@@ -399,7 +399,7 @@ void LayoutState::restore(DropArea *dropArea)
      QHash<quint64, Frame*> framesById;
      QHash<int, Anchor*> anchorByIndex;
      // Create the Anchors
-     for (const AnchorState &a : m_anchors) {
+     for (const AnchorState &a : qAsConst(m_anchors)) {
          if (!a.isValid()) {
              qWarning() << "Ignoring invalid AnchorState for" << dropArea;
              continue;
@@ -418,7 +418,7 @@ void LayoutState::restore(DropArea *dropArea)
      }
 
      // Set the Anchor's to/from
-     for (const AnchorState &a : m_anchors) {
+     for (const AnchorState &a : qAsConst(m_anchors)) {
          if (!a.isValid() || a.isStatic())
              continue;
 
@@ -436,14 +436,14 @@ void LayoutState::restore(DropArea *dropArea)
          delete cf;
      }
 
-     for (const AnchorState &a : m_anchors) {
+     for (const AnchorState &a : qAsConst(m_anchors)) {
          if (!a.isValid())
              continue;
 
          Anchor *anchor = anchorByIndex.value(a.index);
 
          auto restoreFrames = [&framesById, anchor, dropArea] (Anchor::Side side, const LayoutState::FrameState::List &frames) {
-             for (LayoutState::FrameState f : frames) {
+             for (LayoutState::FrameState f : qAsConst(frames)) {
                  Frame *frame = nullptr;
                  if (framesById.contains(f.id)) {
                      frame = framesById.value(f.id);
@@ -453,7 +453,7 @@ void LayoutState::restore(DropArea *dropArea)
                      framesById.insert(f.id, frame);
 
                      // qCDebug(restoring) << "Restoring frame name =" << frameName << "; numDocks=" << f.dockWidgets.size();
-                     for (const QString &dockWidgetName : f.dockWidgets) {
+                     for (const QString &dockWidgetName : qAsConst(f.dockWidgets)) {
                          DockWidget *dw = DockRegistry::self()->dockByName(dockWidgetName);
                          frame->addWidget(dw);
                      }

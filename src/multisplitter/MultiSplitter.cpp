@@ -349,7 +349,7 @@ void MultiSplitter::propagateResize(int delta, Anchor *fromAnchor, Anchor::Side 
     collectPaths(paths, fromAnchor, direction);
 
     qCDebug(sizing) << Q_FUNC_INFO << "Got" << paths.size() << "paths";
-    for (const Anchor::List &path : paths) {
+    for (const Anchor::List &path : qAsConst(paths)) {
         qCDebug(sizing) << Q_FUNC_INFO << path;
     }
 

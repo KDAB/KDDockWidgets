@@ -147,10 +147,10 @@ void Anchor::debug_updateItemNames()
     m_debug_side1ItemNames.clear();
     m_debug_side2ItemNames.clear();
 
-    for (Item *item : m_side1Items)
+    for (Item *item : qAsConst(m_side1Items))
         m_debug_side1ItemNames += item->objectName() + QStringLiteral("; ");
 
-    for (Item *item : m_side2Items)
+    for (Item *item : qAsConst(m_side2Items))
         m_debug_side2ItemNames += item->objectName() + QStringLiteral("; ");
 
     emit debug_itemNamesChanged();
