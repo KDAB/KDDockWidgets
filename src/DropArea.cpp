@@ -28,8 +28,6 @@
 #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"
 
-#include <QtWidgets>
-
 using namespace KDDockWidgets;
 
 DropArea::DropArea(QWidget *parent)

@@ -31,7 +31,6 @@
 #include <QToolButton>
 #include <QHBoxLayout>
 #include <QStyle>
-#include <QtWidgets>
 #include <QStyleOptionFrame>
 
 using namespace KDDockWidgets;

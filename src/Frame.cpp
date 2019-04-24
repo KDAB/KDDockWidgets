@@ -27,7 +27,8 @@
 #include "FloatingWindow_p.h"
 #include "Utils_p.h"
 
-#include <QtWidgets>
+#include <QCloseEvent>
+#include <QVBoxLayout>
 
 #define MARGIN_THRESHOLD 100
 
