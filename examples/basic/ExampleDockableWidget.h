@@ -21,7 +21,7 @@
 #ifndef EXAMPLEDOCKABLEWIDGET_H
 #define EXAMPLEDOCKABLEWIDGET_H
 
-#include <QtWidgets>
+#include <QWidget>
 
 class MyWidget : public QWidget
 {
