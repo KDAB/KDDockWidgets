@@ -197,8 +197,8 @@ public:
 Q_SIGNALS:
     void widgetCountChanged(int count);
     void visibleWidgetCountChanged(int count);
-    void widgetAdded(Item*);
-    void aboutToDumpDebug() const;
+    void widgetAdded(KDDockWidgets::Item*);
+    void aboutToDumpDebug() const; // clazy:exclude=const-signal-or-slot
 
 protected:
     void resizeEvent(QResizeEvent *) override;

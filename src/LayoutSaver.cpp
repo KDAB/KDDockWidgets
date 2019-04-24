@@ -30,6 +30,7 @@ static QString name(QWidget *w)
 
     qWarning() << w;
     qFatal("Invalid Widget");
+    return QString();
 }
 
 struct WindowState {

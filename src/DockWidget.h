@@ -91,7 +91,7 @@ public Q_SLOTS:
 #else
 private Q_SLOTS:
 #endif
-    FloatingWindow *morphIntoFloatingWindow();
+    KDDockWidgets::FloatingWindow *morphIntoFloatingWindow();
 
 #if defined(DOCKS_DEVELOPER_MODE)
 public:

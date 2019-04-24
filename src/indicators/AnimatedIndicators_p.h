@@ -35,7 +35,7 @@ class AnimatedIndicators;
 class AnimatedRubberBand : public QRubberBand
 {
     Q_OBJECT
-    Q_PROPERTY(QVariant length READ length WRITE setLength)
+    Q_PROPERTY(QVariant length READ length WRITE setLength) // clazy:exclude=qproperty-without-notify
 public:
     typedef QList<AnimatedRubberBand *> List;
     explicit AnimatedRubberBand(DropIndicatorOverlayInterface::DropLocation, AnimatedIndicators *parent = nullptr);
