@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2019 Sérgio Martins <sergio.martins@kdab.com>
+  Copyright (C) 2019 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, Author: Sérgio Martins <sergio.martins@kdab.com>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
