@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MULTISPLITTER_H
-#define MULTISPLITTER_H
+#ifndef KD_MULTISPLITTER_MULTISPLITTER_P_H
+#define KD_MULTISPLITTER_MULTISPLITTER_P_H
 
 #include "Anchor_p.h"
 #include "AnchorGroup_p.h"

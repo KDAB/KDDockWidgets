@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KDDOCKWIDGETS_H
-#define KDDOCKWIDGETS_H
+#ifndef KD_KDDOCKWIDGETS_H
+#define KD_KDDOCKWIDGETS_H
 
 #include <QObject>
 

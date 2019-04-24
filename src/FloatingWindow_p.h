@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_FLOATING_WINDOW_H
-#define KD_FLOATING_WINDOW_H
+#ifndef KD_FLOATING_WINDOW_P_H
+#define KD_FLOATING_WINDOW_P_H
 
 #include "docks_export.h"
 #include "Frame_p.h"

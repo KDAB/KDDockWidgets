@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KDDOCKWIDGETS_LAYOUTSAVER_H
-#define KDDOCKWIDGETS_LAYOUTSAVER_H
+#ifndef KD_LAYOUTSAVER_H
+#define KD_LAYOUTSAVER_H
 
 #include "docks_export.h"
 

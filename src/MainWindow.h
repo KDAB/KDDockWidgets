@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KDDOCKS_MAINWINDOW_H
-#define KDDOCKS_MAINWINDOW_H
+#ifndef KD_MAINWINDOW_H
+#define KD_MAINWINDOW_H
 
 #include "docks_export.h"
 #include "KDDockWidgets.h"

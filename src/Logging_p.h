@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_DOCK_LOGGING_H
-#define KD_DOCK_LOGGING_H
+#ifndef KD_DOCK_LOGGING_P_H
+#define KD_DOCK_LOGGING_P_H
 
 #include <QLoggingCategory>
 

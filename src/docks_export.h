@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KDDOCKS_EXPORT_H
-#define KDDOCKS_EXPORT_H
+#ifndef KD_DOCKS_EXPORT_H
+#define KD_DOCKS_EXPORT_H
 
 #include <QtCore/QtGlobal>
 

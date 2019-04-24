@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MULTISPLITTER_ANCHOR_H
-#define MULTISPLITTER_ANCHOR_H
+#ifndef KD_MULTISPLITTER_ANCHOR_P_H
+#define KD_MULTISPLITTER_ANCHOR_P_H
 
 #include "docks_export.h"
 

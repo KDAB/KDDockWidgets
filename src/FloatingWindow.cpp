@@ -25,7 +25,6 @@
 #include "multisplitter/MultiSplitter_p.h"
 #include "DropArea_p.h"
 #include "WindowBeingDragged_p.h"
-#include "Logging_p.h"
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "DockRegistry_p.h"

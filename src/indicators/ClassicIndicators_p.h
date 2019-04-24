@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CLASSIC_DROPINDICATOROVERLAY_H
-#define CLASSIC_DROPINDICATOROVERLAY_H
+#ifndef KD_INDICATORS_CLASSICINDICATORS_P_H
+#define KD_INDICATORS_CLASSICINDICATORS_P_H
 
 #include "DropIndicatorOverlayInterface_p.h"
 

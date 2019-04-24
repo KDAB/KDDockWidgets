@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_DRAGCONTROLLER_H
-#define KD_DRAGCONTROLLER_H
+#ifndef KD_DRAGCONTROLLER_P_H
+#define KD_DRAGCONTROLLER_P_H
 
 #include "TitleBar_p.h"
 #include "TabWidget_p.h"

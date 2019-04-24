@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef WIDGETRESIZEHANDLERBASE_H
-#define WIDGETRESIZEHANDLERBASE_H
+#ifndef KD_WIDGETRESIZEHANDLERBASE_P_H
+#define KD_WIDGETRESIZEHANDLERBASE_P_H
 
 #include <QObject>
 #include <QPoint>

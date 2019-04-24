@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_TAB_WIDGET_H
-#define KD_TAB_WIDGET_H
+#ifndef KD_TAB_WIDGET_P_H
+#define KD_TAB_WIDGET_P_H
 
 #include "docks_export.h"
 #include "Draggable_p.h"

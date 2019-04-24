@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_DOCK_UTILS_H
-#define KD_DOCK_UTILS_H
+#ifndef KD_UTILS_P_H
+#define KD_UTILS_P_H
 
 #include <QApplication>
 

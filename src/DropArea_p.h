@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_DROP_AREA_H
-#define KD_DROP_AREA_H
+#ifndef KD_DROP_AREA_P_H
+#define KD_DROP_AREA_P_H
 
 #include "docks_export.h"
 #include "Frame_p.h"

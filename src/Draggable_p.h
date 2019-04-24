@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_DRAGGABLE_H
-#define KD_DRAGGABLE_H
+#ifndef KD_DRAGGABLE_P_H
+#define KD_DRAGGABLE_P_H
 
 #include <QWidget>
 #include <QVector>

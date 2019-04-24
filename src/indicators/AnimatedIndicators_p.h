@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ANIMATEDINDICATORS_H
-#define ANIMATEDINDICATORS_H
+#ifndef KD_INDICATORS_ANIMATEDINDICATORS_P_H
+#define KD_INDICATORS_ANIMATEDINDICATORS_P_H
 
 #include "DropIndicatorOverlayInterface_p.h"
 

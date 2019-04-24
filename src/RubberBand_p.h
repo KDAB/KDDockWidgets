@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_RUBBERBAND_H
-#define KD_RUBBERBAND_H
+#ifndef KD_RUBBERBAND_P_H
+#define KD_RUBBERBAND_P_H
 
 #include <QRubberBand>
 

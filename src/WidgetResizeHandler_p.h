@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_WIDGET_RESIZE_HANDLER_H
-#define KD_WIDGET_RESIZE_HANDLER_H
+#ifndef KD_WIDGET_RESIZE_HANDLER_P_H
+#define KD_WIDGET_RESIZE_HANDLER_P_H
 
 #include "WidgetResizeHandlerBase_p.h"
 namespace KDDockWidgets {

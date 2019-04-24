@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_FRAME_H
-#define KD_FRAME_H
+#ifndef KD_FRAME_P_H
+#define KD_FRAME_P_H
 
 #include "docks_export.h"
 #include "multisplitter/MultiSplitter_p.h"

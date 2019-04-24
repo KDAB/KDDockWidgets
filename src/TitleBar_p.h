@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_TITLEBAR_H
-#define KD_TITLEBAR_H
+#ifndef KD_TITLEBAR_P_H
+#define KD_TITLEBAR_P_H
 
 #include "docks_export.h"
 #include "Draggable_p.h"

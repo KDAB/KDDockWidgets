@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KDDOCKWIDGETS_ITEM_H
-#define KDDOCKWIDGETS_ITEM_H
+#ifndef KD_MULTISPLITTER_ITEM_P_H
+#define KD_MULTISPLITTER_ITEM_P_H
 
 #include "docks_export.h"
 #include "Anchor_p.h"

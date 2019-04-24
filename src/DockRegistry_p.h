@@ -17,8 +17,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DOCKREGISTRY_H
-#define DOCKREGISTRY_H
+#ifndef KD_DOCKREGISTRY_P_H
+#define KD_DOCKREGISTRY_P_H
 
 #include "DockWidget.h"
 #include "MainWindow.h"
