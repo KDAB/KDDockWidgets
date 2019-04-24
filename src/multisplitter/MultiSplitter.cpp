@@ -529,9 +529,9 @@ QPair<int, int> MultiSplitter::boundPositionsForAnchor(Anchor *anchor) const
 
     const int minSide1Length = anchor->cumulativeMinLength(Anchor::Side1);
     const int minSide2Length = anchor->cumulativeMinLength(Anchor::Side2);
-    const int lenght = anchor->isVertical() ? contentsWidth() : contentsHeight();
+    const int length = anchor->isVertical() ? contentsWidth() : contentsHeight();
 
-    return { minSide1Length - anchor->thickness(), lenght - minSide2Length };
+    return { minSide1Length - anchor->thickness(), length - minSide2Length };
 }
 
 int MultiSplitter::boundPositionForAnchor(Anchor *anchor, Anchor::Side direction) const
@@ -650,7 +650,7 @@ QRect MultiSplitter::rectForDrop(const QWidget *widgetBeingDropped, Location loc
     Length lfd = lengthForDrop(widgetBeingDropped, location, relativeTo);
     if (lfd.isNull())  {
         // This is the case with the drop indicators. If there's not enough space let's still
-        // draw some indicator drop. The window will resize to accomodate the drop.
+        // draw some indicator drop. The window will resize to accommodate the drop.
         lfd.side1Length = INDICATOR_MINIMUM_LENGTH / 2;
         lfd.side2Length = INDICATOR_MINIMUM_LENGTH - lfd.side1Length;
     }
