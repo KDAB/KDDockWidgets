@@ -165,7 +165,7 @@ TitleBar *Frame::titleBar() const
     return m_titleBar;
 }
 
-DockWidget::List Frame::dockWidgets() const
+const DockWidget::List Frame::dockWidgets() const
 {
     DockWidget::List dockWidgets;
     const int count = widgetCount();

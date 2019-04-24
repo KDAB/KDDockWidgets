@@ -164,9 +164,9 @@ public:
 
     bool containsItem(const Item *w, Side side) const;
 
-    ItemList items(Side side) const;
-    ItemList side1Items() const { return m_side1Items; }
-    ItemList side2Items() const { return m_side2Items; }
+    const ItemList items(Side side) const;
+    const ItemList side1Items() const { return m_side1Items; }
+    const ItemList side2Items() const { return m_side2Items; }
 
     void consume(Anchor *other);
     void consume(Anchor *other, Side);

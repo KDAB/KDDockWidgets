@@ -258,7 +258,7 @@ bool Anchor::containsItem(const Item *item, Anchor::Side side) const
     }
 }
 
-ItemList Anchor::items(Anchor::Side side) const
+const ItemList Anchor::items(Anchor::Side side) const
 {
     switch (side) {
     case Side1:
