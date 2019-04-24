@@ -21,7 +21,10 @@
 #include "ExampleDockableWidget.h"
 
 #include <QDebug>
-#include <QtWidgets>
+#include <QVBoxLayout>
+#include <QGroupBox>
+#include <QRadioButton>
+#include <QPushButton>
 
 MyWidget::MyWidget()
     : QWidget()

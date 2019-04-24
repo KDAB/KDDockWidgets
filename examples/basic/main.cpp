@@ -24,7 +24,13 @@
 #include "LayoutSaver.h"
 
 #include <QMouseEvent>
-#include <QtWidgets>
+#include <QTextEdit>
+#include <QMenu>
+#include <QAction>
+#include <QStyleFactory>
+#include <QApplication>
+#include <QDebug>
+#include <QMenuBar>
 
 using namespace KDDockWidgets;
 
