@@ -534,7 +534,7 @@ void AnimatedOutterRubberBand::paintEvent(QPaintEvent *)
     const int t = length().toInt();
     p.setOpacity(-(0.0007625272331 * t * t) + (0.06241830065 * t));
     QPainterPath path;
-    p.setPen(QPen(QColor("#f6476bae")));
+    p.setPen(QPen(QColor(0xf6, 0x47, 0x6b, 0xae)));
 
     QRectF r = rect();
     if (orientation == Qt::Vertical) {
