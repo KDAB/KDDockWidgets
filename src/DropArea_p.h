@@ -52,7 +52,6 @@ public:
     bool drop(Draggable *draggable, QPoint globalPos);
     bool drop(QWidget *droppedwindow, KDDockWidgets::Location location, QWidget *relativeTo);
     int numFrames() const;
-    bool needsCustomTitleBar() const;
     void setIndicatorStyle(DropIndicatorOverlayInterface::Type);
     DropIndicatorOverlayInterface::Type indicatorStyle() const;
 
