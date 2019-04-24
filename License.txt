@@ -1,0 +1,2 @@
+This software is provided as GPLv2 (read LICENSE.GPL.txt), or, alternatively,
+contact KDAB at <info@kdab.com> if you need different licensing.

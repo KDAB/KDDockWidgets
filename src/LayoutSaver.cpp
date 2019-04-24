@@ -1,0 +1,645 @@
+#include "LayoutSaver.h"
+#include "DockRegistry_p.h"
+#include "DockWidget.h"
+#include "DropArea_p.h"
+#include "Logging_p.h"
+#include "Frame_p.h"
+#include "multisplitter/Anchor_p.h"
+#include "multisplitter/Item_p.h"
+
+#include <QDataStream>
+#include <QDebug>
+#include <QSettings>
+#include <QApplication>
+#include <QObject>
+
+#include <memory>
+
+using namespace KDDockWidgets;
+
+namespace KDDockWidgets
+{
+
+static QString name(QWidget *w)
+{
+    if (auto dw = qobject_cast<DockWidget*>(w))
+        return dw->name();
+
+    if (auto mw = qobject_cast<MainWindow*>(w))
+        return mw->name();
+
+    qWarning() << w;
+    qFatal("Invalid Widget");
+}
+
+struct WindowState {
+    explicit WindowState(QWidget *w, const QString &name_)
+        : name(name_)
+        , geometry(w->geometry())
+        , isTopLevel(w->isTopLevel())
+        , isVisible(w->isVisible())
+    {
+    }
+
+    WindowState() = default;
+
+    void restore(QWidget *w)
+    {
+        if (isTopLevel)
+            w->setWindowFlag(Qt::Window, true);
+
+        w->setVisible(isVisible);
+        w->setGeometry(geometry);
+    }
+
+    static const QString s_magicMarker; // Just to validate serialize is simetric to deserialize
+    QString name;
+    QRect geometry;
+    bool isTopLevel = false;
+    bool isVisible = false;
+};
+
+struct LayoutState
+{
+    struct FrameState {
+        explicit FrameState(Frame *f)
+        {
+            currentTabIndex = f->currentTabIndex();
+            options = f->options();
+            const auto docks = f->dockWidgets();
+            dockWidgets.reserve(docks.size());
+            for (DockWidget *dw : docks)
+                dockWidgets.push_back(dw->name());
+            id = f->id();
+        }
+
+        FrameState() = default;
+        typedef QVector<FrameState> List;
+
+        bool isCentralFrame() const
+        {
+            return options & Frame::Option_IsCentralFrame;
+        }
+
+        static const QString s_magicMarker; // Just to validate serialize is simetric to deserialize
+        QStringList dockWidgets;
+        int currentTabIndex = -1;
+        Frame::Options options;
+        quint64 id = 0;
+    };
+
+    struct AnchorState {
+        explicit AnchorState(Anchor *a)
+            : orientation(a->orientation())
+            , position(a->position())
+            , options(a->options())
+        {
+            auto constructFrameState = [] (const ItemList &widgets, LayoutState::FrameState::List &frameStates) {
+                for (Item *w : widgets) {
+                    auto frame = qobject_cast<Frame*>(w->widget());
+                    if (!frame) {
+                        qWarning() << Q_FUNC_INFO << "expected a frame" << w;
+                        continue;
+                    }
+
+                    LayoutState::FrameState f(frame);
+                    frameStates.push_back(f);
+                }
+            };
+
+            constructFrameState(a->side1Items(), side1FrameStates);
+            constructFrameState(a->side2Items(), side2FrameStates);
+
+            const Anchor::List allAnchors = a->m_multiSplitter->anchors();
+            index = allAnchors.indexOf(a);
+            fromIndex = allAnchors.indexOf(a->from());
+            toIndex = allAnchors.indexOf(a->to());
+        }
+
+        AnchorState() = default;
+
+        bool isValid(bool warn = false) const
+        {
+            if (index == -1 || toIndex == -1 || fromIndex == -1) {
+                if (warn)
+                    qWarning() << Q_FUNC_INFO << "Invalid indexes" << index << toIndex << fromIndex;
+                return false;
+            }
+
+            return true;
+        }
+
+        bool isStatic() const
+        {
+            return options & Anchor::Option_Static;
+        }
+
+        typedef QVector<AnchorState> List;
+
+        static const QString s_magicMarker; // Just to validate serialize is simetric to deserialize
+        FrameState::List side1FrameStates;
+        FrameState::List side2FrameStates;
+        Qt::Orientation orientation;
+        int position;
+        Anchor::Options options;
+
+        int index;
+        int fromIndex;
+        int toIndex;
+    };
+
+    explicit LayoutState(const DropArea *a)
+        : m_dropArea(a)
+        , m_isInMainWindow(a->isInMainWindow())
+        , m_isInFloatingWindow(a->isInFloatingWindow())
+    {
+        if (m_isInMainWindow) {
+            // The name of the MainWindow, so we can restore it later.
+            // Needed since we support multiple main windows.
+            m_name = name(a->parentWidget());
+        }
+    }
+
+    LayoutState() = default;
+
+    bool isValid(bool warn = false) const
+    {
+        // Don't accept anything else
+        if (!((m_isInMainWindow && !m_name.isEmpty()) || m_isInFloatingWindow)) {
+            if (warn)
+                qWarning() << Q_FUNC_INFO << "Invalid layout m_name=" << m_name
+                           << "; m_isInFloatingWindow=" << m_isInFloatingWindow
+                           << "; m_isInMainWindow=" << m_isInMainWindow;
+            return false;
+        }
+
+        bool valid = true;
+        for (const auto &anchorState : m_anchors)
+            valid = valid && anchorState.isValid(warn);
+
+        return valid;
+    }
+
+    void restore(DropArea *dropArea);
+
+    static const QString s_magicMarker; // Just to validate serialize is simetric to deserialize
+    const DropArea *m_dropArea = nullptr;
+    bool m_isInMainWindow = false;
+    bool m_isInFloatingWindow = false;
+    QString m_name;
+    AnchorState::List m_anchors;
+};
+
+const QString KDDockWidgets::WindowState::s_magicMarker = QStringLiteral("9ff8744b-72ee-40de-94a2-4d73d10d5180");
+const QString KDDockWidgets::LayoutState::s_magicMarker = QStringLiteral("bac9948e-5f1b-4271-acc5-07f1708e2611");
+const QString KDDockWidgets::LayoutState::FrameState::s_magicMarker = QStringLiteral("9240c11b-57c9-4011-ac54-899663a1fe31");
+const QString KDDockWidgets::LayoutState::AnchorState::s_magicMarker = QStringLiteral("e520c60e-cf5d-4a30-b1a7-588d2c569851");
+
+
+QDataStream &operator<<(QDataStream &ds, KDDockWidgets::WindowState s)
+{
+    ds << WindowState::s_magicMarker;
+    ds << s.name;
+    ds << s.geometry;
+    ds << s.isVisible;
+    ds << s.isTopLevel;
+
+    return ds;
+}
+
+QDataStream &operator>>(QDataStream &ds, KDDockWidgets::WindowState &s)
+{
+    QString magic;
+    ds >> magic;
+    ds >> s.name;
+    ds >> s.geometry;
+    ds >> s.isVisible;
+    ds >> s.isTopLevel;
+
+    if (magic != WindowState::s_magicMarker)
+        qWarning() << "WindowState: stream is corrupted";
+
+    return ds;
+}
+
+QDataStream &operator<<(QDataStream &ds, KDDockWidgets::LayoutState::FrameState f)
+{
+    ds << LayoutState::FrameState::s_magicMarker;
+    ds << f.options;
+    ds << f.currentTabIndex;
+    ds << f.dockWidgets;
+    ds << f.id;
+
+    if (f.dockWidgets.isEmpty() && !f.isCentralFrame())
+        qWarning() << "Serialized empty FrameState";
+
+    return ds;
+}
+
+QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::FrameState &f)
+{
+    QString magic;
+    ds >> magic;
+    ds >> f.options;
+    ds >> f.currentTabIndex;
+    ds >> f.dockWidgets;
+    ds >> f.id;
+
+    if (f.dockWidgets.isEmpty() && !f.isCentralFrame())
+        qWarning() << "Deserialized empty FrameState";
+
+    if (magic != LayoutState::FrameState::s_magicMarker)
+        qWarning() << "FrameState: stream is corrupted";
+
+    return ds;
+}
+
+QDataStream &operator<<(QDataStream &ds, KDDockWidgets::LayoutState::FrameState::List list)
+{
+    ds << list.size();
+    for (const auto &f : list)
+        ds << f;
+
+    return ds;
+}
+
+QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::FrameState::List &list)
+{
+    int numFrames;
+    ds >> numFrames;
+    list.reserve(numFrames);
+    for (int i = 0; i < numFrames; ++i) {
+        LayoutState::FrameState f;
+        ds >> f;
+        list.push_back(f);
+    }
+
+    return ds;
+}
+
+QDataStream &operator<<(QDataStream &ds, KDDockWidgets::LayoutState::AnchorState a)
+{
+    ds << LayoutState::AnchorState::s_magicMarker;
+    ds << a.options;
+    ds << a.position;
+    int ori = a.orientation;
+    ds << ori;
+    ds << a.side1FrameStates;
+    ds << a.side2FrameStates;
+    ds << a.index;
+    ds << a.toIndex;
+    ds << a.fromIndex;
+
+    return ds;
+}
+
+QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::AnchorState &a)
+{
+    QString magic;
+    ds >> magic;
+    ds >> a.options;
+    ds >> a.position;
+    int ori;
+    ds >> ori;
+    a.orientation = static_cast<Qt::Orientation>(ori);
+    ds >> a.side1FrameStates;
+    ds >> a.side2FrameStates;
+    ds >> a.index;
+    ds >> a.toIndex;
+    ds >> a.fromIndex;
+
+    if (magic != LayoutState::AnchorState::s_magicMarker)
+        qWarning() << "AnchorState: stream is corrupted";
+
+    return ds;
+}
+
+QDataStream &operator<<(QDataStream &ds, KDDockWidgets::LayoutState s)
+{
+    ds << LayoutState::s_magicMarker;
+    ds << s.m_isInMainWindow;
+    ds << s.m_isInFloatingWindow;
+    ds << s.m_name;
+
+    const auto anchors = s.m_dropArea->anchors();
+    ds << anchors.size();
+
+    for (Anchor *anchor : anchors) {
+        LayoutState::AnchorState anchorState(anchor);
+        ds << anchorState;
+    }
+
+    if (!s.isValid(/*warn*/true))
+        qWarning() << "Saving invalid layout";
+
+    return ds;
+}
+
+QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState &s)
+{
+    QString magic;
+    ds >> magic;
+    ds >> s.m_isInMainWindow;
+    ds >> s.m_isInFloatingWindow;
+    ds >> s.m_name;
+
+    int numAnchors;
+    ds >> numAnchors;
+    for (int i = 0; i < numAnchors; ++i) {
+        LayoutState::AnchorState anchorState;
+        ds >> anchorState;
+        s.m_anchors.push_back(anchorState);
+    }
+
+    if (magic != LayoutState::s_magicMarker)
+        qWarning() << "LayoutState: stream is corrupted";
+
+    return ds;
+}
+
+void LayoutState::restore(DropArea *dropArea)
+{
+     if (!dropArea) {
+         qWarning() << Q_FUNC_INFO << "MainWindow is missing a drop area";
+         Q_ASSERT(false);
+         return;
+     }
+
+     if (!isValid(/*warn=*/ true)) {
+         qWarning() << "Layout isn't valid";
+         return;
+     }
+
+     if (!dropArea->checkSanity()) {
+         qWarning() << "Drop area is not sane, refusing to restore";
+         return;
+     }
+
+     QHash<quint64, Frame*> framesById;
+     QHash<int, Anchor*> anchorByIndex;
+     // Create the Anchors
+     for (const AnchorState &a : m_anchors) {
+         if (!a.isValid()) {
+             qWarning() << "Ignoring invalid AnchorState for" << dropArea;
+             continue;
+         }
+
+         Anchor *anchor = nullptr;
+         if (a.isStatic()) {
+             anchor = dropArea->staticAnchor(a.options);
+             Q_ASSERT(anchor);
+         } else {
+             anchor = new Anchor(a.orientation, dropArea);
+             anchor->setPosition(a.position);
+         }
+
+         anchorByIndex.insert(a.index, anchor);
+     }
+
+     // Set the Anchor's to/from
+     for (const AnchorState &a : m_anchors) {
+         if (!a.isValid() || a.isStatic())
+             continue;
+
+         Anchor *anchor = anchorByIndex.value(a.index);
+         Anchor *anchorTo = anchorByIndex.value(a.toIndex);
+         Anchor *anchorFrom = anchorByIndex.value(a.fromIndex);
+
+         anchor->setTo(anchorTo);
+         anchor->setFrom(anchorFrom);
+     }
+
+     if (auto cf = dropArea->centralFrame()) {
+         // Remove the built-in frame, it's much easier to just restore everything
+         dropArea->removeItem(cf);
+         delete cf;
+     }
+
+     for (const AnchorState &a : m_anchors) {
+         if (!a.isValid())
+             continue;
+
+         Anchor *anchor = anchorByIndex.value(a.index);
+
+         auto restoreFrames = [&framesById, anchor, dropArea] (Anchor::Side side, const LayoutState::FrameState::List &frames) {
+             for (LayoutState::FrameState f : frames) {
+                 Frame *frame = nullptr;
+                 if (framesById.contains(f.id)) {
+                     frame = framesById.value(f.id);
+                 } else {
+                     frame = new Frame(nullptr, f.options);
+                     auto item = new Item(frame, dropArea);
+                     framesById.insert(f.id, frame);
+
+                     // qCDebug(restoring) << "Restoring frame name =" << frameName << "; numDocks=" << f.dockWidgets.size();
+                     for (const QString &dockWidgetName : f.dockWidgets) {
+                         DockWidget *dw = DockRegistry::self()->dockByName(dockWidgetName);
+                         frame->addWidget(dw);
+                     }
+
+                     frame->setCurrentTabIndex(f.currentTabIndex);
+                     dropArea->addItems_internal({ item }, /*updateSizeConstraints=*/ false);
+
+                 }
+
+                 anchor->addItem(dropArea->itemForWidget(frame), side);
+             }
+         };
+
+         restoreFrames(Anchor::Side1, a.side1FrameStates);
+         restoreFrames(Anchor::Side2, a.side2FrameStates);
+     }
+
+     dropArea->updateSizeConstraints();
+     if (!dropArea->checkSanity()) {
+         qWarning() << "Restored an invalid layout, this should not happen";
+     }
+}
+
+}
+
+class KDDockWidgets::LayoutSaver::Private
+{
+public:
+    Private()
+        : m_dockRegistry(DockRegistry::self())
+    {
+    }
+
+    DockWidget::List floatingDockWidgets() const;
+    MainWindow::List mainWindows() const;
+    std::unique_ptr<QSettings> settings() const;
+    DockRegistry *const m_dockRegistry;
+};
+
+LayoutSaver::LayoutSaver()
+    : d(new Private())
+{
+}
+
+LayoutSaver::~LayoutSaver()
+{
+    delete d;
+}
+
+bool LayoutSaver::saveToDisk()
+{
+    if (qApp->organizationName().isEmpty() || qApp->applicationName().isEmpty()) {
+        qWarning() << Q_FUNC_INFO
+                   << "Cannot save. Either organization name or application name is empty.";
+        return false;
+    }
+
+    const QByteArray data = serializeLayout();
+    d->settings()->setValue(QStringLiteral("data"), data);
+    return true;
+}
+
+void LayoutSaver::restoreFromDisk()
+{
+    const QByteArray data = d->settings()->value(QStringLiteral("data")).toByteArray();
+    restoreLayout(data);
+}
+
+std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
+{
+    auto settings = std::unique_ptr<QSettings>(new QSettings(qApp->organizationName(),
+                                                             qApp->applicationName()));
+    settings->beginGroup(QStringLiteral("KDDockWidgets::LayoutSaver"));
+
+    return settings;
+}
+
+QByteArray LayoutSaver::serializeLayout() const
+{
+    QByteArray result;
+    QDataStream ds(&result, QIODevice::WriteOnly);
+
+    // Save floating dock widgets (just geometry and visibility):
+    const DockWidget::List floatingDocks = d->floatingDockWidgets();
+    ds << floatingDocks.size();
+    for (auto floating : floatingDocks) {
+        WindowState state(floating, floating->name());
+        ds << state;
+    }
+
+    // Save main windows (geometry, visibility and dockwidget layout):
+    auto mainWindows = d->mainWindows();
+
+    // Remove crap:
+    mainWindows.erase(std::remove_if(mainWindows.begin(), mainWindows.end(),
+                                     [](MainWindow *w) {
+                          if (!qobject_cast<DropArea*>(w->centralWidget())) {
+                              qWarning() << Q_FUNC_INFO << "MainWindow with wrong central widget";
+                              return true;
+                          } else {
+                              return false;
+                          }
+    }), mainWindows.end());
+
+    ds << mainWindows.size();
+    for (auto mainWindow : mainWindows) {
+        WindowState windowState(mainWindow, mainWindow->name());
+        LayoutState layoutState(static_cast<DropArea*>(mainWindow->centralWidget()));
+        ds << windowState;
+        ds << layoutState;
+    }
+
+    // Save the floating nested windows:
+    const auto floatingNestedWindows = d->m_dockRegistry->nestedwindows();
+    ds << floatingNestedWindows.size();
+    for (auto window : floatingNestedWindows) {
+        WindowState windowState(window, QString());
+        LayoutState layoutState(window->dropArea());
+        ds << windowState;
+        ds << layoutState;
+    }
+
+    return result;
+}
+
+void LayoutSaver::restoreLayout(const QByteArray &data)
+{
+    if (data.isEmpty())
+        return;
+
+    // Hide all dockwidgets and unparent them from any layout before starting restore
+    d->m_dockRegistry->closeAllDockWidgets();
+
+    QDataStream ds(data);
+
+    // Restore geometry and visibility of floating dock widgets:
+    int numFloating;
+    ds >> numFloating;
+    DockWidget::List floatingDocks;
+    floatingDocks.reserve(numFloating);
+    for (int i = 0; i < numFloating; i++) {
+        WindowState windowState;
+        ds >> windowState;
+
+        if (DockWidget *dw = d->m_dockRegistry->dockByName(windowState.name)) {
+            qCDebug(restoring) << "Restoring dockwidget" << dw << "; to=" << windowState.geometry;
+            windowState.restore(dw);
+        } else {
+            qDebug() << "Unable to restore DockWidget" << windowState.name;
+        }
+    }
+
+    // Restore geometry and visibility of main windows:
+    int numMainWindows;
+    ds >> numMainWindows;
+    MainWindow::List mainWindows;
+    mainWindows.reserve(numMainWindows);
+    for (int i = 0; i < numMainWindows; i++) {
+        WindowState windowState;
+        LayoutState layoutState;
+        ds >> windowState;
+        ds >> layoutState;
+        MainWindow *w = d->m_dockRegistry->mainWindowByName(windowState.name);
+        if (!w) {
+            qDebug() << "Unable to restore MainWindow" << windowState.name
+                     << "; You need to create it before restoring.";
+            continue;
+        }
+
+        if (windowState.isTopLevel)
+            windowState.restore(w);
+
+        qCDebug(restoring) << "Restoring MainWindow";
+        layoutState.restore(qobject_cast<DropArea*>(w->centralWidget()));
+    }
+
+    // Restore floating nested windows
+    int numNestedWindows;
+    ds >> numNestedWindows;
+
+    for (int i = 0; i < numNestedWindows; i++) {
+        WindowState windowState;
+        LayoutState layoutState;
+        ds >> windowState;
+        ds >> layoutState;
+
+        qCDebug(restoring) << "Restoring FloatingWindow";
+        auto fw = new FloatingWindow();
+        windowState.restore(fw);
+        layoutState.restore(fw->dropArea());
+    }    
+}
+
+DockWidget::List LayoutSaver::Private::floatingDockWidgets() const
+{
+    const auto dockwidgets = m_dockRegistry->dockwidgets();
+    DockWidget::List result;
+    result.reserve(dockwidgets.size());
+    std::copy_if(dockwidgets.cbegin(), dockwidgets.cend(),
+                 std::back_inserter(result), [] (DockWidget *dw) {
+        return dw->isFloating() && dw->window() == dw; // because it could be in a nested window (FloatingWindow)
+    });
+    return result;
+}
+
+MainWindow::List LayoutSaver::Private::mainWindows() const
+{
+    return m_dockRegistry->mainwindows();
+}
+
