@@ -5,11 +5,11 @@ KDDockWidgets
 
 Throughout the years KDAB has contributed and funded bug fixes and features to `QDockWidget`.
 Sadly, the `QDockWidget` code is in such a state that each bug fix took many days
-and sometimes caused regressions. The codebase mixes GUI code, wich logic, with state
+and sometimes caused regressions. The codebase mixes GUI code, with logic, with state
 in a spaghetti manner, which makes it very hard to move forward with new features.
 
 In hindsight, what led to `QDockWidget` complexity is that is supports a multitude
-of options and a exponencial number of option combinations, times 3 platforms. From
+of options and a exponential number of option combinations, times 3 platforms. From
 talking with our customers we gathered that none of them cared about most of those options,
 and all of them wanted the same 3 or 4 missing features.
 
@@ -36,5 +36,5 @@ Goals
 Licensing
 =========
 
-This software is provided as GPLv2 (See LICENSE.GPL.txt), or, alternatively,
+This software is provided as GPLv2 (See LICENSE.GPL.txt) or, alternatively,
 contact KDAB at <info@kdab.com> if you need different licensing.
