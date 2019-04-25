@@ -211,8 +211,6 @@ protected:
 
     void setDoSanityChecks(bool);
 
-    Anchor::Side anchorsShouldPropagateMinSize() const;
-
 private:
     friend struct AnchorGroup;
     friend class Item;
