@@ -55,7 +55,7 @@ public:
     Q_ENUM(Option)
 
     typedef QList<Frame *> List;
-    explicit Frame(QWidget *parent = nullptr, Options = 0);
+    explicit Frame(QWidget *parent = nullptr, Options = Option_None);
     ~Frame() override;
 
     void addWidget(DockWidget *);
