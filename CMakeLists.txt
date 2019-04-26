@@ -5,10 +5,18 @@ find_package(Qt5Widgets)
 
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
+set(ECM_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ECM/modules/")
+set(CMAKE_MODULE_PATH ${ECM_MODULE_DIR})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
+option(OPTION_ASAN_SUPPORT "Activate support for using ASAN" OFF)
+
+
+if (OPTION_ASAN_SUPPORT)
+   include(ECMEnableSanitizers)
+endif()	
 
 if (OPTION_DEVELOPER_MODE)
     add_definitions(-DDOCKS_DEVELOPER_MODE)

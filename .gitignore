@@ -1,7 +1,6 @@
 /default/
 docks.qbs.user
 /release/
-*.cmake
 Makefile
 *_autogen*
 CMakeFiles
