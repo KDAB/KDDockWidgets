@@ -29,3 +29,4 @@ resources.qrc.depends
 *backup~
 *backup.md5~
 .qmake.stash
+cmake_install.cmake
