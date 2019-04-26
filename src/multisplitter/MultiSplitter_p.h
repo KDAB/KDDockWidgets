@@ -126,7 +126,7 @@ public:
     /**
      * Returns true if count is 0.
      */
-    bool isEmpty() const { return count() == 0; }
+    bool isEmpty() const { return m_items.isEmpty(); }
     int visibleCount() const;
     int length(Qt::Orientation) const;
 
