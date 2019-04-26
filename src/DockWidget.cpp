@@ -224,7 +224,7 @@ DockWidget::Options DockWidget::options() const
 bool DockWidget::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
-        emit parentChanged();
+        Q_EMIT parentChanged();
         d->updateTitleBarVisibility();
         d->updateToggleAction();
     } else if (e->type() == QEvent::Show) {
@@ -232,9 +232,9 @@ bool DockWidget::event(QEvent *e)
         if (widgetResizeHandler()) {
             widgetResizeHandler()->setActive(isWindow());
         }
-        emit shown();
+        Q_EMIT shown();
     } else if (e->type() == QEvent::Hide) {
-        emit hidden();
+        Q_EMIT hidden();
     }
 
     return QWidget::event(e);

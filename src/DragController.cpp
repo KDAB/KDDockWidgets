@@ -91,7 +91,7 @@ public:
         q->m_draggable = draggable;
         q->m_pressPos = globalPos;
         q->m_offset = pos;
-        emit q->mousePressed();
+        Q_EMIT q->mousePressed();
         return false;
     }
 };
@@ -117,14 +117,14 @@ public:
     bool handleMouseMove(QPoint globalPos) override
     {
         if ((globalPos - q->m_pressPos).manhattanLength() > QApplication::startDragDistance()) {
-            emit q->manhattanLengthMove();
+            Q_EMIT q->manhattanLengthMove();
         }
         return true;
     }
 
     bool handleMouseButtonRelease(QPoint, QPoint) override
     {
-        emit q->dragCanceled();
+        Q_EMIT q->dragCanceled();
         return true;
     }
 };
@@ -155,20 +155,20 @@ public:
         if (!draggable) {
             // It was deleted externally
             qCDebug(state) << "StateDragging: Bailling out, deleted externally";
-            emit q->dragCanceled();
+            Q_EMIT q->dragCanceled();
             return true;
         }
 
         if (q->m_currentDropArea) {
             if (q->m_currentDropArea->drop(draggable, globalPos)) {
-                emit q->dropped();
+                Q_EMIT q->dropped();
             } else {
                 qCDebug(state) << "StateDragging: Bailling out, drop not accepted";
-                emit q->dragCanceled();
+                Q_EMIT q->dragCanceled();
             }
         } else {
             qCDebug(state) << "StateDragging: Bailling out, not over a drop area";
-            emit q->dragCanceled();
+            Q_EMIT q->dragCanceled();
         }
         return true;
     }
@@ -177,7 +177,7 @@ public:
     {
         if (!q->m_windowBeingDragged->window()) {
             qCDebug(state) << "Canceling drag, window was deleted";
-            emit q->dragCanceled();
+            Q_EMIT q->dragCanceled();
             return true;
         }
 

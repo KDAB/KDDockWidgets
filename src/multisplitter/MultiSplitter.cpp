@@ -48,7 +48,7 @@ MultiSplitter::MultiSplitter(QWidget *parent)
 
     qCDebug(multisplittercreation()) << "MultiSplitter";
     connect(this, &MultiSplitter::widgetCountChanged, this, [this] {
-        emit visibleWidgetCountChanged(visibleCount());
+        Q_EMIT visibleWidgetCountChanged(visibleCount());
     });
 
     m_leftAnchor->setObjectName(QStringLiteral("left"));
@@ -299,9 +299,9 @@ void MultiSplitter::addItems_internal(const ItemList &items, bool updateConstrai
     for (auto item : items) {
         item->setMultiSplitter(this);
         item->setVisible(true);
-        emit widgetAdded(item);
+        Q_EMIT widgetAdded(item);
     }
-    emit widgetCountChanged(m_items.size());
+    Q_EMIT widgetCountChanged(m_items.size());
 }
 
 void MultiSplitter::setExtraUselessSpace(QSize sz)
@@ -450,7 +450,7 @@ void MultiSplitter::removeItem(Item *item)
     anchorGroup.removeItem(item);
 
     m_items.removeOne(item);
-    emit widgetCountChanged(m_items.size());
+    Q_EMIT widgetCountChanged(m_items.size());
 }
 
 bool MultiSplitter::contains(Item *item) const
@@ -472,7 +472,7 @@ void MultiSplitter::clear()
 {
     qDeleteAll(m_items);
     m_items.clear();
-    emit widgetCountChanged(0);
+    Q_EMIT widgetCountChanged(0);
 
     for (Anchor *anchor : qAsConst(m_anchors)) {
         if (!anchor->isStatic())
@@ -746,7 +746,7 @@ AnchorGroup MultiSplitter::anchorsForPos(QPoint pos) const
 
 void MultiSplitter::dumpDebug() const
 {
-    emit aboutToDumpDebug();
+    Q_EMIT aboutToDumpDebug();
     qDebug() << Q_FUNC_INFO << "m_contentsSize=" << m_contentSize
              << "; minimumSize=" << minimumSize();
 
@@ -911,7 +911,7 @@ void MultiSplitter::setDoSanityChecks(bool doit)
 void MultiSplitter::emitVisibleWidgetCountChanged()
 {
     if (!m_inDestructor)
-        emit visibleWidgetCountChanged(visibleCount());
+        Q_EMIT visibleWidgetCountChanged(visibleCount());
 }
 
 Item *MultiSplitter::itemForWidget(const QWidget *w) const

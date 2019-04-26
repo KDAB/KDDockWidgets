@@ -74,7 +74,7 @@ void Anchor::setFrom(Anchor *from)
     connect(from, &Anchor::positionChanged, this, &Anchor::updateSize);
     updateSize();
 
-    emit fromChanged();
+    Q_EMIT fromChanged();
 }
 
 void Anchor::setTo(Anchor *to)
@@ -92,7 +92,7 @@ void Anchor::setTo(Anchor *to)
     connect(to, &Anchor::positionChanged, this, &Anchor::updateSize);
     updateSize();
 
-    emit toChanged();
+    Q_EMIT toChanged();
 }
 
 void Anchor::updateSize()
@@ -153,7 +153,7 @@ void Anchor::debug_updateItemNames()
     for (Item *item : qAsConst(m_side2Items))
         m_debug_side2ItemNames += item->objectName() + QStringLiteral("; ");
 
-    emit debug_itemNamesChanged();
+    Q_EMIT debug_itemNamesChanged();
 }
 
 QString Anchor::debug_side1ItemNames() const
@@ -399,7 +399,7 @@ void Anchor::moveEvent(QMoveEvent *)
         return;
 
     m_position = position();
-    emit positionChanged(m_position);
+    Q_EMIT positionChanged(m_position);
     updateItemSizes();
 }
 
@@ -481,7 +481,7 @@ void Anchor::addItem(Item *item, Anchor::Side side)
     if (!items.contains(item)) {
         items << item;
         item->anchorGroup().setAnchor(this, orientation(), side);
-        emit itemsChanged(side);
+        Q_EMIT itemsChanged(side);
         updateItemSizes();
     }
 }
@@ -496,11 +496,11 @@ void Anchor::removeItem(Item *item)
 {
     if (m_side1Items.removeOne(item)) {
         item->anchorGroup().setAnchor(nullptr, orientation(), Side1);
-        emit itemsChanged(Side1);
+        Q_EMIT itemsChanged(Side1);
     } else {
         if (m_side2Items.removeOne(item)) {
             item->anchorGroup().setAnchor(nullptr, orientation(), Side2);
-            emit itemsChanged(Side2);
+            Q_EMIT itemsChanged(Side2);
         }
     }
 }

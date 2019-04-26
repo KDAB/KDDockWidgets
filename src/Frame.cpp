@@ -61,7 +61,7 @@ Frame::Frame(QWidget *parent, Options options)
     connect(m_tabWidget, &QTabWidget::currentChanged, this, [this] (int index) {
         if (index != -1) {
             if (auto dock = dockWidgetAt(index)) {
-                emit currentDockWidgetChanged(dock);
+                Q_EMIT currentDockWidgetChanged(dock);
             } else {
                 qWarning() << "dockaWidgetAt" << index << "returned nullptr" << this;
             }
@@ -91,7 +91,7 @@ void Frame::addWidget(DockWidget *dockWidget)
     m_tabWidget->addDockWidget(dockWidget);
 
     if (widgetCount() == 1) {
-        emit currentDockWidgetChanged(dockWidget);
+        Q_EMIT currentDockWidgetChanged(dockWidget);
     }
 }
 

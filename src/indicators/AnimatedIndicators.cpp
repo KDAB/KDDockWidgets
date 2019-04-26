@@ -70,7 +70,7 @@ public:
     void onEntry(QEvent *) override
     {
         rubberBand->hide();
-        emit rubberBand->hidden();
+        Q_EMIT rubberBand->hidden();
     }
 };
 
@@ -244,10 +244,10 @@ bool AnimatedRubberBand::hover(QPoint globalPos)
 {
     const bool containsMouse = rect().contains(mapFromGlobal(globalPos));
     if (containsMouse) {
-        emit hovered();
+        Q_EMIT hovered();
         return true;
     } else {
-        emit notHovered();
+        Q_EMIT notHovered();
         return false;
     }
 }
@@ -317,9 +317,9 @@ void AnimatedIndicators::updateVisibility()
     } // visibility is set to false when animation ends
 
     if (visible) {
-        emit hovered();
+        Q_EMIT hovered();
     } else {
-        emit notHovered();
+        Q_EMIT notHovered();
     }
 }
 
@@ -504,7 +504,7 @@ void AnimatedOutterRubberBand::setLength(const QVariant &value)
         } else {
             resize(width(), value.toInt());
         }
-        emit positionChanged(value.toInt());
+        Q_EMIT positionChanged(value.toInt());
         updateAnchorOffset();
     }
 }

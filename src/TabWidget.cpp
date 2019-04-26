@@ -102,12 +102,12 @@ void TabWidget::removeDockWidget(DockWidget *w)
 
 void TabWidget::tabInserted(int)
 {
-   emit dockWidgetCountChanged();
+   Q_EMIT dockWidgetCountChanged();
 }
 
 void TabWidget::tabRemoved(int)
 {
-    emit dockWidgetCountChanged();
+    Q_EMIT dockWidgetCountChanged();
 }
 
 void TabWidget::paintEvent(QPaintEvent *p)
