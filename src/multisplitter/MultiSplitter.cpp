@@ -886,7 +886,8 @@ Anchor *MultiSplitter::newAnchor(AnchorGroup &group, Location location)
         group.top = newAnchor;
         break;
     default:
-        break;
+        qWarning() << "MultiSplitter::newAnchor invalid location!";
+        return nullptr;
     }
 
     Q_ASSERT(newAnchor);
