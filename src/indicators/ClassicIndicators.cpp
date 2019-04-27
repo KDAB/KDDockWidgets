@@ -384,7 +384,6 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     case DropLocation_OutterBottom:
         relativeTo = m_dropArea;
         break;
-    case DropLocation_Center:
     default:
         break;
     }
