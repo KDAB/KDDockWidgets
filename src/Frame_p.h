@@ -100,10 +100,15 @@ private:
 
 inline QDebug operator<< (QDebug d, KDDockWidgets::Frame *frame)
 {
-    d << static_cast<QObject*>(frame);
-    d << "\n; window=" << frame->window();
-    d << "\n; options=" << frame->options();
-    d << "\n; dockwidgets=" << frame->dockWidgets();
+    if (frame) {
+        d << static_cast<QObject*>(frame);
+        d << "\n; window=" << frame->window();
+        d << "\n; options=" << frame->options();
+        d << "\n; dockwidgets=" << frame->dockWidgets();
+    } else {
+        d << "nullptr";
+    }
+
     return d;
 }
 
