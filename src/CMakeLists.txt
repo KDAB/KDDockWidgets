@@ -13,7 +13,6 @@ set(DOCKSLIBS_SRCS
     LayoutSaver.cpp
     Logging.cpp
     MainWindow.cpp
-    RubberBand.cpp
     TabWidget.cpp
     TitleBar.cpp
     WindowBeingDragged.cpp
