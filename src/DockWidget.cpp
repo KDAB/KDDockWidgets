@@ -27,7 +27,7 @@
 #include "TabWidget_p.h"
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
-#include "WidgetResizeHandler_p.h"
+#include "WidgetResizeHandlerBase_p.h"
 #include "DropArea_p.h"
 
 #include <QAction>
@@ -105,7 +105,7 @@ DockWidget::DockWidget(const QString &name, Options options, QWidget *parent, Qt
 
     if (!KDDockWidgets::supportsNativeTitleBar()) {
         setWindowFlag(Qt::FramelessWindowHint, true);
-        setWidgetResizeHandler(new WidgetResizeHandler(this));
+        setWidgetResizeHandler(new WidgetResizeHandlerBase(this));
     }
 
     if (name.isEmpty())

@@ -21,7 +21,7 @@
 #include "Draggable_p.h"
 #include "DragController_p.h"
 #include "FloatingWindow_p.h"
-#include "WidgetResizeHandler_p.h"
+#include "WidgetResizeHandlerBase_p.h"
 
 using namespace KDDockWidgets;
 
@@ -35,7 +35,7 @@ public:
         Q_ASSERT(thisWidget);
     }
 
-    QPointer<WidgetResizeHandler> widgetResizeHandler;
+    QPointer<WidgetResizeHandlerBase> widgetResizeHandler;
     QWidget *const thisWidget;
     const bool enabled;
 };
@@ -59,12 +59,12 @@ QWidget *Draggable::asWidget() const
     return d->thisWidget;
 }
 
-WidgetResizeHandler *Draggable::widgetResizeHandler() const
+WidgetResizeHandlerBase *Draggable::widgetResizeHandler() const
 {
     return d->widgetResizeHandler;
 }
 
-void Draggable::setWidgetResizeHandler(WidgetResizeHandler *w)
+void Draggable::setWidgetResizeHandler(WidgetResizeHandlerBase *w)
 {
     Q_ASSERT(!d->widgetResizeHandler);
     Q_ASSERT(w);

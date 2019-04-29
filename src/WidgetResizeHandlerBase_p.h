@@ -28,7 +28,7 @@ class WidgetResizeHandlerBase : public QObject
 {
     Q_OBJECT
 public:
-    explicit WidgetResizeHandlerBase(QObject *parent = nullptr);
+    explicit WidgetResizeHandlerBase(QWidget *target = nullptr);
     ~WidgetResizeHandlerBase() override;
 
     void setTarget(QWidget *w);

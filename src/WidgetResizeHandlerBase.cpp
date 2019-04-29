@@ -27,10 +27,10 @@ namespace  {
 int widgetResizeHandlerMargin = 4; //4 pixel
 }
 bool WidgetResizeHandlerBase::s_disableAllHandlers = false;
-WidgetResizeHandlerBase::WidgetResizeHandlerBase(QObject *parent)
-    : QObject(parent)
+WidgetResizeHandlerBase::WidgetResizeHandlerBase(QWidget *target)
+    : QObject(target)
 {
-
+    setTarget(target);
 }
 
 WidgetResizeHandlerBase::~WidgetResizeHandlerBase()
