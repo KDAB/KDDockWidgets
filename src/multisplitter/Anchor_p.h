@@ -205,7 +205,6 @@ public:
     void move(int);
     int position(QPoint) const;
     void updateSize();
-    void updateRubberBandGeometries();
     void updateItemSizes();
     void debug_updateItemNames();
     QString debug_side1ItemNames() const;
