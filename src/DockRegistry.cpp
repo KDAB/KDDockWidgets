@@ -27,8 +27,8 @@
 
 using namespace KDDockWidgets;
 
-DockRegistry::DockRegistry()
-    : QObject()
+DockRegistry::DockRegistry(QObject *parent)
+    : QObject(parent)
 {
     KDDockWidgets::setLoggingFilterRules();
 }

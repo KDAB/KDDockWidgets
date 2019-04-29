@@ -33,6 +33,7 @@ using namespace KDDockWidgets;
 namespace KDDockWidgets {
 class DropAreaWithCentralFrame : public DropArea
 {
+    Q_OBJECT
 public:
     explicit DropAreaWithCentralFrame(QMainWindow *parent, MainWindowOptions options)
         : DropArea(parent)
@@ -124,3 +125,5 @@ bool MainWindow::eventFilter(QObject *o, QEvent *e)
     qCDebug(globalevents) << "event: " << e->type() << ";receiver=" << o;
     return QMainWindow::eventFilter(o, e);
 }
+
+#include "MainWindow.moc"

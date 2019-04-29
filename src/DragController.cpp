@@ -39,6 +39,7 @@ using namespace KDDockWidgets;
 namespace KDDockWidgets {
 class StateBase : public QState
 {
+    Q_OBJECT
 public:
     StateBase(DragController *parent)
         : QState(parent)
@@ -60,6 +61,7 @@ StateBase::~StateBase() = default;
 
 class StateNone : public StateBase
 {
+    Q_OBJECT
 public:
     explicit StateNone(DragController *parent)
         : StateBase(parent)
@@ -100,6 +102,7 @@ StateNone::~StateNone() = default;
 
 class StatePreDrag : public StateBase
 {
+    Q_OBJECT
 public:
     explicit StatePreDrag(DragController *parent)
         : StateBase(parent)
@@ -133,6 +136,7 @@ StatePreDrag::~StatePreDrag() = default;
 
 class StateDragging : public StateBase
 {
+    Q_OBJECT
 public:
     explicit StateDragging(DragController *parent)
         : StateBase(parent)
@@ -201,7 +205,7 @@ StateDragging::~StateDragging() = default;
 
 }
 
-DragController::DragController()
+DragController::DragController(QObject *)
 {
     qCDebug(creation) << "DragController()";
 
@@ -398,3 +402,5 @@ Draggable *DragController::draggableForQObject(QObject *o) const
 
     return nullptr;
 }
+
+#include "DragController.moc"
