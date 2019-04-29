@@ -27,7 +27,7 @@
 #include "DropArea_p.h"
 #include "WindowBeingDragged_p.h"
 #include "Utils_p.h"
-#include "WidgetResizeHandlerBase_p.h"
+#include "WidgetResizeHandler_p.h"
 #include "DockRegistry_p.h"
 
 #include <QDebug>
@@ -79,7 +79,7 @@ void FloatingWindow::maybeCreateResizeHandler()
 {
     if (!KDDockWidgets::supportsNativeTitleBar()) {
         setWindowFlag(Qt::FramelessWindowHint, true);
-        setWidgetResizeHandler(new WidgetResizeHandlerBase(this));
+        setWidgetResizeHandler(new WidgetResizeHandler(this));
         m_vlayout->setContentsMargins(4, 4, 4, 4);
     }
 }

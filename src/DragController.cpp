@@ -24,7 +24,7 @@
 #include "DropArea_p.h"
 #include "FloatingWindow_p.h"
 #include "Draggable_p.h"
-#include "WidgetResizeHandlerBase_p.h"
+#include "WidgetResizeHandler_p.h"
 
 #include <QMouseEvent>
 #include <QApplication>
@@ -77,7 +77,7 @@ public:
         q->m_offset = QPoint();
         q->m_draggable = nullptr;
         q->m_windowBeingDragged.reset();
-        WidgetResizeHandlerBase::s_disableAllHandlers = false; // Re-enable resize handlers
+        WidgetResizeHandler::s_disableAllHandlers = false; // Re-enable resize handlers
 
         q->m_nonClientDrag = false;
         if (q->m_currentDropArea) {
@@ -114,7 +114,7 @@ public:
     void onEntry(QEvent *) override
     {
         qCDebug(state) << "StatePreDrag entered";
-        WidgetResizeHandlerBase::s_disableAllHandlers = true; // Disable the resize handler during dragging
+        WidgetResizeHandler::s_disableAllHandlers = true; // Disable the resize handler during dragging
     }
 
     bool handleMouseMove(QPoint globalPos) override

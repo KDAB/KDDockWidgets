@@ -18,7 +18,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "WidgetResizeHandlerBase_p.h"
+#include "WidgetResizeHandler_p.h"
 #include <QEvent>
 #include <QMouseEvent>
 #include <QWidget>
@@ -26,18 +26,18 @@
 namespace  {
 int widgetResizeHandlerMargin = 4; //4 pixel
 }
-bool WidgetResizeHandlerBase::s_disableAllHandlers = false;
-WidgetResizeHandlerBase::WidgetResizeHandlerBase(QWidget *target)
+bool WidgetResizeHandler::s_disableAllHandlers = false;
+WidgetResizeHandler::WidgetResizeHandler(QWidget *target)
     : QObject(target)
 {
     setTarget(target);
 }
 
-WidgetResizeHandlerBase::~WidgetResizeHandlerBase()
+WidgetResizeHandler::~WidgetResizeHandler()
 {
 }
 
-bool WidgetResizeHandlerBase::eventFilter(QObject *o, QEvent *e)
+bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
 {
     if (s_disableAllHandlers || (o != mTarget)) {
         return false;
@@ -88,7 +88,7 @@ bool WidgetResizeHandlerBase::eventFilter(QObject *o, QEvent *e)
     return false;
 }
 
-void WidgetResizeHandlerBase::mouseMoveEvent(QMouseEvent *e)
+void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 {
     QPoint pos = mTarget->mapFromGlobal(e->globalPos());
     if (!mResizeWidget) {
@@ -168,7 +168,7 @@ void WidgetResizeHandlerBase::mouseMoveEvent(QMouseEvent *e)
     }
 }
 
-void WidgetResizeHandlerBase::setTarget(QWidget *w)
+void WidgetResizeHandler::setTarget(QWidget *w)
 {
     if (w) {
         mTarget = w;
@@ -179,14 +179,14 @@ void WidgetResizeHandlerBase::setTarget(QWidget *w)
     }
 }
 
-void WidgetResizeHandlerBase::setActive(bool b)
+void WidgetResizeHandler::setActive(bool b)
 {
     if (!b) {
         mCursorPos = CursorPosition::Undefined;
     }
 }
 
-void WidgetResizeHandlerBase::updateCursor(CursorPosition m)
+void WidgetResizeHandler::updateCursor(CursorPosition m)
 {
     //Need for updating cursor when we change child widget
     const QObjectList children = mTarget->children();

@@ -18,18 +18,18 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_WIDGETRESIZEHANDLERBASE_P_H
-#define KD_WIDGETRESIZEHANDLERBASE_P_H
+#ifndef KD_WIDGET_RESIZE_HANDLER_P_H
+#define KD_WIDGET_RESIZE_HANDLER_P_H
 
 #include <QObject>
 #include <QPoint>
 class QMouseEvent;
-class WidgetResizeHandlerBase : public QObject
+class WidgetResizeHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit WidgetResizeHandlerBase(QWidget *target = nullptr);
-    ~WidgetResizeHandlerBase() override;
+    explicit WidgetResizeHandler(QWidget *target = nullptr);
+    ~WidgetResizeHandler() override;
 
     void setTarget(QWidget *w);
 
@@ -58,4 +58,4 @@ private:
     bool mResizeWidget = false;
 };
 
-#endif // WIDGETRESIZEHANDLERBASE_H
+#endif

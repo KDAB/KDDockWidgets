@@ -16,7 +16,7 @@ set(DOCKSLIBS_SRCS
     TabWidget.cpp
     TitleBar.cpp
     WindowBeingDragged.cpp
-    WidgetResizeHandlerBase.cpp
+    WidgetResizeHandler.cpp
     multisplitter/Anchor.cpp
     multisplitter/AnchorGroup.cpp
     multisplitter/MultiSplitter.cpp

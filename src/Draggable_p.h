@@ -27,7 +27,7 @@
 
 #include <memory>
 
-class WidgetResizeHandlerBase;
+class WidgetResizeHandler;
 
 namespace KDDockWidgets {
 
@@ -55,8 +55,8 @@ public:
      * Otherwise it should make it a window. As that's what dragging does.
      */
     virtual std::unique_ptr<WindowBeingDragged> makeWindow() = 0;
-    WidgetResizeHandlerBase *widgetResizeHandler() const;
-    void setWidgetResizeHandler(WidgetResizeHandlerBase *w);
+    WidgetResizeHandler *widgetResizeHandler() const;
+    void setWidgetResizeHandler(WidgetResizeHandler *w);
     FloatingWindow *isFloating() const;
 
 private:
