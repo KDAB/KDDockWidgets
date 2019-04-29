@@ -26,6 +26,9 @@
 namespace  {
 int widgetResizeHandlerMargin = 4; //4 pixel
 }
+
+using namespace KDDockWidgets;
+
 bool WidgetResizeHandler::s_disableAllHandlers = false;
 WidgetResizeHandler::WidgetResizeHandler(QWidget *target)
     : QObject(target)

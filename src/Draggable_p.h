@@ -27,12 +27,11 @@
 
 #include <memory>
 
-class WidgetResizeHandler;
-
 namespace KDDockWidgets {
 
 class FloatingWindow;
 class Frame;
+class WidgetResizeHandler;
 struct WindowBeingDragged;
 
 /**

@@ -24,6 +24,10 @@
 #include <QObject>
 #include <QPoint>
 class QMouseEvent;
+
+
+namespace KDDockWidgets {
+
 class WidgetResizeHandler : public QObject
 {
     Q_OBJECT
@@ -57,5 +61,7 @@ private:
     QPoint mNewPosition;
     bool mResizeWidget = false;
 };
+
+}
 
 #endif
