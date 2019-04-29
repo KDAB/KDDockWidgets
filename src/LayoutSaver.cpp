@@ -217,7 +217,7 @@ const QString KDDockWidgets::LayoutState::FrameState::s_magicMarker = QStringLit
 const QString KDDockWidgets::LayoutState::AnchorState::s_magicMarker = QStringLiteral("e520c60e-cf5d-4a30-b1a7-588d2c569851");
 
 
-QDataStream &operator<<(QDataStream &ds, KDDockWidgets::WindowState s)
+QDataStream &operator<<(QDataStream &ds, const KDDockWidgets::WindowState &s)
 {
     ds << WindowState::s_magicMarker;
     ds << s.name;
@@ -243,7 +243,7 @@ QDataStream &operator>>(QDataStream &ds, KDDockWidgets::WindowState &s)
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, KDDockWidgets::LayoutState::FrameState f)
+QDataStream &operator<<(QDataStream &ds, const KDDockWidgets::LayoutState::FrameState &f)
 {
     ds << LayoutState::FrameState::s_magicMarker;
     ds << f.options;
@@ -275,7 +275,7 @@ QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::FrameState 
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, KDDockWidgets::LayoutState::FrameState::List list)
+QDataStream &operator<<(QDataStream &ds, const KDDockWidgets::LayoutState::FrameState::List &list)
 {
     ds << list.size();
     for (const auto &f : list)
@@ -298,7 +298,7 @@ QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::FrameState:
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, KDDockWidgets::LayoutState::AnchorState a)
+QDataStream &operator<<(QDataStream &ds, const KDDockWidgets::LayoutState::AnchorState &a)
 {
     ds << LayoutState::AnchorState::s_magicMarker;
     ds << a.options;
@@ -335,7 +335,7 @@ QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::AnchorState
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, KDDockWidgets::LayoutState s)
+QDataStream &operator<<(QDataStream &ds, const KDDockWidgets::LayoutState &s)
 {
     ds << LayoutState::s_magicMarker;
     ds << s.m_isInMainWindow;
