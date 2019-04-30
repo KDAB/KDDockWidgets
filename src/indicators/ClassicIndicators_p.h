@@ -48,7 +48,6 @@ protected:
 private:
     friend class KDDockWidgets::Indicator;
     friend class KDDockWidgets::IndicatorWindow;
-    void onDragging(QPoint globalPos);
     void raiseIndicators();
     void setDropLocation(DropLocation);
 
