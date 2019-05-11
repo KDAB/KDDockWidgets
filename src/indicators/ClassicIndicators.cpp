@@ -23,6 +23,7 @@
 #include "DragController_p.h"
 #include "Frame_p.h"
 #include "Logging_p.h"
+#include "Utils_p.h"
 
 #include <QPainter>
 #include <QRubberBand>
@@ -181,6 +182,20 @@ Indicator *IndicatorWindow::indicatorForLocation(DropIndicatorOverlayInterface::
     return nullptr;
 }
 
+void IndicatorWindow::updateMask()
+{
+    QRegion region;
+
+    if (!KDDockWidgets::windowManagerSupportsTranslucency()) {
+        for (Indicator *indicator : qAsConst(m_indicators)) {
+            if (indicator->isVisible())
+                region = region.united(QRegion(indicator->geometry(), QRegion::Rectangle));
+        }
+    }
+
+    setMask(region);
+}
+
 void IndicatorWindow::resizeEvent(QResizeEvent *ev)
 {
     QWidget::resizeEvent(ev);
@@ -200,6 +215,8 @@ void IndicatorWindow::updateIndicatorVisibility(bool visible)
 
     for (Indicator *indicator : { m_outterTop, m_outterLeft, m_outterRight, m_outterBottom })
         indicator->setVisible(outterShouldBeVisible);
+
+    updateMask();
 }
 
 void IndicatorWindow::hover(QPoint globalPos)
