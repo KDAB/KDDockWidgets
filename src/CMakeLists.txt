@@ -49,8 +49,10 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_definitions(-DBUILDING_DOCKS_LIBRARY)
 add_library(docks SHARED ${DOCKSLIBS_SRCS} ${RESOURCES})
 
+find_package(Qt5X11Extras)
+
 set(NEEDED_QT_MODULES Widgets)
-if (UNIX)
+if (Qt5X11Extras_FOUND)
   set(NEEDED_QT_MODULES ${NEEDED_QT_MODULES} X11Extras)
 endif()
 
