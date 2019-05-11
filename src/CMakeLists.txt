@@ -48,7 +48,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_definitions(-DBUILDING_DOCKS_LIBRARY)
 add_library(docks SHARED ${DOCKSLIBS_SRCS} ${RESOURCES})
-qt5_use_modules(docks Widgets)
+
+set(NEEDED_QT_MODULES Widgets)
+if (UNIX)
+  set(NEEDED_QT_MODULES ${NEEDED_QT_MODULES} X11Extras)
+endif()
+
+qt5_use_modules(docks ${NEEDED_QT_MODULES} )
 
 install (TARGETS docks
          RUNTIME DESTINATION bin
