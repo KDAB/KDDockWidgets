@@ -640,7 +640,7 @@ MultiSplitter::Length MultiSplitter::lengthForDrop(const QWidget *widget, Locati
     qCDebug(sizing) << "MultiSplitter::lengthForDrop length=" << available.length()
                     << "; s1=" << available.side1Length << "; s2="<< available.side2Length
                     << "; relativeTo=" << relativeTo
-                    << "; relativeTo.geo=" << relativeTo->geometry()
+                    << "; relativeTo.geo=" << (relativeTo ? relativeTo->geometry() : QRect())
                     << "; widgetCurrentLength=" << widgetCurrentLength;
     return available;
 }
@@ -886,7 +886,8 @@ Anchor *MultiSplitter::newAnchor(AnchorGroup &group, Location location)
         group.top = newAnchor;
         break;
     default:
-        break;
+        qWarning() << "MultiSplitter::newAnchor invalid location!";
+        return nullptr;
     }
 
     Q_ASSERT(newAnchor);

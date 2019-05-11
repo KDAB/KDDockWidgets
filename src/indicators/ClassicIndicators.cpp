@@ -40,6 +40,7 @@ class IndicatorWindow;
 namespace KDDockWidgets {
 class Indicator : public QWidget
 {
+    Q_OBJECT
 public:
     typedef QList<Indicator *> List;
     explicit Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *parent, ClassicIndicators::DropLocation location);
@@ -384,7 +385,6 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     case DropLocation_OutterBottom:
         relativeTo = m_dropArea;
         break;
-    case DropLocation_Center:
     default:
         break;
     }
@@ -395,3 +395,5 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     m_rubberBand->setGeometry(rect);
     m_rubberBand->setVisible(true);
 }
+
+#include "ClassicIndicators.moc"

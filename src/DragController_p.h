@@ -72,7 +72,7 @@ private:
     friend class StateDragging;
     friend class StateDropped;
 
-    DragController();
+    DragController(QObject * = nullptr);
     StateBase *activeState() const;
     QWidget *qtTopLevelUnderCursor() const;
     DropArea *dropAreaUnderCursor() const;

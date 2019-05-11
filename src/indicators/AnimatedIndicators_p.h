@@ -92,6 +92,7 @@ public:
 
 class AnimatedInnerRubberBand : public AnimatedOutterRubberBand
 {
+    Q_OBJECT
 public:
     explicit AnimatedInnerRubberBand(Qt::Orientation orientation,
                                      DropIndicatorOverlayInterface::DropLocation location,

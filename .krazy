@@ -12,5 +12,5 @@ EXCLUDE strings,explicit,normalize,passbyvalue,operators,nullstrcompare,nullstra
 EXCLUDE style 
 
 #skip the borrowed code in the cmake subdir
-SKIP /cmake/Qt5Portability.cmake
+SKIP /cmake/Qt5Portability.cmake|/cmake/ECM/
 

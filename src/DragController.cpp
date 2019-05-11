@@ -24,7 +24,7 @@
 #include "DropArea_p.h"
 #include "FloatingWindow_p.h"
 #include "Draggable_p.h"
-#include "WidgetResizeHandlerBase_p.h"
+#include "WidgetResizeHandler_p.h"
 
 #include <QMouseEvent>
 #include <QApplication>
@@ -39,6 +39,7 @@ using namespace KDDockWidgets;
 namespace KDDockWidgets {
 class StateBase : public QState
 {
+    Q_OBJECT
 public:
     StateBase(DragController *parent)
         : QState(parent)
@@ -60,6 +61,7 @@ StateBase::~StateBase() = default;
 
 class StateNone : public StateBase
 {
+    Q_OBJECT
 public:
     explicit StateNone(DragController *parent)
         : StateBase(parent)
@@ -75,7 +77,7 @@ public:
         q->m_offset = QPoint();
         q->m_draggable = nullptr;
         q->m_windowBeingDragged.reset();
-        WidgetResizeHandlerBase::s_disableAllHandlers = false; // Re-enable resize handlers
+        WidgetResizeHandler::s_disableAllHandlers = false; // Re-enable resize handlers
 
         q->m_nonClientDrag = false;
         if (q->m_currentDropArea) {
@@ -100,6 +102,7 @@ StateNone::~StateNone() = default;
 
 class StatePreDrag : public StateBase
 {
+    Q_OBJECT
 public:
     explicit StatePreDrag(DragController *parent)
         : StateBase(parent)
@@ -111,7 +114,7 @@ public:
     void onEntry(QEvent *) override
     {
         qCDebug(state) << "StatePreDrag entered";
-        WidgetResizeHandlerBase::s_disableAllHandlers = true; // Disable the resize handler during dragging
+        WidgetResizeHandler::s_disableAllHandlers = true; // Disable the resize handler during dragging
     }
 
     bool handleMouseMove(QPoint globalPos) override
@@ -133,6 +136,7 @@ StatePreDrag::~StatePreDrag() = default;
 
 class StateDragging : public StateBase
 {
+    Q_OBJECT
 public:
     explicit StateDragging(DragController *parent)
         : StateBase(parent)
@@ -201,7 +205,7 @@ StateDragging::~StateDragging() = default;
 
 }
 
-DragController::DragController()
+DragController::DragController(QObject *)
 {
     qCDebug(creation) << "DragController()";
 
@@ -398,3 +402,5 @@ Draggable *DragController::draggableForQObject(QObject *o) const
 
     return nullptr;
 }
+
+#include "DragController.moc"

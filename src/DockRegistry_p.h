@@ -67,7 +67,7 @@ public:
     void closeAllDockWidgets();
 
 private:
-    explicit DockRegistry();
+    explicit DockRegistry(QObject *parent = nullptr);
     void maybeDelete();
     bool isEmpty() const;
     DockWidget::List m_dockWidgets;

@@ -39,6 +39,7 @@ namespace KDDockWidgets {
 
 class Button : public QToolButton
 {
+    Q_OBJECT
 public:
     explicit Button(QWidget *parent)
         : QToolButton(parent)
@@ -252,3 +253,5 @@ void TitleBar::onFloatClicked()
 {
     makeWindow();
 }
+
+#include "TitleBar.moc"

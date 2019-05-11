@@ -21,14 +21,47 @@
 #ifndef KD_WIDGET_RESIZE_HANDLER_P_H
 #define KD_WIDGET_RESIZE_HANDLER_P_H
 
-#include "WidgetResizeHandlerBase_p.h"
+#include <QObject>
+#include <QPoint>
+class QMouseEvent;
+
+
 namespace KDDockWidgets {
-class WidgetResizeHandler : public WidgetResizeHandlerBase
+
+class WidgetResizeHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit WidgetResizeHandler(QWidget *target);
+    explicit WidgetResizeHandler(QWidget *target = nullptr);
+    ~WidgetResizeHandler() override;
+
+    void setTarget(QWidget *w);
+
+    void setActive(bool b);
+    static bool s_disableAllHandlers;
+protected:
+    bool eventFilter(QObject *o, QEvent *e) override;
+
+private:
+    enum class CursorPosition {
+        Left,
+        Right,
+        TopLeft,
+        TopRight,
+        BottomRight,
+        BottomLeft,
+        Top,
+        Bottom,
+        Undefined
+    };
+    void mouseMoveEvent(QMouseEvent *e);
+    void updateCursor(CursorPosition m);
+    QWidget *mTarget = nullptr;
+    CursorPosition mCursorPos = CursorPosition::Undefined;
+    QPoint mNewPosition;
+    bool mResizeWidget = false;
 };
+
 }
 
 #endif
