@@ -253,7 +253,7 @@ void MultiSplitter::addWidget(QWidget *w, Location location, QWidget *relativeTo
 
         if (posForExistingAnchor != originalExistingAnchorPos) {
             if (existingAnchor->isStatic()) {
-                qDebug() << "Trying to move static anchor from" << originalExistingAnchorPos << "to"
+                qWarning() << "Trying to move static anchor from" << originalExistingAnchorPos << "to"
                          << posForExistingAnchor << "; location=" << location
                          << "; dropRect=" << dropRect
                          << "; existingAnchor=" << existingAnchor

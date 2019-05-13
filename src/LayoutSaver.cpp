@@ -601,7 +601,7 @@ void LayoutSaver::restoreLayout(const QByteArray &data)
             qCDebug(restoring) << "Restoring dockwidget" << dw << "; to=" << windowState.geometry;
             windowState.restore(dw);
         } else {
-            qDebug() << "Unable to restore DockWidget" << windowState.name;
+            qWarning() << "Unable to restore DockWidget" << windowState.name;
         }
     }
 
@@ -617,7 +617,7 @@ void LayoutSaver::restoreLayout(const QByteArray &data)
         ds >> layoutState;
         MainWindow *w = d->m_dockRegistry->mainWindowByName(windowState.name);
         if (!w) {
-            qDebug() << "Unable to restore MainWindow" << windowState.name
+            qWarning() << "Unable to restore MainWindow" << windowState.name
                      << "; You need to create it before restoring.";
             continue;
         }
