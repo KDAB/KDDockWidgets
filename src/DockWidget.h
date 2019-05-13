@@ -27,7 +27,6 @@
 
 #include <QVector>
 #include <QWidget>
-#include <QPointer>
 
 class QAction;
 

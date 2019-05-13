@@ -26,7 +26,6 @@
 
 #include <QPainter>
 #include <QRubberBand>
-#include <QTimer>
 
 #define INDICATOR_WIDTH 40
 #define OUTTER_INDICATOR_MARGIN 10

@@ -27,14 +27,13 @@
 
 #include <QWidget>
 #include <QVector>
+#include <QDebug>
 
 namespace KDDockWidgets {
 
 class TitleBar;
 class TabWidget;
 class DropArea;
-class DragController;
-class FloatingWindow;
 class DockWidget;
 
 /**

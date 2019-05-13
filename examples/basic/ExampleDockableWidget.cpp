@@ -20,7 +20,6 @@
 
 #include "ExampleDockableWidget.h"
 
-#include <QDebug>
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QRadioButton>

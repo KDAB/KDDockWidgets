@@ -31,13 +31,10 @@
 #include "DropArea_p.h"
 
 #include <QAction>
-#include <QDebug>
 #include <QEvent>
 #include <QVBoxLayout>
-#include <QTimer>
 #include <QSignalBlocker>
 #include <QCloseEvent>
-#include <QDataStream>
 
 using namespace KDDockWidgets;
 

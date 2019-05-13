@@ -24,7 +24,6 @@
 #include "KDDockWidgets.h"
 #include "Anchor_p.h"
 
-#include <QWidget>
 
 namespace KDDockWidgets {
 

@@ -27,12 +27,10 @@
 
 #include <QStateMachine>
 #include <QPoint>
-#include <QPointer>
 #include <memory>
 
 namespace KDDockWidgets {
 
-class Frame;
 class StateBase;
 class DropArea;
 class Draggable;

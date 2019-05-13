@@ -22,7 +22,6 @@
 
 #include "Frame_p.h"
 #include "DropArea_p.h"
-#include <QDebug>
 
 using namespace KDDockWidgets;
 

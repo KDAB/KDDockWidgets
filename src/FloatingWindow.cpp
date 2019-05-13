@@ -30,7 +30,6 @@
 #include "WidgetResizeHandler_p.h"
 #include "DockRegistry_p.h"
 
-#include <QDebug>
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QCloseEvent>

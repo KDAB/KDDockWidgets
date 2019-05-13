@@ -24,7 +24,6 @@
 #include "docks_export.h"
 
 #include <QWidget>
-#include <QLoggingCategory>
 #include <QPointer>
 
 namespace KDDockWidgets {

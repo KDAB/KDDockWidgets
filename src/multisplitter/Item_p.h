@@ -26,7 +26,6 @@
 
 #include <QRect>
 #include <QObject>
-#include <QPointer>
 
 /**
  * Represents an item that you put into a multi-splitter.

@@ -23,7 +23,6 @@
 #include "DockWidget.h"
 #include "LayoutSaver.h"
 
-#include <QMouseEvent>
 #include <QTextEdit>
 #include <QMenu>
 #include <QAction>

@@ -26,8 +26,6 @@
 #include "WindowBeingDragged_p.h"
 
 #include <QPainter>
-#include <QMouseEvent>
-#include <QApplication>
 #include <QToolButton>
 #include <QHBoxLayout>
 #include <QStyle>

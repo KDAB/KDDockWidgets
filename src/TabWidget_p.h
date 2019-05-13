@@ -33,7 +33,6 @@
 
 namespace KDDockWidgets {
 
-class FloatingWindow;
 class DockWidget;
 class TabWidget;
 

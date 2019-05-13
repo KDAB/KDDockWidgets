@@ -25,7 +25,6 @@
 #include "DockRegistry_p.h"
 #include "multisplitter/MultiSplitter_p.h"
 
-#include <QPainter>
 #include <QApplication>
 
 using namespace KDDockWidgets;

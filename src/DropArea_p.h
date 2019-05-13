@@ -27,9 +27,7 @@
 #include "DropIndicatorOverlayInterface_p.h"
 
 #include <QWidget>
-#include <QLoggingCategory>
 
-class QVBoxLayout;
 
 
 namespace KDDockWidgets {

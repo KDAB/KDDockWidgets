@@ -23,11 +23,9 @@
 
 #include "docks_export.h"
 
-class QSettings;
 class QByteArray;
 
 namespace KDDockWidgets {
-class DockRegistry;
 
 class DOCKS_EXPORT LayoutSaver
 {

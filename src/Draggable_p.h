@@ -23,14 +23,12 @@
 
 #include <QWidget>
 #include <QVector>
-#include <QPointer>
 
 #include <memory>
 
 namespace KDDockWidgets {
 
 class FloatingWindow;
-class Frame;
 class WidgetResizeHandler;
 struct WindowBeingDragged;
 

@@ -31,7 +31,6 @@
 #include <QDebug>
 #include <QSettings>
 #include <QApplication>
-#include <QObject>
 
 #include <memory>
 
