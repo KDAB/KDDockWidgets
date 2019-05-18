@@ -22,6 +22,9 @@
 #define KD_UTILS_P_H
 
 #include <QApplication>
+#ifdef QT_X11EXTRAS_LIB
+# include <QtX11Extras/QX11Info>
+#endif
 
 namespace KDDockWidgets {
 
@@ -39,6 +42,17 @@ inline bool supportsNativeTitleBar()
     // But let's return false for Windows and macOS too, since our fake resizing seems to be working fine
     return false;
 #endif
+}
+
+inline bool windowManagerSupportsTranslucency()
+{
+#ifdef QT_X11EXTRAS_LIB
+    if (qApp->platformName() == QLatin1String("xcb"))
+        return QX11Info::isCompositingManagerRunning();
+#endif
+
+    // macOS and Windows are fine
+    return true;
 }
 
 };

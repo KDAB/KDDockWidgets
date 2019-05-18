@@ -70,6 +70,10 @@ public:
 
     Indicator *indicatorForLocation(DropIndicatorOverlayInterface::DropLocation loc) const;
 
+    // When the compositor doesn't support translucency, we use a mask instead
+    // Only happens on Linux
+    void updateMask();
+
     ClassicIndicators *const classicIndicators;
     Indicator *const m_center;
     Indicator *const m_left;
