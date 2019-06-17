@@ -163,7 +163,7 @@ void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context,
             return;
 
         if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL"))
-            qFatal("Got a warning");
+            qFatal("Got a warning, category=%s", context.category);
     }
 }
 
