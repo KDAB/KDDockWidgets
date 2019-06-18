@@ -21,6 +21,13 @@
 #ifndef KD_LAYOUTSAVER_H
 #define KD_LAYOUTSAVER_H
 
+/**
+ * @file
+ * @brief Class to save and restore dock widget layouts.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #include "docks_export.h"
 
 class QByteArray;

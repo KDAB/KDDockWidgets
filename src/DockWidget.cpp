@@ -36,6 +36,13 @@
 #include <QSignalBlocker>
 #include <QCloseEvent>
 
+/**
+ * @file
+ * @brief Represents a dock widget.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 using namespace KDDockWidgets;
 
 class DockWidget::Private

@@ -18,6 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief File with KDDockWidgets namespace-level enums.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #ifndef KD_KDDOCKWIDGETS_H
 #define KD_KDDOCKWIDGETS_H
 

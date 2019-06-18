@@ -18,6 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief Class to save and restore dock widget layouts.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #include "LayoutSaver.h"
 #include "DockRegistry_p.h"
 #include "DockWidget.h"

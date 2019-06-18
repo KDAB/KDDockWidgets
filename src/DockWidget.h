@@ -18,6 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief Represents a dock widget.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #ifndef KD_DOCKWIDGET_H
 #define KD_DOCKWIDGET_H
 

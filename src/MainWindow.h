@@ -18,6 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief QMainWindow wrapper to enable KDDockWidgets support.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #ifndef KD_MAINWINDOW_H
 #define KD_MAINWINDOW_H
 
