@@ -182,16 +182,44 @@ QWidget *DockWidget::widget() const
 
 bool DockWidget::isFloating() const
 {
-    return isWindow() || qobject_cast<FloatingWindow *>(window());
+    if (isWindow())
+        return true;
+
+    auto fw = qobject_cast<FloatingWindow *>(window());
+    return fw && fw->hasSingleDockWidget();
 }
 
-void DockWidget::setFloating(bool doit)
+void DockWidget::setFloating(bool floats)
 {
-    qCDebug(docking) << Q_FUNC_INFO << "yes=" << doit
-              << "; already floating=" << isFloating();
-    if (doit) {
-        if (!isFloating())
+    const bool alreadyFloating = isFloating();
+
+    qCDebug(docking) << Q_FUNC_INFO << "yes=" << floats
+                     << "; already floating=" << alreadyFloating;
+
+    if ((floats && alreadyFloating) || (!floats && !alreadyFloating))
+        return; // Nothing to do
+
+    if (floats) {
+        if (isTabbed()) {
+            TabWidget *tabWidget= d->parentTabWidget();
+            if (!tabWidget) {
+                qWarning() << "DockWidget::setFloating: Tabbed but no tabbar exists"
+                           << this;
+                Q_ASSERT(false);
+            }
+
+            tabWidget->detachTab(this);
+        } else {
+            if (!titleBar()->isVisible()) {
+                qWarning() << "DockWidget::setFloating: Not tabbed but title bar isn't visible"
+                           << this;
+                Q_ASSERT(false);
+            }
+
             titleBar()->makeWindow();
+        }
+
+
     } else {
         // TODO
     }

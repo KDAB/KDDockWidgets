@@ -608,7 +608,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         MainWindow m(QStringLiteral("MyMainWindow"));
         m.show();
         m.setGeometry(500, 300, 300, 300);
-        QVERIFY(dock3->isFloating());
+        QVERIFY(!dock3->isFloating());
         drag(dock3->window(), dock3->window()->mapToGlobal(QPoint(10, 10)), m.geometry().center());
         QVERIFY(!dock3->isFloating());
         QVERIFY(qobject_cast<MainWindow *>(dock3->window()) == &m);
@@ -1785,11 +1785,17 @@ void TestDocks::tst_isTabbed()
     QVERIFY(dock1->isTabbed());
     QVERIFY(dock2->isTabbed());
 
-    /*dock1->setFloating(true);
+    dock1->setFloating(true);
+
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+
     QVERIFY(!dock1->isTabbed());
-    QVERIFY(!dock2->isTabbed());*/
+    QVERIFY(!dock2->isTabbed());
 
     auto window = dock2->window();
+    window->deleteLater();
+    window = dock1->window();
     window->deleteLater();
     waitForDeleted(window);
 }

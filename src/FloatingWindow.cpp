@@ -143,7 +143,7 @@ bool FloatingWindow::hasSingleDockWidget() const
         return false;
 
     Frame *frame = frames.first();
-    return frame->widgetCount();
+    return frame->widgetCount() == 1;
 }
 
 void FloatingWindow::onFrameCountChanged(int count)

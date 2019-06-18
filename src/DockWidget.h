@@ -102,7 +102,9 @@ public:
     QWidget *widget() const;
 
     /**
-     * @brief checks if the dock widget is floating. By floating it means it's not docked into the main window.
+     * @brief checks if the dock widget is floating. Floating means it's not docked and has a window of it's own.
+     * Note that if you dock a floating dock widget into another floating one then they don't count
+     * as floating anymore, as they are side by side (or tabbed).
      * @returns true if the dock widget is floating.
      */
     bool isFloating() const;
