@@ -233,6 +233,7 @@ private Q_SLOTS:
     void tst_rectForDrop_data();
     void tst_rectForDrop();
     void tst_crash(); // tests some crash I got
+    void tst_isTabbed();
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup) const;
 };
@@ -1769,6 +1770,28 @@ void TestDocks::tst_crash()
 
     auto w4 = createWidget(105, QStringLiteral("w4")); // side1 has 108pixels available, which doesn't fit the 5px for the new anchor, + 105 for the widget. Side2 must catter for the 5px.
     ms.addWidget(w4, KDDockWidgets::Location_OnBottom, w1);
+}
+
+void TestDocks::tst_isTabbed()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());
+
+    dock1->addDockWidgetAsTab(dock2);
+    QVERIFY(dock1->isTabbed());
+    QVERIFY(dock2->isTabbed());
+
+    /*dock1->setFloating(true);
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());*/
+
+    auto window = dock2->window();
+    window->deleteLater();
+    waitForDeleted(window);
 }
 
 QTEST_MAIN(KDDockWidgets::TestDocks)
