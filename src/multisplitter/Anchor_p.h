@@ -151,8 +151,16 @@ public:
      */
     int smallestAvailableItemSqueeze(Anchor::Side) const;
 
-
+    /**
+     * @brief The length of this anchor. The distance between @ref from and @ref to.
+     * @return the anchor's length
+     */
     int length() const;
+
+    /**
+     * @brief Checks if this anchor is valid. It's valid if @ref from and @ref to are non-null, and not the same.
+     * @return true if this anchor is valid.
+     */
     bool isValid() const;
 
     /**

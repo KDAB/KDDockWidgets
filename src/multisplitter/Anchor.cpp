@@ -224,7 +224,7 @@ int Anchor::length() const
 
 bool Anchor::isValid() const
 {
-    return m_to && m_from && m_to != m_from;
+    return m_to && m_from && m_to != m_from && m_to != this && m_from != this;
 }
 
 int Anchor::thickness() const
