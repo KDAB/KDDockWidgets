@@ -37,10 +37,10 @@ static Qt::Orientation anchorOrientationForLocation(Location l)
 
 MultiSplitter::MultiSplitter(QWidget *parent)
     : QWidget(parent)
-    , m_leftAnchor(new Anchor(Qt::Vertical, this, Anchor::Option_LeftStatic))
-    , m_topAnchor(new Anchor(Qt::Horizontal, this, Anchor::Option_TopStatic))
-    , m_rightAnchor(new Anchor(Qt::Vertical, this, Anchor::Option_RightStatic))
-    , m_bottomAnchor(new Anchor(Qt::Horizontal, this, Anchor::Option_BottomStatic))
+    , m_leftAnchor(new Anchor(Qt::Vertical, this, Anchor::Type_LeftStatic))
+    , m_topAnchor(new Anchor(Qt::Horizontal, this, Anchor::Type_TopStatic))
+    , m_rightAnchor(new Anchor(Qt::Vertical, this, Anchor::Type_RightStatic))
+    , m_bottomAnchor(new Anchor(Qt::Horizontal, this, Anchor::Type_BottomStatic))
     , m_staticAnchorGroup(this)
 {
     KDDockWidgets::setLoggingFilterRules();
@@ -718,18 +718,18 @@ void MultiSplitter::setAnchorBeingDragged(Anchor *anchor)
     m_anchorBeingDragged = anchor;
 }
 
-Anchor *MultiSplitter::staticAnchor(Anchor::Options options) const
+Anchor *MultiSplitter::staticAnchor(Anchor::Type type) const
 {
-    if (options & Anchor::Option_TopStatic)
+    if (type == Anchor::Type_TopStatic)
         return m_topAnchor;
 
-    if (options & Anchor::Option_BottomStatic)
+    if (type == Anchor::Type_BottomStatic)
         return m_bottomAnchor;
 
-    if (options & Anchor::Option_LeftStatic)
+    if (type == Anchor::Type_LeftStatic)
         return m_leftAnchor;
 
-    if (options & Anchor::Option_RightStatic)
+    if (type == Anchor::Type_RightStatic)
         return m_rightAnchor;
 
     return nullptr;

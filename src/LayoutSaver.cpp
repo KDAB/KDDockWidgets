@@ -119,7 +119,7 @@ struct LayoutState
         explicit AnchorState(Anchor *a)
             : orientation(a->orientation())
             , position(a->position())
-            , options(a->options())
+            , type(a->type())
         {
             auto constructFrameState = [] (const ItemList &widgets, LayoutState::FrameState::List &frameStates) {
                 for (Item *w : widgets) {
@@ -158,7 +158,7 @@ struct LayoutState
 
         bool isStatic() const
         {
-            return options & Anchor::Option_Static;
+            return type & Anchor::Type_Static;
         }
 
         typedef QVector<AnchorState> List;
@@ -168,7 +168,7 @@ struct LayoutState
         FrameState::List side2FrameStates;
         Qt::Orientation orientation;
         int position;
-        Anchor::Options options;
+        Anchor::Type type;
 
         int index;
         int fromIndex;
@@ -307,7 +307,7 @@ QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::FrameState:
 QDataStream &operator<<(QDataStream &ds, const KDDockWidgets::LayoutState::AnchorState &a)
 {
     ds << LayoutState::AnchorState::s_magicMarker;
-    ds << a.options;
+    ds << a.type;
     ds << a.position;
     int ori = a.orientation;
     ds << ori;
@@ -324,7 +324,9 @@ QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::AnchorState
 {
     QString magic;
     ds >> magic;
-    ds >> a.options;
+    int type;
+    ds >> type;
+    a.type = static_cast<Anchor::Type>(type);
     ds >> a.position;
     int ori;
     ds >> ori;
@@ -413,7 +415,7 @@ void LayoutState::restore(DropArea *dropArea)
 
          Anchor *anchor = nullptr;
          if (a.isStatic()) {
-             anchor = dropArea->staticAnchor(a.options);
+             anchor = dropArea->staticAnchor(a.type);
              Q_ASSERT(anchor);
          } else {
              anchor = new Anchor(a.orientation, dropArea);

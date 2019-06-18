@@ -148,7 +148,7 @@ public:
     Anchor *anchorBeingDragged() const { return m_anchorBeingDragged; }
     bool anchorIsBeingDragged() const { return m_anchorBeingDragged != nullptr; }
     const Anchor::List anchors() const { return m_anchors; }
-    Anchor *staticAnchor(Anchor::Options) const;
+    Anchor *staticAnchor(Anchor::Type) const;
     void addItems_internal(const ItemList &, bool updateConstraints = true);
 
 

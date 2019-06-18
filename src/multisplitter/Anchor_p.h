@@ -92,15 +92,17 @@ public:
     ///An anchor can be or 3 types:
     /// - Normal: Anchor that can be resized via mouse
     /// - static: this is the top, left, right, bottom borders of the main window. They are called static because they don't move.
-    enum Option {
-        Option_None = 0, ///< The anchor is normal, and can be resized.
-        Option_LeftStatic = 1,   ///< The anchor is static and represents the left mainwindow margin
-        Option_RightStatic = 2,  ///< The anchor is static and represents the right mainwindow margin
-        Option_TopStatic = 4,    ///< The anchor is static and represents the top mainwindow margin
-        Option_BottomStatic = 8, ///< The anchor is static and represents the bottom mainwindow margin
-        Option_Static = Option_TopStatic | Option_LeftStatic | Option_RightStatic | Option_BottomStatic
+    /// - placeholder: anchor is invisible and is simply holding the place of an hidden dock widget. So we can restore a dock widget to its correct place when showing it.
+    enum Type {
+        Type_None = 0, ///< The anchor is normal, and can be resized.
+        Type_LeftStatic = 1,   ///< The anchor is static and represents the left mainwindow margin
+        Type_RightStatic = 2,  ///< The anchor is static and represents the right mainwindow margin
+        Type_TopStatic = 4,    ///< The anchor is static and represents the top mainwindow margin
+        Type_BottomStatic = 8, ///< The anchor is static and represents the bottom mainwindow margin
+        Type_Static = Type_TopStatic | Type_LeftStatic | Type_RightStatic | Type_BottomStatic, ///< The anchor is static, one of the 4 previous ones
+        Type_Placeholder = 16 ///< The anchor is invisible and is simply holding the place of an hidden dock widget
     };
-    Q_ENUM(Option)
+    Q_ENUM(Type)
 
     enum Side {
         Side_None = 0,
@@ -116,8 +118,7 @@ public:
     Q_DECLARE_FLAGS(SetPositionOptions, SetPositionOption)
 
     typedef QVector<Anchor *> List;
-    typedef int Options;
-    explicit Anchor(Qt::Orientation orientation, MultiSplitter *multiSplitter, Options = Option_None);
+    explicit Anchor(Qt::Orientation orientation, MultiSplitter *multiSplitter, Type = Type_None);
     ~Anchor() override;
     int pos() const;
 
@@ -159,7 +160,17 @@ public:
      */
     int thickness() const;
 
-    bool isStatic() const { return m_options & Option_Static; }
+    /**
+     * @brief Checks if this Anchor is static.
+     * @return true if this Anchor is static.
+     */
+    bool isStatic() const { return m_type & Type_Static; }
+
+    /**
+     * @brief Checks if this Anchor is an invisible placeholder.
+     * @return true if this Anchor is an invisible placeholder.
+     */
+    bool isPlaceholder() const { return m_type == Type_Placeholder; }
 
     bool isUnneeded() const { return !isStatic() && (!hasItems(Side1) || !hasItems(Side2)); }
     bool isEmpty() const { return !hasItems(Side1) && !hasItems(Side2); }
@@ -180,7 +191,7 @@ public:
     void setPositionOffset(int);
     bool isBeingDragged() const;
 
-    Options options() const { return m_options; }
+    Type type() const { return m_type; }
 
     int cumulativeMinLength(Anchor::Side side) const;
 
@@ -218,7 +229,7 @@ public:
     ItemList m_side2Items;
     QPointer<Anchor> m_from;// QPointer just so we can assert. They should never be null.
     QPointer<Anchor> m_to;
-    const Options m_options;
+    const Type m_type;
     int m_position = 0;
     qreal m_positionPercentage = 0.0;
 

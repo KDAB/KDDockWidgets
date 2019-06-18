@@ -29,10 +29,10 @@
 
 using namespace KDDockWidgets;
 
-Anchor::Anchor(Qt::Orientation orientation, MultiSplitter *multiSplitter, Options options)
+Anchor::Anchor(Qt::Orientation orientation, MultiSplitter *multiSplitter, Type type)
     : QWidget(multiSplitter)
     , m_orientation(orientation)
-    , m_options(options)
+    , m_type(type)
     , m_multiSplitter(multiSplitter)
 {
     if (isVertical())
@@ -355,8 +355,8 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
     if (isStatic() && isEmpty()) {
         // There's no widget, but minimum is the space occupied by left+right anchors (or top+bottom).
         const int staticAnchorThickness = Anchor::thickness(/*static=*/true);
-        if ((side == Side2 && (m_options & (Option_LeftStatic | Option_TopStatic))) ||
-            (side == Side1 && (m_options & (Option_RightStatic | Option_BottomStatic))))
+        if ((side == Side2 && (m_type & (Type_LeftStatic | Type_TopStatic))) ||
+            (side == Side1 && (m_type & (Type_RightStatic | Type_BottomStatic))))
             return 2 * staticAnchorThickness;
     }
 
