@@ -1791,6 +1791,8 @@ void TestDocks::tst_isTabbed()
     dock1->addDockWidgetAsTab(dock2);
     QVERIFY(dock1->isTabbed());
     QVERIFY(dock2->isTabbed());
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
 
     // 3. Set one floating. Now both cease to be tabbed, and both are floating.
     dock1->setFloating(true);
@@ -1813,10 +1815,24 @@ void TestDocks::tst_isTabbed()
     QVERIFY(!dock1->isTabbed());
     QVERIFY(!dock2->isTabbed());
 
-    // 6. Call setFloating(true) in an already docked widget
+    // 6. With two dock widgets tabbed, detach 1, and reattach it, via DockWidget::setFloating(false)
+    dock1->addDockWidgetAsTab(dock2);
+    dock2->setFloating(true);
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+    dock2->setFloating(false);
+    QVERIFY(dock1->isTabbed());
+    QVERIFY(dock2->isTabbed());
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
+
+    // 7. Call setFloating(true) in an already docked widget
     auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
     dock3->setFloating(true);
     dock3->setFloating(true);
+
 
     // Cleanup
     auto window = dock1->window();

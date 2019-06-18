@@ -29,6 +29,7 @@
 #include "DockRegistry_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "DropArea_p.h"
+#include "LastPosition_p.h"
 
 #include <QAction>
 #include <QEvent>
@@ -87,6 +88,12 @@ public:
     void close();
     void updateLayoutMargin();
 
+    /**
+     * Before floating a dock widget we save its position. So it can be restored when calling
+     * DockWidget::setFloating(false)
+     */
+    void saveLastPosition();
+
     const QString name;
     QString title;
     QWidget *widget = nullptr;
@@ -95,6 +102,7 @@ public:
     QVBoxLayout *const layout;
     TitleBar *titlebar = nullptr;
     QAction *const toggleAction;
+    LastPosition m_lastPosition;
 };
 
 DockWidget::DockWidget(const QString &name, Options options, QWidget *parent, Qt::WindowFlags flags)
@@ -200,6 +208,8 @@ void DockWidget::setFloating(bool floats)
         return; // Nothing to do
 
     if (floats) {
+        d->saveLastPosition();
+
         if (isTabbed()) {
             TabWidget *tabWidget= d->parentTabWidget();
             if (!tabWidget) {
@@ -212,9 +222,12 @@ void DockWidget::setFloating(bool floats)
         } else {
             frame()->titleBar()->makeWindow();
         }
-
     } else {
         // TODO
+        if (d->m_lastPosition.isTabbed()) {
+            // Restore to the last tab
+            d->m_lastPosition.m_frame->addWidget(this);
+        }
     }
 }
 
@@ -407,6 +420,18 @@ void DockWidget::Private::updateLayoutMargin()
 {
     const int margin = (!q->isWindow() || KDDockWidgets::supportsNativeTitleBar()) ? 0 : 4;
     layout->setContentsMargins(margin, margin, margin, margin);
+}
+
+void DockWidget::Private::saveLastPosition()
+{
+    m_lastPosition = {};
+    if (q->isTabbed()) {
+        TabWidget *tabWidget = parentTabWidget();
+        m_lastPosition.m_tabIndex = tabWidget->indexOf(q);
+        m_lastPosition.m_frame = q->frame();
+    } else {
+        // TODO
+    }
 }
 
 void DockWidget::Private::show()

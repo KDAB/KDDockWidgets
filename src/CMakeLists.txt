@@ -10,6 +10,8 @@ set(DOCKSLIBS_SRCS
     DropIndicatorOverlayInterface.cpp
     FloatingWindow.cpp
     Frame.cpp
+    LastPosition.cpp
+    LastPosition_p.h
     LayoutSaver.cpp
     Logging.cpp
     MainWindow.cpp

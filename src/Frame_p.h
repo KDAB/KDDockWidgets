@@ -81,6 +81,7 @@ public:
     Options options() const { return m_options; }
     quint64 id() const;
     bool anyNonClosable() const;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidget *);
     void numDockWidgetsChanged();
