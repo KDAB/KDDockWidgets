@@ -146,6 +146,12 @@ public:
      */
     Options options() const;
 
+    /**
+     * @brief checks if this dock widget is tabbed into another
+     * @return true if this dock widget is tabbed into another
+     */
+    bool isTabbed() const;
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();
