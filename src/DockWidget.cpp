@@ -210,15 +210,8 @@ void DockWidget::setFloating(bool floats)
 
             tabWidget->detachTab(this);
         } else {
-            if (!titleBar()->isVisible()) {
-                qWarning() << "DockWidget::setFloating: Not tabbed but title bar isn't visible"
-                           << this;
-                Q_ASSERT(false);
-            }
-
-            titleBar()->makeWindow();
+            frame()->titleBar()->makeWindow();
         }
-
 
     } else {
         // TODO

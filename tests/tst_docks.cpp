@@ -1774,28 +1774,56 @@ void TestDocks::tst_crash()
 
 void TestDocks::tst_isTabbed()
 {
+    // Tests DockWidget::isTabbed() and DockWidget::isFloating()
+
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+
+    // 1. Two floating dock widgets. They are tabbed, not floating.
     QVERIFY(!dock1->isTabbed());
     QVERIFY(!dock2->isTabbed());
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
 
+    // 2. Dock a floating dock into another floating dock. They're not floating anymore, just tabbed.
     dock1->addDockWidgetAsTab(dock2);
     QVERIFY(dock1->isTabbed());
     QVERIFY(dock2->isTabbed());
 
+    // 3. Set one floating. Now both cease to be tabbed, and both are floating.
     dock1->setFloating(true);
-
     QVERIFY(dock1->isFloating());
     QVERIFY(dock2->isFloating());
-
     QVERIFY(!dock1->isTabbed());
     QVERIFY(!dock2->isTabbed());
 
-    auto window = dock2->window();
+    // 4. Dock one floating dock into another, side-by-side. They're neither docking or tabbed now.
+    dock1->addDockWidgetToContainingWindow(dock2, KDDockWidgets::Location_OnLeft);
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());
+
+    // 5. float one of them, now both are floating, not tabbed anymore.
+    dock2->setFloating(true);
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());
+
+    // 6. Call setFloating(true) in an already docked widget
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+    dock3->setFloating(true);
+    dock3->setFloating(true);
+
+    // Cleanup
+    auto window = dock1->window();
     window->deleteLater();
-    window = dock1->window();
+    window = dock2->window();
+    window->deleteLater();
+    window = dock3->window();
     window->deleteLater();
     waitForDeleted(window);
 }

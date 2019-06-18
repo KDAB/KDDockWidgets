@@ -185,6 +185,10 @@ public Q_SLOTS:
 #else
 private Q_SLOTS:
 #endif
+    /**
+     * @brief Creates a FloatingWindow and adds itself into it
+     * @return the created FloatingWindow
+     */
     KDDockWidgets::FloatingWindow *morphIntoFloatingWindow();
 
 #if defined(DOCKS_DEVELOPER_MODE)
@@ -198,8 +202,23 @@ private:
     friend class KDDockWidgets::DragController;
     friend class KDDockWidgets::TitleBar;
     friend struct KDDockWidgets::WindowBeingDragged;
+
+    /**
+     * @brief the TitleBar instance used by this dock widget
+     * Note that this TitleBar will only be visible if this dock widget is a window (QWidget::isWindow()),
+     * when not a window there will be a frame associated, and frame()->titleBar() will be visible instead.
+     * @return the TitleBar instance used by this dock widget
+     */
     TitleBar *titleBar() const;
+
+    /**
+     * @brief the Frame which contains this dock widgets.
+     * A frame wraps a docked DockWidget, giving it a TabWidget so it can accept other dock widgets.
+     * Frame is also the actual class that goes into a MultiSplitter.s
+     * @return the frame which contains this dock widgets, or nullptr if none (if this dockwidget is a window).
+     */
     Frame *frame() const;
+
     class Private;
     Private *const d;
 };
