@@ -52,6 +52,24 @@ public:
 
     static void paintFrame(QWidget *);
     bool anyNonClosable() const;
+
+    /**
+     * @brief checks if this FloatingWindow only has one frame.
+     * If true it means there's no side-by-side dock widgets here. There's only 1 frame.
+     * Note that despite having only 1 frame it can still have multiple DockWidgets,
+     * as they can be tabbed into the single frame.
+     * @return true if this FloatingWindow has a single frame.
+     */
+    bool hasSingleFrame() const;
+
+    /**
+     * @brief checks if this FloatingWindow only has one dockwidget.
+     * This is a more specific case than hasSingleFrame(), it implies not only a single frame,
+     * but that frame must only have 1 dock widget.
+     * @return true if this FloatingWindow only has one dockwidget.
+     */
+    bool hasSingleDockWidget() const;
+
 Q_SIGNALS:
     void numFramesChanged();
 

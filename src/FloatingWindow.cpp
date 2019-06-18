@@ -90,12 +90,12 @@ std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()
 
 const Frame::List FloatingWindow::frames() const
 {
-    return findChildren<Frame *>(QString(), Qt::FindChildrenRecursively);;
+    return findChildren<Frame *>(QString(), Qt::FindChildrenRecursively);
 }
 
 TitleBar *FloatingWindow::actualTitleBar() const
 {
-    if (frames().size() == 1)
+    if (hasSingleFrame())
         return frames().at(0)->titleBar();
     return titleBar();
 }
@@ -129,6 +129,21 @@ bool FloatingWindow::anyNonClosable() const
             return true;
     }
     return false;
+}
+
+bool FloatingWindow::hasSingleFrame() const
+{
+    return frames().size() == 1;
+}
+
+bool FloatingWindow::hasSingleDockWidget() const
+{
+    const Frame::List frames = this->frames();
+    if (frames.size() != 1)
+        return false;
+
+    Frame *frame = frames.first();
+    return frame->widgetCount();
 }
 
 void FloatingWindow::onFrameCountChanged(int count)
