@@ -46,7 +46,7 @@ class DragController;
 class TitleBar;
 
 /**
- * Represents something that can be docked.
+ * @brief Represents a dock widget.
  */
 class DOCKS_EXPORT DockWidget : public QWidget
     , public Draggable
@@ -61,29 +61,99 @@ public:
     };
     Q_DECLARE_FLAGS(Options, Option)
 
+    /**
+     * @brief constructs a new DockWidgets
+     * @param name the name of the dockwidget, should be unique. Use title for user visible text.
+     * @param options optional options controlling behaviour
+     * @param parent optional QWidget parent, for ownership purposes
+     * @param flags optional Qt::WindowFlags to apply to the window
+     */
     explicit DockWidget(const QString &name, Options options = {},
                         QWidget *parent = nullptr, Qt::WindowFlags flags = {});
+
+    ///@brief destructor
     ~DockWidget() override;
 
+    /**
+     * @brief docks @p other widget into this one. Tabs will be shown.
+     * @param other The other dock widget to dock into this one.
+     */
     void addDockWidgetAsTab(DockWidget *other);
-    void addDockWidgetToContainingWindow(DockWidget *other, KDDockWidgets::Location,
+
+    /**
+     * @brief docks @p other widget into the window that contains this one.
+     * @param other The other dock widget to dock into the window.
+     * @param location The location to dock.
+     * @param relativeTo The dock widget that the @p location is relative to. If null then the window is considered.
+     */
+    void addDockWidgetToContainingWindow(DockWidget *other, KDDockWidgets::Location location,
                                          DockWidget *relativeTo = nullptr);
 
-    void setWidget(QWidget *);
+    /**
+     * @brief sets the widget which this dock widget contains
+     * @param widget to show inside this dock widget
+     */
+    void setWidget(QWidget *widget);
+
+    /**
+     * @brief the widget which this dock widget contains
+     * @returns the widget shown inside this dock widget
+     */
     QWidget *widget() const;
+
+    /**
+     * @brief checks if the dock widget is floating. By floating it means it's not docked into the main window.
+     * @returns true if the dock widget is floating.
+     */
     bool isFloating() const;
-    void setFloating(bool);
 
+    /**
+     * @brief setter to make the dock widget float or dock.
+     * @param floats Makes the dock widget float or docks it.
+     */
+    void setFloating(bool floats);
+
+    /**
+     * @brief allows to to hide/show the dock widget via a QAction
+     * @return a QAction to toggle the visibility
+     */
     QAction *toggleAction() const;
-    QString name() const;
-    QString title() const;
-    void setTitle(const QString &);
 
+    /**
+     * @brief the dock widget's unique name.
+     * @return the dock widget's unique name.
+     * @sa title
+     */
+    QString name() const;
+
+    /**
+     * @brief the dock widget's title.
+     * @return the dock widget's title.
+     * @sa name, setTitle
+     */
+    QString title() const;
+
+    /**
+     * @brief setter for the dock widget's title
+     * @param title the dock widget's new title
+     * @sa name, setTitle
+     */
+    void setTitle(const QString &title);
+
+    /**
+     * @brief the dock widget's options which control behaviour
+     * @return the dock widget's options
+     */
     Options options() const;
 
 Q_SIGNALS:
+    ///@brief signal emitted when the parent changed
     void parentChanged();
+
+    ///@brief signal emitted when the DockWidget was shown
     void shown();
+
+    ///@brief signal emitted when the DockWidget was hidden
     void hidden();
 
 protected:
