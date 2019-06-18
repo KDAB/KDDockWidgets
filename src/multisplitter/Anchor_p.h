@@ -34,7 +34,7 @@ class MultiSplitter;
 typedef QVector<Item*> ItemList;
 
 /**
- * An anchor is the vertical or horizontal (@ref orientation()) line that has an handle
+ * @brief An anchor is the vertical or horizontal (@ref orientation()) line that has an handle
  * so you can resize widgets with your mouse.
  *
  * A MultiSplitter comes with 4 static anchors (@ref isStatic()), that represent the top, left, right
@@ -88,12 +88,16 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Anchor : public QWidget
     Q_PROPERTY(Anchor* to READ to WRITE setTo NOTIFY toChanged)
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
 public:
+    ///@brief represents the Anchor type
+    ///An anchor can be or 3 types:
+    /// - Normal: Anchor that can be resized via mouse
+    /// - static: this is the top, left, right, bottom borders of the main window. They are called static because they don't move.
     enum Option {
-        Option_None = 0,
-        Option_LeftStatic = 1,
-        Option_RightStatic = 2,
-        Option_TopStatic = 4,
-        Option_BottomStatic = 8,
+        Option_None = 0, ///< The anchor is normal, and can be resized.
+        Option_LeftStatic = 1,   ///< The anchor is static and represents the left mainwindow margin
+        Option_RightStatic = 2,  ///< The anchor is static and represents the right mainwindow margin
+        Option_TopStatic = 4,    ///< The anchor is static and represents the top mainwindow margin
+        Option_BottomStatic = 8, ///< The anchor is static and represents the bottom mainwindow margin
         Option_Static = Option_TopStatic | Option_LeftStatic | Option_RightStatic | Option_BottomStatic
     };
     Q_ENUM(Option)
