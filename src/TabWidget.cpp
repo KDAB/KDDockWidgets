@@ -18,6 +18,14 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief Implements a QTabWidget derived class with support for docking and undocking
+ * KDockWidget::DockWidget as tabs .
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #include "TabWidget_p.h"
 #include "Logging_p.h"
 #include "DragController_p.h"
@@ -67,25 +75,33 @@ std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
         return {};
     }
 
-    QRect r = dock->geometry();
-    m_tabWidget->removeDockWidget(dock);
+    FloatingWindow *floatingWindow = detachTab(dock);
+
+    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow));
+}
+
+FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)
+{
+    QRect r = dockWidget->geometry();
+    m_tabWidget->removeDockWidget(dockWidget);
 
     auto newFrame = new Frame();
-    newFrame->addWidget(dock);
+    newFrame->addWidget(dockWidget);
 
     auto floatingWindow = new FloatingWindow(newFrame);
     r.moveTopLeft(mapToGlobal(QPoint(0, 0)));
     floatingWindow->setGeometry(r);
     floatingWindow->show();
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow));
+
+    return floatingWindow;
 }
 
 TabWidget::TabWidget(QWidget *parent)
     : QTabWidget(parent)
+    , m_tabBar(new TabBar(this))
 {
     setTabBarAutoHide(true);
-    auto tb = new TabBar(this);
-    setTabBar(tb);
+    setTabBar(m_tabBar);
 }
 
 void TabWidget::addDockWidget(DockWidget *dock)
@@ -98,6 +114,11 @@ void TabWidget::addDockWidget(DockWidget *dock)
 void TabWidget::removeDockWidget(DockWidget *w)
 {
     removeTab(indexOf(w));
+}
+
+void TabWidget::detachTab(DockWidget *dockWidget)
+{
+    m_tabBar->detachTab(dockWidget);
 }
 
 void TabWidget::tabInserted(int)

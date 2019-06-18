@@ -18,6 +18,14 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief Implements a QTabWidget derived class with support for docking and undocking
+ * KDockWidget::DockWidget as tabs .
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #ifndef KD_TAB_WIDGET_P_H
 #define KD_TAB_WIDGET_P_H
 
@@ -50,6 +58,14 @@ public:
     // Draggable
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
 
+    /**
+     * @brief detaches a dock widget and shows it as a floating dock widget
+     * The dock widget is morphed into a FloatingWindow for convenience.
+     * @param dockWidget the dock widget to detach
+     * @returns the created FloatingWindow
+     */
+    FloatingWindow *detachTab(DockWidget *dockWidget);
+
 protected:
     void mousePressEvent(QMouseEvent *) override;
 
@@ -65,6 +81,13 @@ public:
     explicit TabWidget(QWidget *parent);
     void addDockWidget(DockWidget *);
     void removeDockWidget(DockWidget *);
+
+    /**
+     * @brief detaches a dock widget and shows it as a floating dock widget
+     * @param dockWidget the dock widget to detach
+     */
+    void detachTab(DockWidget *dockWidget);
+
 Q_SIGNALS:
     void dockWidgetCountChanged();
 protected:
@@ -72,6 +95,7 @@ protected:
     void tabRemoved(int index) override;
     void paintEvent(QPaintEvent *) override;
 private:
+    TabBar *const m_tabBar;
     Q_DISABLE_COPY(TabWidget)
 };
 }
