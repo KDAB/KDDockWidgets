@@ -30,3 +30,5 @@ resources.qrc.depends
 *backup.md5~
 .qmake.stash
 cmake_install.cmake
+latex
+html
