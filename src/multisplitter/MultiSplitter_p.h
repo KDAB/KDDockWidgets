@@ -200,6 +200,7 @@ Q_SIGNALS:
     void aboutToDumpDebug() const; // clazy:exclude=const-signal-or-slot
 
 protected:
+    bool eventFilter(QObject *o, QEvent *e) override;
     void resizeEvent(QResizeEvent *) override;
     bool event(QEvent *) override;
     AnchorGroup anchorsForPos(QPoint pos) const;

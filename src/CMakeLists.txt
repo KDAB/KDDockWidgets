@@ -23,6 +23,8 @@ set(DOCKSLIBS_SRCS
     multisplitter/AnchorGroup.cpp
     multisplitter/MultiSplitter.cpp
     multisplitter/Item.cpp
+    multisplitter/LayoutMemory.cpp
+    multisplitter/LayoutMemory_p.h
     indicators/AnimatedIndicators.cpp
     indicators/ClassicIndicators.cpp)
 

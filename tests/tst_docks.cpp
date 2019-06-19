@@ -1914,6 +1914,7 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
 
     // 1. Just toggle visibility and check that stuff remained sane
     dock1->setVisible(false);
+
     QVERIFY(!dock1->isTabbed());
     QVERIFY(!dock1->isFloating());
     dock1->setVisible(true);

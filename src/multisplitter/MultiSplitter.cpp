@@ -299,6 +299,7 @@ void MultiSplitter::addItems_internal(const ItemList &items, bool updateConstrai
     for (auto item : items) {
         item->setMultiSplitter(this);
         item->setVisible(true);
+        item->widget()->installEventFilter(this);
         Q_EMIT widgetAdded(item);
     }
     Q_EMIT widgetCountChanged(m_items.size());
@@ -446,6 +447,7 @@ void MultiSplitter::removeItem(Item *item)
     if (!item || m_inDestructor || !m_items.contains(item))
         return;
 
+    item->widget()->removeEventFilter(this);
     AnchorGroup anchorGroup = item->anchorGroup();
     anchorGroup.removeItem(item);
     m_items.removeOne(item);
@@ -1081,4 +1083,31 @@ void MultiSplitter::insertAnchor(Anchor *anchor)
 const ItemList MultiSplitter::items() const
 {
     return m_items;
+}
+
+bool MultiSplitter::eventFilter(QObject *o, QEvent *e)
+{
+    if (m_inDestructor || e->spontaneous())
+        return false;
+
+    if (!isVisible()) {
+        // The whole MultiSplitter isn't visible, don't bother. It probably even is being hidden by ~QMainWindow().
+        return false;
+    }
+
+    QWidget *w = qobject_cast<QWidget*>(o);
+    if (!w || !w->testAttribute(Qt::WA_WState_ExplicitShowHide)) {
+        // We only care about explicit show/hide by the developer
+        return false;
+    }
+
+    if (e->type() == QEvent::Show) {
+        qDebug() << "MultiSplitter::eventFilter show for " << w << w->testAttribute(Qt::WA_WState_ExplicitShowHide);
+        // TODO
+    } else if (e->type() == QEvent::Hide) {
+        qDebug() << "MultiSplitter::eventFilter hide for " << w << w->testAttribute(Qt::WA_WState_ExplicitShowHide);
+        // TODO
+    }
+
+    return false;
 }
