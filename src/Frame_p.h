@@ -18,6 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief A DockWidget wrapper that adds a QTabWidget and a TitleBar.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #ifndef KD_FRAME_P_H
 #define KD_FRAME_P_H
 
@@ -37,9 +44,14 @@ class DropArea;
 class DockWidget;
 
 /**
- * Represents a widget that's docked.
- * Shows a small titlebar so you can drag it out.
- * Also provides a QTabWidget so you can tab dock widgets together
+ * @brief A DockWidget wrapper that adds a QTabWidget and a TitleBar
+ *
+ * Frame is the actual widget that goes into the MultiSplitter. It provides a TitleBar which you
+ * can use to detach, and also a QTabWidget so you can tab dock widgets together.
+ *
+ * This class doesn't actually add window frames and it's never a top-level widget. A Frame is always
+ * inside a MultiSplitter (DropArea). Be it a MultiSplitter belonging to a MainWindow or belonging
+ * to a FloatingWindow.
  */
 class DOCKS_EXPORT_FOR_UNIT_TESTS Frame : public QWidget
 {
@@ -95,8 +107,13 @@ public:
      */
     bool alwaysShowsTabs() const { return m_options & Option_AlwaysShowsTabs; }
 
-    int widgetCount() const;
-    bool contains(DockWidget *) const;
+
+    /// @brief returns the number of dock widgets inside the frame
+    int dockWidgetCount() const;
+
+    /// @brief returns whether the dockwidget @p w is inside this frame
+    bool contains(DockWidget *w) const;
+
     QPoint dragPointForWidget(int index) const; // for unit-tests
     void closeEvent(QCloseEvent *) override;
     int currentTabIndex() const;

@@ -18,6 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief A DockWidget wrapper that adds a QTabWidget and a TitleBar.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #include "Frame_p.h"
 #include "TitleBar_p.h"
 #include "TabWidget_p.h"
@@ -87,7 +94,7 @@ void Frame::addWidget(DockWidget *dockWidget)
 
 void Frame::addWidget(Frame *frame)
 {
-    if (frame->widgetCount() == 0) {
+    if (frame->dockWidgetCount() == 0) {
         qWarning() << "Frame::addWidget: frame is empty." << frame;
         return;
     }
@@ -123,15 +130,15 @@ void Frame::insertWidget(DockWidget *dockWidget, int index)
 
     m_tabWidget->insertDockWidget(dockWidget, index);
 
-    if (widgetCount() == 1) {
+    if (dockWidgetCount() == 1) {
         Q_EMIT currentDockWidgetChanged(dockWidget);
     }
 }
 
 void Frame::onDockWidgetCountChanged()
 {
-    qCDebug(docking) << "Frame::onDockWidgetCountChanged; widgetCount=" << widgetCount();
-    if (widgetCount() == 0 && !isCentralFrame()) {
+    qCDebug(docking) << "Frame::onDockWidgetCountChanged; widgetCount=" << dockWidgetCount();
+    if (dockWidgetCount() == 0 && !isCentralFrame()) {
         qCDebug(creation) << "Frame::onDockWidgetCountChanged: deleteLater on" << this;
         deleteLater();
     } else {
@@ -173,7 +180,7 @@ TitleBar *Frame::titleBar() const
 const DockWidget::List Frame::dockWidgets() const
 {
     DockWidget::List dockWidgets;
-    const int count = widgetCount();
+    const int count = dockWidgetCount();
     dockWidgets.reserve(count);
     for (int i = 0, e = count; i != e; ++i) {
         dockWidgets << dockWidgetAt(i);
@@ -184,7 +191,7 @@ const DockWidget::List Frame::dockWidgets() const
 
 bool Frame::contains(DockWidget *dockWidget) const
 {
-    const int count = widgetCount();
+    const int count = dockWidgetCount();
     for (int i = 0, e = count; i != e; ++i) {
         if (dockWidget == dockWidgetAt(i))
             return true;
@@ -194,7 +201,7 @@ bool Frame::contains(DockWidget *dockWidget) const
 
 QPoint Frame::dragPointForWidget(int index) const
 {
-    if (widgetCount() == 1) {
+    if (dockWidgetCount() == 1) {
         Q_ASSERT(index == 0);
         return m_titleBar->mapToGlobal(QPoint(5, 5));
     } else {
@@ -266,7 +273,7 @@ bool Frame::isTheOnlyFrame() const
     return m_dropArea && m_dropArea->numFrames() == 1;
 }
 
-int Frame::widgetCount() const
+int Frame::dockWidgetCount() const
 {
     return m_tabWidget->count();
 }

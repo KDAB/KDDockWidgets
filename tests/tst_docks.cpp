@@ -564,10 +564,10 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         QVERIFY(false);
     }
     QVERIFY(frame2);
-    QCOMPARE(frame2->widgetCount(), 1);
+    QCOMPARE(frame2->dockWidgetCount(), 1);
 
     releaseOn(dock2->window()->geometry().center(), titlebar1);
-    QVERIFY(frame2->widgetCount() == 2); // 2.2 Frame has 2 widgets when one is dropped
+    QVERIFY(frame2->dockWidgetCount() == 2); // 2.2 Frame has 2 widgets when one is dropped
 
     QVERIFY(waitForDeleted(frame1));
 
@@ -577,20 +577,20 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QVERIFY(tabBar);
     drag(tabBar, globalPressPos, frame2->window()->geometry().bottomRight() + QPoint(10, 10));
 
-    QVERIFY(frame2->widgetCount() == 1);
+    QVERIFY(frame2->dockWidgetCount() == 1);
     QVERIFY(qobject_cast<FloatingWindow *>(dock1->window()));
 
     // 2.4 Drag the first dock over the second
     frame1 = dock1->frame();
     frame2 = dock2->frame();
     drag(dock1, frame1->mapToGlobal(QPoint(10, 10)), dock2->window()->geometry().center());
-    QCOMPARE(frame2->widgetCount(), 2);
+    QCOMPARE(frame2->dockWidgetCount(), 2);
 
     // 2.5 Detach and drop to the same place, should tab again
     globalPressPos = frame2->dragPointForWidget(0);
     tabBar = tabBarForFrame(frame2);
     drag(tabBar, globalPressPos, dock2->window()->geometry().center());
-    QCOMPARE(frame2->widgetCount(), 2);
+    QCOMPARE(frame2->dockWidgetCount(), 2);
 
     // 2.6 Drag the tabbed group over a 3rd floating window
     auto dock3 = createDockWidget(QStringLiteral("doc3"), Qt::black);
@@ -600,7 +600,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QVERIFY(waitForDeleted(frame1));
     QVERIFY(waitForDeleted(frame2));
     QVERIFY(dock3->frame());
-    QCOMPARE(dock3->frame()->widgetCount(), 3);
+    QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
 
     auto fw3 = qobject_cast<FloatingWindow *>(dock3->window());
     QVERIFY(fw3);
@@ -615,7 +615,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         drag(dock3->window(), dock3->window()->mapToGlobal(QPoint(10, 10)), m.geometry().center());
         QVERIFY(!dock3->isFloating());
         QVERIFY(qobject_cast<MainWindow *>(dock3->window()) == &m);
-        QCOMPARE(dock3->frame()->widgetCount(), 3);
+        QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
         QVERIFY(qobject_cast<DropArea*>(m.centralWidget())->checkSanity());
 
         delete dock1;
@@ -857,7 +857,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 
     QCOMPARE(fw2->frames().size(), 1);
     auto f2 = fw2->frames().constFirst();
-    QCOMPARE(f2->widgetCount(), 3);
+    QCOMPARE(f2->dockWidgetCount(), 3);
     QVERIFY(waitForDeleted(fw));
     delete fw2;
 }
@@ -995,13 +995,13 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     QVERIFY(dropArea);
     QCOMPARE(dropArea->count(), 1);
     QVERIFY(centralFrame);
-    QCOMPARE(centralFrame->widgetCount(), 0);
+    QCOMPARE(centralFrame->dockWidgetCount(), 0);
 
     // Add a tab
     auto dock = createDockWidget(QStringLiteral("doc1"), Qt::green);
     m->addDockWidgetAsTab(dock);
     QCOMPARE(dropArea->count(), 1);
-    QCOMPARE(centralFrame->widgetCount(), 1);
+    QCOMPARE(centralFrame->dockWidgetCount(), 1);
 
     qDebug() << "Central widget width=" << central->size() << "; mainwindow="
              << m->size();
@@ -1015,7 +1015,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
 
     QVERIFY(centralFrame);
     QCOMPARE(dropArea->count(), 1);
-    QCOMPARE(centralFrame->widgetCount(), 0);
+    QCOMPARE(centralFrame->dockWidgetCount(), 0);
     QVERIFY(dropArea->checkSanity());
 
     delete dock->window();
@@ -1226,7 +1226,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QWidget *window2 = dock2->window();
         QCOMPARE(window1, window2);
         QCOMPARE(dock1->frame(), dock2->frame());
-        QCOMPARE(dock1->frame()->widgetCount(), 2);
+        QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
         delete dock1;
         delete dock2;
     }
@@ -1242,7 +1242,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QWidget *window2 = dock2->window();
         QCOMPARE(window1, window2);
         QCOMPARE(dock1->frame(), dock2->frame());
-        QCOMPARE(dock1->frame()->widgetCount(), 2);
+        QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
         delete dock1;
         delete dock2;
     }
@@ -1260,7 +1260,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QWidget *window2 = dock2->window();
         QCOMPARE(window1, window2);
         QCOMPARE(dock1->frame(), dock2->frame());
-        QCOMPARE(dock1->frame()->widgetCount(), 2);
+        QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
         waitForDeleted(originalWindow2);
         QVERIFY(!originalWindow2);
         delete dock1;
@@ -1279,7 +1279,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QCOMPARE(dock1->window(), m.get());
         QCOMPARE(dock2->window(), m.get());
         QCOMPARE(dock1->frame(), dock2->frame());
-        QCOMPARE(dock1->frame()->widgetCount(), 2);
+        QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
     }
 }
 
