@@ -149,7 +149,13 @@ public:
     Options options() const;
 
     /**
-     * @brief checks if this dock widget is tabbed into another
+     * @brief returns if this dock widget is tabbed into another
+     *
+     * Technically a docked DockWidget always lives in a tab widget, but from the user's prespective
+     * it's not tabbed when there's only 1 dock widget, as there are no tabs displayed. Unless
+     * the frame is using Option_AlwaysShowsTabs, in which case this method will return true regardless
+     * if being the single one.
+     *
      * @return true if this dock widget is tabbed into another
      */
     bool isTabbed() const;

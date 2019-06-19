@@ -76,8 +76,25 @@ public:
 
     bool isTheOnlyFrame() const;
 
+    /**
+     * @brief returns if this widget is the central frame
+     * MainWindow supports a mode where the middle frame is persistent even if no dock widget is there.
+     *
+     * @return whether this widget is the central frame in a main window
+     */
     bool isCentralFrame() const { return m_options & Option_IsCentralFrame; }
+
+    /**
+     * @brief whether the tab widget will always show tabs, even if there's only 1 dock widget
+     *
+     * While technically a non-floating dock widget is always tabbed, the user won't see the tabs
+     * as in most cases there's only 1 widget tabbed. But for the main window central frame it's
+     * often wanted to see tabs even if there's only 1 widget, where each widget represents a "document".
+     *
+     * @return whether the tab widget will always show tabs, even if there's only 1 dock widget
+     */
     bool alwaysShowsTabs() const { return m_options & Option_AlwaysShowsTabs; }
+
     int widgetCount() const;
     bool contains(DockWidget *) const;
     QPoint dragPointForWidget(int index) const; // for unit-tests

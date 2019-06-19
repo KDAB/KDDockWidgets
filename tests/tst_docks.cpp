@@ -1855,12 +1855,23 @@ void TestDocks::tst_isTabbed()
     QVERIFY(dock2->isTabbed());
     QCOMPARE(dock2->frame()->m_tabWidget->indexOf(dock2), 1);
 
+    // 10. Float dock1, and dock it to main window as tab. This tests Option_AlwaysShowsTabs.
+    dock1->setFloating(true);
+    m->addDockWidgetAsTab(dock1);
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(dock1->isTabbed());
+    dock1->setFloating(true);
+    dock1->setFloating(false);
+    QCOMPARE(dock1->frame()->m_tabWidget->count(), 1);
+
     m->deleteLater();
     auto window = m.release();
 
     // Cleanup
     waitForDeleted(window);
 }
+
+// QTest::qWait(50000)
 
 QTEST_MAIN(KDDockWidgets::TestDocks)
 #include "tst_docks.moc"

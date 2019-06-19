@@ -268,11 +268,8 @@ DockWidget::Options DockWidget::options() const
 
 bool DockWidget::isTabbed() const
 {
-    // Technically a docked DockWidget always lives in a tab widget, but from the user's prespective
-    // it's not tabbed when there's only 1 dock widget, as there's no tabs displayed.
-
     if (TabWidget* tabWidget = d->parentTabWidget()) {
-        return tabWidget->count() > 1;
+        return frame()->alwaysShowsTabs() || tabWidget->count() > 1;
     } else {
         if (!isFloating())
             qWarning() << "DockWidget::isTabbed() Couldn't find any tab widget.";
