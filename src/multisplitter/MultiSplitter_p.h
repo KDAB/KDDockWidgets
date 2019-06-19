@@ -143,7 +143,6 @@ public:
      */
     QRect rectForDrop(const QWidget *widget, KDDockWidgets::Location location, Item *relativeTo) const;
 
-    KDDockWidgets::Location oppositeLocation(KDDockWidgets::Location loc) const;
     void setAnchorBeingDragged(Anchor *);
     Anchor *anchorBeingDragged() const { return m_anchorBeingDragged; }
     bool anchorIsBeingDragged() const { return m_anchorBeingDragged != nullptr; }

@@ -45,6 +45,40 @@ namespace KDDockWidgets
         MainWindowOption_HasCentralFrame = 1
     };
     Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
+
+   inline Location oppositeLocation(Location loc)
+   {
+       switch (loc) {
+       case Location_OnLeft:
+           return Location_OnRight;
+       case Location_OnTop:
+           return Location_OnBottom;
+       case Location_OnRight:
+           return Location_OnLeft;
+       case Location_OnBottom:
+           return Location_OnTop;
+       default:
+           Q_ASSERT(false);
+           return Location_None;
+       }
+   }
+
+   inline Location adjacentLocation(Location loc)
+   {
+       switch (loc) {
+       case Location_OnLeft:
+           return Location_OnTop;
+       case Location_OnTop:
+           return Location_OnRight;
+       case Location_OnRight:
+           return Location_OnBottom;
+       case Location_OnBottom:
+           return Location_OnLeft;
+       default:
+           Q_ASSERT(false);
+           return Location_None;
+       }
+   }
 };
 
 #endif

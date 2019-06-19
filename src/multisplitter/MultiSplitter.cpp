@@ -184,7 +184,7 @@ void MultiSplitter::addWidget(QWidget *w, Location location, QWidget *relativeTo
             newAnchor = this->newAnchor(targetAnchorGroup, location);
     } else {
         newAnchor = targetAnchorGroup.createAnchorFrom(location, relativeTo);
-        targetAnchorGroup.setAnchor(newAnchor, MultiSplitter::oppositeLocation(location));
+        targetAnchorGroup.setAnchor(newAnchor, KDDockWidgets::oppositeLocation(location));
     }
 
     if (newAnchor) {
@@ -694,23 +694,6 @@ QRect MultiSplitter::rectForDrop(const QWidget *widgetBeingDropped, Location loc
                     << "; s1=" << side1Length
                     << "; bottom=" << relativeToRect.bottom();
     return result;
-}
-
-Location MultiSplitter::oppositeLocation(Location loc) const
-{
-    switch (loc) {
-    case Location_OnLeft:
-        return Location_OnRight;
-    case Location_OnTop:
-        return Location_OnBottom;
-    case Location_OnRight:
-        return Location_OnLeft;
-    case Location_OnBottom:
-        return Location_OnTop;
-    default:
-        Q_ASSERT(false);
-        return Location_None;
-    }
 }
 
 void MultiSplitter::setAnchorBeingDragged(Anchor *anchor)
