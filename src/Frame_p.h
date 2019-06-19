@@ -130,6 +130,12 @@ public:
     ///@brief returns whether there's only 1 dock widget.
     bool hasSingleDockWidget() const { return dockWidgetCount() == 1; }
 
+    ///@brief Called when a dock widget child @p w is shown
+    void onDockWidgetShown(DockWidget *w);
+
+    ///@brief Called when a dock widget child @p w is hidden
+    void onDockWidgetHidden(DockWidget *w);
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidget *);
     void numDockWidgetsChanged();

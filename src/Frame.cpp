@@ -245,6 +245,28 @@ bool Frame::anyNonClosable() const
     return false;
 }
 
+void Frame::onDockWidgetShown(DockWidget *w)
+{
+    if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
+        if (!isVisible()) {
+            qCDebug(hiding) << "Widget" << w << " was shown, we're=" << "; visible=" << isVisible();
+            setVisible(true);
+        }
+    }
+}
+
+void Frame::onDockWidgetHidden(DockWidget *w)
+{
+    if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
+        if (isVisible()) {
+            qCDebug(hiding) << "Widget" << w << " was hidden, we're="
+                            << "; visible=" << isVisible()
+                            << "; dockWidgets=" << dockWidgets();
+            setVisible(false);
+        }
+    }
+}
+
 DockWidget *Frame::dockWidgetAt(int index) const
 {
     return qobject_cast<DockWidget *>(m_tabWidget->widget(index));

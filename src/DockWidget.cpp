@@ -289,8 +289,20 @@ bool DockWidget::event(QEvent *e)
             widgetResizeHandler()->setActive(isWindow());
         }
         Q_EMIT shown();
+
+        if (Frame *f = frame()) {
+            if (!e->spontaneous()) {
+                f->onDockWidgetShown(this);
+            }
+        }
     } else if (e->type() == QEvent::Hide) {
         Q_EMIT hidden();
+
+        if (Frame *f = frame()) {
+            if (!e->spontaneous()) {
+                f->onDockWidgetHidden(this);
+            }
+        }
     }
 
     return QWidget::event(e);
@@ -327,7 +339,8 @@ TitleBar *DockWidget::titleBar() const
 
 FloatingWindow *DockWidget::morphIntoFloatingWindow()
 {
-    qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this;
+    qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
+                      << "; visible=" << isVisible();
     if (isWindow()) {
         QRect geo = geometry();
         auto frame = new Frame();

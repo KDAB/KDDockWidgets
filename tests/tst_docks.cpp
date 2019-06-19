@@ -1924,9 +1924,9 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
 
     // 2. Check that the parent frame also is hidden now
     dock1->setVisible(false);
-    //QVERIFY(!dock1->frame()->isVisible());
+    QVERIFY(!dock1->frame()->isVisible());
 
-    //QTest::qWait(50000);
+
 
     // Cleanup
     m->deleteLater();
