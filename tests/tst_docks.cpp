@@ -234,7 +234,9 @@ private Q_SLOTS:
     void tst_rectForDrop_data();
     void tst_rectForDrop();
     void tst_crash(); // tests some crash I got
-    void tst_isTabbed();
+    void tst_setFloatingFalseWhenWasTabbed();
+    void tst_setFloatingFalseWhenSideBySide();
+    void tst_setVisibleFalseWhenSideBySide();
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup) const;
 };
@@ -1773,16 +1775,17 @@ void TestDocks::tst_crash()
     ms.addWidget(w4, KDDockWidgets::Location_OnBottom, w1);
 }
 
-void TestDocks::tst_isTabbed()
+void TestDocks::tst_setFloatingFalseWhenWasTabbed()
 {
-    // Tests DockWidget::isTabbed() and DockWidget::isFloating()
+    // Tests DockWidget::isTabbed() and DockWidget::setFloating(false) when tabbed (it should redock)
+    // setFloating(false) for side-by-side is tested in another function
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
 
-    // 1. Two floating dock widgets. They are tabbed, not floating.
+    // 1. Two floating dock widgets. They are floating, not tabbed.
     QVERIFY(!dock1->isTabbed());
     QVERIFY(!dock2->isTabbed());
     QVERIFY(dock1->isFloating());
@@ -1794,6 +1797,13 @@ void TestDocks::tst_isTabbed()
     QVERIFY(dock2->isTabbed());
     QVERIFY(!dock1->isFloating());
     QVERIFY(!dock2->isFloating());
+
+    // 2.1 Set one of them invisible. // Not much will happen, the tab will be still there, just showing an empty space.
+    // Users should use close() instead. Tabwidgets control visibility, they hide the widget when it's not the current tab.
+    dock2->setVisible(false);
+    QVERIFY(dock2->isTabbed());
+    QVERIFY(!dock1->isFloating());
+    QCOMPARE(dock2->frame()->m_tabWidget->count(), 2);
 
     // 3. Set one floating. Now both cease to be tabbed, and both are floating.
     dock1->setFloating(true);
@@ -1864,10 +1874,63 @@ void TestDocks::tst_isTabbed()
     dock1->setFloating(false);
     QCOMPARE(dock1->frame()->m_tabWidget->count(), 1);
 
+    // Cleanup
     m->deleteLater();
     auto window = m.release();
+    waitForDeleted(window);
+}
+
+void TestDocks::tst_setFloatingFalseWhenSideBySide()
+{
+    // Tests DockWidget::setFloating(false) when side-by-side (it should put it where it was)
+    /*EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+
+    dock1->setFloating(true);
+    QVERIFY(dock1->isFloating());
+
+    dock1->setFloating(false);
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock1->isTabbed());
+
+    QTest::qWait(50000);*/
+}
+
+void TestDocks::tst_setVisibleFalseWhenSideBySide()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+
+    const QRect oldGeo = dock1->geometry();
+    QWidget *oldParent = dock1->parentWidget();
+
+    // 1. Just toggle visibility and check that stuff remained sane
+    dock1->setVisible(false);
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock1->isFloating());
+    dock1->setVisible(true);
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock1->isFloating());
+    QCOMPARE(dock1->geometry(), oldGeo);
+    QCOMPARE(dock1->parentWidget(), oldParent);
+
+    // 2. Check that the parent frame also is hidden now
+    dock1->setVisible(false);
+    //QVERIFY(!dock1->frame()->isVisible());
+
+    //QTest::qWait(50000);
 
     // Cleanup
+    m->deleteLater();
+    auto window = m.release();
     waitForDeleted(window);
 }
 

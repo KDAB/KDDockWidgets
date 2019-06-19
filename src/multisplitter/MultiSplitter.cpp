@@ -448,8 +448,8 @@ void MultiSplitter::removeItem(Item *item)
 
     AnchorGroup anchorGroup = item->anchorGroup();
     anchorGroup.removeItem(item);
-
     m_items.removeOne(item);
+
     Q_EMIT widgetCountChanged(m_items.size());
 }
 
