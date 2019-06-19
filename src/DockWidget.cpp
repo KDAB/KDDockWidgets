@@ -209,7 +209,6 @@ void DockWidget::setFloating(bool floats)
 
     if (floats) {
         d->saveLastPosition();
-
         if (isTabbed()) {
             TabWidget *tabWidget= d->parentTabWidget();
             if (!tabWidget) {
@@ -226,7 +225,12 @@ void DockWidget::setFloating(bool floats)
         // TODO
         if (d->m_lastPosition.isTabbed()) {
             // Restore to the last tab
-            d->m_lastPosition.m_frame->addWidget(this);
+
+            if (d->m_lastPosition.m_frame) {
+                 d->m_lastPosition.m_frame->insertWidget(this, d->m_lastPosition.m_tabIndex);
+            } else {
+                // Frame disappeared, we can't tab to the tabwidget anymore
+            }
         }
     }
 }

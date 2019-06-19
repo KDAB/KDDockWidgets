@@ -45,6 +45,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Frame : public QWidget
 {
     Q_OBJECT
 public:
+    typedef QList<Frame *> List;
     typedef int Options;
     enum Option {
         Option_None = 0,
@@ -60,6 +61,10 @@ public:
     void addWidget(DockWidget *);
     void addWidget(Frame *);
     void addWidget(Draggable *draggable);
+
+    ///@brief Inserts a widget into the Frame's TabWidget at @p index
+    void insertWidget(DockWidget *, int index);
+
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;
     TitleBar *titleBar() const;
@@ -88,6 +93,7 @@ Q_SIGNALS:
 
 private:
     Q_DISABLE_COPY(Frame)
+    friend class TestDocks;
     void onDockWidgetCountChanged();
     bool event(QEvent *) override;
     TabWidget *const m_tabWidget;

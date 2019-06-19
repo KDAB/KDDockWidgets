@@ -49,7 +49,7 @@ public:
      */
     bool isTabbed() const
     {
-        return m_tabIndex != -1 && !m_frame.isNull();
+        return m_tabIndex != -1;
     }
 
     ///@brief The tab index in case the dock widget was in a TabWidget, -1 otherwise.

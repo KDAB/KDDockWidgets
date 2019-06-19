@@ -111,6 +111,18 @@ void TabWidget::addDockWidget(DockWidget *dock)
     setCurrentIndex(count() - 1);
 }
 
+void TabWidget::insertDockWidget(DockWidget *dock, int index)
+{
+    if (index < 0)
+        index = 0;
+    if (index > count())
+        index = count();
+
+    Q_ASSERT(dock);
+    insertTab(index, dock, dock->name());
+    setCurrentIndex(index);
+}
+
 void TabWidget::removeDockWidget(DockWidget *w)
 {
     removeTab(indexOf(w));

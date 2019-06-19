@@ -28,6 +28,7 @@
 #include "WindowBeingDragged_p.h"
 #include "Utils_p.h"
 #include "LayoutSaver.h"
+#include "TabWidget_p.h"
 
 #include <QtTest/QtTest>
 #include <QPainter>
@@ -1828,11 +1829,19 @@ void TestDocks::tst_isTabbed()
     QVERIFY(!dock1->isFloating());
     QVERIFY(!dock2->isFloating());
 
-    // 7. Call setFloating(true) in an already docked widget
+    // 7. Call setFloating(true) on an already docked widget
     auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
     dock3->setFloating(true);
     dock3->setFloating(true);
 
+    // 8. Tab 3 together, detach the middle one, reattach the middle one, it should go to the middle.
+    dock1->addDockWidgetAsTab(dock3);
+    dock2->setFloating(true);
+    QVERIFY(dock2->isFloating());
+    dock2->setFloating(false);
+    QVERIFY(!dock2->isFloating());
+    QVERIFY(dock2->isTabbed());
+    QCOMPARE(dock2->frame()->m_tabWidget->indexOf(dock2), 1);
 
     // Cleanup
     auto window = dock1->window();

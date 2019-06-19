@@ -82,17 +82,7 @@ Frame::~Frame()
 
 void Frame::addWidget(DockWidget *dockWidget)
 {
-    Q_ASSERT(dockWidget);
-    if (contains(dockWidget)) {
-        qWarning() << "Frame::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
-        return;
-    }
-
-    m_tabWidget->addDockWidget(dockWidget);
-
-    if (widgetCount() == 1) {
-        Q_EMIT currentDockWidgetChanged(dockWidget);
-    }
+    insertWidget(dockWidget, m_tabWidget->count()); // append
 }
 
 void Frame::addWidget(Frame *frame)
@@ -120,6 +110,21 @@ void Frame::addWidget(Draggable *draggable)
     } else {
         qWarning() << "Unknown" << w;
         Q_ASSERT(false);
+    }
+}
+
+void Frame::insertWidget(DockWidget *dockWidget, int index)
+{
+    Q_ASSERT(dockWidget);
+    if (contains(dockWidget)) {
+        qWarning() << "Frame::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
+        return;
+    }
+
+    m_tabWidget->insertDockWidget(dockWidget, index);
+
+    if (widgetCount() == 1) {
+        Q_EMIT currentDockWidgetChanged(dockWidget);
     }
 }
 

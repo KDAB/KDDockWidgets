@@ -80,6 +80,14 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS TabWidget : public QTabWidget
 public:
     explicit TabWidget(QWidget *parent);
     void addDockWidget(DockWidget *);
+
+    /**
+     * @brief inserts @p dockwidget into the TabWidget, at @p index
+     * @param dockwidget the dockwidget to insert
+     * @param index The index to where to put it
+     */
+    void insertDockWidget(DockWidget *dockwidget, int index);
+
     void removeDockWidget(DockWidget *);
 
     /**
