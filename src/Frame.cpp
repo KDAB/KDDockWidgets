@@ -94,7 +94,7 @@ void Frame::addWidget(DockWidget *dockWidget)
 
 void Frame::addWidget(Frame *frame)
 {
-    if (frame->dockWidgetCount() == 0) {
+    if (frame->isEmpty()) {
         qWarning() << "Frame::addWidget: frame is empty." << frame;
         return;
     }
@@ -130,7 +130,7 @@ void Frame::insertWidget(DockWidget *dockWidget, int index)
 
     m_tabWidget->insertDockWidget(dockWidget, index);
 
-    if (dockWidgetCount() == 1) {
+    if (hasSingleDockWidget()) {
         Q_EMIT currentDockWidgetChanged(dockWidget);
     }
 }
@@ -138,7 +138,7 @@ void Frame::insertWidget(DockWidget *dockWidget, int index)
 void Frame::onDockWidgetCountChanged()
 {
     qCDebug(docking) << "Frame::onDockWidgetCountChanged; widgetCount=" << dockWidgetCount();
-    if (dockWidgetCount() == 0 && !isCentralFrame()) {
+    if (isEmpty() && !isCentralFrame()) {
         qCDebug(creation) << "Frame::onDockWidgetCountChanged: deleteLater on" << this;
         deleteLater();
     } else {
@@ -201,7 +201,7 @@ bool Frame::contains(DockWidget *dockWidget) const
 
 QPoint Frame::dragPointForWidget(int index) const
 {
-    if (dockWidgetCount() == 1) {
+    if (hasSingleDockWidget()) {
         Q_ASSERT(index == 0);
         return m_titleBar->mapToGlobal(QPoint(5, 5));
     } else {

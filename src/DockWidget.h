@@ -164,10 +164,10 @@ Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();
 
-    ///@brief signal emitted when the DockWidget was shown
+    ///@brief signal emitted when the DockWidget is shown. As in QEvent::Show.
     void shown();
 
-    ///@brief signal emitted when the DockWidget was hidden
+    ///@brief signal emitted when the DockWidget is hidden. As in QEvent::Hide.
     void hidden();
 
 protected:

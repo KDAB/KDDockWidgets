@@ -123,6 +123,13 @@ public:
     quint64 id() const;
     bool anyNonClosable() const;
 
+
+    ///@brief returns whether there's 0 dock widgets. If not persistent then the Frame will delete itself.
+    bool isEmpty() const { return dockWidgetCount() == 0; }
+
+    ///@brief returns whether there's only 1 dock widget.
+    bool hasSingleDockWidget() const { return dockWidgetCount() == 1; }
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidget *);
     void numDockWidgetsChanged();
