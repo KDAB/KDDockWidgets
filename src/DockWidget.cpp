@@ -222,7 +222,6 @@ void DockWidget::setFloating(bool floats)
             frame()->titleBar()->makeWindow();
         }
     } else {
-        // TODO
         if (d->m_lastPosition.isTabbed()) {
             // Restore to the last tab
 
@@ -230,7 +229,11 @@ void DockWidget::setFloating(bool floats)
                  d->m_lastPosition.m_frame->insertWidget(this, d->m_lastPosition.m_tabIndex);
             } else {
                 // Frame disappeared, we can't tab to the tabwidget anymore
+                // TODO: Make it smarter
+                qWarning() << "DockWidget::setFloating: Don't know where to put it anymore";
             }
+        } else {
+            // TODO
         }
     }
 }

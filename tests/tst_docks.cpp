@@ -1843,13 +1843,22 @@ void TestDocks::tst_isTabbed()
     QVERIFY(dock2->isTabbed());
     QCOMPARE(dock2->frame()->m_tabWidget->indexOf(dock2), 1);
 
+    // 9. Like 8. but add the two to to main window, and only then reattach the middle one
+    dock2->setFloating(true);
+    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    QVERIFY(fw);
+    QVERIFY(dropArea);
+    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
+    dock2->setFloating(false);
+    QVERIFY(!dock2->isFloating());
+    QVERIFY(dock2->isTabbed());
+    QCOMPARE(dock2->frame()->m_tabWidget->indexOf(dock2), 1);
+
+    m->deleteLater();
+    auto window = m.release();
+
     // Cleanup
-    auto window = dock1->window();
-    window->deleteLater();
-    window = dock2->window();
-    window->deleteLater();
-    window = dock3->window();
-    window->deleteLater();
     waitForDeleted(window);
 }
 
