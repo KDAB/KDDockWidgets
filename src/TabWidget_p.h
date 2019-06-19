@@ -44,15 +44,28 @@ namespace KDDockWidgets {
 class DockWidget;
 class TabWidget;
 
+///@brief a QTabBar derived class to be used by KDDockWidgets::TabWidget
 class DOCKS_EXPORT_FOR_UNIT_TESTS TabBar : public QTabBar
     , public Draggable
 {
     Q_OBJECT
 public:
     typedef QVector<TabBar *> List;
+
+    /**
+     * @brief Constructs a new TabBar
+     * @param parent The parent TabWidget
+     */
     explicit TabBar(TabWidget *parent = nullptr);
 
+    /**
+     * @brief returns the dock widgets at tab number @p index
+     * @param index the tab number from which we want the dock widget
+     * @return the dock widget at tab number @p index
+     */
     DockWidget *dockWidgetAt(int index) const;
+
+    ///@overload
     DockWidget *dockWidgetAt(QPoint localPos) const;
 
     // Draggable
@@ -79,6 +92,9 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS TabWidget : public QTabWidget
     Q_OBJECT
 public:
     explicit TabWidget(QWidget *parent);
+
+
+    ///@brief appends a dock widget into this TabWidget
     void addDockWidget(DockWidget *);
 
     /**

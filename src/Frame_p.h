@@ -54,12 +54,14 @@ public:
     };
     Q_ENUM(Option)
 
-    typedef QList<Frame *> List;
     explicit Frame(QWidget *parent = nullptr, Options = Option_None);
     ~Frame() override;
 
+    ///@brief Adds a widget into the Frame's TabWidget
     void addWidget(DockWidget *);
+    ///@overload
     void addWidget(Frame *);
+    ///@overload
     void addWidget(Draggable *draggable);
 
     ///@brief Inserts a widget into the Frame's TabWidget at @p index
