@@ -18,8 +18,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_LAST_POSITION_H
-#define KD_LAST_POSITION_H
+#ifndef KD_LAST_POSITION_P_H
+#define KD_LAST_POSITION_P_H
 
 /**
  * @file Helper class so dockwidgets can be restored to their previous position.
