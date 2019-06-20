@@ -156,7 +156,7 @@ void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context,
     s_original(t, context, msg);
     if (t == QtWarningMsg) {
 
-        if (context.category == "qt.qpa.xcb")
+        if (QLatin1String(context.category) == QLatin1String("qt.qpa.xcb"))
             return;
 
         if (msg.contains(QLatin1String("QSocketNotifier: Invalid socket")) ||
@@ -253,7 +253,7 @@ static std::unique_ptr<MainWindow> createMainWindow(QSize sz = {600, 600})
 class MyWidget : public QWidget
 {
 public:
-    explicit MyWidget(const QString &name, QColor c)
+    explicit MyWidget(const QString &, QColor c)
         : QWidget()
         , c(c)
     {
@@ -1610,7 +1610,6 @@ void TestDocks::tst_availableLengthForDrop_data()
         MultiSplitterSetup setup;
         setup.size = QSize(multispitterlength, multispitterlength);
         int totalAvailable = multispitterlength - 2*staticAnchorThickness;
-        int expected1 = 0;
         int expected2 = totalAvailable;
         availableSizes << ExpectedAvailableSize{ KDDockWidgets::Location_OnTop, nullptr, 0, expected2, totalAvailable };
         availableSizes << ExpectedAvailableSize{ KDDockWidgets::Location_OnLeft, nullptr, 0, expected2, totalAvailable };

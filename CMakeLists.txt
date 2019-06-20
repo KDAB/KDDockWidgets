@@ -20,10 +20,10 @@ endif()
 
 if (OPTION_DEVELOPER_MODE)
     add_definitions(-DDOCKS_DEVELOPER_MODE)
-endif()
-
-if (OPTION_DEVELOPER_MODE)
     add_definitions(-DQT_FORCE_ASSERTS)
+    if (NOT MSVC)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
+    endif()
 endif()
 
 add_definitions(-DQT_NO_CAST_TO_ASCII
