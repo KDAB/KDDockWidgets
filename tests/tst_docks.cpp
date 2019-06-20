@@ -1089,10 +1089,10 @@ void TestDocks::tst_closeAllDockWidgets()
 
     QCOMPARE(dock1->window(), dock1);
     QCOMPARE(dock2->window(), dock2);
-    QCOMPARE(dock3->window(), fw);
+    QCOMPARE(dock3->window(), fw.data());
     QCOMPARE(dock4->window(), m.get());
     QCOMPARE(dock5->window(), m.get());
-    QCOMPARE(dock6->window(), fw);
+    QCOMPARE(dock6->window(), fw.data());
 
     qDebug() << "closeAllDockWidgets";
     DockRegistry::self()->closeAllDockWidgets();
