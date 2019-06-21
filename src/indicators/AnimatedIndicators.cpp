@@ -40,6 +40,7 @@ namespace KDDockWidgets {
 
 class AnimationStateBase : public QState
 {
+    Q_OBJECT
 public:
     AnimationStateBase(AnimatedIndicators *qq, AnimatedRubberBand *band, QState *parent)
         : QState(parent)
@@ -59,6 +60,7 @@ AnimationStateBase::~AnimationStateBase() {}
 class AnimationState_None : public AnimationStateBase
 {
     // In this state no rubber band is shown
+    Q_OBJECT
 public:
     explicit AnimationState_None(AnimatedIndicators *qq, AnimatedRubberBand *band, QState *parent)
         : AnimationStateBase(qq, band, parent)
@@ -79,6 +81,7 @@ AnimationState_None::~AnimationState_None() {}
 class AnimationState_AnimateShow : public AnimationStateBase
 {
     // In this state we show the rubber bands and start animating them
+    Q_OBJECT
 public:
     explicit AnimationState_AnimateShow(AnimatedIndicators *qq, AnimatedRubberBand *band, QState *parent)
         : AnimationStateBase(qq, band, parent)
@@ -99,6 +102,7 @@ AnimationState_AnimateShow::~AnimationState_AnimateShow() {}
 
 class AnimationState_ShowingRubberBands : public AnimationStateBase
 {
+    Q_OBJECT
 public:
     explicit AnimationState_ShowingRubberBands(AnimatedIndicators *qq, AnimatedRubberBand *band, QState *parent)
         : AnimationStateBase(qq, band, parent)
@@ -117,6 +121,7 @@ AnimationState_ShowingRubberBands::~AnimationState_ShowingRubberBands() {}
 
 class AnimationState_AnimateHide : public AnimationStateBase
 {
+    Q_OBJECT
 public:
     explicit AnimationState_AnimateHide(AnimatedIndicators *qq, AnimatedRubberBand *band, QState *parent)
         : AnimationStateBase(qq, band, parent)
@@ -134,6 +139,7 @@ AnimationState_AnimateHide::~AnimationState_AnimateHide() {}
 class AnimationState_AnimateInflate : public AnimationStateBase
 {
     // In this state we show the rubber bands and start animating them
+    Q_OBJECT
 public:
     explicit AnimationState_AnimateInflate(AnimatedIndicators *qq, AnimatedRubberBand *band, QState *parent)
         : AnimationStateBase(qq, band, parent)
@@ -152,6 +158,7 @@ AnimationState_AnimateInflate::~AnimationState_AnimateInflate() {}
 class AnimationState_Inflated : public AnimationStateBase
 {
     // In this state we show the rubber bands and start animating them
+    Q_OBJECT
 public:
     explicit AnimationState_Inflated(AnimatedIndicators *qq, AnimatedRubberBand *band, QState *parent)
         : AnimationStateBase(qq, band, parent)
@@ -167,6 +174,7 @@ AnimationState_Inflated::~AnimationState_Inflated() {}
 
 class AnimationState_AnimateDeflate : public AnimationStateBase
 {
+    Q_OBJECT
 public:
     explicit AnimationState_AnimateDeflate(AnimatedIndicators *qq, AnimatedRubberBand *band, QState *parent)
         : AnimationStateBase(qq, band, parent)
@@ -560,3 +568,5 @@ AnimatedInnerRubberBand::AnimatedInnerRubberBand(Qt::Orientation orient,
 AnimatedInnerRubberBand::~AnimatedInnerRubberBand()
 {
 }
+
+#include <AnimatedIndicators.moc>
