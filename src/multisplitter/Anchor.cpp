@@ -273,8 +273,10 @@ const ItemList Anchor::items(Anchor::Side side) const
 
 void Anchor::consume(Anchor *other)
 {
+    QPointer<Anchor> otherp = other; // Just to check if it wasn't deleted meanwhile. Which doesn't happen, but we silence a clang-tidy warning this way.
     consume(other, Side1);
-    consume(other, Side2);
+    if (otherp)
+        consume(other, Side2);
 }
 
 void Anchor::consume(Anchor *other, Side side)
