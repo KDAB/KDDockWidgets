@@ -137,7 +137,7 @@ struct LayoutState
             constructFrameState(a->side1Items(), side1FrameStates);
             constructFrameState(a->side2Items(), side2FrameStates);
 
-            const Anchor::List allAnchors = a->m_multiSplitter->anchors();
+            const Anchor::List allAnchors = a->m_layout->anchors();
             index = allAnchors.indexOf(a);
             fromIndex = allAnchors.indexOf(a->from());
             toIndex = allAnchors.indexOf(a->to());

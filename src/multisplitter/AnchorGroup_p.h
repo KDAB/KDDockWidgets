@@ -54,7 +54,7 @@ struct AnchorGroup {
     Anchor *left = nullptr;
     Anchor *bottom = nullptr;
     Anchor *right = nullptr;
-    MultiSplitterLayout * multiSplitter;
+    MultiSplitterLayout * layout;
 };
 }
 

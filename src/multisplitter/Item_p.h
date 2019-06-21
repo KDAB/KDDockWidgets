@@ -109,8 +109,8 @@ public:
     QWidget* widget() const;
     QWidget *parentWidget() const;
 
-    MultiSplitterLayout *multiSplitter() const;
-    void setMultiSplitter(MultiSplitterLayout *w); // TODO: Make the widget children of this one?
+    MultiSplitterLayout *layout() const;
+    void setLayout(MultiSplitterLayout *w); // TODO: Make the widget children of this one?
 
     /**
      * Returns the width of the widget if orientation is Vertical, the height otherwise.

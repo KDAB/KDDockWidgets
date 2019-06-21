@@ -24,8 +24,8 @@
 
 using namespace KDDockWidgets;
 
-AnchorGroup::AnchorGroup(MultiSplitterLayout *m)
-    : multiSplitter(m)
+AnchorGroup::AnchorGroup(MultiSplitterLayout *l)
+    : layout(l)
 {
 }
 
@@ -58,7 +58,7 @@ Anchor *AnchorGroup::createAnchorFrom(Location fromAnchorLocation, Item *relativ
     Anchor *other = anchor(fromAnchorLocation);
     Q_ASSERT(other);
 
-    auto anchor = new Anchor(other->orientation(), other->m_multiSplitter);
+    auto anchor = new Anchor(other->orientation(), other->m_layout);
     if (anchor->isVertical()) {
         anchor->setFrom(top);
         anchor->setTo(bottom);
@@ -173,7 +173,7 @@ void AnchorGroup::addItem(MultiSplitterLayout *sourceMultiSplitter)
 
     // Reparent the widgets:
     for (Item *sourceItem : sourceMultiSplitter->items()) {
-        sourceItem->setMultiSplitter(multiSplitter);
+        sourceItem->setLayout(layout);
         sourceItem->setVisible(true);
     }
 
@@ -181,7 +181,7 @@ void AnchorGroup::addItem(MultiSplitterLayout *sourceMultiSplitter)
     for (Anchor *anchor : sourceMultiSplitter->anchors()) {
         if (!anchor->isStatic()) {
             const qreal positionPercentage = anchor->positionPercentage();
-            anchor->setParent(multiSplitter->parentWidget());
+            anchor->setParent(layout->parentWidget());
             anchor->setVisible(true);
 
             if (anchor->from()->isStatic()) {
@@ -231,7 +231,7 @@ void AnchorGroup::removeItem(Item *item)
     top->removeItem(item);
 
     if (left->isUnneeded()) {
-        multiSplitter->updateAnchorsFromTo(left, right);
+        layout->updateAnchorsFromTo(left, right);
         right->consume(left, Anchor::Side1);
 
         if (!right->isUnneeded() && !right->isStatic()) {
@@ -241,12 +241,12 @@ void AnchorGroup::removeItem(Item *item)
     }
 
     if (right->isUnneeded()) {
-        multiSplitter->updateAnchorsFromTo(right, left);
+        layout->updateAnchorsFromTo(right, left);
         left->consume(right, Anchor::Side2);
     }
 
     if (top->isUnneeded()) {
-        multiSplitter->updateAnchorsFromTo(top, bottom);
+        layout->updateAnchorsFromTo(top, bottom);
         bottom->consume(top, Anchor::Side1);
 
         if (!bottom->isUnneeded() && !bottom->isStatic()) {
@@ -256,7 +256,7 @@ void AnchorGroup::removeItem(Item *item)
     }
 
     if (bottom->isUnneeded()) {
-        multiSplitter->updateAnchorsFromTo(bottom, top);
+        layout->updateAnchorsFromTo(bottom, top);
         top->consume(bottom, Anchor::Side2);
     }
 }

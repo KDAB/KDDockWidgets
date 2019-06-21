@@ -244,7 +244,7 @@ public:
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
     Side m_lastMoveDirection = Side_None;
 
-    MultiSplitterLayout *m_multiSplitter = nullptr;
+    MultiSplitterLayout *m_layout = nullptr;
     bool m_showingSide1Rubberband = false;
     bool m_showingSide2Rubberband = false;
     bool m_initialized = false;

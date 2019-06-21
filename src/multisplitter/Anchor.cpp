@@ -34,7 +34,7 @@ Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, 
     : QWidget(multiSplitter->parentWidget())
     , m_orientation(orientation)
     , m_type(type)
-    , m_multiSplitter(multiSplitter)
+    , m_layout(multiSplitter)
 {
     if (isVertical())
         setFixedWidth(thickness(isStatic()));
@@ -49,7 +49,7 @@ Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, 
 Anchor::~Anchor()
 {
     qCDebug(multisplittercreation) << "~Anchor; this=" << this << "; m_to=" << m_to << "; m_from=" << m_from;
-    m_multiSplitter->removeAnchor(this);
+    m_layout->removeAnchor(this);
     for (Item *item : items(Side1))
         item->anchorGroup().setAnchor(nullptr, m_orientation, Side1);
     for (Item *item : items(Side2))
@@ -181,11 +181,11 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     if (isVertical()) {
         QWidget::move(p, y());
         if (recalculatePercentage)
-            m_positionPercentage = (p * 1.0) / m_multiSplitter->contentsWidth(); // We keep the percentage, so we don't constantly recalculate it during a resize, which introduces rounding errors
+            m_positionPercentage = (p * 1.0) / m_layout->contentsWidth(); // We keep the percentage, so we don't constantly recalculate it during a resize, which introduces rounding errors
     } else {
         QWidget::move(x(), p);
         if (recalculatePercentage)
-            m_positionPercentage = (p * 1.0) / m_multiSplitter->contentsHeight();
+            m_positionPercentage = (p * 1.0) / m_layout->contentsHeight();
     }
 }
 
@@ -315,7 +315,7 @@ void Anchor::removeAllItems()
 Anchor *Anchor::createFrom(Anchor *other, Item *relativeTo)
 {
     Q_ASSERT(other);
-    auto anchor = new Anchor(other->orientation(), other->m_multiSplitter);
+    auto anchor = new Anchor(other->orientation(), other->m_layout);
     anchor->setFrom(other->m_from);
     anchor->setTo(other->m_to);
 
@@ -350,7 +350,7 @@ void Anchor::setPositionOffset(int value)
 
 bool Anchor::isBeingDragged() const
 {
-    return m_multiSplitter->anchorBeingDragged() == this;
+    return m_layout->anchorBeingDragged() == this;
 }
 
 int Anchor::cumulativeMinLength(Anchor::Side side) const
@@ -424,10 +424,10 @@ void Anchor::leaveEvent(QEvent *)
 bool Anchor::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
-        m_multiSplitter->removeAnchor(this);
-        m_multiSplitter = qobject_cast<MultiSplitterWidget *>(parent())->multiSplitter();
-        Q_ASSERT(m_multiSplitter);
-        m_multiSplitter->insertAnchor(this);
+        m_layout->removeAnchor(this);
+        m_layout = qobject_cast<MultiSplitterWidget *>(parent())->multiSplitter();
+        Q_ASSERT(m_layout);
+        m_layout->insertAnchor(this);
     }
 
     return QWidget::event(e);
@@ -435,7 +435,7 @@ bool Anchor::event(QEvent *e)
 
 void Anchor::mousePressEvent(QMouseEvent *)
 {
-    m_multiSplitter->setAnchorBeingDragged(this);
+    m_layout->setAnchorBeingDragged(this);
     qCDebug(anchors) << "Drag started";
 }
 
@@ -445,7 +445,7 @@ void Anchor::mouseMoveEvent(QMouseEvent *e)
         return;
 
     const int positionToGoTo = position(mapToParent(e->pos()));
-    auto bounds = m_multiSplitter->boundPositionsForAnchor(this);
+    auto bounds = m_layout->boundPositionsForAnchor(this);
 
     if (positionToGoTo < bounds.first || positionToGoTo > bounds.second) {
         // qDebug() << "Out of bounds" << bounds.first << bounds.second << positionToGoTo << "; currentPos" << position() << "; window size" << window()->size();
@@ -460,7 +460,7 @@ void Anchor::mouseMoveEvent(QMouseEvent *e)
 
 void Anchor::mouseReleaseEvent(QMouseEvent *)
 {
-    m_multiSplitter->setAnchorBeingDragged(nullptr);
+    m_layout->setAnchorBeingDragged(nullptr);
 }
 
 void Anchor::move(int p)

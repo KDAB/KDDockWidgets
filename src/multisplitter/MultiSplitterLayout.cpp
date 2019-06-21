@@ -308,7 +308,7 @@ void MultiSplitterLayout::addItems_internal(const ItemList &items, bool updateCo
         updateSizeConstraints();
 
     for (auto item : items) {
-        item->setMultiSplitter(this);
+        item->setLayout(this);
         item->setVisible(true);
         item->widget()->installEventFilter(this);
         Q_EMIT widgetAdded(item);

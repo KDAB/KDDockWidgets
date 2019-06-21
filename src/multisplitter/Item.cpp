@@ -42,7 +42,7 @@ public:
     Item *const q;
     AnchorGroup m_anchorGroup;
     const QPointer<QWidget> m_widget;
-    QPointer<MultiSplitterLayout> m_multiSplitter;
+    QPointer<MultiSplitterLayout> m_layout;
     QRect m_geometry;
     bool m_destroying = false;
 };
@@ -53,7 +53,7 @@ Item::Item(QWidget *widget, MultiSplitterLayout *parent)
 {
     Q_ASSERT(parent);
     Q_ASSERT(d->m_widget);
-    setMultiSplitter(parent);
+    setLayout(parent);
     d->m_widget->installEventFilter(this);
 
     // auto destruction
@@ -75,8 +75,8 @@ Item::~Item()
         delete d->m_widget;
     }
 
-    if (d->m_multiSplitter) {
-        d->m_multiSplitter->removeItem(this);
+    if (d->m_layout) {
+        d->m_layout->removeItem(this);
     }
     delete d;
 }
@@ -159,14 +159,14 @@ QRect Item::geometry() const
 
 bool Item::eventFilter(QObject *o, QEvent *e)
 {
-    if (!d->m_multiSplitter)
+    if (!d->m_layout)
         return false;
 
-    if (e->type() == QEvent::ParentChange && !d->m_multiSplitter->m_beingMergedIntoAnotherMultiSplitter) {
-        if (o->parent() != d->m_multiSplitter->parentWidget())
-            d->m_multiSplitter->removeItem(this);
+    if (e->type() == QEvent::ParentChange && !d->m_layout->m_beingMergedIntoAnotherMultiSplitter) {
+        if (o->parent() != d->m_layout->parentWidget())
+            d->m_layout->removeItem(this);
     } else if (e->type() == QEvent::Show || e->type() == QEvent::Hide) {
-        d->m_multiSplitter->emitVisibleWidgetCountChanged();
+        d->m_layout->emitVisibleWidgetCountChanged();
     }
     return false;
 }
@@ -182,18 +182,18 @@ QWidget *Item::parentWidget() const
     return d->m_widget->parentWidget();
 }
 
-MultiSplitterLayout *Item::multiSplitter() const
+MultiSplitterLayout *Item::layout() const
 {
-    return d->m_multiSplitter;
+    return d->m_layout;
 }
 
-void Item::setMultiSplitter(MultiSplitterLayout *m)
+void Item::setLayout(MultiSplitterLayout *m)
 {
     Q_ASSERT(m);
     Q_ASSERT(d->m_widget);
-    if (m != d->m_multiSplitter) {
-        d->m_multiSplitter = m;
-        d->m_anchorGroup.multiSplitter = m;
+    if (m != d->m_layout) {
+        d->m_layout = m;
+        d->m_anchorGroup.layout = m;
         setParent(m);
         d->m_widget->setParent(m->parentWidget());
     }
