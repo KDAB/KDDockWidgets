@@ -210,7 +210,7 @@ Anchor *Item::anchor(Anchor::Side side, Qt::Orientation orientation) const
     return d->m_anchorGroup.anchor(side, orientation);
 }
 
-Anchor *Item::anchor(GeometryDiff geoDiff) const
+Anchor *Item::anchor(const GeometryDiff &geoDiff) const
 {
     if (!geoDiff.onlyOneSideChanged)
         return nullptr;

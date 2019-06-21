@@ -102,7 +102,7 @@ void LayoutMemory::removeWidget(const QWidget *widget)
     }
 
     m_items.removeOne(item);
-    for (auto i : m_items)
+    for (auto i : qAsConst(m_items))
         i->removeItem(item);
 
     for (auto loc : {Location_OnTop, Location_OnLeft, Location_OnRight, Location_OnBottom}) {
