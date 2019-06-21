@@ -12,6 +12,8 @@ set(DOCKSLIBS_SRCS
     Frame.cpp
     LastPosition.cpp
     LastPosition_p.h
+    LayoutMemory.cpp
+    LayoutMemory_p.h
     LayoutSaver.cpp
     Logging.cpp
     MainWindow.cpp
@@ -23,8 +25,6 @@ set(DOCKSLIBS_SRCS
     multisplitter/AnchorGroup.cpp
     multisplitter/MultiSplitter.cpp
     multisplitter/Item.cpp
-    multisplitter/LayoutMemory.cpp
-    multisplitter/LayoutMemory_p.h
     indicators/AnimatedIndicators.cpp
     indicators/ClassicIndicators.cpp)
 
