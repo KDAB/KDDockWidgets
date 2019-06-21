@@ -32,7 +32,7 @@ namespace KDDockWidgets {
 
 class Frame;
 class Draggable;
-class MultiSplitter;
+class MultiSplitterLayout;
 class DropIndicatorOverlayInterface;
 struct WindowBeingDragged;
 
@@ -62,7 +62,7 @@ public:
 
     void debug_updateItemNamesForGammaray();
 
-    bool checkSanity(MultiSplitter::AnchorSanityOption o = MultiSplitter::AnchorSanity_All);
+    bool checkSanity(MultiSplitterLayout::AnchorSanityOption o = MultiSplitterLayout::AnchorSanity_All);
     QWidget *window() const;
 private:
     Q_DISABLE_COPY(DropArea)

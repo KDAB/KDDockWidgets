@@ -29,7 +29,7 @@
 #define KD_FRAME_P_H
 
 #include "docks_export.h"
-#include "multisplitter/MultiSplitter_p.h"
+#include "multisplitter/MultiSplitterLayout_p.h"
 #include "Draggable_p.h"
 
 #include <QWidget>

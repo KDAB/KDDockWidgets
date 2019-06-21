@@ -19,7 +19,7 @@
 */
 
 #include "Anchor_p.h"
-#include "MultiSplitter_p.h"
+#include "MultiSplitterLayout_p.h"
 #include "MultiSplitterWidget_p.h"
 #include "Logging_p.h"
 
@@ -30,7 +30,7 @@
 
 using namespace KDDockWidgets;
 
-Anchor::Anchor(Qt::Orientation orientation, MultiSplitter *multiSplitter, Type type)
+Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type type)
     : QWidget(multiSplitter->parentWidget())
     , m_orientation(orientation)
     , m_type(type)

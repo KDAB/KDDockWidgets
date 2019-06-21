@@ -26,7 +26,7 @@
 
 namespace KDDockWidgets {
 
-class MultiSplitter;
+class MultiSplitterLayout;
 
 class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterWidget : public QWidget
 {
@@ -34,12 +34,12 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterWidget : public QWidget
 public:
     explicit MultiSplitterWidget(QWidget *parent = nullptr);
     ~MultiSplitterWidget() override;
-    MultiSplitter *multiSplitter() const { return m_layout; }
+    MultiSplitterLayout *multiSplitter() const { return m_layout; }
     int count() const;
 protected:
     bool event(QEvent *e) override;
     void resizeEvent(QResizeEvent *) override;
-    MultiSplitter *const m_layout;
+    MultiSplitterLayout *const m_layout;
 };
 
 

@@ -38,7 +38,7 @@ DropArea::DropArea(QWidget *parent)
     //setIndicatorStyle(DropIndicatorOverlayInterface::TypeAnimated);
     setIndicatorStyle(DropIndicatorOverlayInterface::TypeClassic);
 
-    connect(m_layout, &MultiSplitter::widgetAdded, this, [] (Item *item) {
+    connect(m_layout, &MultiSplitterLayout::widgetAdded, this, [] (Item *item) {
         if (!qobject_cast<Frame*>(item->widget())) {
             qWarning() << "A widget" << item->widget() << "that is not a Frame was added to multi-splitter."
                        << "; application might crash";
@@ -46,7 +46,7 @@ DropArea::DropArea(QWidget *parent)
         }
     });
 
-    connect(m_layout, &MultiSplitter::aboutToDumpDebug,
+    connect(m_layout, &MultiSplitterLayout::aboutToDumpDebug,
             this, &DropArea::debug_updateItemNamesForGammaray);
 }
 
@@ -155,7 +155,7 @@ void DropArea::debug_updateItemNamesForGammaray()
         a->debug_updateItemNames();
 }
 
-bool DropArea::checkSanity(MultiSplitter::AnchorSanityOption o)
+bool DropArea::checkSanity(MultiSplitterLayout::AnchorSanityOption o)
 {
     return m_layout->checkSanity(o);
 }

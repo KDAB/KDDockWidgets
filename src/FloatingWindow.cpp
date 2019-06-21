@@ -23,7 +23,7 @@
 #include "Frame_p.h"
 #include "TitleBar_p.h"
 #include "DragController_p.h"
-#include "multisplitter/MultiSplitter_p.h"
+#include "multisplitter/MultiSplitterLayout_p.h"
 #include "DropArea_p.h"
 #include "WindowBeingDragged_p.h"
 #include "Utils_p.h"
@@ -58,9 +58,9 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     m_vlayout->addWidget(m_dropArea);
 
     updateTitleBarVisibility();
-    connect(ms, &MultiSplitter::widgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
-    connect(ms, &MultiSplitter::widgetCountChanged, this, &FloatingWindow::numFramesChanged);
-    connect(ms, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
+    connect(ms, &MultiSplitterLayout::widgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
+    connect(ms, &MultiSplitterLayout::widgetCountChanged, this, &FloatingWindow::numFramesChanged);
+    connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
 }
 
 FloatingWindow::FloatingWindow(Frame *frame, QWidget *parent)

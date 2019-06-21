@@ -34,7 +34,7 @@
 namespace KDDockWidgets {
 
 struct AnchorGroup;
-class MultiSplitter;
+class MultiSplitterLayout;
 
 struct GeometryDiff
 {
@@ -89,7 +89,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject
 {
     Q_OBJECT
 public:
-    explicit Item(QWidget *widget, MultiSplitter *parent);
+    explicit Item(QWidget *widget, MultiSplitterLayout *parent);
     ~Item() override;
 
     int x() const;
@@ -109,8 +109,8 @@ public:
     QWidget* widget() const;
     QWidget *parentWidget() const;
 
-    MultiSplitter *multiSplitter() const;
-    void setMultiSplitter(MultiSplitter *w); // TODO: Make the widget children of this one?
+    MultiSplitterLayout *multiSplitter() const;
+    void setMultiSplitter(MultiSplitterLayout *w); // TODO: Make the widget children of this one?
 
     /**
      * Returns the width of the widget if orientation is Vertical, the height otherwise.

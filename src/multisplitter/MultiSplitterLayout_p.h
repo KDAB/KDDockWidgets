@@ -75,13 +75,13 @@ inline int widgetMinLength(const T *w, Qt::Orientation orientation)
  * A MultiSplitter is simply a list of Anchors, each one of them handling the resizing of widgets.
  * See the documentation for Anchor.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter : public QObject
+class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY widgetCountChanged)
 public:
-    explicit MultiSplitter(QWidget *parent = nullptr);
-    ~MultiSplitter() override;
+    explicit MultiSplitterLayout(QWidget *parent = nullptr);
+    ~MultiSplitterLayout() override;
 
     QWidget *parentWidget() const;
 
@@ -267,7 +267,7 @@ private:
      * When location is Left or Right then the length represents a width, otherwise an height.
      * This function is also called to know the size of the rubberband when hovering over a location.
      */
-    MultiSplitter::Length lengthForDrop(const QWidget *widget, KDDockWidgets::Location location,
+    MultiSplitterLayout::Length lengthForDrop(const QWidget *widget, KDDockWidgets::Location location,
                                         const Item *relativeTo) const;
     void insertAnchor(Anchor *);
     void removeAnchor(Anchor *);

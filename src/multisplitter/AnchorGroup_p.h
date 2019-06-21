@@ -27,15 +27,15 @@
 
 namespace KDDockWidgets {
 
-class MultiSplitter;
+class MultiSplitterLayout;
 class Anchor;
 class Item;
 
 struct AnchorGroup {
-    explicit AnchorGroup(MultiSplitter *);
+    explicit AnchorGroup(MultiSplitterLayout *);
 
     void addItem(Item *item);
-    void addItem(MultiSplitter *);
+    void addItem(MultiSplitterLayout *);
     void removeItem(Item *item);
     bool isValid() const { return top && left && bottom && right; }
 
@@ -54,7 +54,7 @@ struct AnchorGroup {
     Anchor *left = nullptr;
     Anchor *bottom = nullptr;
     Anchor *right = nullptr;
-    MultiSplitter * multiSplitter;
+    MultiSplitterLayout * multiSplitter;
 };
 }
 

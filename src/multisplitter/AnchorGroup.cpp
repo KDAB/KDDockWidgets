@@ -20,11 +20,11 @@
 
 #include "AnchorGroup_p.h"
 #include "Anchor_p.h"
-#include "MultiSplitter_p.h"
+#include "MultiSplitterLayout_p.h"
 
 using namespace KDDockWidgets;
 
-AnchorGroup::AnchorGroup(MultiSplitter *m)
+AnchorGroup::AnchorGroup(MultiSplitterLayout *m)
     : multiSplitter(m)
 {
 }
@@ -162,7 +162,7 @@ void AnchorGroup::addItem(Item *item)
     bottom->addItem(item, Anchor::Side1);
 }
 
-void AnchorGroup::addItem(MultiSplitter *sourceMultiSplitter)
+void AnchorGroup::addItem(MultiSplitterLayout *sourceMultiSplitter)
 {
     // Here we rip all the widgets and anchors from the source multisplitter into the receiving multisplitter
     // preserving the layout between source widgets. Then we delete the source splitter, as all its

@@ -19,7 +19,7 @@
 */
 
 #include "MultiSplitterWidget_p.h"
-#include "MultiSplitter_p.h"
+#include "MultiSplitterLayout_p.h"
 #include "Logging_p.h"
 
 #include <QResizeEvent>
@@ -28,7 +28,7 @@ using namespace KDDockWidgets;
 
 MultiSplitterWidget::MultiSplitterWidget(QWidget *parent)
     : QWidget(parent)
-    , m_layout(new MultiSplitter(this))
+    , m_layout(new MultiSplitterLayout(this))
 {
 }
 

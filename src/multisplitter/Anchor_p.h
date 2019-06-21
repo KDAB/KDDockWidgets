@@ -29,7 +29,7 @@
 namespace KDDockWidgets {
 
 class Item;
-class MultiSplitter;
+class MultiSplitterLayout;
 
 typedef QVector<Item*> ItemList;
 
@@ -118,7 +118,7 @@ public:
     Q_DECLARE_FLAGS(SetPositionOptions, SetPositionOption)
 
     typedef QVector<Anchor *> List;
-    explicit Anchor(Qt::Orientation orientation, MultiSplitter *multiSplitter, Type = Type_None);
+    explicit Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type = Type_None);
     ~Anchor() override;
     int pos() const;
 
@@ -138,7 +138,7 @@ public:
 
     /**
      * Returns how far left or top an anchor can go and still respecting it's Side1 widgets min-size.
-     * This function doesn't count with shifting other anchors, for that use MultiSplitter::boundPositionsForAnchor()
+     * This function doesn't count with shifting other anchors, for that use MultiSplitterLayout::boundPositionsForAnchor()
      * which is is recursive and returns the bounds after simulating that intermediary anchors to the left/top were
      * also resized (each still respecting widgets min sizes though).
      */
@@ -244,7 +244,7 @@ public:
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
     Side m_lastMoveDirection = Side_None;
 
-    MultiSplitter *m_multiSplitter = nullptr;
+    MultiSplitterLayout *m_multiSplitter = nullptr;
     bool m_showingSide1Rubberband = false;
     bool m_showingSide2Rubberband = false;
     bool m_initialized = false;

@@ -19,7 +19,7 @@
 */
 
 #include "Item_p.h"
-#include "MultiSplitter_p.h"
+#include "MultiSplitterLayout_p.h"
 #include "Logging_p.h"
 #include "AnchorGroup_p.h"
 
@@ -30,7 +30,7 @@ using namespace KDDockWidgets;
 class Item::Private {
 public:
 
-    Private(Item *qq, QWidget *widget, MultiSplitter *parent)
+    Private(Item *qq, QWidget *widget, MultiSplitterLayout *parent)
         : q(qq)
         , m_anchorGroup(parent)
         , m_widget(widget)
@@ -42,12 +42,12 @@ public:
     Item *const q;
     AnchorGroup m_anchorGroup;
     const QPointer<QWidget> m_widget;
-    QPointer<MultiSplitter> m_multiSplitter;
+    QPointer<MultiSplitterLayout> m_multiSplitter;
     QRect m_geometry;
     bool m_destroying = false;
 };
 
-Item::Item(QWidget *widget, MultiSplitter *parent)
+Item::Item(QWidget *widget, MultiSplitterLayout *parent)
     : QObject(parent)
     , d(new Private(this, widget, parent))
 {
@@ -182,12 +182,12 @@ QWidget *Item::parentWidget() const
     return d->m_widget->parentWidget();
 }
 
-MultiSplitter *Item::multiSplitter() const
+MultiSplitterLayout *Item::multiSplitter() const
 {
     return d->m_multiSplitter;
 }
 
-void Item::setMultiSplitter(MultiSplitter *m)
+void Item::setMultiSplitter(MultiSplitterLayout *m)
 {
     Q_ASSERT(m);
     Q_ASSERT(d->m_widget);
