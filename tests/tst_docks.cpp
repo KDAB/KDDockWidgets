@@ -18,6 +18,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// We don't care about performance related checks in the tests
+// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref
+
 #include "DockWidget.h"
 #include "MainWindow.h"
 #include "FloatingWindow_p.h"
@@ -195,7 +198,7 @@ public Q_SLOTS:
         qApp->setApplicationName(QStringLiteral("dockwidgets-unit-tests"));
         s_original = qInstallMessageHandler(fatalWarningsMessageHandler);
     }
-
+public:
     static void nestDockWidget(DockWidget *dock, DropArea *dropArea, QWidget *relativeTo, KDDockWidgets::Location location);
 
 private Q_SLOTS:

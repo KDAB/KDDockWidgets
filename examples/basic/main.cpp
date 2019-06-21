@@ -45,9 +45,10 @@ static MyWidget *newMyWidget()
 
 class MyMainWindow : public MainWindow
 {
+    Q_OBJECT
 public:
-    MyMainWindow(MainWindowOptions options)
-        : MainWindow(QStringLiteral("MyMainWindow"), options)
+    MyMainWindow(MainWindowOptions options, QWidget *parent = nullptr)
+        : MainWindow(QStringLiteral("MyMainWindow"), options, parent)
     {
         auto menubar = menuBar();
         auto fileMenu = new QMenu(QStringLiteral("File"));
@@ -137,3 +138,5 @@ int main(int argc, char **argv)
 
     return app.exec();
 }
+
+#include <main.moc>

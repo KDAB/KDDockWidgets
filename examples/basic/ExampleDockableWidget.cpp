@@ -25,8 +25,8 @@
 #include <QRadioButton>
 #include <QPushButton>
 
-MyWidget::MyWidget()
-    : QWidget()
+MyWidget::MyWidget(QWidget *parent)
+    : QWidget(parent)
 {
     auto l = new QVBoxLayout(this);
 

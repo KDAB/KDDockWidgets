@@ -25,10 +25,10 @@
 
 class MyWidget : public QWidget
 {
+    Q_OBJECT
 public:
-    MyWidget();
+    explicit MyWidget(QWidget *parent = nullptr);
     ~MyWidget();
-
 };
 
 #endif
