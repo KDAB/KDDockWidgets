@@ -194,9 +194,22 @@ public:
     Item *itemForWidget(const QWidget *w) const;
 
 Q_SIGNALS:
+    ///@brief emited when the number of widgets changes
+    ///@param count the new widget count
     void widgetCountChanged(int count);
+
     void visibleWidgetCountChanged(int count);
-    void widgetAdded(KDDockWidgets::Item*);
+
+    ///@brief emited when a widget is added
+    ///@param item the item containing the new widget
+    void widgetAdded(KDDockWidgets::Item *item);
+
+    ///@brief emited when a widget is removed
+    ///@param item the item containing the removed widget
+    void widgetRemoved(KDDockWidgets::Item *item);
+
+    ///@brief emitted right before dumping debug
+    ///@sa dumpDebug
     void aboutToDumpDebug() const; // clazy:exclude=const-signal-or-slot
 
 protected:
