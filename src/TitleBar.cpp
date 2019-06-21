@@ -183,6 +183,8 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(m_dockWidget));
     }
 
+    qDebug() << "BAR " << m_floatingWindow;
+
     qCDebug(hovering) << "TitleBar::makeWindow: isFloating=" << isFloating() << "; isTheOnlyFrame=" << m_frame->isTheOnlyFrame() << "; frame=" << m_frame;
     if (FloatingWindow *fw = isFloating()) { // Already floating
         if (m_frame->isTheOnlyFrame()) { // We dont' detach. This one drags the entire window instead.

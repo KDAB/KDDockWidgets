@@ -31,14 +31,14 @@
 using namespace KDDockWidgets;
 
 DropArea::DropArea(QWidget *parent)
-    : MultiSplitter(parent)
+    : MultiSplitterWidget(parent)
 {
     qCDebug(creation) << "DropArea";
 
     //setIndicatorStyle(DropIndicatorOverlayInterface::TypeAnimated);
     setIndicatorStyle(DropIndicatorOverlayInterface::TypeClassic);
 
-    connect(this, &MultiSplitter::widgetAdded, this, [] (Item *item) {
+    connect(m_layout, &MultiSplitter::widgetAdded, this, [] (Item *item) {
         if (!qobject_cast<Frame*>(item->widget())) {
             qWarning() << "A widget" << item->widget() << "that is not a Frame was added to multi-splitter."
                        << "; application might crash";
@@ -46,7 +46,7 @@ DropArea::DropArea(QWidget *parent)
         }
     });
 
-    connect(this, &MultiSplitter::aboutToDumpDebug,
+    connect(m_layout, &MultiSplitter::aboutToDumpDebug,
             this, &DropArea::debug_updateItemNamesForGammaray);
 }
 
@@ -58,7 +58,7 @@ DropArea::~DropArea()
 
 int DropArea::numFrames() const
 {
-    return count();
+    return m_layout->count();
 }
 
 void DropArea::setIndicatorStyle(DropIndicatorOverlayInterface::Type indicatorType)
@@ -86,7 +86,7 @@ DropIndicatorOverlayInterface::Type DropArea::indicatorStyle() const
 
 Anchor::List DropArea::nonStaticAnchors() const
 {
-    auto anchors = MultiSplitter::anchors();
+    auto anchors = m_layout->anchors();
     Anchor::List result;
     for (Anchor *anchor : anchors) {
         if (!anchor->isStatic())
@@ -98,7 +98,7 @@ Anchor::List DropArea::nonStaticAnchors() const
 
 Frame *DropArea::frameContainingPos(QPoint globalPos) const
 {
-    const ItemList &items = this->items();
+    const ItemList &items = m_layout->items();
     for (Item *item : items) {
         auto frame = qobject_cast<Frame *>(item->widget());
         if (!frame || !frame->isVisible()) {
@@ -113,7 +113,7 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
 
 Item *DropArea::centralFrame() const
 {
-    for (Item *item : items()) {
+    for (Item *item : m_layout->items()) {
         if (auto f = qobject_cast<Frame*>(item->widget())) {
             if (f->isCentralFrame())
                 return item;
@@ -129,7 +129,7 @@ void DropArea::addDockWidget(DockWidget *dw, Location location, DockWidget *rela
     auto frame = new Frame();
     frame->addWidget(dw);
     Frame *relativeToFrame = relativeTo ? relativeTo->frame() : nullptr;
-    addWidget(frame, location, relativeToFrame);
+    m_layout->addWidget(frame, location, relativeToFrame);
 }
 
 bool DropArea::isInMainWindow() const
@@ -144,15 +144,28 @@ bool DropArea::isInFloatingWindow() const
 
 void DropArea::debug_updateItemNamesForGammaray()
 {
-    for (Item *item : items()) {
+    for (Item *item : m_layout->items()) {
         if (auto frame = qobject_cast<Frame*>(item->widget())) {
             if (!frame->dockWidgets().isEmpty())
                 frame->setObjectName(frame->dockWidgets().at(0)->objectName());
         }
     }
 
-    for (Anchor *a : anchors())
+    for (Anchor *a : m_layout->anchors())
         a->debug_updateItemNames();
+}
+
+bool DropArea::checkSanity(MultiSplitter::AnchorSanityOption o)
+{
+    return m_layout->checkSanity(o);
+}
+
+QWidget *DropArea::window() const
+{
+    if (auto pw = parentWidget())
+        return pw->window();
+
+    return nullptr;
 }
 
 void DropArea::hover(Draggable *draggable, QPoint globalPos)
@@ -250,9 +263,9 @@ bool DropArea::drop(QWidget *droppedWindow, KDDockWidgets::Location location, QW
     if (auto dock = qobject_cast<DockWidget *>(droppedWindow)) {
         auto frame = new Frame();
         frame->addWidget(dock);
-        addWidget(frame, location, relativeTo);
+        m_layout->addWidget(frame, location, relativeTo);
     } else if (floatingWindow) {
-        addMultiSplitter(floatingWindow->dropArea(), location, relativeTo);
+        m_layout->addMultiSplitter(floatingWindow->dropArea(), location, relativeTo);
         return true;
     } else {
         qWarning() << "Unknown dropped widget" << droppedWindow;

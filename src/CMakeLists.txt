@@ -24,6 +24,8 @@ set(DOCKSLIBS_SRCS
     multisplitter/Anchor.cpp
     multisplitter/AnchorGroup.cpp
     multisplitter/MultiSplitter.cpp
+    multisplitter/MultiSplitterWidget.cpp
+    multisplitter/MultiSplitterWidget_p.h
     multisplitter/Item.cpp
     indicators/AnimatedIndicators.cpp
     indicators/ClassicIndicators.cpp)

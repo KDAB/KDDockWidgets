@@ -20,6 +20,7 @@
 
 #include "Anchor_p.h"
 #include "MultiSplitter_p.h"
+#include "MultiSplitterWidget_p.h"
 #include "Logging_p.h"
 
 #include <QDebug>
@@ -30,7 +31,7 @@
 using namespace KDDockWidgets;
 
 Anchor::Anchor(Qt::Orientation orientation, MultiSplitter *multiSplitter, Type type)
-    : QWidget(multiSplitter)
+    : QWidget(multiSplitter->parentWidget())
     , m_orientation(orientation)
     , m_type(type)
     , m_multiSplitter(multiSplitter)
@@ -424,7 +425,7 @@ bool Anchor::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
         m_multiSplitter->removeAnchor(this);
-        m_multiSplitter = qobject_cast<MultiSplitter *>(parent());
+        m_multiSplitter = qobject_cast<MultiSplitterWidget *>(parent())->multiSplitter();
         Q_ASSERT(m_multiSplitter);
         m_multiSplitter->insertAnchor(this);
     }

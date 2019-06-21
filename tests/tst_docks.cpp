@@ -241,7 +241,7 @@ private Q_SLOTS:
     void tst_setFloatingFalseWhenSideBySide();
     void tst_setVisibleFalseWhenSideBySide();
 private:
-    std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup) const;
+    std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup) const;
 };
 }
 
@@ -509,7 +509,7 @@ void TestDocks::nestDockWidget(DockWidget *dock, DropArea *dropArea, QWidget *re
              << "; min width=" << widgetMinLength(frame, Qt::Vertical)
              << "; min height=" << widgetMinLength(frame, Qt::Horizontal);
 
-    dropArea->addWidget(frame, location, relativeTo);
+    dropArea->multiSplitter()->addWidget(frame, location, relativeTo);
     QVERIFY(dropArea->checkSanity());
     qDebug() << "Size after adding: " << frame->size();
 }
@@ -761,7 +761,7 @@ void TestDocks::tst_anchorsFromTo()
     QVERIFY(dropArea->checkSanity());
 
     auto nonStaticAnchors = dropArea->nonStaticAnchors();
-    AnchorGroup staticAnchors = dropArea->staticAnchorGroup();
+    AnchorGroup staticAnchors = dropArea->multiSplitter()->staticAnchorGroup();
 
     QVERIFY(staticAnchors.isValid());
     QCOMPARE(nonStaticAnchors.size(), 2);
@@ -777,8 +777,8 @@ void TestDocks::tst_anchorsFromTo()
     DockWidget *bottom = createAndNestDockWidget(dropArea, dropArea, KDDockWidgets::Location_OnBottom);
     QVERIFY(dropArea->checkSanity());
     nonStaticAnchors = dropArea->nonStaticAnchors();
-    auto horizAnchors = dropArea->anchors(Qt::Horizontal);
-    auto vertAnchors = dropArea->anchors(Qt::Vertical);
+    auto horizAnchors = dropArea->multiSplitter()->anchors(Qt::Horizontal);
+    auto vertAnchors = dropArea->multiSplitter()->anchors(Qt::Vertical);
     QCOMPARE(nonStaticAnchors.size(), 3);
     QCOMPARE(horizAnchors.size(), 1);
     QCOMPARE(vertAnchors.size(), 2);
@@ -806,8 +806,8 @@ void TestDocks::tst_anchorsFromTo()
         QVERIFY(false);
     }
     nonStaticAnchors = dropArea->nonStaticAnchors();
-    horizAnchors = dropArea->anchors(Qt::Horizontal);
-    vertAnchors = dropArea->anchors(Qt::Vertical);
+    horizAnchors = dropArea->multiSplitter()->anchors(Qt::Horizontal);
+    vertAnchors = dropArea->multiSplitter()->anchors(Qt::Vertical);
     QCOMPARE(nonStaticAnchors.size(), 2);
     QCOMPARE(horizAnchors.size(), 0);
     QCOMPARE(vertAnchors.size(), 2);
@@ -1055,7 +1055,7 @@ void TestDocks::tst_dockInternal()
     QWidget *central = m->centralWidget();
     auto dropArea = qobject_cast<DropArea *>(central);
 
-    QWidget *centralWidget = dropArea->items()[0]->widget();
+    QWidget *centralWidget = dropArea->multiSplitter()->items()[0]->widget();
     nestDockWidget(dock1, dropArea, centralWidget, KDDockWidgets::Location_OnRight);
 
     QVERIFY(dock1->width() < dropArea->width() - centralWidget->width());
@@ -1390,10 +1390,10 @@ void TestDocks::tst_addToSmallMainWindow()
         QVERIFY(waitForResize(m.get()));
         qDebug() << "window size3=" << m->size();
 
-        QVERIFY(dropArea->contentsWidth() > 140);
+        QVERIFY(dropArea->multiSplitter()->contentsWidth() > 140);
 
-        QCOMPARE(dropArea->contentsWidth(), m->width());
-        qDebug() << "New size: " << m->width() << dropArea->contentsWidth()
+        QCOMPARE(dropArea->multiSplitter()->contentsWidth(), m->width());
+        qDebug() << "New size: " << m->width() << dropArea->multiSplitter()->contentsWidth()
                  << dropArea->minimumSize();
         QVERIFY(qobject_cast<DropArea*>(m->centralWidget())->checkSanity());
     }
@@ -1579,24 +1579,25 @@ void TestDocks::tst_propagateResize2()
     dropArea->checkSanity();
 }
 
-std::unique_ptr<MultiSplitter> TestDocks::createMultiSplitterFromSetup(MultiSplitterSetup setup) const
+std::unique_ptr<MultiSplitterWidget> TestDocks::createMultiSplitterFromSetup(MultiSplitterSetup setup) const
 {
-    auto multisplitter = std::unique_ptr<MultiSplitter>(new MultiSplitter());
-    multisplitter->show();
-    multisplitter->setContentsSize(setup.size);
+    auto widget = std::unique_ptr<MultiSplitterWidget>(new MultiSplitterWidget());
+    auto layout = widget->multiSplitter();
+    widget->show();
+    layout->setContentsSize(setup.size);
 
     const int count = setup.widgets.size();
     for (int i = 0; i < count; ++i) {
-        multisplitter->addWidget(setup.widgets[i], setup.locations[i], setup.relativeTos[i]);
+        layout->addWidget(setup.widgets[i], setup.locations[i], setup.relativeTos[i]);
     }
 
     for (WidgetResize wr : setup.widgetResizes) {
         qDebug() << "Resizing widget";
-        multisplitter->resizeItem(wr.w, wr.length, wr.orientation);
+        layout->resizeItem(wr.w, wr.length, wr.orientation);
         Q_ASSERT(widgetLength(wr.w, wr.orientation) == wr.length);
     }
 
-    return multisplitter;
+    return widget;
 }
 
 void TestDocks::tst_availableLengthForDrop_data()
@@ -1699,16 +1700,17 @@ void TestDocks::tst_availableLengthForDrop()
     QFETCH(MultiSplitterSetup, multisplitterSetup);
     QFETCH(ExpectedAvailableSizes, expectedAvailableSizes);
 
-    auto multisplitter = createMultiSplitterFromSetup(multisplitterSetup);
+    auto multisplitterWidget = createMultiSplitterFromSetup(multisplitterSetup);
+    auto layout = multisplitterWidget->multiSplitter();
 
     for (ExpectedAvailableSize expectedSize : expectedAvailableSizes) {
-        expectedSize.relativeTo = expectedSize.relativeTo == nullptr ? multisplitter.get() : expectedSize.relativeTo;
-        auto available = multisplitter->availableLengthForDrop(expectedSize.location, multisplitter->itemForWidget(expectedSize.relativeTo));
+        expectedSize.relativeTo = expectedSize.relativeTo == nullptr ? multisplitterWidget->parentWidget() : expectedSize.relativeTo;
+        auto available = layout->availableLengthForDrop(expectedSize.location, layout->itemForWidget(expectedSize.relativeTo));
         //qDebug() << available.length;
 
         QCOMPARE(available.length(), expectedSize.totalAvailable);
         if (available.side1Length != expectedSize.side1ExpectedSize) {
-            multisplitter->dumpDebug();
+            layout->dumpDebug();
             qDebug() << "loc=" << expectedSize.location << "; relativeTo=" << expectedSize.relativeTo;
             QCOMPARE(available.side1Length, expectedSize.side1ExpectedSize);
         }
@@ -1746,12 +1748,13 @@ void TestDocks::tst_rectForDrop()
 {
     QFETCH(MultiSplitterSetup, multisplitterSetup);
     QFETCH(ExpectedRectsForDrop, expectedRects);
-    auto multisplitter = createMultiSplitterFromSetup(multisplitterSetup);
-    qDebug() << "Created with contentsSize=" << multisplitter->contentsWidth() << multisplitter->contentsHeight()<< multisplitterSetup.size;
+    auto multisplitterWidget = createMultiSplitterFromSetup(multisplitterSetup);
+    auto layout = multisplitterWidget->multiSplitter();
+    qDebug() << "Created with contentsSize=" << layout->contentsWidth() << layout->contentsHeight()<< multisplitterSetup.size;
     for (ExpectedRectForDrop expected : expectedRects) {
-        expected.relativeTo = expected.relativeTo == nullptr ? multisplitter.get() : expected.relativeTo;
-        QRect actualRect = multisplitter->rectForDrop(expected.widgetToDrop, expected.location, multisplitter->itemForWidget(expected.relativeTo));
-        multisplitter->dumpDebug();
+        expected.relativeTo = expected.relativeTo == nullptr ? multisplitterWidget->parentWidget() : expected.relativeTo;
+        QRect actualRect = layout->rectForDrop(expected.widgetToDrop, expected.location, layout->itemForWidget(expected.relativeTo));
+        layout->dumpDebug();
         QCOMPARE(actualRect, expected.expectedRect);
         expected.widgetToDrop->deleteLater();
     }
@@ -1760,21 +1763,22 @@ void TestDocks::tst_rectForDrop()
 void TestDocks::tst_crash()
 {
     EnsureTopLevelsDeleted e;
-    MultiSplitter ms;
-    ms.setContentsSize(QSize(800, 316));
-    ms.show();
+    MultiSplitterWidget msw;
+    auto layout = msw.multiSplitter();
+    layout->setContentsSize(QSize(800, 316));
+    layout->parentWidget()->show();
 
     auto w1 = createWidget(200, QStringLiteral("w1"));
     auto w2 = createWidget(100, QStringLiteral("w2"));
     auto w3 = createWidget(100, QStringLiteral("w3"));
 
-    ms.addWidget(w3, KDDockWidgets::Location_OnBottom);
-    ms.addWidget(w2, KDDockWidgets::Location_OnTop, w3);
-    ms.addWidget(w1, KDDockWidgets::Location_OnTop, w2);
-    ms.resizeItem(w1, 308, Qt::Horizontal);
+    layout->addWidget(w3, KDDockWidgets::Location_OnBottom);
+    layout->addWidget(w2, KDDockWidgets::Location_OnTop, w3);
+    layout->addWidget(w1, KDDockWidgets::Location_OnTop, w2);
+    layout->resizeItem(w1, 308, Qt::Horizontal);
 
     auto w4 = createWidget(105, QStringLiteral("w4")); // side1 has 108pixels available, which doesn't fit the 5px for the new anchor, + 105 for the widget. Side2 must catter for the 5px.
-    ms.addWidget(w4, KDDockWidgets::Location_OnBottom, w1);
+    layout->addWidget(w4, KDDockWidgets::Location_OnBottom, w1);
 }
 
 void TestDocks::tst_setFloatingFalseWhenWasTabbed()

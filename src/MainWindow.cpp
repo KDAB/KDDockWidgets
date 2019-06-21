@@ -31,6 +31,7 @@
 #include "Logging_p.h"
 #include "DockRegistry_p.h"
 #include "multisplitter/MultiSplitter_p.h"
+#include "multisplitter/MultiSplitterWidget_p.h"
 
 #include <QApplication>
 
@@ -46,7 +47,7 @@ public:
         , m_centralFrame(createCentralFrame(options))
     {
         if (m_centralFrame)
-            addWidget(m_centralFrame, KDDockWidgets::Location_OnTop, {});
+            m_layout->addWidget(m_centralFrame, KDDockWidgets::Location_OnTop, {});
     }
 
     static Frame* createCentralFrame(MainWindowOptions options)

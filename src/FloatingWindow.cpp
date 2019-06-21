@@ -45,7 +45,8 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     , m_dropArea(new DropArea(this))
 
 {
-    m_dropArea->setExtraUselessSpace(QSize(0, m_titleBar->height()));
+    auto ms = m_dropArea->multiSplitter();
+    ms->setExtraUselessSpace(QSize(0, m_titleBar->height()));
 
     DockRegistry::self()->registerNestedWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
@@ -57,15 +58,15 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     m_vlayout->addWidget(m_dropArea);
 
     updateTitleBarVisibility();
-    connect(m_dropArea, &MultiSplitter::widgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
-    connect(m_dropArea, &MultiSplitter::widgetCountChanged, this, &FloatingWindow::numFramesChanged);
-    connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
+    connect(ms, &MultiSplitter::widgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
+    connect(ms, &MultiSplitter::widgetCountChanged, this, &FloatingWindow::numFramesChanged);
+    connect(ms, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
 }
 
 FloatingWindow::FloatingWindow(Frame *frame, QWidget *parent)
     : FloatingWindow(parent)
 {
-    m_dropArea->addWidget(frame, KDDockWidgets::Location_OnTop, {});
+    m_dropArea->multiSplitter()->addWidget(frame, KDDockWidgets::Location_OnTop, {});
 }
 
 FloatingWindow::~FloatingWindow()

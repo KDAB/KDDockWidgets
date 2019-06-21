@@ -23,12 +23,10 @@
 
 #include "docks_export.h"
 #include "Frame_p.h"
-#include "multisplitter/MultiSplitter_p.h"
+#include "multisplitter/MultiSplitterWidget_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 
 #include <QWidget>
-
-
 
 namespace KDDockWidgets {
 
@@ -38,7 +36,7 @@ class MultiSplitter;
 class DropIndicatorOverlayInterface;
 struct WindowBeingDragged;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS DropArea : public MultiSplitter
+class DOCKS_EXPORT_FOR_UNIT_TESTS DropArea : public MultiSplitterWidget
 {
     Q_OBJECT
 public:
@@ -64,6 +62,8 @@ public:
 
     void debug_updateItemNamesForGammaray();
 
+    bool checkSanity(MultiSplitter::AnchorSanityOption o = MultiSplitter::AnchorSanity_All);
+    QWidget *window() const;
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;

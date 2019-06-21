@@ -277,12 +277,14 @@ void Frame::setDropArea(DropArea *dt)
     if (dt != m_dropArea) {
         qCDebug(docking) << "Frame::setDropArea dt=" << dt;
         if (m_dropArea)
-            disconnect(m_dropArea, &DropArea::widgetCountChanged, this, &Frame::updateTitleBarVisibility);
+            disconnect(m_dropArea->multiSplitter(), &MultiSplitter::widgetCountChanged,
+                       this, &Frame::updateTitleBarVisibility);
 
         m_dropArea = dt;
 
         if (m_dropArea) {
-            connect(m_dropArea, &DropArea::widgetCountChanged, this, &Frame::updateTitleBarVisibility);
+            connect(m_dropArea->multiSplitter(), &MultiSplitter::widgetCountChanged,
+                    this, &Frame::updateTitleBarVisibility);
             updateTitleBarVisibility();
         }
     }
@@ -307,6 +309,7 @@ bool Frame::event(QEvent *e)
         if (auto dropArea = qobject_cast<DropArea *>(parentWidget())) {
             setDropArea(dropArea);
         } else {
+            Q_ASSERT(!parent());
             setDropArea(nullptr);
         }
     }

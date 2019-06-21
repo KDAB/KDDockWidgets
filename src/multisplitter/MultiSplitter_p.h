@@ -27,11 +27,12 @@
 #include "KDDockWidgets.h"
 #include "Item_p.h"
 
-#include <QWidget>
 #include <QLoggingCategory>
 #include <QPointer>
 
 namespace KDDockWidgets {
+
+class MultiSplitterWidget;
 
 /**
  * Returns the width of the widget if orientation is Vertical, the height otherwise.
@@ -74,12 +75,15 @@ inline int widgetMinLength(const T *w, Qt::Orientation orientation)
  * A MultiSplitter is simply a list of Anchors, each one of them handling the resizing of widgets.
  * See the documentation for Anchor.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter : public QWidget
+class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int count READ count NOTIFY widgetCountChanged)
 public:
     explicit MultiSplitter(QWidget *parent = nullptr);
     ~MultiSplitter() override;
+
+    QWidget *parentWidget() const;
 
     /**
      * Adds a widget to this MultiSplitter.
@@ -92,7 +96,7 @@ public:
      * if widgetFoo was at the left of widgetBar when in the donor splitter, then it will still be at left
      * of widgetBar when the whole splitter is dropped into this one.
      */
-    void addMultiSplitter(MultiSplitter *splitter, KDDockWidgets::Location location,
+    void addMultiSplitter(MultiSplitterWidget *splitter, KDDockWidgets::Location location,
                           QWidget *relativeTo = nullptr);
 
     /**
@@ -216,10 +220,8 @@ Q_SIGNALS:
     ///@sa dumpDebug
     void aboutToDumpDebug() const; // clazy:exclude=const-signal-or-slot
 
-protected:
+public:
     bool eventFilter(QObject *o, QEvent *e) override;
-    void resizeEvent(QResizeEvent *) override;
-    bool event(QEvent *) override;
     AnchorGroup anchorsForPos(QPoint pos) const;
     AnchorGroup staticAnchorGroup() const;
     Anchor::List anchors(Qt::Orientation, bool includeStatic = false) const;

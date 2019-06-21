@@ -51,8 +51,9 @@ Item::Item(QWidget *widget, MultiSplitter *parent)
     : QObject(parent)
     , d(new Private(this, widget, parent))
 {
+    Q_ASSERT(parent);
     Q_ASSERT(d->m_widget);
-    setMultiSplitter(d->m_multiSplitter);
+    setMultiSplitter(parent);
     d->m_widget->installEventFilter(this);
 
     // auto destruction
@@ -73,7 +74,10 @@ Item::~Item()
         d->m_destroying = true;
         delete d->m_widget;
     }
-    d->m_multiSplitter->removeItem(this);
+
+    if (d->m_multiSplitter) {
+        d->m_multiSplitter->removeItem(this);
+    }
     delete d;
 }
 
@@ -159,7 +163,7 @@ bool Item::eventFilter(QObject *o, QEvent *e)
         return false;
 
     if (e->type() == QEvent::ParentChange && !d->m_multiSplitter->m_beingMergedIntoAnotherMultiSplitter) {
-        if (o->parent() != d->m_multiSplitter)
+        if (o->parent() != d->m_multiSplitter->parentWidget())
             d->m_multiSplitter->removeItem(this);
     } else if (e->type() == QEvent::Show || e->type() == QEvent::Hide) {
         d->m_multiSplitter->emitVisibleWidgetCountChanged();
@@ -185,13 +189,13 @@ MultiSplitter *Item::multiSplitter() const
 
 void Item::setMultiSplitter(MultiSplitter *m)
 {
+    Q_ASSERT(m);
     Q_ASSERT(d->m_widget);
-
     if (m != d->m_multiSplitter) {
         d->m_multiSplitter = m;
         d->m_anchorGroup.multiSplitter = m;
         setParent(m);
-        d->m_widget->setParent(m);
+        d->m_widget->setParent(m->parentWidget());
     }
 }
 

@@ -350,7 +350,7 @@ QDataStream &operator<<(QDataStream &ds, const KDDockWidgets::LayoutState &s)
     ds << s.m_isInFloatingWindow;
     ds << s.m_name;
 
-    const auto anchors = s.m_dropArea->anchors();
+    const auto anchors = s.m_dropArea->multiSplitter()->anchors();
     ds << anchors.size();
 
     for (Anchor *anchor : anchors) {
@@ -399,7 +399,7 @@ void LayoutState::restore(DropArea *dropArea)
          return;
      }
 
-     if (!dropArea->checkSanity()) {
+     if (!dropArea->multiSplitter()->checkSanity()) {
          qWarning() << "Drop area is not sane, refusing to restore";
          return;
      }
@@ -415,10 +415,10 @@ void LayoutState::restore(DropArea *dropArea)
 
          Anchor *anchor = nullptr;
          if (a.isStatic()) {
-             anchor = dropArea->staticAnchor(a.type);
+             anchor = dropArea->multiSplitter()->staticAnchor(a.type);
              Q_ASSERT(anchor);
          } else {
-             anchor = new Anchor(a.orientation, dropArea);
+             anchor = new Anchor(a.orientation, dropArea->multiSplitter());
              anchor->setPosition(a.position);
          }
 
@@ -440,7 +440,7 @@ void LayoutState::restore(DropArea *dropArea)
 
      if (auto cf = dropArea->centralFrame()) {
          // Remove the built-in frame, it's much easier to just restore everything
-         dropArea->removeItem(cf);
+         dropArea->multiSplitter()->removeItem(cf);
          delete cf;
      }
 
@@ -457,7 +457,7 @@ void LayoutState::restore(DropArea *dropArea)
                      frame = framesById.value(f.id);
                  } else {
                      frame = new Frame(nullptr, f.options);
-                     auto item = new Item(frame, dropArea);
+                     auto item = new Item(frame, dropArea->multiSplitter());
                      framesById.insert(f.id, frame);
 
                      // qCDebug(restoring) << "Restoring frame name =" << frameName << "; numDocks=" << f.dockWidgets.size();
@@ -467,11 +467,11 @@ void LayoutState::restore(DropArea *dropArea)
                      }
 
                      frame->setCurrentTabIndex(f.currentTabIndex);
-                     dropArea->addItems_internal({ item }, /*updateSizeConstraints=*/ false);
+                     dropArea->multiSplitter()->addItems_internal({ item }, /*updateSizeConstraints=*/ false);
 
                  }
 
-                 anchor->addItem(dropArea->itemForWidget(frame), side);
+                 anchor->addItem(dropArea->multiSplitter()->itemForWidget(frame), side);
              }
          };
 
@@ -479,8 +479,8 @@ void LayoutState::restore(DropArea *dropArea)
          restoreFrames(Anchor::Side2, a.side2FrameStates);
      }
 
-     dropArea->updateSizeConstraints();
-     if (!dropArea->checkSanity()) {
+     dropArea->multiSplitter()->updateSizeConstraints();
+     if (!dropArea->multiSplitter()->checkSanity()) {
          qWarning() << "Restored an invalid layout, this should not happen";
      }
 }

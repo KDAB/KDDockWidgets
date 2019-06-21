@@ -181,7 +181,7 @@ void AnchorGroup::addItem(MultiSplitter *sourceMultiSplitter)
     for (Anchor *anchor : sourceMultiSplitter->anchors()) {
         if (!anchor->isStatic()) {
             const qreal positionPercentage = anchor->positionPercentage();
-            anchor->setParent(multiSplitter);
+            anchor->setParent(multiSplitter->parentWidget());
             anchor->setVisible(true);
 
             if (anchor->from()->isStatic()) {
