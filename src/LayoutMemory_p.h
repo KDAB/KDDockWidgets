@@ -111,6 +111,7 @@ struct LayoutMemory
     void removeDockWidget(const DockWidget *widget);
     bool containsDockWidget(const DockWidget *widget) const;
 
+private:
     MemoryItem::List itemsAtBorder(KDDockWidgets::Location) const;
     MemoryItem::Ptr itemForDockWidget(const DockWidget *widget) const;
 
