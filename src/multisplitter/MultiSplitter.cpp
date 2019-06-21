@@ -283,14 +283,15 @@ void MultiSplitter::addWidget(QWidget *w, Location location, QWidget *relativeTo
     if (sourceMultiSplitter) {
         auto items = sourceMultiSplitter->items();
         targetAnchorGroup.addItem(sourceMultiSplitter);
-        addItems_internal(items);
+        addItems_internal(items, location, relativeTo);
     } else {
         targetAnchorGroup.addItem(item);
-        addItems_internal(ItemList{ item });
+        addItems_internal(ItemList{ item }, location, relativeTo);
     }
 }
 
-void MultiSplitter::addItems_internal(const ItemList &items, bool updateConstraints)
+void MultiSplitter::addItems_internal(const ItemList &items, Location location,
+                                      Item *relativeTo, bool updateConstraints)
 {
     m_items << items;
     if (updateConstraints)
@@ -300,9 +301,14 @@ void MultiSplitter::addItems_internal(const ItemList &items, bool updateConstrai
         item->setMultiSplitter(this);
         item->setVisible(true);
         item->widget()->installEventFilter(this);
-        Q_EMIT widgetAdded(item);
+        Q_EMIT widgetAdded(item, location, relativeTo);
     }
     Q_EMIT widgetCountChanged(m_items.size());
+}
+
+void MultiSplitter::addItems_internal(const ItemList &items, bool updateConstraints)
+{
+    addItems_internal(items, Location_None, nullptr, updateConstraints);
 }
 
 void MultiSplitter::setExtraUselessSpace(QSize sz)

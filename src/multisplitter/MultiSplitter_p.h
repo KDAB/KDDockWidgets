@@ -148,8 +148,10 @@ public:
     bool anchorIsBeingDragged() const { return m_anchorBeingDragged != nullptr; }
     const Anchor::List anchors() const { return m_anchors; }
     Anchor *staticAnchor(Anchor::Type) const;
-    void addItems_internal(const ItemList &, bool updateConstraints = true);
+    void addItems_internal(const ItemList &, Location, Item *relativeTo, bool updateConstraints = true);
 
+    //@overload
+    void addItems_internal(const ItemList &, bool updateConstraints = true);
 
     /**
      * FloatingWindow for example must make space for its title bar, so that space isn't available
@@ -202,7 +204,9 @@ Q_SIGNALS:
 
     ///@brief emited when a widget is added
     ///@param item the item containing the new widget
-    void widgetAdded(KDDockWidgets::Item *item);
+    ///@param the location to where it was added
+    ///@param the widget relative to it was added
+    void widgetAdded(Item *item, Location loc, Item *relativeTo);
 
     ///@brief emited when a widget is removed
     ///@param item the item containing the removed widget
