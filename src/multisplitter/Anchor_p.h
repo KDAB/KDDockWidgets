@@ -73,7 +73,7 @@ typedef QVector<Item*> ItemList;
  * side1Widgets (Foo) and side2Widgets (Bar). This non-static anchors has from=top anchor, and to=bottom anchor.
  *
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS Anchor : public QWidget
+class DOCKS_EXPORT_FOR_UNIT_TESTS Anchor : public QWidget // clazy:exclude=ctor-missing-parent-argument
 {
     Q_OBJECT
 
