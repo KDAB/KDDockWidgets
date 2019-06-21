@@ -26,29 +26,31 @@
  */
 
 #include "LayoutMemory_p.h"
+#include "DockWidget.h"
+
 #include <QDebug>
 
 using namespace KDDockWidgets;
 
-void LayoutMemory::addWidget(const QWidget *widget,
+void LayoutMemory::addDockWidget(const DockWidget *widget,
                              KDDockWidgets::Location location,
-                             QWidget *relativeTo)
+                             DockWidget *relativeTo)
 {
     Q_ASSERT(widget);
 
-    if (containsWidget(widget)) {
+    if (containsDockWidget(widget)) {
         // Doesn't happen!
         Q_ASSERT(false);
-        qWarning() << "LayoutMemory::addWidget: already contained widget!" << widget;
+        qWarning() << "LayoutMemory::addDockWidget: already contained widget!" << widget;
         return;
     }
 
     const bool relativeToWindow = !relativeTo;
 
-    if (!relativeToWindow && !containsWidget(relativeTo)) {
+    if (!relativeToWindow && !containsDockWidget(relativeTo)) {
         // Doesn't happen!
         Q_ASSERT(false);
-        qWarning() << "LayoutMemory::addWidget: Doesn't know about relativeTo" << widget << relativeTo;
+        qWarning() << "LayoutMemory::addDockWidget: Doesn't know about relativeTo" << widget << relativeTo;
         return;
     }
 
@@ -63,7 +65,7 @@ void LayoutMemory::addWidget(const QWidget *widget,
     } else {
         // For documentation purposes let's assume location=left. (It will work the same with bottom, right, top).
 
-        auto relativeToItem = itemForWidget(relativeTo);
+        auto relativeToItem = itemForDockWidget(relativeTo);
         // If adding to the left of X, then it will share the neighbour widgets on top and bottom of relativeToItem
         // adjacentLocation(left) returns top.
         // opposite(top) returns bottom
@@ -86,18 +88,18 @@ void LayoutMemory::addWidget(const QWidget *widget,
     }
 
     QObject::connect(widget, &QObject::destroyed, widget, [this, widget] {
-        removeWidget(widget);
+        removeDockWidget(widget);
     });
 
     m_items.push_back(item);
 }
 
-void LayoutMemory::removeWidget(const QWidget *widget)
+void LayoutMemory::removeDockWidget(const DockWidget *widget)
 {    
-    auto item = itemForWidget(widget);
+    auto item = itemForDockWidget(widget);
     if (!item) {
         Q_ASSERT(false);
-        qWarning() << "LayoutMemory::removeWidget: Couldn't find widget" << widget;
+        qWarning() << "LayoutMemory::removeDockWidget: Couldn't find widget" << widget;
         return;
     }
 
@@ -156,10 +158,10 @@ LayoutMemory::MemoryItem::List LayoutMemory::itemsAtBorder(Location location) co
     return result;
 }
 
-LayoutMemory::MemoryItem::Ptr LayoutMemory::itemForWidget(const QWidget *widget) const
+LayoutMemory::MemoryItem::Ptr LayoutMemory::itemForDockWidget(const DockWidget *widget) const
 {
     for (auto &item : m_items) {
-        if (item->m_widget == widget)
+        if (item->m_dockWidget == widget)
             return item;
     }
 
@@ -167,9 +169,9 @@ LayoutMemory::MemoryItem::Ptr LayoutMemory::itemForWidget(const QWidget *widget)
     return {};
 }
 
-bool LayoutMemory::containsWidget(const QWidget *widget) const
+bool LayoutMemory::containsDockWidget(const DockWidget *widget) const
 {
-    return itemForWidget(widget).get() != nullptr;
+    return itemForDockWidget(widget).get() != nullptr;
 }
 
 LayoutMemory::MemoryItem::Ptr LayoutMemory::locMostItem(Location location,

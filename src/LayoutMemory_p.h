@@ -38,6 +38,8 @@
 namespace KDDockWidgets
 {
 
+class DockWidget;
+
 /**
  * @brief The LayoutMemory struct contains a simplified layout of a MultiSplitter.
  *
@@ -64,8 +66,8 @@ struct LayoutMemory
         typedef std::shared_ptr<MemoryItem> Ptr;
         typedef QVector<MemoryItem::Ptr> List;
 
-        explicit MemoryItem(const QWidget *w)
-            : m_widget(w) {}
+        explicit MemoryItem(const DockWidget *dw)
+            : m_dockWidget(dw) {}
 
         List& itemsAtLocation(KDDockWidgets::Location location)
         {
@@ -98,19 +100,19 @@ struct LayoutMemory
             m_rightItems.removeOne(item);
         }
 
-        const QWidget *const m_widget;
+        const DockWidget *const m_dockWidget;
         List m_topItems;
         List m_bottomItems;
         List m_leftItems;
         List m_rightItems;
     };
 
-    LayoutMemory();
-    void addWidget(const QWidget *widget, Location location, QWidget *relativeTo = nullptr);
-    void removeWidget(const QWidget *widget);
+    void addDockWidget(const DockWidget *widget, Location location, DockWidget *relativeTo = nullptr);
+    void removeDockWidget(const DockWidget *widget);
+    bool containsDockWidget(const DockWidget *widget) const;
+
     MemoryItem::List itemsAtBorder(KDDockWidgets::Location) const;
-    MemoryItem::Ptr itemForWidget(const QWidget *widget) const;
-    bool containsWidget(const QWidget *widget) const;
+    MemoryItem::Ptr itemForDockWidget(const DockWidget *widget) const;
 
     ///@brief returns the right-most, top-most, etc. item from a list of @p contiguousItems
     MemoryItem::Ptr locMostItem(Location location, const MemoryItem::List &contiguousItems) const;
