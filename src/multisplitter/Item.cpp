@@ -22,6 +22,7 @@
 #include "MultiSplitterLayout_p.h"
 #include "Logging_p.h"
 #include "AnchorGroup_p.h"
+#include "Frame_p.h"
 
 #include <QEvent>
 
@@ -30,41 +31,41 @@ using namespace KDDockWidgets;
 class Item::Private {
 public:
 
-    Private(Item *qq, QWidget *widget, MultiSplitterLayout *parent)
+    Private(Item *qq, Frame *widget, MultiSplitterLayout *parent)
         : q(qq)
         , m_anchorGroup(parent)
-        , m_widget(widget)
-        , m_geometry(m_widget->geometry())
+        , m_frame(widget)
+        , m_geometry(m_frame->geometry())
     {
     }
 
     void updateObjectName();
     Item *const q;
     AnchorGroup m_anchorGroup;
-    const QPointer<QWidget> m_widget;
+    const QPointer<Frame> m_frame;
     QPointer<MultiSplitterLayout> m_layout;
     QRect m_geometry;
     bool m_destroying = false;
 };
 
-Item::Item(QWidget *widget, MultiSplitterLayout *parent)
+Item::Item(Frame *frame, MultiSplitterLayout *parent)
     : QObject(parent)
-    , d(new Private(this, widget, parent))
+    , d(new Private(this, frame, parent))
 {
     Q_ASSERT(parent);
-    Q_ASSERT(d->m_widget);
+    Q_ASSERT(d->m_frame);
     setLayout(parent);
-    d->m_widget->installEventFilter(this);
+    d->m_frame->installEventFilter(this);
 
     // auto destruction
-    connect(d->m_widget, &QObject::destroyed, this, [this] {
+    connect(d->m_frame, &QObject::destroyed, this, [this] {
         if (!d->m_destroying) {
             d->m_destroying = true;
             delete this;
         }
     });
 
-    connect(d->m_widget, &QObject::objectNameChanged, this, [this] { d->updateObjectName(); });
+    connect(d->m_frame, &QObject::objectNameChanged, this, [this] { d->updateObjectName(); });
     d->updateObjectName();
 }
 
@@ -72,7 +73,7 @@ Item::~Item()
 {
     if (!d->m_destroying) {
         d->m_destroying = true;
-        delete d->m_widget;
+        delete d->m_frame;
     }
 
     if (d->m_layout) {
@@ -119,25 +120,25 @@ int Item::height() const
 
 bool Item::isVisible() const
 {
-    Q_ASSERT(d->m_widget);
-    return d->m_widget->isVisible();
+    Q_ASSERT(d->m_frame);
+    return d->m_frame->isVisible();
 }
 
 void Item::setVisible(bool v)
 {
-    Q_ASSERT(d->m_widget);
-    d->m_widget->setVisible(v);
+    Q_ASSERT(d->m_frame);
+    d->m_frame->setVisible(v);
 }
 
 void Item::setGeometry(QRect geo)
 {
-    Q_ASSERT(d->m_widget);
+    Q_ASSERT(d->m_frame);
     if (geo != d->m_geometry) {
 
         GeometryDiff geoDiff(d->m_geometry, geo);
 
         d->m_geometry = geo;
-        d->m_widget->setGeometry(geo);
+        d->m_frame->setGeometry(geo);
 
         if (d->m_anchorGroup.isValid() && geoDiff.onlyOneSideChanged) {
             const int lengthDelta = length(geoDiff.orientation()) - minLength(geoDiff.orientation());
@@ -173,13 +174,13 @@ bool Item::eventFilter(QObject *o, QEvent *e)
 
 QWidget *Item::widget() const
 {
-    return d->m_widget;
+    return d->m_frame;
 }
 
 QWidget *Item::parentWidget() const
 {
-    Q_ASSERT(d->m_widget);
-    return d->m_widget->parentWidget();
+    Q_ASSERT(d->m_frame);
+    return d->m_frame->parentWidget();
 }
 
 MultiSplitterLayout *Item::layout() const
@@ -190,12 +191,12 @@ MultiSplitterLayout *Item::layout() const
 void Item::setLayout(MultiSplitterLayout *m)
 {
     Q_ASSERT(m);
-    Q_ASSERT(d->m_widget);
+    Q_ASSERT(d->m_frame);
     if (m != d->m_layout) {
         d->m_layout = m;
         d->m_anchorGroup.layout = m;
         setParent(m);
-        d->m_widget->setParent(m->parentWidget());
+        d->m_frame->setParent(m->parentWidget());
     }
 }
 
@@ -248,29 +249,29 @@ int Item::cumulativeMinLength(Anchor::Side side, Qt::Orientation orientation) co
 
 int Item::minimumWidth() const
 {
-    Q_ASSERT(d->m_widget);
-    return d->m_widget->minimumWidth();
+    Q_ASSERT(d->m_frame);
+    return d->m_frame->minimumWidth();
 }
 
 int Item::minimumHeight() const
 {
-    Q_ASSERT(d->m_widget);
-    return d->m_widget->minimumHeight();
+    Q_ASSERT(d->m_frame);
+    return d->m_frame->minimumHeight();
 }
 
 QSize Item::minimumSize() const
 {
-    Q_ASSERT(d->m_widget);
-    return d->m_widget->minimumSize();
+    Q_ASSERT(d->m_frame);
+    return d->m_frame->minimumSize();
 }
 
 QSize Item::minimumSizeHint() const
 {
-    Q_ASSERT(d->m_widget);
-    return d->m_widget->minimumSizeHint();
+    Q_ASSERT(d->m_frame);
+    return d->m_frame->minimumSizeHint();
 }
 
 void Item::Private::updateObjectName()
 {
-    q->setObjectName(m_widget->objectName());
+    q->setObjectName(m_frame->objectName());
 }

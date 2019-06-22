@@ -28,13 +28,14 @@
 #include <QObject>
 
 /**
- * Represents an item that you put into a multi-splitter.
- * For now it's just wraps a QWidget, but could eventually be used in QML.
+ * @brief Implements an item that you put into a multi-splitter.
+ * For now it just wraps a KDDockWidgets::Frame, but could eventually be used in QML.
  */
 namespace KDDockWidgets {
 
 struct AnchorGroup;
 class MultiSplitterLayout;
+class Frame;
 
 struct GeometryDiff
 {
@@ -89,7 +90,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject
 {
     Q_OBJECT
 public:
-    explicit Item(QWidget *widget, MultiSplitterLayout *parent);
+    explicit Item(Frame *frame, MultiSplitterLayout *parent);
     ~Item() override;
 
     int x() const;

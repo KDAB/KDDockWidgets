@@ -21,6 +21,7 @@
 #include "MultiSplitterLayout_p.h"
 #include "Logging_p.h"
 #include "MultiSplitterWidget_p.h"
+#include "Frame_p.h"
 
 #include <QPushButton>
 #include <QEvent>
@@ -187,8 +188,11 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, QWidget *rela
         return;
     }
 
-    if (!sourceIsAMultiSplitter)
-        item = new Item(w, this);
+    if (!sourceIsAMultiSplitter) {
+        auto frame = qobject_cast<Frame*>(w);
+        Q_ASSERT(frame);
+        item = new Item(frame, this);
+    }
 
     if (relativeToThis) {
         if (!isEmpty())
