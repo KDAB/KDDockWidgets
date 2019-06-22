@@ -123,7 +123,8 @@ void Anchor::updateItemSizes()
                                             : QPoint(item->x(), position + thickness());
 
         geo.setTopLeft(topLeft);
-        item->setGeometry(geo);
+        if (!item->isPlaceholder())
+            item->setGeometry(geo);
     }
 
     position = this->position() - m_positionOffset;
@@ -135,7 +136,8 @@ void Anchor::updateItemSizes()
         const QPoint bottomRight = isVertical() ? QPoint(position - 1, geo.bottom())
                                                 : QPoint(geo.right(), position - 1);
         geo.setBottomRight(bottomRight);
-        item->setGeometry(geo);
+        if (!item->isPlaceholder())
+            item->setGeometry(geo);
     }
 }
 
@@ -174,6 +176,7 @@ void Anchor::setPosition(int p, SetPositionOptions options)
 {
     qCDebug(anchors) << Q_FUNC_INFO << "; visible="
                      << this << m_separatorWidget->isVisible() << "; p=" << p;
+
     m_initialized = true;
     if (position() == p)
         return;
@@ -260,6 +263,19 @@ bool Anchor::hasItems(Anchor::Side side) const
         Q_ASSERT(false);
         return false;
     }
+}
+
+bool Anchor::hasNonPlaceholderItems(Anchor::Side side) const
+{
+    auto &items = side == Side1 ? m_side1Items
+                                : m_side2Items;
+
+    for (Item *item : items) {
+        if (!item->isPlaceholder())
+            return true;
+    }
+
+    return false;
 }
 
 bool Anchor::containsItem(const Item *item, Anchor::Side side) const
@@ -389,6 +405,35 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
     return thickness() + minLength;
 }
 
+void Anchor::setFollowee(Anchor *followee)
+{
+    Q_ASSERT(this != m_followee);
+    if (m_followee == followee)
+        return;
+
+    qCDebug(placeholder) << Q_FUNC_INFO << "follower="
+                         << this << "; followee=" << followee;
+
+    if (followee)
+        disconnect(followee, &Anchor::positionChanged, this, &Anchor::onFolloweePositionChanged);
+
+    m_followee = followee;
+    setThickness();
+    if (m_followee) {
+        Q_ASSERT(orientation() == m_followee->orientation());
+        //setVisible(false);
+        setPosition(m_followee->position());
+        connect(m_followee, &Anchor::positionChanged, this, &Anchor::onFolloweePositionChanged);
+    } else {
+        setVisible(true);
+    }
+}
+
+void Anchor::onFolloweePositionChanged(int pos)
+{
+    setPosition(pos);
+}
+
 int Anchor::thickness(bool staticAnchor)
 {
     return staticAnchor ? 1 : 5;
@@ -401,6 +446,20 @@ void Anchor::setLayout(MultiSplitterLayout *layout)
     setParent(layout->parentWidget());
     m_separatorWidget->setParent(layout->parentWidget());
     m_layout->insertAnchor(this);
+    m_layout->setAnchorBeingDragged(nullptr);
+}
+
+void Anchor::setThickness()
+{
+    const int value = isFollowing() ? m_followee->thickness()
+                                    : thickness(isStatic());
+    if (isVertical()) {
+        m_separatorWidget->setFixedWidth(value);
+        m_geometry.setWidth(value);
+    } else {
+        m_separatorWidget->setFixedHeight(value);
+        m_geometry.setHeight(value);
+    }
 }
 
 int Anchor::position(QPoint p) const

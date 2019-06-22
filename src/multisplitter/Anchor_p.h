@@ -90,6 +90,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Anchor : public QObject // clazy:exclude=ctor-
     Q_PROPERTY(Anchor* from READ from WRITE setFrom NOTIFY fromChanged)
     Q_PROPERTY(Anchor* to READ to WRITE setTo NOTIFY toChanged)
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
+    Q_PROPERTY(Qt::Orientation orientation READ orientation CONSTANT)
 public:
     ///@brief represents the Anchor type
     ///An anchor can be of 2 types:
@@ -184,6 +185,8 @@ public:
     bool isUnneeded() const { return !isStatic() && (!hasItems(Side1) || !hasItems(Side2)); }
     bool isEmpty() const { return !hasItems(Side1) && !hasItems(Side2); }
     bool hasItems(Side) const;
+    bool hasNonPlaceholderItems(Side) const;
+    bool shouldFollow() const{ return !isStatic() && (!hasNonPlaceholderItems(Side1) || !hasNonPlaceholderItems(Side2)); }
 
     bool containsItem(const Item *w, Side side) const;
 
@@ -204,13 +207,20 @@ public:
 
     int cumulativeMinLength(Anchor::Side side) const;
 
+    void setFollowee(Anchor *);
+
     static int thickness(bool staticAnchor);
     static Anchor::Side oppositeSide(Side side);
+    void onFolloweePositionChanged(int pos);
+    bool isFollowing() const { return m_followee != nullptr; }
 
     void onMousePress();
     void onMouseReleased();
     void onMouseMoved(QPoint pt);
     void onWidgetMoved(int p);
+
+private:
+    void setThickness();
 
 Q_SIGNALS:
     void positionChanged(int pos);
@@ -250,9 +260,9 @@ public:
 
     QString m_debug_side1ItemNames;
     QString m_debug_side2ItemNames;
-
     SeparatorWidget *const m_separatorWidget;
     QRect m_geometry;
+    Anchor *m_followee = nullptr;;
 };
 }
 

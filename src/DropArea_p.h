@@ -51,7 +51,7 @@ public:
     void setIndicatorStyle(DropIndicatorOverlayInterface::Type);
     DropIndicatorOverlayInterface::Type indicatorStyle() const;
 
-    Anchor::List nonStaticAnchors() const;
+    Anchor::List nonStaticAnchors(bool includePlaceholders = false) const;
     Frame *frameContainingPos(QPoint globalPos) const;
     Item *centralFrame() const;
     DropIndicatorOverlayInterface *dropIndicatorOverlay() const { return m_dropIndicatorOverlay; }

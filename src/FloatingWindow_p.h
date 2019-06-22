@@ -79,7 +79,6 @@ protected:
 
     ///@brief reimplemented for debug purposes
     void resizeEvent(QResizeEvent *) override;
-
 private:
     Q_DISABLE_COPY(FloatingWindow)
     void maybeCreateResizeHandler();
@@ -89,6 +88,7 @@ private:
     TitleBar *const m_titleBar;
     QVBoxLayout *const m_vlayout;
     DropArea *const m_dropArea;
+    bool m_disableSetVisible = false;
 };
 }
 

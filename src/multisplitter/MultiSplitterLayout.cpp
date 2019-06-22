@@ -145,7 +145,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         return;
     }
 
-    Item* relativeToItem = itemForFrame(relativeToWidget);
+    Item *relativeToItem = itemForFrame(relativeToWidget);
 
     // Make some sanity checks:
     if (!validateInputs(w, location, relativeToItem))
@@ -176,10 +176,19 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     const bool sourceIsAMultiSplitter = sourceMultiSplitter != nullptr;
     const bool relativeToThis = relativeToItem == nullptr;
 
-
     AnchorGroup targetAnchorGroup = relativeToThis ? staticAnchorGroup()
                                                    : anchorsForPos(relativeToItem->geometry().center());
-    Q_ASSERT(targetAnchorGroup.isValid());
+    if (!targetAnchorGroup.isValid()) {
+        qWarning() << Q_FUNC_INFO << "Invalid anchor group=\n"
+                   << "    " << &targetAnchorGroup
+                   << "\n      staticAnchorGroup=" << staticAnchorGroup()
+                   << "\n      relativeToThis=" << relativeToThis
+                   << "\n      relativeToWidget=" << relativeToWidget
+                   << "\n      relativeTo=" << relativeToItem;
+
+        dumpDebug();
+        Q_ASSERT(false);
+    }
 
     Anchor *newAnchor = nullptr;
     const QRect dropRect = rectForDrop(w, location, relativeToItem);
@@ -469,7 +478,8 @@ void MultiSplitterLayout::removeItem(Item *item)
     if (!item || m_inDestructor || !m_items.contains(item))
         return;
 
-    item->frame()->removeEventFilter(this);
+    if (!item->isPlaceholder())
+        item->frame()->removeEventFilter(this);
     AnchorGroup anchorGroup = item->anchorGroup();
     anchorGroup.removeItem(item);
     m_items.removeOne(item);
@@ -511,8 +521,8 @@ void MultiSplitterLayout::clear()
 int MultiSplitterLayout::visibleCount() const
 {
     int count = 0;
-    for (auto w : m_items)
-        if (w->isVisible())
+    for (auto item : m_items)
+        if (!item->isPlaceholder())
             count++;
     return count;
 }
@@ -840,11 +850,12 @@ AnchorGroup MultiSplitterLayout::staticAnchorGroup() const
     return m_staticAnchorGroup;
 }
 
-Anchor::List MultiSplitterLayout::anchors(Qt::Orientation orientation, bool includeStatic) const
+Anchor::List MultiSplitterLayout::anchors(Qt::Orientation orientation, bool includeStatic,
+                                          bool includePlaceholders) const
 {
     Anchor::List result;
     for (Anchor *anchor : m_anchors) {
-        if ((includeStatic || !anchor->isStatic()) && anchor->orientation() == orientation)
+        if ((includeStatic || !anchor->isStatic()) && (includePlaceholders || !anchor->isFollowing()) && anchor->orientation() == orientation)
             result << anchor;
     }
 
@@ -1002,7 +1013,7 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
     if (options & AnchorSanity_Intersections) {
         for (Item *item: items()) {
             for (Anchor *a : anchors()) {
-                if (item->geometry().intersects(a->geometry())) {
+                if (!item->isPlaceholder() && item->geometry().intersects(a->geometry())) {
                     dumpDebug();
                     qWarning() << "MultiSplitterLayout::checkSanity: Widget" << item << "with rect" << item->geometry()
                                << "Intersects anchor" << a << "with rect" << a->geometry();
@@ -1036,6 +1047,34 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
     }
 
     return true;
+}
+
+void MultiSplitterLayout::restorePlaceholder(Item *item)
+{
+    AnchorGroup anchorGroup = item->anchorGroup();
+    Anchor *anchorToMove = anchorGroup.anchorFollowing();
+    Q_ASSERT(anchorToMove);
+
+    Anchor *adjacentAnchor = anchorGroup.adjacentAnchor(anchorToMove);
+    adjacentAnchor->updateItemSizes();
+    adjacentAnchor = anchorGroup.oppositeAnchor(adjacentAnchor);
+    adjacentAnchor->updateItemSizes();
+
+    // If we're shifting, say, the right anchor, width will change this much:
+    const int requiredLength = item->length(anchorToMove->orientation());
+
+    const int oldPosition = anchorToMove->position();
+
+    // The anchor stops following other, and will go to the correct position
+    anchorToMove->setFollowee(nullptr);
+
+    const int newPosition = oldPosition + requiredLength + 1;
+
+    qCDebug(placeholder) << Q_FUNC_INFO << "oldPos=" << oldPosition
+                         << "; newPosition=" << newPosition
+                         << "; item.geo=" << item->geometry();
+
+    anchorToMove->setPosition(newPosition);
 }
 
 void MultiSplitterLayout::setContentsSize(QSize size)

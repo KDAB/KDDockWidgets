@@ -75,12 +75,12 @@ DropIndicatorOverlayInterface::Type DropArea::indicatorStyle() const
     return m_dropIndicatorOverlay->indicatorType();
 }
 
-Anchor::List DropArea::nonStaticAnchors() const
+Anchor::List DropArea::nonStaticAnchors(bool includePlaceholders) const
 {
     auto anchors = m_layout->anchors();
     Anchor::List result;
     for (Anchor *anchor : anchors) {
-        if (!anchor->isStatic())
+        if (!anchor->isStatic() && !(!includePlaceholders && anchor->isFollowing()))
             result << anchor;
     }
 

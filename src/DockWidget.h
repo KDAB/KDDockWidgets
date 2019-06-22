@@ -44,6 +44,8 @@ class TitleBar;
 class FloatingWindow;
 class DragController;
 class TitleBar;
+class Item;
+class LastPosition;
 
 /**
  * @brief Represents a dock widget.
@@ -203,6 +205,7 @@ public:
 private:
 #endif
     Q_DISABLE_COPY(DockWidget)
+    friend class Frame;
     friend class DropArea;
     friend class TestDocks;
     friend class KDDockWidgets::DragController;
@@ -224,6 +227,12 @@ private:
      * @return the frame which contains this dock widgets, or nullptr if none (if this dockwidget is a window).
      */
     Frame *frame() const;
+
+    ///@brief sets the current layout item containing this dock widget
+    void setLayoutItem(Item*);
+
+    ///@brief returns the last position, just for tests. TODO Make tests just use the d-pointer.
+    LastPosition *lastPosition() const;
 
     class Private;
     Private *const d;

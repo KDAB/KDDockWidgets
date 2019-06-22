@@ -33,7 +33,7 @@
 
 using namespace KDDockWidgets;
 
-DockWidget::Options s_dockWidgetOptions = DockWidget::Option_NotClosable;
+DockWidget::Options s_dockWidgetOptions = DockWidget::Option_None; // DockWidget::Option_NotClosable;
 
 static MyWidget *newMyWidget()
 {

@@ -192,10 +192,11 @@ public:
 
     bool checkSanity(AnchorSanityOption o = AnchorSanity_All) const;
 
+    void restorePlaceholder(Item *item);
+
     // For debug
     void dumpDebug() const;
     Item *itemForFrame(const Frame *w) const;
-
 Q_SIGNALS:
     ///@brief emited when the number of widgets changes
     ///@param count the new widget count
@@ -219,7 +220,7 @@ public:
     bool eventFilter(QObject *o, QEvent *e) override;
     AnchorGroup anchorsForPos(QPoint pos) const;
     AnchorGroup staticAnchorGroup() const;
-    Anchor::List anchors(Qt::Orientation, bool includeStatic = false) const;
+    Anchor::List anchors(Qt::Orientation, bool includeStatic = false, bool includePlaceholders = true) const;
     Anchor *newAnchor(AnchorGroup &group, KDDockWidgets::Location location);
     friend QDebug operator<<(QDebug d, const AnchorGroup &group);
 

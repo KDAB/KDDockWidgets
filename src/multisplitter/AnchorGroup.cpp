@@ -21,6 +21,7 @@
 #include "AnchorGroup_p.h"
 #include "Anchor_p.h"
 #include "MultiSplitterLayout_p.h"
+#include "Logging_p.h"
 
 #include <QWidget>
 
@@ -148,6 +149,16 @@ QDebug AnchorGroup::debug(QDebug d) const
     return d;
 }
 
+Anchor *AnchorGroup::anchorFollowing() const
+{
+    for (Anchor *a : {top, left, right, bottom}) {
+        if (a->isFollowing())
+            return a;
+    }
+
+    return nullptr;
+}
+
 void AnchorGroup::setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side)
 {
     const bool isSide1 = side == Anchor::Side1;
@@ -164,6 +175,19 @@ void AnchorGroup::setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side
     }
 }
 
+Anchor *AnchorGroup::adjacentAnchor(Anchor *other) const
+{
+    if (other == top)
+        return right;
+    if (other == right)
+        return bottom;
+    if (other == bottom)
+        return left;
+    if (other == left)
+        return top;
+
+    return nullptr;
+}
 
 void AnchorGroup::addItem(Item *item)
 {
@@ -273,4 +297,33 @@ void AnchorGroup::removeItem(Item *item)
         layout->updateAnchorsFromTo(bottom, top);
         top->consume(bottom, Anchor::Side2);
     }
+}
+
+void AnchorGroup::turnIntoPlaceholder()
+{
+    qCDebug(placeholder) << Q_FUNC_INFO;
+    if (left->shouldFollow()) {
+        // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
+        if (!right->isStatic())
+            right->setPosition(right->position() - ((right->position() - left->position()) / 2));
+        left->setFollowee(right);
+    }
+
+    if (right->shouldFollow()) {
+        right->setFollowee(left);
+    }
+
+    if (top->shouldFollow()) {
+        // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both top/bottom widgets can use the space.
+        if (!bottom->isStatic())
+            bottom->setPosition(bottom->position() - ((bottom->position() - top->position()) / 2));
+        top->setFollowee(bottom);
+    }
+
+
+    if (bottom->shouldFollow()) {
+        bottom->setFollowee(top);
+    }
+
+    layout->emitVisibleWidgetCountChanged();
 }

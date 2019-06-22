@@ -31,12 +31,14 @@ void KDDockWidgets::setLoggingFilterRules()
         QStringLiteral("kdab.multisplitter.anchors"),
         QStringLiteral("kdab.multisplitter.sizing"),
         QStringLiteral("kdab.multisplitter.multisplittercreation"),
+        QStringLiteral("kdab.multisplitter.placeholder"),
         QStringLiteral("kdab.docks.state"),
         QStringLiteral("kdab.docks.overlay"),
         QStringLiteral("kdab.docks.dropping"),
         QStringLiteral("kdab.docks.title"),
         QStringLiteral("kdab.docks.closebutton"),
-        QStringLiteral("kdab.docks.restoring")
+        QStringLiteral("kdab.docks.restoring"),
+        QStringLiteral("kdab.docks.closing")
     };
 
     static QString filterRules;
@@ -66,3 +68,4 @@ Q_LOGGING_CATEGORY(multisplittercreation, "kdab.multisplitter.multisplittercreat
 Q_LOGGING_CATEGORY(addwidget, "kdab.multisplitter.addwidget")
 Q_LOGGING_CATEGORY(anchors, "kdab.multisplitter.anchors")
 Q_LOGGING_CATEGORY(item, "kdab.multisplitter.item")
+Q_LOGGING_CATEGORY(placeholder, "kdab.multisplitter.placeholder")

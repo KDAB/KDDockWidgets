@@ -58,15 +58,20 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     m_vlayout->addWidget(m_dropArea);
 
     updateTitleBarVisibility();
-    connect(ms, &MultiSplitterLayout::widgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
-    connect(ms, &MultiSplitterLayout::widgetCountChanged, this, &FloatingWindow::numFramesChanged);
+    connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
+    connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::numFramesChanged);
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
 }
 
 FloatingWindow::FloatingWindow(Frame *frame, QWidget *parent)
     : FloatingWindow(parent)
 {
+    m_disableSetVisible = true;
+    // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
+    // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
+    // So disable the setVisible(true) call while in the ctor.
     m_dropArea->multiSplitter()->addWidget(frame, KDDockWidgets::Location_OnTop, {});
+    m_disableSetVisible = false;
 }
 
 FloatingWindow::~FloatingWindow()
@@ -164,8 +169,10 @@ void FloatingWindow::onFrameCountChanged(int count)
 
 void FloatingWindow::onVisibleFrameCountChanged(int count)
 {
-    qCDebug(hiding) << "FloatingWindow::onVisibleFrameCountChanged count=" << count;
-    setVisible(count > 0);
+    if (!m_disableSetVisible) {
+        qCDebug(hiding) << "FloatingWindow::onVisibleFrameCountChanged count=" << count;
+        setVisible(count > 0);
+    }
 }
 
 void FloatingWindow::updateTitleBarVisibility()

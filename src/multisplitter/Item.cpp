@@ -31,41 +31,41 @@ using namespace KDDockWidgets;
 class Item::Private {
 public:
 
-    Private(Item *qq, Frame *widget, MultiSplitterLayout *parent)
+    Private(Item *qq, Frame *frame, MultiSplitterLayout *parent)
         : q(qq)
         , m_anchorGroup(parent)
-        , m_frame(widget)
+        , m_frame(frame)
         , m_geometry(m_frame->geometry())
     {
     }
 
+    void setFrame(Frame *frame);
+    void turnIntoPlaceholder();
+
     void updateObjectName();
     Item *const q;
     AnchorGroup m_anchorGroup;
-    const QPointer<Frame> m_frame;
+    Frame *m_frame = nullptr;
     QPointer<MultiSplitterLayout> m_layout;
     QRect m_geometry;
     bool m_destroying = false;
+    int m_refCount = 0;
+    QMetaObject::Connection m_onFrameDestroyed_connection;
+    QMetaObject::Connection m_onFrameObjectNameChanged_connection;
 };
 
 Item::Item(Frame *frame, MultiSplitterLayout *parent)
     : QObject(parent)
     , d(new Private(this, frame, parent))
-{
+{    
     Q_ASSERT(parent);
-    Q_ASSERT(d->m_frame);
+    Q_ASSERT(frame);
+
     setLayout(parent);
-    d->m_frame->installEventFilter(this);
 
-    // auto destruction
-    connect(d->m_frame, &QObject::destroyed, this, [this] {
-        if (!d->m_destroying) {
-            d->m_destroying = true;
-            delete this;
-        }
-    });
-
-    connect(d->m_frame, &QObject::objectNameChanged, this, [this] { d->updateObjectName(); });
+    // Minor hack: Set to nullptr so setFrame doesn't bail out. There's a catch-22: setLayout needs to have an m_frame and setFrame needs to have a layout.
+    d->m_frame = nullptr;
+    d->setFrame(frame);
     d->updateObjectName();
 }
 
@@ -132,9 +132,9 @@ void Item::setVisible(bool v)
 
 void Item::setGeometry(QRect geo)
 {
-    Q_ASSERT(d->m_frame);
-    if (geo != d->m_geometry) {
+    Q_ASSERT(d->m_frame || isPlaceholder());
 
+    if (geo != d->m_geometry) {
         GeometryDiff geoDiff(d->m_geometry, geo);
 
         /*qDebug() << "old=" << geo << "; new=" << d->m_geometry
@@ -143,9 +143,11 @@ void Item::setGeometry(QRect geo)
                  << "; window=" << parentWidget()->window()
                  << "this=" << this;*/
         d->m_geometry = geo;
-        d->m_frame->setGeometry(geo);
+        if (!isPlaceholder())
+            d->m_frame->setGeometry(geo);
 
         if (d->m_anchorGroup.isValid() && geoDiff.onlyOneSideChanged) {
+            // If we're being squeezed to the point where it reaches less then our min size, then we drag the opposite separator, to preserve size
             const int lengthDelta = length(geoDiff.orientation()) - minLength(geoDiff.orientation());
             if (lengthDelta < 0) {
                 Anchor *anchorThatMoved = anchor(geoDiff);
@@ -173,10 +175,13 @@ bool Item::eventFilter(QObject *o, QEvent *e)
         return false;
 
     if (e->type() == QEvent::ParentChange && !d->m_layout->m_beingMergedIntoAnotherMultiSplitter) {
-        if (o->parent() != d->m_layout->parentWidget())
-            d->m_layout->removeItem(this);
+        if (o->parent() != d->m_layout->parentWidget()) {
+            // Frame was detached into a floating window
+            Q_ASSERT(!isPlaceholder());
+            d->turnIntoPlaceholder();
+        }
     } else if (e->type() == QEvent::Show || e->type() == QEvent::Hide) {
-        d->m_layout->emitVisibleWidgetCountChanged();
+        //d->m_layout->emitVisibleWidgetCountChanged(); REMOVE
     }
     return false;
 }
@@ -184,6 +189,13 @@ bool Item::eventFilter(QObject *o, QEvent *e)
 Frame *Item::frame() const
 {
     return d->m_frame;
+}
+
+QWidget *Item::window() const
+{
+    Q_ASSERT(d->m_layout);
+    Q_ASSERT(d->m_layout->parentWidget());
+    return d->m_layout->parentWidget()->window();
 }
 
 QWidget *Item::parentWidget() const
@@ -264,26 +276,141 @@ int Item::cumulativeMinLength(Anchor::Side side, Qt::Orientation orientation) co
 
 int Item::minimumWidth() const
 {
-    Q_ASSERT(d->m_frame);
-    return d->m_frame->minimumWidth();
+    return isPlaceholder() ? 0
+                           : d->m_frame->minimumWidth();
 }
 
 int Item::minimumHeight() const
 {
-    Q_ASSERT(d->m_frame);
-    return d->m_frame->minimumHeight();
+    return isPlaceholder() ? 0
+                           : d->m_frame->minimumHeight();
 }
 
 QSize Item::minimumSize() const
 {
-    Q_ASSERT(d->m_frame);
-    return d->m_frame->minimumSize();
+    return isPlaceholder() ? QSize(0, 0)
+                           : d->m_frame->minimumSize();
 }
 
 QSize Item::minimumSizeHint() const
 {
-    Q_ASSERT(d->m_frame);
-    return d->m_frame->minimumSizeHint();
+    return isPlaceholder() ? QSize(0, 0)
+                           : d->m_frame->minimumSizeHint();
+}
+
+bool Item::isPlaceholder() const
+{
+    return d->m_frame == nullptr;
+}
+
+void Item::restorePlaceholder(DockWidget *dockWidget, int tabIndex)
+{
+    qCDebug(placeholder) << Q_FUNC_INFO << "Restoring to window=" << window();
+    const bool wasPlaceholder = isPlaceholder();
+    if (wasPlaceholder) {
+        d->setFrame(new Frame(layout()->parentWidget()));
+        d->m_frame->setGeometry(d->m_geometry);
+    }
+
+    if (tabIndex != -1 && d->m_frame->dockWidgetCount() >= tabIndex) {
+        d->m_frame->insertWidget(dockWidget, tabIndex);
+    } else {
+        d->m_frame->addWidget(dockWidget);
+    }
+
+    if (wasPlaceholder) {
+        // Resize Anchors to their correct places.
+        d->m_layout->restorePlaceholder(this);
+        d->m_frame->setVisible(true);
+    }
+}
+
+void Item::Private::setFrame(Frame *frame)
+{
+    Q_ASSERT((m_frame && !frame) || (!m_frame && frame));
+
+
+    if (m_frame) {
+        m_frame->removeEventFilter(q);
+        QObject::disconnect(m_onFrameDestroyed_connection);
+        QObject::disconnect(m_onFrameObjectNameChanged_connection);
+    }
+
+    m_frame = frame;
+
+    if (frame) {
+        frame->setLayoutItem(q);
+        frame->installEventFilter(q);
+        // auto destruction
+        m_onFrameDestroyed_connection = q->connect(frame, &QObject::destroyed, q, [this] {
+            if (!m_layout) {
+                // Our parent (MultiSplitterLayout) is being destructed, and will delete this Item
+                // Nothing to do.
+                return;
+            }
+
+            // Frame is being deleted, but perhaps the DockWidget was just made floating, so in this case
+            // we turn the item into a placeholder, so it remembers its previous place if we want to redock it.
+            if (m_refCount) {
+                // There's still KDDockWidgets which are floating and were here previously
+                turnIntoPlaceholder();
+            } else {
+                // Nope, nothing really needs this this Item, destroy it.
+                if (!m_destroying) {
+                    m_destroying = true;
+                    delete this;
+                }
+            }
+        });
+
+        m_onFrameObjectNameChanged_connection = connect(frame, &QObject::objectNameChanged, q, [this] { updateObjectName(); });
+    }
+}
+
+void Item::ref()
+{
+    d->m_refCount++;
+    qCDebug(placeholder()) << Q_FUNC_INFO << "; new ref=" << d->m_refCount;
+}
+
+void Item::unref()
+{
+    if (d->m_refCount == 0) {
+        qWarning() << Q_FUNC_INFO << "refcount can't be 0";
+        return;
+    }
+
+    d->m_refCount--;
+    qCDebug(placeholder()) << Q_FUNC_INFO << "; new ref=" << d->m_refCount;
+
+    if (d->m_refCount == 0) {
+        if (!d->m_destroying) {
+            d->m_destroying = true;
+            delete this;
+        }
+    }
+}
+
+int Item::refCount() const
+{
+    return d->m_refCount;
+}
+
+void Item::Private::turnIntoPlaceholder()
+{
+    if (q->isPlaceholder())
+        return;
+
+    setFrame(nullptr);
+
+    qCDebug(placeholder) << Q_FUNC_INFO << this;
+    AnchorGroup anchorGroup = q->anchorGroup();
+    if (anchorGroup.isValid()) {
+        anchorGroup.turnIntoPlaceholder();
+    } else {
+        // Auto-destruction, which removes it from the layout
+        delete q;
+    }
 }
 
 void Item::Private::updateObjectName()

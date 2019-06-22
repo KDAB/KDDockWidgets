@@ -30,7 +30,7 @@
 #include "WidgetResizeHandler_p.h"
 #include "DropArea_p.h"
 #include "LastPosition_p.h"
-
+#include "multisplitter/Item_p.h"
 #include <QAction>
 #include <QEvent>
 #include <QVBoxLayout>
@@ -87,12 +87,14 @@ public:
     void show();
     void close();
     void updateLayoutMargin();
+    void restoreToPreviousPosition();
+    int currentTabIndex() const;
 
     /**
      * Before floating a dock widget we save its position. So it can be restored when calling
      * DockWidget::setFloating(false)
      */
-    void saveLastPosition();
+    void saveTabIndex();
 
     const QString name;
     QString title;
@@ -208,7 +210,7 @@ void DockWidget::setFloating(bool floats)
         return; // Nothing to do
 
     if (floats) {
-        d->saveLastPosition();
+        d->saveTabIndex();
         if (isTabbed()) {
             TabWidget *tabWidget= d->parentTabWidget();
             if (!tabWidget) {
@@ -222,18 +224,11 @@ void DockWidget::setFloating(bool floats)
             frame()->titleBar()->makeWindow();
         }
     } else {
-        if (d->m_lastPosition.isTabbed()) {
-            // Restore to the last tab
-
-            if (d->m_lastPosition.m_frame) {
-                 d->m_lastPosition.m_frame->insertWidget(this, d->m_lastPosition.m_tabIndex);
-            } else {
-                // Frame disappeared, we can't tab to the tabwidget anymore
-                // TODO: Make it smarter
-                qWarning() << "DockWidget::setFloating: Don't know where to put it anymore";
-            }
+        if (d->m_lastPosition.isValid()) {
+            d->restoreToPreviousPosition();
         } else {
-            // TODO
+            qCDebug(placeholder) << Q_FUNC_INFO << "Don't have a place to restore";
+            // TODO: Restore to prefered place ?
         }
     }
 }
@@ -347,6 +342,7 @@ FloatingWindow *DockWidget::morphIntoFloatingWindow()
         frame->addWidget(this);
         auto floatingWindow = new FloatingWindow(frame);
         floatingWindow->setGeometry(geo);
+        qDebug() << "DockWidget::morphIntoFloatingWindow" << geo << "; " << floatingWindow->geometry();
         floatingWindow->show();
         return floatingWindow;
     } else {
@@ -363,6 +359,17 @@ Frame *DockWidget::frame() const
         p = p->parentWidget();
     }
     return nullptr;
+}
+
+void DockWidget::setLayoutItem(Item *item)
+{
+    qCDebug(placeholder) << Q_FUNC_INFO << this << item;
+    d->m_lastPosition.setLayoutItem(item);
+}
+
+LastPosition *DockWidget::lastPosition() const
+{
+    return &d->m_lastPosition;
 }
 
 void DockWidget::Private::updateTitleBarVisibility()
@@ -403,13 +410,13 @@ void DockWidget::Private::onDockWidgetShown()
     updateTitleBarVisibility();
     updateToggleAction();
 
-    qCDebug(hiding) << "DockWidget::Private::onDockWidgetShown parent=" << q->parentWidget();
+    qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 
 void DockWidget::Private::onDockWidgetHidden()
 {
     updateToggleAction();
-    qCDebug(hiding) << "DockWidget::Private::onDockWidgetHidden parent=" << q->parentWidget();
+    qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 
 TabWidget *DockWidget::Private::parentTabWidget() const
@@ -439,16 +446,25 @@ void DockWidget::Private::updateLayoutMargin()
     layout->setContentsMargins(margin, margin, margin, margin);
 }
 
-void DockWidget::Private::saveLastPosition()
+void DockWidget::Private::restoreToPreviousPosition()
 {
-    m_lastPosition = {};
-    if (q->isTabbed()) {
-        TabWidget *tabWidget = parentTabWidget();
-        m_lastPosition.m_tabIndex = tabWidget->indexOf(q);
-        m_lastPosition.m_frame = q->frame();
-    } else {
-        // TODO
+    if (!m_lastPosition.isValid()) {
+        qWarning() << Q_FUNC_INFO << "Only restoring to MainWindow supported for now";
+        return;
     }
+
+    m_lastPosition.layoutItem()->restorePlaceholder(q, m_lastPosition.m_tabIndex);
+}
+
+int DockWidget::Private::currentTabIndex() const
+{
+    TabWidget *tabWidget = parentTabWidget();
+    return tabWidget->indexOf(q);
+}
+
+void DockWidget::Private::saveTabIndex()
+{
+    m_lastPosition.m_tabIndex = currentTabIndex();
 }
 
 void DockWidget::Private::show()

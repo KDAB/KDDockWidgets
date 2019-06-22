@@ -42,6 +42,7 @@ class TitleBar;
 class TabWidget;
 class DropArea;
 class DockWidget;
+class Item;
 
 /**
  * @brief A DockWidget wrapper that adds a QTabWidget and a TitleBar
@@ -136,6 +137,9 @@ public:
     ///@brief Called when a dock widget child @p w is hidden
     void onDockWidgetHidden(DockWidget *w);
 
+    ///@brief sets the layout item that contains this Frame in the layout
+    void setLayoutItem(Item *item);
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidget *);
     void numDockWidgetsChanged();
@@ -150,6 +154,7 @@ private:
     DropArea *m_dropArea = nullptr;
     const Options m_options;
     const quint64 m_id;
+    QPointer<Item> m_layoutItem;
 };
 }
 

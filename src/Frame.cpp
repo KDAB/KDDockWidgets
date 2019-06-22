@@ -84,6 +84,9 @@ Frame::Frame(QWidget *parent, Options options)
 
 Frame::~Frame()
 {
+    if (m_layoutItem)
+        m_layoutItem->unref();
+
     qCDebug(creation) << "~Frame" << this;
 }
 
@@ -127,6 +130,9 @@ void Frame::insertWidget(DockWidget *dockWidget, int index)
         qWarning() << "Frame::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
         return;
     }
+
+    if (m_layoutItem)
+        dockWidget->setLayoutItem(m_layoutItem);
 
     m_tabWidget->insertDockWidget(dockWidget, index);
 
@@ -267,6 +273,22 @@ void Frame::onDockWidgetHidden(DockWidget *w)
     }
 }
 
+void Frame::setLayoutItem(Item *item)
+{
+    Q_ASSERT(item);
+    if (item == m_layoutItem) {
+        qWarning() << Q_FUNC_INFO << "already contains item" << item;
+        return;
+    }
+
+    item->ref();
+
+    m_layoutItem = item;
+    for (DockWidget *dw : dockWidgets()) {
+        dw->setLayoutItem(item);
+    }
+}
+
 DockWidget *Frame::dockWidgetAt(int index) const
 {
     return qobject_cast<DockWidget *>(m_tabWidget->widget(index));
@@ -277,13 +299,13 @@ void Frame::setDropArea(DropArea *dt)
     if (dt != m_dropArea) {
         qCDebug(docking) << "Frame::setDropArea dt=" << dt;
         if (m_dropArea)
-            disconnect(m_dropArea->multiSplitter(), &MultiSplitterLayout::widgetCountChanged,
+            disconnect(m_dropArea->multiSplitter(), &MultiSplitterLayout::visibleWidgetCountChanged,
                        this, &Frame::updateTitleBarVisibility);
 
         m_dropArea = dt;
 
         if (m_dropArea) {
-            connect(m_dropArea->multiSplitter(), &MultiSplitterLayout::widgetCountChanged,
+            connect(m_dropArea->multiSplitter(), &MultiSplitterLayout::visibleWidgetCountChanged,
                     this, &Frame::updateTitleBarVisibility);
             updateTitleBarVisibility();
         }
