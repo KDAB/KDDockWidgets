@@ -89,18 +89,16 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Anchor : public QWidget // clazy:exclude=ctor-
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
 public:
     ///@brief represents the Anchor type
-    ///An anchor can be or 3 types:
+    ///An anchor can be of 2 types:
     /// - Normal: Anchor that can be resized via mouse
     /// - static: this is the top, left, right, bottom borders of the main window. They are called static because they don't move.
-    /// - placeholder: anchor is invisible and is simply holding the place of an hidden dock widget. So we can restore a dock widget to its correct place when showing it.
     enum Type {
         Type_None = 0, ///< The anchor is normal, and can be resized.
         Type_LeftStatic = 1,   ///< The anchor is static and represents the left mainwindow margin
         Type_RightStatic = 2,  ///< The anchor is static and represents the right mainwindow margin
         Type_TopStatic = 4,    ///< The anchor is static and represents the top mainwindow margin
         Type_BottomStatic = 8, ///< The anchor is static and represents the bottom mainwindow margin
-        Type_Static = Type_TopStatic | Type_LeftStatic | Type_RightStatic | Type_BottomStatic, ///< The anchor is static, one of the 4 previous ones
-        Type_Placeholder = 16 ///< The anchor is invisible and is simply holding the place of an hidden dock widget
+        Type_Static = Type_TopStatic | Type_LeftStatic | Type_RightStatic | Type_BottomStatic ///< The anchor is static, one of the 4 previous ones
     };
     Q_ENUM(Type)
 
@@ -173,12 +171,6 @@ public:
      * @return true if this Anchor is static.
      */
     bool isStatic() const { return m_type & Type_Static; }
-
-    /**
-     * @brief Checks if this Anchor is an invisible placeholder.
-     * @return true if this Anchor is an invisible placeholder.
-     */
-    bool isPlaceholder() const { return m_type == Type_Placeholder; }
 
     bool isUnneeded() const { return !isStatic() && (!hasItems(Side1) || !hasItems(Side2)); }
     bool isEmpty() const { return !hasItems(Side1) && !hasItems(Side2); }
