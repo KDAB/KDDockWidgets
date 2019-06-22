@@ -113,7 +113,7 @@ static bool isGammaray()
     static bool is = qtHookData[3] != 0;
     return is;
 }
-
+namespace {
 class EventFilter : public QObject
 {
 public:
@@ -146,6 +146,7 @@ public:
 
     QSize m_minSize;
 };
+}
 
 static QWidget *createWidget(int minLength, const QString &objname = QString())
 {
@@ -253,6 +254,7 @@ static std::unique_ptr<MainWindow> createMainWindow(QSize sz = {600, 600})
     return ptr;
 }
 
+namespace {
 class MyWidget : public QWidget
 {
 public:
@@ -290,6 +292,7 @@ public:
         return QSize(1,1);
     }
 };
+}
 
 bool waitForDeleted(QObject *o, int timeout = 2000)
 {
