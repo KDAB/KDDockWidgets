@@ -12,8 +12,6 @@ set(DOCKSLIBS_SRCS
     Frame.cpp
     LastPosition.cpp
     LastPosition_p.h
-    LayoutMemory.cpp
-    LayoutMemory_p.h
     LayoutSaver.cpp
     Logging.cpp
     MainWindow.cpp
