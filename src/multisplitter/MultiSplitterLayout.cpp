@@ -105,6 +105,7 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
     }
 
     if (!qobject_cast<Frame*>(widget) && !qobject_cast<MultiSplitterWidget*>(widget)) {
+        qWarning() << "Unknown widget type" << widget;
         Q_ASSERT(false);
         return false;
     }
@@ -446,6 +447,7 @@ void MultiSplitterLayout::resizeItem(QWidget *widget, int newSize, Qt::Orientati
 {
     // Used for unit-tests only
     Item *item = itemForWidget(widget);
+    Q_ASSERT(item);
     Anchor *a = item->anchor(Anchor::Side1, orientation);
     Q_ASSERT(!a->isStatic());
     const int widgLength = item->length(orientation);
