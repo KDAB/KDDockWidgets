@@ -77,6 +77,9 @@ protected:
     void closeEvent(QCloseEvent *) override;
     void paintEvent(QPaintEvent *) override;
 
+    ///@brief reimplemented for debug purposes
+    void resizeEvent(QResizeEvent *) override;
+
 private:
     Q_DISABLE_COPY(FloatingWindow)
     void maybeCreateResizeHandler();

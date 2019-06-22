@@ -123,6 +123,11 @@ void FloatingWindow::paintEvent(QPaintEvent *)
     paintFrame(this);
 }
 
+void FloatingWindow::resizeEvent(QResizeEvent *ev)
+{
+    QWidget::resizeEvent(ev);
+}
+
 bool FloatingWindow::anyNonClosable() const
 {
     for (Frame *frame : frames()) {
