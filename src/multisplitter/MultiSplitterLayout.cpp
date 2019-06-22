@@ -137,7 +137,7 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
     return true;
 }
 
-void MultiSplitterLayout::addWidget(QWidget *w, Location location, QWidget *relativeToWidget)
+void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relativeToWidget)
 {
     Item *item = itemForWidget(w);
     if (item) {
@@ -443,10 +443,10 @@ void MultiSplitterLayout::collectPaths(QVector<Anchor::List> &paths, Anchor *fro
     }
 }
 
-void MultiSplitterLayout::resizeItem(QWidget *widget, int newSize, Qt::Orientation orientation)
+void MultiSplitterLayout::resizeItem(Frame *frame, int newSize, Qt::Orientation orientation)
 {
     // Used for unit-tests only
-    Item *item = itemForWidget(widget);
+    Item *item = itemForWidget(frame);
     Q_ASSERT(item);
     Anchor *a = item->anchor(Anchor::Side1, orientation);
     Q_ASSERT(!a->isStatic());
@@ -458,8 +458,8 @@ void MultiSplitterLayout::resizeItem(QWidget *widget, int newSize, Qt::Orientati
 }
 
 void MultiSplitterLayout::addMultiSplitter(MultiSplitterWidget *sourceMultiSplitter,
-                                     Location location,
-                                     QWidget *relativeTo)
+                                           Location location,
+                                           Frame *relativeTo)
 {
     addWidget(sourceMultiSplitter, location, relativeTo);
 }

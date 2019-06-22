@@ -201,7 +201,7 @@ public Q_SLOTS:
         s_original = qInstallMessageHandler(fatalWarningsMessageHandler);
     }
 public:
-    static void nestDockWidget(DockWidget *dock, DropArea *dropArea, QWidget *relativeTo, KDDockWidgets::Location location);
+    static void nestDockWidget(DockWidget *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location);
 
 private Q_SLOTS:
     void tst_shutdown();
@@ -509,14 +509,11 @@ void TestDocks::tst_createFloatingWindow()
     QVERIFY(!window);
 }
 
-void TestDocks::nestDockWidget(DockWidget *dock, DropArea *dropArea, QWidget *relativeTo, KDDockWidgets::Location location)
+void TestDocks::nestDockWidget(DockWidget *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location)
 {
     auto frame = new Frame();
     frame->addWidget(dock);
     dock->frame()->setObjectName(dock->objectName());
-    if (auto relativeToDock = qobject_cast<DockWidget *>(relativeTo)) {
-        relativeTo = relativeToDock->frame();
-    }
 
     qDebug() << "Adding widget" << frame
              << "; min width=" << widgetMinLength(frame, Qt::Vertical)
@@ -527,7 +524,7 @@ void TestDocks::nestDockWidget(DockWidget *dock, DropArea *dropArea, QWidget *re
     qDebug() << "Size after adding: " << frame->size();
 }
 
-DockWidget *createAndNestDockWidget(DropArea *dropArea, QWidget *relativeTo, KDDockWidgets::Location location)
+DockWidget *createAndNestDockWidget(DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location)
 {
     static int count = 0;
     count++;
@@ -547,8 +544,8 @@ std::unique_ptr<MainWindow> createSimpleNestedMainWindow(DockWidget * *centralDo
     QWidget *central = window->centralWidget();
     auto dropArea = qobject_cast<DropArea *>(central);
 
-    *leftDock = createAndNestDockWidget(dropArea, dropArea, KDDockWidgets::Location_OnLeft);
-    *rightDock = createAndNestDockWidget(dropArea, dropArea, KDDockWidgets::Location_OnRight);
+    *leftDock = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnLeft);
+    *rightDock = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnRight);
     return window;
 }
 
@@ -787,7 +784,7 @@ void TestDocks::tst_anchorsFromTo()
 
     qDebug() << "Adding the bottom one";
     QVERIFY(dropArea->checkSanity());
-    DockWidget *bottom = createAndNestDockWidget(dropArea, dropArea, KDDockWidgets::Location_OnBottom);
+    DockWidget *bottom = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnBottom);
     QVERIFY(dropArea->checkSanity());
     nonStaticAnchors = dropArea->nonStaticAnchors();
     auto horizAnchors = dropArea->multiSplitter()->anchors(Qt::Horizontal);
@@ -843,8 +840,8 @@ void TestDocks::tst_anchorsFromTo()
         auto m = createMainWindow({400, 400});
         DropArea *dropArea = qobject_cast<DropArea *>(m->centralWidget());
 
-        auto dock = createAndNestDockWidget(dropArea, dropArea, KDDockWidgets::Location_OnRight);
-        createAndNestDockWidget(dropArea, dock, KDDockWidgets::Location_OnBottom);
+        auto dock = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnRight);
+        createAndNestDockWidget(dropArea, dock->frame(), KDDockWidgets::Location_OnBottom);
 
         const auto anchors = dropArea->nonStaticAnchors();
         QCOMPARE(anchors.size(), 2);
@@ -861,7 +858,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     auto m = createMainWindow();
     auto fw = createFloatingWindow();
     auto dock2 = createDockWidget(QStringLiteral("doc2"), Qt::red);
-    nestDockWidget(dock2, fw->dropArea(), fw->dropArea(), KDDockWidgets::Location_OnLeft);
+    nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
     QCOMPARE(fw->frames().size(), 2);
     QVERIFY(fw->dropArea()->checkSanity());
 
@@ -884,7 +881,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 
     auto fw = createFloatingWindow();
     auto dock2 = createDockWidget(QStringLiteral("doc2"), Qt::red);
-    nestDockWidget(dock2, fw->dropArea(), fw->dropArea(), KDDockWidgets::Location_OnLeft);
+    nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
     QCOMPARE(fw->frames().size(), 2);
 
     auto fw2 = createFloatingWindow();
@@ -918,7 +915,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
 
     auto fw = createFloatingWindow();
     auto dock2 = createDockWidget(QStringLiteral("doc2"), Qt::red);
-    nestDockWidget(dock2, fw->dropArea(), fw->dropArea(), KDDockWidgets::Location_OnTop); // No we stack on top, unlike in previous test
+    nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop); // No we stack on top, unlike in previous test
     QCOMPARE(fw->frames().size(), 2);
 
     auto fw2 = createFloatingWindow();
@@ -951,7 +948,7 @@ void TestDocks::tst_posAfterLeftDetach()
         EnsureTopLevelsDeleted e;
         auto fw = createFloatingWindow();
         auto dock2 = createDockWidget(QStringLiteral("doc2"), Qt::red);
-        nestDockWidget(dock2, fw->dropArea(), fw->dropArea(), KDDockWidgets::Location_OnRight);
+        nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnRight);
         QVERIFY(fw->dropArea()->checkSanity());
         // When dragging the right one there was a bug where it jumped
         const QPoint globalSrc = dock2->mapToGlobal(QPoint(0, 0));
@@ -971,7 +968,7 @@ void TestDocks::tst_posAfterLeftDetach()
         EnsureTopLevelsDeleted e;
         auto fw = createFloatingWindow();
         auto dock2 = createDockWidget(QStringLiteral("doc2"), Qt::red);
-        nestDockWidget(dock2, fw->dropArea(), fw->dropArea(), KDDockWidgets::Location_OnRight);
+        nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnRight);
         QVERIFY(fw->dropArea()->checkSanity());
 
         const int originalX = dock2->mapToGlobal(QPoint(0, 0)).x();
@@ -1048,9 +1045,9 @@ void TestDocks::tst_propagateMinSize()
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
     auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
 
-    nestDockWidget(dock1, dropArea, dropArea, KDDockWidgets::Location_OnRight);
-    nestDockWidget(dock2, dropArea, dropArea, KDDockWidgets::Location_OnRight);
-    nestDockWidget(dock3, dropArea, dropArea, KDDockWidgets::Location_OnRight);
+    nestDockWidget(dock1, dropArea, nullptr, KDDockWidgets::Location_OnRight);
+    nestDockWidget(dock2, dropArea, nullptr, KDDockWidgets::Location_OnRight);
+    nestDockWidget(dock3, dropArea, nullptr, KDDockWidgets::Location_OnRight);
 
     // TODO finish this when the 3 dock widgets have proper sizes
     //QTest::qWait(50000);
@@ -1092,12 +1089,12 @@ void TestDocks::tst_closeAllDockWidgets()
 
     qDebug() << "Nesting1";
 
-    nestDockWidget(dock4, dropArea, dropArea, KDDockWidgets::Location_OnRight);
+    nestDockWidget(dock4, dropArea, nullptr, KDDockWidgets::Location_OnRight);
     qDebug() << "Nesting2";
-    nestDockWidget(dock5, dropArea, dropArea, KDDockWidgets::Location_OnTop);
+    nestDockWidget(dock5, dropArea, nullptr, KDDockWidgets::Location_OnTop);
     qDebug() << "Nesting3 fw size is" << fw->dropArea()->size();
     const int oldFWHeight = fw->height();
-    nestDockWidget(dock6, fw->dropArea(), fw->dropArea(), KDDockWidgets::Location_OnTop);
+    nestDockWidget(dock6, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
     QVERIFY(oldFWHeight <= fw->height());
     qDebug() << "Nesting done";
 
@@ -1157,8 +1154,8 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
     QVERIFY(dock1->width() >= min1);
     QVERIFY(dock2->width() >= min2);
 
-    nestDockWidget(dock1, dropArea, dropArea, KDDockWidgets::Location_OnRight);
-    nestDockWidget(dock2, dropArea, dropArea, KDDockWidgets::Location_OnLeft);
+    nestDockWidget(dock1, dropArea, nullptr, KDDockWidgets::Location_OnRight);
+    nestDockWidget(dock2, dropArea, nullptr, KDDockWidgets::Location_OnLeft);
 
     // Calculate again, as the window frame has disappeared
     min1 = widgetMinLength(dock1, Qt::Vertical);
@@ -1208,7 +1205,7 @@ void TestDocks::tst_restoreCrash()
         QWidget *central = m->centralWidget();
         auto dropArea = qobject_cast<DropArea *>(central);
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
-        nestDockWidget(dock1, dropArea, dropArea, KDDockWidgets::Location_OnLeft);
+        nestDockWidget(dock1, dropArea, nullptr, KDDockWidgets::Location_OnLeft);
         LayoutSaver saver;
         QVERIFY(saver.saveToDisk());
     }
@@ -1288,7 +1285,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QWidget *central = m->centralWidget();
         auto dropArea = qobject_cast<DropArea *>(central);
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
-        nestDockWidget(dock1, dropArea, dropArea, KDDockWidgets::Location_OnLeft);
+        nestDockWidget(dock1, dropArea, nullptr, KDDockWidgets::Location_OnLeft);
 
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
         dock1->addDockWidgetAsTab(dock2);
@@ -1608,7 +1605,7 @@ std::unique_ptr<MultiSplitterWidget> TestDocks::createMultiSplitterFromSetup(Mul
         frameMap.insert(setup.widgets[i], frame);
         qDebug() << "Min size=" << KDDockWidgets::widgetMinLength(frame, Qt::Horizontal)
                  << KDDockWidgets::widgetMinLength(dock, Qt::Horizontal);
-        layout->addWidget(frame, setup.locations[i], setup.relativeTos[i]);
+        layout->addWidget(frame, setup.locations[i], frameMap.value(setup.relativeTos[i]));
     }
 
     for (WidgetResize wr : setup.widgetResizes) {

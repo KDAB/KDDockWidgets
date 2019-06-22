@@ -88,7 +88,7 @@ public:
     /**
      * Adds a widget to this MultiSplitter.
      */
-    void addWidget(QWidget *widget, KDDockWidgets::Location location, QWidget *relativeTo = nullptr);
+    void addWidget(QWidget *widget, KDDockWidgets::Location location, Frame *relativeTo = nullptr);
 
     /**
      * Adds an entire MultiSplitter into this MultiSplitter. The donor MultiSplitter will be deleted
@@ -97,7 +97,7 @@ public:
      * of widgetBar when the whole splitter is dropped into this one.
      */
     void addMultiSplitter(MultiSplitterWidget *splitter, KDDockWidgets::Location location,
-                          QWidget *relativeTo = nullptr);
+                          Frame *relativeTo = nullptr);
 
     /**
      * Removes a widget from this MultiSplitter.
@@ -334,7 +334,7 @@ private:
 
     // convenience for the unit-tests
     // Moves the widget's bottom or right anchor, to resize it.
-    void resizeItem(QWidget *widget, int newSize, Qt::Orientation);
+    void resizeItem(Frame *frame, int newSize, Qt::Orientation);
 
     Anchor::List m_anchors;
 
