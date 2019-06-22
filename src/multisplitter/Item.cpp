@@ -172,15 +172,15 @@ bool Item::eventFilter(QObject *o, QEvent *e)
     return false;
 }
 
-QWidget *Item::widget() const
+Frame *Item::frame() const
 {
     return d->m_frame;
 }
 
 QWidget *Item::parentWidget() const
 {
-    Q_ASSERT(d->m_frame);
-    return d->m_frame->parentWidget();
+    return d->m_frame ? d->m_frame->parentWidget()
+                      : nullptr;
 }
 
 MultiSplitterLayout *Item::layout() const

@@ -37,15 +37,6 @@ DropArea::DropArea(QWidget *parent)
 
     //setIndicatorStyle(DropIndicatorOverlayInterface::TypeAnimated);
     setIndicatorStyle(DropIndicatorOverlayInterface::TypeClassic);
-
-    connect(m_layout, &MultiSplitterLayout::widgetAdded, this, [] (Item *item) {
-        if (!qobject_cast<Frame*>(item->widget())) {
-            qWarning() << "A widget" << item->widget() << "that is not a Frame was added to multi-splitter."
-                       << "; application might crash";
-            Q_ASSERT(false);
-        }
-    });
-
     connect(m_layout, &MultiSplitterLayout::aboutToDumpDebug,
             this, &DropArea::debug_updateItemNamesForGammaray);
 }
@@ -100,7 +91,7 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
 {
     const ItemList &items = m_layout->items();
     for (Item *item : items) {
-        auto frame = qobject_cast<Frame *>(item->widget());
+        auto frame = item->frame();
         if (!frame || !frame->isVisible()) {
             continue;
         }
@@ -114,7 +105,7 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
 Item *DropArea::centralFrame() const
 {
     for (Item *item : m_layout->items()) {
-        if (auto f = qobject_cast<Frame*>(item->widget())) {
+        if (auto f = item->frame()) {
             if (f->isCentralFrame())
                 return item;
         }
@@ -145,7 +136,7 @@ bool DropArea::isInFloatingWindow() const
 void DropArea::debug_updateItemNamesForGammaray()
 {
     for (Item *item : m_layout->items()) {
-        if (auto frame = qobject_cast<Frame*>(item->widget())) {
+        if (auto frame = item->frame()) {
             if (!frame->dockWidgets().isEmpty())
                 frame->setObjectName(frame->dockWidgets().at(0)->objectName());
         }

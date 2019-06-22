@@ -104,7 +104,12 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
         return false;
     }
 
-    if (relativeTo && relativeTo->widget() == widget) {
+    if (!qobject_cast<Frame*>(widget) && !qobject_cast<MultiSplitterWidget*>(widget)) {
+        Q_ASSERT(false);
+        return false;
+    }
+
+    if (relativeTo && relativeTo->frame() == widget) {
         qWarning() << "widget can't be relative to itself";
         return false;
     }
@@ -314,7 +319,7 @@ void MultiSplitterLayout::addItems_internal(const ItemList &items, bool updateCo
     for (auto item : items) {
         item->setLayout(this);
         item->setVisible(true);
-        item->widget()->installEventFilter(this);
+        item->frame()->installEventFilter(this);
         Q_EMIT widgetAdded(item);
     }
     Q_EMIT widgetCountChanged(m_items.size());
@@ -462,7 +467,7 @@ void MultiSplitterLayout::removeItem(Item *item)
     if (!item || m_inDestructor || !m_items.contains(item))
         return;
 
-    item->widget()->removeEventFilter(this);
+    item->frame()->removeEventFilter(this);
     AnchorGroup anchorGroup = item->anchorGroup();
     anchorGroup.removeItem(item);
     m_items.removeOne(item);
@@ -903,7 +908,7 @@ void MultiSplitterLayout::emitVisibleWidgetCountChanged()
 Item *MultiSplitterLayout::itemForWidget(const QWidget *w) const
 {
     for (Item *item : m_items) {
-        if (item->widget() == w)
+        if (item->frame() == w)
             return item;
     }
     return nullptr;

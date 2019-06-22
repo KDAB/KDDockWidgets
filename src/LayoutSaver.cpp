@@ -122,10 +122,10 @@ struct LayoutState
             , type(a->type())
         {
             auto constructFrameState = [] (const ItemList &widgets, LayoutState::FrameState::List &frameStates) {
-                for (Item *w : widgets) {
-                    auto frame = qobject_cast<Frame*>(w->widget());
+                for (Item *item : widgets) {
+                    auto frame = item->frame();
                     if (!frame) {
-                        qWarning() << Q_FUNC_INFO << "expected a frame" << w;
+                        qWarning() << Q_FUNC_INFO << "expected a frame" << item;
                         continue;
                     }
 

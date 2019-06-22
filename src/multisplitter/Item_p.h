@@ -107,7 +107,7 @@ public:
     QRect geometry() const;
     bool eventFilter(QObject *, QEvent *) override;
 
-    QWidget* widget() const;
+    Frame* frame() const;
     QWidget *parentWidget() const;
 
     MultiSplitterLayout *layout() const;

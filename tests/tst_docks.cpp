@@ -996,7 +996,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     auto dropArea = qobject_cast<DropArea *>(central);
     QVERIFY(dropArea);
 
-    QPointer<Frame> centralFrame = static_cast<Frame*>(dropArea->centralFrame()->widget());
+    QPointer<Frame> centralFrame = static_cast<Frame*>(dropArea->centralFrame()->frame());
     QVERIFY(central);
     QVERIFY(dropArea);
     QCOMPARE(dropArea->count(), 1);
@@ -1058,7 +1058,7 @@ void TestDocks::tst_dockInternal()
     QWidget *central = m->centralWidget();
     auto dropArea = qobject_cast<DropArea *>(central);
 
-    QWidget *centralWidget = dropArea->multiSplitter()->items()[0]->widget();
+    Frame *centralWidget = dropArea->multiSplitter()->items()[0]->frame();
     nestDockWidget(dock1, dropArea, centralWidget, KDDockWidgets::Location_OnRight);
 
     QVERIFY(dock1->width() < dropArea->width() - centralWidget->width());
@@ -1444,7 +1444,7 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
     delete dock2;
     QVERIFY(waitForResize(dock1));
 
-    const int delta1 = (dock1->frame()->width() - oldWidth1);;
+    const int delta1 = (dock1->frame()->width() - oldWidth1);
     const int delta3 = (dock3->frame()->width() - oldWidth3);
 
     qDebug() << "old1=" << oldWidth1
