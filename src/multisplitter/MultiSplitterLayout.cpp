@@ -96,7 +96,7 @@ QWidget *MultiSplitterLayout::parentWidget() const
 
 bool MultiSplitterLayout::validateInputs(QWidget *widget,
                                          Location location,
-                                         Item *relativeTo) const
+                                         const Item *relativeToItem) const
 {
     if (!widget) {
         qWarning() << Q_FUNC_INFO << "Widget is null";
@@ -110,7 +110,7 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
         return false;
     }
 
-    if (relativeTo && relativeTo->frame() == widget) {
+    if (relativeToItem && relativeToItem->frame() == widget) {
         qWarning() << "widget can't be relative to itself";
         return false;
     }
@@ -128,9 +128,9 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
         return false;
     }
 
-    const bool relativeToThis = relativeTo == nullptr;
-    if (!relativeToThis && !contains(relativeTo)) {
-        qWarning() << "MultiSplitterLayout::addWidget: Doesn't contain relativeTo:" << relativeTo;
+    const bool relativeToThis = relativeToItem == nullptr;
+    if (!relativeToThis && !contains(relativeToItem)) {
+        qWarning() << "MultiSplitterLayout::addWidget: Doesn't contain relativeTo:" << relativeToItem;
         return false;
     }
 
@@ -145,13 +145,13 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         return;
     }
 
-    auto relativeTo = itemForWidget(relativeToWidget);
+    Item* relativeToItem = itemForWidget(relativeToWidget);
 
     // Make some sanity checks:
-    if (!validateInputs(w, location, relativeTo))
+    if (!validateInputs(w, location, relativeToItem))
         return;
 
-    const Length lfd = lengthForDrop(w, location, relativeTo);
+    const Length lfd = lengthForDrop(w, location, relativeToItem);
     if (lfd.isNull()) {
         Qt::Orientation orientation = anchorOrientationForLocation(location);
         const int required = widgetMinLength(w, orientation);
@@ -162,27 +162,27 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                         << "\n    m_contentSize=" << m_contentSize
                         << "\n    required=" << required
                         << "\n    this length=" << length(orientation)
-                        << "\n    availableLengthForDrop()=" << availableLengthForDrop(location, relativeTo).length();
+                        << "\n    availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
         setContentLength(orientation, totalRequired);
         qCDebug(sizing) << "now has size= " << parentWidget()->size()
                         << "\n    m_contentSize=" << m_contentSize
                         << "\n    totalRequired=" << totalRequired
-                        << "\n availableLengthForDrop()=" << availableLengthForDrop(location, relativeTo).length();
+                        << "\n availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
     }
 
     auto sourceMultiSplitterWidget = qobject_cast<MultiSplitterWidget *>(w);
     auto sourceMultiSplitter = sourceMultiSplitterWidget ? sourceMultiSplitterWidget->multiSplitter()
                                                          : nullptr;
     const bool sourceIsAMultiSplitter = sourceMultiSplitter != nullptr;
-    const bool relativeToThis = relativeTo == nullptr;
+    const bool relativeToThis = relativeToItem == nullptr;
 
 
     AnchorGroup targetAnchorGroup = relativeToThis ? staticAnchorGroup()
-                                                   : anchorsForPos(relativeTo->geometry().center());
+                                                   : anchorsForPos(relativeToItem->geometry().center());
     Q_ASSERT(targetAnchorGroup.isValid());
 
     Anchor *newAnchor = nullptr;
-    QRect dropRect = rectForDrop(w, location, relativeTo);
+    QRect dropRect = rectForDrop(w, location, relativeToItem);
 
     if (dropRect.size().isNull() || dropRect.x() < 0 || dropRect.y() < 0) {
         qWarning() << Q_FUNC_INFO << "Invalid drop rect" << dropRect
@@ -204,7 +204,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         if (!isEmpty())
             newAnchor = this->newAnchor(targetAnchorGroup, location);
     } else {
-        newAnchor = targetAnchorGroup.createAnchorFrom(location, relativeTo);
+        newAnchor = targetAnchorGroup.createAnchorFrom(location, relativeToItem);
         targetAnchorGroup.setAnchor(newAnchor, KDDockWidgets::oppositeLocation(location));
     }
 
@@ -478,9 +478,9 @@ void MultiSplitterLayout::removeItem(Item *item)
     Q_EMIT widgetCountChanged(m_items.size());
 }
 
-bool MultiSplitterLayout::contains(Item *item) const
+bool MultiSplitterLayout::contains(const Item *item) const
 {
-    return m_items.contains(item);
+    return m_items.contains(const_cast<Item*>(item));
 }
 
 Item *MultiSplitterLayout::itemAt(QPoint p) const
@@ -654,7 +654,8 @@ MultiSplitterLayout::Length MultiSplitterLayout::lengthForDrop(const QWidget *wi
     return available;
 }
 
-QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Location location, Item *relativeTo) const
+QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Location location,
+                                       const Item *relativeTo) const
 {
     Q_ASSERT(widgetBeingDropped);
     Length lfd = lengthForDrop(widgetBeingDropped, location, relativeTo);
@@ -909,6 +910,9 @@ void MultiSplitterLayout::emitVisibleWidgetCountChanged()
 
 Item *MultiSplitterLayout::itemForWidget(const QWidget *w) const
 {
+    if (!w)
+        return nullptr;
+
     for (Item *item : m_items) {
         if (item->frame() == w)
             return item;

@@ -108,7 +108,7 @@ public:
      * Returns true if this MultiSplitter contains the specified widget.
      * The widget must have been added with addWidget/addMultiSplitter.
      */
-    bool contains(Item *) const;
+    bool contains(const Item *) const;
 
     /**
      * Returns the child widget at pos p.
@@ -145,7 +145,7 @@ public:
      * Excludes the Anchor thickness, result is actually smaller than what needed. In other words,
      * the result will be exactly the same as the geometry the widget will get.
      */
-    QRect rectForDrop(const QWidget *widget, KDDockWidgets::Location location, Item *relativeTo) const;
+    QRect rectForDrop(const QWidget *widget, KDDockWidgets::Location location, const Item *relativeTo) const;
 
     void setAnchorBeingDragged(Anchor *);
     Anchor *anchorBeingDragged() const { return m_anchorBeingDragged; }
@@ -178,7 +178,7 @@ public:
     int contentsHeight() const { return m_contentSize.height(); }
 
     // For debug/hardening
-    bool validateInputs(QWidget *widget, KDDockWidgets::Location location, Item *relativeTo) const;
+    bool validateInputs(QWidget *widget, KDDockWidgets::Location location, const Item *relativeToItem) const;
     // For debug/hardening
 
     enum AnchorSanityOption {
