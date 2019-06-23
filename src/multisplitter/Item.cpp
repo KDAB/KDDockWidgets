@@ -137,6 +137,11 @@ void Item::setGeometry(QRect geo)
 
         GeometryDiff geoDiff(d->m_geometry, geo);
 
+        /*qDebug() << "old=" << geo << "; new=" << d->m_geometry
+                 << "; len=" << length(geoDiff.orientation())
+                 << "; minLen=" << minLength(geoDiff.orientation())
+                 << "; window=" << parentWidget()->window()
+                 << "this=" << this;*/
         d->m_geometry = geo;
         d->m_frame->setGeometry(geo);
 
@@ -147,7 +152,11 @@ void Item::setGeometry(QRect geo)
                 Q_ASSERT(anchorThatMoved);
                 Anchor *anchorToMove = d->m_anchorGroup.oppositeAnchor(anchorThatMoved);
                 Q_ASSERT(anchorToMove);
-                anchorToMove->setPosition(anchorToMove->position() - (lengthDelta * geoDiff.signess()));
+                const int newPosition = anchorToMove->position() - (lengthDelta * geoDiff.signess());
+
+                // Note: Position can be slightly negative if the main window isn't big enougn to host the new size.
+                // In that case the window will be resized shortly after
+                anchorToMove->setPosition(newPosition);
             }
         }
     }

@@ -189,7 +189,9 @@ void Anchor::setPosition(int p, SetPositionOptions options)
             m_positionPercentage = (p * 1.0) / m_layout->contentsHeight();
     }
 
-    Q_ASSERT(p >= 0);
+    // Note: Position can be slightly negative if the main window isn't big enougn to host the new size.
+    // In that case the window will be resized shortly after
+    //Q_ASSERT(p >= 0); - commented out, as it's normal
 }
 
 int Anchor::position() const

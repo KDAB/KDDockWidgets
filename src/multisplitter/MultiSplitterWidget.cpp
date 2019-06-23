@@ -44,7 +44,8 @@ int MultiSplitterWidget::count() const
 
 void MultiSplitterWidget::resizeEvent(QResizeEvent *ev)
 {
-    qCDebug(sizing) << Q_FUNC_INFO << "; new=" << ev->size() << "; old=" << ev->oldSize();
+    qCDebug(sizing) << Q_FUNC_INFO << "; new=" << ev->size() << "; old=" << ev->oldSize()
+                    << "; window=" << window();
 
     m_layout->setContentsSize(ev->size());
     QWidget::resizeEvent(ev);
