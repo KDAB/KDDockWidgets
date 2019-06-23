@@ -32,7 +32,6 @@ void KDDockWidgets::setLoggingFilterRules()
         QStringLiteral("kdab.multisplitter.sizing"),
         QStringLiteral("kdab.multisplitter.multisplittercreation"),
         QStringLiteral("kdab.docks.state"),
-        QStringLiteral("kdab.docks.sizing"),
         QStringLiteral("kdab.docks.overlay"),
         QStringLiteral("kdab.docks.dropping"),
         QStringLiteral("kdab.docks.title"),
