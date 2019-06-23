@@ -24,6 +24,7 @@
 #include "KDDockWidgets.h"
 #include "Anchor_p.h"
 
+#include <QDebug>
 
 namespace KDDockWidgets {
 
@@ -54,8 +55,16 @@ struct AnchorGroup {
     Anchor *left = nullptr;
     Anchor *bottom = nullptr;
     Anchor *right = nullptr;
-    MultiSplitterLayout * layout;
+    MultiSplitterLayout *layout;
+
+    QDebug debug(QDebug d) const;
 };
+}
+
+inline QDebug operator<< (QDebug d, KDDockWidgets::AnchorGroup *group)
+{
+    // out-of-line as it needs to include MultiSplitterLayout
+    return group->debug(d);
 }
 
 #endif

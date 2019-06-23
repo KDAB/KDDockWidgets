@@ -21,11 +21,13 @@ set(DOCKSLIBS_SRCS
     WidgetResizeHandler.cpp
     multisplitter/Anchor.cpp
     multisplitter/AnchorGroup.cpp
+    multisplitter/Item.cpp
     multisplitter/MultiSplitterLayout.cpp
     multisplitter/MultiSplitterLayout_p.h
     multisplitter/MultiSplitterWidget.cpp
     multisplitter/MultiSplitterWidget_p.h
-    multisplitter/Item.cpp
+    multisplitter/SeparatorWidget.cpp
+    multisplitter/SeparatorWidget_p.h
     indicators/AnimatedIndicators.cpp
     indicators/ClassicIndicators.cpp)
 

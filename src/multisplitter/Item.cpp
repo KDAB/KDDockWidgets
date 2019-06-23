@@ -221,6 +221,10 @@ int Item::minLength(Qt::Orientation orientation) const
 
 Anchor *Item::anchor(Anchor::Side side, Qt::Orientation orientation) const
 {
+    if (!d->m_anchorGroup.isValid())
+        qWarning() << Q_FUNC_INFO << "Invalid anchor group" << &d->m_anchorGroup
+                   << "in" << this << "; window=" << parentWidget()->window();
+
     return d->m_anchorGroup.anchor(side, orientation);
 }
 
@@ -253,7 +257,9 @@ const AnchorGroup &Item::anchorGroup() const
 
 int Item::cumulativeMinLength(Anchor::Side side, Qt::Orientation orientation) const
 {
-    return minLength(orientation) + anchor(Anchor::oppositeSide(side), orientation)->cumulativeMinLength(side);
+    Anchor *oppositeAnchor = anchor(Anchor::oppositeSide(side), orientation);
+    Q_ASSERT(oppositeAnchor);
+    return minLength(orientation) + oppositeAnchor->cumulativeMinLength(side);
 }
 
 int Item::minimumWidth() const

@@ -22,6 +22,8 @@
 #include "Anchor_p.h"
 #include "MultiSplitterLayout_p.h"
 
+#include <QWidget>
+
 using namespace KDDockWidgets;
 
 AnchorGroup::AnchorGroup(MultiSplitterLayout *l)
@@ -136,6 +138,16 @@ void AnchorGroup::setAnchor(Anchor *anchor, Location loc)
     }
 }
 
+QDebug AnchorGroup::debug(QDebug d) const
+{
+    d << "AnchorGroup: this=" << ((void*)this) << "\n;  top=" << top << "; left=" << left
+      << "\n  ; right=" << right << "; bottom=" << bottom
+      << "\n  ; valid=" << isValid()
+      << "\n  ; layoutWindow=" << (layout ? layout->parentWidget()->window() : nullptr)
+      << "\n";
+    return d;
+}
+
 void AnchorGroup::setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side)
 {
     const bool isSide1 = side == Anchor::Side1;
@@ -181,7 +193,7 @@ void AnchorGroup::addItem(MultiSplitterLayout *sourceMultiSplitter)
     for (Anchor *anchor : sourceMultiSplitter->anchors()) {
         if (!anchor->isStatic()) {
             const qreal positionPercentage = anchor->positionPercentage();
-            anchor->setParent(layout->parentWidget());
+            anchor->setLayout(layout);
             anchor->setVisible(true);
 
             if (anchor->from()->isStatic()) {

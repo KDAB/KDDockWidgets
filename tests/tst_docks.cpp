@@ -204,6 +204,8 @@ public:
     static void nestDockWidget(DockWidget *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location);
 
 private Q_SLOTS:
+    void tst_simple1();
+    void tst_simple2();
     void tst_shutdown();
     void tst_mainWindowAlwaysHasCentralWidget();
     void tst_createFloatingWindow();
@@ -880,11 +882,13 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     EnsureTopLevelsDeleted e;
 
     auto fw = createFloatingWindow();
+    fw->setObjectName(QStringLiteral("fw1"));
     auto dock2 = createDockWidget(QStringLiteral("doc2"), Qt::red);
     nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
     QCOMPARE(fw->frames().size(), 2);
 
     auto fw2 = createFloatingWindow();
+    fw2->setObjectName(QStringLiteral("fw2"));
     fw2->move(fw->x() + fw->width() + 100, fw->y());
 
     QVERIFY(fw2->dropArea()->checkSanity());
@@ -1024,7 +1028,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     QTabBar *tabBar = tabBarForFrame(centralFrame);
     QVERIFY(tabBar);
     qDebug() << "Detaching tab from dropArea->size=" << dropArea->size() << "; dropArea=" << dropArea;
-    drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(centralFrame->width() + 10, centralFrame->height() + 10));
+    drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));
 
     QVERIFY(centralFrame);
     QCOMPARE(dropArea->count(), 1);
@@ -1982,6 +1986,23 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     auto window = m.release();
     waitForDeleted(window);
 }
+
+void TestDocks::tst_simple1()
+{
+    // Simply create a MainWindow
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+}
+
+void TestDocks::tst_simple2()
+{
+    // Simply create a MainWindow, and dock something on top
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dw = createDockWidget(QStringLiteral("dw"), new QPushButton(QStringLiteral("dw")));
+    m->addDockWidget(dw, KDDockWidgets::Location_OnTop);
+}
+
 
 // QTest::qWait(50000)
 

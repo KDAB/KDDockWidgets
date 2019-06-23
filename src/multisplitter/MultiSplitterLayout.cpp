@@ -452,9 +452,9 @@ void MultiSplitterLayout::resizeItem(Frame *frame, int newSize, Qt::Orientation 
     Q_ASSERT(!a->isStatic());
     const int widgLength = item->length(orientation);
     const int delta = newSize - widgLength;
-    qCDebug(::anchors) << Q_FUNC_INFO << "Old position:" << a->pos() << "; old w.geo=" << item->geometry();
+    qCDebug(::anchors) << Q_FUNC_INFO << "Old position:" << a->position() << "; old w.geo=" << item->geometry();
     a->setPosition(a->position() + delta);
-    qCDebug(::anchors) << Q_FUNC_INFO << "New position:" << a->pos() << "; new w.geo=" << item->geometry();
+    qCDebug(::anchors) << Q_FUNC_INFO << "New position:" << a->position() << "; new w.geo=" << item->geometry();
 }
 
 void MultiSplitterLayout::addMultiSplitter(MultiSplitterWidget *sourceMultiSplitter,
@@ -758,7 +758,7 @@ void MultiSplitterLayout::dumpDebug() const
         qDebug() << "    " << anchor
                  << "; side1=" << side1Widgets << anchor->debug_side1ItemNames()
                  << "; side2=" << side2Widgets << anchor->debug_side2ItemNames()
-                 << "; pos=" << anchor->pos()
+                 << "; pos=" << anchor->position()
                  << "; bounds=" << bounds
                  << "; orientation=" << anchor->orientation();
     }

@@ -23,13 +23,16 @@
 
 #include "docks_export.h"
 
-#include <QWidget>
+#include <QObject>
 #include <QPointer>
+#include <QRect>
+#include <QVector>
 
 namespace KDDockWidgets {
 
 class Item;
 class MultiSplitterLayout;
+class SeparatorWidget;
 
 typedef QVector<Item*> ItemList;
 
@@ -73,7 +76,7 @@ typedef QVector<Item*> ItemList;
  * side1Widgets (Foo) and side2Widgets (Bar). This non-static anchors has from=top anchor, and to=bottom anchor.
  *
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS Anchor : public QWidget // clazy:exclude=ctor-missing-parent-argument
+class DOCKS_EXPORT_FOR_UNIT_TESTS Anchor : public QObject // clazy:exclude=ctor-missing-parent-argument
 {
     Q_OBJECT
 
@@ -118,7 +121,6 @@ public:
     typedef QVector<Anchor *> List;
     explicit Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type = Type_None);
     ~Anchor() override;
-    int pos() const;
 
     void setFrom(Anchor *);
     Anchor *from() const { return m_from; }
@@ -132,7 +134,14 @@ public:
     bool isVertical() const { return m_orientation == Qt::Vertical; }
     void setPosition(int p, SetPositionOptions = SetPositionOption_None);
     int position() const;
+    void setVisible(bool);
     qreal positionPercentage() const { return m_positionPercentage; }
+
+    /**
+     * @brief Sets the new layout. Called when we're dropping a source layout into a target one.
+     * The target one will steal the separators of the source one.
+     */
+    void setLayout(MultiSplitterLayout *);
 
     /**
      * Returns how far left or top an anchor can go and still respecting it's Side1 widgets min-size.
@@ -197,16 +206,11 @@ public:
 
     static int thickness(bool staticAnchor);
     static Anchor::Side oppositeSide(Side side);
-protected:
-    void paintEvent(QPaintEvent *) override;
-    void moveEvent(QMoveEvent *) override;
-    void enterEvent(QEvent *) override;
-    void leaveEvent(QEvent *) override;
-    bool event(QEvent *) override;
 
-    void mousePressEvent(QMouseEvent *) override;
-    void mouseMoveEvent(QMouseEvent *) override;
-    void mouseReleaseEvent(QMouseEvent *) override;
+    void onMousePress();
+    void onMouseReleased();
+    void onMouseMoved(QPoint pt);
+    void onWidgetMoved(int p);
 
 Q_SIGNALS:
     void positionChanged(int pos);
@@ -216,13 +220,14 @@ Q_SIGNALS:
     void debug_itemNamesChanged();
 
 public:
-    void move(int);
     int position(QPoint) const;
     void updateSize();
     void updateItemSizes();
     void debug_updateItemNames();
     QString debug_side1ItemNames() const;
     QString debug_side2ItemNames() const;
+    void setGeometry(QRect);
+    QRect geometry() const { return m_geometry; }
 
     const Qt::Orientation m_orientation;
     ItemList m_side1Items;
@@ -230,7 +235,6 @@ public:
     QPointer<Anchor> m_from;// QPointer just so we can assert. They should never be null.
     QPointer<Anchor> m_to;
     const Type m_type;
-    int m_position = 0;
     qreal m_positionPercentage = 0.0;
 
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
@@ -246,6 +250,9 @@ public:
 
     QString m_debug_side1ItemNames;
     QString m_debug_side2ItemNames;
+
+    SeparatorWidget *const m_separatorWidget;
+    QRect m_geometry;
 };
 }
 

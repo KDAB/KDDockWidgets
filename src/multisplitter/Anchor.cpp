@@ -22,28 +22,22 @@
 #include "MultiSplitterLayout_p.h"
 #include "MultiSplitterWidget_p.h"
 #include "Logging_p.h"
+#include "SeparatorWidget_p.h"
 
 #include <QDebug>
-#include <QPainter>
-#include <QMouseEvent>
-#include <QStyleOption>
+#include <QEvent>
 
 using namespace KDDockWidgets;
 
 Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type type)
-    : QWidget(multiSplitter->parentWidget())
+    : QObject(multiSplitter->parentWidget())
     , m_orientation(orientation)
     , m_type(type)
     , m_layout(multiSplitter)
+    , m_separatorWidget(new SeparatorWidget(this, multiSplitter->parentWidget()))
 {
-    if (isVertical())
-        setFixedWidth(thickness(isStatic()));
-    else
-        setFixedHeight(thickness(isStatic()));
-
-    setVisible(true);
-    setMouseTracking(true);
     multiSplitter->insertAnchor(this);
+    connect(this, &QObject::objectNameChanged, m_separatorWidget, &QObject::setObjectName);
 }
 
 Anchor::~Anchor()
@@ -54,11 +48,6 @@ Anchor::~Anchor()
         item->anchorGroup().setAnchor(nullptr, m_orientation, Side1);
     for (Item *item : items(Side2))
         item->anchorGroup().setAnchor(nullptr, m_orientation, Side2);
-}
-
-int Anchor::pos() const
-{
-    return m_orientation == Qt::Horizontal ? y() : x();
 }
 
 void Anchor::setFrom(Anchor *from)
@@ -100,12 +89,20 @@ void Anchor::updateSize()
 {
     if (isValid()) {
         if (isVertical()) {
-            setGeometry(position(), m_from->geometry().bottom(), width(), length());
+            setGeometry(QRect(position(), m_from->geometry().bottom(), thickness(), length()));
         } else {
-            setGeometry(m_from->geometry().right(), position(), length(), height());
+            setGeometry(QRect(m_from->geometry().right(), position(), length(), thickness()));
         }
     }
     qCDebug(anchors) << "Anchor::updateSize" << this << geometry();
+}
+
+void Anchor::setGeometry(QRect r)
+{
+    if (r != m_geometry) {
+        m_geometry = r;
+        m_separatorWidget->setGeometry(r);
+    }
 }
 
 void Anchor::updateItemSizes()
@@ -174,35 +171,48 @@ Qt::Orientation Anchor::orientation() const
 
 void Anchor::setPosition(int p, SetPositionOptions options)
 {
+    Q_ASSERT(p >= 0);
     qCDebug(anchors) << Q_FUNC_INFO << "; visible="
-                     << this <<isVisible() << "; p=" << p;
+                     << this << m_separatorWidget->isVisible() << "; p=" << p;
     m_initialized = true;
-    const bool recalculatePercentage = !(options & SetPositionOption_DontRecalculatePercentage);
+    if (position() == p)
+        return;
 
     if (isVertical()) {
-        QWidget::move(p, y());
-        if (recalculatePercentage)
-            m_positionPercentage = (p * 1.0) / m_layout->contentsWidth(); // We keep the percentage, so we don't constantly recalculate it during a resize, which introduces rounding errors
+        m_geometry.moveLeft(p);
     } else {
-        QWidget::move(x(), p);
-        if (recalculatePercentage)
-            m_positionPercentage = (p * 1.0) / m_layout->contentsHeight();
+        m_geometry.moveTop(p);
     }
+
+    const bool recalculatePercentage = !(options & SetPositionOption_DontRecalculatePercentage);
+
+    m_separatorWidget->move(p);
+    if (recalculatePercentage)
+        m_positionPercentage = (p * 1.0) / m_layout->contentsWidth(); // We keep the percentage, so we don't constantly recalculate it during a resize, which introduces rounding errors
 
     // Note: Position can be slightly negative if the main window isn't big enougn to host the new size.
     // In that case the window will be resized shortly after
     //Q_ASSERT(p >= 0); - commented out, as it's normal
+
+    Q_EMIT positionChanged(position());
+    updateItemSizes();
 }
 
 int Anchor::position() const
 {
-    return isVertical() ? x() : y();
+    const QPoint topLeft = m_geometry.topLeft();
+    return isVertical() ? topLeft.x() : topLeft.y();
+}
+
+void Anchor::setVisible(bool v)
+{
+    m_separatorWidget->setVisible(v);
 }
 
 int Anchor::minPosition() const
 {
     const int smallestSqueeze = smallestAvailableItemSqueeze(Side1);
-    return m_position - smallestSqueeze;
+    return position() - smallestSqueeze;
 }
 
 int Anchor::smallestAvailableItemSqueeze(Anchor::Side side) const
@@ -225,7 +235,7 @@ int Anchor::length() const
 {
     Q_ASSERT(m_to);
     Q_ASSERT(m_from);
-    return m_to->pos() - m_from->pos();
+    return m_to->position() - m_from->position();
 }
 
 bool Anchor::isValid() const
@@ -235,7 +245,8 @@ bool Anchor::isValid() const
 
 int Anchor::thickness() const
 {
-    return isVertical() ? width() : height();
+    return isVertical() ? m_separatorWidget->width()
+                        : m_separatorWidget->height();
 }
 
 bool Anchor::hasItems(Anchor::Side side) const
@@ -383,98 +394,13 @@ int Anchor::thickness(bool staticAnchor)
     return staticAnchor ? 1 : 5;
 }
 
-void Anchor::paintEvent(QPaintEvent *)
+void Anchor::setLayout(MultiSplitterLayout *layout)
 {
-    QPainter p(this);
-
-    QStyleOption opt;
-    opt.palette = palette();
-    opt.rect = rect();
-    opt.state = QStyle::State_None;
-    if (isVertical())
-        opt.state |= QStyle::State_Horizontal;
-
-    if (isEnabled())
-        opt.state |= QStyle::State_Enabled;
-
-    parentWidget()->style()->drawControl(QStyle::CE_Splitter, &opt, &p, this);
-}
-
-void Anchor::moveEvent(QMoveEvent *)
-{
-    qCDebug(anchors) << Q_FUNC_INFO;
-    if (m_position == position())
-        return;
-
-    m_position = position();
-    Q_EMIT positionChanged(m_position);
-    updateItemSizes();
-}
-
-void Anchor::enterEvent(QEvent *)
-{
-    if (!isStatic()) {
-        if (isVertical())
-            setCursor(Qt::SizeHorCursor);
-        else
-            setCursor(Qt::SizeVerCursor);
-    }
-}
-
-void Anchor::leaveEvent(QEvent *)
-{
-    setCursor(Qt::ArrowCursor);
-}
-
-bool Anchor::event(QEvent *e)
-{
-    if (e->type() == QEvent::ParentChange) {
-        m_layout->removeAnchor(this);
-        m_layout = qobject_cast<MultiSplitterWidget *>(parent())->multiSplitter();
-        Q_ASSERT(m_layout);
-        m_layout->insertAnchor(this);
-    }
-
-    return QWidget::event(e);
-}
-
-void Anchor::mousePressEvent(QMouseEvent *)
-{
-    m_layout->setAnchorBeingDragged(this);
-    qCDebug(anchors) << "Drag started";
-}
-
-void Anchor::mouseMoveEvent(QMouseEvent *e)
-{
-    if (!isBeingDragged() || isStatic())
-        return;
-
-    const int positionToGoTo = position(mapToParent(e->pos()));
-    auto bounds = m_layout->boundPositionsForAnchor(this);
-
-    if (positionToGoTo < bounds.first || positionToGoTo > bounds.second) {
-        // qDebug() << "Out of bounds" << bounds.first << bounds.second << positionToGoTo << "; currentPos" << position() << "; window size" << window()->size();
-        return;
-    }
-
-    m_lastMoveDirection = positionToGoTo < position() ? Side1
-                                                      : (positionToGoTo > position() ? Side2
-                                                                                     : Side_None); // Side_None shouldn't happen though.
-    move(positionToGoTo);
-}
-
-void Anchor::mouseReleaseEvent(QMouseEvent *)
-{
-    m_layout->setAnchorBeingDragged(nullptr);
-}
-
-void Anchor::move(int p)
-{
-    if (isVertical()) {
-        QWidget::move(p, y());
-    } else {
-        QWidget::move(x(), p);
-    }
+    m_layout->removeAnchor(this);
+    m_layout = layout;
+    setParent(layout->parentWidget());
+    m_separatorWidget->setParent(layout->parentWidget());
+    m_layout->insertAnchor(this);
 }
 
 int Anchor::position(QPoint p) const
@@ -531,4 +457,43 @@ Anchor::Side Anchor::oppositeSide(Side side)
         Q_ASSERT(false);
         return Side_None;
     }
+}
+
+void Anchor::onMousePress()
+{
+    m_layout->setAnchorBeingDragged(this);
+    qCDebug(anchors) << "Drag started";
+}
+
+void Anchor::onMouseReleased()
+{
+    m_layout->setAnchorBeingDragged(nullptr);
+}
+
+void Anchor::onMouseMoved(QPoint pt)
+{
+    if (!isBeingDragged() || isStatic())
+        return;
+
+    const int positionToGoTo = position(pt);
+    auto bounds = m_layout->boundPositionsForAnchor(this);
+
+    if (positionToGoTo < bounds.first || positionToGoTo > bounds.second) {
+        // qDebug() << "Out of bounds" << bounds.first << bounds.second << positionToGoTo << "; currentPos" << position() << "; window size" << window()->size();
+        return;
+    }
+
+    m_lastMoveDirection = positionToGoTo < position() ? Side1
+                                                      : (positionToGoTo > position() ? Side2
+                                                                                     : Side_None); // Side_None shouldn't happen though.
+    setPosition(positionToGoTo);
+}
+
+void Anchor::onWidgetMoved(int p)
+{
+    if (m_layout->anchorBeingDragged() != this) // We only care if it's being dragged by mouse
+        return;
+
+
+    setPosition(p);
 }
