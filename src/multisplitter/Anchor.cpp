@@ -174,7 +174,8 @@ Qt::Orientation Anchor::orientation() const
 
 void Anchor::setPosition(int p, SetPositionOptions options)
 {
-    qCDebug(anchors) << Q_FUNC_INFO << "; visible=" << isVisible();
+    qCDebug(anchors) << Q_FUNC_INFO << "; visible="
+                     << this <<isVisible() << "; p=" << p;
     m_initialized = true;
     const bool recalculatePercentage = !(options & SetPositionOption_DontRecalculatePercentage);
 
@@ -187,6 +188,8 @@ void Anchor::setPosition(int p, SetPositionOptions options)
         if (recalculatePercentage)
             m_positionPercentage = (p * 1.0) / m_layout->contentsHeight();
     }
+
+    Q_ASSERT(p >= 0);
 }
 
 int Anchor::position() const
