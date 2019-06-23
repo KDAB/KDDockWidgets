@@ -379,7 +379,7 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     }
 
     KDDockWidgets::Location multisplitterLocation = locationToMultisplitterLocation(location);
-    QWidget *relativeTo = nullptr;
+    Frame *relativeToFrame = nullptr;
 
     MultiSplitterLayout *layout = m_dropArea->multiSplitter();
 
@@ -395,20 +395,19 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
             Q_ASSERT(false);
             return;
         }
-        relativeTo = m_hoveredFrame;
+        relativeToFrame = m_hoveredFrame;
         break;
     case DropLocation_OutterLeft:
     case DropLocation_OutterTop:
     case DropLocation_OutterRight:
     case DropLocation_OutterBottom:
-        relativeTo = m_dropArea;
         break;
     default:
         break;
     }
 
     QRect rect = layout->rectForDrop(m_windowBeingDragged, multisplitterLocation,
-                                     layout->itemForWidget(relativeTo));
+                                     layout->itemForFrame(relativeToFrame));
 
     m_rubberBand->setGeometry(rect);
     m_rubberBand->setVisible(true);

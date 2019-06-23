@@ -471,7 +471,7 @@ void LayoutState::restore(DropArea *dropArea)
 
                  }
 
-                 anchor->addItem(dropArea->multiSplitter()->itemForWidget(frame), side);
+                 anchor->addItem(dropArea->multiSplitter()->itemForFrame(frame), side);
              }
          };
 

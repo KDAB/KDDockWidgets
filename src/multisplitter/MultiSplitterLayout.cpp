@@ -115,7 +115,7 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
         return false;
     }
 
-    Item *item = itemForWidget(widget);
+    Item *item = itemForFrame(qobject_cast<Frame*>(widget));
 
     if (contains(item)) {
         qWarning() << "MultiSplitterLayout::addWidget: Already contains" << widget;
@@ -139,13 +139,13 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
 
 void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relativeToWidget)
 {
-    Item *item = itemForWidget(w);
+    Item *item = itemForFrame(qobject_cast<Frame*>(w));
     if (item) {
         qWarning() << "Item already exists;";
         return;
     }
 
-    Item* relativeToItem = itemForWidget(relativeToWidget);
+    Item* relativeToItem = itemForFrame(relativeToWidget);
 
     // Make some sanity checks:
     if (!validateInputs(w, location, relativeToItem))
@@ -446,7 +446,7 @@ void MultiSplitterLayout::collectPaths(QVector<Anchor::List> &paths, Anchor *fro
 void MultiSplitterLayout::resizeItem(Frame *frame, int newSize, Qt::Orientation orientation)
 {
     // Used for unit-tests only
-    Item *item = itemForWidget(frame);
+    Item *item = itemForFrame(frame);
     Q_ASSERT(item);
     Anchor *a = item->anchor(Anchor::Side1, orientation);
     Q_ASSERT(!a->isStatic());
@@ -908,7 +908,7 @@ void MultiSplitterLayout::emitVisibleWidgetCountChanged()
         Q_EMIT visibleWidgetCountChanged(visibleCount());
 }
 
-Item *MultiSplitterLayout::itemForWidget(const QWidget *w) const
+Item *MultiSplitterLayout::itemForFrame(const Frame *w) const
 {
     if (!w)
         return nullptr;

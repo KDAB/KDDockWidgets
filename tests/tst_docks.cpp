@@ -92,7 +92,7 @@ struct ExpectedRectForDrop // struct for testing MultiSplitterLayout::availableL
 {
     QWidget *widgetToDrop;
     KDDockWidgets::Location location;
-    QWidget *relativeTo;
+    Frame *relativeTo;
     QRect expectedRect;
 };
 typedef QVector<ExpectedRectForDrop> ExpectedRectsForDrop;
@@ -1746,7 +1746,7 @@ void TestDocks::tst_availableLengthForDrop()
     int i = 0;
     for (ExpectedAvailableSize expectedSize : expectedAvailableSizes) {
         expectedSize.relativeTo = expectedSize.relativeTo == nullptr ? multisplitterWidget->parentWidget() : expectedSize.relativeTo;
-        auto available = layout->availableLengthForDrop(expectedSize.location, layout->itemForWidget(frameMap.value(expectedSize.relativeTo)));
+        auto available = layout->availableLengthForDrop(expectedSize.location, layout->itemForFrame(frameMap.value(expectedSize.relativeTo)));
         // qDebug() << available.length() << "; i=" << i;
 
         QCOMPARE(available.length(), expectedSize.totalAvailable);
@@ -1795,8 +1795,7 @@ void TestDocks::tst_rectForDrop()
     auto layout = multisplitterWidget->multiSplitter();
     qDebug() << "Created with contentsSize=" << layout->contentsWidth() << layout->contentsHeight()<< multisplitterSetup.size;
     for (ExpectedRectForDrop expected : expectedRects) {
-        expected.relativeTo = expected.relativeTo == nullptr ? multisplitterWidget->parentWidget() : expected.relativeTo;
-        QRect actualRect = layout->rectForDrop(expected.widgetToDrop, expected.location, layout->itemForWidget(expected.relativeTo));
+        QRect actualRect = layout->rectForDrop(expected.widgetToDrop, expected.location, layout->itemForFrame(expected.relativeTo));
         layout->dumpDebug();
         QCOMPARE(actualRect, expected.expectedRect);
         expected.widgetToDrop->deleteLater();

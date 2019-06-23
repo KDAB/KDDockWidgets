@@ -194,7 +194,7 @@ public:
 
     // For debug
     void dumpDebug() const;
-    Item *itemForWidget(const QWidget *w) const;
+    Item *itemForFrame(const Frame *w) const;
 
 Q_SIGNALS:
     ///@brief emited when the number of widgets changes

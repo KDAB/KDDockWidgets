@@ -356,7 +356,7 @@ QPoint AnimatedIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLo
 void AnimatedIndicators::onHoveredFrameChanged(Frame *frame)
 {
     if (frame) {
-        Item *item = m_dropArea->multiSplitter()->itemForWidget(frame);
+        Item *item = m_dropArea->multiSplitter()->itemForFrame(frame);
         AnchorGroup group = item->anchorGroup();
         Q_ASSERT(group.isValid());
 
