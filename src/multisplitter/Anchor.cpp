@@ -171,7 +171,6 @@ Qt::Orientation Anchor::orientation() const
 
 void Anchor::setPosition(int p, SetPositionOptions options)
 {
-    Q_ASSERT(p >= 0);
     qCDebug(anchors) << Q_FUNC_INFO << "; visible="
                      << this << m_separatorWidget->isVisible() << "; p=" << p;
     m_initialized = true;
