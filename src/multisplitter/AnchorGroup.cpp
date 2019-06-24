@@ -244,11 +244,12 @@ void AnchorGroup::removeItem(Item *item)
 
     if (left->isUnneeded()) {
         layout->updateAnchorsFromTo(left, right);
+        const int leftPosition = left->position();
         right->consume(left, Anchor::Side1);
 
         if (!right->isUnneeded() && !right->isStatic()) {
             // Make use of the extra space, so it's fair
-            right->setPosition(right->position() - ((right->position() - left->position()) / 2));
+            right->setPosition(right->position() - ((right->position() - leftPosition) / 2));
         }
     }
 
@@ -259,11 +260,12 @@ void AnchorGroup::removeItem(Item *item)
 
     if (top->isUnneeded()) {
         layout->updateAnchorsFromTo(top, bottom);
+        const int topPosition = top->position();
         bottom->consume(top, Anchor::Side1);
 
         if (!bottom->isUnneeded() && !bottom->isStatic()) {
             // Make use of the extra space, so it's fair
-            bottom->setPosition(bottom->position() - ((bottom->position() - top->position()) / 2));
+            bottom->setPosition(bottom->position() - ((bottom->position() - topPosition) / 2));
         }
     }
 
