@@ -182,7 +182,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     Q_ASSERT(targetAnchorGroup.isValid());
 
     Anchor *newAnchor = nullptr;
-    QRect dropRect = rectForDrop(w, location, relativeToItem);
+    const QRect dropRect = rectForDrop(w, location, relativeToItem);
 
     if (dropRect.size().isNull() || dropRect.x() < 0 || dropRect.y() < 0) {
         qWarning() << Q_FUNC_INFO << "Invalid drop rect" << dropRect
@@ -220,12 +220,12 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
 
         switch (location) {
         case Location_OnLeft:
-            posForExistingAnchor = dropRect.left() - 1;
-            posForNewAnchor = dropRect.right();
+            posForExistingAnchor = dropRect.left() - existingAnchor->thickness();
+            posForNewAnchor = dropRect.right() + 1;
             break;
         case Location_OnTop:
-            posForExistingAnchor = dropRect.top() - 1;
-            posForNewAnchor = dropRect.bottom();
+            posForExistingAnchor = dropRect.top() - existingAnchor->thickness();
+            posForNewAnchor = dropRect.bottom() + 1;
             break;
         case Location_OnBottom:
             posForExistingAnchor = dropRect.bottom() + 1;
@@ -626,7 +626,7 @@ MultiSplitterLayout::Length MultiSplitterLayout::availableLengthForDrop(Location
  * Returns the width or height the widget will get when dropped.
  */
 MultiSplitterLayout::Length MultiSplitterLayout::lengthForDrop(const QWidget *widget, Location location,
-                                                   const Item *relativeTo) const
+                                                               const Item *relativeTo) const
 {
     Q_ASSERT(location != Location_None);
 

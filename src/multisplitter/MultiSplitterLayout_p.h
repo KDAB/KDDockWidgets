@@ -268,7 +268,7 @@ private:
      * This function is also called to know the size of the rubberband when hovering over a location.
      */
     MultiSplitterLayout::Length lengthForDrop(const QWidget *widget, KDDockWidgets::Location location,
-                                        const Item *relativeTo) const;
+                                              const Item *relativeTo) const;
     void insertAnchor(Anchor *);
     void removeAnchor(Anchor *);
 
@@ -286,7 +286,7 @@ private:
     QPair<int, int> boundPositionsForAnchor(Anchor *) const;
 
     /** Returns how much is available for the new drop. It already counts with the space for new anchor that will be created.
-     * So ir returns the contentWidth (or height), minus the minimum-sizes of all widgets, minus the thickness of all anchors
+     * So it returns the contentWidth (or height), minus the minimum-sizes of all widgets, minus the thickness of all anchors
      * minus the thickness of the anchor that would be created.
      **/
     Length availableLengthForDrop(KDDockWidgets::Location location, const Item *relativeTo) const;
