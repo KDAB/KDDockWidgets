@@ -22,6 +22,7 @@
 #define KD_MULTISPLITTER_SEPARATORWIDGET_P_H
 
 #include <QWidget>
+#include <QPointer>
 
 namespace KDDockWidgets {
 class Anchor;
@@ -45,7 +46,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *) override;
     void moveEvent(QMoveEvent *) override;
 private:
-    Anchor *const m_anchor;
+    const QPointer<Anchor> m_anchor; // QPointer so we dont dereference invalid point in paintEvent() when Anchor is deleted.
 };
 
 }

@@ -69,6 +69,9 @@ void SeparatorWidget::move(int p)
 
 void SeparatorWidget::paintEvent(QPaintEvent *)
 {
+    if (!m_anchor)
+        return;
+
     QPainter p(this);
 
     QStyleOption opt;
