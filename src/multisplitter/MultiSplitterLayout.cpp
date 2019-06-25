@@ -1076,7 +1076,11 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     // The anchor stops following other, and will go to the correct position
     anchorToMove->setFollowee(nullptr);
 
-    const int newPosition = oldPosition + requiredLength + 1;
+    int newPosition;
+    if (anchorGroup.sideForAnchor(anchorToMove) == Anchor::Side1)
+        newPosition = oldPosition - requiredLength - anchorToMove->thickness();
+    else
+        newPosition = oldPosition + requiredLength + 1;
 
     qCDebug(placeholder) << Q_FUNC_INFO << "oldPos=" << oldPosition
                          << "; newPosition=" << newPosition
