@@ -54,7 +54,7 @@ public:
     virtual std::unique_ptr<WindowBeingDragged> makeWindow() = 0;
     WidgetResizeHandler *widgetResizeHandler() const;
     void setWidgetResizeHandler(WidgetResizeHandler *w);
-    FloatingWindow *isFloating() const;
+    FloatingWindow *isFloatingWindow() const;
 
 private:
     class Private;

@@ -71,7 +71,7 @@ void Draggable::setWidgetResizeHandler(WidgetResizeHandler *w)
     d->widgetResizeHandler = w;
 }
 
-FloatingWindow *Draggable::isFloating() const
+FloatingWindow *Draggable::isFloatingWindow() const
 {
     QWidget *p = d->thisWidget;
     do {
