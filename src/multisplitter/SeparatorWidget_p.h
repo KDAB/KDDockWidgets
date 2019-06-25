@@ -46,7 +46,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *) override;
     void moveEvent(QMoveEvent *) override;
 private:
-    const QPointer<Anchor> m_anchor; // QPointer so we dont dereference invalid point in paintEvent() when Anchor is deleted.
+    const QPointer<Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.
 };
 
 }

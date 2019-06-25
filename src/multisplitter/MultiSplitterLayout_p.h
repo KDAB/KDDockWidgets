@@ -18,8 +18,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_MULTISPLITTER_MULTISPLITTER_P_H
-#define KD_MULTISPLITTER_MULTISPLITTER_P_H
+#ifndef KD_MULTISPLITTER_LAYOUT_P_H
+#define KD_MULTISPLITTER_LAYOUT_P_H
 
 #include "Anchor_p.h"
 #include "AnchorGroup_p.h"
@@ -198,17 +198,17 @@ public:
     void dumpDebug() const;
     Item *itemForFrame(const Frame *w) const;
 Q_SIGNALS:
-    ///@brief emited when the number of widgets changes
+    ///@brief emitted when the number of widgets changes
     ///@param count the new widget count
     void widgetCountChanged(int count);
 
     void visibleWidgetCountChanged(int count);
 
-    ///@brief emited when a widget is added
+    ///@brief emitted when a widget is added
     ///@param item the item containing the new widget
     void widgetAdded(KDDockWidgets::Item *item);
 
-    ///@brief emited when a widget is removed
+    ///@brief emitted when a widget is removed
     ///@param item the item containing the removed widget
     void widgetRemoved(KDDockWidgets::Item *item);
 
