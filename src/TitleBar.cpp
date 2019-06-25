@@ -253,18 +253,48 @@ bool TitleBar::isFloating() const
         return m_dockWidget->isFloating();
 
     if (m_floatingWindow)
-        return m_floatingWindow->hasSingleDockWidget();
+        return m_floatingWindow->hasSingleDockWidget(); // Debatable! Maybe it's always floating.
 
     if (m_frame)
         return m_frame->isFloating();
 
+    qWarning() << "TitleBar::isFloating: shouldn't happen";
     return false;
+}
+
+DockWidget::List TitleBar::dockWidgets() const
+{
+    if (m_dockWidget)
+        return { m_dockWidget };
+
+    if (m_floatingWindow) {
+        DockWidget::List result;
+        for (Frame *f : m_floatingWindow->frames()) {
+            result << f->dockWidgets();
+        }
+        return result;
+    }
+
+    if (m_frame)
+        return m_frame->dockWidgets();
+
+     qWarning() << "TitleBar::dockWidget: shouldn't happen";
+     return {};
 }
 
 void TitleBar::onFloatClicked()
 {
     if (isFloating()) {
-        qDebug() << "Not implemented yet";
+        DockWidget::List dockWidgets = this->dockWidgets();
+        if (dockWidgets.isEmpty()) {
+            qWarning() << "TitleBar::onFloatClicked: empty list. Shouldn't happen";
+            return;
+        }
+
+        if (dockWidgets.size() == 1)
+            dockWidgets[0]->setFloating(false);
+        else
+            qDebug() << "Not implemented yet";
     } else {
         makeWindow();
     }

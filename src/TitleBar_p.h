@@ -24,6 +24,7 @@
 #include "docks_export.h"
 #include "Draggable_p.h"
 #include "Frame_p.h"
+#include "DockWidget.h"
 
 #include <QWidget>
 #include <QVector>
@@ -55,6 +56,11 @@ public:
 
     ///@brief Returns true if the dock widget which has this title bar is floating
     bool isFloating() const;
+
+    ///@brief the list of dockwidgets under this TitleBar.
+    /// There should always be at least 1. If more than 1 then they are tabbed.
+    DockWidget::List dockWidgets() const;
+
 protected:
     void paintEvent(QPaintEvent *) override;
 

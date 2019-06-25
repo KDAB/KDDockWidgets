@@ -159,6 +159,13 @@ Anchor *AnchorGroup::anchorFollowing() const
     return nullptr;
 }
 
+Anchor::Side AnchorGroup::sideForAnchor(Anchor *a) const
+{
+    if (a == left || a == top)
+        return Anchor::Side1;
+    return Anchor::Side2;
+}
+
 void AnchorGroup::setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side)
 {
     const bool isSide1 = side == Anchor::Side1;
