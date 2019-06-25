@@ -2088,6 +2088,8 @@ void TestDocks::tst_refUnrefItem()
 
 void TestDocks::tst_addAndReadd()
 {
+    EnsureTopLevelsDeleted e;
+
     // 1. This just tests some crash I got.
     // Make a dock widget float and immediately reattach it
     auto m = createMainWindow();
@@ -2104,6 +2106,10 @@ void TestDocks::tst_addAndReadd()
     auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterRight);
     dock1->frame()->titleBar()->makeWindow();
+
+    //Cleanup
+    delete dock1;
+    waitForDeleted(fw);
 }
 
 void TestDocks::tst_availableLengthForOrientation()
