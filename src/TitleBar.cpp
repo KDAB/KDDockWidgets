@@ -247,9 +247,27 @@ void TitleBar::onCloseClicked()
         m_floatingWindow->close();
 }
 
+bool TitleBar::isFloating() const
+{
+    if (m_dockWidget)
+        return m_dockWidget->isFloating();
+
+    if (m_floatingWindow)
+        return m_floatingWindow->hasSingleDockWidget();
+
+    if (m_frame)
+        return m_frame->isFloating();
+
+    return false;
+}
+
 void TitleBar::onFloatClicked()
 {
-    makeWindow();
+    if (isFloating()) {
+        qDebug() << "Not implemented yet";
+    } else {
+        makeWindow();
+    }
 }
 
 #include "TitleBar.moc"

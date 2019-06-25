@@ -52,6 +52,9 @@ public:
     void setTitle(const QString &title);
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     QWidget* closeButton() const;
+
+    ///@brief Returns true if the dock widget which has this title bar is floating
+    bool isFloating() const;
 protected:
     void paintEvent(QPaintEvent *) override;
 

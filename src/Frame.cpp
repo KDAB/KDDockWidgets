@@ -33,6 +33,7 @@
 #include "DragController_p.h"
 #include "FloatingWindow_p.h"
 #include "Utils_p.h"
+#include <MainWindow.h>
 
 #include <QCloseEvent>
 #include <QVBoxLayout>
@@ -317,6 +318,19 @@ bool Frame::isTheOnlyFrame() const
     qCDebug(docking) << "Frame::isTheOnlyFrame() m_dropArea=" << m_dropArea << "; numFrames"
                      << (m_dropArea ? m_dropArea->numFrames() : 0);
     return m_dropArea && m_dropArea->numFrames() == 1;
+}
+
+bool Frame::isFloating() const
+{
+    if (isInMainWindow())
+        return false;
+
+    return isTheOnlyFrame();
+}
+
+bool Frame::isInMainWindow() const
+{
+    return m_dropArea && qobject_cast<MainWindow*>(m_dropArea->parentWidget());
 }
 
 int Frame::dockWidgetCount() const
