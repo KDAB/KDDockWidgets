@@ -252,7 +252,7 @@ private:
 };
 }
 
-static std::unique_ptr<MainWindow> createMainWindow(QSize sz = {600, 600}, MainWindowOptions options = {})
+static std::unique_ptr<MainWindow> createMainWindow(QSize sz = {600, 600}, MainWindowOptions options = MainWindowOption_HasCentralFrame)
 {
     auto ptr = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow"), options));
     ptr->show();
