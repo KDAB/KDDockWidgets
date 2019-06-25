@@ -244,6 +244,7 @@ private Q_SLOTS:
     void tst_setVisibleFalseWhenSideBySide();
     void tst_refUnrefItem();
     void tst_addAndReadd();
+    void tst_availableLengthForOrientation();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -251,9 +252,9 @@ private:
 };
 }
 
-static std::unique_ptr<MainWindow> createMainWindow(QSize sz = {600, 600})
+static std::unique_ptr<MainWindow> createMainWindow(QSize sz = {600, 600}, MainWindowOptions options = {})
 {
-    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow")));
+    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow"), options));
     ptr->show();
     ptr->resize(sz);
     return ptr;
@@ -2103,6 +2104,34 @@ void TestDocks::tst_addAndReadd()
     auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterRight);
     dock1->frame()->titleBar()->makeWindow();
+}
+
+void TestDocks::tst_availableLengthForOrientation()
+{
+    EnsureTopLevelsDeleted e;
+
+    // 1. Test a completely empty window, it's available space is its size minus the static separators thickness
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+    int availableWidth = layout->availableLengthForOrientation(Qt::Vertical);
+    int availableHeight = layout->availableLengthForOrientation(Qt::Horizontal);
+    QCOMPARE(availableWidth, layout->contentsWidth() - 2 * Anchor::thickness(true));
+    QCOMPARE(availableHeight, layout->contentsHeight() - 2 *Anchor::thickness(true));
+
+    //2. Now do the same, but we have some widget docked
+
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("1")));
+    m->addDockWidget(dock1, Location_OnLeft);
+
+    const int dock1MinWidth = widgetMinLength(dock1->frame(), Qt::Vertical);
+    const int dock1MinHeight = widgetMinLength(dock1->frame(), Qt::Horizontal);
+
+    availableWidth = layout->availableLengthForOrientation(Qt::Vertical);
+    availableHeight = layout->availableLengthForOrientation(Qt::Horizontal);
+    QCOMPARE(availableWidth, layout->contentsWidth() - 2 * Anchor::thickness(true) - Anchor::thickness(false) - dock1MinWidth);
+    QCOMPARE(availableHeight, layout->contentsHeight() - 2 *Anchor::thickness(true) - Anchor::thickness(false) -  dock1MinHeight);
 }
 
 // QTest::qWait(50000)

@@ -293,6 +293,13 @@ private:
     Length availableLengthForDrop(KDDockWidgets::Location location, const Item *relativeTo) const;
 
     /**
+     * @brief Like @ref availableLengthForDrop but just returns the total available width or height (depending on @p orientation)
+     * So no need to receive any location.
+     * @param orientation If Qt::Vertical then returns the available width. Height otherwise.
+     */
+    int availableLengthForOrientation(Qt::Orientation orientation) const;
+
+    /**
      * Removes the widgets associated with oldAnchor and gives them to newAnchor.
      * Called when removing a widget results in unneeded anchors.
      */

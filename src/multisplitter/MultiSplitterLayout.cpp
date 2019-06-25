@@ -632,6 +632,14 @@ MultiSplitterLayout::Length MultiSplitterLayout::availableLengthForDrop(Location
     return result;
 }
 
+int MultiSplitterLayout::availableLengthForOrientation(Qt::Orientation orientation) const
+{
+    Length l = availableLengthForDrop(orientation == Qt::Vertical ? Location_OnLeft
+                                                                       : Location_OnTop, nullptr);
+
+    return l.length();
+}
+
 /*
  * Returns the width or height the widget will get when dropped.
  */
