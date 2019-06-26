@@ -244,7 +244,7 @@ private Q_SLOTS:
     void tst_setVisibleFalseWhenSideBySide();
     void tst_refUnrefItem();
     void tst_addAndReadd();
-    void tst_addAndReadd2();
+    void tst_placeholderCount();
     void tst_availableLengthForOrientation();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2113,21 +2113,51 @@ void TestDocks::tst_addAndReadd()
     waitForDeleted(fw);
 }
 
-void TestDocks::tst_addAndReadd2()
+void TestDocks::tst_placeholderCount()
 {
-    // 1. Just tests another bug I got
+    // Tests MultiSplitterLayout::count(),visibleCount() and placeholdercount()
+
+    // 1. MainWindow with just the initial frame.
     auto m = createMainWindow();
     auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    auto layout = dropArea->multiSplitter();
+
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->visibleCount(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 2. MainWindow with central frame and left widget
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 3. Add another dockwidget, this time tabbed in the center. It won't increase count, as it reuses an existing frame.
     m->addDockWidgetAsTab(dock2);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 4. Float dock1. It should create a placeholder
+    dock1->setFloating(true);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 1);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    // 5. Re-dock dock1. It should reuse the placeholder
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 6. Again
     dock1->setFloating(true);
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-
-    dock1->setFloating(true);
-    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-
-    WAIT
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
 }
 
 void TestDocks::tst_availableLengthForOrientation()

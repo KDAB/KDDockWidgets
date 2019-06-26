@@ -282,6 +282,9 @@ void Frame::setLayoutItem(Item *item)
         return;
     }
 
+    if (m_layoutItem)
+        m_layoutItem->unref();
+
     item->ref();
 
     m_layoutItem = item;
