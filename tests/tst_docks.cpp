@@ -244,6 +244,7 @@ private Q_SLOTS:
     void tst_setVisibleFalseWhenSideBySide();
     void tst_refUnrefItem();
     void tst_addAndReadd();
+    void tst_addAndReadd2();
     void tst_availableLengthForOrientation();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2110,6 +2111,23 @@ void TestDocks::tst_addAndReadd()
     //Cleanup
     delete dock1;
     waitForDeleted(fw);
+}
+
+void TestDocks::tst_addAndReadd2()
+{
+    // 1. Just tests another bug I got
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    m->addDockWidgetAsTab(dock2);
+    dock1->setFloating(true);
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+
+    dock1->setFloating(true);
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+
+    WAIT
 }
 
 void TestDocks::tst_availableLengthForOrientation()
