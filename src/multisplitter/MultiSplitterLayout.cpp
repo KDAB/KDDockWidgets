@@ -525,6 +525,11 @@ int MultiSplitterLayout::visibleCount() const
     return count;
 }
 
+int MultiSplitterLayout::placeholderCount() const
+{
+    return count() - visibleCount();
+}
+
 int MultiSplitterLayout::length(Qt::Orientation orientation) const
 {
     return KDDockWidgets::widgetLength(parentWidget(), orientation);

@@ -113,32 +113,44 @@ public:
 
     /**
      * @brief Returns true if this MultiSplitter contains the specified item.
-     * The item must have been added with addWidget/addMultiSplitter.
      */
     bool contains(const Item *) const;
 
     /**
-     * @brief Returns the Item at pos @p p.
-     * The item must have been added with addWidget/addMultiSplitter.
+     * @brief Returns the visible Item at pos @p p.
      */
     Item *itemAt(QPoint p) const;
 
     /**
-     * Removes all items.
+     *  @brief Removes all items.
      */
     void clear();
 
     /**
      * @brief Returns the number of Item objects in this layout.
+     * This includes non-visible (placeholder) Items too.
+     * @sa visibleCount
      */
     int count() const { return m_items.size(); }
+
+    /**
+     * @brief Returns the number of visible Items in this layout.
+     * Which is @ref count minus @ref placeholderCount
+     * @sa count
+     */
+    int visibleCount() const;
+
+    /**
+     * @brief Returns the number of placeholder items in this layout.
+     * This is the same as @ref count minus @ref visibleCount
+     * @sa count, visibleCount
+     */
+    int placeholderCount() const;
 
     /**
      * @brief Returns true if count is 0.
      */
     bool isEmpty() const { return m_items.isEmpty(); }
-
-    int visibleCount() const;
 
     /**
      * @brief If @p orientation is Qt::Horizontal, returns the height, otherwise the width.
