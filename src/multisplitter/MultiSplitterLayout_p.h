@@ -80,7 +80,11 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY widgetCountChanged)
 public:
-    explicit MultiSplitterLayout(QWidget *parent = nullptr);
+
+    /**
+     * @brief Constructor. MultiSplitterLayout is created by MultiSplitterWidget only.
+     */
+    explicit MultiSplitterLayout(MultiSplitterWidget *parent = nullptr);
     ~MultiSplitterLayout() override;
 
     /**
@@ -89,7 +93,7 @@ public:
     MultiSplitterWidget *parentWidget() const;
 
     /**
-     * Adds a widget to this MultiSplitter.
+     * @brief Adds a widget to this MultiSplitter.
      */
     void addWidget(QWidget *widget, KDDockWidgets::Location location, Frame *relativeTo = nullptr);
 
@@ -103,42 +107,46 @@ public:
                           Frame *relativeTo = nullptr);
 
     /**
-     * Removes a widget from this MultiSplitter.
+     * @brief Removes a widget from this MultiSplitter.
      */
     void removeItem(Item *widget);
 
     /**
-     * Returns true if this MultiSplitter contains the specified widget.
-     * The widget must have been added with addWidget/addMultiSplitter.
+     * @brief Returns true if this MultiSplitter contains the specified item.
+     * The item must have been added with addWidget/addMultiSplitter.
      */
     bool contains(const Item *) const;
 
     /**
-     * Returns the child widget at pos p.
-     * The widget must have been added with addWidget/addMultiSplitter.
+     * @brief Returns the Item at pos @p p.
+     * The item must have been added with addWidget/addMultiSplitter.
      */
     Item *itemAt(QPoint p) const;
 
     /**
-     * Removes all child widgets.
+     * Removes all items.
      */
     void clear();
 
     /**
-     * Returns the number of child widgets.
-     * Only the ones added through addWidget/addMultiSplitter. So any internal/helper widget
-     * such as Anchors are ignored.
+     * @brief Returns the number of Item objects in this layout.
      */
     int count() const { return m_items.size(); }
-    /**
-     * Returns true if count is 0.
-     */
-    bool isEmpty() const { return m_items.isEmpty(); }
-    int visibleCount() const;
-    int length(Qt::Orientation) const;
 
     /**
-     * The list of child widgets added through addWidget/addMultiSplitter.
+     * @brief Returns true if count is 0.
+     */
+    bool isEmpty() const { return m_items.isEmpty(); }
+
+    int visibleCount() const;
+
+    /**
+     * @brief If @p orientation is Qt::Horizontal, returns the height, otherwise the width.
+     */
+    int length(Qt::Orientation orientation) const;
+
+    /**
+     * @brief The list of items in this layout.
      */
     const ItemList items() const;
 
