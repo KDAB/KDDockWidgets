@@ -90,7 +90,6 @@ MultiSplitterLayout::~MultiSplitterLayout()
 MultiSplitterWidget *MultiSplitterLayout::parentWidget() const
 {
     auto pw = qobject_cast<MultiSplitterWidget*>(parent());
-    Q_ASSERT(!(!pw && parent())); // it's either null or a QWidget
     return pw;
 }
 
@@ -1149,7 +1148,7 @@ const ItemList MultiSplitterLayout::items() const
 
 bool MultiSplitterLayout::eventFilter(QObject *o, QEvent *e)
 {
-    if (m_inDestructor || e->spontaneous())
+    if (m_inDestructor || e->spontaneous() || !parentWidget())
         return false;
 
     if (!parentWidget()->isVisible()) {
