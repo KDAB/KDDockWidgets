@@ -21,6 +21,7 @@
 #include "AnchorGroup_p.h"
 #include "Anchor_p.h"
 #include "MultiSplitterLayout_p.h"
+#include "MultiSplitterWidget_p.h"
 #include "Logging_p.h"
 
 #include <QWidget>

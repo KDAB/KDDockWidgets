@@ -20,6 +20,7 @@
 
 #include "Item_p.h"
 #include "MultiSplitterLayout_p.h"
+#include "MultiSplitterWidget_p.h"
 #include "Logging_p.h"
 #include "AnchorGroup_p.h"
 #include "Frame_p.h"

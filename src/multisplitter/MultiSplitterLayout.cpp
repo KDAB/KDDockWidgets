@@ -37,7 +37,7 @@ static Qt::Orientation anchorOrientationForLocation(Location l)
                                                            : Qt::Horizontal;
 }
 
-MultiSplitterLayout::MultiSplitterLayout(QWidget *parent)
+MultiSplitterLayout::MultiSplitterLayout(MultiSplitterWidget *parent)
     : QObject(parent)
     , m_leftAnchor(new Anchor(Qt::Vertical, this, Anchor::Type_LeftStatic))
     , m_topAnchor(new Anchor(Qt::Horizontal, this, Anchor::Type_TopStatic))
@@ -87,9 +87,9 @@ MultiSplitterLayout::~MultiSplitterLayout()
     qDeleteAll(anchors);
 }
 
-QWidget *MultiSplitterLayout::parentWidget() const
+MultiSplitterWidget *MultiSplitterLayout::parentWidget() const
 {
-    auto pw = qobject_cast<QWidget*>(parent());
+    auto pw = qobject_cast<MultiSplitterWidget*>(parent());
     Q_ASSERT(!(!pw && parent())); // it's either null or a QWidget
     return pw;
 }

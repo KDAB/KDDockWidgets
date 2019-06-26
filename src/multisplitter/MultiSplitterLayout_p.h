@@ -83,7 +83,10 @@ public:
     explicit MultiSplitterLayout(QWidget *parent = nullptr);
     ~MultiSplitterLayout() override;
 
-    QWidget *parentWidget() const;
+    /**
+     * @brief returns the widget that this layout manages
+     */
+    MultiSplitterWidget *parentWidget() const;
 
     /**
      * Adds a widget to this MultiSplitter.
