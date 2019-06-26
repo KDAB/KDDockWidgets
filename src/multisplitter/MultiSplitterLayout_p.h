@@ -84,7 +84,7 @@ public:
     /**
      * @brief Constructor. MultiSplitterLayout is created by MultiSplitterWidget only.
      */
-    explicit MultiSplitterLayout(MultiSplitterWidget *parent = nullptr);
+    explicit MultiSplitterLayout(MultiSplitterWidget *parent);
     ~MultiSplitterLayout() override;
 
     /**
