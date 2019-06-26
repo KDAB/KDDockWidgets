@@ -88,6 +88,7 @@ public:
     void close();
     void updateLayoutMargin();
     void restoreToPreviousPosition();
+    void maybeRestoreToPreviousPosition();
     int currentTabIndex() const;
 
     /**
@@ -290,6 +291,8 @@ bool DockWidget::event(QEvent *e)
                 f->onDockWidgetShown(this);
             }
         }
+
+        d->maybeRestoreToPreviousPosition();
     } else if (e->type() == QEvent::Hide) {
         Q_EMIT hidden();
 
@@ -433,6 +436,9 @@ TabWidget *DockWidget::Private::parentTabWidget() const
 void DockWidget::Private::close()
 {
     qCDebug(hiding) << "DockWidget::close" << this;
+
+    saveTabIndex();
+
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.
     if (auto tabWidget = parentTabWidget()) {
         tabWidget->removeDockWidget(q);
@@ -456,15 +462,47 @@ void DockWidget::Private::restoreToPreviousPosition()
     m_lastPosition.layoutItem()->restorePlaceholder(q, m_lastPosition.m_tabIndex);
 }
 
+void DockWidget::Private::maybeRestoreToPreviousPosition()
+{
+    // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous position.
+
+    Item *layoutItem = m_lastPosition.layoutItem();
+    if (!layoutItem)
+        return; // nothing to do, no last position
+
+    if (m_lastPosition.m_wasFloating)
+        return; // Nothing to do, it was floating before, now it'll just get visible
+
+    Frame *frame = q->frame();
+
+    if (frame && frame->parentWidget() == layoutItem->parentWidget()) {
+        // There's a frame already. Means the DockWidget was hidden instead of closed.
+        // Nothing to do, the dock widget will simply be shown
+        return;
+    }
+
+    // Now we deal with the case where the DockWidget was close()ed. In this case it doesn't have a parent.
+
+    if (q->parentWidget()) {
+        // The QEvent::Show is due to it being made floating. Nothing to restore.
+        return;
+    }
+
+    // Finally, restore it
+    restoreToPreviousPosition();
+}
+
 int DockWidget::Private::currentTabIndex() const
 {
     TabWidget *tabWidget = parentTabWidget();
-    return tabWidget->indexOf(q);
+    return tabWidget ? tabWidget->indexOf(q)
+                     : 0;
 }
 
 void DockWidget::Private::saveTabIndex()
 {
     m_lastPosition.m_tabIndex = currentTabIndex();
+    m_lastPosition.m_wasFloating = q->isFloating();
 }
 
 void DockWidget::Private::show()

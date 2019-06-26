@@ -74,6 +74,9 @@ public:
     ///@brief The tab index in case the dock widget was in a TabWidget, -1 otherwise.
     int m_tabIndex = -1;
 
+    ///@brief true if the DockWidget was floating when it was closed
+    bool m_wasFloating = false;
+
     ///@brief Sets the last layout item where the dock widget was
     void setLayoutItem(Item *layoutItem)
     {
