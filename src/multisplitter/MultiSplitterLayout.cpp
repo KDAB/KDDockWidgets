@@ -89,8 +89,7 @@ MultiSplitterLayout::~MultiSplitterLayout()
 
 MultiSplitterWidget *MultiSplitterLayout::parentWidget() const
 {
-    auto pw = qobject_cast<MultiSplitterWidget*>(parent());
-    return pw;
+    return qobject_cast<MultiSplitterWidget*>(parent());
 }
 
 bool MultiSplitterLayout::validateInputs(QWidget *widget,
