@@ -2115,6 +2115,7 @@ void TestDocks::tst_addAndReadd()
 
 void TestDocks::tst_placeholderCount()
 {
+    EnsureTopLevelsDeleted e;
     // Tests MultiSplitterLayout::count(),visibleCount() and placeholdercount()
 
     // 1. MainWindow with just the initial frame.
@@ -2154,10 +2155,13 @@ void TestDocks::tst_placeholderCount()
 
     // 6. Again
     dock1->setFloating(true);
+    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->visibleCount(), 2);
     QCOMPARE(layout->placeholderCount(), 0);
+
+    waitForDeleted(fw);
 }
 
 void TestDocks::tst_availableLengthForOrientation()
