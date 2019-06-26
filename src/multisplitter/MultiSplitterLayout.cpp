@@ -494,7 +494,7 @@ bool MultiSplitterLayout::contains(const Item *item) const
 Item *MultiSplitterLayout::itemAt(QPoint p) const
 {
     for (Item *item : m_items) {
-        if (item->geometry().contains(p))
+        if (!item->isPlaceholder() && item->geometry().contains(p))
             return item;
     }
 
