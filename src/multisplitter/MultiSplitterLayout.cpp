@@ -930,13 +930,13 @@ void MultiSplitterLayout::emitVisibleWidgetCountChanged()
         Q_EMIT visibleWidgetCountChanged(visibleCount());
 }
 
-Item *MultiSplitterLayout::itemForFrame(const Frame *w) const
+Item *MultiSplitterLayout::itemForFrame(const Frame *frame) const
 {
-    if (!w)
+    if (!frame)
         return nullptr;
 
     for (Item *item : m_items) {
-        if (item->frame() == w)
+        if (item->frame() == frame)
             return item;
     }
     return nullptr;
