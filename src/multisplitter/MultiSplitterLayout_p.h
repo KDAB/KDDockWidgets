@@ -98,8 +98,8 @@ public:
     void addWidget(QWidget *widget, KDDockWidgets::Location location, Frame *relativeTo = nullptr);
 
     /**
-     * Adds an entire MultiSplitter into this MultiSplitter. The donor MultiSplitter will be deleted
-     * after all its widgets are stolen. All added widgets will preserve their original layout, so,
+     * Adds an entire MultiSplitterWidget into this layout. The donor MultiSplitterWidget will be deleted
+     * after all its Frames are stolen. All added Frames will preserve their original layout, so,
      * if widgetFoo was at the left of widgetBar when in the donor splitter, then it will still be at left
      * of widgetBar when the whole splitter is dropped into this one.
      */
@@ -107,12 +107,12 @@ public:
                           Frame *relativeTo = nullptr);
 
     /**
-     * @brief Removes a widget from this MultiSplitter.
+     * @brief Removes an item from this MultiSplitter.
      */
-    void removeItem(Item *widget);
+    void removeItem(Item *item);
 
     /**
-     * @brief Returns true if this MultiSplitter contains the specified item.
+     * @brief Returns true if this layout contains the specified item.
      */
     bool contains(const Item *) const;
 
@@ -173,31 +173,60 @@ public:
     void setAnchorBeingDragged(Anchor *);
     Anchor *anchorBeingDragged() const { return m_anchorBeingDragged; }
     bool anchorIsBeingDragged() const { return m_anchorBeingDragged != nullptr; }
+
+    ///@brief returns list of separators
     const Anchor::List anchors() const { return m_anchors; }
-    Anchor *staticAnchor(Anchor::Type) const;
+
+    ///@brief returns either the left, top, right or bottom separator, depending on the @p type
+    Anchor *staticAnchor(Anchor::Type type) const;
+
+    ///@brief a function that all code paths adding Items will call.
+    ///It's mostly for code reuse, so we don't duplicate what's done here. But it's also nice to
+    ///have a central place that we know will be called
     void addItems_internal(const ItemList &, bool updateConstraints = true);
 
     /**
+     * @brief returns the extra useless space
      * FloatingWindow for example must make space for its title bar, so that space isn't available
      * for adding widgets.
+     * If @p orientation is Qt::Horizontal, returns the useless height, otherwise width.
      */
-    void setExtraUselessSpace(QSize);
-    int extraUselessSpace(Qt::Orientation) const;
+    int extraUselessSpace(Qt::Orientation orientation) const;
 
     /**
-     * Updates the min size of this MultiSplitter.
+     * @brief setter for the @ref extraUselessSpace
+     * @sa extraUselessSpace
+     */
+    void setExtraUselessSpace(QSize);
+
+    /**
+     * @brief Updates the min size of this layout.
      */
     void updateSizeConstraints();
 
     /**
-     * The "contents size" is just the size() of the MultiSplitter. However, since resizing
+     * @brief setter for the contents size
+     * The "contents size" is just the size() of this layout. However, since resizing
      * QWidgets is async and we need it to be sync. As sometimes adding widgets will increase
-     * the MultiSplitter size (due to widget's min-size constraints).
-     * Also, we might abstract multiSplitter and make it work for QML.
+     * the MultiSplitterLayout size (due to widget's min-size constraints).
      */
     void setContentsSize(QSize);
+
+    /**
+     * @brief sets either the contents height if @p o is Qt::Horizontal, otherwise sets the contents width
+     */
     void setContentLength(Qt::Orientation o, int value);
+
+    /**
+     * @brief returns the contents width.
+     * Usually it's the same width as the respective parent MultiSplitterWidget.
+     */
     int contentsWidth() const { return m_contentSize.width(); }
+
+    /**
+     * @brief returns the contents height.
+     * Usually it's the same height as the respective parent MultiSplitterWidget.
+     */
     int contentsHeight() const { return m_contentSize.height(); }
 
     // For debug/hardening
@@ -219,7 +248,10 @@ public:
 
     // For debug
     void dumpDebug() const;
-    Item *itemForFrame(const Frame *w) const;
+    /**
+     * @brief returns the Item that holds @p frame in this layout
+     */
+    Item *itemForFrame(const Frame *frame) const;
 Q_SIGNALS:
     ///@brief emitted when the number of widgets changes
     ///@param count the new widget count
