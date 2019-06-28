@@ -338,6 +338,7 @@ void Item::Private::setFrame(Frame *frame)
     }
 
     m_frame = frame;
+    Q_EMIT q->frameChanged();
 
     if (frame) {
         frame->setLayoutItem(q);

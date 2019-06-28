@@ -79,6 +79,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY widgetCountChanged)
+    Q_PROPERTY(int visibleCount READ visibleCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
+    Q_PROPERTY(int placeholderCount READ placeholderCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
 public:
 
     /**

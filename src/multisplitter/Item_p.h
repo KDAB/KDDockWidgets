@@ -90,6 +90,7 @@ struct GeometryDiff
 class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject // clazy:exclude=ctor-missing-parent-argument
 {
     Q_OBJECT
+    Q_PROPERTY(bool isPlaceholder READ isPlaceholder NOTIFY frameChanged)
 public:
     explicit Item(Frame *frame, MultiSplitterLayout *parent);
     ~Item() override;
@@ -142,6 +143,8 @@ public:
     void ref();
     void unref();
     int refCount() const; // for tests
+Q_SIGNALS:
+    void frameChanged();
 private:
     class Private;
     Private *const d;
