@@ -65,6 +65,7 @@ protected:
     void paintEvent(QPaintEvent *) override;
 
 private:
+    friend class TestDocks;
     void updateCloseButton();
     void onCloseClicked();
     void onFloatClicked();

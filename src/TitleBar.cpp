@@ -233,7 +233,7 @@ void TitleBar::updateCloseButton()
 void TitleBar::onCloseClicked()
 {
     if (m_frame) {
-        if (m_frame->isTheOnlyFrame()) {
+        if (m_frame->isTheOnlyFrame() && !m_frame->isInMainWindow()) {
             m_frame->window()->close();
         } else {
             m_frame->close();

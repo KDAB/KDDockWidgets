@@ -750,6 +750,48 @@ void TestDocks::tst_close()
     QCOMPARE(rightDock->frame()->x(), rightX);
     delete leftDock; delete rightDock; delete centralDock;
     delete dock1;
+
+
+    // 2. Test that closing the single frame of a main window doesn't close the main window itself
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+        QPointer<MainWindow> mainWindowPtr = m.get();
+        dock1 = createDockWidget(QStringLiteral("hello"), Qt::green);
+        m->addDockWidget(dock1, Location_OnLeft);
+
+        // 2.2 Closing should not close the main window
+        dock1->close();
+        QVERIFY(mainWindowPtr.data());
+        delete dock1;
+    }
+
+    // 2.1 Test closing the frame instead
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+        QPointer<MainWindow> mainWindowPtr = m.get();
+        dock1 = createDockWidget(QStringLiteral("hello"), Qt::green);
+        m->addDockWidget(dock1, Location_OnLeft);
+
+        // 2.2 Closing should not close the main window
+        dock1->frame()->titleBar()->onCloseClicked();
+        QVERIFY(mainWindowPtr.data());
+        QVERIFY(mainWindowPtr->isVisible());
+        delete dock1;
+    }
+
+    // 2.2 Repeat, but with a central frame
+    {
+        auto m = createMainWindow(QSize(800, 500));
+        QPointer<MainWindow> mainWindowPtr = m.get();
+        dock1 = createDockWidget(QStringLiteral("hello"), Qt::green);
+        m->addDockWidget(dock1, Location_OnLeft);
+
+        // 2.2 Closing should not close the main window
+        dock1->frame()->titleBar()->onCloseClicked();
+        QVERIFY(mainWindowPtr.data());
+        QVERIFY(mainWindowPtr->isVisible());
+        delete dock1;
+    }
 }
 
 void TestDocks::tst_dockDockWidgetNested()
