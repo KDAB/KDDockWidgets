@@ -109,7 +109,7 @@ void SeparatorWidget::mousePressEvent(QMouseEvent *)
 
 void SeparatorWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    m_anchor->onMouseMoved(mapToParent(e->pos()));
+    m_anchor->onMouseMoved(parentWidget()->mapFromGlobal(e->globalPos()));
 }
 
 void SeparatorWidget::mouseReleaseEvent(QMouseEvent *)
