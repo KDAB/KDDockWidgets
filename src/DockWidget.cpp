@@ -136,6 +136,7 @@ DockWidget::~DockWidget()
 
 void DockWidget::addDockWidgetAsTab(DockWidget *other)
 {
+    qCDebug(addwidget) << Q_FUNC_INFO << other;
     if (other == this) {
         qWarning() << Q_FUNC_INFO << "Refusing to add dock widget into itself" << other;
         return;
@@ -162,6 +163,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other)
 
 void DockWidget::addDockWidgetToContainingWindow(DockWidget *other, Location location, DockWidget *relativeTo)
 {
+    qCDebug(addwidget) << Q_FUNC_INFO << other << location << relativeTo;
     if (qobject_cast<MainWindow*>(window())) {
         qWarning() << Q_FUNC_INFO << "Just use MainWindow::addWidget() directly. This function is for floating nested windows only.";
         return;

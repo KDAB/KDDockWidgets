@@ -137,6 +137,8 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
 
 void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relativeToWidget)
 {
+    qCDebug(addwidget) << Q_FUNC_INFO << w << location << relativeToWidget;
+
     Item *item = itemForFrame(qobject_cast<Frame*>(w));
     if (item) {
         qWarning() << "Item already exists;";
@@ -468,6 +470,7 @@ void MultiSplitterLayout::addMultiSplitter(MultiSplitterWidget *sourceMultiSplit
                                            Location location,
                                            Frame *relativeTo)
 {
+    qCDebug(addwidget) << Q_FUNC_INFO << sourceMultiSplitter << location << relativeTo;
     addWidget(sourceMultiSplitter, location, relativeTo);
 }
 
