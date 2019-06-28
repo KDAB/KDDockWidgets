@@ -116,9 +116,3 @@ void SeparatorWidget::mouseReleaseEvent(QMouseEvent *)
 {
     m_anchor->onMouseReleased();
 }
-
-void SeparatorWidget::moveEvent(QMoveEvent *)
-{
-    qCDebug(anchors) << Q_FUNC_INFO;
-    // m_anchor->onWidgetMoved(position()); TODO REMOVE METHOD
-}
