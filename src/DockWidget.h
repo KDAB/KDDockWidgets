@@ -162,6 +162,18 @@ public:
      */
     bool isTabbed() const;
 
+    /**
+     * @brief Returns true if this dock widget is the current one in the tab widget that contains it.
+     *
+     * If the dock widget is alone then true is returned, as in this case there will also be a tab widget even though it's invisible.
+     */
+    bool isCurrentTab() const;
+
+    /**
+     * @brief Makes this dock widget current in its tab group.
+     */
+    void setAsCurrentTab();
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();

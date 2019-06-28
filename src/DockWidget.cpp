@@ -273,6 +273,21 @@ bool DockWidget::isTabbed() const
     }
 }
 
+bool DockWidget::isCurrentTab() const
+{
+    if (TabWidget* tabWidget = d->parentTabWidget()) {
+        return tabWidget->currentIndex() == tabWidget->indexOf(const_cast<DockWidget*>(this));
+    } else {
+        return true;
+    }
+}
+
+void DockWidget::setAsCurrentTab()
+{
+    if (TabWidget* tabWidget = d->parentTabWidget())
+        tabWidget->setCurrentWidget(this);
+}
+
 bool DockWidget::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {

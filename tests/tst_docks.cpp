@@ -246,6 +246,7 @@ private Q_SLOTS:
     void tst_addAndReadd();
     void tst_placeholderCount();
     void tst_availableLengthForOrientation();
+    void tst_setAstCurrentTab();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2190,6 +2191,33 @@ void TestDocks::tst_availableLengthForOrientation()
     availableHeight = layout->availableLengthForOrientation(Qt::Horizontal);
     QCOMPARE(availableWidth, layout->contentsWidth() - 2 * Anchor::thickness(true) - Anchor::thickness(false) - dock1MinWidth);
     QCOMPARE(availableHeight, layout->contentsHeight() - 2 *Anchor::thickness(true) - Anchor::thickness(false) -  dock1MinHeight);
+}
+
+void TestDocks::tst_setAstCurrentTab()
+{
+    EnsureTopLevelsDeleted e;
+
+    // Tests DockWidget::setAsCurrentTab() and DockWidget::isCurrentTab()
+    // 1. a single dock widget is current, by definition
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    QVERIFY(dock1->isCurrentTab());
+
+    // 2. Tab dock2 to the group, dock2 is current now
+    auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    dock1->addDockWidgetAsTab(dock2);
+    QVERIFY(!dock1->isCurrentTab());
+    QVERIFY(dock2->isCurrentTab());
+
+    // 3. Set dock1 as current
+    dock1->setAsCurrentTab();
+    QVERIFY(dock1->isCurrentTab());
+    QVERIFY(!dock2->isCurrentTab());
+
+    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    QVERIFY(fw);
+
+    delete dock1; delete dock2;
+    waitForDeleted(fw);
 }
 
 // QTest::qWait(50000)
