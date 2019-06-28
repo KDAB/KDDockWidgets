@@ -144,6 +144,8 @@ void Item::setGeometry(QRect geo)
                  << "; window=" << parentWidget()->window()
                  << "this=" << this;*/
         d->m_geometry = geo;
+        Q_EMIT geometryChanged();
+
         if (!isPlaceholder())
             d->m_frame->setGeometry(geo);
 
