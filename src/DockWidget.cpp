@@ -482,8 +482,8 @@ void DockWidget::Private::restoreToPreviousPosition()
 void DockWidget::Private::maybeRestoreToPreviousPosition()
 {
     // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous position.
-
     Item *layoutItem = m_lastPosition.layoutItem();
+    qCDebug(placeholder) << Q_FUNC_INFO << layoutItem << m_lastPosition.m_wasFloating;
     if (!layoutItem)
         return; // nothing to do, no last position
 
@@ -495,6 +495,7 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
     if (frame && frame->parentWidget() == layoutItem->parentWidget()) {
         // There's a frame already. Means the DockWidget was hidden instead of closed.
         // Nothing to do, the dock widget will simply be shown
+        qCDebug(placeholder) << Q_FUNC_INFO << "Already had frame.";
         return;
     }
 
@@ -502,6 +503,7 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
 
     if (q->parentWidget()) {
         // The QEvent::Show is due to it being made floating. Nothing to restore.
+        qCDebug(placeholder) << Q_FUNC_INFO << "Already had parentWidget";
         return;
     }
 

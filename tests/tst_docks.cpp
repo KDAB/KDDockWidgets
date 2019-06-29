@@ -248,6 +248,7 @@ private Q_SLOTS:
     void tst_placeholderCount();
     void tst_availableLengthForOrientation();
     void tst_setAstCurrentTab();
+    void tst_closeShowWhenNoCentralFrame();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2261,6 +2262,22 @@ void TestDocks::tst_setAstCurrentTab()
 
     delete dock1; delete dock2;
     waitForDeleted(fw);
+}
+
+void TestDocks::tst_closeShowWhenNoCentralFrame()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests a crash I got when hidding and showing and no central frame
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    QPointer<DockWidget> dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->close();
+    QVERIFY(!dock1->frame());
+    QVERIFY(!waitForDeleted(dock1)); // It was being deleted due to a bug
+    QVERIFY(dock1);
+    dock1->show();
+
 }
 
 // QTest::qWait(50000)

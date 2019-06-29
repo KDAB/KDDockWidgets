@@ -167,6 +167,20 @@ Anchor::Side AnchorGroup::sideForAnchor(Anchor *a) const
     return Anchor::Side2;
 }
 
+bool AnchorGroup::isStatic() const
+{
+    return top->isStatic() && bottom->isStatic() && left->isStatic() && right->isStatic();
+}
+
+void AnchorGroup::updateItemSizes()
+{
+    // Sets the geometry of the items that are inside this group
+    left->updateItemSizes();
+    top->updateItemSizes();
+    right->updateItemSizes();
+    bottom->updateItemSizes();
+}
+
 void AnchorGroup::setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side)
 {
     const bool isSide1 = side == Anchor::Side1;

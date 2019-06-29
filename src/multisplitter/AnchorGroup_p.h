@@ -54,6 +54,8 @@ struct AnchorGroup {
     void setAnchor(Anchor *anchor, KDDockWidgets::Location);
     Anchor *anchorFollowing() const;
     Anchor::Side sideForAnchor(Anchor*) const;
+    bool isStatic() const;
+    void updateItemSizes();
 
     Anchor *top = nullptr;
     Anchor *left = nullptr;
