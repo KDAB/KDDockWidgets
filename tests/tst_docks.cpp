@@ -2277,7 +2277,6 @@ void TestDocks::tst_closeShowWhenNoCentralFrame()
     QVERIFY(!waitForDeleted(dock1)); // It was being deleted due to a bug
     QVERIFY(dock1);
     dock1->show();
-
 }
 
 // QTest::qWait(50000)
