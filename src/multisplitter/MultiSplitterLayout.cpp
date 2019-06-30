@@ -957,6 +957,30 @@ Item *MultiSplitterLayout::itemForFrame(const Frame *frame) const
     return nullptr;
 }
 
+Frame::List MultiSplitterLayout::framesFrom(QWidget *frameOrMultiSplitter) const
+{
+    if (Frame *f = qobject_cast<Frame*>(frameOrMultiSplitter))
+        return { f };
+
+    if (MultiSplitterLayout *l = qobject_cast<MultiSplitterLayout*>(frameOrMultiSplitter))
+        return l->frames();
+
+    Q_ASSERT(false);
+    return {};
+}
+
+Frame::List MultiSplitterLayout::frames() const
+{
+    Frame::List result;
+
+    for (Item *item : m_items) {
+        if (Frame *f = item->frame())
+            result.push_back(f);
+    }
+
+    return result;
+}
+
 bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 {
     if (!m_doSanityChecks)

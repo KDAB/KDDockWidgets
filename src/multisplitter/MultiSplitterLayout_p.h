@@ -266,6 +266,19 @@ public:
      * @brief returns the Item that holds @p frame in this layout
      */
     Item *itemForFrame(const Frame *frame) const;
+
+    /**
+     * @brief returns the frames contained in @p frameOrMultiSplitter
+     * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
+     * If frameOrMultiSplitter is a MultiSplitterLayout then it returns a list of all frames it contains
+     */
+    Frame::List framesFrom(QWidget *frameOrMultiSplitter) const;
+
+    /**
+     * @brief Returns a list of Frame objects contained in this layout
+     */
+    Frame::List frames() const;
+
 Q_SIGNALS:
     ///@brief emitted when the number of widgets changes
     ///@param count the new widget count
