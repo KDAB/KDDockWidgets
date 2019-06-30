@@ -18,6 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief A MultiSplitter with support for drop indicators when hovering over.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #ifndef KD_DROP_AREA_P_H
 #define KD_DROP_AREA_P_H
 
@@ -36,6 +43,9 @@ class MultiSplitterLayout;
 class DropIndicatorOverlayInterface;
 struct WindowBeingDragged;
 
+/**
+ * @brief A MultiSplitterWidget with support for drop indicators when hovering over.
+ */
 class DOCKS_EXPORT_FOR_UNIT_TESTS DropArea : public MultiSplitterWidget
 {
     Q_OBJECT

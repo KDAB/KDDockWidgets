@@ -30,6 +30,12 @@
 
 using namespace KDDockWidgets;
 
+/**
+ * @file
+ * @brief A MultiSplitter with support for drop indicators when hovering over.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
 DropArea::DropArea(QWidget *parent)
     : MultiSplitterWidget(parent)
 {

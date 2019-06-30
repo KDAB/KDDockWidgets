@@ -18,6 +18,15 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief A widget that supports an arbitrary number of splitters (called Separators) in any
+ * combination of vertical/horizontal.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
+
 #include "MultiSplitterWidget_p.h"
 #include "MultiSplitterLayout_p.h"
 #include "Logging_p.h"

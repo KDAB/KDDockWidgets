@@ -18,6 +18,17 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief A class to layout widgets in any place relative to another widget.
+ *
+ * Widgets can be inserted to the left,right,top,bottom in relation to another widget or in relation
+ * to the window. Each two neighbour widgets have a separator in between, which the user can use
+ * to resize.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #ifndef KD_MULTISPLITTER_LAYOUT_P_H
 #define KD_MULTISPLITTER_LAYOUT_P_H
 

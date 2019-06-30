@@ -18,6 +18,14 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief A widget that supports an arbitrary number of splitters (called Separators) in any
+ * combination of vertical/horizontal.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #ifndef KD_MULTISPLITTER_MULTISPLITTERWIDGET_P_H
 #define KD_MULTISPLITTER_MULTISPLITTERWIDGET_P_H
 
@@ -28,6 +36,12 @@ namespace KDDockWidgets {
 
 class MultiSplitterLayout;
 
+/**
+ * @brief A widget that supports an arbitrary number of splitters (called Separators) in any
+ * combination of vertical/horizontal.
+ *
+ * The actual layouting is done by @ref MultiSplitterLayout.
+ */
 class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterWidget : public QWidget
 {
     Q_OBJECT
