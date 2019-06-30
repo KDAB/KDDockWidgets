@@ -768,12 +768,18 @@ void MultiSplitterLayout::dumpDebug() const
     qDebug() << Q_FUNC_INFO << "m_contentsSize=" << m_contentSize
              << "; minimumSize=" << parentWidget()->minimumSize();
 
-    qDebug() << "Widgets:";
+    qDebug() << "Items:";
     for (auto item : items()) {
-        qDebug() <<"    " << item << item->geometry()
+        qDebug() <<"    " << item
                  << "; min.width=" << item->minLength(Qt::Vertical)
-                 << "; min.height=" << item->minLength(Qt::Horizontal);
-    }
+                 << "; min.height=" << item->minLength(Qt::Horizontal)
+                 << "; geometry=" << item->geometry()
+                 << "; isPlaceholder=" << item->isPlaceholder()
+                 << "; refCount=" << item->refCount();
+
+        if (Frame *frame = item->frame())
+            frame->dumpDebug();
+     }
 
     qDebug() << "Anchors:";
     for (Anchor *anchor : m_anchors) {
@@ -785,8 +791,13 @@ void MultiSplitterLayout::dumpDebug() const
                  << "; side2=" << side2Widgets << anchor->debug_side2ItemNames()
                  << "; pos=" << anchor->position()
                  << "; bounds=" << bounds
-                 << "; orientation=" << anchor->orientation();
+                 << "; orientation=" << anchor->orientation()
+                 << "; isFollowing=" << anchor->isFollowing();
     }
+
+    qDebug() << "Num Frame:" << Frame::dbg_numFrames();
+    qDebug() << "Num FloatingWindow:" << FloatingWindow::dbg_numFrames();
+
 }
 
 void MultiSplitterLayout::positionStaticAnchors()

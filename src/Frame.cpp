@@ -41,6 +41,8 @@
 
 #define MARGIN_THRESHOLD 100
 
+static int s_dbg_numFrames = 0;
+
 using namespace KDDockWidgets;
 
 static quint64 nextId()
@@ -57,6 +59,7 @@ Frame::Frame(QWidget *parent, Options options)
     , m_options(options)
     , m_id(nextId())
 {
+    s_dbg_numFrames++;
     qCDebug(creation) << "Frame";
     auto vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
@@ -86,6 +89,7 @@ Frame::Frame(QWidget *parent, Options options)
 
 Frame::~Frame()
 {
+    s_dbg_numFrames--;
     if (m_layoutItem)
         m_layoutItem->unref();
 
@@ -291,6 +295,25 @@ void Frame::setLayoutItem(Item *item)
     m_layoutItem = item;
     for (DockWidget *dw : dockWidgets()) {
         dw->setLayoutItem(item);
+    }
+}
+
+Item *Frame::layoutItem() const
+{
+    return m_layoutItem;
+}
+
+int Frame::dbg_numFrames()
+{
+    return s_dbg_numFrames;
+}
+
+void Frame::dumpDebug()
+{
+    qDebug() << "        Frame:";
+    qDebug() << "            layoutItem=" << m_layoutItem;
+    for (auto dw : dockWidgets()) {
+        qDebug() << "            dockwidget=" << dw << "; dw->layoutItem=" << dw->lastPosition()->layoutItem();
     }
 }
 

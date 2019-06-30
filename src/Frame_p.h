@@ -149,8 +149,17 @@ public:
     ///@brief Called when a dock widget child @p w is hidden
     void onDockWidgetHidden(DockWidget *w);
 
-    ///@brief sets the layout item that contains this Frame in the layout
+    ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
     void setLayoutItem(Item *item);
+
+    ///@brief returns the layout item that either contains this Frame in the layout or is a placeholder
+    Item *layoutItem() const;
+
+    ///@brief For tests-only. Returns the number of Frame instances in the whole application.
+    static int dbg_numFrames();
+
+    ///@brief for debug only, prints some debug information
+    void dumpDebug();
 
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidget *);

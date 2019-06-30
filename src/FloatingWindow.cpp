@@ -35,6 +35,8 @@
 #include <QCloseEvent>
 #include <QPainter>
 
+static int s_dbg_numFrames = 0;
+
 using namespace KDDockWidgets;
 
 FloatingWindow::FloatingWindow(QWidget *parent)
@@ -155,6 +157,11 @@ bool FloatingWindow::hasSingleDockWidget() const
 
     Frame *frame = frames.first();
     return frame->dockWidgetCount() == 1;
+}
+
+int FloatingWindow::dbg_numFrames()
+{
+    return s_dbg_numFrames;
 }
 
 void FloatingWindow::onFrameCountChanged(int count)
