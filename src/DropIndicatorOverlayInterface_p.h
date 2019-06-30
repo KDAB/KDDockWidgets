@@ -23,6 +23,7 @@
 
 #include "docks_export.h"
 #include "Frame_p.h"
+#include "KDDockWidgets.h"
 
 #include <QWidget>
 

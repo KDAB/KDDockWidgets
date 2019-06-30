@@ -37,6 +37,7 @@
 #include "docks_export.h"
 #include "KDDockWidgets.h"
 #include "Item_p.h"
+#include "Frame_p.h"
 
 #include <QLoggingCategory>
 #include <QPointer>

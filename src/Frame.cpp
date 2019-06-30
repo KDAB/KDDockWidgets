@@ -33,7 +33,8 @@
 #include "DragController_p.h"
 #include "FloatingWindow_p.h"
 #include "Utils_p.h"
-#include <MainWindow.h>
+#include "MainWindow.h"
+#include "LastPosition_p.h"
 
 #include <QCloseEvent>
 #include <QVBoxLayout>

@@ -30,7 +30,9 @@
 
 #include "docks_export.h"
 #include "Frame_p.h"
+#include "KDDockWidgets.h"
 #include "multisplitter/MultiSplitterWidget_p.h"
+#include "multisplitter/MultiSplitterLayout_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 
 #include <QWidget>
@@ -39,7 +41,6 @@ namespace KDDockWidgets {
 
 class Frame;
 class Draggable;
-class MultiSplitterLayout;
 class DropIndicatorOverlayInterface;
 struct WindowBeingDragged;
 

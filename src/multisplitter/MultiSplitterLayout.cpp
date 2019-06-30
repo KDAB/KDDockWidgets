@@ -22,6 +22,7 @@
 #include "Logging_p.h"
 #include "MultiSplitterWidget_p.h"
 #include "Frame_p.h"
+#include "FloatingWindow_p.h"
 
 #include <QPushButton>
 #include <QEvent>
