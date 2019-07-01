@@ -278,7 +278,7 @@ void AnchorGroup::addItem(MultiSplitterLayout *sourceMultiSplitter)
     left->consume(sourceAnchorGroup.left);
     right->consume(sourceAnchorGroup.right);
 
-    delete sourceMultiSplitter;
+    delete sourceMultiSplitter->parentWidget(); // Delete MultiSplitterWidget and MultiSplitterLayout
 }
 
 void AnchorGroup::removeItem(Item *item)
