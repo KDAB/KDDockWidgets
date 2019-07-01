@@ -279,6 +279,11 @@ public:
      */
     Frame::List frames() const;
 
+    /**
+     * @brief Returns a list of DockWidget objects contained in this layout
+     */
+    QVector<DockWidget*> dockWidgets() const;
+
 Q_SIGNALS:
     ///@brief emitted when the number of widgets changes
     ///@param count the new widget count

@@ -23,6 +23,7 @@
 #include "MultiSplitterWidget_p.h"
 #include "Frame_p.h"
 #include "FloatingWindow_p.h"
+#include "DockWidget.h"
 
 #include <QPushButton>
 #include <QEvent>
@@ -977,6 +978,17 @@ Frame::List MultiSplitterLayout::frames() const
         if (Frame *f = item->frame())
             result.push_back(f);
     }
+
+    return result;
+}
+
+QVector<DockWidget *> MultiSplitterLayout::dockWidgets() const
+{
+    DockWidget::List result;
+    const Frame::List frames = this->frames();
+
+    for (Frame *frame : frames)
+        result << frame->dockWidgets();
 
     return result;
 }
