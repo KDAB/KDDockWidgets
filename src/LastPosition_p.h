@@ -80,14 +80,15 @@ public:
     ///@brief Sets the last layout item where the dock widget was
     void setLayoutItem(Item *layoutItem)
     {
-        Q_ASSERT(layoutItem);
         if (layoutItem == m_layoutItemInMainWindow)
             return;
 
-        const bool isMainWindow = qobject_cast<MainWindow*>(layoutItem->window());
-        if (!isMainWindow) { // For now we only restore widgets to the main window, for simplicity. TODO: Support restoring to FloatingWindow once the concept is proven.
-            qCDebug(placeholder) << Q_FUNC_INFO <<"Ignoring non main window placeholder.";
-            return;
+        if (layoutItem) {
+            const bool isMainWindow = qobject_cast<MainWindow*>(layoutItem->window());
+            if (!isMainWindow) { // For now we only restore widgets to the main window, for simplicity. TODO: Support restoring to FloatingWindow once the concept is proven.
+                qCDebug(placeholder) << Q_FUNC_INFO <<"Ignoring non main-window placeholder.";
+                return;
+            }
         }
 
         if (m_layoutItemInMainWindow)
