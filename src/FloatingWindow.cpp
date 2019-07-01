@@ -63,6 +63,7 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::numFramesChanged);
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
+    connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::deleteLater);
 }
 
 FloatingWindow::FloatingWindow(Frame *frame, QWidget *parent)
