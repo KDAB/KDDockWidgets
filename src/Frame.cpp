@@ -282,10 +282,8 @@ void Frame::onDockWidgetHidden(DockWidget *w)
 void Frame::setLayoutItem(Item *item)
 {
     Q_ASSERT(item);
-    if (item == m_layoutItem) {
-        qWarning() << Q_FUNC_INFO << "already contains item" << item;
+    if (item == m_layoutItem)
         return;
-    }
 
     if (m_layoutItem)
         m_layoutItem->unref();

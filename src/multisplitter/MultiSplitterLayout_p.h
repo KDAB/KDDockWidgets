@@ -260,6 +260,16 @@ public:
 
     void restorePlaceholder(Item *item);
 
+    /**
+     * @brief Removes unneeded placeholder items when adding new frames.
+     *
+     * A floating frame A might have a placeholder in the main window (for example to remember it's position on the Left),
+     * but then the user might attach it to the right, so the left placeholder is no longer need.
+     * Right before adding the frame to the right we remove the left placeholder, otherwise it's unrefed while we're adding
+     * causing a segfault. So what this does is making the unrefing happen a bit earlier.
+     */
+    void unrefOldPlaceholders(const Frame::List &framesBeingAdded) const;
+
     // For debug
     void dumpDebug() const;
     /**

@@ -24,6 +24,7 @@
 #include "Frame_p.h"
 #include "FloatingWindow_p.h"
 #include "DockWidget.h"
+#include "LastPosition_p.h"
 
 #include <QPushButton>
 #include <QEvent>
@@ -83,7 +84,7 @@ MultiSplitterLayout::MultiSplitterLayout(MultiSplitterWidget *parent)
 
 MultiSplitterLayout::~MultiSplitterLayout()
 {
-    qCDebug(multisplittercreation()) << "~MultiSplitter";
+    qCDebug(multisplittercreation) << "~MultiSplitter" << this;
     m_inDestructor = true;
     const auto anchors = m_anchors;
     qDeleteAll(anchors);
@@ -146,6 +147,8 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         qWarning() << "Item already exists;";
         return;
     }
+
+    unrefOldPlaceholders(framesFrom(w));
 
     Item *relativeToItem = itemForFrame(relativeToWidget);
 
@@ -960,11 +963,11 @@ Item *MultiSplitterLayout::itemForFrame(const Frame *frame) const
 
 Frame::List MultiSplitterLayout::framesFrom(QWidget *frameOrMultiSplitter) const
 {
-    if (Frame *f = qobject_cast<Frame*>(frameOrMultiSplitter))
-        return { f };
+    if (auto frame = qobject_cast<Frame*>(frameOrMultiSplitter))
+        return { frame };
 
-    if (MultiSplitterLayout *l = qobject_cast<MultiSplitterLayout*>(frameOrMultiSplitter))
-        return l->frames();
+    if (auto msw = qobject_cast<MultiSplitterWidget*>(frameOrMultiSplitter))
+        return msw->multiSplitter()->frames();
 
     Q_ASSERT(false);
     return {};
@@ -1146,6 +1149,19 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         // are the actual borders of the window
         Q_ASSERT(anchorGroup.isStatic());
         anchorGroup.updateItemSizes();
+    }
+}
+
+void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdded) const
+{
+    for (Frame *frame : framesBeingAdded) {
+        for (DockWidget *dw : frame->dockWidgets()) {
+            if (Item *existingItem = dw->lastPosition()->layoutItem()) {
+                if (contains(existingItem)) { // We're only interested in placeholders from this layout
+                    dw->setLayoutItem(nullptr);
+                }
+            }
+        }
     }
 }
 

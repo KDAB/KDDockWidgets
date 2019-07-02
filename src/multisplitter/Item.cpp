@@ -332,7 +332,6 @@ void Item::Private::setFrame(Frame *frame)
 {
     Q_ASSERT((m_frame && !frame) || (!m_frame && frame));
 
-
     if (m_frame) {
         m_frame->removeEventFilter(q);
         QObject::disconnect(m_onFrameDestroyed_connection);
