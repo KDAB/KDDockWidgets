@@ -109,6 +109,9 @@ void LastPosition::removeNonMainWindowPlaceholders()
 
 void LastPosition::removePlaceholder(Item *item)
 {
+    if (m_clearing) // reentrancy guard
+        return;
+
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [item] (const std::unique_ptr<ItemRef> &itemref) {
                              return itemref->item == item;
                          }), m_placeholders.end());

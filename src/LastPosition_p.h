@@ -108,7 +108,7 @@ public:
     Item* layoutItem() const;
 
     bool containsPlaceholder(Item*) const;
-    void removePlaceholders() { m_placeholders.clear(); }
+    void removePlaceholders() { m_clearing = true; m_placeholders.clear(); m_clearing = false;}
     void removeNonMainWindowPlaceholders();
     void removePlaceholder(Item*);
 
@@ -120,6 +120,7 @@ private:
 
     // The last places where this dock widget was (or is), so it can be restored when setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
+    bool m_clearing = false; // to prevent re-entrancy
 };
 }
 
