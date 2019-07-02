@@ -240,8 +240,8 @@ private:
      */
     Frame *frame() const;
 
-    ///@brief sets the current layout item containing this dock widget
-    void setLayoutItem(Item*);
+    ///@brief adds the current layout item containing this dock widget
+    void addPlaceholderItem(Item*);
 
     ///@brief returns the last position, just for tests. TODO Make tests just use the d-pointer.
     LastPosition *lastPosition() const;

@@ -138,6 +138,12 @@ public:
 
     bool isPlaceholder() const;
 
+    /**
+     * @brief Returns whether this item lives in a @ref MainWindow, as opposed to a @ref FloatingWindow
+     */
+    bool isInMainWindow() const;
+
+
     ///@brief turns the placeholder into a normal Item again showing @p dockWidget
     void restorePlaceholder(DockWidget *dockWidget, int tabIndex);
 

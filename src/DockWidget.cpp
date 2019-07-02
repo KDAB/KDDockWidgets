@@ -381,10 +381,11 @@ Frame *DockWidget::frame() const
     return nullptr;
 }
 
-void DockWidget::setLayoutItem(Item *item)
+void DockWidget::addPlaceholderItem(Item *item)
 {
     qCDebug(placeholder) << Q_FUNC_INFO << this << item;
-    d->m_lastPosition.setLayoutItem(item);
+    Q_ASSERT(item);
+    d->m_lastPosition.addPlaceholderItem(item);
 }
 
 LastPosition *DockWidget::lastPosition() const

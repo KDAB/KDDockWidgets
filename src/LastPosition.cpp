@@ -26,5 +26,90 @@
 
 #include "LastPosition_p.h"
 
+#include <algorithm>
+
 using namespace KDDockWidgets;
 
+LastPosition::~LastPosition()
+{
+    m_placeholders.clear();
+}
+
+void LastPosition::addPlaceholderItem(Item *placeholder)
+{
+    Q_ASSERT(placeholder);
+
+    // 1. Already exists, nothing to do
+    if (containsPlaceholder(placeholder))
+        return;
+
+    if (placeholder->isInMainWindow()) {
+        // 2. If we have a MainWindow placeholder we don't need nothing else
+        removePlaceholders();
+    } else {
+        // 3. It's a placeholder to a FloatingWindow. Let's still keep any MainWindow placeholders we have
+        // as FloatingWindow are temporary so we might need the MainWindow placeholder later.
+        removeNonMainWindowPlaceholders();
+    }
+
+    // Make sure our list only contains valid placeholders. We save the result so we can disconnect from the lambda, since the Item might outlive LastPosition
+    QMetaObject::Connection connection = QObject::connect(placeholder, &QObject::destroyed, placeholder, [this, placeholder] {
+        removePlaceholder(placeholder);
+    });
+
+    m_placeholders.push_back(std::unique_ptr<ItemRef>(new ItemRef(connection, placeholder)));
+
+    // NOTE: We use a list instead of simply two variables to keep the placeholders, because
+    // a placeholder from a FloatingWindow might become a MainWindow one without we knowing,
+    // like when dragging a floating window into a MainWindow. So, isInMainWindow() won't return
+    // the same value always, hence we just shove them into a list, instead of giving them meaningful names in separated variables
+}
+
+QWidget *LastPosition::window() const
+{
+    if (Item *placeholder = layoutItem())
+        return placeholder->window();
+
+    return nullptr;
+}
+
+Item *LastPosition::layoutItem() const
+{
+    // Return the layout item that is in a MainWindow, that's where we restore the dock widget to.
+    // In the future we might want to restore it to FloatingWindows.
+
+    for (const auto &itemref : m_placeholders) {
+        if (itemref->item->isInMainWindow())
+            return itemref->item;
+    }
+
+    return nullptr;
+}
+
+bool LastPosition::containsPlaceholder(Item *item) const
+{
+    for (const auto &itemRef : m_placeholders)
+        if (itemRef->item == item)
+            return true;
+
+    return false;
+}
+
+void LastPosition::removeNonMainWindowPlaceholders()
+{
+    auto it = m_placeholders.begin();
+    while (it != m_placeholders.end()) {
+        ItemRef *itemref = it->get();
+        if (!itemref->item->isInMainWindow())
+            it = m_placeholders.erase(it);
+        else
+            ++it;
+    }
+}
+
+void LastPosition::removePlaceholder(Item *item)
+{
+    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [item] (const std::unique_ptr<ItemRef> &itemref) {
+                             return itemref->item == item;
+                         }), m_placeholders.end());
+}

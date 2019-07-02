@@ -27,13 +27,42 @@
 #ifndef KD_LAST_POSITION_P_H
 #define KD_LAST_POSITION_P_H
 
+#include "docks_export.h"
 #include "multisplitter/Item_p.h"
 #include "MainWindow.h"
 #include "Logging_p.h"
 
 #include <QPointer>
+#include <memory>
 
 namespace KDDockWidgets {
+
+// Just a RAII class so we don't forget to unref
+struct ItemRef
+{
+    ItemRef(QMetaObject::Connection conn, Item *it)
+        : item(it)
+        , guard(it)
+        , connection(conn)
+    {
+        item->ref();
+    }
+
+    ~ItemRef()
+    {
+        if (guard) {
+            QObject::disconnect(connection);
+            item->unref();
+        }
+    }
+
+    Item *const item;
+    const QPointer<Item> guard;
+    const QMetaObject::Connection connection;
+private:
+    Q_DISABLE_COPY(ItemRef)
+};
+
 
 class DockWidget;
 class Frame;
@@ -44,23 +73,17 @@ class Frame;
  * The DockWidget's position is saved when its closed and restored when it's shown.
  * This class holds that position.
  */
-class LastPosition {
+class DOCKS_EXPORT_FOR_UNIT_TESTS LastPosition {
     Q_DISABLE_COPY(LastPosition)
 public:
     LastPosition() = default;
-    ~LastPosition()
-    {
-        if (m_layoutItemInMainWindow) {
-            m_layoutItemInMainWindow->unref();
-            m_layoutItemInMainWindow = nullptr;
-        }
-    }
+    ~LastPosition();
 
     /**
      * @brief Returns whether the LastPosition is valid. If invalid then the DockWidget was never
      * in a MainWindow.
      */
-    bool isValid() const { return !m_layoutItemInMainWindow.isNull(); }
+    bool isValid() const { return layoutItem() != nullptr; }
 
     /**
      * @brief returns if the dock widget was in a tab
@@ -77,35 +100,26 @@ public:
     ///@brief true if the DockWidget was floating when it was closed
     bool m_wasFloating = false;
 
-    ///@brief Sets the last layout item where the dock widget was
-    void setLayoutItem(Item *layoutItem)
+    ///@brief Adds the last layout item where the dock widget was (or is)
+    void addPlaceholderItem(Item *placeholder);
+
+
+    QWidget *window() const;
+    Item* layoutItem() const;
+
+    bool containsPlaceholder(Item*) const;
+    void removePlaceholders() { m_placeholders.clear(); }
+    void removeNonMainWindowPlaceholders();
+    void removePlaceholder(Item*);
+
+    void dumpDebug()
     {
-        if (layoutItem == m_layoutItemInMainWindow)
-            return;
-
-        if (layoutItem) {
-            const bool isMainWindow = qobject_cast<MainWindow*>(layoutItem->window());
-            if (!isMainWindow) { // For now we only restore widgets to the main window, for simplicity. TODO: Support restoring to FloatingWindow once the concept is proven.
-                qCDebug(placeholder) << Q_FUNC_INFO <<"Ignoring non main-window placeholder.";
-                return;
-            }
-        }
-
-        if (m_layoutItemInMainWindow)
-            m_layoutItemInMainWindow->unref();
-
-        m_layoutItemInMainWindow = layoutItem;
-
-        if (m_layoutItemInMainWindow)
-            m_layoutItemInMainWindow->ref();
+        qDebug() << "; placeholdersSize=" << m_placeholders.size();
     }
-
-    QWidget *window() const { return m_layoutItemInMainWindow ? m_layoutItemInMainWindow->window() : nullptr; }
-    Item* layoutItem() const { return m_layoutItemInMainWindow; }
-
 private:
-    ///@brief The item where the DockWidget was in the MainWindow layout.
-    QPointer<Item> m_layoutItemInMainWindow; // QPointer just for the case of someone deleting a whole MainWindow
+
+    // The last places where this dock widget was (or is), so it can be restored when setFloating(false) or show() is called.
+    std::vector<std::unique_ptr<ItemRef>> m_placeholders;
 };
 }
 

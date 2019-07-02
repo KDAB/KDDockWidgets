@@ -1503,14 +1503,18 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
     const int oldWidth1 = dock1->frame()->width();
     const int oldWidth2 = dock2->frame()->width();
     const int oldWidth3 = dock3->frame()->width();
+    MultiSplitterLayout *layout = fw->dropArea()->multiSplitter();
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->visibleCount(), 3);
+    QCOMPARE(layout->placeholderCount(), 0);
 
     delete dock2;
     QVERIFY(waitForResize(dock1));
     QVERIFY(!frame2);
 
-    MultiSplitterLayout *layout = fw->dropArea()->multiSplitter();
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->visibleCount(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
 
     const int delta1 = (dock1->frame()->width() - oldWidth1);
     const int delta3 = (dock3->frame()->width() - oldWidth3);
@@ -2190,6 +2194,10 @@ void TestDocks::tst_placeholderCount()
 
     // 4. Float dock1. It should create a placeholder
     dock1->setFloating(true);
+
+    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    layout->dumpDebug();
+
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->visibleCount(), 1);
     QCOMPARE(layout->placeholderCount(), 1);
@@ -2202,7 +2210,7 @@ void TestDocks::tst_placeholderCount()
 
     // 6. Again
     dock1->setFloating(true);
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    fw = qobject_cast<FloatingWindow*>(dock1->window());
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->visibleCount(), 2);
@@ -2295,6 +2303,9 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
 
     QPointer<DockWidget> dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     m->addDockWidget(dock1, Location_OnLeft);
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    layout->dumpDebug();
     dock1->setFloating(true);
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 1);

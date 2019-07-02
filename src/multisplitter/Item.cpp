@@ -24,6 +24,7 @@
 #include "Logging_p.h"
 #include "AnchorGroup_p.h"
 #include "Frame_p.h"
+#include "MainWindow.h"
 
 #include <QEvent>
 
@@ -304,6 +305,17 @@ QSize Item::minimumSizeHint() const
 bool Item::isPlaceholder() const
 {
     return d->m_frame == nullptr;
+}
+
+bool Item::isInMainWindow() const
+{
+    if (auto l = layout()) {
+        if (auto p = l->parentWidget()) {
+            return qobject_cast<MainWindow*>(p->parentWidget());
+        }
+    }
+
+    return false;
 }
 
 void Item::restorePlaceholder(DockWidget *dockWidget, int tabIndex)
