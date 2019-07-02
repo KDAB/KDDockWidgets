@@ -43,6 +43,7 @@
 #include <QTime>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QVBoxLayout>
 
 #define STATIC_ANCHOR_LENGTH 1
 #define ANCHOR_LENGTH 5
@@ -75,6 +76,17 @@ struct MultiSplitterSetup
     QVector<KDDockWidgets::Location> locations;
 };
 Q_DECLARE_METATYPE(MultiSplitterSetup)
+
+class EmbeddedWindow : public QWidget
+{
+public:
+    explicit EmbeddedWindow(MainWindow *m)
+        : mainWindow(m)
+    {
+    }
+
+    MainWindow *const mainWindow;
+};
 
 struct ExpectedAvailableSize // struct for testing MultiSplitterLayout::availableLengthForDrop()
 {
@@ -251,6 +263,7 @@ private Q_SLOTS:
     void tst_closeShowWhenNoCentralFrame();
     void tst_placeholderDisappearsOnReadd();
     void tst_placeholdersAreRemovedPropertly();
+    void tst_embeddedMainWindow();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -264,6 +277,20 @@ static std::unique_ptr<MainWindow> createMainWindow(QSize sz = {600, 600}, MainW
     ptr->show();
     ptr->resize(sz);
     return ptr;
+}
+
+static EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
+{
+    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
+    auto mainwindow = new MainWindow(QStringLiteral("MyMainWindow"));
+
+    auto window = new EmbeddedWindow(mainwindow);
+    auto lay = new QVBoxLayout(window);
+    lay->setMargin(100);
+    lay->addWidget(mainwindow);
+    window->show();
+    window->resize(sz);
+    return window;
 }
 
 namespace {
@@ -2362,6 +2389,25 @@ void TestDocks::tst_placeholdersAreRemovedPropertly()
 
     // Cleanup
     waitForDeleted(window1);
+}
+
+void TestDocks::tst_embeddedMainWindow()
+{
+    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
+    EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
+
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    window->mainWindow->addDockWidget(dock1, Location_OnTop);
+    dock1->setFloating(true);
+    auto dropArea = qobject_cast<DropArea*>(window->mainWindow->centralWidget());
+    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterLeft);
+
+    auto layout = dropArea->multiSplitter();
+    QVERIFY(waitForDeleted(fw));
+    QCOMPARE(layout->count(), 2); // 2, as it has the central frame
+    QCOMPARE(layout->visibleCount(), 2);
+
 }
 
 // QTest::qWait(50000)
