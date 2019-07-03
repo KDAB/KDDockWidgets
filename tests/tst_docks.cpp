@@ -1552,8 +1552,6 @@ void TestDocks::tst_addToSmallMainWindow()
         waitForResize(m.get());
         qDebug() << "Size=" << m->size();
 
-        const int frame1Height = dock1->frame()->height();
-
         m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
         waitForResize(m.get());
 
