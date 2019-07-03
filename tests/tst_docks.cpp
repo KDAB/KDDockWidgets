@@ -45,6 +45,10 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
+#ifdef Q_OS_WIN
+# include <Windows.h>
+#endif
+
 #define STATIC_ANCHOR_LENGTH 1
 #define ANCHOR_LENGTH 5
 #define WAIT QTest::qWait(5000000);
@@ -109,6 +113,16 @@ struct ExpectedRectForDrop // struct for testing MultiSplitterLayout::availableL
 };
 typedef QVector<ExpectedRectForDrop> ExpectedRectsForDrop;
 Q_DECLARE_METATYPE(ExpectedRectForDrop)
+
+int osWindowMinWidth()
+{
+#ifdef Q_OS_WIN
+    return GetSystemMetrics(SM_CXMIN);
+#else
+    return 140; // Some random value for our windows. It's only important on Windows
+#endif
+}
+
 
 namespace KDDockWidgets {
 
@@ -321,15 +335,24 @@ public:
 class MyWidget2 : public QWidget
 {
 public:
+
+    explicit MyWidget2(QSize minSz = QSize(1,1))
+        : m_minSz(minSz)
+    {
+
+    }
+
     QSize sizeHint() const override
     {
-        return QSize(1,1);
+        return m_minSz;
     }
 
     QSize minimumSizeHint() const override
     {
-        return QSize(1,1);
+        return m_minSz;
     }
+
+    QSize m_minSz;
 };
 }
 
@@ -1467,19 +1490,21 @@ void TestDocks::tst_addToSmallMainWindow()
         auto m = createMainWindow();
         QWidget *central = m->centralWidget();
         auto dropArea = qobject_cast<DropArea *>(central);
-        auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2());
-        auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2());
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(100, 100)));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(100, 100)));
         m->addDockWidgetAsTab(dock1);
-        m->resize(100, 200);
-        QTest::qWait(200);
-        QVERIFY(m->width() < 140);
+        m->resize(osWindowMinWidth(), 200);
+
+        waitForResize(m.get());
+
         qDebug() << "Adding dock2 to Right. window size=" << m->size();
+        QVERIFY(m->width() == osWindowMinWidth());
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
         qDebug() << "Waiting for resize. window size2=" << m->size();
         QVERIFY(waitForResize(m.get()));
         qDebug() << "window size3=" << m->size();
 
-        QVERIFY(dropArea->multiSplitter()->contentsWidth() > 140);
+        QVERIFY(dropArea->multiSplitter()->contentsWidth() > osWindowMinWidth());
 
         QCOMPARE(dropArea->multiSplitter()->contentsWidth(), m->width());
         qDebug() << "New size: " << m->width() << dropArea->multiSplitter()->contentsWidth()
@@ -1495,9 +1520,9 @@ void TestDocks::tst_addToSmallMainWindow()
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2());
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2());
         m->addDockWidgetAsTab(dock1);
-        m->resize(100, 200);
+        m->resize(osWindowMinWidth(), 200);
         QTest::qWait(200);
-        QVERIFY(m->width() < 140);
+        QVERIFY(m->width() == osWindowMinWidth());
 
         auto fw = dock2->morphIntoFloatingWindow();
         QVERIFY(fw->isVisible());
