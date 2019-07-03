@@ -94,6 +94,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject
     Q_PROPERTY(int visibleCount READ visibleCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
     Q_PROPERTY(int placeholderCount READ placeholderCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
     Q_PROPERTY(QSize contentsSize READ contentsSize NOTIFY contentsSizeChanged)
+    Q_PROPERTY(QSize minimumSize READ minimumSize NOTIFY minimumSizeChanged)
 public:
 
     /**
@@ -245,6 +246,12 @@ public:
     int contentsHeight() const { return m_contentSize.height(); }
 
     /**
+     * @brief returns the layout's minimum size
+     * @ref setMinimumSize
+     */
+    QSize minimumSize() const { return m_minSize; }
+
+    /**
      * @brief getter for the contents size
      */
     QSize contentsSize() const { return m_contentSize; }
@@ -323,6 +330,10 @@ Q_SIGNALS:
     ///@sa contentsSize
     void contentsSizeChanged();
 
+    ///@brief emitted when the minimumSize changes
+    ///@sa minimumSize
+    void minimumSizeChanged();
+
 public:
     bool eventFilter(QObject *o, QEvent *e) override;
     AnchorGroup anchorsForPos(QPoint pos) const;
@@ -367,6 +378,12 @@ private:
             return (1.0 * side1Length) / length();
         }
     };
+
+    /**
+     * @brief setter for the minimum size
+     * @ref minimumSize
+     */
+    void setMinimumSize(QSize);
 
     void emitVisibleWidgetCountChanged();
 
@@ -463,8 +480,7 @@ private:
     bool m_beingMergedIntoAnotherMultiSplitter = false;
     bool m_doSanityChecks = true;
 
-    int m_minHeight = 0;
-    int m_minWidth = 0;
+    QSize m_minSize = QSize(0, 0);
     AnchorGroup m_staticAnchorGroup;
 
     QPointer<Anchor> m_anchorBeingDragged;

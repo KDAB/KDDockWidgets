@@ -857,11 +857,10 @@ void MultiSplitterLayout::redistributeSpace_recursive(Anchor *fromAnchor)
 
 void MultiSplitterLayout::updateSizeConstraints()
 {
-    m_minHeight = m_topAnchor->cumulativeMinLength(Anchor::Side2);
-    m_minWidth = m_leftAnchor->cumulativeMinLength(Anchor::Side2);
+    const int minH = m_topAnchor->cumulativeMinLength(Anchor::Side2);
+    const int minW = m_leftAnchor->cumulativeMinLength(Anchor::Side2);
 
-    parentWidget()->setMinimumSize(m_minWidth, m_minHeight);
-    qCDebug(sizing) << Q_FUNC_INFO << "minSize = " << m_minWidth << m_minHeight;
+    setMinimumSize(QSize(minW, minH));
 }
 
 int MultiSplitterLayout::wastedSpacing(Qt::Orientation orientation) const
@@ -1187,6 +1186,16 @@ void MultiSplitterLayout::setContentLength(Qt::Orientation o, int value)
         // Setting the height
         setContentsSize({m_contentSize.width(), value});
     }
+}
+
+void MultiSplitterLayout::setMinimumSize(QSize sz)
+{
+    if (sz != m_minSize) {
+        m_minSize = sz;
+        parentWidget()->setMinimumSize(m_minSize);
+        Q_EMIT minimumSizeChanged();
+    }
+    qCDebug(sizing) << Q_FUNC_INFO << "minSize = " << m_minSize;
 }
 
 void MultiSplitterLayout::updateAnchorsFromTo(Anchor *oldAnchor, Anchor *newAnchor)
