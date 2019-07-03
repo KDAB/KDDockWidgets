@@ -1170,6 +1170,11 @@ void MultiSplitterLayout::setContentsSize(QSize size)
 {
     if (size != m_contentSize) {
         QSize oldSize = m_contentSize;
+
+        if (size.width() < m_minSize.width() || size.height() < m_minSize.height()) {
+            qWarning() << Q_FUNC_INFO << "new size is smaller than min size" << size << m_minSize;
+        }
+
         m_contentSize = size;
         parentWidget()->resize(size);
         redistributeSpace(oldSize, size);
