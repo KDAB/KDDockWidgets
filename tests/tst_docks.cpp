@@ -122,7 +122,7 @@ static int osWindowMinWidth()
     return 140; // Some random value for our windows. It's only important on Windows
 #endif
 }
-
+/*
 static int osWindowMinHeight()
 {
 #ifdef Q_OS_WIN
@@ -130,7 +130,7 @@ static int osWindowMinHeight()
 #else
     return 100; // Some random value for our windows. It's only important on Windows
 #endif
-}
+}*/
 
 namespace KDDockWidgets {
 
