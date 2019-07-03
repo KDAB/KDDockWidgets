@@ -1587,7 +1587,6 @@ void TestDocks::tst_addToSmallMainWindow()
         container.show();
         waitForResize(&m);
         auto dropArea = qobject_cast<DropArea *>(m.centralWidget());
-        auto layout = dropArea->multiSplitter();
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(50, 240)));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(50, 240)));
         m.addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
