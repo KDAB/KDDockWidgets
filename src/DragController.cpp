@@ -29,6 +29,7 @@
 #include <QMouseEvent>
 #include <QApplication>
 #include <QCursor>
+#include <QWindow>
 
 #if defined(Q_OS_WIN)
 # include <Windows.h>
@@ -342,8 +343,20 @@ QWidget *DragController::qtTopLevelUnderCursor() const
                 return tl;
             }
         } else {
+            // Maybe it's embedded in a QWinWidget:
+            for (auto topLevel : topLevels) {
+                if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
+                    if (hwnd == GetParent((HWND)topLevel->windowHandle()->winId())) {
+                        if (topLevel->geometry().contains(globalPos) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
+                            qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
+                            return topLevel;
+                        }
+                    }
+                }
+            }
+
             // A window belonging to another app is below the cursor
-            qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor";
+            qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
             return nullptr;
         }
     }
