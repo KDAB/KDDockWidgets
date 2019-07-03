@@ -109,7 +109,7 @@ void TitleBar::setTitle(const QString &title)
                          << "\n    isVisible=" << isVisible()
                          << "\nwindow=" << window();
         update();
-        emit titleChanged();
+        Q_EMIT titleChanged();
     }
 }
 
