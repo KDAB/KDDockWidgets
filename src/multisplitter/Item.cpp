@@ -257,7 +257,7 @@ Anchor *Item::anchor(const GeometryDiff &geoDiff) const
     if (geoDiff.rightDiff)
         return d->m_anchorGroup.right;
 
-    Q_UNREACHABLE();
+    Q_ASSERT(false);
     return nullptr;
 }
 
