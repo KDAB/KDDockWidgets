@@ -93,6 +93,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject
     Q_PROPERTY(int count READ count NOTIFY widgetCountChanged)
     Q_PROPERTY(int visibleCount READ visibleCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
     Q_PROPERTY(int placeholderCount READ placeholderCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
+    Q_PROPERTY(QSize contentsSize READ contentsSize NOTIFY contentsSizeChanged)
 public:
 
     /**
@@ -243,6 +244,11 @@ public:
      */
     int contentsHeight() const { return m_contentSize.height(); }
 
+    /**
+     * @brief getter for the contents size
+     */
+    QSize contentsSize() const { return m_contentSize; }
+
     // For debug/hardening
     bool validateInputs(QWidget *widget, KDDockWidgets::Location location, const Item *relativeToItem) const;
     // For debug/hardening
@@ -312,6 +318,10 @@ Q_SIGNALS:
     ///@brief emitted right before dumping debug
     ///@sa dumpDebug
     void aboutToDumpDebug() const; // clazy:exclude=const-signal-or-slot
+
+    ///@brief emitted when the contentsSize changes
+    ///@sa contentsSize
+    void contentsSizeChanged();
 
 public:
     bool eventFilter(QObject *o, QEvent *e) override;
