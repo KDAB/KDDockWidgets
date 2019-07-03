@@ -107,7 +107,7 @@ TabWidget::TabWidget(QWidget *parent)
 void TabWidget::addDockWidget(DockWidget *dock)
 {
     Q_ASSERT(dock);
-    addTab(dock, dock->name());
+    addTab(dock, dock->title());
     setCurrentIndex(count() - 1);
 }
 
@@ -119,7 +119,7 @@ void TabWidget::insertDockWidget(DockWidget *dock, int index)
         index = count();
 
     Q_ASSERT(dock);
-    insertTab(index, dock, dock->name());
+    insertTab(index, dock, dock->title());
     setCurrentIndex(index);
 }
 
