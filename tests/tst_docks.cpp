@@ -114,7 +114,7 @@ struct ExpectedRectForDrop // struct for testing MultiSplitterLayout::availableL
 typedef QVector<ExpectedRectForDrop> ExpectedRectsForDrop;
 Q_DECLARE_METATYPE(ExpectedRectForDrop)
 
-int osWindowMinWidth()
+static int osWindowMinWidth()
 {
 #ifdef Q_OS_WIN
     return GetSystemMetrics(SM_CXMIN);
@@ -123,6 +123,14 @@ int osWindowMinWidth()
 #endif
 }
 
+static int osWindowMinHeight()
+{
+#ifdef Q_OS_WIN
+    return GetSystemMetrics(SM_CYMIN);
+#else
+    return 100; // Some random value for our windows. It's only important on Windows
+#endif
+}
 
 namespace KDDockWidgets {
 
@@ -1532,6 +1540,27 @@ void TestDocks::tst_addToSmallMainWindow()
         QVERIFY(qobject_cast<DropArea*>(m->centralWidget())->checkSanity());
         delete fw;
     }
+
+    qDebug() << "Test 4";
+    {
+        auto m = createMainWindow(QSize(100, 100), MainWindowOption_None);
+        QWidget *central = m->centralWidget();
+        auto dropArea = qobject_cast<DropArea *>(central);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(50, 50)));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(50, 50)));
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
+        waitForResize(m.get());
+        qDebug() << "Size=" << m->size();
+
+        const int frame1Height = dock1->frame()->height();
+
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+        waitForResize(m.get());
+
+        const int frame2MinHeight = KDDockWidgets::widgetMinLength(dock2->frame(), Qt::Horizontal);
+        QCOMPARE(dropArea->height(), dock1->frame()->height() + frame2MinHeight + Anchor::thickness(true)*2 + Anchor::thickness(false));
+    }
+
 }
 
 void TestDocks::tst_fairResizeAfterRemoveWidget()
