@@ -84,6 +84,54 @@ private:
     DropArea *m_currentDropArea = nullptr;
     bool m_nonClientDrag = false;
 };
+
+class StateBase : public QState
+{
+    Q_OBJECT
+public:
+    explicit StateBase(DragController *parent);
+    ~StateBase();
+
+    // Not using QEvent here, to abstract platform differences regarding production of such events
+    virtual bool handleMouseButtonPress(Draggable * /*receiver*/, QPoint /*globalPos*/, QPoint /*pos*/) { return false; }
+    virtual bool handleMouseMove(QPoint /*globalPos*/) { return false; }
+    virtual bool handleMouseButtonRelease(QPoint /*globalPos*/, QPoint /*pos*/) { return false; }
+
+    DragController *const q;
+};
+
+class StateNone : public StateBase
+{
+    Q_OBJECT
+public:
+    explicit StateNone(DragController *parent);
+    ~StateNone() override;
+    void onEntry(QEvent *) override;
+    bool handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos) override;
+};
+
+class StatePreDrag : public StateBase
+{
+    Q_OBJECT
+public:
+    explicit StatePreDrag(DragController *parent);
+    ~StatePreDrag() override;
+    void onEntry(QEvent *) override;
+    bool handleMouseMove(QPoint globalPos) override;
+    bool handleMouseButtonRelease(QPoint, QPoint) override;
+};
+
+class StateDragging : public StateBase
+{
+    Q_OBJECT
+public:
+    explicit StateDragging(DragController *parent);
+    ~StateDragging() override;
+    void onEntry(QEvent *) override;
+    bool handleMouseButtonRelease(QPoint globalPos, QPoint) override;
+    bool handleMouseMove(QPoint globalPos) override;
+};
+
 }
 
 #endif

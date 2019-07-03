@@ -37,173 +37,137 @@
 
 using namespace KDDockWidgets;
 
-namespace KDDockWidgets {
-class StateBase : public QState
+StateBase::StateBase(DragController *parent)
+    : QState(parent)
+    , q(parent)
 {
-    Q_OBJECT
-public:
-    StateBase(DragController *parent)
-        : QState(parent)
-        , q(parent)
-    {
-    }
-
-    ~StateBase();
-
-    // Not using QEvent here, to abstract platform differences regarding production of such events
-    virtual bool handleMouseButtonPress(Draggable * /*receiver*/, QPoint /*globalPos*/, QPoint /*pos*/) { return false; }
-    virtual bool handleMouseMove(QPoint /*globalPos*/) { return false; }
-    virtual bool handleMouseButtonRelease(QPoint /*globalPos*/, QPoint /*pos*/) { return false; }
-
-    DragController *const q;
-};
+}
 
 StateBase::~StateBase() = default;
 
-class StateNone : public StateBase
+StateNone::StateNone(DragController *parent)
+    : StateBase(parent)
 {
-    Q_OBJECT
-public:
-    explicit StateNone(DragController *parent)
-        : StateBase(parent)
-    {
+}
+
+void StateNone::onEntry(QEvent *)
+{
+    qCDebug(state) << "StateNone entered";
+    q->m_pressPos = QPoint();
+    q->m_offset = QPoint();
+    q->m_draggable = nullptr;
+    q->m_windowBeingDragged.reset();
+    WidgetResizeHandler::s_disableAllHandlers = false; // Re-enable resize handlers
+
+    q->m_nonClientDrag = false;
+    if (q->m_currentDropArea) {
+        q->m_currentDropArea->removeHover();
+        q->m_currentDropArea = nullptr;
     }
+}
 
-    ~StateNone() override;
+bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
+{
+    qCDebug(state) << "StateNone::handleMouseButtonPress: draggable" << draggable << "; globalPos" << globalPos;
 
-    void onEntry(QEvent *) override
-    {
-        qCDebug(state) << "StateNone entered";
-        q->m_pressPos = QPoint();
-        q->m_offset = QPoint();
-        q->m_draggable = nullptr;
-        q->m_windowBeingDragged.reset();
-        WidgetResizeHandler::s_disableAllHandlers = false; // Re-enable resize handlers
-
-        q->m_nonClientDrag = false;
-        if (q->m_currentDropArea) {
-            q->m_currentDropArea->removeHover();
-            q->m_currentDropArea = nullptr;
-        }
-    }
-
-    bool handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos) override
-    {
-        qCDebug(state) << "StateNone::handleMouseButtonPress: draggable" << draggable << "; globalPos" << globalPos;
-
-        q->m_draggable = draggable;
-        q->m_pressPos = globalPos;
-        q->m_offset = pos;
-        Q_EMIT q->mousePressed();
-        return false;
-    }
-};
+    q->m_draggable = draggable;
+    q->m_pressPos = globalPos;
+    q->m_offset = pos;
+    Q_EMIT q->mousePressed();
+    return false;
+}
 
 StateNone::~StateNone() = default;
 
-class StatePreDrag : public StateBase
+
+StatePreDrag::StatePreDrag(DragController *parent)
+    : StateBase(parent)
 {
-    Q_OBJECT
-public:
-    explicit StatePreDrag(DragController *parent)
-        : StateBase(parent)
-    {
-    }
-
-    ~StatePreDrag() override;
-
-    void onEntry(QEvent *) override
-    {
-        qCDebug(state) << "StatePreDrag entered";
-        WidgetResizeHandler::s_disableAllHandlers = true; // Disable the resize handler during dragging
-    }
-
-    bool handleMouseMove(QPoint globalPos) override
-    {
-        if ((globalPos - q->m_pressPos).manhattanLength() > QApplication::startDragDistance()) {
-            Q_EMIT q->manhattanLengthMove();
-        }
-        return true;
-    }
-
-    bool handleMouseButtonRelease(QPoint, QPoint) override
-    {
-        Q_EMIT q->dragCanceled();
-        return true;
-    }
-};
+}
 
 StatePreDrag::~StatePreDrag() = default;
 
-class StateDragging : public StateBase
+void StatePreDrag::onEntry(QEvent *)
 {
-    Q_OBJECT
-public:
-    explicit StateDragging(DragController *parent)
-        : StateBase(parent)
-    {
+    qCDebug(state) << "StatePreDrag entered";
+    WidgetResizeHandler::s_disableAllHandlers = true; // Disable the resize handler during dragging
+}
+
+bool StatePreDrag::handleMouseMove(QPoint globalPos)
+{
+    if ((globalPos - q->m_pressPos).manhattanLength() > QApplication::startDragDistance()) {
+        Q_EMIT q->manhattanLengthMove();
     }
+    return true;
+}
 
-    ~StateDragging() override;
+bool StatePreDrag::handleMouseButtonRelease(QPoint, QPoint)
+{
+    Q_EMIT q->dragCanceled();
+    return true;
+}
 
-    void onEntry(QEvent *) override
-    {
-        q->m_windowBeingDragged = q->m_draggable->makeWindow();
-        qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->window();
-    }
 
-    bool handleMouseButtonRelease(QPoint globalPos, QPoint) override
-    {
-        qCDebug(state) << "StateDragging: handleMouseButtonRelease";
-
-        Draggable *draggable = q->m_windowBeingDragged->draggable();
-        if (!draggable) {
-            // It was deleted externally
-            qCDebug(state) << "StateDragging: Bailling out, deleted externally";
-            Q_EMIT q->dragCanceled();
-            return true;
-        }
-
-        if (q->m_currentDropArea) {
-            if (q->m_currentDropArea->drop(draggable, globalPos)) {
-                Q_EMIT q->dropped();
-            } else {
-                qCDebug(state) << "StateDragging: Bailling out, drop not accepted";
-                Q_EMIT q->dragCanceled();
-            }
-        } else {
-            qCDebug(state) << "StateDragging: Bailling out, not over a drop area";
-            Q_EMIT q->dragCanceled();
-        }
-        return true;
-    }
-
-    bool handleMouseMove(QPoint globalPos) override
-    {
-        if (!q->m_windowBeingDragged->window()) {
-            qCDebug(state) << "Canceling drag, window was deleted";
-            Q_EMIT q->dragCanceled();
-            return true;
-        }
-
-        if (!q->m_nonClientDrag)
-            q->m_windowBeingDragged->window()->move(globalPos - q->m_offset);
-
-        DropArea *dropArea = q->dropAreaUnderCursor();
-        if (q->m_currentDropArea && dropArea != q->m_currentDropArea)
-            q->m_currentDropArea->removeHover();
-
-        if (dropArea)
-            dropArea->hover(q->m_windowBeingDragged->draggable(), globalPos);
-
-        q->m_currentDropArea = dropArea;
-
-        return true;
-    }
-};
+StateDragging::StateDragging(DragController *parent)
+    : StateBase(parent)
+{
+}
 
 StateDragging::~StateDragging() = default;
 
+void StateDragging::onEntry(QEvent *)
+{
+    q->m_windowBeingDragged = q->m_draggable->makeWindow();
+    qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->window();
+}
+
+bool StateDragging::handleMouseButtonRelease(QPoint globalPos, QPoint)
+{
+    qCDebug(state) << "StateDragging: handleMouseButtonRelease";
+
+    Draggable *draggable = q->m_windowBeingDragged->draggable();
+    if (!draggable) {
+        // It was deleted externally
+        qCDebug(state) << "StateDragging: Bailling out, deleted externally";
+        Q_EMIT q->dragCanceled();
+        return true;
+    }
+
+    if (q->m_currentDropArea) {
+        if (q->m_currentDropArea->drop(draggable, globalPos)) {
+            Q_EMIT q->dropped();
+        } else {
+            qCDebug(state) << "StateDragging: Bailling out, drop not accepted";
+            Q_EMIT q->dragCanceled();
+        }
+    } else {
+        qCDebug(state) << "StateDragging: Bailling out, not over a drop area";
+        Q_EMIT q->dragCanceled();
+    }
+    return true;
+}
+
+bool StateDragging::handleMouseMove(QPoint globalPos)
+{
+    if (!q->m_windowBeingDragged->window()) {
+        qCDebug(state) << "Canceling drag, window was deleted";
+        Q_EMIT q->dragCanceled();
+        return true;
+    }
+
+    if (!q->m_nonClientDrag)
+        q->m_windowBeingDragged->window()->move(globalPos - q->m_offset);
+
+    DropArea *dropArea = q->dropAreaUnderCursor();
+    if (q->m_currentDropArea && dropArea != q->m_currentDropArea)
+        q->m_currentDropArea->removeHover();
+
+    if (dropArea)
+        dropArea->hover(q->m_windowBeingDragged->draggable(), globalPos);
+
+    q->m_currentDropArea = dropArea;
+
+    return true;
 }
 
 DragController::DragController(QObject *)
@@ -422,5 +386,3 @@ Draggable *DragController::draggableForQObject(QObject *o) const
 
     return nullptr;
 }
-
-#include "DragController.moc"
