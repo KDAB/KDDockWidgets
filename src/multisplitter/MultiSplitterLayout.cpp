@@ -200,11 +200,13 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
 
     if (dropRect.size().isNull() || dropRect.x() < 0 || dropRect.y() < 0) {
         qWarning() << Q_FUNC_INFO << "Invalid drop rect" << dropRect
-                   << "\n    size=" << parentWidget()->size() << m_contentSize
+                   << "\n    size=" << parentWidget()->size() << "; contentsSize="<< m_contentSize
                    << "\n    location=" << location
                    << "\n    window=" << parentWidget()->window()
                    << "\n    this=" << this
-                   << "\n    widget.minSize" << widgetMinLength(w, anchorOrientationForLocation(location));
+                   << "\n    availableHeight=" << availableLengthForOrientation(Qt::Horizontal)
+                   << "\n    availableWidth=" << availableLengthForOrientation(Qt::Vertical)
+                   << "\n    widget.minSize=" << widgetMinLength(w, anchorOrientationForLocation(location));
         return;
     }
 
