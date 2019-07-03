@@ -1559,6 +1559,41 @@ void TestDocks::tst_addToSmallMainWindow()
         QCOMPARE(dropArea->height(), dock1->frame()->height() + frame2MinHeight + Anchor::thickness(true)*2 + Anchor::thickness(false));
     }
 
+    qDebug() << "Test 5";
+    {
+        // Test test shouldn't spit any warnings
+
+        MainWindow m(QStringLiteral("MyMainWindow"), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(50, 240)));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(50, 240)));
+        m.addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
+        m.addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+
+        waitForResize(&m);
+        qDebug() << m.size();
+    }
+
+
+    qDebug() << "Test 8";
+    {
+        // Test test shouldn't spit any warnings
+
+        QWidget container;
+        auto lay = new QVBoxLayout(&container);
+        MainWindow m(QStringLiteral("MyMainWindow"), MainWindowOption_None);
+        lay->addWidget(&m);
+        container.resize(100, 100);
+        waitForResize(&container);
+        container.show();
+        waitForResize(&m);
+        auto dropArea = qobject_cast<DropArea *>(m.centralWidget());
+        auto layout = dropArea->multiSplitter();
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(50, 240)));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(50, 240)));
+        m.addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
+        m.addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+        waitForResize(&m);
+    }
 }
 
 void TestDocks::tst_fairResizeAfterRemoveWidget()
