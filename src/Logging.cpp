@@ -39,7 +39,8 @@ void KDDockWidgets::setLoggingFilterRules()
         QStringLiteral("kdab.docks.title"),
         QStringLiteral("kdab.docks.closebutton"),
         QStringLiteral("kdab.docks.restoring"),
-        QStringLiteral("kdab.docks.closing")
+        QStringLiteral("kdab.docks.closing"),
+        QStringLiteral("kdab.docks.toplevels")
     };
 
     static QString filterRules;
@@ -51,6 +52,7 @@ void KDDockWidgets::setLoggingFilterRules()
     }
 }
 
+Q_LOGGING_CATEGORY(toplevels, "kdab.docks.toplevels")
 Q_LOGGING_CATEGORY(creation, "kdab.docks.creation")
 Q_LOGGING_CATEGORY(hovering, "kdab.docks.hovering")
 Q_LOGGING_CATEGORY(mouseevents, "kdab.docks.mouseevents")

@@ -309,6 +309,8 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
         if (hwnd == (HWND)topLevel->winId())
             return topLevel;
     }
+
+    qCDebug(toplevels) << Q_FUNC_INFO << "Couldn't find hwnd for top-level" << hwnd;
     return nullptr;
 }
 #endif
@@ -335,10 +337,13 @@ QWidget *DragController::qtTopLevelUnderCursor() const
             continue;
 
         if (auto tl = qtTopLevelForHWND(hwnd)) {
-            if (tl->geometry().contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay"))
+            if (tl->geometry().contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
+                qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
                 return tl;
+            }
         } else {
             // A window belonging to another app is below the cursor
+            qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor";
             return nullptr;
         }
     }
@@ -347,10 +352,12 @@ QWidget *DragController::qtTopLevelUnderCursor() const
         if (!tl->isVisible() || tl == m_windowBeingDragged->window() || tl->isMinimized() || tl->objectName() == QLatin1String("_docks_IndicatorWindow_Overlay"))
             continue;
         if (tl->geometry().contains(globalPos)) {
+            qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
             return tl;
         }
     }
 #endif
+    qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found";
     return nullptr;
 }
 
