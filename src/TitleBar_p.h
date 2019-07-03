@@ -47,6 +47,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS TitleBar : public QWidget
     , public Draggable
 {
     Q_OBJECT
+    Q_PROPERTY(QString title READ title NOTIFY titleChanged)
 public:
     typedef QVector<TitleBar *> List;
     explicit TitleBar(DockWidget *parent);
@@ -55,6 +56,7 @@ public:
     ~TitleBar() override;
 
     void setTitle(const QString &title);
+    QString title() const { return m_title; }
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     QWidget* closeButton() const;
 
@@ -64,6 +66,9 @@ public:
     ///@brief the list of dockwidgets under this TitleBar.
     /// There should always be at least 1. If more than 1 then they are tabbed.
     DockWidget::List dockWidgets() const;
+
+Q_SIGNALS:
+    void titleChanged();
 
 protected:
     void paintEvent(QPaintEvent *) override;
