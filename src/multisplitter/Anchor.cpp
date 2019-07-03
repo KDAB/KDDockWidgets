@@ -177,6 +177,10 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     qCDebug(anchors) << Q_FUNC_INFO << this << "; visible="
                      << m_separatorWidget->isVisible() << "; p=" << p;
 
+    if (p < 0) {
+        qWarning() << Q_FUNC_INFO << "Negative position" << p;
+    }
+
     m_initialized = true;
     if (position() == p)
         return;
