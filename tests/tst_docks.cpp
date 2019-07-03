@@ -286,7 +286,7 @@ static EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 
     auto window = new EmbeddedWindow(mainwindow);
     auto lay = new QVBoxLayout(window);
-    lay->setMargin(100);
+    lay->setContentsMargins(100, 100, 100, 100);
     lay->addWidget(mainwindow);
     window->show();
     window->resize(sz);
