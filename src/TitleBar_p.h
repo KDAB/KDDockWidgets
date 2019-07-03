@@ -26,6 +26,10 @@
 #include "Frame_p.h"
 #include "DockWidget.h"
 
+#include <QPainter>
+#include <QToolButton>
+#include <QStyle>
+#include <QStyleOptionFrame>
 #include <QWidget>
 #include <QVector>
 
@@ -82,6 +86,44 @@ private:
     Button *m_closeButton = nullptr;
     Button *m_floatButton = nullptr;
 };
+
+class Button : public QToolButton
+{
+    Q_OBJECT
+public:
+    explicit Button(QWidget *parent)
+        : QToolButton(parent)
+    {
+        //const int margin = style()->pixelMetric(QStyle::PM_DockWidgetTitleBarButtonMargin, nullptr, this) * 2;
+        QSize sz = /*QSize(margin, margin) + */ QSize(16, 16);
+        setFixedSize(sz);
+    }
+
+    ~Button() override;
+
+    void paintEvent(QPaintEvent *) override
+    {
+        QPainter p(this);
+        QStyleOptionToolButton opt;
+        opt.init(this);
+
+        if (isEnabled() && underMouse()) {
+            if (isDown()) {
+                opt.state |= QStyle::State_Sunken;
+            } else {
+                opt.state |= QStyle::State_Raised;
+            }
+            style()->drawPrimitive(QStyle::PE_PanelButtonTool, &opt, &p, this);
+        }
+
+        opt.subControls = QStyle::SC_None;
+        opt.features = QStyleOptionToolButton::None;
+        opt.icon = icon();
+        opt.iconSize = size();
+        style()->drawComplexControl(QStyle::CC_ToolButton, &opt, &p, this);
+    }
+};
+
 }
 
 #endif
