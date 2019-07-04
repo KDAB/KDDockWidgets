@@ -43,6 +43,11 @@ int AnchorGroup::height() const
     return bottom->position() - top->position();
 }
 
+bool AnchorGroup::containsAnchor(Anchor *anchor) const
+{
+    return anchor == left || anchor == top || anchor == right || anchor == bottom;
+}
+
 Anchor *AnchorGroup::oppositeAnchor(Anchor *a) const
 {
     if (a == left)
@@ -162,12 +167,37 @@ QDebug AnchorGroup::debug(QDebug d) const
 
 Anchor *AnchorGroup::anchorFollowing() const
 {
-    for (Anchor *a : {top, left, right, bottom}) {
-        if (a->isFollowing())
-            return a;
-    }
+    if (top->folowee() == bottom)
+        return top;
+
+    if (bottom->folowee() == top)
+        return bottom;
+
+    if (left->folowee() == right)
+        return left;
+
+    if (right->folowee() == left)
+        return right;
 
     return nullptr;
+}
+
+int AnchorGroup::numFollowing() const
+{
+    int num = 0;
+    if (top->folowee() == bottom)
+        num++;
+
+    if (bottom->folowee() == top)
+        num++;
+
+    if (left->folowee() == right)
+        num++;
+
+    if (right->folowee() == left)
+        num++;
+
+    return num;
 }
 
 Anchor::Side AnchorGroup::sideForAnchor(Anchor *a) const
@@ -180,6 +210,12 @@ Anchor::Side AnchorGroup::sideForAnchor(Anchor *a) const
 bool AnchorGroup::isStatic() const
 {
     return top->isStatic() && bottom->isStatic() && left->isStatic() && right->isStatic();
+}
+
+bool AnchorGroup::isStaticOrFollowsStatic() const
+{
+    return top->isStaticOrFollowsStatic() && bottom->isStaticOrFollowsStatic()
+            && left->isStaticOrFollowsStatic() && right->isStaticOrFollowsStatic();
 }
 
 void AnchorGroup::updateItemSizes()
@@ -334,7 +370,8 @@ void AnchorGroup::removeItem(Item *item)
 void AnchorGroup::turnIntoPlaceholder()
 {
     qCDebug(placeholder) << Q_FUNC_INFO;
-    if (left->shouldFollow()) {
+    Q_ASSERT(!anchorFollowing());
+    if (left->shouldFollow() && right->folowee() != left) {
         // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
         if (!right->isStatic())
             right->setPosition(right->position() - ((right->position() - left->position()) / 2));
@@ -345,20 +382,26 @@ void AnchorGroup::turnIntoPlaceholder()
         right->setFollowee(left);
     }
 
-    if (top->shouldFollow()) {
+    if (top->shouldFollow() && bottom->folowee() != top) {
         // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both top/bottom widgets can use the space.
         if (!bottom->isStatic())
             bottom->setPosition(bottom->position() - ((bottom->position() - top->position()) / 2));
         top->setFollowee(bottom);
     }
 
-
     if (bottom->shouldFollow() && top->folowee() != bottom) {
         bottom->setFollowee(top);
     }
 
-    if (!isStatic() && !anchorFollowing()) {
-        qWarning() << "There should be at least one anchor following";
+    if (!isStaticOrFollowsStatic() && numFollowing() != 1) {
+        layout->dumpDebug();
+
+        qWarning() << "There should be only one anchor following" << numFollowing()
+                   << "; shouldFollow=" << left->shouldFollow() << top->shouldFollow() << right->shouldFollow() << bottom->shouldFollow()
+                   << "\n; isStatic=" << left->isStatic() << top->isStatic() << right->isStatic() << bottom->isStatic()
+                   << "\n; isFollowing=" << left->isFollowing() << top->isFollowing() << right->isFollowing() << bottom->isFollowing()
+                   << "\n; folowee=" << left->folowee() << top->folowee() << right->folowee() << bottom->folowee();
+
         Q_ASSERT(false);
     }
 

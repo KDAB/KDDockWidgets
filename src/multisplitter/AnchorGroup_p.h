@@ -44,6 +44,9 @@ struct AnchorGroup {
     int width() const;
     int height() const;
 
+    ///@brief returns whether this group contains @p anchor
+    bool containsAnchor(Anchor *anchor) const;
+
     Anchor *oppositeAnchor(Anchor*) const;
     Anchor *createAnchorFrom(KDDockWidgets::Location fromAnchorLocation, Item *relativeTo);
     void setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side);
@@ -56,8 +59,11 @@ struct AnchorGroup {
 
     void setAnchor(Anchor *anchor, KDDockWidgets::Location);
     Anchor *anchorFollowing() const;
+    int numFollowing() const; // for tests
     Anchor::Side sideForAnchor(Anchor*) const;
     bool isStatic() const;
+    bool isStaticOrFollowsStatic() const;
+
     void updateItemSizes();
 
     Anchor *top = nullptr;
