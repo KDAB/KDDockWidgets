@@ -1129,39 +1129,39 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 void MultiSplitterLayout::restorePlaceholder(Item *item)
 {
     AnchorGroup anchorGroup = item->anchorGroup();
-    Anchor *anchorToMove = anchorGroup.anchorFollowing();
-
-    if (anchorToMove) {
-        Anchor *adjacentAnchor = anchorGroup.adjacentAnchor(anchorToMove);
-        adjacentAnchor->updateItemSizes();
-        adjacentAnchor = anchorGroup.oppositeAnchor(adjacentAnchor);
-        adjacentAnchor->updateItemSizes();
-
-        // If we're shifting, say, the right anchor, width will change this much:
-        const int requiredLength = item->length(anchorToMove->orientation());
-
-        const int oldPosition = anchorToMove->position();
-
-        // The anchor stops following other, and will go to the correct position
-        anchorToMove->setFollowee(nullptr);
-
-        int newPosition;
-        if (anchorGroup.sideForAnchor(anchorToMove) == Anchor::Side1)
-            newPosition = oldPosition - requiredLength - anchorToMove->thickness();
-        else
-            newPosition = oldPosition + requiredLength + 1;
-
-        qCDebug(placeholder) << Q_FUNC_INFO << "oldPos=" << oldPosition
-                             << "; newPosition=" << newPosition
-                             << "; item.geo=" << item->geometry();
-
-        anchorToMove->setPosition(newPosition);
-    } else {
+    Anchor *anchor = anchorGroup.anchorFollowing();
+    if (!anchor) {
         // There's no separator to move, it means it's a static anchor group (layout is empty, so the anchors
         // are the actual borders of the window
         Q_ASSERT(anchorGroup.isStatic());
         anchorGroup.updateItemSizes();
+        return;
     }
+
+    Anchor *adjacentAnchor = anchorGroup.adjacentAnchor(anchor);
+    adjacentAnchor->updateItemSizes();
+    adjacentAnchor = anchorGroup.oppositeAnchor(adjacentAnchor);
+    adjacentAnchor->updateItemSizes();
+
+    // If we're shifting, say, the right anchor, width will change this much:
+    const int requiredLength = item->length(anchor->orientation());
+
+    const int oldPosition = anchor->position();
+
+    // The anchor stops following other, and will go to the correct position
+    anchor->setFollowee(nullptr);
+
+    int newPosition;
+    if (anchorGroup.sideForAnchor(anchor) == Anchor::Side1)
+        newPosition = oldPosition - requiredLength - anchor->thickness();
+    else
+        newPosition = oldPosition + requiredLength + 1;
+
+    qCDebug(placeholder) << Q_FUNC_INFO << "oldPos=" << oldPosition
+                         << "; newPosition=" << newPosition
+                         << "; item.geo=" << item->geometry();
+
+    anchor->setPosition(newPosition);
 }
 
 void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdded) const
