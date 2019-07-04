@@ -296,7 +296,9 @@ private Q_SLOTS:
     void tst_toggleMiddleDockCrash(); // tests some crash I got
     void tst_28NestedWidgets();
     void tst_28NestedWidgets_data();
+    void tst_invalidPlaceholderPosition_data();
     void tst_invalidPlaceholderPosition();
+    void tst_invalidAnchorGroup();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2590,8 +2592,17 @@ void TestDocks::tst_28NestedWidgets_data()
     QTest::newRow("valgrind") << docks << QVector<int>{};
 }
 
+void TestDocks::tst_invalidPlaceholderPosition_data()
+{
+    QTest::addColumn<bool>("restore1First");
+    QTest::newRow("restore1First") << true;
+    QTest::newRow("restore2First") << false;
+}
+
 void TestDocks::tst_invalidPlaceholderPosition()
 {
+    QFETCH(bool, restore1First);
+
     // Tests a bug I saw: 3 widgets stacked, close the top one, then the second top one
     // result: the bottom most one didn't have it's top separator at y=0
 
@@ -2629,9 +2640,20 @@ void TestDocks::tst_invalidPlaceholderPosition()
     QCOMPARE(layout->placeholderCount(), 2);
     QCOMPARE(layout->numAchorsFolllowing(), 2);
 
-
     // Check that frame3 moved up to y=1
     QCOMPARE(frame3->y(), 1);
+
+    // Now restore:
+    auto toRestore1 = restore1First ? dock1 : dock2;
+    auto toRestore2 = restore1First ? dock2 : dock1;
+
+    toRestore1->show();
+    toRestore2->show();
+    waitForResize(frame3);
+    QVERIFY(layout->checkSanity());
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->numAchorsFolllowing(), 0);
 
     dock1->deleteLater();
     dock2->deleteLater();
@@ -2667,8 +2689,30 @@ void TestDocks::tst_28NestedWidgets()
         docksToCreate.at(i).createdDock->deleteLater();
         QVERIFY(waitForDeleted(docksToCreate.at(i).createdDock));
     }
-
 }
+
+void TestDocks::tst_invalidAnchorGroup()
+{
+    // Tests a bug I got. Should not warn.
+    EnsureTopLevelsDeleted e;
+
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+
+    QPointer<FloatingWindow> fw = dock2->morphIntoFloatingWindow();
+    nestDockWidget(dock1, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
+
+    dock1->close();
+    waitForResize(dock2);
+    auto layout = fw->dropArea()->multiSplitter();
+    layout->dumpDebug();
+
+    dock2->close();
+    dock1->deleteLater();
+    dock2->deleteLater();
+    waitForDeleted(dock1);
+}
+
 
 // QTest::qWait(50000)
 

@@ -189,6 +189,8 @@ public:
     bool shouldFollow() const{ return !isStatic() && (!hasNonPlaceholderItems(Side1) || !hasNonPlaceholderItems(Side2)) && !isFollowing(); }
 
     bool containsItem(const Item *w, Side side) const;
+    bool isStaticOrFollowsStatic() const;
+
 
     const ItemList items(Side side) const;
     const ItemList side1Items() const { return m_side1Items; }

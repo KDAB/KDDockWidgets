@@ -295,6 +295,14 @@ bool Anchor::containsItem(const Item *item, Anchor::Side side) const
     }
 }
 
+bool Anchor::isStaticOrFollowsStatic() const
+{
+    if (isStatic())
+        return true;
+
+    return m_followee && m_followee->isStaticOrFollowsStatic();
+}
+
 const ItemList Anchor::items(Anchor::Side side) const
 {
     switch (side) {
