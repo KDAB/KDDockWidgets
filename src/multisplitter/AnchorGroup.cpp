@@ -329,9 +329,7 @@ void AnchorGroup::turnIntoPlaceholder()
         if (!right->isStatic())
             right->setPosition(right->position() - ((right->position() - left->position()) / 2));
         left->setFollowee(right);
-    }
-
-    if (right->shouldFollow()) {
+    } else if (right->shouldFollow()) {
         right->setFollowee(left);
     }
 
@@ -340,10 +338,7 @@ void AnchorGroup::turnIntoPlaceholder()
         if (!bottom->isStatic())
             bottom->setPosition(bottom->position() - ((bottom->position() - top->position()) / 2));
         top->setFollowee(bottom);
-    }
-
-
-    if (bottom->shouldFollow()) {
+    } else if (bottom->shouldFollow()) {
         bottom->setFollowee(top);
     }
 

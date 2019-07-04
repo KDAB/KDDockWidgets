@@ -286,6 +286,7 @@ private Q_SLOTS:
     void tst_placeholderDisappearsOnReadd();
     void tst_placeholdersAreRemovedPropertly();
     void tst_embeddedMainWindow();
+    void tst_toggleMiddleDockCrash(); // tests some crash I got
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2493,6 +2494,39 @@ void TestDocks::tst_embeddedMainWindow()
     QCOMPARE(layout->count(), 2); // 2, as it has the central frame
     QCOMPARE(layout->visibleCount(), 2);
 
+}
+
+void TestDocks::tst_toggleMiddleDockCrash()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    QPointer<DockWidget> dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    QPointer<DockWidget> dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    QPointer<DockWidget> dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+    m->addDockWidget(dock3, Location_OnRight);
+
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    auto frame = dock2->frame();
+    dock2->close();
+    QVERIFY(waitForDeleted(frame));
+
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QVERIFY(layout->checkSanity());
+    QCOMPARE(layout->numAchorsFolllowing(), 1);
+
+
+    delete dock2;
+
+
+    //dock2->show();
 }
 
 // QTest::qWait(50000)

@@ -742,6 +742,17 @@ void MultiSplitterLayout::setAnchorBeingDragged(Anchor *anchor)
     m_anchorBeingDragged = anchor;
 }
 
+int MultiSplitterLayout::numAchorsFolllowing() const
+{
+    int count = 0;
+    for (Anchor *a : m_anchors) {
+        if (a->isFollowing())
+            count++;
+    }
+
+    return count;
+}
+
 Anchor *MultiSplitterLayout::staticAnchor(Anchor::Type type) const
 {
     if (type == Anchor::Type_TopStatic)
