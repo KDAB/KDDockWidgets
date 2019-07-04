@@ -186,7 +186,7 @@ public:
     bool isEmpty() const { return !hasItems(Side1) && !hasItems(Side2); }
     bool hasItems(Side) const;
     bool hasNonPlaceholderItems(Side) const;
-    bool shouldFollow() const{ return !isStatic() && (!hasNonPlaceholderItems(Side1) || !hasNonPlaceholderItems(Side2)); }
+    bool shouldFollow() const{ return !isStatic() && (!hasNonPlaceholderItems(Side1) || !hasNonPlaceholderItems(Side2)) && !isFollowing(); }
 
     bool containsItem(const Item *w, Side side) const;
 
@@ -207,7 +207,17 @@ public:
 
     int cumulativeMinLength(Anchor::Side side) const;
 
+    /**
+     * @brief Makes this separator follow another one. This one will be made invisible.
+     * Used when the item in the layout is just a placeholder remembering a previous dock widget position.
+     * Pass nullptr do make it not follow and visible again.
+     */
     void setFollowee(Anchor *);
+
+    /**
+     * @brief getter for the folowee
+     */
+    Anchor *folowee() const { return m_followee; }
 
     static int thickness(bool staticAnchor);
     static Anchor::Side oppositeSide(Side side);

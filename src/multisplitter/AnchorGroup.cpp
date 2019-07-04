@@ -339,7 +339,9 @@ void AnchorGroup::turnIntoPlaceholder()
         if (!right->isStatic())
             right->setPosition(right->position() - ((right->position() - left->position()) / 2));
         left->setFollowee(right);
-    } else if (right->shouldFollow()) {
+    }
+
+    if (right->shouldFollow() && left->folowee() != right) {
         right->setFollowee(left);
     }
 
@@ -348,8 +350,16 @@ void AnchorGroup::turnIntoPlaceholder()
         if (!bottom->isStatic())
             bottom->setPosition(bottom->position() - ((bottom->position() - top->position()) / 2));
         top->setFollowee(bottom);
-    } else if (bottom->shouldFollow()) {
+    }
+
+
+    if (bottom->shouldFollow() && top->folowee() != bottom) {
         bottom->setFollowee(top);
+    }
+
+    if (!isStatic() && !anchorFollowing()) {
+        qWarning() << "There should be at least one anchor following";
+        Q_ASSERT(false);
     }
 
     layout->emitVisibleWidgetCountChanged();

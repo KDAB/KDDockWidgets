@@ -296,6 +296,7 @@ private Q_SLOTS:
     void tst_toggleMiddleDockCrash(); // tests some crash I got
     void tst_28NestedWidgets();
     void tst_28NestedWidgets_data();
+    void tst_invalidPlaceholderPosition();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2572,7 +2573,7 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnRight, -1, nullptr }
     };
 
-    //QTest::newRow("28") << docks << QVector<int>{11, 0};
+    QTest::newRow("28") << docks << QVector<int>{11, 0};
 
     docks = {
         {Location_OnLeft, -1, nullptr },
@@ -2587,6 +2588,54 @@ void TestDocks::tst_28NestedWidgets_data()
 
     // 2. Produced valgrind invalid reads while adding
     QTest::newRow("valgrind") << docks << QVector<int>{};
+}
+
+void TestDocks::tst_invalidPlaceholderPosition()
+{
+    // Tests a bug I saw: 3 widgets stacked, close the top one, then the second top one
+    // result: the bottom most one didn't have it's top separator at y=0
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
+
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+    m->addDockWidget(dock3, Location_OnTop);
+    m->addDockWidget(dock2, Location_OnTop);
+    m->addDockWidget(dock1, Location_OnTop);
+
+    auto frame1 = dock1->frame();
+    auto frame2 = dock2->frame();
+    auto frame3 = dock3->frame();
+    QCOMPARE(frame1->y(), 1);
+    dock1->close();
+    waitForResize(frame2);
+
+    // Check that frame2 moved up to y=1
+    QCOMPARE(frame2->y(), 1);
+    QCOMPARE(layout->numAchorsFolllowing(), 1);
+    layout->dumpDebug();
+
+    dock2->close();
+    waitForResize(dock3);
+
+    layout->dumpDebug();
+    QVERIFY(layout->checkSanity());
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 2);
+    QCOMPARE(layout->numAchorsFolllowing(), 2);
+
+
+    // Check that frame3 moved up to y=1
+    QCOMPARE(frame3->y(), 1);
+
+    dock1->deleteLater();
+    dock2->deleteLater();
+    QVERIFY(waitForDeleted(dock2));
 }
 
 void TestDocks::tst_28NestedWidgets()
@@ -2619,12 +2668,9 @@ void TestDocks::tst_28NestedWidgets()
         QVERIFY(waitForDeleted(docksToCreate.at(i).createdDock));
     }
 
-    // WAIT
 }
 
 // QTest::qWait(50000)
 
 QTEST_MAIN(KDDockWidgets::TestDocks)
 #include "tst_docks.moc"
-
-
