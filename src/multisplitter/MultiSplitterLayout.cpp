@@ -450,14 +450,15 @@ void MultiSplitterLayout::collectPaths(QVector<Anchor::List> &paths, Anchor *fro
     if (paths.isEmpty())
         paths.push_back({});
 
-    Anchor::List &currentPath = paths.last();
-    currentPath.push_back(fromAnchor);
+    int currentPathIndex = paths.size() - 1; // Store the index instead of using "Anchor::List &currentPath = paths.last();" as the references are stable, as the paths vector reallocates
+
+    paths[currentPathIndex].push_back(fromAnchor);
 
     const ItemList items = fromAnchor->items(direction);
     for (int i = 0, end = items.size(); i < end; ++i) {
         Anchor *nextAnchor = items[i]->anchor(Anchor::oppositeSide(direction), fromAnchor->orientation());
         if (i > 0) {
-            Anchor::List newPath = currentPath;
+            Anchor::List newPath = paths[currentPathIndex];
             paths.push_back(newPath);
         }
         collectPaths(paths, nextAnchor, direction);

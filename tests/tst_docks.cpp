@@ -73,7 +73,7 @@ Q_DECLARE_METATYPE(WidgetResize)
 struct DockDescriptor {
     Location loc;
     int relativeToIndex;
-    DockWidget *createdDock = nullptr;
+    DockWidget *createdDock;
 };
 Q_DECLARE_METATYPE(DockDescriptor)
 
@@ -2539,44 +2539,60 @@ void TestDocks::tst_toggleMiddleDockCrash()
 void TestDocks::tst_28NestedWidgets_data()
 {
     QTest::addColumn<QVector<DockDescriptor>>("docksToCreate");
+    QTest::addColumn<QVector<int>>("docksToHide");
 
     QVector<DockDescriptor> docks = {
-        {Location_OnLeft, -1 },
-        {Location_OnBottom, 0},
-        {Location_OnBottom, 0},
-        {Location_OnBottom, 0},
-        {Location_OnBottom, 0},
-        {Location_OnBottom, 0},
-        {Location_OnBottom, 0},
-        {Location_OnBottom, 0},
-        {Location_OnBottom, 0},
-        {Location_OnBottom, 0},
-        {Location_OnBottom, 0},
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnTop, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnLeft, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnBottom, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 },
-        {Location_OnRight, -1 }
+        {Location_OnLeft, -1, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnTop, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnLeft, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr }
     };
 
-    QTest::newRow("28") << docks;
+    //QTest::newRow("28") << docks << QVector<int>{11, 0};
+
+    docks = {
+        {Location_OnLeft, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnTop, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+    };
+
+    // 2. Produced valgrind invalid reads while adding
+    QTest::newRow("valgrind") << docks << QVector<int>{};
 }
 
 void TestDocks::tst_28NestedWidgets()
 {
     QFETCH(QVector<DockDescriptor>, docksToCreate);
+    QFETCH(QVector<int>, docksToHide);
 
     // Tests a case that used to cause negative anchor position when turning into placeholder
     EnsureTopLevelsDeleted e;
@@ -2594,14 +2610,16 @@ void TestDocks::tst_28NestedWidgets()
         ++i;
     }
 
-    auto dock11 = docksToCreate.at(11).createdDock;
-    auto dock0 = docksToCreate.at(0).createdDock;
-    dock11->close();
-    dock0->close();
+    for (int i : docksToHide) {
+        docksToCreate.at(i).createdDock->close();
+    }
 
-    dock11->deleteLater();
-    dock0->deleteLater();
-    QVERIFY(waitForDeleted(dock11));
+    for (int i : docksToHide) {
+        docksToCreate.at(i).createdDock->deleteLater();
+        QVERIFY(waitForDeleted(docksToCreate.at(i).createdDock));
+    }
+
+    // WAIT
 }
 
 // QTest::qWait(50000)
