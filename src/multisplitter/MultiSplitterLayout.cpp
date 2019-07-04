@@ -648,7 +648,7 @@ MultiSplitterLayout::Length MultiSplitterLayout::availableLengthForDrop(Location
 int MultiSplitterLayout::availableLengthForOrientation(Qt::Orientation orientation) const
 {
     Length l = availableLengthForDrop(orientation == Qt::Vertical ? Location_OnLeft
-                                                                       : Location_OnTop, nullptr);
+                                                                  : Location_OnTop, nullptr);
 
     return l.length();
 }
@@ -1138,30 +1138,73 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         return;
     }
 
+    // Update the adjacent sides (if anchor is left, we update top and bottom for example):
     Anchor *adjacentAnchor = anchorGroup.adjacentAnchor(anchor);
+
     adjacentAnchor->updateItemSizes();
     adjacentAnchor = anchorGroup.oppositeAnchor(adjacentAnchor);
     adjacentAnchor->updateItemSizes();
 
-    // If we're shifting, say, the right anchor, width will change this much:
-    const int requiredLength = item->length(anchor->orientation());
+    const Qt::Orientation orientation = anchor->orientation();
+    Anchor *side1Anchor = anchorGroup.anchorAtSide(Anchor::Side1, orientation); // returns the left if vertical, otherwise top
+    Anchor *side2Anchor = anchorGroup.anchorAtSide(Anchor::Side2, orientation); // returns the right if vertical, otherwise bottom
+    const int oldPosition1 = side1Anchor->position();
+    const int oldPosition2 = side2Anchor->position();
 
-    const int oldPosition = anchor->position();
+    // Now update left and right:
+    const int preferedLength = item->length(orientation);
+    const int widgetMinimumLength = qMin(30, KDDockWidgets::widgetMinLength(item, orientation)); // TODO hardcoded 30
 
-    // The anchor stops following other, and will go to the correct position
+    // The anchor stops following the other
     anchor->setFollowee(nullptr);
 
-    int newPosition;
-    if (anchorGroup.sideForAnchor(anchor) == Anchor::Side1)
-        newPosition = oldPosition - requiredLength - anchor->thickness();
-    else
-        newPosition = oldPosition + requiredLength + 1;
+    // Our layout supports this much:
+    const int available = availableLengthForOrientation(orientation);
+    int newLength = qMin(preferedLength, available);
+    if (newLength < widgetMinimumLength) {
+        const int missingDelta = widgetMinimumLength - newLength;
+        // Make our layout bigger to accomodate the needs
+        setContentLength(orientation, contentsLength(orientation) + missingDelta);
+    }
 
-    qCDebug(placeholder) << Q_FUNC_INFO << "oldPos=" << oldPosition
-                         << "; newPosition=" << newPosition
+    const int boundPosition1 = side1Anchor->isStatic() ? side1Anchor->position()
+                                                       : boundPositionForAnchor(side1Anchor, Anchor::Side1);
+
+    const int boundPosition2 = side2Anchor->isStatic() ? side2Anchor->position()
+                                                       : boundPositionForAnchor(side2Anchor, Anchor::Side2);
+
+    // Double check the available space again, for sanity
+    if (boundPosition2 - boundPosition1 - side1Anchor->thickness() < newLength) {
+        qWarning() << "There's not enough space, not possible" << boundPosition2 << boundPosition1 << side1Anchor->thickness()
+                   << "; newLength=" << newLength
+                   << "; available=" << availableLengthForOrientation(orientation)
+                   << "; anchors=" << side1Anchor << side2Anchor
+                   << "; oldPos1=" << oldPosition1
+                   << "; oldPos2=" << oldPosition2
+                   << "; static=" << side1Anchor->isStatic() << side2Anchor->isStatic();
+        Q_ASSERT(false);
+        return;
+    }
+
+    // Let's try that each anchor contributes 50%, so that the widget appears centered
+    const int suggestedLength1 = newLength / 2;
+    const int maxPos1 = boundPosition2 - newLength - side1Anchor->thickness();
+    const int newPosition1 = qMin(qMax(boundPosition1, oldPosition1 - suggestedLength1), maxPos1); // Honour the bound
+    const int newPosition2 = newPosition1 + side1Anchor->thickness() + newLength; // No need to check bound2, we have enough space afterall
+
+
+    qCDebug(placeholder) << Q_FUNC_INFO
+                         << "; oldPos1=" << oldPosition1
+                         << "; oldPos2=" << oldPosition2
+                         << "; newPosition1=" << newPosition1
+                         << "; newPosition2=" << newPosition2
+                         << "; bounds1=" << boundPosition1
+                         << "; bounds2=" << boundPosition2
                          << "; item.geo=" << item->geometry();
 
-    anchor->setPosition(newPosition);
+
+    side1Anchor->setPosition(newPosition1);
+    side2Anchor->setPosition(newPosition2);
 }
 
 void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdded) const
@@ -1202,6 +1245,12 @@ void MultiSplitterLayout::setContentLength(Qt::Orientation o, int value)
         // Setting the height
         setContentsSize({m_contentSize.width(), value});
     }
+}
+
+int MultiSplitterLayout::contentsLength(Qt::Orientation o) const
+{
+    return o == Qt::Vertical ? contentsWidth()
+                             : contentsHeight();
 }
 
 void MultiSplitterLayout::setMinimumSize(QSize sz)

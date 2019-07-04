@@ -237,6 +237,12 @@ public:
     void setContentLength(Qt::Orientation o, int value);
 
     /**
+     * @brief returns @ref contentsWidth if @p o is Qt::Vertical, otherwise @ref contentsHeight
+     * @sa contentsHeight, contentsWidth
+     */
+    int contentsLength(Qt::Orientation o) const;
+
+    /**
      * @brief returns the contents width.
      * Usually it's the same width as the respective parent MultiSplitterWidget.
      */

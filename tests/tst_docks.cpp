@@ -2493,7 +2493,6 @@ void TestDocks::tst_embeddedMainWindow()
     QVERIFY(waitForDeleted(fw));
     QCOMPARE(layout->count(), 2); // 2, as it has the central frame
     QCOMPARE(layout->visibleCount(), 2);
-
 }
 
 void TestDocks::tst_toggleMiddleDockCrash()
@@ -2522,11 +2521,10 @@ void TestDocks::tst_toggleMiddleDockCrash()
     QVERIFY(layout->checkSanity());
     QCOMPARE(layout->numAchorsFolllowing(), 1);
 
+    qDebug() << "Dock1.min=" << KDDockWidgets::widgetMinLength(dock1->frame(), Qt::Vertical);
+    qDebug() << "Dock3.min=" << KDDockWidgets::widgetMinLength(dock3->frame(), Qt::Vertical);
 
-    delete dock2;
-
-
-    //dock2->show();
+    dock2->show();
 }
 
 // QTest::qWait(50000)
