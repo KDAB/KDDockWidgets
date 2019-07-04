@@ -815,7 +815,8 @@ void MultiSplitterLayout::dumpDebug() const
                  << "; pos=" << anchor->position()
                  << "; bounds=" << bounds
                  << "; orientation=" << anchor->orientation()
-                 << "; isFollowing=" << anchor->isFollowing();
+                 << "; isFollowing=" << anchor->isFollowing()
+                 << "; folowee=" << anchor->folowee();
     }
 
     qDebug() << "Num Frame:" << Frame::dbg_numFrames();
