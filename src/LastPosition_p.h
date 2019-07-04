@@ -40,7 +40,7 @@ namespace KDDockWidgets {
 // Just a RAII class so we don't forget to unref
 struct ItemRef
 {
-    ItemRef(QMetaObject::Connection conn, Item *it)
+    ItemRef(const QMetaObject::Connection &conn, Item *it)
         : item(it)
         , guard(it)
         , connection(conn)

@@ -87,7 +87,7 @@ inline int widgetMinLength(const T *w, Qt::Orientation orientation)
  * A MultiSplitter is simply a list of Anchors, each one of them handling the resizing of widgets.
  * See the documentation for Anchor.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject
+class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject // clazy:exclude=ctor-missing-parent-argument
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY widgetCountChanged)
