@@ -119,6 +119,16 @@ Anchor *AnchorGroup::anchor(Anchor::Side side, Qt::Orientation orientation) cons
     }
 }
 
+Anchor *AnchorGroup::anchorAtSide(Anchor::Side side, Qt::Orientation orientation) const
+{
+    const bool isSide1 = side == Anchor::Side1;
+    if (orientation == Qt::Vertical) {
+        return isSide1 ? left: right;
+    } else {
+        return isSide1 ? top : bottom;
+    }
+}
+
 void AnchorGroup::setAnchor(Anchor *anchor, Location loc)
 {
     switch (loc) {
