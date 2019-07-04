@@ -79,6 +79,25 @@ namespace KDDockWidgets
            return Location_None;
        }
    }
+
+   inline QString locationStr(Location loc)
+   {
+       switch (loc) {
+       case KDDockWidgets::Location_None:
+           return QLatin1String("none");
+       case KDDockWidgets::Location_OnLeft:
+           return QLatin1String("left");
+       case KDDockWidgets::Location_OnTop:
+           return QLatin1String("top");
+       case KDDockWidgets::Location_OnRight:
+           return QLatin1String("right");
+       case KDDockWidgets::Location_OnBottom:
+           return QLatin1String("bottom");
+       }
+
+       return QString();
+   }
+
 };
 
 #endif

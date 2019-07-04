@@ -140,7 +140,12 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
 
 void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relativeToWidget)
 {
-    qCDebug(addwidget) << Q_FUNC_INFO << w << location << relativeToWidget;
+    qCDebug(addwidget) << Q_FUNC_INFO << w
+                       << "; location=" << locationStr(location)
+                       << "; relativeTo=" << relativeToWidget
+                       << "; contentSize=" << contentsSize()
+                       << "; w.size=" << w->size()
+                       << "; w.min=" << KDDockWidgets::widgetMinLength(w, anchorOrientationForLocation(location));
 
     Item *item = itemForFrame(qobject_cast<Frame*>(w));
     if (item) {
