@@ -418,8 +418,8 @@ void Anchor::setFollowee(Anchor *followee)
     qCDebug(placeholder) << Q_FUNC_INFO << "follower="
                          << this << "; followee=" << followee;
 
-    if (followee)
-        disconnect(followee, &Anchor::positionChanged, this, &Anchor::onFolloweePositionChanged);
+    if (m_followee)
+        disconnect(m_followee, &Anchor::positionChanged, this, &Anchor::onFolloweePositionChanged);
 
     m_followee = followee;
     setThickness();
@@ -435,6 +435,7 @@ void Anchor::setFollowee(Anchor *followee)
 
 void Anchor::onFolloweePositionChanged(int pos)
 {
+    Q_ASSERT(isFollowing());
     setPosition(pos);
 }
 
