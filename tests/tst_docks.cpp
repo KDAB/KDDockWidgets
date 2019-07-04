@@ -70,6 +70,13 @@ struct WidgetResize
 typedef QVector<WidgetResize> WidgetResizes;
 Q_DECLARE_METATYPE(WidgetResize)
 
+struct DockDescriptor {
+    Location loc;
+    int relativeToIndex;
+    DockWidget *createdDock = nullptr;
+};
+Q_DECLARE_METATYPE(DockDescriptor)
+
 struct MultiSplitterSetup
 {
     QSize size;
@@ -287,6 +294,8 @@ private Q_SLOTS:
     void tst_placeholdersAreRemovedPropertly();
     void tst_embeddedMainWindow();
     void tst_toggleMiddleDockCrash(); // tests some crash I got
+    void tst_28NestedWidgets();
+    void tst_28NestedWidgets_data();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2525,6 +2534,74 @@ void TestDocks::tst_toggleMiddleDockCrash()
     qDebug() << "Dock3.min=" << KDDockWidgets::widgetMinLength(dock3->frame(), Qt::Vertical);
 
     dock2->show();
+}
+
+void TestDocks::tst_28NestedWidgets_data()
+{
+    QTest::addColumn<QVector<DockDescriptor>>("docksToCreate");
+
+    QVector<DockDescriptor> docks = {
+        {Location_OnLeft, -1 },
+        {Location_OnBottom, 0},
+        {Location_OnBottom, 0},
+        {Location_OnBottom, 0},
+        {Location_OnBottom, 0},
+        {Location_OnBottom, 0},
+        {Location_OnBottom, 0},
+        {Location_OnBottom, 0},
+        {Location_OnBottom, 0},
+        {Location_OnBottom, 0},
+        {Location_OnBottom, 0},
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnTop, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnLeft, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnBottom, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 },
+        {Location_OnRight, -1 }
+    };
+
+    QTest::newRow("28") << docks;
+}
+
+void TestDocks::tst_28NestedWidgets()
+{
+    QFETCH(QVector<DockDescriptor>, docksToCreate);
+
+    // Tests a case that used to cause negative anchor position when turning into placeholder
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+
+    int i = 0;
+    for (DockDescriptor &desc : docksToCreate) {
+        desc.createdDock = createDockWidget(QStringLiteral("%1").arg(i), new QPushButton(QStringLiteral("%1").arg(i)));
+
+        DockWidget *relativeTo = nullptr;
+        if (desc.relativeToIndex != -1)
+            relativeTo = docksToCreate.at(desc.relativeToIndex).createdDock;
+
+        m->addDockWidget(desc.createdDock, desc.loc, relativeTo);
+        ++i;
+    }
+
+    auto dock11 = docksToCreate.at(11).createdDock;
+    auto dock0 = docksToCreate.at(0).createdDock;
+    dock11->close();
+    dock0->close();
+
+    dock11->deleteLater();
+    dock0->deleteLater();
+    QVERIFY(waitForDeleted(dock11));
 }
 
 // QTest::qWait(50000)
