@@ -345,14 +345,6 @@ void DockWidget::paintEvent(QPaintEvent *)
 {
     if (isWindow())
         FloatingWindow::paintFrame(this);
-
-#ifdef DOCKS_DEVELOPER_MODE
-    static const bool s_drawDebugTitleFrame = qEnvironmentVariableIsSet("KDDOCKWIDGETS_DRAW_DEBUG_FRAME");
-    if (s_drawDebugTitleFrame) {
-        QPainter p(this);
-        p.drawRect(rect().adjusted(0, 0, -1, -1));
-    }
-#endif
 }
 
 TitleBar *DockWidget::titleBar() const

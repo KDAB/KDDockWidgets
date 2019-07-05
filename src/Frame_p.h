@@ -161,6 +161,10 @@ public:
     ///@brief for debug only, prints some debug information
     void dumpDebug();
 
+#ifdef DOCKS_DEVELOPER_MODE
+    void paintEvent(QPaintEvent *) override;
+#endif
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidget *);
     void numDockWidgetsChanged();

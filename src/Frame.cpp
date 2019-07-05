@@ -316,6 +316,17 @@ void Frame::dumpDebug()
     }
 }
 
+#ifdef DOCKS_DEVELOPER_MODE
+void Frame::paintEvent(QPaintEvent *)
+{
+    static const bool s_drawDebugTitleFrame = qEnvironmentVariableIsSet("KDDOCKWIDGETS_DRAW_DEBUG_FRAME");
+    if (s_drawDebugTitleFrame) {
+        QPainter p(this);
+        p.drawRect(rect().adjusted(0, 0, -1, -1));
+    }
+}
+#endif
+
 DockWidget *Frame::dockWidgetAt(int index) const
 {
     return qobject_cast<DockWidget *>(m_tabWidget->widget(index));
