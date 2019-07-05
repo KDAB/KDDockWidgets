@@ -235,7 +235,7 @@ int Item::minLength(Qt::Orientation orientation) const
     return KDDockWidgets::widgetMinLength(this, orientation);
 }
 
-Anchor *Item::anchor(Anchor::Side side, Qt::Orientation orientation) const
+Anchor *Item::anchorAtDirection(Anchor::Side side, Qt::Orientation orientation) const
 {
     if (!d->m_anchorGroup.isValid())
         qWarning() << Q_FUNC_INFO << "Invalid anchor group" << &d->m_anchorGroup
@@ -273,7 +273,7 @@ const AnchorGroup &Item::anchorGroup() const
 
 int Item::cumulativeMinLength(Anchor::Side side, Qt::Orientation orientation) const
 {
-    Anchor *oppositeAnchor = anchor(Anchor::oppositeSide(side), orientation);
+    Anchor *oppositeAnchor = anchorAtDirection(Anchor::oppositeSide(side), orientation);
     Q_ASSERT(oppositeAnchor);
     return minLength(orientation) + oppositeAnchor->cumulativeMinLength(side);
 }
