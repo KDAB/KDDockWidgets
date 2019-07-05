@@ -241,7 +241,7 @@ Anchor *Item::anchor(Anchor::Side side, Qt::Orientation orientation) const
         qWarning() << Q_FUNC_INFO << "Invalid anchor group" << &d->m_anchorGroup
                    << "in" << this << "; window=" << parentWidget()->window();
 
-    return d->m_anchorGroup.anchor(side, orientation);
+    return d->m_anchorGroup.anchorAtDirection(side, orientation);
 }
 
 Anchor *Item::anchor(const GeometryDiff &geoDiff) const
