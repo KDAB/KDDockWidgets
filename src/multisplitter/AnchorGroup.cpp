@@ -391,13 +391,13 @@ void AnchorGroup::turnIntoPlaceholder()
     if (left->shouldFollow()) {
         if (Anchor *folowee = left->endFolowee()) {
             // Left is already following something else
-            if (!folowee->isStatic()) {
+            if (!folowee->isStatic() && folowee->onlyHasPlaceholderItems(Anchor::Side2)) {
                 folowee->setFollowee(right);
                 return;
             }
         } else {
             // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
-            if (!right->isStatic())
+            if (!right->isStatic() && right->onlyHasPlaceholderItems(Anchor::Side1) && !right->isFollowing())
                 right->setPosition(right->position() - ((right->position() - left->position()) / 2));
             left->setFollowee(right);
             return;
@@ -407,13 +407,13 @@ void AnchorGroup::turnIntoPlaceholder()
     if (top->shouldFollow()) {
         if (Anchor *folowee = top->endFolowee()) {
             // Top is already following something else
-            if (!folowee->isStatic()) {
+            if (!folowee->isStatic() && folowee->onlyHasPlaceholderItems(Anchor::Side2)) {
                 folowee->setFollowee(bottom);
                 return;
             }
         } else {
             // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
-            if (!bottom->isStatic())
+            if (!bottom->isStatic() && bottom->onlyHasPlaceholderItems(Anchor::Side1) && !bottom->isFollowing())
                 bottom->setPosition(bottom->position() - ((bottom->position() - top->position()) / 2));
             top->setFollowee(bottom);
             return;
@@ -423,7 +423,7 @@ void AnchorGroup::turnIntoPlaceholder()
     if (bottom->shouldFollow()) {
         if (Anchor *folowee = bottom->endFolowee()) {
             // Bottom is already following something else (outwards), that something else will follow up
-            if (!folowee->isStatic()) {
+            if (!folowee->isStatic() && folowee->onlyHasPlaceholderItems(Anchor::Side1)) {
                 folowee->setFollowee(top);
                 return;
             }
@@ -436,7 +436,7 @@ void AnchorGroup::turnIntoPlaceholder()
     if (right->shouldFollow()) {
         if (Anchor *folowee = right->endFolowee()) {
             // Right is already following something else (outwards), that something else will follow left
-            if (!folowee->isStatic()) {
+            if (!folowee->isStatic() && folowee->onlyHasPlaceholderItems(Anchor::Side1)) {
                 folowee->setFollowee(left);
                 return;
             }
