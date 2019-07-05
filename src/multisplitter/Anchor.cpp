@@ -269,6 +269,19 @@ bool Anchor::hasItems(Anchor::Side side) const
     }
 }
 
+bool Anchor::onlyHasPlaceholderItems(Anchor::Side side) const
+{
+    auto &items = side == Side1 ? m_side1Items
+                                : m_side2Items;
+
+    for (Item *item : items) {
+        if (!item->isPlaceholder())
+            return false;
+    }
+
+    return true;
+}
+
 bool Anchor::hasNonPlaceholderItems(Anchor::Side side) const
 {
     auto &items = side == Side1 ? m_side1Items

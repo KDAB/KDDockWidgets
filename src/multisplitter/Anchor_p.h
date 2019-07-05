@@ -186,7 +186,8 @@ public:
     bool isEmpty() const { return !hasItems(Side1) && !hasItems(Side2); }
     bool hasItems(Side) const;
     bool hasNonPlaceholderItems(Side) const;
-    bool shouldFollow() const{ return !isStatic() && (!hasNonPlaceholderItems(Side1) || !hasNonPlaceholderItems(Side2)) && !isFollowing(); }
+    bool onlyHasPlaceholderItems(Anchor::Side side) const;
+    bool shouldFollow() const { return !isStatic() && (onlyHasPlaceholderItems(Side1) || onlyHasPlaceholderItems(Side2)) && !isFollowing(); }
 
     bool containsItem(const Item *w, Side side) const;
     bool isStaticOrFollowsStatic() const;
