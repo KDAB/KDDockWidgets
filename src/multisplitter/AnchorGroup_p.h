@@ -70,6 +70,7 @@ struct AnchorGroup {
     bool isStaticOrFollowsStatic() const;
 
     void updateItemSizes();
+    void assertIsSquashed();
 
     Anchor *top = nullptr;
     Anchor *left = nullptr;

@@ -25,7 +25,6 @@
 #include "Logging_p.h"
 
 #include <QWidget>
-#include <QScopeGuard>
 
 using namespace KDDockWidgets;
 
@@ -210,6 +209,20 @@ void AnchorGroup::updateItemSizes()
     bottom->updateItemSizes();
 }
 
+void AnchorGroup::assertIsSquashed()
+{
+    if (!isStaticOrFollowsStatic() && !isSquashed()) {
+        layout->dumpDebug();
+        qWarning() << "The group should be squashed"
+                   << "; shouldFollow=" << left->shouldFollow() << top->shouldFollow() << right->shouldFollow() << bottom->shouldFollow()
+                   << "\n; isStatic=" << left->isStatic() << top->isStatic() << right->isStatic() << bottom->isStatic()
+                   << "\n; isFollowing=" << left->isFollowing() << top->isFollowing() << right->isFollowing() << bottom->isFollowing()
+                   << "\n; folowee=" << left->folowee() << top->folowee() << right->folowee() << bottom->folowee();
+
+        Q_ASSERT(false);
+    }
+}
+
 void AnchorGroup::setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side)
 {
     const bool isSide1 = side == Anchor::Side1;
@@ -355,20 +368,23 @@ void AnchorGroup::turnIntoPlaceholder()
     qCDebug(placeholder) << Q_FUNC_INFO;
     Q_ASSERT(!isSquashed());
 
-    auto runAtEnd = qScopeGuard([this] {
-        if (!isStaticOrFollowsStatic() && !isSquashed()) {
-            layout->dumpDebug();
-            qWarning() << "The group should be squashed"
-                       << "; shouldFollow=" << left->shouldFollow() << top->shouldFollow() << right->shouldFollow() << bottom->shouldFollow()
-                       << "\n; isStatic=" << left->isStatic() << top->isStatic() << right->isStatic() << bottom->isStatic()
-                       << "\n; isFollowing=" << left->isFollowing() << top->isFollowing() << right->isFollowing() << bottom->isFollowing()
-                       << "\n; folowee=" << left->folowee() << top->folowee() << right->folowee() << bottom->folowee();
+    struct RAIIScopeGuard
+    {
+        AnchorGroup &m_group;
 
-            Q_ASSERT(false);
+        RAIIScopeGuard(AnchorGroup &group)
+            : m_group(group)
+        {
         }
 
-        layout->emitVisibleWidgetCountChanged();
-    });
+        ~RAIIScopeGuard()
+        {
+            m_group.assertIsSquashed();
+            m_group.layout->emitVisibleWidgetCountChanged();
+        }
+    private:
+        Q_DISABLE_COPY(RAIIScopeGuard)
+    } guard(*this);
 
 
     if (left->shouldFollow()) {
