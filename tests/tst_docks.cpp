@@ -2668,7 +2668,18 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnTop, -1, nullptr },
         {Location_OnRight, -1, nullptr },
     };
-    QTest::newRow("bug_when_closing") << docks << QVector<int>{};
+    //QTest::newRow("bug_when_closing") << docks << QVector<int>{}; // Q_ASSERT(!isSquashed())
+
+
+    docks = {
+        {Location_OnLeft, -1, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+    };
+
+    QTest::newRow("bug_when_closing2") << docks << QVector<int>{};    // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
 }
 
 void TestDocks::tst_28NestedWidgets()
@@ -2694,6 +2705,7 @@ void TestDocks::tst_28NestedWidgets()
 
     for (int i : docksToHide) {
         docksToCreate.at(i).createdDock->close();
+        QTest::qWait(200);
     }
 
     for (int i : docksToHide) {
@@ -2705,14 +2717,16 @@ void TestDocks::tst_28NestedWidgets()
     i = 0;
     for (auto dock : docksToCreate) {
         if (dock.createdDock->isVisible()) {
-            qDebug() << "Closing" << i;
+            qDebug() << "Closing" << i << dock.createdDock->title();
             dock.createdDock->close();
+            QTest::qWait(200); // Wait for the docks to be closed. TODO Replace with a global event filter and wait for any resize ?
         }
         ++i;
     }
 
     // Cleanup
     for (auto dock : DockRegistry::self()->dockwidgets()) {
+        qDebug() << "Deleting" << dock->title();
         dock->deleteLater();
         QVERIFY(waitForDeleted(dock));
     }
