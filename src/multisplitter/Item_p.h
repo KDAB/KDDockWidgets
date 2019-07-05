@@ -123,6 +123,7 @@ public:
     int length(Qt::Orientation) const;
     int minLength(Qt::Orientation orientation) const;
 
+    Anchor *anchorAtSide(Anchor::Side side, Qt::Orientation orientation) const;
     Anchor *anchorAtDirection(Anchor::Side side, Qt::Orientation orientation) const;
     Anchor *anchor(const GeometryDiff &) const;
     AnchorGroup& anchorGroup();

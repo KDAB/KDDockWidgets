@@ -235,6 +235,16 @@ int Item::minLength(Qt::Orientation orientation) const
     return KDDockWidgets::widgetMinLength(this, orientation);
 }
 
+Anchor *Item::anchorAtSide(Anchor::Side side, Qt::Orientation orientation) const
+{
+    if (!d->m_anchorGroup.isValid())
+        qWarning() << Q_FUNC_INFO << "Invalid anchor group" << &d->m_anchorGroup
+                   << "in" << this << "; window=" << parentWidget()->window();
+
+    return d->m_anchorGroup.anchorAtSide(side, orientation);
+}
+
+
 Anchor *Item::anchorAtDirection(Anchor::Side side, Qt::Orientation orientation) const
 {
     if (!d->m_anchorGroup.isValid())

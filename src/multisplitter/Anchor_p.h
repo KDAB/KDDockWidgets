@@ -226,6 +226,14 @@ public:
      */
     Anchor *endFolowee() const;
 
+    /**
+     * @brief Recursively looks for an anchor in the whole layout but only looking at side @p side
+     *
+     * This allows us to know if there's an anchor on the top or left of us (side1) or right or bottom
+     * (side2), in the whole layout.
+     */
+    bool findAnchor(Anchor *anchor, Side side) const;
+
     static int thickness(bool staticAnchor);
     static Anchor::Side oppositeSide(Side side);
     void onFolloweePositionChanged(int pos);

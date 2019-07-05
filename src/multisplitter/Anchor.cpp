@@ -454,6 +454,23 @@ Anchor *Anchor::endFolowee() const
     return nullptr;
 }
 
+bool Anchor::findAnchor(Anchor *anchor, Anchor::Side side) const
+{
+    Q_ASSERT(anchor != this);
+    Q_ASSERT(anchor->orientation() == orientation());
+
+    for (Item *item : items(side)) {
+        Anchor *a = item->anchorAtSide(side, orientation());
+        if (anchor == a)
+            return true;
+
+        if (a->findAnchor(anchor, side))
+            return true;
+    }
+
+    return false;
+}
+
 void Anchor::onFolloweePositionChanged(int pos)
 {
     Q_ASSERT(isFollowing());
