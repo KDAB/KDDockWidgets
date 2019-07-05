@@ -2539,59 +2539,6 @@ void TestDocks::tst_toggleMiddleDockCrash()
     dock2->show();
 }
 
-void TestDocks::tst_28NestedWidgets_data()
-{
-    QTest::addColumn<QVector<DockDescriptor>>("docksToCreate");
-    QTest::addColumn<QVector<int>>("docksToHide");
-
-    QVector<DockDescriptor> docks = {
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnTop, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr }
-    };
-
-    QTest::newRow("28") << docks << QVector<int>{11, 0};
-
-    docks = {
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnTop, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-    };
-
-    // 2. Produced valgrind invalid reads while adding
-    QTest::newRow("valgrind") << docks << QVector<int>{};
-}
-
 void TestDocks::tst_invalidPlaceholderPosition_data()
 {
     QTest::addColumn<bool>("restore1First");
@@ -2662,6 +2609,59 @@ void TestDocks::tst_invalidPlaceholderPosition()
     dock1->deleteLater();
     dock2->deleteLater();
     QVERIFY(waitForDeleted(dock2));
+}
+
+void TestDocks::tst_28NestedWidgets_data()
+{
+    QTest::addColumn<QVector<DockDescriptor>>("docksToCreate");
+    QTest::addColumn<QVector<int>>("docksToHide");
+
+    QVector<DockDescriptor> docks = {
+        {Location_OnLeft, -1, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnBottom, 0, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnTop, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnLeft, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        {Location_OnRight, -1, nullptr }
+    };
+
+        QTest::newRow("28") << docks << QVector<int>{11, 0};
+
+        docks = {
+            {Location_OnLeft, -1, nullptr },
+            {Location_OnBottom, -1, nullptr },
+            {Location_OnBottom, -1, nullptr },
+            {Location_OnBottom, -1, nullptr },
+            {Location_OnBottom, -1, nullptr },
+            {Location_OnBottom, -1, nullptr },
+            {Location_OnTop, -1, nullptr },
+            {Location_OnRight, -1, nullptr },
+            };
+
+    // 2. Produced valgrind invalid reads while adding
+    QTest::newRow("valgrind") << docks << QVector<int>{};
 }
 
 void TestDocks::tst_28NestedWidgets()
