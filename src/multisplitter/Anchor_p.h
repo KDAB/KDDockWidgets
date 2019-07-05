@@ -221,6 +221,11 @@ public:
      */
     Anchor *folowee() const { return m_followee; }
 
+    /**
+     * @brief Returns the last folowee in the chain.
+     */
+    Anchor *endFolowee() const;
+
     static int thickness(bool staticAnchor);
     static Anchor::Side oppositeSide(Side side);
     void onFolloweePositionChanged(int pos);

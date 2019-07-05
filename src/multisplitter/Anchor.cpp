@@ -441,6 +441,19 @@ void Anchor::setFollowee(Anchor *followee)
     }
 }
 
+Anchor *Anchor::endFolowee() const
+{
+    Anchor *a = m_followee;
+    while (a) {
+        if (!a->folowee())
+            return a;
+
+        a = a->folowee();
+    }
+
+    return nullptr;
+}
+
 void Anchor::onFolloweePositionChanged(int pos)
 {
     Q_ASSERT(isFollowing());
