@@ -2685,6 +2685,15 @@ void TestDocks::tst_28NestedWidgets()
         docksToCreate.at(i).createdDock->close();
     }
 
+
+    // And delete the remaining ones
+    for (auto dock : docksToCreate) {
+        if (dock.createdDock->isVisible())
+            dock.createdDock->close();
+    }
+
+    WAIT
+
     for (int i : docksToHide) {
         docksToCreate.at(i).createdDock->deleteLater();
         QVERIFY(waitForDeleted(docksToCreate.at(i).createdDock));
