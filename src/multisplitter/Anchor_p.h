@@ -187,11 +187,15 @@ public:
     bool hasItems(Side) const;
     bool hasNonPlaceholderItems(Side) const;
     bool onlyHasPlaceholderItems(Anchor::Side side) const;
-    bool shouldFollow() const { return !isStatic() && (onlyHasPlaceholderItems(Side1) || onlyHasPlaceholderItems(Side2)) && !isFollowing(); }
+
+    /**
+     * @brief Returns whether this Anchor should follow another one. That happens if one of it's side is empty or only has placeholders
+     * Also, it can't be a static anchor.
+     */
+    bool shouldFollow() const { return !isStatic() && (onlyHasPlaceholderItems(Side1) || onlyHasPlaceholderItems(Side2)); }
 
     bool containsItem(const Item *w, Side side) const;
     bool isStaticOrFollowsStatic() const;
-
 
     const ItemList items(Side side) const;
     const ItemList side1Items() const { return m_side1Items; }

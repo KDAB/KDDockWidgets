@@ -25,6 +25,7 @@
 #include "Logging_p.h"
 
 #include <QWidget>
+#include <QScopeGuard>
 
 using namespace KDDockWidgets;
 
@@ -354,40 +355,78 @@ void AnchorGroup::turnIntoPlaceholder()
     qCDebug(placeholder) << Q_FUNC_INFO;
     Q_ASSERT(!isSquashed());
 
-    if (left->shouldFollow() && right->folowee() != left) {
-        // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
-        if (!right->isStatic())
-            right->setPosition(right->position() - ((right->position() - left->position()) / 2));
-        left->setFollowee(right);
+    auto runAtEnd = qScopeGuard([this] {
+        if (!isStaticOrFollowsStatic() && !isSquashed()) {
+            layout->dumpDebug();
+            qWarning() << "The group should be squashed"
+                       << "; shouldFollow=" << left->shouldFollow() << top->shouldFollow() << right->shouldFollow() << bottom->shouldFollow()
+                       << "\n; isStatic=" << left->isStatic() << top->isStatic() << right->isStatic() << bottom->isStatic()
+                       << "\n; isFollowing=" << left->isFollowing() << top->isFollowing() << right->isFollowing() << bottom->isFollowing()
+                       << "\n; folowee=" << left->folowee() << top->folowee() << right->folowee() << bottom->folowee();
+
+            Q_ASSERT(false);
+        }
+
+        layout->emitVisibleWidgetCountChanged();
+    });
+
+
+    if (left->shouldFollow()) {
+        if (Anchor *folowee = left->endFolowee()) {
+            // Left is already following something else
+            if (!folowee->isStatic()) {
+                folowee->setFollowee(right);
+                return;
+            }
+        } else {
+            // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
+            if (!right->isStatic())
+                right->setPosition(right->position() - ((right->position() - left->position()) / 2));
+            left->setFollowee(right);
+            return;
+        }
     }
 
-    if (right->shouldFollow() && left->folowee() != right) {
-        right->setFollowee(left);
+    if (top->shouldFollow()) {
+        if (Anchor *folowee = top->endFolowee()) {
+            // Top is already following something else
+            if (!folowee->isStatic()) {
+                folowee->setFollowee(bottom);
+                return;
+            }
+        } else {
+            // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
+            if (!bottom->isStatic())
+                bottom->setPosition(bottom->position() - ((bottom->position() - top->position()) / 2));
+            top->setFollowee(bottom);
+            return;
+        }
     }
 
-    if (top->shouldFollow() && bottom->folowee() != top) {
-        // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both top/bottom widgets can use the space.
-        if (!bottom->isStatic())
-            bottom->setPosition(bottom->position() - ((bottom->position() - top->position()) / 2));
-        top->setFollowee(bottom);
+    if (bottom->shouldFollow()) {
+        if (Anchor *folowee = bottom->endFolowee()) {
+            // Bottom is already following something else (outwards), that something else will follow up
+            if (!folowee->isStatic())
+                folowee->setFollowee(top);
+        } else {
+            bottom->setFollowee(top);
+
+        }
+
+        return;
     }
 
-    if (bottom->shouldFollow() && top->folowee() != bottom) {
-        bottom->setFollowee(top);
+    if (right->shouldFollow()) {
+        if (Anchor *folowee = right->endFolowee()) {
+            // Right is already following something else (outwards), that something else will follow left
+            if (!folowee->isStatic())
+                folowee->setFollowee(left);
+        } else {
+            right->setFollowee(left);
+        }
+
+        return;
     }
-
-    if (!isStaticOrFollowsStatic() && !isSquashed()) {
-        layout->dumpDebug();
-        qWarning() << "The group should be squashed"
-                   << "; shouldFollow=" << left->shouldFollow() << top->shouldFollow() << right->shouldFollow() << bottom->shouldFollow()
-                   << "\n; isStatic=" << left->isStatic() << top->isStatic() << right->isStatic() << bottom->isStatic()
-                   << "\n; isFollowing=" << left->isFollowing() << top->isFollowing() << right->isFollowing() << bottom->isFollowing()
-                   << "\n; folowee=" << left->folowee() << top->folowee() << right->folowee() << bottom->folowee();
-
-        Q_ASSERT(false);
-    }
-
-    layout->emitVisibleWidgetCountChanged();
 }
 
 bool AnchorGroup::isSquashed() const

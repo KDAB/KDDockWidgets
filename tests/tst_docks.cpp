@@ -2615,6 +2615,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
     auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
     MultiSplitterLayout *layout = dropArea->multiSplitter();
 
+    // Stack: 1, 2, 3 vertically
     m->addDockWidget(dock3, Location_OnTop);
     m->addDockWidget(dock2, Location_OnTop);
     m->addDockWidget(dock1, Location_OnTop);
@@ -2623,6 +2624,8 @@ void TestDocks::tst_invalidPlaceholderPosition()
     auto frame2 = dock2->frame();
     auto frame3 = dock3->frame();
     QCOMPARE(frame1->y(), 1);
+
+    // Close 1
     dock1->close();
     waitForResize(frame2);
 
@@ -2631,6 +2634,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
     QCOMPARE(layout->numAchorsFolllowing(), 1);
     layout->dumpDebug();
 
+    // Close 2
     dock2->close();
     waitForResize(dock3);
 
@@ -2692,7 +2696,7 @@ void TestDocks::tst_28NestedWidgets()
             dock.createdDock->close();
     }
 
-    WAIT
+    // WAIT
 
     for (int i : docksToHide) {
         docksToCreate.at(i).createdDock->deleteLater();
@@ -2705,21 +2709,43 @@ void TestDocks::tst_invalidAnchorGroup()
     // Tests a bug I got. Should not warn.
     EnsureTopLevelsDeleted e;
 
-    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
-    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+    {
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
 
-    QPointer<FloatingWindow> fw = dock2->morphIntoFloatingWindow();
-    nestDockWidget(dock1, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
+        QPointer<FloatingWindow> fw = dock2->morphIntoFloatingWindow();
+        nestDockWidget(dock1, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
 
-    dock1->close();
-    waitForResize(dock2);
-    auto layout = fw->dropArea()->multiSplitter();
-    layout->dumpDebug();
+        dock1->close();
+        waitForResize(dock2);
+        auto layout = fw->dropArea()->multiSplitter();
+        layout->dumpDebug();
 
-    dock2->close();
-    dock1->deleteLater();
-    dock2->deleteLater();
-    waitForDeleted(dock1);
+        dock2->close();
+        dock1->deleteLater();
+        dock2->deleteLater();
+        waitForDeleted(dock1);
+    }
+
+    {
+        // Stack 1, 2, 3, close 2, close 1
+
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+        auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+
+        m->addDockWidget(dock3, Location_OnTop);
+        m->addDockWidget(dock2, Location_OnTop);
+        m->addDockWidget(dock1, Location_OnTop);
+
+        dock2->close();
+        dock1->close();
+
+        dock1->deleteLater();
+        dock2->deleteLater();
+        waitForDeleted(dock1);
+    }
 }
 
 
