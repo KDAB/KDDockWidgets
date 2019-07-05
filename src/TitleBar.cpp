@@ -174,6 +174,13 @@ void TitleBar::paintEvent(QPaintEvent *)
     titleOpt.rect = rect().adjusted(0, 0, -buttonAreaWidth(), 0);
 
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
+
+#ifdef DOCKS_DEVELOPER_MODE
+    static const bool s_drawDebugTitleFrame = qEnvironmentVariableIsSet("KDDOCKWIDGETS_DRAW_DEBUG_FRAME");
+    if (s_drawDebugTitleFrame) {
+        p.drawRect(rect().adjusted(0, 0, -1, -1));
+    }
+#endif
 }
 
 void TitleBar::updateCloseButton()
