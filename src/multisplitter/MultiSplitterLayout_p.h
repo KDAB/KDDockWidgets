@@ -196,6 +196,9 @@ public:
     ///@brief returns the number of anchors that are following others, just for tests.
     int numAchorsFolllowing() const;
 
+    ///@brief returns the number of anchors that are following others, just for tests.
+    int numVisibleAnchors() const;
+
     ///@brief returns either the left, top, right or bottom separator, depending on the @p type
     Anchor *staticAnchor(Anchor::Type type) const;
 

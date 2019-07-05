@@ -145,6 +145,9 @@ public:
      */
     void setLayout(MultiSplitterLayout *);
 
+    ///@brief returns the separator widget
+    SeparatorWidget* separatorWidget() const;
+
     /**
      * Returns how far left or top an anchor can go and still respecting it's Side1 widgets min-size.
      * This function doesn't count with shifting other anchors, for that use MultiSplitterLayout::boundPositionsForAnchor()

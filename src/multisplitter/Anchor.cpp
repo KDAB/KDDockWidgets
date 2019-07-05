@@ -446,7 +446,7 @@ void Anchor::setFollowee(Anchor *followee)
     setThickness();
     if (m_followee) {
         Q_ASSERT(orientation() == m_followee->orientation());
-        //setVisible(false);
+        setVisible(false);
         setPosition(m_followee->position());
         connect(m_followee, &Anchor::positionChanged, this, &Anchor::onFolloweePositionChanged);
     } else {
@@ -508,6 +508,11 @@ void Anchor::setLayout(MultiSplitterLayout *layout)
     m_separatorWidget->setParent(layout->parentWidget());
     m_layout->insertAnchor(this);
     m_layout->setAnchorBeingDragged(nullptr);
+}
+
+SeparatorWidget *Anchor::separatorWidget() const
+{
+    return m_separatorWidget;
 }
 
 void Anchor::setThickness()

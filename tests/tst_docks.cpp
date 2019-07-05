@@ -299,6 +299,7 @@ private Q_SLOTS:
     void tst_invalidPlaceholderPosition_data();
     void tst_invalidPlaceholderPosition();
     void tst_invalidAnchorGroup();
+    void tst_resizeViaAnchorsAfterPlaceholderCreation();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2776,6 +2777,30 @@ void TestDocks::tst_invalidAnchorGroup()
     }
 }
 
+void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
+{
+    EnsureTopLevelsDeleted e;
+
+    // Stack 1, 2, 3, close 2, close 2
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+    m->addDockWidget(dock3, Location_OnTop);
+    m->addDockWidget(dock2, Location_OnTop);
+    m->addDockWidget(dock1, Location_OnTop);
+
+    dock2->close();
+    waitForResize(dock3);
+
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    QCOMPARE(layout->numVisibleAnchors(), 5);
+
+    // Cleanup:
+    dock2->deleteLater();
+    waitForDeleted(dock2);
+}
 
 // QTest::qWait(50000)
 

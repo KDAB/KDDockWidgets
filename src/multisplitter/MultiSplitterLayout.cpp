@@ -25,6 +25,7 @@
 #include "FloatingWindow_p.h"
 #include "DockWidget.h"
 #include "LastPosition_p.h"
+#include "SeparatorWidget_p.h"
 
 #include <QPushButton>
 #include <QEvent>
@@ -753,6 +754,17 @@ int MultiSplitterLayout::numAchorsFolllowing() const
     int count = 0;
     for (Anchor *a : m_anchors) {
         if (a->isFollowing())
+            count++;
+    }
+
+    return count;
+}
+
+int MultiSplitterLayout::numVisibleAnchors() const
+{
+    int count = 0;
+    for (Anchor *a : m_anchors) {
+        if (a->separatorWidget()->isVisible())
             count++;
     }
 
