@@ -352,7 +352,8 @@ void AnchorGroup::removeItem(Item *item)
 void AnchorGroup::turnIntoPlaceholder()
 {
     qCDebug(placeholder) << Q_FUNC_INFO;
-    Q_ASSERT(!anchorFollowing());
+    Q_ASSERT(!isSquashed());
+
     if (left->shouldFollow() && right->folowee() != left) {
         // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
         if (!right->isStatic())
