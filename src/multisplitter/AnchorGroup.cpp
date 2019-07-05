@@ -182,24 +182,6 @@ Anchor *AnchorGroup::anchorFollowing() const
     return nullptr;
 }
 
-int AnchorGroup::numFollowing() const
-{
-    int num = 0;
-    if (top->folowee() == bottom)
-        num++;
-
-    if (bottom->folowee() == top)
-        num++;
-
-    if (left->folowee() == right)
-        num++;
-
-    if (right->folowee() == left)
-        num++;
-
-    return num;
-}
-
 Anchor::Side AnchorGroup::sideForAnchor(Anchor *a) const
 {
     if (a == left || a == top)
@@ -393,10 +375,9 @@ void AnchorGroup::turnIntoPlaceholder()
         bottom->setFollowee(top);
     }
 
-    if (!isStaticOrFollowsStatic() && numFollowing() != 1) {
+    if (!isStaticOrFollowsStatic() && !isSquashed()) {
         layout->dumpDebug();
-
-        qWarning() << "There should be only one anchor following" << numFollowing()
+        qWarning() << "The group should be squashed"
                    << "; shouldFollow=" << left->shouldFollow() << top->shouldFollow() << right->shouldFollow() << bottom->shouldFollow()
                    << "\n; isStatic=" << left->isStatic() << top->isStatic() << right->isStatic() << bottom->isStatic()
                    << "\n; isFollowing=" << left->isFollowing() << top->isFollowing() << right->isFollowing() << bottom->isFollowing()
@@ -406,4 +387,24 @@ void AnchorGroup::turnIntoPlaceholder()
     }
 
     layout->emitVisibleWidgetCountChanged();
+}
+
+bool AnchorGroup::isSquashed() const
+{
+    // If left or top are folowing to Side2 that's inwards, so our group is squashed. Because it's holding a placeholder
+    // Side1 is inswards for right and bottom.
+
+    if (left->findAnchor(left->endFolowee(), Anchor::Side2))
+        return true;
+
+    if (top->findAnchor(top->endFolowee(), Anchor::Side2))
+        return true;
+
+    if (right->findAnchor(right->endFolowee(), Anchor::Side1))
+        return true;
+
+    if (bottom->findAnchor(bottom->endFolowee(), Anchor::Side1))
+        return true;
+
+    return false;
 }

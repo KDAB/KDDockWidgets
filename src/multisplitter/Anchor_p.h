@@ -231,6 +231,8 @@ public:
      *
      * This allows us to know if there's an anchor on the top or left of us (side1) or right or bottom
      * (side2), in the whole layout.
+     *
+     * Returns false if @p anchor is nullptr
      */
     bool findAnchor(Anchor *anchor, Side side) const;
 

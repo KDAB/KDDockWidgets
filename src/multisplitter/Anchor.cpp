@@ -456,6 +456,9 @@ Anchor *Anchor::endFolowee() const
 
 bool Anchor::findAnchor(Anchor *anchor, Anchor::Side side) const
 {
+    if (!anchor)
+        return false;
+
     Q_ASSERT(anchor != this);
     Q_ASSERT(anchor->orientation() == orientation());
 
