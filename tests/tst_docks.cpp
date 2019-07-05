@@ -2647,21 +2647,28 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnRight, -1, nullptr }
     };
 
-        QTest::newRow("28") << docks << QVector<int>{11, 0};
-
-        docks = {
-            {Location_OnLeft, -1, nullptr },
-            {Location_OnBottom, -1, nullptr },
-            {Location_OnBottom, -1, nullptr },
-            {Location_OnBottom, -1, nullptr },
-            {Location_OnBottom, -1, nullptr },
-            {Location_OnBottom, -1, nullptr },
-            {Location_OnTop, -1, nullptr },
-            {Location_OnRight, -1, nullptr },
-            };
+    // QTest::newRow("28") << docks << QVector<int>{11, 0};
+    docks = {
+        {Location_OnLeft, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnTop, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+        };
 
     // 2. Produced valgrind invalid reads while adding
     QTest::newRow("valgrind") << docks << QVector<int>{};
+
+    docks = {
+        {Location_OnLeft, -1, nullptr },
+        {Location_OnBottom, -1, nullptr },
+        {Location_OnTop, -1, nullptr },
+        {Location_OnRight, -1, nullptr },
+    };
+    QTest::newRow("bug_when_closing") << docks << QVector<int>{};
 }
 
 void TestDocks::tst_28NestedWidgets()
@@ -2689,18 +2696,25 @@ void TestDocks::tst_28NestedWidgets()
         docksToCreate.at(i).createdDock->close();
     }
 
-
-    // And delete the remaining ones
-    for (auto dock : docksToCreate) {
-        if (dock.createdDock->isVisible())
-            dock.createdDock->close();
-    }
-
-    // WAIT
-
     for (int i : docksToHide) {
         docksToCreate.at(i).createdDock->deleteLater();
         QVERIFY(waitForDeleted(docksToCreate.at(i).createdDock));
+    }
+
+    // And hide the remaining ones
+    i = 0;
+    for (auto dock : docksToCreate) {
+        if (dock.createdDock->isVisible()) {
+            qDebug() << "Closing" << i;
+            dock.createdDock->close();
+        }
+        ++i;
+    }
+
+    // Cleanup
+    for (auto dock : DockRegistry::self()->dockwidgets()) {
+        dock->deleteLater();
+        QVERIFY(waitForDeleted(dock));
     }
 }
 

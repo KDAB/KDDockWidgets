@@ -217,7 +217,8 @@ void AnchorGroup::assertIsSquashed()
                    << "; shouldFollow=" << left->shouldFollow() << top->shouldFollow() << right->shouldFollow() << bottom->shouldFollow()
                    << "\n; isStatic=" << left->isStatic() << top->isStatic() << right->isStatic() << bottom->isStatic()
                    << "\n; isFollowing=" << left->isFollowing() << top->isFollowing() << right->isFollowing() << bottom->isFollowing()
-                   << "\n; folowee=" << left->folowee() << top->folowee() << right->folowee() << bottom->folowee();
+                   << "\n; folowee=" << left->folowee() << top->folowee() << right->folowee() << bottom->folowee()
+                   << "; right.onlyHasPlaceholderItems=" << right->onlyHasPlaceholderItems(Anchor::Side1);
 
         Q_ASSERT(false);
     }
@@ -422,26 +423,27 @@ void AnchorGroup::turnIntoPlaceholder()
     if (bottom->shouldFollow()) {
         if (Anchor *folowee = bottom->endFolowee()) {
             // Bottom is already following something else (outwards), that something else will follow up
-            if (!folowee->isStatic())
+            if (!folowee->isStatic()) {
                 folowee->setFollowee(top);
+                return;
+            }
         } else {
             bottom->setFollowee(top);
-
+            return;
         }
-
-        return;
     }
 
     if (right->shouldFollow()) {
         if (Anchor *folowee = right->endFolowee()) {
             // Right is already following something else (outwards), that something else will follow left
-            if (!folowee->isStatic())
+            if (!folowee->isStatic()) {
                 folowee->setFollowee(left);
+                return;
+            }
         } else {
             right->setFollowee(left);
+            return;
         }
-
-        return;
     }
 }
 
