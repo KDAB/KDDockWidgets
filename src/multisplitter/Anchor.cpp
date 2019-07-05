@@ -452,6 +452,8 @@ void Anchor::setFollowee(Anchor *followee)
     } else {
         setVisible(true);
     }
+
+    Q_EMIT followeeChanged();
 }
 
 Anchor *Anchor::endFollowee() const

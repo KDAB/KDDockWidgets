@@ -91,6 +91,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Anchor : public QObject // clazy:exclude=ctor-
     Q_PROPERTY(Anchor* to READ to WRITE setTo NOTIFY toChanged)
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(Qt::Orientation orientation READ orientation CONSTANT)
+    Q_PROPERTY(Anchor *followee READ followee NOTIFY followeeChanged)
 public:
     ///@brief represents the Anchor type
     ///An anchor can be of 2 types:
@@ -260,6 +261,7 @@ Q_SIGNALS:
     void fromChanged();
     void toChanged();
     void debug_itemNamesChanged();
+    void followeeChanged();
 
 public:
     int position(QPoint) const;
