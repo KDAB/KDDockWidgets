@@ -222,14 +222,14 @@ public:
     void setFollowee(Anchor *);
 
     /**
-     * @brief getter for the folowee
+     * @brief getter for the followee
      */
-    Anchor *folowee() const { return m_followee; }
+    Anchor *followee() const { return m_followee; }
 
     /**
-     * @brief Returns the last folowee in the chain.
+     * @brief Returns the last followee in the chain.
      */
-    Anchor *endFolowee() const;
+    Anchor *endFollowee() const;
 
     /**
      * @brief Recursively looks for an anchor in the whole layout but only looking at side @p side

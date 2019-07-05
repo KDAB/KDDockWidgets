@@ -167,16 +167,16 @@ QDebug AnchorGroup::debug(QDebug d) const
 
 Anchor *AnchorGroup::anchorFollowing() const
 {
-    if (top->folowee() == bottom)
+    if (top->followee() == bottom)
         return top;
 
-    if (bottom->folowee() == top)
+    if (bottom->followee() == top)
         return bottom;
 
-    if (left->folowee() == right)
+    if (left->followee() == right)
         return left;
 
-    if (right->folowee() == left)
+    if (right->followee() == left)
         return right;
 
     return nullptr;
@@ -217,7 +217,7 @@ void AnchorGroup::assertIsSquashed()
                    << "; shouldFollow=" << left->shouldFollow() << top->shouldFollow() << right->shouldFollow() << bottom->shouldFollow()
                    << "\n; isStatic=" << left->isStatic() << top->isStatic() << right->isStatic() << bottom->isStatic()
                    << "\n; isFollowing=" << left->isFollowing() << top->isFollowing() << right->isFollowing() << bottom->isFollowing()
-                   << "\n; folowee=" << left->folowee() << top->folowee() << right->folowee() << bottom->folowee()
+                   << "\n; followee=" << left->followee() << top->followee() << right->followee() << bottom->followee()
                    << "; right.onlyHasPlaceholderItems=" << right->onlyHasPlaceholderItems(Anchor::Side1);
 
         Q_ASSERT(false);
@@ -389,10 +389,10 @@ void AnchorGroup::turnIntoPlaceholder()
 
 
     if (left->shouldFollow()) {
-        if (Anchor *folowee = left->endFolowee()) {
+        if (Anchor *followee = left->endFollowee()) {
             // Left is already following something else
-            if (!folowee->isStatic() && folowee->onlyHasPlaceholderItems(Anchor::Side2)) {
-                folowee->setFollowee(right);
+            if (!followee->isStatic() && followee->onlyHasPlaceholderItems(Anchor::Side2)) {
+                followee->setFollowee(right);
                 return;
             }
         } else {
@@ -405,10 +405,10 @@ void AnchorGroup::turnIntoPlaceholder()
     }
 
     if (top->shouldFollow()) {
-        if (Anchor *folowee = top->endFolowee()) {
+        if (Anchor *followee = top->endFollowee()) {
             // Top is already following something else
-            if (!folowee->isStatic() && folowee->onlyHasPlaceholderItems(Anchor::Side2)) {
-                folowee->setFollowee(bottom);
+            if (!followee->isStatic() && followee->onlyHasPlaceholderItems(Anchor::Side2)) {
+                followee->setFollowee(bottom);
                 return;
             }
         } else {
@@ -421,10 +421,10 @@ void AnchorGroup::turnIntoPlaceholder()
     }
 
     if (bottom->shouldFollow()) {
-        if (Anchor *folowee = bottom->endFolowee()) {
+        if (Anchor *followee = bottom->endFollowee()) {
             // Bottom is already following something else (outwards), that something else will follow up
-            if (!folowee->isStatic() && folowee->onlyHasPlaceholderItems(Anchor::Side1)) {
-                folowee->setFollowee(top);
+            if (!followee->isStatic() && followee->onlyHasPlaceholderItems(Anchor::Side1)) {
+                followee->setFollowee(top);
                 return;
             }
         } else {
@@ -434,10 +434,10 @@ void AnchorGroup::turnIntoPlaceholder()
     }
 
     if (right->shouldFollow()) {
-        if (Anchor *folowee = right->endFolowee()) {
+        if (Anchor *followee = right->endFollowee()) {
             // Right is already following something else (outwards), that something else will follow left
-            if (!folowee->isStatic() && folowee->onlyHasPlaceholderItems(Anchor::Side1)) {
-                folowee->setFollowee(left);
+            if (!followee->isStatic() && followee->onlyHasPlaceholderItems(Anchor::Side1)) {
+                followee->setFollowee(left);
                 return;
             }
         } else {
@@ -449,19 +449,19 @@ void AnchorGroup::turnIntoPlaceholder()
 
 bool AnchorGroup::isSquashed() const
 {
-    // If left or top are folowing to Side2 that's inwards, so our group is squashed. Because it's holding a placeholder
+    // If left or top are following to Side2 that's inwards, so our group is squashed. Because it's holding a placeholder
     // Side1 is inswards for right and bottom.
 
-    if (left->findAnchor(left->endFolowee(), Anchor::Side2))
+    if (left->findAnchor(left->endFollowee(), Anchor::Side2))
         return true;
 
-    if (top->findAnchor(top->endFolowee(), Anchor::Side2))
+    if (top->findAnchor(top->endFollowee(), Anchor::Side2))
         return true;
 
-    if (right->findAnchor(right->endFolowee(), Anchor::Side1))
+    if (right->findAnchor(right->endFollowee(), Anchor::Side1))
         return true;
 
-    if (bottom->findAnchor(bottom->endFolowee(), Anchor::Side1))
+    if (bottom->findAnchor(bottom->endFollowee(), Anchor::Side1))
         return true;
 
     return false;

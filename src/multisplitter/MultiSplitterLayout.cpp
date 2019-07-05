@@ -816,12 +816,11 @@ void MultiSplitterLayout::dumpDebug() const
                  << "; bounds=" << bounds
                  << "; orientation=" << anchor->orientation()
                  << "; isFollowing=" << anchor->isFollowing()
-                 << "; folowee=" << anchor->folowee();
+                 << "; followee=" << anchor->followee();
     }
 
     qDebug() << "Num Frame:" << Frame::dbg_numFrames();
     qDebug() << "Num FloatingWindow:" << FloatingWindow::dbg_numFrames();
-
 }
 
 void MultiSplitterLayout::positionStaticAnchors()

@@ -454,14 +454,14 @@ void Anchor::setFollowee(Anchor *followee)
     }
 }
 
-Anchor *Anchor::endFolowee() const
+Anchor *Anchor::endFollowee() const
 {
     Anchor *a = m_followee;
     while (a) {
-        if (!a->folowee())
+        if (!a->followee())
             return a;
 
-        a = a->folowee();
+        a = a->followee();
     }
 
     return nullptr;
