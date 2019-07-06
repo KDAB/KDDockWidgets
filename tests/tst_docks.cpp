@@ -300,6 +300,7 @@ private Q_SLOTS:
     void tst_invalidPlaceholderPosition();
     void tst_invalidAnchorGroup();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
+    void tst_negativeAnchorPosition();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2800,6 +2801,34 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
     // Cleanup:
     dock2->deleteLater();
     waitForDeleted(dock2);
+}
+
+void TestDocks::tst_negativeAnchorPosition()
+{
+    // Tests that we don't hit:
+    // void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position
+
+    auto m = createMainWindow(QSize(1000, 800));
+
+    auto w1 = new MyWidget2(QSize(104, 104));
+    w1->resize(994, 718);
+    auto w2 = new MyWidget2(QSize(133, 343));
+    w2->resize(392, 362);
+    auto w3 = new MyWidget2(QSize(133, 343));
+    w3->resize(392, 362);
+
+    auto d1 = createDockWidget(QStringLiteral("1"), w1);
+    auto d2 = createDockWidget(QStringLiteral("2"), w2);
+    auto d3 = createDockWidget(QStringLiteral("3"), w3);
+
+    m->addDockWidgetAsTab(d1);
+
+    m->addDockWidget(d2, Location_OnTop);
+    m->addDockWidget(d3, Location_OnTop);
+
+    d2->close();
+    waitForResize(d3);
+    d2->show();
 }
 
 // QTest::qWait(50000)
