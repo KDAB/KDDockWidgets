@@ -1193,7 +1193,8 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
 
     // Double check the available space again, for sanity
     if (boundPosition2 - boundPosition1 - side1Anchor->thickness() < newLength) {
-        qWarning() << "There's not enough space, not possible" << boundPosition2 << boundPosition1 << side1Anchor->thickness()
+        qWarning() << "There's not enough space: bound2=" << boundPosition2
+                   << "; bound1=" << boundPosition1 << "; side1Anchor.thickness=" << side1Anchor->thickness()
                    << "; newLength=" << newLength
                    << "; available=" << availableLengthForOrientation(orientation)
                    << "; anchors=" << side1Anchor << side2Anchor
