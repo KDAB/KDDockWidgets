@@ -278,6 +278,7 @@ private Q_SLOTS:
     void tst_availableLengthForDrop_data();
     void tst_availableLengthForDrop();
 
+    void tst_constraintsAfterPlaceholder();
     void tst_rectForDrop_data();
     void tst_rectForDrop();
     void tst_crash(); // tests some crash I got
@@ -1951,6 +1952,35 @@ void TestDocks::tst_availableLengthForDrop()
         QCOMPARE(available.side2Length, expectedSize.side2ExpectedSize);
         ++i;
     }
+}
+
+void TestDocks::tst_constraintsAfterPlaceholder()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+    const int minHeight = 400;
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(400, minHeight)));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(400, minHeight)));
+    auto dock3 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(400, minHeight)));
+    m->addDockWidget(dock1, Location_OnTop);
+    m->addDockWidget(dock2, Location_OnTop);
+    m->addDockWidget(dock3, Location_OnTop);
+
+    QVERIFY(m->minimumSizeHint().height() > minHeight * 3); // > since some vertical space is occupied by the separators
+
+    // Now close dock1 and check again
+    dock1->close();
+    waitForResize(dock2);
+
+    const int expectedMinHeight = KDDockWidgets::widgetMinLength(dock2->frame(), Qt::Horizontal) +
+                                  KDDockWidgets::widgetMinLength(dock3->frame(), Qt::Horizontal) +
+                                  2 * Anchor::thickness(true) +
+                                  1 * Anchor::thickness(false);
+
+    QCOMPARE(m->minimumSizeHint().height(), expectedMinHeight);
+
+    dock1->deleteLater();
+    waitForDeleted(dock1);
 }
 
 void TestDocks::tst_rectForDrop_data()

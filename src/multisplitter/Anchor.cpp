@@ -427,7 +427,8 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
         minLength = qMax(itemMin, minLength);
     }
 
-    return thickness() + minLength;
+    const int thickness = isFollowing() ? 0 : this->thickness();
+    return thickness + minLength;
 }
 
 void Anchor::setFollowee(Anchor *followee)
