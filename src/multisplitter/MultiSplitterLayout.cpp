@@ -1180,6 +1180,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     const int available = availableLengthForOrientation(orientation);
     int newLength = qMin(preferedLength, available);
     if (newLength < widgetMinimumLength) {
+        qCDebug(placeholder) << Q_FUNC_INFO << newLength << widgetMinimumLength << available;
         const int missingDelta = widgetMinimumLength - newLength;
         // Make our layout bigger to accomodate the needs
         setContentLength(orientation, contentsLength(orientation) + missingDelta);
