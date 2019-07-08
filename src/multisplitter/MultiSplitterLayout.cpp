@@ -858,8 +858,8 @@ void MultiSplitterLayout::redistributeSpace(QSize oldSize, QSize newSize)
 
 void MultiSplitterLayout::redistributeSpace_recursive(Anchor *fromAnchor)
 {
-    for (auto w : fromAnchor->items(Anchor::Side2)) {
-        Anchor *nextAnchor = w->anchorAtDirection(Anchor::Side1, fromAnchor->orientation());
+    for (Item *item : fromAnchor->items(Anchor::Side2)) {
+        Anchor *nextAnchor = item->anchorAtDirection(Anchor::Side1, fromAnchor->orientation());
         if (nextAnchor->isStatic())
             continue;
 
