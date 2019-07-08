@@ -104,15 +104,18 @@ void SeparatorWidget::leaveEvent(QEvent *)
 
 void SeparatorWidget::mousePressEvent(QMouseEvent *)
 {
+    Q_ASSERT(!m_anchor->isFollowing());
     m_anchor->onMousePress();
 }
 
 void SeparatorWidget::mouseMoveEvent(QMouseEvent *e)
 {
+    Q_ASSERT(!m_anchor->isFollowing());
     m_anchor->onMouseMoved(parentWidget()->mapFromGlobal(e->globalPos()));
 }
 
 void SeparatorWidget::mouseReleaseEvent(QMouseEvent *)
 {
+    Q_ASSERT(!m_anchor->isFollowing());
     m_anchor->onMouseReleased();
 }
