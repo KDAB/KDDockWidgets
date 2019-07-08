@@ -2853,24 +2853,85 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
     EnsureTopLevelsDeleted e;
 
     // Stack 1, 2, 3, close 2, close 2
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
-    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
-    auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
-    m->addDockWidget(dock3, Location_OnTop);
-    m->addDockWidget(dock2, Location_OnTop);
-    m->addDockWidget(dock1, Location_OnTop);
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+        auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+        m->addDockWidget(dock3, Location_OnTop);
+        m->addDockWidget(dock2, Location_OnTop);
+        m->addDockWidget(dock1, Location_OnTop);
 
-    dock2->close();
-    waitForResize(dock3);
+        dock2->close();
+        waitForResize(dock3);
 
-    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
-    QCOMPARE(layout->numVisibleAnchors(), 5);
+        auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+        MultiSplitterLayout *layout = dropArea->multiSplitter();
+        QCOMPARE(layout->numVisibleAnchors(), 5);
 
-    // Cleanup:
-    dock2->deleteLater();
-    waitForDeleted(dock2);
+        // Cleanup:
+        dock2->deleteLater();
+        waitForDeleted(dock2);
+    }
+
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+        auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+        auto dock4 = createDockWidget(QStringLiteral("dock4"), new QPushButton(QStringLiteral("four")));
+        m->addDockWidget(dock1, Location_OnRight);
+        m->addDockWidget(dock2, Location_OnRight);
+        m->addDockWidget(dock3, Location_OnRight);
+        m->addDockWidget(dock4, Location_OnRight);
+
+        auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+        MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+        Item *item1 = layout->itemForFrame(dock1->frame());
+        Item *item2 = layout->itemForFrame(dock2->frame());
+        Item *item3 = layout->itemForFrame(dock3->frame());
+        Item *item4 = layout->itemForFrame(dock4->frame());
+
+        Anchor *anchor = item1->anchorGroup().right;
+        int boundToTheRight = layout->boundPositionForAnchor(anchor, Anchor::Side2);
+        int expectedBoundToTheRight = layout->contentsSize().width() -
+                                      Anchor::thickness(true) -
+                                      3*Anchor::thickness(false) -
+                                      KDDockWidgets::widgetMinLength(dock2->frame(), Qt::Vertical) -
+                                      KDDockWidgets::widgetMinLength(dock3->frame(), Qt::Vertical) -
+                                      KDDockWidgets::widgetMinLength(dock4->frame(), Qt::Vertical);
+
+        QCOMPARE(boundToTheRight, expectedBoundToTheRight);
+        qDebug() << "boundToRight="<< boundToTheRight;
+
+        dock3->close();
+        waitForResize(dock2);
+
+        QVERIFY(!item1->isPlaceholder());
+        QVERIFY(!item2->isPlaceholder());
+        QVERIFY(item3->isPlaceholder());
+        QVERIFY(!item4->isPlaceholder());
+
+        QCOMPARE(item1->anchorGroup().right, item2->anchorGroup().left);
+        QCOMPARE(item2->anchorGroup().right, item3->anchorGroup().left);
+        QCOMPARE(item3->anchorGroup().right, item4->anchorGroup().left);
+
+        boundToTheRight = layout->boundPositionForAnchor(anchor, Anchor::Side2);
+        expectedBoundToTheRight = layout->contentsSize().width() -
+                                  Anchor::thickness(true) -
+                                  2*Anchor::thickness(false) -
+                                  KDDockWidgets::widgetMinLength(dock2->frame(), Qt::Vertical) -
+                                  KDDockWidgets::widgetMinLength(dock4->frame(), Qt::Vertical);
+
+        qDebug() << "after close boundToRight="<< boundToTheRight << "; anchor=" << anchor;
+        QCOMPARE(boundToTheRight, expectedBoundToTheRight);
+        anchor->setPosition(boundToTheRight);
+        layout->checkSanity();
+
+        dock3->deleteLater();
+        waitForDeleted(dock3);
+    }
 }
 
 void TestDocks::tst_negativeAnchorPosition()
