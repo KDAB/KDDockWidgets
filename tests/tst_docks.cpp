@@ -2848,8 +2848,8 @@ void TestDocks::tst_negativeAnchorPosition()
     auto w3 = new MyWidget2(QSize(133, 343));
     w3->resize(392, 362);
 
-    // auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
-    // MultiSplitterLayout *layout = dropArea->multiSplitter();
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
 
     auto d1 = createDockWidget(QStringLiteral("1"), w1);
     auto d2 = createDockWidget(QStringLiteral("2"), w2);
@@ -2860,13 +2860,25 @@ void TestDocks::tst_negativeAnchorPosition()
     m->addDockWidget(d2, Location_OnTop);
     m->addDockWidget(d3, Location_OnTop);
 
-    qDebug() << "MinSizes=" << KDDockWidgets::widgetMinLength(d1->frame(), Qt::Horizontal)
-             << KDDockWidgets::widgetMinLength(d2->frame(), Qt::Horizontal)
-             << KDDockWidgets::widgetMinLength(d3->frame(), Qt::Horizontal);
+    const int minHeight = layout->minimumSize().height();
+    const int min1 = KDDockWidgets::widgetMinLength(d1->frame(), Qt::Horizontal);
+    const int min2 = KDDockWidgets::widgetMinLength(d2->frame(), Qt::Horizontal);
+    const int min3 = KDDockWidgets::widgetMinLength(d3->frame(), Qt::Horizontal);
+
+    qDebug() << "MinSizes=" << min1 << min2 << min3 << minHeight;
+
+    d2->close();
+
+    waitForResize(d3);
+    d2->show(); // Should not result in negative anchor positions (Test will fail due to a qWarning)
+    waitForResize(d3);
 
     d2->close();
     waitForResize(d3);
-    d2->show();
+
+    // Now resize the Window, after removing middle one
+    const int availableToShrink = layout->contentsSize().height() - layout->minimumSize().height();
+    layout->setContentLength(Qt::Horizontal, layout->contentsLength(Qt::Horizontal) - availableToShrink); // Should not warn about negative sizes
 }
 
 // QTest::qWait(50000)

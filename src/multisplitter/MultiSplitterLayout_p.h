@@ -453,7 +453,7 @@ private:
      * all widgets.
      **/
     void redistributeSpace(QSize oldSize, QSize newSize);
-    void redistributeSpace_recursive(Anchor *fromAnchor);
+    void redistributeSpace_recursive(Anchor *fromAnchor, int minAnchorPos);
 
     /**
      * Returns the width (if orientation = Horizontal), or height that is occupied by anchors.

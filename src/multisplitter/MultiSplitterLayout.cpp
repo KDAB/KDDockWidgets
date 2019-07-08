@@ -852,34 +852,43 @@ void MultiSplitterLayout::redistributeSpace(QSize oldSize, QSize newSize)
 
     qCDebug(sizing) << "MultiSplitterLayout::redistributeSpace old=" << oldSize << "; new=" << newSize;
 
-    redistributeSpace_recursive(m_leftAnchor);
-    redistributeSpace_recursive(m_topAnchor);
+    redistributeSpace_recursive(m_leftAnchor, 0);
+    redistributeSpace_recursive(m_topAnchor, 0);
 }
 
-void MultiSplitterLayout::redistributeSpace_recursive(Anchor *fromAnchor)
+void MultiSplitterLayout::redistributeSpace_recursive(Anchor *fromAnchor, int minAnchorPos)
 {
     for (Item *item : fromAnchor->items(Anchor::Side2)) {
         Anchor *nextAnchor = item->anchorAtSide(Anchor::Side2, fromAnchor->orientation());
         if (nextAnchor->isStatic())
             continue;
 
-        const int newPosition = int(nextAnchor->positionPercentage() * contentsLength(nextAnchor->orientation()));
+        // We use the minPos of the Anchor that had non-placeholder items on its side1.
+        if (nextAnchor->hasNonPlaceholderItems(Anchor::Side1))
+            minAnchorPos = nextAnchor->minPosition();
 
-        // But don't let the anchor go out of bounds, it must respect its widgets min sizes
-        auto bounds = boundPositionsForAnchor(nextAnchor);
+        if (nextAnchor->hasNonPlaceholderItems(Anchor::Side2) && !nextAnchor->isFollowing()) {
+            const int newPosition = int(nextAnchor->positionPercentage() * contentsLength(nextAnchor->orientation()));
 
-        // For the bounding, use Anchor::minPosition, as we're not making the anchors on the left/top shift, which boundsPositionsForAnchor() assumes.
-        const int newPositionBounded = qBound(nextAnchor->minPosition(), newPosition, bounds.second);
+            // But don't let the anchor go out of bounds, it must respect its widgets min sizes
+            auto bounds = boundPositionsForAnchor(nextAnchor);
 
-        qCDebug(sizing) << Q_FUNC_INFO << nextAnchor << "; bounds.first=" << bounds.first
-                        << "; newPosition=" << newPosition
-                        << "; bounds.second=" << bounds.second
-                        << "; newPositionBounded=" << newPositionBounded
-                        << "; m_contentSize=" << m_contentSize
-                        << "; nextAnchor.minPosition=" << nextAnchor->minPosition();
+            // For the bounding, use Anchor::minPosition, as we're not making the anchors on the left/top shift, which boundsPositionsForAnchor() assumes.
+            const int newPositionBounded = qBound(minAnchorPos, newPosition, bounds.second);
 
-        nextAnchor->setPosition(newPositionBounded, Anchor::SetPositionOption_DontRecalculatePercentage);
-        redistributeSpace_recursive(nextAnchor);
+            qCDebug(sizing) << Q_FUNC_INFO << nextAnchor << "FOO ; bounds.first=" << bounds.first
+                            << "; newPosition=" << newPosition
+                            << "; bounds.first=" << bounds.first
+                            << "; bounds.second=" << bounds.second
+                            << "; newPositionBounded=" << newPositionBounded
+                            << "; oldPosition=" << nextAnchor->position()
+                            << "; contentSize=" << m_contentSize
+                            << "; nextAnchor.minPosition=" << minAnchorPos;
+
+            nextAnchor->setPosition(newPositionBounded, Anchor::SetPositionOption_DontRecalculatePercentage);
+        }
+
+        redistributeSpace_recursive(nextAnchor, minAnchorPos);
     }
 }
 
@@ -1264,6 +1273,15 @@ void MultiSplitterLayout::setContentsSize(QSize size)
         if (size.width() < m_minSize.width() || size.height() < m_minSize.height()) {
             qWarning() << Q_FUNC_INFO << "new size is smaller than min size" << size << m_minSize;
         }
+
+       /* Extra debug
+         const bool inCtor = m_topAnchor->to() == nullptr;
+        if (!inCtor) {
+            QSize minSizeCalculated = QSize(availableLengthForOrientation(Qt::Vertical), availableLengthForOrientation(Qt::Horizontal));
+            if (size.width() < minSizeCalculated.width() || size.height() < minSizeCalculated.height()) {
+                qWarning() << Q_FUNC_INFO << "new size is smaller than min size calculated" << size << minSizeCalculated;
+            }
+        }*/
 
         m_contentSize = size;
         if (!parentWidget()->m_inResizeEvent)
