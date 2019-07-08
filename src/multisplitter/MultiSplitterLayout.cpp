@@ -457,7 +457,7 @@ void MultiSplitterLayout::collectPaths(QVector<Anchor::List> &paths, Anchor *fro
 
     const ItemList items = fromAnchor->items(direction);
     for (int i = 0, end = items.size(); i < end; ++i) {
-        Anchor *nextAnchor = items[i]->anchorAtDirection(Anchor::oppositeSide(direction), fromAnchor->orientation());
+        Anchor *nextAnchor = items[i]->anchorAtSide(direction, fromAnchor->orientation());
         if (i > 0) {
             Anchor::List newPath = paths[currentPathIndex];
             paths.push_back(newPath);
@@ -471,7 +471,7 @@ void MultiSplitterLayout::resizeItem(Frame *frame, int newSize, Qt::Orientation 
     // Used for unit-tests only
     Item *item = itemForFrame(frame);
     Q_ASSERT(item);
-    Anchor *a = item->anchorAtDirection(Anchor::Side1, orientation);
+    Anchor *a = item->anchorAtSide(Anchor::Side2, orientation);
     Q_ASSERT(!a->isStatic());
     const int widgLength = item->length(orientation);
     const int delta = newSize - widgLength;
@@ -859,12 +859,11 @@ void MultiSplitterLayout::redistributeSpace(QSize oldSize, QSize newSize)
 void MultiSplitterLayout::redistributeSpace_recursive(Anchor *fromAnchor)
 {
     for (Item *item : fromAnchor->items(Anchor::Side2)) {
-        Anchor *nextAnchor = item->anchorAtDirection(Anchor::Side1, fromAnchor->orientation());
+        Anchor *nextAnchor = item->anchorAtSide(Anchor::Side2, fromAnchor->orientation());
         if (nextAnchor->isStatic())
             continue;
 
-        const int newPosition = int(nextAnchor->positionPercentage() * (nextAnchor->isVertical() ? m_contentSize.width()
-                                                                                                 : m_contentSize.height()));
+        const int newPosition = int(nextAnchor->positionPercentage() * contentsLength(nextAnchor->orientation()));
 
         // But don't let the anchor go out of bounds, it must respect its widgets min sizes
         auto bounds = boundPositionsForAnchor(nextAnchor);
