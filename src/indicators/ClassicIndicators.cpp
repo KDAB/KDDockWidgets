@@ -37,89 +37,76 @@ namespace KDDockWidgets {
 class IndicatorWindow;
 }
 
-namespace KDDockWidgets {
-class Indicator : public QWidget
+void Indicator::paintEvent(QPaintEvent *)
 {
-    Q_OBJECT
-public:
-    typedef QList<Indicator *> List;
-    explicit Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *parent, ClassicIndicators::DropLocation location);
-    void paintEvent(QPaintEvent *) override
-    {
-        QPainter p(this);
-        if (m_hovered)
-            p.drawImage(rect(), m_imageActive, rect());
-        else
-            p.drawImage(rect(), m_image, rect());
+    QPainter p(this);
+    if (m_hovered)
+        p.drawImage(rect(), m_imageActive, rect());
+    else
+        p.drawImage(rect(), m_image, rect());
 
-    }
-
-    void setHovered(bool hovered)
-    {
-        if (hovered != m_hovered) {
-            m_hovered = hovered;
-            update();
-            if (hovered) {
-                q->setDropLocation(m_dropLocation);
-            } else if (q->currentDropLocation() == m_dropLocation) {
-                q->setDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
-            }
-        }
-    }
-
-    QString iconName(bool active) const
-    {
-        QString suffix = active ? QStringLiteral("_active")
-                                : QString();
-
-        QString name;
-        switch (m_dropLocation) {
-        case DropIndicatorOverlayInterface::DropLocation_Center:
-            name = QStringLiteral("center");
-            break;
-        case DropIndicatorOverlayInterface::DropLocation_Left:
-            name = QStringLiteral("inner_left");
-            break;
-        case DropIndicatorOverlayInterface::DropLocation_Right:
-            name = QStringLiteral("inner_right");
-            break;
-        case DropIndicatorOverlayInterface::DropLocation_Bottom:
-            name = QStringLiteral("inner_bottom");
-            break;
-        case DropIndicatorOverlayInterface::DropLocation_Top:
-            name = QStringLiteral("inner_top");
-            break;
-        case DropIndicatorOverlayInterface::DropLocation_OutterLeft:
-            name = QStringLiteral("outter_left");
-            break;
-        case DropIndicatorOverlayInterface::DropLocation_OutterBottom:
-            name = QStringLiteral("outter_bottom");
-            break;
-        case DropIndicatorOverlayInterface::DropLocation_OutterRight:
-            name = QStringLiteral("outter_right");
-            break;
-        case DropIndicatorOverlayInterface::DropLocation_OutterTop:
-            name = QStringLiteral("outter_top");
-            break;
-        case DropIndicatorOverlayInterface::DropLocation_None:
-            return QString();
-        }
-
-        return name + suffix;
-    }
-
-    QString iconFileName(bool active) const
-    {
-        return QStringLiteral(":/img/classic_indicators/%1.png").arg(iconName(active));
-    }
-
-    QImage m_image;
-    QImage m_imageActive;
-    ClassicIndicators *const q;
-    bool m_hovered = false;
-    const ClassicIndicators::DropLocation m_dropLocation;
-};
 }
+
+void Indicator::setHovered(bool hovered)
+{
+    if (hovered != m_hovered) {
+        m_hovered = hovered;
+        update();
+        if (hovered) {
+            q->setDropLocation(m_dropLocation);
+        } else if (q->currentDropLocation() == m_dropLocation) {
+            q->setDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
+        }
+    }
+}
+
+QString Indicator::iconName(bool active) const
+{
+    QString suffix = active ? QStringLiteral("_active")
+                            : QString();
+
+    QString name;
+    switch (m_dropLocation) {
+    case DropIndicatorOverlayInterface::DropLocation_Center:
+        name = QStringLiteral("center");
+        break;
+    case DropIndicatorOverlayInterface::DropLocation_Left:
+        name = QStringLiteral("inner_left");
+        break;
+    case DropIndicatorOverlayInterface::DropLocation_Right:
+        name = QStringLiteral("inner_right");
+        break;
+    case DropIndicatorOverlayInterface::DropLocation_Bottom:
+        name = QStringLiteral("inner_bottom");
+        break;
+    case DropIndicatorOverlayInterface::DropLocation_Top:
+        name = QStringLiteral("inner_top");
+        break;
+    case DropIndicatorOverlayInterface::DropLocation_OutterLeft:
+        name = QStringLiteral("outter_left");
+        break;
+    case DropIndicatorOverlayInterface::DropLocation_OutterBottom:
+        name = QStringLiteral("outter_bottom");
+        break;
+    case DropIndicatorOverlayInterface::DropLocation_OutterRight:
+        name = QStringLiteral("outter_right");
+        break;
+    case DropIndicatorOverlayInterface::DropLocation_OutterTop:
+        name = QStringLiteral("outter_top");
+        break;
+    case DropIndicatorOverlayInterface::DropLocation_None:
+        return QString();
+    }
+
+    return name + suffix;
+}
+
+QString Indicator::iconFileName(bool active) const
+{
+    return QStringLiteral(":/img/classic_indicators/%1.png").arg(iconName(active));
+}
+
+
 
 IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_, QWidget *)
     : QWidget(nullptr, Qt::Tool)
@@ -412,5 +399,3 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     m_rubberBand->setGeometry(rect);
     m_rubberBand->setVisible(true);
 }
-
-#include "ClassicIndicators.moc"
