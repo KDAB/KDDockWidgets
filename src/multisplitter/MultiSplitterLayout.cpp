@@ -1267,7 +1267,8 @@ void MultiSplitterLayout::setContentsSize(QSize size)
         }
 
         m_contentSize = size;
-        parentWidget()->resize(size);
+        if (!parentWidget()->m_inResizeEvent)
+            parentWidget()->resize(size);
         redistributeSpace(oldSize, size);
         Q_EMIT contentsSizeChanged();
     }
