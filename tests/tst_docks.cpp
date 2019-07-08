@@ -2632,6 +2632,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
 
     toRestore1->show();
     toRestore2->show();
+
     waitForResize(frame3);
     QVERIFY(layout->checkSanity());
     QCOMPARE(layout->count(), 3);
@@ -2847,6 +2848,9 @@ void TestDocks::tst_negativeAnchorPosition()
     auto w3 = new MyWidget2(QSize(133, 343));
     w3->resize(392, 362);
 
+    // auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    // MultiSplitterLayout *layout = dropArea->multiSplitter();
+
     auto d1 = createDockWidget(QStringLiteral("1"), w1);
     auto d2 = createDockWidget(QStringLiteral("2"), w2);
     auto d3 = createDockWidget(QStringLiteral("3"), w3);
@@ -2855,6 +2859,10 @@ void TestDocks::tst_negativeAnchorPosition()
 
     m->addDockWidget(d2, Location_OnTop);
     m->addDockWidget(d3, Location_OnTop);
+
+    qDebug() << "MinSizes=" << KDDockWidgets::widgetMinLength(d1->frame(), Qt::Horizontal)
+             << KDDockWidgets::widgetMinLength(d2->frame(), Qt::Horizontal)
+             << KDDockWidgets::widgetMinLength(d3->frame(), Qt::Horizontal);
 
     d2->close();
     waitForResize(d3);

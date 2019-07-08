@@ -43,15 +43,18 @@ public:
 
     void setFrame(Frame *frame);
     void turnIntoPlaceholder();
+    void setIsPlaceholder(bool);
 
     void updateObjectName();
     Item *const q;
     AnchorGroup m_anchorGroup;
     Frame *m_frame = nullptr;
+    bool m_isPlaceholder = false;
     QPointer<MultiSplitterLayout> m_layout;
     QRect m_geometry;
     bool m_destroying = false;
     int m_refCount = 0;
+    bool m_blockPropagateGeo = false;
     QMetaObject::Connection m_onFrameDestroyed_connection;
     QMetaObject::Connection m_onFrameObjectNameChanged_connection;
 };
@@ -150,7 +153,7 @@ void Item::setGeometry(QRect geo)
         if (!isPlaceholder())
             d->m_frame->setGeometry(geo);
 
-        if (d->m_anchorGroup.isValid() && geoDiff.onlyOneSideChanged) {
+        if (!d->m_blockPropagateGeo && d->m_anchorGroup.isValid() && geoDiff.onlyOneSideChanged) {
             // If we're being squeezed to the point where it reaches less then our min size, then we drag the opposite separator, to preserve size
             const int lengthDelta = length(geoDiff.orientation()) - minLength(geoDiff.orientation());
             if (lengthDelta < 0) {
@@ -166,6 +169,18 @@ void Item::setGeometry(QRect geo)
             }
         }
     }
+}
+
+void Item::beginBlockPropagateGeo()
+{
+    Q_ASSERT(!d->m_blockPropagateGeo);
+    d->m_blockPropagateGeo = true;
+}
+
+void Item::endBlockPropagateGeo()
+{
+    Q_ASSERT(d->m_blockPropagateGeo);
+    d->m_blockPropagateGeo = false;
 }
 
 QRect Item::geometry() const
@@ -315,7 +330,12 @@ QSize Item::minimumSizeHint() const
 
 bool Item::isPlaceholder() const
 {
-    return d->m_frame == nullptr;
+    return d->m_isPlaceholder;
+}
+
+void Item::setIsPlaceholder(bool is)
+{
+    d->setIsPlaceholder(is);
 }
 
 bool Item::isInMainWindow() const
@@ -332,8 +352,7 @@ bool Item::isInMainWindow() const
 void Item::restorePlaceholder(DockWidget *dockWidget, int tabIndex)
 {
     qCDebug(placeholder) << Q_FUNC_INFO << "Restoring to window=" << window();
-    const bool wasPlaceholder = isPlaceholder();
-    if (wasPlaceholder) {
+    if (d->m_isPlaceholder) {
         d->setFrame(new Frame(layout()->parentWidget()));
         d->m_frame->setGeometry(d->m_geometry);
     }
@@ -344,10 +363,11 @@ void Item::restorePlaceholder(DockWidget *dockWidget, int tabIndex)
         d->m_frame->addWidget(dockWidget);
     }
 
-    if (wasPlaceholder) {
+    if (d->m_isPlaceholder) {
         // Resize Anchors to their correct places.
         d->m_layout->restorePlaceholder(this);
         d->m_frame->setVisible(true);
+        d->setIsPlaceholder(false);
     }
 }
 
@@ -428,6 +448,7 @@ void Item::Private::turnIntoPlaceholder()
         return;
 
     setFrame(nullptr);
+    setIsPlaceholder(true);
 
     qCDebug(placeholder) << Q_FUNC_INFO << this;
     AnchorGroup anchorGroup = q->anchorGroup();
@@ -436,6 +457,14 @@ void Item::Private::turnIntoPlaceholder()
     } else {
         // Auto-destruction, which removes it from the layout
         delete q;
+    }
+}
+
+void Item::Private::setIsPlaceholder(bool is)
+{
+    if (is != m_isPlaceholder) {
+        m_isPlaceholder = is;
+        Q_EMIT q->isPlaceholderChanged();
     }
 }
 

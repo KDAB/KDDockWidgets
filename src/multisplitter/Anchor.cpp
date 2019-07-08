@@ -101,6 +101,11 @@ void Anchor::updateSize()
 void Anchor::setGeometry(QRect r)
 {
     if (r != m_geometry) {
+
+        if (position() < 0) {
+            qCDebug(anchors) << Q_FUNC_INFO << "Old position was negative" << position() << "; new=" << r;
+        }
+
         m_geometry = r;
         m_separatorWidget->setGeometry(r);
     }
@@ -136,8 +141,9 @@ void Anchor::updateItemSizes()
         const QPoint bottomRight = isVertical() ? QPoint(position - 1, geo.bottom())
                                                 : QPoint(geo.right(), position - 1);
         geo.setBottomRight(bottomRight);
-        if (!item->isPlaceholder())
+        if (!item->isPlaceholder()) {
             item->setGeometry(geo);
+        }
     }
 }
 
@@ -177,9 +183,8 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     qCDebug(anchors) << Q_FUNC_INFO << this << "; visible="
                      << m_separatorWidget->isVisible() << "; p=" << p;
 
-    if (p < 0) {
-        qWarning() << Q_FUNC_INFO << "Negative position" << p;
-    }
+    if (p < 0)
+        qWarning() << Q_FUNC_INFO << "Negative position" << p << this;
 
     m_initialized = true;
     if (position() == p)

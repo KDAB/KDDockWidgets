@@ -90,7 +90,7 @@ struct GeometryDiff
 class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject // clazy:exclude=ctor-missing-parent-argument
 {
     Q_OBJECT
-    Q_PROPERTY(bool isPlaceholder READ isPlaceholder NOTIFY frameChanged)
+    Q_PROPERTY(bool isPlaceholder READ isPlaceholder NOTIFY isPlaceholderChanged)
     Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
 public:
     explicit Item(Frame *frame, MultiSplitterLayout *parent);
@@ -107,6 +107,10 @@ public:
     void setVisible(bool);
 
     void setGeometry(QRect);
+
+    void beginBlockPropagateGeo();
+    void endBlockPropagateGeo();
+
     QRect geometry() const;
     bool eventFilter(QObject *, QEvent *) override;
 
@@ -138,7 +142,7 @@ public:
     QSize minimumSizeHint() const;
 
     bool isPlaceholder() const;
-
+    void setIsPlaceholder(bool);
     /**
      * @brief Returns whether this item lives in a @ref MainWindow, as opposed to a @ref FloatingWindow
      */
@@ -154,6 +158,7 @@ public:
 Q_SIGNALS:
     void frameChanged();
     void geometryChanged();
+    void isPlaceholderChanged();
 private:
     class Private;
     Private *const d;
