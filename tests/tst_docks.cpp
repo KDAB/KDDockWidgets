@@ -73,7 +73,7 @@ Q_DECLARE_METATYPE(WidgetResize)
 struct DockDescriptor {
     Location loc;
     int relativeToIndex;
-    DockWidget *createdDock;
+    QPointer<DockWidget> createdDock;
 };
 Q_DECLARE_METATYPE(DockDescriptor)
 
@@ -2788,7 +2788,7 @@ void TestDocks::tst_28NestedWidgets()
     // And hide the remaining ones
     i = 0;
     for (auto dock : docksToCreate) {
-        if (dock.createdDock->isVisible()) {
+        if (dock.createdDock && dock.createdDock->isVisible()) {
             qDebug() << "Closing" << i << dock.createdDock->title();
             dock.createdDock->close();
             QTest::qWait(200); // Wait for the docks to be closed. TODO Replace with a global event filter and wait for any resize ?
