@@ -160,11 +160,15 @@ void Item::setGeometry(QRect geo)
                 Anchor *anchorThatMoved = anchor(geoDiff);
                 Q_ASSERT(anchorThatMoved);
                 Anchor *anchorToMove = d->m_anchorGroup.oppositeAnchor(anchorThatMoved);
+                if (anchorToMove->isFollowing())
+                    anchorToMove = anchorToMove->endFollowee();
+
                 Q_ASSERT(anchorToMove);
                 const int newPosition = anchorToMove->position() - (lengthDelta * geoDiff.signess());
 
                 // Note: Position can be slightly negative if the main window isn't big enougn to host the new size.
                 // In that case the window will be resized shortly after
+                Q_ASSERT(!anchorToMove->isFollowing());
                 anchorToMove->setPosition(newPosition);
             }
         }
