@@ -181,11 +181,6 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                         << "\n availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
     }
 
-    auto sourceMultiSplitterWidget = qobject_cast<MultiSplitterWidget *>(w);
-    auto sourceMultiSplitter = sourceMultiSplitterWidget ? sourceMultiSplitterWidget->multiSplitter()
-                                                         : nullptr;
-    const bool sourceIsAMultiSplitter = sourceMultiSplitter != nullptr;
-
     Anchor *newAnchor = nullptr;
     const QRect dropRect = rectForDrop(w, location, relativeToItem);
 
@@ -199,12 +194,6 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                    << "\n    availableWidth=" << availableLengthForOrientation(Qt::Vertical)
                    << "\n    widget.minSize=" << widgetMinLength(w, anchorOrientationForLocation(location));
         return;
-    }
-
-    if (!sourceIsAMultiSplitter) {
-        auto frame = qobject_cast<Frame*>(w);
-        Q_ASSERT(frame);
-        item = new Item(frame, this);
     }
 
     auto result = this->createTargetAnchorGroup(location, relativeToItem);
@@ -304,11 +293,18 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                  << "; direction2Anchor=" << direction2Anchor;*/
     }
 
+    auto sourceMultiSplitterWidget = qobject_cast<MultiSplitterWidget *>(w);
+    auto sourceMultiSplitter = sourceMultiSplitterWidget ? sourceMultiSplitterWidget->multiSplitter()
+                                                         : nullptr;
+
     if (sourceMultiSplitter) {
         auto items = sourceMultiSplitter->items();
         targetAnchorGroup.addItem(sourceMultiSplitter);
         addItems_internal(items);
     } else {
+        auto frame = qobject_cast<Frame*>(w);
+        Q_ASSERT(frame);
+        item = new Item(frame, this);
         targetAnchorGroup.addItem(item);
         addItems_internal(ItemList{ item });
     }
