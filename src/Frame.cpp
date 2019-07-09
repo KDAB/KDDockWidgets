@@ -131,7 +131,7 @@ void Frame::addWidget(Draggable *draggable)
 
 void Frame::insertWidget(DockWidget *dockWidget, int index)
 {
-    qCDebug(addwidget()) << Q_FUNC_INFO << "; dockWidget=" << dockWidget << "; oldFrame=" << dockWidget->frame();
+    qCDebug(addwidget()) << Q_FUNC_INFO << ((void*)this) <<  "; dockWidget=" << dockWidget << "; oldFrame=" << dockWidget->frame();
 
     Q_ASSERT(dockWidget);
     if (contains(dockWidget)) {
