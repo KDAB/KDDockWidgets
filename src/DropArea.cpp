@@ -121,6 +121,11 @@ Item *DropArea::centralFrame() const
 
 void DropArea::addDockWidget(DockWidget *dw, Location location, DockWidget *relativeTo, AddingOption option)
 {
+    if (!dw || dw == relativeTo || location == Location_None) {
+        qWarning() << Q_FUNC_INFO << "Invalid parameters" << dw << relativeTo << location;
+        return;
+    }
+
     // The public API deals in terms of DockWidget, but our internal MultiSplitter deals in terms
     // of Frame, so wrap it:
     auto frame = new Frame();
