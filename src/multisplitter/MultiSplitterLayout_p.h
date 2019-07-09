@@ -194,7 +194,7 @@ public:
     const Anchor::List anchors() const { return m_anchors; }
 
     ///@brief returns the number of anchors that are following others, just for tests.
-    int numAchorsFolllowing() const;
+    int numAchorsFollowing() const;
 
     ///@brief returns the number of anchors that are following others, just for tests.
     int numVisibleAnchors() const;

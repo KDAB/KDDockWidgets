@@ -2563,7 +2563,7 @@ void TestDocks::tst_toggleMiddleDockCrash()
     QCOMPARE(layout->count(), 3);
     QCOMPARE(layout->placeholderCount(), 1);
     QVERIFY(layout->checkSanity());
-    QCOMPARE(layout->numAchorsFolllowing(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 1);
 
     qDebug() << "Dock1.min=" << KDDockWidgets::widgetMinLength(dock1->frame(), Qt::Vertical);
     qDebug() << "Dock3.min=" << KDDockWidgets::widgetMinLength(dock3->frame(), Qt::Vertical);
@@ -2610,7 +2610,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
 
     // Check that frame2 moved up to y=1
     QCOMPARE(frame2->y(), 1);
-    QCOMPARE(layout->numAchorsFolllowing(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 1);
     layout->dumpDebug();
 
     // Close 2
@@ -2621,7 +2621,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
     QVERIFY(layout->checkSanity());
     QCOMPARE(layout->count(), 3);
     QCOMPARE(layout->placeholderCount(), 2);
-    QCOMPARE(layout->numAchorsFolllowing(), 2);
+    QCOMPARE(layout->numAchorsFollowing(), 2);
 
     // Check that frame3 moved up to y=1
     QCOMPARE(frame3->y(), 1);
@@ -2637,7 +2637,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
     QVERIFY(layout->checkSanity());
     QCOMPARE(layout->count(), 3);
     QCOMPARE(layout->placeholderCount(), 0);
-    QCOMPARE(layout->numAchorsFolllowing(), 0);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
 
     dock1->deleteLater();
     dock2->deleteLater();

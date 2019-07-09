@@ -749,7 +749,7 @@ void MultiSplitterLayout::setAnchorBeingDragged(Anchor *anchor)
     m_anchorBeingDragged = anchor;
 }
 
-int MultiSplitterLayout::numAchorsFolllowing() const
+int MultiSplitterLayout::numAchorsFollowing() const
 {
     int count = 0;
     for (Anchor *a : m_anchors) {
