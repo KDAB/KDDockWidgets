@@ -106,19 +106,23 @@ TabWidget::TabWidget(QWidget *parent)
 
 void TabWidget::addDockWidget(DockWidget *dock)
 {
-    Q_ASSERT(dock);
-    addTab(dock, dock->title());
-    setCurrentIndex(count() - 1);
+    insertDockWidget(dock, count());
 }
 
 void TabWidget::insertDockWidget(DockWidget *dock, int index)
 {
+    Q_ASSERT(dock);
+
     if (index < 0)
         index = 0;
     if (index > count())
         index = count();
 
-    Q_ASSERT(dock);
+    if (contains(dock)) {
+        qWarning() << Q_FUNC_INFO << "Refusing to add already existing widget";
+        return;
+    }
+
     insertTab(index, dock, dock->title());
     setCurrentIndex(index);
 }
@@ -131,6 +135,11 @@ void TabWidget::removeDockWidget(DockWidget *w)
 void TabWidget::detachTab(DockWidget *dockWidget)
 {
     m_tabBar->detachTab(dockWidget);
+}
+
+bool TabWidget::contains(DockWidget *dw) const
+{
+    return indexOf(dw) != -1;
 }
 
 void TabWidget::tabInserted(int)

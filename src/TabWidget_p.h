@@ -112,6 +112,12 @@ public:
      */
     void detachTab(DockWidget *dockWidget);
 
+    /**
+     * @brief Returns whether dockwidget @p dw is contained in this tab widget
+     * Equivalent to indexOf(dw) != -1
+     */
+    bool contains(DockWidget *dw) const;
+
 Q_SIGNALS:
     void dockWidgetCountChanged();
 protected:
