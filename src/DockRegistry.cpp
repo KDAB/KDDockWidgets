@@ -34,7 +34,7 @@ DockRegistry::DockRegistry(QObject *parent)
     KDDockWidgets::setLoggingFilterRules();
 
 #ifdef DOCKS_DEVELOPER_MODE
-    if (qEnvironmentVariableIsSet("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW")) {
+    if (qEnvironmentVariableIntValue("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW") == 1) {
         auto dv = new Debug::DebugWindow();
         dv->show();
     }
