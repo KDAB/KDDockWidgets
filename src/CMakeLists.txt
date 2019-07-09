@@ -17,6 +17,10 @@ set(DOCKSLIBS_SRCS
     MainWindow.cpp
     TabWidget.cpp
     TitleBar.cpp
+    ObjectViewer.cpp
+    ObjectViewer_p.h
+    DebugWindow.cpp
+    DebugWindow_p.h
     WindowBeingDragged.cpp
     WidgetResizeHandler.cpp
     multisplitter/Anchor.cpp

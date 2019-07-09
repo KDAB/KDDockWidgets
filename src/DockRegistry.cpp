@@ -21,6 +21,7 @@
 #include "DockRegistry_p.h"
 #include "DockWidget.h"
 #include "Logging_p.h"
+#include "DebugWindow_p.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -31,6 +32,13 @@ DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
     KDDockWidgets::setLoggingFilterRules();
+
+#ifdef DOCKS_DEVELOPER_MODE
+    if (qEnvironmentVariableIsSet("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW")) {
+        auto dv = new Debug::DebugWindow();
+        dv->show();
+    }
+#endif
 }
 
 void DockRegistry::maybeDelete()
