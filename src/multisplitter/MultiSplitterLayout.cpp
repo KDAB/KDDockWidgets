@@ -185,7 +185,6 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     auto sourceMultiSplitter = sourceMultiSplitterWidget ? sourceMultiSplitterWidget->multiSplitter()
                                                          : nullptr;
     const bool sourceIsAMultiSplitter = sourceMultiSplitter != nullptr;
-    const bool relativeToThis = relativeToItem == nullptr;
 
     Anchor *newAnchor = nullptr;
     const QRect dropRect = rectForDrop(w, location, relativeToItem);
