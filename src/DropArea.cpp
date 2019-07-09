@@ -119,14 +119,14 @@ Item *DropArea::centralFrame() const
     return nullptr;
 }
 
-void DropArea::addDockWidget(DockWidget *dw, Location location, DockWidget *relativeTo)
+void DropArea::addDockWidget(DockWidget *dw, Location location, DockWidget *relativeTo, AddingOption option)
 {
     // The public API deals in terms of DockWidget, but our internal MultiSplitter deals in terms
     // of Frame, so wrap it:
     auto frame = new Frame();
     frame->addWidget(dw);
     Frame *relativeToFrame = relativeTo ? relativeTo->frame() : nullptr;
-    m_layout->addWidget(frame, location, relativeToFrame);
+    m_layout->addWidget(frame, location, relativeToFrame, option);
 }
 
 bool DropArea::isInMainWindow() const

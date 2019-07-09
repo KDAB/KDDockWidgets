@@ -94,6 +94,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject // clazy:exclude=ctor-mi
     Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
 public:
     explicit Item(Frame *frame, MultiSplitterLayout *parent);
+    explicit Item(DockWidget *dw, MultiSplitterLayout *parent);
     ~Item() override;
 
     int x() const;
@@ -146,7 +147,6 @@ public:
      * @brief Returns whether this item lives in a @ref MainWindow, as opposed to a @ref FloatingWindow
      */
     bool isInMainWindow() const;
-
 
     ///@brief turns the placeholder into a normal Item again showing @p dockWidget
     void restorePlaceholder(DockWidget *dockWidget, int tabIndex);

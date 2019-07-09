@@ -139,7 +139,7 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
     return true;
 }
 
-void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relativeToWidget)
+void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relativeToWidget, AddingOption option)
 {
     qCDebug(addwidget) << Q_FUNC_INFO << w
                        << "; location=" << locationStr(location)
@@ -161,6 +161,11 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     // Make some sanity checks:
     if (!validateInputs(w, location, relativeToItem))
         return;
+
+    if (option & AddingOption_StartHidden) {
+        addAsPlaceholder(qobject_cast<DockWidget*>(w), location, relativeToItem);
+        return;
+    }
 
     const Length lfd = lengthForDrop(w, location, relativeToItem);
     if (lfd.isNull()) {
@@ -318,11 +323,33 @@ void MultiSplitterLayout::addItems_internal(const ItemList &items, bool updateCo
 
     for (auto item : items) {
         item->setLayout(this);
-        item->setVisible(true);
-        item->frame()->installEventFilter(this);
-        Q_EMIT widgetAdded(item);
+        if (item->frame()) {
+            item->setVisible(true);
+            item->frame()->installEventFilter(this);
+            Q_EMIT widgetAdded(item);
+        }
     }
     Q_EMIT widgetCountChanged(m_items.size());
+}
+
+void MultiSplitterLayout::addAsPlaceholder(DockWidget *dockWidget, Location location, Item *relativeTo)
+{
+    if (!dockWidget) {
+        qWarning() << Q_FUNC_INFO << "null dockwidget";
+        return;
+    }
+
+    dockWidget->setParent(nullptr);
+
+    auto result = createTargetAnchorGroup(location, relativeTo);
+    AnchorGroup targetAnchorGroup = result.first;
+
+    auto item = new Item(dockWidget, this);
+
+    targetAnchorGroup.addItem(item);
+    addItems_internal(ItemList{ item }, false);
+
+    Q_ASSERT(!dockWidget->isVisible());
 }
 
 void MultiSplitterLayout::setExtraUselessSpace(QSize sz)

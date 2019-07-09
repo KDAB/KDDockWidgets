@@ -46,6 +46,11 @@ namespace KDDockWidgets
     };
     Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 
+    enum AddingOption {
+        AddingOption_None = 0,
+        AddingOption_StartHidden ///< Don't show the dock widget when adding it
+    };
+
    inline Location oppositeLocation(Location loc)
    {
        switch (loc) {

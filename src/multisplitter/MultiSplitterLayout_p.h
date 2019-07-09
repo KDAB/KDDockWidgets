@@ -111,7 +111,7 @@ public:
     /**
      * @brief Adds a widget to this MultiSplitter.
      */
-    void addWidget(QWidget *widget, KDDockWidgets::Location location, Frame *relativeTo = nullptr);
+    void addWidget(QWidget *widget, KDDockWidgets::Location location, Frame *relativeTo = nullptr, AddingOption option = {});
 
     /**
      * Adds an entire MultiSplitterWidget into this layout. The donor MultiSplitterWidget will be deleted
@@ -121,6 +121,12 @@ public:
      */
     void addMultiSplitter(MultiSplitterWidget *splitter, KDDockWidgets::Location location,
                           Frame *relativeTo = nullptr);
+
+
+    /**
+     * @brief Adds the dockwidget but it stays hidden until an explicit show()
+     */
+    void addAsPlaceholder(DockWidget *dw, KDDockWidgets::Location location, Item *relativeTo = nullptr);
 
     /**
      * @brief Removes an item from this MultiSplitter.

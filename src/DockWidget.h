@@ -224,6 +224,7 @@ private:
     friend class KDDockWidgets::DragController;
     friend class KDDockWidgets::TitleBar;
     friend struct KDDockWidgets::WindowBeingDragged;
+    friend class KDDockWidgets::Item;
 
     /**
      * @brief the TitleBar instance used by this dock widget

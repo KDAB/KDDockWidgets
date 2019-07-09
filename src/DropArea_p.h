@@ -66,7 +66,7 @@ public:
     Frame *frameContainingPos(QPoint globalPos) const;
     Item *centralFrame() const;
     DropIndicatorOverlayInterface *dropIndicatorOverlay() const { return m_dropIndicatorOverlay; }
-    void addDockWidget(DockWidget *, KDDockWidgets::Location location, DockWidget *relativeTo);
+    void addDockWidget(DockWidget *, KDDockWidgets::Location location, DockWidget *relativeTo, AddingOption option = {});
 
     bool isInMainWindow() const;
     bool isInFloatingWindow() const;

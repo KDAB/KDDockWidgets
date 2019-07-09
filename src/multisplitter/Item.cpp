@@ -25,6 +25,7 @@
 #include "AnchorGroup_p.h"
 #include "Frame_p.h"
 #include "MainWindow.h"
+#include "DockWidget.h"
 
 #include <QEvent>
 
@@ -63,15 +64,24 @@ Item::Item(Frame *frame, MultiSplitterLayout *parent)
     : QObject(parent)
     , d(new Private(this, frame, parent))
 {    
-    Q_ASSERT(parent);
-    Q_ASSERT(frame);
 
+    Q_ASSERT(frame);
     setLayout(parent);
 
     // Minor hack: Set to nullptr so setFrame doesn't bail out. There's a catch-22: setLayout needs to have an m_frame and setFrame needs to have a layout.
     d->m_frame = nullptr;
     d->setFrame(frame);
     d->updateObjectName();
+}
+
+Item::Item(DockWidget *dw, MultiSplitterLayout *parent)
+    : QObject(parent)
+    , d(new Private(this, nullptr, parent))
+{
+    setLayout(parent);
+
+    dw->addPlaceholderItem(this);
+    d->turnIntoPlaceholder();
 }
 
 Item::~Item()
@@ -235,12 +245,12 @@ MultiSplitterLayout *Item::layout() const
 void Item::setLayout(MultiSplitterLayout *m)
 {
     Q_ASSERT(m);
-    Q_ASSERT(d->m_frame);
     if (m != d->m_layout) {
         d->m_layout = m;
         d->m_anchorGroup.layout = m;
         setParent(m);
-        d->m_frame->setParent(m->parentWidget());
+        if (d->m_frame)
+            d->m_frame->setParent(m->parentWidget());
     }
 }
 

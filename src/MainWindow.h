@@ -48,7 +48,7 @@ public:
                         QWidget *parent = nullptr, Qt::WindowFlags flags = {});
     ~MainWindow() override;
     void addDockWidgetAsTab(DockWidget *);
-    void addDockWidget(DockWidget *, KDDockWidgets::Location, DockWidget *relativeTo = nullptr);
+    void addDockWidget(DockWidget *, KDDockWidgets::Location, DockWidget *relativeTo = nullptr, AddingOption = {});
 
     QString name() const;
     MainWindowOptions options() const;

@@ -113,9 +113,9 @@ void MainWindow::addDockWidgetAsTab(DockWidget *widget)
     }
 }
 
-void MainWindow::addDockWidget(DockWidget *dw, Location location, DockWidget *relativeTo)
+void MainWindow::addDockWidget(DockWidget *dw, Location location, DockWidget *relativeTo, AddingOption option)
 {
-    d->m_dropArea->addDockWidget(dw, location, relativeTo);
+    d->m_dropArea->addDockWidget(dw, location, relativeTo, option);
 }
 
 QString MainWindow::name() const
