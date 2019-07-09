@@ -98,7 +98,7 @@ MultiSplitterWidget *MultiSplitterLayout::parentWidget() const
 
 bool MultiSplitterLayout::validateInputs(QWidget *widget,
                                          Location location,
-                                         const Item *relativeToItem) const
+                                         const Frame *relativeToFrame) const
 {
     if (!widget) {
         qWarning() << Q_FUNC_INFO << "Widget is null";
@@ -112,7 +112,7 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
         return false;
     }
 
-    if (relativeToItem && relativeToItem->frame() == widget) {
+    if (relativeToFrame && relativeToFrame == widget) {
         qWarning() << "widget can't be relative to itself";
         return false;
     }
@@ -130,7 +130,9 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
         return false;
     }
 
-    const bool relativeToThis = relativeToItem == nullptr;
+    const bool relativeToThis = relativeToFrame == nullptr;
+
+    Item *relativeToItem = itemForFrame(relativeToFrame);
     if (!relativeToThis && !contains(relativeToItem)) {
         qWarning() << "MultiSplitterLayout::addWidget: Doesn't contain relativeTo:" << relativeToItem;
         return false;
@@ -159,7 +161,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     Item *relativeToItem = itemForFrame(relativeToWidget);
 
     // Make some sanity checks:
-    if (!validateInputs(w, location, relativeToItem))
+    if (!validateInputs(w, location, relativeToWidget))
         return;
 
     if (option & AddingOption_StartHidden) {

@@ -275,7 +275,7 @@ public:
     QSize contentsSize() const { return m_contentSize; }
 
     // For debug/hardening
-    bool validateInputs(QWidget *widget, KDDockWidgets::Location location, const Item *relativeToItem) const;
+    bool validateInputs(QWidget *widget, KDDockWidgets::Location location, const Frame *relativeToFrame) const;
     // For debug/hardening
 
     enum AnchorSanityOption {
