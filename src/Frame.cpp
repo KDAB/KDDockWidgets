@@ -60,7 +60,7 @@ Frame::Frame(QWidget *parent, Options options)
     , m_id(nextId())
 {
     s_dbg_numFrames++;
-    qCDebug(creation) << "Frame" << this << s_dbg_numFrames;
+    qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
     auto vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
