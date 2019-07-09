@@ -208,14 +208,9 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         item = new Item(frame, this);
     }
 
-    AnchorGroup targetAnchorGroup = this->targetAnchorGroup(relativeToItem);
-    if (relativeToThis) {
-        if (!isEmpty())
-            newAnchor = this->newAnchor(targetAnchorGroup, location);
-    } else {
-        newAnchor = targetAnchorGroup.createAnchorFrom(location, relativeToItem);
-        targetAnchorGroup.setAnchor(newAnchor, KDDockWidgets::oppositeLocation(location));
-    }
+    auto result = this->createTargetAnchorGroup(location, relativeToItem);
+    AnchorGroup targetAnchorGroup = result.first;
+    newAnchor = result.second;
 
     if (newAnchor) {
         const int anchorThickness = Anchor::thickness(/*static=*/false);
@@ -1021,21 +1016,31 @@ QVector<DockWidget *> MultiSplitterLayout::dockWidgets() const
     return result;
 }
 
-AnchorGroup MultiSplitterLayout::targetAnchorGroup(Item *relativeTo) const
+QPair<AnchorGroup,Anchor*> MultiSplitterLayout::createTargetAnchorGroup(KDDockWidgets::Location location, Item *relativeToItem)
 {
-    AnchorGroup group = relativeTo ? anchorsForPos(relativeTo->geometry().center())
-                                   : staticAnchorGroup();
+    const bool relativeToThis = relativeToItem == nullptr;
+    AnchorGroup group = relativeToThis ? staticAnchorGroup()
+                                       : anchorsForPos(relativeToItem->geometry().center());
 
     if (!group.isValid()) {
         qWarning() << Q_FUNC_INFO << "Invalid anchor group:" << group
                    << "; staticAnchorGroup=" << staticAnchorGroup()
-                   << "; relativeTo=" << relativeTo;
+                   << "; relativeTo=" << relativeToItem;
 
         dumpDebug();
         Q_ASSERT(false);
     }
 
-    return group;
+    Anchor *newAnchor = nullptr;
+    if (relativeToThis) {
+        if (!isEmpty())
+            newAnchor = this->newAnchor(group, location);
+    } else {
+        newAnchor = group.createAnchorFrom(location, relativeToItem);
+        group.setAnchor(newAnchor, KDDockWidgets::oppositeLocation(location));
+    }
+
+    return { group, newAnchor };
 }
 
 bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
