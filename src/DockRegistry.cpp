@@ -65,6 +65,14 @@ DockRegistry *DockRegistry::self()
 
 void DockRegistry::registerDockWidget(DockWidget *dock)
 {
+    if (dock->name().isEmpty()) {
+        qWarning() << Q_FUNC_INFO << "Dock " << dock << " doesn't have an ID";
+    } else {
+        if (auto other = dockByName(dock->name())) {
+            qWarning() << Q_FUNC_INFO << "Another dock" << other << "with name" << dock->name() << " already exists." << dock;
+        }
+    }
+
     m_dockWidgets << dock;
 }
 

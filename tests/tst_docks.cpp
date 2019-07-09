@@ -208,7 +208,8 @@ void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context,
         if (msg.contains(QLatin1String("QSocketNotifier: Invalid socket")) ||
             msg.contains(QLatin1String("QWindowsWindow::setGeometry")) ||
             msg.contains(QLatin1String("This plugin does not support")) ||
-            msg.contains(QLatin1String("Note that Qt no longer ships fonts")))
+            msg.contains(QLatin1String("Note that Qt no longer ships fonts")) ||
+            msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")))
             return;
 
         if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL"))
