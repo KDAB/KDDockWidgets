@@ -60,7 +60,7 @@ Frame::Frame(QWidget *parent, Options options)
     , m_id(nextId())
 {
     s_dbg_numFrames++;
-    qCDebug(creation) << "Frame";
+    qCDebug(creation) << "Frame" << this << s_dbg_numFrames;
     auto vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
@@ -75,7 +75,7 @@ Frame::Frame(QWidget *parent, Options options)
             if (auto dock = dockWidgetAt(index)) {
                 Q_EMIT currentDockWidgetChanged(dock);
             } else {
-                qWarning() << "dockaWidgetAt" << index << "returned nullptr" << this;
+                qWarning() << "dockWidgetAt" << index << "returned nullptr" << this;
             }
         }
     });
@@ -149,7 +149,7 @@ void Frame::insertWidget(DockWidget *dockWidget, int index)
 
 void Frame::onDockWidgetCountChanged()
 {
-    qCDebug(docking) << "Frame::onDockWidgetCountChanged; widgetCount=" << dockWidgetCount();
+    qCDebug(docking) << "Frame::onDockWidgetCountChanged:" << this << "; widgetCount=" << dockWidgetCount();
     if (isEmpty() && !isCentralFrame()) {
         qCDebug(creation) << "Frame::onDockWidgetCountChanged: deleteLater on" << this;
         deleteLater();
