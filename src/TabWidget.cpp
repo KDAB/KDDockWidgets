@@ -32,6 +32,7 @@
 #include "FloatingWindow_p.h"
 #include "Frame_p.h"
 #include "WindowBeingDragged_p.h"
+#include "Logging_p.h"
 
 #include <QMouseEvent>
 
@@ -112,6 +113,7 @@ void TabWidget::addDockWidget(DockWidget *dock)
 void TabWidget::insertDockWidget(DockWidget *dock, int index)
 {
     Q_ASSERT(dock);
+    qCDebug(addwidget) << Q_FUNC_INFO << dock << "; count before=" << count();
 
     if (index < 0)
         index = 0;
