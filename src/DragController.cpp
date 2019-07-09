@@ -295,7 +295,7 @@ QWidget *DragController::qtTopLevelUnderCursor() const
     while (hwnd) {
         hwnd = GetWindow(hwnd, GW_HWNDNEXT);
         RECT r;
-        if (!GetWindowRect(hwnd, &r))
+        if (!GetWindowRect(hwnd, &r) || !IsWindowVisible(hwnd))
             continue;
 
         if (!PtInRect(&r, globalNativePos)) // Check if window is under cursor
