@@ -104,6 +104,7 @@ MainWindow::~MainWindow()
 void MainWindow::addDockWidgetAsTab(DockWidget *widget)
 {
     Q_ASSERT(widget);
+    qCDebug(addwidget) << Q_FUNC_INFO << widget;
 
     if (d->supportsCentralFrame()) {
         d->m_dropArea->m_centralFrame->addWidget(widget);

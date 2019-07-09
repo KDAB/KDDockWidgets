@@ -182,6 +182,7 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other, Location loc
 void DockWidget::setWidget(QWidget *w)
 {
     Q_ASSERT(w && !d->widget);
+    qCDebug(addwidget) << Q_FUNC_INFO << w;
 
     d->widget = w;
     d->layout->addWidget(w);
