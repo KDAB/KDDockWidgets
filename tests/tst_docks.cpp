@@ -61,6 +61,22 @@ static bool s_pauseBeforeMove = false; // for debugging
 
 extern quintptr Q_CORE_EXPORT qtHookData[];
 
+static QString s_expectedWarning;
+
+struct SetExpectedWarning
+{
+    explicit SetExpectedWarning(const QString &s)
+    {
+        s_expectedWarning = s;
+    }
+
+    ~SetExpectedWarning()
+    {
+        s_expectedWarning.clear();
+    }
+};
+
+
 struct WidgetResize
 {
     int length;
@@ -212,6 +228,9 @@ void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context,
             msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")))
             return;
 
+        if (msg.contains(s_expectedWarning))
+            return;
+
         if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL"))
             qFatal("Got a warning, category=%s", context.category);
     }
@@ -304,6 +323,7 @@ private Q_SLOTS:
     void tst_invalidAnchorGroup();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
     void tst_negativeAnchorPosition();
+    void tst_stealFrame();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2941,6 +2961,7 @@ void TestDocks::tst_negativeAnchorPosition()
     // Tests that we don't hit:
     // void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position
 
+    EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(1000, 800));
 
     auto w1 = new MyWidget2(QSize(104, 104));
@@ -2981,6 +3002,87 @@ void TestDocks::tst_negativeAnchorPosition()
     // Now resize the Window, after removing middle one
     const int availableToShrink = layout->contentsSize().height() - layout->minimumSize().height();
     layout->setContentLength(Qt::Horizontal, layout->contentsLength(Qt::Horizontal) - availableToShrink); // Should not warn about negative sizes
+
+    d2->deleteLater();
+    waitForDeleted(d2);
+}
+
+void TestDocks::tst_stealFrame()
+{
+    // Tests using addWidget() with dock widgets which are already in a layout
+
+    auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+
+    auto m2 = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+    auto dock4 = createDockWidget(QStringLiteral("dock4"), new QPushButton(QStringLiteral("four")));
+
+    auto dropArea1 = qobject_cast<DropArea*>(m1->centralWidget());
+    MultiSplitterLayout *layout1 = dropArea1->multiSplitter();
+
+    auto dropArea2 = qobject_cast<DropArea*>(m2->centralWidget());
+    MultiSplitterLayout *layout2 = dropArea2->multiSplitter();
+
+    m1->addDockWidget(dock1, Location_OnRight);
+    m1->addDockWidget(dock2, Location_OnRight);
+    m2->addDockWidget(dock3, Location_OnRight);
+    m2->addDockWidget(dock4, Location_OnRight);
+
+    // 1. MainWindow #1 steals a widget from MainWindow2 and vice-versa
+    m1->addDockWidget(dock3, Location_OnRight);
+    m1->addDockWidget(dock4, Location_OnRight);
+    m2->addDockWidget(dock1, Location_OnRight);
+    Item *item2 = layout1->itemForFrame(dock2->frame());
+    m2->addDockWidget(dock2, Location_OnRight);
+
+    QVERIFY(waitForDeleted(item2));
+
+    QCOMPARE(layout1->count(), 2);
+    QCOMPARE(layout2->count(), 2);
+    QCOMPARE(layout1->placeholderCount(), 0);
+    QCOMPARE(layout2->placeholderCount(), 0);
+
+    // 2. MainWindow #1 steals a widget from MainWindow2 and vice-versa, but adds as tabs
+    dock1->addDockWidgetAsTab(dock3);
+    auto f2 = dock2->frame();
+    dock4->addDockWidgetAsTab(dock2);
+    QVERIFY(waitForDeleted(f2));
+
+    QCOMPARE(layout1->count(), 1);
+    QCOMPARE(layout2->count(), 1);
+    QCOMPARE(layout1->placeholderCount(), 0);
+    QCOMPARE(layout2->placeholderCount(), 0);
+
+    // 3. Test stealing a tab from the same tab-widget we're in. Nothing happens
+    {
+        SetExpectedWarning sew(QLatin1String("Already contains KDDockWidgets::DockWidget")); // Supress the qFatal this time
+        dock1->addDockWidgetAsTab(dock3);
+        QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
+    }
+
+    // 4. Steal from another tab which resides in another Frame, which resides in the same main window
+    m1->addDockWidget(dock1, Location_OnTop);
+    f2 = dock2->frame();
+    dock1->addDockWidgetAsTab(dock2);
+    QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
+    QCOMPARE(dock4->frame()->dockWidgetCount(), 1);
+
+    QCOMPARE(layout1->count(), 2);
+    QCOMPARE(layout1->placeholderCount(), 0);
+
+    // 5. And also steal a side-by-side one into the tab
+    auto f4 = dock4->frame();
+    dock1->addDockWidgetAsTab(dock4);
+    QVERIFY(waitForDeleted(f4));
+    QCOMPARE(layout1->count(), 1);
+    QCOMPARE(layout1->placeholderCount(), 0);
+
+    // 6. Steal from tab to side-by-side within the same MainWindow
+    m1->addDockWidget(dock1, Location_OnLeft);
+    QCOMPARE(layout1->count(), 2);
+    QCOMPARE(layout1->placeholderCount(), 0);
 }
 
 // QTest::qWait(50000)
