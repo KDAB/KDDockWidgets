@@ -187,7 +187,6 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     const bool sourceIsAMultiSplitter = sourceMultiSplitter != nullptr;
     const bool relativeToThis = relativeToItem == nullptr;
 
-    AnchorGroup targetAnchorGroup = this->targetAnchorGroup(relativeToItem);
     Anchor *newAnchor = nullptr;
     const QRect dropRect = rectForDrop(w, location, relativeToItem);
 
@@ -209,6 +208,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         item = new Item(frame, this);
     }
 
+    AnchorGroup targetAnchorGroup = this->targetAnchorGroup(relativeToItem);
     if (relativeToThis) {
         if (!isEmpty())
             newAnchor = this->newAnchor(targetAnchorGroup, location);
