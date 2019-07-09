@@ -187,20 +187,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     const bool sourceIsAMultiSplitter = sourceMultiSplitter != nullptr;
     const bool relativeToThis = relativeToItem == nullptr;
 
-    AnchorGroup targetAnchorGroup = relativeToThis ? staticAnchorGroup()
-                                                   : anchorsForPos(relativeToItem->geometry().center());
-    if (!targetAnchorGroup.isValid()) {
-        qWarning() << Q_FUNC_INFO << "Invalid anchor group=\n"
-                   << "    " << &targetAnchorGroup
-                   << "\n      staticAnchorGroup=" << staticAnchorGroup()
-                   << "\n      relativeToThis=" << relativeToThis
-                   << "\n      relativeToWidget=" << relativeToWidget
-                   << "\n      relativeTo=" << relativeToItem;
-
-        dumpDebug();
-        Q_ASSERT(false);
-    }
-
+    AnchorGroup targetAnchorGroup = this->targetAnchorGroup(relativeToItem);
     Anchor *newAnchor = nullptr;
     const QRect dropRect = rectForDrop(w, location, relativeToItem);
 
@@ -1032,6 +1019,23 @@ QVector<DockWidget *> MultiSplitterLayout::dockWidgets() const
         result << frame->dockWidgets();
 
     return result;
+}
+
+AnchorGroup MultiSplitterLayout::targetAnchorGroup(Item *relativeTo) const
+{
+    AnchorGroup group = relativeTo ? anchorsForPos(relativeTo->geometry().center())
+                                   : staticAnchorGroup();
+
+    if (!group.isValid()) {
+        qWarning() << Q_FUNC_INFO << "Invalid anchor group:" << group
+                   << "; staticAnchorGroup=" << staticAnchorGroup()
+                   << "; relativeTo=" << relativeTo;
+
+        dumpDebug();
+        Q_ASSERT(false);
+    }
+
+    return group;
 }
 
 bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const

@@ -319,6 +319,12 @@ public:
      */
     QVector<DockWidget*> dockWidgets() const;
 
+    /**
+     * @brief Returns the AnchorGroup for adding an item relative to @p relativeTo
+     * If relativeTo is null then it returns the static anchorgroups
+     */
+    AnchorGroup targetAnchorGroup(Item *relativeTo) const;
+
 Q_SIGNALS:
     ///@brief emitted when the number of widgets changes
     ///@param count the new widget count
