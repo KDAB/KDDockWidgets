@@ -147,15 +147,20 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other)
         return;
     }
 
-    if (isWindow()) {
-        // Doesn't have a frame yet
-        morphIntoFloatingWindow();
-    }
-
     Frame *frame = this->frame();
     if (!frame) {
         qWarning() << Q_FUNC_INFO << "Couldn't find frame to add dock widget to";
         return;
+    }
+
+    if (frame->contains(other)) {
+        qWarning() << Q_FUNC_INFO << "Already contains" << other;
+        return;
+    }
+
+    if (isWindow()) {
+        // Doesn't have a frame yet
+        morphIntoFloatingWindow();
     }
 
     frame->addWidget(other);
