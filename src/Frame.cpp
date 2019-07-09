@@ -308,7 +308,7 @@ int Frame::dbg_numFrames()
 
 void Frame::dumpDebug()
 {
-    qDebug() << "        Frame:";
+    qDebug() << "        Frame:" << this;
     qDebug() << "            layoutItem=" << m_layoutItem << "; num=" << m_tabWidget->count();
     for (auto dw : dockWidgets()) {
         qDebug() << "            dockwidget=" << dw << "; dw->layoutItem=" << dw->lastPosition()->layoutItem();
