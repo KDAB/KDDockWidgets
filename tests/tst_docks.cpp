@@ -239,6 +239,7 @@ class TestDocks : public QObject
 public Q_SLOTS:
     void initTestCase()
     {
+        qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
         qApp->setOrganizationName(QStringLiteral("KDAB"));
         qApp->setApplicationName(QStringLiteral("dockwidgets-unit-tests"));
         s_original = qInstallMessageHandler(fatalWarningsMessageHandler);
