@@ -75,6 +75,7 @@ public:
 
     bool checkSanity(MultiSplitterLayout::AnchorSanityOption o = MultiSplitterLayout::AnchorSanity_All);
     QWidget *window() const;
+    bool contains(DockWidget *) const;
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;

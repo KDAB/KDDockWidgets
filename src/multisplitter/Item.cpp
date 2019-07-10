@@ -74,16 +74,6 @@ Item::Item(Frame *frame, MultiSplitterLayout *parent)
     d->updateObjectName();
 }
 
-Item::Item(DockWidget *dw, MultiSplitterLayout *parent)
-    : QObject(parent)
-    , d(new Private(this, nullptr, parent))
-{
-    setLayout(parent);
-
-    dw->addPlaceholderItem(this);
-    d->turnIntoPlaceholder();
-}
-
 Item::~Item()
 {
     if (!d->m_destroying) {

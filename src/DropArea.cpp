@@ -127,25 +127,35 @@ void DropArea::addDockWidget(DockWidget *dw, Location location, DockWidget *rela
     }
 
     Frame *frame = nullptr;
+    Frame *relativeToFrame = relativeTo ? relativeTo->frame() : nullptr;
 
     // Check if the dock widget already exists in the layout
-    if (Frame *oldFrame = dw->frame()) {
-        if (oldFrame->hasSingleDockWidget() && m_layout->contains(oldFrame)) {
+    if (contains(dw)) {
+        if (option & AddingOption_StartHidden) {
+            // StartHidden is just to be used at startup, not to moving stuff around
+            qWarning() << Q_FUNC_INFO << "Dock widget already exists in the layout";
+            return;
+        }
+
+        Frame *oldFrame = dw->frame();
+        if (oldFrame->hasSingleDockWidget()) {
             Q_ASSERT(oldFrame->contains(dw));
             // The frame only has this dock widget, and the frame is already in the layout. So move the frame instead
             frame = oldFrame;
+        } else {
+            frame = new Frame();
+            frame->addWidget(dw);
         }
-    }
-
-    if (!frame) {
-        // The public API deals in terms of DockWidget, but our internal MultiSplitter deals in terms
-        // of Frame, so wrap it:
+    } else {
         frame = new Frame();
         frame->addWidget(dw);
     }
 
-    Frame *relativeToFrame = relativeTo ? relativeTo->frame() : nullptr;
-    m_layout->addWidget(frame, location, relativeToFrame, option);
+    if (option & AddingOption_StartHidden) {
+        m_layout->addWidget(dw, location, relativeToFrame, option);
+    } else {
+        m_layout->addWidget(frame, location, relativeToFrame, option);
+    }
 }
 
 bool DropArea::isInMainWindow() const
@@ -182,6 +192,11 @@ QWidget *DropArea::window() const
         return pw->window();
 
     return nullptr;
+}
+
+bool DropArea::contains(DockWidget *dw) const
+{
+    return dw->frame() && m_layout->contains(dw->frame());
 }
 
 void DropArea::hover(Draggable *draggable, QPoint globalPos)

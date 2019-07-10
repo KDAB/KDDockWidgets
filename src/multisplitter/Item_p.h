@@ -94,7 +94,6 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject // clazy:exclude=ctor-mi
     Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
 public:
     explicit Item(Frame *frame, MultiSplitterLayout *parent);
-    explicit Item(DockWidget *dw, MultiSplitterLayout *parent);
     ~Item() override;
 
     int x() const;

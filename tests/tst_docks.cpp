@@ -324,6 +324,7 @@ private Q_SLOTS:
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
     void tst_negativeAnchorPosition();
     void tst_stealFrame();
+    void tst_addAsPlaceholder();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -3010,7 +3011,7 @@ void TestDocks::tst_negativeAnchorPosition()
 void TestDocks::tst_stealFrame()
 {
     // Tests using addWidget() with dock widgets which are already in a layout
-
+    EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
@@ -3108,6 +3109,31 @@ void TestDocks::tst_stealFrame()
     QVERIFY(dock1->isVisible());
     QCOMPARE(layout2->count(), 2);  // Nothing happened
     QCOMPARE(layout2->placeholderCount(), 0);
+}
+
+void TestDocks::tst_addAsPlaceholder()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+
+    m->addDockWidget(dock1, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnTop, nullptr, AddingOption_StartHidden);
+
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QVERIFY(!dock2->isVisible());
+
+    dock2->show();
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    dock2->deleteLater();
+    waitForDeleted(dock2);
 }
 
 // QTest::qWait(50000)

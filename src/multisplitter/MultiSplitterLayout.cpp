@@ -98,7 +98,7 @@ MultiSplitterWidget *MultiSplitterLayout::parentWidget() const
 
 bool MultiSplitterLayout::validateInputs(QWidget *widget,
                                          Location location,
-                                         const Frame *relativeToFrame) const
+                                         const Frame *relativeToFrame, AddingOption option) const
 {
     if (!widget) {
         qWarning() << Q_FUNC_INFO << "Widget is null";
@@ -106,8 +106,17 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
         return false;
     }
 
-    if (!qobject_cast<Frame*>(widget) && !qobject_cast<MultiSplitterWidget*>(widget)) {
+    const bool isDockWidget = qobject_cast<DockWidget*>(widget);
+    const bool isStartHidden = option & AddingOption_StartHidden;
+
+    if (!qobject_cast<Frame*>(widget) && !qobject_cast<MultiSplitterWidget*>(widget) && !isDockWidget) {
         qWarning() << "Unknown widget type" << widget;
+        Q_ASSERT(false);
+        return false;
+    }
+
+    if (isDockWidget != isStartHidden) {
+        qWarning() << "Wrong parameters" << isDockWidget << isStartHidden;
         Q_ASSERT(false);
         return false;
     }
@@ -152,8 +161,6 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                        << "; w.min=" << KDDockWidgets::widgetMinLength(w, anchorOrientationForLocation(location))
                        << "; frame=" << (void*)frame;
 
-
-
     if (Item *item = itemForFrame(frame)) {
         // Item already exists, remove it.
         // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
@@ -168,7 +175,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     Item *relativeToItem = itemForFrame(relativeToWidget);
 
     // Make some sanity checks:
-    if (!validateInputs(w, location, relativeToWidget))
+    if (!validateInputs(w, location, relativeToWidget, option))
         return;
 
     if (option & AddingOption_StartHidden) {
@@ -352,10 +359,14 @@ void MultiSplitterLayout::addAsPlaceholder(DockWidget *dockWidget, Location loca
     auto result = createTargetAnchorGroup(location, relativeTo);
     AnchorGroup targetAnchorGroup = result.first;
 
-    auto item = new Item(dockWidget, this);
+    auto frame = new Frame(parentWidget());
+    auto item = new Item(frame, this);
 
     targetAnchorGroup.addItem(item);
     addItems_internal(ItemList{ item }, false);
+
+    dockWidget->addPlaceholderItem(item);
+    delete frame;
 
     Q_ASSERT(!dockWidget->isVisible());
 }
@@ -1024,7 +1035,6 @@ Frame::List MultiSplitterLayout::framesFrom(QWidget *frameOrMultiSplitter) const
     if (auto msw = qobject_cast<MultiSplitterWidget*>(frameOrMultiSplitter))
         return msw->multiSplitter()->frames();
 
-    Q_ASSERT(false);
     return {};
 }
 
