@@ -311,7 +311,7 @@ QWidget *DragController::qtTopLevelUnderCursor() const
             for (auto topLevel : topLevels) {
                 if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
                     if (hwnd == GetParent((HWND)topLevel->windowHandle()->winId())) {
-                        if (topLevel->geometry().contains(globalPos) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
+                        if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos)) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
                             qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
                             return topLevel;
                         }

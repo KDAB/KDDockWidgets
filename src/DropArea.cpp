@@ -229,8 +229,6 @@ bool DropArea::drop(Draggable *draggable, QPoint globalPos)
         return false;
     }
 
-    Q_ASSERT(window()->geometry().contains(globalPos));
-
     if (m_dropIndicatorOverlay->currentDropLocation() == DropIndicatorOverlayInterface::DropLocation_None) {
         qCDebug(hovering) << "DropArea::drop: bailing out, drop location = none";
         return false;
