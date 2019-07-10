@@ -1164,6 +1164,12 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 
         if (!checkSides(Anchor::Side1) || !checkSides(Anchor::Side2))
             return false;
+
+        if (anchor->isFollowing() && !qobject_cast<Anchor*>(anchor->followee())) {
+            qWarning() << "Anchor is following but followee was deleted already";
+            return false;
+        }
+
     }
 
     // Check that no widget intersects with an anchor

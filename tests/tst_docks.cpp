@@ -325,6 +325,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPosition();
     void tst_stealFrame();
     void tst_addAsPlaceholder();
+    void tst_removeItem();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -3132,6 +3133,114 @@ void TestDocks::tst_addAsPlaceholder()
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 0);
 
+    dock2->deleteLater();
+    waitForDeleted(dock2);
+}
+
+void TestDocks::tst_removeItem()
+{
+    // Tests that MultiSplitterLayout::removeItem() works
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+
+    m->addDockWidget(dock1, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnTop, nullptr, AddingOption_StartHidden);
+
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 1);
+
+    // 1. Remove an item that's a placeholder
+    Item *item2 = dock2->lastPosition()->layoutItem();
+    layout->removeItem(item2);
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
+
+    // 2. Remove an item that has an actual widget
+    Item *item1 = dock1->lastPosition()->layoutItem();
+    layout->removeItem(item1);
+    QCOMPARE(layout->count(), 0);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
+
+
+    // 3. Remove an item that has anchors following one of its other anchors (Tests that anchors stop following)
+    // Stack 1, 2, 3
+    m->addDockWidget(dock3, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnBottom);
+    m->addDockWidget(dock1, Location_OnBottom);
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
+
+    qDebug() << "Closing... ";
+    dock2->close();
+    auto frame1 = dock1->frame();
+    dock1->close();
+    QVERIFY(waitForDeleted(frame1));
+
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 2);
+    QCOMPARE(layout->numAchorsFollowing(), 2);
+
+    // Now remove the items
+    layout->removeItem(dock2->lastPosition()->layoutItem());
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 1);
+    layout->checkSanity();
+    layout->removeItem(dock1->lastPosition()->layoutItem());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
+
+    // Add again
+    m->addDockWidget(dock2, Location_OnBottom);
+    m->addDockWidget(dock1, Location_OnBottom);
+    dock2->close();
+    frame1 = dock1->frame();
+    dock1->close();
+    QVERIFY(waitForDeleted(frame1));
+
+    // Now remove the items, but first dock1
+    layout->removeItem(dock1->lastPosition()->layoutItem());
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 1);
+    layout->checkSanity();
+    layout->removeItem(dock2->lastPosition()->layoutItem());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
+    layout->checkSanity();
+
+    // Add again, stacked as 1, 2, 3, then close 2 and 3.
+    m->addDockWidget(dock2, Location_OnTop);
+    m->addDockWidget(dock1, Location_OnTop);
+
+    auto frame2 = dock2->frame();
+    dock2->close();
+    waitForDeleted(frame2);
+
+    auto frame3 = dock3->frame();
+    dock3->close();
+    waitForDeleted(frame3);
+
+    // The second anchor is now following the 3rd, while the 3rd is following 'bottom'
+    layout->removeItem(dock3->lastPosition()->layoutItem()); // will trigger the 3rd anchor to be removed
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 1);
+    layout->checkSanity();
+
+    dock1->deleteLater();
     dock2->deleteLater();
     waitForDeleted(dock2);
 }
