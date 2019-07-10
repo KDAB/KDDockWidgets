@@ -3242,7 +3242,8 @@ void TestDocks::tst_removeItem()
 
     dock1->deleteLater();
     dock2->deleteLater();
-    waitForDeleted(dock2);
+    dock3->deleteLater();
+    waitForDeleted(dock3);
 }
 
 // QTest::qWait(50000)

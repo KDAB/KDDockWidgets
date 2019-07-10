@@ -347,8 +347,15 @@ void Anchor::consume(Anchor *other, Side side)
     auto items = other->items(side);
     other->removeItems(side);
     addItems(items, side);
-    if (other->isUnneeded())
+    if (other->isUnneeded()) {
+        // Before deleting an unneeded anchor, we must check if there's anchors following it, and make them follow us instead
+        Anchor::List anchorsFollowingOther = m_layout->anchorsFollowing(other);
+        for (Anchor *follower : anchorsFollowingOther) {
+            follower->setFollowee(this);
+        }
+
         delete other;
+    }
 }
 
 void Anchor::swapItems(Anchor *other)
