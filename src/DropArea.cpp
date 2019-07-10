@@ -126,17 +126,17 @@ void DropArea::addDockWidget(DockWidget *dw, Location location, DockWidget *rela
         return;
     }
 
+    if ((option & AddingOption_StartHidden) && dw->frame() != nullptr) {
+        // StartHidden is just to be used at startup, not to moving stuff around
+        qWarning() << Q_FUNC_INFO << "Dock widget already exists in the layout";
+        return;
+    }
+
     Frame *frame = nullptr;
     Frame *relativeToFrame = relativeTo ? relativeTo->frame() : nullptr;
 
     // Check if the dock widget already exists in the layout
     if (contains(dw)) {
-        if (option & AddingOption_StartHidden) {
-            // StartHidden is just to be used at startup, not to moving stuff around
-            qWarning() << Q_FUNC_INFO << "Dock widget already exists in the layout";
-            return;
-        }
-
         Frame *oldFrame = dw->frame();
         if (oldFrame->hasSingleDockWidget()) {
             Q_ASSERT(oldFrame->contains(dw));
