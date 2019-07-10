@@ -204,6 +204,11 @@ public:
     ///@brief returns list of separators
     const Anchor::List anchors() const { return m_anchors; }
 
+    /**
+     * @brief Returns the list of anchors that are following @p followed
+     */
+    Anchor::List anchorsFollowing(Anchor *followed) const;
+
     ///@brief returns the number of anchors that are following others, just for tests.
     int numAchorsFollowing() const;
 
