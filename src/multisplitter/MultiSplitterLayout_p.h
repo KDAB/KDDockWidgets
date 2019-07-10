@@ -205,9 +205,9 @@ public:
     const Anchor::List anchors() const { return m_anchors; }
 
     /**
-     * @brief Returns the list of anchors that are following @p followed
+     * @brief Returns the list of anchors that are following @p followee
      */
-    Anchor::List anchorsFollowing(Anchor *followed) const;
+    Anchor::List anchorsFollowing(Anchor *followee) const;
 
     ///@brief returns the number of anchors that are following others, just for tests.
     int numAchorsFollowing() const;

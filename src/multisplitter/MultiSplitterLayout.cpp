@@ -777,15 +777,15 @@ void MultiSplitterLayout::setAnchorBeingDragged(Anchor *anchor)
     m_anchorBeingDragged = anchor;
 }
 
-Anchor::List MultiSplitterLayout::anchorsFollowing(Anchor *followed) const
+Anchor::List MultiSplitterLayout::anchorsFollowing(Anchor *followee) const
 {
-    if (!followed)
+    if (!followee)
         return {};
 
     Anchor::List followers;
 
     for (Anchor *a : m_anchors) {
-        if (a->followee() == followed)
+        if (a->followee() == followee)
             followers.push_back(a);
     }
 
