@@ -832,6 +832,15 @@ Anchor *MultiSplitterLayout::staticAnchor(Anchor::Type type) const
     return nullptr;
 }
 
+Anchor *MultiSplitterLayout::staticAnchor(Anchor::Side side, Qt::Orientation orientation) const
+{
+    if (orientation == Qt::Vertical) {
+        return side == Anchor::Side1 ? m_leftAnchor : m_rightAnchor;
+    } else {
+        return side == Anchor::Side1 ? m_topAnchor : m_bottomAnchor;
+    }
+}
+
 AnchorGroup MultiSplitterLayout::anchorsForPos(QPoint pos) const
 {
     Item *item = itemAt(pos);
@@ -1016,8 +1025,8 @@ Anchor *MultiSplitterLayout::newAnchor(AnchorGroup &group, Location location)
     Q_ASSERT(donor != newAnchor);
 
     if (newAnchor->onlyHasPlaceholderItems(outterSide)) {
-        Item *placeholder = newAnchor->items(outterSide).at(0);
-        placeholder->anchorGroup().turnIntoPlaceholder();
+        Anchor *anchor = newAnchor->findNearestAnchorWithItems(outterSide);
+        newAnchor->setFollowee(anchor);
     }
 
     if (!checkSanity(AnchorSanity_Normal)) {

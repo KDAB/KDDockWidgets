@@ -3316,34 +3316,55 @@ void TestDocks::tst_removeItem()
 
 void TestDocks::tst_startHidden()
 {
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
-    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+    // EnsureTopLevelsDeleted e;
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
 
-    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+        auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+        MultiSplitterLayout *layout = dropArea->multiSplitter();
 
-    m->addDockWidget(dock1, Location_OnTop, nullptr, AddingOption_StartHidden);
+        m->addDockWidget(dock1, Location_OnTop, nullptr, AddingOption_StartHidden);
 
-    QCOMPARE(layout->count(), 1);
-    QCOMPARE(layout->placeholderCount(), 1);
-    QCOMPARE(layout->numAchorsFollowing(), 0);
+        QCOMPARE(layout->count(), 1);
+        QCOMPARE(layout->placeholderCount(), 1);
+        QCOMPARE(layout->numAchorsFollowing(), 0);
 
-    m->addDockWidget(dock2, Location_OnTop);
+        m->addDockWidget(dock2, Location_OnTop);
 
-    layout->checkSanity();
+        layout->checkSanity();
 
-    QCOMPARE(layout->count(), 2);
-    QCOMPARE(layout->placeholderCount(), 1);
-    QCOMPARE(layout->numAchorsFollowing(), 1);
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 1);
+        QCOMPARE(layout->numAchorsFollowing(), 1);
 
-    dock1->show();
-    QCOMPARE(layout->count(), 2);
-    QCOMPARE(layout->placeholderCount(), 0);
-    QCOMPARE(layout->numAchorsFollowing(), 0);
+        dock1->show();
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
+        QCOMPARE(layout->numAchorsFollowing(), 0);
 
-    waitForResize(dock2);
+        waitForResize(dock2);
+    }
+
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+        auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+
+        //auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+        //MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+        m->addDockWidget(dock1, Location_OnLeft, nullptr, AddingOption_StartHidden);
+        m->addDockWidget(dock2, Location_OnBottom, nullptr, AddingOption_StartHidden);
+        m->addDockWidget(dock3, Location_OnRight, nullptr, AddingOption_StartHidden);
+
+        //dock1->show();
+        //dock2->show();
+        //dock3->show();
+        //waitForResize(dock2);
+    }
 }
 
 void TestDocks::tst_startClosed()

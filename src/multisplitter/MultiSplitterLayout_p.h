@@ -218,6 +218,8 @@ public:
     ///@brief returns either the left, top, right or bottom separator, depending on the @p type
     Anchor *staticAnchor(Anchor::Type type) const;
 
+    Anchor *staticAnchor(Anchor::Side side, Qt::Orientation orientation) const;
+
     ///@brief a function that all code paths adding Items will call.
     ///It's mostly for code reuse, so we don't duplicate what's done here. But it's also nice to
     ///have a central place that we know will be called

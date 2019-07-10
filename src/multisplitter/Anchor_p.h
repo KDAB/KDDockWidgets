@@ -245,6 +245,12 @@ public:
      */
     bool findAnchor(Anchor *anchor, Side side) const;
 
+    /**
+     * @brief Returns the nearest Anchor with non-placeholder items on side @p side
+     * If nothing is found then returns the static anchor on that side
+     */
+    Anchor *findNearestAnchorWithItems(Side side) const;
+
     static int thickness(bool staticAnchor);
     static Anchor::Side oppositeSide(Side side);
     void onFolloweePositionChanged(int pos);

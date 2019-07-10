@@ -450,7 +450,7 @@ void AnchorGroup::turnIntoPlaceholder()
 bool AnchorGroup::isSquashed() const
 {
     // If left or top are following to Side2 that's inwards, so our group is squashed. Because it's holding a placeholder
-    // Side1 is inswards for right and bottom.
+    // Side1 is inwards for right and bottom.
 
     if (left->findAnchor(left->endFollowee(), Anchor::Side2))
         return true;

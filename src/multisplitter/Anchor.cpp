@@ -502,6 +502,27 @@ bool Anchor::findAnchor(Anchor *anchor, Anchor::Side side) const
     return false;
 }
 
+Anchor *Anchor::findNearestAnchorWithItems(Anchor::Side side) const
+{
+    Anchor *candidate = nullptr;
+    for (Item *item : items(side)) {
+        Anchor *a = item->anchorAtSide(side, orientation());
+        if (item->isPlaceholder()) {
+            a = item->anchorAtSide(side, orientation());
+        } else {
+            if (!candidate || (side == Side1 && a->position() > candidate->position()) || (side == Side2 && a->position() < candidate->position()) ) {
+                candidate = a;
+            }
+        }
+    }
+
+
+    if (!candidate)
+        candidate = m_layout->staticAnchor(side, orientation());
+
+    return candidate;
+}
+
 void Anchor::onFolloweePositionChanged(int pos)
 {
     Q_ASSERT(isFollowing());
