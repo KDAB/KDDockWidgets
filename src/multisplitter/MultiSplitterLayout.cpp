@@ -143,17 +143,24 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
 
 void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relativeToWidget, AddingOption option)
 {
+    auto frame = qobject_cast<Frame*>(w);
     qCDebug(addwidget) << Q_FUNC_INFO << w
                        << "; location=" << locationStr(location)
                        << "; relativeTo=" << relativeToWidget
                        << "; contentSize=" << contentsSize()
                        << "; w.size=" << w->size()
-                       << "; w.min=" << KDDockWidgets::widgetMinLength(w, anchorOrientationForLocation(location));
+                       << "; w.min=" << KDDockWidgets::widgetMinLength(w, anchorOrientationForLocation(location))
+                       << "; frame=" << (void*)frame;
 
-    Item *item = itemForFrame(qobject_cast<Frame*>(w));
-    if (item) {
-        qWarning() << "Item already exists;";
-        return;
+
+
+    if (Item *item = itemForFrame(frame)) {
+        // Item already exists, remove it.
+        // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
+        QPointer<Item> ptr = item;
+        frame->setParent(nullptr); // so ~Item doesn't delete it
+        frame->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
+        Q_ASSERT(!ptr);
     }
 
     unrefOldPlaceholders(framesFrom(w));
@@ -309,9 +316,8 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         targetAnchorGroup.addItem(sourceMultiSplitter);
         addItems_internal(items);
     } else {
-        auto frame = qobject_cast<Frame*>(w);
         Q_ASSERT(frame);
-        item = new Item(frame, this);
+        auto item = new Item(frame, this);
         targetAnchorGroup.addItem(item);
         addItems_internal(ItemList{ item });
     }
@@ -512,6 +518,11 @@ void MultiSplitterLayout::removeItem(Item *item)
 bool MultiSplitterLayout::contains(const Item *item) const
 {
     return m_items.contains(const_cast<Item*>(item));
+}
+
+bool MultiSplitterLayout::contains(const Frame *frame) const
+{
+    return itemForFrame(frame) != nullptr;
 }
 
 Item *MultiSplitterLayout::itemAt(QPoint p) const

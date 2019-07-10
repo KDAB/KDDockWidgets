@@ -80,6 +80,9 @@ public:
     ///@brief Inserts a widget into the Frame's TabWidget at @p index
     void insertWidget(DockWidget *, int index);
 
+    ///@brief removes a dockwidget from the frame
+    void removeWidget(DockWidget *);
+
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;
     TitleBar *titleBar() const;
@@ -187,9 +190,9 @@ inline QDebug operator<< (QDebug d, KDDockWidgets::Frame *frame)
 {
     if (frame) {
         d << static_cast<QObject*>(frame);
-        d << "\n; window=" << frame->window();
-        d << "\n; options=" << frame->options();
-        d << "\n; dockwidgets=" << frame->dockWidgets();
+        d << "; window=" << frame->window();
+        d << "; options=" << frame->options();
+        d << "; dockwidgets=" << frame->dockWidgets();
     } else {
         d << "nullptr";
     }

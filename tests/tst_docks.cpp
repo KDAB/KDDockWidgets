@@ -228,7 +228,7 @@ void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context,
             msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")))
             return;
 
-        if (msg.contains(s_expectedWarning))
+        if (!s_expectedWarning.isEmpty() && msg.contains(s_expectedWarning))
             return;
 
         if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL"))
@@ -3084,7 +3084,7 @@ void TestDocks::tst_stealFrame()
     QCOMPARE(layout1->count(), 2);
     QCOMPARE(layout1->placeholderCount(), 0);
 
-    // 6.
+    // 6. side-by-side to side-by-side within same MainWindow
     m2->addDockWidget(dock1, Location_OnRight);
     QCOMPARE(layout2->count(), 2);
     QCOMPARE(layout2->placeholderCount(), 0);
@@ -3097,11 +3097,17 @@ void TestDocks::tst_stealFrame()
         QVERIFY(dock1->isVisible());
     }
 
-    //WAIT
+    QVERIFY(dock1->isVisible());
+    m2->addDockWidget(dock1, Location_OnLeft, nullptr); // Should not warn
 
-    //m2->addDockWidget(dock1, Location_OnLeft, dock2);
-    //QCOMPARE(layout2->count(), 2);  // Nothing happened
-    //QCOMPARE(layout2->placeholderCount(), 0);
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(layout2->count(), 2);  // Nothing happened
+    QCOMPARE(layout2->placeholderCount(), 0);
+
+    m2->addDockWidget(dock1, Location_OnLeft, nullptr);
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(layout2->count(), 2);  // Nothing happened
+    QCOMPARE(layout2->placeholderCount(), 0);
 }
 
 // QTest::qWait(50000)

@@ -93,7 +93,7 @@ Frame::~Frame()
     if (m_layoutItem)
         m_layoutItem->unref();
 
-    qCDebug(creation) << "~Frame" << this;
+    qCDebug(creation) << "~Frame" << (void*)this;
 }
 
 void Frame::addWidget(DockWidget *dockWidget)
@@ -147,6 +147,11 @@ void Frame::insertWidget(DockWidget *dockWidget, int index)
     if (hasSingleDockWidget()) {
         Q_EMIT currentDockWidgetChanged(dockWidget);
     }
+}
+
+void Frame::removeWidget(DockWidget *dw)
+{
+    m_tabWidget->removeDockWidget(dw);
 }
 
 void Frame::onDockWidgetCountChanged()
@@ -283,18 +288,22 @@ void Frame::onDockWidgetHidden(DockWidget *w)
 
 void Frame::setLayoutItem(Item *item)
 {
-    Q_ASSERT(item);
     if (item == m_layoutItem)
         return;
 
     if (m_layoutItem)
         m_layoutItem->unref();
 
-    item->ref();
+    if (item)
+        item->ref();
 
     m_layoutItem = item;
-    for (DockWidget *dw : dockWidgets()) {
-        dw->addPlaceholderItem(item);
+    if (item) {
+        for (DockWidget *dw : dockWidgets())
+            dw->addPlaceholderItem(item);
+    } else {
+        for (DockWidget *dw : dockWidgets())
+            dw->lastPosition()->removePlaceholders();
     }
 }
 

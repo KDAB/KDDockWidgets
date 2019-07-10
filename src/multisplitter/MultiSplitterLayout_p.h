@@ -139,6 +139,11 @@ public:
     bool contains(const Item *) const;
 
     /**
+     * @brief  Returns true if this layout contains the specified frame.
+     */
+    bool contains(const Frame *) const;
+
+    /**
      * @brief Returns the visible Item at pos @p p.
      */
     Item *itemAt(QPoint p) const;
