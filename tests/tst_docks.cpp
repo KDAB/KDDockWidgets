@@ -90,6 +90,7 @@ struct DockDescriptor {
     Location loc;
     int relativeToIndex;
     QPointer<DockWidget> createdDock;
+    KDDockWidgets::AddingOption option;
 };
 Q_DECLARE_METATYPE(DockDescriptor)
 
@@ -326,6 +327,8 @@ private Q_SLOTS:
     void tst_stealFrame();
     void tst_addAsPlaceholder();
     void tst_removeItem();
+    void tst_startHidden();
+    void tst_startClosed();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -2674,99 +2677,99 @@ void TestDocks::tst_28NestedWidgets_data()
     QTest::addColumn<QVector<int>>("docksToHide");
 
     QVector<DockDescriptor> docks = {
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnTop, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr }
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None }
     };
 
-    QTest::newRow("28") << docks << QVector<int>{11, 0};
+    //QTest::newRow("28") << docks << QVector<int>{11, 0};
     docks = {
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnTop, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        };
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+    };
 
     // 2. Produced valgrind invalid reads while adding
-    QTest::newRow("valgrind") << docks << QVector<int>{};
+    //QTest::newRow("valgrind") << docks << QVector<int>{};
 
     docks = {
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnTop, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
     };
-    QTest::newRow("bug_when_closing") << docks << QVector<int>{}; // Q_ASSERT(!isSquashed())
+    //QTest::newRow("bug_when_closing") << docks << QVector<int>{}; // Q_ASSERT(!isSquashed())
 
 
     docks = {
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
     };
 
-    QTest::newRow("bug_when_closing2") << docks << QVector<int>{};    // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
+    //QTest::newRow("bug_when_closing2") << docks << QVector<int>{};    // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
 
     docks = {
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnBottom, 0, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnTop, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnLeft, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnBottom, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr },
-        {Location_OnRight, -1, nullptr }
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnBottom, 0, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None }
     };
 
     QVector<int> docksToHide;
@@ -2775,7 +2778,67 @@ void TestDocks::tst_28NestedWidgets_data()
             docksToHide << i;
     }
 
-    QTest::newRow("bug_with_holes") << docks << docksToHide;
+    // QTest::newRow("bug_with_holes") << docks << docksToHide;
+
+    docks = {
+        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnLeft, 17, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None } };
+
+    docksToHide.clear();
+    //QTest::newRow("add_as_placeholder") << docks << docksToHide;
+
+
+
+    docks = {
+        /*{Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },*/
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        // {Location_OnRight, -1, nullptr, AddingOption_None }
+    };
+
+    QTest::newRow("add_as_placeholder_simple") << docks << docksToHide;
+
 }
 
 void TestDocks::tst_28NestedWidgets()
@@ -2786,6 +2849,8 @@ void TestDocks::tst_28NestedWidgets()
     // Tests a case that used to cause negative anchor position when turning into placeholder
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
 
     int i = 0;
     for (DockDescriptor &desc : docksToCreate) {
@@ -2795,7 +2860,9 @@ void TestDocks::tst_28NestedWidgets()
         if (desc.relativeToIndex != -1)
             relativeTo = docksToCreate.at(desc.relativeToIndex).createdDock;
 
-        m->addDockWidget(desc.createdDock, desc.loc, relativeTo);
+        m->addDockWidget(desc.createdDock, desc.loc, relativeTo, desc.option);
+        qDebug() << "Added" <<i;
+        layout->checkSanity();
         ++i;
     }
 
@@ -2808,6 +2875,7 @@ void TestDocks::tst_28NestedWidgets()
         docksToCreate.at(i).createdDock->deleteLater();
         QVERIFY(waitForDeleted(docksToCreate.at(i).createdDock));
     }
+
 
     // And hide the remaining ones
     i = 0;
@@ -3244,6 +3312,71 @@ void TestDocks::tst_removeItem()
     dock2->deleteLater();
     dock3->deleteLater();
     waitForDeleted(dock3);
+}
+
+void TestDocks::tst_startHidden()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+    m->addDockWidget(dock1, Location_OnTop, nullptr, AddingOption_StartHidden);
+
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
+
+    m->addDockWidget(dock2, Location_OnTop);
+
+    layout->checkSanity();
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 1);
+
+    dock1->show();
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
+
+    waitForResize(dock2);
+}
+
+void TestDocks::tst_startClosed()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+    m->addDockWidget(dock1, Location_OnTop);
+    Frame *frame1 = dock1->frame();
+    dock1->close();
+    waitForDeleted(frame1);
+
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
+
+    m->addDockWidget(dock2, Location_OnTop);
+
+    layout->checkSanity();
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->numAchorsFollowing(), 1);
+
+    dock1->show();
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
 }
 
 // QTest::qWait(50000)

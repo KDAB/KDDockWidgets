@@ -293,7 +293,8 @@ public:
         AnchorSanity_Intersections = 1,
         AnchorSanity_WidgetMinSizes = 2,
         AnchorSanity_WidgetInvalidSizes = 4,
-        AnchorSanity_All = AnchorSanity_Intersections | AnchorSanity_WidgetMinSizes | AnchorSanity_WidgetInvalidSizes,
+        AnchorSanity_Followers = 8,
+        AnchorSanity_All = AnchorSanity_Intersections | AnchorSanity_WidgetMinSizes | AnchorSanity_WidgetInvalidSizes | AnchorSanity_Followers,
     };
     Q_ENUM(AnchorSanityOption)
 
