@@ -6,6 +6,7 @@ set(DOCKSLIBS_SRCS
     DragController.cpp
     Draggable.cpp
     DropArea.cpp
+    DropAreaWithCentralFrame_p.h
     DockRegistry.cpp
     DropIndicatorOverlayInterface.cpp
     FloatingWindow.cpp

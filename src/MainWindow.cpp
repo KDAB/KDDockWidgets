@@ -30,6 +30,7 @@
 #include "Frame_p.h"
 #include "Logging_p.h"
 #include "DockRegistry_p.h"
+#include "DropAreaWithCentralFrame_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "multisplitter/MultiSplitterWidget_p.h"
 
@@ -37,33 +38,7 @@
 
 using namespace KDDockWidgets;
 
-namespace KDDockWidgets {
-class DropAreaWithCentralFrame : public DropArea
-{
-    Q_OBJECT
-public:
-    explicit DropAreaWithCentralFrame(QMainWindow *parent, MainWindowOptions options)
-        : DropArea(parent)
-        , m_centralFrame(createCentralFrame(options))
-    {
-        if (m_centralFrame)
-            m_layout->addWidget(m_centralFrame, KDDockWidgets::Location_OnTop, {});
-    }
-
-    static Frame* createCentralFrame(MainWindowOptions options)
-    {
-        return (options & MainWindowOption_HasCentralFrame) ? new Frame(nullptr, Frame::Option_IsCentralFrame | Frame::Option_AlwaysShowsTabs)
-                                                            : nullptr;
-    }
-
-    ~DropAreaWithCentralFrame();
-
-    Frame *const m_centralFrame = nullptr;
-};
-
 DropAreaWithCentralFrame::~DropAreaWithCentralFrame() {}
-
-}
 
 class MainWindow::Private
 {
@@ -133,5 +108,3 @@ bool MainWindow::eventFilter(QObject *o, QEvent *e)
     qCDebug(globalevents) << "event: " << e->type() << ";receiver=" << o;
     return QMainWindow::eventFilter(o, e);
 }
-
-#include "MainWindow.moc"
