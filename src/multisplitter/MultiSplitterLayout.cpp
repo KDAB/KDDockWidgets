@@ -159,7 +159,8 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                        << "; contentSize=" << contentsSize()
                        << "; w.size=" << w->size()
                        << "; w.min=" << KDDockWidgets::widgetMinLength(w, anchorOrientationForLocation(location))
-                       << "; frame=" << (void*)frame;
+                       << "; frame=" << (void*)frame
+                       << "; option=" << option;
 
     if (Item *item = itemForFrame(frame)) {
         // Item already exists, remove it.
