@@ -64,7 +64,6 @@ struct AnchorGroup {
     Anchor *anchorAtSide(Anchor::Side side, Qt::Orientation orientation) const;
 
     void setAnchor(Anchor *anchor, KDDockWidgets::Location);
-    Anchor *anchorFollowing() const;
 
     Anchor::List anchorsFollowingInwards() const;
 

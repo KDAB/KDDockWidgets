@@ -1261,14 +1261,16 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 void MultiSplitterLayout::restorePlaceholder(Item *item)
 {
     AnchorGroup anchorGroup = item->anchorGroup();
-    Anchor *anchor = anchorGroup.anchorFollowing();
-    if (!anchor) {
+    Anchor::List anchorsFollowing = anchorGroup.anchorsFollowingInwards();
+    if (anchorsFollowing.isEmpty()) {
         // There's no separator to move, it means it's a static anchor group (layout is empty, so the anchors
         // are the actual borders of the window
         Q_ASSERT(anchorGroup.isStatic());
         anchorGroup.updateItemSizes();
         return;
     }
+
+    Anchor *anchor = anchorsFollowing.at(0); // TODO honour the other ones
 
     Anchor *adjacentAnchor = anchorGroup.adjacentAnchor(anchor);
     const Qt::Orientation orientation = anchor->orientation();

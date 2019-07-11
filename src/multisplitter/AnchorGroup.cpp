@@ -165,23 +165,6 @@ QDebug AnchorGroup::debug(QDebug d) const
     return d;
 }
 
-Anchor *AnchorGroup::anchorFollowing() const
-{
-    if (top->followee() == bottom)
-        return top;
-
-    if (bottom->followee() == top)
-        return bottom;
-
-    if (left->followee() == right)
-        return left;
-
-    if (right->followee() == left)
-        return right;
-
-    return nullptr;
-}
-
 Anchor::List AnchorGroup::anchorsFollowingInwards() const
 {
     Anchor::List result;
