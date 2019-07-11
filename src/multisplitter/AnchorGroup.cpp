@@ -182,6 +182,24 @@ Anchor *AnchorGroup::anchorFollowing() const
     return nullptr;
 }
 
+Anchor::List AnchorGroup::anchorsFollowingInwards() const
+{
+    Anchor::List result;
+    if (left->findAnchor(left->endFollowee(), Anchor::Side2))
+        result.push_back(left);
+
+    if (top->findAnchor(top->endFollowee(), Anchor::Side2))
+        result.push_back(top);
+
+    if (right->findAnchor(right->endFollowee(), Anchor::Side1))
+        result.push_back(right);
+
+    if (bottom->findAnchor(bottom->endFollowee(), Anchor::Side1))
+        result.push_back(bottom);
+
+    return result;
+}
+
 Anchor::Side AnchorGroup::sideForAnchor(Anchor *a) const
 {
     if (a == left || a == top)
@@ -452,17 +470,5 @@ bool AnchorGroup::isSquashed() const
     // If left or top are following to Side2 that's inwards, so our group is squashed. Because it's holding a placeholder
     // Side1 is inwards for right and bottom.
 
-    if (left->findAnchor(left->endFollowee(), Anchor::Side2))
-        return true;
-
-    if (top->findAnchor(top->endFollowee(), Anchor::Side2))
-        return true;
-
-    if (right->findAnchor(right->endFollowee(), Anchor::Side1))
-        return true;
-
-    if (bottom->findAnchor(bottom->endFollowee(), Anchor::Side1))
-        return true;
-
-    return false;
+    return !anchorsFollowingInwards().isEmpty();
 }

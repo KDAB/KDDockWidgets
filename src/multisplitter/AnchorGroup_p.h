@@ -65,6 +65,9 @@ struct AnchorGroup {
 
     void setAnchor(Anchor *anchor, KDDockWidgets::Location);
     Anchor *anchorFollowing() const;
+
+    Anchor::List anchorsFollowingInwards() const;
+
     Anchor::Side sideForAnchor(Anchor*) const;
     bool isStatic() const;
     bool isStaticOrFollowsStatic() const;
