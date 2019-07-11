@@ -452,8 +452,10 @@ void Anchor::setFollowee(Anchor *followee)
     qCDebug(placeholder) << Q_FUNC_INFO << "follower="
                          << this << "; followee=" << followee;
 
-    if (m_followee)
+    if (m_followee) {
         disconnect(m_followee, &Anchor::positionChanged, this, &Anchor::onFolloweePositionChanged);
+        disconnect(m_followee, &Anchor::thicknessChanged, this, &Anchor::setThickness);
+    }
 
     m_followee = followee;
     setThickness();
@@ -462,6 +464,7 @@ void Anchor::setFollowee(Anchor *followee)
         setVisible(false);
         setPosition(m_followee->position());
         connect(m_followee, &Anchor::positionChanged, this, &Anchor::onFolloweePositionChanged);
+        connect(m_followee, &Anchor::thicknessChanged, this, &Anchor::setThickness);
     } else {
         setVisible(true);
     }
@@ -552,12 +555,19 @@ void Anchor::setThickness()
 {
     const int value = isFollowing() ? m_followee->thickness()
                                     : thickness(isStatic());
-    if (isVertical()) {
-        m_separatorWidget->setFixedWidth(value);
-        m_geometry.setWidth(value);
-    } else {
-        m_separatorWidget->setFixedHeight(value);
-        m_geometry.setHeight(value);
+
+    const int oldValue = thickness();
+
+    if (value != oldValue) {
+        if (isVertical()) {
+            m_separatorWidget->setFixedWidth(value);
+            m_geometry.setWidth(value);
+        } else {
+            m_separatorWidget->setFixedHeight(value);
+            m_geometry.setHeight(value);
+        }
+
+        emit thicknessChanged();
     }
 }
 

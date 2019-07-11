@@ -271,6 +271,7 @@ Q_SIGNALS:
     void toChanged();
     void debug_itemNamesChanged();
     void followeeChanged();
+    void thicknessChanged();
 
 public:
     int position(QPoint) const;
