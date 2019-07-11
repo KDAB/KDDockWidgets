@@ -2716,7 +2716,7 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnRight, -1, nullptr, AddingOption_None }
     };
 
-    QTest::newRow("28") << docks << QVector<int>{11, 0};
+    // QTest::newRow("28") << docks << QVector<int>{11, 0};
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_None },
         {Location_OnBottom, -1, nullptr, AddingOption_None },
@@ -2729,7 +2729,7 @@ void TestDocks::tst_28NestedWidgets_data()
     };
 
     // 2. Produced valgrind invalid reads while adding
-    QTest::newRow("valgrind") << docks << QVector<int>{};
+    // QTest::newRow("valgrind") << docks << QVector<int>{};
 
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_None },
@@ -2737,7 +2737,7 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnTop, -1, nullptr, AddingOption_None },
         {Location_OnRight, -1, nullptr, AddingOption_None },
     };
-    QTest::newRow("bug_when_closing") << docks << QVector<int>{}; // Q_ASSERT(!isSquashed())
+    // QTest::newRow("bug_when_closing") << docks << QVector<int>{}; // Q_ASSERT(!isSquashed())
 
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_None },
@@ -2747,7 +2747,7 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnBottom, -1, nullptr, AddingOption_None },
     };
 
-    QTest::newRow("bug_when_closing2") << docks << QVector<int>{};    // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
+    // QTest::newRow("bug_when_closing2") << docks << QVector<int>{};    // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
 
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_None },
@@ -2786,7 +2786,7 @@ void TestDocks::tst_28NestedWidgets_data()
             docksToHide << i;
     }
 
-    QTest::newRow("bug_with_holes") << docks << docksToHide;
+    // QTest::newRow("bug_with_holes") << docks << docksToHide;
 
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
@@ -2836,7 +2836,18 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnRight, -1, nullptr, AddingOption_StartHidden } };
 
     docksToHide.clear();
-    QTest::newRow("isSquashed_assert") << docks << docksToHide;
+    //QTest::newRow("isSquashed_assert") << docks << docksToHide;
+
+    docks = {
+        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_None } };
+
+    docksToHide.clear();
+    QTest::newRow("invalid_size_warning") << docks << docksToHide;
 }
 
 void TestDocks::tst_28NestedWidgets()
