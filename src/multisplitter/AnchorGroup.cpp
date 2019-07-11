@@ -174,12 +174,17 @@ Anchor::List AnchorGroup::anchorsFollowingInwards() const
     if (top->findAnchor(top->endFollowee(), Anchor::Side2))
         result.push_back(top);
 
-    if (right->findAnchor(right->endFollowee(), Anchor::Side1))
+    if (right->findAnchor(right->endFollowee(), Anchor::Side1)) {
         result.push_back(right);
+        Q_ASSERT(!result.contains(left));
+    }
 
-    if (bottom->findAnchor(bottom->endFollowee(), Anchor::Side1))
+    if (bottom->findAnchor(bottom->endFollowee(), Anchor::Side1)) {
         result.push_back(bottom);
+        Q_ASSERT(!result.contains(top));
+    }
 
+    Q_ASSERT(result.size() <= 2);
     return result;
 }
 
