@@ -179,6 +179,23 @@ void AnchorGroup::setAnchor(Anchor *anchor, Location loc)
     }
 }
 
+bool AnchorGroup::anchorIsFollowingInwards(Anchor *anchor) const
+{
+    if (anchor == left && left->findAnchor(left->endFollowee(), Anchor::Side2))
+        return true;
+
+    if (anchor == top && top->findAnchor(top->endFollowee(), Anchor::Side2))
+        return true;
+
+    if (anchor == right && right->findAnchor(right->endFollowee(), Anchor::Side1))
+        return true;
+
+    if (anchor == bottom && bottom->findAnchor(bottom->endFollowee(), Anchor::Side1))
+        return true;
+
+    return false;
+}
+
 QDebug AnchorGroup::debug(QDebug d) const
 {
     d << "AnchorGroup: this=" << ((void*)this) << "\n;  top=" << top << "; left=" << left
@@ -189,27 +206,41 @@ QDebug AnchorGroup::debug(QDebug d) const
     return d;
 }
 
-Anchor::List AnchorGroup::anchorsFollowingInwards() const
+const Anchor::List AnchorGroup::anchorsFollowingInwards() const
 {
     Anchor::List result;
-    if (left->findAnchor(left->endFollowee(), Anchor::Side2))
+    if (anchorIsFollowingInwards(left))
         result.push_back(left);
 
-    if (top->findAnchor(top->endFollowee(), Anchor::Side2))
+    if (anchorIsFollowingInwards(top))
         result.push_back(top);
 
-    if (right->findAnchor(right->endFollowee(), Anchor::Side1)) {
+    if (anchorIsFollowingInwards(right)) {
         result.push_back(right);
         Q_ASSERT(!result.contains(left));
     }
 
-    if (bottom->findAnchor(bottom->endFollowee(), Anchor::Side1)) {
+    if (anchorIsFollowingInwards(bottom)) {
         result.push_back(bottom);
         Q_ASSERT(!result.contains(top));
     }
 
     Q_ASSERT(result.size() <= 2);
     return result;
+}
+
+const Anchor::List AnchorGroup::anchorsNotFollowingInwards() const
+{
+    Anchor::List result = anchors();
+    for (Anchor *a : anchorsFollowingInwards())
+        result.removeOne(a);
+
+    return result;
+}
+
+const Anchor::List AnchorGroup::anchors() const
+{
+    return { left, top, right, bottom };
 }
 
 Anchor::Side AnchorGroup::sideForAnchor(Anchor *a) const

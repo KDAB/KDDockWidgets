@@ -1301,20 +1301,22 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     // Our layout has enough size for the dock widget
     ensureHasAvailableSize(newSize);
 
-    Anchor *anchor = anchorsFollowing.at(0);
-
-
-    Anchor *adjacentAnchor = anchorGroup.adjacentAnchor(anchor);
-    const Qt::Orientation orientation = anchor->orientation();
-
     item->setIsPlaceholder(false);
+
     updateSizeConstraints();
 
-    // Update the adjacent sides (if anchor is left, we update top and bottom for example):
-    adjacentAnchor->updateItemSizes();
-    adjacentAnchor = anchorGroup.oppositeAnchor(adjacentAnchor);
-    adjacentAnchor->updateItemSizes();
+    if (!anchorsFollowing.contains(anchorGroup.top) && !anchorsFollowing.contains(anchorGroup.bottom)) {
+        anchorGroup.top->updateItemSizes();
+        anchorGroup.bottom->updateItemSizes();
+    }
+    if (!anchorsFollowing.contains(anchorGroup.left) && !anchorsFollowing.contains(anchorGroup.right)) {
+        anchorGroup.left->updateItemSizes();
+        anchorGroup.right->updateItemSizes();
+    }
 
+    Anchor *anchor = anchorsFollowing.at(0);
+
+    const Qt::Orientation orientation = anchor->orientation();
     Anchor *side1Anchor = anchorGroup.anchorAtSide(Anchor::Side1, orientation); // returns the left if vertical, otherwise top
     Anchor *side2Anchor = anchorGroup.anchorAtSide(Anchor::Side2, orientation); // returns the right if vertical, otherwise bottom
     const int oldPosition1 = side1Anchor->position();

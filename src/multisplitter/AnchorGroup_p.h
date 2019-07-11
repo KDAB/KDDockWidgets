@@ -77,7 +77,10 @@ struct AnchorGroup {
 
     void setAnchor(Anchor *anchor, KDDockWidgets::Location);
 
-    Anchor::List anchorsFollowingInwards() const;
+    bool anchorIsFollowingInwards(Anchor*) const;
+    const Anchor::List anchorsFollowingInwards() const;
+    const Anchor::List anchorsNotFollowingInwards() const;
+    const Anchor::List anchors() const;
 
     Anchor::Side sideForAnchor(Anchor*) const;
     bool isStatic() const;
@@ -85,6 +88,7 @@ struct AnchorGroup {
 
     void updateItemSizes();
     void assertIsSquashed();
+
 
     Anchor *top = nullptr;
     Anchor *left = nullptr;
