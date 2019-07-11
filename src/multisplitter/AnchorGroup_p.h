@@ -53,6 +53,12 @@ struct AnchorGroup {
     ///@brief returns whether this group contains @p anchor
     bool containsAnchor(Anchor *anchor) const;
 
+    /**
+     * @brief Returns the max available size in this group
+     * This is the size of the widget when you push all anchors outwards
+     */
+    QSize availableSize() const;
+
     Anchor *oppositeAnchor(Anchor*) const;
     Anchor *createAnchorFrom(KDDockWidgets::Location fromAnchorLocation, Item *relativeTo);
     void setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side);

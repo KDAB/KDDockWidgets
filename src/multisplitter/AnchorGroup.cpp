@@ -48,6 +48,24 @@ bool AnchorGroup::containsAnchor(Anchor *anchor) const
     return anchor == left || anchor == top || anchor == right || anchor == bottom;
 }
 
+QSize AnchorGroup::availableSize() const
+{
+    const int leftBound = left->isStatic() ? left->position()
+                                           : layout->boundPositionForAnchor(left, Anchor::Side1);
+
+    const int rightBound = right->isStatic() ? right->position()
+                                             : layout->boundPositionForAnchor(right, Anchor::Side2);
+
+    const int topBound = top->isStatic() ? top->position()
+                                         : layout->boundPositionForAnchor(top, Anchor::Side1);
+
+    const int bottomBound = bottom->isStatic() ? bottom->position()
+                                               : layout->boundPositionForAnchor(bottom, Anchor::Side2);
+
+    return QSize(rightBound - leftBound - left->thickness(),
+                 bottomBound - topBound - top->thickness());
+}
+
 Anchor *AnchorGroup::oppositeAnchor(Anchor *a) const
 {
     if (a == left)
