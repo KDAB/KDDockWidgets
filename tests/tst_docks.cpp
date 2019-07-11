@@ -2820,14 +2820,23 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnRight, -1, nullptr, AddingOption_None } };
 
     docksToHide.clear();
-    // QTest::newRow("add_as_placeholder") << docks << docksToHide;
+    //QTest::newRow("add_as_placeholder") << docks << docksToHide;
 
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
         {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
         {Location_OnRight, -1, nullptr, AddingOption_StartHidden } };
 
-    QTest::newRow("add_as_placeholder_simple") << docks << docksToHide;
+    //QTest::newRow("add_as_placeholder_simple") << docks << docksToHide;
+
+
+    docks = {
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden } };
+
+    docksToHide.clear();
+    QTest::newRow("isSquashed_assert") << docks << docksToHide;
 }
 
 void TestDocks::tst_28NestedWidgets()

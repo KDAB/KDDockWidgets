@@ -202,6 +202,10 @@ QDebug AnchorGroup::debug(QDebug d) const
       << "\n  ; right=" << right << "; bottom=" << bottom
       << "\n  ; valid=" << isValid()
       << "\n  ; layoutWindow=" << (layout ? layout->parentWidget()->window() : nullptr)
+      << "; isSquashed=" << isSquashed() << "; "
+      << anchorIsFollowingInwards(left) << anchorIsFollowingInwards(top)
+      << anchorIsFollowingInwards(right) << anchorIsFollowingInwards(bottom)
+      << left->followee()
       << "\n";
     return d;
 }
@@ -427,8 +431,7 @@ void AnchorGroup::removeItem(Item *item)
 
 void AnchorGroup::turnIntoPlaceholder()
 {
-    qCDebug(placeholder) << Q_FUNC_INFO;
-    Q_ASSERT(!isSquashed());
+    qCDebug(placeholder) << Q_FUNC_INFO << *this;
 
     struct RAIIScopeGuard
     {
@@ -448,6 +451,9 @@ void AnchorGroup::turnIntoPlaceholder()
         Q_DISABLE_COPY(RAIIScopeGuard)
     } guard(*this);
 
+    if (isSquashed()) {
+        return; // Nothing to do
+    }
 
     if (left->shouldFollow()) {
         if (Anchor *followee = left->endFollowee()) {
