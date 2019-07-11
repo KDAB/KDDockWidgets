@@ -469,6 +469,11 @@ private:
     QSize availableSize() const;
 
     /**
+     * @brief Increases the layout size if @ref availableSize is less than @needed
+     */
+    void ensureHasAvailableSize(QSize needed);
+
+    /**
      * Removes the widgets associated with oldAnchor and gives them to newAnchor.
      * Called when removing a widget results in unneeded anchors.
      */

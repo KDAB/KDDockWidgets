@@ -1263,6 +1263,22 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
     return true;
 }
 
+void MultiSplitterLayout::ensureHasAvailableSize(QSize needed)
+{
+    const QSize availableSize = this->availableSize();
+
+    qCDebug(placeholder) << Q_FUNC_INFO << "; needed=" << needed << availableSize;
+
+    const int deltaWidth = needed.width() > availableSize.width() ? (needed.width() - availableSize.width())
+                                                                  : 0;
+
+    const int deltaHeight = needed.height() > availableSize.height() ? (needed.height() - availableSize.height())
+                                                                     : 0;
+
+    const QSize newSize = contentsSize() + QSize(deltaWidth, deltaHeight);
+    setContentsSize(newSize);
+}
+
 void MultiSplitterLayout::restorePlaceholder(Item *item)
 {
     AnchorGroup anchorGroup = item->anchorGroup();
