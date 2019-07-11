@@ -66,6 +66,12 @@ QSize AnchorGroup::availableSize() const
                  bottomBound - topBound - top->thickness());
 }
 
+bool AnchorGroup::hasAvailableSizeFor(QSize needed) const
+{
+    const QSize available = availableSize();
+    return available.width() >= needed.width() && available.height() >= needed.height();
+}
+
 Anchor *AnchorGroup::oppositeAnchor(Anchor *a) const
 {
     if (a == left)

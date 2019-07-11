@@ -59,6 +59,12 @@ struct AnchorGroup {
      */
     QSize availableSize() const;
 
+    /**
+     * @brief Returns whether @ref availableSize is bigger or equal than @ref needed
+     */
+    bool hasAvailableSizeFor(QSize needed) const;
+
+
     Anchor *oppositeAnchor(Anchor*) const;
     Anchor *createAnchorFrom(KDDockWidgets::Location fromAnchorLocation, Item *relativeTo);
     void setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side);

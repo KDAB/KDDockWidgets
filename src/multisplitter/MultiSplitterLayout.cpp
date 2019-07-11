@@ -1291,20 +1291,21 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         return;
     }
 
-    Anchor *anchor = anchorsFollowing.at(0); // TODO honour the other ones
+    const QSize availableSize = this->availableSize();
+    const QSize widgetMinSize = { qMax(30, KDDockWidgets::widgetMinLength(item->frame(), Qt::Vertical)),
+                                  qMax(30, KDDockWidgets::widgetMinLength(item->frame(), Qt::Horizontal)) }; // TODO hardcoded 30
+
+    const QSize newSize = {qMax(qMin(item->length(Qt::Vertical), availableSize.width()), widgetMinSize.width()),
+                           qMax(qMin(item->length(Qt::Horizontal), availableSize.height()), widgetMinSize.height()) };
+
+    // Our layout has enough size for the dock widget
+    ensureHasAvailableSize(newSize);
+
+    Anchor *anchor = anchorsFollowing.at(0);
+
 
     Anchor *adjacentAnchor = anchorGroup.adjacentAnchor(anchor);
     const Qt::Orientation orientation = anchor->orientation();
-    const int widgetMinimumLength = qMax(30, KDDockWidgets::widgetMinLength(item->frame(), orientation)); // TODO hardcoded 30
-    // Our layout supports this much:
-    const int available = availableLengthForOrientation(orientation);
-    const int newLength = qMax(qMin(item->length(orientation), available), widgetMinimumLength);
-
-    if (newLength > available) {
-        const int missing = newLength - available;
-        // Make our layout bigger to accomodate the needs
-        setContentLength(orientation, contentsLength(orientation) + missing);
-    }
 
     item->setIsPlaceholder(false);
     updateSizeConstraints();
@@ -1331,13 +1332,13 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
                                                        : boundPositionForAnchor(side2Anchor, Anchor::Side2);
 
     // Double check the available space again, for sanity
-    if (boundPosition2 - boundPosition1 - side1Anchor->thickness() < newLength) {
+    if (!anchorGroup.hasAvailableSizeFor(newSize)) {
         qWarning() << "There's not enough space: bound2=" << boundPosition2
                    << "; bound1=" << boundPosition1 << "; side1Anchor.thickness=" << side1Anchor->thickness()
-                   << "; newLength=" << newLength
+                   << "; newSize=" << newSize
                    << "; newspace=" << boundPosition2 - boundPosition1 - side1Anchor->thickness()
-                   << "; available_old=" << available
-                   << "; available_new=" << availableLengthForOrientation(orientation)
+                   << "; available_old=" << availableSize
+                   << "; available_new=" << this->availableSize()
                    << "; anchors=" << side1Anchor << side2Anchor
                    << "; oldPos1=" << oldPosition1
                    << "; oldPos2=" << oldPosition2
@@ -1346,6 +1347,8 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         Q_ASSERT(false);
         return;
     }
+
+    const int newLength = anchor->isVertical() ? newSize.width() : newSize.height();
 
     // Let's try that each anchor contributes 50%, so that the widget appears centered
     const int suggestedLength1 = newLength / 2;
@@ -1362,15 +1365,14 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
                          << "; bounds1=" << boundPosition1
                          << "; bounds2=" << boundPosition2
                          << "; item.geo=" << item->geometry()
-                         << "; newLength=" << newLength
+                         << "; newSize=" << newSize
                          << "; side1Anchor=" << side1Anchor
                          << "; side2Anchor=" << side2Anchor
                          << side1Anchor->followee() << side2Anchor->followee()
                          << "; anchorFollowing=" << anchor
                          << "; contentsSize=" << m_contentSize
-                         << "; widgetMinimumLength=" << widgetMinimumLength
-                         << "; newLength=" << newLength
-                         << "; available_old=" << available
+                         << "; widgetMinSize=" << widgetMinSize
+                         << "; available_old=" << availableSize
                          << "; available_new=" << availableLengthForOrientation(orientation)
                          << "; item.size=" << item->size();
 
