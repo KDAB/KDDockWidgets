@@ -1169,10 +1169,10 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
             return false;
         }
 
-        if (options & AnchorSanity_WidgetInvalidSizes) {
+        if ((options & AnchorSanity_WidgetInvalidSizes) && !item->isPlaceholder()) {
             if (item->width() <= 0 || item->height() <= 0) {
                 dumpDebug();
-                qWarning() << "Invalid size for widget" << item->size();
+                qWarning() << "Invalid size for widget" << item << item->size() << "; isPlaceholder=" << item->isPlaceholder();
                 return false;
             }
         }
@@ -1239,6 +1239,10 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 
     if (options & AnchorSanity_WidgetMinSizes) {
         for (Item *item : items()) {
+
+            if (item->isPlaceholder())
+                continue;
+
             const int minWidth = item->minLength(Qt::Vertical);
             const int minHeight = item->minLength(Qt::Horizontal);
 
