@@ -463,6 +463,12 @@ private:
     int availableLengthForOrientation(Qt::Orientation orientation) const;
 
     /**
+     * @brief Equivalent to @ref availableLengthForOrientation but returns for both orientations.
+     * width is for Qt::Vertical.
+     */
+    QSize availableSize() const;
+
+    /**
      * Removes the widgets associated with oldAnchor and gives them to newAnchor.
      * Called when removing a widget results in unneeded anchors.
      */

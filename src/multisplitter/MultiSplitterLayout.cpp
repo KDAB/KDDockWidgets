@@ -689,6 +689,11 @@ int MultiSplitterLayout::availableLengthForOrientation(Qt::Orientation orientati
     return l.length();
 }
 
+QSize MultiSplitterLayout::availableSize() const
+{
+    return { availableLengthForOrientation(Qt::Vertical), availableLengthForOrientation(Qt::Horizontal) };
+}
+
 /*
  * Returns the width or height the widget will get when dropped.
  */
