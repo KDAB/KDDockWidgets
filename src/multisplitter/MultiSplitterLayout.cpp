@@ -1314,75 +1314,84 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         anchorGroup.right->updateItemSizes();
     }
 
-    Anchor *anchor = anchorsFollowing.at(0);
+    for (Anchor *anchorFollowingInwards : anchorsFollowing) {
+        const Anchor::Side outterSide = anchorGroup.sideForAnchor(anchorFollowingInwards);
+        if (anchorFollowingInwards->onlyHasPlaceholderItems(outterSide)) {
+            Anchor *anchorToFollow = anchorFollowingInwards->findNearestAnchorWithItems(outterSide);
+            if (anchorToFollow->followee() != anchorFollowingInwards)
+                anchorFollowingInwards->setFollowee(anchorToFollow);
+            else
+                anchorFollowingInwards->setFollowee(nullptr);
+        } else {
+            anchorFollowingInwards->setFollowee(nullptr);
+        }
 
-    const Qt::Orientation orientation = anchor->orientation();
-    Anchor *side1Anchor = anchorGroup.anchorAtSide(Anchor::Side1, orientation); // returns the left if vertical, otherwise top
-    Anchor *side2Anchor = anchorGroup.anchorAtSide(Anchor::Side2, orientation); // returns the right if vertical, otherwise bottom
-    const int oldPosition1 = side1Anchor->position();
-    const int oldPosition2 = side2Anchor->position();
+        if (anchorFollowingInwards->followee() == nullptr) {
 
-    // Now update left and right:
-    // The anchor stops following the other
-    qCDebug(placeholder) << Q_FUNC_INFO << "Folower=" << anchor << "; folowee=" << anchor->followee();
-    anchor->setFollowee(nullptr);
+            const Qt::Orientation orientation = anchorFollowingInwards->orientation();
+            Anchor *side1Anchor = anchorGroup.anchorAtSide(Anchor::Side1, orientation); // returns the left if vertical, otherwise top
+            Anchor *side2Anchor = anchorGroup.anchorAtSide(Anchor::Side2, orientation); // returns the right if vertical, otherwise bottom
+            const int oldPosition1 = side1Anchor->position();
+            const int oldPosition2 = side2Anchor->position();
+            const int boundPosition1 = side1Anchor->isStatic() ? side1Anchor->position()
+                                                               : boundPositionForAnchor(side1Anchor, Anchor::Side1);
 
-    const int boundPosition1 = side1Anchor->isStatic() ? side1Anchor->position()
-                                                       : boundPositionForAnchor(side1Anchor, Anchor::Side1);
+            const int boundPosition2 = side2Anchor->isStatic() ? side2Anchor->position()
+                                                               : boundPositionForAnchor(side2Anchor, Anchor::Side2);
 
-    const int boundPosition2 = side2Anchor->isStatic() ? side2Anchor->position()
-                                                       : boundPositionForAnchor(side2Anchor, Anchor::Side2);
+            // Double check the available space again, for sanity
+            if (!anchorGroup.hasAvailableSizeFor(newSize)) {
+                qWarning() << "There's not enough space: bound2=" << boundPosition2
+                           << "; bound1=" << boundPosition1 << "; side1Anchor.thickness=" << side1Anchor->thickness()
+                           << "; newSize=" << newSize
+                           << "; newspace=" << boundPosition2 - boundPosition1 - side1Anchor->thickness()
+                           << "; available_old=" << availableSize
+                           << "; available_new=" << this->availableSize()
+                           << "; anchors=" << side1Anchor << side2Anchor
+                           << "; oldPos1=" << oldPosition1
+                           << "; oldPos2=" << oldPosition2
+                           << "; static=" << side1Anchor->isStatic() << side2Anchor->isStatic()
+                           << "; contentsSize=" << m_contentSize;
+                Q_ASSERT(false);
+                return;
+            }
 
-    // Double check the available space again, for sanity
-    if (!anchorGroup.hasAvailableSizeFor(newSize)) {
-        qWarning() << "There's not enough space: bound2=" << boundPosition2
-                   << "; bound1=" << boundPosition1 << "; side1Anchor.thickness=" << side1Anchor->thickness()
-                   << "; newSize=" << newSize
-                   << "; newspace=" << boundPosition2 - boundPosition1 - side1Anchor->thickness()
-                   << "; available_old=" << availableSize
-                   << "; available_new=" << this->availableSize()
-                   << "; anchors=" << side1Anchor << side2Anchor
-                   << "; oldPos1=" << oldPosition1
-                   << "; oldPos2=" << oldPosition2
-                   << "; static=" << side1Anchor->isStatic() << side2Anchor->isStatic()
-                   << "; contentsSize=" << m_contentSize;
-        Q_ASSERT(false);
-        return;
+            const int newLength = anchorFollowingInwards->isVertical() ? newSize.width() : newSize.height();
+
+            // Let's try that each anchor contributes 50%, so that the widget appears centered
+            const int suggestedLength1 = newLength / 2;
+            const int maxPos1 = boundPosition2 - newLength - side1Anchor->thickness();
+            const int newPosition1 = qMin(qMax(boundPosition1, oldPosition1 - suggestedLength1), maxPos1); // Honour the bound
+            const int newPosition2 = newPosition1 + side1Anchor->thickness() + newLength; // No need to check bound2, we have enough space afterall
+
+
+            qCDebug(placeholder) << Q_FUNC_INFO
+                                 << "; oldPos1=" << oldPosition1
+                                 << "; oldPos2=" << oldPosition2
+                                 << "; newPosition1=" << newPosition1
+                                 << "; newPosition2=" << newPosition2
+                                 << "; bounds1=" << boundPosition1
+                                 << "; bounds2=" << boundPosition2
+                                 << "; item.geo=" << item->geometry()
+                                 << "; newSize=" << newSize
+                                 << "; side1Anchor=" << side1Anchor
+                                 << "; side2Anchor=" << side2Anchor
+                                 << side1Anchor->followee() << side2Anchor->followee()
+                                 << "; anchorFollowing=" << anchorFollowingInwards
+                                 << "; contentsSize=" << m_contentSize
+                                 << "; widgetMinSize=" << widgetMinSize
+                                 << "; available_old=" << availableSize
+                                 << "; available_new=" << availableLengthForOrientation(orientation)
+                                 << "; item.size=" << item->size();
+
+            // We don't want item to resize the anchors while setting newPosition1, we already calculated it
+            item->beginBlockPropagateGeo();
+            side1Anchor->setPosition(newPosition1);
+            side2Anchor->setPosition(newPosition2);
+            item->endBlockPropagateGeo();
+
+        }
     }
-
-    const int newLength = anchor->isVertical() ? newSize.width() : newSize.height();
-
-    // Let's try that each anchor contributes 50%, so that the widget appears centered
-    const int suggestedLength1 = newLength / 2;
-    const int maxPos1 = boundPosition2 - newLength - side1Anchor->thickness();
-    const int newPosition1 = qMin(qMax(boundPosition1, oldPosition1 - suggestedLength1), maxPos1); // Honour the bound
-    const int newPosition2 = newPosition1 + side1Anchor->thickness() + newLength; // No need to check bound2, we have enough space afterall
-
-
-    qCDebug(placeholder) << Q_FUNC_INFO
-                         << "; oldPos1=" << oldPosition1
-                         << "; oldPos2=" << oldPosition2
-                         << "; newPosition1=" << newPosition1
-                         << "; newPosition2=" << newPosition2
-                         << "; bounds1=" << boundPosition1
-                         << "; bounds2=" << boundPosition2
-                         << "; item.geo=" << item->geometry()
-                         << "; newSize=" << newSize
-                         << "; side1Anchor=" << side1Anchor
-                         << "; side2Anchor=" << side2Anchor
-                         << side1Anchor->followee() << side2Anchor->followee()
-                         << "; anchorFollowing=" << anchor
-                         << "; contentsSize=" << m_contentSize
-                         << "; widgetMinSize=" << widgetMinSize
-                         << "; available_old=" << availableSize
-                         << "; available_new=" << availableLengthForOrientation(orientation)
-                         << "; item.size=" << item->size();
-
-    // We don't want item to resize the anchors while setting newPosition1, we already calculated it
-    item->beginBlockPropagateGeo();
-    side1Anchor->setPosition(newPosition1);
-    side2Anchor->setPosition(newPosition2);
-    item->endBlockPropagateGeo();
 }
 
 void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdded) const

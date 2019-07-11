@@ -509,13 +509,12 @@ Anchor *Anchor::findNearestAnchorWithItems(Anchor::Side side) const
         Anchor *a = item->anchorAtSide(side, orientation());
         if (item->isPlaceholder()) {
             a = item->anchorAtSide(side, orientation());
-        } else {
-            if (!candidate || (side == Side1 && a->position() > candidate->position()) || (side == Side2 && a->position() < candidate->position()) ) {
-                candidate = a;
-            }
+        }
+
+        if (!candidate || (side == Side1 && a->position() > candidate->position()) || (side == Side2 && a->position() < candidate->position()) ) {
+            candidate = a;
         }
     }
-
 
     if (!candidate)
         candidate = m_layout->staticAnchor(side, orientation());
