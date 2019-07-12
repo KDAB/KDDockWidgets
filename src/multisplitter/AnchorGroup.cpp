@@ -274,21 +274,6 @@ void AnchorGroup::updateItemSizes()
     bottom->updateItemSizes();
 }
 
-void AnchorGroup::assertIsSquashed()
-{
-    if (!isStaticOrFollowsStatic() && !isSquashed()) {
-        layout->dumpDebug();
-        qWarning() << "The group should be squashed"
-                   << "; shouldFollow=" << left->shouldFollow() << top->shouldFollow() << right->shouldFollow() << bottom->shouldFollow()
-                   << "\n; isStatic=" << left->isStatic() << top->isStatic() << right->isStatic() << bottom->isStatic()
-                   << "\n; isFollowing=" << left->isFollowing() << top->isFollowing() << right->isFollowing() << bottom->isFollowing()
-                   << "\n; followee=" << left->followee() << top->followee() << right->followee() << bottom->followee()
-                   << "; right.onlyHasPlaceholderItems=" << right->onlyHasPlaceholderItems(Anchor::Side1);
-
-        Q_ASSERT(false);
-    }
-}
-
 void AnchorGroup::setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side)
 {
     const bool isSide1 = side == Anchor::Side1;
@@ -426,91 +411,6 @@ void AnchorGroup::removeItem(Item *item)
     if (bottom->isUnneeded()) {
         layout->updateAnchorsFromTo(bottom, top);
         top->consume(bottom, Anchor::Side2);
-    }
-}
-
-void AnchorGroup::turnIntoPlaceholder()
-{
-    qCDebug(placeholder) << Q_FUNC_INFO << *this;
-
-    struct RAIIScopeGuard
-    {
-        AnchorGroup &m_group;
-
-        RAIIScopeGuard(AnchorGroup &group)
-            : m_group(group)
-        {
-        }
-
-        ~RAIIScopeGuard()
-        {
-            m_group.assertIsSquashed();
-            m_group.layout->emitVisibleWidgetCountChanged();
-        }
-    private:
-        Q_DISABLE_COPY(RAIIScopeGuard)
-    } guard(*this);
-
-    if (isSquashed()) {
-        return; // Nothing to do
-    }
-
-    if (left->shouldFollow()) {
-        if (Anchor *followee = left->endFollowee()) {
-            // Left is already following something else
-            if (!followee->isStatic() && followee->onlyHasPlaceholderItems(Anchor::Side2)) {
-                followee->setFollowee(right);
-                return;
-            }
-        } else {
-            // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
-            if (!right->isStatic() && right->onlyHasPlaceholderItems(Anchor::Side1) && !right->isFollowing())
-                right->setPosition(right->position() - ((right->position() - left->position()) / 2));
-            left->setFollowee(right);
-            return;
-        }
-    }
-
-    if (top->shouldFollow()) {
-        if (Anchor *followee = top->endFollowee()) {
-            // Top is already following something else
-            if (!followee->isStatic() && followee->onlyHasPlaceholderItems(Anchor::Side2)) {
-                followee->setFollowee(bottom);
-                return;
-            }
-        } else {
-            // Make use of the extra space, so it's fair. When a dock widget in the middle is closed, both left/right widgets can use the space.
-            if (!bottom->isStatic() && bottom->onlyHasPlaceholderItems(Anchor::Side1) && !bottom->isFollowing())
-                bottom->setPosition(bottom->position() - ((bottom->position() - top->position()) / 2));
-            top->setFollowee(bottom);
-            return;
-        }
-    }
-
-    if (bottom->shouldFollow()) {
-        if (Anchor *followee = bottom->endFollowee()) {
-            // Bottom is already following something else (outwards), that something else will follow up
-            if (!followee->isStatic() && followee->onlyHasPlaceholderItems(Anchor::Side1)) {
-                followee->setFollowee(top);
-                return;
-            }
-        } else {
-            bottom->setFollowee(top);
-            return;
-        }
-    }
-
-    if (right->shouldFollow()) {
-        if (Anchor *followee = right->endFollowee()) {
-            // Right is already following something else (outwards), that something else will follow left
-            if (!followee->isStatic() && followee->onlyHasPlaceholderItems(Anchor::Side1)) {
-                followee->setFollowee(left);
-                return;
-            }
-        } else {
-            right->setFollowee(left);
-            return;
-        }
     }
 }
 

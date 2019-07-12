@@ -447,11 +447,14 @@ void Item::Private::turnIntoPlaceholder()
     qCDebug(placeholder) << Q_FUNC_INFO << this;
     AnchorGroup anchorGroup = q->anchorGroup();
     if (anchorGroup.isValid()) {
-        anchorGroup.turnIntoPlaceholder();
+        m_layout->emitVisibleWidgetCountChanged();
     } else {
         // Auto-destruction, which removes it from the layout
         delete q;
     }
+
+
+    m_layout->updateAnchorFollowing();
 }
 
 void Item::Private::setIsPlaceholder(bool is)
