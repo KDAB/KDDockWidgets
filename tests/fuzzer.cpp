@@ -3,6 +3,7 @@
 
   Copyright (C) 2018-2019 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
   Author: Sérgio Martins <sergio.martins@kdab.com>
+  Author: Laurent Montel <laurent.montel@kdab.com>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -17,20 +18,24 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #include "DockWidget.h"
 #include "MainWindow.h"
-#include <iostream>
+#include "DropArea_p.h"
+
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QTimer>
 #include <QDebug>
-#include <qdatetime.h>
+#include <QDateTime>
 #include <QTextEdit>
-#include <DropArea_p.h>
+
+#include <iostream>
 
 #ifdef Q_OS_WIN
 # include <Windows.h>
 #endif
+
 using namespace KDDockWidgets;
 
 static QtMessageHandler s_original = nullptr;
