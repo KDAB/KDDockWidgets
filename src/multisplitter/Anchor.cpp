@@ -183,8 +183,10 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     qCDebug(anchors) << Q_FUNC_INFO << this << "; visible="
                      << m_separatorWidget->isVisible() << "; p=" << p;
 
-    if (p < 0)
+    if (p < 0) {
+        m_layout->dumpDebug();
         qWarning() << Q_FUNC_INFO << "Negative position" << p << this;
+    }
 
     m_initialized = true;
     if (position() == p)
@@ -480,6 +482,7 @@ Anchor *Anchor::endFollowee() const
             return a;
 
         a = a->followee();
+        qDebug() << a;
     }
 
     return nullptr;
@@ -514,14 +517,21 @@ Anchor *Anchor::findNearestAnchorWithItems(Anchor::Side side) const
             a = item->anchorAtSide(side, orientation());
         }
 
-        if (!candidate || (side == Side1 && a->position() > candidate->position()) || (side == Side2 && a->position() < candidate->position()) ) {
-            candidate = a;
+        if (a->hasNonPlaceholderItems(side)) {
+            if (!candidate || (side == Side1 && a->position() > candidate->position()) || (side == Side2 && a->position() < candidate->position()) ) {
+                candidate = a;
+            }
+        } else {
+            return a->findNearestAnchorWithItems(side);
         }
     }
 
     if (!candidate)
         candidate = m_layout->staticAnchor(side, orientation());
 
+    qDebug() << "Found " << candidate;
+
+    Q_ASSERT(candidate->isStatic() || candidate->hasNonPlaceholderItems(side));
     return candidate;
 }
 

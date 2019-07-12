@@ -38,7 +38,6 @@ struct AnchorGroup {
     void addItem(Item *item);
     void addItem(MultiSplitterLayout *);
     void removeItem(Item *item);
-    void turnIntoPlaceholder();
     bool isValid() const { return top && left && bottom && right; }
 
     /**
@@ -87,7 +86,6 @@ struct AnchorGroup {
     bool isStaticOrFollowsStatic() const;
 
     void updateItemSizes();
-    void assertIsSquashed();
 
 
     Anchor *top = nullptr;

@@ -479,6 +479,8 @@ private:
      */
     void updateAnchorsFromTo(Anchor *oldAnchor, Anchor *newAnchor);
 
+    void updateAnchorFollowing();
+
     /**
      * Positions the static anchors at their correct places. Called when the MultiSplitter is resized.
      * left and top anchor are at position 0, while right/bottom are at position= width/height.
