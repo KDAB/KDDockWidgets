@@ -29,7 +29,6 @@
 
 #include <QPushButton>
 #include <QEvent>
-#include <QResizeEvent>
 
 #define INDICATOR_MINIMUM_LENGTH 100
 

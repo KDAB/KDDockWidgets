@@ -24,7 +24,6 @@
 #include "MultiSplitterWidget_p.h"
 #include "Logging_p.h"
 
-#include <QWidget>
 
 using namespace KDDockWidgets;
 
