@@ -25,7 +25,6 @@
 #include "SeparatorWidget_p.h"
 
 #include <QDebug>
-#include <QEvent>
 
 using namespace KDDockWidgets;
 

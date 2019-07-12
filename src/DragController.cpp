@@ -29,7 +29,6 @@
 #include <QMouseEvent>
 #include <QApplication>
 #include <QCursor>
-#include <QWindow>
 
 #if defined(Q_OS_WIN)
 # include <Windows.h>

@@ -29,10 +29,9 @@
 #include <QPainter>
 #include <QToolButton>
 #include <QStyle>
-#include <QStyleOptionFrame>
 #include <QWidget>
 #include <QVector>
-
+#include <QStyleOptionToolButton>
 
 class QHBoxLayout;
 
