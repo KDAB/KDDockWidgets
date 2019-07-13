@@ -576,7 +576,7 @@ void Anchor::setThickness()
             m_geometry.setHeight(value);
         }
 
-        emit thicknessChanged();
+        Q_EMIT thicknessChanged();
     }
 }
 

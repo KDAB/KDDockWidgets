@@ -34,6 +34,7 @@ add_definitions(-DQT_NO_CAST_TO_ASCII
                 -DQT_USE_QSTRINGBUILDER
                 -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
                 -DQT_STRICT_ITERATORS
+                -DQT_NO_KEYWORDS
                )
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
