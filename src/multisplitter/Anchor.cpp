@@ -528,8 +528,6 @@ Anchor *Anchor::findNearestAnchorWithItems(Anchor::Side side) const
     if (!candidate)
         candidate = m_layout->staticAnchor(side, orientation());
 
-    qDebug() << "Found " << candidate;
-
     Q_ASSERT(candidate->isStatic() || candidate->hasNonPlaceholderItems(side));
     return candidate;
 }
