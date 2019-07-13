@@ -2079,7 +2079,7 @@ void TestDocks::tst_crash()
     }
 
     {
-        // 2. Try again, but now detach from tab before putting it on the bottom
+        // 2. Teste an assert I got
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
