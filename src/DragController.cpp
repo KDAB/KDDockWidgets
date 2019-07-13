@@ -31,6 +31,7 @@
 #include <QCursor>
 
 #if defined(Q_OS_WIN)
+# include <QWindow>
 # include <Windows.h>
 #endif
 
