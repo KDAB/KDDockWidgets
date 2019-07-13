@@ -2095,15 +2095,11 @@ void TestDocks::tst_crash()
         m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
 
         QCOMPARE(layout->count(), 2);
-        QCOMPARE(layout->placeholderCount(), 0);
-        QCOMPARE(layout->numAchorsFollowing(), 0);
+        QCOMPARE(layout->placeholderCount(), 1);
+        QCOMPARE(layout->numAchorsFollowing(), 1);
 
-        dock2->setFloating(true);
-        dock2->setFloating(false);
-        QCOMPARE(layout->count(), 2);
-        QCOMPARE(layout->placeholderCount(), 0);
-        QCOMPARE(layout->numAchorsFollowing(), 0);
-        QVERIFY(!dock2->isFloating());
+        dock1->deleteLater();
+        waitForDeleted(dock1);
     }
 }
 
