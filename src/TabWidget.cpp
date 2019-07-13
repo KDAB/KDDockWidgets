@@ -27,7 +27,6 @@
  */
 
 #include "TabWidget_p.h"
-#include "Logging_p.h"
 #include "DragController_p.h"
 #include "FloatingWindow_p.h"
 #include "Frame_p.h"
