@@ -306,6 +306,7 @@ private Q_SLOTS:
     void tst_crash(); // tests some crash I got
     void tst_setFloatingWhenWasTabbed();
     void tst_setFloatingWhenSideBySide();
+    void tst_setFloatingAfterDraggedFromTabToSideBySide();
     void tst_setVisibleFalseWhenSideBySide();
     void tst_refUnrefItem();
     void tst_addAndReadd();
@@ -2057,22 +2058,53 @@ void TestDocks::tst_rectForDrop()
 void TestDocks::tst_crash()
 {
     EnsureTopLevelsDeleted e;
-    MultiSplitterWidget msw;
-    auto layout = msw.multiSplitter();
-    layout->setContentsSize(QSize(800, 316));
-    layout->parentWidget()->show();
 
-    auto f1 = createFrameWithWidget(QStringLiteral("w1"), &msw, 200);
-    auto f2 = createFrameWithWidget(QStringLiteral("w2"), &msw, 100);
-    auto f3 = createFrameWithWidget(QStringLiteral("w3"), &msw, 100);
+    {
+        MultiSplitterWidget msw;
+        auto layout = msw.multiSplitter();
+        layout->setContentsSize(QSize(800, 316));
+        layout->parentWidget()->show();
 
-    layout->addWidget(f3, KDDockWidgets::Location_OnBottom);
-    layout->addWidget(f2, KDDockWidgets::Location_OnTop, f3);
-    layout->addWidget(f1, KDDockWidgets::Location_OnTop, f2);
-    layout->resizeItem(f1, 308, Qt::Horizontal);
+        auto f1 = createFrameWithWidget(QStringLiteral("w1"), &msw, 200);
+        auto f2 = createFrameWithWidget(QStringLiteral("w2"), &msw, 100);
+        auto f3 = createFrameWithWidget(QStringLiteral("w3"), &msw, 100);
 
-    auto f4 = createFrameWithWidget(QStringLiteral("w4"), &msw, 105);  // side1 has 108pixels available, which doesn't fit the 5px for the new anchor, + 105 for the widget. Side2 must catter for the 5px.
-    layout->addWidget(f4, KDDockWidgets::Location_OnBottom, f1);
+        layout->addWidget(f3, KDDockWidgets::Location_OnBottom);
+        layout->addWidget(f2, KDDockWidgets::Location_OnTop, f3);
+        layout->addWidget(f1, KDDockWidgets::Location_OnTop, f2);
+        layout->resizeItem(f1, 308, Qt::Horizontal);
+
+        auto f4 = createFrameWithWidget(QStringLiteral("w4"), &msw, 105);  // side1 has 108pixels available, which doesn't fit the 5px for the new anchor, + 105 for the widget. Side2 must catter for the 5px.
+        layout->addWidget(f4, KDDockWidgets::Location_OnBottom, f1);
+    }
+
+    {
+        // 2. Try again, but now detach from tab before putting it on the bottom
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+        auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+        auto layout = dropArea->multiSplitter();
+
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        dock1->addDockWidgetAsTab(dock2);
+
+        dock1->setFloating(true);
+
+        // Move from tab to bottom
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
+        QCOMPARE(layout->numAchorsFollowing(), 0);
+
+        dock2->setFloating(true);
+        dock2->setFloating(false);
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
+        QCOMPARE(layout->numAchorsFollowing(), 0);
+        QVERIFY(!dock2->isFloating());
+    }
 }
 
 void TestDocks::tst_setFloatingWhenWasTabbed()
@@ -2207,6 +2239,68 @@ void TestDocks::tst_setFloatingWhenSideBySide()
     QVERIFY(!dock1->isTabbed());
 
     waitForDeleted(fw);
+}
+
+void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
+{
+    EnsureTopLevelsDeleted e;
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+        auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+        auto layout = dropArea->multiSplitter();
+
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        dock1->addDockWidgetAsTab(dock2);
+
+        // Move from tab to bottom
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
+        QCOMPARE(layout->numAchorsFollowing(), 0);
+
+        dock2->setFloating(true);
+        dock2->setFloating(false);
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
+        QCOMPARE(layout->numAchorsFollowing(), 0);
+        QVERIFY(!dock2->isFloating());
+    }
+
+    {
+        // 2. Try again, but now detach from tab before putting it on the bottom
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+        auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+        auto layout = dropArea->multiSplitter();
+
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        dock1->addDockWidgetAsTab(dock2);
+
+        dock1->setFloating(true);
+
+        // Move from tab to bottom
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+
+
+        WAIT
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
+        QCOMPARE(layout->numAchorsFollowing(), 0);
+
+        dock2->setFloating(true);
+        dock2->setFloating(false);
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
+        QCOMPARE(layout->numAchorsFollowing(), 0);
+        QVERIFY(!dock2->isFloating());
+    }
+
+
+    WAIT
 }
 
 void TestDocks::tst_setVisibleFalseWhenSideBySide()
