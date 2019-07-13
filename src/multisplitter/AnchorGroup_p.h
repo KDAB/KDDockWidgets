@@ -40,12 +40,6 @@ struct AnchorGroup {
     void removeItem(Item *item);
     bool isValid() const { return top && left && bottom && right; }
 
-    /**
-     * @brief Returns whether one of the anchors is following another inwards, meaning we have 0 area
-     * This is mostly for tests, to check that it returns true when we're a placeholder.
-     */
-    bool isSquashed() const;
-
     int width() const;
     int height() const;
 
