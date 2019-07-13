@@ -161,13 +161,11 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                        << "; frame=" << (void*)frame
                        << "; option=" << option;
 
-    if (Item *item = itemForFrame(frame)) {
+    if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it.
         // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
-        QPointer<Item> ptr = item;
         frame->setParent(nullptr); // so ~Item doesn't delete it
         frame->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
-        Q_ASSERT(!ptr);
     }
 
     unrefOldPlaceholders(framesFrom(w));
