@@ -2266,7 +2266,8 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
     }
 
     {
-        // 2. Try again, but now detach from tab before putting it on the bottom
+        // 2. Try again, but now detach from tab before putting it on the bottom. What was happening was that MultiSplitterLayout::addWidget()
+        // called with a MultiSplitter as widget wasn't setting the layout items for the dock widgets
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
@@ -2276,27 +2277,28 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         dock1->addDockWidgetAsTab(dock2);
 
-        dock1->setFloating(true);
+        dock1->frame()->m_tabWidget->detachTab(dock2);
 
         // Move from tab to bottom
-        m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
 
+        auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+        QVERIFY(fw2);
 
-        WAIT
+        layout->addWidget(fw2->dropArea(), KDDockWidgets::Location_OnRight, nullptr);
+
         QCOMPARE(layout->count(), 2);
         QCOMPARE(layout->placeholderCount(), 0);
         QCOMPARE(layout->numAchorsFollowing(), 0);
 
+        QVERIFY(dock2->lastPosition()->layoutItem());
         dock2->setFloating(true);
         dock2->setFloating(false);
+
         QCOMPARE(layout->count(), 2);
         QCOMPARE(layout->placeholderCount(), 0);
         QCOMPARE(layout->numAchorsFollowing(), 0);
         QVERIFY(!dock2->isFloating());
     }
-
-
-    WAIT
 }
 
 void TestDocks::tst_setVisibleFalseWhenSideBySide()
