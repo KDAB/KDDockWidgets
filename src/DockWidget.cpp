@@ -368,7 +368,6 @@ FloatingWindow *DockWidget::morphIntoFloatingWindow()
         frame->addWidget(this);
         auto floatingWindow = new FloatingWindow(frame);
         floatingWindow->setGeometry(geo);
-        qDebug() << "DockWidget::morphIntoFloatingWindow" << geo << "; " << floatingWindow->geometry();
         floatingWindow->show();
         return floatingWindow;
     } else {
