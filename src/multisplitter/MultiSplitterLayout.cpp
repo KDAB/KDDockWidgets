@@ -996,31 +996,26 @@ Anchor *MultiSplitterLayout::newAnchor(AnchorGroup &group, Location location)
     Anchor *newAnchor = nullptr;
     Anchor *donor = nullptr;
     Q_ASSERT(checkSanity(AnchorSanity_Normal));
-    Anchor::Side outterSide = Anchor::Side_None;
     switch (location) {
     case Location_OnLeft:
         donor = group.left;
         newAnchor = Anchor::createFrom(donor);
         group.right = newAnchor;
-        outterSide = Anchor::Side2;
         break;
     case Location_OnTop:
         donor = group.top;
         newAnchor = Anchor::createFrom(donor);
         group.bottom = newAnchor;
-        outterSide = Anchor::Side2;
         break;
     case Location_OnRight:
         donor = group.right;
         newAnchor = Anchor::createFrom(donor);
         group.left = newAnchor;
-        outterSide = Anchor::Side1;
         break;
     case Location_OnBottom:
         donor = group.bottom;
         newAnchor = Anchor::createFrom(donor);
         group.top = newAnchor;
-        outterSide = Anchor::Side1;
         break;
     default:
         qWarning() << "MultiSplitterLayout::newAnchor invalid location!";
@@ -1031,10 +1026,6 @@ Anchor *MultiSplitterLayout::newAnchor(AnchorGroup &group, Location location)
     Q_ASSERT(donor);
     Q_ASSERT(donor != newAnchor);
 
-    if (false && newAnchor->onlyHasPlaceholderItems(outterSide)) {
-        Anchor *anchor = newAnchor->findNearestAnchorWithItems(outterSide);
-        newAnchor->setFollowee(anchor);
-    }
 
     if (!checkSanity(AnchorSanity_Normal)) {
         qWarning() << "MultiSplitterLayout::newAnchor no sanity!";

@@ -201,7 +201,6 @@ QDebug AnchorGroup::debug(QDebug d) const
       << "\n  ; right=" << right << "; bottom=" << bottom
       << "\n  ; valid=" << isValid()
       << "\n  ; layoutWindow=" << (layout ? layout->parentWidget()->window() : nullptr)
-      << "; isSquashed=" << isSquashed() << "; "
       << anchorIsFollowingInwards(left) << anchorIsFollowingInwards(top)
       << anchorIsFollowingInwards(right) << anchorIsFollowingInwards(bottom)
       << left->followee()
@@ -411,12 +410,4 @@ void AnchorGroup::removeItem(Item *item)
         layout->updateAnchorsFromTo(bottom, top);
         top->consume(bottom, Anchor::Side2);
     }
-}
-
-bool AnchorGroup::isSquashed() const
-{
-    // If left or top are following to Side2 that's inwards, so our group is squashed. Because it's holding a placeholder
-    // Side1 is inwards for right and bottom.
-
-    return !anchorsFollowingInwards().isEmpty();
 }
