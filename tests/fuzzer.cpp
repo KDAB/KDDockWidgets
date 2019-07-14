@@ -108,7 +108,7 @@ int main(int argc, char **argv)
         dock->setWidget(new QTextEdit(dock));
         listDockWidget.append(dock);
         std::cout << "{" << std::endl;
-        std::cout << QString(QStringLiteral("   auto dock = new DockWidget(%1);").arg(name)).toLocal8Bit().constData() << std::endl;
+        std::cout << QString(QStringLiteral("   auto dock = new DockWidget(QStringLiteral(\"%1\"));").arg(name)).toLocal8Bit().constData() << std::endl;
         std::cout << "   dock->setWidget(new QTextEdit(dock));" << std::endl;
         std::cout << "   listDockWidget.append(dock);"<<std::endl;
         std::cout << "}" << std::endl;
