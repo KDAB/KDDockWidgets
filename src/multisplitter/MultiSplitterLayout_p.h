@@ -54,11 +54,16 @@ inline int widgetLength(const T *w, Qt::Orientation orientation)
     return (orientation == Qt::Vertical) ? w->width() : w->height();
 }
 
+inline int lengthFromSize(QSize sz, Qt::Orientation orientation)
+{
+    return orientation == Qt::Vertical ? sz.width()
+                                       : sz.height();
+}
+
 /**
  * Returns the widget's min-width if orientation is Vertical, the min-height otherwise.
  */
-template <typename T>
-inline int widgetMinLength(const T *w, Qt::Orientation orientation)
+inline int widgetMinLength(const QWidget *w, Qt::Orientation orientation)
 {
     int min = 0;
     if (orientation == Qt::Vertical) {

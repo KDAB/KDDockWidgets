@@ -134,11 +134,7 @@ public:
 
     int cumulativeMinLength(Anchor::Side, Qt::Orientation orientation) const;
 
-    // TODO: Hide
-    int minimumWidth() const;
-    int minimumHeight() const;
     QSize minimumSize() const;
-    QSize minimumSizeHint() const;
 
     bool isPlaceholder() const;
     void setIsPlaceholder(bool);
