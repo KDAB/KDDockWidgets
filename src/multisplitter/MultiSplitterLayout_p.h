@@ -300,7 +300,8 @@ public:
         AnchorSanity_WidgetMinSizes = 2,
         AnchorSanity_WidgetInvalidSizes = 4,
         AnchorSanity_Followers = 8,
-        AnchorSanity_All = AnchorSanity_Intersections | AnchorSanity_WidgetMinSizes | AnchorSanity_WidgetInvalidSizes | AnchorSanity_Followers,
+        AnchorSanity_WidgetGeometry = 16,
+        AnchorSanity_All = AnchorSanity_Intersections | AnchorSanity_WidgetMinSizes | AnchorSanity_WidgetInvalidSizes | AnchorSanity_Followers | AnchorSanity_WidgetGeometry
     };
     Q_ENUM(AnchorSanityOption)
 

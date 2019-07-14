@@ -1228,6 +1228,15 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
         }
     }
 
+    if (options & AnchorSanity_WidgetGeometry) {
+        for (Item *item: items()) {
+            if (!item->isPlaceholder() && item->anchorGroup().itemSize() != item->size()) {
+                qWarning() << Q_FUNC_INFO << "Invaild item size" << item->size() << item->anchorGroup().itemSize();
+                return false;
+            }
+        }
+    }
+
     if (options & AnchorSanity_WidgetMinSizes) {
         for (Item *item : items()) {
 
