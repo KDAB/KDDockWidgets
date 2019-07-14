@@ -173,7 +173,10 @@ void Item::setGeometry(QRect geo)
                 // Note: Position can be slightly negative if the main window isn't big enougn to host the new size.
                 // In that case the window will be resized shortly after
                 Q_ASSERT(!anchorToMove->isFollowing());
-                anchorToMove->setPosition(newPosition);
+
+                // When dropping a MultiSplitter into a MultiSplitter there's an instant where some anchors of the group are from the source MultiSplitter, as they weren't consumed yet.
+                if (anchorToMove->parent() != parentWidget())
+                    anchorToMove->setPosition(newPosition);
             }
         }
     }
