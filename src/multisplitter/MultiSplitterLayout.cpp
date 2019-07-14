@@ -1264,6 +1264,19 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
         }
     }
 
+    if (m_topAnchor->position() != 0 || m_leftAnchor->position() != 0) {
+        qWarning() << Q_FUNC_INFO << "Invalid top or left anchor position"
+                   << m_topAnchor->position() << m_leftAnchor->position();
+        return false;
+    }
+
+    if (m_rightAnchor->position() != m_contentSize.width() - 1 || m_bottomAnchor->position() != m_contentSize.height() - 1) {
+        qWarning() << Q_FUNC_INFO << "Invalid right or bottom anchor position"
+                   << m_rightAnchor->position() << m_bottomAnchor->position()
+                   << "; m_contentsSize=" << m_contentSize;
+        return false;
+    }
+
     return true;
 }
 
