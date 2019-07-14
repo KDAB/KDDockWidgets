@@ -175,7 +175,7 @@ void Item::setGeometry(QRect geo)
                 Q_ASSERT(!anchorToMove->isFollowing());
 
                 // When dropping a MultiSplitter into a MultiSplitter there's an instant where some anchors of the group are from the source MultiSplitter, as they weren't consumed yet.
-                if (anchorToMove->parent() != parentWidget())
+                if (anchorToMove->parent() == parentWidget())
                     anchorToMove->setPosition(newPosition);
             }
         }
