@@ -297,8 +297,7 @@ int Item::cumulativeMinLength(Anchor::Side side, Qt::Orientation orientation) co
 {
     Anchor *oppositeAnchor = anchorAtSide(side, orientation);
     Q_ASSERT(oppositeAnchor);
-    const int minLength = isPlaceholder() ? 0 : this->minLength(orientation);
-    return minLength + oppositeAnchor->cumulativeMinLength(side);
+    return minLength(orientation) + oppositeAnchor->cumulativeMinLength(side);
 }
 
 QSize Item::minimumSize() const
