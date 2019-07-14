@@ -92,6 +92,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject // clazy:exclude=ctor-mi
     Q_OBJECT
     Q_PROPERTY(bool isPlaceholder READ isPlaceholder NOTIFY isPlaceholderChanged)
     Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
+    Q_PROPERTY(QSize minimumSize READ minimumSize NOTIFY minimumSizeChanged)
 public:
     explicit Item(Frame *frame, MultiSplitterLayout *parent);
     ~Item() override;
@@ -153,6 +154,7 @@ Q_SIGNALS:
     void frameChanged();
     void geometryChanged();
     void isPlaceholderChanged();
+    void minimumSizeChanged();
 private:
     class Private;
     Private *const d;
