@@ -1300,21 +1300,17 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     item->setIsPlaceholder(false);
     updateSizeConstraints();
 
-
     Anchor::List anchorsFollowing = anchorGroup.anchorsFollowingInwards();
     if (anchorsFollowing.isEmpty()) {
         // There's no separator to move, it means it's a static anchor group (layout is empty, so the anchors
         // are the actual borders of the window
         dumpDebug();
-        qDebug() << "Group was " << anchorGroup;
         Q_ASSERT(anchorGroup.isStaticOrFollowsStatic());
         anchorGroup.updateItemSizes();
         return;
     }
 
     updateAnchorFollowing();
-
-
 
     if (!anchorsFollowing.contains(anchorGroup.top) && !anchorsFollowing.contains(anchorGroup.bottom)) {
         anchorGroup.top->updateItemSizes();
