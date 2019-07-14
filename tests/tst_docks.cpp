@@ -2222,26 +2222,56 @@ void TestDocks::tst_setFloatingWhenSideBySide()
     // Tests DockWidget::setFloating(false|true) when side-by-side (it should put it where it was)
     EnsureTopLevelsDeleted e;
 
-    // 1. Create a MainWindow with two docked dock-widgets, then float the first one.
-    auto m = createMainWindow();
-    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
-    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
-    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-    m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+    {
+        // 1. Create a MainWindow with two docked dock-widgets, then float the first one.
+        auto m = createMainWindow();
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
-    QPointer<Frame> frame1 = dock1->frame();
-    dock1->setFloating(true);
-    QVERIFY(dock1->isFloating());
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
-    QVERIFY(fw);
+        QPointer<Frame> frame1 = dock1->frame();
+        dock1->setFloating(true);
+        QVERIFY(dock1->isFloating());
+        auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+        QVERIFY(fw);
 
-    //2. Put it back, via setFloating(). It should return to its place.
-    dock1->setFloating(false);
+        //2. Put it back, via setFloating(). It should return to its place.
+        dock1->setFloating(false);
 
-    QVERIFY(!dock1->isFloating());
-    QVERIFY(!dock1->isTabbed());
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!dock1->isTabbed());
 
-    waitForDeleted(fw);
+        waitForDeleted(fw);
+    }
+
+    {
+        // 2. Tests a case where restoring a dock widget wouldn't make it use all its available space
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+        auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+        auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+        auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+        MultiSplitterLayout *layout = dropArea->multiSplitter();
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+        m->addDockWidget(dock3, KDDockWidgets::Location_OnRight);
+        auto f2 = dock2->frame();
+
+        dock2->close();
+        dock3->close();
+        waitForDeleted(f2);
+        dock2->show();
+
+        waitForResize(dock2);
+        Item *item2 = layout->itemForFrame(dock2->frame());
+        AnchorGroup group = item2->anchorGroup();
+        AnchorGroup staticGroup = layout->staticAnchorGroup();
+        QCOMPARE(group.right->followee(), staticGroup.right);
+        QCOMPARE(group.right->position(), staticGroup.right->position());
+        QCOMPARE(item2->geometry(), dock2->frame()->geometry());
+        // QCOMPARE(item2->size(), group.itemSize());
+    }
 }
 
 void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
