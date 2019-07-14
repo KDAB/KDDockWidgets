@@ -40,8 +40,8 @@ public:
         , m_frame(frame)
         , m_geometry(m_frame->geometry())
     {
-        m_minSize = QSize(widgetMinLength(m_frame, Qt::Vertical),
-                          widgetMinLength(m_frame, Qt::Horizontal));
+        setMinimumSize(QSize(widgetMinLength(m_frame, Qt::Vertical),
+                             widgetMinLength(m_frame, Qt::Horizontal)));
     }
 
     void setFrame(Frame *frame);
@@ -49,6 +49,7 @@ public:
     void setIsPlaceholder(bool);
 
     void updateObjectName();
+    void setMinimumSize(QSize);
     Item *const q;
     AnchorGroup m_anchorGroup;
     Frame *m_frame = nullptr;
@@ -346,6 +347,14 @@ void Item::restorePlaceholder(DockWidget *dockWidget, int tabIndex)
         d->m_layout->restorePlaceholder(this);
         d->m_frame->setVisible(true);
         d->setIsPlaceholder(false);
+    }
+}
+
+void Item::Private::setMinimumSize(QSize sz)
+{
+    if (sz != m_minSize) {
+        m_minSize = sz;
+        Q_EMIT q->minimumSizeChanged();
     }
 }
 
