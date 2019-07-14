@@ -109,8 +109,15 @@ public:
 
     bool containsPlaceholder(Item*) const;
     void removePlaceholders() { m_clearing = true; m_placeholders.clear(); m_clearing = false;}
+
+    ///@brief Removes the placeholders that belong to @p layout
+    void removePlaceholders(const MultiSplitterLayout *layout);
+
+    ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();
-    void removePlaceholder(Item*);
+
+    ///@brief removes the Item @p placeholder
+    void removePlaceholder(Item *placeholder);
 
     void dumpDebug()
     {

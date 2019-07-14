@@ -95,6 +95,13 @@ bool LastPosition::containsPlaceholder(Item *item) const
     return false;
 }
 
+void LastPosition::removePlaceholders(const MultiSplitterLayout *layout)
+{
+    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [layout] (const std::unique_ptr<ItemRef> &itemref) {
+                             return itemref->item->layout() == layout;
+                         }), m_placeholders.end());
+}
+
 void LastPosition::removeNonMainWindowPlaceholders()
 {
     auto it = m_placeholders.begin();
@@ -107,12 +114,12 @@ void LastPosition::removeNonMainWindowPlaceholders()
     }
 }
 
-void LastPosition::removePlaceholder(Item *item)
+void LastPosition::removePlaceholder(Item *placeholder)
 {
     if (m_clearing) // reentrancy guard
         return;
 
-    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [item] (const std::unique_ptr<ItemRef> &itemref) {
-                             return itemref->item == item;
+    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [placeholder] (const std::unique_ptr<ItemRef> &itemref) {
+                             return itemref->item == placeholder;
                          }), m_placeholders.end());
 }
