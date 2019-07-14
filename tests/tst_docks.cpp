@@ -2276,21 +2276,27 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
 
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         dock1->addDockWidgetAsTab(dock2);
+        Item *oldItem2 = dock2->lastPosition()->layoutItem();
+        QCOMPARE(oldItem2, layout->itemForFrame(dock2->frame()));
 
+
+        // Detach tab
         dock1->frame()->m_tabWidget->detachTab(dock2);
-
-        // Move from tab to bottom
-
         auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
         QVERIFY(fw2);
+        QCOMPARE(dock2->lastPosition()->layoutItem(), oldItem2);
+        Item *item2 = fw2->dropArea()->multiSplitter()->itemForFrame(dock2->frame());
+        QVERIFY(item2);
+        QCOMPARE(item2->parentWidget(), fw2->dropArea());
+        QVERIFY(!layout->itemForFrame(dock2->frame()));
 
+        // Move from tab to bottom
         layout->addWidget(fw2->dropArea(), KDDockWidgets::Location_OnRight, nullptr);
-
+        QVERIFY(dock2->lastPosition()->layoutItem());
         QCOMPARE(layout->count(), 2);
         QCOMPARE(layout->placeholderCount(), 0);
         QCOMPARE(layout->numAchorsFollowing(), 0);
 
-        QVERIFY(dock2->lastPosition()->layoutItem());
         dock2->setFloating(true);
         dock2->setFloating(false);
 
@@ -2298,6 +2304,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         QCOMPARE(layout->placeholderCount(), 0);
         QCOMPARE(layout->numAchorsFollowing(), 0);
         QVERIFY(!dock2->isFloating());
+        waitForDeleted(fw2);
     }
 }
 
