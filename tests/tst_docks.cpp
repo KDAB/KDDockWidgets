@@ -331,6 +331,7 @@ private Q_SLOTS:
     void tst_startHidden();
     void tst_startClosed();
     void tst_sizeConstraintWarning();
+    void tst_invalidLayoutAfterRestore();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -3410,6 +3411,84 @@ void TestDocks::tst_sizeConstraintWarning()
     dropArea->checkSanity();
     listDockWidget.at(18 - 1)->addDockWidgetAsTab(listDockWidget.at(18));
     dropArea->checkSanity();
+}
+
+void TestDocks::tst_invalidLayoutAfterRestore()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    // Stack 1, 2, 3
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+    m->addDockWidget(dock3, Location_OnRight);
+
+    Anchor *rightAnchor = layout->staticAnchorGroup().right;
+    const int oldRightAnchorPos = rightAnchor->position();
+    const int oldContentsWidth = layout->contentsWidth();
+
+    auto f1 = dock1->frame();
+    dock3->close();
+    dock2->close();
+    dock1->close();
+    QVERIFY(waitForDeleted(f1));
+
+    dock3->show();
+    dock2->show();
+    dock1->show();
+    waitForEvent(m.get(), QEvent::LayoutRequest); // So MainWindow min size is updated
+
+    Item *item1 = layout->itemForFrame(dock1->frame());
+    Item *item2 = layout->itemForFrame(dock2->frame());
+    Item *item3 = layout->itemForFrame(dock3->frame());
+    Item *item4 = dropArea->centralFrame();
+    const int oldAvailableWidth = layout->availableLengthForOrientation(Qt::Vertical);
+
+    qDebug() << "; Item3 min=" << item3->minimumSize().width()
+             << "; Item2 min=" << item2->minimumSize().width()
+             << "; Item1 min=" << item1->minimumSize().width()
+             << "; Item4 min=" << item4->minimumSize().width()
+             << "; oldAvailableWidth=" << oldAvailableWidth
+             << "; old window.minWidth=" << layout->minimumSize().width();
+
+    qDebug() << "Item3 width=" << item3->width()
+             << "Item2 width=" << item2->width();
+
+    QCOMPARE(layout->count(), 4);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->numAchorsFollowing(), 0);
+
+    // Detach dock2
+    auto f2 = dock2->frame();
+    f2->m_tabWidget->detachTab(dock2);
+    QVERIFY(waitForDeleted(f2));
+    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    const int newAvailableWidth = layout->availableLengthForOrientation(Qt::Vertical);
+    QCOMPARE(layout->minimumSize().width(), 2*Anchor::thickness(true) + 2*Anchor::thickness(false) + item1->minimumSize().width() + item3->minimumSize().width() + item4->minimumSize().width());
+
+    MultiSplitterLayout::Length availableForDock2 = layout->availableLengthForDrop(Location_OnLeft, item3);
+
+    qDebug() << "Item3 width after=" << item3->width()
+             << "; newAvailableWidth=" << newAvailableWidth
+             << "; new window.minWidth=" << layout->minimumSize().width()
+             << "; availableforDock2=" << availableForDock2.length()
+             << availableForDock2.side1Length << availableForDock2.side2Length;
+
+    const int item3AvailableSqueeze = item3->width() - item3->minimumSize().width();
+    QVERIFY(availableForDock2.side2Length <= item3AvailableSqueeze);
+
+
+    // Drop left of dock3
+    layout->addWidget(fw2->dropArea(), Location_OnLeft, dock3->frame());
+
+    QVERIFY(waitForDeleted(fw2));
+    QCOMPARE(rightAnchor->position(), oldRightAnchorPos);
+    QCOMPARE(layout->contentsWidth(), oldContentsWidth);
+    layout->checkSanity();
 }
 
 void TestDocks::tst_stealFrame()

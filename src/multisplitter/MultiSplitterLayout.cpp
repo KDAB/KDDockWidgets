@@ -748,14 +748,18 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
                                                                                   -staticAnchorThickness, -staticAnchorThickness)
                                                 : relativeTo->geometry();
 
+    AnchorGroup group = relativeToThis ? staticAnchorGroup() : relativeTo->anchorGroup();
+    int anchorOffset = 0;
 
     switch (location) {
     case Location_OnLeft:
-        result = QRect(qMax(0, relativeToRect.x() - side1Length), relativeToRect.y(),
+        anchorOffset = side1Length > 0 ? group.left->thickness() : 0;
+        result = QRect(qMax(0, relativeToRect.x() - side1Length - anchorOffset), relativeToRect.y(),
                        lengthForDrop, relativeToRect.height());
         break;
     case Location_OnTop:
-        result = QRect(relativeToRect.x(), qMax(0, relativeToRect.y() - side1Length),
+        anchorOffset = side1Length > 0 ? group.left->thickness() : 0;
+        result = QRect(relativeToRect.x(), qMax(0, relativeToRect.y() - side1Length - - anchorOffset),
                        relativeToRect.width(), lengthForDrop);
         break;
     case Location_OnRight:
@@ -772,9 +776,10 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
     }
 
     qCDebug(sizing) << "MultiSplitterLayout::rectForDrop rect=" << result
+                    << "; result.bottomRight=" << result.bottomRight()
                     << "; location=" << location
                     << "; s1=" << side1Length
-                    << "; bottom=" << relativeToRect.bottom();
+                    << "; relativeToRect.bottomRight=" << relativeToRect.bottomRight();
     return result;
 }
 
