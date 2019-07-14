@@ -330,11 +330,10 @@ private Q_SLOTS:
     void tst_removeItem();
     void tst_startHidden();
     void tst_startClosed();
+    void tst_sizeConstraintWarning();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
-
-    void tst_sizeConstraintNotRespected(); // TODO: Disabled as respecting min sizes is not implemented for the case we add into a tab,
 
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
@@ -1595,6 +1594,7 @@ void TestDocks::tst_addToSmallMainWindow()
         auto dropArea = qobject_cast<DropArea *>(central);
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(50, 50)));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(50, 50)));
+        MultiSplitterLayout *layout = dropArea->multiSplitter();
         m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
         waitForResize(m.get());
         qDebug() << "Size=" << m->size();
@@ -1602,8 +1602,8 @@ void TestDocks::tst_addToSmallMainWindow()
         m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
         waitForResize(m.get());
 
-        const int frame2MinHeight = KDDockWidgets::widgetMinLength(dock2->frame(), Qt::Horizontal);
-        QCOMPARE(dropArea->height(), dock1->frame()->height() + frame2MinHeight + Anchor::thickness(true)*2 + Anchor::thickness(false));
+        const int item2MinHeight =  layout->itemForFrame(dock2->frame())->minLength(Qt::Horizontal);
+        QCOMPARE(dropArea->height(), dock1->frame()->height() + item2MinHeight + Anchor::thickness(true)*2 + Anchor::thickness(false));
     }
 
     qDebug() << "Test 5";
@@ -1993,6 +1993,10 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(400, minHeight)));
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(400, minHeight)));
     auto dock3 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(400, minHeight)));
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+    // Stack 3, 2, 1
     m->addDockWidget(dock1, Location_OnTop);
     m->addDockWidget(dock2, Location_OnTop);
     m->addDockWidget(dock3, Location_OnTop);
@@ -2003,8 +2007,11 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     dock1->close();
     waitForResize(dock2);
 
-    const int expectedMinHeight = KDDockWidgets::widgetMinLength(dock2->frame(), Qt::Horizontal) +
-                                  KDDockWidgets::widgetMinLength(dock3->frame(), Qt::Horizontal) +
+    Item *item2 = layout->itemForFrame(dock2->frame());
+    Item *item3 = layout->itemForFrame(dock3->frame());
+
+    const int expectedMinHeight = item2->minLength(Qt::Horizontal) +
+                                  item3->minLength(Qt::Horizontal) +
                                   2 * Anchor::thickness(true) +
                                   1 * Anchor::thickness(false);
 
@@ -2524,8 +2531,8 @@ void TestDocks::tst_availableLengthForOrientation()
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("1")));
     m->addDockWidget(dock1, Location_OnLeft);
 
-    const int dock1MinWidth = widgetMinLength(dock1->frame(), Qt::Vertical);
-    const int dock1MinHeight = widgetMinLength(dock1->frame(), Qt::Horizontal);
+    const int dock1MinWidth = layout->itemForFrame(dock1->frame())->minLength(Qt::Vertical);
+    const int dock1MinHeight = layout->itemForFrame(dock1->frame())->minLength(Qt::Horizontal);
 
     availableWidth = layout->availableLengthForOrientation(Qt::Vertical);
     availableHeight = layout->availableLengthForOrientation(Qt::Horizontal);
@@ -3116,9 +3123,9 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         int expectedBoundToTheRight = layout->contentsSize().width() -
                                       Anchor::thickness(true) -
                                       3*Anchor::thickness(false) -
-                                      KDDockWidgets::widgetMinLength(dock2->frame(), Qt::Vertical) -
-                                      KDDockWidgets::widgetMinLength(dock3->frame(), Qt::Vertical) -
-                                      KDDockWidgets::widgetMinLength(dock4->frame(), Qt::Vertical);
+                                      item2->minLength(Qt::Vertical) -
+                                      item3->minLength(Qt::Vertical) -
+                                      item4->minLength(Qt::Vertical);
 
         QCOMPARE(boundToTheRight, expectedBoundToTheRight);
         qDebug() << "boundToRight="<< boundToTheRight;
@@ -3139,8 +3146,8 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         expectedBoundToTheRight = layout->contentsSize().width() -
                                   Anchor::thickness(true) -
                                   2*Anchor::thickness(false) -
-                                  KDDockWidgets::widgetMinLength(dock2->frame(), Qt::Vertical) -
-                                  KDDockWidgets::widgetMinLength(dock4->frame(), Qt::Vertical);
+                                  item2->minLength(Qt::Vertical) -
+                                  item4->minLength(Qt::Vertical) ;
 
         qDebug() << "after close boundToRight="<< boundToTheRight << "; anchor=" << anchor;
         QCOMPARE(boundToTheRight, expectedBoundToTheRight);
@@ -3203,7 +3210,7 @@ void TestDocks::tst_negativeAnchorPosition()
     waitForDeleted(d2);
 }
 
-void TestDocks::tst_sizeConstraintNotRespected()
+void TestDocks::tst_sizeConstraintWarning()
 {
     // Tests that we don't get the warning: MultiSplitterLayout::checkSanity: Widget has height= 122 but minimum is 144 KDDockWidgets::Item
     // Code autogenerated by the fuzzer:
@@ -3361,6 +3368,8 @@ void TestDocks::tst_sizeConstraintNotRespected()
     dropArea->checkSanity();
 
     listDockWidget.at(17 - 1)->addDockWidgetAsTab(listDockWidget.at(17));
+    dropArea->checkSanity();
+    listDockWidget.at(18 - 1)->addDockWidgetAsTab(listDockWidget.at(18));
     dropArea->checkSanity();
 }
 

@@ -40,6 +40,8 @@ public:
         , m_frame(frame)
         , m_geometry(m_frame->geometry())
     {
+        m_minSize = QSize(widgetMinLength(m_frame, Qt::Vertical),
+                          widgetMinLength(m_frame, Qt::Horizontal));
     }
 
     void setFrame(Frame *frame);
@@ -53,6 +55,7 @@ public:
     bool m_isPlaceholder = false;
     QPointer<MultiSplitterLayout> m_layout;
     QRect m_geometry;
+    QSize m_minSize;
     bool m_destroying = false;
     int m_refCount = 0;
     bool m_blockPropagateGeo = false;
@@ -251,7 +254,7 @@ int Item::length(Qt::Orientation orientation) const
 
 int Item::minLength(Qt::Orientation orientation) const
 {
-    return KDDockWidgets::widgetMinLength(this, orientation);
+    return lengthFromSize(minimumSize(), orientation);
 }
 
 Anchor *Item::anchorAtSide(Anchor::Side side, Qt::Orientation orientation) const
@@ -298,28 +301,10 @@ int Item::cumulativeMinLength(Anchor::Side side, Qt::Orientation orientation) co
     return minLength + oppositeAnchor->cumulativeMinLength(side);
 }
 
-int Item::minimumWidth() const
-{
-    return isPlaceholder() ? 0
-                           : d->m_frame->minimumWidth();
-}
-
-int Item::minimumHeight() const
-{
-    return isPlaceholder() ? 0
-                           : d->m_frame->minimumHeight();
-}
-
 QSize Item::minimumSize() const
 {
     return isPlaceholder() ? QSize(0, 0)
-                           : d->m_frame->minimumSize();
-}
-
-QSize Item::minimumSizeHint() const
-{
-    return isPlaceholder() ? QSize(0, 0)
-                           : d->m_frame->minimumSizeHint();
+                           : d->m_minSize;
 }
 
 bool Item::isPlaceholder() const
