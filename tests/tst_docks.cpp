@@ -176,17 +176,17 @@ namespace {
 class EventFilter : public QObject
 {
 public:
-    EventFilter() {}
+    EventFilter(QEvent::Type type) : m_type(type) {}
     bool eventFilter(QObject *, QEvent *e)
     {
-        if (e->type() == QEvent::Resize)
-            m_gotResize = true;
+        if (e->type() == m_type)
+            m_got = true;
 
         return false;
     }
 
-
-    bool m_gotResize = false;
+    const QEvent::Type m_type;
+    bool m_got = false;
 };
 
 
@@ -428,19 +428,24 @@ bool waitForDeleted(QObject *o, int timeout = 2000)
     return wasDeleted;
 }
 
-bool waitForResize(QWidget *w, int timeout = 2000)
+bool waitForEvent(QWidget *w, QEvent::Type type, int timeout = 2000)
 {
-    EventFilter filter;
+    EventFilter filter(type);
     w->installEventFilter(&filter);
     QTime time;
     time.start();
 
-    while (!filter.m_gotResize && time.elapsed() < timeout) {
+    while (!filter.m_got && time.elapsed() < timeout) {
         qApp->processEvents();
         QTest::qWait(50);
     }
 
-    return filter.m_gotResize;
+    return filter.m_got;
+}
+
+bool waitForResize(QWidget *w, int timeout = 2000)
+{
+    return waitForEvent(w, QEvent::Resize, timeout);
 }
 
 static QTabBar *tabBarForFrame(Frame *f)
