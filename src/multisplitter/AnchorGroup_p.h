@@ -21,6 +21,7 @@
 #ifndef KD_MULTISPLITTER_ANCHORGROUP_P_H
 #define KD_MULTISPLITTER_ANCHORGROUP_P_H
 
+#include "docks_export.h"
 #include "KDDockWidgets.h"
 #include "Anchor_p.h"
 
@@ -32,7 +33,7 @@ class MultiSplitterLayout;
 class Anchor;
 class Item;
 
-struct AnchorGroup {
+struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup {
     explicit AnchorGroup(MultiSplitterLayout *);
 
     void addItem(Item *item);
@@ -51,6 +52,11 @@ struct AnchorGroup {
      * This is the size of the widget when you push all anchors outwards
      */
     QSize availableSize() const;
+
+    /**
+     * @brief Returns the size of an item that would be inside these 4 anchors
+     */
+    QSize itemSize() const;
 
     /**
      * @brief Returns whether @ref availableSize is bigger or equal than @ref needed

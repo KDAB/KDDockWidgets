@@ -65,6 +65,12 @@ QSize AnchorGroup::availableSize() const
                  bottomBound - topBound - top->thickness());
 }
 
+QSize AnchorGroup::itemSize() const
+{
+    return QSize(right->position() - left->position() - left->thickness(),
+                 bottom->position() - top->position() - top->thickness());
+}
+
 bool AnchorGroup::hasAvailableSizeFor(QSize needed) const
 {
     const QSize available = availableSize();
