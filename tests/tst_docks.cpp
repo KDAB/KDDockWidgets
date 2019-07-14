@@ -325,6 +325,7 @@ private Q_SLOTS:
     void tst_invalidAnchorGroup();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
     void tst_negativeAnchorPosition();
+    void tst_negativeAnchorPosition2();
     void tst_stealFrame();
     void tst_addAsPlaceholder();
     void tst_removeItem();
@@ -3011,6 +3012,35 @@ void TestDocks::tst_28NestedWidgets_data()
 
     docksToHide.clear();
     QTest::newRow("negative_pos_warning") << docks << docksToHide;
+
+    docks = {
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_None } };
+
+    docksToHide.clear();
+    QTest::newRow("bug") << docks << docksToHide;
+
+    docks = {
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_None } };
+
+    docksToHide.clear();
+    QTest::newRow("bug2") << docks << docksToHide;
+
+    docks = {
+        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_None } };
+
+    docksToHide.clear();
+    //QTest::newRow("bug3") << docks << docksToHide;
 }
 
 void TestDocks::tst_28NestedWidgets()
@@ -3248,6 +3278,30 @@ void TestDocks::tst_negativeAnchorPosition()
 
     d2->deleteLater();
     waitForDeleted(d2);
+}
+
+void TestDocks::tst_negativeAnchorPosition2()
+{
+    // Tests that the "Out of bounds position" warning doesn't appear. Test will abort if yes.
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight, nullptr, AddingOption_StartHidden);
+    m->addDockWidget(dock3, Location_OnRight);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->count(), 3);
+
+    dock1->setFloating(true);
+    dock1->setFloating(false);
+    dock2->deleteLater();
+    QVERIFY(waitForDeleted(dock2));
 }
 
 void TestDocks::tst_sizeConstraintWarning()
