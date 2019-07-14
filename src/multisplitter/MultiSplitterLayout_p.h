@@ -484,7 +484,9 @@ private:
      */
     void updateAnchorsFromTo(Anchor *oldAnchor, Anchor *newAnchor);
 
+    void clearAnchorsFollowing();
     void updateAnchorFollowing();
+    QHash<Anchor *, Anchor *> anchorsShouldFollow() const;
 
     /**
      * Positions the static anchors at their correct places. Called when the MultiSplitter is resized.
