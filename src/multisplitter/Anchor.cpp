@@ -188,8 +188,10 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     }
 
     m_initialized = true;
-    if (position() == p)
+    if (position() == p) {
+        updateItemSizes();
         return;
+    }
 
     if (isVertical()) {
         m_geometry.moveLeft(p);
