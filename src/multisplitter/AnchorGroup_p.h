@@ -35,6 +35,9 @@ class Item;
 
 struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup
 {
+    ///@brief contructs an invalid group
+    AnchorGroup() = default;
+
     explicit AnchorGroup(MultiSplitterLayout *);
 
     void addItem(Item *item);
@@ -47,6 +50,10 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup
 
     ///@brief returns whether this group contains @p anchor
     bool containsAnchor(Anchor *anchor) const;
+
+    ///@brief returns whether this group contains @p anchor at Side @p side
+    ///If side is Side1, then anchor must be equal to left or top, otherwise top or bottom
+    bool containsAnchor(Anchor *anchor, Anchor::Side side) const;
 
     /**
      * @brief Returns the max available size in this group

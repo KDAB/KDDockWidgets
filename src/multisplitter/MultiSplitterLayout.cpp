@@ -1519,7 +1519,7 @@ void MultiSplitterLayout::clearAnchorsFollowing()
         anchor->setFollowee(nullptr);
 }
 
-void MultiSplitterLayout::updateAnchorFollowing()
+void MultiSplitterLayout::updateAnchorFollowing(const AnchorGroup &groupBeingRemoved)
 {
     clearAnchorsFollowing();
 
@@ -1529,12 +1529,38 @@ void MultiSplitterLayout::updateAnchorFollowing()
 
         if (anchor->onlyHasPlaceholderItems(Anchor::Side2)) {
             Anchor *toFollow = anchor->findNearestAnchorWithItems(Anchor::Side2);
-            if (toFollow->followee() != anchor)
+            if (toFollow->followee() != anchor) {
+
+                if (!toFollow->isStatic() && groupBeingRemoved.containsAnchor(anchor, Anchor::Side1)) {
+                    // A group is being removed, instead of simply shifting the left/top anchor all the way, let's make it use half the space
+                    if (toFollow->onlyHasPlaceholderItems(Anchor::Side1)) { // Means it can move!
+                        const int delta = toFollow->position() - anchor->position() - anchor->thickness();
+                        const int halfDelta = int(delta / 2.0);
+                        if (halfDelta > 0) {
+                            toFollow->setPosition(toFollow->position() - halfDelta);
+                        }
+                    }
+                }
+
                 anchor->setFollowee(toFollow);
+            }
         } else if (anchor->onlyHasPlaceholderItems(Anchor::Side1)) {
             Anchor *toFollow = anchor->findNearestAnchorWithItems(Anchor::Side1);
-            if (toFollow->followee() != anchor)
+            if (toFollow->followee() != anchor) {
+
+                if (!toFollow->isStatic() &&groupBeingRemoved.containsAnchor(anchor, Anchor::Side2)) {
+                    // A group is being removed, instead of simply shifting the right/bottom anchor all the way, let's make it use half the space
+                    if (toFollow->onlyHasPlaceholderItems(Anchor::Side2)) { // Means it can move!
+                        const int delta = anchor->position() - toFollow->position() - toFollow->thickness();
+                        const int halfDelta = int(delta / 2.0);
+                        if (halfDelta > 0) {
+                            toFollow->setPosition(toFollow->position() + halfDelta);
+                        }
+                    }
+                }
+
                 anchor->setFollowee(toFollow);
+            }
         }
     }
 }
