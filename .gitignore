@@ -32,3 +32,4 @@ resources.qrc.depends
 cmake_install.cmake
 latex
 html
+fuzzer
