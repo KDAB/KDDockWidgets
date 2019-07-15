@@ -334,6 +334,7 @@ private Q_SLOTS:
     void tst_startClosed();
     void tst_sizeConstraintWarning();
     void tst_invalidLayoutAfterRestore();
+    void tst_samePositionAfterHideRestore();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -3882,6 +3883,25 @@ void TestDocks::tst_startClosed()
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 0);
     QCOMPARE(layout->numAchorsFollowing(), 0);
+}
+
+void TestDocks::tst_samePositionAfterHideRestore()
+{
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+    m->addDockWidget(dock3, Location_OnRight);
+    QRect geo2 = dock2->frame()->geometry();
+    dock2->setFloating(true);
+
+    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    dock2->setFloating(false);
+    QVERIFY(waitForDeleted(fw2));
+    QCOMPARE(geo2, dock2->frame()->geometry());
 }
 
 // QTest::qWait(50000)
