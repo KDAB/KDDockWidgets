@@ -29,6 +29,7 @@
 
 #include <QPushButton>
 #include <QEvent>
+#include <QtMath>
 
 #define INDICATOR_MINIMUM_LENGTH 100
 
@@ -1384,9 +1385,8 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
             }*/
 
         const int newLength = anchorFollowingInwards->isVertical() ? newSize.width() : newSize.height();
-
         // Let's try that each anchor contributes 50%, so that the widget appears centered
-        const int suggestedLength1 = newLength / 2;
+        const int suggestedLength1 = qMin(newLength, qCeil(newLength / 2) + side1Anchor->thickness() + 1);
         const int maxPos1 = boundPosition2 - newLength - side1Anchor->thickness();
         const int newPosition1 = qMin(qMax(boundPosition1, oldPosition1 - suggestedLength1), maxPos1); // Honour the bound
         const int newPosition2 = newPosition1 + side1Anchor->thickness() + newLength; // No need to check bound2, we have enough space afterall
@@ -1548,7 +1548,7 @@ void MultiSplitterLayout::updateAnchorFollowing(const AnchorGroup &groupBeingRem
             Anchor *toFollow = anchor->findNearestAnchorWithItems(Anchor::Side1);
             if (toFollow->followee() != anchor) {
 
-                if (!toFollow->isStatic() &&groupBeingRemoved.containsAnchor(anchor, Anchor::Side2)) {
+                if (!toFollow->isStatic() && groupBeingRemoved.containsAnchor(anchor, Anchor::Side2)) {
                     // A group is being removed, instead of simply shifting the right/bottom anchor all the way, let's make it use half the space
                     if (toFollow->onlyHasPlaceholderItems(Anchor::Side2)) { // Means it can move!
                         const int delta = anchor->position() - toFollow->position() - toFollow->thickness();
