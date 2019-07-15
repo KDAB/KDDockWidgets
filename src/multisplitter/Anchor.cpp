@@ -451,7 +451,7 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
 
 void Anchor::setFollowee(Anchor *followee)
 {
-    Q_ASSERT(this != m_followee);
+    Q_ASSERT(this != followee);
     if (m_followee == followee)
         return;
 
