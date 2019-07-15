@@ -3042,7 +3042,7 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnRight, -1, nullptr, AddingOption_None } };
 
     docksToHide.clear();
-    //QTest::newRow("bug3") << docks << docksToHide;
+    QTest::newRow("bug3") << docks << docksToHide;
 }
 
 void TestDocks::tst_28NestedWidgets()
