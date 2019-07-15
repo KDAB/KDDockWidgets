@@ -64,6 +64,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
     , m_floatingWindow(parent)
 {
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateCloseButton);
+    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateFloatButton);
     init();
 }
 
@@ -198,6 +199,13 @@ void TitleBar::paintEvent(QPaintEvent *)
     titleOpt.rect = rect().adjusted(iconAreaWidth(), 0, -buttonAreaWidth(), 0);
 
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
+}
+
+void TitleBar::updateFloatButton()
+{
+    // If we have a floating window with nested dock widgets we can't re-attach, because we don't
+    // know where to
+    m_floatButton->setVisible(!m_floatingWindow || m_floatingWindow->hasSingleFrame());
 }
 
 void TitleBar::updateCloseButton()
