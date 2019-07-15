@@ -327,6 +327,7 @@ private Q_SLOTS:
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
     void tst_negativeAnchorPosition();
     void tst_negativeAnchorPosition2();
+    void tst_negativeAnchorPosition3();
     void tst_stealFrame();
     void tst_addAsPlaceholder();
     void tst_removeItem();
@@ -609,6 +610,31 @@ FloatingWindow *createFloatingWindow()
     count++;
     auto dock = createDockWidget(QStringLiteral("docfw %1").arg(count), Qt::green);
     return dock->morphIntoFloatingWindow();
+}
+
+static std::unique_ptr<MainWindow> createMainWindow(QVector<DockDescriptor> &docks)
+{
+    auto m = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow"), MainWindowOption_None));
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    auto layout = dropArea->multiSplitter();
+    m->show();
+    m->resize(QSize(700, 700));
+
+    int i = 0;
+    for (DockDescriptor &desc : docks) {
+        desc.createdDock = createDockWidget(QStringLiteral("%1").arg(i), new QPushButton(QStringLiteral("%1").arg(i)));
+
+        DockWidget *relativeTo = nullptr;
+        if (desc.relativeToIndex != -1)
+            relativeTo = docks.at(desc.relativeToIndex).createdDock;
+
+        m->addDockWidget(desc.createdDock, desc.loc, relativeTo, desc.option);
+        qDebug() << "Added" <<i;
+        layout->checkSanity();
+        ++i;
+    }
+
+    return m;
 }
 
 void TestDocks::tst_createFloatingWindow()
@@ -3304,6 +3330,30 @@ void TestDocks::tst_negativeAnchorPosition2()
     dock1->setFloating(false);
     dock2->deleteLater();
     QVERIFY(waitForDeleted(dock2));
+}
+
+void TestDocks::tst_negativeAnchorPosition3()
+{
+    // 2. Another case, when floating a dock:
+    EnsureTopLevelsDeleted e;
+    QVector<DockDescriptor> docks = { {Location_OnLeft, -1, nullptr, AddingOption_None },
+                                     {Location_OnRight, -1, nullptr, AddingOption_None },
+                                     {Location_OnLeft, -1, nullptr, AddingOption_None },
+                                     {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+                                     {Location_OnRight, -1, nullptr, AddingOption_None } };
+    auto m = createMainWindow(docks);
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    layout->checkSanity();
+
+    auto dock1 = docks.at(1).createdDock;
+    auto dock3 = docks.at(3).createdDock;
+
+    dock1->setFloating(true);
+
+    dock1->deleteLater();
+    dock3->deleteLater();
+    waitForDeleted(dock3);
 }
 
 void TestDocks::tst_sizeConstraintWarning()

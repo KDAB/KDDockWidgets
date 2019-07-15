@@ -516,16 +516,11 @@ Anchor *Anchor::findNearestAnchorWithItems(Anchor::Side side) const
     Anchor *candidate = nullptr;
     for (Item *item : items(side)) {
         Anchor *a = item->anchorAtSide(side, orientation());
-        if (item->isPlaceholder()) {
-            a = item->anchorAtSide(side, orientation());
-        }
+        if (!a->hasNonPlaceholderItems(side))
+            a = a->findNearestAnchorWithItems(side);
 
-        if (a->hasNonPlaceholderItems(side)) {
-            if (!candidate || (side == Side1 && a->position() > candidate->position()) || (side == Side2 && a->position() < candidate->position()) ) {
-                candidate = a;
-            }
-        } else {
-            return a->findNearestAnchorWithItems(side);
+        if (!candidate || (side == Side1 && a->position() > candidate->position()) || (side == Side2 && a->position() < candidate->position()) ) {
+            candidate = a;
         }
     }
 
