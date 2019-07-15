@@ -77,6 +77,26 @@ bool AnchorGroup::hasAvailableSizeFor(QSize needed) const
     return available.width() >= needed.width() && available.height() >= needed.height();
 }
 
+AnchorGroup AnchorGroup::outterGroup() const
+{
+    AnchorGroup group(layout);
+
+    group.left = left->hasNonPlaceholderItems(Anchor::Side1) ? left
+                                                             : left->findNearestAnchorWithItems(Anchor::Side1);
+
+    group.top = top->hasNonPlaceholderItems(Anchor::Side1) ? top
+                                                           : top->findNearestAnchorWithItems(Anchor::Side1);
+
+
+    group.right = right->hasNonPlaceholderItems(Anchor::Side2) ? right
+                                                               : right->findNearestAnchorWithItems(Anchor::Side2);
+
+    group.bottom = bottom->hasNonPlaceholderItems(Anchor::Side2) ? bottom
+                                                                 : bottom->findNearestAnchorWithItems(Anchor::Side2);
+
+    return group;
+}
+
 Anchor *AnchorGroup::oppositeAnchor(Anchor *a) const
 {
     if (a == left)
