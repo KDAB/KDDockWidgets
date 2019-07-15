@@ -336,6 +336,7 @@ private Q_SLOTS:
     void tst_sizeConstraintWarning();
     void tst_invalidLayoutAfterRestore();
     void tst_samePositionAfterHideRestore();
+    void tst_anchorFollowingItselfAssert();
 private:
     void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -3334,7 +3335,7 @@ void TestDocks::tst_negativeAnchorPosition2()
 
 void TestDocks::tst_negativeAnchorPosition3()
 {
-    // 2. Another case, when floating a dock:
+    // 1. Another case, when floating a dock:
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = { {Location_OnLeft, -1, nullptr, AddingOption_None },
                                      {Location_OnRight, -1, nullptr, AddingOption_None },
@@ -3354,6 +3355,34 @@ void TestDocks::tst_negativeAnchorPosition3()
     dock1->deleteLater();
     dock3->deleteLater();
     waitForDeleted(dock3);
+}
+
+void TestDocks::tst_anchorFollowingItselfAssert()
+{
+    // 1. Tests that we don't assert in Anchor::setFollowee()
+    //  ASSERT: "this != m_followee" in file ../src/multisplitter/Anchor.cpp
+    EnsureTopLevelsDeleted e;
+    QVector<DockDescriptor> docks = {
+        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_None } };
+
+    auto m = createMainWindow(docks);
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    layout->checkSanity();
+
+    auto dock1 = docks.at(1).createdDock;
+    auto dock2 = docks.at(2).createdDock;
+    dock2->setFloating(true);
+    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    dropArea->multiSplitter()->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
+    dock2->setFloating(true);
+    fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    dropArea->multiSplitter()->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
 }
 
 void TestDocks::tst_sizeConstraintWarning()
