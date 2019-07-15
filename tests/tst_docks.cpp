@@ -3383,6 +3383,10 @@ void TestDocks::tst_anchorFollowingItselfAssert()
     dock2->setFloating(true);
     fw2 = qobject_cast<FloatingWindow*>(dock2->window());
     dropArea->multiSplitter()->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
+
+    docks.at(0).createdDock->deleteLater();
+    docks.at(4).createdDock->deleteLater();
+    waitForDeleted(docks.at(4).createdDock);
 }
 
 void TestDocks::tst_sizeConstraintWarning()

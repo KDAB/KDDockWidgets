@@ -357,7 +357,8 @@ void Anchor::consume(Anchor *other, Side side)
         // Before deleting an unneeded anchor, we must check if there's anchors following it, and make them follow us instead
         Anchor::List anchorsFollowingOther = m_layout->anchorsFollowing(other);
         for (Anchor *follower : anchorsFollowingOther) {
-            follower->setFollowee(this);
+            if (follower != this)
+                follower->setFollowee(this);
         }
 
         delete other;
