@@ -486,7 +486,6 @@ Anchor *Anchor::endFollowee() const
             return a;
 
         a = a->followee();
-        qDebug() << a;
     }
 
     return nullptr;
