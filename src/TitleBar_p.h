@@ -76,6 +76,7 @@ protected:
 
 private:
     friend class TestDocks;
+    void updateFloatButton();
     void updateCloseButton();
     void onCloseClicked();
     void onFloatClicked();
