@@ -82,6 +82,7 @@ Frame::Frame(QWidget *parent, Options options)
 
     connect(this, &Frame::currentDockWidgetChanged, m_titleBar, [this] (DockWidget *dock) {
         m_titleBar->setTitle(dock->title());
+        m_titleBar->setIcon(dock->icon());
     });
 
     m_tabWidget->setTabBarAutoHide(!alwaysShowsTabs());
