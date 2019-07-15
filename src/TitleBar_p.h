@@ -68,6 +68,8 @@ public:
     /// There should always be at least 1. If more than 1 then they are tabbed.
     DockWidget::List dockWidgets() const;
 
+    ///@brief returns whether this title bar supports a floating/unfloating button
+    bool supportsFloatingButton() const;
 Q_SIGNALS:
     void titleChanged();
 

@@ -203,9 +203,14 @@ void TitleBar::paintEvent(QPaintEvent *)
 
 void TitleBar::updateFloatButton()
 {
+    m_floatButton->setVisible(supportsFloatingButton());
+}
+
+bool TitleBar::supportsFloatingButton() const
+{
     // If we have a floating window with nested dock widgets we can't re-attach, because we don't
     // know where to
-    m_floatButton->setVisible(!m_floatingWindow || m_floatingWindow->hasSingleFrame());
+    return !m_floatingWindow || m_floatingWindow->hasSingleFrame();
 }
 
 void TitleBar::updateCloseButton()
