@@ -47,6 +47,13 @@ bool AnchorGroup::containsAnchor(Anchor *anchor) const
     return anchor == left || anchor == top || anchor == right || anchor == bottom;
 }
 
+bool AnchorGroup::containsAnchor(Anchor *anchor, Anchor::Side side) const
+{
+    if (side == Anchor::Side1)
+        return anchor == left || anchor == top;
+    return anchor == right || anchor == bottom;
+}
+
 QSize AnchorGroup::availableSize() const
 {
     const int leftBound = left->isStatic() ? left->position()

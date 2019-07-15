@@ -485,7 +485,7 @@ private:
     void updateAnchorsFromTo(Anchor *oldAnchor, Anchor *newAnchor);
 
     void clearAnchorsFollowing();
-    void updateAnchorFollowing();
+    void updateAnchorFollowing(const AnchorGroup &groupBeingRemoved = {});
     QHash<Anchor *, Anchor *> anchorsShouldFollow() const;
 
     /**

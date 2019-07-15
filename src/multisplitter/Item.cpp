@@ -434,13 +434,15 @@ int Item::refCount() const
 
 void Item::Private::turnIntoPlaceholder()
 {
+    qCDebug(placeholder) << Q_FUNC_INFO << this;
     if (q->isPlaceholder())
         return;
 
     setFrame(nullptr);
     setIsPlaceholder(true);
 
-    qCDebug(placeholder) << Q_FUNC_INFO << this;
+    m_layout->clearAnchorsFollowing();
+
     AnchorGroup anchorGroup = q->anchorGroup();
     if (anchorGroup.isValid()) {
         m_layout->emitVisibleWidgetCountChanged();
@@ -449,8 +451,7 @@ void Item::Private::turnIntoPlaceholder()
         delete q;
     }
 
-
-    m_layout->updateAnchorFollowing();
+    m_layout->updateAnchorFollowing(anchorGroup);
 }
 
 void Item::Private::setIsPlaceholder(bool is)
