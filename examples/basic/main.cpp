@@ -115,6 +115,7 @@ int main(int argc, char **argv)
 
     auto example = newMyWidget();
     auto dock = new DockWidget(QStringLiteral("foo"), s_dockWidgetOptions);
+    dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
     dock->setWidget(example);
     dock->resize(400, 400);
     dock->show();

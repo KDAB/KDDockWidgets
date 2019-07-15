@@ -174,6 +174,15 @@ public:
      */
     void setAsCurrentTab();
 
+    /**
+     * @brief Add an icon on titlebar.
+     */
+    void setIcon(const QIcon &icon);
+
+    /**
+     * @return the dock widget's icon.
+     */
+    QIcon icon() const;
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();
