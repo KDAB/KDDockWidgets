@@ -26,6 +26,7 @@
 #include "WindowBeingDragged_p.h"
 
 #include <QHBoxLayout>
+#include <QLabel>
 
 using namespace KDDockWidgets;
 
@@ -70,6 +71,9 @@ void TitleBar::init()
 {
     qCDebug(creation) << "TitleBar" << this;
     setFixedHeight(30);
+    m_dockWidgetIcon = new QLabel(this);
+    m_layout->addWidget(m_dockWidgetIcon);
+
     m_layout->addStretch();
     m_layout->setContentsMargins(0, 2, 2, 2);
     m_layout->setSpacing(2);
@@ -85,6 +89,15 @@ void TitleBar::init()
     connect(m_closeButton, &QAbstractButton::clicked, this, &TitleBar::onCloseClicked);
 
     updateCloseButton();
+}
+
+int TitleBar::iconAreaWidth() const
+{
+    if (m_icon.isNull()) {
+        return 0;
+    } else {
+        return 30;
+    }
 }
 
 int TitleBar::buttonAreaWidth() const
@@ -110,6 +123,17 @@ void TitleBar::setTitle(const QString &title)
                          << "\nwindow=" << window();
         update();
         Q_EMIT titleChanged();
+    }
+}
+
+void TitleBar::setIcon(const QIcon &icon)
+{
+    m_icon = icon;
+    if (!m_icon.isNull()) {
+        const QPixmap pix = m_icon.pixmap(QSize(28,28));
+        m_dockWidgetIcon->setPixmap(pix);
+    } else {
+        m_dockWidgetIcon->setPixmap(QPixmap());
     }
 }
 
@@ -171,7 +195,7 @@ void TitleBar::paintEvent(QPaintEvent *)
 
     QStyleOptionDockWidget titleOpt;
     titleOpt.title = m_title;
-    titleOpt.rect = rect().adjusted(0, 0, -buttonAreaWidth(), 0);
+    titleOpt.rect = rect().adjusted(iconAreaWidth(), 0, -buttonAreaWidth(), 0);
 
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
 }

@@ -34,7 +34,7 @@
 #include <QStyleOptionToolButton>
 
 class QHBoxLayout;
-
+class QLabel;
 
 namespace KDDockWidgets {
 
@@ -56,6 +56,8 @@ public:
 
     void setTitle(const QString &title);
     QString title() const { return m_title; }
+
+    void setIcon(const QIcon &icon);
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     QWidget* closeButton() const;
 
@@ -79,9 +81,11 @@ private:
     void onFloatClicked();
     void init();
     int buttonAreaWidth() const;
+    int iconAreaWidth() const;
 
     QPoint m_pressPos;
     QString m_title;
+    QIcon m_icon;
     QHBoxLayout *const m_layout;
 
     DockWidget *const m_dockWidget;
@@ -89,6 +93,7 @@ private:
     FloatingWindow *const m_floatingWindow;
     Button *m_closeButton = nullptr;
     Button *m_floatButton = nullptr;
+    QLabel *m_dockWidgetIcon = nullptr;
 };
 
 class Button : public QToolButton

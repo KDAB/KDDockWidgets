@@ -79,6 +79,7 @@ public:
 
     void updateTitleBarVisibility();
     void updateTitle();
+    void updateIcon();
     void toggle(bool enabled);
     void updateToggleAction();
     void onDockWidgetShown();
@@ -99,6 +100,7 @@ public:
 
     const QString name;
     QString title;
+    QIcon icon;
     QWidget *widget = nullptr;
     DockWidget *const q;
     const DockWidget::Options options;
@@ -296,6 +298,17 @@ void DockWidget::setAsCurrentTab()
         tabWidget->setCurrentWidget(this);
 }
 
+void DockWidget::setIcon(const QIcon &icon)
+{
+    d->icon = icon;
+    d->updateIcon();
+}
+
+QIcon DockWidget::icon() const
+{
+    return d->icon;
+}
+
 bool DockWidget::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
@@ -410,6 +423,11 @@ void DockWidget::Private::updateTitle()
 
     titlebar->setTitle(title);
     toggleAction->setText(title);
+}
+
+void DockWidget::Private::updateIcon()
+{
+    titlebar->setIcon(icon);
 }
 
 void DockWidget::Private::toggle(bool enabled)
