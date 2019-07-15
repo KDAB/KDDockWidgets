@@ -33,7 +33,8 @@ class MultiSplitterLayout;
 class Anchor;
 class Item;
 
-struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup {
+struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup
+{
     explicit AnchorGroup(MultiSplitterLayout *);
 
     void addItem(Item *item);
@@ -63,6 +64,8 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup {
      */
     bool hasAvailableSizeFor(QSize needed) const;
 
+    /// Returns the group formed by the Anchors that actually have items on their outter side
+    AnchorGroup outterGroup() const;
 
     Anchor *oppositeAnchor(Anchor*) const;
     Anchor *createAnchorFrom(KDDockWidgets::Location fromAnchorLocation, Item *relativeTo);
