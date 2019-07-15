@@ -19,7 +19,7 @@
 */
 
 // We don't care about performance related checks in the tests
-// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref
+// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
 
 #include "DockWidget.h"
 #include "MainWindow.h"
@@ -74,6 +74,7 @@ struct SetExpectedWarning
     {
         s_expectedWarning.clear();
     }
+    Q_DISABLE_COPY(SetExpectedWarning)
 };
 
 
@@ -3595,7 +3596,7 @@ void TestDocks::tst_stealFrame()
 
     // 3. Test stealing a tab from the same tab-widget we're in. Nothing happens
     {
-        SetExpectedWarning sew(QLatin1String("Already contains KDDockWidgets::DockWidget")); // Supress the qFatal this time
+        SetExpectedWarning sew(QStringLiteral("Already contains KDDockWidgets::DockWidget")); // Suppress the qFatal this time
         dock1->addDockWidgetAsTab(dock3);
         QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
     }
@@ -3628,7 +3629,7 @@ void TestDocks::tst_stealFrame()
     QCOMPARE(layout2->placeholderCount(), 0);
 
     {
-        SetExpectedWarning sew(QLatin1String("Invalid parameters KDDockWidgets::DockWidget")); // Supress the qFatal this time
+        SetExpectedWarning sew(QStringLiteral("Invalid parameters KDDockWidgets::DockWidget")); // Suppress the qFatal this time
         m2->addDockWidget(dock1, Location_OnLeft, dock1);
         QCOMPARE(layout2->count(), 2);  // Nothing happened
         QCOMPARE(layout2->placeholderCount(), 0);

@@ -89,15 +89,15 @@ namespace KDDockWidgets
    {
        switch (loc) {
        case KDDockWidgets::Location_None:
-           return QLatin1String("none");
+           return QStringLiteral("none");
        case KDDockWidgets::Location_OnLeft:
-           return QLatin1String("left");
+           return QStringLiteral("left");
        case KDDockWidgets::Location_OnTop:
-           return QLatin1String("top");
+           return QStringLiteral("top");
        case KDDockWidgets::Location_OnRight:
-           return QLatin1String("right");
+           return QStringLiteral("right");
        case KDDockWidgets::Location_OnBottom:
-           return QLatin1String("bottom");
+           return QStringLiteral("bottom");
        }
 
        return QString();

@@ -46,7 +46,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(&m_objectViewer);
 
     auto button = new QPushButton(this);
-    button->setText(QLatin1String("Dump DockWidget Info"));
+    button->setText(QStringLiteral("Dump DockWidget Info"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &DebugWindow::dumpDockWidgetInfo);
 

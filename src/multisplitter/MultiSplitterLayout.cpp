@@ -1515,7 +1515,7 @@ void MultiSplitterLayout::updateAnchorsFromTo(Anchor *oldAnchor, Anchor *newAnch
 
 void MultiSplitterLayout::clearAnchorsFollowing()
 {
-    for (Anchor *anchor : m_anchors)
+    for (Anchor *anchor : qAsConst(m_anchors))
         anchor->setFollowee(nullptr);
 }
 
@@ -1523,7 +1523,7 @@ void MultiSplitterLayout::updateAnchorFollowing()
 {
     clearAnchorsFollowing();
 
-    for (Anchor *anchor : m_anchors) {
+    for (Anchor *anchor : qAsConst(m_anchors)) {
         if (anchor->isStatic())
             continue;
 

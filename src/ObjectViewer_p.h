@@ -40,7 +40,7 @@ class QStandardItem;
 namespace KDDockWidgets {
 namespace Debug {
 
-class ObjectViewer : public QWidget
+class ObjectViewer : public QWidget //clazy:exclude=missing-qobject-macro
 {
 public:
     explicit ObjectViewer(QWidget *parent = nullptr);

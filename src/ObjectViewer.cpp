@@ -58,9 +58,9 @@ ObjectViewer::ObjectViewer(QWidget *parent)
     connect(m_treeView.selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &ObjectViewer::onSelectionChanged);
 
-    QAction *action = m_menu.addAction(QLatin1String("Refresh"));
+    QAction *action = m_menu.addAction(QStringLiteral("Refresh"));
     connect(action, &QAction::triggered, this, &ObjectViewer::refresh);
-    action = m_menu.addAction(QLatin1String("Dump Windows"));
+    action = m_menu.addAction(QStringLiteral("Dump Windows"));
     connect(action, &QAction::triggered, this, &ObjectViewer::dumpWindows);
 
     refresh();
@@ -75,7 +75,8 @@ void ObjectViewer::refresh()
 
     m_model.clear();
 
-    for (QWidget *window : qApp->topLevelWidgets()) {
+    const auto &topLevelWidgets = qApp->topLevelWidgets();
+    for (QWidget *window : topLevelWidgets) {
         add(window, m_model.invisibleRootItem());
     }
 }
@@ -83,7 +84,8 @@ void ObjectViewer::refresh()
 void ObjectViewer::dumpWindows()
 {
     qDebug() << "Top Level QWidgets:";
-    for (QWidget *w : qApp->topLevelWidgets()) {
+    const auto &topLevelWidgets = qApp->topLevelWidgets();
+    for (QWidget *w : topLevelWidgets) {
         if (qobject_cast<QMenu*>(w))
             continue;
 
@@ -91,7 +93,8 @@ void ObjectViewer::dumpWindows()
     }
 
     qDebug() << "Top Level Windows:";
-    for (QWindow *w : qApp->topLevelWindows()) {
+    const auto &topLevelWindows = qApp->topLevelWindows();
+    for (QWindow *w : topLevelWindows) {
         qDebug() << "    QWindow=" << w << "; parent=" << w->parent() << "; transientParent=" << w->transientParent() << "; hwnd=" << w->winId();
     }
 }
