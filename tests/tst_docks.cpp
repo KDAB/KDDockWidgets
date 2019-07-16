@@ -272,6 +272,7 @@ private Q_SLOTS:
     void tst_createFloatingWindow();
     void tst_dock2FloatingWidgetsTabbed();
     void tst_close();
+    void tst_preventClose();
     void tst_closeAllDockWidgets();
     void tst_dockDockWidgetNested();
     void tst_dockFloatingWindowNested();
@@ -854,6 +855,37 @@ void TestDocks::tst_close()
         QVERIFY(mainWindowPtr->isVisible());
         delete dock1;
     }
+}
+
+void TestDocks::tst_preventClose()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto nonClosableWidget = new NonClosableWidget();
+    auto dock1 = new DockWidget(QStringLiteral("1"));
+    dock1->setWidget(nonClosableWidget);
+
+    // 1. Test a floating dock widget
+    dock1->resize(100, 100);
+    dock1->show();
+    QVERIFY(dock1->isVisible());
+    dock1->close();
+    QVERIFY(dock1->isVisible());
+
+    // 2. Morph it into a FlatingWindow
+    dock1->morphIntoFloatingWindow();
+    dock1->close();
+    QVERIFY(dock1->isVisible());
+    dock1->titleBar()->onCloseClicked();
+    QVERIFY(dock1->isVisible());
+    dock1->frame()->titleBar()->onCloseClicked();
+    QVERIFY(dock1->isVisible());
+    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    fw->close();
+    QVERIFY(dock1->isVisible());
+
+    dock1->deleteLater();
+    QVERIFY(waitForDeleted(dock1));
 }
 
 void TestDocks::tst_dockDockWidgetNested()

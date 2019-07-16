@@ -254,10 +254,13 @@ QPoint Frame::dragPointForWidget(int index) const
 void Frame::closeEvent(QCloseEvent *e)
 {
     qCDebug(closing) << "Frame::closeEvent";
-    e->accept();
+    e->accept(); // Accepted by default (will close unless ignored)
     DockWidget::List docks = dockWidgets();
-    for (DockWidget *dock : docks) // TODO: Ask first if they want to close
-        dock->close();
+    for (DockWidget *dock : docks) {
+        qApp->sendEvent(dock, e);
+        if (!e->isAccepted())
+            break; // Stop when the first dockwidget prevents closing
+    }
 }
 
 int Frame::currentTabIndex() const

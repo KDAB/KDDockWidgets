@@ -57,7 +57,8 @@ class NonClosableWidget : public QWidget
 {
 public:
     Q_OBJECT
-    explicit NonClosableWidget(QWidget *parent);
+public:
+    explicit NonClosableWidget(QWidget *parent = nullptr);
     ~NonClosableWidget() override;
 
 protected:
@@ -69,6 +70,12 @@ class MyWidget : public QWidget
 public:
     explicit MyWidget(const QString &, QColor c);
     ~MyWidget() override;
+
+
+    QSize minimumSizeHint() const override
+    {
+        return {100, 100};
+    }
 
 protected:
     void paintEvent(QPaintEvent *) override;
