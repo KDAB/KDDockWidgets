@@ -524,6 +524,8 @@ void MultiSplitterLayout::removeItem(Item *item)
     anchorGroup.removeItem(item);
     m_items.removeOne(item);
 
+    updateAnchorFollowing();
+
     Q_EMIT widgetRemoved(item);
     Q_EMIT widgetCountChanged(m_items.size());
 }

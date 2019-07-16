@@ -328,6 +328,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPosition();
     void tst_negativeAnchorPosition2();
     void tst_negativeAnchorPosition3();
+    void tst_negativeAnchorPosition4();
     void tst_stealFrame();
     void tst_addAsPlaceholder();
     void tst_removeItem();
@@ -3355,6 +3356,37 @@ void TestDocks::tst_negativeAnchorPosition3()
     dock1->deleteLater();
     dock3->deleteLater();
     waitForDeleted(dock3);
+}
+
+void TestDocks::tst_negativeAnchorPosition4()
+{
+    // 1. Tests that we don't get a warning
+    // Out of bounds position= -5 ; oldPosition= 0 KDDockWidgets::Anchor(0x55e726be9090, name = "left") KDDockWidgets::MainWindow(0x55e726beb8d0)
+    EnsureTopLevelsDeleted e;
+    QVector<DockDescriptor> docks = { { Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
+                                      { Location_OnTop, -1, nullptr, AddingOption_None },
+                                      { Location_OnRight, -1, nullptr, AddingOption_None },
+                                      { Location_OnLeft, -1, nullptr, AddingOption_None },
+                                      { Location_OnRight, -1, nullptr, AddingOption_None } };
+
+    auto m = createMainWindow(docks);
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    layout->checkSanity();
+
+    auto dock1 = docks.at(1).createdDock;
+    auto dock2 = docks.at(2).createdDock;
+    dock2->setFloating(true);
+    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    dropArea->multiSplitter()->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
+    dock2->setFloating(true);
+    fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+
+    dropArea->multiSplitter()->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
+
+    docks.at(0).createdDock->deleteLater();
+    docks.at(4).createdDock->deleteLater();
+    waitForDeleted(docks.at(4).createdDock);
 }
 
 void TestDocks::tst_anchorFollowingItselfAssert()

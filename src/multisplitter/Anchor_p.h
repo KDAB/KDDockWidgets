@@ -306,7 +306,7 @@ public:
     QString m_debug_side2ItemNames;
     SeparatorWidget *const m_separatorWidget;
     QRect m_geometry;
-    Anchor *m_followee = nullptr;;
+    QPointer<Anchor> m_followee;
 };
 }
 
