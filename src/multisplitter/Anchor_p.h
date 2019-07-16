@@ -261,6 +261,10 @@ public:
     void onMouseMoved(QPoint pt);
     void onWidgetMoved(int p);
 
+
+    ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other work while we're not in the final size
+    static bool isResizing();
+
 private:
     void setThickness();
 
@@ -298,6 +302,7 @@ public:
     bool m_showingSide1Rubberband = false;
     bool m_showingSide2Rubberband = false;
     bool m_initialized = false;
+    static bool s_isResizing;
 
     // For when being animated. They are not displayed at their pos, but with an offset.
     int m_positionOffset = 0;

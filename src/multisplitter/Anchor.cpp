@@ -33,6 +33,8 @@
 
 using namespace KDDockWidgets;
 
+bool Anchor::s_isResizing = false;
+
 Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type type)
     : QObject(multiSplitter->parentWidget())
     , m_orientation(orientation)
@@ -641,12 +643,14 @@ Anchor::Side Anchor::oppositeSide(Side side)
 
 void Anchor::onMousePress()
 {
+    s_isResizing = true;
     m_layout->setAnchorBeingDragged(this);
     qCDebug(anchors) << "Drag started";
 }
 
 void Anchor::onMouseReleased()
 {
+    s_isResizing = false;
     m_layout->setAnchorBeingDragged(nullptr);
 }
 
@@ -691,4 +695,9 @@ void Anchor::onWidgetMoved(int p)
 
 
     setPosition(p);
+}
+
+bool Anchor::isResizing()
+{
+    return s_isResizing;
 }
