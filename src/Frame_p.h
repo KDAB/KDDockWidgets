@@ -130,6 +130,16 @@ public:
     /// @brief returns whether the dockwidget @p w is inside this frame
     bool contains(DockWidget *w) const;
 
+
+    /**
+     * @brief Puts the Frame back in its previous main window position
+     *
+     * Usually DockWidget::Private::restoreToPreviousPosition() is used, but
+     * when we have a floating frame with tabs we just reuse the frame instead of
+     * moving the tabbed dock widgets one by one.
+     */
+    void restoreToPreviousPosition();
+
     QPoint dragPointForWidget(int index) const; // for unit-tests
     void closeEvent(QCloseEvent *) override;
     int currentTabIndex() const;

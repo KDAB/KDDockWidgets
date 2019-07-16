@@ -353,6 +353,18 @@ void Item::restorePlaceholder(DockWidget *dockWidget, int tabIndex)
     }
 }
 
+void Item::restorePlaceholder(Frame *frame)
+{
+    Q_ASSERT(d->m_isPlaceholder);
+
+    frame->setParent(layout()->parentWidget());
+    d->setFrame(frame);
+    d->m_frame->setGeometry(d->m_geometry);
+    d->m_layout->restorePlaceholder(this);
+    d->m_frame->setVisible(true);
+    d->setIsPlaceholder(false);
+}
+
 void Item::Private::setMinimumSize(QSize sz)
 {
     if (sz != m_minSize) {

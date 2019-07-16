@@ -147,6 +147,10 @@ public:
     ///@brief turns the placeholder into a normal Item again showing @p dockWidget
     void restorePlaceholder(DockWidget *dockWidget, int tabIndex);
 
+    ///@brief turns the placeholder into a normal item again
+    /// This overload is called when the Frame has more than 1 tab, otherwise we just use the DockWidget overload
+    void restorePlaceholder(Frame *frame);
+
     void ref();
     void unref();
     int refCount() const; // for tests

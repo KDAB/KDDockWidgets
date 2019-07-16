@@ -219,6 +219,27 @@ bool Frame::contains(DockWidget *dockWidget) const
     return false;
 }
 
+void Frame::restoreToPreviousPosition()
+{
+    if (hasSingleDockWidget()) {
+        qWarning() << Q_FUNC_INFO << "Invalid usage, there's no tabs";
+        return;
+    }
+
+    if (!m_layoutItem) {
+        qCDebug(placeholder) << Q_FUNC_INFO << "There's no previous position known";
+        return;
+    }
+
+    if (!m_layoutItem->isPlaceholder()) {
+        // Maybe in this case just fold the frame into the placeholder, which probably has other dockwidgets which were added meanwhile. TODO
+        qCDebug(placeholder) << Q_FUNC_INFO << "Previous position isn't a placeholder";
+        return;
+    }
+
+    m_layoutItem->restorePlaceholder(this);
+}
+
 QPoint Frame::dragPointForWidget(int index) const
 {
     if (hasSingleDockWidget()) {
