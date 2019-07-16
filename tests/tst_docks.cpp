@@ -54,7 +54,9 @@
 #define STATIC_ANCHOR_LENGTH 1
 #define ANCHOR_LENGTH 5
 #define WAIT QTest::qWait(5000000);
+
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Tests;
 
 static bool s_pauseBeforePress = false; // for debugging
 static bool s_pauseBeforeMove = false; // for debugging
@@ -79,7 +81,6 @@ struct SetExpectedWarning
     Q_DISABLE_COPY(SetExpectedWarning)
 };
 
-
 struct WidgetResize
 {
     int length;
@@ -88,14 +89,6 @@ struct WidgetResize
 };
 typedef QVector<WidgetResize> WidgetResizes;
 Q_DECLARE_METATYPE(WidgetResize)
-
-struct DockDescriptor {
-    Location loc;
-    int relativeToIndex;
-    QPointer<DockWidget> createdDock;
-    KDDockWidgets::AddingOption option;
-};
-Q_DECLARE_METATYPE(DockDescriptor)
 
 struct MultiSplitterSetup
 {
@@ -349,14 +342,6 @@ private:
 };
 }
 
-static std::unique_ptr<MainWindow> createMainWindow(QSize sz = {600, 600}, MainWindowOptions options = MainWindowOption_HasCentralFrame)
-{
-    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow"), options));
-    ptr->show();
-    ptr->resize(sz);
-    return ptr;
-}
-
 static EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 {
     // Tests a MainWindow which isn't a top-level window, but is embedded in another window
@@ -372,29 +357,6 @@ static EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 }
 
 namespace {
-class MyWidget : public QWidget
-{
-public:
-    explicit MyWidget(const QString &, QColor c)
-        : QWidget()
-        , c(c)
-    {
-        qDebug() << "MyWidget" << this;
-    }
-
-    ~MyWidget() override
-    {
-        qDebug() << "~MyWidget" << this;
-    }
-
-    void paintEvent(QPaintEvent *) override
-    {
-        QPainter p(this);
-        p.fillRect(rect(), c);
-    }
-
-    QColor c;
-};
 
 class MyWidget2 : public QWidget
 {
@@ -577,23 +539,6 @@ static void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndic
     drag(sourceTitleBar, QPoint(), dropPoint, ButtonAction_Release);
 }
 
-DockWidget *createDockWidget(const QString &name, QWidget *w, DockWidget::Options options = {})
-{
-    auto dock = new DockWidget(name, options);
-    dock->setWidget(w);
-    dock->setObjectName(name);
-    dock->setGeometry(0, 0, 400, 400);
-    dock->show();
-    dock->activateWindow();
-    Q_ASSERT(dock->window());
-    Q_ASSERT(dock->windowHandle());
-    if (QTest::qWaitForWindowActive(dock->window()->windowHandle(), 200)) {
-        qDebug() << dock->window();
-        return dock;
-    }
-    return nullptr;
-};
-
 Frame* createFrameWithWidget(const QString &name, MultiSplitterWidget *parent, int minLength = -1)
 {
     QWidget *w = createWidget(minLength, name);
@@ -604,42 +549,12 @@ Frame* createFrameWithWidget(const QString &name, MultiSplitterWidget *parent, i
     return frame;
 }
 
-DockWidget *createDockWidget(const QString &name, QColor color)
-{
-    return createDockWidget(name, new MyWidget(name, color));
-};
-
 FloatingWindow *createFloatingWindow()
 {
     static int count = 0;
     count++;
     auto dock = createDockWidget(QStringLiteral("docfw %1").arg(count), Qt::green);
     return dock->morphIntoFloatingWindow();
-}
-
-static std::unique_ptr<MainWindow> createMainWindow(QVector<DockDescriptor> &docks)
-{
-    auto m = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow"), MainWindowOption_None));
-    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
-    auto layout = dropArea->multiSplitter();
-    m->show();
-    m->resize(QSize(700, 700));
-
-    int i = 0;
-    for (DockDescriptor &desc : docks) {
-        desc.createdDock = createDockWidget(QStringLiteral("%1").arg(i), new QPushButton(QStringLiteral("%1").arg(i)));
-
-        DockWidget *relativeTo = nullptr;
-        if (desc.relativeToIndex != -1)
-            relativeTo = docks.at(desc.relativeToIndex).createdDock;
-
-        m->addDockWidget(desc.createdDock, desc.loc, relativeTo, desc.option);
-        qDebug() << "Added" <<i;
-        layout->checkSanity();
-        ++i;
-    }
-
-    return m;
 }
 
 void TestDocks::tst_createFloatingWindow()

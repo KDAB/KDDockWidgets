@@ -22,6 +22,7 @@
 #include "DockWidget.h"
 #include "MainWindow.h"
 #include "DropArea_p.h"
+#include "utils.h"
 
 #include <QApplication>
 #include <QCommandLineParser>
@@ -37,6 +38,7 @@
 #endif
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Tests;
 
 static QtMessageHandler s_original = nullptr;
 
@@ -59,15 +61,6 @@ void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context,
         if (!qEnvironmentVariableIsSet("NO_FATAL"))
             qFatal("Got a warning, category=%s", context.category);
     }
-}
-
-
-static std::unique_ptr<MainWindow> createMainWindow(QSize sz = {600, 600}, MainWindowOptions options = MainWindowOption_HasCentralFrame)
-{
-    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow"), options));
-    ptr->show();
-    ptr->resize(sz);
-    return ptr;
 }
 
 int main(int argc, char **argv)

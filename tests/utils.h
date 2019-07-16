@@ -21,7 +21,37 @@
 #ifndef KDDOCKWIDGETS_TESTS_UTILS_H
 #define KDDOCKWIDGETS_TESTS_UTILS_H
 
+#include "MainWindow.h"
+#include "KDDockWidgets.h"
+#include "DockWidget.h"
+
 #include <QWidget>
+#include <QPointer>
+#include <QVector>
+
+#include <memory>
+
+namespace KDDockWidgets {
+namespace Tests {
+
+struct DockDescriptor {
+    Location loc;
+    int relativeToIndex;
+    QPointer<DockWidget> createdDock;
+    KDDockWidgets::AddingOption option;
+};
+
+
+std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QSize sz = {600, 600},
+                                                            KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame);
+
+
+
+std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
+
+KDDockWidgets::DockWidget *createDockWidget(const QString &name, QWidget *w,
+                                            DockWidget::Options options = {});
+KDDockWidgets::DockWidget *createDockWidget(const QString &name, QColor color);
 
 class NonClosableWidget : public QWidget
 {
@@ -34,4 +64,24 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 };
 
+class MyWidget : public QWidget
+{
+public:
+    explicit MyWidget(const QString &, QColor c);
+    ~MyWidget() override;
+
+protected:
+    void paintEvent(QPaintEvent *) override;
+private:
+    QColor c;
+};
+
+
+}
+}
+
+Q_DECLARE_METATYPE(KDDockWidgets::Tests::DockDescriptor)
+
+
 #endif
+
