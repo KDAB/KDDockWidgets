@@ -308,6 +308,7 @@ private Q_SLOTS:
     void tst_setFloatingWhenWasTabbed();
     void tst_setFloatingWhenSideBySide();
     void tst_setFloatingAfterDraggedFromTabToSideBySide();
+    void tst_setFloatingAFrameWithTabs();
     void tst_setVisibleFalseWhenSideBySide();
     void tst_refUnrefItem();
     void tst_addAndReadd();
@@ -2384,6 +2385,38 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         QVERIFY(!dock2->isFloating());
         waitForDeleted(fw2);
     }
+}
+
+void TestDocks::tst_setFloatingAFrameWithTabs()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
+    auto layout = dropArea->multiSplitter();
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    dock1->addDockWidgetAsTab(dock2);
+
+    // Make it float
+    dock1->frame()->titleBar()->onFloatClicked();
+
+    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    QVERIFY(fw);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    auto frame1 = dock1->frame();
+    QVERIFY(frame1->layoutItem());
+
+    // Attach it again
+    dock1->frame()->titleBar()->onFloatClicked();
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(dock1->window(), m.get());
+
+    waitForDeleted(fw);
 }
 
 void TestDocks::tst_setVisibleFalseWhenSideBySide()

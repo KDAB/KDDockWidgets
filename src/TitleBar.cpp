@@ -295,10 +295,18 @@ void TitleBar::onFloatClicked()
             return;
         }
 
-        if (dockWidgets.size() == 1)
+        if (dockWidgets.size() == 1) {
+            // Case 1: Single dockwidget floating
             dockWidgets[0]->setFloating(false);
-        else
-            qDebug() << "Not implemented yet";
+        } else {
+            // Case 2: Multiple dockwidgets are tabbed toghether and floating
+            // TODO: Just reuse the whole frame and put it back. The frame currently doesn't remember the position in the main window
+            // so use an hack for now
+            for (auto dock : dockWidgets) {
+                dock->setFloating(true);
+                dock->setFloating(false);
+            }
+        }
     } else {
         makeWindow();
     }
