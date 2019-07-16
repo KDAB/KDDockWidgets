@@ -27,6 +27,10 @@
 #include <QApplication>
 #include <QDebug>
 
+#ifdef Q_OS_WIN
+# include <Windows.h>
+#endif
+
 using namespace KDDockWidgets;
 
 Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type type)
@@ -656,6 +660,15 @@ void Anchor::onMouseMoved(QPoint pt)
         onMouseReleased();
         return;
     }
+
+#ifdef Q_OS_WIN
+    // Try harder, Qt can be wrong, if mixed with MFC
+    if (GetKeyState(VK_LBUTTON) == 0) {
+        qWarning() << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+        onMouseReleased();
+        return;
+    }
+#endif
 
     const int positionToGoTo = position(pt);
     auto bounds = m_layout->boundPositionsForAnchor(this);
