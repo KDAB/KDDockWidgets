@@ -30,6 +30,7 @@
 
 #define INDICATOR_WIDTH 40
 #define OUTTER_INDICATOR_MARGIN 10
+//#define KDDOCKWIDGETS_RUBBERBAND_IS_TOPLEVEL 1
 
 using namespace KDDockWidgets;
 
@@ -255,10 +256,12 @@ Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *pare
 
 ClassicIndicators::ClassicIndicators(DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea) // Is parented on the drop-area, not a toplevel.
-    , m_rubberBand(new QRubberBand(QRubberBand::Rectangle, dropArea))
+    , m_rubberBand(new QRubberBand(QRubberBand::Rectangle, rubberBandIsTopLevel() ? nullptr : dropArea))
     , m_indicatorWindow(new IndicatorWindow(this, /*parent=*/ nullptr)) // Top-level so the indicators can appear above the window being dragged.
 {
     setVisible(false);
+    if (rubberBandIsTopLevel())
+        m_rubberBand->setWindowOpacity(0.5);
 }
 
 ClassicIndicators::~ClassicIndicators()
@@ -352,8 +355,12 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     }
 
     if (location == DropLocation_Center) {
-        m_rubberBand->setGeometry(m_hoveredFrame ? m_hoveredFrame->geometry() : rect());
+        m_rubberBand->setGeometry(geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->geometry() : rect()));
         m_rubberBand->setVisible(true);
+        if (rubberBandIsTopLevel()) {
+            m_rubberBand->raise();
+            raiseIndicators();
+        }
         return;
     }
 
@@ -388,6 +395,32 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     QRect rect = layout->rectForDrop(m_windowBeingDragged, multisplitterLocation,
                                      layout->itemForFrame(relativeToFrame));
 
-    m_rubberBand->setGeometry(rect);
+    m_rubberBand->setGeometry(geometryForRubberband(rect));
     m_rubberBand->setVisible(true);
+    if (rubberBandIsTopLevel()) {
+        m_rubberBand->raise();
+        raiseIndicators();
+    }
+}
+
+QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
+{
+    if (!rubberBandIsTopLevel())
+        return localRect;
+
+    QPoint topLeftLocal = localRect.topLeft();
+    QPoint topLeftGlobal = m_dropArea->mapToGlobal(topLeftLocal);
+
+    localRect.moveTopLeft(topLeftGlobal);
+
+    return localRect;
+}
+
+bool ClassicIndicators::rubberBandIsTopLevel() const
+{
+#ifdef KDDOCKWIDGETS_RUBBERBAND_IS_TOPLEVEL
+    return true;
+#else
+    return false;
+#endif
 }
