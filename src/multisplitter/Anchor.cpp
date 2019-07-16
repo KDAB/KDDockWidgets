@@ -24,6 +24,7 @@
 #include "Logging_p.h"
 #include "SeparatorWidget_p.h"
 
+#include <QApplication>
 #include <QDebug>
 
 using namespace KDDockWidgets;
@@ -649,6 +650,12 @@ void Anchor::onMouseMoved(QPoint pt)
 {
     if (!isBeingDragged() || isStatic())
         return;
+
+    if (!(qApp->mouseButtons() & Qt::LeftButton)) {
+        qWarning() << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+        onMouseReleased();
+        return;
+    }
 
     const int positionToGoTo = position(pt);
     auto bounds = m_layout->boundPositionsForAnchor(this);
