@@ -74,7 +74,8 @@ Q_SIGNALS:
     void titleChanged();
 
 protected:
-    void paintEvent(QPaintEvent *) override;
+    void paintEvent(QPaintEvent *) override;    
+    void mouseDoubleClickEvent(QMouseEvent *e) override;
 
 private:
     friend class TestDocks;

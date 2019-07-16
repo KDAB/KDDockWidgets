@@ -27,6 +27,7 @@
 
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QMouseEvent>
 
 using namespace KDDockWidgets;
 
@@ -111,6 +112,16 @@ int TitleBar::buttonAreaWidth() const
 
 TitleBar::~TitleBar()
 {
+}
+
+void TitleBar::mouseDoubleClickEvent( QMouseEvent * e )
+{
+    if ( e->button() == Qt::LeftButton )
+    {
+        Q_EMIT onFloatClicked();
+        return;
+    }
+    QWidget::mouseDoubleClickEvent(e);
 }
 
 void TitleBar::setTitle(const QString &title)
