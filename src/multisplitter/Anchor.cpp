@@ -656,7 +656,7 @@ void Anchor::onMouseMoved(QPoint pt)
         return;
 
     if (!(qApp->mouseButtons() & Qt::LeftButton)) {
-        qWarning() << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+        qCDebug(mouseevents) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
         onMouseReleased();
         return;
     }
@@ -664,7 +664,7 @@ void Anchor::onMouseMoved(QPoint pt)
 #ifdef Q_OS_WIN
     // Try harder, Qt can be wrong, if mixed with MFC
     if (GetKeyState(VK_LBUTTON) == 0) {
-        qWarning() << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+        qCDebug(mouseevents) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
         onMouseReleased();
         return;
     }
