@@ -255,10 +255,9 @@ Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *pare
 
 ClassicIndicators::ClassicIndicators(DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea) // Is parented on the drop-area, not a toplevel.
-    , m_rubberBand(new QRubberBand(QRubberBand::Rectangle, this))
+    , m_rubberBand(new QRubberBand(QRubberBand::Rectangle, dropArea))
     , m_indicatorWindow(new IndicatorWindow(this, /*parent=*/ nullptr)) // Top-level so the indicators can appear above the window being dragged.
 {
-    setAttribute(Qt::WA_TranslucentBackground);
     setVisible(false);
 }
 
@@ -286,13 +285,12 @@ QPoint ClassicIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLoc
 void ClassicIndicators::updateVisibility()
 {
     if (isHovered()) {
-        setVisible(true);
         m_indicatorWindow->updatePositions();
         m_indicatorWindow->setVisible(true);
         m_indicatorWindow->updateIndicatorVisibility(true);
         raiseIndicators();
     } else {
-        setVisible(false);
+        m_rubberBand->setVisible(false);
         m_indicatorWindow->setVisible(false);
         m_indicatorWindow->updateIndicatorVisibility(false);
     }
@@ -312,12 +310,6 @@ void ClassicIndicators::resizeEvent(QResizeEvent *ev)
 {
     QWidget::resizeEvent(ev);
     m_indicatorWindow->resize(window()->size());
-}
-
-void ClassicIndicators::paintEvent(QPaintEvent *)
-{
-    QPainter p(this);
-    p.fillRect(rect(), Qt::transparent);
 }
 
 void ClassicIndicators::raiseIndicators()

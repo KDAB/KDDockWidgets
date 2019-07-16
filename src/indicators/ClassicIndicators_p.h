@@ -43,7 +43,6 @@ protected:
     void showEvent(QShowEvent *) override;
     void hideEvent(QHideEvent *) override;
     void resizeEvent(QResizeEvent *) override;
-    void paintEvent(QPaintEvent *) override;
     void updateVisibility() override;
 private:
     friend class KDDockWidgets::Indicator;
