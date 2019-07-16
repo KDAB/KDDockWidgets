@@ -75,6 +75,7 @@ Q_SIGNALS:
 
 protected:
     void paintEvent(QPaintEvent *) override;
+    void mouseDoubleClickEvent(QMouseEvent *) override;
 
 private:
     friend class TestDocks;
