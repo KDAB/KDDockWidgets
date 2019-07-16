@@ -28,7 +28,7 @@ class NonClosableWidget : public QWidget
 public:
     Q_OBJECT
     explicit NonClosableWidget(QWidget *parent);
-    ~NonClosableWidget();
+    ~NonClosableWidget() override;
 
 protected:
     void closeEvent(QCloseEvent *event) override;
