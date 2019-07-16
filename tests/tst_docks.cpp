@@ -34,6 +34,8 @@
 #include "TabWidget_p.h"
 #include "multisplitter/MultiSplitterWidget_p.h"
 #include "LastPosition_p.h"
+#include "utils.h"
+
 #include <QtTest/QtTest>
 #include <QPainter>
 #include <QMouseEvent>
