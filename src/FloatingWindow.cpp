@@ -45,7 +45,6 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     , m_titleBar(new TitleBar(this))
     , m_vlayout(new QVBoxLayout(this))
     , m_dropArea(new DropArea(this))
-
 {
     auto ms = m_dropArea->multiSplitter();
     ms->setExtraUselessSpace(QSize(0, m_titleBar->height()));

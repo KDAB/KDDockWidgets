@@ -53,10 +53,10 @@ public:
 protected:
     bool event(QEvent *e) override;
     void resizeEvent(QResizeEvent *) override;
+    bool m_inResizeEvent = false;
     MultiSplitterLayout *const m_layout;
 private:
     friend class MultiSplitterLayout;
-    bool m_inResizeEvent = false;
 };
 
 
