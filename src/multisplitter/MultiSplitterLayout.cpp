@@ -747,7 +747,7 @@ QRect MultiSplitterLayout::rectForDrop(MultiSplitterLayout::Length lfd, Location
         break;
     case Location_OnTop:
         anchorOffset = side1Length > 0 ? side1AnchorThickness : 0;
-        result = QRect(relativeToRect.x(), qMax(0, relativeToRect.y() - side1Length - - anchorOffset),
+        result = QRect(relativeToRect.x(), qMax(0, relativeToRect.y() - side1Length - anchorOffset),
                        relativeToRect.width(), lengthForDrop);
         break;
     case Location_OnRight:

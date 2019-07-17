@@ -2098,36 +2098,47 @@ void TestDocks::tst_rectForDropMath_data()
     // 3. Now we have two items already in the layout, side-by side, item1 on the left, item2 on the right
 
     const int availableWidth = 1000 - 2*staticAnchorThickness - anchorThickness;
-    int width1 = availableWidth / 2;
-    int width2 = availableWidth - width1;
-    int height = 1000 - 2*staticAnchorThickness;
-    item1Geometry = QRect(staticAnchorThickness, staticAnchorThickness, width1, height);
-    QRect item2Geometry = QRect(item1Geometry.right() + anchorThickness + 1, staticAnchorThickness, width2, height);
-    qDebug() <<"item1=" << item1Geometry << "; item2=" << item2Geometry;
+    const int width1 = availableWidth / 2;
+    const int width2 = availableWidth - width1;
+    const int height1 = width1;
+    const int height2 = width2;
+    const int h = 1000 - 2*staticAnchorThickness;
+    const int w = 1000 - 2*staticAnchorThickness;
+    const QRect item1GeometryH = QRect(staticAnchorThickness, staticAnchorThickness, width1, h);
+    const QRect item2GeometryH = QRect(item1GeometryH.right() + anchorThickness + 1, staticAnchorThickness, width2, h);
 
-    const int spaceBetweenItems = item2Geometry.left() - item1Geometry.right() - 1;
+    const QRect item1GeometryV = QRect(staticAnchorThickness, staticAnchorThickness, w, height1);
+    const QRect item2GeometryV = QRect(staticAnchorThickness, item1GeometryV.bottom() + anchorThickness + 1, w, height2);
+
+    qDebug() <<"item1H=" << item1GeometryH << "; item2H=" << item2GeometryH;
+    qDebug() <<"item1V=" << item1GeometryV << "; item2V=" << item2GeometryV;
+
+    const int spaceBetweenItems = item2GeometryH.left() - item1GeometryH.right() - 1;
     Q_ASSERT(spaceBetweenItems == anchorThickness);
 
     length = { 100, 0 };
-    int x = 1000 - staticAnchorThickness - item2Geometry.width() - 100 - anchorThickness;
-    expectedRect = QRect(x, staticAnchorThickness, 100, 1000 - staticAnchorThickness*2);
+    int x = 1000 - staticAnchorThickness - item2GeometryH.width() - 100 - anchorThickness;
+    expectedRect = QRect(x, staticAnchorThickness, 100, h);
     side1AnchorThickness = anchorThickness;
+    qDebug() << "expected=" << expectedRect;
     QTest::newRow("left-of-right-item") << contentsSize
                                         << length
                                         << Location_OnLeft
                                         << side1AnchorThickness
-                                        << item2Geometry
+                                        << item2GeometryH
                                         << expectedRect;
 
-    int y = 1000 - staticAnchorThickness - item2Geometry.height() - 100 - anchorThickness;
-    expectedRect = QRect(staticAnchorThickness, y, 1000 - staticAnchorThickness*2, 100);
+    int y = 1000 - staticAnchorThickness - item2GeometryV.height() - 100 - anchorThickness;
+    expectedRect = QRect(staticAnchorThickness, y, w, 100);
     side1AnchorThickness = anchorThickness;
+    qDebug() << "expected=" << expectedRect;
     QTest::newRow("top-of-bottom-item") << contentsSize
                                         << length
                                         << Location_OnTop
                                         << side1AnchorThickness
-                                        << item2Geometry
+                                        << item2GeometryV
                                         << expectedRect;
+
 }
 
 void TestDocks::tst_rectForDropMath()
@@ -2143,7 +2154,9 @@ void TestDocks::tst_rectForDropMath()
     MultiSplitterLayout layout(&widget);
     layout.setContentsSize(layoutContentsSize);
 
-    QCOMPARE(layout.rectForDrop(length, location, side1AnchorThickness, relativeToRect), expectedRect);
+    const QRect result = layout.rectForDrop(length, location, side1AnchorThickness, relativeToRect);
+    qDebug() << "Result=" << result;
+    QCOMPARE(result, expectedRect);
 }
 
 void TestDocks::tst_rectForDrop_data()
