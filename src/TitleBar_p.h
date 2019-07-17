@@ -85,7 +85,7 @@ private:
     void onFloatClicked();
     void init();
     int buttonAreaWidth() const;
-    int iconAreaWidth() const;
+    QRect iconRect() const;
 
     QPoint m_pressPos;
     QString m_title;

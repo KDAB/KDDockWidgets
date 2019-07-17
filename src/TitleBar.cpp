@@ -77,7 +77,7 @@ void TitleBar::init()
     m_layout->addWidget(m_dockWidgetIcon);
 
     m_layout->addStretch();
-    m_layout->setContentsMargins(0, 2, 2, 2);
+    m_layout->setContentsMargins(2, 2, 2, 2);
     m_layout->setSpacing(2);
 
     m_closeButton = new Button(this);
@@ -93,12 +93,12 @@ void TitleBar::init()
     updateCloseButton();
 }
 
-int TitleBar::iconAreaWidth() const
+QRect TitleBar::iconRect() const
 {
     if (m_icon.isNull()) {
-        return 0;
+        return QRect(0,0, 0,0);
     } else {
-        return 30;
+        return QRect(3, 3, 30, 30);
     }
 }
 
@@ -207,7 +207,7 @@ void TitleBar::paintEvent(QPaintEvent *)
 
     QStyleOptionDockWidget titleOpt;
     titleOpt.title = m_title;
-    titleOpt.rect = rect().adjusted(iconAreaWidth(), 0, -buttonAreaWidth(), 0);
+    titleOpt.rect = rect().adjusted(iconRect().right(), 0, -buttonAreaWidth(), 0);
 
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
 }
