@@ -352,16 +352,15 @@ void Frame::dumpDebug()
     }
 }
 
-#ifdef DOCKS_DEVELOPER_MODE
 void Frame::paintEvent(QPaintEvent *)
 {
-    static const bool s_drawDebugTitleFrame = qEnvironmentVariableIsSet("KDDOCKWIDGETS_DRAW_DEBUG_FRAME");
-    if (s_drawDebugTitleFrame) {
+    if (!isFloating()) {
         QPainter p(this);
-        p.drawRect(rect().adjusted(0, 0, -1, -1));
+        QPen pen(QColor(184, 184, 184, 184));
+        p.setPen(pen);
+        p.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 2, 2);
     }
 }
-#endif
 
 DockWidget *Frame::dockWidgetAt(int index) const
 {
