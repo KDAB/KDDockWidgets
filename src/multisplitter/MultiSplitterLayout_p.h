@@ -582,6 +582,7 @@ private:
     Anchor *const m_bottomAnchor;
 
     ItemList m_items;
+    bool m_inCtor = true;
     bool m_inDestructor = false;
     bool m_beingMergedIntoAnotherMultiSplitter = false;
     bool m_doSanityChecks = true;

@@ -81,6 +81,7 @@ MultiSplitterLayout::MultiSplitterLayout(MultiSplitterWidget *parent)
     clear();
 
     positionStaticAnchors();
+    m_inCtor = false;
 }
 
 MultiSplitterLayout::~MultiSplitterLayout()
@@ -1166,7 +1167,7 @@ QPair<AnchorGroup,Anchor*> MultiSplitterLayout::createTargetAnchorGroup(KDDockWi
 
 bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 {
-    if (!m_doSanityChecks)
+    if (!m_doSanityChecks || m_inCtor)
         return true;
 
     auto check = [this, options] (Item *item, Qt::Orientation orientation) {
@@ -1476,14 +1477,14 @@ void MultiSplitterLayout::setContentsSize(QSize size)
             qWarning() << Q_FUNC_INFO << "new size is smaller than min size" << size << m_minSize;
         }
 
-       /* Extra debug
-         const bool inCtor = m_topAnchor->to() == nullptr;
-        if (!inCtor) {
+#if defined(DOCKS_DEVELOPER_MODE)
+        if (!m_inCtor && false) { // TODO Uncomment when it passes
             QSize minSizeCalculated = QSize(availableLengthForOrientation(Qt::Vertical), availableLengthForOrientation(Qt::Horizontal));
             if (size.width() < minSizeCalculated.width() || size.height() < minSizeCalculated.height()) {
                 qWarning() << Q_FUNC_INFO << "new size is smaller than min size calculated" << size << minSizeCalculated;
             }
-        }*/
+        }
+#endif
 
         m_contentSize = size;
         if (!parentWidget()->m_inResizeEvent)
