@@ -191,15 +191,13 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         const int totalRequired = required + length(orientation)
                 + (isEmpty() ? 0 : Anchor::thickness(/*static*/ false))
                 + extraUselessSpace(orientation);
-        qCDebug(sizing) << "had size=" << m_multiSplitter->size()
-                        << "\n    m_contentSize=" << m_contentSize
+        qCDebug(sizing) << "\n    m_contentSize=" << m_contentSize
                         << "\n    required=" << required
                         << "\n    this length=" << length(orientation)
                         << "\n    availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
         setContentLength(orientation, totalRequired);
-        qCDebug(sizing) << "now has size= " << m_multiSplitter->size()
-                        << "\n    m_contentSize=" << m_contentSize
-                        << "\n    totalRequired=" << totalRequired
+        qCDebug(sizing) << "now=    m_contentSize=" << m_contentSize
+                        << "\n      totalRequired=" << totalRequired
                         << "\n availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
     }
 
@@ -292,7 +290,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                          << posForExistingAnchor << "; location=" << location
                          << "; dropRect=" << dropRect
                          << "; existingAnchor=" << existingAnchor
-                         << "; size=" << m_multiSplitter->size() << m_contentSize
+                         << "; size=" << m_contentSize
                          << "; Qt::WA_PendingResizeEvent=" << m_multiSplitter->testAttribute(Qt::WA_PendingResizeEvent)
                          << "; Qt::WA_WState_Created=" << m_multiSplitter->testAttribute(Qt::WA_WState_Created);
                 Q_ASSERT(false);
