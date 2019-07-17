@@ -2122,28 +2122,8 @@ void TestDocks::tst_rectForDrop()
 void TestDocks::tst_crash()
 {
     EnsureTopLevelsDeleted e;
-
     {
-        MultiSplitterWidget msw;
-        auto layout = msw.multiSplitter();
-        layout->setContentsSize(QSize(800, 316));
-        layout->parentWidget()->show();
-
-        auto f1 = createFrameWithWidget(QStringLiteral("w1"), &msw, 200);
-        auto f2 = createFrameWithWidget(QStringLiteral("w2"), &msw, 100);
-        auto f3 = createFrameWithWidget(QStringLiteral("w3"), &msw, 100);
-
-        layout->addWidget(f3, KDDockWidgets::Location_OnBottom);
-        layout->addWidget(f2, KDDockWidgets::Location_OnTop, f3);
-        layout->addWidget(f1, KDDockWidgets::Location_OnTop, f2);
-        layout->resizeItem(f1, 308, Qt::Horizontal);
-
-        auto f4 = createFrameWithWidget(QStringLiteral("w4"), &msw, 105);  // side1 has 108pixels available, which doesn't fit the 5px for the new anchor, + 105 for the widget. Side2 must catter for the 5px.
-        layout->addWidget(f4, KDDockWidgets::Location_OnBottom, f1);
-    }
-
-    {
-        // 2. Teste an assert I got
+        // 1. Teste an assert I got
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
