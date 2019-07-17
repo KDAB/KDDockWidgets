@@ -2015,7 +2015,6 @@ void TestDocks::tst_rectForDropMath_data()
     QTest::addColumn<QSize>("layoutContentsSize");
     QTest::addColumn<MultiSplitterLayout::Length>("length");
     QTest::addColumn<Location>("location");
-    QTest::addColumn<int>("side1AnchorThickness");
     QTest::addColumn<QRect>("relativeToRect");
     QTest::addColumn<QRect>("expectedRect");
 
@@ -2027,12 +2026,11 @@ void TestDocks::tst_rectForDropMath_data()
 
     MultiSplitterLayout::Length length = { 0, 100 };
     QRect expectedRect(staticAnchorThickness, staticAnchorThickness, 100, 1000 - staticAnchorThickness*2);
-    int side1AnchorThickness = staticAnchorThickness;
+
     // 1. Relative to the whole window
     QTest::newRow("left-of-window") << contentsSize
                                     << length
                                     << Location_OnLeft
-                                    << side1AnchorThickness
                                     << relativeToWindowRect
                                     << expectedRect;
 
@@ -2040,7 +2038,6 @@ void TestDocks::tst_rectForDropMath_data()
     QTest::newRow("top-of-window") << contentsSize
                                    << length
                                    << Location_OnTop
-                                   << side1AnchorThickness
                                    << relativeToWindowRect
                                    << expectedRect;
 
@@ -2049,7 +2046,6 @@ void TestDocks::tst_rectForDropMath_data()
     QTest::newRow("right-of-window") << contentsSize
                                      << length
                                      << Location_OnRight
-                                     << side1AnchorThickness
                                      << relativeToWindowRect
                                      << expectedRect;
 
@@ -2057,7 +2053,6 @@ void TestDocks::tst_rectForDropMath_data()
     QTest::newRow("bottom-of-window") << contentsSize
                                       << length
                                       << Location_OnBottom
-                                      << side1AnchorThickness
                                       << relativeToWindowRect
                                       << expectedRect;
 
@@ -2068,7 +2063,6 @@ void TestDocks::tst_rectForDropMath_data()
     QTest::newRow("left-of-leftmost-item") << contentsSize
                                            << length
                                            << Location_OnLeft
-                                           << side1AnchorThickness
                                            << item1Geometry
                                            << expectedRect;
 
@@ -2076,7 +2070,6 @@ void TestDocks::tst_rectForDropMath_data()
     QTest::newRow("top-of-topmost-item") << contentsSize
                                          << length
                                          << Location_OnTop
-                                         << side1AnchorThickness
                                          << item1Geometry
                                          << expectedRect;
 
@@ -2084,7 +2077,6 @@ void TestDocks::tst_rectForDropMath_data()
     QTest::newRow("right-of-rightmost-item") << contentsSize
                                              << length
                                              << Location_OnRight
-                                             << side1AnchorThickness
                                              << item1Geometry
                                              << expectedRect;
 
@@ -2092,7 +2084,6 @@ void TestDocks::tst_rectForDropMath_data()
     QTest::newRow("bottom-of-bottommost-item") << contentsSize
                                                << length
                                                << Location_OnBottom
-                                               << side1AnchorThickness
                                                << item1Geometry
                                                << expectedRect;
     // 3. Now we have two items already in the layout, side-by side, item1 on the left, item2 on the right
@@ -2117,27 +2108,56 @@ void TestDocks::tst_rectForDropMath_data()
     Q_ASSERT(spaceBetweenItems == anchorThickness);
 
     length = { 100, 0 };
-    int x = 1000 - staticAnchorThickness - item2GeometryH.width() - 100 - anchorThickness;
+    int x = 1000 - staticAnchorThickness - item2GeometryH.width() - 100;
     expectedRect = QRect(x, staticAnchorThickness, 100, h);
-    side1AnchorThickness = anchorThickness;
     qDebug() << "expected=" << expectedRect;
     QTest::newRow("left-of-right-item") << contentsSize
                                         << length
                                         << Location_OnLeft
-                                        << side1AnchorThickness
                                         << item2GeometryH
                                         << expectedRect;
 
-    int y = 1000 - staticAnchorThickness - item2GeometryV.height() - 100 - anchorThickness;
+    length = { 0, 100 };
+    x = item1GeometryH.width() + anchorThickness + 1;
+    expectedRect = QRect(x, staticAnchorThickness, 100, h);
+    qDebug() << "expected=" << expectedRect;
+    QTest::newRow("left-of-right-item2") << contentsSize
+                                         << length
+                                         << Location_OnLeft
+                                         << item2GeometryH
+                                         << expectedRect;
+
+    int side1 = 2;
+    length = { side1, 98 };
+    x = item1GeometryH.width() + anchorThickness - side1 + 1;
+    expectedRect = QRect(x, staticAnchorThickness, 100, h);
+    qDebug() << "expected=" << expectedRect;
+    QTest::newRow("left-of-right-item3") << contentsSize
+                                         << length
+                                         << Location_OnLeft
+                                         << item2GeometryH
+                                         << expectedRect;
+
+
+    length = { 100, 0 };
+    int y = 1000 - staticAnchorThickness - item2GeometryV.height() - 100;
     expectedRect = QRect(staticAnchorThickness, y, w, 100);
-    side1AnchorThickness = anchorThickness;
     qDebug() << "expected=" << expectedRect;
     QTest::newRow("top-of-bottom-item") << contentsSize
                                         << length
                                         << Location_OnTop
-                                        << side1AnchorThickness
                                         << item2GeometryV
                                         << expectedRect;
+
+    length = { 0, 100 };
+    x = item1GeometryH.right() + 1;
+    expectedRect = QRect(x, staticAnchorThickness, 100, h);
+    QTest::newRow("right-of-left-item") << contentsSize
+                                        << length
+                                        << Location_OnRight
+                                        << item1GeometryH
+                                        << expectedRect;
+
 
 }
 
@@ -2146,7 +2166,6 @@ void TestDocks::tst_rectForDropMath()
     QFETCH(QSize, layoutContentsSize);
     QFETCH(MultiSplitterLayout::Length, length);
     QFETCH(Location, location);
-    QFETCH(int, side1AnchorThickness);
     QFETCH(QRect, relativeToRect);
     QFETCH(QRect, expectedRect);
 
@@ -2154,7 +2173,7 @@ void TestDocks::tst_rectForDropMath()
     MultiSplitterLayout layout(&widget);
     layout.setContentsSize(layoutContentsSize);
 
-    const QRect result = layout.rectForDrop(length, location, side1AnchorThickness, relativeToRect);
+    const QRect result = layout.rectForDrop(length, location, relativeToRect);
     qDebug() << "Result=" << result;
     QCOMPARE(result, expectedRect);
 }

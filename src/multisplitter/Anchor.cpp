@@ -189,7 +189,7 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     qCDebug(anchors) << Q_FUNC_INFO << this << "; visible="
                      << m_separatorWidget->isVisible() << "; p=" << p;
 
-    if (p < 0 /*|| p > m_layout->contentsLength(orientation()) - 1*/) { // TODO: uncomment when all tests pass
+    if (p < 0  || p > m_layout->contentsLength(orientation()) - 1) {
         m_layout->dumpDebug();
         qWarning() << Q_FUNC_INFO << "Out of bounds position=" << p
                    << "; oldPosition=" << position()

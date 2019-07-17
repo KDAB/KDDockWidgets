@@ -82,6 +82,38 @@ inline int widgetMinLength(const QWidget *w, Qt::Orientation orientation)
     return qMax(min, 0);
 }
 
+inline Anchor::Side sideForLocation(Location loc)
+{
+    switch (loc) {
+    case KDDockWidgets::Location_OnLeft:
+    case KDDockWidgets::Location_OnTop:
+        return Anchor::Side1;
+    case KDDockWidgets::Location_OnRight:
+    case KDDockWidgets::Location_OnBottom:
+        return Anchor::Side2;
+    default:
+        break;
+    }
+
+    return Anchor::Side_None;
+}
+
+inline Qt::Orientation orientationForLocation(Location loc)
+{
+    switch (loc) {
+    case KDDockWidgets::Location_OnLeft:
+    case KDDockWidgets::Location_OnRight:
+        return Qt::Vertical;
+    case KDDockWidgets::Location_OnTop:
+    case KDDockWidgets::Location_OnBottom:
+        return Qt::Horizontal;
+    default:
+        break;
+    }
+
+    return Qt::Vertical;
+}
+
 /**
  * A MultiSplitter is like a QSplitter but supports mixing vertical and horizontal splitters in
  * any combination.
@@ -433,8 +465,7 @@ private:
     /**
      * @brief overload called by the first one. Splitted out just so it's easier to unit-test the math
      */
-    QRect rectForDrop(Length lengthForDrop, Location location,
-                      int side1AnchorThickness, QRect relativeToRect) const;
+    QRect rectForDrop(Length lengthForDrop, Location location, QRect relativeToRect) const;
 
     /**
      * @brief setter for the minimum size

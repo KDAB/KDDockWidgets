@@ -593,10 +593,12 @@ void MultiSplitterLayout::removeAnchor(Anchor *anchor)
 QPair<int, int> MultiSplitterLayout::boundPositionsForAnchor(Anchor *anchor) const
 {
     if (anchor->isStatic()) {
-        // Doesn't happen
-        qWarning() << "MultiSplitterLayout::boundsForAnchor Can't be called with static anchors";
-        Q_ASSERT(false);
-        return {};
+        if (anchor == m_leftAnchor || anchor == m_topAnchor) {
+            return {0, 0};
+        } else if (anchor == m_rightAnchor || anchor == m_bottomAnchor) {
+            const int max = contentsLength(anchor->orientation()) - 1;
+            return {max, max};
+        }
     }
 
     const int minSide1Length = anchor->cumulativeMinLength(Anchor::Side1);
@@ -729,25 +731,21 @@ MultiSplitterLayout::Length MultiSplitterLayout::lengthForDrop(const QWidget *wi
     return available;
 }
 
-QRect MultiSplitterLayout::rectForDrop(MultiSplitterLayout::Length lfd, Location location,
-                                       int side1AnchorThickness, QRect relativeToRect) const
+QRect MultiSplitterLayout::rectForDrop(MultiSplitterLayout::Length lfd, Location location, QRect relativeToRect) const
 {
     QRect result;
     const int widgetLength = lfd.length();
     const int newAnchorThickness = isEmpty() ? 0 : Anchor::thickness(/*static=*/false);
     const int side1Length = lfd.side1Length;
     const int staticAnchorThickness = Anchor::thickness(/**static=*/true);
-    int anchorOffset = 0;
 
     switch (location) {
     case Location_OnLeft:
-        anchorOffset = side1Length > 0 ? side1AnchorThickness : 0;
-        result = QRect(qMax(0, relativeToRect.x() - side1Length - anchorOffset), relativeToRect.y(),
+        result = QRect(qMax(0, relativeToRect.x() - side1Length), relativeToRect.y(),
                        widgetLength, relativeToRect.height());
         break;
     case Location_OnTop:
-        anchorOffset = side1Length > 0 ? side1AnchorThickness : 0;
-        result = QRect(relativeToRect.x(), qMax(0, relativeToRect.y() - side1Length - anchorOffset),
+        result = QRect(relativeToRect.x(), qMax(0, relativeToRect.y() - side1Length),
                        relativeToRect.width(), widgetLength);
         break;
     case Location_OnRight:
@@ -790,11 +788,34 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
                                                 : relativeTo->geometry();
 
     AnchorGroup group = relativeToThis ? staticAnchorGroup() : relativeTo->anchorGroup();
-    const int side1AnchorThickness = location == Location_OnTop ? group.top->thickness()
-                                                                : group.left->thickness();
 
     // This function is split in two just so we can unit-test the math in the second one, which is more involved
-    return rectForDrop(lfd, location, side1AnchorThickness, relativeToRect);
+    QRect result = rectForDrop(lfd, location, relativeToRect);
+
+    // lfd has the length that the widget should have, and we're guaranteed to have +5 (Anchor::thicknes) pixels
+    // For the new anchor, but in rectForDrop() we don't know if that extra 5px fits on the left side or on the right,
+    // so now do an adjustment and put the rect within correct bounds, so all the min sizes to side1 and to side2 are respected
+    const Qt::Orientation orientation = orientationForLocation(location);
+    Anchor *anchor1 = group.anchorAtSide(Anchor::Side1, orientation);
+    Anchor *anchor2 = group.anchorAtSide(Anchor::Side2, orientation);
+    const int bound1 = boundPositionForAnchor(anchor1, Anchor::Side1);
+    const int bound2 = boundPositionForAnchor(anchor2, Anchor::Side2);
+
+    if (orientation == Qt::Vertical) {
+        if (result.x() < bound1 + anchor1->thickness())
+            result.moveLeft(bound1 + anchor1->thickness());
+        if (result.right() >= bound2)
+            result.moveRight(bound2 - 1);
+        Q_ASSERT(result.x() >= bound1 + anchor1->thickness());
+    } else {
+        if (result.y() < bound1 + anchor1->thickness())
+            result.moveTop(bound1 + anchor1->thickness());
+        if (result.bottom() >= bound2)
+            result.moveBottom(bound2 - 1);
+        Q_ASSERT(result.y() >= bound1 + anchor1->thickness());
+    }
+
+    return result;
 }
 
 void MultiSplitterLayout::setAnchorBeingDragged(Anchor *anchor)
