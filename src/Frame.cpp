@@ -402,7 +402,7 @@ bool Frame::isFloating() const
 
 bool Frame::isInMainWindow() const
 {
-    return m_dropArea && qobject_cast<MainWindow*>(m_dropArea->parentWidget());
+    return m_dropArea && m_dropArea->isInMainWindow();
 }
 
 int Frame::dockWidgetCount() const
