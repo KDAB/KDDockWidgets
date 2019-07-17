@@ -439,7 +439,7 @@ Q_SIGNALS:
 
     ///@brief emitted when the minimumSize changes
     ///@sa minimumSize
-    void minimumSizeChanged();
+    void minimumSizeChanged(QSize);
 
 public:
     bool eventFilter(QObject *o, QEvent *e) override;
@@ -574,6 +574,7 @@ private:
     // Moves the widget's bottom or right anchor, to resize it.
     void resizeItem(Frame *frame, int newSize, Qt::Orientation);
 
+    MultiSplitterWidget *const m_multiSplitter;
     Anchor::List m_anchors;
 
     Anchor *const m_leftAnchor;
@@ -589,7 +590,6 @@ private:
 
     QSize m_minSize = QSize(0, 0);
     AnchorGroup m_staticAnchorGroup;
-
     QPointer<Anchor> m_anchorBeingDragged;
     QSize m_contentSize;
     QSize m_extraUselessSpace = {0, 0};

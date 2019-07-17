@@ -40,6 +40,9 @@ MultiSplitterWidget::MultiSplitterWidget(QWidget *parent)
     : QWidget(parent)
     , m_layout(new MultiSplitterLayout(this))
 {
+    connect(m_layout, &MultiSplitterLayout::minimumSizeChanged, this, [this] (QSize sz) {
+        setMinimumSize(sz);
+    });
 }
 
 MultiSplitterWidget::~MultiSplitterWidget()

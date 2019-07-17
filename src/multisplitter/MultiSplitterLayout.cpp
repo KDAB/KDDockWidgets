@@ -43,6 +43,7 @@ static Qt::Orientation anchorOrientationForLocation(Location l)
 
 MultiSplitterLayout::MultiSplitterLayout(MultiSplitterWidget *parent)
     : QObject(parent)
+    , m_multiSplitter(parent)
     , m_leftAnchor(new Anchor(Qt::Vertical, this, Anchor::Type_LeftStatic))
     , m_topAnchor(new Anchor(Qt::Horizontal, this, Anchor::Type_TopStatic))
     , m_rightAnchor(new Anchor(Qt::Vertical, this, Anchor::Type_RightStatic))
@@ -94,7 +95,7 @@ MultiSplitterLayout::~MultiSplitterLayout()
 
 MultiSplitterWidget *MultiSplitterLayout::parentWidget() const
 {
-    return qobject_cast<MultiSplitterWidget*>(parent());
+    return m_multiSplitter;
 }
 
 bool MultiSplitterLayout::validateInputs(QWidget *widget,
@@ -190,13 +191,13 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         const int totalRequired = required + length(orientation)
                 + (isEmpty() ? 0 : Anchor::thickness(/*static*/ false))
                 + extraUselessSpace(orientation);
-        qCDebug(sizing) << "had size=" << parentWidget()->size()
+        qCDebug(sizing) << "had size=" << m_multiSplitter->size()
                         << "\n    m_contentSize=" << m_contentSize
                         << "\n    required=" << required
                         << "\n    this length=" << length(orientation)
                         << "\n    availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
         setContentLength(orientation, totalRequired);
-        qCDebug(sizing) << "now has size= " << parentWidget()->size()
+        qCDebug(sizing) << "now has size= " << m_multiSplitter->size()
                         << "\n    m_contentSize=" << m_contentSize
                         << "\n    totalRequired=" << totalRequired
                         << "\n availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
@@ -207,9 +208,9 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
 
     if (dropRect.size().isNull() || dropRect.x() < 0 || dropRect.y() < 0) {
         qWarning() << Q_FUNC_INFO << "Invalid drop rect" << dropRect
-                   << "\n    size=" << parentWidget()->size() << "; contentsSize="<< m_contentSize
+                   << "\n    size=" << m_multiSplitter->size() << "; contentsSize="<< m_contentSize
                    << "\n    location=" << location
-                   << "\n    window=" << parentWidget()->window()
+                   << "\n    window=" << m_multiSplitter->window()
                    << "\n    this=" << this
                    << "\n    availableHeight=" << availableLengthForOrientation(Qt::Horizontal)
                    << "\n    availableWidth=" << availableLengthForOrientation(Qt::Vertical)
@@ -291,9 +292,9 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                          << posForExistingAnchor << "; location=" << location
                          << "; dropRect=" << dropRect
                          << "; existingAnchor=" << existingAnchor
-                         << "; size=" << parentWidget()->size() << m_contentSize
-                         << "; Qt::WA_PendingResizeEvent=" << parentWidget()->testAttribute(Qt::WA_PendingResizeEvent)
-                         << "; Qt::WA_WState_Created=" << parentWidget()->testAttribute(Qt::WA_WState_Created);
+                         << "; size=" << m_multiSplitter->size() << m_contentSize
+                         << "; Qt::WA_PendingResizeEvent=" << m_multiSplitter->testAttribute(Qt::WA_PendingResizeEvent)
+                         << "; Qt::WA_WState_Created=" << m_multiSplitter->testAttribute(Qt::WA_WState_Created);
                 Q_ASSERT(false);
             }
             existingAnchor->setPosition(posForExistingAnchor);
@@ -361,7 +362,7 @@ void MultiSplitterLayout::addAsPlaceholder(DockWidget *dockWidget, Location loca
     auto result = createTargetAnchorGroup(location, relativeTo);
     AnchorGroup targetAnchorGroup = result.first;
 
-    auto frame = new Frame(parentWidget());
+    auto frame = new Frame(m_multiSplitter);
     auto item = new Item(frame, this);
 
     targetAnchorGroup.addItem(item);
@@ -582,7 +583,7 @@ int MultiSplitterLayout::placeholderCount() const
 
 int MultiSplitterLayout::length(Qt::Orientation orientation) const
 {
-    return KDDockWidgets::widgetLength(parentWidget(), orientation);
+    return KDDockWidgets::widgetLength(m_multiSplitter, orientation);
 }
 
 void MultiSplitterLayout::removeAnchor(Anchor *anchor)
@@ -784,7 +785,7 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
 
     const int staticAnchorThickness = Anchor::thickness(/**static=*/true);
     const bool relativeToThis = relativeTo == nullptr;
-    const QRect relativeToRect = relativeToThis ? parentWidget()->rect().adjusted(staticAnchorThickness, staticAnchorThickness,
+    const QRect relativeToRect = relativeToThis ? m_multiSplitter->rect().adjusted(staticAnchorThickness, staticAnchorThickness,
                                                                                   -staticAnchorThickness, -staticAnchorThickness)
                                                 : relativeTo->geometry();
 
@@ -900,7 +901,7 @@ void MultiSplitterLayout::dumpDebug() const
 {
     Q_EMIT aboutToDumpDebug();
     qDebug() << Q_FUNC_INFO << "m_contentsSize=" << m_contentSize
-             << "; minimumSize=" << parentWidget()->minimumSize();
+             << "; minimumSize=" << m_multiSplitter->minimumSize();
 
     qDebug() << "Items:";
     for (auto item : items()) {
@@ -1487,8 +1488,8 @@ void MultiSplitterLayout::setContentsSize(QSize size)
 #endif
 
         m_contentSize = size;
-        if (!parentWidget()->m_inResizeEvent)
-            parentWidget()->resize(size);
+        if (!m_multiSplitter->m_inResizeEvent)
+            m_multiSplitter->resize(size);
         redistributeSpace(oldSize, size);
         Q_EMIT contentsSizeChanged();
     }
@@ -1515,8 +1516,7 @@ void MultiSplitterLayout::setMinimumSize(QSize sz)
 {
     if (sz != m_minSize) {
         m_minSize = sz;
-        parentWidget()->setMinimumSize(m_minSize);
-        Q_EMIT minimumSizeChanged();
+        Q_EMIT minimumSizeChanged(sz);
     }
     qCDebug(sizing) << Q_FUNC_INFO << "minSize = " << m_minSize;
 }
@@ -1634,10 +1634,10 @@ const ItemList MultiSplitterLayout::items() const
 
 bool MultiSplitterLayout::eventFilter(QObject *o, QEvent *e)
 {
-    if (m_inDestructor || e->spontaneous() || !parentWidget())
+    if (m_inDestructor || e->spontaneous() || !m_multiSplitter)
         return false;
 
-    if (!parentWidget()->isVisible()) {
+    if (!m_multiSplitter->isVisible()) {
         // The whole MultiSplitter isn't visible, don't bother. It probably even is being hidden by ~QMainWindow().
         return false;
     }
