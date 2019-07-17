@@ -194,6 +194,7 @@ void Anchor::setPosition(int p, SetPositionOptions options)
         qWarning() << Q_FUNC_INFO << "Out of bounds position=" << p
                    << "; oldPosition=" << position()
                    << this
+                   << "; max=" << m_layout->contentsLength(orientation()) - 1
                    << m_layout->parentWidget()->window();
     }
 
