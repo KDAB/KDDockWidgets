@@ -3393,6 +3393,7 @@ void TestDocks::tst_negativeAnchorPosition()
 
     auto dropArea = m->dropArea();
     MultiSplitterLayout *layout = dropArea->multiSplitter();
+    qDebug() << "ContentSize:" << layout->contentsSize();
 
     auto d1 = createDockWidget(QStringLiteral("1"), w1);
     auto d2 = createDockWidget(QStringLiteral("2"), w2);
