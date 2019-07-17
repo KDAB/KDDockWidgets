@@ -146,6 +146,7 @@ void TitleBar::setIcon(const QIcon &icon)
     } else {
         m_dockWidgetIcon->setPixmap(QPixmap());
     }
+    update();
 }
 
 std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
