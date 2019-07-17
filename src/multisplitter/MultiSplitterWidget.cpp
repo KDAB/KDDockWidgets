@@ -43,11 +43,15 @@ MultiSplitterWidget::MultiSplitterWidget(QWidget *parent)
     connect(m_layout, &MultiSplitterLayout::minimumSizeChanged, this, [this] (QSize sz) {
         setMinimumSize(sz);
     });
+
+    connect(m_layout, &MultiSplitterLayout::contentsSizeChanged, this, [this] (QSize sz) {
+        if (!m_inResizeEvent)
+            resize(sz);
+    });
 }
 
 MultiSplitterWidget::~MultiSplitterWidget()
 {
-
 }
 
 int MultiSplitterWidget::count() const

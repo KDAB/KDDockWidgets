@@ -435,7 +435,7 @@ Q_SIGNALS:
 
     ///@brief emitted when the contentsSize changes
     ///@sa contentsSize
-    void contentsSizeChanged();
+    void contentsSizeChanged(QSize sz);
 
     ///@brief emitted when the minimumSize changes
     ///@sa minimumSize
