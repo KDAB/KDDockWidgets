@@ -352,6 +352,30 @@ public:
      */
     QPair<AnchorGroup, Anchor *> createTargetAnchorGroup(Location location, Item *relativeToItem);
 
+    struct Length {
+        int side1Length = 0;
+        int side2Length = 0;
+        int length() const { return side1Length + side2Length; }
+
+        void setLength(int newLength)
+        {
+            // Sets the new length, preserving proportion
+            side1Length = int(side1Factor() * newLength);
+            side2Length = newLength - side1Length;
+        }
+
+        bool isNull() const
+        {
+            return length() <= 0;
+        }
+
+    private:
+        qreal side1Factor() const
+        {
+            return (1.0 * side1Length) / length();
+        }
+    };
+
 Q_SIGNALS:
     ///@brief emitted when the number of widgets changes
     ///@param count the new widget count
@@ -400,35 +424,11 @@ private:
         Anchor *side2;
     };
 
-    struct Length {
-        int side1Length = 0;
-        int side2Length = 0;
-        int length() const { return side1Length + side2Length; }
-
-        void setLength(int newLength)
-        {
-            // Sets the new length, preserving proportion
-            side1Length = int(side1Factor() * newLength);
-            side2Length = newLength - side1Length;
-        }
-
-        bool isNull() const
-        {
-            return length() <= 0;
-        }
-
-    private:
-        qreal side1Factor() const
-        {
-            return (1.0 * side1Length) / length();
-        }
-    };
-
     /**
      * @brief overload called by the first one. Splitted out just so it's easier to unit-test the math
      */
     QRect rectForDrop(Length lengthForDrop, Location location,
-                      const Item *relativeTo, QRect relativeToRect) const;
+                      int side1AnchorThickness, QRect relativeToRect) const;
 
     /**
      * @brief setter for the minimum size
@@ -562,5 +562,7 @@ inline QDebug operator<<(QDebug d, const AnchorGroup &group) {
     return d;
 }
 }
+
+Q_DECLARE_METATYPE(KDDockWidgets::MultiSplitterLayout::Length)
 
 #endif

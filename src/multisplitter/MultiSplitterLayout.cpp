@@ -730,26 +730,23 @@ MultiSplitterLayout::Length MultiSplitterLayout::lengthForDrop(const QWidget *wi
 }
 
 QRect MultiSplitterLayout::rectForDrop(MultiSplitterLayout::Length lfd, Location location,
-                                       const Item *relativeTo, QRect relativeToRect) const
+                                       int side1AnchorThickness, QRect relativeToRect) const
 {
     QRect result;
     const int lengthForDrop = lfd.length();
     const int newAnchorThickness = isEmpty() ? 0 : Anchor::thickness(/*static=*/false);
     const int side1Length = lfd.side1Length;
     const int staticAnchorThickness = Anchor::thickness(/**static=*/true);
-    const bool relativeToThis = relativeTo == nullptr;
-
-    AnchorGroup group = relativeToThis ? staticAnchorGroup() : relativeTo->anchorGroup();
     int anchorOffset = 0;
 
     switch (location) {
     case Location_OnLeft:
-        anchorOffset = side1Length > 0 ? group.left->thickness() : 0;
+        anchorOffset = side1Length > 0 ? side1AnchorThickness : 0;
         result = QRect(qMax(0, relativeToRect.x() - side1Length - anchorOffset), relativeToRect.y(),
                        lengthForDrop, relativeToRect.height());
         break;
     case Location_OnTop:
-        anchorOffset = side1Length > 0 ? group.left->thickness() : 0;
+        anchorOffset = side1Length > 0 ? side1AnchorThickness : 0;
         result = QRect(relativeToRect.x(), qMax(0, relativeToRect.y() - side1Length - - anchorOffset),
                        relativeToRect.width(), lengthForDrop);
         break;
@@ -792,9 +789,12 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
                                                                                   -staticAnchorThickness, -staticAnchorThickness)
                                                 : relativeTo->geometry();
 
+    AnchorGroup group = relativeToThis ? staticAnchorGroup() : relativeTo->anchorGroup();
+    const int side1AnchorThickness = location == Location_OnTop ? group.top->thickness()
+                                                                : group.left->thickness();
 
-    // This function is splitted in two just so we can unit-test the math in the second one, which is more involved
-    return rectForDrop(lfd, location, relativeTo, relativeToRect);
+    // This function is split in two just so we can unit-test the math in the second one, which is more involved
+    return rectForDrop(lfd, location, side1AnchorThickness, relativeToRect);
 }
 
 void MultiSplitterLayout::setAnchorBeingDragged(Anchor *anchor)
