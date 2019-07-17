@@ -170,13 +170,13 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         frame->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
     }
 
-    unrefOldPlaceholders(framesFrom(w));
-
-    Item *relativeToItem = itemForFrame(relativeToWidget);
-
     // Make some sanity checks:
     if (!validateInputs(w, location, relativeToWidget, option))
         return;
+
+    unrefOldPlaceholders(framesFrom(w));
+
+    Item *relativeToItem = itemForFrame(relativeToWidget);
 
     if (option & AddingOption_StartHidden) {
         addAsPlaceholder(qobject_cast<DockWidget*>(w), location, relativeToItem);
