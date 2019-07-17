@@ -207,7 +207,8 @@ void TitleBar::paintEvent(QPaintEvent *)
 
     QStyleOptionDockWidget titleOpt;
     titleOpt.title = m_title;
-    titleOpt.rect = rect().adjusted(iconRect().right(), 0, -buttonAreaWidth(), 0);
+    titleOpt.rect = iconRect().isEmpty() ? rect().adjusted(2, 0, -buttonAreaWidth(), 0)
+                                         : rect().adjusted(iconRect().right(), 0, -buttonAreaWidth(), 0);
 
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
 }
