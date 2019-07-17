@@ -124,7 +124,7 @@ void TabWidget::insertDockWidget(DockWidget *dock, int index)
         return;
     }
 
-    insertTab(index, dock, dock->title());
+    insertTab(index, dock, dock->icon(), dock->title());
     setCurrentIndex(index);
 }
 
