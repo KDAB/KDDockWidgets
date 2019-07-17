@@ -105,4 +105,6 @@ namespace KDDockWidgets
 
 };
 
+Q_DECLARE_METATYPE(KDDockWidgets::Location)
+
 #endif

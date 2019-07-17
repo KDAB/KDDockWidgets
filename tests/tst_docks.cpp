@@ -300,6 +300,8 @@ private Q_SLOTS:
     void tst_constraintsAfterPlaceholder();
     void tst_rectForDrop_data();
     void tst_rectForDrop();
+    void tst_rectForDropMath_data();
+    void tst_rectForDropMath();
     void tst_crash(); // tests some crash I got
     void tst_setFloatingWhenWasTabbed();
     void tst_setFloatingWhenSideBySide();
@@ -2006,6 +2008,74 @@ void TestDocks::tst_constraintsAfterPlaceholder()
 
     dock1->deleteLater();
     waitForDeleted(dock1);
+}
+
+void TestDocks::tst_rectForDropMath_data()
+{
+    QTest::addColumn<QSize>("layoutContentsSize");
+    QTest::addColumn<MultiSplitterLayout::Length>("length");
+    QTest::addColumn<Location>("location");
+    QTest::addColumn<int>("side1AnchorThickness");
+    QTest::addColumn<QRect>("relativeToRect");
+    QTest::addColumn<QRect>("expectedRect");
+
+    const QRect layoutRect(0, 0, 1000, 1000);
+    const QSize contentsSize = layoutRect.size();
+    const int staticAnchorThickness = Anchor::thickness(true);
+    const QRect relativeToWindowRect = layoutRect.adjusted(staticAnchorThickness, staticAnchorThickness, -staticAnchorThickness, -staticAnchorThickness);
+
+    MultiSplitterLayout::Length length = { 0, 100 };
+    QRect expectedRect(staticAnchorThickness, staticAnchorThickness, 100, 1000 - staticAnchorThickness*2);
+    int side1AnchorThickness = staticAnchorThickness;
+    QTest::newRow("left-of-window") << contentsSize
+                                    << length
+                                    << Location_OnLeft
+                                    << side1AnchorThickness
+                                    << relativeToWindowRect
+                                    << expectedRect;
+
+    expectedRect = QRect(staticAnchorThickness, staticAnchorThickness, 1000 - staticAnchorThickness*2, 100);
+    QTest::newRow("top-of-window") << contentsSize
+                                   << length
+                                   << Location_OnTop
+                                   << side1AnchorThickness
+                                   << relativeToWindowRect
+                                   << expectedRect;
+
+
+    length = { 100, 0 };
+    expectedRect = QRect(1000 - 100 - staticAnchorThickness, staticAnchorThickness, 100, 1000 - staticAnchorThickness*2);
+    QTest::newRow("right-of-window") << contentsSize
+                                     << length
+                                     << Location_OnRight
+                                     << side1AnchorThickness
+                                     << relativeToWindowRect
+                                     << expectedRect;
+
+    expectedRect = QRect(staticAnchorThickness, 1000 - 100 - staticAnchorThickness, 1000 - staticAnchorThickness*2, 100);
+    QTest::newRow("bottom-of-window") << contentsSize
+                                      << length
+                                      << Location_OnBottom
+                                      << side1AnchorThickness
+                                      << relativeToWindowRect
+                                      << expectedRect;
+
+}
+
+void TestDocks::tst_rectForDropMath()
+{
+    QFETCH(QSize, layoutContentsSize);
+    QFETCH(MultiSplitterLayout::Length, length);
+    QFETCH(Location, location);
+    QFETCH(int, side1AnchorThickness);
+    QFETCH(QRect, relativeToRect);
+    QFETCH(QRect, expectedRect);
+
+    MultiSplitterWidget widget;
+    MultiSplitterLayout layout(&widget);
+    layout.setContentsSize(layoutContentsSize);
+
+    QCOMPARE(layout.rectForDrop(length, location, side1AnchorThickness, relativeToRect), expectedRect);
 }
 
 void TestDocks::tst_rectForDrop_data()

@@ -353,6 +353,12 @@ public:
     QPair<AnchorGroup, Anchor *> createTargetAnchorGroup(Location location, Item *relativeToItem);
 
     struct Length {
+        Length() = default;
+        Length(int side1, int side2)
+            : side1Length(side1)
+            , side2Length(side2)
+        {}
+
         int side1Length = 0;
         int side2Length = 0;
         int length() const { return side1Length + side2Length; }
