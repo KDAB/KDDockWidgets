@@ -1646,13 +1646,5 @@ bool MultiSplitterLayout::eventFilter(QObject *o, QEvent *e)
         return false;
     }
 
-    if (e->type() == QEvent::Show) {
-        //qDebug() << "MultiSplitterLayout::eventFilter show for " << w << w->testAttribute(Qt::WA_WState_ExplicitShowHide);
-        // TODO
-    } else if (e->type() == QEvent::Hide) {
-        //qDebug() << "MultiSplitterLayout::eventFilter hide for " << w << w->testAttribute(Qt::WA_WState_ExplicitShowHide);
-        // TODO
-    }
-
     return false;
 }
