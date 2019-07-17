@@ -729,27 +729,15 @@ MultiSplitterLayout::Length MultiSplitterLayout::lengthForDrop(const QWidget *wi
     return available;
 }
 
-QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Location location,
-                                       const Item *relativeTo) const
+QRect MultiSplitterLayout::rectForDrop(MultiSplitterLayout::Length lfd, Location location,
+                                       const Item *relativeTo, QRect relativeToRect) const
 {
-    Q_ASSERT(widgetBeingDropped);
-    Length lfd = lengthForDrop(widgetBeingDropped, location, relativeTo);
-    if (lfd.isNull())  {
-        // This is the case with the drop indicators. If there's not enough space let's still
-        // draw some indicator drop. The window will resize to accommodate the drop.
-        lfd.side1Length = INDICATOR_MINIMUM_LENGTH / 2;
-        lfd.side2Length = INDICATOR_MINIMUM_LENGTH - lfd.side1Length;
-    }
-
     QRect result;
-    const int newAnchorThickness = isEmpty() ? 0 : Anchor::thickness(/*static=*/false);
     const int lengthForDrop = lfd.length();
+    const int newAnchorThickness = isEmpty() ? 0 : Anchor::thickness(/*static=*/false);
     const int side1Length = lfd.side1Length;
     const int staticAnchorThickness = Anchor::thickness(/**static=*/true);
     const bool relativeToThis = relativeTo == nullptr;
-    const QRect relativeToRect = relativeToThis ? parentWidget()->rect().adjusted(staticAnchorThickness, staticAnchorThickness,
-                                                                                  -staticAnchorThickness, -staticAnchorThickness)
-                                                : relativeTo->geometry();
 
     AnchorGroup group = relativeToThis ? staticAnchorGroup() : relativeTo->anchorGroup();
     int anchorOffset = 0;
@@ -784,6 +772,29 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
                     << "; s1=" << side1Length
                     << "; relativeToRect.bottomRight=" << relativeToRect.bottomRight();
     return result;
+}
+
+QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Location location,
+                                       const Item *relativeTo) const
+{
+    Q_ASSERT(widgetBeingDropped);
+    Length lfd = lengthForDrop(widgetBeingDropped, location, relativeTo);
+    if (lfd.isNull())  {
+        // This is the case with the drop indicators. If there's not enough space let's still
+        // draw some indicator drop. The window will resize to accommodate the drop.
+        lfd.side1Length = INDICATOR_MINIMUM_LENGTH / 2;
+        lfd.side2Length = INDICATOR_MINIMUM_LENGTH - lfd.side1Length;
+    }
+
+    const int staticAnchorThickness = Anchor::thickness(/**static=*/true);
+    const bool relativeToThis = relativeTo == nullptr;
+    const QRect relativeToRect = relativeToThis ? parentWidget()->rect().adjusted(staticAnchorThickness, staticAnchorThickness,
+                                                                                  -staticAnchorThickness, -staticAnchorThickness)
+                                                : relativeTo->geometry();
+
+
+    // This function is splitted in two just so we can unit-test the math in the second one, which is more involved
+    return rectForDrop(lfd, location, relativeTo, relativeToRect);
 }
 
 void MultiSplitterLayout::setAnchorBeingDragged(Anchor *anchor)

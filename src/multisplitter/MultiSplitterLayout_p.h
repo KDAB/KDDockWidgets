@@ -44,6 +44,7 @@
 namespace KDDockWidgets {
 
 class MultiSplitterWidget;
+class Length;
 
 /**
  * Returns the width of the widget if orientation is Vertical, the height otherwise.
@@ -424,6 +425,12 @@ private:
     };
 
     /**
+     * @brief overload called by the first one. Splitted out just so it's easier to unit-test the math
+     */
+    QRect rectForDrop(Length lengthForDrop, Location location,
+                      const Item *relativeTo, QRect relativeToRect) const;
+
+    /**
      * @brief setter for the minimum size
      * @ref minimumSize
      */
@@ -438,6 +445,8 @@ private:
      */
     MultiSplitterLayout::Length lengthForDrop(const QWidget *widget, KDDockWidgets::Location location,
                                               const Item *relativeTo) const;
+
+
     void insertAnchor(Anchor *);
     void removeAnchor(Anchor *);
 
