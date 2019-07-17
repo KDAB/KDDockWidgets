@@ -733,7 +733,7 @@ QRect MultiSplitterLayout::rectForDrop(MultiSplitterLayout::Length lfd, Location
                                        int side1AnchorThickness, QRect relativeToRect) const
 {
     QRect result;
-    const int lengthForDrop = lfd.length();
+    const int widgetLength = lfd.length();
     const int newAnchorThickness = isEmpty() ? 0 : Anchor::thickness(/*static=*/false);
     const int side1Length = lfd.side1Length;
     const int staticAnchorThickness = Anchor::thickness(/**static=*/true);
@@ -743,21 +743,21 @@ QRect MultiSplitterLayout::rectForDrop(MultiSplitterLayout::Length lfd, Location
     case Location_OnLeft:
         anchorOffset = side1Length > 0 ? side1AnchorThickness : 0;
         result = QRect(qMax(0, relativeToRect.x() - side1Length - anchorOffset), relativeToRect.y(),
-                       lengthForDrop, relativeToRect.height());
+                       widgetLength, relativeToRect.height());
         break;
     case Location_OnTop:
         anchorOffset = side1Length > 0 ? side1AnchorThickness : 0;
         result = QRect(relativeToRect.x(), qMax(0, relativeToRect.y() - side1Length - anchorOffset),
-                       relativeToRect.width(), lengthForDrop);
+                       relativeToRect.width(), widgetLength);
         break;
     case Location_OnRight:
         result = QRect(qMin(relativeToRect.right() + 1 - side1Length + newAnchorThickness,
-                            contentsWidth() - lengthForDrop - staticAnchorThickness), relativeToRect.y(), lengthForDrop, relativeToRect.height());
+                            contentsWidth() - widgetLength - staticAnchorThickness), relativeToRect.y(), widgetLength, relativeToRect.height());
         break;
     case Location_OnBottom:
         result = QRect(relativeToRect.x(), qMin(relativeToRect.bottom() + 1 - side1Length + newAnchorThickness,
-                                                contentsHeight() - lengthForDrop - staticAnchorThickness),
-                       relativeToRect.width(), lengthForDrop);
+                                                contentsHeight() - widgetLength - staticAnchorThickness),
+                       relativeToRect.width(), widgetLength);
         break;
     default:
         break;

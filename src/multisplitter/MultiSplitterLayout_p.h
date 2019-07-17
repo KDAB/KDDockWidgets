@@ -445,7 +445,8 @@ private:
     void emitVisibleWidgetCountChanged();
 
     /**
-     * Returns the size that the widget will get when dropped at this specific location.
+     * @brief Returns the size that the widget will get when dropped at this specific location.
+     *
      * When location is Left or Right then the length represents a width, otherwise an height.
      * This function is also called to know the size of the rubberband when hovering over a location.
      */
