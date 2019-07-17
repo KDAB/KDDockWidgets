@@ -50,6 +50,7 @@ public:
     ~MultiSplitterWidget() override;
     MultiSplitterLayout *multiSplitter() const { return m_layout; }
     int count() const;
+    bool isInMainWindow() const;
 protected:
     bool event(QEvent *e) override;
     void resizeEvent(QResizeEvent *) override;

@@ -30,6 +30,7 @@
 #include "MultiSplitterWidget_p.h"
 #include "MultiSplitterLayout_p.h"
 #include "Logging_p.h"
+#include "MainWindow.h"
 
 #include <QResizeEvent>
 
@@ -68,4 +69,9 @@ bool MultiSplitterWidget::event(QEvent *e)
         m_layout->updateSizeConstraints();
 
     return QWidget::event(e);
+}
+
+bool MultiSplitterWidget::isInMainWindow() const
+{
+    return qobject_cast<MainWindow*>(parentWidget());
 }

@@ -158,11 +158,6 @@ void DropArea::addDockWidget(DockWidget *dw, Location location, DockWidget *rela
     }
 }
 
-bool DropArea::isInMainWindow() const
-{
-    return qobject_cast<MainWindow*>(parentWidget());
-}
-
 bool DropArea::isInFloatingWindow() const
 {
     return qobject_cast<FloatingWindow*>(parentWidget());
