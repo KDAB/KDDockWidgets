@@ -160,7 +160,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
                        << "; contentSize=" << contentsSize()
                        << "; w.size=" << w->size()
                        << "; w.min=" << KDDockWidgets::widgetMinLength(w, anchorOrientationForLocation(location))
-                       << "; frame=" << (void*)frame
+                       << "; frame=" << frame
                        << "; option=" << option;
 
     if (itemForFrame(frame) != nullptr) {
