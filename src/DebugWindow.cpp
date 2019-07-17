@@ -62,8 +62,6 @@ void DebugWindow::dumpDockWidgetInfo()
         fw->dropArea()->multiSplitter()->dumpDebug();
     }
 
-    for (MainWindow *mw : mainWindows) {
-        auto da = qobject_cast<DropArea*>(mw->centralWidget());
-        da->multiSplitter()->dumpDebug();
-    }
+    for (MainWindow *mw : mainWindows)
+        mw->multiSplitterLayout()->dumpDebug();
 }

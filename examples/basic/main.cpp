@@ -82,17 +82,7 @@ public:
             LayoutSaver saver;
             saver.restoreFromDisk();
         });
-
-        /*connect(newAction, &QAction::triggered, this, [this] {
-            auto dropArea = qobject_cast<DropArea*>(centralWidget());
-            Q_ASSERT(dropArea);
-            //if (dropArea->indicatorStyle() == DropIndicatorOverlayInterface::TypeAnimated)
-                //dropArea->setIndicatorStyle(DropIndicatorOverlayInterface::TypeClassic);
-            //else
-                //dropArea->setIndicatorStyle(DropIndicatorOverlayInterface::TypeAnimated);
-        });*/
     }
-
 
     QMenu *toggleMenu;
 };

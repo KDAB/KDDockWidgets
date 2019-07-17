@@ -108,11 +108,9 @@ int main(int argc, char **argv)
     }
 
     //Add log !
-    QWidget *central = window->centralWidget();
-    auto dropArea = qobject_cast<DropArea *>(central);
+    DropArea *dropArea = window->dropArea();
 
-    std::cout << "QWidget *central = window->centralWidget();" << std::endl;
-    std::cout << "auto dropArea = qobject_cast<DropArea *>(central);" << std::endl;
+    std::cout << "auto dropArea = window->dropArea();" << std::endl;
 
     // Add dockWidget
     for (int i = 0; i < listDockWidget.count(); ++i) {

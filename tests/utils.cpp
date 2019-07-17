@@ -78,8 +78,7 @@ DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor c
 std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
 {
     auto m = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow"), MainWindowOption_None));
-    auto dropArea = qobject_cast<DropArea*>(m->centralWidget());
-    auto layout = dropArea->multiSplitter();
+    auto layout = m->multiSplitterLayout();
     m->show();
     m->resize(QSize(700, 700));
 

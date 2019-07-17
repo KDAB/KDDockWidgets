@@ -555,21 +555,10 @@ QByteArray LayoutSaver::serializeLayout() const
     // Save main windows (geometry, visibility and dockwidget layout):
     auto mainWindows = d->mainWindows();
 
-    // Remove crap:
-    mainWindows.erase(std::remove_if(mainWindows.begin(), mainWindows.end(),
-                                     [](MainWindow *w) {
-                          if (!qobject_cast<DropArea*>(w->centralWidget())) {
-                              qWarning() << Q_FUNC_INFO << "MainWindow with wrong central widget";
-                              return true;
-                          } else {
-                              return false;
-                          }
-    }), mainWindows.end());
-
     ds << mainWindows.size();
     for (auto mainWindow : mainWindows) {
         WindowState windowState(mainWindow, mainWindow->name());
-        LayoutState layoutState(static_cast<DropArea*>(mainWindow->centralWidget()));
+        LayoutState layoutState(mainWindow->dropArea());
         ds << windowState;
         ds << layoutState;
     }
@@ -635,7 +624,7 @@ void LayoutSaver::restoreLayout(const QByteArray &data)
             windowState.restore(w);
 
         qCDebug(restoring) << "Restoring MainWindow";
-        layoutState.restore(qobject_cast<DropArea*>(w->centralWidget()));
+        layoutState.restore(w->dropArea());
     }
 
     // Restore floating nested windows
