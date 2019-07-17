@@ -38,6 +38,8 @@ namespace KDDockWidgets {
 
 class DockWidget;
 class Frame;
+class DropArea;
+class MultiSplitterLayout;
 
 class DOCKS_EXPORT MainWindow : public QMainWindow
 {
@@ -52,6 +54,14 @@ public:
 
     QString name() const;
     MainWindowOptions options() const;
+
+#if defined(DOCKS_DEVELOPER_MODE)
+    ///@brief returns the drop area. Used by the tests only
+    DropArea *dropArea() const;
+
+    ///@brief returns the MultiSplitterLayout. Used by the tests only.
+    MultiSplitterLayout* multiSplitterLayout() const;
+#endif
 
 private:
     bool eventFilter(QObject *, QEvent *) override;
