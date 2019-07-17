@@ -322,9 +322,9 @@ void Item::setIsPlaceholder(bool is)
 
 bool Item::isInMainWindow() const
 {
-    if (auto l = layout()) {
-        if (auto p = l->parentWidget()) {
-            return qobject_cast<MainWindow*>(p->parentWidget());
+    if (MultiSplitterLayout *l = layout()) {
+        if (MultiSplitterWidget *msw = l->parentWidget()) {
+            return msw->isInMainWindow();
         }
     }
 
