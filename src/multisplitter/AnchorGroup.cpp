@@ -233,7 +233,7 @@ QDebug AnchorGroup::debug(QDebug d) const
     d << "AnchorGroup: this=" << ((void*)this) << "\n;  top=" << top << "; left=" << left
       << "\n  ; right=" << right << "; bottom=" << bottom
       << "\n  ; valid=" << isValid()
-      << "\n  ; layoutWindow=" << (layout ? layout->parentWidget()->window() : nullptr)
+      << "\n  ; layoutWindow=" << (layout ? layout->multiSplitter()->window() : nullptr)
       << anchorIsFollowingInwards(left) << anchorIsFollowingInwards(top)
       << anchorIsFollowingInwards(right) << anchorIsFollowingInwards(bottom)
       << left->followee()
@@ -402,7 +402,7 @@ void AnchorGroup::addItem(MultiSplitterLayout *sourceMultiSplitter)
     left->consume(sourceAnchorGroup.left);
     right->consume(sourceAnchorGroup.right);
 
-    delete sourceMultiSplitter->parentWidget(); // Delete MultiSplitterWidget and MultiSplitterLayout
+    delete sourceMultiSplitter->multiSplitter(); // Delete MultiSplitterWidget and MultiSplitterLayout
 }
 
 void AnchorGroup::removeItem(Item *item)

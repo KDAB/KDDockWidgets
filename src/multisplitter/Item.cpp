@@ -205,7 +205,7 @@ bool Item::eventFilter(QObject *o, QEvent *e)
         return false;
 
     if (e->type() == QEvent::ParentChange && !d->m_layout->m_beingMergedIntoAnotherMultiSplitter) {
-        if (o->parent() != d->m_layout->parentWidget()) {
+        if (o->parent() != d->m_layout->multiSplitter()) {
             // Frame was detached into a floating window
             Q_ASSERT(!isPlaceholder());
             d->turnIntoPlaceholder();
@@ -224,8 +224,8 @@ Frame *Item::frame() const
 QWidget *Item::window() const
 {
     Q_ASSERT(d->m_layout);
-    Q_ASSERT(d->m_layout->parentWidget());
-    return d->m_layout->parentWidget()->window();
+    Q_ASSERT(d->m_layout->multiSplitter());
+    return d->m_layout->multiSplitter()->window();
 }
 
 QWidget *Item::parentWidget() const
@@ -247,7 +247,7 @@ void Item::setLayout(MultiSplitterLayout *m)
         d->m_anchorGroup.layout = m;
         setParent(m);
         if (d->m_frame)
-            d->m_frame->setParent(m->parentWidget());
+            d->m_frame->setParent(m->multiSplitter());
     }
 }
 
@@ -323,7 +323,7 @@ void Item::setIsPlaceholder(bool is)
 bool Item::isInMainWindow() const
 {
     if (MultiSplitterLayout *l = layout()) {
-        if (MultiSplitterWidget *msw = l->parentWidget()) {
+        if (MultiSplitterWidget *msw = l->multiSplitter()) {
             return msw->isInMainWindow();
         }
     }
@@ -335,7 +335,7 @@ void Item::restorePlaceholder(DockWidget *dockWidget, int tabIndex)
 {
     qCDebug(placeholder) << Q_FUNC_INFO << "Restoring to window=" << window();
     if (d->m_isPlaceholder) {
-        d->setFrame(new Frame(layout()->parentWidget()));
+        d->setFrame(new Frame(layout()->multiSplitter()));
         d->m_frame->setGeometry(d->m_geometry);
     }
 
@@ -357,7 +357,7 @@ void Item::restorePlaceholder(Frame *frame)
 {
     Q_ASSERT(d->m_isPlaceholder);
 
-    frame->setParent(layout()->parentWidget());
+    frame->setParent(layout()->multiSplitter());
     d->setFrame(frame);
     d->m_frame->setGeometry(d->m_geometry);
     d->m_layout->restorePlaceholder(this);

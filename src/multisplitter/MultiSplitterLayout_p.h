@@ -143,7 +143,7 @@ public:
     /**
      * @brief returns the widget that this layout manages
      */
-    MultiSplitterWidget *parentWidget() const;
+    MultiSplitterWidget *multiSplitter() const;
 
     /**
      * @brief Adds a widget to this MultiSplitter.

@@ -592,7 +592,7 @@ void TestDocks::nestDockWidget(DockWidget *dock, DropArea *dropArea, Frame *rela
              << "; min width=" << widgetMinLength(frame, Qt::Vertical)
              << "; min height=" << widgetMinLength(frame, Qt::Horizontal);
 
-    dropArea->multiSplitter()->addWidget(frame, location, relativeTo);
+    dropArea->multiSplitterLayout()->addWidget(frame, location, relativeTo);
     QVERIFY(dropArea->checkSanity());
     qDebug() << "Size after adding: " << frame->size();
 }
@@ -916,7 +916,7 @@ void TestDocks::tst_anchorsFromTo()
     QVERIFY(dropArea->checkSanity());
 
     auto nonStaticAnchors = dropArea->nonStaticAnchors();
-    AnchorGroup staticAnchors = dropArea->multiSplitter()->staticAnchorGroup();
+    AnchorGroup staticAnchors = dropArea->multiSplitterLayout()->staticAnchorGroup();
 
     QVERIFY(staticAnchors.isValid());
     QCOMPARE(nonStaticAnchors.size(), 2);
@@ -932,8 +932,8 @@ void TestDocks::tst_anchorsFromTo()
     DockWidget *bottom = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnBottom);
     QVERIFY(dropArea->checkSanity());
     nonStaticAnchors = dropArea->nonStaticAnchors();
-    auto horizAnchors = dropArea->multiSplitter()->anchors(Qt::Horizontal);
-    auto vertAnchors = dropArea->multiSplitter()->anchors(Qt::Vertical);
+    auto horizAnchors = dropArea->multiSplitterLayout()->anchors(Qt::Horizontal);
+    auto vertAnchors = dropArea->multiSplitterLayout()->anchors(Qt::Vertical);
     QCOMPARE(nonStaticAnchors.size(), 3);
     QCOMPARE(horizAnchors.size(), 1);
     QCOMPARE(vertAnchors.size(), 2);
@@ -958,8 +958,8 @@ void TestDocks::tst_anchorsFromTo()
     QVERIFY(follower->isFollowing());
 
     nonStaticAnchors = dropArea->nonStaticAnchors();
-    horizAnchors = dropArea->multiSplitter()->anchors(Qt::Horizontal, false, false);
-    vertAnchors = dropArea->multiSplitter()->anchors(Qt::Vertical, false, false);
+    horizAnchors = dropArea->multiSplitterLayout()->anchors(Qt::Horizontal, false, false);
+    vertAnchors = dropArea->multiSplitterLayout()->anchors(Qt::Vertical, false, false);
     QCOMPARE(nonStaticAnchors.size(), 2);
     QCOMPARE(horizAnchors.size(), 0);
     QCOMPARE(vertAnchors.size(), 2);
@@ -1207,7 +1207,7 @@ void TestDocks::tst_dockInternal()
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
     auto dropArea = m->dropArea();
 
-    Frame *centralWidget = dropArea->multiSplitter()->items()[0]->frame();
+    Frame *centralWidget = dropArea->multiSplitterLayout()->items()[0]->frame();
     nestDockWidget(dock1, dropArea, centralWidget, KDDockWidgets::Location_OnRight);
 
     QVERIFY(dock1->width() < dropArea->width() - centralWidget->width());
@@ -1538,10 +1538,10 @@ void TestDocks::tst_addToSmallMainWindow()
         QVERIFY(waitForResize(m.get()));
         qDebug() << "window size3=" << m->size();
 
-        QVERIFY(dropArea->multiSplitter()->contentsWidth() > osWindowMinWidth());
+        QVERIFY(dropArea->multiSplitterLayout()->contentsWidth() > osWindowMinWidth());
 
-        QCOMPARE(dropArea->multiSplitter()->contentsWidth(), m->width());
-        qDebug() << "New size: " << m->width() << dropArea->multiSplitter()->contentsWidth()
+        QCOMPARE(dropArea->multiSplitterLayout()->contentsWidth(), m->width());
+        qDebug() << "New size: " << m->width() << dropArea->multiSplitterLayout()->contentsWidth()
                  << dropArea->minimumSize();
         QVERIFY(m->dropArea()->checkSanity());
     }
@@ -1572,7 +1572,7 @@ void TestDocks::tst_addToSmallMainWindow()
         auto dropArea = m->dropArea();
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(50, 50)));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(50, 50)));
-        MultiSplitterLayout *layout = dropArea->multiSplitter();
+        MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
         m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
         waitForResize(m.get());
         qDebug() << "Size=" << m->size();
@@ -1640,7 +1640,7 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
     const int oldWidth1 = dock1->frame()->width();
     const int oldWidth2 = dock2->frame()->width();
     const int oldWidth3 = dock3->frame()->width();
-    MultiSplitterLayout *layout = fw->dropArea()->multiSplitter();
+    MultiSplitterLayout *layout = fw->dropArea()->multiSplitterLayout();
     QCOMPARE(layout->count(), 3);
     QCOMPARE(layout->visibleCount(), 3);
     QCOMPARE(layout->placeholderCount(), 0);
@@ -1790,7 +1790,7 @@ void TestDocks::tst_propagateResize2()
 std::unique_ptr<MultiSplitterWidget> TestDocks::createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget*, Frame*> &frameMap) const
 {
     auto widget = std::unique_ptr<MultiSplitterWidget>(new MultiSplitterWidget());
-    auto layout = widget->multiSplitter();
+    auto layout = widget->multiSplitterLayout();
     widget->show();
     layout->setContentsSize(setup.size);
 
@@ -1939,7 +1939,7 @@ void TestDocks::tst_availableLengthForDrop()
     QFETCH(ExpectedAvailableSizes, expectedAvailableSizes);
     QHash<QWidget*, Frame*> frameMap;
     auto multisplitterWidget = createMultiSplitterFromSetup(multisplitterSetup, frameMap);
-    auto layout = multisplitterWidget->multiSplitter();
+    auto layout = multisplitterWidget->multiSplitterLayout();
 
     int i = 0;
     for (ExpectedAvailableSize expectedSize : expectedAvailableSizes) {
@@ -1968,7 +1968,7 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(400, minHeight)));
     auto dock3 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(400, minHeight)));
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
     // Stack 3, 2, 1
     m->addDockWidget(dock1, Location_OnTop);
@@ -2194,7 +2194,7 @@ void TestDocks::tst_rectForDrop()
     QFETCH(ExpectedRectsForDrop, expectedRects);
     QHash<QWidget*, Frame*> frameMap;
     auto multisplitterWidget = createMultiSplitterFromSetup(multisplitterSetup, frameMap);
-    auto layout = multisplitterWidget->multiSplitter();
+    auto layout = multisplitterWidget->multiSplitterLayout();
     qDebug() << "Created with contentsSize=" << layout->contentsWidth() << layout->contentsHeight()<< multisplitterSetup.size;
     for (ExpectedRectForDrop expected : expectedRects) {
         QRect actualRect = layout->rectForDrop(expected.widgetToDrop, expected.location, layout->itemForFrame(expected.relativeTo));
@@ -2213,7 +2213,7 @@ void TestDocks::tst_crash()
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
         auto dropArea = m->dropArea();
-        auto layout = dropArea->multiSplitter();
+        auto layout = dropArea->multiSplitterLayout();
 
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         dock1->addDockWidgetAsTab(dock2);
@@ -2374,7 +2374,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
         auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
         auto dropArea = m->dropArea();
-        MultiSplitterLayout *layout = dropArea->multiSplitter();
+        MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
         m->addDockWidget(dock3, KDDockWidgets::Location_OnRight);
@@ -2408,7 +2408,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
         auto dropArea = m->dropArea();
-        auto layout = dropArea->multiSplitter();
+        auto layout = dropArea->multiSplitterLayout();
 
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         dock1->addDockWidgetAsTab(dock2);
@@ -2435,7 +2435,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
         auto dropArea = m->dropArea();
-        auto layout = dropArea->multiSplitter();
+        auto layout = dropArea->multiSplitterLayout();
 
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         dock1->addDockWidgetAsTab(dock2);
@@ -2448,7 +2448,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
         QVERIFY(fw2);
         QCOMPARE(dock2->lastPosition()->layoutItem(), oldItem2);
-        Item *item2 = fw2->dropArea()->multiSplitter()->itemForFrame(dock2->frame());
+        Item *item2 = fw2->dropArea()->multiSplitterLayout()->itemForFrame(dock2->frame());
         QVERIFY(item2);
         QCOMPARE(item2->parentWidget(), fw2->dropArea());
         QVERIFY(!layout->itemForFrame(dock2->frame()));
@@ -2476,7 +2476,7 @@ void TestDocks::tst_setFloatingAFrameWithTabs()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
     auto dropArea = m->dropArea();
-    auto layout = dropArea->multiSplitter();
+    auto layout = dropArea->multiSplitterLayout();
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
@@ -2562,7 +2562,7 @@ void TestDocks::tst_refUnrefItem()
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
     auto dropArea = m->dropArea();
-    auto layout = dropArea->multiSplitter();
+    auto layout = dropArea->multiSplitterLayout();
     QPointer<Frame> frame1 = dock1->frame();
     QPointer<Frame> frame2 = dock2->frame();
     QPointer<Item> item1 = layout->itemForFrame(frame1);
@@ -2655,7 +2655,7 @@ void TestDocks::tst_placeholderCount()
     auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
     auto dropArea = m->dropArea();
-    auto layout = dropArea->multiSplitter();
+    auto layout = dropArea->multiSplitterLayout();
 
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->visibleCount(), 1);
@@ -2707,7 +2707,7 @@ void TestDocks::tst_availableLengthForOrientation()
     // 1. Test a completely empty window, it's available space is its size minus the static separators thickness
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
     int availableWidth = layout->availableLengthForOrientation(Qt::Vertical);
     int availableHeight = layout->availableLengthForOrientation(Qt::Horizontal);
@@ -2780,7 +2780,7 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
     QPointer<DockWidget> dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     m->addDockWidget(dock1, Location_OnLeft);
@@ -2813,7 +2813,7 @@ void TestDocks::tst_placeholdersAreRemovedPropertly()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
     QPointer<DockWidget> dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     QPointer<DockWidget> dock2 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     m->addDockWidget(dock1, Location_OnLeft);
@@ -2857,7 +2857,7 @@ void TestDocks::tst_embeddedMainWindow()
     auto fw = qobject_cast<FloatingWindow*>(dock1->window());
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterLeft);
 
-    auto layout = dropArea->multiSplitter();
+    auto layout = dropArea->multiSplitterLayout();
     QVERIFY(waitForDeleted(fw));
     QCOMPARE(layout->count(), 2); // 2, as it has the central frame
     QCOMPARE(layout->visibleCount(), 2);
@@ -2868,7 +2868,7 @@ void TestDocks::tst_toggleMiddleDockCrash()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
     QPointer<DockWidget> dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     QPointer<DockWidget> dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
     QPointer<DockWidget> dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
@@ -2916,7 +2916,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
     auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
 
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
     // Stack: 1, 2, 3 vertically
     m->addDockWidget(dock3, Location_OnTop);
@@ -3199,7 +3199,7 @@ void TestDocks::tst_28NestedWidgets()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
     int i = 0;
     for (DockDescriptor &desc : docksToCreate) {
@@ -3260,7 +3260,7 @@ void TestDocks::tst_invalidAnchorGroup()
 
         dock1->close();
         waitForResize(dock2);
-        auto layout = fw->dropArea()->multiSplitter();
+        auto layout = fw->dropArea()->multiSplitterLayout();
         layout->dumpDebug();
 
         dock2->close();
@@ -3308,7 +3308,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         waitForResize(dock3);
 
         auto dropArea = m->dropArea();
-        MultiSplitterLayout *layout = dropArea->multiSplitter();
+        MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
         QCOMPARE(layout->numVisibleAnchors(), 5);
 
         // Cleanup:
@@ -3328,7 +3328,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         m->addDockWidget(dock4, Location_OnRight);
 
         auto dropArea = m->dropArea();
-        MultiSplitterLayout *layout = dropArea->multiSplitter();
+        MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
         Item *item1 = layout->itemForFrame(dock1->frame());
         Item *item2 = layout->itemForFrame(dock2->frame());
@@ -3392,7 +3392,7 @@ void TestDocks::tst_negativeAnchorPosition()
     w3->resize(392, 362);
 
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
     qDebug() << "ContentSize:" << layout->contentsSize();
 
     auto d1 = createDockWidget(QStringLiteral("1"), w1);
@@ -3434,7 +3434,7 @@ void TestDocks::tst_negativeAnchorPosition2()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
     auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
@@ -3463,7 +3463,7 @@ void TestDocks::tst_negativeAnchorPosition3()
                                      {Location_OnRight, -1, nullptr, AddingOption_None } };
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
     layout->checkSanity();
 
     auto dock1 = docks.at(1).createdDock;
@@ -3489,18 +3489,18 @@ void TestDocks::tst_negativeAnchorPosition4()
 
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
     layout->checkSanity();
 
     auto dock1 = docks.at(1).createdDock;
     auto dock2 = docks.at(2).createdDock;
     dock2->setFloating(true);
     auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
-    dropArea->multiSplitter()->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
+    dropArea->multiSplitterLayout()->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
     dock2->setFloating(true);
     fw2 = qobject_cast<FloatingWindow*>(dock2->window());
 
-    dropArea->multiSplitter()->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
+    dropArea->multiSplitterLayout()->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
 
     docks.at(0).createdDock->deleteLater();
     docks.at(4).createdDock->deleteLater();
@@ -3522,17 +3522,17 @@ void TestDocks::tst_anchorFollowingItselfAssert()
 
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
     layout->checkSanity();
 
     auto dock1 = docks.at(1).createdDock;
     auto dock2 = docks.at(2).createdDock;
     dock2->setFloating(true);
     auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
-    dropArea->multiSplitter()->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
+    dropArea->multiSplitterLayout()->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
     dock2->setFloating(true);
     fw2 = qobject_cast<FloatingWindow*>(dock2->window());
-    dropArea->multiSplitter()->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
+    dropArea->multiSplitterLayout()->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
 
     docks.at(0).createdDock->deleteLater();
     docks.at(4).createdDock->deleteLater();
@@ -3710,7 +3710,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
     auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
     // Stack 1, 2, 3
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
@@ -3793,10 +3793,10 @@ void TestDocks::tst_stealFrame()
     auto dock4 = createDockWidget(QStringLiteral("dock4"), new QPushButton(QStringLiteral("four")));
 
     auto dropArea1 = m1->dropArea();
-    MultiSplitterLayout *layout1 = dropArea1->multiSplitter();
+    MultiSplitterLayout *layout1 = dropArea1->multiSplitterLayout();
 
     auto dropArea2 = m2->dropArea();
-    MultiSplitterLayout *layout2 = dropArea2->multiSplitter();
+    MultiSplitterLayout *layout2 = dropArea2->multiSplitterLayout();
 
     m1->addDockWidget(dock1, Location_OnRight);
     m1->addDockWidget(dock2, Location_OnRight);
@@ -3894,7 +3894,7 @@ void TestDocks::tst_addAsPlaceholder()
     m->addDockWidget(dock2, Location_OnTop, nullptr, AddingOption_StartHidden);
 
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 1);
@@ -3921,7 +3921,7 @@ void TestDocks::tst_removeItem()
     m->addDockWidget(dock2, Location_OnTop, nullptr, AddingOption_StartHidden);
 
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 1);
@@ -4026,7 +4026,7 @@ void TestDocks::tst_startHidden()
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
 
         auto dropArea = m->dropArea();
-        MultiSplitterLayout *layout = dropArea->multiSplitter();
+        MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
         m->addDockWidget(dock1, Location_OnTop, nullptr, AddingOption_StartHidden);
 
@@ -4057,7 +4057,7 @@ void TestDocks::tst_startHidden()
         auto dock3 = createDockWidget(QStringLiteral("dock3"), new QPushButton(QStringLiteral("three")));
 
         auto dropArea = m->dropArea();
-        MultiSplitterLayout *layout = dropArea->multiSplitter();
+        MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
         m->addDockWidget(dock1, Location_OnLeft, nullptr, AddingOption_StartHidden);
 
         m->addDockWidget(dock2, Location_OnBottom, nullptr, AddingOption_StartHidden);
@@ -4093,7 +4093,7 @@ void TestDocks::tst_startClosed()
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
 
     auto dropArea = m->dropArea();
-    MultiSplitterLayout *layout = dropArea->multiSplitter();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
     m->addDockWidget(dock1, Location_OnTop);
     Frame *frame1 = dock1->frame();

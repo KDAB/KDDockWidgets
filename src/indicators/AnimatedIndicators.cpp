@@ -293,7 +293,7 @@ AnimatedIndicators::AnimatedIndicators(DropArea *dropArea)
         });
     }
 
-    auto group = dropArea->multiSplitter()->staticAnchorGroup();
+    auto group = dropArea->multiSplitterLayout()->staticAnchorGroup();
     m_outterLeftRubberBand->setAnchor(group.left);
     m_outterRightRubberBand->setAnchor(group.right);
     m_outterTopRubberBand->setAnchor(group.top);
@@ -356,7 +356,7 @@ QPoint AnimatedIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLo
 void AnimatedIndicators::onHoveredFrameChanged(Frame *frame)
 {
     if (frame) {
-        Item *item = m_dropArea->multiSplitter()->itemForFrame(frame);
+        Item *item = m_dropArea->multiSplitterLayout()->itemForFrame(frame);
         AnchorGroup group = item->anchorGroup();
         Q_ASSERT(group.isValid());
 

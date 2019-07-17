@@ -59,7 +59,7 @@ void DebugWindow::dumpDockWidgetInfo()
     MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
 
     for (FloatingWindow *fw : floatingWindows) {
-        fw->dropArea()->multiSplitter()->dumpDebug();
+        fw->dropArea()->multiSplitterLayout()->dumpDebug();
     }
 
     for (MainWindow *mw : mainWindows)

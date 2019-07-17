@@ -46,7 +46,7 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     , m_vlayout(new QVBoxLayout(this))
     , m_dropArea(new DropArea(this))
 {
-    auto ms = m_dropArea->multiSplitter();
+    auto ms = m_dropArea->multiSplitterLayout();
     ms->setExtraUselessSpace(QSize(0, m_titleBar->height()));
 
     DockRegistry::self()->registerNestedWindow(this);
@@ -72,7 +72,7 @@ FloatingWindow::FloatingWindow(Frame *frame, QWidget *parent)
     // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
     // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
     // So disable the setVisible(true) call while in the ctor.
-    m_dropArea->multiSplitter()->addWidget(frame, KDDockWidgets::Location_OnTop, {});
+    m_dropArea->multiSplitterLayout()->addWidget(frame, KDDockWidgets::Location_OnTop, {});
     m_disableSetVisible = false;
 }
 

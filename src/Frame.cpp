@@ -372,13 +372,13 @@ void Frame::setDropArea(DropArea *dt)
     if (dt != m_dropArea) {
         qCDebug(docking) << "Frame::setDropArea dt=" << dt;
         if (m_dropArea)
-            disconnect(m_dropArea->multiSplitter(), &MultiSplitterLayout::visibleWidgetCountChanged,
+            disconnect(m_dropArea->multiSplitterLayout(), &MultiSplitterLayout::visibleWidgetCountChanged,
                        this, &Frame::updateTitleBarVisibility);
 
         m_dropArea = dt;
 
         if (m_dropArea) {
-            connect(m_dropArea->multiSplitter(), &MultiSplitterLayout::visibleWidgetCountChanged,
+            connect(m_dropArea->multiSplitterLayout(), &MultiSplitterLayout::visibleWidgetCountChanged,
                     this, &Frame::updateTitleBarVisibility);
             updateTitleBarVisibility();
         }

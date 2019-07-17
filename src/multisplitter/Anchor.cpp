@@ -36,11 +36,11 @@ using namespace KDDockWidgets;
 bool Anchor::s_isResizing = false;
 
 Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type type)
-    : QObject(multiSplitter->parentWidget())
+    : QObject(multiSplitter->multiSplitter())
     , m_orientation(orientation)
     , m_type(type)
     , m_layout(multiSplitter)
-    , m_separatorWidget(new SeparatorWidget(this, multiSplitter->parentWidget()))
+    , m_separatorWidget(new SeparatorWidget(this, multiSplitter->multiSplitter()))
 {
     multiSplitter->insertAnchor(this);
     connect(this, &QObject::objectNameChanged, m_separatorWidget, &QObject::setObjectName);
@@ -195,7 +195,7 @@ void Anchor::setPosition(int p, SetPositionOptions options)
                    << "; oldPosition=" << position()
                    << this
                    << "; max=" << m_layout->contentsLength(orientation()) - 1
-                   << m_layout->parentWidget()->window();
+                   << m_layout->multiSplitter()->window();
     }
 
     m_initialized = true;
@@ -555,8 +555,8 @@ void Anchor::setLayout(MultiSplitterLayout *layout)
 {
     m_layout->removeAnchor(this);
     m_layout = layout;
-    setParent(layout->parentWidget());
-    m_separatorWidget->setParent(layout->parentWidget());
+    setParent(layout->multiSplitter());
+    m_separatorWidget->setParent(layout->multiSplitter());
     m_layout->insertAnchor(this);
     m_layout->setAnchorBeingDragged(nullptr);
 }

@@ -93,7 +93,7 @@ MultiSplitterLayout::~MultiSplitterLayout()
     qDeleteAll(anchors);
 }
 
-MultiSplitterWidget *MultiSplitterLayout::parentWidget() const
+MultiSplitterWidget *MultiSplitterLayout::multiSplitter() const
 {
     return m_multiSplitter;
 }
@@ -316,7 +316,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     }
 
     auto sourceMultiSplitterWidget = qobject_cast<MultiSplitterWidget *>(w);
-    auto sourceMultiSplitter = sourceMultiSplitterWidget ? sourceMultiSplitterWidget->multiSplitter()
+    auto sourceMultiSplitter = sourceMultiSplitterWidget ? sourceMultiSplitterWidget->multiSplitterLayout()
                                                          : nullptr;
 
     if (sourceMultiSplitter) {
@@ -1111,7 +1111,7 @@ Frame::List MultiSplitterLayout::framesFrom(QWidget *frameOrMultiSplitter) const
         return { frame };
 
     if (auto msw = qobject_cast<MultiSplitterWidget*>(frameOrMultiSplitter))
-        return msw->multiSplitter()->frames();
+        return msw->multiSplitterLayout()->frames();
 
     return {};
 }

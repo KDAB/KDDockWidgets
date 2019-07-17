@@ -111,7 +111,7 @@ DropArea *MainWindow::dropArea() const
 
 MultiSplitterLayout *MainWindow::multiSplitterLayout() const
 {
-    return d->m_dropArea->multiSplitter();
+    return d->m_dropArea->multiSplitterLayout();
 }
 #endif
 
