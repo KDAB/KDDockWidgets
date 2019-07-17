@@ -2027,6 +2027,7 @@ void TestDocks::tst_rectForDropMath_data()
     MultiSplitterLayout::Length length = { 0, 100 };
     QRect expectedRect(staticAnchorThickness, staticAnchorThickness, 100, 1000 - staticAnchorThickness*2);
     int side1AnchorThickness = staticAnchorThickness;
+    // 1. Relative to the whole window
     QTest::newRow("left-of-window") << contentsSize
                                     << length
                                     << Location_OnLeft
@@ -2043,7 +2044,6 @@ void TestDocks::tst_rectForDropMath_data()
                                    << expectedRect;
 
 
-    length = { 100, 0 };
     expectedRect = QRect(1000 - 100 - staticAnchorThickness, staticAnchorThickness, 100, 1000 - staticAnchorThickness*2);
     QTest::newRow("right-of-window") << contentsSize
                                      << length
@@ -2059,6 +2059,41 @@ void TestDocks::tst_rectForDropMath_data()
                                       << side1AnchorThickness
                                       << relativeToWindowRect
                                       << expectedRect;
+
+    // 2. Relative to the item, left of leftmost, right of rightmost, etc.
+    QRect item1Geometry = QRect(staticAnchorThickness, staticAnchorThickness, 1000 - 2*staticAnchorThickness, 1000 - 2*staticAnchorThickness);
+    length = { 0, 100 };
+    expectedRect = QRect(staticAnchorThickness, staticAnchorThickness, 100, 1000 - staticAnchorThickness*2);
+    QTest::newRow("left-of-leftmost-item") << contentsSize
+                                           << length
+                                           << Location_OnLeft
+                                           << side1AnchorThickness
+                                           << item1Geometry
+                                           << expectedRect;
+
+    expectedRect = QRect(staticAnchorThickness, staticAnchorThickness, 1000 - staticAnchorThickness*2, 100);
+    QTest::newRow("top-of-topmost-item") << contentsSize
+                                         << length
+                                         << Location_OnTop
+                                         << side1AnchorThickness
+                                         << item1Geometry
+                                         << expectedRect;
+
+    expectedRect = QRect(1000 - 100 - staticAnchorThickness, staticAnchorThickness, 100, 1000 - staticAnchorThickness*2);
+    QTest::newRow("right-of-rightmost-item") << contentsSize
+                                             << length
+                                             << Location_OnRight
+                                             << side1AnchorThickness
+                                             << item1Geometry
+                                             << expectedRect;
+
+    expectedRect = QRect(staticAnchorThickness, 1000 - 100 - staticAnchorThickness, 1000 - staticAnchorThickness*2, 100);
+    QTest::newRow("bottom-of-bottommost-item") << contentsSize
+                                               << length
+                                               << Location_OnBottom
+                                               << side1AnchorThickness
+                                               << item1Geometry
+                                               << expectedRect;
 
 }
 
