@@ -43,6 +43,8 @@ public:
     bool saveToDisk();
     void restoreFromDisk();
 
+    ///@brief returns whether a restore (@ref restoreLayout) is in progress
+    static bool restoreInProgress();
 private:
     QByteArray serializeLayout() const;
     void restoreLayout(const QByteArray &);

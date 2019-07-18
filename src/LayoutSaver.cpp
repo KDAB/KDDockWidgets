@@ -98,6 +98,7 @@ struct LayoutState
             for (DockWidget *dw : docks)
                 dockWidgets.push_back(dw->name());
             id = f->id();
+            geometry = f->geometry();
         }
 
         FrameState() = default;
@@ -112,6 +113,7 @@ struct LayoutState
         QStringList dockWidgets;
         int currentTabIndex = -1;
         Frame::Options options;
+        QRect geometry;
         quint64 id = 0;
     };
 
@@ -259,6 +261,7 @@ QDataStream &operator<<(QDataStream &ds, const KDDockWidgets::LayoutState::Frame
     ds << f.currentTabIndex;
     ds << f.dockWidgets;
     ds << f.id;
+    ds << f.geometry;
 
     if (f.dockWidgets.isEmpty() && !f.isCentralFrame())
         qWarning() << "Serialized empty FrameState";
@@ -274,6 +277,7 @@ QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::FrameState 
     ds >> f.currentTabIndex;
     ds >> f.dockWidgets;
     ds >> f.id;
+    ds >> f.geometry;
 
     if (f.dockWidgets.isEmpty() && !f.isCentralFrame())
         qWarning() << "Deserialized empty FrameState";
@@ -457,13 +461,14 @@ void LayoutState::restore(DropArea *dropArea)
 
          Anchor *anchor = anchorByIndex.value(a.index);
 
-         auto restoreFrames = [&framesById, anchor, dropArea] (Anchor::Side side, const LayoutState::FrameState::List &frames) {
-             for (LayoutState::FrameState f : qAsConst(frames)) {
+         auto restoreFrames = [&framesById, anchor, dropArea] (Anchor::Side side, const LayoutState::FrameState::List &frameStates) {
+             for (LayoutState::FrameState f : qAsConst(frameStates)) {
                  Frame *frame = nullptr;
                  if (framesById.contains(f.id)) {
                      frame = framesById.value(f.id);
                  } else {
                      frame = new Frame(nullptr, f.options);
+                     frame->setGeometry(f.geometry);
                      auto item = new Item(frame, dropArea->multiSplitterLayout());
                      framesById.insert(f.id, frame);
 
@@ -506,7 +511,10 @@ public:
     MainWindow::List mainWindows() const;
     std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
+    static bool s_restoreInProgress;
 };
+
+bool LayoutSaver::Private::s_restoreInProgress = false;
 
 LayoutSaver::LayoutSaver()
     : d(new Private())
@@ -534,7 +542,9 @@ bool LayoutSaver::saveToDisk()
 void LayoutSaver::restoreFromDisk()
 {
     const QByteArray data = d->settings()->value(QStringLiteral("data")).toByteArray();
+    Private::s_restoreInProgress = true;
     restoreLayout(data);
+    Private::s_restoreInProgress = false;
 }
 
 std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
@@ -648,7 +658,12 @@ void LayoutSaver::restoreLayout(const QByteArray &data)
         auto fw = new FloatingWindow();
         windowState.restore(fw);
         layoutState.restore(fw->dropArea());
-    }    
+    }
+}
+
+bool LayoutSaver::restoreInProgress()
+{
+    return Private::s_restoreInProgress;
 }
 
 DockWidget::List LayoutSaver::Private::floatingDockWidgets() const

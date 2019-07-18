@@ -23,6 +23,7 @@
 #include "MultiSplitterWidget_p.h"
 #include "Logging_p.h"
 #include "SeparatorWidget_p.h"
+#include "LayoutSaver.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -121,6 +122,11 @@ void Anchor::updateItemSizes()
 {
     if (!m_initialized) {
         // setPosition() hasn't been called yet, don't bother
+        return;
+    }
+
+    if (LayoutSaver::restoreInProgress()) {
+        // Nothing to do. The LayoutSaver is setting up the whole layout.
         return;
     }
 
