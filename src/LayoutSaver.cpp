@@ -141,6 +141,8 @@ struct LayoutState
             index = allAnchors.indexOf(a);
             fromIndex = allAnchors.indexOf(a->from());
             toIndex = allAnchors.indexOf(a->to());
+            followsIndex = a->followee() ? allAnchors.indexOf(a->followee())
+                                         : -1;
         }
 
         AnchorState() = default;
@@ -173,6 +175,7 @@ struct LayoutState
         int index;
         int fromIndex;
         int toIndex;
+        int followsIndex;
     };
 
     explicit LayoutState(const DropArea *a)
@@ -316,6 +319,7 @@ QDataStream &operator<<(QDataStream &ds, const KDDockWidgets::LayoutState::Ancho
     ds << a.index;
     ds << a.toIndex;
     ds << a.fromIndex;
+    ds << a.followsIndex;
 
     return ds;
 }
@@ -336,6 +340,7 @@ QDataStream &operator>>(QDataStream &ds, KDDockWidgets::LayoutState::AnchorState
     ds >> a.index;
     ds >> a.toIndex;
     ds >> a.fromIndex;
+    ds >> a.followsIndex;
 
     if (magic != LayoutState::AnchorState::s_magicMarker)
         qWarning() << "AnchorState: stream is corrupted";
@@ -419,7 +424,8 @@ void LayoutState::restore(DropArea *dropArea)
              Q_ASSERT(anchor);
          } else {
              anchor = new Anchor(a.orientation, dropArea->multiSplitterLayout());
-             anchor->setPosition(a.position);
+             if (a.followsIndex == -1) // doesn't follow another anchor
+                 anchor->setPosition(a.position);
          }
 
          anchorByIndex.insert(a.index, anchor);
@@ -436,6 +442,8 @@ void LayoutState::restore(DropArea *dropArea)
 
          anchor->setTo(anchorTo);
          anchor->setFrom(anchorFrom);
+         if (a.followsIndex != -1)
+             anchor->setFollowee(anchorByIndex.value(a.followsIndex));
      }
 
      if (auto cf = dropArea->centralFrame()) {
