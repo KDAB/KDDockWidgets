@@ -337,10 +337,9 @@ private Q_SLOTS:
     void tst_invalidLayoutAfterRestore();
     void tst_samePositionAfterHideRestore();
     void tst_anchorFollowingItselfAssert();
+    void tst_restoreEmpty();
 private:
-    void tst_restoreEmpty(); // TODO. Disabled for now, save/restore needs to support placeholders
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
-
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
 }
