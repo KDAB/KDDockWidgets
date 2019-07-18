@@ -251,6 +251,9 @@ public:
      */
     Anchor *findNearestAnchorWithItems(Side side) const;
 
+    ///@brief removes the side1 and side2 items. Doesn't delete them
+    void clear();
+
     static int thickness(bool staticAnchor);
     static Anchor::Side oppositeSide(Side side);
     void onFolloweePositionChanged(int pos);

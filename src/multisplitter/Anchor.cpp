@@ -546,6 +546,12 @@ Anchor *Anchor::findNearestAnchorWithItems(Anchor::Side side) const
     return candidate;
 }
 
+void Anchor::clear()
+{
+    m_side1Items.clear();
+    m_side2Items.clear();
+}
+
 void Anchor::onFolloweePositionChanged(int pos)
 {
     Q_ASSERT(isFollowing());
