@@ -94,7 +94,7 @@ Frame::~Frame()
     if (m_layoutItem)
         m_layoutItem->unref();
 
-    qCDebug(creation) << "~Frame" << (void*)this;
+    qCDebug(creation) << "~Frame" << static_cast<void*>(this);
 }
 
 void Frame::addWidget(DockWidget *dockWidget)
