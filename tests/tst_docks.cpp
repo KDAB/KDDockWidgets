@@ -1341,9 +1341,8 @@ void TestDocks::tst_restoreCrash()
     {
         // Create a main window, with a left dock, save it to disk.
         auto m = createMainWindow();
-        auto dropArea = m->dropArea();
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
-        nestDockWidget(dock1, dropArea, nullptr, KDDockWidgets::Location_OnLeft);
+        m->addDockWidget(dock1, Location_OnLeft);
         LayoutSaver saver;
         QVERIFY(saver.saveToDisk());
     }
@@ -1351,14 +1350,14 @@ void TestDocks::tst_restoreCrash()
     // Restore
     qDebug() << Q_FUNC_INFO << "Restoring";
     auto m = createMainWindow();
-    auto dropArea = m->dropArea();
+    auto layout = m->multiSplitterLayout();
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
     QVERIFY(dock1->isFloating());
-    QVERIFY(dropArea->checkSanity());
+    QVERIFY(layout->checkSanity());
 
     LayoutSaver saver;
     saver.restoreFromDisk();
-    QVERIFY(dropArea->checkSanity());
+    QVERIFY(layout->checkSanity());
     QVERIFY(!dock1->isFloating());
 }
 

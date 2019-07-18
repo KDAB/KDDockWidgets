@@ -408,10 +408,12 @@ void LayoutState::restore(DropArea *dropArea)
          return;
      }
 
-     if (!dropArea->multiSplitterLayout()->checkSanity()) {
+     if (!dropArea->checkSanity()) {
          qWarning() << "Drop area is not sane, refusing to restore";
          return;
      }
+
+     MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
      QHash<quint64, Frame*> framesById;
      QHash<int, Anchor*> anchorByIndex;
@@ -424,10 +426,10 @@ void LayoutState::restore(DropArea *dropArea)
 
          Anchor *anchor = nullptr;
          if (a.isStatic()) {
-             anchor = dropArea->multiSplitterLayout()->staticAnchor(a.type);
+             anchor = layout->staticAnchor(a.type);
              Q_ASSERT(anchor);
          } else {
-             anchor = new Anchor(a.orientation, dropArea->multiSplitterLayout());
+             anchor = new Anchor(a.orientation, layout);
              if (a.followsIndex == -1) // doesn't follow another anchor
                  anchor->setPosition(a.position);
          }
@@ -450,9 +452,9 @@ void LayoutState::restore(DropArea *dropArea)
              anchor->setFollowee(anchorByIndex.value(a.followsIndex));
      }
 
-     if (auto cf = dropArea->centralFrame()) {
+     if (Item *item = dropArea->centralFrame()) {
          // Remove the built-in frame, it's much easier to just restore everything
-         dropArea->multiSplitterLayout()->removeItem(cf);
+         layout->removeItem(item);
      }
 
      for (const AnchorState &a : qAsConst(m_anchors)) {
@@ -461,7 +463,7 @@ void LayoutState::restore(DropArea *dropArea)
 
          Anchor *anchor = anchorByIndex.value(a.index);
 
-         auto restoreFrames = [&framesById, anchor, dropArea] (Anchor::Side side, const LayoutState::FrameState::List &frameStates) {
+         auto restoreFrames = [&framesById, anchor, layout] (Anchor::Side side, const LayoutState::FrameState::List &frameStates) {
              for (LayoutState::FrameState f : qAsConst(frameStates)) {
                  Frame *frame = nullptr;
                  if (framesById.contains(f.id)) {
@@ -469,7 +471,7 @@ void LayoutState::restore(DropArea *dropArea)
                  } else {
                      frame = new Frame(nullptr, f.options);
                      frame->setGeometry(f.geometry);
-                     auto item = new Item(frame, dropArea->multiSplitterLayout());
+                     auto item = new Item(frame, layout);
                      framesById.insert(f.id, frame);
 
                      // qCDebug(restoring) << "Restoring frame name =" << frameName << "; numDocks=" << f.dockWidgets.size();
@@ -479,11 +481,11 @@ void LayoutState::restore(DropArea *dropArea)
                      }
 
                      frame->setCurrentTabIndex(f.currentTabIndex);
-                     dropArea->multiSplitterLayout()->addItems_internal({ item }, /*updateSizeConstraints=*/ false);
+                     layout->addItems_internal({ item }, /*updateSizeConstraints=*/ false);
 
                  }
 
-                 anchor->addItem(dropArea->multiSplitterLayout()->itemForFrame(frame), side);
+                 anchor->addItem(layout->itemForFrame(frame), side);
              }
          };
 
@@ -491,8 +493,8 @@ void LayoutState::restore(DropArea *dropArea)
          restoreFrames(Anchor::Side2, a.side2FrameStates);
      }
 
-     dropArea->multiSplitterLayout()->updateSizeConstraints();
-     if (!dropArea->multiSplitterLayout()->checkSanity()) {
+     layout->updateSizeConstraints();
+     if (!dropArea->checkSanity()) {
          qWarning() << "Restored an invalid layout, this should not happen";
      }
 }
