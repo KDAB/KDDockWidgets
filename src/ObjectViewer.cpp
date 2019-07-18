@@ -203,7 +203,7 @@ void ObjectViewer::updateItemAppearence(QStandardItem *item)
 
 QObject *ObjectViewer::objectForItem(QStandardItem *item) const
 {
-    return item->data(ObjRole).value<QObject*>();;
+    return item->data(ObjRole).value<QObject*>();
 }
 
 QWidget *ObjectViewer::widgetForItem(QStandardItem *item) const
