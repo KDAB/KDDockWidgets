@@ -43,9 +43,9 @@ public:
     bool saveToDisk();
     void restoreFromDisk();
 
+private:
     QByteArray serializeLayout() const;
     void restoreLayout(const QByteArray &);
-private:
     class Private;
     Private *const d;
 };
