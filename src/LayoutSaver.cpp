@@ -431,7 +431,7 @@ void LayoutState::restore(DropArea *dropArea)
          anchorByIndex.insert(a.index, anchor);
      }
 
-     // Set the Anchor's to/from
+     // Set the Anchor's to/from/follower
      for (const AnchorState &a : qAsConst(m_anchors)) {
          if (!a.isValid() || a.isStatic())
              continue;
