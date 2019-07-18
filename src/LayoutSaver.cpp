@@ -441,7 +441,6 @@ void LayoutState::restore(DropArea *dropArea)
      if (auto cf = dropArea->centralFrame()) {
          // Remove the built-in frame, it's much easier to just restore everything
          dropArea->multiSplitterLayout()->removeItem(cf);
-         delete cf;
      }
 
      for (const AnchorState &a : qAsConst(m_anchors)) {
