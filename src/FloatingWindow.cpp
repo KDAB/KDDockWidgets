@@ -65,8 +65,30 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::deleteLater);
 }
 
+static QWidget* hackFindParentHarder(QWidget *p)
+{
+    // TODO: Using a parent helps the floating windows stay in front of the main window always.
+    // We're not receiving the parent via ctor argument as the app can have multiple-main windows,
+    // so use a hack here.
+    // Not quite clear what to do if the app supports multiple main windows though.
+
+    if (p)
+        return p;
+
+    const MainWindow::List windows = DockRegistry::self()->mainwindows();
+
+    if (windows.isEmpty())
+        return nullptr;
+    if (windows.size() == 1)
+        return windows.first();
+    else {
+        qWarning() << Q_FUNC_INFO << "There's multiple MainWindows, not sure what to do about parenting";
+        return windows.first();
+    }
+}
+
 FloatingWindow::FloatingWindow(Frame *frame, QWidget *parent)
-    : FloatingWindow(parent)
+    : FloatingWindow(hackFindParentHarder(parent))
 {
     m_disableSetVisible = true;
     // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
