@@ -42,6 +42,8 @@ struct DockDescriptor {
 };
 
 
+bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
+
 std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QSize sz = {600, 600},
                                                             KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame);
 

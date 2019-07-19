@@ -212,18 +212,11 @@ static QWidget *createWidget(int minLength, const QString &objname = QString())
 
 void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
 {
+    if (shouldBlacklistWarning(msg, QLatin1String(context.category)))
+        return;
+
     s_original(t, context, msg);
     if (t == QtWarningMsg) {
-
-        if (QLatin1String(context.category) == QLatin1String("qt.qpa.xcb"))
-            return;
-
-        if (msg.contains(QLatin1String("QSocketNotifier: Invalid socket")) ||
-            msg.contains(QLatin1String("QWindowsWindow::setGeometry")) ||
-            msg.contains(QLatin1String("This plugin does not support")) ||
-            msg.contains(QLatin1String("Note that Qt no longer ships fonts")) ||
-            msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")))
-            return;
 
         if (!s_expectedWarning.isEmpty() && msg.contains(s_expectedWarning))
             return;

@@ -116,3 +116,15 @@ void MyWidget::paintEvent(QPaintEvent *)
     QPainter p(this);
     p.fillRect(rect(), c);
 }
+
+bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QString &category)
+{
+    if (category == QLatin1String("qt.qpa.xcb"))
+        return true;
+
+    return msg.contains(QLatin1String("QSocketNotifier: Invalid socket")) ||
+           msg.contains(QLatin1String("QWindowsWindow::setGeometry")) ||
+           msg.contains(QLatin1String("This plugin does not support")) ||
+           msg.contains(QLatin1String("Note that Qt no longer ships fonts")) ||
+           msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget"));
+}
