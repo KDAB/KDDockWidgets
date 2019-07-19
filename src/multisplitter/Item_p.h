@@ -94,7 +94,10 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject // clazy:exclude=ctor-mi
     Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
     Q_PROPERTY(QSize minimumSize READ minimumSize NOTIFY minimumSizeChanged)
 public:
-    explicit Item(Frame *frame, MultiSplitterLayout *parent);
+    /// @brief constructs a new layout item to show @p Frame in the layout @layout
+    explicit Item(Frame *frame, MultiSplitterLayout *layout);
+
+    /// @brief Destroys its frame too.
     ~Item() override;
 
     int x() const;

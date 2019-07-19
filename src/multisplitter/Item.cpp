@@ -82,6 +82,7 @@ Item::~Item()
 {
     if (!d->m_destroying) {
         d->m_destroying = true;
+        disconnect(d->m_onFrameDestroyed_connection);
         delete d->m_frame;
     }
 

@@ -297,6 +297,7 @@ private Q_SLOTS:
     void tst_availableLengthForDrop_data();
     void tst_availableLengthForDrop();
 
+    void tst_clear();
     void tst_constraintsAfterPlaceholder();
     void tst_rectForDrop_data();
     void tst_rectForDrop();
@@ -2845,6 +2846,7 @@ void TestDocks::tst_placeholdersAreRemovedPropertly()
 
 void TestDocks::tst_embeddedMainWindow()
 {
+    EnsureTopLevelsDeleted e;
     // Tests a MainWindow which isn't a top-level window, but is embedded in another window
     EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
 
@@ -2859,6 +2861,7 @@ void TestDocks::tst_embeddedMainWindow()
     QVERIFY(waitForDeleted(fw));
     QCOMPARE(layout->count(), 2); // 2, as it has the central frame
     QCOMPARE(layout->visibleCount(), 2);
+    delete window;
 }
 
 void TestDocks::tst_toggleMiddleDockCrash()
@@ -4125,6 +4128,7 @@ void TestDocks::tst_startClosed()
 
 void TestDocks::tst_samePositionAfterHideRestore()
 {
+    EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
@@ -4140,6 +4144,34 @@ void TestDocks::tst_samePositionAfterHideRestore()
     dock2->setFloating(false);
     QVERIFY(waitForDeleted(fw2));
     QCOMPARE(geo2, dock2->frame()->geometry());
+}
+
+void TestDocks::tst_clear()
+{
+    // Tests MultiSplitterLayout::clear()
+    EnsureTopLevelsDeleted e;
+    QCOMPARE(Frame::dbg_numFrames(), 0);
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+    m->addDockWidget(dock3, Location_OnRight);
+    dock3->close();
+
+    QCOMPARE(Frame::dbg_numFrames(), 3);
+
+    auto layout = m->multiSplitterLayout();
+    layout->clear();
+
+    QCOMPARE(layout->count(), 0);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    dock3->deleteLater();
+    QVERIFY(waitForDeleted(dock3));
 }
 
 // QTest::qWait(50000)

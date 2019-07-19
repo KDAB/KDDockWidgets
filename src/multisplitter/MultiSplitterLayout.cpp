@@ -552,17 +552,26 @@ Item *MultiSplitterLayout::itemAt(QPoint p) const
 
 void MultiSplitterLayout::clear()
 {
-    qDeleteAll(m_items);
-    m_items.clear();
-    Q_EMIT widgetCountChanged(0);
+    const int oldCount = count();
+    const int oldVisibleCount = visibleCount();
+    const auto items = m_items;
+    m_items.clear(); // Clear the item list first, do avoid ~Item() triggering a removal from the list
+    qDeleteAll(items);
 
     for (Anchor *anchor : qAsConst(m_anchors)) {
-        if (!anchor->isStatic())
-            anchor->deleteLater();
+        anchor->clear();
+        if (!anchor->isStatic()) {
+            delete anchor;
+        }
     }
 
-    m_anchors.clear();
-    m_anchors << m_topAnchor << m_bottomAnchor << m_leftAnchor << m_rightAnchor;
+    m_anchors = { m_topAnchor, m_bottomAnchor, m_leftAnchor, m_rightAnchor };
+
+    if (oldCount > 0)
+        Q_EMIT widgetCountChanged(0);
+    if (oldVisibleCount > 0)
+        Q_EMIT visibleWidgetCountChanged(0);
+
 }
 
 int MultiSplitterLayout::visibleCount() const

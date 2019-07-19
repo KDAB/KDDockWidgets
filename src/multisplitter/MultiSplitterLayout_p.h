@@ -186,7 +186,8 @@ public:
     Item *itemAt(QPoint p) const;
 
     /**
-     *  @brief Removes all items.
+     * @brief Removes all Items, Anchors and Frames docked in this layout.
+     * DockWidgets are closed but not deleted.
      */
     void clear();
 
