@@ -15,6 +15,7 @@ and all of them wanted the same 3 or 4 missing features.
 
 This framework is under active development and has no planned release date yet.
 
+![Screen capture](/screencap.gif?raw=true "The docking system in action")
 
 Goals
 =====
