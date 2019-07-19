@@ -55,13 +55,13 @@ public:
     QString name() const;
     MainWindowOptions options() const;
 
-#if defined(DOCKS_DEVELOPER_MODE)
-    ///@brief returns the drop area. Used by the tests only
+    ///@internal
+    ///@brief returns the drop area.
     DropArea *dropArea() const;
 
-    ///@brief returns the MultiSplitterLayout. Used by the tests only.
+    ///@internal
+    ///@brief returns the MultiSplitterLayout.
     MultiSplitterLayout* multiSplitterLayout() const;
-#endif
 
 private:
     bool eventFilter(QObject *, QEvent *) override;

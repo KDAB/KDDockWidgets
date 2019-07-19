@@ -103,7 +103,6 @@ MainWindowOptions MainWindow::options() const
     return d->m_options;
 }
 
-#if defined(DOCKS_DEVELOPER_MODE)
 DropArea *MainWindow::dropArea() const
 {
     return d->m_dropArea;
@@ -113,7 +112,6 @@ MultiSplitterLayout *MainWindow::multiSplitterLayout() const
 {
     return d->m_dropArea->multiSplitterLayout();
 }
-#endif
 
 bool MainWindow::eventFilter(QObject *o, QEvent *e)
 {
