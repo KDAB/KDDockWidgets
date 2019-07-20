@@ -34,6 +34,7 @@ namespace KDDockWidgets {
 class StateBase;
 class DropArea;
 class Draggable;
+class FallbackMouseGrabber;
 
 class DragController : public QStateMachine
 {
@@ -53,6 +54,9 @@ public:
     void unregisterDraggable(Draggable *);
 
     bool isDragging() const;
+
+    void grabMouseFor(QWidget*);
+    void releaseMouse(QWidget*);
 
 Q_SIGNALS:
     void mousePressed();
@@ -83,6 +87,7 @@ private:
     std::unique_ptr<WindowBeingDragged> m_windowBeingDragged;
     DropArea *m_currentDropArea = nullptr;
     bool m_nonClientDrag = false;
+    FallbackMouseGrabber *m_fallbackMouseGrabber = nullptr;
 };
 
 class StateBase : public QState

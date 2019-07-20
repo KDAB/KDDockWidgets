@@ -19,6 +19,7 @@
 */
 
 #include "WindowBeingDragged_p.h"
+#include "DragController_p.h"
 
 using namespace KDDockWidgets;
 
@@ -32,4 +33,32 @@ void WindowBeingDragged::init()
     Q_ASSERT(window());
     grabMouse();
     window()->raise();
+}
+
+void WindowBeingDragged::grabMouse()
+{
+    QWidget *target = nullptr;
+    if (m_floatingWindow)
+        target = m_floatingWindow;
+    else if (m_dockWidget)
+        target = m_dockWidget->titleBar();
+
+    if (target) {
+        qCDebug(hovering) << "WindowBeingDragged: Released " << target;
+        DragController::instance()->grabMouseFor(target);
+    }
+}
+
+void WindowBeingDragged::releaseMouse()
+{
+    QWidget *target = nullptr;
+    if (m_floatingWindow)
+        target = m_floatingWindow;
+    else if (m_dockWidget)
+        target = m_dockWidget->titleBar();
+
+    if (target) {
+        qCDebug(hovering) << "WindowBeingDragged: Released " << target;
+        DragController::instance()->releaseMouse(target);
+    }
 }

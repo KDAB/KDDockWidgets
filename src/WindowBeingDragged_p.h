@@ -66,27 +66,8 @@ public:
         return m_dockWidget;
     }
 
-    void grabMouse()
-    {
-        if (m_floatingWindow) {
-            m_floatingWindow->grabMouse();
-            qCDebug(hovering) << "WindowBeingDragged: Released " << m_floatingWindow;
-        } else if (m_dockWidget) {
-            m_dockWidget->titleBar()->grabMouse();
-            qCDebug(hovering) << "WindowBeingDragged: Released " << m_dockWidget->titleBar();
-        }
-    }
-
-    void releaseMouse()
-    {
-        if (m_floatingWindow) {
-            m_floatingWindow->releaseMouse();
-            qCDebug(hovering) << "WindowBeingDragged: Grabbed " << m_floatingWindow;
-        } else if (m_dockWidget) {
-            m_dockWidget->titleBar()->releaseMouse();
-            qCDebug(hovering) << "WindowBeingDragged: Grabbed " << m_dockWidget->titleBar();
-        }
-    }
+    void grabMouse();
+    void releaseMouse();
 
 private:
     Q_DISABLE_COPY(WindowBeingDragged)

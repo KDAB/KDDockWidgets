@@ -37,6 +37,53 @@
 
 using namespace KDDockWidgets;
 
+namespace KDDockWidgets {
+///@brief Custom mouse grabber, as platforms like wayland don't support grabbing the mouse
+class FallbackMouseGrabber : public QObject
+{
+public:
+    FallbackMouseGrabber(QObject *parent)
+        : QObject(parent)
+    {
+    }
+
+    void grabMouse(QWidget *target)
+    {
+        m_target = target;
+        qApp->installEventFilter(this);
+    }
+
+    void releaseMouse()
+    {
+        m_target = nullptr;
+        qApp->removeEventFilter(this);
+    }
+
+    bool eventFilter(QObject *, QEvent *ev) override
+    {
+        if (m_reentrancyGuard || !m_target)
+            return false;
+
+        if (ev->type() == QEvent::MouseButtonPress ||
+            ev->type() == QEvent::MouseButtonRelease ||
+            ev->type() == QEvent::MouseMove ||
+            ev->type() == QEvent::NonClientAreaMouseButtonPress ||
+            ev->type() == QEvent::NonClientAreaMouseButtonRelease ||
+            ev->type() == QEvent::NonClientAreaMouseMove) {
+            m_reentrancyGuard = true;
+            qApp->sendEvent(m_target, ev);
+            m_reentrancyGuard = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    bool m_reentrancyGuard = false;
+    QPointer<QWidget> m_target;
+};
+}
+
 StateBase::StateBase(DragController *parent)
     : QState(parent)
     , q(parent)
@@ -171,6 +218,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
 }
 
 DragController::DragController(QObject *)
+    //: m_fallbackMouseGrabber(new FallbackMouseGrabber(this)) // Commented for now, as wayland has other problems, like QWidget::move() not working
 {
     qCDebug(creation) << "DragController()";
 
@@ -209,6 +257,24 @@ void DragController::unregisterDraggable(Draggable *drg)
 bool DragController::isDragging() const
 {
     return m_windowBeingDragged != nullptr;
+}
+
+void DragController::grabMouseFor(QWidget *target)
+{
+    // Wayland doesn't support grabbing, so we might want to use m_fallbackMouseGrabber.
+    // Commented out for now as wayland has other problems, like QWidget::move() not working
+
+    target->grabMouse();
+    //m_fallbackMouseGrabber->grabMouse(target);
+}
+
+void DragController::releaseMouse(QWidget *target)
+{
+    // Wayland doesn't support grabbing, so we might want to use m_fallbackMouseGrabber.
+    // Commented out for now as wayland has other problems, like QWidget::move() not working
+
+    target->releaseMouse();
+    //m_fallbackMouseGrabber->releaseMouse();
 }
 
 static QMouseEvent *mouseEvent(QEvent *e)
