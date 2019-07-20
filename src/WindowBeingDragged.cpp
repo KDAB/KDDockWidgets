@@ -25,17 +25,17 @@ using namespace KDDockWidgets;
 
 WindowBeingDragged::~WindowBeingDragged()
 {
-    releaseMouse();
+    grabMouse(false);
 }
 
 void WindowBeingDragged::init()
 {
     Q_ASSERT(window());
-    grabMouse();
+    grabMouse(true);
     window()->raise();
 }
 
-void WindowBeingDragged::grabMouse()
+void WindowBeingDragged::grabMouse(bool grab)
 {
     QWidget *target = nullptr;
     if (m_floatingWindow)
@@ -44,21 +44,10 @@ void WindowBeingDragged::grabMouse()
         target = m_dockWidget->titleBar();
 
     if (target) {
-        qCDebug(hovering) << "WindowBeingDragged: Released " << target;
-        DragController::instance()->grabMouseFor(target);
-    }
-}
-
-void WindowBeingDragged::releaseMouse()
-{
-    QWidget *target = nullptr;
-    if (m_floatingWindow)
-        target = m_floatingWindow;
-    else if (m_dockWidget)
-        target = m_dockWidget->titleBar();
-
-    if (target) {
-        qCDebug(hovering) << "WindowBeingDragged: Released " << target;
-        DragController::instance()->releaseMouse(target);
+        qCDebug(hovering) << "WindowBeingDragged: grab " << target << grab;
+        if (grab)
+            DragController::instance()->grabMouseFor(target);
+        else
+            DragController::instance()->releaseMouse(target);
     }
 }

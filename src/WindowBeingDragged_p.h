@@ -66,8 +66,8 @@ public:
         return m_dockWidget;
     }
 
-    void grabMouse();
-    void releaseMouse();
+    ///@brief grabs or releases the mouse
+    void grabMouse(bool grab);
 
 private:
     Q_DISABLE_COPY(WindowBeingDragged)
