@@ -331,6 +331,7 @@ private Q_SLOTS:
     void tst_invalidLayoutAfterRestore();
     void tst_samePositionAfterHideRestore();
     void tst_anchorFollowingItselfAssert();
+    void tst_positionWhenShown();
     void tst_restoreEmpty();
 private:
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
@@ -3531,6 +3532,24 @@ void TestDocks::tst_anchorFollowingItselfAssert()
     docks.at(0).createdDock->deleteLater();
     docks.at(4).createdDock->deleteLater();
     waitForDeleted(docks.at(4).createdDock);
+}
+
+void TestDocks::tst_positionWhenShown()
+{
+    // Tests that when showing a dockwidget it shows in the same position as before
+    EnsureTopLevelsDeleted e;
+    auto window = createMainWindow();
+    auto dock1 = new DockWidget(QStringLiteral("1"));
+    dock1->show();
+    dock1->window()->move(100, 100);
+    QCOMPARE(dock1->window()->pos(), QPoint(100, 100));
+
+    dock1->close();
+    dock1->show();
+    QCOMPARE(dock1->window()->pos(), QPoint(100, 100));
+
+    dock1->deleteLater();
+    QVERIFY(waitForDeleted(dock1));
 }
 
 void TestDocks::tst_sizeConstraintWarning()

@@ -121,5 +121,15 @@ void LastPosition::removePlaceholder(Item *placeholder)
 
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [placeholder] (const std::unique_ptr<ItemRef> &itemref) {
                              return itemref->item == placeholder;
-                         }), m_placeholders.end());
+    }), m_placeholders.end());
+}
+
+void LastPosition::setLastFloatingGeometry(QRect geo)
+{
+    m_lastFloatingGeo = geo;
+}
+
+QRect LastPosition::lastFloatingGeometry() const
+{
+    return m_lastFloatingGeo;
 }

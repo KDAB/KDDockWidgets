@@ -379,13 +379,21 @@ FloatingWindow *DockWidget::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
                       << "; visible=" << isVisible();
+
+    if (auto fw = qobject_cast<FloatingWindow*>(window()))
+        return fw; // Nothing to do
+
     if (isWindow()) {
-        QRect geo = geometry();
+        QRect geo = lastPosition()->lastFloatingGeometry();
+        if (geo.isNull())
+            geo = geometry();
+
         auto frame = new Frame();
         frame->addWidget(this);
         auto floatingWindow = new FloatingWindow(frame);
         floatingWindow->setGeometry(geo);
         floatingWindow->show();
+
         return floatingWindow;
     } else {
         return nullptr;
@@ -480,8 +488,10 @@ TabWidget *DockWidget::Private::parentTabWidget() const
 
 void DockWidget::Private::close()
 {
-    qCDebug(hiding) << "DockWidget::close" << this;
+    if (q->isFloating())
+        m_lastPosition.setLastFloatingGeometry(q->window()->geometry());
 
+    qCDebug(hiding) << "DockWidget::close" << this;
     saveTabIndex();
 
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.

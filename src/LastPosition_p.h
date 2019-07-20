@@ -123,11 +123,17 @@ public:
     {
         qDebug() << "; placeholdersSize=" << m_placeholders.size();
     }
+
+    void setLastFloatingGeometry(QRect);
+    QRect lastFloatingGeometry() const;
+
 private:
 
     // The last places where this dock widget was (or is), so it can be restored when setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
     bool m_clearing = false; // to prevent re-entrancy
+
+    QRect m_lastFloatingGeo;
 };
 }
 
