@@ -104,10 +104,10 @@ QString Indicator::iconName(bool active) const
 
 QString Indicator::iconFileName(bool active) const
 {
-    return QStringLiteral(":/img/classic_indicators/%1.png").arg(iconName(active));
+    const QString name = iconName(active);
+    return KDDockWidgets::windowManagerSupportsTranslucency() ? QStringLiteral(":/img/classic_indicators/%1.png").arg(name)
+                                                              : QStringLiteral(":/img/classic_indicators/opaque/%1.png").arg(name);
 }
-
-
 
 IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_, QWidget *)
     : QWidget(nullptr, Qt::Tool)
