@@ -40,9 +40,17 @@ MyWidget::MyWidget(QWidget *parent)
     l2->addWidget(radio3);
 
     l->addWidget(box);
-    l->addWidget(new QPushButton(QStringLiteral("Test")));
+    auto button = new QPushButton(QStringLiteral("Test"));
+    l->addWidget(button);
     l->addWidget(new QPushButton(QStringLiteral("Test")));
     l->addStretch();
+
+    connect(button, &QPushButton::clicked, button, [this] {
+        // To test if moving windows work on Wayland
+        QPoint pos = window()->pos();
+        window()->move(pos + QPoint(30, 30));
+    });
+
 }
 
 MyWidget::~MyWidget()
