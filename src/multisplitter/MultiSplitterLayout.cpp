@@ -35,6 +35,8 @@
 
 using namespace KDDockWidgets;
 
+const QString MultiSplitterLayout::s_magicMarker = QStringLiteral("bac9948e-5f1b-4271-acc5-07f1708e2611");
+
 static Qt::Orientation anchorOrientationForLocation(Location l)
 {
     return (l == Location_OnLeft || l == Location_OnRight) ? Qt::Vertical
@@ -1654,4 +1656,60 @@ bool MultiSplitterLayout::eventFilter(QObject *o, QEvent *e)
     }
 
     return false;
+}
+
+MultiSplitterLayout *MultiSplitterLayout::createFromDataStream(QDataStream &ds, MultiSplitterWidget *parent)
+{
+    auto layout = new MultiSplitterLayout(parent);
+
+    QString marker;
+    QSize minSize;
+    QSize contentsSize;
+    int numAnchors;
+
+    ds >> marker;
+    ds >> contentsSize;
+    ds >> minSize;
+    ds >> numAnchors;
+
+    Anchor::List anchors;
+    anchors.reserve(numAnchors);
+    for (int i = 0; i < numAnchors; ++i) {
+        anchors.push_back(Anchor::createFromDataStream(ds, layout));
+    }
+
+    for (Anchor *anchor : qAsConst(anchors)) {
+        int indexFrom = anchor->property("indexFrom").toInt();
+        int indexTo = anchor->property("indexTo").toInt();
+        int indexFolowee = anchor->property("indexFolowee").toInt();
+        anchor->setProperty("indexFrom", QVariant());
+        anchor->setProperty("indexTo", QVariant());
+        anchor->setProperty("indexFolowee", QVariant());
+
+        anchor->setFrom(anchors.at(indexFrom));
+        anchor->setTo(anchors.at(indexTo));
+        if (indexFolowee != -1)
+            anchor->setFollowee(anchors.at(indexFolowee));
+    }
+
+    layout->m_contentSize = contentsSize;
+    layout->m_minSize = minSize;
+    layout->m_anchors = anchors;
+
+    return layout;
+}
+
+QDataStream &operator<<(QDataStream &ds, MultiSplitterLayout *l)
+{
+    ds << MultiSplitterLayout::s_magicMarker;
+    ds << l->contentsSize();
+    ds << l->minimumSize();
+
+    const Anchor::List anchors = l->anchors();
+    ds << anchors.size();
+    for (Anchor *anchor : anchors) {
+        ds << *anchor;
+    }
+
+    return ds;
 }

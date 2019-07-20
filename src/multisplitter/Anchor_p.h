@@ -27,6 +27,7 @@
 #include <QPointer>
 #include <QRect>
 #include <QVector>
+#include <QDataStream>
 
 namespace KDDockWidgets {
 
@@ -123,6 +124,7 @@ public:
     typedef QVector<Anchor *> List;
     explicit Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type = Type_None);
     ~Anchor() override;
+    static Anchor* createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout);
 
     void setFrom(Anchor *);
     Anchor *from() const { return m_from; }
@@ -306,6 +308,7 @@ public:
     bool m_showingSide2Rubberband = false;
     bool m_initialized = false;
     static bool s_isResizing;
+    static const QString s_magicMarker; // Just to validate serialize is simetric to deserialize
 
     // For when being animated. They are not displayed at their pos, but with an offset.
     int m_positionOffset = 0;
@@ -316,6 +319,9 @@ public:
     QRect m_geometry;
     QPointer<Anchor> m_followee;
 };
+
+QDataStream &operator<<(QDataStream &ds, Anchor &);
+
 }
 
 #endif

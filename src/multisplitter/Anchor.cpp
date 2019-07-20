@@ -35,6 +35,7 @@
 using namespace KDDockWidgets;
 
 bool Anchor::s_isResizing = false;
+const QString Anchor::s_magicMarker = QStringLiteral("e520c60e-cf5d-4a30-b1a7-588d2c569851");
 
 Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type type)
     : QObject(multiSplitter->multiSplitter())
@@ -716,3 +717,60 @@ bool Anchor::isResizing()
 {
     return s_isResizing;
 }
+
+Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
+{
+    QString marker;
+    QRect geometry;
+    int orientation;
+    int type;
+
+    int indexFrom;
+    int indexTo;
+    int indexFolowee;
+
+    ds >> marker;
+    ds >> geometry;
+    ds >> orientation;
+    ds >> type;
+    ds >> indexFrom;
+    ds >> indexTo;
+    ds >> indexFolowee;
+
+    auto anchor = new Anchor(Qt::Orientation(orientation), layout, Anchor::Type(type));
+    anchor->setGeometry(geometry);
+    anchor->setProperty("indexFrom", indexFrom);
+    anchor->setProperty("indexTo", indexTo);
+    anchor->setProperty("indexFolowee", indexFolowee);
+
+    return anchor;
+}
+
+QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Anchor &a)
+{
+    const Anchor::List allAnchors = a.m_layout->anchors();
+    const ItemList allItems = a.m_layout->items();
+
+    ds << Anchor::s_magicMarker;
+    ds << a.geometry();
+    ds << a.orientation();
+    ds << a.type();
+    ds << allAnchors.indexOf(a.from());
+    ds << allAnchors.indexOf(a.to());
+    ds << (a.followee() ? allAnchors.indexOf(a.followee()) : -1);
+
+    QVector<int> side1Items;
+    for (Item *item : a.side1Items())
+        side1Items.push_back(allItems.indexOf(item));
+
+    QVector<int> side2Items;
+    for (Item *item : a.side2Items())
+        side1Items.push_back(allItems.indexOf(item));
+
+    ds << side1Items;
+    ds << side2Items;
+
+    return ds;
+}
+
+

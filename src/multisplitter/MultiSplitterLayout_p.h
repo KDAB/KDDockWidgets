@@ -235,6 +235,8 @@ public:
      */
     QRect rectForDrop(const QWidget *widget, KDDockWidgets::Location location, const Item *relativeTo) const;
 
+    static MultiSplitterLayout* createFromDataStream(QDataStream &ds, MultiSplitterWidget *parent);
+
     void setAnchorBeingDragged(Anchor *);
     Anchor *anchorBeingDragged() const { return m_anchorBeingDragged; }
     bool anchorIsBeingDragged() const { return m_anchorBeingDragged != nullptr; }
@@ -449,7 +451,7 @@ public:
     Anchor::List anchors(Qt::Orientation, bool includeStatic = false, bool includePlaceholders = true) const;
     Anchor *newAnchor(AnchorGroup &group, KDDockWidgets::Location location);
     friend QDebug operator<<(QDebug d, const AnchorGroup &group);
-
+    static const QString s_magicMarker;
     void setDoSanityChecks(bool);
 
 private:
@@ -601,6 +603,8 @@ inline QDebug operator<<(QDebug d, const AnchorGroup &group) {
       << "; right=" << group.right << "; bottom=" << group.bottom;
     return d;
 }
+
+QDataStream &operator<<(QDataStream &ds, MultiSplitterLayout *);
 }
 
 Q_DECLARE_METATYPE(KDDockWidgets::MultiSplitterLayout::Length)
