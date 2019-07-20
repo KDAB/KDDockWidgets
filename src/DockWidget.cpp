@@ -345,11 +345,11 @@ bool DockWidget::event(QEvent *e)
 void DockWidget::closeEvent(QCloseEvent *e)
 {
     e->accept(); // By default we accept, means DockWidget closes
-    qApp->sendEvent(d->widget, e); // Give a change for the widget to ignore
+    if (d->widget)
+        qApp->sendEvent(d->widget, e); // Give a change for the widget to ignore
 
-    if (e->isAccepted()) {
+    if (e->isAccepted())
         d->close();
-    }
 }
 
 std::unique_ptr<WindowBeingDragged> DockWidget::makeWindow()
