@@ -50,6 +50,8 @@ public:
     MyMainWindow(MainWindowOptions options, QWidget *parent = nullptr)
         : MainWindow(QStringLiteral("MyMainWindow"), options, parent)
     {
+        // qApp->installEventFilter(this);
+
         auto menubar = menuBar();
         auto fileMenu = new QMenu(QStringLiteral("File"));
         toggleMenu = new QMenu(QStringLiteral("Toggle"));
@@ -82,6 +84,19 @@ public:
             LayoutSaver saver;
             saver.restoreFromDisk();
         });
+    }
+
+    bool eventFilter(QObject *, QEvent *ev) override
+    {
+        if (ev->type() == QEvent::MouseButtonPress ||
+            ev->type() == QEvent::MouseButtonRelease ||
+            //ev->type() == QEvent::MouseMove ||
+            ev->type() == QEvent::NonClientAreaMouseButtonPress ||
+            ev->type() == QEvent::NonClientAreaMouseButtonRelease ||
+            ev->type() == QEvent::NonClientAreaMouseMove)
+            qDebug() << "Mouse event: " << ev->type();
+
+        return false;
     }
 
     QMenu *toggleMenu;
