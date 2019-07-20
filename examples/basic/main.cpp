@@ -96,6 +96,9 @@ public:
             ev->type() == QEvent::NonClientAreaMouseMove)
             qDebug() << "Mouse event: " << ev->type();
 
+        if (ev->type() == QEvent::Move)
+            qDebug() << "Move event " << window()->pos();
+
         return false;
     }
 
