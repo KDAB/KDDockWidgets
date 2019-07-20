@@ -1,12 +1,16 @@
 cmake_minimum_required(VERSION 3.3)
 
-project(KDDockWidgets)
-
-option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
-option(OPTION_ASAN_SUPPORT "Activate support for using ASAN" OFF)
+project(KDDockWidgets
+        VERSION 0.1
+        DESCRIPTION "An advanced docking system for Qt"
+        HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
+        LANGUAGES CXX)
 
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
+
+option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
+option(OPTION_ASAN_SUPPORT "Activate support for using ASAN" OFF)
 
 find_package(Qt5Widgets)
 set(CMAKE_AUTOMOC ON)
