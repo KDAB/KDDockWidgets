@@ -220,6 +220,10 @@ private Q_SLOTS:
      */
     KDDockWidgets::FloatingWindow *morphIntoFloatingWindow();
 
+    /// @brief calls morphIntoFloatingWindow() if the dock widget is visible and is a top-level
+    /// This is called delayed whenever we show a floating dock widget, so we get a FloatingWindow
+    void maybeMorphIntoFloatingWindow();
+
 #if defined(DOCKS_DEVELOPER_MODE)
 public:
 #else

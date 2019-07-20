@@ -36,6 +36,7 @@
 #include <QVBoxLayout>
 #include <QSignalBlocker>
 #include <QCloseEvent>
+#include <QTimer>
 
 /**
  * @file
@@ -329,6 +330,9 @@ bool DockWidget::event(QEvent *e)
         }
 
         d->maybeRestoreToPreviousPosition();
+
+        // Transform into a FloatingWindow if this will be a regular floating dock widget.
+        QTimer::singleShot(0, this, &DockWidget::maybeMorphIntoFloatingWindow);
     } else if (e->type() == QEvent::Hide) {
         Q_EMIT hidden();
 
@@ -398,6 +402,12 @@ FloatingWindow *DockWidget::morphIntoFloatingWindow()
     } else {
         return nullptr;
     }
+}
+
+void DockWidget::maybeMorphIntoFloatingWindow()
+{
+    if (isWindow() && isVisible())
+        morphIntoFloatingWindow();
 }
 
 Frame *DockWidget::frame() const

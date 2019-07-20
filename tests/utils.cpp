@@ -52,21 +52,25 @@ std::unique_ptr<KDDockWidgets::MainWindow> KDDockWidgets::Tests::createMainWindo
     return ptr;
 }
 
-DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidget *w, DockWidget::Options options)
+DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidget *w, DockWidget::Options options, bool show)
 {
     auto dock = new DockWidget(name, options);
     dock->setWidget(w);
     dock->setObjectName(name);
     dock->setGeometry(0, 0, 400, 400);
-    dock->show();
-    dock->activateWindow();
-    Q_ASSERT(dock->window());
-    Q_ASSERT(dock->windowHandle());
-    if (QTest::qWaitForWindowActive(dock->window()->windowHandle(), 200)) {
-        qDebug() << dock->window();
+    if (show) {
+        dock->show();
+        dock->morphIntoFloatingWindow();
+        dock->activateWindow();
+        Q_ASSERT(dock->window());
+        if (QTest::qWaitForWindowActive(dock->window()->windowHandle(), 200)) {
+            qDebug() << dock->window();
+            return dock;
+        }
+        return nullptr;
+    } else {
         return dock;
     }
-    return nullptr;
 };
 
 DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor color)
@@ -84,7 +88,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
 
     int i = 0;
     for (DockDescriptor &desc : docks) {
-        desc.createdDock = createDockWidget(QStringLiteral("%1").arg(i), new QPushButton(QStringLiteral("%1").arg(i)));
+        desc.createdDock = createDockWidget(QStringLiteral("%1").arg(i), new QPushButton(QStringLiteral("%1").arg(i)), {}, false);
 
         DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
