@@ -7,7 +7,6 @@ set(EXAMPLE_SRCS
 include_directories(${CMAKE_SOURCE_DIR}/src/)
 
 add_executable(docks_example ${EXAMPLE_SRCS})
-qt5_use_modules(docks_example Widgets)
-target_link_libraries(docks_example docks)
+target_link_libraries(docks_example docks Qt5::Widgets)
 install(TARGETS docks_example DESTINATION bin)
 

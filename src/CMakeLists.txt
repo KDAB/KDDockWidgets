@@ -42,35 +42,27 @@ else()
     set(IS_CLANG_BUILD FALSE)
 endif()
 
-if (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wshadow -Wconversion -fvisibility=hidden")
-
-    if (IS_CLANG_BUILD)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wweak-vtables")
-    endif()
-endif()
-
-
 set (DOCKS_INSTALLABLE_INCLUDES docks_export.h DockWidget.h MainWindow.h LayoutSaver.h Draggable_p.h KDDockWidgets.h)
 
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
+add_library(docks SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
+target_compile_definitions(docks PRIVATE BUILDING_DOCKS_LIBRARY)
+if (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
+    target_compile_options(docks PRIVATE -Wshadow -Wconversion -fvisibility=hidden)
 
-add_definitions(-DBUILDING_DOCKS_LIBRARY)
-add_library(docks SHARED ${DOCKSLIBS_SRCS} ${RESOURCES})
-
-if (NOT WIN32)
-  find_package(Qt5X11Extras)
+    if (IS_CLANG_BUILD)
+        target_compile_options(docks PRIVATE -Wweak-vtables)
+    endif()
 endif()
 
-set(NEEDED_QT_MODULES Widgets)
-if (Qt5X11Extras_FOUND)
-  set(NEEDED_QT_MODULES ${NEEDED_QT_MODULES} X11Extras)
+target_link_libraries(docks Qt5::Widgets)
+if (NOT WIN32 AND NOT APPLE)
+    find_package(Qt5X11Extras)
+    target_link_libraries(docks Qt5::X11Extras)
 endif()
-
-qt5_use_modules(docks ${NEEDED_QT_MODULES} )
 
 install (TARGETS docks
          RUNTIME DESTINATION bin
