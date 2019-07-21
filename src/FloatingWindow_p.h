@@ -93,6 +93,9 @@ private:
     DropArea *const m_dropArea;
     bool m_disableSetVisible = false;
 };
+
+QDataStream &operator<<(QDataStream &ds, FloatingWindow *);
+
 }
 
 #endif
