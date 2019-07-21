@@ -70,6 +70,8 @@ public:
     explicit Frame(QWidget *parent = nullptr, Options = Option_None);
     ~Frame() override;
 
+    static Frame *createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout);
+
     ///@brief Adds a widget into the Frame's TabWidget
     void addWidget(DockWidget *);
     ///@overload
@@ -192,6 +194,9 @@ private:
     const quint64 m_id;
     QPointer<Item> m_layoutItem;
 };
+
+QDataStream &operator<<(QDataStream &ds, Frame *);
+
 }
 
 inline QDebug operator<< (QDebug d, KDDockWidgets::Frame *frame)

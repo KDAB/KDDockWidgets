@@ -57,7 +57,7 @@ Frame::Frame(QWidget *parent, Options options)
     , m_tabWidget(new TabWidget(this))
     , m_titleBar(new TitleBar(this))
     , m_options(options)
-    , m_id(nextId())
+    , m_id(nextId()) // TODO: Remove ids
 {
     s_dbg_numFrames++;
     qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
@@ -423,4 +423,44 @@ bool Frame::event(QEvent *e)
     }
 
     return QWidget::event(e);
+}
+
+Frame *Frame::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
+{
+    QRect geo;
+    int options;
+    int currentTabIndex;
+    int numDocks;
+    ds >> geo;
+    ds >> options;
+    ds >> currentTabIndex;
+    ds >> numDocks;
+
+    auto frame = new Frame(layout->multiSplitter(), Frame::Options(options));
+
+    for (int i = 0; i < numDocks; ++i) {
+        if (DockWidget *dw = DockWidget::createFromDataStream(ds)) {
+            frame->addWidget(dw);
+        }
+    }
+
+    frame->setCurrentTabIndex(currentTabIndex);
+    frame->setGeometry(geo);
+
+    return frame;
+}
+
+QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Frame *frame)
+{
+    ds << frame->geometry();
+    ds << frame->options();
+    ds << frame->currentTabIndex();
+
+    const DockWidget::List docks = frame->dockWidgets();
+    ds << docks.size();
+    for (DockWidget *dock : docks) {
+        ds << dock;
+    }
+
+    return ds;
 }

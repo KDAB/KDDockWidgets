@@ -728,8 +728,8 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     int indexFrom;
     int indexTo;
     int indexFolowee;
-    QVector<int> side1Items;
-    QVector<int> side2Items;
+    QVector<int> side1ItemIndexes;
+    QVector<int> side2ItemIndexes;
 
     ds >> marker;
     ds >> geometry;
@@ -738,14 +738,27 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     ds >> indexFrom;
     ds >> indexTo;
     ds >> indexFolowee;
-    ds >> side1Items;
-    ds >> side2Items;
+    ds >> side1ItemIndexes;
+    ds >> side2ItemIndexes;
 
     auto anchor = new Anchor(Qt::Orientation(orientation), layout, Anchor::Type(type));
     anchor->setGeometry(geometry);
     anchor->setProperty("indexFrom", indexFrom);
     anchor->setProperty("indexTo", indexTo);
     anchor->setProperty("indexFolowee", indexFolowee);
+
+    ItemList side1Items;
+    ItemList side2Items;
+    const ItemList allItems = layout->items();
+    for (int index : side1ItemIndexes) {
+        side1Items.push_back(allItems.at(index));
+    }
+    for (int index : side2ItemIndexes) {
+        side2Items.push_back(allItems.at(index));
+    }
+
+    anchor->m_side1Items = side1Items;
+    anchor->m_side2Items = side2Items;
 
     return anchor;
 }

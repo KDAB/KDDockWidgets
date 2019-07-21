@@ -31,6 +31,8 @@
 #include "DropArea_p.h"
 #include "LastPosition_p.h"
 #include "multisplitter/Item_p.h"
+#include "DockRegistry_p.h"
+
 #include <QAction>
 #include <QEvent>
 #include <QVBoxLayout>
@@ -576,4 +578,22 @@ void DockWidget::Private::show()
 {
     // Only show for now
     q->show();
+}
+
+DockWidget *DockWidget::createFromDataStream(QDataStream &ds)
+{
+    QString name;
+    ds >> name;
+
+    DockWidget *dw = DockRegistry::self()->dockByName(name);
+    if (!dw)
+        qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
+
+    return dw;
+}
+
+QDataStream &KDDockWidgets::operator<<(QDataStream &ds, DockWidget *dw)
+{
+    ds << dw->name();
+    return ds;
 }

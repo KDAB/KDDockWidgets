@@ -76,6 +76,8 @@ public:
     ///@brief destructor
     ~DockWidget() override;
 
+    static DockWidget *createFromDataStream(QDataStream &ds);
+
     /**
      * @brief docks @p other widget into this one. Tabs will be shown.
      * @param other The other dock widget to dock into this one.
@@ -264,6 +266,8 @@ private:
     class Private;
     Private *const d;
 };
+
+QDataStream &operator<<(QDataStream &ds, DockWidget *);
 
 }
 

@@ -479,3 +479,33 @@ void Item::Private::updateObjectName()
 {
     q->setObjectName(m_frame->objectName());
 }
+
+Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
+{
+    bool isPlaceholder;
+    QRect geo;
+    bool hasFrame;
+    ds >> isPlaceholder;
+    ds >> geo;
+    ds >> hasFrame;
+    Frame *frame = hasFrame ? Frame::createFromDataStream(ds, layout)
+                            : nullptr;
+
+    auto item = new Item(frame, layout);
+    item->setIsPlaceholder(isPlaceholder);
+
+    return item;
+}
+
+QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Item *item)
+{
+    ds << item->isPlaceholder();
+    ds << item->geometry();
+    auto frame = item->frame();
+    ds << (frame != nullptr);
+    if (frame) {
+        ds << frame;
+    }
+
+    return ds;
+}

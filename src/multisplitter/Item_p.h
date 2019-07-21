@@ -100,6 +100,8 @@ public:
     /// @brief Destroys its frame too.
     ~Item() override;
 
+    static Item* createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout);
+
     int x() const;
     int y() const;
     QPoint pos() const;
@@ -166,6 +168,8 @@ private:
     class Private;
     Private *const d;
 };
+
+QDataStream &operator<<(QDataStream &ds, Item *);
 
 }
 
