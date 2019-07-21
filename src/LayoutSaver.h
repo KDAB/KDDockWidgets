@@ -54,8 +54,6 @@ private:
     QByteArray serializeLayout() const;
     bool restoreLayout(const QByteArray &);
 
-    QByteArray serializeLayout_old() const;
-    void restoreLayout_old(const QByteArray &);
     class Private;
     Private *const d;
 };

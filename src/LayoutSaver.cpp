@@ -607,6 +607,7 @@ std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
     return settings;
 }
 
+/*
 QByteArray LayoutSaver::serializeLayout_old() const
 {
     QByteArray result;
@@ -711,7 +712,7 @@ void LayoutSaver::restoreLayout_old(const QByteArray &data)
         layoutState.restore(fw->dropArea());
     }
 }
-
+*/
 bool LayoutSaver::restoreInProgress()
 {
     return Private::s_restoreInProgress;
