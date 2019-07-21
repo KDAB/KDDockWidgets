@@ -559,6 +559,9 @@ QByteArray LayoutSaver::serializeLayout() const
     QByteArray result;
     QDataStream ds(&result, QIODevice::WriteOnly);
 
+    // Just a simplification. One less type of windows to handle.
+    d->m_dockRegistry->ensureAllFloatingWidgetsAreMorphed();
+
     const MainWindow::List mainWindows = d->m_dockRegistry->mainwindows();
     ds << mainWindows.size();
     for (MainWindow *mainWindow : mainWindows) {

@@ -192,6 +192,14 @@ void DockRegistry::clear()
                        << "; nestedwindows=" << m_nestedWindows.size();
 }
 
+void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
+{
+    for (DockWidget *dw : m_dockWidgets) {
+        if (dw->window() == dw && dw->isVisible())
+            dw->morphIntoFloatingWindow();
+    }
+}
+
 DockRegistry::~DockRegistry()
 {
 }
