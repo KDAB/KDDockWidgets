@@ -40,12 +40,16 @@ public:
     LayoutSaver();
     ~LayoutSaver();
 
-    bool saveToDisk();
-    void restoreFromDisk();
-
     ///@brief returns whether a restore (@ref restoreLayout) is in progress
     static bool restoreInProgress();
 private:
+
+    // Private for now, as they don't work
+    bool saveToDisk();
+    void restoreFromDisk();
+
+    friend class TestDocks;
+
     QByteArray serializeLayout() const;
     void restoreLayout(const QByteArray &);
     class Private;
