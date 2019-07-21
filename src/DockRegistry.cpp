@@ -66,11 +66,9 @@ DockRegistry *DockRegistry::self()
 void DockRegistry::registerDockWidget(DockWidget *dock)
 {
     if (dock->name().isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "Dock " << dock << " doesn't have an ID";
-    } else {
-        if (auto other = dockByName(dock->name())) {
-            qWarning() << Q_FUNC_INFO << "Another dock" << other << "with name" << dock->name() << " already exists." << dock;
-        }
+        qWarning() << Q_FUNC_INFO << "DockWidget" << dock << " doesn't have an ID";
+    } else if (auto other = dockByName(dock->name())) {
+        qWarning() << Q_FUNC_INFO << "Another DockWidget" << other << "with name" << dock->name() << " already exists." << dock;
     }
 
     m_dockWidgets << dock;
@@ -84,6 +82,12 @@ void DockRegistry::unregisterDockWidget(DockWidget *dock)
 
 void DockRegistry::registerMainWindow(MainWindow *mainWindow)
 {
+    if (mainWindow->name().isEmpty()) {
+        qWarning() << Q_FUNC_INFO << "MainWindow" << mainWindow << " doesn't have an ID";
+    } else if (auto other = mainWindowByName(mainWindow->name())) {
+        qWarning() << Q_FUNC_INFO << "Another MainWindow" << other << "with name" << mainWindow->name() << " already exists." << mainWindow;
+    }
+
     m_mainWindows << mainWindow;
 }
 
@@ -139,6 +143,21 @@ bool DockRegistry::isSane() const
             names.insert(name);
         }
     }
+
+    names.clear();
+    for (auto mainwindow : qAsConst(m_mainWindows)) {
+        const QString name = mainwindow->name();
+        if (name.isEmpty()) {
+            qWarning() << "DockRegistry::isSane: MainWindow" << mainwindow << "is missing a name";
+            return false;
+        } else if (names.contains(name)) {
+            qWarning() << "DockRegistry::isSane: mainWindow with duplicate names:" << name;
+            return false;
+        } else {
+            names.insert(name);
+        }
+    }
+
     return true;
 }
 
