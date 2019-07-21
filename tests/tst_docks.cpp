@@ -1239,7 +1239,7 @@ void TestDocks::tst_closeAllDockWidgets()
     QCOMPARE(dock6->window(), fw.data());
 
     qDebug() << "closeAllDockWidgets";
-    DockRegistry::self()->closeAllDockWidgets();
+    DockRegistry::self()->clear();
     qDebug() << "closeAllDockWidgets done";
 
     waitForDeleted(fw);

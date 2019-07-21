@@ -60,11 +60,10 @@ public:
     QVector<FloatingWindow*> nestedwindows() const;
 
     /**
-     * Closes all dock widgets.
-     * Means all FloatingWindow wrappers are deleted, and all DockWidget made into a Qt::Window, with
-     * null parent, all placeholder items are deleted.
+     * Closes all dock widgets, destroys all FloatingWindow, Item and Anchors.
+     * This is called before restoring a layout.
      */
-    void closeAllDockWidgets();
+    void clear();
 
 private:
     explicit DockRegistry(QObject *parent = nullptr);
