@@ -35,6 +35,7 @@
 #include "multisplitter/MultiSplitterWidget_p.h"
 
 #include <QApplication>
+#include <QDataStream>
 
 using namespace KDDockWidgets;
 
@@ -117,4 +118,26 @@ bool MainWindow::eventFilter(QObject *o, QEvent *e)
 {
     qCDebug(globalevents) << "event: " << e->type() << ";receiver=" << o;
     return QMainWindow::eventFilter(o, e);
+}
+
+bool MainWindow::fillFromDataStream(QDataStream &ds)
+{
+    int options;
+    ds >> options;
+
+    if (options != int(d->m_options)) {
+        qWarning() << Q_FUNC_INFO << "Refusing to restore MainWindow with different options"
+                   << "; expected=" << options << "; has=" << d->m_options;
+        return false;
+    }
+
+    return d->m_dropArea->multiSplitterLayout()->fillFromDataStream(ds);
+}
+
+QDataStream &KDDockWidgets::operator<<(QDataStream &ds, MainWindow *mainWindow)
+{
+    ds << mainWindow->d->m_options;
+    ds << mainWindow->d->m_dropArea->multiSplitterLayout();
+
+    return ds;
 }

@@ -34,6 +34,8 @@
 #include <QMainWindow>
 #include <QVector>
 
+class QDataStream;
+
 namespace KDDockWidgets {
 
 class DockWidget;
@@ -64,11 +66,18 @@ public:
     MultiSplitterLayout* multiSplitterLayout() const;
 
 private:
+    friend QDataStream &operator<<(QDataStream &ds, MainWindow *);
+    friend class LayoutSaver;
+
     bool eventFilter(QObject *, QEvent *) override;
+    bool fillFromDataStream(QDataStream &ds);
 
     class Private;
     Private *const d;
 };
+
+QDataStream &operator<<(QDataStream &ds, MainWindow *);
+
 }
 
 #endif

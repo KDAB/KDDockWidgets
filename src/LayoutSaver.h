@@ -42,6 +42,7 @@ public:
 
     ///@brief returns whether a restore (@ref restoreLayout) is in progress
     static bool restoreInProgress();
+
 private:
 
     // Private for now, as they don't work
@@ -51,7 +52,10 @@ private:
     friend class TestDocks;
 
     QByteArray serializeLayout() const;
-    void restoreLayout(const QByteArray &);
+    bool restoreLayout(const QByteArray &);
+
+    QByteArray serializeLayout_old() const;
+    void restoreLayout_old(const QByteArray &);
     class Private;
     Private *const d;
 };

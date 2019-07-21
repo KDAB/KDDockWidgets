@@ -235,7 +235,7 @@ public:
      */
     QRect rectForDrop(const QWidget *widget, KDDockWidgets::Location location, const Item *relativeTo) const;
 
-    static MultiSplitterLayout* createFromDataStream(QDataStream &ds, MultiSplitterWidget *parent);
+    bool fillFromDataStream(QDataStream &ds);
 
     void setAnchorBeingDragged(Anchor *);
     Anchor *anchorBeingDragged() const { return m_anchorBeingDragged; }

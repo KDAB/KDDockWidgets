@@ -549,6 +549,55 @@ void LayoutSaver::restoreFromDisk()
     Private::s_restoreInProgress = false;
 }
 
+QByteArray LayoutSaver::serializeLayout() const
+{
+    if (!d->m_dockRegistry->isSane()) {
+        qWarning() << Q_FUNC_INFO << "Refusing to serialize insane layout";
+        return {};
+    }
+
+    QByteArray result;
+    QDataStream ds(&result, QIODevice::WriteOnly);
+
+    const MainWindow::List mainWindows = d->m_dockRegistry->mainwindows();
+    ds << mainWindows.size();
+    for (MainWindow *mainWindow : mainWindows) {
+        ds << mainWindow->name();
+        ds << mainWindow;
+    }
+
+    return result;
+}
+
+bool LayoutSaver::restoreLayout(const QByteArray &data)
+{
+    if (data.isEmpty())
+        return false;
+
+    QDataStream ds(data);
+
+    // Hide all dockwidgets and unparent them from any layout before starting restore
+    d->m_dockRegistry->closeAllDockWidgets();
+
+    int numMainWindows;
+    ds >> numMainWindows;
+    for (int i = 0 ; i < numMainWindows; ++i) {
+        QString name;
+        ds >> name;
+
+        MainWindow *mainWindow = d->m_dockRegistry->mainWindowByName(name);
+        if (!mainWindow) {
+            qWarning() << "Failed to restore layout create MainWindow with name" << name << "first";
+            return false;
+        }
+
+        if (!mainWindow->fillFromDataStream(ds))
+            return false;
+    }
+
+    return true;
+}
+
 std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
 {
     auto settings = std::unique_ptr<QSettings>(new QSettings(qApp->organizationName(),
@@ -558,7 +607,7 @@ std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
     return settings;
 }
 
-QByteArray LayoutSaver::serializeLayout() const
+QByteArray LayoutSaver::serializeLayout_old() const
 {
     QByteArray result;
     QDataStream ds(&result, QIODevice::WriteOnly);
@@ -595,7 +644,7 @@ QByteArray LayoutSaver::serializeLayout() const
     return result;
 }
 
-void LayoutSaver::restoreLayout(const QByteArray &data)
+void LayoutSaver::restoreLayout_old(const QByteArray &data)
 {
     if (data.isEmpty())
         return;

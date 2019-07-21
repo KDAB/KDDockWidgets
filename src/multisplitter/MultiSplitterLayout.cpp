@@ -1658,10 +1658,8 @@ bool MultiSplitterLayout::eventFilter(QObject *o, QEvent *e)
     return false;
 }
 
-MultiSplitterLayout *MultiSplitterLayout::createFromDataStream(QDataStream &ds, MultiSplitterWidget *parent)
+bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
 {
-    auto layout = new MultiSplitterLayout(parent);
-
     QString marker;
     QSize minSize;
     QSize contentsSize;
@@ -1675,7 +1673,7 @@ MultiSplitterLayout *MultiSplitterLayout::createFromDataStream(QDataStream &ds, 
     Anchor::List anchors;
     anchors.reserve(numAnchors);
     for (int i = 0; i < numAnchors; ++i) {
-        anchors.push_back(Anchor::createFromDataStream(ds, layout));
+        anchors.push_back(Anchor::createFromDataStream(ds, this));
     }
 
     for (Anchor *anchor : qAsConst(anchors)) {
@@ -1692,14 +1690,14 @@ MultiSplitterLayout *MultiSplitterLayout::createFromDataStream(QDataStream &ds, 
             anchor->setFollowee(anchors.at(indexFolowee));
     }
 
-    layout->m_contentSize = contentsSize;
-    layout->m_minSize = minSize;
-    layout->m_anchors = anchors;
+    m_contentSize = contentsSize;
+    m_minSize = minSize;
+    m_anchors = anchors;
 
-    return layout;
+    return true;
 }
 
-QDataStream &operator<<(QDataStream &ds, MultiSplitterLayout *l)
+QDataStream &KDDockWidgets::operator<<(QDataStream &ds, MultiSplitterLayout *l)
 {
     ds << MultiSplitterLayout::s_magicMarker;
     ds << l->contentsSize();
