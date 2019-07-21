@@ -1319,10 +1319,18 @@ void TestDocks::tst_restoreEmpty()
     EnsureTopLevelsDeleted e;
 
     // Create a main window, with a left dock, save it to disk.
-    auto m = createMainWindow();
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto layout = m->multiSplitterLayout();
+    auto oldRight = layout->m_rightAnchor;
+    const int oldRightPos = oldRight->position();
     LayoutSaver saver;
     QVERIFY(saver.saveToDisk());
     saver.restoreFromDisk();
+    QVERIFY(m->multiSplitterLayout()->checkSanity());
+    QVERIFY(oldRight != layout->m_rightAnchor); // It got new static-anchors
+    QVERIFY(oldRightPos == layout->m_rightAnchor->position());
+    QCOMPARE(layout->anchors().size(), 4);
+    QCOMPARE(layout->count(), 0);
 }
 
 void TestDocks::tst_restoreCrash()

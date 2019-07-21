@@ -22,6 +22,7 @@
 #include "DockWidget.h"
 #include "Logging_p.h"
 #include "DebugWindow_p.h"
+#include "multisplitter/MultiSplitterLayout_p.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -178,6 +179,9 @@ QVector<FloatingWindow *> DockRegistry::nestedwindows() const
 
 void DockRegistry::closeAllDockWidgets()
 {
+    for (auto mw : qAsConst(m_mainWindows))
+        mw->multiSplitterLayout()->clear(/*deleteStaticAnchors=*/ true);
+
     for (auto dw : qAsConst(m_dockWidgets)) {
         dw->close();
     }

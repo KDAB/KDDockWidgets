@@ -552,7 +552,7 @@ Item *MultiSplitterLayout::itemAt(QPoint p) const
     return nullptr;
 }
 
-void MultiSplitterLayout::clear()
+void MultiSplitterLayout::clear(bool alsoDeleteStaticAnchors)
 {
     const int oldCount = count();
     const int oldVisibleCount = visibleCount();
@@ -560,14 +560,25 @@ void MultiSplitterLayout::clear()
     m_items.clear(); // Clear the item list first, do avoid ~Item() triggering a removal from the list
     qDeleteAll(items);
 
-    for (Anchor *anchor : qAsConst(m_anchors)) {
+    const auto anchors = m_anchors;
+    m_anchors.clear();
+
+    for (Anchor *anchor : qAsConst(anchors)) {
         anchor->clear();
-        if (!anchor->isStatic()) {
+        if (!anchor->isStatic() || alsoDeleteStaticAnchors) {
             delete anchor;
         }
     }
 
-    m_anchors = { m_topAnchor, m_bottomAnchor, m_leftAnchor, m_rightAnchor };
+    if (alsoDeleteStaticAnchors) {
+        m_anchors.clear();
+        m_topAnchor = nullptr;
+        m_bottomAnchor = nullptr;
+        m_leftAnchor = nullptr;
+        m_rightAnchor = nullptr;
+    } else {
+        m_anchors = { m_topAnchor, m_bottomAnchor, m_leftAnchor, m_rightAnchor };
+    }
 
     if (oldCount > 0)
         Q_EMIT widgetCountChanged(0);
@@ -1314,6 +1325,13 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
             }
         }
     }
+
+    if (!m_topAnchor || !m_leftAnchor || !m_rightAnchor || !m_bottomAnchor) {
+        qWarning() << Q_FUNC_INFO << "Invalid static anchors"
+                   << m_leftAnchor << m_topAnchor << m_rightAnchor << m_bottomAnchor;
+        return false;
+    }
+
 /* TODO: uncomment when all tests pass
     if (m_topAnchor->position() != 0 || m_leftAnchor->position() != 0) {
         qWarning() << Q_FUNC_INFO << "Invalid top or left anchor position"
@@ -1673,7 +1691,21 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     Anchor::List anchors;
     anchors.reserve(numAnchors);
     for (int i = 0; i < numAnchors; ++i) {
-        anchors.push_back(Anchor::createFromDataStream(ds, this));
+        Anchor *anchor = Anchor::createFromDataStream(ds, this);
+        anchors.push_back(anchor);
+        if (anchor->type() == Anchor::Type_LeftStatic) {
+            Q_ASSERT(!m_leftAnchor);
+            m_leftAnchor = anchor;
+        } else if (anchor->type() == Anchor::Type_TopStatic) {
+            Q_ASSERT(!m_topAnchor);
+            m_topAnchor = anchor;
+        } else if (anchor->type() == Anchor::Type_RightStatic) {
+            Q_ASSERT(!m_rightAnchor);
+            m_rightAnchor = anchor;
+        } else if (anchor->type() == Anchor::Type_BottomStatic) {
+            Q_ASSERT(!m_bottomAnchor);
+            m_bottomAnchor = anchor;
+        }
     }
 
     for (Anchor *anchor : qAsConst(anchors)) {

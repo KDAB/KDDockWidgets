@@ -62,7 +62,7 @@ public:
     /**
      * Closes all dock widgets.
      * Means all FloatingWindow wrappers are deleted, and all DockWidget made into a Qt::Window, with
-     * null parent.
+     * null parent, all placeholder items are deleted.
      */
     void closeAllDockWidgets();
 

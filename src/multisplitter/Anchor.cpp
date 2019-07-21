@@ -728,6 +728,8 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     int indexFrom;
     int indexTo;
     int indexFolowee;
+    QVector<int> side1Items;
+    QVector<int> side2Items;
 
     ds >> marker;
     ds >> geometry;
@@ -736,6 +738,8 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     ds >> indexFrom;
     ds >> indexTo;
     ds >> indexFolowee;
+    ds >> side1Items;
+    ds >> side2Items;
 
     auto anchor = new Anchor(Qt::Orientation(orientation), layout, Anchor::Type(type));
     anchor->setGeometry(geometry);

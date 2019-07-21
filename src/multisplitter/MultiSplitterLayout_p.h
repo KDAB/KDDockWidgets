@@ -189,7 +189,7 @@ public:
      * @brief Removes all Items, Anchors and Frames docked in this layout.
      * DockWidgets are closed but not deleted.
      */
-    void clear();
+    void clear(bool alsoDeleteStaticAnchors = false);
 
     /**
      * @brief Returns the number of Item objects in this layout.
@@ -580,10 +580,10 @@ private:
     MultiSplitterWidget *const m_multiSplitter;
     Anchor::List m_anchors;
 
-    Anchor *const m_leftAnchor;
-    Anchor *const m_topAnchor;
-    Anchor *const m_rightAnchor;
-    Anchor *const m_bottomAnchor;
+    Anchor *m_leftAnchor = nullptr;
+    Anchor *m_topAnchor = nullptr;
+    Anchor *m_rightAnchor = nullptr;
+    Anchor *m_bottomAnchor = nullptr;
 
     ItemList m_items;
     bool m_inCtor = true;
