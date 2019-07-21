@@ -173,7 +173,7 @@ MainWindow::List DockRegistry::mainwindows() const
     return m_mainWindows;
 }
 
-QVector<FloatingWindow *> DockRegistry::nestedwindows() const
+const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
 {
     return m_nestedWindows;
 }

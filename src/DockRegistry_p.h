@@ -55,15 +55,29 @@ public:
     MainWindow *mainWindowByName(const QString &) const;
     bool isSane() const;
 
+    ///@brief returns all DockWidget instances
     DockWidget::List dockwidgets() const;
+
+    ///@brief returns all MainWindow instances
     MainWindow::List mainwindows() const;
-    QVector<FloatingWindow*> nestedwindows() const;
+
+    ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
+    /// As there might be DockWidgets which weren't morphed yet.
+    const QVector<FloatingWindow*> nestedwindows() const;
 
     /**
-     * Closes all dock widgets, destroys all FloatingWindow, Item and Anchors.
+     * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors.
      * This is called before restoring a layout.
      */
     void clear();
+
+    /**
+     * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.
+     *
+     * This is to simplify things before saving a layout. So we don't have to care about the case
+     * where the window is a DockWidget.
+     */
+    void ensureAllFloatingWidgetsAreMorphed();
 
 private:
     explicit DockRegistry(QObject *parent = nullptr);

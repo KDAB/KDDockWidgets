@@ -566,6 +566,13 @@ QByteArray LayoutSaver::serializeLayout() const
         ds << mainWindow;
     }
 
+    for (FloatingWindow *window : d->m_dockRegistry->nestedwindows()) {
+        ds << mainWindow;
+    }
+
+    // TODO: Restore geometry in hidden dock widgets
+    // TODO: Restore the placeholder for hidden dock widgets
+
     return result;
 }
 
