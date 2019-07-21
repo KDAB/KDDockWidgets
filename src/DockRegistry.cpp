@@ -185,6 +185,7 @@ void DockRegistry::clear()
 
     for (auto dw : qAsConst(m_dockWidgets)) {
         dw->close();
+        dw->lastPosition()->removePlaceholders();
     }
 
     qCDebug(restoring) << Q_FUNC_INFO << "; dockwidgets=" << m_dockWidgets.size()
