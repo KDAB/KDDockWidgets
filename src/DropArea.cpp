@@ -281,16 +281,13 @@ bool DropArea::drop(QWidget *droppedWindow, KDDockWidgets::Location location, Fr
 {
     qCDebug(docking) << "DropArea::addFrame";
 
-    auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow);
-    if (floatingWindow)
-        floatingWindow->scheduleDeleteLater();
-
     if (auto dock = qobject_cast<DockWidget *>(droppedWindow)) {
         auto frame = new Frame();
         frame->addWidget(dock);
         m_layout->addWidget(frame, location, relativeTo);
-    } else if (floatingWindow) {
+    } else if (auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow)) {
         m_layout->addMultiSplitter(floatingWindow->dropArea(), location, relativeTo);
+        floatingWindow->scheduleDeleteLater();
         return true;
     } else {
         qWarning() << "Unknown dropped widget" << droppedWindow;
