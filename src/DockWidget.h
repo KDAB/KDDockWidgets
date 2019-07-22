@@ -46,6 +46,7 @@ class DragController;
 class TitleBar;
 class Item;
 class LastPosition;
+class DockRegistry;
 
 /**
  * @brief Represents a dock widget.
@@ -240,6 +241,7 @@ private:
     friend class KDDockWidgets::TitleBar;
     friend struct KDDockWidgets::WindowBeingDragged;
     friend class KDDockWidgets::Item;
+    friend class KDDockWidgets::DockRegistry;
 
     /**
      * @brief the TitleBar instance used by this dock widget
