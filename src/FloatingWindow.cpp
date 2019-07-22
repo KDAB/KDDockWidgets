@@ -62,7 +62,7 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::numFramesChanged);
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
-    connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::scheduleDeleteLater);
+    m_layoutDestroyedConnection = connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
 static QWidget* hackFindParentHarder(QWidget *p)
@@ -100,6 +100,8 @@ FloatingWindow::FloatingWindow(Frame *frame, QWidget *parent)
 
 FloatingWindow::~FloatingWindow()
 {
+    disconnect(m_layoutDestroyedConnection);
+
     DockRegistry::self()->unregisterNestedWindow(this);
     qCDebug(creation) << "~FloatingWindow";
 }

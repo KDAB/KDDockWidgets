@@ -105,6 +105,7 @@ private:
     DropArea *const m_dropArea;
     bool m_disableSetVisible = false;
     bool m_beingDeleted = false;
+    QMetaObject::Connection m_layoutDestroyedConnection;
 };
 
 QDataStream &operator<<(QDataStream &ds, FloatingWindow *);
