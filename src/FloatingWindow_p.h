@@ -72,6 +72,16 @@ public:
      */
     bool hasSingleDockWidget() const;
 
+    /**
+     * @brief Returns whether a deleteLater has already been issued
+     */
+    bool beingDeleted() const;
+
+    /**
+     * @brief Equivalent to deleteLater() but sets beingDeleted() to true
+     */
+    void scheduleDeleteLater();
+
     ///@brief For tests-only. Returns the number of Frame instances in the whole application.
     static int dbg_numFrames();
 
@@ -94,6 +104,7 @@ private:
     QVBoxLayout *const m_vlayout;
     DropArea *const m_dropArea;
     bool m_disableSetVisible = false;
+    bool m_beingDeleted = false;
 };
 
 QDataStream &operator<<(QDataStream &ds, FloatingWindow *);

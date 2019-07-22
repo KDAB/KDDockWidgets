@@ -159,8 +159,7 @@ void Frame::onDockWidgetCountChanged()
 {
     qCDebug(docking) << "Frame::onDockWidgetCountChanged:" << this << "; widgetCount=" << dockWidgetCount();
     if (isEmpty() && !isCentralFrame()) {
-        qCDebug(creation) << "Frame::onDockWidgetCountChanged: deleteLater on" << this;
-        deleteLater();
+        scheduleDeleteLater();
     } else {
         updateTitleBarVisibility();
     }
@@ -362,6 +361,11 @@ void Frame::paintEvent(QPaintEvent *)
     }
 }
 
+bool Frame::beingDeleted() const
+{
+    return m_beingDeleted;
+}
+
 DockWidget *Frame::dockWidgetAt(int index) const
 {
     return qobject_cast<DockWidget *>(m_tabWidget->widget(index));
@@ -452,15 +456,24 @@ Frame *Frame::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Frame *frame)
 {
+    const DockWidget::List docks = frame->dockWidgets();
+
     ds << frame->geometry();
     ds << frame->options();
     ds << frame->currentTabIndex();
-
-    const DockWidget::List docks = frame->dockWidgets();
     ds << docks.size();
+
     for (DockWidget *dock : docks) {
         ds << dock;
     }
 
     return ds;
 }
+
+void Frame::scheduleDeleteLater()
+{
+    qCDebug(creation) << Q_FUNC_INFO << this;
+    m_beingDeleted = true;
+    deleteLater();
+}
+

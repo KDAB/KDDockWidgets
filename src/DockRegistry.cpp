@@ -175,7 +175,15 @@ MainWindow::List DockRegistry::mainwindows() const
 
 const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
 {
-    return m_nestedWindows;
+    // Returns all the FloatingWindow which aren't being deleted
+    QVector<FloatingWindow *> result;
+    result.reserve(m_nestedWindows.size());
+    for (FloatingWindow *fw : m_nestedWindows) {
+        if (!fw->beingDeleted())
+            result.push_back(fw);
+    }
+
+    return result;
 }
 
 void DockRegistry::clear()

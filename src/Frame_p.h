@@ -178,6 +178,11 @@ public:
 
     void paintEvent(QPaintEvent *) override;
 
+    /**
+     * @brief Returns whether a deleteLater has already been issued
+     */
+    bool beingDeleted() const;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidget *);
     void numDockWidgetsChanged();
@@ -185,6 +190,7 @@ Q_SIGNALS:
 private:
     Q_DISABLE_COPY(Frame)
     friend class TestDocks;
+    void scheduleDeleteLater();
     void onDockWidgetCountChanged();
     bool event(QEvent *) override;
     TabWidget *const m_tabWidget;
@@ -193,6 +199,7 @@ private:
     const Options m_options;
     const quint64 m_id;
     QPointer<Item> m_layoutItem;
+    bool m_beingDeleted = false;
 };
 
 QDataStream &operator<<(QDataStream &ds, Frame *);

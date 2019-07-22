@@ -283,7 +283,7 @@ bool DropArea::drop(QWidget *droppedWindow, KDDockWidgets::Location location, Fr
 
     auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow);
     if (floatingWindow)
-        floatingWindow->deleteLater();
+        floatingWindow->scheduleDeleteLater();
 
     if (auto dock = qobject_cast<DockWidget *>(droppedWindow)) {
         auto frame = new Frame();

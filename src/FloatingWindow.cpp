@@ -62,7 +62,7 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::numFramesChanged);
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
-    connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::deleteLater);
+    connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
 static QWidget* hackFindParentHarder(QWidget *p)
@@ -167,6 +167,12 @@ void FloatingWindow::resizeEvent(QResizeEvent *ev)
     QWidget::resizeEvent(ev);
 }
 
+void FloatingWindow::scheduleDeleteLater()
+{
+    m_beingDeleted = true;
+    deleteLater();
+}
+
 bool FloatingWindow::anyNonClosable() const
 {
     for (Frame *frame : frames()) {
@@ -191,6 +197,19 @@ bool FloatingWindow::hasSingleDockWidget() const
     return frame->dockWidgetCount() == 1;
 }
 
+bool FloatingWindow::beingDeleted() const
+{
+    if (m_beingDeleted)
+        return true;
+
+    for (Frame *f : frames()) {
+        if (!f->beingDeleted())
+            return false;
+    }
+
+    return true;
+}
+
 int FloatingWindow::dbg_numFrames()
 {
     return s_dbg_numFloatingWindows;
@@ -200,7 +219,7 @@ void FloatingWindow::onFrameCountChanged(int count)
 {
     qCDebug(docking) << "FloatingWindow::onFrameCountChanged" << count;
     if (count == 0) {
-        deleteLater();
+        scheduleDeleteLater();
     } else {
         updateTitleBarVisibility();
     }
