@@ -721,6 +721,7 @@ bool Anchor::isResizing()
 Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
 {
     QString marker;
+    QString objectName;
     QRect geometry;
     int orientation;
     int type;
@@ -732,6 +733,7 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     QVector<int> side2ItemIndexes;
 
     ds >> marker;
+    ds >> objectName;
     ds >> geometry;
     ds >> orientation;
     ds >> type;
@@ -742,6 +744,7 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     ds >> side2ItemIndexes;
 
     auto anchor = new Anchor(Qt::Orientation(orientation), layout, Anchor::Type(type));
+    anchor->setObjectName(objectName);
     anchor->setGeometry(geometry);
     anchor->setProperty("indexFrom", indexFrom);
     anchor->setProperty("indexTo", indexTo);
@@ -771,6 +774,7 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Anchor &a)
     const ItemList allItems = a.m_layout->items();
 
     ds << Anchor::s_magicMarker;
+    ds << a.objectName();
     ds << a.geometry();
     ds << a.orientation();
     ds << a.type();
@@ -784,9 +788,9 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Anchor &a)
         side1Items.push_back(allItems.indexOf(item));
 
     QVector<int> side2Items;
-    side1Items.reserve(a.side2Items().size());
+    side2Items.reserve(a.side2Items().size());
     for (Item *item : a.side2Items())
-        side1Items.push_back(allItems.indexOf(item));
+        side2Items.push_back(allItems.indexOf(item));
 
     ds << side1Items;
     ds << side2Items;
