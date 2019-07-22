@@ -33,7 +33,7 @@ set(DOCKSLIBS_SRCS
     multisplitter/MultiSplitterWidget_p.h
     multisplitter/SeparatorWidget.cpp
     multisplitter/SeparatorWidget_p.h
-    indicators/AnimatedIndicators.cpp
+    # indicators/AnimatedIndicators.cpp
     indicators/ClassicIndicators.cpp)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

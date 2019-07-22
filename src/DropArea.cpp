@@ -25,7 +25,7 @@
 #include "MainWindow.h"
 #include "FloatingWindow_p.h"
 #include "indicators/ClassicIndicators_p.h"
-#include "indicators/AnimatedIndicators_p.h"
+// #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"
 
 using namespace KDDockWidgets;
@@ -67,8 +67,9 @@ void DropArea::setIndicatorStyle(DropIndicatorOverlayInterface::Type indicatorTy
             m_dropIndicatorOverlay = new ClassicIndicators(this);
             break;
         case DropIndicatorOverlayInterface::TypeAnimated:
-            m_dropIndicatorOverlay = new AnimatedIndicators(this);
-            break;
+            // Disabled for now, that will come for 2.0 or so
+            //m_dropIndicatorOverlay = new AnimatedIndicators(this);
+            //break;
         case DropIndicatorOverlayInterface::TypeNone:
             Q_ASSERT(false);
             break;
