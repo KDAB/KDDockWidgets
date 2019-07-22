@@ -361,7 +361,7 @@ void Frame::paintEvent(QPaintEvent *)
     }
 }
 
-bool Frame::beingDeleted() const
+bool Frame::beingDeletedLater() const
 {
     return m_beingDeleted;
 }

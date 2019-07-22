@@ -181,7 +181,7 @@ public:
     /**
      * @brief Returns whether a deleteLater has already been issued
      */
-    bool beingDeleted() const;
+    bool beingDeletedLater() const;
 
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidget *);

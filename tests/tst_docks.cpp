@@ -1342,16 +1342,23 @@ void TestDocks::tst_restoreSimple()
     // Tests restoring a very simple layout, composed of just 1 docked widget
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    //auto layout = m->multiSplitterLayout();
+    auto layout = m->multiSplitterLayout();
     auto dock1 = createDockWidget(QStringLiteral("one"), new QTextEdit());
     m->addDockWidget(dock1, Location_OnTop);
 
     LayoutSaver saver;
     QVERIFY(saver.saveToDisk());
+    auto f1 = dock1->frame();
     dock1->close();
+    QCOMPARE(layout->count(), 1);
+    QVERIFY(waitForDeleted(f1));
+    QCOMPARE(layout->placeholderCount(), 1);
 
     QCOMPARE(DockRegistry::self()->nestedwindows().size(), 0);
     saver.restoreFromDisk();
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    //QVERIFY(dock1->isVisible());
 }
 
 void TestDocks::tst_restoreCrash()
@@ -2638,7 +2645,6 @@ void TestDocks::tst_refUnrefItem()
     auto m2 = createMainWindow();
     m2->addDockWidget(dock4, KDDockWidgets::Location_OnLeft);
     QVERIFY(!item4.data());
-
 }
 
 void TestDocks::tst_addAndReadd()
@@ -3801,9 +3807,10 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QCOMPARE(layout->numAchorsFollowing(), 0);
 
     // Detach dock2
-    auto f2 = dock2->frame();
+    QPointer<Frame> f2 = dock2->frame();
     f2->m_tabWidget->detachTab(dock2);
-    QVERIFY(waitForDeleted(f2));
+    QVERIFY(!f2.data());
+    QTest::qWait(200); // Not sure why. Some event we're waiting for. TODO: Investigate
     auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
     const int newAvailableWidth = layout->availableLengthForOrientation(Qt::Vertical);
     QCOMPARE(layout->minimumSize().width(), 2*Anchor::thickness(true) + 2*Anchor::thickness(false) + item1->minimumSize().width() + item3->minimumSize().width() + item4->minimumSize().width());
@@ -3856,10 +3863,9 @@ void TestDocks::tst_stealFrame()
     m1->addDockWidget(dock3, Location_OnRight);
     m1->addDockWidget(dock4, Location_OnRight);
     m2->addDockWidget(dock1, Location_OnRight);
-    Item *item2 = layout1->itemForFrame(dock2->frame());
+    QPointer<Item> item2 = layout1->itemForFrame(dock2->frame());
     m2->addDockWidget(dock2, Location_OnRight);
-
-    QVERIFY(waitForDeleted(item2));
+    QVERIFY(!item2.data());
 
     QCOMPARE(layout1->count(), 2);
     QCOMPARE(layout2->count(), 2);
@@ -3868,9 +3874,9 @@ void TestDocks::tst_stealFrame()
 
     // 2. MainWindow #1 steals a widget from MainWindow2 and vice-versa, but adds as tabs
     dock1->addDockWidgetAsTab(dock3);
-    auto f2 = dock2->frame();
+    QPointer<Frame> f2 = dock2->frame();
     dock4->addDockWidgetAsTab(dock2);
-    QVERIFY(waitForDeleted(f2));
+    QVERIFY(!f2.data());
 
     QCOMPARE(layout1->count(), 1);
     QCOMPARE(layout2->count(), 1);

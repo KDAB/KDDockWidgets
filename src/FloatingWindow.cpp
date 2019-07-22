@@ -203,7 +203,7 @@ bool FloatingWindow::beingDeleted() const
         return true;
 
     for (Frame *f : frames()) {
-        if (!f->beingDeleted())
+        if (!f->beingDeletedLater())
             return false;
     }
 

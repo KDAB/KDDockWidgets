@@ -86,10 +86,13 @@ FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)
     m_tabWidget->removeDockWidget(dockWidget);
 
     auto newFrame = new Frame();
+    const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
     newFrame->addWidget(dockWidget);
 
+    // We're potentially already dead at this point, as frames with 0 tabs auto-destruct. Don't access members from this point.
+
     auto floatingWindow = new FloatingWindow(newFrame);
-    r.moveTopLeft(mapToGlobal(QPoint(0, 0)));
+    r.moveTopLeft(globalPoint);
     floatingWindow->setGeometry(r);
     floatingWindow->show();
 
@@ -124,8 +127,21 @@ void TabWidget::insertDockWidget(DockWidget *dock, int index)
         return;
     }
 
+    QPointer<Frame> oldFrame = dock->frame();
     insertTab(index, dock, dock->icon(), dock->title());
     setCurrentIndex(index);
+
+    if (oldFrame && oldFrame->beingDeletedLater()) {
+        // give it a push and delete it immediately.
+        // Having too many deleteLater() puts us in an inconsistent state. For example if LayoutSaver::saveState()
+        // would to be called while the Frame hadn't been deleted yet it would count with that frame unless hacks.
+        // Also the unit-tests are full of waitForDeleted() due to deleteLater.
+
+        // Ideally we would just remove the deleteLater from frame.cpp, but QTabWidget::insertTab()
+        // would crash, as it accesses the old tab-widget we're stealing from
+
+        delete oldFrame;
+    }
 }
 
 void TabWidget::removeDockWidget(DockWidget *w)
