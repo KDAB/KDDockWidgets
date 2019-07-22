@@ -333,6 +333,7 @@ private Q_SLOTS:
     void tst_anchorFollowingItselfAssert();
     void tst_positionWhenShown();
     void tst_restoreEmpty();
+    void tst_restoreSimple();
 private:
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -1331,6 +1332,26 @@ void TestDocks::tst_restoreEmpty()
     QVERIFY(oldRightPos == layout->m_rightAnchor->position());
     QCOMPARE(layout->anchors().size(), 4);
     QCOMPARE(layout->count(), 0);
+}
+
+void TestDocks::tst_restoreSimple()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests restoring a very simple layout, composed of just 1 docked widget
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    //auto layout = m->multiSplitterLayout();
+    auto dock1 = createDockWidget(QStringLiteral("one"), new QTextEdit());
+    m->addDockWidget(dock1, Location_OnTop);
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToDisk());
+    dock1->close();
+    WAIT
+    QCOMPARE(DockRegistry::self()->nestedwindows().size(), 0);
+    saver.restoreFromDisk();
+
+
 }
 
 void TestDocks::tst_restoreCrash()

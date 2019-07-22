@@ -1690,17 +1690,20 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     ds >> contentsSize;
     ds >> minSize;
     ds >> numItems;
+    ds >> numAnchors;
 
     ItemList items;
+    Q_ASSERT(numItems >= 0);
     items.reserve(numItems);
     for (int i = 0; i < numItems; ++i) {
         Item *item = Item::createFromDataStream(ds, this);
         items.push_back(item);
     }
 
-    ds >> numAnchors;
+    m_items = items;
 
     Anchor::List anchors;
+    Q_ASSERT(numAnchors >= 0);
     anchors.reserve(numAnchors);
     for (int i = 0; i < numAnchors; ++i) {
         Anchor *anchor = Anchor::createFromDataStream(ds, this);
@@ -1743,18 +1746,19 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, MultiSplitterLayout *l)
 {
+    const ItemList items = l->items();
+    const Anchor::List anchors = l->anchors();
+
     ds << MultiSplitterLayout::s_magicMarker;
     ds << l->contentsSize();
     ds << l->minimumSize();
-
-    const ItemList items = l->items();
     ds << items.size();
+    ds << anchors.size();
+
     for (Item *item : items) {
         ds << item;
     }
 
-    const Anchor::List anchors = l->anchors();
-    ds << anchors.size();
     for (Anchor *anchor : anchors) {
         ds << *anchor;
     }
