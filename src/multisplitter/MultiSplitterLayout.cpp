@@ -1678,6 +1678,8 @@ bool MultiSplitterLayout::eventFilter(QObject *o, QEvent *e)
 
 bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
 {
+    clear();
+
     QString marker;
     QSize minSize;
     QSize contentsSize;

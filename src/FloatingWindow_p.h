@@ -43,6 +43,8 @@ public:
     explicit FloatingWindow(Frame *frame, QWidget *parent = nullptr);
     ~FloatingWindow() override;
 
+    static FloatingWindow* createFromDataStream(QDataStream &ds);
+
     // Draggable:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     const Frame::List frames() const;

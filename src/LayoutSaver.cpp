@@ -509,6 +509,9 @@ public:
     {
     }
 
+    void serializeWindowGeometry(QDataStream &ds, QWidget *topLevel);
+    void deserializeWindowGeometry(QDataStream &ds, QWidget *topLevel);
+
     DockWidget::List floatingDockWidgets() const;
     MainWindow::List mainWindows() const;
     std::unique_ptr<QSettings> settings() const;
@@ -566,11 +569,15 @@ QByteArray LayoutSaver::serializeLayout() const
     ds << mainWindows.size();
     for (MainWindow *mainWindow : mainWindows) {
         ds << mainWindow->name();
+        d->serializeWindowGeometry(ds, mainWindow);
         ds << mainWindow;
     }
 
-    for (FloatingWindow *window : d->m_dockRegistry->nestedwindows()) {
-        ds << window;
+    const QVector<FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
+    ds << floatingWindows.size();
+    for (FloatingWindow *floatingWindow : floatingWindows) {
+        d->serializeWindowGeometry(ds, floatingWindow);
+        ds << floatingWindow;
     }
 
     // TODO: Restore geometry in hidden dock widgets
@@ -601,11 +608,35 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             return false;
         }
 
+        d->deserializeWindowGeometry(ds, mainWindow);
+
         if (!mainWindow->fillFromDataStream(ds))
             return false;
     }
 
+    int numFloating;
+    ds >> numFloating;
+    for (int i = 0; i < numFloating; ++i) {
+        FloatingWindow::createFromDataStream(ds);
+    }
+
     return true;
+}
+
+void LayoutSaver::Private::serializeWindowGeometry(QDataStream &ds, QWidget *topLevel)
+{
+    ds << topLevel->geometry();
+    ds << topLevel->isVisible();
+}
+
+void LayoutSaver::Private::deserializeWindowGeometry(QDataStream &ds, QWidget *topLevel)
+{
+    QRect geo;
+    bool visible;
+    ds >> geo;
+    ds >> visible;
+    topLevel->setGeometry(geo);
+    topLevel->setVisible(visible);
 }
 
 std::unique_ptr<QSettings> LayoutSaver::Private::settings() const

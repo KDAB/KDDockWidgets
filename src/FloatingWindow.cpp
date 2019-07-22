@@ -225,6 +225,18 @@ void FloatingWindow::updateTitleBarVisibility()
     m_titleBar->setVisible(visible);
 }
 
+FloatingWindow *FloatingWindow::createFromDataStream(QDataStream &ds)
+{
+    int parentIndex;
+    ds >> parentIndex;
+    QWidget *parent = parentIndex == -1 ? nullptr
+                                        : DockRegistry::self()->mainwindows().at(parentIndex);
+
+    auto fw = new FloatingWindow(parent);
+    fw->dropArea()->multiSplitterLayout()->fillFromDataStream(ds);
+    return fw;
+}
+
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, FloatingWindow *fw)
 {
     auto mainWindow = qobject_cast<MainWindow*>(fw->parentWidget());
