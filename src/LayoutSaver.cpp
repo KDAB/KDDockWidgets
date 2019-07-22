@@ -135,7 +135,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     QDataStream ds(data);
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
-    d->m_dockRegistry->clear();
+    d->m_dockRegistry->clear(/*deleteStaticAnchors=*/true);
 
     int numMainWindows;
     ds >> numMainWindows;

@@ -186,15 +186,15 @@ const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
     return result;
 }
 
-void DockRegistry::clear()
+void DockRegistry::clear(bool deleteStaticAnchors)
 {
-    for (auto mw : qAsConst(m_mainWindows))
-        mw->multiSplitterLayout()->clear(/*deleteStaticAnchors=*/ true);
-
     for (auto dw : qAsConst(m_dockWidgets)) {
         dw->close();
         dw->lastPosition()->removePlaceholders();
     }
+
+    for (auto mw : qAsConst(m_mainWindows))
+        mw->multiSplitterLayout()->clear(deleteStaticAnchors);
 
     qCDebug(restoring) << Q_FUNC_INFO << "; dockwidgets=" << m_dockWidgets.size()
                        << "; nestedwindows=" << m_nestedWindows.size();

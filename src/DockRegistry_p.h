@@ -69,7 +69,7 @@ public:
      * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors.
      * This is called before restoring a layout.
      */
-    void clear();
+    void clear(bool deleteStaticAnchors = false);
 
     /**
      * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.
