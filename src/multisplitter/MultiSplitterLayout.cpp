@@ -1690,7 +1690,7 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     ds >> numItems;
 
     ItemList items;
-    items.resize(numItems);
+    items.reserve(numItems);
     for (int i = 0; i < numItems; ++i) {
         Item *item = Item::createFromDataStream(ds, this);
         items.push_back(item);

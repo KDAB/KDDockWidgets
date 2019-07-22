@@ -31,6 +31,8 @@
 
 #include <memory>
 
+// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
+
 namespace KDDockWidgets {
 namespace Tests {
 

@@ -65,11 +65,12 @@ public:
     ///@brief returns the MultiSplitterLayout.
     MultiSplitterLayout* multiSplitterLayout() const;
 
+protected:
+    bool eventFilter(QObject *, QEvent *) override;
+
 private:
     friend QDataStream &operator<<(QDataStream &ds, MainWindow *);
     friend class LayoutSaver;
-
-    bool eventFilter(QObject *, QEvent *) override;
     bool fillFromDataStream(QDataStream &ds);
 
     class Private;

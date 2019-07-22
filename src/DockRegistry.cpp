@@ -194,7 +194,7 @@ void DockRegistry::clear()
 
 void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
-    for (DockWidget *dw : m_dockWidgets) {
+    for (DockWidget *dw : qAsConst(m_dockWidgets)) {
         if (dw->window() == dw && dw->isVisible())
             dw->morphIntoFloatingWindow();
     }

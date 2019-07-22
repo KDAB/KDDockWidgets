@@ -117,7 +117,7 @@ TitleBar::~TitleBar()
 void TitleBar::mouseDoubleClickEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton && supportsFloatingButton()) {
-        Q_EMIT onFloatClicked();
+        onFloatClicked();
     } else {
         QWidget::mouseDoubleClickEvent(e);
     }
@@ -304,7 +304,7 @@ void TitleBar::onFloatClicked()
             // Case 2: Multiple dockwidgets are tabbed toghether and floating
             // TODO: Just reuse the whole frame and put it back. The frame currently doesn't remember the position in the main window
             // so use an hack for now
-            for (auto dock : dockWidgets) {
+            for (auto dock : qAsConst(dockWidgets)) {
                 dock->setFloating(true);
                 dock->setFloating(false);
             }

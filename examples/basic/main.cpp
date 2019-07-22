@@ -86,7 +86,7 @@ public:
         });*/
     }
 
-    bool eventFilter(QObject *, QEvent *ev) override
+    bool eventFilter(QObject *o, QEvent *ev) override
     {
         if (ev->type() == QEvent::MouseButtonPress ||
             ev->type() == QEvent::MouseButtonRelease ||
@@ -99,7 +99,7 @@ public:
         if (ev->type() == QEvent::Move)
             qDebug() << "Move event " << window()->pos();
 
-        return false;
+        return KDDockWidgets::MainWindow::eventFilter(o, ev);
     }
 
     QMenu *toggleMenu;

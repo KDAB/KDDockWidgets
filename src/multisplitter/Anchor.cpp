@@ -750,10 +750,12 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     ItemList side1Items;
     ItemList side2Items;
     const ItemList allItems = layout->items();
-    for (int index : side1ItemIndexes) {
+    side1Items.reserve(side1ItemIndexes.size());
+    for (int index : qAsConst(side1ItemIndexes)) {
         side1Items.push_back(allItems.at(index));
     }
-    for (int index : side2ItemIndexes) {
+    side2Items.reserve(side2ItemIndexes.size());
+    for (int index : qAsConst(side2ItemIndexes)) {
         side2Items.push_back(allItems.at(index));
     }
 
@@ -777,10 +779,12 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Anchor &a)
     ds << (a.followee() ? allAnchors.indexOf(a.followee()) : -1);
 
     QVector<int> side1Items;
+    side1Items.reserve(a.side1Items().size());
     for (Item *item : a.side1Items())
         side1Items.push_back(allItems.indexOf(item));
 
     QVector<int> side2Items;
+    side1Items.reserve(a.side2Items().size());
     for (Item *item : a.side2Items())
         side1Items.push_back(allItems.indexOf(item));
 
