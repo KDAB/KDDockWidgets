@@ -48,7 +48,9 @@ void NonClosableWidget::closeEvent(QCloseEvent *ev)
 
 std::unique_ptr<KDDockWidgets::MainWindow> KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options)
 {
-    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow"), options));
+    static int count = 0;
+    count++;
+    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow%1").arg(count), options));
     ptr->show();
     ptr->resize(sz);
     return ptr;

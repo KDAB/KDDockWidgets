@@ -342,8 +342,10 @@ private:
 
 static EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 {
+    static int count = 0;
+    count++;
     // Tests a MainWindow which isn't a top-level window, but is embedded in another window
-    auto mainwindow = new MainWindow(QStringLiteral("MyMainWindow"));
+    auto mainwindow = new MainWindow(QStringLiteral("MyMainWindow%1").arg(count));
 
     auto window = new EmbeddedWindow(mainwindow);
     auto lay = new QVBoxLayout(window);
@@ -684,7 +686,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     // 2.7 Drop the window into a MainWindow
     {
-        MainWindow m(QStringLiteral("MyMainWindow"));
+        MainWindow m(QStringLiteral("MyMainWindow_tst_dock2FloatingWidgetsTabbed"));
         m.show();
         m.setGeometry(500, 300, 300, 300);
         QVERIFY(!dock3->isFloating());
@@ -1347,11 +1349,9 @@ void TestDocks::tst_restoreSimple()
     LayoutSaver saver;
     QVERIFY(saver.saveToDisk());
     dock1->close();
-    WAIT
+
     QCOMPARE(DockRegistry::self()->nestedwindows().size(), 0);
     saver.restoreFromDisk();
-
-
 }
 
 void TestDocks::tst_restoreCrash()
@@ -1609,7 +1609,7 @@ void TestDocks::tst_addToSmallMainWindow()
     {
         // Test test shouldn't spit any warnings
 
-        MainWindow m(QStringLiteral("MyMainWindow"), MainWindowOption_None);
+        MainWindow m(QStringLiteral("MyMainWindow_tst_addToSmallMainWindow5"), MainWindowOption_None);
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(50, 240)));
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(50, 240)));
         m.addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
@@ -1619,14 +1619,13 @@ void TestDocks::tst_addToSmallMainWindow()
         qDebug() << m.size();
     }
 
-
     qDebug() << "Test 8";
     {
         // Test test shouldn't spit any warnings
 
         QWidget container;
         auto lay = new QVBoxLayout(&container);
-        MainWindow m(QStringLiteral("MyMainWindow"), MainWindowOption_None);
+        MainWindow m(QStringLiteral("MyMainWindow_tst_addToSmallMainWindow8"), MainWindowOption_None);
         lay->addWidget(&m);
         container.resize(100, 100);
         waitForResize(&container);
@@ -1818,7 +1817,7 @@ std::unique_ptr<MultiSplitterWidget> TestDocks::createMultiSplitterFromSetup(Mul
     const int count = setup.widgets.size();
     for (int i = 0; i < count; ++i) {
         auto frame = new Frame(widget.get());
-        auto dock = new DockWidget(QStringLiteral("foo"));
+        auto dock = new DockWidget(QStringLiteral("foo_createMultiSplitterFromSetup%1").arg(i));
         dock->setWidget(setup.widgets[i]);
         frame->addWidget(dock);
         frameMap.insert(setup.widgets[i], frame);
@@ -1987,7 +1986,7 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     const int minHeight = 400;
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new MyWidget2(QSize(400, minHeight)));
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(400, minHeight)));
-    auto dock3 = createDockWidget(QStringLiteral("dock2"), new MyWidget2(QSize(400, minHeight)));
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new MyWidget2(QSize(400, minHeight)));
     auto dropArea = m->dropArea();
     MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
@@ -2838,7 +2837,7 @@ void TestDocks::tst_placeholdersAreRemovedPropertly()
     auto dropArea = m->dropArea();
     MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
     QPointer<DockWidget> dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
-    QPointer<DockWidget> dock2 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    QPointer<DockWidget> dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
     m->addDockWidget(dock1, Location_OnLeft);
     Item *item = layout->items().constFirst();
     m->addDockWidget(dock2, Location_OnRight);
