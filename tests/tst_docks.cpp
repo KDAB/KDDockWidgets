@@ -1358,7 +1358,7 @@ void TestDocks::tst_restoreSimple()
     saver.restoreFromDisk();
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
-    //QVERIFY(dock1->isVisible());
+    QVERIFY(dock1->isVisible());
 }
 
 void TestDocks::tst_restoreCrash()

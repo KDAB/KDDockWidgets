@@ -450,6 +450,7 @@ Frame *Frame::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
 
     frame->setCurrentTabIndex(currentTabIndex);
     frame->setGeometry(geo);
+    frame->show();
 
     return frame;
 }
