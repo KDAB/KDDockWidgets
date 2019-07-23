@@ -334,6 +334,7 @@ private Q_SLOTS:
     void tst_positionWhenShown();
     void tst_restoreEmpty();
     void tst_restoreSimple();
+    void tst_restoreNestedAndTabbed();
 private:
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -1400,6 +1401,68 @@ void TestDocks::tst_restoreSimple()
     // Cleanup
     dock3->deleteLater();
     QVERIFY(waitForDeleted(dock3));
+}
+
+void TestDocks::tst_restoreNestedAndTabbed()
+{
+    // Just a more involved test
+
+    EnsureTopLevelsDeleted e;
+    QPoint oldFW4Pos;
+    QRect oldGeo;
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, QStringLiteral("tst_restoreNestedAndTabbed"));
+        m->move(500, 500);
+        oldGeo = m->geometry();
+        auto layout = m->multiSplitterLayout();
+        auto dock1 = createDockWidget(QStringLiteral("1"), new QTextEdit());
+        auto dock2 = createDockWidget(QStringLiteral("2"), new QTextEdit());
+        auto dock3 = createDockWidget(QStringLiteral("3"), new QTextEdit());
+
+        auto dock4 = createDockWidget(QStringLiteral("4"), new QTextEdit());
+        auto dock5 = createDockWidget(QStringLiteral("5"), new QTextEdit());
+        dock4->addDockWidgetAsTab(dock5);
+        oldFW4Pos = dock4->window()->pos();
+
+        m->addDockWidget(dock1, Location_OnLeft);
+        m->addDockWidget(dock2, Location_OnRight);
+        dock2->addDockWidgetAsTab(dock3);
+        dock2->setAsCurrentTab();
+        QCOMPARE(dock2->frame()->currentTabIndex(), 0);
+        QCOMPARE(dock4->frame()->currentTabIndex(), 1);
+
+        LayoutSaver saver;
+        QVERIFY(saver.saveToDisk());
+        QVERIFY(layout->checkSanity());
+        // Let it be destroyed, we'll restore a new one
+    }
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, QStringLiteral("tst_restoreNestedAndTabbed"));
+    auto layout = m->multiSplitterLayout();
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QTextEdit());
+    auto dock2 = createDockWidget(QStringLiteral("2"), new QTextEdit());
+    auto dock3 = createDockWidget(QStringLiteral("3"), new QTextEdit());
+    auto dock4 = createDockWidget(QStringLiteral("4"), new QTextEdit());
+    auto dock5 = createDockWidget(QStringLiteral("5"), new QTextEdit());
+
+    LayoutSaver saver;
+    saver.restoreFromDisk();
+    QVERIFY(layout->checkSanity());
+
+    auto fw4 = qobject_cast<FloatingWindow*>(dock4->window());
+    QVERIFY(fw4);
+    QCOMPARE(dock4->window(), dock5->window());
+    QCOMPARE(fw4->pos(), oldFW4Pos);
+
+    QCOMPARE(dock1->window(), m.get());
+    QCOMPARE(dock2->window(), m.get());
+    QCOMPARE(dock3->window(), m.get());
+
+    QCOMPARE(dock2->frame()->currentTabIndex(), 0);
+    QCOMPARE(dock4->frame()->currentTabIndex(), 1);
+
+    qDebug() << m->frameGeometry() << m->geometry();
+    QCOMPARE(m->geometry(), oldGeo);
 }
 
 void TestDocks::tst_restoreCrash()

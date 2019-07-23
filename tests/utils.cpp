@@ -46,11 +46,15 @@ void NonClosableWidget::closeEvent(QCloseEvent *ev)
     ev->ignore(); // don't allow to close
 }
 
-std::unique_ptr<KDDockWidgets::MainWindow> KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options)
+std::unique_ptr<KDDockWidgets::MainWindow> KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options, const QString &name)
 {
     static int count = 0;
     count++;
-    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow%1").arg(count), options));
+
+    const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
+                                                  : name;
+
+    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(name, options));
     ptr->show();
     ptr->resize(sz);
     return ptr;
