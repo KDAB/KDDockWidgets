@@ -1684,7 +1684,7 @@ bool MultiSplitterLayout::eventFilter(QObject *o, QEvent *e)
 
 bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
 {
-    clear();
+    clear(true);
 
     QString marker;
     QSize minSize;
@@ -1708,12 +1708,9 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
 
     m_items = items;
 
-    Anchor::List anchors;
     Q_ASSERT(numAnchors >= 0);
-    anchors.reserve(numAnchors);
     for (int i = 0; i < numAnchors; ++i) {
-        Anchor *anchor = Anchor::createFromDataStream(ds, this);
-        anchors.push_back(anchor);
+        Anchor *anchor = Anchor::createFromDataStream(ds, this); // They auto-register into m_anchors
         if (anchor->type() == Anchor::Type_LeftStatic) {
             Q_ASSERT(!m_leftAnchor);
             m_leftAnchor = anchor;
@@ -1729,7 +1726,7 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
         }
     }
 
-    for (Anchor *anchor : qAsConst(anchors)) {
+    for (Anchor *anchor : qAsConst(m_anchors)) {
         int indexFrom = anchor->property("indexFrom").toInt();
         int indexTo = anchor->property("indexTo").toInt();
         int indexFolowee = anchor->property("indexFolowee").toInt();
@@ -1737,15 +1734,14 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
         anchor->setProperty("indexTo", QVariant());
         anchor->setProperty("indexFolowee", QVariant());
 
-        anchor->setFrom(anchors.at(indexFrom));
-        anchor->setTo(anchors.at(indexTo));
+        anchor->setFrom(m_anchors.at(indexFrom));
+        anchor->setTo(m_anchors.at(indexTo));
         if (indexFolowee != -1)
-            anchor->setFollowee(anchors.at(indexFolowee));
+            anchor->setFollowee(m_anchors.at(indexFolowee));
     }
 
     m_contentSize = contentsSize;
     m_minSize = minSize;
-    m_anchors = anchors;
 
     // Now that the anchors were created we can add them to the items
     for (Item *item : qAsConst(m_items)) {
