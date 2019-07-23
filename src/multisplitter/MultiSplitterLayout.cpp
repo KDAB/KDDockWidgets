@@ -333,7 +333,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     updateAnchorFollowing();
 }
 
-void MultiSplitterLayout::addItems_internal(const ItemList &items, bool updateConstraints)
+void MultiSplitterLayout::addItems_internal(const ItemList &items, bool updateConstraints, bool emitSignal)
 {
     m_items << items;
     if (updateConstraints)
@@ -347,7 +347,9 @@ void MultiSplitterLayout::addItems_internal(const ItemList &items, bool updateCo
             Q_EMIT widgetAdded(item);
         }
     }
-    Q_EMIT widgetCountChanged(m_items.size());
+
+    if (emitSignal)
+        Q_EMIT widgetCountChanged(m_items.size());
 }
 
 void MultiSplitterLayout::addAsPlaceholder(DockWidget *dockWidget, Location location, Item *relativeTo)
@@ -1736,7 +1738,7 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     m_staticAnchorGroup.bottom = m_bottomAnchor;
 
     m_items.clear(); // Now properly set the items, which installs needed event filters, etc.
-    addItems_internal(items, false); // Add the items only after we have the static anchors set
+    addItems_internal(items, false, false); // Add the items only after we have the static anchors set
 
     for (Anchor *anchor : qAsConst(m_anchors)) {
         int indexFrom = anchor->property("indexFrom").toInt();
@@ -1768,6 +1770,9 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
         group.right = m_anchors.at(rightIndex);
         group.bottom = m_anchors.at(bottomIndex);
     }
+
+    if (!m_items.isEmpty())
+        Q_EMIT widgetCountChanged(m_items.size());
 
     return true;
 }

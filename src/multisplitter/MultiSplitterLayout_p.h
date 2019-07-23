@@ -263,7 +263,7 @@ public:
     ///@brief a function that all code paths adding Items will call.
     ///It's mostly for code reuse, so we don't duplicate what's done here. But it's also nice to
     ///have a central place that we know will be called
-    void addItems_internal(const ItemList &, bool updateConstraints = true);
+    void addItems_internal(const ItemList &, bool updateConstraints = true, bool emitSignal = true);
 
     /**
      * @brief returns the extra useless space

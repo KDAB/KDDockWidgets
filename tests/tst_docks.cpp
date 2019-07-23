@@ -338,6 +338,7 @@ private Q_SLOTS:
     void tst_restoreCentralFrame();
     void tst_restoreCrash();
     void tst_restoreTwice();
+    void tst_restoreSideBySide();
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
@@ -1548,6 +1549,46 @@ void TestDocks::tst_restoreTwice()
         QVERIFY(dock3->window()->isVisible());
         auto fw = qobject_cast<FloatingWindow*>(dock2->window());
         QVERIFY(fw);
+    }
+}
+
+void TestDocks::tst_restoreSideBySide()
+{
+    // Save a layout that has a floating window with nesting
+
+    EnsureTopLevelsDeleted e;
+
+    {
+        EnsureTopLevelsDeleted e1;
+        // MainWindow:
+        auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, QStringLiteral("tst_restoreTwice"));
+        auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+        m->addDockWidgetAsTab(dock1);
+        auto layout = m->multiSplitterLayout();
+
+        // FloatingWindow:
+        auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+        auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
+        dock2->addDockWidgetToContainingWindow(dock3, Location_OnRight);
+        LayoutSaver saver;
+        QVERIFY(saver.saveToDisk());
+        QVERIFY(layout->checkSanity());
+    }
+
+    {
+
+        auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, QStringLiteral("tst_restoreTwice"));
+        auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+
+        auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+        auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
+
+
+        LayoutSaver restorer;
+        QVERIFY(restorer.restoreFromDisk());
+
+        QCOMPARE(dock1->window(), m.get());
+        QCOMPARE(dock2->window(), dock3->window());
     }
 }
 
