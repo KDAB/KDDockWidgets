@@ -248,23 +248,12 @@ void FloatingWindow::updateTitleBarVisibility()
 
 void FloatingWindow::fillFromDataStream(QDataStream &ds)
 {
-    int parentIndex;
-    ds >> parentIndex;
-    QWidget *parent = parentIndex == -1 ? nullptr
-                                        : DockRegistry::self()->mainwindows().at(parentIndex);
-
-    setParent(parent, windowFlags() | Qt::Tool);
     dropArea()->multiSplitterLayout()->fillFromDataStream(ds);
     show();
 }
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, FloatingWindow *fw)
 {
-    auto mainWindow = qobject_cast<MainWindow*>(fw->parentWidget());
-    const int parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
-                                       : -1;
-
-    ds << parentIndex;
     ds << fw->dropArea()->multiSplitterLayout();
     return ds;
 }

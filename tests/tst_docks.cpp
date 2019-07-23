@@ -337,6 +337,7 @@ private Q_SLOTS:
     void tst_restoreNestedAndTabbed();
     void tst_restoreCentralFrame();
     void tst_restoreCrash();
+    void tst_restoreTwice();
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
@@ -1514,6 +1515,40 @@ void TestDocks::tst_restoreCrash()
     QVERIFY(saver.restoreFromDisk());
     QVERIFY(layout->checkSanity());
     QVERIFY(!dock1->isFloating());
+}
+
+void TestDocks::tst_restoreTwice()
+{
+    // Tests that restoring multiple times doesn't hide the floating windows for some reason
+
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, QStringLiteral("tst_restoreTwice"));
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    m->addDockWidgetAsTab(dock1);
+
+    auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
+
+    dock2->morphIntoFloatingWindow();
+    dock3->morphIntoFloatingWindow();
+
+    {
+        LayoutSaver saver;
+        QVERIFY(saver.saveToDisk());
+        QVERIFY(saver.restoreFromDisk());
+        QVERIFY(dock2->isVisible());
+        QVERIFY(dock3->isVisible());
+    }
+
+    {
+        LayoutSaver saver;
+        QVERIFY(saver.restoreFromDisk());
+        QVERIFY(dock2->isVisible());
+        QVERIFY(dock3->isVisible());
+        QVERIFY(dock2->window()->isVisible());
+        QVERIFY(dock3->window()->isVisible());
+        auto fw = qobject_cast<FloatingWindow*>(dock2->window());
+        QVERIFY(fw);
+    }
 }
 
 void TestDocks::tst_addDockWidgetAsTabToDockWidget()

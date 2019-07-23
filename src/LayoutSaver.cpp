@@ -119,6 +119,13 @@ QByteArray LayoutSaver::serializeLayout() const
     const QVector<FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
     ds << floatingWindows.size();
     for (FloatingWindow *floatingWindow : floatingWindows) {
+
+        auto mainWindow = qobject_cast<MainWindow*>(floatingWindow->parentWidget());
+        const int parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
+                                           : -1;
+
+        ds << parentIndex;
+
         d->serializeWindowGeometry(ds, floatingWindow);
         ds << floatingWindow;
     }
@@ -168,7 +175,13 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     int numFloating;
     ds >> numFloating;
     for (int i = 0; i < numFloating; ++i) {
-        auto fw = new FloatingWindow();
+
+        int parentIndex;
+        ds >> parentIndex;
+        QWidget *parent = parentIndex == -1 ? nullptr
+                                            : DockRegistry::self()->mainwindows().at(parentIndex);
+
+        auto fw = new FloatingWindow(parent);
         d->deserializeWindowGeometry(ds, fw);
         fw->fillFromDataStream(ds);
     }
