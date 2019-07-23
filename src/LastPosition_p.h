@@ -79,6 +79,8 @@ public:
     LastPosition() = default;
     ~LastPosition();
 
+    void fillFromDataStream(QDataStream &ds);
+
     /**
      * @brief Returns whether the LastPosition is valid. If invalid then the DockWidget was never
      * in a MainWindow.
@@ -135,6 +137,9 @@ private:
 
     QRect m_lastFloatingGeo;
 };
+
+QDataStream &operator<<(QDataStream &ds, LastPosition *);
+
 }
 
 #endif

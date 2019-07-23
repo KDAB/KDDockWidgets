@@ -133,3 +133,21 @@ QRect LastPosition::lastFloatingGeometry() const
 {
     return m_lastFloatingGeo;
 }
+
+void LastPosition::fillFromDataStream(QDataStream &ds)
+{
+    m_placeholders.clear();
+    ds >> m_lastFloatingGeo;
+    ds >> m_tabIndex;
+    ds >> m_wasFloating;
+}
+
+QDataStream &KDDockWidgets::operator<<(QDataStream &ds, LastPosition *lp)
+{
+    ds << lp->lastFloatingGeometry();
+    ds << lp->m_tabIndex;
+    ds << lp->m_wasFloating;
+
+    return ds;
+}
+

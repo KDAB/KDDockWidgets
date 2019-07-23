@@ -589,11 +589,14 @@ DockWidget *DockWidget::createFromDataStream(QDataStream &ds)
     if (!dw)
         qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
 
+    dw->lastPosition()->fillFromDataStream(ds);
+
     return dw;
 }
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, DockWidget *dw)
 {
     ds << dw->name();
+    ds << dw->lastPosition();
     return ds;
 }

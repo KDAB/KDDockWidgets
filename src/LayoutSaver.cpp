@@ -121,7 +121,13 @@ QByteArray LayoutSaver::serializeLayout() const
         ds << floatingWindow;
     }
 
-    // TODO: Restore geometry in hidden dock widgets
+    // Closed dock widgets also have interesting things to save, like geometry and placeholder info
+    const DockWidget::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
+    ds << closedDockWidgets.size();
+    for (DockWidget *dockWidget : closedDockWidgets) {
+        ds << dockWidget;
+    }
+
     // TODO: Restore the placeholder for hidden dock widgets
 
     return result;
@@ -137,6 +143,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     // Hide all dockwidgets and unparent them from any layout before starting restore
     d->m_dockRegistry->clear(/*deleteStaticAnchors=*/true);
 
+    // 1. Restore main windows
     int numMainWindows;
     ds >> numMainWindows;
     for (int i = 0 ; i < numMainWindows; ++i) {
@@ -155,6 +162,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             return false;
     }
 
+    // 2. Restore FloatingWindows
     int numFloating;
     ds >> numFloating;
     for (int i = 0; i < numFloating; ++i) {
@@ -162,6 +170,13 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         d->deserializeWindowGeometry(ds, fw);
         fw->fillFromDataStream(ds);
     }
+
+    // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties
+    int numClosedDockWidgets;
+    ds >> numClosedDockWidgets;
+     for (int i = 0; i < numClosedDockWidgets; ++i) {
+         DockWidget::createFromDataStream(ds);
+     }
 
     return true;
 }

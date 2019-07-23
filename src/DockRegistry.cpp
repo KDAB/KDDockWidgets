@@ -168,6 +168,19 @@ DockWidget::List DockRegistry::dockwidgets() const
     return m_dockWidgets;
 }
 
+DockWidget::List DockRegistry::closedDockwidgets() const
+{
+    DockWidget::List result;
+    result.reserve(m_dockWidgets.size());
+
+    for (DockWidget *dw : m_dockWidgets) {
+        if (dw->parent() == nullptr && !dw->isVisible())
+            result.push_back(dw);
+    }
+
+    return result;
+}
+
 MainWindow::List DockRegistry::mainwindows() const
 {
     return m_mainWindows;

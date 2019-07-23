@@ -1345,6 +1345,7 @@ void TestDocks::tst_restoreSimple()
     auto layout = m->multiSplitterLayout();
     auto dock1 = createDockWidget(QStringLiteral("one"), new QTextEdit());
     auto dock2 = createDockWidget(QStringLiteral("two"), new QTextEdit());
+    auto dock3 = createDockWidget(QStringLiteral("three"), new QTextEdit());
     m->addDockWidget(dock1, Location_OnTop);
 
     // Dock2 floats at 150,150
@@ -1352,10 +1353,15 @@ void TestDocks::tst_restoreSimple()
     dock2->window()->move(dock2FloatingPoint);
     QVERIFY(dock2->isVisible());
 
+    const QPoint dock3FloatingPoint = QPoint(200, 200);
+    dock3->window()->move(dock3FloatingPoint);
+    dock3->close();
+
     LayoutSaver saver;
     QVERIFY(saver.saveToDisk());
     auto f1 = dock1->frame();
-    dock2->move(QPoint(0, 0)); // Move *after* we saved.
+    dock2->window()->move(QPoint(0, 0)); // Move *after* we saved.
+    dock3->window()->move(QPoint(0, 0)); // Move *after* we saved.
     dock1->close();
     dock2->close();
     QVERIFY(!dock2->isVisible());
@@ -1382,6 +1388,18 @@ void TestDocks::tst_restoreSimple()
     QCOMPARE(fw2->parent(), m.get());
     QVERIFY(dock2->isFloating());
     QVERIFY(dock2->isVisible());
+
+    QVERIFY(!dock3->isVisible()); // Remains closed
+    QVERIFY(dock3->parentWidget() == nullptr);
+
+    dock3->show();
+    dock3->morphIntoFloatingWindow(); // as it would take 1 event loop. Do it now so we can compare already.
+
+    QCOMPARE(dock3->window()->pos(), dock3FloatingPoint);
+
+    // Cleanup
+    dock3->deleteLater();
+    QVERIFY(waitForDeleted(dock3));
 }
 
 void TestDocks::tst_restoreCrash()

@@ -58,6 +58,9 @@ public:
     ///@brief returns all DockWidget instances
     DockWidget::List dockwidgets() const;
 
+    ///@brief returns all closed DockWidget instances
+    DockWidget::List closedDockwidgets() const;
+
     ///@brief returns all MainWindow instances
     MainWindow::List mainwindows() const;
 
