@@ -1359,6 +1359,7 @@ void TestDocks::tst_restoreSimple()
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
     QVERIFY(dock1->isVisible());
+    layout->checkSanity();
 }
 
 void TestDocks::tst_restoreCrash()

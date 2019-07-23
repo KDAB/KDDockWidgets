@@ -431,16 +431,19 @@ bool Frame::event(QEvent *e)
 
 Frame *Frame::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
 {
+    QString objectName;
     QRect geo;
     int options;
     int currentTabIndex;
     int numDocks;
+    ds >> objectName;
     ds >> geo;
     ds >> options;
     ds >> currentTabIndex;
     ds >> numDocks;
 
     auto frame = new Frame(layout->multiSplitter(), Frame::Options(options));
+    frame->setObjectName(objectName);
 
     for (int i = 0; i < numDocks; ++i) {
         if (DockWidget *dw = DockWidget::createFromDataStream(ds)) {
@@ -459,6 +462,7 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Frame *frame)
 {
     const DockWidget::List docks = frame->dockWidgets();
 
+    ds << frame->objectName();
     ds << frame->geometry();
     ds << frame->options();
     ds << frame->currentTabIndex();

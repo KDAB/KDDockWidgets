@@ -482,25 +482,52 @@ void Item::Private::updateObjectName()
 
 Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
 {
+    QString objectName;
     bool isPlaceholder;
     QRect geo;
     bool hasFrame;
+
+    int leftIndex;
+    int topIndex;
+    int rightIndex;
+    int bottomIndex;
+
+    ds >> objectName;
     ds >> isPlaceholder;
     ds >> geo;
+    ds >> leftIndex;
+    ds >> topIndex;
+    ds >> rightIndex;
+    ds >> bottomIndex;
     ds >> hasFrame;
+
     Frame *frame = hasFrame ? Frame::createFromDataStream(ds, layout)
                             : nullptr;
 
     auto item = new Item(frame, layout);
     item->setIsPlaceholder(isPlaceholder);
+    item->setObjectName(objectName);
+
+    item->setProperty("leftIndex", leftIndex);
+    item->setProperty("topIndex", topIndex);
+    item->setProperty("rightIndex", rightIndex);
+    item->setProperty("bottomIndex", bottomIndex);
 
     return item;
 }
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Item *item)
 {
+    ds << item->objectName();
     ds << item->isPlaceholder();
     ds << item->geometry();
+
+    const Anchor::List allAnchors = item->layout()->anchors();
+    ds << allAnchors.indexOf(item->anchorGroup().left);
+    ds << allAnchors.indexOf(item->anchorGroup().top);
+    ds << allAnchors.indexOf(item->anchorGroup().right);
+    ds << allAnchors.indexOf(item->anchorGroup().bottom);
+
     auto frame = item->frame();
     ds << (frame != nullptr);
     if (frame) {

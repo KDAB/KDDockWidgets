@@ -1747,6 +1747,20 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     m_minSize = minSize;
     m_anchors = anchors;
 
+    // Now that the anchors were created we can add them to the items
+    for (Item *item : qAsConst(m_items)) {
+        const int leftIndex = item->property("leftIndex").toInt();
+        const int topIndex = item->property("topIndex").toInt();
+        const int rightIndex = item->property("rightIndex").toInt();
+        const int bottomIndex = item->property("bottomIndex").toInt();
+
+        AnchorGroup &group = item->anchorGroup();
+        group.left = m_anchors.at(leftIndex);
+        group.top = m_anchors.at(topIndex);
+        group.right = m_anchors.at(rightIndex);
+        group.bottom = m_anchors.at(bottomIndex);
+    }
+
     return true;
 }
 
