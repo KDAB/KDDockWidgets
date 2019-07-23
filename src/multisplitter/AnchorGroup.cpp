@@ -213,6 +213,9 @@ void AnchorGroup::setAnchor(Anchor *anchor, Location loc)
 
 bool AnchorGroup::anchorIsFollowingInwards(Anchor *anchor) const
 {
+    if (!anchor)
+        return false;
+
     if (anchor == left && left->findAnchor(left->endFollowee(), Anchor::Side2))
         return true;
 
@@ -236,7 +239,7 @@ QDebug AnchorGroup::debug(QDebug d) const
       << "\n  ; layoutWindow=" << (layout ? layout->multiSplitter()->window() : nullptr)
       << anchorIsFollowingInwards(left) << anchorIsFollowingInwards(top)
       << anchorIsFollowingInwards(right) << anchorIsFollowingInwards(bottom)
-      << left->followee()
+      << (left ? left->followee() : nullptr)
       << "\n";
     return d;
 }
