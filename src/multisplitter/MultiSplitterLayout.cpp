@@ -1396,7 +1396,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     if (anchorsFollowing.isEmpty()) {
         // There's no separator to move, it means it's a static anchor group (layout is empty, so the anchors
         // are the actual borders of the window
-        dumpDebug();
+        // dumpDebug();
         Q_ASSERT(anchorGroup.isStaticOrFollowsStatic());
         anchorGroup.updateItemSizes();
         return;
