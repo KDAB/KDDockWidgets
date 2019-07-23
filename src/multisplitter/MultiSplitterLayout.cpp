@@ -1710,7 +1710,7 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
         items.push_back(item);
     }
 
-    addItems_internal(items, false);
+    m_items = items; // Set the items, so Anchor::createFromDataStream() can set the side1 and side2 items
 
     Q_ASSERT(numAnchors >= 0);
     for (int i = 0; i < numAnchors; ++i) {
@@ -1734,6 +1734,9 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     m_staticAnchorGroup.top = m_topAnchor;
     m_staticAnchorGroup.right = m_rightAnchor;
     m_staticAnchorGroup.bottom = m_bottomAnchor;
+
+    m_items.clear(); // Now properly set the items, which installs needed event filters, etc.
+    addItems_internal(items, false); // Add the items only after we have the static anchors set
 
     for (Anchor *anchor : qAsConst(m_anchors)) {
         int indexFrom = anchor->property("indexFrom").toInt();

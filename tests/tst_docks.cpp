@@ -1344,12 +1344,21 @@ void TestDocks::tst_restoreSimple()
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto layout = m->multiSplitterLayout();
     auto dock1 = createDockWidget(QStringLiteral("one"), new QTextEdit());
+    auto dock2 = createDockWidget(QStringLiteral("two"), new QTextEdit());
     m->addDockWidget(dock1, Location_OnTop);
+
+    // Dock2 floats at 150,150
+    const QPoint dock2FloatingPoint = QPoint(150, 150);
+    dock2->window()->move(dock2FloatingPoint);
+    QVERIFY(dock2->isVisible());
 
     LayoutSaver saver;
     QVERIFY(saver.saveToDisk());
     auto f1 = dock1->frame();
+    dock2->move(QPoint(0, 0)); // Move *after* we saved.
     dock1->close();
+    dock2->close();
+    QVERIFY(!dock2->isVisible());
     QCOMPARE(layout->count(), 1);
     QVERIFY(waitForDeleted(f1));
     QCOMPARE(layout->placeholderCount(), 1);
@@ -1364,6 +1373,10 @@ void TestDocks::tst_restoreSimple()
     // Test a crash I got:
     dock1->setFloating(true);
     dock1->setFloating(false);
+
+    //QCOMPARE(dock2->window()->pos(), dock2FloatingPoint);
+    //QVERIFY(dock2->isFloating());
+    QVERIFY(dock2->isVisible());
 }
 
 void TestDocks::tst_restoreCrash()
