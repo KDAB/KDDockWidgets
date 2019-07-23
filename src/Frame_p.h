@@ -70,7 +70,7 @@ public:
     explicit Frame(QWidget *parent = nullptr, Options = Option_None);
     ~Frame() override;
 
-    static Frame *createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout);
+    static Frame *createFromDataStream(QDataStream &ds);
 
     ///@brief Adds a widget into the Frame's TabWidget
     void addWidget(DockWidget *);

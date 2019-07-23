@@ -335,6 +335,7 @@ private Q_SLOTS:
     void tst_restoreEmpty();
     void tst_restoreSimple();
     void tst_restoreNestedAndTabbed();
+    void tst_restoreCentralFrame();
 private:
     void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -1463,6 +1464,29 @@ void TestDocks::tst_restoreNestedAndTabbed()
 
     qDebug() << m->frameGeometry() << m->geometry();
     QCOMPARE(m->geometry(), oldGeo);
+}
+
+void TestDocks::tst_restoreCentralFrame()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500));
+    auto layout = m->multiSplitterLayout();
+
+    QCOMPARE(layout->count(), 1);
+    Item *item = m->dropArea()->centralFrame();
+    QVERIFY(item);
+    QCOMPARE(item->frame()->options(), Frame::Option_IsCentralFrame | Frame::Option_AlwaysShowsTabs);
+    QVERIFY(!item->frame()->titleBar()->isVisible());
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToDisk());
+    QVERIFY(saver.restoreFromDisk());
+
+    QCOMPARE(layout->count(), 1);
+    item = m->dropArea()->centralFrame();
+    QVERIFY(item);
+    QCOMPARE(item->frame()->options(), Frame::Option_IsCentralFrame | Frame::Option_AlwaysShowsTabs);
+    QVERIFY(!item->frame()->titleBar()->isVisible());
 }
 
 void TestDocks::tst_restoreCrash()

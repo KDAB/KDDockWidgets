@@ -501,8 +501,7 @@ Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
     ds >> bottomIndex;
     ds >> hasFrame;
 
-    Frame *frame = hasFrame ? Frame::createFromDataStream(ds, layout)
-                            : nullptr;
+    Frame *frame = hasFrame ? Frame::createFromDataStream(ds) : nullptr;
 
     auto item = new Item(frame, layout);
     item->setIsPlaceholder(isPlaceholder);

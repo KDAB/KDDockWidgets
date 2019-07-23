@@ -415,7 +415,7 @@ bool Frame::event(QEvent *e)
     return QWidget::event(e);
 }
 
-Frame *Frame::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
+Frame *Frame::createFromDataStream(QDataStream &ds)
 {
     QString objectName;
     QRect geo;
@@ -428,7 +428,7 @@ Frame *Frame::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
     ds >> currentTabIndex;
     ds >> numDocks;
 
-    auto frame = new Frame(layout->multiSplitter(), Frame::Options(options));
+    auto frame = new Frame(/*parent=*/nullptr, Frame::Options(options));
     frame->setObjectName(objectName);
 
     for (int i = 0; i < numDocks; ++i) {
