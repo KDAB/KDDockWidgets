@@ -576,6 +576,10 @@ void MultiSplitterLayout::clear(bool alsoDeleteStaticAnchors)
         m_bottomAnchor = nullptr;
         m_leftAnchor = nullptr;
         m_rightAnchor = nullptr;
+        m_staticAnchorGroup.left = nullptr;
+        m_staticAnchorGroup.top = nullptr;
+        m_staticAnchorGroup.right = nullptr;
+        m_staticAnchorGroup.bottom = nullptr;
     } else {
         m_anchors = { m_topAnchor, m_bottomAnchor, m_leftAnchor, m_rightAnchor };
     }
@@ -1725,6 +1729,11 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
             m_bottomAnchor = anchor;
         }
     }
+
+    m_staticAnchorGroup.left = m_leftAnchor;
+    m_staticAnchorGroup.top = m_topAnchor;
+    m_staticAnchorGroup.right = m_rightAnchor;
+    m_staticAnchorGroup.bottom = m_bottomAnchor;
 
     for (Anchor *anchor : qAsConst(m_anchors)) {
         int indexFrom = anchor->property("indexFrom").toInt();

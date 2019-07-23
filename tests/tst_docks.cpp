@@ -1360,6 +1360,10 @@ void TestDocks::tst_restoreSimple()
     QCOMPARE(layout->placeholderCount(), 0);
     QVERIFY(dock1->isVisible());
     layout->checkSanity();
+
+    // Test a crash I got:
+    dock1->setFloating(true);
+    dock1->setFloating(false);
 }
 
 void TestDocks::tst_restoreCrash()
