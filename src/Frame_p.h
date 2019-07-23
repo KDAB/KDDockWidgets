@@ -148,7 +148,6 @@ public:
     void setCurrentTabIndex(int);
 
     Options options() const { return m_options; }
-    quint64 id() const;
     bool anyNonClosable() const;
 
 
@@ -197,7 +196,6 @@ private:
     TitleBar *const m_titleBar;
     DropArea *m_dropArea = nullptr;
     const Options m_options;
-    const quint64 m_id;
     QPointer<Item> m_layoutItem;
     bool m_beingDeleted = false;
 };

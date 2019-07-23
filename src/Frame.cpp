@@ -45,19 +45,11 @@ static int s_dbg_numFrames = 0;
 
 using namespace KDDockWidgets;
 
-static quint64 nextId()
-{
-    static quint64 id = 0;
-    id++;
-    return id;
-}
-
 Frame::Frame(QWidget *parent, Options options)
     : QWidget(parent)
     , m_tabWidget(new TabWidget(this))
     , m_titleBar(new TitleBar(this))
     , m_options(options)
-    , m_id(nextId()) // TODO: Remove ids
 {
     s_dbg_numFrames++;
     qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
@@ -270,12 +262,6 @@ int Frame::currentTabIndex() const
 void Frame::setCurrentTabIndex(int index)
 {
     m_tabWidget->setCurrentIndex(index);
-}
-
-quint64 Frame::id() const
-{
-    // The id is simply an helper to coorelate frames when doing save/restore
-    return m_id;
 }
 
 bool Frame::anyNonClosable() const
