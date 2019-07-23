@@ -117,8 +117,8 @@ QByteArray LayoutSaver::serializeLayout() const
     const QVector<FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
     ds << floatingWindows.size();
     for (FloatingWindow *floatingWindow : floatingWindows) {
-        ds << floatingWindow;
         d->serializeWindowGeometry(ds, floatingWindow);
+        ds << floatingWindow;
     }
 
     // TODO: Restore geometry in hidden dock widgets
@@ -159,8 +159,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     ds >> numFloating;
     for (int i = 0; i < numFloating; ++i) {
         auto fw = new FloatingWindow();
-        fw->fillFromDataStream(ds);
         d->deserializeWindowGeometry(ds, fw);
+        fw->fillFromDataStream(ds);
     }
 
     return true;
