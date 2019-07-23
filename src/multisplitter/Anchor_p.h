@@ -324,4 +324,7 @@ QDataStream &operator<<(QDataStream &ds, Anchor *);
 
 }
 
+Q_DECLARE_METATYPE(KDDockWidgets::ItemList)
+Q_DECLARE_METATYPE(KDDockWidgets::Item*)
+
 #endif
