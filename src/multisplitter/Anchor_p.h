@@ -320,7 +320,7 @@ public:
     QPointer<Anchor> m_followee;
 };
 
-QDataStream &operator<<(QDataStream &ds, Anchor &);
+QDataStream &operator<<(QDataStream &ds, Anchor *);
 
 }
 

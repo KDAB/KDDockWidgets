@@ -1776,7 +1776,7 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, MultiSplitterLayout *l)
     }
 
     for (Anchor *anchor : anchors) {
-        ds << *anchor;
+        ds << anchor;
     }
 
     return ds;

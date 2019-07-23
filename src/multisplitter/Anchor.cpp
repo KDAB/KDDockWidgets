@@ -768,28 +768,28 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     return anchor;
 }
 
-QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Anchor &a)
+QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Anchor *a)
 {
-    const Anchor::List allAnchors = a.m_layout->anchors();
-    const ItemList allItems = a.m_layout->items();
+    const Anchor::List allAnchors = a->m_layout->anchors();
+    const ItemList allItems = a->m_layout->items();
 
     ds << Anchor::s_magicMarker;
-    ds << a.objectName();
-    ds << a.geometry();
-    ds << a.orientation();
-    ds << a.type();
-    ds << allAnchors.indexOf(a.from());
-    ds << allAnchors.indexOf(a.to());
-    ds << (a.followee() ? allAnchors.indexOf(a.followee()) : -1);
+    ds << a->objectName();
+    ds << a->geometry();
+    ds << a->orientation();
+    ds << a->type();
+    ds << allAnchors.indexOf(a->from());
+    ds << allAnchors.indexOf(a->to());
+    ds << (a->followee() ? allAnchors.indexOf(a->followee()) : -1);
 
     QVector<int> side1Items;
-    side1Items.reserve(a.side1Items().size());
-    for (Item *item : a.side1Items())
+    side1Items.reserve(a->side1Items().size());
+    for (Item *item : a->side1Items())
         side1Items.push_back(allItems.indexOf(item));
 
     QVector<int> side2Items;
-    side2Items.reserve(a.side2Items().size());
-    for (Item *item : a.side2Items())
+    side2Items.reserve(a->side2Items().size());
+    for (Item *item : a->side2Items())
         side2Items.push_back(allItems.indexOf(item));
 
     ds << side1Items;
@@ -797,5 +797,3 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Anchor &a)
 
     return ds;
 }
-
-
