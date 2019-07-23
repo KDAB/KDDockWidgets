@@ -1374,8 +1374,13 @@ void TestDocks::tst_restoreSimple()
     dock1->setFloating(true);
     dock1->setFloating(false);
 
-    //QCOMPARE(dock2->window()->pos(), dock2FloatingPoint);
-    //QVERIFY(dock2->isFloating());
+    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    QVERIFY(fw2);
+    QVERIFY(fw2->isVisible());
+    QVERIFY(fw2->isTopLevel());
+    QCOMPARE(fw2->pos(), dock2FloatingPoint);
+    QCOMPARE(fw2->parent(), m.get());
+    QVERIFY(dock2->isFloating());
     QVERIFY(dock2->isVisible());
 }
 

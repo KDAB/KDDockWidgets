@@ -253,8 +253,9 @@ void FloatingWindow::fillFromDataStream(QDataStream &ds)
     QWidget *parent = parentIndex == -1 ? nullptr
                                         : DockRegistry::self()->mainwindows().at(parentIndex);
 
-    setParent(parent);
+    setParent(parent, windowFlags() | Qt::Tool);
     dropArea()->multiSplitterLayout()->fillFromDataStream(ds);
+    show();
 }
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, FloatingWindow *fw)
