@@ -1239,13 +1239,10 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
         return true;
     };
 
-
-    for (Item *item : qAsConst(m_items)) {
-        if (!check(item, Qt::Vertical))
-            return false;
-
-        if (!check(item, Qt::Horizontal))
-            return false;
+    if (!m_topAnchor || !m_leftAnchor || !m_rightAnchor || !m_bottomAnchor) {
+        qWarning() << Q_FUNC_INFO << "Invalid static anchors"
+                   << m_leftAnchor << m_topAnchor << m_rightAnchor << m_bottomAnchor;
+        return false;
     }
 
     for (Anchor *anchor : qAsConst(m_anchors)) {
@@ -1280,6 +1277,14 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
                 qWarning() << "Non static anchor should have items on both sides unless it's following or being followed" << anchor;
             }
         }
+    }
+
+    for (Item *item : qAsConst(m_items)) {
+        if (!check(item, Qt::Vertical))
+            return false;
+
+        if (!check(item, Qt::Horizontal))
+            return false;
     }
 
     // Check that no widget intersects with an anchor
@@ -1336,12 +1341,6 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
                 return false;
             }
         }
-    }
-
-    if (!m_topAnchor || !m_leftAnchor || !m_rightAnchor || !m_bottomAnchor) {
-        qWarning() << Q_FUNC_INFO << "Invalid static anchors"
-                   << m_leftAnchor << m_topAnchor << m_rightAnchor << m_bottomAnchor;
-        return false;
     }
 
 /* TODO: uncomment when all tests pass
