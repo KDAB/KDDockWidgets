@@ -764,6 +764,7 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
 
     anchor->m_side1Items = side1Items;
     anchor->m_side2Items = side2Items;
+    anchor->m_initialized = true;
 
     return anchor;
 }

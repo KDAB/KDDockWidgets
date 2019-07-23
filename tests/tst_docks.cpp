@@ -339,6 +339,7 @@ private Q_SLOTS:
     void tst_restoreCrash();
     void tst_restoreTwice();
     void tst_restoreSideBySide();
+    void tst_marginsAfterRestore();
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
@@ -1589,6 +1590,33 @@ void TestDocks::tst_restoreSideBySide()
 
         QCOMPARE(dock1->window(), m.get());
         QCOMPARE(dock2->window(), dock3->window());
+    }
+}
+
+void TestDocks::tst_marginsAfterRestore()
+{
+    EnsureTopLevelsDeleted e;
+    {
+        EnsureTopLevelsDeleted e1;
+        // MainWindow:
+        auto m = createMainWindow(QSize(500, 500), {}, QStringLiteral("tst_marginsAfterRestore"));
+        auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+        m->addDockWidget(dock1, Location_OnLeft);
+        auto layout = m->multiSplitterLayout();
+
+        LayoutSaver saver;
+        QVERIFY(saver.saveToDisk());
+        QVERIFY(saver.restoreFromDisk());
+        QVERIFY(layout->checkSanity());
+
+        dock1->setFloating(true);
+
+        auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+        QVERIFY(fw);
+        layout->addWidget(fw->dropArea(), Location_OnRight);
+
+        m->dropArea()->debug_updateItemNamesForGammaray();
+        layout->checkSanity();
     }
 }
 
