@@ -336,8 +336,8 @@ private Q_SLOTS:
     void tst_restoreSimple();
     void tst_restoreNestedAndTabbed();
     void tst_restoreCentralFrame();
+    void tst_restoreCrash();
 private:
-    void tst_restoreCrash(); // TODO. Disabled for now, save/restore needs to support placeholders
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
 }
@@ -1495,7 +1495,7 @@ void TestDocks::tst_restoreCrash()
 
     {
         // Create a main window, with a left dock, save it to disk.
-        auto m = createMainWindow();
+        auto m = createMainWindow({}, {}, QStringLiteral("tst_restoreCrash"));
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
         m->addDockWidget(dock1, Location_OnLeft);
         LayoutSaver saver;
@@ -1504,7 +1504,7 @@ void TestDocks::tst_restoreCrash()
 
     // Restore
     qDebug() << Q_FUNC_INFO << "Restoring";
-    auto m = createMainWindow();
+    auto m = createMainWindow({}, {}, QStringLiteral("tst_restoreCrash"));
     auto layout = m->multiSplitterLayout();
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")));
     QVERIFY(dock1->isFloating());
