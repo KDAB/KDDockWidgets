@@ -1706,7 +1706,7 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
         items.push_back(item);
     }
 
-    m_items = items;
+    addItems_internal(items, false);
 
     Q_ASSERT(numAnchors >= 0);
     for (int i = 0; i < numAnchors; ++i) {
