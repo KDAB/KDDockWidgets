@@ -72,7 +72,7 @@ public:
 
         // newAction = fileMenu->addAction("Change MainWindow indicator style");
 
-        /*auto saveLayoutAction = fileMenu->addAction(QStringLiteral("Save Layout"));
+        auto saveLayoutAction = fileMenu->addAction(QStringLiteral("Save Layout"));
         connect(saveLayoutAction, &QAction::triggered, this, [] {
             LayoutSaver saver;
             const bool result = saver.saveToDisk();
@@ -83,7 +83,7 @@ public:
         connect(restoreLayoutAction, &QAction::triggered, this, [] {
             LayoutSaver saver;
             saver.restoreFromDisk();
-        });*/
+        });
     }
 
     bool eventFilter(QObject *o, QEvent *ev) override

@@ -54,7 +54,7 @@ std::unique_ptr<KDDockWidgets::MainWindow> KDDockWidgets::Tests::createMainWindo
     const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
                                                   : name;
 
-    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(name, options));
+    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(mainWindowName, options));
     ptr->show();
     ptr->resize(sz);
     return ptr;

@@ -1371,7 +1371,7 @@ void TestDocks::tst_restoreSimple()
     QCOMPARE(layout->placeholderCount(), 1);
 
     QCOMPARE(DockRegistry::self()->nestedwindows().size(), 0);
-    saver.restoreFromDisk();
+    QVERIFY(saver.restoreFromDisk());
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
     QVERIFY(dock1->isVisible());
@@ -1446,7 +1446,7 @@ void TestDocks::tst_restoreNestedAndTabbed()
     auto dock5 = createDockWidget(QStringLiteral("5"), new QTextEdit());
 
     LayoutSaver saver;
-    saver.restoreFromDisk();
+    QVERIFY(saver.restoreFromDisk());
     QVERIFY(layout->checkSanity());
 
     auto fw4 = qobject_cast<FloatingWindow*>(dock4->window());
@@ -1487,7 +1487,7 @@ void TestDocks::tst_restoreCrash()
     QVERIFY(layout->checkSanity());
 
     LayoutSaver saver;
-    saver.restoreFromDisk();
+    QVERIFY(saver.restoreFromDisk());
     QVERIFY(layout->checkSanity());
     QVERIFY(!dock1->isFloating());
 }

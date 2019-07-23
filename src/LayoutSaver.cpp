@@ -85,12 +85,14 @@ bool LayoutSaver::saveToDisk()
     return true;
 }
 
-void LayoutSaver::restoreFromDisk()
+bool LayoutSaver::restoreFromDisk()
 {
     const QByteArray data = d->settings()->value(QStringLiteral("data")).toByteArray();
     Private::s_restoreInProgress = true;
-    restoreLayout(data);
+    const bool result = restoreLayout(data);
     Private::s_restoreInProgress = false;
+
+    return result;
 }
 
 QByteArray LayoutSaver::serializeLayout() const

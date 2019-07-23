@@ -43,16 +43,31 @@ public:
     ///@brief returns whether a restore (@ref restoreLayout) is in progress
     static bool restoreInProgress();
 
-private:
-
-    // Private for now, as they don't work
+    /**
+     * @brief saves the layout to disk using QSettings
+     */
     bool saveToDisk();
-    void restoreFromDisk();
 
-    friend class TestDocks;
+    /**
+     * @brief restores the layout from disk using QSettings.
+     * @return true on success
+     */
+    bool restoreFromDisk();
 
+    /**
+     * @brief saves the layout into a bytearray
+     */
     QByteArray serializeLayout() const;
+
+    /**
+     * @brief restores the layout from a bytearray
+     * It's mandatory that all MainWindows and DockWidgets have been created before calling this function.
+     * @return true on success
+     */
     bool restoreLayout(const QByteArray &);
+
+private:
+    friend class TestDocks;
 
     class Private;
     Private *const d;
