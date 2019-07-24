@@ -188,6 +188,12 @@ public:
      * @return the dock widget's icon.
      */
     QIcon icon() const;
+
+    /**
+     * @brief Like QWidget::close() but the hosted widget won't be asked if we should close
+     */
+    void forceClose();
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();

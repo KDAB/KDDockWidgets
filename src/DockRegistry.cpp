@@ -232,7 +232,7 @@ const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
 void DockRegistry::clear(bool deleteStaticAnchors)
 {
     for (auto dw : qAsConst(m_dockWidgets)) {
-        dw->close();
+        dw->forceClose();
         dw->lastPosition()->removePlaceholders();
     }
 

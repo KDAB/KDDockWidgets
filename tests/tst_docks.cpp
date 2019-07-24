@@ -1656,7 +1656,7 @@ void TestDocks::tst_restoreWithNonClosableWidget()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), {}, QStringLiteral("tst_marginsAfterRestore"));
-    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")), DockWidget::Option_NotClosable);
+    auto dock1 = createDockWidget(QStringLiteral("1"), new NonClosableWidget(), DockWidget::Option_NotClosable);
     m->addDockWidget(dock1, Location_OnLeft);
     auto layout = m->multiSplitterLayout();
 
@@ -1664,8 +1664,6 @@ void TestDocks::tst_restoreWithNonClosableWidget()
     QVERIFY(saver.saveToDisk());
     QVERIFY(saver.restoreFromDisk());
     QVERIFY(layout->checkSanity());
-
-    WAIT
 }
 
 void TestDocks::tst_marginsAfterRestore()

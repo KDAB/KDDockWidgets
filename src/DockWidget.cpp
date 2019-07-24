@@ -312,6 +312,11 @@ QIcon DockWidget::icon() const
     return d->icon;
 }
 
+void DockWidget::forceClose()
+{
+    d->close();
+}
+
 bool DockWidget::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
