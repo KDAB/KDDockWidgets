@@ -47,7 +47,7 @@ class TitleBar;
 class Item;
 class LastPosition;
 class DockRegistry;
-
+class TabWidget;
 /**
  * @brief Represents a dock widget.
  */
@@ -237,11 +237,15 @@ private:
     friend class Frame;
     friend class DropArea;
     friend class TestDocks;
+    friend class Item;
+    friend class KDDockWidgets::TabWidget;
     friend class KDDockWidgets::DragController;
     friend class KDDockWidgets::TitleBar;
     friend struct KDDockWidgets::WindowBeingDragged;
     friend class KDDockWidgets::Item;
     friend class KDDockWidgets::DockRegistry;
+
+    friend QDataStream &operator<<(QDataStream &ds, DockWidget *);
 
     /**
      * @brief the TitleBar instance used by this dock widget
