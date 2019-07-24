@@ -25,6 +25,8 @@
  */
 
 #include "LastPosition_p.h"
+#include "DockRegistry_p.h"
+#include "multisplitter/MultiSplitterLayout_p.h"
 
 #include <algorithm>
 
@@ -137,6 +139,20 @@ QRect LastPosition::lastFloatingGeometry() const
 void LastPosition::fillFromDataStream(QDataStream &ds)
 {
     m_placeholders.clear();
+
+    int numPlaceholders;
+    ds >> numPlaceholders;
+    for (int i = 0 ; i < numPlaceholders; ++i) {
+        int layoutIndex;
+        int itemIndex;
+        ds >> layoutIndex;
+        ds >> itemIndex;
+
+        MultiSplitterLayout *layout = DockRegistry::self()->layouts().at(layoutIndex);
+        Item *item= layout->items().at(itemIndex);
+        addPlaceholderItem(item);
+    }
+
     ds >> m_lastFloatingGeo;
     ds >> m_tabIndex;
     ds >> m_wasFloating;
@@ -144,6 +160,20 @@ void LastPosition::fillFromDataStream(QDataStream &ds)
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, LastPosition *lp)
 {
+    const auto &placeholders = lp->placeholders();
+    const int numPlaceholders = int(placeholders.size());
+    ds << numPlaceholders;
+
+    for (auto &itemRef : placeholders) {
+        Item *item = itemRef->item;
+        MultiSplitterLayout *layout = item->layout();
+        const int layoutIndex = DockRegistry::self()->layouts().indexOf(layout);
+        const int itemIndex = layout->items().indexOf(item);
+
+        ds << layoutIndex;
+        ds << itemIndex;
+    }
+
     ds << lp->lastFloatingGeometry();
     ds << lp->m_tabIndex;
     ds << lp->m_wasFloating;

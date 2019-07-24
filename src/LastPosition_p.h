@@ -73,7 +73,8 @@ class Frame;
  * The DockWidget's position is saved when its closed and restored when it's shown.
  * This class holds that position.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS LastPosition {
+class DOCKS_EXPORT_FOR_UNIT_TESTS LastPosition
+{
     Q_DISABLE_COPY(LastPosition)
 public:
     LastPosition() = default;
@@ -111,6 +112,8 @@ public:
 
     bool containsPlaceholder(Item*) const;
     void removePlaceholders() { m_clearing = true; m_placeholders.clear(); m_clearing = false;}
+
+    const std::vector<std::unique_ptr<ItemRef>>& placeholders() const { return m_placeholders; }
 
     ///@brief Removes the placeholders that belong to @p layout
     void removePlaceholders(const MultiSplitterLayout *layout);
