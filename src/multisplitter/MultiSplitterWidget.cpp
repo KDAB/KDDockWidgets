@@ -31,6 +31,7 @@
 #include "MultiSplitterLayout_p.h"
 #include "Logging_p.h"
 #include "MainWindow.h"
+#include "FloatingWindow_p.h"
 
 #include <QResizeEvent>
 
@@ -80,5 +81,15 @@ bool MultiSplitterWidget::event(QEvent *e)
 
 bool MultiSplitterWidget::isInMainWindow() const
 {
+    return mainWindow() != nullptr;
+}
+
+MainWindow *MultiSplitterWidget::mainWindow() const
+{
     return qobject_cast<MainWindow*>(parentWidget());
+}
+
+FloatingWindow *MultiSplitterWidget::floatingWindow() const
+{
+    return qobject_cast<FloatingWindow*>(parentWidget());
 }

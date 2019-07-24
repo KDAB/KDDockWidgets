@@ -35,6 +35,8 @@
 namespace KDDockWidgets {
 
 class MultiSplitterLayout;
+class MainWindow;
+class FloatingWindow;
 
 /**
  * @brief A widget that supports an arbitrary number of splitters (called Separators) in any
@@ -51,6 +53,8 @@ public:
     MultiSplitterLayout *multiSplitterLayout() const { return m_layout; }
     int count() const;
     bool isInMainWindow() const;
+    MainWindow* mainWindow() const;
+    FloatingWindow* floatingWindow() const;
 protected:
     bool event(QEvent *e) override;
     void resizeEvent(QResizeEvent *) override;
