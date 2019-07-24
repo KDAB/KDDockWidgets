@@ -26,6 +26,7 @@
 #include "DockWidget.h"
 #include "LastPosition_p.h"
 #include "SeparatorWidget_p.h"
+#include "DockRegistry_p.h"
 
 #include <QPushButton>
 #include <QEvent>
@@ -54,6 +55,9 @@ MultiSplitterLayout::MultiSplitterLayout(MultiSplitterWidget *parent)
 {
     Q_ASSERT(parent);
     KDDockWidgets::setLoggingFilterRules();
+
+    DockRegistry::self()->registerLayout(this);
+
     setContentsSize(parent->size());
 
     qCDebug(multisplittercreation()) << "MultiSplitter";
@@ -93,6 +97,7 @@ MultiSplitterLayout::~MultiSplitterLayout()
     m_inDestructor = true;
     const auto anchors = m_anchors;
     qDeleteAll(anchors);
+    DockRegistry::self()->unregisterLayout(this);
 }
 
 MultiSplitterWidget *MultiSplitterLayout::multiSplitter() const

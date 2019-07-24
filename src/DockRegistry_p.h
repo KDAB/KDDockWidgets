@@ -51,6 +51,9 @@ public:
     void registerNestedWindow(FloatingWindow *);
     void unregisterNestedWindow(FloatingWindow *);
 
+    void registerLayout(MultiSplitterLayout *);
+    void unregisterLayout(MultiSplitterLayout *);
+
     DockWidget *dockByName(const QString &) const;
     MainWindow *mainWindowByName(const QString &) const;
     bool isSane() const;
@@ -63,6 +66,9 @@ public:
 
     ///@brief returns all MainWindow instances
     MainWindow::List mainwindows() const;
+
+    ///@brief returns the list of MultiSplitterLayout instances
+    QVector<MultiSplitterLayout*> layouts() const;
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
@@ -89,6 +95,7 @@ private:
     DockWidget::List m_dockWidgets;
     MainWindow::List m_mainWindows;
     QVector<FloatingWindow*> m_nestedWindows;
+    QVector<MultiSplitterLayout*> m_layouts;
 };
 
 }

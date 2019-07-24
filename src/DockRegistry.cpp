@@ -110,6 +110,16 @@ void DockRegistry::unregisterNestedWindow(FloatingWindow *window)
     maybeDelete();
 }
 
+void DockRegistry::registerLayout(MultiSplitterLayout *layout)
+{
+    m_layouts << layout;
+}
+
+void DockRegistry::unregisterLayout(MultiSplitterLayout *layout)
+{
+    m_layouts.removeOne(layout);
+}
+
 DockWidget *DockRegistry::dockByName(const QString &name) const
 {
     for (auto dock : qAsConst(m_dockWidgets)) {
@@ -184,6 +194,11 @@ DockWidget::List DockRegistry::closedDockwidgets() const
 MainWindow::List DockRegistry::mainwindows() const
 {
     return m_mainWindows;
+}
+
+QVector<MultiSplitterLayout *> DockRegistry::layouts() const
+{
+    return m_layouts;
 }
 
 const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
