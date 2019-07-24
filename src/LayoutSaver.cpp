@@ -154,7 +154,7 @@ QByteArray LayoutSaver::serializeLayout() const
 bool LayoutSaver::restoreLayout(const QByteArray &data)
 {
     if (data.isEmpty())
-        return false;
+        return true;
 
     QDataStream ds(data);
 
