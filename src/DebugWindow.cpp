@@ -31,6 +31,7 @@
 #include "FloatingWindow_p.h"
 #include "DropArea_p.h"
 #include "MainWindow.h"
+#include "LayoutSaver.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -53,7 +54,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &DebugWindow::dumpDockWidgetInfo);
 
-    auto hlay = new QHBoxLayout(this);
+    auto hlay = new QHBoxLayout();
     layout->addLayout(hlay);
 
     button = new QPushButton(this);
@@ -74,6 +75,28 @@ DebugWindow::DebugWindow(QWidget *parent)
             dw->setFloating(!dw->isFloating());
         }
     });
+
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("Save layout"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        LayoutSaver saver;
+        QString message = saver.saveToDisk() ? QStringLiteral("Saved!")
+                                             : QStringLiteral("Error!");
+        QMessageBox::information(nullptr, QStringLiteral("Save layout"), message);
+    });
+
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("Restore layout"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        LayoutSaver saver;
+        QString message = saver.restoreFromDisk() ? QStringLiteral("Restored!")
+                                                  : QStringLiteral("Error!");
+        QMessageBox::information(nullptr, QStringLiteral("Restore layout"), message);
+    });
+
+
 
     resize(800, 800);
 }
