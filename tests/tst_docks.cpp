@@ -339,6 +339,7 @@ private Q_SLOTS:
     void tst_restoreCrash();
     void tst_restoreTwice();
     void tst_restoreSideBySide();
+    void tst_restoreWithPlaceholder();
     void tst_marginsAfterRestore();
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -1591,6 +1592,63 @@ void TestDocks::tst_restoreSideBySide()
         QCOMPARE(dock1->window(), m.get());
         QCOMPARE(dock2->window(), dock3->window());
     }
+}
+
+void TestDocks::tst_restoreWithPlaceholder()
+{
+    // Float dock1, save and restore, then unfloat and see if dock2 goes back to where it was
+
+    EnsureTopLevelsDeleted e;
+    {
+        auto m = createMainWindow(QSize(500, 500), {}, QStringLiteral("tst_restoreWithPlaceholder"));
+
+        auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+        m->addDockWidget(dock1, Location_OnLeft);
+        auto layout = m->multiSplitterLayout();
+        dock1->setFloating(true);
+
+        LayoutSaver saver;
+        QVERIFY(saver.saveToDisk());
+
+        dock1->close();
+
+        QVERIFY(saver.restoreFromDisk());
+        QVERIFY(layout->checkSanity());
+
+        QVERIFY(dock1->isFloating());
+        QVERIFY(dock1->isVisible());
+        QCOMPARE(layout->count(), 1);
+        QCOMPARE(layout->placeholderCount(), 1);
+
+        dock1->setFloating(false); // Put it back. Should go back because the placeholder was restored.
+
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(dock1->isVisible());
+        QCOMPARE(layout->count(), 1);
+        QCOMPARE(layout->placeholderCount(), 0);
+
+    }
+
+    // Try again, but on a different main window
+    auto m = createMainWindow(QSize(500, 500), {}, QStringLiteral("tst_restoreWithPlaceholder"));
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    auto layout = m->multiSplitterLayout();
+
+    LayoutSaver saver;
+    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(layout->checkSanity());
+
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    dock1->setFloating(false); // Put it back. Should go back because the placeholder was restored.
+
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
 }
 
 void TestDocks::tst_marginsAfterRestore()

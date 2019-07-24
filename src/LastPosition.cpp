@@ -27,6 +27,7 @@
 #include "LastPosition_p.h"
 #include "DockRegistry_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
+#include "multisplitter/MultiSplitterWidget_p.h"
 
 #include <algorithm>
 
@@ -138,19 +139,46 @@ QRect LastPosition::lastFloatingGeometry() const
 
 void LastPosition::fillFromDataStream(QDataStream &ds)
 {
-    m_placeholders.clear();
+    // Don't clear m_placeholders, as that would trigger Item deletion.
+    // It's OK to add existing items, that's a no-op in addPlaceholderItem()
+    // Any other existing item in m_placeholder is also correct, as it was added during restore
 
     int numPlaceholders;
     ds >> numPlaceholders;
     for (int i = 0 ; i < numPlaceholders; ++i) {
-        int layoutIndex;
+        bool isFloatingWindow;
         int itemIndex;
-        ds >> layoutIndex;
+        ds >> isFloatingWindow;
+
+        MultiSplitterLayout *layout;
+        if (isFloatingWindow) {
+            int fwIndex;
+            ds >> fwIndex;
+
+            if (fwIndex == -1) {
+                ds >> itemIndex;
+                continue; // Skip
+            } else {
+                FloatingWindow *fw = DockRegistry::self()->nestedwindows().at(fwIndex);
+                layout = fw->multiSplitterLayout();
+            }
+        } else {
+            QString name;
+            ds >> name;
+            MainWindow *mainWindow = DockRegistry::self()->mainWindowByName(name);
+            layout = mainWindow->multiSplitterLayout();
+        }
+
         ds >> itemIndex;
 
-        MultiSplitterLayout *layout = DockRegistry::self()->layouts().at(layoutIndex);
-        Item *item= layout->items().at(itemIndex);
-        addPlaceholderItem(item);
+        const ItemList &items = layout->items();
+        if (itemIndex < items.size()) {
+            Item *item = items.at(itemIndex);
+            addPlaceholderItem(item);
+        } else {
+            // Shouldn't happen, maybe even assert
+            qWarning() << Q_FUNC_INFO <<"Couldn't find item index" << itemIndex << "in" << items;
+        }
     }
 
     ds >> m_lastFloatingGeo;
@@ -167,10 +195,22 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, LastPosition *lp)
     for (auto &itemRef : placeholders) {
         Item *item = itemRef->item;
         MultiSplitterLayout *layout = item->layout();
-        const int layoutIndex = DockRegistry::self()->layouts().indexOf(layout);
         const int itemIndex = layout->items().indexOf(item);
 
-        ds << layoutIndex;
+        auto fw = layout->multiSplitter()->floatingWindow();
+        auto mainWindow = layout->multiSplitter()->mainWindow();
+        Q_ASSERT(mainWindow || fw);
+
+        if (fw) {
+            ds << true;
+            ds << (fw->beingDeleted() ? -1 : DockRegistry::self()->nestedwindows().indexOf(fw)); // TODO: Remove once we stop using deleteLater with FloatingWindow. delete would be better
+        } else {
+            ds << false;
+            const QString name = mainWindow->name();
+            Q_ASSERT(!name.isEmpty());
+            ds << name;
+        }
+
         ds << itemIndex;
     }
 

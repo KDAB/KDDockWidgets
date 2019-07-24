@@ -31,6 +31,7 @@
 #include "DropArea_p.h"
 #include "Logging_p.h"
 #include "Frame_p.h"
+#include "LastPosition_p.h"
 #include "multisplitter/Anchor_p.h"
 #include "multisplitter/Item_p.h"
 
@@ -137,7 +138,15 @@ QByteArray LayoutSaver::serializeLayout() const
         ds << dockWidget;
     }
 
-    // TODO: Restore the placeholder for hidden dock widgets
+    // Save the placeholder info. We do it last, as we also restore it last, since we need all items to be created
+    // before restoring the placeholders
+
+    const DockWidget::List dockWidgets = d->m_dockRegistry->dockwidgets();
+    ds << dockWidgets.size();
+    for (DockWidget *dw : dockWidgets) {
+        ds << dw->name();
+        ds << dw->lastPosition();
+    }
 
     return result;
 }
@@ -189,9 +198,25 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties
     int numClosedDockWidgets;
     ds >> numClosedDockWidgets;
-     for (int i = 0; i < numClosedDockWidgets; ++i) {
-         DockWidget::createFromDataStream(ds);
-     }
+    for (int i = 0; i < numClosedDockWidgets; ++i) {
+        DockWidget::createFromDataStream(ds);
+    }
+
+    // 4. Restore the placeholder info, now that the Items have been created
+    int numDockWidgets;
+    ds >> numDockWidgets;
+    for (int i = 0; i < numDockWidgets; ++i) {
+        QString name;
+        ds >> name;
+
+        if (DockWidget *dw = d->m_dockRegistry->dockByName(name)) {
+            dw->lastPosition()->fillFromDataStream(ds);
+        } else {
+            qWarning() << Q_FUNC_INFO << "Could not find dockwidget" << name;
+            LastPosition dummy;
+            dummy.fillFromDataStream(ds); // Add a dummy just to consume the stream
+        }
+    }
 
     return true;
 }

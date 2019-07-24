@@ -172,7 +172,13 @@ void FloatingWindow::resizeEvent(QResizeEvent *ev)
 void FloatingWindow::scheduleDeleteLater()
 {
     m_beingDeleted = true;
+    DockRegistry::self()->unregisterNestedWindow(this);
     deleteLater();
+}
+
+MultiSplitterLayout *FloatingWindow::multiSplitterLayout() const
+{
+    return m_dropArea->multiSplitterLayout();
 }
 
 bool FloatingWindow::anyNonClosable() const

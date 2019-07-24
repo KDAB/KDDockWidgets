@@ -33,6 +33,7 @@ namespace KDDockWidgets {
 
 class DropArea;
 class Frame;
+class MultiSplitterLayout;
 
 class DOCKS_EXPORT_FOR_UNIT_TESTS FloatingWindow : public QWidget
     , public Draggable
@@ -81,6 +82,11 @@ public:
      * @brief Equivalent to deleteLater() but sets beingDeleted() to true
      */
     void scheduleDeleteLater();
+
+    /**
+     * @brief Returns the MultiSplitterLayout
+     */
+    MultiSplitterLayout *multiSplitterLayout() const;
 
     ///@brief For tests-only. Returns the number of Frame instances in the whole application.
     static int dbg_numFrames();
