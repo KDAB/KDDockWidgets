@@ -41,9 +41,6 @@ DockRegistry::DockRegistry(QObject *parent)
         dv->show();
     }
 #endif
-
-    qRegisterMetaType<KDDockWidgets::ItemList>("KDDockWidgets::ItemList");
-
 }
 
 void DockRegistry::maybeDelete()

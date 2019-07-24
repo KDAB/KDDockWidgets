@@ -82,8 +82,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Anchor : public QObject // clazy:exclude=ctor-
     Q_OBJECT
 
     // properties for GammaRay
-    Q_PROPERTY(ItemList side1Items READ side1Items NOTIFY itemsChanged)
-    Q_PROPERTY(ItemList side2Items READ side2Items NOTIFY itemsChanged)
+    Q_PROPERTY(KDDockWidgets::ItemList side1Items READ side1Items NOTIFY itemsChanged)
+    Q_PROPERTY(KDDockWidgets::ItemList side2Items READ side2Items NOTIFY itemsChanged)
 
     Q_PROPERTY(QString debug_side1ItemNames READ debug_side1ItemNames NOTIFY debug_itemNamesChanged)
     Q_PROPERTY(QString debug_side2ItemNames READ debug_side2ItemNames NOTIFY debug_itemNamesChanged)
