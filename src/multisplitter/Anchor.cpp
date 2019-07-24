@@ -44,12 +44,6 @@ Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, 
     , m_layout(multiSplitter)
     , m_separatorWidget(new SeparatorWidget(this, multiSplitter->multiSplitter()))
 {
-    static bool registered = false;
-    if (!registered) {
-        qRegisterMetaType<KDDockWidgets::ItemList>("KDDockWidgets::ItemList");
-        registered = true;
-    }
-
     multiSplitter->insertAnchor(this);
     connect(this, &QObject::objectNameChanged, m_separatorWidget, &QObject::setObjectName);
 }
