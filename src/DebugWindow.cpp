@@ -33,7 +33,10 @@
 #include "MainWindow.h"
 
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QPushButton>
+#include <QSpinBox>
+#include <QMessageBox>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Debug;
@@ -49,6 +52,28 @@ DebugWindow::DebugWindow(QWidget *parent)
     button->setText(QStringLiteral("Dump DockWidget Info"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &DebugWindow::dumpDockWidgetInfo);
+
+    auto hlay = new QHBoxLayout(this);
+    layout->addLayout(hlay);
+
+    button = new QPushButton(this);
+    auto spin = new QSpinBox(this);
+    spin->setMinimum(0);
+    button->setText(QStringLiteral("Toggle float"));
+    hlay->addWidget(button);
+    hlay->addWidget(spin);
+
+    connect(button, &QPushButton::clicked, this, [spin] {
+        auto docks = DockRegistry::self()->dockwidgets();
+        const int index = spin->value();
+        if (index >= docks.size()) {
+            QMessageBox::warning(nullptr, QStringLiteral("Invalid index"),
+                                 QStringLiteral("Max index is %1").arg(index));
+        } else {
+            auto dw = docks.at(index);
+            dw->setFloating(!dw->isFloating());
+        }
+    });
 
     resize(800, 800);
 }
