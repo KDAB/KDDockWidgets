@@ -69,7 +69,7 @@ DebugWindow::DebugWindow(QWidget *parent)
         const int index = spin->value();
         if (index >= docks.size()) {
             QMessageBox::warning(nullptr, QStringLiteral("Invalid index"),
-                                 QStringLiteral("Max index is %1").arg(docks.size()));
+                                 QStringLiteral("Max index is %1").arg(docks.size() - 1));
         } else {
             auto dw = docks.at(index);
             dw->setFloating(!dw->isFloating());
