@@ -340,6 +340,7 @@ private Q_SLOTS:
     void tst_restoreTwice();
     void tst_restoreSideBySide();
     void tst_restoreWithPlaceholder();
+    void tst_restoreWithNonClosableWidget();
     void tst_marginsAfterRestore();
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -1649,6 +1650,22 @@ void TestDocks::tst_restoreWithPlaceholder()
     QVERIFY(dock1->isVisible());
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
+}
+
+void TestDocks::tst_restoreWithNonClosableWidget()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), {}, QStringLiteral("tst_marginsAfterRestore"));
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")), DockWidget::Option_NotClosable);
+    m->addDockWidget(dock1, Location_OnLeft);
+    auto layout = m->multiSplitterLayout();
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToDisk());
+    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(layout->checkSanity());
+
+    WAIT
 }
 
 void TestDocks::tst_marginsAfterRestore()
