@@ -94,8 +94,14 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject // clazy:exclude=ctor-mi
     Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
     Q_PROPERTY(QSize minimumSize READ minimumSize NOTIFY minimumSizeChanged)
 public:
+
     /// @brief constructs a new layout item to show @p Frame in the layout @layout
+    /// @param frame This is never nullptr.
+    /// @param layout This is never nullptr.
     explicit Item(Frame *frame, MultiSplitterLayout *layout);
+
+    /// @brief Constructor overload used when restoring a layout and the Item is a placeholder (no frame)
+    explicit Item(MultiSplitterLayout *layout);
 
     /// @brief Destroys its frame too.
     ~Item() override;

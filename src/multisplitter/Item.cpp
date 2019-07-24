@@ -40,8 +40,19 @@ public:
         , m_frame(frame)
         , m_geometry(m_frame->geometry())
     {
+        Q_ASSERT(m_frame);
         setMinimumSize(QSize(widgetMinLength(m_frame, Qt::Vertical),
                              widgetMinLength(m_frame, Qt::Horizontal)));
+
+    }
+
+    // Overload ctor called when restoring a placeholder Item triggered by LayoutSaver::restore()
+    Private(Item *qq, MultiSplitterLayout *parent)
+        : q(qq)
+        , m_anchorGroup(parent)
+        , m_frame(nullptr)
+        , m_geometry(QRect())
+    {
     }
 
     void setFrame(Frame *frame);
@@ -68,14 +79,18 @@ Item::Item(Frame *frame, MultiSplitterLayout *parent)
     : QObject(parent)
     , d(new Private(this, frame, parent))
 {    
-
-    Q_ASSERT(frame);
     setLayout(parent);
 
     // Minor hack: Set to nullptr so setFrame doesn't bail out. There's a catch-22: setLayout needs to have an m_frame and setFrame needs to have a layout.
     d->m_frame = nullptr;
     d->setFrame(frame);
     d->updateObjectName();
+}
+
+Item::Item(MultiSplitterLayout *parent)
+    : QObject(parent)
+    , d(new Private(this, parent))
+{
 }
 
 Item::~Item()
@@ -499,11 +514,11 @@ Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
     ds >> topIndex;
     ds >> rightIndex;
     ds >> bottomIndex;
-    ds >> hasFrame;
+    ds >> hasFrame; // false if it's a placeholder
 
-    Frame *frame = hasFrame ? Frame::createFromDataStream(ds) : nullptr;
+    auto item = hasFrame ? new Item(Frame::createFromDataStream(ds), layout)
+                         : new Item(layout);
 
-    auto item = new Item(frame, layout);
     item->setIsPlaceholder(isPlaceholder);
     item->setObjectName(objectName);
 
