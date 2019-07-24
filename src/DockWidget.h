@@ -48,6 +48,8 @@ class Item;
 class LastPosition;
 class DockRegistry;
 class TabWidget;
+class LayoutSaver;
+
 /**
  * @brief Represents a dock widget.
  */
@@ -244,6 +246,7 @@ private:
     friend struct KDDockWidgets::WindowBeingDragged;
     friend class KDDockWidgets::Item;
     friend class KDDockWidgets::DockRegistry;
+    friend class KDDockWidgets::LayoutSaver;
 
     friend QDataStream &operator<<(QDataStream &ds, DockWidget *);
 
