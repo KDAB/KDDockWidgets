@@ -3535,6 +3535,11 @@ void TestDocks::tst_28NestedWidgets()
         ++i;
     }
 
+    // Run the saver in these complex scenarios:
+    LayoutSaver saver;
+    QVERIFY(saver.saveToDisk());
+    QVERIFY(saver.restoreFromDisk());
+
     for (int i : docksToHide) {
         docksToCreate.at(i).createdDock->close();
         layout->checkSanity();
