@@ -120,6 +120,16 @@ void DockRegistry::unregisterLayout(MultiSplitterLayout *layout)
     m_layouts.removeOne(layout);
 }
 
+void DockRegistry::registerFrame(Frame *frame)
+{
+    m_frames << frame;
+}
+
+void DockRegistry::unregisterFrame(Frame *frame)
+{
+    m_frames.removeOne(frame);
+}
+
 DockWidget *DockRegistry::dockByName(const QString &name) const
 {
     for (auto dock : qAsConst(m_dockWidgets)) {
@@ -199,6 +209,11 @@ MainWindow::List DockRegistry::mainwindows() const
 QVector<MultiSplitterLayout *> DockRegistry::layouts() const
 {
     return m_layouts;
+}
+
+Frame::List DockRegistry::frames() const
+{
+    return m_frames;
 }
 
 const QVector<FloatingWindow *> DockRegistry::nestedwindows() const

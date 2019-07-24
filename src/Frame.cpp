@@ -35,6 +35,7 @@
 #include "Utils_p.h"
 #include "MainWindow.h"
 #include "LastPosition_p.h"
+#include "DockRegistry_p.h"
 
 #include <QCloseEvent>
 #include <QVBoxLayout>
@@ -52,6 +53,7 @@ Frame::Frame(QWidget *parent, Options options)
     , m_options(options)
 {
     s_dbg_numFrames++;
+    DockRegistry::self()->registerFrame(this);
     qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
     auto vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
@@ -87,6 +89,7 @@ Frame::~Frame()
         m_layoutItem->unref();
 
     qCDebug(creation) << "~Frame" << static_cast<void*>(this);
+    DockRegistry::self()->unregisterFrame(this);
 }
 
 void Frame::addWidget(DockWidget *dockWidget)
