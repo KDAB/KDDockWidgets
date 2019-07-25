@@ -1820,6 +1820,16 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     if (!m_items.isEmpty())
         Q_EMIT widgetCountChanged(m_items.size());
 
+
+    // The main window that we're restoring can have more stuff now (other-toolbars etc), so by
+    // having restored its geometry it can mean our dockwidget layout is now different, so update
+    // its content size if needed
+    Q_EMIT minimumSizeChanged(m_minSize);
+
+    if (m_contentSize != multiSplitter()->size()) {
+        setContentsSize(m_contentSize);
+    }
+
     return true;
 }
 

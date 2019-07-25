@@ -341,6 +341,7 @@ private Q_SLOTS:
     void tst_restoreSideBySide();
     void tst_restoreWithPlaceholder();
     void tst_restoreWithNonClosableWidget();
+    void tst_restoreAfterResize();
     void tst_marginsAfterRestore();
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -1667,6 +1668,25 @@ void TestDocks::tst_restoreWithNonClosableWidget()
     QVERIFY(saver.saveToDisk());
     QVERIFY(saver.restoreFromDisk());
     QVERIFY(layout->checkSanity());
+}
+
+void TestDocks::tst_restoreAfterResize()
+{
+    // Tests a crash I got when the layout received a resize event *while* restoring
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), {}, QStringLiteral("tst_restoreAfterResize"));
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    m->addDockWidget(dock1, Location_OnLeft);
+    auto layout = m->multiSplitterLayout();
+    const QSize oldContentsSize = layout->contentsSize();
+    const QSize oldWindowSize = m->size();
+    LayoutSaver saver;
+    QVERIFY(saver.saveToDisk());
+    m->resize(1000, 1000);
+    QVERIFY(saver.restoreFromDisk());
+    QCOMPARE(oldContentsSize, layout->contentsSize());
+    QCOMPARE(oldWindowSize, m->size());
 }
 
 void TestDocks::tst_marginsAfterRestore()

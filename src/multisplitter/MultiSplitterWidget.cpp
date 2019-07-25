@@ -32,6 +32,7 @@
 #include "Logging_p.h"
 #include "MainWindow.h"
 #include "FloatingWindow_p.h"
+#include "LayoutSaver.h"
 
 #include <QResizeEvent>
 
@@ -65,8 +66,13 @@ void MultiSplitterWidget::resizeEvent(QResizeEvent *ev)
     qCDebug(sizing) << Q_FUNC_INFO << "; new=" << ev->size() << "; old=" << ev->oldSize()
                     << "; window=" << window();
 
-    m_inResizeEvent = true;
-    m_layout->setContentsSize(ev->size());
+    m_inResizeEvent = true; // to avoid re-entrancy
+
+    if (!LayoutSaver::restoreInProgress()) {
+        // don't resize anything while we're restoring the layout
+        m_layout->setContentsSize(ev->size());
+    }
+
     QWidget::resizeEvent(ev);
     m_inResizeEvent = false;
 }
