@@ -391,7 +391,9 @@ void Item::Private::setMinimumSize(QSize sz)
 void Item::restoreSizes(QSize minSize, QRect geometry)
 {
     d->m_minSize = minSize;
-    d->m_geometry= geometry;
+    d->m_geometry = geometry;
+    if (d->m_frame)
+        d->m_frame->setGeometry(geometry);
 }
 
 void Item::Private::setFrame(Frame *frame)

@@ -3553,10 +3553,14 @@ void TestDocks::tst_28NestedWidgets()
         ++i;
     }
 
+    layout->checkSanity();
+
     // Run the saver in these complex scenarios:
     LayoutSaver saver;
     QVERIFY(saver.saveToDisk());
     QVERIFY(saver.restoreFromDisk());
+
+    layout->checkSanity();
 
     for (int i : docksToHide) {
         docksToCreate.at(i).createdDock->close();
@@ -3564,11 +3568,14 @@ void TestDocks::tst_28NestedWidgets()
         QTest::qWait(200);
     }
 
+    layout->checkSanity();
+
     for (int i : docksToHide) {
         docksToCreate.at(i).createdDock->deleteLater();
         QVERIFY(waitForDeleted(docksToCreate.at(i).createdDock));
     }
 
+    layout->checkSanity();
 
     // And hide the remaining ones
     i = 0;
