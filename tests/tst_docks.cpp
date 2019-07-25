@@ -4214,9 +4214,9 @@ void TestDocks::tst_stealFrame()
     QCOMPARE(layout1->placeholderCount(), 0);
 
     // 5. And also steal a side-by-side one into the tab
-    auto f4 = dock4->frame();
+    QPointer<Frame> f4 = dock4->frame();
     dock1->addDockWidgetAsTab(dock4);
-    QVERIFY(waitForDeleted(f4));
+    QVERIFY(!f4);
     QCOMPARE(layout1->count(), 1);
     QCOMPARE(layout1->placeholderCount(), 0);
 
