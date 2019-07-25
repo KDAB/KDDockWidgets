@@ -389,10 +389,10 @@ void Item::Private::setMinimumSize(QSize sz)
     }
 }
 
-void Item::setMinimumSize(QSize sz)
+void Item::restoreSizes(QSize minSize, QRect geometry)
 {
-    // exposed overload just to be called by LayoutSaver::restore()
-    d->setMinimumSize(sz);
+    d->m_minSize = minSize;
+    d->m_geometry= geometry;
 }
 
 void Item::Private::setFrame(Frame *frame)
@@ -529,7 +529,7 @@ Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
 
     item->setIsPlaceholder(isPlaceholder);
     item->setObjectName(objectName);
-    item->setMinimumSize(minSize);
+    item->restoreSizes(minSize, geo);
 
     item->setProperty("leftIndex", leftIndex);
     item->setProperty("topIndex", topIndex);
