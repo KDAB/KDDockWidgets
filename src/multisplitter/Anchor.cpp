@@ -683,7 +683,8 @@ void Anchor::onMouseMoved(QPoint pt)
 
 #ifdef Q_OS_WIN
     // Try harder, Qt can be wrong, if mixed with MFC
-    if (GetKeyState(VK_LBUTTON) == 0) {
+    const bool mouseButtonIsReallyDown = (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
+    if (!mouseButtonIsReallyDown) {
         qCDebug(mouseevents) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
         onMouseReleased();
         return;
