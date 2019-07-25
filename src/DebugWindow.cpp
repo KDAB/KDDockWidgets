@@ -115,6 +115,30 @@ DebugWindow::DebugWindow(QWidget *parent)
         qApp->restoreOverrideCursor();
     });
 
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("dump main windows"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        const auto mainWindows = DockRegistry::self()->mainwindows();
+        for (MainWindow *mainWindow : mainWindows) {
+            mainWindow->multiSplitterLayout()->dumpDebug();
+        }
+    });
+
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("check sanity"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        const auto mainWindows = DockRegistry::self()->mainwindows();
+        for (MainWindow *mainWindow : mainWindows) {
+            mainWindow->multiSplitterLayout()->checkSanity();
+        }
+
+        const auto floatingWindows = DockRegistry::self()->nestedwindows();
+        for (FloatingWindow *floatingWindow : floatingWindows) {
+            floatingWindow->multiSplitterLayout()->checkSanity();
+        }
+    });
 
     resize(800, 800);
 }
