@@ -85,7 +85,7 @@ DebugWindow::DebugWindow(QWidget *parent)
         LayoutSaver saver;
         QString message = saver.saveToDisk() ? QStringLiteral("Saved!")
                                              : QStringLiteral("Error!");
-        QMessageBox::information(nullptr, QStringLiteral("Save layout"), message);
+        qDebug() << message;
     });
 
     button = new QPushButton(this);
@@ -95,7 +95,7 @@ DebugWindow::DebugWindow(QWidget *parent)
         LayoutSaver saver;
         QString message = saver.restoreFromDisk() ? QStringLiteral("Restored!")
                                                   : QStringLiteral("Error!");
-        QMessageBox::information(nullptr, QStringLiteral("Restore layout"), message);
+        qDebug() << message;
     });
 
     button = new QPushButton(this);
