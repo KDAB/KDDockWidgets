@@ -325,6 +325,11 @@ QSize Item::minimumSize() const
                            : d->m_minSize;
 }
 
+QSize Item::actualMinSize() const
+{
+    return d->m_minSize;
+}
+
 bool Item::isPlaceholder() const
 {
     return d->m_isPlaceholder;
@@ -545,7 +550,7 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Item *item)
     ds << item->objectName();
     ds << item->isPlaceholder();
     ds << item->geometry();
-    ds << item->minimumSize();
+    ds << item->actualMinSize();
 
     const Anchor::List allAnchors = item->layout()->anchors();
     ds << allAnchors.indexOf(item->anchorGroup().left);
