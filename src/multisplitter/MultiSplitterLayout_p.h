@@ -202,6 +202,11 @@ public:
     bool isEmpty() const { return m_items.isEmpty(); }
 
     /**
+     * @brief Returns whether there's non placeholder items.
+     */
+    bool hasVisibleItems() const { return visibleCount() > 0; }
+
+    /**
      * @brief If @p orientation is Qt::Horizontal, returns the height, otherwise the width.
      */
     int length(Qt::Orientation orientation) const;

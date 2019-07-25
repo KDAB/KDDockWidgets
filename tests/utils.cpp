@@ -89,14 +89,16 @@ DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor c
 
 std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
 {
-    auto m = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow"), MainWindowOption_None));
+    static int count = 0;
+    count++;
+    auto m = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None));
     auto layout = m->multiSplitterLayout();
     m->show();
     m->resize(QSize(700, 700));
 
     int i = 0;
     for (DockDescriptor &desc : docks) {
-        desc.createdDock = createDockWidget(QStringLiteral("%1").arg(i), new QPushButton(QStringLiteral("%1").arg(i)), {}, false);
+        desc.createdDock = createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), new QPushButton(QStringLiteral("%1").arg(i)), {}, false);
 
         DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)

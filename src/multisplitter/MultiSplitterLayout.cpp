@@ -698,7 +698,7 @@ MultiSplitterLayout::Length MultiSplitterLayout::availableLengthForDrop(Location
     const int side1AvailableLength = anchor->position() - minForAlreadyOccupied1;
     const int side2AvailableLength = thisLength - (anchor->position() + anchor->thickness()) - minForAlreadyOccupied2;
 
-    const bool needsNewAnchor = !isEmpty(); // If a new anchor is needed then we need space for the drag handle and such.
+    const bool needsNewAnchor = hasVisibleItems(); // If a new anchor is needed then we need space for the drag handle and such.
     const int newAnchorThickness = needsNewAnchor ? Anchor::thickness(/*static=*/false) : 0;
 
     // This useless space doesn't belong to side1 or side2 specifically. So account for it separately.

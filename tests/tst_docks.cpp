@@ -323,6 +323,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPosition3();
     void tst_negativeAnchorPosition4();
     void tst_negativeAnchorPosition5();
+    void tst_availableSizeWithPlaceholders();
     void tst_stealFrame();
     void tst_addAsPlaceholder();
     void tst_removeItem();
@@ -3903,6 +3904,55 @@ void TestDocks::tst_negativeAnchorPosition5()
         dock->deleteLater();
 
     QVERIFY(waitForDeleted(dock0));
+}
+
+void TestDocks::tst_availableSizeWithPlaceholders()
+{
+    EnsureTopLevelsDeleted e;
+    QVector<DockDescriptor> docks1 = {
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        };
+
+    QVector<DockDescriptor> docks2 = {
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        };
+
+    QVector<DockDescriptor> empty;
+
+    auto m1 = createMainWindow(docks1);
+    auto m2 = createMainWindow(docks2);
+    auto m3 = createMainWindow(empty);
+
+    auto f0 = docks2.at(0).createdDock->frame();
+    docks2.at(0).createdDock->close();
+    docks2.at(1).createdDock->close();
+    docks2.at(2).createdDock->close();
+    QVERIFY(waitForDeleted(f0));
+
+    auto layout1 = m1->multiSplitterLayout();
+    auto layout2 = m2->multiSplitterLayout();
+    auto layout3 = m3->multiSplitterLayout();
+
+    QCOMPARE(layout1->contentsSize(), layout2->contentsSize());
+    QCOMPARE(layout1->contentsSize(), layout3->contentsSize());
+
+    qDebug() << "CONTENTS SIZE" << layout1->contentsSize();
+    QCOMPARE(layout1->availableSize(), layout2->availableSize());
+    QCOMPARE(layout1->availableSize(), layout3->availableSize());
+
+    // Cleanup
+    docks1.at(0).createdDock->deleteLater();
+    docks1.at(1).createdDock->deleteLater();
+    docks1.at(2).createdDock->deleteLater();
+    docks2.at(0).createdDock->deleteLater();
+    docks2.at(1).createdDock->deleteLater();
+    docks2.at(2).createdDock->deleteLater();
+    QVERIFY(waitForDeleted(docks2.at(2).createdDock));
+
 }
 
 void TestDocks::tst_anchorFollowingItselfAssert()
