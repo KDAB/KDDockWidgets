@@ -1773,6 +1773,12 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
         group.top = m_anchors.at(topIndex);
         group.right = m_anchors.at(rightIndex);
         group.bottom = m_anchors.at(bottomIndex);
+
+        // Clear helper properties
+        item->setProperty("leftIndex", QVariant());
+        item->setProperty("topIndex", QVariant());
+        item->setProperty("rightIndex", QVariant());
+        item->setProperty("bottomIndex", QVariant());
     }
 
     if (!m_items.isEmpty())
