@@ -43,7 +43,6 @@ public:
         Q_ASSERT(m_frame);
         setMinimumSize(QSize(widgetMinLength(m_frame, Qt::Vertical),
                              widgetMinLength(m_frame, Qt::Horizontal)));
-
     }
 
     // Overload ctor called when restoring a placeholder Item triggered by LayoutSaver::restore()

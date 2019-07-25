@@ -61,27 +61,6 @@ inline int lengthFromSize(QSize sz, Qt::Orientation orientation)
                                        : sz.height();
 }
 
-/**
- * Returns the widget's min-width if orientation is Vertical, the min-height otherwise.
- */
-inline int widgetMinLength(const QWidget *w, Qt::Orientation orientation)
-{
-    int min = 0;
-    if (orientation == Qt::Vertical) {
-        if (w->minimumWidth() > 0)
-            min = w->minimumWidth();
-        else
-            min = w->minimumSizeHint().width();
-    } else {
-        if (w->minimumHeight() > 0)
-            min = w->minimumHeight();
-        else
-            min = w->minimumSizeHint().height();
-    }
-
-    return qMax(min, 0);
-}
-
 inline Anchor::Side sideForLocation(Location loc)
 {
     switch (loc) {
@@ -139,6 +118,11 @@ public:
      */
     explicit MultiSplitterLayout(MultiSplitterWidget *parent);
     ~MultiSplitterLayout() override;
+
+    /**
+     * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.s
+     */
+    static QSize hardcodedMinimumSize();
 
     /**
      * @brief returns the widget that this layout manages
@@ -602,6 +586,31 @@ inline QDebug operator<<(QDebug d, const AnchorGroup &group) {
     d << "AnchorGroup: top=" << group.top << "; left=" << group.left
       << "; right=" << group.right << "; bottom=" << group.bottom;
     return d;
+}
+
+/**
+ * Returns the widget's min-width if orientation is Vertical, the min-height otherwise.
+ */
+inline int widgetMinLength(const QWidget *w, Qt::Orientation orientation)
+{
+    int min = 0;
+    if (orientation == Qt::Vertical) {
+        if (w->minimumWidth() > 0)
+            min = w->minimumWidth();
+        else
+            min = w->minimumSizeHint().width();
+
+        min = qMax(MultiSplitterLayout::hardcodedMinimumSize().width(), min);
+    } else {
+        if (w->minimumHeight() > 0)
+            min = w->minimumHeight();
+        else
+            min = w->minimumSizeHint().height();
+
+        min = qMax(MultiSplitterLayout::hardcodedMinimumSize().height(), min);
+    }
+
+    return qMax(min, 0);
 }
 
 QDataStream &operator<<(QDataStream &ds, MultiSplitterLayout *);

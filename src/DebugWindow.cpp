@@ -96,8 +96,6 @@ DebugWindow::DebugWindow(QWidget *parent)
         QMessageBox::information(nullptr, QStringLiteral("Restore layout"), message);
     });
 
-
-
     resize(800, 800);
 }
 

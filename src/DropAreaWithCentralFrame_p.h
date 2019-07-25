@@ -22,6 +22,7 @@
 #define KD_DROP_AREA_WITH_CENTRAL_FRAME_H
 
 #include "DropArea_p.h"
+#include <QMainWindow>
 
 namespace KDDockWidgets {
 class DropAreaWithCentralFrame : public DropArea

@@ -33,6 +33,8 @@
 #include <QtMath>
 
 #define INDICATOR_MINIMUM_LENGTH 100
+#define KDDOCKWIDGETS_MIN_WIDTH 80
+#define KDDOCKWIDGETS_MIN_HEIGHT 90
 
 using namespace KDDockWidgets;
 
@@ -98,6 +100,12 @@ MultiSplitterLayout::~MultiSplitterLayout()
     const auto anchors = m_anchors;
     qDeleteAll(anchors);
     DockRegistry::self()->unregisterLayout(this);
+}
+
+/**static*/
+QSize MultiSplitterLayout::hardcodedMinimumSize()
+{
+    return QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
 }
 
 MultiSplitterWidget *MultiSplitterLayout::multiSplitter() const
@@ -1386,8 +1394,10 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     AnchorGroup anchorGroup = item->anchorGroup();
 
     const QSize availableSize = this->availableSize();
-    const QSize widgetMinSize = { qMax(30, KDDockWidgets::widgetMinLength(item->frame(), Qt::Vertical)),
-                                 qMax(30, KDDockWidgets::widgetMinLength(item->frame(), Qt::Horizontal)) }; // TODO hardcoded 30
+    const QSize hardcodedMinSize = MultiSplitterLayout::hardcodedMinimumSize();
+
+    const QSize widgetMinSize = { qMax(hardcodedMinSize.width(), KDDockWidgets::widgetMinLength(item->frame(), Qt::Vertical)),
+                                  qMax(hardcodedMinSize.height(), KDDockWidgets::widgetMinLength(item->frame(), Qt::Horizontal)) };
 
     const QSize newSize = {qMax(qMin(item->length(Qt::Vertical), availableSize.width()), widgetMinSize.width()),
                            qMax(qMin(item->length(Qt::Horizontal), availableSize.height()), widgetMinSize.height()) };
