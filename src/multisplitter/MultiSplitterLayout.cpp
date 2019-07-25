@@ -1330,6 +1330,11 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
     if (options & AnchorSanity_WidgetGeometry) {
         for (Item *item: items()) {
 
+            if (!item->isPlaceholder() && item->geometry() != item->frame()->geometry()) {
+                qWarning() << Q_FUNC_INFO << "Invalid geometry for item" << item << item->geometry() << item->frame()->geometry();
+                return false;
+            }
+
             if (!item->anchorGroup().isValid()) {
                 qWarning() << Q_FUNC_INFO << "Invalid item group for item" << item->anchorGroup();
                 return false;
