@@ -46,7 +46,7 @@ using namespace KDDockWidgets::Debug;
 
 DebugWindow::DebugWindow(QWidget *parent)
     : QWidget(parent)
-    , m_objectViewer(parent)
+    , m_objectViewer(this)
 {
     auto layout = new QVBoxLayout(this);
     layout->addWidget(&m_objectViewer);

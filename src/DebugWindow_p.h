@@ -41,8 +41,6 @@ class DebugWindow : public QWidget
 public:
     explicit DebugWindow(QWidget *parent = nullptr);
 
-
-
 private:
     void dumpDockWidgetInfo();
     ObjectViewer m_objectViewer;

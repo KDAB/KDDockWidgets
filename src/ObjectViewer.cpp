@@ -109,7 +109,7 @@ QString ObjectViewer::nameForObj(QObject *o) const
 
 void ObjectViewer::add(QObject *obj, QStandardItem *parent)
 {
-    if (obj == this || obj == &m_menu) // Ignore our stuff
+    if (obj == this || obj == &m_menu || obj == parentWidget()) // Ignore our stuff
         return;
 
     if (m_ignoreMenus && qobject_cast<QMenu*>(obj))
