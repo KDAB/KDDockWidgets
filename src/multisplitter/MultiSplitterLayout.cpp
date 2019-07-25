@@ -967,13 +967,14 @@ void MultiSplitterLayout::dumpDebug() const
                  << "; pos=" << anchor->position()
                  << "; sepWidget.pos=" << (anchor->isVertical() ? anchor->separatorWidget()->x()
                                                                 : anchor->separatorWidget()->y())
+                 << "; geo=" << anchor->geometry()
+                 << "; sep.geo=" << anchor->separatorWidget()->geometry()
                  << "; bounds=" << bounds
                  << "; orientation=" << anchor->orientation()
                  << "; isFollowing=" << anchor->isFollowing()
                  << "; followee=" << anchor->followee()
                  << "; from=" << ((void*)anchor->from())
                  << "; to=" << ((void*)anchor->to());
-
     }
 
     qDebug() << "Num Frame:" << Frame::dbg_numFrames();
@@ -1295,6 +1296,11 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
             if (!anchor->isStatic() && !anchor->isFollowing() && !hasItemsOnBothSides && anchorsFollowing(anchor).isEmpty()) {
                 qWarning() << "Non static anchor should have items on both sides unless it's following or being followed" << anchor;
             }
+        }
+
+        if (anchor->geometry() != anchor->separatorWidget()->geometry()) {
+            qWarning() << Q_FUNC_INFO << "Inconsistent anchor geometry" << anchor->geometry() << "; " << anchor->separatorWidget()->geometry();
+            return false;
         }
     }
 
