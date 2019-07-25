@@ -30,6 +30,8 @@
 #include "ObjectViewer_p.h"
 #include <QWidget>
 
+class QEventLoop;
+
 namespace KDDockWidgets {
 namespace Debug {
 
@@ -38,9 +40,16 @@ class DebugWindow : public QWidget
     Q_OBJECT
 public:
     explicit DebugWindow(QWidget *parent = nullptr);
+
+
+
 private:
     void dumpDockWidgetInfo();
     ObjectViewer m_objectViewer;
+    QEventLoop *m_isPickingWidget = nullptr;
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
 };
 }
 }

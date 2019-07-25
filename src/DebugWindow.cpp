@@ -38,6 +38,8 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include <QMessageBox>
+#include <QApplication>
+#include <QMouseEvent>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Debug;
@@ -96,6 +98,24 @@ DebugWindow::DebugWindow(QWidget *parent)
         QMessageBox::information(nullptr, QStringLiteral("Restore layout"), message);
     });
 
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("Pick Widget"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [this] {
+
+        qApp->setOverrideCursor(Qt::CrossCursor);
+        grabMouse();
+
+        QEventLoop loop;
+        m_isPickingWidget = &loop;
+        loop.exec();
+
+        releaseMouse();
+        m_isPickingWidget = nullptr;
+        qApp->restoreOverrideCursor();
+    });
+
+
     resize(800, 800);
 }
 
@@ -110,4 +130,19 @@ void DebugWindow::dumpDockWidgetInfo()
 
     for (MainWindow *mw : mainWindows)
         mw->multiSplitterLayout()->dumpDebug();
+}
+
+void DebugWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (!m_isPickingWidget)
+        return QWidget::mousePressEvent(event);
+
+    QWidget *w = qApp->widgetAt(event->globalPos());
+    qDebug() << "Widget at pos" << event->globalPos() << "is"
+             << w << "; parent="
+             << (w ? w->parentWidget() : nullptr) << "; geometry="
+             << (w ? w->geometry() : QRect());
+
+
+    m_isPickingWidget->quit();
 }
