@@ -242,6 +242,9 @@ int Anchor::position() const
 void Anchor::setVisible(bool v)
 {
     m_separatorWidget->setVisible(v);
+    if (v) {
+        m_separatorWidget->setGeometry(m_geometry);
+    }
 }
 
 int Anchor::minPosition() const

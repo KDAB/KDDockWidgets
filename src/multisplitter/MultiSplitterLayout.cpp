@@ -1299,7 +1299,8 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
         }
 
         if (!anchor->isFollowing() &&  anchor->geometry() != anchor->separatorWidget()->geometry()) {
-            qWarning() << Q_FUNC_INFO << "Inconsistent anchor geometry" << anchor->geometry() << "; " << anchor->separatorWidget()->geometry();
+            qWarning() << Q_FUNC_INFO << anchor << anchor->separatorWidget()
+                       << "Inconsistent anchor geometry" << anchor->geometry() << "; " << anchor->separatorWidget()->geometry();
             return false;
         }
     }
