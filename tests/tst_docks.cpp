@@ -322,6 +322,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPosition2();
     void tst_negativeAnchorPosition3();
     void tst_negativeAnchorPosition4();
+    void tst_negativeAnchorPosition5();
     void tst_stealFrame();
     void tst_addAsPlaceholder();
     void tst_removeItem();
@@ -3875,6 +3876,58 @@ void TestDocks::tst_negativeAnchorPosition4()
     docks.at(0).createdDock->deleteLater();
     docks.at(4).createdDock->deleteLater();
     waitForDeleted(docks.at(4).createdDock);
+}
+
+void TestDocks::tst_negativeAnchorPosition5()
+{
+    EnsureTopLevelsDeleted e;
+    QVector<DockDescriptor> docks = {
+        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnTop, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnLeft, 17, nullptr, AddingOption_None },
+        {Location_OnRight, -1, nullptr, AddingOption_None } };
+
+    auto m = createMainWindow(docks);
+    auto dropArea = m->dropArea();
+    MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
+    layout->checkSanity();
+
+    auto dock0 = docks.at(0).createdDock;
+    auto dock1 = docks.at(1).createdDock;
+
+    dock1->show();
+    // dock0->show(); // uncomment to fail
+
+    // Cleanup
+    for (auto dock : DockRegistry::self()->dockwidgets())
+        dock->deleteLater();
+
+    QVERIFY(waitForDeleted(dock0));
 }
 
 void TestDocks::tst_anchorFollowingItselfAssert()
