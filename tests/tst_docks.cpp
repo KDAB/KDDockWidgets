@@ -3882,35 +3882,10 @@ void TestDocks::tst_negativeAnchorPosition5()
 {
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
         {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
         {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
         {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnLeft, 17, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None } };
+        };
 
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
