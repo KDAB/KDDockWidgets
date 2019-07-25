@@ -1561,6 +1561,7 @@ void TestDocks::tst_restoreSideBySide()
 
     EnsureTopLevelsDeleted e;
 
+    QSize item2MinSize;
     {
         EnsureTopLevelsDeleted e1;
         // MainWindow:
@@ -1573,22 +1574,24 @@ void TestDocks::tst_restoreSideBySide()
         auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
         auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
         dock2->addDockWidgetToContainingWindow(dock3, Location_OnRight);
+        auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+        item2MinSize = fw2->multiSplitterLayout()->itemForFrame(dock2->frame())->minimumSize();
         LayoutSaver saver;
         QVERIFY(saver.saveToDisk());
         QVERIFY(layout->checkSanity());
     }
 
     {
-
         auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, QStringLiteral("tst_restoreTwice"));
         auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
-
         auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
         auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
 
-
         LayoutSaver restorer;
         QVERIFY(restorer.restoreFromDisk());
+
+        auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+        QCOMPARE(item2MinSize, fw2->multiSplitterLayout()->itemForFrame(dock2->frame())->minimumSize());
 
         QCOMPARE(dock1->window(), m.get());
         QCOMPARE(dock2->window(), dock3->window());

@@ -389,6 +389,12 @@ void Item::Private::setMinimumSize(QSize sz)
     }
 }
 
+void Item::setMinimumSize(QSize sz)
+{
+    // exposed overload just to be called by LayoutSaver::restore()
+    d->setMinimumSize(sz);
+}
+
 void Item::Private::setFrame(Frame *frame)
 {
     Q_ASSERT((m_frame && !frame) || (!m_frame && frame));
@@ -500,6 +506,7 @@ Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
     QString objectName;
     bool isPlaceholder;
     QRect geo;
+    QSize minSize;
     bool hasFrame;
 
     int leftIndex;
@@ -510,6 +517,7 @@ Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
     ds >> objectName;
     ds >> isPlaceholder;
     ds >> geo;
+    ds >> minSize;
     ds >> leftIndex;
     ds >> topIndex;
     ds >> rightIndex;
@@ -521,6 +529,7 @@ Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
 
     item->setIsPlaceholder(isPlaceholder);
     item->setObjectName(objectName);
+    item->setMinimumSize(minSize);
 
     item->setProperty("leftIndex", leftIndex);
     item->setProperty("topIndex", topIndex);
@@ -535,6 +544,7 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Item *item)
     ds << item->objectName();
     ds << item->isPlaceholder();
     ds << item->geometry();
+    ds << item->minimumSize();
 
     const Anchor::List allAnchors = item->layout()->anchors();
     ds << allAnchors.indexOf(item->anchorGroup().left);

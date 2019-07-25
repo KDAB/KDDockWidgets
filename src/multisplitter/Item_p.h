@@ -171,6 +171,8 @@ Q_SIGNALS:
     void isPlaceholderChanged();
     void minimumSizeChanged();
 private:
+    void setMinimumSize(QSize sz); // Just for LayoutSaver::restore
+
     class Private;
     Private *const d;
 };
