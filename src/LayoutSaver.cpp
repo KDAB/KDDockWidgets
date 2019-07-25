@@ -44,6 +44,7 @@
 
 using namespace KDDockWidgets;
 
+#define KDDOCKWIDGETS_SERIALIZATION_VERSION 1
 
 class KDDockWidgets::LayoutSaver::Private
 {
@@ -105,6 +106,7 @@ QByteArray LayoutSaver::serializeLayout() const
 
     QByteArray result;
     QDataStream ds(&result, QIODevice::WriteOnly);
+    ds << KDDOCKWIDGETS_SERIALIZATION_VERSION;
 
     // Just a simplification. One less type of windows to handle.
     d->m_dockRegistry->ensureAllFloatingWidgetsAreMorphed();
@@ -157,6 +159,14 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         return true;
 
     QDataStream ds(data);
+    int serializationVersion;
+    ds >> serializationVersion;
+
+    if (serializationVersion != KDDOCKWIDGETS_SERIALIZATION_VERSION) {
+        qWarning() << "Unsupported serialization version. Got=" << serializationVersion
+                   << "; expected=" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
+        return false;
+    }
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
     d->m_dockRegistry->clear(/*deleteStaticAnchors=*/true);
@@ -192,7 +202,9 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         auto fw = new FloatingWindow(parent);
         d->deserializeWindowGeometry(ds, fw);
-        fw->fillFromDataStream(ds);
+        if (!fw->fillFromDataStream(ds)) {
+            return false;
+        }
     }
 
     // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties

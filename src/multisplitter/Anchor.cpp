@@ -733,6 +733,11 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     QVector<int> side2ItemIndexes;
 
     ds >> marker;
+    if (marker != Anchor::s_magicMarker) {
+        qWarning() << Q_FUNC_INFO << "Corrupted stream";
+        return nullptr;
+    }
+
     ds >> objectName;
     ds >> geometry;
     ds >> orientation;

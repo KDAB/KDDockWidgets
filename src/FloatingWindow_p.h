@@ -44,7 +44,7 @@ public:
     explicit FloatingWindow(Frame *frame, QWidget *parent = nullptr);
     ~FloatingWindow() override;
 
-    void fillFromDataStream(QDataStream &ds);
+    bool fillFromDataStream(QDataStream &ds);
 
     // Draggable:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;

@@ -252,10 +252,14 @@ void FloatingWindow::updateTitleBarVisibility()
     m_titleBar->setVisible(visible);
 }
 
-void FloatingWindow::fillFromDataStream(QDataStream &ds)
+bool FloatingWindow::fillFromDataStream(QDataStream &ds)
 {
-    dropArea()->multiSplitterLayout()->fillFromDataStream(ds);
-    show();
+    if (dropArea()->multiSplitterLayout()->fillFromDataStream(ds)) {
+        show();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, FloatingWindow *fw)

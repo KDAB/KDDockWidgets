@@ -1713,6 +1713,11 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     int numAnchors;
 
     ds >> marker;
+    if (marker != s_magicMarker) {
+        qWarning() << Q_FUNC_INFO << "corrupted stream";
+        return false;
+    }
+
     ds >> contentsSize;
     ds >> minSize;
     ds >> numItems;
@@ -1731,6 +1736,9 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     Q_ASSERT(numAnchors >= 0);
     for (int i = 0; i < numAnchors; ++i) {
         Anchor *anchor = Anchor::createFromDataStream(ds, this); // They auto-register into m_anchors
+        if (!anchor)
+            return false;
+
         if (anchor->type() == Anchor::Type_LeftStatic) {
             Q_ASSERT(!m_leftAnchor);
             m_leftAnchor = anchor;
