@@ -49,6 +49,21 @@ using namespace KDDockWidgets;
 class KDDockWidgets::LayoutSaver::Private
 {
 public:
+
+    struct RAIIIsRestoring
+    {
+        RAIIIsRestoring()
+        {
+            LayoutSaver::Private::s_restoreInProgress = true;
+        }
+
+        ~RAIIIsRestoring()
+        {
+            LayoutSaver::Private::s_restoreInProgress = false;
+        }
+        Q_DISABLE_COPY(RAIIIsRestoring)
+    };
+
     Private()
         : m_dockRegistry(DockRegistry::self())
     {
@@ -90,10 +105,7 @@ bool LayoutSaver::saveToDisk()
 bool LayoutSaver::restoreFromDisk()
 {
     const QByteArray data = d->settings()->value(QStringLiteral("data")).toByteArray();
-    Private::s_restoreInProgress = true;
     const bool result = restoreLayout(data);
-    Private::s_restoreInProgress = false;
-
     return result;
 }
 
@@ -157,6 +169,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 {
     if (data.isEmpty())
         return true;
+
+    Private::RAIIIsRestoring isRestoring;
 
     QDataStream ds(data);
     int serializationVersion;
