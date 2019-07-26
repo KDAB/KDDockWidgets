@@ -3964,6 +3964,7 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     item10->restoreSizes(item30->minimumSize(), item30->geometry());
 
     QCOMPARE(item10->geometry(), item30->geometry());
+    QCOMPARE(item10->frame()->minimumSizeHint(), item10->frame()->minimumSizeHint());
     QCOMPARE(item10->minimumSize(), item30->minimumSize());
     QCOMPARE(layout1->availableSize(), layout3->availableSize());
 

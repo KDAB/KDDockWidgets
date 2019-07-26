@@ -399,7 +399,6 @@ void Item::onLayoutRequest() const
     if (frameMinSize == d->m_minSize)
         return; // Nothing to do
 
-
     // TODO: The new minSize can't be bigger than the current geometry because we don't support that yet
     // In the future we should resize the item and propagate the resize through the layout
     const QSize itemMinSize = frameMinSize.boundedTo(d->m_geometry.size());
@@ -437,6 +436,7 @@ void Item::Private::setFrame(Frame *frame)
     Q_EMIT q->frameChanged();
 
     if (frame) {
+        q->onLayoutRequest();
         frame->setLayoutItem(q);
         frame->installEventFilter(q);
         // auto destruction
