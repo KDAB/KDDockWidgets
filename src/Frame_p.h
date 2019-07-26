@@ -85,6 +85,7 @@ public:
     ///@brief removes a dockwidget from the frame
     void removeWidget(DockWidget *);
 
+    void updateTitleAndIcon();
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;
     TitleBar *titleBar() const;
@@ -146,6 +147,8 @@ public:
     void closeEvent(QCloseEvent *) override;
     int currentTabIndex() const;
     void setCurrentTabIndex(int);
+
+    DockWidget *currentDockWidget() const;
 
     Options options() const { return m_options; }
     bool anyNonClosable() const;

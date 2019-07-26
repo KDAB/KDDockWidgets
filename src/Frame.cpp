@@ -74,10 +74,7 @@ Frame::Frame(QWidget *parent, Options options)
         }
     });
 
-    connect(this, &Frame::currentDockWidgetChanged, m_titleBar, [this] (DockWidget *dock) {
-        m_titleBar->setTitle(dock->title());
-        m_titleBar->setIcon(dock->icon());
-    });
+    connect(this, &Frame::currentDockWidgetChanged, this, &Frame::updateTitleAndIcon);
 
     m_tabWidget->setTabBarAutoHide(!alwaysShowsTabs());
 }
@@ -91,6 +88,17 @@ Frame::~Frame()
     qCDebug(creation) << "~Frame" << static_cast<void*>(this);
     DockRegistry::self()->unregisterFrame(this);
 }
+
+void Frame::updateTitleAndIcon()
+{
+    if (DockWidget *dw = currentDockWidget()) {
+        m_titleBar->setTitle(dw->title());
+        m_titleBar->setIcon(dw->icon());
+    } else {
+        qWarning() << Q_FUNC_INFO << "Invalid dock widget for frame." << currentTabIndex();
+    }
+}
+
 
 void Frame::addWidget(DockWidget *dockWidget)
 {
@@ -265,6 +273,11 @@ int Frame::currentTabIndex() const
 void Frame::setCurrentTabIndex(int index)
 {
     m_tabWidget->setCurrentIndex(index);
+}
+
+DockWidget *Frame::currentDockWidget() const
+{
+    return qobject_cast<DockWidget*>(m_tabWidget->currentWidget());
 }
 
 bool Frame::anyNonClosable() const
