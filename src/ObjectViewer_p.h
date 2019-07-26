@@ -48,6 +48,8 @@ public:
     void refresh();
 
 private:
+    void dumpSelectedWidgetToPng();
+    void updateSelectedWidget();
     void dumpWindows();
     QString nameForObj(QObject *o) const;
     void add(QObject *obj, QStandardItem *parent);
@@ -55,6 +57,7 @@ private:
     void onSelectionChanged();
     void printProperties(QObject *) const;
     QObject* selectedObject() const;
+    QWidget *selectedWidget() const;
     void updateItemAppearence(QStandardItem*);
     QObject *objectForItem(QStandardItem*) const;
     QWidget *widgetForItem(QStandardItem*) const;

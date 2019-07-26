@@ -39,6 +39,7 @@
 #include <QWindow>
 #include <QToolBar>
 #include <QShortcut>
+#include <QDir>
 
 using namespace KDDockWidgets::Debug;
 
@@ -63,6 +64,12 @@ ObjectViewer::ObjectViewer(QWidget *parent)
     action = m_menu.addAction(QStringLiteral("Dump Windows"));
     connect(action, &QAction::triggered, this, &ObjectViewer::dumpWindows);
 
+    action = m_menu.addAction(QStringLiteral("Update"));
+    connect(action, &QAction::triggered, this, &ObjectViewer::updateSelectedWidget);
+
+    action = m_menu.addAction(QStringLiteral("Print to png"));
+    connect(action, &QAction::triggered, this, &ObjectViewer::dumpSelectedWidgetToPng);
+
     refresh();
     setWindowTitle(QStringLiteral("ObjectViewer"));
 }
@@ -79,6 +86,22 @@ void ObjectViewer::refresh()
     for (QWidget *window : topLevelWidgets) {
         add(window, m_model.invisibleRootItem());
     }
+}
+
+void ObjectViewer::dumpSelectedWidgetToPng()
+{
+    if (auto w = selectedWidget()) {
+        QPixmap px(w->size());
+        w->render(&px);
+        px.save(QStringLiteral("px.png"));
+        qDebug() << QDir::currentPath();
+    }
+}
+
+void ObjectViewer::updateSelectedWidget()
+{
+    if (auto w = selectedWidget())
+        w->update();
 }
 
 void ObjectViewer::dumpWindows()
@@ -201,6 +224,11 @@ QObject *ObjectViewer::selectedObject() const
     QModelIndex index = indexes.first();
     QObject *obj = index.data(ObjRole).value<QObject*>();
     return obj;
+}
+
+QWidget *ObjectViewer::selectedWidget() const
+{
+    return qobject_cast<QWidget*>(selectedObject());
 }
 
 void ObjectViewer::updateItemAppearence(QStandardItem *item)
