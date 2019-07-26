@@ -163,6 +163,12 @@ public:
     /// This overload is called when the Frame has more than 1 tab, otherwise we just use the DockWidget overload
     void restorePlaceholder(Frame *frame);
 
+    /**
+     * @brief Checks if the minSize is correct.
+     * The parent widget got a QEvent::LayoutRequest, so the Frame might have changed its constraints.
+     */
+    void onLayoutRequest() const;
+
     void ref();
     void unref();
     int refCount() const; // for tests

@@ -41,8 +41,7 @@ public:
         , m_geometry(m_frame->geometry())
     {
         Q_ASSERT(m_frame);
-        setMinimumSize(QSize(widgetMinLength(m_frame, Qt::Vertical),
-                             widgetMinLength(m_frame, Qt::Horizontal)));
+        setMinimumSize(frameMinSize());
     }
 
     // Overload ctor called when restoring a placeholder Item triggered by LayoutSaver::restore()
@@ -52,6 +51,12 @@ public:
         , m_frame(nullptr)
         , m_geometry(QRect())
     {
+    }
+
+    QSize frameMinSize() const
+    {
+        return QSize(widgetMinLength(m_frame, Qt::Vertical),
+                     widgetMinLength(m_frame, Qt::Horizontal));
     }
 
     void setFrame(Frame *frame);
@@ -383,6 +388,23 @@ void Item::restorePlaceholder(Frame *frame)
     d->m_layout->restorePlaceholder(this);
     d->m_frame->setVisible(true);
     d->setIsPlaceholder(false);
+}
+
+void Item::onLayoutRequest() const
+{
+    if (!d->m_frame)
+        return; // It's a placeholder, nothing to do. TODO: When restoring the placeholder we should update its min size
+
+    QSize frameMinSize = d->frameMinSize().expandedTo(MultiSplitterLayout::hardcodedMinimumSize());
+    if (frameMinSize == d->m_minSize)
+        return; // Nothing to do
+
+
+    // TODO: The new minSize can't be bigger than the current geometry because we don't support that yet
+    // In the future we should resize the item and propagate the resize through the layout
+    const QSize itemMinSize = frameMinSize.boundedTo(d->m_geometry.size());
+
+    d->setMinimumSize(itemMinSize);
 }
 
 void Item::Private::setMinimumSize(QSize sz)
