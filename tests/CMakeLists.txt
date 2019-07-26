@@ -8,6 +8,6 @@ add_executable(tst_docks tst_docks.cpp utils.cpp)
 target_link_libraries(tst_docks docks Qt5::Widgets Qt5::Test)
 
 ##### Fuzzer
-add_executable(fuzzer fuzzer.cpp utils.cpp)
-target_link_libraries(fuzzer docks Qt5::Widgets Qt5::Test)
+#add_executable(fuzzer fuzzer.cpp utils.cpp)
+#target_link_libraries(fuzzer docks Qt5::Widgets Qt5::Test)
 
