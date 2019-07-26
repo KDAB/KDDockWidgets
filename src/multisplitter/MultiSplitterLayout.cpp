@@ -1471,9 +1471,9 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         if (anchorsThatWillFollowOthers.contains(side1Anchor)) {
             Anchor *followee = anchorsThatWillFollowOthers.value(side1Anchor);
             side1Anchor->setFollowee(followee);
-
             side1Anchor = followee;
         }
+
         if (anchorsThatWillFollowOthers.contains(side2Anchor)) {
             Anchor *followee = anchorsThatWillFollowOthers.value(side2Anchor);
             side2Anchor->setFollowee(followee);
@@ -1509,9 +1509,8 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         // Let's try that each anchor contributes 50%, so that the widget appears centered
         const int suggestedLength1 = qMin(newLength, qCeil(newLength / 2) + side1Anchor->thickness() + 1);
         const int maxPos1 = boundPosition2 - newLength - side1Anchor->thickness();
-        const int newPosition1 = qMin(qMax(boundPosition1, oldPosition1 - suggestedLength1), maxPos1); // Honour the bound
+        const int newPosition1 = qMax(qMin(maxPos1, oldPosition1 - suggestedLength1), boundPosition1); // Honour the bound
         const int newPosition2 = newPosition1 + side1Anchor->thickness() + newLength; // No need to check bound2, we have enough space afterall
-
 
         qCDebug(placeholder) << Q_FUNC_INFO
                              << "; oldPos1=" << oldPosition1
@@ -1531,6 +1530,14 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
                              << "; available_old=" << availableSize
                              << "; available_new=" << availableLengthForOrientation(orientation)
                              << "; item.size=" << item->size();
+
+        if (newPosition1 < boundPosition1 || newPosition2 > boundPosition2) {
+            qWarning() << Q_FUNC_INFO << "Out of bounds"
+                       // << "bounds.anchor1=" << boundPositionsForAnchor(side1Anchor)
+                       << "bounds.anchor2=" << boundPositionsForAnchor(side2Anchor)
+                       << "; side1Anchor.thickness" << side1Anchor->thickness()
+                       << "; side2Anchor.thickness" << side2Anchor->thickness();
+        }
 
         // We don't want item to resize the anchors while setting newPosition1, we already calculated it
         side1Anchor->setPosition(newPosition1);

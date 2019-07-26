@@ -466,7 +466,9 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
         minLength = qMax(itemMin, minLength);
     }
 
-    const int thickness = isFollowing() ? 0 : this->thickness();
+    // Dont' use isFollowing() here, because when restoring a placeholder we clear the followers first
+    const int thickness = (isStatic() || hasNonPlaceholderItems(side)) ? this->thickness() : 0;
+
     return thickness + minLength;
 }
 

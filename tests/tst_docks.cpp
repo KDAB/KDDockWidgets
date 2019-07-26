@@ -3897,7 +3897,14 @@ void TestDocks::tst_negativeAnchorPosition5()
     auto dock1 = docks.at(1).createdDock;
 
     dock1->show();
-    // dock0->show(); // uncomment to fail
+
+    Item *item1  = layout->itemForFrame(dock1->frame());
+
+    qDebug() << "contents size" << layout->contentsSize()
+             << "; available=" << layout->availableLengthForOrientation(Qt::Horizontal)
+             << "; item1.min=" << item1->minimumSize();
+
+    dock0->show();
 
     // Cleanup
     for (auto dock : DockRegistry::self()->dockwidgets())
