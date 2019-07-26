@@ -79,6 +79,17 @@ DebugWindow::DebugWindow(QWidget *parent)
     });
 
     button = new QPushButton(this);
+    button->setText(QStringLiteral("Float all visible docks"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        for (auto dw : DockRegistry::self()->dockwidgets()) {
+            if (dw->isVisible() && !dw->isFloating()) {
+                dw->setFloating(true);
+            }
+        }
+    });
+
+    button = new QPushButton(this);
     button->setText(QStringLiteral("Save layout"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
