@@ -313,6 +313,7 @@ void DockWidget::setIcon(const QIcon &icon)
 {
     d->icon = icon;
     d->updateIcon();
+    Q_EMIT iconChanged();
 }
 
 QIcon DockWidget::icon() const

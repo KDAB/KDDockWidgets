@@ -204,6 +204,9 @@ Q_SIGNALS:
     ///@brief signal emitted when the DockWidget is hidden. As in QEvent::Hide.
     void hidden();
 
+    ///@brief signal emitted when the icon changed
+    void iconChanged();
+
 protected:
     bool event(QEvent *) override;
     void closeEvent(QCloseEvent *) override;
