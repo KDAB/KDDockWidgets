@@ -118,6 +118,9 @@ DockWidget::DockWidget(const QString &name, Options options, QWidget *parent, Qt
     , Draggable(this, KDDockWidgets::supportsNativeTitleBar()) // On Linux the draggable is our custom title bar, not the window itself. Because on Linux we only get mouse move events when the mouse button is released
     , d(new Private(name, options, this))
 {
+
+    setAttribute(Qt::WA_DontCreateNativeAncestors); // gives trouble with MFC
+
     d->init();
     DragController::instance();
     DockRegistry::self()->registerDockWidget(this);
