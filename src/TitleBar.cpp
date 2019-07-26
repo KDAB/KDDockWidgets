@@ -140,13 +140,14 @@ void TitleBar::setTitle(const QString &title)
 void TitleBar::setIcon(const QIcon &icon)
 {
     m_icon = icon;
-    if (!m_icon.isNull()) {
+    if (m_icon.isNull()) {
+        m_dockWidgetIcon->setPixmap(QPixmap());
+    } else {
         const QPixmap pix = m_icon.pixmap(QSize(28,28));
         m_dockWidgetIcon->setPixmap(pix);
-    } else {
-        m_dockWidgetIcon->setPixmap(QPixmap());
     }
     update();
+    Q_EMIT iconChanged();
 }
 
 std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
@@ -223,6 +224,11 @@ bool TitleBar::supportsFloatingButton() const
     // If we have a floating window with nested dock widgets we can't re-attach, because we don't
     // know where to
     return !m_floatingWindow || m_floatingWindow->hasSingleFrame();
+}
+
+bool TitleBar::hasIcon() const
+{
+    return !m_icon.isNull();
 }
 
 void TitleBar::updateCloseButton()

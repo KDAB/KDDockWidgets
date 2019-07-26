@@ -47,6 +47,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS TitleBar : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
+    Q_PROPERTY(bool hasIcon READ hasIcon NOTIFY iconChanged)
 public:
     typedef QVector<TitleBar *> List;
     explicit TitleBar(DockWidget *parent);
@@ -70,9 +71,13 @@ public:
 
     ///@brief returns whether this title bar supports a floating/unfloating button
     bool supportsFloatingButton() const;
+
+    ///@brief returns whether this title bar has an icon
+    bool hasIcon() const;
+
 Q_SIGNALS:
     void titleChanged();
-
+    void iconChanged();
 protected:
     void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
