@@ -3908,6 +3908,8 @@ void TestDocks::tst_negativeAnchorPosition5()
 
 void TestDocks::tst_availableSizeWithPlaceholders()
 {
+    // Tests MultiSplitterLayout::available() with and without placeholders. The result should be the same.
+
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks1 = {
         {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
@@ -3927,21 +3929,42 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     auto m2 = createMainWindow(docks2);
     auto m3 = createMainWindow(empty);
 
-    auto f0 = docks2.at(0).createdDock->frame();
-    docks2.at(0).createdDock->close();
-    docks2.at(1).createdDock->close();
-    docks2.at(2).createdDock->close();
-    QVERIFY(waitForDeleted(f0));
-
     auto layout1 = m1->multiSplitterLayout();
     auto layout2 = m2->multiSplitterLayout();
     auto layout3 = m3->multiSplitterLayout();
+
+    auto f20 = docks2.at(0).createdDock->frame();
+
+    docks2.at(0).createdDock->close();
+    docks2.at(1).createdDock->close();
+    docks2.at(2).createdDock->close();
+    QVERIFY(waitForDeleted(f20));
 
     QCOMPARE(layout1->contentsSize(), layout2->contentsSize());
     QCOMPARE(layout1->contentsSize(), layout3->contentsSize());
 
     qDebug() << "CONTENTS SIZE" << layout1->contentsSize();
     QCOMPARE(layout1->availableSize(), layout2->availableSize());
+    QCOMPARE(layout1->availableSize(), layout3->availableSize());
+
+    // Now show 1 widget in m1 and m3
+    docks1.at(0).createdDock->show();
+    m3->addDockWidget(docks2.at(0).createdDock, Location_OnBottom); // just steal from m2
+
+    QCOMPARE(layout1->contentsSize(), layout3->contentsSize());
+
+    Frame *f10 = docks1.at(0).createdDock->frame();
+    Item *item10 = layout1->itemForFrame(f10);
+    Item *item30 = layout3->itemForFrame(docks2.at(0).createdDock->frame());
+
+    // HACK: The Frame's have different minimum size than the Items as they're geometry change later
+    // and the item isn't updated, so for the purpose of this test (available) we force the items
+    // to have the same properties. TODO: Remove the restoreSizes once the Frame propagates its min size
+    // to the item.
+    item10->restoreSizes(item30->minimumSize(), item30->geometry());
+
+    QCOMPARE(item10->geometry(), item30->geometry());
+    QCOMPARE(item10->minimumSize(), item30->minimumSize());
     QCOMPARE(layout1->availableSize(), layout3->availableSize());
 
     // Cleanup
@@ -3952,7 +3975,6 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     docks2.at(1).createdDock->deleteLater();
     docks2.at(2).createdDock->deleteLater();
     QVERIFY(waitForDeleted(docks2.at(2).createdDock));
-
 }
 
 void TestDocks::tst_anchorFollowingItselfAssert()
