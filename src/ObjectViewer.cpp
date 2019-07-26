@@ -104,6 +104,10 @@ QString ObjectViewer::nameForObj(QObject *o) const
     QString name = QString::fromLatin1(o->metaObject()->className());
     if (!o->objectName().isEmpty())
         name += QStringLiteral("(%1)").arg(o->objectName());
+
+    if (auto w = qobject_cast<QWidget*>(o))
+        name += QStringLiteral(" - %1,%2 %3x%4").arg(w->x()).arg(w->y()).arg(w->width()).arg(w->height());
+
     return name;
 }
 
