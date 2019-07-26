@@ -105,8 +105,14 @@ QString ObjectViewer::nameForObj(QObject *o) const
     if (!o->objectName().isEmpty())
         name += QStringLiteral("(%1)").arg(o->objectName());
 
-    if (auto w = qobject_cast<QWidget*>(o))
+    if (auto w = qobject_cast<QWidget*>(o)) {
         name += QStringLiteral(" - %1,%2 %3x%4").arg(w->x()).arg(w->y()).arg(w->width()).arg(w->height());
+
+        if (w->isWindow())
+            name += QStringLiteral(" ;W");
+        if (w->windowHandle() != nullptr)
+            name += QStringLiteral(" ;N");
+    }
 
     return name;
 }
@@ -182,6 +188,8 @@ void ObjectViewer::printProperties(QObject *obj) const
     if (auto w = qobject_cast<QWidget*>(obj)) {
         qDebug() << "Is a widget!";
         qDebug() << "Window=" << w->window();
+        qDebug() << "flags=" << w->windowFlags();
+        qDebug() << "is native?" << (w->windowHandle() != nullptr);
     }
 }
 
