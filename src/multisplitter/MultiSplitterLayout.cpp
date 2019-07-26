@@ -1489,21 +1489,21 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
                                                            : boundPositionForAnchor(side2Anchor, Anchor::Side2);
 
         // Double check the available space again, for sanity
-        /*if (!anchorGroup.hasAvailableSizeFor(newSize)) {
-                qWarning() << "There's not enough space: bound2=" << boundPosition2
-                           << "; bound1=" << boundPosition1 << "; side1Anchor.thickness=" << side1Anchor->thickness()
-                           << "; newSize=" << newSize
-                           << "; newspace=" << boundPosition2 - boundPosition1 - side1Anchor->thickness()
-                           << "; available_old=" << availableSize
-                           << "; available_new=" << this->availableSize()
-                           << "; anchors=" << side1Anchor << side2Anchor
-                           << "; oldPos1=" << oldPosition1
-                           << "; oldPos2=" << oldPosition2
-                           << "; static=" << side1Anchor->isStatic() << side2Anchor->isStatic()
-                           << "; contentsSize=" << m_contentSize;
-                Q_ASSERT(false);
-                return;
-            }*/
+        if (!anchorGroup.hasAvailableSizeFor(newSize)) {
+            qWarning() << "There's not enough space: bound2=" << boundPosition2
+                       << "; bound1=" << boundPosition1 << "; side1Anchor.thickness=" << side1Anchor->thickness()
+                       << "; newSize=" << newSize
+                       << "; newspace=" << boundPosition2 - boundPosition1 - side1Anchor->thickness()
+                       << "; available_old=" << availableSize
+                       << "; available_new=" << this->availableSize()
+                       << "; anchors=" << side1Anchor << side2Anchor
+                       << "; oldPos1=" << oldPosition1
+                       << "; oldPos2=" << oldPosition2
+                       << "; static=" << side1Anchor->isStatic() << side2Anchor->isStatic()
+                       << "; contentsSize=" << m_contentSize;
+            Q_ASSERT(false);
+            return;
+        }
 
         const int newLength = anchorFollowingInwards->isVertical() ? newSize.width() : newSize.height();
         // Let's try that each anchor contributes 50%, so that the widget appears centered
