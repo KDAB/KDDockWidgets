@@ -37,6 +37,7 @@ struct AnchorGroup;
 class MultiSplitterLayout;
 class Frame;
 class DockWidget;
+class TestDocks;
 
 struct GeometryDiff
 {
@@ -171,6 +172,7 @@ Q_SIGNALS:
     void isPlaceholderChanged();
     void minimumSizeChanged();
 private:
+    friend KDDockWidgets::TestDocks;
     friend QDataStream &operator<<(QDataStream &ds, Item *);
     QSize actualMinSize() const; // The min size, regardless if it's a placeholder or not, so we can save the actual value while LayoutSaver::saveLayout
     void restoreSizes(QSize minSize, QRect geometry); // Just for LayoutSaver::restore
