@@ -140,6 +140,22 @@ DebugWindow::DebugWindow(QWidget *parent)
         }
     });
 
+
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("Detach central widget"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        const auto mainWindows = DockRegistry::self()->mainwindows();
+        if (mainWindows.isEmpty())
+            return;
+        auto mainwindow = mainWindows.at(0);
+        auto centralWidget = mainwindow->centralWidget();
+        centralWidget->setParent(nullptr, Qt::Window);
+        if (!centralWidget->isVisible()) {
+            centralWidget->show();
+        }
+    });
+
     resize(800, 800);
 }
 
