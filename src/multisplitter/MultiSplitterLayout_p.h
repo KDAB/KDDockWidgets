@@ -493,6 +493,11 @@ private:
      */
     QPair<int, int> boundPositionsForAnchor(Anchor *) const;
 
+    /**
+     * @brief similar to @ref boundPositionsForAnchor but returns for all anchors
+     */
+    QHash<Anchor*, QPair<int,int>> boundPositionsForAllAnchors() const;
+
     /** Returns how much is available for the new drop. It already counts with the space for new anchor that will be created.
      * So it returns the contentWidth (or height), minus the minimum-sizes of all widgets, minus the thickness of all anchors
      * minus the thickness of the anchor that would be created.
@@ -560,7 +565,6 @@ private:
 
     // Helper function for propagateResize()
     void collectPaths(QVector<Anchor::List> &paths, Anchor *fromAnchor, Anchor::Side direction);
-
 
     // convenience for the unit-tests
     // Moves the widget's bottom or right anchor, to resize it.

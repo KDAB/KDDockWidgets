@@ -649,6 +649,15 @@ QPair<int, int> MultiSplitterLayout::boundPositionsForAnchor(Anchor *anchor) con
     return { minSide1Length - anchor->thickness(), length - minSide2Length };
 }
 
+QHash<Anchor *, QPair<int, int> > MultiSplitterLayout::boundPositionsForAllAnchors() const
+{
+    QHash<Anchor *, QPair<int, int> > result;
+    for (Anchor *anchor : m_anchors)
+        result.insert(anchor, boundPositionsForAnchor(anchor));
+
+    return result;
+}
+
 int MultiSplitterLayout::boundPositionForAnchor(Anchor *anchor, Anchor::Side direction) const
 {
     auto bounds = boundPositionsForAnchor(anchor);
