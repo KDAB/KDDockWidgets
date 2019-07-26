@@ -207,6 +207,8 @@ Q_SIGNALS:
     ///@brief signal emitted when the icon changed
     void iconChanged();
 
+    ///@brief signal emitted when the title changed
+    void titleChanged();
 protected:
     bool event(QEvent *) override;
     void closeEvent(QCloseEvent *) override;

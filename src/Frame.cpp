@@ -151,10 +151,15 @@ void Frame::insertWidget(DockWidget *dockWidget, int index)
     if (hasSingleDockWidget()) {
         Q_EMIT currentDockWidgetChanged(dockWidget);
     }
+
+    connect(dockWidget, &DockWidget::titleChanged, this, &Frame::updateTitleAndIcon);
+    connect(dockWidget, &DockWidget::iconChanged, this, &Frame::updateTitleAndIcon);
 }
 
 void Frame::removeWidget(DockWidget *dw)
 {
+    disconnect(dw, &DockWidget::titleChanged, this, &Frame::updateTitleAndIcon);
+    disconnect(dw, &DockWidget::iconChanged, this, &Frame::updateTitleAndIcon);
     m_tabWidget->removeDockWidget(dw);
 }
 
