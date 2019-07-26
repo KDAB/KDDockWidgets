@@ -70,6 +70,9 @@ ObjectViewer::ObjectViewer(QWidget *parent)
     action = m_menu.addAction(QStringLiteral("Print to png"));
     connect(action, &QAction::triggered, this, &ObjectViewer::dumpSelectedWidgetToPng);
 
+    action = m_menu.addAction(QStringLiteral("Toggle Visible"));
+    connect(action, &QAction::triggered, this, &ObjectViewer::toggleVisible);
+
     refresh();
     setWindowTitle(QStringLiteral("ObjectViewer"));
 }
@@ -102,6 +105,12 @@ void ObjectViewer::updateSelectedWidget()
 {
     if (auto w = selectedWidget())
         w->update();
+}
+
+void ObjectViewer::toggleVisible()
+{
+    if (auto w = selectedWidget())
+        w->setVisible(!w->isVisible());
 }
 
 void ObjectViewer::dumpWindows()
@@ -238,7 +247,11 @@ void ObjectViewer::updateItemAppearence(QStandardItem *item)
     if (!widget)
         return;
 
-    item->setEnabled(widget->isVisible());
+    if (widget->isVisible()) {
+        item->setForeground(Qt::black);
+    } else {
+        item->setForeground(Qt::gray);
+    }
 }
 
 QObject *ObjectViewer::objectForItem(QStandardItem *item) const

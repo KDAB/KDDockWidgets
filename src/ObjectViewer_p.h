@@ -50,6 +50,7 @@ public:
 private:
     void dumpSelectedWidgetToPng();
     void updateSelectedWidget();
+    void toggleVisible();
     void dumpWindows();
     QString nameForObj(QObject *o) const;
     void add(QObject *obj, QStandardItem *parent);
