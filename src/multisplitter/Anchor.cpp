@@ -50,6 +50,7 @@ Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, 
 
 Anchor::~Anchor()
 {
+    m_separatorWidget->setEnabled(false);
     m_separatorWidget->deleteLater();
     qCDebug(multisplittercreation) << "~Anchor; this=" << this << "; m_to=" << m_to << "; m_from=" << m_from;
     m_layout->removeAnchor(this);

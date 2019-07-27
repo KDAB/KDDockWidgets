@@ -33,6 +33,7 @@ SeparatorWidget::SeparatorWidget(KDDockWidgets::Anchor *anchor, QWidget *parent)
     : QWidget(parent)
     , m_anchor(anchor)
 {
+    Q_ASSERT(anchor);
     const int thickness = Anchor::thickness(isStatic());
     if (isVertical())
         setFixedWidth(thickness);
@@ -90,7 +91,9 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
 void SeparatorWidget::enterEvent(QEvent *)
 {
     qCDebug(anchors) << Q_FUNC_INFO << m_anchor.isNull() << isEnabled() << this;
-    Q_ASSERT(m_anchor);
+    if (!m_anchor)
+        return;
+
     if (!isStatic()) {
         if (isVertical())
             setCursor(Qt::SizeHorCursor);
