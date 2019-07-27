@@ -90,7 +90,7 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
 void SeparatorWidget::enterEvent(QEvent *)
 {
     qCDebug(anchors) << Q_FUNC_INFO << m_anchor.isNull() << isEnabled() << this;
-
+    Q_ASSERT(m_anchor);
     if (!isStatic()) {
         if (isVertical())
             setCursor(Qt::SizeHorCursor);
