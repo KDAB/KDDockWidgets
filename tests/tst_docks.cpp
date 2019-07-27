@@ -345,6 +345,7 @@ private Q_SLOTS:
     void tst_restoreWithNonClosableWidget();
     void tst_restoreAfterResize();
     void tst_marginsAfterRestore();
+    void tst_restoreEmbeddedMainWindow();
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
@@ -4669,6 +4670,35 @@ void TestDocks::tst_clear()
 
     dock3->deleteLater();
     QVERIFY(waitForDeleted(dock3));
+}
+
+void TestDocks::tst_restoreEmbeddedMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
+    EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
+
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    window->mainWindow->addDockWidget(dock1, Location_OnTop);
+
+    const QPoint originalPos(250, 250);
+    const QSize originalSize = window->size();
+    window->move(originalPos);
+
+    LayoutSaver saver;
+    QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    window->resize(555, 555);
+    const QPoint newPos(500, 500);
+    window->move(newPos);
+    QVERIFY(saver.restoreLayout(saved));
+
+    QCOMPARE(window->pos(), originalPos);
+    QCOMPARE(window->size(), originalSize);
+
+
+    delete window;
 }
 
 // QTest::qWait(50000)

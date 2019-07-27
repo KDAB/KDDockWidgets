@@ -127,7 +127,7 @@ QByteArray LayoutSaver::serializeLayout() const
     ds << mainWindows.size();
     for (MainWindow *mainWindow : mainWindows) {
         ds << mainWindow->name();
-        d->serializeWindowGeometry(ds, mainWindow);
+        d->serializeWindowGeometry(ds, mainWindow->window()); // window() as the MainWindow can be embedded
         ds << mainWindow;
     }
 
@@ -198,7 +198,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             return false;
         }
 
-        d->deserializeWindowGeometry(ds, mainWindow);
+        d->deserializeWindowGeometry(ds, mainWindow->window()); // window() as the MainWindow can be embedded
 
         if (!mainWindow->fillFromDataStream(ds))
             return false;
