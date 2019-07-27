@@ -1848,7 +1848,7 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
     Q_EMIT minimumSizeChanged(m_minSize);
 
     if (m_contentSize != multiSplitter()->size()) {
-        setContentsSize(m_contentSize);
+        setContentsSize(multiSplitter()->size());
     }
 
     return true;

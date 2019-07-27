@@ -47,7 +47,7 @@ MultiSplitterWidget::MultiSplitterWidget(QWidget *parent)
     });
 
     connect(m_layout, &MultiSplitterLayout::contentsSizeChanged, this, [this] (QSize sz) {
-        if (!m_inResizeEvent)
+        if (!m_inResizeEvent && !LayoutSaver::restoreInProgress())
             resize(sz);
     });
 }
