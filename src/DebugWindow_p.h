@@ -42,6 +42,10 @@ public:
     explicit DebugWindow(QWidget *parent = nullptr);
 
 private:
+#ifdef Q_OS_WIN
+    void dumpWindow(QWidget *);
+    void dumpWindows();
+#endif
     void dumpDockWidgetInfo();
     ObjectViewer m_objectViewer;
     QEventLoop *m_isPickingWidget = nullptr;

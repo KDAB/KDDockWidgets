@@ -40,6 +40,12 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QMouseEvent>
+#include <QWindow>
+
+#ifdef Q_OS_WIN
+# include <Windows.h>
+# include <WinUser.h>
+#endif
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Debug;
@@ -167,7 +173,45 @@ DebugWindow::DebugWindow(QWidget *parent)
         }
     });
 
+#ifdef Q_OS_WIN
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("Dump native windows"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, &DebugWindow::dumpWindows);
+#endif
+
     resize(800, 800);
+}
+
+#ifdef Q_OS_WIN
+void DebugWindow::dumpWindow(QWidget *w)
+{
+    if (QWindow *window = w->windowHandle()) {
+        HWND hwnd = HWND(w->winId());
+
+        RECT clientRect;
+        RECT rect;
+        GetWindowRect(hwnd, &rect);
+        GetClientRect(hwnd, &clientRect);
+
+        qDebug() << w
+                 << QStringLiteral(" ClientRect=%1,%2 %3x%4").arg(clientRect.left).arg(clientRect.top).arg(clientRect.right - clientRect.left + 1).arg(clientRect.bottom - clientRect.top + 1)
+                 << QStringLiteral(" WindowRect=%1,%2 %3x%4").arg(rect.left).arg(rect.top).arg(rect.right - rect.left + 1).arg(rect.bottom - rect.top + 1);
+
+    }
+
+    for (QObject *child : w->children()) {
+        if (auto childW = qobject_cast<QWidget*>(child)) {
+            dumpWindow(childW);
+        }
+    }
+}
+#endif
+
+void DebugWindow::dumpWindows()
+{
+    for (QWidget *w : qApp->topLevelWidgets())
+        dumpWindow(w);
 }
 
 void DebugWindow::dumpDockWidgetInfo()
