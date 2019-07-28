@@ -173,6 +173,14 @@ DebugWindow::DebugWindow(QWidget *parent)
         }
     });
 
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("Repaint all widgets"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [this] {
+        for (auto w : qApp->topLevelWidgets())
+            repaintWidgetRecursive(w);
+    });
+
 #ifdef Q_OS_WIN
     button = new QPushButton(this);
     button->setText(QStringLiteral("Dump native windows"));
@@ -214,6 +222,16 @@ void DebugWindow::dumpWindows()
 {
     for (QWidget *w : qApp->topLevelWidgets())
         dumpWindow(w);
+}
+
+void DebugWindow::repaintWidgetRecursive(QWidget *w)
+{
+    w->repaint();
+    for (QObject *child : w->children()) {
+        if (auto childW = qobject_cast<QWidget*>(child)) {
+            repaintWidgetRecursive(childW);
+        }
+    }
 }
 
 #endif

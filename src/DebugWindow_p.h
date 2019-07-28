@@ -46,6 +46,9 @@ private:
     void dumpWindow(QWidget *);
     void dumpWindows();
 #endif
+
+    void repaintWidgetRecursive(QWidget *);
+
     void dumpDockWidgetInfo();
     ObjectViewer m_objectViewer;
     QEventLoop *m_isPickingWidget = nullptr;
