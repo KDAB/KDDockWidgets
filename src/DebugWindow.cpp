@@ -208,13 +208,15 @@ void DebugWindow::dumpWindow(QWidget *w)
         }
     }
 }
-#endif
+
 
 void DebugWindow::dumpWindows()
 {
     for (QWidget *w : qApp->topLevelWidgets())
         dumpWindow(w);
 }
+
+#endif
 
 void DebugWindow::dumpDockWidgetInfo()
 {
