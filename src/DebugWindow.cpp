@@ -224,6 +224,8 @@ void DebugWindow::dumpWindows()
         dumpWindow(w);
 }
 
+#endif
+
 void DebugWindow::repaintWidgetRecursive(QWidget *w)
 {
     w->repaint();
@@ -233,8 +235,6 @@ void DebugWindow::repaintWidgetRecursive(QWidget *w)
         }
     }
 }
-
-#endif
 
 void DebugWindow::dumpDockWidgetInfo()
 {
