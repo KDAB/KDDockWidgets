@@ -227,8 +227,10 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     const bool recalculatePercentage = !(options & SetPositionOption_DontRecalculatePercentage) && !m_layout->isResizing();
 
     m_separatorWidget->move(p);
-    if (recalculatePercentage)
-        m_positionPercentage = (p * 1.0) / m_layout->contentsWidth(); // We keep the percentage, so we don't constantly recalculate it during a resize, which introduces rounding errors
+    if (recalculatePercentage) {
+        // We keep the percentage, so we don't constantly recalculate it during a resize, which introduces rounding errors
+        updatePositionPercentage();
+    }
 
     // Note: Position can be slightly negative if the main window isn't big enougn to host the new size.
     // In that case the window will be resized shortly after
@@ -236,6 +238,11 @@ void Anchor::setPosition(int p, SetPositionOptions options)
 
     Q_EMIT positionChanged(position());
     updateItemSizes();
+}
+
+void Anchor::updatePositionPercentage()
+{
+    m_positionPercentage = (position() * 1.0) / m_layout->contentsWidth();
 }
 
 int Anchor::position() const
@@ -762,6 +769,7 @@ Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layou
     auto anchor = new Anchor(Qt::Orientation(orientation), layout, Anchor::Type(type));
     anchor->setObjectName(objectName);
     anchor->setGeometry(geometry);
+    anchor->updatePositionPercentage();
     anchor->setProperty("indexFrom", indexFrom);
     anchor->setProperty("indexTo", indexTo);
     anchor->setProperty("indexFolowee", indexFolowee);

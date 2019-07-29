@@ -137,7 +137,9 @@ public:
     void removeItems(Side);
     bool isVertical() const { return m_orientation == Qt::Vertical; }
     void setPosition(int p, SetPositionOptions = SetPositionOption_None);
+    void updatePositionPercentage();
     int position() const;
+
     void setVisible(bool);
     qreal positionPercentage() const { return m_positionPercentage; }
 

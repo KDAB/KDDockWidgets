@@ -347,6 +347,7 @@ private Q_SLOTS:
     void tst_marginsAfterRestore();
     void tst_restoreEmbeddedMainWindow();
 
+    void tst_resizeWindow_data();
     void tst_resizeWindow();
     void tst_resizeWindow2();
 private:
@@ -4705,8 +4706,17 @@ void TestDocks::tst_restoreEmbeddedMainWindow()
     delete window;
 }
 
+void TestDocks::tst_resizeWindow_data()
+{
+    QTest::addColumn<bool>("doASaveRestore");
+    QTest::newRow("false") << false;
+    QTest::newRow("true") << true;
+}
+
 void TestDocks::tst_resizeWindow()
 {
+    QFETCH(bool, doASaveRestore);
+
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
@@ -4726,6 +4736,11 @@ void TestDocks::tst_resizeWindow()
     const int oldWidth2 = dock2->width();
 
     QCOMPARE(oldWidth1, oldWidth2);
+
+    if (doASaveRestore) {
+        LayoutSaver saver;
+        saver.restoreLayout(saver.serializeLayout());
+    }
 
     m->showMaximized();
     QVERIFY(waitForResize(m.get()));
