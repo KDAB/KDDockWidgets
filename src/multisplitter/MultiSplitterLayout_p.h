@@ -337,7 +337,7 @@ public:
     /**
      * @brief Removes unneeded placeholder items when adding new frames.
      *
-     * A floating frame A might have a placeholder in the main window (for example to remember it's position on the Left),
+     * A floating frame A might have a placeholder in the main window (for example to remember its position on the Left),
      * but then the user might attach it to the right, so the left placeholder is no longer need.
      * Right before adding the frame to the right we remove the left placeholder, otherwise it's unrefed while we're adding
      * causing a segfault. So what this does is making the unrefing happen a bit earlier.
@@ -570,6 +570,9 @@ private:
     // Moves the widget's bottom or right anchor, to resize it.
     void resizeItem(Frame *frame, int newSize, Qt::Orientation);
 
+    ///@brief returns whether we're inside setContentsSize();
+    bool isResizing() const { return m_resizing; }
+
     MultiSplitterWidget *const m_multiSplitter;
     Anchor::List m_anchors;
 
@@ -583,6 +586,7 @@ private:
     bool m_inDestructor = false;
     bool m_beingMergedIntoAnotherMultiSplitter = false;
     bool m_doSanityChecks = true;
+    bool m_resizing = false;
 
     QSize m_minSize = QSize(0, 0);
     AnchorGroup m_staticAnchorGroup;

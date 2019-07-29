@@ -347,6 +347,7 @@ private Q_SLOTS:
     void tst_marginsAfterRestore();
     void tst_restoreEmbeddedMainWindow();
 
+    void tst_resizeWindow();
     void tst_resizeWindow2();
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -4702,6 +4703,49 @@ void TestDocks::tst_restoreEmbeddedMainWindow()
 
 
     delete window;
+}
+
+void TestDocks::tst_resizeWindow()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+
+    auto layout = m->multiSplitterLayout();
+    Item *item1 = layout->itemForFrame(dock1->frame());
+    Anchor *anchor = item1->anchorGroup().right;
+
+    // Move the separator so the both dock widgets have the same space
+    const int delta = dock1->width() - dock2->width();
+    anchor->setPosition(anchor->position() - delta / 2);
+
+    const int oldWidth1 = dock1->width();
+    const int oldWidth2 = dock2->width();
+
+    QCOMPARE(oldWidth1, oldWidth2);
+
+    m->showMaximized();
+    QVERIFY(waitForResize(m.get()));
+
+    const int maximizedWidth1 = dock1->width();
+    const int maximizedWidth2 = dock2->width();
+
+    const double relativeDifference = qAbs((maximizedWidth1 - maximizedWidth2) / (1.0 * layout->contentsWidth()));
+
+    qDebug() << oldWidth1 << oldWidth2 << maximizedWidth1 << maximizedWidth2 << relativeDifference;
+    QVERIFY(relativeDifference <= 0.01);
+
+    m->showNormal();
+    QVERIFY(waitForResize(m.get()));
+
+    const int newWidth1 = dock1->width();
+    const int newWidth2 = dock2->width();
+
+    QCOMPARE(oldWidth1, newWidth1);
+    QCOMPARE(oldWidth2, newWidth2);
 }
 
 void TestDocks::tst_resizeWindow2()

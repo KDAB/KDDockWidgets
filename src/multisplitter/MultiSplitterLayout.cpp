@@ -1036,7 +1036,7 @@ void MultiSplitterLayout::redistributeSpace_recursive(Anchor *fromAnchor, int mi
             // For the bounding, use Anchor::minPosition, as we're not making the anchors on the left/top shift, which boundsPositionsForAnchor() assumes.
             const int newPositionBounded = qBound(minAnchorPos, newPosition, bounds.second);
 
-            qCDebug(sizing) << Q_FUNC_INFO << nextAnchor << "FOO ; bounds.first=" << bounds.first
+            qCDebug(sizing) << Q_FUNC_INFO << nextAnchor << "bounds.first=" << bounds.first
                             << "; newPosition=" << newPosition
                             << "; bounds.first=" << bounds.first
                             << "; bounds.second=" << bounds.second
@@ -1569,6 +1569,7 @@ void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdd
 void MultiSplitterLayout::setContentsSize(QSize size)
 {
     if (size != m_contentSize) {
+        m_resizing = true;
         QSize oldSize = m_contentSize;
 
         if (size.width() < m_minSize.width() || size.height() < m_minSize.height()) {
@@ -1586,7 +1587,9 @@ void MultiSplitterLayout::setContentsSize(QSize size)
 
         m_contentSize = size;
         Q_EMIT contentsSizeChanged(size);
+
         redistributeSpace(oldSize, size);
+        m_resizing = false;
     }
 }
 

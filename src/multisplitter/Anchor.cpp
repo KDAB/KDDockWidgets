@@ -220,7 +220,11 @@ void Anchor::setPosition(int p, SetPositionOptions options)
         m_geometry.moveTop(p);
     }
 
-    const bool recalculatePercentage = !(options & SetPositionOption_DontRecalculatePercentage);
+    /**
+     * If we're in the middle of a resize then remember the relative positions, so we can do
+     * a redistribution so that relatively all widgets occupy the same amount
+     */
+    const bool recalculatePercentage = !(options & SetPositionOption_DontRecalculatePercentage) && !m_layout->isResizing();
 
     m_separatorWidget->move(p);
     if (recalculatePercentage)
