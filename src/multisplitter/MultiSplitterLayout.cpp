@@ -1005,10 +1005,15 @@ void MultiSplitterLayout::redistributeSpace(QSize oldSize, QSize newSize)
     if (oldSize == newSize || !oldSize.isValid() || !newSize.isValid())
         return;
 
-    qCDebug(sizing) << "MultiSplitterLayout::redistributeSpace old=" << oldSize << "; new=" << newSize;
+    qCDebug(sizing) << Q_FUNC_INFO << "old=" << oldSize << "; new=" << newSize;
 
-    redistributeSpace_recursive(m_leftAnchor, 0);
-    redistributeSpace_recursive(m_topAnchor, 0);
+    const bool widthChanged = oldSize.width() != newSize.width();
+    const bool heightChanged = oldSize.height() != newSize.height();
+
+    if (widthChanged)
+        redistributeSpace_recursive(m_leftAnchor, 0);
+    if (heightChanged)
+        redistributeSpace_recursive(m_topAnchor, 0);
 }
 
 void MultiSplitterLayout::redistributeSpace_recursive(Anchor *fromAnchor, int minAnchorPos)
