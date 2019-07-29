@@ -97,6 +97,9 @@ Q_SIGNALS:
 protected:
     void closeEvent(QCloseEvent *) override;
     void paintEvent(QPaintEvent *) override;
+#if defined(Q_OS_WIN)
+    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
+#endif
 
     ///@brief reimplemented for debug purposes
     void resizeEvent(QResizeEvent *) override;
