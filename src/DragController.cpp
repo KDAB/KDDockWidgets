@@ -120,7 +120,9 @@ void StateNone::onEntry(QEvent *)
 
 bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
 {
-    qCDebug(state) << "StateNone::handleMouseButtonPress: draggable" << draggable << "; globalPos" << globalPos;
+    qCDebug(state) << "StateNone::handleMouseButtonPress: draggable"
+                   << draggable << "; globalPos" << globalPos
+                   << draggable->asWidget();
 
     q->m_draggable = draggable;
     q->m_pressPos = globalPos;

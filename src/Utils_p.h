@@ -44,6 +44,15 @@ inline bool supportsNativeTitleBar()
 #endif
 }
 
+inline bool supportsAeroSnap()
+{
+#ifdef Q_OS_WIN
+    return false; // Change here to enable it
+#else
+    return false;
+#endif
+}
+
 inline bool windowManagerSupportsTranslucency()
 {
 #ifdef QT_X11EXTRAS_LIB

@@ -40,7 +40,7 @@ static int s_dbg_numFloatingWindows = 0;
 using namespace KDDockWidgets;
 
 FloatingWindow::FloatingWindow(QWidget *parent)
-    : QWidget(parent, Qt::Tool)
+    : QWidget(parent, KDDockWidgets::supportsAeroSnap() ? Qt::Window : Qt::Tool)
     , Draggable(this)
     , m_titleBar(new TitleBar(this))
     , m_vlayout(new QVBoxLayout(this))
@@ -118,13 +118,12 @@ bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, lon
 
 void FloatingWindow::maybeCreateResizeHandler()
 {
-    if (!KDDockWidgets::supportsNativeTitleBar()) {
-#if !defined(Q_OS_WIN)
+    if (!KDDockWidgets::supportsNativeTitleBar() && !KDDockWidgets::supportsAeroSnap()) {
         setWindowFlag(Qt::FramelessWindowHint, true);
         setWidgetResizeHandler(new WidgetResizeHandler(this));
-#endif
     }
 }
+
 
 std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()
 {
