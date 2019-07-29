@@ -320,7 +320,6 @@ const AnchorGroup &Item::anchorGroup() const
 int Item::cumulativeMinLength(Anchor::Side side, Qt::Orientation orientation) const
 {
     Anchor *oppositeAnchor = anchorAtSide(side, orientation);
-    Q_ASSERT(oppositeAnchor);
     if (!oppositeAnchor) {
         // Shouldn't happen. But don't assert as this might be being called from a dumpDebug()
         qWarning() << Q_FUNC_INFO << "Null opposite anchor";
