@@ -460,7 +460,6 @@ Frame *Frame::createFromDataStream(QDataStream &ds)
 
     frame->setCurrentTabIndex(currentTabIndex);
     frame->setGeometry(geo);
-    frame->show();
 
     return frame;
 }

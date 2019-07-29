@@ -555,6 +555,11 @@ Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
     auto item = hasFrame ? new Item(Frame::createFromDataStream(ds), layout)
                          : new Item(layout);
 
+    if (hasFrame) {
+        // Show only after the frame is parented, so we don't flicker
+        item->frame()->show();
+    }
+
     item->setIsPlaceholder(isPlaceholder);
     item->setObjectName(objectName);
     item->restoreSizes(minSize, geo);
