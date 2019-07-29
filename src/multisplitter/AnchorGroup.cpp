@@ -393,7 +393,9 @@ void AnchorGroup::addItem(MultiSplitterLayout *sourceMultiSplitter)
             } else {
                 newPos = top->position() + (height() * positionPercentage);
             }
-            anchor->setPosition(static_cast<int>(newPos));
+
+            const QPair<int,int> bounds = layout->boundPositionsForAnchor(anchor);
+            anchor->setPosition(qBound(bounds.first, static_cast<int>(newPos), bounds.second));
         }
     }
 

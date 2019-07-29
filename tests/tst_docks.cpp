@@ -1054,7 +1054,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 
     QVERIFY(anchors[1]->position() < anchors[0]->position());
     fw2->dropArea()->debug_updateItemNamesForGammaray();
-    //QVERIFY(fw2->dropArea()->checkSanity()); broken, will be fixed in next commit
+    QVERIFY(fw2->dropArea()->checkSanity());
 
     ///Cleanup
     fw2->deleteLater();
