@@ -30,7 +30,6 @@
 
 #include "docks_export.h"
 #include "KDDockWidgets.h"
-#include "Draggable_p.h"
 
 #include <QVector>
 #include <QWidget>
@@ -54,7 +53,6 @@ class LayoutSaver;
  * @brief Represents a dock widget.
  */
 class DOCKS_EXPORT DockWidget : public QWidget
-    , public Draggable
 {
     Q_OBJECT
 public:
@@ -212,13 +210,7 @@ Q_SIGNALS:
 protected:
     bool event(QEvent *) override;
     void closeEvent(QCloseEvent *) override;
-    /**
-     * @brief Called internally by via the Draggable interface.
-     * This function is only called on Windows. On Linux/mac there's no native title-bar, so you
-     * drag something else instead (a KDDockWidgets::TabWidget tab or a KDDockWidgets::TitleBar).
-     * @return a WindowBeingDragged instance
-     */
-    std::unique_ptr<WindowBeingDragged> makeWindow() override;
+
     /**
      * @brief paints a frame, in case this DockWidget is a top-level QWidget (window).
      * @param the paint event
@@ -254,7 +246,6 @@ private:
     friend class KDDockWidgets::TabWidget;
     friend class KDDockWidgets::DragController;
     friend class KDDockWidgets::TitleBar;
-    friend struct KDDockWidgets::WindowBeingDragged;
     friend class KDDockWidgets::Item;
     friend class KDDockWidgets::DockRegistry;
     friend class KDDockWidgets::LayoutSaver;

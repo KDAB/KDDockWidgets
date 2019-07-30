@@ -43,14 +43,6 @@ public:
         init();
     }
 
-    WindowBeingDragged(DockWidget *dock)
-        : m_floatingWindow(nullptr)
-        , m_dockWidget(dock)
-        , m_draggable(dock)
-    {
-        init();
-    }
-
     ~WindowBeingDragged();
     void init();
 

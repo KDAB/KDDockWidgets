@@ -115,18 +115,12 @@ public:
 
 DockWidget::DockWidget(const QString &name, Options options, QWidget *parent, Qt::WindowFlags flags)
     : QWidget(parent, flags | Qt::Tool)
-    , Draggable(this, KDDockWidgets::supportsNativeTitleBar()) // On Linux the draggable is our custom title bar, not the window itself. Because on Linux we only get mouse move events when the mouse button is released
     , d(new Private(name, options, this))
 {
     d->init();
     DragController::instance();
     DockRegistry::self()->registerDockWidget(this);
     qCDebug(creation) << "DockWidget" << this;
-
-    if (!KDDockWidgets::supportsNativeTitleBar()) {
-        setWindowFlag(Qt::FramelessWindowHint, true);
-        setWidgetResizeHandler(new WidgetResizeHandler(this));
-    }
 
     if (name.isEmpty())
         qWarning() << Q_FUNC_INFO << "Name can't be null";
@@ -327,9 +321,6 @@ bool DockWidget::event(QEvent *e)
         d->updateToggleAction();
     } else if (e->type() == QEvent::Show) {
         d->updateLayoutMargin();
-        if (widgetResizeHandler()) {
-            widgetResizeHandler()->setActive(isWindow());
-        }
         Q_EMIT shown();
 
         if (Frame *f = frame()) {
@@ -363,18 +354,6 @@ void DockWidget::closeEvent(QCloseEvent *e)
 
     if (e->isAccepted())
         d->close();
-}
-
-std::unique_ptr<WindowBeingDragged> DockWidget::makeWindow()
-{
-    // No need to show(). The only way DockWidget can be dragged directly is on Windows via its native title bar
-    // so it's already a window. On Linux the TitleBar is the draggable)
-
-    if (!KDDockWidgets::supportsNativeTitleBar()) {
-        qFatal("DockWidget::makeWindow() was called but native title bar isn't supported");
-    }
-
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(this));
 }
 
 void DockWidget::paintEvent(QPaintEvent *)

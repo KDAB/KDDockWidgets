@@ -172,9 +172,15 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     }
 
     if (m_dockWidget) {
-        // It's a dock widget that wasn't transformed into FloatingWindow yet
-        qCDebug(hovering) << "TitleBar::makeWindow: Returning unmorphed DockWidget";
-        return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(m_dockWidget));
+        // It's a dock widget that wasn't transformed into FloatingWindow yet.
+        // Usually doesn't happen, as the window is morphed immediately
+        qCDebug(hovering) << "TitleBar::makeWindow: unmorphed DockWidget";
+        if (m_dockWidget == m_dockWidget->window()) {
+            FloatingWindow *window = m_dockWidget->morphIntoFloatingWindow();
+            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(window));
+        }
+
+        return {};
     }
 
     qCDebug(hovering) << "TitleBar::makeWindow: isFloating=" << isFloatingWindow() << "; isTheOnlyFrame=" << m_frame->isTheOnlyFrame() << "; frame=" << m_frame;
