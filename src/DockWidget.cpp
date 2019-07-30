@@ -423,7 +423,7 @@ LastPosition *DockWidget::lastPosition() const
 
 void DockWidget::Private::updateTitleBarVisibility()
 {
-    titlebar->setVisible(q->isWindow() && !KDDockWidgets::supportsNativeTitleBar());
+    titlebar->setVisible(q->isWindow());
 }
 
 void DockWidget::Private::updateTitle()
@@ -501,7 +501,7 @@ void DockWidget::Private::close()
 
 void DockWidget::Private::updateLayoutMargin()
 {
-    const int margin = (!q->isWindow() || KDDockWidgets::supportsNativeTitleBar()) ? 0 : 4;
+    const int margin = !q->isWindow() ? 0 : 4;
     layout->setContentsMargins(margin, margin, margin, margin);
 }
 
