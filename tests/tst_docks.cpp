@@ -502,7 +502,8 @@ static void drag(QWidget *sourceWidget, QPoint pressGlobalPos, QPoint globalDest
         QTest::qWait(DEBUGGING_PAUSE_DURATION);
 
     qDebug() << "Moving sourceWidget to" << globalDest
-             << "; sourceWidget->size=" << sourceWidget->size();
+             << "; sourceWidget->size=" << sourceWidget->size()
+             << "; from=" << QCursor::pos();
     moveMouseTo(globalDest, sourceWidget);
     qDebug() << "Arrived at" << QCursor::pos();
     pressGlobalPos = sourceWidget->mapToGlobal(QPoint(10, 10));
@@ -676,19 +677,23 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     // 2.4 Drag the first dock over the second
     frame1 = dock1->frame();
     frame2 = dock2->frame();
-    drag(dock1, frame1->mapToGlobal(QPoint(10, 10)), dock2->window()->geometry().center());
+    globalPressPos = frame1->titleBar()->mapToGlobal(QPoint(100,5));
+    drag(frame1->titleBar(), globalPressPos, dock2->window()->geometry().center());
+
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
     // 2.5 Detach and drop to the same place, should tab again
     globalPressPos = frame2->dragPointForWidget(0);
     tabBar = tabBarForFrame(frame2);
+
     drag(tabBar, globalPressPos, dock2->window()->geometry().center());
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
     // 2.6 Drag the tabbed group over a 3rd floating window
     auto dock3 = createDockWidget(QStringLiteral("doc3"), Qt::black);
     QTest::qWait(1000); // Test is flaky otherwise
-    drag(frame2->window(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
+
+    drag(frame2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
 
     QVERIFY(waitForDeleted(frame1));
     QVERIFY(waitForDeleted(frame2));
@@ -705,7 +710,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         m.show();
         m.setGeometry(500, 300, 300, 300);
         QVERIFY(!dock3->isFloating());
-        drag(dock3->window(), dock3->window()->mapToGlobal(QPoint(10, 10)), m.geometry().center());
+        drag(dock3->frame()->titleBar(), dock3->window()->mapToGlobal(QPoint(10, 10)), m.geometry().center());
         QVERIFY(!dock3->isFloating());
         QVERIFY(qobject_cast<MainWindow *>(dock3->window()) == &m);
         QCOMPARE(dock3->frame()->dockWidgetCount(), 3);

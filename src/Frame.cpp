@@ -217,6 +217,11 @@ bool Frame::contains(DockWidget *dockWidget) const
     return false;
 }
 
+FloatingWindow *Frame::floatingWindow() const
+{
+    return qobject_cast<FloatingWindow*>(window());
+}
+
 void Frame::restoreToPreviousPosition()
 {
     if (hasSingleDockWidget()) {

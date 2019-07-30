@@ -134,6 +134,9 @@ public:
     bool contains(DockWidget *w) const;
 
 
+    ///@brief returns the FloatingWindow this frame is in, if any
+    FloatingWindow *floatingWindow() const;
+
     /**
      * @brief Puts the Frame back in its previous main window position
      *

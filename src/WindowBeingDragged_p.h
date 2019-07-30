@@ -23,16 +23,18 @@
 
 #include "docks_export.h"
 #include "FloatingWindow_p.h"
+
 #include <QPointer>
 
 namespace KDDockWidgets {
 
 class FloatingWindow;
+class Draggable;
 
 struct DOCKS_EXPORT_FOR_UNIT_TESTS WindowBeingDragged
 {
 public:
-    explicit WindowBeingDragged(FloatingWindow *fw);
+    explicit WindowBeingDragged(FloatingWindow *fw, Draggable *draggable);
     ~WindowBeingDragged();
     void init();
 
@@ -44,6 +46,7 @@ public:
 private:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<FloatingWindow> m_floatingWindow;
+    QPointer<QWidget> m_draggable;
 };
 }
 

@@ -41,7 +41,7 @@ using namespace KDDockWidgets;
 
 FloatingWindow::FloatingWindow(QWidget *parent)
     : QWidget(parent, KDDockWidgets::supportsAeroSnap() ? Qt::Window : Qt::Tool)
-    , Draggable(this)
+    , Draggable(this, KDDockWidgets::supportsNativeTitleBar()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_titleBar(new TitleBar(this))
     , m_vlayout(new QVBoxLayout(this))
     , m_dropArea(new DropArea(this))
@@ -128,7 +128,7 @@ void FloatingWindow::maybeCreateResizeHandler()
 
 std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()
 {
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(this));
+    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(this, this));
 }
 
 const Frame::List FloatingWindow::frames() const

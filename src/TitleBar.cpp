@@ -168,7 +168,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 
     if (m_floatingWindow) {
         // We're already a floating window, no detach needed
-        return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(m_floatingWindow));
+        return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(m_floatingWindow, this));
     }
 
     if (m_dockWidget) {
@@ -177,7 +177,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         qCDebug(hovering) << "TitleBar::makeWindow: unmorphed DockWidget";
         if (m_dockWidget == m_dockWidget->window()) {
             FloatingWindow *window = m_dockWidget->morphIntoFloatingWindow();
-            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(window));
+            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(window, this));
         }
 
         return {};
@@ -187,7 +187,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     if (FloatingWindow *fw = isFloatingWindow()) { // Already floating
         if (m_frame->isTheOnlyFrame()) { // We dont' detach. This one drags the entire window instead.
             qCDebug(hovering) << "TitleBar::makeWindow no detach needed";
-            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw));
+            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
         }
     }
 
@@ -200,7 +200,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     floatingWindow->show();
     qCDebug(hovering) << "TitleBar::makeWindow setting geometry" << r << "actual=" << floatingWindow->geometry();
 
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow));
+    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
 }
 
 QWidget *TitleBar::closeButton() const

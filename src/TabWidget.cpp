@@ -77,7 +77,7 @@ std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
 
     FloatingWindow *floatingWindow = detachTab(dock);
 
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow));
+    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
 }
 
 FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)

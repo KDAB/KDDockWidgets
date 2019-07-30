@@ -24,8 +24,9 @@
 
 using namespace KDDockWidgets;
 
-WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw)
+WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
     : m_floatingWindow(fw)
+    , m_draggable(draggable->asWidget())
 {
     init();
 }
@@ -44,12 +45,12 @@ void WindowBeingDragged::init()
 
 void WindowBeingDragged::grabMouse(bool grab)
 {
-    if (!m_floatingWindow)
+    if (!m_draggable)
         return;
 
-    qCDebug(hovering) << "WindowBeingDragged: grab " << m_floatingWindow << grab;
+    qCDebug(hovering) << "WindowBeingDragged: grab " << m_floatingWindow << grab << m_draggable;
     if (grab)
-        DragController::instance()->grabMouseFor(m_floatingWindow);
+        DragController::instance()->grabMouseFor(m_draggable);
     else
-        DragController::instance()->releaseMouse(m_floatingWindow);
+        DragController::instance()->releaseMouse(m_draggable);
 }
