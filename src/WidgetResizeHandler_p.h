@@ -37,23 +37,19 @@ namespace KDDockWidgets {
 
 #if defined(Q_OS_WIN)
 
-static bool resizeHandlerNativeEvent(QWidget *w, const QByteArray &eventType, void *message, long *result)
+static bool resizeHandlerNativeEvent(QWidget *w, QRect titleBarRectGlobal, const QByteArray &eventType, void *message, long *result)
 {
     if (eventType != "windows_generic_MSG")
         return false;
-
-    if (w->window() != w)
-        return false;
-
-    const int borderWidth = 8;
-    const bool hasFixedWidth = w->minimumWidth() == w->maximumWidth();
-    const bool hasFixedHeight = w->minimumHeight() == w->maximumHeight();
 
     auto msg = static_cast<MSG *>(message);
     if (msg->message == WM_NCCALCSIZE) {
         *result = 0;
         return true;
     } else if (msg->message == WM_NCHITTEST) {
+        const int borderWidth = 8;
+        const bool hasFixedWidth = w->minimumWidth() == w->maximumWidth();
+        const bool hasFixedHeight = w->minimumHeight() == w->maximumHeight();
 
         *result = 0;
         const int xPos = GET_X_LPARAM(msg->lParam);
@@ -81,7 +77,8 @@ static bool resizeHandlerNativeEvent(QWidget *w, const QByteArray &eventType, vo
             *result = HTBOTTOM;
         } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth) {
             *result = HTRIGHT;
-        } else {
+        } else if (yPos >= titleBarRectGlobal.top() && yPos <= titleBarRectGlobal.bottom() && xPos >= titleBarRectGlobal.left() && xPos >= titleBarRectGlobal.right()) {
+            // User clicked on the title bar, let's allow it, so we get Aero-Snap.
             *result = HTCAPTION;
         }
 
