@@ -112,6 +112,10 @@ int TitleBar::buttonAreaWidth() const
 
 TitleBar::~TitleBar()
 {
+    for (auto button : { m_floatButton , m_closeButton }) {
+        button->setParent(nullptr);
+        button->deleteLater();
+    }
 }
 
 bool TitleBar::onDoubleClicked()
@@ -129,7 +133,6 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton)
         onDoubleClicked();
-
 }
 
 void TitleBar::setTitle(const QString &title)
