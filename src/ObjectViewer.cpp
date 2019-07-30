@@ -41,6 +41,10 @@
 #include <QShortcut>
 #include <QDir>
 
+#ifdef Q_OS_WIN
+# include <Windows.h>
+#endif
+
 using namespace KDDockWidgets::Debug;
 
 enum Role {
@@ -72,6 +76,11 @@ ObjectViewer::ObjectViewer(QWidget *parent)
 
     action = m_menu.addAction(QStringLiteral("Toggle Visible"));
     connect(action, &QAction::triggered, this, &ObjectViewer::toggleVisible);
+
+#ifdef Q_OS_WIN
+    action = m_menu.addAction(QStringLiteral("Send WM_NCHITTEST"));
+    connect(action, &QAction::triggered, this, &ObjectViewer::sendHitTest);
+#endif
 
     refresh();
     setWindowTitle(QStringLiteral("ObjectViewer"));
@@ -112,6 +121,16 @@ void ObjectViewer::toggleVisible()
     if (auto w = selectedWidget())
         w->setVisible(!w->isVisible());
 }
+
+#ifdef Q_OS_WIN
+void ObjectViewer::sendHitTest()
+{
+    if (auto w = selectedWidget()) {
+        qDebug() << "Sending hit test to" << w;
+        ::SendMessage(HWND(w->winId()), WM_NCHITTEST, 0, 0);
+    }
+}
+#endif
 
 void ObjectViewer::dumpWindows()
 {

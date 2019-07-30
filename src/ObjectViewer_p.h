@@ -62,6 +62,11 @@ private:
     void updateItemAppearence(QStandardItem*);
     QObject *objectForItem(QStandardItem*) const;
     QWidget *widgetForItem(QStandardItem*) const;
+
+#ifdef Q_OS_WIN
+    void sendHitTest();
+#endif
+
     QTreeView m_treeView;
     QStandardItemModel m_model;
     QPointer<QObject> m_selectedObject;
