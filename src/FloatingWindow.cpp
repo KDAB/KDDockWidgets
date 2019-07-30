@@ -113,7 +113,7 @@ bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, lon
         // To enable aero snap we need to tell Windows where's our custom title bar
         QRect titleBarRectGlobal = m_titleBar->rect();
         titleBarRectGlobal.moveTopLeft(m_titleBar->mapToGlobal(QPoint(0, 0)));
-        if (KDDockWidgets::resizeHandlerNativeEvent(this, titleBarRectGlobal, eventType, message, result))
+        if (WidgetResizeHandler::handleWindowsNativeEvent(this, titleBarRectGlobal, eventType, message, result))
             return true;
     }
 
