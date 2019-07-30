@@ -635,7 +635,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 {
     EnsureTopLevelsDeleted e;
 
-    if (KDDockWidgets::supportsNativeTitleBar())
+    if (KDDockWidgets::usesNativeTitleBar())
         return; // Unit-tests can't drag via tab, yet
 
     auto dock1 = createDockWidget(QStringLiteral("doc1"), Qt::green);

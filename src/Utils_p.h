@@ -33,7 +33,7 @@ inline bool isLeftButtonPressed()
     return qApp->mouseButtons() & Qt::LeftButton;
 }
 
-inline bool supportsNativeTitleBar()
+inline bool usesNativeTitleBar()
 {
 #ifdef Q_OS_LINUX
     // On Linux, dragging the title bar of a window doesn't generate NonClientMouseEvents
@@ -44,7 +44,7 @@ inline bool supportsNativeTitleBar()
 #endif
 }
 
-inline bool supportsAeroSnap()
+inline bool usesNativeDraggingAndResizing()
 {
 #ifdef Q_OS_WIN
     return false; // Change here to enable it

@@ -179,7 +179,7 @@ void Frame::updateTitleBarVisibility()
     if (m_dropArea->numFrames() > 1) {
         visible = true;
     } else if (m_dropArea->numFrames() == 1) {
-        visible = !KDDockWidgets::supportsNativeTitleBar();
+        visible = !KDDockWidgets::usesNativeTitleBar();
     }
 
     m_titleBar->setVisible(visible);

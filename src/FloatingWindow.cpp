@@ -40,8 +40,8 @@ static int s_dbg_numFloatingWindows = 0;
 using namespace KDDockWidgets;
 
 FloatingWindow::FloatingWindow(QWidget *parent)
-    : QWidget(parent, KDDockWidgets::supportsAeroSnap() ? Qt::Window : Qt::Tool)
-    , Draggable(this, KDDockWidgets::supportsNativeTitleBar()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
+    : QWidget(parent, KDDockWidgets::usesNativeDraggingAndResizing() ? Qt::Window : Qt::Tool)
+    , Draggable(this, KDDockWidgets::usesNativeTitleBar() || KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_titleBar(new TitleBar(this))
     , m_vlayout(new QVBoxLayout(this))
     , m_dropArea(new DropArea(this))
@@ -109,8 +109,12 @@ FloatingWindow::~FloatingWindow()
 #if defined(Q_OS_WIN)
 bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
 {
-    if (KDDockWidgets::supportsAeroSnap() && KDDockWidgets::resizeHandlerNativeEvent(this, eventType, message, result))
-        return true;
+    if (KDDockWidgets::usesNativeDraggingAndResizing()) {
+        QRect titleBarRectGlobal = m_titleBar->rect();
+        titleBarRectGlobal.moveTopLeft(m_titleBar->mapToGlobal(QPoint(0, 0)));
+        if (KDDockWidgets::resizeHandlerNativeEvent(this, titleBarRectGlobal, eventType, message, result))
+            return true;
+    }
 
     return QWidget::nativeEvent(eventType, message, result);
 }
@@ -118,7 +122,7 @@ bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, lon
 
 void FloatingWindow::maybeCreateResizeHandler()
 {
-    if (!KDDockWidgets::supportsNativeTitleBar() && !KDDockWidgets::supportsAeroSnap()) {
+    if (!KDDockWidgets::usesNativeTitleBar() && !KDDockWidgets::usesNativeDraggingAndResizing()) {
         setWindowFlag(Qt::FramelessWindowHint, true);
         setWidgetResizeHandler(new WidgetResizeHandler(this));
         m_vlayout->setContentsMargins(4, 4, 4, 4);
@@ -255,7 +259,7 @@ void FloatingWindow::onVisibleFrameCountChanged(int count)
 void FloatingWindow::updateTitleBarVisibility()
 {
     m_titleBar->setTitle(windowTitle().isEmpty() ? qApp->applicationName() : windowTitle());
-    const bool visible = m_dropArea->numFrames() > 1 && !KDDockWidgets::supportsNativeTitleBar();
+    const bool visible = m_dropArea->numFrames() > 1 && !KDDockWidgets::usesNativeTitleBar();
 
     qCDebug(title) << Q_FUNC_INFO << "Setting title visible=" << visible
                    << "; was" << m_titleBar->isVisible();
