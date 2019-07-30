@@ -105,8 +105,8 @@ QString Indicator::iconName(bool active) const
 QString Indicator::iconFileName(bool active) const
 {
     const QString name = iconName(active);
-    return KDDockWidgets::windowManagerSupportsTranslucency() ? QStringLiteral(":/img/classic_indicators/%1.png").arg(name)
-                                                              : QStringLiteral(":/img/classic_indicators/opaque/%1.png").arg(name);
+    return KDDockWidgets::windowManagerHasTranslucency() ? QStringLiteral(":/img/classic_indicators/%1.png").arg(name)
+                                                         : QStringLiteral(":/img/classic_indicators/opaque/%1.png").arg(name);
 }
 
 IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_, QWidget *)
@@ -173,7 +173,7 @@ void IndicatorWindow::updateMask()
 {
     QRegion region;
 
-    if (!KDDockWidgets::windowManagerSupportsTranslucency()) {
+    if (!KDDockWidgets::windowManagerHasTranslucency()) {
         for (Indicator *indicator : qAsConst(m_indicators)) {
             if (indicator->isVisible())
                 region = region.united(QRegion(indicator->geometry(), QRegion::Rectangle));

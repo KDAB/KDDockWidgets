@@ -41,7 +41,7 @@ using namespace KDDockWidgets;
 
 FloatingWindow::FloatingWindow(QWidget *parent)
     : QWidget(parent, KDDockWidgets::usesNativeDraggingAndResizing() ? Qt::Window : Qt::Tool)
-    , Draggable(this, KDDockWidgets::usesNativeTitleBar() || KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
+    , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_titleBar(new TitleBar(this))
     , m_vlayout(new QVBoxLayout(this))
     , m_dropArea(new DropArea(this))
@@ -109,7 +109,8 @@ FloatingWindow::~FloatingWindow()
 #if defined(Q_OS_WIN)
 bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
 {
-    if (KDDockWidgets::usesNativeDraggingAndResizing()) {
+    if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
+        // To enable aero snap we need to tell Windows where's our custom title bar
         QRect titleBarRectGlobal = m_titleBar->rect();
         titleBarRectGlobal.moveTopLeft(m_titleBar->mapToGlobal(QPoint(0, 0)));
         if (KDDockWidgets::resizeHandlerNativeEvent(this, titleBarRectGlobal, eventType, message, result))
@@ -122,7 +123,7 @@ bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, lon
 
 void FloatingWindow::maybeCreateResizeHandler()
 {
-    if (!KDDockWidgets::usesNativeTitleBar() && !KDDockWidgets::usesNativeDraggingAndResizing()) {
+    if (!KDDockWidgets::usesNativeDraggingAndResizing()) {
         setWindowFlag(Qt::FramelessWindowHint, true);
         setWidgetResizeHandler(new WidgetResizeHandler(this));
         m_vlayout->setContentsMargins(4, 4, 4, 4);

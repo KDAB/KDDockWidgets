@@ -44,16 +44,24 @@ inline bool usesNativeTitleBar()
 #endif
 }
 
-inline bool usesNativeDraggingAndResizing()
+inline bool usesAeroSnapWithCustomDecos()
 {
 #ifdef Q_OS_WIN
-    return false; // Change here to enable it
+    return false;
 #else
     return false;
 #endif
 }
 
-inline bool windowManagerSupportsTranslucency()
+inline bool usesNativeDraggingAndResizing()
+{
+    // a native title bar implies native resizing and dragging
+    // Windows Aero-Snap also implies native dragging, and implies no native-title bar
+    Q_ASSERT(!(usesNativeTitleBar() && usesAeroSnapWithCustomDecos()));
+    return usesNativeTitleBar() || usesAeroSnapWithCustomDecos();
+}
+
+inline bool windowManagerHasTranslucency()
 {
 #ifdef QT_X11EXTRAS_LIB
     if (qApp->platformName() == QLatin1String("xcb"))
