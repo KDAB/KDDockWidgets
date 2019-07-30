@@ -229,16 +229,29 @@ void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context,
 struct EnsureTopLevelsDeleted
 {
     EnsureTopLevelsDeleted()
-        : m_initialNumWindows(qApp->topLevelWidgets().size())
+        : m_initialNumWindows(topLevels().size())
     {
     }
 
     ~EnsureTopLevelsDeleted()
     {
-        if (qApp->topLevelWidgets().size() != m_initialNumWindows) {
+        if (topLevels().size() != m_initialNumWindows) {
             qWarning() << "There's still top-level widgets present!" << qApp->topLevelWidgets() << m_initialNumWindows;
         }
     }
+
+    QWidgetList topLevels() const
+    {
+        QWidgetList result;
+
+        for (QWidget *w : qApp->topLevelWidgets()) {
+            if (!qobject_cast<QToolButton*>(w))
+                result << w;
+        }
+
+        return result;
+    }
+
 
     const int m_initialNumWindows;
 };
