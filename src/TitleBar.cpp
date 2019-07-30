@@ -114,13 +114,22 @@ TitleBar::~TitleBar()
 {
 }
 
+bool TitleBar::onDoubleClicked()
+{
+    if (supportsFloatingButton()) {
+        onFloatClicked();
+        return true;
+    }
+
+    return false;
+}
+
+
 void TitleBar::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    if (e->button() == Qt::LeftButton && supportsFloatingButton()) {
-        onFloatClicked();
-    } else {
-        QWidget::mouseDoubleClickEvent(e);
-    }
+    if (e->button() == Qt::LeftButton)
+        onDoubleClicked();
+
 }
 
 void TitleBar::setTitle(const QString &title)

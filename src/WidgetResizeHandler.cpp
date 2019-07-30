@@ -27,6 +27,8 @@
 #include <QWidget>
 #include <QDebug>
 #include <QApplication>
+#include <QScreen>
+#include <QWindow>
 
 #if defined(Q_OS_WIN)
 # include <Windowsx.h>
@@ -254,6 +256,39 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
         }
 
         return *result != 0;
+    } else if (msg->message == WM_NCLBUTTONDBLCLK) {
+        // We don't want double click to maximize the window
+
+        if (TitleBar *titleBar = w->actualTitleBar()) {
+            if (titleBar->isVisible()) { // can't be invisible afaik
+                titleBar->onDoubleClicked();
+            }
+        }
+
+        return true;
+    } else if (msg->message == WM_GETMINMAXINFO) {
+        // Qt doesn't work well with windows that don't have title bar but have native frames.
+        // When maximized they go out of bounds and the title bar is clipped, so catch WM_GETMINMAXINFO
+        // and patch the size
+
+        // According to microsoft docs it only works for the primary screen, but extrapolates for the others
+        QScreen *screen = QApplication::primaryScreen();
+        if (w->isMaximized() || !screen || w->windowHandle()->screen() != screen)
+            return false;
+
+        DefWindowProc(msg->hwnd, msg->message, msg->wParam, msg->lParam);
+
+        const QRect availableGeometry = screen->availableGeometry();
+
+        auto mmi = reinterpret_cast<MINMAXINFO *>(msg->lParam);
+
+        mmi->ptMaxSize.y = availableGeometry.height();
+        mmi->ptMaxSize.x = availableGeometry.width() - 1; // Otherwise it gets bogus size
+        mmi->ptMaxPosition.x = availableGeometry.x();
+        mmi->ptMaxPosition.y = availableGeometry.y();
+
+        *result = 0;
+        return true;
     }
 
     return false;
