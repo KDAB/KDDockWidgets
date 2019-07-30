@@ -47,6 +47,8 @@ inline bool usesNativeTitleBar()
 inline bool usesAeroSnapWithCustomDecos()
 {
 #ifdef Q_OS_WIN
+    /** On Windows we support snapping to the edges in case we're using non-native title bar (the default),
+     * just change to true here*/
     return false;
 #else
     return false;
