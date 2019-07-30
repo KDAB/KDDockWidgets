@@ -21,6 +21,7 @@
 #include "DropArea_p.h"
 #include "Frame_p.h"
 #include "Logging_p.h"
+#include "DockWidget.h"
 #include "Draggable_p.h"
 #include "MainWindow.h"
 #include "FloatingWindow_p.h"

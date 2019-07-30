@@ -20,8 +20,15 @@
 
 #include "WindowBeingDragged_p.h"
 #include "DragController_p.h"
+#include "Logging_p.h"
 
 using namespace KDDockWidgets;
+
+WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw)
+    : m_floatingWindow(fw)
+{
+    init();
+}
 
 WindowBeingDragged::~WindowBeingDragged()
 {
@@ -45,5 +52,4 @@ void WindowBeingDragged::grabMouse(bool grab)
         DragController::instance()->grabMouseFor(m_floatingWindow);
     else
         DragController::instance()->releaseMouse(m_floatingWindow);
-
 }

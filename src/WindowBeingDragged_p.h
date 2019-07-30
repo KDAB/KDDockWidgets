@@ -22,25 +22,17 @@
 #define KD_WINDOWBEINGDRAGGED_P_H
 
 #include "docks_export.h"
-
 #include "FloatingWindow_p.h"
-#include "DockWidget.h"
-#include "TitleBar_p.h"
-#include "Logging_p.h"
-
 #include <QPointer>
 
 namespace KDDockWidgets {
 
+class FloatingWindow;
+
 struct DOCKS_EXPORT_FOR_UNIT_TESTS WindowBeingDragged
 {
 public:
-    WindowBeingDragged(FloatingWindow *fw)
-        : m_floatingWindow(fw)
-    {
-        init();
-    }
-
+    explicit WindowBeingDragged(FloatingWindow *fw);
     ~WindowBeingDragged();
     void init();
 
