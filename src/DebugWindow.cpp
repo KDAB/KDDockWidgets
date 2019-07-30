@@ -68,6 +68,9 @@ public:
 
         if (msg->message == WM_NCCALCSIZE)
             qDebug() << "Got WM_NCCALCSIZE!" << message;
+#else
+        Q_UNUSED(eventType);
+        Q_UNUSED(message);
 #endif
 
         return false; // don't accept anything
