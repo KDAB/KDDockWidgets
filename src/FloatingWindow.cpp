@@ -109,7 +109,7 @@ FloatingWindow::~FloatingWindow()
 #if defined(Q_OS_WIN)
 bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
 {
-    if (KDDockWidgets::resizeHandlerNativeEvent(this, eventType, message, result))
+    if (KDDockWidgets::supportsAeroSnap() && KDDockWidgets::resizeHandlerNativeEvent(this, eventType, message, result))
         return true;
 
     return QWidget::nativeEvent(eventType, message, result);
