@@ -117,20 +117,11 @@ void Frame::addWidget(Frame *frame)
         addWidget(dockWidget);
 }
 
-void Frame::addWidget(Draggable *draggable)
+void Frame::addWidget(FloatingWindow *floatingWindow)
 {
-    QWidget *w = draggable->asWidget();
-    Q_ASSERT(w);
-
-    if (auto dock = qobject_cast<DockWidget *>(w)) {
-        addWidget(dock);
-    } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
-        for (Frame *f : fw->frames())
-            addWidget(f);
-    } else {
-        qWarning() << "Unknown" << w;
-        Q_ASSERT(false);
-    }
+    Q_ASSERT(floatingWindow);
+    for (Frame *f : floatingWindow->frames())
+        addWidget(f);
 }
 
 void Frame::insertWidget(DockWidget *dockWidget, int index)

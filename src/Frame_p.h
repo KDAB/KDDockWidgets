@@ -29,7 +29,6 @@
 #define KD_FRAME_P_H
 
 #include "docks_export.h"
-#include "Draggable_p.h"
 #include "multisplitter/Item_p.h"
 
 #include <QWidget>
@@ -43,6 +42,7 @@ class TabWidget;
 class DropArea;
 class DockWidget;
 class Item;
+class FloatingWindow;
 
 /**
  * @brief A DockWidget wrapper that adds a QTabWidget and a TitleBar
@@ -77,7 +77,7 @@ public:
     ///@overload
     void addWidget(Frame *);
     ///@overload
-    void addWidget(Draggable *draggable);
+    void addWidget(FloatingWindow *floatingWindow);
 
     ///@brief Inserts a widget into the Frame's TabWidget at @p index
     void insertWidget(DockWidget *, int index);

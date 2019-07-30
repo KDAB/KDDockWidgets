@@ -55,8 +55,8 @@ public:
     ~DropArea();
 
     void removeHover();
-    void hover(Draggable *draggable, QPoint globalPos);
-    bool drop(Draggable *draggable, QPoint globalPos);
+    void hover(FloatingWindow *floatingWindow, QPoint globalPos);
+    bool drop(FloatingWindow *droppedWindow, QPoint globalPos);
     bool drop(QWidget *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     int numFrames() const;
     void setIndicatorStyle(DropIndicatorOverlayInterface::Type);

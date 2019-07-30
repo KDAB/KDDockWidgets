@@ -195,10 +195,10 @@ bool DropArea::contains(DockWidget *dw) const
     return dw->frame() && m_layout->contains(dw->frame());
 }
 
-void DropArea::hover(Draggable *draggable, QPoint globalPos)
+void DropArea::hover(FloatingWindow *floatingWindow, QPoint globalPos)
 {
     Frame *frame = frameContainingPos(globalPos); // Frame is nullptr if MainWindowOption_HasCentralFrame isn't set
-    m_dropIndicatorOverlay->setWindowBeingDragged(draggable->asWidget());
+    m_dropIndicatorOverlay->setWindowBeingDragged(floatingWindow);
     m_dropIndicatorOverlay->setHoveredFrame(frame);
     m_dropIndicatorOverlay->hover(globalPos);
 }
@@ -216,9 +216,8 @@ static bool isOutterLocation(DropIndicatorOverlayInterface::DropLocation locatio
     }
 }
 
-bool DropArea::drop(Draggable *draggable, QPoint globalPos)
+bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
 {
-    QWidget *droppedWindow = draggable->asWidget();
     if (droppedWindow == window()) {
         qWarning() << "Refusing to drop onto itself"; // Doesn't happen
         Q_ASSERT(false);
@@ -232,7 +231,7 @@ bool DropArea::drop(Draggable *draggable, QPoint globalPos)
 
     qCDebug(dropping) << "DropArea::drop:" << droppedWindow;
 
-    hover(draggable, globalPos);
+    hover(droppedWindow, globalPos);
     Frame *acceptingFrame = m_dropIndicatorOverlay->hoveredFrame();
     if (!(acceptingFrame || isOutterLocation(m_dropIndicatorOverlay->currentDropLocation()))) {
         qWarning() << "DropArea::drop: asserted with frame=" << acceptingFrame << "; Location=" << m_dropIndicatorOverlay->currentDropLocation();
@@ -258,7 +257,7 @@ bool DropArea::drop(Draggable *draggable, QPoint globalPos)
         break;
     case DropIndicatorOverlayInterface::DropLocation_Center:
         qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingFrame;
-        acceptingFrame->addWidget(draggable);
+        acceptingFrame->addWidget(droppedWindow);
         break;
 
     default:

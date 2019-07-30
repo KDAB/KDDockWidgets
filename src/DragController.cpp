@@ -179,8 +179,8 @@ bool StateDragging::handleMouseButtonRelease(QPoint globalPos, QPoint)
 {
     qCDebug(state) << "StateDragging: handleMouseButtonRelease";
 
-    Draggable *draggable = q->m_windowBeingDragged->draggable();
-    if (!draggable) {
+    FloatingWindow *floatingWindow = q->m_windowBeingDragged->window();
+    if (!floatingWindow) {
         // It was deleted externally
         qCDebug(state) << "StateDragging: Bailling out, deleted externally";
         Q_EMIT q->dragCanceled();
@@ -188,7 +188,7 @@ bool StateDragging::handleMouseButtonRelease(QPoint globalPos, QPoint)
     }
 
     if (q->m_currentDropArea) {
-        if (q->m_currentDropArea->drop(draggable, globalPos)) {
+        if (q->m_currentDropArea->drop(floatingWindow, globalPos)) {
             Q_EMIT q->dropped();
         } else {
             qCDebug(state) << "StateDragging: Bailling out, drop not accepted";
@@ -217,7 +217,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
         q->m_currentDropArea->removeHover();
 
     if (dropArea)
-        dropArea->hover(q->m_windowBeingDragged->draggable(), globalPos);
+        dropArea->hover(q->m_windowBeingDragged->window(), globalPos);
 
     q->m_currentDropArea = dropArea;
 
