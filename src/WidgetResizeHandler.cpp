@@ -54,14 +54,14 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     case QEvent::MouseButtonPress: {
         if (mCursorPos == CursorPosition::Undefined)
             return false;
-        QMouseEvent *mouveEvent = static_cast<QMouseEvent *>(e);
+        auto mouseEvent = static_cast<QMouseEvent *>(e);
         if (mTarget->isMaximized())
             break;
         const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin));
-        const QPoint cursorPoint = mTarget->mapFromGlobal(mouveEvent->globalPos());
+        const QPoint cursorPoint = mTarget->mapFromGlobal(mouseEvent->globalPos());
         if (!widgetRect.contains(cursorPoint))
             return false;
-        if (mouveEvent->button() == Qt::LeftButton) {
+        if (mouseEvent->button() == Qt::LeftButton) {
             mResizeWidget = true;
         }
         mNewPosition = cursorPoint;
@@ -70,8 +70,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     case QEvent::MouseButtonRelease: {
         if (mTarget->isMaximized())
             break;
-        QMouseEvent *mouveEvent = static_cast<QMouseEvent *>(e);
-        if (mouveEvent->button() == Qt::LeftButton) {
+        auto mouseEvent = static_cast<QMouseEvent *>(e);
+        if (mouseEvent->button() == Qt::LeftButton) {
             mResizeWidget = false;
             mTarget->releaseMouse();
             mTarget->releaseKeyboard();
@@ -82,11 +82,11 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     case QEvent::MouseMove: {
         if (mTarget->isMaximized())
             break;
-        QMouseEvent *mouveEvent = static_cast<QMouseEvent *>(e);
-        mResizeWidget = mResizeWidget && (mouveEvent->buttons() & Qt::LeftButton);
+        auto mouseEvent = static_cast<QMouseEvent *>(e);
+        mResizeWidget = mResizeWidget && (mouseEvent->buttons() & Qt::LeftButton);
         const bool state = mResizeWidget;
         mResizeWidget = ((o == mTarget) && mResizeWidget);
-        mouseMoveEvent(mouveEvent);
+        mouseMoveEvent(mouseEvent);
         mResizeWidget = state;
         return true;
     }
