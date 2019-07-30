@@ -37,8 +37,6 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS WindowBeingDragged
 public:
     WindowBeingDragged(FloatingWindow *fw)
         : m_floatingWindow(fw)
-        , m_dockWidget(nullptr)
-        , m_draggable(fw)
     {
         init();
     }
@@ -46,17 +44,8 @@ public:
     ~WindowBeingDragged();
     void init();
 
-    DockWidget *dockWidget() const { return m_dockWidget; }
-    FloatingWindow *floatingWindow() const { return m_floatingWindow; }
-    Draggable *draggable() const { return window() ? m_draggable : nullptr; }
-
-    QWidget *window() const
-    {
-        if (m_floatingWindow)
-            return m_floatingWindow;
-
-        return m_dockWidget;
-    }
+    FloatingWindow *window() const { return m_floatingWindow; }
+    Draggable *draggable() const { return m_floatingWindow; }
 
     ///@brief grabs or releases the mouse
     void grabMouse(bool grab);
@@ -64,8 +53,6 @@ public:
 private:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<FloatingWindow> m_floatingWindow;
-    QPointer<DockWidget> m_dockWidget;
-    Draggable *const m_draggable;
 };
 }
 

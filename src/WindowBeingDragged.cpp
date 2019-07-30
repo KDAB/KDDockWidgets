@@ -30,24 +30,20 @@ WindowBeingDragged::~WindowBeingDragged()
 
 void WindowBeingDragged::init()
 {
-    Q_ASSERT(window());
+    Q_ASSERT(m_floatingWindow);
     grabMouse(true);
-    window()->raise();
+    m_floatingWindow->raise();
 }
 
 void WindowBeingDragged::grabMouse(bool grab)
 {
-    QWidget *target = nullptr;
-    if (m_floatingWindow)
-        target = m_floatingWindow;
-    else if (m_dockWidget)
-        target = m_dockWidget->titleBar();
+    if (!m_floatingWindow)
+        return;
 
-    if (target) {
-        qCDebug(hovering) << "WindowBeingDragged: grab " << target << grab;
-        if (grab)
-            DragController::instance()->grabMouseFor(target);
-        else
-            DragController::instance()->releaseMouse(target);
-    }
+    qCDebug(hovering) << "WindowBeingDragged: grab " << m_floatingWindow << grab;
+    if (grab)
+        DragController::instance()->grabMouseFor(m_floatingWindow);
+    else
+        DragController::instance()->releaseMouse(m_floatingWindow);
+
 }
