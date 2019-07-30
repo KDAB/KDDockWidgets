@@ -45,7 +45,6 @@ public:
     void init();
 
     FloatingWindow *window() const { return m_floatingWindow; }
-    Draggable *draggable() const { return m_floatingWindow; }
 
     ///@brief grabs or releases the mouse
     void grabMouse(bool grab);
