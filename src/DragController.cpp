@@ -23,7 +23,6 @@
 #include "Logging_p.h"
 #include "DropArea_p.h"
 #include "FloatingWindow_p.h"
-#include "Draggable_p.h"
 #include "WidgetResizeHandler_p.h"
 
 #include <QMouseEvent>
