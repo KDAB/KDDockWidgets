@@ -26,7 +26,10 @@
 #include <QDebug>
 
 class QMouseEvent;
+
 namespace KDDockWidgets {
+
+class FloatingWindow;
 
 class WidgetResizeHandler : public QObject
 {
@@ -38,7 +41,7 @@ public:
     void setTarget(QWidget *w);
 
 #ifdef Q_OS_WIN
-    static bool handleWindowsNativeEvent(QWidget *w, QRect titleBarRectGlobal, const QByteArray &eventType, void *message, long *result);
+    static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, long *result);
 #endif
     static bool s_disableAllHandlers;
 protected:

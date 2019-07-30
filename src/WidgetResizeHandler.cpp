@@ -19,10 +19,14 @@
 */
 
 #include "WidgetResizeHandler_p.h"
+#include "FloatingWindow_p.h"
+#include "TitleBar_p.h"
+
 #include <QEvent>
 #include <QMouseEvent>
 #include <QWidget>
 #include <QDebug>
+#include <QApplication>
 
 #if defined(Q_OS_WIN)
 # include <Windowsx.h>
@@ -196,12 +200,13 @@ void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 #ifdef Q_OS_WIN
 
 /// Handler to enable Aero-snap
-bool WidgetResizeHandler::handleWindowsNativeEvent(QWidget *w, QRect titleBarRectGlobal, const QByteArray &eventType, void *message, long *result)
+bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, long *result)
 {
-
-
     if (eventType != "windows_generic_MSG")
         return false;
+
+    QRect titleBarRectGlobal = w->actualTitleBar()->rect();
+    titleBarRectGlobal.moveTopLeft(w->actualTitleBar()->mapToGlobal(QPoint(0, 0)));
 
     auto msg = static_cast<MSG *>(message);
     if (msg->message == WM_NCCALCSIZE) {
@@ -238,9 +243,14 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWidget *w, QRect titleBarRec
             *result = HTBOTTOM;
         } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth) {
             *result = HTRIGHT;
-        } else if (yPos >= titleBarRectGlobal.top() && yPos <= titleBarRectGlobal.bottom() && xPos >= titleBarRectGlobal.left() && xPos >= titleBarRectGlobal.right()) {
-            // User clicked on the title bar, let's allow it, so we get Aero-Snap.
-            *result = HTCAPTION;
+        } else {
+            if (yPos >= titleBarRectGlobal.top() && yPos <= titleBarRectGlobal.bottom() && xPos >= titleBarRectGlobal.left() && xPos <= titleBarRectGlobal.right()) {
+                QWidget *hoveredWidget = qApp->widgetAt(QPoint(xPos, yPos));
+                if (!qobject_cast<QAbstractButton*>(hoveredWidget)) {
+                    // User clicked on the title bar, let's allow it, so we get Aero-Snap.
+                    *result = HTCAPTION;
+                }
+            }
         }
 
         return *result != 0;
