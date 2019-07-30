@@ -100,8 +100,6 @@ public:
     ~WidgetResizeHandler() override;
 
     void setTarget(QWidget *w);
-
-    void setActive(bool b);
     static bool s_disableAllHandlers;
 protected:
     bool eventFilter(QObject *o, QEvent *e) override;
@@ -120,6 +118,7 @@ private:
     };
     void mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);
+    CursorPosition cursorPosition(QPoint) const;
     QWidget *mTarget = nullptr;
     CursorPosition mCursorPos = CursorPosition::Undefined;
     QPoint mNewPosition;
