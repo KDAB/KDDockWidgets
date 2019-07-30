@@ -121,6 +121,7 @@ void FloatingWindow::maybeCreateResizeHandler()
     if (!KDDockWidgets::supportsNativeTitleBar() && !KDDockWidgets::supportsAeroSnap()) {
         setWindowFlag(Qt::FramelessWindowHint, true);
         setWidgetResizeHandler(new WidgetResizeHandler(this));
+        m_vlayout->setContentsMargins(4, 4, 4, 4);
     }
 }
 
