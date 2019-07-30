@@ -41,6 +41,7 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QWindow>
+#include <QAbstractNativeEventFilter>
 
 #ifdef Q_OS_WIN
 # include <Windows.h>
@@ -50,10 +51,34 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Debug;
 
+
+
+
+
+class DebugAppEventFilter : public QAbstractNativeEventFilter
+{
+public:
+    DebugAppEventFilter() {}
+    bool nativeEventFilter(const QByteArray &eventType, void *message, long *) override
+    {
+#ifdef Q_OS_WIN
+        if (eventType != "windows_generic_MSG")
+            return false;
+        auto msg = static_cast<MSG *>(message);
+
+        if (msg->message == WM_NCCALCSIZE)
+            qDebug() << "Got WM_NCCALCSIZE!" << message;
+#endif
+
+        return false; // don't accept anything
+    }
+};
+
 DebugWindow::DebugWindow(QWidget *parent)
     : QWidget(parent)
     , m_objectViewer(this)
 {
+    // qApp->installNativeEventFilter(new DebugAppEventFilter());
     auto layout = new QVBoxLayout(this);
     layout->addWidget(&m_objectViewer);
 
