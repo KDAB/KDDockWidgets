@@ -572,8 +572,12 @@ DockWidget *DockWidget::createFromDataStream(QDataStream &ds)
     ds >> name;
 
     DockWidget *dw = DockRegistry::self()->dockByName(name);
-    if (!dw)
+    if (dw) {
+        if (QWidget *w = dw->widget())
+            w->setVisible(true);
+    } else {
         qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
+    }
 
     return dw;
 }
