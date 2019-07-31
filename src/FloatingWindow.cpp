@@ -249,6 +249,26 @@ MultiSplitterLayout *FloatingWindow::multiSplitterLayout() const
     return m_dropArea->multiSplitterLayout();
 }
 
+bool FloatingWindow::isInTitleBar(QPoint globalPoint) const
+{
+    if (KDDockWidgets::usesNativeTitleBar()) {
+#ifdef Q_OS_WIN
+        WPARAM wparam = 0;
+        LPARAM lparam = MAKELPARAM(globalPoint.x(), globalPoint.y());
+        auto result = SendMessage(HWND(winId()), WM_NCHITTEST, wparam, lparam);
+        return result == HTCAPTION;
+#else
+        // TODO: Support native title bar on macOS. Just needs a way for us to check that we're in it.
+        qFatal("Not implemented on this platform");
+#endif
+    } else {
+        if (TitleBar *tb = actualTitleBar())
+            return tb->rect().adjusted(8, 8, 0, 0).contains(tb->mapFromGlobal(globalPoint));
+    }
+
+    return false;
+}
+
 bool FloatingWindow::anyNonClosable() const
 {
     for (Frame *frame : frames()) {

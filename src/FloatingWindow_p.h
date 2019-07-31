@@ -89,6 +89,11 @@ public:
      */
     MultiSplitterLayout *multiSplitterLayout() const;
 
+    /**
+     * @brief Returns whether @p globalPoint is inside the title bar
+     */
+    bool isInTitleBar(QPoint globalPoint) const;
+
     ///@brief For tests-only. Returns the number of Frame instances in the whole application.
     static int dbg_numFrames();
 

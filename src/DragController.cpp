@@ -329,14 +329,11 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     switch (e->type()) {
     case QEvent::NonClientAreaMouseButtonPress: {
         if (auto fw = qobject_cast<FloatingWindow*>(o)) {
-            if (TitleBar *tb = fw->actualTitleBar()) {
-                if (tb->rect().adjusted(8, 8, 0, 0).contains(tb->mapFromGlobal(me->globalPos()))) { // TODO: 8px comes from WidgetResizeHandler::handleWindowsNativeEvent. Ideally we should send a WM_NCHITTEST
-                    m_nonClientDrag = true;
-                    return activeState()->handleMouseButtonPress(draggableForQObject(o), me->globalPos(), me->pos());
-                }
+            if (fw->isInTitleBar(me->globalPos())) {
+                m_nonClientDrag = true;
+                return activeState()->handleMouseButtonPress(draggableForQObject(o), me->globalPos(), me->pos());
             }
         }
-
         return QStateMachine::eventFilter(o, e);
     }
     case QEvent::MouseButtonPress:
