@@ -58,8 +58,9 @@ public:
     ///@brief getter for the flags
     Flags flags() const;
 
-    ///@brief setter for the flags
-    void setFlags(Flags);
+    ///@brief setter for the flags. Not all flags are guaranteed to be set, as the OS might not supported them
+    ///Call @ref flags() after the setter if you need to know what was really set
+    void setFlags(Flags flags);
 
 private:
     Q_DISABLE_COPY(Config)

@@ -24,7 +24,6 @@
 #include "Config.h"
 
 #include <QApplication>
-#include <QOperatingSystemVersion>
 
 #ifdef QT_X11EXTRAS_LIB
 # include <QtX11Extras/QX11Info>
@@ -39,22 +38,12 @@ inline bool isLeftButtonPressed()
 
 inline bool usesNativeTitleBar()
 {
-#ifdef Q_OS_LINUX
-    // On Linux, dragging the title bar of a window doesn't generate NonClientMouseEvents
-    return false;
-#else
     return Config::instance().flags() & Config::Flag_NativeTitleBar;
-#endif
 }
 
 inline bool usesAeroSnapWithCustomDecos()
 {
-#ifdef Q_OS_WIN
-    // Aero-snap is supported since Windows 10
-    return (Config::instance().flags() & Config::Flag_AeroSnapWithClientDecos) && QOperatingSystemVersion::current().majorVersion() >= 10;
-#else
-    return false;
-#endif
+    return Config::instance().flags() & Config::Flag_AeroSnapWithClientDecos;
 }
 
 inline bool usesNativeDraggingAndResizing()

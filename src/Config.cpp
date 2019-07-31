@@ -28,6 +28,7 @@
 #include "Config.h"
 #include <QApplication>
 #include <QDebug>
+#include <QOperatingSystemVersion>
 
 using namespace KDDockWidgets;
 
@@ -38,14 +39,16 @@ public:
     {
     }
 
-    Flags m_flags = Flag_Default;
+    void fixFlags();
 
+    Flags m_flags = Flag_Default;
 };
 
 
 Config::Config()
     : d(new Private())
 {
+    d->fixFlags();
 }
 
 Config& Config::instance()
@@ -71,10 +74,34 @@ void Config::setFlags(Flags f)
         return;
     }
 
-    if ((f & Flag_AeroSnapWithClientDecos) && (f & Flag_NativeTitleBar)) {
-        // We're either using native or client decorations
-        f = f & ~Flag_AeroSnapWithClientDecos;
+    d->m_flags = f;
+    d->fixFlags();
+}
+
+void Config::Private::fixFlags()
+{
+#if defined(Q_OS_WIN)
+    if (QOperatingSystemVersion::current().majorVersion() < 10) {
+        // Aero-snap requires Windows 10
+        m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
     }
 
-    d->m_flags = f;
+    // These are mutually exclusive:
+    if ((m_flags & Flag_AeroSnapWithClientDecos) && (m_flags & Flag_NativeTitleBar)) {
+        // We're either using native or client decorations, let's use native.
+        m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
+    }
+#elif defined(Q_OS_MACOS)
+    // Not supported on macOS:
+    m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
+#else
+    // Not supported on linux.
+    // On Linux, dragging the title bar of a window doesn't generate NonClientMouseEvents
+    m_flags = m_flags & ~Flag_NativeTitleBar;
+    m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
+#endif
+
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
+    m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
+#endif
 }
