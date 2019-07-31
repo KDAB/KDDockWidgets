@@ -225,8 +225,12 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
 }
 
 DragController::DragController(QObject *)
-    //: m_fallbackMouseGrabber(new FallbackMouseGrabber(this)) // Commented for now, as wayland has other problems, like QWidget::move() not working
 {
+    if (KDDockWidgets::usesNativeDraggingAndResizing()) { // probably also good for wayland, which doesn't support mouse grabbing
+        // Aero-snap jams if we're grabbing the mouse, so use the fallback grabber
+        m_fallbackMouseGrabber = new FallbackMouseGrabber(this);
+    }
+
     qCDebug(creation) << "DragController()";
 
     auto stateNone = new StateNone(this);
@@ -278,26 +282,20 @@ bool DragController::isInClientDrag() const
 
 void DragController::grabMouseFor(QWidget *target)
 {
-    if (KDDockWidgets::usesNativeDraggingAndResizing()) // No grabbing when using native title bar
-        return;
-
-    // Wayland doesn't support grabbing, so we might want to use m_fallbackMouseGrabber.
-    // Commented out for now as wayland has other problems, like QWidget::move() not working
-
-    target->grabMouse();
-    //m_fallbackMouseGrabber->grabMouse(target);
+    if (m_fallbackMouseGrabber) {
+        m_fallbackMouseGrabber->grabMouse(target);
+    } else {
+        target->grabMouse();
+    }
 }
 
 void DragController::releaseMouse(QWidget *target)
 {
-    if (KDDockWidgets::usesNativeDraggingAndResizing()) // No grabbing when using native title bar
-        return;
-
-    // Wayland doesn't support grabbing, so we might want to use m_fallbackMouseGrabber.
-    // Commented out for now as wayland has other problems, like QWidget::move() not working
-
-    target->releaseMouse();
-    //m_fallbackMouseGrabber->releaseMouse();
+    if (m_fallbackMouseGrabber) {
+        m_fallbackMouseGrabber->releaseMouse();
+    } else {
+        target->releaseMouse();
+    }
 }
 
 static QMouseEvent *mouseEvent(QEvent *e)
