@@ -155,7 +155,7 @@ bool StatePreDrag::handleMouseMove(QPoint globalPos)
     return true;
 }
 
-bool StatePreDrag::handleMouseButtonRelease(QPoint, QPoint)
+bool StatePreDrag::handleMouseButtonRelease(QPoint)
 {
     Q_EMIT q->dragCanceled();
     return true;
@@ -175,7 +175,7 @@ void StateDragging::onEntry(QEvent *)
     qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->window();
 }
 
-bool StateDragging::handleMouseButtonRelease(QPoint globalPos, QPoint)
+bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
 {
     qCDebug(state) << "StateDragging: handleMouseButtonRelease";
 
@@ -347,7 +347,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
         else break;
     case QEvent::MouseButtonRelease:
     case QEvent::NonClientAreaMouseButtonRelease:
-        return activeState()->handleMouseButtonRelease(me->globalPos(), me->pos());
+        return activeState()->handleMouseButtonRelease(me->globalPos());
     case QEvent::MouseMove:
         return activeState()->handleMouseMove(me->globalPos());
     default:
