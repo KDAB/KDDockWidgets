@@ -252,6 +252,11 @@ bool TitleBar::hasIcon() const
     return !m_icon.isNull();
 }
 
+QIcon TitleBar::icon() const
+{
+    return m_icon;
+}
+
 void TitleBar::updateCloseButton()
 {
     const bool anyNonClosable = m_frame ? m_frame->anyNonClosable()

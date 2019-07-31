@@ -195,6 +195,16 @@ TitleBar *Frame::titleBar() const
     return m_titleBar;
 }
 
+QString Frame::title() const
+{
+    return m_titleBar->title();
+}
+
+QIcon Frame::icon() const
+{
+    return m_titleBar->icon();
+}
+
 const DockWidget::List Frame::dockWidgets() const
 {
     DockWidget::List dockWidgets;

@@ -311,13 +311,27 @@ void FloatingWindow::onVisibleFrameCountChanged(int count)
 
 void FloatingWindow::updateTitleBarVisibility()
 {
-    m_titleBar->setTitle(windowTitle().isEmpty() ? qApp->applicationName() : windowTitle());
+    QString title;
+    QIcon icon;
+    if (hasSingleFrame()) {
+        const Frame *frame = frames().constFirst();
+        title = frame->title();
+        icon = frame->icon();
+    } else {
+        title = qApp->applicationName();
+    }
+
+    m_titleBar->setTitle(title);
     const bool visible = m_dropArea->numFrames() > 1 && !KDDockWidgets::usesNativeTitleBar();
 
-    qCDebug(title) << Q_FUNC_INFO << "Setting title visible=" << visible
-                   << "; was" << m_titleBar->isVisible();
+    qCDebug(::title) << Q_FUNC_INFO << "Setting title visible=" << visible
+                     << "; was" << m_titleBar->isVisible();
 
     m_titleBar->setVisible(visible);
+    if (KDDockWidgets::usesNativeTitleBar()) {
+        setWindowTitle(title);
+        setWindowIcon(icon);
+    }
 }
 
 bool FloatingWindow::fillFromDataStream(QDataStream &ds)

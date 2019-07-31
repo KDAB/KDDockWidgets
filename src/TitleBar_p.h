@@ -75,6 +75,9 @@ public:
     ///@brief returns whether this title bar has an icon
     bool hasIcon() const;
 
+    ///@brief the icon
+    QIcon icon() const;
+
     ///@brief toggle floating
     bool onDoubleClicked();
 

@@ -89,6 +89,8 @@ public:
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;
     TitleBar *titleBar() const;
+    QString title() const;
+    QIcon icon() const;
     const QVector<DockWidget *> dockWidgets() const;
     DockWidget *dockWidgetAt(int index) const;
     void setDropArea(DropArea *);
