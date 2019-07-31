@@ -34,10 +34,56 @@
 #include <QApplication>
 #include <QCloseEvent>
 #include <QPainter>
+#include <QAbstractNativeEventFilter>
+
+#ifdef Q_OS_WIN
+# include <Windows.h>
+#endif
 
 static int s_dbg_numFloatingWindows = 0;
 
 using namespace KDDockWidgets;
+
+#ifdef Q_OS_WIN
+namespace KDDockWidgets {
+
+
+/**
+ * @brief Helper to rediriect WM_NCHITTEST from child widgets to the top-level widget
+ *
+ * To implement aero-snap the top-level window must respond to WM_NCHITTEST, we do that
+ * in FloatingWindow::nativeEvent(). But if the child widgets have a native handle, then
+ * the WM_NCHITTEST will go to them. They have to respond HTTRANSPARENT so the event
+ * is redirected.
+ */
+class NCHITTESTEventFilter : public QAbstractNativeEventFilter
+{
+public:
+    explicit NCHITTESTEventFilter(FloatingWindow *fw) : m_floatingWindow(fw) {}
+    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override
+    {
+        if (eventType != "windows_generic_MSG" || !m_floatingWindow)
+            return false;
+
+        auto msg = static_cast<MSG *>(message);
+        if (msg->message != WM_NCHITTEST)
+            return false;
+        QWidget *child = QWidget::find(WId(msg->hwnd));
+        if (!child || child->window() != m_floatingWindow)
+            return false;
+
+        if (child != m_floatingWindow) {
+            *result = HTTRANSPARENT;
+            return true;
+        }
+
+        return false;
+    }
+
+    QPointer<FloatingWindow> m_floatingWindow;
+};
+}
+#endif
 
 FloatingWindow::FloatingWindow(QWidget *parent)
     : QWidget(parent, KDDockWidgets::usesNativeDraggingAndResizing() ? Qt::Window : Qt::Tool)
@@ -46,6 +92,13 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     , m_vlayout(new QVBoxLayout(this))
     , m_dropArea(new DropArea(this))
 {
+#ifdef Q_OS_WIN
+    if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
+        m_nchittestFilter = new NCHITTESTEventFilter(this);
+        qApp->installNativeEventFilter(m_nchittestFilter);
+    }
+#endif
+
     auto ms = m_dropArea->multiSplitterLayout();
     ms->setExtraUselessSpace(QSize(0, m_titleBar->height()));
 
@@ -101,6 +154,7 @@ FloatingWindow::FloatingWindow(Frame *frame, QWidget *parent)
 FloatingWindow::~FloatingWindow()
 {
     disconnect(m_layoutDestroyedConnection);
+    delete m_nchittestFilter;
 
     DockRegistry::self()->unregisterNestedWindow(this);
     qCDebug(creation) << "~FloatingWindow";

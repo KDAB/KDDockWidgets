@@ -28,6 +28,7 @@
 #include <QWidget>
 
 class QVBoxLayout;
+class QAbstractNativeEventFilter;
 
 namespace KDDockWidgets {
 
@@ -115,6 +116,7 @@ private:
     bool m_disableSetVisible = false;
     bool m_beingDeleted = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
+    QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
 };
 
 QDataStream &operator<<(QDataStream &ds, FloatingWindow *);
