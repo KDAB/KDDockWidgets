@@ -126,7 +126,7 @@ int main(int argc, char **argv)
     auto dock = new DockWidget(QStringLiteral("foo"), s_dockWidgetOptions);
     dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
     dock->setWidget(example);
-    example->winId();
+    example->winId(); // for testing native widgets too
     dock->resize(400, 400);
     dock->show();
     window.toggleMenu->addAction(dock->toggleAction());
