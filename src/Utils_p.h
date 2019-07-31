@@ -22,6 +22,8 @@
 #define KD_UTILS_P_H
 
 #include <QApplication>
+#include <QOperatingSystemVersion>
+
 #ifdef QT_X11EXTRAS_LIB
 # include <QtX11Extras/QX11Info>
 #endif
@@ -47,9 +49,8 @@ inline bool usesNativeTitleBar()
 inline bool usesAeroSnapWithCustomDecos()
 {
 #ifdef Q_OS_WIN
-    /** On Windows we support snapping to the edges in case we're using non-native title bar (the default),
-     * just change to true here*/
-    return true;
+    // Aero-snap is supported since Windows 10
+    return QOperatingSystemVersion::current().majorVersion() >= 10;
 #else
     return false;
 #endif
