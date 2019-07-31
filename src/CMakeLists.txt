@@ -2,6 +2,8 @@
 cmake_policy(SET CMP0043 NEW)
 
 set(DOCKSLIBS_SRCS
+    Config.cpp
+    Config.h
     DockWidget.cpp
     DragController.cpp
     Draggable.cpp
@@ -42,7 +44,7 @@ else()
     set(IS_CLANG_BUILD FALSE)
 endif()
 
-set (DOCKS_INSTALLABLE_INCLUDES docks_export.h DockWidget.h MainWindow.h LayoutSaver.h Draggable_p.h KDDockWidgets.h)
+set (DOCKS_INSTALLABLE_INCLUDES docks_export.h DockWidget.h MainWindow.h LayoutSaver.h Draggable_p.h KDDockWidgets.h Config.h)
 
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 

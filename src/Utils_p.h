@@ -21,6 +21,8 @@
 #ifndef KD_UTILS_P_H
 #define KD_UTILS_P_H
 
+#include "Config.h"
+
 #include <QApplication>
 #include <QOperatingSystemVersion>
 
@@ -41,8 +43,7 @@ inline bool usesNativeTitleBar()
     // On Linux, dragging the title bar of a window doesn't generate NonClientMouseEvents
     return false;
 #else
-    // But let's return false for Windows and macOS too, since our fake resizing seems to be working fine
-    return false;
+    return Config::instance().flags() & Config::Flag_NativeTitleBar;
 #endif
 }
 
@@ -50,7 +51,7 @@ inline bool usesAeroSnapWithCustomDecos()
 {
 #ifdef Q_OS_WIN
     // Aero-snap is supported since Windows 10
-    return QOperatingSystemVersion::current().majorVersion() >= 10;
+    return (Config::instance().flags() & Config::Flag_AeroSnapWithClientDecos) && QOperatingSystemVersion::current().majorVersion() >= 10;
 #else
     return false;
 #endif
