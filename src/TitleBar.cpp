@@ -24,6 +24,7 @@
 #include "FloatingWindow_p.h"
 #include "Logging_p.h"
 #include "WindowBeingDragged_p.h"
+#include "Utils_p.h"
 
 #include <QHBoxLayout>
 #include <QLabel>
@@ -212,7 +213,9 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     floatingWindow->show();
     qCDebug(hovering) << "TitleBar::makeWindow setting geometry" << r << "actual=" << floatingWindow->geometry();
 
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
+    auto draggable = KDDockWidgets::usesNativeTitleBar() ? static_cast<Draggable*>(floatingWindow)
+                                                         : static_cast<Draggable*>(this);
+    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
 }
 
 QWidget *TitleBar::closeButton() const

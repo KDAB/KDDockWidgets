@@ -32,6 +32,7 @@
 #include "Frame_p.h"
 #include "WindowBeingDragged_p.h"
 #include "Logging_p.h"
+#include "Utils_p.h"
 
 #include <QMouseEvent>
 
@@ -77,7 +78,9 @@ std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
 
     FloatingWindow *floatingWindow = detachTab(dock);
 
-    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
+    auto draggable = KDDockWidgets::usesNativeTitleBar() ? static_cast<Draggable*>(floatingWindow)
+                                                         : static_cast<Draggable*>(this);
+    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
 }
 
 FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)
