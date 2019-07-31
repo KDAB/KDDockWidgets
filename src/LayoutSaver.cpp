@@ -71,6 +71,7 @@ public:
 
     void serializeWindowGeometry(QDataStream &ds, QWidget *topLevel);
     void deserializeWindowGeometry(QDataStream &ds, QWidget *topLevel);
+    void deleteEmptyFrames();
 
     std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
@@ -172,6 +173,22 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     Private::RAIIIsRestoring isRestoring;
 
+    struct FrameCleanup {
+        FrameCleanup(LayoutSaver *saver) : m_saver(saver)
+        {
+        }
+
+        ~FrameCleanup()
+        {
+            m_saver->d->deleteEmptyFrames();
+        }
+
+        LayoutSaver *const m_saver;
+
+    };
+
+    FrameCleanup cleanup(this);
+
     QDataStream ds(data);
     int serializationVersion;
     ds >> serializationVersion;
@@ -261,6 +278,17 @@ void LayoutSaver::Private::deserializeWindowGeometry(QDataStream &ds, QWidget *t
     ds >> visible;
     topLevel->setGeometry(geo);
     topLevel->setVisible(visible);
+}
+
+void LayoutSaver::Private::deleteEmptyFrames()
+{
+    // After a restore it can happen that some DockWidgets didn't exist, so weren't restored.
+    // Delete their frame now.
+
+    for (Frame *frame : m_dockRegistry->frames()) {
+        if (!frame->beingDeletedLater() && frame->isEmpty())
+            frame->deleteLater();
+    }
 }
 
 std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
