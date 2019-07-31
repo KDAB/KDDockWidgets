@@ -305,6 +305,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
 {
     if (m_nonClientDrag && e->type() == QEvent::Move) {
         // On Windows, non-client mouse moves are only sent at the end, so we must fake it:
+        qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o;
         activeState()->handleMouseMove(QCursor::pos());
         return QStateMachine::eventFilter(o, e);
     }
@@ -320,9 +321,18 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o;
 
     switch (e->type()) {
-    case QEvent::NonClientAreaMouseButtonPress:
-        m_nonClientDrag = true;
-        return activeState()->handleMouseButtonPress(draggableForQObject(o), me->globalPos(), me->pos());
+    case QEvent::NonClientAreaMouseButtonPress: {
+        if (auto fw = qobject_cast<FloatingWindow*>(o)) {
+            if (TitleBar *tb = fw->actualTitleBar()) {
+                if (tb->rect().adjusted(8, 8, 0, 0).contains(tb->mapFromGlobal(me->globalPos()))) { // TODO: 8px comes from WidgetResizeHandler::handleWindowsNativeEvent. Ideally we should send a WM_NCHITTEST
+                    m_nonClientDrag = true;
+                    return activeState()->handleMouseButtonPress(draggableForQObject(o), me->globalPos(), me->pos());
+                }
+            }
+        }
+
+        return QStateMachine::eventFilter(o, e);
+    }
     case QEvent::MouseButtonPress:
         // For top-level windows that support native dragging all goes through the NonClient* events.
         // This also forbids dragging a FloatingWindow simply by pressing outside of the title area, in the background
