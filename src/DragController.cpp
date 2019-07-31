@@ -268,6 +268,9 @@ bool DragController::isDragging() const
 
 void DragController::grabMouseFor(QWidget *target)
 {
+    if (KDDockWidgets::usesNativeDraggingAndResizing()) // No grabbing when using native title bar
+        return;
+
     // Wayland doesn't support grabbing, so we might want to use m_fallbackMouseGrabber.
     // Commented out for now as wayland has other problems, like QWidget::move() not working
 
@@ -277,6 +280,9 @@ void DragController::grabMouseFor(QWidget *target)
 
 void DragController::releaseMouse(QWidget *target)
 {
+    if (KDDockWidgets::usesNativeDraggingAndResizing()) // No grabbing when using native title bar
+        return;
+
     // Wayland doesn't support grabbing, so we might want to use m_fallbackMouseGrabber.
     // Commented out for now as wayland has other problems, like QWidget::move() not working
 
