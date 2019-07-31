@@ -21,6 +21,7 @@
 #include "WidgetResizeHandler_p.h"
 #include "FloatingWindow_p.h"
 #include "TitleBar_p.h"
+#include "DragController_p.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -215,6 +216,13 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
         *result = 0;
         return true;
     } else if (msg->message == WM_NCHITTEST) {
+
+        if (DragController::instance()->isInClientDrag()) {
+            // There's a non-native drag going on.
+            *result = 0;
+            return false;
+        }
+
         const int borderWidth = 8;
         const bool hasFixedWidth = w->minimumWidth() == w->maximumWidth();
         const bool hasFixedHeight = w->minimumHeight() == w->maximumHeight();

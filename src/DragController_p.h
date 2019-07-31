@@ -54,6 +54,8 @@ public:
     void unregisterDraggable(Draggable *);
 
     bool isDragging() const;
+    bool isInNonClientDrag() const;
+    bool isInClientDrag() const;
 
     void grabMouseFor(QWidget*);
     void releaseMouse(QWidget*);

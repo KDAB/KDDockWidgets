@@ -266,6 +266,16 @@ bool DragController::isDragging() const
     return m_windowBeingDragged != nullptr;
 }
 
+bool DragController::isInNonClientDrag() const
+{
+    return isDragging() && m_nonClientDrag;
+}
+
+bool DragController::isInClientDrag() const
+{
+    return isDragging() && !m_nonClientDrag;
+}
+
 void DragController::grabMouseFor(QWidget *target)
 {
     if (KDDockWidgets::usesNativeDraggingAndResizing()) // No grabbing when using native title bar
