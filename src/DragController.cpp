@@ -353,6 +353,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     case QEvent::MouseButtonRelease:
     case QEvent::NonClientAreaMouseButtonRelease:
         return activeState()->handleMouseButtonRelease(me->globalPos());
+    case QEvent::NonClientAreaMouseMove:
     case QEvent::MouseMove:
         return activeState()->handleMouseMove(me->globalPos());
     default:
