@@ -41,6 +41,7 @@ public:
 
     void fixFlags();
 
+    DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     Flags m_flags = Flag_Default;
 };
 
@@ -51,7 +52,7 @@ Config::Config()
     d->fixFlags();
 }
 
-Config& Config::instance()
+Config& Config::self()
 {
     static Config config;
     return config;
@@ -76,6 +77,16 @@ void Config::setFlags(Flags f)
 
     d->m_flags = f;
     d->fixFlags();
+}
+
+void Config::setDockWidgetFactoryFunc(DockWidgetFactoryFunc func)
+{
+    d->m_dockWidgetFactoryFunc = func;
+}
+
+DockWidgetFactoryFunc Config::dockWidgetFactoryFunc() const
+{
+    return d->m_dockWidgetFactoryFunc;
 }
 
 void Config::Private::fixFlags()

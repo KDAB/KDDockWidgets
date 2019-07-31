@@ -32,6 +32,8 @@
 
 namespace KDDockWidgets
 {
+class DockWidget;
+typedef KDDockWidgets::DockWidget* (*DockWidgetFactoryFunc)(const QString &name);
 
 /**
  * @brief Singleton to allow to choose certain behaviours for the framework.
@@ -43,7 +45,7 @@ class DOCKS_EXPORT Config
 public:
 
     ///@brief returns the singleton Config instance
-    static Config &instance();
+    static Config &self();
 
     ~Config();
 
@@ -61,6 +63,20 @@ public:
     ///@brief setter for the flags. Not all flags are guaranteed to be set, as the OS might not supported them
     ///Call @ref flags() after the setter if you need to know what was really set
     void setFlags(Flags flags);
+
+    /**
+     * @brief Registers the DockWidgetFactoryFunc. The default is nullptr, and is optional.
+     *
+     * A DockWidgetFactoryFunc is a function that receives a dock widget name and returns a DockWidget.
+     *
+     * When restoring @ref LayoutSaver requires all dock widgets to exist. If a DockWidget doesn't
+     * exist then a DockWidgetFactoryFunc function is required, so the layout saver can ask
+     * to create the DockWidget and then restore it.
+     */
+    void setDockWidgetFactoryFunc(DockWidgetFactoryFunc);
+
+    ///@brief Getter for the DockWidgetFactoryFunc. nullptr by default
+    DockWidgetFactoryFunc dockWidgetFactoryFunc() const;
 
 private:
     Q_DISABLE_COPY(Config)

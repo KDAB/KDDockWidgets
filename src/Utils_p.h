@@ -38,12 +38,12 @@ inline bool isLeftButtonPressed()
 
 inline bool usesNativeTitleBar()
 {
-    return Config::instance().flags() & Config::Flag_NativeTitleBar;
+    return Config::self().flags() & Config::Flag_NativeTitleBar;
 }
 
 inline bool usesAeroSnapWithCustomDecos()
 {
-    return Config::instance().flags() & Config::Flag_AeroSnapWithClientDecos;
+    return Config::self().flags() & Config::Flag_AeroSnapWithClientDecos;
 }
 
 inline bool usesNativeDraggingAndResizing()

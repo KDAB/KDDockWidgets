@@ -32,6 +32,7 @@
 #include "LastPosition_p.h"
 #include "multisplitter/Item_p.h"
 #include "DockRegistry_p.h"
+#include "Config.h"
 
 #include <QAction>
 #include <QEvent>
@@ -572,6 +573,13 @@ DockWidget *DockWidget::createFromDataStream(QDataStream &ds)
     ds >> name;
 
     DockWidget *dw = DockRegistry::self()->dockByName(name);
+    if (!dw) {
+        if (auto factoryFunc = Config::self().dockWidgetFactoryFunc()) {
+            // DockWidget doesn't exist, ask to create it
+            dw = factoryFunc(name);
+        }
+    }
+
     if (dw) {
         if (QWidget *w = dw->widget())
             w->setVisible(true);
