@@ -30,6 +30,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QMenuBar>
+#include <QVBoxLayout>
 
 using namespace KDDockWidgets;
 
@@ -114,13 +115,23 @@ int main(int argc, char **argv)
     app.setApplicationName(QStringLiteral("Test app"));
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
+    const bool embedded = app.arguments().contains(QStringLiteral("--embedded"));
     const bool noCentralFrame = app.arguments().contains(QStringLiteral("--no-central"));
     MainWindowOptions options = noCentralFrame ? MainWindowOption_None
                                                : MainWindowOption_HasCentralFrame;
 
-    MyMainWindow window(options);
-    window.resize(1000, 800);
-    window.show();
+    MyMainWindow mainWindow(options);
+    QWidget *window;
+    if (embedded) {
+        window = new QWidget();
+        auto lay = new QVBoxLayout(window);
+        lay->addWidget(&mainWindow);
+    } else {
+        window = &mainWindow;
+    }
+
+    window->resize(1000, 800);
+    window->show();
 
     auto example = newMyWidget();
     auto dock = new DockWidget(QStringLiteral("foo"), s_dockWidgetOptions);
@@ -130,7 +141,7 @@ int main(int argc, char **argv)
     example->winId(); // for testing native widgets too
     dock->resize(400, 400);
     dock->show();
-    window.toggleMenu->addAction(dock->toggleAction());
+    mainWindow.toggleMenu->addAction(dock->toggleAction());
 
     example = newMyWidget();
     example->setGeometry(100, 100, 400, 400);
@@ -138,15 +149,15 @@ int main(int argc, char **argv)
     dock->setWidget(example);
     dock->resize(400, 400);
     dock->show();
-    window.toggleMenu->addAction(dock->toggleAction());
+    mainWindow.toggleMenu->addAction(dock->toggleAction());
 
     auto textEdit = new QTextEdit();
     textEdit->setText(QStringLiteral("Hello, this is the central document."));
     dock = new DockWidget(QStringLiteral("doc 0"), s_dockWidgetOptions);
     dock->setWidget(textEdit);
-    window.toggleMenu->addAction(dock->toggleAction());
+    mainWindow.toggleMenu->addAction(dock->toggleAction());
     if (!noCentralFrame)
-        window.addDockWidgetAsTab(dock);
+        mainWindow.addDockWidgetAsTab(dock);
 
     return app.exec();
 }
