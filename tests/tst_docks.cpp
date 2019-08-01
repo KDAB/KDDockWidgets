@@ -4763,7 +4763,7 @@ void TestDocks::tst_restoreWithDockFactory()
 
     // Now try with a factory func
     DockWidgetFactoryFunc func = [] (const QString &) {
-        return createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+        return createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")), {}, /*show=*/ false);
     };
 
     Config::self().setDockWidgetFactoryFunc(func);
