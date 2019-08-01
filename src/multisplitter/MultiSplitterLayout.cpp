@@ -199,22 +199,8 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         return;
     }
 
-    const Length lfd = lengthForDrop(w, location, relativeToItem);
-    if (lfd.isNull()) {
-        Qt::Orientation orientation = anchorOrientationForLocation(location);
-        const int required = widgetMinLength(w, orientation);
-        const int totalRequired = required + length(orientation)
-                + (isEmpty() ? 0 : Anchor::thickness(/*static*/ false))
-                + extraUselessSpace(orientation);
-        qCDebug(sizing) << "\n    m_contentSize=" << m_contentSize
-                        << "\n    required=" << required
-                        << "\n    this length=" << length(orientation)
-                        << "\n    availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
-        setContentLength(orientation, totalRequired);
-        qCDebug(sizing) << "now=    m_contentSize=" << m_contentSize
-                        << "\n      totalRequired=" << totalRequired
-                        << "\n availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
-    }
+
+    ensureEnoughContentsSize(w, location, relativeToItem);
 
     Anchor *newAnchor = nullptr;
     const QRect dropRect = rectForDrop(w, location, relativeToItem);
@@ -388,6 +374,26 @@ void MultiSplitterLayout::addAsPlaceholder(DockWidget *dockWidget, Location loca
 
     updateAnchorFollowing();
     Q_ASSERT(!dockWidget->isVisible());
+}
+
+void MultiSplitterLayout::ensureEnoughContentsSize(const QWidget *widget, Location location, const Item *relativeToItem)
+{
+    const Length lfd = lengthForDrop(widget, location, relativeToItem);
+    if (lfd.isNull()) {
+        Qt::Orientation orientation = anchorOrientationForLocation(location);
+        const int required = widgetMinLength(widget, orientation);
+        const int totalRequired = required + length(orientation)
+                                  + (isEmpty() ? 0 : Anchor::thickness(/*static*/ false))
+                                  + extraUselessSpace(orientation);
+        qCDebug(sizing) << "\n    m_contentSize=" << m_contentSize
+                        << "\n    required=" << required
+                        << "\n    this length=" << length(orientation)
+                        << "\n    availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
+        setContentLength(orientation, totalRequired);
+        qCDebug(sizing) << "now=    m_contentSize=" << m_contentSize
+                        << "\n      totalRequired=" << totalRequired
+                        << "\n availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
+    }
 }
 
 void MultiSplitterLayout::setExtraUselessSpace(QSize sz)

@@ -202,8 +202,8 @@ void Anchor::setPosition(int p, SetPositionOptions options)
         m_layout->dumpDebug();
         qWarning() << Q_FUNC_INFO << "Out of bounds position=" << p
                    << "; oldPosition=" << position()
-                   << this
-                   << m_layout->contentsSize()
+                   << "; this=" << this
+                   << "; contentsSize=" << m_layout->contentsSize()
                    << "; max=" << max
                    << m_layout->multiSplitter()->window();
     }

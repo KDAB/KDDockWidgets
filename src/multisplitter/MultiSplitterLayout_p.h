@@ -477,6 +477,16 @@ private:
                                               const Item *relativeTo) const;
 
 
+    /**
+     * @brief Ensures that this layout's contentSize is enough for dropping @p widget to @p location,
+     * relative to @p relativeToItem.
+     *
+     * It may increase contentsSize or do notying, never decrease.
+     */
+    void ensureEnoughContentsSize(const QWidget *widget, KDDockWidgets::Location location,
+                                  const Item *relativeToItem);
+
+
     void insertAnchor(Anchor *);
     void removeAnchor(Anchor *);
 
