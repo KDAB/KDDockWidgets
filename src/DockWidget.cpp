@@ -23,7 +23,6 @@
 #include "Frame_p.h"
 #include "FloatingWindow_p.h"
 #include "Logging_p.h"
-#include "TitleBar_p.h"
 #include "TabWidget_p.h"
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
@@ -73,15 +72,11 @@ public:
 
     void init()
     {
-        titlebar = new TitleBar(q);
         layout->setSpacing(0);
         layout->setContentsMargins(0, 0, 0, 0);
-        layout->addWidget(titlebar);
-        updateTitleBarVisibility();
         updateTitle();
     }
 
-    void updateTitleBarVisibility();
     void updateTitle();
     void updateIcon();
     void toggle(bool enabled);
@@ -109,7 +104,6 @@ public:
     DockWidget *const q;
     const DockWidget::Options options;
     QVBoxLayout *const layout;
-    TitleBar *titlebar = nullptr;
     QAction *const toggleAction;
     LastPosition m_lastPosition;
 };
@@ -318,7 +312,6 @@ bool DockWidget::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
         Q_EMIT parentChanged();
-        d->updateTitleBarVisibility();
         d->updateToggleAction();
     } else if (e->type() == QEvent::Show) {
         d->updateLayoutMargin();
@@ -361,11 +354,6 @@ void DockWidget::paintEvent(QPaintEvent *)
 {
     if (isWindow())
         FloatingWindow::paintFrame(this);
-}
-
-TitleBar *DockWidget::titleBar() const
-{
-    return d->titlebar;
 }
 
 FloatingWindow *DockWidget::morphIntoFloatingWindow()
@@ -422,23 +410,18 @@ LastPosition *DockWidget::lastPosition() const
     return &d->m_lastPosition;
 }
 
-void DockWidget::Private::updateTitleBarVisibility()
-{
-    titlebar->setVisible(q->isWindow());
-}
-
 void DockWidget::Private::updateTitle()
 {
     if (q->isFloating())
         q->window()->setWindowTitle(title);
 
-    titlebar->setTitle(title);
+
     toggleAction->setText(title);
 }
 
 void DockWidget::Private::updateIcon()
 {
-    titlebar->setIcon(icon);
+
 }
 
 void DockWidget::Private::toggle(bool enabled)
@@ -462,9 +445,7 @@ void DockWidget::Private::updateToggleAction()
 
 void DockWidget::Private::onDockWidgetShown()
 {
-    updateTitleBarVisibility();
     updateToggleAction();
-
     qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 

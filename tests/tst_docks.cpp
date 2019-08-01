@@ -537,12 +537,8 @@ static void drag(QWidget *sourceWidget, QPoint globalDest, ButtonActions buttonA
 
     TitleBar *titleBar = nullptr;
     if (auto dock = qobject_cast<DockWidget *>(sourceWidget)) {
-        titleBar = dock->titleBar();
-
-        if (!titleBar->isVisible()) {
-            if (auto frame = dock->frame()) {
-                titleBar = frame->titleBar();
-            }
+        if (auto frame = dock->frame()) {
+            titleBar = frame->titleBar();
         }
     } else if (auto fw = qobject_cast<FloatingWindow *>(sourceWidget)) {
         titleBar = fw->titleBar();
@@ -910,8 +906,6 @@ void TestDocks::tst_preventClose()
     // 2. Morph it into a FlatingWindow
     dock1->morphIntoFloatingWindow();
     dock1->close();
-    QVERIFY(dock1->isVisible());
-    dock1->titleBar()->onCloseClicked();
     QVERIFY(dock1->isVisible());
     dock1->frame()->titleBar()->onCloseClicked();
     QVERIFY(dock1->isVisible());
@@ -2065,15 +2059,6 @@ void TestDocks::tst_notClosable()
     {
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")), DockWidget::Option_NotClosable);
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
-
-        QVERIFY(!dock1->titleBar()->isVisible());
-
-        QWidget *close1 = dock1->titleBar()->closeButton();
-        QWidget *close2 = dock2->titleBar()->closeButton();
-
-        QVERIFY(!close1->isEnabled());
-        QVERIFY(close2->isEnabled());
-
         dock1->addDockWidgetAsTab(dock2);
 
 
@@ -2081,9 +2066,6 @@ void TestDocks::tst_notClosable()
         QVERIFY(fw);
         QWidget *closeFW = fw->titleBar()->closeButton();
         QWidget *closeFrame = fw->frames().at(0)->titleBar()->closeButton();
-
-        QVERIFY(!close1->isVisible());
-        QVERIFY(!close2->isVisible());
         QVERIFY(!closeFW->isVisible());
 
         QVERIFY(closeFrame->isVisible());
@@ -2100,14 +2082,6 @@ void TestDocks::tst_notClosable()
         auto dock1 = createDockWidget(QStringLiteral("dock1"), new QPushButton(QStringLiteral("one")), DockWidget::Option_NotClosable);
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
 
-        QVERIFY(!dock1->titleBar()->isVisible());
-
-        QWidget *close1 = dock1->titleBar()->closeButton();
-        QWidget *close2 = dock2->titleBar()->closeButton();
-
-        QVERIFY(!close1->isEnabled());
-        QVERIFY(close2->isEnabled());
-
         dock2->morphIntoFloatingWindow();
         dock2->addDockWidgetAsTab(dock1);
 
@@ -2116,8 +2090,6 @@ void TestDocks::tst_notClosable()
         QWidget *closeFW = fw->titleBar()->closeButton();
         QWidget *closeFrame = fw->frames().at(0)->titleBar()->closeButton();
 
-        QVERIFY(!close1->isVisible());
-        QVERIFY(!close2->isVisible());
         QVERIFY(!closeFW->isVisible());
 
         QVERIFY(closeFrame->isVisible());

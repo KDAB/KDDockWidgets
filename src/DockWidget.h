@@ -39,10 +39,8 @@ class QAction;
 namespace KDDockWidgets {
 
 class Frame;
-class TitleBar;
 class FloatingWindow;
 class DragController;
-class TitleBar;
 class Item;
 class LastPosition;
 class DockRegistry;
@@ -245,20 +243,11 @@ private:
     friend class Item;
     friend class KDDockWidgets::TabWidget;
     friend class KDDockWidgets::DragController;
-    friend class KDDockWidgets::TitleBar;
     friend class KDDockWidgets::Item;
     friend class KDDockWidgets::DockRegistry;
     friend class KDDockWidgets::LayoutSaver;
 
     friend QDataStream &operator<<(QDataStream &ds, DockWidget *);
-
-    /**
-     * @brief the TitleBar instance used by this dock widget
-     * Note that this TitleBar will only be visible if this dock widget is a window (QWidget::isWindow()),
-     * when not a window there will be a frame associated, and frame()->titleBar() will be visible instead.
-     * @return the TitleBar instance used by this dock widget
-     */
-    TitleBar *titleBar() const;
 
     /**
      * @brief the Frame which contains this dock widgets.
