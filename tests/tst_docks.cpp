@@ -339,6 +339,8 @@ private Q_SLOTS:
     void tst_negativeAnchorPosition3();
     void tst_negativeAnchorPosition4();
     void tst_negativeAnchorPosition5();
+    void tst_negativeAnchorPositionWhenEmbedded_data();
+    void tst_negativeAnchorPositionWhenEmbedded();
     void tst_availableSizeWithPlaceholders();
     void tst_stealFrame();
     void tst_addAsPlaceholder();
@@ -3940,6 +3942,40 @@ void TestDocks::tst_negativeAnchorPosition5()
         dock->deleteLater();
 
     QVERIFY(waitForDeleted(dock0));
+}
+
+void TestDocks::tst_negativeAnchorPositionWhenEmbedded_data()
+{
+    QTest::addColumn<bool>("embedded");
+
+     QTest::newRow("false") << false;
+     QTest::newRow("true") << true;
+}
+
+void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
+{
+    QFETCH(bool, embedded);
+    EnsureTopLevelsDeleted e;
+
+    MainWindow *m;
+
+    if (embedded) {
+        auto em = createEmbeddedMainWindow(QSize(500, 500));
+        m = em->mainWindow;
+    } else {
+        m =new MainWindow(QStringLiteral("m1"), MainWindowOption_None);
+        m->resize(QSize(500, 500));
+    }
+    // auto layout = m->multiSplitterLayout();
+
+    auto w1 = new MyWidget2(QSize(400,400));
+    auto w2 = new MyWidget2(QSize(400,400));
+    auto d1 = createDockWidget(QStringLiteral("1"), w1);
+    auto d2 = createDockWidget(QStringLiteral("2"), w2);
+
+    m->addDockWidget(d1, Location_OnLeft);
+    m->addDockWidget(d2, Location_OnLeft);
+    delete m;
 }
 
 void TestDocks::tst_availableSizeWithPlaceholders()
