@@ -286,7 +286,7 @@ void LayoutSaver::Private::deleteEmptyFrames()
     // Delete their frame now.
 
     for (Frame *frame : m_dockRegistry->frames()) {
-        if (!frame->beingDeletedLater() && frame->isEmpty())
+        if (!frame->beingDeletedLater() && frame->isEmpty() && !frame->isCentralFrame())
             delete frame;
     }
 }
