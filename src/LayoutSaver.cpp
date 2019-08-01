@@ -255,7 +255,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (DockWidget *dw = d->m_dockRegistry->dockByName(name)) {
             dw->lastPosition()->fillFromDataStream(ds);
         } else {
-            qWarning() << Q_FUNC_INFO << "Could not find dockwidget" << name;
+            qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
             LastPosition dummy;
             dummy.fillFromDataStream(ds); // Add a dummy just to consume the stream
         }
@@ -287,7 +287,7 @@ void LayoutSaver::Private::deleteEmptyFrames()
 
     for (Frame *frame : m_dockRegistry->frames()) {
         if (!frame->beingDeletedLater() && frame->isEmpty())
-            frame->deleteLater();
+            delete frame;
     }
 }
 

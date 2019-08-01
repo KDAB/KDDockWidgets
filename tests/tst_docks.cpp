@@ -238,6 +238,9 @@ struct EnsureTopLevelsDeleted
         if (topLevels().size() != m_initialNumWindows) {
             qWarning() << "There's still top-level widgets present!" << qApp->topLevelWidgets() << m_initialNumWindows;
         }
+
+        // Other cleanup, since we use this class everywhere
+        Config::self().setDockWidgetFactoryFunc(nullptr);
     }
 
     QWidgetList topLevels() const
@@ -359,10 +362,12 @@ private Q_SLOTS:
     void tst_restoreAfterResize();
     void tst_marginsAfterRestore();
     void tst_restoreEmbeddedMainWindow();
+    void tst_restoreWithDockFactory();
 
     void tst_resizeWindow_data();
     void tst_resizeWindow();
     void tst_resizeWindow2();
+
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
@@ -4722,6 +4727,49 @@ void TestDocks::tst_restoreEmbeddedMainWindow()
 
 
     delete window;
+}
+
+void TestDocks::tst_restoreWithDockFactory()
+{
+    // Tests that restore the layout with a missing dock widget will recreate the dock widget using a factory
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    m->addDockWidget(dock1, Location_OnLeft);
+    auto layout = m->multiSplitterLayout();
+
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->visibleCount(), 1);
+
+    LayoutSaver saver;
+    QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+    QPointer<Frame> f1 = dock1->frame();
+    delete dock1;
+    waitForDeleted(f1);
+    QVERIFY(!f1);
+
+    // Directly deleted don't leave placeolders. We could though.
+    QCOMPARE(layout->count(), 0);
+
+    {
+        // We don't know how to create the dock widget
+        SetExpectedWarning expectedWarning(QStringLiteral("Couldn't find dock widget"));
+        QVERIFY(saver.restoreLayout(saved));
+        QCOMPARE(layout->count(), 0);
+    }
+
+    // Now try with a factory func
+    DockWidgetFactoryFunc func = [] (const QString &) {
+        return createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
+    };
+
+    Config::self().setDockWidgetFactoryFunc(func);
+    QVERIFY(saver.restoreLayout(saved));
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->visibleCount(), 1);
 }
 
 void TestDocks::tst_resizeWindow_data()
