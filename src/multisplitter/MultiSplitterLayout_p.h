@@ -255,20 +255,6 @@ public:
     void addItems_internal(const ItemList &, bool updateConstraints = true, bool emitSignal = true);
 
     /**
-     * @brief returns the extra useless space
-     * FloatingWindow for example must make space for its title bar, so that space isn't available
-     * for adding widgets.
-     * If @p orientation is Qt::Horizontal, returns the useless height, otherwise width.
-     */
-    int extraUselessSpace(Qt::Orientation orientation) const;
-
-    /**
-     * @brief setter for the @ref extraUselessSpace
-     * @sa extraUselessSpace
-     */
-    void setExtraUselessSpace(QSize);
-
-    /**
      * @brief Updates the min size of this layout.
      */
     void updateSizeConstraints();
@@ -602,7 +588,6 @@ private:
     AnchorGroup m_staticAnchorGroup;
     QPointer<Anchor> m_anchorBeingDragged;
     QSize m_contentSize;
-    QSize m_extraUselessSpace = {0, 0};
 };
 
 inline QDebug operator<<(QDebug d, const AnchorGroup &group) {

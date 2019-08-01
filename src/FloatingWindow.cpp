@@ -100,7 +100,6 @@ FloatingWindow::FloatingWindow(QWidget *parent)
 #endif
 
     auto ms = m_dropArea->multiSplitterLayout();
-    ms->setExtraUselessSpace(QSize(0, m_titleBar->height()));
 
     DockRegistry::self()->registerNestedWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
