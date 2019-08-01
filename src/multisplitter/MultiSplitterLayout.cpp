@@ -389,7 +389,7 @@ void MultiSplitterLayout::ensureEnoughContentsSize(const QWidget *widget, Locati
                         << "\n    required=" << required
                         << "\n    this length=" << length(orientation)
                         << "\n    availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
-        setContentLength(orientation, totalRequired);
+        setContentLength(totalRequired, orientation);
         qCDebug(sizing) << "now=    m_contentSize=" << m_contentSize
                         << "\n      totalRequired=" << totalRequired
                         << "\n availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
@@ -1599,7 +1599,7 @@ void MultiSplitterLayout::setContentsSize(QSize size)
     }
 }
 
-void MultiSplitterLayout::setContentLength(Qt::Orientation o, int value)
+void MultiSplitterLayout::setContentLength(int value, Qt::Orientation o)
 {
     if (o == Qt::Vertical) {
         // Setting the width

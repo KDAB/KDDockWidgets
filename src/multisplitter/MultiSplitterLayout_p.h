@@ -284,7 +284,7 @@ public:
     /**
      * @brief sets either the contents height if @p o is Qt::Horizontal, otherwise sets the contents width
      */
-    void setContentLength(Qt::Orientation o, int value);
+    void setContentLength(int value, Qt::Orientation o);
 
     /**
      * @brief returns @ref contentsWidth if @p o is Qt::Vertical, otherwise @ref contentsHeight

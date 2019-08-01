@@ -3825,7 +3825,7 @@ void TestDocks::tst_negativeAnchorPosition()
 
     // Now resize the Window, after removing middle one
     const int availableToShrink = layout->contentsSize().height() - layout->minimumSize().height();
-    layout->setContentLength(Qt::Horizontal, layout->contentsLength(Qt::Horizontal) - availableToShrink); // Should not warn about negative sizes
+    layout->setContentLength(layout->contentsLength(Qt::Horizontal) - availableToShrink, Qt::Horizontal); // Should not warn about negative sizes
 
     d2->deleteLater();
     waitForDeleted(d2);
