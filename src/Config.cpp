@@ -26,6 +26,8 @@
  */
 
 #include "Config.h"
+#include "DockRegistry_p.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QOperatingSystemVersion>
@@ -70,8 +72,8 @@ Config::Flags Config::flags() const
 
 void Config::setFlags(Flags f)
 {
-    if (!qApp) {
-        qWarning() << Q_FUNC_INFO << "Only use this function before creating the QApplication";
+    if (!DockRegistry::self()->isEmpty()) {
+        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
         return;
     }
 

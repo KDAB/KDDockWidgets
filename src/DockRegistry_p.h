@@ -94,10 +94,14 @@ public:
      */
     void ensureAllFloatingWidgetsAreMorphed();
 
+    /**
+     * @brief returns true if there's 0 dockwidgets, 0 main windows
+     */
+    bool isEmpty() const;
+
 private:
     explicit DockRegistry(QObject *parent = nullptr);
     void maybeDelete();
-    bool isEmpty() const;
     DockWidget::List m_dockWidgets;
     MainWindow::List m_mainWindows;
     Frame::List m_frames;
