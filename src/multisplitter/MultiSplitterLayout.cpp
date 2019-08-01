@@ -381,18 +381,15 @@ void MultiSplitterLayout::ensureEnoughContentsSize(const QWidget *widget, Locati
     const Length lfd = lengthForDrop(widget, location, relativeToItem);
     if (lfd.isNull()) {
         Qt::Orientation orientation = anchorOrientationForLocation(location);
-        const int required = widgetMinLength(widget, orientation);
-        const int totalRequired = required + length(orientation)
+        const int widgetMin = widgetMinLength(widget, orientation);
+        const int totalRequired = widgetMin + length(orientation)
                                   + (isEmpty() ? 0 : Anchor::thickness(/*static*/ false))
                                   + extraUselessSpace(orientation);
         qCDebug(sizing) << "\n    m_contentSize=" << m_contentSize
-                        << "\n    required=" << required
+                        << "\n    widgetMin=" << widgetMin
                         << "\n    this length=" << length(orientation)
                         << "\n    availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
         setContentLength(totalRequired, orientation);
-        qCDebug(sizing) << "now=    m_contentSize=" << m_contentSize
-                        << "\n      totalRequired=" << totalRequired
-                        << "\n availableLengthForDrop()=" << availableLengthForDrop(location, relativeToItem).length();
     }
 }
 
