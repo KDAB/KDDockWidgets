@@ -379,19 +379,27 @@ void MultiSplitterLayout::addAsPlaceholder(DockWidget *dockWidget, Location loca
 void MultiSplitterLayout::ensureEnoughContentsSize(const QWidget *widget,
                                                    Location location, const Item *relativeToItem)
 {
-    Qt::Orientation orientation = anchorOrientationForLocation(location);
-    const int available = availableLengthForDrop(location, relativeToItem).length();
-    const int widgetMin = widgetMinLength(widget, orientation);
-    const int needed = widgetMin - available + (isEmpty() ? 0 : Anchor::thickness(/*static=*/false));
+    const int neededAnchorThickness = isEmpty() ? 0 : Anchor::thickness(/*static=*/ false);
+    const QSize available = availableSize();
+    const QSize widgetMin = { widgetMinLength(widget, Qt::Vertical), widgetMinLength(widget, Qt::Horizontal) };
+    const int neededWidth = widgetMin.width() - available.width() + neededAnchorThickness;
+    const int neededHeight = widgetMin.height() - available.height() + neededAnchorThickness;
 
-    if (needed > 0) {
-        qCDebug(sizing) << "contents=" << contentsLength(orientation)
+    QSize newSize = m_contentSize;
+    if (neededWidth > 0)
+        newSize.setWidth(newSize.width() + neededWidth);
+    if (neededHeight > 0)
+        newSize.setHeight(newSize.height() + neededHeight);
+
+
+    if (newSize != m_contentSize) {
+        qCDebug(sizing) << "contents=" << m_contentSize
                         << "; available=" << available
                         << "; widgetMin=" << widgetMin
-                        << "; needed=" << needed
-                        << "; newContents=" << contentsLength(orientation) + needed
+                        << "; needed=" << neededWidth << neededHeight
+                        << "; newSize=" << newSize
                         << "; isEmpty=" << isEmpty();
-        setContentLength(contentsLength(orientation) + needed, orientation);
+        setContentsSize(newSize);
     }
 
     // Just to make sure:

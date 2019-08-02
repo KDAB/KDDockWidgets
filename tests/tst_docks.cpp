@@ -339,6 +339,8 @@ private Q_SLOTS:
     void tst_negativeAnchorPosition3();
     void tst_negativeAnchorPosition4();
     void tst_negativeAnchorPosition5();
+    void tst_negativeAnchorPositionWhenEmbedded_data();
+    void tst_negativeAnchorPositionWhenEmbedded();
     void tst_availableSizeWithPlaceholders();
     void tst_stealFrame();
     void tst_addAsPlaceholder();
@@ -369,8 +371,6 @@ private Q_SLOTS:
     void tst_resizeWindow2();
 
 private:
-    void tst_negativeAnchorPositionWhenEmbedded_data();
-    void tst_negativeAnchorPositionWhenEmbedded();
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
 }
@@ -3947,7 +3947,7 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
 
     m->addDockWidget(d1, Location_OnLeft);
     m->addDockWidget(d2, Location_OnLeft);
-    delete m;
+    delete m->window();
 }
 
 void TestDocks::tst_availableSizeWithPlaceholders()
