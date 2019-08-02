@@ -860,13 +860,23 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
             result.moveLeft(bound1 + anchor1->thickness());
         if (result.right() >= bound2)
             result.moveRight(bound2 - 1);
-        Q_ASSERT(result.x() >= bound1 + anchor1->thickness());
+        if (result.x() < bound1 + anchor1->thickness()) {
+            dumpDebug();
+            qDebug() << "result=" << result.x() << "; bound1=" << bound1
+                     << "; anchor1->thickness" << anchor1->thickness();
+            Q_ASSERT(false);
+        }
     } else {
         if (result.y() < bound1 + anchor1->thickness())
             result.moveTop(bound1 + anchor1->thickness());
         if (result.bottom() >= bound2)
             result.moveBottom(bound2 - 1);
-        Q_ASSERT(result.y() >= bound1 + anchor1->thickness());
+        if (result.y() < bound1 + anchor1->thickness()) {
+            dumpDebug();
+            qDebug() << "result=" << result.y() << "; bound1=" << bound1
+                     << "; anchor1->thickness" << anchor1->thickness();
+            Q_ASSERT(false);
+        }
     }
 
     return result;
