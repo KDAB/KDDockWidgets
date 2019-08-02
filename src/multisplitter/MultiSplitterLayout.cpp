@@ -306,12 +306,6 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         // to make room for ours.
         propagateResize(delta1, direction1Anchor, /*direction*/ Anchor::Side1);
         propagateResize(delta2, direction2Anchor, /*direction*/ Anchor::Side2);
-
-        /*qDebug() << "Delta1=" << delta1 << "; delta2=" << delta2
-                 << "; posForNewAnchor=" << posForNewAnchor
-                 << "; w=" << widget->width()
-                 << "; direction1Anchor=" << direction1Anchor
-                 << "; direction2Anchor=" << direction2Anchor;*/
     }
 
     auto sourceMultiSplitterWidget = qobject_cast<MultiSplitterWidget *>(w);
