@@ -369,6 +369,7 @@ private Q_SLOTS:
     void tst_resizeWindow_data();
     void tst_resizeWindow();
     void tst_resizeWindow2();
+    void tst_rectForDropCrash();
 
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -3935,8 +3936,9 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
         auto em = createEmbeddedMainWindow(QSize(500, 500));
         m = em->mainWindow;
     } else {
-        m =new MainWindow(QStringLiteral("m1"), MainWindowOption_None);
+        m =new MainWindow(QStringLiteral("m1"));
         m->resize(QSize(500, 500));
+        m->show();
     }
     // auto layout = m->multiSplitterLayout();
 
@@ -3944,9 +3946,34 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
     auto w2 = new MyWidget2(QSize(400,400));
     auto d1 = createDockWidget(QStringLiteral("1"), w1);
     auto d2 = createDockWidget(QStringLiteral("2"), w2);
+    auto d3 = createDockWidget(QStringLiteral("3"), w2);
 
     m->addDockWidget(d1, Location_OnLeft);
     m->addDockWidget(d2, Location_OnLeft);
+    m->addDockWidget(d3, Location_OnLeft);
+    delete m->window();
+}
+
+void TestDocks::tst_rectForDropCrash()
+{
+    // Tests a crash I got in MultiSplitterLayout::rectForDrop() (asserts being hit)
+    EnsureTopLevelsDeleted e;
+
+    MainWindow *m =new MainWindow(QStringLiteral("m1"));
+    m->resize(QSize(500, 500));
+    m->show();
+
+    auto layout = m->multiSplitterLayout();
+
+    auto w1 = new MyWidget2(QSize(400,400));
+    auto w2 = new MyWidget2(QSize(400,400));
+    auto d1 = createDockWidget(QStringLiteral("1"), w1);
+    auto d2 = createDockWidget(QStringLiteral("2"), w2);
+
+    m->addDockWidget(d1, Location_OnTop);
+    Item *centralItem = m->dropArea()->centralFrame();
+    layout->rectForDrop(d2, Location_OnTop, centralItem);
+
     delete m->window();
 }
 

@@ -828,7 +828,8 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
 {
     Q_ASSERT(widgetBeingDropped);
     Length lfd = lengthForDrop(widgetBeingDropped, location, relativeTo);
-    if (lfd.isNull())  {
+    const bool needsMoreSpace = lfd.isNull();
+    if (needsMoreSpace)  {
         // This is the case with the drop indicators. If there's not enough space let's still
         // draw some indicator drop. The window will resize to accommodate the drop.
         lfd.side1Length = INDICATOR_MINIMUM_LENGTH / 2;
@@ -860,7 +861,10 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
             result.moveLeft(bound1 + anchor1->thickness());
         if (result.right() >= bound2)
             result.moveRight(bound2 - 1);
-        if (result.x() < bound1 + anchor1->thickness()) {
+        if (!needsMoreSpace && result.x() < bound1 + anchor1->thickness()) {
+            // We only assert if there's enough space. When adding a new widget we ensure there's enough space before calling rectForDrop, so it's never null.
+            // However, when hovering, we call rectForDrop(), and we want to draw the rubber band even if there's not enough space yet.
+            // So don't assert when hovering.
             dumpDebug();
             qDebug() << "result=" << result.x() << "; bound1=" << bound1
                      << "; anchor1->thickness" << anchor1->thickness();
@@ -871,7 +875,9 @@ QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Locati
             result.moveTop(bound1 + anchor1->thickness());
         if (result.bottom() >= bound2)
             result.moveBottom(bound2 - 1);
-        if (result.y() < bound1 + anchor1->thickness()) {
+
+        if (!needsMoreSpace && result.y() < bound1 + anchor1->thickness()) {
+            // Same comment as above
             dumpDebug();
             qDebug() << "result=" << result.y() << "; bound1=" << bound1
                      << "; anchor1->thickness" << anchor1->thickness();
