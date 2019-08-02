@@ -3940,7 +3940,7 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
         m->resize(QSize(500, 500));
         m->show();
     }
-    // auto layout = m->multiSplitterLayout();
+    auto layout = m->multiSplitterLayout();
 
     auto w1 = new MyWidget2(QSize(400,400));
     auto w2 = new MyWidget2(QSize(400,400));
@@ -3951,6 +3951,9 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
     m->addDockWidget(d1, Location_OnLeft);
     m->addDockWidget(d2, Location_OnLeft);
     m->addDockWidget(d3, Location_OnLeft);
+
+    layout->checkSanity();
+
     delete m->window();
 }
 
