@@ -79,6 +79,9 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup
     void setAnchor(Anchor *a, Qt::Orientation orientation, Anchor::Side side);
 
     Anchor *adjacentAnchor(Anchor*) const;
+
+    QPair<Anchor*,Anchor*> adjacentAnchors(Anchor*) const;
+
     Anchor *anchor(KDDockWidgets::Location) const;
     Anchor *anchorAtDirection(Anchor::Side side, Qt::Orientation orientation) const;
 

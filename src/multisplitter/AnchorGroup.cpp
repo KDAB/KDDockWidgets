@@ -338,6 +338,17 @@ Anchor *AnchorGroup::adjacentAnchor(Anchor *other) const
     return nullptr;
 }
 
+QPair<Anchor *, Anchor *> AnchorGroup::adjacentAnchors(Anchor *anchor) const
+{
+    if (anchor == left || anchor == right) {
+        return { top, bottom };
+    } else if (anchor == top || anchor == bottom) {
+        return { left, right };
+    } else {
+        return {};
+    }
+}
+
 void AnchorGroup::addItem(Item *item)
 {
     // Dropping a single dockwidget, without any nesting
