@@ -46,6 +46,7 @@ class LastPosition;
 class DockRegistry;
 class TabWidget;
 class LayoutSaver;
+class TitleBar;
 
 /**
  * @brief Represents a dock widget.
@@ -242,6 +243,7 @@ private:
     friend class TestDocks;
     friend class Item;
     friend class KDDockWidgets::TabWidget;
+    friend class KDDockWidgets::TitleBar;
     friend class KDDockWidgets::DragController;
     friend class KDDockWidgets::Item;
     friend class KDDockWidgets::DockRegistry;
