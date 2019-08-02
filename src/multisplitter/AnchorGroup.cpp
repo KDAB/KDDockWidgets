@@ -78,6 +78,12 @@ QSize AnchorGroup::itemSize() const
                  bottom->position() - top->position() - top->thickness());
 }
 
+int AnchorGroup::itemSize(Qt::Orientation o) const
+{
+    return o == Qt::Vertical ? itemSize().width()
+                             : itemSize().height();
+}
+
 bool AnchorGroup::hasAvailableSizeFor(QSize needed) const
 {
     const QSize available = availableSize();

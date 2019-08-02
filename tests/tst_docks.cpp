@@ -339,6 +339,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPosition3();
     void tst_negativeAnchorPosition4();
     void tst_negativeAnchorPosition5();
+    void tst_negativeAnchorPosition6();
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_negativeAnchorPositionWhenEmbedded();
     void tst_availableSizeWithPlaceholders();
@@ -3915,6 +3916,44 @@ void TestDocks::tst_negativeAnchorPosition5()
         dock->deleteLater();
 
     QVERIFY(waitForDeleted(dock0));
+}
+
+void TestDocks::tst_negativeAnchorPosition6()
+{
+    // Tests a case when we add a widget to left/right but the layout doesn't have enough height (or vice-versa)
+    EnsureTopLevelsDeleted e;
+
+    auto m = new MainWindow(QStringLiteral("m1"), MainWindowOption_None);
+    m->resize(QSize(100, 100));
+    m->show();
+
+    auto layout = m->multiSplitterLayout();
+
+    auto w1 = new MyWidget2(QSize(400,100));
+    auto w2 = new MyWidget2(QSize(400,100));
+    auto w3 = new MyWidget2(QSize(400,100));
+    auto w4 = new MyWidget2(QSize(400,900));
+    auto d1 = createDockWidget(QStringLiteral("1"), w1);
+    auto d2 = createDockWidget(QStringLiteral("2"), w2);
+    auto d3 = createDockWidget(QStringLiteral("3"), w3);
+    auto d4 = createDockWidget(QStringLiteral("4"), w4);
+
+    m->addDockWidget(d1, Location_OnBottom);
+    m->addDockWidget(d2, Location_OnBottom);
+    m->addDockWidget(d3, Location_OnBottom);
+
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    m->addDockWidget(d4, Location_OnRight, d3);
+
+    layout->checkSanity();
+
+
+    Item *centralItem = m->dropArea()->centralFrame();
+    layout->rectForDrop(d2, Location_OnTop, centralItem);
+
+    delete m->window();
 }
 
 void TestDocks::tst_negativeAnchorPositionWhenEmbedded_data()

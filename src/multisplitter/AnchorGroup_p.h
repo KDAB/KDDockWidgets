@@ -67,6 +67,12 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup
     QSize itemSize() const;
 
     /**
+     * @brief Similar to @ref itemSize(), but returns the width if @p o is Qt::Vertical, otherwise
+     * the height
+     */
+    int itemSize(Qt::Orientation o) const;
+
+    /**
      * @brief Returns whether @ref availableSize is bigger or equal than @ref needed
      */
     bool hasAvailableSizeFor(QSize needed) const;

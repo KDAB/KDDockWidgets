@@ -199,7 +199,6 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         return;
     }
 
-
     ensureEnoughContentsSize(w, location, relativeToItem);
 
     Anchor *newAnchor = nullptr;
@@ -301,6 +300,28 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         // to make room for ours.
         propagateResize(delta1, direction1Anchor, /*direction*/ Anchor::Side1);
         propagateResize(delta2, direction2Anchor, /*direction*/ Anchor::Side2);
+    }
+
+
+    if (newAnchor) {
+        // Also ensure the widget has a minimum size in the other direction. So, when adding to
+        // left/right, it will still have its minimum height honoured, and vice-versa.
+        QPair<Anchor*, Anchor*> adjacentAnchors = targetAnchorGroup.adjacentAnchors(newAnchor);
+
+        const int bound1 = boundPositionForAnchor(adjacentAnchors.first, Anchor::Side1);
+        const int bound2 = boundPositionForAnchor(adjacentAnchors.second, Anchor::Side2);
+
+        const Qt::Orientation otherOrientation = adjacentAnchors.first->orientation();
+        const int min = widgetMinLength(w, otherOrientation);
+        const int has = targetAnchorGroup.itemSize(otherOrientation);
+        const int needs = min - has;
+        if (needs > 0) {
+            const int pos1 = qMax(bound1, adjacentAnchors.first->position() - needs);
+            const int pos2 = pos1 + adjacentAnchors.first->thickness() + min;
+            Q_ASSERT(pos2 <= bound2);
+            adjacentAnchors.first->setPosition(pos1);
+            adjacentAnchors.second->setPosition(pos2);
+        }
     }
 
     auto sourceMultiSplitterWidget = qobject_cast<MultiSplitterWidget *>(w);
