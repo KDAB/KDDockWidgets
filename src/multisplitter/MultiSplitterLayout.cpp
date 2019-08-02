@@ -278,11 +278,6 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
             return;
         }
 
-        qCDebug(sizing) << "posForNewAnchor=" << posForNewAnchor
-                        << "; posForExistingAnchor=" << posForExistingAnchor
-                        << "; delta1=" << delta1
-                        << "; delta2=" << delta2;
-
         newAnchor->setPosition(posForNewAnchor);
 
         if (posForExistingAnchor != originalExistingAnchorPos) {
@@ -386,15 +381,8 @@ void MultiSplitterLayout::ensureEnoughContentsSize(const QWidget *widget,
         newSize.setHeight(newSize.height() + neededHeight);
 
 
-    if (newSize != m_contentSize) {
-        qCDebug(sizing) << "contents=" << m_contentSize
-                        << "; available=" << available
-                        << "; widgetMin=" << widgetMin
-                        << "; needed=" << neededWidth << neededHeight
-                        << "; newSize=" << newSize
-                        << "; isEmpty=" << isEmpty();
+    if (newSize != m_contentSize)
         setContentsSize(newSize);
-    }
 
     // Just to make sure:
     if (lengthForDrop(widget, location, relativeToItem).isNull())
@@ -420,12 +408,6 @@ static Anchor::List removeSmallestPath(QVector<Anchor::List> &paths)
 
 void MultiSplitterLayout::propagateResize(int delta, Anchor *fromAnchor, Anchor::Side direction)
 {
-    qCDebug(sizing) << Q_FUNC_INFO << " START delta=" << delta
-                    << "; fromAnchor=" << fromAnchor
-                    << "; isStatic?" << fromAnchor->isStatic()
-                    << "; direction=" << direction
-                    << "; pos=" << fromAnchor->position();
-
     Q_ASSERT(delta >= 0);
     if (delta == 0 || fromAnchor->isStatic())
         return;
@@ -433,7 +415,6 @@ void MultiSplitterLayout::propagateResize(int delta, Anchor *fromAnchor, Anchor:
     QVector<Anchor::List> paths;
     collectPaths(paths, fromAnchor, direction);
 
-    qCDebug(sizing) << Q_FUNC_INFO << "Got" << paths.size() << "paths";
     for (const Anchor::List &path : qAsConst(paths)) {
         qCDebug(sizing) << Q_FUNC_INFO << path;
     }
@@ -478,8 +459,6 @@ void MultiSplitterLayout::propagateResize(int delta, Anchor *fromAnchor, Anchor:
             }
         }
     }
-
-    qCDebug(sizing) << Q_FUNC_INFO << "END";
 }
 
 void MultiSplitterLayout::collectPaths(QVector<Anchor::List> &paths, Anchor *fromAnchor, Anchor::Side direction)
