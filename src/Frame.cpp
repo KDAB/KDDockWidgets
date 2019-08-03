@@ -169,17 +169,14 @@ void Frame::updateTitleBarVisibility()
     if (!m_dropArea)
         return;
 
-    if (isCentralFrame()) {
-        m_titleBar->setVisible(false);
-        return;
-    }
-
     bool visible = false;
-
-    if (m_dropArea->numFrames() > 1) {
+    if (isCentralFrame()) {
+        visible = false;
+    } else if (FloatingWindow *fw = floatingWindow()) {
+        // If there's nested frames then show each Frame's title bar
+        visible = !fw->hasSingleFrame();
+    } else {
         visible = true;
-    } else if (m_dropArea->numFrames() == 1) {
-        visible = !KDDockWidgets::usesNativeTitleBar();
     }
 
     m_titleBar->setVisible(visible);
@@ -415,6 +412,11 @@ bool Frame::isFloating() const
         return false;
 
     return isTheOnlyFrame();
+}
+
+bool Frame::isInFloatingWindow() const
+{
+    return floatingWindow() != nullptr;
 }
 
 bool Frame::isInMainWindow() const

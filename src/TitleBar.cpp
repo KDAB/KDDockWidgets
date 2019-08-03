@@ -171,7 +171,6 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 
         if (m_floatingWindow) {
             qWarning() << "Has floating window with titlebar=" << m_floatingWindow->titleBar()
-                       << "; and actual titleBar=" << m_floatingWindow->actualTitleBar()
                        << "; fw->isVisible=" << m_floatingWindow->isVisible();
         }
 

@@ -192,13 +192,6 @@ const Frame::List FloatingWindow::frames() const
     return findChildren<Frame *>(QString(), Qt::FindChildrenRecursively);
 }
 
-TitleBar *FloatingWindow::actualTitleBar() const
-{
-    if (hasSingleFrame())
-        return frames().at(0)->titleBar();
-    return titleBar();
-}
-
 void FloatingWindow::paintFrame(QWidget *w)
 {
     QPainter p(w);
@@ -261,11 +254,8 @@ bool FloatingWindow::isInTitleBar(QPoint globalPoint) const
         qFatal("Not implemented on this platform");
 #endif
     } else {
-        if (TitleBar *tb = actualTitleBar())
-            return tb->rect().adjusted(8, 8, 0, 0).contains(tb->mapFromGlobal(globalPoint));
+        return m_titleBar->rect().adjusted(8, 8, 0, 0).contains(m_titleBar->mapFromGlobal(globalPoint));
     }
-
-    return false;
 }
 
 bool FloatingWindow::anyNonClosable() const
@@ -340,12 +330,8 @@ void FloatingWindow::updateTitleBarVisibility()
         title = qApp->applicationName();
     }
 
+    const bool visible = !KDDockWidgets::usesNativeTitleBar();
     m_titleBar->setTitle(title);
-    const bool visible = m_dropArea->numFrames() > 1 && !KDDockWidgets::usesNativeTitleBar();
-
-    qCDebug(::title) << Q_FUNC_INFO << "Setting title visible=" << visible
-                     << "; was" << m_titleBar->isVisible();
-
     m_titleBar->setVisible(visible);
     if (KDDockWidgets::usesNativeTitleBar()) {
         setWindowTitle(title);

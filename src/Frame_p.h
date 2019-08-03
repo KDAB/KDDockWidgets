@@ -100,9 +100,17 @@ public:
     /**
      * @brief Returns whether this frame is floating. A floating frame isn't attached to any other MainWindow,
      * and if it's attached to a FloatingWindow then it's considered floating if it's the only frame in that Window.
-     * A floating frame can have multiple dock widgets (tabbed), in which case each DockWidget::isFloating() returns false.
+     * A floating frame can have multiple dock widgets (tabbed), in which case each DockWidget::isFloating() returns false,
+     * in which case you can use isInFloatingWindow() which would still return true
      */
     bool isFloating() const;
+
+    /**
+     * @brief Returns whether this frame is in a FloatingWindow, as opposed to MainWindow.
+     *
+     * After setup it's equivalent to !isInMainWindow().
+     */
+    bool isInFloatingWindow() const;
 
     /**
      * @brief Returns whether this frame is docked inside a MainWindow.

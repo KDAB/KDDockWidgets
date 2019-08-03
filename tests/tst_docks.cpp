@@ -554,14 +554,14 @@ static void drag(QWidget *sourceWidget, QPoint globalDest, ButtonActions buttonA
 
 static void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
 {
-    auto sourceTitleBar = fw->actualTitleBar();
+    auto sourceTitleBar = fw->titleBar();
     Q_ASSERT(sourceTitleBar && sourceTitleBar->isVisible());
     drag(sourceTitleBar, sourceTitleBar->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
 }
 
 static void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation)
 {
-    auto sourceTitleBar = fw->actualTitleBar();
+    auto sourceTitleBar = fw->titleBar();
 
     // First we drag over it, so the drop indicators appear:
     drag(sourceTitleBar, sourceTitleBar->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(QPoint(50, 50)), ButtonAction_Press);
@@ -657,11 +657,12 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         return; // Unit-tests can't drag via tab, yet
 
     auto dock1 = createDockWidget(QStringLiteral("doc1"), Qt::green);
-    dock1->window()->setGeometry(500, 500, 400, 400);
+    auto fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+    fw1->setGeometry(500, 500, 400, 400);
     QVERIFY(dock1);
     QPointer<Frame> frame1 = dock1->frame();
 
-    auto titlebar1 = frame1->titleBar();
+    auto titlebar1 = fw1->titleBar();
     auto dock2 = createDockWidget(QStringLiteral("doc2"), Qt::red);
 
     QVERIFY(dock1->isFloating());
@@ -695,8 +696,9 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     // 2.4 Drag the first dock over the second
     frame1 = dock1->frame();
     frame2 = dock2->frame();
-    globalPressPos = frame1->titleBar()->mapToGlobal(QPoint(100,5));
-    drag(frame1->titleBar(), globalPressPos, dock2->window()->geometry().center());
+    fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+    globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100,5));
+    drag(fw1->titleBar(), globalPressPos, dock2->window()->geometry().center());
 
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
@@ -711,7 +713,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     auto dock3 = createDockWidget(QStringLiteral("doc3"), Qt::black);
     QTest::qWait(1000); // Test is flaky otherwise
 
-    drag(frame2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
+    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    drag(fw2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
 
     QVERIFY(waitForDeleted(frame1));
     QVERIFY(waitForDeleted(frame2));
@@ -728,7 +731,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         m.show();
         m.setGeometry(500, 300, 300, 300);
         QVERIFY(!dock3->isFloating());
-        drag(dock3->frame()->titleBar(), dock3->window()->mapToGlobal(QPoint(10, 10)), m.geometry().center());
+        auto fw3 = qobject_cast<FloatingWindow *>(dock3->window());
+        drag(fw3->titleBar(), dock3->window()->mapToGlobal(QPoint(10, 10)), m.geometry().center());
         QVERIFY(!dock3->isFloating());
         QVERIFY(qobject_cast<MainWindow *>(dock3->window()) == &m);
         QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
@@ -2063,14 +2067,12 @@ void TestDocks::tst_notClosable()
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
         dock1->addDockWidgetAsTab(dock2);
 
-
         auto fw = qobject_cast<FloatingWindow*>(dock1->window());
         QVERIFY(fw);
         QWidget *closeFW = fw->titleBar()->closeButton();
         QWidget *closeFrame = fw->frames().at(0)->titleBar()->closeButton();
-        QVERIFY(!closeFW->isVisible());
-
-        QVERIFY(closeFrame->isVisible());
+        QVERIFY(closeFW->isVisible());
+        QVERIFY(!closeFrame->isVisible());
         QVERIFY(!closeFrame->isEnabled());
 
         auto window = dock1->window();
@@ -2092,9 +2094,8 @@ void TestDocks::tst_notClosable()
         QWidget *closeFW = fw->titleBar()->closeButton();
         QWidget *closeFrame = fw->frames().at(0)->titleBar()->closeButton();
 
-        QVERIFY(!closeFW->isVisible());
-
-        QVERIFY(closeFrame->isVisible());
+        QVERIFY(closeFW->isVisible());
+        QVERIFY(!closeFrame->isVisible());
         QVERIFY(!closeFrame->isEnabled());
 
         auto window = dock2->window();

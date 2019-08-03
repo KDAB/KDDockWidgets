@@ -51,8 +51,13 @@ public:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     const Frame::List frames() const;
     DropArea *dropArea() const { return m_dropArea; }
+
+    /**
+     * @brief Returns the title bar.
+     *
+     * This TitleBar is hidden if we're using a native title bar.
+     */
     TitleBar *titleBar() const { return m_titleBar; }
-    TitleBar *actualTitleBar() const;
 
     static void paintFrame(QWidget *);
     bool anyNonClosable() const;
