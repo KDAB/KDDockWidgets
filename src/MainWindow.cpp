@@ -95,7 +95,7 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
 
     auto centralWidget = new MyCentralWidget(this);
     auto layout = new QVBoxLayout(centralWidget);
-    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setContentsMargins(1, 5, 1, 1);
     layout->addWidget(d->m_dropArea); // 1 level of indirection so we can add some margins
     setCentralWidget(centralWidget);
 
