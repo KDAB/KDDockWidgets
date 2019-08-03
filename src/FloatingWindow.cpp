@@ -320,6 +320,12 @@ void FloatingWindow::onVisibleFrameCountChanged(int count)
 
 void FloatingWindow::updateTitleBarVisibility()
 {
+    updateTitleAndIcon();
+    m_titleBar->setVisible(!KDDockWidgets::usesNativeTitleBar());
+}
+
+void FloatingWindow::updateTitleAndIcon()
+{
     QString title;
     QIcon icon;
     if (hasSingleFrame()) {
@@ -329,11 +335,9 @@ void FloatingWindow::updateTitleBarVisibility()
     } else {
         title = qApp->applicationName();
     }
-
-    const bool visible = !KDDockWidgets::usesNativeTitleBar();
     m_titleBar->setTitle(title);
     m_titleBar->setIcon(icon);
-    m_titleBar->setVisible(visible);
+
     if (KDDockWidgets::usesNativeTitleBar()) {
         setWindowTitle(title);
         setWindowIcon(icon);

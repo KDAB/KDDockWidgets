@@ -94,6 +94,13 @@ void Frame::updateTitleAndIcon()
     if (DockWidget *dw = currentDockWidget()) {
         m_titleBar->setTitle(dw->title());
         m_titleBar->setIcon(dw->icon());
+
+        if (auto fw = floatingWindow()) {
+            if (fw->hasSingleFrame()) {
+                fw->updateTitleAndIcon();
+            }
+        }
+
     } else if (currentTabIndex() != -1) {
         qWarning() << Q_FUNC_INFO << "Invalid dock widget for frame." << currentTabIndex();
     }
