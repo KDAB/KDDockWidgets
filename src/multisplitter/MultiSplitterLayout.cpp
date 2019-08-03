@@ -90,6 +90,9 @@ MultiSplitterLayout::MultiSplitterLayout(MultiSplitterWidget *parent)
     clear();
 
     positionStaticAnchors();
+
+    // Initialize min size
+    updateSizeConstraints();
     m_inCtor = false;
 }
 
@@ -392,6 +395,7 @@ void MultiSplitterLayout::ensureEnoughContentsSize(const QWidget *widget,
     const int neededAnchorThickness = isEmpty() ? 0 : Anchor::thickness(/*static=*/ false);
     const QSize available = availableSize();
     const QSize widgetMin = { widgetMinLength(widget, Qt::Vertical), widgetMinLength(widget, Qt::Horizontal) };
+    const QSize oldContentsSize = m_contentSize;
     const int neededWidth = widgetMin.width() - available.width() + neededAnchorThickness;
     const int neededHeight = widgetMin.height() - available.height() + neededAnchorThickness;
 
@@ -401,13 +405,21 @@ void MultiSplitterLayout::ensureEnoughContentsSize(const QWidget *widget,
     if (neededHeight > 0)
         newSize.setHeight(newSize.height() + neededHeight);
 
-
     if (newSize != m_contentSize)
         setContentsSize(newSize);
 
     // Just to make sure:
-    if (lengthForDrop(widget, location, relativeToItem).isNull())
+    if (lengthForDrop(widget, location, relativeToItem).isNull()) {
+        qWarning() << Q_FUNC_INFO << "failed! Please report a bug."
+                   << "; oldAvailable=" << available
+                   << "; newAvailable=" << availableSize()
+                   << "; newSize=" << newSize
+                   << "; m_contentSize=" << m_contentSize
+                   << "; oldContentsSize=" << oldContentsSize
+                   << "; widgetMin=" << widgetMin
+                   << "; isEmpty=" << isEmpty();
         Q_ASSERT(false);
+    }
 }
 
 static Anchor::List removeSmallestPath(QVector<Anchor::List> &paths)

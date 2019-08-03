@@ -50,6 +50,8 @@ MultiSplitterWidget::MultiSplitterWidget(QWidget *parent)
         if (!m_inResizeEvent && !LayoutSaver::restoreInProgress())
             resize(sz);
     });
+
+    setMinimumSize(m_layout->minimumSize());
 }
 
 MultiSplitterWidget::~MultiSplitterWidget()
