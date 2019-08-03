@@ -657,7 +657,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         return; // Unit-tests can't drag via tab, yet
 
     auto dock1 = createDockWidget(QStringLiteral("doc1"), Qt::green);
-    auto fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw1 = dock1->floatingWindow();
     fw1->setGeometry(500, 500, 400, 400);
     QVERIFY(dock1);
     QPointer<Frame> frame1 = dock1->frame();
@@ -672,8 +672,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     // It morphed into a FloatingWindow
     QPointer<Frame> frame2 = dock2->frame();
-    if (!qobject_cast<FloatingWindow *>(dock2->window())) {
-        qWarning() << "dock2->window()=" << dock2->window();
+    if (!dock2->floatingWindow()) {
+        qWarning() << "dock2->floatingWindow()=" << dock2->floatingWindow();
         QVERIFY(false);
     }
     QVERIFY(frame2);
@@ -696,7 +696,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     // 2.4 Drag the first dock over the second
     frame1 = dock1->frame();
     frame2 = dock2->frame();
-    fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+    fw1 = dock1->floatingWindow();
     globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100,5));
     drag(fw1->titleBar(), globalPressPos, dock2->window()->geometry().center());
 
@@ -713,7 +713,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     auto dock3 = createDockWidget(QStringLiteral("doc3"), Qt::black);
     QTest::qWait(1000); // Test is flaky otherwise
 
-    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    auto fw2 = dock2->floatingWindow();
     drag(fw2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
 
     QVERIFY(waitForDeleted(frame1));
@@ -777,7 +777,7 @@ void TestDocks::tst_close()
     QVERIFY(dock1->isVisible());
 
     // 1.3 Use hide() instead
-    auto fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw1 = dock1->floatingWindow();
     dock1->hide();
     QVERIFY(waitForDeleted(fw1));
     QVERIFY(!dock1->isVisible());
@@ -915,7 +915,7 @@ void TestDocks::tst_preventClose()
     QVERIFY(dock1->isVisible());
     dock1->frame()->titleBar()->onCloseClicked();
     QVERIFY(dock1->isVisible());
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw = dock1->floatingWindow();
     fw->close();
     QVERIFY(dock1->isVisible());
 
@@ -1421,7 +1421,7 @@ void TestDocks::tst_restoreSimple()
     dock1->setFloating(true);
     dock1->setFloating(false);
 
-    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    auto fw2 = dock2->floatingWindow();
     QVERIFY(fw2);
     QVERIFY(fw2->isVisible());
     QVERIFY(fw2->isTopLevel());
@@ -1489,7 +1489,7 @@ void TestDocks::tst_restoreNestedAndTabbed()
     QVERIFY(saver.restoreFromDisk());
     QVERIFY(layout->checkSanity());
 
-    auto fw4 = qobject_cast<FloatingWindow*>(dock4->window());
+    auto fw4 = dock4->floatingWindow();
     QVERIFY(fw4);
     QCOMPARE(dock4->window(), dock5->window());
     QCOMPARE(fw4->pos(), oldFW4Pos);
@@ -1584,7 +1584,7 @@ void TestDocks::tst_restoreTwice()
         QVERIFY(dock3->isVisible());
         QVERIFY(dock2->window()->isVisible());
         QVERIFY(dock3->window()->isVisible());
-        auto fw = qobject_cast<FloatingWindow*>(dock2->window());
+        auto fw = dock2->floatingWindow();
         QVERIFY(fw);
     }
 }
@@ -1608,7 +1608,7 @@ void TestDocks::tst_restoreSideBySide()
         auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
         auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
         dock2->addDockWidgetToContainingWindow(dock3, Location_OnRight);
-        auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+        auto fw2 = dock2->floatingWindow();
         item2MinSize = fw2->multiSplitterLayout()->itemForFrame(dock2->frame())->minimumSize();
         LayoutSaver saver;
         QVERIFY(saver.saveToDisk());
@@ -1624,7 +1624,7 @@ void TestDocks::tst_restoreSideBySide()
         LayoutSaver restorer;
         QVERIFY(restorer.restoreFromDisk());
 
-        auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+        auto fw2 = dock2->floatingWindow();
         QCOMPARE(item2MinSize, fw2->multiSplitterLayout()->itemForFrame(dock2->frame())->minimumSize());
 
         QCOMPARE(dock1->window(), m.get());
@@ -1740,7 +1740,7 @@ void TestDocks::tst_marginsAfterRestore()
 
         dock1->setFloating(true);
 
-        auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+        auto fw = dock1->floatingWindow();
         QVERIFY(fw);
         layout->addWidget(fw->dropArea(), Location_OnRight);
 
@@ -2021,7 +2021,7 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
     dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
     dock1->addDockWidgetToContainingWindow(dock3, Location_OnRight, dock2);
 
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw = dock1->floatingWindow();
 
     QPointer<Frame> frame2= dock2->frame();
 
@@ -2067,7 +2067,7 @@ void TestDocks::tst_notClosable()
         auto dock2 = createDockWidget(QStringLiteral("dock2"), new QPushButton(QStringLiteral("two")));
         dock1->addDockWidgetAsTab(dock2);
 
-        auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+        auto fw = dock1->floatingWindow();
         QVERIFY(fw);
         QWidget *closeFW = fw->titleBar()->closeButton();
         QWidget *closeFrame = fw->frames().at(0)->titleBar()->closeButton();
@@ -2089,7 +2089,7 @@ void TestDocks::tst_notClosable()
         dock2->morphIntoFloatingWindow();
         dock2->addDockWidgetAsTab(dock1);
 
-        auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+        auto fw = dock1->floatingWindow();
         QVERIFY(fw);
         QWidget *closeFW = fw->titleBar()->closeButton();
         QWidget *closeFrame = fw->frames().at(0)->titleBar()->closeButton();
@@ -2718,7 +2718,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         QPointer<Frame> frame1 = dock1->frame();
         dock1->setFloating(true);
         QVERIFY(dock1->isFloating());
-        auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+        auto fw = dock1->floatingWindow();
         QVERIFY(fw);
 
         //2. Put it back, via setFloating(). It should return to its place.
@@ -2810,7 +2810,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
 
         // Detach tab
         dock1->frame()->m_tabWidget->detachTab(dock2);
-        auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+        auto fw2 = dock2->floatingWindow();
         QVERIFY(fw2);
         QCOMPARE(dock2->lastPosition()->layoutItem(), oldItem2);
         Item *item2 = fw2->dropArea()->multiSplitterLayout()->itemForFrame(dock2->frame());
@@ -2850,7 +2850,7 @@ void TestDocks::tst_setFloatingAFrameWithTabs()
     // Make it float
     dock1->frame()->titleBar()->onFloatClicked();
 
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw = dock1->floatingWindow();
     QVERIFY(fw);
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 1);
@@ -2998,7 +2998,7 @@ void TestDocks::tst_addAndReadd()
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     dock1->frame()->titleBar()->makeWindow();
 
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw = dock1->floatingWindow();
     QVERIFY(fw);
     auto dropArea = m->dropArea();
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterRight);
@@ -3040,7 +3040,7 @@ void TestDocks::tst_placeholderCount()
     // 4. Float dock1. It should create a placeholder
     dock1->setFloating(true);
 
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw = dock1->floatingWindow();
     layout->dumpDebug();
 
     QCOMPARE(layout->count(), 2);
@@ -3055,7 +3055,7 @@ void TestDocks::tst_placeholderCount()
 
     // 6. Again
     dock1->setFloating(true);
-    fw = qobject_cast<FloatingWindow*>(dock1->window());
+    fw = dock1->floatingWindow();
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->visibleCount(), 2);
@@ -3112,7 +3112,7 @@ void TestDocks::tst_setAstCurrentTab()
     QVERIFY(dock1->isCurrentTab());
     QVERIFY(!dock2->isCurrentTab());
 
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw = dock1->floatingWindow();
     QVERIFY(fw);
 
     delete dock1; delete dock2;
@@ -3156,7 +3156,7 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
     QCOMPARE(layout->placeholderCount(), 1);
 
     dock1->morphIntoFloatingWindow();
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw = dock1->floatingWindow();
     layout->addMultiSplitter(fw->dropArea(), Location_OnRight );
     layout->dumpDebug();
     QCOMPARE(layout->placeholderCount(), 0);
@@ -3219,7 +3219,7 @@ void TestDocks::tst_embeddedMainWindow()
     window->mainWindow->addDockWidget(dock1, Location_OnTop);
     dock1->setFloating(true);
     auto dropArea = window->mainWindow->dropArea();
-    auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+    auto fw = dock1->floatingWindow();
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterLeft);
 
     auto layout = dropArea->multiSplitterLayout();
@@ -3873,10 +3873,10 @@ void TestDocks::tst_negativeAnchorPosition4()
     auto dock1 = docks.at(1).createdDock;
     auto dock2 = docks.at(2).createdDock;
     dock2->setFloating(true);
-    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    auto fw2 = dock2->floatingWindow();
     dropArea->multiSplitterLayout()->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
     dock2->setFloating(true);
-    fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    fw2 = dock2->floatingWindow();
 
     dropArea->multiSplitterLayout()->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
 
@@ -4113,10 +4113,10 @@ void TestDocks::tst_anchorFollowingItselfAssert()
     auto dock1 = docks.at(1).createdDock;
     auto dock2 = docks.at(2).createdDock;
     dock2->setFloating(true);
-    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    auto fw2 = dock2->floatingWindow();
     dropArea->multiSplitterLayout()->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
     dock2->setFloating(true);
-    fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    fw2 = dock2->floatingWindow();
     dropArea->multiSplitterLayout()->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
 
     docks.at(0).createdDock->deleteLater();
@@ -4366,7 +4366,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     f2->m_tabWidget->detachTab(dock2);
     QVERIFY(!f2.data());
     QTest::qWait(200); // Not sure why. Some event we're waiting for. TODO: Investigate
-    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    auto fw2 = dock2->floatingWindow();
     const int newAvailableWidth = layout->availableLengthForOrientation(Qt::Vertical);
     QCOMPARE(layout->minimumSize().width(), 2*Anchor::thickness(true) + 2*Anchor::thickness(false) + item1->minimumSize().width() + item3->minimumSize().width() + item4->minimumSize().width());
 
@@ -4742,7 +4742,7 @@ void TestDocks::tst_samePositionAfterHideRestore()
     QRect geo2 = dock2->frame()->geometry();
     dock2->setFloating(true);
 
-    auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+    auto fw2 = dock2->floatingWindow();
     dock2->setFloating(false);
     QVERIFY(waitForDeleted(fw2));
     QCOMPARE(geo2, dock2->frame()->geometry());
@@ -4758,7 +4758,7 @@ void TestDocks::tst_clear()
     auto dock1 = createDockWidget(QStringLiteral("1"), new QPushButton(QStringLiteral("1")));
     auto dock2 = createDockWidget(QStringLiteral("2"), new QPushButton(QStringLiteral("2")));
     auto dock3 = createDockWidget(QStringLiteral("3"), new QPushButton(QStringLiteral("3")));
-    auto fw3 = qobject_cast<FloatingWindow*>(dock3->window());
+    auto fw3 = dock3->floatingWindow();
 
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);

@@ -253,11 +253,21 @@ private:
 
     /**
      * @brief the Frame which contains this dock widgets.
+     *
      * A frame wraps a docked DockWidget, giving it a TabWidget so it can accept other dock widgets.
-     * Frame is also the actual class that goes into a MultiSplitter.s
-     * @return the frame which contains this dock widgets, or nullptr if none (if this dockwidget is a window).
+     * Frame is also the actual class that goes into a MultiSplitter.
+     *
+     * It's nullptr immediately after creation.
      */
     Frame *frame() const;
+
+    /**
+     * @brief returns the FloatingWindow this dock widget is in. If nullptr then it's in a MainWindow.
+     *
+     * Note: Being in a FloatingWindow doesn't necessarily mean @ref isFloating() returns true, as
+     * the dock widget might be in a floating window with other dock widgets side by side.
+     */
+    FloatingWindow *floatingWindow() const;
 
     ///@brief adds the current layout item containing this dock widget
     void addPlaceholderItem(Item*);

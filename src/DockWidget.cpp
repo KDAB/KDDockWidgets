@@ -398,6 +398,11 @@ Frame *DockWidget::frame() const
     return nullptr;
 }
 
+FloatingWindow *DockWidget::floatingWindow() const
+{
+    return qobject_cast<FloatingWindow*>(window());
+}
+
 void DockWidget::addPlaceholderItem(Item *item)
 {
     qCDebug(placeholder) << Q_FUNC_INFO << this << item;
