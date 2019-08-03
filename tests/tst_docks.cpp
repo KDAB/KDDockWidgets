@@ -599,7 +599,7 @@ void TestDocks::tst_createFloatingWindow()
     QVERIFY(dock);
     QVERIFY(dock->isFloating());
 
-    QVERIFY(dock->name() == QLatin1String("doc1")); // 1.0 objectName() is inherited
+    QCOMPARE(dock->name(), QLatin1String("doc1")); // 1.0 objectName() is inherited
 
     QPointer<FloatingWindow> window = qobject_cast<FloatingWindow *>(dock->window());
     QVERIFY(window); // 1.1 DockWidget creates a FloatingWindow and is reparented
@@ -836,7 +836,9 @@ void TestDocks::tst_close()
 
     rightDock->close();
     QTest::qWait(250); // TODO: wait for some signal
-    QCOMPARE(centralDock->frame()->width(), mainwindow->width() - STATIC_ANCHOR_LENGTH*2);
+    auto lay = mainwindow->centralWidget()->layout();
+    QMargins margins = lay->contentsMargins();
+    QCOMPARE(centralDock->frame()->width(), mainwindow->width() - STATIC_ANCHOR_LENGTH*2 - margins.left() - margins.right());
     delete leftDock; delete rightDock; delete centralDock;
 
     // 1.9 Close tabbed dock, side docks will maintain their position
@@ -1928,8 +1930,8 @@ void TestDocks::tst_addToSmallMainWindow()
         qDebug() << "window size3=" << m->size();
 
         QVERIFY(dropArea->multiSplitterLayout()->contentsWidth() > osWindowMinWidth());
-
-        QCOMPARE(dropArea->multiSplitterLayout()->contentsWidth(), m->width());
+        QMargins margins = m->centralWidget()->layout()->contentsMargins();
+        QCOMPARE(dropArea->multiSplitterLayout()->contentsWidth(), m->width() - margins.left() - margins.right());
         qDebug() << "New size: " << m->width() << dropArea->multiSplitterLayout()->contentsWidth()
                  << dropArea->minimumSize();
         QVERIFY(m->dropArea()->checkSanity());
@@ -2338,7 +2340,9 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     m->addDockWidget(dock2, Location_OnTop);
     m->addDockWidget(dock3, Location_OnTop);
 
-    QVERIFY(m->minimumSizeHint().height() > minHeight * 3); // > since some vertical space is occupied by the separators
+    QVERIFY(waitForResize(m.get()));
+
+    QVERIFY(widgetMinLength(m.get(), Qt::Horizontal) > minHeight * 3); // > since some vertical space is occupied by the separators
 
     // Now close dock1 and check again
     dock1->close();
@@ -2347,10 +2351,12 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     Item *item2 = layout->itemForFrame(dock2->frame());
     Item *item3 = layout->itemForFrame(dock3->frame());
 
+    QMargins margins = m->centralWidget()->layout()->contentsMargins();
     const int expectedMinHeight = item2->minLength(Qt::Horizontal) +
                                   item3->minLength(Qt::Horizontal) +
                                   2 * Anchor::thickness(true) +
-                                  1 * Anchor::thickness(false);
+                                  1 * Anchor::thickness(false)
+                                  + margins.top() + margins.bottom();
 
     QCOMPARE(m->minimumSizeHint().height(), expectedMinHeight);
 
@@ -2575,13 +2581,20 @@ void TestDocks::tst_crash()
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("dock1", new QPushButton("one"));
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        auto dropArea = m->dropArea();
-        auto layout = dropArea->multiSplitterLayout();
+        auto layout = m->multiSplitterLayout();
 
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        Item *item1 = layout->itemForFrame(dock1->frame());
         dock1->addDockWidgetAsTab(dock2);
 
         dock1->setFloating(true);
+        Item *layoutItem = dock1->lastPosition()->layoutItem();
+        QVERIFY(layoutItem && layoutItem->isInMainWindow());
+        QCOMPARE(layoutItem, item1);
+
+        QCOMPARE(layout->placeholderCount(), 0);
+        QCOMPARE(layout->count(), 1);
+        QCOMPARE(layout->numAchorsFollowing(), 0);
 
         // Move from tab to bottom
         m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
@@ -3760,7 +3773,7 @@ void TestDocks::tst_negativeAnchorPosition()
     // void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position
 
     EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 800));
+    auto m = createMainWindow(QSize(1002, 806));
 
     auto w1 = new MyWidget2(QSize(104, 104));
     w1->resize(994, 718);

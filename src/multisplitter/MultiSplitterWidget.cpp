@@ -92,7 +92,13 @@ bool MultiSplitterWidget::isInMainWindow() const
 
 MainWindow *MultiSplitterWidget::mainWindow() const
 {
-    return qobject_cast<MainWindow*>(parentWidget());
+    if (auto pw = parentWidget()) {
+        // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as it's parented
+        if (pw->objectName() == QLatin1String("MyCentralWidget"))
+            return qobject_cast<MainWindow*>(pw->parentWidget());
+    }
+
+    return nullptr;
 }
 
 FloatingWindow *MultiSplitterWidget::floatingWindow() const

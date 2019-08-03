@@ -36,10 +36,35 @@
 
 #include <QApplication>
 #include <QDataStream>
+#include <QVBoxLayout>
+#include <QPainter>
 
 using namespace KDDockWidgets;
 
 DropAreaWithCentralFrame::~DropAreaWithCentralFrame() {}
+
+namespace KDDockWidgets {
+class MyCentralWidget : public QWidget
+{
+public:
+    explicit MyCentralWidget(QWidget *parent = nullptr) : QWidget(parent)
+    {
+        setObjectName(QStringLiteral("MyCentralWidget"));
+    }
+
+    ~MyCentralWidget() override;
+
+    void paintEvent(QPaintEvent *) override
+    {
+        QPainter p(this);
+        QPen pen(QColor(184, 184, 184, 184));
+        p.setPen(pen);
+        p.drawLine(0, 0, width(), 0);
+    }
+};
+}
+
+MyCentralWidget::~MyCentralWidget() {}
 
 class MainWindow::Private
 {
@@ -67,7 +92,13 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
     , d(new Private(name, options, this))
 {
     DockRegistry::self()->registerMainWindow(this);
-    setCentralWidget(d->m_dropArea);
+
+    auto centralWidget = new MyCentralWidget(this);
+    auto layout = new QVBoxLayout(centralWidget);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(d->m_dropArea); // 1 level of indirection so we can add some margins
+    setCentralWidget(centralWidget);
+
     // qApp->installEventFilter(this);
 }
 
