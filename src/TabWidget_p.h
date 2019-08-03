@@ -118,8 +118,9 @@ public:
      */
     bool contains(DockWidget *dw) const;
 
-    // Draggable
+    // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
+    bool isPositionDraggable(QPoint p) const override;
 
 Q_SIGNALS:
     void dockWidgetCountChanged();

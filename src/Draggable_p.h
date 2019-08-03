@@ -33,8 +33,9 @@ class WidgetResizeHandler;
 struct WindowBeingDragged;
 
 /**
- * Represents something that can be dragged.
- * Like a tab, a docked title bar, and even a FloatingWindow.
+ * @brief Represents something that can be dragged.
+ *
+ * Like a tab, a docked title bar, and even a FloatingWindow if it has a native OS title bar
  *
  * \internal
  */
@@ -52,6 +53,15 @@ public:
      * Otherwise it should make it a window. As that's what dragging does.
      */
     virtual std::unique_ptr<WindowBeingDragged> makeWindow() = 0;
+
+
+    /**
+     * @brief Returns whether point @p p is draggable.
+     *
+     * Because simply inheriting from Draggable doesn't mean you can click anywhere to drag.
+     */
+    virtual bool isPositionDraggable(QPoint p) const { Q_UNUSED(p) return true; }
+
     WidgetResizeHandler *widgetResizeHandler() const;
     void setWidgetResizeHandler(WidgetResizeHandler *w);
     FloatingWindow *isFloatingWindow() const;

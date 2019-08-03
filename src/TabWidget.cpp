@@ -181,6 +181,16 @@ std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
 }
 
+bool TabWidget::isPositionDraggable(QPoint p) const
+{
+    if (tabPosition() != QTabWidget::North) {
+        qWarning() << Q_FUNC_INFO << "Not implemented yet. Only North is supported";
+        return false;
+    }
+
+    return p.y() >= 0 && p.y() <= m_tabBar->height();
+}
+
 void TabWidget::tabInserted(int)
 {
    Q_EMIT dockWidgetCountChanged();

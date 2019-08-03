@@ -124,6 +124,9 @@ bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, Q
                    << draggable << "; globalPos" << globalPos
                    << draggable->asWidget();
 
+    if (!draggable->isPositionDraggable(pos))
+        return false;
+
     q->m_draggable = draggable;
     q->m_pressPos = globalPos;
     q->m_offset = pos;
@@ -337,7 +340,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     switch (e->type()) {
     case QEvent::NonClientAreaMouseButtonPress: {
         if (auto fw = qobject_cast<FloatingWindow*>(o)) {
-            if (fw->isInTitleBar(me->globalPos())) {
+            if (fw->isInTitleBar(me->globalPos())) { // TODO: Port to isPositionDraggable()
                 m_nonClientDrag = true;
                 return activeState()->handleMouseButtonPress(draggableForQObject(o), me->globalPos(), me->pos());
             }
