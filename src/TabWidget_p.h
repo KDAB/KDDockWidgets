@@ -87,7 +87,7 @@ private:
     QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
 };
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS TabWidget : public QTabWidget
+class DOCKS_EXPORT_FOR_UNIT_TESTS TabWidget : public QTabWidget, public Draggable
 {
     Q_OBJECT
 public:
@@ -117,6 +117,9 @@ public:
      * Equivalent to indexOf(dw) != -1
      */
     bool contains(DockWidget *dw) const;
+
+    // Draggable
+    std::unique_ptr<WindowBeingDragged> makeWindow() override;
 
 Q_SIGNALS:
     void dockWidgetCountChanged();

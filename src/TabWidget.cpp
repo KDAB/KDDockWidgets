@@ -104,6 +104,7 @@ FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)
 
 TabWidget::TabWidget(QWidget *parent)
     : QTabWidget(parent)
+    , Draggable(this, Config::self().flags() & Config::Flag_DraggableTabBar)
     , m_tabBar(new TabBar(this))
 {
     setTabBarAutoHide(true);
@@ -160,6 +161,24 @@ void TabWidget::detachTab(DockWidget *dockWidget)
 bool TabWidget::contains(DockWidget *dw) const
 {
     return indexOf(dw) != -1;
+}
+
+std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
+{
+    auto frame  = qobject_cast<Frame*>(parentWidget());
+    Q_ASSERT(frame);
+
+    QRect r = frame->geometry();
+
+    const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
+
+
+    auto floatingWindow = new FloatingWindow(frame);
+    r.moveTopLeft(globalPoint);
+    floatingWindow->setGeometry(r);
+    floatingWindow->show();
+
+    return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
 }
 
 void TabWidget::tabInserted(int)

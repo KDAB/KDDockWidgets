@@ -36,7 +36,7 @@ class DockWidget;
 typedef KDDockWidgets::DockWidget* (*DockWidgetFactoryFunc)(const QString &name);
 
 /**
- * @brief Singleton to allow to choose certain behaviours for the framework.
+ * @brief Singleton to allow to choose certain behaviours of the framework.
  *
  * The setters should only be used before creating a QApplication.
  */
@@ -53,6 +53,7 @@ public:
         Flag_None = 0,
         Flag_NativeTitleBar = 1, ///> Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise. This is mutually exclusive with Flag_AeroSnap
         Flag_AeroSnapWithClientDecos = 2, ///> Enables AeroSnap even if we're not using the native title bar. Only supported on Windows 10.
+        Flag_DraggableTabBar = 4, ///> The TabBar background next to the tabs is draggable and can be used to detach/attach windows
         Flag_Default = Flag_AeroSnapWithClientDecos ///> The defaults if nothing is set
     };
     Q_DECLARE_FLAGS(Flags, Flag)
