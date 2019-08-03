@@ -332,6 +332,7 @@ void FloatingWindow::updateTitleBarVisibility()
 
     const bool visible = !KDDockWidgets::usesNativeTitleBar();
     m_titleBar->setTitle(title);
+    m_titleBar->setIcon(icon);
     m_titleBar->setVisible(visible);
     if (KDDockWidgets::usesNativeTitleBar()) {
         setWindowTitle(title);
