@@ -62,19 +62,19 @@ public:
     bool isSane() const;
 
     ///@brief returns all DockWidget instances
-    DockWidget::List dockwidgets() const;
+    const DockWidget::List dockwidgets() const;
 
     ///@brief returns all closed DockWidget instances
-    DockWidget::List closedDockwidgets() const;
+    const DockWidget::List closedDockwidgets() const;
 
     ///@brief returns all MainWindow instances
-    MainWindow::List mainwindows() const;
+    const MainWindow::List mainwindows() const;
 
     ///@brief returns the list of MultiSplitterLayout instances
-    QVector<MultiSplitterLayout*> layouts() const;
+    const QVector<MultiSplitterLayout*> layouts() const;
 
     ///@brief returns a list of all Frame instances
-    Frame::List frames() const;
+    const Frame::List frames() const;
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.

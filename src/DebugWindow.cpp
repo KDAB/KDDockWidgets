@@ -48,17 +48,16 @@
 # include <WinUser.h>
 #endif
 
+// clazy:excludeall=range-loop
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Debug;
-
-
-
-
 
 class DebugAppEventFilter : public QAbstractNativeEventFilter
 {
 public:
     DebugAppEventFilter() {}
+    ~DebugAppEventFilter();
     bool nativeEventFilter(const QByteArray &eventType, void *message, long *) override
     {
 #ifdef Q_OS_WIN
@@ -76,6 +75,8 @@ public:
         return false; // don't accept anything
     }
 };
+
+DebugAppEventFilter::~DebugAppEventFilter() {}
 
 DebugWindow::DebugWindow(QWidget *parent)
     : QWidget(parent)
@@ -280,7 +281,7 @@ void DebugWindow::dumpDockWidgetInfo()
 void DebugWindow::mousePressEvent(QMouseEvent *event)
 {
     if (!m_isPickingWidget)
-        return QWidget::mousePressEvent(event);
+        QWidget::mousePressEvent(event);
 
     QWidget *w = qApp->widgetAt(event->globalPos());
     qDebug() << "Widget at pos" << event->globalPos() << "is"

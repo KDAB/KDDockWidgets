@@ -183,12 +183,12 @@ bool DockRegistry::isSane() const
     return true;
 }
 
-DockWidget::List DockRegistry::dockwidgets() const
+const DockWidget::List DockRegistry::dockwidgets() const
 {
     return m_dockWidgets;
 }
 
-DockWidget::List DockRegistry::closedDockwidgets() const
+const DockWidget::List DockRegistry::closedDockwidgets() const
 {
     DockWidget::List result;
     result.reserve(m_dockWidgets.size());
@@ -201,17 +201,17 @@ DockWidget::List DockRegistry::closedDockwidgets() const
     return result;
 }
 
-MainWindow::List DockRegistry::mainwindows() const
+const MainWindow::List DockRegistry::mainwindows() const
 {
     return m_mainWindows;
 }
 
-QVector<MultiSplitterLayout *> DockRegistry::layouts() const
+const QVector<MultiSplitterLayout *> DockRegistry::layouts() const
 {
     return m_layouts;
 }
 
-Frame::List DockRegistry::frames() const
+const Frame::List DockRegistry::frames() const
 {
     return m_frames;
 }
