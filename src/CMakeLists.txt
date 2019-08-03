@@ -1,6 +1,19 @@
 
 cmake_policy(SET CMP0043 NEW)
 
+add_definitions(-DQT_NO_CAST_TO_ASCII
+                -DQT_NO_CAST_FROM_ASCII
+                -DQT_NO_URL_CAST_FROM_STRING
+                -DQT_NO_CAST_FROM_BYTEARRAY
+                -DQT_NO_SIGNALS_SLOTS_KEYWORDS
+                -DQT_USE_QSTRINGBUILDER
+                -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
+                -DQT_STRICT_ITERATORS
+                -DQT_NO_KEYWORDS
+                -DQT_DISABLE_DEPRECATED_BEFORE=0x060000
+                -DQT_NO_FOREACH
+               )
+
 set(DOCKSLIBS_SRCS
     Config.cpp
     Config.h
