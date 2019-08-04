@@ -50,7 +50,6 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS TitleBar : public QWidget
     Q_PROPERTY(bool hasIcon READ hasIcon NOTIFY iconChanged)
 public:
     typedef QVector<TitleBar *> List;
-    explicit TitleBar(DockWidget *parent);
     explicit TitleBar(Frame *parent);
     explicit TitleBar(FloatingWindow *parent);
     ~TitleBar() override;

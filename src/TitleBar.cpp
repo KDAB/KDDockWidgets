@@ -34,17 +34,6 @@ using namespace KDDockWidgets;
 
 Button::~Button() {}
 
-TitleBar::TitleBar(DockWidget *dockwidget)
-    : QWidget(dockwidget)
-    , Draggable(this)
-    , m_layout(new QHBoxLayout(this))
-    , m_dockWidget(dockwidget)
-    , m_frame(nullptr)
-    , m_floatingWindow(nullptr)
-{
-    init();
-}
-
 TitleBar::TitleBar(Frame *parent)
     : QWidget(parent)
     , Draggable(this)
