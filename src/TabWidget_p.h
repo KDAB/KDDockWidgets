@@ -127,7 +127,6 @@ Q_SIGNALS:
 protected:
     void tabInserted(int index) override;
     void tabRemoved(int index) override;
-    void paintEvent(QPaintEvent *) override;
 private:
     TabBar *const m_tabBar;
     Q_DISABLE_COPY(TabWidget)

@@ -27,6 +27,7 @@
 
 #include "Frame_p.h"
 #include "widgets/FrameWidget_p.h" // TODO: abstract
+#include "widgets/TabWidgetWidget_p.h" // TODO: abstract
 #include "TabWidget_p.h"
 #include "DropArea_p.h"
 #include "Logging_p.h"
@@ -50,7 +51,7 @@ using namespace KDDockWidgets;
 
 Frame::Frame(QWidget *parent, Options options)
     : QWidget(parent)
-    , m_tabWidget(new TabWidget(this))
+    , m_tabWidget(new TabWidgetWidget(this))
     , m_titleBar(new TitleBarWidget(this))
     , m_options(options)
 {

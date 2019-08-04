@@ -202,11 +202,3 @@ void TabWidget::tabRemoved(int)
 {
     Q_EMIT dockWidgetCountChanged();
 }
-
-void TabWidget::paintEvent(QPaintEvent *p)
-{
-    // When count is 1 we want to use the same background as a regular QWidget
-    // Otherwise it looks weird because the colors change when transforming a QDockWidget into FloatingWindow
-    if (count() > 1)
-        QTabWidget::paintEvent(p);
-}
