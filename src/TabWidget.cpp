@@ -35,6 +35,7 @@
 #include "Utils_p.h"
 
 #include "widgets/FrameWidget_p.h" // TODO: Abstract
+#include "widgets/TabBarWidget_p.h" // TODO: Abstract
 
 #include <QMouseEvent>
 
@@ -61,12 +62,6 @@ DockWidget *TabBar::dockWidgetAt(int index) const
 DockWidget *TabBar::dockWidgetAt(QPoint localPos) const
 {
     return dockWidgetAt(tabAt(localPos));
-}
-
-void TabBar::mousePressEvent(QMouseEvent *e)
-{
-    m_lastPressedDockWidget = dockWidgetAt(e->pos());
-    QTabBar::mousePressEvent(e);
 }
 
 std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
@@ -104,10 +99,15 @@ FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)
     return floatingWindow;
 }
 
+void TabBar::onMousePress(QPoint localPos)
+{
+    m_lastPressedDockWidget = dockWidgetAt(localPos);
+}
+
 TabWidget::TabWidget(QWidget *parent)
     : QTabWidget(parent)
     , Draggable(this, Config::self().flags() & Config::Flag_DraggableTabBar)
-    , m_tabBar(new TabBar(this))
+    , m_tabBar(new TabBarWidget(this))
 {
     setTabBarAutoHide(true);
     setTabBar(m_tabBar);

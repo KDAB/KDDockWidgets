@@ -32,6 +32,7 @@
 #include "docks_export.h"
 #include "Draggable_p.h"
 #include "Frame_p.h"
+#include "DockWidget.h"
 
 #include <QTabWidget>
 #include <QTabBar>
@@ -79,8 +80,7 @@ public:
      */
     FloatingWindow *detachTab(DockWidget *dockWidget);
 
-protected:
-    void mousePressEvent(QMouseEvent *) override;
+    void onMousePress(QPoint localPos);
 
 private:
     TabWidget *const m_tabWidget;

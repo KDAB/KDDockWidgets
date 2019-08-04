@@ -52,6 +52,7 @@ set(DOCKSLIBS_SRCS
     indicators/ClassicIndicators.cpp
 
     widgets/FrameWidget.cpp
+    widgets/TabBarWidget.cpp
     widgets/TitleBarWidget.cpp
     )
 
