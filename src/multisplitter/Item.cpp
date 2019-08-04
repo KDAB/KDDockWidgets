@@ -24,6 +24,7 @@
 #include "Logging_p.h"
 #include "AnchorGroup_p.h"
 #include "Frame_p.h"
+#include "widgets/FrameWidget_p.h" // TODO: Abstract
 #include "MainWindow.h"
 #include "DockWidget.h"
 
@@ -364,7 +365,7 @@ void Item::restorePlaceholder(DockWidget *dockWidget, int tabIndex)
 {
     qCDebug(placeholder) << Q_FUNC_INFO << "Restoring to window=" << window();
     if (d->m_isPlaceholder) {
-        d->setFrame(new Frame(layout()->multiSplitter()));
+        d->setFrame(new FrameWidget(layout()->multiSplitter()));
         d->m_frame->setGeometry(d->m_geometry);
     }
 

@@ -191,8 +191,6 @@ public:
     ///@brief for debug only, prints some debug information
     void dumpDebug();
 
-    void paintEvent(QPaintEvent *) override;
-
     /**
      * @brief Returns whether a deleteLater has already been issued
      */

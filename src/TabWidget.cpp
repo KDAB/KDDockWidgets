@@ -34,6 +34,8 @@
 #include "Logging_p.h"
 #include "Utils_p.h"
 
+#include "widgets/FrameWidget_p.h" // TODO: Abstract
+
 #include <QMouseEvent>
 
 #include <memory>
@@ -88,7 +90,7 @@ FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)
     QRect r = dockWidget->geometry();
     m_tabWidget->removeDockWidget(dockWidget);
 
-    auto newFrame = new Frame();
+    auto newFrame = new FrameWidget();
     const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
     newFrame->addWidget(dockWidget);
 

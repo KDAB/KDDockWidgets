@@ -20,7 +20,7 @@
 
 #include "DockWidget.h"
 #include "DragController_p.h"
-#include "Frame_p.h"
+#include "widgets/FrameWidget_p.h"
 #include "FloatingWindow_p.h"
 #include "Logging_p.h"
 #include "TabWidget_p.h"
@@ -375,7 +375,7 @@ FloatingWindow *DockWidget::morphIntoFloatingWindow()
         if (geo.isNull())
             geo = geometry();
 
-        auto frame = new Frame();
+        auto frame = new FrameWidget();
         frame->addWidget(this);
         auto floatingWindow = new FloatingWindow(frame);
         floatingWindow->setGeometry(geo);

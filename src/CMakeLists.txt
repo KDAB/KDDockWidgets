@@ -51,6 +51,7 @@ set(DOCKSLIBS_SRCS
     # indicators/AnimatedIndicators.cpp
     indicators/ClassicIndicators.cpp
 
+    widgets/FrameWidget.cpp
     widgets/TitleBarWidget.cpp
     )
 

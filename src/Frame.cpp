@@ -26,6 +26,7 @@
  */
 
 #include "Frame_p.h"
+#include "widgets/FrameWidget_p.h" // TODO: abstract
 #include "TabWidget_p.h"
 #include "DropArea_p.h"
 #include "Logging_p.h"
@@ -40,7 +41,6 @@
 
 #include <QCloseEvent>
 #include <QVBoxLayout>
-#include <QPainter>
 
 #define MARGIN_THRESHOLD 100
 
@@ -370,16 +370,6 @@ void Frame::dumpDebug()
     }
 }
 
-void Frame::paintEvent(QPaintEvent *)
-{
-    if (!isFloating()) {
-        QPainter p(this);
-        QPen pen(QColor(184, 184, 184, 184));
-        p.setPen(pen);
-        p.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 2, 2);
-    }
-}
-
 bool Frame::beingDeletedLater() const
 {
     return m_beingDeleted;
@@ -471,7 +461,7 @@ Frame *Frame::createFromDataStream(QDataStream &ds)
     ds >> currentTabIndex;
     ds >> numDocks;
 
-    auto frame = new Frame(/*parent=*/nullptr, Frame::Options(options));
+    auto frame = new FrameWidget(/*parent=*/nullptr, Frame::Options(options));
     frame->setObjectName(objectName);
 
     for (int i = 0; i < numDocks; ++i) {
