@@ -33,7 +33,6 @@ set(DOCKSLIBS_SRCS
     MainWindow.cpp
     TabWidget.cpp
     TitleBar.cpp
-    TitleBarWidget.cpp
     ObjectViewer.cpp
     ObjectViewer_p.h
     DebugWindow.cpp
@@ -50,7 +49,10 @@ set(DOCKSLIBS_SRCS
     multisplitter/SeparatorWidget.cpp
     multisplitter/SeparatorWidget_p.h
     # indicators/AnimatedIndicators.cpp
-    indicators/ClassicIndicators.cpp)
+    indicators/ClassicIndicators.cpp
+
+    widgets/TitleBarWidget.cpp
+    )
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(IS_CLANG_BUILD TRUE)

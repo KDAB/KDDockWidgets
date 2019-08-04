@@ -21,7 +21,6 @@
 #include "FloatingWindow_p.h"
 #include "Logging_p.h"
 #include "Frame_p.h"
-#include "TitleBarWidget_p.h"
 #include "DragController_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "DropArea_p.h"
@@ -29,6 +28,8 @@
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "DockRegistry_p.h"
+
+#include "widgets/TitleBarWidget_p.h"
 
 #include <QVBoxLayout>
 #include <QApplication>

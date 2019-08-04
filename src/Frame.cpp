@@ -26,7 +26,6 @@
  */
 
 #include "Frame_p.h"
-#include "TitleBarWidget_p.h"
 #include "TabWidget_p.h"
 #include "DropArea_p.h"
 #include "Logging_p.h"
@@ -36,6 +35,8 @@
 #include "MainWindow.h"
 #include "LastPosition_p.h"
 #include "DockRegistry_p.h"
+
+#include "widgets/TitleBarWidget_p.h"
 
 #include <QCloseEvent>
 #include <QVBoxLayout>
