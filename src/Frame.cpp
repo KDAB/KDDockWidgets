@@ -26,7 +26,7 @@
  */
 
 #include "Frame_p.h"
-#include "TitleBar_p.h"
+#include "TitleBarWidget_p.h"
 #include "TabWidget_p.h"
 #include "DropArea_p.h"
 #include "Logging_p.h"
@@ -39,6 +39,7 @@
 
 #include <QCloseEvent>
 #include <QVBoxLayout>
+#include <QPainter>
 
 #define MARGIN_THRESHOLD 100
 
@@ -49,7 +50,7 @@ using namespace KDDockWidgets;
 Frame::Frame(QWidget *parent, Options options)
     : QWidget(parent)
     , m_tabWidget(new TabWidget(this))
-    , m_titleBar(new TitleBar(this))
+    , m_titleBar(new TitleBarWidget(this))
     , m_options(options)
 {
     s_dbg_numFrames++;

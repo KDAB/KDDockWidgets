@@ -26,12 +26,9 @@
 #include "Frame_p.h"
 #include "DockWidget.h"
 
-#include <QPainter>
-#include <QToolButton>
-#include <QStyle>
 #include <QWidget>
 #include <QVector>
-#include <QStyleOptionToolButton>
+#include <QIcon>
 
 class QHBoxLayout;
 class QLabel;
@@ -59,7 +56,6 @@ public:
 
     void setIcon(const QIcon &icon);
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
-    QWidget* closeButton() const;
 
     ///@brief Returns true if the dock widget which has this title bar is floating
     bool isFloating() const;
@@ -80,72 +76,41 @@ public:
     ///@brief toggle floating
     bool onDoubleClicked();
 
+    ///@brief getter for m_frame
+    const Frame *frame() const { return m_frame; }
+
+    ///@brief getter for m_floatingWindow
+    const FloatingWindow *floatingWindow() const { return m_floatingWindow; }
+
 Q_SIGNALS:
     void titleChanged();
     void iconChanged();
+
 protected:
-    void paintEvent(QPaintEvent *) override;
-    void mouseDoubleClickEvent(QMouseEvent *) override;
+    void onCloseClicked();
+    void onFloatClicked();
+    virtual void updateFloatButton() {}
+    virtual void updateCloseButton() {}
+
+    // The following are needed for the unit-tests
+    virtual bool isCloseButtonVisible() const = 0;
+    virtual bool isCloseButtonEnabled() const = 0;
+    virtual bool isFloatButtonVisible() const = 0;
+    virtual bool isFloatButtonEnabled() const = 0;
 
 private:
     friend class TestDocks;
-    void updateFloatButton();
-    void updateCloseButton();
-    void onCloseClicked();
-    void onFloatClicked();
+
     void init();
-    int buttonAreaWidth() const;
-    QRect iconRect() const;
 
     QPoint m_pressPos;
     QString m_title;
     QIcon m_icon;
-    QHBoxLayout *const m_layout;
 
-    DockWidget *const m_dockWidget;
     Frame *const m_frame;
     FloatingWindow *const m_floatingWindow;
-    Button *m_closeButton = nullptr;
-    Button *m_floatButton = nullptr;
-    QLabel *m_dockWidgetIcon = nullptr;
 };
 
-class Button : public QToolButton
-{
-    Q_OBJECT
-public:
-    explicit Button(QWidget *parent)
-        : QToolButton(parent)
-    {
-        //const int margin = style()->pixelMetric(QStyle::PM_DockWidgetTitleBarButtonMargin, nullptr, this) * 2;
-        QSize sz = /*QSize(margin, margin) + */ QSize(16, 16);
-        setFixedSize(sz);
-    }
-
-    ~Button() override;
-
-    void paintEvent(QPaintEvent *) override
-    {
-        QPainter p(this);
-        QStyleOptionToolButton opt;
-        opt.init(this);
-
-        if (isEnabled() && underMouse()) {
-            if (isDown()) {
-                opt.state |= QStyle::State_Sunken;
-            } else {
-                opt.state |= QStyle::State_Raised;
-            }
-            style()->drawPrimitive(QStyle::PE_PanelButtonTool, &opt, &p, this);
-        }
-
-        opt.subControls = QStyle::SC_None;
-        opt.features = QStyleOptionToolButton::None;
-        opt.icon = icon();
-        opt.iconSize = size();
-        style()->drawComplexControl(QStyle::CC_ToolButton, &opt, &p, this);
-    }
-};
 
 }
 

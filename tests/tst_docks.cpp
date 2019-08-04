@@ -27,7 +27,7 @@
 #include "DockRegistry_p.h"
 #include "Frame_p.h"
 #include "DropArea_p.h"
-#include "TitleBar_p.h"
+#include "TitleBarWidget_p.h"
 #include "WindowBeingDragged_p.h"
 #include "Utils_p.h"
 #include "LayoutSaver.h"
@@ -2071,11 +2071,11 @@ void TestDocks::tst_notClosable()
 
         auto fw = dock1->floatingWindow();
         QVERIFY(fw);
-        QWidget *closeFW = fw->titleBar()->closeButton();
-        QWidget *closeFrame = fw->frames().at(0)->titleBar()->closeButton();
-        QVERIFY(closeFW->isVisible());
-        QVERIFY(!closeFrame->isVisible());
-        QVERIFY(!closeFrame->isEnabled());
+        TitleBar *titlebarFW = fw->titleBar();
+        TitleBar *titleBarFrame = fw->frames().at(0)->titleBar();
+        QVERIFY(titlebarFW->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
 
         auto window = dock1->window();
         window->deleteLater();
@@ -2093,12 +2093,12 @@ void TestDocks::tst_notClosable()
 
         auto fw = dock1->floatingWindow();
         QVERIFY(fw);
-        QWidget *closeFW = fw->titleBar()->closeButton();
-        QWidget *closeFrame = fw->frames().at(0)->titleBar()->closeButton();
+        TitleBar *titlebarFW = fw->titleBar();
+        TitleBar *titleBarFrame = fw->frames().at(0)->titleBar();
 
-        QVERIFY(closeFW->isVisible());
-        QVERIFY(!closeFrame->isVisible());
-        QVERIFY(!closeFrame->isEnabled());
+        QVERIFY(titlebarFW->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
 
         auto window = dock2->window();
         window->deleteLater();

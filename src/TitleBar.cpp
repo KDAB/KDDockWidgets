@@ -32,13 +32,9 @@
 
 using namespace KDDockWidgets;
 
-Button::~Button() {}
-
 TitleBar::TitleBar(Frame *parent)
     : QWidget(parent)
     , Draggable(this)
-    , m_layout(new QHBoxLayout(this))
-    , m_dockWidget(nullptr)
     , m_frame(parent)
     , m_floatingWindow(nullptr)
 {
@@ -49,8 +45,6 @@ TitleBar::TitleBar(Frame *parent)
 TitleBar::TitleBar(FloatingWindow *parent)
     : QWidget(parent)
     , Draggable(this)
-    , m_layout(new QHBoxLayout(this))
-    , m_dockWidget(nullptr)
     , m_frame(nullptr)
     , m_floatingWindow(parent)
 {
@@ -63,49 +57,10 @@ void TitleBar::init()
 {
     qCDebug(creation) << "TitleBar" << this;
     setFixedHeight(30);
-    m_dockWidgetIcon = new QLabel(this);
-    m_layout->addWidget(m_dockWidgetIcon);
-
-    m_layout->addStretch();
-    m_layout->setContentsMargins(2, 2, 2, 2);
-    m_layout->setSpacing(2);
-
-    m_closeButton = new Button(this);
-    m_floatButton = new Button(this);
-    m_floatButton->setIcon(style()->standardIcon(QStyle::SP_TitleBarNormalButton));
-    m_closeButton->setIcon(style()->standardIcon(QStyle::SP_TitleBarCloseButton));
-    m_layout->addWidget(m_floatButton);
-    m_layout->addWidget(m_closeButton);
-
-    connect(m_floatButton, &QAbstractButton::clicked, this, &TitleBar::onFloatClicked);
-    connect(m_closeButton, &QAbstractButton::clicked, this, &TitleBar::onCloseClicked);
-
-    updateCloseButton();
-}
-
-QRect TitleBar::iconRect() const
-{
-    if (m_icon.isNull()) {
-        return QRect(0,0, 0,0);
-    } else {
-        return QRect(3, 3, 30, 30);
-    }
-}
-
-int TitleBar::buttonAreaWidth() const
-{
-    if (m_floatButton->isVisible())
-        return width() - m_floatButton->x();
-    else
-        return width() - m_closeButton->x();
 }
 
 TitleBar::~TitleBar()
 {
-    for (auto button : { m_floatButton , m_closeButton }) {
-        button->setParent(nullptr);
-        button->deleteLater();
-    }
 }
 
 bool TitleBar::onDoubleClicked()
@@ -116,13 +71,6 @@ bool TitleBar::onDoubleClicked()
     }
 
     return false;
-}
-
-
-void TitleBar::mouseDoubleClickEvent(QMouseEvent *e)
-{
-    if (e->button() == Qt::LeftButton)
-        onDoubleClicked();
 }
 
 void TitleBar::setTitle(const QString &title)
@@ -142,13 +90,6 @@ void TitleBar::setTitle(const QString &title)
 void TitleBar::setIcon(const QIcon &icon)
 {
     m_icon = icon;
-    if (m_icon.isNull()) {
-        m_dockWidgetIcon->setPixmap(QPixmap());
-    } else {
-        const QPixmap pix = m_icon.pixmap(QSize(28,28));
-        m_dockWidgetIcon->setPixmap(pix);
-    }
-    update();
     Q_EMIT iconChanged();
 }
 
@@ -170,18 +111,6 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     if (m_floatingWindow) {
         // We're already a floating window, no detach needed
         return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(m_floatingWindow, this));
-    }
-
-    if (m_dockWidget) {
-        // It's a dock widget that wasn't transformed into FloatingWindow yet.
-        // Usually doesn't happen, as the window is morphed immediately
-        qCDebug(hovering) << "TitleBar::makeWindow: unmorphed DockWidget";
-        if (m_dockWidget == m_dockWidget->window()) {
-            FloatingWindow *window = m_dockWidget->morphIntoFloatingWindow();
-            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(window, this));
-        }
-
-        return {};
     }
 
     qCDebug(hovering) << "TitleBar::makeWindow: isFloating=" << isFloatingWindow() << "; isTheOnlyFrame=" << m_frame->isTheOnlyFrame() << "; frame=" << m_frame;
@@ -206,28 +135,6 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
 }
 
-QWidget *TitleBar::closeButton() const
-{
-    return m_closeButton;
-}
-
-void TitleBar::paintEvent(QPaintEvent *)
-{
-    QPainter p(this);
-
-    QStyleOptionDockWidget titleOpt;
-    titleOpt.title = m_title;
-    titleOpt.rect = iconRect().isEmpty() ? rect().adjusted(2, 0, -buttonAreaWidth(), 0)
-                                         : rect().adjusted(iconRect().right(), 0, -buttonAreaWidth(), 0);
-
-    style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
-}
-
-void TitleBar::updateFloatButton()
-{
-    m_floatButton->setVisible(supportsFloatingButton());
-}
-
 bool TitleBar::supportsFloatingButton() const
 {
     // If we have a floating window with nested dock widgets we can't re-attach, because we don't
@@ -245,17 +152,6 @@ QIcon TitleBar::icon() const
     return m_icon;
 }
 
-void TitleBar::updateCloseButton()
-{
-    const bool anyNonClosable = m_frame ? m_frame->anyNonClosable()
-                                        : (m_dockWidget ? bool(m_dockWidget->options() & DockWidget::Option_NotClosable)
-                                                        : (m_floatingWindow ? m_floatingWindow->anyNonClosable()
-                                                                            : false));
-
-    qCDebug(closebutton) << Q_FUNC_INFO << "enabled=" << !anyNonClosable;
-    m_closeButton->setEnabled(!anyNonClosable);
-}
-
 void TitleBar::onCloseClicked()
 {
     if (m_frame) {
@@ -266,17 +162,12 @@ void TitleBar::onCloseClicked()
         }
     }
 
-    if (m_dockWidget)
-        m_dockWidget->close();
-
     if (m_floatingWindow)
         m_floatingWindow->close();
 }
 
 bool TitleBar::isFloating() const
 {
-    if (m_dockWidget)
-        return m_dockWidget->isFloating();
 
     if (m_floatingWindow)
         return m_floatingWindow->hasSingleDockWidget(); // Debatable! Maybe it's always floating.
@@ -290,9 +181,6 @@ bool TitleBar::isFloating() const
 
 DockWidget::List TitleBar::dockWidgets() const
 {
-    if (m_dockWidget)
-        return { m_dockWidget };
-
     if (m_floatingWindow) {
         DockWidget::List result;
         for (Frame *f : m_floatingWindow->frames()) {

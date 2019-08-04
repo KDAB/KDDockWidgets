@@ -33,6 +33,7 @@ set(DOCKSLIBS_SRCS
     MainWindow.cpp
     TabWidget.cpp
     TitleBar.cpp
+    TitleBarWidget.cpp
     ObjectViewer.cpp
     ObjectViewer_p.h
     DebugWindow.cpp

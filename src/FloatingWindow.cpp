@@ -21,7 +21,7 @@
 #include "FloatingWindow_p.h"
 #include "Logging_p.h"
 #include "Frame_p.h"
-#include "TitleBar_p.h"
+#include "TitleBarWidget_p.h"
 #include "DragController_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "DropArea_p.h"
@@ -88,7 +88,7 @@ public:
 FloatingWindow::FloatingWindow(QWidget *parent)
     : QWidget(parent, KDDockWidgets::usesNativeDraggingAndResizing() ? Qt::Window : Qt::Tool)
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
-    , m_titleBar(new TitleBar(this))
+    , m_titleBar(new TitleBarWidget(this))
     , m_vlayout(new QVBoxLayout(this))
     , m_dropArea(new DropArea(this))
 {
