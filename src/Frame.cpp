@@ -383,6 +383,11 @@ bool Frame::beingDeletedLater() const
     return m_beingDeleted;
 }
 
+TabWidget *Frame::tabWidget() const
+{
+    return m_tabWidget;
+}
+
 DockWidget *Frame::dockWidgetAt(int index) const
 {
     return qobject_cast<DockWidget *>(m_tabWidget->widget(index));

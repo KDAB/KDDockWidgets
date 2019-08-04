@@ -198,6 +198,9 @@ public:
      */
     bool beingDeletedLater() const;
 
+    ///@brief getter for the tab widget
+    TabWidget *tabWidget() const;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidget *);
     void numDockWidgetsChanged();

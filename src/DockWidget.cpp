@@ -308,6 +308,12 @@ void DockWidget::forceClose()
     d->close();
 }
 
+QTabWidget *DockWidget::tabWidget() const
+{
+    return frame() ? frame()->tabWidget()
+                   : nullptr;
+}
+
 bool DockWidget::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
