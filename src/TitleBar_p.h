@@ -93,10 +93,10 @@ protected:
     virtual void updateCloseButton() {}
 
     // The following are needed for the unit-tests
-    virtual bool isCloseButtonVisible() const = 0;
-    virtual bool isCloseButtonEnabled() const = 0;
-    virtual bool isFloatButtonVisible() const = 0;
-    virtual bool isFloatButtonEnabled() const = 0;
+    virtual bool isCloseButtonVisible() const { return true; }
+    virtual bool isCloseButtonEnabled() const { return true; }
+    virtual bool isFloatButtonVisible() const { return true; }
+    virtual bool isFloatButtonEnabled() const { return true; }
 
 private:
     friend class TestDocks;
