@@ -96,7 +96,6 @@ DockWidgetFactoryFunc Config::dockWidgetFactoryFunc() const
 void Config::setFrameworkWidgetFactory(FrameworkWidgetFactory *wf)
 {
     Q_ASSERT(wf);
-    Q_ASSERT(!d->m_frameworkWidgetFactory); // Could work... but make up your mind... asserting since probably you don't know what you're doing
     delete d->m_frameworkWidgetFactory;
     d->m_frameworkWidgetFactory = wf;
 }
