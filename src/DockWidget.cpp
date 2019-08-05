@@ -356,12 +356,6 @@ void DockWidget::closeEvent(QCloseEvent *e)
         d->close();
 }
 
-void DockWidget::paintEvent(QPaintEvent *)
-{
-    if (isWindow())
-        FloatingWindow::paintFrame(this);
-}
-
 FloatingWindow *DockWidget::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
@@ -377,7 +371,7 @@ FloatingWindow *DockWidget::morphIntoFloatingWindow()
 
         auto frame = Config::self().frameWorkWidgetFactory()->createFrame();
         frame->addWidget(this);
-        auto floatingWindow = new FloatingWindow(frame);
+        auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(frame);
         floatingWindow->setGeometry(geo);
         floatingWindow->show();
 

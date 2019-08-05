@@ -51,6 +51,7 @@ set(DOCKSLIBS_SRCS
 
     FrameworkWidgetFactory.cpp
 
+    widgets/FloatingWindowWidget.cpp
     widgets/FrameWidget.cpp
     widgets/SeparatorWidget.cpp
     widgets/SeparatorWidget_p.h

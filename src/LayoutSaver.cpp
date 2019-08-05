@@ -26,6 +26,7 @@
  */
 
 #include "LayoutSaver.h"
+#include "Config.h"
 #include "DockRegistry_p.h"
 #include "DockWidget.h"
 #include "DropArea_p.h"
@@ -231,7 +232,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         QWidget *parent = parentIndex == -1 ? nullptr
                                             : DockRegistry::self()->mainwindows().at(parentIndex);
 
-        auto fw = new FloatingWindow(parent);
+        auto fw = Config::self().frameWorkWidgetFactory()->createFloatingWindow(parent);
         d->deserializeWindowGeometry(ds, fw);
         if (!fw->fillFromDataStream(ds)) {
             return false;

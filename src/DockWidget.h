@@ -220,12 +220,6 @@ protected:
     bool event(QEvent *) override;
     void closeEvent(QCloseEvent *) override;
 
-    /**
-     * @brief paints a frame, in case this DockWidget is a top-level QWidget (window).
-     * @param the paint event
-     */
-    void paintEvent(QPaintEvent *ev) override;
-
 #if defined(DOCKS_DEVELOPER_MODE)
 public Q_SLOTS:
 #else

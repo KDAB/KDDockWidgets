@@ -59,7 +59,6 @@ public:
      */
     TitleBar *titleBar() const { return m_titleBar; }
 
-    static void paintFrame(QWidget *);
     bool anyNonClosable() const;
 
     /**
@@ -109,15 +108,6 @@ public:
 Q_SIGNALS:
     void numFramesChanged();
 
-protected:
-    void closeEvent(QCloseEvent *) override;
-    void paintEvent(QPaintEvent *) override;
-#if defined(Q_OS_WIN)
-    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
-#endif
-
-    ///@brief reimplemented for debug purposes
-    void resizeEvent(QResizeEvent *) override;
 private:
     Q_DISABLE_COPY(FloatingWindow)
     void maybeCreateResizeHandler();

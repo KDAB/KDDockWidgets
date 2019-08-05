@@ -89,7 +89,7 @@ FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)
 
     // We're potentially already dead at this point, as frames with 0 tabs auto-destruct. Don't access members from this point.
 
-    auto floatingWindow = new FloatingWindow(newFrame);
+    auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(newFrame);
     r.moveTopLeft(globalPoint);
     floatingWindow->setGeometry(r);
     floatingWindow->show();
@@ -173,7 +173,7 @@ std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
     const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
 
 
-    auto floatingWindow = new FloatingWindow(frame);
+    auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(frame);
     r.moveTopLeft(globalPoint);
     floatingWindow->setGeometry(r);
     floatingWindow->show();

@@ -192,43 +192,6 @@ const Frame::List FloatingWindow::frames() const
     return findChildren<Frame *>(QString(), Qt::FindChildrenRecursively);
 }
 
-void FloatingWindow::paintFrame(QWidget *w)
-{
-    QPainter p(w);
-    p.setPen(0x666666);
-    p.drawRect(w->rect().adjusted(0, 0, -1, -1));
-}
-
-void FloatingWindow::closeEvent(QCloseEvent *e)
-{
-    qCDebug(closing) << "Frame::closeEvent";
-    e->accept(); // Accepted by default (will close unless ignored)
-
-    Frame::List frames = this->frames();
-    for (Frame *frame : frames) {
-        qApp->sendEvent(frame, e);
-        if (!e->isAccepted())
-            break; // Stop when the first frame prevents closing
-    }
-}
-
-void FloatingWindow::paintEvent(QPaintEvent *)
-{
-    paintFrame(this);
-#ifdef DOCKS_DEVELOPER_MODE
-    static const bool s_drawDebugTitleFrame = qEnvironmentVariableIsSet("KDDOCKWIDGETS_DRAW_DEBUG_FRAME");
-    if (s_drawDebugTitleFrame) {
-        QPainter p(this);
-        p.drawRect(rect().adjusted(0, 0, -1, -1));
-    }
-#endif
-}
-
-void FloatingWindow::resizeEvent(QResizeEvent *ev)
-{
-    QWidget::resizeEvent(ev);
-}
-
 void FloatingWindow::scheduleDeleteLater()
 {
     m_beingDeleted = true;

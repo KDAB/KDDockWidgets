@@ -25,6 +25,7 @@
 #include "widgets/TabBarWidget_p.h"
 #include "widgets/TabWidgetWidget_p.h"
 #include "widgets/SeparatorWidget_p.h"
+#include "widgets/FloatingWindowWidget_p.h"
 
 using namespace KDDockWidgets;
 
@@ -60,4 +61,14 @@ TabWidget *DefaultWidgetFactory::createTabWidget(QWidget *parent) const
 SeparatorWidget *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidget *parent) const
 {
     return new SeparatorWidget(anchor, parent);
+}
+
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(QWidget *parent) const
+{
+    return new FloatingWindowWidget(parent);
+}
+
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, QWidget *parent) const
+{
+    return new FloatingWindowWidget(frame, parent);
 }

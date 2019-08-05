@@ -25,6 +25,7 @@
 #include "TitleBar_p.h"
 #include "TabWidget_p.h"
 #include "widgets/SeparatorWidget_p.h" // TODO: remove
+#include "FloatingWindow_p.h"
 
 namespace KDDockWidgets {
 
@@ -38,6 +39,8 @@ public:
     virtual TabBar* createTabBar(TabWidget *parent = nullptr) const = 0;
     virtual TabWidget* createTabWidget(QWidget *parent) const = 0;
     virtual SeparatorWidget* createSeparator(Anchor *anchor, QWidget *parent = nullptr) const = 0;
+    virtual FloatingWindow *createFloatingWindow(QWidget *parent = nullptr) const = 0;
+    virtual FloatingWindow *createFloatingWindow(Frame *frame, QWidget *parent = nullptr) const = 0;
 };
 
 class DefaultWidgetFactory : public FrameworkWidgetFactory
@@ -48,7 +51,9 @@ public:
     TitleBar *createTitleBar(FloatingWindow *) const override;
     TabBar *createTabBar(TabWidget *parent) const override;
     TabWidget *createTabWidget(QWidget *parent) const override;
-    SeparatorWidget* createSeparator(Anchor *anchor, QWidget *parent = nullptr) const override;
+    SeparatorWidget *createSeparator(Anchor *anchor, QWidget *parent = nullptr) const override;
+    FloatingWindow *createFloatingWindow(QWidget *parent = nullptr) const override;
+    FloatingWindow *createFloatingWindow(Frame *frame, QWidget *parent = nullptr) const override;
 };
 
 }
