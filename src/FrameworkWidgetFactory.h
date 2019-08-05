@@ -21,6 +21,7 @@
 #ifndef KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_H
 #define KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_H
 
+#include "docks_export.h"
 #include "Frame_p.h"
 #include "TitleBar_p.h"
 #include "TabWidget_p.h"
@@ -29,7 +30,7 @@
 
 namespace KDDockWidgets {
 
-class FrameworkWidgetFactory {
+class DOCKS_EXPORT FrameworkWidgetFactory {
 public:
     virtual ~FrameworkWidgetFactory();
 
@@ -43,7 +44,7 @@ public:
     virtual FloatingWindow *createFloatingWindow(Frame *frame, QWidget *parent = nullptr) const = 0;
 };
 
-class DefaultWidgetFactory : public FrameworkWidgetFactory
+class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
 {
 public:
     Frame *createFrame(QWidget *parent, Frame::Options) const override;
