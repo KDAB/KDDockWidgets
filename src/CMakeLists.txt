@@ -51,6 +51,8 @@ set(DOCKSLIBS_SRCS
     # indicators/AnimatedIndicators.cpp
     indicators/ClassicIndicators.cpp
 
+    FrameworkWidgetFactory.cpp
+
     widgets/FrameWidget.cpp
     widgets/TabWidgetWidget.cpp
     widgets/TabBarWidget.cpp

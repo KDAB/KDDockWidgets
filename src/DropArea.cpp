@@ -24,10 +24,9 @@
 #include "Draggable_p.h"
 #include "MainWindow.h"
 #include "FloatingWindow_p.h"
+#include "Config.h"
 
 #include "indicators/ClassicIndicators_p.h"
-
-#include "widgets/FrameWidget_p.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"
@@ -148,11 +147,11 @@ void DropArea::addDockWidget(DockWidget *dw, Location location, DockWidget *rela
             // The frame only has this dock widget, and the frame is already in the layout. So move the frame instead
             frame = oldFrame;
         } else {
-            frame = new FrameWidget();
+            frame = Config::self().frameWorkWidgetFactory()->createFrame();
             frame->addWidget(dw);
         }
     } else {
-        frame = new FrameWidget();
+        frame = Config::self().frameWorkWidgetFactory()->createFrame();
         frame->addWidget(dw);
     }
 
@@ -285,7 +284,7 @@ bool DropArea::drop(QWidget *droppedWindow, KDDockWidgets::Location location, Fr
     qCDebug(docking) << "DropArea::addFrame";
 
     if (auto dock = qobject_cast<DockWidget *>(droppedWindow)) {
-        auto frame = new FrameWidget();
+        auto frame = Config::self().frameWorkWidgetFactory()->createFrame();
         frame->addWidget(dock);
         m_layout->addWidget(frame, location, relativeTo);
     } else if (auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow)) {

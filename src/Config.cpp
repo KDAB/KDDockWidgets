@@ -38,12 +38,14 @@ class Config::Private
 {
 public:
     Private()
+        : m_frameworkWidgetFactory(new DefaultWidgetFactory())
     {
     }
 
     void fixFlags();
 
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
+    FrameworkWidgetFactory *m_frameworkWidgetFactory;
     Flags m_flags = Flag_Default;
 };
 
@@ -89,6 +91,19 @@ void Config::setDockWidgetFactoryFunc(DockWidgetFactoryFunc func)
 DockWidgetFactoryFunc Config::dockWidgetFactoryFunc() const
 {
     return d->m_dockWidgetFactoryFunc;
+}
+
+void Config::setFrameworkWidgetFactory(FrameworkWidgetFactory *wf)
+{
+    Q_ASSERT(wf);
+    Q_ASSERT(!d->m_frameworkWidgetFactory); // Could work... but make up your mind... asserting since probably you don't know what you're doing
+    delete d->m_frameworkWidgetFactory;
+    d->m_frameworkWidgetFactory = wf;
+}
+
+FrameworkWidgetFactory *Config::frameWorkWidgetFactory() const
+{
+    return d->m_frameworkWidgetFactory;
 }
 
 void Config::Private::fixFlags()

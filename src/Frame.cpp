@@ -26,8 +26,6 @@
  */
 
 #include "Frame_p.h"
-#include "widgets/FrameWidget_p.h" // TODO: abstract
-#include "widgets/TabWidgetWidget_p.h" // TODO: abstract
 #include "TabWidget_p.h"
 #include "DropArea_p.h"
 #include "Logging_p.h"
@@ -37,8 +35,7 @@
 #include "MainWindow.h"
 #include "LastPosition_p.h"
 #include "DockRegistry_p.h"
-
-#include "widgets/TitleBarWidget_p.h"
+#include "Config.h"
 
 #include <QCloseEvent>
 #include <QVBoxLayout>
@@ -51,8 +48,8 @@ using namespace KDDockWidgets;
 
 Frame::Frame(QWidget *parent, Options options)
     : QWidget(parent)
-    , m_tabWidget(new TabWidgetWidget(this))
-    , m_titleBar(new TitleBarWidget(this))
+    , m_tabWidget(Config::self().frameWorkWidgetFactory()->createTabWidget(this))
+    , m_titleBar(Config::self().frameWorkWidgetFactory()->createTitleBar(this))
     , m_options(options)
 {
     s_dbg_numFrames++;
@@ -462,7 +459,7 @@ Frame *Frame::createFromDataStream(QDataStream &ds)
     ds >> currentTabIndex;
     ds >> numDocks;
 
-    auto frame = new FrameWidget(/*parent=*/nullptr, Frame::Options(options));
+    auto frame = Config::self().frameWorkWidgetFactory()->createFrame(/*parent=*/nullptr, Frame::Options(options));
     frame->setObjectName(objectName);
 
     for (int i = 0; i < numDocks; ++i) {

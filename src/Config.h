@@ -29,6 +29,7 @@
 #define KD_DOCKWIDGETS_CONFIG_H
 
 #include "docks_export.h"
+#include "FrameworkWidgetFactory.h"
 
 namespace KDDockWidgets
 {
@@ -79,6 +80,17 @@ public:
     ///@brief Getter for the DockWidgetFactoryFunc. nullptr by default
     DockWidgetFactoryFunc dockWidgetFactoryFunc() const;
 
+    /**
+     * @brief Sets the WidgetFactory.
+     *
+     * By default DefaultWidgetFactory is used, which gives you FrameWidget, TitleBarWidget,
+     * TabBarWidget, TabWidgetWidget etc. You can set your own factory, to supply your own variants
+     * of those classes, for the purposes of changing GUI appearence and such.
+     *
+     * Also potentially useful to return QtQuick classes instead of the QtWidget based ones.
+     */
+    void setFrameworkWidgetFactory(FrameworkWidgetFactory *);
+    FrameworkWidgetFactory *frameWorkWidgetFactory() const;
 private:
     Q_DISABLE_COPY(Config)
     Config();

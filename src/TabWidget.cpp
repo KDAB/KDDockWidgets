@@ -33,9 +33,7 @@
 #include "WindowBeingDragged_p.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
-
-#include "widgets/FrameWidget_p.h" // TODO: Abstract
-#include "widgets/TabBarWidget_p.h" // TODO: Abstract
+#include "Config.h"
 
 #include <QMouseEvent>
 
@@ -85,7 +83,7 @@ FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)
     QRect r = dockWidget->geometry();
     m_tabWidget->removeDockWidget(dockWidget);
 
-    auto newFrame = new FrameWidget();
+    auto newFrame = Config::self().frameWorkWidgetFactory()->createFrame();
     const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
     newFrame->addWidget(dockWidget);
 
@@ -107,7 +105,7 @@ void TabBar::onMousePress(QPoint localPos)
 TabWidget::TabWidget(QWidget *parent)
     : QTabWidget(parent)
     , Draggable(this, Config::self().flags() & Config::Flag_DraggableTabBar)
-    , m_tabBar(new TabBarWidget(this))
+    , m_tabBar(Config::self().frameWorkWidgetFactory()->createTabBar(this))
 {
     setTabBarAutoHide(true);
     setTabBar(m_tabBar);

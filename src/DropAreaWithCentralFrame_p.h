@@ -22,7 +22,8 @@
 #define KD_DROP_AREA_WITH_CENTRAL_FRAME_H
 
 #include "DropArea_p.h"
-#include "widgets/FrameWidget_p.h"
+#include "Config.h"
+
 #include <QMainWindow>
 
 namespace KDDockWidgets {
@@ -40,7 +41,7 @@ public:
 
     static Frame* createCentralFrame(MainWindowOptions options)
     {
-        return (options & MainWindowOption_HasCentralFrame) ? new FrameWidget(nullptr, Frame::Option_IsCentralFrame | Frame::Option_AlwaysShowsTabs)
+        return (options & MainWindowOption_HasCentralFrame) ? Config::self().frameWorkWidgetFactory()->createFrame(nullptr, Frame::Option_IsCentralFrame | Frame::Option_AlwaysShowsTabs)
                                                             : nullptr;
     }
 

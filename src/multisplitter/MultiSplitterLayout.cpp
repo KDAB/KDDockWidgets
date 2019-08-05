@@ -27,8 +27,7 @@
 #include "LastPosition_p.h"
 #include "SeparatorWidget_p.h"
 #include "DockRegistry_p.h"
-
-#include "widgets/FrameWidget_p.h" // TODO: Abstract
+#include "Config.h"
 
 #include <QPushButton>
 #include <QEvent>
@@ -378,7 +377,7 @@ void MultiSplitterLayout::addAsPlaceholder(DockWidget *dockWidget, Location loca
     auto result = createTargetAnchorGroup(location, relativeTo);
     AnchorGroup targetAnchorGroup = result.first;
 
-    auto frame = new FrameWidget(m_multiSplitter);
+    auto frame = Config::self().frameWorkWidgetFactory()->createFrame(m_multiSplitter);
     auto item = new Item(frame, this);
 
     targetAnchorGroup.addItem(item);
