@@ -46,15 +46,7 @@ FloatingWindowWidget::FloatingWindowWidget(Frame *frame, QWidget *parent)
 
 void FloatingWindowWidget::closeEvent(QCloseEvent *e)
 {
-    qCDebug(closing) << "Frame::closeEvent";
-    e->accept(); // Accepted by default (will close unless ignored)
-
-    Frame::List frames = this->frames();
-    for (Frame *frame : frames) {
-        qApp->sendEvent(frame, e);
-        if (!e->isAccepted())
-            break; // Stop when the first frame prevents closing
-    }
+    onCloseEvent(e);
 }
 
 void FloatingWindowWidget::paintEvent(QPaintEvent *)

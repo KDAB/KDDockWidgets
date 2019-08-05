@@ -300,6 +300,19 @@ void FloatingWindow::updateTitleAndIcon()
     }
 }
 
+void FloatingWindow::onCloseEvent(QCloseEvent *e)
+{
+    qCDebug(closing) << "Frame::closeEvent";
+    e->accept(); // Accepted by default (will close unless ignored)
+
+    Frame::List frames = this->frames();
+    for (Frame *frame : frames) {
+        qApp->sendEvent(frame, e);
+        if (!e->isAccepted())
+            break; // Stop when the first frame prevents closing
+    }
+}
+
 bool FloatingWindow::fillFromDataStream(QDataStream &ds)
 {
     if (dropArea()->multiSplitterLayout()->fillFromDataStream(ds)) {

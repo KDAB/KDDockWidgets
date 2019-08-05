@@ -110,6 +110,10 @@ protected:
 #ifdef Q_OS_WIN
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
 #endif
+
+    // Not using closeEvent, since tihs class should be used by QtQuick too.
+    void onCloseEvent(QCloseEvent *);
+
     TitleBar *const m_titleBar;
     DropArea *const m_dropArea;
 private:
