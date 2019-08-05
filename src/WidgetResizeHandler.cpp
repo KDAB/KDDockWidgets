@@ -30,6 +30,7 @@
 #include <QApplication>
 #include <QScreen>
 #include <QWindow>
+#include <QAbstractButton>
 
 #if defined(Q_OS_WIN)
 # include <Windowsx.h>
@@ -208,8 +209,8 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
     if (eventType != "windows_generic_MSG")
         return false;
 
-    QRect titleBarRectGlobal = w->actualTitleBar()->rect();
-    titleBarRectGlobal.moveTopLeft(w->actualTitleBar()->mapToGlobal(QPoint(0, 0)));
+    QRect titleBarRectGlobal = w->titleBar()->rect();
+    titleBarRectGlobal.moveTopLeft(w->titleBar()->mapToGlobal(QPoint(0, 0)));
 
     auto msg = static_cast<MSG *>(message);
     if (msg->message == WM_NCCALCSIZE) {
@@ -267,7 +268,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
     } else if (msg->message == WM_NCLBUTTONDBLCLK) {
         // We don't want double click to maximize the window
 
-        if (TitleBar *titleBar = w->actualTitleBar()) {
+        if (TitleBar *titleBar = w->titleBar()) {
             if (titleBar->isVisible()) { // can't be invisible afaik
                 titleBar->onDoubleClicked();
             }

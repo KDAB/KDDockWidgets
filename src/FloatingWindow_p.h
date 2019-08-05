@@ -107,6 +107,8 @@ public:
 
 Q_SIGNALS:
     void numFramesChanged();
+protected:
+    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
 
 private:
     Q_DISABLE_COPY(FloatingWindow)
