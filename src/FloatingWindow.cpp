@@ -30,7 +30,6 @@
 #include "DockRegistry_p.h"
 #include "Config.h"
 
-#include <QVBoxLayout>
 #include <QApplication>
 #include <QCloseEvent>
 #include <QPainter>
@@ -89,7 +88,6 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     : QWidget(parent, KDDockWidgets::usesNativeDraggingAndResizing() ? Qt::Window : Qt::Tool)
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_titleBar(Config::self().frameWorkWidgetFactory()->createTitleBar(this))
-    , m_vlayout(new QVBoxLayout(this))
     , m_dropArea(new DropArea(this))
 {
 #ifdef Q_OS_WIN
@@ -104,11 +102,8 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     DockRegistry::self()->registerNestedWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
 
-    m_vlayout->setSpacing(0);
-    m_vlayout->setContentsMargins(0, 0, 0, 0);
+
     maybeCreateResizeHandler();
-    m_vlayout->addWidget(m_titleBar);
-    m_vlayout->addWidget(m_dropArea);
 
     updateTitleBarVisibility();
     connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
@@ -177,10 +172,8 @@ void FloatingWindow::maybeCreateResizeHandler()
     if (!KDDockWidgets::usesNativeDraggingAndResizing()) {
         setWindowFlag(Qt::FramelessWindowHint, true);
         setWidgetResizeHandler(new WidgetResizeHandler(this));
-        m_vlayout->setContentsMargins(4, 4, 4, 4);
     }
 }
-
 
 std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()
 {

@@ -27,7 +27,6 @@
 
 #include <QWidget>
 
-class QVBoxLayout;
 class QAbstractNativeEventFilter;
 
 namespace KDDockWidgets {
@@ -111,15 +110,14 @@ protected:
 #ifdef Q_OS_WIN
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
 #endif
+    TitleBar *const m_titleBar;
+    DropArea *const m_dropArea;
 private:
     Q_DISABLE_COPY(FloatingWindow)
     void maybeCreateResizeHandler();
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
     void updateTitleBarVisibility();
-    TitleBar *const m_titleBar;
-    QVBoxLayout *const m_vlayout;
-    DropArea *const m_dropArea;
     bool m_disableSetVisible = false;
     bool m_beingDeleted = false;
     QMetaObject::Connection m_layoutDestroyedConnection;

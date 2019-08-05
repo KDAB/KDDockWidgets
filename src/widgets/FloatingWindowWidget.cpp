@@ -20,21 +20,28 @@
 
 #include "FloatingWindowWidget_p.h"
 #include "Logging_p.h"
+#include "Utils_p.h"
+#include "DropArea_p.h"
 
 #include <QApplication>
 #include <QCloseEvent>
 #include <QPainter>
+#include <QVBoxLayout>
 
 using namespace KDDockWidgets;
 
 FloatingWindowWidget::FloatingWindowWidget(QWidget *parent)
     : FloatingWindow(parent)
+    , m_vlayout(new QVBoxLayout(this))
 {
+    init();
 }
 
 FloatingWindowWidget::FloatingWindowWidget(Frame *frame, QWidget *parent)
     : FloatingWindow(frame, parent)
+    , m_vlayout(new QVBoxLayout(this))
 {
+    init();
 }
 
 void FloatingWindowWidget::closeEvent(QCloseEvent *e)
@@ -55,4 +62,15 @@ void FloatingWindowWidget::paintEvent(QPaintEvent *)
     QPainter p(this);
     p.setPen(0x666666);
     p.drawRect(rect().adjusted(0, 0, -1, -1));
+}
+
+void FloatingWindowWidget::init()
+{
+    m_vlayout->setSpacing(0);
+    m_vlayout->setContentsMargins(0, 0, 0, 0);
+    m_vlayout->addWidget(m_titleBar);
+    m_vlayout->addWidget(m_dropArea);
+
+    if (!KDDockWidgets::usesNativeDraggingAndResizing())
+        m_vlayout->setContentsMargins(4, 4, 4, 4);
 }

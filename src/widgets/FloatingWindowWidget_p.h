@@ -23,6 +23,8 @@
 
 #include "FloatingWindow_p.h"
 
+class QVBoxLayout;
+
 namespace KDDockWidgets {
 
 class FloatingWindowWidget : public FloatingWindow
@@ -36,7 +38,9 @@ protected:
     void closeEvent(QCloseEvent *) override;
     void paintEvent(QPaintEvent *) override;
 private:
+    void init();
     Q_DISABLE_COPY(FloatingWindowWidget)
+    QVBoxLayout *const m_vlayout;
 };
 
 }
