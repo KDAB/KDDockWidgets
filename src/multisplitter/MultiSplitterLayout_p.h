@@ -147,7 +147,7 @@ public:
     /**
      * @brief Adds the dockwidget but it stays hidden until an explicit show()
      */
-    void addAsPlaceholder(DockWidget *dw, KDDockWidgets::Location location, Item *relativeTo = nullptr);
+    void addAsPlaceholder(DockWidgetBase *dw, KDDockWidgets::Location location, Item *relativeTo = nullptr);
 
     /**
      * @brief Removes an item from this MultiSplitter.
@@ -352,7 +352,7 @@ public:
     /**
      * @brief Returns a list of DockWidget objects contained in this layout
      */
-    QVector<DockWidget*> dockWidgets() const;
+    QVector<DockWidgetBase*> dockWidgets() const;
 
     /**
      * @brief Creates an AnchorGroup suited for adding a dockwidget to @location relative to @relativeToItem

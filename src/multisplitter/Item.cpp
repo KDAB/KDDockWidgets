@@ -25,7 +25,7 @@
 #include "AnchorGroup_p.h"
 #include "Frame_p.h"
 #include "MainWindow.h"
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 #include "Config.h"
 
 #include <QEvent>
@@ -361,7 +361,7 @@ bool Item::isInMainWindow() const
     return false;
 }
 
-void Item::restorePlaceholder(DockWidget *dockWidget, int tabIndex)
+void Item::restorePlaceholder(DockWidgetBase *dockWidget, int tabIndex)
 {
     qCDebug(placeholder) << Q_FUNC_INFO << "Restoring to window=" << window();
     if (d->m_isPlaceholder) {

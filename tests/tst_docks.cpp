@@ -21,7 +21,7 @@
 // We don't care about performance related checks in the tests
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 #include "MainWindow.h"
 #include "FloatingWindow_p.h"
 #include "DockRegistry_p.h"
@@ -272,7 +272,7 @@ public Q_SLOTS:
         s_original = qInstallMessageHandler(fatalWarningsMessageHandler);
     }
 public:
-    static void nestDockWidget(DockWidget *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location);
+    static void nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location);
 
 private Q_SLOTS:
     void tst_simple1();
@@ -539,7 +539,7 @@ static void drag(QWidget *sourceWidget, QPoint globalDest, ButtonActions buttonA
     Q_ASSERT(sourceWidget && sourceWidget->isVisible());
 
     TitleBar *titleBar = nullptr;
-    if (auto dock = qobject_cast<DockWidget *>(sourceWidget)) {
+    if (auto dock = qobject_cast<DockWidgetBase *>(sourceWidget)) {
         if (auto frame = dock->frame()) {
             titleBar = frame->titleBar();
         }
@@ -611,7 +611,7 @@ void TestDocks::tst_createFloatingWindow()
     QVERIFY(!window);
 }
 
-void TestDocks::nestDockWidget(DockWidget *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location)
+void TestDocks::nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location)
 {
     auto frame = new Frame();
     frame->addWidget(dock);
@@ -626,7 +626,7 @@ void TestDocks::nestDockWidget(DockWidget *dock, DropArea *dropArea, Frame *rela
     qDebug() << "Size after adding: " << frame->size();
 }
 
-DockWidget *createAndNestDockWidget(DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location)
+DockWidgetBase *createAndNestDockWidget(DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location)
 {
     static int count = 0;
     count++;
@@ -638,7 +638,7 @@ DockWidget *createAndNestDockWidget(DropArea *dropArea, Frame *relativeTo, KDDoc
     return dock;
 }
 
-std::unique_ptr<MainWindow> createSimpleNestedMainWindow(DockWidget * *centralDock, DockWidget * *leftDock, DockWidget * *rightDock)
+std::unique_ptr<MainWindow> createSimpleNestedMainWindow(DockWidgetBase * *centralDock, DockWidgetBase * *leftDock, DockWidgetBase * *rightDock)
 {
     auto window = createMainWindow({900, 500});
     *centralDock = createDockWidget("centralDock", Qt::green);
@@ -819,9 +819,9 @@ void TestDocks::tst_close()
     // TODO: 1.7 Test Frame with two tabs
 
     // 1.8 Check if space is reclaimed after closing left dock
-    DockWidget *centralDock;
-    DockWidget *leftDock;
-    DockWidget *rightDock;
+    DockWidgetBase *centralDock;
+    DockWidgetBase *leftDock;
+    DockWidgetBase *rightDock;
 
     auto mainwindow = createSimpleNestedMainWindow(&centralDock, &leftDock, &rightDock);
     auto da = mainwindow->dropArea();
@@ -945,9 +945,9 @@ void TestDocks::tst_anchorsFromTo()
 {
     EnsureTopLevelsDeleted e;
 
-    DockWidget *centralDock;
-    DockWidget *leftDock;
-    DockWidget *rightDock;
+    DockWidgetBase *centralDock;
+    DockWidgetBase *leftDock;
+    DockWidgetBase *rightDock;
     auto mainwindow = createSimpleNestedMainWindow(&centralDock, &leftDock, &rightDock);
     auto dropArea = mainwindow->dropArea();
     QVERIFY(dropArea->checkSanity());
@@ -966,7 +966,7 @@ void TestDocks::tst_anchorsFromTo()
 
     qDebug() << "Adding the bottom one";
     QVERIFY(dropArea->checkSanity());
-    DockWidget *bottom = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnBottom);
+    DockWidgetBase *bottom = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnBottom);
     QVERIFY(dropArea->checkSanity());
     nonStaticAnchors = dropArea->nonStaticAnchors();
     auto horizAnchors = dropArea->multiSplitterLayout()->anchors(Qt::Horizontal);
@@ -1696,7 +1696,7 @@ void TestDocks::tst_restoreWithNonClosableWidget()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), {}, "tst_marginsAfterRestore");
-    auto dock1 = createDockWidget("1", new NonClosableWidget(), DockWidget::Option_NotClosable);
+    auto dock1 = createDockWidget("1", new NonClosableWidget(), DockWidgetBase::Option_NotClosable);
     m->addDockWidget(dock1, Location_OnLeft);
     auto layout = m->multiSplitterLayout();
 
@@ -2017,9 +2017,9 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
 
     EnsureTopLevelsDeleted e;
 
-    DockWidget *dock1 = createDockWidget("dock1", new QPushButton("one"));
-    DockWidget *dock2 = createDockWidget("dock2", new QPushButton("two"));
-    DockWidget *dock3 = createDockWidget("dock3", new QPushButton("three"));
+    DockWidgetBase *dock1 = createDockWidget("dock1", new QPushButton("one"));
+    DockWidgetBase *dock2 = createDockWidget("dock2", new QPushButton("two"));
+    DockWidgetBase *dock3 = createDockWidget("dock3", new QPushButton("three"));
 
     dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
     dock1->addDockWidgetToContainingWindow(dock3, Location_OnRight, dock2);
@@ -2066,7 +2066,7 @@ void TestDocks::tst_notClosable()
 {
     EnsureTopLevelsDeleted e;
     {
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), DockWidget::Option_NotClosable);
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"), DockWidgetBase::Option_NotClosable);
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
         dock1->addDockWidgetAsTab(dock2);
 
@@ -2086,7 +2086,7 @@ void TestDocks::tst_notClosable()
     {
         // Now dock dock1 into dock1 instead
 
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), DockWidget::Option_NotClosable);
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"), DockWidgetBase::Option_NotClosable);
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
 
         dock2->morphIntoFloatingWindow();
@@ -3139,7 +3139,7 @@ void TestDocks::tst_closeShowWhenNoCentralFrame()
     // Tests a crash I got when hidding and showing and no central frame
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
-    QPointer<DockWidget> dock1 = createDockWidget("1", new QPushButton("1"));
+    QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
     m->addDockWidget(dock1, Location_OnLeft);
     dock1->close();
     QVERIFY(!dock1->frame());
@@ -3160,7 +3160,7 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
     auto dropArea = m->dropArea();
     MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
 
-    QPointer<DockWidget> dock1 = createDockWidget("1", new QPushButton("1"));
+    QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
     m->addDockWidget(dock1, Location_OnLeft);
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
@@ -3192,8 +3192,8 @@ void TestDocks::tst_placeholdersAreRemovedPropertly()
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     auto dropArea = m->dropArea();
     MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
-    QPointer<DockWidget> dock1 = createDockWidget("1", new QPushButton("1"));
-    QPointer<DockWidget> dock2 = createDockWidget("2", new QPushButton("2"));
+    QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
+    QPointer<DockWidgetBase> dock2 = createDockWidget("2", new QPushButton("2"));
     m->addDockWidget(dock1, Location_OnLeft);
     Item *item = layout->items().constFirst();
     m->addDockWidget(dock2, Location_OnRight);
@@ -3249,9 +3249,9 @@ void TestDocks::tst_toggleMiddleDockCrash()
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     auto dropArea = m->dropArea();
     MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
-    QPointer<DockWidget> dock1 = createDockWidget("1", new QPushButton("1"));
-    QPointer<DockWidget> dock2 = createDockWidget("2", new QPushButton("2"));
-    QPointer<DockWidget> dock3 = createDockWidget("3", new QPushButton("3"));
+    QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
+    QPointer<DockWidgetBase> dock2 = createDockWidget("2", new QPushButton("2"));
+    QPointer<DockWidgetBase> dock3 = createDockWidget("3", new QPushButton("3"));
 
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
@@ -3585,7 +3585,7 @@ void TestDocks::tst_28NestedWidgets()
     for (DockDescriptor &desc : docksToCreate) {
         desc.createdDock = createDockWidget(QString("%1").arg(i), new QPushButton(QString("%1").arg(i)), {}, false);
 
-        DockWidget *relativeTo = nullptr;
+        DockWidgetBase *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docksToCreate.at(desc.relativeToIndex).createdDock;
 
@@ -4164,7 +4164,7 @@ void TestDocks::tst_sizeConstraintWarning()
     SetExpectedWarning sew("Dock widget already exists in the layout");
 
     auto window = createMainWindow();
-    QList<DockWidget *> listDockWidget;
+    QList<DockWidgetBase *> listDockWidget;
     {
        auto dock = new DockWidget("foo-0");
        dock->setWidget(new QTextEdit(dock));

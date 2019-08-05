@@ -467,7 +467,7 @@ DropArea *DragController::dropAreaUnderCursor() const
         Q_ASSERT(false);
     }
 
-    if (auto dock = qobject_cast<DockWidget *>(topLevel)) {
+    if (auto dock = qobject_cast<DockWidgetBase *>(topLevel)) {
         FloatingWindow *fw = dock->morphIntoFloatingWindow();
         m_windowBeingDragged->window()->raise();
         return fw->dropArea();

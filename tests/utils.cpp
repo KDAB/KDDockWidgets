@@ -60,7 +60,7 @@ std::unique_ptr<KDDockWidgets::MainWindow> KDDockWidgets::Tests::createMainWindo
     return ptr;
 }
 
-DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidget *w, DockWidget::Options options, bool show)
+DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidget *w, DockWidgetBase::Options options, bool show)
 {
     auto dock = new DockWidget(name, options);
     dock->setWidget(w);
@@ -81,7 +81,7 @@ DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidget 
     }
 };
 
-DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor color)
+DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor color)
 {
     return createDockWidget(name, new MyWidget(name, color));
 };
@@ -100,7 +100,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     for (DockDescriptor &desc : docks) {
         desc.createdDock = createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), new QPushButton(QStringLiteral("%1").arg(i)), {}, false);
 
-        DockWidget *relativeTo = nullptr;
+        DockWidgetBase *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docks.at(desc.relativeToIndex).createdDock;
 

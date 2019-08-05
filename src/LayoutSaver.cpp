@@ -28,7 +28,7 @@
 #include "LayoutSaver.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 #include "DropArea_p.h"
 #include "Logging_p.h"
 #include "Frame_p.h"
@@ -148,18 +148,18 @@ QByteArray LayoutSaver::serializeLayout() const
     }
 
     // Closed dock widgets also have interesting things to save, like geometry and placeholder info
-    const DockWidget::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
+    const DockWidgetBase::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
     ds << closedDockWidgets.size();
-    for (DockWidget *dockWidget : closedDockWidgets) {
+    for (DockWidgetBase *dockWidget : closedDockWidgets) {
         ds << dockWidget;
     }
 
     // Save the placeholder info. We do it last, as we also restore it last, since we need all items to be created
     // before restoring the placeholders
 
-    const DockWidget::List dockWidgets = d->m_dockRegistry->dockwidgets();
+    const DockWidgetBase::List dockWidgets = d->m_dockRegistry->dockwidgets();
     ds << dockWidgets.size();
-    for (DockWidget *dw : dockWidgets) {
+    for (DockWidgetBase *dw : dockWidgets) {
         ds << dw->name();
         ds << dw->lastPosition();
     }
@@ -243,7 +243,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     int numClosedDockWidgets;
     ds >> numClosedDockWidgets;
     for (int i = 0; i < numClosedDockWidgets; ++i) {
-        DockWidget::createFromDataStream(ds);
+        DockWidgetBase::createFromDataStream(ds);
     }
 
     // 4. Restore the placeholder info, now that the Items have been created
@@ -253,7 +253,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         QString name;
         ds >> name;
 
-        if (DockWidget *dw = d->m_dockRegistry->dockByName(name)) {
+        if (DockWidgetBase *dw = d->m_dockRegistry->dockByName(name)) {
             dw->lastPosition()->fillFromDataStream(ds);
         } else {
             qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;

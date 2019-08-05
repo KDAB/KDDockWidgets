@@ -91,7 +91,7 @@ Frame::~Frame()
 
 void Frame::updateTitleAndIcon()
 {
-    if (DockWidget *dw = currentDockWidget()) {
+    if (DockWidgetBase *dw = currentDockWidget()) {
         m_titleBar->setTitle(dw->title());
         m_titleBar->setIcon(dw->icon());
 
@@ -107,7 +107,7 @@ void Frame::updateTitleAndIcon()
 }
 
 
-void Frame::addWidget(DockWidget *dockWidget)
+void Frame::addWidget(DockWidgetBase *dockWidget)
 {
     insertWidget(dockWidget, m_tabWidget->count()); // append
 }
@@ -120,7 +120,7 @@ void Frame::addWidget(Frame *frame)
     }
 
     const auto &docks = frame->dockWidgets();
-    for (DockWidget *dockWidget : docks)
+    for (DockWidgetBase *dockWidget : docks)
         addWidget(dockWidget);
 }
 
@@ -131,7 +131,7 @@ void Frame::addWidget(FloatingWindow *floatingWindow)
         addWidget(f);
 }
 
-void Frame::insertWidget(DockWidget *dockWidget, int index)
+void Frame::insertWidget(DockWidgetBase *dockWidget, int index)
 {
     qCDebug(addwidget()) << Q_FUNC_INFO << ((void*)this) <<  "; dockWidget=" << dockWidget << "; oldFrame=" << dockWidget->frame();
 
@@ -150,14 +150,14 @@ void Frame::insertWidget(DockWidget *dockWidget, int index)
         Q_EMIT currentDockWidgetChanged(dockWidget);
     }
 
-    connect(dockWidget, &DockWidget::titleChanged, this, &Frame::updateTitleAndIcon);
-    connect(dockWidget, &DockWidget::iconChanged, this, &Frame::updateTitleAndIcon);
+    connect(dockWidget, &DockWidgetBase::titleChanged, this, &Frame::updateTitleAndIcon);
+    connect(dockWidget, &DockWidgetBase::iconChanged, this, &Frame::updateTitleAndIcon);
 }
 
-void Frame::removeWidget(DockWidget *dw)
+void Frame::removeWidget(DockWidgetBase *dw)
 {
-    disconnect(dw, &DockWidget::titleChanged, this, &Frame::updateTitleAndIcon);
-    disconnect(dw, &DockWidget::iconChanged, this, &Frame::updateTitleAndIcon);
+    disconnect(dw, &DockWidgetBase::titleChanged, this, &Frame::updateTitleAndIcon);
+    disconnect(dw, &DockWidgetBase::iconChanged, this, &Frame::updateTitleAndIcon);
     m_tabWidget->removeDockWidget(dw);
 }
 
@@ -209,9 +209,9 @@ QIcon Frame::icon() const
     return m_titleBar->icon();
 }
 
-const DockWidget::List Frame::dockWidgets() const
+const DockWidgetBase::List Frame::dockWidgets() const
 {
-    DockWidget::List dockWidgets;
+    DockWidgetBase::List dockWidgets;
     const int count = dockWidgetCount();
     dockWidgets.reserve(count);
     for (int i = 0, e = count; i != e; ++i) {
@@ -221,7 +221,7 @@ const DockWidget::List Frame::dockWidgets() const
     return dockWidgets;
 }
 
-bool Frame::contains(DockWidget *dockWidget) const
+bool Frame::contains(DockWidgetBase *dockWidget) const
 {
     const int count = dockWidgetCount();
     for (int i = 0, e = count; i != e; ++i) {
@@ -272,8 +272,8 @@ void Frame::closeEvent(QCloseEvent *e)
 {
     qCDebug(closing) << "Frame::closeEvent";
     e->accept(); // Accepted by default (will close unless ignored)
-    DockWidget::List docks = dockWidgets();
-    for (DockWidget *dock : docks) {
+    DockWidgetBase::List docks = dockWidgets();
+    for (DockWidgetBase *dock : docks) {
         qApp->sendEvent(dock, e);
         if (!e->isAccepted())
             break; // Stop when the first dockwidget prevents closing
@@ -290,22 +290,22 @@ void Frame::setCurrentTabIndex(int index)
     m_tabWidget->setCurrentIndex(index);
 }
 
-DockWidget *Frame::currentDockWidget() const
+DockWidgetBase *Frame::currentDockWidget() const
 {
-    return qobject_cast<DockWidget*>(m_tabWidget->currentWidget());
+    return qobject_cast<DockWidgetBase*>(m_tabWidget->currentWidget());
 }
 
 bool Frame::anyNonClosable() const
 {
     for (auto dw : dockWidgets()) {
-        if (dw->options() & DockWidget::Option_NotClosable)
+        if (dw->options() & DockWidgetBase::Option_NotClosable)
             return true;
     }
 
     return false;
 }
 
-void Frame::onDockWidgetShown(DockWidget *w)
+void Frame::onDockWidgetShown(DockWidgetBase *w)
 {
     if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
         if (!isVisible()) {
@@ -315,7 +315,7 @@ void Frame::onDockWidgetShown(DockWidget *w)
     }
 }
 
-void Frame::onDockWidgetHidden(DockWidget *w)
+void Frame::onDockWidgetHidden(DockWidgetBase *w)
 {
     if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
         if (isVisible()) {
@@ -340,10 +340,10 @@ void Frame::setLayoutItem(Item *item)
 
     m_layoutItem = item;
     if (item) {
-        for (DockWidget *dw : dockWidgets())
+        for (DockWidgetBase *dw : dockWidgets())
             dw->addPlaceholderItem(item);
     } else {
-        for (DockWidget *dw : dockWidgets())
+        for (DockWidgetBase *dw : dockWidgets())
             dw->lastPosition()->removePlaceholders();
     }
 }
@@ -378,9 +378,9 @@ TabWidget *Frame::tabWidget() const
     return m_tabWidget;
 }
 
-DockWidget *Frame::dockWidgetAt(int index) const
+DockWidgetBase *Frame::dockWidgetAt(int index) const
 {
-    return qobject_cast<DockWidget *>(m_tabWidget->widget(index));
+    return qobject_cast<DockWidgetBase *>(m_tabWidget->widget(index));
 }
 
 void Frame::setDropArea(DropArea *dt)
@@ -463,7 +463,7 @@ Frame *Frame::createFromDataStream(QDataStream &ds)
     frame->setObjectName(objectName);
 
     for (int i = 0; i < numDocks; ++i) {
-        if (DockWidget *dw = DockWidget::createFromDataStream(ds)) {
+        if (DockWidgetBase *dw = DockWidgetBase::createFromDataStream(ds)) {
             frame->addWidget(dw);
         }
     }
@@ -476,7 +476,7 @@ Frame *Frame::createFromDataStream(QDataStream &ds)
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Frame *frame)
 {
-    const DockWidget::List docks = frame->dockWidgets();
+    const DockWidgetBase::List docks = frame->dockWidgets();
 
     ds << frame->objectName();
     ds << frame->geometry();
@@ -484,7 +484,7 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Frame *frame)
     ds << frame->currentTabIndex();
     ds << docks.size();
 
-    for (DockWidget *dock : docks) {
+    for (DockWidgetBase *dock : docks) {
         ds << dock;
     }
 

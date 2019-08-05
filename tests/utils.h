@@ -23,7 +23,7 @@
 
 #include "MainWindow.h"
 #include "KDDockWidgets.h"
-#include "DockWidget.h"
+#include "widgets/DockWidget.h"
 
 #include <QWidget>
 #include <QPointer>
@@ -39,7 +39,7 @@ namespace Tests {
 struct DockDescriptor {
     Location loc;
     int relativeToIndex;
-    QPointer<DockWidget> createdDock;
+    QPointer<DockWidgetBase> createdDock;
     KDDockWidgets::AddingOption option;
 };
 
@@ -53,9 +53,9 @@ std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QSize sz = {600, 600
 
 std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
 
-KDDockWidgets::DockWidget *createDockWidget(const QString &name, QWidget *w,
-                                            DockWidget::Options options = {}, bool show = true);
-KDDockWidgets::DockWidget *createDockWidget(const QString &name, QColor color);
+KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidget *w,
+                                                DockWidgetBase::Options options = {}, bool show = true);
+KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QColor color);
 
 class NonClosableWidget : public QWidget
 {

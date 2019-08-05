@@ -40,7 +40,7 @@ namespace KDDockWidgets {
 class TitleBar;
 class TabWidget;
 class DropArea;
-class DockWidget;
+class DockWidgetBase;
 class Item;
 class FloatingWindow;
 
@@ -73,17 +73,17 @@ public:
     static Frame *createFromDataStream(QDataStream &ds);
 
     ///@brief Adds a widget into the Frame's TabWidget
-    void addWidget(DockWidget *);
+    void addWidget(DockWidgetBase *);
     ///@overload
     void addWidget(Frame *);
     ///@overload
     void addWidget(FloatingWindow *floatingWindow);
 
     ///@brief Inserts a widget into the Frame's TabWidget at @p index
-    void insertWidget(DockWidget *, int index);
+    void insertWidget(DockWidgetBase *, int index);
 
     ///@brief removes a dockwidget from the frame
-    void removeWidget(DockWidget *);
+    void removeWidget(DockWidgetBase *);
 
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
@@ -91,8 +91,8 @@ public:
     TitleBar *titleBar() const;
     QString title() const;
     QIcon icon() const;
-    const QVector<DockWidget *> dockWidgets() const;
-    DockWidget *dockWidgetAt(int index) const;
+    const QVector<DockWidgetBase *> dockWidgets() const;
+    DockWidgetBase *dockWidgetAt(int index) const;
     void setDropArea(DropArea *);
 
     bool isTheOnlyFrame() const;
@@ -141,7 +141,7 @@ public:
     int dockWidgetCount() const;
 
     /// @brief returns whether the dockwidget @p w is inside this frame
-    bool contains(DockWidget *w) const;
+    bool contains(DockWidgetBase *w) const;
 
 
     ///@brief returns the FloatingWindow this frame is in, if any
@@ -161,7 +161,7 @@ public:
     int currentTabIndex() const;
     void setCurrentTabIndex(int);
 
-    DockWidget *currentDockWidget() const;
+    DockWidgetBase *currentDockWidget() const;
 
     Options options() const { return m_options; }
     bool anyNonClosable() const;
@@ -174,10 +174,10 @@ public:
     bool hasSingleDockWidget() const { return dockWidgetCount() == 1; }
 
     ///@brief Called when a dock widget child @p w is shown
-    void onDockWidgetShown(DockWidget *w);
+    void onDockWidgetShown(DockWidgetBase *w);
 
     ///@brief Called when a dock widget child @p w is hidden
-    void onDockWidgetHidden(DockWidget *w);
+    void onDockWidgetHidden(DockWidgetBase *w);
 
     ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
     void setLayoutItem(Item *item);
@@ -200,7 +200,7 @@ public:
     TabWidget *tabWidget() const;
 
 Q_SIGNALS:
-    void currentDockWidgetChanged(KDDockWidgets::DockWidget *);
+    void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();
 
 private:

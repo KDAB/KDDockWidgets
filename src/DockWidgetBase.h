@@ -25,8 +25,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#ifndef KD_DOCKWIDGET_H
-#define KD_DOCKWIDGET_H
+#ifndef KD_DOCKWIDGET_BASE_H
+#define KD_DOCKWIDGET_BASE_H
 
 #include "docks_export.h"
 #include "KDDockWidgets.h"
@@ -52,11 +52,11 @@ class TitleBar;
 /**
  * @brief Represents a dock widget.
  */
-class DOCKS_EXPORT DockWidget : public QWidget
+class DOCKS_EXPORT DockWidgetBase : public QWidget
 {
     Q_OBJECT
 public:
-    typedef QVector<DockWidget *> List;
+    typedef QVector<DockWidgetBase *> List;
 
     enum Option {
         Option_None = 0,
@@ -71,19 +71,19 @@ public:
      * @param parent optional QWidget parent, for ownership purposes
      * @param flags optional Qt::WindowFlags to apply to the window
      */
-    explicit DockWidget(const QString &name, Options options = {},
+    explicit DockWidgetBase(const QString &name, Options options = {},
                         QWidget *parent = nullptr, Qt::WindowFlags flags = {});
 
     ///@brief destructor
-    ~DockWidget() override;
+    ~DockWidgetBase() override;
 
-    static DockWidget *createFromDataStream(QDataStream &ds);
+    static DockWidgetBase *createFromDataStream(QDataStream &ds);
 
     /**
      * @brief docks @p other widget into this one. Tabs will be shown.
      * @param other The other dock widget to dock into this one.
      */
-    void addDockWidgetAsTab(DockWidget *other);
+    void addDockWidgetAsTab(DockWidgetBase *other);
 
     /**
      * @brief docks @p other widget into the window that contains this one.
@@ -91,8 +91,8 @@ public:
      * @param location The location to dock.
      * @param relativeTo The dock widget that the @p location is relative to. If null then the window is considered.
      */
-    void addDockWidgetToContainingWindow(DockWidget *other, KDDockWidgets::Location location,
-                                         DockWidget *relativeTo = nullptr);
+    void addDockWidgetToContainingWindow(DockWidgetBase *other, KDDockWidgets::Location location,
+                                         DockWidgetBase *relativeTo = nullptr);
 
     /**
      * @brief sets the widget which this dock widget contains
@@ -240,7 +240,7 @@ public:
 #else
 private:
 #endif
-    Q_DISABLE_COPY(DockWidget)
+    Q_DISABLE_COPY(DockWidgetBase)
     friend class MultiSplitterLayout;
     friend class Frame;
     friend class DropArea;
@@ -253,7 +253,7 @@ private:
     friend class KDDockWidgets::DockRegistry;
     friend class KDDockWidgets::LayoutSaver;
 
-    friend QDataStream &operator<<(QDataStream &ds, DockWidget *);
+    friend QDataStream &operator<<(QDataStream &ds, DockWidgetBase *);
 
     /**
      * @brief the Frame which contains this dock widgets.
@@ -283,7 +283,7 @@ private:
     Private *const d;
 };
 
-QDataStream &operator<<(QDataStream &ds, DockWidget *);
+QDataStream &operator<<(QDataStream &ds, DockWidgetBase *);
 
 }
 

@@ -19,7 +19,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 #include "MainWindow.h"
 #include "DropArea_p.h"
 #include "utils.h"

@@ -20,8 +20,8 @@
 
 #include "MainWindow.h"
 #include "ExampleDockableWidget.h"
-#include "DockWidget.h"
 #include "LayoutSaver.h"
+#include "widgets/DockWidget.h"
 
 #include <QTextEdit>
 #include <QMenu>
@@ -34,7 +34,7 @@
 
 using namespace KDDockWidgets;
 
-DockWidget::Options s_dockWidgetOptions = DockWidget::Option_None; // DockWidget::Option_NotClosable;
+DockWidgetBase::Options s_dockWidgetOptions = DockWidgetBase::Option_None; // DockWidget::Option_NotClosable;
 
 static MyWidget *newMyWidget()
 {

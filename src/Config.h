@@ -33,8 +33,8 @@
 
 namespace KDDockWidgets
 {
-class DockWidget;
-typedef KDDockWidgets::DockWidget* (*DockWidgetFactoryFunc)(const QString &name);
+class DockWidgetBase;
+typedef KDDockWidgets::DockWidgetBase* (*DockWidgetFactoryFunc)(const QString &name);
 
 /**
  * @brief Singleton to allow to choose certain behaviours of the framework.

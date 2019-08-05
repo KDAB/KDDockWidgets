@@ -17,7 +17,7 @@ add_definitions(-DQT_NO_CAST_TO_ASCII
 set(DOCKSLIBS_SRCS
     Config.cpp
     Config.h
-    DockWidget.cpp
+    DockWidgetBase.cpp
     DragController.cpp
     Draggable.cpp
     DropArea.cpp
@@ -51,6 +51,7 @@ set(DOCKSLIBS_SRCS
 
     FrameworkWidgetFactory.cpp
 
+    widgets/DockWidget.cpp
     widgets/FloatingWindowWidget.cpp
     widgets/FrameWidget.cpp
     widgets/SeparatorWidget.cpp
@@ -66,7 +67,7 @@ else()
     set(IS_CLANG_BUILD FALSE)
 endif()
 
-set (DOCKS_INSTALLABLE_INCLUDES docks_export.h DockWidget.h MainWindow.h LayoutSaver.h Draggable_p.h KDDockWidgets.h Config.h)
+set (DOCKS_INSTALLABLE_INCLUDES docks_export.h MainWindow.h LayoutSaver.h Draggable_p.h KDDockWidgets.h Config.h)
 
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 

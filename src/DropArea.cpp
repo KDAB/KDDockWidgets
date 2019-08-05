@@ -20,7 +20,7 @@
 
 #include "DropArea_p.h"
 #include "Logging_p.h"
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 #include "Draggable_p.h"
 #include "MainWindow.h"
 #include "FloatingWindow_p.h"
@@ -123,7 +123,7 @@ Item *DropArea::centralFrame() const
     return nullptr;
 }
 
-void DropArea::addDockWidget(DockWidget *dw, Location location, DockWidget *relativeTo, AddingOption option)
+void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBase *relativeTo, AddingOption option)
 {
     if (!dw || dw == relativeTo || location == Location_None) {
         qWarning() << Q_FUNC_INFO << "Invalid parameters" << dw << relativeTo << location;
@@ -193,7 +193,7 @@ QWidget *DropArea::window() const
     return nullptr;
 }
 
-bool DropArea::contains(DockWidget *dw) const
+bool DropArea::contains(DockWidgetBase *dw) const
 {
     return dw->frame() && m_layout->contains(dw->frame());
 }
@@ -283,7 +283,7 @@ bool DropArea::drop(QWidget *droppedWindow, KDDockWidgets::Location location, Fr
 {
     qCDebug(docking) << "DropArea::addFrame";
 
-    if (auto dock = qobject_cast<DockWidget *>(droppedWindow)) {
+    if (auto dock = qobject_cast<DockWidgetBase *>(droppedWindow)) {
         auto frame = Config::self().frameWorkWidgetFactory()->createFrame();
         frame->addWidget(dock);
         m_layout->addWidget(frame, location, relativeTo);

@@ -23,7 +23,7 @@
 #include "MultiSplitterWidget_p.h"
 #include "Frame_p.h"
 #include "FloatingWindow_p.h"
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 #include "LastPosition_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
@@ -126,7 +126,7 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
         return false;
     }
 
-    const bool isDockWidget = qobject_cast<DockWidget*>(widget);
+    const bool isDockWidget = qobject_cast<DockWidgetBase*>(widget);
     const bool isStartHidden = option & AddingOption_StartHidden;
 
     if (!qobject_cast<Frame*>(widget) && !qobject_cast<MultiSplitterWidget*>(widget) && !isDockWidget) {
@@ -198,7 +198,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
     Item *relativeToItem = itemForFrame(relativeToWidget);
 
     if (option & AddingOption_StartHidden) {
-        addAsPlaceholder(qobject_cast<DockWidget*>(w), location, relativeToItem);
+        addAsPlaceholder(qobject_cast<DockWidgetBase*>(w), location, relativeToItem);
         return;
     }
 
@@ -364,7 +364,7 @@ void MultiSplitterLayout::addItems_internal(const ItemList &items, bool updateCo
         Q_EMIT widgetCountChanged(m_items.size());
 }
 
-void MultiSplitterLayout::addAsPlaceholder(DockWidget *dockWidget, Location location, Item *relativeTo)
+void MultiSplitterLayout::addAsPlaceholder(DockWidgetBase *dockWidget, Location location, Item *relativeTo)
 {
     if (!dockWidget) {
         qWarning() << Q_FUNC_INFO << "null dockwidget";
@@ -1219,9 +1219,9 @@ Frame::List MultiSplitterLayout::frames() const
     return result;
 }
 
-QVector<DockWidget *> MultiSplitterLayout::dockWidgets() const
+QVector<DockWidgetBase *> MultiSplitterLayout::dockWidgets() const
 {
-    DockWidget::List result;
+    DockWidgetBase::List result;
     const Frame::List frames = this->frames();
 
     for (Frame *frame : frames)
@@ -1582,7 +1582,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
 void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdded) const
 {
     for (Frame *frame : framesBeingAdded) {
-        for (DockWidget *dw : frame->dockWidgets()) {
+        for (DockWidgetBase *dw : frame->dockWidgets()) {
             if (Item *existingItem = dw->lastPosition()->layoutItem()) {
                 if (contains(existingItem)) { // We're only interested in placeholders from this layout
                     dw->lastPosition()->removePlaceholders(this);

@@ -108,7 +108,7 @@ MainWindow::~MainWindow()
     delete d;
 }
 
-void MainWindow::addDockWidgetAsTab(DockWidget *widget)
+void MainWindow::addDockWidgetAsTab(DockWidgetBase *widget)
 {
     Q_ASSERT(widget);
     qCDebug(addwidget) << Q_FUNC_INFO << widget;
@@ -120,7 +120,7 @@ void MainWindow::addDockWidgetAsTab(DockWidget *widget)
     }
 }
 
-void MainWindow::addDockWidget(DockWidget *dw, Location location, DockWidget *relativeTo, AddingOption option)
+void MainWindow::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBase *relativeTo, AddingOption option)
 {
     d->m_dropArea->addDockWidget(dw, location, relativeTo, option);
 }

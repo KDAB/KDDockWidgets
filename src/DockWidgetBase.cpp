@@ -18,7 +18,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 #include "DragController_p.h"
 #include "Frame_p.h"
 #include "FloatingWindow_p.h"
@@ -49,10 +49,10 @@
 
 using namespace KDDockWidgets;
 
-class DockWidget::Private
+class DockWidgetBase::Private
 {
 public:
-    Private(const QString &dockName, DockWidget::Options options_, DockWidget *qq)
+    Private(const QString &dockName, DockWidgetBase::Options options_, DockWidgetBase *qq)
         : name(dockName)
         , title(dockName)
         , q(qq)
@@ -60,8 +60,8 @@ public:
         , layout(new QVBoxLayout(q))
         , toggleAction(new QAction(q))
     {
-        q->connect(q, &DockWidget::shown, q, [this] { onDockWidgetShown(); } );
-        q->connect(q, &DockWidget::hidden, q, [this] { onDockWidgetHidden(); } );
+        q->connect(q, &DockWidgetBase::shown, q, [this] { onDockWidgetShown(); } );
+        q->connect(q, &DockWidgetBase::hidden, q, [this] { onDockWidgetHidden(); } );
 
         q->connect(toggleAction, &QAction::toggled, q, [this] (bool enabled) {
             toggle(enabled);
@@ -101,14 +101,14 @@ public:
     QString title;
     QIcon icon;
     QWidget *widget = nullptr;
-    DockWidget *const q;
-    const DockWidget::Options options;
+    DockWidgetBase *const q;
+    const DockWidgetBase::Options options;
     QVBoxLayout *const layout;
     QAction *const toggleAction;
     LastPosition m_lastPosition;
 };
 
-DockWidget::DockWidget(const QString &name, Options options, QWidget *parent, Qt::WindowFlags flags)
+DockWidgetBase::DockWidgetBase(const QString &name, Options options, QWidget *parent, Qt::WindowFlags flags)
     : QWidget(parent, flags | Qt::Tool)
     , d(new Private(name, options, this))
 {
@@ -121,14 +121,14 @@ DockWidget::DockWidget(const QString &name, Options options, QWidget *parent, Qt
         qWarning() << Q_FUNC_INFO << "Name can't be null";
 }
 
-DockWidget::~DockWidget()
+DockWidgetBase::~DockWidgetBase()
 {
     DockRegistry::self()->unregisterDockWidget(this);
     qCDebug(creation) << "~DockWidget" << this;
     delete d;
 }
 
-void DockWidget::addDockWidgetAsTab(DockWidget *other)
+void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other)
 {
     qCDebug(addwidget) << Q_FUNC_INFO << other;
     if (other == this) {
@@ -160,7 +160,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other)
     frame->addWidget(other);
 }
 
-void DockWidget::addDockWidgetToContainingWindow(DockWidget *other, Location location, DockWidget *relativeTo)
+void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other, Location location, DockWidgetBase *relativeTo)
 {
     qCDebug(addwidget) << Q_FUNC_INFO << other << location << relativeTo;
     if (qobject_cast<MainWindow*>(window())) {
@@ -178,7 +178,7 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other, Location loc
     }
 }
 
-void DockWidget::setWidget(QWidget *w)
+void DockWidgetBase::setWidget(QWidget *w)
 {
     Q_ASSERT(w && !d->widget);
     qCDebug(addwidget) << Q_FUNC_INFO << w;
@@ -188,12 +188,12 @@ void DockWidget::setWidget(QWidget *w)
     setWindowTitle(name());
 }
 
-QWidget *DockWidget::widget() const
+QWidget *DockWidgetBase::widget() const
 {
     return d->widget;
 }
 
-bool DockWidget::isFloating() const
+bool DockWidgetBase::isFloating() const
 {
     if (isWindow())
         return true;
@@ -202,7 +202,7 @@ bool DockWidget::isFloating() const
     return fw && fw->hasSingleDockWidget();
 }
 
-void DockWidget::setFloating(bool floats)
+void DockWidgetBase::setFloating(bool floats)
 {
     const bool alreadyFloating = isFloating();
 
@@ -236,22 +236,22 @@ void DockWidget::setFloating(bool floats)
     }
 }
 
-QAction *DockWidget::toggleAction() const
+QAction *DockWidgetBase::toggleAction() const
 {
     return d->toggleAction;
 }
 
-QString DockWidget::name() const
+QString DockWidgetBase::name() const
 {
     return d->name;
 }
 
-QString DockWidget::title() const
+QString DockWidgetBase::title() const
 {
     return d->title;
 }
 
-void DockWidget::setTitle(const QString &title)
+void DockWidgetBase::setTitle(const QString &title)
 {
     if (title != d->title) {
         d->title = title;
@@ -260,12 +260,12 @@ void DockWidget::setTitle(const QString &title)
     }
 }
 
-DockWidget::Options DockWidget::options() const
+DockWidgetBase::Options DockWidgetBase::options() const
 {
     return d->options;
 }
 
-bool DockWidget::isTabbed() const
+bool DockWidgetBase::isTabbed() const
 {
     if (TabWidget* tabWidget = d->parentTabWidget()) {
         return frame()->alwaysShowsTabs() || tabWidget->count() > 1;
@@ -276,45 +276,45 @@ bool DockWidget::isTabbed() const
     }
 }
 
-bool DockWidget::isCurrentTab() const
+bool DockWidgetBase::isCurrentTab() const
 {
     if (TabWidget* tabWidget = d->parentTabWidget()) {
-        return tabWidget->currentIndex() == tabWidget->indexOf(const_cast<DockWidget*>(this));
+        return tabWidget->currentIndex() == tabWidget->indexOf(const_cast<DockWidgetBase*>(this));
     } else {
         return true;
     }
 }
 
-void DockWidget::setAsCurrentTab()
+void DockWidgetBase::setAsCurrentTab()
 {
     if (TabWidget* tabWidget = d->parentTabWidget())
         tabWidget->setCurrentWidget(this);
 }
 
-void DockWidget::setIcon(const QIcon &icon)
+void DockWidgetBase::setIcon(const QIcon &icon)
 {
     d->icon = icon;
     d->updateIcon();
     Q_EMIT iconChanged();
 }
 
-QIcon DockWidget::icon() const
+QIcon DockWidgetBase::icon() const
 {
     return d->icon;
 }
 
-void DockWidget::forceClose()
+void DockWidgetBase::forceClose()
 {
     d->close();
 }
 
-QTabWidget *DockWidget::tabWidget() const
+QTabWidget *DockWidgetBase::tabWidget() const
 {
     return frame() ? frame()->tabWidget()
                    : nullptr;
 }
 
-bool DockWidget::event(QEvent *e)
+bool DockWidgetBase::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
         Q_EMIT parentChanged();
@@ -332,7 +332,7 @@ bool DockWidget::event(QEvent *e)
         d->maybeRestoreToPreviousPosition();
 
         // Transform into a FloatingWindow if this will be a regular floating dock widget.
-        QTimer::singleShot(0, this, &DockWidget::maybeMorphIntoFloatingWindow);
+        QTimer::singleShot(0, this, &DockWidgetBase::maybeMorphIntoFloatingWindow);
     } else if (e->type() == QEvent::Hide) {
         Q_EMIT hidden();
 
@@ -346,7 +346,7 @@ bool DockWidget::event(QEvent *e)
     return QWidget::event(e);
 }
 
-void DockWidget::closeEvent(QCloseEvent *e)
+void DockWidgetBase::closeEvent(QCloseEvent *e)
 {
     e->accept(); // By default we accept, means DockWidget closes
     if (d->widget)
@@ -356,7 +356,7 @@ void DockWidget::closeEvent(QCloseEvent *e)
         d->close();
 }
 
-FloatingWindow *DockWidget::morphIntoFloatingWindow()
+FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
                       << "; visible=" << isVisible();
@@ -381,13 +381,13 @@ FloatingWindow *DockWidget::morphIntoFloatingWindow()
     }
 }
 
-void DockWidget::maybeMorphIntoFloatingWindow()
+void DockWidgetBase::maybeMorphIntoFloatingWindow()
 {
     if (isWindow() && isVisible())
         morphIntoFloatingWindow();
 }
 
-Frame *DockWidget::frame() const
+Frame *DockWidgetBase::frame() const
 {
     QWidget *p = parentWidget();
     while (p) {
@@ -398,24 +398,24 @@ Frame *DockWidget::frame() const
     return nullptr;
 }
 
-FloatingWindow *DockWidget::floatingWindow() const
+FloatingWindow *DockWidgetBase::floatingWindow() const
 {
     return qobject_cast<FloatingWindow*>(window());
 }
 
-void DockWidget::addPlaceholderItem(Item *item)
+void DockWidgetBase::addPlaceholderItem(Item *item)
 {
     qCDebug(placeholder) << Q_FUNC_INFO << this << item;
     Q_ASSERT(item);
     d->m_lastPosition.addPlaceholderItem(item);
 }
 
-LastPosition *DockWidget::lastPosition() const
+LastPosition *DockWidgetBase::lastPosition() const
 {
     return &d->m_lastPosition;
 }
 
-void DockWidget::Private::updateTitle()
+void DockWidgetBase::Private::updateTitle()
 {
     if (q->isFloating())
         q->window()->setWindowTitle(title);
@@ -424,12 +424,12 @@ void DockWidget::Private::updateTitle()
     toggleAction->setText(title);
 }
 
-void DockWidget::Private::updateIcon()
+void DockWidgetBase::Private::updateIcon()
 {
 
 }
 
-void DockWidget::Private::toggle(bool enabled)
+void DockWidgetBase::Private::toggle(bool enabled)
 {
     if (enabled) {
         show();
@@ -438,7 +438,7 @@ void DockWidget::Private::toggle(bool enabled)
     }
 }
 
-void DockWidget::Private::updateToggleAction()
+void DockWidgetBase::Private::updateToggleAction()
 {
     QSignalBlocker blocker(toggleAction);
     if ((q->isVisible() || parentTabWidget()) && !toggleAction->isChecked()) {
@@ -448,19 +448,19 @@ void DockWidget::Private::updateToggleAction()
     }
 }
 
-void DockWidget::Private::onDockWidgetShown()
+void DockWidgetBase::Private::onDockWidgetShown()
 {
     updateToggleAction();
     qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 
-void DockWidget::Private::onDockWidgetHidden()
+void DockWidgetBase::Private::onDockWidgetHidden()
 {
     updateToggleAction();
     qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 
-TabWidget *DockWidget::Private::parentTabWidget() const
+TabWidget *DockWidgetBase::Private::parentTabWidget() const
 {
     QWidget *p= q->parentWidget();
     if (p && p->objectName() == QLatin1String("qt_tabwidget_stackedwidget")) {
@@ -471,7 +471,7 @@ TabWidget *DockWidget::Private::parentTabWidget() const
     return nullptr;
 }
 
-void DockWidget::Private::close()
+void DockWidgetBase::Private::close()
 {
     if (q->isFloating())
         m_lastPosition.setLastFloatingGeometry(q->window()->geometry());
@@ -486,13 +486,13 @@ void DockWidget::Private::close()
     }
 }
 
-void DockWidget::Private::updateLayoutMargin()
+void DockWidgetBase::Private::updateLayoutMargin()
 {
     const int margin = !q->isWindow() ? 0 : 4;
     layout->setContentsMargins(margin, margin, margin, margin);
 }
 
-void DockWidget::Private::restoreToPreviousPosition()
+void DockWidgetBase::Private::restoreToPreviousPosition()
 {
     if (!m_lastPosition.isValid()) {
         qWarning() << Q_FUNC_INFO << "Only restoring to MainWindow supported for now";
@@ -502,7 +502,7 @@ void DockWidget::Private::restoreToPreviousPosition()
     m_lastPosition.layoutItem()->restorePlaceholder(q, m_lastPosition.m_tabIndex);
 }
 
-void DockWidget::Private::maybeRestoreToPreviousPosition()
+void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 {
     // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous position.
     Item *layoutItem = m_lastPosition.layoutItem();
@@ -534,31 +534,31 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
     restoreToPreviousPosition();
 }
 
-int DockWidget::Private::currentTabIndex() const
+int DockWidgetBase::Private::currentTabIndex() const
 {
     TabWidget *tabWidget = parentTabWidget();
     return tabWidget ? tabWidget->indexOf(q)
                      : 0;
 }
 
-void DockWidget::Private::saveTabIndex()
+void DockWidgetBase::Private::saveTabIndex()
 {
     m_lastPosition.m_tabIndex = currentTabIndex();
     m_lastPosition.m_wasFloating = q->isFloating();
 }
 
-void DockWidget::Private::show()
+void DockWidgetBase::Private::show()
 {
     // Only show for now
     q->show();
 }
 
-DockWidget *DockWidget::createFromDataStream(QDataStream &ds)
+DockWidgetBase *DockWidgetBase::createFromDataStream(QDataStream &ds)
 {
     QString name;
     ds >> name;
 
-    DockWidget *dw = DockRegistry::self()->dockByName(name);
+    DockWidgetBase *dw = DockRegistry::self()->dockByName(name);
     if (!dw) {
         if (auto factoryFunc = Config::self().dockWidgetFactoryFunc()) {
             // DockWidget doesn't exist, ask to create it
@@ -576,7 +576,7 @@ DockWidget *DockWidget::createFromDataStream(QDataStream &ds)
     return dw;
 }
 
-QDataStream &KDDockWidgets::operator<<(QDataStream &ds, DockWidget *dw)
+QDataStream &KDDockWidgets::operator<<(QDataStream &ds, DockWidgetBase *dw)
 {
     ds << dw->name();
     return ds;

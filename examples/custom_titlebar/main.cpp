@@ -19,9 +19,9 @@
 */
 
 #include "MainWindow.h"
-#include "DockWidget.h"
 #include "Config.h"
 #include "TitleBar_p.h"
+#include "widgets/DockWidget.h"
 
 #include <QTextEdit>
 #include <QApplication>
@@ -76,7 +76,7 @@ public:
     }
 };
 
-DockWidget *createDockWidget(const QString &name)
+DockWidgetBase *createDockWidget(const QString &name)
 {
     auto dock = new DockWidget(name);
     dock->setWidget(new QTextEdit());
@@ -102,7 +102,7 @@ int main(int argc, char **argv)
     mainWindow.resize(1000, 800);
     mainWindow.show();
 
-    DockWidget *dock1 = createDockWidget(QStringLiteral("one"));
+    DockWidgetBase *dock1 = createDockWidget(QStringLiteral("one"));
     createDockWidget(QStringLiteral("two"));
     createDockWidget(QStringLiteral("three"));
     mainWindow.addDockWidget(dock1, Location_OnTop);

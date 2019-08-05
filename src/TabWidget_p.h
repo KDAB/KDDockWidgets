@@ -32,7 +32,7 @@
 #include "docks_export.h"
 #include "Draggable_p.h"
 #include "Frame_p.h"
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 
 #include <QTabWidget>
 #include <QTabBar>
@@ -42,7 +42,7 @@
 
 namespace KDDockWidgets {
 
-class DockWidget;
+class DockWidgetBase;
 class TabWidget;
 
 ///@brief a QTabBar derived class to be used by KDDockWidgets::TabWidget
@@ -64,10 +64,10 @@ public:
      * @param index the tab number from which we want the dock widget
      * @return the dock widget at tab number @p index
      */
-    DockWidget *dockWidgetAt(int index) const;
+    DockWidgetBase *dockWidgetAt(int index) const;
 
     ///@overload
-    DockWidget *dockWidgetAt(QPoint localPos) const;
+    DockWidgetBase *dockWidgetAt(QPoint localPos) const;
 
     // Draggable
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
@@ -78,13 +78,13 @@ public:
      * @param dockWidget the dock widget to detach
      * @returns the created FloatingWindow
      */
-    FloatingWindow *detachTab(DockWidget *dockWidget);
+    FloatingWindow *detachTab(DockWidgetBase *dockWidget);
 
     void onMousePress(QPoint localPos);
 
 private:
     TabWidget *const m_tabWidget;
-    QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
+    QPointer<DockWidgetBase> m_lastPressedDockWidget = nullptr;
 };
 
 class DOCKS_EXPORT_FOR_UNIT_TESTS TabWidget : public QTabWidget, public Draggable
@@ -95,28 +95,28 @@ public:
 
 
     ///@brief appends a dock widget into this TabWidget
-    void addDockWidget(DockWidget *);
+    void addDockWidget(DockWidgetBase *);
 
     /**
      * @brief inserts @p dockwidget into the TabWidget, at @p index
      * @param dockwidget the dockwidget to insert
      * @param index The index to where to put it
      */
-    void insertDockWidget(DockWidget *dockwidget, int index);
+    void insertDockWidget(DockWidgetBase *dockwidget, int index);
 
-    void removeDockWidget(DockWidget *);
+    void removeDockWidget(DockWidgetBase *);
 
     /**
      * @brief detaches a dock widget and shows it as a floating dock widget
      * @param dockWidget the dock widget to detach
      */
-    void detachTab(DockWidget *dockWidget);
+    void detachTab(DockWidgetBase *dockWidget);
 
     /**
      * @brief Returns whether dockwidget @p dw is contained in this tab widget
      * Equivalent to indexOf(dw) != -1
      */
-    bool contains(DockWidget *dw) const;
+    bool contains(DockWidgetBase *dw) const;
 
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;

@@ -38,7 +38,7 @@ class QDataStream;
 
 namespace KDDockWidgets {
 
-class DockWidget;
+class DockWidgetBase;
 class Frame;
 class DropArea;
 class MultiSplitterLayout;
@@ -51,8 +51,8 @@ public:
     explicit MainWindow(const QString &name, MainWindowOptions options = MainWindowOption_HasCentralFrame,
                         QWidget *parent = nullptr, Qt::WindowFlags flags = {});
     ~MainWindow() override;
-    void addDockWidgetAsTab(DockWidget *);
-    void addDockWidget(DockWidget *, KDDockWidgets::Location, DockWidget *relativeTo = nullptr, AddingOption = {});
+    void addDockWidgetAsTab(DockWidgetBase *);
+    void addDockWidget(DockWidgetBase *, KDDockWidgets::Location, DockWidgetBase *relativeTo = nullptr, AddingOption = {});
 
     QString name() const;
     MainWindowOptions options() const;

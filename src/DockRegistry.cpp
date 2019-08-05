@@ -19,7 +19,7 @@
 */
 
 #include "DockRegistry_p.h"
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 #include "Logging_p.h"
 #include "DebugWindow_p.h"
 #include "LastPosition_p.h"
@@ -65,7 +65,7 @@ DockRegistry *DockRegistry::self()
     return s_dockRegistry;
 }
 
-void DockRegistry::registerDockWidget(DockWidget *dock)
+void DockRegistry::registerDockWidget(DockWidgetBase *dock)
 {
     if (dock->name().isEmpty()) {
         qWarning() << Q_FUNC_INFO << "DockWidget" << dock << " doesn't have an ID";
@@ -76,7 +76,7 @@ void DockRegistry::registerDockWidget(DockWidget *dock)
     m_dockWidgets << dock;
 }
 
-void DockRegistry::unregisterDockWidget(DockWidget *dock)
+void DockRegistry::unregisterDockWidget(DockWidgetBase *dock)
 {
     m_dockWidgets.removeOne(dock);
     maybeDelete();
@@ -130,7 +130,7 @@ void DockRegistry::unregisterFrame(Frame *frame)
     m_frames.removeOne(frame);
 }
 
-DockWidget *DockRegistry::dockByName(const QString &name) const
+DockWidgetBase *DockRegistry::dockByName(const QString &name) const
 {
     for (auto dock : qAsConst(m_dockWidgets)) {
         if (dock->name() == name)
@@ -183,17 +183,17 @@ bool DockRegistry::isSane() const
     return true;
 }
 
-const DockWidget::List DockRegistry::dockwidgets() const
+const DockWidgetBase::List DockRegistry::dockwidgets() const
 {
     return m_dockWidgets;
 }
 
-const DockWidget::List DockRegistry::closedDockwidgets() const
+const DockWidgetBase::List DockRegistry::closedDockwidgets() const
 {
-    DockWidget::List result;
+    DockWidgetBase::List result;
     result.reserve(m_dockWidgets.size());
 
-    for (DockWidget *dw : m_dockWidgets) {
+    for (DockWidgetBase *dw : m_dockWidgets) {
         if (dw->parent() == nullptr && !dw->isVisible())
             result.push_back(dw);
     }
@@ -245,7 +245,7 @@ void DockRegistry::clear(bool deleteStaticAnchors)
 
 void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
-    for (DockWidget *dw : qAsConst(m_dockWidgets)) {
+    for (DockWidgetBase *dw : qAsConst(m_dockWidgets)) {
         if (dw->window() == dw && dw->isVisible())
             dw->morphIntoFloatingWindow();
     }

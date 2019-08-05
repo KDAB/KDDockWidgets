@@ -21,7 +21,7 @@
 #ifndef KD_DOCKREGISTRY_P_H
 #define KD_DOCKREGISTRY_P_H
 
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 #include "MainWindow.h"
 #include "FloatingWindow_p.h"
 
@@ -42,8 +42,8 @@ class DOCKS_EXPORT DockRegistry : public QObject
 public:
     static DockRegistry *self();
     ~DockRegistry();
-    void registerDockWidget(DockWidget *);
-    void unregisterDockWidget(DockWidget *);
+    void registerDockWidget(DockWidgetBase *);
+    void unregisterDockWidget(DockWidgetBase *);
 
     void registerMainWindow(MainWindow *);
     void unregisterMainWindow(MainWindow *);
@@ -57,15 +57,15 @@ public:
     void registerFrame(Frame *);
     void unregisterFrame(Frame *);
 
-    DockWidget *dockByName(const QString &) const;
+    DockWidgetBase *dockByName(const QString &) const;
     MainWindow *mainWindowByName(const QString &) const;
     bool isSane() const;
 
     ///@brief returns all DockWidget instances
-    const DockWidget::List dockwidgets() const;
+    const DockWidgetBase::List dockwidgets() const;
 
     ///@brief returns all closed DockWidget instances
-    const DockWidget::List closedDockwidgets() const;
+    const DockWidgetBase::List closedDockwidgets() const;
 
     ///@brief returns all MainWindow instances
     const MainWindow::List mainwindows() const;
@@ -102,7 +102,7 @@ public:
 private:
     explicit DockRegistry(QObject *parent = nullptr);
     void maybeDelete();
-    DockWidget::List m_dockWidgets;
+    DockWidgetBase::List m_dockWidgets;
     MainWindow::List m_mainWindows;
     Frame::List m_frames;
     QVector<FloatingWindow*> m_nestedWindows;

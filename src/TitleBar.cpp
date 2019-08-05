@@ -179,10 +179,10 @@ bool TitleBar::isFloating() const
     return false;
 }
 
-DockWidget::List TitleBar::dockWidgets() const
+DockWidgetBase::List TitleBar::dockWidgets() const
 {
     if (m_floatingWindow) {
-        DockWidget::List result;
+        DockWidgetBase::List result;
         for (Frame *f : m_floatingWindow->frames()) {
             result << f->dockWidgets();
         }
@@ -199,7 +199,7 @@ DockWidget::List TitleBar::dockWidgets() const
 void TitleBar::onFloatClicked()
 {
     if (isFloating()) {
-        DockWidget::List dockWidgets = this->dockWidgets();
+        DockWidgetBase::List dockWidgets = this->dockWidgets();
         if (dockWidgets.isEmpty()) {
             qWarning() << "TitleBar::onFloatClicked: empty list. Shouldn't happen";
             return;

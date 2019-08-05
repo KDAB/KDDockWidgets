@@ -49,15 +49,15 @@ TabBar::TabBar(TabWidget *parent)
     setMinimumWidth(30);
 }
 
-DockWidget *TabBar::dockWidgetAt(int index) const
+DockWidgetBase *TabBar::dockWidgetAt(int index) const
 {
     if (index < 0 || index >= count())
         return nullptr;
 
-    return qobject_cast<DockWidget *>(m_tabWidget->widget(index));
+    return qobject_cast<DockWidgetBase *>(m_tabWidget->widget(index));
 }
 
-DockWidget *TabBar::dockWidgetAt(QPoint localPos) const
+DockWidgetBase *TabBar::dockWidgetAt(QPoint localPos) const
 {
     return dockWidgetAt(tabAt(localPos));
 }
@@ -78,7 +78,7 @@ std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
 }
 
-FloatingWindow * TabBar::detachTab(DockWidget *dockWidget)
+FloatingWindow * TabBar::detachTab(DockWidgetBase *dockWidget)
 {
     QRect r = dockWidget->geometry();
     m_tabWidget->removeDockWidget(dockWidget);
@@ -111,12 +111,12 @@ TabWidget::TabWidget(QWidget *parent)
     setTabBar(m_tabBar);
 }
 
-void TabWidget::addDockWidget(DockWidget *dock)
+void TabWidget::addDockWidget(DockWidgetBase *dock)
 {
     insertDockWidget(dock, count());
 }
 
-void TabWidget::insertDockWidget(DockWidget *dock, int index)
+void TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
 {
     Q_ASSERT(dock);
     qCDebug(addwidget) << Q_FUNC_INFO << dock << "; count before=" << count();
@@ -148,17 +148,17 @@ void TabWidget::insertDockWidget(DockWidget *dock, int index)
     }
 }
 
-void TabWidget::removeDockWidget(DockWidget *w)
+void TabWidget::removeDockWidget(DockWidgetBase *w)
 {
     removeTab(indexOf(w));
 }
 
-void TabWidget::detachTab(DockWidget *dockWidget)
+void TabWidget::detachTab(DockWidgetBase *dockWidget)
 {
     m_tabBar->detachTab(dockWidget);
 }
 
-bool TabWidget::contains(DockWidget *dw) const
+bool TabWidget::contains(DockWidgetBase *dw) const
 {
     return indexOf(dw) != -1;
 }

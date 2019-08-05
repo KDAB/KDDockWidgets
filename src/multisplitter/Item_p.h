@@ -36,7 +36,7 @@ namespace KDDockWidgets {
 struct AnchorGroup;
 class MultiSplitterLayout;
 class Frame;
-class DockWidget;
+class DockWidgetBase;
 class TestDocks;
 
 struct GeometryDiff
@@ -157,7 +157,7 @@ public:
     bool isInMainWindow() const;
 
     ///@brief turns the placeholder into a normal Item again showing @p dockWidget
-    void restorePlaceholder(DockWidget *dockWidget, int tabIndex);
+    void restorePlaceholder(DockWidgetBase *dockWidget, int tabIndex);
 
     ///@brief turns the placeholder into a normal item again
     /// This overload is called when the Frame has more than 1 tab, otherwise we just use the DockWidget overload

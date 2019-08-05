@@ -24,7 +24,7 @@
 #include "docks_export.h"
 #include "Draggable_p.h"
 #include "Frame_p.h"
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 
 #include <QWidget>
 #include <QVector>
@@ -35,7 +35,7 @@ class QLabel;
 
 namespace KDDockWidgets {
 
-class DockWidget;
+class DockWidgetBase;
 class Frame;
 class Button;
 
@@ -62,7 +62,7 @@ public:
 
     ///@brief the list of dockwidgets under this TitleBar.
     /// There should always be at least 1. If more than 1 then they are tabbed.
-    DockWidget::List dockWidgets() const;
+    DockWidgetBase::List dockWidgets() const;
 
     ///@brief returns whether this title bar supports a floating/unfloating button
     bool supportsFloatingButton() const;

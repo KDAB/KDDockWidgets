@@ -66,7 +66,7 @@ public:
     Frame *frameContainingPos(QPoint globalPos) const;
     Item *centralFrame() const;
     DropIndicatorOverlayInterface *dropIndicatorOverlay() const { return m_dropIndicatorOverlay; }
-    void addDockWidget(DockWidget *, KDDockWidgets::Location location, DockWidget *relativeTo, AddingOption option = {});
+    void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location, DockWidgetBase *relativeTo, AddingOption option = {});
 
     bool isInFloatingWindow() const;
 
@@ -74,7 +74,7 @@ public:
 
     bool checkSanity(MultiSplitterLayout::AnchorSanityOption o = MultiSplitterLayout::AnchorSanity_All);
     QWidget *window() const;
-    bool contains(DockWidget *) const;
+    bool contains(DockWidgetBase *) const;
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;

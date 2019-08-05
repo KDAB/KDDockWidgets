@@ -64,7 +64,7 @@ private:
 };
 
 
-class DockWidget;
+class DockWidgetBase;
 class Frame;
 /**
  * @internal
