@@ -30,6 +30,8 @@
 
 #include "DockWidgetBase.h"
 
+class QCloseEvent;
+
 namespace KDDockWidgets {
 
 /**
@@ -54,9 +56,8 @@ public:
     ~DockWidget() override;
 
 protected:
-
-    class Private;
-    Private *const d;
+    bool event(QEvent *) override;
+    void closeEvent(QCloseEvent *) override;
 };
 
 }

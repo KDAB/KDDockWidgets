@@ -314,48 +314,6 @@ QTabWidget *DockWidgetBase::tabWidget() const
                    : nullptr;
 }
 
-bool DockWidgetBase::event(QEvent *e)
-{
-    if (e->type() == QEvent::ParentChange) {
-        Q_EMIT parentChanged();
-        d->updateToggleAction();
-    } else if (e->type() == QEvent::Show) {
-        d->updateLayoutMargin();
-        Q_EMIT shown();
-
-        if (Frame *f = frame()) {
-            if (!e->spontaneous()) {
-                f->onDockWidgetShown(this);
-            }
-        }
-
-        d->maybeRestoreToPreviousPosition();
-
-        // Transform into a FloatingWindow if this will be a regular floating dock widget.
-        QTimer::singleShot(0, this, &DockWidgetBase::maybeMorphIntoFloatingWindow);
-    } else if (e->type() == QEvent::Hide) {
-        Q_EMIT hidden();
-
-        if (Frame *f = frame()) {
-            if (!e->spontaneous()) {
-                f->onDockWidgetHidden(this);
-            }
-        }
-    }
-
-    return QWidget::event(e);
-}
-
-void DockWidgetBase::closeEvent(QCloseEvent *e)
-{
-    e->accept(); // By default we accept, means DockWidget closes
-    if (d->widget)
-        qApp->sendEvent(d->widget, e); // Give a change for the widget to ignore
-
-    if (e->isAccepted())
-        d->close();
-}
-
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
@@ -551,6 +509,50 @@ void DockWidgetBase::Private::show()
 {
     // Only show for now
     q->show();
+}
+
+void DockWidgetBase::onParentChanged()
+{
+    Q_EMIT parentChanged();
+    d->updateToggleAction();
+}
+
+void DockWidgetBase::onShown(bool spontaneous)
+{
+    d->updateLayoutMargin();
+    Q_EMIT shown();
+
+    if (Frame *f = frame()) {
+        if (!spontaneous) {
+            f->onDockWidgetShown(this);
+        }
+    }
+
+    d->maybeRestoreToPreviousPosition();
+
+    // Transform into a FloatingWindow if this will be a regular floating dock widget.
+    QTimer::singleShot(0, this, &DockWidgetBase::maybeMorphIntoFloatingWindow);
+}
+
+void DockWidgetBase::onHidden(bool spontaneous)
+{
+    Q_EMIT hidden();
+
+    if (Frame *f = frame()) {
+        if (!spontaneous) {
+            f->onDockWidgetHidden(this);
+        }
+    }
+}
+
+void DockWidgetBase::onClosed(QCloseEvent *e)
+{
+    e->accept(); // By default we accept, means DockWidget closes
+    if (d->widget)
+        qApp->sendEvent(d->widget, e); // Give a change for the widget to ignore
+
+    if (e->isAccepted())
+        d->close();
 }
 
 DockWidgetBase *DockWidgetBase::createFromDataStream(QDataStream &ds)

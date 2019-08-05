@@ -216,9 +216,12 @@ Q_SIGNALS:
 
     ///@brief signal emitted when the title changed
     void titleChanged();
+
 protected:
-    bool event(QEvent *) override;
-    void closeEvent(QCloseEvent *) override;
+    void onParentChanged();
+    void onShown(bool spontaneous);
+    void onHidden(bool spontaneous);
+    void onClosed(QCloseEvent *e);
 
 #if defined(DOCKS_DEVELOPER_MODE)
 public Q_SLOTS:

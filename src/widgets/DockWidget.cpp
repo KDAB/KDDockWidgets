@@ -20,6 +20,8 @@
 
 #include "DockWidget.h"
 
+#include <QCloseEvent>
+
 /**
  * @file
  * @brief Represents a dock widget.
@@ -28,23 +30,29 @@
  */
 
 using namespace KDDockWidgets;
-
-class DockWidget::Private
-{
-public:
-    Private()
-    {
-    }
-
-};
-
 DockWidget::DockWidget(const QString &name, Options options, QWidget *parent, Qt::WindowFlags flags)
     : DockWidgetBase(name, options, parent, flags)
-    , d(new Private())
 {
 }
 
 DockWidget::~DockWidget()
 {
-    delete d;
+}
+
+bool DockWidget::event(QEvent *e)
+{
+    if (e->type() == QEvent::ParentChange) {
+        onParentChanged();
+    } else if (e->type() == QEvent::Show) {
+        onShown(e->spontaneous());
+    } else if (e->type() == QEvent::Hide) {
+        onHidden(e->spontaneous());
+    }
+
+    return QWidget::event(e);
+}
+
+void DockWidget::closeEvent(QCloseEvent *e)
+{
+    onClosed(e);
 }
