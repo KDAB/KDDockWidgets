@@ -24,6 +24,7 @@
 #include "widgets/TitleBarWidget_p.h"
 #include "widgets/TabBarWidget_p.h"
 #include "widgets/TabWidgetWidget_p.h"
+#include "widgets/SeparatorWidget_p.h"
 
 using namespace KDDockWidgets;
 
@@ -54,4 +55,9 @@ TabBar *DefaultWidgetFactory::createTabBar(TabWidget *parent) const
 TabWidget *DefaultWidgetFactory::createTabWidget(QWidget *parent) const
 {
     return new TabWidgetWidget(parent);
+}
+
+SeparatorWidget *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidget *parent) const
+{
+    return new SeparatorWidget(anchor, parent);
 }

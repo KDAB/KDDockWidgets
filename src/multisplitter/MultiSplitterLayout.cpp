@@ -25,7 +25,6 @@
 #include "FloatingWindow_p.h"
 #include "DockWidget.h"
 #include "LastPosition_p.h"
-#include "SeparatorWidget_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
 

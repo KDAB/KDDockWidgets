@@ -46,14 +46,14 @@ set(DOCKSLIBS_SRCS
     multisplitter/MultiSplitterLayout_p.h
     multisplitter/MultiSplitterWidget.cpp
     multisplitter/MultiSplitterWidget_p.h
-    multisplitter/SeparatorWidget.cpp
-    multisplitter/SeparatorWidget_p.h
     # indicators/AnimatedIndicators.cpp
     indicators/ClassicIndicators.cpp
 
     FrameworkWidgetFactory.cpp
 
     widgets/FrameWidget.cpp
+    widgets/SeparatorWidget.cpp
+    widgets/SeparatorWidget_p.h
     widgets/TabWidgetWidget.cpp
     widgets/TabBarWidget.cpp
     widgets/TitleBarWidget.cpp
