@@ -1025,7 +1025,7 @@ void TestDocks::tst_anchorsFromTo()
         const auto anchors = dropArea->nonStaticAnchors();
         QCOMPARE(anchors.size(), 2);
         QCOMPARE(anchors[1]->orientation(), Qt::Horizontal);
-        QCOMPARE(anchors[1]->to()->objectName(), "right");
+        QCOMPARE(anchors[1]->to()->objectName(), QString("right"));
         QCOMPARE(anchors[1]->from(), anchors[0]);
     }
 }
@@ -1077,10 +1077,10 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     QCOMPARE(anchors[0]->orientation(), Qt::Vertical);
     QCOMPARE(anchors[1]->orientation(), Qt::Vertical);
 
-    QCOMPARE(anchors[0]->from()->objectName(), "top");
-    QCOMPARE(anchors[0]->to()->objectName(), "bottom");
-    QCOMPARE(anchors[1]->from()->objectName(), "top");
-    QCOMPARE(anchors[1]->to()->objectName(), "bottom");
+    QCOMPARE(anchors[0]->from()->objectName(), QString("top"));
+    QCOMPARE(anchors[0]->to()->objectName(), QString("bottom"));
+    QCOMPARE(anchors[1]->from()->objectName(), QString("top"));
+    QCOMPARE(anchors[1]->to()->objectName(), QString("bottom"));
 
     QVERIFY(anchors[1]->position() < anchors[0]->position());
     fw2->dropArea()->debug_updateItemNamesForGammaray();
@@ -1111,10 +1111,10 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
     QCOMPARE(anchors[0]->orientation(), Qt::Vertical);
     QCOMPARE(anchors[1]->orientation(), Qt::Horizontal);
 
-    QCOMPARE(anchors[0]->from()->objectName(), "top");
-    QCOMPARE(anchors[0]->to()->objectName(), "bottom");
+    QCOMPARE(anchors[0]->from()->objectName(), QString("top"));
+    QCOMPARE(anchors[0]->to()->objectName(), QString("bottom"));
     QCOMPARE(anchors[1]->from(), anchors[0]);
-    QCOMPARE(anchors[1]->to()->objectName(), "right");
+    QCOMPARE(anchors[1]->to()->objectName(), QString("right"));
 
     QVERIFY(anchors[1]->position() > 0);
     QVERIFY(anchors[1]->position() < fw2->height());
