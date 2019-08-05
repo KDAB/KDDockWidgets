@@ -21,7 +21,7 @@
 #include "MainWindow.h"
 #include "Config.h"
 #include "TitleBar_p.h"
-#include "widgets/DockWidget.h"
+#include "DockWidget.h"
 
 #include <QTextEdit>
 #include <QApplication>

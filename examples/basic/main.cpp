@@ -21,7 +21,7 @@
 #include "MainWindow.h"
 #include "ExampleDockableWidget.h"
 #include "LayoutSaver.h"
-#include "widgets/DockWidget.h"
+#include "DockWidget.h"
 
 #include <QTextEdit>
 #include <QMenu>

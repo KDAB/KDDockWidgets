@@ -67,13 +67,21 @@ else()
     set(IS_CLANG_BUILD FALSE)
 endif()
 
-set (DOCKS_INSTALLABLE_INCLUDES docks_export.h MainWindow.h LayoutSaver.h Draggable_p.h KDDockWidgets.h Config.h)
+set (DOCKS_INSTALLABLE_INCLUDES docks_export.h widgets/DockWidget.h MainWindow.h LayoutSaver.h Draggable_p.h KDDockWidgets.h Config.h)
 
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
 add_library(docks SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
+
+target_include_directories(docks
+    PUBLIC
+        $<INSTALL_INTERFACE:kddockwidgets>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/widgets>
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_SOURCE_DIR}/src/widgets
+)
+
 target_compile_definitions(docks PRIVATE BUILDING_DOCKS_LIBRARY)
 if (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
     target_compile_options(docks PRIVATE -Wshadow -Wconversion -fvisibility=hidden)
