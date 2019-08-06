@@ -29,7 +29,7 @@ namespace KDDockWidgets {
 /**
  * @brief The GUI counterpart of Frame. Inherits Frame and implements paintEvent().
  */
-class FrameWidget : public Frame
+class DOCKS_EXPORT FrameWidget : public Frame
 {
     Q_OBJECT
 public:

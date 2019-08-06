@@ -38,7 +38,7 @@ namespace KDDockWidgets {
 class DockWidget;
 class TabWidget;
 
-class TabBarWidget : public TabBar
+class DOCKS_EXPORT TabBarWidget : public TabBar
 {
     Q_OBJECT
 public:

@@ -35,7 +35,7 @@ class DropArea;
 class Frame;
 class MultiSplitterLayout;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS FloatingWindow : public QWidget
+class DOCKS_EXPORT FloatingWindow : public QWidget
     , public Draggable
 {
     Q_OBJECT

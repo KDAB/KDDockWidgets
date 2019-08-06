@@ -46,7 +46,7 @@ class DockWidgetBase;
 class TabWidget;
 
 ///@brief a QTabBar derived class to be used by KDDockWidgets::TabWidget
-class DOCKS_EXPORT_FOR_UNIT_TESTS TabBar : public QTabBar
+class DOCKS_EXPORT TabBar : public QTabBar
     , public Draggable
 {
     Q_OBJECT
@@ -87,7 +87,7 @@ private:
     QPointer<DockWidgetBase> m_lastPressedDockWidget = nullptr;
 };
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS TabWidget : public QTabWidget, public Draggable
+class DOCKS_EXPORT TabWidget : public QTabWidget, public Draggable
 {
     Q_OBJECT
 public:

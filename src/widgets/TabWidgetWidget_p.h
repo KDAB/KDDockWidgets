@@ -32,7 +32,7 @@
 
 namespace KDDockWidgets {
 
-class TabWidgetWidget : public TabWidget
+class DOCKS_EXPORT TabWidgetWidget : public TabWidget
 {
     Q_OBJECT
 public:

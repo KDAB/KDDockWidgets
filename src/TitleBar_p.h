@@ -39,7 +39,7 @@ class DockWidgetBase;
 class Frame;
 class Button;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS TitleBar : public QWidget
+class DOCKS_EXPORT TitleBar : public QWidget
     , public Draggable
 {
     Q_OBJECT

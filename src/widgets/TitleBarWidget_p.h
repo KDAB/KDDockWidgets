@@ -40,7 +40,7 @@ class DockWidget;
 class Frame;
 class Button;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS TitleBarWidget : public TitleBar
+class DOCKS_EXPORT TitleBarWidget : public TitleBar
 {
     Q_OBJECT
 public:

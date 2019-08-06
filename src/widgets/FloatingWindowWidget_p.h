@@ -27,7 +27,7 @@ class QVBoxLayout;
 
 namespace KDDockWidgets {
 
-class FloatingWindowWidget : public FloatingWindow
+class DOCKS_EXPORT FloatingWindowWidget : public FloatingWindow
 {
     Q_OBJECT
 public:

@@ -54,7 +54,7 @@ class FloatingWindow;
  * inside a MultiSplitter (DropArea). Be it a MultiSplitter belonging to a MainWindow or belonging
  * to a FloatingWindow.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS Frame : public QWidget
+class DOCKS_EXPORT Frame : public QWidget
 {
     Q_OBJECT
 public:
