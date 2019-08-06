@@ -20,7 +20,7 @@
 
 #include "MultiSplitterLayout_p.h"
 #include "Logging_p.h"
-#include "MultiSplitterWidget_p.h"
+#include "MultiSplitter_p.h"
 #include "Frame_p.h"
 #include "FloatingWindow_p.h"
 #include "DockWidgetBase.h"
@@ -327,13 +327,13 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         }
     }
 
-    auto sourceMultiSplitterWidget = qobject_cast<MultiSplitter *>(w);
-    auto sourceMultiSplitter = sourceMultiSplitterWidget ? sourceMultiSplitterWidget->multiSplitterLayout()
+    auto sourceMultiSplitter = qobject_cast<MultiSplitter *>(w);
+    auto sourceMultiSplitterLayout = sourceMultiSplitter ? sourceMultiSplitter->multiSplitterLayout()
                                                          : nullptr;
 
-    if (sourceMultiSplitter) {
-        auto items = sourceMultiSplitter->items();
-        targetAnchorGroup.addItem(sourceMultiSplitter);
+    if (sourceMultiSplitterLayout) {
+        auto items = sourceMultiSplitterLayout->items();
+        targetAnchorGroup.addItem(sourceMultiSplitterLayout);
         addItems_internal(items);
     } else {
         Q_ASSERT(frame);

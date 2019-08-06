@@ -114,7 +114,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject // clazy:
 public:
 
     /**
-     * @brief Constructor. MultiSplitterLayout is created by MultiSplitterWidget only.
+     * @brief Constructor. MultiSplitterLayout is created by MultiSplitter only.
      */
     explicit MultiSplitterLayout(MultiSplitter *parent);
     ~MultiSplitterLayout() override;
@@ -135,7 +135,7 @@ public:
     void addWidget(QWidget *widget, KDDockWidgets::Location location, Frame *relativeTo = nullptr, AddingOption option = {});
 
     /**
-     * Adds an entire MultiSplitterWidget into this layout. The donor MultiSplitterWidget will be deleted
+     * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted
      * after all its Frames are stolen. All added Frames will preserve their original layout, so,
      * if widgetFoo was at the left of widgetBar when in the donor splitter, then it will still be at left
      * of widgetBar when the whole splitter is dropped into this one.
@@ -280,13 +280,13 @@ public:
 
     /**
      * @brief returns the contents width.
-     * Usually it's the same width as the respective parent MultiSplitterWidget.
+     * Usually it's the same width as the respective parent MultiSplitter.
      */
     int contentsWidth() const { return m_contentSize.width(); }
 
     /**
      * @brief returns the contents height.
-     * Usually it's the same height as the respective parent MultiSplitterWidget.
+     * Usually it's the same height as the respective parent MultiSplitter.
      */
     int contentsHeight() const { return m_contentSize.height(); }
 

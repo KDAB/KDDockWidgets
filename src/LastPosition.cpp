@@ -27,7 +27,7 @@
 #include "LastPosition_p.h"
 #include "DockRegistry_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
-#include "multisplitter/MultiSplitterWidget_p.h"
+#include "multisplitter/MultiSplitter_p.h"
 
 #include <algorithm>
 

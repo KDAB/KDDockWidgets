@@ -21,7 +21,7 @@
 #include "AnchorGroup_p.h"
 #include "Anchor_p.h"
 #include "MultiSplitterLayout_p.h"
-#include "MultiSplitterWidget_p.h"
+#include "MultiSplitter_p.h"
 #include "Logging_p.h"
 
 
@@ -424,7 +424,7 @@ void AnchorGroup::addItem(MultiSplitterLayout *sourceMultiSplitter)
     left->consume(sourceAnchorGroup.left);
     right->consume(sourceAnchorGroup.right);
 
-    delete sourceMultiSplitter->multiSplitter(); // Delete MultiSplitterWidget and MultiSplitterLayout
+    delete sourceMultiSplitter->multiSplitter(); // Delete MultiSplitter and MultiSplitterLayout
 }
 
 void AnchorGroup::removeItem(Item *item)

@@ -32,7 +32,7 @@
 #include "Utils_p.h"
 #include "LayoutSaver.h"
 #include "TabWidget_p.h"
-#include "multisplitter/MultiSplitterWidget_p.h"
+#include "multisplitter/MultiSplitter_p.h"
 #include "LastPosition_p.h"
 #include "utils.h"
 

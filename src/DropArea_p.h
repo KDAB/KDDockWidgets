@@ -31,7 +31,7 @@
 #include "docks_export.h"
 #include "Frame_p.h"
 #include "KDDockWidgets.h"
-#include "multisplitter/MultiSplitterWidget_p.h"
+#include "multisplitter/MultiSplitter_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 
@@ -45,7 +45,7 @@ class DropIndicatorOverlayInterface;
 struct WindowBeingDragged;
 
 /**
- * @brief A MultiSplitterWidget with support for drop indicators when hovering over.
+ * @brief A MultiSplitter with support for drop indicators when hovering over.
  */
 class DOCKS_EXPORT_FOR_UNIT_TESTS DropArea : public MultiSplitter
 {
