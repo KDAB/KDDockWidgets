@@ -58,7 +58,7 @@ TabWidget *DefaultWidgetFactory::createTabWidget(QWidget *parent) const
     return new TabWidgetWidget(parent);
 }
 
-SeparatorWidget *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidget *parent) const
+Separator *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidget *parent) const
 {
     return new SeparatorWidget(anchor, parent);
 }

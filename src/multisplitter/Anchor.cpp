@@ -593,7 +593,7 @@ void Anchor::setLayout(MultiSplitterLayout *layout)
     m_layout->setAnchorBeingDragged(nullptr);
 }
 
-SeparatorWidget *Anchor::separatorWidget() const
+Separator *Anchor::separatorWidget() const
 {
     return m_separatorWidget;
 }

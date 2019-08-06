@@ -102,8 +102,8 @@ public:
     LastPosition m_lastPosition;
 };
 
-DockWidgetBase::DockWidgetBase(const QString &name, Options options, QWidget *parent, Qt::WindowFlags flags)
-    : QWidget(parent, flags | Qt::Tool)
+DockWidgetBase::DockWidgetBase(const QString &name, Options options)
+    : QWidget(nullptr)
     , d(new Private(name, options, this))
 {
     d->init();

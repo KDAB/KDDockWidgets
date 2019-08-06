@@ -48,10 +48,11 @@ public:
      * @param name the name of the dockwidget, should be unique. Use title for user visible text.
      * @param options optional options controlling behaviour
      * @param parent optional QWidget parent, for ownership purposes
-     * @param flags optional Qt::WindowFlags to apply to the window
+     *
+     * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
+     * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget(const QString &name, Options options = {},
-                        QWidget *parent = nullptr, Qt::WindowFlags flags = {});
+    explicit DockWidget(const QString &name, Options options = {});
 
     ///@brief destructor
     ~DockWidget() override;

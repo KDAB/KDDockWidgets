@@ -33,7 +33,7 @@ namespace KDDockWidgets {
 
 class Item;
 class MultiSplitterLayout;
-class SeparatorWidget;
+class Separator;
 
 typedef QVector<Item*> ItemList;
 
@@ -150,7 +150,7 @@ public:
     void setLayout(MultiSplitterLayout *);
 
     ///@brief returns the separator widget
-    SeparatorWidget* separatorWidget() const;
+    Separator* separatorWidget() const;
 
     /**
      * Returns how far left or top an anchor can go and still respecting it's Side1 widgets min-size.
@@ -317,7 +317,7 @@ public:
 
     QString m_debug_side1ItemNames;
     QString m_debug_side2ItemNames;
-    SeparatorWidget *const m_separatorWidget;
+    Separator *const m_separatorWidget;
     QRect m_geometry;
     QPointer<Anchor> m_followee;
 };

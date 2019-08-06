@@ -30,33 +30,15 @@
 using namespace KDDockWidgets;
 
 SeparatorWidget::SeparatorWidget(KDDockWidgets::Anchor *anchor, QWidget *parent)
-    : QWidget(parent)
-    , m_anchor(anchor)
+    : Separator(anchor, parent)
 {
-    Q_ASSERT(anchor);
     const int thickness = Anchor::thickness(isStatic());
     if (isVertical())
         setFixedWidth(thickness);
     else
         setFixedHeight(thickness);
 
-    setVisible(true);
     setMouseTracking(true);
-}
-
-bool SeparatorWidget::isVertical() const
-{
-    return m_anchor->isVertical();
-}
-
-bool SeparatorWidget::isStatic() const
-{
-    return m_anchor->isStatic();
-}
-
-int SeparatorWidget::position() const
-{
-    return isVertical() ? x() : y();
 }
 
 void SeparatorWidget::move(int p)
@@ -70,7 +52,7 @@ void SeparatorWidget::move(int p)
 
 void SeparatorWidget::paintEvent(QPaintEvent *)
 {
-    if (!m_anchor)
+    if (!anchor())
         return;
 
     QPainter p(this);
@@ -90,8 +72,8 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
 
 void SeparatorWidget::enterEvent(QEvent *)
 {
-    qCDebug(anchors) << Q_FUNC_INFO << m_anchor.isNull() << isEnabled() << this;
-    if (!m_anchor)
+    qCDebug(anchors) << Q_FUNC_INFO << anchor() << isEnabled() << this;
+    if (!anchor())
         return;
 
     if (!isStatic()) {
@@ -109,18 +91,15 @@ void SeparatorWidget::leaveEvent(QEvent *)
 
 void SeparatorWidget::mousePressEvent(QMouseEvent *)
 {
-    Q_ASSERT(!m_anchor->isFollowing());
-    m_anchor->onMousePress();
+    onMousePress();
 }
 
 void SeparatorWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    Q_ASSERT(!m_anchor->isFollowing());
-    m_anchor->onMouseMoved(parentWidget()->mapFromGlobal(e->globalPos()));
+    onMouseMove(e->globalPos());
 }
 
 void SeparatorWidget::mouseReleaseEvent(QMouseEvent *)
 {
-    Q_ASSERT(!m_anchor->isFollowing());
-    m_anchor->onMouseReleased();
+    onMouseRelease();
 }

@@ -46,6 +46,7 @@ set(DOCKSLIBS_SRCS
     multisplitter/MultiSplitterLayout_p.h
     multisplitter/MultiSplitterWidget.cpp
     multisplitter/MultiSplitterWidget_p.h
+    multisplitter/Separator.cpp
     # indicators/AnimatedIndicators.cpp
     indicators/ClassicIndicators.cpp
 

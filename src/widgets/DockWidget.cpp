@@ -37,15 +37,14 @@ class DockWidget::Private
 public:
     Private(DockWidget *q)
         : layout(new QVBoxLayout(q))
-
     {
     }
 
     QVBoxLayout *const layout;
 };
 
-DockWidget::DockWidget(const QString &name, Options options, QWidget *parent, Qt::WindowFlags flags)
-    : DockWidgetBase(name, options, parent, flags)
+DockWidget::DockWidget(const QString &name, Options options)
+    : DockWidgetBase(name, options)
     , d(new Private(this))
 {
     connect(this, &DockWidgetBase::widgetChanged, this, [this] (QWidget *w) {
