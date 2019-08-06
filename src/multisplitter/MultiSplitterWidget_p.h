@@ -26,8 +26,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#ifndef KD_MULTISPLITTER_MULTISPLITTERWIDGET_P_H
-#define KD_MULTISPLITTER_MULTISPLITTERWIDGET_P_H
+#ifndef KDDOCKWIDGETS_MULTISPLITTER_P_H
+#define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
 #include "docks_export.h"
 #include <QWidget>
@@ -44,12 +44,12 @@ class FloatingWindow;
  *
  * The actual layouting is done by @ref MultiSplitterLayout.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterWidget : public QWidget
+class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MultiSplitterWidget(QWidget *parent = nullptr);
-    ~MultiSplitterWidget() override;
+    explicit MultiSplitter(QWidget *parent = nullptr);
+    ~MultiSplitter() override;
     MultiSplitterLayout *multiSplitterLayout() const { return m_layout; }
     int count() const;
     bool isInMainWindow() const;
@@ -61,9 +61,7 @@ protected:
     MultiSplitterLayout *const m_layout;
 private:
     bool m_inResizeEvent = false;
-
 };
-
 
 }
 

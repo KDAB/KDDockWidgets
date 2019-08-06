@@ -40,7 +40,7 @@ using namespace KDDockWidgets;
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 DropArea::DropArea(QWidget *parent)
-    : MultiSplitterWidget(parent)
+    : MultiSplitter(parent)
 {
     qCDebug(creation) << "DropArea";
 

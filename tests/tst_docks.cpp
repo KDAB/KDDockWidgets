@@ -369,7 +369,7 @@ private Q_SLOTS:
     void tst_dragByTabBar();
 
 private:
-    std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
+    std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
 }
 
@@ -453,7 +453,7 @@ bool waitForResize(QWidget *w, int timeout = 2000)
     return waitForEvent(w, QEvent::Resize, timeout);
 }
 
-Frame* createFrameWithWidget(const QString &name, MultiSplitterWidget *parent, int minLength = -1)
+Frame* createFrameWithWidget(const QString &name, MultiSplitter *parent, int minLength = -1)
 {
     QWidget *w = createWidget(minLength, name);
     auto dw = new DockWidget(name);
@@ -2032,9 +2032,9 @@ void TestDocks::tst_propagateResize2()
     dropArea->checkSanity();
 }
 
-std::unique_ptr<MultiSplitterWidget> TestDocks::createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget*, Frame*> &frameMap) const
+std::unique_ptr<MultiSplitter> TestDocks::createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget*, Frame*> &frameMap) const
 {
-    auto widget = std::unique_ptr<MultiSplitterWidget>(new MultiSplitterWidget());
+    auto widget = std::unique_ptr<MultiSplitter>(new MultiSplitter());
     auto layout = widget->multiSplitterLayout();
     widget->show();
     layout->setContentsSize(setup.size);
@@ -2403,7 +2403,7 @@ void TestDocks::tst_rectForDropMath()
     QFETCH(QRect, relativeToRect);
     QFETCH(QRect, expectedRect);
 
-    MultiSplitterWidget widget;
+    MultiSplitter widget;
     MultiSplitterLayout layout(&widget);
     layout.setContentsSize(layoutContentsSize);
 

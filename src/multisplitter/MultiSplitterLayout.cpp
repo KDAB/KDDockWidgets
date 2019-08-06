@@ -46,7 +46,7 @@ static Qt::Orientation anchorOrientationForLocation(Location l)
                                                            : Qt::Horizontal;
 }
 
-MultiSplitterLayout::MultiSplitterLayout(MultiSplitterWidget *parent)
+MultiSplitterLayout::MultiSplitterLayout(MultiSplitter *parent)
     : QObject(parent)
     , m_multiSplitter(parent)
     , m_leftAnchor(new Anchor(Qt::Vertical, this, Anchor::Type_LeftStatic))
@@ -111,7 +111,7 @@ QSize MultiSplitterLayout::hardcodedMinimumSize()
     return QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
 }
 
-MultiSplitterWidget *MultiSplitterLayout::multiSplitter() const
+MultiSplitter *MultiSplitterLayout::multiSplitter() const
 {
     return m_multiSplitter;
 }
@@ -129,7 +129,7 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
     const bool isDockWidget = qobject_cast<DockWidgetBase*>(widget);
     const bool isStartHidden = option & AddingOption_StartHidden;
 
-    if (!qobject_cast<Frame*>(widget) && !qobject_cast<MultiSplitterWidget*>(widget) && !isDockWidget) {
+    if (!qobject_cast<Frame*>(widget) && !qobject_cast<MultiSplitter*>(widget) && !isDockWidget) {
         qWarning() << "Unknown widget type" << widget;
         Q_ASSERT(false);
         return false;
@@ -327,7 +327,7 @@ void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relati
         }
     }
 
-    auto sourceMultiSplitterWidget = qobject_cast<MultiSplitterWidget *>(w);
+    auto sourceMultiSplitterWidget = qobject_cast<MultiSplitter *>(w);
     auto sourceMultiSplitter = sourceMultiSplitterWidget ? sourceMultiSplitterWidget->multiSplitterLayout()
                                                          : nullptr;
 
@@ -533,7 +533,7 @@ void MultiSplitterLayout::resizeItem(Frame *frame, int newSize, Qt::Orientation 
     qCDebug(::anchors) << Q_FUNC_INFO << "New position:" << a->position() << "; new w.geo=" << item->geometry();
 }
 
-void MultiSplitterLayout::addMultiSplitter(MultiSplitterWidget *sourceMultiSplitter,
+void MultiSplitterLayout::addMultiSplitter(MultiSplitter *sourceMultiSplitter,
                                            Location location,
                                            Frame *relativeTo)
 {
@@ -1201,7 +1201,7 @@ Frame::List MultiSplitterLayout::framesFrom(QWidget *frameOrMultiSplitter) const
     if (auto frame = qobject_cast<Frame*>(frameOrMultiSplitter))
         return { frame };
 
-    if (auto msw = qobject_cast<MultiSplitterWidget*>(frameOrMultiSplitter))
+    if (auto msw = qobject_cast<MultiSplitter*>(frameOrMultiSplitter))
         return msw->multiSplitterLayout()->frames();
 
     return {};

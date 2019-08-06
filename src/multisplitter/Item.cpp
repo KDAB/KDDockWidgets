@@ -353,7 +353,7 @@ void Item::setIsPlaceholder(bool is)
 bool Item::isInMainWindow() const
 {
     if (MultiSplitterLayout *l = layout()) {
-        if (MultiSplitterWidget *msw = l->multiSplitter()) {
+        if (MultiSplitter *msw = l->multiSplitter()) {
             return msw->isInMainWindow();
         }
     }

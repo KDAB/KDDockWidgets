@@ -38,7 +38,7 @@
 
 using namespace KDDockWidgets;
 
-MultiSplitterWidget::MultiSplitterWidget(QWidget *parent)
+MultiSplitter::MultiSplitter(QWidget *parent)
     : QWidget(parent)
     , m_layout(new MultiSplitterLayout(this))
 {
@@ -54,16 +54,16 @@ MultiSplitterWidget::MultiSplitterWidget(QWidget *parent)
     setMinimumSize(m_layout->minimumSize());
 }
 
-MultiSplitterWidget::~MultiSplitterWidget()
+MultiSplitter::~MultiSplitter()
 {
 }
 
-int MultiSplitterWidget::count() const
+int MultiSplitter::count() const
 {
     return m_layout->count();
 }
 
-void MultiSplitterWidget::resizeEvent(QResizeEvent *ev)
+void MultiSplitter::resizeEvent(QResizeEvent *ev)
 {
     qCDebug(sizing) << Q_FUNC_INFO << "; new=" << ev->size() << "; old=" << ev->oldSize()
                     << "; window=" << window();
@@ -79,7 +79,7 @@ void MultiSplitterWidget::resizeEvent(QResizeEvent *ev)
     m_inResizeEvent = false;
 }
 
-bool MultiSplitterWidget::event(QEvent *e)
+bool MultiSplitter::event(QEvent *e)
 {
     if (e->type() == QEvent::LayoutRequest)
         m_layout->updateSizeConstraints();
@@ -87,12 +87,12 @@ bool MultiSplitterWidget::event(QEvent *e)
     return QWidget::event(e);
 }
 
-bool MultiSplitterWidget::isInMainWindow() const
+bool MultiSplitter::isInMainWindow() const
 {
     return mainWindow() != nullptr;
 }
 
-MainWindow *MultiSplitterWidget::mainWindow() const
+MainWindow *MultiSplitter::mainWindow() const
 {
     if (auto pw = parentWidget()) {
         // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as it's parented
@@ -103,7 +103,7 @@ MainWindow *MultiSplitterWidget::mainWindow() const
     return nullptr;
 }
 
-FloatingWindow *MultiSplitterWidget::floatingWindow() const
+FloatingWindow *MultiSplitter::floatingWindow() const
 {
     return qobject_cast<FloatingWindow*>(parentWidget());
 }

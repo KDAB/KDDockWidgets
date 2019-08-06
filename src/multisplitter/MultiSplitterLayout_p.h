@@ -43,7 +43,7 @@
 
 namespace KDDockWidgets {
 
-class MultiSplitterWidget;
+class MultiSplitter;
 class Length;
 
 /**
@@ -116,7 +116,7 @@ public:
     /**
      * @brief Constructor. MultiSplitterLayout is created by MultiSplitterWidget only.
      */
-    explicit MultiSplitterLayout(MultiSplitterWidget *parent);
+    explicit MultiSplitterLayout(MultiSplitter *parent);
     ~MultiSplitterLayout() override;
 
     /**
@@ -127,7 +127,7 @@ public:
     /**
      * @brief returns the widget that this layout manages
      */
-    MultiSplitterWidget *multiSplitter() const;
+    MultiSplitter *multiSplitter() const;
 
     /**
      * @brief Adds a widget to this MultiSplitter.
@@ -140,7 +140,7 @@ public:
      * if widgetFoo was at the left of widgetBar when in the donor splitter, then it will still be at left
      * of widgetBar when the whole splitter is dropped into this one.
      */
-    void addMultiSplitter(MultiSplitterWidget *splitter, KDDockWidgets::Location location,
+    void addMultiSplitter(MultiSplitter *splitter, KDDockWidgets::Location location,
                           Frame *relativeTo = nullptr);
 
 
@@ -569,7 +569,7 @@ private:
     ///@brief returns whether we're inside setContentsSize();
     bool isResizing() const { return m_resizing; }
 
-    MultiSplitterWidget *const m_multiSplitter;
+    MultiSplitter *const m_multiSplitter;
     Anchor::List m_anchors;
 
     Anchor *m_leftAnchor = nullptr;
