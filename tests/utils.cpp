@@ -156,12 +156,14 @@ QWidget *KDDockWidgets::Tests::draggableFor(QWidget *w)
         if (auto frame = dock->frame())
             draggable = frame->titleBar();
     } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
-        draggable = ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && fw->hasSingleFrame()) ? static_cast<QWidget*>(fw->frames().first()->tabWidget())
-                                                                                                                  : static_cast<QWidget*>(fw->titleBar());
+        draggable = ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && fw->hasSingleFrame() && fw->frames().first()->hasTabsVisible()) ? static_cast<QWidget*>(fw->frames().first()->tabWidget())
+                                                                                                                                                            : static_cast<QWidget*>(fw->titleBar());
+
     } else if (qobject_cast<TabWidget *>(w) || qobject_cast<TitleBar *>(w)) {
         draggable = w;
     }
 
+    qDebug() << "Draggable is" << draggable;
     return draggable;
 }
 

@@ -366,6 +366,7 @@ private Q_SLOTS:
 
     void tst_tabBarWithHiddenTitleBar_data();
     void tst_tabBarWithHiddenTitleBar();
+    void tst_dragByTabBar();
 
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -3920,6 +3921,31 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     d2->close();
     delete d2;
     QVERIFY(d1->frame()->titleBar()->isVisible());
+}
+
+void TestDocks::tst_dragByTabBar()
+{
+    EnsureTopLevelsDeleted e;
+    Config::self().setFlags(Config::self().flags() | Config::Flag_HideTitleBarWhenTabsVisible);
+
+    auto m = createMainWindow();
+
+    auto dropArea = m->dropArea();
+    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
+
+    auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(400, 400)));
+    auto dock3 = createDockWidget("dock3", new MyWidget2(QSize(400, 400)));
+    m->addDockWidgetAsTab(dock1);
+    m->resize(osWindowMinWidth(), 200);
+
+    dock2->addDockWidgetAsTab(dock3);
+
+    auto fw = dock2->floatingWindow();
+    fw->move(m->pos() + QPoint(500, 500));
+    QVERIFY(fw->isVisible());
+    QVERIFY(!fw->titleBar()->isVisible());
+
+    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
 }
 
 void TestDocks::tst_rectForDropCrash()
