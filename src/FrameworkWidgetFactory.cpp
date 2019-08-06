@@ -20,6 +20,8 @@
 
 #include "FrameworkWidgetFactory.h"
 
+#include "QWidgetAdapter.h"
+
 #include "widgets/FrameWidget_p.h"
 #include "widgets/TitleBarWidget_p.h"
 #include "widgets/TabBarWidget_p.h"
@@ -58,7 +60,7 @@ TabWidget *DefaultWidgetFactory::createTabWidget(QWidget *parent) const
     return new TabWidgetWidget(parent);
 }
 
-Separator *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidget *parent) const
+Separator *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidgetAdapter *parent) const
 {
     return new SeparatorWidget(anchor, parent);
 }

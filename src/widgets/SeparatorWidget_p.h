@@ -23,13 +23,15 @@
 
 #include "multisplitter/Separator_p.h"
 
+class QPaintEvent;
+
 namespace KDDockWidgets {
 
 class DOCKS_EXPORT SeparatorWidget : public Separator
 {
     Q_OBJECT
 public:
-    explicit SeparatorWidget(Anchor *anchor, QWidget *parent = nullptr);
+    explicit SeparatorWidget(Anchor *anchor, QWidgetAdapter *parent = nullptr);
 
 protected:
     virtual void move(int p) override;
@@ -37,9 +39,6 @@ protected:
     void paintEvent(QPaintEvent *) override;
     void enterEvent(QEvent *) override;
     void leaveEvent(QEvent *) override;
-    void mousePressEvent(QMouseEvent *) override;
-    void mouseMoveEvent(QMouseEvent *) override;
-    void mouseReleaseEvent(QMouseEvent *) override;
 };
 
 }

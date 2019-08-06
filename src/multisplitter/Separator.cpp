@@ -26,7 +26,7 @@
 using namespace KDDockWidgets;
 
 Separator::Separator(KDDockWidgets::Anchor *anchor, QWidget *parent)
-    : QWidget(parent)
+    : QWidgetAdapter(parent)
     , m_anchor(anchor)
 {
     Q_ASSERT(anchor);

@@ -33,6 +33,7 @@
 #include "QWidgetAdapter.h"
 
 #include <QResizeEvent>
+#include <QMouseEvent>
 
 using namespace KDDockWidgets;
 
@@ -59,5 +60,24 @@ void QWidgetAdapter::resizeEvent(QResizeEvent *ev)
         QWidget::resizeEvent(ev);
 }
 
+void QWidgetAdapter::mousePressEvent(QMouseEvent *)
+{
+    onMousePress();
+}
+
+void QWidgetAdapter::mouseMoveEvent(QMouseEvent *ev)
+{
+    onMouseMove(ev->globalPos());
+}
+
+void QWidgetAdapter::mouseReleaseEvent(QMouseEvent *)
+{
+    onMouseRelease();
+}
+
 bool QWidgetAdapter::onResize(QSize, QSize) { return false; }
 void QWidgetAdapter::onLayoutRequest() {}
+
+void QWidgetAdapter::onMousePress() {}
+void QWidgetAdapter::onMouseMove(QPoint) {}
+void QWidgetAdapter::onMouseRelease() {}

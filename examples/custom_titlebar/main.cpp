@@ -67,7 +67,7 @@ public:
 class MySeparator : public SeparatorWidget
 {
 public:
-    explicit MySeparator(Anchor *anchor, QWidget *parent = nullptr)
+    explicit MySeparator(Anchor *anchor, QWidgetAdapter *parent = nullptr)
         : SeparatorWidget(anchor, parent)
     {
     }
@@ -92,7 +92,7 @@ public:
         return new MyTitleBar(fw);
     }
 
-    Separator * createSeparator(Anchor *anchor, QWidget *parent = nullptr) const override
+    Separator * createSeparator(Anchor *anchor, QWidgetAdapter *parent = nullptr) const override
     {
         return new MySeparator(anchor, parent);
     }

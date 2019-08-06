@@ -22,14 +22,14 @@
 #define KD_MULTISPLITTER_SEPARATOR_P_H
 
 #include "docks_export.h"
+#include "QWidgetAdapter.h"
 
-#include <QWidget>
 #include <QPointer>
 
 namespace KDDockWidgets {
 class Anchor;
 
-class DOCKS_EXPORT Separator : public QWidget
+class DOCKS_EXPORT Separator : public QWidgetAdapter
 {
     Q_OBJECT
 public:
@@ -42,9 +42,9 @@ public:
     virtual void move(int p) = 0;
 
 protected:
-    void onMousePress();
-    void onMouseMove(QPoint globalPos);
-    void onMouseRelease();
+    void onMousePress() override;
+    void onMouseMove(QPoint globalPos) override;
+    void onMouseRelease() override;
 
 private:
     const QPointer<Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.

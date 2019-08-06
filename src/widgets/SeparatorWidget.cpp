@@ -25,11 +25,10 @@
 
 #include <QPainter>
 #include <QStyleOption>
-#include <QMouseEvent>
 
 using namespace KDDockWidgets;
 
-SeparatorWidget::SeparatorWidget(KDDockWidgets::Anchor *anchor, QWidget *parent)
+SeparatorWidget::SeparatorWidget(KDDockWidgets::Anchor *anchor, QWidgetAdapter *parent)
     : Separator(anchor, parent)
 {
     const int thickness = Anchor::thickness(isStatic());
@@ -87,19 +86,4 @@ void SeparatorWidget::enterEvent(QEvent *)
 void SeparatorWidget::leaveEvent(QEvent *)
 {
     setCursor(Qt::ArrowCursor);
-}
-
-void SeparatorWidget::mousePressEvent(QMouseEvent *)
-{
-    onMousePress();
-}
-
-void SeparatorWidget::mouseMoveEvent(QMouseEvent *e)
-{
-    onMouseMove(e->globalPos());
-}
-
-void SeparatorWidget::mouseReleaseEvent(QMouseEvent *)
-{
-    onMouseRelease();
 }

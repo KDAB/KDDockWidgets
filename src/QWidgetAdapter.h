@@ -46,9 +46,15 @@ public:
 protected:
     bool event(QEvent *e) override;
     void resizeEvent(QResizeEvent *) override;
+    void mousePressEvent(QMouseEvent *) override;
+    void mouseMoveEvent(QMouseEvent *) override;
+    void mouseReleaseEvent(QMouseEvent *) override;
 
     virtual bool onResize(QSize oldSize, QSize newSize);
     virtual void onLayoutRequest();
+    virtual void onMousePress();
+    virtual void onMouseMove(QPoint globalPos);
+    virtual void onMouseRelease();
 };
 
 }
