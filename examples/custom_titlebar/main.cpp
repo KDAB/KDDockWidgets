@@ -22,6 +22,7 @@
 #include "Config.h"
 #include "TitleBar_p.h"
 #include "DockWidget.h"
+#include "SeparatorWidget_p.h"
 
 #include <QTextEdit>
 #include <QApplication>
@@ -62,6 +63,22 @@ public:
     }
 };
 
+// Inheriting from SeparatorWidget instead of Separator as it handles moving and mouse cursor changing
+class MySeparator : public SeparatorWidget
+{
+public:
+    explicit MySeparator(Anchor *anchor, QWidget *parent = nullptr)
+        : SeparatorWidget(anchor, parent)
+    {
+    }
+
+    void paintEvent(QPaintEvent *) override
+    {
+        QPainter p(this);
+        p.fillRect(rect(), isStatic() ? Qt::black : Qt::cyan);
+    }
+};
+
 class CustomWidgetFactory : public DefaultWidgetFactory
 {
 public:
@@ -73,6 +90,11 @@ public:
     TitleBar * createTitleBar(FloatingWindow *fw) const override
     {
         return new MyTitleBar(fw);
+    }
+
+    Separator * createSeparator(Anchor *anchor, QWidget *parent = nullptr) const override
+    {
+        return new MySeparator(anchor, parent);
     }
 };
 
@@ -90,13 +112,15 @@ int main(int argc, char **argv)
 {
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-    Config::self().setFrameworkWidgetFactory(new CustomWidgetFactory());
 
     QApplication app(argc, argv);
+
+    Config::self().setFrameworkWidgetFactory(new CustomWidgetFactory()); // Sets our custom factory
+    Config::self().setSeparatorThickness(10, /*static=*/ false);
+
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("Test app"));
 
-    qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
     MainWindow mainWindow(QStringLiteral("myMainWindow"), MainWindowOption_None);
     mainWindow.resize(1000, 800);

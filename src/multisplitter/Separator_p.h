@@ -21,13 +21,15 @@
 #ifndef KD_MULTISPLITTER_SEPARATOR_P_H
 #define KD_MULTISPLITTER_SEPARATOR_P_H
 
+#include "docks_export.h"
+
 #include <QWidget>
 #include <QPointer>
 
 namespace KDDockWidgets {
 class Anchor;
 
-class Separator : public QWidget
+class DOCKS_EXPORT Separator : public QWidget
 {
     Q_OBJECT
 public:

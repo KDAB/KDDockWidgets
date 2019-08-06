@@ -25,7 +25,7 @@
 
 namespace KDDockWidgets {
 
-class SeparatorWidget : public Separator
+class DOCKS_EXPORT SeparatorWidget : public Separator
 {
     Q_OBJECT
 public:
