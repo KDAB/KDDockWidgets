@@ -35,7 +35,6 @@ public:
     explicit FloatingWindowWidget(Frame *frame, QWidget *parent = nullptr);
 
 protected:
-    void closeEvent(QCloseEvent *) override;
     void paintEvent(QPaintEvent *) override;
 private:
     void init();

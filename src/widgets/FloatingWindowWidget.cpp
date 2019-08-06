@@ -24,7 +24,6 @@
 #include "DropArea_p.h"
 
 #include <QApplication>
-#include <QCloseEvent>
 #include <QPainter>
 #include <QVBoxLayout>
 
@@ -42,11 +41,6 @@ FloatingWindowWidget::FloatingWindowWidget(Frame *frame, QWidget *parent)
     , m_vlayout(new QVBoxLayout(this))
 {
     init();
-}
-
-void FloatingWindowWidget::closeEvent(QCloseEvent *e)
-{
-    onCloseEvent(e);
 }
 
 void FloatingWindowWidget::paintEvent(QPaintEvent *)

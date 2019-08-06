@@ -37,8 +37,8 @@
 
 using namespace KDDockWidgets;
 
-QWidgetAdapter::QWidgetAdapter(QWidget *parent)
-    : QWidget(parent)
+QWidgetAdapter::QWidgetAdapter(QWidget *parent, Qt::WindowFlags f)
+    : QWidget(parent, f)
 {
 }
 
@@ -81,9 +81,16 @@ void QWidgetAdapter::mouseReleaseEvent(QMouseEvent *)
     onMouseRelease();
 }
 
+void QWidgetAdapter::closeEvent(QCloseEvent *e)
+{
+    onCloseEvent(e);
+}
+
 bool QWidgetAdapter::onResize(QSize, QSize) { return false; }
 void QWidgetAdapter::onLayoutRequest() {}
 
 void QWidgetAdapter::onMousePress() {}
 void QWidgetAdapter::onMouseMove(QPoint) {}
 void QWidgetAdapter::onMouseRelease() {}
+
+void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}

@@ -24,8 +24,7 @@
 #include "docks_export.h"
 #include "Frame_p.h"
 #include "Draggable_p.h"
-
-#include <QWidget>
+#include "QWidgetAdapter.h"
 
 class QAbstractNativeEventFilter;
 
@@ -35,7 +34,7 @@ class DropArea;
 class Frame;
 class MultiSplitterLayout;
 
-class DOCKS_EXPORT FloatingWindow : public QWidget
+class DOCKS_EXPORT FloatingWindow : public QWidgetAdapter
     , public Draggable
 {
     Q_OBJECT
@@ -112,8 +111,7 @@ protected:
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
 #endif
 
-    // Not using closeEvent, since tihs class should be used by QtQuick too.
-    void onCloseEvent(QCloseEvent *);
+    void onCloseEvent(QCloseEvent *) override;
 
     TitleBar *const m_titleBar;
     DropArea *const m_dropArea;

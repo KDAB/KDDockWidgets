@@ -40,7 +40,7 @@ class DOCKS_EXPORT QWidgetAdapter : public QWidget // TODO ifdef the base class 
 {
     Q_OBJECT
 public:
-    explicit QWidgetAdapter(QWidget *parent = nullptr);
+    explicit QWidgetAdapter(QWidget *parent = nullptr, Qt::WindowFlags f = {});
     ~QWidgetAdapter() override;
 
 protected:
@@ -50,12 +50,14 @@ protected:
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *) override;
     void mouseReleaseEvent(QMouseEvent *) override;
+    void closeEvent(QCloseEvent *) override;
 
     virtual bool onResize(QSize oldSize, QSize newSize);
     virtual void onLayoutRequest();
     virtual void onMousePress();
     virtual void onMouseMove(QPoint globalPos);
     virtual void onMouseRelease();
+    virtual void onCloseEvent(QCloseEvent *);
 };
 
 }
