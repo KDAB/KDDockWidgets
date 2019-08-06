@@ -231,6 +231,7 @@ struct EnsureTopLevelsDeleted
 {
     EnsureTopLevelsDeleted()
         : m_initialNumWindows(topLevels().size())
+        , m_originalFlags(Config::self().flags())
     {
     }
 
@@ -242,6 +243,7 @@ struct EnsureTopLevelsDeleted
 
         // Other cleanup, since we use this class everywhere
         Config::self().setDockWidgetFactoryFunc(nullptr);
+        Config::self().setFlags(m_originalFlags);
     }
 
     QWidgetList topLevels() const
@@ -258,6 +260,7 @@ struct EnsureTopLevelsDeleted
 
 
     const int m_initialNumWindows;
+    const Config::Flags m_originalFlags;
 };
 
 class TestDocks : public QObject
@@ -372,6 +375,9 @@ private Q_SLOTS:
     void tst_resizeWindow();
     void tst_resizeWindow2();
     void tst_rectForDropCrash();
+
+    void tst_tabBarWithHiddenTitleBar_data();
+    void tst_tabBarWithHiddenTitleBar();
 
 private:
     std::unique_ptr<MultiSplitterWidget> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -4011,12 +4017,45 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
     delete m->window();
 }
 
+void TestDocks::tst_tabBarWithHiddenTitleBar_data()
+{
+    QTest::addColumn<bool>("hiddenTitleBar");
+
+    QTest::newRow("false") << false;
+    QTest::newRow("true") << true;
+}
+
+void TestDocks::tst_tabBarWithHiddenTitleBar()
+{
+    EnsureTopLevelsDeleted e;
+    QFETCH(bool, hiddenTitleBar);
+
+    const auto originalFlags = Config::self().flags();
+    if (hiddenTitleBar)
+        Config::self().setFlags(originalFlags | Config::Flag_HideTitleBarWhenTabsVisible);
+
+    auto m = createMainWindow();
+
+    auto d1 = createDockWidget("1", new QTextEdit());
+    auto d2 = createDockWidget("2", new QTextEdit());
+    m->addDockWidget(d1, Location_OnTop);
+
+    QVERIFY(d1->frame()->titleBar()->isVisible());
+    d1->addDockWidgetAsTab(d2);
+
+    QVERIFY(d2->frame()->titleBar()->isVisible() ^ hiddenTitleBar);
+
+    d2->close();
+    delete d2;
+    QVERIFY(d1->frame()->titleBar()->isVisible());
+}
+
 void TestDocks::tst_rectForDropCrash()
 {
     // Tests a crash I got in MultiSplitterLayout::rectForDrop() (asserts being hit)
     EnsureTopLevelsDeleted e;
 
-    MainWindow *m =new MainWindow("m1");
+    auto m = new MainWindow("m1");
     m->resize(QSize(500, 500));
     m->show();
 
