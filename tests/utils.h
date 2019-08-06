@@ -23,6 +23,7 @@
 
 #include "MainWindow.h"
 #include "KDDockWidgets.h"
+#include "DropIndicatorOverlayInterface_p.h"
 #include "widgets/DockWidget.h"
 
 #include <QWidget>
@@ -35,6 +36,13 @@
 
 namespace KDDockWidgets {
 namespace Tests {
+
+enum ButtonAction {
+    ButtonAction_None,
+    ButtonAction_Press = 1,
+    ButtonAction_Release = 2
+};
+Q_DECLARE_FLAGS(ButtonActions, ButtonAction)
 
 struct DockDescriptor {
     Location loc;
@@ -88,6 +96,14 @@ private:
     QColor c;
 };
 
+
+void pressOn(QPoint globalPos, QWidget *receiver);
+void releaseOn(QPoint globalPos, QWidget *receiver);
+void moveMouseTo(QPoint globalDest, QWidget *receiver);
+void drag(QWidget *sourceWidget, QPoint pressGlobalPos, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release);
+void drag(QWidget *sourceWidget, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release);
+void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release);
+void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation);
 
 }
 }

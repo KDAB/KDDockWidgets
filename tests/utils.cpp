@@ -28,6 +28,10 @@
 #include <QPushButton>
 #include <QtTest/QtTest>
 
+static bool s_pauseBeforePress = false; // for debugging
+static bool s_pauseBeforeMove = false; // for debugging
+#define DEBUGGING_PAUSE_DURATION 5000 // 5 seconds
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
 
@@ -159,4 +163,108 @@ QWidget *KDDockWidgets::Tests::draggableFor(QWidget *w)
     }
 
     return draggable;
+}
+
+void KDDockWidgets::Tests::pressOn(QPoint globalPos, QWidget *receiver)
+{
+    QCursor::setPos(globalPos);
+    QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
+                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    qApp->sendEvent(receiver, &ev);
+}
+
+void KDDockWidgets::Tests::releaseOn(QPoint globalPos, QWidget *receiver)
+{
+    QMouseEvent ev(QEvent::MouseButtonRelease, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
+                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    qApp->sendEvent(receiver, &ev);
+}
+
+void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, QWidget *receiver)
+{
+    QPoint globalSrc(receiver->mapToGlobal(QPoint(5, 5)));
+
+    QPointer<QWidget> receiverP = receiver;
+
+    while (globalSrc != globalDest) {
+        if (globalSrc.x() < globalDest.x()) {
+            globalSrc.setX(globalSrc.x() + 1);
+        } else if (globalSrc.x() > globalDest.x()) {
+            globalSrc.setX(globalSrc.x() - 1);
+        }
+        if (globalSrc.y() < globalDest.y()) {
+            globalSrc.setY(globalSrc.y() + 1);
+        } else if (globalSrc.y() > globalDest.y()) {
+            globalSrc.setY(globalSrc.y() - 1);
+        }
+
+        QCursor::setPos(globalSrc); // Since some code uses QCursor::pos()
+        QMouseEvent ev(QEvent::MouseMove, receiver->mapFromGlobal(globalSrc), receiver->window()->mapFromGlobal(globalSrc), globalSrc,
+                       Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+
+        if (!receiverP) {
+            qWarning() << "Receiver was deleted";
+            return;
+        }
+
+        qApp->sendEvent(receiver, &ev);
+        QTest::qWait(2);
+    }
+}
+
+void KDDockWidgets::Tests::drag(QWidget *sourceWidget, QPoint pressGlobalPos, QPoint globalDest, ButtonActions buttonActions)
+{
+    if (buttonActions & ButtonAction_Press) {
+        if (s_pauseBeforePress)
+            QTest::qWait(DEBUGGING_PAUSE_DURATION);
+
+        pressOn(pressGlobalPos, sourceWidget);
+    }
+
+    sourceWidget->window()->activateWindow();
+
+    if (s_pauseBeforeMove)
+        QTest::qWait(DEBUGGING_PAUSE_DURATION);
+
+    qDebug() << "Moving sourceWidget to" << globalDest
+             << "; sourceWidget->size=" << sourceWidget->size()
+             << "; from=" << QCursor::pos();
+    moveMouseTo(globalDest, sourceWidget);
+    qDebug() << "Arrived at" << QCursor::pos();
+    pressGlobalPos = sourceWidget->mapToGlobal(QPoint(10, 10));
+    if (buttonActions & ButtonAction_Release)
+        releaseOn(globalDest, sourceWidget);
+}
+
+void KDDockWidgets::Tests::drag(QWidget *sourceWidget, QPoint globalDest, ButtonActions buttonActions)
+{
+    Q_ASSERT(sourceWidget && sourceWidget->isVisible());
+
+    QWidget *draggable = draggableFor(sourceWidget);
+
+    Q_ASSERT(draggable && draggable->isVisible());
+    const QPoint pressGlobalPos = draggable->mapToGlobal(QPoint(6, 6));
+
+    drag(draggable, pressGlobalPos, globalDest, buttonActions);
+}
+
+void KDDockWidgets::Tests::dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest, ButtonActions buttonActions)
+{
+    auto draggable = draggableFor(fw);
+    Q_ASSERT(draggable && draggable->isVisible());
+    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
+}
+
+void KDDockWidgets::Tests::dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation)
+{
+    auto draggable = draggableFor(fw);
+
+    // First we drag over it, so the drop indicators appear:
+    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(QPoint(50, 50)), ButtonAction_Press);
+
+    // Now we drag over the drop indicator and only then release mouse:
+    DropIndicatorOverlayInterface *dropIndicatorOverlay = target->dropIndicatorOverlay();
+    const QPoint dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
+
+    drag(draggable, QPoint(), dropPoint, ButtonAction_Release);
 }
