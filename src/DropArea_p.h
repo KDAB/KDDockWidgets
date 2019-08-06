@@ -35,8 +35,6 @@
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 
-#include <QWidget>
-
 namespace KDDockWidgets {
 
 class Frame;
@@ -68,12 +66,9 @@ public:
     DropIndicatorOverlayInterface *dropIndicatorOverlay() const { return m_dropIndicatorOverlay; }
     void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location, DockWidgetBase *relativeTo, AddingOption option = {});
 
-    bool isInFloatingWindow() const;
-
     void debug_updateItemNamesForGammaray();
 
     bool checkSanity(MultiSplitterLayout::AnchorSanityOption o = MultiSplitterLayout::AnchorSanity_All);
-    QWidget *window() const;
     bool contains(DockWidgetBase *) const;
 private:
     Q_DISABLE_COPY(DropArea)

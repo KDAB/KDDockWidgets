@@ -44,6 +44,7 @@ public:
     ~QWidgetAdapter() override;
 
 protected:
+    void raiseAndActivate();
     bool event(QEvent *e) override;
     void resizeEvent(QResizeEvent *) override;
     void mousePressEvent(QMouseEvent *) override;

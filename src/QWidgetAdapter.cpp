@@ -46,6 +46,12 @@ QWidgetAdapter::~QWidgetAdapter()
 {
 }
 
+void QWidgetAdapter::raiseAndActivate()
+{
+    window()->raise();
+    window()->activateWindow();
+}
+
 bool QWidgetAdapter::event(QEvent *e)
 {
     if (e->type() == QEvent::LayoutRequest)

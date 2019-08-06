@@ -162,11 +162,6 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
     }
 }
 
-bool DropArea::isInFloatingWindow() const
-{
-    return qobject_cast<FloatingWindow*>(parentWidget());
-}
-
 void DropArea::debug_updateItemNamesForGammaray()
 {
     for (Item *item : m_layout->items()) {
@@ -183,14 +178,6 @@ void DropArea::debug_updateItemNamesForGammaray()
 bool DropArea::checkSanity(MultiSplitterLayout::AnchorSanityOption o)
 {
     return m_layout->checkSanity(o);
-}
-
-QWidget *DropArea::window() const
-{
-    if (auto pw = parentWidget())
-        return pw->window();
-
-    return nullptr;
 }
 
 bool DropArea::contains(DockWidgetBase *dw) const
@@ -270,11 +257,8 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
         break;
     }
 
-    if (result) {
-        qCDebug(hovering) << "Raising";
-        window()->raise();
-        window()->activateWindow();
-    }
+    if (result)
+        raiseAndActivate();
 
     return result;
 }
