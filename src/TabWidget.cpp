@@ -104,7 +104,7 @@ void TabBar::onMousePress(QPoint localPos)
 
 TabWidget::TabWidget(QWidget *parent)
     : QTabWidget(parent)
-    , Draggable(this, Config::self().flags() & Config::Flag_DraggableTabBar)
+    , Draggable(this, Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
     , m_tabBar(Config::self().frameWorkWidgetFactory()->createTabBar(this))
 {
     setTabBarAutoHide(true);
