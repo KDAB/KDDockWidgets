@@ -20,6 +20,7 @@
 
 #include "utils.h"
 #include "DropArea_p.h"
+#include "Config.h"
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -142,4 +143,20 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
            msg.contains(QLatin1String("Note that Qt no longer ships fonts")) ||
            msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")) ||
            msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
+}
+
+QWidget *KDDockWidgets::Tests::draggableFor(QWidget *w)
+{
+    QWidget *draggable = nullptr;
+    if (auto dock = qobject_cast<DockWidgetBase *>(w)) {
+        if (auto frame = dock->frame())
+            draggable = frame->titleBar();
+    } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
+        draggable = ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && fw->hasSingleFrame()) ? static_cast<QWidget*>(fw->frames().first()->tabWidget())
+                                                                                                                  : static_cast<QWidget*>(fw->titleBar());
+    } else if (qobject_cast<TabWidget *>(w) || qobject_cast<TitleBar *>(w)) {
+        draggable = w;
+    }
+
+    return draggable;
 }

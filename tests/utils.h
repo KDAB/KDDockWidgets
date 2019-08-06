@@ -43,6 +43,7 @@ struct DockDescriptor {
     KDDockWidgets::AddingOption option;
 };
 
+QWidget* draggableFor(QWidget *);
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 

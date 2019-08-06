@@ -544,40 +544,33 @@ static void drag(QWidget *sourceWidget, QPoint globalDest, ButtonActions buttonA
 {
     Q_ASSERT(sourceWidget && sourceWidget->isVisible());
 
-    TitleBar *titleBar = nullptr;
-    if (auto dock = qobject_cast<DockWidgetBase *>(sourceWidget)) {
-        if (auto frame = dock->frame()) {
-            titleBar = frame->titleBar();
-        }
-    } else if (auto fw = qobject_cast<FloatingWindow *>(sourceWidget)) {
-        titleBar = fw->titleBar();
-    }
+    QWidget *draggable = draggableFor(sourceWidget);
 
-    Q_ASSERT(titleBar && titleBar->isVisible());
-    const QPoint pressGlobalPos = titleBar->mapToGlobal(QPoint(6, 6));
+    Q_ASSERT(draggable && draggable->isVisible());
+    const QPoint pressGlobalPos = draggable->mapToGlobal(QPoint(6, 6));
 
-    drag(titleBar, pressGlobalPos, globalDest, buttonActions);
+    drag(draggable, pressGlobalPos, globalDest, buttonActions);
 }
 
 static void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
 {
-    auto sourceTitleBar = fw->titleBar();
-    Q_ASSERT(sourceTitleBar && sourceTitleBar->isVisible());
-    drag(sourceTitleBar, sourceTitleBar->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
+    auto draggable = draggableFor(fw);
+    Q_ASSERT(draggable && draggable->isVisible());
+    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
 }
 
 static void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation)
 {
-    auto sourceTitleBar = fw->titleBar();
+    auto draggable = draggableFor(fw);
 
     // First we drag over it, so the drop indicators appear:
-    drag(sourceTitleBar, sourceTitleBar->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(QPoint(50, 50)), ButtonAction_Press);
+    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(QPoint(50, 50)), ButtonAction_Press);
 
     // Now we drag over the drop indicator and only then release mouse:
     DropIndicatorOverlayInterface *dropIndicatorOverlay = target->dropIndicatorOverlay();
     const QPoint dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
 
-    drag(sourceTitleBar, QPoint(), dropPoint, ButtonAction_Release);
+    drag(draggable, QPoint(), dropPoint, ButtonAction_Release);
 }
 
 Frame* createFrameWithWidget(const QString &name, MultiSplitterWidget *parent, int minLength = -1)
