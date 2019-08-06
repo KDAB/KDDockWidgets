@@ -37,6 +37,7 @@
 
 namespace KDDockWidgets {
 
+class TabBar;
 class TitleBar;
 class TabWidget;
 class DropArea;
@@ -198,6 +199,9 @@ public:
 
     ///@brief getter for the tab widget
     TabWidget *tabWidget() const;
+
+    ///@brief getter for the tab bar
+    TabBar *tabBar() const;
 
     /**
      * @brief returns true if tabs are visible

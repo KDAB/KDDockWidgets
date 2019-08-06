@@ -452,11 +452,6 @@ bool waitForResize(QWidget *w, int timeout = 2000)
     return waitForEvent(w, QEvent::Resize, timeout);
 }
 
-static QTabBar *tabBarForFrame(Frame *f)
-{
-    return f->findChild<QTabBar *>(QString(), Qt::FindChildrenRecursively);
-}
-
 Frame* createFrameWithWidget(const QString &name, MultiSplitterWidget *parent, int minLength = -1)
 {
     QWidget *w = createWidget(minLength, name);
@@ -570,7 +565,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     // 2.3 Detach tab1 to empty space
     QPoint globalPressPos = frame2->dragPointForWidget(0);
-    QTabBar *tabBar = tabBarForFrame(frame2);
+    QTabBar *tabBar = frame2->tabBar();
     QVERIFY(tabBar);
     drag(tabBar, globalPressPos, frame2->window()->geometry().bottomRight() + QPoint(10, 10));
 
@@ -588,7 +583,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     // 2.5 Detach and drop to the same place, should tab again
     globalPressPos = frame2->dragPointForWidget(0);
-    tabBar = tabBarForFrame(frame2);
+    tabBar = frame2->tabBar();
 
     drag(tabBar, globalPressPos, dock2->window()->geometry().center());
     QCOMPARE(frame2->dockWidgetCount(), 2);
@@ -1087,7 +1082,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
 
     // Detach tab
     QPoint globalPressPos = centralFrame->dragPointForWidget(0);
-    QTabBar *tabBar = tabBarForFrame(centralFrame);
+    QTabBar *tabBar = centralFrame->tabBar();
     QVERIFY(tabBar);
     qDebug() << "Detaching tab from dropArea->size=" << dropArea->size() << "; dropArea=" << dropArea;
     drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));

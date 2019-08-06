@@ -388,6 +388,11 @@ TabWidget *Frame::tabWidget() const
     return m_tabWidget;
 }
 
+TabBar *Frame::tabBar() const
+{
+    return qobject_cast<TabBar*>(m_tabWidget->tabBar());
+}
+
 bool Frame::hasTabsVisible() const
 {
     return alwaysShowsTabs() || dockWidgetCount() > 1;
