@@ -38,6 +38,8 @@ public:
     Private(DockWidget *q)
         : layout(new QVBoxLayout(q))
     {
+        layout->setSpacing(0);
+        layout->setContentsMargins(0, 0, 0, 0);
     }
 
     QVBoxLayout *const layout;
