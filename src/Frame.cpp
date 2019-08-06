@@ -168,6 +168,10 @@ void Frame::onDockWidgetCountChanged()
         scheduleDeleteLater();
     } else {
         updateTitleBarVisibility();
+
+        // We don't really keep track of the state, so emit even if the visibility didn't change. No biggie.
+        if (!(m_options & Option_AlwaysShowsTabs))
+            Q_EMIT hasTabsVisibleChanged();
     }
 }
 
@@ -183,10 +187,16 @@ void Frame::updateTitleBarVisibility()
         // If there's nested frames then show each Frame's title bar
         visible = !fw->hasSingleFrame();
     } else {
-        visible = true;
+        if ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && hasTabsVisible()) {
+            visible = false;
+        } else {
+            visible = true;
+        }
     }
 
     m_titleBar->setVisible(visible);
+    if (auto fw = floatingWindow())
+        fw->updateTitleBarVisibility();
 }
 
 bool Frame::containsMouse(QPoint globalPos) const
@@ -376,6 +386,11 @@ bool Frame::beingDeletedLater() const
 TabWidget *Frame::tabWidget() const
 {
     return m_tabWidget;
+}
+
+bool Frame::hasTabsVisible() const
+{
+    return alwaysShowsTabs() || dockWidgetCount() > 1;
 }
 
 DockWidgetBase *Frame::dockWidgetAt(int index) const

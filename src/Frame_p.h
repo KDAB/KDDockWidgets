@@ -199,9 +199,17 @@ public:
     ///@brief getter for the tab widget
     TabWidget *tabWidget() const;
 
+    /**
+     * @brief returns true if tabs are visible
+     *
+     * @sa hasTabsVisibleChanged()
+     **/
+    bool hasTabsVisible() const;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();
+    void hasTabsVisibleChanged();
 
 private:
     Q_DISABLE_COPY(Frame)

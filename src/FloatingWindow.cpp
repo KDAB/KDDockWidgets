@@ -277,7 +277,20 @@ void FloatingWindow::onVisibleFrameCountChanged(int count)
 void FloatingWindow::updateTitleBarVisibility()
 {
     updateTitleAndIcon();
-    m_titleBar->setVisible(!KDDockWidgets::usesNativeTitleBar());
+
+    bool visible = true;
+
+    if (KDDockWidgets::usesNativeTitleBar()) {
+        visible = false;
+    } else {
+        if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) {
+            if (hasSingleFrame()) {
+                visible = !frames().first()->hasTabsVisible();
+            }
+        }
+    }
+
+    m_titleBar->setVisible(visible);
 }
 
 void FloatingWindow::updateTitleAndIcon()

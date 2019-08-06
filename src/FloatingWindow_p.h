@@ -103,6 +103,7 @@ public:
 
     ///@brief updates the title and the icon
     void updateTitleAndIcon();
+    void updateTitleBarVisibility();
 
 Q_SIGNALS:
     void numFramesChanged();
@@ -121,7 +122,6 @@ private:
     void maybeCreateResizeHandler();
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
-    void updateTitleBarVisibility();
     bool m_disableSetVisible = false;
     bool m_beingDeleted = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
