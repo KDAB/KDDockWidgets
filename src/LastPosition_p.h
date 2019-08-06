@@ -73,7 +73,7 @@ class Frame;
  * The DockWidget's position is saved when its closed and restored when it's shown.
  * This class holds that position.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS LastPosition
+class DOCKS_EXPORT LastPosition
 {
     Q_DISABLE_COPY(LastPosition)
 public:

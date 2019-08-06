@@ -88,7 +88,7 @@ struct GeometryDiff
     const bool onlyOneSideChanged;
 };
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject // clazy:exclude=ctor-missing-parent-argument
+class DOCKS_EXPORT Item : public QObject // clazy:exclude=ctor-missing-parent-argument
 {
     Q_OBJECT
     Q_PROPERTY(bool isPlaceholder READ isPlaceholder NOTIFY isPlaceholderChanged)

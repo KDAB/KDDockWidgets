@@ -33,7 +33,7 @@ class MultiSplitterLayout;
 class Anchor;
 class Item;
 
-struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup
+struct DOCKS_EXPORT AnchorGroup
 {
     ///@brief contructs an invalid group
     AnchorGroup() = default;

@@ -31,7 +31,7 @@ namespace KDDockWidgets {
 
 class DropArea;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS DropIndicatorOverlayInterface : public QWidget
+class DOCKS_EXPORT DropIndicatorOverlayInterface : public QWidget
 {
     Q_OBJECT
 public:

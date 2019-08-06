@@ -44,7 +44,7 @@ class FloatingWindow;
  *
  * The actual layouting is done by @ref MultiSplitterLayout.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterWidget : public QWidget
+class DOCKS_EXPORT MultiSplitterWidget : public QWidget
 {
     Q_OBJECT
 public:

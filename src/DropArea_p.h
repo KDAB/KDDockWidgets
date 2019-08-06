@@ -47,7 +47,7 @@ struct WindowBeingDragged;
 /**
  * @brief A MultiSplitterWidget with support for drop indicators when hovering over.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS DropArea : public MultiSplitterWidget
+class DOCKS_EXPORT DropArea : public MultiSplitterWidget
 {
     Q_OBJECT
 public:

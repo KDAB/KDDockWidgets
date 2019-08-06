@@ -31,7 +31,7 @@ namespace KDDockWidgets {
 class FloatingWindow;
 class Draggable;
 
-struct DOCKS_EXPORT_FOR_UNIT_TESTS WindowBeingDragged
+struct DOCKS_EXPORT WindowBeingDragged
 {
 public:
     explicit WindowBeingDragged(FloatingWindow *fw, Draggable *draggable);
