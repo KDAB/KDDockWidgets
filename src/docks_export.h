@@ -24,9 +24,19 @@
 #include <QtCore/QtGlobal>
 
 #if defined(BUILDING_DOCKS_LIBRARY)
-# define DOCKS_EXPORT Q_DECL_EXPORT
+#  define DOCKS_EXPORT Q_DECL_EXPORT
+#  if defined(DOCKS_DEVELOPER_MODE)
+#    define DOCKS_EXPORT_FOR_UNIT_TESTS Q_DECL_EXPORT
+#  else
+#    define DOCKS_EXPORT_FOR_UNIT_TESTS
+#  endif
 #else
-# define DOCKS_EXPORT Q_DECL_IMPORT
+#  define DOCKS_EXPORT Q_DECL_IMPORT
+#  if defined(DOCKS_DEVELOPER_MODE)
+#    define DOCKS_EXPORT_FOR_UNIT_TESTS Q_DECL_IMPORT
+# else
+#    define DOCKS_EXPORT_FOR_UNIT_TESTS Q_DECL_IMPORT
+# endif
 #endif
 
 #endif

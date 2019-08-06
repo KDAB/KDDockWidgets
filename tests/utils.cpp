@@ -163,6 +163,7 @@ QWidget *KDDockWidgets::Tests::draggableFor(QWidget *w)
         draggable = w;
     }
 
+    qDebug() << "Draggable is" << draggable;
     return draggable;
 }
 
