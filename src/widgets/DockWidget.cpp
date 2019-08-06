@@ -21,6 +21,7 @@
 #include "DockWidget.h"
 
 #include <QCloseEvent>
+#include <QVBoxLayout>
 
 /**
  * @file
@@ -30,13 +31,31 @@
  */
 
 using namespace KDDockWidgets;
+
+class DockWidget::Private
+{
+public:
+    Private(DockWidget *q)
+        : layout(new QVBoxLayout(q))
+
+    {
+    }
+
+    QVBoxLayout *const layout;
+};
+
 DockWidget::DockWidget(const QString &name, Options options, QWidget *parent, Qt::WindowFlags flags)
     : DockWidgetBase(name, options, parent, flags)
+    , d(new Private(this))
 {
+    connect(this, &DockWidgetBase::widgetChanged, this, [this] (QWidget *w) {
+        d->layout->addWidget(w);
+    });
 }
 
 DockWidget::~DockWidget()
 {
+    delete d;
 }
 
 bool DockWidget::event(QEvent *e)

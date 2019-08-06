@@ -36,14 +36,15 @@ namespace KDDockWidgets {
 
 /**
  * @brief Represents a dock widget.
+ *
+ * Most of the interface lives in DockWidgetBase, to facilitate sharing with QtQuick.
  */
 class DOCKS_EXPORT DockWidget : public DockWidgetBase
 {
     Q_OBJECT
 public:
-
     /**
-     * @brief constructs a new DockWidgets
+     * @brief constructs a new DockWidget
      * @param name the name of the dockwidget, should be unique. Use title for user visible text.
      * @param options optional options controlling behaviour
      * @param parent optional QWidget parent, for ownership purposes
@@ -58,6 +59,10 @@ public:
 protected:
     bool event(QEvent *) override;
     void closeEvent(QCloseEvent *) override;
+
+private:
+    class Private;
+    Private *const d;
 };
 
 }

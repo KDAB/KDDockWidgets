@@ -35,7 +35,6 @@
 
 #include <QAction>
 #include <QEvent>
-#include <QVBoxLayout>
 #include <QSignalBlocker>
 #include <QCloseEvent>
 #include <QTimer>
@@ -57,7 +56,6 @@ public:
         , title(dockName)
         , q(qq)
         , options(options_)
-        , layout(new QVBoxLayout(q))
         , toggleAction(new QAction(q))
     {
         q->connect(q, &DockWidgetBase::shown, q, [this] { onDockWidgetShown(); } );
@@ -72,8 +70,6 @@ public:
 
     void init()
     {
-        layout->setSpacing(0);
-        layout->setContentsMargins(0, 0, 0, 0);
         updateTitle();
     }
 
@@ -86,7 +82,6 @@ public:
     TabWidget *parentTabWidget() const;
     void show();
     void close();
-    void updateLayoutMargin();
     void restoreToPreviousPosition();
     void maybeRestoreToPreviousPosition();
     int currentTabIndex() const;
@@ -103,7 +98,6 @@ public:
     QWidget *widget = nullptr;
     DockWidgetBase *const q;
     const DockWidgetBase::Options options;
-    QVBoxLayout *const layout;
     QAction *const toggleAction;
     LastPosition m_lastPosition;
 };
@@ -184,7 +178,7 @@ void DockWidgetBase::setWidget(QWidget *w)
     qCDebug(addwidget) << Q_FUNC_INFO << w;
 
     d->widget = w;
-    d->layout->addWidget(w);
+    Q_EMIT widgetChanged(w);
     setWindowTitle(name());
 }
 
@@ -444,12 +438,6 @@ void DockWidgetBase::Private::close()
     }
 }
 
-void DockWidgetBase::Private::updateLayoutMargin()
-{
-    const int margin = !q->isWindow() ? 0 : 4;
-    layout->setContentsMargins(margin, margin, margin, margin);
-}
-
 void DockWidgetBase::Private::restoreToPreviousPosition()
 {
     if (!m_lastPosition.isValid()) {
@@ -519,7 +507,6 @@ void DockWidgetBase::onParentChanged()
 
 void DockWidgetBase::onShown(bool spontaneous)
 {
-    d->updateLayoutMargin();
     Q_EMIT shown();
 
     if (Frame *f = frame()) {

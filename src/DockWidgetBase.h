@@ -217,6 +217,9 @@ Q_SIGNALS:
     ///@brief signal emitted when the title changed
     void titleChanged();
 
+    ///@brief emitted when the widget changes,
+    void widgetChanged(QWidget*);
+
 protected:
     void onParentChanged();
     void onShown(bool spontaneous);
