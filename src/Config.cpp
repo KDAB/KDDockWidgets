@@ -47,6 +47,8 @@ public:
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     FrameworkWidgetFactory *m_frameworkWidgetFactory;
     Flags m_flags = Flag_Default;
+    int m_separatorThickness = 5;
+    int m_staticSeparatorThickness = 1;
 };
 
 
@@ -103,6 +105,30 @@ void Config::setFrameworkWidgetFactory(FrameworkWidgetFactory *wf)
 FrameworkWidgetFactory *Config::frameWorkWidgetFactory() const
 {
     return d->m_frameworkWidgetFactory;
+}
+
+int Config::separatorThickness(bool staticSeparator) const
+{
+    return staticSeparator ? d->m_staticSeparatorThickness
+                           : d->m_separatorThickness;
+}
+
+void Config::setSeparatorThickness(int value, bool staticSeparator)
+{
+    if (value <= 0 || value >= 100) {
+        qWarning() << Q_FUNC_INFO << "Invalid value" << value;
+        return;
+    }
+
+    if (!DockRegistry::self()->isEmpty()) {
+        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
+        return;
+    }
+
+    if (staticSeparator)
+        d->m_staticSeparatorThickness = value;
+    else
+        d->m_separatorThickness = value;
 }
 
 void Config::Private::fixFlags()

@@ -580,7 +580,7 @@ void Anchor::onFolloweePositionChanged(int pos)
 
 int Anchor::thickness(bool staticAnchor)
 {
-    return staticAnchor ? 1 : 5;
+    return Config::self().separatorThickness(staticAnchor);
 }
 
 void Anchor::setLayout(MultiSplitterLayout *layout)
