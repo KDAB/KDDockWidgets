@@ -35,6 +35,7 @@ set(DOCKSLIBS_SRCS
     TitleBar.cpp
     ObjectViewer.cpp
     ObjectViewer_p.h
+    QWidgetAdapter.cpp
     DebugWindow.cpp
     DebugWindow_p.h
     WindowBeingDragged.cpp

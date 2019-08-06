@@ -30,7 +30,7 @@
 #define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
 #include "docks_export.h"
-#include <QWidget>
+#include "QWidgetAdapter.h"
 
 namespace KDDockWidgets {
 
@@ -44,7 +44,7 @@ class FloatingWindow;
  *
  * The actual layouting is done by @ref MultiSplitterLayout.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter : public QWidget
+class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter : public QWidgetAdapter
 {
     Q_OBJECT
 public:
@@ -56,8 +56,8 @@ public:
     MainWindow* mainWindow() const;
     FloatingWindow* floatingWindow() const;
 protected:
-    bool event(QEvent *e) override;
-    void resizeEvent(QResizeEvent *) override;
+    void onLayoutRequest() override;
+    bool onResize(QSize oldSize, QSize newSize) override;
     MultiSplitterLayout *const m_layout;
 private:
     bool m_inResizeEvent = false;

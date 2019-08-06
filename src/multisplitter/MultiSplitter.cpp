@@ -34,12 +34,12 @@
 #include "FloatingWindow_p.h"
 #include "LayoutSaver.h"
 
-#include <QResizeEvent>
+#include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
 
 MultiSplitter::MultiSplitter(QWidget *parent)
-    : QWidget(parent)
+    : QWidgetAdapter(parent)
     , m_layout(new MultiSplitterLayout(this))
 {
     connect(m_layout, &MultiSplitterLayout::minimumSizeChanged, this, [this] (QSize sz) {
@@ -63,29 +63,26 @@ int MultiSplitter::count() const
     return m_layout->count();
 }
 
-void MultiSplitter::resizeEvent(QResizeEvent *ev)
+void MultiSplitter::onLayoutRequest()
 {
-    qCDebug(sizing) << Q_FUNC_INFO << "; new=" << ev->size() << "; old=" << ev->oldSize()
+    m_layout->updateSizeConstraints();
+}
+
+bool MultiSplitter::onResize(QSize oldSize, QSize newSize)
+{
+    qCDebug(sizing) << Q_FUNC_INFO << "; new=" << newSize << "; old=" << oldSize
                     << "; window=" << window();
 
-    m_inResizeEvent = true; // to avoid re-entrancy
+    QScopedValueRollback<bool>(m_inResizeEvent, true); // to avoid re-entrancy
 
     if (!LayoutSaver::restoreInProgress()) {
         // don't resize anything while we're restoring the layout
-        m_layout->setContentsSize(ev->size());
+        m_layout->setContentsSize(newSize);
     }
 
-    QWidget::resizeEvent(ev);
-    m_inResizeEvent = false;
+    return false; // So QWidget::resizeEvent is called
 }
 
-bool MultiSplitter::event(QEvent *e)
-{
-    if (e->type() == QEvent::LayoutRequest)
-        m_layout->updateSizeConstraints();
-
-    return QWidget::event(e);
-}
 
 bool MultiSplitter::isInMainWindow() const
 {
