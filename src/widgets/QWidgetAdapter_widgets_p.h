@@ -36,12 +36,17 @@
 
 namespace KDDockWidgets {
 
+class FloatingWindow;
+
 class DOCKS_EXPORT QWidgetAdapter : public QWidget
 {
     Q_OBJECT
 public:
     explicit QWidgetAdapter(QWidget *parent = nullptr, Qt::WindowFlags f = {});
     ~QWidgetAdapter() override;
+
+    ///@brief returns the FloatingWindow this widget is in, otherwise nullptr
+    FloatingWindow *floatingWindow() const;
 
 protected:
     void raiseAndActivate();

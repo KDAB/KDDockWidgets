@@ -30,7 +30,6 @@ set(DOCKSLIBS_SRCS
     LastPosition_p.h
     LayoutSaver.cpp
     Logging.cpp
-    MainWindow.cpp
     TabWidget.cpp
     TitleBar.cpp
     ObjectViewer.cpp
@@ -70,6 +69,7 @@ if (OPTION_QTQUICK)
         )
 else()
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
+        MainWindow.cpp
         widgets/QWidgetAdapter_widgets.cpp
         widgets/QWidgetAdapter_widgets_p.h)
 
@@ -107,7 +107,13 @@ if (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
     endif()
 endif()
 
-target_link_libraries(docks Qt5::Widgets)
+if (OPTION_QTQUICK)
+    target_link_libraries(docks Qt5::Widgets Qt5::Quick)
+else()
+    target_link_libraries(docks Qt5::Widgets)
+endif()
+
+
 if (NOT WIN32 AND NOT APPLE)
     find_package(Qt5X11Extras)
     target_link_libraries(docks Qt5::X11Extras)

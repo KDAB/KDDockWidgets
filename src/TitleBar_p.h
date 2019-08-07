@@ -22,11 +22,12 @@
 #define KD_TITLEBAR_P_H
 
 #include "docks_export.h"
+
+#include "QWidgetAdapter.h"
 #include "Draggable_p.h"
 #include "Frame_p.h"
 #include "DockWidgetBase.h"
 
-#include <QWidget>
 #include <QVector>
 #include <QIcon>
 
@@ -39,7 +40,7 @@ class DockWidgetBase;
 class Frame;
 class Button;
 
-class DOCKS_EXPORT TitleBar : public QWidget
+class DOCKS_EXPORT TitleBar : public QWidgetAdapter
     , public Draggable
 {
     Q_OBJECT

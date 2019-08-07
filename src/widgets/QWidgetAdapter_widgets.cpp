@@ -31,6 +31,7 @@
  */
 
 #include "QWidgetAdapter_widgets_p.h"
+#include "FloatingWindow_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>
@@ -44,6 +45,14 @@ QWidgetAdapter::QWidgetAdapter(QWidget *parent, Qt::WindowFlags f)
 
 QWidgetAdapter::~QWidgetAdapter()
 {
+}
+
+FloatingWindow *QWidgetAdapter::floatingWindow() const
+{
+    if (auto fw = qobject_cast<FloatingWindow*>(window()))
+        return fw;
+
+    return nullptr;
 }
 
 void QWidgetAdapter::raiseAndActivate()

@@ -32,10 +32,31 @@
 
 #include "docks_export.h"
 
+#include <QQuickItem>
 #include <QObject>
 #include <QCloseEvent>
 
 namespace KDDockWidgets {
+
+class FloatingWindow;
+
+
+class QuickItem : public QQuickItem
+{
+public:
+    explicit QuickItem(QQuickItem *parent)
+        : QQuickItem(parent)
+    {
+    }
+    ~QuickItem() override;
+
+    void releaseMouse()
+    {
+        ungrabMouse();
+    }
+};
+
+QuickItem::~QuickItem() {}
 
 class DOCKS_EXPORT QWidgetAdapter : public QObject
 {
@@ -44,6 +65,20 @@ public:
     explicit QWidgetAdapter(QObject *parent = nullptr, Qt::WindowFlags f = {});
     ~QWidgetAdapter() override;
 
+    ///@brief returns the FloatingWindow this widget is in, otherwise nullptr
+    FloatingWindow *floatingWindow() const;
+
+    void setGeometry(QRect);
+    QRect geometry() const;
+    QRect rect() const;
+    void show();
+    void setVisible(bool);
+    void raise();
+
+    void grabMouse();
+    void releaseMouse();
+    void setMinimumSize(QSize);
+    void resize(QSize);
 protected:
     void raiseAndActivate();
 

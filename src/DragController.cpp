@@ -49,7 +49,7 @@ public:
 
     ~FallbackMouseGrabber() override;
 
-    void grabMouse(QWidget *target)
+    void grabMouse(QWidgetOrQuick *target)
     {
         m_target = target;
         qApp->installEventFilter(this);
@@ -82,7 +82,7 @@ public:
     }
 
     bool m_reentrancyGuard = false;
-    QPointer<QWidget> m_target;
+    QPointer<QWidgetOrQuick> m_target;
 };
 
 FallbackMouseGrabber::~FallbackMouseGrabber() {}
@@ -121,8 +121,7 @@ void StateNone::onEntry(QEvent *)
 bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
 {
     qCDebug(state) << "StateNone::handleMouseButtonPress: draggable"
-                   << draggable << "; globalPos" << globalPos
-                   << draggable->asWidget();
+                   << draggable << "; globalPos" << globalPos;
 
     if (!draggable->isPositionDraggable(pos))
         return false;
@@ -283,7 +282,7 @@ bool DragController::isInClientDrag() const
     return isDragging() && !m_nonClientDrag;
 }
 
-void DragController::grabMouseFor(QWidget *target)
+void DragController::grabMouseFor(QWidgetOrQuick *target)
 {
     if (m_fallbackMouseGrabber) {
         m_fallbackMouseGrabber->grabMouse(target);
@@ -292,7 +291,7 @@ void DragController::grabMouseFor(QWidget *target)
     }
 }
 
-void DragController::releaseMouse(QWidget *target)
+void DragController::releaseMouse(QWidgetOrQuick *target)
 {
     if (m_fallbackMouseGrabber) {
         m_fallbackMouseGrabber->releaseMouse();

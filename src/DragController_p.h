@@ -57,8 +57,8 @@ public:
     bool isInNonClientDrag() const;
     bool isInClientDrag() const;
 
-    void grabMouseFor(QWidget*);
-    void releaseMouse(QWidget*);
+    void grabMouseFor(QWidgetOrQuick *);
+    void releaseMouse(QWidgetOrQuick *);
 
 Q_SIGNALS:
     void mousePressed();

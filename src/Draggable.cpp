@@ -28,7 +28,7 @@ using namespace KDDockWidgets;
 class Draggable::Private
 {
 public:
-    explicit Private(QWidget *_thisWidget, bool _enabled)
+    explicit Private(QWidgetOrQuick *_thisWidget, bool _enabled)
         : thisWidget(_thisWidget)
         , enabled(_enabled)
     {
@@ -36,7 +36,7 @@ public:
     }
 
     QPointer<WidgetResizeHandler> widgetResizeHandler;
-    QWidget *const thisWidget;
+    QWidgetOrQuick *const thisWidget;
     const bool enabled;
 };
 
@@ -54,7 +54,7 @@ Draggable::~Draggable()
     delete d;
 }
 
-QWidget *Draggable::asWidget() const
+QWidgetOrQuick *Draggable::asWidget() const
 {
     return d->thisWidget;
 }
@@ -69,20 +69,4 @@ void Draggable::setWidgetResizeHandler(WidgetResizeHandler *w)
     Q_ASSERT(!d->widgetResizeHandler);
     Q_ASSERT(w);
     d->widgetResizeHandler = w;
-}
-
-FloatingWindow *Draggable::isFloatingWindow() const
-{
-    QWidget *p = d->thisWidget;
-    do {
-        if (auto fw = qobject_cast<FloatingWindow *>(p))
-            return fw;
-
-        if (p->windowFlags() & Qt::Window)
-            return nullptr;  // Some other window
-
-        p = p->parentWidget();
-    } while (p);
-
-    return nullptr;
 }

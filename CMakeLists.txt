@@ -11,9 +11,10 @@ cmake_policy(SET CMP0042 NEW)
 
 option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
 option(OPTION_ASAN_SUPPORT "Activate support for using ASAN" OFF)
-# option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
+option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" ON)
 
 find_package(Qt5Widgets)
+
 set(CMAKE_AUTOMOC ON)
 
 set(ECM_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ECM/modules/")
@@ -33,6 +34,7 @@ if (OPTION_DEVELOPER_MODE)
 endif()
 
 if (OPTION_QTQUICK)
+    find_package(Qt5Quick)
     add_definitions(-DKDDOCKWIDGETS_QTQUICK)
 else()
     add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
@@ -40,7 +42,7 @@ endif()
 
 add_subdirectory(src)
 
-if (OPTION_DEVELOPER_MODE)
+if (OPTION_DEVELOPER_MODE AND NOT OPTION_QTQUICK)
     add_subdirectory(tests)
     add_subdirectory(examples)
 endif()

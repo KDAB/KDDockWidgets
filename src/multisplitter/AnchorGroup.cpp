@@ -242,7 +242,6 @@ QDebug AnchorGroup::debug(QDebug d) const
     d << "AnchorGroup: this=" << ((void*)this) << "\n;  top=" << top << "; left=" << left
       << "\n  ; right=" << right << "; bottom=" << bottom
       << "\n  ; valid=" << isValid()
-      << "\n  ; layoutWindow=" << (layout ? layout->multiSplitter()->window() : nullptr)
       << anchorIsFollowingInwards(left) << anchorIsFollowingInwards(top)
       << anchorIsFollowingInwards(right) << anchorIsFollowingInwards(bottom)
       << (left ? left->followee() : nullptr)

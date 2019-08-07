@@ -23,8 +23,10 @@
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "widgets/QWidgetAdapter_widgets_p.h"
+typedef QWidget QWidgetOrQuick;
 #else
 # include "quick/QWidgetAdapter_quick_p.h"
+typedef KDDockWidgets::QuickItem QWidgetOrQuick;
 #endif
 
 #endif

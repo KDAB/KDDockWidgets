@@ -21,7 +21,8 @@
 #ifndef KD_DRAGGABLE_P_H
 #define KD_DRAGGABLE_P_H
 
-#include <QWidget>
+#include "QWidgetAdapter.h"
+
 #include <QVector>
 
 #include <memory>
@@ -46,14 +47,13 @@ public:
 
     explicit Draggable(QWidget *thisObject, bool enabled = true);
     virtual ~Draggable();
-    QWidget *asWidget() const;
+    QWidgetOrQuick *asWidget() const;
 
     /**
      * If this draggable is already a window, do nothing.
      * Otherwise it should make it a window. As that's what dragging does.
      */
     virtual std::unique_ptr<WindowBeingDragged> makeWindow() = 0;
-
 
     /**
      * @brief Returns whether point @p p is draggable.
@@ -64,7 +64,6 @@ public:
 
     WidgetResizeHandler *widgetResizeHandler() const;
     void setWidgetResizeHandler(WidgetResizeHandler *w);
-    FloatingWindow *isFloatingWindow() const;
 
 private:
     class Private;

@@ -31,6 +31,7 @@
  */
 
 #include "QWidgetAdapter_quick_p.h"
+#include "FloatingWindow_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>
@@ -56,3 +57,33 @@ void QWidgetAdapter::onMousePress() {}
 void QWidgetAdapter::onMouseMove(QPoint) {}
 void QWidgetAdapter::onMouseRelease() {}
 void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}
+
+
+void QWidgetAdapter::raise() {}
+
+FloatingWindow * QWidgetAdapter::floatingWindow() const
+{
+    return nullptr;
+}
+
+QRect QWidgetAdapter::geometry() const
+{
+    return {};
+}
+
+QRect QWidgetAdapter::rect() const
+{
+    return {};
+}
+
+void QWidgetAdapter::show()
+{
+}
+
+void QWidgetAdapter::setGeometry(QRect) {}
+void QWidgetAdapter::setVisible(bool) {}
+
+void QWidgetAdapter::grabMouse() {}
+void QWidgetAdapter::releaseMouse() {}
+void QWidgetAdapter::setMinimumSize(QSize) {}
+void QWidgetAdapter::resize(QSize) {}

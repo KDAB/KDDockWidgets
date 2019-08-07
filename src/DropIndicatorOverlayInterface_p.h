@@ -22,16 +22,15 @@
 #define KD_DROPINDICATOROVERLAYINTERFACE_P_H
 
 #include "docks_export.h"
+#include "QWidgetAdapter.h"
 #include "Frame_p.h"
 #include "KDDockWidgets.h"
-
-#include <QWidget>
 
 namespace KDDockWidgets {
 
 class DropArea;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS DropIndicatorOverlayInterface : public QWidget
+class DOCKS_EXPORT_FOR_UNIT_TESTS DropIndicatorOverlayInterface : public QWidgetAdapter
 {
     Q_OBJECT
 public:
@@ -81,7 +80,7 @@ protected:
     virtual void updateVisibility() = 0;
     Frame *m_hoveredFrame = nullptr;
     DropLocation m_currentDropLocation = DropLocation_None;
-    QPointer<const QWidget> m_windowBeingDragged;
+    QPointer<const QWidgetOrQuick> m_windowBeingDragged;
     DropArea *const m_dropArea;
 };
 }

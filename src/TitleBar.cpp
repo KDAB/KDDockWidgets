@@ -33,7 +33,7 @@
 using namespace KDDockWidgets;
 
 TitleBar::TitleBar(Frame *parent)
-    : QWidget(parent)
+    : QWidgetAdapter(parent)
     , Draggable(this)
     , m_frame(parent)
     , m_floatingWindow(nullptr)
@@ -43,7 +43,7 @@ TitleBar::TitleBar(Frame *parent)
 }
 
 TitleBar::TitleBar(FloatingWindow *parent)
-    : QWidget(parent)
+    : QWidgetAdapter(parent)
     , Draggable(this)
     , m_frame(nullptr)
     , m_floatingWindow(parent)
@@ -113,8 +113,8 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(m_floatingWindow, this));
     }
 
-    qCDebug(hovering) << "TitleBar::makeWindow: isFloating=" << isFloatingWindow() << "; isTheOnlyFrame=" << m_frame->isTheOnlyFrame() << "; frame=" << m_frame;
-    if (FloatingWindow *fw = isFloatingWindow()) { // Already floating
+    qCDebug(hovering) << "TitleBar::makeWindow: isFloating=" << floatingWindow() << "; isTheOnlyFrame=" << m_frame->isTheOnlyFrame() << "; frame=" << m_frame;
+    if (FloatingWindow *fw = QWidgetAdapter::floatingWindow()) { // Already floating
         if (m_frame->isTheOnlyFrame()) { // We dont' detach. This one drags the entire window instead.
             qCDebug(hovering) << "TitleBar::makeWindow no detach needed";
             return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
