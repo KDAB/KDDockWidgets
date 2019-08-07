@@ -35,7 +35,6 @@ set(DOCKSLIBS_SRCS
     TitleBar.cpp
     ObjectViewer.cpp
     ObjectViewer_p.h
-    QWidgetAdapter.cpp
     DebugWindow.cpp
     DebugWindow_p.h
     WindowBeingDragged.cpp
@@ -63,6 +62,19 @@ set(DOCKSLIBS_SRCS
     widgets/TitleBarWidget.cpp
     )
 
+
+if (OPTION_QTQUICK)
+    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
+        quick/QWidgetAdapter_quick.cpp
+        quick/QWidgetAdapter_quick_p.h
+        )
+else()
+    set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
+        widgets/QWidgetAdapter_widgets.cpp
+        widgets/QWidgetAdapter_widgets_p.h)
+
+endif()
+
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(IS_CLANG_BUILD TRUE)
 else()
@@ -79,9 +91,11 @@ target_include_directories(docks
     PUBLIC
         $<INSTALL_INTERFACE:kddockwidgets>
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/widgets>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/quick>
     PRIVATE
         ${CMAKE_SOURCE_DIR}/src
         ${CMAKE_SOURCE_DIR}/src/widgets
+        ${CMAKE_SOURCE_DIR}/src/quick
 )
 
 target_compile_definitions(docks PRIVATE BUILDING_DOCKS_LIBRARY)

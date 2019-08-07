@@ -11,6 +11,7 @@ cmake_policy(SET CMP0042 NEW)
 
 option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
 option(OPTION_ASAN_SUPPORT "Activate support for using ASAN" OFF)
+option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
 find_package(Qt5Widgets)
 set(CMAKE_AUTOMOC ON)
@@ -29,6 +30,12 @@ if (OPTION_DEVELOPER_MODE)
     if (NOT MSVC)
         add_compile_options(-Wall -Wextra -Werror)
     endif()
+endif()
+
+if (OPTION_QTQUICK)
+    add_definitions(-DKDDOCKWIDGETS_QTQUICK)
+else()
+    add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
 endif()
 
 add_subdirectory(src)

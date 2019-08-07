@@ -30,15 +30,15 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "QWidgetAdapter.h"
+#include "QWidgetAdapter_quick_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>
 
 using namespace KDDockWidgets;
 
-QWidgetAdapter::QWidgetAdapter(QWidget *parent, Qt::WindowFlags f)
-    : QWidget(parent, f)
+QWidgetAdapter::QWidgetAdapter(QObject *parent, Qt::WindowFlags)
+    : QObject (parent)
 {
 }
 
@@ -48,49 +48,11 @@ QWidgetAdapter::~QWidgetAdapter()
 
 void QWidgetAdapter::raiseAndActivate()
 {
-    window()->raise();
-    window()->activateWindow();
-}
-
-bool QWidgetAdapter::event(QEvent *e)
-{
-    if (e->type() == QEvent::LayoutRequest)
-        onLayoutRequest();
-
-    return QWidget::event(e);
-}
-
-void QWidgetAdapter::resizeEvent(QResizeEvent *ev)
-{
-    if (!onResize(ev->oldSize(), ev->size()))
-        QWidget::resizeEvent(ev);
-}
-
-void QWidgetAdapter::mousePressEvent(QMouseEvent *)
-{
-    onMousePress();
-}
-
-void QWidgetAdapter::mouseMoveEvent(QMouseEvent *ev)
-{
-    onMouseMove(ev->globalPos());
-}
-
-void QWidgetAdapter::mouseReleaseEvent(QMouseEvent *)
-{
-    onMouseRelease();
-}
-
-void QWidgetAdapter::closeEvent(QCloseEvent *e)
-{
-    onCloseEvent(e);
 }
 
 bool QWidgetAdapter::onResize(QSize, QSize) { return false; }
 void QWidgetAdapter::onLayoutRequest() {}
-
 void QWidgetAdapter::onMousePress() {}
 void QWidgetAdapter::onMouseMove(QPoint) {}
 void QWidgetAdapter::onMouseRelease() {}
-
 void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}

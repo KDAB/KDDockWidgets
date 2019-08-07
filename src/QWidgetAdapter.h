@@ -18,48 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * @file
- * @brief A class that is QWidget when building for QtWidgets, and QObject when building for QtQuick.
- *
- * Allows to have the same code base supporting both stacks.
- *
- * @author Sérgio Martins \<sergio.martins@kdab.com\>
- */
-
 #ifndef KDDOCKWIDGETS_QWIDGETADAPTER_H
 #define KDDOCKWIDGETS_QWIDGETADAPTER_H
 
-#include "docks_export.h"
-
-#include <QWidget>
-
-namespace KDDockWidgets {
-
-class DOCKS_EXPORT QWidgetAdapter : public QWidget // TODO ifdef the base class once we support QtQuick
-{
-    Q_OBJECT
-public:
-    explicit QWidgetAdapter(QWidget *parent = nullptr, Qt::WindowFlags f = {});
-    ~QWidgetAdapter() override;
-
-protected:
-    void raiseAndActivate();
-    bool event(QEvent *e) override;
-    void resizeEvent(QResizeEvent *) override;
-    void mousePressEvent(QMouseEvent *) override;
-    void mouseMoveEvent(QMouseEvent *) override;
-    void mouseReleaseEvent(QMouseEvent *) override;
-    void closeEvent(QCloseEvent *) override;
-
-    virtual bool onResize(QSize oldSize, QSize newSize);
-    virtual void onLayoutRequest();
-    virtual void onMousePress();
-    virtual void onMouseMove(QPoint globalPos);
-    virtual void onMouseRelease();
-    virtual void onCloseEvent(QCloseEvent *);
-};
-
-}
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+# include "widgets/QWidgetAdapter_widgets_p.h"
+#else
+# include "quick/QWidgetAdapter_quick_p.h"
+#endif
 
 #endif
