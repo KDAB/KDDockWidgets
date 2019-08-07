@@ -38,7 +38,6 @@
 #include "Config.h"
 
 #include <QCloseEvent>
-#include <QVBoxLayout>
 
 #define MARGIN_THRESHOLD 100
 
@@ -52,14 +51,10 @@ Frame::Frame(QWidget *parent, Options options)
     , m_titleBar(Config::self().frameWorkWidgetFactory()->createTitleBar(this))
     , m_options(options)
 {
+    qDebug() << "Frame";
     s_dbg_numFrames++;
     DockRegistry::self()->registerFrame(this);
     qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
-    auto vlayout = new QVBoxLayout(this);
-    vlayout->setContentsMargins(0, 0, 0, 0);
-    vlayout->setSpacing(0);
-    vlayout->addWidget(m_titleBar);
-    vlayout->addWidget(m_tabWidget);
 
     connect(m_tabWidget, &TabWidget::dockWidgetCountChanged, this, &Frame::onDockWidgetCountChanged);
     connect(m_tabWidget, &TabWidget::dockWidgetCountChanged, this, &Frame::numDockWidgetsChanged);

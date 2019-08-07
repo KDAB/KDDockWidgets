@@ -26,7 +26,10 @@
  */
 
 #include "FrameWidget_p.h"
+#include "TitleBar_p.h"
+#include "TabWidget_p.h"
 
+#include <QVBoxLayout>
 #include <QPainter>
 
 using namespace KDDockWidgets;
@@ -34,6 +37,14 @@ using namespace KDDockWidgets;
 FrameWidget::FrameWidget(QWidget *parent, Options options)
     : Frame(parent, options)
 {
+
+    qDebug() << "FrameWidget";
+
+    auto vlayout = new QVBoxLayout(this);
+    vlayout->setContentsMargins(0, 0, 0, 0);
+    vlayout->setSpacing(0);
+    vlayout->addWidget(titleBar());
+    vlayout->addWidget(tabWidget());
 }
 
 void FrameWidget::paintEvent(QPaintEvent *)

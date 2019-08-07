@@ -2078,13 +2078,14 @@ void TestDocks::tst_availableLengthForDrop_data()
     {
         // Frame has a bit bigger min size than the widget it hosts, since it has space for a tab bar and titlebar
 
-        Frame frame;
+        auto frame = Config::self().frameWorkWidgetFactory()->createFrame();
         const int w1MinLength = 100;
         QWidget *w1 = createWidget(w1MinLength);
         auto dock = new DockWidget("foo");
         dock->setWidget(w1);
-        frame.addWidget(dock);
-        minFrameSize = frame.minimumSizeHint();
+        frame->addWidget(dock);
+        minFrameSize = frame->minimumSizeHint();
+        delete frame;
     }
 
     {
