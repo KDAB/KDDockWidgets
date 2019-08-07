@@ -35,6 +35,7 @@
 
 #include <QResizeEvent>
 #include <QMouseEvent>
+#include <QWindow>
 
 using namespace KDDockWidgets;
 
@@ -87,3 +88,4 @@ void QWidgetAdapter::grabMouse() {}
 void QWidgetAdapter::releaseMouse() {}
 void QWidgetAdapter::setMinimumSize(QSize) {}
 void QWidgetAdapter::resize(QSize) {}
+QWindow *windowHandle() const { return nullptr; }

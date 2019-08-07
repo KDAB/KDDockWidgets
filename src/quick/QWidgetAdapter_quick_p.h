@@ -39,7 +39,7 @@
 namespace KDDockWidgets {
 
 class FloatingWindow;
-
+class QWindow;
 
 class QuickItem : public QQuickItem
 {
@@ -79,6 +79,9 @@ public:
     void releaseMouse();
     void setMinimumSize(QSize);
     void resize(QSize);
+
+    QWindow *windowHandle() const;
+
 protected:
     void raiseAndActivate();
 

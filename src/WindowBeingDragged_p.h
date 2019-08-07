@@ -38,7 +38,7 @@ public:
     ~WindowBeingDragged();
     void init();
 
-    FloatingWindow *window() const { return m_floatingWindow; }
+    FloatingWindow *floatingWindow() const { return m_floatingWindow; }
 
     ///@brief grabs or releases the mouse
     void grabMouse(bool grab);

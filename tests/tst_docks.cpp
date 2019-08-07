@@ -870,7 +870,7 @@ void TestDocks::tst_anchorsFromTo()
     Anchor *follower = horizAnchors.at(0);
     auto window = bottom->frame()->titleBar()->makeWindow();
     QVERIFY(dropArea->checkSanity());
-    QVERIFY(qobject_cast<FloatingWindow *>(window->window()));
+    QVERIFY(qobject_cast<FloatingWindow *>(window->floatingWindow()));
     QVERIFY(follower->isFollowing());
 
     nonStaticAnchors = dropArea->nonStaticAnchors();
@@ -891,7 +891,7 @@ void TestDocks::tst_anchorsFromTo()
     }
 
     mainwindow.reset();
-    delete window->window();
+    delete window->floatingWindow();
 
     {
         // Test a case where the to wasn't correct

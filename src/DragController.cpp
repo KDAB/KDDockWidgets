@@ -29,6 +29,7 @@
 #include <QMouseEvent>
 #include <QApplication>
 #include <QCursor>
+#include <QWindow>
 
 #if defined(Q_OS_WIN)
 # include <QWindow>
@@ -174,14 +175,14 @@ StateDragging::~StateDragging() = default;
 void StateDragging::onEntry(QEvent *)
 {
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
-    qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->window();
+    qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
 }
 
 bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
 {
     qCDebug(state) << "StateDragging: handleMouseButtonRelease";
 
-    FloatingWindow *floatingWindow = q->m_windowBeingDragged->window();
+    FloatingWindow *floatingWindow = q->m_windowBeingDragged->floatingWindow();
     if (!floatingWindow) {
         // It was deleted externally
         qCDebug(state) << "StateDragging: Bailling out, deleted externally";
@@ -205,21 +206,21 @@ bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
 
 bool StateDragging::handleMouseMove(QPoint globalPos)
 {
-    if (!q->m_windowBeingDragged->window()) {
+    if (!q->m_windowBeingDragged->floatingWindow()) {
         qCDebug(state) << "Canceling drag, window was deleted";
         Q_EMIT q->dragCanceled();
         return true;
     }
 
     if (!q->m_nonClientDrag)
-        q->m_windowBeingDragged->window()->move(globalPos - q->m_offset);
+        q->m_windowBeingDragged->floatingWindow()->windowHandle()->setPosition(globalPos - q->m_offset);
 
     DropArea *dropArea = q->dropAreaUnderCursor();
     if (q->m_currentDropArea && dropArea != q->m_currentDropArea)
         q->m_currentDropArea->removeHover();
 
     if (dropArea)
-        dropArea->hover(q->m_windowBeingDragged->window(), globalPos);
+        dropArea->hover(q->m_windowBeingDragged->floatingWindow(), globalPos);
 
     q->m_currentDropArea = dropArea;
 
@@ -433,7 +434,7 @@ QWidget *DragController::qtTopLevelUnderCursor() const
     }
 #else
     for (auto tl : topLevels) {
-        if (!tl->isVisible() || tl == m_windowBeingDragged->window() || tl->isMinimized() || tl->objectName() == QLatin1String("_docks_IndicatorWindow_Overlay"))
+        if (!tl->isVisible() || tl == m_windowBeingDragged->floatingWindow() || tl->isMinimized() || tl->objectName() == QLatin1String("_docks_IndicatorWindow_Overlay"))
             continue;
         if (tl->geometry().contains(globalPos)) {
             qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
@@ -468,7 +469,7 @@ DropArea *DragController::dropAreaUnderCursor() const
 
     if (auto dock = qobject_cast<DockWidgetBase *>(topLevel)) {
         FloatingWindow *fw = dock->morphIntoFloatingWindow();
-        m_windowBeingDragged->window()->raise();
+        m_windowBeingDragged->floatingWindow()->raise();
         return fw->dropArea();
     }
 
