@@ -458,7 +458,7 @@ Frame* createFrameWithWidget(const QString &name, MultiSplitter *parent, int min
     QWidget *w = createWidget(minLength, name);
     auto dw = new DockWidget(name);
     dw->setWidget(w);
-    auto frame = new Frame(parent);
+    auto frame = Config::self().frameWorkWidgetFactory()->createFrame(parent);
     frame->addWidget(dw);
     return frame;
 }
@@ -492,7 +492,7 @@ void TestDocks::tst_createFloatingWindow()
 
 void TestDocks::nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location)
 {
-    auto frame = new Frame();
+    auto frame = Config::self().frameWorkWidgetFactory()->createFrame();
     frame->addWidget(dock);
     dock->frame()->setObjectName(dock->objectName());
 
@@ -2041,7 +2041,7 @@ std::unique_ptr<MultiSplitter> TestDocks::createMultiSplitterFromSetup(MultiSpli
 
     const int count = setup.widgets.size();
     for (int i = 0; i < count; ++i) {
-        auto frame = new Frame(widget.get());
+        auto frame = Config::self().frameWorkWidgetFactory()->createFrame(widget.get());
         auto dock = new DockWidget(QString("foo_createMultiSplitterFromSetup%1").arg(i));
         dock->setWidget(setup.widgets[i]);
         frame->addWidget(dock);
