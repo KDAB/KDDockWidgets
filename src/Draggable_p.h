@@ -45,7 +45,7 @@ class Draggable
 public:
     typedef QVector<Draggable *> List;
 
-    explicit Draggable(QWidget *thisObject, bool enabled = true);
+    explicit Draggable(QWidgetOrQuick *thisObject, bool enabled = true);
     virtual ~Draggable();
     QWidgetOrQuick *asWidget() const;
 

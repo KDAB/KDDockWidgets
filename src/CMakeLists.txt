@@ -46,8 +46,6 @@ set(DOCKSLIBS_SRCS
     multisplitter/MultiSplitter.cpp
     multisplitter/MultiSplitter_p.h
     multisplitter/Separator.cpp
-    # indicators/AnimatedIndicators.cpp
-    indicators/ClassicIndicators.cpp
 
     FrameworkWidgetFactory.cpp
 
@@ -70,6 +68,8 @@ if (OPTION_QTQUICK)
 else()
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
         MainWindow.cpp
+        # indicators/AnimatedIndicators.cpp
+        indicators/ClassicIndicators.cpp
         widgets/QWidgetAdapter_widgets.cpp
         widgets/QWidgetAdapter_widgets_p.h)
 

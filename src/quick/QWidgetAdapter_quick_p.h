@@ -36,10 +36,11 @@
 #include <QObject>
 #include <QCloseEvent>
 
+class QWindow;
+
 namespace KDDockWidgets {
 
 class FloatingWindow;
-class QWindow;
 
 class QuickItem : public QQuickItem
 {

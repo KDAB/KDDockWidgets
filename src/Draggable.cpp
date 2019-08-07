@@ -40,7 +40,7 @@ public:
     const bool enabled;
 };
 
-Draggable::Draggable(QWidget *thisWidget, bool enabled)
+Draggable::Draggable(QWidgetOrQuick *thisWidget, bool enabled)
     : d(new Private(thisWidget, enabled))
 {
     if (thisWidget && d->enabled)
