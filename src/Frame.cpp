@@ -37,6 +37,7 @@
 #include "DockRegistry_p.h"
 #include "Config.h"
 
+#include <QTabBar>
 #include <QCloseEvent>
 
 #define MARGIN_THRESHOLD 100
@@ -51,23 +52,9 @@ Frame::Frame(QWidget *parent, Options options)
     , m_titleBar(Config::self().frameWorkWidgetFactory()->createTitleBar(this))
     , m_options(options)
 {
-    qDebug() << "Frame";
     s_dbg_numFrames++;
     DockRegistry::self()->registerFrame(this);
     qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
-
-    connect(m_tabWidget, &TabWidget::dockWidgetCountChanged, this, &Frame::onDockWidgetCountChanged);
-    connect(m_tabWidget, &TabWidget::dockWidgetCountChanged, this, &Frame::numDockWidgetsChanged);
-
-    connect(m_tabWidget, &QTabWidget::currentChanged, this, [this] (int index) {
-        if (index != -1) {
-            if (auto dock = dockWidgetAt(index)) {
-                Q_EMIT currentDockWidgetChanged(dock);
-            } else {
-                qWarning() << "dockWidgetAt" << index << "returned nullptr" << this;
-            }
-        }
-    });
 
     connect(this, &Frame::currentDockWidgetChanged, this, &Frame::updateTitleAndIcon);
 
@@ -104,7 +91,7 @@ void Frame::updateTitleAndIcon()
 
 void Frame::addWidget(DockWidgetBase *dockWidget)
 {
-    insertWidget(dockWidget, m_tabWidget->count()); // append
+    insertWidget(dockWidget, m_tabWidget->numDockWidgets()); // append
 }
 
 void Frame::addWidget(Frame *frame)
@@ -167,6 +154,19 @@ void Frame::onDockWidgetCountChanged()
         // We don't really keep track of the state, so emit even if the visibility didn't change. No biggie.
         if (!(m_options & Option_AlwaysShowsTabs))
             Q_EMIT hasTabsVisibleChanged();
+    }
+
+    Q_EMIT numDockWidgetsChanged();
+}
+
+void Frame::onCurrentTabChanged(int index)
+{
+    if (index != -1) {
+        if (auto dock = dockWidgetAt(index)) {
+            Q_EMIT currentDockWidgetChanged(dock);
+        } else {
+            qWarning() << "dockWidgetAt" << index << "returned nullptr" << this;
+        }
     }
 }
 
@@ -292,12 +292,12 @@ int Frame::currentTabIndex() const
 
 void Frame::setCurrentTabIndex(int index)
 {
-    m_tabWidget->setCurrentIndex(index);
+    m_tabWidget->setCurrentDockWidget(index);
 }
 
 DockWidgetBase *Frame::currentDockWidget() const
 {
-    return qobject_cast<DockWidgetBase*>(m_tabWidget->currentWidget());
+    return m_tabWidget->dockwidgetAt(m_tabWidget->currentIndex());
 }
 
 bool Frame::anyNonClosable() const
@@ -366,7 +366,7 @@ int Frame::dbg_numFrames()
 void Frame::dumpDebug()
 {
     qDebug() << "        Frame:" << (void*)this;
-    qDebug() << "            layoutItem=" << m_layoutItem << "; num=" << m_tabWidget->count();
+    qDebug() << "            layoutItem=" << m_layoutItem << "; num=" << m_tabWidget->numDockWidgets();
     for (auto dw : dockWidgets()) {
         qDebug() << "            dockwidget=" << dw << "; dw->layoutItem=" << dw->lastPosition()->layoutItem();
         dw->lastPosition()->dumpDebug();
@@ -395,7 +395,7 @@ bool Frame::hasTabsVisible() const
 
 DockWidgetBase *Frame::dockWidgetAt(int index) const
 {
-    return qobject_cast<DockWidgetBase *>(m_tabWidget->widget(index));
+    return qobject_cast<DockWidgetBase *>(m_tabWidget->dockwidgetAt(index));
 }
 
 void Frame::setDropArea(DropArea *dt)
@@ -443,7 +443,7 @@ bool Frame::isInMainWindow() const
 
 int Frame::dockWidgetCount() const
 {
-    return m_tabWidget->count();
+    return m_tabWidget->numDockWidgets();
 }
 
 bool Frame::event(QEvent *e)

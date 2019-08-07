@@ -90,6 +90,7 @@ public:
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;
     TitleBar *titleBar() const;
+    TabWidget *tabWidget() const;
     QString title() const;
     QIcon icon() const;
     const QVector<DockWidgetBase *> dockWidgets() const;
@@ -197,9 +198,6 @@ public:
      */
     bool beingDeletedLater() const;
 
-    ///@brief getter for the tab widget
-    TabWidget *tabWidget() const;
-
     ///@brief getter for the tab bar
     TabBar *tabBar() const;
 
@@ -210,6 +208,7 @@ public:
      **/
     bool hasTabsVisible() const;
 
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();
@@ -218,8 +217,10 @@ Q_SIGNALS:
 private:
     Q_DISABLE_COPY(Frame)
     friend class TestDocks;
-    void scheduleDeleteLater();
+    friend class TabWidget;
     void onDockWidgetCountChanged();
+    void onCurrentTabChanged(int index);
+    void scheduleDeleteLater();
     bool event(QEvent *) override;
     TabWidget *const m_tabWidget;
     TitleBar *const m_titleBar;

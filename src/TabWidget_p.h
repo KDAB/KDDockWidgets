@@ -87,15 +87,51 @@ private:
     QPointer<DockWidgetBase> m_lastPressedDockWidget = nullptr;
 };
 
-class DOCKS_EXPORT TabWidget : public QTabWidget, public Draggable
+class DOCKS_EXPORT TabWidget : public Draggable
 {
-    Q_OBJECT
 public:
-    explicit TabWidget(QWidget *parent);
+    /**
+     * @brief Constructs a new TabWidget, with @p frame as a parent
+     */
+    explicit TabWidget(QWidgetOrQuick *thisWidget, Frame *frame);
 
+    /**
+     * @brief returns the number of dock widgets in this TabWidget
+     */
+    virtual int numDockWidgets() const = 0;
+
+    /**
+     * @brief Removes a dock widget from the TabWidget
+     */
+    virtual void removeDockWidget(DockWidgetBase *) = 0;
+
+    /**
+     * @brief Returns the index of the dock widget, or -1 if it doesn't exist
+     */
+    virtual int indexOfDockWidget(DockWidgetBase *) const = 0;
+
+    /**
+     * @brief Sets the current dock widget index
+     */
+    virtual void setCurrentDockWidget(int index) = 0;
+    void setCurrentDockWidget(DockWidgetBase *);
+
+    virtual void insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) = 0;
+
+    virtual void setTabBarAutoHide(bool) = 0;
+
+    /**
+     * @brief Returns the current index
+     */
+    virtual int currentIndex() const = 0;
 
     ///@brief appends a dock widget into this TabWidget
     void addDockWidget(DockWidgetBase *);
+
+    /**
+     * @brief Returns the dock widget tabbed at index @p index
+     */
+    virtual DockWidgetBase *dockwidgetAt(int index) const = 0;
 
     /**
      * @brief inserts @p dockwidget into the TabWidget, at @p index
@@ -103,8 +139,6 @@ public:
      * @param index The index to where to put it
      */
     void insertDockWidget(DockWidgetBase *dockwidget, int index);
-
-    void removeDockWidget(DockWidgetBase *);
 
     /**
      * @brief detaches a dock widget and shows it as a floating dock widget
@@ -118,17 +152,26 @@ public:
      */
     bool contains(DockWidgetBase *dw) const;
 
+    /**
+     * @brief Returns the tab bar
+     */
+    virtual TabBar* tabBar() const = 0;
+
+    /**
+     * @brief Returns this class as a QWidget (if using QtWidgets) or QQuickItem
+     */
+    QWidgetOrQuick *asWidget() const;
+
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
-    bool isPositionDraggable(QPoint p) const override;
 
-Q_SIGNALS:
-    void dockWidgetCountChanged();
 protected:
-    void tabInserted(int index) override;
-    void tabRemoved(int index) override;
+    void onTabInserted();
+    void onTabRemoved();
+
 private:
-    TabBar *const m_tabBar;
+    Frame *const m_frame;
+    QWidgetOrQuick *const m_thisWidget;
     Q_DISABLE_COPY(TabWidget)
 };
 }

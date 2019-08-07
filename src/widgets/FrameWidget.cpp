@@ -31,20 +31,18 @@
 
 #include <QVBoxLayout>
 #include <QPainter>
+#include <QVBoxLayout>
 
 using namespace KDDockWidgets;
 
 FrameWidget::FrameWidget(QWidget *parent, Options options)
     : Frame(parent, options)
 {
-
-    qDebug() << "FrameWidget";
-
     auto vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
     vlayout->addWidget(titleBar());
-    vlayout->addWidget(tabWidget());
+    vlayout->addWidget(tabWidget()->asWidget());
 }
 
 void FrameWidget::paintEvent(QPaintEvent *)

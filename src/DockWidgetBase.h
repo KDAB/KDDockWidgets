@@ -35,7 +35,6 @@
 #include <QWidget>
 
 class QAction;
-class QTabWidget;
 
 namespace KDDockWidgets {
 
@@ -45,8 +44,8 @@ class DragController;
 class Item;
 class LastPosition;
 class DockRegistry;
-class TabWidget;
 class LayoutSaver;
+class TabWidget;
 class TitleBar;
 
 /**
@@ -192,15 +191,6 @@ public:
      * @brief Like QWidget::close() but the hosted widget won't be asked if we should close
      */
     void forceClose();
-
-    /**
-     * @brief Returns the tab widget where this dock widget is in.
-     *
-     * It will be nullptr right after DockWidget() ctor, but will get set as soon as the DockWidget,
-     * gets added ao a MainWindow, or on the next event loop, where it's transformed into a
-     * FloatingWindow if floating.
-     */
-    QTabWidget* tabWidget() const;
 
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed

@@ -262,7 +262,7 @@ DockWidgetBase::Options DockWidgetBase::options() const
 bool DockWidgetBase::isTabbed() const
 {
     if (TabWidget* tabWidget = d->parentTabWidget()) {
-        return frame()->alwaysShowsTabs() || tabWidget->count() > 1;
+        return frame()->alwaysShowsTabs() || tabWidget->numDockWidgets() > 1;
     } else {
         if (!isFloating())
             qWarning() << "DockWidget::isTabbed() Couldn't find any tab widget.";
@@ -273,7 +273,7 @@ bool DockWidgetBase::isTabbed() const
 bool DockWidgetBase::isCurrentTab() const
 {
     if (TabWidget* tabWidget = d->parentTabWidget()) {
-        return tabWidget->currentIndex() == tabWidget->indexOf(const_cast<DockWidgetBase*>(this));
+        return tabWidget->currentIndex() == tabWidget->indexOfDockWidget(const_cast<DockWidgetBase*>(this));
     } else {
         return true;
     }
@@ -282,7 +282,7 @@ bool DockWidgetBase::isCurrentTab() const
 void DockWidgetBase::setAsCurrentTab()
 {
     if (TabWidget* tabWidget = d->parentTabWidget())
-        tabWidget->setCurrentWidget(this);
+        tabWidget->setCurrentDockWidget(this);
 }
 
 void DockWidgetBase::setIcon(const QIcon &icon)
@@ -300,12 +300,6 @@ QIcon DockWidgetBase::icon() const
 void DockWidgetBase::forceClose()
 {
     d->close();
-}
-
-QTabWidget *DockWidgetBase::tabWidget() const
-{
-    return frame() ? frame()->tabWidget()
-                   : nullptr;
 }
 
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
@@ -414,11 +408,8 @@ void DockWidgetBase::Private::onDockWidgetHidden()
 
 TabWidget *DockWidgetBase::Private::parentTabWidget() const
 {
-    QWidget *p= q->parentWidget();
-    if (p && p->objectName() == QLatin1String("qt_tabwidget_stackedwidget")) {
-        if (auto tw = qobject_cast<TabWidget *>(p->parentWidget()))
-            return tw;
-    }
+    if (auto f = q->frame())
+        return f->tabWidget();
 
     return nullptr;
 }
@@ -483,8 +474,7 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 int DockWidgetBase::Private::currentTabIndex() const
 {
     TabWidget *tabWidget = parentTabWidget();
-    return tabWidget ? tabWidget->indexOf(q)
-                     : 0;
+    return tabWidget ? tabWidget->indexOfDockWidget(q) : 0;
 }
 
 void DockWidgetBase::Private::saveTabIndex()

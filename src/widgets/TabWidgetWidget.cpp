@@ -26,12 +26,37 @@
  */
 
 #include "TabWidgetWidget_p.h"
+#include "Frame_p.h"
+#include "Config.h"
 
 using namespace KDDockWidgets;
 
-TabWidgetWidget::TabWidgetWidget(QWidget *parent)
-    : TabWidget(parent)
+TabWidgetWidget::TabWidgetWidget(Frame *parent)
+    : QTabWidget(parent)
+    , TabWidget(this, parent)
+    , m_tabBar(Config::self().frameWorkWidgetFactory()->createTabBar(this))
 {
+    setTabBar(m_tabBar);
+}
+
+TabBar *TabWidgetWidget::tabBar() const
+{
+    return m_tabBar;
+}
+
+int TabWidgetWidget::numDockWidgets() const
+{
+    return count();
+}
+
+void TabWidgetWidget::removeDockWidget(DockWidgetBase *dw)
+{
+    removeTab(indexOf(dw));
+}
+
+int TabWidgetWidget::indexOfDockWidget(DockWidgetBase *dw) const
+{
+    return indexOf(dw);
 }
 
 void TabWidgetWidget::paintEvent(QPaintEvent *p)
@@ -40,4 +65,50 @@ void TabWidgetWidget::paintEvent(QPaintEvent *p)
     // Otherwise it looks weird because the colors change when transforming a QDockWidget into FloatingWindow
     if (count() > 1)
         QTabWidget::paintEvent(p);
+}
+
+void TabWidgetWidget::tabInserted(int)
+{
+    onTabInserted();
+}
+
+void TabWidgetWidget::tabRemoved(int)
+{
+    onTabRemoved();
+}
+
+bool TabWidgetWidget::isPositionDraggable(QPoint p) const
+{
+    if (tabPosition() != QTabWidget::North) {
+        qWarning() << Q_FUNC_INFO << "Not implemented yet. Only North is supported";
+        return false;
+    }
+
+    return p.y() >= 0 && p.y() <= QTabWidget::tabBar()->height();
+}
+
+void TabWidgetWidget::setCurrentDockWidget(int index)
+{
+    setCurrentIndex(index);
+}
+
+void TabWidgetWidget::insertDockWidget(int index, DockWidgetBase *dw,
+                                       const QIcon &icon, const QString &title)
+{
+    insertTab(index, dw, icon, title);
+}
+
+void TabWidgetWidget::setTabBarAutoHide(bool b)
+{
+    QTabWidget::setTabBarAutoHide(b);
+}
+
+DockWidgetBase *TabWidgetWidget::dockwidgetAt(int index) const
+{
+    return qobject_cast<DockWidgetBase *>(widget(index));
+}
+
+int TabWidgetWidget::currentIndex() const
+{
+    return QTabWidget::currentIndex();
 }

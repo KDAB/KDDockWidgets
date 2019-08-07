@@ -21,6 +21,7 @@
 #include "utils.h"
 #include "DropArea_p.h"
 #include "Config.h"
+#include "TabWidgetWidget_p.h"
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -156,10 +157,10 @@ QWidget *KDDockWidgets::Tests::draggableFor(QWidget *w)
         if (auto frame = dock->frame())
             draggable = frame->titleBar();
     } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
-        draggable = ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && fw->hasSingleFrame() && fw->frames().first()->hasTabsVisible()) ? static_cast<QWidget*>(fw->frames().first()->tabWidget())
+        draggable = ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && fw->hasSingleFrame() && fw->frames().first()->hasTabsVisible()) ? static_cast<QWidget*>(fw->frames().first()->tabWidget()->asWidget())
                                                                                                                                                             : static_cast<QWidget*>(fw->titleBar());
 
-    } else if (qobject_cast<TabWidget *>(w) || qobject_cast<TitleBar *>(w)) {
+    } else if (qobject_cast<TabWidgetWidget *>(w) || qobject_cast<TitleBar *>(w)) {
         draggable = w;
     }
 

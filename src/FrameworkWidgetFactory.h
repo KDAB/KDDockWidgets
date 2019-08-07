@@ -38,7 +38,7 @@ public:
     virtual TitleBar* createTitleBar(Frame *) const = 0;
     virtual TitleBar* createTitleBar(FloatingWindow *) const = 0;
     virtual TabBar* createTabBar(TabWidget *parent = nullptr) const = 0;
-    virtual TabWidget* createTabWidget(QWidget *parent) const = 0;
+    virtual TabWidget* createTabWidget(Frame *parent) const = 0;
     virtual Separator* createSeparator(Anchor *anchor, QWidgetAdapter *parent = nullptr) const = 0;
     virtual FloatingWindow *createFloatingWindow(QWidget *parent = nullptr) const = 0;
     virtual FloatingWindow *createFloatingWindow(Frame *frame, QWidget *parent = nullptr) const = 0;
@@ -51,7 +51,7 @@ public:
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
     TabBar *createTabBar(TabWidget *parent) const override;
-    TabWidget *createTabWidget(QWidget *parent) const override;
+    TabWidget *createTabWidget(Frame *parent) const override;
     Separator *createSeparator(Anchor *anchor, QWidgetAdapter *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(QWidget *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(Frame *frame, QWidget *parent = nullptr) const override;

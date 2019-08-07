@@ -55,7 +55,7 @@ TabBar *DefaultWidgetFactory::createTabBar(TabWidget *parent) const
     return new TabBarWidget(parent);
 }
 
-TabWidget *DefaultWidgetFactory::createTabWidget(QWidget *parent) const
+TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
 {
     return new TabWidgetWidget(parent);
 }

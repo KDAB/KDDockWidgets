@@ -41,10 +41,10 @@
 
 using namespace KDDockWidgets;
 
-TabBar::TabBar(TabWidget *parent)
-    : QTabBar(parent)
+TabBar::TabBar(TabWidget *tabWidget)
+    : QTabBar(tabWidget->asWidget())
     , Draggable(this)
-    , m_tabWidget(parent)
+    , m_tabWidget(tabWidget)
 {
     setMinimumWidth(30);
 }
@@ -54,7 +54,7 @@ DockWidgetBase *TabBar::dockWidgetAt(int index) const
     if (index < 0 || index >= count())
         return nullptr;
 
-    return qobject_cast<DockWidgetBase *>(m_tabWidget->widget(index));
+    return m_tabWidget->dockwidgetAt(index);
 }
 
 DockWidgetBase *TabBar::dockWidgetAt(QPoint localPos) const
@@ -102,29 +102,41 @@ void TabBar::onMousePress(QPoint localPos)
     m_lastPressedDockWidget = dockWidgetAt(localPos);
 }
 
-TabWidget::TabWidget(QWidget *parent)
-    : QTabWidget(parent)
-    , Draggable(this, Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
-    , m_tabBar(Config::self().frameWorkWidgetFactory()->createTabBar(this))
+TabWidget::TabWidget(QWidgetOrQuick *thisWidget, Frame *frame)
+    : Draggable(thisWidget, Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
+    , m_frame(frame)
+    , m_thisWidget(thisWidget)
 {
-    setTabBarAutoHide(true);
-    setTabBar(m_tabBar);
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    // Little ifdefery, as this is not so easy to abstract
+    QObject::connect(static_cast<QTabWidget*>(thisWidget), &QTabWidget::currentChanged,
+                     frame, &Frame::onCurrentTabChanged);
+#else
+    qWarning() << Q_FUNC_INFO << "Implement me")
+#endif
+
+}
+
+void TabWidget::setCurrentDockWidget(DockWidgetBase *dw)
+{
+    setCurrentDockWidget(indexOfDockWidget(dw));
 }
 
 void TabWidget::addDockWidget(DockWidgetBase *dock)
 {
-    insertDockWidget(dock, count());
+    insertDockWidget(dock, numDockWidgets());
 }
 
 void TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
 {
     Q_ASSERT(dock);
-    qCDebug(addwidget) << Q_FUNC_INFO << dock << "; count before=" << count();
+    qCDebug(addwidget) << Q_FUNC_INFO << dock << "; count before=" << numDockWidgets();
 
     if (index < 0)
         index = 0;
-    if (index > count())
-        index = count();
+    if (index > numDockWidgets())
+        index = numDockWidgets();
 
     if (contains(dock)) {
         qWarning() << Q_FUNC_INFO << "Refusing to add already existing widget";
@@ -132,8 +144,8 @@ void TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
     }
 
     QPointer<Frame> oldFrame = dock->frame();
-    insertTab(index, dock, dock->icon(), dock->title());
-    setCurrentIndex(index);
+    insertDockWidget(index, dock, dock->icon(), dock->title());
+    setCurrentDockWidget(index);
 
     if (oldFrame && oldFrame->beingDeletedLater()) {
         // give it a push and delete it immediately.
@@ -148,32 +160,30 @@ void TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
     }
 }
 
-void TabWidget::removeDockWidget(DockWidgetBase *w)
-{
-    removeTab(indexOf(w));
-}
 
 void TabWidget::detachTab(DockWidgetBase *dockWidget)
 {
-    m_tabBar->detachTab(dockWidget);
+    tabBar()->detachTab(dockWidget);
 }
 
 bool TabWidget::contains(DockWidgetBase *dw) const
 {
-    return indexOf(dw) != -1;
+    return indexOfDockWidget(dw) != -1;
+}
+
+QWidgetOrQuick *TabWidget::asWidget() const
+{
+    return m_thisWidget;
 }
 
 std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
 {
-    auto frame  = qobject_cast<Frame*>(parentWidget());
-    Q_ASSERT(frame);
+    QRect r = m_frame->geometry();
 
-    QRect r = frame->geometry();
-
-    const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
+    const QPoint globalPoint = m_thisWidget->mapToGlobal(QPoint(0, 0));
 
 
-    auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(frame);
+    auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(m_frame);
     r.moveTopLeft(globalPoint);
     floatingWindow->setGeometry(r);
     floatingWindow->show();
@@ -181,22 +191,13 @@ std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
 }
 
-bool TabWidget::isPositionDraggable(QPoint p) const
-{
-    if (tabPosition() != QTabWidget::North) {
-        qWarning() << Q_FUNC_INFO << "Not implemented yet. Only North is supported";
-        return false;
-    }
 
-    return p.y() >= 0 && p.y() <= m_tabBar->height();
+void TabWidget::onTabInserted()
+{
+    m_frame->onDockWidgetCountChanged();
 }
 
-void TabWidget::tabInserted(int)
+void TabWidget::onTabRemoved()
 {
-   Q_EMIT dockWidgetCountChanged();
-}
-
-void TabWidget::tabRemoved(int)
-{
-    Q_EMIT dockWidgetCountChanged();
+    m_frame->onDockWidgetCountChanged();
 }

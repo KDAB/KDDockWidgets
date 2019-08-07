@@ -29,18 +29,39 @@
 #define KDTABWIDGETWIDGET_P_H
 
 #include "TabWidget_p.h"
+#include <QTabWidget>
 
 namespace KDDockWidgets {
 
-class DOCKS_EXPORT TabWidgetWidget : public TabWidget
+class Frame;
+class TabBar;
+
+class DOCKS_EXPORT TabWidgetWidget : public QTabWidget, public TabWidget
 {
     Q_OBJECT
 public:
-    explicit TabWidgetWidget(QWidget *parent);
+    explicit TabWidgetWidget(Frame *parent);
+
+    TabBar *tabBar() const override;
+
+    int numDockWidgets() const override;
+    void removeDockWidget(DockWidgetBase *) override;
+    int indexOfDockWidget(DockWidgetBase *) const override;
 protected:
     void paintEvent(QPaintEvent *) override;
+    void tabInserted(int index) override;
+    void tabRemoved(int index) override;
+    bool isPositionDraggable(QPoint p) const override;
+    void setCurrentDockWidget(int index) override;
+    void insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) override;
+    void setTabBarAutoHide(bool) override;
+
+    DockWidgetBase *dockwidgetAt(int index) const override;
+    int currentIndex() const override;
+
 private:
     Q_DISABLE_COPY(TabWidgetWidget)
+    TabBar *const m_tabBar;
 };
 }
 
