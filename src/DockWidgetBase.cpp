@@ -103,7 +103,7 @@ public:
 };
 
 DockWidgetBase::DockWidgetBase(const QString &name, Options options)
-    : QWidget(nullptr)
+    : QWidget(nullptr, Qt::Tool)
     , d(new Private(name, options, this))
 {
     d->init();
