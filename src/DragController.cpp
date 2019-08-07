@@ -399,7 +399,7 @@ QWidget *DragController::qtTopLevelUnderCursor() const
 
     // There might be windows that don't belong to our app in between, so use win32 to travel by z-order.
     // Another solution is to set a parent on all top-levels. But this code is orthogonal.
-    HWND hwnd = (HWND)m_windowBeingDragged->window()->winId();
+    HWND hwnd = (HWND)m_windowBeingDragged->floatingWindow()->winId();
     while (hwnd) {
         hwnd = GetWindow(hwnd, GW_HWNDNEXT);
         RECT r;
