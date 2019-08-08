@@ -100,9 +100,9 @@ endif()
 
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 
-add_library(docks SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
+add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
 
-target_include_directories(docks
+target_include_directories(kddockwidgets
     PUBLIC
         $<INSTALL_INTERFACE:kddockwidgets>
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/widgets>
@@ -113,28 +113,28 @@ target_include_directories(docks
         ${CMAKE_SOURCE_DIR}/src/quick
 )
 
-target_compile_definitions(docks PRIVATE BUILDING_DOCKS_LIBRARY)
+target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY)
 if (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
-    target_compile_options(docks PRIVATE -Wshadow -Wconversion -fvisibility=hidden)
+    target_compile_options(kddockwidgets PRIVATE -Wshadow -Wconversion -fvisibility=hidden)
 
     if (IS_CLANG_BUILD)
-        target_compile_options(docks PRIVATE -Wweak-vtables)
+        target_compile_options(kddockwidgets PRIVATE -Wweak-vtables)
     endif()
 endif()
 
 if (OPTION_QTQUICK)
-    target_link_libraries(docks Qt5::Widgets Qt5::Quick)
+    target_link_libraries(kddockwidgets Qt5::Widgets Qt5::Quick)
 else()
-    target_link_libraries(docks Qt5::Widgets)
+    target_link_libraries(kddockwidgets Qt5::Widgets)
 endif()
 
 
 if (NOT WIN32 AND NOT APPLE)
     find_package(Qt5X11Extras)
-    target_link_libraries(docks Qt5::X11Extras)
+    target_link_libraries(kddockwidgets Qt5::X11Extras)
 endif()
 
-install (TARGETS docks
+install (TARGETS kddockwidgets
          RUNTIME DESTINATION bin
          LIBRARY DESTINATION lib
          ARCHIVE DESTINATION lib)
