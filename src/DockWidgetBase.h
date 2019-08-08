@@ -193,6 +193,8 @@ public:
      */
     void forceClose();
 
+    void setLocked(bool) {} // Not implemented yet
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();
