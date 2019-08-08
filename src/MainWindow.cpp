@@ -125,7 +125,7 @@ void MainWindow::addDockWidget(DockWidgetBase *dw, Location location, DockWidget
     d->m_dropArea->addDockWidget(dw, location, relativeTo, option);
 }
 
-QString MainWindow::name() const
+QString MainWindow::uniqueName() const
 {
     return d->name;
 }

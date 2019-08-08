@@ -480,7 +480,7 @@ void TestDocks::tst_createFloatingWindow()
     QVERIFY(dock);
     QVERIFY(dock->isFloating());
 
-    QCOMPARE(dock->name(), QLatin1String("doc1")); // 1.0 objectName() is inherited
+    QCOMPARE(dock->uniqueName(), QLatin1String("doc1")); // 1.0 objectName() is inherited
 
     QPointer<FloatingWindow> window = qobject_cast<FloatingWindow *>(dock->window());
     QVERIFY(window); // 1.1 DockWidget creates a FloatingWindow and is reparented

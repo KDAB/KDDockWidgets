@@ -128,7 +128,7 @@ QByteArray LayoutSaver::serializeLayout() const
     const MainWindow::List mainWindows = d->m_dockRegistry->mainwindows();
     ds << mainWindows.size();
     for (MainWindow *mainWindow : mainWindows) {
-        ds << mainWindow->name();
+        ds << mainWindow->uniqueName();
         d->serializeWindowGeometry(ds, mainWindow->window()); // window() as the MainWindow can be embedded
         ds << mainWindow;
     }
@@ -160,7 +160,7 @@ QByteArray LayoutSaver::serializeLayout() const
     const DockWidgetBase::List dockWidgets = d->m_dockRegistry->dockwidgets();
     ds << dockWidgets.size();
     for (DockWidgetBase *dw : dockWidgets) {
-        ds << dw->name();
+        ds << dw->uniqueName();
         ds << dw->lastPosition();
     }
 

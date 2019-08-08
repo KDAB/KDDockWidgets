@@ -48,13 +48,13 @@ class DOCKS_EXPORT MainWindow : public QMainWindow
     Q_OBJECT
 public:
     typedef QVector<MainWindow*> List;
-    explicit MainWindow(const QString &name, MainWindowOptions options = MainWindowOption_HasCentralFrame,
+    explicit MainWindow(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
                         QWidget *parent = nullptr, Qt::WindowFlags flags = {});
     ~MainWindow() override;
     void addDockWidgetAsTab(DockWidgetBase *);
     void addDockWidget(DockWidgetBase *, KDDockWidgets::Location, DockWidgetBase *relativeTo = nullptr, AddingOption = {});
 
-    QString name() const;
+    QString uniqueName() const;
     MainWindowOptions options() const;
 
     ///@internal

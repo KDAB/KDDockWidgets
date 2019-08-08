@@ -206,7 +206,7 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, LastPosition *lp)
             ds << (fw->beingDeleted() ? -1 : DockRegistry::self()->nestedwindows().indexOf(fw)); // TODO: Remove once we stop using deleteLater with FloatingWindow. delete would be better
         } else {
             ds << false;
-            const QString name = mainWindow->name();
+            const QString name = mainWindow->uniqueName();
             Q_ASSERT(!name.isEmpty());
             ds << name;
         }

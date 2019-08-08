@@ -73,7 +73,7 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidgetBase(const QString &name, Options options = {});
+    explicit DockWidgetBase(const QString &uniqueName, Options options = {});
 
     ///@brief destructor
     ~DockWidgetBase() override;
@@ -132,7 +132,7 @@ public:
      * @return the dock widget's unique name.
      * @sa title
      */
-    QString name() const;
+    QString uniqueName() const;
 
     /**
      * @brief the dock widget's title.

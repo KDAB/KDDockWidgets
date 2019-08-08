@@ -179,7 +179,7 @@ void DockWidgetBase::setWidget(QWidget *w)
 
     d->widget = w;
     Q_EMIT widgetChanged(w);
-    setWindowTitle(name());
+    setWindowTitle(uniqueName());
 }
 
 QWidget *DockWidgetBase::widget() const
@@ -235,7 +235,7 @@ QAction *DockWidgetBase::toggleAction() const
     return d->toggleAction;
 }
 
-QString DockWidgetBase::name() const
+QString DockWidgetBase::uniqueName() const
 {
     return d->name;
 }
@@ -557,6 +557,6 @@ DockWidgetBase *DockWidgetBase::createFromDataStream(QDataStream &ds)
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, DockWidgetBase *dw)
 {
-    ds << dw->name();
+    ds << dw->uniqueName();
     return ds;
 }

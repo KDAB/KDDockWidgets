@@ -52,7 +52,7 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget(const QString &name, Options options = {});
+    explicit DockWidget(const QString &uniqueName, Options options = {});
 
     ///@brief destructor
     ~DockWidget() override;
