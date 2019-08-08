@@ -369,6 +369,8 @@ private Q_SLOTS:
     void tst_tabBarWithHiddenTitleBar();
     void tst_dragByTabBar();
 
+    void tst_addToHiddenMainWindow();
+
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
@@ -3948,6 +3950,23 @@ void TestDocks::tst_dragByTabBar()
     QVERIFY(!fw->titleBar()->isVisible());
 
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
+}
+
+void TestDocks::tst_addToHiddenMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = new MainWindow("m1");
+    auto w1 = new MyWidget2(QSize(400,400));
+    auto w2 = new MyWidget2(QSize(400,400));
+    auto d1 = createDockWidget("1", w1);
+    auto d2 = createDockWidget("2", w2);
+
+    m->addDockWidget(d1, Location_OnTop);
+    m->addDockWidget(d2, Location_OnTop);
+
+    d1->setFloating(true);
+
+    delete m;
 }
 
 void TestDocks::tst_rectForDropCrash()
