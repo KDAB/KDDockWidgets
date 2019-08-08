@@ -48,7 +48,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter : public QWidgetAdapter
 {
     Q_OBJECT
 public:
-    explicit MultiSplitter(QWidget *parent = nullptr);
+    explicit MultiSplitter(QWidgetOrQuick *parent = nullptr);
     ~MultiSplitter() override;
     MultiSplitterLayout *multiSplitterLayout() const { return m_layout; }
     int count() const;

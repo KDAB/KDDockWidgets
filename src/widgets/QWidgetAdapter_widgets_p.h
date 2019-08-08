@@ -48,6 +48,8 @@ public:
     ///@brief returns the FloatingWindow this widget is in, otherwise nullptr
     FloatingWindow *floatingWindow() const;
 
+    void setFlag(Qt::WindowType, bool on = true);
+
 protected:
     void raiseAndActivate();
     bool event(QEvent *e) override;

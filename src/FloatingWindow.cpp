@@ -34,6 +34,7 @@
 #include <QCloseEvent>
 #include <QPainter>
 #include <QAbstractNativeEventFilter>
+#include <QWindow>
 
 #ifdef Q_OS_WIN
 # include <Windows.h>
@@ -84,7 +85,7 @@ public:
 }
 #endif
 
-FloatingWindow::FloatingWindow(QWidget *parent)
+FloatingWindow::FloatingWindow(QWidgetOrQuick *parent)
     : QWidgetAdapter(parent, KDDockWidgets::usesNativeDraggingAndResizing() ? Qt::Window : Qt::Tool)
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_titleBar(Config::self().frameWorkWidgetFactory()->createTitleBar(this))
@@ -112,7 +113,7 @@ FloatingWindow::FloatingWindow(QWidget *parent)
     m_layoutDestroyedConnection = connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
-static QWidget* hackFindParentHarder(QWidget *p)
+static QWidgetOrQuick* hackFindParentHarder(QWidgetOrQuick *p)
 {
     // TODO: Using a parent helps the floating windows stay in front of the main window always.
     // We're not receiving the parent via ctor argument as the app can have multiple-main windows,
@@ -122,6 +123,7 @@ static QWidget* hackFindParentHarder(QWidget *p)
     if (p)
         return p;
 
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     const MainWindow::List windows = DockRegistry::self()->mainwindows();
 
     if (windows.isEmpty())
@@ -132,9 +134,12 @@ static QWidget* hackFindParentHarder(QWidget *p)
         qWarning() << Q_FUNC_INFO << "There's multiple MainWindows, not sure what to do about parenting";
         return windows.first();
     }
+#else
+    qWarning() << "Implement and abstract me!";
+#endif
 }
 
-FloatingWindow::FloatingWindow(Frame *frame, QWidget *parent)
+FloatingWindow::FloatingWindow(Frame *frame, QWidgetOrQuick *parent)
     : FloatingWindow(hackFindParentHarder(parent))
 {
     m_disableSetVisible = true;
@@ -170,7 +175,7 @@ bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, lon
 void FloatingWindow::maybeCreateResizeHandler()
 {
     if (!KDDockWidgets::usesNativeDraggingAndResizing()) {
-        setWindowFlag(Qt::FramelessWindowHint, true);
+        setFlag(Qt::FramelessWindowHint, true);
         setWidgetResizeHandler(new WidgetResizeHandler(this));
     }
 }

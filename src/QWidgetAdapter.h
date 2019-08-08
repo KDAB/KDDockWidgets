@@ -26,7 +26,7 @@
 typedef QWidget QWidgetOrQuick;
 #else
 # include "quick/QWidgetAdapter_quick_p.h"
-typedef KDDockWidgets::QuickItem QWidgetOrQuick;
+typedef KDDockWidgets::QWidgetAdapter QWidgetOrQuick;
 #endif
 
 #endif

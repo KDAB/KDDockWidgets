@@ -39,8 +39,8 @@ class DOCKS_EXPORT FloatingWindow : public QWidgetAdapter
 {
     Q_OBJECT
 public:
-    explicit FloatingWindow(QWidget *parent = nullptr);
-    explicit FloatingWindow(Frame *frame, QWidget *parent = nullptr);
+    explicit FloatingWindow(QWidgetOrQuick *parent = nullptr);
+    explicit FloatingWindow(Frame *frame, QWidgetOrQuick *parent = nullptr);
     ~FloatingWindow() override;
 
     bool fillFromDataStream(QDataStream &ds);

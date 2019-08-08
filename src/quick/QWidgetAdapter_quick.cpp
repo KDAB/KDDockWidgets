@@ -88,4 +88,14 @@ void QWidgetAdapter::grabMouse() {}
 void QWidgetAdapter::releaseMouse() {}
 void QWidgetAdapter::setMinimumSize(QSize) {}
 void QWidgetAdapter::resize(QSize) {}
-QWindow *windowHandle() const { return nullptr; }
+QWindow *QWidgetAdapter::windowHandle() const { return nullptr; }
+
+void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
+{
+    if (auto w = windowHandle()) {
+        w->setFlag(f, on);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Implement me";
+    }
+}
+

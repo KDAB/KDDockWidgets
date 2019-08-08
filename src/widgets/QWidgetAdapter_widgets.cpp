@@ -95,6 +95,11 @@ void QWidgetAdapter::closeEvent(QCloseEvent *e)
     onCloseEvent(e);
 }
 
+void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
+{
+    QWidget::setWindowFlag(f, on);
+}
+
 bool QWidgetAdapter::onResize(QSize, QSize) { return false; }
 void QWidgetAdapter::onLayoutRequest() {}
 

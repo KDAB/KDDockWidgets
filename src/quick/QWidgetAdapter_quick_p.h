@@ -41,7 +41,7 @@ class QWindow;
 namespace KDDockWidgets {
 
 class FloatingWindow;
-
+/*
 class QuickItem : public QQuickItem
 {
 public:
@@ -51,13 +51,16 @@ public:
     }
     ~QuickItem() override;
 
+    QRect geometry() const { return {}; }
+    void setGeometry(QRect) {}
+
     void releaseMouse()
     {
         ungrabMouse();
     }
 };
-
 QuickItem::~QuickItem() {}
+*/
 
 class DOCKS_EXPORT QWidgetAdapter : public QObject
 {
@@ -68,6 +71,8 @@ public:
 
     ///@brief returns the FloatingWindow this widget is in, otherwise nullptr
     FloatingWindow *floatingWindow() const;
+
+    void setFlag(Qt::WindowType, bool on = true);
 
     void setGeometry(QRect);
     QRect geometry() const;
@@ -82,6 +87,9 @@ public:
     void resize(QSize);
 
     QWindow *windowHandle() const;
+
+    void setWindowTitle(const QString &) {}
+    void setWindowIcon(const QIcon &) {}
 
 protected:
     void raiseAndActivate();

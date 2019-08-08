@@ -70,8 +70,8 @@ public:
     {
     }
 
-    void serializeWindowGeometry(QDataStream &ds, QWidget *topLevel);
-    void deserializeWindowGeometry(QDataStream &ds, QWidget *topLevel);
+    void serializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel);
+    void deserializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel);
     void deleteEmptyFrames();
 
     std::unique_ptr<QSettings> settings() const;
@@ -265,13 +265,13 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     return true;
 }
 
-void LayoutSaver::Private::serializeWindowGeometry(QDataStream &ds, QWidget *topLevel)
+void LayoutSaver::Private::serializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel)
 {
     ds << topLevel->geometry();
     ds << topLevel->isVisible();
 }
 
-void LayoutSaver::Private::deserializeWindowGeometry(QDataStream &ds, QWidget *topLevel)
+void LayoutSaver::Private::deserializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel)
 {
     QRect geo;
     bool visible;

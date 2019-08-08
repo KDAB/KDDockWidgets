@@ -38,7 +38,7 @@
 
 using namespace KDDockWidgets;
 
-MultiSplitter::MultiSplitter(QWidget *parent)
+MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
     : QWidgetAdapter(parent)
     , m_layout(new MultiSplitterLayout(this))
 {

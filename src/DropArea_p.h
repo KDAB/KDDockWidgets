@@ -49,7 +49,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS DropArea : public MultiSplitter
 {
     Q_OBJECT
 public:
-    explicit DropArea(QWidget *parent);
+    explicit DropArea(QWidgetOrQuick *parent);
     ~DropArea();
 
     void removeHover();
