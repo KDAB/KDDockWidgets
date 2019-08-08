@@ -49,7 +49,18 @@ set(DOCKSLIBS_SRCS
     FrameworkWidgetFactory.cpp
     )
 
-set(DOCKS_INSTALLABLE_INCLUDES docks_export.h  LayoutSaver.h Draggable_p.h KDDockWidgets.h Config.h)
+set(DOCKS_INSTALLABLE_INCLUDES
+    docks_export.h
+    Config.h
+    DockWidgetBase.h
+    Draggable_p.h
+    KDDockWidgets.h
+    QWidgetAdapter.h
+    LayoutSaver.h
+    )
+
+set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
+    widgets/QWidgetAdapter_widgets_p.h)
 
 
 if (OPTION_QTQUICK)
@@ -128,3 +139,4 @@ install (TARGETS docks
          LIBRARY DESTINATION lib
          ARCHIVE DESTINATION lib)
 install (FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
+install (FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/widgets)

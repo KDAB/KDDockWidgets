@@ -21,6 +21,10 @@
 #ifndef KDDOCKWIDGETS_QWIDGETADAPTER_H
 #define KDDOCKWIDGETS_QWIDGETADAPTER_H
 
+#if !defined(KDDOCKWIDGETS_QTWIDGETS) &&  !defined(KDDOCKWIDGETS_QTWIDGETS)
+# define KDDOCKWIDGETS_QTWIDGETS
+#endif
+
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "widgets/QWidgetAdapter_widgets_p.h"
 typedef QWidget QWidgetOrQuick;
