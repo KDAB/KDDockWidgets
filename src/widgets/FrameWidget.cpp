@@ -32,6 +32,8 @@
 #include <QVBoxLayout>
 #include <QPainter>
 #include <QVBoxLayout>
+#include <QTableWidget>
+#include <QTabBar>
 
 using namespace KDDockWidgets;
 
@@ -53,4 +55,10 @@ void FrameWidget::paintEvent(QPaintEvent *)
         p.setPen(pen);
         p.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 2, 2);
     }
+}
+
+QTabBar *FrameWidget::tabBar() const
+{
+    auto tw = static_cast<QTabWidget*>(tabWidget()->asWidget());
+    return tw->tabBar();
 }

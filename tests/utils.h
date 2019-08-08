@@ -35,6 +35,9 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
 
 namespace KDDockWidgets {
+
+class FrameWidget;
+
 namespace Tests {
 
 enum ButtonAction {
@@ -54,6 +57,8 @@ struct DockDescriptor {
 QWidget* draggableFor(QWidget *);
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
+
+QPoint dragPointForWidget(Frame* frame, int index);
 
 std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QSize sz = {600, 600},
                                                             KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame, const QString &name = {});

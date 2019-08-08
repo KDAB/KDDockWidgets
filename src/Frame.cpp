@@ -262,17 +262,6 @@ void Frame::restoreToPreviousPosition()
     m_layoutItem->restorePlaceholder(this);
 }
 
-QPoint Frame::dragPointForWidget(int index) const
-{
-    if (hasSingleDockWidget()) {
-        Q_ASSERT(index == 0);
-        return m_titleBar->mapToGlobal(QPoint(5, 5));
-    } else {
-        QRect rect = m_tabWidget->tabBar()->tabRect(index);
-        return m_tabWidget->tabBar()->mapToGlobal(rect.center());
-    }
-}
-
 void Frame::closeEvent(QCloseEvent *e)
 {
     qCDebug(closing) << "Frame::closeEvent";
@@ -381,11 +370,6 @@ bool Frame::beingDeletedLater() const
 TabWidget *Frame::tabWidget() const
 {
     return m_tabWidget;
-}
-
-TabBar *Frame::tabBar() const
-{
-    return qobject_cast<TabBar*>(m_tabWidget->tabBar());
 }
 
 bool Frame::hasTabsVisible() const

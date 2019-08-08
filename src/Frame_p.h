@@ -37,7 +37,6 @@
 
 namespace KDDockWidgets {
 
-class TabBar;
 class TitleBar;
 class TabWidget;
 class DropArea;
@@ -158,7 +157,6 @@ public:
      */
     void restoreToPreviousPosition();
 
-    QPoint dragPointForWidget(int index) const; // for unit-tests
     void closeEvent(QCloseEvent *) override;
     int currentTabIndex() const;
     void setCurrentTabIndex(int);
@@ -197,9 +195,6 @@ public:
      * @brief Returns whether a deleteLater has already been issued
      */
     bool beingDeletedLater() const;
-
-    ///@brief getter for the tab bar
-    TabBar *tabBar() const;
 
     /**
      * @brief returns true if tabs are visible

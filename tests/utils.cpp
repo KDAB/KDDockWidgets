@@ -22,6 +22,7 @@
 #include "DropArea_p.h"
 #include "Config.h"
 #include "TabWidgetWidget_p.h"
+#include "FrameWidget_p.h"
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -37,6 +38,19 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
+
+QPoint KDDockWidgets::Tests::dragPointForWidget(Frame *frame, int index)
+{
+    auto frameW = static_cast<FrameWidget*>(frame);
+
+    if (frameW->hasSingleDockWidget()) {
+        Q_ASSERT(index == 0);
+        return frameW->titleBar()->mapToGlobal(QPoint(5, 5));
+    } else {
+        QRect rect = frameW->tabBar()->tabRect(index);
+        return frameW->tabBar()->mapToGlobal(rect.center());
+    }
+}
 
 NonClosableWidget::NonClosableWidget(QWidget *parent)
     : QWidget(parent)

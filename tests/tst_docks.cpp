@@ -26,6 +26,7 @@
 #include "FloatingWindow_p.h"
 #include "DockRegistry_p.h"
 #include "Frame_p.h"
+#include "FrameWidget_p.h"
 #include "DropArea_p.h"
 #include "TitleBar_p.h"
 #include "WindowBeingDragged_p.h"
@@ -565,8 +566,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QVERIFY(waitForDeleted(frame1));
 
     // 2.3 Detach tab1 to empty space
-    QPoint globalPressPos = frame2->dragPointForWidget(0);
-    QTabBar *tabBar = frame2->tabBar();
+    QPoint globalPressPos = dragPointForWidget(frame2.data(), 0);
+    QTabBar *tabBar = static_cast<FrameWidget*>(frame2.data())->tabBar();
     QVERIFY(tabBar);
     drag(tabBar, globalPressPos, frame2->window()->geometry().bottomRight() + QPoint(10, 10));
 
@@ -583,8 +584,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
     // 2.5 Detach and drop to the same place, should tab again
-    globalPressPos = frame2->dragPointForWidget(0);
-    tabBar = frame2->tabBar();
+    globalPressPos = dragPointForWidget(frame2.data(), 0);
+    tabBar = static_cast<FrameWidget*>(frame2.data())->tabBar();
 
     drag(tabBar, globalPressPos, dock2->window()->geometry().center());
     QCOMPARE(frame2->dockWidgetCount(), 2);
@@ -1082,8 +1083,8 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
              << m->size();
 
     // Detach tab
-    QPoint globalPressPos = centralFrame->dragPointForWidget(0);
-    QTabBar *tabBar = centralFrame->tabBar();
+    QPoint globalPressPos = dragPointForWidget(centralFrame.data(), 0);
+    QTabBar *tabBar = static_cast<FrameWidget*>(centralFrame.data())->tabBar();
     QVERIFY(tabBar);
     qDebug() << "Detaching tab from dropArea->size=" << dropArea->size() << "; dropArea=" << dropArea;
     drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));

@@ -24,6 +24,8 @@
 
 #include "Frame_p.h"
 
+class QTabBar;
+
 namespace KDDockWidgets {
 
 /**
@@ -34,6 +36,8 @@ class DOCKS_EXPORT FrameWidget : public Frame
     Q_OBJECT
 public:
     explicit FrameWidget(QWidget *parent = nullptr, Options = Option_None);
+    QTabBar *tabBar() const;
+protected:
     void paintEvent(QPaintEvent *) override;
 };
 
