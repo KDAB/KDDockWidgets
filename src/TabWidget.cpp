@@ -43,17 +43,16 @@
 
 using namespace KDDockWidgets;
 
-TabBar::TabBar(TabWidget *tabWidget)
-    : QTabBar(tabWidget->asWidget())
-    , Draggable(this)
+TabBar::TabBar(QWidgetOrQuick *thisWidget, TabWidget *tabWidget)
+    : Draggable(thisWidget)
     , m_tabWidget(tabWidget)
+    , m_thisWidget(thisWidget)
 {
-    setMinimumWidth(30);
 }
 
 DockWidgetBase *TabBar::dockWidgetAt(int index) const
 {
-    if (index < 0 || index >= count())
+    if (index < 0 || index >= numDockWidgets())
         return nullptr;
 
     return m_tabWidget->dockwidgetAt(index);
@@ -86,7 +85,7 @@ FloatingWindow * TabBar::detachTab(DockWidgetBase *dockWidget)
     m_tabWidget->removeDockWidget(dockWidget);
 
     auto newFrame = Config::self().frameWorkWidgetFactory()->createFrame();
-    const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
+    const QPoint globalPoint = m_thisWidget->mapToGlobal(QPoint(0, 0));
     newFrame->addWidget(dockWidget);
 
     // We're potentially already dead at this point, as frames with 0 tabs auto-destruct. Don't access members from this point.
@@ -102,6 +101,11 @@ FloatingWindow * TabBar::detachTab(DockWidgetBase *dockWidget)
 void TabBar::onMousePress(QPoint localPos)
 {
     m_lastPressedDockWidget = dockWidgetAt(localPos);
+}
+
+QWidgetOrQuick *TabBar::asWidget() const
+{
+    return m_thisWidget;
 }
 
 TabWidget::TabWidget(QWidgetOrQuick *thisWidget, Frame *frame)
@@ -160,12 +164,6 @@ void TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
 
         delete oldFrame;
     }
-}
-
-
-void TabWidget::detachTab(DockWidgetBase *dockWidget)
-{
-    tabBar()->detachTab(dockWidget);
 }
 
 bool TabWidget::contains(DockWidgetBase *dw) const

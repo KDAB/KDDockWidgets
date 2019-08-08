@@ -45,18 +45,14 @@ class DockWidgetBase;
 class TabWidget;
 
 ///@brief a QTabBar derived class to be used by KDDockWidgets::TabWidget
-class DOCKS_EXPORT TabBar : public QTabBar
-    , public Draggable
+class DOCKS_EXPORT TabBar : public Draggable
 {
-    Q_OBJECT
 public:
-    typedef QVector<TabBar *> List;
-
     /**
      * @brief Constructs a new TabBar
      * @param parent The parent TabWidget
      */
-    explicit TabBar(TabWidget *parent = nullptr);
+    explicit TabBar(QWidgetOrQuick *thisWidget, TabWidget *parent = nullptr);
 
     /**
      * @brief returns the dock widgets at tab number @p index
@@ -81,9 +77,19 @@ public:
 
     void onMousePress(QPoint localPos);
 
+    virtual int numDockWidgets() const = 0;
+    virtual int tabAt(QPoint localPos) const = 0;
+
+
+    /**
+     * @brief Returns this class as a QWidget (if using QtWidgets) or QQuickItem
+     */
+    QWidgetOrQuick *asWidget() const;
+
 private:
     TabWidget *const m_tabWidget;
     QPointer<DockWidgetBase> m_lastPressedDockWidget = nullptr;
+    QWidgetOrQuick *const m_thisWidget;
 };
 
 class DOCKS_EXPORT TabWidget : public Draggable
@@ -133,17 +139,17 @@ public:
     virtual DockWidgetBase *dockwidgetAt(int index) const = 0;
 
     /**
+     * @brief detaches a dock widget and shows it as a floating dock widget
+     * @param dockWidget the dock widget to detach
+     */
+    virtual void detachTab(DockWidgetBase *dockWidget) = 0;
+
+    /**
      * @brief inserts @p dockwidget into the TabWidget, at @p index
      * @param dockwidget the dockwidget to insert
      * @param index The index to where to put it
      */
     void insertDockWidget(DockWidgetBase *dockwidget, int index);
-
-    /**
-     * @brief detaches a dock widget and shows it as a floating dock widget
-     * @param dockWidget the dock widget to detach
-     */
-    void detachTab(DockWidgetBase *dockWidget);
 
     /**
      * @brief Returns whether dockwidget @p dw is contained in this tab widget

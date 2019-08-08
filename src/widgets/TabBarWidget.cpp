@@ -33,12 +33,23 @@
 using namespace KDDockWidgets;
 
 TabBarWidget::TabBarWidget(TabWidget *parent)
-    : TabBar(parent)
+    : QTabBar(parent->asWidget())
+    , TabBar(this, parent)
 {
+}
+
+int TabBarWidget::numDockWidgets() const
+{
+    return count();
+}
+
+int TabBarWidget::tabAt(QPoint localPos) const
+{
+    return QTabBar::tabAt(localPos);
 }
 
 void TabBarWidget::mousePressEvent(QMouseEvent *e)
 {
     onMousePress(e->pos());
-    TabBar::mousePressEvent(e);
+    QTabBar::mousePressEvent(e);
 }

@@ -36,7 +36,7 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
     , TabWidget(this, parent)
     , m_tabBar(Config::self().frameWorkWidgetFactory()->createTabBar(this))
 {
-    setTabBar(m_tabBar);
+    setTabBar(static_cast<QTabBar*>(m_tabBar->asWidget()));
 }
 
 TabBar *TabWidgetWidget::tabBar() const
@@ -101,6 +101,11 @@ void TabWidgetWidget::insertDockWidget(int index, DockWidgetBase *dw,
 void TabWidgetWidget::setTabBarAutoHide(bool b)
 {
     QTabWidget::setTabBarAutoHide(b);
+}
+
+void TabWidgetWidget::detachTab(DockWidgetBase *dockWidget)
+{
+    tabBar()->detachTab(dockWidget);
 }
 
 DockWidgetBase *TabWidgetWidget::dockwidgetAt(int index) const

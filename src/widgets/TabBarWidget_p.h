@@ -31,6 +31,8 @@
 
 #include "TabWidget_p.h"
 
+#include <QTabBar>
+
 class QMouseEvent;
 
 namespace KDDockWidgets {
@@ -38,16 +40,13 @@ namespace KDDockWidgets {
 class DockWidget;
 class TabWidget;
 
-class DOCKS_EXPORT TabBarWidget : public TabBar
+class DOCKS_EXPORT TabBarWidget : public QTabBar, public TabBar
 {
     Q_OBJECT
 public:
-
-    /**
-     * @brief Constructs a new TabBar
-     */
     explicit TabBarWidget(TabWidget *parent = nullptr);
-
+    int numDockWidgets() const override;
+    int tabAt(QPoint localPos) const override;
 protected:
     void mousePressEvent(QMouseEvent *) override;
 
