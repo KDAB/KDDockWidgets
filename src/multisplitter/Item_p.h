@@ -23,6 +23,7 @@
 
 #include "docks_export.h"
 #include "Anchor_p.h"
+#include "QWidgetAdapter.h"
 
 #include <QRect>
 #include <QObject>
@@ -128,8 +129,8 @@ public:
     bool eventFilter(QObject *, QEvent *) override;
 
     Frame* frame() const;
-    QWidget *window() const;
-    QWidget *parentWidget() const;
+    QWidgetOrQuick *window() const;
+    QWidgetOrQuick *parentWidget() const;
 
     MultiSplitterLayout *layout() const;
     void setLayout(MultiSplitterLayout *w); // TODO: Make the widget children of this one?

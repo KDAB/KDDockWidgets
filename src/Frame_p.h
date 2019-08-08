@@ -30,6 +30,7 @@
 
 #include "docks_export.h"
 #include "multisplitter/Item_p.h"
+#include "QWidgetAdapter.h"
 
 #include <QWidget>
 #include <QVector>
@@ -54,7 +55,7 @@ class FloatingWindow;
  * inside a MultiSplitter (DropArea). Be it a MultiSplitter belonging to a MainWindow or belonging
  * to a FloatingWindow.
  */
-class DOCKS_EXPORT Frame : public QWidget
+class DOCKS_EXPORT Frame : public QWidgetAdapter
 {
     Q_OBJECT
 public:
@@ -157,7 +158,7 @@ public:
      */
     void restoreToPreviousPosition();
 
-    void closeEvent(QCloseEvent *) override;
+    void onCloseEvent(QCloseEvent *e) override;
     int currentTabIndex() const;
     void setCurrentTabIndex(int);
 

@@ -68,7 +68,7 @@ void LastPosition::addPlaceholderItem(Item *placeholder)
     // the same value always, hence we just shove them into a list, instead of giving them meaningful names in separated variables
 }
 
-QWidget *LastPosition::window() const
+QWidgetOrQuick *LastPosition::window() const
 {
     if (Item *placeholder = layoutItem())
         return placeholder->window();

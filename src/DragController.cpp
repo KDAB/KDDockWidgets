@@ -388,8 +388,11 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
 }
 #endif
 
-QWidget *DragController::qtTopLevelUnderCursor() const
+QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
 {
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+
     QPoint globalPos = QCursor::pos();
     auto topLevels = qApp->topLevelWidgets();
 #if defined(Q_OS_WIN)
@@ -442,13 +445,18 @@ QWidget *DragController::qtTopLevelUnderCursor() const
         }
     }
 #endif
+
+#else
+    qWarning() << Q_FUNC_INFO << "Implement me!";
+#endif
+
     qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found";
     return nullptr;
 }
 
 DropArea *DragController::dropAreaUnderCursor() const
 {
-    QWidget *topLevel = qtTopLevelUnderCursor();
+    auto topLevel = qtTopLevelUnderCursor();
     if (!topLevel) {
         //qCDebug(state) << "DragController::dropAreaUnderCursor: null";
         return nullptr;
@@ -473,7 +481,7 @@ DropArea *DragController::dropAreaUnderCursor() const
         return fw->dropArea();
     }
 
-    QWidget *w = topLevel->childAt(topLevel->mapFromGlobal(QCursor::pos()));
+    auto *w = topLevel->childAt(topLevel->mapFromGlobal(QCursor::pos()));
     while (w) {
         if (auto dt = qobject_cast<DropArea *>(w)) {
             return dt;

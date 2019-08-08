@@ -78,18 +78,40 @@ public:
     QRect geometry() const;
     QRect rect() const;
     void show();
+    bool isVisible() const { return true; }
     void setVisible(bool);
+    void setEnabled(bool) {}
+    int width() const { return 0; }
+    int height() const { return 0; }
+    void setFixedHeight(int) {}
+    void setFixedWidth(int) {}
     void raise();
+    void update() {}
+    QSize size() const {return {}; }
+    QSize minimumSizeHint() const {return {}; }
+    QSize minimumSize() const {return {}; }
+    int minimumHeight() const {return {};}
+    int minimumWidth() const {return {};}
+    int x() const { return 0; }
+    int y() const { return 0; }
 
     void grabMouse();
     void releaseMouse();
     void setMinimumSize(QSize);
     void resize(QSize);
+    bool isWindow() const { return false; }
 
     QWindow *windowHandle() const;
+    QWidgetAdapter *window() const { return nullptr; }
+    QWidgetAdapter *parentWidget() const { return nullptr; }
+    QPoint mapToGlobal(QPoint) const { return {}; }
+    QPoint mapFromGlobal(QPoint) const { return {}; }
+    bool testAttribute(Qt::WidgetAttribute) { return false; }
 
     void setWindowTitle(const QString &) {}
     void setWindowIcon(const QIcon &) {}
+    void close() {}
+    QWidgetAdapter* childAt(QPoint) { return nullptr; }
 
 protected:
     void raiseAndActivate();

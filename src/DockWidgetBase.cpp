@@ -103,7 +103,7 @@ public:
 };
 
 DockWidgetBase::DockWidgetBase(const QString &name, Options options)
-    : QWidget(nullptr, Qt::Tool)
+    : QWidgetOrQuick(nullptr, Qt::Tool)
     , d(new Private(name, options, this))
 {
     d->init();
@@ -335,7 +335,7 @@ void DockWidgetBase::maybeMorphIntoFloatingWindow()
 
 Frame *DockWidgetBase::frame() const
 {
-    QWidget *p = parentWidget();
+    QWidgetOrQuick *p = parentWidget();
     while (p) {
         if (auto frame = qobject_cast<Frame *>(p))
             return frame;

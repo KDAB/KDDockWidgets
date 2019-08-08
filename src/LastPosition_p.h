@@ -107,7 +107,7 @@ public:
     void addPlaceholderItem(Item *placeholder);
 
 
-    QWidget *window() const;
+    QWidgetOrQuick *window() const;
     Item* layoutItem() const;
 
     bool containsPlaceholder(Item*) const;

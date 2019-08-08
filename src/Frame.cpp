@@ -47,7 +47,7 @@ static int s_dbg_numFrames = 0;
 using namespace KDDockWidgets;
 
 Frame::Frame(QWidget *parent, Options options)
-    : QWidget(parent)
+    : QWidgetAdapter(parent)
     , m_tabWidget(Config::self().frameWorkWidgetFactory()->createTabWidget(this))
     , m_titleBar(Config::self().frameWorkWidgetFactory()->createTitleBar(this))
     , m_options(options)
@@ -262,7 +262,12 @@ void Frame::restoreToPreviousPosition()
     m_layoutItem->restorePlaceholder(this);
 }
 
-void Frame::closeEvent(QCloseEvent *e)
+int Frame::currentTabIndex() const
+{
+    return m_tabWidget->currentIndex();
+}
+
+void Frame::onCloseEvent(QCloseEvent *e)
 {
     qCDebug(closing) << "Frame::closeEvent";
     e->accept(); // Accepted by default (will close unless ignored)
@@ -272,11 +277,6 @@ void Frame::closeEvent(QCloseEvent *e)
         if (!e->isAccepted())
             break; // Stop when the first dockwidget prevents closing
     }
-}
-
-int Frame::currentTabIndex() const
-{
-    return m_tabWidget->currentIndex();
 }
 
 void Frame::setCurrentTabIndex(int index)
@@ -442,7 +442,7 @@ bool Frame::event(QEvent *e)
         }
     }
 
-    return QWidget::event(e);
+    return QWidgetAdapter::event(e);
 }
 
 Frame *Frame::createFromDataStream(QDataStream &ds)

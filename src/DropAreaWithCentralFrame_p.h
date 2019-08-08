@@ -24,14 +24,14 @@
 #include "DropArea_p.h"
 #include "Config.h"
 
-#include <QMainWindow>
+#include "QWidgetAdapter.h"
 
 namespace KDDockWidgets {
 class DropAreaWithCentralFrame : public DropArea
 {
     Q_OBJECT
 public:
-    explicit DropAreaWithCentralFrame(QMainWindow *parent, MainWindowOptions options)
+    explicit DropAreaWithCentralFrame(QWidgetOrQuick *parent, MainWindowOptions options)
         : DropArea(parent)
         , m_centralFrame(createCentralFrame(options))
     {

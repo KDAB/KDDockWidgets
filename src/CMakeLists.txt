@@ -28,7 +28,6 @@ set(DOCKSLIBS_SRCS
     Frame.cpp
     LastPosition.cpp
     LastPosition_p.h
-    LayoutSaver.cpp
     Logging.cpp
     TabWidget.cpp
     TitleBar.cpp
@@ -48,16 +47,9 @@ set(DOCKSLIBS_SRCS
     multisplitter/Separator.cpp
 
     FrameworkWidgetFactory.cpp
-
-    widgets/DockWidget.cpp
-    widgets/FloatingWindowWidget.cpp
-    widgets/FrameWidget.cpp
-    widgets/SeparatorWidget.cpp
-    widgets/SeparatorWidget_p.h
-    widgets/TabWidgetWidget.cpp
-    widgets/TabBarWidget.cpp
-    widgets/TitleBarWidget.cpp
     )
+
+set(DOCKS_INSTALLABLE_INCLUDES docks_export.h  LayoutSaver.h Draggable_p.h KDDockWidgets.h Config.h)
 
 
 if (OPTION_QTQUICK)
@@ -68,11 +60,25 @@ if (OPTION_QTQUICK)
 else()
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
         MainWindow.cpp
+        LayoutSaver.cpp
         # indicators/AnimatedIndicators.cpp
         indicators/ClassicIndicators.cpp
         widgets/QWidgetAdapter_widgets.cpp
-        widgets/QWidgetAdapter_widgets_p.h)
+        widgets/QWidgetAdapter_widgets_p.h
+        widgets/DockWidget.cpp
+        widgets/FloatingWindowWidget.cpp
+        widgets/FrameWidget.cpp
+        widgets/SeparatorWidget.cpp
+        widgets/SeparatorWidget_p.h
+        widgets/TabWidgetWidget.cpp
+        widgets/TabBarWidget.cpp
+        widgets/TitleBarWidget.cpp
+        )
 
+    set(DOCKS_INSTALLABLE_INCLUDES
+        ${DOCKS_INSTALLABLE_INCLUDES}
+        MainWindow.h
+        widgets/DockWidget.h)
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -80,8 +86,6 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 else()
     set(IS_CLANG_BUILD FALSE)
 endif()
-
-set (DOCKS_INSTALLABLE_INCLUDES docks_export.h widgets/DockWidget.h MainWindow.h LayoutSaver.h Draggable_p.h KDDockWidgets.h Config.h)
 
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 

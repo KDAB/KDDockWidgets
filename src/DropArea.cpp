@@ -236,7 +236,7 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
     return result;
 }
 
-bool DropArea::drop(QWidget *droppedWindow, KDDockWidgets::Location location, Frame *relativeTo)
+bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location location, Frame *relativeTo)
 {
     qCDebug(docking) << "DropArea::addFrame";
 

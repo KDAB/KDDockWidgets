@@ -242,14 +242,14 @@ Frame *Item::frame() const
     return d->m_frame;
 }
 
-QWidget *Item::window() const
+QWidgetOrQuick *Item::window() const
 {
     Q_ASSERT(d->m_layout);
     Q_ASSERT(d->m_layout->multiSplitter());
     return d->m_layout->multiSplitter()->window();
 }
 
-QWidget *Item::parentWidget() const
+QWidgetOrQuick *Item::parentWidget() const
 {
     return d->m_frame ? d->m_frame->parentWidget()
                       : nullptr;

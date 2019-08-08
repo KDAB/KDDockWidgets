@@ -30,6 +30,7 @@
 
 #include "docks_export.h"
 #include "KDDockWidgets.h"
+#include "QWidgetAdapter.h"
 
 #include <QVector>
 #include <QWidget>
@@ -51,7 +52,7 @@ class TitleBar;
 /**
  * @brief Represents a dock widget.
  */
-class DOCKS_EXPORT DockWidgetBase : public QWidget
+class DOCKS_EXPORT DockWidgetBase : public QWidgetOrQuick
 {
     Q_OBJECT
 public:

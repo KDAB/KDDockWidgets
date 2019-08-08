@@ -36,7 +36,7 @@ class DOCKS_EXPORT FrameworkWidgetFactory {
 public:
     virtual ~FrameworkWidgetFactory();
 
-    virtual Frame* createFrame(QWidget *parent = nullptr, Frame::Options = Frame::Option_None) const = 0;
+    virtual Frame* createFrame(QWidgetOrQuick *parent = nullptr, Frame::Options = Frame::Option_None) const = 0;
     virtual TitleBar* createTitleBar(Frame *) const = 0;
     virtual TitleBar* createTitleBar(FloatingWindow *) const = 0;
     virtual TabBar* createTabBar(TabWidget *parent = nullptr) const = 0;
@@ -50,7 +50,7 @@ public:
 class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
 {
 public:
-    Frame *createFrame(QWidget *parent, Frame::Options) const override;
+    Frame *createFrame(QWidgetOrQuick *parent, Frame::Options) const override;
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
     TabBar *createTabBar(TabWidget *parent) const override;

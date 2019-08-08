@@ -132,7 +132,7 @@ public:
     /**
      * @brief Adds a widget to this MultiSplitter.
      */
-    void addWidget(QWidget *widget, KDDockWidgets::Location location, Frame *relativeTo = nullptr, AddingOption option = {});
+    void addWidget(QWidgetOrQuick *widget, KDDockWidgets::Location location, Frame *relativeTo = nullptr, AddingOption option = {});
 
     /**
      * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted
@@ -222,7 +222,7 @@ public:
      * Excludes the Anchor thickness, result is actually smaller than what needed. In other words,
      * the result will be exactly the same as the geometry the widget will get.
      */
-    QRect rectForDrop(const QWidget *widget, KDDockWidgets::Location location, const Item *relativeTo) const;
+    QRect rectForDrop(const QWidgetOrQuick *widget, KDDockWidgets::Location location, const Item *relativeTo) const;
 
     bool fillFromDataStream(QDataStream &ds);
 
@@ -302,7 +302,7 @@ public:
     QSize contentsSize() const { return m_contentSize; }
 
     // For debug/hardening
-    bool validateInputs(QWidget *widget, KDDockWidgets::Location location, const Frame *relativeToFrame, AddingOption option) const;
+    bool validateInputs(QWidgetOrQuick *widget, KDDockWidgets::Location location, const Frame *relativeToFrame, AddingOption option) const;
     // For debug/hardening
 
     enum AnchorSanityOption {
@@ -342,7 +342,7 @@ public:
      * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
      * If frameOrMultiSplitter is a MultiSplitterLayout then it returns a list of all frames it contains
      */
-    Frame::List framesFrom(QWidget *frameOrMultiSplitter) const;
+    Frame::List framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
 
     /**
      * @brief Returns a list of Frame objects contained in this layout
@@ -459,7 +459,7 @@ private:
      * When location is Left or Right then the length represents a width, otherwise an height.
      * This function is also called to know the size of the rubberband when hovering over a location.
      */
-    MultiSplitterLayout::Length lengthForDrop(const QWidget *widget, KDDockWidgets::Location location,
+    MultiSplitterLayout::Length lengthForDrop(const QWidgetOrQuick *widget, KDDockWidgets::Location location,
                                               const Item *relativeTo) const;
 
 
@@ -469,7 +469,7 @@ private:
      *
      * It may increase contentsSize or do notying, never decrease.
      */
-    void ensureEnoughContentsSize(const QWidget *widget, KDDockWidgets::Location location,
+    void ensureEnoughContentsSize(const QWidgetOrQuick *widget, KDDockWidgets::Location location,
                                   const Item *relativeToItem);
 
 
@@ -599,7 +599,7 @@ inline QDebug operator<<(QDebug d, const AnchorGroup &group) {
 /**
  * Returns the widget's min-width if orientation is Vertical, the min-height otherwise.
  */
-inline int widgetMinLength(const QWidget *w, Qt::Orientation orientation)
+inline int widgetMinLength(const QWidgetOrQuick *w, Qt::Orientation orientation)
 {
     int min = 0;
     if (orientation == Qt::Vertical) {

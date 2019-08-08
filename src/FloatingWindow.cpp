@@ -136,6 +136,7 @@ static QWidgetOrQuick* hackFindParentHarder(QWidgetOrQuick *p)
     }
 #else
     qWarning() << "Implement and abstract me!";
+    return nullptr;
 #endif
 }
 
@@ -176,7 +177,9 @@ void FloatingWindow::maybeCreateResizeHandler()
 {
     if (!KDDockWidgets::usesNativeDraggingAndResizing()) {
         setFlag(Qt::FramelessWindowHint, true);
+#ifdef KDDOCKWIDGETS_QTWIDGETS
         setWidgetResizeHandler(new WidgetResizeHandler(this));
+#endif
     }
 }
 

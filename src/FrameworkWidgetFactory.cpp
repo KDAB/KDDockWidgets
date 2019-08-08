@@ -19,15 +19,17 @@
 */
 
 #include "FrameworkWidgetFactory.h"
-#include "indicators/ClassicIndicators_p.h"
 #include "QWidgetAdapter.h"
 
-#include "widgets/FrameWidget_p.h"
-#include "widgets/TitleBarWidget_p.h"
-#include "widgets/TabBarWidget_p.h"
-#include "widgets/TabWidgetWidget_p.h"
-#include "widgets/SeparatorWidget_p.h"
-#include "widgets/FloatingWindowWidget_p.h"
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+#include "indicators/ClassicIndicators_p.h"
+# include "widgets/FrameWidget_p.h"
+# include "widgets/TitleBarWidget_p.h"
+# include "widgets/TabBarWidget_p.h"
+# include "widgets/TabWidgetWidget_p.h"
+# include "widgets/SeparatorWidget_p.h"
+# include "widgets/FloatingWindowWidget_p.h"
+#endif
 
 using namespace KDDockWidgets;
 
@@ -35,7 +37,8 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 {
 }
 
-Frame *DefaultWidgetFactory::createFrame(QWidget *parent, Frame::Options options) const
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, Frame::Options options) const
 {
     return new FrameWidget(parent, options);
 }
@@ -79,3 +82,50 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(
 {
     return new ClassicIndicators(dropArea);
 }
+#else
+
+Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *, Frame::Options) const
+{
+    return nullptr;
+}
+
+TitleBar *DefaultWidgetFactory::createTitleBar(Frame *) const
+{
+    return nullptr;
+}
+
+TitleBar *DefaultWidgetFactory::createTitleBar(FloatingWindow *) const
+{
+    return nullptr;
+}
+
+TabBar *DefaultWidgetFactory::createTabBar(TabWidget *) const
+{
+    return nullptr;
+}
+
+TabWidget *DefaultWidgetFactory::createTabWidget(Frame *) const
+{
+    return nullptr;
+}
+
+Separator *DefaultWidgetFactory::createSeparator(Anchor *, QWidgetAdapter *) const
+{
+    return nullptr;
+}
+
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(QWidget *) const
+{
+    return nullptr;
+}
+
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *, QWidget *) const
+{
+    return nullptr;
+}
+
+DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *) const
+{
+    return nullptr;
+}
+#endif

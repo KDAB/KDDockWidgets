@@ -116,7 +116,7 @@ MultiSplitter *MultiSplitterLayout::multiSplitter() const
     return m_multiSplitter;
 }
 
-bool MultiSplitterLayout::validateInputs(QWidget *widget,
+bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
                                          Location location,
                                          const Frame *relativeToFrame, AddingOption option) const
 {
@@ -170,7 +170,7 @@ bool MultiSplitterLayout::validateInputs(QWidget *widget,
     return true;
 }
 
-void MultiSplitterLayout::addWidget(QWidget *w, Location location, Frame *relativeToWidget, AddingOption option)
+void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame *relativeToWidget, AddingOption option)
 {
     auto frame = qobject_cast<Frame*>(w);
     qCDebug(addwidget) << Q_FUNC_INFO << w
@@ -389,7 +389,7 @@ void MultiSplitterLayout::addAsPlaceholder(DockWidgetBase *dockWidget, Location 
     Q_ASSERT(!dockWidget->isVisible());
 }
 
-void MultiSplitterLayout::ensureEnoughContentsSize(const QWidget *widget,
+void MultiSplitterLayout::ensureEnoughContentsSize(const QWidgetOrQuick *widget,
                                                    Location location, const Item *relativeToItem)
 {
     const int neededAnchorThickness = isEmpty() ? 0 : Anchor::thickness(/*static=*/ false);
@@ -762,7 +762,7 @@ QSize MultiSplitterLayout::availableSize() const
 /*
  * Returns the width or height the widget will get when dropped.
  */
-MultiSplitterLayout::Length MultiSplitterLayout::lengthForDrop(const QWidget *widget, Location location,
+MultiSplitterLayout::Length MultiSplitterLayout::lengthForDrop(const QWidgetOrQuick *widget, Location location,
                                                                const Item *relativeTo) const
 {
     Q_ASSERT(location != Location_None);
@@ -829,7 +829,7 @@ QRect MultiSplitterLayout::rectForDrop(MultiSplitterLayout::Length lfd, Location
     return result;
 }
 
-QRect MultiSplitterLayout::rectForDrop(const QWidget *widgetBeingDropped, Location location,
+QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widgetBeingDropped, Location location,
                                        const Item *relativeTo) const
 {
     Q_ASSERT(widgetBeingDropped);
@@ -1196,7 +1196,7 @@ Item *MultiSplitterLayout::itemForFrame(const Frame *frame) const
     return nullptr;
 }
 
-Frame::List MultiSplitterLayout::framesFrom(QWidget *frameOrMultiSplitter) const
+Frame::List MultiSplitterLayout::framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const
 {
     if (auto frame = qobject_cast<Frame*>(frameOrMultiSplitter))
         return { frame };

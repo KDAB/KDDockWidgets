@@ -119,7 +119,7 @@ TabWidget::TabWidget(QWidgetOrQuick *thisWidget, Frame *frame)
     QObject::connect(static_cast<QTabWidget*>(thisWidget), &QTabWidget::currentChanged,
                      frame, &Frame::onCurrentTabChanged);
 #else
-    qWarning() << Q_FUNC_INFO << "Implement me")
+    qWarning() << Q_FUNC_INFO << "Implement me";
 #endif
 
 }

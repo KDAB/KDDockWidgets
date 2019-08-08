@@ -55,7 +55,7 @@ public:
     void removeHover();
     void hover(FloatingWindow *floatingWindow, QPoint globalPos);
     bool drop(FloatingWindow *droppedWindow, QPoint globalPos);
-    bool drop(QWidget *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
+    bool drop(QWidgetOrQuick *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     int numFrames() const;
 
     Anchor::List nonStaticAnchors(bool includePlaceholders = false) const;
