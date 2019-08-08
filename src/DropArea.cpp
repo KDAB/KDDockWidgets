@@ -25,8 +25,7 @@
 #include "MainWindow.h"
 #include "FloatingWindow_p.h"
 #include "Config.h"
-
-#include "indicators/ClassicIndicators_p.h"
+#include "DropIndicatorOverlayInterface_p.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"
@@ -41,11 +40,9 @@ using namespace KDDockWidgets;
  */
 DropArea::DropArea(QWidgetOrQuick *parent)
     : MultiSplitter(parent)
+    , m_dropIndicatorOverlay(Config::self().frameWorkWidgetFactory()->createDropIndicatorOverlay(this))
 {
     qCDebug(creation) << "DropArea";
-
-    //setIndicatorStyle(DropIndicatorOverlayInterface::TypeAnimated);
-    setIndicatorStyle(DropIndicatorOverlayInterface::TypeClassic);
     connect(m_layout, &MultiSplitterLayout::aboutToDumpDebug,
             this, &DropArea::debug_updateItemNamesForGammaray);
 }
@@ -59,30 +56,6 @@ DropArea::~DropArea()
 int DropArea::numFrames() const
 {
     return m_layout->count();
-}
-
-void DropArea::setIndicatorStyle(DropIndicatorOverlayInterface::Type indicatorType)
-{
-    if (!m_dropIndicatorOverlay || m_dropIndicatorOverlay->indicatorType() != indicatorType) {
-        delete m_dropIndicatorOverlay;
-        switch (indicatorType) {
-        case DropIndicatorOverlayInterface::TypeClassic:
-            m_dropIndicatorOverlay = new ClassicIndicators(this);
-            break;
-        case DropIndicatorOverlayInterface::TypeAnimated:
-            // Disabled for now, that will come for 2.0 or so
-            //m_dropIndicatorOverlay = new AnimatedIndicators(this);
-            //break;
-        case DropIndicatorOverlayInterface::TypeNone:
-            Q_ASSERT(false);
-            break;
-        }
-    }
-}
-
-DropIndicatorOverlayInterface::Type DropArea::indicatorStyle() const
-{
-    return m_dropIndicatorOverlay->indicatorType();
 }
 
 Anchor::List DropArea::nonStaticAnchors(bool includePlaceholders) const

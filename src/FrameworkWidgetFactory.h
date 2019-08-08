@@ -30,6 +30,8 @@
 
 namespace KDDockWidgets {
 
+class DropIndicatorOverlayInterface;
+
 class DOCKS_EXPORT FrameworkWidgetFactory {
 public:
     virtual ~FrameworkWidgetFactory();
@@ -42,6 +44,7 @@ public:
     virtual Separator* createSeparator(Anchor *anchor, QWidgetAdapter *parent = nullptr) const = 0;
     virtual FloatingWindow *createFloatingWindow(QWidget *parent = nullptr) const = 0;
     virtual FloatingWindow *createFloatingWindow(Frame *frame, QWidget *parent = nullptr) const = 0;
+    virtual DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const = 0;
 };
 
 class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
@@ -55,6 +58,7 @@ public:
     Separator *createSeparator(Anchor *anchor, QWidgetAdapter *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(QWidget *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(Frame *frame, QWidget *parent = nullptr) const override;
+    DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const override;
 };
 
 }

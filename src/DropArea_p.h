@@ -57,8 +57,6 @@ public:
     bool drop(FloatingWindow *droppedWindow, QPoint globalPos);
     bool drop(QWidget *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     int numFrames() const;
-    void setIndicatorStyle(DropIndicatorOverlayInterface::Type);
-    DropIndicatorOverlayInterface::Type indicatorStyle() const;
 
     Anchor::List nonStaticAnchors(bool includePlaceholders = false) const;
     Frame *frameContainingPos(QPoint globalPos) const;

@@ -19,7 +19,7 @@
 */
 
 #include "FrameworkWidgetFactory.h"
-
+#include "indicators/ClassicIndicators_p.h"
 #include "QWidgetAdapter.h"
 
 #include "widgets/FrameWidget_p.h"
@@ -73,4 +73,9 @@ FloatingWindow *DefaultWidgetFactory::createFloatingWindow(QWidget *parent) cons
 FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, QWidget *parent) const
 {
     return new FloatingWindowWidget(frame, parent);
+}
+
+DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const
+{
+    return new ClassicIndicators(dropArea);
 }
