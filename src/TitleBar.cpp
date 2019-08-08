@@ -95,9 +95,9 @@ void TitleBar::setIcon(const QIcon &icon)
 
 std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 {
-    if (!isVisible()) {
+    if (!isVisible() && window()->isVisible()) {
         qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar"
-                   << this;
+                   << this << window()->isVisible() << parentWidget();
 
         if (m_floatingWindow) {
             qWarning() << "Has floating window with titlebar=" << m_floatingWindow->titleBar()

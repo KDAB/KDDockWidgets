@@ -3964,6 +3964,7 @@ void TestDocks::tst_addToHiddenMainWindow()
     m->addDockWidget(d1, Location_OnTop);
     m->addDockWidget(d2, Location_OnTop);
 
+    QVERIFY(!m->isVisible());
     d1->setFloating(true);
 
     delete m;
