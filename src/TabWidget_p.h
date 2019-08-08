@@ -34,7 +34,6 @@
 #include "Frame_p.h"
 #include "DockWidgetBase.h"
 
-#include <QTabWidget>
 #include <QTabBar>
 #include <QVector>
 

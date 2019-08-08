@@ -35,7 +35,9 @@
 #include "Utils_p.h"
 #include "Config.h"
 
-#include <QMouseEvent>
+#ifdef QT_WIDGETS_LIB
+# include <QTabWidget>
+#endif
 
 #include <memory>
 
