@@ -1722,6 +1722,8 @@ void MultiSplitterLayout::updateAnchorFollowing(const AnchorGroup &groupBeingRem
             }
         }
     }
+
+    updateSizeConstraints();
 }
 
 QHash<Anchor*, Anchor*> MultiSplitterLayout::anchorsShouldFollow() const
