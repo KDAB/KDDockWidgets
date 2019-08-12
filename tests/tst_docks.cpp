@@ -306,6 +306,7 @@ private Q_SLOTS:
     void tst_rectForDropMath_data();
     void tst_rectForDropMath();
     void tst_crash(); // tests some crash I got
+    void tst_crash2_data();
     void tst_crash2();
     void tst_setFloatingWhenWasTabbed();
     void tst_setFloatingWhenSideBySide();
@@ -2493,39 +2494,88 @@ void TestDocks::tst_crash()
     }
 }
 
+void TestDocks::tst_crash2_data()
+{
+    QTest::addColumn<bool>("show");
+    QTest::newRow("true") << true;
+    //QTest::newRow("false") << false;
+}
+
 void TestDocks::tst_crash2()
 {
-    EnsureTopLevelsDeleted e;
-    auto m = new MainWindow("m1");
-    auto layout = m->multiSplitterLayout();
-    m->show();
+    QFETCH(bool, show);
 
-    DockWidget::List docks;
-    for (int i = 0; i < 3; ++i)
-        docks << new DockWidget(QString::number(i));
 
-    QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft,
-                                                  Location_OnRight};
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = new MainWindow("m1", MainWindowOption_None);
+        auto layout = m->multiSplitterLayout();
+        m->setVisible(show);
 
-    QVector<KDDockWidgets::AddingOption> options = { AddingOption_None, AddingOption_None,
-                                                    AddingOption_StartHidden};
+        DockWidget::List docks;
+        const int num = 4;
+        for (int i = 0; i < num; ++i)
+            docks << new DockWidget(QString::number(i));
 
-    QVector<bool> floatings =  {true, false, false};
+        QVector<KDDockWidgets::Location> locations = {Location_OnLeft,
+                                                      Location_OnRight, Location_OnRight, Location_OnRight};
 
-    for (int i = 0; i < 3; ++i) {
+        QVector<KDDockWidgets::AddingOption> options = { AddingOption_StartHidden,
+                                                        AddingOption_StartHidden, AddingOption_None, AddingOption_StartHidden};
 
-        m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
-        layout->checkSanity();
+        QVector<bool> floatings =  {true, false, false, false};
 
-        QCOMPARE(layout->m_leftAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().width());
-        QCOMPARE(layout->m_topAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().height());
+        for (int i = 0; i < num; ++i) {
 
-        docks[i]->setFloating(floatings[i]);
+            m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
+            layout->checkSanity();
+
+            QCOMPARE(layout->m_leftAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().width());
+            QCOMPARE(layout->m_topAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().height());
+
+            docks[i]->setFloating(floatings[i]);
+        }
+
+        qDeleteAll(docks);
+        qDeleteAll(DockRegistry::self()->frames());
+        delete m;
     }
 
-    qDeleteAll(docks);
-    qDeleteAll(DockRegistry::self()->frames());
-    delete m;
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = new MainWindow("m1");
+        auto layout = m->multiSplitterLayout();
+        m->show();
+
+        const int num = 3;
+        DockWidget::List docks;
+        for (int i = 0; i < num; ++i)
+            docks << new DockWidget(QString::number(i));
+
+        QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft,
+                                                      Location_OnRight};
+
+        QVector<KDDockWidgets::AddingOption> options = { AddingOption_None, AddingOption_None,
+                                                        AddingOption_StartHidden};
+
+        QVector<bool> floatings =  {true, false, false};
+
+        for (int i = 0; i < num; ++i) {
+
+            m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
+            layout->checkSanity();
+
+            QCOMPARE(layout->m_leftAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().width());
+            QCOMPARE(layout->m_topAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().height());
+
+            docks[i]->setFloating(floatings[i]);
+        }
+
+        qDeleteAll(docks);
+        qDeleteAll(DockRegistry::self()->frames());
+        delete m;
+    }
+
 }
 
 void TestDocks::tst_setFloatingWhenWasTabbed()
