@@ -26,6 +26,7 @@
 #include "FloatingWindow_p.h"
 #include "Config.h"
 #include "DropIndicatorOverlayInterface_p.h"
+#include "FrameworkWidgetFactory.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"

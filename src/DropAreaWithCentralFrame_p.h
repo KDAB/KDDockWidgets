@@ -23,6 +23,7 @@
 
 #include "DropArea_p.h"
 #include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #include "QWidgetAdapter.h"
 

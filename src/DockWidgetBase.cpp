@@ -32,6 +32,7 @@
 #include "multisplitter/Item_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QAction>
 #include <QEvent>

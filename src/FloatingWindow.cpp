@@ -29,6 +29,7 @@
 #include "WidgetResizeHandler_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QApplication>
 #include <QCloseEvent>

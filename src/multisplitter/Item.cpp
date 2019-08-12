@@ -27,6 +27,7 @@
 #include "MainWindow.h"
 #include "DockWidgetBase.h"
 #include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QEvent>
 

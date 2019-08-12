@@ -45,13 +45,13 @@ set(DOCKSLIBS_SRCS
     multisplitter/MultiSplitter.cpp
     multisplitter/MultiSplitter_p.h
     multisplitter/Separator.cpp
-
     FrameworkWidgetFactory.cpp
     )
 
 set(DOCKS_INSTALLABLE_INCLUDES
     docks_export.h
     Config.h
+    FrameworkWidgetFactory.h
     DockWidgetBase.h
     Draggable_p.h
     KDDockWidgets.h

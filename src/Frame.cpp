@@ -36,6 +36,7 @@
 #include "LastPosition_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QTabBar>
 #include <QCloseEvent>

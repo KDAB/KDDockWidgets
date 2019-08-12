@@ -34,6 +34,7 @@
 #include "Logging_p.h"
 #include "Utils_p.h"
 #include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #ifdef QT_WIDGETS_LIB
 # include <QTabWidget>

@@ -23,6 +23,7 @@
 #include "TitleBar_p.h"
 #include "DockWidget.h"
 #include "SeparatorWidget_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QTextEdit>
 #include <QApplication>

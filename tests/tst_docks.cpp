@@ -36,6 +36,7 @@
 #include "multisplitter/MultiSplitter_p.h"
 #include "LastPosition_p.h"
 #include "utils.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QtTest/QtTest>
 #include <QPainter>
@@ -2498,13 +2499,12 @@ void TestDocks::tst_crash2_data()
 {
     QTest::addColumn<bool>("show");
     QTest::newRow("true") << true;
-    //QTest::newRow("false") << false;
+    QTest::newRow("false") << false;
 }
 
 void TestDocks::tst_crash2()
 {
     QFETCH(bool, show);
-
 
     {
         EnsureTopLevelsDeleted e;

@@ -27,6 +27,8 @@
 #include "LastPosition_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
+#include "Separator_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QPushButton>
 #include <QEvent>

@@ -27,6 +27,7 @@
 
 #include "Config.h"
 #include "DockRegistry_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QApplication>
 #include <QDebug>

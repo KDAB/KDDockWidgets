@@ -25,6 +25,7 @@
 #include "Logging_p.h"
 #include "WindowBeingDragged_p.h"
 #include "Utils_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QHBoxLayout>
 #include <QLabel>

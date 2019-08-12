@@ -35,6 +35,7 @@
 #include "LastPosition_p.h"
 #include "multisplitter/Anchor_p.h"
 #include "multisplitter/Item_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QDataStream>
 #include <QDebug>

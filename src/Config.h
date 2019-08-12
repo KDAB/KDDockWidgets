@@ -29,11 +29,11 @@
 #define KD_DOCKWIDGETS_CONFIG_H
 
 #include "docks_export.h"
-#include "FrameworkWidgetFactory.h"
 
 namespace KDDockWidgets
 {
 class DockWidgetBase;
+class FrameworkWidgetFactory;
 typedef KDDockWidgets::DockWidgetBase* (*DockWidgetFactoryFunc)(const QString &name);
 
 /**

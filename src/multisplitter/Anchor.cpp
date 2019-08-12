@@ -24,6 +24,8 @@
 #include "Logging_p.h"
 #include "LayoutSaver.h"
 #include "Config.h"
+#include "Separator_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QApplication>
 #include <QDebug>

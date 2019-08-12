@@ -28,6 +28,7 @@
 #include "TabWidgetWidget_p.h"
 #include "Frame_p.h"
 #include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 using namespace KDDockWidgets;
 
