@@ -58,10 +58,13 @@ set(DOCKS_INSTALLABLE_INCLUDES
     QWidgetAdapter.h
     LayoutSaver.h
     Frame_p.h
+    TitleBar_p.h
     )
 
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
-    widgets/QWidgetAdapter_widgets_p.h)
+    widgets/QWidgetAdapter_widgets_p.h
+    widgets/TitleBarWidget_p.h
+)
 
 if (OPTION_QTQUICK)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
