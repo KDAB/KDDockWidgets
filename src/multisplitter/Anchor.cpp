@@ -200,14 +200,22 @@ void Anchor::setPosition(int p, SetPositionOptions options)
                      << m_separatorWidget->isVisible() << "; p=" << p;
 
     const int max = m_layout->length(orientation()) - 1;
-    if (max != -1 && (p < 0  || p > max)) {
-        m_layout->dumpDebug();
-        qWarning() << Q_FUNC_INFO << "Out of bounds position=" << p
-                   << "; oldPosition=" << position()
-                   << "; this=" << this
-                   << "; size=" << m_layout->size()
-                   << "; max=" << max
-                   << m_layout->multiSplitter()->window();
+    const bool outOfBounds = max != -1 && (p < 0  || p > max);
+
+    if (outOfBounds) {
+        if (isStatic() && m_layout->isRestoringPlaceholder()) {
+            // Don't do anything here, it's restoring a placeholder and will call ensureAnchorsBounded() when finished
+            return;
+        } else {
+            m_layout->dumpDebug();
+            qWarning() << Q_FUNC_INFO << "Out of bounds position=" << p
+                       << "; oldPosition=" << position()
+                       << "; this=" << this
+                       << "; size=" << m_layout->size()
+                       << "; max=" << max
+                       << m_layout->multiSplitter()->window();
+        }
+
     }
 
     m_initialized = true;
