@@ -1598,13 +1598,13 @@ void TestDocks::tst_restoreAfterResize()
     auto dock1 = createDockWidget("1", new QPushButton("1"));
     m->addDockWidget(dock1, Location_OnLeft);
     auto layout = m->multiSplitterLayout();
-    const QSize oldContentsSize = layout->contentsSize();
+    const QSize oldContentsSize = layout->size();
     const QSize oldWindowSize = m->size();
     LayoutSaver saver;
     QVERIFY(saver.saveToDisk());
     m->resize(1000, 1000);
     QVERIFY(saver.restoreFromDisk());
-    QCOMPARE(oldContentsSize, layout->contentsSize());
+    QCOMPARE(oldContentsSize, layout->size());
     QCOMPARE(oldWindowSize, m->size());
 }
 
@@ -1813,10 +1813,10 @@ void TestDocks::tst_addToSmallMainWindow()
         QVERIFY(waitForResize(m.get()));
         qDebug() << "window size3=" << m->size();
 
-        QVERIFY(dropArea->multiSplitterLayout()->contentsWidth() > osWindowMinWidth());
+        QVERIFY(dropArea->multiSplitterLayout()->width() > osWindowMinWidth());
         QMargins margins = m->centralWidget()->layout()->contentsMargins();
-        QCOMPARE(dropArea->multiSplitterLayout()->contentsWidth(), m->width() - margins.left() - margins.right());
-        qDebug() << "New size: " << m->width() << dropArea->multiSplitterLayout()->contentsWidth()
+        QCOMPARE(dropArea->multiSplitterLayout()->width(), m->width() - margins.left() - margins.right());
+        qDebug() << "New size: " << m->width() << dropArea->multiSplitterLayout()->width()
                  << dropArea->minimumSize();
         QVERIFY(m->dropArea()->checkSanity());
     }
@@ -2041,7 +2041,7 @@ std::unique_ptr<MultiSplitter> TestDocks::createMultiSplitterFromSetup(MultiSpli
     auto widget = std::unique_ptr<MultiSplitter>(new MultiSplitter());
     auto layout = widget->multiSplitterLayout();
     widget->show();
-    layout->setContentsSize(setup.size);
+    layout->setSize(setup.size);
 
     const int count = setup.widgets.size();
     for (int i = 0; i < count; ++i) {
@@ -2410,7 +2410,7 @@ void TestDocks::tst_rectForDropMath()
 
     MultiSplitter widget;
     MultiSplitterLayout layout(&widget);
-    layout.setContentsSize(layoutContentsSize);
+    layout.setSize(layoutContentsSize);
 
     const QRect result = layout.rectForDrop(length, location, relativeToRect);
     qDebug() << "Result=" << result;
@@ -2449,7 +2449,7 @@ void TestDocks::tst_rectForDrop()
     QHash<QWidget*, Frame*> frameMap;
     auto multisplitterWidget = createMultiSplitterFromSetup(multisplitterSetup, frameMap);
     auto layout = multisplitterWidget->multiSplitterLayout();
-    qDebug() << "Created with contentsSize=" << layout->contentsWidth() << layout->contentsHeight()<< multisplitterSetup.size;
+    qDebug() << "Created with contentsSize=" << layout->width() << layout->height()<< multisplitterSetup.size;
     for (ExpectedRectForDrop expected : expectedRects) {
         QRect actualRect = layout->rectForDrop(expected.widgetToDrop, expected.location, layout->itemForFrame(expected.relativeTo));
         layout->dumpDebug();
@@ -3008,8 +3008,8 @@ void TestDocks::tst_availableLengthForOrientation()
 
     int availableWidth = layout->availableLengthForOrientation(Qt::Vertical);
     int availableHeight = layout->availableLengthForOrientation(Qt::Horizontal);
-    QCOMPARE(availableWidth, layout->contentsWidth() - 2 * Anchor::thickness(true));
-    QCOMPARE(availableHeight, layout->contentsHeight() - 2 *Anchor::thickness(true));
+    QCOMPARE(availableWidth, layout->width() - 2 * Anchor::thickness(true));
+    QCOMPARE(availableHeight, layout->height() - 2 *Anchor::thickness(true));
 
     //2. Now do the same, but we have some widget docked
 
@@ -3021,8 +3021,8 @@ void TestDocks::tst_availableLengthForOrientation()
 
     availableWidth = layout->availableLengthForOrientation(Qt::Vertical);
     availableHeight = layout->availableLengthForOrientation(Qt::Horizontal);
-    QCOMPARE(availableWidth, layout->contentsWidth() - 2 * Anchor::thickness(true) - Anchor::thickness(false) - dock1MinWidth);
-    QCOMPARE(availableHeight, layout->contentsHeight() - 2 *Anchor::thickness(true) - Anchor::thickness(false) -  dock1MinHeight);
+    QCOMPARE(availableWidth, layout->width() - 2 * Anchor::thickness(true) - Anchor::thickness(false) - dock1MinWidth);
+    QCOMPARE(availableHeight, layout->height() - 2 *Anchor::thickness(true) - Anchor::thickness(false) -  dock1MinHeight);
 }
 
 void TestDocks::tst_setAstCurrentTab()
@@ -3100,7 +3100,7 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
     QCOMPARE(layout->placeholderCount(), 0);
 
     // The dock1 should occupy the entire width
-    QCOMPARE(dock1->frame()->width(), layout->contentsWidth() - 2 * Anchor::thickness(true));
+    QCOMPARE(dock1->frame()->width(), layout->width() - 2 * Anchor::thickness(true));
 
     QVERIFY(waitForDeleted(fw));
 }
@@ -3648,7 +3648,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
 
         Anchor *anchor = item1->anchorGroup().right;
         int boundToTheRight = layout->boundPositionForAnchor(anchor, Anchor::Side2);
-        int expectedBoundToTheRight = layout->contentsSize().width() -
+        int expectedBoundToTheRight = layout->size().width() -
                                       Anchor::thickness(true) -
                                       3*Anchor::thickness(false) -
                                       item2->minLength(Qt::Vertical) -
@@ -3671,7 +3671,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         QCOMPARE(item3->anchorGroup().right, item4->anchorGroup().left);
 
         boundToTheRight = layout->boundPositionForAnchor(anchor, Anchor::Side2);
-        expectedBoundToTheRight = layout->contentsSize().width() -
+        expectedBoundToTheRight = layout->size().width() -
                                   Anchor::thickness(true) -
                                   2*Anchor::thickness(false) -
                                   item2->minLength(Qt::Vertical) -
@@ -3704,7 +3704,6 @@ void TestDocks::tst_negativeAnchorPosition()
 
     auto dropArea = m->dropArea();
     MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
-    qDebug() << "ContentSize:" << layout->contentsSize();
 
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
@@ -3732,8 +3731,8 @@ void TestDocks::tst_negativeAnchorPosition()
     waitForResize(d3);
 
     // Now resize the Window, after removing middle one
-    const int availableToShrink = layout->contentsSize().height() - layout->minimumSize().height();
-    layout->setContentLength(layout->contentsLength(Qt::Horizontal) - availableToShrink, Qt::Horizontal); // Should not warn about negative sizes
+    const int availableToShrink = layout->size().height() - layout->minimumSize().height();
+    layout->setContentLength(layout->length(Qt::Horizontal) - availableToShrink, Qt::Horizontal); // Should not warn about negative sizes
 
     d2->deleteLater();
     waitForDeleted(d2);
@@ -3839,7 +3838,7 @@ void TestDocks::tst_negativeAnchorPosition5()
 
     Item *item1  = layout->itemForFrame(dock1->frame());
 
-    qDebug() << "contents size" << layout->contentsSize()
+    qDebug() << "contents size" << layout->size()
              << "; available=" << layout->availableLengthForOrientation(Qt::Horizontal)
              << "; item1.min=" << item1->minimumSize();
 
@@ -4064,10 +4063,10 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     docks2.at(2).createdDock->close();
     QVERIFY(waitForDeleted(f20));
 
-    QCOMPARE(layout1->contentsSize(), layout2->contentsSize());
-    QCOMPARE(layout1->contentsSize(), layout3->contentsSize());
+    QCOMPARE(layout1->size(), layout2->size());
+    QCOMPARE(layout1->size(), layout3->size());
 
-    qDebug() << "CONTENTS SIZE" << layout1->contentsSize();
+    qDebug() << "CONTENTS SIZE" << layout1->size();
     QCOMPARE(layout1->availableSize(), layout2->availableSize());
     QCOMPARE(layout1->availableSize(), layout3->availableSize());
 
@@ -4075,7 +4074,7 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     docks1.at(0).createdDock->show();
     m3->addDockWidget(docks2.at(0).createdDock, Location_OnBottom); // just steal from m2
 
-    QCOMPARE(layout1->contentsSize(), layout3->contentsSize());
+    QCOMPARE(layout1->size(), layout3->size());
 
     Frame *f10 = docks1.at(0).createdDock->frame();
     Item *item10 = layout1->itemForFrame(f10);
@@ -4338,7 +4337,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
 
     Anchor *rightAnchor = layout->staticAnchorGroup().right;
     const int oldRightAnchorPos = rightAnchor->position();
-    const int oldContentsWidth = layout->contentsWidth();
+    const int oldContentsWidth = layout->width();
 
     auto f1 = dock1->frame();
     dock3->close();
@@ -4397,7 +4396,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
 
     QVERIFY(waitForDeleted(fw2));
     QCOMPARE(rightAnchor->position(), oldRightAnchorPos);
-    QCOMPARE(layout->contentsWidth(), oldContentsWidth);
+    QCOMPARE(layout->width(), oldContentsWidth);
     layout->checkSanity();
 }
 
@@ -4902,7 +4901,7 @@ void TestDocks::tst_resizeWindow()
     const int maximizedWidth1 = dock1->width();
     const int maximizedWidth2 = dock2->width();
 
-    const double relativeDifference = qAbs((maximizedWidth1 - maximizedWidth2) / (1.0 * layout->contentsWidth()));
+    const double relativeDifference = qAbs((maximizedWidth1 - maximizedWidth2) / (1.0 * layout->width()));
 
     qDebug() << oldWidth1 << oldWidth2 << maximizedWidth1 << maximizedWidth2 << relativeDifference;
     QVERIFY(relativeDifference <= 0.01);

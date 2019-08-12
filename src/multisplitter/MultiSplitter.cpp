@@ -46,7 +46,7 @@ MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
         setMinimumSize(sz);
     });
 
-    connect(m_layout, &MultiSplitterLayout::contentsSizeChanged, this, [this] (QSize sz) {
+    connect(m_layout, &MultiSplitterLayout::sizeChanged, this, [this] (QSize sz) {
         if (!m_inResizeEvent && !LayoutSaver::restoreInProgress())
             resize(sz);
     });
@@ -77,7 +77,7 @@ bool MultiSplitter::onResize(QSize oldSize, QSize newSize)
 
     if (!LayoutSaver::restoreInProgress()) {
         // don't resize anything while we're restoring the layout
-        m_layout->setContentsSize(newSize);
+        m_layout->setSize(newSize);
     }
 
     return false; // So QWidget::resizeEvent is called

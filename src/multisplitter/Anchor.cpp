@@ -197,13 +197,13 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     qCDebug(anchors) << Q_FUNC_INFO << this << "; visible="
                      << m_separatorWidget->isVisible() << "; p=" << p;
 
-    const int max = m_layout->contentsLength(orientation()) - 1;
+    const int max = m_layout->length(orientation()) - 1;
     if (max != -1 && (p < 0  || p > max)) {
         m_layout->dumpDebug();
         qWarning() << Q_FUNC_INFO << "Out of bounds position=" << p
                    << "; oldPosition=" << position()
                    << "; this=" << this
-                   << "; contentsSize=" << m_layout->contentsSize()
+                   << "; size=" << m_layout->size()
                    << "; max=" << max
                    << m_layout->multiSplitter()->window();
     }
@@ -242,7 +242,7 @@ void Anchor::setPosition(int p, SetPositionOptions options)
 
 void Anchor::updatePositionPercentage()
 {
-    m_positionPercentage = (position() * 1.0) / m_layout->contentsWidth();
+    m_positionPercentage = (position() * 1.0) / m_layout->width();
 }
 
 int Anchor::position() const

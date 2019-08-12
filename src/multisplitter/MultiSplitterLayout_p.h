@@ -109,7 +109,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject // clazy:
     Q_PROPERTY(int count READ count NOTIFY widgetCountChanged)
     Q_PROPERTY(int visibleCount READ visibleCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
     Q_PROPERTY(int placeholderCount READ placeholderCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
-    Q_PROPERTY(QSize contentsSize READ contentsSize NOTIFY contentsSizeChanged)
+    Q_PROPERTY(QSize size READ size NOTIFY sizeChanged)
     Q_PROPERTY(QSize minimumSize READ minimumSize NOTIFY minimumSizeChanged)
 public:
 
@@ -265,7 +265,7 @@ public:
      * QWidgets is async and we need it to be sync. As sometimes adding widgets will increase
      * the MultiSplitterLayout size (due to widget's min-size constraints).
      */
-    void setContentsSize(QSize);
+    void setSize(QSize);
 
     /**
      * @brief sets either the contents height if @p o is Qt::Horizontal, otherwise sets the contents width
@@ -276,19 +276,19 @@ public:
      * @brief returns @ref contentsWidth if @p o is Qt::Vertical, otherwise @ref contentsHeight
      * @sa contentsHeight, contentsWidth
      */
-    int contentsLength(Qt::Orientation o) const;
+    //int length(Qt::Orientation o) const;
 
     /**
      * @brief returns the contents width.
      * Usually it's the same width as the respective parent MultiSplitter.
      */
-    int contentsWidth() const { return m_contentSize.width(); }
+    int width() const { return m_size.width(); }
 
     /**
      * @brief returns the contents height.
      * Usually it's the same height as the respective parent MultiSplitter.
      */
-    int contentsHeight() const { return m_contentSize.height(); }
+    int height() const { return m_size.height(); }
 
     /**
      * @brief returns the layout's minimum size
@@ -297,9 +297,9 @@ public:
     QSize minimumSize() const { return m_minSize; }
 
     /**
-     * @brief getter for the contents size
+     * @brief getter for the size
      */
-    QSize contentsSize() const { return m_contentSize; }
+    QSize size() const { return m_size; }
 
     // For debug/hardening
     bool validateInputs(QWidgetOrQuick *widget, KDDockWidgets::Location location, const Frame *relativeToFrame, AddingOption option) const;
@@ -411,9 +411,9 @@ Q_SIGNALS:
     ///@sa dumpDebug
     void aboutToDumpDebug() const; // clazy:exclude=const-signal-or-slot
 
-    ///@brief emitted when the contentsSize changes
-    ///@sa contentsSize
-    void contentsSizeChanged(QSize sz);
+    ///@brief emitted when the size changes
+    ///@sa size
+    void sizeChanged(QSize sz);
 
     ///@brief emitted when the minimumSize changes
     ///@sa minimumSize
@@ -464,12 +464,12 @@ private:
 
 
     /**
-     * @brief Ensures that this layout's contentSize is enough for dropping @p widget to @p location,
+     * @brief Ensures that this layout's size is enough for dropping @p widget to @p location,
      * relative to @p relativeToItem.
      *
-     * It may increase contentsSize or do notying, never decrease.
+     * It may increase size or do notying, never decrease.
      */
-    void ensureEnoughContentsSize(const QWidgetOrQuick *widget, KDDockWidgets::Location location,
+    void ensureEnoughSize(const QWidgetOrQuick *widget, KDDockWidgets::Location location,
                                   const Item *relativeToItem);
 
 
@@ -568,7 +568,7 @@ private:
     // Moves the widget's bottom or right anchor, to resize it.
     void resizeItem(Frame *frame, int newSize, Qt::Orientation);
 
-    ///@brief returns whether we're inside setContentsSize();
+    ///@brief returns whether we're inside setSize();
     bool isResizing() const { return m_resizing; }
 
     MultiSplitter *const m_multiSplitter;
@@ -589,7 +589,7 @@ private:
     QSize m_minSize = QSize(0, 0);
     AnchorGroup m_staticAnchorGroup;
     QPointer<Anchor> m_anchorBeingDragged;
-    QSize m_contentSize;
+    QSize m_size;
 };
 
 inline QDebug operator<<(QDebug d, const AnchorGroup &group) {
