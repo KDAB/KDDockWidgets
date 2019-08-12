@@ -22,15 +22,20 @@
 #define KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_H
 
 #include "docks_export.h"
+#include "QWidgetAdapter.h"
 #include "Frame_p.h"
-#include "TitleBar_p.h"
-#include "TabWidget_p.h"
-#include "multisplitter/Separator_p.h"
-#include "FloatingWindow_p.h"
 
 namespace KDDockWidgets {
 
 class DropIndicatorOverlayInterface;
+class Separator;
+class FloatingWindow;
+class TabWidget;
+class TitleBar;
+class Frame;
+class DropArea;
+class Anchor;
+class TabBar;
 
 class DOCKS_EXPORT FrameworkWidgetFactory {
 public:

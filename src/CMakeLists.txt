@@ -57,11 +57,11 @@ set(DOCKS_INSTALLABLE_INCLUDES
     KDDockWidgets.h
     QWidgetAdapter.h
     LayoutSaver.h
+    Frame_p.h
     )
 
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     widgets/QWidgetAdapter_widgets_p.h)
-
 
 if (OPTION_QTQUICK)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}

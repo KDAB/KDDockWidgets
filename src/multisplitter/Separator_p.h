@@ -38,7 +38,7 @@ public:
     bool isStatic() const;
     int position() const;
 
-    const Anchor *anchor() const { return m_anchor; }
+    const QPointer<Anchor> anchor() const { return m_anchor; }
     virtual void move(int p) = 0;
 
 protected:

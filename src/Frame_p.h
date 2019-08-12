@@ -29,12 +29,12 @@
 #define KD_FRAME_P_H
 
 #include "docks_export.h"
-#include "multisplitter/Item_p.h"
 #include "QWidgetAdapter.h"
 
 #include <QWidget>
 #include <QVector>
 #include <QDebug>
+#include <QPointer>
 
 namespace KDDockWidgets {
 

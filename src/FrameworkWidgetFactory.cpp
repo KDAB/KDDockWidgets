@@ -19,10 +19,14 @@
 */
 
 #include "FrameworkWidgetFactory.h"
-#include "QWidgetAdapter.h"
+#include "Frame_p.h"
+#include "TitleBar_p.h"
+#include "TabWidget_p.h"
+#include "multisplitter/Separator_p.h"
+#include "FloatingWindow_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "indicators/ClassicIndicators_p.h"
+# include "indicators/ClassicIndicators_p.h"
 # include "widgets/FrameWidget_p.h"
 # include "widgets/TitleBarWidget_p.h"
 # include "widgets/TabBarWidget_p.h"
