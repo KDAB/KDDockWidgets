@@ -473,6 +473,8 @@ private:
                                   const Item *relativeToItem);
 
 
+    void ensureAnchorsBounded();
+
     void insertAnchor(Anchor *);
     void removeAnchor(Anchor *);
 

@@ -422,6 +422,13 @@ void MultiSplitterLayout::ensureEnoughContentsSize(const QWidgetOrQuick *widget,
     }
 }
 
+void MultiSplitterLayout::ensureAnchorsBounded()
+{
+    // Recursive, goes all the way to right/bottom
+    m_leftAnchor->ensureBounded();
+    m_topAnchor->ensureBounded();
+}
+
 static Anchor::List removeSmallestPath(QVector<Anchor::List> &paths)
 {
     // Removes and returns the smallest list
@@ -1576,6 +1583,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     }
     item->endBlockPropagateGeo();
 
+    ensureAnchorsBounded();
     updateAnchorFollowing();
 }
 

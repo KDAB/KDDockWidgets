@@ -143,6 +143,8 @@ public:
     void setVisible(bool);
     qreal positionPercentage() const { return m_positionPercentage; }
 
+    void ensureBounded();
+
     /**
      * @brief Sets the new layout. Called when we're dropping a source layout into a target one.
      * The target one will steal the separators of the source one.

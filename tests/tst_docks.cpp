@@ -306,6 +306,7 @@ private Q_SLOTS:
     void tst_rectForDropMath_data();
     void tst_rectForDropMath();
     void tst_crash(); // tests some crash I got
+    void tst_crash2();
     void tst_setFloatingWhenWasTabbed();
     void tst_setFloatingWhenSideBySide();
     void tst_setFloatingAfterDraggedFromTabToSideBySide();
@@ -2492,6 +2493,41 @@ void TestDocks::tst_crash()
     }
 }
 
+void TestDocks::tst_crash2()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = new MainWindow("m1");
+    auto layout = m->multiSplitterLayout();
+    m->show();
+
+    DockWidget::List docks;
+    for (int i = 0; i < 3; ++i)
+        docks << new DockWidget(QString::number(i));
+
+    QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft,
+                                                  Location_OnRight};
+
+    QVector<KDDockWidgets::AddingOption> options = { AddingOption_None, AddingOption_None,
+                                                    AddingOption_StartHidden};
+
+    QVector<bool> floatings =  {true, false, false};
+
+    for (int i = 0; i < 3; ++i) {
+
+        m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
+        layout->checkSanity();
+
+        QCOMPARE(layout->m_leftAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().width());
+        QCOMPARE(layout->m_topAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().height());
+
+        docks[i]->setFloating(floatings[i]);
+    }
+
+    qDeleteAll(docks);
+    qDeleteAll(DockRegistry::self()->frames());
+    delete m;
+}
+
 void TestDocks::tst_setFloatingWhenWasTabbed()
 {
     // Tests DockWidget::isTabbed() and DockWidget::setFloating(false|true) when tabbed (it should redock)
@@ -3966,6 +4002,7 @@ void TestDocks::tst_addToHiddenMainWindow()
 
     QVERIFY(!m->isVisible());
     d1->setFloating(true);
+    d2->setFloating(false);
 
     delete m;
 }
