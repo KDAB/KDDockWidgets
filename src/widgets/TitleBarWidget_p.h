@@ -38,7 +38,6 @@ namespace KDDockWidgets {
 
 class DockWidget;
 class Frame;
-class Button;
 
 class DOCKS_EXPORT TitleBarWidget : public TitleBar
 {
@@ -63,6 +62,8 @@ protected:
     bool isFloatButtonVisible() const override;
     bool isFloatButtonEnabled() const override;
 
+    static QAbstractButton* createButton(QWidget *parent, const QIcon &icon);
+
 private:
     void init();
     int buttonAreaWidth() const;
@@ -70,8 +71,8 @@ private:
     QRect iconRect() const;
 
     QHBoxLayout *const m_layout;
-    Button *m_closeButton = nullptr;
-    Button *m_floatButton = nullptr;
+    QAbstractButton *m_closeButton = nullptr;
+    QAbstractButton *m_floatButton = nullptr;
     QLabel *m_dockWidgetIcon = nullptr;
 };
 

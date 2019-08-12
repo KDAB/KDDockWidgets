@@ -59,9 +59,8 @@ void TitleBarWidget::init()
     m_layout->setSpacing(2);
 
     m_closeButton = new Button(this);
-    m_floatButton = new Button(this);
-    m_floatButton->setIcon(style()->standardIcon(QStyle::SP_TitleBarNormalButton));
-    m_closeButton->setIcon(style()->standardIcon(QStyle::SP_TitleBarCloseButton));
+    m_floatButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarNormalButton));
+    m_closeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarCloseButton));
     m_layout->addWidget(m_floatButton);
     m_layout->addWidget(m_closeButton);
 
@@ -167,4 +166,11 @@ bool TitleBarWidget::isFloatButtonVisible() const
 bool TitleBarWidget::isFloatButtonEnabled() const
 {
     return m_floatButton->isEnabled();
+}
+
+QAbstractButton *TitleBarWidget::createButton(QWidget *parent, const QIcon &icon)
+{
+    auto button = new Button(parent);
+    button->setIcon(icon);
+    return button;
 }
