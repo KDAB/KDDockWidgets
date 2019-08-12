@@ -50,6 +50,8 @@ public:
     ///@brief getter for the close button
     QWidget* closeButton() const;
 
+    static QAbstractButton* createButton(QWidget *parent, const QIcon &icon);
+
 protected:
     void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
@@ -61,8 +63,6 @@ protected:
     bool isCloseButtonEnabled() const override;
     bool isFloatButtonVisible() const override;
     bool isFloatButtonEnabled() const override;
-
-    static QAbstractButton* createButton(QWidget *parent, const QIcon &icon);
 
 private:
     void init();
