@@ -293,8 +293,9 @@ int Anchor::smallestAvailableItemSqueeze(Anchor::Side side) const
 
 void Anchor::ensureBounded()
 {
-    if (!isStatic()) {
+    if (!isStatic() && !isFollowing()) {
         const QPair<int,int> bounds = m_layout->boundPositionsForAnchor(this);
+
         if (position() < bounds.first) {
             setPosition(bounds.first);
         } else if (position() > bounds.second) {

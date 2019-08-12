@@ -33,6 +33,7 @@
 #include <QPushButton>
 #include <QEvent>
 #include <QtMath>
+#include <QScopedValueRollback>
 
 #define INDICATOR_MINIMUM_LENGTH 100
 #define KDDOCKWIDGETS_MIN_WIDTH 80
@@ -1182,6 +1183,16 @@ void MultiSplitterLayout::setDoSanityChecks(bool doit)
         m_doSanityChecks = doit;
 }
 
+void MultiSplitterLayout::blockItemPropagateGeo(bool block)
+{
+    for (Item *item : m_items) {
+        if (block)
+            item->beginBlockPropagateGeo();
+        else
+            item->endBlockPropagateGeo();
+    }
+}
+
 void MultiSplitterLayout::emitVisibleWidgetCountChanged()
 {
     if (!m_inDestructor)
@@ -1458,6 +1469,8 @@ void MultiSplitterLayout::ensureHasAvailableSize(QSize needed)
 
 void MultiSplitterLayout::restorePlaceholder(Item *item)
 {
+    QScopedValueRollback<bool> restoring(m_restoringPlaceholder, true);
+
     AnchorGroup anchorGroup = item->anchorGroup();
 
     const QSize availableSize = this->availableSize();

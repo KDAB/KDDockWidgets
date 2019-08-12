@@ -440,6 +440,8 @@ private:
         Anchor *side2;
     };
 
+    void blockItemPropagateGeo(bool block);
+
     /**
      * @brief overload called by the first one. Splitted out just so it's easier to unit-test the math
      */
@@ -570,6 +572,7 @@ private:
 
     ///@brief returns whether we're inside setSize();
     bool isResizing() const { return m_resizing; }
+    bool isRestoringPlaceholder() const { return m_restoringPlaceholder; }
 
     MultiSplitter *const m_multiSplitter;
     Anchor::List m_anchors;
@@ -583,6 +586,7 @@ private:
     bool m_inCtor = true;
     bool m_inDestructor = false;
     bool m_beingMergedIntoAnotherMultiSplitter = false;
+    bool m_restoringPlaceholder = false;
     bool m_doSanityChecks = true;
     bool m_resizing = false;
 
