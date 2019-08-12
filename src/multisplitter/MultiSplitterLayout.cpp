@@ -200,12 +200,12 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
 
     Item *relativeToItem = itemForFrame(relativeToWidget);
 
+    ensureEnoughSize(w, location, relativeToItem);
+
     if (option & AddingOption_StartHidden) {
         addAsPlaceholder(qobject_cast<DockWidgetBase*>(w), location, relativeToItem);
         return;
     }
-
-    ensureEnoughSize(w, location, relativeToItem);
 
     Anchor *newAnchor = nullptr;
     const QRect dropRect = rectForDrop(w, location, relativeToItem);
@@ -662,7 +662,22 @@ QPair<int, int> MultiSplitterLayout::boundPositionsForAnchor(Anchor *anchor) con
     const int minSide2Length = anchor->cumulativeMinLength(Anchor::Side2);
     const int length = anchor->isVertical() ? width() : height();
 
-    return { minSide1Length - anchor->thickness(), length - minSide2Length };
+    const int bound1 = qMax(0, minSide1Length - anchor->thickness());
+    const int bound2 = qMax(0, length - minSide2Length);
+
+    if (bound2 < bound1) {
+        qWarning() << Q_FUNC_INFO << "Invalid bounds"
+                   << "; bound1=" << bound1
+                   << "; bound2=" << bound2
+                   << "; size=" << size()
+                   << "; anchor=" << anchor
+                   << "; orientation=" << anchor->orientation()
+                   << "; min1=" << minSide1Length
+                   << "; min2=" << minSide2Length;
+        Q_ASSERT(false);
+    }
+
+    return { bound1, bound2 };
 }
 
 QHash<Anchor *, QPair<int, int> > MultiSplitterLayout::boundPositionsForAllAnchors() const
@@ -1593,7 +1608,6 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     }
     item->endBlockPropagateGeo();
 
-    ensureAnchorsBounded();
     updateAnchorFollowing();
 }
 
@@ -1742,6 +1756,7 @@ void MultiSplitterLayout::updateAnchorFollowing(const AnchorGroup &groupBeingRem
     }
 
     updateSizeConstraints();
+    ensureAnchorsBounded();
 }
 
 QHash<Anchor*, Anchor*> MultiSplitterLayout::anchorsShouldFollow() const
