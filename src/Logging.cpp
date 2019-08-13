@@ -20,55 +20,23 @@
 
 #include "Logging_p.h"
 
-void KDDockWidgets::setLoggingFilterRules()
-{
-    static QStringList loggingCategories = {
-        QStringLiteral("kdab.docks.mouseevents"),
-        QStringLiteral("kdab.docks.hiding"),
-        QStringLiteral("kdab.docks.hovering"),
-        QStringLiteral("kdab.docks.creation"),
-        QStringLiteral("kdab.docks.docking"),
-        QStringLiteral("kdab.multisplitter.anchors"),
-        QStringLiteral("kdab.multisplitter.sizing"),
-        QStringLiteral("kdab.multisplitter.multisplittercreation"),
-        QStringLiteral("kdab.multisplitter.placeholder"),
-        QStringLiteral("kdab.multisplitter.addwidget"),
-        QStringLiteral("kdab.docks.state"),
-        QStringLiteral("kdab.docks.overlay"),
-        QStringLiteral("kdab.docks.dropping"),
-        QStringLiteral("kdab.docks.title"),
-        QStringLiteral("kdab.docks.closebutton"),
-        QStringLiteral("kdab.docks.restoring"),
-        QStringLiteral("kdab.docks.closing"),
-        QStringLiteral("kdab.docks.toplevels")
-    };
-
-    static QString filterRules;
-    if (filterRules.isEmpty()) {
-        for (const QString &cat : loggingCategories) {
-            filterRules += cat + QStringLiteral("=false\n");
-        }
-        QLoggingCategory::setFilterRules(filterRules);
-    }
-}
-
-Q_LOGGING_CATEGORY(toplevels, "kdab.docks.toplevels")
-Q_LOGGING_CATEGORY(creation, "kdab.docks.creation")
-Q_LOGGING_CATEGORY(hovering, "kdab.docks.hovering")
-Q_LOGGING_CATEGORY(mouseevents, "kdab.docks.mouseevents")
-Q_LOGGING_CATEGORY(state, "kdab.docks.state")
-Q_LOGGING_CATEGORY(docking, "kdab.docks.docking")
-Q_LOGGING_CATEGORY(globalevents, "kdab.docks.globalevents")
-Q_LOGGING_CATEGORY(hiding, "kdab.docks.hiding")
-Q_LOGGING_CATEGORY(closing, "kdab.docks.closing")
-Q_LOGGING_CATEGORY(overlay, "kdab.docks.overlay")
-Q_LOGGING_CATEGORY(dropping, "kdab.docks.dropping")
-Q_LOGGING_CATEGORY(restoring, "kdab.docks.restoring")
-Q_LOGGING_CATEGORY(title, "kdab.docks.title")
-Q_LOGGING_CATEGORY(closebutton, "kdab.docks.closebutton")
-Q_LOGGING_CATEGORY(sizing, "kdab.multisplitter.sizing")
-Q_LOGGING_CATEGORY(multisplittercreation, "kdab.multisplitter.multisplittercreation")
-Q_LOGGING_CATEGORY(addwidget, "kdab.multisplitter.addwidget")
-Q_LOGGING_CATEGORY(anchors, "kdab.multisplitter.anchors")
-Q_LOGGING_CATEGORY(item, "kdab.multisplitter.item")
-Q_LOGGING_CATEGORY(placeholder, "kdab.multisplitter.placeholder")
+Q_LOGGING_CATEGORY(toplevels, "kdab.docks.toplevels", QtWarningMsg)
+Q_LOGGING_CATEGORY(creation, "kdab.docks.creation", QtWarningMsg)
+Q_LOGGING_CATEGORY(hovering, "kdab.docks.hovering", QtWarningMsg)
+Q_LOGGING_CATEGORY(mouseevents, "kdab.docks.mouseevents", QtWarningMsg)
+Q_LOGGING_CATEGORY(state, "kdab.docks.state", QtWarningMsg)
+Q_LOGGING_CATEGORY(docking, "kdab.docks.docking", QtWarningMsg)
+Q_LOGGING_CATEGORY(globalevents, "kdab.docks.globalevents", QtWarningMsg)
+Q_LOGGING_CATEGORY(hiding, "kdab.docks.hiding", QtWarningMsg)
+Q_LOGGING_CATEGORY(closing, "kdab.docks.closing", QtWarningMsg)
+Q_LOGGING_CATEGORY(overlay, "kdab.docks.overlay", QtWarningMsg)
+Q_LOGGING_CATEGORY(dropping, "kdab.docks.dropping", QtWarningMsg)
+Q_LOGGING_CATEGORY(restoring, "kdab.docks.restoring", QtWarningMsg)
+Q_LOGGING_CATEGORY(title, "kdab.docks.title", QtWarningMsg)
+Q_LOGGING_CATEGORY(closebutton, "kdab.docks.closebutton", QtWarningMsg)
+Q_LOGGING_CATEGORY(sizing, "kdab.multisplitter.sizing", QtWarningMsg)
+Q_LOGGING_CATEGORY(multisplittercreation, "kdab.multisplitter.multisplittercreation", QtWarningMsg)
+Q_LOGGING_CATEGORY(addwidget, "kdab.multisplitter.addwidget", QtWarningMsg)
+Q_LOGGING_CATEGORY(anchors, "kdab.multisplitter.anchors", QtWarningMsg)
+Q_LOGGING_CATEGORY(item, "kdab.multisplitter.item", QtWarningMsg)
+Q_LOGGING_CATEGORY(placeholder, "kdab.multisplitter.placeholder", QtWarningMsg)

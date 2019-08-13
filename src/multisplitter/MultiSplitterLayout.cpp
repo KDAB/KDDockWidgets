@@ -59,7 +59,6 @@ MultiSplitterLayout::MultiSplitterLayout(MultiSplitter *parent)
     , m_staticAnchorGroup(this)
 {
     Q_ASSERT(parent);
-    KDDockWidgets::setLoggingFilterRules();
 
     DockRegistry::self()->registerLayout(this);
 

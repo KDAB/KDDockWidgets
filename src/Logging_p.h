@@ -23,11 +23,6 @@
 
 #include <QLoggingCategory>
 
-namespace KDDockWidgets {
-void setLoggingFilterRules();
-}
-
-
 Q_DECLARE_LOGGING_CATEGORY(hovering)
 Q_DECLARE_LOGGING_CATEGORY(creation)
 Q_DECLARE_LOGGING_CATEGORY(mouseevents)

@@ -33,8 +33,6 @@ using namespace KDDockWidgets;
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
-    KDDockWidgets::setLoggingFilterRules();
-
 #ifdef DOCKS_DEVELOPER_MODE
     if (qEnvironmentVariableIntValue("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW") == 1) {
         auto dv = new Debug::DebugWindow();
