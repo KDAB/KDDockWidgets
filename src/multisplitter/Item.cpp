@@ -400,7 +400,7 @@ void Item::restorePlaceholder(Frame *frame)
 void Item::onLayoutRequest() const
 {
     if (!d->m_frame)
-        return; // It's a placeholder, nothing to do. TODO: When restoring the placeholder we should update its min size
+        return; // It's a placeholder, nothing to do.
 
     QSize frameMinSize = d->frameMinSize().expandedTo(MultiSplitterLayout::hardcodedMinimumSize());
     if (frameMinSize == d->m_minSize)
