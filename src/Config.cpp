@@ -41,6 +41,7 @@ public:
     Private()
         : m_frameworkWidgetFactory(new DefaultWidgetFactory())
     {
+        delete m_frameworkWidgetFactory;
     }
 
     void fixFlags();
