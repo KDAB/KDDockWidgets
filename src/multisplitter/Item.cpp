@@ -378,8 +378,9 @@ void Item::restorePlaceholder(DockWidgetBase *dockWidget, int tabIndex)
 
     if (d->m_isPlaceholder) {
         // Resize Anchors to their correct places.
-        d->m_layout->restorePlaceholder(this);
         d->m_frame->setVisible(true);
+        d->setMinimumSize(d->frameMinSize());
+        d->m_layout->restorePlaceholder(this);
         d->setIsPlaceholder(false);
     }
 }

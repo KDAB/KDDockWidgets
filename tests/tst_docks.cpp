@@ -373,6 +373,7 @@ private Q_SLOTS:
     void tst_dragByTabBar();
 
     void tst_addToHiddenMainWindow();
+    void tst_minSizeChanges();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -415,6 +416,12 @@ public:
     QSize minimumSizeHint() const override
     {
         return m_minSz;
+    }
+
+    void setMinSize(QSize s)
+    {
+        m_minSz = s;
+        updateGeometry();
     }
 
     QSize m_minSz;
@@ -4052,6 +4059,41 @@ void TestDocks::tst_addToHiddenMainWindow()
     QVERIFY(!m->isVisible());
     d1->setFloating(true);
     d2->setFloating(false);
+
+    delete m;
+}
+
+void TestDocks::tst_minSizeChanges()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = new MainWindow("m1", MainWindowOption_None);
+    m->show();
+    auto w1 = new MyWidget2(QSize(400,400));
+    auto w2 = new MyWidget2(QSize(400,400));
+
+    auto d1 = new DockWidget("1");
+    d1->setWidget(w1);
+    auto d2 = new DockWidget("2");
+    d2->setWidget(w2);
+
+    m->addDockWidget(d1, Location_OnTop);
+    m->addDockWidget(d2, Location_OnTop, nullptr, AddingOption_StartHidden);
+    auto layout = m->multiSplitterLayout();
+
+    w2->setMinSize(QSize(800, 800));
+    d2->show();
+
+    //Item *item1 = layout->itemForFrame(d1->frame());
+    Item *item2 = layout->itemForFrame(d2->frame());
+
+    layout->checkSanity();
+
+    waitForResize(m);
+
+    QVERIFY(item2->width() >= 800);
+    QVERIFY(item2->height() >= 800);
+    qDebug() << m->height();
+    QVERIFY(m->height() >= 1200);
 
     delete m;
 }
