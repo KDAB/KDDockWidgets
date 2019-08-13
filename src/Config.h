@@ -88,6 +88,7 @@ public:
      * of those classes, for the purposes of changing GUI appearence and such.
      *
      * Also potentially useful to return QtQuick classes instead of the QtWidget based ones.
+     * Ownership is taken.
      */
     void setFrameworkWidgetFactory(FrameworkWidgetFactory *);
     FrameworkWidgetFactory *frameWorkWidgetFactory() const;
