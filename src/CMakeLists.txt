@@ -108,12 +108,13 @@ add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES}
 target_include_directories(kddockwidgets
     PUBLIC
         $<INSTALL_INTERFACE:kddockwidgets>
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/widgets>
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/quick>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/widgets>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/quick>
     PRIVATE
-        ${CMAKE_SOURCE_DIR}/src
-        ${CMAKE_SOURCE_DIR}/src/widgets
-        ${CMAKE_SOURCE_DIR}/src/quick
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/widgets
+        ${CMAKE_CURRENT_SOURCE_DIR}/quick
 )
 
 target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY)
