@@ -41,6 +41,10 @@ public:
     Private()
         : m_frameworkWidgetFactory(new DefaultWidgetFactory())
     {
+    }
+
+    ~Private()
+    {
         delete m_frameworkWidgetFactory;
     }
 
