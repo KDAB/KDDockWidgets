@@ -878,34 +878,34 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widgetBeingDropped,
     const Qt::Orientation orientation = orientationForLocation(location);
     Anchor *anchor1 = group.anchorAtSide(Anchor::Side1, orientation);
     Anchor *anchor2 = group.anchorAtSide(Anchor::Side2, orientation);
-    const int bound1 = boundPositionForAnchor(anchor1, Anchor::Side1);
-    const int bound2 = boundPositionForAnchor(anchor2, Anchor::Side2);
+    QPair<int,int> bounds1 = boundPositionsForAnchor(anchor1);
+    QPair<int,int> bounds2 = boundPositionsForAnchor(anchor2);
 
     if (orientation == Qt::Vertical) {
-        if (result.x() < bound1 + anchor1->thickness())
-            result.moveLeft(bound1 + anchor1->thickness());
-        if (result.right() >= bound2)
-            result.moveRight(bound2 - 1);
-        if (!needsMoreSpace && result.x() < bound1 + anchor1->thickness()) {
+        if (result.x() < bounds1.first + anchor1->thickness())
+            result.moveLeft(bounds1.first + anchor1->thickness());
+        if (result.right() >= bounds2.second)
+            result.moveRight(bounds2.second - 1);
+        if (!needsMoreSpace && result.x() < bounds1.first + anchor1->thickness()) {
             // We only assert if there's enough space. When adding a new widget we ensure there's enough space before calling rectForDrop, so it's never null.
             // However, when hovering, we call rectForDrop(), and we want to draw the rubber band even if there's not enough space yet.
             // So don't assert when hovering.
             dumpDebug();
-            qDebug() << "result=" << result.x() << "; bound1=" << bound1
+            qDebug() << "result=" << result.x() << "; bound1=" << bounds1.first
                      << "; anchor1->thickness" << anchor1->thickness();
             Q_ASSERT(false);
         }
     } else {
-        if (result.y() < bound1 + anchor1->thickness())
-            result.moveTop(bound1 + anchor1->thickness());
-        if (result.bottom() >= bound2)
-            result.moveBottom(bound2 - 1);
+        if (result.y() < bounds1.first + anchor1->thickness()) {
+            result.moveTop(bounds1.first + anchor1->thickness());
+        }
+        if (result.bottom() >= bounds2.second) {
+            result.moveBottom(bounds2.second - 1);
+        }
 
-        if (!needsMoreSpace && result.y() < bound1 + anchor1->thickness()) {
+        if (!needsMoreSpace && result.y() < bounds1.first + anchor1->thickness()) {
             // Same comment as above
             dumpDebug();
-            qDebug() << "result=" << result.y() << "; bound1=" << bound1
-                     << "; anchor1->thickness" << anchor1->thickness();
             Q_ASSERT(false);
         }
     }
