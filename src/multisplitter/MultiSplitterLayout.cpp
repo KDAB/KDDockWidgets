@@ -393,6 +393,7 @@ void MultiSplitterLayout::addAsPlaceholder(DockWidgetBase *dockWidget, Location 
 
     updateAnchorFollowing();
     Q_ASSERT(!dockWidget->isVisible());
+    maybeCheckSanity();
 }
 
 void MultiSplitterLayout::ensureEnoughSize(const QWidgetOrQuick *widget,
