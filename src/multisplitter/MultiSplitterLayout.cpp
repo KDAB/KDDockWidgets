@@ -348,10 +348,7 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
 
     m_addingItem = false;
     updateAnchorFollowing();
-
-#if defined(DOCKS_DEVELOPER_MODE)
-    checkSanity();
-#endif
+    maybeCheckSanity();
 }
 
 void MultiSplitterLayout::addItems_internal(const ItemList &items, bool updateConstraints, bool emitSignal)
@@ -1426,6 +1423,14 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
     return true;
 }
 
+void MultiSplitterLayout::maybeCheckSanity()
+{
+#if defined(DOCKS_DEVELOPER_MODE)
+    if (!checkSanity())
+        qWarning() << Q_FUNC_INFO << "Sanity check failed";
+#endif
+}
+
 void MultiSplitterLayout::ensureHasAvailableSize(QSize needed)
 {
     const QSize availableSize = this->availableSize();
@@ -1470,9 +1475,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         // dumpDebug();
         Q_ASSERT(anchorGroup.isStaticOrFollowsStatic());
         anchorGroup.updateItemSizes();
-#if defined(DOCKS_DEVELOPER_MODE)
-        checkSanity();
-#endif
+        maybeCheckSanity();
         return;
     }
 
@@ -1572,9 +1575,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     item->endBlockPropagateGeo();
 
     updateAnchorFollowing();
-#if defined(DOCKS_DEVELOPER_MODE)
-    checkSanity();
-#endif
+    maybeCheckSanity();
 }
 
 void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdded) const

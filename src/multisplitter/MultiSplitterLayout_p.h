@@ -317,6 +317,7 @@ public:
     Q_ENUM(AnchorSanityOption)
 
     bool checkSanity(AnchorSanityOption o = AnchorSanity_All) const;
+    void maybeCheckSanity();
 
     void restorePlaceholder(Item *item);
 
