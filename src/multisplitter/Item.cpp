@@ -402,15 +402,11 @@ void Item::onLayoutRequest() const
     if (!d->m_frame)
         return; // It's a placeholder, nothing to do.
 
-    QSize frameMinSize = d->frameMinSize().expandedTo(MultiSplitterLayout::hardcodedMinimumSize());
-    if (frameMinSize == d->m_minSize)
+    const QSize minSize = d->frameMinSize().expandedTo(MultiSplitterLayout::hardcodedMinimumSize());
+    if (minSize == d->m_minSize)
         return; // Nothing to do
 
-    // TODO: The new minSize can't be bigger than the current geometry because we don't support that yet
-    // In the future we should resize the item and propagate the resize through the layout
-    const QSize itemMinSize = frameMinSize.boundedTo(d->m_geometry.size());
-
-    d->setMinimumSize(itemMinSize);
+    d->setMinimumSize(minSize);
 }
 
 void Item::Private::setMinimumSize(QSize sz)

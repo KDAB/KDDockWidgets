@@ -4113,10 +4113,11 @@ void TestDocks::tst_minSizeChanges()
     m->addDockWidget(d2, Location_OnTop, nullptr, AddingOption_StartHidden);
     auto layout = m->multiSplitterLayout();
 
+    // 1. d2 is a placeholder, let's change its min size before showing it
     w2->setMinSize(QSize(800, 800));
     d2->show();
 
-    //Item *item1 = layout->itemForFrame(d1->frame());
+    Item *item1 = layout->itemForFrame(d1->frame());
     Item *item2 = layout->itemForFrame(d2->frame());
 
     layout->checkSanity();
@@ -4125,8 +4126,24 @@ void TestDocks::tst_minSizeChanges()
 
     QVERIFY(item2->width() >= 800);
     QVERIFY(item2->height() >= 800);
-    qDebug() << m->height();
     QVERIFY(m->height() >= 1200);
+
+    // 2. d1 is visible, let's change its min size
+    qDebug() << item1->minimumSize() << item1->size();
+    w1->setMinSize(QSize(800, 800));
+
+    waitForEvent(layout->multiSplitter(), QEvent::LayoutRequest);
+    layout->ensureAnchorsBounded();
+
+    qDebug() << item1->minimumSize() << item1->size();
+    layout->checkSanity();
+    QVERIFY(m->height() >= 1600);
+
+    // add a small one to the middle
+    auto w3 = new MyWidget2(QSize(100,100));
+    auto d3 = new DockWidget("3");
+    d3->setWidget(w3);
+    m->addDockWidget(d3, Location_OnTop, d1);
 
     delete m;
 }
