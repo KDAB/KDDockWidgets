@@ -206,6 +206,8 @@ void Anchor::setPosition(int p, SetPositionOptions options)
         if (isStatic() && m_layout->isRestoringPlaceholder()) {
             // Don't do anything here, it's restoring a placeholder and will call ensureAnchorsBounded() when finished
             return;
+        } else if (m_layout->isAddingItem()) {
+            return;
         } else {
             m_layout->dumpDebug();
             qWarning() << Q_FUNC_INFO << "Out of bounds position=" << p
@@ -215,7 +217,6 @@ void Anchor::setPosition(int p, SetPositionOptions options)
                        << "; max=" << max
                        << m_layout->multiSplitter()->window();
         }
-
     }
 
     m_initialized = true;

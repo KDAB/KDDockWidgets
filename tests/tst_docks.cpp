@@ -336,6 +336,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPosition4();
     void tst_negativeAnchorPosition5();
     void tst_negativeAnchorPosition6();
+    void tst_negativeAnchorPosition7();
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_negativeAnchorPositionWhenEmbedded();
     void tst_availableSizeWithPlaceholders();
@@ -3944,6 +3945,38 @@ void TestDocks::tst_negativeAnchorPosition6()
     layout->rectForDrop(d2, Location_OnTop, centralItem);
 
     delete m->window();
+}
+
+void TestDocks::tst_negativeAnchorPosition7()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = new MainWindow("m1", MainWindowOption_None);
+    m->show();
+    auto w1 = new MyWidget2(QSize(400,400));
+    auto w2 = new MyWidget2(QSize(400,400));
+
+    auto d1 = new DockWidget("1");
+    d1->setWidget(w1);
+    auto d2 = new DockWidget("2");
+    d2->setWidget(w2);
+
+    auto w3 = new MyWidget2(QSize(100,100));
+    auto d3 = new DockWidget("3");
+    d3->setWidget(w3);
+
+    // Stack 1, 2
+    m->addDockWidget(d2, Location_OnTop);
+    m->addDockWidget(d1, Location_OnTop);
+
+     //auto layout = m->multiSplitterLayout();
+     //layout->dumpDebug();
+
+    // add a small one to the middle
+
+    // Stack: 1, 3, 2
+    m->addDockWidget(d3, Location_OnTop, d2);
+
+    delete m;
 }
 
 void TestDocks::tst_negativeAnchorPositionWhenEmbedded_data()

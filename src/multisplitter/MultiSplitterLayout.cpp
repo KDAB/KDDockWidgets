@@ -221,6 +221,8 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
         return;
     }
 
+    m_addingItem = true;
+
     auto result = this->createTargetAnchorGroup(location, relativeToItem);
     AnchorGroup targetAnchorGroup = result.first;
     newAnchor = result.second;
@@ -344,6 +346,7 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
         addItems_internal(ItemList{ item });
     }
 
+    m_addingItem = false;
     updateAnchorFollowing();
 }
 

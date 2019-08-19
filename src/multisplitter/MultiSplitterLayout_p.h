@@ -573,6 +573,7 @@ private:
     ///@brief returns whether we're inside setSize();
     bool isResizing() const { return m_resizing; }
     bool isRestoringPlaceholder() const { return m_restoringPlaceholder; }
+    bool isAddingItem() const { return m_addingItem; }
 
     MultiSplitter *const m_multiSplitter;
     Anchor::List m_anchors;
@@ -589,6 +590,7 @@ private:
     bool m_restoringPlaceholder = false;
     bool m_doSanityChecks = true;
     bool m_resizing = false;
+    bool m_addingItem = false;
 
     QSize m_minSize = QSize(0, 0);
     AnchorGroup m_staticAnchorGroup;
