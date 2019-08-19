@@ -428,7 +428,7 @@ public:
     friend QDebug operator<<(QDebug d, const AnchorGroup &group);
     static const QString s_magicMarker;
     void setDoSanityChecks(bool);
-
+    void ensureAnchorsBounded();
 private:
     friend struct AnchorGroup;
     friend class Item;
@@ -474,8 +474,6 @@ private:
     void ensureEnoughSize(const QWidgetOrQuick *widget, KDDockWidgets::Location location,
                                   const Item *relativeToItem);
 
-
-    void ensureAnchorsBounded();
 
     void insertAnchor(Anchor *);
     void removeAnchor(Anchor *);

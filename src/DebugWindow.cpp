@@ -210,6 +210,16 @@ DebugWindow::DebugWindow(QWidget *parent)
             repaintWidgetRecursive(w);
     });
 
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("EnsureAnchorsBounded"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        const auto mainWindows = DockRegistry::self()->mainwindows();
+        if (mainWindows.isEmpty())
+            return;
+        mainWindows.at(0)->multiSplitterLayout()->ensureAnchorsBounded();
+    });
+
 #ifdef Q_OS_WIN
     button = new QPushButton(this);
     button->setText(QStringLiteral("Dump native windows"));
