@@ -870,46 +870,8 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widgetBeingDropped,
                                                                                   -staticAnchorThickness, -staticAnchorThickness)
                                                 : relativeTo->geometry();
 
-    AnchorGroup group = relativeToThis ? staticAnchorGroup() : relativeTo->anchorGroup();
-
     // This function is split in two just so we can unit-test the math in the second one, which is more involved
     QRect result = rectForDrop(lfd, location, relativeToRect);
-
-    // lfd has the length that the widget should have, and we're guaranteed to have +5 (Anchor::thicknes) pixels
-    // For the new anchor, but in rectForDrop() we don't know if that extra 5px fits on the left side or on the right,
-    // so now do an adjustment and put the rect within correct bounds, so all the min sizes to side1 and to side2 are respected
-    const Qt::Orientation orientation = orientationForLocation(location);
-    Anchor *anchor1 = group.anchorAtSide(Anchor::Side1, orientation);
-    Anchor *anchor2 = group.anchorAtSide(Anchor::Side2, orientation);
-    QPair<int,int> bounds1 = boundPositionsForAnchor(anchor1);
-    QPair<int,int> bounds2 = boundPositionsForAnchor(anchor2);
-
-    if (orientation == Qt::Vertical) {
-        if (result.x() < bounds1.first + anchor1->thickness())
-            result.moveLeft(bounds1.first + anchor1->thickness());
-        if (result.right() >= bounds2.second)
-            result.moveRight(bounds2.second - 1);
-        if (!needsMoreSpace && result.x() < bounds1.first + anchor1->thickness()) {
-            // We only assert if there's enough space. When adding a new widget we ensure there's enough space before calling rectForDrop, so it's never null.
-            // However, when hovering, we call rectForDrop(), and we want to draw the rubber band even if there's not enough space yet.
-            // So don't assert when hovering.
-            dumpDebug();
-            Q_ASSERT(false);
-        }
-    } else {
-        if (result.y() < bounds1.first + anchor1->thickness()) {
-            result.moveTop(bounds1.first + anchor1->thickness());
-        }
-        if (result.bottom() >= bounds2.second) {
-            result.moveBottom(bounds2.second - 1);
-        }
-
-        if (!needsMoreSpace && result.y() < bounds1.first + anchor1->thickness()) {
-            // Same comment as above
-            dumpDebug();
-            Q_ASSERT(false);
-        }
-    }
 
     return result;
 }
