@@ -891,8 +891,6 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widgetBeingDropped,
             // However, when hovering, we call rectForDrop(), and we want to draw the rubber band even if there's not enough space yet.
             // So don't assert when hovering.
             dumpDebug();
-            qDebug() << "result=" << result.x() << "; bound1=" << bounds1.first
-                     << "; anchor1->thickness" << anchor1->thickness();
             Q_ASSERT(false);
         }
     } else {
