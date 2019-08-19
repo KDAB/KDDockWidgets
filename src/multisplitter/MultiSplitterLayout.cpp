@@ -348,6 +348,10 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
 
     m_addingItem = false;
     updateAnchorFollowing();
+
+#if defined(DOCKS_DEVELOPER_MODE)
+    checkSanity();
+#endif
 }
 
 void MultiSplitterLayout::addItems_internal(const ItemList &items, bool updateConstraints, bool emitSignal)
