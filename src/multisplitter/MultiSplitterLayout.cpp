@@ -1470,6 +1470,9 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         // dumpDebug();
         Q_ASSERT(anchorGroup.isStaticOrFollowsStatic());
         anchorGroup.updateItemSizes();
+#if defined(DOCKS_DEVELOPER_MODE)
+        checkSanity();
+#endif
         return;
     }
 
@@ -1569,6 +1572,9 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     item->endBlockPropagateGeo();
 
     updateAnchorFollowing();
+#if defined(DOCKS_DEVELOPER_MODE)
+    checkSanity();
+#endif
 }
 
 void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdded) const
