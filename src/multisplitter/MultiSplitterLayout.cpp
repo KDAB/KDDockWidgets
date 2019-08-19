@@ -1154,12 +1154,6 @@ Anchor *MultiSplitterLayout::newAnchor(AnchorGroup &group, Location location)
     return newAnchor;
 }
 
-void MultiSplitterLayout::setDoSanityChecks(bool doit)
-{
-    if (doit != m_doSanityChecks)
-        m_doSanityChecks = doit;
-}
-
 void MultiSplitterLayout::blockItemPropagateGeo(bool block)
 {
     for (Item *item : m_items) {
@@ -1251,7 +1245,7 @@ QPair<AnchorGroup,Anchor*> MultiSplitterLayout::createTargetAnchorGroup(KDDockWi
 
 bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 {
-    if (!m_doSanityChecks || m_inCtor)
+    if (m_inCtor)
         return true;
 
     auto check = [this, options] (Item *item, Qt::Orientation orientation) {

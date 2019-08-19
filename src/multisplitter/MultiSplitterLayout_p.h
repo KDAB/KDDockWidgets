@@ -427,7 +427,6 @@ public:
     Anchor *newAnchor(AnchorGroup &group, KDDockWidgets::Location location);
     friend QDebug operator<<(QDebug d, const AnchorGroup &group);
     static const QString s_magicMarker;
-    void setDoSanityChecks(bool);
     void ensureAnchorsBounded();
 private:
     friend struct AnchorGroup;
@@ -586,7 +585,6 @@ private:
     bool m_inDestructor = false;
     bool m_beingMergedIntoAnotherMultiSplitter = false;
     bool m_restoringPlaceholder = false;
-    bool m_doSanityChecks = true;
     bool m_resizing = false;
     bool m_addingItem = false;
 
