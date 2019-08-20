@@ -1636,6 +1636,7 @@ void MultiSplitterLayout::setMinimumSize(QSize sz)
 {
     if (sz != m_minSize) {
         m_minSize = sz;
+        setSize(m_size.expandedTo(m_minSize)); // Increase size incase we need to
         Q_EMIT minimumSizeChanged(sz);
     }
     qCDebug(sizing) << Q_FUNC_INFO << "minSize = " << m_minSize;
