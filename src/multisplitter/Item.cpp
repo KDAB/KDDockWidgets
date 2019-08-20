@@ -410,6 +410,8 @@ void Item::onLayoutRequest() const
     const int deltaW = qMax(minSize.width() - d->m_minSize.width(), 0);
     const int deltaH = qMax(minSize.height() - d->m_minSize.height(), 0);
 
+    qCDebug(sizing) << Q_FUNC_INFO << "Updating minsize from"
+                    << d->m_minSize << minSize << "for" << this;
     d->setMinimumSize(minSize);
 
     if (deltaW == 0 && deltaH == 0)
