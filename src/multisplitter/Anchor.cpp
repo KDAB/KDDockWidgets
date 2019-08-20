@@ -203,10 +203,8 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     const bool outOfBounds = max != -1 && (p < 0  || p > max);
 
     if (outOfBounds) {
-        if (isStatic() && m_layout->isRestoringPlaceholder()) {
-            // Don't do anything here, it's restoring a placeholder and will call ensureAnchorsBounded() when finished
-            return;
-        } else if (m_layout->isAddingItem()) {
+        if ((isStatic() && m_layout->isRestoringPlaceholder()) || m_layout->isAddingItem() || m_layout->isResizing()) {
+            // Don't do anything here, it will call ensureAnchorsBounded() when finished
             return;
         } else {
             m_layout->dumpDebug();

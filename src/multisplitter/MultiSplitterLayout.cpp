@@ -1611,6 +1611,8 @@ void MultiSplitterLayout::setSize(QSize size)
 
         redistributeSpace(oldSize, size);
         m_resizing = false;
+
+        ensureAnchorsBounded();
         maybeCheckSanity();
     }
 }

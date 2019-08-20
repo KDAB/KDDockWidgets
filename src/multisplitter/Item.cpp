@@ -416,8 +416,6 @@ void Item::onLayoutRequest() const
         return; // min size shrunk, nothing to do
 
     d->m_layout->updateSizeConstraints();
-    d->m_layout->ensureAnchorsBounded();
-    d->m_layout->maybeCheckSanity();
 }
 
 void Item::Private::setMinimumSize(QSize sz)

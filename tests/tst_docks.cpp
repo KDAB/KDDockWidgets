@@ -375,6 +375,7 @@ private Q_SLOTS:
 
     void tst_addToHiddenMainWindow();
     void tst_minSizeChanges();
+    void tst_complex();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -4163,6 +4164,86 @@ void TestDocks::tst_minSizeChanges()
     d3->setWidget(w3);
     m->addDockWidget(d3, Location_OnTop, d1);
 
+    delete m;
+}
+
+void TestDocks::tst_complex()
+{
+    // Tests some anchors out of bounds I got
+
+    EnsureTopLevelsDeleted e;
+    auto m = new MainWindow("m1", MainWindowOption_None);
+    auto layout = m->multiSplitterLayout();
+    m->resize(3266, 2239);
+
+    DockWidget::List docks;
+
+    QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft, Location_OnLeft,
+                                                  Location_OnRight, Location_OnRight, Location_OnRight, Location_OnRight,
+                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
+                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
+                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom
+                                                  };
+
+    QVector<KDDockWidgets::AddingOption> options = { AddingOption_None, AddingOption_None,
+                                                    AddingOption_StartHidden, AddingOption_StartHidden,
+                                                    AddingOption_None,
+                                                    AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,
+                                                    AddingOption_None, AddingOption_None,
+                                                    AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden
+    };
+
+    QVector<bool> floatings =  {true, false, true, false, false, false, false, false, false, false, false, false,
+                               true, false, false, true, true, true, true, true, false };
+
+    QVector<QSize> minSizes= {
+        QSize(316, 219),
+        QSize(355, 237),
+        QSize(293, 66),
+        QSize(158, 72),
+        QSize(30, 141),
+        QSize(104, 143),
+        QSize(104, 105),
+        QSize(84, 341),
+        QSize(130, 130),
+        QSize(404, 205),
+        QSize(296, 177),
+        QSize(914, 474),
+        QSize(355, 237),
+        QSize(104, 104),
+        QSize(104, 138),
+        QSize(1061, 272),
+        QSize(165, 196),
+        QSize(296, 177),
+        QSize(104, 104),
+        QSize(355, 237),
+        QSize(104, 138)
+    };
+
+    const int num = 21;
+    for (int i = 0; i < num; ++i) {
+        auto widget = new MyWidget2(minSizes.at(i));
+        auto dw = new DockWidget(QString::number(i));
+        dw->setWidget(widget);
+        docks << dw;
+    }
+
+    for (int i = 0; i < num; ++i) {
+        m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
+        layout->checkSanity();
+
+        QCOMPARE(layout->m_leftAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().width());
+        QCOMPARE(layout->m_topAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().height());
+
+        docks[i]->setFloating(floatings[i]);
+        layout->checkSanity();
+    }
+
+    m->show();
+
+    // Cleanup
+    qDeleteAll(docks);
+    qDeleteAll(DockRegistry::self()->frames());
     delete m;
 }
 
