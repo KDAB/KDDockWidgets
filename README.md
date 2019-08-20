@@ -1,6 +1,5 @@
 KDDockWidgets
 ==============
-
 `KDDockWidgets` is a KDAB effort to provide an advanced docking system for Qt.
 
 Throughout the years KDAB has contributed and funded bug fixes and features to `QDockWidget`.
@@ -33,9 +32,24 @@ Goals
   - Not mixing GUI with state with logic with animations
   - Unit-test everything, even the GUI and DnD operations
 
-
 Licensing
 =========
+KDDockWidgets is (C) 2019, Klarälvdalens Datakonsult AB, and is available
+under the terms of the GPLv2 (see LICENSE.GPL.txt).
 
-This software is provided as GPLv2 (See LICENSE.GPL.txt) or, alternatively,
-contact KDAB at <info@kdab.com> if you need different licensing.
+Contact KDAB at <info@kdab.com> if you need different licensing options.
+
+About KDAB
+==========
+KDDockWidgets is supported and maintained by Klarälvdalens Datakonsult AB (KDAB).
+
+The KDAB Group is the global No.1 software consultancy for Qt, C++ and
+OpenGL applications across desktop, embedded and mobile platforms.
+
+The KDAB Group provides consulting and mentoring for developing Qt applications
+from scratch and in porting from all popular and legacy frameworks to Qt.
+We continue to help develop parts of Qt and are one of the major contributors
+to the Qt Project. We can give advanced or standard trainings anywhere
+around the globe on Qt as well as C++, OpenGL, 3D and more.
+
+Please visit http://www.kdab.com to meet the people who write code like this.
