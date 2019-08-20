@@ -4153,10 +4153,7 @@ void TestDocks::tst_minSizeChanges()
     qDebug() << item1->minimumSize() << item1->size();
     w1->setMinSize(QSize(800, 800));
 
-    waitForEvent(layout->multiSplitter(), QEvent::LayoutRequest);
-    layout->ensureAnchorsBounded();
-
-    qDebug() << item1->minimumSize() << item1->size();
+    waitForResize(m);
     layout->checkSanity();
     QVERIFY(m->height() >= 1600);
 

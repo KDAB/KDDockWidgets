@@ -77,6 +77,7 @@ public:
     bool m_destroying = false;
     int m_refCount = 0;
     bool m_blockPropagateGeo = false;
+    QMetaObject::Connection m_onFrameLayoutRequest_connection;
     QMetaObject::Connection m_onFrameDestroyed_connection;
     QMetaObject::Connection m_onFrameObjectNameChanged_connection;
 };
@@ -406,7 +407,17 @@ void Item::onLayoutRequest() const
     if (minSize == d->m_minSize)
         return; // Nothing to do
 
+    const int deltaW = qMax(minSize.width() - d->m_minSize.width(), 0);
+    const int deltaH = qMax(minSize.height() - d->m_minSize.height(), 0);
+
     d->setMinimumSize(minSize);
+
+    if (deltaW == 0 && deltaH == 0)
+        return; // min size shrunk, nothing to do
+
+    d->m_layout->updateSizeConstraints();
+    d->m_layout->ensureAnchorsBounded();
+    d->m_layout->maybeCheckSanity();
 }
 
 void Item::Private::setMinimumSize(QSize sz)
@@ -432,6 +443,7 @@ void Item::Private::setFrame(Frame *frame)
     if (m_frame) {
         m_frame->removeEventFilter(q);
         QObject::disconnect(m_onFrameDestroyed_connection);
+        QObject::disconnect(m_onFrameLayoutRequest_connection);
         QObject::disconnect(m_onFrameObjectNameChanged_connection);
     }
 
@@ -464,6 +476,7 @@ void Item::Private::setFrame(Frame *frame)
             }
         });
 
+        m_onFrameLayoutRequest_connection = connect(frame, &Frame::layoutInvalidated, q, &Item::onLayoutRequest);
         m_onFrameObjectNameChanged_connection = connect(frame, &QObject::objectNameChanged, q, [this] { updateObjectName(); });
     }
 }

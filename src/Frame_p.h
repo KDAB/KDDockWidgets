@@ -204,11 +204,11 @@ public:
      **/
     bool hasTabsVisible() const;
 
-
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();
     void hasTabsVisibleChanged();
+    void layoutInvalidated();
 
 private:
     Q_DISABLE_COPY(Frame)

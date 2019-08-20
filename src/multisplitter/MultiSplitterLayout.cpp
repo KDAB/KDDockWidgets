@@ -1066,11 +1066,6 @@ void MultiSplitterLayout::redistributeSpace_recursive(Anchor *fromAnchor, int mi
 
 void MultiSplitterLayout::updateSizeConstraints()
 {
-    for (Item *item : qAsConst(m_items)) {
-        // Check if Item's min size need updating, as the Frame could have sent QEvent::LayoutRequest
-        item->onLayoutRequest();
-    }
-
     const int minH = m_topAnchor->cumulativeMinLength(Anchor::Side2);
     const int minW = m_leftAnchor->cumulativeMinLength(Anchor::Side2);
 

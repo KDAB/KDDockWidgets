@@ -37,10 +37,30 @@
 
 using namespace KDDockWidgets;
 
+///@brieg a QVBoxLayout that emits layoutInvalidated so that Item can detect minSize changes
+class VBoxLayout : public QVBoxLayout
+{
+public:
+    explicit VBoxLayout(FrameWidget *parent)
+        : QVBoxLayout(parent)
+        , m_frameWidget(parent) {}
+    ~VBoxLayout() override;
+
+    void invalidate() override
+    {
+        QVBoxLayout::invalidate();
+        m_frameWidget->layoutInvalidated();
+    }
+
+    FrameWidget *const m_frameWidget;
+};
+
+VBoxLayout::~VBoxLayout() = default;
+
 FrameWidget::FrameWidget(QWidget *parent, Options options)
     : Frame(parent, options)
 {
-    auto vlayout = new QVBoxLayout(this);
+    auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
     vlayout->addWidget(titleBar());
