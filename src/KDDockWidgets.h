@@ -102,8 +102,7 @@ namespace KDDockWidgets
 
        return QString();
    }
-
-};
+}
 
 Q_DECLARE_METATYPE(KDDockWidgets::Location)
 
