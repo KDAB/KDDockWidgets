@@ -1069,7 +1069,11 @@ void MultiSplitterLayout::updateSizeConstraints()
     const int minH = m_topAnchor->cumulativeMinLength(Anchor::Side2);
     const int minW = m_leftAnchor->cumulativeMinLength(Anchor::Side2);
 
-    setMinimumSize(QSize(minW, minH));
+    const QSize newMinSize = QSize(minW, minH);
+    qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << m_minSize
+                    << "to" << newMinSize;
+
+    setMinimumSize(newMinSize);
 }
 
 int MultiSplitterLayout::wastedSpacing(Qt::Orientation orientation) const
