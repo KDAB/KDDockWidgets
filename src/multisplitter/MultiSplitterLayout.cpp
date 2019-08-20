@@ -560,6 +560,8 @@ void MultiSplitterLayout::removeItem(Item *item)
     if (!item || m_inDestructor || !m_items.contains(item))
         return;
 
+    maybeCheckSanity();
+
     if (!item->isPlaceholder())
         item->frame()->removeEventFilter(this);
     AnchorGroup anchorGroup = item->anchorGroup();
