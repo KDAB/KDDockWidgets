@@ -1390,7 +1390,6 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
             const int minHeight = item->minLength(Qt::Horizontal);
 
             if (item->width() < minWidth) {
-                dumpDebug();
                 qWarning() << "MultiSplitterLayout::checkSanity: Widget has width=" << item->width()
                            << "but minimum is" << minWidth
                            << item;
@@ -1398,7 +1397,6 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
             }
 
             if (item->height() < minHeight) {
-                dumpDebug();
                 qWarning() << "MultiSplitterLayout::checkSanity: Widget has height=" << item->height()
                            << "but minimum is" << minHeight
                            << item;
