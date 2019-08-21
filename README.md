@@ -20,13 +20,13 @@ Goals
 =====
 - Provide advanced docking that QDockWidgets doesn't support:
   - nesting dock widgets in a floating window and docking that group back to main window
-  - nesting in any main window
-  - docking to center of main window
+  - docking to any main window, not only to the parent main window
+  - docking to center of main window, or simply removing the concept of "central widget"
   - main window supporting detachable tabs in center widget
   - different forms of docking indicators (through plugins)
   - detaching arbitrary tabs from a tab bar into a dock area
-
-- Discard unneeded features present in QDockWidgets that make the code complicated
+  - QtQuick support
+  - Exposing inner helper widgets so the user can customize them or provide his own
 
 - Clean codebase
   - Not mixing GUI with state with logic with animations
