@@ -400,7 +400,7 @@ void Item::restorePlaceholder(Frame *frame)
 
 void Item::onLayoutRequest() const
 {
-    if (!d->m_frame)
+    if (!d->m_frame || d->m_isPlaceholder)
         return; // It's a placeholder, nothing to do.
 
     const QSize minSize = d->frameMinSize().expandedTo(MultiSplitterLayout::hardcodedMinimumSize());
@@ -418,6 +418,14 @@ void Item::onLayoutRequest() const
         return; // min size shrunk, nothing to do
 
     d->m_layout->updateSizeConstraints();
+
+    if (width() < d->m_minSize.width() || height() < d->m_minSize.height()) {
+        // Shouldn't happen
+        qWarning() << Q_FUNC_INFO << "Constraints not honoured size=" << size()
+                   << "; minSize=" << d->m_minSize
+                   << "; layout.size=" << d->m_layout->size()
+                   << "; layout.minSize=" << d->m_layout->minimumSize();
+    }
 }
 
 void Item::Private::setMinimumSize(QSize sz)
