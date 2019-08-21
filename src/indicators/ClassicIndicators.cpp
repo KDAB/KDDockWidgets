@@ -110,7 +110,7 @@ QString Indicator::iconFileName(bool active) const
 }
 
 IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_, QWidget *)
-    : QWidget(nullptr, Qt::Tool)
+    : QWidget(nullptr, Qt::Tool | Qt::BypassWindowManagerHint)
     , classicIndicators(classicIndicators_)
     , m_center(new Indicator(classicIndicators, this, DropIndicatorOverlayInterface::DropLocation_Center)) // Each indicator is not a top-level. Otherwise there's noticeable delay.
     , m_left(new Indicator(classicIndicators, this, DropIndicatorOverlayInterface::DropLocation_Left))
