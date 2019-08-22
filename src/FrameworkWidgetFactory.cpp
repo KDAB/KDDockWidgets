@@ -33,6 +33,8 @@
 # include "widgets/TabWidgetWidget_p.h"
 # include "widgets/SeparatorWidget_p.h"
 # include "widgets/FloatingWindowWidget_p.h"
+#else
+# include "quick/FrameQuick_p.h"
 #endif
 
 using namespace KDDockWidgets;
@@ -88,9 +90,9 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(
 }
 #else
 
-Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *, Frame::Options) const
+Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, Frame::Options options) const
 {
-    return nullptr;
+    return new FrameQuick(parent, options);
 }
 
 TitleBar *DefaultWidgetFactory::createTitleBar(Frame *) const

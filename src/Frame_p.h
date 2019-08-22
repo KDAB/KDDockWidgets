@@ -68,7 +68,7 @@ public:
     };
     Q_ENUM(Option)
 
-    explicit Frame(QWidget *parent = nullptr, Options = Option_None);
+    explicit Frame(QWidgetOrQuick *parent = nullptr, Options = Option_None);
     ~Frame() override;
 
     static Frame *createFromDataStream(QDataStream &ds);

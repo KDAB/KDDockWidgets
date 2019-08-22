@@ -70,6 +70,8 @@ if (OPTION_QTQUICK)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
         quick/QWidgetAdapter_quick.cpp
         quick/QWidgetAdapter_quick_p.h
+        quick/FrameQuick.cpp
+        quick/FrameQuick_p.h
         )
 else()
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}

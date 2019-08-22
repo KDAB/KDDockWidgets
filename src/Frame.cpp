@@ -47,7 +47,7 @@ static int s_dbg_numFrames = 0;
 
 using namespace KDDockWidgets;
 
-Frame::Frame(QWidget *parent, Options options)
+Frame::Frame(QWidgetOrQuick *parent, Options options)
     : QWidgetAdapter(parent)
     , m_tabWidget(Config::self().frameWorkWidgetFactory()->createTabWidget(this))
     , m_titleBar(Config::self().frameWorkWidgetFactory()->createTitleBar(this))
