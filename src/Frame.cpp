@@ -205,6 +205,17 @@ TitleBar *Frame::titleBar() const
     return m_titleBar;
 }
 
+TitleBar *Frame::actualTitleBar() const
+{
+    if (FloatingWindow *fw = floatingWindow()) {
+        // If there's nested frames then show each Frame's title bar
+        if (fw->hasSingleFrame())
+            return fw->titleBar();
+    }
+
+    return titleBar();
+}
+
 QString Frame::title() const
 {
     return m_titleBar->title();

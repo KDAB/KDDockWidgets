@@ -376,6 +376,7 @@ private Q_SLOTS:
     void tst_addToHiddenMainWindow();
     void tst_minSizeChanges();
     void tst_complex();
+    void tst_titlebar_getter();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -4244,6 +4245,27 @@ void TestDocks::tst_complex()
     // Cleanup
     qDeleteAll(docks);
     qDeleteAll(DockRegistry::self()->frames());
+    delete m;
+}
+
+void TestDocks::tst_titlebar_getter()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = new MainWindow("m1");
+    m->resize(QSize(500, 500));
+    m->show();
+
+    auto w1 = new MyWidget2(QSize(400, 400));
+    auto d1 = createDockWidget("1", w1);
+
+    m->addDockWidget(d1, Location_OnTop);
+
+    QVERIFY(d1->titleBar()->isVisible());
+    d1->setFloating(true);
+    QVERIFY(d1->floatingWindow());
+    QVERIFY(d1->floatingWindow()->isVisible());
+    QVERIFY(d1->titleBar()->isVisible());
+
     delete m;
 }
 

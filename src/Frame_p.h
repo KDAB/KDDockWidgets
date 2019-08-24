@@ -90,6 +90,7 @@ public:
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;
     TitleBar *titleBar() const;
+    TitleBar *actualTitleBar() const;
     TabWidget *tabWidget() const;
     QString title() const;
     QIcon icon() const;

@@ -193,6 +193,15 @@ public:
      */
     void forceClose();
 
+
+    /**
+     * @brief Returns this dock widget's title bar.
+     *
+     * Note that several dock widgets can have the same title bar, in case they are tabbed.
+     * Hidden dock widgets have no title bar.
+     */
+    TitleBar *titleBar() const;
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();

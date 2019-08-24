@@ -303,6 +303,14 @@ void DockWidgetBase::forceClose()
     d->close();
 }
 
+TitleBar *DockWidgetBase::titleBar() const
+{
+    if (Frame *f = frame())
+        return f->actualTitleBar();
+
+    return nullptr;
+}
+
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
