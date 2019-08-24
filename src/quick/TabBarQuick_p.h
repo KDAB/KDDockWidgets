@@ -18,38 +18,36 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_MULTISPLITTER_SEPARATOR_P_H
-#define KD_MULTISPLITTER_SEPARATOR_P_H
+/**
+ * @file
+ * @brief Implements a QTabWidget derived class with support for docking and undocking
+ * KDockWidget::DockWidget as tabs .
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
+#ifndef KD_TABBAR_QUICK_P_H
+#define KD_TABBAR_QUICK_P_H
 
-#include <QPointer>
+#include "TabWidget_p.h"
+
 
 namespace KDDockWidgets {
-class Anchor;
 
-class DOCKS_EXPORT Separator : public QWidgetAdapter
+class DockWidget;
+class TabWidget;
+
+class DOCKS_EXPORT TabBarQuick : public TabBar
 {
-    Q_OBJECT
+
 public:
-    explicit Separator(Anchor *anchor, QWidgetAdapter *parent = nullptr);
-    bool isVertical() const;
-    bool isStatic() const;
-    int position() const;
-
-    const QPointer<Anchor> anchor() const { return m_anchor; }
-    virtual void move(int p) = 0;
-
+    explicit TabBarQuick(TabWidget *parent = nullptr);
+    int numDockWidgets() const override;
+    int tabAt(QPoint localPos) const override;
 protected:
-    void onMousePress() override;
-    void onMouseMove(QPoint globalPos) override;
-    void onMouseRelease() override;
+    //void mousePressEvent(QMouseEvent *) override;
 
-private:
-    const QPointer<Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.
 };
-
 }
 
 #endif

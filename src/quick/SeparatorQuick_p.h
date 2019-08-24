@@ -18,36 +18,26 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_MULTISPLITTER_SEPARATOR_P_H
-#define KD_MULTISPLITTER_SEPARATOR_P_H
+#ifndef KD_MULTISPLITTER_SEPARATORQUICK_P_H
+#define KD_MULTISPLITTER_SEPARATORQUICK_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
+#include "multisplitter/Separator_p.h"
 
-#include <QPointer>
 
 namespace KDDockWidgets {
-class Anchor;
 
-class DOCKS_EXPORT Separator : public QWidgetAdapter
+class DOCKS_EXPORT SeparatorQuick : public Separator
 {
     Q_OBJECT
 public:
-    explicit Separator(Anchor *anchor, QWidgetAdapter *parent = nullptr);
-    bool isVertical() const;
-    bool isStatic() const;
-    int position() const;
-
-    const QPointer<Anchor> anchor() const { return m_anchor; }
-    virtual void move(int p) = 0;
+    explicit SeparatorQuick(Anchor *anchor, QWidgetAdapter *parent = nullptr);
 
 protected:
-    void onMousePress() override;
-    void onMouseMove(QPoint globalPos) override;
-    void onMouseRelease() override;
+    virtual void move(int p) override;
 
-private:
-    const QPointer<Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.
+/*    void paintEvent(QPaintEvent *) override;
+    void enterEvent(QEvent *) override;
+    void leaveEvent(QEvent *) override;*/
 };
 
 }

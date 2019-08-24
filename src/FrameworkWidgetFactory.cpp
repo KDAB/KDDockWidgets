@@ -35,6 +35,12 @@
 # include "widgets/FloatingWindowWidget_p.h"
 #else
 # include "quick/FrameQuick_p.h"
+# include "quick/DockWidgetQuick.h"
+# include "quick/TitleBarQuick_p.h"
+# include "quick/TabBarQuick_p.h"
+# include "quick/TabWidgetQuick_p.h"
+# include "quick/FloatingWindowQuick_p.h"
+# include "quick/SeparatorQuick_p.h"
 #endif
 
 using namespace KDDockWidgets;
@@ -95,39 +101,39 @@ Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, Frame::Options 
     return new FrameQuick(parent, options);
 }
 
-TitleBar *DefaultWidgetFactory::createTitleBar(Frame *) const
+TitleBar *DefaultWidgetFactory::createTitleBar(Frame *frame) const
 {
-    return nullptr;
+    return new TitleBarQuick(frame);
 }
 
-TitleBar *DefaultWidgetFactory::createTitleBar(FloatingWindow *) const
+TitleBar *DefaultWidgetFactory::createTitleBar(FloatingWindow *fw) const
 {
-    return nullptr;
+    return new TitleBarQuick(fw);
 }
 
-TabBar *DefaultWidgetFactory::createTabBar(TabWidget *) const
+TabBar *DefaultWidgetFactory::createTabBar(TabWidget *tb) const
 {
-    return nullptr;
+    return new TabBarQuick(tb);
 }
 
-TabWidget *DefaultWidgetFactory::createTabWidget(Frame *) const
+TabWidget *DefaultWidgetFactory::createTabWidget(Frame *frame) const
 {
-    return nullptr;
+    return new TabWidgetQuick(frame);
 }
 
-Separator *DefaultWidgetFactory::createSeparator(Anchor *, QWidgetAdapter *) const
+Separator *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidgetAdapter *parent) const
 {
-    return nullptr;
+    return new SeparatorQuick(anchor, parent);
 }
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(QWidget *) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(QWidgetOrQuick *parent) const
 {
-    return nullptr;
+    return new FloatingWindowQuick(parent);
 }
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *, QWidget *) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, QWidgetOrQuick *parent) const
 {
-    return nullptr;
+    return new FloatingWindowQuick(frame, parent);
 }
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *) const

@@ -18,50 +18,22 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Separator_p.h"
+#include "SeparatorQuick_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "multisplitter/Anchor_p.h"
 #include "Logging_p.h"
 
+
 using namespace KDDockWidgets;
 
-Separator::Separator(KDDockWidgets::Anchor *anchor, QWidgetAdapter *parent)
-    : QWidgetAdapter(parent)
-    , m_anchor(anchor)
+SeparatorQuick::SeparatorQuick(KDDockWidgets::Anchor *anchor, QWidgetAdapter *parent)
+    : Separator(anchor, parent)
 {
-    Q_ASSERT(anchor);
-    setVisible(true);
+
 }
 
-bool Separator::isVertical() const
+void SeparatorQuick::move(int )
 {
-    return m_anchor->isVertical();
+
 }
 
-bool Separator::isStatic() const
-{
-    return m_anchor->isStatic();
-}
-
-int Separator::position() const
-{
-    return isVertical() ? x() : y();
-}
-
-void Separator::onMousePress()
-{
-    Q_ASSERT(!m_anchor->isFollowing());
-    m_anchor->onMousePress();
-}
-
-void Separator::onMouseMove(QPoint globalPos)
-{
-    Q_ASSERT(!m_anchor->isFollowing());
-    m_anchor->onMouseMoved(parentWidget()->mapFromGlobal(globalPos));
-}
-
-void Separator::onMouseRelease()
-{
-    Q_ASSERT(!m_anchor->isFollowing());
-    m_anchor->onMouseReleased();
-}

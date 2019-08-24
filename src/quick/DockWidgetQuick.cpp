@@ -18,38 +18,53 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_MULTISPLITTER_SEPARATOR_P_H
-#define KD_MULTISPLITTER_SEPARATOR_P_H
+#include "DockWidgetQuick.h"
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
+/**
+ * @file
+ * @brief Represents a dock widget.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
 
-#include <QPointer>
+using namespace KDDockWidgets;
 
-namespace KDDockWidgets {
-class Anchor;
-
-class DOCKS_EXPORT Separator : public QWidgetAdapter
+class DockWidgetQuick::Private
 {
-    Q_OBJECT
 public:
-    explicit Separator(Anchor *anchor, QWidgetAdapter *parent = nullptr);
-    bool isVertical() const;
-    bool isStatic() const;
-    int position() const;
+    Private(DockWidgetQuick *)
 
-    const QPointer<Anchor> anchor() const { return m_anchor; }
-    virtual void move(int p) = 0;
-
-protected:
-    void onMousePress() override;
-    void onMouseMove(QPoint globalPos) override;
-    void onMouseRelease() override;
-
-private:
-    const QPointer<Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.
+    {
+    }
 };
 
+DockWidgetQuick::DockWidgetQuick(const QString &name, Options options)
+    : DockWidgetBase(name, options)
+    , d(new Private(this))
+{
 }
 
-#endif
+DockWidgetQuick::~DockWidgetQuick()
+{
+    delete d;
+}
+
+/* TODO_QUICK
+bool DockWidget::event(QEvent *e)
+{
+    if (e->type() == QEvent::ParentChange) {
+        onParentChanged();
+    } else if (e->type() == QEvent::Show) {
+        onShown(e->spontaneous());
+    } else if (e->type() == QEvent::Hide) {
+        onHidden(e->spontaneous());
+    }
+
+    return QWidget::event(e);
+}
+
+void DockWidget::closeEvent(QCloseEvent *e)
+{
+    onClosed(e);
+}
+*/

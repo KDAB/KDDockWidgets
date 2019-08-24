@@ -18,37 +18,45 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_MULTISPLITTER_SEPARATOR_P_H
-#define KD_MULTISPLITTER_SEPARATOR_P_H
+#ifndef KD_TITLEBARQUICK_P_H
+#define KD_TITLEBARQUICK_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
+#include "../docks_export.h"
+#include "../TitleBar_p.h"
 
-#include <QPointer>
+
 
 namespace KDDockWidgets {
-class Anchor;
 
-class DOCKS_EXPORT Separator : public QWidgetAdapter
+class DockWidget;
+class Frame;
+
+class DOCKS_EXPORT TitleBarQuick : public TitleBar
 {
     Q_OBJECT
 public:
-    explicit Separator(Anchor *anchor, QWidgetAdapter *parent = nullptr);
-    bool isVertical() const;
-    bool isStatic() const;
-    int position() const;
+    explicit TitleBarQuick(Frame *parent);
+    explicit TitleBarQuick(FloatingWindow *parent);
+    ~TitleBarQuick() override;
 
-    const QPointer<Anchor> anchor() const { return m_anchor; }
-    virtual void move(int p) = 0;
+    ///@brief getter for the close button
+    //QWidget* closeButton() const;
 
 protected:
-    void onMousePress() override;
-    void onMouseMove(QPoint globalPos) override;
-    void onMouseRelease() override;
+    /*void paintEvent(QPaintEvent *) override;
+    void mouseDoubleClickEvent(QMouseEvent *) override;
+    void updateFloatButton() override;
+    void updateCloseButton() override;*/
 
-private:
-    const QPointer<Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.
+     // The following are needed for the unit-tests
+    bool isCloseButtonVisible() const override;
+    bool isCloseButtonEnabled() const override;
+    bool isFloatButtonVisible() const override;
+    bool isFloatButtonEnabled() const override;
+//
 };
+
+
 
 }
 

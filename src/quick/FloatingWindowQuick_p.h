@@ -18,36 +18,23 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_MULTISPLITTER_SEPARATOR_P_H
-#define KD_MULTISPLITTER_SEPARATOR_P_H
+#ifndef KD_FLOATING_WINDOWQUICK_P_H
+#define KD_FLOATING_WINDOWQUICK_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
-
-#include <QPointer>
+#include "FloatingWindow_p.h"
 
 namespace KDDockWidgets {
-class Anchor;
 
-class DOCKS_EXPORT Separator : public QWidgetAdapter
+class DOCKS_EXPORT FloatingWindowQuick : public FloatingWindow
 {
     Q_OBJECT
 public:
-    explicit Separator(Anchor *anchor, QWidgetAdapter *parent = nullptr);
-    bool isVertical() const;
-    bool isStatic() const;
-    int position() const;
-
-    const QPointer<Anchor> anchor() const { return m_anchor; }
-    virtual void move(int p) = 0;
-
-protected:
-    void onMousePress() override;
-    void onMouseMove(QPoint globalPos) override;
-    void onMouseRelease() override;
+    explicit FloatingWindowQuick(QWidgetOrQuick *parent = nullptr);
+    explicit FloatingWindowQuick(Frame *frame, QWidgetOrQuick *parent = nullptr);
 
 private:
-    const QPointer<Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.
+    void init();
+    Q_DISABLE_COPY(FloatingWindowQuick)
 };
 
 }

@@ -72,6 +72,18 @@ if (OPTION_QTQUICK)
         quick/QWidgetAdapter_quick_p.h
         quick/FrameQuick.cpp
         quick/FrameQuick_p.h
+        quick/DockWidgetQuick.cpp
+        quick/DockWidgetQuick.h
+        quick/FloatingWindowQuick.cpp
+        quick/FloatingWindowQuick_p.h
+        quick/SeparatorQuick.cpp
+        quick/SeparatorQuick_p.h
+        quick/TabBarQuick.cpp
+        quick/TabBarQuick_p.h
+        quick/TabWidgetQuick.cpp
+        quick/TabWidgetQuick_p.h
+        quick/TitleBarQuick.cpp
+        quick/TitleBarQuick_p.h
         )
 else()
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
