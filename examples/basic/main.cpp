@@ -22,6 +22,7 @@
 #include "ExampleDockableWidget.h"
 #include "LayoutSaver.h"
 #include "DockWidget.h"
+#include "Config.h"
 
 #include <QTextEdit>
 #include <QMenu>
@@ -111,6 +112,7 @@ int main(int argc, char **argv)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
+    // KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible);
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("Test app"));
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));

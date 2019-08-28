@@ -371,6 +371,7 @@ private Q_SLOTS:
 
     void tst_tabBarWithHiddenTitleBar_data();
     void tst_tabBarWithHiddenTitleBar();
+    void tst_dragByTabBar_data();
     void tst_dragByTabBar();
 
     void tst_addToHiddenMainWindow();
@@ -4074,8 +4075,18 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     QVERIFY(d1->frame()->titleBar()->isVisible());
 }
 
+void TestDocks::tst_dragByTabBar_data()
+{
+    QTest::addColumn<bool>("documentMode");
+
+    QTest::newRow("false") << false;
+    QTest::newRow("true") << true;
+}
+
 void TestDocks::tst_dragByTabBar()
 {
+    QFETCH(bool, documentMode);
+
     EnsureTopLevelsDeleted e;
     Config::self().setFlags(Config::self().flags() | Config::Flag_HideTitleBarWhenTabsVisible);
 
@@ -4090,6 +4101,8 @@ void TestDocks::tst_dragByTabBar()
     m->resize(osWindowMinWidth(), 200);
 
     dock2->addDockWidgetAsTab(dock3);
+    if (documentMode)
+        static_cast<QTabWidget*>(dock2->frame()->tabWidget()->asWidget())->setDocumentMode(true);
 
     auto fw = dock2->floatingWindow();
     fw->move(m->pos() + QPoint(500, 500));

@@ -176,6 +176,10 @@ void StateDragging::onEntry(QEvent *)
 {
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
+    if (!q->m_windowBeingDragged) {
+        qWarning() << Q_FUNC_INFO << "No window being dragged for " << q->m_draggable->asWidget();
+        Q_EMIT q->dragCanceled();
+    }
 }
 
 bool StateDragging::handleMouseButtonRelease(QPoint globalPos)

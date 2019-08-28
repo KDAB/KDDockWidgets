@@ -69,7 +69,10 @@ std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
     auto dock = m_lastPressedDockWidget;
     m_lastPressedDockWidget = nullptr; // TODO check if we still have this dock, it might have been deleted
     if (!dock) {
-        qWarning() << "TabBar::makeWindow() Couldn't find dock widget at position" << QCursor::pos();
+        if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) {
+            return m_tabWidget->makeWindow();
+        }
+
         return {};
     }
 
@@ -179,10 +182,12 @@ QWidgetOrQuick *TabWidget::asWidget() const
 
 std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
 {
+    // This is called when using Flag_HideTitleBarWhenTabsVisible
+    // For detaching individual tabs, TabBar::makeWindow() is called.
+
     QRect r = m_frame->geometry();
 
     const QPoint globalPoint = m_thisWidget->mapToGlobal(QPoint(0, 0));
-
 
     auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(m_frame);
     r.moveTopLeft(globalPoint);
