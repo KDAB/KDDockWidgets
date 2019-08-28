@@ -165,7 +165,9 @@ bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
 
     Item *relativeToItem = itemForFrame(relativeToFrame);
     if (!relativeToThis && !contains(relativeToItem)) {
-        qWarning() << "MultiSplitterLayout::addWidget: Doesn't contain relativeTo:" << relativeToFrame;
+        qWarning() << "MultiSplitterLayout::addWidget: Doesn't contain relativeTo:"
+                   << relativeToFrame
+                   << "; options=" << option;
         return false;
     }
 
