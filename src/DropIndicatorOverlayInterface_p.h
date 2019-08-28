@@ -62,6 +62,8 @@ public:
     bool isHovered() const;
     DropLocation currentDropLocation() const { return m_currentDropLocation; }
     Frame *hoveredFrame() const { return m_hoveredFrame; }
+    void setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation location);
+
     virtual Type indicatorType() const = 0;
     virtual void hover(QPoint globalPos) = 0;
 
@@ -77,7 +79,6 @@ private:
 
 protected:
     virtual void onHoveredFrameChanged(Frame *);
-    void setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation location);
     virtual void updateVisibility() = 0;
     Frame *m_hoveredFrame = nullptr;
     DropLocation m_currentDropLocation = DropLocation_None;

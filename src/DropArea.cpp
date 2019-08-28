@@ -260,4 +260,5 @@ bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location locat
 void DropArea::removeHover()
 {
     m_dropIndicatorOverlay->setWindowBeingDragged(nullptr);
+    m_dropIndicatorOverlay->setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
 }
