@@ -557,6 +557,7 @@ DockWidgetBase *DockWidgetBase::createFromDataStream(QDataStream &ds)
     if (dw) {
         if (QWidget *w = dw->widget())
             w->setVisible(true);
+        dw->setProperty("kddockwidget_was_restored", true);
     } else {
         qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
     }

@@ -74,6 +74,7 @@ public:
     void serializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel);
     void deserializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel);
     void deleteEmptyFrames();
+    void clearRestoredProperty();
 
     std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
@@ -170,6 +171,7 @@ QByteArray LayoutSaver::serializeLayout() const
 
 bool LayoutSaver::restoreLayout(const QByteArray &data)
 {
+    d->clearRestoredProperty();
     if (data.isEmpty())
         return true;
 
@@ -264,6 +266,28 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     }
 
     return true;
+}
+
+DockWidgetBase::List LayoutSaver::restoredDockWidgets() const
+{
+    const DockWidgetBase::List &allDockWidgets = DockRegistry::self()->dockwidgets();
+    DockWidgetBase::List result;
+    result.reserve(allDockWidgets.size());
+    for (DockWidgetBase *dw : allDockWidgets) {
+        if (dw->property("kddockwidget_was_restored").toBool())
+            result.push_back(dw);
+    }
+
+    return result;
+
+}
+
+void LayoutSaver::Private::clearRestoredProperty()
+{
+    const DockWidgetBase::List &allDockWidgets = DockRegistry::self()->dockwidgets();
+    for (DockWidgetBase *dw : allDockWidgets) {
+        dw->setProperty("kddockwidget_was_restored", QVariant());
+    }
 }
 
 void LayoutSaver::Private::serializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel)

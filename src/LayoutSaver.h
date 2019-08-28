@@ -29,6 +29,7 @@
  */
 
 #include "docks_export.h"
+#include "DockWidgetBase.h"
 
 class QByteArray;
 
@@ -65,6 +66,13 @@ public:
      * @return true on success
      */
     bool restoreLayout(const QByteArray &);
+
+    /**
+     * @brief returns a list of dock widgets which were restored since the last @ref restoreLayout() or @ref restoreFromDisk()
+     *
+     * Useful since some dock widgets can be new, and hence not be included in the last saved layout.
+     */
+    DockWidgetBase::List restoredDockWidgets() const;
 
 private:
     friend class TestDocks;

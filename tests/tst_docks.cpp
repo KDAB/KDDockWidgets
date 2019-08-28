@@ -1315,6 +1315,7 @@ void TestDocks::tst_restoreSimple()
     QCOMPARE(layout->placeholderCount(), 0);
     QVERIFY(dock1->isVisible());
     layout->checkSanity();
+    QCOMPARE(saver.restoredDockWidgets().size(), 3);
 
     // Test a crash I got:
     dock1->setFloating(true);
