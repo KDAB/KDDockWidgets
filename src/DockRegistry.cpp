@@ -28,14 +28,17 @@
 
 #include <QPointer>
 #include <QDebug>
+#include <QApplication>
+#include <QWindow>
 
 using namespace KDDockWidgets;
 
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
-
 #ifdef KDDOCKWIDGETS_QTWIDGETS
+    qApp->installEventFilter(this);
+
 # ifdef DOCKS_DEVELOPER_MODE
     if (qEnvironmentVariableIntValue("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW") == 1) {
         auto dv = new Debug::DebugWindow();
@@ -46,6 +49,10 @@ DockRegistry::DockRegistry(QObject *parent)
 #else
     KDDockWidgets::registerQmlTypes();
 #endif
+}
+
+DockRegistry::~DockRegistry()
+{
 }
 
 void DockRegistry::maybeDelete()
@@ -234,6 +241,16 @@ const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
     return result;
 }
 
+FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) const
+{
+    for (FloatingWindow *fw : m_nestedWindows) {
+        if (fw->windowHandle() == windowHandle)
+            return fw;
+    }
+
+    return nullptr;
+}
+
 void DockRegistry::clear(bool deleteStaticAnchors)
 {
     for (auto dw : qAsConst(m_dockWidgets)) {
@@ -256,6 +273,21 @@ void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
     }
 }
 
-DockRegistry::~DockRegistry()
+bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
 {
+    // This event filter is needed so we sort the floating windows by z-order
+    // When a FloatingWindow is exposed we put it at the end of the list
+
+    if (event->type() != QEvent::Expose)
+        return false;
+
+    if (auto windowHandle = qobject_cast<QWindow*>(watched)) {
+        if (FloatingWindow *fw = floatingWindowForHandle(windowHandle)) {
+            // This floating window was exposed
+            m_nestedWindows.removeOne(fw);
+            m_nestedWindows.append(fw);
+        }
+    }
+
+    return false;
 }

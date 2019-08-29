@@ -25,6 +25,7 @@
 #include "FloatingWindow_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "Utils_p.h"
+#include "DockRegistry_p.h"
 
 #include <QMouseEvent>
 #include <QApplication>
@@ -391,6 +392,21 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
     return nullptr;
 }
 #endif
+template <typename T>
+static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<T> &topLevels, T windowBeingDragged)
+{
+    for (int i = topLevels.size() -1; i >= 0; --i) {
+        auto tl = topLevels.at(i);
+        if (!tl->isVisible() || tl == windowBeingDragged || tl->isMinimized())
+            continue;
+        if (tl->geometry().contains(globalPos)) {
+            qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
+            return tl;
+        }
+    }
+
+    return nullptr;
+}
 
 QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
 {
@@ -440,14 +456,16 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
         }
     }
 #else
-    for (auto tl : topLevels) {
-        if (!tl->isVisible() || tl == m_windowBeingDragged->floatingWindow() || tl->isMinimized() || tl->objectName() == QLatin1String("_docks_IndicatorWindow_Overlay"))
-            continue;
-        if (tl->geometry().contains(globalPos)) {
-            qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
-            return tl;
-        }
-    }
+
+    // On Linux we don't have API to check the z-order of top-levels. So first check the floating windows
+    // and check the MainWindow last, as the MainWindow will have lower z-order as it's a parent (TODO: How will it work with multiple MainWindows ?)
+    // The floating window list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
+
+    if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->nestedwindows(), m_windowBeingDragged->floatingWindow()))
+        return tl;
+
+    return qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->mainwindows(), static_cast<MainWindowBase*>(nullptr));
+
 #endif
 
 #else

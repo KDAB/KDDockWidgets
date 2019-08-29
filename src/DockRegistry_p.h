@@ -80,6 +80,9 @@ public:
     /// As there might be DockWidgets which weren't morphed yet.
     const QVector<FloatingWindow*> nestedwindows() const;
 
+    ///@brief returns the FloatingWindow with handle @p windowHandle
+    FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
+
     /**
      * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors.
      * This is called before restoring a layout.
@@ -98,7 +101,8 @@ public:
      * @brief returns true if there's 0 dockwidgets, 0 main windows
      */
     bool isEmpty() const;
-
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
 private:
     explicit DockRegistry(QObject *parent = nullptr);
     void maybeDelete();
