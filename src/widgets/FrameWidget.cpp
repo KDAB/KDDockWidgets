@@ -31,7 +31,6 @@
 
 #include <QVBoxLayout>
 #include <QPainter>
-#include <QVBoxLayout>
 #include <QTableWidget>
 #include <QTabBar>
 

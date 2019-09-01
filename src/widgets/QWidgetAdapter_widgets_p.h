@@ -27,8 +27,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#ifndef KDDOCKWIDGETS_QWIDGETADAPTERWIDGETS_H
-#define KDDOCKWIDGETS_QWIDGETADAPTERWIDGETS_H
+#ifndef KDDOCKWIDGETS_QWIDGETADAPTERWIDGETS_P_H
+#define KDDOCKWIDGETS_QWIDGETADAPTERWIDGETS_P_H
 
 #include "../docks_export.h"
 

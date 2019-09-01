@@ -30,7 +30,6 @@
 #include "DropArea_p.h"
 #include "LastPosition_p.h"
 #include "multisplitter/Item_p.h"
-#include "DockRegistry_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
@@ -226,7 +225,7 @@ void DockWidgetBase::setFloating(bool floats)
             d->restoreToPreviousPosition();
         } else {
             qCDebug(placeholder) << Q_FUNC_INFO << "Don't have a place to restore";
-            // TODO: Restore to prefered place ?
+            // TODO: Restore to preferred place ?
         }
     }
 }

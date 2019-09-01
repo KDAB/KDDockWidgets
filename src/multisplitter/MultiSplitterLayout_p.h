@@ -443,7 +443,7 @@ private:
     void blockItemPropagateGeo(bool block);
 
     /**
-     * @brief overload called by the first one. Splitted out just so it's easier to unit-test the math
+     * @brief overload called by the first one. Split-out so it's easier to unit-test the math
      */
     QRect rectForDrop(Length lengthForDrop, Location location, QRect relativeToRect) const;
 

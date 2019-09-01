@@ -89,7 +89,7 @@ public:
      *
      * By default DefaultWidgetFactory is used, which gives you FrameWidget, TitleBarWidget,
      * TabBarWidget, TabWidgetWidget etc. You can set your own factory, to supply your own variants
-     * of those classes, for the purposes of changing GUI appearence and such.
+     * of those classes, for the purposes of changing GUI appearance and such.
      *
      * Also potentially useful to return QtQuick classes instead of the QtWidget based ones.
      * Ownership is taken.
