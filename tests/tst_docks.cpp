@@ -5184,14 +5184,14 @@ void TestDocks::tst_resizeWindow()
     Item *item1 = layout->itemForFrame(dock1->frame());
     Anchor *anchor = item1->anchorGroup().right;
 
-    // Move the separator so the both dock widgets have the same space
+    // Move the separator so both dock widgets have the same space
     const int delta = dock1->width() - dock2->width();
     anchor->setPosition(anchor->position() - delta / 2);
 
     const int oldWidth1 = dock1->width();
     const int oldWidth2 = dock2->width();
 
-    QCOMPARE(oldWidth1, oldWidth2);
+    QVERIFY(oldWidth2 - oldWidth1 <= 1); // They're not equal if separator thickness if even
 
     if (doASaveRestore) {
         LayoutSaver saver;
