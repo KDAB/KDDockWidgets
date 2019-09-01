@@ -121,7 +121,7 @@ int Config::separatorThickness(bool staticSeparator) const
 
 void Config::setSeparatorThickness(int value, bool staticSeparator)
 {
-    if (value <= 0 || value >= 100) {
+    if ((value <= 0 && !staticSeparator) || (value < 0 && staticSeparator) || value >= 100) {
         qWarning() << Q_FUNC_INFO << "Invalid value" << value;
         return;
     }
