@@ -39,6 +39,14 @@ under the terms of the GPLv2 (see LICENSE.GPL.txt).
 
 Contact KDAB at <info@kdab.com> if you need different licensing options.
 
+Get Involved
+============
+KDAB will happily accept external contributions; however, **all**
+contributions will require a signed Contributor License Agreement
+(see docs/KDDockWidgets-CopyrightAssignmentForm.docx).
+
+Contact info@kdab.com for more information.
+
 About KDAB
 ==========
 KDDockWidgets is supported and maintained by Klarälvdalens Datakonsult AB (KDAB).
