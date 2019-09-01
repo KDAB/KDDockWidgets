@@ -54,8 +54,6 @@
 # include <Windows.h>
 #endif
 
-#define STATIC_ANCHOR_LENGTH 1
-#define ANCHOR_LENGTH 5
 #define WAIT QTest::qWait(5000000);
 
 using namespace KDDockWidgets;
@@ -64,6 +62,16 @@ using namespace KDDockWidgets::Tests;
 extern quintptr Q_CORE_EXPORT qtHookData[];
 
 static QString s_expectedWarning;
+
+static int staticAnchorLength()
+{
+    return Config::self().separatorThickness(true);
+}
+
+static int anchorLength()
+{
+    return Config::self().separatorThickness(false);
+}
 
 struct SetExpectedWarning
 {
@@ -723,19 +731,19 @@ void TestDocks::tst_close()
     auto da = mainwindow->dropArea();
 
     QVERIFY(da->checkSanity());
-    QCOMPARE(leftDock->frame()->x(), STATIC_ANCHOR_LENGTH); // 1 = static anchor thickness
-    QCOMPARE(centralDock->frame()->x(), leftDock->frame()->geometry().right() + ANCHOR_LENGTH + 1);
-    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + ANCHOR_LENGTH + 1);
+    QCOMPARE(leftDock->frame()->x(), staticAnchorLength()); // 1 = static anchor thickness
+    QCOMPARE(centralDock->frame()->x(), leftDock->frame()->geometry().right() + anchorLength() + 1);
+    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + anchorLength() + 1);
     leftDock->close();
     QTest::qWait(250); // TODO: wait for some signal
-    QCOMPARE(centralDock->frame()->x(), STATIC_ANCHOR_LENGTH);
-    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + ANCHOR_LENGTH + 1);
+    QCOMPARE(centralDock->frame()->x(), staticAnchorLength());
+    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + anchorLength() + 1);
 
     rightDock->close();
     QTest::qWait(250); // TODO: wait for some signal
     auto lay = mainwindow->centralWidget()->layout();
     QMargins margins = lay->contentsMargins();
-    QCOMPARE(centralDock->frame()->width(), mainwindow->width() - STATIC_ANCHOR_LENGTH*2 - margins.left() - margins.right());
+    QCOMPARE(centralDock->frame()->width(), mainwindow->width() - staticAnchorLength()*2 - margins.left() - margins.right());
     delete leftDock; delete rightDock; delete centralDock;
 
     // 1.9 Close tabbed dock, side docks will maintain their position
