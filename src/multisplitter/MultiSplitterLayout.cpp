@@ -1009,8 +1009,8 @@ void MultiSplitterLayout::positionStaticAnchors()
     qCDebug(sizing) << Q_FUNC_INFO;
     m_leftAnchor->setPosition(0);
     m_topAnchor->setPosition(0);
-    m_bottomAnchor->setPosition(height() - 1);
-    m_rightAnchor->setPosition(width() - 1);
+    m_bottomAnchor->setPosition(height() - m_bottomAnchor->thickness());
+    m_rightAnchor->setPosition(width() - m_rightAnchor->thickness());
 }
 
 void MultiSplitterLayout::redistributeSpace(QSize oldSize, QSize newSize)

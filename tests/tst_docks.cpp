@@ -230,6 +230,8 @@ struct EnsureTopLevelsDeleted
     EnsureTopLevelsDeleted()
         : m_initialNumWindows(topLevels().size())
         , m_originalFlags(Config::self().flags())
+        , m_originalStaticAnchorThickness(Config::self().separatorThickness(true))
+        , m_originalAnchorThickness(Config::self().separatorThickness(false))
     {
     }
 
@@ -242,6 +244,8 @@ struct EnsureTopLevelsDeleted
         // Other cleanup, since we use this class everywhere
         Config::self().setDockWidgetFactoryFunc(nullptr);
         Config::self().setFlags(m_originalFlags);
+        Config::self().setSeparatorThickness(m_originalStaticAnchorThickness, true);
+        Config::self().setSeparatorThickness(m_originalAnchorThickness, false);
     }
 
     QWidgetList topLevels() const
@@ -256,9 +260,10 @@ struct EnsureTopLevelsDeleted
         return result;
     }
 
-
     const int m_initialNumWindows;
     const Config::Flags m_originalFlags;
+    const int m_originalStaticAnchorThickness;
+    const int m_originalAnchorThickness;
 };
 
 class TestDocks : public QObject
@@ -2379,7 +2384,7 @@ void TestDocks::tst_rectForDropMath_data()
                                         << expectedRect;
 
     length = { 0, 100 };
-    x = item1GeometryH.width() + anchorThickness + 1;
+    x = item1GeometryH.width() + anchorThickness + staticAnchorThickness;
     expectedRect = QRect(x, staticAnchorThickness, 100, h);
     qDebug() << "expected=" << expectedRect;
     QTest::newRow("left-of-right-item2") << contentsSize
@@ -2390,7 +2395,7 @@ void TestDocks::tst_rectForDropMath_data()
 
     int side1 = 2;
     length = { side1, 98 };
-    x = item1GeometryH.width() + anchorThickness - side1 + 1;
+    x = item1GeometryH.width() + anchorThickness - side1 + staticAnchorThickness;
     expectedRect = QRect(x, staticAnchorThickness, 100, h);
     qDebug() << "expected=" << expectedRect;
     QTest::newRow("left-of-right-item3") << contentsSize
