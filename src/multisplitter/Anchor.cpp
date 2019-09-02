@@ -199,7 +199,7 @@ void Anchor::setPosition(int p, SetPositionOptions options)
     qCDebug(anchors) << Q_FUNC_INFO << this << "; visible="
                      << m_separatorWidget->isVisible() << "; p=" << p;
 
-    const int max = m_layout->length(orientation()) - 1;
+    const int max = m_layout->length(orientation()) - Anchor::thickness(true);
     const bool outOfBounds = max != -1 && (p < 0  || p > max);
 
     if (outOfBounds) {

@@ -4303,7 +4303,8 @@ void TestDocks::tst_staticAnchorThickness_data()
 {
     QTest::addColumn<int>("thickness");
     QTest::newRow("2") << 2;
-    //QTest::newRow("0") << 0;
+    QTest::newRow("1") << 1;
+    QTest::newRow("0") << 0;
 }
 
 void TestDocks::tst_staticAnchorThickness()
@@ -4320,6 +4321,8 @@ void TestDocks::tst_staticAnchorThickness()
 
     m->addDockWidget(d1, Location_OnLeft);
     m->addDockWidget(d2, Location_OnRight);
+
+    delete m;
 }
 
 void TestDocks::tst_rectForDropCrash()

@@ -661,7 +661,7 @@ QPair<int, int> MultiSplitterLayout::boundPositionsForAnchor(Anchor *anchor) con
         if (anchor == m_leftAnchor || anchor == m_topAnchor) {
             return {0, 0};
         } else if (anchor == m_rightAnchor || anchor == m_bottomAnchor) {
-            const int max = length(anchor->orientation()) - 1;
+            const int max = length(anchor->orientation()) - Anchor::thickness(true);
             return {max, max};
         }
     }
