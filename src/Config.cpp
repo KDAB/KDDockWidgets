@@ -54,7 +54,7 @@ public:
     FrameworkWidgetFactory *m_frameworkWidgetFactory;
     Flags m_flags = Flag_Default;
     int m_separatorThickness = 5;
-    int m_staticSeparatorThickness = 1;
+    int m_staticSeparatorThickness = 0;
 };
 
 
