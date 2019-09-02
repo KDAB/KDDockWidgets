@@ -391,6 +391,8 @@ private Q_SLOTS:
     void tst_minSizeChanges();
     void tst_complex();
     void tst_titlebar_getter();
+    void tst_staticAnchorThickness_data();
+    void tst_staticAnchorThickness();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -3311,14 +3313,15 @@ void TestDocks::tst_invalidPlaceholderPosition()
     auto frame1 = dock1->frame();
     auto frame2 = dock2->frame();
     auto frame3 = dock3->frame();
-    QCOMPARE(frame1->y(), 1);
+    const int staticAnchorThickness = Anchor::thickness(true);
+    QCOMPARE(frame1->y(), staticAnchorThickness);
 
     // Close 1
     dock1->close();
     waitForResize(frame2);
 
     // Check that frame2 moved up to y=1
-    QCOMPARE(frame2->y(), 1);
+    QCOMPARE(frame2->y(), staticAnchorThickness);
     QCOMPARE(layout->numAchorsFollowing(), 1);
     layout->dumpDebug();
 
@@ -3332,7 +3335,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
     QCOMPARE(layout->numAchorsFollowing(), 2);
 
     // Check that frame3 moved up to y=1
-    QCOMPARE(frame3->y(), 1);
+    QCOMPARE(frame3->y(), staticAnchorThickness);
 
     // Now restore:
     auto toRestore1 = restore1First ? dock1 : dock2;
@@ -4294,6 +4297,29 @@ void TestDocks::tst_titlebar_getter()
     QVERIFY(d1->titleBar()->isVisible());
 
     delete m;
+}
+
+void TestDocks::tst_staticAnchorThickness_data()
+{
+    QTest::addColumn<int>("thickness");
+    QTest::newRow("2") << 2;
+    //QTest::newRow("0") << 0;
+}
+
+void TestDocks::tst_staticAnchorThickness()
+{
+    QFETCH(int, thickness);
+    Config::self().setSeparatorThickness(thickness, true);
+
+    auto m = new MainWindow("m1", MainWindowOption_None);
+    m->resize(QSize(502, 500));
+    m->show();
+
+    auto d1 = createDockWidget("1", new QTextEdit());
+    auto d2 = createDockWidget("2", new QTextEdit());
+
+    m->addDockWidget(d1, Location_OnLeft);
+    m->addDockWidget(d2, Location_OnRight);
 }
 
 void TestDocks::tst_rectForDropCrash()
