@@ -2459,10 +2459,10 @@ void TestDocks::tst_rectForDrop_data()
         QWidget * widgetToDrop = createWidget(100, "w1");
         widgetToDrop->resize(200, 200);
         const int expectedLength = 200; // this 200 will change when the initial length algoritm changes; Maybe just call MultiSplitterLayout::LengthForDrop() directly here
-        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnLeft, nullptr, QRect(1, 1, expectedLength,  multispitterlength - staticAnchorThickness*2) };
-        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnTop, nullptr, QRect(1, 1, multispitterlength - staticAnchorThickness*2, expectedLength) };
-        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnRight, nullptr, QRect(299, 1, expectedLength, multispitterlength - staticAnchorThickness*2) };
-        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnBottom, nullptr, QRect(1, 299, multispitterlength - staticAnchorThickness*2, expectedLength) };
+        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnLeft, nullptr, QRect(staticAnchorThickness, staticAnchorThickness, expectedLength,  multispitterlength - staticAnchorThickness*2) };
+        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnTop, nullptr, QRect(staticAnchorThickness, staticAnchorThickness, multispitterlength - staticAnchorThickness*2, expectedLength) };
+        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnRight, nullptr, QRect(300 - staticAnchorThickness, staticAnchorThickness, expectedLength, multispitterlength - staticAnchorThickness*2) };
+        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnBottom, nullptr, QRect(staticAnchorThickness, 300 - staticAnchorThickness, multispitterlength - staticAnchorThickness*2, expectedLength) };
 
         setup.size = QSize(multispitterlength, multispitterlength);
         QTest::newRow("empty") << setup << rects;
