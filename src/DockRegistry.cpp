@@ -34,10 +34,12 @@ DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
 #ifdef DOCKS_DEVELOPER_MODE
+# ifdef KDDOCKWIDGETS_QTWIDGETS
     if (qEnvironmentVariableIntValue("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW") == 1) {
         auto dv = new Debug::DebugWindow();
         dv->show();
     }
+# endif
 #endif
 }
 

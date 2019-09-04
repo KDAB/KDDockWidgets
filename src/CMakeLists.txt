@@ -33,8 +33,6 @@ set(DOCKSLIBS_SRCS
     TitleBar.cpp
     ObjectViewer.cpp
     ObjectViewer_p.h
-    DebugWindow.cpp
-    DebugWindow_p.h
     MainWindowBase.cpp
     WindowBeingDragged.cpp
     WidgetResizeHandler.cpp
@@ -89,6 +87,8 @@ if (OPTION_QTQUICK)
         )
 else()
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
+        DebugWindow.cpp
+        DebugWindow_p.h
         MainWindow.cpp
         LayoutSaver.cpp
         # indicators/AnimatedIndicators.cpp
