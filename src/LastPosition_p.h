@@ -29,7 +29,6 @@
 
 #include "docks_export.h"
 #include "multisplitter/Item_p.h"
-#include "MainWindow.h"
 #include "Logging_p.h"
 
 #include <QPointer>
