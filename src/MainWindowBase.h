@@ -31,9 +31,9 @@
 
 #include "docks_export.h"
 #include "KDDockWidgets.h"
+#include "QWidgetAdapter.h"
 
 #include <QVector>
-#include <QMainWindow>
 
 class QDataStream;
 
@@ -44,7 +44,7 @@ class Frame;
 class DropArea;
 class MultiSplitterLayout;
 
-class DOCKS_EXPORT MainWindowBase : public QMainWindow
+class DOCKS_EXPORT MainWindowBase : public QMainWindowOrQuick
 {
     Q_OBJECT
 public:

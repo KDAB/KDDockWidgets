@@ -61,7 +61,7 @@ public:
 
 MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                                QWidget *parent, Qt::WindowFlags flags)
-    : QMainWindow(parent, flags)
+    : QMainWindowOrQuick(parent, flags)
     , d(new Private(uniqueName, options, this))
 {
     DockRegistry::self()->registerMainWindow(this);

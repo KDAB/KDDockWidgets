@@ -27,10 +27,13 @@
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "widgets/QWidgetAdapter_widgets_p.h"
+#include <QMainWindow>
 typedef QWidget QWidgetOrQuick;
+typedef QMainWindow QMainWindowOrQuick;
 #else
 # include "quick/QWidgetAdapter_quick_p.h"
 typedef KDDockWidgets::QWidgetAdapter QWidgetOrQuick;
+typedef QWidgetOrQuick QMainWindowOrQuick;
 #endif
 
 #endif
