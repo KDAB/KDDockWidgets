@@ -76,6 +76,7 @@ if (OPTION_QTQUICK)
         quick/DockWidgetQuick.h
         quick/FloatingWindowQuick.cpp
         quick/FloatingWindowQuick_p.h
+        quick/LayoutSaverQuick.cpp
         quick/SeparatorQuick.cpp
         quick/SeparatorQuick_p.h
         quick/TabBarQuick.cpp
