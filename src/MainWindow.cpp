@@ -41,8 +41,6 @@
 
 using namespace KDDockWidgets;
 
-DropAreaWithCentralFrame::~DropAreaWithCentralFrame() {}
-
 namespace KDDockWidgets {
 class MyCentralWidget : public QWidget
 {

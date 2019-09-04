@@ -22,32 +22,20 @@
 #define KD_DROP_AREA_WITH_CENTRAL_FRAME_H
 
 #include "DropArea_p.h"
-#include "Config.h"
-#include "FrameworkWidgetFactory.h"
 
 #include "QWidgetAdapter.h"
 
 namespace KDDockWidgets {
-class DropAreaWithCentralFrame : public DropArea
+class DOCKS_EXPORT DropAreaWithCentralFrame : public DropArea
 {
     Q_OBJECT
 public:
-    explicit DropAreaWithCentralFrame(QWidgetOrQuick *parent, MainWindowOptions options)
-        : DropArea(parent)
-        , m_centralFrame(createCentralFrame(options))
-    {
-        if (m_centralFrame)
-            m_layout->addWidget(m_centralFrame, KDDockWidgets::Location_OnTop, {});
-    }
-
-    static Frame* createCentralFrame(MainWindowOptions options)
-    {
-        return (options & MainWindowOption_HasCentralFrame) ? Config::self().frameWorkWidgetFactory()->createFrame(nullptr, Frame::Option_IsCentralFrame | Frame::Option_AlwaysShowsTabs)
-                                                            : nullptr;
-    }
-
+    explicit DropAreaWithCentralFrame(QWidgetOrQuick *parent = {}, MainWindowOptions options = {});
     ~DropAreaWithCentralFrame();
 
+    static Frame* createCentralFrame(MainWindowOptions options);
+private:
+    friend class MainWindow;
     Frame *const m_centralFrame = nullptr;
 };
 
