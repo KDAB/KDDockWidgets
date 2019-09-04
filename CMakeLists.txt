@@ -42,7 +42,10 @@ endif()
 
 add_subdirectory(src)
 
-if (OPTION_DEVELOPER_MODE AND NOT OPTION_QTQUICK)
-    add_subdirectory(tests)
+if (OPTION_DEVELOPER_MODE)
+    if (NOT OPTION_QTQUICK)
+        add_subdirectory(tests)
+    endif()
+
     add_subdirectory(examples)
 endif()

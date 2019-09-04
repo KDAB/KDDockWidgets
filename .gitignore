@@ -36,3 +36,4 @@ fuzzer
 custom_titlebar
 libkddockwidgets.so
 *.depends
+kddockwidgets_basic_quick

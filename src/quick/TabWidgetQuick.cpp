@@ -33,7 +33,7 @@
 using namespace KDDockWidgets;
 
 TabWidgetQuick::TabWidgetQuick(Frame *parent)
-    : TabWidget(nullptr, parent) // TODO replace nullptr
+    : TabWidget(this, parent)
     , m_tabBar(Config::self().frameWorkWidgetFactory()->createTabBar(this))
 {
 }

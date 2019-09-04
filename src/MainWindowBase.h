@@ -43,6 +43,7 @@ class DockWidgetBase;
 class Frame;
 class DropArea;
 class MultiSplitterLayout;
+class DropAreaWithCentralFrame;
 
 class DOCKS_EXPORT MainWindowBase : public QMainWindowOrQuick
 {
@@ -50,7 +51,7 @@ class DOCKS_EXPORT MainWindowBase : public QMainWindowOrQuick
 public:
     typedef QVector<MainWindowBase*> List;
     explicit MainWindowBase(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                            QWidget *parent = nullptr, Qt::WindowFlags flags = {});
+                            QWidgetOrQuick *parent = nullptr, Qt::WindowFlags flags = {});
 
     ~MainWindowBase() override;
     void addDockWidgetAsTab(DockWidgetBase *);
@@ -61,11 +62,17 @@ public:
 
     ///@internal
     ///@brief returns the drop area.
-    DropArea *dropArea() const;
+    virtual DropAreaWithCentralFrame *dropArea() const = 0;
 
     ///@internal
     ///@brief returns the MultiSplitterLayout.
     MultiSplitterLayout* multiSplitterLayout() const;
+
+protected:
+    void setUniqueName(const QString &uniqueName);
+
+Q_SIGNALS:
+    void uniqueNameChanged();
 
 private:
     class Private;

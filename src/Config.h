@@ -30,10 +30,14 @@
 
 #include "docks_export.h"
 
+class QQmlEngine;
+
 namespace KDDockWidgets
 {
+
 class DockWidgetBase;
 class FrameworkWidgetFactory;
+
 typedef KDDockWidgets::DockWidgetBase* (*DockWidgetFactoryFunc)(const QString &name);
 
 /**
@@ -107,6 +111,11 @@ public:
     ///@brief setter for @ref separatorThickness
     ///Note: Only use this function at startup before creating any DockWidget or MainWindow.
     void setSeparatorThickness(int value, bool staticSeparator);
+
+
+    ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
+    void setQmlEngine(QQmlEngine *);
+    QQmlEngine* qmlEngine() const;
 
 private:
     Q_DISABLE_COPY(Config)

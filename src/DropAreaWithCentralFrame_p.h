@@ -30,7 +30,7 @@ class DOCKS_EXPORT DropAreaWithCentralFrame : public DropArea
 {
     Q_OBJECT
 public:
-    explicit DropAreaWithCentralFrame(QWidgetOrQuick *parent = {}, MainWindowOptions options = {});
+    explicit DropAreaWithCentralFrame(QWidgetOrQuick *parent = {}, MainWindowOptions options = MainWindowOption_HasCentralFrame);
     ~DropAreaWithCentralFrame();
 
     static Frame* createCentralFrame(MainWindowOptions options);

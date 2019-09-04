@@ -18,36 +18,31 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * @file
- * @brief Implements a QTabWidget derived class with support for docking and undocking
- * KDockWidget::DockWidget as tabs .
- *
- * @author Sérgio Martins \<sergio.martins@kdab.com\>
- */
 
-#ifndef KD_TABBAR_QUICK_P_H
-#define KD_TABBAR_QUICK_P_H
+#include "DockRegistry_p.h"
+#include "Config.h"
 
-#include "TabWidget_p.h"
+#include <QQuickView>
+#include <QGuiApplication>
 
 
-namespace KDDockWidgets {
-
-class DockWidget;
-class TabWidget;
-
-class DOCKS_EXPORT TabBarQuick : public QWidgetAdapter, public TabBar
+int main(int argc, char **argv)
 {
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QGuiApplication app(argc, argv);
+    app.setOrganizationName(QStringLiteral("KDAB"));
+    app.setApplicationName(QStringLiteral("Test app"));
 
-public:
-    explicit TabBarQuick(TabWidget *parent = nullptr);
-    int numDockWidgets() const override;
-    int tabAt(QPoint localPos) const override;
-protected:
-    //void mousePressEvent(QMouseEvent *) override;
+    KDDockWidgets::DockRegistry::self(); // TODO: Remove. Right now registers qml types.
 
-};
+    QQuickView view;
+
+    KDDockWidgets::Config::self().setQmlEngine(view.engine());
+
+    view.setSource(QUrl("qrc:/main.qml"));
+    view.resize(500, 500);
+    view.show();
+
+    return app.exec();
 }
-
-#endif

@@ -31,6 +31,12 @@ Separator::Separator(KDDockWidgets::Anchor *anchor, QWidgetAdapter *parent)
 {
     Q_ASSERT(anchor);
     setVisible(true);
+
+    const int thickness = Anchor::thickness(isStatic());
+    if (isVertical())
+        setFixedWidth(thickness);
+    else
+        setFixedHeight(thickness);
 }
 
 bool Separator::isVertical() const
@@ -64,4 +70,13 @@ void Separator::onMouseRelease()
 {
     Q_ASSERT(!m_anchor->isFollowing());
     m_anchor->onMouseReleased();
+}
+
+void Separator::move(int p)
+{
+    if (isVertical()) {
+        QWidgetAdapter::move(p, y());
+    } else {
+        QWidgetAdapter::move(x(), p);
+    }
 }

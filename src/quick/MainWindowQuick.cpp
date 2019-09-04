@@ -18,36 +18,30 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * @file
- * @brief Implements a QTabWidget derived class with support for docking and undocking
- * KDockWidget::DockWidget as tabs .
- *
- * @author Sérgio Martins \<sergio.martins@kdab.com\>
- */
+#include "MainWindowQuick_p.h"
+#include <QDebug>
 
-#ifndef KD_TABBAR_QUICK_P_H
-#define KD_TABBAR_QUICK_P_H
+using namespace KDDockWidgets;
 
-#include "TabWidget_p.h"
-
-
-namespace KDDockWidgets {
-
-class DockWidget;
-class TabWidget;
-
-class DOCKS_EXPORT TabBarQuick : public QWidgetAdapter, public TabBar
+MainWindowQuick::MainWindowQuick()
+    : MainWindowBase(QString(), MainWindowOption_HasCentralFrame)
 {
-
-public:
-    explicit TabBarQuick(TabWidget *parent = nullptr);
-    int numDockWidgets() const override;
-    int tabAt(QPoint localPos) const override;
-protected:
-    //void mousePressEvent(QMouseEvent *) override;
-
-};
+    qDebug() << "Created";
 }
 
-#endif
+DropAreaWithCentralFrame *MainWindowQuick::dropArea() const
+{
+    return m_dropArea;
+}
+
+void MainWindowQuick::setDropArea(DropAreaWithCentralFrame *dropArea)
+{
+    if (m_dropArea) {
+        qWarning() << Q_FUNC_INFO << "Already contains a drop area!";
+        return;
+    }
+
+    qDebug() << "Got drop area";
+    m_dropArea = dropArea;
+    Q_EMIT dropAreaChanged();
+}

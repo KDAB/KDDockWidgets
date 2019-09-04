@@ -32,7 +32,8 @@
 using namespace KDDockWidgets;
 
 TabBarQuick::TabBarQuick(TabWidget *parent)
-    : TabBar(nullptr, parent) // TODO replace nullptr
+    : QWidgetAdapter(parent->asWidget())
+    , TabBar(this, parent)
 {
 }
 

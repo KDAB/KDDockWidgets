@@ -26,11 +26,21 @@
  */
 
 #include "FrameQuick_p.h"
+#include "Config.h"
 
+#include <QDebug>
 
 using namespace KDDockWidgets;
 
 FrameQuick::FrameQuick(QWidgetAdapter *parent, Options options)
     : Frame(parent, options)
 {
+    qDebug() << Q_FUNC_INFO << "Created frame";
+    auto component = new QQmlComponent(Config::self().qmlEngine(),
+                                       QUrl(QStringLiteral("qrc:/kddockwidgets/quick/qml/Frame.qml")));
+
+
+    auto separatorItem = static_cast<QQuickItem*>(component->create());
+    separatorItem->setParentItem(this);
+    separatorItem->setParent(this);
 }

@@ -35,7 +35,7 @@ namespace KDDockWidgets {
 class Frame;
 class TabBar;
 
-class DOCKS_EXPORT TabWidgetQuick : public TabWidget
+class DOCKS_EXPORT TabWidgetQuick : public TabWidget, public QWidgetAdapter
 {
 public:
     explicit TabWidgetQuick(Frame *parent);

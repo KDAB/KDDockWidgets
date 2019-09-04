@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/kddockwidgets/">
+        <file>quick/qml/Frame.qml</file>
+        <file>quick/qml/MainWindow.qml</file>
+        <file>quick/qml/Separator.qml</file>
+    </qresource>
+</RCC>

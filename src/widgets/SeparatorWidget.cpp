@@ -31,22 +31,7 @@ using namespace KDDockWidgets;
 SeparatorWidget::SeparatorWidget(KDDockWidgets::Anchor *anchor, QWidgetAdapter *parent)
     : Separator(anchor, parent)
 {
-    const int thickness = Anchor::thickness(isStatic());
-    if (isVertical())
-        setFixedWidth(thickness);
-    else
-        setFixedHeight(thickness);
-
     setMouseTracking(true);
-}
-
-void SeparatorWidget::move(int p)
-{
-    if (isVertical()) {
-        QWidget::move(p, y());
-    } else {
-        QWidget::move(x(), p);
-    }
 }
 
 void SeparatorWidget::paintEvent(QPaintEvent *)

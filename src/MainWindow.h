@@ -41,6 +41,11 @@ public:
                         QWidget *parent = nullptr, Qt::WindowFlags flags = {});
     ~MainWindow() override;
 
+    DropAreaWithCentralFrame *dropArea() const override;
+
+private:
+    class Private;
+    Private *const d;
 };
 
 }

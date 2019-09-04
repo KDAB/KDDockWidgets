@@ -22,18 +22,20 @@
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "multisplitter/Anchor_p.h"
 #include "Logging_p.h"
+#include "Config.h"
 
+#include <QQmlComponent>
 
 using namespace KDDockWidgets;
 
 SeparatorQuick::SeparatorQuick(KDDockWidgets::Anchor *anchor, QWidgetAdapter *parent)
     : Separator(anchor, parent)
 {
+    auto component = new QQmlComponent(Config::self().qmlEngine(),
+                                       QUrl(QStringLiteral("qrc:/kddockwidgets/quick/qml/Separator.qml")));
 
+
+    auto separatorItem = static_cast<QQuickItem*>(component->create());
+    separatorItem->setParentItem(this);
+    separatorItem->setParent(this);
 }
-
-void SeparatorQuick::move(int )
-{
-
-}
-

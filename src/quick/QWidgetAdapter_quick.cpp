@@ -39,9 +39,10 @@
 
 using namespace KDDockWidgets;
 
-QWidgetAdapter::QWidgetAdapter(QObject *parent, Qt::WindowFlags)
-    : QObject (parent)
+QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags)
+    : QQuickItem(parent)
 {
+    this->setParent(parent); // also set parentItem
 }
 
 QWidgetAdapter::~QWidgetAdapter()
@@ -69,26 +70,67 @@ FloatingWindow * QWidgetAdapter::floatingWindow() const
 
 QRect QWidgetAdapter::geometry() const
 {
-    return {};
+    QRect r = rect();
+    r.moveTopLeft(QPointF(x(), y()).toPoint());
+    return r;
 }
 
 QRect QWidgetAdapter::rect() const
 {
-    return {};
+    return QRectF(0, 0, width(), height()).toRect();
 }
 
 void QWidgetAdapter::show()
 {
+    setVisible(true);
 }
 
-void QWidgetAdapter::setGeometry(QRect) {}
-void QWidgetAdapter::setVisible(bool) {}
+void QWidgetAdapter::setFixedHeight(int height)
+{
+    qDebug() << Q_FUNC_INFO << height << this;
+    setHeight(height);
+}
+
+void QWidgetAdapter::setFixedWidth(int width)
+{
+    qDebug() << Q_FUNC_INFO << width << this;
+    setWidth(width);
+}
+
+void QWidgetAdapter::setGeometry(QRect rect)
+{
+    qDebug() << Q_FUNC_INFO << rect << this;
+    setWidth(rect.width());
+    setHeight(rect.height());
+    setX(rect.x());
+    setY(rect.y());
+}
 
 void QWidgetAdapter::grabMouse() {}
 void QWidgetAdapter::releaseMouse() {}
 void QWidgetAdapter::setMinimumSize(QSize) {}
-void QWidgetAdapter::resize(QSize) {}
+
+void QWidgetAdapter::resize(QSize sz)
+{
+    qDebug() << Q_FUNC_INFO << sz << this;
+    setWidth(sz.width());
+    setHeight(sz.height());
+}
+
 QWindow *QWidgetAdapter::windowHandle() const { return nullptr; }
+
+void QWidgetAdapter::move(int x, int y)
+{
+    qDebug() << Q_FUNC_INFO << x << y << this;
+    setX(x);
+    setY(y);
+}
+
+void QWidgetAdapter::setParent(QQuickItem *p)
+{
+    QQuickItem::setParent(p);
+    QQuickItem::setParentItem(p);
+}
 
 void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
 {

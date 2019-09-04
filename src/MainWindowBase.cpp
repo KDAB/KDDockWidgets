@@ -42,10 +42,8 @@ using namespace KDDockWidgets;
 class MainWindowBase::Private
 {
 public:
-    explicit Private(const QString &mainWindowName, MainWindowOptions options, MainWindowBase *mainWindow)
-        : m_dropArea(new DropAreaWithCentralFrame(mainWindow, options))
-        , name(mainWindowName)
-        , m_options(options)
+    explicit Private(MainWindowOptions options)
+        : m_options(options)
     {
     }
 
@@ -54,17 +52,16 @@ public:
         return m_options & MainWindowOption_HasCentralFrame;
     }
 
-    DropAreaWithCentralFrame *const m_dropArea;
-    const QString name;
+    QString name;
     const MainWindowOptions m_options;
 };
 
 MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                               QWidget *parent, Qt::WindowFlags flags)
+                               QWidgetOrQuick *parent, Qt::WindowFlags flags)
     : QMainWindowOrQuick(parent, flags)
-    , d(new Private(uniqueName, options, this))
+    , d(new Private(options))
 {
-    DockRegistry::self()->registerMainWindow(this);
+    setUniqueName(uniqueName);
 }
 
 MainWindowBase::~MainWindowBase()
@@ -79,7 +76,7 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
     qCDebug(addwidget) << Q_FUNC_INFO << widget;
 
     if (d->supportsCentralFrame()) {
-        d->m_dropArea->m_centralFrame->addWidget(widget);
+        dropArea()->m_centralFrame->addWidget(widget);
     } else {
         qWarning() << Q_FUNC_INFO << "Not supported without MainWindowOption_HasCentralFrame";
     }
@@ -87,7 +84,7 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
 
 void MainWindowBase::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBase *relativeTo, AddingOption option)
 {
-    d->m_dropArea->addDockWidget(dw, location, relativeTo, option);
+     dropArea()->addDockWidget(dw, location, relativeTo, option);
 }
 
 QString MainWindowBase::uniqueName() const
@@ -100,16 +97,24 @@ MainWindowOptions MainWindowBase::options() const
     return d->m_options;
 }
 
-DropArea *MainWindowBase::dropArea() const
-{
-    return d->m_dropArea;
-}
-
 MultiSplitterLayout *MainWindowBase::multiSplitterLayout() const
 {
-    return d->m_dropArea->multiSplitterLayout();
+    return dropArea()->multiSplitterLayout();
 }
 
+void MainWindowBase::setUniqueName(const QString &uniqueName)
+{
+    if (uniqueName.isEmpty())
+        return;
+
+    if (d->name.isEmpty()) {
+        d->name = uniqueName;
+        Q_EMIT uniqueNameChanged();
+        DockRegistry::self()->registerMainWindow(this);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Already has a name." << this->uniqueName() << uniqueName;
+    }
+}
 
 bool MainWindowBase::fillFromDataStream(QDataStream &ds)
 {

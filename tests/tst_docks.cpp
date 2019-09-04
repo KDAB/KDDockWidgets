@@ -37,6 +37,7 @@
 #include "LastPosition_p.h"
 #include "utils.h"
 #include "FrameworkWidgetFactory.h"
+#include "DropAreaWithCentralFrame_p.h"
 
 #include <QtTest/QtTest>
 #include <QPainter>

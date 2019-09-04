@@ -33,8 +33,6 @@ public:
     explicit SeparatorQuick(Anchor *anchor, QWidgetAdapter *parent = nullptr);
 
 protected:
-    virtual void move(int p) override;
-
 /*    void paintEvent(QPaintEvent *) override;
     void enterEvent(QEvent *) override;
     void leaveEvent(QEvent *) override;*/

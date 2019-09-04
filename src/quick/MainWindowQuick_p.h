@@ -18,36 +18,29 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
- * @file
- * @brief Implements a QTabWidget derived class with support for docking and undocking
- * KDockWidget::DockWidget as tabs .
- *
- * @author Sérgio Martins \<sergio.martins@kdab.com\>
- */
+#ifndef KD_MAIN_WINDOW_QUICK_P_H
+#define KD_MAIN_WINDOW_QUICK_P_H
 
-#ifndef KD_TABBAR_QUICK_P_H
-#define KD_TABBAR_QUICK_P_H
-
-#include "TabWidget_p.h"
-
+#include "MainWindowBase.h"
 
 namespace KDDockWidgets {
 
-class DockWidget;
-class TabWidget;
-
-class DOCKS_EXPORT TabBarQuick : public QWidgetAdapter, public TabBar
+class MainWindowQuick : public MainWindowBase
 {
-
+    Q_OBJECT
+    Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
+    Q_PROPERTY(KDDockWidgets::DropAreaWithCentralFrame* dropArea READ dropArea WRITE setDropArea NOTIFY dropAreaChanged)
 public:
-    explicit TabBarQuick(TabWidget *parent = nullptr);
-    int numDockWidgets() const override;
-    int tabAt(QPoint localPos) const override;
+    MainWindowQuick();
 protected:
-    //void mousePressEvent(QMouseEvent *) override;
-
+    DropAreaWithCentralFrame *dropArea() const override;
+    void setDropArea(DropAreaWithCentralFrame*);
+Q_SIGNALS:
+    void dropAreaChanged();
+private:
+    DropAreaWithCentralFrame *m_dropArea = nullptr;
 };
+
 }
 
 #endif

@@ -62,11 +62,11 @@ public:
 QuickItem::~QuickItem() {}
 */
 
-class DOCKS_EXPORT QWidgetAdapter : public QObject
+class DOCKS_EXPORT QWidgetAdapter : public QQuickItem
 {
     Q_OBJECT
 public:
-    explicit QWidgetAdapter(QObject *parent = nullptr, Qt::WindowFlags f = {});
+    explicit QWidgetAdapter(QQuickItem *parent = nullptr, Qt::WindowFlags f = {});
     ~QWidgetAdapter() override;
 
     ///@brief returns the FloatingWindow this widget is in, otherwise nullptr
@@ -74,17 +74,18 @@ public:
 
     void setFlag(Qt::WindowType, bool on = true);
 
+    int x() const { return int(QQuickItem::x()); }
+    int y() const { return int(QQuickItem::y()); }
+    int width() const { return int(QQuickItem::width()); }
+    int height() const { return int(QQuickItem::height()); }
+
     void setGeometry(QRect);
     QRect geometry() const;
     QRect rect() const;
     void show();
-    bool isVisible() const { return true; }
-    void setVisible(bool);
     void setEnabled(bool) {}
-    int width() const { return 0; }
-    int height() const { return 0; }
-    void setFixedHeight(int) {}
-    void setFixedWidth(int) {}
+    void setFixedHeight(int);
+    void setFixedWidth(int);
     void raise();
     void update() {}
     QSize size() const {return {}; }
@@ -92,8 +93,6 @@ public:
     QSize minimumSize() const {return {}; }
     int minimumHeight() const {return {};}
     int minimumWidth() const {return {};}
-    int x() const { return 0; }
-    int y() const { return 0; }
 
     void grabMouse();
     void releaseMouse();
@@ -112,6 +111,9 @@ public:
     void setWindowIcon(const QIcon &) {}
     void close() {}
     QWidgetAdapter* childAt(QPoint) { return nullptr; }
+    void move(int x, int y);
+
+    void setParent(QQuickItem*);
 
 protected:
     void raiseAndActivate();

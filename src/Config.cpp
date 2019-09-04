@@ -50,6 +50,7 @@ public:
 
     void fixFlags();
 
+    QQmlEngine *m_qmlEngine = nullptr;
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     FrameworkWidgetFactory *m_frameworkWidgetFactory;
     Flags m_flags = Flag_Default;
@@ -135,6 +136,21 @@ void Config::setSeparatorThickness(int value, bool staticSeparator)
         d->m_staticSeparatorThickness = value;
     else
         d->m_separatorThickness = value;
+}
+
+void Config::setQmlEngine(QQmlEngine *qmlEngine)
+{
+    if (d->m_qmlEngine) {
+        qWarning() << Q_FUNC_INFO << "Already has QML engine";
+        return;
+    }
+
+    d->m_qmlEngine = qmlEngine;
+}
+
+QQmlEngine *Config::qmlEngine() const
+{
+    return d->m_qmlEngine;
 }
 
 void Config::Private::fixFlags()

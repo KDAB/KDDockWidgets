@@ -39,6 +39,18 @@
 
 using namespace KDDockWidgets;
 
+class MainWindow::Private
+{
+public:
+    explicit Private(MainWindowOptions options, MainWindowBase *mainWindow)
+        : m_dropArea(new DropAreaWithCentralFrame(mainWindow, options))
+    {
+    }
+
+    DropAreaWithCentralFrame *const m_dropArea;
+};
+
+
 namespace KDDockWidgets {
 class MyCentralWidget : public QWidget
 {
@@ -66,6 +78,7 @@ MyCentralWidget::~MyCentralWidget() {}
 MainWindow::MainWindow(const QString &name, MainWindowOptions options,
                        QWidget *parent, Qt::WindowFlags flags)
     : MainWindowBase(name, options, parent, flags)
+    , d(new Private(options, this))
 {
     auto centralWidget = new MyCentralWidget(this);
     auto layout = new QVBoxLayout(centralWidget);
@@ -78,4 +91,10 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
 
 MainWindow::~MainWindow()
 {
+    delete d;
+}
+
+DropAreaWithCentralFrame *MainWindow::dropArea() const
+{
+    return d->m_dropArea;
 }

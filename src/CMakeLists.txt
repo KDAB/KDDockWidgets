@@ -67,6 +67,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
 
 if (OPTION_QTQUICK)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
+        quick/QmlTypes.cpp
         quick/QWidgetAdapter_quick.cpp
         quick/QWidgetAdapter_quick_p.h
         quick/FrameQuick.cpp
@@ -76,6 +77,7 @@ if (OPTION_QTQUICK)
         quick/FloatingWindowQuick.cpp
         quick/FloatingWindowQuick_p.h
         quick/LayoutSaverQuick.cpp
+        quick/MainWindowQuick.cpp
         quick/SeparatorQuick.cpp
         quick/SeparatorQuick_p.h
         quick/TabBarQuick.cpp
@@ -83,8 +85,10 @@ if (OPTION_QTQUICK)
         quick/TabWidgetQuick.cpp
         quick/TabWidgetQuick_p.h
         quick/TitleBarQuick.cpp
-        quick/TitleBarQuick_p.h
-        )
+        quick/TitleBarQuick_p.h)
+
+    qt5_add_resources(RESOURCES_QUICK ${CMAKE_CURRENT_SOURCE_DIR}/qtquick.qrc)
+
 else()
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
         DebugWindow.cpp
@@ -119,7 +123,7 @@ endif()
 
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 
-add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
+add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES} ${RESOURCES_QUICK})
 
 target_include_directories(kddockwidgets
     PUBLIC

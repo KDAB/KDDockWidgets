@@ -24,6 +24,7 @@
 #include "DebugWindow_p.h"
 #include "LastPosition_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
+#include "quick/QmlTypes.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -33,13 +34,17 @@ using namespace KDDockWidgets;
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
-#ifdef DOCKS_DEVELOPER_MODE
-# ifdef KDDOCKWIDGETS_QTWIDGETS
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+# ifdef DOCKS_DEVELOPER_MODE
     if (qEnvironmentVariableIntValue("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW") == 1) {
         auto dv = new Debug::DebugWindow();
         dv->show();
     }
 # endif
+
+#else
+    KDDockWidgets::registerQmlTypes();
 #endif
 }
 
