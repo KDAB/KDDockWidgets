@@ -22,7 +22,6 @@
 #include "Logging_p.h"
 #include "DockWidgetBase.h"
 #include "Draggable_p.h"
-#include "MainWindow.h"
 #include "FloatingWindow_p.h"
 #include "Config.h"
 #include "DropIndicatorOverlayInterface_p.h"

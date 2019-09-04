@@ -24,7 +24,6 @@
 #include "Logging_p.h"
 #include "AnchorGroup_p.h"
 #include "Frame_p.h"
-#include "MainWindow.h"
 #include "DockWidgetBase.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
