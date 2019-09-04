@@ -127,9 +127,9 @@ QByteArray LayoutSaver::serializeLayout() const
     // Just a simplification. One less type of windows to handle.
     d->m_dockRegistry->ensureAllFloatingWidgetsAreMorphed();
 
-    const MainWindow::List mainWindows = d->m_dockRegistry->mainwindows();
+    const MainWindowBase::List mainWindows = d->m_dockRegistry->mainwindows();
     ds << mainWindows.size();
-    for (MainWindow *mainWindow : mainWindows) {
+    for (MainWindowBase *mainWindow : mainWindows) {
         ds << mainWindow->uniqueName();
         d->serializeWindowGeometry(ds, mainWindow->window()); // window() as the MainWindow can be embedded
         ds << mainWindow;
@@ -139,7 +139,7 @@ QByteArray LayoutSaver::serializeLayout() const
     ds << floatingWindows.size();
     for (FloatingWindow *floatingWindow : floatingWindows) {
 
-        auto mainWindow = qobject_cast<MainWindow*>(floatingWindow->parentWidget());
+        auto mainWindow = qobject_cast<MainWindowBase*>(floatingWindow->parentWidget());
         const int parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
                                            : -1;
 
@@ -213,7 +213,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         QString name;
         ds >> name;
 
-        MainWindow *mainWindow = d->m_dockRegistry->mainWindowByName(name);
+        MainWindowBase *mainWindow = d->m_dockRegistry->mainWindowByName(name);
         if (!mainWindow) {
             qWarning() << "Failed to restore layout create MainWindow with name" << name << "first";
             return false;

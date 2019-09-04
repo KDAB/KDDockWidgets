@@ -35,6 +35,7 @@ set(DOCKSLIBS_SRCS
     ObjectViewer_p.h
     DebugWindow.cpp
     DebugWindow_p.h
+    MainWindowBase.cpp
     WindowBeingDragged.cpp
     WidgetResizeHandler.cpp
     multisplitter/Anchor.cpp

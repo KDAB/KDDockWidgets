@@ -80,7 +80,7 @@ void DockRegistry::unregisterDockWidget(DockWidgetBase *dock)
     maybeDelete();
 }
 
-void DockRegistry::registerMainWindow(MainWindow *mainWindow)
+void DockRegistry::registerMainWindow(MainWindowBase *mainWindow)
 {
     if (mainWindow->uniqueName().isEmpty()) {
         qWarning() << Q_FUNC_INFO << "MainWindow" << mainWindow << " doesn't have an ID";
@@ -91,7 +91,7 @@ void DockRegistry::registerMainWindow(MainWindow *mainWindow)
     m_mainWindows << mainWindow;
 }
 
-void DockRegistry::unregisterMainWindow(MainWindow *mainWindow)
+void DockRegistry::unregisterMainWindow(MainWindowBase *mainWindow)
 {
     m_mainWindows.removeOne(mainWindow);
     maybeDelete();
@@ -138,7 +138,7 @@ DockWidgetBase *DockRegistry::dockByName(const QString &name) const
     return nullptr;
 }
 
-MainWindow *DockRegistry::mainWindowByName(const QString &name) const
+MainWindowBase *DockRegistry::mainWindowByName(const QString &name) const
 {
     for (auto mainWindow : qAsConst(m_mainWindows)) {
         if (mainWindow->uniqueName() == name)
@@ -199,7 +199,7 @@ const DockWidgetBase::List DockRegistry::closedDockwidgets() const
     return result;
 }
 
-const MainWindow::List DockRegistry::mainwindows() const
+const MainWindowBase::List DockRegistry::mainwindows() const
 {
     return m_mainWindows;
 }

@@ -35,7 +35,7 @@
 namespace KDDockWidgets {
 
 class MultiSplitterLayout;
-class MainWindow;
+class MainWindowBase;
 class FloatingWindow;
 
 /**
@@ -53,7 +53,7 @@ public:
     MultiSplitterLayout *multiSplitterLayout() const { return m_layout; }
     int count() const;
     bool isInMainWindow() const;
-    MainWindow* mainWindow() const;
+    MainWindowBase* mainWindow() const;
     FloatingWindow* floatingWindow() const;
 protected:
     void onLayoutRequest() override;

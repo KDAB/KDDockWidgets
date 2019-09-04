@@ -19,6 +19,7 @@
 */
 
 #include "FloatingWindow_p.h"
+#include "MainWindowBase.h"
 #include "Logging_p.h"
 #include "Frame_p.h"
 #include "DragController_p.h"
@@ -125,7 +126,7 @@ static QWidgetOrQuick* hackFindParentHarder(QWidgetOrQuick *p)
         return p;
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-    const MainWindow::List windows = DockRegistry::self()->mainwindows();
+    const MainWindowBase::List windows = DockRegistry::self()->mainwindows();
 
     if (windows.isEmpty())
         return nullptr;

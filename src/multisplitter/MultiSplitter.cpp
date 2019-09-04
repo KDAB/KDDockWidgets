@@ -30,7 +30,7 @@
 #include "MultiSplitter_p.h"
 #include "MultiSplitterLayout_p.h"
 #include "Logging_p.h"
-#include "MainWindow.h"
+#include "MainWindowBase.h"
 #include "FloatingWindow_p.h"
 #include "LayoutSaver.h"
 
@@ -90,12 +90,12 @@ bool MultiSplitter::isInMainWindow() const
     return mainWindow() != nullptr;
 }
 
-MainWindow *MultiSplitter::mainWindow() const
+MainWindowBase *MultiSplitter::mainWindow() const
 {
     if (auto pw = parentWidget()) {
         // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as it's parented
         if (pw->objectName() == QLatin1String("MyCentralWidget"))
-            return qobject_cast<MainWindow*>(pw->parentWidget());
+            return qobject_cast<MainWindowBase*>(pw->parentWidget());
     }
 
     return nullptr;

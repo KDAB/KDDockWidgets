@@ -165,7 +165,7 @@ void LastPosition::fillFromDataStream(QDataStream &ds)
         } else {
             QString name;
             ds >> name;
-            MainWindow *mainWindow = DockRegistry::self()->mainWindowByName(name);
+            MainWindowBase *mainWindow = DockRegistry::self()->mainWindowByName(name);
             layout = mainWindow->multiSplitterLayout();
         }
 

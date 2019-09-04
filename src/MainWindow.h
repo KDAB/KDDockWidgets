@@ -28,22 +28,11 @@
 #ifndef KD_MAINWINDOW_H
 #define KD_MAINWINDOW_H
 
-#include "docks_export.h"
-#include "KDDockWidgets.h"
-
-#include <QMainWindow>
-#include <QVector>
-
-class QDataStream;
+#include "MainWindowBase.h"
 
 namespace KDDockWidgets {
 
-class DockWidgetBase;
-class Frame;
-class DropArea;
-class MultiSplitterLayout;
-
-class DOCKS_EXPORT MainWindow : public QMainWindow
+class DOCKS_EXPORT MainWindow : public MainWindowBase
 {
     Q_OBJECT
 public:
@@ -51,33 +40,8 @@ public:
     explicit MainWindow(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
                         QWidget *parent = nullptr, Qt::WindowFlags flags = {});
     ~MainWindow() override;
-    void addDockWidgetAsTab(DockWidgetBase *);
-    void addDockWidget(DockWidgetBase *, KDDockWidgets::Location, DockWidgetBase *relativeTo = nullptr, AddingOption = {});
 
-    QString uniqueName() const;
-    MainWindowOptions options() const;
-
-    ///@internal
-    ///@brief returns the drop area.
-    DropArea *dropArea() const;
-
-    ///@internal
-    ///@brief returns the MultiSplitterLayout.
-    MultiSplitterLayout* multiSplitterLayout() const;
-
-protected:
-    bool eventFilter(QObject *, QEvent *) override;
-
-private:
-    friend QDataStream &operator<<(QDataStream &ds, MainWindow *);
-    friend class LayoutSaver;
-    bool fillFromDataStream(QDataStream &ds);
-
-    class Private;
-    Private *const d;
 };
-
-QDataStream &operator<<(QDataStream &ds, MainWindow *);
 
 }
 

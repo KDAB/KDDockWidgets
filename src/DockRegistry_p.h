@@ -22,7 +22,7 @@
 #define KD_DOCKREGISTRY_P_H
 
 #include "DockWidgetBase.h"
-#include "MainWindow.h"
+#include "MainWindowBase.h"
 #include "FloatingWindow_p.h"
 
 #include <QVector>
@@ -45,8 +45,8 @@ public:
     void registerDockWidget(DockWidgetBase *);
     void unregisterDockWidget(DockWidgetBase *);
 
-    void registerMainWindow(MainWindow *);
-    void unregisterMainWindow(MainWindow *);
+    void registerMainWindow(MainWindowBase *);
+    void unregisterMainWindow(MainWindowBase *);
 
     void registerNestedWindow(FloatingWindow *);
     void unregisterNestedWindow(FloatingWindow *);
@@ -58,7 +58,7 @@ public:
     void unregisterFrame(Frame *);
 
     DockWidgetBase *dockByName(const QString &) const;
-    MainWindow *mainWindowByName(const QString &) const;
+    MainWindowBase *mainWindowByName(const QString &) const;
     bool isSane() const;
 
     ///@brief returns all DockWidget instances
@@ -68,7 +68,7 @@ public:
     const DockWidgetBase::List closedDockwidgets() const;
 
     ///@brief returns all MainWindow instances
-    const MainWindow::List mainwindows() const;
+    const MainWindowBase::List mainwindows() const;
 
     ///@brief returns the list of MultiSplitterLayout instances
     const QVector<MultiSplitterLayout*> layouts() const;
@@ -103,7 +103,7 @@ private:
     explicit DockRegistry(QObject *parent = nullptr);
     void maybeDelete();
     DockWidgetBase::List m_dockWidgets;
-    MainWindow::List m_mainWindows;
+    MainWindowBase::List m_mainWindows;
     Frame::List m_frames;
     QVector<FloatingWindow*> m_nestedWindows;
     QVector<MultiSplitterLayout*> m_layouts;

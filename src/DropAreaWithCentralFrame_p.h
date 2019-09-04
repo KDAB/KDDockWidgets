@@ -35,7 +35,7 @@ public:
 
     static Frame* createCentralFrame(MainWindowOptions options);
 private:
-    friend class MainWindow;
+    friend class MainWindowBase;
     Frame *const m_centralFrame = nullptr;
 };
 

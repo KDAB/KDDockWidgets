@@ -166,7 +166,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
         const auto mainWindows = DockRegistry::self()->mainwindows();
-        for (MainWindow *mainWindow : mainWindows) {
+        for (MainWindowBase *mainWindow : mainWindows) {
             mainWindow->multiSplitterLayout()->dumpDebug();
         }
     });
@@ -176,7 +176,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
         const auto mainWindows = DockRegistry::self()->mainwindows();
-        for (MainWindow *mainWindow : mainWindows) {
+        for (MainWindowBase *mainWindow : mainWindows) {
             mainWindow->multiSplitterLayout()->checkSanity();
         }
 
@@ -278,13 +278,13 @@ void DebugWindow::repaintWidgetRecursive(QWidget *w)
 void DebugWindow::dumpDockWidgetInfo()
 {
     QVector<FloatingWindow*> floatingWindows = DockRegistry::self()->nestedwindows();
-    MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
+    MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
 
     for (FloatingWindow *fw : floatingWindows) {
         fw->dropArea()->multiSplitterLayout()->dumpDebug();
     }
 
-    for (MainWindow *mw : mainWindows)
+    for (MainWindowBase *mw : mainWindows)
         mw->multiSplitterLayout()->dumpDebug();
 }
 
