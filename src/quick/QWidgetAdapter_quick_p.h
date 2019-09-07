@@ -88,11 +88,12 @@ public:
     void setFixedWidth(int);
     void raise();
     void update() {}
-    QSize size() const {return {}; }
-    QSize minimumSizeHint() const {return {}; }
-    QSize minimumSize() const {return {}; }
-    int minimumHeight() const {return {};}
-    int minimumWidth() const {return {};}
+
+    QSize size() const { return QQuickItem::size().toSize(); }
+    QSize minimumSizeHint() const { return m_minimumSize; }
+    QSize minimumSize() const { return m_minimumSize; }
+    int minimumHeight() const { return m_minimumSize.height(); }
+    int minimumWidth() const { return m_minimumSize.width(); }
 
     void grabMouse();
     void releaseMouse();
@@ -124,6 +125,8 @@ protected:
     virtual void onMouseMove(QPoint globalPos);
     virtual void onMouseRelease();
     virtual void onCloseEvent(QCloseEvent *);
+private:
+    QSize m_minimumSize = {0, 0};
 };
 
 }

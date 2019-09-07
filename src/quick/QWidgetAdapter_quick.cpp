@@ -51,7 +51,6 @@ QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags)
     connect(this, &QQuickItem::heightChanged, this, [this] {
         onResize(size());
     });
-
 }
 
 QWidgetAdapter::~QWidgetAdapter()
@@ -117,7 +116,10 @@ void QWidgetAdapter::setGeometry(QRect rect)
 
 void QWidgetAdapter::grabMouse() {}
 void QWidgetAdapter::releaseMouse() {}
-void QWidgetAdapter::setMinimumSize(QSize) {}
+void QWidgetAdapter::setMinimumSize(QSize sz)
+{
+    m_minimumSize = sz;
+}
 
 void QWidgetAdapter::resize(QSize sz)
 {
