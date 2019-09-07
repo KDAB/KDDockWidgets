@@ -43,6 +43,15 @@ QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags)
     : QQuickItem(parent)
 {
     this->setParent(parent); // also set parentItem
+
+    connect(this, &QQuickItem::widthChanged, this, [this] {
+        onResize(size());
+    });
+
+    connect(this, &QQuickItem::heightChanged, this, [this] {
+        onResize(size());
+    });
+
 }
 
 QWidgetAdapter::~QWidgetAdapter()
@@ -53,7 +62,7 @@ void QWidgetAdapter::raiseAndActivate()
 {
 }
 
-bool QWidgetAdapter::onResize(QSize, QSize) { return false; }
+bool QWidgetAdapter::onResize(QSize) { return false; }
 void QWidgetAdapter::onLayoutRequest() {}
 void QWidgetAdapter::onMousePress() {}
 void QWidgetAdapter::onMouseMove(QPoint) {}

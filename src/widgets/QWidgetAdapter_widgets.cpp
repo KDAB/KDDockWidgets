@@ -71,7 +71,7 @@ bool QWidgetAdapter::event(QEvent *e)
 
 void QWidgetAdapter::resizeEvent(QResizeEvent *ev)
 {
-    if (!onResize(ev->oldSize(), ev->size()))
+    if (!onResize(ev->size()))
         QWidget::resizeEvent(ev);
 }
 
@@ -100,7 +100,7 @@ void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
     QWidget::setWindowFlag(f, on);
 }
 
-bool QWidgetAdapter::onResize(QSize, QSize) { return false; }
+bool QWidgetAdapter::onResize(QSize) { return false; }
 void QWidgetAdapter::onLayoutRequest() {}
 
 void QWidgetAdapter::onMousePress() {}

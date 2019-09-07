@@ -69,9 +69,9 @@ void MultiSplitter::onLayoutRequest()
     m_layout->maybeCheckSanity();
 }
 
-bool MultiSplitter::onResize(QSize oldSize, QSize newSize)
+bool MultiSplitter::onResize(QSize newSize)
 {
-    qCDebug(sizing) << Q_FUNC_INFO << "; new=" << newSize << "; old=" << oldSize
+    qCDebug(sizing) << Q_FUNC_INFO << "; new=" << newSize
                     << "; window=" << window();
 
     QScopedValueRollback<bool>(m_inResizeEvent, true); // to avoid re-entrancy

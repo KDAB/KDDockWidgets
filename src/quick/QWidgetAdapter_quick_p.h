@@ -118,7 +118,7 @@ public:
 protected:
     void raiseAndActivate();
 
-    virtual bool onResize(QSize oldSize, QSize newSize);
+    virtual bool onResize(QSize newSize);
     virtual void onLayoutRequest();
     virtual void onMousePress();
     virtual void onMouseMove(QPoint globalPos);

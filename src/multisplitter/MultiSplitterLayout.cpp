@@ -1600,7 +1600,8 @@ void MultiSplitterLayout::setSize(QSize size)
         QSize oldSize = m_size;
 
         if (size.width() < m_minSize.width() || size.height() < m_minSize.height()) {
-            qWarning() << Q_FUNC_INFO << "new size is smaller than min size" << size << m_minSize;
+            qWarning() << Q_FUNC_INFO << "new size is smaller than min size. Size=" << size << "; min=" << m_minSize;
+            return;
         }
 
 #if defined(DOCKS_DEVELOPER_MODE)

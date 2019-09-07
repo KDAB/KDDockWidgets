@@ -57,7 +57,7 @@ public:
     FloatingWindow* floatingWindow() const;
 protected:
     void onLayoutRequest() override;
-    bool onResize(QSize oldSize, QSize newSize) override;
+    bool onResize(QSize newSize) override;
     MultiSplitterLayout *const m_layout;
 private:
     bool m_inResizeEvent = false;
