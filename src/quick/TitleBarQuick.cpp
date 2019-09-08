@@ -43,23 +43,3 @@ TitleBarQuick::TitleBarQuick(FloatingWindow *parent)
 TitleBarQuick::~TitleBarQuick()
 {
 }
-
-bool TitleBarQuick::isCloseButtonVisible() const
-{
-    return false;
-}
-
-bool TitleBarQuick::isCloseButtonEnabled() const
-{
-    return false;
-}
-
-bool TitleBarQuick::isFloatButtonVisible() const
-{
-    return false;
-}
-
-bool TitleBarQuick::isFloatButtonEnabled() const
-{
-    return false;
-}

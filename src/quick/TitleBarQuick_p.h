@@ -47,12 +47,6 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void updateFloatButton() override;
     void updateCloseButton() override;*/
-
-     // The following are needed for the unit-tests
-    bool isCloseButtonVisible() const override;
-    bool isCloseButtonEnabled() const override;
-    bool isFloatButtonVisible() const override;
-    bool isFloatButtonEnabled() const override;
 //
 };
 

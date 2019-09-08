@@ -39,8 +39,8 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, Options options)
     auto component = new QQmlComponent(Config::self().qmlEngine(),
                                        QUrl(QStringLiteral("qrc:/kddockwidgets/quick/qml/Frame.qml")));
 
-
-    auto separatorItem = static_cast<QQuickItem*>(component->create());
-    separatorItem->setParentItem(this);
-    separatorItem->setParent(this);
+    auto item = static_cast<QQuickItem*>(component->create());
+    item->setProperty("frameCpp", QVariant::fromValue(this));
+    item->setParentItem(this);
+    item->setParent(this);
 }

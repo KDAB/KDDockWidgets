@@ -3,5 +3,7 @@
         <file>quick/qml/Frame.qml</file>
         <file>quick/qml/MainWindow.qml</file>
         <file>quick/qml/Separator.qml</file>
+        <file>quick/qml/TitleBarBase.qml</file>
+        <file>quick/qml/TitleBar.qml</file>
     </qresource>
 </RCC>
