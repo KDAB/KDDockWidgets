@@ -74,6 +74,24 @@ public:
      */
     DockWidgetBase::List restoredDockWidgets() const;
 
+#if defined(DOCKS_DEVELOPER_MODE)
+    /**
+     * @brief Dumps the saved layout with qDebug, for debug purposes.
+     */
+    void dumpLayout(const QByteArray &);
+#endif
+
+    struct Layout;
+    struct MainWindow;
+    struct FloatingWindow;
+    struct DockWidget;
+    struct LastPosition;
+    struct MultiSplitterLayout;
+    struct Item;
+    struct Anchor;
+    struct Frame;
+    struct Placeholder;
+
 private:
     friend class TestDocks;
 

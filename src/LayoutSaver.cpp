@@ -26,6 +26,7 @@
  */
 
 #include "LayoutSaver.h"
+#include "LayoutSaver_p.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
 #include "DockWidgetBase.h"
@@ -45,8 +46,6 @@
 #include <memory>
 
 using namespace KDDockWidgets;
-
-#define KDDOCKWIDGETS_SERIALIZATION_VERSION 1
 
 class KDDockWidgets::LayoutSaver::Private
 {
@@ -135,9 +134,9 @@ QByteArray LayoutSaver::serializeLayout() const
         ds << mainWindow;
     }
 
-    const QVector<FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
+    const QVector<KDDockWidgets::FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
     ds << floatingWindows.size();
-    for (FloatingWindow *floatingWindow : floatingWindows) {
+    for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
 
         auto mainWindow = qobject_cast<MainWindowBase*>(floatingWindow->parentWidget());
         const int parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
@@ -260,7 +259,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             dw->lastPosition()->fillFromDataStream(ds);
         } else {
             qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
-            LastPosition dummy;
+            KDDockWidgets::LastPosition dummy;
             dummy.fillFromDataStream(ds); // Add a dummy just to consume the stream
         }
     }
@@ -281,6 +280,17 @@ DockWidgetBase::List LayoutSaver::restoredDockWidgets() const
     return result;
 
 }
+
+#if defined(DOCKS_DEVELOPER_MODE)
+void LayoutSaver::dumpLayout(const QByteArray &savedLayout)
+{
+    QDataStream ds(savedLayout);
+    int serializationVersion;
+    ds >> serializationVersion;
+
+
+}
+#endif
 
 void LayoutSaver::Private::clearRestoredProperty()
 {
@@ -311,7 +321,7 @@ void LayoutSaver::Private::deleteEmptyFrames()
     // After a restore it can happen that some DockWidgets didn't exist, so weren't restored.
     // Delete their frame now.
 
-    for (Frame *frame : m_dockRegistry->frames()) {
+    for (auto frame : m_dockRegistry->frames()) {
         if (!frame->beingDeletedLater() && frame->isEmpty() && !frame->isCentralFrame())
             delete frame;
     }
@@ -329,4 +339,10 @@ std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
 bool LayoutSaver::restoreInProgress()
 {
     return Private::s_restoreInProgress;
+}
+
+void LayoutSaver::Layout::fillFrom(const QByteArray &serialized)
+{
+    QDataStream ds(serialized);
+    ds >> this;
 }
