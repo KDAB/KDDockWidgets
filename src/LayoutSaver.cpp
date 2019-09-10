@@ -422,22 +422,30 @@ bool LayoutSaver::DockWidget::isValid() const
     return !uniqueName.isEmpty();
 }
 
-bool LayoutSaver::Anchor::isValid() const
+bool LayoutSaver::Anchor::isValid(const LayoutSaver::MultiSplitterLayout &layout) const
 {
     const bool isStatic = type != KDDockWidgets::Anchor::Type_None;
     const bool isFollowing = indexOfFollowee != -1;
+    const int numAnchors = layout.anchors.size();
 
     if (!geometry.isValid() && !isStatic && !isFollowing) {
         qWarning() << Q_FUNC_INFO << "Invalid geometry" << geometry;
         return false;
     }
 
-    if (indexOfFrom < 0 || indexOfTo < 0 || indexOfFrom == indexOfTo) {
+    if (indexOfFrom < 0 || indexOfTo < 0 || indexOfFrom == indexOfTo ||
+        indexOfTo >= numAnchors || indexOfFrom >= numAnchors) {
         qWarning() << Q_FUNC_INFO << "Invalid indexes" << indexOfFrom << indexOfTo;
         return false;
     }
 
-    // TODO: Check the outterbound too
+    auto &anchorTo = layout.anchors[indexOfTo];
+    auto &anchorFrom = layout.anchors[indexOfFrom];
+    if (anchorTo.orientation != anchorFrom.orientation || anchorTo.orientation == orientation) {
+        qWarning() << Q_FUNC_INFO << "Invalid orientation" << anchorTo.orientation << anchorFrom.orientation
+                   << orientation;
+        return false;
+    }
 
     if (orientation != Qt::Vertical && orientation != Qt::Horizontal) {
         qWarning() << Q_FUNC_INFO << "Invalid orientation" << orientation;
@@ -495,7 +503,7 @@ bool LayoutSaver::MultiSplitterLayout::isValid() const
     }
 
     for (auto &anchor : anchors) {
-        if (!anchor.isValid())
+        if (!anchor.isValid(*this))
             return false;
     }
 

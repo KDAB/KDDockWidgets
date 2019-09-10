@@ -114,7 +114,7 @@ struct LayoutSaver::Anchor
 {
     typedef QVector<LayoutSaver::Anchor> List;
 
-    bool isValid() const;
+    bool isValid(const LayoutSaver::MultiSplitterLayout &layout) const;
 
     QString objectName;
     QRect geometry;
