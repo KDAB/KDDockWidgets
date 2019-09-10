@@ -388,7 +388,7 @@ bool LayoutSaver::Item::isValid() const
 
 bool LayoutSaver::Frame::isValid() const
 {
-    if (!valid)
+    if (!isNull)
         return true;
 
     if (!geometry.isValid()) {
