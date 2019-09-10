@@ -29,6 +29,7 @@
 #include "Config.h"
 #include "Separator_p.h"
 #include "FrameworkWidgetFactory.h"
+#include "LayoutSaver.h"
 
 #include <QPushButton>
 #include <QEvent>
@@ -1250,7 +1251,7 @@ QPair<AnchorGroup,Anchor*> MultiSplitterLayout::createTargetAnchorGroup(KDDockWi
 
 bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 {
-    if (m_inCtor)
+    if (m_inCtor || LayoutSaver::restoreInProgress())
         return true;
 
     auto check = [this, options] (Item *item, Qt::Orientation orientation) {

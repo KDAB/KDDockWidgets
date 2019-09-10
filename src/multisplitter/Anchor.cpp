@@ -206,7 +206,7 @@ void Anchor::setPosition(int p, SetPositionOptions options)
         if ((isStatic() && m_layout->isRestoringPlaceholder()) || m_layout->isAddingItem() || m_layout->isResizing()) {
             // Don't do anything here, it will call ensureAnchorsBounded() when finished
             return;
-        } else {
+        } else if (!LayoutSaver::restoreInProgress()) {
             m_layout->dumpDebug();
             qWarning() << Q_FUNC_INFO << "Out of bounds position=" << p
                        << "; oldPosition=" << position()
