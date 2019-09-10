@@ -82,7 +82,7 @@ struct LayoutSaver::Frame
 {
     bool isValid() const;
 
-    bool valid = true; // TODO: Rename to isNull
+    bool isNull = true;
     QString objectName;
     QRect geometry;
     int options;
@@ -288,8 +288,8 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Item *item)
     ds << item->indexOfRightAnchor;
     ds << item->indexOfBottomAnchor;
 
-    ds << item->frame.valid;
-    if (item->frame.valid) {
+    ds << item->frame.isNull;
+    if (item->frame.isNull) {
         ds << &item->frame;
     }
 
@@ -313,7 +313,7 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Item *item)
     if (hasFrame) {
         ds >> &item->frame;
     } else {
-        item->frame.valid = false;
+        item->frame.isNull = false;
     }
 
     return ds;
