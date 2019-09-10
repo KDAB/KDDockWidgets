@@ -483,8 +483,12 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
     ds >> numAllDockWidgets;
     l->allDockWidgets.clear();
     for (int i = 0; i < numAllDockWidgets; ++i) {
+        QString name;
+
         LayoutSaver::DockWidget m;
-        ds >> &m;
+        ds >> m.uniqueName;
+        ds >> &m.lastPosition;
+
         l->allDockWidgets.push_back(m);
     }
 
