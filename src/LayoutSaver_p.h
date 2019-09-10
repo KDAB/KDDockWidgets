@@ -26,11 +26,11 @@
 #include "multisplitter/MultiSplitterLayout_p.h"
 
 #include <QDataStream>
+#include <memory>
 
 #define KDDOCKWIDGETS_SERIALIZATION_VERSION 1
 
 namespace KDDockWidgets {
-
 
 struct LayoutSaver::Placeholder
 {
@@ -52,10 +52,28 @@ struct LayoutSaver::LastPosition
 
 struct LayoutSaver::DockWidget
 {
-    typedef QVector<LayoutSaver::DockWidget> List;
+    // Using shared ptr, as we need to modify shared instances
+    typedef std::shared_ptr<LayoutSaver::DockWidget> Ptr;
+    typedef QVector<Ptr> List;
+    static QHash<QString, Ptr> s_dockWidgets;
+
+    static Ptr dockWidgetForName(const QString &name)
+    {
+        auto dw = s_dockWidgets.value(name);
+        if (dw)
+            return dw;
+
+        dw = Ptr(new LayoutSaver::DockWidget);
+        dw->uniqueName = name;
+
+        return dw;
+    }
 
     QString uniqueName;
     LayoutSaver::LastPosition lastPosition;
+
+private:
+    DockWidget() {}
 };
 
 struct LayoutSaver::Frame
@@ -207,18 +225,6 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Anchor *a)
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::DockWidget *dw)
-{
-    ds << dw->uniqueName;
-    return ds;
-}
-
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::DockWidget *dw)
-{
-    ds >> dw->uniqueName;
-    return ds;
-}
-
 QDataStream &operator<<(QDataStream &ds, LayoutSaver::Frame *frame)
 {
     ds << frame->objectName;
@@ -228,7 +234,7 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Frame *frame)
     ds << frame->dockWidgets.size();
 
     for (auto &dock : frame->dockWidgets) {
-        ds << &dock;
+        ds << dock->uniqueName;
     }
 
     return ds;
@@ -246,9 +252,10 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame)
     ds >> numDockWidgets;
 
     for (int i = 0; i < numDockWidgets; ++i) {
-        LayoutSaver::DockWidget dock;
-        ds >> &dock;
-        frame->dockWidgets.push_back(dock);
+        QString name;
+        ds >> name;
+        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
+        frame->dockWidgets.push_back(dw);
     }
 
     return ds;
@@ -435,13 +442,13 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Layout *l)
 
     ds << l->closedDockWidgets.size();
     for (auto &dw: l->closedDockWidgets) {
-        ds << &dw;
+        ds << dw->uniqueName;
     }
 
     ds << l->allDockWidgets.size();
     for (auto &dw: l->allDockWidgets) {
-        ds << dw.uniqueName;
-        ds << &dw.lastPosition;
+        ds << dw->uniqueName;
+        ds << &dw->lastPosition;
     }
 
     return ds;
@@ -449,6 +456,7 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Layout *l)
 
 QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
 {
+    LayoutSaver::DockWidget::s_dockWidgets.clear();
     int numMainWindows;
     int numFloatingWindows;
     int numClosedDockWidgets;
@@ -475,21 +483,21 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
     ds >> numClosedDockWidgets;
     l->closedDockWidgets.clear();
     for (int i = 0; i < numClosedDockWidgets; ++i) {
-        LayoutSaver::DockWidget m;
-        ds >> &m;
-        l->closedDockWidgets.push_back(m);
+        QString name;
+        ds >> name;
+        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
+        l->closedDockWidgets.push_back(dw);
     }
 
     ds >> numAllDockWidgets;
     l->allDockWidgets.clear();
     for (int i = 0; i < numAllDockWidgets; ++i) {
         QString name;
+        ds >> name;
 
-        LayoutSaver::DockWidget m;
-        ds >> m.uniqueName;
-        ds >> &m.lastPosition;
-
-        l->allDockWidgets.push_back(m);
+        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
+        ds >> &dw->lastPosition;
+        l->allDockWidgets.push_back(dw);
     }
 
     return ds;

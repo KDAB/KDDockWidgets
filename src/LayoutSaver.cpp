@@ -47,6 +47,8 @@
 
 using namespace KDDockWidgets;
 
+QHash<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
+
 class KDDockWidgets::LayoutSaver::Private
 {
 public:
