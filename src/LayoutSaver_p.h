@@ -95,7 +95,7 @@ struct LayoutSaver::Item
 {
     typedef QVector<LayoutSaver::Item> List;
 
-    bool isValid() const;
+    bool isValid(const MultiSplitterLayout &) const;
 
     QString objectName;
     bool isPlaceholder;

@@ -369,14 +369,17 @@ void LayoutSaver::Layout::fillFrom(const QByteArray &serialized)
     ds >> this;
 }
 
-bool LayoutSaver::Item::isValid() const
+bool LayoutSaver::Item::isValid(const LayoutSaver::MultiSplitterLayout &layout) const
 {
     if (!frame.isValid())
         return false;
 
+    const int numAnchors = layout.anchors.size();
 
     if (indexOfLeftAnchor < 0 || indexOfTopAnchor < 0 ||
-        indexOfBottomAnchor < 0 || indexOfRightAnchor < 0) {
+        indexOfBottomAnchor < 0 || indexOfRightAnchor < 0 ||
+        indexOfLeftAnchor >= numAnchors || indexOfTopAnchor >= numAnchors ||
+        indexOfBottomAnchor >= numAnchors || indexOfRightAnchor >= numAnchors) {
         qWarning() << Q_FUNC_INFO << "Invalid anchor indexes"
                    << indexOfLeftAnchor << indexOfTopAnchor
                    << indexOfBottomAnchor << indexOfRightAnchor;
@@ -487,7 +490,7 @@ bool LayoutSaver::MainWindow::isValid() const
 bool LayoutSaver::MultiSplitterLayout::isValid() const
 {
     for (auto &item : items) {
-        if (!item.isValid())
+        if (!item.isValid(*this))
             return false;
     }
 
