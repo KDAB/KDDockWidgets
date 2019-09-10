@@ -343,8 +343,163 @@ bool LayoutSaver::restoreInProgress()
     return Private::s_restoreInProgress;
 }
 
+bool LayoutSaver::Layout::isValid() const
+{
+    for (auto &m : mainWindows) {
+        if (!m.isValid())
+            return false;
+    }
+
+    for (auto &m : floatingWindows) {
+        if (!m.isValid())
+            return false;
+    }
+
+    for (auto &m : allDockWidgets) {
+        if (!m->isValid())
+            return false;
+    }
+
+    return true;
+}
+
 void LayoutSaver::Layout::fillFrom(const QByteArray &serialized)
 {
     QDataStream ds(serialized);
     ds >> this;
+}
+
+bool LayoutSaver::Item::isValid() const
+{
+    if (!frame.isValid())
+        return false;
+
+
+    if (indexOfLeftAnchor < 0 || indexOfTopAnchor < 0 ||
+        indexOfBottomAnchor < 0 || indexOfRightAnchor < 0) {
+        qWarning() << Q_FUNC_INFO << "Invalid anchor indexes"
+                   << indexOfLeftAnchor << indexOfTopAnchor
+                   << indexOfBottomAnchor << indexOfRightAnchor;
+        return false;
+    }
+
+    return true;
+}
+
+bool LayoutSaver::Frame::isValid() const
+{
+    if (!valid)
+        return true;
+
+    if (!geometry.isValid()) {
+        qWarning() << Q_FUNC_INFO << "Invalid geometry";
+        return false;
+    }
+
+    if (options < 0 || options > 3) {
+        qWarning() << Q_FUNC_INFO << "Invalid options" << options;
+        return false;
+    }
+
+    if (currentTabIndex >= dockWidgets.size() || currentTabIndex < 0) {
+        qWarning() << Q_FUNC_INFO << "Invalid tab index" << currentTabIndex << dockWidgets.size();
+        return false;
+    }
+
+    for (auto &dw : dockWidgets) {
+        if (!dw->isValid())
+            return false;
+    }
+
+    return true;
+}
+
+bool LayoutSaver::DockWidget::isValid() const
+{
+    return !uniqueName.isEmpty();
+}
+
+bool LayoutSaver::Anchor::isValid() const
+{
+    const bool isStatic = type != KDDockWidgets::Anchor::Type_None;
+    const bool isFollowing = indexOfFollowee != -1;
+
+    if (!geometry.isValid() && !isStatic && !isFollowing) {
+        qWarning() << Q_FUNC_INFO << "Invalid geometry" << geometry;
+        return false;
+    }
+
+    if (indexOfFrom < 0 || indexOfTo < 0 || indexOfFrom == indexOfTo) {
+        qWarning() << Q_FUNC_INFO << "Invalid indexes" << indexOfFrom << indexOfTo;
+        return false;
+    }
+
+    // TODO: Check the outterbound too
+
+    if (orientation != Qt::Vertical && orientation != Qt::Horizontal) {
+        qWarning() << Q_FUNC_INFO << "Invalid orientation" << orientation;
+        return false;
+    }
+
+    if (type != KDDockWidgets::Anchor::Type_None &&
+        type != KDDockWidgets::Anchor::Type_LeftStatic &&
+        type != KDDockWidgets::Anchor::Type_RightStatic &&
+        type != KDDockWidgets::Anchor::Type_TopStatic &&
+        type != KDDockWidgets::Anchor::Type_BottomStatic) {
+        qWarning() << Q_FUNC_INFO << "Invalid type" << type;
+        return false;
+    }
+
+    if (!isStatic && !isFollowing && (side1Items.isEmpty() || side2Items.isEmpty())) {
+        qWarning() << Q_FUNC_INFO << "Anchor should have items on both sides";
+        return false;
+    }
+
+    return true;
+}
+
+bool LayoutSaver::FloatingWindow::isValid() const
+{
+    if (!multiSplitterLayout.isValid())
+        return false;
+
+    if (!geometry.isValid()) {
+        qWarning() << Q_FUNC_INFO << "Invalid geometry";
+        return false;
+    }
+
+    return true;
+}
+
+bool LayoutSaver::MainWindow::isValid() const
+{
+    if (!multiSplitterLayout.isValid())
+        return false;
+
+    if (options != MainWindowOption_None && options != MainWindowOption_HasCentralFrame) {
+        qWarning() << Q_FUNC_INFO << "Invalid option" << options;
+        return false;
+    }
+
+    return true;
+}
+
+bool LayoutSaver::MultiSplitterLayout::isValid() const
+{
+    for (auto &item : items) {
+        if (!item.isValid())
+            return false;
+    }
+
+    for (auto &anchor : anchors) {
+        if (!anchor.isValid())
+            return false;
+    }
+
+    if (!size.isValid()) {
+        qWarning() << Q_FUNC_INFO << "Invalid size";
+        return false;
+    }
+
+    return true;
 }

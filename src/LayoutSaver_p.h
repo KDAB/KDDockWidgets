@@ -57,6 +57,8 @@ struct LayoutSaver::DockWidget
     typedef QVector<Ptr> List;
     static QHash<QString, Ptr> s_dockWidgets;
 
+    bool isValid() const;
+
     static Ptr dockWidgetForName(const QString &name)
     {
         auto dw = s_dockWidgets.value(name);
@@ -78,7 +80,9 @@ private:
 
 struct LayoutSaver::Frame
 {
-    bool valid = true;
+    bool isValid() const;
+
+    bool valid = true; // TODO: Rename to isNull
     QString objectName;
     QRect geometry;
     int options;
@@ -91,6 +95,8 @@ struct LayoutSaver::Item
 {
     typedef QVector<LayoutSaver::Item> List;
 
+    bool isValid() const;
+
     QString objectName;
     bool isPlaceholder;
     QRect geometry;
@@ -98,7 +104,7 @@ struct LayoutSaver::Item
 
     int indexOfLeftAnchor;
     int indexOfTopAnchor;
-    int indexOfRighttAnchor;
+    int indexOfRightAnchor;
     int indexOfBottomAnchor;
 
     LayoutSaver::Frame frame;
@@ -107,6 +113,8 @@ struct LayoutSaver::Item
 struct LayoutSaver::Anchor
 {
     typedef QVector<LayoutSaver::Anchor> List;
+
+    bool isValid() const;
 
     QString objectName;
     QRect geometry;
@@ -121,6 +129,8 @@ struct LayoutSaver::Anchor
 
 struct LayoutSaver::MultiSplitterLayout
 {
+    bool isValid() const;
+
     LayoutSaver::Anchor::List anchors;
     LayoutSaver::Item::List items;
     QSize minSize;
@@ -130,6 +140,8 @@ struct LayoutSaver::MultiSplitterLayout
 struct LayoutSaver::FloatingWindow
 {
     typedef QVector<LayoutSaver::FloatingWindow> List;
+
+    bool isValid() const;
 
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
     int parentIndex = -1;
@@ -142,6 +154,8 @@ struct LayoutSaver::MainWindow
 public:
     typedef QVector<LayoutSaver::MainWindow> List;
 
+    bool isValid() const;
+
     KDDockWidgets::MainWindowOptions options;
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
     QString uniqueName;
@@ -153,6 +167,7 @@ struct LayoutSaver::Layout
 {
 public:
 
+    bool isValid() const;
     void fillFrom(const QByteArray &serialized);
 
     int serializationVersion = KDDOCKWIDGETS_SERIALIZATION_VERSION;
@@ -270,7 +285,7 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Item *item)
 
     ds << item->indexOfLeftAnchor;
     ds << item->indexOfTopAnchor;
-    ds << item->indexOfRighttAnchor;
+    ds << item->indexOfRightAnchor;
     ds << item->indexOfBottomAnchor;
 
     ds << item->frame.valid;
@@ -290,7 +305,7 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Item *item)
 
     ds >> item->indexOfLeftAnchor;
     ds >> item->indexOfTopAnchor;
-    ds >> item->indexOfRighttAnchor;
+    ds >> item->indexOfRightAnchor;
     ds >> item->indexOfBottomAnchor;
 
     bool hasFrame;
