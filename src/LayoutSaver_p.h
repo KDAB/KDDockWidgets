@@ -50,7 +50,7 @@ struct LayoutSaver::LastPosition
     LayoutSaver::Placeholder::List placeholders;
 };
 
-struct LayoutSaver::DockWidget
+struct DOCKS_EXPORT LayoutSaver::DockWidget
 {
     // Using shared ptr, as we need to modify shared instances
     typedef std::shared_ptr<LayoutSaver::DockWidget> Ptr;
