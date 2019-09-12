@@ -178,15 +178,13 @@ void Frame::updateTitleBarVisibility()
     bool visible = false;
     if (isCentralFrame()) {
         visible = false;
+    } else if ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && hasTabsVisible()) {
+           visible = false;
     } else if (FloatingWindow *fw = floatingWindow()) {
         // If there's nested frames then show each Frame's title bar
         visible = !fw->hasSingleFrame();
     } else {
-        if ((Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) && hasTabsVisible()) {
-            visible = false;
-        } else {
-            visible = true;
-        }
+        visible = true;
     }
 
     m_titleBar->setVisible(visible);

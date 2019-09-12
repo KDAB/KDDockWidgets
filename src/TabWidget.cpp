@@ -68,13 +68,26 @@ std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
 {
     auto dock = m_lastPressedDockWidget;
     m_lastPressedDockWidget = nullptr; // TODO check if we still have this dock, it might have been deleted
-    if (!dock) {
-        if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) {
+
+    const bool hideTitleBarWhenTabsVisible = Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible;
+    const bool alwaysShowTabs = Config::self().flags() & Config::Flag_AlwaysShowTabs;
+
+    if (hideTitleBarWhenTabsVisible) {
+        if (dock) {
+            if (alwaysShowTabs && hasSingleDockWidget()) {
+                // Case #2. User is dragging a tab but there's only 1 tab (and tabs are always visible), so drag everything instead, no detaching happens
+               return m_tabWidget->makeWindow();
+            }
+
+        } else {
+            // Case #1. User is dragging on the QTabBar background, not on an actual tab
             return m_tabWidget->makeWindow();
         }
-
-        return {};
     }
+
+    if (!dock)
+        return {};
+
 
     FloatingWindow *floatingWindow = detachTab(dock);
 
@@ -105,6 +118,11 @@ FloatingWindow * TabBar::detachTab(DockWidgetBase *dockWidget)
 void TabBar::onMousePress(QPoint localPos)
 {
     m_lastPressedDockWidget = dockWidgetAt(localPos);
+}
+
+bool TabBar::hasSingleDockWidget() const
+{
+    return numDockWidgets() == 1;
 }
 
 QWidgetOrQuick *TabBar::asWidget() const

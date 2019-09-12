@@ -24,6 +24,7 @@
 #include "TabWidget_p.h"
 #include "multisplitter/Separator_p.h"
 #include "FloatingWindow_p.h"
+#include "Config.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "indicators/ClassicIndicators_p.h"
@@ -52,6 +53,9 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, Frame::Options options) const
 {
+    if (Config::self().flags() & Config::Flag_AlwaysShowTabs)
+        options |= Frame::Option_AlwaysShowsTabs;
+
     return new FrameWidget(parent, options);
 }
 
