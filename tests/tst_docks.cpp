@@ -4127,17 +4127,25 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
 void TestDocks::tst_dragByTabBar_data()
 {
     QTest::addColumn<bool>("documentMode");
+    QTest::addColumn<bool>("tabsAlwaysVisible");
 
-    QTest::newRow("false") << false;
-    QTest::newRow("true") << true;
+    QTest::newRow("false-false") << false << false;
+    QTest::newRow("true-false") << true << false;
+    QTest::newRow("false-true") << false << true;
+    QTest::newRow("true-true") << true << true;
 }
 
 void TestDocks::tst_dragByTabBar()
 {
     QFETCH(bool, documentMode);
+    QFETCH(bool, tabsAlwaysVisible);
 
     EnsureTopLevelsDeleted e;
-    Config::self().setFlags(Config::self().flags() | Config::Flag_HideTitleBarWhenTabsVisible);
+    auto flags = Config::self().flags() | Config::Flag_HideTitleBarWhenTabsVisible;
+    if (tabsAlwaysVisible)
+        flags |= Config::Flag_AlwaysShowTabs;
+
+    Config::self().setFlags(flags);
 
     auto m = createMainWindow();
 
