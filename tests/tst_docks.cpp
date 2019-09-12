@@ -388,6 +388,7 @@ private Q_SLOTS:
     void tst_tabBarWithHiddenTitleBar();
     void tst_dragByTabBar_data();
     void tst_dragByTabBar();
+    void tst_dragBySingleTab();
 
     void tst_addToHiddenMainWindow();
     void tst_minSizeChanges();
@@ -4167,6 +4168,26 @@ void TestDocks::tst_dragByTabBar()
     QVERIFY(!fw->titleBar()->isVisible());
 
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
+}
+
+void TestDocks::tst_dragBySingleTab()
+{
+    // Tests dragging via a tab when there's only 1 tab, and we're using Flag_AlwaysShowTabs
+    EnsureTopLevelsDeleted e;
+    Config::self().setFlags(Config::Flag_AlwaysShowTabs);
+    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
+    dock1->show();
+
+    auto frame1 = dock1->frame();
+
+    QPoint globalPressPos = dragPointForWidget(frame1, 0);
+    QTabBar *tabBar = static_cast<FrameWidget*>(frame1)->tabBar();
+    QVERIFY(tabBar);
+    SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing in this case
+    drag(tabBar, globalPressPos, QPoint(0, 0));
+
+    delete dock1;
+    waitForDeleted(frame1);
 }
 
 void TestDocks::tst_addToHiddenMainWindow()

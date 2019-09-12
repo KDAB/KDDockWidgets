@@ -170,6 +170,9 @@ public:
      */
     QWidgetOrQuick *asWidget() const;
 
+    ///@brief getter for the frame
+    Frame *frame() const;
+
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
 

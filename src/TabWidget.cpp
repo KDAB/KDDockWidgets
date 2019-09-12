@@ -75,19 +75,23 @@ std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
     if (hideTitleBarWhenTabsVisible) {
         if (dock) {
             if (alwaysShowTabs && hasSingleDockWidget()) {
-                // Case #2. User is dragging a tab but there's only 1 tab (and tabs are always visible), so drag everything instead, no detaching happens
+                // Case #1. User is dragging a tab but there's only 1 tab (and tabs are always visible), so drag everything instead, no detaching happens
                return m_tabWidget->makeWindow();
             }
-
         } else {
-            // Case #1. User is dragging on the QTabBar background, not on an actual tab
+            // Case #2. User is dragging on the QTabBar background, not on an actual tab.
+            // As Flag_HideTitleBarWhenTabsVisible is set, we let the user drag through the tab widget background.
             return m_tabWidget->makeWindow();
+        }
+    } else {
+        if (dock && hasSingleDockWidget() && alwaysShowTabs) {
+            // Case #3. window with title bar and single tab, no detaching should happen, just use the title bar.
+            return {};
         }
     }
 
     if (!dock)
         return {};
-
 
     FloatingWindow *floatingWindow = detachTab(dock);
 
@@ -131,7 +135,7 @@ QWidgetOrQuick *TabBar::asWidget() const
 }
 
 TabWidget::TabWidget(QWidgetOrQuick *thisWidget, Frame *frame)
-    : Draggable(thisWidget, Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible)
+    : Draggable(thisWidget, Config::self().flags() & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
     , m_frame(frame)
     , m_thisWidget(thisWidget)
 {
@@ -196,6 +200,11 @@ bool TabWidget::contains(DockWidgetBase *dw) const
 QWidgetOrQuick *TabWidget::asWidget() const
 {
     return m_thisWidget;
+}
+
+Frame *TabWidget::frame() const
+{
+    return m_frame;
 }
 
 std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()

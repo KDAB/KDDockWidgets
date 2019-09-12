@@ -112,7 +112,8 @@ int main(int argc, char **argv)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
-    // KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible);
+    //KDDockWidgets::Config::self().setFlags( KDDockWidgets::Config::Flags() | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
+    //KDDockWidgets::Config::self().setFlags( KDDockWidgets::Config::Flags() | KDDockWidgets::Config::Flag_AlwaysShowTabs);
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("Test app"));
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
