@@ -4063,19 +4063,34 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
 void TestDocks::tst_tabBarWithHiddenTitleBar_data()
 {
     QTest::addColumn<bool>("hiddenTitleBar");
+    QTest::addColumn<bool>("tabsAlwaysVisible");
 
-    QTest::newRow("false") << false;
-    QTest::newRow("true") << true;
+    QTest::newRow("false-false") << false << false;
+    QTest::newRow("true-false") << true << false;
+
+    QTest::newRow("false-true") << false << true;
+    QTest::newRow("true-true") << true << true;
+
 }
 
 void TestDocks::tst_tabBarWithHiddenTitleBar()
 {
     EnsureTopLevelsDeleted e;
     QFETCH(bool, hiddenTitleBar);
+    QFETCH(bool, tabsAlwaysVisible);
 
     const auto originalFlags = Config::self().flags();
+
+    auto newFlags = originalFlags;
+
     if (hiddenTitleBar)
-        Config::self().setFlags(originalFlags | Config::Flag_HideTitleBarWhenTabsVisible);
+        newFlags = newFlags | Config::Flag_HideTitleBarWhenTabsVisible;
+
+    if (tabsAlwaysVisible)
+        newFlags = newFlags | Config::Flag_AlwaysShowTabs;
+
+
+    Config::self().setFlags(newFlags);
 
     auto m = createMainWindow();
 
@@ -4083,7 +4098,15 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     auto d2 = createDockWidget("2", new QTextEdit());
     m->addDockWidget(d1, Location_OnTop);
 
-    QVERIFY(d1->frame()->titleBar()->isVisible());
+    if (tabsAlwaysVisible) {
+        if (hiddenTitleBar)
+            QVERIFY(!d1->frame()->titleBar()->isVisible());
+        else
+            QVERIFY(d1->frame()->titleBar()->isVisible());
+    } else {
+        QVERIFY(d1->frame()->titleBar()->isVisible());
+    }
+
     d1->addDockWidgetAsTab(d2);
 
     QVERIFY(d2->frame()->titleBar()->isVisible() ^ hiddenTitleBar);
@@ -4091,7 +4114,14 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     d2->close();
     m->multiSplitterLayout()->checkSanity();
     delete d2;
-    QVERIFY(d1->frame()->titleBar()->isVisible());
+    if (tabsAlwaysVisible) {
+        if (hiddenTitleBar)
+            QVERIFY(!d1->frame()->titleBar()->isVisible());
+        else
+            QVERIFY(d1->frame()->titleBar()->isVisible());
+    } else {
+        QVERIFY(d1->frame()->titleBar()->isVisible());
+    }
 }
 
 void TestDocks::tst_dragByTabBar_data()
