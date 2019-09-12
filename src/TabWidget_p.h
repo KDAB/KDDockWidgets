@@ -77,6 +77,9 @@ public:
 
     void onMousePress(QPoint localPos);
 
+    ///@brief returns whether there's only 1 tab
+    bool hasSingleDockWidget() const;
+
     virtual int numDockWidgets() const = 0;
     virtual int tabAt(QPoint localPos) const = 0;
 
