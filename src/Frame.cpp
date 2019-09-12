@@ -46,11 +46,21 @@ static int s_dbg_numFrames = 0;
 
 using namespace KDDockWidgets;
 
+namespace KDDockWidgets {
+static Frame::Options actualOptions(Frame::Options options)
+{
+    if (Config::self().flags() & Config::Flag_AlwaysShowTabs)
+        options |= Frame::Option_AlwaysShowsTabs;
+
+    return options;
+}
+}
+
 Frame::Frame(QWidgetOrQuick *parent, Options options)
     : QWidgetAdapter(parent)
     , m_tabWidget(Config::self().frameWorkWidgetFactory()->createTabWidget(this))
     , m_titleBar(Config::self().frameWorkWidgetFactory()->createTitleBar(this))
-    , m_options(options)
+    , m_options(actualOptions(options))
 {
     s_dbg_numFrames++;
     DockRegistry::self()->registerFrame(this);

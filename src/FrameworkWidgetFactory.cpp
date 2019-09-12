@@ -53,9 +53,6 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, Frame::Options options) const
 {
-    if (Config::self().flags() & Config::Flag_AlwaysShowTabs)
-        options |= Frame::Option_AlwaysShowsTabs;
-
     return new FrameWidget(parent, options);
 }
 
