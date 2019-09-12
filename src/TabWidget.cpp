@@ -184,6 +184,10 @@ std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
 {
     // This is called when using Flag_HideTitleBarWhenTabsVisible
     // For detaching individual tabs, TabBar::makeWindow() is called.
+    if (auto floatingWindow = qobject_cast<FloatingWindow*>(asWidget()->window())) {
+        // We're already in a floating window, just move the window. No detachment happens.
+        return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
+    }
 
     QRect r = m_frame->geometry();
 
