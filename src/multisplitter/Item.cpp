@@ -402,6 +402,9 @@ void Item::onLayoutRequest() const
     if (!d->m_frame || d->m_isPlaceholder)
         return; // It's a placeholder, nothing to do.
 
+    if (d->m_layout->isAddingItem())
+        return; // We're adding an item. Constraints will be updated at the *end* During is dangerous.
+
     const QSize minSize = d->frameMinSize().expandedTo(MultiSplitterLayout::hardcodedMinimumSize());
     if (minSize == d->m_minSize)
         return; // Nothing to do
@@ -423,7 +426,10 @@ void Item::onLayoutRequest() const
         qWarning() << Q_FUNC_INFO << "Constraints not honoured size=" << size()
                    << "; minSize=" << d->m_minSize
                    << "; layout.size=" << d->m_layout->size()
-                   << "; layout.minSize=" << d->m_layout->minimumSize();
+                   << "; layout.minSize=" << d->m_layout->minimumSize()
+                   << "; this=" << this
+                   << "; window=" << d->m_frame->window()
+                   << d->m_layout->isAddingItem();
     }
 }
 
