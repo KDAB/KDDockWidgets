@@ -112,6 +112,7 @@ else()
     set(DOCKS_INSTALLABLE_INCLUDES
         ${DOCKS_INSTALLABLE_INCLUDES}
         MainWindow.h
+        MainWindowBase.h
         widgets/DockWidget.h)
 endif()
 
@@ -127,7 +128,7 @@ add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES}
 
 target_include_directories(kddockwidgets
     PUBLIC
-        $<INSTALL_INTERFACE:kddockwidgets>
+        $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/widgets>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/quick>
@@ -159,8 +160,27 @@ if (NOT WIN32 AND NOT APPLE)
 endif()
 
 install (TARGETS kddockwidgets
+         EXPORT kddockwidgetsTargets
          RUNTIME DESTINATION bin
          LIBRARY DESTINATION lib
          ARCHIVE DESTINATION lib)
 install (FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
 install (FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/widgets)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    KDDockWidgetsConfigVersion.cmake
+    VERSION ${PACKAGE_VERSION}
+    COMPATIBILITY AnyNewerVersion
+    )
+
+install(EXPORT kddockwidgetsTargets
+        FILE KDDockWidgetsTargets.cmake
+        NAMESPACE KDAB::
+        DESTINATION lib/cmake/KDDockWidgets
+)
+configure_file(KDDockWidgetsConfig.cmake.in KDDockWidgetsConfig.cmake @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfig.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfigVersion.cmake"
+        DESTINATION lib/cmake/KDDockWidgets
+)
