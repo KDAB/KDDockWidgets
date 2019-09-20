@@ -31,6 +31,7 @@
 #include "docks_export.h"
 #include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
+#include "LayoutSaver_p.h"
 
 #include <QVector>
 #include <QWidget>
@@ -78,7 +79,7 @@ public:
     ///@brief destructor
     ~DockWidgetBase() override;
 
-    static DockWidgetBase *createFromDataStream(QDataStream &ds);
+    static DockWidgetBase *createFromSaved(LayoutSaver::DockWidget::Ptr);
 
     /**
      * @brief docks @p other widget into this one. Tabs will be shown.

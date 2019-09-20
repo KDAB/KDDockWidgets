@@ -25,6 +25,7 @@
 #include "Frame_p.h"
 #include "Draggable_p.h"
 #include "QWidgetAdapter.h"
+#include "LayoutSaver_p.h"
 
 class QAbstractNativeEventFilter;
 
@@ -43,7 +44,7 @@ public:
     explicit FloatingWindow(Frame *frame, QWidgetOrQuick *parent = nullptr);
     ~FloatingWindow() override;
 
-    bool fillFromDataStream(QDataStream &ds);
+    bool fillFromSaved(const LayoutSaver::FloatingWindow &);
 
     // Draggable:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;

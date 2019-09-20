@@ -30,6 +30,7 @@
 #include "docks_export.h"
 #include "multisplitter/Item_p.h"
 #include "Logging_p.h"
+#include "LayoutSaver_p.h"
 
 #include <QPointer>
 #include <memory>
@@ -79,7 +80,7 @@ public:
     LastPosition() = default;
     ~LastPosition();
 
-    void fillFromDataStream(QDataStream &ds);
+    void fillFromSaved(const LayoutSaver::LastPosition &);
 
     /**
      * @brief Returns whether the LastPosition is valid. If invalid then the DockWidget was never

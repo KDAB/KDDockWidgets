@@ -540,16 +540,13 @@ void DockWidgetBase::onClosed(QCloseEvent *e)
         d->close();
 }
 
-DockWidgetBase *DockWidgetBase::createFromDataStream(QDataStream &ds)
+DockWidgetBase *DockWidgetBase::createFromSaved(LayoutSaver::DockWidget::Ptr saved)
 {
-    QString name;
-    ds >> name;
-
-    DockWidgetBase *dw = DockRegistry::self()->dockByName(name);
+    DockWidgetBase *dw = DockRegistry::self()->dockByName(saved->uniqueName);
     if (!dw) {
         if (auto factoryFunc = Config::self().dockWidgetFactoryFunc()) {
             // DockWidget doesn't exist, ask to create it
-            dw = factoryFunc(name);
+            dw = factoryFunc(saved->uniqueName);
         }
     }
 
@@ -558,7 +555,7 @@ DockWidgetBase *DockWidgetBase::createFromDataStream(QDataStream &ds)
             w->setVisible(true);
         dw->setProperty("kddockwidget_was_restored", true);
     } else {
-        qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
+        qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << saved->uniqueName;
     }
 
     return dw;

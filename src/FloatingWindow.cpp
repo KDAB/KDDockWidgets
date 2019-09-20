@@ -336,9 +336,9 @@ void FloatingWindow::onCloseEvent(QCloseEvent *e)
     }
 }
 
-bool FloatingWindow::fillFromDataStream(QDataStream &ds)
+bool FloatingWindow::fillFromSaved(const LayoutSaver::FloatingWindow &fw)
 {
-    if (dropArea()->multiSplitterLayout()->fillFromDataStream(ds)) {
+    if (dropArea()->multiSplitterLayout()->fillFromSaved(fw.multiSplitterLayout)) {
         show();
         return true;
     } else {

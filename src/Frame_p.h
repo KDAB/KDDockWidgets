@@ -30,6 +30,7 @@
 
 #include "docks_export.h"
 #include "QWidgetAdapter.h"
+#include "LayoutSaver_p.h"
 
 #include <QWidget>
 #include <QVector>
@@ -73,7 +74,7 @@ public:
     explicit Frame(QWidgetOrQuick *parent = nullptr, Options = Option_None);
     ~Frame() override;
 
-    static Frame *createFromDataStream(QDataStream &ds);
+    static Frame *createFromSaved(const LayoutSaver::Frame &);
 
     ///@brief Adds a widget into the Frame's TabWidget
     void addWidget(DockWidgetBase *);

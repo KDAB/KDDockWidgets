@@ -464,30 +464,19 @@ bool Frame::event(QEvent *e)
     return QWidgetAdapter::event(e);
 }
 
-Frame *Frame::createFromDataStream(QDataStream &ds)
+Frame *Frame::createFromSaved(const LayoutSaver::Frame &f)
 {
-    QString objectName;
-    QRect geo;
-    int options;
-    int currentTabIndex;
-    int numDocks;
-    ds >> objectName;
-    ds >> geo;
-    ds >> options;
-    ds >> currentTabIndex;
-    ds >> numDocks;
+    auto frame = Config::self().frameWorkWidgetFactory()->createFrame(/*parent=*/nullptr, Frame::Options(f.options));
+    frame->setObjectName(f.objectName);
 
-    auto frame = Config::self().frameWorkWidgetFactory()->createFrame(/*parent=*/nullptr, Frame::Options(options));
-    frame->setObjectName(objectName);
-
-    for (int i = 0; i < numDocks; ++i) {
-        if (DockWidgetBase *dw = DockWidgetBase::createFromDataStream(ds)) {
+    for (auto savedDock : qAsConst(f.dockWidgets)) {
+        if (DockWidgetBase *dw = DockWidgetBase::createFromSaved(savedDock)) {
             frame->addWidget(dw);
         }
     }
 
-    frame->setCurrentTabIndex(currentTabIndex);
-    frame->setGeometry(geo);
+    frame->setCurrentTabIndex(f.currentTabIndex);
+    frame->setGeometry(f.geometry);
 
     return frame;
 }

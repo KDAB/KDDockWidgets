@@ -38,6 +38,7 @@
 #include "KDDockWidgets.h"
 #include "Item_p.h"
 #include "Frame_p.h"
+#include "LayoutSaver_p.h"
 
 #include <QPointer>
 
@@ -224,7 +225,7 @@ public:
      */
     QRect rectForDrop(const QWidgetOrQuick *widget, KDDockWidgets::Location location, const Item *relativeTo) const;
 
-    bool fillFromDataStream(QDataStream &ds);
+    bool fillFromSaved(const LayoutSaver::MultiSplitterLayout &);
 
     void setAnchorBeingDragged(Anchor *);
     Anchor *anchorBeingDragged() const { return m_anchorBeingDragged; }

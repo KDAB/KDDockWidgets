@@ -29,11 +29,12 @@
  */
 
 #include "docks_export.h"
-#include "DockWidgetBase.h"
 
 class QByteArray;
 
 namespace KDDockWidgets {
+
+class DockWidgetBase;
 
 class DOCKS_EXPORT LayoutSaver
 {
@@ -72,7 +73,7 @@ public:
      *
      * Useful since some dock widgets can be new, and hence not be included in the last saved layout.
      */
-    DockWidgetBase::List restoredDockWidgets() const;
+    QVector<DockWidgetBase *> restoredDockWidgets() const;
 
 #if defined(DOCKS_DEVELOPER_MODE)
     /**

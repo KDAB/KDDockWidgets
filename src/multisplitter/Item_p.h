@@ -24,6 +24,7 @@
 #include "docks_export.h"
 #include "Anchor_p.h"
 #include "QWidgetAdapter.h"
+#include "LayoutSaver_p.h"
 
 #include <QRect>
 #include <QObject>
@@ -108,7 +109,7 @@ public:
     /// @brief Destroys its frame too.
     ~Item() override;
 
-    static Item* createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout);
+    static Item* createFromSaved(const LayoutSaver::Item &, MultiSplitterLayout *layout);
 
     int x() const;
     int y() const;

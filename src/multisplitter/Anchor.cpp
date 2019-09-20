@@ -762,53 +762,26 @@ bool Anchor::isResizing()
     return s_isResizing;
 }
 
-Anchor *Anchor::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
+
+Anchor *Anchor::createFromSaved(const LayoutSaver::Anchor &a, MultiSplitterLayout *layout)
 {
-    QString marker;
-    QString objectName;
-    QRect geometry;
-    int orientation;
-    int type;
-
-    int indexFrom;
-    int indexTo;
-    int indexFolowee;
-    QVector<int> side1ItemIndexes;
-    QVector<int> side2ItemIndexes;
-
-    ds >> marker;
-    if (marker != Anchor::s_magicMarker) {
-        qWarning() << Q_FUNC_INFO << "Corrupted stream";
-        return nullptr;
-    }
-
-    ds >> objectName;
-    ds >> geometry;
-    ds >> orientation;
-    ds >> type;
-    ds >> indexFrom;
-    ds >> indexTo;
-    ds >> indexFolowee;
-    ds >> side1ItemIndexes;
-    ds >> side2ItemIndexes;
-
-    auto anchor = new Anchor(Qt::Orientation(orientation), layout, Anchor::Type(type));
-    anchor->setObjectName(objectName);
-    anchor->setGeometry(geometry);
+    auto anchor = new Anchor(Qt::Orientation(a.orientation), layout, Anchor::Type(a.type));
+    anchor->setObjectName(a.objectName);
+    anchor->setGeometry(a.geometry);
     anchor->updatePositionPercentage();
-    anchor->setProperty("indexFrom", indexFrom);
-    anchor->setProperty("indexTo", indexTo);
-    anchor->setProperty("indexFolowee", indexFolowee);
+    anchor->setProperty("indexFrom", a.indexOfFrom);
+    anchor->setProperty("indexTo", a.indexOfTo);
+    anchor->setProperty("indexFolowee", a.indexOfFollowee);
 
     ItemList side1Items;
     ItemList side2Items;
     const ItemList allItems = layout->items();
-    side1Items.reserve(side1ItemIndexes.size());
-    for (int index : qAsConst(side1ItemIndexes)) {
+    side1Items.reserve(a.side1Items.size());
+    for (int index : qAsConst(a.side1Items)) {
         side1Items.push_back(allItems.at(index));
     }
-    side2Items.reserve(side2ItemIndexes.size());
-    for (int index : qAsConst(side2ItemIndexes)) {
+    side2Items.reserve(a.side2Items.size());
+    for (int index : qAsConst(a.side2Items)) {
         side2Items.push_back(allItems.at(index));
     }
 

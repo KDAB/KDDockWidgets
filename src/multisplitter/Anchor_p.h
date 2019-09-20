@@ -22,6 +22,7 @@
 #define KD_MULTISPLITTER_ANCHOR_P_H
 
 #include "docks_export.h"
+#include "LayoutSaver_p.h"
 
 #include <QObject>
 #include <QPointer>
@@ -124,7 +125,7 @@ public:
     typedef QVector<Anchor *> List;
     explicit Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type = Type_None);
     ~Anchor() override;
-    static Anchor* createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout);
+    static Anchor* createFromSaved(const LayoutSaver::Anchor &, MultiSplitterLayout *layout);
 
     void setFrom(Anchor *);
     Anchor *from() const { return m_from; }
@@ -312,7 +313,7 @@ public:
     bool m_showingSide2Rubberband = false;
     bool m_initialized = false;
     static bool s_isResizing;
-    static const QString s_magicMarker; // Just to validate serialize is simetric to deserialize
+    static const QString s_magicMarker; // Just to validate serialize is symmetric to deserialize
 
     // For when being animated. They are not displayed at their pos, but with an offset.
     int m_positionOffset = 0;

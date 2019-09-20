@@ -116,18 +116,15 @@ void MainWindowBase::setUniqueName(const QString &uniqueName)
     }
 }
 
-bool MainWindowBase::fillFromDataStream(QDataStream &ds)
+bool MainWindowBase::fillFromSaved(const LayoutSaver::MainWindow &mw)
 {
-    int options;
-    ds >> options;
-
-    if (options != int(this->options())) {
+    if (mw.options != options()) {
         qWarning() << Q_FUNC_INFO << "Refusing to restore MainWindow with different options"
-                   << "; expected=" << options << "; has=" << this->options();
+                   << "; expected=" << mw.options << "; has=" << options();
         return false;
     }
 
-    return dropArea()->multiSplitterLayout()->fillFromDataStream(ds);
+    return dropArea()->multiSplitterLayout()->fillFromSaved(mw.multiSplitterLayout);
 }
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, MainWindowBase *mainWindow)

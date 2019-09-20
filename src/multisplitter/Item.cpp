@@ -558,30 +558,10 @@ void Item::Private::updateObjectName()
     q->setObjectName(m_frame->objectName());
 }
 
-Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
+Item *Item::createFromSaved(const LayoutSaver::Item &i, MultiSplitterLayout *layout)
 {
-    QString objectName;
-    bool isPlaceholder;
-    QRect geo;
-    QSize minSize;
-    bool hasFrame;
-
-    int leftIndex;
-    int topIndex;
-    int rightIndex;
-    int bottomIndex;
-
-    ds >> objectName;
-    ds >> isPlaceholder;
-    ds >> geo;
-    ds >> minSize;
-    ds >> leftIndex;
-    ds >> topIndex;
-    ds >> rightIndex;
-    ds >> bottomIndex;
-    ds >> hasFrame; // false if it's a placeholder
-
-    auto item = hasFrame ? new Item(Frame::createFromDataStream(ds), layout)
+    const bool hasFrame = !i.frame.isNull;
+    auto item = hasFrame ? new Item(Frame::createFromSaved(i.frame), layout)
                          : new Item(layout);
 
     if (hasFrame) {
@@ -589,14 +569,14 @@ Item *Item::createFromDataStream(QDataStream &ds, MultiSplitterLayout *layout)
         item->frame()->show();
     }
 
-    item->setIsPlaceholder(isPlaceholder);
-    item->setObjectName(objectName);
-    item->restoreSizes(minSize, geo);
+    item->setIsPlaceholder(i.isPlaceholder);
+    item->setObjectName(i.objectName);
+    item->restoreSizes(i.minSize, i.geometry);
 
-    item->setProperty("leftIndex", leftIndex);
-    item->setProperty("topIndex", topIndex);
-    item->setProperty("rightIndex", rightIndex);
-    item->setProperty("bottomIndex", bottomIndex);
+    item->setProperty("leftIndex", i.indexOfLeftAnchor);
+    item->setProperty("topIndex", i.indexOfTopAnchor);
+    item->setProperty("rightIndex", i.indexOfRightAnchor);
+    item->setProperty("bottomIndex", i.indexOfBottomAnchor);
 
     return item;
 }

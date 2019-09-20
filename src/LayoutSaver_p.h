@@ -22,11 +22,16 @@
 #define KD_LAYOUTSAVER_P_H
 
 #include "LayoutSaver.h"
-#include "multisplitter/Anchor_p.h"
-#include "multisplitter/MultiSplitterLayout_p.h"
+#include "KDDockWidgets.h"
 
+#include <QRect>
 #include <QDataStream>
+#include <QDebug>
+
 #include <memory>
+
+#define ANCHOR_MAGIC_MARKER "e520c60e-cf5d-4a30-b1a7-588d2c569851"
+#define MULTISPLITTER_LAYOUT_MAGIC_MARKER "bac9948e-5f1b-4271-acc5-07f1708e2611"
 
 #define KDDOCKWIDGETS_SERIALIZATION_VERSION 1
 
@@ -168,7 +173,7 @@ struct LayoutSaver::Layout
 public:
 
     bool isValid() const;
-    void fillFrom(const QByteArray &serialized);
+    bool fillFrom(const QByteArray &serialized);
 
     int serializationVersion = KDDOCKWIDGETS_SERIALIZATION_VERSION;
     LayoutSaver::MainWindow::List mainWindows;
@@ -177,7 +182,7 @@ public:
     LayoutSaver::DockWidget::List allDockWidgets;
 };
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::Placeholder *p)
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Placeholder *p)
 {
     ds << p->isFloatingWindow;
     if (p->isFloatingWindow)
@@ -190,7 +195,7 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Placeholder *p)
     return ds;
 }
 
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::Placeholder *p)
+inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Placeholder *p)
 {
     ds >> p->isFloatingWindow;
     if (p->isFloatingWindow)
@@ -203,9 +208,9 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Placeholder *p)
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::Anchor *a)
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Anchor *a)
 {
-    ds << Anchor::s_magicMarker;
+    ds << QStringLiteral(ANCHOR_MAGIC_MARKER);
     ds << a->objectName;
     ds << a->geometry;
     ds << a->orientation;
@@ -219,12 +224,12 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Anchor *a)
     return ds;
 }
 
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::Anchor *a)
+inline  QDataStream &operator>>(QDataStream &ds, LayoutSaver::Anchor *a)
 {
     QString marker;
 
     ds >> marker;
-    if (marker != Anchor::s_magicMarker)
+    if (marker != QLatin1String(ANCHOR_MAGIC_MARKER))
         qWarning() << Q_FUNC_INFO << "Corrupt stream";
 
     ds >> a->objectName;
@@ -240,7 +245,7 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Anchor *a)
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::Frame *frame)
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Frame *frame)
 {
     ds << frame->objectName;
     ds << frame->geometry;
@@ -255,10 +260,11 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Frame *frame)
     return ds;
 }
 
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame)
+inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame)
 {
     int numDockWidgets;
     frame->dockWidgets.clear();
+    frame->isNull = false;
 
     ds >> frame->objectName;
     ds >> frame->geometry;
@@ -276,7 +282,7 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame)
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::Item *item)
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Item *item)
 {
     ds << item->objectName;
     ds << item->isPlaceholder;
@@ -296,7 +302,7 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Item *item)
     return ds;
 }
 
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::Item *item)
+inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Item *item)
 {
     ds >> item->objectName;
     ds >> item->isPlaceholder;
@@ -312,16 +318,17 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Item *item)
     ds >> hasFrame;
     if (hasFrame) {
         ds >> &item->frame;
-    } else {
         item->frame.isNull = false;
+    } else {
+        item->frame.isNull = true;
     }
 
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::MultiSplitterLayout *l)
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::MultiSplitterLayout *l)
 {
-    ds << MultiSplitterLayout::s_magicMarker;
+    ds << QStringLiteral(MULTISPLITTER_LAYOUT_MAGIC_MARKER);
 
     ds << l->size;
     ds << l->minSize;
@@ -337,14 +344,14 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::MultiSplitterLayout *l)
     return ds;
 }
 
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::MultiSplitterLayout *l)
+inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MultiSplitterLayout *l)
 {
     int numItems;
     int numAnchors;
     QString marker;
     ds >> marker;
 
-    if (marker != MultiSplitterLayout::s_magicMarker)
+    if (marker != QLatin1String(MULTISPLITTER_LAYOUT_MAGIC_MARKER))
         qWarning() << Q_FUNC_INFO << "Corrupt stream, invalid magic";
 
     ds >> l->size;
@@ -370,7 +377,7 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::MultiSplitterLayout *l)
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::LastPosition *lp)
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::LastPosition *lp)
 {
     ds << lp->placeholders.size();
 
@@ -385,7 +392,7 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::LastPosition *lp)
     return ds;
 }
 
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::LastPosition *lp)
+inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::LastPosition *lp)
 {
     int numPlaceholders;
     ds >> numPlaceholders;
@@ -404,7 +411,7 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::LastPosition *lp)
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 {
     ds << fw->parentIndex;
     ds << fw->geometry;
@@ -413,7 +420,7 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
     return ds;
 }
 
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
+inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 {
     ds >> fw->parentIndex;
     ds >> fw->geometry;
@@ -422,7 +429,7 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::MainWindow *m)
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::MainWindow *m)
 {
     ds << m->uniqueName;
     ds << m->geometry;
@@ -432,7 +439,7 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::MainWindow *m)
     return ds;
 }
 
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::MainWindow *m)
+inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MainWindow *m)
 {
     ds >> m->uniqueName;
     ds >> m->geometry;
@@ -442,7 +449,7 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::MainWindow *m)
     return ds;
 }
 
-QDataStream &operator<<(QDataStream &ds, LayoutSaver::Layout *l)
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Layout *l)
 {
     ds << l->serializationVersion;
     ds << l->mainWindows.size();
@@ -469,7 +476,7 @@ QDataStream &operator<<(QDataStream &ds, LayoutSaver::Layout *l)
     return ds;
 }
 
-QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
+inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
 {
     LayoutSaver::DockWidget::s_dockWidgets.clear();
     int numMainWindows;
@@ -519,7 +526,5 @@ QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
 }
 
 }
-
-
 
 #endif

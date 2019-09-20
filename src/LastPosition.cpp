@@ -137,39 +137,22 @@ QRect LastPosition::lastFloatingGeometry() const
     return m_lastFloatingGeo;
 }
 
-void LastPosition::fillFromDataStream(QDataStream &ds)
+void LastPosition::fillFromSaved(const LayoutSaver::LastPosition &lp)
 {
-    // Don't clear m_placeholders, as that would trigger Item deletion.
-    // It's OK to add existing items, that's a no-op in addPlaceholderItem()
-    // Any other existing item in m_placeholder is also correct, as it was added during restore
-
-    int numPlaceholders;
-    ds >> numPlaceholders;
-    for (int i = 0 ; i < numPlaceholders; ++i) {
-        bool isFloatingWindow;
-        int itemIndex;
-        ds >> isFloatingWindow;
-
+    for (const auto &placeholder : qAsConst(lp.placeholders)) {
         MultiSplitterLayout *layout;
-        if (isFloatingWindow) {
-            int fwIndex;
-            ds >> fwIndex;
-
-            if (fwIndex == -1) {
-                ds >> itemIndex;
+        int itemIndex = placeholder.itemIndex;
+        if (placeholder.isFloatingWindow) {
+            if (placeholder.indexOfFloatingWindow == -1) {
                 continue; // Skip
             } else {
-                FloatingWindow *fw = DockRegistry::self()->nestedwindows().at(fwIndex);
+                FloatingWindow *fw = DockRegistry::self()->nestedwindows().at(placeholder.indexOfFloatingWindow);
                 layout = fw->multiSplitterLayout();
             }
         } else {
-            QString name;
-            ds >> name;
-            MainWindowBase *mainWindow = DockRegistry::self()->mainWindowByName(name);
+            MainWindowBase *mainWindow = DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
             layout = mainWindow->multiSplitterLayout();
         }
-
-        ds >> itemIndex;
 
         const ItemList &items = layout->items();
         if (itemIndex < items.size()) {
@@ -179,11 +162,13 @@ void LastPosition::fillFromDataStream(QDataStream &ds)
             // Shouldn't happen, maybe even assert
             qWarning() << Q_FUNC_INFO <<"Couldn't find item index" << itemIndex << "in" << items;
         }
+
     }
 
-    ds >> m_lastFloatingGeo;
-    ds >> m_tabIndex;
-    ds >> m_wasFloating;
+    m_lastFloatingGeo = lp.lastFloatingGeometry;
+    m_tabIndex = lp.tabIndex;
+    m_wasFloating = lp.wasFloating;
+
 }
 
 QDataStream &KDDockWidgets::operator<<(QDataStream &ds, LastPosition *lp)

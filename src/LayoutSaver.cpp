@@ -73,7 +73,9 @@ public:
     }
 
     void serializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel);
-    void deserializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel);
+
+    template <typename T>
+    void deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel);
     void deleteEmptyFrames();
     void clearRestoredProperty();
 
@@ -194,75 +196,50 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     FrameCleanup cleanup(this);
 
-    QDataStream ds(data);
-    int serializationVersion;
-    ds >> serializationVersion;
-
-    if (serializationVersion != KDDOCKWIDGETS_SERIALIZATION_VERSION) {
-        qWarning() << "Unsupported serialization version. Got=" << serializationVersion
-                   << "; expected=" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
+    LayoutSaver::Layout layout;
+    if (!layout.fillFrom(data))
         return false;
-    }
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
     d->m_dockRegistry->clear(/*deleteStaticAnchors=*/true);
 
     // 1. Restore main windows
-    int numMainWindows;
-    ds >> numMainWindows;
-    for (int i = 0 ; i < numMainWindows; ++i) {
-        QString name;
-        ds >> name;
-
-        MainWindowBase *mainWindow = d->m_dockRegistry->mainWindowByName(name);
+    for (const LayoutSaver::MainWindow &mw : qAsConst(layout.mainWindows)) {
+        MainWindowBase *mainWindow = d->m_dockRegistry->mainWindowByName(mw.uniqueName);
         if (!mainWindow) {
-            qWarning() << "Failed to restore layout create MainWindow with name" << name << "first";
+            qWarning() << "Failed to restore layout create MainWindow with name" << mw.uniqueName << "first";
             return false;
         }
 
-        d->deserializeWindowGeometry(ds, mainWindow->window()); // window() as the MainWindow can be embedded
+        d->deserializeWindowGeometry(mw, mainWindow->window()); // window() as the MainWindow can be embedded
 
-        if (!mainWindow->fillFromDataStream(ds))
+        if (!mainWindow->fillFromSaved(mw))
             return false;
     }
 
     // 2. Restore FloatingWindows
-    int numFloating;
-    ds >> numFloating;
-    for (int i = 0; i < numFloating; ++i) {
+    for (const LayoutSaver::FloatingWindow &fw : qAsConst(layout.floatingWindows)) {
+        QWidget *parent = fw.parentIndex == -1 ? nullptr
+                                               : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
-        int parentIndex;
-        ds >> parentIndex;
-        QWidget *parent = parentIndex == -1 ? nullptr
-                                            : DockRegistry::self()->mainwindows().at(parentIndex);
-
-        auto fw = Config::self().frameWorkWidgetFactory()->createFloatingWindow(parent);
-        d->deserializeWindowGeometry(ds, fw);
-        if (!fw->fillFromDataStream(ds)) {
+        auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(parent);
+        d->deserializeWindowGeometry(fw, floatingWindow);
+        if (!floatingWindow->fillFromSaved(fw)) {
             return false;
         }
     }
 
     // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties
-    int numClosedDockWidgets;
-    ds >> numClosedDockWidgets;
-    for (int i = 0; i < numClosedDockWidgets; ++i) {
-        DockWidgetBase::createFromDataStream(ds);
+    for (auto dw : qAsConst(layout.closedDockWidgets)) {
+        DockWidgetBase::createFromSaved(dw);
     }
 
     // 4. Restore the placeholder info, now that the Items have been created
-    int numDockWidgets;
-    ds >> numDockWidgets;
-    for (int i = 0; i < numDockWidgets; ++i) {
-        QString name;
-        ds >> name;
-
-        if (DockWidgetBase *dw = d->m_dockRegistry->dockByName(name)) {
-            dw->lastPosition()->fillFromDataStream(ds);
+    for (auto dw : qAsConst(layout.allDockWidgets)) {
+        if (DockWidgetBase *dockWidget = d->m_dockRegistry->dockByName(dw->uniqueName)) {
+            dockWidget->lastPosition()->fillFromSaved(dw->lastPosition);
         } else {
-            qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
-            KDDockWidgets::LastPosition dummy;
-            dummy.fillFromDataStream(ds); // Add a dummy just to consume the stream
+            qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << dw->uniqueName;
         }
     }
 
@@ -308,14 +285,11 @@ void LayoutSaver::Private::serializeWindowGeometry(QDataStream &ds, QWidgetOrQui
     ds << topLevel->isVisible();
 }
 
-void LayoutSaver::Private::deserializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel)
+template <typename T>
+void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel)
 {
-    QRect geo;
-    bool visible;
-    ds >> geo;
-    ds >> visible;
-    topLevel->setGeometry(geo);
-    topLevel->setVisible(visible);
+    topLevel->setGeometry(saved.geometry);
+    topLevel->setVisible(saved.isVisible);
 }
 
 void LayoutSaver::Private::deleteEmptyFrames()
@@ -363,10 +337,18 @@ bool LayoutSaver::Layout::isValid() const
     return true;
 }
 
-void LayoutSaver::Layout::fillFrom(const QByteArray &serialized)
+bool LayoutSaver::Layout::fillFrom(const QByteArray &serialized)
 {
     QDataStream ds(serialized);
     ds >> this;
+
+    if (serializationVersion != KDDOCKWIDGETS_SERIALIZATION_VERSION) {
+        qWarning() << "Unsupported serialization version. Got=" << serializationVersion
+                   << "; expected=" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
+        return false;
+    }
+
+    return true;
 }
 
 bool LayoutSaver::Item::isValid(const LayoutSaver::MultiSplitterLayout &layout) const

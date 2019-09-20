@@ -1785,40 +1785,21 @@ bool MultiSplitterLayout::eventFilter(QObject *o, QEvent *e)
     return false;
 }
 
-bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
+bool MultiSplitterLayout::fillFromSaved(const LayoutSaver::MultiSplitterLayout &msl)
 {
     clear(true);
 
-    QString marker;
-    QSize minSize;
-    QSize size;
-    int numItems;
-    int numAnchors;
-
-    ds >> marker;
-    if (marker != s_magicMarker) {
-        qWarning() << Q_FUNC_INFO << "corrupted stream";
-        return false;
-    }
-
-    ds >> size;
-    ds >> minSize;
-    ds >> numItems;
-    ds >> numAnchors;
-
     ItemList items;
-    Q_ASSERT(numItems >= 0);
-    items.reserve(numItems);
-    for (int i = 0; i < numItems; ++i) {
-        Item *item = Item::createFromDataStream(ds, this);
+    items.reserve(msl.items.size());
+    for (const auto &i : qAsConst(msl.items)) {
+        Item *item = Item::createFromSaved(i, this);
         items.push_back(item);
     }
 
-    m_items = items; // Set the items, so Anchor::createFromDataStream() can set the side1 and side2 items
+    m_items = items; // Set the items, so Anchor::createFromSaved() can set the side1 and side2 items
 
-    Q_ASSERT(numAnchors >= 0);
-    for (int i = 0; i < numAnchors; ++i) {
-        Anchor *anchor = Anchor::createFromDataStream(ds, this); // They auto-register into m_anchors
+    for (const auto &a : qAsConst(msl.anchors)) {
+        Anchor *anchor = Anchor::createFromSaved(a, this); // They auto-register into m_anchors
         if (!anchor)
             return false;
 
@@ -1859,8 +1840,8 @@ bool MultiSplitterLayout::fillFromDataStream(QDataStream &ds)
             anchor->setFollowee(m_anchors.at(indexFolowee));
     }
 
-    m_size = size;
-    m_minSize = minSize;
+    m_size = msl.size;
+    m_minSize = msl.minSize;
 
     // Now that the anchors were created we can add them to the items
     for (Item *item : qAsConst(m_items)) {

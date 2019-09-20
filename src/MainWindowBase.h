@@ -32,6 +32,7 @@
 #include "docks_export.h"
 #include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
+#include "LayoutSaver_p.h"
 
 #include <QVector>
 
@@ -80,7 +81,7 @@ private:
 
     friend QDataStream &operator<<(QDataStream &ds, MainWindowBase *);
     friend class LayoutSaver;
-    bool fillFromDataStream(QDataStream &ds);
+    bool fillFromSaved(const LayoutSaver::MainWindow &);
 };
 
 QDataStream &operator<<(QDataStream &ds, MainWindowBase *);
