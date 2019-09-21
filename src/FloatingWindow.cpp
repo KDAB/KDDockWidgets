@@ -346,8 +346,16 @@ bool FloatingWindow::fillFromSaved(const LayoutSaver::FloatingWindow &fw)
     }
 }
 
-QDataStream &KDDockWidgets::operator<<(QDataStream &ds, FloatingWindow *fw)
+LayoutSaver::FloatingWindow FloatingWindow::serialize() const
 {
-    ds << fw->dropArea()->multiSplitterLayout();
-    return ds;
+    LayoutSaver::FloatingWindow fw;
+
+    fw.geometry = geometry();
+    fw.isVisible = isVisible();
+    fw.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
+
+    auto mainWindow = qobject_cast<MainWindowBase*>(parentWidget());
+    fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
+                                : -1;
+    return fw;
 }

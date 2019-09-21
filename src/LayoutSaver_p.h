@@ -294,10 +294,10 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Item *item)
     ds << item->indexOfRightAnchor;
     ds << item->indexOfBottomAnchor;
 
-    ds << item->frame.isNull;
-    if (item->frame.isNull) {
+    const bool hasFrame = !item->frame.isNull;
+    ds << hasFrame;
+    if (hasFrame)
         ds << &item->frame;
-    }
 
     return ds;
 }

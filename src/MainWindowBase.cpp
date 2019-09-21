@@ -35,8 +35,6 @@
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "multisplitter/MultiSplitter_p.h"
 
-#include <QDataStream>
-
 using namespace KDDockWidgets;
 
 class MainWindowBase::Private
@@ -127,10 +125,15 @@ bool MainWindowBase::fillFromSaved(const LayoutSaver::MainWindow &mw)
     return dropArea()->multiSplitterLayout()->fillFromSaved(mw.multiSplitterLayout);
 }
 
-QDataStream &KDDockWidgets::operator<<(QDataStream &ds, MainWindowBase *mainWindow)
+LayoutSaver::MainWindow MainWindowBase::serialize() const
 {
-    ds << mainWindow->options();
-    ds << mainWindow->dropArea()->multiSplitterLayout();
+    LayoutSaver::MainWindow m;
 
-    return ds;
+    m.options = options();
+    m.geometry = window()->geometry(); // window() as the MainWindow can be embedded
+    m.isVisible = isVisible();
+    m.uniqueName = uniqueName();
+    m.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
+
+    return m;
 }

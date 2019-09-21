@@ -45,6 +45,7 @@ public:
     ~FloatingWindow() override;
 
     bool fillFromSaved(const LayoutSaver::FloatingWindow &);
+    LayoutSaver::FloatingWindow serialize() const;
 
     // Draggable:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
@@ -126,8 +127,6 @@ private:
     QMetaObject::Connection m_layoutDestroyedConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
 };
-
-QDataStream &operator<<(QDataStream &ds, FloatingWindow *);
 
 }
 

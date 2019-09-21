@@ -481,21 +481,22 @@ Frame *Frame::createFromSaved(const LayoutSaver::Frame &f)
     return frame;
 }
 
-QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Frame *frame)
+LayoutSaver::Frame Frame::serialize() const
 {
-    const DockWidgetBase::List docks = frame->dockWidgets();
+    LayoutSaver::Frame frame;
+    frame.isNull = false;
 
-    ds << frame->objectName();
-    ds << frame->geometry();
-    ds << frame->options();
-    ds << frame->currentTabIndex();
-    ds << docks.size();
+    const DockWidgetBase::List docks = dockWidgets();
 
-    for (DockWidgetBase *dock : docks) {
-        ds << dock;
-    }
+    frame.objectName = objectName();
+    frame.geometry = geometry();
+    frame.options = options();
+    frame.currentTabIndex = currentTabIndex();
 
-    return ds;
+    for (DockWidgetBase *dock : docks)
+        frame.dockWidgets.push_back(dock->serialize());
+
+    return frame;
 }
 
 void Frame::scheduleDeleteLater()

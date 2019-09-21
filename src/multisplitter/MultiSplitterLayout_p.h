@@ -226,6 +226,7 @@ public:
     QRect rectForDrop(const QWidgetOrQuick *widget, KDDockWidgets::Location location, const Item *relativeTo) const;
 
     bool fillFromSaved(const LayoutSaver::MultiSplitterLayout &);
+    LayoutSaver::MultiSplitterLayout serialize() const;
 
     void setAnchorBeingDragged(Anchor *);
     Anchor *anchorBeingDragged() const { return m_anchorBeingDragged; }
@@ -627,7 +628,6 @@ inline int widgetMinLength(const QWidgetOrQuick *w, Qt::Orientation orientation)
     return qMax(min, 0);
 }
 
-QDataStream &operator<<(QDataStream &ds, MultiSplitterLayout *);
 }
 
 Q_DECLARE_METATYPE(KDDockWidgets::MultiSplitterLayout::Length)

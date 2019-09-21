@@ -80,6 +80,7 @@ public:
     ~DockWidgetBase() override;
 
     static DockWidgetBase *createFromSaved(LayoutSaver::DockWidget::Ptr);
+    LayoutSaver::DockWidget::Ptr serialize() const;
 
     /**
      * @brief docks @p other widget into this one. Tabs will be shown.
@@ -261,8 +262,6 @@ private:
     friend class KDDockWidgets::DockRegistry;
     friend class KDDockWidgets::LayoutSaver;
 
-    friend QDataStream &operator<<(QDataStream &ds, DockWidgetBase *);
-
     /**
      * @brief the Frame which contains this dock widgets.
      *
@@ -290,8 +289,6 @@ private:
     class Private;
     Private *const d;
 };
-
-QDataStream &operator<<(QDataStream &ds, DockWidgetBase *);
 
 }
 

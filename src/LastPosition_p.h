@@ -81,6 +81,7 @@ public:
     ~LastPosition();
 
     void fillFromSaved(const LayoutSaver::LastPosition &);
+    LayoutSaver::LastPosition serialize() const;
 
     /**
      * @brief Returns whether the LastPosition is valid. If invalid then the DockWidget was never
@@ -140,8 +141,6 @@ private:
 
     QRect m_lastFloatingGeo;
 };
-
-QDataStream &operator<<(QDataStream &ds, LastPosition *);
 
 }
 

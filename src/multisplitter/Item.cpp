@@ -581,24 +581,27 @@ Item *Item::createFromSaved(const LayoutSaver::Item &i, MultiSplitterLayout *lay
     return item;
 }
 
-QDataStream &KDDockWidgets::operator<<(QDataStream &ds, Item *item)
+LayoutSaver::Item Item::serialize() const
 {
-    ds << item->objectName();
-    ds << item->isPlaceholder();
-    ds << item->geometry();
-    ds << item->actualMinSize();
+    LayoutSaver::Item item;
 
-    const Anchor::List allAnchors = item->layout()->anchors();
-    ds << allAnchors.indexOf(item->anchorGroup().left);
-    ds << allAnchors.indexOf(item->anchorGroup().top);
-    ds << allAnchors.indexOf(item->anchorGroup().right);
-    ds << allAnchors.indexOf(item->anchorGroup().bottom);
+    item.objectName = objectName();
+    item.isPlaceholder = isPlaceholder();
+    item.geometry = geometry();
+    item.minSize = actualMinSize();
 
-    auto frame = item->frame();
-    ds << (frame != nullptr);
+    const Anchor::List allAnchors = layout()->anchors();
+    item.indexOfLeftAnchor =allAnchors.indexOf(anchorGroup().left);
+    item.indexOfTopAnchor = allAnchors.indexOf(anchorGroup().top);
+    item.indexOfRightAnchor = allAnchors.indexOf(anchorGroup().right);
+    item.indexOfBottomAnchor = allAnchors.indexOf(anchorGroup().bottom);
+
+    auto frame = this->frame();
     if (frame) {
-        ds << frame;
+        item.frame = frame->serialize();
+    } else {
+        item.frame.isNull = true;
     }
 
-    return ds;
+    return item;
 }

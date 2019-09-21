@@ -171,13 +171,13 @@ void LastPosition::fillFromSaved(const LayoutSaver::LastPosition &lp)
 
 }
 
-QDataStream &KDDockWidgets::operator<<(QDataStream &ds, LastPosition *lp)
+LayoutSaver::LastPosition LastPosition::serialize() const
 {
-    const auto &placeholders = lp->placeholders();
-    const int numPlaceholders = int(placeholders.size());
-    ds << numPlaceholders;
+    LayoutSaver::LastPosition l;
 
-    for (auto &itemRef : placeholders) {
+    for (auto &itemRef : m_placeholders) {
+        LayoutSaver::Placeholder p;
+
         Item *item = itemRef->item;
         MultiSplitterLayout *layout = item->layout();
         const int itemIndex = layout->items().indexOf(item);
@@ -185,24 +185,22 @@ QDataStream &KDDockWidgets::operator<<(QDataStream &ds, LastPosition *lp)
         auto fw = layout->multiSplitter()->floatingWindow();
         auto mainWindow = layout->multiSplitter()->mainWindow();
         Q_ASSERT(mainWindow || fw);
+        p.isFloatingWindow = fw;
 
-        if (fw) {
-            ds << true;
-            ds << (fw->beingDeleted() ? -1 : DockRegistry::self()->nestedwindows().indexOf(fw)); // TODO: Remove once we stop using deleteLater with FloatingWindow. delete would be better
+        if (p.isFloatingWindow) {
+            p.indexOfFloatingWindow = fw->beingDeleted() ? -1 : DockRegistry::self()->nestedwindows().indexOf(fw); // TODO: Remove once we stop using deleteLater with FloatingWindow. delete would be better
         } else {
-            ds << false;
-            const QString name = mainWindow->uniqueName();
-            Q_ASSERT(!name.isEmpty());
-            ds << name;
+            p.mainWindowUniqueName = mainWindow->uniqueName();
+            Q_ASSERT(!p.mainWindowUniqueName.isEmpty());
         }
 
-        ds << itemIndex;
+        p.itemIndex = itemIndex;
+        l.placeholders.push_back(p);
     }
 
-    ds << lp->lastFloatingGeometry();
-    ds << lp->m_tabIndex;
-    ds << lp->m_wasFloating;
+    l.lastFloatingGeometry = lastFloatingGeometry();
+    l.tabIndex = m_tabIndex;
+    l.wasFloating = m_wasFloating;
 
-    return ds;
+    return l;
 }
-

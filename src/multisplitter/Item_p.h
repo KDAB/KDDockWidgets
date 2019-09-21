@@ -110,6 +110,7 @@ public:
     ~Item() override;
 
     static Item* createFromSaved(const LayoutSaver::Item &, MultiSplitterLayout *layout);
+    LayoutSaver::Item serialize() const;
 
     int x() const;
     int y() const;
@@ -181,15 +182,12 @@ Q_SIGNALS:
     void minimumSizeChanged();
 private:
     friend KDDockWidgets::TestDocks;
-    friend QDataStream &operator<<(QDataStream &ds, Item *);
     QSize actualMinSize() const; // The min size, regardless if it's a placeholder or not, so we can save the actual value while LayoutSaver::saveLayout
     void restoreSizes(QSize minSize, QRect geometry); // Just for LayoutSaver::restore
 
     class Private;
     Private *const d;
 };
-
-QDataStream &operator<<(QDataStream &ds, Item *);
 
 }
 

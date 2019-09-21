@@ -75,13 +75,6 @@ public:
      */
     QVector<DockWidgetBase *> restoredDockWidgets() const;
 
-#if defined(DOCKS_DEVELOPER_MODE)
-    /**
-     * @brief Dumps the saved layout with qDebug, for debug purposes.
-     */
-    void dumpLayout(const QByteArray &);
-#endif
-
     struct Layout;
     struct MainWindow;
     struct FloatingWindow;

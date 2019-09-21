@@ -79,12 +79,10 @@ private:
     class Private;
     Private *const d;
 
-    friend QDataStream &operator<<(QDataStream &ds, MainWindowBase *);
     friend class LayoutSaver;
     bool fillFromSaved(const LayoutSaver::MainWindow &);
+    LayoutSaver::MainWindow serialize() const;
 };
-
-QDataStream &operator<<(QDataStream &ds, MainWindowBase *);
 
 }
 

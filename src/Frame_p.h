@@ -75,6 +75,7 @@ public:
     ~Frame() override;
 
     static Frame *createFromSaved(const LayoutSaver::Frame &);
+    LayoutSaver::Frame serialize() const;
 
     ///@brief Adds a widget into the Frame's TabWidget
     void addWidget(DockWidgetBase *);
@@ -229,8 +230,6 @@ private:
     QPointer<Item> m_layoutItem;
     bool m_beingDeleted = false;
 };
-
-QDataStream &operator<<(QDataStream &ds, Frame *);
 
 }
 

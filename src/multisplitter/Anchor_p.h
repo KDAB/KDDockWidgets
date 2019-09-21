@@ -28,7 +28,6 @@
 #include <QPointer>
 #include <QRect>
 #include <QVector>
-#include <QDataStream>
 
 namespace KDDockWidgets {
 
@@ -126,6 +125,7 @@ public:
     explicit Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type = Type_None);
     ~Anchor() override;
     static Anchor* createFromSaved(const LayoutSaver::Anchor &, MultiSplitterLayout *layout);
+    LayoutSaver::Anchor serialize() const;
 
     void setFrom(Anchor *);
     Anchor *from() const { return m_from; }
@@ -324,8 +324,6 @@ public:
     QRect m_geometry;
     QPointer<Anchor> m_followee;
 };
-
-QDataStream &operator<<(QDataStream &ds, Anchor *);
 
 }
 

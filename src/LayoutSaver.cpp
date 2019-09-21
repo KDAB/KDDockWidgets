@@ -38,7 +38,6 @@
 #include "multisplitter/Item_p.h"
 #include "FrameworkWidgetFactory.h"
 
-#include <QDataStream>
 #include <QDebug>
 #include <QSettings>
 #include <QApplication>
@@ -123,51 +122,41 @@ QByteArray LayoutSaver::serializeLayout() const
         return {};
     }
 
-    QByteArray result;
-    QDataStream ds(&result, QIODevice::WriteOnly);
-    ds << KDDOCKWIDGETS_SERIALIZATION_VERSION;
+    LayoutSaver::Layout layout;
 
     // Just a simplification. One less type of windows to handle.
     d->m_dockRegistry->ensureAllFloatingWidgetsAreMorphed();
 
     const MainWindowBase::List mainWindows = d->m_dockRegistry->mainwindows();
-    ds << mainWindows.size();
     for (MainWindowBase *mainWindow : mainWindows) {
-        ds << mainWindow->uniqueName();
-        d->serializeWindowGeometry(ds, mainWindow->window()); // window() as the MainWindow can be embedded
-        ds << mainWindow;
+        layout.mainWindows.push_back(mainWindow->serialize());
     }
 
     const QVector<KDDockWidgets::FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
-    ds << floatingWindows.size();
     for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
-
-        auto mainWindow = qobject_cast<MainWindowBase*>(floatingWindow->parentWidget());
-        const int parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
-                                           : -1;
-
-        ds << parentIndex;
-
-        d->serializeWindowGeometry(ds, floatingWindow);
-        ds << floatingWindow;
+        layout.floatingWindows.push_back(floatingWindow->serialize());
     }
 
     // Closed dock widgets also have interesting things to save, like geometry and placeholder info
     const DockWidgetBase::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
-    ds << closedDockWidgets.size();
+
     for (DockWidgetBase *dockWidget : closedDockWidgets) {
-        ds << dockWidget;
+        layout.closedDockWidgets.push_back(dockWidget->serialize());
     }
 
     // Save the placeholder info. We do it last, as we also restore it last, since we need all items to be created
     // before restoring the placeholders
 
     const DockWidgetBase::List dockWidgets = d->m_dockRegistry->dockwidgets();
-    ds << dockWidgets.size();
-    for (DockWidgetBase *dw : dockWidgets) {
-        ds << dw->uniqueName();
-        ds << dw->lastPosition();
+    for (DockWidgetBase *dockWidget : dockWidgets) {
+        auto dw = dockWidget->serialize();
+        dw->lastPosition = dockWidget->lastPosition()->serialize();
+        layout.allDockWidgets.push_back(dw);
     }
+
+    QByteArray result;
+    QDataStream ds(&result, QIODevice::WriteOnly);
+    ds << &layout;
 
     return result;
 }
@@ -260,29 +249,12 @@ DockWidgetBase::List LayoutSaver::restoredDockWidgets() const
 
 }
 
-#if defined(DOCKS_DEVELOPER_MODE)
-void LayoutSaver::dumpLayout(const QByteArray &savedLayout)
-{
-    QDataStream ds(savedLayout);
-    int serializationVersion;
-    ds >> serializationVersion;
-
-
-}
-#endif
-
 void LayoutSaver::Private::clearRestoredProperty()
 {
     const DockWidgetBase::List &allDockWidgets = DockRegistry::self()->dockwidgets();
     for (DockWidgetBase *dw : allDockWidgets) {
         dw->setProperty("kddockwidget_was_restored", QVariant());
     }
-}
-
-void LayoutSaver::Private::serializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel)
-{
-    ds << topLevel->geometry();
-    ds << topLevel->isVisible();
 }
 
 template <typename T>

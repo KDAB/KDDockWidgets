@@ -1879,24 +1879,18 @@ bool MultiSplitterLayout::fillFromSaved(const LayoutSaver::MultiSplitterLayout &
     return true;
 }
 
-QDataStream &KDDockWidgets::operator<<(QDataStream &ds, MultiSplitterLayout *l)
+LayoutSaver::MultiSplitterLayout MultiSplitterLayout::serialize() const
 {
-    const ItemList items = l->items();
-    const Anchor::List anchors = l->anchors();
+    LayoutSaver::MultiSplitterLayout l;
 
-    ds << MultiSplitterLayout::s_magicMarker;
-    ds << l->size();
-    ds << l->minimumSize();
-    ds << items.size();
-    ds << anchors.size();
+    l.size = size();
+    l.minSize = minimumSize();
 
-    for (Item *item : items) {
-        ds << item;
-    }
+    for (Item *item : m_items)
+        l.items.push_back(item->serialize());
 
-    for (Anchor *anchor : anchors) {
-        ds << anchor;
-    }
+    for (Anchor *anchor : m_anchors)
+        l.anchors.push_back(anchor->serialize());
 
-    return ds;
+    return l;
 }

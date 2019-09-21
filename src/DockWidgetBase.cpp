@@ -561,8 +561,7 @@ DockWidgetBase *DockWidgetBase::createFromSaved(LayoutSaver::DockWidget::Ptr sav
     return dw;
 }
 
-QDataStream &KDDockWidgets::operator<<(QDataStream &ds, DockWidgetBase *dw)
+LayoutSaver::DockWidget::Ptr DockWidgetBase::serialize() const
 {
-    ds << dw->uniqueName();
-    return ds;
+    return LayoutSaver::DockWidget::dockWidgetForName(uniqueName());
 }
