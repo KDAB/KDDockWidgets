@@ -114,7 +114,7 @@ void MainWindowBase::setUniqueName(const QString &uniqueName)
     }
 }
 
-bool MainWindowBase::fillFromSaved(const LayoutSaver::MainWindow &mw)
+bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
 {
     if (mw.options != options()) {
         qWarning() << Q_FUNC_INFO << "Refusing to restore MainWindow with different options"
@@ -122,7 +122,7 @@ bool MainWindowBase::fillFromSaved(const LayoutSaver::MainWindow &mw)
         return false;
     }
 
-    return dropArea()->multiSplitterLayout()->fillFromSaved(mw.multiSplitterLayout);
+    return dropArea()->multiSplitterLayout()->deserialize(mw.multiSplitterLayout);
 }
 
 LayoutSaver::MainWindow MainWindowBase::serialize() const

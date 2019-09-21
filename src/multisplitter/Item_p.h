@@ -109,7 +109,7 @@ public:
     /// @brief Destroys its frame too.
     ~Item() override;
 
-    static Item* createFromSaved(const LayoutSaver::Item &, MultiSplitterLayout *layout);
+    static Item* deserialize(const LayoutSaver::Item &, MultiSplitterLayout *layout);
     LayoutSaver::Item serialize() const;
 
     int x() const;

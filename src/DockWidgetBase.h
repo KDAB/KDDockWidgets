@@ -79,7 +79,7 @@ public:
     ///@brief destructor
     ~DockWidgetBase() override;
 
-    static DockWidgetBase *createFromSaved(LayoutSaver::DockWidget::Ptr);
+    static DockWidgetBase *deserialize(LayoutSaver::DockWidget::Ptr);
     LayoutSaver::DockWidget::Ptr serialize() const;
 
     /**

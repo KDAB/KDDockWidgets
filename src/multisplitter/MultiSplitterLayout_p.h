@@ -225,7 +225,7 @@ public:
      */
     QRect rectForDrop(const QWidgetOrQuick *widget, KDDockWidgets::Location location, const Item *relativeTo) const;
 
-    bool fillFromSaved(const LayoutSaver::MultiSplitterLayout &);
+    bool deserialize(const LayoutSaver::MultiSplitterLayout &);
     LayoutSaver::MultiSplitterLayout serialize() const;
 
     void setAnchorBeingDragged(Anchor *);

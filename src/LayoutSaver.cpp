@@ -202,7 +202,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         d->deserializeWindowGeometry(mw, mainWindow->window()); // window() as the MainWindow can be embedded
 
-        if (!mainWindow->fillFromSaved(mw))
+        if (!mainWindow->deserialize(mw))
             return false;
     }
 
@@ -213,20 +213,20 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(parent);
         d->deserializeWindowGeometry(fw, floatingWindow);
-        if (!floatingWindow->fillFromSaved(fw)) {
+        if (!floatingWindow->deserialize(fw)) {
             return false;
         }
     }
 
     // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties
     for (auto dw : qAsConst(layout.closedDockWidgets)) {
-        DockWidgetBase::createFromSaved(dw);
+        DockWidgetBase::deserialize(dw);
     }
 
     // 4. Restore the placeholder info, now that the Items have been created
     for (auto dw : qAsConst(layout.allDockWidgets)) {
         if (DockWidgetBase *dockWidget = d->m_dockRegistry->dockByName(dw->uniqueName)) {
-            dockWidget->lastPosition()->fillFromSaved(dw->lastPosition);
+            dockWidget->lastPosition()->deserialize(dw->lastPosition);
         } else {
             qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << dw->uniqueName;
         }

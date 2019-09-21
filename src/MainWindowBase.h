@@ -78,7 +78,7 @@ private:
     Private *const d;
 
     friend class LayoutSaver;
-    bool fillFromSaved(const LayoutSaver::MainWindow &);
+    bool deserialize(const LayoutSaver::MainWindow &);
     LayoutSaver::MainWindow serialize() const;
 };
 

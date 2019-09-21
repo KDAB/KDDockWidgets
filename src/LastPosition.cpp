@@ -137,7 +137,7 @@ QRect LastPosition::lastFloatingGeometry() const
     return m_lastFloatingGeo;
 }
 
-void LastPosition::fillFromSaved(const LayoutSaver::LastPosition &lp)
+void LastPosition::deserialize(const LayoutSaver::LastPosition &lp)
 {
     for (const auto &placeholder : qAsConst(lp.placeholders)) {
         MultiSplitterLayout *layout;

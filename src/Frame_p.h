@@ -74,7 +74,7 @@ public:
     explicit Frame(QWidgetOrQuick *parent = nullptr, Options = Option_None);
     ~Frame() override;
 
-    static Frame *createFromSaved(const LayoutSaver::Frame &);
+    static Frame *deserialize(const LayoutSaver::Frame &);
     LayoutSaver::Frame serialize() const;
 
     ///@brief Adds a widget into the Frame's TabWidget

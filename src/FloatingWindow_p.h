@@ -44,7 +44,7 @@ public:
     explicit FloatingWindow(Frame *frame, QWidgetOrQuick *parent = nullptr);
     ~FloatingWindow() override;
 
-    bool fillFromSaved(const LayoutSaver::FloatingWindow &);
+    bool deserialize(const LayoutSaver::FloatingWindow &);
     LayoutSaver::FloatingWindow serialize() const;
 
     // Draggable:

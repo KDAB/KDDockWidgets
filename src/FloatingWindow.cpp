@@ -336,9 +336,9 @@ void FloatingWindow::onCloseEvent(QCloseEvent *e)
     }
 }
 
-bool FloatingWindow::fillFromSaved(const LayoutSaver::FloatingWindow &fw)
+bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
 {
-    if (dropArea()->multiSplitterLayout()->fillFromSaved(fw.multiSplitterLayout)) {
+    if (dropArea()->multiSplitterLayout()->deserialize(fw.multiSplitterLayout)) {
         show();
         return true;
     } else {

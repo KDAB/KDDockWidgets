@@ -558,10 +558,10 @@ void Item::Private::updateObjectName()
     q->setObjectName(m_frame->objectName());
 }
 
-Item *Item::createFromSaved(const LayoutSaver::Item &i, MultiSplitterLayout *layout)
+Item *Item::deserialize(const LayoutSaver::Item &i, MultiSplitterLayout *layout)
 {
     const bool hasFrame = !i.frame.isNull;
-    auto item = hasFrame ? new Item(Frame::createFromSaved(i.frame), layout)
+    auto item = hasFrame ? new Item(Frame::deserialize(i.frame), layout)
                          : new Item(layout);
 
     if (hasFrame) {

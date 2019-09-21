@@ -763,7 +763,7 @@ bool Anchor::isResizing()
 }
 
 
-Anchor *Anchor::createFromSaved(const LayoutSaver::Anchor &a, MultiSplitterLayout *layout)
+Anchor *Anchor::deserialize(const LayoutSaver::Anchor &a, MultiSplitterLayout *layout)
 {
     auto anchor = new Anchor(Qt::Orientation(a.orientation), layout, Anchor::Type(a.type));
     anchor->setObjectName(a.objectName);

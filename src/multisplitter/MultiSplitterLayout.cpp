@@ -1785,21 +1785,21 @@ bool MultiSplitterLayout::eventFilter(QObject *o, QEvent *e)
     return false;
 }
 
-bool MultiSplitterLayout::fillFromSaved(const LayoutSaver::MultiSplitterLayout &msl)
+bool MultiSplitterLayout::deserialize(const LayoutSaver::MultiSplitterLayout &msl)
 {
     clear(true);
 
     ItemList items;
     items.reserve(msl.items.size());
     for (const auto &i : qAsConst(msl.items)) {
-        Item *item = Item::createFromSaved(i, this);
+        Item *item = Item::deserialize(i, this);
         items.push_back(item);
     }
 
-    m_items = items; // Set the items, so Anchor::createFromSaved() can set the side1 and side2 items
+    m_items = items; // Set the items, so Anchor::deserialize() can set the side1 and side2 items
 
     for (const auto &a : qAsConst(msl.anchors)) {
-        Anchor *anchor = Anchor::createFromSaved(a, this); // They auto-register into m_anchors
+        Anchor *anchor = Anchor::deserialize(a, this); // They auto-register into m_anchors
         if (!anchor)
             return false;
 

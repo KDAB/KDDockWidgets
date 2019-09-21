@@ -80,7 +80,7 @@ public:
     LastPosition() = default;
     ~LastPosition();
 
-    void fillFromSaved(const LayoutSaver::LastPosition &);
+    void deserialize(const LayoutSaver::LastPosition &);
     LayoutSaver::LastPosition serialize() const;
 
     /**

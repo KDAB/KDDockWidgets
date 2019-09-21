@@ -124,7 +124,7 @@ public:
     typedef QVector<Anchor *> List;
     explicit Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, Type = Type_None);
     ~Anchor() override;
-    static Anchor* createFromSaved(const LayoutSaver::Anchor &, MultiSplitterLayout *layout);
+    static Anchor* deserialize(const LayoutSaver::Anchor &, MultiSplitterLayout *layout);
     LayoutSaver::Anchor serialize() const;
 
     void setFrom(Anchor *);

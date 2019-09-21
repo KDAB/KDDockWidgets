@@ -464,13 +464,13 @@ bool Frame::event(QEvent *e)
     return QWidgetAdapter::event(e);
 }
 
-Frame *Frame::createFromSaved(const LayoutSaver::Frame &f)
+Frame *Frame::deserialize(const LayoutSaver::Frame &f)
 {
     auto frame = Config::self().frameWorkWidgetFactory()->createFrame(/*parent=*/nullptr, Frame::Options(f.options));
     frame->setObjectName(f.objectName);
 
     for (auto savedDock : qAsConst(f.dockWidgets)) {
-        if (DockWidgetBase *dw = DockWidgetBase::createFromSaved(savedDock)) {
+        if (DockWidgetBase *dw = DockWidgetBase::deserialize(savedDock)) {
             frame->addWidget(dw);
         }
     }
