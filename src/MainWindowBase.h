@@ -36,8 +36,6 @@
 
 #include <QVector>
 
-class QDataStream;
-
 namespace KDDockWidgets {
 
 class DockWidgetBase;
