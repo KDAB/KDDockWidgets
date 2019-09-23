@@ -1,0 +1,13 @@
+include(CMakeFindDependencyMacro)
+
+find_dependency(Qt5Widgets REQUIRED)
+if (@OPTION_QTQUICK@)
+    find_dependency(Qt5Quick REQUIRED)
+endif()
+
+if (NOT WIN32 AND NOT APPLE)
+    find_dependency(Qt5X11Extras REQUIRED)
+endif()
+
+# Add the targets file
+include("${CMAKE_CURRENT_LIST_DIR}/KDDockWidgetsTargets.cmake")
