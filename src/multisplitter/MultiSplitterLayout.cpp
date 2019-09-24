@@ -31,7 +31,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "LayoutSaver.h"
 
-#include <QPushButton>
+#include <QAction>
 #include <QEvent>
 #include <QtMath>
 #include <QScopedValueRollback>
@@ -1406,6 +1406,18 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
                            << item;
                 return false;
             }
+        }
+    }
+
+    for (DockWidgetBase *dw : DockRegistry::self()->dockwidgets()) {
+        Frame *frame = dw->frame();
+        auto tabWidgetParent = frame ? frame->tabWidget() : nullptr;
+        const bool shouldBeChecked = dw->isVisible() || tabWidgetParent;
+
+        if (shouldBeChecked != dw->toggleAction()->isChecked()) {
+            qWarning() << Q_FUNC_INFO << "Invalid state for DockWidgetBase::toggleAction()"
+                       << dw->toggleAction()->isChecked();
+            return false;
         }
     }
 
