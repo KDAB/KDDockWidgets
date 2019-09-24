@@ -38,6 +38,20 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
     , m_tabBar(Config::self().frameWorkWidgetFactory()->createTabBar(this))
 {
     setTabBar(static_cast<QTabBar*>(m_tabBar->asWidget()));
+
+    // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user presses [x]
+    connect(this, &QTabWidget::tabCloseRequested, this, [this] (int index) {
+        if (DockWidgetBase *dw = dockwidgetAt(index)) {
+            if (dw->options() & DockWidgetBase::Option_NotClosable) {
+                qWarning() << "QTabWidget::tabCloseRequested: Refusing to close dock widget with Option_NotClosable option. name=" << dw->uniqueName();
+            } else {
+                dw->close();
+            }
+        } else {
+            qWarning() << "QTabWidget::tabCloseRequested Couldn't find dock widget for index" << index << "; count=" << count();
+        }
+    });
+
 }
 
 TabBar *TabWidgetWidget::tabBar() const
