@@ -35,9 +35,9 @@
 
 #include <QAction>
 #include <QEvent>
-#include <QSignalBlocker>
 #include <QCloseEvent>
 #include <QTimer>
+#include <QScopedValueRollback>
 
 /**
  * @file
@@ -62,7 +62,8 @@ public:
         q->connect(q, &DockWidgetBase::hidden, q, [this] { onDockWidgetHidden(); } );
 
         q->connect(toggleAction, &QAction::toggled, q, [this] (bool enabled) {
-            toggle(enabled);
+            if (!m_updatingToggleAction) // guard against recursiveness
+                toggle(enabled);
         });
 
         toggleAction->setCheckable(true);
@@ -100,6 +101,7 @@ public:
     const DockWidgetBase::Options options;
     QAction *const toggleAction;
     LastPosition m_lastPosition;
+    bool m_updatingToggleAction = false;
 };
 
 DockWidgetBase::DockWidgetBase(const QString &name, Options options)
@@ -394,7 +396,8 @@ void DockWidgetBase::Private::toggle(bool enabled)
 
 void DockWidgetBase::Private::updateToggleAction()
 {
-    QSignalBlocker blocker(toggleAction);
+    QScopedValueRollback<bool> recursionGuard(m_updatingToggleAction, true); // Guard against recursiveness
+    m_updatingToggleAction = true;
     if ((q->isVisible() || parentTabWidget()) && !toggleAction->isChecked()) {
         toggleAction->setChecked(true);
     } else if ((!q->isVisible() && !parentTabWidget()) && toggleAction->isChecked()) {
