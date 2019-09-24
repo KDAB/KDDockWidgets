@@ -410,65 +410,67 @@ static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<T> &t
 
 QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
 {
-
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 
     QPoint globalPos = QCursor::pos();
     auto topLevels = qApp->topLevelWidgets();
-#if defined(Q_OS_WIN)
-    POINT globalNativePos;
-    if (!GetCursorPos(&globalNativePos))
-        return nullptr;
 
-    // There might be windows that don't belong to our app in between, so use win32 to travel by z-order.
-    // Another solution is to set a parent on all top-levels. But this code is orthogonal.
-    HWND hwnd = (HWND)m_windowBeingDragged->floatingWindow()->winId();
-    while (hwnd) {
-        hwnd = GetWindow(hwnd, GW_HWNDNEXT);
-        RECT r;
-        if (!GetWindowRect(hwnd, &r) || !IsWindowVisible(hwnd))
-            continue;
+    if (qApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
+# if defined(Q_OS_WIN)
+        POINT globalNativePos;
+        if (!GetCursorPos(&globalNativePos))
+            return nullptr;
 
-        if (!PtInRect(&r, globalNativePos)) // Check if window is under cursor
-            continue;
+        // There might be windows that don't belong to our app in between, so use win32 to travel by z-order.
+        // Another solution is to set a parent on all top-levels. But this code is orthogonal.
+        HWND hwnd = HWND(m_windowBeingDragged->floatingWindow()->winId());
+        while (hwnd) {
+            hwnd = GetWindow(hwnd, GW_HWNDNEXT);
+            RECT r;
+            if (!GetWindowRect(hwnd, &r) || !IsWindowVisible(hwnd))
+                continue;
 
-        if (auto tl = qtTopLevelForHWND(hwnd)) {
-            if (tl->geometry().contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
-                qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
-                return tl;
-            }
-        } else {
-            // Maybe it's embedded in a QWinWidget:
-            for (auto topLevel : topLevels) {
-                if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
-                    if (hwnd == GetParent((HWND)topLevel->windowHandle()->winId())) {
-                        if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos)) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
-                            qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
-                            return topLevel;
+            if (!PtInRect(&r, globalNativePos)) // Check if window is under cursor
+                continue;
+
+            if (auto tl = qtTopLevelForHWND(hwnd)) {
+                if (tl->geometry().contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
+                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
+                    return tl;
+                }
+            } else {
+                // Maybe it's embedded in a QWinWidget:
+                for (auto topLevel : topLevels) {
+                    if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
+                        if (hwnd == GetParent(HWND(topLevel->windowHandle()->winId()))) {
+                            if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos)) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
+                                qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
+                                return topLevel;
+                            }
                         }
                     }
                 }
-            }
 
-            // A window belonging to another app is below the cursor
-            qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
-            return nullptr;
+                // A window belonging to another app is below the cursor
+                qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
+                return nullptr;
+            }
         }
+# endif
+    } else {
+        // !Windows: Linux, macOS, offscreen (offscreen on Windows too), etc.
+
+        // On Linux we don't have API to check the z-order of top-levels. So first check the floating windows
+        // and check the MainWindow last, as the MainWindow will have lower z-order as it's a parent (TODO: How will it work with multiple MainWindows ?)
+        // The floating window list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
+
+        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->nestedwindows(), m_windowBeingDragged->floatingWindow()))
+            return tl;
+
+        return qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->mainwindows(), static_cast<MainWindowBase*>(nullptr));
     }
 #else
-
-    // On Linux we don't have API to check the z-order of top-levels. So first check the floating windows
-    // and check the MainWindow last, as the MainWindow will have lower z-order as it's a parent (TODO: How will it work with multiple MainWindows ?)
-    // The floating window list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
-
-    if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->nestedwindows(), m_windowBeingDragged->floatingWindow()))
-        return tl;
-
-    return qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->mainwindows(), static_cast<MainWindowBase*>(nullptr));
-
-#endif
-
-#else
+    // QtQuick:
     qWarning() << Q_FUNC_INFO << "Implement me!";
 #endif
 
