@@ -55,7 +55,11 @@ public:
     FrameworkWidgetFactory *m_frameworkWidgetFactory;
     Flags m_flags = Flag_Default;
     int m_separatorThickness = 5;
+#if defined(Q_OS_WIN)
+    int m_staticSeparatorThickness = 1; // FIXME: Broken on Windows still.
+#else
     int m_staticSeparatorThickness = 0;
+#endif
 };
 
 
