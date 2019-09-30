@@ -543,7 +543,7 @@ void DockWidgetBase::onClosed(QCloseEvent *e)
         d->close();
 }
 
-DockWidgetBase *DockWidgetBase::deserialize(LayoutSaver::DockWidget::Ptr saved)
+DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
 {
     DockWidgetBase *dw = DockRegistry::self()->dockByName(saved->uniqueName);
     if (!dw) {
