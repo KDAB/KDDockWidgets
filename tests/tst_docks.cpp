@@ -386,6 +386,7 @@ private Q_SLOTS:
 
     void tst_tabBarWithHiddenTitleBar_data();
     void tst_tabBarWithHiddenTitleBar();
+    void tst_toggleDockWidgetWithHiddenTitleBar();
     void tst_dragByTabBar_data();
     void tst_dragByTabBar();
     void tst_dragBySingleTab();
@@ -4123,6 +4124,24 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     } else {
         QVERIFY(d1->frame()->titleBar()->isVisible());
     }
+}
+
+void TestDocks::tst_toggleDockWidgetWithHiddenTitleBar()
+{
+    EnsureTopLevelsDeleted e;
+    Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
+    auto m = createMainWindow();
+
+    auto d1 = createDockWidget("1", new QTextEdit());
+    m->addDockWidget(d1, Location_OnTop);
+
+    QVERIFY(!d1->frame()->titleBar()->isVisible());
+
+    d1->toggleAction()->setChecked(false);
+    auto f1 = d1->frame();
+    waitForDeleted(f1);
+    d1->toggleAction()->setChecked(true);
+    QVERIFY(!d1->frame()->titleBar()->isVisible());
 }
 
 void TestDocks::tst_dragByTabBar_data()

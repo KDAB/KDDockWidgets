@@ -182,9 +182,6 @@ void Frame::onCurrentTabChanged(int index)
 
 void Frame::updateTitleBarVisibility()
 {
-    if (!m_dropArea)
-        return;
-
     bool visible = false;
     if (isCentralFrame()) {
         visible = false;
