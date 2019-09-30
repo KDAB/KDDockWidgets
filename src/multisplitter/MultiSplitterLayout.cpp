@@ -445,7 +445,7 @@ static Anchor::List removeSmallestPath(QVector<Anchor::List> &paths)
     Anchor::List smallestPath;
     int indexOfSmallest = 0;
     for (int i = 0, end = paths.size(); i < end; ++i) {
-        const Anchor::List path = paths.at(i);
+        const Anchor::List &path = paths.at(i);
         if (path.size() <= smallestPath.size() || smallestPath.isEmpty()) {
             smallestPath = path;
             indexOfSmallest = i;

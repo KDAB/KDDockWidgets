@@ -466,7 +466,7 @@ Frame *Frame::deserialize(const LayoutSaver::Frame &f)
     auto frame = Config::self().frameWorkWidgetFactory()->createFrame(/*parent=*/nullptr, Frame::Options(f.options));
     frame->setObjectName(f.objectName);
 
-    for (auto savedDock : qAsConst(f.dockWidgets)) {
+    for (const auto &savedDock : qAsConst(f.dockWidgets)) {
         if (DockWidgetBase *dw = DockWidgetBase::deserialize(savedDock)) {
             frame->addWidget(dw);
         }

@@ -219,12 +219,12 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     }
 
     // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties
-    for (auto dw : qAsConst(layout.closedDockWidgets)) {
+    for (const auto &dw : qAsConst(layout.closedDockWidgets)) {
         DockWidgetBase::deserialize(dw);
     }
 
     // 4. Restore the placeholder info, now that the Items have been created
-    for (auto dw : qAsConst(layout.allDockWidgets)) {
+    for (const auto &dw : qAsConst(layout.allDockWidgets)) {
         if (DockWidgetBase *dockWidget = d->m_dockRegistry->dockByName(dw->uniqueName)) {
             dockWidget->lastPosition()->deserialize(dw->lastPosition);
         } else {
