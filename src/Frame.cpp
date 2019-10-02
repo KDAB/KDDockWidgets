@@ -79,6 +79,9 @@ Frame::~Frame()
 
     qCDebug(creation) << "~Frame" << static_cast<void*>(this);
     DockRegistry::self()->unregisterFrame(this);
+
+    // Run some disconnects() too, so we don't receive signals during destruction:
+    setDropArea(nullptr);
 }
 
 void Frame::updateTitleAndIcon()
