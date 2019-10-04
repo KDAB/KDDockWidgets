@@ -23,7 +23,7 @@
 
 /**
  * @file
- * @brief Class to save and restore dock widget layouts.
+ * @brief Class to save and restore dockwidget layouts.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */

@@ -18,6 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file
+ * @brief Namespace-level methods related to registering QML types.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 namespace KDDockWidgets {
     void registerQmlTypes();
 }

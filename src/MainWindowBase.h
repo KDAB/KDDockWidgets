@@ -21,7 +21,7 @@
 
 /**
  * @file
- * @brief The MainWindow base class that's shared between QtWidgets and QtQuick stack
+ * @brief The MainWindow base-class that's shared between QtWidgets and QtQuick stack.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */

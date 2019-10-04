@@ -20,7 +20,7 @@
 
 /**
  * @file
- * @brief QMainWindow wrapper to enable KDDockWidgets support.
+ * @brief QMainWindow sub-class to enable KDDockWidgets support.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */

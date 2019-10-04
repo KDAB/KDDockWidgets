@@ -20,7 +20,7 @@
 
 /**
  * @file
- * @brief File with KDDockWidgets namespace-level enums.
+ * @brief File with KDDockWidgets namespace-level enums and methods.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */

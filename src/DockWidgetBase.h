@@ -20,7 +20,7 @@
 
 /**
  * @file
- * @brief Represents a dock widget.
+ * @brief A dock widget.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */

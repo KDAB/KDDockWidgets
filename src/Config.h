@@ -20,7 +20,7 @@
 
 /**
  * @file
- * @brief Application wide config to tune certain beahviours of the framework.
+ * @brief Application-wide config to tune certain behaviours of the framework.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */

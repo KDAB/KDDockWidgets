@@ -25,6 +25,13 @@
 # define KDDOCKWIDGETS_QTWIDGETS
 #endif
 
+/**
+ * @file
+ * @brief Abstraction for supporting both QtWidgets and QtQuick.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "widgets/QWidgetAdapter_widgets_p.h"
 #include <QMainWindow>
