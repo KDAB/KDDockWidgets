@@ -37,3 +37,5 @@ custom_titlebar
 libkddockwidgets.so
 *.depends
 kddockwidgets_basic_quick
+/src/KDDockWidgetsConfig.cmake
+/src/KDDockWidgetsConfigVersion.cmake
