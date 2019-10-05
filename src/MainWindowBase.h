@@ -44,6 +44,13 @@ class DropArea;
 class MultiSplitterLayout;
 class DropAreaWithCentralFrame;
 
+/**
+ * @brief The MainWindow base-class. MainWindow and MainWindowBase are only
+ * split in two so we can share some code with the QtQuick implementation,
+ * which also derives from MainWindowBase.
+ *
+ * Do not use instantiate directly in user code. Use MainWindow instead.
+ */
 class DOCKS_EXPORT MainWindowBase : public QMainWindowOrQuick
 {
     Q_OBJECT
@@ -53,10 +60,36 @@ public:
                             QWidgetOrQuick *parent = nullptr, Qt::WindowFlags flags = {});
 
     ~MainWindowBase() override;
-    void addDockWidgetAsTab(DockWidgetBase *);
-    void addDockWidget(DockWidgetBase *, KDDockWidgets::Location, DockWidgetBase *relativeTo = nullptr, AddingOption = {});
 
+    /**
+     * @brief Docks a DockWidget into the central frame, tabbed.
+     * @warning Requires that the MainWindow was constructed with MainWindowOption_HasCentralFrame option.
+     * @param The DockWidget to dock.
+     *
+     * @sa DockWidgetBase::addDockWidgetAsTab()
+     */
+    void addDockWidgetAsTab(DockWidgetBase *dockwidget);
+
+    /**
+     * @brief Docks a DockWidget into this main window.
+     * @param dockWidget
+     * @param location
+     * @param relativeTo
+     * @param option
+     */
+    void addDockWidget(DockWidgetBase *dockWidget,
+                       KDDockWidgets::Location location,
+                       DockWidgetBase *relativeTo = nullptr, AddingOption option = {});
+
+    /**
+     * @brief Returns the unique name that was passed via constructor.
+     *        Used internally by the save/restore mechanism.
+     * @internal
+     */
     QString uniqueName() const;
+
+
+    /// @brief Returns the main window options that were passed via constructor.
     MainWindowOptions options() const;
 
     ///@internal

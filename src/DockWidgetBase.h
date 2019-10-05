@@ -20,7 +20,7 @@
 
 /**
  * @file
- * @brief A dock widget.
+ * @brief The DockWidget base-class that's shared between QtWidgets and QtQuick stack.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
@@ -51,7 +51,11 @@ class TabWidget;
 class TitleBar;
 
 /**
- * @brief Represents a dock widget.
+ * @brief The DockWidget base-class. DockWidget and DockWidgetBase are only
+ * split in two so we can share some code with the QtQuick implementation,
+ * which also derives from DockWidgetBase.
+ *
+ * Do not use instantiate directly in user code. Use DockWidget instead.
  */
 class DOCKS_EXPORT DockWidgetBase : public QWidgetOrQuick
 {
@@ -59,17 +63,17 @@ class DOCKS_EXPORT DockWidgetBase : public QWidgetOrQuick
 public:
     typedef QVector<DockWidgetBase *> List;
 
+    ///@brief DockWidget options to pass at construction time
     enum Option {
-        Option_None = 0,
+        Option_None = 0, ///< No option, the default
         Option_NotClosable = 1 /// The DockWidget can't be closed on the [x], only programatically
     };
     Q_DECLARE_FLAGS(Options, Option)
 
     /**
-     * @brief constructs a new DockWidgets
+     * @brief constructs a new DockWidget
      * @param name the name of the dockwidget, should be unique. Use title for user visible text.
      * @param options optional options controlling behaviour
-     * @param parent optional QWidget parent, for ownership purposes
      *
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
@@ -79,80 +83,93 @@ public:
     ///@brief destructor
     ~DockWidgetBase() override;
 
+    /**
+     * @param Constructs a dock widget from its serialized form.
+     * @internal
+     */
     static DockWidgetBase *deserialize(const LayoutSaver::DockWidget::Ptr &);
+
+    /**
+     * @param Serializes this dock widget into an intermediate form
+     */
     LayoutSaver::DockWidget::Ptr serialize() const;
 
     /**
-     * @brief docks @p other widget into this one. Tabs will be shown.
+     * @brief docks @p other widget into this one. Tabs will be shown if not already.
      * @param other The other dock widget to dock into this one.
+     * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
     void addDockWidgetAsTab(DockWidgetBase *other);
 
     /**
      * @brief docks @p other widget into the window that contains this one.
+     *        Equivalent to @ref MainWindow::addDockWidge() with the difference
+     *        that it also supports the case where the top-level window is a
+     *        @ref FloatingWindow instead of @ref MainWindow.
+     *
      * @param other The other dock widget to dock into the window.
      * @param location The location to dock.
      * @param relativeTo The dock widget that the @p location is relative to. If null then the window is considered.
+     * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetAsTab()
      */
     void addDockWidgetToContainingWindow(DockWidgetBase *other, KDDockWidgets::Location location,
                                          DockWidgetBase *relativeTo = nullptr);
 
     /**
-     * @brief sets the widget which this dock widget contains
+     * @brief sets the widget which this dock widget hosts.
      * @param widget to show inside this dock widget
      */
     void setWidget(QWidget *widget);
 
     /**
-     * @brief the widget which this dock widget contains
-     * @returns the widget shown inside this dock widget
+     * @brief returns the widget which this dock widget hosts
      */
     QWidget *widget() const;
 
     /**
-     * @brief checks if the dock widget is floating. Floating means it's not docked and has a window of it's own.
-     * Note that if you dock a floating dock widget into another floating one then they don't count
-     * as floating anymore, as they are side by side (or tabbed).
-     * @returns true if the dock widget is floating.
+     * @brief Returns whether the dock widget is floating.
+     * Floating means it's not docked and has a window of its own.
+     * Note that if you dock a floating dock widget into another floating one
+     * then they don't count as floating anymore, as they are
+     * side-by-side (or tabbed).
      */
     bool isFloating() const;
 
     /**
      * @brief setter to make the dock widget float or dock.
-     * @param floats Makes the dock widget float or docks it.
+     * @param floats If true makes the dock widget float, otherwise docks it.
      */
     void setFloating(bool floats);
 
     /**
-     * @brief allows to to hide/show the dock widget via a QAction
-     * @return a QAction to toggle the visibility
+     * @brief Returns the QAction that allows to hide/show the dock widget
+     * Useful to put in menus.
      */
     QAction *toggleAction() const;
 
     /**
      * @brief the dock widget's unique name.
-     * @return the dock widget's unique name.
-     * @sa title
+     * @internal
      */
     QString uniqueName() const;
 
     /**
-     * @brief the dock widget's title.
-     * @return the dock widget's title.
-     * @sa name, setTitle
+     * @brief Returns the dock widget's title.
+     *        This title is visible in title bars and tab bars.
+     * @sa setTitle
      */
     QString title() const;
 
     /**
      * @brief setter for the dock widget's title
      * @param title the dock widget's new title
-     * @sa name, setTitle
+     * @sa setTitle
      */
     void setTitle(const QString &title);
 
     /**
-     * @brief the dock widget's options which control behaviour
-     * @return the dock widget's options
+     * @brief Returns the dock widget's options which control behaviour
+     *        These options were passed at construction time and are immutable.
      */
     Options options() const;
 
@@ -163,15 +180,14 @@ public:
      * it's not tabbed when there's only 1 dock widget, as there are no tabs displayed. Unless
      * the frame is using Option_AlwaysShowsTabs, in which case this method will return true regardless
      * if being the single one.
-     *
-     * @return true if this dock widget is tabbed into another
      */
     bool isTabbed() const;
 
     /**
-     * @brief Returns true if this dock widget is the current one in the tab widget that contains it.
-     *
-     * If the dock widget is alone then true is returned, as in this case there will also be a tab widget even though it's invisible.
+     * @brief Returns true if this dock widget is the current one in the tab
+     *        widget that contains it. If the dock widget is alone then true is
+     *        returned, as in this case there will also be a tab widget even
+     *        though it's invisible.
      */
     bool isCurrentTab() const;
 
@@ -181,26 +197,27 @@ public:
     void setAsCurrentTab();
 
     /**
-     * @brief Add an icon on titlebar.
+     * @brief Sets an icon to show on title bars and tab bars.
+     * By default none is shown.
      */
     void setIcon(const QIcon &icon);
 
     /**
-     * @return the dock widget's icon.
+     * @brief Returns the dock widget's icon.
      */
     QIcon icon() const;
 
     /**
-     * @brief Like QWidget::close() but the hosted widget won't be asked if we should close
+     * @brief Like QWidget::close() but the hosted widget won't be asked if we
+     * should close.
      */
     void forceClose();
-
 
     /**
      * @brief Returns this dock widget's title bar.
      *
-     * Note that several dock widgets can have the same title bar, in case they are tabbed.
-     * Hidden dock widgets have no title bar.
+     * Note that several dock widgets can have the same title bar, in case they are tabbed together.
+     * Hidden dock widgets have no associated title bar.
      */
     TitleBar *titleBar() const;
 
@@ -220,7 +237,7 @@ Q_SIGNALS:
     ///@brief signal emitted when the title changed
     void titleChanged();
 
-    ///@brief emitted when the widget changes,
+    ///@brief emitted when the hosted widget changed
     void widgetChanged(QWidget*);
 
 protected:

@@ -32,15 +32,29 @@
 
 namespace KDDockWidgets {
 
+/**
+ * @brief The QMainwindow sub-class that the application should use to be able
+ * to dock KDDockWidget::DockWidget instances.
+ */
 class DOCKS_EXPORT MainWindow : public MainWindowBase
 {
     Q_OBJECT
 public:
     typedef QVector<MainWindow*> List;
+
+    ///@brief Constructor. Use it as you would use QMainWindow.
+    ///@param uniqueName Mandatory name that should be unique between all MainWindow instances.
+    ///       This name won't be user visible and just used internally for the save/restore.
+    ///@param options optional MainWindowOptions to use
+    ///@param parent QObject *parent to pass to QMainWindow constructor.
+    ///@param flags Window flags to  pass to QMainWindow constructor.
     explicit MainWindow(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
                         QWidget *parent = nullptr, Qt::WindowFlags flags = {});
+
+    ///@brief Destructor
     ~MainWindow() override;
 
+    ///@internal
     DropAreaWithCentralFrame *dropArea() const override;
 
 private:

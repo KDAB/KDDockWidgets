@@ -34,23 +34,24 @@ namespace KDDockWidgets
 {
     enum Location {
         Location_None,
-        Location_OnLeft,
-        Location_OnTop,
-        Location_OnRight,
-        Location_OnBottom
+        Location_OnLeft, ///> Left docking location
+        Location_OnTop,  ///> Top docking location
+        Location_OnRight, ///> Right docking location
+        Location_OnBottom ///> Bottom docking location
     };
 
     enum MainWindowOption {
-        MainWindowOption_None = 0,
-        MainWindowOption_HasCentralFrame = 1
+        MainWindowOption_None = 0, ///> No option set
+        MainWindowOption_HasCentralFrame = 1 ///> Makes the MainWindow always have a central frame, for tabbing documents
     };
     Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 
     enum AddingOption {
-        AddingOption_None = 0,
+        AddingOption_None = 0, ///> No option set
         AddingOption_StartHidden ///< Don't show the dock widget when adding it
     };
 
+   ///@internal
    inline Location oppositeLocation(Location loc)
    {
        switch (loc) {
@@ -68,6 +69,7 @@ namespace KDDockWidgets
        }
    }
 
+   ///@internal
    inline Location adjacentLocation(Location loc)
    {
        switch (loc) {
@@ -85,6 +87,7 @@ namespace KDDockWidgets
        }
    }
 
+   ///@internal
    inline QString locationStr(Location loc)
    {
        switch (loc) {

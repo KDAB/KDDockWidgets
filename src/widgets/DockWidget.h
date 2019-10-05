@@ -45,12 +45,14 @@ class DOCKS_EXPORT DockWidget : public DockWidgetBase
 public:
     /**
      * @brief constructs a new DockWidget
-     * @param name the name of the dockwidget, should be unique. Use title for user visible text.
+     * @param uniqueName Mandatory name that should be unique between all DockWidget instances.
+     *        This name won't be user visible and just used internally for the save/restore.
+     *        Use setTitle() for user visible text.
      * @param options optional options controlling behaviour
-     * @param parent optional QWidget parent, for ownership purposes
      *
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
-     * when visible, or stays without a parent when hidden.
+     * when visible, or stays without a parent when hidden. This allows to support docking
+     * to different main windows.
      */
     explicit DockWidget(const QString &uniqueName, Options options = {});
 

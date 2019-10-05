@@ -43,7 +43,8 @@ typedef KDDockWidgets::DockWidgetBase* (*DockWidgetFactoryFunc)(const QString &n
 /**
  * @brief Singleton to allow to choose certain behaviours of the framework.
  *
- * The setters should only be used before creating a QApplication.
+ * The setters should only be used before creating any DockWidget or MainWindow,
+ * preferably right after creating the QApplication.
  */
 class DOCKS_EXPORT Config
 {
@@ -52,10 +53,12 @@ public:
     ///@brief returns the singleton Config instance
     static Config &self();
 
+    ///@brief destructor, called at shutdown
     ~Config();
 
+    ///@brief Flag enum to tune certain behaviours, the defaults are Flag_Default
     enum Flag {
-        Flag_None = 0,
+        Flag_None = 0, ///> No option set
         Flag_NativeTitleBar = 1, ///> Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise. This is mutually exclusive with Flag_AeroSnap
         Flag_AeroSnapWithClientDecos = 2, ///> Enables AeroSnap even if we're not using the native title bar. Only supported on Windows 10.
         Flag_HideTitleBarWhenTabsVisible = 8, ///> Hides the title bar if there's tabs visible. The empty space in the tab bar becomes draggable.
@@ -64,25 +67,32 @@ public:
     };
     Q_DECLARE_FLAGS(Flags, Flag)
 
-    ///@brief getter for the flags
+    ///@brief returns the chosen flags
     Flags flags() const;
 
-    ///@brief setter for the flags. Not all flags are guaranteed to be set, as the OS might not supported them
+    ///@brief setter for the flags
+    ///@param flags the flags to set
+    ///Not all flags are guaranteed to be set, as the OS might not supported them
     ///Call @ref flags() after the setter if you need to know what was really set
     void setFlags(Flags flags);
 
     /**
-     * @brief Registers the DockWidgetFactoryFunc. The default is nullptr, and is optional.
+     * @brief Registers a DockWidgetFactoryFunc.
      *
-     * A DockWidgetFactoryFunc is a function that receives a dock widget name and returns a DockWidget.
+     * This is optional, the default is nullptr.
      *
-     * When restoring @ref LayoutSaver requires all dock widgets to exist. If a DockWidget doesn't
-     * exist then a DockWidgetFactoryFunc function is required, so the layout saver can ask
-     * to create the DockWidget and then restore it.
+     * A DockWidgetFactoryFunc is a function that receives a dock widget name
+     * and returns a DockWidget instance.
+     *
+     * While restoring, @ref LayoutSaver requires all dock widgets to exist.
+     * If a DockWidget doesn't exist then a DockWidgetFactoryFunc function is
+     * required, so the layout saver can ask to create the DockWidget and then
+     * restore it.
      */
     void setDockWidgetFactoryFunc(DockWidgetFactoryFunc);
 
-    ///@brief Getter for the DockWidgetFactoryFunc. nullptr by default
+    ///@brief Returns the DockWidgetFactoryFunc.
+    ///nullptr by default
     DockWidgetFactoryFunc dockWidgetFactoryFunc() const;
 
     /**
@@ -96,23 +106,24 @@ public:
      * Ownership is taken.
      */
     void setFrameworkWidgetFactory(FrameworkWidgetFactory *);
+
+    ///@brief getter for the framework widget factory
     FrameworkWidgetFactory *frameWorkWidgetFactory() const;
 
     /**
      * @brief Returns the thickness of the separator.
      *
      * Returns the width if the separator is vertical, otherwise the height.
-     * If @p staticSeparator is true, then returns for the static separators. The static separators
-     * are the ones at the edges of the window (top, left, bottom, right).
+     * If @p staticSeparator is true, then returns for the static separators.
+     * The static separators are the ones at the edges of the window (top, left, bottom, right).
      *
-     * Default is 1px for static separators and 5px for normal separators.
+     * Default is 0px for static separators and 5px for normal separators.
      */
     int separatorThickness(bool staticSeparator) const;
 
     ///@brief setter for @ref separatorThickness
     ///Note: Only use this function at startup before creating any DockWidget or MainWindow.
     void setSeparatorThickness(int value, bool staticSeparator);
-
 
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
     void setQmlEngine(QQmlEngine *);

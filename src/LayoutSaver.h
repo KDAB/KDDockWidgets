@@ -39,7 +39,10 @@ class DockWidgetBase;
 class DOCKS_EXPORT LayoutSaver
 {
 public:
+    ///@brief Constructor. Construction on the stack is suggested.
     LayoutSaver();
+
+    ///@brief Destructor.
     ~LayoutSaver();
 
     ///@brief returns whether a restore (@ref restoreLayout) is in progress
@@ -57,19 +60,27 @@ public:
     bool restoreFromDisk();
 
     /**
-     * @brief saves the layout into a bytearray
+     * @brief saves the layout into a byte array
      */
     QByteArray serializeLayout() const;
 
     /**
-     * @brief restores the layout from a bytearray
-     * It's mandatory that all MainWindows and DockWidgets have been created before calling this function.
+     * @brief restores the layout from a byte array
+     * All MainWindows and DockWidgets should have been created before calling
+     * this function.
+     *
+     * If not all DockWidgets can be created beforehand then make sure to set
+     * a DockWidget factory via Config::setDockWidgetFactoryFunc()
+     *
+     * @sa Config::setDockWidgetFactoryFunc()
+     *
      * @return true on success
      */
     bool restoreLayout(const QByteArray &);
 
     /**
-     * @brief returns a list of dock widgets which were restored since the last @ref restoreLayout() or @ref restoreFromDisk()
+     * @brief returns a list of dock widgets which were restored since the last
+     * @ref restoreLayout() or @ref restoreFromDisk()
      *
      * Useful since some dock widgets can be new, and hence not be included in the last saved layout.
      */
