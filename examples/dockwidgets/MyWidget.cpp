@@ -18,7 +18,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ExampleDockableWidget.h"
+#include "MyWidget.h"
 
 #include <QVBoxLayout>
 #include <QGroupBox>

@@ -11,7 +11,8 @@ find_package(KDDockWidgets REQUIRED)
 
 add_executable(kddockwidgets_example
     main.cpp
-    ExampleDockableWidget.cpp
+    MyMainWindow.cpp
+    MyWidget.cpp
 )
 
 target_link_libraries(kddockwidgets_example

@@ -18,94 +18,17 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ExampleDockableWidget.h"
-#include <kddockwidgets/MainWindow.h>
-#include <kddockwidgets/LayoutSaver.h>
-#include <kddockwidgets/DockWidget.h>
+#include "MyWidget.h"
+#include "MyMainWindow.h"
+
 #include <kddockwidgets/Config.h>
 
-#include <QTextEdit>
-#include <QMenu>
-#include <QAction>
 #include <QStyleFactory>
 #include <QApplication>
 #include <QDebug>
-#include <QMenuBar>
 #include <QVBoxLayout>
 
 using namespace KDDockWidgets;
-
-DockWidgetBase::Options s_dockWidgetOptions = DockWidgetBase::Option_None; // DockWidget::Option_NotClosable;
-
-static MyWidget *newMyWidget()
-{
-    static int count = 0;
-    count++;
-    return new MyWidget();
-}
-
-
-class MyMainWindow : public MainWindow
-{
-    Q_OBJECT
-public:
-    MyMainWindow(MainWindowOptions options, QWidget *parent = nullptr)
-        : MainWindow(QStringLiteral("MyMainWindow"), options, parent)
-    {
-        // qApp->installEventFilter(this);
-
-        auto menubar = menuBar();
-        auto fileMenu = new QMenu(QStringLiteral("File"));
-        toggleMenu = new QMenu(QStringLiteral("Toggle"));
-        menubar->addMenu(fileMenu);
-        menubar->addMenu(toggleMenu);
-
-        QAction *newAction = fileMenu->addAction(QStringLiteral("New DockWidget"));
-        static int count = 0;
-        count++;
-        connect(newAction, &QAction::triggered, this, [] {
-            auto w = newMyWidget();
-            w->setGeometry(100, 100, 400, 400);
-            auto dock = new DockWidget(QStringLiteral("dock %1").arg(count));
-            dock->setWidget(w);
-            dock->resize(400, 400);
-            dock->show();
-        });
-
-        // newAction = fileMenu->addAction("Change MainWindow indicator style");
-
-        auto saveLayoutAction = fileMenu->addAction(QStringLiteral("Save Layout"));
-        connect(saveLayoutAction, &QAction::triggered, this, [] {
-            LayoutSaver saver;
-            const bool result = saver.saveToDisk();
-            qDebug() << "Saving layout to disk. Result=" << result;
-        });
-
-        auto restoreLayoutAction = fileMenu->addAction(QStringLiteral("Restore Layout"));
-        connect(restoreLayoutAction, &QAction::triggered, this, [] {
-            LayoutSaver saver;
-            saver.restoreFromDisk();
-        });
-    }
-
-    bool eventFilter(QObject *o, QEvent *ev) override
-    {
-        if (ev->type() == QEvent::MouseButtonPress ||
-            ev->type() == QEvent::MouseButtonRelease ||
-            //ev->type() == QEvent::MouseMove ||
-            ev->type() == QEvent::NonClientAreaMouseButtonPress ||
-            ev->type() == QEvent::NonClientAreaMouseButtonRelease ||
-            ev->type() == QEvent::NonClientAreaMouseMove)
-            qDebug() << "Mouse event: " << ev->type();
-
-        if (ev->type() == QEvent::Move)
-            qDebug() << "Move event " << window()->pos();
-
-        return KDDockWidgets::MainWindow::eventFilter(o, ev);
-    }
-
-    QMenu *toggleMenu;
-};
 
 int main(int argc, char **argv)
 {
@@ -136,33 +59,5 @@ int main(int argc, char **argv)
     window->resize(1000, 800);
     window->show();
 
-    auto example = newMyWidget();
-    auto dock = new DockWidget(QStringLiteral("foo"), s_dockWidgetOptions);
-    dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
-    dock->setWidget(example);
-    dock->setTitle(QStringLiteral("foo"));
-    example->winId(); // for testing native widgets too
-    dock->resize(400, 400);
-    dock->show();
-    mainWindow.toggleMenu->addAction(dock->toggleAction());
-
-    example = newMyWidget();
-    example->setGeometry(100, 100, 400, 400);
-    dock = new DockWidget(QStringLiteral("bar"), s_dockWidgetOptions);
-    dock->setWidget(example);
-    dock->resize(400, 400);
-    dock->show();
-    mainWindow.toggleMenu->addAction(dock->toggleAction());
-
-    auto textEdit = new QTextEdit();
-    textEdit->setText(QStringLiteral("Hello, this is the central document."));
-    dock = new DockWidget(QStringLiteral("doc 0"), s_dockWidgetOptions);
-    dock->setWidget(textEdit);
-    mainWindow.toggleMenu->addAction(dock->toggleAction());
-    if (!noCentralFrame)
-        mainWindow.addDockWidgetAsTab(dock);
-
     return app.exec();
 }
-
-#include "main.moc"
