@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.3)
 
-project(docks_example)
+project(kddockwidgets_example)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIRS ON)
@@ -9,12 +9,12 @@ set(CMAKE_INCLUDE_CURRENT_DIRS ON)
 # if you want to look for a specific version for instance.
 find_package(KDDockWidgets REQUIRED)
 
-add_executable(docks_example
+add_executable(kddockwidgets_example
     main.cpp
     ExampleDockableWidget.cpp
 )
 
-target_link_libraries(docks_example 
+target_link_libraries(kddockwidgets_example
     PRIVATE 
         KDAB::kddockwidgets
 )
