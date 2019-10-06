@@ -27,6 +27,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QVBoxLayout>
+#include <QCommandLineParser>
 
 using namespace KDDockWidgets;
 
@@ -35,16 +36,40 @@ int main(int argc, char **argv)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
-    //KDDockWidgets::Config::self().setFlags( KDDockWidgets::Config::Flags() | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
-    //KDDockWidgets::Config::self().setFlags( KDDockWidgets::Config::Flags() | KDDockWidgets::Config::Flag_AlwaysShowTabs);
+
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("Test app"));
+
+    QCommandLineParser parser;
+    parser.setApplicationDescription("KDDockWidgets example application");
+    parser.addHelpOption();
+
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
-    const bool embedded = app.arguments().contains(QStringLiteral("--embedded"));
-    const bool noCentralFrame = app.arguments().contains(QStringLiteral("--no-central"));
-    MainWindowOptions options = noCentralFrame ? MainWindowOption_None
-                                               : MainWindowOption_HasCentralFrame;
+    QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Never show titlebars"));
+    parser.addOption(noTitleBars);
+
+    /// For testing QMainWindow embedded in MFC
+    QCommandLineOption embeddedMainWindow("r", QCoreApplication::translate("main", "Embed main window"));
+    QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
+
+#if defined(DOCKS_DEVELOPER_MODE)
+    parser.addOption(embeddedMainWindow);
+    parser.addOption(noCentralFrame);
+#endif
+
+    parser.process(app);
+
+    bool embedded = false;
+    MainWindowOptions options = MainWindowOption_None;
+#if defined(DOCKS_DEVELOPER_MODE)
+    embedded = parser.isSet(embeddedMainWindow);
+    options = parser.isSet(noCentralFrame) ? MainWindowOption_None
+                                           : MainWindowOption_HasCentralFrame;
+#endif
+
+    if (parser.isSet(noTitleBars))
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flags() | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
 
     MyMainWindow mainWindow(options);
     QWidget *window;
