@@ -20,6 +20,7 @@
 
 #include "MyWidget.h"
 #include "MyMainWindow.h"
+#include "MyFrameworkWidgetFactory.h"
 
 #include <kddockwidgets/Config.h>
 
@@ -45,10 +46,11 @@ int main(int argc, char **argv)
 
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
+    QCommandLineOption customStyle("p", QCoreApplication::translate("main", "Shows how to style framework internals via FrameworkWidgetFactory"));
+    parser.addOption(customStyle);
+
     QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Never show titlebars"));
     parser.addOption(noTitleBars);
-
-
 
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
@@ -56,6 +58,13 @@ int main(int argc, char **argv)
 #endif
 
     parser.process(app);
+
+    if (parser.isSet(customStyle)) {
+        Config::self().setFrameworkWidgetFactory(new CustomWidgetFactory()); // Sets our custom factory
+
+        // Increase the separator size, just for demo
+        Config::self().setSeparatorThickness(10, /*static=*/ false);
+    }
 
     MainWindowOptions options = MainWindowOption_None;
 #if defined(DOCKS_DEVELOPER_MODE)

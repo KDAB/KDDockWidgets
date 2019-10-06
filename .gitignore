@@ -39,3 +39,4 @@ libkddockwidgets.so
 kddockwidgets_basic_quick
 /src/KDDockWidgetsConfig.cmake
 /src/KDDockWidgetsConfigVersion.cmake
+build-*
