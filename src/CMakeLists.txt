@@ -64,6 +64,10 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     widgets/QWidgetAdapter_widgets_p.h
     widgets/TitleBarWidget_p.h
     widgets/SeparatorWidget_p.h
+    widgets/FloatingWindowWidget_p.h
+    widgets/FrameWidget_p.h
+    widgets/TabBarWidget_p.h
+    widgets/TabWidgetWidget_p.h
 )
 
 if (OPTION_QTQUICK)
