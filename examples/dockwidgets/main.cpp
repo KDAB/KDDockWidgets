@@ -48,9 +48,10 @@ int main(int argc, char **argv)
     QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Never show titlebars"));
     parser.addOption(noTitleBars);
 
-    QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
+
 
 #if defined(DOCKS_DEVELOPER_MODE)
+    QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
 #endif
 
