@@ -44,7 +44,7 @@ Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, 
     , m_orientation(orientation)
     , m_type(type)
     , m_layout(multiSplitter)
-    , m_separatorWidget(Config::self().frameWorkWidgetFactory()->createSeparator(this, multiSplitter->multiSplitter()))
+    , m_separatorWidget(Config::self().frameworkWidgetFactory()->createSeparator(this, multiSplitter->multiSplitter()))
 {
     multiSplitter->insertAnchor(this);
     connect(this, &QObject::objectNameChanged, m_separatorWidget, &QObject::setObjectName);

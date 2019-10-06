@@ -40,7 +40,7 @@ using namespace KDDockWidgets;
  */
 DropArea::DropArea(QWidgetOrQuick *parent)
     : MultiSplitter(parent)
-    , m_dropIndicatorOverlay(Config::self().frameWorkWidgetFactory()->createDropIndicatorOverlay(this))
+    , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
 {
     qCDebug(creation) << "DropArea";
     connect(m_layout, &MultiSplitterLayout::aboutToDumpDebug,
@@ -120,11 +120,11 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
             // The frame only has this dock widget, and the frame is already in the layout. So move the frame instead
             frame = oldFrame;
         } else {
-            frame = Config::self().frameWorkWidgetFactory()->createFrame();
+            frame = Config::self().frameworkWidgetFactory()->createFrame();
             frame->addWidget(dw);
         }
     } else {
-        frame = Config::self().frameWorkWidgetFactory()->createFrame();
+        frame = Config::self().frameworkWidgetFactory()->createFrame();
         frame->addWidget(dw);
     }
 
@@ -241,7 +241,7 @@ bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location locat
     qCDebug(docking) << "DropArea::addFrame";
 
     if (auto dock = qobject_cast<DockWidgetBase *>(droppedWindow)) {
-        auto frame = Config::self().frameWorkWidgetFactory()->createFrame();
+        auto frame = Config::self().frameworkWidgetFactory()->createFrame();
         frame->addWidget(dock);
         m_layout->addWidget(frame, location, relativeTo);
     } else if (auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow)) {

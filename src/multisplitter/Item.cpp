@@ -366,7 +366,7 @@ void Item::restorePlaceholder(DockWidgetBase *dockWidget, int tabIndex)
 {
     qCDebug(placeholder) << Q_FUNC_INFO << "Restoring to window=" << window();
     if (d->m_isPlaceholder) {
-        d->setFrame(Config::self().frameWorkWidgetFactory()->createFrame(layout()->multiSplitter()));
+        d->setFrame(Config::self().frameworkWidgetFactory()->createFrame(layout()->multiSplitter()));
         d->m_frame->setGeometry(d->m_geometry);
     }
 

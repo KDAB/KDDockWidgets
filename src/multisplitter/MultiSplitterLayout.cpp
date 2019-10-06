@@ -385,7 +385,7 @@ void MultiSplitterLayout::addAsPlaceholder(DockWidgetBase *dockWidget, Location 
     auto result = createTargetAnchorGroup(location, relativeTo);
     AnchorGroup targetAnchorGroup = result.first;
 
-    auto frame = Config::self().frameWorkWidgetFactory()->createFrame(m_multiSplitter);
+    auto frame = Config::self().frameworkWidgetFactory()->createFrame(m_multiSplitter);
     auto item = new Item(frame, this);
 
     targetAnchorGroup.addItem(item);

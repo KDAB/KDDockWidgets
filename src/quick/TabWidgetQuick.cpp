@@ -34,7 +34,7 @@ using namespace KDDockWidgets;
 
 TabWidgetQuick::TabWidgetQuick(Frame *parent)
     : TabWidget(this, parent)
-    , m_tabBar(Config::self().frameWorkWidgetFactory()->createTabBar(this))
+    , m_tabBar(Config::self().frameworkWidgetFactory()->createTabBar(this))
 {
 }
 

@@ -113,7 +113,7 @@ void Config::setFrameworkWidgetFactory(FrameworkWidgetFactory *wf)
     d->m_frameworkWidgetFactory = wf;
 }
 
-FrameworkWidgetFactory *Config::frameWorkWidgetFactory() const
+FrameworkWidgetFactory *Config::frameworkWidgetFactory() const
 {
     return d->m_frameworkWidgetFactory;
 }

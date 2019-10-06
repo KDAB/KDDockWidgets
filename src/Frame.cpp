@@ -58,8 +58,8 @@ static Frame::Options actualOptions(Frame::Options options)
 
 Frame::Frame(QWidgetOrQuick *parent, Options options)
     : QWidgetAdapter(parent)
-    , m_tabWidget(Config::self().frameWorkWidgetFactory()->createTabWidget(this))
-    , m_titleBar(Config::self().frameWorkWidgetFactory()->createTitleBar(this))
+    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
+    , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_options(actualOptions(options))
 {
     s_dbg_numFrames++;
@@ -466,7 +466,7 @@ bool Frame::event(QEvent *e)
 
 Frame *Frame::deserialize(const LayoutSaver::Frame &f)
 {
-    auto frame = Config::self().frameWorkWidgetFactory()->createFrame(/*parent=*/nullptr, Frame::Options(f.options));
+    auto frame = Config::self().frameworkWidgetFactory()->createFrame(/*parent=*/nullptr, Frame::Options(f.options));
     frame->setObjectName(f.objectName);
 
     for (const auto &savedDock : qAsConst(f.dockWidgets)) {

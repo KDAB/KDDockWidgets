@@ -325,9 +325,9 @@ FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
         if (geo.isNull())
             geo = geometry();
 
-        auto frame = Config::self().frameWorkWidgetFactory()->createFrame();
+        auto frame = Config::self().frameworkWidgetFactory()->createFrame();
         frame->addWidget(this);
-        auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(frame);
+        auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(frame);
         floatingWindow->setGeometry(geo);
         floatingWindow->show();
 

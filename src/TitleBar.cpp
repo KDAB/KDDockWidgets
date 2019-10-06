@@ -126,7 +126,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     qCDebug(hovering) << "TitleBar::makeWindow original geometry" << r;
     r.moveTopLeft(m_frame->mapToGlobal(QPoint(0, 0)));
 
-    auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(m_frame);
+    auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(m_frame);
     floatingWindow->setGeometry(r);
     floatingWindow->show();
     qCDebug(hovering) << "TitleBar::makeWindow setting geometry" << r << "actual=" << floatingWindow->geometry();

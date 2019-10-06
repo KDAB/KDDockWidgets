@@ -108,7 +108,7 @@ public:
     void setFrameworkWidgetFactory(FrameworkWidgetFactory *);
 
     ///@brief getter for the framework widget factory
-    FrameworkWidgetFactory *frameWorkWidgetFactory() const;
+    FrameworkWidgetFactory *frameworkWidgetFactory() const;
 
     /**
      * @brief Returns the thickness of the separator.

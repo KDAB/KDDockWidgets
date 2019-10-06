@@ -211,7 +211,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         QWidget *parent = fw.parentIndex == -1 ? nullptr
                                                : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
-        auto floatingWindow = Config::self().frameWorkWidgetFactory()->createFloatingWindow(parent);
+        auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(parent);
         d->deserializeWindowGeometry(fw, floatingWindow);
         if (!floatingWindow->deserialize(fw)) {
             return false;
