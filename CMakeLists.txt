@@ -47,5 +47,6 @@ if (OPTION_DEVELOPER_MODE)
         add_subdirectory(tests)
     endif()
 
-    add_subdirectory(examples)
+    # examples use <kddockwidget/ qualified includes so need to be installed first
+    # add_subdirectory(examples)
 endif()
