@@ -26,7 +26,6 @@
 #include <QStyleFactory>
 #include <QApplication>
 #include <QDebug>
-#include <QVBoxLayout>
 #include <QCommandLineParser>
 
 using namespace KDDockWidgets;
@@ -49,21 +48,16 @@ int main(int argc, char **argv)
     QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Never show titlebars"));
     parser.addOption(noTitleBars);
 
-    /// For testing QMainWindow embedded in MFC
-    QCommandLineOption embeddedMainWindow("r", QCoreApplication::translate("main", "Embed main window"));
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
 
 #if defined(DOCKS_DEVELOPER_MODE)
-    parser.addOption(embeddedMainWindow);
     parser.addOption(noCentralFrame);
 #endif
 
     parser.process(app);
 
-    bool embedded = false;
     MainWindowOptions options = MainWindowOption_None;
 #if defined(DOCKS_DEVELOPER_MODE)
-    embedded = parser.isSet(embeddedMainWindow);
     options = parser.isSet(noCentralFrame) ? MainWindowOption_None
                                            : MainWindowOption_HasCentralFrame;
 #endif
@@ -72,17 +66,8 @@ int main(int argc, char **argv)
         KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flags() | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
 
     MyMainWindow mainWindow(options);
-    QWidget *window;
-    if (embedded) {
-        window = new QWidget();
-        auto lay = new QVBoxLayout(window);
-        lay->addWidget(&mainWindow);
-    } else {
-        window = &mainWindow;
-    }
-
-    window->resize(1000, 800);
-    window->show();
+    mainWindow.resize(1000, 800);
+    mainWindow.show();
 
     return app.exec();
 }
