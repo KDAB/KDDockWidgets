@@ -170,7 +170,7 @@ install (TARGETS kddockwidgets
          LIBRARY DESTINATION lib
          ARCHIVE DESTINATION lib)
 install (FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
-install (FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/widgets)
+install (FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
