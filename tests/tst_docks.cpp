@@ -408,7 +408,7 @@ static EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
     static int count = 0;
     count++;
     // Tests a MainWindow which isn't a top-level window, but is embedded in another window
-    auto mainwindow = new MainWindow(QString("MyMainWindow%1").arg(count));
+    auto mainwindow = new MainWindow(QString("MyMainWindow%1").arg(count), MainWindowOption_HasCentralFrame);
 
     auto window = new EmbeddedWindow(mainwindow);
     auto lay = new QVBoxLayout(window);
@@ -643,7 +643,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     // 2.7 Drop the window into a MainWindow
     {
-        MainWindow m("MyMainWindow_tst_dock2FloatingWidgetsTabbed");
+        MainWindow m("MyMainWindow_tst_dock2FloatingWidgetsTabbed", MainWindowOption_HasCentralFrame);
         m.show();
         m.setGeometry(500, 300, 300, 300);
         QVERIFY(!dock3->isFloating());
@@ -2574,7 +2574,7 @@ void TestDocks::tst_crash2()
 
     {
         EnsureTopLevelsDeleted e;
-        auto m = new MainWindow("m1");
+        auto m = new MainWindow("m1", MainWindowOption_HasCentralFrame);
         auto layout = m->multiSplitterLayout();
         m->show();
 
@@ -4041,7 +4041,7 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
         auto em = createEmbeddedMainWindow(QSize(500, 500));
         m = em->mainWindow;
     } else {
-        m =new MainWindow("m1");
+        m =new MainWindow("m1", MainWindowOption_HasCentralFrame);
         m->resize(QSize(500, 500));
         m->show();
     }
@@ -4212,7 +4212,7 @@ void TestDocks::tst_dragBySingleTab()
 void TestDocks::tst_addToHiddenMainWindow()
 {
     EnsureTopLevelsDeleted e;
-    auto m = new MainWindow("m1");
+    auto m = new MainWindow("m1", MainWindowOption_HasCentralFrame);
     auto w1 = new MyWidget2(QSize(400,400));
     auto w2 = new MyWidget2(QSize(400,400));
     auto d1 = createDockWidget("1", w1);
@@ -4361,7 +4361,7 @@ void TestDocks::tst_complex()
 void TestDocks::tst_titlebar_getter()
 {
     EnsureTopLevelsDeleted e;
-    auto m = new MainWindow("m1");
+    auto m = new MainWindow("m1", MainWindowOption_HasCentralFrame);
     m->resize(QSize(500, 500));
     m->show();
 
@@ -4410,7 +4410,7 @@ void TestDocks::tst_rectForDropCrash()
     // Tests a crash I got in MultiSplitterLayout::rectForDrop() (asserts being hit)
     EnsureTopLevelsDeleted e;
 
-    auto m = new MainWindow("m1");
+    auto m = new MainWindow("m1", MainWindowOption_HasCentralFrame);
     m->resize(QSize(500, 500));
     m->show();
 
