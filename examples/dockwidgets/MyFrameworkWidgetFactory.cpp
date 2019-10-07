@@ -20,7 +20,7 @@
 
 #include "MyFrameworkWidgetFactory.h"
 #include <kddockwidgets/FrameworkWidgetFactory.h>
-#include <kddockwidgets/widgets/SeparatorWidget_p.h>
+//#include <kddockwidgets/widgets/SeparatorWidget_p.h>
 #include <QApplication>
 
 class MyTitleBar : public KDDockWidgets::TitleBar
@@ -60,6 +60,7 @@ public:
     }
 };
 
+/*
 // Inheriting from SeparatorWidget instead of Separator as it handles moving and mouse cursor changing
 class MySeparator : public KDDockWidgets::SeparatorWidget
 {
@@ -76,6 +77,7 @@ public:
         p.fillRect(rect(), isStatic() ? Qt::black : Qt::cyan);
     }
 };
+*/
 
 KDDockWidgets::TitleBar * CustomWidgetFactory::createTitleBar(KDDockWidgets::Frame *frame) const
 {
@@ -86,9 +88,10 @@ KDDockWidgets::TitleBar * CustomWidgetFactory::createTitleBar(KDDockWidgets::Flo
 {
     return new MyTitleBar(fw);
 }
-
+/*
 KDDockWidgets::Separator * CustomWidgetFactory::createSeparator(KDDockWidgets::Anchor *anchor,
                                                                 KDDockWidgets::QWidgetAdapter *parent) const
 {
     return new MySeparator(anchor, parent);
 }
+*/

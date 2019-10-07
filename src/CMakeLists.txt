@@ -52,13 +52,20 @@ set(DOCKS_INSTALLABLE_INCLUDES
     Config.h
     FrameworkWidgetFactory.h
     DockWidgetBase.h
-    Draggable_p.h
     KDDockWidgets.h
     QWidgetAdapter.h
     LayoutSaver.h
-    Frame_p.h
-    TitleBar_p.h
+    LayoutSaver_p.h
     )
+
+
+set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
+    Draggable_p.h
+    DropIndicatorOverlayInterface_p.h
+    FloatingWindow_p.h
+    Frame_p.h
+    TabWidget_p.h
+    TitleBar_p.h)
 
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     widgets/QWidgetAdapter_widgets_p.h
@@ -170,6 +177,7 @@ install (TARGETS kddockwidgets
          LIBRARY DESTINATION lib
          ARCHIVE DESTINATION lib)
 install (FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
+install (FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION include/kddockwidgets/private)
 install (FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
 
 include(CMakePackageConfigHelpers)
