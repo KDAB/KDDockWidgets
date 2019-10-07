@@ -22,8 +22,8 @@
 #define KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_H
 
 #include "docks_export.h"
+#include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
-#include "Frame_p.h"
 
 /**
  * @file
@@ -73,7 +73,7 @@ public:
     ///       DockWidgets.
     ///@param parent just forward to Frame's constructor
     ///@param options just forward to Frame's constructor
-    virtual Frame* createFrame(QWidgetOrQuick *parent = nullptr, Frame::Options = Frame::Option_None) const = 0;
+    virtual Frame* createFrame(QWidgetOrQuick *parent = nullptr, FrameOptions = FrameOption_None) const = 0;
 
     ///@brief Called internally by the framework to create a TitleBar
     ///       Override to provide your own TitleBar sub-class. If overridden then
@@ -129,7 +129,7 @@ public:
 class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
 {
 public:
-    Frame *createFrame(QWidgetOrQuick *parent, Frame::Options) const override;
+    Frame *createFrame(QWidgetOrQuick *parent, FrameOptions) const override;
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
     TabBar *createTabBar(TabWidget *parent) const override;

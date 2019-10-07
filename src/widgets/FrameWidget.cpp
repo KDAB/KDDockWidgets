@@ -56,7 +56,7 @@ public:
 
 VBoxLayout::~VBoxLayout() = default;
 
-FrameWidget::FrameWidget(QWidget *parent, Options options)
+FrameWidget::FrameWidget(QWidget *parent, FrameOptions options)
     : Frame(parent, options)
 {
     auto vlayout = new VBoxLayout(this);

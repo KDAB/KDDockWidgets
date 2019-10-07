@@ -47,16 +47,16 @@ static int s_dbg_numFrames = 0;
 using namespace KDDockWidgets;
 
 namespace KDDockWidgets {
-static Frame::Options actualOptions(Frame::Options options)
+static FrameOptions actualOptions(FrameOptions options)
 {
     if (Config::self().flags() & Config::Flag_AlwaysShowTabs)
-        options |= Frame::Option_AlwaysShowsTabs;
+        options |= FrameOption_AlwaysShowsTabs;
 
     return options;
 }
 }
 
-Frame::Frame(QWidgetOrQuick *parent, Options options)
+Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     : QWidgetAdapter(parent)
     , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
@@ -165,7 +165,7 @@ void Frame::onDockWidgetCountChanged()
         updateTitleBarVisibility();
 
         // We don't really keep track of the state, so emit even if the visibility didn't change. No biggie.
-        if (!(m_options & Option_AlwaysShowsTabs))
+        if (!(m_options & FrameOption_AlwaysShowsTabs))
             Q_EMIT hasTabsVisibleChanged();
     }
 
@@ -466,7 +466,7 @@ bool Frame::event(QEvent *e)
 
 Frame *Frame::deserialize(const LayoutSaver::Frame &f)
 {
-    auto frame = Config::self().frameworkWidgetFactory()->createFrame(/*parent=*/nullptr, Frame::Options(f.options));
+    auto frame = Config::self().frameworkWidgetFactory()->createFrame(/*parent=*/nullptr, FrameOptions(f.options));
     frame->setObjectName(f.objectName);
 
     for (const auto &savedDock : qAsConst(f.dockWidgets)) {

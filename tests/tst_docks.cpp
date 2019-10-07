@@ -1433,7 +1433,7 @@ void TestDocks::tst_restoreCentralFrame()
     QCOMPARE(layout->count(), 1);
     Item *item = m->dropArea()->centralFrame();
     QVERIFY(item);
-    QCOMPARE(item->frame()->options(), Frame::Option_IsCentralFrame | Frame::Option_AlwaysShowsTabs);
+    QCOMPARE(item->frame()->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!item->frame()->titleBar()->isVisible());
 
     LayoutSaver saver;
@@ -1443,7 +1443,7 @@ void TestDocks::tst_restoreCentralFrame()
     QCOMPARE(layout->count(), 1);
     item = m->dropArea()->centralFrame();
     QVERIFY(item);
-    QCOMPARE(item->frame()->options(), Frame::Option_IsCentralFrame | Frame::Option_AlwaysShowsTabs);
+    QCOMPARE(item->frame()->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!item->frame()->titleBar()->isVisible());
 }
 

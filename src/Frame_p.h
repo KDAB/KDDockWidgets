@@ -63,15 +63,8 @@ class DOCKS_EXPORT Frame : public QWidgetAdapter
     Q_PROPERTY(KDDockWidgets::TitleBar* titleBar READ titleBar CONSTANT)
 public:
     typedef QList<Frame *> List;
-    typedef int Options;
-    enum Option {
-        Option_None = 0,
-        Option_AlwaysShowsTabs = 1,
-        Option_IsCentralFrame = 2
-    };
-    Q_ENUM(Option)
 
-    explicit Frame(QWidgetOrQuick *parent = nullptr, Options = Option_None);
+    explicit Frame(QWidgetOrQuick *parent = nullptr, FrameOptions = FrameOption_None);
     ~Frame() override;
 
     static Frame *deserialize(const LayoutSaver::Frame &);
@@ -130,7 +123,7 @@ public:
      *
      * @return whether this widget is the central frame in a main window
      */
-    bool isCentralFrame() const { return m_options & Option_IsCentralFrame; }
+    bool isCentralFrame() const { return m_options & FrameOption_IsCentralFrame; }
 
     /**
      * @brief whether the tab widget will always show tabs, even if there's only 1 dock widget
@@ -141,7 +134,7 @@ public:
      *
      * @return whether the tab widget will always show tabs, even if there's only 1 dock widget
      */
-    bool alwaysShowsTabs() const { return m_options & Option_AlwaysShowsTabs; }
+    bool alwaysShowsTabs() const { return m_options & FrameOption_AlwaysShowsTabs; }
 
 
     /// @brief returns the number of dock widgets inside the frame
@@ -169,7 +162,7 @@ public:
 
     DockWidgetBase *currentDockWidget() const;
 
-    Options options() const { return m_options; }
+    FrameOptions options() const { return m_options; }
     bool anyNonClosable() const;
 
 
@@ -226,7 +219,7 @@ private:
     TabWidget *const m_tabWidget;
     TitleBar *const m_titleBar;
     DropArea *m_dropArea = nullptr;
-    const Options m_options;
+    const FrameOptions m_options;
     QPointer<Item> m_layoutItem;
     bool m_beingDeleted = false;
 };

@@ -51,7 +51,7 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, Frame::Options options) const
+Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options) const
 {
     return new FrameWidget(parent, options);
 }

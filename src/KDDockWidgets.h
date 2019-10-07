@@ -51,6 +51,14 @@ namespace KDDockWidgets
         AddingOption_StartHidden ///< Don't show the dock widget when adding it
     };
 
+    ///@internal
+    enum FrameOption {
+        FrameOption_None = 0,
+        FrameOption_AlwaysShowsTabs = 1,
+        FrameOption_IsCentralFrame = 2
+    };
+    Q_DECLARE_FLAGS(FrameOptions, FrameOption)
+
    ///@internal
    inline Location oppositeLocation(Location loc)
    {
