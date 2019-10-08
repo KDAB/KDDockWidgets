@@ -102,6 +102,7 @@ public:
     QAction *const toggleAction;
     LastPosition m_lastPosition;
     bool m_updatingToggleAction = false;
+    bool m_isForceClosing = false;
 };
 
 DockWidgetBase::DockWidgetBase(const QString &name, Options options)
@@ -301,6 +302,7 @@ QIcon DockWidgetBase::icon() const
 
 void DockWidgetBase::forceClose()
 {
+    QScopedValueRollback<bool> rollback(d->m_isForceClosing, true);
     d->close();
 }
 
@@ -427,8 +429,9 @@ TabWidget *DockWidgetBase::Private::parentTabWidget() const
 
 void DockWidgetBase::Private::close()
 {
-    if (q->isFloating())
+    if (!m_isForceClosing && q->isFloating()) { // only user-closing is interesting to save the geometry
         m_lastPosition.setLastFloatingGeometry(q->window()->geometry());
+    }
 
     qCDebug(hiding) << "DockWidget::close" << this;
     saveTabIndex();

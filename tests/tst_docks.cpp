@@ -397,6 +397,7 @@ private Q_SLOTS:
     void tst_titlebar_getter();
     void tst_staticAnchorThickness_data();
     void tst_staticAnchorThickness();
+    void tst_honourGeometryOfHiddenWindow();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -4403,6 +4404,28 @@ void TestDocks::tst_staticAnchorThickness()
     m->addDockWidget(d2, Location_OnRight);
 
     delete m;
+}
+
+void TestDocks::tst_honourGeometryOfHiddenWindow()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto d1 = new DockWidget("1");
+    d1->setWidget(new QTextEdit());
+
+    QVERIFY(!d1->isVisible());
+
+    // Clear had a bug where it saved the position of all dock widgets being closed
+    DockRegistry::self()->clear();
+
+    const QRect suggestedGeo(150, 150, 250, 250);
+    d1->setGeometry(suggestedGeo);
+
+    d1->show();
+    waitForEvent(d1, QEvent::Show);
+
+    QCOMPARE( d1->window()->geometry(), suggestedGeo);
+    delete d1->window();
 }
 
 void TestDocks::tst_rectForDropCrash()
