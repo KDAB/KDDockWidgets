@@ -116,5 +116,6 @@ namespace KDDockWidgets
 }
 
 Q_DECLARE_METATYPE(KDDockWidgets::Location)
+Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
 
 #endif
