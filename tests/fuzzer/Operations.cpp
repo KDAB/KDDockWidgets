@@ -31,8 +31,9 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;
 using namespace KDDockWidgets::Testing::Operations;
 
-OperationBase::OperationBase(KDDockWidgets::Testing::Operations::OperationType type)
+OperationBase::OperationBase(KDDockWidgets::Testing::Operations::OperationType type, Fuzzer *fuzzer)
     : m_operationType(type)
+    , m_fuzzer(fuzzer)
 {
 
 }
@@ -56,16 +57,14 @@ MainWindowBase *OperationBase::mainWindowByName(const QString &name) const
     return DockRegistry::self()->mainWindowByName(name);
 }
 
-CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(const QString &dockWidgetName)
-    : OperationBase(OperationType_CloseViaDockWidgetAPI)
-    , m_dockWidgetName(dockWidgetName)
+CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(Fuzzer *fuzzer)
+    : OperationBase(OperationType_CloseViaDockWidgetAPI, fuzzer)
 {
 }
 
 void CloseViaDockWidgetAPI::execute_impl()
 {
-    qDebug() << Q_FUNC_INFO << "Closing" << m_dockWidgetName;
-    if (auto dw = dockByName(m_dockWidgetName)) {
+    if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
         auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->close();
         if (fw && fw->beingDeleted())
@@ -74,16 +73,14 @@ void CloseViaDockWidgetAPI::execute_impl()
     }
 }
 
-HideViaDockWidgetAPI::HideViaDockWidgetAPI(const QString &dockWidgetName)
-    : OperationBase(OperationType_HideViaDockWidgetAPI)
-    , m_dockWidgetName(dockWidgetName)
+HideViaDockWidgetAPI::HideViaDockWidgetAPI(Fuzzer *fuzzer)
+    : OperationBase(OperationType_HideViaDockWidgetAPI, fuzzer)
 {
 }
 
 void HideViaDockWidgetAPI::execute_impl()
 {
-    qDebug() << Q_FUNC_INFO << "Hidding" << m_dockWidgetName;
-    if (auto dw = dockByName(m_dockWidgetName)) {
+    if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
         auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->hide();
         if (fw && fw->beingDeleted())
@@ -91,22 +88,19 @@ void HideViaDockWidgetAPI::execute_impl()
     }
 }
 
-ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(const QString &dockWidgetName)
-    : OperationBase(OperationType_ShowViaDockWidgetAPI)
-    , m_dockWidgetName(dockWidgetName)
+ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(Fuzzer *fuzzer)
+    : OperationBase(OperationType_ShowViaDockWidgetAPI, fuzzer)
 {
 }
 
 void ShowViaDockWidgetAPI::execute_impl()
 {
-    qDebug() << Q_FUNC_INFO << "Showing" << m_dockWidgetName;
-    if (auto dw = dockByName(m_dockWidgetName))
+    if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget())
         dw->show();
 }
 
 AddDockWidget::AddDockWidget(Fuzzer *fuzzer)
-    : OperationBase(OperationType_AddDockWidget)
-    , m_fuzzer(fuzzer)
+    : OperationBase(OperationType_AddDockWidget, fuzzer)
 {
 }
 

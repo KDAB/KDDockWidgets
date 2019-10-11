@@ -57,7 +57,7 @@ class OperationBase {
 public:
     typedef std::shared_ptr<OperationBase> Ptr;
     typedef QVector<OperationBase::Ptr> List;
-    explicit OperationBase(OperationType);
+    explicit OperationBase(OperationType, Fuzzer *);
     virtual ~OperationBase();
 
     void execute();
@@ -65,38 +65,36 @@ protected:
     virtual void execute_impl() = 0;
     DockWidgetBase* dockByName(const QString &) const;
     MainWindowBase* mainWindowByName(const QString &) const;
-private:
+
     const OperationType m_operationType;
+    Fuzzer *const m_fuzzer;
 };
 
 class CloseViaDockWidgetAPI : public OperationBase
 {
 public:
-    CloseViaDockWidgetAPI(const QString &dockWidgetName);
+    explicit CloseViaDockWidgetAPI(Fuzzer *);
 
 protected:
     void execute_impl() override;
-    const QString m_dockWidgetName;
 };
 
 class HideViaDockWidgetAPI : public OperationBase
 {
 public:
-    HideViaDockWidgetAPI(const QString &dockWidgetName);
+    explicit HideViaDockWidgetAPI(Fuzzer *);
 
 protected:
     void execute_impl() override;
-    const QString m_dockWidgetName;
 };
 
 class ShowViaDockWidgetAPI : public OperationBase
 {
 public:
-    ShowViaDockWidgetAPI(const QString &dockWidgetName);
+    explicit ShowViaDockWidgetAPI(Fuzzer *);
 
 protected:
     void execute_impl() override;
-    const QString m_dockWidgetName;
 };
 
 class AddDockWidget : public OperationBase
@@ -106,8 +104,6 @@ public:
 
 protected:
     void execute_impl() override;
-private:
-    Fuzzer *const m_fuzzer;
 };
 
 }

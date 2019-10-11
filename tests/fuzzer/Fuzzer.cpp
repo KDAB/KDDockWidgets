@@ -236,18 +236,6 @@ QPoint Fuzzer::getRandomPos()
     return {x, y};
 }
 
-QString Fuzzer::getRandomDockName()
-{
-    const int numDockWidgets = DockRegistry::self()->dockwidgets().size();
-    if (numDockWidgets == 0)
-        return QString();
-
-    std::uniform_int_distribution<> dockWidgetDistrib(0, numDockWidgets - 1);
-    int index = dockWidgetDistrib(m_randomEngine);
-    return DockRegistry::self()->dockwidgets().at(index)->uniqueName();
-
-}
-
 OperationBase::Ptr Fuzzer::getRandomOperation()
 {
     Testing::Operations::OperationBase::Ptr operation;
@@ -257,13 +245,13 @@ OperationBase::Ptr Fuzzer::getRandomOperation()
 
     switch (operationType) {
     case OperationType_CloseViaDockWidgetAPI:
-        operation = OperationBase::Ptr(new CloseViaDockWidgetAPI(getRandomDockName()));
+        operation = OperationBase::Ptr(new CloseViaDockWidgetAPI(this));
         break;
     case OperationType_HideViaDockWidgetAPI:
-        operation = OperationBase::Ptr(new HideViaDockWidgetAPI(getRandomDockName()));
+        operation = OperationBase::Ptr(new HideViaDockWidgetAPI(this));
         break;
     case OperationType_ShowViaDockWidgetAPI:
-        operation = OperationBase::Ptr(new ShowViaDockWidgetAPI(getRandomDockName()));
+        operation = OperationBase::Ptr(new ShowViaDockWidgetAPI(this));
         break;
     case OperationType_AddDockWidget:
         operation = OperationBase::Ptr(new AddDockWidget(this));

@@ -104,7 +104,6 @@ public:
 
     QPoint getRandomPos();
 
-    QString getRandomDockName();
     Operations::OperationBase::Ptr getRandomOperation();
 
     Fuzzer::Test generateRandomTest();
