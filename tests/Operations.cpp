@@ -45,6 +45,16 @@ void OperationBase::execute()
     execute_impl();
 }
 
+DockWidgetBase *OperationBase::dockByName(const QString &name) const
+{
+    return DockRegistry::self()->dockByName(name);
+}
+
+MainWindowBase *OperationBase::mainWindowByName(const QString &name) const
+{
+    return DockRegistry::self()->mainWindowByName(name);
+}
+
 CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(const QString &dockWidgetName)
     : OperationBase(OperationType_CloseViaDockWidgetAPI)
     , m_dockWidgetName(dockWidgetName)
@@ -53,10 +63,10 @@ CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(const QString &dockWidgetName)
 
 void CloseViaDockWidgetAPI::execute_impl()
 {
-    if (auto dw = DockRegistry::self()->dockByName(m_dockWidgetName)) {
+    if (auto dw = dockByName(m_dockWidgetName)) {
         auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->close();
-        if (fw)
+        if (fw && fw->beingDeleted())
             Testing::waitForDeleted(fw);
 
     }
@@ -70,10 +80,10 @@ HideViaDockWidgetAPI::HideViaDockWidgetAPI(const QString &dockWidgetName)
 
 void HideViaDockWidgetAPI::execute_impl()
 {
-    if (auto dw = DockRegistry::self()->dockByName(m_dockWidgetName)) {
+    if (auto dw = dockByName(m_dockWidgetName)) {
         auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->hide();
-        if (fw)
+        if (fw && fw->beingDeleted())
             Testing::waitForDeleted(fw);
     }
 }
@@ -86,6 +96,24 @@ ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(const QString &dockWidgetName)
 
 void ShowViaDockWidgetAPI::execute_impl()
 {
-    if (auto dw = DockRegistry::self()->dockByName(m_dockWidgetName))
+    if (auto dw = dockByName(m_dockWidgetName))
         dw->show();
+}
+
+AddDockWidget::AddDockWidget()
+    : OperationBase(OperationType_AddDockWidget)
+{
+}
+
+void AddDockWidget::execute_impl()
+{
+  /*  const AddDockWidgetParams params = m_paramsFunc();
+    MainWindowBase *mainWindow = mainWindowByName(params.mainWindowName);
+    DockWidgetBase *dw = dockByName(params.dockWidgetName);
+    DockWidgetBase *relativeTo = dockByName(params.dockWidgetRelativeToName);
+
+    auto fw = qobject_cast<FloatingWindow*>(dw->window());
+    mainWindow->addDockWidget(dw, params.location, relativeTo, params.addingOption);
+    if (fw && fw->beingDeleted())
+        Testing::waitForDeleted(fw);*/
 }

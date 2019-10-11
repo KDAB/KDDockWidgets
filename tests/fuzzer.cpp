@@ -146,6 +146,9 @@ public:
         case OperationType_ShowViaDockWidgetAPI:
             operation = OperationBase::Ptr(new ShowViaDockWidgetAPI(getRandomDockName()));
             break;
+        case OperationType_AddDockWidget:
+            operation = OperationBase::Ptr(new AddDockWidget());
+            break;
         default:
             qFatal("Doesn't happen");
         }

@@ -24,6 +24,8 @@
 #ifndef KDDOCKWIDGETS_TESTING_OPERATIONS_H
 #define KDDOCKWIDGETS_TESTING_OPERATIONS_H
 
+#include "KDDockWidgets.h"
+
 #include <QObject>
 #include <QVector>
 
@@ -32,6 +34,7 @@
 namespace KDDockWidgets {
 
 class DockWidgetBase;
+class MainWindowBase;
 
 namespace Testing {
 namespace Operations {
@@ -41,6 +44,7 @@ enum OperationType {
     OperationType_CloseViaDockWidgetAPI, ///< Closing programatically via DockWidget::close()
     OperationType_HideViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::hide()
     OperationType_ShowViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::show()
+    OperationType_AddDockWidget,        ///< MainWindow::addDockWidget()
     OperationType_Count /// Keep at end
 };
 
@@ -56,6 +60,8 @@ public:
     void execute();
 protected:
     virtual void execute_impl() = 0;
+    DockWidgetBase* dockByName(const QString &) const;
+    MainWindowBase* mainWindowByName(const QString &) const;
 private:
     const OperationType m_operationType;
 };
@@ -88,6 +94,23 @@ public:
 protected:
     void execute_impl() override;
     const QString m_dockWidgetName;
+};
+
+struct AddDockWidgetParams {
+    QString mainWindowName;
+    QString dockWidgetName;
+    QString dockWidgetRelativeToName;
+    KDDockWidgets::Location location;
+    KDDockWidgets::AddingOption addingOption;
+};
+
+class AddDockWidget : public OperationBase
+{
+public:
+    explicit AddDockWidget();
+
+protected:
+    void execute_impl() override;
 };
 
 }
