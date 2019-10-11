@@ -51,6 +51,8 @@ namespace Testing {
         typedef QVector<Operation> List;
         OperationType operationType;
         // Extra arguments which depend on the type go here:
+
+        int targetDockWidget = -1;
     };
 
 

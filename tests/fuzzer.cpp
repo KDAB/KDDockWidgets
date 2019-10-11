@@ -22,6 +22,7 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
 #include "Testing.h"
+#include "DockRegistry_p.h"
 
 #include <QApplication>
 #include <QTimer>
@@ -122,6 +123,20 @@ public:
 
         std::uniform_int_distribution<> operationDistrib(OperationType_None + 1, OperationType_Count - 1);
         operation.operationType = OperationType(operationDistrib(m_randomEngine));
+
+        const int numDockWidgets = DockRegistry::self()->dockwidgets().size();
+        std::uniform_int_distribution<> dockWidgetDistrib(0, numDockWidgets - 1);
+
+        switch (operation.operationType) {
+        case KDDockWidgets::Testing::OperationType_Count:
+        case KDDockWidgets::Testing::OperationType_None:
+            qFatal("Doesn't happen");
+        case KDDockWidgets::Testing::OperationType_CloseViaDockWidgetAPI:
+        case KDDockWidgets::Testing::OperationType_HideViaDockWidgetAPI:
+        case KDDockWidgets::Testing::OperationType_ShowViaDockWidgetAPI:
+            operation.targetDockWidget = dockWidgetDistrib(m_randomEngine);
+            break;
+        }
 
         return operation;
     }
