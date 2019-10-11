@@ -24,6 +24,7 @@
 #include "Operations.h"
 #include "DockWidgetBase.h"
 #include "DockRegistry_p.h"
+#include "Testing.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;
@@ -52,8 +53,13 @@ CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(const QString &dockWidgetName)
 
 void CloseViaDockWidgetAPI::execute_impl()
 {
-    if (auto dw = DockRegistry::self()->dockByName(m_dockWidgetName))
+    if (auto dw = DockRegistry::self()->dockByName(m_dockWidgetName)) {
+        auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->close();
+        if (fw)
+            Testing::waitForDeleted(fw);
+
+    }
 }
 
 HideViaDockWidgetAPI::HideViaDockWidgetAPI(const QString &dockWidgetName)
@@ -64,8 +70,12 @@ HideViaDockWidgetAPI::HideViaDockWidgetAPI(const QString &dockWidgetName)
 
 void HideViaDockWidgetAPI::execute_impl()
 {
-    if (auto dw = DockRegistry::self()->dockByName(m_dockWidgetName))
+    if (auto dw = DockRegistry::self()->dockByName(m_dockWidgetName)) {
+        auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->hide();
+        if (fw)
+            Testing::waitForDeleted(fw);
+    }
 }
 
 ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(const QString &dockWidgetName)
