@@ -39,6 +39,7 @@
 #include "utils.h"
 #include "FrameworkWidgetFactory.h"
 #include "DropAreaWithCentralFrame_p.h"
+#include "Testing.h"
 
 #include <QtTest/QtTest>
 #include <QPainter>
@@ -61,10 +62,6 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
 
-extern quintptr Q_CORE_EXPORT qtHookData[];
-
-static QString s_expectedWarning;
-
 static int staticAnchorLength()
 {
     return Config::self().separatorThickness(true);
@@ -79,12 +76,12 @@ struct SetExpectedWarning
 {
     explicit SetExpectedWarning(const QString &s)
     {
-        s_expectedWarning = s;
+        Testing::setExpectedWarning(s);
     }
 
     ~SetExpectedWarning()
     {
-        s_expectedWarning.clear();
+        Testing::setExpectedWarning({});
     }
     Q_DISABLE_COPY(SetExpectedWarning)
 };
@@ -162,13 +159,6 @@ static int osWindowMinHeight()
 
 namespace KDDockWidgets {
 
-static QtMessageHandler s_original = nullptr;
-
-static bool isGammaray()
-{
-    static bool is = qtHookData[3] != 0;
-    return is;
-}
 namespace {
 class EventFilter : public QObject
 {
@@ -209,22 +199,6 @@ static QWidget *createWidget(int minLength, const QString &objname = QString())
     auto w = new WidgetWithMinSize(QSize(minLength, minLength));
     w->setObjectName(objname);
     return w;
-}
-
-void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
-{
-    if (shouldBlacklistWarning(msg, QLatin1String(context.category)))
-        return;
-
-    s_original(t, context, msg);
-    if (t == QtWarningMsg) {
-
-        if (!s_expectedWarning.isEmpty() && msg.contains(s_expectedWarning))
-            return;
-
-        if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL"))
-            qFatal("Got a warning, category=%s", context.category);
-    }
 }
 
 struct EnsureTopLevelsDeleted
@@ -277,7 +251,7 @@ public Q_SLOTS:
         qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
         qApp->setOrganizationName("KDAB");
         qApp->setApplicationName("dockwidgets-unit-tests");
-        s_original = qInstallMessageHandler(fatalWarningsMessageHandler);
+        Testing::installFatalMessageHandler();
     }
 public:
     static void nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location);

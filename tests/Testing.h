@@ -35,6 +35,9 @@
 namespace KDDockWidgets {
 namespace Testing {
 
+    void installFatalMessageHandler();
+    void setExpectedWarning(const QString &);
+
     enum OperationType {
         OperationType_None = 0,
         OperationType_CloseViaDockWidgetAPI, ///< Closing programatically via DockWidget::close()

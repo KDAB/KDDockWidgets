@@ -24,10 +24,49 @@
 #include "DockRegistry_p.h"
 
 #include <QTest>
+#include <QLoggingCategory>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;
 
+extern quintptr Q_CORE_EXPORT qtHookData[];
+static QString s_expectedWarning;
+static QtMessageHandler s_original = nullptr;
+
+static bool isGammaray()
+{
+    static bool is = qtHookData[3] != 0;
+    return is;
+}
+
+static bool shouldBlacklistWarning(const QString &msg, const QString &category)
+{
+    if (category == QLatin1String("qt.qpa.xcb"))
+        return true;
+
+    return msg.contains(QLatin1String("QSocketNotifier: Invalid socket")) ||
+           msg.contains(QLatin1String("QWindowsWindow::setGeometry")) ||
+           msg.contains(QLatin1String("This plugin does not support")) ||
+           msg.contains(QLatin1String("Note that Qt no longer ships fonts")) ||
+           msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")) ||
+           msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
+}
+
+static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
+{
+    if (shouldBlacklistWarning(msg, QLatin1String(context.category)))
+        return;
+
+    s_original(t, context, msg);
+    if (t == QtWarningMsg) {
+
+        if (!s_expectedWarning.isEmpty() && msg.contains(s_expectedWarning))
+            return;
+
+        if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL"))
+            qFatal("Got a warning, category=%s", context.category);
+    }
+}
 
 class HostedWidget : public QWidget
 {
@@ -96,7 +135,6 @@ static void createLayout(const Layout &layout)
     for (const Testing::DockWidgetDescriptor &dwd : layout.dockWidgets) {
         createDockWidget(dwd);
     }
-
 }
 
 static void runOperation(const Operation &)
@@ -124,4 +162,14 @@ void Testing::runTest(const Test &test)
 
     if (!DockRegistry::self()->isEmpty())
         qFatal("There's still dock widgets and the end of runTest");
+}
+
+void Testing::installFatalMessageHandler()
+{
+    s_original = qInstallMessageHandler(fatalWarningsMessageHandler);
+}
+
+void Testing::setExpectedWarning(const QString &expected)
+{
+    s_expectedWarning = expected;
 }
