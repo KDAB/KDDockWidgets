@@ -69,7 +69,6 @@ void CloseViaDockWidgetAPI::execute_impl()
         dw->close();
         if (fw && fw->beingDeleted())
             Testing::waitForDeleted(fw);
-
     }
 }
 

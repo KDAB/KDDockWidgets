@@ -35,6 +35,23 @@
 namespace KDDockWidgets {
 namespace Testing {
 
+static QVariantMap sizeToVariantMap(QSize sz)
+{
+    QVariantMap map;
+    map["width"] = sz.width();
+    map["height"] = sz.height();
+    return map;
+}
+
+static QVariantMap rectToVariantMap(QRect r)
+{
+    QVariantMap map;
+    map["size"] = sizeToVariantMap(r.size());
+    map["x"] = r.x();
+    map["y"] = r.y();
+    return map;
+}
+
 class Fuzzer : public QObject
              , WarningObserver
 {
@@ -58,8 +75,8 @@ public:
         QVariantMap toVariantMap() const
         {
             QVariantMap map;
-            map[QStringLiteral("minSize")] = minSize;
-            map[QStringLiteral("geometry")] = geometry;
+            map[QStringLiteral("minSize")] = sizeToVariantMap(minSize);
+            map[QStringLiteral("geometry")] = rectToVariantMap(geometry);
             map[QStringLiteral("isFloating")] = isFloating;
             map[QStringLiteral("isVisible")] = isVisible;
 
@@ -75,7 +92,7 @@ public:
         QVariantMap toVariantMap() const
         {
             QVariantMap map;
-            map[QStringLiteral("geometry")] = geometry;
+            map[QStringLiteral("geometry")] = rectToVariantMap(geometry);
             map[QStringLiteral("mainWindowOption")] = mainWindowOption;
             return map;
         }
