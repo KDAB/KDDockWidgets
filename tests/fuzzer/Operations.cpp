@@ -24,7 +24,7 @@
 #include "Operations.h"
 #include "DockWidgetBase.h"
 #include "DockRegistry_p.h"
-#include "Testing.h"
+#include "../Testing.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;

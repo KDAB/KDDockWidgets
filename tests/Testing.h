@@ -25,12 +25,12 @@
 #define KDDOCKWIDGETS_TESTING_H
 
 #include "KDDockWidgets.h"
-#include "Operations.h"
 
 #include <QSize>
 #include <QRect>
 #include <QVector>
 #include <QEvent>
+#include <QWidget>
 
 /**
  * @file
@@ -39,7 +39,6 @@
 
 namespace KDDockWidgets {
 namespace Testing {
-
     void installFatalMessageHandler();
     void setExpectedWarning(const QString &);
 
@@ -47,36 +46,35 @@ namespace Testing {
     bool waitForDeleted(QObject *o, int timeout = 2000);
     bool waitForResize(QWidget *w, int timeout = 2000);
 
-    ///@brief Describes a dock widget.
-    struct DockWidgetDescriptor {
-        typedef QVector<DockWidgetDescriptor> List;
-        QSize minSize; // the minSize of the hosted widget
-        QRect geometry;
-        bool isFloating;
-        bool isVisible;
-    };
+    class HostedWidget : public QWidget
+    {
+    public:
 
-    struct MainWindowDescriptor {
-        typedef QVector<MainWindowDescriptor> List;
-        QRect geometry;
-        MainWindowOption mainWindowOption;
-    };
+        explicit HostedWidget(QSize minSz = QSize(1,1))
+            : m_minSz(minSz)
+        {
+        }
 
-    ///@brief Describes our initial window layout, which will be subject to a test.
-    struct Layout {
-        typedef QVector<Layout> List;
-        MainWindowDescriptor::List mainWindows;
-        DockWidgetDescriptor::List dockWidgets;
-    };
+        ~HostedWidget() override;
 
-    /// @brief a test is an initial layout and the list of operations to run on it
-    struct Test {
-        typedef QVector<Test> List;
-        Layout initialLayout;
-        Operations::OperationBase::List operations;
-    };
+        QSize sizeHint() const override
+        {
+            return m_minSz;
+        }
 
-    void runTest(const Testing::Test &);
+        QSize minimumSizeHint() const override
+        {
+            return m_minSz;
+        }
+
+        void setMinSize(QSize s)
+        {
+            m_minSz = s;
+            updateGeometry();
+        }
+
+        QSize m_minSz;
+    };
 }
 }
 

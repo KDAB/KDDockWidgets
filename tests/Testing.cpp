@@ -23,6 +23,7 @@
 #include "DockWidget.h"
 #include "DockRegistry_p.h"
 
+#include <QApplication>
 #include <QTest>
 #include <QLoggingCategory>
 
@@ -122,100 +123,7 @@ bool Testing::waitForResize(QWidget *w, int timeout)
     return waitForEvent(w, QEvent::Resize, timeout);
 }
 
-class HostedWidget : public QWidget
-{
-public:
-
-    explicit HostedWidget(QSize minSz = QSize(1,1))
-        : m_minSz(minSz)
-    {
-    }
-
-    ~HostedWidget() override;
-
-    QSize sizeHint() const override
-    {
-        return m_minSz;
-    }
-
-    QSize minimumSizeHint() const override
-    {
-        return m_minSz;
-    }
-
-    void setMinSize(QSize s)
-    {
-        m_minSz = s;
-        updateGeometry();
-    }
-
-    QSize m_minSz;
-};
-
 HostedWidget::~HostedWidget() {}
-
-static MainWindow* createMainWindow(const Testing::MainWindowDescriptor &mwd)
-{
-    static int count = 0;
-    count++;
-    auto mainWindow = new MainWindow(QStringLiteral("MainWindow-%1").arg(count), mwd.mainWindowOption);
-
-    mainWindow->setGeometry(mwd.geometry);
-
-    mainWindow->show();
-    return mainWindow;
-}
-
-static DockWidget* createDockWidget(const Testing::DockWidgetDescriptor &dwd)
-{
-    static int count = 0;
-    count++;
-    auto dockWidget = new DockWidget(QStringLiteral("DockWidget-%1").arg(count));
-
-    dockWidget->setWidget(new HostedWidget(dwd.minSize));
-
-    if (dwd.isFloating)
-        dockWidget->setGeometry(dwd.geometry);
-
-    if (dwd.isVisible)
-        dockWidget->show();
-
-    return dockWidget;
-}
-
-static void createLayout(const Layout &layout)
-{
-    for (const Testing::MainWindowDescriptor &mwd : layout.mainWindows) {
-        createMainWindow(mwd);
-    }
-
-    for (const Testing::DockWidgetDescriptor &dwd : layout.dockWidgets) {
-        createDockWidget(dwd);
-    }
-}
-
-void Testing::runTest(const Test &test)
-{
-    if (!DockRegistry::self()->isEmpty())
-        qFatal("There's dock widgets and the start runTest");
-
-    createLayout(test.initialLayout);
-    for (const auto &op : test.operations) {
-        op->execute();
-    }
-
-    for (MainWindowBase *mw : DockRegistry::self()->mainwindows())
-        delete mw;
-
-    for (FloatingWindow *fw : DockRegistry::self()->nestedwindows())
-        delete fw;
-
-    for (DockWidgetBase *dw : DockRegistry::self()->dockwidgets())
-        delete dw;
-
-    if (!DockRegistry::self()->isEmpty())
-        qFatal("There's still dock widgets and the end of runTest");
-}
 
 void Testing::installFatalMessageHandler()
 {
