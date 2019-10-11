@@ -75,8 +75,9 @@ public:
     explicit HostedWidget(QSize minSz = QSize(1,1))
         : m_minSz(minSz)
     {
-
     }
+
+    ~HostedWidget() override;
 
     QSize sizeHint() const override
     {
@@ -96,6 +97,8 @@ public:
 
     QSize m_minSz;
 };
+
+HostedWidget::~HostedWidget() {}
 
 static MainWindow* createMainWindow(const Testing::MainWindowDescriptor &mwd)
 {
@@ -137,10 +140,6 @@ static void createLayout(const Layout &layout)
     }
 }
 
-static void runOperation(const Operation &)
-{
-}
-
 void Testing::runTest(const Test &test)
 {
     if (!DockRegistry::self()->isEmpty())
@@ -148,7 +147,7 @@ void Testing::runTest(const Test &test)
 
     createLayout(test.initialLayout);
     for (const auto &op : test.operations) {
-        runOperation(op);
+        op->execute();
     }
 
     for (MainWindowBase *mw : DockRegistry::self()->mainwindows())

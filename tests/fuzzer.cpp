@@ -32,6 +32,7 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;
+using namespace KDDockWidgets::Testing::Operations;
 
 #define OPERATIONS_PER_TEST 200
 
@@ -117,25 +118,36 @@ public:
         return {x, y};
     }
 
-    Testing::Operation getRandomOperation()
+    QString getRandomDockName()
     {
-        Testing::Operation operation;
+        const int numDockWidgets = DockRegistry::self()->dockwidgets().size();
+        if (numDockWidgets == 0)
+            return QString();
+
+        std::uniform_int_distribution<> dockWidgetDistrib(0, numDockWidgets - 1);
+        int index = dockWidgetDistrib(m_randomEngine);
+        return DockRegistry::self()->dockwidgets().at(index)->uniqueName();
+    }
+
+    OperationBase::Ptr getRandomOperation()
+    {
+        Testing::Operations::OperationBase::Ptr operation;
 
         std::uniform_int_distribution<> operationDistrib(OperationType_None + 1, OperationType_Count - 1);
-        operation.operationType = OperationType(operationDistrib(m_randomEngine));
+        auto operationType = OperationType(operationDistrib(m_randomEngine));
 
-        const int numDockWidgets = DockRegistry::self()->dockwidgets().size();
-        std::uniform_int_distribution<> dockWidgetDistrib(0, numDockWidgets - 1);
-
-        switch (operation.operationType) {
-        case KDDockWidgets::Testing::OperationType_Count:
-        case KDDockWidgets::Testing::OperationType_None:
-            qFatal("Doesn't happen");
-        case KDDockWidgets::Testing::OperationType_CloseViaDockWidgetAPI:
-        case KDDockWidgets::Testing::OperationType_HideViaDockWidgetAPI:
-        case KDDockWidgets::Testing::OperationType_ShowViaDockWidgetAPI:
-            operation.targetDockWidget = dockWidgetDistrib(m_randomEngine);
+        switch (operationType) {
+        case OperationType_CloseViaDockWidgetAPI:
+            operation = OperationBase::Ptr(new CloseViaDockWidgetAPI(getRandomDockName()));
             break;
+        case OperationType_HideViaDockWidgetAPI:
+            operation = OperationBase::Ptr(new HideViaDockWidgetAPI(getRandomDockName()));
+            break;
+        case OperationType_ShowViaDockWidgetAPI:
+            operation = OperationBase::Ptr(new ShowViaDockWidgetAPI(getRandomDockName()));
+            break;
+        default:
+            qFatal("Doesn't happen");
         }
 
         return operation;

@@ -22,6 +22,7 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
 #include "KDDockWidgets.h"
+#include "Operations.h"
 
 #include <QSize>
 #include <QRect>
@@ -37,24 +38,6 @@ namespace Testing {
 
     void installFatalMessageHandler();
     void setExpectedWarning(const QString &);
-
-    enum OperationType {
-        OperationType_None = 0,
-        OperationType_CloseViaDockWidgetAPI, ///< Closing programatically via DockWidget::close()
-        OperationType_HideViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::hide()
-        OperationType_ShowViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::show()
-        OperationType_Count /// Keep at end
-    };
-
-    ///@brief Describes a testable action.
-    struct Operation {
-        typedef QVector<Operation> List;
-        OperationType operationType;
-        // Extra arguments which depend on the type go here:
-
-        int targetDockWidget = -1;
-    };
-
 
     ///@brief Describes a dock widget.
     struct DockWidgetDescriptor {
@@ -82,7 +65,7 @@ namespace Testing {
     struct Test {
         typedef QVector<Test> List;
         Layout initialLayout;
-        Operation::List operations;
+        Operations::OperationBase::List operations;
     };
 
     void runTest(const Testing::Test &);
