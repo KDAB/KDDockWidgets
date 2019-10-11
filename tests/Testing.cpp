@@ -33,6 +33,22 @@ extern quintptr Q_CORE_EXPORT qtHookData[];
 static QString s_expectedWarning;
 static QtMessageHandler s_original = nullptr;
 
+class EventFilter : public QObject
+{
+public:
+    EventFilter(QEvent::Type type) : m_type(type) {}
+    bool eventFilter(QObject *, QEvent *e)
+    {
+        if (e->type() == m_type)
+            m_got = true;
+
+        return false;
+    }
+
+    const QEvent::Type m_type;
+    bool m_got = false;
+};
+
 static bool isGammaray()
 {
     static bool is = qtHookData[3] != 0;
@@ -66,6 +82,44 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
         if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL"))
             qFatal("Got a warning, category=%s", context.category);
     }
+}
+
+bool Testing::waitForEvent(QWidget *w, QEvent::Type type, int timeout)
+{
+    EventFilter filter(type);
+    w->installEventFilter(&filter);
+    QTime time;
+    time.start();
+
+    while (!filter.m_got && time.elapsed() < timeout) {
+        qApp->processEvents();
+        QTest::qWait(50);
+    }
+
+    return filter.m_got;
+}
+
+bool Testing::waitForDeleted(QObject *o, int timeout)
+{
+    if (!o)
+        return true;
+
+    QPointer<QObject> ptr = o;
+    QTime time;
+    time.start();
+
+    while (ptr && time.elapsed() < timeout) {
+        qApp->processEvents();
+        QTest::qWait(50);
+    }
+
+    const bool wasDeleted = !ptr;
+    return wasDeleted;
+}
+
+bool Testing::waitForResize(QWidget *w, int timeout)
+{
+    return waitForEvent(w, QEvent::Resize, timeout);
 }
 
 class HostedWidget : public QWidget

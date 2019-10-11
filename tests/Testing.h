@@ -27,6 +27,7 @@
 #include <QSize>
 #include <QRect>
 #include <QVector>
+#include <QEvent>
 
 /**
  * @file
@@ -38,6 +39,10 @@ namespace Testing {
 
     void installFatalMessageHandler();
     void setExpectedWarning(const QString &);
+
+    bool waitForEvent(QWidget *w, QEvent::Type type, int timeout = 2000);
+    bool waitForDeleted(QObject *o, int timeout = 2000);
+    bool waitForResize(QWidget *w, int timeout = 2000);
 
     ///@brief Describes a dock widget.
     struct DockWidgetDescriptor {

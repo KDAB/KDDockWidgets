@@ -160,22 +160,6 @@ static int osWindowMinHeight()
 namespace KDDockWidgets {
 
 namespace {
-class EventFilter : public QObject
-{
-public:
-    EventFilter(QEvent::Type type) : m_type(type) {}
-    bool eventFilter(QObject *, QEvent *e)
-    {
-        if (e->type() == m_type)
-            m_got = true;
-
-        return false;
-    }
-
-    const QEvent::Type m_type;
-    bool m_got = false;
-};
-
 
 class WidgetWithMinSize : public QWidget
 {
@@ -426,44 +410,6 @@ public:
 };
 }
 
-bool waitForDeleted(QObject *o, int timeout = 2000)
-{
-    if (!o)
-        return true;
-
-    QPointer<QObject> ptr = o;
-    QTime time;
-    time.start();
-
-    while (ptr && time.elapsed() < timeout) {
-        qApp->processEvents();
-        QTest::qWait(50);
-    }
-
-    const bool wasDeleted = !ptr;
-    return wasDeleted;
-}
-
-bool waitForEvent(QWidget *w, QEvent::Type type, int timeout = 2000)
-{
-    EventFilter filter(type);
-    w->installEventFilter(&filter);
-    QTime time;
-    time.start();
-
-    while (!filter.m_got && time.elapsed() < timeout) {
-        qApp->processEvents();
-        QTest::qWait(50);
-    }
-
-    return filter.m_got;
-}
-
-bool waitForResize(QWidget *w, int timeout = 2000)
-{
-    return waitForEvent(w, QEvent::Resize, timeout);
-}
-
 Frame* createFrameWithWidget(const QString &name, MultiSplitter *parent, int minLength = -1)
 {
     QWidget *w = createWidget(minLength, name);
@@ -496,8 +442,8 @@ void TestDocks::tst_createFloatingWindow()
     QVERIFY(window); // 1.1 DockWidget creates a FloatingWindow and is reparented
     QVERIFY(window->dropArea()->checkSanity());
     dock->deleteLater();
-    QVERIFY(waitForDeleted(dock));
-    QVERIFY(waitForDeleted(window)); // 1.2 Floating Window is destroyed when DockWidget is destroyed
+    QVERIFY(Testing::waitForDeleted(dock));
+    QVERIFY(Testing::waitForDeleted(window)); // 1.2 Floating Window is destroyed when DockWidget is destroyed
     QVERIFY(!window);
 }
 
@@ -573,7 +519,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     releaseOn(dock2->window()->geometry().center(), titlebar1);
     QCOMPARE(frame2->dockWidgetCount(), 2); // 2.2 Frame has 2 widgets when one is dropped
 
-    QVERIFY(waitForDeleted(frame1));
+    QVERIFY(Testing::waitForDeleted(frame1));
 
     // 2.3 Detach tab1 to empty space
     QPoint globalPressPos = dragPointForWidget(frame2.data(), 0);
@@ -607,8 +553,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     auto fw2 = dock2->floatingWindow();
     drag(fw2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
 
-    QVERIFY(waitForDeleted(frame1));
-    QVERIFY(waitForDeleted(frame2));
+    QVERIFY(Testing::waitForDeleted(frame1));
+    QVERIFY(Testing::waitForDeleted(frame2));
     QVERIFY(dock3->frame());
     QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
 
@@ -632,8 +578,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         delete dock1;
         delete dock2;
         delete dock3;
-        QVERIFY(waitForDeleted(frame2));
-        QVERIFY(waitForDeleted(fw3));
+        QVERIFY(Testing::waitForDeleted(frame2));
+        QVERIFY(Testing::waitForDeleted(fw3));
     }
 }
 
@@ -670,7 +616,7 @@ void TestDocks::tst_close()
     // 1.3 Use hide() instead
     auto fw1 = dock1->floatingWindow();
     dock1->hide();
-    QVERIFY(waitForDeleted(fw1));
+    QVERIFY(Testing::waitForDeleted(fw1));
     QVERIFY(!dock1->isVisible());
     QVERIFY(!dock1->window()->isVisible());
     QCOMPARE(dock1->window(), dock1);
@@ -686,8 +632,8 @@ void TestDocks::tst_close()
 
     QVERIFY(dock1->close());
     QVERIFY(!dock1->frame());
-    QVERIFY(waitForDeleted(frame1));
-    QVERIFY(waitForDeleted(window));
+    QVERIFY(Testing::waitForDeleted(frame1));
+    QVERIFY(Testing::waitForDeleted(window));
 
     // 1.5 close a FloatingWindow, via FloatingWindow::close
     dock1->show();
@@ -702,8 +648,8 @@ void TestDocks::tst_close()
     QVERIFY(window->close());
 
     QVERIFY(!dock1->frame());
-    QVERIFY(waitForDeleted(frame1));
-    QVERIFY(waitForDeleted(window));
+    QVERIFY(Testing::waitForDeleted(frame1));
+    QVERIFY(Testing::waitForDeleted(window));
 
     // TODO: 1.6 Test FloatingWindow with two frames
     // TODO: 1.7 Test Frame with two tabs
@@ -813,7 +759,7 @@ void TestDocks::tst_preventClose()
     QVERIFY(dock1->isVisible());
 
     dock1->deleteLater();
-    QVERIFY(waitForDeleted(dock1));
+    QVERIFY(Testing::waitForDeleted(dock1));
 }
 
 void TestDocks::tst_dockDockWidgetNested()
@@ -940,7 +886,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     QCOMPARE(fw2->frames().size(), 1);
     auto f2 = fw2->frames().constFirst();
     QCOMPARE(f2->dockWidgetCount(), 3);
-    QVERIFY(waitForDeleted(fw));
+    QVERIFY(Testing::waitForDeleted(fw));
     delete fw2;
 }
 
@@ -978,7 +924,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 
     ///Cleanup
     fw2->deleteLater();
-    waitForDeleted(fw2);
+    Testing::waitForDeleted(fw2);
 }
 
 void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
@@ -1011,7 +957,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
     QVERIFY(fw2->dropArea()->checkSanity());
 
     fw2->deleteLater();
-    waitForDeleted(fw2);
+    Testing::waitForDeleted(fw2);
 }
 
 void TestDocks::tst_posAfterLeftDetach()
@@ -1033,7 +979,7 @@ void TestDocks::tst_posAfterLeftDetach()
 
         delete dock2;
         fw->deleteLater();
-        waitForDeleted(fw);
+        Testing::waitForDeleted(fw);
     }
 
     {
@@ -1051,7 +997,7 @@ void TestDocks::tst_posAfterLeftDetach()
 
         delete dock2;
         fw->deleteLater();
-        waitForDeleted(fw);
+        Testing::waitForDeleted(fw);
     }
 }
 
@@ -1064,7 +1010,7 @@ void TestDocks::tst_shutdown()
     m->show();
     QVERIFY(QTest::qWaitForWindowActive(m->windowHandle()));
     dock->deleteLater();
-    QVERIFY(waitForDeleted(dock));
+    QVERIFY(Testing::waitForDeleted(dock));
 }
 
 void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
@@ -1179,7 +1125,7 @@ void TestDocks::tst_closeAllDockWidgets()
     DockRegistry::self()->clear();
     qDebug() << "closeAllDockWidgets done";
 
-    waitForDeleted(fw);
+    Testing::waitForDeleted(fw);
     QVERIFY(!fw);
 
     QCOMPARE(dock1->window(), dock1);
@@ -1300,7 +1246,7 @@ void TestDocks::tst_restoreSimple()
     dock2->close();
     QVERIFY(!dock2->isVisible());
     QCOMPARE(layout->count(), 1);
-    QVERIFY(waitForDeleted(f1));
+    QVERIFY(Testing::waitForDeleted(f1));
     QCOMPARE(layout->placeholderCount(), 1);
 
     QCOMPARE(DockRegistry::self()->nestedwindows().size(), 0);
@@ -1334,7 +1280,7 @@ void TestDocks::tst_restoreSimple()
 
     // Cleanup
     dock3->deleteLater();
-    QVERIFY(waitForDeleted(dock3));
+    QVERIFY(Testing::waitForDeleted(dock3));
 }
 
 void TestDocks::tst_restoreNestedAndTabbed()
@@ -1660,7 +1606,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
         dock1->deleteLater();
         dock2->deleteLater();
-        waitForDeleted(dock2);
+        Testing::waitForDeleted(dock2);
     }
     {
         // Dock into a morphed dock widget
@@ -1677,7 +1623,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
         dock1->deleteLater();
         dock2->deleteLater();
-        waitForDeleted(dock2);
+        Testing::waitForDeleted(dock2);
     }
     {
         // Dock a morphed dock widget into a morphed dock widget
@@ -1694,11 +1640,11 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QCOMPARE(window1, window2);
         QCOMPARE(dock1->frame(), dock2->frame());
         QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
-        waitForDeleted(originalWindow2);
+        Testing::waitForDeleted(originalWindow2);
         QVERIFY(!originalWindow2);
         dock1->deleteLater();
         dock2->deleteLater();
-        waitForDeleted(dock2);
+        Testing::waitForDeleted(dock2);
     }
     {
         // Dock to an already docked widget
@@ -1755,7 +1701,7 @@ void TestDocks::tst_addDockWidgetToContainingWindow()
     delete dock1;
     delete dock2;
     delete dock3;
-    waitForDeleted(window);
+    Testing::waitForDeleted(window);
 }
 
 void TestDocks::tst_addToSmallMainWindow()
@@ -1812,13 +1758,13 @@ void TestDocks::tst_addToSmallMainWindow()
         m->addDockWidgetAsTab(dock1);
         m->resize(osWindowMinWidth(), 200);
 
-        waitForResize(m.get());
+        Testing::waitForResize(m.get());
 
         qDebug() << "Adding dock2 to Right. window size=" << m->size();
         QVERIFY(m->width() == osWindowMinWidth());
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
         qDebug() << "Waiting for resize. window size2=" << m->size();
-        QVERIFY(waitForResize(m.get()));
+        QVERIFY(Testing::waitForResize(m.get()));
         qDebug() << "window size3=" << m->size();
 
         QVERIFY(dropArea->multiSplitterLayout()->width() > osWindowMinWidth());
@@ -1857,11 +1803,11 @@ void TestDocks::tst_addToSmallMainWindow()
         auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(50, 50)));
         MultiSplitterLayout *layout = dropArea->multiSplitterLayout();
         m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
-        waitForResize(m.get());
+        Testing::waitForResize(m.get());
         qDebug() << "Size=" << m->size();
 
         m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
-        waitForResize(m.get());
+        Testing::waitForResize(m.get());
 
         const int item2MinHeight =  layout->itemForFrame(dock2->frame())->minLength(Qt::Horizontal);
         QCOMPARE(dropArea->height(), dock1->frame()->height() + item2MinHeight + Anchor::thickness(true)*2 + Anchor::thickness(false));
@@ -1877,7 +1823,7 @@ void TestDocks::tst_addToSmallMainWindow()
         m.addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
         m.addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
 
-        waitForResize(&m);
+        Testing::waitForResize(&m);
         qDebug() << m.size();
     }
 
@@ -1890,14 +1836,14 @@ void TestDocks::tst_addToSmallMainWindow()
         MainWindow m("MyMainWindow_tst_addToSmallMainWindow8", MainWindowOption_None);
         lay->addWidget(&m);
         container.resize(100, 100);
-        waitForResize(&container);
+        Testing::waitForResize(&container);
         container.show();
-        waitForResize(&m);
+        Testing::waitForResize(&m);
         auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(50, 240)));
         auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(50, 240)));
         m.addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
         m.addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
-        waitForResize(&m);
+        Testing::waitForResize(&m);
     }
 }
 
@@ -1928,7 +1874,7 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
     QCOMPARE(layout->placeholderCount(), 0);
 
     delete dock2;
-    QVERIFY(waitForResize(dock1));
+    QVERIFY(Testing::waitForResize(dock1));
     QVERIFY(!frame2);
 
     QCOMPARE(layout->count(), 2);
@@ -1950,7 +1896,7 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
 
     QWidget *window = dock1->window();
     window->deleteLater();
-    waitForDeleted(window);
+    Testing::waitForDeleted(window);
 }
 
 void TestDocks::tst_notClosable()
@@ -1971,7 +1917,7 @@ void TestDocks::tst_notClosable()
 
         auto window = dock1->window();
         window->deleteLater();
-        waitForDeleted(window);
+        Testing::waitForDeleted(window);
     }
 
     {
@@ -1994,7 +1940,7 @@ void TestDocks::tst_notClosable()
 
         auto window = dock2->window();
         window->deleteLater();
-        waitForDeleted(window);
+        Testing::waitForDeleted(window);
     }
 }
 
@@ -2012,12 +1958,12 @@ void TestDocks::tst_maximizeAndRestore()
     QVERIFY(dropArea->checkSanity());
 
     m->showMaximized();
-    waitForResize(m.get());
+    Testing::waitForResize(m.get());
 
     QVERIFY(dropArea->checkSanity());
     qDebug() << "About to show normal";
     m->showNormal();
-    waitForResize(m.get());
+    Testing::waitForResize(m.get());
 
     QVERIFY(dropArea->checkSanity());
 }
@@ -2233,13 +2179,13 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     m->addDockWidget(dock2, Location_OnTop);
     m->addDockWidget(dock3, Location_OnTop);
 
-    QVERIFY(waitForResize(m.get()));
+    QVERIFY(Testing::waitForResize(m.get()));
 
     QVERIFY(widgetMinLength(m.get(), Qt::Horizontal) > minHeight * 3); // > since some vertical space is occupied by the separators
 
     // Now close dock1 and check again
     dock1->close();
-    waitForResize(dock2);
+    Testing::waitForResize(dock2);
 
     Item *item2 = layout->itemForFrame(dock2->frame());
     Item *item3 = layout->itemForFrame(dock3->frame());
@@ -2254,7 +2200,7 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     QCOMPARE(m->minimumSizeHint().height(), expectedMinHeight);
 
     dock1->deleteLater();
-    waitForDeleted(dock1);
+    Testing::waitForDeleted(dock1);
 }
 
 void TestDocks::tst_rectForDropMath_data()
@@ -2497,7 +2443,7 @@ void TestDocks::tst_crash()
         QCOMPARE(layout->numAchorsFollowing(), 1);
 
         dock1->deleteLater();
-        waitForDeleted(dock1);
+        Testing::waitForDeleted(dock1);
     }
 }
 
@@ -2688,7 +2634,7 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     m->addDockWidgetAsTab(dock3);
     m->deleteLater();
     auto window = m.release();
-    waitForDeleted(window);
+    Testing::waitForDeleted(window);
 }
 
 void TestDocks::tst_setFloatingWhenSideBySide()
@@ -2716,7 +2662,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         QVERIFY(!dock1->isFloating());
         QVERIFY(!dock1->isTabbed());
 
-        waitForDeleted(fw);
+        Testing::waitForDeleted(fw);
     }
 
     {
@@ -2735,10 +2681,10 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         QVERIFY(item2);
         dock2->close();
         dock3->close();
-        waitForDeleted(f2);
+        Testing::waitForDeleted(f2);
         dock2->show();
 
-        waitForResize(dock2);
+        Testing::waitForResize(dock2);
 
         AnchorGroup group = item2->anchorGroup();
         AnchorGroup staticGroup = layout->staticAnchorGroup();
@@ -2750,7 +2696,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
 
         // Cleanup
         dock3->deleteLater();
-        waitForDeleted(dock3);
+        Testing::waitForDeleted(dock3);
     }
 }
 
@@ -2821,7 +2767,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         QCOMPARE(layout->placeholderCount(), 0);
         QCOMPARE(layout->numAchorsFollowing(), 0);
         QVERIFY(!dock2->isFloating());
-        waitForDeleted(fw2);
+        Testing::waitForDeleted(fw2);
     }
 }
 
@@ -2854,7 +2800,7 @@ void TestDocks::tst_setFloatingAFrameWithTabs()
     QCOMPARE(layout->placeholderCount(), 0);
     QCOMPARE(dock1->window(), m.get());
 
-    waitForDeleted(fw);
+    Testing::waitForDeleted(fw);
 }
 
 void TestDocks::tst_setVisibleFalseWhenSideBySide()
@@ -2888,7 +2834,7 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     // Cleanup
     m->deleteLater();
     auto window = m.release();
-    waitForDeleted(window);
+    Testing::waitForDeleted(window);
 }
 
 void TestDocks::tst_simple1()
@@ -2930,7 +2876,7 @@ void TestDocks::tst_refUnrefItem()
 
     // 1. Delete a dock widget directly. It should delete its frame and also the Item
     delete dock1;
-    waitForDeleted(frame1);
+    Testing::waitForDeleted(frame1);
     QVERIFY(!frame1.data());
     QVERIFY(!item1.data());
 
@@ -2946,7 +2892,7 @@ void TestDocks::tst_refUnrefItem()
     // 3. Close dock2. frame2 should be deleted, but item2 preserved.
     QCOMPARE(item2->refCount(), 2);
     dock2->close();
-    waitForDeleted(frame2);
+    Testing::waitForDeleted(frame2);
     QVERIFY(dock2);
     QVERIFY(item2.data());
     QCOMPARE(item2->refCount(), 1);
@@ -2965,7 +2911,7 @@ void TestDocks::tst_refUnrefItem()
     QPointer<Frame> frame4 = dock4->frame();
     QPointer<Item> item4 = layout->itemForFrame(frame4);
     dock4->close();
-    waitForDeleted(frame4);
+    Testing::waitForDeleted(frame4);
     QCOMPARE(item4->refCount(), 1);
     QVERIFY(item4->isPlaceholder());
     layout->checkSanity();
@@ -3000,7 +2946,7 @@ void TestDocks::tst_addAndReadd()
 
     //Cleanup
     delete dock1;
-    waitForDeleted(fw);
+    Testing::waitForDeleted(fw);
 }
 
 void TestDocks::tst_placeholderCount()
@@ -3056,7 +3002,7 @@ void TestDocks::tst_placeholderCount()
     QCOMPARE(layout->placeholderCount(), 0);
     layout->checkSanity();
 
-    waitForDeleted(fw);
+    Testing::waitForDeleted(fw);
 }
 
 void TestDocks::tst_availableLengthForOrientation()
@@ -3113,7 +3059,7 @@ void TestDocks::tst_setAstCurrentTab()
     fw->multiSplitterLayout()->checkSanity();
 
     delete dock1; delete dock2;
-    waitForDeleted(fw);
+    Testing::waitForDeleted(fw);
 }
 
 void TestDocks::tst_closeShowWhenNoCentralFrame()
@@ -3126,7 +3072,7 @@ void TestDocks::tst_closeShowWhenNoCentralFrame()
     m->addDockWidget(dock1, Location_OnLeft);
     dock1->close();
     QVERIFY(!dock1->frame());
-    QVERIFY(!waitForDeleted(dock1)); // It was being deleted due to a bug
+    QVERIFY(!Testing::waitForDeleted(dock1)); // It was being deleted due to a bug
     QVERIFY(dock1);
     dock1->show();
     m->multiSplitterLayout()->checkSanity();
@@ -3166,7 +3112,7 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
     // The dock1 should occupy the entire width
     QCOMPARE(dock1->frame()->width(), layout->width() - 2 * Anchor::thickness(true));
 
-    QVERIFY(waitForDeleted(fw));
+    QVERIFY(Testing::waitForDeleted(fw));
 }
 
 void TestDocks::tst_placeholdersAreRemovedPropertly()
@@ -3203,7 +3149,7 @@ void TestDocks::tst_placeholdersAreRemovedPropertly()
     layout->checkSanity();
 
     // Cleanup
-    waitForDeleted(window1);
+    Testing::waitForDeleted(window1);
 }
 
 void TestDocks::tst_embeddedMainWindow()
@@ -3220,7 +3166,7 @@ void TestDocks::tst_embeddedMainWindow()
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterLeft);
 
     auto layout = dropArea->multiSplitterLayout();
-    QVERIFY(waitForDeleted(fw));
+    QVERIFY(Testing::waitForDeleted(fw));
     QCOMPARE(layout->count(), 2); // 2, as it has the central frame
     QCOMPARE(layout->visibleCount(), 2);
     layout->checkSanity();
@@ -3246,7 +3192,7 @@ void TestDocks::tst_toggleMiddleDockCrash()
 
     auto frame = dock2->frame();
     dock2->close();
-    QVERIFY(waitForDeleted(frame));
+    QVERIFY(Testing::waitForDeleted(frame));
 
     QCOMPARE(layout->count(), 3);
     QCOMPARE(layout->placeholderCount(), 1);
@@ -3297,7 +3243,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
 
     // Close 1
     dock1->close();
-    waitForResize(frame2);
+    Testing::waitForResize(frame2);
 
     // Check that frame2 moved up to y=1
     QCOMPARE(frame2->y(), staticAnchorThickness);
@@ -3306,7 +3252,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
 
     // Close 2
     dock2->close();
-    waitForResize(dock3);
+    Testing::waitForResize(dock3);
 
     QVERIFY(layout->checkSanity());
     QCOMPARE(layout->count(), 3);
@@ -3331,7 +3277,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
     QCOMPARE(layout->numAchorsFollowing(), 1);
     toRestore2->show();
 
-    waitForResize(frame3);
+    Testing::waitForResize(frame3);
     QVERIFY(layout->checkSanity());
     QCOMPARE(layout->count(), 3);
     QCOMPARE(layout->placeholderCount(), 0);
@@ -3340,7 +3286,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
 
     dock1->deleteLater();
     dock2->deleteLater();
-    QVERIFY(waitForDeleted(dock2));
+    QVERIFY(Testing::waitForDeleted(dock2));
 }
 
 void TestDocks::tst_28NestedWidgets_data()
@@ -3600,7 +3546,7 @@ void TestDocks::tst_28NestedWidgets()
 
     for (int i : docksToHide) {
         docksToCreate.at(i).createdDock->deleteLater();
-        QVERIFY(waitForDeleted(docksToCreate.at(i).createdDock));
+        QVERIFY(Testing::waitForDeleted(docksToCreate.at(i).createdDock));
     }
 
     layout->checkSanity();
@@ -3622,7 +3568,7 @@ void TestDocks::tst_28NestedWidgets()
     for (auto dock : DockRegistry::self()->dockwidgets()) {
         qDebug() << "Deleting" << dock->title();
         dock->deleteLater();
-        QVERIFY(waitForDeleted(dock));
+        QVERIFY(Testing::waitForDeleted(dock));
     }
 }
 
@@ -3639,14 +3585,14 @@ void TestDocks::tst_invalidAnchorGroup()
         nestDockWidget(dock1, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
 
         dock1->close();
-        waitForResize(dock2);
+        Testing::waitForResize(dock2);
         auto layout = fw->dropArea()->multiSplitterLayout();
         layout->checkSanity();
 
         dock2->close();
         dock1->deleteLater();
         dock2->deleteLater();
-        waitForDeleted(dock1);
+        Testing::waitForDeleted(dock1);
     }
 
     {
@@ -3666,7 +3612,7 @@ void TestDocks::tst_invalidAnchorGroup()
 
         dock1->deleteLater();
         dock2->deleteLater();
-        waitForDeleted(dock1);
+        Testing::waitForDeleted(dock1);
     }
 }
 
@@ -3685,7 +3631,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         m->addDockWidget(dock1, Location_OnTop);
 
         dock2->close();
-        waitForResize(dock3);
+        Testing::waitForResize(dock3);
 
         MultiSplitterLayout *layout = m->multiSplitterLayout();
         QCOMPARE(layout->numVisibleAnchors(), 5);
@@ -3693,7 +3639,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
 
         // Cleanup:
         dock2->deleteLater();
-        waitForDeleted(dock2);
+        Testing::waitForDeleted(dock2);
     }
 
     {
@@ -3727,7 +3673,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         qDebug() << "boundToRight="<< boundToTheRight;
 
         dock3->close();
-        waitForResize(dock2);
+        Testing::waitForResize(dock2);
 
         QVERIFY(!item1->isPlaceholder());
         QVERIFY(!item2->isPlaceholder());
@@ -3751,7 +3697,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         layout->checkSanity();
 
         dock3->deleteLater();
-        waitForDeleted(dock3);
+        Testing::waitForDeleted(dock3);
     }
 }
 
@@ -3790,13 +3736,13 @@ void TestDocks::tst_negativeAnchorPosition()
 
     d2->close();
 
-    waitForResize(d3);
+    Testing::waitForResize(d3);
     d2->show(); // Should not result in negative anchor positions (Test will fail due to a qWarning)
-    waitForResize(d3);
+    Testing::waitForResize(d3);
     layout->checkSanity();
 
     d2->close();
-    waitForResize(d3);
+    Testing::waitForResize(d3);
     layout->checkSanity();
 
     // Now resize the Window, after removing middle one
@@ -3804,7 +3750,7 @@ void TestDocks::tst_negativeAnchorPosition()
     layout->setContentLength(layout->length(Qt::Horizontal) - availableToShrink, Qt::Horizontal); // Should not warn about negative sizes
 
     d2->deleteLater();
-    waitForDeleted(d2);
+    Testing::waitForDeleted(d2);
     layout->checkSanity();
 }
 
@@ -3830,7 +3776,7 @@ void TestDocks::tst_negativeAnchorPosition2()
     dock1->setFloating(false);
     dock2->deleteLater();
     layout->checkSanity();
-    QVERIFY(waitForDeleted(dock2));
+    QVERIFY(Testing::waitForDeleted(dock2));
 }
 
 void TestDocks::tst_negativeAnchorPosition3()
@@ -3855,7 +3801,7 @@ void TestDocks::tst_negativeAnchorPosition3()
     dock1->deleteLater();
     dock3->deleteLater();
     layout->checkSanity();
-    waitForDeleted(dock3);
+    Testing::waitForDeleted(dock3);
 }
 
 void TestDocks::tst_negativeAnchorPosition4()
@@ -3887,7 +3833,7 @@ void TestDocks::tst_negativeAnchorPosition4()
     layout->checkSanity();
     docks.at(0).createdDock->deleteLater();
     docks.at(4).createdDock->deleteLater();
-    waitForDeleted(docks.at(4).createdDock);
+    Testing::waitForDeleted(docks.at(4).createdDock);
 }
 
 void TestDocks::tst_negativeAnchorPosition5()
@@ -3922,7 +3868,7 @@ void TestDocks::tst_negativeAnchorPosition5()
     for (auto dock : DockRegistry::self()->dockwidgets())
         dock->deleteLater();
 
-    QVERIFY(waitForDeleted(dock0));
+    QVERIFY(Testing::waitForDeleted(dock0));
 }
 
 void TestDocks::tst_negativeAnchorPosition6()
@@ -4114,7 +4060,7 @@ void TestDocks::tst_toggleDockWidgetWithHiddenTitleBar()
 
     d1->toggleAction()->setChecked(false);
     auto f1 = d1->frame();
-    waitForDeleted(f1);
+    Testing::waitForDeleted(f1);
     d1->toggleAction()->setChecked(true);
     QVERIFY(!d1->frame()->titleBar()->isVisible());
 }
@@ -4181,7 +4127,7 @@ void TestDocks::tst_dragBySingleTab()
     drag(tabBar, globalPressPos, QPoint(0, 0));
 
     delete dock1;
-    waitForDeleted(frame1);
+    Testing::waitForDeleted(frame1);
 }
 
 void TestDocks::tst_addToHiddenMainWindow()
@@ -4230,7 +4176,7 @@ void TestDocks::tst_minSizeChanges()
 
     layout->checkSanity();
 
-    waitForResize(m);
+    Testing::waitForResize(m);
 
     QVERIFY(item2->width() >= 800);
     QVERIFY(item2->height() >= 800);
@@ -4240,7 +4186,7 @@ void TestDocks::tst_minSizeChanges()
     qDebug() << item1->minimumSize() << item1->size();
     w1->setMinSize(QSize(800, 800));
 
-    waitForResize(m);
+    Testing::waitForResize(m);
     layout->checkSanity();
     QVERIFY(m->height() >= 1600);
 
@@ -4396,7 +4342,7 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
     d1->setGeometry(suggestedGeo);
 
     d1->show();
-    waitForEvent(d1, QEvent::Show);
+    Testing::waitForEvent(d1, QEvent::Show);
 
     QCOMPARE( d1->window()->geometry(), suggestedGeo);
     delete d1->window();
@@ -4458,7 +4404,7 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     docks2.at(0).createdDock->close();
     docks2.at(1).createdDock->close();
     docks2.at(2).createdDock->close();
-    QVERIFY(waitForDeleted(f20));
+    QVERIFY(Testing::waitForDeleted(f20));
 
     QCOMPARE(layout1->size(), layout2->size());
     QCOMPARE(layout1->size(), layout3->size());
@@ -4499,7 +4445,7 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     docks2.at(0).createdDock->deleteLater();
     docks2.at(1).createdDock->deleteLater();
     docks2.at(2).createdDock->deleteLater();
-    QVERIFY(waitForDeleted(docks2.at(2).createdDock));
+    QVERIFY(Testing::waitForDeleted(docks2.at(2).createdDock));
 }
 
 void TestDocks::tst_anchorFollowingItselfAssert()
@@ -4531,7 +4477,7 @@ void TestDocks::tst_anchorFollowingItselfAssert()
 
     docks.at(0).createdDock->deleteLater();
     docks.at(4).createdDock->deleteLater();
-    waitForDeleted(docks.at(4).createdDock);
+    Testing::waitForDeleted(docks.at(4).createdDock);
 }
 
 void TestDocks::tst_positionWhenShown()
@@ -4552,7 +4498,7 @@ void TestDocks::tst_positionWhenShown()
 
     // Cleanup
     dock1->deleteLater();
-    QVERIFY(waitForDeleted(dock1));
+    QVERIFY(Testing::waitForDeleted(dock1));
 }
 
 void TestDocks::tst_sizeConstraintWarning()
@@ -4722,7 +4668,7 @@ void TestDocks::tst_sizeConstraintWarning()
     for (auto dock: docks)
         dock->deleteLater();
 
-    waitForDeleted(lastDock);
+    Testing::waitForDeleted(lastDock);
 }
 
 void TestDocks::tst_invalidLayoutAfterRestore()
@@ -4747,12 +4693,12 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     dock3->close();
     dock2->close();
     dock1->close();
-    QVERIFY(waitForDeleted(f1));
+    QVERIFY(Testing::waitForDeleted(f1));
 
     dock3->show();
     dock2->show();
     dock1->show();
-    waitForEvent(m.get(), QEvent::LayoutRequest); // So MainWindow min size is updated
+    Testing::waitForEvent(m.get(), QEvent::LayoutRequest); // So MainWindow min size is updated
 
     Item *item1 = layout->itemForFrame(dock1->frame());
     Item *item2 = layout->itemForFrame(dock2->frame());
@@ -4798,7 +4744,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     // Drop left of dock3
     layout->addWidget(fw2->dropArea(), Location_OnLeft, dock3->frame());
 
-    QVERIFY(waitForDeleted(fw2));
+    QVERIFY(Testing::waitForDeleted(fw2));
     QCOMPARE(rightAnchor->position(), oldRightAnchorPos);
     QCOMPARE(layout->width(), oldContentsWidth);
     layout->checkSanity();
@@ -4933,7 +4879,7 @@ void TestDocks::tst_addAsPlaceholder()
 
     // Cleanup
     dock2->deleteLater();
-    waitForDeleted(dock2);
+    Testing::waitForDeleted(dock2);
 }
 
 void TestDocks::tst_removeItem()
@@ -4983,7 +4929,7 @@ void TestDocks::tst_removeItem()
     dock2->close();
     auto frame1 = dock1->frame();
     dock1->close();
-    QVERIFY(waitForDeleted(frame1));
+    QVERIFY(Testing::waitForDeleted(frame1));
 
     QCOMPARE(layout->count(), 3);
     QCOMPARE(layout->placeholderCount(), 2);
@@ -5006,7 +4952,7 @@ void TestDocks::tst_removeItem()
     dock2->close();
     frame1 = dock1->frame();
     dock1->close();
-    QVERIFY(waitForDeleted(frame1));
+    QVERIFY(Testing::waitForDeleted(frame1));
 
     // Now remove the items, but first dock1
     layout->removeItem(dock1->lastPosition()->layoutItem());
@@ -5026,11 +4972,11 @@ void TestDocks::tst_removeItem()
 
     auto frame2 = dock2->frame();
     dock2->close();
-    waitForDeleted(frame2);
+    Testing::waitForDeleted(frame2);
 
     auto frame3 = dock3->frame();
     dock3->close();
-    waitForDeleted(frame3);
+    Testing::waitForDeleted(frame3);
 
     // The second anchor is now following the 3rd, while the 3rd is following 'bottom'
     layout->removeItem(dock3->lastPosition()->layoutItem()); // will trigger the 3rd anchor to be removed
@@ -5042,7 +4988,7 @@ void TestDocks::tst_removeItem()
     dock1->deleteLater();
     dock2->deleteLater();
     dock3->deleteLater();
-    waitForDeleted(dock3);
+    Testing::waitForDeleted(dock3);
 }
 
 void TestDocks::tst_startHidden()
@@ -5075,7 +5021,7 @@ void TestDocks::tst_startHidden()
         QCOMPARE(layout->placeholderCount(), 0);
         QCOMPARE(layout->numAchorsFollowing(), 0);
 
-        waitForResize(dock2);
+        Testing::waitForResize(dock2);
     }
 
     {
@@ -5109,7 +5055,7 @@ void TestDocks::tst_startHidden()
 
         dock2->show();
         dock3->show();
-        waitForResize(dock2);
+        Testing::waitForResize(dock2);
         layout->checkSanity();
     }
 }
@@ -5127,7 +5073,7 @@ void TestDocks::tst_startClosed()
     m->addDockWidget(dock1, Location_OnTop);
     Frame *frame1 = dock1->frame();
     dock1->close();
-    waitForDeleted(frame1);
+    Testing::waitForDeleted(frame1);
 
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 1);
@@ -5163,7 +5109,7 @@ void TestDocks::tst_samePositionAfterHideRestore()
 
     auto fw2 = dock2->floatingWindow();
     dock2->setFloating(false);
-    QVERIFY(waitForDeleted(fw2));
+    QVERIFY(Testing::waitForDeleted(fw2));
     QCOMPARE(geo2, dock2->frame()->geometry());
     m->multiSplitterLayout()->checkSanity();
 }
@@ -5183,7 +5129,7 @@ void TestDocks::tst_clear()
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
     m->addDockWidget(dock3, Location_OnRight);
-    QVERIFY(waitForDeleted(fw3));
+    QVERIFY(Testing::waitForDeleted(fw3));
     dock3->close();
 
     QCOMPARE(Frame::dbg_numFrames(), 3);
@@ -5197,7 +5143,7 @@ void TestDocks::tst_clear()
 
     // Cleanup
     dock3->deleteLater();
-    QVERIFY(waitForDeleted(dock3));
+    QVERIFY(Testing::waitForDeleted(dock3));
 }
 
 void TestDocks::tst_restoreEmbeddedMainWindow()
@@ -5248,7 +5194,7 @@ void TestDocks::tst_restoreWithDockFactory()
     QVERIFY(!saved.isEmpty());
     QPointer<Frame> f1 = dock1->frame();
     delete dock1;
-    waitForDeleted(f1);
+    Testing::waitForDeleted(f1);
     QVERIFY(!f1);
 
     // Directly deleted don't leave placeolders. We could though.
@@ -5310,7 +5256,7 @@ void TestDocks::tst_resizeWindow()
     }
 
     m->showMaximized();
-    QVERIFY(waitForResize(m.get()));
+    QVERIFY(Testing::waitForResize(m.get()));
 
     const int maximizedWidth1 = dock1->width();
     const int maximizedWidth2 = dock2->width();
@@ -5321,7 +5267,7 @@ void TestDocks::tst_resizeWindow()
     QVERIFY(relativeDifference <= 0.01);
 
     m->showNormal();
-    QVERIFY(waitForResize(m.get()));
+    QVERIFY(Testing::waitForResize(m.get()));
 
     const int newWidth1 = dock1->width();
     const int newWidth2 = dock2->width();
