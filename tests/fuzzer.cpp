@@ -119,7 +119,10 @@ public:
     Testing::Operation getRandomOperation()
     {
         Testing::Operation operation;
-        operation.operationType = OperationType_CloseViaDockWidgetAPI; // TODO
+
+        std::uniform_int_distribution<> operationDistrib(OperationType_None + 1, OperationType_Count - 1);
+        operation.operationType = OperationType(operationDistrib(m_randomEngine));
+
         return operation;
     }
 

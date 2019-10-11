@@ -43,6 +43,7 @@ namespace Testing {
         OperationType_CloseViaDockWidgetAPI, ///< Closing programatically via DockWidget::close()
         OperationType_HideViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::hide()
         OperationType_ShowViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::show()
+        OperationType_Count /// Keep at end
     };
 
     ///@brief Describes a testable action.
