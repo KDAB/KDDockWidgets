@@ -5,5 +5,5 @@ add_executable(fuzzer
                Operations.cpp
                ../Testing.cpp)
 
-
+set_property(TARGET fuzzer PROPERTY CXX_STANDARD 17)
 target_link_libraries(fuzzer kddockwidgets Qt5::Widgets Qt5::Test)

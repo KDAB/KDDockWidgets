@@ -165,7 +165,7 @@ bool Fuzzer::getRandomBool(int truePercentage)
     return distrib(m_randomEngine) < truePercentage;
 }
 
-Fuzzer::AddDockWidgetParams Fuzzer::getRandomAddDockWidgetParams()
+Testing::AddDockWidgetParams Fuzzer::getRandomAddDockWidgetParams()
 {
     AddDockWidgetParams params;
 

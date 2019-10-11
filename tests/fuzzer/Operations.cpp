@@ -47,6 +47,19 @@ void OperationBase::execute()
     execute_impl();
 }
 
+QVariantMap OperationBase::toVariantMap() const
+{
+    const QVariantMap params = paramsToVariantMap();
+    if (params.isEmpty())
+        return {};
+
+    QVariantMap map;
+    map["type"] = m_operationType;
+    map["params"] = params;
+
+    return map;
+}
+
 DockWidgetBase *OperationBase::dockByName(const QString &name) const
 {
     return DockRegistry::self()->dockByName(name);
@@ -65,11 +78,20 @@ CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(Fuzzer *fuzzer)
 void CloseViaDockWidgetAPI::execute_impl()
 {
     if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
+        m_dockWidgetName = dw->uniqueName();
         auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->close();
         if (fw && fw->beingDeleted())
             Testing::waitForDeleted(fw);
     }
+}
+
+QVariantMap CloseViaDockWidgetAPI::paramsToVariantMap() const
+{
+    QVariantMap map;
+    if (!m_dockWidgetName.isEmpty())
+        map["dockWidgetName"] = m_dockWidgetName;
+    return map;
 }
 
 HideViaDockWidgetAPI::HideViaDockWidgetAPI(Fuzzer *fuzzer)
@@ -80,11 +102,20 @@ HideViaDockWidgetAPI::HideViaDockWidgetAPI(Fuzzer *fuzzer)
 void HideViaDockWidgetAPI::execute_impl()
 {
     if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
+        m_dockWidgetName = dw->uniqueName();
         auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->hide();
         if (fw && fw->beingDeleted())
             Testing::waitForDeleted(fw);
     }
+}
+
+QVariantMap HideViaDockWidgetAPI::paramsToVariantMap() const
+{
+    QVariantMap map;
+    if (!m_dockWidgetName.isEmpty())
+        map["dockWidgetName"] = m_dockWidgetName;
+    return map;
 }
 
 ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(Fuzzer *fuzzer)
@@ -94,8 +125,18 @@ ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(Fuzzer *fuzzer)
 
 void ShowViaDockWidgetAPI::execute_impl()
 {
-    if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget())
+    if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
+        m_dockWidgetName = dw->uniqueName();
         dw->show();
+    }
+}
+
+QVariantMap ShowViaDockWidgetAPI::paramsToVariantMap() const
+{
+    QVariantMap map;
+    if (!m_dockWidgetName.isEmpty())
+        map["dockWidgetName"] = m_dockWidgetName;
+    return map;
 }
 
 AddDockWidget::AddDockWidget(Fuzzer *fuzzer)
@@ -105,10 +146,16 @@ AddDockWidget::AddDockWidget(Fuzzer *fuzzer)
 
 void AddDockWidget::execute_impl()
 {
-    const Fuzzer::AddDockWidgetParams params = m_fuzzer->getRandomAddDockWidgetParams();
+    m_params = m_fuzzer->getRandomAddDockWidgetParams();
 
-    auto fw = qobject_cast<FloatingWindow*>(params.dockWidget->window());
-    params.mainWindow->addDockWidget(params.dockWidget, params.location, params.relativeTo, params.addingOption);
+    auto fw = qobject_cast<FloatingWindow*>(m_params->dockWidget->window());
+    m_params->mainWindow->addDockWidget(m_params->dockWidget, m_params->location, m_params->relativeTo, m_params->addingOption);
     if (fw && fw->beingDeleted())
         Testing::waitForDeleted(fw);
+}
+
+QVariantMap AddDockWidget::paramsToVariantMap() const
+{
+    return m_params ? m_params->toVariantMap()
+                    : QVariantMap();
 }

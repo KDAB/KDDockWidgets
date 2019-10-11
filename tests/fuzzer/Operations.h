@@ -25,11 +25,13 @@
 #define KDDOCKWIDGETS_TESTING_OPERATIONS_H
 
 #include "KDDockWidgets.h"
+#include "../Testing.h"
 
 #include <QObject>
 #include <QVector>
 
 #include <memory>
+#include <optional>
 
 namespace KDDockWidgets {
 
@@ -61,8 +63,12 @@ public:
     virtual ~OperationBase();
 
     void execute();
+
+    QVariantMap toVariantMap() const;
+
 protected:
     virtual void execute_impl() = 0;
+    virtual QVariantMap paramsToVariantMap() const = 0;
     DockWidgetBase* dockByName(const QString &) const;
     MainWindowBase* mainWindowByName(const QString &) const;
 
@@ -77,6 +83,8 @@ public:
 
 protected:
     void execute_impl() override;
+    QVariantMap paramsToVariantMap() const override;
+    QString m_dockWidgetName;
 };
 
 class HideViaDockWidgetAPI : public OperationBase
@@ -86,6 +94,8 @@ public:
 
 protected:
     void execute_impl() override;
+    QVariantMap paramsToVariantMap() const override;
+    QString m_dockWidgetName;
 };
 
 class ShowViaDockWidgetAPI : public OperationBase
@@ -95,6 +105,8 @@ public:
 
 protected:
     void execute_impl() override;
+    QVariantMap paramsToVariantMap() const override;
+    QString m_dockWidgetName;
 };
 
 class AddDockWidget : public OperationBase
@@ -104,6 +116,9 @@ public:
 
 protected:
     void execute_impl() override;
+    QVariantMap paramsToVariantMap() const override;
+private:
+    std::optional<Testing::AddDockWidgetParams> m_params;
 };
 
 }

@@ -133,18 +133,24 @@ public:
         {
             QVariantMap map;
             map[QStringLiteral("initialLayout")] = initialLayout.toVariantMap();
+
+            QVariantList operationsVariant;
+            operationsVariant.reserve(operations.size());
+            int i = 0;
+            for (const auto &o : operations) {
+                QVariantMap operationVariant = o->toVariantMap();
+                if (operationVariant.isEmpty())
+                    break;
+
+                operationVariant["index"] = i;
+                ++i;
+                operationsVariant << operationVariant;
+            }
+
+            map[QStringLiteral("operations")] = operationsVariant;
             return map;
         }
     };
-
-    struct AddDockWidgetParams {
-        MainWindowBase *mainWindow;
-        DockWidgetBase *dockWidget;
-        DockWidgetBase *relativeTo;
-        KDDockWidgets::Location location;
-        KDDockWidgets::AddingOption addingOption;
-    };
-
 
     void runTest(const Test &);
 
@@ -158,7 +164,7 @@ public:
 
     bool getRandomBool(int truePercentage = 50);
 
-    AddDockWidgetParams getRandomAddDockWidgetParams();
+    Testing::AddDockWidgetParams getRandomAddDockWidgetParams();
 
     KDDockWidgets::MainWindowBase* getRandomMainWindow();
     KDDockWidgets::DockWidgetBase* getRandomDockWidget(DockWidgetBase *excluding = nullptr);

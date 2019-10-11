@@ -25,12 +25,15 @@
 #define KDDOCKWIDGETS_TESTING_H
 
 #include "KDDockWidgets.h"
+#include "MainWindowBase.h"
+#include "DockWidgetBase.h"
 
 #include <QSize>
 #include <QRect>
 #include <QVector>
 #include <QEvent>
 #include <QWidget>
+#include <QVariant>
 
 /**
  * @file
@@ -38,12 +41,38 @@
  */
 
 namespace KDDockWidgets {
+
+
 namespace Testing {
 
     class WarningObserver
     {
     public:
         virtual void onFatal() = 0;
+    };
+
+    struct AddDockWidgetParams {
+        MainWindowBase *mainWindow;
+        DockWidgetBase *dockWidget;
+        DockWidgetBase *relativeTo;
+        KDDockWidgets::Location location;
+        KDDockWidgets::AddingOption addingOption;
+
+        QVariantMap toVariantMap() const
+        {
+            QVariantMap map;
+            map["mainWindowName"] = mainWindow->uniqueName();
+            map["dockWidgetName"] = dockWidget->uniqueName();
+
+            if (relativeTo)
+                map["relativeToName"] = relativeTo->uniqueName();
+
+            map["location"] = location;
+            map["addingOption"] = addingOption;
+
+            return map;
+        }
+
     };
 
     void setWarningObserver(WarningObserver *);
