@@ -21,6 +21,9 @@
 // We don't care about performance related checks in the tests
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
+#ifndef KDDOCKWIDGETS_TESTING_H
+#define KDDOCKWIDGETS_TESTING_H
+
 #include "KDDockWidgets.h"
 #include "Operations.h"
 
@@ -76,3 +79,5 @@ namespace Testing {
     void runTest(const Testing::Test &);
 }
 }
+
+#endif
