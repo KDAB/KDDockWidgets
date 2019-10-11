@@ -51,6 +51,7 @@ public:
         , m_randomEngine(m_randomDevice())
         , m_fuzzerConfig(config)
     {
+        Testing::installFatalMessageHandler();
     }
 
     Testing::Layout generateRandomLayout()
