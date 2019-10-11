@@ -39,6 +39,15 @@
 
 namespace KDDockWidgets {
 namespace Testing {
+
+    class WarningObserver
+    {
+    public:
+        virtual void onFatal() = 0;
+    };
+
+    void setWarningObserver(WarningObserver *);
+
     void installFatalMessageHandler();
     void setExpectedWarning(const QString &);
 

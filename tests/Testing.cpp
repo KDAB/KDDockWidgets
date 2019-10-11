@@ -32,6 +32,7 @@ using namespace KDDockWidgets::Testing;
 
 extern quintptr Q_CORE_EXPORT qtHookData[];
 static QString s_expectedWarning;
+static WarningObserver *s_warningObserver = nullptr;
 static QtMessageHandler s_original = nullptr;
 
 class EventFilter : public QObject
@@ -80,8 +81,13 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
         if (!s_expectedWarning.isEmpty() && msg.contains(s_expectedWarning))
             return;
 
-        if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL"))
+        if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {
+
+            if (s_warningObserver)
+                s_warningObserver->onFatal();
+
             qFatal("Got a warning, category=%s", context.category);
+        }
     }
 }
 
@@ -133,4 +139,9 @@ void Testing::installFatalMessageHandler()
 void Testing::setExpectedWarning(const QString &expected)
 {
     s_expectedWarning = expected;
+}
+
+void Testing::setWarningObserver(WarningObserver *observer)
+{
+    s_warningObserver = observer;
 }

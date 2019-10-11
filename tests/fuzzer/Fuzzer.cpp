@@ -26,6 +26,8 @@
 #include "DockWidget.h"
 #include "MainWindow.h"
 
+#include <QJsonDocument>
+
 #include <QString>
 #include <QTest>
 
@@ -77,13 +79,15 @@ static void createLayout(const Fuzzer::Layout &layout)
 
 void Fuzzer::runTest(const Test &test)
 {
+    m_currentTest = test;
+
     if (!DockRegistry::self()->isEmpty())
         qFatal("There's dock widgets and the start runTest");
 
     createLayout(test.initialLayout);
     for (const auto &op : test.operations) {
         op->execute();
-        QTest::qWait(1000);
+        //QTest::qWait(1000);
     }
 
     for (MainWindowBase *mw : DockRegistry::self()->mainwindows())
@@ -105,6 +109,7 @@ Fuzzer::Fuzzer(Fuzzer::FuzzerConfig config, QObject *parent)
     , m_fuzzerConfig(config)
 {
     Testing::installFatalMessageHandler();
+    Testing::setWarningObserver(this);
 }
 
 Fuzzer::Layout Fuzzer::generateRandomLayout()
@@ -307,4 +312,16 @@ QRect Fuzzer::randomGeometry()
     QPoint pos = getRandomPos();
 
     return QRect(pos, QSize(width, height));
+}
+
+void Fuzzer::onFatal()
+{
+    // Tests failed! Let's dump
+    QVariantMap map = m_currentTest.toVariantMap();
+    QJsonDocument jsonDoc = QJsonDocument::fromVariant(map);
+    QFile file("fuzzer_dump.json");
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(jsonDoc.toJson());
+    }
+    file.close();
 }

@@ -28,6 +28,7 @@
 #include "MainWindowBase.h"
 #include "Operations.h"
 
+#include <QJsonDocument>
 #include <QVector>
 #include <random>
 
@@ -35,6 +36,7 @@ namespace KDDockWidgets {
 namespace Testing {
 
 class Fuzzer : public QObject
+             , WarningObserver
 {
     Q_OBJECT
 public:
@@ -52,24 +54,70 @@ public:
         QRect geometry;
         bool isFloating;
         bool isVisible;
+
+        QVariantMap toVariantMap() const
+        {
+            QVariantMap map;
+            map[QStringLiteral("minSize")] = minSize;
+            map[QStringLiteral("geometry")] = geometry;
+            map[QStringLiteral("isFloating")] = isFloating;
+            map[QStringLiteral("isVisible")] = isVisible;
+
+            return map;
+        }
     };
 
     struct MainWindowDescriptor {
         typedef QVector<MainWindowDescriptor> List;
         QRect geometry;
         MainWindowOption mainWindowOption;
+
+        QVariantMap toVariantMap() const
+        {
+            QVariantMap map;
+            map[QStringLiteral("geometry")] = geometry;
+            map[QStringLiteral("mainWindowOption")] = mainWindowOption;
+            return map;
+        }
     };
 
     struct Layout {
         typedef QVector<Layout> List;
         MainWindowDescriptor::List mainWindows;
         DockWidgetDescriptor::List dockWidgets;
+
+        QVariantMap toVariantMap() const
+        {
+            QVariantList mainWindowsVariant;
+            mainWindowsVariant.reserve(mainWindows.size());
+            for (const auto &mw : mainWindows) {
+                mainWindowsVariant << mw.toVariantMap();
+            }
+
+            QVariantList dockWidgetsVariant;
+            dockWidgetsVariant.reserve(dockWidgets.size());
+            for (const auto &dw : dockWidgets) {
+                dockWidgetsVariant << dw.toVariantMap();
+            }
+
+            QVariantMap map;
+            map[QStringLiteral("mainWindows")] = mainWindowsVariant;
+            map[QStringLiteral("dockWidgets")] = dockWidgetsVariant;
+            return map;
+        }
+
     };
 
     struct Test {
         typedef QVector<Test> List;
         Layout initialLayout;
         Operations::OperationBase::List operations;
+        QVariantMap toVariantMap() const
+        {
+            QVariantMap map;
+            map[QStringLiteral("initialLayout")] = initialLayout.toVariantMap();
+            return map;
+        }
     };
 
     struct AddDockWidgetParams {
@@ -113,11 +161,14 @@ public:
 
     QRect randomGeometry();
 
+    void onFatal() override;
+
+private:
     std::random_device m_randomDevice;
     std::mt19937 m_randomEngine;
     FuzzerConfig m_fuzzerConfig;
+    Fuzzer::Test m_currentTest;
 };
-
 
 }
 }
