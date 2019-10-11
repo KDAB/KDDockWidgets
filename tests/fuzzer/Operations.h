@@ -37,6 +37,9 @@ class DockWidgetBase;
 class MainWindowBase;
 
 namespace Testing {
+
+class Fuzzer;
+
 namespace Operations {
 
 enum OperationType {
@@ -96,21 +99,15 @@ protected:
     const QString m_dockWidgetName;
 };
 
-struct AddDockWidgetParams {
-    QString mainWindowName;
-    QString dockWidgetName;
-    QString dockWidgetRelativeToName;
-    KDDockWidgets::Location location;
-    KDDockWidgets::AddingOption addingOption;
-};
-
 class AddDockWidget : public OperationBase
 {
 public:
-    explicit AddDockWidget();
+    explicit AddDockWidget(Fuzzer *);
 
 protected:
     void execute_impl() override;
+private:
+    Fuzzer *const m_fuzzer;
 };
 
 }

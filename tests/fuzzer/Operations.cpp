@@ -24,6 +24,7 @@
 #include "Operations.h"
 #include "DockWidgetBase.h"
 #include "DockRegistry_p.h"
+#include "Fuzzer.h"
 #include "../Testing.h"
 
 using namespace KDDockWidgets;
@@ -63,6 +64,7 @@ CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(const QString &dockWidgetName)
 
 void CloseViaDockWidgetAPI::execute_impl()
 {
+    qDebug() << Q_FUNC_INFO << "Closing" << m_dockWidgetName;
     if (auto dw = dockByName(m_dockWidgetName)) {
         auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->close();
@@ -80,6 +82,7 @@ HideViaDockWidgetAPI::HideViaDockWidgetAPI(const QString &dockWidgetName)
 
 void HideViaDockWidgetAPI::execute_impl()
 {
+    qDebug() << Q_FUNC_INFO << "Hidding" << m_dockWidgetName;
     if (auto dw = dockByName(m_dockWidgetName)) {
         auto fw = qobject_cast<FloatingWindow*>(dw->window());
         dw->hide();
@@ -96,24 +99,23 @@ ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(const QString &dockWidgetName)
 
 void ShowViaDockWidgetAPI::execute_impl()
 {
+    qDebug() << Q_FUNC_INFO << "Showing" << m_dockWidgetName;
     if (auto dw = dockByName(m_dockWidgetName))
         dw->show();
 }
 
-AddDockWidget::AddDockWidget()
+AddDockWidget::AddDockWidget(Fuzzer *fuzzer)
     : OperationBase(OperationType_AddDockWidget)
+    , m_fuzzer(fuzzer)
 {
 }
 
 void AddDockWidget::execute_impl()
 {
-  /*  const AddDockWidgetParams params = m_paramsFunc();
-    MainWindowBase *mainWindow = mainWindowByName(params.mainWindowName);
-    DockWidgetBase *dw = dockByName(params.dockWidgetName);
-    DockWidgetBase *relativeTo = dockByName(params.dockWidgetRelativeToName);
+    const Fuzzer::AddDockWidgetParams params = m_fuzzer->getRandomAddDockWidgetParams();
 
-    auto fw = qobject_cast<FloatingWindow*>(dw->window());
-    mainWindow->addDockWidget(dw, params.location, relativeTo, params.addingOption);
+    auto fw = qobject_cast<FloatingWindow*>(params.dockWidget->window());
+    params.mainWindow->addDockWidget(params.dockWidget, params.location, params.relativeTo, params.addingOption);
     if (fw && fw->beingDeleted())
-        Testing::waitForDeleted(fw);*/
+        Testing::waitForDeleted(fw);
 }
