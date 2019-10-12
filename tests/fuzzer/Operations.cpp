@@ -78,11 +78,13 @@ CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(Fuzzer *fuzzer)
 void CloseViaDockWidgetAPI::execute_impl()
 {
     if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
-        m_dockWidgetName = dw->uniqueName();
-        auto fw = qobject_cast<FloatingWindow*>(dw->window());
-        dw->close();
-        if (fw && fw->beingDeleted())
-            Testing::waitForDeleted(fw);
+        if (dw->isVisible()) {
+            m_dockWidgetName = dw->uniqueName();
+            auto fw = qobject_cast<FloatingWindow*>(dw->window());
+            dw->close();
+            if (fw && fw->beingDeleted())
+                Testing::waitForDeleted(fw);
+        }
     }
 }
 
@@ -102,11 +104,13 @@ HideViaDockWidgetAPI::HideViaDockWidgetAPI(Fuzzer *fuzzer)
 void HideViaDockWidgetAPI::execute_impl()
 {
     if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
-        m_dockWidgetName = dw->uniqueName();
-        auto fw = qobject_cast<FloatingWindow*>(dw->window());
-        dw->hide();
-        if (fw && fw->beingDeleted())
-            Testing::waitForDeleted(fw);
+        if (dw->isVisible()) {
+            m_dockWidgetName = dw->uniqueName();
+            auto fw = qobject_cast<FloatingWindow*>(dw->window());
+            dw->hide();
+            if (fw && fw->beingDeleted())
+                Testing::waitForDeleted(fw);
+        }
     }
 }
 
@@ -126,8 +130,10 @@ ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(Fuzzer *fuzzer)
 void ShowViaDockWidgetAPI::execute_impl()
 {
     if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
-        m_dockWidgetName = dw->uniqueName();
-        dw->show();
+        if (!dw->isVisible()) {
+            m_dockWidgetName = dw->uniqueName();
+            dw->show();
+        }
     }
 }
 
