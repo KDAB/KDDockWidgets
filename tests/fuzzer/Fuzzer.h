@@ -154,7 +154,7 @@ public:
 
     void runTest(const Test &);
 
-    explicit Fuzzer(FuzzerConfig config, QObject *parent = nullptr);
+    explicit Fuzzer(QObject *parent = nullptr);
 
     Fuzzer::Layout generateRandomLayout();
 
@@ -180,7 +180,9 @@ public:
     Fuzzer::Test generateRandomTest();
     Fuzzer::Test::List generateRandomTests(int num);
 
-    void fuzz();
+    void fuzz(FuzzerConfig config);
+    void fuzz(const QStringList &jsonFiles);
+    void fuzz(const QString &json);
 
     QRect randomGeometry();
 
@@ -189,7 +191,6 @@ public:
 private:
     std::random_device m_randomDevice;
     std::mt19937 m_randomEngine;
-    FuzzerConfig m_fuzzerConfig;
     Fuzzer::Test m_currentTest;
 };
 

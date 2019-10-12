@@ -24,6 +24,7 @@
 #include "Fuzzer.h"
 #include "DockRegistry_p.h"
 
+#include <QCommandLineParser>
 #include <QApplication>
 #include <QTimer>
 #include <QDebug>
@@ -35,8 +36,20 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    Fuzzer fuzzer({ 1, 10, true });
-    QTimer::singleShot(0, &fuzzer, &Fuzzer::fuzz);
+    QCommandLineParser parser;
+    parser.setApplicationDescription("Fuzzer Help");
+    parser.addPositionalArgument("json", QCoreApplication::translate("main", "json file to load"));
+    parser.addHelpOption();
+    parser.process(app);
+    const QStringList filesToLoad = parser.positionalArguments();
+
+    Fuzzer fuzzer;
+    QTimer::singleShot(0, &fuzzer, [&fuzzer, filesToLoad] {
+        if (filesToLoad.isEmpty())
+            fuzzer.fuzz({ 1, 10, true });
+        else
+            fuzzer.fuzz(filesToLoad);
+    });
 
     return app.exec();
 }

@@ -103,10 +103,9 @@ void Fuzzer::runTest(const Test &test)
         qFatal("There's still dock widgets and the end of runTest");
 }
 
-Fuzzer::Fuzzer(Fuzzer::FuzzerConfig config, QObject *parent)
+Fuzzer::Fuzzer(QObject *parent)
     : QObject(parent)
     , m_randomEngine(m_randomDevice())
-    , m_fuzzerConfig(config)
 {
     Testing::installFatalMessageHandler();
     Testing::setWarningObserver(this);
@@ -292,13 +291,31 @@ Fuzzer::Test::List Fuzzer::generateRandomTests(int num)
     return tests;
 }
 
-void Fuzzer::fuzz()
+void Fuzzer::fuzz(FuzzerConfig config)
 {
-    const Fuzzer::Test::List tests = generateRandomTests(m_fuzzerConfig.numTests);
+    const Fuzzer::Test::List tests = generateRandomTests(config.numTests);
     qDebug().noquote() << "Running" << QString("%1 tests...").arg(tests.size());
 
     for (const auto &test : tests) {
         runTest(test);
+    }
+}
+
+void Fuzzer::fuzz(const QStringList &jsonFiles)
+{
+    for (const QString &jsonFile : jsonFiles)
+        fuzz(jsonFile);
+}
+
+void Fuzzer::fuzz(const QString &jsonFile)
+{
+    QFile file(jsonFile);
+    if (file.open(QIODevice::ReadOnly)) {
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        // TODO
+        qDebug() << jsonFile;
+    } else {
+        qWarning() << Q_FUNC_INFO << "Failed to open file" << jsonFile;
     }
 }
 
