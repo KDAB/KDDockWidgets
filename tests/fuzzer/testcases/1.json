@@ -1,0 +1,497 @@
+{
+    "initialLayout": {
+        "dockWidgets": [
+            {
+                "geometry": {
+                    "size": {
+                        "height": 593,
+                        "width": 861
+                    },
+                    "x": 55,
+                    "y": 296
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 373,
+                    "width": 344
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 583,
+                        "width": 346
+                    },
+                    "x": 474,
+                    "y": 477
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 416,
+                    "width": 243
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 931,
+                        "width": 482
+                    },
+                    "x": 429,
+                    "y": 108
+                },
+                "isFloating": true,
+                "isVisible": true,
+                "minSize": {
+                    "height": 509,
+                    "width": 172
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 514,
+                        "width": 608
+                    },
+                    "x": 109,
+                    "y": 197
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 288,
+                    "width": 341
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 947,
+                        "width": 568
+                    },
+                    "x": 234,
+                    "y": 156
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 348,
+                    "width": 443
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 564,
+                        "width": 1097
+                    },
+                    "x": 88,
+                    "y": 430
+                },
+                "isFloating": true,
+                "isVisible": true,
+                "minSize": {
+                    "height": 170,
+                    "width": 600
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 350,
+                        "width": 1108
+                    },
+                    "x": 384,
+                    "y": 279
+                },
+                "isFloating": true,
+                "isVisible": true,
+                "minSize": {
+                    "height": 295,
+                    "width": 554
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 1040,
+                        "width": 960
+                    },
+                    "x": 325,
+                    "y": 313
+                },
+                "isFloating": true,
+                "isVisible": false,
+                "minSize": {
+                    "height": 480,
+                    "width": 565
+                }
+            }
+        ],
+        "mainWindows": [
+            {
+                "geometry": {
+                    "size": {
+                        "height": 961,
+                        "width": 472
+                    },
+                    "x": 232,
+                    "y": 79
+                },
+                "mainWindowOption": 0
+            }
+        ]
+    },
+    "operations": [
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-6",
+                "location": 3,
+                "mainWindowName": "MainWindow-1"
+            },
+            "type": 4
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-7"
+            },
+            "type": 2
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-7"
+            },
+            "type": 3
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-3",
+                "dockWidgetToAddName": "DockWidget-8"
+            },
+            "type": 5
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-7",
+                "dockWidgetToAddName": "DockWidget-8"
+            },
+            "type": 5
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-5"
+            },
+            "type": 2
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-3",
+                "dockWidgetToAddName": "DockWidget-4"
+            },
+            "type": 5
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-2"
+            },
+            "type": 2
+        },
+        {
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-8",
+                "location": 2,
+                "mainWindowName": "MainWindow-1"
+            },
+            "type": 4
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-7",
+                "dockWidgetToAddName": "DockWidget-3"
+            },
+            "type": 5
+        },
+        {
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-7",
+                "location": 1,
+                "mainWindowName": "MainWindow-1",
+                "relativeToName": "DockWidget-6"
+            },
+            "type": 4
+        },
+        {
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-2",
+                "location": 3,
+                "mainWindowName": "MainWindow-1",
+                "relativeToName": "DockWidget-7"
+            },
+            "type": 4
+        },
+        {
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-3",
+                "location": 1,
+                "mainWindowName": "MainWindow-1"
+            },
+            "type": 4
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-8"
+            },
+            "type": 2
+        },
+        {
+            "params": {
+                "dockWidgetName": "DockWidget-4"
+            },
+            "type": 1
+        },
+        {
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-1",
+                "location": 2,
+                "mainWindowName": "MainWindow-1"
+            },
+            "type": 4
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        },
+        {
+            "params": {
+                "sleepTimeMS": -1
+            },
+            "type": 6
+        }
+    ]
+}
