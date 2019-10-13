@@ -39,12 +39,22 @@ int main(int argc, char **argv)
     QCommandLineParser parser;
     parser.setApplicationDescription("Fuzzer Help");
     parser.addPositionalArgument("json", QCoreApplication::translate("main", "json file to load"));
+
+    QCommandLineOption slowDownOption("s", QCoreApplication::translate("main", "Slowdown tests. Adds a 1 second delay between operations"));
+    parser.addOption(slowDownOption);
+
     parser.addHelpOption();
     parser.process(app);
+
+    const bool slowDown = parser.isSet(slowDownOption);
+
     const QStringList filesToLoad = parser.positionalArguments();
 
     const bool dumpToJsonOnFatal = filesToLoad.isEmpty();
     Fuzzer fuzzer(dumpToJsonOnFatal);
+    if (slowDown)
+        fuzzer.setDelayBetweenOperations(1000);
+
     QTimer::singleShot(0, &fuzzer, [&fuzzer, filesToLoad] {
         if (filesToLoad.isEmpty())
             fuzzer.fuzz({ 1, 10, true });

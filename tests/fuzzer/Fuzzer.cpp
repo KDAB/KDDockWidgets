@@ -90,7 +90,7 @@ void Fuzzer::runTest(const Test &test)
         // qDebug() << "Running operation" << op->type() << "; index=" << index;
         index++;
         op->execute();
-        QTest::qWait(50);
+        QTest::qWait(m_operationDelayMS);
     }
 
     for (MainWindowBase *mw : DockRegistry::self()->mainwindows())
@@ -334,6 +334,11 @@ void Fuzzer::onFatal()
         // Tests failed! Let's dump
         m_currentTest.dumpToJsonFile("fuzzer_dump.json");
     }
+}
+
+void Fuzzer::setDelayBetweenOperations(int delay)
+{
+    m_operationDelayMS = delay;
 }
 
 void Fuzzer::Test::dumpToJsonFile(const QString &filename)

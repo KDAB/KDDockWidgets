@@ -30,6 +30,7 @@
 
 #include <QJsonDocument>
 #include <QVector>
+
 #include <random>
 
 namespace KDDockWidgets {
@@ -255,12 +256,14 @@ public:
     QRect randomGeometry();
 
     void onFatal() override;
+    void setDelayBetweenOperations(int delay);
 
 private:
     std::random_device m_randomDevice;
     std::mt19937 m_randomEngine;
     Fuzzer::Test m_currentTest;
     const bool m_dumpJsonOnFailure;
+    int m_operationDelayMS = 50;
 };
 
 }
