@@ -254,33 +254,10 @@ QPoint Fuzzer::getRandomPos()
 
 OperationBase::Ptr Fuzzer::getRandomOperation()
 {
-    Testing::Operations::OperationBase::Ptr operation;
-
     std::uniform_int_distribution<> operationDistrib(OperationType_None + 1, OperationType_Count - 1);
     auto operationType = OperationType(operationDistrib(m_randomEngine));
 
-    switch (operationType) {
-    case OperationType_CloseViaDockWidgetAPI:
-        operation = OperationBase::Ptr(new CloseViaDockWidgetAPI(this));
-        break;
-    case OperationType_HideViaDockWidgetAPI:
-        operation = OperationBase::Ptr(new HideViaDockWidgetAPI(this));
-        break;
-    case OperationType_ShowViaDockWidgetAPI:
-        operation = OperationBase::Ptr(new ShowViaDockWidgetAPI(this));
-        break;
-    case OperationType_AddDockWidget:
-        operation = OperationBase::Ptr(new AddDockWidget(this));
-        break;
-    case OperationType_AddDockWidgetAsTab:
-        operation = OperationBase::Ptr(new AddDockWidgetAsTab(this));
-        break;
-    case OperationType_None:
-    case OperationType_Count:
-        break;
-    }
-
-    return operation;
+    return OperationBase::newOperation(this, operationType);
 }
 
 Fuzzer::Test Fuzzer::generateRandomTest()

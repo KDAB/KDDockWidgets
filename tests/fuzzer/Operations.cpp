@@ -64,17 +64,37 @@ QVariantMap OperationBase::toVariantMap() const
 
 OperationBase::Ptr OperationBase::fromVariantMap(Fuzzer *fuzzer, const QVariantMap &map)
 {
-    OperationBase::Ptr ptr;
-
     if (!map.contains("type") || !map.contains("params")) {
         qDebug() << Q_FUNC_INFO << "Invalid map";
         return {};
     }
 
     auto operationType = OperationType(map["type"].toInt());
-    switch (operationType) {
+
+    OperationBase::Ptr ptr = OperationBase::newOperation(fuzzer, operationType);
+    if (ptr) {
+
+        const QVariantMap params = map["params"].toMap();
+        if (params.isEmpty()) {
+            qDebug() << Q_FUNC_INFO << "Invalid params";
+        } else {
+            ptr->fillParamsFromVariantMap(params);
+        }
+    } else {
+        qDebug() << Q_FUNC_INFO << "Failed to fill params";
+    }
+
+    return ptr;
+}
+
+OperationBase::Ptr OperationBase::newOperation(Fuzzer *fuzzer, OperationType type)
+{
+    OperationBase::Ptr ptr;
+
+    switch (type) {
     case OperationType_Count:
     case OperationType_None:
+        qDebug() << Q_FUNC_INFO << "Invalid type";
         break;
     case OperationType_CloseViaDockWidgetAPI:
         ptr = OperationBase::Ptr(new CloseViaDockWidgetAPI(fuzzer));
@@ -91,18 +111,6 @@ OperationBase::Ptr OperationBase::fromVariantMap(Fuzzer *fuzzer, const QVariantM
     case OperationType_AddDockWidgetAsTab:
         ptr = OperationBase::Ptr(new AddDockWidgetAsTab(fuzzer));
         break;
-    }
-
-    if (ptr) {
-
-        const QVariantMap params = map["params"].toMap();
-        if (params.isEmpty()) {
-            qDebug() << Q_FUNC_INFO << "Invalid params";
-        } else {
-            ptr->fillParamsFromVariantMap(params);
-        }
-    } else {
-        qDebug() << Q_FUNC_INFO << "Failed to fill params";
     }
 
     return ptr;

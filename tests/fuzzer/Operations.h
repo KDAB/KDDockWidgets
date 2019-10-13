@@ -67,6 +67,7 @@ public:
 
     QVariantMap toVariantMap() const;
     static OperationBase::Ptr fromVariantMap(Fuzzer *fuzzer, const QVariantMap &);
+    static OperationBase::Ptr newOperation(Fuzzer *fuzzer, OperationType);
 
 protected:
     virtual void execute_impl() = 0;
