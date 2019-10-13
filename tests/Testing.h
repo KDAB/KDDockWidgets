@@ -27,6 +27,7 @@
 #include "KDDockWidgets.h"
 #include "MainWindowBase.h"
 #include "DockWidgetBase.h"
+#include "DockRegistry_p.h"
 
 #include <QSize>
 #include <QRect>
@@ -73,6 +74,30 @@ namespace Testing {
             return map;
         }
 
+        void fillFromVariantMap(const QVariantMap &map)
+        {
+            const QString mainWindowName = map["mainWindowName"].toString();
+            const QString dockWidgetName = map["dockWidgetName"].toString();
+            const QString relativeToName = map["relativeToName"].toString();
+            location = KDDockWidgets::Location(map["location"].toInt());
+            addingOption = KDDockWidgets::AddingOption(map["addingOption"].toInt());
+
+
+            if (mainWindowName.isEmpty())
+                mainWindow = nullptr;
+            else
+                mainWindow = DockRegistry::self()->mainWindowByName(mainWindowName);
+
+            if (dockWidgetName.isEmpty())
+                dockWidget = nullptr;
+            else
+                dockWidget = DockRegistry::self()->dockByName(dockWidgetName);
+
+            if (relativeToName.isEmpty())
+                relativeTo = nullptr;
+            else
+                relativeTo = DockRegistry::self()->dockByName(relativeToName);
+        }
     };
 
     void setWarningObserver(WarningObserver *);

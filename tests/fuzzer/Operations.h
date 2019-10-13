@@ -65,10 +65,12 @@ public:
     void execute();
 
     QVariantMap toVariantMap() const;
+    static OperationBase::Ptr fromVariantMap(Fuzzer *fuzzer, const QVariantMap &);
 
 protected:
     virtual void execute_impl() = 0;
     virtual QVariantMap paramsToVariantMap() const = 0;
+    virtual void fillParamsFromVariantMap(const QVariantMap &) = 0;
     DockWidgetBase* dockByName(const QString &) const;
     MainWindowBase* mainWindowByName(const QString &) const;
 
@@ -84,6 +86,7 @@ public:
 protected:
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
+    void fillParamsFromVariantMap(const QVariantMap &) override;
     QString m_dockWidgetName;
 };
 
@@ -95,6 +98,7 @@ public:
 protected:
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
+    void fillParamsFromVariantMap(const QVariantMap &) override;
     QString m_dockWidgetName;
 };
 
@@ -106,6 +110,7 @@ public:
 protected:
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
+    void fillParamsFromVariantMap(const QVariantMap &) override;
     QString m_dockWidgetName;
 };
 
@@ -117,6 +122,7 @@ public:
 protected:
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
+    void fillParamsFromVariantMap(const QVariantMap &) override;
 private:
     std::optional<Testing::AddDockWidgetParams> m_params;
 };

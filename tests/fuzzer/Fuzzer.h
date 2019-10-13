@@ -52,6 +52,17 @@ static QVariantMap rectToVariantMap(QRect r)
     return map;
 }
 
+static QSize sizeFromVariantMap(const QVariantMap &map)
+{
+    return { map["x"].toInt(), map["y"].toInt() };
+}
+
+static QRect rectFromVariantMap(const QVariantMap &map)
+{
+    const QSize sz = sizeFromVariantMap(map["size"].toMap());
+    return { map["x"].toInt(), map["y"].toInt(), sz.width(), sz.height() };
+}
+
 class Fuzzer : public QObject
              , WarningObserver
 {
@@ -82,6 +93,19 @@ public:
 
             return map;
         }
+
+        static DockWidgetDescriptor fromVariantMap(const QVariantMap &map)
+        {
+            DockWidgetDescriptor dock;
+
+            dock.minSize = sizeFromVariantMap(map["minSize"].toMap());
+            dock.geometry = rectFromVariantMap(map["geometry"].toMap());
+            dock.isFloating = map["isFloating"].toBool();
+            dock.isVisible = map["isVisible"].toBool();
+
+            return dock;
+        }
+
     };
 
     struct MainWindowDescriptor {
@@ -95,6 +119,16 @@ public:
             map[QStringLiteral("geometry")] = rectToVariantMap(geometry);
             map[QStringLiteral("mainWindowOption")] = mainWindowOption;
             return map;
+        }
+
+        static MainWindowDescriptor fromVariantMap(const QVariantMap &map)
+        {
+            MainWindowDescriptor mainWindow;
+
+            mainWindow.mainWindowOption = MainWindowOption(map["mainWindowOption"].toInt());
+            mainWindow.geometry = rectFromVariantMap(map["geometry"].toMap());
+
+            return mainWindow;
         }
     };
 
@@ -123,6 +157,24 @@ public:
             return map;
         }
 
+
+        static Layout fromVariantMap(const QVariantMap &map)
+        {
+            Layout l;
+
+            const QVariantList mainWindows = map["mainWindows"].toList();
+            const QVariantList dockWidgets = map["dockWidgets"].toList();
+
+            l.mainWindows.reserve(mainWindows.size());
+            for (const QVariant &mainwindow : mainWindows)
+                l.mainWindows.push_back(MainWindowDescriptor::fromVariantMap(mainwindow.toMap()));
+
+            l.dockWidgets.reserve(dockWidgets.size());
+            for (const QVariant &dockWidget : dockWidgets)
+                l.dockWidgets.push_back(DockWidgetDescriptor::fromVariantMap(dockWidget.toMap()));
+
+            return l;
+        }
     };
 
     struct Test {
@@ -149,6 +201,19 @@ public:
 
             map[QStringLiteral("operations")] = operationsVariant;
             return map;
+        }
+
+        static Test fromVariantMap(Fuzzer *fuzzer, const QVariantMap &map)
+        {
+            Test t;
+            t.initialLayout = Layout::fromVariantMap(map["initialLayout"].toMap());
+
+            const QVariantList operations = map["operations"].toList();
+            t.operations.reserve(operations.size());
+            for (const QVariant &operation : operations)
+                t.operations.push_back(Operations::OperationBase::fromVariantMap(fuzzer, operation.toMap()));
+
+            return t;
         }
     };
 

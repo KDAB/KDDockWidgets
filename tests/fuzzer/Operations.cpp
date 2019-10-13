@@ -60,6 +60,36 @@ QVariantMap OperationBase::toVariantMap() const
     return map;
 }
 
+OperationBase::Ptr OperationBase::fromVariantMap(Fuzzer *fuzzer, const QVariantMap &map)
+{
+    OperationBase::Ptr ptr;
+
+    auto operationType = OperationType(map["type"].toInt());
+    switch (operationType) {
+    case OperationType_Count:
+    case OperationType_None:
+        break;
+    case OperationType_CloseViaDockWidgetAPI:
+        ptr = OperationBase::Ptr(new CloseViaDockWidgetAPI(fuzzer));
+        break;
+    case OperationType_HideViaDockWidgetAPI:
+        ptr = OperationBase::Ptr(new HideViaDockWidgetAPI(fuzzer));
+        break;
+    case OperationType_ShowViaDockWidgetAPI:
+        ptr = OperationBase::Ptr(new ShowViaDockWidgetAPI(fuzzer));
+        break;
+    case OperationType_AddDockWidget:
+        ptr = OperationBase::Ptr(new AddDockWidget(fuzzer));
+        break;
+    }
+
+    if (ptr) {
+        ptr->fillParamsFromVariantMap(map["params"].toMap());
+    }
+
+    return ptr;
+}
+
 DockWidgetBase *OperationBase::dockByName(const QString &name) const
 {
     return DockRegistry::self()->dockByName(name);
@@ -96,6 +126,13 @@ QVariantMap CloseViaDockWidgetAPI::paramsToVariantMap() const
     return map;
 }
 
+void CloseViaDockWidgetAPI::fillParamsFromVariantMap(const QVariantMap &map)
+{
+    if (!map.isEmpty()) {
+         m_dockWidgetName = map["dockWidgetName"].toString();
+    }
+}
+
 HideViaDockWidgetAPI::HideViaDockWidgetAPI(Fuzzer *fuzzer)
     : OperationBase(OperationType_HideViaDockWidgetAPI, fuzzer)
 {
@@ -122,6 +159,13 @@ QVariantMap HideViaDockWidgetAPI::paramsToVariantMap() const
     return map;
 }
 
+void HideViaDockWidgetAPI::fillParamsFromVariantMap(const QVariantMap &map)
+{
+    if (!map.isEmpty()) {
+        m_dockWidgetName = map["dockWidgetName"].toString();
+    }
+}
+
 ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(Fuzzer *fuzzer)
     : OperationBase(OperationType_ShowViaDockWidgetAPI, fuzzer)
 {
@@ -145,6 +189,13 @@ QVariantMap ShowViaDockWidgetAPI::paramsToVariantMap() const
     return map;
 }
 
+void ShowViaDockWidgetAPI::fillParamsFromVariantMap(const QVariantMap &map)
+{
+    if (!map.isEmpty()) {
+        m_dockWidgetName = map["dockWidgetName"].toString();
+    }
+}
+
 AddDockWidget::AddDockWidget(Fuzzer *fuzzer)
     : OperationBase(OperationType_AddDockWidget, fuzzer)
 {
@@ -164,4 +215,11 @@ QVariantMap AddDockWidget::paramsToVariantMap() const
 {
     return m_params ? m_params->toVariantMap()
                     : QVariantMap();
+}
+
+void AddDockWidget::fillParamsFromVariantMap(const QVariantMap &map)
+{
+    if (!map.isEmpty()) {
+        m_params->fillFromVariantMap(map);
+    }
 }
