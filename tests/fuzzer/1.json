@@ -1,0 +1,113 @@
+{
+    "initialLayout": {
+        "dockWidgets": [
+            {
+                "geometry": {
+                    "size": {
+                        "height": 664,
+                        "width": 821
+                    },
+                    "x": 125,
+                    "y": 342
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 176,
+                    "width": 472
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 735,
+                        "width": 805
+                    },
+                    "x": 204,
+                    "y": 35
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 162,
+                    "width": 223
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 428,
+                        "width": 942
+                    },
+                    "x": 295,
+                    "y": 263
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 266,
+                    "width": 544
+                }
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 550,
+                        "width": 706
+                    },
+                    "x": 276,
+                    "y": 55
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 157,
+                    "width": 476
+                }
+            }
+        ],
+        "mainWindows": [
+            {
+                "geometry": {
+                    "size": {
+                        "height": 1178,
+                        "width": 272
+                    },
+                    "x": 344,
+                    "y": 278
+                },
+                "mainWindowOption": 0
+            }
+        ]
+    },
+    "operations": [
+        {
+            "index": 0,
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-4",
+                "location": 3,
+                "mainWindowName": "MainWindow-1"
+            },
+            "type": 4
+        },
+        {
+            "index": 5,
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-3",
+                "location": 1,
+                "mainWindowName": "MainWindow-1"
+            },
+            "type": 4
+        },
+        {
+            "index": 6,
+            "params": {
+                "dockWidgetName": "DockWidget-4",
+                "dockWidgetToAddName": "DockWidget-3"
+            },
+            "type": 5
+        }
+    ]
+}
