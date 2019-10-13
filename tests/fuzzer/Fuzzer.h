@@ -235,7 +235,7 @@ public:
     Testing::AddDockWidgetParams getRandomAddDockWidgetParams();
 
     KDDockWidgets::MainWindowBase* getRandomMainWindow();
-    KDDockWidgets::DockWidgetBase* getRandomDockWidget(DockWidgetBase *excluding = nullptr);
+    KDDockWidgets::DockWidgetBase* getRandomDockWidget(const DockWidgetBase::List &excluding = {});
     KDDockWidgets::DockWidgetBase* getRandomRelativeTo(MainWindowBase *mainWindow,
                                                        DockWidgetBase *excluding);
 

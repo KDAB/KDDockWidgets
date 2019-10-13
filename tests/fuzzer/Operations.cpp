@@ -254,7 +254,17 @@ AddDockWidgetAsTab::AddDockWidgetAsTab(Fuzzer *fuzzer)
 void AddDockWidgetAsTab::execute_impl()
 {
     DockWidgetBase *dw = m_fuzzer->getRandomDockWidget();
-    DockWidgetBase *dw2 = m_fuzzer->getRandomDockWidget(dw);
+    if (!dw)
+        return;
+
+    DockWidgetBase *dw2 = nullptr;
+
+    if (auto frame = dw->frame()) {
+        dw2 = m_fuzzer->getRandomDockWidget(/*excluding=*/frame->dockWidgets());
+    }
+
+    if (!dw2)
+        return;
 
     m_dockWidgetName = dw->uniqueName();
     m_dockWidgetToAddName = dw2->uniqueName();

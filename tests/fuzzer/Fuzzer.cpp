@@ -206,12 +206,11 @@ MainWindowBase *Fuzzer::getRandomMainWindow()
     return windows.first();
 }
 
-DockWidgetBase *Fuzzer::getRandomDockWidget(DockWidgetBase *excluding)
+DockWidgetBase *Fuzzer::getRandomDockWidget(const DockWidgetBase::List &excluding)
 {
     auto docks = DockRegistry::self()->dockwidgets();
-
-    if (excluding)
-        docks.removeOne(excluding);
+    for (auto dw : excluding)
+        docks.removeOne(dw);
 
     if (docks.isEmpty())
         return nullptr;
