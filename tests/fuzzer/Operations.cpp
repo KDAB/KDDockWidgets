@@ -296,8 +296,15 @@ void AddDockWidgetAsTab::generateRandomParams()
 
     DockWidgetBase *dw2 = nullptr;
 
-    if (auto frame = dw->frame())
-        dw2 = m_fuzzer->getRandomDockWidget(/*excluding=*/frame->dockWidgets());
+    if (auto frame = dw->frame()) {
+        auto toExclude = frame->dockWidgets();
+        for (auto dockWidget : DockRegistry::self()->dockwidgets()) {
+            if (dockWidget->window() == dw->window())
+                toExclude.push_back(dockWidget);
+        }
+
+        dw2 = m_fuzzer->getRandomDockWidget(toExclude);
+    }
 
     if (!dw2)
         return;
