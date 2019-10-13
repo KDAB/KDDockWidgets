@@ -103,9 +103,10 @@ void Fuzzer::runTest(const Test &test)
         qFatal("There's still dock widgets and the end of runTest");
 }
 
-Fuzzer::Fuzzer(QObject *parent)
+Fuzzer::Fuzzer(bool dumpJsonOnFailure, QObject *parent)
     : QObject(parent)
     , m_randomEngine(m_randomDevice())
+    , m_dumpJsonOnFailure(dumpJsonOnFailure)
 {
     Testing::installFatalMessageHandler();
     Testing::setWarningObserver(this);
@@ -333,12 +334,14 @@ QRect Fuzzer::randomGeometry()
 
 void Fuzzer::onFatal()
 {
-    // Tests failed! Let's dump
-    QVariantMap map = m_currentTest.toVariantMap();
-    QJsonDocument jsonDoc = QJsonDocument::fromVariant(map);
-    QFile file("fuzzer_dump.json");
-    if (file.open(QIODevice::WriteOnly)) {
-        file.write(jsonDoc.toJson());
+    if (m_dumpJsonOnFailure) {
+        // Tests failed! Let's dump
+        QVariantMap map = m_currentTest.toVariantMap();
+        QJsonDocument jsonDoc = QJsonDocument::fromVariant(map);
+        QFile file("fuzzer_dump.json");
+        if (file.open(QIODevice::WriteOnly)) {
+            file.write(jsonDoc.toJson());
+        }
+        file.close();
     }
-    file.close();
 }

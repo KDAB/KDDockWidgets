@@ -219,7 +219,7 @@ public:
 
     void runTest(const Test &);
 
-    explicit Fuzzer(QObject *parent = nullptr);
+    explicit Fuzzer(bool dumpJsonOnFailure, QObject *parent = nullptr);
 
     Fuzzer::Layout generateRandomLayout();
 
@@ -257,6 +257,7 @@ private:
     std::random_device m_randomDevice;
     std::mt19937 m_randomEngine;
     Fuzzer::Test m_currentTest;
+    const bool m_dumpJsonOnFailure;
 };
 
 }

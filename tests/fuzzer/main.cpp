@@ -43,7 +43,8 @@ int main(int argc, char **argv)
     parser.process(app);
     const QStringList filesToLoad = parser.positionalArguments();
 
-    Fuzzer fuzzer;
+    const bool dumpToJsonOnFatal = filesToLoad.isEmpty();
+    Fuzzer fuzzer(dumpToJsonOnFatal);
     QTimer::singleShot(0, &fuzzer, [&fuzzer, filesToLoad] {
         if (filesToLoad.isEmpty())
             fuzzer.fuzz({ 1, 10, true });
