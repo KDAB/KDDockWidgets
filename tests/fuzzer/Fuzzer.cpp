@@ -87,7 +87,7 @@ void Fuzzer::runTest(const Test &test)
     createLayout(test.initialLayout);
     for (const auto &op : test.operations) {
         op->execute();
-        //QTest::qWait(1000);
+        QTest::qWait(50);
     }
 
     for (MainWindowBase *mw : DockRegistry::self()->mainwindows())
