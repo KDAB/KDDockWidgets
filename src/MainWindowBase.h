@@ -72,10 +72,10 @@ public:
 
     /**
      * @brief Docks a DockWidget into this main window.
-     * @param dockWidget
-     * @param location
-     * @param relativeTo
-     * @param option
+     * @param dockWidget The dock widget to add into this MainWindow
+     * @param location the location where to dock
+     * @param relativeTo In case we're docking in relation to another dock widget
+     * @param option AddingOptions
      */
     void addDockWidget(DockWidgetBase *dockWidget,
                        KDDockWidgets::Location location,
