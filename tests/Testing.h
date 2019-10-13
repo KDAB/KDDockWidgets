@@ -53,50 +53,52 @@ namespace Testing {
     };
 
     struct AddDockWidgetParams {
-        MainWindowBase *mainWindow;
-        DockWidgetBase *dockWidget;
-        DockWidgetBase *relativeTo;
+        QString mainWindowName;
+        QString dockWidgetName;
+        QString relativeToName;
         KDDockWidgets::Location location;
         KDDockWidgets::AddingOption addingOption;
 
         QVariantMap toVariantMap() const
         {
             QVariantMap map;
-            map["mainWindowName"] = mainWindow->uniqueName();
-            map["dockWidgetName"] = dockWidget->uniqueName();
 
-            if (relativeTo)
-                map["relativeToName"] = relativeTo->uniqueName();
-
+            map["mainWindowName"] = mainWindowName;
+            map["dockWidgetName"] = dockWidgetName;
+            if (!relativeToName.isEmpty())
+                map["relativeToName"] = relativeToName;
             map["location"] = location;
             map["addingOption"] = addingOption;
 
             return map;
         }
 
-        void fillFromVariantMap(const QVariantMap &map)
+        static AddDockWidgetParams fillFromVariantMap(const QVariantMap &map)
         {
-            const QString mainWindowName = map["mainWindowName"].toString();
-            const QString dockWidgetName = map["dockWidgetName"].toString();
-            const QString relativeToName = map["relativeToName"].toString();
-            location = KDDockWidgets::Location(map["location"].toInt());
-            addingOption = KDDockWidgets::AddingOption(map["addingOption"].toInt());
+            AddDockWidgetParams params;
 
+            params.mainWindowName = map["mainWindowName"].toString();
+            params.dockWidgetName = map["dockWidgetName"].toString();
+            params.relativeToName = map["relativeToName"].toString();
+            params.location = KDDockWidgets::Location(map["location"].toInt());
+            params.addingOption = KDDockWidgets::AddingOption(map["addingOption"].toInt());
 
-            if (mainWindowName.isEmpty())
-                mainWindow = nullptr;
-            else
-                mainWindow = DockRegistry::self()->mainWindowByName(mainWindowName);
+            return params;
+        }
 
-            if (dockWidgetName.isEmpty())
-                dockWidget = nullptr;
-            else
-                dockWidget = DockRegistry::self()->dockByName(dockWidgetName);
+        KDDockWidgets::MainWindowBase *mainWindow() const
+        {
+            return KDDockWidgets::DockRegistry::self()->mainWindowByName(mainWindowName);
+        }
 
-            if (relativeToName.isEmpty())
-                relativeTo = nullptr;
-            else
-                relativeTo = DockRegistry::self()->dockByName(relativeToName);
+        KDDockWidgets::DockWidgetBase *dockWidget() const
+        {
+            return KDDockWidgets::DockRegistry::self()->dockByName(dockWidgetName);
+        }
+
+        KDDockWidgets::DockWidgetBase *relativeTo() const
+        {
+            return KDDockWidgets::DockRegistry::self()->dockByName(relativeToName);
         }
     };
 

@@ -169,15 +169,26 @@ Testing::AddDockWidgetParams Fuzzer::getRandomAddDockWidgetParams()
 {
     AddDockWidgetParams params;
 
-    params.dockWidget = getRandomDockWidget();
-    if (!params.dockWidget) {
+    if (auto dw = getRandomDockWidget()) {
+        params.dockWidgetName = dw->uniqueName();
+    } else {
         qWarning() << Q_FUNC_INFO << "No dock widgets exist yet!";
         return {};
     }
 
-    params.mainWindow = getRandomMainWindow();
-    params.relativeTo = getRandomBool() ? getRandomRelativeTo(params.mainWindow, params.dockWidget)
-                                        : nullptr;
+    if (auto mw = getRandomMainWindow()) {
+        params.mainWindowName = mw->uniqueName();
+    } else {
+        qWarning() << Q_FUNC_INFO << "No main widgets exist yet!";
+        return {};
+    }
+
+    if (getRandomBool()) {
+        if (auto rt =  getRandomRelativeTo(params.mainWindow(), params.dockWidget())) {
+            params.relativeToName = rt->uniqueName();
+        }
+    }
+
     params.location = getRandomLocation();
     params.addingOption = AddingOption_None; // TODO: Test the other ones
 
@@ -315,6 +326,7 @@ void Fuzzer::fuzz(const QString &jsonFile)
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         const QVariantMap map = doc.toVariant().toMap();
         Test test = Test::fromVariantMap(this, map);
+        // test.dumpToJsonFile("2.json"); // for debug only
         runTest(test);
     } else {
         qWarning() << Q_FUNC_INFO << "Failed to open file" << jsonFile;
