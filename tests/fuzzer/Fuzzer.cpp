@@ -313,8 +313,9 @@ void Fuzzer::fuzz(const QString &jsonFile)
     QFile file(jsonFile);
     if (file.open(QIODevice::ReadOnly)) {
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
-        // TODO
-        qDebug() << jsonFile;
+        const QVariantMap map = doc.toVariant().toMap();
+        Test test = Test::fromVariantMap(this, map);
+        runTest(test);
     } else {
         qWarning() << Q_FUNC_INFO << "Failed to open file" << jsonFile;
     }
