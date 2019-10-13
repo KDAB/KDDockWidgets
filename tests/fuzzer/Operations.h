@@ -69,7 +69,10 @@ public:
     static OperationBase::Ptr fromVariantMap(Fuzzer *fuzzer, const QVariantMap &);
     static OperationBase::Ptr newOperation(Fuzzer *fuzzer, OperationType);
 
+    OperationType type() const { return m_operationType; }
+
 protected:
+    virtual bool hasParams() const = 0;
     virtual void execute_impl() = 0;
     virtual QVariantMap paramsToVariantMap() const = 0;
     virtual void fillParamsFromVariantMap(const QVariantMap &) = 0;
@@ -86,6 +89,7 @@ public:
     explicit CloseViaDockWidgetAPI(Fuzzer *);
 
 protected:
+    bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
@@ -98,6 +102,7 @@ public:
     explicit HideViaDockWidgetAPI(Fuzzer *);
 
 protected:
+    bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
@@ -110,6 +115,7 @@ public:
     explicit ShowViaDockWidgetAPI(Fuzzer *);
 
 protected:
+    bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
@@ -122,6 +128,7 @@ public:
     explicit AddDockWidget(Fuzzer *);
 
 protected:
+    bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
@@ -135,6 +142,7 @@ public:
     explicit AddDockWidgetAsTab(Fuzzer *);
 
 protected:
+    bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;

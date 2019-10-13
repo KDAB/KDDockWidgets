@@ -131,6 +131,11 @@ CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(Fuzzer *fuzzer)
 {
 }
 
+bool CloseViaDockWidgetAPI::hasParams() const
+{
+    return !m_dockWidgetName.isEmpty();
+}
+
 void CloseViaDockWidgetAPI::execute_impl()
 {
     if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
@@ -160,6 +165,11 @@ void CloseViaDockWidgetAPI::fillParamsFromVariantMap(const QVariantMap &map)
 HideViaDockWidgetAPI::HideViaDockWidgetAPI(Fuzzer *fuzzer)
     : OperationBase(OperationType_HideViaDockWidgetAPI, fuzzer)
 {
+}
+
+bool HideViaDockWidgetAPI::hasParams() const
+{
+    return !m_dockWidgetName.isEmpty();
 }
 
 void HideViaDockWidgetAPI::execute_impl()
@@ -193,6 +203,11 @@ ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(Fuzzer *fuzzer)
 {
 }
 
+bool ShowViaDockWidgetAPI::hasParams() const
+{
+    return !m_dockWidgetName.isEmpty();
+}
+
 void ShowViaDockWidgetAPI::execute_impl()
 {
     if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget()) {
@@ -219,6 +234,11 @@ void ShowViaDockWidgetAPI::fillParamsFromVariantMap(const QVariantMap &map)
 AddDockWidget::AddDockWidget(Fuzzer *fuzzer)
     : OperationBase(OperationType_AddDockWidget, fuzzer)
 {
+}
+
+bool AddDockWidget::hasParams() const
+{
+    return m_params.has_value();
 }
 
 void AddDockWidget::execute_impl()
@@ -251,6 +271,11 @@ AddDockWidgetAsTab::AddDockWidgetAsTab(Fuzzer *fuzzer)
 {
 }
 
+bool AddDockWidgetAsTab::hasParams() const
+{
+    return !m_dockWidgetName.isEmpty() && !m_dockWidgetToAddName.isEmpty();
+}
+
 void AddDockWidgetAsTab::execute_impl()
 {
     DockWidgetBase *dw = m_fuzzer->getRandomDockWidget();
@@ -279,8 +304,10 @@ QVariantMap AddDockWidgetAsTab::paramsToVariantMap() const
 {
     QVariantMap map;
 
-    map["dockWidgetName"] = m_dockWidgetName;
-    map["dockWidgetToAddName"] = m_dockWidgetToAddName;
+    if (hasParams()) {
+        map["dockWidgetName"] = m_dockWidgetName;
+        map["dockWidgetToAddName"] = m_dockWidgetToAddName;
+    }
 
     return map;
 }
