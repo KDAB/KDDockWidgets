@@ -82,7 +82,6 @@
     },
     "operations": [
         {
-            "index": 0,
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-4",
@@ -92,7 +91,6 @@
             "type": 4
         },
         {
-            "index": 5,
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-3",
@@ -102,7 +100,6 @@
             "type": 4
         },
         {
-            "index": 6,
             "params": {
                 "dockWidgetName": "DockWidget-4",
                 "dockWidgetToAddName": "DockWidget-3"
