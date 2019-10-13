@@ -337,12 +337,17 @@ void Fuzzer::onFatal()
 {
     if (m_dumpJsonOnFailure) {
         // Tests failed! Let's dump
-        QVariantMap map = m_currentTest.toVariantMap();
-        QJsonDocument jsonDoc = QJsonDocument::fromVariant(map);
-        QFile file("fuzzer_dump.json");
-        if (file.open(QIODevice::WriteOnly)) {
-            file.write(jsonDoc.toJson());
-        }
-        file.close();
+        m_currentTest.dumpToJsonFile("fuzzer_dump.json");
     }
+}
+
+void Fuzzer::Test::dumpToJsonFile(const QString &filename)
+{
+    const QVariantMap map = toVariantMap();
+    QJsonDocument jsonDoc = QJsonDocument::fromVariant(map);
+    QFile file(filename);
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(jsonDoc.toJson());
+    }
+    file.close();
 }

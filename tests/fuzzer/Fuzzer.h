@@ -181,6 +181,9 @@ public:
         typedef QVector<Test> List;
         Layout initialLayout;
         Operations::OperationBase::List operations;
+
+        void dumpToJsonFile(const QString &filename);
+
         QVariantMap toVariantMap() const
         {
             QVariantMap map;
