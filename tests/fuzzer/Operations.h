@@ -49,7 +49,8 @@ enum OperationType {
     OperationType_CloseViaDockWidgetAPI, ///< Closing programatically via DockWidget::close()
     OperationType_HideViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::hide()
     OperationType_ShowViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::show()
-    OperationType_AddDockWidget,        ///< MainWindow::addDockWidget()
+    OperationType_AddDockWidget,         ///< MainWindow::addDockWidget()
+    OperationType_AddDockWidgetAsTab,    ///< DockWidget::addDockWidgetAsTab()
     OperationType_Count /// Keep at end
 };
 
@@ -125,6 +126,20 @@ protected:
     void fillParamsFromVariantMap(const QVariantMap &) override;
 private:
     std::optional<Testing::AddDockWidgetParams> m_params;
+};
+
+class AddDockWidgetAsTab : public OperationBase
+{
+public:
+    explicit AddDockWidgetAsTab(Fuzzer *);
+
+protected:
+    void execute_impl() override;
+    QVariantMap paramsToVariantMap() const override;
+    void fillParamsFromVariantMap(const QVariantMap &) override;
+private:
+    QString m_dockWidgetName;
+    QString m_dockWidgetToAddName;
 };
 
 }

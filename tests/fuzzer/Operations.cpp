@@ -88,6 +88,9 @@ OperationBase::Ptr OperationBase::fromVariantMap(Fuzzer *fuzzer, const QVariantM
     case OperationType_AddDockWidget:
         ptr = OperationBase::Ptr(new AddDockWidget(fuzzer));
         break;
+    case OperationType_AddDockWidgetAsTab:
+        ptr = OperationBase::Ptr(new AddDockWidgetAsTab(fuzzer));
+        break;
     }
 
     if (ptr) {
@@ -233,4 +236,39 @@ QVariantMap AddDockWidget::paramsToVariantMap() const
 void AddDockWidget::fillParamsFromVariantMap(const QVariantMap &map)
 {
     m_params = AddDockWidgetParams::fillFromVariantMap(map);
+}
+
+AddDockWidgetAsTab::AddDockWidgetAsTab(Fuzzer *fuzzer)
+    : OperationBase(OperationType_AddDockWidgetAsTab, fuzzer)
+{
+}
+
+void AddDockWidgetAsTab::execute_impl()
+{
+    DockWidgetBase *dw = m_fuzzer->getRandomDockWidget();
+    DockWidgetBase *dw2 = m_fuzzer->getRandomDockWidget(dw);
+
+    m_dockWidgetName = dw->uniqueName();
+    m_dockWidgetToAddName = dw2->uniqueName();
+
+    auto fw = qobject_cast<FloatingWindow*>(dw2->window());
+    dw->addDockWidgetAsTab(dw2);
+    if (fw && fw->beingDeleted())
+        Testing::waitForDeleted(fw);
+}
+
+QVariantMap AddDockWidgetAsTab::paramsToVariantMap() const
+{
+    QVariantMap map;
+
+    map["dockWidgetName"] = m_dockWidgetName;
+    map["dockWidgetToAddName"] = m_dockWidgetToAddName;
+
+    return map;
+}
+
+void AddDockWidgetAsTab::fillParamsFromVariantMap(const QVariantMap &map)
+{
+    m_dockWidgetName = map["dockWidgetName"].toString();
+    m_dockWidgetToAddName = map["dockWidgetToAddName"].toString();
 }

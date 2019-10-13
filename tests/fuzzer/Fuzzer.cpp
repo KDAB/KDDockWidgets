@@ -272,8 +272,12 @@ OperationBase::Ptr Fuzzer::getRandomOperation()
     case OperationType_AddDockWidget:
         operation = OperationBase::Ptr(new AddDockWidget(this));
         break;
-    default:
-        qFatal("Doesn't happen");
+    case OperationType_AddDockWidgetAsTab:
+        operation = OperationBase::Ptr(new AddDockWidgetAsTab(this));
+        break;
+    case OperationType_None:
+    case OperationType_Count:
+        break;
     }
 
     return operation;
