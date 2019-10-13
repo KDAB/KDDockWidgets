@@ -54,7 +54,7 @@ static QVariantMap rectToVariantMap(QRect r)
 
 static QSize sizeFromVariantMap(const QVariantMap &map)
 {
-    return { map["x"].toInt(), map["y"].toInt() };
+    return { map["width"].toInt(), map["height"].toInt() };
 }
 
 static QRect rectFromVariantMap(const QVariantMap &map)
