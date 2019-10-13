@@ -27,6 +27,8 @@
 #include "Fuzzer.h"
 #include "../Testing.h"
 
+#include <QTest>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;
 using namespace KDDockWidgets::Testing::Operations;
@@ -113,6 +115,9 @@ OperationBase::Ptr OperationBase::newOperation(Fuzzer *fuzzer, OperationType typ
         break;
     case OperationType_AddDockWidgetAsTab:
         ptr = OperationBase::Ptr(new AddDockWidgetAsTab(fuzzer));
+        break;
+    case OperationType_Pause:
+        ptr = OperationBase::Ptr(new Pause(fuzzer));
         break;
     }
 
@@ -332,4 +337,27 @@ void AddDockWidgetAsTab::fillParamsFromVariantMap(const QVariantMap &map)
 {
     m_dockWidgetName = map["dockWidgetName"].toString();
     m_dockWidgetToAddName = map["dockWidgetToAddName"].toString();
+}
+
+Pause::Pause(Fuzzer *fuzzer)
+    : OperationBase(OperationType_Pause, fuzzer)
+{
+
+}
+
+void Pause::execute_impl()
+{
+    QTest::qWait(m_sleepTimeMS);
+}
+
+QVariantMap Pause::paramsToVariantMap() const
+{
+    QVariantMap map;
+    map["sleepTimeMS"] = m_sleepTimeMS;
+    return map;
+}
+
+void Pause::fillParamsFromVariantMap(const QVariantMap &map)
+{
+    m_sleepTimeMS = map["sleepTimeMS"].toInt();
 }
