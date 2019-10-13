@@ -191,14 +191,14 @@ public:
 
             QVariantList operationsVariant;
             operationsVariant.reserve(operations.size());
-            int i = 0;
+            int i = -1;
             for (const auto &o : operations) {
+                ++i;
                 QVariantMap operationVariant = o->toVariantMap();
                 if (operationVariant.isEmpty())
-                    break;
+                    continue;
 
                 operationVariant["index"] = i;
-                ++i;
                 operationsVariant << operationVariant;
             }
 

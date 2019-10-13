@@ -85,7 +85,10 @@ void Fuzzer::runTest(const Test &test)
         qFatal("There's dock widgets and the start runTest");
 
     createLayout(test.initialLayout);
+    int index = 0;
     for (const auto &op : test.operations) {
+        // qDebug() << "Running operation" << op->type() << "; index=" << index;
+        index++;
         op->execute();
         QTest::qWait(50);
     }

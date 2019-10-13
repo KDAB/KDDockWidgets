@@ -74,6 +74,7 @@ public:
 protected:
     virtual bool hasParams() const = 0;
     virtual void execute_impl() = 0;
+    virtual void generateRandomParams() = 0;
     virtual QVariantMap paramsToVariantMap() const = 0;
     virtual void fillParamsFromVariantMap(const QVariantMap &) = 0;
     DockWidgetBase* dockByName(const QString &) const;
@@ -89,6 +90,7 @@ public:
     explicit CloseViaDockWidgetAPI(Fuzzer *);
 
 protected:
+    void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
@@ -102,6 +104,7 @@ public:
     explicit HideViaDockWidgetAPI(Fuzzer *);
 
 protected:
+    void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
@@ -115,6 +118,7 @@ public:
     explicit ShowViaDockWidgetAPI(Fuzzer *);
 
 protected:
+    void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
@@ -128,6 +132,7 @@ public:
     explicit AddDockWidget(Fuzzer *);
 
 protected:
+    void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
@@ -142,6 +147,7 @@ public:
     explicit AddDockWidgetAsTab(Fuzzer *);
 
 protected:
+    void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
