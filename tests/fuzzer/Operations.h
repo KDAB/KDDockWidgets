@@ -164,13 +164,13 @@ public:
     explicit Pause(Fuzzer *);
 
 protected:
-    void generateRandomParams() override { m_sleepTimeMS = 6000000; }
-    bool hasParams() const override { return m_sleepTimeMS != -1; }
+    void generateRandomParams() override { m_sleepTimeMS = -1; }
+    bool hasParams() const override { return m_sleepTimeMS > -1; }
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
 private:
-    int m_sleepTimeMS = 6000000;
+    int m_sleepTimeMS = -1;
 };
 
 }

@@ -354,6 +354,7 @@ Pause::Pause(Fuzzer *fuzzer)
 
 void Pause::execute_impl()
 {
+    qDebug() << Q_FUNC_INFO << "Sleeping for" << m_sleepTimeMS << "...";
     QTest::qWait(m_sleepTimeMS);
 }
 
