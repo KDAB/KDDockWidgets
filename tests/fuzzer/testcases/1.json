@@ -87,7 +87,7 @@
     },
     "operations": [
         {
-            "comment": "AddDockWidget DockWidget-2 to 3",
+            "comment": "AddDockWidget DockWidget-2 to right",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-2",
@@ -97,7 +97,7 @@
             "type": 4
         },
         {
-            "comment": "AddDockWidget DockWidget-4 to 2",
+            "comment": "AddDockWidget DockWidget-4-[hidden] to top",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-4",
@@ -107,7 +107,7 @@
             "type": 4
         },
         {
-            "comment": "AddDockWidget DockWidget-3 to 1, relative to DockWidget-2",
+            "comment": "AddDockWidget DockWidget-3 to left, relative to DockWidget-2",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-3",
@@ -118,14 +118,14 @@
             "type": 4
         },
         {
-            "comment": "Hidding DockWidget-4",
+            "comment": "Hidding DockWidget-4-[hidden]",
             "params": {
                 "dockWidgetName": "DockWidget-4"
             },
             "type": 2
         },
         {
-            "comment": "AddDockWidget DockWidget-1 to 2",
+            "comment": "AddDockWidget DockWidget-1 to top",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-1",

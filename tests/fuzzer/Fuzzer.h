@@ -188,7 +188,7 @@ public:
         Layout initialLayout;
         Operations::OperationBase::List operations;
 
-        void dumpToJsonFile(const QString &filename);
+        void dumpToJsonFile(const QString &filename) const;
 
         QVariantMap toVariantMap() const
         {

@@ -81,6 +81,7 @@ protected:
     virtual void fillParamsFromVariantMap(const QVariantMap &) = 0;
     DockWidgetBase* dockByName(const QString &) const;
     MainWindowBase* mainWindowByName(const QString &) const;
+    QString dockStr(const QString &name) const;
 
     const OperationType m_operationType;
     Fuzzer *const m_fuzzer;

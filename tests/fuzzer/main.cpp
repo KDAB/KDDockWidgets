@@ -43,14 +43,17 @@ int main(int argc, char **argv)
     QCommandLineOption slowDownOption("s", QCoreApplication::translate("main", "Slowdown tests. Adds a 1 second delay between operations"));
     parser.addOption(slowDownOption);
 
+    QCommandLineOption forceDumpJsonOption("f", QCoreApplication::translate("main", "Dump json of the test even if we're already loading a test."));
+    parser.addOption(forceDumpJsonOption);
+
     parser.addHelpOption();
     parser.process(app);
 
     const bool slowDown = parser.isSet(slowDownOption);
+    const bool forceDumpJson = parser.isSet(forceDumpJsonOption);
 
     const QStringList filesToLoad = parser.positionalArguments();
-
-    const bool dumpToJsonOnFatal = filesToLoad.isEmpty();
+    const bool dumpToJsonOnFatal = forceDumpJson || filesToLoad.isEmpty();
     Fuzzer fuzzer(dumpToJsonOnFatal);
     if (slowDown)
         fuzzer.setDelayBetweenOperations(1000);

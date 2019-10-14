@@ -135,6 +135,17 @@ MainWindowBase *OperationBase::mainWindowByName(const QString &name) const
     return DockRegistry::self()->mainWindowByName(name);
 }
 
+QString OperationBase::dockStr(const QString &name) const
+{
+    if (auto dw = dockByName(name)) {
+        if (dw->isVisible())
+            return name;
+        return QStringLiteral("%1-[hidden]").arg(name);
+    } else {
+        return QStringLiteral("null");
+    }
+}
+
 CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(Fuzzer *fuzzer)
     : OperationBase(OperationType_CloseViaDockWidgetAPI, fuzzer)
 {
@@ -142,7 +153,7 @@ CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(Fuzzer *fuzzer)
 
 QString CloseViaDockWidgetAPI::description() const
 {
-    return QStringLiteral("Closing %1").arg(m_dockWidgetName);
+    return QStringLiteral("Closing %1").arg(dockStr(m_dockWidgetName));
 }
 
 void CloseViaDockWidgetAPI::generateRandomParams()
@@ -159,7 +170,7 @@ bool CloseViaDockWidgetAPI::hasParams() const
 
 void CloseViaDockWidgetAPI::execute_impl()
 {
-    DockWidgetBase *dw = dockByName(m_dockWidgetName);
+    DockWidgetBase *dw = dockByName(dockStr(m_dockWidgetName));
     auto fw = qobject_cast<FloatingWindow*>(dw->window());
     dw->close();
     if (fw && fw->beingDeleted())
@@ -186,7 +197,7 @@ HideViaDockWidgetAPI::HideViaDockWidgetAPI(Fuzzer *fuzzer)
 
 QString HideViaDockWidgetAPI::description() const
 {
-    return QStringLiteral("Hidding %1").arg(m_dockWidgetName);
+    return QStringLiteral("Hidding %1").arg(dockStr(m_dockWidgetName));
 }
 
 void HideViaDockWidgetAPI::generateRandomParams()
@@ -203,7 +214,7 @@ bool HideViaDockWidgetAPI::hasParams() const
 
 void HideViaDockWidgetAPI::execute_impl()
 {
-    DockWidgetBase *dw = dockByName(m_dockWidgetName);
+    DockWidgetBase *dw = dockByName(dockStr(m_dockWidgetName));
     auto fw = qobject_cast<FloatingWindow*>(dw->window());
     dw->close();
     if (fw && fw->beingDeleted())
@@ -230,7 +241,7 @@ ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(Fuzzer *fuzzer)
 
 QString ShowViaDockWidgetAPI::description() const
 {
-    return QStringLiteral("Showing %1").arg(m_dockWidgetName);
+    return QStringLiteral("Showing %1").arg(dockStr(m_dockWidgetName));
 }
 
 void ShowViaDockWidgetAPI::generateRandomParams()
@@ -275,9 +286,9 @@ QString AddDockWidget::description() const
         return QStringLiteral("null");
 
     if (m_params->relativeToName.isEmpty())
-        return QStringLiteral("AddDockWidget %1 to %2").arg(m_params->dockWidgetName).arg(m_params->location);
+        return QStringLiteral("AddDockWidget %1 to %2").arg(dockStr(m_params->dockWidgetName)).arg(KDDockWidgets::locationStr(m_params->location));
     else
-        return QStringLiteral("AddDockWidget %1 to %2, relative to %3").arg(m_params->dockWidgetName).arg(m_params->location).arg(m_params->relativeToName);
+        return QStringLiteral("AddDockWidget %1 to %2, relative to %3").arg(dockStr(m_params->dockWidgetName)).arg(KDDockWidgets::locationStr(m_params->location)).arg(dockStr(m_params->relativeToName));
 }
 
 void AddDockWidget::generateRandomParams()
@@ -320,7 +331,7 @@ QString AddDockWidgetAsTab::description() const
     if (!hasParams())
         return QStringLiteral("null");
 
-    return QStringLiteral("AddDockWidgetAsTab %1 onto %2").arg(m_dockWidgetToAddName, m_dockWidgetName);
+    return QStringLiteral("AddDockWidgetAsTab %1 onto %2").arg(dockStr(m_dockWidgetToAddName), dockStr(m_dockWidgetName));
 }
 
 void AddDockWidgetAsTab::generateRandomParams()

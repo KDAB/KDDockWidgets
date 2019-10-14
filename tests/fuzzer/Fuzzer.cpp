@@ -313,7 +313,6 @@ void Fuzzer::fuzz(const QString &jsonFile)
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         const QVariantMap map = doc.toVariant().toMap();
         Test test = Test::fromVariantMap(this, map);
-        // test.dumpToJsonFile("2.json"); // for debug only
         runTest(test);
     } else {
         qWarning() << Q_FUNC_INFO << "Failed to open file" << jsonFile;
@@ -345,13 +344,15 @@ void Fuzzer::setDelayBetweenOperations(int delay)
     m_operationDelayMS = delay;
 }
 
-void Fuzzer::Test::dumpToJsonFile(const QString &filename)
+void Fuzzer::Test::dumpToJsonFile(const QString &filename) const
 {
     const QVariantMap map = toVariantMap();
     QJsonDocument jsonDoc = QJsonDocument::fromVariant(map);
     QFile file(filename);
     if (file.open(QIODevice::WriteOnly)) {
         file.write(jsonDoc.toJson());
+    } else {
+        qDebug() << Q_FUNC_INFO << "Error opening file";
     }
     file.close();
 }
