@@ -113,12 +113,14 @@ public:
 
     struct MainWindowDescriptor {
         typedef QVector<MainWindowDescriptor> List;
+        QString name;
         QRect geometry;
         MainWindowOption mainWindowOption;
 
         QVariantMap toVariantMap() const
         {
             QVariantMap map;
+            map[QStringLiteral("name")] = name;
             map[QStringLiteral("geometry")] = rectToVariantMap(geometry);
             map[QStringLiteral("mainWindowOption")] = mainWindowOption;
             return map;
@@ -128,6 +130,7 @@ public:
         {
             MainWindowDescriptor mainWindow;
 
+            mainWindow.name = map["name"].toString();
             mainWindow.mainWindowOption = MainWindowOption(map["mainWindowOption"].toInt());
             mainWindow.geometry = rectFromVariantMap(map["geometry"].toMap());
 

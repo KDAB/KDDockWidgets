@@ -39,9 +39,7 @@ using namespace KDDockWidgets::Testing::Operations;
 
 static MainWindow* createMainWindow(const Fuzzer::MainWindowDescriptor &mwd)
 {
-    static int count = 0;
-    count++;
-    auto mainWindow = new MainWindow(QStringLiteral("MainWindow-%1").arg(count), mwd.mainWindowOption);
+    auto mainWindow = new MainWindow(mwd.name, mwd.mainWindowOption);
 
     mainWindow->setGeometry(mwd.geometry);
 
@@ -118,6 +116,11 @@ Fuzzer::Layout Fuzzer::generateRandomLayout()
     // for now we only support 1 main window
     Fuzzer::Layout layout;
     Fuzzer::MainWindowDescriptor mainWindow;
+
+    static int count = 0;
+    count++;
+    mainWindow.name = QStringLiteral("MainWindow-%1").arg(count);
+
     mainWindow.geometry = randomGeometry();
     mainWindow.mainWindowOption = MainWindowOption_None; // TODO: Maybe test other options
     layout.mainWindows << mainWindow;

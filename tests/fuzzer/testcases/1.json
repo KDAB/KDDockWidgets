@@ -140,6 +140,7 @@
         ],
         "mainWindows": [
             {
+                "name" : "MainWindow-1",
                 "geometry": {
                     "size": {
                         "height": 961,
