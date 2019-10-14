@@ -147,12 +147,6 @@
     "operations": [
         {
             "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-6",
                 "location": 3,
@@ -162,76 +156,12 @@
         },
         {
             "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "dockWidgetName": "DockWidget-7"
-            },
-            "type": 2
-        },
-        {
-            "params": {
-                "dockWidgetName": "DockWidget-7"
-            },
-            "type": 3
-        },
-        {
-            "params": {
-                "dockWidgetName": "DockWidget-3",
-                "dockWidgetToAddName": "DockWidget-8"
-            },
-            "type": 5
-        },
-        {
-            "params": {
-                "dockWidgetName": "DockWidget-7",
-                "dockWidgetToAddName": "DockWidget-8"
-            },
-            "type": 5
-        },
-        {
-            "params": {
-                "dockWidgetName": "DockWidget-5"
-            },
-            "type": 2
-        },
-        {
-            "params": {
-                "dockWidgetName": "DockWidget-3",
-                "dockWidgetToAddName": "DockWidget-4"
-            },
-            "type": 5
-        },
-        {
-            "params": {
-                "dockWidgetName": "DockWidget-2"
-            },
-            "type": 2
-        },
-        {
-            "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-8",
                 "location": 2,
                 "mainWindowName": "MainWindow-1"
             },
             "type": 4
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "dockWidgetName": "DockWidget-7",
-                "dockWidgetToAddName": "DockWidget-3"
-            },
-            "type": 5
         },
         {
             "params": {
@@ -245,40 +175,9 @@
         },
         {
             "params": {
-                "addingOption": 0,
-                "dockWidgetName": "DockWidget-2",
-                "location": 3,
-                "mainWindowName": "MainWindow-1",
-                "relativeToName": "DockWidget-7"
-            },
-            "type": 4
-        },
-        {
-            "params": {
-                "addingOption": 0,
-                "dockWidgetName": "DockWidget-3",
-                "location": 1,
-                "mainWindowName": "MainWindow-1"
-            },
-            "type": 4
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
                 "dockWidgetName": "DockWidget-8"
             },
             "type": 2
-        },
-        {
-            "params": {
-                "dockWidgetName": "DockWidget-4"
-            },
-            "type": 1
         },
         {
             "params": {
@@ -288,210 +187,6 @@
                 "mainWindowName": "MainWindow-1"
             },
             "type": 4
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
-        },
-        {
-            "params": {
-                "sleepTimeMS": -1
-            },
-            "type": 6
         }
     ]
 }
