@@ -83,7 +83,7 @@ void Fuzzer::runTest(const Test &test)
     createLayout(test.initialLayout);
     int index = 0;
     for (const auto &op : test.operations) {
-        // qDebug() << "Running operation" << op->type() << "; index=" << index;
+        qDebug() << "Running" << op->description();
         index++;
         op->execute();
         QTest::qWait(m_operationDelayMS);
