@@ -62,7 +62,7 @@
                     "y": 313
                 },
                 "isFloating": true,
-                "isVisible": false,
+                "isVisible": true,
                 "minSize": {
                     "height": 480,
                     "width": 565
