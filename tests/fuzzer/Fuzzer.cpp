@@ -87,6 +87,7 @@ void Fuzzer::runTest(const Test &test)
         index++;
         op->execute();
         QTest::qWait(m_operationDelayMS);
+        DockRegistry::self()->checkSanityAll();
     }
 
     for (MainWindowBase *mw : DockRegistry::self()->mainwindows())

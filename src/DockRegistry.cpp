@@ -66,6 +66,12 @@ bool DockRegistry::isEmpty() const
     return m_dockWidgets.isEmpty() && m_mainWindows.isEmpty() && m_nestedWindows.isEmpty();
 }
 
+void DockRegistry::checkSanityAll()
+{
+    for (auto layout :m_layouts)
+        layout->checkSanity();
+}
+
 DockRegistry *DockRegistry::self()
 {
     static QPointer<DockRegistry> s_dockRegistry;

@@ -101,6 +101,15 @@ public:
      * @brief returns true if there's 0 dockwidgets, 0 main windows
      */
     bool isEmpty() const;
+
+    /**
+     * @brief Calls MultisplitterLayout::checkSanity() on all layouts.
+     *
+     * This is called by the unit-tests or the fuzzer. If during this the framework spits a qWarning()
+     * then the app will qFatal()
+     */
+    void checkSanityAll();
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 private:
