@@ -49,8 +49,12 @@ void OperationBase::execute()
     if (!hasParams())
         generateRandomParams();
 
-    if (hasParams()) // Check again, as generateRandomParams() is not guaranteed
+    if (hasParams()) { // Check again, as generateRandomParams() is not guaranteed
         execute_impl();
+
+        if (m_sleepMS > 0)
+            QTest::qWait(m_sleepMS);
+    }
 }
 
 QVariantMap OperationBase::toVariantMap() const
@@ -79,13 +83,15 @@ OperationBase::Ptr OperationBase::fromVariantMap(Fuzzer *fuzzer, const QVariantM
 
     OperationBase::Ptr ptr = OperationBase::newOperation(fuzzer, operationType);
     if (ptr) {
-
         const QVariantMap params = map["params"].toMap();
         if (params.isEmpty()) {
             qDebug() << Q_FUNC_INFO << "Invalid params";
         } else {
             ptr->fillParamsFromVariantMap(params);
         }
+
+        if (map.contains("pause"))
+            ptr->m_sleepMS = map["pause"].toInt();
     } else {
         qDebug() << Q_FUNC_INFO << "Failed to fill params";
     }
@@ -116,9 +122,6 @@ OperationBase::Ptr OperationBase::newOperation(Fuzzer *fuzzer, OperationType typ
         break;
     case OperationType_AddDockWidgetAsTab:
         ptr = OperationBase::Ptr(new AddDockWidgetAsTab(fuzzer));
-        break;
-    case OperationType_Pause:
-        ptr = OperationBase::Ptr(new Pause(fuzzer));
         break;
     }
 
@@ -390,33 +393,4 @@ void AddDockWidgetAsTab::fillParamsFromVariantMap(const QVariantMap &map)
 {
     m_dockWidgetName = map["dockWidgetName"].toString();
     m_dockWidgetToAddName = map["dockWidgetToAddName"].toString();
-}
-
-Pause::Pause(Fuzzer *fuzzer)
-    : OperationBase(OperationType_Pause, fuzzer)
-{
-
-}
-
-QString Pause::description() const
-{
-    return QStringLiteral("Pausing for %1 ms").arg(m_sleepTimeMS);
-}
-
-void Pause::execute_impl()
-{
-    qDebug() << Q_FUNC_INFO << "Sleeping for" << m_sleepTimeMS << "...";
-    QTest::qWait(m_sleepTimeMS);
-}
-
-QVariantMap Pause::paramsToVariantMap() const
-{
-    QVariantMap map;
-    map["sleepTimeMS"] = m_sleepTimeMS;
-    return map;
-}
-
-void Pause::fillParamsFromVariantMap(const QVariantMap &map)
-{
-    m_sleepTimeMS = map["sleepTimeMS"].toInt();
 }

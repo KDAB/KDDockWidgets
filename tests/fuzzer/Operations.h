@@ -51,7 +51,6 @@ enum OperationType {
     OperationType_ShowViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::show()
     OperationType_AddDockWidget,         ///< MainWindow::addDockWidget()
     OperationType_AddDockWidgetAsTab,    ///< DockWidget::addDockWidgetAsTab()
-    OperationType_Pause,                 ///< Sleeps. Just used for debugging purposes.
     OperationType_Count /// Keep at end
 };
 
@@ -85,6 +84,7 @@ protected:
 
     const OperationType m_operationType;
     Fuzzer *const m_fuzzer;
+    int m_sleepMS = 0;
 };
 
 class CloseViaDockWidgetAPI : public OperationBase
@@ -163,22 +163,6 @@ protected:
 private:
     QString m_dockWidgetName;
     QString m_dockWidgetToAddName;
-};
-
-class Pause : public OperationBase
-{
-public:
-    explicit Pause(Fuzzer *);
-
-protected:
-    QString description() const override;
-    void generateRandomParams() override { m_sleepTimeMS = -1; }
-    bool hasParams() const override { return m_sleepTimeMS > -1; }
-    void execute_impl() override;
-    QVariantMap paramsToVariantMap() const override;
-    void fillParamsFromVariantMap(const QVariantMap &) override;
-private:
-    int m_sleepTimeMS = -1;
 };
 
 }
