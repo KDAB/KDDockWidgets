@@ -22,74 +22,6 @@
                 "name" : "DockWidget-2",
                 "geometry": {
                     "size": {
-                        "height": 583,
-                        "width": 346
-                    },
-                    "x": 474,
-                    "y": 477
-                },
-                "isFloating": false,
-                "isVisible": true,
-                "minSize": {
-                    "height": 416,
-                    "width": 243
-                }
-            },
-            {
-                "name" : "DockWidget-3",
-                "geometry": {
-                    "size": {
-                        "height": 931,
-                        "width": 482
-                    },
-                    "x": 429,
-                    "y": 108
-                },
-                "isFloating": true,
-                "isVisible": true,
-                "minSize": {
-                    "height": 509,
-                    "width": 172
-                }
-            },
-            {
-                "name" : "DockWidget-4",
-                "geometry": {
-                    "size": {
-                        "height": 514,
-                        "width": 608
-                    },
-                    "x": 109,
-                    "y": 197
-                },
-                "isFloating": false,
-                "isVisible": true,
-                "minSize": {
-                    "height": 288,
-                    "width": 341
-                }
-            },
-            {
-                "name" : "DockWidget-5",
-                "geometry": {
-                    "size": {
-                        "height": 947,
-                        "width": 568
-                    },
-                    "x": 234,
-                    "y": 156
-                },
-                "isFloating": false,
-                "isVisible": true,
-                "minSize": {
-                    "height": 348,
-                    "width": 443
-                }
-            },
-            {
-                "name" : "DockWidget-6",
-                "geometry": {
-                    "size": {
                         "height": 564,
                         "width": 1097
                     },
@@ -104,7 +36,7 @@
                 }
             },
             {
-                "name" : "DockWidget-7",
+                "name" : "DockWidget-3",
                 "geometry": {
                     "size": {
                         "height": 350,
@@ -121,7 +53,7 @@
                 }
             },
             {
-                "name" : "DockWidget-8",
+                "name" : "DockWidget-4",
                 "geometry": {
                     "size": {
                         "height": 1040,
@@ -157,7 +89,7 @@
         {
             "params": {
                 "addingOption": 0,
-                "dockWidgetName": "DockWidget-6",
+                "dockWidgetName": "DockWidget-2",
                 "location": 3,
                 "mainWindowName": "MainWindow-1"
             },
@@ -166,7 +98,7 @@
         {
             "params": {
                 "addingOption": 0,
-                "dockWidgetName": "DockWidget-8",
+                "dockWidgetName": "DockWidget-4",
                 "location": 2,
                 "mainWindowName": "MainWindow-1"
             },
@@ -175,16 +107,16 @@
         {
             "params": {
                 "addingOption": 0,
-                "dockWidgetName": "DockWidget-7",
+                "dockWidgetName": "DockWidget-3",
                 "location": 1,
                 "mainWindowName": "MainWindow-1",
-                "relativeToName": "DockWidget-6"
+                "relativeToName": "DockWidget-2"
             },
             "type": 4
         },
         {
             "params": {
-                "dockWidgetName": "DockWidget-8"
+                "dockWidgetName": "DockWidget-4"
             },
             "type": 2
         },
