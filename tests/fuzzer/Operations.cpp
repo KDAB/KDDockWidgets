@@ -63,6 +63,7 @@ QVariantMap OperationBase::toVariantMap() const
     QVariantMap map;
     map["type"] = m_operationType;
     map["params"] = params;
+    map["comment"] = description();
 
     return map;
 }
@@ -139,6 +140,11 @@ CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(Fuzzer *fuzzer)
 {
 }
 
+QString CloseViaDockWidgetAPI::description() const
+{
+    return QStringLiteral("Closing %1").arg(m_dockWidgetName);
+}
+
 void CloseViaDockWidgetAPI::generateRandomParams()
 {
     if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget())
@@ -176,6 +182,11 @@ void CloseViaDockWidgetAPI::fillParamsFromVariantMap(const QVariantMap &map)
 HideViaDockWidgetAPI::HideViaDockWidgetAPI(Fuzzer *fuzzer)
     : OperationBase(OperationType_HideViaDockWidgetAPI, fuzzer)
 {
+}
+
+QString HideViaDockWidgetAPI::description() const
+{
+    return QStringLiteral("Hidding %1").arg(m_dockWidgetName);
 }
 
 void HideViaDockWidgetAPI::generateRandomParams()
@@ -217,6 +228,11 @@ ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(Fuzzer *fuzzer)
 {
 }
 
+QString ShowViaDockWidgetAPI::description() const
+{
+    return QStringLiteral("Showing %1").arg(m_dockWidgetName);
+}
+
 void ShowViaDockWidgetAPI::generateRandomParams()
 {
     if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget())
@@ -253,6 +269,17 @@ AddDockWidget::AddDockWidget(Fuzzer *fuzzer)
 {
 }
 
+QString AddDockWidget::description() const
+{
+    if (!hasParams())
+        return QStringLiteral("null");
+
+    if (m_params->relativeToName.isEmpty())
+        return QStringLiteral("AddDockWidget %1 to %2").arg(m_params->dockWidgetName).arg(m_params->location);
+    else
+        return QStringLiteral("AddDockWidget %1 to %2, relative to %3").arg(m_params->dockWidgetName).arg(m_params->location).arg(m_params->relativeToName);
+}
+
 void AddDockWidget::generateRandomParams()
 {
     m_params = m_fuzzer->getRandomAddDockWidgetParams();
@@ -286,6 +313,14 @@ void AddDockWidget::fillParamsFromVariantMap(const QVariantMap &map)
 AddDockWidgetAsTab::AddDockWidgetAsTab(Fuzzer *fuzzer)
     : OperationBase(OperationType_AddDockWidgetAsTab, fuzzer)
 {
+}
+
+QString AddDockWidgetAsTab::description() const
+{
+    if (!hasParams())
+        return QStringLiteral("null");
+
+    return QStringLiteral("AddDockWidgetAsTab %1 onto %2").arg(m_dockWidgetToAddName, m_dockWidgetName);
 }
 
 void AddDockWidgetAsTab::generateRandomParams()
@@ -350,6 +385,11 @@ Pause::Pause(Fuzzer *fuzzer)
     : OperationBase(OperationType_Pause, fuzzer)
 {
 
+}
+
+QString Pause::description() const
+{
+    return QStringLiteral("Pausing for %1 ms").arg(m_sleepTimeMS);
 }
 
 void Pause::execute_impl()

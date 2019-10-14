@@ -2,7 +2,6 @@
     "initialLayout": {
         "dockWidgets": [
             {
-                "name" : "DockWidget-1",
                 "geometry": {
                     "size": {
                         "height": 593,
@@ -16,10 +15,10 @@
                 "minSize": {
                     "height": 373,
                     "width": 344
-                }
+                },
+                "name": "DockWidget-1"
             },
             {
-                "name" : "DockWidget-2",
                 "geometry": {
                     "size": {
                         "height": 564,
@@ -33,10 +32,10 @@
                 "minSize": {
                     "height": 170,
                     "width": 600
-                }
+                },
+                "name": "DockWidget-2"
             },
             {
-                "name" : "DockWidget-3",
                 "geometry": {
                     "size": {
                         "height": 350,
@@ -50,10 +49,10 @@
                 "minSize": {
                     "height": 295,
                     "width": 554
-                }
+                },
+                "name": "DockWidget-3"
             },
             {
-                "name" : "DockWidget-4",
                 "geometry": {
                     "size": {
                         "height": 1040,
@@ -67,12 +66,12 @@
                 "minSize": {
                     "height": 480,
                     "width": 565
-                }
+                },
+                "name": "DockWidget-4"
             }
         ],
         "mainWindows": [
             {
-                "name" : "MainWindow-1",
                 "geometry": {
                     "size": {
                         "height": 961,
@@ -81,12 +80,14 @@
                     "x": 232,
                     "y": 79
                 },
-                "mainWindowOption": 0
+                "mainWindowOption": 0,
+                "name": "MainWindow-1"
             }
         ]
     },
     "operations": [
         {
+            "comment": "AddDockWidget DockWidget-2 to 3",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-2",
@@ -96,6 +97,7 @@
             "type": 4
         },
         {
+            "comment": "AddDockWidget DockWidget-4 to 2",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-4",
@@ -105,6 +107,7 @@
             "type": 4
         },
         {
+            "comment": "AddDockWidget DockWidget-3 to 1, relative to DockWidget-2",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-3",
@@ -115,12 +118,14 @@
             "type": 4
         },
         {
+            "comment": "Hidding DockWidget-4",
             "params": {
                 "dockWidgetName": "DockWidget-4"
             },
             "type": 2
         },
         {
+            "comment": "AddDockWidget DockWidget-1 to 2",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-1",
