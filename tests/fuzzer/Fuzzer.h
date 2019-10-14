@@ -79,6 +79,7 @@ public:
 
     struct DockWidgetDescriptor {
         typedef QVector<DockWidgetDescriptor> List;
+        QString name;
         QSize minSize; // the minSize of the hosted widget
         QRect geometry;
         bool isFloating;
@@ -87,6 +88,7 @@ public:
         QVariantMap toVariantMap() const
         {
             QVariantMap map;
+            map[QStringLiteral("name")] = name;
             map[QStringLiteral("minSize")] = sizeToVariantMap(minSize);
             map[QStringLiteral("geometry")] = rectToVariantMap(geometry);
             map[QStringLiteral("isFloating")] = isFloating;
@@ -99,6 +101,7 @@ public:
         {
             DockWidgetDescriptor dock;
 
+            dock.name = map["name"].toString();
             dock.minSize = sizeFromVariantMap(map["minSize"].toMap());
             dock.geometry = rectFromVariantMap(map["geometry"].toMap());
             dock.isFloating = map["isFloating"].toBool();
@@ -106,7 +109,6 @@ public:
 
             return dock;
         }
-
     };
 
     struct MainWindowDescriptor {

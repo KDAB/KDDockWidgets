@@ -51,9 +51,7 @@ static MainWindow* createMainWindow(const Fuzzer::MainWindowDescriptor &mwd)
 
 static DockWidget* createDockWidget(const Fuzzer::DockWidgetDescriptor &dwd)
 {
-    static int count = 0;
-    count++;
-    auto dockWidget = new DockWidget(QStringLiteral("DockWidget-%1").arg(count));
+    auto dockWidget = new DockWidget(dwd.name);
 
     dockWidget->setWidget(new Testing::HostedWidget(dwd.minSize));
 
@@ -137,6 +135,9 @@ Fuzzer::DockWidgetDescriptor Fuzzer::generateRandomDockWidget()
 {
     Fuzzer::DockWidgetDescriptor dwd;
 
+    static int count = 0;
+    count++;
+    dwd.name = QStringLiteral("DockWidget-%1").arg(count);
     dwd.isFloating = getRandomBool(35);
     dwd.isVisible = getRandomBool(70);
 

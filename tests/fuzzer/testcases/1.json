@@ -2,6 +2,7 @@
     "initialLayout": {
         "dockWidgets": [
             {
+                "name" : "DockWidget-1",
                 "geometry": {
                     "size": {
                         "height": 593,
@@ -18,6 +19,7 @@
                 }
             },
             {
+                "name" : "DockWidget-2",
                 "geometry": {
                     "size": {
                         "height": 583,
@@ -34,6 +36,7 @@
                 }
             },
             {
+                "name" : "DockWidget-3",
                 "geometry": {
                     "size": {
                         "height": 931,
@@ -50,6 +53,7 @@
                 }
             },
             {
+                "name" : "DockWidget-4",
                 "geometry": {
                     "size": {
                         "height": 514,
@@ -66,6 +70,7 @@
                 }
             },
             {
+                "name" : "DockWidget-5",
                 "geometry": {
                     "size": {
                         "height": 947,
@@ -82,6 +87,7 @@
                 }
             },
             {
+                "name" : "DockWidget-6",
                 "geometry": {
                     "size": {
                         "height": 564,
@@ -98,6 +104,7 @@
                 }
             },
             {
+                "name" : "DockWidget-7",
                 "geometry": {
                     "size": {
                         "height": 350,
@@ -114,6 +121,7 @@
                 }
             },
             {
+                "name" : "DockWidget-8",
                 "geometry": {
                     "size": {
                         "height": 1040,
