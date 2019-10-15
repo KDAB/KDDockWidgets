@@ -1357,7 +1357,8 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
                 if (!item->isPlaceholder() && item->geometry().intersects(a->geometry())) {
                     dumpDebug();
                     qWarning() << "MultiSplitterLayout::checkSanity: Widget" << item << "with rect" << item->geometry()
-                               << "Intersects anchor" << a << "with rect" << a->geometry();
+                               << "Intersects anchor" << a << "with rect" << a->geometry()
+                               << "; a.visible|following|valid|unneeded=" << a->separatorWidget()->isVisible()<< a->isFollowing() << a->isValid() << a->isUnneeded();
                     return false;
                 }
             }
