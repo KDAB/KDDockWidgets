@@ -221,7 +221,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     });
 
     button = new QPushButton(this);
-    button->setText(QStringLiteral("updateAnchorFollowing()"));
+    button->setText(QStringLiteral("UpdateAnchorFollowing"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
         const auto mainWindows = DockRegistry::self()->mainwindows();
