@@ -124,10 +124,10 @@
             "type": 4
         },
         {
-            "comment": "AddDockWidgetAsTab DockWidget-3-[hidden] onto DockWidget-1",
+            "comment": "AddDockWidgetAsTab DockWidget-2 onto DockWidget-1",
             "params": {
                 "dockWidgetName": "DockWidget-1",
-                "dockWidgetToAddName": "DockWidget-3"
+                "dockWidgetToAddName": "DockWidget-2"
             },
             "type": 5
         }
