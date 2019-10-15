@@ -401,6 +401,12 @@ void Item::onLayoutRequest() const
     if (!d->m_frame || d->m_isPlaceholder)
         return; // It's a placeholder, nothing to do.
 
+    if (d->m_frame->geometry() != geometry()) {
+        // The frame is controlled by the layout, it can't change its geometry on its own.
+        // Put it back.
+        d->m_frame->setGeometry(geometry());
+    }
+
     if (d->m_layout->isAddingItem())
         return; // We're adding an item. Constraints will be updated at the *end* During is dangerous.
 
