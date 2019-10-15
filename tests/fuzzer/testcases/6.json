@@ -108,7 +108,7 @@
             "type": 4
         },
         {
-            "comment": "Showing DockWidget-4-[hidden]",
+            "comment": "Showing DockWidget-4",
             "params": {
                 "dockWidgetName": "DockWidget-4"
             },
@@ -134,11 +134,10 @@
             "params": {
                 "dockWidgetName": "DockWidget-1"
             },
-            "type": 3,
-            "pause": 1
+            "type": 3
         },
         {
-            "comment": "AddDockWidgetAsTab DockWidget-2-[hidden] onto DockWidget-1",
+            "comment": "AddDockWidgetAsTab DockWidget-2 onto DockWidget-1",
             "params": {
                 "dockWidgetName": "DockWidget-1",
                 "dockWidgetToAddName": "DockWidget-2"
