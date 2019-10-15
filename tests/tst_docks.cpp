@@ -4790,6 +4790,7 @@ void TestDocks::tst_stealFrame()
     dock1->addDockWidgetAsTab(dock3);
     QPointer<Frame> f2 = dock2->frame();
     dock4->addDockWidgetAsTab(dock2);
+    QVERIFY(Testing::waitForDeleted(f2.data()));
     QVERIFY(!f2.data());
 
     QCOMPARE(layout1->count(), 1);
@@ -4817,7 +4818,7 @@ void TestDocks::tst_stealFrame()
     // 5. And also steal a side-by-side one into the tab
     QPointer<Frame> f4 = dock4->frame();
     dock1->addDockWidgetAsTab(dock4);
-    QVERIFY(!f4);
+    QVERIFY(Testing::waitForDeleted(f4.data()));
     QCOMPARE(layout1->count(), 1);
     QCOMPARE(layout1->placeholderCount(), 0);
 

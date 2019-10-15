@@ -154,6 +154,7 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other)
     }
 
     Q_ASSERT(frame);
+    other->setParent(nullptr);
     frame->addWidget(other);
 }
 
