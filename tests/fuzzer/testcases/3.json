@@ -1,0 +1,170 @@
+{
+    "initialLayout": {
+        "dockWidgets": [
+            {
+                "geometry": {
+                    "size": {
+                        "height": 475,
+                        "width": 869
+                    },
+                    "x": 48,
+                    "y": 443
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 179,
+                    "width": 577
+                },
+                "name": "DockWidget-1"
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 903,
+                        "width": 596
+                    },
+                    "x": 212,
+                    "y": 195
+                },
+                "isFloating": true,
+                "isVisible": true,
+                "minSize": {
+                    "height": 579,
+                    "width": 519
+                },
+                "name": "DockWidget-2"
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 696,
+                        "width": 530
+                    },
+                    "x": 103,
+                    "y": 264
+                },
+                "isFloating": true,
+                "isVisible": true,
+                "minSize": {
+                    "height": 497,
+                    "width": 213
+                },
+                "name": "DockWidget-3"
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 745,
+                        "width": 732
+                    },
+                    "x": 403,
+                    "y": 397
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 388,
+                    "width": 322
+                },
+                "name": "DockWidget-4"
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 609,
+                        "width": 734
+                    },
+                    "x": 311,
+                    "y": 337
+                },
+                "isFloating": true,
+                "isVisible": true,
+                "minSize": {
+                    "height": 201,
+                    "width": 436
+                },
+                "name": "DockWidget-5"
+            }
+        ],
+        "mainWindows": [
+            {
+                "geometry": {
+                    "size": {
+                        "height": 723,
+                        "width": 297
+                    },
+                    "x": 179,
+                    "y": 93
+                },
+                "mainWindowOption": 0,
+                "name": "MainWindow-1"
+            }
+        ]
+    },
+    "operations": [
+        {
+            "comment": "AddDockWidget DockWidget-2-[hidden] to left",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-2",
+                "location": 1,
+                "mainWindowName": "MainWindow-1"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidget DockWidget-1 to bottom",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-1",
+                "location": 4,
+                "mainWindowName": "MainWindow-1"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-3-[hidden] onto DockWidget-2-[hidden]",
+            "params": {
+                "dockWidgetName": "DockWidget-2",
+                "dockWidgetToAddName": "DockWidget-3"
+            },
+            "type": 5
+        },
+        {
+            "comment": "AddDockWidget DockWidget-2-[hidden] to left, relative to DockWidget-1",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-2",
+                "location": 1,
+                "mainWindowName": "MainWindow-1",
+                "relativeToName": "DockWidget-1"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-5-[hidden] onto DockWidget-3-[hidden]",
+            "params": {
+                "dockWidgetName": "DockWidget-3",
+                "dockWidgetToAddName": "DockWidget-5"
+            },
+            "type": 5
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-4 onto DockWidget-5-[hidden]",
+            "params": {
+                "dockWidgetName": "DockWidget-5",
+                "dockWidgetToAddName": "DockWidget-4"
+            },
+            "type": 5
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-2-[hidden] onto DockWidget-4",
+            "params": {
+                "dockWidgetName": "DockWidget-4",
+                "dockWidgetToAddName": "DockWidget-2"
+            },
+            "type": 5
+        }
+    ]
+}
