@@ -83,9 +83,9 @@ void Fuzzer::runTest(const Test &test)
     createLayout(test.initialLayout);
     int index = 0;
     for (const auto &op : test.operations) {
-        qDebug() << "Running" << op->description();
         index++;
         op->execute();
+        qDebug() << "Ran" << op->description();
         QTest::qWait(m_operationDelayMS);
         DockRegistry::self()->checkSanityAll();
     }

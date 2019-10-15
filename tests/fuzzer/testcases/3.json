@@ -104,7 +104,7 @@
     },
     "operations": [
         {
-            "comment": "AddDockWidget DockWidget-2-[hidden] to left",
+            "comment": "AddDockWidget DockWidget-2 to left",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-2",
@@ -124,7 +124,7 @@
             "type": 4
         },
         {
-            "comment": "AddDockWidgetAsTab DockWidget-3-[hidden] onto DockWidget-2-[hidden]",
+            "comment": "AddDockWidgetAsTab DockWidget-3 onto DockWidget-2",
             "params": {
                 "dockWidgetName": "DockWidget-2",
                 "dockWidgetToAddName": "DockWidget-3"
@@ -143,7 +143,7 @@
             "type": 4
         },
         {
-            "comment": "AddDockWidgetAsTab DockWidget-5-[hidden] onto DockWidget-3-[hidden]",
+            "comment": "AddDockWidgetAsTab DockWidget-5 onto DockWidget-3",
             "params": {
                 "dockWidgetName": "DockWidget-3",
                 "dockWidgetToAddName": "DockWidget-5"
@@ -151,7 +151,7 @@
             "type": 5
         },
         {
-            "comment": "AddDockWidgetAsTab DockWidget-4 onto DockWidget-5-[hidden]",
+            "comment": "AddDockWidgetAsTab DockWidget-4 onto DockWidget-5",
             "params": {
                 "dockWidgetName": "DockWidget-5",
                 "dockWidgetToAddName": "DockWidget-4"
@@ -159,7 +159,7 @@
             "type": 5
         },
         {
-            "comment": "AddDockWidgetAsTab DockWidget-2-[hidden] onto DockWidget-4",
+            "comment": "AddDockWidgetAsTab DockWidget-2 onto DockWidget-4",
             "params": {
                 "dockWidgetName": "DockWidget-4",
                 "dockWidgetToAddName": "DockWidget-2"

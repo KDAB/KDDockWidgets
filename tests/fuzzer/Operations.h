@@ -70,7 +70,7 @@ public:
     static OperationBase::Ptr newOperation(Fuzzer *fuzzer, OperationType);
 
     OperationType type() const { return m_operationType; }
-    virtual QString description() const = 0;
+    QString description() const { return m_description; }
 
 protected:
     virtual bool hasParams() const = 0;
@@ -85,6 +85,7 @@ protected:
     const OperationType m_operationType;
     Fuzzer *const m_fuzzer;
     int m_sleepMS = 0;
+    QString m_description;
 };
 
 class CloseViaDockWidgetAPI : public OperationBase
@@ -93,7 +94,6 @@ public:
     explicit CloseViaDockWidgetAPI(Fuzzer *);
 
 protected:
-    QString description() const override;
     void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
@@ -108,7 +108,6 @@ public:
     explicit HideViaDockWidgetAPI(Fuzzer *);
 
 protected:
-    QString description() const override;
     void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
@@ -123,7 +122,6 @@ public:
     explicit ShowViaDockWidgetAPI(Fuzzer *);
 
 protected:
-    QString description() const override;
     void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
@@ -138,7 +136,6 @@ public:
     explicit AddDockWidget(Fuzzer *);
 
 protected:
-    QString description() const override;
     void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
@@ -154,7 +151,6 @@ public:
     explicit AddDockWidgetAsTab(Fuzzer *);
 
 protected:
-    QString description() const override;
     void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
