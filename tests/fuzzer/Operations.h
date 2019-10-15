@@ -72,8 +72,9 @@ public:
     OperationType type() const { return m_operationType; }
     QString description() const { return m_description; }
 
-protected:
     virtual bool hasParams() const = 0;
+
+protected:
     virtual void execute_impl() = 0;
     virtual void generateRandomParams() = 0;
     virtual QVariantMap paramsToVariantMap() const = 0;
