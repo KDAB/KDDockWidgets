@@ -1379,7 +1379,10 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
             }
 
             if (!item->isPlaceholder() && item->anchorGroup().itemSize() != item->size()) {
-                qWarning() << Q_FUNC_INFO << "Invaild item size" << item->size() << item->anchorGroup().itemSize();
+                qWarning() << Q_FUNC_INFO << "Invaild item size="
+                           << item->size()
+                           << "group size="
+                           << item->anchorGroup().itemSize();
                 return false;
             }
         }
@@ -1585,8 +1588,17 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         }
 
         // We don't want item to resize the anchors while setting newPosition1, we already calculated it
-        side1Anchor->setPosition(newPosition1);
-        side2Anchor->setPosition(newPosition2);
+        if (side1Anchor->isStatic()) {
+            side1Anchor->updateItemSizes();
+        } else {
+            side1Anchor->setPosition(newPosition1);
+        }
+
+        if (side2Anchor->isStatic()) {
+            side2Anchor->updateItemSizes();
+        } else {
+            side2Anchor->setPosition(newPosition2);
+        }
     }
     item->endBlockPropagateGeo();
 
