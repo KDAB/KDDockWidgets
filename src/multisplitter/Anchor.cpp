@@ -101,11 +101,12 @@ void Anchor::updateSize()
 {
     if (isValid()) {
         if (isVertical()) {
-            setGeometry(QRect(position(), m_from->geometry().bottom(), thickness(), length()));
+            setGeometry(QRect(position(), m_from->geometry().bottom() + 1, thickness(), length()));
         } else {
-            setGeometry(QRect(m_from->geometry().right(), position(), length(), thickness()));
+            setGeometry(QRect(m_from->geometry().right() + 1, position(), length(), thickness()));
         }
     }
+
     qCDebug(anchors) << "Anchor::updateSize" << this << geometry();
 }
 
