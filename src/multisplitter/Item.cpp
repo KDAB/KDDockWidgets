@@ -418,7 +418,14 @@ void Item::onLayoutRequest() const
     if (deltaW == 0 && deltaH == 0)
         return; // min size shrunk, nothing to do
 
+    const QSize oldLayoutSize = d->m_layout->size();
     d->m_layout->updateSizeConstraints();
+    const bool ranEnsureAnchorsBounded = oldLayoutSize != d->m_layout->size();
+
+    // setMinimumSize() and setSize() are no-ops if the size didn't change. So run ensureAnchorsBounded()
+    // ourselves, as the internal widgets changed their constraints
+    if (!ranEnsureAnchorsBounded)
+        d->m_layout->ensureAnchorsBounded();
 
     if (width() < d->m_minSize.width() || height() < d->m_minSize.height()) {
         // Shouldn't happen
