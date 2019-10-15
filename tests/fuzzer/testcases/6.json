@@ -51,23 +51,6 @@
                     "width": 418
                 },
                 "name": "DockWidget-3"
-            },
-            {
-                "geometry": {
-                    "size": {
-                        "height": 812,
-                        "width": 763
-                    },
-                    "x": 53,
-                    "y": 115
-                },
-                "isFloating": false,
-                "isVisible": true,
-                "minSize": {
-                    "height": 296,
-                    "width": 478
-                },
-                "name": "DockWidget-4"
             }
         ],
         "mainWindows": [
@@ -97,22 +80,14 @@
             "type": 4
         },
         {
-            "comment": "AddDockWidget DockWidget-3 to left, relative to DockWidget-1",
+            "comment": "AddDockWidget DockWidget-3 to left",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-3",
                 "location": 1,
-                "mainWindowName": "MainWindow-1",
-                "relativeToName": "DockWidget-1"
+                "mainWindowName": "MainWindow-1"
             },
             "type": 4
-        },
-        {
-            "comment": "Showing DockWidget-4",
-            "params": {
-                "dockWidgetName": "DockWidget-4"
-            },
-            "type": 3
         },
         {
             "comment": "Hidding DockWidget-1",
@@ -122,12 +97,11 @@
             "type": 2
         },
         {
-            "comment": "AddDockWidgetAsTab DockWidget-3 onto DockWidget-4",
+            "comment": "Hidding DockWidget-3",
             "params": {
-                "dockWidgetName": "DockWidget-4",
-                "dockWidgetToAddName": "DockWidget-3"
+                "dockWidgetName": "DockWidget-3"
             },
-            "type": 5
+            "type": 2
         },
         {
             "comment": "Showing DockWidget-1-[hidden]",
