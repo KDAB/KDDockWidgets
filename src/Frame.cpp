@@ -143,6 +143,7 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index)
 
     if (hasSingleDockWidget()) {
         Q_EMIT currentDockWidgetChanged(dockWidget);
+        setObjectName(dockWidget->uniqueName());
     }
 
     connect(dockWidget, &DockWidgetBase::titleChanged, this, &Frame::updateTitleAndIcon);

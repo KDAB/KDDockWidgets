@@ -140,7 +140,7 @@ void DropArea::debug_updateItemNamesForGammaray()
     for (Item *item : m_layout->items()) {
         if (auto frame = item->frame()) {
             if (!frame->dockWidgets().isEmpty())
-                frame->setObjectName(frame->dockWidgets().at(0)->objectName());
+                frame->setObjectName(frame->dockWidgets().at(0)->uniqueName());
         }
     }
 

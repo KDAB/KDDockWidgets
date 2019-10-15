@@ -90,7 +90,6 @@ Item::Item(Frame *frame, MultiSplitterLayout *parent)
     // Minor hack: Set to nullptr so setFrame doesn't bail out. There's a catch-22: setLayout needs to have an m_frame and setFrame needs to have a layout.
     d->m_frame = nullptr;
     d->setFrame(frame);
-    d->updateObjectName();
 }
 
 Item::Item(MultiSplitterLayout *parent)
@@ -491,6 +490,7 @@ void Item::Private::setFrame(Frame *frame)
 
         m_onFrameLayoutRequest_connection = connect(frame, &Frame::layoutInvalidated, q, &Item::onLayoutRequest);
         m_onFrameObjectNameChanged_connection = connect(frame, &QObject::objectNameChanged, q, [this] { updateObjectName(); });
+        updateObjectName();
     }
 }
 
@@ -555,7 +555,15 @@ void Item::Private::setIsPlaceholder(bool is)
 
 void Item::Private::updateObjectName()
 {
-    q->setObjectName(m_frame->objectName());
+    if (m_frame && !m_frame->objectName().isEmpty()) {
+        q->setObjectName(m_frame->objectName());
+    } else if (q->isPlaceholder()) {
+        q->setObjectName(QStringLiteral("placeholder"));
+    } else if (!m_frame){
+        q->setObjectName(QStringLiteral("null frame"));
+    } else {
+        q->setObjectName(QStringLiteral("frame with no dockwidgets"));
+    }
 }
 
 Item *Item::deserialize(const LayoutSaver::Item &i, MultiSplitterLayout *layout)
