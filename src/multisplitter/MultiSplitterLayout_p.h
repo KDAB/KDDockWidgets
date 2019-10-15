@@ -47,6 +47,10 @@ namespace KDDockWidgets {
 class MultiSplitter;
 class Length;
 
+namespace Debug {
+class DebugWindow;
+}
+
 /**
  * Returns the width of the widget if orientation is Vertical, the height otherwise.
  */
@@ -436,6 +440,7 @@ private:
     friend class Item;
     friend class Anchor;
     friend class TestDocks;
+    friend class KDDockWidgets::Debug::DebugWindow;
 
     struct AnchorBounds {
         Anchor *side1;
