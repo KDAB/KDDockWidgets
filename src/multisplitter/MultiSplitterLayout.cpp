@@ -1054,7 +1054,7 @@ void MultiSplitterLayout::redistributeSpace_recursive(Anchor *fromAnchor, int mi
             auto bounds = boundPositionsForAnchor(nextAnchor);
 
             // For the bounding, use Anchor::minPosition, as we're not making the anchors on the left/top shift, which boundsPositionsForAnchor() assumes.
-            const int newPositionBounded = qBound(minAnchorPos, newPosition, bounds.second);
+            const int newPositionBounded = qMax(bounds.first, qBound(minAnchorPos, newPosition, bounds.second));
 
             qCDebug(sizing) << Q_FUNC_INFO << nextAnchor << "bounds.first=" << bounds.first
                             << "; newPosition=" << newPosition
