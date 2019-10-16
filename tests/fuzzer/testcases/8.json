@@ -11,7 +11,7 @@
                     "y": 468
                 },
                 "isFloating": true,
-                "isVisible": false,
+                "isVisible": true,
                 "minSize": {
                     "height": 183,
                     "width": 485
@@ -55,23 +55,6 @@
             {
                 "geometry": {
                     "size": {
-                        "height": 324,
-                        "width": 771
-                    },
-                    "x": 244,
-                    "y": 129
-                },
-                "isFloating": false,
-                "isVisible": true,
-                "minSize": {
-                    "height": 210,
-                    "width": 300
-                },
-                "name": "DockWidget-4"
-            },
-            {
-                "geometry": {
-                    "size": {
                         "height": 684,
                         "width": 740
                     },
@@ -79,7 +62,7 @@
                     "y": 117
                 },
                 "isFloating": false,
-                "isVisible": false,
+                "isVisible": true,
                 "minSize": {
                     "height": 332,
                     "width": 414
@@ -96,29 +79,12 @@
                     "y": 108
                 },
                 "isFloating": false,
-                "isVisible": false,
+                "isVisible": true,
                 "minSize": {
                     "height": 494,
                     "width": 506
                 },
                 "name": "DockWidget-6"
-            },
-            {
-                "geometry": {
-                    "size": {
-                        "height": 958,
-                        "width": 973
-                    },
-                    "x": 11,
-                    "y": 144
-                },
-                "isFloating": false,
-                "isVisible": true,
-                "minSize": {
-                    "height": 520,
-                    "width": 492
-                },
-                "name": "DockWidget-7"
             },
             {
                 "geometry": {
@@ -130,7 +96,7 @@
                     "y": 197
                 },
                 "isFloating": true,
-                "isVisible": false,
+                "isVisible": true,
                 "minSize": {
                     "height": 590,
                     "width": 209
@@ -172,7 +138,7 @@
     },
     "operations": [
         {
-            "comment": "AddDockWidget DockWidget-8-[hidden] to left",
+            "comment": "AddDockWidget DockWidget-8 to left",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-8",
@@ -182,37 +148,12 @@
             "type": 4
         },
         {
-            "comment": "AddDockWidgetAsTab DockWidget-5-[hidden] onto DockWidget-9",
-            "params": {
-                "dockWidgetName": "DockWidget-9",
-                "dockWidgetToAddName": "DockWidget-5"
-            },
-            "type": 5
-        },
-        {
-            "comment": "AddDockWidgetAsTab DockWidget-8 onto DockWidget-9-[hidden]",
+            "comment": "AddDockWidgetAsTab DockWidget-8 onto DockWidget-9",
             "params": {
                 "dockWidgetName": "DockWidget-9",
                 "dockWidgetToAddName": "DockWidget-8"
             },
             "type": 5
-        },
-        {
-            "comment": "AddDockWidget DockWidget-7 to bottom",
-            "params": {
-                "addingOption": 0,
-                "dockWidgetName": "DockWidget-7",
-                "location": 4,
-                "mainWindowName": "MainWindow-1"
-            },
-            "type": 4
-        },
-        {
-            "comment": "Closing DockWidget-7",
-            "params": {
-                "dockWidgetName": "DockWidget-7"
-            },
-            "type": 1
         },
         {
             "comment": "AddDockWidget DockWidget-2 to left",
@@ -221,24 +162,6 @@
                 "dockWidgetName": "DockWidget-2",
                 "location": 1,
                 "mainWindowName": "MainWindow-1"
-            },
-            "type": 4
-        },
-        {
-            "comment": "Showing DockWidget-1-[hidden]",
-            "params": {
-                "dockWidgetName": "DockWidget-1"
-            },
-            "type": 3
-        },
-        {
-            "comment": "AddDockWidget DockWidget-5-[hidden] to bottom, relative to DockWidget-2",
-            "params": {
-                "addingOption": 0,
-                "dockWidgetName": "DockWidget-5",
-                "location": 4,
-                "mainWindowName": "MainWindow-1",
-                "relativeToName": "DockWidget-2"
             },
             "type": 4
         },
@@ -253,7 +176,7 @@
             "type": 4
         },
         {
-            "comment": "AddDockWidget DockWidget-6-[hidden] to right",
+            "comment": "AddDockWidget DockWidget-6 to right",
             "params": {
                 "addingOption": 0,
                 "dockWidgetName": "DockWidget-6",
