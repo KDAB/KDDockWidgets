@@ -40,7 +40,7 @@ struct WindowBeingDragged;
  *
  * \internal
  */
-class Draggable
+class DOCKS_EXPORT Draggable
 {
 public:
     typedef QVector<Draggable *> List;
