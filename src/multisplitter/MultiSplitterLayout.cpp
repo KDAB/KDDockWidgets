@@ -678,11 +678,16 @@ QPair<int, int> MultiSplitterLayout::boundPositionsForAnchor(Anchor *anchor) con
         qWarning() << Q_FUNC_INFO << "Invalid bounds"
                    << "; bound1=" << bound1
                    << "; bound2=" << bound2
-                   << "; size=" << size()
+                   << "; layout.size=" << size()
+                   << "; layout.min=" << minimumSize()
                    << "; anchor=" << anchor
                    << "; orientation=" << anchor->orientation()
-                   << "; min1=" << minSide1Length
-                   << "; min2=" << minSide2Length;
+                   << "; minSide1Length=" << minSide1Length
+                   << "; minSide2Length=" << minSide2Length
+                   << "; side1=" << anchor->side1Items()
+                   << "; side2=" << anchor->side2Items()
+                   << "; followee=" << anchor->followee()
+                   << "; thickness=" << anchor->thickness();
         Q_ASSERT(false);
     }
 
@@ -964,7 +969,7 @@ void MultiSplitterLayout::dumpDebug() const
 {
     Q_EMIT aboutToDumpDebug();
     qDebug() << Q_FUNC_INFO << "m_size=" << m_size
-             << "; minimumSize=" << m_multiSplitter->minimumSize();
+             << "; minimumSize=" << minimumSize();
 
     qDebug() << "Items:";
     for (auto item : items()) {
