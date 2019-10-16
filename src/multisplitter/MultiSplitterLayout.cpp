@@ -1645,7 +1645,10 @@ void MultiSplitterLayout::setSize(QSize size)
         redistributeSpace(oldSize, size);
         m_resizing = false;
 
-        ensureAnchorsBounded();
+        if (!m_restoringPlaceholder) { // ensureAnchorsBounded() is run at the end of restorePlaceholder() already.
+            ensureAnchorsBounded();
+        }
+
         maybeCheckSanity();
     }
 }
