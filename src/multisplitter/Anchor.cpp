@@ -505,8 +505,11 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
         minLength = qMax(itemMin, minLength);
     }
 
+    auto map = m_layout->anchorsShouldFollow();
+
     // Dont' use isFollowing() here, because when restoring a placeholder we clear the followers first
-    const int thickness = (isStatic() || hasNonPlaceholderItems(side)) ? this->thickness() : 0;
+    const bool willFollow = map.contains(const_cast<Anchor*>(this));
+    const int thickness = willFollow ? 0 : Anchor::thickness(isStatic());
 
     return thickness + minLength;
 }

@@ -2520,8 +2520,14 @@ void TestDocks::tst_crash2()
             QCOMPARE(layout->m_leftAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().width());
             QCOMPARE(layout->m_topAnchor->cumulativeMinLength(Anchor::Side2), layout->minimumSize().height());
 
+            if (i == 2) {
+                // Wait for the resizes. This used to make the app crash.
+                QTest::qWait(1000);
+            }
+
             docks[i]->setFloating(floatings[i]);
         }
+        layout->checkSanity();
 
         qDeleteAll(docks);
         qDeleteAll(DockRegistry::self()->frames());

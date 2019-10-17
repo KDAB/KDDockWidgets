@@ -1490,6 +1490,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
     ensureHasAvailableSize(newSize);
 
     item->setIsPlaceholder(false);
+    item->beginBlockPropagateGeo();
     updateSizeConstraints();
 
     Anchor::List anchorsFollowing = anchorGroup.anchorsFollowingInwards();
@@ -1515,7 +1516,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         anchorGroup.right->updateItemSizes();
     }
 
-    item->beginBlockPropagateGeo();
+
     for (Anchor *anchorFollowingInwards : anchorsFollowing) {
         const Qt::Orientation orientation = anchorFollowingInwards->orientation();
         Anchor *side1Anchor = anchorGroup.anchorAtSide(Anchor::Side1, orientation); // returns the left if vertical, otherwise top
