@@ -1310,11 +1310,13 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
     if (m_topAnchor->position() != 0 || m_leftAnchor->position() != 0 ||
             m_rightAnchor->position() != width() - m_rightAnchor->thickness() ||
             m_bottomAnchor->position() != height() - m_bottomAnchor->thickness()) {
-        qWarning() << Q_FUNC_INFO << "Invalid anchor position" << m_leftAnchor->position()
-                    << m_topAnchor->position()
-                    << m_rightAnchor->position()
-                    << m_bottomAnchor->position()
-                    << "; size=" << m_size;
+        qWarning() << Q_FUNC_INFO << "Invalid anchor position"
+                    << " left=" << m_leftAnchor->position()
+                    << " top=" << m_topAnchor->position()
+                    << " right=" << m_rightAnchor->position()
+                    << " bottom=" << m_bottomAnchor->position()
+                    << "; size=" << m_size
+                    << "; min=" << m_minSize;
         return false;
     }
 

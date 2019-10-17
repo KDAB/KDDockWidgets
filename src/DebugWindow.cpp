@@ -221,6 +221,16 @@ DebugWindow::DebugWindow(QWidget *parent)
     });
 
     button = new QPushButton(this);
+    button->setText(QStringLiteral("PositionStaticAnchors()"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        const auto mainWindows = DockRegistry::self()->mainwindows();
+        if (mainWindows.isEmpty())
+            return;
+        mainWindows.at(0)->multiSplitterLayout()->positionStaticAnchors();
+    });
+
+    button = new QPushButton(this);
     button->setText(QStringLiteral("UpdateAnchorFollowing"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
