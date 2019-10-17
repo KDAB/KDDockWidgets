@@ -66,7 +66,6 @@ int MultiSplitter::count() const
 void MultiSplitter::onLayoutRequest()
 {
     m_layout->updateSizeConstraints();
-    m_layout->maybeCheckSanity();
 }
 
 bool MultiSplitter::onResize(QSize newSize)

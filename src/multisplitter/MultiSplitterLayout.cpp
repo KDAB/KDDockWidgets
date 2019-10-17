@@ -1307,6 +1307,18 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
         return false;
     }
 
+    if (m_topAnchor->position() != 0 || m_leftAnchor->position() != 0 ||
+            m_rightAnchor->position() != width() - m_rightAnchor->thickness() ||
+            m_bottomAnchor->position() != height() - m_bottomAnchor->thickness()) {
+        qWarning() << Q_FUNC_INFO << "Invalid anchor position" << m_leftAnchor->position()
+                    << m_topAnchor->position()
+                    << m_rightAnchor->position()
+                    << m_bottomAnchor->position()
+                    << "; size=" << m_size;
+        return false;
+    }
+
+
     for (Anchor *anchor : qAsConst(m_anchors)) {
         if (!anchor->isValid()) {
             dumpDebug();
@@ -1659,8 +1671,6 @@ void MultiSplitterLayout::setSize(QSize size)
         if (!m_restoringPlaceholder) { // ensureAnchorsBounded() is run at the end of restorePlaceholder() already.
             ensureAnchorsBounded();
         }
-
-        maybeCheckSanity();
     }
 }
 
