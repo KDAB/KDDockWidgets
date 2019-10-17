@@ -504,7 +504,7 @@ private:
     QHash<Anchor*, QPair<int,int>> boundPositionsForAllAnchors() const;
 
     /** Returns how much is available for the new drop. It already counts with the space for new anchor that will be created.
-     * So it returns the contentWidth (or height), minus the minimum-sizes of all widgets, minus the thickness of all anchors
+     * So it returns this layout's width() (or height), minus the minimum-sizes of all widgets, minus the thickness of all anchors
      * minus the thickness of the anchor that would be created.
      **/
     Length availableLengthForDrop(KDDockWidgets::Location location, const Item *relativeTo) const;

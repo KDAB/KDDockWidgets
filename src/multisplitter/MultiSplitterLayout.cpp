@@ -1544,16 +1544,20 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         // Double check the available space again, for sanity
         if (!anchorGroup.hasAvailableSizeFor(newSize)) {
             qWarning() << "There's not enough space: bound2=" << boundPosition2
-                       << "; bound1=" << boundPosition1 << "; side1Anchor.thickness=" << side1Anchor->thickness()
+                       << "; bound1=" << boundPosition1
                        << "; newSize=" << newSize
+                       << "; widgetMinSize=" << widgetMinSize
                        << "; newspace=" << boundPosition2 - boundPosition1 - side1Anchor->thickness()
                        << "; available_old=" << availableSize
                        << "; available_new=" << this->availableSize()
                        << "; anchors=" << side1Anchor << side2Anchor
                        << "; oldPos1=" << oldPosition1
                        << "; oldPos2=" << oldPosition2
+                       << "; thickness=" << side1Anchor->thickness() << side2Anchor->thickness()
+                       << "; isFollowing=" << side1Anchor->isFollowing() << side2Anchor->isFollowing()
                        << "; static=" << side1Anchor->isStatic() << side2Anchor->isStatic()
-                       << "; size=" << m_size;
+                       << "; size=" << m_size
+                       << "; m_minSize=" << m_minSize;
             Q_ASSERT(false);
             return;
         }
@@ -1579,6 +1583,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
                              << side1Anchor->followee() << side2Anchor->followee()
                              << "; anchorFollowing=" << anchorFollowingInwards
                              << "; size=" << m_size
+                             << "; minSize=" << m_minSize
                              << "; widgetMinSize=" << widgetMinSize
                              << "; available_old=" << availableSize
                              << "; available_new=" << availableLengthForOrientation(orientation)
