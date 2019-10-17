@@ -238,6 +238,11 @@ public:
     Anchor *followee() const { return m_followee; }
 
     /**
+     * @brief Returns the list of anchors following this one.
+     */
+    const List followers() const;
+
+    /**
      * @brief Returns the last followee in the chain.
      */
     Anchor *endFollowee() const;

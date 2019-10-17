@@ -543,6 +543,17 @@ void Anchor::setFollowee(Anchor *followee)
     Q_EMIT followeeChanged();
 }
 
+const Anchor::List Anchor::followers() const
+{
+    Anchor::List result;
+    for (Anchor *a : m_layout->anchors()) {
+        if (a->followee() == this)
+            result.push_back(a);
+    }
+
+    return result;
+}
+
 Anchor *Anchor::endFollowee() const
 {
     Anchor *a = m_followee;
