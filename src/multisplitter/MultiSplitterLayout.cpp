@@ -1741,6 +1741,8 @@ void MultiSplitterLayout::updateAnchorFollowing(const AnchorGroup &groupBeingRem
 {
     clearAnchorsFollowing();
 
+    QHash<Anchor *, int> newPositionsWhenGroupRemoved;
+
     for (Anchor *anchor : qAsConst(m_anchors)) {
         if (anchor->isStatic())
             continue;
@@ -1748,14 +1750,13 @@ void MultiSplitterLayout::updateAnchorFollowing(const AnchorGroup &groupBeingRem
         if (anchor->onlyHasPlaceholderItems(Anchor::Side2)) {
             Anchor *toFollow = anchor->findNearestAnchorWithItems(Anchor::Side2);
             if (toFollow->followee() != anchor) {
-
                 if (!toFollow->isStatic() && groupBeingRemoved.containsAnchor(anchor, Anchor::Side1)) {
                     // A group is being removed, instead of simply shifting the left/top anchor all the way, let's make it use half the space
                     if (toFollow->onlyHasPlaceholderItems(Anchor::Side1)) { // Means it can move!
                         const int delta = toFollow->position() - anchor->position() - anchor->thickness();
                         const int halfDelta = int(delta / 2.0);
                         if (halfDelta > 0) {
-                            toFollow->setPosition(toFollow->position() - halfDelta);
+                            newPositionsWhenGroupRemoved.insert(toFollow, toFollow->position() - halfDelta);
                         }
                     }
                 }
@@ -1772,7 +1773,7 @@ void MultiSplitterLayout::updateAnchorFollowing(const AnchorGroup &groupBeingRem
                         const int delta = anchor->position() - toFollow->position() - toFollow->thickness();
                         const int halfDelta = int(delta / 2.0);
                         if (halfDelta > 0) {
-                            toFollow->setPosition(toFollow->position() + halfDelta);
+                            newPositionsWhenGroupRemoved.insert(toFollow, toFollow->position() + halfDelta);
                         }
                     }
                 }
@@ -1780,6 +1781,24 @@ void MultiSplitterLayout::updateAnchorFollowing(const AnchorGroup &groupBeingRem
                 anchor->setFollowee(toFollow);
             }
         }
+    }
+
+
+    for (auto it = newPositionsWhenGroupRemoved.begin(), end = newPositionsWhenGroupRemoved.end(); it != end; ++it) {
+        Anchor *anchorToShift = it.key();
+        const int newPosition = it.value();
+        const Anchor::Side sideToShiftTo = newPosition < anchorToShift->position() ? Anchor::Side1
+                                                                                   : Anchor::Side2;
+        bool doShift = true;
+        for (Anchor *follower : anchorToShift->followers()) {
+            if (follower->hasNonPlaceholderItems(sideToShiftTo) && !groupBeingRemoved.containsAnchor(follower, sideToShiftTo)) {
+                doShift = false;
+                break;
+            }
+        }
+
+        if (doShift)
+            anchorToShift->setPosition(newPosition);
     }
 
     updateSizeConstraints();
