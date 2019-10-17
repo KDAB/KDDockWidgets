@@ -1555,10 +1555,11 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
                                                            : boundPositionForAnchor(side2Anchor, Anchor::Side2);
 
         // Double check the available space again, for sanity
-        if (!anchorGroup.hasAvailableSizeFor(newSize)) {
+        if (!anchorGroup.hasAvailableSizeFor(newSize, orientation)) {
             qWarning() << "There's not enough space: bound2=" << boundPosition2
                        << "; bound1=" << boundPosition1
                        << "; newSize=" << newSize
+                       << "; anchorGroup.available" << anchorGroup.availableSize()
                        << "; widgetMinSize=" << widgetMinSize
                        << "; newspace=" << boundPosition2 - boundPosition1 - side1Anchor->thickness()
                        << "; available_old=" << availableSize

@@ -75,7 +75,7 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS AnchorGroup
     /**
      * @brief Returns whether @ref availableSize is bigger or equal than @ref needed
      */
-    bool hasAvailableSizeFor(QSize needed) const;
+    bool hasAvailableSizeFor(QSize needed, Qt::Orientation orientation) const;
 
     /// Returns the group formed by the Anchors that actually have items on their outter side
     AnchorGroup outterGroup() const;

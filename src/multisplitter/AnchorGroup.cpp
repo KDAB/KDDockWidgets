@@ -84,10 +84,11 @@ int AnchorGroup::itemSize(Qt::Orientation o) const
                              : itemSize().height();
 }
 
-bool AnchorGroup::hasAvailableSizeFor(QSize needed) const
+bool AnchorGroup::hasAvailableSizeFor(QSize needed, Qt::Orientation orientation) const
 {
     const QSize available = availableSize();
-    return available.width() >= needed.width() && available.height() >= needed.height();
+    return orientation == Qt::Vertical ? available.width() >= needed.width()
+                                       : available.height() >= needed.height();
 }
 
 AnchorGroup AnchorGroup::outterGroup() const
