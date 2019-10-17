@@ -1450,7 +1450,7 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 void MultiSplitterLayout::maybeCheckSanity()
 {
 #if defined(DOCKS_DEVELOPER_MODE)
-    if (!checkSanity())
+    if (!isRestoringPlaceholder() && !checkSanity())
         qWarning() << Q_FUNC_INFO << "Sanity check failed";
 #endif
 }
