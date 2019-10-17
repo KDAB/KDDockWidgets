@@ -28,6 +28,8 @@
 #include <QApplication>
 #include <QTimer>
 #include <QDebug>
+#include <QFile>
+#include <iostream>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;
@@ -57,6 +59,13 @@ int main(int argc, char **argv)
     Fuzzer fuzzer(dumpToJsonOnFatal);
     if (slowDown)
         fuzzer.setDelayBetweenOperations(1000);
+
+    for (const QString &file : filesToLoad) {
+        if (!QFile::exists(file)) {
+            std::cerr << "\nFile doesn't exist: " << file.toStdString() << "\n";
+            return 0;
+        }
+    }
 
     QTimer::singleShot(0, &fuzzer, [&fuzzer, filesToLoad] {
         if (filesToLoad.isEmpty())
