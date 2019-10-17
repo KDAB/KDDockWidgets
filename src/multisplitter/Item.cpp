@@ -166,6 +166,7 @@ void Item::setGeometry(QRect geo)
 
     if (geo != d->m_geometry) {
         GeometryDiff geoDiff(d->m_geometry, geo);
+        const Qt::Orientation diffOrientation = geoDiff.orientation();
 
         /*qDebug() << "old=" << geo << "; new=" << d->m_geometry
                  << "; len=" << length(geoDiff.orientation())
@@ -180,16 +181,19 @@ void Item::setGeometry(QRect geo)
 
         if (!d->m_blockPropagateGeo && d->m_anchorGroup.isValid() && geoDiff.onlyOneSideChanged) {
             // If we're being squeezed to the point where it reaches less then our min size, then we drag the opposite separator, to preserve size
-            const int lengthDelta = length(geoDiff.orientation()) - minLength(geoDiff.orientation());
+            const int lengthDelta = length(diffOrientation) - minLength(diffOrientation);
             if (lengthDelta < 0) {
                 Anchor *anchorThatMoved = anchor(geoDiff);
                 Q_ASSERT(anchorThatMoved);
                 Anchor *anchorToMove = d->m_anchorGroup.oppositeAnchor(anchorThatMoved);
+                const bool movingSide1 = anchorGroup().sideForAnchor(anchorToMove) == Anchor::Side1; // if true we're going to move left or top.
+
                 if (anchorToMove->isFollowing())
                     anchorToMove = anchorToMove->endFollowee();
 
                 Q_ASSERT(anchorToMove);
-                const int newPosition = anchorToMove->position() - (lengthDelta * geoDiff.signess());
+                const int signess = movingSide1 ? 1 : -1;
+                const int newPosition = anchorToMove->position() + (lengthDelta * signess);
 
                 // Note: Position can be slightly negative if the main window isn't big enougn to host the new size.
                 // In that case the window will be resized shortly after
