@@ -989,10 +989,9 @@ void MultiSplitterLayout::dumpDebug() const
         auto side1Widgets = anchor->items(Anchor::Side1);
         auto side2Widgets = anchor->items(Anchor::Side2);
         auto bounds = anchor->isStatic() ? QPair<int, int>() : boundPositionsForAnchor(anchor);
-        qDebug() << "    " << anchor
-                 << "; separatorWidget=" << anchor->separatorWidget()
-                 << "; side1=" << side1Widgets << anchor->debug_side1ItemNames()
-                 << "; side2=" << side2Widgets << anchor->debug_side2ItemNames()
+        qDebug() << "\n    " << anchor
+                 << "; side1=" << side1Widgets
+                 << "; side2=" << side2Widgets
                  << "; pos=" << anchor->position()
                  << "; sepWidget.pos=" << (anchor->isVertical() ? anchor->separatorWidget()->x()
                                                                 : anchor->separatorWidget()->y())
