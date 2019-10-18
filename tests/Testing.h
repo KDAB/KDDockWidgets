@@ -59,6 +59,11 @@ namespace Testing {
         KDDockWidgets::Location location;
         KDDockWidgets::AddingOption addingOption;
 
+        bool isNull() const
+        {
+            return mainWindowName.isEmpty();
+        }
+
         QVariantMap toVariantMap() const
         {
             QVariantMap map;

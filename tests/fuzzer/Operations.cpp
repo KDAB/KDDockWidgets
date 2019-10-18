@@ -278,27 +278,27 @@ void AddDockWidget::generateRandomParams()
 
 bool AddDockWidget::hasParams() const
 {
-    return m_params.has_value();
+    return !m_params.isNull();
 }
 
 void AddDockWidget::execute_impl()
 {
-    if (m_params->relativeToName.isEmpty())
-        m_description = QStringLiteral("AddDockWidget %1 to %2").arg(dockStr(m_params->dockWidgetName)).arg(KDDockWidgets::locationStr(m_params->location));
+    if (m_params.relativeToName.isEmpty())
+        m_description = QStringLiteral("AddDockWidget %1 to %2").arg(dockStr(m_params.dockWidgetName)).arg(KDDockWidgets::locationStr(m_params.location));
     else
-        m_description = QStringLiteral("AddDockWidget %1 to %2, relative to %3").arg(dockStr(m_params->dockWidgetName)).arg(KDDockWidgets::locationStr(m_params->location)).arg(dockStr(m_params->relativeToName));
+        m_description = QStringLiteral("AddDockWidget %1 to %2, relative to %3").arg(dockStr(m_params.dockWidgetName)).arg(KDDockWidgets::locationStr(m_params.location)).arg(dockStr(m_params.relativeToName));
 
-    auto fw = qobject_cast<FloatingWindow*>(m_params->dockWidget()->window());
-    m_params->mainWindow()->addDockWidget(m_params->dockWidget(), m_params->location,
-                                          m_params->relativeTo(), m_params->addingOption);
+    auto fw = qobject_cast<FloatingWindow*>(m_params.dockWidget()->window());
+    m_params.mainWindow()->addDockWidget(m_params.dockWidget(), m_params.location,
+                                          m_params.relativeTo(), m_params.addingOption);
     if (fw && fw->beingDeleted())
         Testing::waitForDeleted(fw);
 }
 
 QVariantMap AddDockWidget::paramsToVariantMap() const
 {
-    return m_params ? m_params->toVariantMap()
-                    : QVariantMap();
+    return m_params.isNull() ? QVariantMap()
+                             :  m_params.toVariantMap();
 }
 
 void AddDockWidget::fillParamsFromVariantMap(const QVariantMap &map)

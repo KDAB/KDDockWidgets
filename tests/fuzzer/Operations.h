@@ -31,7 +31,6 @@
 #include <QVector>
 
 #include <memory>
-#include <optional>
 
 namespace KDDockWidgets {
 
@@ -143,7 +142,7 @@ protected:
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
 private:
-    std::optional<Testing::AddDockWidgetParams> m_params;
+    Testing::AddDockWidgetParams m_params;
 };
 
 class AddDockWidgetAsTab : public OperationBase
