@@ -995,6 +995,7 @@ void MultiSplitterLayout::dumpDebug() const
                  << "; pos=" << anchor->position()
                  << "; sepWidget.pos=" << (anchor->isVertical() ? anchor->separatorWidget()->x()
                                                                 : anchor->separatorWidget()->y())
+                 << "; sepWidget.visible=" << anchor->separatorWidget()->isVisible()
                  << "; geo=" << anchor->geometry()
                  << "; sep.geo=" << anchor->separatorWidget()->geometry()
                  << "; bounds=" << bounds
@@ -1353,11 +1354,17 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
             }
         }
 
-        if (!anchor->isFollowing() &&  anchor->geometry() != anchor->separatorWidget()->geometry()) {
+        if (!anchor->isFollowing() &&anchor->geometry() != anchor->separatorWidget()->geometry()) {
             qWarning() << Q_FUNC_INFO << anchor << anchor->separatorWidget()
                        << "Inconsistent anchor geometry" << anchor->geometry() << "; " << anchor->separatorWidget()->geometry();
             return false;
         }
+
+        if (multiSplitter()->isVisible() && !anchor->isFollowing() && !anchor->separatorWidget()->isVisible()) {
+            qWarning() << Q_FUNC_INFO << "Anchor should be visible" << anchor;
+            return false;
+        }
+
     }
 
     for (Item *item : qAsConst(m_items)) {

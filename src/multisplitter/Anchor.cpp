@@ -526,6 +526,7 @@ void Anchor::setFollowee(Anchor *followee)
     if (m_followee) {
         disconnect(m_followee, &Anchor::positionChanged, this, &Anchor::onFolloweePositionChanged);
         disconnect(m_followee, &Anchor::thicknessChanged, this, &Anchor::setThickness);
+        disconnect(m_followeeDestroyedConnection);
     }
 
     m_followee = followee;
@@ -536,6 +537,11 @@ void Anchor::setFollowee(Anchor *followee)
         setPosition(m_followee->position());
         connect(m_followee, &Anchor::positionChanged, this, &Anchor::onFolloweePositionChanged);
         connect(m_followee, &Anchor::thicknessChanged, this, &Anchor::setThickness);
+        m_followeeDestroyedConnection = connect(m_followee, &QObject::destroyed, this, [this] {
+            setFollowee(nullptr);
+        });
+
+
     } else {
         setVisible(true);
     }
