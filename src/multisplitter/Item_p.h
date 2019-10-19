@@ -123,6 +123,7 @@ public:
     void setVisible(bool);
 
     void setGeometry(QRect);
+    void ensureMinSize_recursive(Qt::Orientation orientation, Anchor::Side);
 
     void beginBlockPropagateGeo();
     void endBlockPropagateGeo();

@@ -181,30 +181,37 @@ void Item::setGeometry(QRect geo)
 
         if (!d->m_blockPropagateGeo && d->m_anchorGroup.isValid() && geoDiff.onlyOneSideChanged) {
             // If we're being squeezed to the point where it reaches less then our min size, then we drag the opposite separator, to preserve size
-            const int lengthDelta = length(diffOrientation) - minLength(diffOrientation);
-            if (lengthDelta < 0) {
-                Anchor *anchorThatMoved = anchor(geoDiff);
-                Q_ASSERT(anchorThatMoved);
-                Anchor *anchorToMove = d->m_anchorGroup.oppositeAnchor(anchorThatMoved);
-                const bool movingSide1 = anchorGroup().sideForAnchor(anchorToMove) == Anchor::Side1; // if true we're going to move left or top.
-
-                if (anchorToMove->isFollowing())
-                    anchorToMove = anchorToMove->endFollowee();
-
-                Q_ASSERT(anchorToMove);
-                const int signess = movingSide1 ? 1 : -1;
-                const int newPosition = anchorToMove->position() + (lengthDelta * signess);
-
-                // Note: Position can be slightly negative if the main window isn't big enougn to host the new size.
-                // In that case the window will be resized shortly after
-                Q_ASSERT(!anchorToMove->isFollowing());
-
-                // When dropping a MultiSplitter into a MultiSplitter there's an instant where some anchors of the group are from the source MultiSplitter, as they weren't consumed yet.
-                if (anchorToMove->parent() == parentWidget())
-                    anchorToMove->setPosition(newPosition);
-            }
+            Anchor *anchorThatMoved = anchor(geoDiff);
+            Q_ASSERT(anchorThatMoved);
+            Anchor *anchorToMove = d->m_anchorGroup.oppositeAnchor(anchorThatMoved);
+            ensureMinSize_recursive(diffOrientation, anchorGroup().sideForAnchor(anchorToMove));
         }
     }
+}
+
+void Item::ensureMinSize_recursive(Qt::Orientation orientation, Anchor::Side side)
+{
+    const int delta = length(orientation) - minLength(orientation);
+    if (delta >= 0) // Our size is just fine
+        return;
+
+    Anchor *anchorToMove = d->m_anchorGroup.anchorAtSide(side, orientation);
+    if (anchorToMove->isFollowing())
+        anchorToMove = anchorToMove->endFollowee();
+
+    const bool movingSide1 = side == Anchor::Side1; // if true we're going to move left or top.
+    const int signess = movingSide1 ? 1 : -1;
+    const int newPosition = anchorToMove->position() + (delta * signess);
+
+    // Note: Position can be slightly negative if the main window isn't big enougn to host the new size.
+    // In that case the window will be resized shortly after
+    Q_ASSERT(!anchorToMove->isFollowing());
+
+    // When dropping a MultiSplitter into a MultiSplitter there's an instant where some anchors of the group are from the source MultiSplitter, as they weren't consumed yet.
+    if (anchorToMove->parent() == parentWidget())
+        anchorToMove->setPosition(newPosition);
+
+    // Anchor::setPosition() will call Item::ensureMinSize_recursive() again on the next items
 }
 
 void Item::beginBlockPropagateGeo()
