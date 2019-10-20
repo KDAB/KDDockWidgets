@@ -293,6 +293,9 @@ int Anchor::smallestAvailableItemSqueeze(Anchor::Side side) const
 
 void Anchor::ensureBounded()
 {
+    // TODO: Probably delete this unused method. It was used in the old days before discovering it
+    // was flawed: Separators being in between bounds doesn't imply that all min sizes are being
+    // Honoured. Use MultiSplitterLayout::ensureItemsMinSize() instead
     if (!isStatic() && !isFollowing()) {
         const QPair<int,int> bounds = m_layout->boundPositionsForAnchor(this);
 

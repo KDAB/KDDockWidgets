@@ -575,6 +575,8 @@ private:
     // Moves the widget's bottom or right anchor, to resize it.
     void resizeItem(Frame *frame, int newSize, Qt::Orientation);
 
+    void ensureItemsMinSize();
+
     ///@brief returns whether we're inside setSize();
     bool isResizing() const { return m_resizing; }
     bool isRestoringPlaceholder() const { return m_restoringPlaceholder; }

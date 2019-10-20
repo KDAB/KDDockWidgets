@@ -28,6 +28,7 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
+#include <qmath.h>
 #include <QEvent>
 
 using namespace KDDockWidgets;
@@ -184,13 +185,16 @@ void Item::setGeometry(QRect geo)
             Anchor *anchorThatMoved = anchor(geoDiff);
             Q_ASSERT(anchorThatMoved);
             Anchor *anchorToMove = d->m_anchorGroup.oppositeAnchor(anchorThatMoved);
-            ensureMinSize_recursive(diffOrientation, anchorGroup().sideForAnchor(anchorToMove));
+            ensureMinSize(diffOrientation, anchorGroup().sideForAnchor(anchorToMove));
         }
     }
 }
 
-void Item::ensureMinSize_recursive(Qt::Orientation orientation, Anchor::Side side)
+void Item::ensureMinSize(Qt::Orientation orientation, Anchor::Side side)
 {
+    if (isPlaceholder())
+        return;
+
     const int delta = length(orientation) - minLength(orientation);
     if (delta >= 0) // Our size is just fine
         return;
@@ -212,6 +216,38 @@ void Item::ensureMinSize_recursive(Qt::Orientation orientation, Anchor::Side sid
         anchorToMove->setPosition(newPosition);
 
     // Anchor::setPosition() will call Item::ensureMinSize_recursive() again on the next items
+}
+
+void Item::ensureMinSize(Qt::Orientation orientation)
+{
+    if (isPlaceholder())
+        return;
+
+    const int minLength = this->minLength(orientation);
+    const int delta = length(orientation) - minLength;
+    if (delta >= 0) // Our size is just fine
+        return;
+
+    const int newLength = minLength;
+
+    Anchor *anchor1 = anchorGroup().anchorAtSide(Anchor::Side1, orientation);
+    Anchor *anchor2 = anchorGroup().anchorAtSide(Anchor::Side2, orientation);
+
+    const int bound1 = d->m_layout->boundPositionForAnchor(anchor1, Anchor::Side1);
+    const int bound2 = d->m_layout->boundPositionForAnchor(anchor2, Anchor::Side2);
+
+    // If vertical, anchor1 is the left separator and anchor2 is the right one. We'll push anchor1
+    // further left and anchor2 further right.
+
+    const int suggestedDelta1 = qMin(delta, qCeil(delta / 2) + anchor1->thickness() + 1);
+    const int maxPos1 = bound2 - newLength - anchor1->thickness();
+    const int newPosition1 = qMax(qMin(maxPos1, anchor1->position() - suggestedDelta1), bound1); // Honour the bound
+    const int newPosition2 = newPosition1 + anchor1->thickness() + newLength; // No need to check bound2, we have enough space afterall
+
+    if (!anchor1->isStatic())
+        anchor1->setPosition(newPosition1);
+    if (!anchor2->isStatic())
+        anchor2->setPosition(newPosition2);
 }
 
 void Item::beginBlockPropagateGeo()

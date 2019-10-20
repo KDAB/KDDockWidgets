@@ -434,9 +434,10 @@ void MultiSplitterLayout::ensureEnoughSize(const QWidgetOrQuick *widget,
 
 void MultiSplitterLayout::ensureAnchorsBounded()
 {
-    // Recursive, goes all the way to right/bottom
-    m_leftAnchor->ensureBounded();
-    m_topAnchor->ensureBounded();
+    //Ensures all separators are within their bounds, meaning all items obey their min size
+    positionStaticAnchors();
+    ensureItemsMinSize();
+    checkSanity();
 }
 
 static Anchor::List removeSmallestPath(QVector<Anchor::List> &paths)
@@ -548,6 +549,14 @@ void MultiSplitterLayout::resizeItem(Frame *frame, int newSize, Qt::Orientation 
     qCDebug(::anchors) << Q_FUNC_INFO << "Old position:" << a->position() << "; old w.geo=" << item->geometry();
     a->setPosition(a->position() + delta);
     qCDebug(::anchors) << Q_FUNC_INFO << "New position:" << a->position() << "; new w.geo=" << item->geometry();
+}
+
+void MultiSplitterLayout::ensureItemsMinSize()
+{
+    for (Item *item : qAsConst(m_items)) {
+        item->ensureMinSize(Qt::Vertical);
+        item->ensureMinSize(Qt::Horizontal);
+    }
 }
 
 void MultiSplitterLayout::addMultiSplitter(MultiSplitter *sourceMultiSplitter,
