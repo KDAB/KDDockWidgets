@@ -125,7 +125,6 @@ bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
 {
     if (!widget) {
         qWarning() << Q_FUNC_INFO << "Widget is null";
-        Q_ASSERT(false);
         return false;
     }
 
@@ -134,13 +133,11 @@ bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
 
     if (!qobject_cast<Frame*>(widget) && !qobject_cast<MultiSplitter*>(widget) && !isDockWidget) {
         qWarning() << "Unknown widget type" << widget;
-        Q_ASSERT(false);
         return false;
     }
 
     if (isDockWidget != isStartHidden) {
         qWarning() << "Wrong parameters" << isDockWidget << isStartHidden;
-        Q_ASSERT(false);
         return false;
     }
 
@@ -158,7 +155,6 @@ bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
 
     if (location == Location_None) {
         qWarning() << "MultiSplitterLayout::addWidget: not adding to location None";
-        Q_ASSERT(false);
         return false;
     }
 
@@ -283,7 +279,6 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
             break;
         case Location_None:
             qWarning() << Q_FUNC_INFO << "Location can't be none";
-            Q_ASSERT(false);
             return;
         }
 
@@ -298,7 +293,6 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
                          << "; size=" << m_size
                          << "; Qt::WA_PendingResizeEvent=" << m_multiSplitter->testAttribute(Qt::WA_PendingResizeEvent)
                          << "; Qt::WA_WState_Created=" << m_multiSplitter->testAttribute(Qt::WA_WState_Created);
-                Q_ASSERT(false);
             }
             existingAnchor->setPosition(posForExistingAnchor);
         }
@@ -428,7 +422,6 @@ void MultiSplitterLayout::ensureEnoughSize(const QWidgetOrQuick *widget,
                    << "; oldSize=" << oldSize
                    << "; widgetMin=" << widgetMin
                    << "; isEmpty=" << isEmpty();
-        Q_ASSERT(false);
     }
 }
 
@@ -697,7 +690,6 @@ QPair<int, int> MultiSplitterLayout::boundPositionsForAnchor(Anchor *anchor) con
                    << "; side2=" << anchor->side2Items()
                    << "; followee=" << anchor->followee()
                    << "; thickness=" << anchor->thickness();
-        Q_ASSERT(false);
     }
 
     return { bound1, bound2 };
@@ -735,7 +727,6 @@ MultiSplitterLayout::Length MultiSplitterLayout::availableLengthForDrop(Location
     switch (location) {
     case KDDockWidgets::Location_None:
         qWarning() << "MultiSplitterLayout::availableLengthForDrop invalid location for dropping";
-        Q_ASSERT(false);
         return result;
     case KDDockWidgets::Location_OnLeft:
         anchor = anchors.left;
@@ -784,8 +775,6 @@ MultiSplitterLayout::Length MultiSplitterLayout::availableLengthForDrop(Location
                     << "; anchorPos=" << anchor->position()
                     << "; unusableSpace=" << unusableSpace;
 
-    //Q_ASSERT(result.side1Length <= side1AvailableLength); // TODO, uncomment this, maybe
-    //Q_ASSERT(result.side2Length <= side2AvailableLength);
     return result;
 }
 
@@ -1162,7 +1151,6 @@ Anchor *MultiSplitterLayout::newAnchor(AnchorGroup &group, Location location)
 
     if (!checkSanity(AnchorSanity_Normal)) {
         qWarning() << "MultiSplitterLayout::newAnchor no sanity!";
-        Q_ASSERT(false);
     }
     updateAnchorsFromTo(donor, newAnchor);
 
@@ -1248,7 +1236,6 @@ QPair<AnchorGroup,Anchor*> MultiSplitterLayout::createTargetAnchorGroup(KDDockWi
                    << "; relativeTo=" << relativeToItem;
 
         dumpDebug();
-        Q_ASSERT(false);
     }
 
     Anchor *newAnchor = nullptr;
@@ -1589,7 +1576,6 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
                        << "; static=" << side1Anchor->isStatic() << side2Anchor->isStatic()
                        << "; size=" << m_size
                        << "; m_minSize=" << m_minSize;
-            Q_ASSERT(false);
             return;
         }
 
@@ -1739,8 +1725,6 @@ void MultiSplitterLayout::updateAnchorsFromTo(Anchor *oldAnchor, Anchor *newAnch
                          << "\n    from=" << other->from()
                          << "\n    to=" << other->to()
                          << "\n    other=" << other;
-
-                Q_ASSERT(false);
             }
         }
     }
