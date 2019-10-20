@@ -24,7 +24,7 @@
 #include "MainWindow.h"
 #include "KDDockWidgets.h"
 #include "DropIndicatorOverlayInterface_p.h"
-#include "widgets/DockWidget.h"
+#include "DockWidget.h"
 
 #include <QWidget>
 #include <QPointer>

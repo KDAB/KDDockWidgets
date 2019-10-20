@@ -26,7 +26,7 @@
 #include "FloatingWindow_p.h"
 #include "DockRegistry_p.h"
 #include "Frame_p.h"
-#include "FrameWidget_p.h"
+#include "private/widgets/FrameWidget_p.h"
 #include "DropArea_p.h"
 #include "TitleBar_p.h"
 #include "WindowBeingDragged_p.h"

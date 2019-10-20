@@ -21,8 +21,8 @@
 #include "utils.h"
 #include "DropArea_p.h"
 #include "Config.h"
-#include "TabWidgetWidget_p.h"
-#include "FrameWidget_p.h"
+#include "private/widgets/TabWidgetWidget_p.h"
+#include "private/widgets/FrameWidget_p.h"
 #include "TitleBar_p.h"
 #include "FloatingWindow_p.h"
 

@@ -30,7 +30,7 @@
 #ifndef KDDOCKWIDGETS_QWIDGETADAPTERWIDGETS_P_H
 #define KDDOCKWIDGETS_QWIDGETADAPTERWIDGETS_P_H
 
-#include "../docks_export.h"
+#include "../../docks_export.h"
 
 #include <QWidget>
 

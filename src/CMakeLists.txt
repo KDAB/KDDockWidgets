@@ -16,35 +16,35 @@ add_definitions(-DQT_NO_CAST_TO_ASCII
 
 set(DOCKSLIBS_SRCS
     Config.cpp
-    Config.h
-    DockWidgetBase.cpp
-    DragController.cpp
-    Draggable.cpp
-    DropArea.cpp
-    DropAreaWithCentralFrame.cpp
-    DockRegistry.cpp
-    DropIndicatorOverlayInterface.cpp
-    FloatingWindow.cpp
-    Frame.cpp
-    LastPosition.cpp
-    LastPosition_p.h
-    Logging.cpp
-    TabWidget.cpp
-    TitleBar.cpp
-    ObjectViewer.cpp
-    ObjectViewer_p.h
-    MainWindowBase.cpp
-    WindowBeingDragged.cpp
-    WidgetResizeHandler.cpp
-    multisplitter/Anchor.cpp
-    multisplitter/AnchorGroup.cpp
-    multisplitter/Item.cpp
-    multisplitter/MultiSplitterLayout.cpp
-    multisplitter/MultiSplitterLayout_p.h
-    multisplitter/MultiSplitter.cpp
-    multisplitter/MultiSplitter_p.h
-    multisplitter/Separator.cpp
     FrameworkWidgetFactory.cpp
+    DockWidgetBase.cpp
+    MainWindow.cpp
+    MainWindowBase.cpp
+    LayoutSaver.cpp
+    private/LastPosition.cpp
+    private/ObjectViewer.cpp
+    private/DropIndicatorOverlayInterface.cpp
+    private/indicators/ClassicIndicators.cpp
+    private/indicators/AnimatedIndicators.cpp
+    private/DropArea.cpp
+    private/multisplitter/Item.cpp
+    private/multisplitter/MultiSplitter.cpp
+    private/multisplitter/Anchor.cpp
+    private/multisplitter/AnchorGroup.cpp
+    private/multisplitter/Separator.cpp
+    private/multisplitter/MultiSplitterLayout.cpp
+    private/TabWidget.cpp
+    private/FloatingWindow.cpp
+    private/Logging.cpp
+    private/TitleBar.cpp
+    private/DebugWindow.cpp
+    private/DockRegistry.cpp
+    private/Draggable.cpp
+    private/WindowBeingDragged.cpp
+    private/DragController.cpp
+    private/Frame.cpp
+    private/DropAreaWithCentralFrame.cpp
+    private/WidgetResizeHandler.cpp
     )
 
 set(DOCKS_INSTALLABLE_INCLUDES
@@ -60,72 +60,57 @@ set(DOCKS_INSTALLABLE_INCLUDES
 
 
 set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
-    Draggable_p.h
-    DropIndicatorOverlayInterface_p.h
-    FloatingWindow_p.h
-    Frame_p.h
-    TabWidget_p.h
-    TitleBar_p.h)
+    private/Draggable_p.h
+    private/DropIndicatorOverlayInterface_p.h
+    private/FloatingWindow_p.h
+    private/Frame_p.h
+    private/TabWidget_p.h
+    private/TitleBar_p.h
+    )
 
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
-    widgets/QWidgetAdapter_widgets_p.h
-    widgets/TitleBarWidget_p.h
-    widgets/SeparatorWidget_p.h
-    widgets/FloatingWindowWidget_p.h
-    widgets/FrameWidget_p.h
-    widgets/TabBarWidget_p.h
-    widgets/TabWidgetWidget_p.h
+    private/widgets/QWidgetAdapter_widgets_p.h
+    private/widgets/TitleBarWidget_p.h
+    private/widgets/SeparatorWidget_p.h
+        private/widgets/FloatingWindowWidget_p.h
+    private/widgets/FrameWidget_p.h
+    private/widgets/TabBarWidget_p.h
+    private/widgets/TabWidgetWidget_p.h
 )
 
 if (OPTION_QTQUICK)
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
-        quick/QmlTypes.cpp
-        quick/QWidgetAdapter_quick.cpp
-        quick/QWidgetAdapter_quick_p.h
-        quick/FrameQuick.cpp
-        quick/FrameQuick_p.h
-        quick/DockWidgetQuick.cpp
-        quick/DockWidgetQuick.h
-        quick/FloatingWindowQuick.cpp
-        quick/FloatingWindowQuick_p.h
-        quick/LayoutSaverQuick.cpp
-        quick/MainWindowQuick.cpp
-        quick/SeparatorQuick.cpp
-        quick/SeparatorQuick_p.h
-        quick/TabBarQuick.cpp
-        quick/TabBarQuick_p.h
-        quick/TabWidgetQuick.cpp
-        quick/TabWidgetQuick_p.h
-        quick/TitleBarQuick.cpp
-        quick/TitleBarQuick_p.h)
+        private/quick/DockWidgetQuick.cpp
+        private/quick/QWidgetAdapter_quick.cpp
+        private/quick/FloatingWindowQuick.cpp
+        private/quick/TitleBarQuick.cpp
+        private/quick/QmlTypes.cpp
+        private/quick/TabWidgetQuick.cpp
+        private/quick/FrameQuick.cpp
+        private/quick/MainWindowQuick.cpp
+        private/quick/TabBarQuick.cpp
+        private/quick/SeparatorQuick.cpp
+        private/quick/LayoutSaverQuick.cpp)
 
     qt5_add_resources(RESOURCES_QUICK ${CMAKE_CURRENT_SOURCE_DIR}/qtquick.qrc)
 
 else()
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
-        DebugWindow.cpp
-        DebugWindow_p.h
-        MainWindow.cpp
-        LayoutSaver.cpp
-        # indicators/AnimatedIndicators.cpp
-        indicators/ClassicIndicators.cpp
-        widgets/QWidgetAdapter_widgets.cpp
-        widgets/QWidgetAdapter_widgets_p.h
-        widgets/DockWidget.cpp
-        widgets/FloatingWindowWidget.cpp
-        widgets/FrameWidget.cpp
-        widgets/SeparatorWidget.cpp
-        widgets/SeparatorWidget_p.h
-        widgets/TabWidgetWidget.cpp
-        widgets/TabBarWidget.cpp
-        widgets/TitleBarWidget.cpp
+        private/widgets/SeparatorWidget.cpp
+        private/widgets/TabBarWidget.cpp
+        private/widgets/FloatingWindowWidget.cpp
+        private/widgets/FrameWidget.cpp
+        private/widgets/TabWidgetWidget.cpp
+        private/widgets/TitleBarWidget.cpp
+        private/widgets/DockWidget.cpp
+        private/widgets/QWidgetAdapter_widgets.cpp
         )
 
     set(DOCKS_INSTALLABLE_INCLUDES
         ${DOCKS_INSTALLABLE_INCLUDES}
         MainWindow.h
         MainWindowBase.h
-        widgets/DockWidget.h)
+        DockWidget.h)
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -141,13 +126,11 @@ add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES}
 target_include_directories(kddockwidgets
     PUBLIC
         $<INSTALL_INTERFACE:include>
+        $<INSTALL_INTERFACE:include/kddockwidgets>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/widgets>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/quick>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets
-        ${CMAKE_CURRENT_SOURCE_DIR}/quick
+        ${CMAKE_CURRENT_SOURCE_DIR}/private
 )
 
 target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY)

@@ -33,7 +33,7 @@
  */
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "widgets/QWidgetAdapter_widgets_p.h"
+# include "private/widgets/QWidgetAdapter_widgets_p.h"
 #include <QMainWindow>
 typedef QWidget QWidgetOrQuick;
 typedef QMainWindow QMainWindowOrQuick;

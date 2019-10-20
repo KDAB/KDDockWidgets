@@ -19,7 +19,7 @@
 */
 
 #include <kddockwidgets/FrameworkWidgetFactory.h>
-#include <kddockwidgets/TitleBar_p.h>
+#include <kddockwidgets/private/TitleBar_p.h>
 #include <QPainter>
 
 class CustomWidgetFactory : public KDDockWidgets::DefaultWidgetFactory
