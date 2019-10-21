@@ -21,7 +21,7 @@
 #ifndef KD_TITLEBARWIDGET_P_H
 #define KD_TITLEBARWIDGET_P_H
 
-#include "../docks_export.h"
+#include "../../docks_export.h"
 #include "../TitleBar_p.h"
 
 #include <QPainter>

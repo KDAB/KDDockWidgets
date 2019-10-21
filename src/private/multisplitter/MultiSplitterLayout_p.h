@@ -32,12 +32,12 @@
 #ifndef KD_MULTISPLITTER_LAYOUT_P_H
 #define KD_MULTISPLITTER_LAYOUT_P_H
 
+#include "../Frame_p.h"
 #include "Anchor_p.h"
 #include "AnchorGroup_p.h"
 #include "docks_export.h"
 #include "KDDockWidgets.h"
 #include "Item_p.h"
-#include "Frame_p.h"
 #include "LayoutSaver_p.h"
 
 #include <QPointer>
