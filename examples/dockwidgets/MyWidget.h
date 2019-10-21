@@ -23,12 +23,44 @@
 
 #include <QWidget>
 
+class QPainter;
+
 class MyWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MyWidget(QWidget *parent = nullptr);
+    explicit MyWidget(const QString &backgroundFile, const QString &logoFile, QWidget *parent = nullptr);
     ~MyWidget();
+protected:
+    void drawLogo(QPainter &);
+    QImage m_background;
+    QImage m_logo;
 };
+
+class MyWidget1 : public MyWidget
+{
+public:
+    explicit MyWidget1(QWidget *parent = nullptr);
+protected:
+    void paintEvent(QPaintEvent*) override;
+};
+
+class MyWidget2 : public MyWidget
+{
+public:
+    explicit MyWidget2(QWidget *parent = nullptr);
+protected:
+    void paintEvent(QPaintEvent*) override;
+    QImage m_triangle;
+};
+
+class MyWidget3 : public MyWidget
+{
+public:
+    explicit MyWidget3(QWidget *parent = nullptr);
+protected:
+    void paintEvent(QPaintEvent*) override;
+};
+
 
 #endif

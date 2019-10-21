@@ -31,19 +31,30 @@
 #include <QString>
 #include <QTextEdit>
 
-KDDockWidgets::DockWidget::Options s_dockWidgetOptions = KDDockWidgets::DockWidget::Option_None;
+#include <stdlib.h>
+#include <time.h>
 
 static MyWidget *newMyWidget()
 {
-    static int count = 0;
-    count++;
-    return new MyWidget();
+    const int randomNumber = rand() % 100 + 1;
+
+    if (randomNumber < 66) {
+        if (randomNumber < 33) {
+            return new MyWidget1();
+        } else {
+            return new MyWidget2();
+        }
+    } else {
+        return new MyWidget3();
+    }
 }
 
 MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *parent)
     : MainWindow(QStringLiteral("MyMainWindow"), options, parent)
 {
     // qApp->installEventFilter(this);
+
+    srand(time(nullptr));
 
     auto menubar = menuBar();
     auto fileMenu = new QMenu(QStringLiteral("File"));
@@ -52,18 +63,17 @@ MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *pa
     menubar->addMenu(m_toggleMenu);
 
     QAction *newAction = fileMenu->addAction(QStringLiteral("New DockWidget"));
-    static int count = 0;
-    count++;
+
     connect(newAction, &QAction::triggered, this, [] {
+        static int count = 0;
+        count++;
         auto w = newMyWidget();
         w->setGeometry(100, 100, 400, 400);
-        auto dock = new KDDockWidgets::DockWidget(QStringLiteral("dock %1").arg(count));
+        auto dock = new KDDockWidgets::DockWidget(QStringLiteral("new dock %1").arg(count));
         dock->setWidget(w);
         dock->resize(400, 400);
         dock->show();
     });
-
-    // newAction = fileMenu->addAction("Change MainWindow indicator style");
 
     auto saveLayoutAction = fileMenu->addAction(QStringLiteral("Save Layout"));
     connect(saveLayoutAction, &QAction::triggered, this, [] {
@@ -78,29 +88,37 @@ MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *pa
         saver.restoreFromDisk();
     });
 
-    auto example = newMyWidget();
-    auto dock = new KDDockWidgets::DockWidget(QStringLiteral("foo"), s_dockWidgetOptions);
-    dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
-    dock->setWidget(example);
-    dock->setTitle(QStringLiteral("foo"));
-    example->winId(); // for testing native widgets too
-    dock->resize(400, 400);
-    dock->show();
-    m_toggleMenu->addAction(dock->toggleAction());
+    struct Descriptor {
+        KDDockWidgets::Location location;
+        int relativeTo;
+    };
 
-    example = newMyWidget();
-    example->setGeometry(100, 100, 400, 400);
-    dock = new KDDockWidgets::DockWidget(QStringLiteral("bar"), s_dockWidgetOptions);
-    dock->setWidget(example);
-    dock->resize(400, 400);
-    dock->show();
-    m_toggleMenu->addAction(dock->toggleAction());
+    const QVector<Descriptor> docksToCreate = {
+        { KDDockWidgets::Location_OnTop, -1 },
+        { KDDockWidgets::Location_OnRight, 0 },
+        { KDDockWidgets::Location_OnLeft, -1 },
+        { KDDockWidgets::Location_OnBottom, -1 },
+    };
 
-    auto textEdit = new QTextEdit();
-    textEdit->setText(QStringLiteral("Hello, this is the central document."));
-    dock = new KDDockWidgets::DockWidget(QStringLiteral("doc 0"), s_dockWidgetOptions);
-    dock->setWidget(textEdit);
-    m_toggleMenu->addAction(dock->toggleAction());
-    if (options & KDDockWidgets::MainWindowOption_HasCentralFrame)
-        addDockWidgetAsTab(dock);
+    int count = 0;
+    KDDockWidgets::DockWidget::List createdDockWidgets;
+    for (Descriptor desc : docksToCreate) {
+        count++;
+        auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count));
+        createdDockWidgets << dock;
+
+        if (count == 1)
+            dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
+        auto myWidget = newMyWidget();
+        dock->setWidget(myWidget);
+        dock->setTitle(QStringLiteral("DockWidget #%1").arg(count));
+        dock->resize(400, 400);
+        dock->show();
+        m_toggleMenu->addAction(dock->toggleAction());
+
+        KDDockWidgets::DockWidgetBase *relativeTo = desc.relativeTo == -1 ? nullptr
+                                                                          : createdDockWidgets.at(desc.relativeTo);
+
+        addDockWidget(dock, desc.location, relativeTo);
+    }
 }
