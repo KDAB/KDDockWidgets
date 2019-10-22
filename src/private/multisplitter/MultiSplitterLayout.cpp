@@ -430,7 +430,6 @@ void MultiSplitterLayout::ensureAnchorsBounded()
     //Ensures all separators are within their bounds, meaning all items obey their min size
     positionStaticAnchors();
     ensureItemsMinSize();
-    checkSanity();
 }
 
 static Anchor::List removeSmallestPath(QVector<Anchor::List> &paths)
@@ -1117,7 +1116,6 @@ Anchor *MultiSplitterLayout::newAnchor(AnchorGroup &group, Location location)
     qCDebug(::anchors) << "MultiSplitterLayout::newAnchor" << location;
     Anchor *newAnchor = nullptr;
     Anchor *donor = nullptr;
-    Q_ASSERT(checkSanity(AnchorSanity_Normal));
     switch (location) {
     case Location_OnLeft:
         donor = group.left;
@@ -1148,10 +1146,6 @@ Anchor *MultiSplitterLayout::newAnchor(AnchorGroup &group, Location location)
     Q_ASSERT(donor);
     Q_ASSERT(donor != newAnchor);
 
-
-    if (!checkSanity(AnchorSanity_Normal)) {
-        qWarning() << "MultiSplitterLayout::newAnchor no sanity!";
-    }
     updateAnchorsFromTo(donor, newAnchor);
 
     qCDebug(::anchors()) << newAnchor->hasNonPlaceholderItems(Anchor::Side1)
@@ -1356,11 +1350,12 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
             return false;
         }
 
-        if (multiSplitter()->isVisible() && !anchor->isFollowing() && !anchor->separatorWidget()->isVisible()) {
-            qWarning() << Q_FUNC_INFO << "Anchor should be visible" << anchor;
-            return false;
+        if (options & AnchorSanity_Visibility) {
+            if (multiSplitter()->isVisible() && !anchor->isFollowing() && !anchor->separatorWidget()->isVisible()) {
+                qWarning() << Q_FUNC_INFO << "Anchor should be visible" << anchor;
+                return false;
+            }
         }
-
     }
 
     for (Item *item : qAsConst(m_items)) {
@@ -1466,7 +1461,7 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
 void MultiSplitterLayout::maybeCheckSanity()
 {
 #if defined(DOCKS_DEVELOPER_MODE)
-    if (!isRestoringPlaceholder() && !checkSanity())
+    if (!isRestoringPlaceholder() && !checkSanity(AnchorSanityOption(AnchorSanity_All & ~AnchorSanity_Visibility)))
         qWarning() << Q_FUNC_INFO << "Sanity check failed";
 #endif
 }
