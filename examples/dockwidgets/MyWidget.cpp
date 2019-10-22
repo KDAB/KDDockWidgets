@@ -26,14 +26,12 @@
 
 MyWidget::MyWidget(const QString &backgroundFile, const QString &logoFile, QWidget *parent)
     : QWidget(parent)
-    , m_background(QImage(backgroundFile))
-    , m_logo(QImage(logoFile))
 {
-    if (!backgroundFile.isEmpty() && m_background.isNull())
-        qWarning() << "Invalid image for background file" << backgroundFile;
+    if (!backgroundFile.isEmpty())
+        m_background = QImage(backgroundFile);
 
-    if (!logoFile.isEmpty() && m_logo.isNull())
-        qWarning() << "Invalid image for logo file" << logoFile;
+    if (!logoFile.isEmpty())
+        m_logo = QImage(logoFile);
 }
 
 MyWidget::~MyWidget()
@@ -45,12 +43,19 @@ void MyWidget::drawLogo(QPainter &p)
     if (m_logo.isNull())
         return;
 
-    const qreal ratio = m_logo.width() / (m_logo.height() * 1.0);
+    const qreal ratio = m_logo.height() / (m_logo.width() * 1.0);
 
-    const int height = size().height() - 100;
-    const int width = int(height * ratio);
+    const int maxWidth = int(0.80 * size().width());
+    const int maxHeight = int(0.80 * size().height());
+
+    const int proposedHeight = int(maxWidth * ratio);
+
+    const int width = proposedHeight <= maxHeight ? maxWidth
+                                                  : int(maxHeight / ratio);
+
+    const int height = int(width * ratio);
     QRect targetLogoRect(0,0, width, height);
-    targetLogoRect.moveCenter(rect().center());
+    targetLogoRect.moveCenter(rect().center() + QPoint(0, -int(size().height() * 0.00)));
     p.drawImage(targetLogoRect, m_logo, m_logo.rect());
 }
 
@@ -70,7 +75,6 @@ void MyWidget1::paintEvent(QPaintEvent *)
 
 MyWidget2::MyWidget2(MyWidget::QWidget *parent)
     : MyWidget(QString(), QStringLiteral(":/assets/KDAB_bubble_blue.png"), parent)
-    , m_triangle(QImage(QStringLiteral(":/assets/tri.png")))
 {
 }
 
@@ -78,14 +82,12 @@ void MyWidget2::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
     p.fillRect(rect(), Qt::white);
-
-    //.drawImage(rect(), m_triangle, m_triangle.rect());
-
     drawLogo(p);
 }
 
 MyWidget3::MyWidget3(MyWidget::QWidget *parent)
     : MyWidget(QStringLiteral(":/assets/base.png"), QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"), parent)
+    , m_triangle(QImage(QStringLiteral(":/assets/tri.png")))
 {
 }
 
@@ -95,5 +97,9 @@ void MyWidget3::paintEvent(QPaintEvent *)
     p.fillRect(rect(), QColor(0xD5, 0xD5, 0xD5));
 
     p.drawImage(m_background.rect(), m_background, m_background.rect());
+
+    const QRect targetRect = QRect({ width() - m_triangle.width(), height() - m_triangle.height() }, m_triangle.size());
+
+    p.drawImage(targetRect, m_triangle, m_triangle.rect());
     drawLogo(p);
 }

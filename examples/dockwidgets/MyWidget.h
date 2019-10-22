@@ -51,7 +51,6 @@ public:
     explicit MyWidget2(QWidget *parent = nullptr);
 protected:
     void paintEvent(QPaintEvent*) override;
-    QImage m_triangle;
 };
 
 class MyWidget3 : public MyWidget
@@ -60,6 +59,7 @@ public:
     explicit MyWidget3(QWidget *parent = nullptr);
 protected:
     void paintEvent(QPaintEvent*) override;
+    QImage m_triangle;
 };
 
 
