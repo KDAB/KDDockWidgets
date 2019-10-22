@@ -2,35 +2,39 @@ KDDockWidgets
 ==============
 `KDDockWidgets` is a KDAB effort to provide an advanced docking system for Qt.
 
-Throughout the years KDAB has contributed and funded bug fixes and features to `QDockWidget`.
-Sadly, the `QDockWidget` code is in such a state that each bug fix took many days
-and sometimes caused regressions. The codebase mixes GUI code, with logic, with state
-in a spaghetti manner, which makes it very hard to move forward with new features.
+Throughout the years KDAB contributed and funded bug fixes and features to `QDockWidget`.
+Sadly, this was very painful. Each bug fix or feature took many days of implementation,
+and an equal number of days just to fix the fall-out regressions.
 
-In hindsight, what led to `QDockWidget` complexity is that is supports a multitude
-of options and a exponential number of option combinations, times 3 platforms. From
-talking with our customers we gathered that none of them cared about most of those options,
-and all of them wanted the same 3 or 4 missing features.
+`QDockWidget` mixes GUI code with logic with state, making it very hard
+to move forward with new features. Furthermore, our customers were getting more
+creative with their requests, so it was clear we needed a better docking framework.
 
-This framework is under active development and has no planned release date yet.
 
 ![Screen capture](/screencap.gif?raw=true "The docking system in action")
 
-Goals
-=====
+Features
+========
 - Provide advanced docking that QDockWidgets doesn't support:
-  - nesting dock widgets in a floating window and docking that group back to main window
-  - docking to any main window, not only to the parent main window
-  - docking to center of main window, or simply removing the concept of "central widget"
-  - main window supporting detachable tabs in center widget
-  - different forms of docking indicators (through plugins)
-  - detaching arbitrary tabs from a tab bar into a dock area
-  - QtQuick support
+  - Nesting dock widgets in a floating window and docking that group back to main window
+  - Docking to any main window, not only to the parent main window
+  - Docking to center of main window, or simply removing the concept of "central widget"
+  - Main window supporting detachable tabs in center widget
+  - Detaching arbitrary tabs from a tab bar into a dock area
   - Exposing inner helper widgets so the user can customize them or provide his own
+    - Customize tab widgets
+    - Customize title bars
+    - Customize window frames
 
 - Clean codebase
   - Not mixing GUI with state with logic with animations
-  - Unit-test everything, even the GUI and DnD operations
+  - Unit-test everything, even the GUI and DnD operations (140 tests currently)
+  - Fuzzer for doing random testing
+
+Roadmap:
+========
+  - Different forms of docking indicators (through plugins)
+  - QtQuick support
 
 Licensing
 =========
