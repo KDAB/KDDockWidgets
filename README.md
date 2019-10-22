@@ -13,7 +13,7 @@ creative with their requests, so it was clear we needed a better docking framewo
 
 Features
 ========
-- Provide advanced docking that QDockWidgets doesn't support:
+- Provide advanced docking that QDockWidgets doesn't support
   - Nesting dock widgets in a floating window and docking that group back to main window
   - Docking to any main window, not only to the parent main window
   - Docking to center of main window, or simply removing the concept of "central widget"
@@ -31,13 +31,13 @@ Features
 
 ![Screen capture](/screencap.gif?raw=true "The docking system in action")
 
-Roadmap:
+Roadmap
 ========
   - Different forms of docking indicators (through plugins)
   - QtQuick support
 
 
-Trying out the demo:
+Trying out the demo
 ====================
 
 Open a terminal capable of building Qt5 applications (Should have cmake, ninja, compiler, Qt, etc in PATH).
