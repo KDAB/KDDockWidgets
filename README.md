@@ -4,14 +4,12 @@ KDDockWidgets
 
 Throughout the years KDAB contributed and funded bug fixes and features to `QDockWidget`.
 Sadly, this was very painful. Each bug fix or feature took many days of implementation,
-and an equal number of days just to fix the fall-out regressions.
+and an equal number of days just to fix dozens of regressions.
 
 `QDockWidget` mixes GUI code with logic with state, making it very hard
 to move forward with new features. Furthermore, our customers were getting more
 creative with their requests, so it was clear we needed a better docking framework.
 
-
-![Screen capture](/screencap.gif?raw=true "The docking system in action")
 
 Features
 ========
@@ -30,6 +28,8 @@ Features
   - Not mixing GUI with state with logic with animations
   - Unit-test everything, even the GUI and DnD operations (140 tests currently)
   - Fuzzer for doing random testing
+
+![Screen capture](/screencap.gif?raw=true "The docking system in action")
 
 Roadmap:
 ========
