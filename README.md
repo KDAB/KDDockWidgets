@@ -36,6 +36,30 @@ Roadmap:
   - Different forms of docking indicators (through plugins)
   - QtQuick support
 
+
+Trying out the demo:
+====================
+
+Open a terminal capable of building Qt5 applications (Should have cmake, ninja, compiler, Qt, etc in PATH).
+
+Feel free to adapt the instructions to suit your cmake generator and operating system.
+Build and install the KDDockWidgets framework:
+
+```
+$ cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/path/where/to/install ../path/to/kddockwidgets
+$ make
+$ make install
+```
+
+Now build and run the example:
+```
+$ cd path/to/kddockwidgets/examples/dockwidgets/
+$ cmake -DCMAKE_PREFIX_PATH=/path/where/to/install
+$ make
+$ ./kddockwidgets_example
+
+```
+
 Licensing
 =========
 KDDockWidgets is (C) 2018-2019, Klarälvdalens Datakonsult AB, and is available
