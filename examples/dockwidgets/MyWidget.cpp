@@ -24,14 +24,24 @@
 #include <QDebug>
 #include <QFile>
 
+static QHash<QString, QImage> s_images;
+
 MyWidget::MyWidget(const QString &backgroundFile, const QString &logoFile, QWidget *parent)
     : QWidget(parent)
 {
-    if (!backgroundFile.isEmpty())
-        m_background = QImage(backgroundFile);
+    if (!backgroundFile.isEmpty()) {
+        auto it = s_images.find(backgroundFile);
+        if (it == s_images.end())
+            it = s_images.insert(backgroundFile, QImage(backgroundFile));
+        m_background = it.value();
+    }
 
-    if (!logoFile.isEmpty())
-        m_logo = QImage(logoFile);
+    if (!logoFile.isEmpty()) {
+        auto it = s_images.find(logoFile);
+        if (it == s_images.end())
+            it = s_images.insert(logoFile, QImage(logoFile));
+        m_logo = it.value();
+    }
 }
 
 MyWidget::~MyWidget()

@@ -88,7 +88,13 @@ MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *pa
         saver.restoreFromDisk();
     });
 
+    createDockWidgets();
+}
+
+void MyMainWindow::createDockWidgets()
+{
     KDDockWidgets::DockWidget::List dockwidgets;
+    // Create 9 KDDockWidget::DockWidget and the respective widgets they're hosting (MyWidget instances)
     for (int i = 0; i < 9; i++)
         dockwidgets << newDockWidget();
 
