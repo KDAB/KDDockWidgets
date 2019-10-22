@@ -27,5 +27,6 @@ public:
     explicit MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *parent = nullptr);
 
 private:
+    KDDockWidgets::DockWidgetBase* newDockWidget();
     QMenu *m_toggleMenu = nullptr;
 };

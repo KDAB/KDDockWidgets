@@ -38,14 +38,14 @@ static MyWidget *newMyWidget()
 {
     const int randomNumber = rand() % 100 + 1;
 
-    if (randomNumber < 66) {
+    if (randomNumber < 50) {
         if (randomNumber < 33) {
             return new MyWidget1();
         } else {
-            return new MyWidget2();
+            return new MyWidget3();
         }
     } else {
-        return new MyWidget3();
+        return new MyWidget2();
     }
 }
 
@@ -71,7 +71,7 @@ MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *pa
         w->setGeometry(100, 100, 400, 400);
         auto dock = new KDDockWidgets::DockWidget(QStringLiteral("new dock %1").arg(count));
         dock->setWidget(w);
-        dock->resize(400, 400);
+        dock->resize(600, 600);
         dock->show();
     });
 
@@ -88,37 +88,46 @@ MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *pa
         saver.restoreFromDisk();
     });
 
-    struct Descriptor {
-        KDDockWidgets::Location location;
-        int relativeTo;
-    };
+    KDDockWidgets::DockWidget::List dockwidgets;
+    for (int i = 0; i < 9; i++)
+        dockwidgets << newDockWidget();
 
-    const QVector<Descriptor> docksToCreate = {
-        { KDDockWidgets::Location_OnTop, -1 },
-        { KDDockWidgets::Location_OnRight, 0 },
-        { KDDockWidgets::Location_OnLeft, -1 },
-        { KDDockWidgets::Location_OnBottom, -1 },
-    };
 
-    int count = 0;
-    KDDockWidgets::DockWidget::List createdDockWidgets;
-    for (Descriptor desc : docksToCreate) {
-        count++;
-        auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count));
-        createdDockWidgets << dock;
+    // MainWindow::addDockWidget() attaches a dock widget to the main window:
+    addDockWidget(dockwidgets[0], KDDockWidgets::Location_OnTop);
 
-        if (count == 1)
-            dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
-        auto myWidget = newMyWidget();
-        dock->setWidget(myWidget);
-        dock->setTitle(QStringLiteral("DockWidget #%1").arg(count));
-        dock->resize(400, 400);
-        dock->show();
-        m_toggleMenu->addAction(dock->toggleAction());
+    // Here, for finer granularity we specify right of dockwidgets[0]:
+    addDockWidget(dockwidgets[1], KDDockWidgets::Location_OnRight, dockwidgets[0]);
 
-        KDDockWidgets::DockWidgetBase *relativeTo = desc.relativeTo == -1 ? nullptr
-                                                                          : createdDockWidgets.at(desc.relativeTo);
+    addDockWidget(dockwidgets[2], KDDockWidgets::Location_OnLeft);
+    addDockWidget(dockwidgets[3], KDDockWidgets::Location_OnBottom);
+    addDockWidget(dockwidgets[4], KDDockWidgets::Location_OnBottom);
 
-        addDockWidget(dock, desc.location, relativeTo);
-    }
+    // Tab two dock widgets toghether
+    dockwidgets[3]->addDockWidgetAsTab(dockwidgets[5]);
+
+    // 6 is floating, as it wasn't added to the main window via MainWindow::addDockWidget().
+    // and we tab 7 with it.
+    dockwidgets[6]->addDockWidgetAsTab(dockwidgets[7]);
+
+    // Floating windows also support nesting, here we add 8 to the bottom of the group
+    dockwidgets[6]->addDockWidgetToContainingWindow(dockwidgets[8], KDDockWidgets::Location_OnBottom);
+}
+
+KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
+{
+    static int count = 0;
+    auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count));
+
+    if (count == 1)
+        dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
+    auto myWidget = newMyWidget();
+    dock->setWidget(myWidget);
+    dock->setTitle(QStringLiteral("DockWidget #%1").arg(count));
+    dock->resize(600, 600);
+    dock->show();
+    m_toggleMenu->addAction(dock->toggleAction());
+
+    count++;
+    return dock;
 }

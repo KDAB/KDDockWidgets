@@ -76,7 +76,7 @@ int main(int argc, char **argv)
         KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flags() | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
 
     MyMainWindow mainWindow(options);
-    mainWindow.resize(1000, 800);
+    mainWindow.resize(1200, 1200);
     mainWindow.show();
 
     return app.exec();
