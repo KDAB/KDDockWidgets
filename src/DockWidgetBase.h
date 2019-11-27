@@ -36,7 +36,9 @@
 #include <QVector>
 #include <QWidget>
 
+QT_BEGIN_NAMESPACE
 class QAction;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

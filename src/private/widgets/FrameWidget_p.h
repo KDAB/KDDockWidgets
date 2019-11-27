@@ -24,7 +24,9 @@
 
 #include "../Frame_p.h"
 
+QT_BEGIN_NAMESPACE
 class QTabBar;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

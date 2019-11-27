@@ -23,7 +23,9 @@
 
 #include "FloatingWindow_p.h"
 
+QT_BEGIN_NAMESPACE
 class QVBoxLayout;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

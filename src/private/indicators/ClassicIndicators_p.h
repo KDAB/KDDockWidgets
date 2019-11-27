@@ -23,7 +23,9 @@
 
 #include "DropIndicatorOverlayInterface_p.h"
 
+QT_BEGIN_NAMESPACE
 class QRubberBand;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

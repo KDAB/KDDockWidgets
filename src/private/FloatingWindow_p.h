@@ -27,7 +27,9 @@
 #include "QWidgetAdapter.h"
 #include "LayoutSaver_p.h"
 
+QT_BEGIN_NAMESPACE
 class QAbstractNativeEventFilter;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

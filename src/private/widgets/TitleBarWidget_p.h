@@ -31,8 +31,10 @@
 #include <QVector>
 #include <QStyleOptionToolButton>
 
+QT_BEGIN_NAMESPACE
 class QHBoxLayout;
 class QLabel;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

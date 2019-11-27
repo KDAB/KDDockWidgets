@@ -33,7 +33,9 @@
 
 #include <QTabBar>
 
+QT_BEGIN_NAMESPACE
 class QMouseEvent;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

@@ -23,7 +23,9 @@
 
 #include "multisplitter/Separator_p.h"
 
+QT_BEGIN_NAMESPACE
 class QPaintEvent;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

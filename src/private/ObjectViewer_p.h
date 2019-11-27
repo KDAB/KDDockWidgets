@@ -35,7 +35,9 @@
 #include <QObject>
 #include <QMenu>
 
+QT_BEGIN_NAMESPACE
 class QStandardItem;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 namespace Debug {

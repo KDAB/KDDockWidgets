@@ -30,7 +30,9 @@
 #include "ObjectViewer_p.h"
 #include <QWidget>
 
+QT_BEGIN_NAMESPACE
 class QEventLoop;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 namespace Debug {

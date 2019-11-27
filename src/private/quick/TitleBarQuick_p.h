@@ -24,8 +24,6 @@
 #include "../docks_export.h"
 #include "../TitleBar_p.h"
 
-
-
 namespace KDDockWidgets {
 
 class DockWidget;

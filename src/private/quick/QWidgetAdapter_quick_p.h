@@ -36,7 +36,9 @@
 #include <QObject>
 #include <QCloseEvent>
 
+QT_BEGIN_NAMESPACE
 class QWindow;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

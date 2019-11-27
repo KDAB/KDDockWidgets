@@ -30,7 +30,9 @@
 
 #include "DockWidgetBase.h"
 
+QT_BEGIN_NAMESPACE
 class QCloseEvent;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 

@@ -30,7 +30,9 @@
 
 #include "docks_export.h"
 
+QT_BEGIN_NAMESPACE
 class QByteArray;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
