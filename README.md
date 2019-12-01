@@ -60,6 +60,11 @@ $ ./kddockwidgets_example
 
 ```
 
+Supported Qt versions
+======================
+KDDockWidgets requires Qt >= 5.9
+
+
 Licensing
 =========
 KDDockWidgets is (C) 2018-2019, Klarälvdalens Datakonsult AB, and is available
