@@ -207,6 +207,7 @@ Q_SIGNALS:
     void numDockWidgetsChanged();
     void hasTabsVisibleChanged();
     void layoutInvalidated();
+    void isInMainWindowChanged();
 
 private:
     Q_DISABLE_COPY(Frame)

@@ -406,6 +406,7 @@ void Frame::setDropArea(DropArea *dt)
 {
     if (dt != m_dropArea) {
         qCDebug(docking) << "Frame::setDropArea dt=" << dt;
+        const bool wasInMainWindow = isInMainWindow();
         if (m_dropArea)
             disconnect(m_dropArea->multiSplitterLayout(), &MultiSplitterLayout::visibleWidgetCountChanged,
                        this, &Frame::updateTitleBarVisibility);
@@ -417,6 +418,9 @@ void Frame::setDropArea(DropArea *dt)
                     this, &Frame::updateTitleBarVisibility);
             updateTitleBarVisibility();
         }
+
+        if (wasInMainWindow != isInMainWindow())
+            Q_EMIT isInMainWindowChanged();
     }
 }
 
