@@ -252,7 +252,7 @@ void Anchor::setPosition(int p, SetPositionOptions options)
 
 void Anchor::updatePositionPercentage()
 {
-    m_positionPercentage = (position() * 1.0) / m_layout->width();
+    m_positionPercentage = (position() * 1.0) / m_layout->length(m_orientation);
 }
 
 int Anchor::position() const
