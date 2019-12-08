@@ -144,6 +144,13 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index)
     if (hasSingleDockWidget()) {
         Q_EMIT currentDockWidgetChanged(dockWidget);
         setObjectName(dockWidget->uniqueName());
+
+        if (!m_layoutItem) {
+            // When adding the 1st dock widget of a fresh frame, let's give the frame the size
+            // of the dock widget, so that when adding it to the main window, the main window can
+            // use that size as the initial suggested size.
+            resize(dockWidget->size());
+        }
     }
 
     connect(dockWidget, &DockWidgetBase::titleChanged, this, &Frame::updateTitleAndIcon);
