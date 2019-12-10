@@ -25,6 +25,11 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+#ifndef KD_QMLTYPES_H
+#define KD_QMLTYPES_H
+
 namespace KDDockWidgets {
     void registerQmlTypes();
 }
+
+#endif
