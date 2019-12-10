@@ -36,7 +36,7 @@
 
 static MyWidget *newMyWidget()
 {
-    const int randomNumber = rand() % 100 + 1;
+    const int randomNumber = qrand() % 100 + 1;
 
     if (randomNumber < 50) {
         if (randomNumber < 33) {
@@ -54,7 +54,7 @@ MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *pa
 {
     // qApp->installEventFilter(this);
 
-    srand(time(nullptr));
+    qsrand(time(nullptr));
 
     auto menubar = menuBar();
     auto fileMenu = new QMenu(QStringLiteral("File"));

@@ -18,6 +18,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#pragma once
+
 #include <kddockwidgets/FrameworkWidgetFactory.h>
 #include <kddockwidgets/private/TitleBar_p.h>
 #include <QPainter>

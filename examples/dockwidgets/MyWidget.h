@@ -21,6 +21,8 @@
 #ifndef EXAMPLEDOCKABLEWIDGET_H
 #define EXAMPLEDOCKABLEWIDGET_H
 
+#pragma once
+
 #include <QWidget>
 
 class QPainter;
