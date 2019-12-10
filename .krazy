@@ -1,4 +1,4 @@
-CHECKSETS qt5,c++,foss
+CHECKSETS qt5,c++
 
 #KDAB-specific checks
 EXTRA kdabcopyright
@@ -7,10 +7,12 @@ EXTRA kdabcopyright
 #EXTRA defines,null
 
 #exclude checks now being done by clazy or clang-tools
-EXCLUDE strings,explicit,normalize,passbyvalue,operators,nullstrcompare,nullstrassign,doublequote_chars,qobject,sigsandslots,staticobjects
+EXCLUDE strings,explicit,normalize,passbyvalue,operators,nullstrcompare,nullstrassign,doublequote_chars,qobject,sigsandslots,staticobjects,dpointer,inline
 #exclude more checks
-EXCLUDE style 
+EXCLUDE style
 
+#skip CMake files
+SKIP /KDDockWidgetsConfig.cmake.in
 #skip the borrowed code in the cmake subdir
 SKIP /cmake/Qt5Portability.cmake|/cmake/ECM/
 
