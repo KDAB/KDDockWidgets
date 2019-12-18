@@ -469,7 +469,7 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
         if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->nestedwindows(), m_windowBeingDragged->floatingWindow()))
             return tl;
 
-        return qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->mainwindows(), static_cast<MainWindowBase*>(nullptr));
+        return qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->topLevels(/*excludeFloating=*/true), static_cast<QWidget*>(nullptr));
     }
 #else
     // QtQuick:
