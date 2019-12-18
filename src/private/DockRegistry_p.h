@@ -83,6 +83,17 @@ public:
     ///@brief returns the FloatingWindow with handle @p windowHandle
     FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
 
+    ///@brief Returns the list with all visiblye top-level parents of our FloatingWindow and MainWindow instances.
+    ///
+    /// Typically these are the FloatingWindows and MainWindows themselves. However, since a
+    /// MainWindow can be embedded into another widget (for whatever reason, like a QWinWidget),
+    /// it means that a top-level can be something else.
+    ///
+    /// Every returned widget is either a FloatingWindow, MainWindow, or something that contains a MainWindow.
+    ///
+    /// If @p excludeFloatingDocks is true then FloatingWindow won't be returned
+    QVector<QWidget*> topLevels(bool excludeFloatingDocks = false) const;
+
     /**
      * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors.
      * This is called before restoring a layout.

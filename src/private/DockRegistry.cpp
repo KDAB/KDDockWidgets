@@ -257,6 +257,26 @@ FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) con
     return nullptr;
 }
 
+QVector<QWidget *> DockRegistry::topLevels(bool excludeFloatingDocks) const
+{
+    QVector<QWidget *> windows;
+    windows.reserve(m_nestedWindows.size() + m_mainWindows.size());
+
+    if (!excludeFloatingDocks) {
+        for (FloatingWindow *fw : m_nestedWindows) {
+            if (fw->isVisible())
+                windows << fw;
+        }
+    }
+
+    for (MainWindowBase *m : m_mainWindows) {
+        if (m->isVisible())
+            windows << m->topLevelWidget();
+    }
+
+    return windows;
+}
+
 void DockRegistry::clear(bool deleteStaticAnchors)
 {
     for (auto dw : qAsConst(m_dockWidgets)) {
