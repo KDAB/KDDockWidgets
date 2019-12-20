@@ -168,6 +168,19 @@ MainWindowBase *DockRegistry::mainWindowByName(const QString &name) const
     return nullptr;
 }
 
+DockWidgetBase *DockRegistry::dockWidgetForGuest(QWidget *guest) const
+{
+    if (!guest)
+        return nullptr;
+
+    for (DockWidgetBase *dw : m_dockWidgets) {
+        if (dw->widget() == guest)
+            return dw;
+    }
+
+    return nullptr;
+}
+
 bool DockRegistry::isSane() const
 {
     QSet<QString> names;

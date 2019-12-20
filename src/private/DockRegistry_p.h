@@ -59,6 +59,10 @@ public:
 
     DockWidgetBase *dockByName(const QString &) const;
     MainWindowBase *mainWindowByName(const QString &) const;
+
+    /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
+    DockWidgetBase *dockWidgetForGuest(QWidget *guest) const;
+
     bool isSane() const;
 
     ///@brief returns all DockWidget instances

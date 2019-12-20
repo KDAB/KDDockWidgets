@@ -356,6 +356,7 @@ private Q_SLOTS:
     void tst_staticAnchorThickness_data();
     void tst_staticAnchorThickness();
     void tst_honourGeometryOfHiddenWindow();
+    void tst_registry();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -4352,6 +4353,20 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
 
     QCOMPARE( d1->window()->geometry(), suggestedGeo);
     delete d1->window();
+}
+
+void TestDocks::tst_registry()
+{
+    EnsureTopLevelsDeleted e;
+    auto dr = DockRegistry::self();
+
+    QCOMPARE(dr->dockwidgets().size(), 0);
+    auto dw = new DockWidget(QStringLiteral("dw1"));
+    auto guest = new QWidget();
+    dw->setWidget(guest);
+    QCOMPARE(dr->dockWidgetForGuest(nullptr), nullptr);
+    QCOMPARE(dr->dockWidgetForGuest(guest), dw);
+    delete dw;
 }
 
 void TestDocks::tst_rectForDropCrash()
