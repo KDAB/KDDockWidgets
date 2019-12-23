@@ -1792,7 +1792,7 @@ void MultiSplitterLayout::updateAnchorFollowing(const AnchorGroup &groupBeingRem
             }
         }
 
-        if (doShift)
+        if (doShift && !anchorToShift->isFollowing())
             anchorToShift->setPosition(newPosition);
     }
 

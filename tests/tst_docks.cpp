@@ -357,6 +357,7 @@ private Q_SLOTS:
     void tst_staticAnchorThickness();
     void tst_honourGeometryOfHiddenWindow();
     void tst_registry();
+    void tst_dockNotFillingSpace();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -4367,6 +4368,38 @@ void TestDocks::tst_registry()
     QCOMPARE(dr->dockWidgetForGuest(nullptr), nullptr);
     QCOMPARE(dr->dockWidgetForGuest(guest), dw);
     delete dw;
+}
+
+void TestDocks::tst_dockNotFillingSpace()
+{
+     EnsureTopLevelsDeleted e;
+     auto m = new MainWindow("m1");
+     m->resize(QSize(500, 500));
+     m->show();
+
+     auto d1 = createDockWidget("1", new QTextEdit());
+     auto d2 = createDockWidget("2", new QTextEdit());
+     auto d3 = createDockWidget("3", new QTextEdit());
+
+     m->addDockWidget(d1, Location_OnTop);
+     m->addDockWidget(d2, Location_OnBottom);
+     m->addDockWidget(d3, Location_OnBottom);
+
+     Frame *frame2 = d2->frame();
+     d1->close();
+     d2->close();
+     Testing::waitForDeleted(frame2);
+
+     auto layout = m->multiSplitterLayout();
+     QVERIFY(layout->checkSanity());
+
+     Item *item3 = layout->itemForFrame(d3->frame());
+     AnchorGroup group = item3->anchorGroup();
+     QCOMPARE(group.top->position(), 0);
+
+     delete d1;
+     delete d2;
+     delete m;
 }
 
 void TestDocks::tst_rectForDropCrash()
