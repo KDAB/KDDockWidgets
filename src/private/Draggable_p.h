@@ -59,6 +59,7 @@ public:
      * @brief Returns whether point @p p is draggable.
      *
      * Because simply inheriting from Draggable doesn't mean you can click anywhere to drag.
+     * @param p is the point where the mouse press occurred
      */
     virtual bool isPositionDraggable(QPoint p) const { Q_UNUSED(p) return true; }
 
