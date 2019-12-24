@@ -153,7 +153,7 @@ void StatePreDrag::onEntry(QEvent *)
 
 bool StatePreDrag::handleMouseMove(QPoint globalPos)
 {
-    if ((globalPos - q->m_pressPos).manhattanLength() > QApplication::startDragDistance()) {
+    if (q->m_draggable->dragCanStart(q->m_pressPos, globalPos)) {
         Q_EMIT q->manhattanLengthMove();
     }
     return true;

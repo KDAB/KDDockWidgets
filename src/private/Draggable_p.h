@@ -63,6 +63,13 @@ public:
      */
     virtual bool isPositionDraggable(QPoint p) const { Q_UNUSED(p) return true; }
 
+    /**
+     * @brief Returns whether a mouse move can start a drag or not.
+     * The default implementation just checks if the delta is bigger than
+     * QApplication::startDragDistance().
+     */
+    virtual bool dragCanStart(QPoint pressPos, QPoint globalPos) const;
+
     WidgetResizeHandler *widgetResizeHandler() const;
     void setWidgetResizeHandler(WidgetResizeHandler *w);
 

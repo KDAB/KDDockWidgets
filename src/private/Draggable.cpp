@@ -23,6 +23,8 @@
 #include "FloatingWindow_p.h"
 #include "WidgetResizeHandler_p.h"
 
+#include <QApplication>
+
 using namespace KDDockWidgets;
 
 class Draggable::Private
@@ -57,6 +59,11 @@ Draggable::~Draggable()
 QWidgetOrQuick *Draggable::asWidget() const
 {
     return d->thisWidget;
+}
+
+bool Draggable::dragCanStart(QPoint pressPos, QPoint globalPos) const
+{
+     return (globalPos - pressPos).manhattanLength() > QApplication::startDragDistance();
 }
 
 WidgetResizeHandler *Draggable::widgetResizeHandler() const
