@@ -49,6 +49,9 @@ int main(int argc, char **argv)
     QCommandLineOption customStyle("p", QCoreApplication::translate("main", "Shows how to style framework internals via FrameworkWidgetFactory"));
     parser.addOption(customStyle);
 
+    QCommandLineOption reorderTabsOption("r", QCoreApplication::translate("main", "Support re-ordering tabs with mouse"));
+    parser.addOption(reorderTabsOption);
+
     QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Never show titlebars"));
     parser.addOption(noTitleBars);
 
@@ -72,8 +75,14 @@ int main(int argc, char **argv)
                                            : MainWindowOption_HasCentralFrame;
 #endif
 
+    auto flags = KDDockWidgets::Config::self().flags();
     if (parser.isSet(noTitleBars))
-        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flags() | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
+        flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs;
+
+    if (parser.isSet(reorderTabsOption))
+        flags |= KDDockWidgets::Config::Flag_AllowReorderTabs;
+
+    KDDockWidgets::Config::self().setFlags(flags);
 
     MyMainWindow mainWindow(options);
     mainWindow.resize(1200, 1200);

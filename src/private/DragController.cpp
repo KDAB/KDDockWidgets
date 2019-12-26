@@ -155,16 +155,16 @@ bool StatePreDrag::handleMouseMove(QPoint globalPos)
 {
     if (q->m_draggable->dragCanStart(q->m_pressPos, globalPos)) {
         Q_EMIT q->manhattanLengthMove();
+        return true;
     }
-    return true;
+    return false;
 }
 
 bool StatePreDrag::handleMouseButtonRelease(QPoint)
 {
     Q_EMIT q->dragCanceled();
-    return true;
+    return false;
 }
-
 
 StateDragging::StateDragging(DragController *parent)
     : StateBase(parent)

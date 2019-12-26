@@ -27,8 +27,10 @@
  */
 
 #include "TabBarWidget_p.h"
+#include "Config.h"
 
 #include <QMouseEvent>
+#include <QApplication>
 
 using namespace KDDockWidgets;
 
@@ -36,6 +38,7 @@ TabBarWidget::TabBarWidget(TabWidget *parent)
     : QTabBar(parent->asWidget())
     , TabBar(this, parent)
 {
+    setMovable(Config::self().flags() & Config::Flag_AllowReorderTabs);
 }
 
 int TabBarWidget::numDockWidgets() const
@@ -52,4 +55,37 @@ void TabBarWidget::mousePressEvent(QMouseEvent *e)
 {
     onMousePress(e->pos());
     QTabBar::mousePressEvent(e);
+}
+
+bool TabBarWidget::dragCanStart(QPoint pressPos, QPoint pos) const
+{
+    // Here we allow the user to re-order tabs instead of dragging them off.
+    // To do that we just return false here, and QTabBar will handle the mouse event, assuming QTabBar::isMovable.
+
+    const bool defaultResult = Draggable::dragCanStart(pressPos, pos);
+
+    if (!defaultResult || !isMovable()) {
+        // Nothing more to do. If the drag wouldn't start anyway, return false.
+        // And if the tabs aren't movable, just return the default result, which just considers
+        // QApplication::startDragDistances
+        return defaultResult;
+    }
+
+    const int index = tabAt(mapFromGlobal(pos));
+    if (index == -1)
+        return defaultResult;
+
+    const int deltaX = qAbs(pos.x() - pressPos.x());
+    const int deltaY = qAbs(pos.y() - pressPos.y());
+
+    if (deltaY > 5 * QApplication::startDragDistance()) {
+        // Moving up or down too much results in a detach. No tab re-ordering allowed.
+        return true;
+    } else if (deltaY > QApplication::startDragDistance() && deltaX < QApplication::startDragDistance()) {
+        // Moved a bit up or down, but not left/right, then detach too.
+        // Only if it's going considerably left/right we allow to re-order tabs.
+        return true;
+    }
+
+    return false;
 }

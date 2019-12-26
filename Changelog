@@ -1,0 +1,6 @@
+* v1.0 (November 4th, 2019)
+  - Initial Release
+
+* v1.1 (, 2020)
+  - Fix dock widgets not filling their complete available space
+  - Allow tab re-ordering with mouse, via KDDockWidgets::Config::Flag_AllowReorderTabs.

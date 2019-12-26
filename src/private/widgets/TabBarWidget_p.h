@@ -50,6 +50,7 @@ public:
     int numDockWidgets() const override;
     int tabAt(QPoint localPos) const override;
 protected:
+    bool dragCanStart(QPoint pressPos, QPoint pos) const override;
     void mousePressEvent(QMouseEvent *) override;
 
 };
