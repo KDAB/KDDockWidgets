@@ -248,6 +248,7 @@ private Q_SLOTS:
     void tst_createFloatingWindow();
     void tst_dock2FloatingWidgetsTabbed();
     void tst_close();
+    void tst_doubleClose();
     void tst_preventClose();
     void tst_closeAllDockWidgets();
     void tst_dockDockWidgetNested();
@@ -732,6 +733,33 @@ void TestDocks::tst_close()
         QVERIFY(mainWindowPtr.data());
         QVERIFY(mainWindowPtr->isVisible());
         delete dock1;
+    }
+}
+
+void TestDocks::tst_doubleClose()
+{
+    EnsureTopLevelsDeleted e;
+    {
+        // Via close()
+        auto dock1 = createDockWidget("hello", Qt::green);
+        auto window = dock1->window();
+        dock1->close();
+        dock1->close();
+
+        delete dock1;
+        Testing::waitForDeleted(window);
+    }
+    {
+        // Via the button
+        auto dock1 = createDockWidget("hello", Qt::green);
+        QPointer<QWidget> window = dock1->window();
+
+        auto t = dock1->frame()->titleBar();
+        t->onCloseClicked();
+        t->onCloseClicked();
+
+        delete dock1;
+        Testing::waitForDeleted(window.data());
     }
 }
 
