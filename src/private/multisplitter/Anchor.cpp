@@ -27,6 +27,7 @@
 #include "Separator_p.h"
 #include "FrameworkWidgetFactory.h"
 
+#include <QRubberBand>
 #include <QApplication>
 #include <QDebug>
 
@@ -45,6 +46,8 @@ Anchor::Anchor(Qt::Orientation orientation, MultiSplitterLayout *multiSplitter, 
     , m_type(type)
     , m_layout(multiSplitter)
     , m_separatorWidget(Config::self().frameworkWidgetFactory()->createSeparator(this, multiSplitter->multiSplitter()))
+    , m_lazyResize(Config::self().flags() & Config::Flag_LazyResize)
+    , m_lazyResizeRubberBand(m_lazyResize ? new QRubberBand(QRubberBand::Line, multiSplitter->multiSplitter()) : nullptr)
 {
     multiSplitter->insertAnchor(this);
     connect(this, &QObject::objectNameChanged, m_separatorWidget, &QObject::setObjectName);
@@ -668,6 +671,22 @@ void Anchor::setThickness()
     }
 }
 
+void Anchor::setLazyPosition(int pos)
+{
+    if (m_lazyPosition != pos) {
+        m_lazyPosition = pos;
+
+        QRect geo = m_separatorWidget->geometry();
+        if (isVertical()) {
+            geo.moveLeft(pos);
+        } else {
+            geo.moveTop(pos);
+        }
+
+        m_lazyResizeRubberBand->setGeometry(geo);
+    }
+}
+
 int Anchor::position(QPoint p) const
 {
     return isVertical() ? p.x() : p.y();
@@ -729,10 +748,20 @@ void Anchor::onMousePress()
     s_isResizing = true;
     m_layout->setAnchorBeingDragged(this);
     qCDebug(anchors) << "Drag started";
+
+    if (m_lazyResize) {
+        setLazyPosition(position());
+        m_lazyResizeRubberBand->show();
+    }
 }
 
 void Anchor::onMouseReleased()
 {
+    if (m_lazyResize) {
+        m_lazyResizeRubberBand->hide();
+        setPosition(m_lazyPosition);
+    }
+
     s_isResizing = false;
     m_layout->setAnchorBeingDragged(nullptr);
 }
@@ -769,7 +798,11 @@ void Anchor::onMouseMoved(QPoint pt)
     m_lastMoveDirection = positionToGoTo < position() ? Side1
                                                       : (positionToGoTo > position() ? Side2
                                                                                      : Side_None); // Side_None shouldn't happen though.
-    setPosition(positionToGoTo);
+
+    if (m_lazyResize)
+        setLazyPosition(positionToGoTo);
+    else
+        setPosition(positionToGoTo);
 }
 
 void Anchor::onWidgetMoved(int p)

@@ -29,6 +29,8 @@
 #include <QRect>
 #include <QVector>
 
+class QRubberBand;
+
 namespace KDDockWidgets {
 
 class Item;
@@ -282,6 +284,7 @@ public:
 
 private:
     void setThickness();
+    void setLazyPosition(int);
 
 Q_SIGNALS:
     void positionChanged(int pos);
@@ -329,6 +332,9 @@ public:
     QRect m_geometry;
     Anchor *m_followee = nullptr;
     QMetaObject::Connection m_followeeDestroyedConnection;
+    const bool m_lazyResize;
+    int m_lazyPosition = 0;
+    QRubberBand *const m_lazyResizeRubberBand;
 };
 
 }

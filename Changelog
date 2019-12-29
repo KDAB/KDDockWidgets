@@ -2,5 +2,8 @@
   - Initial Release
 
 * v1.1 (, 2020)
-  - Fix dock widgets not filling their complete available space
-  - Allow tab re-ordering with mouse, via KDDockWidgets::Config::Flag_AllowReorderTabs.
+  Features:
+     - Allow tab re-ordering with mouse, via KDDockWidgets::Config::Flag_AllowReorderTabs.
+     - Add support for lazy resize. Resize is only done when mouse is released.
+  Fixes:
+    - Fix dock widgets not filling their complete available space

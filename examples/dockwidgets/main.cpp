@@ -55,6 +55,9 @@ int main(int argc, char **argv)
     QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Never show titlebars"));
     parser.addOption(noTitleBars);
 
+    QCommandLineOption lazyResizeOption("l", QCoreApplication::translate("main", "Use lazy resize"));
+    parser.addOption(lazyResizeOption);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
@@ -81,6 +84,9 @@ int main(int argc, char **argv)
 
     if (parser.isSet(reorderTabsOption))
         flags |= KDDockWidgets::Config::Flag_AllowReorderTabs;
+
+    if (parser.isSet(lazyResizeOption))
+        flags |= KDDockWidgets::Config::Flag_LazyResize;
 
     KDDockWidgets::Config::self().setFlags(flags);
 
