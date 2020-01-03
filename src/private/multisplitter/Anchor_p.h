@@ -29,7 +29,9 @@
 #include <QRect>
 #include <QVector>
 
+QT_BEGIN_NAMESPACE
 class QRubberBand;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
