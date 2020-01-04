@@ -96,7 +96,7 @@ bool Testing::waitForEvent(QWidget *w, QEvent::Type type, int timeout)
 {
     EventFilter filter(type);
     w->installEventFilter(&filter);
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     while (!filter.m_got && time.elapsed() < timeout) {
@@ -113,7 +113,7 @@ bool Testing::waitForDeleted(QObject *o, int timeout)
         return true;
 
     QPointer<QObject> ptr = o;
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     while (ptr && time.elapsed() < timeout) {
