@@ -189,8 +189,7 @@ static QWidget *createWidget(int minLength, const QString &objname = QString())
 struct EnsureTopLevelsDeleted
 {
     EnsureTopLevelsDeleted()
-        : m_initialNumWindows(topLevels().size())
-        , m_originalFlags(Config::self().flags())
+        : m_originalFlags(Config::self().flags())
         , m_originalStaticAnchorThickness(Config::self().separatorThickness(true))
         , m_originalAnchorThickness(Config::self().separatorThickness(false))
     {
@@ -198,8 +197,8 @@ struct EnsureTopLevelsDeleted
 
     ~EnsureTopLevelsDeleted()
     {
-        if (topLevels().size() != m_initialNumWindows) {
-            qWarning() << "There's still top-level widgets present!" << topLevels() << m_initialNumWindows;
+        if (topLevels().size() != 0) {
+            qWarning() << "There's still top-level widgets present!" << topLevels();
         }
 
         // Other cleanup, since we use this class everywhere
@@ -221,7 +220,6 @@ struct EnsureTopLevelsDeleted
         return result;
     }
 
-    const int m_initialNumWindows;
     const Config::Flags m_originalFlags;
     const int m_originalStaticAnchorThickness;
     const int m_originalAnchorThickness;
@@ -2388,13 +2386,17 @@ void TestDocks::tst_rectForDrop_data()
         MultiSplitterSetup setup;
         ExpectedRectsForDrop rects;
 
-        QWidget * widgetToDrop = createWidget(100, "w1");
-        widgetToDrop->resize(200, 200);
+        auto widgetToDrop = [] {
+            QWidget * widgetToDrop = createWidget(100, "w1");
+            widgetToDrop->resize(200, 200);
+            return widgetToDrop;
+        };
+
         const int expectedLength = 200; // this 200 will change when the initial length algoritm changes; Maybe just call MultiSplitterLayout::LengthForDrop() directly here
-        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnLeft, nullptr, QRect(staticAnchorThickness, staticAnchorThickness, expectedLength,  multispitterlength - staticAnchorThickness*2) };
-        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnTop, nullptr, QRect(staticAnchorThickness, staticAnchorThickness, multispitterlength - staticAnchorThickness*2, expectedLength) };
-        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnRight, nullptr, QRect(300 - staticAnchorThickness, staticAnchorThickness, expectedLength, multispitterlength - staticAnchorThickness*2) };
-        rects << ExpectedRectForDrop {widgetToDrop, KDDockWidgets::Location_OnBottom, nullptr, QRect(staticAnchorThickness, 300 - staticAnchorThickness, multispitterlength - staticAnchorThickness*2, expectedLength) };
+        rects << ExpectedRectForDrop {widgetToDrop(), KDDockWidgets::Location_OnLeft, nullptr, QRect(staticAnchorThickness, staticAnchorThickness, expectedLength,  multispitterlength - staticAnchorThickness*2) };
+        rects << ExpectedRectForDrop {widgetToDrop(), KDDockWidgets::Location_OnTop, nullptr, QRect(staticAnchorThickness, staticAnchorThickness, multispitterlength - staticAnchorThickness*2, expectedLength) };
+        rects << ExpectedRectForDrop {widgetToDrop(), KDDockWidgets::Location_OnRight, nullptr, QRect(300 - staticAnchorThickness, staticAnchorThickness, expectedLength, multispitterlength - staticAnchorThickness*2) };
+        rects << ExpectedRectForDrop {widgetToDrop(), KDDockWidgets::Location_OnBottom, nullptr, QRect(staticAnchorThickness, 300 - staticAnchorThickness, multispitterlength - staticAnchorThickness*2, expectedLength) };
 
         setup.size = QSize(multispitterlength, multispitterlength);
         QTest::newRow("empty") << setup << rects;
@@ -2415,6 +2417,7 @@ void TestDocks::tst_rectForDrop()
         layout->dumpDebug();
         QCOMPARE(actualRect, expected.expectedRect);
         expected.widgetToDrop->deleteLater();
+        Testing::waitForDeleted(expected.widgetToDrop);
     }
 }
 
