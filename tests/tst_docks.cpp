@@ -2390,6 +2390,7 @@ void TestDocks::tst_rectForDropMath_data()
 
 void TestDocks::tst_rectForDropMath()
 {
+    EnsureTopLevelsDeleted e;
     QFETCH(QSize, layoutContentsSize);
     QFETCH(MultiSplitterLayout::Length, length);
     QFETCH(Location, location);
@@ -2432,6 +2433,7 @@ void TestDocks::tst_rectForDrop_data()
 
 void TestDocks::tst_rectForDrop()
 {
+    EnsureTopLevelsDeleted e;
     QFETCH(MultiSplitterSetup, multisplitterSetup);
     QFETCH(ExpectedRectsForDrop, expectedRects);
     QHash<QWidget*, Frame*> frameMap;
