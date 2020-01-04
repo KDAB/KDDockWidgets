@@ -52,6 +52,7 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 #include <QToolButton>
+#include <QStyleFactory>
 
 #ifdef Q_OS_WIN
 # include <Windows.h>
@@ -235,6 +236,9 @@ public Q_SLOTS:
         qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
         qApp->setOrganizationName("KDAB");
         qApp->setApplicationName("dockwidgets-unit-tests");
+
+        qApp->setStyle(QStyleFactory::create("fusion"));
+
         Testing::installFatalMessageHandler();
     }
 public:
