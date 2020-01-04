@@ -2138,36 +2138,6 @@ void TestDocks::tst_availableLengthForDrop_data()
 
         QTest::newRow("one_existing-inner") << setup << availableSizes;
     }
-
-    {
-        ExpectedAvailableSizes availableSizes;
-        MultiSplitterSetup setup;
-        setup.size = QSize(multispitterlength, multispitterlength);
-
-        const int w1MinLength = 100;
-
-        QWidget *w1 = createWidget(w1MinLength, "w1");
-        QWidget *w2 = createWidget(w1MinLength, "w2");
-        QWidget *w3 = createWidget(w1MinLength, "w3");
-
-        setup.widgets << w1 << w2 << w3;
-        setup.relativeTos << nullptr << nullptr << nullptr;
-        setup.locations << KDDockWidgets::Location_OnBottom << KDDockWidgets::Location_OnBottom << KDDockWidgets::Location_OnBottom;
-
-        setup.widgetResizes << WidgetResize{ 150, Qt::Horizontal, w1 };
-        setup.widgetResizes << WidgetResize{ 150, Qt::Horizontal, w2 };
-
-        const int totalAvailable = multispitterlength - 2*staticAnchorThickness - 2*anchorThickness -3*minFrameSize.height() - anchorThickness;
-        int expected2 = totalAvailable;
-        availableSizes << ExpectedAvailableSize{ KDDockWidgets::Location_OnTop, nullptr, 0, expected2, totalAvailable };
-        availableSizes << ExpectedAvailableSize{ KDDockWidgets::Location_OnBottom, w3, expected2, 0, totalAvailable };
-
-        int expected1 = 15;
-        expected2 = totalAvailable - expected1;
-        availableSizes << ExpectedAvailableSize{ KDDockWidgets::Location_OnBottom, w1, expected1, expected2, totalAvailable };
-
-        QTest::newRow("another") << setup << availableSizes;
-    }
     //----------------------------------------------------------------------------------------------
 }
 
