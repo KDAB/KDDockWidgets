@@ -199,7 +199,7 @@ struct EnsureTopLevelsDeleted
     ~EnsureTopLevelsDeleted()
     {
         if (topLevels().size() != m_initialNumWindows) {
-            qWarning() << "There's still top-level widgets present!" << qApp->topLevelWidgets() << m_initialNumWindows;
+            qWarning() << "There's still top-level widgets present!" << topLevels() << m_initialNumWindows;
         }
 
         // Other cleanup, since we use this class everywhere
