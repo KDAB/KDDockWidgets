@@ -105,6 +105,13 @@ FloatingWindow::FloatingWindow(QWidgetOrQuick *parent)
     DockRegistry::self()->registerNestedWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
 
+#ifdef Q_OS_WIN
+# if QT_VERSION < 0x051000
+    // On Windows with Qt 5.9 (and maybe later but we don't care), the WM_NCALCSIZE isn't being processed unless we explicitly create the window.
+    // So create it now, otherwise floating dock widgets will show a native title bar until resized.
+    create();
+# endif
+#endif
 
     maybeCreateResizeHandler();
 
