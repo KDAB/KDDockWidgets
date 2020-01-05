@@ -595,14 +595,15 @@ void Item::Private::turnIntoPlaceholder()
     m_layout->clearAnchorsFollowing();
 
     AnchorGroup anchorGroup = q->anchorGroup();
+    auto layout = m_layout; // copy it, since we're deleting 'q', which deletes 'this'
     if (anchorGroup.isValid()) {
-        m_layout->emitVisibleWidgetCountChanged();
+        layout->emitVisibleWidgetCountChanged();
     } else {
         // Auto-destruction, which removes it from the layout
         delete q;
     }
 
-    m_layout->updateAnchorFollowing(anchorGroup);
+    layout->updateAnchorFollowing(anchorGroup);
 }
 
 void Item::Private::setIsPlaceholder(bool is)
