@@ -30,6 +30,7 @@
 #include <QDebug>
 #include <QString>
 #include <QTextEdit>
+#include <QTimer>
 
 #include <stdlib.h>
 #include <time.h>
@@ -91,7 +92,7 @@ MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *pa
     //});
 
     createDockWidgets();
-	slotLoadLayoutActionClicked();
+	QTimer::singleShot(100, this, &MyMainWindow::slotLoadLayoutActionClicked);
 }
 
 void MyMainWindow::slotLoadLayoutActionClicked()
