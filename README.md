@@ -67,7 +67,7 @@ KDDockWidgets requires Qt >= 5.9
 
 Licensing
 =========
-KDDockWidgets is (C) 2018-2019, Klarälvdalens Datakonsult AB, and is available
+KDDockWidgets is (C) 2018-2020, Klarälvdalens Datakonsult AB, and is available
 under the terms of the GPLv2 (see LICENSE.GPL.txt).
 
 Contact KDAB at <info@kdab.com> if you need different licensing options.
