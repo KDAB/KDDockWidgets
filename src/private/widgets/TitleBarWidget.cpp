@@ -58,7 +58,6 @@ void TitleBarWidget::init()
     m_layout->setContentsMargins(2, 2, 2, 2);
     m_layout->setSpacing(2);
 
-    m_closeButton = new Button(this);
     m_floatButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarNormalButton));
     m_closeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarCloseButton));
     m_layout->addWidget(m_floatButton);
