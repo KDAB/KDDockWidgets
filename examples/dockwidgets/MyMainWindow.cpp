@@ -76,19 +76,57 @@ MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *pa
     });
 
     auto saveLayoutAction = fileMenu->addAction(QStringLiteral("Save Layout"));
-    connect(saveLayoutAction, &QAction::triggered, this, [] {
-        KDDockWidgets::LayoutSaver saver;
-        const bool result = saver.saveToDisk();
-        qDebug() << "Saving layout to disk. Result=" << result;
-    });
+   	connect(saveLayoutAction, &QAction::triggered, this, &MyMainWindow::slotSaveLayoutActionClicked);
+    //connect(saveLayoutAction, &QAction::triggered, this, [] {
+    //    KDDockWidgets::LayoutSaver saver;
+    //    const bool result = saver.saveToDisk();
+    //    qDebug() << "Saving layout to disk. Result=" << result;
+    //});
 
     auto restoreLayoutAction = fileMenu->addAction(QStringLiteral("Restore Layout"));
-    connect(restoreLayoutAction, &QAction::triggered, this, [] {
-        KDDockWidgets::LayoutSaver saver;
-        saver.restoreFromDisk();
-    });
+   	connect(restoreLayoutAction, &QAction::triggered, this, &MyMainWindow::slotLoadLayoutActionClicked);
+    //connect(restoreLayoutAction, &QAction::triggered, this, [] {
+    //    KDDockWidgets::LayoutSaver saver;
+    //    saver.restoreFromDisk();
+    //});
 
     createDockWidgets();
+	slotLoadLayoutActionClicked();
+}
+
+void MyMainWindow::slotLoadLayoutActionClicked()
+{
+	std::ifstream ifile("layout.config", std::ios::in | std::ios::binary);
+	if (ifile.is_open())
+	{
+		std::string temp, s;
+		while (std::getline(ifile, temp))
+		{
+			s += temp;
+			s += "\n";
+		}
+
+		QByteArray arr = QByteArray::fromStdString(s);
+		KDDockWidgets::LayoutSaver saver;
+		saver.restoreLayout(arr);
+	}
+}
+
+void MyMainWindow::slotSaveLayoutActionClicked()
+{
+	KDDockWidgets::LayoutSaver saver;
+	if (true == saver.saveToDisk())
+	{
+		auto arr = saver.serializeLayout();
+		std::string s = saver.serializeLayout().toStdString();
+		std::ofstream ofile(".\\layout.config", std::ios::out | std::ios::binary);
+		if (ofile.is_open())
+		{
+			ofile << s;
+			ofile.close();
+		}
+		saver.restoreLayout(arr);
+	}
 }
 
 void MyMainWindow::createDockWidgets()
@@ -100,7 +138,11 @@ void MyMainWindow::createDockWidgets()
 
 
     // MainWindow::addDockWidget() attaches a dock widget to the main window:
-    addDockWidget(dockwidgets[0], KDDockWidgets::Location_OnTop);
+#if defined(DOCKS_DEVELOPER_MODE) 
+	addDockWidgetAsTab(dockwidgets[0]);
+#else
+	addDockWidget(dockwidgets[0], KDDockWidgets::Location_OnTop);
+#endif
 
     // Here, for finer granularity we specify right of dockwidgets[0]:
     addDockWidget(dockwidgets[1], KDDockWidgets::Location_OnRight, dockwidgets[0]);

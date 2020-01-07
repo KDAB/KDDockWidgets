@@ -27,6 +27,10 @@ class MyMainWindow : public KDDockWidgets::MainWindow
     Q_OBJECT
 public:
     explicit MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *parent = nullptr);
+	
+public slots:
+	void slotLoadLayoutActionClicked();
+	void slotSaveLayoutActionClicked();
 
 private:
     void createDockWidgets();
