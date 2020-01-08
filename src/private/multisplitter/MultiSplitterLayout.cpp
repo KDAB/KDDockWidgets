@@ -1513,6 +1513,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         Q_ASSERT(anchorGroup.isStaticOrFollowsStatic());
         anchorGroup.updateItemSizes();
         maybeCheckSanity();
+        item->endBlockPropagateGeo();
         return;
     }
 
@@ -1572,6 +1573,7 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
                        << "; static=" << side1Anchor->isStatic() << side2Anchor->isStatic()
                        << "; size=" << m_size
                        << "; m_minSize=" << m_minSize;
+            item->endBlockPropagateGeo();
             return;
         }
 
