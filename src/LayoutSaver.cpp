@@ -118,7 +118,7 @@ bool LayoutSaver::restoreFromDisk()
 QByteArray LayoutSaver::serializeLayout() const
 {
     if (!d->m_dockRegistry->isSane()) {
-        qWarning() << Q_FUNC_INFO << "Refusing to serialize insane layout";
+        qWarning() << Q_FUNC_INFO << "Refusing to serialize this layout. Check previous warnings.";
         return {};
     }
 
