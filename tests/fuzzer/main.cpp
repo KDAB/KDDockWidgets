@@ -48,6 +48,9 @@ int main(int argc, char **argv)
     QCommandLineOption forceDumpJsonOption("f", QCoreApplication::translate("main", "Dump json of the test even if we're already loading a test."));
     parser.addOption(forceDumpJsonOption);
 
+    QCommandLineOption loopOption("l", QCoreApplication::translate("main", "Loops until it crashes"));
+    parser.addOption(loopOption);
+
     parser.addHelpOption();
     parser.process(app);
 
@@ -67,9 +70,13 @@ int main(int argc, char **argv)
         }
     }
 
-    QTimer::singleShot(0, &fuzzer, [&fuzzer, filesToLoad] {
+    const bool loops = parser.isSet(loopOption);
+
+    QTimer::singleShot(0, &fuzzer, [&fuzzer, filesToLoad, loops] {
         if (filesToLoad.isEmpty())
-            fuzzer.fuzz({ 1, 10, true });
+            do {
+                fuzzer.fuzz({ 1, 10, true });
+            } while(loops);
         else
             fuzzer.fuzz(filesToLoad);
     });
