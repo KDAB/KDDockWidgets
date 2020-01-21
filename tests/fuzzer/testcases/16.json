@@ -1,0 +1,518 @@
+{
+    "initialLayout": {
+        "dockWidgets": [
+            {
+                "geometry": {
+                    "size": {
+                        "height": 757,
+                        "width": 748
+                    },
+                    "x": 352,
+                    "y": 17
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 302,
+                    "width": 541
+                },
+                "name": "DockWidget-108"
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 930,
+                        "width": 1083
+                    },
+                    "x": 64,
+                    "y": 35
+                },
+                "isFloating": true,
+                "isVisible": true,
+                "minSize": {
+                    "height": 462,
+                    "width": 553
+                },
+                "name": "DockWidget-109"
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 665,
+                        "width": 1031
+                    },
+                    "x": 207,
+                    "y": 178
+                },
+                "isFloating": true,
+                "isVisible": true,
+                "minSize": {
+                    "height": 402,
+                    "width": 523
+                },
+                "name": "DockWidget-110"
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 525,
+                        "width": 962
+                    },
+                    "x": 118,
+                    "y": 157
+                },
+                "isFloating": false,
+                "isVisible": true,
+                "minSize": {
+                    "height": 322,
+                    "width": 460
+                },
+                "name": "DockWidget-111"
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 920,
+                        "width": 618
+                    },
+                    "x": 199,
+                    "y": 154
+                },
+                "isFloating": true,
+                "isVisible": false,
+                "minSize": {
+                    "height": 425,
+                    "width": 249
+                },
+                "name": "DockWidget-112"
+            },
+            {
+                "geometry": {
+                    "size": {
+                        "height": 770,
+                        "width": 538
+                    },
+                    "x": 323,
+                    "y": 203
+                },
+                "isFloating": true,
+                "isVisible": true,
+                "minSize": {
+                    "height": 523,
+                    "width": 451
+                },
+                "name": "DockWidget-113"
+            }
+        ],
+        "mainWindows": [
+            {
+                "geometry": {
+                    "size": {
+                        "height": 1487,
+                        "width": 307
+                    },
+                    "x": 42,
+                    "y": 118
+                },
+                "mainWindowOption": 0,
+                "name": "MainWindow-17"
+            }
+        ]
+    },
+    "operations": [
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-112-[hidden] onto DockWidget-109",
+            "params": {
+                "dockWidgetName": "DockWidget-109",
+                "dockWidgetToAddName": "DockWidget-112"
+            },
+            "type": 5
+        },
+        {
+            "comment": "Hidding DockWidget-108",
+            "params": {
+                "dockWidgetName": "DockWidget-108"
+            },
+            "type": 2
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-109-[hidden] onto DockWidget-113",
+            "params": {
+                "dockWidgetName": "DockWidget-113",
+                "dockWidgetToAddName": "DockWidget-109"
+            },
+            "type": 5
+        },
+        {
+            "comment": "Hidding DockWidget-112",
+            "params": {
+                "dockWidgetName": "DockWidget-112"
+            },
+            "type": 2
+        },
+        {
+            "comment": "AddDockWidget DockWidget-110 to bottom",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-110",
+                "location": 4,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "Hidding DockWidget-110",
+            "params": {
+                "dockWidgetName": "DockWidget-110"
+            },
+            "type": 2
+        },
+        {
+            "comment": "Hidding DockWidget-109",
+            "params": {
+                "dockWidgetName": "DockWidget-109"
+            },
+            "type": 2
+        },
+        {
+            "comment": "AddDockWidget DockWidget-110-[hidden] to right",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-110",
+                "location": 3,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "Closing DockWidget-110",
+            "params": {
+                "dockWidgetName": "DockWidget-110"
+            },
+            "type": 1
+        },
+        {
+            "comment": "AddDockWidget DockWidget-113 to bottom",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-113",
+                "location": 4,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "Showing DockWidget-110-[hidden]",
+            "params": {
+                "dockWidgetName": "DockWidget-110"
+            },
+            "type": 3
+        },
+        {
+            "comment": "Showing DockWidget-112-[hidden]",
+            "params": {
+                "dockWidgetName": "DockWidget-112"
+            },
+            "type": 3
+        },
+        {
+            "comment": "AddDockWidget DockWidget-113 to bottom, relative to DockWidget-110",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-113",
+                "location": 4,
+                "mainWindowName": "MainWindow-17",
+                "relativeToName": "DockWidget-110"
+            },
+            "type": 4
+        },
+        {
+            "comment": "Closing DockWidget-110",
+            "params": {
+                "dockWidgetName": "DockWidget-110"
+            },
+            "type": 1
+        },
+        {
+            "comment": "AddDockWidget DockWidget-109-[hidden] to left, relative to DockWidget-113",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-109",
+                "location": 1,
+                "mainWindowName": "MainWindow-17",
+                "relativeToName": "DockWidget-113"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-110-[hidden] onto DockWidget-113",
+            "params": {
+                "dockWidgetName": "DockWidget-113",
+                "dockWidgetToAddName": "DockWidget-110"
+            },
+            "type": 5
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-110 onto DockWidget-112",
+            "params": {
+                "dockWidgetName": "DockWidget-112",
+                "dockWidgetToAddName": "DockWidget-110"
+            },
+            "type": 5
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-111 onto DockWidget-113",
+            "params": {
+                "dockWidgetName": "DockWidget-113",
+                "dockWidgetToAddName": "DockWidget-111"
+            },
+            "type": 5
+        },
+        {
+            "comment": "Hidding DockWidget-111",
+            "params": {
+                "dockWidgetName": "DockWidget-111"
+            },
+            "type": 2
+        },
+        {
+            "comment": "Showing DockWidget-112-[hidden]",
+            "params": {
+                "dockWidgetName": "DockWidget-112"
+            },
+            "type": 3
+        },
+        {
+            "comment": "AddDockWidget DockWidget-111-[hidden] to top",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-111",
+                "location": 2,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidget DockWidget-112 to top",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-112",
+                "location": 2,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidget DockWidget-108-[hidden] to right, relative to DockWidget-109",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-108",
+                "location": 3,
+                "mainWindowName": "MainWindow-17",
+                "relativeToName": "DockWidget-109"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidget DockWidget-108 to right, relative to DockWidget-111",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-108",
+                "location": 3,
+                "mainWindowName": "MainWindow-17",
+                "relativeToName": "DockWidget-111"
+            },
+            "type": 4
+        },
+        {
+            "comment": "Hidding DockWidget-113",
+            "params": {
+                "dockWidgetName": "DockWidget-113"
+            },
+            "type": 2
+        },
+        {
+            "comment": "AddDockWidget DockWidget-108 to left",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-108",
+                "location": 1,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-113-[hidden] onto DockWidget-108",
+            "params": {
+                "dockWidgetName": "DockWidget-108",
+                "dockWidgetToAddName": "DockWidget-113"
+            },
+            "type": 5
+        },
+        {
+            "comment": "Hidding DockWidget-109",
+            "params": {
+                "dockWidgetName": "DockWidget-109"
+            },
+            "type": 2
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-109-[hidden] onto DockWidget-112",
+            "params": {
+                "dockWidgetName": "DockWidget-112",
+                "dockWidgetToAddName": "DockWidget-109"
+            },
+            "type": 5
+        },
+        {
+            "comment": "AddDockWidget DockWidget-108-[hidden] to top",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-108",
+                "location": 2,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-108 onto DockWidget-110",
+            "params": {
+                "dockWidgetName": "DockWidget-110",
+                "dockWidgetToAddName": "DockWidget-108"
+            },
+            "type": 5
+        },
+        {
+            "comment": "Hidding DockWidget-108",
+            "params": {
+                "dockWidgetName": "DockWidget-108"
+            },
+            "type": 2
+        },
+        {
+            "comment": "AddDockWidget DockWidget-108-[hidden] to right, relative to DockWidget-111",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-108",
+                "location": 3,
+                "mainWindowName": "MainWindow-17",
+                "relativeToName": "DockWidget-111"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-110 onto DockWidget-112-[hidden]",
+            "params": {
+                "dockWidgetName": "DockWidget-112",
+                "dockWidgetToAddName": "DockWidget-110"
+            },
+            "type": 5
+        },
+        {
+            "comment": "AddDockWidget DockWidget-112-[hidden] to left, relative to DockWidget-108",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-112",
+                "location": 1,
+                "mainWindowName": "MainWindow-17",
+                "relativeToName": "DockWidget-108"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidget DockWidget-108 to right, relative to DockWidget-111",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-108",
+                "location": 3,
+                "mainWindowName": "MainWindow-17",
+                "relativeToName": "DockWidget-111"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidget DockWidget-112 to left",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-112",
+                "location": 1,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "Closing DockWidget-113",
+            "params": {
+                "dockWidgetName": "DockWidget-113"
+            },
+            "type": 1
+        },
+        {
+            "comment": "AddDockWidget DockWidget-109-[hidden] to left",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-109",
+                "location": 1,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "Closing DockWidget-111",
+            "params": {
+                "dockWidgetName": "DockWidget-111"
+            },
+            "type": 1
+        },
+        {
+            "comment": "AddDockWidget DockWidget-112 to left",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-112",
+                "location": 1,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidget DockWidget-110 to top, relative to DockWidget-108",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-110",
+                "location": 2,
+                "mainWindowName": "MainWindow-17",
+                "relativeToName": "DockWidget-108"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidgetAsTab DockWidget-111-[hidden] onto DockWidget-110",
+            "params": {
+                "dockWidgetName": "DockWidget-110",
+                "dockWidgetToAddName": "DockWidget-111"
+            },
+            "type": 5
+        },
+        {
+            "comment": "AddDockWidget DockWidget-109 to left",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-109",
+                "location": 1,
+                "mainWindowName": "MainWindow-17"
+            },
+            "type": 4
+        },
+        {
+            "comment": "AddDockWidget DockWidget-111 to right, relative to DockWidget-112",
+            "params": {
+                "addingOption": 0,
+                "dockWidgetName": "DockWidget-111",
+                "location": 3,
+                "mainWindowName": "MainWindow-17",
+                "relativeToName": "DockWidget-112"
+            },
+            "type": 4
+        }
+    ]
+}
