@@ -669,6 +669,9 @@ QPair<int, int> MultiSplitterLayout::boundPositionsForAnchor(Anchor *anchor) con
         }
     }
 
+    if (anchor->isFollowing())
+        anchor = anchor->endFollowee();
+
     const int minSide1Length = anchor->cumulativeMinLength(Anchor::Side1);
     const int minSide2Length = anchor->cumulativeMinLength(Anchor::Side2);
     const int length = anchor->isVertical() ? width() : height();
