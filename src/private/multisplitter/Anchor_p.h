@@ -285,6 +285,7 @@ public:
     static bool isResizing();
 
 private:
+    int cumulativeMinLength_recursive(Anchor::Side side) const;
     void setThickness();
     void setLazyPosition(int);
 

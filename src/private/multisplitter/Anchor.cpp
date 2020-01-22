@@ -503,9 +503,14 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
             (side == Side1 && (m_type & (Type_RightStatic | Type_BottomStatic))))
             return 2 * staticAnchorThickness;
     }
+    return cumulativeMinLength_recursive(side) + Anchor::thickness(isStatic());
+}
 
+int Anchor::cumulativeMinLength_recursive(Anchor::Side side) const
+{
     const auto items = this->items(side);
     int minLength = 0;
+    auto map = m_layout->anchorsShouldFollow();
     for (auto item : items) {
         Anchor *oppositeAnchor = item->anchorAtSide(side, orientation());
         if (!oppositeAnchor) {
@@ -514,17 +519,15 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
             return 0;
         }
 
-        const int itemMin = item->minLength(orientation()) + oppositeAnchor->cumulativeMinLength(side);
-        minLength = qMax(itemMin, minLength);
+        // Dont' use isFollowing() here, because when restoring a placeholder we clear the followers first
+        const bool willFollow = map.contains(oppositeAnchor);
+        const int anchorThickness = willFollow ? 0 : Anchor::thickness(oppositeAnchor->isStatic());
+
+        const int candidate = anchorThickness + item->minLength(orientation()) + oppositeAnchor->cumulativeMinLength_recursive(side);
+        minLength = qMax(candidate, minLength);
     }
 
-    auto map = m_layout->anchorsShouldFollow();
-
-    // Dont' use isFollowing() here, because when restoring a placeholder we clear the followers first
-    const bool willFollow = map.contains(const_cast<Anchor*>(this));
-    const int thickness = willFollow ? 0 : Anchor::thickness(isStatic());
-
-    return thickness + minLength;
+    return minLength;
 }
 
 void Anchor::setFollowee(Anchor *followee)
