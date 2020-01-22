@@ -507,7 +507,14 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
     const auto items = this->items(side);
     int minLength = 0;
     for (auto item : items) {
-        const int itemMin = item->cumulativeMinLength(side, orientation());
+        Anchor *oppositeAnchor = item->anchorAtSide(side, orientation());
+        if (!oppositeAnchor) {
+            // Shouldn't happen. But don't assert as this might be being called from a dumpDebug()
+            qWarning() << Q_FUNC_INFO << "Null opposite anchor";
+            return 0;
+        }
+
+        const int itemMin = item->minLength(orientation()) + oppositeAnchor->cumulativeMinLength(side);
         minLength = qMax(itemMin, minLength);
     }
 

@@ -150,8 +150,6 @@ public:
     AnchorGroup& anchorGroup();
     const AnchorGroup& anchorGroup() const;
 
-    int cumulativeMinLength(Anchor::Side, Qt::Orientation orientation) const;
-
     QSize minimumSize() const;
 
     bool isPlaceholder() const;

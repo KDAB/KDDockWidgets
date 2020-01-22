@@ -365,17 +365,6 @@ const AnchorGroup &Item::anchorGroup() const
     return d->m_anchorGroup;
 }
 
-int Item::cumulativeMinLength(Anchor::Side side, Qt::Orientation orientation) const
-{
-    Anchor *oppositeAnchor = anchorAtSide(side, orientation);
-    if (!oppositeAnchor) {
-        // Shouldn't happen. But don't assert as this might be being called from a dumpDebug()
-        qWarning() << Q_FUNC_INFO << "Null opposite anchor";
-        return 0;
-    }
-    return minLength(orientation) + oppositeAnchor->cumulativeMinLength(side);
-}
-
 QSize Item::minimumSize() const
 {
     return isPlaceholder() ? QSize(0, 0)
