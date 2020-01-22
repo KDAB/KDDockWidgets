@@ -252,8 +252,8 @@ public:
     Fuzzer::Test::List generateRandomTests(int num);
 
     void fuzz(FuzzerConfig config);
-    void fuzz(const QStringList &jsonFiles);
-    void fuzz(const QString &json);
+    void fuzz(const QStringList &jsonFiles, bool skipLast);
+    void fuzz(const QString &json, bool skipLast);
 
     QRect randomGeometry();
 

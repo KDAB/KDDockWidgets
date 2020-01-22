@@ -303,19 +303,27 @@ void Fuzzer::fuzz(FuzzerConfig config)
     }
 }
 
-void Fuzzer::fuzz(const QStringList &jsonFiles)
+void Fuzzer::fuzz(const QStringList &jsonFiles, bool skipLast)
 {
+    if (jsonFiles.size() > 1 && skipLast) {
+        qFatal("Use -d only when passing a single json file");
+    }
+
     for (const QString &jsonFile : jsonFiles)
-        fuzz(jsonFile);
+        fuzz(jsonFile, skipLast);
 }
 
-void Fuzzer::fuzz(const QString &jsonFile)
+void Fuzzer::fuzz(const QString &jsonFile, bool skipLast)
 {
     QFile file(jsonFile);
     if (file.open(QIODevice::ReadOnly)) {
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         const QVariantMap map = doc.toVariant().toMap();
         Test test = Test::fromVariantMap(this, map);
+
+        if (skipLast)
+            test.operations.removeLast();
+
         runTest(test);
     } else {
         qWarning() << Q_FUNC_INFO << "Failed to open file" << jsonFile;

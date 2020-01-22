@@ -51,6 +51,9 @@ int main(int argc, char **argv)
     QCommandLineOption loopOption("l", QCoreApplication::translate("main", "Loops until it crashes"));
     parser.addOption(loopOption);
 
+    QCommandLineOption debugOption("d", QCoreApplication::translate("main", "Skips the last test (presumably failing) and doesn't exit so process can be debugged"));
+    parser.addOption(debugOption);
+
     parser.addHelpOption();
     parser.process(app);
 
@@ -71,15 +74,23 @@ int main(int argc, char **argv)
     }
 
     const bool loops = parser.isSet(loopOption);
+    const bool skipLastAndPause = parser.isSet(debugOption);
 
-    QTimer::singleShot(0, &fuzzer, [&fuzzer, filesToLoad, loops] {
-        if (filesToLoad.isEmpty())
+    QTimer::singleShot(0, &fuzzer, [&app, &fuzzer, filesToLoad, loops, skipLastAndPause] {
+        if (filesToLoad.isEmpty()) {
             do {
                 fuzzer.fuzz({ 1, 10, true });
             } while(loops);
-        else
-            fuzzer.fuzz(filesToLoad);
+        } else {
+            fuzzer.fuzz(filesToLoad, skipLastAndPause);
+        }
+
+        if (!skipLastAndPause) {
+            // if skipLastAndPause is true we keep the app running so it can be debugged
+            app.quit();
+        }
     });
 
+    app.setQuitOnLastWindowClosed(false);
     return app.exec();
 }
