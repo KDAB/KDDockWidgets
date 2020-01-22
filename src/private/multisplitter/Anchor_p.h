@@ -285,7 +285,17 @@ public:
     static bool isResizing();
 
 private:
-    int cumulativeMinLength_recursive(Anchor::Side side) const;
+    struct CumulativeMin {
+        int minLength = 0;
+        int numItems = 0;
+        CumulativeMin& operator+=(CumulativeMin other) {
+            minLength += other.minLength;
+            numItems += other.numItems;
+            return *this;
+        }
+    };
+    CumulativeMin cumulativeMinLength_recursive(Anchor::Side side) const;
+
     void setThickness();
     void setLazyPosition(int);
 

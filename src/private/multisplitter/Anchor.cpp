@@ -503,31 +503,45 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
             (side == Side1 && (m_type & (Type_RightStatic | Type_BottomStatic))))
             return 2 * staticAnchorThickness;
     }
-    return cumulativeMinLength_recursive(side) + Anchor::thickness(isStatic());
+    const CumulativeMin result = cumulativeMinLength_recursive(side);
+
+    const int numNonStaticAnchors = result.numItems >= 2 ? result.numItems - 1
+                                                         : 0;
+
+    int r = Anchor::thickness(isStatic()) + Anchor::thickness(true)
+            + numNonStaticAnchors*Anchor::thickness(false)
+            + result.minLength;
+
+    return r;
 }
 
-int Anchor::cumulativeMinLength_recursive(Anchor::Side side) const
+Anchor::CumulativeMin Anchor::cumulativeMinLength_recursive(Anchor::Side side) const
 {
     const auto items = this->items(side);
-    int minLength = 0;
-    auto map = m_layout->anchorsShouldFollow();
+    CumulativeMin result;
+
     for (auto item : items) {
         Anchor *oppositeAnchor = item->anchorAtSide(side, orientation());
         if (!oppositeAnchor) {
             // Shouldn't happen. But don't assert as this might be being called from a dumpDebug()
             qWarning() << Q_FUNC_INFO << "Null opposite anchor";
-            return 0;
+            return {0, 0};
         }
 
-        // Dont' use isFollowing() here, because when restoring a placeholder we clear the followers first
-        const bool willFollow = map.contains(oppositeAnchor);
-        const int anchorThickness = willFollow ? 0 : Anchor::thickness(oppositeAnchor->isStatic());
+        CumulativeMin candidateMin;
+        if (!item->isPlaceholder()) {
+            candidateMin.numItems++;
+            candidateMin.minLength = item->minLength(orientation());
+        }
 
-        const int candidate = anchorThickness + item->minLength(orientation()) + oppositeAnchor->cumulativeMinLength_recursive(side);
-        minLength = qMax(candidate, minLength);
+        candidateMin += oppositeAnchor->cumulativeMinLength_recursive(side);
+
+        if (candidateMin.minLength >= result.minLength) {
+            result = candidateMin;
+        }
     }
 
-    return minLength;
+    return result;
 }
 
 void Anchor::setFollowee(Anchor *followee)
