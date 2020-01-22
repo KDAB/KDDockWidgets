@@ -84,10 +84,7 @@ void Fuzzer::runTest(const Test &test, bool skipLastAndPause)
     int index = 0;
 
     auto operations = test.operations;
-    if (skipLastAndPause) {
-        auto last = operations.takeLast();
-        qDebug() << "Skipping" << last->toString() << "\n";
-    }
+    auto last = operations.takeLast();
 
     for (const auto &op : operations) {
         index++;
@@ -98,7 +95,9 @@ void Fuzzer::runTest(const Test &test, bool skipLastAndPause)
         DockRegistry::self()->checkSanityAll();
     }
 
-    if (!skipLastAndPause) {
+    if (skipLastAndPause) {
+        qDebug() << "Skipped" << last->toString() << "\n";
+    } else {
         for (MainWindowBase *mw : DockRegistry::self()->mainwindows())
             delete mw;
 
