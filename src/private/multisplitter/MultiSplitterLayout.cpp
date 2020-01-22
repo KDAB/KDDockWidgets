@@ -171,6 +171,45 @@ bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
     return true;
 }
 
+std::pair<int,int> MultiSplitterLayout::boundInterval(int newPos1, Anchor* anchor1, int newPos2, Anchor *anchor2) const
+{
+    const int bound1 = boundPositionForAnchor(anchor1, Anchor::Side1);
+    const int bound2 = boundPositionForAnchor(anchor2, Anchor::Side2);
+
+    if (newPos1 >= bound1 && newPos2 <= bound2) {
+        // Simplest case, it's bounded.
+        return { newPos1, newPos2 };
+    }
+
+    if (newPos1 < bound1) {
+        // the anchor1 is out of bounds
+
+        const int bythismuch = bound1 - newPos1;
+        newPos1 = bound1;
+        newPos2 = newPos2 + bythismuch;
+
+        if (newPos2 > bound2) {
+            qWarning() << "Adjusted interval still out of bounds. Not enough space. #1";
+        }
+
+        return { newPos1, newPos2 };
+    } else if (newPos2 > bound2) {
+        // the anchor2 is out of bounds
+
+        const int bythismuch = newPos2 - bound2;
+        newPos2 = bound2;
+        newPos1 = newPos1 - bythismuch;
+
+        if (newPos1 < bound1) {
+            qWarning() << "Adjusted interval still out of bounds. Not enough space. #1";
+        }
+
+        return { newPos1, newPos2 };
+    }
+
+    return { newPos1, newPos2 };
+}
+
 void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame *relativeToWidget, AddingOption option)
 {
     auto frame = qobject_cast<Frame*>(w);
@@ -267,6 +306,7 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
         case Location_OnTop:
             direction1Anchor = existingAnchor;
             direction2Anchor = newAnchor;
+            std::tie(posForExistingAnchor, posForNewAnchor) = boundInterval(posForExistingAnchor, existingAnchor, posForNewAnchor, newAnchor);
             delta1 = originalExistingAnchorPos - posForExistingAnchor;
             delta2 = posForNewAnchor - posForExistingAnchor;
             break;
@@ -274,6 +314,7 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
         case Location_OnBottom:
             direction1Anchor = newAnchor;
             direction2Anchor = existingAnchor;
+            std::tie(posForNewAnchor, posForExistingAnchor) = boundInterval(posForNewAnchor, newAnchor, posForExistingAnchor, existingAnchor);
             delta1 = posForExistingAnchor - posForNewAnchor;
             delta2 = posForExistingAnchor - originalExistingAnchorPos;
             break;
@@ -305,7 +346,6 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
         propagateResize(delta1, direction1Anchor, /*direction*/ Anchor::Side1);
         propagateResize(delta2, direction2Anchor, /*direction*/ Anchor::Side2);
     }
-
 
     if (newAnchor) {
         // Also ensure the widget has a minimum size in the other direction. So, when adding to

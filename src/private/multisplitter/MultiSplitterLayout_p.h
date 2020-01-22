@@ -448,6 +448,7 @@ private:
         Anchor *side2;
     };
 
+    std::pair<int,int> boundInterval(int newPos1, Anchor* anchor1, int newPos2, Anchor *anchor2) const;
     void blockItemPropagateGeo(bool block);
 
     /**
