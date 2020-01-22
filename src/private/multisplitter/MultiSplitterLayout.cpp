@@ -492,8 +492,10 @@ static Anchor::List removeSmallestPath(QVector<Anchor::List> &paths)
 
 void MultiSplitterLayout::propagateResize(int delta, Anchor *fromAnchor, Anchor::Side direction)
 {
-    Q_ASSERT(delta >= 0);
-    if (delta == 0 || fromAnchor->isStatic())
+    if (delta < 0)
+        qWarning() << Q_FUNC_INFO << "Invalid delta" << delta << fromAnchor << direction;
+
+    if (delta <= 0 || fromAnchor->isStatic())
         return;
 
     QVector<Anchor::List> paths;
