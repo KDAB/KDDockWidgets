@@ -73,7 +73,7 @@ static void createLayout(const Fuzzer::Layout &layout)
     }
 }
 
-void Fuzzer::runTest(const Test &test)
+void Fuzzer::runTest(const Test &test, bool skipLastAndPause)
 {
     m_currentTest = test;
 
@@ -83,7 +83,11 @@ void Fuzzer::runTest(const Test &test)
     createLayout(test.initialLayout);
     int index = 0;
 
-    for (const auto &op : test.operations) {
+    auto operations = test.operations;
+    if (skipLastAndPause)
+        operations.removeLast();
+
+    for (const auto &op : operations) {
         index++;
         op->execute();
         if (op->hasParams())
@@ -92,17 +96,19 @@ void Fuzzer::runTest(const Test &test)
         DockRegistry::self()->checkSanityAll();
     }
 
-    for (MainWindowBase *mw : DockRegistry::self()->mainwindows())
-        delete mw;
+    if (!skipLastAndPause) {
+        for (MainWindowBase *mw : DockRegistry::self()->mainwindows())
+            delete mw;
 
-    for (FloatingWindow *fw : DockRegistry::self()->nestedwindows())
-        delete fw;
+        for (FloatingWindow *fw : DockRegistry::self()->nestedwindows())
+            delete fw;
 
-    for (DockWidgetBase *dw : DockRegistry::self()->dockwidgets())
-        delete dw;
+        for (DockWidgetBase *dw : DockRegistry::self()->dockwidgets())
+            delete dw;
 
-    if (!DockRegistry::self()->isEmpty())
-        qFatal("There's still dock widgets and the end of runTest");
+        if (!DockRegistry::self()->isEmpty())
+            qFatal("There's still dock widgets and the end of runTest");
+    }
 }
 
 Fuzzer::Fuzzer(bool dumpJsonOnFailure, QObject *parent)
@@ -320,11 +326,7 @@ void Fuzzer::fuzz(const QString &jsonFile, bool skipLast)
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         const QVariantMap map = doc.toVariant().toMap();
         Test test = Test::fromVariantMap(this, map);
-
-        if (skipLast)
-            test.operations.removeLast();
-
-        runTest(test);
+        runTest(test, skipLast);
     } else {
         qWarning() << Q_FUNC_INFO << "Failed to open file" << jsonFile;
     }

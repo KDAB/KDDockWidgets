@@ -223,7 +223,7 @@ public:
         }
     };
 
-    void runTest(const Test &);
+    void runTest(const Test &, bool skipLastAndPause = false);
 
     explicit Fuzzer(bool dumpJsonOnFailure, QObject *parent = nullptr);
 
