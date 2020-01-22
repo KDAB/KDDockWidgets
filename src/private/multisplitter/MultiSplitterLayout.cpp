@@ -343,8 +343,9 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
         addItems_internal(ItemList{ item });
     }
 
-    m_addingItem = false;
     updateAnchorFollowing();
+    m_addingItem = false;
+
     maybeCheckSanity();
 }
 
