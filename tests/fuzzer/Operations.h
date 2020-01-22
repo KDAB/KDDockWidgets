@@ -74,8 +74,9 @@ public:
     OperationType type() const { return m_operationType; }
     QString description() const { return m_description; }
 
+    virtual void updateDescription() = 0;
     virtual bool hasParams() const = 0;
-    QString toString() const;
+    QString toString();
 
 protected:
     virtual void execute_impl() = 0;
@@ -98,6 +99,7 @@ public:
     explicit CloseViaDockWidgetAPI(Fuzzer *);
 
 protected:
+    void updateDescription() override;
     void generateRandomParams() override;
     bool hasParams() const override;
     void execute_impl() override;
@@ -114,6 +116,7 @@ public:
 protected:
     void generateRandomParams() override;
     bool hasParams() const override;
+    void updateDescription() override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
@@ -128,6 +131,7 @@ public:
 protected:
     void generateRandomParams() override;
     bool hasParams() const override;
+    void updateDescription() override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
@@ -142,6 +146,7 @@ public:
 protected:
     void generateRandomParams() override;
     bool hasParams() const override;
+    void updateDescription() override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
@@ -157,6 +162,7 @@ public:
 protected:
     void generateRandomParams() override;
     bool hasParams() const override;
+    void updateDescription() override;
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
