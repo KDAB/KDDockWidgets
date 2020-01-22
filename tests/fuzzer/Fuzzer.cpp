@@ -73,18 +73,21 @@ static void createLayout(const Fuzzer::Layout &layout)
     }
 }
 
-void Fuzzer::runTest(const Test &test, bool skipLastAndPause)
+void Fuzzer::runTest(const Test &test)
 {
     m_currentTest = test;
 
     if (!DockRegistry::self()->isEmpty())
         qFatal("There's dock widgets and the start runTest");
 
+    const bool skipsLast = m_options & Option_SkipLast;
     createLayout(test.initialLayout);
     int index = 0;
 
     auto operations = test.operations;
-    auto last = operations.takeLast();
+    auto last = operations.last();
+    if (skipsLast)
+        operations.removeLast();
 
     for (const auto &op : operations) {
         index++;
@@ -95,9 +98,11 @@ void Fuzzer::runTest(const Test &test, bool skipLastAndPause)
         DockRegistry::self()->checkSanityAll();
     }
 
-    if (skipLastAndPause) {
+    if (skipsLast)
         qDebug() << "Skipped" << last->toString() << "\n";
-    } else {
+
+    const bool willQuit = !(m_options & Option_NoQuit);
+    if (willQuit) {
         for (MainWindowBase *mw : DockRegistry::self()->mainwindows())
             delete mw;
 
@@ -112,10 +117,11 @@ void Fuzzer::runTest(const Test &test, bool skipLastAndPause)
     }
 }
 
-Fuzzer::Fuzzer(bool dumpJsonOnFailure, QObject *parent)
+Fuzzer::Fuzzer(bool dumpJsonOnFailure, Options options, QObject *parent)
     : QObject(parent)
     , m_randomEngine(m_randomDevice())
     , m_dumpJsonOnFailure(dumpJsonOnFailure)
+    , m_options(options)
 {
     Testing::installFatalMessageHandler();
     Testing::setWarningObserver(this);
@@ -310,24 +316,24 @@ void Fuzzer::fuzz(FuzzerConfig config)
     }
 }
 
-void Fuzzer::fuzz(const QStringList &jsonFiles, bool skipLast)
+void Fuzzer::fuzz(const QStringList &jsonFiles)
 {
-    if (jsonFiles.size() > 1 && skipLast) {
+    if (jsonFiles.size() > 1 && (m_options & Option_SkipLast)) {
         qFatal("Use -d only when passing a single json file");
     }
 
     for (const QString &jsonFile : jsonFiles)
-        fuzz(jsonFile, skipLast);
+        fuzz(jsonFile);
 }
 
-void Fuzzer::fuzz(const QString &jsonFile, bool skipLast)
+void Fuzzer::fuzz(const QString &jsonFile)
 {
     QFile file(jsonFile);
     if (file.open(QIODevice::ReadOnly)) {
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         const QVariantMap map = doc.toVariant().toMap();
         Test test = Test::fromVariantMap(this, map);
-        runTest(test, skipLast);
+        runTest(test);
     } else {
         qWarning() << Q_FUNC_INFO << "Failed to open file" << jsonFile;
     }

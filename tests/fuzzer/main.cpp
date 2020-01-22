@@ -51,8 +51,11 @@ int main(int argc, char **argv)
     QCommandLineOption loopOption("l", QCoreApplication::translate("main", "Loops until it crashes"));
     parser.addOption(loopOption);
 
-    QCommandLineOption debugOption("d", QCoreApplication::translate("main", "Skips the last test (presumably failing) and doesn't exit so process can be debugged"));
-    parser.addOption(debugOption);
+    QCommandLineOption skipLastOption("a", QCoreApplication::translate("main", "Skips the last test (presumably failing)"));
+    parser.addOption(skipLastOption);
+
+    QCommandLineOption noQuitOption("n", QCoreApplication::translate("main", "Don't quit at the end, keep event loop running for debugging"));
+    parser.addOption(noQuitOption);
 
     parser.addHelpOption();
     parser.process(app);
@@ -62,7 +65,18 @@ int main(int argc, char **argv)
 
     const QStringList filesToLoad = parser.positionalArguments();
     const bool dumpToJsonOnFatal = forceDumpJson || filesToLoad.isEmpty();
-    Fuzzer fuzzer(dumpToJsonOnFatal);
+
+
+    Fuzzer::Options options = Fuzzer::Option_None;
+    if (parser.isSet(skipLastOption))
+        options |= Fuzzer::Option_SkipLast;
+
+    if (parser.isSet(noQuitOption))
+        options |= Fuzzer::Option_NoQuit;
+
+    const bool loops = parser.isSet(loopOption);
+
+    Fuzzer fuzzer(dumpToJsonOnFatal, options);
     if (slowDown)
         fuzzer.setDelayBetweenOperations(1000);
 
@@ -73,20 +87,17 @@ int main(int argc, char **argv)
         }
     }
 
-    const bool loops = parser.isSet(loopOption);
-    const bool skipLastAndPause = parser.isSet(debugOption);
-
-    QTimer::singleShot(0, &fuzzer, [&app, &fuzzer, filesToLoad, loops, skipLastAndPause] {
+    QTimer::singleShot(0, &fuzzer, [&app, &fuzzer, filesToLoad, loops, options] {
         if (filesToLoad.isEmpty()) {
             do {
                 fuzzer.fuzz({ 1, 10, true });
             } while(loops);
         } else {
-            fuzzer.fuzz(filesToLoad, skipLastAndPause);
+            fuzzer.fuzz(filesToLoad);
         }
 
-        if (!skipLastAndPause) {
-            // if skipLastAndPause is true we keep the app running so it can be debugged
+        if (!(options & Fuzzer::Option_NoQuit)) {
+            // if noQuit is true we keep the app running so it can be debugged
             app.quit();
         }
     });

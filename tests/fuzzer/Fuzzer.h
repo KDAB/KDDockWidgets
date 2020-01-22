@@ -70,6 +70,13 @@ class Fuzzer : public QObject
     Q_OBJECT
 public:
 
+    enum Option {
+        Option_None = 0,
+        Option_NoQuit = 1, ///< Don't quit when the tests finish. So we can debug in gammaray
+        Option_SkipLast = 2 ///< Don't execute the last test. Useful when the last one is the failing one and we want to inspect the state prior to crash
+    };
+    Q_DECLARE_FLAGS(Options, Option)
+
     struct FuzzerConfig
     {
         int numTests;
@@ -223,9 +230,9 @@ public:
         }
     };
 
-    void runTest(const Test &, bool skipLastAndPause = false);
+    void runTest(const Test &);
 
-    explicit Fuzzer(bool dumpJsonOnFailure, QObject *parent = nullptr);
+    explicit Fuzzer(bool dumpJsonOnFailure, Options, QObject *parent = nullptr);
 
     Fuzzer::Layout generateRandomLayout();
 
@@ -252,8 +259,8 @@ public:
     Fuzzer::Test::List generateRandomTests(int num);
 
     void fuzz(FuzzerConfig config);
-    void fuzz(const QStringList &jsonFiles, bool skipLast);
-    void fuzz(const QString &json, bool skipLast);
+    void fuzz(const QStringList &jsonFiles);
+    void fuzz(const QString &json);
 
     QRect randomGeometry();
 
@@ -266,6 +273,7 @@ private:
     Fuzzer::Test m_currentTest;
     const bool m_dumpJsonOnFailure;
     int m_operationDelayMS = 50;
+    const Options m_options;
 };
 
 }
