@@ -96,11 +96,12 @@ void Frame::updateTitleAndIcon()
             }
         }
 
+        setObjectName(dw->uniqueName());
+
     } else if (currentTabIndex() != -1) {
         qWarning() << Q_FUNC_INFO << "Invalid dock widget for frame." << currentTabIndex();
     }
 }
-
 
 void Frame::addWidget(DockWidgetBase *dockWidget)
 {
