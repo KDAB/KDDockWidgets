@@ -84,8 +84,10 @@ void Fuzzer::runTest(const Test &test, bool skipLastAndPause)
     int index = 0;
 
     auto operations = test.operations;
-    if (skipLastAndPause)
-        operations.removeLast();
+    if (skipLastAndPause) {
+        auto last = operations.takeLast();
+        qDebug() << "Skipping" << last->toString() << "\n";
+    }
 
     for (const auto &op : operations) {
         index++;

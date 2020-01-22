@@ -33,6 +33,11 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;
 using namespace KDDockWidgets::Testing::Operations;
 
+static QString operationTypeStr(OperationType ot)
+{
+    return QMetaEnum::fromType<OperationType>().valueToKey(ot);
+}
+
 OperationBase::OperationBase(KDDockWidgets::Testing::Operations::OperationType type, Fuzzer *fuzzer)
     : m_operationType(type)
     , m_fuzzer(fuzzer)
@@ -126,6 +131,11 @@ OperationBase::Ptr OperationBase::newOperation(Fuzzer *fuzzer, OperationType typ
     }
 
     return ptr;
+}
+
+QString OperationBase::toString() const
+{
+    return QStringLiteral("type=%1;description=%2").arg(operationTypeStr(m_operationType), m_description);
 }
 
 DockWidgetBase *OperationBase::dockByName(const QString &name) const

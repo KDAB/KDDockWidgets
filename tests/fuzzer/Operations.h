@@ -29,6 +29,7 @@
 
 #include <QObject>
 #include <QVector>
+#include <QMetaEnum>
 
 #include <memory>
 
@@ -42,7 +43,7 @@ namespace Testing {
 class Fuzzer;
 
 namespace Operations {
-
+Q_NAMESPACE
 enum OperationType {
     OperationType_None = 0,
     OperationType_CloseViaDockWidgetAPI, ///< Closing programatically via DockWidget::close()
@@ -52,6 +53,8 @@ enum OperationType {
     OperationType_AddDockWidgetAsTab,    ///< DockWidget::addDockWidgetAsTab()
     OperationType_Count /// Keep at end
 };
+Q_ENUM_NS(OperationType)
+
 
 ///@brief Describes a testable action.
 class OperationBase {
@@ -72,6 +75,7 @@ public:
     QString description() const { return m_description; }
 
     virtual bool hasParams() const = 0;
+    QString toString() const;
 
 protected:
     virtual void execute_impl() = 0;
