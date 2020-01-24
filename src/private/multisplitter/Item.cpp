@@ -244,7 +244,7 @@ void Item::ensureMinSize(Qt::Orientation orientation)
 
     const int suggestedDelta1 = qMin(delta, qCeil(delta / 2) + anchor1->thickness() + 1);
     const int maxPos1 = bound2 - newLength - anchor1->thickness();
-    const int newPosition1 = qMax(qMin(maxPos1, anchor1->position() - suggestedDelta1), bound1); // Honour the bound
+    const int newPosition1 = qMin(anchor1->position(), qMax(qMin(maxPos1, anchor1->position() - suggestedDelta1), bound1)); // Honour the bound
     const int newPosition2 = newPosition1 + anchor1->thickness() + newLength; // No need to check bound2, we have enough space afterall
 
     if (!anchor1->isStatic())
