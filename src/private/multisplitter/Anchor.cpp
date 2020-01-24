@@ -518,7 +518,7 @@ int Anchor::cumulativeMinLength(Anchor::Side side) const
 Anchor::CumulativeMin Anchor::cumulativeMinLength_recursive(Anchor::Side side) const
 {
     const auto items = this->items(side);
-    CumulativeMin result;
+    CumulativeMin result = { 0, 0 };
 
     for (auto item : items) {
         Anchor *oppositeAnchor = item->anchorAtSide(side, orientation());
@@ -528,7 +528,7 @@ Anchor::CumulativeMin Anchor::cumulativeMinLength_recursive(Anchor::Side side) c
             return {0, 0};
         }
 
-        CumulativeMin candidateMin;
+        CumulativeMin candidateMin = { 0, 0 };
         if (!item->isPlaceholder()) {
             candidateMin.numItems++;
             candidateMin.minLength = item->minLength(orientation());

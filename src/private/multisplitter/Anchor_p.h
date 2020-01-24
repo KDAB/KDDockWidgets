@@ -286,8 +286,8 @@ public:
 
 private:
     struct CumulativeMin {
-        int minLength = 0;
-        int numItems = 0;
+        int minLength;
+        int numItems;
         CumulativeMin& operator+=(CumulativeMin other) {
             minLength += other.minLength;
             numItems += other.numItems;
