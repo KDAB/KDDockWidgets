@@ -319,6 +319,6 @@ void DebugWindow::mousePressEvent(QMouseEvent *event)
              << (w ? w->parentWidget() : nullptr) << "; geometry="
              << (w ? w->geometry() : QRect());
 
-
-    m_isPickingWidget->quit();
+    if (m_isPickingWidget)
+        m_isPickingWidget->quit();
 }
