@@ -155,13 +155,6 @@
     },
     "operations": [
         {
-            "comment": "Hidding DockWidget-51",
-            "params": {
-                "dockWidgetName": "DockWidget-51"
-            },
-            "type": 2
-        },
-        {
             "comment": "AddDockWidget DockWidget-49-[hidden] to top",
             "params": {
                 "addingOption": 0,
@@ -170,35 +163,6 @@
                 "mainWindowName": "MainWindow-9"
             },
             "type": 4
-        },
-        {
-            "comment": "Hidding DockWidget-48",
-            "params": {
-                "dockWidgetName": "DockWidget-48"
-            },
-            "type": 2
-        },
-        {
-            "comment": "Hidding DockWidget-49",
-            "params": {
-                "dockWidgetName": "DockWidget-49"
-            },
-            "type": 2
-        },
-        {
-            "comment": "Hidding DockWidget-47",
-            "params": {
-                "dockWidgetName": "DockWidget-47"
-            },
-            "type": 2
-        },
-        {
-            "comment": "AddDockWidgetAsTab DockWidget-48-[hidden] onto DockWidget-53",
-            "params": {
-                "dockWidgetName": "DockWidget-53",
-                "dockWidgetToAddName": "DockWidget-48"
-            },
-            "type": 5
         },
         {
             "comment": "AddDockWidgetAsTab DockWidget-51-[hidden] onto DockWidget-53-[hidden]",
@@ -231,13 +195,6 @@
                 "mainWindowName": "MainWindow-9"
             },
             "type": 4
-        },
-        {
-            "comment": "Hidding DockWidget-54",
-            "params": {
-                "dockWidgetName": "DockWidget-54"
-            },
-            "type": 2
         },
         {
             "comment": "AddDockWidget DockWidget-53-[hidden] to bottom",
@@ -332,20 +289,6 @@
             "type": 3
         },
         {
-            "comment": "Closing DockWidget-48",
-            "params": {
-                "dockWidgetName": "DockWidget-48"
-            },
-            "type": 1
-        },
-        {
-            "comment": "Hidding DockWidget-53",
-            "params": {
-                "dockWidgetName": "DockWidget-53"
-            },
-            "type": 2
-        },
-        {
             "comment": "AddDockWidget DockWidget-53-[hidden] to left, relative to DockWidget-52",
             "params": {
                 "addingOption": 0,
@@ -382,28 +325,11 @@
             "type": 4
         },
         {
-            "comment": "Hidding DockWidget-50",
-            "params": {
-                "dockWidgetName": "DockWidget-50"
-            },
-            "type": 2
-        },
-        {
             "comment": "Closing DockWidget-47",
             "params": {
                 "dockWidgetName": "DockWidget-47"
             },
             "type": 1
-        },
-        {
-            "comment": "AddDockWidget DockWidget-54 to bottom",
-            "params": {
-                "addingOption": 0,
-                "dockWidgetName": "DockWidget-54",
-                "location": 4,
-                "mainWindowName": "MainWindow-9"
-            },
-            "type": 4
         },
         {
             "comment": "Showing DockWidget-48-[hidden]",
