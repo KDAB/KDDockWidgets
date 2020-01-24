@@ -562,11 +562,13 @@ private:
 
     /**
      * Called by addWidget().
-     * If you drop a 100px in the middle of a layout, it will steal some space from the left widgets
-     * and still some space from the right ones. delta1 is the space stolen at the left
-     * delta2 is the space stolen at the right. The sum of delta1+delta2 is the size of the widget
-     * (plus the splitter). Then we propagate the resize, so that all widgets chip in and get smaller
-     * to make room for ours.
+     *
+     * When adding a widget to a layout, it will steal space from the widgets on the left (or top) (@p direction being Anchor::Side1),
+     * and from the widgets on the right (or bottom) (@p direction being Anchor::Side2).
+     *
+     * @param delta the amount of space we're stealing in the specified side
+     * @param fromAnchor The anchor we're starting from
+     * @param direction if we're going left/top (Side1) or right/bottom (Side2)
      */
     void propagateResize(int delta, Anchor *fromAnchor, Anchor::Side direction);
 
