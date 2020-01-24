@@ -789,6 +789,8 @@ MultiSplitterLayout::Length MultiSplitterLayout::availableLengthForDrop(Location
         break;
     }
 
+    anchor = anchor->isFollowing() ? anchor->endFollowee() : anchor;
+
     const int minForAlreadyOccupied1 = anchor->cumulativeMinLength(Anchor::Side1) - anchor->thickness(); // TODO: Check if this is correct, we're discounting the anchor twice
     const int minForAlreadyOccupied2 = anchor->cumulativeMinLength(Anchor::Side2) - anchor->thickness();
 
