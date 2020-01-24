@@ -271,6 +271,7 @@ private:
     std::random_device m_randomDevice;
     std::mt19937 m_randomEngine;
     Fuzzer::Test m_currentTest;
+    QString m_currentJsonFile;
     const bool m_dumpJsonOnFailure;
     int m_operationDelayMS = 50;
     const Options m_options;
