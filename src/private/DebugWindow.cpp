@@ -36,6 +36,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QLineEdit>
 #include <QSpinBox>
 #include <QMessageBox>
 #include <QApplication>
@@ -110,6 +111,25 @@ DebugWindow::DebugWindow(QWidget *parent)
         } else {
             auto dw = docks.at(index);
             dw->setFloating(!dw->isFloating());
+        }
+    });
+
+    hlay = new QHBoxLayout();
+    layout->addLayout(hlay);
+    button = new QPushButton(this);
+    auto lineedit = new QLineEdit(this);
+    lineedit->setPlaceholderText(tr("DockWidget unique name"));
+    button->setText(QStringLiteral("Show"));
+    hlay->addWidget(button);
+    hlay->addWidget(lineedit);
+
+    connect(button, &QPushButton::clicked, this, [lineedit] {
+        auto dw = DockRegistry::self()->dockByName(lineedit->text());
+        if (dw) {
+            dw->show();
+        } else {
+            QMessageBox::warning(nullptr, QStringLiteral("Could not find"),
+                                 QStringLiteral("Could not find DockWidget with name %1").arg(lineedit->text()));
         }
     });
 
