@@ -233,6 +233,9 @@ void Item::ensureMinSize(Qt::Orientation orientation)
     Anchor *anchor1 = anchorGroup().anchorAtSide(Anchor::Side1, orientation);
     Anchor *anchor2 = anchorGroup().anchorAtSide(Anchor::Side2, orientation);
 
+    anchor1 = anchor1->isFollowing() ? anchor1->endFollowee() : anchor1;
+    anchor2 = anchor2->isFollowing() ? anchor2->endFollowee() : anchor2;
+
     const int bound1 = d->m_layout->boundPositionForAnchor(anchor1, Anchor::Side1);
     const int bound2 = d->m_layout->boundPositionForAnchor(anchor2, Anchor::Side2);
 
