@@ -338,13 +338,11 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
             existingAnchor->setPosition(posForExistingAnchor);
         }
 
-        // If you drop a 100px in the middle of a layout, it will steal some space from the left widgets
-        // and still some space from the right ones. delta1 is the space stolen at the left
-        // delta2 is the space stolen at the right. The sum of delta1+delta2 is the size of the widget
-        // (plus the splitter). Then we propagate the resize, so that all widgets chip in and get smaller
-        // to make room for ours.
-        propagateResize(delta1, direction1Anchor, /*direction*/ Anchor::Side1);
-        propagateResize(delta2, direction2Anchor, /*direction*/ Anchor::Side2);
+        // Make sure not just the side1/side2 adjacent widgets are contributing space for our new widget
+        // the ones adjacents to the adjacents (recursive) must also give.
+        // The code would work fine without this, it's just that it wouldn't look fair.
+        propagateResize(delta1, direction1Anchor, Anchor::Side1);
+        propagateResize(delta2, direction2Anchor, Anchor::Side2);
     }
 
     if (newAnchor) {
