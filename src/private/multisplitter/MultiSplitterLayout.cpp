@@ -1613,28 +1613,6 @@ void MultiSplitterLayout::restorePlaceholder(Item *item)
         const int boundPosition2 = side2Anchor->isStatic() ? side2Anchor->position()
                                                            : boundPositionForAnchor(side2Anchor, Anchor::Side2);
 
-        // Double check the available space again, for sanity
-        if (!anchorGroup.hasAvailableSizeFor(newSize, orientation)) {
-            qWarning() << "There's not enough space: bound2=" << boundPosition2
-                       << "; bound1=" << boundPosition1
-                       << "; newSize=" << newSize
-                       << "; anchorGroup.available" << anchorGroup.availableSize()
-                       << "; widgetMinSize=" << widgetMinSize
-                       << "; newspace=" << boundPosition2 - boundPosition1 - side1Anchor->thickness()
-                       << "; available_old=" << availableSize
-                       << "; available_new=" << this->availableSize()
-                       << "; anchors=" << side1Anchor << side2Anchor
-                       << "; oldPos1=" << oldPosition1
-                       << "; oldPos2=" << oldPosition2
-                       << "; thickness=" << side1Anchor->thickness() << side2Anchor->thickness()
-                       << "; isFollowing=" << side1Anchor->isFollowing() << side2Anchor->isFollowing()
-                       << "; static=" << side1Anchor->isStatic() << side2Anchor->isStatic()
-                       << "; size=" << m_size
-                       << "; m_minSize=" << m_minSize;
-            item->endBlockPropagateGeo();
-            return;
-        }
-
         const int newLength = anchorFollowingInwards->isVertical() ? newSize.width() : newSize.height();
         // Let's try that each anchor contributes 50%, so that the widget appears centered
         const int suggestedLength1 = qMin(newLength, qCeil(newLength / 2) + side1Anchor->thickness() + 1);
