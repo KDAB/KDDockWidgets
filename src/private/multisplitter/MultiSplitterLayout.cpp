@@ -1342,7 +1342,8 @@ bool MultiSplitterLayout::checkSanity(AnchorSanityOption options) const
         if ((options & AnchorSanity_WidgetInvalidSizes) && !item->isPlaceholder()) {
             if (item->width() <= 0 || item->height() <= 0) {
                 dumpDebug();
-                qWarning() << "Invalid size for widget" << item << item->size() << "; isPlaceholder=" << item->isPlaceholder();
+                qWarning() << "Invalid size for widget" << item << item->size() << "; isPlaceholder=" << item->isPlaceholder()
+                           << "; minSize=" << item->minimumSize();
                 return false;
             }
         }
