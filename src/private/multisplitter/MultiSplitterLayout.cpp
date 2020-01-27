@@ -194,7 +194,8 @@ std::pair<int,int> MultiSplitterLayout::boundInterval(int newPos1, Anchor* ancho
                        << "; newPos2=" << newPos2
                        << "; bounds=" << bound1 << bound2
                        << "; anchor1=" << anchor1
-                       << "; anchor2=" << anchor2;
+                       << "; anchor2=" << anchor2
+                       << "; size=" << size();
         }
 
         return { newPos1, newPos2 };
@@ -211,7 +212,8 @@ std::pair<int,int> MultiSplitterLayout::boundInterval(int newPos1, Anchor* ancho
                        << "; newPos2=" << newPos2
                        << "; bounds=" << bound1 << bound2
                        << "; anchor1=" << anchor1
-                       << "; anchor2=" << anchor2;
+                       << "; anchor2=" << anchor2
+                       << "; size=" << size();
         }
 
         return { newPos1, newPos2 };
