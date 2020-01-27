@@ -189,7 +189,12 @@ std::pair<int,int> MultiSplitterLayout::boundInterval(int newPos1, Anchor* ancho
         newPos2 = newPos2 + bythismuch;
 
         if (newPos2 > bound2) {
-            qWarning() << "Adjusted interval still out of bounds. Not enough space. #1";
+            qWarning() << "Adjusted interval still out of bounds. Not enough space. #1"
+                       << "; newPos1=" << newPos1
+                       << "; newPos2=" << newPos2
+                       << "; bounds=" << bound1 << bound2
+                       << "; anchor1=" << anchor1
+                       << "; anchor2=" << anchor2;
         }
 
         return { newPos1, newPos2 };
@@ -201,7 +206,12 @@ std::pair<int,int> MultiSplitterLayout::boundInterval(int newPos1, Anchor* ancho
         newPos1 = newPos1 - bythismuch;
 
         if (newPos1 < bound1) {
-            qWarning() << "Adjusted interval still out of bounds. Not enough space. #1";
+            qWarning() << "Adjusted interval still out of bounds. Not enough space. #2"
+                       << "; newPos1=" << newPos1
+                       << "; newPos2=" << newPos2
+                       << "; bounds=" << bound1 << bound2
+                       << "; anchor1=" << anchor1
+                       << "; anchor2=" << anchor2;
         }
 
         return { newPos1, newPos2 };
