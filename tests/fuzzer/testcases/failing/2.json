@@ -16,7 +16,7 @@
                     "height": 447,
                     "width": 498
                 },
-                "name": "DockWidget-4322"
+                "name": "DockWidget-1"
             },
             {
                 "geometry": {
@@ -33,7 +33,7 @@
                     "height": 565,
                     "width": 544
                 },
-                "name": "DockWidget-4323"
+                "name": "DockWidget-2"
             },
             {
                 "geometry": {
@@ -50,7 +50,7 @@
                     "height": 284,
                     "width": 596
                 },
-                "name": "DockWidget-4324"
+                "name": "DockWidget-3"
             }
         ],
         "mainWindows": [
@@ -64,94 +64,94 @@
                     "y": 2
                 },
                 "mainWindowOption": 0,
-                "name": "MainWindow-794"
+                "name": "MainWindow-1"
             }
         ]
     },
     "operations": [
         {
-            "comment": "AddDockWidget DockWidget-4323-[hidden] to top",
+            "comment": "AddDockWidget DockWidget-2-[hidden] to top",
             "params": {
                 "addingOption": 0,
-                "dockWidgetName": "DockWidget-4323",
+                "dockWidgetName": "DockWidget-2",
                 "location": 2,
-                "mainWindowName": "MainWindow-794"
+                "mainWindowName": "MainWindow-1"
             },
             "type": 4
         },
         {
-            "comment": "Closing DockWidget-4323",
+            "comment": "Closing DockWidget-2",
             "params": {
-                "dockWidgetName": "DockWidget-4323"
+                "dockWidgetName": "DockWidget-2"
             },
             "type": 1
         },
         {
-            "comment": "AddDockWidget DockWidget-4324 to left",
+            "comment": "AddDockWidget DockWidget-3 to left",
             "params": {
                 "addingOption": 0,
-                "dockWidgetName": "DockWidget-4324",
+                "dockWidgetName": "DockWidget-3",
                 "location": 1,
-                "mainWindowName": "MainWindow-794"
+                "mainWindowName": "MainWindow-1"
             },
             "type": 4
         },
         {
-            "comment": "AddDockWidget DockWidget-4324 to right",
+            "comment": "AddDockWidget DockWidget-3 to right",
             "params": {
                 "addingOption": 0,
-                "dockWidgetName": "DockWidget-4324",
+                "dockWidgetName": "DockWidget-3",
                 "location": 3,
-                "mainWindowName": "MainWindow-794"
+                "mainWindowName": "MainWindow-1"
             },
             "type": 4
         },
         {
-            "comment": "Closing DockWidget-4324",
+            "comment": "Closing DockWidget-3",
             "params": {
-                "dockWidgetName": "DockWidget-4324"
+                "dockWidgetName": "DockWidget-3"
             },
             "type": 1
         },
         {
-            "comment": "AddDockWidget DockWidget-4324-[hidden] to left",
+            "comment": "AddDockWidget DockWidget-3-[hidden] to left",
             "params": {
                 "addingOption": 0,
-                "dockWidgetName": "DockWidget-4324",
+                "dockWidgetName": "DockWidget-3",
                 "location": 1,
-                "mainWindowName": "MainWindow-794"
+                "mainWindowName": "MainWindow-1"
             },
             "type": 4
         },
         {
-            "comment": "AddDockWidget DockWidget-4322-[hidden] to top, relative to DockWidget-4324",
+            "comment": "AddDockWidget DockWidget-1-[hidden] to top, relative to DockWidget-3",
             "params": {
                 "addingOption": 0,
-                "dockWidgetName": "DockWidget-4322",
+                "dockWidgetName": "DockWidget-1",
                 "location": 2,
-                "mainWindowName": "MainWindow-794",
-                "relativeToName": "DockWidget-4324"
+                "mainWindowName": "MainWindow-1",
+                "relativeToName": "DockWidget-3"
             },
             "type": 4
         },
         {
-            "comment": "Hidding DockWidget-4324",
+            "comment": "Hidding DockWidget-3",
             "params": {
-                "dockWidgetName": "DockWidget-4324"
+                "dockWidgetName": "DockWidget-3"
             },
             "type": 2
         },
         {
-            "comment": "Closing DockWidget-4322",
+            "comment": "Closing DockWidget-1",
             "params": {
-                "dockWidgetName": "DockWidget-4322"
+                "dockWidgetName": "DockWidget-1"
             },
             "type": 1
         },
         {
-            "comment": "Showing DockWidget-4324-[hidden]",
+            "comment": "Showing DockWidget-3-[hidden]",
             "params": {
-                "dockWidgetName": "DockWidget-4324"
+                "dockWidgetName": "DockWidget-3"
             },
             "type": 3
         }
