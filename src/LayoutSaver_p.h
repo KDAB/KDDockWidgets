@@ -90,7 +90,7 @@ struct LayoutSaver::Frame
     bool isNull = true;
     QString objectName;
     QRect geometry;
-    int options;
+    unsigned int options;
     int currentTabIndex;
 
     LayoutSaver::DockWidget::List dockWidgets;
