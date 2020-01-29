@@ -353,7 +353,7 @@ bool LayoutSaver::Frame::isValid() const
         return false;
     }
 
-    if (options < 0 || options > 3) {
+    if (options > 3) {
         qWarning() << Q_FUNC_INFO << "Invalid options" << options;
         return false;
     }
