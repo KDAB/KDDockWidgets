@@ -10,7 +10,7 @@ cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
 
 option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
-option(OPTION_ASAN_SUPPORT "Activate support for using ASAN" OFF)
+option(OPTION_SANITIZER_SUPPORT "Activate support for using sanitizers" OFF)
 # option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
 find_package(Qt5Widgets)
@@ -22,7 +22,7 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_DIR})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-if (OPTION_ASAN_SUPPORT)
+if (OPTION_SANITIZER_SUPPORT)
     include(ECMEnableSanitizers)
 endif()	
 
