@@ -223,6 +223,7 @@ private:
     const FrameOptions m_options;
     QPointer<Item> m_layoutItem;
     bool m_beingDeleted = false;
+    QMetaObject::Connection m_visibleWidgetCountChangedConnection;
 };
 
 }
