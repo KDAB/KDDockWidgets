@@ -315,6 +315,11 @@ TitleBar *DockWidgetBase::titleBar() const
     return nullptr;
 }
 
+bool DockWidgetBase::isOpen() const
+{
+    return d->toggleAction->isChecked();
+}
+
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this

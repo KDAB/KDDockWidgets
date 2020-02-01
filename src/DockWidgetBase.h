@@ -223,6 +223,12 @@ public:
      */
     TitleBar *titleBar() const;
 
+    /**
+     * @brief Returns whether this dock widget is open.
+     * Equivalent to calling toggleAction().isChecked() or isVisible()
+     */
+    bool isOpen() const;
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();
