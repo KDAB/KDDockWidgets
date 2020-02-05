@@ -62,8 +62,11 @@ public:
         q->connect(q, &DockWidgetBase::hidden, q, [this] { onDockWidgetHidden(); } );
 
         q->connect(toggleAction, &QAction::toggled, q, [this] (bool enabled) {
-            if (!m_updatingToggleAction) // guard against recursiveness
+            if (!m_updatingToggleAction) { // guard against recursiveness
+                toggleAction->blockSignals(true); // and don't emit spurious toggle. Like when a dock widget is inserted into a tab widget it might get hide events, ignore those. The Dock Widget is open.
                 toggle(enabled);
+                toggleAction->blockSignals(false);
+            }
         });
 
         toggleAction->setCheckable(true);
