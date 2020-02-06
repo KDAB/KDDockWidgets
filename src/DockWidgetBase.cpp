@@ -77,6 +77,8 @@ public:
         updateTitle();
     }
 
+    QPoint defaultCenterPosForFloating();
+
     void updateTitle();
     void updateIcon();
     void toggle(bool enabled);
@@ -333,8 +335,12 @@ FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 
     if (isWindow()) {
         QRect geo = lastPosition()->lastFloatingGeometry();
-        if (geo.isNull())
+        if (geo.isNull()) {
             geo = geometry();
+            const QPoint center = d->defaultCenterPosForFloating();
+            if (!center.isNull())
+                geo.moveCenter(center);
+        }
 
         auto frame = Config::self().frameworkWidgetFactory()->createFrame();
         frame->addWidget(this);
@@ -380,6 +386,17 @@ void DockWidgetBase::addPlaceholderItem(Item *item)
 LastPosition *DockWidgetBase::lastPosition() const
 {
     return &d->m_lastPosition;
+}
+
+QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
+{
+    MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
+    // We don't care about multiple mainwindows yet. Or, let's just say that the first one is more main than the others
+    MainWindowBase *mw = mainWindows.isEmpty() ? nullptr : mainWindows.constFirst();
+    if (!mw || !q->isFloating())
+        return {};
+
+    return mw->geometry().center();
 }
 
 void DockWidgetBase::Private::updateTitle()
