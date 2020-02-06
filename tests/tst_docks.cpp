@@ -361,6 +361,7 @@ private Q_SLOTS:
     void tst_honourGeometryOfHiddenWindow();
     void tst_registry();
     void tst_dockNotFillingSpace();
+    void tst_floatingLastPosAfterDoubleClose();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -4407,6 +4408,17 @@ void TestDocks::tst_dockNotFillingSpace()
      delete d1;
      delete d2;
      delete m;
+}
+
+void TestDocks::tst_floatingLastPosAfterDoubleClose()
+{
+    EnsureTopLevelsDeleted e;
+    auto d1 = new DockWidget(QStringLiteral("a"));
+    QVERIFY(d1->lastPosition()->lastFloatingGeometry().isNull());
+    QVERIFY(!d1->isVisible());
+    d1->close();
+    QVERIFY(d1->lastPosition()->lastFloatingGeometry().isNull());
+    delete d1;
 }
 
 void TestDocks::tst_rectForDropCrash()

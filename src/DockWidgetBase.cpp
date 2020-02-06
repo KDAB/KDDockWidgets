@@ -455,7 +455,8 @@ TabWidget *DockWidgetBase::Private::parentTabWidget() const
 
 void DockWidgetBase::Private::close()
 {
-    if (!m_isForceClosing && q->isFloating()) { // only user-closing is interesting to save the geometry
+    if (!m_isForceClosing && q->isFloating() && q->isVisible()) { // only user-closing is interesting to save the geometry
+        // We check for isVisible so we don't save geometry if you call close() on an already closed dock widget
         m_lastPosition.setLastFloatingGeometry(q->window()->geometry());
     }
 
