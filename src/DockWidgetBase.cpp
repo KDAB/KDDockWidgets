@@ -99,6 +99,7 @@ public:
     void saveTabIndex();
 
     const QString name;
+    QString affinityName;
     QString title;
     QIcon icon;
     QWidget *widget = nullptr;
@@ -143,6 +144,12 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other)
         return;
     }
 
+    if (other->affinityName() != affinityName()) {
+        qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
+                   << other->affinityName() << affinityName();
+        return;
+    }
+
     Frame *frame = this->frame();
 
     if (frame) {
@@ -168,6 +175,12 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other, Loca
     qCDebug(addwidget) << Q_FUNC_INFO << other << location << relativeTo;
     if (qobject_cast<MainWindowBase*>(window())) {
         qWarning() << Q_FUNC_INFO << "Just use MainWindow::addWidget() directly. This function is for floating nested windows only.";
+        return;
+    }
+
+    if (other->affinityName() != affinityName()) {
+        qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
+                   << other->affinityName() << affinityName();
         return;
     }
 
@@ -323,6 +336,26 @@ TitleBar *DockWidgetBase::titleBar() const
 bool DockWidgetBase::isOpen() const
 {
     return d->toggleAction->isChecked();
+}
+
+QString DockWidgetBase::affinityName() const
+{
+    return d->affinityName;
+}
+
+void DockWidgetBase::setAffinityName(const QString &name)
+{
+    if (d->affinityName == name)
+        return;
+
+    if (!d->affinityName.isEmpty()) {
+        qWarning() << Q_FUNC_INFO
+                   << "Affinity is already set, refusing to change."
+                   << "Submit a feature request with a good justification.";
+        return;
+    }
+
+    d->affinityName = name;
 }
 
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()

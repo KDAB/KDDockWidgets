@@ -68,13 +68,18 @@ public:
 
     bool checkSanity(MultiSplitterLayout::AnchorSanityOption o = MultiSplitterLayout::AnchorSanity_All);
     bool contains(DockWidgetBase *) const;
+
+    QString affinityName() const;
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;
     friend class TestDocks;
     friend class DropIndicatorOverlayInterface;
     friend class AnimatedIndicators;
+    template <typename T>
+    bool validateAffinity(T *) const;
     bool m_inDestructor = false;
+    QString m_affinityName;
     DropIndicatorOverlayInterface *m_dropIndicatorOverlay = nullptr;
 };
 }

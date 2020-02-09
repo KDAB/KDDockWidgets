@@ -51,6 +51,7 @@ class DockRegistry;
 class LayoutSaver;
 class TabWidget;
 class TitleBar;
+class MainWindowBase;
 
 /**
  * @brief The DockWidget base-class. DockWidget and DockWidgetBase are only
@@ -228,6 +229,30 @@ public:
      * Equivalent to calling toggleAction().isChecked() or isVisible()
      */
     bool isOpen() const;
+
+    /**
+     * @brief Sets the affinity name. Dock widgets can only dock into dock widgets of the same affinity.
+     *
+     * By default the affinity is empty and a dock widget can dock into any main window and into any
+     * floating window. Usually you won't ever need to call
+     * this function, unless you have requirements where certain dock widgets can only dock into
+     * certain other dock widgets and main windows. @sa MainWindowBase::setAffinityName().
+     *
+     * Note: Call this function right after creating your dock widget, before adding to a main window and
+     * before restoring any layout.
+     *
+     * Note: Currently you can only call this function once, to keep the code simple and avoid
+     * edge cases. This will only be changed if a good use case comes up that requires changing
+     * affinities multiple times.
+     *
+     * @p name The affinity name.
+     */
+    void setAffinityName(const QString &name);
+
+    /**
+     * @brief Returns the affinity name. Empty by default.
+     */
+    QString affinityName() const;
 
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed

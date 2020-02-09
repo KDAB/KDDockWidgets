@@ -49,8 +49,9 @@ static MyWidget *newMyWidget()
     }
 }
 
-MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *parent)
-    : MainWindow(QStringLiteral("MyMainWindow"), options, parent)
+MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
+                           const QString &affinityName, QWidget *parent)
+    : MainWindow(uniqueName, options, parent)
 {
     // qApp->installEventFilter(this);
 
@@ -88,6 +89,7 @@ MyMainWindow::MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *pa
         saver.restoreFromDisk();
     });
 
+    setAffinityName(affinityName);
     createDockWidgets();
 }
 
@@ -124,6 +126,7 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
 {
     static int count = 0;
     auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count));
+    dock->setAffinityName(affinityName()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
 
     if (count == 1)
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));

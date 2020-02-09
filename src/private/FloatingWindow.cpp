@@ -122,7 +122,7 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     m_layoutDestroyedConnection = connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
-static MainWindowBase* hackFindParentHarder(MainWindowBase *candidateParent)
+static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
 {
     // TODO: Using a parent helps the floating windows stay in front of the main window always.
     // We're not receiving the parent via ctor argument as the app can have multiple-main windows,
@@ -137,10 +137,30 @@ static MainWindowBase* hackFindParentHarder(MainWindowBase *candidateParent)
 
     if (windows.isEmpty())
         return nullptr;
-    if (windows.size() == 1)
+
+    if (windows.size() == 1) {
         return windows.first();
-    else {
-        qWarning() << Q_FUNC_INFO << "There's multiple MainWindows, not sure what to do about parenting";
+    } else {
+        const QString affinityName = frame ? frame->affinityName() : QString();
+
+        if (affinityName.isEmpty()) {
+
+            for (MainWindowBase *window : windows) {
+                if (window->affinityName().isEmpty())
+                    return window;
+            }
+
+            qWarning() << Q_FUNC_INFO << "No window with empty affinity found";
+
+        } else {
+            for (MainWindowBase *window : windows) {
+                if (window->affinityName() == affinityName)
+                    return window;
+            }
+
+            qWarning() << Q_FUNC_INFO << "No window with affinity" << affinityName << "found";
+        }
+
         return windows.first();
     }
 #else
@@ -150,7 +170,7 @@ static MainWindowBase* hackFindParentHarder(MainWindowBase *candidateParent)
 }
 
 FloatingWindow::FloatingWindow(Frame *frame, MainWindowBase *parent)
-    : FloatingWindow(hackFindParentHarder(parent))
+    : FloatingWindow(hackFindParentHarder(frame, parent))
 {
     m_disableSetVisible = true;
     // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
@@ -308,6 +328,12 @@ void FloatingWindow::updateTitleBarVisibility()
     }
 
     m_titleBar->setVisible(visible);
+}
+
+QString FloatingWindow::affinityName() const
+{
+    auto frames = this->frames();
+    return frames.isEmpty() ? QString() : frames.constFirst()->affinityName();
 }
 
 void FloatingWindow::updateTitleAndIcon()

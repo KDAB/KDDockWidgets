@@ -26,6 +26,7 @@
 #include "Config.h"
 #include "DropIndicatorOverlayInterface_p.h"
 #include "FrameworkWidgetFactory.h"
+#include "MainWindowBase.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"
@@ -109,6 +110,9 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
         return;
     }
 
+    if (!validateAffinity(dw))
+        return;
+
     Frame *frame = nullptr;
     Frame *relativeToFrame = relativeTo ? relativeTo->frame() : nullptr;
 
@@ -158,8 +162,22 @@ bool DropArea::contains(DockWidgetBase *dw) const
     return dw->frame() && m_layout->contains(dw->frame());
 }
 
+QString DropArea::affinityName() const
+{
+    if (auto mw = mainWindow()) {
+        return mw->affinityName();
+    } else if (auto fw = floatingWindow()) {
+        return fw->affinityName();
+    }
+
+    return QString();
+}
+
 void DropArea::hover(FloatingWindow *floatingWindow, QPoint globalPos)
 {
+    if (!validateAffinity(floatingWindow))
+        return;
+
     Frame *frame = frameContainingPos(globalPos); // Frame is nullptr if MainWindowOption_HasCentralFrame isn't set
     m_dropIndicatorOverlay->setWindowBeingDragged(floatingWindow);
     m_dropIndicatorOverlay->setHoveredFrame(frame);
@@ -220,6 +238,8 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
         break;
     case DropIndicatorOverlayInterface::DropLocation_Center:
         qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingFrame;
+        if (!validateAffinity(droppedWindow))
+            return false;
         acceptingFrame->addWidget(droppedWindow);
         break;
 
@@ -241,10 +261,16 @@ bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location locat
     qCDebug(docking) << "DropArea::addFrame";
 
     if (auto dock = qobject_cast<DockWidgetBase *>(droppedWindow)) {
+        if (!validateAffinity(dock))
+            return false;
+
         auto frame = Config::self().frameworkWidgetFactory()->createFrame();
         frame->addWidget(dock);
         m_layout->addWidget(frame, location, relativeTo);
     } else if (auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow)) {
+        if (!validateAffinity(floatingWindow))
+            return false;
+
         m_layout->addMultiSplitter(floatingWindow->dropArea(), location, relativeTo);
         floatingWindow->scheduleDeleteLater();
         return true;
@@ -260,4 +286,17 @@ void DropArea::removeHover()
 {
     m_dropIndicatorOverlay->setWindowBeingDragged(nullptr);
     m_dropIndicatorOverlay->setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
+}
+
+template<typename T>
+bool DropArea::validateAffinity(T *window) const
+{
+    if (window->affinityName() != affinityName()) {
+        // Commented the warning, so we don't warn when hovering over
+        //qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
+                   //<< window->affinityName() << affinityName();
+        return false;
+    }
+
+    return true;
 }

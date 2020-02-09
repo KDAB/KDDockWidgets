@@ -58,6 +58,12 @@ int main(int argc, char **argv)
     QCommandLineOption lazyResizeOption("l", QCoreApplication::translate("main", "Use lazy resize"));
     parser.addOption(lazyResizeOption);
 
+    QCommandLineOption multipleMainWindows("m", QCoreApplication::translate("main", "Shows two multiple main windows"));
+    parser.addOption(multipleMainWindows);
+
+    QCommandLineOption incompatibleMainWindows("i", QCoreApplication::translate("main", "Only usable with -m. Make the two main windows incompatible with each other. (Illustrates (MainWindowBase::setAffinityName))"));
+    parser.addOption(incompatibleMainWindows);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
@@ -88,11 +94,33 @@ int main(int argc, char **argv)
     if (parser.isSet(lazyResizeOption))
         flags |= KDDockWidgets::Config::Flag_LazyResize;
 
+    if (parser.isSet(incompatibleMainWindows) && !parser.isSet(multipleMainWindows)) {
+        qWarning() << "Error: Argument -i requires -m";
+        return 1;
+    }
+
     KDDockWidgets::Config::self().setFlags(flags);
 
-    MyMainWindow mainWindow(options);
+    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options);
+    mainWindow.setWindowTitle("Main Window 1");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
+
+    if (parser.isSet(multipleMainWindows)) {
+        // By default a dock widget can dock into any main window.
+        // By setting an affinity name we can prevent that. Dock widgets of different affinities are incompatible.
+        const QString affinity = parser.isSet(incompatibleMainWindows) ? QStringLiteral("affinity1")
+                                                                       : QString();
+
+        auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options, affinity);
+        if (affinity.isEmpty())
+            mainWindow2->setWindowTitle("Main Window 2");
+        else
+            mainWindow2->setWindowTitle("Main Window 2 (different affinity)");
+
+        mainWindow2->resize(1200, 1200);
+        mainWindow2->show();
+    }
 
     return app.exec();
 }

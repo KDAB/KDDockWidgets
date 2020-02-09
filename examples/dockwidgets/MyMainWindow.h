@@ -26,7 +26,9 @@ class MyMainWindow : public KDDockWidgets::MainWindow
 {
     Q_OBJECT
 public:
-    explicit MyMainWindow(KDDockWidgets::MainWindowOptions options, QWidget *parent = nullptr);
+    explicit MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
+                          const QString &affinityName = {}, // Usually not needed. Just here to show the feature.
+                          QWidget *parent = nullptr);
 
 private:
     void createDockWidgets();

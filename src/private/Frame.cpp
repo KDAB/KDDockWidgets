@@ -405,6 +405,15 @@ bool Frame::hasTabsVisible() const
     return alwaysShowsTabs() || dockWidgetCount() > 1;
 }
 
+QString Frame::affinityName() const
+{
+    if (isEmpty()) {
+        return {};
+    } else {
+        return dockWidgetAt(0)->affinityName();
+    }
+}
+
 DockWidgetBase *Frame::dockWidgetAt(int index) const
 {
     return qobject_cast<DockWidgetBase *>(m_tabWidget->dockwidgetAt(index));

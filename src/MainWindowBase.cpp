@@ -51,6 +51,7 @@ public:
     }
 
     QString name;
+    QString affinityName;
     const MainWindowOptions m_options;
 };
 
@@ -73,6 +74,12 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
     Q_ASSERT(widget);
     qCDebug(addwidget) << Q_FUNC_INFO << widget;
 
+    if (widget->affinityName() != affinityName()) {
+        qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
+                   << widget->affinityName() << affinityName();
+        return;
+    }
+
     if (d->supportsCentralFrame()) {
         dropArea()->m_centralFrame->addWidget(widget);
     } else {
@@ -82,7 +89,7 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
 
 void MainWindowBase::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBase *relativeTo, AddingOption option)
 {
-     dropArea()->addDockWidget(dw, location, relativeTo, option);
+    dropArea()->addDockWidget(dw, location, relativeTo, option);
 }
 
 QString MainWindowBase::uniqueName() const
@@ -98,6 +105,26 @@ MainWindowOptions MainWindowBase::options() const
 MultiSplitterLayout *MainWindowBase::multiSplitterLayout() const
 {
     return dropArea()->multiSplitterLayout();
+}
+
+void MainWindowBase::setAffinityName(const QString &name)
+{
+    if (d->affinityName == name)
+        return;
+
+    if (!d->affinityName.isEmpty()) {
+        qWarning() << Q_FUNC_INFO
+                   << "Affinity is already set, refusing to change."
+                   << "Submit a feature request with a good justification.";
+        return;
+    }
+
+    d->affinityName = name;
+}
+
+QString MainWindowBase::affinityName() const
+{
+    return d->affinityName;
 }
 
 void MainWindowBase::setUniqueName(const QString &uniqueName)

@@ -202,6 +202,8 @@ public:
      **/
     bool hasTabsVisible() const;
 
+    QString affinityName() const;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();
