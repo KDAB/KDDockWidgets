@@ -81,12 +81,12 @@ Separator *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidgetAdapter 
     return new SeparatorWidget(anchor, parent);
 }
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(QWidget *parent) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent) const
 {
     return new FloatingWindowWidget(parent);
 }
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, QWidget *parent) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWindowBase *parent) const
 {
     return new FloatingWindowWidget(frame, parent);
 }

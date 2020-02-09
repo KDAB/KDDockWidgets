@@ -34,6 +34,7 @@
 
 namespace KDDockWidgets {
 
+class MainWindowBase;
 class DropIndicatorOverlayInterface;
 class Separator;
 class FloatingWindow;
@@ -108,14 +109,14 @@ public:
     ///       Override to provide your own FloatingWindow sub-class. If overridden then
     ///       you also need to override the overloads below.
     ///@param parent Just forward to FloatingWindow's constructor.
-    virtual FloatingWindow *createFloatingWindow(QWidgetOrQuick *parent = nullptr) const = 0;
+    virtual FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const = 0;
 
     ///@brief Called internally by the framework to create a FloatingWindow
     ///       Override to provide your own FloatingWindow sub-class. If overridden then
     ///       you also need to override the overloads above.
     ///@param frame Just forward to FloatingWindow's constructor.
     ///@param parent Just forward to FloatingWindow's constructor.
-    virtual FloatingWindow *createFloatingWindow(Frame *frame, QWidgetOrQuick *parent = nullptr) const = 0;
+    virtual FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const = 0;
 
     ///@brief Called internally by the framework to create a DropIndicatorOverlayInterface
     ///       Override to provide your own DropIndicatorOverlayInterface sub-class.
@@ -135,8 +136,8 @@ public:
     TabBar *createTabBar(TabWidget *parent) const override;
     TabWidget *createTabWidget(Frame *parent) const override;
     Separator *createSeparator(Anchor *anchor, QWidgetAdapter *parent = nullptr) const override;
-    FloatingWindow *createFloatingWindow(QWidgetOrQuick *parent = nullptr) const override;
-    FloatingWindow *createFloatingWindow(Frame *frame, QWidgetOrQuick *parent = nullptr) const override;
+    FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const override;
+    FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const override;
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const override;
 };
 
