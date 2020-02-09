@@ -208,8 +208,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // 2. Restore FloatingWindows
     for (const LayoutSaver::FloatingWindow &fw : qAsConst(layout.floatingWindows)) {
-        QWidget *parent = fw.parentIndex == -1 ? nullptr
-                                               : DockRegistry::self()->mainwindows().at(fw.parentIndex);
+        MainWindowBase *parent = fw.parentIndex == -1 ? nullptr
+                                                      : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
         auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(parent);
         d->deserializeWindowGeometry(fw, floatingWindow);

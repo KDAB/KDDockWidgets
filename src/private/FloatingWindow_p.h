@@ -33,6 +33,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+class MainWindowBase;
 class DropArea;
 class Frame;
 class MultiSplitterLayout;
@@ -42,8 +43,8 @@ class DOCKS_EXPORT FloatingWindow : public QWidgetAdapter
 {
     Q_OBJECT
 public:
-    explicit FloatingWindow(QWidgetOrQuick *parent = nullptr);
-    explicit FloatingWindow(Frame *frame, QWidgetOrQuick *parent = nullptr);
+    explicit FloatingWindow(MainWindowBase *parent = nullptr);
+    explicit FloatingWindow(Frame *frame, MainWindowBase *parent = nullptr);
     ~FloatingWindow() override;
 
     bool deserialize(const LayoutSaver::FloatingWindow &);

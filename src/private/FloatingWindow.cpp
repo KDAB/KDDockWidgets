@@ -87,7 +87,7 @@ public:
 }
 #endif
 
-FloatingWindow::FloatingWindow(QWidgetOrQuick *parent)
+FloatingWindow::FloatingWindow(MainWindowBase *parent)
     : QWidgetAdapter(parent, KDDockWidgets::usesNativeDraggingAndResizing() ? Qt::Window : Qt::Tool)
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
@@ -122,15 +122,15 @@ FloatingWindow::FloatingWindow(QWidgetOrQuick *parent)
     m_layoutDestroyedConnection = connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
-static QWidgetOrQuick* hackFindParentHarder(QWidgetOrQuick *p)
+static MainWindowBase* hackFindParentHarder(MainWindowBase *candidateParent)
 {
     // TODO: Using a parent helps the floating windows stay in front of the main window always.
     // We're not receiving the parent via ctor argument as the app can have multiple-main windows,
     // so use a hack here.
     // Not quite clear what to do if the app supports multiple main windows though.
 
-    if (p)
-        return p;
+    if (candidateParent)
+        return candidateParent;
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     const MainWindowBase::List windows = DockRegistry::self()->mainwindows();
@@ -149,7 +149,7 @@ static QWidgetOrQuick* hackFindParentHarder(QWidgetOrQuick *p)
 #endif
 }
 
-FloatingWindow::FloatingWindow(Frame *frame, QWidgetOrQuick *parent)
+FloatingWindow::FloatingWindow(Frame *frame, MainWindowBase *parent)
     : FloatingWindow(hackFindParentHarder(parent))
 {
     m_disableSetVisible = true;

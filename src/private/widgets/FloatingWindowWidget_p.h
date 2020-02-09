@@ -33,8 +33,8 @@ class DOCKS_EXPORT FloatingWindowWidget : public FloatingWindow
 {
     Q_OBJECT
 public:
-    explicit FloatingWindowWidget(QWidget *parent = nullptr);
-    explicit FloatingWindowWidget(Frame *frame, QWidget *parent = nullptr);
+    explicit FloatingWindowWidget(MainWindowBase *parent = nullptr);
+    explicit FloatingWindowWidget(Frame *frame, MainWindowBase *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *) override;

@@ -30,14 +30,14 @@
 
 using namespace KDDockWidgets;
 
-FloatingWindowWidget::FloatingWindowWidget(QWidget *parent)
+FloatingWindowWidget::FloatingWindowWidget(MainWindowBase *parent)
     : FloatingWindow(parent)
     , m_vlayout(new QVBoxLayout(this))
 {
     init();
 }
 
-FloatingWindowWidget::FloatingWindowWidget(Frame *frame, QWidget *parent)
+FloatingWindowWidget::FloatingWindowWidget(Frame *frame, MainWindowBase *parent)
     : FloatingWindow(frame, parent)
     , m_vlayout(new QVBoxLayout(this))
 {
