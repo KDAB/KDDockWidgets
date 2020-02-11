@@ -359,6 +359,13 @@ void FloatingWindow::updateTitleAndIcon()
 void FloatingWindow::onCloseEvent(QCloseEvent *e)
 {
     qCDebug(closing) << "Frame::closeEvent";
+
+    if (e->spontaneous() && anyNonClosable()) {
+        // Event from the window system won't close us
+        e->ignore();
+        return;
+    }
+
     e->accept(); // Accepted by default (will close unless ignored)
 
     Frame::List frames = this->frames();
