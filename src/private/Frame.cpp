@@ -320,7 +320,7 @@ DockWidgetBase *Frame::currentDockWidget() const
 bool Frame::anyNonClosable() const
 {
     for (auto dw : dockWidgets()) {
-        if (dw->options() & DockWidgetBase::Option_NotClosable)
+        if ((dw->options() & DockWidgetBase::Option_NotClosable) && !DockRegistry::self()->isProcessingAppQuitEvent())
             return true;
     }
 

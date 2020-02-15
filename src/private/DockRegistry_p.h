@@ -125,11 +125,19 @@ public:
      */
     void checkSanityAll();
 
+    /**
+     * @brief Returns whether we're processing a QEvent::Quit
+     *
+     * Used internally to know if we should let Qt close a NonClosable dock widget at shutdown time.
+     */
+    bool isProcessingAppQuitEvent() const;
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 private:
     explicit DockRegistry(QObject *parent = nullptr);
     void maybeDelete();
+    bool m_isProcessingAppQuitEvent = false;
     DockWidgetBase::List m_dockWidgets;
     MainWindowBase::List m_mainWindows;
     Frame::List m_frames;

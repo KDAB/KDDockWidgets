@@ -72,6 +72,11 @@ void DockRegistry::checkSanityAll()
         layout->checkSanity();
 }
 
+bool DockRegistry::isProcessingAppQuitEvent() const
+{
+    return m_isProcessingAppQuitEvent;
+}
+
 DockRegistry *DockRegistry::self()
 {
     static QPointer<DockRegistry> s_dockRegistry;
@@ -314,17 +319,18 @@ void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 
 bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
 {
-    // This event filter is needed so we sort the floating windows by z-order
-    // When a FloatingWindow is exposed we put it at the end of the list
-
-    if (event->type() != QEvent::Expose)
-        return false;
-
-    if (auto windowHandle = qobject_cast<QWindow*>(watched)) {
-        if (FloatingWindow *fw = floatingWindowForHandle(windowHandle)) {
-            // This floating window was exposed
-            m_nestedWindows.removeOne(fw);
-            m_nestedWindows.append(fw);
+    if (event->type() == QEvent::Quit && !m_isProcessingAppQuitEvent) {
+        m_isProcessingAppQuitEvent = true;
+        qApp->sendEvent(qApp, event);
+        m_isProcessingAppQuitEvent = false;
+        return true;
+    } else if (event->type() == QEvent::Expose) {
+        if (auto windowHandle = qobject_cast<QWindow*>(watched)) {
+            if (FloatingWindow *fw = floatingWindowForHandle(windowHandle)) {
+                // This floating window was exposed
+                m_nestedWindows.removeOne(fw);
+                m_nestedWindows.append(fw);
+            }
         }
     }
 
