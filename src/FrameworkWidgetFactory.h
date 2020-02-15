@@ -76,6 +76,14 @@ public:
     ///@param options just forward to Frame's constructor
     virtual Frame* createFrame(QWidgetOrQuick *parent = nullptr, FrameOptions = FrameOption_None) const = 0;
 
+    ///@brief Called internally by the framework to create the central Frame class
+    ////      Override to provide your own center Frame sub-class or set custom flags for it.
+    ///       A frame is the widget that holds the titlebar and tab-widget which holds the
+    ///       DockWidgets. By default, it creates a Frame with FrameOption_IsCentralFrame and
+    ///       FrameOption_AlwaysShowsTabs set.
+    ///@param parent just forward to Frame's constructor
+    virtual Frame* createCentralFrame(QWidgetOrQuick *parent = nullptr) const = 0;
+
     ///@brief Called internally by the framework to create a TitleBar
     ///       Override to provide your own TitleBar sub-class. If overridden then
     ///       you also need to override the overload below.
@@ -131,6 +139,7 @@ class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
 {
 public:
     Frame *createFrame(QWidgetOrQuick *parent, FrameOptions) const override;
+    Frame *createCentralFrame(QWidgetOrQuick *parent) const override;
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
     TabBar *createTabBar(TabWidget *parent) const override;

@@ -56,6 +56,11 @@ Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions op
     return new FrameWidget(parent, options);
 }
 
+Frame *DefaultWidgetFactory::createCentralFrame(QWidgetOrQuick *parent) const
+{
+    return createFrame(parent, FrameOptions() | FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
+}
+
 TitleBar *DefaultWidgetFactory::createTitleBar(Frame *frame) const
 {
     return new TitleBarWidget(frame);
@@ -100,6 +105,11 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(
 Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, Frame::Options options) const
 {
     return new FrameQuick(parent, options);
+}
+
+Frame *DefaultWidgetFactory::createCentralFrame(QWidgetOrQuick *parent) const
+{
+    return createFrame(parent, FrameOptions() | FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
 }
 
 TitleBar *DefaultWidgetFactory::createTitleBar(Frame *frame) const
