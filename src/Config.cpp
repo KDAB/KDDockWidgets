@@ -60,6 +60,9 @@ public:
 #else
     int m_staticSeparatorThickness = 0;
 #endif
+    int m_widgetsMinWidth = 80;
+    int m_widgetsMinHeight = 90;
+    int m_indicatorMinSize = 100;
 };
 
 
@@ -155,6 +158,27 @@ void Config::setQmlEngine(QQmlEngine *qmlEngine)
 QQmlEngine *Config::qmlEngine() const
 {
     return d->m_qmlEngine;
+}
+
+void Config::setMinimumSizeOfWidgets(int width, int height)
+{
+    d->m_widgetsMinWidth = width;
+    d->m_widgetsMinHeight = height;
+}
+
+QSize Config::minimumSizeOfWidgets()
+{
+    return QSize(d->m_widgetsMinWidth, d->m_widgetsMinHeight);
+}
+
+void Config::setMinimumSizeOfIndicator(int size)
+{
+    d->m_indicatorMinSize = size;
+}
+
+int Config::minimumSizeOfIndicator()
+{
+    return d->m_indicatorMinSize;
 }
 
 void Config::Private::fixFlags()

@@ -36,10 +36,6 @@
 #include <QtMath>
 #include <QScopedValueRollback>
 
-#define INDICATOR_MINIMUM_LENGTH 100
-#define KDDOCKWIDGETS_MIN_WIDTH 80
-#define KDDOCKWIDGETS_MIN_HEIGHT 90
-
 using namespace KDDockWidgets;
 
 const QString MultiSplitterLayout::s_magicMarker = QStringLiteral("bac9948e-5f1b-4271-acc5-07f1708e2611");
@@ -111,7 +107,7 @@ MultiSplitterLayout::~MultiSplitterLayout()
 /**static*/
 QSize MultiSplitterLayout::hardcodedMinimumSize()
 {
-    return QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
+    return Config::self().minimumSizeOfWidgets();
 }
 
 MultiSplitter *MultiSplitterLayout::multiSplitter() const
@@ -940,8 +936,8 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widgetBeingDropped,
     if (needsMoreSpace)  {
         // This is the case with the drop indicators. If there's not enough space let's still
         // draw some indicator drop. The window will resize to accommodate the drop.
-        lfd.side1Length = INDICATOR_MINIMUM_LENGTH / 2;
-        lfd.side2Length = INDICATOR_MINIMUM_LENGTH - lfd.side1Length;
+        lfd.side1Length = Config::self().minimumSizeOfIndicator() / 2;
+        lfd.side2Length = Config::self().minimumSizeOfIndicator() - lfd.side1Length;
     }
 
     const int staticAnchorThickness = Anchor::thickness(/**static=*/true);

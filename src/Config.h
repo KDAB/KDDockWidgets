@@ -32,6 +32,7 @@
 
 QT_BEGIN_NAMESPACE
 class QQmlEngine;
+class QSize;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets
@@ -135,6 +136,20 @@ public:
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
     void setQmlEngine(QQmlEngine *);
     QQmlEngine* qmlEngine() const;
+
+    ///@brief Set the minimal size of the docks
+    ///Note: Only use this function at startup before creating any DockWidget or MainWindow.
+    void setMinimumSizeOfWidgets(int width, int height);
+
+    ///@brief Returns the minimum size of the docks
+    QSize minimumSizeOfWidgets();
+
+    ///@brief Set the minimal size of the indicator
+    ///Note: Only use this function at startup before creating any DockWidget or MainWindow.
+    void setMinimumSizeOfIndicator(int size);
+
+    ///@brief Returns the minimum size of the indicator
+    int minimumSizeOfIndicator();
 
 private:
     Q_DISABLE_COPY(Config)
