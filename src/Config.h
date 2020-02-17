@@ -67,6 +67,7 @@ public:
         Flag_AlwaysShowTabs = 16, ///> Always show tabs, even if there's only one,
         Flag_AllowReorderTabs = 32, /// Allows user to re-order tabs by dragging them
         Flag_LazyResize = 32, /// The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
+        Flag_TabsHaveCloseButton = 64, /// Tabs will have a close button. Equivalent to QTabWidget::setTabsClosable(true).
         Flag_Default = Flag_AeroSnapWithClientDecos ///> The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)

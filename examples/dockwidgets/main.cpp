@@ -64,6 +64,9 @@ int main(int argc, char **argv)
     QCommandLineOption incompatibleMainWindows("i", QCoreApplication::translate("main", "Only usable with -m. Make the two main windows incompatible with each other. (Illustrates (MainWindowBase::setAffinityName))"));
     parser.addOption(incompatibleMainWindows);
 
+    QCommandLineOption tabsHaveCloseButton("c", QCoreApplication::translate("main", "Tabs have a close button"));
+    parser.addOption(tabsHaveCloseButton);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
@@ -93,6 +96,9 @@ int main(int argc, char **argv)
 
     if (parser.isSet(lazyResizeOption))
         flags |= KDDockWidgets::Config::Flag_LazyResize;
+
+    if (parser.isSet(tabsHaveCloseButton))
+        flags |= KDDockWidgets::Config::Flag_TabsHaveCloseButton;
 
     if (parser.isSet(incompatibleMainWindows) && !parser.isSet(multipleMainWindows)) {
         qWarning() << "Error: Argument -i requires -m";

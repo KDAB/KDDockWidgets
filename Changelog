@@ -4,6 +4,7 @@
 * v1.1 (, 2020)
   Features:
      - Allow tab re-ordering with mouse, via KDDockWidgets::Config::Flag_AllowReorderTabs.
-     - Add support for lazy resize. Resize is only done when mouse is released.
+     - Allow tabs to have a close button, via KDDockWidgets::Config::Flag_TabsHaveCloseButton.
+     - Add support for lazy resize, via KDDockWidgets::Config::Flag_LazyResize. Resize is only done when mouse is released.
   Fixes:
     - Fix dock widgets not filling their complete available space

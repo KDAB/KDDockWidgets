@@ -38,6 +38,7 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
     , m_tabBar(Config::self().frameworkWidgetFactory()->createTabBar(this))
 {
     setTabBar(static_cast<QTabBar*>(m_tabBar->asWidget()));
+    setTabsClosable(Config::self().flags() & Config::Flag_TabsHaveCloseButton);
 
     // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user presses [x]
     connect(this, &QTabWidget::tabCloseRequested, this, [this] (int index) {
