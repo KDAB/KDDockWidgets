@@ -67,6 +67,9 @@ int main(int argc, char **argv)
     QCommandLineOption tabsHaveCloseButton("c", QCoreApplication::translate("main", "Tabs have a close button"));
     parser.addOption(tabsHaveCloseButton);
 
+    QCommandLineOption nonClosableDockWidget("n", QCoreApplication::translate("main", "DockWidget #0 will be non-closable"));
+    parser.addOption(nonClosableDockWidget);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
@@ -107,7 +110,9 @@ int main(int argc, char **argv)
 
     KDDockWidgets::Config::self().setFlags(flags);
 
-    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options);
+    const bool nonClosableDockWidget0 = parser.isSet(nonClosableDockWidget);
+
+    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0);
     mainWindow.setWindowTitle("Main Window 1");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
@@ -118,7 +123,8 @@ int main(int argc, char **argv)
         const QString affinity = parser.isSet(incompatibleMainWindows) ? QStringLiteral("affinity1")
                                                                        : QString();
 
-        auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options, affinity);
+        auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
+                                            nonClosableDockWidget0, affinity);
         if (affinity.isEmpty())
             mainWindow2->setWindowTitle("Main Window 2");
         else

@@ -50,8 +50,9 @@ static MyWidget *newMyWidget()
 }
 
 MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                           const QString &affinityName, QWidget *parent)
+                           bool dockWidget0IsNonClosable, const QString &affinityName, QWidget *parent)
     : MainWindow(uniqueName, options, parent)
+    , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
 {
     // qApp->installEventFilter(this);
 
@@ -125,7 +126,13 @@ void MyMainWindow::createDockWidgets()
 KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
 {
     static int count = 0;
-    auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count));
+
+    // Passing options is optional, we just want to illustrate Option_NotClosable here
+    KDDockWidgets::DockWidget::Options options = KDDockWidgets::DockWidget::Option_None;
+    if (count == 0 && m_dockWidget0IsNonClosable)
+        options |= KDDockWidgets::DockWidget::Option_NotClosable;
+
+    auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count), options);
     dock->setAffinityName(affinityName()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
 
     if (count == 1)
