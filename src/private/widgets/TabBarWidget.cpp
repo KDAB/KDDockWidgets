@@ -42,7 +42,14 @@ public:
     int styleHint(QStyle::StyleHint hint, const QStyleOption *option = nullptr,
                   const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override
     {
-        if (hint == QStyle::SH_Widget_Animation_Duration) {
+
+#if QT_VERSION < QT_VERSION_CHECK(5,10,0)
+        auto durationHint = QStyle::SH_Widget_Animate; // deprecated in 5.10
+#else
+        auto durationHint = QStyle::SH_Widget_Animation_Duration;
+#endif
+
+        if (hint == durationHint) {
             // QTabBar has a bug which causes the paint event to dereference a tab which was already removed.
             // Because, after the tab being removed, the d->pressedIndex is only reset after the animation ends.
             // So disable the animation. Crash can be repro by enabling movable tabs, and detaching a tab quickly from
