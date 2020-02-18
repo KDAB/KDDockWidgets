@@ -80,6 +80,14 @@ void TabBarWidget::mousePressEvent(QMouseEvent *e)
     QTabBar::mousePressEvent(e);
 }
 
+void TabBarWidget::mouseMoveEvent(QMouseEvent *e)
+{
+    if (count() > 1) {
+        // Only allow to re-order tabs if we have more than 1 tab, otherwise it's just weird.
+        QTabBar::mouseMoveEvent(e);
+    }
+}
+
 bool TabBarWidget::dragCanStart(QPoint pressPos, QPoint pos) const
 {
     // Here we allow the user to re-order tabs instead of dragging them off.
