@@ -31,6 +31,28 @@
 
 #include <QMouseEvent>
 #include <QApplication>
+#include <QProxyStyle>
+
+namespace KDDockWidgets {
+class MyProxy : public QProxyStyle
+{
+public:
+    MyProxy() : QProxyStyle(nullptr) {}
+
+    int styleHint(QStyle::StyleHint hint, const QStyleOption *option = nullptr,
+                  const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override
+    {
+        if (hint == QStyle::SH_Widget_Animation_Duration) {
+            // QTabBar has a bug which causes the paint event to dereference a tab which was already removed.
+            // Because, after the tab being removed, the d->pressedIndex is only reset after the animation ends.
+            // So disable the animation. Crash can be repro by enabling movable tabs, and detaching a tab quickly from
+            // a floating window containing two dock widgets. Reproduced on Windows
+            return 0;
+        }
+        return baseStyle()->styleHint(hint, option, widget, returnData);
+    }
+};
+}
 
 using namespace KDDockWidgets;
 
@@ -39,6 +61,7 @@ TabBarWidget::TabBarWidget(TabWidget *parent)
     , TabBar(this, parent)
 {
     setMovable(Config::self().flags() & Config::Flag_AllowReorderTabs);
+    setStyle(new MyProxy());
 }
 
 int TabBarWidget::numDockWidgets() const
