@@ -267,6 +267,9 @@ public:
     void onFatal() override;
     void setDelayBetweenOperations(int delay);
 
+    QByteArray lastSavedLayout() const;
+    void setLastSavedLayout(const QByteArray &serialized);
+
 private:
     std::random_device m_randomDevice;
     std::mt19937 m_randomEngine;
@@ -275,6 +278,7 @@ private:
     const bool m_dumpJsonOnFailure;
     int m_operationDelayMS = 50;
     const Options m_options;
+    QByteArray m_lastSavedLayout;
 };
 
 }

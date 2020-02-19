@@ -75,6 +75,7 @@ static void createLayout(const Fuzzer::Layout &layout)
 
 void Fuzzer::runTest(const Test &test)
 {
+    m_lastSavedLayout.clear();
     m_currentTest = test;
 
     if (!DockRegistry::self()->isEmpty())
@@ -368,6 +369,16 @@ void Fuzzer::onFatal()
 void Fuzzer::setDelayBetweenOperations(int delay)
 {
     m_operationDelayMS = delay;
+}
+
+QByteArray Fuzzer::lastSavedLayout() const
+{
+    return m_lastSavedLayout;
+}
+
+void Fuzzer::setLastSavedLayout(const QByteArray &serialized)
+{
+    m_lastSavedLayout = serialized;
 }
 
 void Fuzzer::Test::dumpToJsonFile(const QString &filename) const

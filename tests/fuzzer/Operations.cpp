@@ -129,6 +129,12 @@ OperationBase::Ptr OperationBase::newOperation(Fuzzer *fuzzer, OperationType typ
     case OperationType_AddDockWidgetAsTab:
         ptr = OperationBase::Ptr(new AddDockWidgetAsTab(fuzzer));
         break;
+    case OperationType_SaveLayout:
+        ptr = OperationBase::Ptr(new SaveLayout(fuzzer));
+        break;
+    case OperationType_RestoreLayout:
+        ptr = OperationBase::Ptr(new RestoreLayout(fuzzer));
+        break;
     }
 
     return ptr;
@@ -401,4 +407,81 @@ void AddDockWidgetAsTab::fillParamsFromVariantMap(const QVariantMap &map)
 {
     m_dockWidgetName = map["dockWidgetName"].toString();
     m_dockWidgetToAddName = map["dockWidgetToAddName"].toString();
+}
+
+SaveLayout::SaveLayout(Fuzzer *fuzzer)
+    : OperationBase(OperationType_SaveLayout, fuzzer)
+{
+}
+
+bool SaveLayout::hasParams() const
+{
+    return true;
+}
+
+void SaveLayout::updateDescription()
+{
+    m_description = QStringLiteral("SaveLayout");
+}
+
+void SaveLayout::execute_impl()
+{
+    LayoutSaver saver;
+    m_fuzzer->setLastSavedLayout(saver.serializeLayout());
+
+    qDebug() << m_fuzzer << m_fuzzer->lastSavedLayout().isEmpty();
+}
+
+void SaveLayout::generateRandomParams()
+{
+}
+
+QVariantMap SaveLayout::paramsToVariantMap() const
+{
+    return {};
+}
+
+void SaveLayout::fillParamsFromVariantMap(const QVariantMap &)
+{
+}
+
+RestoreLayout::RestoreLayout(Fuzzer *fuzzer)
+    : OperationBase(OperationType_RestoreLayout, fuzzer)
+{
+}
+
+bool RestoreLayout::hasParams() const
+{
+    return true;
+}
+
+void RestoreLayout::updateDescription()
+{
+     m_description = QStringLiteral("RestoreLayout");
+}
+
+void RestoreLayout::execute_impl()
+{
+    QByteArray serialized = m_fuzzer->lastSavedLayout();
+    if (serialized.isEmpty()) {
+        qDebug() << "Skipping, nothing to restore";
+        return;
+    }
+
+    qDebug() << "Restoring!";
+    LayoutSaver saver;
+    saver.restoreLayout(serialized);
+}
+
+void RestoreLayout::generateRandomParams()
+{
+}
+
+QVariantMap RestoreLayout::paramsToVariantMap() const
+{
+    return {};
+}
+
+void RestoreLayout::fillParamsFromVariantMap(const QVariantMap &)
+{
 }

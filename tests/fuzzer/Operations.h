@@ -51,6 +51,8 @@ enum OperationType {
     OperationType_ShowViaDockWidgetAPI,  ///< Hidding programatically via DockWidget::show()
     OperationType_AddDockWidget,         ///< MainWindow::addDockWidget()
     OperationType_AddDockWidgetAsTab,    ///< DockWidget::addDockWidgetAsTab()
+    OperationType_SaveLayout, ///< LayoutSaver::saveLayout()
+    OperationType_RestoreLayout, ///< LayoutSaver::restoreLayout()
     OperationType_Count /// Keep at end
 };
 Q_ENUM_NS(OperationType)
@@ -169,6 +171,36 @@ protected:
 private:
     QString m_dockWidgetName;
     QString m_dockWidgetToAddName;
+};
+
+class SaveLayout : public OperationBase
+{
+public:
+    explicit SaveLayout(Fuzzer *);
+
+protected:
+    bool hasParams() const override;
+    void updateDescription() override;
+    void execute_impl() override;
+
+    void generateRandomParams() override;
+    QVariantMap paramsToVariantMap() const override;
+    void fillParamsFromVariantMap(const QVariantMap &) override;
+};
+
+class RestoreLayout : public OperationBase
+{
+public:
+    explicit RestoreLayout(Fuzzer *);
+
+protected:
+    bool hasParams() const override;
+    void updateDescription() override;
+    void execute_impl() override;
+
+    void generateRandomParams() override;
+    QVariantMap paramsToVariantMap() const override;
+    void fillParamsFromVariantMap(const QVariantMap &) override;
 };
 
 }
