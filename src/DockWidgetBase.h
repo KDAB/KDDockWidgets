@@ -100,9 +100,12 @@ public:
     /**
      * @brief docks @p other widget into this one. Tabs will be shown if not already.
      * @param other The other dock widget to dock into this one.
+     * @param addingOption Allows to specify an AddingOption. Which is useful to add the dock widget
+     * as hidden, recording only a placeholder in the tab. So it's restored to tabbed when eventually
+     * shown.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
-    void addDockWidgetAsTab(DockWidgetBase *other);
+    void addDockWidgetAsTab(DockWidgetBase *other, AddingOption addingOption = AddingOption_None);
 
     /**
      * @brief docks @p other widget into the window that contains this one.

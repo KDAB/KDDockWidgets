@@ -103,12 +103,12 @@ void Frame::updateTitleAndIcon()
     }
 }
 
-void Frame::addWidget(DockWidgetBase *dockWidget)
+void Frame::addWidget(DockWidgetBase *dockWidget, AddingOption addingOption)
 {
-    insertWidget(dockWidget, m_tabWidget->numDockWidgets()); // append
+    insertWidget(dockWidget, m_tabWidget->numDockWidgets(), addingOption); // append
 }
 
-void Frame::addWidget(Frame *frame)
+void Frame::addWidget(Frame *frame, AddingOption addingOption)
 {
     if (frame->isEmpty()) {
         qWarning() << "Frame::addWidget: frame is empty." << frame;
@@ -117,40 +117,45 @@ void Frame::addWidget(Frame *frame)
 
     const auto &docks = frame->dockWidgets();
     for (DockWidgetBase *dockWidget : docks)
-        addWidget(dockWidget);
+        addWidget(dockWidget, addingOption);
 }
 
-void Frame::addWidget(FloatingWindow *floatingWindow)
+void Frame::addWidget(FloatingWindow *floatingWindow, AddingOption addingOption)
 {
     Q_ASSERT(floatingWindow);
     for (Frame *f : floatingWindow->frames())
-        addWidget(f);
+        addWidget(f, addingOption);
 }
 
-void Frame::insertWidget(DockWidgetBase *dockWidget, int index)
+void Frame::insertWidget(DockWidgetBase *dockWidget, int index, AddingOption addingOption)
 {
-    qCDebug(addwidget()) << Q_FUNC_INFO << ((void*)this) <<  "; dockWidget=" << dockWidget << "; oldFrame=" << dockWidget->frame();
+    qCDebug(addwidget()) << Q_FUNC_INFO << ((void*)this) <<  "; dockWidget="
+                         << dockWidget << "; oldFrame=" << dockWidget->frame()
+                         << "; addingOption=" << addingOption;
 
     Q_ASSERT(dockWidget);
     if (contains(dockWidget)) {
         qWarning() << "Frame::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
         return;
     }
-
     if (m_layoutItem)
         dockWidget->addPlaceholderItem(m_layoutItem);
 
     m_tabWidget->insertDockWidget(dockWidget, index);
 
-    if (hasSingleDockWidget()) {
-        Q_EMIT currentDockWidgetChanged(dockWidget);
-        setObjectName(dockWidget->uniqueName());
+    if (addingOption == AddingOption_StartHidden) {
+        dockWidget->close(); // Ensure closed
+    } else {
+        if (hasSingleDockWidget()) {
+            Q_EMIT currentDockWidgetChanged(dockWidget);
+            setObjectName(dockWidget->uniqueName());
 
-        if (!m_layoutItem) {
-            // When adding the 1st dock widget of a fresh frame, let's give the frame the size
-            // of the dock widget, so that when adding it to the main window, the main window can
-            // use that size as the initial suggested size.
-            resize(dockWidget->size());
+            if (!m_layoutItem) {
+                // When adding the 1st dock widget of a fresh frame, let's give the frame the size
+                // of the dock widget, so that when adding it to the main window, the main window can
+                // use that size as the initial suggested size.
+                resize(dockWidget->size());
+            }
         }
     }
 

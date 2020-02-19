@@ -131,7 +131,7 @@ DockWidgetBase::~DockWidgetBase()
     delete d;
 }
 
-void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other)
+void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, AddingOption addingOption)
 {
     qCDebug(addwidget) << Q_FUNC_INFO << other;
     if (other == this) {
@@ -167,7 +167,7 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other)
 
     Q_ASSERT(frame);
     other->setParent(nullptr);
-    frame->addWidget(other);
+    frame->addWidget(other, addingOption);
 }
 
 void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other, Location location, DockWidgetBase *relativeTo)

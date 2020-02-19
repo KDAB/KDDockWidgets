@@ -362,6 +362,7 @@ private Q_SLOTS:
     void tst_registry();
     void tst_dockNotFillingSpace();
     void tst_floatingLastPosAfterDoubleClose();
+    void tst_addingOptionHiddenTabbed();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5376,7 +5377,22 @@ void TestDocks::tst_resizeWindow2()
     layout->checkSanity();
 }
 
-// QTest::qWait(50000)
+void TestDocks::tst_addingOptionHiddenTabbed()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    m->addDockWidget(dock1, Location_OnTop);
+
+    QCOMPARE(dock1->frame()->dockWidgetCount(), 1);
+    dock1->addDockWidgetAsTab(dock2, AddingOption_StartHidden);
+    QCOMPARE(dock1->frame()->dockWidgetCount(), 1);
+    dock2->show();
+    QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
+
+    QVERIFY(dock1->frame() == dock2->frame());
+}
 
 QTEST_MAIN(KDDockWidgets::TestDocks)
 #include "tst_docks.moc"

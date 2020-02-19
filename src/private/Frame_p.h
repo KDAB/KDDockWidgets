@@ -71,14 +71,14 @@ public:
     LayoutSaver::Frame serialize() const;
 
     ///@brief Adds a widget into the Frame's TabWidget
-    void addWidget(DockWidgetBase *);
+    void addWidget(DockWidgetBase *, AddingOption = AddingOption_None);
     ///@overload
-    void addWidget(Frame *);
+    void addWidget(Frame *, AddingOption = AddingOption_None);
     ///@overload
-    void addWidget(FloatingWindow *floatingWindow);
+    void addWidget(FloatingWindow *floatingWindow, AddingOption addingOption = AddingOption_None);
 
     ///@brief Inserts a widget into the Frame's TabWidget at @p index
-    void insertWidget(DockWidgetBase *, int index);
+    void insertWidget(DockWidgetBase *, int index, AddingOption addingOption = AddingOption_None);
 
     ///@brief removes a dockwidget from the frame
     void removeWidget(DockWidgetBase *);
