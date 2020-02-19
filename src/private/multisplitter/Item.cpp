@@ -440,6 +440,9 @@ void Item::onLayoutRequest() const
     if (!d->m_frame || d->m_isPlaceholder)
         return; // It's a placeholder, nothing to do.
 
+    if (LayoutSaver::restoreInProgress())
+        return; // we don't even have the anchors yet, nothing to do
+
     if (d->m_frame->geometry() != geometry()) {
         // The frame is controlled by the layout, it can't change its geometry on its own.
         // Put it back.
