@@ -81,6 +81,7 @@ public:
     std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
     static bool s_restoreInProgress;
+    LayoutSaver::Layout *m_currentLayoutBeingRestored = nullptr;
 };
 
 bool LayoutSaver::Private::s_restoreInProgress = false;
@@ -173,22 +174,23 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     Private::RAIIIsRestoring isRestoring;
 
     struct FrameCleanup {
-        FrameCleanup(LayoutSaver *saver) : m_saver(saver)
+        FrameCleanup(LayoutSaver *saver, LayoutSaver::Layout *layout)
+            : m_saver(saver)
         {
+            m_saver->d->m_currentLayoutBeingRestored = layout;
         }
 
         ~FrameCleanup()
         {
             m_saver->d->deleteEmptyFrames();
+            m_saver->d->m_currentLayoutBeingRestored = nullptr;
         }
 
         LayoutSaver *const m_saver;
-
     };
 
-    FrameCleanup cleanup(this);
-
     LayoutSaver::Layout layout;
+    FrameCleanup cleanup(this, &layout);
     if (!layout.fillFrom(data))
         return false;
 
@@ -236,6 +238,11 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     }
 
     return true;
+}
+
+LayoutSaver::Layout *LayoutSaver::currentLayoutBeingRestored() const
+{
+    return d->m_currentLayoutBeingRestored;
 }
 
 DockWidgetBase::List LayoutSaver::restoredDockWidgets() const
