@@ -72,8 +72,6 @@ public:
     {
     }
 
-    void serializeWindowGeometry(QDataStream &ds, QWidgetOrQuick *topLevel);
-
     template <typename T>
     void deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel);
     void deleteEmptyFrames();
