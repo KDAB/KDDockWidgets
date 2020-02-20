@@ -314,9 +314,9 @@ bool LayoutSaver::Layout::fillFrom(const QByteArray &serialized)
     QDataStream ds(serialized);
     ds >> this;
 
-    if (serializationVersion != KDDOCKWIDGETS_SERIALIZATION_VERSION) {
+    if (serializationVersion > KDDOCKWIDGETS_SERIALIZATION_VERSION) {
         qWarning() << "Unsupported serialization version. Got=" << serializationVersion
-                   << "; expected=" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
+                   << "; expected equal or less than" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
         return false;
     }
 
