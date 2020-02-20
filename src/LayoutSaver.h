@@ -98,6 +98,7 @@ public:
     struct Anchor;
     struct Frame;
     struct Placeholder;
+    struct ScreenInfo;
 
 private:
     friend class TestDocks;

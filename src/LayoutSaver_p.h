@@ -27,6 +27,8 @@
 #include <QRect>
 #include <QDataStream>
 #include <QDebug>
+#include <QScreen>
+#include <QApplication>
 
 #include <memory>
 
@@ -177,12 +179,31 @@ public:
     bool isVisible;
 };
 
+struct LayoutSaver::ScreenInfo
+{
+    typedef QVector<LayoutSaver::ScreenInfo> List;
+    int index;
+    QRect geometry;
+    QString name;
+    double devicePixelRatio;
+};
+
 struct LayoutSaver::Layout
 {
 public:
 
     Layout() {
         s_currentLayoutBeingRestored = this;
+
+        const QList<QScreen*> screens = qApp->screens();
+        for (int i = 0; i < screens.size(); ++i) {
+            ScreenInfo info;
+            info.index = i;
+            info.geometry = screens[i]->geometry();
+            info.name = screens[i]->name();
+            info.devicePixelRatio = screens[i]->devicePixelRatio();
+            screenInfo.push_back(info);
+        }
     }
 
     ~Layout() {
@@ -200,7 +221,28 @@ public:
     LayoutSaver::FloatingWindow::List floatingWindows;
     LayoutSaver::DockWidget::List closedDockWidgets;
     LayoutSaver::DockWidget::List allDockWidgets;
+    ScreenInfo::List screenInfo;
 };
+
+inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::ScreenInfo *info)
+{
+    ds << info->index;
+    ds << info->geometry;
+    ds << info->name;
+    ds << info->devicePixelRatio;
+
+    return ds;
+}
+
+inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::ScreenInfo *info)
+{
+    ds >> info->index;
+    ds >> info->geometry;
+    ds >> info->name;
+    ds >> info->devicePixelRatio;
+
+    return ds;
+}
 
 inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Placeholder *p)
 {
@@ -508,6 +550,11 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Layout *l)
         ds << &dw->lastPosition;
     }
 
+    ds << l->screenInfo.size();
+    for (auto &info: l->screenInfo) {
+        ds << &info;
+    }
+
     return ds;
 }
 
@@ -518,6 +565,7 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
     int numFloatingWindows;
     int numClosedDockWidgets;
     int numAllDockWidgets;
+    int numScreenInfo;
 
     ds >> l->serializationVersion;
 
@@ -555,6 +603,18 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
         auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
         ds >> &dw->lastPosition;
         l->allDockWidgets.push_back(dw);
+    }
+
+
+    if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
+        ds >> numScreenInfo;
+        l->screenInfo.clear();
+        l->screenInfo.reserve(numScreenInfo);
+        for (int i = 0; i < numScreenInfo; ++i) {
+            LayoutSaver::ScreenInfo info;
+            ds >> &info;
+            l->screenInfo.push_back(info);
+        }
     }
 
     return ds;
