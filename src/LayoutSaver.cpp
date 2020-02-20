@@ -128,18 +128,20 @@ QByteArray LayoutSaver::serializeLayout() const
     d->m_dockRegistry->ensureAllFloatingWidgetsAreMorphed();
 
     const MainWindowBase::List mainWindows = d->m_dockRegistry->mainwindows();
+    layout.mainWindows.reserve(mainWindows.size());
     for (MainWindowBase *mainWindow : mainWindows) {
         layout.mainWindows.push_back(mainWindow->serialize());
     }
 
     const QVector<KDDockWidgets::FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
+    layout.floatingWindows.reserve(floatingWindows.size());
     for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
         layout.floatingWindows.push_back(floatingWindow->serialize());
     }
 
     // Closed dock widgets also have interesting things to save, like geometry and placeholder info
     const DockWidgetBase::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
-
+    layout.closedDockWidgets.reserve(closedDockWidgets.size());
     for (DockWidgetBase *dockWidget : closedDockWidgets) {
         layout.closedDockWidgets.push_back(dockWidget->serialize());
     }
@@ -148,6 +150,7 @@ QByteArray LayoutSaver::serializeLayout() const
     // before restoring the placeholders
 
     const DockWidgetBase::List dockWidgets = d->m_dockRegistry->dockwidgets();
+    layout.allDockWidgets.reserve(dockWidgets.size());
     for (DockWidgetBase *dockWidget : dockWidgets) {
         auto dw = dockWidget->serialize();
         dw->lastPosition = dockWidget->lastPosition()->serialize();
