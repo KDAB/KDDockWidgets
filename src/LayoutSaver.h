@@ -30,6 +30,8 @@
 
 #include "docks_export.h"
 
+#include "KDDockWidgets.h"
+
 QT_BEGIN_NAMESPACE
 class QByteArray;
 QT_END_NAMESPACE
@@ -101,6 +103,7 @@ public:
     struct Anchor;
     struct Frame;
     struct Placeholder;
+    struct ScalingInfo;
     struct ScreenInfo;
 
 private:

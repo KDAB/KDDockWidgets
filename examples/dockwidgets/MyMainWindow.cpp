@@ -50,9 +50,11 @@ static MyWidget *newMyWidget()
 }
 
 MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                           bool dockWidget0IsNonClosable, const QString &affinityName, QWidget *parent)
+                           bool dockWidget0IsNonClosable, bool restoreIsRelative,
+                           const QString &affinityName, QWidget *parent)
     : MainWindow(uniqueName, options, parent)
     , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
+    , m_restoreIsRelative(restoreIsRelative)
 {
     // qApp->installEventFilter(this);
 
@@ -85,7 +87,10 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     });
 
     auto restoreLayoutAction = fileMenu->addAction(QStringLiteral("Restore Layout"));
-    connect(restoreLayoutAction, &QAction::triggered, this, [] {
+    connect(restoreLayoutAction, &QAction::triggered, this, [this] {
+        KDDockWidgets::RestoreOptions options = KDDockWidgets::RestoreOption_None;
+        if (m_restoreIsRelative)
+            options |= KDDockWidgets::RestoreOption_RelativeToMainWindow;
         KDDockWidgets::LayoutSaver saver;
         saver.restoreFromFile(QStringLiteral("mylayout.json"));
     });

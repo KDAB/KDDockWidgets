@@ -519,9 +519,6 @@ LayoutSaver::Frame Frame::serialize() const
     frame.options = options();
     frame.currentTabIndex = currentTabIndex();
 
-    if (m_dropArea)
-        frame.layoutSize = m_dropArea->multiSplitterLayout()->size();
-
     for (DockWidgetBase *dock : docks)
         frame.dockWidgets.push_back(dock->serialize());
 

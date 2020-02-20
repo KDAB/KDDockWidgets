@@ -39,7 +39,7 @@
 /**
   * Bump whenever the format changes, so we can still load old layouts.
   * version 1: Initial version
-  * version 2: Introduced Frame::layoutSize, MainWindow::screenSize and FloatingWindow::screenSize
+  * version 2: Introduced MainWindow::screenSize and FloatingWindow::screenSize
   */
 #define KDDOCKWIDGETS_SERIALIZATION_VERSION 2
 
@@ -85,6 +85,28 @@ struct LayoutSaver::Placeholder
     QString mainWindowUniqueName;
 };
 
+///@brief contains info about how a main window is scaled.
+///Used for RestoreOption_RelativeToMainWindow
+struct LayoutSaver::ScalingInfo
+{
+    ScalingInfo() = default;
+    explicit ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo);
+
+    bool isValid() const {
+        return heightFactor > 0 && widthFactor > 0;
+    }
+
+    void translatePos(QPoint &) const;
+    void applyFactorsTo(QPoint &) const;
+    void applyFactorsTo(QSize &) const;
+    void applyFactorsTo(QRect &) const;
+
+    QString mainWindowName;
+    QRect savedMainWindowGeometry;
+    QRect realMainWindowGeometry;
+    double heightFactor = -1;
+    double widthFactor = -1;
+};
 
 struct LayoutSaver::LastPosition
 {
@@ -92,6 +114,9 @@ struct LayoutSaver::LastPosition
     int tabIndex;
     bool wasFloating;
     LayoutSaver::Placeholder::List placeholders;
+
+    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    void scaleSizes(const ScalingInfo &scalingInfo);
 
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
@@ -105,6 +130,9 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
     static QHash<QString, Ptr> s_dockWidgets;
 
     bool isValid() const;
+
+    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    void scaleSizes(const ScalingInfo &scalingInfo);
 
     static Ptr dockWidgetForName(const QString &name)
     {
@@ -153,13 +181,15 @@ struct LayoutSaver::Frame
 {
     bool isValid() const;
 
+    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    void scaleSizes(const ScalingInfo &scalingInfo);
+
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
     bool isNull = true;
     QString objectName;
     QRect geometry;
-    QSize layoutSize; // for relative-size restoring
     unsigned int options;
     int currentTabIndex;
 
@@ -171,6 +201,8 @@ struct LayoutSaver::Item
     typedef QVector<LayoutSaver::Item> List;
 
     bool isValid(const MultiSplitterLayout &) const;
+    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    void scaleSizes(const ScalingInfo &scalingInfo);
 
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
@@ -194,6 +226,9 @@ struct LayoutSaver::Anchor
 
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
+    void scaleSizes(const ScalingInfo &);
+
+    bool isVertical() const;
 
     QString objectName;
     QRect geometry;
@@ -209,6 +244,8 @@ struct LayoutSaver::Anchor
 struct LayoutSaver::MultiSplitterLayout
 {
     bool isValid() const;
+    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    void scaleSizes(const ScalingInfo &scalingInfo);
 
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
@@ -224,6 +261,10 @@ struct LayoutSaver::FloatingWindow
     typedef QVector<LayoutSaver::FloatingWindow> List;
 
     bool isValid() const;
+
+    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    void scaleSizes(const ScalingInfo &);
+
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
@@ -241,6 +282,10 @@ public:
     typedef QVector<LayoutSaver::MainWindow> List;
 
     bool isValid() const;
+
+    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    void scaleSizes();
+
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
@@ -251,8 +296,12 @@ public:
     int screenIndex;
     QSize screenSize;  // for relative-size restoring
     bool isVisible;
+
+    ScalingInfo scalingInfo;
 };
 
+///@brief we serialize some info about screens, so eventually we can make restore smarter when switching screens
+///Not used currently, but nice to have in the json already
 struct LayoutSaver::ScreenInfo
 {
     typedef QVector<LayoutSaver::ScreenInfo> List;
@@ -289,15 +338,20 @@ public:
     }
 
     bool isValid() const;
-    bool fillFrom(const QByteArray &serialized);
 
+    bool fillFrom(const QByteArray &serialized);
     QByteArray toJson() const;
     bool fromJson(const QByteArray &jsonData);
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
+    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    void scaleSizes();
+
     friend QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame);
     static LayoutSaver::Layout* s_currentLayoutBeingRestored;
+
+    LayoutSaver::MainWindow mainWindowForIndex(int index) const;
 
     int serializationVersion = KDDOCKWIDGETS_SERIALIZATION_VERSION;
     LayoutSaver::MainWindow::List mainWindows;
@@ -361,7 +415,8 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame)
     ds >> frame->geometry;
 
     if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
-        ds >> frame->layoutSize;
+        QSize sz;
+        ds >> sz; // deprecated field, just discard
     }
 
     ds >> frame->options;

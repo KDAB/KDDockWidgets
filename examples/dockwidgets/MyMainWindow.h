@@ -27,7 +27,7 @@ class MyMainWindow : public KDDockWidgets::MainWindow
     Q_OBJECT
 public:
     explicit MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                          bool dockWidget0IsNonClosable,
+                          bool dockWidget0IsNonClosable, bool restoreIsRelative,
                           const QString &affinityName = {}, // Usually not needed. Just here to show the feature.
                           QWidget *parent = nullptr);
 
@@ -36,4 +36,5 @@ private:
     KDDockWidgets::DockWidgetBase* newDockWidget();
     QMenu *m_toggleMenu = nullptr;
     const bool m_dockWidget0IsNonClosable;
+    const bool m_restoreIsRelative;
 };

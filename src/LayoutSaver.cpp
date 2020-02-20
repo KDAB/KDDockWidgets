@@ -38,6 +38,7 @@
 #include "multisplitter/Item_p.h"
 #include "FrameworkWidgetFactory.h"
 
+#include <qmath.h>
 #include <QDebug>
 #include <QSettings>
 #include <QApplication>
@@ -102,8 +103,9 @@ public:
         Q_DISABLE_COPY(RAIIIsRestoring)
     };
 
-    Private()
+    Private(RestoreOptions options)
         : m_dockRegistry(DockRegistry::self())
+        , m_restoreOptions(options)
     {
     }
 
@@ -114,13 +116,14 @@ public:
 
     std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
+    const RestoreOptions m_restoreOptions;
     static bool s_restoreInProgress;
 };
 
 bool LayoutSaver::Private::s_restoreInProgress = false;
 
 LayoutSaver::LayoutSaver()
-    : d(new Private())
+    : d(new Private(RestoreOption_None))
 {
 }
 
@@ -153,6 +156,7 @@ bool LayoutSaver::restoreFromFile(const QString &jsonFilename)
 
     const QByteArray data = f.readAll();
     const bool result = restoreLayout(data);
+
     return result;
 }
 
@@ -230,6 +234,9 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         return false;
     }
 
+    if (d->m_restoreOptions & RestoreOption_RelativeToMainWindow)
+        layout.scaleSizes();
+
     // Hide all dockwidgets and unparent them from any layout before starting restore
     d->m_dockRegistry->clear(/*deleteStaticAnchors=*/true);
 
@@ -241,7 +248,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             return false;
         }
 
-        d->deserializeWindowGeometry(mw, mainWindow->window()); // window() as the MainWindow can be embedded
+        if (!(d->m_restoreOptions & RestoreOption_RelativeToMainWindow))
+            d->deserializeWindowGeometry(mw, mainWindow->window()); // window(), as the MainWindow can be embedded
 
         if (!mainWindow->deserialize(mw))
             return false;
@@ -420,6 +428,35 @@ void LayoutSaver::Layout::fromVariantMap(const QVariantMap &map)
     screenInfo = fromVariantList<LayoutSaver::ScreenInfo>(map.value(QStringLiteral("screenInfo")).toList());
 }
 
+void LayoutSaver::Layout::scaleSizes()
+{
+    if (mainWindows.isEmpty())
+        return;
+
+    for (auto &mw : mainWindows)
+        mw.scaleSizes();
+
+    for (auto &fw : floatingWindows) {
+        LayoutSaver::MainWindow mw = mainWindowForIndex(fw.parentIndex);
+        if (mw.scalingInfo.isValid())
+            fw.scaleSizes(mw.scalingInfo);
+    }
+
+    for (auto &dw : allDockWidgets) {
+        // TODO: Determine the best main window. This only interesting for closed dock widget geometry
+        // which was previously floating. But they still have some other main window as parent.
+        dw->scaleSizes(mainWindows.constFirst().scalingInfo);
+    }
+}
+
+LayoutSaver::MainWindow LayoutSaver::Layout::mainWindowForIndex(int index) const
+{
+    if (index < 0 || index >= mainWindows.size())
+        return {};
+
+    return mainWindows.at(index);
+}
+
 bool LayoutSaver::Item::isValid(const LayoutSaver::MultiSplitterLayout &layout) const
 {
     if (!frame.isValid())
@@ -438,6 +475,13 @@ bool LayoutSaver::Item::isValid(const LayoutSaver::MultiSplitterLayout &layout) 
     }
 
     return true;
+}
+
+void LayoutSaver::Item::scaleSizes(const ScalingInfo &scalingInfo)
+{
+    scalingInfo.applyFactorsTo(geometry);
+    if (!frame.isNull)
+        frame.scaleSizes(scalingInfo);
 }
 
 QVariantMap LayoutSaver::Item::toVariantMap() const
@@ -498,13 +542,17 @@ bool LayoutSaver::Frame::isValid() const
     return true;
 }
 
+void LayoutSaver::Frame::scaleSizes(const ScalingInfo &scalingInfo)
+{
+    scalingInfo.applyFactorsTo(geometry);
+}
+
 QVariantMap LayoutSaver::Frame::toVariantMap() const
 {
     QVariantMap map;
     map.insert(QStringLiteral("isNull"), isNull);
     map.insert(QStringLiteral("objectName"), objectName);
     map.insert(QStringLiteral("geometry"), rectToMap(geometry));
-    map.insert(QStringLiteral("layoutSize"), sizeToMap(layoutSize));
     map.insert(QStringLiteral("options"), options);
     map.insert(QStringLiteral("currentTabIndex"), currentTabIndex);
 
@@ -524,7 +572,6 @@ void LayoutSaver::Frame::fromVariantMap(const QVariantMap &map)
     isNull = map.value(QStringLiteral("isNull")).toBool();
     objectName = map.value(QStringLiteral("objectName")).toString();
     geometry = mapToRect(map.value(QStringLiteral("geometry")).toMap());
-    layoutSize = mapToSize(map.value(QStringLiteral("layoutSize")).toMap());
     options = map.value(QStringLiteral("options")).toUInt();
     currentTabIndex = map.value(QStringLiteral("currentTabIndex")).toInt();
 
@@ -541,6 +588,11 @@ void LayoutSaver::Frame::fromVariantMap(const QVariantMap &map)
 bool LayoutSaver::DockWidget::isValid() const
 {
     return !uniqueName.isEmpty();
+}
+
+void LayoutSaver::DockWidget::scaleSizes(const ScalingInfo &scalingInfo)
+{
+    lastPosition.scaleSizes(scalingInfo);
 }
 
 QVariantMap LayoutSaver::DockWidget::toVariantMap() const
@@ -654,6 +706,22 @@ void LayoutSaver::Anchor::fromVariantMap(const QVariantMap &map)
         side2Items.push_back(v.toInt());
 }
 
+void LayoutSaver::Anchor::scaleSizes(const ScalingInfo &scalingInfo)
+{
+    const QPoint pos = geometry.topLeft();
+
+    if (isVertical()) {
+        geometry.moveLeft(int(pos.x() * scalingInfo.widthFactor));
+    } else {
+        geometry.moveTop(int(pos.y() * scalingInfo.heightFactor));
+    }
+}
+
+bool LayoutSaver::Anchor::isVertical() const
+{
+    return orientation == Qt::Vertical;
+}
+
 bool LayoutSaver::FloatingWindow::isValid() const
 {
     if (!multiSplitterLayout.isValid())
@@ -665,6 +733,12 @@ bool LayoutSaver::FloatingWindow::isValid() const
     }
 
     return true;
+}
+
+void LayoutSaver::FloatingWindow::scaleSizes(const ScalingInfo &scalingInfo)
+{
+    scalingInfo.applyFactorsTo(/*by-ref*/geometry);
+    multiSplitterLayout.scaleSizes(scalingInfo);
 }
 
 QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
@@ -701,6 +775,20 @@ bool LayoutSaver::MainWindow::isValid() const
     }
 
     return true;
+}
+
+void LayoutSaver::MainWindow::scaleSizes()
+{
+    if (scalingInfo.isValid()) {
+        // Doesn't happen, it's called only once
+        Q_ASSERT(false);
+        return;
+    }
+
+    scalingInfo = ScalingInfo(uniqueName, geometry);
+
+    if (scalingInfo.isValid())
+        multiSplitterLayout.scaleSizes(scalingInfo);
 }
 
 QVariantMap LayoutSaver::MainWindow::toVariantMap() const
@@ -749,6 +837,15 @@ bool LayoutSaver::MultiSplitterLayout::isValid() const
     return true;
 }
 
+void LayoutSaver::MultiSplitterLayout::scaleSizes(const ScalingInfo &scalingInfo)
+{
+    scalingInfo.applyFactorsTo(/*by-ref*/size);
+    for (LayoutSaver::Anchor &anchor : anchors)
+        anchor.scaleSizes(scalingInfo);
+    for (LayoutSaver::Item &item : items)
+        item.scaleSizes(scalingInfo);
+}
+
 QVariantMap LayoutSaver::MultiSplitterLayout::toVariantMap() const
 {
     QVariantMap map;
@@ -767,6 +864,11 @@ void LayoutSaver::MultiSplitterLayout::fromVariantMap(const QVariantMap &map)
     items = fromVariantList<LayoutSaver::Item>(map.value(QStringLiteral("items")).toList());
     minSize = mapToSize(map.value(QStringLiteral("minSize")).toMap());
     size = mapToSize(map.value(QStringLiteral("size")).toMap());
+}
+
+void LayoutSaver::LastPosition::scaleSizes(const ScalingInfo &scalingInfo)
+{
+    scalingInfo.applyFactorsTo(/*by-ref*/lastFloatingGeometry);
 }
 
 QVariantMap LayoutSaver::LastPosition::toVariantMap() const
@@ -827,4 +929,65 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
     indexOfFloatingWindow = map.value(QStringLiteral("indexOfFloatingWindow"), -1).toInt();
     itemIndex = map.value(QStringLiteral("itemIndex")).toInt();
     mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
+}
+
+LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo)
+{
+    auto mainWindow = DockRegistry::self()->mainWindowByName(mainWindowId);
+    if (!mainWindow) {
+        qWarning() << Q_FUNC_INFO << "Failed to find main window with name" << mainWindowName;
+        return;
+    }
+
+    if (!savedMainWindowGeo.isValid() || savedMainWindowGeo.isNull()) {
+        qWarning() << Q_FUNC_INFO << "Invalid saved main window geometry" << savedMainWindowGeo;
+        return;
+    }
+
+    if (!mainWindow->geometry().isValid() || mainWindow->geometry().isNull()) {
+        qWarning() << Q_FUNC_INFO << "Invalid main window geometry" << mainWindow->geometry();
+        return;
+    }
+
+    this->mainWindowName = mainWindowId;
+    this->savedMainWindowGeometry = savedMainWindowGeo;
+    realMainWindowGeometry = mainWindow->geometry();
+    widthFactor = double(realMainWindowGeometry.width()) / savedMainWindowGeo.width();
+    heightFactor = double(realMainWindowGeometry.height()) / savedMainWindowGeo.height();
+}
+
+void LayoutSaver::ScalingInfo::translatePos(QPoint &pt) const
+{
+    const int deltaX = pt.x() - savedMainWindowGeometry.x();
+    const int deltaY = pt.y() - savedMainWindowGeometry.y();
+
+    const double newDeltaX = deltaX * widthFactor;
+    const double newDeltaY = deltaY * heightFactor;
+
+    pt.setX(qCeil(savedMainWindowGeometry.x() + newDeltaX));
+    pt.setY(qCeil(savedMainWindowGeometry.y() + newDeltaY));
+}
+
+void LayoutSaver::ScalingInfo::applyFactorsTo(QPoint &pt) const
+{
+    pt.setX(qCeil(pt.x() + widthFactor));
+    pt.setY(qCeil(pt.y() + heightFactor));
+}
+
+void LayoutSaver::ScalingInfo::applyFactorsTo(QSize &sz) const
+{
+    sz.setWidth(qCeil(widthFactor * sz.width()));
+    sz.setHeight(qCeil(heightFactor * sz.height()));
+}
+
+void LayoutSaver::ScalingInfo::applyFactorsTo(QRect &rect) const
+{
+    QPoint pos = rect.topLeft();
+    QSize size = rect.size();
+
+    applyFactorsTo(/*by-ref*/size);
+    applyFactorsTo(/*by-ref*/pos);
+
+    rect.moveTopLeft(pos);
+    rect.setSize(size);
 }

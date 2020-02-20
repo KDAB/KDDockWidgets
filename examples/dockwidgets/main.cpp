@@ -70,6 +70,9 @@ int main(int argc, char **argv)
     QCommandLineOption nonClosableDockWidget("n", QCoreApplication::translate("main", "DockWidget #0 will be non-closable"));
     parser.addOption(nonClosableDockWidget);
 
+    QCommandLineOption relativeRestore("s", QCoreApplication::translate("main", "Don't restore main window geometry, restore dock widgets in relative sizes"));
+    parser.addOption(relativeRestore);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
@@ -111,8 +114,9 @@ int main(int argc, char **argv)
     KDDockWidgets::Config::self().setFlags(flags);
 
     const bool nonClosableDockWidget0 = parser.isSet(nonClosableDockWidget);
+    const bool restoreIsRelative = parser.isSet(relativeRestore);
 
-    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0);
+    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0, restoreIsRelative);
     mainWindow.setWindowTitle("Main Window 1");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
@@ -124,7 +128,7 @@ int main(int argc, char **argv)
                                                                        : QString();
 
         auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
-                                            nonClosableDockWidget0, affinity);
+                                            nonClosableDockWidget0, restoreIsRelative, affinity);
         if (affinity.isEmpty())
             mainWindow2->setWindowTitle("Main Window 2");
         else
