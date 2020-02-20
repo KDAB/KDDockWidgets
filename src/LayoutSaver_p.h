@@ -33,7 +33,13 @@
 #define ANCHOR_MAGIC_MARKER "e520c60e-cf5d-4a30-b1a7-588d2c569851"
 #define MULTISPLITTER_LAYOUT_MAGIC_MARKER "bac9948e-5f1b-4271-acc5-07f1708e2611"
 
-#define KDDOCKWIDGETS_SERIALIZATION_VERSION 1
+/**
+  * Bump whenever the format changes, so we can still load old layouts.
+  * version 1: Initial version
+  * version 2: Introduced Frame::layoutSize, MainWindow::screenSize and FloatingWindow::screenSize
+  */
+#define KDDOCKWIDGETS_SERIALIZATION_VERSION 2
+
 
 namespace KDDockWidgets {
 
@@ -175,8 +181,19 @@ struct LayoutSaver::Layout
 {
 public:
 
+    Layout() {
+        s_currentLayoutBeingRestored = this;
+    }
+
+    ~Layout() {
+        s_currentLayoutBeingRestored = nullptr;
+    }
+
     bool isValid() const;
     bool fillFrom(const QByteArray &serialized);
+
+    friend QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame);
+    static LayoutSaver::Layout* s_currentLayoutBeingRestored;
 
     int serializationVersion = KDDOCKWIDGETS_SERIALIZATION_VERSION;
     LayoutSaver::MainWindow::List mainWindows;
@@ -252,6 +269,7 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Frame *frame)
 {
     ds << frame->objectName;
     ds << frame->geometry;
+    ds << frame->layoutSize;
     ds << frame->options;
     ds << frame->currentTabIndex;
     ds << frame->dockWidgets.size();
@@ -271,6 +289,11 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame)
 
     ds >> frame->objectName;
     ds >> frame->geometry;
+
+    if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
+        ds >> frame->layoutSize;
+    }
+
     ds >> frame->options;
     ds >> frame->currentTabIndex;
     ds >> numDockWidgets;
@@ -418,6 +441,7 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 {
     ds << fw->parentIndex;
     ds << fw->geometry;
+    ds << fw->screenSize;
     ds << fw->isVisible;
     ds << &fw->multiSplitterLayout;
     return ds;
@@ -427,6 +451,10 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 {
     ds >> fw->parentIndex;
     ds >> fw->geometry;
+    if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
+        ds >> fw->screenSize;
+    }
+
     ds >> fw->isVisible;
     ds >> &fw->multiSplitterLayout;
     return ds;
@@ -436,6 +464,7 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::MainWindow *m)
 {
     ds << m->uniqueName;
     ds << m->geometry;
+    ds << m->screenSize;
     ds << m->isVisible;
     ds << m->options;
     ds << &m->multiSplitterLayout;
@@ -446,6 +475,9 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MainWindow *m)
 {
     ds >> m->uniqueName;
     ds >> m->geometry;
+    if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
+        ds >> m->screenSize;
+    }
     ds >> m->isVisible;
     ds >> m->options;
     ds >> &m->multiSplitterLayout;

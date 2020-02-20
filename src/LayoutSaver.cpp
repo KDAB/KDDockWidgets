@@ -47,6 +47,7 @@
 using namespace KDDockWidgets;
 
 QHash<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
+LayoutSaver::Layout* LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
 
 class KDDockWidgets::LayoutSaver::Private
 {
@@ -81,7 +82,6 @@ public:
     std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
     static bool s_restoreInProgress;
-    LayoutSaver::Layout *m_currentLayoutBeingRestored = nullptr;
 };
 
 bool LayoutSaver::Private::s_restoreInProgress = false;
@@ -174,23 +174,21 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     Private::RAIIIsRestoring isRestoring;
 
     struct FrameCleanup {
-        FrameCleanup(LayoutSaver *saver, LayoutSaver::Layout *layout)
+        FrameCleanup(LayoutSaver *saver)
             : m_saver(saver)
         {
-            m_saver->d->m_currentLayoutBeingRestored = layout;
         }
 
         ~FrameCleanup()
         {
             m_saver->d->deleteEmptyFrames();
-            m_saver->d->m_currentLayoutBeingRestored = nullptr;
         }
 
         LayoutSaver *const m_saver;
     };
 
+    FrameCleanup cleanup(this);
     LayoutSaver::Layout layout;
-    FrameCleanup cleanup(this, &layout);
     if (!layout.fillFrom(data))
         return false;
 
@@ -238,11 +236,6 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     }
 
     return true;
-}
-
-LayoutSaver::Layout *LayoutSaver::currentLayoutBeingRestored() const
-{
-    return d->m_currentLayoutBeingRestored;
 }
 
 DockWidgetBase::List LayoutSaver::restoredDockWidgets() const

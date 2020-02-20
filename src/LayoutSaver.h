@@ -100,7 +100,6 @@ public:
     struct Placeholder;
 
 private:
-    LayoutSaver::Layout *currentLayoutBeingRestored() const;
     friend class TestDocks;
 
     class Private;
