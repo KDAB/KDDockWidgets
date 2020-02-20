@@ -629,5 +629,5 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
 
 LayoutSaver::DockWidget::Ptr DockWidgetBase::serialize() const
 {
-    return LayoutSaver::DockWidget::dockWidgetForName(uniqueName());
+    return LayoutSaver::DockWidget::dockWidgetForName(uniqueName(), affinityName());
 }

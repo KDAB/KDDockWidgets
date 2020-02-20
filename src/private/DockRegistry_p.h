@@ -105,6 +105,13 @@ public:
     void clear(bool deleteStaticAnchors = false);
 
     /**
+     * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors belonging
+     * to the passed main windows.
+     * This is called before restoring a layout.
+     */
+    void clearMainWindows(const QStringList &uniqueNames, bool deleteStaticAnchors = false);
+
+    /**
      * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.
      *
      * This is to simplify things before saving a layout. So we don't have to care about the case

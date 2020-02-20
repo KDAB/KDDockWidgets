@@ -30,6 +30,8 @@
 
 #include "docks_export.h"
 
+#include <QStringList>
+
 QT_BEGIN_NAMESPACE
 class QByteArray;
 QT_END_NAMESPACE
@@ -64,7 +66,7 @@ public:
     /**
      * @brief saves the layout into a byte array
      */
-    QByteArray serializeLayout() const;
+    QByteArray serializeLayout(const QStringList &uniqueNames = {}) const;
 
     /**
      * @brief restores the layout from a byte array
@@ -78,7 +80,7 @@ public:
      *
      * @return true on success
      */
-    bool restoreLayout(const QByteArray &);
+    bool restoreLayout(const QByteArray &, const QStringList &uniqueNames = {});
 
     /**
      * @brief returns a list of dock widgets which were restored since the last

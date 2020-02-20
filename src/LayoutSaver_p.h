@@ -70,7 +70,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
 
     bool isValid() const;
 
-    static Ptr dockWidgetForName(const QString &name)
+    static Ptr dockWidgetForName(const QString &name, const QString &affinityName)
     {
         auto dw = s_dockWidgets.value(name);
         if (dw)
@@ -78,11 +78,13 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
 
         dw = Ptr(new LayoutSaver::DockWidget);
         dw->uniqueName = name;
+        dw->affinityName = affinityName;
 
         return dw;
     }
 
     QString uniqueName;
+    QString affinityName;
     LayoutSaver::LastPosition lastPosition;
 
 private:
@@ -159,6 +161,7 @@ struct LayoutSaver::FloatingWindow
     int parentIndex = -1;
     QRect geometry;
     QSize screenSize;  // for relative-size restoring
+    QString affinityName;
     bool isVisible = true;
 };
 
@@ -172,6 +175,7 @@ public:
     KDDockWidgets::MainWindowOptions options;
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
     QString uniqueName;
+    QString affinityName;
     QRect geometry;
     QSize screenSize;  // for relative-size restoring
     bool isVisible;
@@ -276,6 +280,7 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Frame *frame)
 
     for (auto &dock : frame->dockWidgets) {
         ds << dock->uniqueName;
+        ds << dock->affinityName;
     }
 
     return ds;
@@ -301,7 +306,9 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame)
     for (int i = 0; i < numDockWidgets; ++i) {
         QString name;
         ds >> name;
-        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
+        QString affinityName;
+        ds >> affinityName;
+        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name, affinityName);
         frame->dockWidgets.push_back(dw);
     }
 
@@ -439,6 +446,7 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::LastPosition *lp)
 
 inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 {
+    ds << fw->affinityName;
     ds << fw->parentIndex;
     ds << fw->geometry;
     ds << fw->screenSize;
@@ -449,6 +457,7 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 
 inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 {
+    ds >> fw->affinityName;
     ds >> fw->parentIndex;
     ds >> fw->geometry;
     if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
@@ -463,6 +472,7 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::MainWindow *m)
 {
     ds << m->uniqueName;
+    ds << m->affinityName;
     ds << m->geometry;
     ds << m->screenSize;
     ds << m->isVisible;
@@ -474,6 +484,7 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::MainWindow *m)
 inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MainWindow *m)
 {
     ds >> m->uniqueName;
+    ds >> m->affinityName;
     ds >> m->geometry;
     if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
         ds >> m->screenSize;
@@ -500,11 +511,13 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Layout *l)
     ds << l->closedDockWidgets.size();
     for (auto &dw: l->closedDockWidgets) {
         ds << dw->uniqueName;
+        ds << dw->affinityName;
     }
 
     ds << l->allDockWidgets.size();
     for (auto &dw: l->allDockWidgets) {
         ds << dw->uniqueName;
+        ds << dw->affinityName;
         ds << &dw->lastPosition;
     }
 
@@ -542,7 +555,9 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
     for (int i = 0; i < numClosedDockWidgets; ++i) {
         QString name;
         ds >> name;
-        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
+        QString affinityName;
+        ds >> affinityName;
+        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name, affinityName);
         l->closedDockWidgets.push_back(dw);
     }
 
@@ -551,8 +566,10 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
     for (int i = 0; i < numAllDockWidgets; ++i) {
         QString name;
         ds >> name;
+        QString affinityName;
+        ds >> affinityName;
 
-        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
+        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name, affinityName);
         ds >> &dw->lastPosition;
         l->allDockWidgets.push_back(dw);
     }

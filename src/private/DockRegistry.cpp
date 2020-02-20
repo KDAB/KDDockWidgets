@@ -309,6 +309,40 @@ void DockRegistry::clear(bool deleteStaticAnchors)
                        << "; nestedwindows=" << m_nestedWindows.size();
 }
 
+void DockRegistry::clearMainWindows(const QStringList &uniqueNames, bool deleteStaticAnchors)
+{
+
+  QStringList affinities;
+  auto shouldClearDockWidget = [&affinities](const QString &affinityName) {
+    return affinities.isEmpty() || affinities.contains(affinityName) || affinityName.isEmpty();
+  };
+
+  auto shouldClearMainWindow = [&uniqueNames](MainWindowBase *mw) {
+    return uniqueNames.isEmpty() || uniqueNames.contains(mw->uniqueName());
+  };
+
+  // first need to find the affinity names for the requested main windows
+  for (auto mw : qAsConst(m_mainWindows)) {
+    if (shouldClearMainWindow(mw)) {
+      if (!mw->affinityName().isEmpty())
+        affinities.append(mw->affinityName());
+    }
+  }
+
+  for (auto dw : qAsConst(m_dockWidgets)) {
+    if (shouldClearDockWidget(dw->affinityName())) {
+      dw->forceClose();
+      dw->lastPosition()->removePlaceholders();
+    }
+  }
+
+  for (auto mw : qAsConst(m_mainWindows)) {
+    if (shouldClearMainWindow(mw)) {
+      mw->multiSplitterLayout()->clear(deleteStaticAnchors);
+    }
+  }
+}
+
 void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
     for (DockWidgetBase *dw : qAsConst(m_dockWidgets)) {

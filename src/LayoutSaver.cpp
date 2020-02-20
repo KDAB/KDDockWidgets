@@ -116,12 +116,21 @@ bool LayoutSaver::restoreFromDisk()
     return result;
 }
 
-QByteArray LayoutSaver::serializeLayout() const
+QByteArray LayoutSaver::serializeLayout(const QStringList &uniqueNames) const
 {
     if (!d->m_dockRegistry->isSane()) {
         qWarning() << Q_FUNC_INFO << "Refusing to serialize this layout. Check previous warnings.";
         return {};
     }
+
+    auto shouldSaveMainWindow = [&uniqueNames](MainWindowBase *mw) {
+      return uniqueNames.isEmpty() || uniqueNames.contains(mw->uniqueName());
+    };
+
+    QStringList savedAffinities;
+    auto shouldSaveWidget = [&savedAffinities](const QString &affinityName) {
+      return savedAffinities.isEmpty() || savedAffinities.contains(affinityName);
+    };
 
     LayoutSaver::Layout layout;
 
@@ -131,20 +140,26 @@ QByteArray LayoutSaver::serializeLayout() const
     const MainWindowBase::List mainWindows = d->m_dockRegistry->mainwindows();
     layout.mainWindows.reserve(mainWindows.size());
     for (MainWindowBase *mainWindow : mainWindows) {
-        layout.mainWindows.push_back(mainWindow->serialize());
+      if (shouldSaveMainWindow(mainWindow)) {
+         layout.mainWindows.push_back(mainWindow->serialize());
+         if (!mainWindow->affinityName().isEmpty())
+            savedAffinities.append(mainWindow->affinityName());
+      }
     }
 
     const QVector<KDDockWidgets::FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
     layout.floatingWindows.reserve(floatingWindows.size());
     for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
-        layout.floatingWindows.push_back(floatingWindow->serialize());
+        if (shouldSaveWidget(floatingWindow->affinityName()))
+            layout.floatingWindows.push_back(floatingWindow->serialize());
     }
 
     // Closed dock widgets also have interesting things to save, like geometry and placeholder info
     const DockWidgetBase::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
     layout.closedDockWidgets.reserve(closedDockWidgets.size());
     for (DockWidgetBase *dockWidget : closedDockWidgets) {
-        layout.closedDockWidgets.push_back(dockWidget->serialize());
+      if (shouldSaveWidget(dockWidget->affinityName()))
+          layout.closedDockWidgets.push_back(dockWidget->serialize());
     }
 
     // Save the placeholder info. We do it last, as we also restore it last, since we need all items to be created
@@ -153,6 +168,8 @@ QByteArray LayoutSaver::serializeLayout() const
     const DockWidgetBase::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
     for (DockWidgetBase *dockWidget : dockWidgets) {
+        if (!shouldSaveWidget(dockWidget->affinityName()))
+          continue;
         auto dw = dockWidget->serialize();
         dw->lastPosition = dockWidget->lastPosition()->serialize();
         layout.allDockWidgets.push_back(dw);
@@ -165,11 +182,20 @@ QByteArray LayoutSaver::serializeLayout() const
     return result;
 }
 
-bool LayoutSaver::restoreLayout(const QByteArray &data)
+bool LayoutSaver::restoreLayout(const QByteArray &data, const QStringList &uniqueNames)
 {
     d->clearRestoredProperty();
     if (data.isEmpty())
         return true;
+
+    QStringList restoredAffinities;
+    auto shouldRestoreWidget = [&restoredAffinities](const QString &affinityName) {
+      return restoredAffinities.isEmpty() || restoredAffinities.contains(affinityName) || affinityName.isEmpty();
+    };
+
+    auto shouldRestoreMainWindow = [&uniqueNames](MainWindowBase *mw) {
+      return uniqueNames.isEmpty() || uniqueNames.contains(mw->uniqueName());
+    };
 
     Private::RAIIIsRestoring isRestoring;
 
@@ -193,11 +219,15 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         return false;
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
-    d->m_dockRegistry->clear(/*deleteStaticAnchors=*/true);
+    d->m_dockRegistry->clearMainWindows(uniqueNames, /*deleteStaticAnchors=*/true);
 
     // 1. Restore main windows
     for (const LayoutSaver::MainWindow &mw : qAsConst(layout.mainWindows)) {
         MainWindowBase *mainWindow = d->m_dockRegistry->mainWindowByName(mw.uniqueName);
+
+        if (!shouldRestoreMainWindow(mainWindow))
+          continue;
+
         if (!mainWindow) {
             qWarning() << "Failed to restore layout create MainWindow with name" << mw.uniqueName << "first";
             return false;
@@ -207,12 +237,20 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         if (!mainWindow->deserialize(mw))
             return false;
+        if (!mainWindow->affinityName().isEmpty())
+          restoredAffinities.append(mainWindow->affinityName());
     }
+
 
     // 2. Restore FloatingWindows
     for (const LayoutSaver::FloatingWindow &fw : qAsConst(layout.floatingWindows)) {
         MainWindowBase *parent = fw.parentIndex == -1 ? nullptr
                                                       : DockRegistry::self()->mainwindows().at(fw.parentIndex);
+        if (parent != nullptr && !shouldRestoreMainWindow(parent))
+          continue;
+
+        if (!shouldRestoreWidget(fw.affinityName))
+          continue;
 
         auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(parent);
         d->deserializeWindowGeometry(fw, floatingWindow);
@@ -223,11 +261,15 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties
     for (const auto &dw : qAsConst(layout.closedDockWidgets)) {
-        DockWidgetBase::deserialize(dw);
+      if (shouldRestoreWidget(dw->affinityName))
+           DockWidgetBase::deserialize(dw);
     }
 
     // 4. Restore the placeholder info, now that the Items have been created
     for (const auto &dw : qAsConst(layout.allDockWidgets)) {
+      if (!shouldRestoreWidget(dw->affinityName))
+            continue;
+
         if (DockWidgetBase *dockWidget = d->m_dockRegistry->dockByName(dw->uniqueName)) {
             dockWidget->lastPosition()->deserialize(dw->lastPosition);
         } else {
