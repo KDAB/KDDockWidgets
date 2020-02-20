@@ -161,6 +161,7 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     m.geometry = window()->geometry(); // window() as the MainWindow can be embedded
     m.isVisible = isVisible();
     m.uniqueName = uniqueName();
+    m.screenIndex = screenNumberForWidget(this);
     m.screenSize = screenSizeForWidget(this);
     m.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
 

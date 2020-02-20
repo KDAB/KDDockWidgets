@@ -80,6 +80,18 @@ inline QSize screenSizeForWidget(const QWidget *w)
     return {};
 }
 
+inline int screenNumberForWidget(const QWidget *w)
+{
+    QWidget *topLevel = w->window();
+    if (QWindow *window = topLevel->windowHandle()) {
+        if (QScreen *screen = window->screen()) {
+            return qApp->screens().indexOf(screen);
+        }
+    }
+
+    return -1;
+}
+
 };
 
 #endif

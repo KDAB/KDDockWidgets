@@ -393,6 +393,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.geometry = geometry();
     fw.isVisible = isVisible();
     fw.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
+    fw.screenIndex = screenNumberForWidget(this);
     fw.screenSize = screenSizeForWidget(this);
 
     auto mainWindow = qobject_cast<MainWindowBase*>(parentWidget());

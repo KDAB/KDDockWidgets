@@ -160,6 +160,7 @@ struct LayoutSaver::FloatingWindow
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
     int parentIndex = -1;
     QRect geometry;
+    int screenIndex;
     QSize screenSize;  // for relative-size restoring
     bool isVisible = true;
 };
@@ -175,6 +176,7 @@ public:
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
     QString uniqueName;
     QRect geometry;
+    int screenIndex;
     QSize screenSize;  // for relative-size restoring
     bool isVisible;
 };
@@ -483,6 +485,7 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 {
     ds << fw->parentIndex;
     ds << fw->geometry;
+    ds << fw->screenIndex;
     ds << fw->screenSize;
     ds << fw->isVisible;
     ds << &fw->multiSplitterLayout;
@@ -494,6 +497,7 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
     ds >> fw->parentIndex;
     ds >> fw->geometry;
     if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
+        ds >> fw->screenIndex;
         ds >> fw->screenSize;
     }
 
@@ -506,6 +510,7 @@ inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::MainWindow *m)
 {
     ds << m->uniqueName;
     ds << m->geometry;
+    ds << m->screenIndex;
     ds << m->screenSize;
     ds << m->isVisible;
     ds << m->options;
@@ -518,6 +523,7 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MainWindow *m)
     ds >> m->uniqueName;
     ds >> m->geometry;
     if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
+        ds >> m->screenIndex;
         ds >> m->screenSize;
     }
     ds >> m->isVisible;
