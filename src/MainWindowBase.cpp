@@ -30,6 +30,7 @@
 #include "DockRegistry_p.h"
 #include "DropArea_p.h"
 #include "Frame_p.h"
+#include "Utils_p.h"
 #include "Logging_p.h"
 #include "DropAreaWithCentralFrame_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
@@ -160,6 +161,7 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     m.geometry = window()->geometry(); // window() as the MainWindow can be embedded
     m.isVisible = isVisible();
     m.uniqueName = uniqueName();
+    m.screenSize = screenSizeForWidget(this);
     m.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
 
     return m;

@@ -90,6 +90,7 @@ struct LayoutSaver::Frame
     bool isNull = true;
     QString objectName;
     QRect geometry;
+    QSize layoutSize; // for relative-size restoring
     unsigned int options;
     int currentTabIndex;
 
@@ -151,6 +152,7 @@ struct LayoutSaver::FloatingWindow
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
     int parentIndex = -1;
     QRect geometry;
+    QSize screenSize;  // for relative-size restoring
     bool isVisible = true;
 };
 
@@ -165,6 +167,7 @@ public:
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
     QString uniqueName;
     QRect geometry;
+    QSize screenSize;  // for relative-size restoring
     bool isVisible;
 };
 

@@ -24,6 +24,9 @@
 #include "Config.h"
 
 #include <QApplication>
+#include <QScreen>
+#include <QWidget>
+#include <QWindow>
 
 #ifdef QT_X11EXTRAS_LIB
 # include <QtX11Extras/QX11Info>
@@ -63,6 +66,18 @@ inline bool windowManagerHasTranslucency()
 
     // macOS and Windows are fine
     return true;
+}
+
+inline QSize screenSizeForWidget(const QWidget *w)
+{
+    QWidget *topLevel = w->window();
+    if (QWindow *window = topLevel->windowHandle()) {
+        if (QScreen *screen = window->screen()) {
+            return screen->size();
+        }
+    }
+
+    return {};
 }
 
 };
