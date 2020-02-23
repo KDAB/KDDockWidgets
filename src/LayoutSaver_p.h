@@ -45,9 +45,39 @@
 
 namespace KDDockWidgets {
 
+template <typename T>
+typename T::List fromVariantList(const QVariantList &listV)
+{
+    typename T::List result;
+
+    result.reserve(listV.size());
+    for (const QVariant &v : listV) {
+        T t;
+        t.fromVariantMap(v.toMap());
+        result.push_back(t);
+    }
+
+    return result;
+}
+
+template <typename T>
+QVariantList toVariantList(const typename T::List &list)
+{
+    QVariantList result;
+    result.reserve(list.size());
+    for (const T &v : list)
+        result.push_back(v.toVariantMap());
+
+    return result;
+}
+
 struct LayoutSaver::Placeholder
 {
     typedef QVector<LayoutSaver::Placeholder> List;
+
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
+
     bool isFloatingWindow;
     int indexOfFloatingWindow;
     int itemIndex;
@@ -61,6 +91,9 @@ struct LayoutSaver::LastPosition
     int tabIndex;
     bool wasFloating;
     LayoutSaver::Placeholder::List placeholders;
+
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
 };
 
 struct DOCKS_EXPORT LayoutSaver::DockWidget
@@ -84,6 +117,9 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
         return dw;
     }
 
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
+
     QString uniqueName;
     LayoutSaver::LastPosition lastPosition;
 
@@ -91,9 +127,33 @@ private:
     DockWidget() {}
 };
 
+
+inline QVariantList toVariantList(const LayoutSaver::DockWidget::List &list)
+{
+    QVariantList result;
+    result.reserve(list.size());
+    for (const auto &dw : list)
+        result.push_back(dw->toVariantMap());
+
+    return result;
+}
+
+inline QVariantList dockWidgetNames(const LayoutSaver::DockWidget::List &list)
+{
+    QVariantList result;
+    result.reserve(list.size());
+    for (auto &dw : list)
+        result.push_back(dw->uniqueName);
+
+    return result;
+}
+
 struct LayoutSaver::Frame
 {
     bool isValid() const;
+
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
 
     bool isNull = true;
     QString objectName;
@@ -111,16 +171,17 @@ struct LayoutSaver::Item
 
     bool isValid(const MultiSplitterLayout &) const;
 
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
+
     QString objectName;
     bool isPlaceholder;
     QRect geometry;
     QSize minSize;
-
     int indexOfLeftAnchor;
     int indexOfTopAnchor;
     int indexOfRightAnchor;
     int indexOfBottomAnchor;
-
     LayoutSaver::Frame frame;
 };
 
@@ -129,6 +190,9 @@ struct LayoutSaver::Anchor
     typedef QVector<LayoutSaver::Anchor> List;
 
     bool isValid(const LayoutSaver::MultiSplitterLayout &layout) const;
+
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
 
     QString objectName;
     QRect geometry;
@@ -145,6 +209,9 @@ struct LayoutSaver::MultiSplitterLayout
 {
     bool isValid() const;
 
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
+
     LayoutSaver::Anchor::List anchors;
     LayoutSaver::Item::List items;
     QSize minSize;
@@ -156,6 +223,8 @@ struct LayoutSaver::FloatingWindow
     typedef QVector<LayoutSaver::FloatingWindow> List;
 
     bool isValid() const;
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
 
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
     int parentIndex = -1;
@@ -171,6 +240,8 @@ public:
     typedef QVector<LayoutSaver::MainWindow> List;
 
     bool isValid() const;
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
 
     KDDockWidgets::MainWindowOptions options;
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
@@ -184,6 +255,10 @@ public:
 struct LayoutSaver::ScreenInfo
 {
     typedef QVector<LayoutSaver::ScreenInfo> List;
+
+    QVariantMap toVariantMap() const;
+    void fromVariantMap(const QVariantMap &map);
+
     int index;
     QRect geometry;
     QString name;
@@ -214,6 +289,10 @@ public:
 
     bool isValid() const;
     bool fillFrom(const QByteArray &serialized);
+
+    QVariantMap toVariantMap() const;
+
+    void fromVariantMap(const QVariantMap &map);
 
     friend QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame);
     static LayoutSaver::Layout* s_currentLayoutBeingRestored;

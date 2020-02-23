@@ -324,6 +324,44 @@ bool LayoutSaver::Layout::fillFrom(const QByteArray &serialized)
     return true;
 }
 
+QVariantMap LayoutSaver::Layout::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("serializationVersion"), serializationVersion);
+    map.insert(QStringLiteral("mainWindows"), toVariantList<LayoutSaver::MainWindow>(mainWindows));
+    map.insert(QStringLiteral("floatingWindows"), toVariantList<LayoutSaver::FloatingWindow>(floatingWindows));
+    map.insert(QStringLiteral("closedDockWidgets"), dockWidgetNames(closedDockWidgets));
+    map.insert(QStringLiteral("allDockWidgets"), toVariantList(allDockWidgets));
+    map.insert(QStringLiteral("screenInfo"), toVariantList<LayoutSaver::ScreenInfo>(screenInfo));
+
+    return map;
+}
+
+void LayoutSaver::Layout::fromVariantMap(const QVariantMap &map)
+{
+    allDockWidgets.clear();
+    const QVariantList dockWidgetsV = map.value(QStringLiteral("allDockWidgets")).toList();
+    for (const QVariant &v : dockWidgetsV) {
+        const QVariantMap dwV = v.toMap();
+        const QString name = dwV.value(QStringLiteral("uniqueName")).toString();
+        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
+        dw->fromVariantMap(dwV);
+        allDockWidgets.push_back(dw);
+    }
+
+    closedDockWidgets.clear();
+    const QVariantList closedDockWidgetsV = map.value(QStringLiteral("closedDockWidgets")).toList();
+    closedDockWidgets.reserve(closedDockWidgetsV.size());
+    for (const QVariant &v : closedDockWidgetsV) {
+        closedDockWidgets.push_back(LayoutSaver::DockWidget::dockWidgetForName(v.toString()));
+    }
+
+    serializationVersion = map.value(QStringLiteral("serializationVersion")).toInt();
+    mainWindows = fromVariantList<LayoutSaver::MainWindow>(map.value(QStringLiteral("mainWindows")).toList());
+    floatingWindows = fromVariantList<LayoutSaver::FloatingWindow>(map.value(QStringLiteral("floatingWindows")).toList());
+    screenInfo = fromVariantList<LayoutSaver::ScreenInfo>(map.value(QStringLiteral("screenInfo")).toList());
+}
+
 bool LayoutSaver::Item::isValid(const LayoutSaver::MultiSplitterLayout &layout) const
 {
     if (!frame.isValid())
@@ -332,9 +370,9 @@ bool LayoutSaver::Item::isValid(const LayoutSaver::MultiSplitterLayout &layout) 
     const int numAnchors = layout.anchors.size();
 
     if (indexOfLeftAnchor < 0 || indexOfTopAnchor < 0 ||
-        indexOfBottomAnchor < 0 || indexOfRightAnchor < 0 ||
-        indexOfLeftAnchor >= numAnchors || indexOfTopAnchor >= numAnchors ||
-        indexOfBottomAnchor >= numAnchors || indexOfRightAnchor >= numAnchors) {
+            indexOfBottomAnchor < 0 || indexOfRightAnchor < 0 ||
+            indexOfLeftAnchor >= numAnchors || indexOfTopAnchor >= numAnchors ||
+            indexOfBottomAnchor >= numAnchors || indexOfRightAnchor >= numAnchors) {
         qWarning() << Q_FUNC_INFO << "Invalid anchor indexes"
                    << indexOfLeftAnchor << indexOfTopAnchor
                    << indexOfBottomAnchor << indexOfRightAnchor;
@@ -342,6 +380,35 @@ bool LayoutSaver::Item::isValid(const LayoutSaver::MultiSplitterLayout &layout) 
     }
 
     return true;
+}
+
+QVariantMap LayoutSaver::Item::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("objectName"), objectName);
+    map.insert(QStringLiteral("isPlaceholder"), isPlaceholder);
+    map.insert(QStringLiteral("geometry"), geometry);
+    map.insert(QStringLiteral("minSize"), minSize);
+    map.insert(QStringLiteral("indexOfLeftAnchor"), indexOfLeftAnchor);
+    map.insert(QStringLiteral("indexOfTopAnchor"), indexOfTopAnchor);
+    map.insert(QStringLiteral("indexOfRightAnchor"), indexOfRightAnchor);
+    map.insert(QStringLiteral("indexOfBottomAnchor"), indexOfBottomAnchor);
+    map.insert(QStringLiteral("frame"), frame.toVariantMap());
+
+    return map;
+}
+
+void LayoutSaver::Item::fromVariantMap(const QVariantMap &map)
+{
+    objectName = map.value(QStringLiteral("objectName")).toString();
+    isPlaceholder = map.value(QStringLiteral("isPlaceholder")).toBool();
+    geometry = map.value(QStringLiteral("geometry")).toRect();
+    minSize = map.value(QStringLiteral("minSize")).toSize();
+    indexOfLeftAnchor = map.value(QStringLiteral("indexOfLeftAnchor")).toInt();
+    indexOfTopAnchor = map.value(QStringLiteral("indexOfTopAnchor")).toInt();
+    indexOfRightAnchor = map.value(QStringLiteral("indexOfRightAnchor")).toInt();
+    indexOfBottomAnchor = map.value(QStringLiteral("indexOfBottomAnchor")).toInt();
+    frame.fromVariantMap(map.value(QStringLiteral("frame")).toMap());
 }
 
 bool LayoutSaver::Frame::isValid() const
@@ -372,9 +439,58 @@ bool LayoutSaver::Frame::isValid() const
     return true;
 }
 
+QVariantMap LayoutSaver::Frame::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("isNull"), isNull);
+    map.insert(QStringLiteral("objectName"), objectName);
+    map.insert(QStringLiteral("geometry"), geometry);
+    map.insert(QStringLiteral("layoutSize"), layoutSize);
+    map.insert(QStringLiteral("options"), options);
+    map.insert(QStringLiteral("currentTabIndex"), currentTabIndex);
+
+    map.insert(QStringLiteral("dockWidgets"), dockWidgetNames(dockWidgets));
+
+    return map;
+}
+
+void LayoutSaver::Frame::fromVariantMap(const QVariantMap &map)
+{
+    isNull = map.value(QStringLiteral("isNull")).toBool();
+    objectName = map.value(QStringLiteral("objectName")).toString();
+    geometry = map.value(QStringLiteral("geometry")).toRect();
+    layoutSize = map.value(QStringLiteral("layoutSize")).toSize();
+    options = map.value(QStringLiteral("options")).toUInt();
+    currentTabIndex = map.value(QStringLiteral("currentTabIndex")).toInt();
+
+    QVariantList dockWidgetsV = map.value(QStringLiteral("dockWidgets")).toList();
+
+    dockWidgets.clear();
+    dockWidgets.reserve(dockWidgetsV.size());
+    for (const auto &variant : dockWidgetsV) {
+        DockWidget::Ptr dw = DockWidget::dockWidgetForName(variant.toString());
+        dockWidgets.push_back(dw);
+    }
+}
+
 bool LayoutSaver::DockWidget::isValid() const
 {
     return !uniqueName.isEmpty();
+}
+
+QVariantMap LayoutSaver::DockWidget::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("uniqueName"), uniqueName);
+    map.insert(QStringLiteral("lastPosition"), lastPosition.toVariantMap());
+
+    return map;
+}
+
+void LayoutSaver::DockWidget::fromVariantMap(const QVariantMap &map)
+{
+    uniqueName = map.value(QStringLiteral("uniqueName")).toString();
+    lastPosition.fromVariantMap(map.value(QStringLiteral("lastPosition")).toMap());
 }
 
 bool LayoutSaver::Anchor::isValid(const LayoutSaver::MultiSplitterLayout &layout) const
@@ -424,6 +540,55 @@ bool LayoutSaver::Anchor::isValid(const LayoutSaver::MultiSplitterLayout &layout
     return true;
 }
 
+QVariantMap LayoutSaver::Anchor::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("objectName"), objectName);
+    map.insert(QStringLiteral("geometry"), geometry);
+    map.insert(QStringLiteral("orientation"), orientation);
+    map.insert(QStringLiteral("type"), type);
+    map.insert(QStringLiteral("indexOfFrom"), indexOfFrom);
+    map.insert(QStringLiteral("indexOfTo"), indexOfTo);
+    map.insert(QStringLiteral("indexOfFollowee"), indexOfFollowee);
+
+    QVariantList side1ItemsV;
+    QVariantList side2ItemsV;
+    side1ItemsV.reserve(side1Items.size());
+    side2ItemsV.reserve(side2Items.size());
+    for (int index : qAsConst(side1Items))
+        side1ItemsV.push_back(index);
+    for (int index : qAsConst(side2Items))
+        side2ItemsV.push_back(index);
+
+    map.insert(QStringLiteral("side1Items"), side1ItemsV);
+    map.insert(QStringLiteral("side12tems"), side2ItemsV);
+
+    return map;
+}
+
+void LayoutSaver::Anchor::fromVariantMap(const QVariantMap &map)
+{
+    objectName = map.value(QStringLiteral("objectName")).toString();
+    geometry = map.value(QStringLiteral("geometry")).toRect();
+
+    orientation = map.value(QStringLiteral("orientation")).toInt();
+    type = map.value(QStringLiteral("type")).toInt();
+    indexOfFrom = map.value(QStringLiteral("indexOfFrom")).toInt();
+    indexOfTo = map.value(QStringLiteral("indexOfTo")).toInt();
+    indexOfFollowee = map.value(QStringLiteral("indexOfFollowee")).toInt();
+
+    side1Items.clear();
+    side2Items.clear();
+    const QVariantList side1ItemsV = map.value(QStringLiteral("side1Items")).toList();
+    const QVariantList side2ItemsV = map.value(QStringLiteral("side2Items")).toList();
+    side1Items.reserve(side1ItemsV.size());
+    side2Items.reserve(side2ItemsV.size());
+    for (const QVariant &v : side1ItemsV)
+        side1Items.push_back(v.toInt());
+    for (const QVariant &v : side2ItemsV)
+        side2Items.push_back(v.toInt());
+}
+
 bool LayoutSaver::FloatingWindow::isValid() const
 {
     if (!multiSplitterLayout.isValid())
@@ -437,6 +602,29 @@ bool LayoutSaver::FloatingWindow::isValid() const
     return true;
 }
 
+QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("multiSplitterLayout"), multiSplitterLayout.toVariantMap());
+    map.insert(QStringLiteral("parentIndex"), parentIndex);
+    map.insert(QStringLiteral("geometry"), geometry);
+    map.insert(QStringLiteral("screenIndex"), screenIndex);
+    map.insert(QStringLiteral("screenSize"), screenSize);
+    map.insert(QStringLiteral("isVisible"), isVisible);
+
+    return map;
+}
+
+void LayoutSaver::FloatingWindow::fromVariantMap(const QVariantMap &map)
+{
+    multiSplitterLayout.fromVariantMap(map.value(QStringLiteral("multiSplitterLayout")).toMap());
+    parentIndex = map.value(QStringLiteral("parentIndex")).toInt();
+    geometry = map.value(QStringLiteral("geometry")).toRect();
+    screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
+    screenSize = map.value(QStringLiteral("screenSize")).toSize();
+    isVisible = map.value(QStringLiteral("isVisible")).toBool();
+}
+
 bool LayoutSaver::MainWindow::isValid() const
 {
     if (!multiSplitterLayout.isValid())
@@ -448,6 +636,31 @@ bool LayoutSaver::MainWindow::isValid() const
     }
 
     return true;
+}
+
+QVariantMap LayoutSaver::MainWindow::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("options"), int(options));
+    map.insert(QStringLiteral("multiSplitterLayout"), multiSplitterLayout.toVariantMap());
+    map.insert(QStringLiteral("uniqueName"), uniqueName);
+    map.insert(QStringLiteral("geometry"), geometry);
+    map.insert(QStringLiteral("screenIndex"), screenIndex);
+    map.insert(QStringLiteral("screenSize"), screenSize);
+    map.insert(QStringLiteral("isVisible"), isVisible);
+
+    return map;
+}
+
+void LayoutSaver::MainWindow::fromVariantMap(const QVariantMap &map)
+{
+    options = KDDockWidgets::MainWindowOptions(map.value(QStringLiteral("options")).toInt());
+    multiSplitterLayout.fromVariantMap(map.value(QStringLiteral("multiSplitterLayout")).toMap());
+    uniqueName = map.value(QStringLiteral("uniqueName")).toString();
+    geometry = map.value(QStringLiteral("geometry")).toRect();
+    screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
+    screenSize = map.value(QStringLiteral("screenSize")).toSize();
+    isVisible = map.value(QStringLiteral("isVisible")).toBool();
 }
 
 bool LayoutSaver::MultiSplitterLayout::isValid() const
@@ -468,4 +681,81 @@ bool LayoutSaver::MultiSplitterLayout::isValid() const
     }
 
     return true;
+}
+
+QVariantMap LayoutSaver::MultiSplitterLayout::toVariantMap() const
+{
+    QVariantMap map;
+
+    map.insert(QStringLiteral("anchors"), toVariantList<LayoutSaver::Anchor>(anchors));
+    map.insert(QStringLiteral("items"), toVariantList<LayoutSaver::Item>(items));
+    map.insert(QStringLiteral("minSize"), minSize);
+    map.insert(QStringLiteral("size"), size);
+
+    return map;
+}
+
+void LayoutSaver::MultiSplitterLayout::fromVariantMap(const QVariantMap &map)
+{
+    anchors = fromVariantList<LayoutSaver::Anchor>(map.value(QStringLiteral("anchors")).toList());
+    items = fromVariantList<LayoutSaver::Item>(map.value(QStringLiteral("items")).toList());
+    minSize = map.value(QStringLiteral("minSize")).toSize();
+    size = map.value(QStringLiteral("size")).toSize();
+}
+
+QVariantMap LayoutSaver::LastPosition::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("lastFloatingGeometry"), lastFloatingGeometry);
+    map.insert(QStringLiteral("tabIndex"), tabIndex);
+    map.insert(QStringLiteral("wasFloating"), wasFloating);
+    map.insert(QStringLiteral("placeholders"), toVariantList<LayoutSaver::Placeholder>(placeholders));
+
+    return map;
+}
+
+void LayoutSaver::LastPosition::fromVariantMap(const QVariantMap &map)
+{
+    lastFloatingGeometry = map.value(QStringLiteral("lastFloatingGeometry")).toRect();
+    tabIndex = map.value(QStringLiteral("tabIndex")).toInt();
+    wasFloating = map.value(QStringLiteral("wasFloating")).toBool();
+    placeholders = fromVariantList<LayoutSaver::Placeholder>(map.value(QStringLiteral("placeholders")).toList());
+}
+
+QVariantMap LayoutSaver::ScreenInfo::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("index"), index);
+    map.insert(QStringLiteral("geometry"), geometry);
+    map.insert(QStringLiteral("name"), name);
+    map.insert(QStringLiteral("devicePixelRatio"), devicePixelRatio);
+
+    return map;
+}
+
+void LayoutSaver::ScreenInfo::fromVariantMap(const QVariantMap &map)
+{
+    index = map.value(QStringLiteral("index")).toInt();
+    geometry = map.value(QStringLiteral("geometry")).toRect();
+    name = map.value(QStringLiteral("name")).toString();
+    devicePixelRatio = map.value(QStringLiteral("devicePixelRatio")).toDouble();
+}
+
+QVariantMap LayoutSaver::Placeholder::toVariantMap() const
+{
+    QVariantMap map;
+    map.insert(QStringLiteral("isFloatingWindow"), isFloatingWindow);
+    map.insert(QStringLiteral("indexOfFloatingWindow"), indexOfFloatingWindow);
+    map.insert(QStringLiteral("itemIndex"), itemIndex);
+    map.insert(QStringLiteral("mainWindowUniqueName"), mainWindowUniqueName);
+
+    return map;
+}
+
+void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
+{
+    isFloatingWindow = map.value(QStringLiteral("isFloatingWindow")).toBool();
+    indexOfFloatingWindow = map.value(QStringLiteral("indexOfFloatingWindow")).toInt();
+    itemIndex = map.value(QStringLiteral("itemIndex")).toInt();
+    mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
 }
