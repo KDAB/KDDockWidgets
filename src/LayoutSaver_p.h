@@ -307,35 +307,12 @@ public:
     ScreenInfo::List screenInfo;
 };
 
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::ScreenInfo *info)
-{
-    ds << info->index;
-    ds << info->geometry;
-    ds << info->name;
-    ds << info->devicePixelRatio;
-
-    return ds;
-}
-
 inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::ScreenInfo *info)
 {
     ds >> info->index;
     ds >> info->geometry;
     ds >> info->name;
     ds >> info->devicePixelRatio;
-
-    return ds;
-}
-
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Placeholder *p)
-{
-    ds << p->isFloatingWindow;
-    if (p->isFloatingWindow)
-        ds << p->indexOfFloatingWindow;
-    else
-        ds << p->mainWindowUniqueName;
-
-    ds << p->itemIndex;
 
     return ds;
 }
@@ -349,22 +326,6 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Placeholder *p)
         ds >> p->mainWindowUniqueName;
 
     ds >> p->itemIndex;
-
-    return ds;
-}
-
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Anchor *a)
-{
-    ds << QStringLiteral(ANCHOR_MAGIC_MARKER);
-    ds << a->objectName;
-    ds << a->geometry;
-    ds << a->orientation;
-    ds << a->type;
-    ds << a->indexOfFrom;
-    ds << a->indexOfTo;
-    ds << a->indexOfFollowee;
-    ds << a->side1Items;
-    ds << a->side2Items;
 
     return ds;
 }
@@ -386,22 +347,6 @@ inline  QDataStream &operator>>(QDataStream &ds, LayoutSaver::Anchor *a)
     ds >> a->indexOfFollowee;
     ds >> a->side1Items;
     ds >> a->side2Items;
-
-    return ds;
-}
-
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Frame *frame)
-{
-    ds << frame->objectName;
-    ds << frame->geometry;
-    ds << frame->layoutSize;
-    ds << frame->options;
-    ds << frame->currentTabIndex;
-    ds << frame->dockWidgets.size();
-
-    for (auto &dock : frame->dockWidgets) {
-        ds << dock->uniqueName;
-    }
 
     return ds;
 }
@@ -433,26 +378,6 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame)
     return ds;
 }
 
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Item *item)
-{
-    ds << item->objectName;
-    ds << item->isPlaceholder;
-    ds << item->geometry;
-    ds << item->minSize;
-
-    ds << item->indexOfLeftAnchor;
-    ds << item->indexOfTopAnchor;
-    ds << item->indexOfRightAnchor;
-    ds << item->indexOfBottomAnchor;
-
-    const bool hasFrame = !item->frame.isNull;
-    ds << hasFrame;
-    if (hasFrame)
-        ds << &item->frame;
-
-    return ds;
-}
-
 inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Item *item)
 {
     ds >> item->objectName;
@@ -473,24 +398,6 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Item *item)
     } else {
         item->frame.isNull = true;
     }
-
-    return ds;
-}
-
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::MultiSplitterLayout *l)
-{
-    ds << QStringLiteral(MULTISPLITTER_LAYOUT_MAGIC_MARKER);
-
-    ds << l->size;
-    ds << l->minSize;
-    ds << l->items.size();
-    ds << l->anchors.size();
-
-    for (auto &item : l->items)
-        ds << &item;
-
-    for (auto &anchor : l->anchors)
-        ds << &anchor;
 
     return ds;
 }
@@ -528,21 +435,6 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MultiSplitterLayout
     return ds;
 }
 
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::LastPosition *lp)
-{
-    ds << lp->placeholders.size();
-
-    for (auto &p : lp->placeholders) {
-        ds << &p;
-    }
-
-    ds << lp->lastFloatingGeometry;
-    ds << lp->tabIndex;
-    ds << lp->wasFloating;
-
-    return ds;
-}
-
 inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::LastPosition *lp)
 {
     int numPlaceholders;
@@ -562,17 +454,6 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::LastPosition *lp)
     return ds;
 }
 
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
-{
-    ds << fw->parentIndex;
-    ds << fw->geometry;
-    ds << fw->screenIndex;
-    ds << fw->screenSize;
-    ds << fw->isVisible;
-    ds << &fw->multiSplitterLayout;
-    return ds;
-}
-
 inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
 {
     ds >> fw->parentIndex;
@@ -587,18 +468,6 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
     return ds;
 }
 
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::MainWindow *m)
-{
-    ds << m->uniqueName;
-    ds << m->geometry;
-    ds << m->screenIndex;
-    ds << m->screenSize;
-    ds << m->isVisible;
-    ds << m->options;
-    ds << &m->multiSplitterLayout;
-    return ds;
-}
-
 inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MainWindow *m)
 {
     ds >> m->uniqueName;
@@ -610,38 +479,6 @@ inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MainWindow *m)
     ds >> m->isVisible;
     ds >> m->options;
     ds >> &m->multiSplitterLayout;
-    return ds;
-}
-
-inline QDataStream &operator<<(QDataStream &ds, LayoutSaver::Layout *l)
-{
-    ds << l->serializationVersion;
-    ds << l->mainWindows.size();
-    for (auto &m: l->mainWindows) {
-        ds << &m;
-    }
-
-    ds << l->floatingWindows.size();
-    for (auto &fw: l->floatingWindows) {
-        ds << &fw;
-    }
-
-    ds << l->closedDockWidgets.size();
-    for (auto &dw: l->closedDockWidgets) {
-        ds << dw->uniqueName;
-    }
-
-    ds << l->allDockWidgets.size();
-    for (auto &dw: l->allDockWidgets) {
-        ds << dw->uniqueName;
-        ds << &dw->lastPosition;
-    }
-
-    ds << l->screenInfo.size();
-    for (auto &info: l->screenInfo) {
-        ds << &info;
-    }
-
     return ds;
 }
 
