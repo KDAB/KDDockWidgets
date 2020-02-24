@@ -190,11 +190,7 @@ QByteArray LayoutSaver::serializeLayout() const
         layout.allDockWidgets.push_back(dw);
     }
 
-    QByteArray result;
-    QDataStream ds(&result, QIODevice::WriteOnly);
-    ds << &layout;
-
-    return result;
+    return layout.toJson();
 }
 
 bool LayoutSaver::restoreLayout(const QByteArray &data)
@@ -221,8 +217,10 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     FrameCleanup cleanup(this);
     LayoutSaver::Layout layout;
-    if (!layout.fillFrom(data))
+    if (!layout.fromJson(data)) {
+        qWarning() << Q_FUNC_INFO << "Failed to parse json data";
         return false;
+    }
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
     d->m_dockRegistry->clear(/*deleteStaticAnchors=*/true);
