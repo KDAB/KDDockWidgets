@@ -393,7 +393,8 @@ QVariantMap LayoutSaver::Item::toVariantMap() const
     map.insert(QStringLiteral("indexOfTopAnchor"), indexOfTopAnchor);
     map.insert(QStringLiteral("indexOfRightAnchor"), indexOfRightAnchor);
     map.insert(QStringLiteral("indexOfBottomAnchor"), indexOfBottomAnchor);
-    map.insert(QStringLiteral("frame"), frame.toVariantMap());
+    if (!frame.isNull)
+        map.insert(QStringLiteral("frame"), frame.toVariantMap());
 
     return map;
 }
@@ -408,7 +409,7 @@ void LayoutSaver::Item::fromVariantMap(const QVariantMap &map)
     indexOfTopAnchor = map.value(QStringLiteral("indexOfTopAnchor")).toInt();
     indexOfRightAnchor = map.value(QStringLiteral("indexOfRightAnchor")).toInt();
     indexOfBottomAnchor = map.value(QStringLiteral("indexOfBottomAnchor")).toInt();
-    frame.fromVariantMap(map.value(QStringLiteral("frame")).toMap());
+    frame.fromVariantMap(map.value(QStringLiteral("frame"), QVariantMap()).toMap());
 }
 
 bool LayoutSaver::Frame::isValid() const
@@ -456,6 +457,12 @@ QVariantMap LayoutSaver::Frame::toVariantMap() const
 
 void LayoutSaver::Frame::fromVariantMap(const QVariantMap &map)
 {
+    if (map.isEmpty()) {
+        isNull = true;
+        dockWidgets.clear();
+        return;
+    }
+
     isNull = map.value(QStringLiteral("isNull")).toBool();
     objectName = map.value(QStringLiteral("objectName")).toString();
     geometry = map.value(QStringLiteral("geometry")).toRect();
