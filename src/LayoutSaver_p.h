@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QScreen>
 #include <QApplication>
+#include <QJsonDocument>
 
 #include <memory>
 
@@ -290,8 +291,9 @@ public:
     bool isValid() const;
     bool fillFrom(const QByteArray &serialized);
 
+    QByteArray toJson() const;
+    bool fromJson(const QByteArray &jsonData);
     QVariantMap toVariantMap() const;
-
     void fromVariantMap(const QVariantMap &map);
 
     friend QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame);

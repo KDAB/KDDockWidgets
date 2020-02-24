@@ -358,6 +358,24 @@ bool LayoutSaver::Layout::fillFrom(const QByteArray &serialized)
     return true;
 }
 
+QByteArray LayoutSaver::Layout::toJson() const
+{
+    QJsonDocument doc = QJsonDocument::fromVariant(toVariantMap());
+    return doc.toJson();
+}
+
+bool LayoutSaver::Layout::fromJson(const QByteArray &jsonData)
+{
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData, &error);
+    if (error.error == QJsonParseError::NoError)  {
+        fromVariantMap(doc.toVariant().toMap());
+        return true;
+    }
+
+    return false;
+}
+
 QVariantMap LayoutSaver::Layout::toVariantMap() const
 {
     QVariantMap map;
