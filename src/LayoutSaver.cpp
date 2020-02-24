@@ -568,7 +568,7 @@ QVariantMap LayoutSaver::Anchor::toVariantMap() const
         side2ItemsV.push_back(index);
 
     map.insert(QStringLiteral("side1Items"), side1ItemsV);
-    map.insert(QStringLiteral("side12tems"), side2ItemsV);
+    map.insert(QStringLiteral("side2Items"), side2ItemsV);
 
     return map;
 }
