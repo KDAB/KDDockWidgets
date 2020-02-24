@@ -41,6 +41,7 @@
 #include <QDebug>
 #include <QSettings>
 #include <QApplication>
+#include <QFile>
 
 #include <memory>
 
@@ -128,22 +129,29 @@ LayoutSaver::~LayoutSaver()
     delete d;
 }
 
-bool LayoutSaver::saveToDisk()
+bool LayoutSaver::saveToFile(const QString &jsonFilename)
 {
-    if (qApp->organizationName().isEmpty() || qApp->applicationName().isEmpty()) {
-        qWarning() << Q_FUNC_INFO
-                   << "Cannot save. Either organization name or application name is empty.";
+    const QByteArray data = serializeLayout();
+
+    QFile f(jsonFilename);
+    if (!f.open(QIODevice::WriteOnly)) {
+        qWarning() << Q_FUNC_INFO << "Failed to open" << jsonFilename << f.errorString();
         return false;
     }
 
-    const QByteArray data = serializeLayout();
-    d->settings()->setValue(QStringLiteral("data"), data);
+    f.write(data);
     return true;
 }
 
-bool LayoutSaver::restoreFromDisk()
+bool LayoutSaver::restoreFromFile(const QString &jsonFilename)
 {
-    const QByteArray data = d->settings()->value(QStringLiteral("data")).toByteArray();
+    QFile f(jsonFilename);
+    if (!f.open(QIODevice::ReadOnly)) {
+        qWarning() << Q_FUNC_INFO << "Failed to open" << jsonFilename << f.errorString();
+        return false;
+    }
+
+    const QByteArray data = f.readAll();
     const bool result = restoreLayout(data);
     return result;
 }

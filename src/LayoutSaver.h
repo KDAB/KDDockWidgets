@@ -51,15 +51,18 @@ public:
     static bool restoreInProgress();
 
     /**
-     * @brief saves the layout to disk using QSettings
-     */
-    bool saveToDisk();
-
-    /**
-     * @brief restores the layout from disk using QSettings.
+     * @brief saves the layout to JSON file
+     * @brief jsonFilename the filename where the layout will be saved to
      * @return true on success
      */
-    bool restoreFromDisk();
+    bool saveToFile(const QString &jsonFilename);
+
+    /**
+     * @brief restores the layout from a JSON file
+     * @brief jsonFilename the filename containing a saved layout
+     * @return true on success
+     */
+    bool restoreFromFile(const QString &jsonFilename);
 
     /**
      * @brief saves the layout into a byte array

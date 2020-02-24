@@ -80,14 +80,14 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     auto saveLayoutAction = fileMenu->addAction(QStringLiteral("Save Layout"));
     connect(saveLayoutAction, &QAction::triggered, this, [] {
         KDDockWidgets::LayoutSaver saver;
-        const bool result = saver.saveToDisk();
+        const bool result = saver.saveToFile(QStringLiteral("mylayout.json"));
         qDebug() << "Saving layout to disk. Result=" << result;
     });
 
     auto restoreLayoutAction = fileMenu->addAction(QStringLiteral("Restore Layout"));
     connect(restoreLayoutAction, &QAction::triggered, this, [] {
         KDDockWidgets::LayoutSaver saver;
-        saver.restoreFromDisk();
+        saver.restoreFromFile(QStringLiteral("mylayout.json"));
     });
 
     setAffinityName(affinityName);

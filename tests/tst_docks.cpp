@@ -1241,8 +1241,8 @@ void TestDocks::tst_restoreEmpty()
     auto oldRight = layout->m_rightAnchor;
     const int oldRightPos = oldRight->position();
     LayoutSaver saver;
-    QVERIFY(saver.saveToDisk());
-    saver.restoreFromDisk();
+    QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
+    saver.restoreFromFile(QStringLiteral("layout.json"));
     QVERIFY(m->multiSplitterLayout()->checkSanity());
     QVERIFY(oldRight != layout->m_rightAnchor); // It got new static-anchors
     QVERIFY(oldRightPos == layout->m_rightAnchor->position());
@@ -1272,7 +1272,7 @@ void TestDocks::tst_restoreSimple()
     dock3->close();
 
     LayoutSaver saver;
-    QVERIFY(saver.saveToDisk());
+    QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
     auto f1 = dock1->frame();
     dock2->window()->move(QPoint(0, 0)); // Move *after* we saved.
     dock3->window()->move(QPoint(0, 0)); // Move *after* we saved.
@@ -1284,7 +1284,7 @@ void TestDocks::tst_restoreSimple()
     QCOMPARE(layout->placeholderCount(), 1);
 
     QCOMPARE(DockRegistry::self()->nestedwindows().size(), 0);
-    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
     QVERIFY(dock1->isVisible());
@@ -1346,7 +1346,7 @@ void TestDocks::tst_restoreNestedAndTabbed()
         QCOMPARE(dock4->frame()->currentTabIndex(), 1);
 
         LayoutSaver saver;
-        QVERIFY(saver.saveToDisk());
+        QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
         QVERIFY(layout->checkSanity());
         // Let it be destroyed, we'll restore a new one
     }
@@ -1360,7 +1360,7 @@ void TestDocks::tst_restoreNestedAndTabbed()
     auto dock5 = createDockWidget("5", new QTextEdit());
 
     LayoutSaver saver;
-    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
     QVERIFY(layout->checkSanity());
 
     auto fw4 = dock4->floatingWindow();
@@ -1392,8 +1392,8 @@ void TestDocks::tst_restoreCentralFrame()
     QVERIFY(!item->frame()->titleBar()->isVisible());
 
     LayoutSaver saver;
-    QVERIFY(saver.saveToDisk());
-    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
 
     QCOMPARE(layout->count(), 1);
     item = m->dropArea()->centralFrame();
@@ -1412,7 +1412,7 @@ void TestDocks::tst_restoreCrash()
         auto dock1 = createDockWidget("dock1", new QPushButton("one"));
         m->addDockWidget(dock1, Location_OnLeft);
         LayoutSaver saver;
-        QVERIFY(saver.saveToDisk());
+        QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
     }
 
     // Restore
@@ -1424,7 +1424,7 @@ void TestDocks::tst_restoreCrash()
     QVERIFY(layout->checkSanity());
 
     LayoutSaver saver;
-    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
     QVERIFY(layout->checkSanity());
     QVERIFY(!dock1->isFloating());
 }
@@ -1445,15 +1445,15 @@ void TestDocks::tst_restoreTwice()
 
     {
         LayoutSaver saver;
-        QVERIFY(saver.saveToDisk());
-        QVERIFY(saver.restoreFromDisk());
+        QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
+        QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
         QVERIFY(dock2->isVisible());
         QVERIFY(dock3->isVisible());
     }
 
     {
         LayoutSaver saver;
-        QVERIFY(saver.restoreFromDisk());
+        QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
         QVERIFY(dock2->isVisible());
         QVERIFY(dock3->isVisible());
         QVERIFY(dock2->window()->isVisible());
@@ -1485,7 +1485,7 @@ void TestDocks::tst_restoreSideBySide()
         auto fw2 = dock2->floatingWindow();
         item2MinSize = fw2->multiSplitterLayout()->itemForFrame(dock2->frame())->minimumSize();
         LayoutSaver saver;
-        QVERIFY(saver.saveToDisk());
+        QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
         QVERIFY(layout->checkSanity());
     }
 
@@ -1496,7 +1496,7 @@ void TestDocks::tst_restoreSideBySide()
         auto dock3 = createDockWidget("3", new QPushButton("3"));
 
         LayoutSaver restorer;
-        QVERIFY(restorer.restoreFromDisk());
+        QVERIFY(restorer.restoreFromFile(QStringLiteral("layout.json")));
 
         auto fw2 = dock2->floatingWindow();
         QCOMPARE(item2MinSize, fw2->multiSplitterLayout()->itemForFrame(dock2->frame())->minimumSize());
@@ -1520,11 +1520,11 @@ void TestDocks::tst_restoreWithPlaceholder()
         dock1->setFloating(true);
 
         LayoutSaver saver;
-        QVERIFY(saver.saveToDisk());
+        QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
 
         dock1->close();
 
-        QVERIFY(saver.restoreFromDisk());
+        QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
         QVERIFY(layout->checkSanity());
 
         QVERIFY(dock1->isFloating());
@@ -1547,7 +1547,7 @@ void TestDocks::tst_restoreWithPlaceholder()
     auto layout = m->multiSplitterLayout();
 
     LayoutSaver saver;
-    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
     QVERIFY(layout->checkSanity());
 
     QVERIFY(dock1->isFloating());
@@ -1572,8 +1572,8 @@ void TestDocks::tst_restoreWithNonClosableWidget()
     auto layout = m->multiSplitterLayout();
 
     LayoutSaver saver;
-    QVERIFY(saver.saveToDisk());
-    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
     QVERIFY(layout->checkSanity());
 }
 
@@ -1589,9 +1589,9 @@ void TestDocks::tst_restoreAfterResize()
     const QSize oldContentsSize = layout->size();
     const QSize oldWindowSize = m->size();
     LayoutSaver saver;
-    QVERIFY(saver.saveToDisk());
+    QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
     m->resize(1000, 1000);
-    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
     QCOMPARE(oldContentsSize, layout->size());
     QCOMPARE(oldWindowSize, m->size());
 }
@@ -1608,8 +1608,8 @@ void TestDocks::tst_marginsAfterRestore()
         auto layout = m->multiSplitterLayout();
 
         LayoutSaver saver;
-        QVERIFY(saver.saveToDisk());
-        QVERIFY(saver.restoreFromDisk());
+        QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
+        QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
         QVERIFY(layout->checkSanity());
 
         dock1->setFloating(true);
@@ -3548,8 +3548,8 @@ void TestDocks::tst_28NestedWidgets()
 
     // Run the saver in these complex scenarios:
     LayoutSaver saver;
-    QVERIFY(saver.saveToDisk());
-    QVERIFY(saver.restoreFromDisk());
+    QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
 
     layout->checkSanity();
 

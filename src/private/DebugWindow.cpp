@@ -149,8 +149,8 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
         LayoutSaver saver;
-        QString message = saver.saveToDisk() ? QStringLiteral("Saved!")
-                                             : QStringLiteral("Error!");
+        QString message = saver.saveToFile(QStringLiteral("layout.json")) ? QStringLiteral("Saved!")
+                                                                          : QStringLiteral("Error!");
         qDebug() << message;
     });
 
@@ -159,8 +159,8 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
         LayoutSaver saver;
-        QString message = saver.restoreFromDisk() ? QStringLiteral("Restored!")
-                                                  : QStringLiteral("Error!");
+        QString message = saver.restoreFromFile(QStringLiteral("layout.json")) ? QStringLiteral("Restored!")
+                                                                               : QStringLiteral("Error!");
         qDebug() << message;
     });
 
