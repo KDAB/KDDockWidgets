@@ -745,9 +745,12 @@ QVariantMap LayoutSaver::Placeholder::toVariantMap() const
 {
     QVariantMap map;
     map.insert(QStringLiteral("isFloatingWindow"), isFloatingWindow);
-    map.insert(QStringLiteral("indexOfFloatingWindow"), indexOfFloatingWindow);
     map.insert(QStringLiteral("itemIndex"), itemIndex);
-    map.insert(QStringLiteral("mainWindowUniqueName"), mainWindowUniqueName);
+
+    if (isFloatingWindow)
+        map.insert(QStringLiteral("indexOfFloatingWindow"), indexOfFloatingWindow);
+    else
+        map.insert(QStringLiteral("mainWindowUniqueName"), mainWindowUniqueName);
 
     return map;
 }
@@ -755,7 +758,7 @@ QVariantMap LayoutSaver::Placeholder::toVariantMap() const
 void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
 {
     isFloatingWindow = map.value(QStringLiteral("isFloatingWindow")).toBool();
-    indexOfFloatingWindow = map.value(QStringLiteral("indexOfFloatingWindow")).toInt();
+    indexOfFloatingWindow = map.value(QStringLiteral("indexOfFloatingWindow"), -1).toInt();
     itemIndex = map.value(QStringLiteral("itemIndex")).toInt();
     mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
 }
