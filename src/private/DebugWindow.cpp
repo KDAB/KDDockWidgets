@@ -207,7 +207,6 @@ DebugWindow::DebugWindow(QWidget *parent)
         }
     });
 
-
     button = new QPushButton(this);
     button->setText(QStringLiteral("Detach central widget"));
     layout->addWidget(button);
@@ -235,10 +234,9 @@ DebugWindow::DebugWindow(QWidget *parent)
     button->setText(QStringLiteral("EnsureAnchorsBounded"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
-        const auto mainWindows = DockRegistry::self()->mainwindows();
-        if (mainWindows.isEmpty())
-            return;
-        mainWindows.at(0)->multiSplitterLayout()->ensureAnchorsBounded();
+        const auto layouts = DockRegistry::self()->layouts();
+        for (auto l : layouts)
+            l->ensureAnchorsBounded();
     });
 
     button = new QPushButton(this);
@@ -265,20 +263,18 @@ DebugWindow::DebugWindow(QWidget *parent)
     button->setText(QStringLiteral("PositionStaticAnchors()"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
-        const auto mainWindows = DockRegistry::self()->mainwindows();
-        if (mainWindows.isEmpty())
-            return;
-        mainWindows.at(0)->multiSplitterLayout()->positionStaticAnchors();
+        const auto layouts = DockRegistry::self()->layouts();
+        for (auto l : layouts)
+            l->positionStaticAnchors();
     });
 
     button = new QPushButton(this);
     button->setText(QStringLiteral("UpdateAnchorFollowing"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
-        const auto mainWindows = DockRegistry::self()->mainwindows();
-        if (mainWindows.isEmpty())
-            return;
-        mainWindows.at(0)->multiSplitterLayout()->updateAnchorFollowing();
+        const auto layouts = DockRegistry::self()->layouts();
+        for (auto l : layouts)
+            l->updateAnchorFollowing();
     });
 
     button = new QPushButton(this);
