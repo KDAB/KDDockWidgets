@@ -973,8 +973,8 @@ void LayoutSaver::ScalingInfo::translatePos(QPoint &pt) const
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QPoint &pt) const
 {
-    pt.setX(qCeil(pt.x() + widthFactor));
-    pt.setY(qCeil(pt.y() + heightFactor));
+    pt.setX(qCeil(pt.x() * widthFactor));
+    pt.setY(qCeil(pt.y() * heightFactor));
 }
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QSize &sz) const
@@ -985,6 +985,9 @@ void LayoutSaver::ScalingInfo::applyFactorsTo(QSize &sz) const
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QRect &rect) const
 {
+    if (rect.isEmpty())
+        return;
+
     QPoint pos = rect.topLeft();
     QSize size = rect.size();
 
