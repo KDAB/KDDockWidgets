@@ -91,9 +91,13 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         KDDockWidgets::RestoreOptions options = KDDockWidgets::RestoreOption_None;
         if (m_restoreIsRelative)
             options |= KDDockWidgets::RestoreOption_RelativeToMainWindow;
-        KDDockWidgets::LayoutSaver saver;
+
+        KDDockWidgets::LayoutSaver saver(options);
         saver.restoreFromFile(QStringLiteral("mylayout.json"));
     });
+
+    auto quitAction = fileMenu->addAction(QStringLiteral("Quit"));
+    connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
 
     setAffinityName(affinityName);
     createDockWidgets();
