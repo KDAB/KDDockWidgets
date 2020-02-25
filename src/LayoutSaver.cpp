@@ -122,8 +122,8 @@ public:
 
 bool LayoutSaver::Private::s_restoreInProgress = false;
 
-LayoutSaver::LayoutSaver()
-    : d(new Private(RestoreOption_None))
+LayoutSaver::LayoutSaver(RestoreOptions options)
+    : d(new Private(options))
 {
 }
 
@@ -211,6 +211,22 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     if (data.isEmpty())
         return true;
 
+    struct EnsureItemsAtCorrectPlace {
+        ~EnsureItemsAtCorrectPlace()
+        {
+            // When using RestoreOption_RelativeToMainWindow we'll have many rounding errors so the layout won't be exact.
+            // Make sure to run a relayout at the end
+            // (Using RAII to make sure it runs after Private::RAIIIsRestoring went out of scope, since "isRestoring= true" inhibits relayout
+            if (ensure) {
+                for (auto layout : DockRegistry::self()->layouts())
+                    layout->redistributeSpace();
+            }
+        }
+
+        bool ensure = false;
+    };
+
+    EnsureItemsAtCorrectPlace ensureItemsAtCorrectPlace;
     Private::RAIIIsRestoring isRestoring;
 
     struct FrameCleanup {
@@ -280,6 +296,9 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << dw->uniqueName;
         }
     }
+
+    // our raii class will run when
+    ensureItemsAtCorrectPlace.ensure = d->m_restoreOptions & RestoreOption_RelativeToMainWindow;
 
     return true;
 }
@@ -979,8 +998,8 @@ void LayoutSaver::ScalingInfo::applyFactorsTo(QPoint &pt) const
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QSize &sz) const
 {
-    sz.setWidth(qCeil(widthFactor * sz.width()));
-    sz.setHeight(qCeil(heightFactor * sz.height()));
+    sz.setWidth(int(widthFactor * sz.width()));
+    sz.setHeight(int(heightFactor * sz.height()));
 }
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QRect &rect) const

@@ -44,7 +44,7 @@ class DOCKS_EXPORT LayoutSaver
 {
 public:
     ///@brief Constructor. Construction on the stack is suggested.
-    LayoutSaver();
+    explicit LayoutSaver(RestoreOptions options = RestoreOption_None);
 
     ///@brief Destructor.
     ~LayoutSaver();

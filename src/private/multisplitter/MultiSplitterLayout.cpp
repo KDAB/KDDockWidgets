@@ -1080,6 +1080,7 @@ void MultiSplitterLayout::positionStaticAnchors()
 
 void MultiSplitterLayout::redistributeSpace()
 {
+    positionStaticAnchors();
     redistributeSpace_recursive(m_leftAnchor, 0);
     redistributeSpace_recursive(m_topAnchor, 0);
 }

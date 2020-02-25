@@ -442,6 +442,7 @@ private:
     friend class Anchor;
     friend class TestDocks;
     friend class KDDockWidgets::Debug::DebugWindow;
+    friend class LayoutSaver;
 
     struct AnchorBounds {
         Anchor *side1;
