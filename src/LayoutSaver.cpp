@@ -442,10 +442,13 @@ void LayoutSaver::Layout::scaleSizes()
             fw.scaleSizes(mw.scalingInfo);
     }
 
-    for (auto &dw : allDockWidgets) {
-        // TODO: Determine the best main window. This only interesting for closed dock widget geometry
-        // which was previously floating. But they still have some other main window as parent.
-        dw->scaleSizes(mainWindows.constFirst().scalingInfo);
+    const ScalingInfo firstScalingInfo = mainWindows.constFirst().scalingInfo;
+    if (firstScalingInfo.isValid()) {
+        for (auto &dw : allDockWidgets) {
+            // TODO: Determine the best main window. This only interesting for closed dock widget geometry
+            // which was previously floating. But they still have some other main window as parent.
+            dw->scaleSizes(firstScalingInfo);
+        }
     }
 }
 

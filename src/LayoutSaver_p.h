@@ -93,7 +93,7 @@ struct LayoutSaver::ScalingInfo
     explicit ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo);
 
     bool isValid() const {
-        return heightFactor > 0 && widthFactor > 0;
+        return heightFactor > 0 && widthFactor > 0 && !((qFuzzyCompare(widthFactor, 1) && qFuzzyCompare(heightFactor, 1)));
     }
 
     void translatePos(QPoint &) const;
