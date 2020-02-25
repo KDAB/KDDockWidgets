@@ -1025,7 +1025,9 @@ void MultiSplitterLayout::dumpDebug() const
     Q_EMIT aboutToDumpDebug();
     qDebug() << Q_FUNC_INFO << "m_size=" << m_size
              << "; minimumSize=" << minimumSize()
-             << "; parentWidget=" << multiSplitter()->size();
+             << "; parentWidget.size=" << multiSplitter()->size()
+             << "; window=" << multiSplitter()->window()
+             << "; window.size=" << multiSplitter()->window()->size();
 
     qDebug() << "Items:";
     for (auto item : items()) {
