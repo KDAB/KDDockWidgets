@@ -242,6 +242,17 @@ DebugWindow::DebugWindow(QWidget *parent)
     });
 
     button = new QPushButton(this);
+    button->setText(QStringLiteral("RedistributeSpace"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        const auto layouts = DockRegistry::self()->layouts();
+        for (auto l : layouts) {
+            l->redistributeSpace_recursive(l->m_leftAnchor, 0);
+            l->redistributeSpace_recursive(l->m_topAnchor, 0);
+        }
+    });
+
+    button = new QPushButton(this);
     button->setText(QStringLiteral("PositionStaticAnchors()"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
