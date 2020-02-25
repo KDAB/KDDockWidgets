@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include <kddockwidgets/DockWidget.h>
 #include <kddockwidgets/MainWindow.h>
 
 class MyMainWindow : public KDDockWidgets::MainWindow
@@ -37,4 +38,5 @@ private:
     QMenu *m_toggleMenu = nullptr;
     const bool m_dockWidget0IsNonClosable;
     const bool m_restoreIsRelative;
+    KDDockWidgets::DockWidget::List m_dockwidgets;
 };

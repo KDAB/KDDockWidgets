@@ -22,7 +22,6 @@
 #include "MyWidget.h"
 
 #include <kddockwidgets/LayoutSaver.h>
-#include <kddockwidgets/DockWidget.h>
 
 #include <QMenu>
 #include <QMenuBar>
@@ -96,6 +95,12 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         saver.restoreFromFile(QStringLiteral("mylayout.json"));
     });
 
+    auto closeAllAction = fileMenu->addAction(QStringLiteral("Close all"));
+    connect(closeAllAction, &QAction::triggered, this, [this] {
+        for (auto dw : m_dockwidgets)
+            dw->close();
+    });
+
     auto quitAction = fileMenu->addAction(QStringLiteral("Quit"));
     connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
 
@@ -105,31 +110,32 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
 
 void MyMainWindow::createDockWidgets()
 {
-    KDDockWidgets::DockWidget::List dockwidgets;
+    Q_ASSERT(m_dockwidgets.isEmpty());
+
     // Create 9 KDDockWidget::DockWidget and the respective widgets they're hosting (MyWidget instances)
     for (int i = 0; i < 9; i++)
-        dockwidgets << newDockWidget();
+        m_dockwidgets << newDockWidget();
 
 
     // MainWindow::addDockWidget() attaches a dock widget to the main window:
-    addDockWidget(dockwidgets[0], KDDockWidgets::Location_OnTop);
+    addDockWidget(m_dockwidgets[0], KDDockWidgets::Location_OnTop);
 
     // Here, for finer granularity we specify right of dockwidgets[0]:
-    addDockWidget(dockwidgets[1], KDDockWidgets::Location_OnRight, dockwidgets[0]);
+    addDockWidget(m_dockwidgets[1], KDDockWidgets::Location_OnRight, m_dockwidgets[0]);
 
-    addDockWidget(dockwidgets[2], KDDockWidgets::Location_OnLeft);
-    addDockWidget(dockwidgets[3], KDDockWidgets::Location_OnBottom);
-    addDockWidget(dockwidgets[4], KDDockWidgets::Location_OnBottom);
+    addDockWidget(m_dockwidgets[2], KDDockWidgets::Location_OnLeft);
+    addDockWidget(m_dockwidgets[3], KDDockWidgets::Location_OnBottom);
+    addDockWidget(m_dockwidgets[4], KDDockWidgets::Location_OnBottom);
 
     // Tab two dock widgets toghether
-    dockwidgets[3]->addDockWidgetAsTab(dockwidgets[5]);
+    m_dockwidgets[3]->addDockWidgetAsTab(m_dockwidgets[5]);
 
     // 6 is floating, as it wasn't added to the main window via MainWindow::addDockWidget().
     // and we tab 7 with it.
-    dockwidgets[6]->addDockWidgetAsTab(dockwidgets[7]);
+    m_dockwidgets[6]->addDockWidgetAsTab(m_dockwidgets[7]);
 
     // Floating windows also support nesting, here we add 8 to the bottom of the group
-    dockwidgets[6]->addDockWidgetToContainingWindow(dockwidgets[8], KDDockWidgets::Location_OnBottom);
+    m_dockwidgets[6]->addDockWidgetToContainingWindow(m_dockwidgets[8], KDDockWidgets::Location_OnBottom);
 }
 
 KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
