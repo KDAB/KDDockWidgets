@@ -246,10 +246,8 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
         const auto layouts = DockRegistry::self()->layouts();
-        for (auto l : layouts) {
-            l->redistributeSpace_recursive(l->m_leftAnchor, 0);
-            l->redistributeSpace_recursive(l->m_topAnchor, 0);
-        }
+        for (auto l : layouts)
+            l->redistributeSpace();
     });
 
     button = new QPushButton(this);

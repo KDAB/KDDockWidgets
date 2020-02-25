@@ -1024,7 +1024,8 @@ void MultiSplitterLayout::dumpDebug() const
 {
     Q_EMIT aboutToDumpDebug();
     qDebug() << Q_FUNC_INFO << "m_size=" << m_size
-             << "; minimumSize=" << minimumSize();
+             << "; minimumSize=" << minimumSize()
+             << "; parentWidget=" << multiSplitter()->size();
 
     qDebug() << "Items:";
     for (auto item : items()) {
@@ -1073,6 +1074,12 @@ void MultiSplitterLayout::positionStaticAnchors()
     m_topAnchor->setPosition(0);
     m_bottomAnchor->setPosition(height() - m_bottomAnchor->thickness());
     m_rightAnchor->setPosition(width() - m_rightAnchor->thickness());
+}
+
+void MultiSplitterLayout::redistributeSpace()
+{
+    redistributeSpace_recursive(m_leftAnchor, 0);
+    redistributeSpace_recursive(m_topAnchor, 0);
 }
 
 void MultiSplitterLayout::redistributeSpace(QSize oldSize, QSize newSize)

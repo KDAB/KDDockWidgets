@@ -550,6 +550,7 @@ private:
      * When this MultiSplitter is resized, it gives or steals the less/extra space evenly through
      * all widgets.
      **/
+    void redistributeSpace();
     void redistributeSpace(QSize oldSize, QSize newSize);
     void redistributeSpace_recursive(Anchor *fromAnchor, int minAnchorPos);
 
