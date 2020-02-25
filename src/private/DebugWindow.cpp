@@ -251,6 +251,17 @@ DebugWindow::DebugWindow(QWidget *parent)
     });
 
     button = new QPushButton(this);
+    button->setText(QStringLiteral("resize by 1x1"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [] {
+        const auto layouts = DockRegistry::self()->layouts();
+        for (auto l : layouts) {
+            QWidget *tlw = l->multiSplitter()->window();
+            tlw->resize(tlw->size() + QSize(1, 1));
+        }
+    });
+
+    button = new QPushButton(this);
     button->setText(QStringLiteral("PositionStaticAnchors()"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
