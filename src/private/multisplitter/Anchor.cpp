@@ -255,7 +255,13 @@ void Anchor::setPosition(int p, SetPositionOptions options)
 
 void Anchor::updatePositionPercentage()
 {
-    m_positionPercentage = (position() * 1.0) / m_layout->length(m_orientation);
+    const int layoutLength = m_layout->length(m_orientation);
+    m_positionPercentage = (position() * 1.0) / layoutLength;
+
+    if (position() > layoutLength) {
+        qWarning() << Q_FUNC_INFO << "Weird position percentage" << m_positionPercentage
+                   << position() << layoutLength;
+    }
 }
 
 int Anchor::position() const
@@ -849,7 +855,8 @@ Anchor *Anchor::deserialize(const LayoutSaver::Anchor &a, MultiSplitterLayout *l
     auto anchor = new Anchor(Qt::Orientation(a.orientation), layout, Anchor::Type(a.type));
     anchor->setObjectName(a.objectName);
     anchor->setGeometry(a.geometry);
-    anchor->updatePositionPercentage();
+    anchor->m_positionPercentage = a.positionPercentage;
+
     anchor->setProperty("indexFrom", a.indexOfFrom);
     anchor->setProperty("indexTo", a.indexOfTo);
     anchor->setProperty("indexFolowee", a.indexOfFollowee);

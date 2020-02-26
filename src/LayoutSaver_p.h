@@ -232,7 +232,7 @@ struct LayoutSaver::Anchor
 
     QString objectName;
     QRect geometry;
-    double positionPercentage; // Not really used as it's calculated. But for debug purposes, store it to detect if the calculation is off.
+    double positionPercentage;
     int orientation;
     int type;
     int indexOfFrom;
