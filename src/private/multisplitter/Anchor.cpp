@@ -886,6 +886,7 @@ LayoutSaver::Anchor Anchor::serialize() const
     a.indexOfFrom = allAnchors.indexOf(from());
     a.indexOfTo = allAnchors.indexOf(to());
     a.indexOfFollowee = followee() ? allAnchors.indexOf(followee()) : -1;
+    a.positionPercentage = m_positionPercentage;
 
     a.side1Items.clear();
     a.side1Items.reserve(this->side1Items().size());

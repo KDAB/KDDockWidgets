@@ -324,7 +324,7 @@ public:
     QPointer<Anchor> m_from;// QPointer just so we can assert. They should never be null.
     QPointer<Anchor> m_to;
     const Type m_type;
-    qreal m_positionPercentage = 0.0;
+    qreal m_positionPercentage = 0.0; // Should be between 0 and 1
 
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
     Side m_lastMoveDirection = Side_None;

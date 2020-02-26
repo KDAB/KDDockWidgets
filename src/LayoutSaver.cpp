@@ -689,6 +689,7 @@ QVariantMap LayoutSaver::Anchor::toVariantMap() const
     map.insert(QStringLiteral("indexOfFrom"), indexOfFrom);
     map.insert(QStringLiteral("indexOfTo"), indexOfTo);
     map.insert(QStringLiteral("indexOfFollowee"), indexOfFollowee);
+    map.insert(QStringLiteral("positionPercentage"), positionPercentage);
 
     QVariantList side1ItemsV;
     QVariantList side2ItemsV;
@@ -715,6 +716,7 @@ void LayoutSaver::Anchor::fromVariantMap(const QVariantMap &map)
     indexOfFrom = map.value(QStringLiteral("indexOfFrom")).toInt();
     indexOfTo = map.value(QStringLiteral("indexOfTo")).toInt();
     indexOfFollowee = map.value(QStringLiteral("indexOfFollowee")).toInt();
+    positionPercentage = map.value(QStringLiteral("positionPercentage")).toDouble();
 
     side1Items.clear();
     side2Items.clear();
