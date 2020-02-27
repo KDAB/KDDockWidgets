@@ -73,6 +73,9 @@ int main(int argc, char **argv)
     QCommandLineOption relativeRestore("s", QCoreApplication::translate("main", "Don't restore main window geometry, restore dock widgets in relative sizes"));
     parser.addOption(relativeRestore);
 
+    QCommandLineOption doubleClickMaximize("x", QCoreApplication::translate("main", "Double clicking a title bar will maximize a floating window"));
+    parser.addOption(doubleClickMaximize);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
@@ -105,6 +108,10 @@ int main(int argc, char **argv)
 
     if (parser.isSet(tabsHaveCloseButton))
         flags |= KDDockWidgets::Config::Flag_TabsHaveCloseButton;
+
+
+    if (parser.isSet(doubleClickMaximize))
+        flags |= KDDockWidgets::Config::Flag_DoubleClickMaximizes;
 
     if (parser.isSet(incompatibleMainWindows) && !parser.isSet(multipleMainWindows)) {
         qWarning() << "Error: Argument -i requires -m";

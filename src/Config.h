@@ -68,6 +68,7 @@ public:
         Flag_AllowReorderTabs = 32, /// Allows user to re-order tabs by dragging them
         Flag_LazyResize = 32, /// The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
         Flag_TabsHaveCloseButton = 64, /// Tabs will have a close button. Equivalent to QTabWidget::setTabsClosable(true).
+        Flag_DoubleClickMaximizes = 128, /// Double clicking the titlebar will maximize a floating window instead of re-docking it
         Flag_Default = Flag_AeroSnapWithClientDecos ///> The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)

@@ -66,7 +66,14 @@ TitleBar::~TitleBar()
 
 bool TitleBar::onDoubleClicked()
 {
-    if (supportsFloatingButton()) {
+    if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes) && m_floatingWindow) {
+        // Not using isFloating(), as that can be a dock widget nested in a floating window. By convention it's floating, but it's not the title bar of the top-level window.
+        if (m_floatingWindow->isMaximized())
+            m_floatingWindow->showNormal();
+        else
+            m_floatingWindow->showMaximized();
+        return true;
+    } else if (supportsFloatingButton()) {
         onFloatClicked();
         return true;
     }
