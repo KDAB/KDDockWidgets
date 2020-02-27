@@ -102,6 +102,7 @@ private:
 };
 
 
+void doubleClickOn(QPoint globalPos, QWidget *receiver);
 void pressOn(QPoint globalPos, QWidget *receiver);
 void releaseOn(QPoint globalPos, QWidget *receiver);
 void moveMouseTo(QPoint globalDest, QWidget *receiver);

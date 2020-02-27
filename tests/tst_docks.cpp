@@ -43,7 +43,6 @@
 
 #include <QtTest/QtTest>
 #include <QPainter>
-#include <QMouseEvent>
 #include <QApplication>
 #include <QTabBar>
 #include <QAction>
@@ -363,6 +362,7 @@ private Q_SLOTS:
     void tst_dockNotFillingSpace();
     void tst_floatingLastPosAfterDoubleClose();
     void tst_addingOptionHiddenTabbed();
+    void tst_flagDoubleClick();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5392,6 +5392,55 @@ void TestDocks::tst_addingOptionHiddenTabbed()
     QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
 
     QVERIFY(dock1->frame() == dock2->frame());
+}
+
+void TestDocks::tst_flagDoubleClick()
+{
+    {
+        EnsureTopLevelsDeleted e;
+        Config::self().setFlags(Config::Flag_DoubleClickMaximizes);
+        auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        auto dock2 = createDockWidget("2", new QPushButton("2"));
+        m->addDockWidget(dock1, Location_OnTop);
+
+        FloatingWindow *fw2 = dock2->floatingWindow();
+        QVERIFY(!fw2->isMaximized());
+        TitleBar *t2 = dock2->titleBar();
+        QPoint pos = t2->mapToGlobal({5, 5});
+        Tests::doubleClickOn(pos, t2);
+        QVERIFY(fw2->isMaximized());
+        delete fw2;
+
+        TitleBar *t1 = dock1->titleBar();
+        QVERIFY(!t1->isFloating());
+        pos = t1->mapToGlobal({5, 5});
+        Tests::doubleClickOn(pos, t1);
+        QVERIFY(t1->isFloating());
+        QVERIFY(!dock1->window()->isMaximized());
+        delete dock1->window();
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("1", new QPushButton("1"));
+
+        m->addDockWidget(dock1, Location_OnTop);
+
+        TitleBar *t1 = dock1->titleBar();
+        QVERIFY(!t1->isFloating());
+        QPoint pos = t1->mapToGlobal({5, 5});
+        Tests::doubleClickOn(pos, t1);
+        QVERIFY(t1->isFloating());
+        QVERIFY(dock1->isFloating());
+        QVERIFY(!dock1->window()->isMaximized());
+
+        pos = t1->mapToGlobal({5, 5});
+        Tests::doubleClickOn(pos, t1);
+        QVERIFY(!dock1->isFloating());
+
+    }
 }
 
 QTEST_MAIN(KDDockWidgets::TestDocks)

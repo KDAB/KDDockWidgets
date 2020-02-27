@@ -184,6 +184,14 @@ QWidget *KDDockWidgets::Tests::draggableFor(QWidget *w)
     return draggable;
 }
 
+void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, QWidget *receiver)
+{
+    QCursor::setPos(globalPos);
+    QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
+                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    qApp->sendEvent(receiver, &ev);
+}
+
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, QWidget *receiver)
 {
     QCursor::setPos(globalPos);
