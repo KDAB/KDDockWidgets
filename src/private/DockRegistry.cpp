@@ -51,6 +51,19 @@ DockRegistry::DockRegistry(QObject *parent)
 #endif
 }
 
+QStringList DockRegistry::affinitiesForMainWindowNames(const QStringList &names) const
+{
+    QStringList affinities;
+
+    for (auto mw : qAsConst(m_mainWindows)) {
+        if (names.contains(mw->uniqueName()) && !mw->affinityName().isEmpty()) {
+            affinities.append(mw->affinityName());
+        }
+    }
+
+    return affinities;
+}
+
 DockRegistry::~DockRegistry()
 {
 }
@@ -311,32 +324,24 @@ void DockRegistry::clear(bool deleteStaticAnchors)
 
 void DockRegistry::clear(const QStringList &mainWindowsUniqueNames, bool deleteStaticAnchors)
 {
-    QStringList affinities;
-    auto shouldClearDockWidget = [&affinities](const QString &affinityName) {
-        return affinities.isEmpty() || affinities.contains(affinityName) || affinityName.isEmpty();
-    };
-
-    auto shouldClearMainWindow = [&mainWindowsUniqueNames](MainWindowBase *mw) {
-        return mainWindowsUniqueNames.isEmpty() || mainWindowsUniqueNames.contains(mw->uniqueName());
-    };
-
-    // first need to find the affinity names for the requested main windows
-    for (auto mw : qAsConst(m_mainWindows)) {
-        if (shouldClearMainWindow(mw)) {
-            if (!mw->affinityName().isEmpty())
-                affinities.append(mw->affinityName());
-        }
+    if (mainWindowsUniqueNames.isEmpty()) {
+        // Just clear everything
+        clear(deleteStaticAnchors);
+        return;
     }
 
+    const QStringList affinities = QStringList() << affinitiesForMainWindowNames(mainWindowsUniqueNames)
+                                                 << QString(); // empty affinity also matches and will be closed
+
     for (auto dw : qAsConst(m_dockWidgets)) {
-        if (shouldClearDockWidget(dw->affinityName())) {
+        if (affinities.contains(dw->affinityName())) {
             dw->forceClose();
             dw->lastPosition()->removePlaceholders();
         }
     }
 
     for (auto mw : qAsConst(m_mainWindows)) {
-        if (shouldClearMainWindow(mw)) {
+        if (mainWindowsUniqueNames.contains(mw->uniqueName())) {
             mw->multiSplitterLayout()->clear(deleteStaticAnchors);
         }
     }

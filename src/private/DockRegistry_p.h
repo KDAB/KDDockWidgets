@@ -145,6 +145,7 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 private:
     explicit DockRegistry(QObject *parent = nullptr);
+    QStringList affinitiesForMainWindowNames(const QStringList &names) const;
     void maybeDelete();
     bool m_isProcessingAppQuitEvent = false;
     DockWidgetBase::List m_dockWidgets;
