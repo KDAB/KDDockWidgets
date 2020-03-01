@@ -604,6 +604,19 @@ void MultiSplitterLayout::ensureItemsMinSize()
     }
 }
 
+QString MultiSplitterLayout::affinityName() const
+{
+    if (auto ms = multiSplitter()) {
+        if (auto mainWindow = ms->mainWindow()) {
+            return mainWindow->affinityName();
+        } else if (auto fw = ms->floatingWindow()) {
+            return fw->affinityName();
+        }
+    }
+
+    return QString();
+}
+
 void MultiSplitterLayout::addMultiSplitter(MultiSplitter *sourceMultiSplitter,
                                            Location location,
                                            Frame *relativeTo)

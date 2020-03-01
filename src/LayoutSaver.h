@@ -93,6 +93,15 @@ public:
      */
     QVector<DockWidgetBase *> restoredDockWidgets() const;
 
+
+    /**
+     * @brief Sets the list of affinity names for which restore and save will be applied on.
+     * Allows to save/restore only a subset of the windows.
+     * Empty by default, all windows are subject to save/restore.
+     * Any window with empty affinity will also be subject to save/restore, regardless of @p affinityNames.
+     */
+    void setAffinityNames(const QStringList &affinityNames);
+
     struct Layout;
     struct MainWindow;
     struct FloatingWindow;

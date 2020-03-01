@@ -588,6 +588,8 @@ private:
     bool isRestoringPlaceholder() const { return m_restoringPlaceholder; }
     bool isAddingItem() const { return m_addingItem; }
 
+    QString affinityName() const;
+
     MultiSplitter *const m_multiSplitter;
     Anchor::List m_anchors;
 

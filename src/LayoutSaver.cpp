@@ -109,6 +109,10 @@ public:
     {
     }
 
+    bool matchesAffinity(const QString &affinityName) const {
+        return m_affinityNames.isEmpty() || affinityName.isEmpty() || m_affinityNames.contains(affinityName);
+    }
+
     template <typename T>
     void deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel);
     void deleteEmptyFrames();
@@ -117,6 +121,7 @@ public:
     std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
     const RestoreOptions m_restoreOptions;
+    QStringList m_affinityNames;
     static bool s_restoreInProgress;
 };
 
@@ -175,20 +180,23 @@ QByteArray LayoutSaver::serializeLayout() const
     const MainWindowBase::List mainWindows = d->m_dockRegistry->mainwindows();
     layout.mainWindows.reserve(mainWindows.size());
     for (MainWindowBase *mainWindow : mainWindows) {
-        layout.mainWindows.push_back(mainWindow->serialize());
+        if (d->matchesAffinity(mainWindow->affinityName()))
+            layout.mainWindows.push_back(mainWindow->serialize());
     }
 
     const QVector<KDDockWidgets::FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
     layout.floatingWindows.reserve(floatingWindows.size());
     for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
-        layout.floatingWindows.push_back(floatingWindow->serialize());
+        if (d->matchesAffinity(floatingWindow->affinityName()))
+            layout.floatingWindows.push_back(floatingWindow->serialize());
     }
 
     // Closed dock widgets also have interesting things to save, like geometry and placeholder info
     const DockWidgetBase::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
     layout.closedDockWidgets.reserve(closedDockWidgets.size());
     for (DockWidgetBase *dockWidget : closedDockWidgets) {
-        layout.closedDockWidgets.push_back(dockWidget->serialize());
+        if (d->matchesAffinity(dockWidget->affinityName()))
+            layout.closedDockWidgets.push_back(dockWidget->serialize());
     }
 
     // Save the placeholder info. We do it last, as we also restore it last, since we need all items to be created
@@ -197,9 +205,11 @@ QByteArray LayoutSaver::serializeLayout() const
     const DockWidgetBase::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
     for (DockWidgetBase *dockWidget : dockWidgets) {
-        auto dw = dockWidget->serialize();
-        dw->lastPosition = dockWidget->lastPosition()->serialize();
-        layout.allDockWidgets.push_back(dw);
+        if (d->matchesAffinity(dockWidget->affinityName())) {
+            auto dw = dockWidget->serialize();
+            dw->lastPosition = dockWidget->lastPosition()->serialize();
+            layout.allDockWidgets.push_back(dw);
+        }
     }
 
     return layout.toJson();
@@ -212,21 +222,30 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         return true;
 
     struct EnsureItemsAtCorrectPlace {
+
+        EnsureItemsAtCorrectPlace(LayoutSaver *ls)
+            : layoutSaver(ls)
+        {
+        }
+
         ~EnsureItemsAtCorrectPlace()
         {
             // When using RestoreOption_RelativeToMainWindow we'll have many rounding errors so the layout won't be exact.
             // Make sure to run a relayout at the end
             // (Using RAII to make sure it runs after Private::RAIIIsRestoring went out of scope, since "isRestoring= true" inhibits relayout
             if (ensure) {
-                for (auto layout : DockRegistry::self()->layouts())
-                    layout->redistributeSpace();
+                for (auto layout : DockRegistry::self()->layouts()) {
+                    if (layoutSaver->d->matchesAffinity(layout->affinityName()))
+                        layout->redistributeSpace();
+                }
             }
         }
 
         bool ensure = false;
+        LayoutSaver *const layoutSaver;
     };
 
-    EnsureItemsAtCorrectPlace ensureItemsAtCorrectPlace;
+    EnsureItemsAtCorrectPlace ensureItemsAtCorrectPlace(this);
     Private::RAIIIsRestoring isRestoring;
 
     struct FrameCleanup {
@@ -264,6 +283,9 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             return false;
         }
 
+        if (!d->matchesAffinity(mainWindow->affinityName()))
+            continue;
+
         if (!(d->m_restoreOptions & RestoreOption_RelativeToMainWindow))
             d->deserializeWindowGeometry(mw, mainWindow->window()); // window(), as the MainWindow can be embedded
 
@@ -273,6 +295,9 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // 2. Restore FloatingWindows
     for (const LayoutSaver::FloatingWindow &fw : qAsConst(layout.floatingWindows)) {
+        if (!d->matchesAffinity(fw.affinityName))
+            continue;
+
         MainWindowBase *parent = fw.parentIndex == -1 ? nullptr
                                                       : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
@@ -285,11 +310,16 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties
     for (const auto &dw : qAsConst(layout.closedDockWidgets)) {
-        DockWidgetBase::deserialize(dw);
+        if (d->matchesAffinity(dw->affinityName)) {
+            DockWidgetBase::deserialize(dw);
+        }
     }
 
     // 4. Restore the placeholder info, now that the Items have been created
     for (const auto &dw : qAsConst(layout.allDockWidgets)) {
+        if (!d->matchesAffinity(dw->affinityName))
+            continue;
+
         if (DockWidgetBase *dockWidget = d->m_dockRegistry->dockByName(dw->uniqueName)) {
             dockWidget->lastPosition()->deserialize(dw->lastPosition);
         } else {
@@ -301,6 +331,15 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     ensureItemsAtCorrectPlace.ensure = d->m_restoreOptions & RestoreOption_RelativeToMainWindow;
 
     return true;
+}
+
+void LayoutSaver::setAffinityNames(const QStringList &affinityNames)
+{
+    d->m_affinityNames = affinityNames;
+    if (affinityNames.contains(QString())) {
+        // Any window with empty affinity will also be subject to save/restore
+        d->m_affinityNames << QString();
+    }
 }
 
 DockWidgetBase::List LayoutSaver::restoredDockWidgets() const
