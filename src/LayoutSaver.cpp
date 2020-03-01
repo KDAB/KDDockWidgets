@@ -620,6 +620,8 @@ void LayoutSaver::DockWidget::scaleSizes(const ScalingInfo &scalingInfo)
 QVariantMap LayoutSaver::DockWidget::toVariantMap() const
 {
     QVariantMap map;
+    if (!affinityName.isEmpty())
+        map.insert(QStringLiteral("affinityName"), affinityName);
     map.insert(QStringLiteral("uniqueName"), uniqueName);
     map.insert(QStringLiteral("lastPosition"), lastPosition.toVariantMap());
 
@@ -628,6 +630,7 @@ QVariantMap LayoutSaver::DockWidget::toVariantMap() const
 
 void LayoutSaver::DockWidget::fromVariantMap(const QVariantMap &map)
 {
+    affinityName = map.value(QStringLiteral("affinityName")).toString();
     uniqueName = map.value(QStringLiteral("uniqueName")).toString();
     lastPosition.fromVariantMap(map.value(QStringLiteral("lastPosition")).toMap());
 }
@@ -775,6 +778,9 @@ QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
     map.insert(QStringLiteral("screenSize"), sizeToMap(screenSize));
     map.insert(QStringLiteral("isVisible"), isVisible);
 
+    if (!affinityName.isEmpty())
+        map.insert(QStringLiteral("affinityName"), affinityName);
+
     return map;
 }
 
@@ -786,6 +792,7 @@ void LayoutSaver::FloatingWindow::fromVariantMap(const QVariantMap &map)
     screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
     screenSize = mapToSize(map.value(QStringLiteral("screenSize")).toMap());
     isVisible = map.value(QStringLiteral("isVisible")).toBool();
+    affinityName = map.value(QStringLiteral("affinityName")).toString();
 }
 
 bool LayoutSaver::MainWindow::isValid() const
@@ -826,6 +833,9 @@ QVariantMap LayoutSaver::MainWindow::toVariantMap() const
     map.insert(QStringLiteral("screenSize"), sizeToMap(screenSize));
     map.insert(QStringLiteral("isVisible"), isVisible);
 
+    if (!affinityName.isEmpty())
+        map.insert(QStringLiteral("affinityName"), affinityName);
+
     return map;
 }
 
@@ -834,6 +844,7 @@ void LayoutSaver::MainWindow::fromVariantMap(const QVariantMap &map)
     options = KDDockWidgets::MainWindowOptions(map.value(QStringLiteral("options")).toInt());
     multiSplitterLayout.fromVariantMap(map.value(QStringLiteral("multiSplitterLayout")).toMap());
     uniqueName = map.value(QStringLiteral("uniqueName")).toString();
+    affinityName = map.value(QStringLiteral("affinityName")).toString();
     geometry = mapToRect(map.value(QStringLiteral("geometry")).toMap());
     screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
     screenSize = mapToSize(map.value(QStringLiteral("screenSize")).toMap());

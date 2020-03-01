@@ -620,6 +620,13 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
         if (QWidget *w = dw->widget())
             w->setVisible(true);
         dw->setProperty("kddockwidget_was_restored", true);
+
+        if (dw->affinityName() != saved->affinityName) {
+            qWarning() << Q_FUNC_INFO << "Affinty name changed from" << dw->affinityName()
+                       << "; to" << saved->affinityName;
+            dw->d->affinityName = saved->affinityName;
+        }
+
     } else {
         qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << saved->uniqueName;
     }
@@ -629,5 +636,8 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
 
 LayoutSaver::DockWidget::Ptr DockWidgetBase::serialize() const
 {
-    return LayoutSaver::DockWidget::dockWidgetForName(uniqueName());
+    auto ptr = LayoutSaver::DockWidget::dockWidgetForName(uniqueName());
+    ptr->affinityName = affinityName();
+
+    return ptr;
 }

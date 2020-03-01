@@ -395,6 +395,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
     fw.screenIndex = screenNumberForWidget(this);
     fw.screenSize = screenSizeForWidget(this);
+    fw.affinityName = affinityName();
 
     auto mainWindow = qobject_cast<MainWindowBase*>(parentWidget());
     fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)

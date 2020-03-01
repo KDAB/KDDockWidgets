@@ -150,6 +150,13 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
         return false;
     }
 
+    if (d->affinityName != mw.affinityName) {
+        qWarning() << Q_FUNC_INFO << "Affinty name changed from" << d->affinityName
+                   << "; to" << mw.affinityName;
+
+        d->affinityName = mw.affinityName;
+    }
+
     return dropArea()->multiSplitterLayout()->deserialize(mw.multiSplitterLayout);
 }
 
@@ -164,6 +171,7 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     m.screenIndex = screenNumberForWidget(this);
     m.screenSize = screenSizeForWidget(this);
     m.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
+    m.affinityName = d->affinityName;
 
     return m;
 }
