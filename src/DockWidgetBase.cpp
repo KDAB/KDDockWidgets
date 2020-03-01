@@ -622,7 +622,7 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
         dw->setProperty("kddockwidget_was_restored", true);
 
         if (dw->affinityName() != saved->affinityName) {
-            qWarning() << Q_FUNC_INFO << "Affinty name changed from" << dw->affinityName()
+            qWarning() << Q_FUNC_INFO << "Affinity name changed from" << dw->affinityName()
                        << "; to" << saved->affinityName;
             dw->d->affinityName = saved->affinityName;
         }

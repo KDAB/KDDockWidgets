@@ -51,19 +51,6 @@ DockRegistry::DockRegistry(QObject *parent)
 #endif
 }
 
-QStringList DockRegistry::affinitiesForMainWindowNames(const QStringList &names) const
-{
-    QStringList affinities;
-
-    for (auto mw : qAsConst(m_mainWindows)) {
-        if (names.contains(mw->uniqueName()) && !mw->affinityName().isEmpty()) {
-            affinities.append(mw->affinityName());
-        }
-    }
-
-    return affinities;
-}
-
 DockRegistry::~DockRegistry()
 {
 }
@@ -322,16 +309,16 @@ void DockRegistry::clear(bool deleteStaticAnchors)
                        << "; nestedwindows=" << m_nestedWindows.size();
 }
 
-void DockRegistry::clear(const QStringList &mainWindowsUniqueNames, bool deleteStaticAnchors)
+void DockRegistry::clear(QStringList affinities, bool deleteStaticAnchors)
 {
-    if (mainWindowsUniqueNames.isEmpty()) {
+    if (affinities.isEmpty()) {
         // Just clear everything
         clear(deleteStaticAnchors);
         return;
     }
 
-    const QStringList affinities = QStringList() << affinitiesForMainWindowNames(mainWindowsUniqueNames)
-                                                 << QString(); // empty affinity also matches and will be closed
+     // empty affinity also matches and will be closed
+    affinities << QString();
 
     for (auto dw : qAsConst(m_dockWidgets)) {
         if (affinities.contains(dw->affinityName())) {
@@ -341,7 +328,7 @@ void DockRegistry::clear(const QStringList &mainWindowsUniqueNames, bool deleteS
     }
 
     for (auto mw : qAsConst(m_mainWindows)) {
-        if (mainWindowsUniqueNames.contains(mw->uniqueName())) {
+        if (affinities.contains(mw->affinityName())) {
             mw->multiSplitterLayout()->clear(deleteStaticAnchors);
         }
     }

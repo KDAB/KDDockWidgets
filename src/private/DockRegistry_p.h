@@ -105,13 +105,9 @@ public:
     void clear(bool deleteStaticAnchors = false);
 
     /**
-     * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors belonging (or associated to)
-     * to the passed main windows.
-     *
-     * By associated it's meant having the same affinity. This is useful to close a subset of main windows
-     * and their floating windows.
+     * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors with the specified affinities.
      */
-    void clear(const QStringList &mainWindowsUniqueNames, bool deleteStaticAnchors = false);
+    void clear(QStringList affinities, bool deleteStaticAnchors = false);
 
     /**
      * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.
@@ -145,7 +141,6 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 private:
     explicit DockRegistry(QObject *parent = nullptr);
-    QStringList affinitiesForMainWindowNames(const QStringList &names) const;
     void maybeDelete();
     bool m_isProcessingAppQuitEvent = false;
     DockWidgetBase::List m_dockWidgets;

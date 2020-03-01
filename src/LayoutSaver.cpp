@@ -273,7 +273,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         layout.scaleSizes();
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
-    d->m_dockRegistry->clear(/*deleteStaticAnchors=*/true);
+    d->m_dockRegistry->clear(d->m_affinityNames, /*deleteStaticAnchors=*/true);
 
     // 1. Restore main windows
     for (const LayoutSaver::MainWindow &mw : qAsConst(layout.mainWindows)) {
