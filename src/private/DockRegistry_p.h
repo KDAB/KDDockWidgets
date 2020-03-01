@@ -105,6 +105,15 @@ public:
     void clear(bool deleteStaticAnchors = false);
 
     /**
+     * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors belonging (or associated to)
+     * to the passed main windows.
+     *
+     * By associated it's meant having the same affinity. This is useful to close a subset of main windows
+     * and their floating windows.
+     */
+    void clear(const QStringList &mainWindowsUniqueNames, bool deleteStaticAnchors = false);
+
+    /**
      * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.
      *
      * This is to simplify things before saving a layout. So we don't have to care about the case
