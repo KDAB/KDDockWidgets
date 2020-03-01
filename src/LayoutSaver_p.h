@@ -141,6 +141,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
             return dw;
 
         dw = Ptr(new LayoutSaver::DockWidget);
+        s_dockWidgets.insert(name, dw);
         dw->uniqueName = name;
 
         return dw;
