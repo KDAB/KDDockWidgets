@@ -82,9 +82,12 @@ std::unique_ptr<KDDockWidgets::MainWindow> KDDockWidgets::Tests::createMainWindo
     return ptr;
 }
 
-DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidget *w, DockWidgetBase::Options options, bool show)
+DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidget *w,
+                                                       DockWidgetBase::Options options, bool show,
+                                                       const QString &affinityName)
 {
     auto dock = new DockWidget(name, options);
+    dock->setAffinityName(affinityName);
     dock->setWidget(w);
     dock->setObjectName(name);
     dock->setGeometry(0, 0, 400, 400);

@@ -335,6 +335,7 @@ private Q_SLOTS:
     void tst_restoreWithPlaceholder();
     void tst_restoreWithNonClosableWidget();
     void tst_restoreAfterResize();
+    void tst_restoreWithAffinity();
     void tst_marginsAfterRestore();
     void tst_restoreEmbeddedMainWindow();
     void tst_restoreWithDockFactory();
@@ -1594,6 +1595,48 @@ void TestDocks::tst_restoreAfterResize()
     QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
     QCOMPARE(oldContentsSize, layout->size());
     QCOMPARE(oldWindowSize, m->size());
+}
+
+void TestDocks::tst_restoreWithAffinity()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m1 = createMainWindow(QSize(500, 500));
+    m1->setAffinityName("a1");
+    auto m2 = createMainWindow(QSize(500, 500));
+    m2->setAffinityName("a2");
+
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, true, "a1");
+    m1->addDockWidget(dock1, Location_OnLeft);
+
+    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, true, "a2");
+    dock2->setFloating(true);
+    dock2->show();
+
+    LayoutSaver saver;
+    saver.setAffinityNames({"a1"});
+    const QByteArray saved1 = saver.serializeLayout();
+
+    QPointer<FloatingWindow> fw2 = dock2->floatingWindow();
+    saver.restoreLayout(saved1);
+
+    // Restoring affinity 1 shouldn't close affinity 2
+    QVERIFY(!fw2.isNull());
+    QVERIFY(dock2->isVisible());
+
+    // Close all and restore again
+    DockRegistry::self()->clear();
+    saver.restoreLayout(saved1);
+
+    // dock2 continues closed
+    QVERIFY(!dock2->isVisible());
+
+    // dock1 was restored
+    QVERIFY(dock1->isVisible());
+    QVERIFY(!dock1->isFloating());
+    QCOMPARE(dock1->window(), m1.get());
+
+    delete dock2->window();
 }
 
 void TestDocks::tst_marginsAfterRestore()
