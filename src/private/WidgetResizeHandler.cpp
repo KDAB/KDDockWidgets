@@ -22,6 +22,7 @@
 #include "FloatingWindow_p.h"
 #include "TitleBar_p.h"
 #include "DragController_p.h"
+#include "Config.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -266,15 +267,23 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
 
         return *result != 0;
     } else if (msg->message == WM_NCLBUTTONDBLCLK) {
-        // We don't want double click to maximize the window
+        if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes)) {
+            // By returning false we accept Windows native action, a maximize.
+            // We could also call titleBar->onDoubleClicked(); here which will maximize if Flag_DoubleClickMaximizes is set,
+            // but there's a bug in QWidget::showMaximized() on Windows when we're covering the native title bar, the window is maximized with an offset.
+            // So instead, use a native maximize which works well
+            return false;
+        } else {
+            // Let the title bar handle it. It will re-dock the window.
 
-        if (TitleBar *titleBar = w->titleBar()) {
-            if (titleBar->isVisible()) { // can't be invisible afaik
-                titleBar->onDoubleClicked();
+            if (TitleBar *titleBar = w->titleBar()) {
+                if (titleBar->isVisible()) { // can't be invisible afaik
+                    titleBar->onDoubleClicked();
+                }
             }
-        }
 
-        return true;
+            return true;
+        }
     } else if (msg->message == WM_GETMINMAXINFO) {
         // Qt doesn't work well with windows that don't have title bar but have native frames.
         // When maximized they go out of bounds and the title bar is clipped, so catch WM_GETMINMAXINFO
