@@ -82,8 +82,9 @@ public:
                        DockWidgetBase *relativeTo = nullptr, AddingOption option = {});
 
     /**
-     * @brief Returns the unique name that was passed via constructor.
-     *        Used internally by the save/restore mechanism.
+     * @brief Returns the unique name.
+     *        Used to keep track of multiple mainwindows in the same application and
+     *        to save/load the state of mainwindows.
      * @internal
      */
     QString uniqueName() const;
@@ -123,7 +124,11 @@ public:
      */
     QString affinityName() const;
 
-protected:
+    /**
+     * Set a new unique name for the mainwindow
+     *
+     * @p name The unique name
+     */
     void setUniqueName(const QString &uniqueName);
 
 Q_SIGNALS:
