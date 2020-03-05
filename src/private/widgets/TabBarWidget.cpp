@@ -37,7 +37,7 @@ namespace KDDockWidgets {
 class MyProxy : public QProxyStyle
 {
 public:
-    MyProxy() : QProxyStyle(nullptr) {}
+    MyProxy() : QProxyStyle(qApp->style()) {}
 
     int styleHint(QStyle::StyleHint hint, const QStyleOption *option = nullptr,
                   const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override
