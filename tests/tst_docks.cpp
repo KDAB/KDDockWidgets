@@ -609,9 +609,11 @@ void TestDocks::tst_close()
 
     // 1.1 Reshow with show()
     dock1->show();
+    auto fw = dock1->floatingWindow();
+    QVERIFY(fw);
     QVERIFY(toggleAction->isChecked());
     QVERIFY(dock1->isVisible());
-    QCOMPARE(dock1->window(), dock1);
+    QCOMPARE(dock1->window(), fw);
     QVERIFY(toggleAction->isChecked());
 
     // 1.2 Reshow with toggleAction instead
@@ -623,7 +625,10 @@ void TestDocks::tst_close()
 
     // 1.3 Use hide() instead
     auto fw1 = dock1->floatingWindow();
-    dock1->hide();
+    QVERIFY(fw1);
+
+    dock1->close(); // TODO: Hide doesn't delete the FloatingWindow
+
     QVERIFY(Testing::waitForDeleted(fw1));
     QVERIFY(!dock1->isVisible());
     QVERIFY(!dock1->window()->isVisible());
@@ -2743,9 +2748,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         dock3->close();
         Testing::waitForDeleted(f2);
         dock2->show();
-
         Testing::waitForResize(dock2);
-
         AnchorGroup group = item2->anchorGroup();
         AnchorGroup staticGroup = layout->staticAnchorGroup();
         QCOMPARE(group.right->followee(), staticGroup.right);

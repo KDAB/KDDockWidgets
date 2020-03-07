@@ -343,6 +343,17 @@ QString DockWidgetBase::affinityName() const
     return d->affinityName;
 }
 
+void DockWidgetBase::show()
+{
+    if (isWindow() && (lastPosition()->m_wasFloating || !lastPosition()->isValid())) {
+        // Create the FloatingWindow already, instead of waiting for the show event.
+        // This reduces flickering on some platforms
+        morphIntoFloatingWindow();
+    } else {
+        QWidget::show();
+    }
+}
+
 void DockWidgetBase::setAffinityName(const QString &name)
 {
     if (d->affinityName == name)

@@ -257,6 +257,9 @@ public:
      */
     QString affinityName() const;
 
+    /// @brief Equivalent to QWidget::show(), but it's optimized to reduce flickering on some platforms
+    void show();
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();
