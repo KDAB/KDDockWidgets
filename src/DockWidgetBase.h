@@ -174,10 +174,16 @@ public:
     void setTitle(const QString &title);
 
     /**
-     * @brief Returns the dock widget's options which control behaviour
-     *        These options were passed at construction time and are immutable.
+     * @brief Returns the dock widget's options which control behaviour.
+     * @sa setOptions(), optionsChanged()
      */
     Options options() const;
+
+    /**
+     * @brief Setter for the options
+     * @sa options(), optionsChanged()
+     */
+    void setOptions(Options);
 
     /**
      * @brief returns if this dock widget is tabbed into another
@@ -278,6 +284,10 @@ Q_SIGNALS:
 
     ///@brief emitted when the hosted widget changed
     void widgetChanged(QWidget*);
+
+    ///@brief emitted when the options change
+    ///@sa setOptions(), options()
+    void optionsChanged(Options);
 
 protected:
     void onParentChanged();

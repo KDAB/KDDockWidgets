@@ -85,6 +85,8 @@ public:
     ///@brief getter for m_floatingWindow
     const FloatingWindow *floatingWindow() const { return m_floatingWindow; }
 
+    virtual void updateCloseButton() {}
+
 Q_SIGNALS:
     void titleChanged();
     void iconChanged();
@@ -93,7 +95,6 @@ protected:
     void onCloseClicked();
     void onFloatClicked();
     virtual void updateFloatButton() {}
-    virtual void updateCloseButton() {}
 
     // The following are needed for the unit-tests
     virtual bool isCloseButtonVisible() const { return true; }

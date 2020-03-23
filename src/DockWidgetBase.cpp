@@ -104,7 +104,7 @@ public:
     QIcon icon;
     QWidget *widget = nullptr;
     DockWidgetBase *const q;
-    const DockWidgetBase::Options options;
+    DockWidgetBase::Options options;
     QAction *const toggleAction;
     LastPosition m_lastPosition;
     bool m_updatingToggleAction = false;
@@ -279,6 +279,16 @@ void DockWidgetBase::setTitle(const QString &title)
 DockWidgetBase::Options DockWidgetBase::options() const
 {
     return d->options;
+}
+
+void DockWidgetBase::setOptions(Options options)
+{
+    if (options != d->options) {
+        d->options = options;
+        Q_EMIT optionsChanged(options);
+        if (auto tb = titleBar())
+            tb->updateCloseButton();
+    }
 }
 
 bool DockWidgetBase::isTabbed() const
