@@ -369,11 +369,11 @@ void DockWidgetBase::raise()
     if (!isOpen())
         return;
 
+    setAsCurrentTab();
+
     if (auto fw = qobject_cast<FloatingWindow*>(window())) {
         fw->raise();
         fw->activateWindow();
-    } else {
-        setAsCurrentTab();
     }
 }
 
