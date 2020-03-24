@@ -364,6 +364,7 @@ private Q_SLOTS:
     void tst_floatingLastPosAfterDoubleClose();
     void tst_addingOptionHiddenTabbed();
     void tst_flagDoubleClick();
+    void tst_floatingWindowDeleted();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5487,6 +5488,37 @@ void TestDocks::tst_flagDoubleClick()
         QVERIFY(!dock1->isFloating());
 
     }
+}
+
+
+void TestDocks::tst_floatingWindowDeleted()
+{
+    // Tests a case where the empty floating dock widget wouldn't be deleted
+    // Doesn't repro QTBUG-83030 unfortunately, as we already have an event loop running
+    // but let's leave this here nontheless
+    class MyMainWindow : public KDDockWidgets::MainWindow {
+    public:
+
+        MyMainWindow()
+            : KDDockWidgets::MainWindow("tst_floatingWindowDeleted", MainWindowOption_None)
+        {
+            auto dock1 = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #1"));
+            auto myWidget = new QWidget();
+            dock1->setWidget(myWidget);
+            dock1->resize(600, 600);
+            dock1->show();
+
+            auto dock2 = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #2"));
+            myWidget = new QWidget();
+            dock2->setWidget(myWidget);
+            dock2->resize(600, 600);
+            dock2->show();
+
+            dock1->addDockWidgetAsTab(dock2);
+        }
+    };
+
+    MyMainWindow m;
 }
 
 QTEST_MAIN(KDDockWidgets::TestDocks)
