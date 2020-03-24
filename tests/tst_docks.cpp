@@ -1995,6 +1995,19 @@ void TestDocks::tst_notClosable()
         TitleBar *titlebarFW = fw->titleBar();
         TitleBar *titleBarFrame = fw->frames().at(0)->titleBar();
         QVERIFY(titlebarFW->isCloseButtonVisible());
+        QVERIFY(!titlebarFW->isCloseButtonEnabled());
+        QVERIFY(!titleBarFrame->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
+
+        dock1->setOptions(DockWidgetBase::Option_None);
+        QVERIFY(titlebarFW->isCloseButtonVisible());
+        QVERIFY(titlebarFW->isCloseButtonEnabled());
+        QVERIFY(!titleBarFrame->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
+
+        dock1->setOptions(DockWidgetBase::Option_NotClosable);
+        QVERIFY(titlebarFW->isCloseButtonVisible());
+        QVERIFY(!titlebarFW->isCloseButtonEnabled());
         QVERIFY(!titleBarFrame->isCloseButtonVisible());
         QVERIFY(!titleBarFrame->isCloseButtonEnabled());
 
