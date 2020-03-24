@@ -44,6 +44,7 @@
 #include <QWindow>
 #include <QFileDialog>
 #include <QAbstractNativeEventFilter>
+#include <QTimer>
 
 #ifdef Q_OS_WIN
 # include <Windows.h>
@@ -275,6 +276,17 @@ DebugWindow::DebugWindow(QWidget *parent)
         const auto layouts = DockRegistry::self()->layouts();
         for (auto l : layouts)
             l->updateAnchorFollowing();
+    });
+
+    button = new QPushButton(this);
+    button->setText(QStringLiteral("Raise #0 (after 3s timeout)"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [this] {
+        QTimer::singleShot(3000, this, [] {
+            const auto docks = DockRegistry::self()->dockwidgets();
+            if (!docks.isEmpty())
+                docks.constFirst()->raise();
+        });
     });
 
     button = new QPushButton(this);
