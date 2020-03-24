@@ -136,6 +136,9 @@ void MyMainWindow::createDockWidgets()
 
     // Floating windows also support nesting, here we add 8 to the bottom of the group
     m_dockwidgets[6]->addDockWidgetToContainingWindow(m_dockwidgets[8], KDDockWidgets::Location_OnBottom);
+
+    auto floatingWindow = m_dockwidgets[6]->window();
+    floatingWindow->move(100, 100);
 }
 
 KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
