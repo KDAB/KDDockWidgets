@@ -365,6 +365,7 @@ private Q_SLOTS:
     void tst_addingOptionHiddenTabbed();
     void tst_flagDoubleClick();
     void tst_floatingWindowDeleted();
+    void tst_raise();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5503,7 +5504,6 @@ void TestDocks::tst_flagDoubleClick()
     }
 }
 
-
 void TestDocks::tst_floatingWindowDeleted()
 {
     // Tests a case where the empty floating dock widget wouldn't be deleted
@@ -5532,6 +5532,29 @@ void TestDocks::tst_floatingWindowDeleted()
     };
 
     MyMainWindow m;
+}
+
+void TestDocks::tst_raise()
+{
+    // Tests DockWidget::raise();
+    auto dock1 = createDockWidget("1", new QWidget());
+    auto dock2 = createDockWidget("2", new QWidget());
+    dock1->addDockWidgetAsTab(dock2);
+    dock1->setAsCurrentTab();
+    QVERIFY(dock1->isCurrentTab());
+    QVERIFY(!dock2->isCurrentTab());
+    dock2->raise();
+    QVERIFY(!dock1->isCurrentTab());
+    QVERIFY(dock2->isCurrentTab());
+
+    if (qApp->platformName() != QLatin1String("offscreen")) { // offscreen qpa doesn't seem to keep Window Z.
+        auto dock3 = createDockWidget("3", new QWidget());
+        dock3->window()->setGeometry(dock1->window()->geometry());
+        QCOMPARE(qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window(), dock3->window());
+        dock1->raise();
+        QVERIFY(dock1->isCurrentTab());
+        QCOMPARE(qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window(), dock1->window());
+    }
 }
 
 QTEST_MAIN(KDDockWidgets::TestDocks)
