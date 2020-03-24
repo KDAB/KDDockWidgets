@@ -266,6 +266,15 @@ public:
     /// @brief Equivalent to QWidget::show(), but it's optimized to reduce flickering on some platforms
     void show();
 
+    /// @brief Brings the dock widget to the front.
+    ///
+    /// This means:
+    /// - If the dock widget is tabbed with other dock widgets but its tab is not current, it's made current.
+    /// - If the dock widget is floating, QWindow::raise() is called.
+    ///
+    /// This only applies if the dock widget is already open. If closed, does nothing.
+    void raise();
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();

@@ -364,6 +364,19 @@ void DockWidgetBase::show()
     }
 }
 
+void DockWidgetBase::raise()
+{
+    if (!isOpen())
+        return;
+
+    if (auto fw = qobject_cast<FloatingWindow*>(window())) {
+        fw->raise();
+        fw->activateWindow();
+    } else {
+        setAsCurrentTab();
+    }
+}
+
 void DockWidgetBase::setAffinityName(const QString &name)
 {
     if (d->affinityName == name)
