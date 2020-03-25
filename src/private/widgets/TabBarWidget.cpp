@@ -37,7 +37,10 @@ namespace KDDockWidgets {
 class MyProxy : public QProxyStyle
 {
 public:
-    MyProxy() : QProxyStyle(qApp->style()) {}
+    MyProxy() : QProxyStyle(qApp->style())
+    {
+        setParent(qApp);
+    }
 
     int styleHint(QStyle::StyleHint hint, const QStyleOption *option = nullptr,
                   const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override
@@ -63,12 +66,18 @@ public:
 
 using namespace KDDockWidgets;
 
+static MyProxy *proxyStyle()
+{
+    static auto *proxy = new MyProxy;
+    return proxy;
+}
+
 TabBarWidget::TabBarWidget(TabWidget *parent)
     : QTabBar(parent->asWidget())
     , TabBar(this, parent)
 {
     setMovable(Config::self().flags() & Config::Flag_AllowReorderTabs);
-    setStyle(new MyProxy());
+    setStyle(proxyStyle());
 }
 
 int TabBarWidget::numDockWidgets() const
