@@ -22,6 +22,7 @@
 #include "DropArea_p.h"
 
 #include <QPainter>
+#include <QPainterPath>
 #include <QState>
 #include <QStateMachine>
 
