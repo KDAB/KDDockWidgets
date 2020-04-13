@@ -69,7 +69,8 @@ public:
     ///@brief DockWidget options to pass at construction time
     enum Option {
         Option_None = 0, ///< No option, the default
-        Option_NotClosable = 1 /// The DockWidget can't be closed on the [x], only programatically
+        Option_NotClosable = 1, /// The DockWidget can't be closed on the [x], only programatically
+        Option_NotDockable = 2 ///< The DockWidget can't be docked, it's always floating
     };
     Q_DECLARE_FLAGS(Options, Option)
 
@@ -180,7 +181,10 @@ public:
     Options options() const;
 
     /**
-     * @brief Setter for the options
+     * @brief Setter for the options.
+     * Only Option_NotClosable is allowed to change after construction. For the other options use
+     * the constructor only.
+     *
      * @sa options(), optionsChanged()
      */
     void setOptions(Options);

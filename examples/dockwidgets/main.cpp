@@ -76,6 +76,9 @@ int main(int argc, char **argv)
     QCommandLineOption doubleClickMaximize("x", QCoreApplication::translate("main", "Double clicking a title bar will maximize a floating window"));
     parser.addOption(doubleClickMaximize);
 
+    QCommandLineOption nonDockable("d", QCoreApplication::translate("main", "DockWidget #9 will be non-dockable"));
+    parser.addOption(nonDockable);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
@@ -122,8 +125,9 @@ int main(int argc, char **argv)
 
     const bool nonClosableDockWidget0 = parser.isSet(nonClosableDockWidget);
     const bool restoreIsRelative = parser.isSet(relativeRestore);
+    const bool nonDockableDockWidget9 = parser.isSet(nonDockable);
 
-    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0, restoreIsRelative);
+    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0, nonDockableDockWidget9, restoreIsRelative);
     mainWindow.setWindowTitle("Main Window 1");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
@@ -135,7 +139,7 @@ int main(int argc, char **argv)
                                                                        : QString();
 
         auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
-                                            nonClosableDockWidget0, restoreIsRelative, affinity);
+                                            nonClosableDockWidget0, nonDockableDockWidget9, restoreIsRelative, affinity);
         if (affinity.isEmpty())
             mainWindow2->setWindowTitle("Main Window 2");
         else

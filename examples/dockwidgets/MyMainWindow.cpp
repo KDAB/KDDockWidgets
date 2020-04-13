@@ -49,10 +49,11 @@ static MyWidget *newMyWidget()
 }
 
 MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                           bool dockWidget0IsNonClosable, bool restoreIsRelative,
+                           bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
                            const QString &affinityName, QWidget *parent)
     : MainWindow(uniqueName, options, parent)
     , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
+    , m_dockWidget9IsNonDockable(nonDockableDockWidget9)
     , m_restoreIsRelative(restoreIsRelative)
 {
     // qApp->installEventFilter(this);
@@ -112,8 +113,11 @@ void MyMainWindow::createDockWidgets()
 {
     Q_ASSERT(m_dockwidgets.isEmpty());
 
+    const int numDockWidgets = m_dockWidget9IsNonDockable ? 10 : 9;
+
+
     // Create 9 KDDockWidget::DockWidget and the respective widgets they're hosting (MyWidget instances)
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < numDockWidgets; i++)
         m_dockwidgets << newDockWidget();
 
 
@@ -150,6 +154,9 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
     if (count == 0 && m_dockWidget0IsNonClosable)
         options |= KDDockWidgets::DockWidget::Option_NotClosable;
 
+    if (count == 9 && m_dockWidget9IsNonDockable)
+        options |= KDDockWidgets::DockWidget::Option_NotDockable;
+
     auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count), options);
     dock->setAffinityName(affinityName()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
 
@@ -157,7 +164,14 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
     auto myWidget = newMyWidget();
     dock->setWidget(myWidget);
-    dock->setTitle(QStringLiteral("DockWidget #%1").arg(count));
+
+
+    if (dock->options() & KDDockWidgets::DockWidget::Option_NotDockable) {
+        dock->setTitle(QStringLiteral("DockWidget #%1 (%2)").arg(count).arg("non dockable"));
+    } else {
+        dock->setTitle(QStringLiteral("DockWidget #%1").arg(count));
+    }
+
     dock->resize(600, 600);
     dock->show();
     m_toggleMenu->addAction(dock->toggleAction());

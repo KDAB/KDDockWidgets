@@ -63,6 +63,7 @@ public:
     TitleBar *titleBar() const { return m_titleBar; }
 
     bool anyNonClosable() const;
+    bool anyNonDockable() const;
 
     /**
      * @brief checks if this FloatingWindow only has one frame.

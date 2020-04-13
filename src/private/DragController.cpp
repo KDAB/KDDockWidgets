@@ -197,6 +197,12 @@ bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
         return true;
     }
 
+    if (floatingWindow->anyNonDockable()) {
+        qCDebug(state) << "StateDragging: Ignoring floating window with non dockable widgets";
+        Q_EMIT q->dragCanceled();
+        return true;
+    }
+
     if (q->m_currentDropArea) {
         if (q->m_currentDropArea->drop(floatingWindow, globalPos)) {
             Q_EMIT q->dropped();
@@ -213,21 +219,36 @@ bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
 
 bool StateDragging::handleMouseMove(QPoint globalPos)
 {
-    if (!q->m_windowBeingDragged->floatingWindow()) {
+    FloatingWindow *fw = q->m_windowBeingDragged->floatingWindow();
+    if (!fw) {
         qCDebug(state) << "Canceling drag, window was deleted";
         Q_EMIT q->dragCanceled();
         return true;
     }
 
     if (!q->m_nonClientDrag)
-        q->m_windowBeingDragged->floatingWindow()->windowHandle()->setPosition(globalPos - q->m_offset);
+        fw->windowHandle()->setPosition(globalPos - q->m_offset);
+
+
+    if (fw->anyNonDockable()) {
+        qCDebug(state) << "StateDragging: Ignoring non dockable floating window";
+        return true;
+    }
 
     DropArea *dropArea = q->dropAreaUnderCursor();
     if (q->m_currentDropArea && dropArea != q->m_currentDropArea)
         q->m_currentDropArea->removeHover();
 
-    if (dropArea)
-        dropArea->hover(q->m_windowBeingDragged->floatingWindow(), globalPos);
+    if (dropArea) {
+        if (FloatingWindow *targetFw = dropArea->floatingWindow()) {
+            if (targetFw->anyNonDockable()) {
+                qCDebug(state) << "StateDragging: Ignoring non dockable target floating window";
+                return false;
+            }
+        }
+
+        dropArea->hover(fw, globalPos);
+    }
 
     q->m_currentDropArea = dropArea;
 

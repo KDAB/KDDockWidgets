@@ -150,6 +150,12 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, AddingOption addi
         return;
     }
 
+    if ((other->options() & DockWidgetBase::Option_NotDockable) ||
+        (options() & DockWidgetBase::Option_NotDockable)) {
+        qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
+        return;
+    }
+
     Frame *frame = this->frame();
 
     if (frame) {
@@ -181,6 +187,12 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other, Loca
     if (other->affinityName() != affinityName()) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
                    << other->affinityName() << affinityName();
+        return;
+    }
+
+    if ((other->options() & DockWidgetBase::Option_NotDockable) ||
+        (options() & DockWidgetBase::Option_NotDockable)) {
+        qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
         return;
     }
 
@@ -283,6 +295,11 @@ DockWidgetBase::Options DockWidgetBase::options() const
 
 void DockWidgetBase::setOptions(Options options)
 {
+    if ((d->options & Option_NotDockable) != (options & Option_NotDockable)) {
+        qWarning() << Q_FUNC_INFO << "Option_NotDockable not allowed to change. Pass via ctor only.";
+        return;
+    }
+
     if (options != d->options) {
         d->options = options;
         Q_EMIT optionsChanged(options);

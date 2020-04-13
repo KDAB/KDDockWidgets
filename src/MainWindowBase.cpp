@@ -81,6 +81,11 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
         return;
     }
 
+    if (widget->options() & DockWidgetBase::Option_NotDockable) {
+        qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << widget;
+        return;
+    }
+
     if (d->supportsCentralFrame()) {
         dropArea()->m_centralFrame->addWidget(widget);
     } else {
@@ -90,6 +95,11 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
 
 void MainWindowBase::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBase *relativeTo, AddingOption option)
 {
+    if (dw->options() & DockWidgetBase::Option_NotDockable) {
+        qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << dw;
+        return;
+    }
+
     dropArea()->addDockWidget(dw, location, relativeTo, option);
 }
 

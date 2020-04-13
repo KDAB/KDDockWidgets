@@ -260,6 +260,15 @@ bool FloatingWindow::anyNonClosable() const
     return false;
 }
 
+bool FloatingWindow::anyNonDockable() const
+{
+    for (Frame *frame : frames()) {
+        if (frame->anyNonDockable())
+            return true;
+    }
+    return false;
+}
+
 bool FloatingWindow::hasSingleFrame() const
 {
     return frames().size() == 1;

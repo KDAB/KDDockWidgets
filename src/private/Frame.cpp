@@ -333,6 +333,16 @@ bool Frame::anyNonClosable() const
     return false;
 }
 
+bool Frame::anyNonDockable() const
+{
+    for (auto dw : dockWidgets()) {
+        if (dw->options() & DockWidgetBase::Option_NotDockable)
+            return true;
+    }
+
+    return false;
+}
+
 void Frame::onDockWidgetShown(DockWidgetBase *w)
 {
     if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
