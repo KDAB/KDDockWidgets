@@ -291,8 +291,9 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
 
         // According to microsoft docs it only works for the primary screen, but extrapolates for the others
         QScreen *screen = QApplication::primaryScreen();
-        if (w->isMaximized() || !screen || w->windowHandle()->screen() != screen)
+        if (!screen || w->windowHandle()->screen() != screen) {
             return false;
+        }
 
         DefWindowProc(msg->hwnd, msg->message, msg->wParam, msg->lParam);
 
