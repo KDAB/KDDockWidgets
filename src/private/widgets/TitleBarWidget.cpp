@@ -58,15 +58,20 @@ void TitleBarWidget::init()
     m_layout->setContentsMargins(2, 2, 2, 2);
     m_layout->setSpacing(2);
 
+    m_maximizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMaxButton));
     m_floatButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarNormalButton));
     m_closeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarCloseButton));
+    m_layout->addWidget(m_maximizeButton);
     m_layout->addWidget(m_floatButton);
     m_layout->addWidget(m_closeButton);
 
     connect(m_floatButton, &QAbstractButton::clicked, this, &TitleBarWidget::onFloatClicked);
     connect(m_closeButton, &QAbstractButton::clicked, this, &TitleBarWidget::onCloseClicked);
+    connect(m_maximizeButton, &QAbstractButton::clicked, this, &TitleBarWidget::onMaximizeClicked);
 
     updateCloseButton();
+    updateFloatButton();
+    updateMaximizeButton();
 
     connect(this, &TitleBar::titleChanged, this, [this] {
         update();
@@ -103,7 +108,7 @@ int TitleBarWidget::buttonAreaWidth() const
 TitleBarWidget::~TitleBarWidget()
 {
     // To avoid a crash
-    for (auto button : { m_floatButton , m_closeButton }) {
+    for (auto button : { m_floatButton, m_maximizeButton, m_closeButton }) {
         button->setParent(nullptr);
         button->deleteLater();
     }
@@ -145,6 +150,18 @@ void TitleBarWidget::updateCloseButton()
 
     qCDebug(closebutton) << Q_FUNC_INFO << "enabled=" << !anyNonClosable;
     m_closeButton->setEnabled(!anyNonClosable);
+}
+
+void TitleBarWidget::updateMaximizeButton()
+{
+    if (auto fw = floatingWindow()) {
+        m_maximizeButton->setIcon(style()->standardIcon(fw->isMaximized() ? QStyle::SP_TitleBarNormalButton
+                                                                          : QStyle::SP_TitleBarMaxButton));
+
+        m_maximizeButton->setVisible(supportsMaximizeButton());
+    } else {
+        m_maximizeButton->setVisible(false);
+    }
 }
 
 bool TitleBarWidget::isCloseButtonVisible() const

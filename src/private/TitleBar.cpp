@@ -51,6 +51,8 @@ TitleBar::TitleBar(FloatingWindow *parent)
 {
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateCloseButton);
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateFloatButton);
+    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateMaximizeButton);
+    connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, &TitleBar::updateMaximizeButton);
     init();
 }
 
@@ -68,10 +70,7 @@ bool TitleBar::onDoubleClicked()
 {
     if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes) && m_floatingWindow) {
         // Not using isFloating(), as that can be a dock widget nested in a floating window. By convention it's floating, but it's not the title bar of the top-level window.
-        if (m_floatingWindow->isMaximized())
-            m_floatingWindow->showNormal();
-        else
-            m_floatingWindow->showMaximized();
+        toggleMaximized();
         return true;
     } else if (supportsFloatingButton()) {
         onFloatClicked();
@@ -79,6 +78,17 @@ bool TitleBar::onDoubleClicked()
     }
 
     return false;
+}
+
+void TitleBar::toggleMaximized()
+{
+    if (!m_floatingWindow)
+        return;
+
+    if (m_floatingWindow->isMaximized())
+        m_floatingWindow->showNormal();
+    else
+        m_floatingWindow->showMaximized();
 }
 
 void TitleBar::setTitle(const QString &title)
@@ -145,9 +155,24 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 
 bool TitleBar::supportsFloatingButton() const
 {
+    if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton) {
+        // Apps having a maximize/restore button traditionally don't have a floating one,
+        // QDockWidget style only has floating and no maximize/restore.
+        // We can add an option later if we need them to co-exist
+        return false;
+    }
+
     // If we have a floating window with nested dock widgets we can't re-attach, because we don't
     // know where to
     return !m_floatingWindow || m_floatingWindow->hasSingleFrame();
+}
+
+bool TitleBar::supportsMaximizeButton() const
+{
+    if (!(Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton))
+        return false;
+
+    return m_floatingWindow != nullptr;
 }
 
 bool TitleBar::hasIcon() const
@@ -228,4 +253,9 @@ void TitleBar::onFloatClicked()
     } else {
         makeWindow();
     }
+}
+
+void TitleBar::onMaximizeClicked()
+{
+    toggleMaximized();
 }

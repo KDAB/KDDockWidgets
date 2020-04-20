@@ -59,6 +59,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void updateFloatButton() override;
     void updateCloseButton() override;
+    void updateMaximizeButton() override;
 
      // The following are needed for the unit-tests
     bool isCloseButtonVisible() const override;
@@ -75,6 +76,7 @@ private:
     QHBoxLayout *const m_layout;
     QAbstractButton *m_closeButton = nullptr;
     QAbstractButton *m_floatButton = nullptr;
+    QAbstractButton *m_maximizeButton = nullptr;
     QLabel *m_dockWidgetIcon = nullptr;
 };
 

@@ -29,6 +29,7 @@
 
 QT_BEGIN_NAMESPACE
 class QAbstractNativeEventFilter;
+class QWindowStateChangeEvent;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
@@ -114,6 +115,7 @@ public:
 
 Q_SIGNALS:
     void numFramesChanged();
+    void windowStateChanged(QWindowStateChangeEvent *);
 protected:
 #ifdef Q_OS_WIN
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;

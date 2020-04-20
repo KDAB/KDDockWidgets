@@ -67,8 +67,11 @@ public:
     /// There should always be at least 1. If more than 1 then they are tabbed.
     DockWidgetBase::List dockWidgets() const;
 
-    ///@brief returns whether this title bar supports a floating/unfloating button
+    ///@brief returns whether this title bar supports a floating/docking button
     bool supportsFloatingButton() const;
+
+    ///@brief returns whether this title bar supports a maximize/restore button
+    bool supportsMaximizeButton() const;
 
     ///@brief returns whether this title bar has an icon
     bool hasIcon() const;
@@ -94,7 +97,11 @@ Q_SIGNALS:
 protected:
     void onCloseClicked();
     void onFloatClicked();
+    void onMaximizeClicked();
+    void toggleMaximized();
+
     virtual void updateFloatButton() {}
+    virtual void updateMaximizeButton() {}
 
     // The following are needed for the unit-tests
     virtual bool isCloseButtonVisible() const { return true; }

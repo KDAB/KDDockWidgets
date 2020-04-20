@@ -27,6 +27,7 @@
 #include <QApplication>
 #include <QPainter>
 #include <QVBoxLayout>
+#include <QWindowStateChangeEvent>
 
 using namespace KDDockWidgets;
 
@@ -49,6 +50,14 @@ void FloatingWindowWidget::paintEvent(QPaintEvent *)
     QPainter p(this);
     p.setPen(0x666666);
     p.drawRect(rect().adjusted(0, 0, -1, -1));
+}
+
+bool FloatingWindowWidget::event(QEvent *ev)
+{
+    if (ev->type() == QEvent::WindowStateChange)
+        Q_EMIT windowStateChanged(static_cast<QWindowStateChangeEvent*>(ev));
+
+    return FloatingWindow::event(ev);
 }
 
 void FloatingWindowWidget::init()

@@ -79,6 +79,9 @@ int main(int argc, char **argv)
     QCommandLineOption nonDockable("d", QCoreApplication::translate("main", "DockWidget #9 will be non-dockable"));
     parser.addOption(nonDockable);
 
+    QCommandLineOption maximizeButton("b", QCoreApplication::translate("main", "DockWidgets have maximize/restore buttons instead of float/dock button"));
+    parser.addOption(maximizeButton);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
@@ -105,6 +108,9 @@ int main(int argc, char **argv)
 
     if (parser.isSet(reorderTabsOption))
         flags |= KDDockWidgets::Config::Flag_AllowReorderTabs;
+
+    if (parser.isSet(maximizeButton))
+        flags |= KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton;
 
     if (parser.isSet(lazyResizeOption))
         flags |= KDDockWidgets::Config::Flag_LazyResize;

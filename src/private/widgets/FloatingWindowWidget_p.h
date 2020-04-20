@@ -38,6 +38,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *) override;
+    bool event(QEvent *ev) override;
 private:
     void init();
     Q_DISABLE_COPY(FloatingWindowWidget)
