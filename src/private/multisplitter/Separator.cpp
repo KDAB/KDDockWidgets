@@ -19,9 +19,9 @@
 */
 
 #include "Separator_p.h"
-#include "multisplitter/MultiSplitterLayout_p.h"
-#include "multisplitter/Anchor_p.h"
-#include "Logging_p.h"
+#include "MultiSplitterLayout_p.h"
+#include "Anchor_p.h"
+#include "../Logging_p.h"
 
 using namespace KDDockWidgets;
 

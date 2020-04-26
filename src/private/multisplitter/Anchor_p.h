@@ -21,8 +21,8 @@
 #ifndef KD_MULTISPLITTER_ANCHOR_P_H
 #define KD_MULTISPLITTER_ANCHOR_P_H
 
-#include "docks_export.h"
-#include "LayoutSaver_p.h"
+#include "../../docks_export.h"
+#include "../../LayoutSaver_p.h"
 
 #include <QObject>
 #include <QPointer>

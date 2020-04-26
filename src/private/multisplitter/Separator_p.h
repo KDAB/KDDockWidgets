@@ -21,8 +21,8 @@
 #ifndef KD_MULTISPLITTER_SEPARATOR_P_H
 #define KD_MULTISPLITTER_SEPARATOR_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
+#include "../../docks_export.h"
+#include "../../QWidgetAdapter.h"
 
 #include <QPointer>
 

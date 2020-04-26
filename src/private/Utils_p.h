@@ -21,7 +21,7 @@
 #ifndef KD_UTILS_P_H
 #define KD_UTILS_P_H
 
-#include "Config.h"
+#include "../Config.h"
 
 #include <QApplication>
 #include <QScreen>

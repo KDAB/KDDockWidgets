@@ -22,7 +22,7 @@
 #ifndef KD_FRAME_QUICK_P_H
 #define KD_FRAME_QUICK_P_H
 
-#include "Frame_p.h"
+#include "../Frame_p.h"
 
 namespace KDDockWidgets {
 

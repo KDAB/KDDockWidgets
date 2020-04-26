@@ -28,7 +28,7 @@
 #ifndef KDTABWIDGETQUICK_P_H
 #define KDTABWIDGETQUICK_P_H
 
-#include "TabWidget_p.h"
+#include "../TabWidget_p.h"
 
 namespace KDDockWidgets {
 

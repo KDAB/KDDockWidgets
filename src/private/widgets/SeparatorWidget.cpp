@@ -19,9 +19,9 @@
 */
 
 #include "SeparatorWidget_p.h"
-#include "multisplitter/MultiSplitterLayout_p.h"
-#include "multisplitter/Anchor_p.h"
-#include "Logging_p.h"
+#include "../multisplitter/MultiSplitterLayout_p.h"
+#include "../multisplitter/Anchor_p.h"
+#include "../Logging_p.h"
 
 #include <QPainter>
 #include <QStyleOption>

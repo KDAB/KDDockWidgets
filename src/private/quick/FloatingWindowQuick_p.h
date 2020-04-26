@@ -21,7 +21,7 @@
 #ifndef KD_FLOATING_WINDOWQUICK_P_H
 #define KD_FLOATING_WINDOWQUICK_P_H
 
-#include "FloatingWindow_p.h"
+#include "../FloatingWindow_p.h"
 
 namespace KDDockWidgets {
 

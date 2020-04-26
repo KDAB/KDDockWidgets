@@ -26,12 +26,12 @@
  */
 
 #include "MainWindow.h"
-#include "DropArea_p.h"
-#include "Frame_p.h"
-#include "Logging_p.h"
-#include "DropAreaWithCentralFrame_p.h"
-#include "multisplitter/MultiSplitterLayout_p.h"
-#include "multisplitter/MultiSplitter_p.h"
+#include "private/DropArea_p.h"
+#include "private/Frame_p.h"
+#include "private/Logging_p.h"
+#include "private/DropAreaWithCentralFrame_p.h"
+#include "private/multisplitter/MultiSplitterLayout_p.h"
+#include "private/multisplitter/MultiSplitter_p.h"
 
 #include <QApplication>
 #include <QVBoxLayout>

@@ -29,7 +29,7 @@
 #ifndef KD_TABBAR_WIDGET_P_H
 #define KD_TABBAR_WIDGET_P_H
 
-#include "TabWidget_p.h"
+#include "../TabWidget_p.h"
 
 #include <QTabBar>
 

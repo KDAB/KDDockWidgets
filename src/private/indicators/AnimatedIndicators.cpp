@@ -19,7 +19,7 @@
 */
 
 #include "AnimatedIndicators_p.h"
-#include "DropArea_p.h"
+#include "../DropArea_p.h"
 
 #include <QPainter>
 #include <QPainterPath>

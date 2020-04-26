@@ -21,7 +21,7 @@
 #ifndef KD_MULTISPLITTER_SEPARATORWIDGET_P_H
 #define KD_MULTISPLITTER_SEPARATORWIDGET_P_H
 
-#include "multisplitter/Separator_p.h"
+#include "../multisplitter/Separator_p.h"
 
 QT_BEGIN_NAMESPACE
 class QPaintEvent;

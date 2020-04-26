@@ -21,7 +21,7 @@
 #ifndef KD_INDICATORS_CLASSICINDICATORS_P_H
 #define KD_INDICATORS_CLASSICINDICATORS_P_H
 
-#include "DropIndicatorOverlayInterface_p.h"
+#include "../DropIndicatorOverlayInterface_p.h"
 
 QT_BEGIN_NAMESPACE
 class QRubberBand;

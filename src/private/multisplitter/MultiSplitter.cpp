@@ -29,9 +29,9 @@
 
 #include "MultiSplitter_p.h"
 #include "MultiSplitterLayout_p.h"
-#include "Logging_p.h"
+#include "../Logging_p.h"
 #include "MainWindowBase.h"
-#include "FloatingWindow_p.h"
+#include "../FloatingWindow_p.h"
 #include "LayoutSaver.h"
 
 #include <QScopedValueRollback>

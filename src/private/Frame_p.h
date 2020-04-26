@@ -28,9 +28,9 @@
 #ifndef KD_FRAME_P_H
 #define KD_FRAME_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
-#include "LayoutSaver_p.h"
+#include "../docks_export.h"
+#include "../QWidgetAdapter.h"
+#include "../LayoutSaver_p.h"
 
 #include <QWidget>
 #include <QVector>

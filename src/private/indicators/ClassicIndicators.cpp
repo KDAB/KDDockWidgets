@@ -19,11 +19,11 @@
 */
 
 #include "ClassicIndicators_p.h"
-#include "DropArea_p.h"
-#include "DragController_p.h"
-#include "Frame_p.h"
-#include "Logging_p.h"
-#include "Utils_p.h"
+#include "../DropArea_p.h"
+#include "../DragController_p.h"
+#include "../Frame_p.h"
+#include "../Logging_p.h"
+#include "../Utils_p.h"
 
 #include <QPainter>
 #include <QRubberBand>

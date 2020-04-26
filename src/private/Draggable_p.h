@@ -21,7 +21,7 @@
 #ifndef KD_DRAGGABLE_P_H
 #define KD_DRAGGABLE_P_H
 
-#include "QWidgetAdapter.h"
+#include "../QWidgetAdapter.h"
 
 #include <QVector>
 

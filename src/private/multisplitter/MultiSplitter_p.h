@@ -29,8 +29,8 @@
 #ifndef KDDOCKWIDGETS_MULTISPLITTER_P_H
 #define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
+#include "../../docks_export.h"
+#include "../../QWidgetAdapter.h"
 
 namespace KDDockWidgets {
 

@@ -21,10 +21,10 @@
 #ifndef KD_MULTISPLITTER_ITEM_P_H
 #define KD_MULTISPLITTER_ITEM_P_H
 
-#include "docks_export.h"
+#include "../../docks_export.h"
 #include "Anchor_p.h"
-#include "QWidgetAdapter.h"
-#include "LayoutSaver_p.h"
+#include "../../QWidgetAdapter.h"
+#include "../../LayoutSaver_p.h"
 
 #include <QRect>
 #include <QObject>

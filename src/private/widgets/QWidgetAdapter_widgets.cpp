@@ -31,7 +31,7 @@
  */
 
 #include "QWidgetAdapter_widgets_p.h"
-#include "FloatingWindow_p.h"
+#include "../FloatingWindow_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>

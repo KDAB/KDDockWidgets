@@ -19,12 +19,12 @@
 */
 
 #include "TitleBarWidget_p.h"
-#include "DragController_p.h"
-#include "Frame_p.h"
-#include "FloatingWindow_p.h"
-#include "Logging_p.h"
-#include "WindowBeingDragged_p.h"
-#include "Utils_p.h"
+#include "../DragController_p.h"
+#include "../Frame_p.h"
+#include "../FloatingWindow_p.h"
+#include "../Logging_p.h"
+#include "../WindowBeingDragged_p.h"
+#include "../Utils_p.h"
 
 #include <QHBoxLayout>
 #include <QLabel>

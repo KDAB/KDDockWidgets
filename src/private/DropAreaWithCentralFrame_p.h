@@ -23,7 +23,7 @@
 
 #include "DropArea_p.h"
 
-#include "QWidgetAdapter.h"
+#include "../QWidgetAdapter.h"
 
 namespace KDDockWidgets {
 class DOCKS_EXPORT DropAreaWithCentralFrame : public DropArea

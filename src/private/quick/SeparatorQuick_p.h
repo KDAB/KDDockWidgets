@@ -21,7 +21,7 @@
 #ifndef KD_MULTISPLITTER_SEPARATORQUICK_P_H
 #define KD_MULTISPLITTER_SEPARATORQUICK_P_H
 
-#include "multisplitter/Separator_p.h"
+#include "../multisplitter/Separator_p.h"
 
 
 namespace KDDockWidgets {

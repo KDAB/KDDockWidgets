@@ -22,7 +22,7 @@
 #include "Anchor_p.h"
 #include "MultiSplitterLayout_p.h"
 #include "MultiSplitter_p.h"
-#include "Logging_p.h"
+#include "../Logging_p.h"
 
 
 using namespace KDDockWidgets;

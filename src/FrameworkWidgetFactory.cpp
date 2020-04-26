@@ -19,29 +19,29 @@
 */
 
 #include "FrameworkWidgetFactory.h"
-#include "Frame_p.h"
-#include "TitleBar_p.h"
-#include "TabWidget_p.h"
-#include "multisplitter/Separator_p.h"
-#include "FloatingWindow_p.h"
+#include "private/Frame_p.h"
+#include "private/TitleBar_p.h"
+#include "private/TabWidget_p.h"
+#include "private/multisplitter/Separator_p.h"
+#include "private/FloatingWindow_p.h"
 #include "Config.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "indicators/ClassicIndicators_p.h"
-# include "widgets/FrameWidget_p.h"
-# include "widgets/TitleBarWidget_p.h"
-# include "widgets/TabBarWidget_p.h"
-# include "widgets/TabWidgetWidget_p.h"
-# include "widgets/SeparatorWidget_p.h"
-# include "widgets/FloatingWindowWidget_p.h"
+# include "private/indicators/ClassicIndicators_p.h"
+# include "private/widgets/FrameWidget_p.h"
+# include "private/widgets/TitleBarWidget_p.h"
+# include "private/widgets/TabBarWidget_p.h"
+# include "private/widgets/TabWidgetWidget_p.h"
+# include "private/widgets/SeparatorWidget_p.h"
+# include "private/widgets/FloatingWindowWidget_p.h"
 #else
-# include "quick/FrameQuick_p.h"
-# include "quick/DockWidgetQuick.h"
-# include "quick/TitleBarQuick_p.h"
-# include "quick/TabBarQuick_p.h"
-# include "quick/TabWidgetQuick_p.h"
-# include "quick/FloatingWindowQuick_p.h"
-# include "quick/SeparatorQuick_p.h"
+# include "private/quick/FrameQuick_p.h"
+# include "private/quick/DockWidgetQuick.h"
+# include "private/quick/TitleBarQuick_p.h"
+# include "private/quick/TabBarQuick_p.h"
+# include "private/quick/TabWidgetQuick_p.h"
+# include "private/quick/FloatingWindowQuick_p.h"
+# include "private/quick/SeparatorQuick_p.h"
 #endif
 
 using namespace KDDockWidgets;

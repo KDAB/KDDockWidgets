@@ -19,13 +19,13 @@
 */
 
 #include "MultiSplitterLayout_p.h"
-#include "Logging_p.h"
+#include "../Logging_p.h"
 #include "MultiSplitter_p.h"
-#include "Frame_p.h"
-#include "FloatingWindow_p.h"
+#include "../Frame_p.h"
+#include "../FloatingWindow_p.h"
 #include "DockWidgetBase.h"
-#include "LastPosition_p.h"
-#include "DockRegistry_p.h"
+#include "../LastPosition_p.h"
+#include "../DockRegistry_p.h"
 #include "Config.h"
 #include "Separator_p.h"
 #include "FrameworkWidgetFactory.h"

@@ -27,10 +27,10 @@
 #ifndef KD_LAST_POSITION_P_H
 #define KD_LAST_POSITION_P_H
 
-#include "docks_export.h"
+#include "../docks_export.h"
 #include "multisplitter/Item_p.h"
 #include "Logging_p.h"
-#include "LayoutSaver_p.h"
+#include "../LayoutSaver_p.h"
 
 #include <QPointer>
 #include <memory>

@@ -38,7 +38,7 @@
 typedef QWidget QWidgetOrQuick;
 typedef QMainWindow QMainWindowOrQuick;
 #else
-# include "quick/QWidgetAdapter_quick_p.h"
+# include "private/quick/QWidgetAdapter_quick_p.h"
 typedef KDDockWidgets::QWidgetAdapter QWidgetOrQuick;
 typedef QWidgetOrQuick QMainWindowOrQuick;
 #endif

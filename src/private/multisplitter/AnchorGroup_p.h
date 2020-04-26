@@ -21,8 +21,8 @@
 #ifndef KD_MULTISPLITTER_ANCHORGROUP_P_H
 #define KD_MULTISPLITTER_ANCHORGROUP_P_H
 
-#include "docks_export.h"
-#include "KDDockWidgets.h"
+#include "../../docks_export.h"
+#include "../../KDDockWidgets.h"
 #include "Anchor_p.h"
 
 #include <QDebug>
