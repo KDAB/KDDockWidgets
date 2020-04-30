@@ -57,6 +57,7 @@ public:
         , q(qq)
         , options(options_)
         , toggleAction(new QAction(q))
+        , floatAction(new QAction(q))
     {
         q->connect(q, &DockWidgetBase::shown, q, [this] { onDockWidgetShown(); } );
         q->connect(q, &DockWidgetBase::hidden, q, [this] { onDockWidgetHidden(); } );
@@ -69,7 +70,14 @@ public:
             }
         });
 
+        q->connect(floatAction, &QAction::toggled, q, [this] (bool enabled) {
+            if (!m_updatingFloatAction) { // guard against recursiveness
+                q->setFloating(enabled);
+            }
+        });
+
         toggleAction->setCheckable(true);
+        floatAction->setCheckable(true);
     }
 
     void init()
@@ -83,6 +91,7 @@ public:
     void updateIcon();
     void toggle(bool enabled);
     void updateToggleAction();
+    void updateFloatAction();
     void onDockWidgetShown();
     void onDockWidgetHidden();
     TabWidget *parentTabWidget() const;
@@ -106,8 +115,10 @@ public:
     DockWidgetBase *const q;
     DockWidgetBase::Options options;
     QAction *const toggleAction;
+    QAction *const floatAction;
     LastPosition m_lastPosition;
     bool m_updatingToggleAction = false;
+    bool m_updatingFloatAction = false;
     bool m_isForceClosing = false;
 };
 
@@ -267,6 +278,11 @@ void DockWidgetBase::setFloating(bool floats)
 QAction *DockWidgetBase::toggleAction() const
 {
     return d->toggleAction;
+}
+
+QAction *DockWidgetBase::floatAction() const
+{
+    return d->floatAction;
 }
 
 QString DockWidgetBase::uniqueName() const
@@ -517,15 +533,32 @@ void DockWidgetBase::Private::updateToggleAction()
     }
 }
 
+void DockWidgetBase::Private::updateFloatAction()
+{
+    QScopedValueRollback<bool> recursionGuard(m_updatingFloatAction, true); // Guard against recursiveness
+
+    if (q->isFloating()) {
+        floatAction->setEnabled(m_lastPosition.isValid());
+        floatAction->setChecked(true);
+        floatAction->setToolTip(tr("Dock"));
+    } else {
+        floatAction->setEnabled(true);
+        floatAction->setChecked(false);
+        floatAction->setToolTip(tr("Detach"));
+    }
+}
+
 void DockWidgetBase::Private::onDockWidgetShown()
 {
     updateToggleAction();
+    updateFloatAction();
     qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 
 void DockWidgetBase::Private::onDockWidgetHidden()
 {
     updateToggleAction();
+    updateFloatAction();
     qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 
@@ -618,6 +651,7 @@ void DockWidgetBase::onParentChanged()
 {
     Q_EMIT parentChanged();
     d->updateToggleAction();
+    d->updateFloatAction();
 }
 
 void DockWidgetBase::onShown(bool spontaneous)

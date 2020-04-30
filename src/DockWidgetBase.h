@@ -155,6 +155,12 @@ public:
     QAction *toggleAction() const;
 
     /**
+     * @brief Returns the QAction that allows to dock/undock the dock widget
+     * Useful to put in menus.
+     */
+    QAction *floatAction() const;
+
+    /**
      * @brief the dock widget's unique name.
      * @internal
      */
