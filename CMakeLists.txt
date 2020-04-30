@@ -44,6 +44,7 @@ add_subdirectory(src)
 
 if (OPTION_DEVELOPER_MODE)
     if (NOT OPTION_QTQUICK)
+        enable_testing()
         add_subdirectory(tests)
     endif()
 

@@ -11,6 +11,7 @@ include_directories(../src)
 include_directories(../src/private)
 add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS})
 target_link_libraries(tst_docks kddockwidgets Qt5::Widgets Qt5::Test)
+add_test(NAME tst_docks COMMAND tst_docks)
 
 add_subdirectory(fuzzer)
 
