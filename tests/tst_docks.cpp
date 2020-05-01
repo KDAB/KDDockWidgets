@@ -366,6 +366,7 @@ private Q_SLOTS:
     void tst_flagDoubleClick();
     void tst_floatingWindowDeleted();
     void tst_raise();
+    void tst_floatingAction();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5554,6 +5555,89 @@ void TestDocks::tst_raise()
         dock1->raise();
         QVERIFY(dock1->isCurrentTab());
         QCOMPARE(qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window(), dock1->window());
+    }
+}
+
+void TestDocks::tst_floatingAction()
+{
+    // Tests DockWidget::floatAction()
+    EnsureTopLevelsDeleted e;
+
+    {
+        // 1. Create a MainWindow with two docked dock-widgets, then float the first one.
+        auto m = createMainWindow();
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+
+        auto action = dock1->floatAction();
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!action->isChecked());
+        QVERIFY(action->isEnabled());
+        QCOMPARE(action->toolTip(), tr("Detach"));
+
+        action->toggle();
+        QVERIFY(dock1->isFloating());
+        QVERIFY(action->isChecked());
+        QVERIFY(action->isEnabled());
+        QCOMPARE(action->toolTip(), tr("Dock"));
+
+        auto fw = dock1->floatingWindow();
+        QVERIFY(fw);
+
+        //2. Put it back, via setFloating(). It should return to its place.
+        action->toggle();
+
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!action->isChecked());
+        QVERIFY(action->isEnabled());
+        QVERIFY(!dock1->isTabbed());
+        QCOMPARE(action->toolTip(), tr("Detach"));;
+
+        Testing::waitForDeleted(fw);
+    }
+
+        {
+        // 1. Create a MainWindow with one docked dock-widgets, and one floating.
+        auto m = createMainWindow();
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+
+        //The floating window action should be disabled as it has no previous place
+        auto action = dock2->floatAction();
+        QVERIFY(dock2->isFloating());
+        QVERIFY(action->isChecked());
+        QVERIFY(!action->isEnabled());
+        QCOMPARE(action->toolTip(), tr("Dock"));
+
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+
+        QVERIFY(!dock2->isFloating());
+        QVERIFY(!action->isChecked());
+        QVERIFY(action->isEnabled());
+        QCOMPARE(action->toolTip(), tr("Detach"));
+
+        action->toggle();
+        QVERIFY(dock2->isFloating());
+        QVERIFY(action->isChecked());
+        QVERIFY(action->isEnabled());
+        QCOMPARE(action->toolTip(), tr("Dock"));
+
+        auto fw = dock2->floatingWindow();
+        QVERIFY(fw);
+
+        //2. Put it back, via setFloating(). It should return to its place.
+        action->toggle();
+
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!action->isChecked());
+        QVERIFY(action->isEnabled());
+        QVERIFY(!dock1->isTabbed());
+        QCOMPARE(action->toolTip(), tr("Detach"));;
+
+        Testing::waitForDeleted(fw);
     }
 }
 
