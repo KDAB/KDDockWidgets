@@ -25,7 +25,9 @@
 
 #include <QWidget>
 
+QT_BEGIN_NAMESPACE
 class QPainter;
+QT_END_NAMESPACE
 
 class MyWidget : public QWidget
 {
