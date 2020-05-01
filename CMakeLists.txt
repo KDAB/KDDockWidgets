@@ -41,6 +41,7 @@ else()
 endif()
 
 add_subdirectory(src)
+add_subdirectory(examples/dockwidgets)
 
 if (OPTION_DEVELOPER_MODE)
     if (NOT OPTION_QTQUICK)

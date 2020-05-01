@@ -122,12 +122,14 @@ endif()
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 
 add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES} ${RESOURCES_QUICK})
+add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
 
 target_include_directories(kddockwidgets
     PUBLIC
         $<INSTALL_INTERFACE:include>
         $<INSTALL_INTERFACE:include/kddockwidgets>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/private
