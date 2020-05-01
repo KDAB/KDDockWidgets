@@ -83,7 +83,7 @@ int main(int argc, char **argv)
     parser.addOption(maximizeButton);
 
 #if defined(DOCKS_DEVELOPER_MODE)
-    QCommandLineOption noCentralFrame("c", QCoreApplication::translate("main", "No central frame"));
+    QCommandLineOption noCentralFrame("f", QCoreApplication::translate("main", "No central frame"));
     parser.addOption(noCentralFrame);
 #endif
 
