@@ -41,3 +41,4 @@ kddockwidgets_basic_quick
 build-*
 /examples/dockwidgets/kddockwidgets_example
 .cmake
+CTestTestfile.cmake
