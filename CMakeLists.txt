@@ -1,10 +1,15 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.7)
 
-project(KDDockWidgets
-        VERSION 0.1
-        DESCRIPTION "An advanced docking system for Qt"
-        HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
-        LANGUAGES CXX)
+if (${CMAKE_VERSION} VERSION_LESS "3.12.0")
+    project(KDDockWidgets VERSION 0.1 LANGUAGES CXX)
+else()
+    project(KDDockWidgets
+            VERSION 0.1
+            DESCRIPTION "An advanced docking system for Qt"
+            HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
+            LANGUAGES CXX)
+endif()
+
 
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
