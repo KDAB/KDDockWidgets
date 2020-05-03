@@ -5538,8 +5538,11 @@ void TestDocks::tst_floatingWindowDeleted()
 void TestDocks::tst_raise()
 {
     // Tests DockWidget::raise();
+    EnsureTopLevelsDeleted e;
+
     auto dock1 = createDockWidget("1", new QWidget());
     auto dock2 = createDockWidget("2", new QWidget());
+    auto fw2 = dock2->window();
     dock1->addDockWidgetAsTab(dock2);
     dock1->setAsCurrentTab();
     QVERIFY(dock1->isCurrentTab());
@@ -5556,6 +5559,9 @@ void TestDocks::tst_raise()
         QVERIFY(dock1->isCurrentTab());
         QCOMPARE(qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window(), dock1->window());
     }
+
+    delete fw2;
+    delete dock1->window();
 }
 
 void TestDocks::tst_floatingAction()
@@ -5598,7 +5604,7 @@ void TestDocks::tst_floatingAction()
         Testing::waitForDeleted(fw);
     }
 
-        {
+    {
         // 1. Create a MainWindow with one docked dock-widgets, and one floating.
         auto m = createMainWindow();
         auto dock1 = createDockWidget("dock1", new QPushButton("one"));
@@ -5635,7 +5641,7 @@ void TestDocks::tst_floatingAction()
         QVERIFY(!action->isChecked());
         QVERIFY(action->isEnabled());
         QVERIFY(!dock1->isTabbed());
-        QCOMPARE(action->toolTip(), tr("Detach"));;
+        QCOMPARE(action->toolTip(), tr("Detach"));
 
         Testing::waitForDeleted(fw);
     }
