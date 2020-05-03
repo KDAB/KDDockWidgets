@@ -46,6 +46,7 @@
 static int s_dbg_numFrames = 0;
 
 using namespace KDDockWidgets;
+using namespace Layouting;
 
 namespace KDDockWidgets {
 static FrameOptions actualOptions(FrameOptions options)
@@ -293,7 +294,7 @@ void Frame::restoreToPreviousPosition()
         return;
     }
 
-    m_layoutItem->restorePlaceholder(this);
+    m_layoutItem->restore(this);
 }
 
 int Frame::currentTabIndex() const
@@ -430,6 +431,11 @@ QString Frame::affinityName() const
     }
 }
 
+QWidget *Frame::asWidget()
+{
+    return this;
+}
+
 DockWidgetBase *Frame::dockWidgetAt(int index) const
 {
     return qobject_cast<DockWidgetBase *>(m_tabWidget->dockwidgetAt(index));
@@ -503,6 +509,9 @@ bool Frame::event(QEvent *e)
 
 Frame *Frame::deserialize(const LayoutSaver::Frame &f)
 {
+    if (!f.isValid())
+        return nullptr;
+
     auto frame = Config::self().frameworkWidgetFactory()->createFrame(/*parent=*/nullptr, FrameOptions(f.options));
     frame->setObjectName(f.objectName);
 
@@ -529,6 +538,7 @@ LayoutSaver::Frame Frame::serialize() const
     frame.geometry = geometry();
     frame.options = options();
     frame.currentTabIndex = currentTabIndex();
+    frame.id = QString::number(qint64(this)); // for coorelation purposes
 
     for (DockWidgetBase *dock : docks)
         frame.dockWidgets.push_back(dock->serialize());

@@ -66,63 +66,26 @@ namespace KDDockWidgets
     };
     Q_DECLARE_FLAGS(RestoreOptions, RestoreOption)
 
-   ///@internal
-   inline Location oppositeLocation(Location loc)
-   {
-       switch (loc) {
-       case Location_OnLeft:
-           return Location_OnRight;
-       case Location_OnTop:
-           return Location_OnBottom;
-       case Location_OnRight:
-           return Location_OnLeft;
-       case Location_OnBottom:
-           return Location_OnTop;
-       default:
-           Q_ASSERT(false);
-           return Location_None;
-       }
-   }
+    ///@internal
+    inline QString locationStr(Location loc)
+    {
+        switch (loc) {
+        case KDDockWidgets::Location_None:
+            return QStringLiteral("none");
+        case KDDockWidgets::Location_OnLeft:
+            return QStringLiteral("left");
+        case KDDockWidgets::Location_OnTop:
+            return QStringLiteral("top");
+        case KDDockWidgets::Location_OnRight:
+            return QStringLiteral("right");
+        case KDDockWidgets::Location_OnBottom:
+            return QStringLiteral("bottom");
+        }
 
-   ///@internal
-   inline Location adjacentLocation(Location loc)
-   {
-       switch (loc) {
-       case Location_OnLeft:
-           return Location_OnTop;
-       case Location_OnTop:
-           return Location_OnRight;
-       case Location_OnRight:
-           return Location_OnBottom;
-       case Location_OnBottom:
-           return Location_OnLeft;
-       default:
-           Q_ASSERT(false);
-           return Location_None;
-       }
-   }
-
-   ///@internal
-   inline QString locationStr(Location loc)
-   {
-       switch (loc) {
-       case KDDockWidgets::Location_None:
-           return QStringLiteral("none");
-       case KDDockWidgets::Location_OnLeft:
-           return QStringLiteral("left");
-       case KDDockWidgets::Location_OnTop:
-           return QStringLiteral("top");
-       case KDDockWidgets::Location_OnRight:
-           return QStringLiteral("right");
-       case KDDockWidgets::Location_OnBottom:
-           return QStringLiteral("bottom");
-       }
-
-       return QString();
-   }
+        return QString();
+    }
 }
 
-Q_DECLARE_METATYPE(KDDockWidgets::Location)
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
 
 #endif

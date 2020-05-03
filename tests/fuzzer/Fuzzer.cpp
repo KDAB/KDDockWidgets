@@ -94,7 +94,7 @@ void Fuzzer::runTest(const Test &test)
         index++;
         op->execute();
         if (op->hasParams())
-            qDebug() << "Ran" << op->description();
+            qDebug() << "Ran" << op->description() << index;
         QTest::qWait(m_operationDelayMS);
         DockRegistry::self()->checkSanityAll();
     }

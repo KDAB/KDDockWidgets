@@ -131,7 +131,7 @@ void MyMainWindow::createDockWidgets()
     addDockWidget(m_dockwidgets[3], KDDockWidgets::Location_OnBottom);
     addDockWidget(m_dockwidgets[4], KDDockWidgets::Location_OnBottom);
 
-    // Tab two dock widgets toghether
+    // Tab two dock widgets together
     m_dockwidgets[3]->addDockWidgetAsTab(m_dockwidgets[5]);
 
     // 6 is floating, as it wasn't added to the main window via MainWindow::addDockWidget().

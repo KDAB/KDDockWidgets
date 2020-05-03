@@ -38,6 +38,11 @@ DropAreaWithCentralFrame::~DropAreaWithCentralFrame()
 
 Frame* DropAreaWithCentralFrame::createCentralFrame(MainWindowOptions options)
 {
-    return (options & MainWindowOption_HasCentralFrame) ? Config::self().frameworkWidgetFactory()->createFrame(nullptr, FrameOptions() | FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs)
-                                                        : nullptr;
+    Frame *frame = nullptr;
+    if (options & MainWindowOption_HasCentralFrame) {
+        frame = Config::self().frameworkWidgetFactory()->createFrame(nullptr, FrameOptions() | FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
+        frame->setObjectName(QStringLiteral("central frame"));
+    }
+
+    return frame;
 }

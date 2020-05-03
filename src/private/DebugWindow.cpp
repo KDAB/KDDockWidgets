@@ -232,24 +232,6 @@ DebugWindow::DebugWindow(QWidget *parent)
     });
 
     button = new QPushButton(this);
-    button->setText(QStringLiteral("EnsureAnchorsBounded"));
-    layout->addWidget(button);
-    connect(button, &QPushButton::clicked, this, [] {
-        const auto layouts = DockRegistry::self()->layouts();
-        for (auto l : layouts)
-            l->ensureAnchorsBounded();
-    });
-
-    button = new QPushButton(this);
-    button->setText(QStringLiteral("RedistributeSpace"));
-    layout->addWidget(button);
-    connect(button, &QPushButton::clicked, this, [] {
-        const auto layouts = DockRegistry::self()->layouts();
-        for (auto l : layouts)
-            l->redistributeSpace();
-    });
-
-    button = new QPushButton(this);
     button->setText(QStringLiteral("resize by 1x1"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
@@ -261,24 +243,6 @@ DebugWindow::DebugWindow(QWidget *parent)
     });
 
     button = new QPushButton(this);
-    button->setText(QStringLiteral("PositionStaticAnchors()"));
-    layout->addWidget(button);
-    connect(button, &QPushButton::clicked, this, [] {
-        const auto layouts = DockRegistry::self()->layouts();
-        for (auto l : layouts)
-            l->positionStaticAnchors();
-    });
-
-    button = new QPushButton(this);
-    button->setText(QStringLiteral("UpdateAnchorFollowing"));
-    layout->addWidget(button);
-    connect(button, &QPushButton::clicked, this, [] {
-        const auto layouts = DockRegistry::self()->layouts();
-        for (auto l : layouts)
-            l->updateAnchorFollowing();
-    });
-
-    button = new QPushButton(this);
     button->setText(QStringLiteral("Raise #0 (after 3s timeout)"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [this] {
@@ -287,33 +251,6 @@ DebugWindow::DebugWindow(QWidget *parent)
             if (!docks.isEmpty())
                 docks.constFirst()->raise();
         });
-    });
-
-    button = new QPushButton(this);
-    button->setText(QStringLiteral("Convert old layout to JSON"));
-    layout->addWidget(button);
-    connect(button, &QPushButton::clicked, this, [this] {
-        const QString filename = QFileDialog::getOpenFileName(this);
-        if (filename.isEmpty())
-            return;
-
-        QFile f(filename);
-        if (!f.open(QIODevice::ReadOnly)) {
-            qWarning() << "Failed to open file" << filename;
-            return;
-        }
-
-        const QByteArray oldData = f.readAll();
-        LayoutSaver::Layout savedLayout;
-        savedLayout.fillFrom(oldData);
-        const QByteArray jsonData = savedLayout.toJson();
-        QFile f2(QStringLiteral("%1.json").arg(filename));
-        if (!f2.open(QIODevice::WriteOnly)) {
-            qWarning() << "Failed to open file for writing" << filename;
-            return;
-        }
-
-        f2.write(jsonData);
     });
 
 #ifdef Q_OS_WIN

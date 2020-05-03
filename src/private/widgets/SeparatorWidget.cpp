@@ -19,7 +19,6 @@
 */
 
 #include "SeparatorWidget_p.h"
-#include "multisplitter/MultiSplitterLayout_p.h"
 #include "multisplitter/Anchor_p.h"
 #include "Logging_p.h"
 
@@ -27,8 +26,9 @@
 #include <QStyleOption>
 
 using namespace KDDockWidgets;
+using namespace Layouting;
 
-SeparatorWidget::SeparatorWidget(KDDockWidgets::Anchor *anchor, QWidgetAdapter *parent)
+SeparatorWidget::SeparatorWidget(Layouting::Anchor *anchor, QWidget *parent)
     : Separator(anchor, parent)
 {
     setMouseTracking(true);
@@ -45,7 +45,7 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
     opt.palette = palette();
     opt.rect = rect();
     opt.state = QStyle::State_None;
-    if (isVertical())
+    if (!isVertical())
         opt.state |= QStyle::State_Horizontal;
 
     if (isEnabled())
@@ -56,16 +56,14 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
 
 void SeparatorWidget::enterEvent(QEvent *)
 {
-    qCDebug(anchors) << Q_FUNC_INFO << anchor() << isEnabled() << this;
+    qCDebug(anchors) << Q_FUNC_INFO << anchor() << this;
     if (!anchor())
         return;
 
-    if (!isStatic()) {
-        if (isVertical())
-            setCursor(Qt::SizeHorCursor);
-        else
-            setCursor(Qt::SizeVerCursor);
-    }
+    if (isVertical())
+        setCursor(Qt::SizeVerCursor);
+    else
+        setCursor(Qt::SizeHorCursor);
 }
 
 void SeparatorWidget::leaveEvent(QEvent *)

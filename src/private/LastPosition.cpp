@@ -32,6 +32,7 @@
 #include <algorithm>
 
 using namespace KDDockWidgets;
+using namespace Layouting;
 
 LastPosition::~LastPosition()
 {
@@ -46,7 +47,7 @@ void LastPosition::addPlaceholderItem(Item *placeholder)
     if (containsPlaceholder(placeholder))
         return;
 
-    if (placeholder->isInMainWindow()) {
+    if (DockRegistry::self()->itemIsInMainWindow(placeholder)) {
         // 2. If we have a MainWindow placeholder we don't need nothing else
         removePlaceholders();
     } else {
@@ -82,7 +83,7 @@ Item *LastPosition::layoutItem() const
     // In the future we might want to restore it to FloatingWindows.
 
     for (const auto &itemref : m_placeholders) {
-        if (itemref->item->isInMainWindow())
+        if (DockRegistry::self()->itemIsInMainWindow(itemref->item))
             return itemref->item;
     }
 
@@ -101,7 +102,7 @@ bool LastPosition::containsPlaceholder(Item *item) const
 void LastPosition::removePlaceholders(const MultiSplitterLayout *layout)
 {
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [layout] (const std::unique_ptr<ItemRef> &itemref) {
-                             return itemref->item->layout() == layout;
+                             return DockRegistry::self()->layoutForItem(itemref->item) == layout;
                          }), m_placeholders.end());
 }
 
@@ -110,7 +111,7 @@ void LastPosition::removeNonMainWindowPlaceholders()
     auto it = m_placeholders.begin();
     while (it != m_placeholders.end()) {
         ItemRef *itemref = it->get();
-        if (!itemref->item->isInMainWindow())
+        if (!DockRegistry::self()->itemIsInMainWindow(itemref->item))
             it = m_placeholders.erase(it);
         else
             ++it;
@@ -154,7 +155,7 @@ void LastPosition::deserialize(const LayoutSaver::LastPosition &lp)
             layout = mainWindow->multiSplitterLayout();
         }
 
-        const ItemList &items = layout->items();
+        const Item::List &items = layout->items();
         if (itemIndex < items.size()) {
             Item *item = items.at(itemIndex);
             addPlaceholderItem(item);
@@ -179,7 +180,7 @@ LayoutSaver::LastPosition LastPosition::serialize() const
         LayoutSaver::Placeholder p;
 
         Item *item = itemRef->item;
-        MultiSplitterLayout *layout = item->layout();
+        MultiSplitterLayout *layout = DockRegistry::self()->layoutForItem(item);
         const int itemIndex = layout->items().indexOf(item);
 
         auto fw = layout->multiSplitter()->floatingWindow();

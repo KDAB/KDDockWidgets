@@ -21,6 +21,7 @@
 #ifndef KD_MULTISPLITTER_SEPARATORWIDGET_P_H
 #define KD_MULTISPLITTER_SEPARATORWIDGET_P_H
 
+#include "docks_export.h"
 #include "multisplitter/Separator_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -29,11 +30,11 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class DOCKS_EXPORT SeparatorWidget : public Separator
+class DOCKS_EXPORT SeparatorWidget : public Layouting::Separator
 {
     Q_OBJECT
 public:
-    explicit SeparatorWidget(Anchor *anchor, QWidgetAdapter *parent = nullptr);
+    explicit SeparatorWidget(Layouting::Anchor *anchor, QWidget *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *) override;

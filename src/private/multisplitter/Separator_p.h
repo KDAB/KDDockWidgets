@@ -21,35 +21,31 @@
 #ifndef KD_MULTISPLITTER_SEPARATOR_P_H
 #define KD_MULTISPLITTER_SEPARATOR_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
+//#include "docks_export.h" TODO
 
+#include <QWidget>
 #include <QPointer>
 
-namespace KDDockWidgets {
+namespace Layouting {
 class Anchor;
 
-class DOCKS_EXPORT Separator : public QWidgetAdapter
+class /*DOCKS_EXPORT*/ Separator : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(bool isVertical READ isVertical CONSTANT)
-    Q_PROPERTY(bool isStatic READ isStatic CONSTANT)
-    //Q_PROPERTY(int position READ position NOTIFY positionChanged)
 public:
-    explicit Separator(Anchor *anchor, QWidgetAdapter *parent = nullptr);
+    explicit Separator(Layouting::Anchor *anchor, QWidget *hostWidget);
     bool isVertical() const;
-    bool isStatic() const;
-    int position() const;
     void move(int p);
-    const QPointer<Anchor> anchor() const { return m_anchor; }
 
 protected:
-    void onMousePress() override;
-    void onMouseMove(QPoint globalPos) override;
-    void onMouseRelease() override;
+    const QPointer<Layouting::Anchor> anchor() const { return m_anchor; }
+    void mousePressEvent(QMouseEvent *) override;
+    void mouseMoveEvent(QMouseEvent *) override;
+    void mouseReleaseEvent(QMouseEvent *) override;
 
 private:
-    const QPointer<Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.
+    const QPointer<Layouting::Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.
 };
 
 }

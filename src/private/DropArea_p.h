@@ -58,15 +58,14 @@ public:
     bool drop(QWidgetOrQuick *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     int numFrames() const;
 
-    Anchor::List nonStaticAnchors(bool includePlaceholders = false) const;
     Frame *frameContainingPos(QPoint globalPos) const;
-    Item *centralFrame() const;
+    Layouting::Item *centralFrame() const;
     DropIndicatorOverlayInterface *dropIndicatorOverlay() const { return m_dropIndicatorOverlay; }
     void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location, DockWidgetBase *relativeTo, AddingOption option = {});
 
     void debug_updateItemNamesForGammaray();
 
-    bool checkSanity(MultiSplitterLayout::AnchorSanityOption o = MultiSplitterLayout::AnchorSanity_All);
+    bool checkSanity();
     bool contains(DockWidgetBase *) const;
 
     QString affinityName() const;

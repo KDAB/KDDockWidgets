@@ -45,6 +45,8 @@
 #endif
 
 using namespace KDDockWidgets;
+using namespace Layouting;
+
 
 FrameworkWidgetFactory::~FrameworkWidgetFactory()
 {
@@ -76,7 +78,7 @@ TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
     return new TabWidgetWidget(parent);
 }
 
-Separator *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidgetAdapter *parent) const
+Layouting::Separator *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidget *parent) const
 {
     return new SeparatorWidget(anchor, parent);
 }

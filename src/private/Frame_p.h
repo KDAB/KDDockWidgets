@@ -31,6 +31,7 @@
 #include "docks_export.h"
 #include "QWidgetAdapter.h"
 #include "LayoutSaver_p.h"
+#include "multisplitter/Item_p.h"
 
 #include <QWidget>
 #include <QVector>
@@ -43,7 +44,6 @@ class TitleBar;
 class TabWidget;
 class DropArea;
 class DockWidgetBase;
-class Item;
 class FloatingWindow;
 
 /**
@@ -57,6 +57,7 @@ class FloatingWindow;
  * to a FloatingWindow.
  */
 class DOCKS_EXPORT Frame : public QWidgetAdapter
+                         , public Layouting::GuestInterface
 {
     Q_OBJECT
 
@@ -178,11 +179,8 @@ public:
     ///@brief Called when a dock widget child @p w is hidden
     void onDockWidgetHidden(DockWidgetBase *w);
 
-    ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
-    void setLayoutItem(Item *item);
-
     ///@brief returns the layout item that either contains this Frame in the layout or is a placeholder
-    Item *layoutItem() const;
+    Layouting::Item *layoutItem() const;
 
     ///@brief For tests-only. Returns the number of Frame instances in the whole application.
     static int dbg_numFrames();
@@ -204,6 +202,12 @@ public:
 
     QString affinityName() const;
 
+    ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
+    void setLayoutItem(Layouting::Item *item) override;
+
+    ///@brief Overriden from GuestInterface
+    QWidget *asWidget() override;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();
@@ -223,7 +227,7 @@ private:
     TitleBar *const m_titleBar;
     DropArea *m_dropArea = nullptr;
     const FrameOptions m_options;
-    QPointer<Item> m_layoutItem;
+    QPointer<Layouting::Item> m_layoutItem;
     bool m_beingDeleted = false;
     QMetaObject::Connection m_visibleWidgetCountChangedConnection;
 };

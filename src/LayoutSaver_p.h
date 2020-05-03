@@ -25,7 +25,6 @@
 #include "KDDockWidgets.h"
 
 #include <QRect>
-#include <QDataStream>
 #include <QDebug>
 #include <QScreen>
 #include <QApplication>
@@ -33,15 +32,15 @@
 
 #include <memory>
 
-#define ANCHOR_MAGIC_MARKER "e520c60e-cf5d-4a30-b1a7-588d2c569851"
 #define MULTISPLITTER_LAYOUT_MAGIC_MARKER "bac9948e-5f1b-4271-acc5-07f1708e2611"
 
 /**
   * Bump whenever the format changes, so we can still load old layouts.
   * version 1: Initial version
   * version 2: Introduced MainWindow::screenSize and FloatingWindow::screenSize
+  * version 3: New layouting engine
   */
-#define KDDOCKWIDGETS_SERIALIZATION_VERSION 2
+#define KDDOCKWIDGETS_SERIALIZATION_VERSION 3
 
 
 namespace KDDockWidgets {
@@ -194,54 +193,9 @@ struct LayoutSaver::Frame
     QRect geometry;
     unsigned int options;
     int currentTabIndex;
+    QString id; // for coorelation purposes
 
     LayoutSaver::DockWidget::List dockWidgets;
-};
-
-struct LayoutSaver::Item
-{
-    typedef QVector<LayoutSaver::Item> List;
-
-    bool isValid(const MultiSplitterLayout &) const;
-    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
-    void scaleSizes(const ScalingInfo &scalingInfo);
-
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
-
-    QString objectName;
-    bool isPlaceholder;
-    QRect geometry;
-    QSize minSize;
-    int indexOfLeftAnchor;
-    int indexOfTopAnchor;
-    int indexOfRightAnchor;
-    int indexOfBottomAnchor;
-    LayoutSaver::Frame frame;
-};
-
-struct LayoutSaver::Anchor
-{
-    typedef QVector<LayoutSaver::Anchor> List;
-
-    bool isValid(const LayoutSaver::MultiSplitterLayout &layout) const;
-
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
-    void scaleSizes(const ScalingInfo &);
-
-    bool isVertical() const;
-
-    QString objectName;
-    QRect geometry;
-    double positionPercentage;
-    int orientation;
-    int type;
-    int indexOfFrom;
-    int indexOfTo;
-    int indexOfFollowee;
-    QVector<int> side1Items;
-    QVector<int> side2Items;
 };
 
 struct LayoutSaver::MultiSplitterLayout
@@ -253,10 +207,8 @@ struct LayoutSaver::MultiSplitterLayout
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
-    LayoutSaver::Anchor::List anchors;
-    LayoutSaver::Item::List items;
-    QSize minSize;
-    QSize size;
+    QVariantMap layout;
+    QHash<QString, LayoutSaver::Frame> frames;
 };
 
 struct LayoutSaver::FloatingWindow
@@ -344,7 +296,6 @@ public:
 
     bool isValid() const;
 
-    bool fillFrom(const QByteArray &serialized);
     QByteArray toJson() const;
     bool fromJson(const QByteArray &jsonData);
     QVariantMap toVariantMap() const;
@@ -353,7 +304,6 @@ public:
     /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes();
 
-    friend QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame);
     static LayoutSaver::Layout* s_currentLayoutBeingRestored;
 
     LayoutSaver::MainWindow mainWindowForIndex(int index) const;
@@ -365,244 +315,6 @@ public:
     LayoutSaver::DockWidget::List allDockWidgets;
     ScreenInfo::List screenInfo;
 };
-
-inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::ScreenInfo *info)
-{
-    ds >> info->index;
-    ds >> info->geometry;
-    ds >> info->name;
-    ds >> info->devicePixelRatio;
-
-    return ds;
-}
-
-inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Placeholder *p)
-{
-    ds >> p->isFloatingWindow;
-    if (p->isFloatingWindow)
-        ds >> p->indexOfFloatingWindow;
-    else
-        ds >> p->mainWindowUniqueName;
-
-    ds >> p->itemIndex;
-
-    return ds;
-}
-
-inline  QDataStream &operator>>(QDataStream &ds, LayoutSaver::Anchor *a)
-{
-    QString marker;
-
-    ds >> marker;
-    if (marker != QLatin1String(ANCHOR_MAGIC_MARKER))
-        qWarning() << Q_FUNC_INFO << "Corrupt stream";
-
-    ds >> a->objectName;
-    ds >> a->geometry;
-    ds >> a->orientation;
-    ds >> a->type;
-    ds >> a->indexOfFrom;
-    ds >> a->indexOfTo;
-    ds >> a->indexOfFollowee;
-    ds >> a->side1Items;
-    ds >> a->side2Items;
-
-    return ds;
-}
-
-inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Frame *frame)
-{
-    int numDockWidgets;
-    frame->dockWidgets.clear();
-    frame->isNull = false;
-
-    ds >> frame->objectName;
-    ds >> frame->geometry;
-
-    if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
-        QSize sz;
-        ds >> sz; // deprecated field, just discard
-    }
-
-    ds >> frame->options;
-    ds >> frame->currentTabIndex;
-    ds >> numDockWidgets;
-
-    for (int i = 0; i < numDockWidgets; ++i) {
-        QString name;
-        ds >> name;
-        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
-        frame->dockWidgets.push_back(dw);
-    }
-
-    return ds;
-}
-
-inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Item *item)
-{
-    ds >> item->objectName;
-    ds >> item->isPlaceholder;
-    ds >> item->geometry;
-    ds >> item->minSize;
-
-    ds >> item->indexOfLeftAnchor;
-    ds >> item->indexOfTopAnchor;
-    ds >> item->indexOfRightAnchor;
-    ds >> item->indexOfBottomAnchor;
-
-    bool hasFrame;
-    ds >> hasFrame;
-    if (hasFrame) {
-        ds >> &item->frame;
-        item->frame.isNull = false;
-    } else {
-        item->frame.isNull = true;
-    }
-
-    return ds;
-}
-
-inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MultiSplitterLayout *l)
-{
-    int numItems;
-    int numAnchors;
-    QString marker;
-    ds >> marker;
-
-    if (marker != QLatin1String(MULTISPLITTER_LAYOUT_MAGIC_MARKER))
-        qWarning() << Q_FUNC_INFO << "Corrupt stream, invalid magic";
-
-    ds >> l->size;
-    ds >> l->minSize;
-    ds >> numItems;
-    ds >> numAnchors;
-
-    l->items.clear();
-    l->anchors.clear();
-
-    for (int i = 0 ; i < numItems; ++i) {
-        LayoutSaver::Item item;
-        ds >> &item;
-        l->items.push_back(item);
-    }
-
-    for (int i = 0 ; i < numAnchors; ++i) {
-        LayoutSaver::Anchor a;
-        ds >> &a;
-        l->anchors.push_back(a);
-    }
-
-    return ds;
-}
-
-inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::LastPosition *lp)
-{
-    int numPlaceholders;
-    ds >> numPlaceholders;
-
-    lp->placeholders.clear();
-    for (int i = 0 ; i < numPlaceholders; ++i) {
-        LayoutSaver::Placeholder p;
-        ds >> &p;
-        lp->placeholders.push_back(p);
-    }
-
-    ds >> lp->lastFloatingGeometry;
-    ds >> lp->tabIndex;
-    ds >> lp->wasFloating;
-
-    return ds;
-}
-
-inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::FloatingWindow *fw)
-{
-    ds >> fw->parentIndex;
-    ds >> fw->geometry;
-    if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
-        ds >> fw->screenIndex;
-        ds >> fw->screenSize;
-    }
-
-    ds >> fw->isVisible;
-    ds >> &fw->multiSplitterLayout;
-    return ds;
-}
-
-inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::MainWindow *m)
-{
-    ds >> m->uniqueName;
-    ds >> m->geometry;
-    if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
-        ds >> m->screenIndex;
-        ds >> m->screenSize;
-    }
-    ds >> m->isVisible;
-    ds >> m->options;
-    ds >> &m->multiSplitterLayout;
-    return ds;
-}
-
-inline QDataStream &operator>>(QDataStream &ds, LayoutSaver::Layout *l)
-{
-    LayoutSaver::DockWidget::s_dockWidgets.clear();
-    int numMainWindows;
-    int numFloatingWindows;
-    int numClosedDockWidgets;
-    int numAllDockWidgets;
-    int numScreenInfo;
-
-    ds >> l->serializationVersion;
-
-    ds >> numMainWindows;
-    l->mainWindows.clear();
-    for (int i = 0; i < numMainWindows; ++i) {
-        LayoutSaver::MainWindow m;
-        ds >> &m;
-        l->mainWindows.push_back(m);
-    }
-
-    ds >> numFloatingWindows;
-    l->floatingWindows.clear();
-    for (int i = 0; i < numFloatingWindows; ++i) {
-        LayoutSaver::FloatingWindow m;
-        ds >> &m;
-        l->floatingWindows.push_back(m);
-    }
-
-    ds >> numClosedDockWidgets;
-    l->closedDockWidgets.clear();
-    for (int i = 0; i < numClosedDockWidgets; ++i) {
-        QString name;
-        ds >> name;
-        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
-        l->closedDockWidgets.push_back(dw);
-    }
-
-    ds >> numAllDockWidgets;
-    l->allDockWidgets.clear();
-    for (int i = 0; i < numAllDockWidgets; ++i) {
-        QString name;
-        ds >> name;
-
-        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
-        ds >> &dw->lastPosition;
-        l->allDockWidgets.push_back(dw);
-    }
-
-
-    if (LayoutSaver::Layout::s_currentLayoutBeingRestored->serializationVersion >= 2) {
-        ds >> numScreenInfo;
-        l->screenInfo.clear();
-        l->screenInfo.reserve(numScreenInfo);
-        for (int i = 0; i < numScreenInfo; ++i) {
-            LayoutSaver::ScreenInfo info;
-            ds >> &info;
-            l->screenInfo.push_back(info);
-        }
-    }
-
-    return ds;
-}
 
 }
 

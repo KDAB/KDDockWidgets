@@ -24,6 +24,7 @@
 #include "DebugWindow_p.h"
 #include "LastPosition_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
+#include "multisplitter/MultiSplitter_p.h"
 #include "quick/QmlTypes.h"
 
 #include <QPointer>
@@ -32,6 +33,7 @@
 #include <QWindow>
 
 using namespace KDDockWidgets;
+using namespace Layouting;
 
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
@@ -68,13 +70,31 @@ bool DockRegistry::isEmpty() const
 
 void DockRegistry::checkSanityAll()
 {
-    for (auto layout :m_layouts)
+    for (auto layout : m_layouts) {
         layout->checkSanity();
+        //layout->dumpDebug();
+    }
 }
 
 bool DockRegistry::isProcessingAppQuitEvent() const
 {
     return m_isProcessingAppQuitEvent;
+}
+
+MultiSplitterLayout *DockRegistry::layoutForItem(const Item *item) const
+{
+    if (auto ms = qobject_cast<MultiSplitter*>(item->hostWidget()))
+        return ms->multiSplitterLayout();
+
+    return nullptr;
+}
+
+bool DockRegistry::itemIsInMainWindow(const Item *item) const
+{
+    if (auto layout = layoutForItem(item))
+        return layout->multiSplitter()->isInMainWindow();
+
+    return false;
 }
 
 DockRegistry *DockRegistry::self()
@@ -295,7 +315,7 @@ QVector<QWidget *> DockRegistry::topLevels(bool excludeFloatingDocks) const
     return windows;
 }
 
-void DockRegistry::clear(bool deleteStaticAnchors)
+void DockRegistry::clear()
 {
     for (auto dw : qAsConst(m_dockWidgets)) {
         dw->forceClose();
@@ -303,17 +323,17 @@ void DockRegistry::clear(bool deleteStaticAnchors)
     }
 
     for (auto mw : qAsConst(m_mainWindows))
-        mw->multiSplitterLayout()->clear(deleteStaticAnchors);
+        mw->multiSplitterLayout()->clear();
 
     qCDebug(restoring) << Q_FUNC_INFO << "; dockwidgets=" << m_dockWidgets.size()
                        << "; nestedwindows=" << m_nestedWindows.size();
 }
 
-void DockRegistry::clear(QStringList affinities, bool deleteStaticAnchors)
+void DockRegistry::clear(QStringList affinities)
 {
     if (affinities.isEmpty()) {
         // Just clear everything
-        clear(deleteStaticAnchors);
+        clear();
         return;
     }
 
@@ -329,7 +349,7 @@ void DockRegistry::clear(QStringList affinities, bool deleteStaticAnchors)
 
     for (auto mw : qAsConst(m_mainWindows)) {
         if (affinities.contains(mw->affinityName())) {
-            mw->multiSplitterLayout()->clear(deleteStaticAnchors);
+            mw->multiSplitterLayout()->clear();
         }
     }
 }

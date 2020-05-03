@@ -18,48 +18,12 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Separator_p.h"
-#include "Anchor_p.h"
-#include "Logging_p.h"
-#include "Item_p.h"
+#ifndef KD_DOCKWIDGETS_MULTISPLITTER_LOGGING_P_H
+#define KD_DOCKWIDGETS_MULTISPLITTER_LOGGING_P_H
 
-#include <QMouseEvent>
+#include <QLoggingCategory>
 
-using namespace Layouting;
+Q_DECLARE_LOGGING_CATEGORY(separators)
 
-Separator::Separator(Layouting::Anchor *anchor, QWidget *hostWidget)
-    : QWidget(hostWidget)
-    , m_anchor(anchor)
-{
-    Q_ASSERT(anchor);
-    setVisible(true);
-}
 
-bool Separator::isVertical() const
-{
-    return m_anchor->isVertical();
-}
-
-void Separator::move(int p)
-{
-    if (isVertical()) {
-        QWidget::move(x(), p);
-    } else {
-        QWidget::move(p, y());
-    }
-}
-
-void Separator::mousePressEvent(QMouseEvent *)
-{
-    m_anchor->onMousePress();
-}
-
-void Separator::mouseMoveEvent(QMouseEvent *ev)
-{
-    m_anchor->onMouseMoved(parentWidget()->mapFromGlobal(ev->globalPos()));
-}
-
-void Separator::mouseReleaseEvent(QMouseEvent *)
-{
-    m_anchor->onMouseReleased();
-}
+#endif

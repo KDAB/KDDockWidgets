@@ -47,6 +47,7 @@
  */
 
 using namespace KDDockWidgets;
+using namespace Layouting;
 
 class DockWidgetBase::Private
 {
@@ -594,7 +595,9 @@ void DockWidgetBase::Private::restoreToPreviousPosition()
         return;
     }
 
-    m_lastPosition.layoutItem()->restorePlaceholder(q, m_lastPosition.m_tabIndex);
+    MultiSplitterLayout *layout = DockRegistry::self()->layoutForItem(m_lastPosition.layoutItem());
+    Q_ASSERT(layout);
+    layout->restorePlaceholder(q, m_lastPosition.layoutItem(), m_lastPosition.m_tabIndex);
 }
 
 void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
@@ -610,7 +613,7 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 
     Frame *frame = q->frame();
 
-    if (frame && frame->parentWidget() == layoutItem->parentWidget()) {
+    if (frame && frame->parentWidget() == DockRegistry::self()->layoutForItem(layoutItem)->multiSplitter()) {
         // There's a frame already. Means the DockWidget was hidden instead of closed.
         // Nothing to do, the dock widget will simply be shown
         qCDebug(placeholder) << Q_FUNC_INFO << "Already had frame.";

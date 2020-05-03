@@ -25,6 +25,7 @@
 #include "QWidgetAdapter.h"
 #include "Frame_p.h"
 #include "KDDockWidgets.h"
+#include "multisplitter/Item_p.h"
 
 namespace KDDockWidgets {
 

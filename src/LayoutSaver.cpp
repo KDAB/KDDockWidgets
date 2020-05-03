@@ -34,7 +34,6 @@
 #include "Logging_p.h"
 #include "Frame_p.h"
 #include "LastPosition_p.h"
-#include "multisplitter/Anchor_p.h"
 #include "multisplitter/Item_p.h"
 #include "FrameworkWidgetFactory.h"
 
@@ -47,43 +46,10 @@
 #include <memory>
 
 using namespace KDDockWidgets;
+using namespace Layouting;
 
 QHash<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout* LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
-
-static QVariantMap sizeToMap(QSize sz)
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("width"), sz.width());
-    map.insert(QStringLiteral("height"), sz.height());
-
-    return map;
-}
-
-static QVariantMap rectToMap(QRect rect)
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("x"), rect.x());
-    map.insert(QStringLiteral("y"), rect.y());
-    map.insert(QStringLiteral("width"), rect.width());
-    map.insert(QStringLiteral("height"), rect.height());
-
-    return map;
-}
-
-static QSize mapToSize(const QVariantMap &map)
-{
-    return { map.value(QStringLiteral("width")).toInt(),
-             map.value(QStringLiteral("height")).toInt() };
-}
-
-static QRect mapToRect(const QVariantMap &map)
-{
-    return QRect(map.value(QStringLiteral("x")).toInt(),
-                 map.value(QStringLiteral("y")).toInt(),
-                 map.value(QStringLiteral("width")).toInt(),
-                 map.value(QStringLiteral("height")).toInt());
-}
 
 class KDDockWidgets::LayoutSaver::Private
 {
@@ -221,31 +187,6 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     if (data.isEmpty())
         return true;
 
-    struct EnsureItemsAtCorrectPlace {
-
-        EnsureItemsAtCorrectPlace(LayoutSaver *ls)
-            : layoutSaver(ls)
-        {
-        }
-
-        ~EnsureItemsAtCorrectPlace()
-        {
-            // When using RestoreOption_RelativeToMainWindow we'll have many rounding errors so the layout won't be exact.
-            // Make sure to run a relayout at the end
-            // (Using RAII to make sure it runs after Private::RAIIIsRestoring went out of scope, since "isRestoring= true" inhibits relayout
-            if (ensure) {
-                for (auto layout : DockRegistry::self()->layouts()) {
-                    if (layoutSaver->d->matchesAffinity(layout->affinityName()))
-                        layout->redistributeSpace();
-                }
-            }
-        }
-
-        bool ensure = false;
-        LayoutSaver *const layoutSaver;
-    };
-
-    EnsureItemsAtCorrectPlace ensureItemsAtCorrectPlace(this);
     Private::RAIIIsRestoring isRestoring;
 
     struct FrameCleanup {
@@ -273,7 +214,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         layout.scaleSizes();
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
-    d->m_dockRegistry->clear(d->m_affinityNames, /*deleteStaticAnchors=*/true);
+    d->m_dockRegistry->clear(d->m_affinityNames);
 
     // 1. Restore main windows
     for (const LayoutSaver::MainWindow &mw : qAsConst(layout.mainWindows)) {
@@ -326,9 +267,6 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << dw->uniqueName;
         }
     }
-
-    // our raii class will run when
-    ensureItemsAtCorrectPlace.ensure = d->m_restoreOptions & RestoreOption_RelativeToMainWindow;
 
     return true;
 }
@@ -411,20 +349,6 @@ bool LayoutSaver::Layout::isValid() const
     for (auto &m : allDockWidgets) {
         if (!m->isValid())
             return false;
-    }
-
-    return true;
-}
-
-bool LayoutSaver::Layout::fillFrom(const QByteArray &serialized)
-{
-    QDataStream ds(serialized);
-    ds >> this;
-
-    if (serializationVersion > KDDOCKWIDGETS_SERIALIZATION_VERSION) {
-        qWarning() << "Unsupported serialization version. Got=" << serializationVersion
-                   << "; expected equal or less than" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
-        return false;
     }
 
     return true;
@@ -518,70 +442,18 @@ LayoutSaver::MainWindow LayoutSaver::Layout::mainWindowForIndex(int index) const
     return mainWindows.at(index);
 }
 
-bool LayoutSaver::Item::isValid(const LayoutSaver::MultiSplitterLayout &layout) const
-{
-    if (!frame.isValid())
-        return false;
-
-    const int numAnchors = layout.anchors.size();
-
-    if (indexOfLeftAnchor < 0 || indexOfTopAnchor < 0 ||
-            indexOfBottomAnchor < 0 || indexOfRightAnchor < 0 ||
-            indexOfLeftAnchor >= numAnchors || indexOfTopAnchor >= numAnchors ||
-            indexOfBottomAnchor >= numAnchors || indexOfRightAnchor >= numAnchors) {
-        qWarning() << Q_FUNC_INFO << "Invalid anchor indexes"
-                   << indexOfLeftAnchor << indexOfTopAnchor
-                   << indexOfBottomAnchor << indexOfRightAnchor;
-        return false;
-    }
-
-    return true;
-}
-
-void LayoutSaver::Item::scaleSizes(const ScalingInfo &scalingInfo)
-{
-    scalingInfo.applyFactorsTo(geometry);
-    if (!frame.isNull)
-        frame.scaleSizes(scalingInfo);
-}
-
-QVariantMap LayoutSaver::Item::toVariantMap() const
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("objectName"), objectName);
-    map.insert(QStringLiteral("isPlaceholder"), isPlaceholder);
-    map.insert(QStringLiteral("geometry"), rectToMap(geometry));
-    map.insert(QStringLiteral("minSize"), sizeToMap(minSize));
-    map.insert(QStringLiteral("indexOfLeftAnchor"), indexOfLeftAnchor);
-    map.insert(QStringLiteral("indexOfTopAnchor"), indexOfTopAnchor);
-    map.insert(QStringLiteral("indexOfRightAnchor"), indexOfRightAnchor);
-    map.insert(QStringLiteral("indexOfBottomAnchor"), indexOfBottomAnchor);
-    if (!frame.isNull)
-        map.insert(QStringLiteral("frame"), frame.toVariantMap());
-
-    return map;
-}
-
-void LayoutSaver::Item::fromVariantMap(const QVariantMap &map)
-{
-    objectName = map.value(QStringLiteral("objectName")).toString();
-    isPlaceholder = map.value(QStringLiteral("isPlaceholder")).toBool();
-    geometry = mapToRect(map.value(QStringLiteral("geometry")).toMap());
-    minSize = mapToSize(map.value(QStringLiteral("minSize")).toMap());
-    indexOfLeftAnchor = map.value(QStringLiteral("indexOfLeftAnchor")).toInt();
-    indexOfTopAnchor = map.value(QStringLiteral("indexOfTopAnchor")).toInt();
-    indexOfRightAnchor = map.value(QStringLiteral("indexOfRightAnchor")).toInt();
-    indexOfBottomAnchor = map.value(QStringLiteral("indexOfBottomAnchor")).toInt();
-    frame.fromVariantMap(map.value(QStringLiteral("frame"), QVariantMap()).toMap());
-}
-
 bool LayoutSaver::Frame::isValid() const
 {
-    if (!isNull)
+    if (isNull)
         return true;
 
     if (!geometry.isValid()) {
         qWarning() << Q_FUNC_INFO << "Invalid geometry";
+        return false;
+    }
+
+    if (id.isEmpty()) {
+        qWarning() << Q_FUNC_INFO << "Invalid id";
         return false;
     }
 
@@ -590,9 +462,11 @@ bool LayoutSaver::Frame::isValid() const
         return false;
     }
 
-    if (currentTabIndex >= dockWidgets.size() || currentTabIndex < 0) {
-        qWarning() << Q_FUNC_INFO << "Invalid tab index" << currentTabIndex << dockWidgets.size();
-        return false;
+    if (!dockWidgets.isEmpty()) {
+        if (currentTabIndex >= dockWidgets.size() || currentTabIndex < 0) {
+            qWarning() << Q_FUNC_INFO << "Invalid tab index" << currentTabIndex << dockWidgets.size();
+            return false;
+        }
     }
 
     for (auto &dw : dockWidgets) {
@@ -611,6 +485,7 @@ void LayoutSaver::Frame::scaleSizes(const ScalingInfo &scalingInfo)
 QVariantMap LayoutSaver::Frame::toVariantMap() const
 {
     QVariantMap map;
+    map.insert(QStringLiteral("id"), id);
     map.insert(QStringLiteral("isNull"), isNull);
     map.insert(QStringLiteral("objectName"), objectName);
     map.insert(QStringLiteral("geometry"), rectToMap(geometry));
@@ -630,6 +505,7 @@ void LayoutSaver::Frame::fromVariantMap(const QVariantMap &map)
         return;
     }
 
+    id = map.value(QStringLiteral("id")).toString();
     isNull = map.value(QStringLiteral("isNull")).toBool();
     objectName = map.value(QStringLiteral("objectName")).toString();
     geometry = mapToRect(map.value(QStringLiteral("geometry")).toMap());
@@ -672,120 +548,6 @@ void LayoutSaver::DockWidget::fromVariantMap(const QVariantMap &map)
     affinityName = map.value(QStringLiteral("affinityName")).toString();
     uniqueName = map.value(QStringLiteral("uniqueName")).toString();
     lastPosition.fromVariantMap(map.value(QStringLiteral("lastPosition")).toMap());
-}
-
-bool LayoutSaver::Anchor::isValid(const LayoutSaver::MultiSplitterLayout &layout) const
-{
-    const bool isStatic = type != KDDockWidgets::Anchor::Type_None;
-    const bool isFollowing = indexOfFollowee != -1;
-    const int numAnchors = layout.anchors.size();
-
-    if (!geometry.isValid() && !isStatic && !isFollowing) {
-        qWarning() << Q_FUNC_INFO << "Invalid geometry" << geometry;
-        return false;
-    }
-
-    if (indexOfFrom < 0 || indexOfTo < 0 || indexOfFrom == indexOfTo ||
-        indexOfTo >= numAnchors || indexOfFrom >= numAnchors) {
-        qWarning() << Q_FUNC_INFO << "Invalid indexes" << indexOfFrom << indexOfTo;
-        return false;
-    }
-
-    auto &anchorTo = layout.anchors[indexOfTo];
-    auto &anchorFrom = layout.anchors[indexOfFrom];
-    if (anchorTo.orientation != anchorFrom.orientation || anchorTo.orientation == orientation) {
-        qWarning() << Q_FUNC_INFO << "Invalid orientation" << anchorTo.orientation << anchorFrom.orientation
-                   << orientation;
-        return false;
-    }
-
-    if (orientation != Qt::Vertical && orientation != Qt::Horizontal) {
-        qWarning() << Q_FUNC_INFO << "Invalid orientation" << orientation;
-        return false;
-    }
-
-    if (type != KDDockWidgets::Anchor::Type_None &&
-        type != KDDockWidgets::Anchor::Type_LeftStatic &&
-        type != KDDockWidgets::Anchor::Type_RightStatic &&
-        type != KDDockWidgets::Anchor::Type_TopStatic &&
-        type != KDDockWidgets::Anchor::Type_BottomStatic) {
-        qWarning() << Q_FUNC_INFO << "Invalid type" << type;
-        return false;
-    }
-
-    if (!isStatic && !isFollowing && (side1Items.isEmpty() || side2Items.isEmpty())) {
-        qWarning() << Q_FUNC_INFO << "Anchor should have items on both sides";
-        return false;
-    }
-
-    return true;
-}
-
-QVariantMap LayoutSaver::Anchor::toVariantMap() const
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("objectName"), objectName);
-    map.insert(QStringLiteral("geometry"), rectToMap(geometry));
-    map.insert(QStringLiteral("orientation"), orientation);
-    map.insert(QStringLiteral("type"), type);
-    map.insert(QStringLiteral("indexOfFrom"), indexOfFrom);
-    map.insert(QStringLiteral("indexOfTo"), indexOfTo);
-    map.insert(QStringLiteral("indexOfFollowee"), indexOfFollowee);
-    map.insert(QStringLiteral("positionPercentage"), positionPercentage);
-
-    QVariantList side1ItemsV;
-    QVariantList side2ItemsV;
-    side1ItemsV.reserve(side1Items.size());
-    side2ItemsV.reserve(side2Items.size());
-    for (int index : qAsConst(side1Items))
-        side1ItemsV.push_back(index);
-    for (int index : qAsConst(side2Items))
-        side2ItemsV.push_back(index);
-
-    map.insert(QStringLiteral("side1Items"), side1ItemsV);
-    map.insert(QStringLiteral("side2Items"), side2ItemsV);
-
-    return map;
-}
-
-void LayoutSaver::Anchor::fromVariantMap(const QVariantMap &map)
-{
-    objectName = map.value(QStringLiteral("objectName")).toString();
-    geometry = mapToRect(map.value(QStringLiteral("geometry")).toMap());
-
-    orientation = map.value(QStringLiteral("orientation")).toInt();
-    type = map.value(QStringLiteral("type")).toInt();
-    indexOfFrom = map.value(QStringLiteral("indexOfFrom")).toInt();
-    indexOfTo = map.value(QStringLiteral("indexOfTo")).toInt();
-    indexOfFollowee = map.value(QStringLiteral("indexOfFollowee")).toInt();
-    positionPercentage = map.value(QStringLiteral("positionPercentage")).toDouble();
-
-    side1Items.clear();
-    side2Items.clear();
-    const QVariantList side1ItemsV = map.value(QStringLiteral("side1Items")).toList();
-    const QVariantList side2ItemsV = map.value(QStringLiteral("side2Items")).toList();
-    side1Items.reserve(side1ItemsV.size());
-    side2Items.reserve(side2ItemsV.size());
-    for (const QVariant &v : side1ItemsV)
-        side1Items.push_back(v.toInt());
-    for (const QVariant &v : side2ItemsV)
-        side2Items.push_back(v.toInt());
-}
-
-void LayoutSaver::Anchor::scaleSizes(const ScalingInfo &scalingInfo)
-{
-    const QPoint pos = geometry.topLeft();
-
-    if (isVertical()) {
-        geometry.moveLeft(int(pos.x() * scalingInfo.widthFactor));
-    } else {
-        geometry.moveTop(int(pos.y() * scalingInfo.heightFactor));
-    }
-}
-
-bool LayoutSaver::Anchor::isVertical() const
-{
-    return orientation == Qt::Vertical;
 }
 
 bool LayoutSaver::FloatingWindow::isValid() const
@@ -893,51 +655,47 @@ void LayoutSaver::MainWindow::fromVariantMap(const QVariantMap &map)
 
 bool LayoutSaver::MultiSplitterLayout::isValid() const
 {
-    for (auto &item : items) {
-        if (!item.isValid(*this))
-            return false;
-    }
+    if (layout.isEmpty())
+        return false;
 
-    for (auto &anchor : anchors) {
-        if (!anchor.isValid(*this))
-            return false;
-    }
-
-    if (!size.isValid()) {
+    /*if (!size.isValid()) {
         qWarning() << Q_FUNC_INFO << "Invalid size";
         return false;
-    }
+    }*/
 
     return true;
 }
 
-void LayoutSaver::MultiSplitterLayout::scaleSizes(const ScalingInfo &scalingInfo)
+void LayoutSaver::MultiSplitterLayout::scaleSizes(const ScalingInfo &)
 {
-    scalingInfo.applyFactorsTo(/*by-ref*/size);
-    for (LayoutSaver::Anchor &anchor : anchors)
-        anchor.scaleSizes(scalingInfo);
-    for (LayoutSaver::Item &item : items)
-        item.scaleSizes(scalingInfo);
+    // scalingInfo.applyFactorsTo(/*by-ref*/size);
+    //for (LayoutSaver::Item &item : items) TODO
+    //    item.scaleSizes(scalingInfo);
 }
 
 QVariantMap LayoutSaver::MultiSplitterLayout::toVariantMap() const
 {
-    QVariantMap map;
+    QVariantMap result;
+    result.insert(QStringLiteral("layout"), layout);
 
-    map.insert(QStringLiteral("anchors"), toVariantList<LayoutSaver::Anchor>(anchors));
-    map.insert(QStringLiteral("items"), toVariantList<LayoutSaver::Item>(items));
-    map.insert(QStringLiteral("minSize"), sizeToMap(minSize));
-    map.insert(QStringLiteral("size"), sizeToMap(size));
+    QVariantMap framesV;
+    for (auto &frame : frames)
+        framesV.insert(frame.id, frame.toVariantMap());
 
-    return map;
+    result.insert(QStringLiteral("frames"), framesV);
+    return result;
 }
 
 void LayoutSaver::MultiSplitterLayout::fromVariantMap(const QVariantMap &map)
 {
-    anchors = fromVariantList<LayoutSaver::Anchor>(map.value(QStringLiteral("anchors")).toList());
-    items = fromVariantList<LayoutSaver::Item>(map.value(QStringLiteral("items")).toList());
-    minSize = mapToSize(map.value(QStringLiteral("minSize")).toMap());
-    size = mapToSize(map.value(QStringLiteral("size")).toMap());
+    layout = map.value(QStringLiteral("layout")).toMap();
+    const QVariantMap framesV = map.value(QStringLiteral("frames")).toMap();
+    frames.clear();
+    for (const QVariant &frameV : framesV) {
+        LayoutSaver::Frame frame;
+        frame.fromVariantMap(frameV.toMap());
+        frames.insert(frame.id, frame);
+    }
 }
 
 void LayoutSaver::LastPosition::scaleSizes(const ScalingInfo &scalingInfo)

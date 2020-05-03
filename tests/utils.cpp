@@ -97,7 +97,6 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWid
         dock->activateWindow();
         Q_ASSERT(dock->window());
         if (QTest::qWaitForWindowActive(dock->window()->windowHandle(), 200)) {
-            qDebug() << dock->window();
             return dock;
         }
         return nullptr;

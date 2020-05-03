@@ -102,12 +102,12 @@ public:
      * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors.
      * This is called before restoring a layout.
      */
-    void clear(bool deleteStaticAnchors = false);
+    void clear();
 
     /**
      * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Anchors with the specified affinities.
      */
-    void clear(QStringList affinities, bool deleteStaticAnchors = false);
+    void clear(QStringList affinities);
 
     /**
      * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.
@@ -136,6 +136,12 @@ public:
      * Used internally to know if we should let Qt close a NonClosable dock widget at shutdown time.
      */
     bool isProcessingAppQuitEvent() const;
+
+    // TODO: docs
+    MultiSplitterLayout* layoutForItem(const Layouting::Item *) const;
+
+    // TODO: docs
+    bool itemIsInMainWindow(const Layouting::Item *) const;
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;

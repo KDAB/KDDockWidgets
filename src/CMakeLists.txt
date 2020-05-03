@@ -1,11 +1,7 @@
 
 cmake_policy(SET CMP0043 NEW)
 
-add_definitions(-DQT_NO_CAST_TO_ASCII
-                -DQT_NO_CAST_FROM_ASCII
-                -DQT_NO_URL_CAST_FROM_STRING
-                -DQT_NO_CAST_FROM_BYTEARRAY
-                -DQT_NO_SIGNALS_SLOTS_KEYWORDS
+add_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS
                 -DQT_USE_QSTRINGBUILDER
                 -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
                 -DQT_STRICT_ITERATORS
@@ -25,13 +21,9 @@ set(DOCKSLIBS_SRCS
     private/ObjectViewer.cpp
     private/DropIndicatorOverlayInterface.cpp
     private/indicators/ClassicIndicators.cpp
-    private/indicators/AnimatedIndicators.cpp
+    # private/indicators/AnimatedIndicators.cpp
     private/DropArea.cpp
-    private/multisplitter/Item.cpp
     private/multisplitter/MultiSplitter.cpp
-    private/multisplitter/Anchor.cpp
-    private/multisplitter/AnchorGroup.cpp
-    private/multisplitter/Separator.cpp
     private/multisplitter/MultiSplitterLayout.cpp
     private/TabWidget.cpp
     private/FloatingWindow.cpp
@@ -72,7 +64,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/QWidgetAdapter_widgets_p.h
     private/widgets/TitleBarWidget_p.h
     private/widgets/SeparatorWidget_p.h
-        private/widgets/FloatingWindowWidget_p.h
+    private/widgets/FloatingWindowWidget_p.h
     private/widgets/FrameWidget_p.h
     private/widgets/TabBarWidget_p.h
     private/widgets/TabWidgetWidget_p.h
@@ -119,6 +111,9 @@ else()
     set(IS_CLANG_BUILD FALSE)
 endif()
 
+
+add_subdirectory(private/multisplitter)
+
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 
 add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES} ${RESOURCES_QUICK})
@@ -135,7 +130,13 @@ target_include_directories(kddockwidgets
         ${CMAKE_CURRENT_SOURCE_DIR}/private
 )
 
-target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY)
+target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY
+                                                 QT_NO_CAST_TO_ASCII
+                                                 QT_NO_CAST_FROM_ASCII
+                                                 QT_NO_URL_CAST_FROM_STRING
+                                                 QT_NO_CAST_FROM_BYTEARRAY
+)
+
 if (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
     target_compile_options(kddockwidgets PRIVATE -Wshadow -Wconversion -fvisibility=hidden)
 
@@ -147,13 +148,13 @@ endif()
 if (OPTION_QTQUICK)
     target_link_libraries(kddockwidgets Qt5::Widgets Qt5::Quick)
 else()
-    target_link_libraries(kddockwidgets Qt5::Widgets)
+    target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets PRIVATE kddockwidgets_layouting)
 endif()
 
 
 if (NOT WIN32 AND NOT APPLE)
     find_package(Qt5X11Extras)
-    target_link_libraries(kddockwidgets Qt5::X11Extras)
+    target_link_libraries(kddockwidgets PUBLIC Qt5::X11Extras)
 endif()
 
 install (TARGETS kddockwidgets
@@ -163,6 +164,7 @@ install (TARGETS kddockwidgets
          ARCHIVE DESTINATION lib)
 install (FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
 install (FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION include/kddockwidgets/private)
+install (FILES private/multisplitter/Item_p.h DESTINATION include/kddockwidgets/multisplitter)
 install (FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
 
 include(CMakePackageConfigHelpers)
