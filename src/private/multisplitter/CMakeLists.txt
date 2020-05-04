@@ -1,6 +1,4 @@
 set(MULTISPLITTER_SRCS
-    Anchor.cpp
-    Anchor_p.h
     Item.cpp
     Item_p.h
     Logging.cpp

@@ -78,9 +78,9 @@ TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
     return new TabWidgetWidget(parent);
 }
 
-Layouting::Separator *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidget *parent) const
+Layouting::Separator *DefaultWidgetFactory::createSeparator(QWidget *parent) const
 {
-    return new SeparatorWidget(anchor, parent);
+    return new SeparatorWidget(parent);
 }
 
 FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent) const
@@ -124,9 +124,9 @@ TabWidget *DefaultWidgetFactory::createTabWidget(Frame *frame) const
     return new TabWidgetQuick(frame);
 }
 
-Separator *DefaultWidgetFactory::createSeparator(Anchor *anchor, QWidgetAdapter *parent) const
+Separator *DefaultWidgetFactory::createSeparator(QWidgetAdapter *parent) const
 {
-    return new SeparatorQuick(anchor, parent);
+    return new SeparatorQuick(parent);
 }
 
 FloatingWindow *DefaultWidgetFactory::createFloatingWindow(QWidgetOrQuick *parent) const

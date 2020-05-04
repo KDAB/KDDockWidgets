@@ -21,31 +21,64 @@
 #ifndef KD_MULTISPLITTER_SEPARATOR_P_H
 #define KD_MULTISPLITTER_SEPARATOR_P_H
 
-//#include "docks_export.h" TODO
+
+#include "Item_p.h"
 
 #include <QWidget>
 #include <QPointer>
 
-namespace Layouting {
-class Anchor;
+QT_BEGIN_NAMESPACE
+class QRubberBand;
+QT_END_NAMESPACE
 
-class /*DOCKS_EXPORT*/ Separator : public QWidget
+namespace Layouting {
+
+typedef Separator* (*SeparatorFactoryFunc)(QWidget *parent);
+
+class Separator : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(bool isVertical READ isVertical CONSTANT)
 public:
-    explicit Separator(Layouting::Anchor *anchor, QWidget *hostWidget);
+    typedef QVector<Separator*> List;
+
     bool isVertical() const;
     void move(int p);
+    Qt::Orientation orientation() const;
+    bool lazyResizeEnabled() const;
+    void setGeometry(int pos, int pos2, int length);
+    void setGeometry(QRect r);
+    int position() const;
+    QWidget *hostWidget() const;
+
+    void init(Layouting::ItemContainer*, Qt::Orientation orientation, SeparatorOptions options);
+
+    ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other work while we're not in the final size
+    static bool isResizing();
+    static void setSeparatorFactoryFunc(SeparatorFactoryFunc);
+    static Separator* createSeparator(QWidget *host);
 
 protected:
-    const QPointer<Layouting::Anchor> anchor() const { return m_anchor; }
+    explicit Separator(QWidget *hostWidget);
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *) override;
     void mouseReleaseEvent(QMouseEvent *) override;
-
 private:
-    const QPointer<Layouting::Anchor> m_anchor; // QPointer so we don't dereference invalid point in paintEvent() when Anchor is deleted.
+    static bool s_isResizing;
+    static Separator* s_separatorBeingDragged;
+    void onMouseReleased();
+    int position(QPoint p) const;
+    void setLazyPosition(int);
+    void setPosition(int p);
+    bool isBeingDragged() const;
+    Qt::Orientation m_orientation;
+    QRect m_geometry;
+    int m_lazyPosition = 0;
+    SeparatorOptions m_options;
+    QRubberBand *m_lazyResizeRubberBand = nullptr;
+    ItemContainer *m_parentContainer = nullptr;
+    // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
+    Layouting::Side m_lastMoveDirection = Side1;
 };
 
 }

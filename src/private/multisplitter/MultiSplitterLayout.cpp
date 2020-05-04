@@ -247,12 +247,7 @@ int MultiSplitterLayout::placeholderCount() const
     return count() - visibleCount();
 }
 
-void MultiSplitterLayout::setAnchorBeingDragged(Anchor *anchor)
-{
-    m_anchorBeingDragged = anchor;
-}
-
-Anchor::List MultiSplitterLayout::anchors() const
+Separator::List MultiSplitterLayout::separators() const
 {
     return m_rootItem->separators_recursive();
 }

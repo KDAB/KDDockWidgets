@@ -1128,7 +1128,7 @@ void TestDocks::tst_restoreEmpty()
     QVERIFY(saver.saveToFile(QStringLiteral("layout.json")));
     saver.restoreFromFile(QStringLiteral("layout.json"));
     QVERIFY(m->multiSplitterLayout()->checkSanity());
-    QCOMPARE(layout->anchors().size(), 0);
+    QCOMPARE(layout->separators().size(), 0);
     QCOMPARE(layout->count(), 0);
     QCOMPARE(m->size(), oldSize);
     QVERIFY(layout->checkSanity());
@@ -2749,11 +2749,11 @@ void TestDocks::tst_placeholdersAreRemovedProperly()
     dock1->setFloating(true);
     QVERIFY(item->isPlaceholder());
 
-    QCOMPARE(layout->anchors().size(), 0);
+    QCOMPARE(layout->separators().size(), 0);
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 1);
     layout->removeItem(item);
-    QCOMPARE(layout->anchors().size(), 0);
+    QCOMPARE(layout->separators().size(), 0);
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
 
@@ -2762,7 +2762,7 @@ void TestDocks::tst_placeholdersAreRemovedProperly()
     dock1->setFloating(true);
     QPointer<QWidget> window1 = dock1->window();
     delete dock1;
-    QCOMPARE(layout->anchors().size(), 0);
+    QCOMPARE(layout->separators().size(), 0);
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
     layout->checkSanity();
@@ -3234,10 +3234,10 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         m->addDockWidget(dock3, Location_OnTop);
         m->addDockWidget(dock2, Location_OnTop);
         m->addDockWidget(dock1, Location_OnTop);
-        QCOMPARE(layout->anchors().size(), 2);
+        QCOMPARE(layout->separators().size(), 2);
         dock2->close();
         Testing::waitForResize(dock3);
-        QCOMPARE(layout->anchors().size(), 1);
+        QCOMPARE(layout->separators().size(), 1);
         layout->checkSanity();
 
         // Cleanup:
@@ -3263,10 +3263,10 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         Item *item3 = layout->itemForFrame(dock3->frame());
         Item *item4 = layout->itemForFrame(dock4->frame());
 
-        const auto separators = layout->anchors();
+        const auto separators = layout->separators();
         QCOMPARE(separators.size(), 3);
 
-        Anchor *anchor1 = separators[0];
+        Separator *anchor1 = separators[0];
         int boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
         int expectedBoundToTheRight = layout->size().width() -
                                       3*Item::separatorThickness() -
@@ -4870,7 +4870,7 @@ void TestDocks::tst_resizeWindow2()
     m->addDockWidget(dock2, Location_OnBottom);
 
     auto layout = m->multiSplitterLayout();
-    Anchor *anchor = layout->anchors().at(0);
+    Separator *anchor = layout->separators().at(0);
     const int oldPosY = anchor->position();
     m->resize(m->width() + 10, m->height());
     QCOMPARE(anchor->position(), oldPosY);

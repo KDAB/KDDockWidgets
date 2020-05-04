@@ -65,8 +65,7 @@ public:
 class MySeparator : public KDDockWidgets::SeparatorWidget
 {
 public:
-    explicit MySeparator(KDDockWidgets::Anchor *anchor,
-                         KDDockWidgets::QWidgetAdapter *parent = nullptr)
+    explicit MySeparator(KDDockWidgets::QWidgetAdapter *parent = nullptr)
         : KDDockWidgets::SeparatorWidget(anchor, parent)
     {
     }
@@ -89,8 +88,7 @@ KDDockWidgets::TitleBar * CustomWidgetFactory::createTitleBar(KDDockWidgets::Flo
     return new MyTitleBar(fw);
 }
 /*
-KDDockWidgets::Separator * CustomWidgetFactory::createSeparator(KDDockWidgets::Anchor *anchor,
-                                                                KDDockWidgets::QWidgetAdapter *parent) const
+KDDockWidgets::Separator * CustomWidgetFactory::createSeparator(KDDockWidgets::QWidgetAdapter *parent) const
 {
     return new MySeparator(anchor, parent);
 }

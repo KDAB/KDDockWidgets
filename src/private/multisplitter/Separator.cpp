@@ -19,25 +19,28 @@
 */
 
 #include "Separator_p.h"
-#include "Anchor_p.h"
 #include "Logging_p.h"
 #include "Item_p.h"
 
 #include <QMouseEvent>
+#include <QRubberBand>
+#include <QApplication>
 
 using namespace Layouting;
 
-Separator::Separator(Layouting::Anchor *anchor, QWidget *hostWidget)
+bool Separator::s_isResizing = false;
+Separator* Separator::s_separatorBeingDragged = nullptr;
+
+static SeparatorFactoryFunc s_separatorFactoryFunc = nullptr;
+
+Separator::Separator(QWidget *hostWidget)
     : QWidget(hostWidget)
-    , m_anchor(anchor)
 {
-    Q_ASSERT(anchor);
-    setVisible(true);
 }
 
 bool Separator::isVertical() const
 {
-    return m_anchor->isVertical();
+    return m_orientation == Qt::Vertical;
 }
 
 void Separator::move(int p)
@@ -49,17 +52,180 @@ void Separator::move(int p)
     }
 }
 
+Qt::Orientation Separator::orientation() const
+{
+    return m_orientation;
+}
+
 void Separator::mousePressEvent(QMouseEvent *)
 {
-    m_anchor->onMousePress();
+    s_separatorBeingDragged = this;
+
+    qCDebug(separators) << "Drag started";
+
+    if (lazyResizeEnabled()) {
+        setLazyPosition(position());
+        m_lazyResizeRubberBand->show();
+    }
 }
 
 void Separator::mouseMoveEvent(QMouseEvent *ev)
 {
-    m_anchor->onMouseMoved(parentWidget()->mapFromGlobal(ev->globalPos()));
+    if (!isBeingDragged())
+        return;
+
+    if (!(qApp->mouseButtons() & Qt::LeftButton)) {
+        qCDebug(separators) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+        onMouseReleased();
+        return;
+    }
+
+#ifdef Q_OS_WIN
+    // Try harder, Qt can be wrong, if mixed with MFC
+    const bool mouseButtonIsReallyDown = (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
+    if (!mouseButtonIsReallyDown) {
+        qCDebug(mouseevents) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+        onMouseReleased();
+        return;
+    }
+#endif
+
+    const int positionToGoTo = position(ev->pos());
+    const int minPos = m_parentContainer->minPosForSeparator_global(this);
+    const int maxPos = m_parentContainer->maxPosForSeparator_global(this);
+
+    if (positionToGoTo < minPos || positionToGoTo > maxPos)
+        return;
+
+    m_lastMoveDirection = positionToGoTo < position() ? Side1
+                                                      : (positionToGoTo > position() ? Side2
+                                                                                     : Side2); // Last case shouldn't happen though.
+
+    if (/*m_lazyResize*/ false) // TODO
+        setLazyPosition(positionToGoTo);
+    else
+        setPosition(positionToGoTo);
 }
 
 void Separator::mouseReleaseEvent(QMouseEvent *)
 {
-    m_anchor->onMouseReleased();
+    onMouseReleased();
+}
+
+void Separator::onMouseReleased()
+{
+    if (m_lazyResizeRubberBand) {
+        m_lazyResizeRubberBand->hide();
+        setPosition(m_lazyPosition);
+    }
+
+    s_separatorBeingDragged = nullptr;
+}
+
+bool Separator::lazyResizeEnabled() const
+{
+    return m_options & SeparatorOption::LazyResize;
+}
+
+void Separator::setGeometry(QRect r)
+{
+    if (r != m_geometry) {
+        m_geometry = r;
+        QWidget::setGeometry(r);
+        setVisible(true);
+    }
+}
+
+int Separator::position() const
+{
+    const QPoint topLeft = m_geometry.topLeft();
+    return isVertical() ? topLeft.y() : topLeft.x();
+}
+
+int Separator::position(QPoint p) const
+{
+    return isVertical() ? p.y() : p.x();
+}
+
+QWidget *Separator::hostWidget() const
+{
+    return parentWidget();
+}
+
+void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation, SeparatorOptions options)
+{
+    m_parentContainer = parentContainer;
+    m_orientation = orientation;
+    m_options = options;
+    m_lazyResizeRubberBand = (options & SeparatorOption::LazyResize) ? new QRubberBand(QRubberBand::Line, hostWidget())
+                                                                     : nullptr;
+    setVisible(true);
+}
+
+void Separator::setGeometry(int pos, int pos2, int length)
+{
+    QRect newGeo = m_geometry;
+    if (isVertical()) {
+        // The separator itself is horizontal
+        newGeo.setSize(QSize(length, Item::separatorThickness()));
+        newGeo.moveTo(pos2, pos);
+    } else {
+        // The separator itself is vertical
+        newGeo.setSize(QSize(Item::separatorThickness(), length));
+        newGeo.moveTo(pos, pos2);
+    }
+
+    setGeometry(newGeo);
+}
+
+bool Separator::isResizing()
+{
+    return s_isResizing;
+}
+
+void Separator::setSeparatorFactoryFunc(SeparatorFactoryFunc func)
+{
+    s_separatorFactoryFunc = func;
+}
+
+Separator* Separator::createSeparator(QWidget *host)
+{
+    if (s_separatorFactoryFunc)
+        return s_separatorFactoryFunc(host);
+
+    return new Separator(host);
+}
+
+void Separator::setLazyPosition(int pos)
+{
+    if (m_lazyPosition != pos) {
+        m_lazyPosition = pos;
+
+        QRect geo = geometry();
+        if (isVertical()) {
+            geo.moveLeft(pos);
+        } else {
+            geo.moveTop(pos);
+        }
+
+        m_lazyResizeRubberBand->setGeometry(geo);
+    }
+}
+
+bool Separator::isBeingDragged() const
+{
+    return s_separatorBeingDragged == this;
+}
+
+void Separator::setPosition(int p)
+{
+    QRect geo = m_geometry;
+    QPoint pt = geo.topLeft();
+    if (isVertical())
+        pt.setY(p);
+    else
+        pt.setX(p);
+
+    geo.moveTopLeft(pt);
+    setGeometry(geo);
 }

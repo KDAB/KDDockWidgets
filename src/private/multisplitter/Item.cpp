@@ -19,7 +19,7 @@
 */
 
 #include "Item_p.h"
-#include "Anchor_p.h"
+#include "Separator_p.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -859,7 +859,7 @@ bool ItemContainer::checkSanity()
     const int pos2 = Layouting::pos(mapToRoot(QPoint(0, 0)), oppositeOrientation(m_orientation));
 
     for (int i = 0; i < m_separators.size(); ++i) {
-        Anchor *separator = m_separators.at(i);
+        Separator *separator = m_separators.at(i);
         Item *item = visibleChildren.at(i);
         const int expectedSeparatorPos = mapToRoot(item->m_sizingInfo.edge(m_orientation) + 1, m_orientation);
 
@@ -2024,10 +2024,10 @@ QSize ItemContainer::missingSizeFor(Item *item, Qt::Orientation o) const
 {
     QSize missing = {0, 0};
     const QSize available = availableSize();
-    const int anchorWasteW = (o == Qt::Vertical || !hasVisibleChildren()) ? 0 : Item::separatorThickness();
-    const int anchorWasteH = (o == Qt::Vertical && hasVisibleChildren()) ? Item::separatorThickness() : 0;
-    missing.setWidth(qMax(item->minSize().width() - available.width() + anchorWasteW, 0));
-    missing.setHeight(qMax(item->minSize().height() - available.height() + anchorWasteH, 0));
+    const int separatorWasteW = (o == Qt::Vertical || !hasVisibleChildren()) ? 0 : Item::separatorThickness();
+    const int separatorWasteH = (o == Qt::Vertical && hasVisibleChildren()) ? Item::separatorThickness() : 0;
+    missing.setWidth(qMax(item->minSize().width() - available.width() + separatorWasteW, 0));
+    missing.setHeight(qMax(item->minSize().height() - available.height() + separatorWasteH, 0));
 
     return missing;
 }
@@ -2318,20 +2318,21 @@ void ItemContainer::updateSeparators()
 
     // Instead of just creating N missing ones at the end of the list, let's minimize separators
     // having their position changed, to minimize flicker
-    Anchor::List newSeparators;
+    Separator::List newSeparators;
     newSeparators.reserve(numSeparators);
 
     const int pos2 = isVertical() ? mapToRoot(QPoint(0, 0)).x()
                                   : mapToRoot(QPoint(0, 0)).y();
 
     for (int position : positions) {
-        Anchor *separator = separatorAt(position);
+        Separator *separator = separatorAt(position);
         if (separator) {
             // Already existing, reuse
             newSeparators.push_back(separator);
             m_separators.removeOne(separator);
         } else {
-            separator = new Anchor(this, m_orientation, Anchor::Option::None, hostWidget());
+            separator = Separator::createSeparator(hostWidget());
+            separator->init(this, m_orientation, SeparatorOption::None);
             newSeparators.push_back(separator);
         }
         separator->setGeometry(position, pos2, oppositeLength());
@@ -2373,9 +2374,9 @@ void ItemContainer::updateSeparators_recursive()
     }
 }
 
-Anchor *ItemContainer::separatorAt(int p) const
+Separator *ItemContainer::separatorAt(int p) const
 {
-    for (Anchor *separator : m_separators) {
+    for (Separator *separator : m_separators) {
         if (separator->position() == p)
             return separator;
     }
@@ -2393,24 +2394,24 @@ bool ItemContainer::isHorizontal() const
     return m_orientation == Qt::Horizontal;
 }
 
-int ItemContainer::indexOf(Anchor *separator) const
+int ItemContainer::indexOf(Separator *separator) const
 {
     return m_separators.indexOf(separator);
 }
 
-int ItemContainer::minPosForSeparator(Anchor *separator) const
+int ItemContainer::minPosForSeparator(Separator *separator) const
 {
     const int globalMin = minPosForSeparator_global(separator);
     return mapFromRoot(globalMin, m_orientation);
 }
 
-int ItemContainer::maxPosForSeparator(Anchor *separator) const
+int ItemContainer::maxPosForSeparator(Separator *separator) const
 {
     const int globalMax = maxPosForSeparator_global(separator);
     return mapFromRoot(globalMax, m_orientation);
 }
 
-int ItemContainer::minPosForSeparator_global(Anchor *separator) const
+int ItemContainer::minPosForSeparator_global(Separator *separator) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
@@ -2423,7 +2424,7 @@ int ItemContainer::minPosForSeparator_global(Anchor *separator) const
     return separator->position() - available1;
 }
 
-int ItemContainer::maxPosForSeparator_global(Anchor *separator) const
+int ItemContainer::maxPosForSeparator_global(Separator *separator) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
@@ -2475,9 +2476,9 @@ void ItemContainer::fillFromVariantMap(const QVariantMap &map,
     }
 }
 
-QVector<Layouting::Anchor*> ItemContainer::separators_recursive() const
+QVector<Separator *> ItemContainer::separators_recursive() const
 {
-    Layouting::Anchor::List separators = m_separators;
+    Layouting::Separator::List separators = m_separators;
 
     for (Item *item : m_children) {
         if (auto c = item->asContainer())

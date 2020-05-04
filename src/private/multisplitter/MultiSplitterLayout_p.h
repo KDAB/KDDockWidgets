@@ -33,7 +33,7 @@
 #define KD_MULTISPLITTER_LAYOUT_P_H
 
 #include "../Frame_p.h"
-#include "Anchor_p.h"
+#include "Separator_p.h"
 #include "docks_export.h"
 #include "KDDockWidgets.h"
 #include "Item_p.h"
@@ -55,9 +55,6 @@ class DebugWindow;
  *
  * It supports adding a widget to the left/top/bottom/right of the whole MultiSplitter or adding
  * relative to a single widget.
- *
- * A MultiSplitter is simply a list of Anchors, each one of them handling the resizing of widgets.
- * See the documentation for Anchor.
  */
 class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject // clazy:exclude=ctor-missing-parent-argument
 {
@@ -121,7 +118,7 @@ public:
     Layouting::Item *itemAt(QPoint p) const;
 
     /**
-     * @brief Removes all Items, Anchors and Frames docked in this layout.
+     * @brief Removes all Items, Separators and Frames docked in this layout.
      * DockWidgets are closed but not deleted.
      */
     void clear();
@@ -167,7 +164,7 @@ public:
     /**
      * Called by the indicators, so they draw the drop rubber band at the correct place.
      * The rect for the rubberband when dropping a widget at the specified location.
-     * Excludes the Anchor thickness, result is actually smaller than what needed. In other words,
+     * Excludes the Separator thickness, result is actually smaller than what needed. In other words,
      * the result will be exactly the same as the geometry the widget will get.
      */
     QRect rectForDrop(const QWidgetOrQuick *widget, KDDockWidgets::Location location, const Layouting::Item *relativeTo) const;
@@ -175,12 +172,8 @@ public:
     bool deserialize(const LayoutSaver::MultiSplitterLayout &);
     LayoutSaver::MultiSplitterLayout serialize() const;
 
-    void setAnchorBeingDragged(Layouting::Anchor *);
-    Layouting::Anchor *anchorBeingDragged() const { return m_anchorBeingDragged; }
-    bool anchorIsBeingDragged() const { return m_anchorBeingDragged != nullptr; }
-
     ///@brief returns list of separators
-    Layouting::Anchor::List anchors() const;
+    Layouting::Separator::List separators() const;
 
     /**
      * @brief Updates the min size of this layout.
@@ -298,7 +291,7 @@ Q_SIGNALS:
     void minimumSizeChanged(QSize);
 
 public:
-    Layouting::Anchor::List anchors(Qt::Orientation, bool includeStatic = false, bool includePlaceholders = true) const;
+    Layouting::Separator::List separators(Qt::Orientation, bool includeStatic = false, bool includePlaceholders = true) const;
 private:
     friend class TestDocks;
     friend class KDDockWidgets::Debug::DebugWindow;
@@ -341,7 +334,6 @@ private:
     bool m_restoringPlaceholder = false;
     bool m_resizing = false;
 
-    QPointer<Layouting::Anchor> m_anchorBeingDragged;
     Layouting::ItemContainer *m_rootItem = nullptr;
 };
 

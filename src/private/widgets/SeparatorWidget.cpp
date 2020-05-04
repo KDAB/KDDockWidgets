@@ -19,7 +19,6 @@
 */
 
 #include "SeparatorWidget_p.h"
-#include "multisplitter/Anchor_p.h"
 #include "Logging_p.h"
 
 #include <QPainter>
@@ -28,17 +27,14 @@
 using namespace KDDockWidgets;
 using namespace Layouting;
 
-SeparatorWidget::SeparatorWidget(Layouting::Anchor *anchor, QWidget *parent)
-    : Separator(anchor, parent)
+SeparatorWidget::SeparatorWidget(QWidget *parent)
+    : Separator(parent)
 {
     setMouseTracking(true);
 }
 
 void SeparatorWidget::paintEvent(QPaintEvent *)
 {
-    if (!anchor())
-        return;
-
     QPainter p(this);
 
     QStyleOption opt;
@@ -56,10 +52,7 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
 
 void SeparatorWidget::enterEvent(QEvent *)
 {
-    qCDebug(anchors) << Q_FUNC_INFO << anchor() << this;
-    if (!anchor())
-        return;
-
+    qCDebug(anchors) << Q_FUNC_INFO << this;
     if (isVertical())
         setCursor(Qt::SizeVerCursor);
     else

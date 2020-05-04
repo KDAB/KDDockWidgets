@@ -34,7 +34,7 @@ class DOCKS_EXPORT SeparatorWidget : public Layouting::Separator
 {
     Q_OBJECT
 public:
-    explicit SeparatorWidget(Layouting::Anchor *anchor, QWidget *parent = nullptr);
+    explicit SeparatorWidget(QWidget *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *) override;

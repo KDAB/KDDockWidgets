@@ -39,10 +39,7 @@ namespace Layouting {
 
 class ItemContainer;
 class Item;
-class Anchor;
 class Separator;
-
-typedef Separator* (*SeparatorFactoryFunc)(Layouting::Anchor*, QWidget *parent);
 
 enum Location {
     Location_None,
@@ -101,6 +98,12 @@ enum Side {
 enum class GrowthStrategy {
     BothSidesEqually
 };
+
+enum class SeparatorOption {
+    None = 0,
+    LazyResize
+};
+Q_DECLARE_FLAGS(SeparatorOptions, SeparatorOption);
 
 inline Qt::Orientation oppositeOrientation(Qt::Orientation o) {
     return o == Qt::Vertical ? Qt::Horizontal
@@ -539,11 +542,11 @@ public:
     bool isVertical() const;
     bool isHorizontal() const;
 
-    int indexOf(Anchor *) const;
-    int minPosForSeparator(Anchor *) const;
-    int maxPosForSeparator(Anchor *) const;
-    int minPosForSeparator_global(Anchor *) const;
-    int maxPosForSeparator_global(Anchor *) const;
+    int indexOf(Separator *) const;
+    int minPosForSeparator(Separator *) const;
+    int maxPosForSeparator(Separator *) const;
+    int minPosForSeparator_global(Separator *) const;
+    int maxPosForSeparator_global(Separator *) const;
 
     void deleteSeparators_recursive();
     void updateSeparators_recursive();
@@ -559,7 +562,7 @@ public:
     Item::List m_children;
     bool m_isResizing = false;
     bool m_blockUpdatePercentages = false;
-    QVector<Layouting::Anchor*> separators_recursive() const;
+    QVector<Layouting::Separator*> separators_recursive() const;
     Qt::Orientation m_orientation = Qt::Vertical;
 private:
     void updateWidgets_recursive();
@@ -567,10 +570,10 @@ private:
     QVector<int> requiredSeparatorPositions() const;
     void updateSeparators();
     void deleteSeparators();
-    Anchor* separatorAt(int p) const;
+    Separator* separatorAt(int p) const;
     QVector<double> childPercentages() const;
     mutable bool m_checkSanityScheduled = false;
-    QVector<Layouting::Anchor*> m_separators;
+    QVector<Layouting::Separator*> m_separators;
     bool m_convertingItemToContainer = false;
 };
 
