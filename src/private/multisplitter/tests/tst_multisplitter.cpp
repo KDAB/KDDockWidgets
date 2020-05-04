@@ -28,7 +28,7 @@
 
 using namespace Layouting;
 
-static int st = Item::separatorThickness();
+static int st = Item::separatorThickness;
 
 static QtMessageHandler s_original = nullptr;
 static QString s_expectedWarning;
@@ -1026,8 +1026,8 @@ void TestMultiSplitter::tst_separatorMinMax()
     QCOMPARE(root->minPosForSeparator(separator), 200);
     QCOMPARE(root->minPosForSeparator_global(separator), 200); // same, since there's no nesting
 
-    QCOMPARE(root->maxPosForSeparator(separator), root->width() - Item::separatorThickness() - 200);
-    QCOMPARE(root->maxPosForSeparator(separator), root->width() - Item::separatorThickness() - 200);
+    QCOMPARE(root->maxPosForSeparator(separator), root->width() - st - 200);
+    QCOMPARE(root->maxPosForSeparator(separator), root->width() - st - 200);
     QVERIFY(serializeDeserializeTest(root));
 }
 

@@ -63,16 +63,6 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
 using namespace Layouting;
 
-static int staticAnchorLength()
-{
-    return Config::self().separatorThickness(true);
-}
-
-static int anchorLength()
-{
-    return Config::self().separatorThickness(false);
-}
-
 struct SetExpectedWarning
 {
     explicit SetExpectedWarning(const QString &s)
@@ -181,8 +171,7 @@ struct EnsureTopLevelsDeleted
 {
     EnsureTopLevelsDeleted()
         : m_originalFlags(Config::self().flags())
-        , m_original0(Config::self().separatorThickness(true))
-        , m_originalAnchorThickness(Config::self().separatorThickness(false))
+        , m_originalSeparatorThickness(Config::self().separatorThickness())
     {
     }
 
@@ -195,8 +184,7 @@ struct EnsureTopLevelsDeleted
         // Other cleanup, since we use this class everywhere
         Config::self().setDockWidgetFactoryFunc(nullptr);
         Config::self().setFlags(m_originalFlags);
-        Config::self().setSeparatorThickness(m_original0, true);
-        Config::self().setSeparatorThickness(m_originalAnchorThickness, false);
+        Config::self().setSeparatorThickness(m_originalSeparatorThickness);
     }
 
     QWidgetList topLevels() const
@@ -212,8 +200,7 @@ struct EnsureTopLevelsDeleted
     }
 
     const Config::Flags m_originalFlags;
-    const int m_original0;
-    const int m_originalAnchorThickness;
+    const int m_originalSeparatorThickness;
 };
 
 class TestDocks : public QObject
@@ -665,19 +652,19 @@ void TestDocks::tst_close()
     auto da = mainwindow->dropArea();
 
     QVERIFY(da->checkSanity());
-    QCOMPARE(leftDock->frame()->x(), staticAnchorLength()); // 1 = static anchor thickness
-    QCOMPARE(centralDock->frame()->x(), leftDock->frame()->geometry().right() + anchorLength() + 1);
-    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + anchorLength() + 1);
+    QCOMPARE(leftDock->frame()->x(), 0); // 1 = static anchor thickness
+    QCOMPARE(centralDock->frame()->x(), leftDock->frame()->geometry().right() + Item::separatorThickness + 1);
+    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + Item::separatorThickness + 1);
     leftDock->close();
     QTest::qWait(250); // TODO: wait for some signal
-    QCOMPARE(centralDock->frame()->x(), staticAnchorLength());
-    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + anchorLength() + 1);
+    QCOMPARE(centralDock->frame()->x(), 0);
+    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + Item::separatorThickness + 1);
 
     rightDock->close();
     QTest::qWait(250); // TODO: wait for some signal
     auto lay = mainwindow->centralWidget()->layout();
     QMargins margins = lay->contentsMargins();
-    QCOMPARE(centralDock->frame()->width(), mainwindow->width() - staticAnchorLength()*2 - margins.left() - margins.right());
+    QCOMPARE(centralDock->frame()->width(), mainwindow->width() - 0*2 - margins.left() - margins.right());
     delete leftDock; delete rightDock; delete centralDock;
 
     // 1.9 Close tabbed dock, side docks will maintain their position
@@ -1780,7 +1767,7 @@ void TestDocks::tst_addToSmallMainWindow4()
     QVERIFY(m->dropArea()->checkSanity());
 
     const int item2MinHeight = layout->itemForFrame(dock2->frame())->minLength(Qt::Vertical);
-    QCOMPARE(dropArea->height(), dock1->frame()->height() + item2MinHeight + Item::separatorThickness());
+    QCOMPARE(dropArea->height(), dock1->frame()->height() + item2MinHeight + Item::separatorThickness);
 }
 
 void TestDocks::tst_addToSmallMainWindow5()
@@ -2008,7 +1995,7 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     QMargins margins = m->centralWidget()->layout()->contentsMargins();
     const int expectedMinHeight = item2->minLength(Qt::Vertical) +
                                   item3->minLength(Qt::Vertical) +
-                                  1 * Item::separatorThickness()
+                                  1 * Item::separatorThickness
                                   + margins.top() + margins.bottom();
 
     qDebug() << layout->rootItem()->minSize() << margins;
@@ -3269,7 +3256,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         Separator *anchor1 = separators[0];
         int boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
         int expectedBoundToTheRight = layout->size().width() -
-                                      3*Item::separatorThickness() -
+                                      3*Item::separatorThickness -
                                       item2->minLength(Qt::Horizontal) -
                                       item3->minLength(Qt::Horizontal) -
                                       item4->minLength(Qt::Horizontal);
@@ -3286,7 +3273,7 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
 
         boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
         expectedBoundToTheRight = layout->size().width() -
-                                  2*Item::separatorThickness() -
+                                  2*Item::separatorThickness -
                                   item2->minLength(Qt::Horizontal) -
                                   item4->minLength(Qt::Horizontal) ;
 
@@ -3889,7 +3876,7 @@ void TestDocks::tst_0_data()
 void TestDocks::tst_0()
 {
     QFETCH(int, thickness);
-    Config::self().setSeparatorThickness(thickness, true);
+    Config::self().setSeparatorThickness(thickness);
 
     auto m = new MainWindow("m1", MainWindowOption_None);
     m->resize(QSize(502, 500));
@@ -4335,7 +4322,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QVERIFY(!f2.data());
     QTest::qWait(200); // Not sure why. Some event we're waiting for. TODO: Investigate
     auto fw2 = dock2->floatingWindow();
-    QCOMPARE(layout->minimumSize().width(), 2*Item::separatorThickness() + item1->minSize().width() + item3->minSize().width() + item4->minSize().width());
+    QCOMPARE(layout->minimumSize().width(), 2*Item::separatorThickness + item1->minSize().width() + item3->minSize().width() + item4->minSize().width());
 
     // Drop left of dock3
     layout->addWidget(fw2->dropArea(), Location_OnLeft, dock3->frame());

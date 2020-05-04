@@ -93,7 +93,7 @@ int main(int argc, char **argv)
         Config::self().setFrameworkWidgetFactory(new CustomWidgetFactory()); // Sets our custom factory
 
         // Increase the separator size, just for demo
-        Config::self().setSeparatorThickness(10, /*static=*/ false);
+        Config::self().setSeparatorThickness(10);
     }
 
     MainWindowOptions options = MainWindowOption_None;

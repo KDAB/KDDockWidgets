@@ -28,6 +28,7 @@
 
 using namespace Layouting;
 
+int Layouting::Item::separatorThickness = 5;
 
 ItemContainer *Item::root() const
 {
@@ -509,11 +510,6 @@ void Item::setGeometry_recursive(QRect rect)
     setGeometry(rect);
 }
 
-int Item::separatorThickness()
-{
-    return 5;
-}
-
 bool Item::checkSanity()
 {
     if (minSize().width() > width() || minSize().height() > height()) {
@@ -777,7 +773,7 @@ bool ItemContainer::checkSanity()
             return false;
         }
 
-        expectedPos = pos + Layouting::length(item->size(), m_orientation) + separatorThickness();
+        expectedPos = pos + Layouting::length(item->size(), m_orientation) + separatorThickness;
     }
 
     const int h1 = Layouting::length(size(), oppositeOrientation(m_orientation));
@@ -819,7 +815,7 @@ bool ItemContainer::checkSanity()
     const Item::List visibleChildren = this->visibleChildren();
     const bool isEmptyRoot = isRoot() && visibleChildren.isEmpty();
     if (!isEmptyRoot) {
-        int occupied = qMax(0, Item::separatorThickness() * (visibleChildren.size() - 1));
+        int occupied = qMax(0, Item::separatorThickness * (visibleChildren.size() - 1));
         for (Item *item : visibleChildren) {
             occupied += item->length(m_orientation);
         }
@@ -853,8 +849,8 @@ bool ItemContainer::checkSanity()
         return false;
     }
 
-    const QSize expectedSeparatorSize = isVertical() ? QSize(width(), Item::separatorThickness())
-                                                     : QSize(Item::separatorThickness(), height());
+    const QSize expectedSeparatorSize = isVertical() ? QSize(width(), Item::separatorThickness)
+                                                     : QSize(Item::separatorThickness, height());
 
     const int pos2 = Layouting::pos(mapToRoot(QPoint(0, 0)), oppositeOrientation(m_orientation));
 
@@ -1151,7 +1147,7 @@ QRect ItemContainer::suggestedDropRect(QSize minSize, const Item *relativeTo, Lo
     }
 
     const int itemMin = Layouting::length(minSize, m_orientation);
-    const int available = availableLength() - Item::separatorThickness();
+    const int available = availableLength() - Item::separatorThickness;
     const SizingInfo::List sizes = this->sizes();
     const int count = sizes.count();
 
@@ -1312,7 +1308,7 @@ void ItemContainer::positionItems(SizingInfo::List &sizes)
     for (int i = 0; i < count; ++i) {
         SizingInfo &sizing = sizes[i];
         if (sizing.isBeingInserted) {
-            nextPos += Item::separatorThickness();
+            nextPos += Item::separatorThickness;
             continue;
         }
 
@@ -1321,7 +1317,7 @@ void ItemContainer::positionItems(SizingInfo::List &sizes)
         sizing.setLength(oppositeLength, oppositeOrientation);
 
         sizing.setPos(nextPos, m_orientation);
-        nextPos += sizing.length(m_orientation) + Item::separatorThickness();
+        nextPos += sizing.length(m_orientation) + Item::separatorThickness;
     }
 }
 
@@ -1515,7 +1511,7 @@ int ItemContainer::usableLength() const
     if (children.size() <= 1)
         return Layouting::length(size(), m_orientation);
 
-    const int separatorWaste = separatorThickness() * (numVisibleChildren - 1);
+    const int separatorWaste = separatorThickness * (numVisibleChildren - 1);
     return length() - separatorWaste;
 }
 
@@ -1576,7 +1572,7 @@ QSize ItemContainer::minSize() const
             }
         }
 
-        const int separatorWaste = qMax(0, (visibleChildren.size() - 1) * separatorThickness());
+        const int separatorWaste = qMax(0, (visibleChildren.size() - 1) * separatorThickness);
         if (isVertical())
             minH += separatorWaste;
         else
@@ -1603,7 +1599,7 @@ QSize ItemContainer::maxSize() const
             }
         }
 
-        const int separatorWaste = (visibleChildren.size() - 1) * separatorThickness();
+        const int separatorWaste = (visibleChildren.size() - 1) * separatorThickness;
         if (isVertical())
             maxH += separatorWaste;
         else
@@ -1809,7 +1805,7 @@ void ItemContainer::restoreChild(Item *item)
         return;
     }
 
-    const int available = availableOnSide(item, Side1) + availableOnSide(item, Side2) - Item::separatorThickness();
+    const int available = availableOnSide(item, Side1) + availableOnSide(item, Side2) - Item::separatorThickness;
 
     const QSize proposedSize = item->size();
     const int max = available;
@@ -1992,9 +1988,9 @@ int ItemContainer::neighbourSeparatorWaste(const Item *item, Side side, Qt::Orie
 
     if (o == m_orientation) {
         if (side == Side1) {
-            return index * Item::separatorThickness();
+            return index * Item::separatorThickness;
         } else {
-            return (children.size() - 1 - index) * Item::separatorThickness();
+            return (children.size() - 1 - index) * Item::separatorThickness;
         }
     } else {
         return 0;
@@ -2024,8 +2020,8 @@ QSize ItemContainer::missingSizeFor(Item *item, Qt::Orientation o) const
 {
     QSize missing = {0, 0};
     const QSize available = availableSize();
-    const int separatorWasteW = (o == Qt::Vertical || !hasVisibleChildren()) ? 0 : Item::separatorThickness();
-    const int separatorWasteH = (o == Qt::Vertical && hasVisibleChildren()) ? Item::separatorThickness() : 0;
+    const int separatorWasteW = (o == Qt::Vertical || !hasVisibleChildren()) ? 0 : Item::separatorThickness;
+    const int separatorWasteH = (o == Qt::Vertical && hasVisibleChildren()) ? Item::separatorThickness : 0;
     missing.setWidth(qMax(item->minSize().width() - available.width() + separatorWasteW, 0));
     missing.setHeight(qMax(item->minSize().height() - available.height() + separatorWasteH, 0));
 
@@ -2054,13 +2050,13 @@ void ItemContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)
         QRect geo2 = side2Neighbour->geometry();
 
         if (isVertical()) {
-            const int available = geo2.y() - geo1.bottom() - separatorThickness();
+            const int available = geo2.y() - geo1.bottom() - separatorThickness;
             geo1.setHeight(geo1.height() + available / 2);
-            geo2.setTop(geo1.bottom() + separatorThickness() + 1);
+            geo2.setTop(geo1.bottom() + separatorThickness + 1);
         } else {
-            const int available = geo2.x() - geo1.right() - separatorThickness();
+            const int available = geo2.x() - geo1.right() - separatorThickness;
             geo1.setWidth(geo1.width() + available / 2);
-            geo2.setLeft(geo1.right() + separatorThickness() + 1);
+            geo2.setLeft(geo1.right() + separatorThickness + 1);
         }
 
         side1Neighbour->setGeometry_recursive(geo1);
@@ -2097,7 +2093,7 @@ void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
 {
     int toSteal = missing; // The amount that neighbours of @p index will shrink
     if (accountForNewSeparator)
-        toSteal += Item::separatorThickness();
+        toSteal += Item::separatorThickness;
 
     Q_ASSERT(index != -1);
     if (toSteal == 0)

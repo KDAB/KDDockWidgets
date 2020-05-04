@@ -167,11 +167,11 @@ void Separator::setGeometry(int pos, int pos2, int length)
     QRect newGeo = m_geometry;
     if (isVertical()) {
         // The separator itself is horizontal
-        newGeo.setSize(QSize(length, Item::separatorThickness()));
+        newGeo.setSize(QSize(length, Item::separatorThickness));
         newGeo.moveTo(pos2, pos);
     } else {
         // The separator itself is vertical
-        newGeo.setSize(QSize(Item::separatorThickness(), length));
+        newGeo.setSize(QSize(Item::separatorThickness, length));
         newGeo.moveTo(pos, pos2);
     }
 

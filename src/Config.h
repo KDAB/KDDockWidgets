@@ -120,17 +120,13 @@ public:
     /**
      * @brief Returns the thickness of the separator.
      *
-     * Returns the width if the separator is vertical, otherwise the height.
-     * If @p staticSeparator is true, then returns for the static separators.
-     * The static separators are the ones at the edges of the window (top, left, bottom, right).
-     *
-     * Default is 0px for static separators and 5px for normal separators.
+     * Default is 5px.
      */
-    int separatorThickness(bool staticSeparator) const;
+    int separatorThickness() const;
 
     ///@brief setter for @ref separatorThickness
     ///Note: Only use this function at startup before creating any DockWidget or MainWindow.
-    void setSeparatorThickness(int value, bool staticSeparator);
+    void setSeparatorThickness(int value);
 
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
     void setQmlEngine(QQmlEngine *);

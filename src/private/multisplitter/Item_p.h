@@ -321,6 +321,7 @@ public:
      * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.
      */
     static QSize hardcodedMinimumSize();
+    static int separatorThickness;
 
     int x() const;
     int y() const;
@@ -336,7 +337,6 @@ public:
     bool isWidget() const { return !isContainer(); }
 
     Qt::Orientation orientation() const;
-    static int separatorThickness();
     [[nodiscard]] virtual bool checkSanity();
     void setParentContainer(ItemContainer *parent); // TODO: Make private
     void connectParent(ItemContainer *parent);

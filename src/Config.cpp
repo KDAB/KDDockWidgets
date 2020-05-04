@@ -55,14 +55,7 @@ public:
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     FrameworkWidgetFactory *m_frameworkWidgetFactory;
     Flags m_flags = Flag_Default;
-    int m_separatorThickness = 5;
-#if defined(Q_OS_WIN)
-    int m_staticSeparatorThickness = 1; // FIXME: Broken on Windows still.
-#else
-    int m_staticSeparatorThickness = 0;
-#endif
 };
-
 
 Config::Config()
     : d(new Private())
@@ -126,15 +119,14 @@ FrameworkWidgetFactory *Config::frameworkWidgetFactory() const
     return d->m_frameworkWidgetFactory;
 }
 
-int Config::separatorThickness(bool staticSeparator) const
+int Config::separatorThickness() const
 {
-    return staticSeparator ? d->m_staticSeparatorThickness
-                           : d->m_separatorThickness;
+    return Layouting::Item::separatorThickness;
 }
 
-void Config::setSeparatorThickness(int value, bool staticSeparator)
+void Config::setSeparatorThickness(int value)
 {
-    if ((value <= 0 && !staticSeparator) || (value < 0 && staticSeparator) || value >= 100) {
+    if (value < 0 || value >= 100) {
         qWarning() << Q_FUNC_INFO << "Invalid value" << value;
         return;
     }
@@ -144,10 +136,7 @@ void Config::setSeparatorThickness(int value, bool staticSeparator)
         return;
     }
 
-    if (staticSeparator)
-        d->m_staticSeparatorThickness = value;
-    else
-        d->m_separatorThickness = value;
+    Layouting::Item::separatorThickness = value;
 }
 
 void Config::setQmlEngine(QQmlEngine *qmlEngine)
