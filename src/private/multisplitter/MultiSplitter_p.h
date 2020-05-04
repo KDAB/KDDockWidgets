@@ -42,7 +42,7 @@ class FloatingWindow;
  * @brief A widget that supports an arbitrary number of splitters (called Separators) in any
  * combination of vertical/horizontal.
  *
- * The actual layouting is done by @ref MultiSplitterLayout.
+ * The actual layouting is done by @ref Layouting::Item.
  */
 class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter : public QWidgetAdapter
 {
@@ -51,7 +51,6 @@ public:
     explicit MultiSplitter(QWidgetOrQuick *parent = nullptr);
     ~MultiSplitter() override;
     MultiSplitterLayout *multiSplitterLayout() const { return m_layout; }
-    int count() const;
     bool isInMainWindow() const;
     MainWindowBase* mainWindow() const;
     FloatingWindow* floatingWindow() const;

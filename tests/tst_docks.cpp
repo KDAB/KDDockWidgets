@@ -836,7 +836,6 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     dragFloatingWindowTo(fw, fw2->dropArea(), DropIndicatorOverlayInterface::DropLocation_Left);
     QCOMPARE(fw2->frames().size(), 3);
 
-    fw2->dropArea()->debug_updateItemNamesForGammaray();
     QVERIFY(fw2->dropArea()->checkSanity());
 
     ///Cleanup
@@ -931,14 +930,14 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     QPointer<Frame> centralFrame = static_cast<Frame*>(dropArea->centralFrame()->frame());
     QVERIFY(central);
     QVERIFY(dropArea);
-    QCOMPARE(dropArea->count(), 1);
+    QCOMPARE(dropArea->multiSplitterLayout()->count(), 1);
     QVERIFY(centralFrame);
     QCOMPARE(centralFrame->dockWidgetCount(), 0);
 
     // Add a tab
     auto dock = createDockWidget("doc1", Qt::green);
     m->addDockWidgetAsTab(dock);
-    QCOMPARE(dropArea->count(), 1);
+    QCOMPARE(dropArea->multiSplitterLayout()->count(), 1);
     QCOMPARE(centralFrame->dockWidgetCount(), 1);
 
     qDebug() << "Central widget width=" << central->size() << "; mainwindow="
@@ -952,7 +951,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));
 
     QVERIFY(centralFrame);
-    QCOMPARE(dropArea->count(), 1);
+    QCOMPARE(dropArea->multiSplitterLayout()->count(), 1);
     QCOMPARE(centralFrame->dockWidgetCount(), 0);
     QVERIFY(dropArea->checkSanity());
 
@@ -1551,7 +1550,6 @@ void TestDocks::tst_marginsAfterRestore()
         QVERIFY(fw);
         layout->addWidget(fw->dropArea(), Location_OnRight);
 
-        m->dropArea()->debug_updateItemNamesForGammaray();
         layout->checkSanity();
     }
 }
@@ -1700,8 +1698,6 @@ void TestDocks::tst_addToSmallMainWindow1()
     m->addDockWidget(dock4, Location_OnBottom);
 
     auto dropArea = m->dropArea();
-
-    dropArea->debug_updateItemNamesForGammaray();
 
     QVERIFY(dropArea->checkSanity());
     QVERIFY(dock2->width() < mainWindowLength);
@@ -3322,7 +3318,7 @@ void TestDocks::tst_negativeAnchorPosition()
 
     // Now resize the Window, after removing middle one
     const int availableToShrink = layout->size().height() - layout->minimumSize().height();
-    layout->setContentLength(layout->length(Qt::Horizontal) - availableToShrink, Qt::Horizontal); // Should not warn about negative sizes
+    layout->setSize({layout->width(), layout->width() - availableToShrink});
 
     d2->deleteLater();
     Testing::waitForDeleted(d2);
@@ -4694,7 +4690,7 @@ void TestDocks::tst_clear()
     QCOMPARE(Frame::dbg_numFrames(), 3);
 
     auto layout = m->multiSplitterLayout();
-    layout->clear();
+    layout->rootItem()->clear();
 
     QCOMPARE(layout->count(), 0);
     QCOMPARE(layout->placeholderCount(), 0);

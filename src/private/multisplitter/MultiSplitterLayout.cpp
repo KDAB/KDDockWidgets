@@ -54,17 +54,13 @@ MultiSplitterLayout::MultiSplitterLayout(MultiSplitter *parent)
 
     qCDebug(multisplittercreation()) << "MultiSplitter";
 
-    clear();
-
     // Initialize min size
     updateSizeConstraints();
-    m_inCtor = false;
 }
 
 MultiSplitterLayout::~MultiSplitterLayout()
 {
     qCDebug(multisplittercreation) << "~MultiSplitter" << this;
-    m_inDestructor = true;
     if (m_rootItem->hostWidget() == multiSplitter())
         delete m_rootItem;
     DockRegistry::self()->unregisterLayout(this);
@@ -183,19 +179,6 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
         delete frame;
 }
 
-QString MultiSplitterLayout::affinityName() const
-{
-    if (auto ms = multiSplitter()) {
-        if (auto mainWindow = ms->mainWindow()) {
-            return mainWindow->affinityName();
-        } else if (auto fw = ms->floatingWindow()) {
-            return fw->affinityName();
-        }
-    }
-
-    return QString();
-}
-
 void MultiSplitterLayout::addMultiSplitter(MultiSplitter *sourceMultiSplitter,
                                            Location location,
                                            Frame *relativeTo)
@@ -209,12 +192,10 @@ void MultiSplitterLayout::removeItem(Item *item)
     if (!item)
         qWarning() << Q_FUNC_INFO << "nullptr item";
 
-    if (!item || m_inDestructor)
+    if (!item)
         return;
 
     item->parentContainer()->removeItem(item);
-
-    Q_EMIT widgetRemoved(item);     // TODO Remove.
 }
 
 bool MultiSplitterLayout::contains(const Item *item) const
@@ -225,16 +206,6 @@ bool MultiSplitterLayout::contains(const Item *item) const
 bool MultiSplitterLayout::contains(const Frame *frame) const
 {
     return itemForFrame(frame) != nullptr;
-}
-
-Item *MultiSplitterLayout::itemAt(QPoint p) const
-{
-    return m_rootItem->itemAt_recursive(p);
-}
-
-void MultiSplitterLayout::clear()
-{
-    m_rootItem->clear();
 }
 
 int MultiSplitterLayout::visibleCount() const
@@ -259,12 +230,6 @@ void MultiSplitterLayout::updateSizeConstraints()
                     << "to" << newMinSize;
 
     setMinimumSize(newMinSize);
-}
-
-void MultiSplitterLayout::emitVisibleWidgetCountChanged()
-{
-    if (!m_inDestructor)
-        Q_EMIT visibleWidgetCountChanged(visibleCount());
 }
 
 int MultiSplitterLayout::availableLengthForOrientation(Qt::Orientation orientation) const
@@ -310,17 +275,6 @@ Frame::List MultiSplitterLayout::frames() const
         if (auto f = static_cast<Frame*>(item->frame()))
             result.push_back(f);
     }
-
-    return result;
-}
-
-QVector<DockWidgetBase *> MultiSplitterLayout::dockWidgets() const
-{
-    DockWidgetBase::List result;
-    const Frame::List frames = this->frames();
-
-    for (Frame *frame : frames)
-        result << frame->dockWidgets();
 
     return result;
 }
@@ -371,32 +325,13 @@ void MultiSplitterLayout::setSize(QSize size)
 {
     if (size != this->size()) {
         m_rootItem->resize(size);
-        m_resizing = true;
         Q_EMIT sizeChanged(size);
-        m_resizing = false; // TODO: m_resizing needed ?
-    }
-}
-
-void MultiSplitterLayout::setContentLength(int value, Qt::Orientation o)
-{
-    if (o == Qt::Vertical) {
-        // Setting the width
-        setSize({value, size().height()});
-    } else {
-        // Setting the height
-        setSize({size().width(), value});
     }
 }
 
 QSize MultiSplitterLayout::minimumSize() const
 {
     return m_rootItem->minSize();
-}
-
-int MultiSplitterLayout::length(Qt::Orientation o) const
-{
-    return o == Qt::Vertical ? width()
-                             : height();
 }
 
 void MultiSplitterLayout::setMinimumSize(QSize sz)
@@ -413,7 +348,6 @@ void MultiSplitterLayout::setRootItem(ItemContainer *root)
 {
     delete m_rootItem;
     m_rootItem = root;
-    connect(m_rootItem, &ItemContainer::numItemsChanged, this, &MultiSplitterLayout::widgetCountChanged);
     connect(m_rootItem, &ItemContainer::numVisibleItemsChanged, this, &MultiSplitterLayout::visibleWidgetCountChanged);
     connect(m_rootItem, &ItemContainer::minSizeChanged, this, [this] {
         Q_EMIT minimumSizeChanged(minimumSize());

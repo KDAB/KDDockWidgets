@@ -58,11 +58,6 @@ MultiSplitter::~MultiSplitter()
 {
 }
 
-int MultiSplitter::count() const
-{
-    return m_layout->count();
-}
-
 void MultiSplitter::onLayoutRequest()
 {
     m_layout->updateSizeConstraints();
@@ -82,7 +77,6 @@ bool MultiSplitter::onResize(QSize newSize)
 
     return false; // So QWidget::resizeEvent is called
 }
-
 
 bool MultiSplitter::isInMainWindow() const
 {

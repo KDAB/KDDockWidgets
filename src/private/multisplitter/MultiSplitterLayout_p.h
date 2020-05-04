@@ -35,9 +35,7 @@
 #include "../Frame_p.h"
 #include "Separator_p.h"
 #include "docks_export.h"
-#include "KDDockWidgets.h"
 #include "Item_p.h"
-#include "LayoutSaver_p.h"
 
 #include <QPointer>
 
@@ -50,6 +48,10 @@ class DebugWindow;
 }
 
 /**
+ * MultiSplitterLayout is simply a wrapper around Layouting::Item in which the hosted widgets are
+ * of class KDDockWidgets::Frame. The stuff in Layouting:: being agnostic and generic, not specific
+ * to KDDW.
+ *
  * A MultiSplitter is like a QSplitter but supports mixing vertical and horizontal splitters in
  * any combination.
  *
@@ -59,13 +61,7 @@ class DebugWindow;
 class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitterLayout : public QObject // clazy:exclude=ctor-missing-parent-argument
 {
     Q_OBJECT
-    Q_PROPERTY(int count READ count NOTIFY widgetCountChanged)
-    Q_PROPERTY(int visibleCount READ visibleCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
-    Q_PROPERTY(int placeholderCount READ placeholderCount NOTIFY widgetCountChanged) // This notify isn't ogood enough, but it's just for debug, we're calling QMetaProperty::read to debug
-    Q_PROPERTY(QSize size READ size NOTIFY sizeChanged)
-    Q_PROPERTY(QSize minimumSize READ minimumSize NOTIFY minimumSizeChanged)
 public:
-
     /**
      * @brief Constructor. MultiSplitterLayout is created by MultiSplitter only.
      */
@@ -80,7 +76,8 @@ public:
     /**
      * @brief Adds a widget to this MultiSplitter.
      */
-    void addWidget(QWidgetOrQuick *widget, KDDockWidgets::Location location, Frame *relativeTo = nullptr, AddingOption option = {});
+    void addWidget(QWidgetOrQuick *widget, KDDockWidgets::Location location,
+                   Frame *relativeTo = nullptr, AddingOption option = {});
 
     /**
      * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted
@@ -90,12 +87,6 @@ public:
      */
     void addMultiSplitter(MultiSplitter *splitter, KDDockWidgets::Location location,
                           Frame *relativeTo = nullptr);
-
-
-    /**
-     * @brief Adds the dockwidget but it stays hidden until an explicit show()
-     */
-    void addAsPlaceholder(DockWidgetBase *dw, KDDockWidgets::Location location, Layouting::Item *relativeTo = nullptr);
 
     /**
      * @brief Removes an item from this MultiSplitter.
@@ -111,17 +102,6 @@ public:
      * @brief  Returns true if this layout contains the specified frame.
      */
     bool contains(const Frame *) const;
-
-    /**
-     * @brief Returns the visible Item at pos @p p.
-     */
-    Layouting::Item *itemAt(QPoint p) const;
-
-    /**
-     * @brief Removes all Items, Separators and Frames docked in this layout.
-     * DockWidgets are closed but not deleted.
-     */
-    void clear();
 
     /**
      * @brief Returns the number of Item objects in this layout.
@@ -145,20 +125,13 @@ public:
     int placeholderCount() const;
 
     /**
-     * @brief Returns whether there's non placeholder items.
-     */
-    bool hasVisibleItems() const { return visibleCount() > 0; }
-
-    /**
-     * @brief If @p orientation is Qt::Horizontal, returns the height, otherwise the width.
-     */
-    int length(Qt::Orientation orientation) const;
-
-    /**
      * @brief The list of items in this layout.
      */
     const Layouting::Item::List items() const;
 
+    /**
+     * @brief Returns the root container item
+     */
     Layouting::ItemContainer *rootItem() const;
 
     /**
@@ -172,7 +145,7 @@ public:
     bool deserialize(const LayoutSaver::MultiSplitterLayout &);
     LayoutSaver::MultiSplitterLayout serialize() const;
 
-    ///@brief returns list of separators
+    ///@brief returns the list of separators
     Layouting::Separator::List separators() const;
 
     /**
@@ -187,17 +160,6 @@ public:
      * the MultiSplitterLayout size (due to widget's min-size constraints).
      */
     void setSize(QSize);
-
-    /**
-     * @brief sets either the contents height if @p o is Qt::Horizontal, otherwise sets the contents width
-     */
-    void setContentLength(int value, Qt::Orientation o);
-
-    /**
-     * @brief returns @ref contentsWidth if @p o is Qt::Vertical, otherwise @ref contentsHeight
-     * @sa contentsHeight, contentsWidth
-     */
-    //int length(Qt::Orientation o) const;
 
     /**
      * @brief returns the contents width.
@@ -222,11 +184,50 @@ public:
      */
     QSize size() const { return m_rootItem->size(); }
 
-    // For debug/hardening
-    bool validateInputs(QWidgetOrQuick *widget, KDDockWidgets::Location location, const Frame *relativeToFrame, AddingOption option) const;
-    // For debug/hardening
-
+    /// @brief Runs some sanity checks. Returns true if everything is OK
     bool checkSanity() const;
+
+    /// @brief dumps the layout to stderr
+    void dumpDebug() const;
+
+    /**
+     * @brief returns the Item that holds @p frame in this layout
+     */
+    Layouting::Item *itemForFrame(const Frame *frame) const;
+
+    /**
+     * @brief Returns a list of Frame objects contained in this layout
+     */
+    Frame::List frames() const;
+
+    /// @brief restores the dockwidget @p dw to its previous position
+    void restorePlaceholder(DockWidgetBase *dw, Layouting::Item *, int tabIndex);
+
+Q_SIGNALS:
+    void visibleWidgetCountChanged(int count);
+
+    ///@brief emitted when the size changes
+    ///@sa size
+    void sizeChanged(QSize sz);
+
+    ///@brief emitted when the minimumSize changes
+    ///@sa minimumSize
+    void minimumSizeChanged(QSize);
+
+private:
+    friend class TestDocks;
+
+    /**
+     * @brief returns the frames contained in @p frameOrMultiSplitter
+     * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
+     * If frameOrMultiSplitter is a MultiSplitterLayout then it returns a list of all frames it contains
+     */
+    Frame::List framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
+
+
+    // For debug/hardening
+    bool validateInputs(QWidgetOrQuick *widget, KDDockWidgets::Location location,
+                        const Frame *relativeToFrame, AddingOption option) const;
 
     /**
      * @brief Removes unneeded placeholder items when adding new frames.
@@ -238,65 +239,6 @@ public:
      */
     void unrefOldPlaceholders(const Frame::List &framesBeingAdded) const;
 
-    // For debug
-    void dumpDebug() const;
-    /**
-     * @brief returns the Item that holds @p frame in this layout
-     */
-    Layouting::Item *itemForFrame(const Frame *frame) const;
-
-    /**
-     * @brief returns the frames contained in @p frameOrMultiSplitter
-     * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
-     * If frameOrMultiSplitter is a MultiSplitterLayout then it returns a list of all frames it contains
-     */
-    Frame::List framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
-
-    /**
-     * @brief Returns a list of Frame objects contained in this layout
-     */
-    Frame::List frames() const;
-
-    /**
-     * @brief Returns a list of DockWidget objects contained in this layout
-     */
-    QVector<DockWidgetBase*> dockWidgets() const;
-
-    void restorePlaceholder(DockWidgetBase *dw, Layouting::Item *, int tabIndex);
-
-Q_SIGNALS:
-    ///@brief emitted when the number of widgets changes
-    void widgetCountChanged();
-
-    void visibleWidgetCountChanged(int count);
-
-    ///@brief emitted when a widget is added
-    ///@param item the item containing the new widget
-    void widgetAdded(Layouting::Item *item);
-
-    ///@brief emitted when a widget is removed
-    ///@param item the item containing the removed widget
-    void widgetRemoved(Layouting::Item *item);
-
-    ///@brief emitted right before dumping debug
-    ///@sa dumpDebug
-    void aboutToDumpDebug() const; // clazy:exclude=const-signal-or-slot
-
-    ///@brief emitted when the size changes
-    ///@sa size
-    void sizeChanged(QSize sz);
-
-    ///@brief emitted when the minimumSize changes
-    ///@sa minimumSize
-    void minimumSizeChanged(QSize);
-
-public:
-    Layouting::Separator::List separators(Qt::Orientation, bool includeStatic = false, bool includePlaceholders = true) const;
-private:
-    friend class TestDocks;
-    friend class KDDockWidgets::Debug::DebugWindow;
-    friend class LayoutSaver;
-
     /**
      * @brief setter for the minimum size
      * @ref minimumSize
@@ -304,8 +246,6 @@ private:
     void setMinimumSize(QSize);
 
     void setRootItem(Layouting::ItemContainer *);
-
-    void emitVisibleWidgetCountChanged();
 
     /**
      * @brief Like @ref availableLengthForDrop but just returns the total available width or height (depending on @p orientation)
@@ -320,20 +260,7 @@ private:
      */
     QSize availableSize() const;
 
-    ///@brief returns whether we're inside setSize();
-    bool isResizing() const { return m_resizing; }
-    bool isRestoringPlaceholder() const { return m_restoringPlaceholder; }
-
-    QString affinityName() const;
-
     MultiSplitter *const m_multiSplitter;
-
-    bool m_inCtor = true;
-    bool m_inDestructor = false;
-    bool m_beingMergedIntoAnotherMultiSplitter = false; // TODO
-    bool m_restoringPlaceholder = false;
-    bool m_resizing = false;
-
     Layouting::ItemContainer *m_rootItem = nullptr;
 };
 

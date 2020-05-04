@@ -58,12 +58,9 @@ public:
     bool drop(QWidgetOrQuick *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     int numFrames() const;
 
-    Frame *frameContainingPos(QPoint globalPos) const;
     Layouting::Item *centralFrame() const;
     DropIndicatorOverlayInterface *dropIndicatorOverlay() const { return m_dropIndicatorOverlay; }
     void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location, DockWidgetBase *relativeTo, AddingOption option = {});
-
-    void debug_updateItemNamesForGammaray();
 
     bool checkSanity();
     bool contains(DockWidgetBase *) const;
@@ -77,6 +74,7 @@ private:
     friend class AnimatedIndicators;
     template <typename T>
     bool validateAffinity(T *) const;
+    Frame *frameContainingPos(QPoint globalPos) const;
     bool m_inDestructor = false;
     QString m_affinityName;
     DropIndicatorOverlayInterface *m_dropIndicatorOverlay = nullptr;
