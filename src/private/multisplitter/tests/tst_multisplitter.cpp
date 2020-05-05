@@ -1107,6 +1107,9 @@ void TestMultiSplitter::tst_availableOnSide()
 
     Item *item2 = createItem(/*min=*/QSize(200, 200));
     root->insertItem(item2, Location_OnRight);
+    auto separator = root->separators_recursive()[0];
+    QCOMPARE(root->minPosForSeparator_global(separator), item1->minSize().width());
+    QCOMPARE(root->maxPosForSeparator_global(separator), root->width() - item2->minSize().width() - Item::separatorThickness);
 
     QCOMPARE(root->availableOnSide(item1, Side1), 0);
     QCOMPARE(root->availableOnSide(item1, Side2), item2->width() - item2->minSize().width());
@@ -1117,6 +1120,10 @@ void TestMultiSplitter::tst_availableOnSide()
     root->insertItem(item3, Location_OnRight);
     QCOMPARE(root->availableOnSide(item3, Side1), (item1->width() - item1->minSize().width()) - (item2->width() - item2->minSize().width()));
     QCOMPARE(root->availableOnSide(item3, Side2), 0);
+
+    auto separator2 = root->separators_recursive()[1];
+    QCOMPARE(root->minPosForSeparator_global(separator2), item1->minSize().width() + item2->minSize().width() + Item::separatorThickness);
+    QCOMPARE(root->maxPosForSeparator_global(separator2), root->width() - item3->minSize().width() - Item::separatorThickness);
 
     Item *item4 = createItem(/*min=*/QSize(200, 200));
     item3->insertItem(item4, Location_OnBottom);
@@ -1129,6 +1136,13 @@ void TestMultiSplitter::tst_availableOnSide()
 
     QCOMPARE(c->availableOnSide_recursive(item4, Side1, Qt::Vertical), (item3->height() - item3->minSize().height()));
     QCOMPARE(c->availableOnSide_recursive(item4, Side2, Qt::Vertical), 0);
+
+    Item *item31 = createItem(/*min=*/QSize(100, 100));
+    item3->insertItem(item31, Location_OnRight);
+    auto container31 = item31->parentContainer();
+    auto separato31 = container31->separators_recursive()[0];
+    QCOMPARE(container31->minPosForSeparator_global(separato31), item1->minSize().width() + item2->minSize().width() + item3->minSize().width() + 2*Item::separatorThickness);
+    QCOMPARE(container31->maxPosForSeparator_global(separato31), root->width() - item31->width() - Item::separatorThickness);
 }
 
 QTEST_MAIN(TestMultiSplitter)
