@@ -513,7 +513,8 @@ public:
     int neighboursMinLengthFor_recursive(const Item *item, Side, Qt::Orientation) const;
     int neighbourSeparatorWaste(const Item *item, Side, Qt::Orientation) const;
     int neighbourSeparatorWaste_recursive(const Item *item, Side, Qt::Orientation) const;
-    int availableOnSide(Item *child, Side) const;
+    int availableOnSide(const Item *child, Side) const;
+    int availableOnSide_recursive(const Item *child, Side, Qt::Orientation orientation) const;
     QSize missingSizeFor(Item *item, Qt::Orientation) const;
     void onChildMinSizeChanged(Item *child);
     void onChildVisibleChanged(Item *child, bool visible);

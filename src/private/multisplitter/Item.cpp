@@ -2003,7 +2003,7 @@ int ItemContainer::neighbourSeparatorWaste_recursive(const Item *item, Side side
                                                                         : parentContainer()->neighbourSeparatorWaste(item, side, orientation));
 }
 
-int ItemContainer::availableOnSide(Item *child, Side side) const
+int ItemContainer::availableOnSide(const Item *child, Side side) const
 {
     const int length = neighboursLengthFor(child, side, m_orientation);
     const int min = neighboursMinLengthFor(child, side, m_orientation);
@@ -2014,6 +2014,18 @@ int ItemContainer::availableOnSide(Item *child, Side side) const
         Q_ASSERT(false);
     }
     return available;
+}
+
+int ItemContainer::availableOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
+{
+    if (orientation == m_orientation) {
+        const int available = availableOnSide(child, side);
+        return isRoot() ? available
+                        : (available + parentContainer()->availableOnSide_recursive(this, side, orientation));
+    } else {
+        return isRoot() ? 0
+                        : parentContainer()->availableOnSide_recursive(this, side, orientation);
+    }
 }
 
 QSize ItemContainer::missingSizeFor(Item *item, Qt::Orientation o) const
@@ -2416,7 +2428,7 @@ int ItemContainer::minPosForSeparator_global(Separator *separator) const
     Q_ASSERT(separatorIndex + 1 < children.size());
     Item *item = children.at(separatorIndex + 1);
 
-    const int available1 = availableOnSide(item, Side1);
+    const int available1 = availableOnSide_recursive(item, Side1, m_orientation);
     return separator->position() - available1;
 }
 
@@ -2428,7 +2440,7 @@ int ItemContainer::maxPosForSeparator_global(Separator *separator) const
     const Item::List children = visibleChildren();
     Item *item = children.at(separatorIndex);
 
-    const int available2 = availableOnSide(item, Side2);
+    const int available2 = availableOnSide_recursive(item, Side2, m_orientation);
     return separator->position() + available2;
 }
 

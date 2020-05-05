@@ -107,7 +107,7 @@ static std::unique_ptr<ItemContainer> createRoot()
     return std::unique_ptr<ItemContainer>(root);
 }
 
-static Item* createItem()
+static Item* createItem(QSize minSz = {})
 {
     static int count = 0;
     count++;
@@ -118,6 +118,8 @@ static Item* createItem()
     item->setGeometry(QRect(0, 0, 200, 200));
     item->setObjectName(QStringLiteral("%1").arg(count));
     auto guest = new GuestWidget();
+    if (!minSz.isNull())
+        guest->setMinSize(minSz);
     guest->setObjectName(item->objectName());
     item->setFrame(guest);
     return item;
@@ -175,6 +177,7 @@ private Q_SLOTS:
     void tst_separatorRecreatedOnParentChange();
     void tst_containerReducesSize();
     void tst_insertHiddenContainer();
+    void tst_availableOnSide();
 };
 
 void TestMultiSplitter::tst_createRoot()
@@ -1090,6 +1093,42 @@ void TestMultiSplitter::tst_insertHiddenContainer()
     auto anotherRoot = createRoot();
     anotherRoot->insertItem(root1.release(), Location_OnTop);
     QVERIFY(anotherRoot->checkSanity());
+}
+
+void TestMultiSplitter::tst_availableOnSide()
+{
+    auto root = createRoot();
+    Item *item1 = createItem(/*min=*/QSize(100, 100));
+    root->setSize(QSize(1000, 1000));
+    root->insertItem(item1, Location_OnLeft);
+
+    QCOMPARE(root->availableOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableOnSide(item1, Side2), 0);
+
+    Item *item2 = createItem(/*min=*/QSize(200, 200));
+    root->insertItem(item2, Location_OnRight);
+
+    QCOMPARE(root->availableOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableOnSide(item1, Side2), item2->width() - item2->minSize().width());
+    QCOMPARE(root->availableOnSide(item2, Side1), item1->width() - item1->minSize().width());
+    QCOMPARE(root->availableOnSide(item2, Side2), 0);
+
+    Item *item3 = createItem(/*min=*/QSize(200, 200));
+    root->insertItem(item3, Location_OnRight);
+    QCOMPARE(root->availableOnSide(item3, Side1), (item1->width() - item1->minSize().width()) - (item2->width() - item2->minSize().width()));
+    QCOMPARE(root->availableOnSide(item3, Side2), 0);
+
+    Item *item4 = createItem(/*min=*/QSize(200, 200));
+    item3->insertItem(item4, Location_OnBottom);
+
+    auto c = item3->parentContainer();
+    QCOMPARE(c->availableOnSide_recursive(item3, Side1, Qt::Horizontal), (item1->width() - item1->minSize().width()) - (item2->width() - item2->minSize().width()));
+    QCOMPARE(c->availableOnSide_recursive(item3, Side2, Qt::Horizontal), 0);
+    QCOMPARE(c->availableOnSide_recursive(item4, Side1, Qt::Horizontal), (item1->width() - item1->minSize().width()) - (item2->width() - item2->minSize().width()));
+    QCOMPARE(c->availableOnSide_recursive(item4, Side2, Qt::Horizontal), 0);
+
+    QCOMPARE(c->availableOnSide_recursive(item4, Side1, Qt::Vertical), (item3->height() - item3->minSize().height()));
+    QCOMPARE(c->availableOnSide_recursive(item4, Side2, Qt::Vertical), 0);
 }
 
 QTEST_MAIN(TestMultiSplitter)
