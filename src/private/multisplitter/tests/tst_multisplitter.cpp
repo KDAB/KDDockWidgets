@@ -187,7 +187,6 @@ void TestMultiSplitter::tst_createRoot()
     auto root = createRoot();
     QVERIFY(root->isRoot());
     QVERIFY(root->isContainer());
-    QVERIFY(!root->isWidget());
     QVERIFY(root->hasOrientation());
     QCOMPARE(root->size(), QSize(1000, 1000));
     QVERIFY(root->checkSanity());
@@ -200,7 +199,6 @@ void TestMultiSplitter::tst_insertOne()
     auto item = createItem();
     root->insertItem(item, Location_OnTop);
     QCOMPARE(root->numChildren(), 1);
-    QVERIFY(item->isWidget());
     QVERIFY(!item->isContainer());
     QCOMPARE(root->size(), QSize(1000, 1000));
     QCOMPARE(item->size(), root->size());
@@ -605,10 +603,6 @@ void TestMultiSplitter::tst_availableSize()
     QCOMPARE(root->neighboursLengthFor(item1, Side2, Qt::Horizontal), 0);
     QCOMPARE(root->neighboursMinLengthFor(item1, Side1, Qt::Horizontal), 0);
     QCOMPARE(root->neighboursMinLengthFor(item1, Side2, Qt::Horizontal), 0);
-    QCOMPARE(root->neighbourSeparatorWaste(item1, Side1, Qt::Vertical), 0);
-    QCOMPARE(root->neighbourSeparatorWaste(item1, Side2, Qt::Vertical), 0);
-    QCOMPARE(root->neighbourSeparatorWaste(item1, Side1, Qt::Horizontal), 0);
-    QCOMPARE(root->neighbourSeparatorWaste(item1, Side2, Qt::Horizontal), 0);
 
     QCOMPARE(root->neighboursLengthFor_recursive(item1, Side1, Qt::Vertical), 0);
     QCOMPARE(root->neighboursLengthFor_recursive(item1, Side2, Qt::Vertical), 0);
@@ -659,14 +653,6 @@ void TestMultiSplitter::tst_availableSize()
     QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side1, Qt::Horizontal), item3->width());
     QCOMPARE(container4->neighboursLengthFor_recursive(item5, Side2, Qt::Horizontal), 0);
 
-    QCOMPARE(container4->neighbourSeparatorWaste(item4, Side1, Qt::Vertical), 0);
-    QCOMPARE(container4->neighbourSeparatorWaste(item4, Side2, Qt::Vertical), st);
-    QCOMPARE(container4->neighbourSeparatorWaste(item4, Side1, Qt::Horizontal), 0);
-    QCOMPARE(container4->neighbourSeparatorWaste(item4, Side2, Qt::Horizontal), 0);
-    QCOMPARE(container4->neighbourSeparatorWaste(item5, Side1, Qt::Vertical), st);
-    QCOMPARE(container4->neighbourSeparatorWaste(item5, Side2, Qt::Vertical), 0);
-    QCOMPARE(container4->neighbourSeparatorWaste(item5, Side1, Qt::Horizontal), 0);
-    QCOMPARE(container4->neighbourSeparatorWaste(item5, Side2, Qt::Horizontal), 0);
     QVERIFY(serializeDeserializeTest(root));
 }
 
@@ -685,15 +671,8 @@ void TestMultiSplitter::tst_missingSize()
     Item *item3 = createItem();
     item3->setMinSize(root->size() + QSize(100, 200));
 
-    // Test empty root
-    QCOMPARE(root->missingSizeFor(item1, Qt::Vertical), QSize(0, 0));
-    QCOMPARE(root->missingSizeFor(item2, Qt::Vertical), QSize(0, 0));
-    QCOMPARE(root->missingSizeFor(item3, Qt::Vertical), QSize(100, 200));
-
     // Test with an existing item
     root->insertItem(item1, Location_OnTop);
-    QCOMPARE(root->missingSizeFor(item2, Qt::Vertical), item1->minSize() + QSize(0, st));
-    QCOMPARE(root->missingSizeFor(item3, Qt::Vertical), item1->minSize() + QSize(0, st) + QSize(100, 200));
     QVERIFY(serializeDeserializeTest(root));
 }
 

@@ -54,42 +54,6 @@ enum AddingOption {
     AddingOption_StartHidden ///< Don't show the dock widget when adding it
 };
 
-///@internal
-inline Location oppositeLocation(Location loc)
-{
-    switch (loc) {
-    case Location_OnLeft:
-        return Location_OnRight;
-    case Location_OnTop:
-        return Location_OnBottom;
-    case Location_OnRight:
-        return Location_OnLeft;
-    case Location_OnBottom:
-        return Location_OnTop;
-    default:
-        Q_ASSERT(false);
-        return Location_None;
-    }
-}
-
-///@internal
-inline Location adjacentLocation(Location loc)
-{
-    switch (loc) {
-    case Location_OnLeft:
-        return Location_OnTop;
-    case Location_OnTop:
-        return Location_OnRight;
-    case Location_OnRight:
-        return Location_OnBottom;
-    case Location_OnBottom:
-        return Location_OnLeft;
-    default:
-        Q_ASSERT(false);
-        return Location_None;
-    }
-}
-
 enum Side {
     Side1,
     Side2
@@ -127,19 +91,9 @@ inline bool locationIsVertical(Location loc)
     return loc == Location_OnTop || loc == Location_OnBottom;
 }
 
-inline bool locationIsHorizontal(Location loc)
-{
-    return !locationIsVertical(loc);
-}
-
 inline bool locationIsSide1(Location loc)
 {
     return loc == Location_OnLeft || loc == Location_OnTop;
-}
-
-inline bool locationIsSide2(Location loc)
-{
-    return loc == Location_OnRight || loc == Location_OnBottom;
 }
 
 inline QRect adjustedRect(QRect r, Qt::Orientation o, int p1, int p2)
@@ -315,14 +269,14 @@ public:
     ~Item() override;
 
     bool isRoot() const;
-    virtual int visibleCount_recursive() const;
 
+    virtual int visibleCount_recursive() const;
     virtual void insertItem(Item *item, Location, AddingOption = AddingOption_None);
 
     /**
      * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.
      */
-    static QSize hardcodedMinimumSize();
+    static const QSize hardcodedMinimumSize;
     static int separatorThickness;
 
     int x() const;
@@ -334,42 +288,20 @@ public:
     QPoint pos() const;
     int pos(Qt::Orientation) const;
     QRect geometry() const;
-
     bool isContainer() const;
-    bool isWidget() const { return !isContainer(); }
 
-    Qt::Orientation orientation() const;
-    [[nodiscard]] virtual bool checkSanity();
-    void setParentContainer(ItemContainer *parent); // TODO: Make private
-    void connectParent(ItemContainer *parent);
     ItemContainer *parentContainer() const;
-    void setPos(QPoint); // TODO: Make private
-    void setPos(int pos, Qt::Orientation);
-    int position(Qt::Orientation) const;
-    const ItemContainer *asContainer() const;
-    ItemContainer *asContainer();
     void setMinSize(QSize);
     void setMaxSize(QSize);
     virtual QSize minSize() const;
     virtual QSize maxSize() const;
     virtual void resize(QSize newSize);
-    int minLength(Qt::Orientation) const;
-    void setLength(int length, Qt::Orientation);
-    virtual void setLength_recursive(int length, Qt::Orientation);
-    int length(Qt::Orientation) const;
-    int availableLength(Qt::Orientation) const;
     bool isPlaceholder() const;
 
     virtual bool isVisible(bool excludeBeingInserted = false) const;
-    virtual void setIsVisible(bool);
     virtual void setGeometry_recursive(QRect rect);
     virtual void dumpLayout(int level = 0);
     void setGeometry(QRect rect);
-    SizingInfo m_sizingInfo;
-    QSize missingSize() const;
-    int missingLength(Qt::Orientation) const;
-    bool isBeingInserted() const;
-    void setBeingInserted(bool);
     ItemContainer *root() const;
     QRect mapToRoot(QRect) const;
     QPoint mapToRoot(QPoint) const;
@@ -390,10 +322,11 @@ public:
     void unref();
     int refCount() const;
 
+    int minLength(Qt::Orientation) const;
+
     QWidget *hostWidget() const;
     void restore(GuestInterface *guest);
     virtual void setHostWidget(QWidget *);
-    virtual void updateWidgetGeometries();
     virtual QVariantMap toVariantMap() const;
     virtual void fillFromVariantMap(const QVariantMap &map, const QHash<QString, GuestInterface*> &widgets);
     static Item* createFromVariantMap(QWidget *hostWidget, ItemContainer *parent,
@@ -410,12 +343,32 @@ Q_SIGNALS:
 protected:
     friend class ::TestMultiSplitter;
     explicit Item(bool isContainer, QWidget *hostWidget, ItemContainer *parent);
+    void setParentContainer(ItemContainer *parent);
+    void connectParent(ItemContainer *parent);
+    [[nodiscard]] virtual bool checkSanity();
+    void setPos(QPoint); // TODO: Make private
+    void setPos(int pos, Qt::Orientation);
+    int position(Qt::Orientation) const;
+    const ItemContainer *asContainer() const;
+    ItemContainer *asContainer();
+    void setLength(int length, Qt::Orientation);
+    virtual void setLength_recursive(int length, Qt::Orientation);
+    int length(Qt::Orientation) const;
+    int availableLength(Qt::Orientation) const;
+    QSize missingSize() const;
+    virtual void updateWidgetGeometries();
+    virtual void setIsVisible(bool);
+    bool isBeingInserted() const;
+    void setBeingInserted(bool);
+
+    SizingInfo m_sizingInfo;
     const bool m_isContainer;
     ItemContainer *m_parent = nullptr;
 private Q_SLOTS:
     void onWidgetLayoutRequested();
 
 private:
+    friend class ItemContainer;
     void turnIntoPlaceholder();
     bool eventFilter(QObject *o, QEvent *event) override;
     int m_refCount = 0;
@@ -449,7 +402,6 @@ public:
     explicit ItemContainer(QWidget *parent);
     void insertItem(Item *item, int index);
     [[nodiscard]] bool checkSanity() override;
-    void scheduleCheckSanity() const;
     bool hasOrientation() const;
     int numChildren() const;
     int numVisibleChildren() const;
@@ -463,7 +415,6 @@ public:
     ItemContainer *convertChildToContainer(Item *leaf);
     void insertItem(Item *item, Location, AddingOption = AddingOption_None) override;
     bool hasOrientationFor(Location) const;
-    Item::List children() const;
     Item::List visibleChildren(bool includeBeingInserted = false) const;
     int usableLength() const;
     bool hasSingleVisibleItem() const;
@@ -479,7 +430,7 @@ public:
     QVariantList items() const;
     void dumpLayout(int level = 0) override;
     void updateChildPercentages();
-     void updateChildPercentages_recursive();
+    void updateChildPercentages_recursive();
     void restoreChild(Item *);
     void updateWidgetGeometries() override;
     int oppositeLength() const;
@@ -510,26 +461,19 @@ public:
     QSize availableSize() const;
     int availableLength() const;
     LengthOnSide lengthOnSide(const SizingInfo::List &sizes, int fromIndex, Side, Qt::Orientation) const;
-    int minLength(int fromIndex, Side, Qt::Orientation) const;
     int neighboursLengthFor(const Item *item, Side, Qt::Orientation) const;
     int neighboursLengthFor_recursive(const Item *item, Side, Qt::Orientation) const;
     int neighboursMinLengthFor(const Item *item, Side, Qt::Orientation) const;
-    int neighboursMinLengthFor_recursive(const Item *item, Side, Qt::Orientation) const;
-    int neighbourSeparatorWaste(const Item *item, Side, Qt::Orientation) const;
-    int neighbourSeparatorWaste_recursive(const Item *item, Side, Qt::Orientation) const;
     int availableOnSide(const Item *child, Side) const;
     int availableOnSide_recursive(const Item *child, Side, Qt::Orientation orientation) const;
-    QSize missingSizeFor(Item *item, Qt::Orientation) const;
     void onChildMinSizeChanged(Item *child);
     void onChildVisibleChanged(Item *child, bool visible);
     void updateSizeConstraints();
-    SizingInfo::List sizingInfosPerNeighbour(Item *item, Side) const;
     SizingInfo::List sizes(bool ignoreBeingInserted = false) const;
     QVector<int> calculateSqueezes(SizingInfo::List::ConstIterator begin, SizingInfo::List::ConstIterator end, int needed) const;
     QRect suggestedDropRect(QSize minSize, const Item *relativeTo, Location) const;
     void positionItems();
     void positionItems(SizingInfo::List &sizes);
-    bool isResizing() const { return m_isResizing; }
     void clear();
     Item* itemForFrame(const QWidget *w) const; // TODO: Rename
     int visibleCount_recursive() const override;
@@ -570,6 +514,7 @@ public:
     QVector<Layouting::Separator*> separators_recursive() const;
     Qt::Orientation m_orientation = Qt::Vertical;
 private:
+    void scheduleCheckSanity() const;
     Separator *neighbourSeparator(const Item *item, Side, Qt::Orientation) const;
     void updateWidgets_recursive();
     /// Returns the positions that each separator should have (x position if Qt::Horizontal, y otherwise)
@@ -594,7 +539,7 @@ inline QSize widgetMinSize(const QWidget *w)
     const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
                                             : w->minimumSizeHint().height();
 
-    return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize());
+    return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
 }
 
 inline int widgetMinLength(const QWidget *w, Qt::Orientation o) {

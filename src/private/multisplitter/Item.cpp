@@ -29,6 +29,7 @@
 using namespace Layouting;
 
 int Layouting::Item::separatorThickness = 5;
+const QSize Layouting::Item::hardcodedMinimumSize = QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
 
 ItemContainer *Item::root() const
 {
@@ -233,11 +234,6 @@ QSize Item::missingSize() const
     return missing;
 }
 
-int Item::missingLength(Qt::Orientation o) const
-{
-    return Layouting::length(missingSize(), o);
-}
-
 bool Item::isBeingInserted() const
 {
     return m_sizingInfo.isBeingInserted;
@@ -386,12 +382,6 @@ void Item::insertItem(Item *item, Location loc, AddingOption option)
     }
 
     (void) root()->checkSanity();
-}
-
-/** static */
-QSize Item::hardcodedMinimumSize()
-{
-    return QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
 }
 
 int Item::x() const
@@ -1101,8 +1091,6 @@ void ItemContainer::updateSizeConstraints()
 {
     const QSize missingSize = this->missingSize();
     if (!missingSize.isNull()) {
-        //QScopedValueRollback<bool> resizing(m_isResizing, true);
-
         if (isRoot()) {
             // Resize the whole layout
             resize(size() + missingSize);
@@ -1481,11 +1469,6 @@ bool ItemContainer::hasOrientationFor(Location loc) const
     return m_orientation == orientationForLocation(loc);
 }
 
-Item::List ItemContainer::children() const
-{
-    return m_children;
-}
-
 Item::List ItemContainer::visibleChildren(bool includeBeingInserted) const
 {
     Item::List items;
@@ -1631,11 +1614,6 @@ void ItemContainer::resize(QSize newSize) // Rename to setSize_recursive
     const bool lengthChanged = (isVertical() && heightChanged) || (isHorizontal() && widthChanged);
 
     setSize(newSize);
-
-    if (m_isResizing) {
-        // We're already under a resize, nothing to do
-        return;
-    }
 
     const int totalNewLength = usableLength();
     int remaining = totalNewLength;
@@ -2046,38 +2024,6 @@ int ItemContainer::neighboursMinLengthFor(const Item *item, Side side, Qt::Orien
     }
 }
 
-int ItemContainer::neighboursMinLengthFor_recursive(const Item *item, Side side, Qt::Orientation o) const
-{
-    return neighboursMinLengthFor(item, side, o) + (isRoot() ? 0
-                                                             : parentContainer()->neighboursMinLengthFor(this, side, o));
-}
-
-int ItemContainer::neighbourSeparatorWaste(const Item *item, Side side, Qt::Orientation o) const
-{
-    const Item::List children = visibleChildren();
-    const int index = children.indexOf(const_cast<Item*>(item));
-    if (index == -1) {
-        qWarning() << Q_FUNC_INFO << "Couldn't find item" << item;
-        return 0;
-    }
-
-    if (o == m_orientation) {
-        if (side == Side1) {
-            return index * Item::separatorThickness;
-        } else {
-            return (children.size() - 1 - index) * Item::separatorThickness;
-        }
-    } else {
-        return 0;
-    }
-}
-
-int ItemContainer::neighbourSeparatorWaste_recursive(const Item *item, Side side, Qt::Orientation orientation) const
-{
-    return neighbourSeparatorWaste(item, side, orientation) + (isRoot() ? 0
-                                                                        : parentContainer()->neighbourSeparatorWaste(item, side, orientation));
-}
-
 int ItemContainer::availableOnSide(const Item *child, Side side) const
 {
     const int length = neighboursLengthFor(child, side, m_orientation);
@@ -2101,18 +2047,6 @@ int ItemContainer::availableOnSide_recursive(const Item *child, Side side, Qt::O
         return isRoot() ? 0
                         : parentContainer()->availableOnSide_recursive(this, side, orientation);
     }
-}
-
-QSize ItemContainer::missingSizeFor(Item *item, Qt::Orientation o) const
-{
-    QSize missing = {0, 0};
-    const QSize available = availableSize();
-    const int separatorWasteW = (o == Qt::Vertical || !hasVisibleChildren()) ? 0 : Item::separatorThickness;
-    const int separatorWasteH = (o == Qt::Vertical && hasVisibleChildren()) ? Item::separatorThickness : 0;
-    missing.setWidth(qMax(item->minSize().width() - available.width() + separatorWasteW, 0));
-    missing.setHeight(qMax(item->minSize().height() - available.height() + separatorWasteH, 0));
-
-    return missing;
 }
 
 QVariantList ItemContainer::items() const
@@ -2271,30 +2205,6 @@ void ItemContainer::applyGeometries(const SizingInfo::List &sizes)
     }
 
     positionItems();
-}
-
-SizingInfo::List ItemContainer::sizingInfosPerNeighbour(Item *item, Side side) const
-{
-    Item::List children = visibleChildren();
-    const int indexOfChild = children.indexOf(item);
-    int start = 0;
-    int end = 0;
-    if (side == Side1) {
-        start = 0;
-        end = indexOfChild - 1;
-    } else {
-        start = indexOfChild + 1;
-        end = children.size() - 1;
-    }
-
-    SizingInfo::List result;
-    result.reserve(end - start + 1);
-    for (int i = start; i <= end; ++i) {
-        Item *neighbour = children.at(i);
-        result << neighbour->m_sizingInfo;
-    }
-
-    return result;
 }
 
 SizingInfo::List ItemContainer::sizes(bool ignoreBeingInserted) const
