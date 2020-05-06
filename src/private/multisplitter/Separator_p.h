@@ -42,6 +42,8 @@ class Separator : public QWidget
 public:
     typedef QVector<Separator*> List;
 
+    ~Separator();
+
     bool isVertical() const;
     void move(int p);
     Qt::Orientation orientation() const;
@@ -52,6 +54,8 @@ public:
     QWidget *hostWidget() const;
 
     void init(Layouting::ItemContainer*, Qt::Orientation orientation, SeparatorOptions options);
+
+    ItemContainer *parentContainer() const;
 
     ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other work while we're not in the final size
     static bool isResizing();
@@ -67,14 +71,13 @@ private:
     static bool s_isResizing;
     static Separator* s_separatorBeingDragged;
     void onMouseReleased();
-    int position(QPoint p) const;
     void setLazyPosition(int);
-    void setPosition(int p);
     bool isBeingDragged() const;
     Qt::Orientation m_orientation;
     QRect m_geometry;
     int m_lazyPosition = 0;
     SeparatorOptions m_options;
+    bool m_lazyResize = false; // TODO
     QRubberBand *m_lazyResizeRubberBand = nullptr;
     ItemContainer *m_parentContainer = nullptr;
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.

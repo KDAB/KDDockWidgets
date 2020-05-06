@@ -19,6 +19,7 @@
 */
 
 #include "Item_p.h"
+#include "Separator_p.h"
 #include <QtTest/QtTest>
 #include <memory.h>
 
@@ -178,6 +179,7 @@ private Q_SLOTS:
     void tst_containerReducesSize();
     void tst_insertHiddenContainer();
     void tst_availableOnSide();
+    void tst_resizeViaSeparator();
 };
 
 void TestMultiSplitter::tst_createRoot()
@@ -1143,6 +1145,28 @@ void TestMultiSplitter::tst_availableOnSide()
     auto separato31 = container31->separators_recursive()[0];
     QCOMPARE(container31->minPosForSeparator_global(separato31), item1->minSize().width() + item2->minSize().width() + item3->minSize().width() + 2*Item::separatorThickness);
     QCOMPARE(container31->maxPosForSeparator_global(separato31), root->width() - item31->width() - Item::separatorThickness);
+}
+
+void TestMultiSplitter::tst_resizeViaSeparator()
+{
+    auto root = createRoot();
+    Item *item1 = createItem(/*min=*/QSize(100, 100));
+    Item *item2 = createItem(/*min=*/QSize(100, 100));
+    root->setSize(QSize(1000, 1000));
+    root->insertItem(item1, Location_OnLeft);
+    root->insertItem(item2, Location_OnRight);
+
+    auto separator = root->separators_recursive().at(0);
+    int oldPos = separator->position();
+    const int delta = -50;
+
+    root->requestSeparatorMove(separator, delta);
+    QCOMPARE(separator->position(), oldPos + delta);
+
+    // Now move right
+    oldPos = separator->position();
+    root->requestSeparatorMove(separator, -delta);
+    QCOMPARE(separator->position(), oldPos -delta);
 }
 
 QTEST_MAIN(TestMultiSplitter)

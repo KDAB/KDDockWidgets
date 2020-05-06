@@ -28,7 +28,6 @@
 
 using namespace Layouting;
 
-bool Separator::s_isResizing = false;
 Separator* Separator::s_separatorBeingDragged = nullptr;
 
 static SeparatorFactoryFunc s_separatorFactoryFunc = nullptr;
@@ -36,6 +35,12 @@ static SeparatorFactoryFunc s_separatorFactoryFunc = nullptr;
 Separator::Separator(QWidget *hostWidget)
     : QWidget(hostWidget)
 {
+}
+
+Separator::~Separator()
+{
+    if (isBeingDragged())
+        s_separatorBeingDragged = nullptr;
 }
 
 bool Separator::isVertical() const
@@ -90,7 +95,7 @@ void Separator::mouseMoveEvent(QMouseEvent *ev)
     }
 #endif
 
-    const int positionToGoTo = position(ev->pos());
+    const int positionToGoTo = Layouting::pos(mapToParent(ev->pos()), m_orientation);
     const int minPos = m_parentContainer->minPosForSeparator_global(this);
     const int maxPos = m_parentContainer->maxPosForSeparator_global(this);
 
@@ -101,10 +106,10 @@ void Separator::mouseMoveEvent(QMouseEvent *ev)
                                                       : (positionToGoTo > position() ? Side2
                                                                                      : Side2); // Last case shouldn't happen though.
 
-    if (/*m_lazyResize*/ false) // TODO
+    if (m_lazyResize)
         setLazyPosition(positionToGoTo);
     else
-        setPosition(positionToGoTo);
+        m_parentContainer->requestSeparatorMove(this, positionToGoTo - position());
 }
 
 void Separator::mouseReleaseEvent(QMouseEvent *)
@@ -116,7 +121,7 @@ void Separator::onMouseReleased()
 {
     if (m_lazyResizeRubberBand) {
         m_lazyResizeRubberBand->hide();
-        setPosition(m_lazyPosition);
+        m_parentContainer->requestSeparatorMove(this, m_lazyPosition - position());
     }
 
     s_separatorBeingDragged = nullptr;
@@ -142,11 +147,6 @@ int Separator::position() const
     return isVertical() ? topLeft.y() : topLeft.x();
 }
 
-int Separator::position(QPoint p) const
-{
-    return isVertical() ? p.y() : p.x();
-}
-
 QWidget *Separator::hostWidget() const
 {
     return parentWidget();
@@ -160,6 +160,11 @@ void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation
     m_lazyResizeRubberBand = (options & SeparatorOption::LazyResize) ? new QRubberBand(QRubberBand::Line, hostWidget())
                                                                      : nullptr;
     setVisible(true);
+}
+
+ItemContainer *Separator::parentContainer() const
+{
+    return m_parentContainer;
 }
 
 void Separator::setGeometry(int pos, int pos2, int length)
@@ -180,7 +185,7 @@ void Separator::setGeometry(int pos, int pos2, int length)
 
 bool Separator::isResizing()
 {
-    return s_isResizing;
+    return s_separatorBeingDragged != nullptr;
 }
 
 void Separator::setSeparatorFactoryFunc(SeparatorFactoryFunc func)
@@ -215,17 +220,4 @@ void Separator::setLazyPosition(int pos)
 bool Separator::isBeingDragged() const
 {
     return s_separatorBeingDragged == this;
-}
-
-void Separator::setPosition(int p)
-{
-    QRect geo = m_geometry;
-    QPoint pt = geo.topLeft();
-    if (isVertical())
-        pt.setY(p);
-    else
-        pt.setX(p);
-
-    geo.moveTopLeft(pt);
-    setGeometry(geo);
 }

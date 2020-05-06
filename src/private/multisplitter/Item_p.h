@@ -96,7 +96,9 @@ enum Side {
 };
 
 enum class GrowthStrategy {
-    BothSidesEqually
+    BothSidesEqually,
+    Side1Only,
+    Side2Only
 };
 
 enum class SeparatorOption {
@@ -482,6 +484,8 @@ public:
     void updateWidgetGeometries() override;
     int oppositeLength() const;
 
+    void requestSeparatorMove(Separator *separator, int delta);
+
     ///@brief Grows the side1Neighbour to the right and the side2Neighbour to the left
     ///So they occupy the empty space that's between them (or bottom/top if Qt::Vertical).
     ///This is useful when an Item is removed. Its neighbours will occupy its space.
@@ -566,6 +570,7 @@ public:
     QVector<Layouting::Separator*> separators_recursive() const;
     Qt::Orientation m_orientation = Qt::Vertical;
 private:
+    Separator *neighbourSeparator(const Item *item, Side, Qt::Orientation) const;
     void updateWidgets_recursive();
     /// Returns the positions that each separator should have (x position if Qt::Horizontal, y otherwise)
     QVector<int> requiredSeparatorPositions() const;

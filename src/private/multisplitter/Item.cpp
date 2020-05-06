@@ -1838,6 +1838,81 @@ int ItemContainer::oppositeLength() const
                         : height();
 }
 
+void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
+{
+    const int separatorIndex = m_separators.indexOf(separator);
+    if (separatorIndex == -1) {
+        // Doesn't happen
+        qWarning() << Q_FUNC_INFO << "Unknown separator" << separator << this;
+        root()->dumpLayout();
+        return;
+    }
+
+    if (delta == 0)
+        return;
+
+    const int min = minPosForSeparator_global(separator);
+    const int pos = separator->position();
+    const int max = maxPosForSeparator_global(separator);
+
+    if (pos + delta < min || pos + delta > max) {
+        qWarning() << "Separator would have gone out of bounds"
+                   << separator << min << pos << max << delta;
+        return;
+    }
+
+    const Side side = delta < 0 ? Side1 : Side2;
+    const Item::List children = visibleChildren();
+    if (children.size() <= separatorIndex) {
+        // Doesn't happen
+        qWarning() << Q_FUNC_INFO << "Not enough children for separator index" << separator
+                   << this << separatorIndex;
+        root()->dumpLayout();
+        return;
+    }
+
+    int remainingToTake = qAbs(delta);
+    int tookLocally = 0;
+
+    if (side == Side1) {
+        // Separator is moving left (or top if horizontal)
+
+        // This is the available within our container, which we can use without bothering other other separators
+        Item *side2Neighbour = m_children[separatorIndex + 1];
+        const int available1 = availableOnSide(side2Neighbour, Side1);
+        tookLocally = qMin(available1, remainingToTake);
+
+        if (tookLocally != 0) {
+            growItem(side2Neighbour, tookLocally, GrowthStrategy::Side1Only);
+        }
+
+    } else {
+        // Separator is moving right (or bottom if horizontal)
+        Item *side1Neighbour = m_children[separatorIndex];
+        const int available2 = availableOnSide(side1Neighbour, Side2);
+        tookLocally = qMin(available2, remainingToTake);
+        if (tookLocally != 0) {
+            growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only);
+        }
+    }
+
+    remainingToTake -= tookLocally;
+
+    if (remainingToTake > 0) {
+        // Go up the hierarchy and move the next separator on the left
+        if (Q_UNLIKELY(isRoot())) {
+            // Doesn't happen
+            qWarning() << Q_FUNC_INFO << "Not enough space to move separator"
+                       << this;
+        } else {
+            Separator *nextSeparator = parentContainer()->neighbourSeparator(this, side, m_orientation);
+            // nextSeparator might not belong to parentContainer(), due to different orientation
+            const int remainingDelta = side == Side1 ? -remainingToTake : remainingToTake;
+            nextSeparator->parentContainer()->requestSeparatorMove(nextSeparator, remainingDelta);
+        }
+    }
+}
+
 Item *ItemContainer::visibleNeighbourFor(const Item *item, Side side) const
 {
     // Item might not be visible, so use m_children instead of visibleChildren()
@@ -2101,7 +2176,7 @@ void ItemContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)
 }
 
 void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
-                             GrowthStrategy, bool accountForNewSeparator)
+                             GrowthStrategy growthStrategy, bool accountForNewSeparator)
 {
     int toSteal = missing; // The amount that neighbours of @p index will shrink
     if (accountForNewSeparator)
@@ -2116,50 +2191,59 @@ void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
     sizingInfo.setLength(sizingInfo.length(m_orientation) + missing, m_orientation);
     sizingInfo.setOppositeLength(oppositeLength(), m_orientation);
 
-    const int count = sizes.count();
-    if (count == 1) {
-        //There's no neighbours to push, we're alone. Occupy the full container
-        sizingInfo.incrementLength(missing, m_orientation);
-        return;
-    }
-
-    // #2. Now shrink the neigbours by the same amount. Calculate how much to shrink from each side
-    const LengthOnSide side1Length = lengthOnSide(sizes, index - 1, Side1, m_orientation);
-    const LengthOnSide side2Length = lengthOnSide(sizes, index + 1, Side2, m_orientation);
-
-    int available1 = side1Length.available();
-    int available2 = side2Length.available();
     int side1Growth = 0;
     int side2Growth = 0;
 
-    if (toSteal > available1 + available2) {
-        root()->dumpLayout();
-        Q_ASSERT(false);
-    }
-
-    while (toSteal > 0) {
-        if (available1 == 0) {
-            Q_ASSERT(available2 >= toSteal);
-            side2Growth += toSteal;
-            break;
-        } else if (available2 == 0) {
-            Q_ASSERT(available1 >= toSteal);
-            side1Growth += toSteal;
-            break;
+    if (growthStrategy == GrowthStrategy::BothSidesEqually) {
+        const int count = sizes.count();
+        if (count == 1) {
+            //There's no neighbours to push, we're alone. Occupy the full container
+            sizingInfo.incrementLength(missing, m_orientation);
+            return;
         }
 
-        const int toTake = qMax(1, toSteal / 2);
-        const int took1 = qMin(toTake, available1);
-        toSteal -= took1;
-        available1 -= took1;
-        side1Growth += took1;
-        if (toSteal == 0)
-            break;
+        // #2. Now shrink the neigbours by the same amount. Calculate how much to shrink from each side
+        const LengthOnSide side1Length = lengthOnSide(sizes, index - 1, Side1, m_orientation);
+        const LengthOnSide side2Length = lengthOnSide(sizes, index + 1, Side2, m_orientation);
 
-        const int took2 = qMin(toTake, available2);
-        toSteal -= took2;
-        side2Growth += took2;
-        available2 -= took2;
+        int available1 = side1Length.available();
+        int available2 = side2Length.available();
+
+        if (toSteal > available1 + available2) {
+            root()->dumpLayout();
+            Q_ASSERT(false);
+        }
+
+        while (toSteal > 0) {
+            if (available1 == 0) {
+                Q_ASSERT(available2 >= toSteal);
+                side2Growth += toSteal;
+                break;
+            } else if (available2 == 0) {
+                Q_ASSERT(available1 >= toSteal);
+                side1Growth += toSteal;
+                break;
+            }
+
+            const int toTake = qMax(1, toSteal / 2);
+            const int took1 = qMin(toTake, available1);
+            toSteal -= took1;
+            available1 -= took1;
+            side1Growth += took1;
+            if (toSteal == 0)
+                break;
+
+            const int took2 = qMin(toTake, available2);
+            toSteal -= took2;
+            side2Growth += took2;
+            available2 -= took2;
+        }
+    } else if (growthStrategy == GrowthStrategy::Side1Only) {
+        side1Growth = missing;
+        side2Growth = 0;
+    } else if (growthStrategy == GrowthStrategy::Side2Only) {
+        side1Growth = 0;
+        side2Growth = missing;
     }
 
     shrinkNeighbours(index, sizes, side1Growth, side2Growth);
@@ -2322,34 +2406,44 @@ QVector<int> ItemContainer::requiredSeparatorPositions() const
 void ItemContainer::updateSeparators()
 {
     const QVector<int> positions = requiredSeparatorPositions();
-    const int numSeparators = positions.size();
+    const int requiredNumSeparators = positions.size();
 
-    // Instead of just creating N missing ones at the end of the list, let's minimize separators
-    // having their position changed, to minimize flicker
-    Separator::List newSeparators;
-    newSeparators.reserve(numSeparators);
+    const bool numSeparatorsChanged = requiredNumSeparators != m_separators.size();
+    if (numSeparatorsChanged) {
+        // Instead of just creating N missing ones at the end of the list, let's minimize separators
+        // having their position changed, to minimize flicker
+        Separator::List newSeparators;
+        newSeparators.reserve(requiredNumSeparators);
 
+        for (int position : positions) {
+            Separator *separator = separatorAt(position);
+            if (separator) {
+                // Already existing, reuse
+                newSeparators.push_back(separator);
+                m_separators.removeOne(separator);
+            } else {
+                separator = Separator::createSeparator(hostWidget());
+                separator->init(this, m_orientation, SeparatorOption::None);
+                newSeparators.push_back(separator);
+            }
+        }
+
+        // delete what remained, which is unused
+        deleteSeparators();
+
+        m_separators = newSeparators;
+    }
+
+    // Update their positions:
     const int pos2 = isVertical() ? mapToRoot(QPoint(0, 0)).x()
                                   : mapToRoot(QPoint(0, 0)).y();
 
+    int i = 0;
     for (int position : positions) {
-        Separator *separator = separatorAt(position);
-        if (separator) {
-            // Already existing, reuse
-            newSeparators.push_back(separator);
-            m_separators.removeOne(separator);
-        } else {
-            separator = Separator::createSeparator(hostWidget());
-            separator->init(this, m_orientation, SeparatorOption::None);
-            newSeparators.push_back(separator);
-        }
-        separator->setGeometry(position, pos2, oppositeLength());
+        m_separators.at(i)->setGeometry(position, pos2, oppositeLength());
+        i++;
     }
 
-    // delete what remained, which is unused
-    deleteSeparators();
-
-    m_separators = newSeparators;
     updateChildPercentages();
 }
 
@@ -2494,6 +2588,35 @@ QVector<Separator *> ItemContainer::separators_recursive() const
     }
 
     return separators;
+}
+
+Separator *ItemContainer::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const
+{
+    Item::List children = visibleChildren();
+    const int itemIndex = children.indexOf(const_cast<Item *>(item));
+    if (itemIndex == -1) {
+        qWarning() << Q_FUNC_INFO << "Item not found" << item
+                   << this;
+        root()->dumpLayout();
+        return nullptr;
+    }
+
+    if (orientation != this->orientation()) {
+        // Go up
+        if (isRoot()) {
+            return nullptr;
+        } else {
+            return parentContainer()->neighbourSeparator(this, side, orientation);
+        }
+    }
+
+    const int separatorIndex = side == Side1 ? itemIndex -1
+                                             : itemIndex;
+
+    if (separatorIndex < 0 || separatorIndex >= m_separators.size())
+        return nullptr;
+
+    return m_separators[separatorIndex];
 }
 
 void ItemContainer::updateWidgets_recursive()
