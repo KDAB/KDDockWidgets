@@ -2294,7 +2294,8 @@ void ItemContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int sid
         for (int i = 0; i < squeezes.size(); ++i) {
             const int squeeze = squeezes.at(i);
             SizingInfo &sizing = sizes[i];
-            sizing.setGeometry(adjustedRect(sizing.geometry, m_orientation, 0, -squeeze));
+            // setSize() or setGeometry() have the same effect here, we don't care about the position yet. That's done in positionItems()
+            sizing.setSize(adjustedRect(sizing.geometry, m_orientation, 0, -squeeze).size());
         }
     }
 
@@ -2306,7 +2307,7 @@ void ItemContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int sid
         for (int i = 0; i < squeezes.size(); ++i) {
             const int squeeze = squeezes.at(i);
             SizingInfo &sizing = sizes[i + index + 1];
-            sizing.setGeometry(adjustedRect(sizing.geometry, m_orientation, squeeze, 0));
+            sizing.setSize(adjustedRect(sizing.geometry, m_orientation, squeeze, 0).size());
         }
     }
 }

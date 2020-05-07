@@ -178,6 +178,11 @@ struct SizingInfo {
         return geometry.size();
     }
 
+    void setSize(QSize sz)
+    {
+        geometry.setSize(sz);
+    }
+
     int length(Qt::Orientation o) const {
         return Layouting::length(size(), o);
     }
