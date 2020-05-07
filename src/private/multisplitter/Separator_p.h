@@ -47,13 +47,12 @@ public:
     bool isVertical() const;
     void move(int p);
     Qt::Orientation orientation() const;
-    bool lazyResizeEnabled() const;
     void setGeometry(int pos, int pos2, int length);
     void setGeometry(QRect r);
     int position() const;
     QWidget *hostWidget() const;
 
-    void init(Layouting::ItemContainer*, Qt::Orientation orientation, SeparatorOptions options);
+    void init(Layouting::ItemContainer*, Qt::Orientation orientation);
 
     ItemContainer *parentContainer() const;
 
@@ -61,6 +60,7 @@ public:
     static bool isResizing();
     static void setSeparatorFactoryFunc(SeparatorFactoryFunc);
     static Separator* createSeparator(QWidget *host);
+    static bool usesLazyResize;
 
 protected:
     explicit Separator(QWidget *hostWidget);
@@ -76,8 +76,7 @@ private:
     Qt::Orientation m_orientation;
     QRect m_geometry;
     int m_lazyPosition = 0;
-    SeparatorOptions m_options;
-    bool m_lazyResize = false; // TODO
+    // SeparatorOptions m_options; TODO: Have a Layouting::Config
     QRubberBand *m_lazyResizeRubberBand = nullptr;
     ItemContainer *m_parentContainer = nullptr;
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.

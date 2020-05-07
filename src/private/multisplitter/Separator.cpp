@@ -19,7 +19,7 @@
 */
 
 #include "Separator_p.h"
-#include "Logging_p.h"
+#include "Logging_p.h" // TODO: Have our own
 #include "Item_p.h"
 
 #include <QMouseEvent>
@@ -31,6 +31,7 @@ using namespace Layouting;
 Separator* Separator::s_separatorBeingDragged = nullptr;
 
 static SeparatorFactoryFunc s_separatorFactoryFunc = nullptr;
+bool Separator::usesLazyResize = false;
 
 Separator::Separator(QWidget *hostWidget)
     : QWidget(hostWidget)
@@ -68,7 +69,7 @@ void Separator::mousePressEvent(QMouseEvent *)
 
     qCDebug(separators) << "Drag started";
 
-    if (lazyResizeEnabled()) {
+    if (m_lazyResizeRubberBand) {
         setLazyPosition(position());
         m_lazyResizeRubberBand->show();
     }
@@ -106,7 +107,7 @@ void Separator::mouseMoveEvent(QMouseEvent *ev)
                                                       : (positionToGoTo > position() ? Side2
                                                                                      : Side2); // Last case shouldn't happen though.
 
-    if (m_lazyResize)
+    if (m_lazyResizeRubberBand)
         setLazyPosition(positionToGoTo);
     else
         m_parentContainer->requestSeparatorMove(this, positionToGoTo - position());
@@ -125,11 +126,6 @@ void Separator::onMouseReleased()
     }
 
     s_separatorBeingDragged = nullptr;
-}
-
-bool Separator::lazyResizeEnabled() const
-{
-    return m_options & SeparatorOption::LazyResize;
 }
 
 void Separator::setGeometry(QRect r)
@@ -152,13 +148,12 @@ QWidget *Separator::hostWidget() const
     return parentWidget();
 }
 
-void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation, SeparatorOptions options)
+void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation)
 {
     m_parentContainer = parentContainer;
     m_orientation = orientation;
-    m_options = options;
-    m_lazyResizeRubberBand = (options & SeparatorOption::LazyResize) ? new QRubberBand(QRubberBand::Line, hostWidget())
-                                                                     : nullptr;
+    m_lazyResizeRubberBand = usesLazyResize ? new QRubberBand(QRubberBand::Line, hostWidget())
+                                            : nullptr;
     setVisible(true);
 }
 
@@ -208,9 +203,9 @@ void Separator::setLazyPosition(int pos)
 
         QRect geo = geometry();
         if (isVertical()) {
-            geo.moveLeft(pos);
-        } else {
             geo.moveTop(pos);
+        } else {
+            geo.moveLeft(pos);
         }
 
         m_lazyResizeRubberBand->setGeometry(geo);
