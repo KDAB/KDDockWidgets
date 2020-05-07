@@ -723,12 +723,20 @@ void TestMultiSplitter::tst_ensureEnoughSize()
 void TestMultiSplitter::tst_turnIntoPlaceholder()
 {
     auto root = createRoot();
+
+    int numVisibleItems = 0;
+    QObject::connect(root.get(), &ItemContainer::numVisibleItemsChanged, this, [&numVisibleItems] (int count) {
+        numVisibleItems = count;
+    });
+
     Item *item1 = createItem();
     Item *item2 = createItem();
     Item *item3 = createItem();
     root->insertItem(item1, Location_OnLeft);
+    QCOMPARE(numVisibleItems, 1);
     QVERIFY(item1->isVisible());
     item1->turnIntoPlaceholder();
+    QCOMPARE(numVisibleItems, 0);
     QVERIFY(!item1->isVisible());
     QCOMPARE(root->visibleCount_recursive(), 0);
     QCOMPARE(root->count_recursive(), 1);
@@ -736,11 +744,14 @@ void TestMultiSplitter::tst_turnIntoPlaceholder()
 
     root->insertItem(item2, Location_OnLeft);
     QVERIFY(root->checkSanity());
+    QCOMPARE(numVisibleItems, 1);
 
     root->insertItem(item3, Location_OnLeft);
+    QCOMPARE(numVisibleItems, 2);
     QVERIFY(root->checkSanity());
     QCOMPARE(item2->width() + item3->width() + st, root->width());
     item2->turnIntoPlaceholder();
+    QCOMPARE(numVisibleItems, 1);
     QVERIFY(root->checkSanity());
     QCOMPARE(item3->width(), root->width());
     QVERIFY(serializeDeserializeTest(root));
