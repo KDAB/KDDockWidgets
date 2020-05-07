@@ -24,7 +24,7 @@
 #include <QVector>
 #include <QRect>
 #include <QVariant>
-#include <QWidget> // TODO: remove
+#include <QWidget>
 #include <QDebug>
 #include <QVariant>
 
@@ -32,6 +32,9 @@
 
 #define KDDOCKWIDGETS_MIN_WIDTH 80
 #define KDDOCKWIDGETS_MIN_HEIGHT 90
+
+#define KDDOCKWIDGETS_MAX_WIDTH 16777215
+#define KDDOCKWIDGETS_MAX_HEIGHT 16777215
 
 class TestMultiSplitter;
 
@@ -240,8 +243,8 @@ struct SizingInfo {
 
     typedef QVector<SizingInfo> List;
     QRect geometry;
-    QSize minSize = QSize(40, 40); // TODO: Hardcoded
-    QSize maxSize = QSize(16777215, 16777215); // TODO: Not supported yet
+    QSize minSize = QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
+    QSize maxSize = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT); // TODO: Not supported yet
     double percentageWithinParent = 0.0;
     bool isBeingInserted = false;
 };
@@ -290,18 +293,10 @@ public:
     QRect geometry() const;
     QRect rect() const;
     bool isContainer() const;
-
     ItemContainer *parentContainer() const;
     void setMinSize(QSize);
     void setMaxSize(QSize);
-    virtual QSize minSize() const;
-    virtual QSize maxSize() const;
-    virtual void resize(QSize newSize);
     bool isPlaceholder() const;
-
-    virtual bool isVisible(bool excludeBeingInserted = false) const;
-    virtual void setGeometry_recursive(QRect rect);
-    virtual void dumpLayout(int level = 0);
     void setGeometry(QRect rect);
     ItemContainer *root() const;
     QRect mapToRoot(QRect) const;
@@ -312,11 +307,11 @@ public:
     QPoint mapFromParent(QPoint) const;
     int mapFromRoot(int p, Qt::Orientation) const;
 
-    QWidget *frame() const { return m_guest ? m_guest->asWidget() : nullptr; } // TODO: rename
+    QWidget *widget() const { return m_guest ? m_guest->asWidget() : nullptr; }
     GuestInterface *guest() const { return m_guest; }
-    void setFrame(GuestInterface *);
+    void setGuest(GuestInterface *);
     QWidget *window() const {
-        return m_guest ? frame()->window() : nullptr;
+        return m_guest ? widget()->window() : nullptr;
     }
 
     void ref();
@@ -327,9 +322,17 @@ public:
 
     QWidget *hostWidget() const;
     void restore(GuestInterface *guest);
+
+    virtual QSize minSize() const;
+    virtual QSize maxSize() const;
+    virtual void resize(QSize newSize);
+    virtual bool isVisible(bool excludeBeingInserted = false) const;
+    virtual void setGeometry_recursive(QRect rect);
+    virtual void dumpLayout(int level = 0);
     virtual void setHostWidget(QWidget *);
     virtual QVariantMap toVariantMap() const;
     virtual void fillFromVariantMap(const QVariantMap &map, const QHash<QString, GuestInterface*> &widgets);
+
     static Item* createFromVariantMap(QWidget *hostWidget, ItemContainer *parent,
                                       const QVariantMap &map, const QHash<QString, GuestInterface *> &widgets);
 
@@ -347,7 +350,7 @@ protected:
     void setParentContainer(ItemContainer *parent);
     void connectParent(ItemContainer *parent);
     [[nodiscard]] virtual bool checkSanity();
-    void setPos(QPoint); // TODO: Make private
+    void setPos(QPoint);
     void setPos(int pos, Qt::Orientation);
     int position(Qt::Orientation) const;
     const ItemContainer *asContainer() const;
@@ -376,8 +379,7 @@ private:
     void updateObjectName();
     void onWidgetDestroyed();
     bool m_isVisible = false;
-    bool m_destroying = false; // TODO: Remove and check if unit-tests pass
-    QWidget * m_hostWidget = nullptr;
+    QWidget *m_hostWidget = nullptr;
     GuestInterface *m_guest = nullptr;
 };
 
@@ -476,7 +478,7 @@ public:
     void positionItems();
     void positionItems(SizingInfo::List &sizes);
     void clear();
-    Item* itemForFrame(const QWidget *w) const; // TODO: Rename
+    Item* itemForWidget(const QWidget *w) const;
     int visibleCount_recursive() const override;
     int count_recursive() const;
     Item *itemAt(QPoint p) const;

@@ -108,7 +108,7 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemContainer> &root)
     QHash<QString, GuestInterface*> widgets;
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
-        if (auto w = static_cast<GuestWidget*>(item->frame()))
+        if (auto w = static_cast<GuestWidget*>(item->widget()))
             widgets.insert(QString::number(qint64(w)), w);
 
     root2.fillFromVariantMap(serialized, widgets);
@@ -140,7 +140,7 @@ static Item* createItem(QSize minSz = {})
     if (!minSz.isNull())
         guest->setMinSize(minSz);
     guest->setObjectName(item->objectName());
-    item->setFrame(guest);
+    item->setGuest(guest);
     return item;
 }
 
@@ -961,7 +961,7 @@ void TestMultiSplitter::tst_minSizeChanges()
     root->resize(QSize(200, 200));
     QVERIFY(root->checkSanity());
 
-    auto w1 = static_cast<GuestWidget*>(item1->frame()); // TODO: Static cast not required ?
+    auto w1 = static_cast<GuestWidget*>(item1->widget()); // TODO: Static cast not required ?
     w1->setMinSize(QSize(300, 300));
     QVERIFY(root->checkSanity());
     QCOMPARE(root->size(), QSize(300, 300));

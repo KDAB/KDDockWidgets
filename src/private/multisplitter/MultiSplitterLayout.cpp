@@ -159,11 +159,11 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
 
     if (frame) {
         newItem = new Item(multiSplitter());
-        newItem->setFrame(frame);
+        newItem->setGuest(frame);
     } else if (dw) {
         newItem = new Item(multiSplitter());
         frame = new Frame();
-        newItem->setFrame(frame);
+        newItem->setGuest(frame);
         frame->addWidget(dw, option);
     } else if (auto ms = qobject_cast<MultiSplitter*>(w)) {
         newItem = ms->multiSplitterLayout()->rootItem();
@@ -250,7 +250,7 @@ Item *MultiSplitterLayout::itemForFrame(const Frame *frame) const
     if (!frame)
         return nullptr;
 
-    return m_rootItem->itemForFrame(frame);
+    return m_rootItem->itemForWidget(frame);
 }
 
 Frame::List MultiSplitterLayout::framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const
@@ -272,7 +272,7 @@ Frame::List MultiSplitterLayout::frames() const
     result.reserve(items.size());
 
     for (Item *item : items) {
-        if (auto f = static_cast<Frame*>(item->frame()))
+        if (auto f = static_cast<Frame*>(item->widget()))
             result.push_back(f);
     }
 
@@ -286,7 +286,7 @@ void MultiSplitterLayout::restorePlaceholder(DockWidgetBase *dw, Item *item, int
         item->restore(newFrame);
     }
 
-    auto frame = qobject_cast<Frame*>(item->frame());
+    auto frame = qobject_cast<Frame*>(item->widget());
     Q_ASSERT(frame);
 
     if (tabIndex != -1 && frame->dockWidgetCount() >= tabIndex) {
@@ -401,7 +401,7 @@ LayoutSaver::MultiSplitterLayout MultiSplitterLayout::serialize() const
     l.frames.reserve(items.size());
     for (Item *item : items) {
         if (!item->isContainer()) {
-            if (auto frame = qobject_cast<Frame*>(item->frame()))
+            if (auto frame = qobject_cast<Frame*>(item->widget()))
                 l.frames.insert(QString::number(qint64(frame)), frame->serialize());
         }
     }
