@@ -49,7 +49,7 @@ QPoint Item::mapToRoot(QPoint p) const
     if (isRoot())
         return p;
 
-    return p + parentContainer()->mapToRoot(parentContainer()->pos());
+    return p + parentContainer()->mapToRoot(pos());
 }
 
 int Item::mapToRoot(int p, Qt::Orientation o) const
@@ -61,10 +61,10 @@ int Item::mapToRoot(int p, Qt::Orientation o) const
 
 QPoint Item::mapFromRoot(QPoint p) const
 {
-    ItemContainer *c = parentContainer();
-    while (c) {
-        p = p - c->pos();
-        c = c->parentContainer();
+    const Item *it = this;
+    while (it) {
+        p = p - it->pos();
+        it = it->parentContainer();
     }
 
     return p;
@@ -129,8 +129,9 @@ void Item::setFrame(GuestInterface *guest)
 
 void Item::updateWidgetGeometries()
 {
-    if (auto w = frame())
-        w->setGeometry(mapToRoot(m_sizingInfo.geometry));
+    if (auto w = frame()) {
+        w->setGeometry(mapToRoot(rect()));
+    }
 }
 
 QVariantMap Item::toVariantMap() const
@@ -433,6 +434,11 @@ QRect Item::geometry() const
                              : m_sizingInfo.geometry;
 }
 
+QRect Item::rect() const
+{
+    return QRect(0, 0, width(), height());
+}
+
 bool Item::isContainer() const
 {
     return m_isContainer;
@@ -486,7 +492,7 @@ void Item::setIsVisible(bool is)
 
     if (is) {
         if (auto w = frame()) {
-            w->setGeometry(mapToRoot(m_sizingInfo.geometry)); // TODO
+            w->setGeometry(mapToRoot(rect()));
             w->setVisible(true); // TODO: Only set visible when apply*() ?
         }
     }
@@ -525,18 +531,18 @@ bool Item::checkSanity()
             return false;
         }
 
-        return true; // TODO Uncomment only after honouring layoutInvalidated()
-        if (mapFromRoot(w->geometry()) != geometry()) {
-            qWarning() << Q_FUNC_INFO << "Guest widget doesn't have correct geometry. has="
-                       << mapFromRoot(w->geometry())
-                       << w->geometry()
-                       << geometry()
+        if (w->geometry() != mapToRoot(rect())) {
+            root()->dumpLayout();
+            qWarning() << Q_FUNC_INFO << "Guest widget doesn't have correct geometry. has"
+                       << "guest.global=" << w->geometry()
+                       << "; item.local=" << geometry()
+                       << "; item.global=" << mapToRoot(rect())
                        << this
                        << w;
             return false;
         }
     }
-
+return true;
     if (!isVisible()) {
         if (auto w = frame()) {
             if (w->isVisible()) {
@@ -1718,7 +1724,7 @@ void ItemContainer::dumpLayout(int level)
         if (item->isVisible()) {
             if (i < m_separators.size()) {
                 auto separator = m_separators.at(i);
-                qDebug().noquote() << indent << " - Separator: " << "local.geo=" << mapFromRoot(m_separators.at(i)->geometry())
+                qDebug().noquote() << indent << " - Separator: " << "local.geo=" << mapFromRoot(separator->geometry())
                                    << "global.geo=" << separator->geometry()
                                    << separator;
             }
@@ -2550,7 +2556,7 @@ void ItemContainer::updateWidgets_recursive()
         } else {
             if (item->isVisible()) {
                 if (QWidget *widget = item->frame()) {
-                    widget->setGeometry(item->geometry());
+                    widget->setGeometry(mapToRoot(item->geometry()));
                     widget->setVisible(true);
                 } else {
                     qWarning() << Q_FUNC_INFO << "visible item doesn't have a guest"

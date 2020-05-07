@@ -288,6 +288,7 @@ public:
     QPoint pos() const;
     int pos(Qt::Orientation) const;
     QRect geometry() const;
+    QRect rect() const;
     bool isContainer() const;
 
     ItemContainer *parentContainer() const;

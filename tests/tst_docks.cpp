@@ -652,7 +652,8 @@ void TestDocks::tst_close()
     auto da = mainwindow->dropArea();
 
     QVERIFY(da->checkSanity());
-    QCOMPARE(leftDock->frame()->x(), 0); // 1 = static anchor thickness
+    QCOMPARE(leftDock->frame()->x(), 0);
+
     QCOMPARE(centralDock->frame()->x(), leftDock->frame()->geometry().right() + Item::separatorThickness + 1);
     QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + Item::separatorThickness + 1);
     leftDock->close();

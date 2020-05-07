@@ -57,6 +57,24 @@ public:
         }
     }
 
+    void resizeEvent(QResizeEvent *ev) override
+    {
+        QWidget::resizeEvent(ev);
+        /*Debug helpers:
+         * if (geometry() == QRect(800,0, 200,200)) {
+            qDebug() << "HERE2";
+        }*/
+    }
+
+    void moveEvent(QMoveEvent *ev) override
+    {
+        QWidget::moveEvent(ev);
+        /*Debug helpers:
+         * if (geometry() == QRect(800,0, 200,200)) {
+            //qDebug() << "HERE1";
+        }*/
+    }
+
 Q_SIGNALS:
     void layoutInvalidated();
 private:
@@ -180,6 +198,7 @@ private Q_SLOTS:
     void tst_insertHiddenContainer();
     void tst_availableOnSide();
     void tst_resizeViaSeparator();
+    void tst_mapToRoot();
 };
 
 void TestMultiSplitter::tst_createRoot()
@@ -1146,6 +1165,25 @@ void TestMultiSplitter::tst_resizeViaSeparator()
     oldPos = separator->position();
     root->requestSeparatorMove(separator, -delta);
     QCOMPARE(separator->position(), oldPos -delta);
+}
+
+void TestMultiSplitter::tst_mapToRoot()
+{
+    auto root = createRoot();
+    Item *item1 = createItem();
+    root->insertItem(item1, Location_OnLeft);
+    auto root2 = createRoot();
+    Item *item21 = createItem();
+    Item *item22 = createItem();
+    root2->insertItem(item21, Location_OnTop);
+    root2->insertItem(item22, Location_OnBottom);
+    root->insertItem(root2.release(), Location_OnBottom);
+    QVERIFY(root->checkSanity());
+
+    auto c = item22->parentContainer();
+    QPoint rootPt = c->mapToRoot(QPoint(0, 0));
+    QCOMPARE(rootPt, QPoint(0, item1->height() + st));
+    QCOMPARE(c->mapFromRoot(rootPt), QPoint(0, 0));
 }
 
 QTEST_MAIN(TestMultiSplitter)

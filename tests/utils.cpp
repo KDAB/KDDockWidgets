@@ -141,12 +141,10 @@ MyWidget::MyWidget(const QString &, QColor c)
     : QWidget()
     , c(c)
 {
-    qDebug() << "MyWidget" << this;
 }
 
 MyWidget::~MyWidget()
 {
-    qDebug() << "~MyWidget" << this;
 }
 
 void MyWidget::paintEvent(QPaintEvent *)
