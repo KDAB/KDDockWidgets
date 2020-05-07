@@ -849,6 +849,18 @@ bool ItemContainer::checkSanity()
         Item *item = visibleChildren.at(i);
         const int expectedSeparatorPos = mapToRoot(item->m_sizingInfo.edge(m_orientation) + 1, m_orientation);
 
+        if (separator->hostWidget() != hostWidget()) {
+            qWarning() << Q_FUNC_INFO << "Invalid host widget for separator"
+                       << separator->hostWidget() << hostWidget() << this;
+            return false;
+        }
+
+        if (separator->parentContainer() != this) {
+            qWarning() << Q_FUNC_INFO << "Invalid parent container for separator"
+                       << separator->parentContainer() << separator << this;
+            return false;
+        }
+
         if (separator->position() != expectedSeparatorPos) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected separator position" << separator->position()
