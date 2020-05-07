@@ -2284,7 +2284,7 @@ QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator be
 void ItemContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount, int side2Amount)
 {
     Q_ASSERT(side1Amount > 0 || side2Amount > 0);
-    //Q_ASSERT(side1Growth >= 0 && side2Growth >= 0); // never negative
+    Q_ASSERT(side1Amount >= 0 && side2Amount >= 0); // never negative
 
     if (side1Amount > 0) {
         auto begin = sizes.cbegin();
