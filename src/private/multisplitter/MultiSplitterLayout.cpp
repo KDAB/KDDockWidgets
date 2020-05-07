@@ -22,21 +22,12 @@
 #include "Logging_p.h"
 #include "MultiSplitter_p.h"
 #include "Frame_p.h"
-#include "FloatingWindow_p.h"
 #include "DockWidgetBase.h"
 #include "LastPosition_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
-#include "Separator_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "LayoutSaver.h"
-
-#include <QAction>
-#include <QEvent>
-#include <QtMath>
-#include <QScopedValueRollback>
-
-#define INDICATOR_MINIMUM_LENGTH 100
 
 using namespace KDDockWidgets;
 using namespace Layouting;
@@ -103,7 +94,7 @@ bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
     if (contains(item)) {
         qWarning() << "MultiSplitterLayout::addWidget: Already contains" << widget;
         return false;
-    }// TODO: check for widget changing parent
+    }
 
     if (location == Location_None) {
         qWarning() << "MultiSplitterLayout::addWidget: not adding to location None";

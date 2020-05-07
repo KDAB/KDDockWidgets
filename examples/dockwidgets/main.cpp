@@ -83,8 +83,8 @@ int main(int argc, char **argv)
     parser.addOption(maximizeButton);
 
 #if defined(DOCKS_DEVELOPER_MODE)
-    QCommandLineOption noCentralFrame("f", QCoreApplication::translate("main", "No central frame"));
-    parser.addOption(noCentralFrame);
+    QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central frame"));
+    parser.addOption(centralFrame);
 #endif
 
     parser.process(app);
@@ -98,8 +98,8 @@ int main(int argc, char **argv)
 
     MainWindowOptions options = MainWindowOption_None;
 #if defined(DOCKS_DEVELOPER_MODE)
-    options = parser.isSet(noCentralFrame) ? MainWindowOption_None
-                                           : MainWindowOption_HasCentralFrame;
+    options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralFrame
+                                         : MainWindowOption_None;
 #endif
 
     auto flags = KDDockWidgets::Config::self().flags();

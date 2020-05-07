@@ -2350,7 +2350,7 @@ void ItemContainer::updateSeparators()
                 m_separators.removeOne(separator);
             } else {
                 separator = Separator::createSeparator(hostWidget());
-                separator->init(this, m_orientation, SeparatorOption::None);
+                separator->init(this, m_orientation);
                 newSeparators.push_back(separator);
             }
         }

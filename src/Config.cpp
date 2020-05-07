@@ -93,6 +93,8 @@ void Config::setFlags(Flags f)
         return;
     }
 
+    Layouting::Separator::usesLazyResize = f & Flag_LazyResize; // TODO: We'll soon have Layouting::Config and rely less on static members
+
     d->m_flags = f;
     d->fixFlags();
 }
