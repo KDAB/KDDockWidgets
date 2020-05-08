@@ -28,13 +28,16 @@
 #define KD_LAST_POSITION_P_H
 
 #include "docks_export.h"
-#include "multisplitter/Item_p.h"
 #include "Logging_p.h"
 #include "LayoutSaver_p.h"
 #include "QWidgetAdapter.h"
 
 #include <QPointer>
 #include <memory>
+
+namespace Layouting {
+class Item;
+}
 
 namespace KDDockWidgets {
 
@@ -43,21 +46,8 @@ class MultiSplitterLayout;
 // Just a RAII class so we don't forget to unref
 struct ItemRef
 {
-    ItemRef(const QMetaObject::Connection &conn, Layouting::Item *it)
-        : item(it)
-        , guard(it)
-        , connection(conn)
-    {
-        item->ref();
-    }
-
-    ~ItemRef()
-    {
-        if (guard) {
-            QObject::disconnect(connection);
-            item->unref();
-        }
-    }
+    ItemRef(const QMetaObject::Connection &conn, Layouting::Item *it);
+    ~ItemRef();
 
     Layouting::Item *const item;
     const QPointer<Layouting::Item> guard;

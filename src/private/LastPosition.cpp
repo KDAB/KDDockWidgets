@@ -205,3 +205,19 @@ LayoutSaver::LastPosition LastPosition::serialize() const
 
     return l;
 }
+
+ItemRef::ItemRef(const QMetaObject::Connection &conn, Item *it)
+    : item(it)
+    , guard(it)
+    , connection(conn)
+{
+    item->ref();
+}
+
+ItemRef::~ItemRef()
+{
+    if (guard) {
+        QObject::disconnect(connection);
+        item->unref();
+    }
+}
