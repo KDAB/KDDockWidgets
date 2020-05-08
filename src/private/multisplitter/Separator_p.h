@@ -22,8 +22,6 @@
 #define KD_MULTISPLITTER_SEPARATOR_P_H
 
 
-#include "Item_p.h"
-
 #include <QWidget>
 #include <QPointer>
 
@@ -32,6 +30,9 @@ class QRubberBand;
 QT_END_NAMESPACE
 
 namespace Layouting {
+
+class ItemContainer;
+class Separator;
 
 typedef Separator* (*SeparatorFactoryFunc)(QWidget *parent);
 
@@ -68,19 +69,13 @@ protected:
     void mouseMoveEvent(QMouseEvent *) override;
     void mouseReleaseEvent(QMouseEvent *) override;
 private:
-    static bool s_isResizing;
-    static Separator* s_separatorBeingDragged;
     void onMouseReleased();
     void setLazyPosition(int);
     bool isBeingDragged() const;
-    Qt::Orientation m_orientation;
-    QRect m_geometry;
-    int m_lazyPosition = 0;
-    // SeparatorOptions m_options; TODO: Have a Layouting::Config
-    QRubberBand *m_lazyResizeRubberBand = nullptr;
-    ItemContainer *m_parentContainer = nullptr;
-    // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
-    Layouting::Side m_lastMoveDirection = Side1;
+    static bool s_isResizing;
+    static Separator* s_separatorBeingDragged;
+    struct Private;
+    Private *const d;
 };
 
 }
