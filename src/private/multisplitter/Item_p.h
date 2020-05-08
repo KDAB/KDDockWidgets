@@ -72,7 +72,7 @@ enum class SeparatorOption {
     None = 0,
     LazyResize
 };
-Q_DECLARE_FLAGS(SeparatorOptions, SeparatorOption);
+Q_DECLARE_FLAGS(SeparatorOptions, SeparatorOption)
 
 inline Qt::Orientation oppositeOrientation(Qt::Orientation o) {
     return o == Qt::Vertical ? Qt::Horizontal
