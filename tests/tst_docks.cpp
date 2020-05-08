@@ -67,7 +67,8 @@ struct SetExpectedWarning
 {
     explicit SetExpectedWarning(const QString &s)
     {
-        Testing::setExpectedWarning(s);
+        if (!s.isEmpty())
+            Testing::setExpectedWarning(s);
     }
 
     ~SetExpectedWarning()
@@ -4337,13 +4338,21 @@ void TestDocks::tst_invalidJSON_data()
     // dock-x where x starts at 0
     QTest::addColumn<QString>("layoutFileName");
     QTest::addColumn<int>("numDockWidgets");
-    QTest::newRow("invalid") << "invalid.json" << 29;
+    QTest::addColumn<QString>("expectedWarning");
+    QTest::addColumn<bool>("expectedResult");
+    QTest::newRow("unsupported-serialization-version") << "unsupported-serialization-version.json"
+                                                       << 10
+                                                       << "Serialization format is too old"
+                                                       << false;
+    QTest::newRow("invalid") << "invalid.json" << 29 << "" << false;
 }
 
 void TestDocks::tst_invalidJSON()
 {
     QFETCH(QString, layoutFileName);
     QFETCH(int, numDockWidgets);
+    QFETCH(QString, expectedWarning);
+    QFETCH(bool, expectedResult);
 
     const QString absoluteLayoutFileName = QStringLiteral(":/layouts/%1").arg(layoutFileName);
 
@@ -4353,8 +4362,10 @@ void TestDocks::tst_invalidJSON()
         createDockWidget(QStringLiteral("dock-%1").arg(i), new QPushButton("one"));
     }
 
-    //LayoutSaver restorer;
-    //QVERIFY(restorer.restoreFromFile(absoluteLayoutFileName));
+    SetExpectedWarning sew(expectedWarning);
+
+    LayoutSaver restorer;
+    QCOMPARE(restorer.restoreFromFile(absoluteLayoutFileName), expectedResult);
 }
 
 void TestDocks::tst_stealFrame()

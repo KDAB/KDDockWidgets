@@ -210,6 +210,10 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         return false;
     }
 
+    if (!layout.isValid()) {
+        return false;
+    }
+
     if (d->m_restoreOptions & RestoreOption_RelativeToMainWindow)
         layout.scaleSizes();
 
@@ -336,6 +340,12 @@ bool LayoutSaver::restoreInProgress()
 
 bool LayoutSaver::Layout::isValid() const
 {
+    if (serializationVersion != KDDOCKWIDGETS_SERIALIZATION_VERSION) {
+        qWarning() << Q_FUNC_INFO << "Serialization format is too old"
+                   << serializationVersion << "current=" << KDDOCKWIDGETS_SERIALIZATION_VERSION;
+        return false;
+    }
+
     for (auto &m : mainWindows) {
         if (!m.isValid())
             return false;
