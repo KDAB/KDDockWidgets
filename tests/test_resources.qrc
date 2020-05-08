@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>layouts/invalid.json</file>
+    </qresource>
+</RCC>

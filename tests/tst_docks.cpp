@@ -317,6 +317,8 @@ private Q_SLOTS:
     void tst_restoreEmbeddedMainWindow();
     void tst_restoreWithDockFactory();
     void tst_invalidLayoutAfterRestore();
+    void tst_invalidJSON_data();
+    void tst_invalidJSON();
 
     void tst_resizeWindow_data();
     void tst_resizeWindow();
@@ -4327,6 +4329,32 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QVERIFY(Testing::waitForDeleted(fw2));
     QCOMPARE(layout->width(), oldContentsWidth);
     layout->checkSanity();
+}
+
+void TestDocks::tst_invalidJSON_data()
+{
+    // Be sure that the main windows in the json are called "MyMainWindow1" and the dock widgets
+    // dock-x where x starts at 0
+    QTest::addColumn<QString>("layoutFileName");
+    QTest::addColumn<int>("numDockWidgets");
+    QTest::newRow("invalid") << "invalid.json" << 29;
+}
+
+void TestDocks::tst_invalidJSON()
+{
+    QFETCH(QString, layoutFileName);
+    QFETCH(int, numDockWidgets);
+
+    const QString absoluteLayoutFileName = QStringLiteral(":/layouts/%1").arg(layoutFileName);
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None, "MyMainWindow1");
+    for (int i = 0; i < numDockWidgets; ++i) {
+        createDockWidget(QStringLiteral("dock-%1").arg(i), new QPushButton("one"));
+    }
+
+    //LayoutSaver restorer;
+    //QVERIFY(restorer.restoreFromFile(absoluteLayoutFileName));
 }
 
 void TestDocks::tst_stealFrame()
