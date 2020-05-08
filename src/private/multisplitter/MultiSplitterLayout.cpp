@@ -388,6 +388,9 @@ bool MultiSplitterLayout::deserialize(const LayoutSaver::MultiSplitterLayout &l)
 
     m_rootItem->fillFromVariantMap(l.layout, frames);
 
+    updateSizeConstraints();
+    m_rootItem->resize(multiSplitter()->size());
+
     return true;
 }
 

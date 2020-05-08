@@ -317,6 +317,7 @@ private Q_SLOTS:
     void tst_marginsAfterRestore();
     void tst_restoreEmbeddedMainWindow();
     void tst_restoreWithDockFactory();
+    void tst_restoreResizesLayout();
     void tst_invalidLayoutAfterRestore();
     void tst_invalidJSON_data();
     void tst_invalidJSON();
@@ -4812,6 +4813,30 @@ void TestDocks::tst_restoreWithDockFactory()
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->visibleCount(), 1);
     layout->checkSanity();
+}
+
+void TestDocks::tst_restoreResizesLayout()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile("mylayout.json"));
+
+    // Now resize the window, and then restore. The layout should have the new size
+
+    auto layout = m->multiSplitterLayout();
+    m->resize(1050, 1050);
+    QCOMPARE(m->size(), QSize(1050, 1050));
+
+    LayoutSaver restorer(RestoreOption_RelativeToMainWindow);
+    QVERIFY(restorer.restoreFromFile("mylayout.json"));
+    QVERIFY(layout->checkSanity());
+
+    QCOMPARE(m->dropArea()->size(), layout->rootItem()->size());
+    QVERIFY(layout->checkSanity());
 }
 
 void TestDocks::tst_resizeWindow_data()
