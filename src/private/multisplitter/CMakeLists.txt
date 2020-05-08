@@ -7,7 +7,7 @@ set(MULTISPLITTER_SRCS
     Separator_p.h
 )
 
-add_library(kddockwidgets_layouting ${MULTISPLITTER_SRCS})
+add_library(kddockwidgets_layouting STATIC ${MULTISPLITTER_SRCS})
 target_link_libraries(kddockwidgets_layouting Qt5::Core Qt5::Widgets)
 
 add_subdirectory(tests)
