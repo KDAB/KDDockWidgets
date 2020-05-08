@@ -32,16 +32,24 @@
 #ifndef KD_MULTISPLITTER_LAYOUT_P_H
 #define KD_MULTISPLITTER_LAYOUT_P_H
 
-#include "../Frame_p.h"
+
 #include "Separator_p.h"
 #include "docks_export.h"
-#include "Item_p.h"
+#include "KDDockWidgets.h"
+#include "LayoutSaver_p.h"
+#include "QWidgetAdapter.h"
 
 #include <QPointer>
+
+namespace Layouting {
+class Item;
+class Separator;
+}
 
 namespace KDDockWidgets {
 
 class MultiSplitter;
+class Frame;
 
 namespace Debug {
 class DebugWindow;
@@ -108,7 +116,7 @@ public:
      * This includes non-visible (placeholder) Items too.
      * @sa visibleCount
      */
-    int count() const { return m_rootItem->count_recursive();  }
+    int count() const;
 
     /**
      * @brief Returns the number of visible Items in this layout.
@@ -127,7 +135,7 @@ public:
     /**
      * @brief The list of items in this layout.
      */
-    const Layouting::Item::List items() const;
+    const QVector<Layouting::Item*> items() const;
 
     /**
      * @brief Returns the root container item
@@ -146,7 +154,7 @@ public:
     LayoutSaver::MultiSplitterLayout serialize() const;
 
     ///@brief returns the list of separators
-    Layouting::Separator::List separators() const;
+    QVector<Layouting::Separator*> separators() const;
 
     /**
      * @brief Updates the min size of this layout.
@@ -182,7 +190,7 @@ public:
     /**
      * @brief getter for the size
      */
-    QSize size() const { return m_rootItem->size(); }
+    QSize size() const;
 
     /// @brief Runs some sanity checks. Returns true if everything is OK
     bool checkSanity() const;
@@ -198,7 +206,7 @@ public:
     /**
      * @brief Returns a list of Frame objects contained in this layout
      */
-    Frame::List frames() const;
+    QList<Frame*> frames() const;
 
     /// @brief restores the dockwidget @p dw to its previous position
     void restorePlaceholder(DockWidgetBase *dw, Layouting::Item *, int tabIndex);
@@ -222,7 +230,7 @@ private:
      * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
      * If frameOrMultiSplitter is a MultiSplitterLayout then it returns a list of all frames it contains
      */
-    Frame::List framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
+    QList<Frame*> framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
 
 
     // For debug/hardening
@@ -237,7 +245,7 @@ private:
      * Right before adding the frame to the right we remove the left placeholder, otherwise it's unrefed while we're adding
      * causing a segfault. So what this does is making the unrefing happen a bit earlier.
      */
-    void unrefOldPlaceholders(const Frame::List &framesBeingAdded) const;
+    void unrefOldPlaceholders(const QList<Frame*> &framesBeingAdded) const;
 
     /**
      * @brief setter for the minimum size

@@ -199,6 +199,11 @@ bool MultiSplitterLayout::contains(const Frame *frame) const
     return itemForFrame(frame) != nullptr;
 }
 
+int MultiSplitterLayout::count() const
+{
+    return m_rootItem->count_recursive();
+}
+
 int MultiSplitterLayout::visibleCount() const
 {
     return m_rootItem->visibleCount_recursive();
@@ -324,6 +329,8 @@ QSize MultiSplitterLayout::minimumSize() const
 {
     return m_rootItem->minSize();
 }
+
+QSize MultiSplitterLayout::size() const { return m_rootItem->size(); }
 
 void MultiSplitterLayout::setMinimumSize(QSize sz)
 {
