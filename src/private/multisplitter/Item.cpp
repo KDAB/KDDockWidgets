@@ -506,6 +506,9 @@ void Item::setGeometry_recursive(QRect rect)
 
 bool Item::checkSanity()
 {
+    if (!root())
+        return true;
+
     if (minSize().width() > width() || minSize().height() > height()) {
         root()->dumpLayout();
         qWarning() << Q_FUNC_INFO << "Size constraints not honoured" << this
@@ -566,14 +569,14 @@ void Item::setGeometry(QRect rect)
             // Just a sanity check...
             ItemContainer *c = asContainer();
             if (c->hasVisibleChildren()) {
-                root()->dumpLayout();
+                if (auto r = root()) r->dumpLayout();
                 Q_ASSERT(false);
             }
         }
 
         const QSize minSz = minSize();
         if (rect.width() < minSz.width() || rect.height() < minSz.height()) {
-            root()->dumpLayout();
+            if (auto r = root()) r->dumpLayout();
             qWarning() << Q_FUNC_INFO << this << "Constraints not honoured."
                        << "sz=" << rect.size() << "; min=" << minSz
                        << ": parent=" << parentContainer();
