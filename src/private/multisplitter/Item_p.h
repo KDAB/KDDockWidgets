@@ -80,6 +80,12 @@ enum class ChildrenResizeStrategy {
     Side2, ///< When resizing a container, it takes/adds space from Side2 children first
 };
 
+enum class NeighbourSqueezeStrategy {
+    Equally, ///< The squeeze is spread between all neighbours, not just immediate ones first
+    Side1NeighboursFirst, ///< The first neighbour takes as much squeeze as it cans, only then the next neighbour is squezed, and so forth
+    Side2NeighboursFirst ///< Same as Side1NeighboursFirst but does reverse order
+};
+
 inline Qt::Orientation oppositeOrientation(Qt::Orientation o) {
     return o == Qt::Vertical ? Qt::Horizontal
                              : Qt::Vertical;
@@ -469,7 +475,8 @@ public:
     /// The neighbours at the left/top of the item, will be shrunk by @p side1Amount, while the items
     /// at right/bottom will be shrunk by @p side2Amount.
     /// Squeezes all the neighbours (not just the immediate ones).
-    void shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount, int side2Amount);
+    void shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount, int side2Amount,
+                          NeighbourSqueezeStrategy = NeighbourSqueezeStrategy::Equally);
 
     Item *visibleNeighbourFor(const Item *item, Side side) const;
     QSize availableSize() const;
@@ -484,7 +491,9 @@ public:
     void onChildVisibleChanged(Item *child, bool visible);
     void updateSizeConstraints();
     SizingInfo::List sizes(bool ignoreBeingInserted = false) const;
-    QVector<int> calculateSqueezes(SizingInfo::List::ConstIterator begin, SizingInfo::List::ConstIterator end, int needed) const;
+    QVector<int> calculateSqueezes(SizingInfo::List::ConstIterator begin,
+                                   SizingInfo::List::ConstIterator end,
+                                   int needed, NeighbourSqueezeStrategy) const;
     QRect suggestedDropRect(QSize minSize, const Item *relativeTo, Location) const;
     void positionItems();
     void positionItems(SizingInfo::List &sizes);

@@ -198,6 +198,7 @@ private Q_SLOTS:
     void tst_insertHiddenContainer();
     void tst_availableOnSide();
     void tst_resizeViaSeparator();
+    void tst_resizeViaSeparator2();
     void tst_mapToRoot();
 };
 
@@ -1176,6 +1177,54 @@ void TestMultiSplitter::tst_resizeViaSeparator()
     oldPos = separator->position();
     root->requestSeparatorMove(separator, -delta);
     QCOMPARE(separator->position(), oldPos -delta);
+}
+
+void TestMultiSplitter::tst_resizeViaSeparator2()
+{
+    // Here we resize one of the separators and make sure onyly the items next to the separator move
+    // propagation should only start when constraints have been met
+
+    auto root = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+    auto item4 = createItem();
+
+    root->insertItem(item1, Location_OnLeft);
+    root->insertItem(item2, Location_OnRight);
+    root->insertItem(item3, Location_OnRight);
+    root->insertItem(item4, Location_OnRight);
+
+    auto resizeChildrenTo1000px = [&root] {
+        /// Make sure each item has 1000  of width. Cheating here as we don't have API to resize all.
+        const int numChildren = root->numChildren();
+        for (auto item : qAsConst(root->m_children)) {
+            item->m_sizingInfo.percentageWithinParent = 1.0 / numChildren;
+        }
+        root->setSize_recursive(QSize(4000 + Item::separatorThickness*(numChildren-1), 1000));
+    };
+
+    const int delta = 100;
+    const int originalChildWidth = 1000;
+    resizeChildrenTo1000px();
+
+    const auto separators = root->separators_recursive();
+    QVERIFY(root->checkSanity());
+    QCOMPARE(separators.size(), 3);
+
+    root->requestSeparatorMove(separators[1], delta);
+
+    QCOMPARE(item1->width(), originalChildWidth); // item1 didn't change when we moved the second separator, only item2 and 3 are supposed to move
+    QCOMPARE(item2->width(), originalChildWidth + delta);
+    QCOMPARE(item3->width(), originalChildWidth - delta);
+    QCOMPARE(item4->width(), originalChildWidth);
+
+    // And back
+    root->requestSeparatorMove(separators[1], -delta);
+    QCOMPARE(item1->width(), originalChildWidth); // item1 didn't change when we moved the second separator, only item2 and 3 are supposed to move
+    QCOMPARE(item2->width(), originalChildWidth);
+    QCOMPARE(item3->width(), originalChildWidth);
+    QCOMPARE(item4->width(), originalChildWidth);
 }
 
 void TestMultiSplitter::tst_mapToRoot()
