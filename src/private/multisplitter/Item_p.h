@@ -74,6 +74,12 @@ enum class SeparatorOption {
 };
 Q_DECLARE_FLAGS(SeparatorOptions, SeparatorOption)
 
+enum class ChildrenResizeStrategy {
+    Percentage, ///< Resizes the container in a way that all children will keep occupying the same percentage
+    Side1, ///< When resizing a container, it takes/adds space from Side1 children first
+    Side2, ///< When resizing a container, it takes/adds space from Side2 children first
+};
+
 inline Qt::Orientation oppositeOrientation(Qt::Orientation o) {
     return o == Qt::Vertical ? Qt::Horizontal
                              : Qt::Vertical;
@@ -522,6 +528,7 @@ public:
     QVector<Layouting::Separator*> separators_recursive() const;
     Qt::Orientation m_orientation = Qt::Vertical;
 private:
+    void resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &sizes, ChildrenResizeStrategy);
     void scheduleCheckSanity() const;
     Separator *neighbourSeparator(const Item *item, Side, Qt::Orientation) const;
     void updateWidgets_recursive();

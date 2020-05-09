@@ -1609,6 +1609,57 @@ QSize ItemContainer::maxSize() const
     return { maxW, maxH };
 }
 
+void ItemContainer::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &childSizes,
+                                   ChildrenResizeStrategy strategy)
+{
+    // This container is being resized to @p newSize, so we must resize our children too, based
+    //on @p strategy.
+    // The new sizes are applied to @p childSizes, which will be applied to the widgets when when we're done
+
+    const QVector<double> childPercentages = this->childPercentages();
+    const int count = childSizes.count();
+    const bool widthChanged = oldSize.width() != newSize.width();
+    const bool heightChanged = oldSize.height() != newSize.height();
+    const bool lengthChanged = (isVertical() && heightChanged) || (isHorizontal() && widthChanged);
+    const int totalNewLength = usableLength();
+    int remaining = totalNewLength;
+
+    if (strategy == ChildrenResizeStrategy::Percentage) {
+        // In this strategy mode, each children will preserve its current relative size. So, if a child
+        // is occupying 50% of this container, then it will still occupy that after the container resize
+
+        for (int i = 0; i < count; ++i) {
+            const bool isLast = i == count - 1;
+
+            SizingInfo &itemSize = childSizes[i];
+
+            const qreal childPercentage = childPercentages.at(i);
+            const int newItemLength = lengthChanged ? (isLast ? remaining
+                                                              : int(childPercentage * totalNewLength))
+                                                    : itemSize.length(m_orientation);
+
+            if (newItemLength <= 0) {
+                root()->dumpLayout();
+                qWarning() << Q_FUNC_INFO << "Invalid resize newItemLength=" << newItemLength;
+                Q_ASSERT(false);
+                return;
+            }
+
+            remaining = remaining - newItemLength;
+
+            if (isVertical()) {
+                itemSize.geometry.setSize({ width(), newItemLength });
+            } else {
+                itemSize.geometry.setSize({ newItemLength, height() });
+            }
+        }
+    } else if (strategy == ChildrenResizeStrategy::Side1) {
+        // TODO
+    } else if (strategy == ChildrenResizeStrategy::Side2) {
+        // TODO
+    }
+}
+
 void ItemContainer::setSize_recursive(QSize newSize)
 {
     QScopedValueRollback<bool> block(m_blockUpdatePercentages, true);
@@ -1622,56 +1673,27 @@ void ItemContainer::setSize_recursive(QSize newSize)
                    << this;
         return;
     }
-
-    const bool widthChanged = width() != newSize.width();
-    const bool heightChanged = height() != newSize.height();
-    if (!widthChanged && !heightChanged)
+    if (newSize == size())
         return;
 
-    const bool lengthChanged = (isVertical() && heightChanged) || (isHorizontal() && widthChanged);
-
+    const QSize oldSize = size();
     setSize(newSize);
 
-    const int totalNewLength = usableLength();
-    int remaining = totalNewLength;
-
-    const QVector<double> childPercentages = this->childPercentages();
     const Item::List children = visibleChildren();
     const int count = children.size();
     SizingInfo::List childSizes = sizes();
 
-    // #1 Apply the new sizes, based on the % they occupied previously.
+    // #1 Since we changed size, also resize out children.
     // But apply them to our SizingInfo::List first before setting actual Item/QWidget geometries
     // Because we need step #2 where we ensure min sizes for each item are respected. We could
     // calculate and do everything in a single-step, but we already have the code for #2 in growItem()
     // so doing it in 2 steps will reuse much logic.
-    for (int i = 0; i < count; ++i) {
-        const bool isLast = i == count - 1;
 
-        SizingInfo &itemSize = childSizes[i];
+    // the sizes:
+    resizeChildren(oldSize, newSize, /*by-ref*/ childSizes, ChildrenResizeStrategy::Percentage);
 
-        const qreal childPercentage = childPercentages.at(i);
-        const int newItemLength = lengthChanged ? (isLast ? remaining
-                                                          : int(childPercentage * totalNewLength))
-                                                : itemSize.length(m_orientation);
-
-        if (newItemLength <= 0) {
-            root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Invalid resize newItemLength=" << newItemLength;
-            Q_ASSERT(false);
-            return;
-        }
-
-        remaining = remaining - newItemLength;
-
-        if (isVertical()) {
-            itemSize.geometry.setSize({ width(), newItemLength });
-        } else {
-            itemSize.geometry.setSize({ newItemLength, height() });
-        }
-    }
-
-    positionItems(childSizes);
+    // the positions:
+    positionItems(/*by-ref*/ childSizes);
 
     // #2 Adjust sizes so that each item has at least Item::minSize.
     for (int i = 0; i < count; ++i) {
