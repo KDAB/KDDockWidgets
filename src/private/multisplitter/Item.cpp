@@ -1622,12 +1622,12 @@ void ItemContainer::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::Lis
     const bool heightChanged = oldSize.height() != newSize.height();
     const bool lengthChanged = (isVertical() && heightChanged) || (isHorizontal() && widthChanged);
     const int totalNewLength = usableLength();
-    int remaining = totalNewLength;
 
     if (strategy == ChildrenResizeStrategy::Percentage) {
         // In this strategy mode, each children will preserve its current relative size. So, if a child
         // is occupying 50% of this container, then it will still occupy that after the container resize
 
+        int remaining = totalNewLength;
         for (int i = 0; i < count; ++i) {
             const bool isLast = i == count - 1;
 
@@ -1653,10 +1653,33 @@ void ItemContainer::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::Lis
                 itemSize.geometry.setSize({ newItemLength, height() });
             }
         }
-    } else if (strategy == ChildrenResizeStrategy::Side1) {
-        // TODO
-    } else if (strategy == ChildrenResizeStrategy::Side2) {
-        // TODO
+    } else if (strategy == ChildrenResizeStrategy::Side1 || strategy == ChildrenResizeStrategy::Side2) {
+        int remaining = Layouting::length(newSize - oldSize, m_orientation); // This is how much we need to give to children (when growing the container), or to take from them when shrinking the container
+        const bool isGrowing = remaining > 0;
+        remaining = qAbs(remaining); // Easier to deal in positive numbers
+        const bool isSide1 = strategy == ChildrenResizeStrategy::Side1;
+
+        const int start = isSide1 ? 0 : count - 1;
+        const int end = isSide1 ? count - 1 : 0;
+        const int increment = isSide1 ? 1 : -1;
+
+        for (int i = start; i <= end; i+=increment) {
+            SizingInfo &size = childSizes[i];
+
+            if (isGrowing) {
+                // Since we don't honour item max-size yet, it can just grow all it wants
+                size.incrementLength(remaining, m_orientation);
+                remaining = 0; // and we're done, the first one got everything
+            } else {
+                const int availableToGive = size.availableLength(m_orientation);
+                const int took = qMin(availableToGive, remaining);
+                size.incrementLength(-took, m_orientation);
+                remaining -= took;
+            }
+
+            if (remaining == 0)
+                break;
+        }
     }
 }
 
