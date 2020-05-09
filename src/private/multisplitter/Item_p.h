@@ -330,7 +330,7 @@ public:
 
     virtual QSize minSize() const;
     virtual QSize maxSize() const;
-    virtual void resize(QSize newSize);
+    virtual void setSize_recursive(QSize newSize);
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(QRect rect);
     virtual void dumpLayout(int level = 0);
@@ -432,7 +432,7 @@ public:
     void setOrientation(Qt::Orientation);
     QSize minSize() const override;
     QSize maxSize() const override;
-    void resize(QSize newSize) override;
+    void setSize_recursive(QSize newSize) override;
     int length() const;
     QRect rect() const;
     QVariantList items() const;

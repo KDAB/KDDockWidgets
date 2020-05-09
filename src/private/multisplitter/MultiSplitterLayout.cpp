@@ -320,7 +320,7 @@ void MultiSplitterLayout::dumpDebug() const
 void MultiSplitterLayout::setSize(QSize size)
 {
     if (size != this->size()) {
-        m_rootItem->resize(size);
+        m_rootItem->setSize_recursive(size);
         Q_EMIT sizeChanged(size);
     }
 }
@@ -389,7 +389,7 @@ bool MultiSplitterLayout::deserialize(const LayoutSaver::MultiSplitterLayout &l)
     m_rootItem->fillFromVariantMap(l.layout, frames);
 
     updateSizeConstraints();
-    m_rootItem->resize(multiSplitter()->size());
+    m_rootItem->setSize_recursive(multiSplitter()->size());
 
     return true;
 }

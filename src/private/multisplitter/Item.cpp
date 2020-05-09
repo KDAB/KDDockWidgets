@@ -219,7 +219,7 @@ void Item::setHostWidget(QWidget *host)
     }
 }
 
-void Item::resize(QSize newSize)
+void Item::setSize_recursive(QSize newSize)
 {
     setSize(newSize);
 }
@@ -312,7 +312,7 @@ void Item::setMinSize(QSize sz)
     if (sz != m_sizingInfo.minSize) {
         m_sizingInfo.minSize = sz;
         Q_EMIT minSizeChanged(this);
-        resize(size().expandedTo(sz));
+        setSize_recursive(size().expandedTo(sz));
     }
 }
 
@@ -1008,7 +1008,7 @@ void ItemContainer::setGeometry_recursive(QRect rect)
     setPos(rect.topLeft());
 
     // Call resize, which is recursive and will resize the children too
-    resize(rect.size());
+    setSize_recursive(rect.size());
 }
 
 ItemContainer *ItemContainer::convertChildToContainer(Item *leaf)
@@ -1107,7 +1107,7 @@ void ItemContainer::updateSizeConstraints()
     if (!missingSize.isNull()) {
         if (isRoot()) {
             // Resize the whole layout
-            resize(size() + missingSize);
+            setSize_recursive(size() + missingSize);
         }
     }
 
@@ -1441,7 +1441,7 @@ void ItemContainer::setLength_recursive(int length, Qt::Orientation o)
         sz.setWidth(length);
     }
 
-    resize(sz);
+    setSize_recursive(sz);
 }
 
 void ItemContainer::insertItem(Item *item, int index)
@@ -1609,7 +1609,7 @@ QSize ItemContainer::maxSize() const
     return { maxW, maxH };
 }
 
-void ItemContainer::resize(QSize newSize) // Rename to setSize_recursive
+void ItemContainer::setSize_recursive(QSize newSize)
 {
     QScopedValueRollback<bool> block(m_blockUpdatePercentages, true);
 
@@ -2218,7 +2218,7 @@ void ItemContainer::applyGeometries(const SizingInfo::List &sizes)
 
     for (int i = 0; i < count; ++i) {
         Item *item = items.at(i);
-        item->resize(sizes[i].geometry.size());
+        item->setSize_recursive(sizes[i].geometry.size());
     }
 
     positionItems();

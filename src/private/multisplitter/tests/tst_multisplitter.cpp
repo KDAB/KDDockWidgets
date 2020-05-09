@@ -542,7 +542,7 @@ void TestMultiSplitter::tst_resize()
     const int item3Percentage = item1->width() / root->width();
 
     // Now resize:
-    root->resize({2000, 505});
+    root->setSize_recursive({2000, 505});
     QVERIFY(root->checkSanity());
 
     QVERIFY(item1Percentage - (1.0* item1->width() / root->width()) < 0.01);
@@ -557,7 +557,7 @@ void TestMultiSplitter::tst_resize()
     item3->insertItem(item31, Location_OnBottom);
 
     QVERIFY(root->checkSanity());
-    root->resize({2500, 505});
+    root->setSize_recursive({2500, 505});
     QVERIFY(root->checkSanity());
     QVERIFY(serializeDeserializeTest(root));
 }
@@ -575,8 +575,8 @@ void TestMultiSplitter::tst_resizeWithConstraints()
         root->insertItem(item1, Location_OnLeft);
         QVERIFY(root->checkSanity());
 
-        root->resize(item1->minSize()); // Still fits
-        root->resize(item1->minSize() - QSize(1, 0)); // wouldn't fit
+        root->setSize_recursive(item1->minSize()); // Still fits
+        root->setSize_recursive(item1->minSize() - QSize(1, 0)); // wouldn't fit
         QCOMPARE(root->size(), item1->size()); // still has the old size
         QVERIFY(serializeDeserializeTest(root));
     }
@@ -588,7 +588,7 @@ void TestMultiSplitter::tst_resizeWithConstraints()
         auto item1 = createItem();
         auto item2 = createItem();
         auto item3 = createItem();
-        root->resize(QSize(2000, 500));
+        root->setSize_recursive(QSize(2000, 500));
         item1->setMinSize(QSize(500, 500));
         item2->setMinSize(QSize(500, 500));
         item3->setMinSize(QSize(500, 500));
@@ -969,7 +969,7 @@ void TestMultiSplitter::tst_minSizeChanges()
     Item *item1 = createItem();
     root->insertItem(item1, Location_OnLeft);
 
-    root->resize(QSize(200, 200));
+    root->setSize_recursive(QSize(200, 200));
     QVERIFY(root->checkSanity());
 
     auto w1 = static_cast<GuestWidget*>(item1->widget()); // TODO: Static cast not required ?
@@ -981,7 +981,7 @@ void TestMultiSplitter::tst_minSizeChanges()
     root->insertItem(item2, Location_OnTop);
     QVERIFY(root->checkSanity());
 
-    root->resize(QSize(1000, 1000));
+    root->setSize_recursive(QSize(1000, 1000));
     QVERIFY(root->checkSanity());
 
     w1->setMinSize(QSize(700, 700));
