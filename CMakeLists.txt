@@ -15,7 +15,6 @@ cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
 
 option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
-option(OPTION_SANITIZER_SUPPORT "Activate support for using sanitizers" OFF)
 # option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
 find_package(Qt5Widgets)
@@ -24,14 +23,10 @@ set(CMAKE_AUTOMOC ON)
 
 set(ECM_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ECM/modules/")
 set(CMAKE_MODULE_PATH ${ECM_MODULE_DIR})
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-if (OPTION_SANITIZER_SUPPORT)
-    include(ECMEnableSanitizers)
-endif()	
-
 if (OPTION_DEVELOPER_MODE)
+    include(ECMEnableSanitizers)
     add_definitions(-DDOCKS_DEVELOPER_MODE -DQT_FORCE_ASSERTS)
     if (NOT MSVC)
         add_compile_options(-Wall -Wextra -Werror)
@@ -53,7 +48,4 @@ if (OPTION_DEVELOPER_MODE)
         enable_testing()
         add_subdirectory(tests)
     endif()
-
-    # examples use <kddockwidget/ qualified includes so need to be installed first
-    # add_subdirectory(examples)
 endif()
