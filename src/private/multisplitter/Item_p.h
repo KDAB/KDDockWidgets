@@ -81,7 +81,7 @@ enum class ChildrenResizeStrategy {
 };
 
 enum class NeighbourSqueezeStrategy {
-    Equally, ///< The squeeze is spread between all neighbours, not just immediate ones first
+    AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
     Side1NeighboursFirst, ///< The first neighbour takes as much squeeze as it cans, only then the next neighbour is squezed, and so forth
     Side2NeighboursFirst ///< Same as Side1NeighboursFirst but does reverse order
 };
@@ -492,7 +492,7 @@ public:
     /// at right/bottom will be shrunk by @p side2Amount.
     /// Squeezes all the neighbours (not just the immediate ones).
     void shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount, int side2Amount,
-                          NeighbourSqueezeStrategy = NeighbourSqueezeStrategy::Equally);
+                          NeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours);
 
     Item *visibleNeighbourFor(const Item *item, Side side) const;
     QSize availableSize() const;

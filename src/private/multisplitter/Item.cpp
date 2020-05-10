@@ -1121,7 +1121,7 @@ void ItemContainer::onChildMinSizeChanged(Item *child)
     const QSize missingForChild = child->missingSize();
     if (!missingForChild.isNull()) {
         // Child has some growing to do. It will grow left and right equally, (and top-bottom), as needed.
-        growItem(child, Layouting::length(missingForChild, m_orientation), GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::Equally);
+        growItem(child, Layouting::length(missingForChild, m_orientation), GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
     }
 
     updateChildPercentages();
@@ -1772,7 +1772,7 @@ void ItemContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy stra
         SizingInfo &size = childSizes[i];
         const int missing = size.missingLength(m_orientation);
         if (missing > 0)
-            growItem(i, childSizes, missing, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::Equally);
+            growItem(i, childSizes, missing, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
     }
 
     // #3 Sizes are now correct and honour min/max sizes. So apply them to our Items
@@ -1910,7 +1910,7 @@ void ItemContainer::restoreChild(Item *item)
         item->m_sizingInfo.geometry.setWidth(0);
     }
 
-    growItem(item, newLength, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::Equally, /*accountForNewSeparator=*/ true);
+    growItem(item, newLength, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours, /*accountForNewSeparator=*/ true);
     updateSeparators_recursive();
 }
 
@@ -2355,7 +2355,7 @@ QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator be
     QVector<int> squeezes(count, 0);
     int missing = needed;
 
-    if (strategy == NeighbourSqueezeStrategy::Equally) {
+    if (strategy == NeighbourSqueezeStrategy::AllNeighbours) {
         while (missing > 0) {
             const int numDonors = std::count_if(availabilities.cbegin(), availabilities.cend(), [] (int num) {
                 return num > 0;
