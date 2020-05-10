@@ -201,6 +201,7 @@ private Q_SLOTS:
     void tst_resizeViaSeparator2();
     void tst_resizeViaSeparator3();
     void tst_mapToRoot();
+    void tst_closeAndRestorePreservesPosition();
 };
 
 void TestMultiSplitter::tst_createRoot()
@@ -1304,6 +1305,36 @@ void TestMultiSplitter::tst_mapToRoot()
     QCOMPARE(c->mapFromRoot(rootPt), QPoint(0, 0));
 }
 
-QTEST_MAIN(TestMultiSplitter)
+void TestMultiSplitter::tst_closeAndRestorePreservesPosition()
+{
+    // Result is [1, 2, 3]
+
+    auto root = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+
+    root->insertItem(item1, Location_OnLeft);
+    root->insertItem(item2, Location_OnRight);
+    root->insertItem(item3, Location_OnRight);
+
+    root->dumpLayout();
+}
+
+int main(int argc, char *argv[])
+{
+    bool qpaPassed = false;
+    for (int i = 1; i < argc; ++i) {
+        if (qstrcmp(argv[i], "-platform") == 0) {
+            qpaPassed = true;
+            break;
+        }
+    }
+
+    if (!qpaPassed)
+        qputenv("QT_QPA_PLATFORM", "offscreen");
+
+    QTEST_MAIN_IMPL(TestMultiSplitter)
+}
 
 #include "tst_multisplitter.moc"
