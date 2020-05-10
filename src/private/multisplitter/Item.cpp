@@ -356,7 +356,7 @@ int Item::pos(Qt::Orientation o) const
     return o == Qt::Vertical ? y() : x();
 }
 
-void Item::insertItem(Item *item, Location loc, AddingOption option)
+void Item::insertItem(Item *item, Location loc, DefaultSizeMode defaultSizeMode, AddingOption option)
 {
     Q_ASSERT(item != this);
 
@@ -377,10 +377,10 @@ void Item::insertItem(Item *item, Location loc, AddingOption option)
             m_parent->setOrientation(orientation);
         }
 
-        m_parent->insertItem(item, indexInParent);
+        m_parent->insertItem(item, indexInParent, defaultSizeMode);
     } else {
         ItemContainer *container = m_parent->convertChildToContainer(this);
-        container->insertItem(item, loc, option);
+        container->insertItem(item, loc, defaultSizeMode, option);
     }
 
     (void) root()->checkSanity();
@@ -715,8 +715,21 @@ int Item::visibleCount_recursive() const
     return isVisible() ? 1 : 0;
 }
 
+struct ItemContainer::Private
+{
+    Private(ItemContainer *q)
+        : q(q)
+    {
+    }
+
+    int defaultLengthFor(Item *item, DefaultSizeMode) const;
+
+    ItemContainer *const q;
+};
+
 ItemContainer::ItemContainer(QWidget *hostWidget, ItemContainer *parent)
     : Item(true, hostWidget, parent)
+    , d(new Private(this))
 {
     Q_ASSERT(parent);
     connectParent(parent);
@@ -736,9 +749,15 @@ ItemContainer::ItemContainer(QWidget *hostWidget, ItemContainer *parent)
 
 ItemContainer::ItemContainer(QWidget *hostWidget)
     : Item(true, hostWidget, /*parentContainer=*/ nullptr)
+    , d(new Private(this))
 {
     // CTOR for root item
     Q_ASSERT(hostWidget);
+}
+
+ItemContainer::~ItemContainer()
+{
+    delete d;
 }
 
 bool ItemContainer::checkSanity()
@@ -1027,17 +1046,18 @@ ItemContainer *ItemContainer::convertChildToContainer(Item *leaf)
     container->setParentContainer(nullptr);
     container->setParentContainer(this);
 
-    insertItem(container, index);
+    insertItem(container, index, DefaultSizeMode::None);
     m_children.removeOne(leaf);
     container->setGeometry(leaf->geometry());
-    container->insertItem(leaf, Location_OnTop);
+    container->insertItem(leaf, Location_OnTop, DefaultSizeMode::None);
     Q_EMIT itemsChanged();
     updateSeparators_recursive();
 
     return container;
 }
 
-void ItemContainer::insertItem(Item *item, Location loc, AddingOption option)
+void ItemContainer::insertItem(Item *item, Location loc, DefaultSizeMode defaultSizeMode,
+                               AddingOption addingOption)
 {
     Q_ASSERT(item != this);
     if (contains(item)) {
@@ -1045,8 +1065,8 @@ void ItemContainer::insertItem(Item *item, Location loc, AddingOption option)
         return;
     }
 
-    item->setIsVisible(!(option & AddingOption_StartHidden));
-    Q_ASSERT(!((option & AddingOption_StartHidden) && item->isContainer()));
+    item->setIsVisible(!(addingOption & AddingOption_StartHidden));
+    Q_ASSERT(!((addingOption & AddingOption_StartHidden) && item->isContainer()));
 
     const Qt::Orientation locOrientation = orientationForLocation(loc);
 
@@ -1057,7 +1077,7 @@ void ItemContainer::insertItem(Item *item, Location loc, AddingOption option)
         }
 
         const int index = locationIsSide1(loc) ? 0 : m_children.size();
-        insertItem(item, index);
+        insertItem(item, index, defaultSizeMode);
     } else {
         // Inserting directly in a container ? Only if it's root.
         Q_ASSERT(isRoot());
@@ -1066,10 +1086,10 @@ void ItemContainer::insertItem(Item *item, Location loc, AddingOption option)
         container->setChildren(m_children, m_orientation);
         m_children.clear();
         setOrientation(oppositeOrientation(m_orientation));
-        insertItem(container, 0);
+        insertItem(container, 0, DefaultSizeMode::None);
 
         // Now we have the correct orientation, we can insert
-        insertItem(item, loc, option);
+        insertItem(item, loc, defaultSizeMode, addingOption);
 
         if (!container->hasVisibleChildren())
             container->setGeometry(QRect());
@@ -1450,10 +1470,17 @@ void ItemContainer::setLength_recursive(int length, Qt::Orientation o)
     setSize_recursive(sz);
 }
 
-void ItemContainer::insertItem(Item *item, int index)
+void ItemContainer::insertItem(Item *item, int index, DefaultSizeMode defaultSizeMode)
 {
+    if (defaultSizeMode != DefaultSizeMode::None) {
+        /// Choose a nice size for the item we're adding
+        const int suggestedLength = d->defaultLengthFor(item, defaultSizeMode);
+        item->setLength_recursive(suggestedLength, m_orientation);
+    }
+
     m_children.insert(index, item);
     item->setParentContainer(this);
+
     Q_EMIT itemsChanged();
 
     if (!m_convertingItemToContainer && item->isVisible())
@@ -1869,10 +1896,9 @@ void ItemContainer::restoreChild(Item *item)
 
     const int available = availableOnSide(item, Side1) + availableOnSide(item, Side2) - Item::separatorThickness;
 
-    const QSize proposedSize = item->size();
     const int max = available;
     const int min = item->minLength(m_orientation);
-    const int proposed = Layouting::length(proposedSize, m_orientation);
+    const int proposed = Layouting::length(item->size(), m_orientation);
     const int newLength = qBound(min, proposed, max);
 
     Q_ASSERT(item->isVisible());
@@ -2683,4 +2709,33 @@ void SizingInfo::fromVariantMap(const QVariantMap &map)
     geometry = mapToRect(map[QStringLiteral("geometry")].toMap());
     minSize = mapToSize(map[QStringLiteral("minSize")].toMap());
     maxSize = mapToSize(map[QStringLiteral("maxSize")].toMap());
+}
+
+int ItemContainer::Private::defaultLengthFor(Item *item, DefaultSizeMode mode) const
+{
+    int result = 0;
+    switch (mode) {
+    case DefaultSizeMode::None:
+        break;
+    case DefaultSizeMode::Fair: {
+        const int numVisibleChildren = q->numVisibleChildren() + 1; // +1 so it counts with @p item too, which we're adding
+        const int usableLength = q->length() - (Item::separatorThickness*(numVisibleChildren - 1));
+        result = usableLength / numVisibleChildren;
+        break;
+    }
+    case DefaultSizeMode::FairButFloor: {
+        int length = defaultLengthFor(item, DefaultSizeMode::Fair);
+        result = qMin(length, item->length(q->m_orientation));
+        break;
+    }
+    case DefaultSizeMode::ItemSize:
+        result = item->length(q->m_orientation);
+        break;
+    case DefaultSizeMode::SizePolicy:
+        qWarning() << Q_FUNC_INFO << "Now implemented yet";
+        break;
+    }
+
+    result = qMax(item->minLength(q->m_orientation), result); // bound with max-size too
+    return result;
 }

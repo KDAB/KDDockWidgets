@@ -85,7 +85,7 @@ public:
      * @brief Adds a widget to this MultiSplitter.
      */
     void addWidget(QWidgetOrQuick *widget, KDDockWidgets::Location location,
-                   Frame *relativeTo = nullptr, AddingOption option = {});
+                   Frame *relativeTo = nullptr, DefaultSizeMode = DefaultSizeMode::Fair, AddingOption option = {});
 
     /**
      * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted

@@ -115,7 +115,9 @@ bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
     return true;
 }
 
-void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame *relativeToWidget, AddingOption option)
+void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location,
+                                    Frame *relativeToWidget, DefaultSizeMode defaultSizeMode,
+                                    AddingOption option)
 {
     auto frame = qobject_cast<Frame*>(w);
     qCDebug(addwidget) << Q_FUNC_INFO << w
@@ -164,7 +166,8 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location, Frame 
     }
 
     Q_ASSERT(!newItem->geometry().isEmpty());
-    relativeTo->insertItem(newItem, Layouting::Location(location), Layouting::AddingOption(option));
+    relativeTo->insertItem(newItem, Layouting::Location(location),
+                           Layouting::DefaultSizeMode(defaultSizeMode), Layouting::AddingOption(option));
 
     if (dw && option && AddingOption_StartHidden)
         delete frame;

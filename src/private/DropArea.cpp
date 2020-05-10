@@ -120,9 +120,9 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
     }
 
     if (option & AddingOption_StartHidden) {
-        m_layout->addWidget(dw, location, relativeToFrame, option);
+        m_layout->addWidget(dw, location, relativeToFrame, DefaultSizeMode::Fair, option);
     } else {
-        m_layout->addWidget(frame, location, relativeToFrame, option);
+        m_layout->addWidget(frame, location, relativeToFrame, DefaultSizeMode::Fair, option);
     }
 }
 
@@ -240,7 +240,7 @@ bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location locat
 
         auto frame = Config::self().frameworkWidgetFactory()->createFrame();
         frame->addWidget(dock);
-        m_layout->addWidget(frame, location, relativeTo);
+        m_layout->addWidget(frame, location, relativeTo, DefaultSizeMode::FairButFloor);
     } else if (auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow)) {
         if (!validateAffinity(floatingWindow))
             return false;

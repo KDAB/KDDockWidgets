@@ -86,6 +86,16 @@ enum class NeighbourSqueezeStrategy {
     Side2NeighboursFirst ///< Same as Side1NeighboursFirst but does reverse order
 };
 
+///@brief When an item is added we need to figure out what's a decent size for it
+///This enum specifies the different ways to calculate it
+enum class DefaultSizeMode {
+    ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
+    Fair, ///< Gives an equal relative size as the items that are already in the layout
+    FairButFloor, ///< Equal to fair, but if the item is smaller than the fair suggestion, then that small size is used.
+    SizePolicy, ///< Uses the item's sizeHint() and sizePolicy()
+    None, ///< Don't do any sizing
+};
+
 inline Qt::Orientation oppositeOrientation(Qt::Orientation o) {
     return o == Qt::Vertical ? Qt::Horizontal
                              : Qt::Vertical;
@@ -291,7 +301,9 @@ public:
     bool isRoot() const;
 
     virtual int visibleCount_recursive() const;
-    virtual void insertItem(Item *item, Location, AddingOption = AddingOption_None);
+    virtual void insertItem(Item *item, Location,
+                            DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
+                            AddingOption = AddingOption_None);
 
     /**
      * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.
@@ -420,7 +432,8 @@ public:
 
     explicit ItemContainer(QWidget *hostWidget, ItemContainer *parent);
     explicit ItemContainer(QWidget *parent);
-    void insertItem(Item *item, int index);
+    ~ItemContainer();
+    void insertItem(Item *item, int index, DefaultSizeMode);
     [[nodiscard]] bool checkSanity() override;
     bool hasOrientation() const;
     int numChildren() const;
@@ -433,7 +446,8 @@ public:
     void setGeometry_recursive(QRect rect) override;
 
     ItemContainer *convertChildToContainer(Item *leaf);
-    void insertItem(Item *item, Location, AddingOption = AddingOption_None) override;
+    void insertItem(Item *item, Location, DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
+                    AddingOption = AddingOption_None) override;
     bool hasOrientationFor(Location) const;
     Item::List visibleChildren(bool includeBeingInserted = false) const;
     int usableLength() const;
@@ -551,6 +565,9 @@ private:
     mutable bool m_checkSanityScheduled = false;
     QVector<Layouting::Separator*> m_separators;
     bool m_convertingItemToContainer = false;
+
+    struct Private;
+    Private *const d;
 };
 
 /**
