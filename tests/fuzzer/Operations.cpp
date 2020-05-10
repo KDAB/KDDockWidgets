@@ -193,7 +193,7 @@ void CloseViaDockWidgetAPI::updateDescription()
 
 void CloseViaDockWidgetAPI::execute_impl()
 {
-    DockWidgetBase *dw = dockByName(dockStr(m_dockWidgetName));
+    DockWidgetBase *dw = dockByName(m_dockWidgetName);
     auto fw = qobject_cast<FloatingWindow*>(dw->window());
     dw->close();
     if (fw && fw->beingDeleted())
@@ -237,7 +237,12 @@ void HideViaDockWidgetAPI::updateDescription()
 
 void HideViaDockWidgetAPI::execute_impl()
 {
-    DockWidgetBase *dw = dockByName(dockStr(m_dockWidgetName));
+    DockWidgetBase *dw = dockByName(m_dockWidgetName);
+    if (!dw) {
+        qDebug() << Q_FUNC_INFO << "not found" << m_dockWidgetName;
+        Q_ASSERT(false);
+    }
+
     auto fw = qobject_cast<FloatingWindow*>(dw->window());
     dw->close();
     if (fw && fw->beingDeleted())
