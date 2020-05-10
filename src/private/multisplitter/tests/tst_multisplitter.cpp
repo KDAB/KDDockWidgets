@@ -1313,12 +1313,34 @@ void TestMultiSplitter::tst_closeAndRestorePreservesPosition()
     auto item1 = createItem();
     auto item2 = createItem();
     auto item3 = createItem();
+    auto item4 = createItem();
 
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);
     root->insertItem(item3, Location_OnRight);
+    root->insertItem(item4, Location_OnRight);
+
+    const int oldW1 = item1->width();
+    const int oldW2 = item2->width();
+    //const int oldW3 = item3->width();
+    const int oldW4 = item4->width();
+
+    auto guest3 = item3->guest();
+    item3->turnIntoPlaceholder();
+
+    // Test that both sides reclaimed the space equally
+    QCOMPARE(item1->width(), oldW1);
+    QVERIFY(qAbs(item2->width() - (oldW2 + (oldW2/2))) < Item::separatorThickness);
+    QVERIFY(qAbs(item4->width() - (oldW4 + (oldW4/2))) < Item::separatorThickness);
 
     root->dumpLayout();
+    item3->restore(guest3);
+    root->dumpLayout();
+
+/*    QCOMPARE(item1->width(), oldW1);
+    QCOMPARE(item2->width(), oldW2);
+    QCOMPARE(item3->width(), oldW3);
+    QCOMPARE(item4->width(), oldW4);*/
 }
 
 int main(int argc, char *argv[])

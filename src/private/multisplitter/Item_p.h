@@ -481,8 +481,10 @@ public:
     ///@brief grows an item by @p amount. It calculates how much to grow on side1 and on side2
     ///Then calls growItem(item, side1Growth, side2Growth) which will effectively grow it,
     ///and shrink the neighbours which are donating the size.
-    void growItem(Item *, int amount, GrowthStrategy, bool accountForNewSeparator = false, ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
-    void growItem(int index, SizingInfo::List &sizes, int missing, GrowthStrategy, bool accountForNewSeparator = false);
+    void growItem(Item *, int amount, GrowthStrategy, NeighbourSqueezeStrategy neighbourSqueezeStrategy, bool accountForNewSeparator = false, ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
+    void growItem(int index, SizingInfo::List &sizes, int missing, GrowthStrategy,
+                  NeighbourSqueezeStrategy neighbourSqueezeStrategy,
+                  bool accountForNewSeparator = false);
 
     ///@brief Shrinks the neighbours of the item at @p index
     ///

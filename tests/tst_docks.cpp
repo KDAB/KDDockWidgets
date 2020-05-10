@@ -4867,9 +4867,9 @@ void TestDocks::tst_resizeWindow()
 
     ItemContainer *root = item2->parentContainer();
     if (delta > 0) {
-        root->growItem(item2, delta / 2, GrowthStrategy::BothSidesEqually);
+        root->growItem(item2, delta / 2, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::Equally);
     } else {
-        root->growItem(item1, delta / 2, GrowthStrategy::BothSidesEqually);
+        root->growItem(item1, delta / 2, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::Equally);
     }
 
     layout->checkSanity();

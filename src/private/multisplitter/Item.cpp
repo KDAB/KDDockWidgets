@@ -1121,7 +1121,7 @@ void ItemContainer::onChildMinSizeChanged(Item *child)
     const QSize missingForChild = child->missingSize();
     if (!missingForChild.isNull()) {
         // Child has some growing to do. It will grow left and right equally, (and top-bottom), as needed.
-        growItem(child, Layouting::length(missingForChild, m_orientation), GrowthStrategy::BothSidesEqually);
+        growItem(child, Layouting::length(missingForChild, m_orientation), GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::Equally);
     }
 
     updateChildPercentages();
@@ -1772,7 +1772,7 @@ void ItemContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy stra
         SizingInfo &size = childSizes[i];
         const int missing = size.missingLength(m_orientation);
         if (missing > 0)
-            growItem(i, childSizes, missing, GrowthStrategy::BothSidesEqually);
+            growItem(i, childSizes, missing, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::Equally);
     }
 
     // #3 Sizes are now correct and honour min/max sizes. So apply them to our Items
@@ -1910,7 +1910,7 @@ void ItemContainer::restoreChild(Item *item)
         item->m_sizingInfo.geometry.setWidth(0);
     }
 
-    growItem(item, newLength, GrowthStrategy::BothSidesEqually, /*accountForNewSeparator=*/ true);
+    growItem(item, newLength, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::Equally, /*accountForNewSeparator=*/ true);
     updateSeparators_recursive();
 }
 
@@ -1971,7 +1971,8 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
         tookLocally = qMin(available1, remainingToTake);
 
         if (tookLocally != 0) {
-            growItem(side2Neighbour, tookLocally, GrowthStrategy::Side1Only, false,
+            growItem(side2Neighbour, tookLocally, GrowthStrategy::Side1Only,
+                     NeighbourSqueezeStrategy::Side2NeighboursFirst, false,
                      ChildrenResizeStrategy::Side1SeparatorMove);
         }
 
@@ -1981,7 +1982,8 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
         const int available2 = availableOnSide(side1Neighbour, Side2);
         tookLocally = qMin(available2, remainingToTake);
         if (tookLocally != 0) {
-            growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only, false,
+            growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only,
+                     NeighbourSqueezeStrategy::Side1NeighboursFirst, false,
                      ChildrenResizeStrategy::Side2SeparatorMove);
         }
     }
@@ -2222,7 +2224,9 @@ void ItemContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)
 }
 
 void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
-                             GrowthStrategy growthStrategy, bool accountForNewSeparator)
+                             GrowthStrategy growthStrategy,
+                             NeighbourSqueezeStrategy neighbourSqueezeStrategy,
+                             bool accountForNewSeparator)
 {
     int toSteal = missing; // The amount that neighbours of @p index will shrink
     if (accountForNewSeparator)
@@ -2239,7 +2243,6 @@ void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
 
     int side1Growth = 0;
     int side2Growth = 0;
-    auto neighbourSqueezeStrategy = NeighbourSqueezeStrategy::Equally;
 
     if (growthStrategy == GrowthStrategy::BothSidesEqually) {
         const int count = sizes.count();
@@ -2288,24 +2291,24 @@ void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
     } else if (growthStrategy == GrowthStrategy::Side1Only) {
         side1Growth = missing;
         side2Growth = 0;
-        neighbourSqueezeStrategy = NeighbourSqueezeStrategy::Side2NeighboursFirst;
     } else if (growthStrategy == GrowthStrategy::Side2Only) {
         side1Growth = 0;
         side2Growth = missing;
-        neighbourSqueezeStrategy = NeighbourSqueezeStrategy::Side1NeighboursFirst;
     }
 
     shrinkNeighbours(index, sizes, side1Growth, side2Growth, neighbourSqueezeStrategy);
 }
 
 void ItemContainer::growItem(Item *item, int amount, GrowthStrategy growthStrategy,
-                             bool accountForNewSeparator, ChildrenResizeStrategy childResizeStrategy)
+                             NeighbourSqueezeStrategy neighbourSqueezeStrategy,
+                             bool accountForNewSeparator,
+                             ChildrenResizeStrategy childResizeStrategy)
 {
     const Item::List items = visibleChildren();
     const int index = items.indexOf(item);
     SizingInfo::List sizes = this->sizes();
 
-    growItem(index, /*by-ref=*/sizes, amount, growthStrategy, accountForNewSeparator);
+    growItem(index, /*by-ref=*/sizes, amount, growthStrategy, neighbourSqueezeStrategy, accountForNewSeparator);
 
     applyGeometries(sizes, childResizeStrategy);
 }
