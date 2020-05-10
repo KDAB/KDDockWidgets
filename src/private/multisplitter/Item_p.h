@@ -76,8 +76,8 @@ Q_DECLARE_FLAGS(SeparatorOptions, SeparatorOption)
 
 enum class ChildrenResizeStrategy {
     Percentage, ///< Resizes the container in a way that all children will keep occupying the same percentage
-    Side1, ///< When resizing a container, it takes/adds space from Side1 children first
-    Side2, ///< When resizing a container, it takes/adds space from Side2 children first
+    Side1SeparatorMove, ///< When resizing a container, it takes/adds space from Side1 children first
+    Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
 };
 
 enum class NeighbourSqueezeStrategy {
@@ -342,7 +342,7 @@ public:
 
     virtual QSize minSize() const;
     virtual QSize maxSize() const;
-    virtual void setSize_recursive(QSize newSize);
+    virtual void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage);
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(QRect rect);
     virtual void dumpLayout(int level = 0);
@@ -444,7 +444,7 @@ public:
     void setOrientation(Qt::Orientation);
     QSize minSize() const override;
     QSize maxSize() const override;
-    void setSize_recursive(QSize newSize) override;
+    void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage) override;
     int length() const;
     QRect rect() const;
     QVariantList items() const;
@@ -467,7 +467,7 @@ public:
     ///@brief grows an item by @p amount. It calculates how much to grow on side1 and on side2
     ///Then calls growItem(item, side1Growth, side2Growth) which will effectively grow it,
     ///and shrink the neighbours which are donating the size.
-    void growItem(Item *, int amount, GrowthStrategy, bool accountForNewSeparator = false);
+    void growItem(Item *, int amount, GrowthStrategy, bool accountForNewSeparator = false, ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
     void growItem(int index, SizingInfo::List &sizes, int missing, GrowthStrategy, bool accountForNewSeparator = false);
 
     ///@brief Shrinks the neighbours of the item at @p index
@@ -508,7 +508,7 @@ public:
     void setIsVisible(bool) override;
     bool isVisible(bool excludeBeingInserted = false) const override;
     void setLength_recursive(int length, Qt::Orientation) override;
-    void applyGeometries(const SizingInfo::List &sizes);
+    void applyGeometries(const SizingInfo::List &sizes, ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
     void applyPositions(const SizingInfo::List &sizes);
     Qt::Orientation orientation() const;
     bool isVertical() const;
@@ -535,6 +535,7 @@ public:
     bool m_isResizing = false;
     bool m_blockUpdatePercentages = false;
     QVector<Layouting::Separator*> separators_recursive() const;
+    QVector<Layouting::Separator*> separators() const;
     Qt::Orientation m_orientation = Qt::Vertical;
 private:
     void resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &sizes, ChildrenResizeStrategy);

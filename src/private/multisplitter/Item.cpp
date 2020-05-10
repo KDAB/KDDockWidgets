@@ -222,7 +222,7 @@ void Item::setHostWidget(QWidget *host)
     }
 }
 
-void Item::setSize_recursive(QSize newSize)
+void Item::setSize_recursive(QSize newSize, ChildrenResizeStrategy)
 {
     setSize(newSize);
 }
@@ -1659,14 +1659,32 @@ void ItemContainer::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::Lis
                 itemSize.geometry.setSize({ newItemLength, height() });
             }
         }
-    } else if (strategy == ChildrenResizeStrategy::Side1 || strategy == ChildrenResizeStrategy::Side2) {
+    } else if (strategy == ChildrenResizeStrategy::Side1SeparatorMove ||
+               strategy == ChildrenResizeStrategy::Side2SeparatorMove) {
         int remaining = Layouting::length(newSize - oldSize, m_orientation); // This is how much we need to give to children (when growing the container), or to take from them when shrinking the container
         const bool isGrowing = remaining > 0;
         remaining = qAbs(remaining); // Easier to deal in positive numbers
-        const bool isSide1 = strategy == ChildrenResizeStrategy::Side1;
+
+        // We're resizing the container, and need to decide if we start resizing the 1st children or
+        //, in reverse order.
+        // If the separator is being dragged left or top, then isSide1SeparatorMove is true.
+        // If isSide1SeparatorMove is true and we're growing, then it means this container is on the right/bottom top of the separator,
+        // so should resize its first children first. Same logic for the other 3 cases
+
+        const bool isSide1SeparatorMove = strategy == ChildrenResizeStrategy::Side1SeparatorMove;
+        bool resizeHeadFirst;
+        if (isGrowing && isSide1SeparatorMove) {
+            resizeHeadFirst = true;
+        } else if (isGrowing && !isSide1SeparatorMove) {
+            resizeHeadFirst = false;
+        } else if (!isGrowing && isSide1SeparatorMove) {
+            resizeHeadFirst = false;
+        } else if (!isGrowing && !isSide1SeparatorMove) {
+            resizeHeadFirst = true;
+        }
 
         for (int i = 0; i < count; i++) {
-            const int index = isSide1 ? i : count - 1 - i;
+            const int index = resizeHeadFirst ? i : count - 1 - i;
 
             SizingInfo &size = childSizes[index];
 
@@ -1687,7 +1705,7 @@ void ItemContainer::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::Lis
     }
 }
 
-void ItemContainer::setSize_recursive(QSize newSize)
+void ItemContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy)
 {
     QScopedValueRollback<bool> block(m_blockUpdatePercentages, true);
 
@@ -1717,7 +1735,7 @@ void ItemContainer::setSize_recursive(QSize newSize)
     // so doing it in 2 steps will reuse much logic.
 
     // the sizes:
-    resizeChildren(oldSize, newSize, /*by-ref*/ childSizes, ChildrenResizeStrategy::Percentage);
+    resizeChildren(oldSize, newSize, /*by-ref*/ childSizes, strategy);
 
     // the positions:
     positionItems(/*by-ref*/ childSizes);
@@ -1731,7 +1749,7 @@ void ItemContainer::setSize_recursive(QSize newSize)
     }
 
     // #3 Sizes are now correct and honour min/max sizes. So apply them to our Items
-    applyGeometries(childSizes);
+    applyGeometries(childSizes, strategy);
 }
 
 int ItemContainer::length() const
@@ -1927,7 +1945,8 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
         tookLocally = qMin(available1, remainingToTake);
 
         if (tookLocally != 0) {
-            growItem(side2Neighbour, tookLocally, GrowthStrategy::Side1Only);
+            growItem(side2Neighbour, tookLocally, GrowthStrategy::Side1Only, false,
+                     ChildrenResizeStrategy::Side1SeparatorMove);
         }
 
     } else {
@@ -1936,7 +1955,8 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
         const int available2 = availableOnSide(side1Neighbour, Side2);
         tookLocally = qMin(available2, remainingToTake);
         if (tookLocally != 0) {
-            growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only);
+            growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only, false,
+                     ChildrenResizeStrategy::Side2SeparatorMove);
         }
     }
 
@@ -2252,17 +2272,19 @@ void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
     shrinkNeighbours(index, sizes, side1Growth, side2Growth, neighbourSqueezeStrategy);
 }
 
-void ItemContainer::growItem(Item *item, int amount, GrowthStrategy growthStrategy, bool accountForNewSeparator)
+void ItemContainer::growItem(Item *item, int amount, GrowthStrategy growthStrategy,
+                             bool accountForNewSeparator, ChildrenResizeStrategy childResizeStrategy)
 {
     const Item::List items = visibleChildren();
     const int index = items.indexOf(item);
     SizingInfo::List sizes = this->sizes();
 
     growItem(index, /*by-ref=*/sizes, amount, growthStrategy, accountForNewSeparator);
-    applyGeometries(sizes);
+
+    applyGeometries(sizes, childResizeStrategy);
 }
 
-void ItemContainer::applyGeometries(const SizingInfo::List &sizes)
+void ItemContainer::applyGeometries(const SizingInfo::List &sizes, ChildrenResizeStrategy strategy)
 {
     const Item::List items = visibleChildren();
     const int count = items.size();
@@ -2270,7 +2292,7 @@ void ItemContainer::applyGeometries(const SizingInfo::List &sizes)
 
     for (int i = 0; i < count; ++i) {
         Item *item = items.at(i);
-        item->setSize_recursive(sizes[i].geometry.size());
+        item->setSize_recursive(sizes[i].geometry.size(), strategy);
     }
 
     positionItems();
@@ -2590,6 +2612,11 @@ QVector<Separator *> ItemContainer::separators_recursive() const
     }
 
     return separators;
+}
+
+QVector<Separator *> ItemContainer::separators() const
+{
+    return m_separators;
 }
 
 Separator *ItemContainer::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const

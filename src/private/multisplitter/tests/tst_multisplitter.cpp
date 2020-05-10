@@ -199,6 +199,7 @@ private Q_SLOTS:
     void tst_availableOnSide();
     void tst_resizeViaSeparator();
     void tst_resizeViaSeparator2();
+    void tst_resizeViaSeparator3();
     void tst_mapToRoot();
 };
 
@@ -1225,6 +1226,61 @@ void TestMultiSplitter::tst_resizeViaSeparator2()
     QCOMPARE(item2->width(), originalChildWidth);
     QCOMPARE(item3->width(), originalChildWidth);
     QCOMPARE(item4->width(), originalChildWidth);
+}
+
+void TestMultiSplitter::tst_resizeViaSeparator3()
+{
+    // Like tst_resizeViaSeparator2 but we have nesting, when a container is shrunk, it too
+    // should only shrink its children that are near the separator, instead of all of them equally
+
+    // Layout: |1 | 3|
+    //         |4 |  |
+    //         -------
+    //            2
+
+    auto root = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+    auto item4 = createItem();
+
+    root->insertItem(item1, Location_OnTop);
+    root->insertItem(item2, Location_OnBottom);
+    item1->insertItem(item3, Location_OnRight);
+    item1->insertItem(item4, Location_OnBottom);
+
+    // Make some room, so each item has enough space to shrink without hitting constriants
+    root->setSize_recursive(QSize(1000, 4000));
+
+    // Our horizontal separator
+    const auto separators = root->separators();
+    const auto horizontalSeparator = separators[0];
+    QCOMPARE(separators.size(), 1);
+
+    const int delta = 10;
+    const int oldH1 = item1->height();
+    const int oldH2 = item2->height();
+    const int oldH3 = item3->height();
+    const int oldH4 = item4->height();
+
+    // If the following ever fails, then make sure item4 has space before we move the separator
+    QVERIFY(item4->availableLength(Qt::Vertical) > delta);
+
+    // Move separator up:
+    root->requestSeparatorMove(horizontalSeparator, -delta);
+
+    QCOMPARE(item2->height(),  oldH2 + delta);
+    QCOMPARE(item3->height(),  oldH3 - delta);
+    QCOMPARE(item4->height(),  oldH4 - delta);
+    QCOMPARE(item1->height(),  oldH1);
+
+    // Move down again
+    root->requestSeparatorMove(horizontalSeparator, delta);
+
+    QCOMPARE(item2->height(),  oldH2);
+    QCOMPARE(item3->height(),  oldH3);
+    QCOMPARE(item4->height(),  oldH4);
+    QCOMPARE(item1->height(),  oldH1);
 }
 
 void TestMultiSplitter::tst_mapToRoot()
