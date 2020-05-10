@@ -66,9 +66,6 @@ void OperationBase::execute()
 QVariantMap OperationBase::toVariantMap() const
 {
     const QVariantMap params = paramsToVariantMap();
-    if (params.isEmpty()) {
-        return {};
-    }
 
     QVariantMap map;
     map["type"] = m_operationType;
@@ -473,7 +470,6 @@ void RestoreLayout::execute_impl()
         return;
     }
 
-    qDebug() << "Restoring!";
     LayoutSaver saver;
     saver.restoreLayout(serialized);
 }
