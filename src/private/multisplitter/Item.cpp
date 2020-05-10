@@ -1672,7 +1672,7 @@ void ItemContainer::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::Lis
         // so should resize its first children first. Same logic for the other 3 cases
 
         const bool isSide1SeparatorMove = strategy == ChildrenResizeStrategy::Side1SeparatorMove;
-        bool resizeHeadFirst;
+        bool resizeHeadFirst = false;
         if (isGrowing && isSide1SeparatorMove) {
             resizeHeadFirst = true;
         } else if (isGrowing && !isSide1SeparatorMove) {
