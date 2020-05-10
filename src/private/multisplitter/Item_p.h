@@ -82,8 +82,7 @@ enum class ChildrenResizeStrategy {
 
 enum class NeighbourSqueezeStrategy {
     AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
-    Side1NeighboursFirst, ///< The first neighbour takes as much squeeze as it cans, only then the next neighbour is squezed, and so forth
-    Side2NeighboursFirst ///< Same as Side1NeighboursFirst but does reverse order
+    ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the next neighbour is squezed, and so forth
 };
 
 ///@brief When an item is added we need to figure out what's a decent size for it
@@ -508,8 +507,8 @@ public:
     void updateSizeConstraints();
     SizingInfo::List sizes(bool ignoreBeingInserted = false) const;
     QVector<int> calculateSqueezes(SizingInfo::List::ConstIterator begin,
-                                   SizingInfo::List::ConstIterator end,
-                                   int needed, NeighbourSqueezeStrategy) const;
+                                   SizingInfo::List::ConstIterator end, int needed,
+                                   NeighbourSqueezeStrategy, bool reversed = false) const;
     QRect suggestedDropRect(QSize minSize, const Item *relativeTo, Location) const;
     void positionItems();
     void positionItems(SizingInfo::List &sizes);

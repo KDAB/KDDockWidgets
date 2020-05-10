@@ -1972,7 +1972,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
 
         if (tookLocally != 0) {
             growItem(side2Neighbour, tookLocally, GrowthStrategy::Side1Only,
-                     NeighbourSqueezeStrategy::Side2NeighboursFirst, false,
+                     NeighbourSqueezeStrategy::ImmediateNeighboursFirst, false,
                      ChildrenResizeStrategy::Side1SeparatorMove);
         }
 
@@ -1983,7 +1983,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
         tookLocally = qMin(available2, remainingToTake);
         if (tookLocally != 0) {
             growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only,
-                     NeighbourSqueezeStrategy::Side1NeighboursFirst, false,
+                     NeighbourSqueezeStrategy::ImmediateNeighboursFirst, false,
                      ChildrenResizeStrategy::Side2SeparatorMove);
         }
     }
@@ -2343,7 +2343,7 @@ SizingInfo::List ItemContainer::sizes(bool ignoreBeingInserted) const
 
 QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin,
                                               SizingInfo::List::ConstIterator end, int needed,
-                                              NeighbourSqueezeStrategy strategy) const
+                                              NeighbourSqueezeStrategy strategy, bool reversed) const
 {
     QVector<int> availabilities;
     for (auto it = begin; it < end; ++it) {
@@ -2383,12 +2383,10 @@ QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator be
                     break;
             }
         }
-    } else if (strategy == NeighbourSqueezeStrategy::Side1NeighboursFirst ||
-               strategy == NeighbourSqueezeStrategy::Side2NeighboursFirst) {
-
+    } else if (strategy == NeighbourSqueezeStrategy::ImmediateNeighboursFirst) {
         for (int i = 0; i < count; i++) {
-            const int index = strategy == NeighbourSqueezeStrategy::Side1NeighboursFirst ? i
-                                                                                         : count - 1 - i;
+            const int index = reversed ? count - 1 - i : i;
+
             const int available = availabilities.at(index);
             if (available > 0) {
                 const int took = qMin(missing, available);
@@ -2400,7 +2398,6 @@ QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator be
                 break;
         }
     }
-
 
     return squeezes;
 }
@@ -2414,8 +2411,8 @@ void ItemContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int sid
     if (side1Amount > 0) {
         auto begin = sizes.cbegin();
         auto end = sizes.cbegin() + index;
-
-        const QVector<int> squeezes = calculateSqueezes(begin, end, side1Amount, strategy);
+        const bool reversed = strategy == NeighbourSqueezeStrategy::ImmediateNeighboursFirst;
+        const QVector<int> squeezes = calculateSqueezes(begin, end, side1Amount, strategy, reversed);
         for (int i = 0; i < squeezes.size(); ++i) {
             const int squeeze = squeezes.at(i);
             SizingInfo &sizing = sizes[i];
