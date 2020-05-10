@@ -23,6 +23,7 @@
 
 #include "Fuzzer.h"
 #include "DockRegistry_p.h"
+#include "../utils.h"
 
 #include <QCommandLineParser>
 #include <QApplication>
@@ -36,6 +37,11 @@ using namespace KDDockWidgets::Testing;
 
 int main(int argc, char **argv)
 {
+    if (!qpaPassedAsArgument(argc, argv)) {
+        // Use offscreen by default as it's less annoying, doesn't create visible windows
+        qputenv("QT_QPA_PLATFORM", "offscreen");
+    }
+
     QApplication app(argc, argv);
 
     QCommandLineParser parser;

@@ -1331,8 +1331,10 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (!qpaPassed)
+    if (!qpaPassed) {
+        // Use offscreen by default as it's less annoying, doesn't create visible windows
         qputenv("QT_QPA_PLATFORM", "offscreen");
+    }
 
     QTEST_MAIN_IMPL(TestMultiSplitter)
 }
