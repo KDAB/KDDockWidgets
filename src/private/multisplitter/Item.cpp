@@ -1949,7 +1949,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
         return;
     }
 
-    const Side side = delta < 0 ? Side1 : Side2;
+    const Side moveDirection = delta < 0 ? Side1 : Side2;
     const Item::List children = visibleChildren();
     if (children.size() <= separatorIndex) {
         // Doesn't happen
@@ -1962,7 +1962,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
     int remainingToTake = qAbs(delta);
     int tookLocally = 0;
 
-    if (side == Side1) {
+    if (moveDirection == Side1) {
         // Separator is moving left (or top if horizontal)
 
         // This is the available within our container, which we can use without bothering other other separators
@@ -1997,9 +1997,9 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
             qWarning() << Q_FUNC_INFO << "Not enough space to move separator"
                        << this;
         } else {
-            Separator *nextSeparator = parentContainer()->neighbourSeparator(this, side, m_orientation);
+            Separator *nextSeparator = parentContainer()->neighbourSeparator(this, moveDirection, m_orientation);
             // nextSeparator might not belong to parentContainer(), due to different orientation
-            const int remainingDelta = side == Side1 ? -remainingToTake : remainingToTake;
+            const int remainingDelta = moveDirection == Side1 ? -remainingToTake : remainingToTake;
             nextSeparator->parentContainer()->requestSeparatorMove(nextSeparator, remainingDelta);
         }
     }
