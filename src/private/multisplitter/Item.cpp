@@ -206,7 +206,12 @@ void Item::restore(GuestInterface *guest)
         qWarning() << Q_FUNC_INFO << "Containers can't be restored";
     } else {
         setGuest(guest);
-        parentContainer()->restoreChild(this);
+        parentContainer()->restoreChild(this, NeighbourSqueezeStrategy::ImmediateNeighboursFirst);
+
+        // When we restore to previous positions, we only still from the immediate neighbours.
+        // It's consistent with closing an item, it also only grows the immediate neighbours
+        // By passing ImmediateNeighboursFirst we can hide/show an item multiple times and it
+        // uses the same place
     }
 }
 
@@ -1867,7 +1872,7 @@ QVector<double> ItemContainer::childPercentages() const
     return percentages;
 }
 
-void ItemContainer::restoreChild(Item *item)
+void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourSqueezeStrategy)
 {
     Q_ASSERT(contains(item));
 
@@ -1878,7 +1883,8 @@ void ItemContainer::restoreChild(Item *item)
     if (!hadVisibleChildren) {
         // This container was hidden and will now be restored too, since a child was restored
         if (auto c = parentContainer()) {
-            c->restoreChild(this);
+            setSize(item->size()); // give it a decent size. Same size as the item being restored makes sense
+            c->restoreChild(this, neighbourSqueezeStrategy);
         }
     }
 
@@ -1910,7 +1916,7 @@ void ItemContainer::restoreChild(Item *item)
         item->m_sizingInfo.geometry.setWidth(0);
     }
 
-    growItem(item, newLength, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours, /*accountForNewSeparator=*/ true);
+    growItem(item, newLength, GrowthStrategy::BothSidesEqually, neighbourSqueezeStrategy, /*accountForNewSeparator=*/ true);
     updateSeparators_recursive();
 }
 

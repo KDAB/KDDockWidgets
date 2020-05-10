@@ -464,7 +464,8 @@ public:
     void dumpLayout(int level = 0) override;
     void updateChildPercentages();
     void updateChildPercentages_recursive();
-    void restoreChild(Item *);
+    void restoreChild(Item *,
+                      NeighbourSqueezeStrategy neighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours);
     void updateWidgetGeometries() override;
     int oppositeLength() const;
 

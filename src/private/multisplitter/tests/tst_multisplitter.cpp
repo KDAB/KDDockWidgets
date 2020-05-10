@@ -1322,7 +1322,7 @@ void TestMultiSplitter::tst_closeAndRestorePreservesPosition()
 
     const int oldW1 = item1->width();
     const int oldW2 = item2->width();
-    //const int oldW3 = item3->width();
+    const int oldW3 = item3->width();
     const int oldW4 = item4->width();
 
     auto guest3 = item3->guest();
@@ -1333,14 +1333,12 @@ void TestMultiSplitter::tst_closeAndRestorePreservesPosition()
     QVERIFY(qAbs(item2->width() - (oldW2 + (oldW2/2))) < Item::separatorThickness);
     QVERIFY(qAbs(item4->width() - (oldW4 + (oldW4/2))) < Item::separatorThickness);
 
-    root->dumpLayout();
     item3->restore(guest3);
-    root->dumpLayout();
 
-/*    QCOMPARE(item1->width(), oldW1);
+    QCOMPARE(item1->width(), oldW1);
     QCOMPARE(item2->width(), oldW2);
     QCOMPARE(item3->width(), oldW3);
-    QCOMPARE(item4->width(), oldW4);*/
+    QCOMPARE(item4->width(), oldW4);
 }
 
 int main(int argc, char *argv[])
