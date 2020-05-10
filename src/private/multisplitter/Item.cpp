@@ -116,7 +116,10 @@ void Item::setGuest(GuestInterface *guest)
         connect(newWidget, SIGNAL(layoutInvalidated()), this, SLOT(onWidgetLayoutRequested()));
 
         if (m_sizingInfo.geometry.isEmpty()) {
-            setGeometry(mapFromRoot(newWidget->geometry()));
+            // Use the widgets geometry, but ensure it's at least hardcodedMinimumSize
+            QRect widgetGeo = newWidget->geometry();
+            widgetGeo.setSize(widgetGeo.size().expandedTo(Item::hardcodedMinimumSize));
+            setGeometry(mapFromRoot(widgetGeo));
         } else {
             updateWidgetGeometries();
         }
