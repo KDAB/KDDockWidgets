@@ -1189,9 +1189,16 @@ QRect ItemContainer::suggestedDropRect(QSize minSize, const Item *relativeTo, Lo
     const int count = sizes.count();
 
     if (relativeTo && count == 1) {
-        // If it's the only item then the result is that it's relative to the whole layout
-        // So simplify our code
-        relativeTo = nullptr;
+
+        // When the container only has one item we can do some simplifications
+
+        if (isRoot()) {
+            // Means the result is relative to the whole window
+            relativeTo = nullptr;
+        } else {
+            // Do it relative to this container instead
+            return parentContainer()->suggestedDropRect(minSize, this, loc);
+        }
     }
 
     if (relativeTo) {

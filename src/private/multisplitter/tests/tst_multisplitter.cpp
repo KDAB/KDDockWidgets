@@ -185,6 +185,7 @@ private Q_SLOTS:
     void tst_ensureEnoughSize();
     void tst_turnIntoPlaceholder();
     void tst_suggestedRect();
+    void tst_suggestedRect2();
     void tst_insertAnotherRoot();
     void tst_misc1();
     void tst_misc2();
@@ -827,6 +828,23 @@ void TestMultiSplitter::tst_suggestedRect()
     QCOMPARE(bottomRect.bottomLeft(), item2->geometry().bottomLeft());
     QCOMPARE(bottomRect.bottomRight(), item2->geometry().bottomRight());
     QVERIFY(serializeDeserializeTest(root));
+}
+
+void TestMultiSplitter::tst_suggestedRect2()
+{
+    // Tests a bug where the inner drop locations didn't work when there was a nested container
+    // Like container >> container >> Item
+
+    auto root1 = createRoot();
+    auto root2 = createRoot();
+
+    const QSize minSize(100, 100);
+    Item *item = createItem();
+
+    root2->insertItem(item, Location_OnRight);
+    root1->insertItem(root2.get(), Location_OnRight);
+
+    QVERIFY(item->parentContainer()->suggestedDropRect(minSize, item, Location_OnRight).isValid());
 }
 
 void TestMultiSplitter::tst_insertAnotherRoot()
