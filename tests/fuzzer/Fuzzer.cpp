@@ -92,6 +92,15 @@ void Fuzzer::runTest(const Test &test)
 
     for (const auto &op : operations) {
         index++;
+
+#if 0
+        // Uncomment to set a breakpoint! Check the last good index printed in the terminal
+        if (index == 82) {
+            qDebug() << "About to run the bad guy. Layout:";
+            DockRegistry::self()->checkSanityAll(/*dumpDebug=*/true);
+            qDebug() << "Running the bad guy:";
+        }
+#endif
         op->execute();
         if (op->hasParams())
             qDebug() << "Ran" << op->description() << index;

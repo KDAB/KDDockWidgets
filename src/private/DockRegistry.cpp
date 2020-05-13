@@ -68,11 +68,12 @@ bool DockRegistry::isEmpty() const
     return m_dockWidgets.isEmpty() && m_mainWindows.isEmpty() && m_nestedWindows.isEmpty();
 }
 
-void DockRegistry::checkSanityAll()
+void DockRegistry::checkSanityAll(bool dumpLayout)
 {
     for (auto layout : m_layouts) {
         layout->checkSanity();
-        //layout->dumpDebug();
+        if (dumpLayout)
+            layout->dumpDebug();
     }
 }
 

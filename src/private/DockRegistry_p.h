@@ -125,10 +125,12 @@ public:
     /**
      * @brief Calls MultisplitterLayout::checkSanity() on all layouts.
      *
+     * @param dumpDebug If true then each layout is dumped too
+     *
      * This is called by the unit-tests or the fuzzer. If during this the framework spits a qWarning()
      * then the app will qFatal()
      */
-    void checkSanityAll();
+    void checkSanityAll(bool dumpDebug = false);
 
     /**
      * @brief Returns whether we're processing a QEvent::Quit
