@@ -27,6 +27,7 @@
 #include "DropIndicatorOverlayInterface_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "MainWindowBase.h"
+#include "multisplitter/Item_p.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"

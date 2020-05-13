@@ -26,6 +26,10 @@
 #include <QRubberBand>
 #include <QApplication>
 
+#ifdef Q_OS_WIN
+# include <windows.h>
+#endif
+
 using namespace Layouting;
 
 Separator* Separator::s_separatorBeingDragged = nullptr;
@@ -104,7 +108,7 @@ void Separator::mouseMoveEvent(QMouseEvent *ev)
     // Try harder, Qt can be wrong, if mixed with MFC
     const bool mouseButtonIsReallyDown = (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
     if (!mouseButtonIsReallyDown) {
-        qCDebug(mouseevents) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
+        qCDebug(separators) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
         onMouseReleased();
         return;
     }

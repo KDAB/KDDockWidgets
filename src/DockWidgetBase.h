@@ -342,7 +342,6 @@ private:
     friend class Frame;
     friend class DropArea;
     friend class TestDocks;
-    friend class Item;
     friend class KDDockWidgets::TabWidget;
     friend class KDDockWidgets::TitleBar;
     friend class KDDockWidgets::DragController;
