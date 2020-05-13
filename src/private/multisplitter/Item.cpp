@@ -1352,6 +1352,7 @@ void ItemContainer::positionItems(SizingInfo::List &sizes)
         // If the layout is horizontal, the item will have the height of the container. And vice-versa
         const int oppositeLength = Layouting::length(size(), oppositeOrientation);
         sizing.setLength(oppositeLength, oppositeOrientation);
+        sizing.setPos(0, oppositeOrientation);
 
         sizing.setPos(nextPos, m_orientation);
         nextPos += sizing.length(m_orientation) + Item::separatorThickness;
