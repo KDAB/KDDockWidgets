@@ -1161,8 +1161,10 @@ void ItemContainer::onChildVisibleChanged(Item */*child*/, bool visible)
     }
 }
 
-QRect ItemContainer::suggestedDropRect(QSize minSize, const Item *relativeTo, Location loc) const
+QRect ItemContainer::suggestedDropRect(Item *item, const Item *relativeTo, Location loc) const
 {
+    const QSize minSize = item->minSize();
+
     if (relativeTo && !relativeTo->parentContainer()) {
         qWarning() << Q_FUNC_INFO << "No parent container";
         return {};
@@ -1197,7 +1199,7 @@ QRect ItemContainer::suggestedDropRect(QSize minSize, const Item *relativeTo, Lo
             relativeTo = nullptr;
         } else {
             // Do it relative to this container instead
-            return parentContainer()->suggestedDropRect(minSize, this, loc);
+            return parentContainer()->suggestedDropRect(item, this, loc);
         }
     }
 

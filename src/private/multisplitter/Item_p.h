@@ -510,7 +510,7 @@ public:
     QVector<int> calculateSqueezes(SizingInfo::List::ConstIterator begin,
                                    SizingInfo::List::ConstIterator end, int needed,
                                    NeighbourSqueezeStrategy, bool reversed = false) const;
-    QRect suggestedDropRect(QSize minSize, const Item *relativeTo, Location) const;
+    QRect suggestedDropRect(Item *item, const Item *relativeTo, Location) const;
     void positionItems();
     void positionItems(SizingInfo::List &sizes);
     void clear();

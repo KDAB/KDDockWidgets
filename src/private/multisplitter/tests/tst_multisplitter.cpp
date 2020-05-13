@@ -769,10 +769,13 @@ void TestMultiSplitter::tst_suggestedRect()
     auto root = createRoot();
     root->setSize(QSize(2000, 1000));
     const QSize minSize(100, 100);
-    QRect leftRect = root->suggestedDropRect(minSize, nullptr, Location_OnLeft);
-    QRect topRect = root->suggestedDropRect(minSize, nullptr, Location_OnTop);
-    QRect bottomRect = root->suggestedDropRect(minSize, nullptr, Location_OnBottom);
-    QRect rightRect = root->suggestedDropRect(minSize, nullptr, Location_OnRight);
+    Item itemBeingDropped(nullptr);
+    itemBeingDropped.setMinSize(minSize);
+
+    QRect leftRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnLeft);
+    QRect topRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnTop);
+    QRect bottomRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnBottom);
+    QRect rightRect = root->suggestedDropRect(&itemBeingDropped, nullptr, Location_OnRight);
 
     // Test relative to root:
     QVERIFY(leftRect.width() >= minSize.width());
@@ -792,10 +795,10 @@ void TestMultiSplitter::tst_suggestedRect()
     Item *item1 = createItem();
     item1->setMinSize(QSize(100, 100));
     root->insertItem(item1, Location_OnLeft);
-    leftRect = root->suggestedDropRect(minSize, item1, Location_OnLeft);
-    topRect = root->suggestedDropRect(minSize, item1, Location_OnTop);
-    bottomRect = root->suggestedDropRect(minSize, item1, Location_OnBottom);
-    rightRect = root->suggestedDropRect(minSize, item1, Location_OnRight);
+    leftRect = root->suggestedDropRect(&itemBeingDropped, item1, Location_OnLeft);
+    topRect = root->suggestedDropRect(&itemBeingDropped, item1, Location_OnTop);
+    bottomRect = root->suggestedDropRect(&itemBeingDropped, item1, Location_OnBottom);
+    rightRect = root->suggestedDropRect(&itemBeingDropped, item1, Location_OnRight);
     QVERIFY(leftRect.width() >= minSize.width());
     QVERIFY(topRect.height() >= minSize.height());
     QVERIFY(bottomRect.height() >= minSize.height());
@@ -814,10 +817,10 @@ void TestMultiSplitter::tst_suggestedRect()
     Item *item2 = createItem();
     item1->setMinSize(QSize(100, 100));
     root->insertItem(item2, Location_OnRight);
-    leftRect = root->suggestedDropRect(minSize, item2, Location_OnLeft);
-    topRect = root->suggestedDropRect(minSize, item2, Location_OnTop);
-    bottomRect = root->suggestedDropRect(minSize, item2, Location_OnBottom);
-    rightRect = root->suggestedDropRect(minSize, item2, Location_OnRight);
+    leftRect = root->suggestedDropRect(&itemBeingDropped, item2, Location_OnLeft);
+    topRect = root->suggestedDropRect(&itemBeingDropped, item2, Location_OnTop);
+    bottomRect = root->suggestedDropRect(&itemBeingDropped, item2, Location_OnBottom);
+    rightRect = root->suggestedDropRect(&itemBeingDropped, item2, Location_OnRight);
     QCOMPARE(leftRect.y(), item2->geometry().y());
     QVERIFY(leftRect.x() < item2->geometry().x());
     QVERIFY(leftRect.x() > item1->geometry().x());
@@ -838,13 +841,15 @@ void TestMultiSplitter::tst_suggestedRect2()
     auto root1 = createRoot();
     auto root2 = createRoot();
 
-    const QSize minSize(100, 100);
+    Item itemBeingDropped(nullptr);
+    itemBeingDropped.setMinSize(QSize(100, 100));
+
     Item *item = createItem();
 
     root2->insertItem(item, Location_OnRight);
     root1->insertItem(root2.get(), Location_OnRight);
 
-    QVERIFY(item->parentContainer()->suggestedDropRect(minSize, item, Location_OnRight).isValid());
+    QVERIFY(item->parentContainer()->suggestedDropRect(&itemBeingDropped, item, Location_OnRight).isValid());
 }
 
 void TestMultiSplitter::tst_insertAnotherRoot()

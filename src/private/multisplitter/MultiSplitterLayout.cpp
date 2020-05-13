@@ -367,14 +367,17 @@ ItemContainer *MultiSplitterLayout::rootItem() const
 
 QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widget, Location location, const Item *relativeTo) const
 {
-    const QSize min = Layouting::widgetMinSize(widget);
+    Item item(nullptr);
+    item.setSize(widget->size());
+    item.setMinSize(Layouting::widgetMinSize(widget));
+    item.setMaxSize(widget->maximumSize());
 
     if (relativeTo) {
         ItemContainer *container = relativeTo->parentContainer();
-        QRect rect = container->suggestedDropRect(min, relativeTo, Layouting::Location(location));
+        QRect rect = container->suggestedDropRect(&item, relativeTo, Layouting::Location(location));
         return container->mapToRoot(rect);
     } else {
-        return m_rootItem->suggestedDropRect(min, nullptr, Layouting::Location(location));
+        return m_rootItem->suggestedDropRect(&item, nullptr, Layouting::Location(location));
     }
 }
 
