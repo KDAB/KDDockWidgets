@@ -66,6 +66,8 @@ void OperationBase::execute()
 QVariantMap OperationBase::toVariantMap() const
 {
     const QVariantMap params = paramsToVariantMap();
+    if (!hasParams())
+        return {};
 
     QVariantMap map;
     map["type"] = m_operationType;
