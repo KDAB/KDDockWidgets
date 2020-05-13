@@ -526,6 +526,8 @@ void TestMultiSplitter::tst_minSize()
     QCOMPARE(item2->parentContainer()->minSize(), QSize(200, 300+100+st));
 
     QCOMPARE(root->minSize(), QSize(101+200+st, 300 + 100 + st));
+    QVERIFY(root->checkSanity());
+
     QVERIFY(serializeDeserializeTest(root));
 }
 

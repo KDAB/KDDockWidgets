@@ -550,6 +550,7 @@ public:
     Item::List m_children;
     bool m_isResizing = false;
     bool m_blockUpdatePercentages = false;
+    bool m_isDeserializing = false;
     QVector<Layouting::Separator*> separators_recursive() const;
     QVector<Layouting::Separator*> separators() const;
     Qt::Orientation m_orientation = Qt::Vertical;

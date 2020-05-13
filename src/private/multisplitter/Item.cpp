@@ -628,10 +628,7 @@ Item::Item(QWidget *hostWidget, ItemContainer *parent)
     , m_parent(parent)
     , m_hostWidget(hostWidget)
 {
-}
-
-Item::~Item()
-{
+    connectParent(parent);
 }
 
 Item::Item(bool isContainer, QWidget *hostWidget, ItemContainer *parent)
@@ -639,6 +636,11 @@ Item::Item(bool isContainer, QWidget *hostWidget, ItemContainer *parent)
     , m_isContainer(isContainer)
     , m_parent(parent)
     , m_hostWidget(hostWidget)
+{
+    connectParent(parent);
+}
+
+Item::~Item()
 {
 }
 
@@ -737,7 +739,6 @@ ItemContainer::ItemContainer(QWidget *hostWidget, ItemContainer *parent)
     , d(new Private(this))
 {
     Q_ASSERT(parent);
-    connectParent(parent);
 
     connect(this, &Item::xChanged, this, [this] {
         for (Item *item : qAsConst(m_children)) {
@@ -1106,7 +1107,7 @@ void ItemContainer::insertItem(Item *item, Location loc, DefaultSizeMode default
 
 void ItemContainer::onChildMinSizeChanged(Item *child)
 {
-    if (m_convertingItemToContainer) {
+    if (m_convertingItemToContainer || m_isDeserializing) {
         // Don't bother our parents, we're converting
         return;
     }
@@ -1148,6 +1149,9 @@ void ItemContainer::updateSizeConstraints()
 
 void ItemContainer::onChildVisibleChanged(Item */*child*/, bool visible)
 {
+    if (m_isDeserializing)
+        return;
+
     const int numVisible = numVisibleChildren();
     if (visible && numVisible == 1) {
         // Child became visible and there's only 1 visible child. Meaning there were 0 visible before.
@@ -1842,7 +1846,10 @@ void ItemContainer::updateChildPercentages()
             item->m_sizingInfo.percentageWithinParent = (1.0 * item->length(m_orientation)) / usable;
             auto p = item->m_sizingInfo.percentageWithinParent;
             if (qFuzzyIsNull(p) || p > 1.0) {
-                qWarning() << Q_FUNC_INFO << "Invalid percentage" << p << this;
+                root()->dumpLayout();
+                qWarning() << Q_FUNC_INFO << "Invalid percentage" << p << this
+                           << "; item=" << item
+                           << "; item.length=" << item->length(m_orientation);
             }
         } else {
             item->m_sizingInfo.percentageWithinParent = 0.0;
@@ -2613,6 +2620,8 @@ QVariantMap ItemContainer::toVariantMap() const
 void ItemContainer::fillFromVariantMap(const QVariantMap &map,
                                        const QHash<QString, GuestInterface*> &widgets)
 {
+    QScopedValueRollback<bool> deserializing(m_isDeserializing, true);
+
     Item::fillFromVariantMap(map, widgets);
     const QVariantList childrenV = map[QStringLiteral("children")].toList();
     m_orientation = Qt::Orientation(map[QStringLiteral("orientation")].toInt());
