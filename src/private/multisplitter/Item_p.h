@@ -377,7 +377,7 @@ protected:
     explicit Item(bool isContainer, QWidget *hostWidget, ItemContainer *parent);
     void setParentContainer(ItemContainer *parent);
     void connectParent(ItemContainer *parent);
-    [[nodiscard]] virtual bool checkSanity();
+    Q_REQUIRED_RESULT virtual bool checkSanity();
     void setPos(QPoint);
     void setPos(int pos, Qt::Orientation);
     int position(Qt::Orientation) const;
@@ -433,7 +433,7 @@ public:
     explicit ItemContainer(QWidget *parent);
     ~ItemContainer();
     void insertItem(Item *item, int index, DefaultSizeMode);
-    [[nodiscard]] bool checkSanity() override;
+    Q_REQUIRED_RESULT bool checkSanity() override;
     bool hasOrientation() const;
     int numChildren() const;
     int numVisibleChildren() const;
