@@ -30,15 +30,14 @@
 #include "LayoutSaver.h"
 
 using namespace KDDockWidgets;
-using namespace Layouting;
 
 MultiSplitterLayout::MultiSplitterLayout(MultiSplitter *parent)
     : QObject(parent)
     , m_multiSplitter(parent)
-    , m_rootItem(new ItemContainer(parent))
+    , m_rootItem(new Layouting::ItemContainer(parent))
 {
     Q_ASSERT(parent);
-    setRootItem(new ItemContainer(parent));
+    setRootItem(new Layouting::ItemContainer(parent));
     DockRegistry::self()->registerLayout(this);
 
     setSize(parent->size());
@@ -89,7 +88,7 @@ bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
         return false;
     }
 
-    Item *item = itemForFrame(qobject_cast<Frame*>(widget));
+    Layouting::Item *item = itemForFrame(qobject_cast<Frame*>(widget));
 
     if (contains(item)) {
         qWarning() << "MultiSplitterLayout::addWidget: Already contains" << widget;
@@ -103,7 +102,7 @@ bool MultiSplitterLayout::validateInputs(QWidgetOrQuick *widget,
 
     const bool relativeToThis = relativeToFrame == nullptr;
 
-    Item *relativeToItem = itemForFrame(relativeToFrame);
+    Layouting::Item *relativeToItem = itemForFrame(relativeToFrame);
     if (!relativeToThis && !contains(relativeToItem)) {
         qWarning() << "MultiSplitterLayout::addWidget: Doesn't contain relativeTo:"
                    << "; relativeToFrame=" << relativeToFrame
@@ -140,21 +139,21 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location,
     if (!validateInputs(w, location, relativeToWidget, option))
         return;
 
-    Item *relativeTo = itemForFrame(relativeToWidget);
+    Layouting::Item *relativeTo = itemForFrame(relativeToWidget);
     if (!relativeTo)
         relativeTo = m_rootItem;
 
-    Item *newItem = nullptr;
+    Layouting::Item *newItem = nullptr;
 
     Frame::List frames = framesFrom(w);
     unrefOldPlaceholders(frames);
     auto dw = qobject_cast<DockWidgetBase*>(w);
 
     if (frame) {
-        newItem = new Item(multiSplitter());
+        newItem = new Layouting::Item(multiSplitter());
         newItem->setGuest(frame);
     } else if (dw) {
-        newItem = new Item(multiSplitter());
+        newItem = new Layouting::Item(multiSplitter());
         frame = new Frame();
         newItem->setGuest(frame);
         frame->addWidget(dw, option);
@@ -181,7 +180,7 @@ void MultiSplitterLayout::addMultiSplitter(MultiSplitter *sourceMultiSplitter,
     addWidget(sourceMultiSplitter, location, relativeTo);
 }
 
-void MultiSplitterLayout::removeItem(Item *item)
+void MultiSplitterLayout::removeItem(Layouting::Item *item)
 {
     if (!item)
         qWarning() << Q_FUNC_INFO << "nullptr item";
@@ -192,7 +191,7 @@ void MultiSplitterLayout::removeItem(Item *item)
     item->parentContainer()->removeItem(item);
 }
 
-bool MultiSplitterLayout::contains(const Item *item) const
+bool MultiSplitterLayout::contains(const Layouting::Item *item) const
 {
     return m_rootItem->contains_recursive(item);
 }
@@ -217,7 +216,7 @@ int MultiSplitterLayout::placeholderCount() const
     return count() - visibleCount();
 }
 
-Separator::List MultiSplitterLayout::separators() const
+Layouting::Separator::List MultiSplitterLayout::separators() const
 {
     return m_rootItem->separators_recursive();
 }
@@ -244,7 +243,7 @@ QSize MultiSplitterLayout::availableSize() const
     return m_rootItem->availableSize();
 }
 
-Item *MultiSplitterLayout::itemForFrame(const Frame *frame) const
+Layouting::Item *MultiSplitterLayout::itemForFrame(const Frame *frame) const
 {
     if (!frame)
         return nullptr;
@@ -265,12 +264,12 @@ Frame::List MultiSplitterLayout::framesFrom(QWidgetOrQuick *frameOrMultiSplitter
 
 Frame::List MultiSplitterLayout::frames() const
 {
-    const Item::List items = m_rootItem->items_recursive();
+    const Layouting::Item::List items = m_rootItem->items_recursive();
 
     Frame::List result;
     result.reserve(items.size());
 
-    for (Item *item : items) {
+    for (Layouting::Item *item : items) {
         if (auto f = static_cast<Frame*>(item->widget()))
             result.push_back(f);
     }
@@ -278,7 +277,7 @@ Frame::List MultiSplitterLayout::frames() const
     return result;
 }
 
-void MultiSplitterLayout::restorePlaceholder(DockWidgetBase *dw, Item *item, int tabIndex)
+void MultiSplitterLayout::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item, int tabIndex)
 {
     if (item->isPlaceholder()) {
         Frame *newFrame = Config::self().frameworkWidgetFactory()->createFrame(multiSplitter());
@@ -306,7 +305,7 @@ void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdd
 {
     for (Frame *frame : framesBeingAdded) {
         for (DockWidgetBase *dw : frame->dockWidgets()) {
-            if (Item *existingItem = dw->lastPosition()->layoutItem()) {
+            if (Layouting::Item *existingItem = dw->lastPosition()->layoutItem()) {
                 if (contains(existingItem)) { // We're only interested in placeholders from this layout
                     dw->lastPosition()->removePlaceholders(this);
                 }
@@ -345,35 +344,37 @@ void MultiSplitterLayout::setMinimumSize(QSize sz)
     qCDebug(sizing) << Q_FUNC_INFO << "minSize = " << m_rootItem->minSize();
 }
 
-void MultiSplitterLayout::setRootItem(ItemContainer *root)
+void MultiSplitterLayout::setRootItem(Layouting::ItemContainer *root)
 {
     delete m_rootItem;
     m_rootItem = root;
-    connect(m_rootItem, &ItemContainer::numVisibleItemsChanged, this, &MultiSplitterLayout::visibleWidgetCountChanged);
-    connect(m_rootItem, &ItemContainer::minSizeChanged, this, [this] {
+    connect(m_rootItem, &Layouting::ItemContainer::numVisibleItemsChanged,
+            this, &MultiSplitterLayout::visibleWidgetCountChanged);
+    connect(m_rootItem, &Layouting::ItemContainer::minSizeChanged, this, [this] {
         Q_EMIT minimumSizeChanged(minimumSize());
     });
 }
 
-const Item::List MultiSplitterLayout::items() const
+const Layouting::Item::List MultiSplitterLayout::items() const
 {
     return m_rootItem->items_recursive();
 }
 
-ItemContainer *MultiSplitterLayout::rootItem() const
+Layouting::ItemContainer *MultiSplitterLayout::rootItem() const
 {
     return m_rootItem;
 }
 
-QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widget, Location location, const Item *relativeTo) const
+QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widget, Location location,
+                                       const Layouting::Item *relativeTo) const
 {
-    Item item(nullptr);
+    Layouting::Item item(nullptr);
     item.setSize(widget->size());
     item.setMinSize(Layouting::widgetMinSize(widget));
     item.setMaxSize(widget->maximumSize());
 
     if (relativeTo) {
-        ItemContainer *container = relativeTo->parentContainer();
+        Layouting::ItemContainer *container = relativeTo->parentContainer();
         QRect rect = container->suggestedDropRect(&item, relativeTo, Layouting::Location(location));
         return container->mapToRoot(rect);
     } else {
@@ -383,9 +384,9 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widget, Location lo
 
 bool MultiSplitterLayout::deserialize(const LayoutSaver::MultiSplitterLayout &l)
 {
-    setRootItem(new ItemContainer(m_multiSplitter));
+    setRootItem(new Layouting::ItemContainer(m_multiSplitter));
 
-    QHash<QString, GuestInterface*> frames;
+    QHash<QString, Layouting::GuestInterface*> frames;
     for (const LayoutSaver::Frame &frame : qAsConst(l.frames)) {
         Frame *f = Frame::deserialize(frame);
         Q_ASSERT(!frame.id.isEmpty());
@@ -404,9 +405,9 @@ LayoutSaver::MultiSplitterLayout MultiSplitterLayout::serialize() const
 {
     LayoutSaver::MultiSplitterLayout l;
     l.layout = m_rootItem->toVariantMap();
-    const Item::List items = m_rootItem->items_recursive();
+    const Layouting::Item::List items = m_rootItem->items_recursive();
     l.frames.reserve(items.size());
-    for (Item *item : items) {
+    for (Layouting::Item *item : items) {
         if (!item->isContainer()) {
             if (auto frame = qobject_cast<Frame*>(item->widget()))
                 l.frames.insert(QString::number(qint64(frame)), frame->serialize());
