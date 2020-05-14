@@ -387,8 +387,6 @@ void Item::insertItem(Item *item, Location loc, DefaultSizeMode defaultSizeMode,
         ItemContainer *container = m_parent->convertChildToContainer(this);
         container->insertItem(item, loc, defaultSizeMode, option);
     }
-
-    (void) root()->checkSanity();
 }
 
 int Item::x() const
