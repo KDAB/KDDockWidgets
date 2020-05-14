@@ -26,13 +26,15 @@
 
 // TODO: namespace
 
-
 using namespace Layouting;
 
 static int st = Item::separatorThickness;
 
 static QtMessageHandler s_original = nullptr;
 static QString s_expectedWarning;
+
+class TestMultiSplitter;
+static TestMultiSplitter* s_testObject = nullptr;
 
 class GuestWidget : public QWidget
                   , public GuestInterface
@@ -96,72 +98,24 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
     }
 }
 
-static bool serializeDeserializeTest(const std::unique_ptr<ItemContainer> &root)
-{
-    // Serializes and deserializes a layout
-    if (!root->checkSanity())
-        return false;
-
-    const QVariantMap serialized = root->toVariantMap();
-    ItemContainer root2(root->hostWidget());
-
-    QHash<QString, GuestInterface*> widgets;
-    const Item::List originalItems = root->items_recursive();
-    for (Item *item : originalItems)
-        if (auto w = static_cast<GuestWidget*>(item->widget()))
-            widgets.insert(QString::number(qint64(w)), w);
-
-    root2.fillFromVariantMap(serialized, widgets);
-
-    return root2.checkSanity();
-}
-
-static std::unique_ptr<ItemContainer> createRoot()
-{
-    auto hostWidget = new QWidget();
-    hostWidget->setObjectName("HostWidget");
-    hostWidget->show();
-    auto root = new ItemContainer(hostWidget); // todo WIDGET
-    root->setSize({ 1000, 1000 });
-    return std::unique_ptr<ItemContainer>(root);
-}
-
-static Item* createItem(QSize minSz = {})
-{
-    static int count = 0;
-    count++;
-    auto hostWidget = new QWidget();
-    hostWidget->setObjectName("HostWidget");
-    hostWidget->show();
-    auto item = new Item(hostWidget);
-    item->setGeometry(QRect(0, 0, 200, 200));
-    item->setObjectName(QStringLiteral("%1").arg(count));
-    auto guest = new GuestWidget();
-    if (!minSz.isNull())
-        guest->setMinSize(minSz);
-    guest->setObjectName(item->objectName());
-    item->setGuest(guest);
-    return item;
-}
-
-static ItemContainer* createRootWithSingleItem()
-{
-    auto root = new ItemContainer(new QWidget()); // todo WIDGET
-    root->setSize({ 1000, 1000 });
-
-    Item *item1 = createItem();
-    root->insertItem(item1, Location_OnTop);
-
-    return root;
-}
-
 class TestMultiSplitter : public QObject
 {
     Q_OBJECT
+
+public:
+    QVector<QWidget*> m_hostWidgets; // for cleanup purposes
+
 public Q_SLOTS:
     void initTestCase()
     {
         s_original = qInstallMessageHandler(fatalWarningsMessageHandler);
+        s_testObject = this;
+    }
+
+    void cleanupTestCase()
+    {
+        auto copy = m_hostWidgets;
+        qDeleteAll(copy);
     }
 
 private Q_SLOTS:
@@ -204,6 +158,77 @@ private Q_SLOTS:
     void tst_mapToRoot();
     void tst_closeAndRestorePreservesPosition();
 };
+
+class MyHostWidget : public QWidget {
+  public:
+    MyHostWidget()
+    {
+        s_testObject->m_hostWidgets << this;
+    }
+
+    ~MyHostWidget() {
+        s_testObject->m_hostWidgets.removeOne(this);
+    }
+};
+
+static bool serializeDeserializeTest(const std::unique_ptr<ItemContainer> &root)
+{
+    // Serializes and deserializes a layout
+    if (!root->checkSanity())
+        return false;
+
+    const QVariantMap serialized = root->toVariantMap();
+    ItemContainer root2(root->hostWidget());
+
+    QHash<QString, GuestInterface*> widgets;
+    const Item::List originalItems = root->items_recursive();
+    for (Item *item : originalItems)
+        if (auto w = static_cast<GuestWidget*>(item->widget()))
+            widgets.insert(QString::number(qint64(w)), w);
+
+    root2.fillFromVariantMap(serialized, widgets);
+
+    return root2.checkSanity();
+}
+
+static std::unique_ptr<ItemContainer> createRoot()
+{
+    auto hostWidget = new QWidget();
+    hostWidget->setObjectName("HostWidget");
+    hostWidget->show();
+    auto root = new ItemContainer(hostWidget); // todo WIDGET
+    root->setSize({ 1000, 1000 });
+    return std::unique_ptr<ItemContainer>(root);
+}
+
+static Item* createItem(QSize minSz = {})
+{
+    static int count = 0;
+    count++;
+    auto hostWidget = new MyHostWidget();
+    hostWidget->setObjectName("HostWidget");
+    hostWidget->show();
+    auto item = new Item(hostWidget);
+    item->setGeometry(QRect(0, 0, 200, 200));
+    item->setObjectName(QStringLiteral("%1").arg(count));
+    auto guest = new GuestWidget();
+    if (!minSz.isNull())
+        guest->setMinSize(minSz);
+    guest->setObjectName(item->objectName());
+    item->setGuest(guest);
+    return item;
+}
+
+static ItemContainer* createRootWithSingleItem()
+{
+    auto root = new ItemContainer(new QWidget()); // todo WIDGET
+    root->setSize({ 1000, 1000 });
+
+    Item *item1 = createItem();
+    root->insertItem(item1, Location_OnTop);
+
+    return root;
+}
 
 void TestMultiSplitter::tst_createRoot()
 {
@@ -700,6 +725,9 @@ void TestMultiSplitter::tst_missingSize()
     // Test with an existing item
     root->insertItem(item1, Location_OnTop);
     QVERIFY(serializeDeserializeTest(root));
+
+    delete item2;
+    delete item3;
 }
 
 void TestMultiSplitter::tst_ensureEnoughSize()
