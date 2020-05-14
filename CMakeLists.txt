@@ -29,7 +29,7 @@ if (OPTION_DEVELOPER_MODE)
     include(ECMEnableSanitizers)
     add_definitions(-DDOCKS_DEVELOPER_MODE -DQT_FORCE_ASSERTS)
     if (NOT MSVC)
-        add_compile_options(-Wall -Wextra -Werror)
+        add_compile_options(-Wall -Wextra -Werror -Wno-error=deprecated-declarations)
     endif()
 endif()
 
