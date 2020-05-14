@@ -25,7 +25,6 @@
 #include <QStyleOption>
 
 using namespace KDDockWidgets;
-using namespace Layouting;
 
 SeparatorWidget::SeparatorWidget(QWidget *parent)
     : Separator(parent)

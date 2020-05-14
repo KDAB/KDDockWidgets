@@ -46,7 +46,6 @@
 #include <memory>
 
 using namespace KDDockWidgets;
-using namespace Layouting;
 
 QHash<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout* LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
@@ -498,7 +497,7 @@ QVariantMap LayoutSaver::Frame::toVariantMap() const
     map.insert(QStringLiteral("id"), id);
     map.insert(QStringLiteral("isNull"), isNull);
     map.insert(QStringLiteral("objectName"), objectName);
-    map.insert(QStringLiteral("geometry"), rectToMap(geometry));
+    map.insert(QStringLiteral("geometry"), Layouting::rectToMap(geometry));
     map.insert(QStringLiteral("options"), options);
     map.insert(QStringLiteral("currentTabIndex"), currentTabIndex);
 
@@ -518,7 +517,7 @@ void LayoutSaver::Frame::fromVariantMap(const QVariantMap &map)
     id = map.value(QStringLiteral("id")).toString();
     isNull = map.value(QStringLiteral("isNull")).toBool();
     objectName = map.value(QStringLiteral("objectName")).toString();
-    geometry = mapToRect(map.value(QStringLiteral("geometry")).toMap());
+    geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
     options = map.value(QStringLiteral("options")).toUInt();
     currentTabIndex = map.value(QStringLiteral("currentTabIndex")).toInt();
 
@@ -584,9 +583,9 @@ QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
     QVariantMap map;
     map.insert(QStringLiteral("multiSplitterLayout"), multiSplitterLayout.toVariantMap());
     map.insert(QStringLiteral("parentIndex"), parentIndex);
-    map.insert(QStringLiteral("geometry"), rectToMap(geometry));
+    map.insert(QStringLiteral("geometry"), Layouting::rectToMap(geometry));
     map.insert(QStringLiteral("screenIndex"), screenIndex);
-    map.insert(QStringLiteral("screenSize"), sizeToMap(screenSize));
+    map.insert(QStringLiteral("screenSize"), Layouting::sizeToMap(screenSize));
     map.insert(QStringLiteral("isVisible"), isVisible);
 
     if (!affinityName.isEmpty())
@@ -599,9 +598,9 @@ void LayoutSaver::FloatingWindow::fromVariantMap(const QVariantMap &map)
 {
     multiSplitterLayout.fromVariantMap(map.value(QStringLiteral("multiSplitterLayout")).toMap());
     parentIndex = map.value(QStringLiteral("parentIndex")).toInt();
-    geometry = mapToRect(map.value(QStringLiteral("geometry")).toMap());
+    geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
     screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
-    screenSize = mapToSize(map.value(QStringLiteral("screenSize")).toMap());
+    screenSize = Layouting::mapToSize(map.value(QStringLiteral("screenSize")).toMap());
     isVisible = map.value(QStringLiteral("isVisible")).toBool();
     affinityName = map.value(QStringLiteral("affinityName")).toString();
 }
@@ -639,9 +638,9 @@ QVariantMap LayoutSaver::MainWindow::toVariantMap() const
     map.insert(QStringLiteral("options"), int(options));
     map.insert(QStringLiteral("multiSplitterLayout"), multiSplitterLayout.toVariantMap());
     map.insert(QStringLiteral("uniqueName"), uniqueName);
-    map.insert(QStringLiteral("geometry"), rectToMap(geometry));
+    map.insert(QStringLiteral("geometry"), Layouting::rectToMap(geometry));
     map.insert(QStringLiteral("screenIndex"), screenIndex);
-    map.insert(QStringLiteral("screenSize"), sizeToMap(screenSize));
+    map.insert(QStringLiteral("screenSize"), Layouting::sizeToMap(screenSize));
     map.insert(QStringLiteral("isVisible"), isVisible);
 
     if (!affinityName.isEmpty())
@@ -656,9 +655,9 @@ void LayoutSaver::MainWindow::fromVariantMap(const QVariantMap &map)
     multiSplitterLayout.fromVariantMap(map.value(QStringLiteral("multiSplitterLayout")).toMap());
     uniqueName = map.value(QStringLiteral("uniqueName")).toString();
     affinityName = map.value(QStringLiteral("affinityName")).toString();
-    geometry = mapToRect(map.value(QStringLiteral("geometry")).toMap());
+    geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
     screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
-    screenSize = mapToSize(map.value(QStringLiteral("screenSize")).toMap());
+    screenSize = Layouting::mapToSize(map.value(QStringLiteral("screenSize")).toMap());
 
     isVisible = map.value(QStringLiteral("isVisible")).toBool();
 }
@@ -716,7 +715,7 @@ void LayoutSaver::LastPosition::scaleSizes(const ScalingInfo &scalingInfo)
 QVariantMap LayoutSaver::LastPosition::toVariantMap() const
 {
     QVariantMap map;
-    map.insert(QStringLiteral("lastFloatingGeometry"), rectToMap(lastFloatingGeometry));
+    map.insert(QStringLiteral("lastFloatingGeometry"), Layouting::rectToMap(lastFloatingGeometry));
     map.insert(QStringLiteral("tabIndex"), tabIndex);
     map.insert(QStringLiteral("wasFloating"), wasFloating);
     map.insert(QStringLiteral("placeholders"), toVariantList<LayoutSaver::Placeholder>(placeholders));
@@ -726,7 +725,7 @@ QVariantMap LayoutSaver::LastPosition::toVariantMap() const
 
 void LayoutSaver::LastPosition::fromVariantMap(const QVariantMap &map)
 {
-    lastFloatingGeometry = mapToRect(map.value(QStringLiteral("lastFloatingGeometry")).toMap());
+    lastFloatingGeometry = Layouting::mapToRect(map.value(QStringLiteral("lastFloatingGeometry")).toMap());
     tabIndex = map.value(QStringLiteral("tabIndex")).toInt();
     wasFloating = map.value(QStringLiteral("wasFloating")).toBool();
     placeholders = fromVariantList<LayoutSaver::Placeholder>(map.value(QStringLiteral("placeholders")).toList());
@@ -736,7 +735,7 @@ QVariantMap LayoutSaver::ScreenInfo::toVariantMap() const
 {
     QVariantMap map;
     map.insert(QStringLiteral("index"), index);
-    map.insert(QStringLiteral("geometry"), rectToMap(geometry));
+    map.insert(QStringLiteral("geometry"), Layouting::rectToMap(geometry));
     map.insert(QStringLiteral("name"), name);
     map.insert(QStringLiteral("devicePixelRatio"), devicePixelRatio);
 
@@ -746,7 +745,7 @@ QVariantMap LayoutSaver::ScreenInfo::toVariantMap() const
 void LayoutSaver::ScreenInfo::fromVariantMap(const QVariantMap &map)
 {
     index = map.value(QStringLiteral("index")).toInt();
-    geometry = mapToRect(map.value(QStringLiteral("geometry")).toMap());
+    geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
     name = map.value(QStringLiteral("name")).toString();
     devicePixelRatio = map.value(QStringLiteral("devicePixelRatio")).toDouble();
 }

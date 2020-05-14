@@ -32,14 +32,13 @@
 #include <algorithm>
 
 using namespace KDDockWidgets;
-using namespace Layouting;
 
 LastPosition::~LastPosition()
 {
     m_placeholders.clear();
 }
 
-void LastPosition::addPlaceholderItem(Item *placeholder)
+void LastPosition::addPlaceholderItem(Layouting::Item *placeholder)
 {
     Q_ASSERT(placeholder);
 
@@ -71,13 +70,13 @@ void LastPosition::addPlaceholderItem(Item *placeholder)
 
 QWidgetOrQuick *LastPosition::window() const
 {
-    if (Item *placeholder = layoutItem())
+    if (Layouting::Item *placeholder = layoutItem())
         return placeholder->window();
 
     return nullptr;
 }
 
-Item *LastPosition::layoutItem() const
+Layouting::Item *LastPosition::layoutItem() const
 {
     // Return the layout item that is in a MainWindow, that's where we restore the dock widget to.
     // In the future we might want to restore it to FloatingWindows.
@@ -90,7 +89,7 @@ Item *LastPosition::layoutItem() const
     return nullptr;
 }
 
-bool LastPosition::containsPlaceholder(Item *item) const
+bool LastPosition::containsPlaceholder(Layouting::Item *item) const
 {
     for (const auto &itemRef : m_placeholders)
         if (itemRef->item == item)
@@ -118,7 +117,7 @@ void LastPosition::removeNonMainWindowPlaceholders()
     }
 }
 
-void LastPosition::removePlaceholder(Item *placeholder)
+void LastPosition::removePlaceholder(Layouting::Item *placeholder)
 {
     if (m_clearing) // reentrancy guard
         return;
@@ -155,9 +154,9 @@ void LastPosition::deserialize(const LayoutSaver::LastPosition &lp)
             layout = mainWindow->multiSplitterLayout();
         }
 
-        const Item::List &items = layout->items();
+        const Layouting::Item::List &items = layout->items();
         if (itemIndex < items.size()) {
-            Item *item = items.at(itemIndex);
+            Layouting::Item *item = items.at(itemIndex);
             addPlaceholderItem(item);
         } else {
             // Shouldn't happen, maybe even assert
@@ -179,7 +178,7 @@ LayoutSaver::LastPosition LastPosition::serialize() const
     for (auto &itemRef : m_placeholders) {
         LayoutSaver::Placeholder p;
 
-        Item *item = itemRef->item;
+        Layouting::Item *item = itemRef->item;
         MultiSplitterLayout *layout = DockRegistry::self()->layoutForItem(item);
         const int itemIndex = layout->items().indexOf(item);
 
@@ -206,7 +205,7 @@ LayoutSaver::LastPosition LastPosition::serialize() const
     return l;
 }
 
-ItemRef::ItemRef(const QMetaObject::Connection &conn, Item *it)
+ItemRef::ItemRef(const QMetaObject::Connection &conn, Layouting::Item *it)
     : item(it)
     , guard(it)
     , connection(conn)

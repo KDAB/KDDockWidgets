@@ -46,7 +46,6 @@
 static int s_dbg_numFrames = 0;
 
 using namespace KDDockWidgets;
-using namespace Layouting;
 
 namespace KDDockWidgets {
 static FrameOptions actualOptions(FrameOptions options)
@@ -366,7 +365,7 @@ void Frame::onDockWidgetHidden(DockWidgetBase *w)
     }
 }
 
-void Frame::setLayoutItem(Item *item)
+void Frame::setLayoutItem(Layouting::Item *item)
 {
     if (item == m_layoutItem)
         return;
@@ -387,7 +386,7 @@ void Frame::setLayoutItem(Item *item)
     }
 }
 
-Item *Frame::layoutItem() const
+Layouting::Item *Frame::layoutItem() const
 {
     return m_layoutItem;
 }

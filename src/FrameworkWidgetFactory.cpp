@@ -45,8 +45,6 @@
 #endif
 
 using namespace KDDockWidgets;
-using namespace Layouting;
-
 
 FrameworkWidgetFactory::~FrameworkWidgetFactory()
 {

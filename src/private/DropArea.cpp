@@ -33,7 +33,6 @@
 #include "WindowBeingDragged_p.h"
 
 using namespace KDDockWidgets;
-using namespace Layouting;
 
 /**
  * @file
@@ -61,8 +60,8 @@ int DropArea::numFrames() const
 
 Frame *DropArea::frameContainingPos(QPoint globalPos) const
 {
-    const Item::List &items = m_layout->items();
-    for (Item *item : items) {
+    const Layouting::Item::List &items = m_layout->items();
+    for (Layouting::Item *item : items) {
         auto frame = static_cast<Frame*>(item->widget());
         if (!frame || !frame->isVisible()) {
             continue;
@@ -74,9 +73,9 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
     return nullptr;
 }
 
-Item *DropArea::centralFrame() const
+Layouting::Item *DropArea::centralFrame() const
 {
-    for (Item *item : m_layout->items()) {
+    for (Layouting::Item *item : m_layout->items()) {
         if (auto f = static_cast<Frame*>(item->widget())) {
             if (f->isCentralFrame())
                 return item;

@@ -33,7 +33,6 @@
 #include <QWindow>
 
 using namespace KDDockWidgets;
-using namespace Layouting;
 
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
@@ -82,7 +81,7 @@ bool DockRegistry::isProcessingAppQuitEvent() const
     return m_isProcessingAppQuitEvent;
 }
 
-MultiSplitterLayout *DockRegistry::layoutForItem(const Item *item) const
+MultiSplitterLayout *DockRegistry::layoutForItem(const Layouting::Item *item) const
 {
     if (auto ms = qobject_cast<MultiSplitter*>(item->hostWidget()))
         return ms->multiSplitterLayout();
@@ -90,7 +89,7 @@ MultiSplitterLayout *DockRegistry::layoutForItem(const Item *item) const
     return nullptr;
 }
 
-bool DockRegistry::itemIsInMainWindow(const Item *item) const
+bool DockRegistry::itemIsInMainWindow(const Layouting::Item *item) const
 {
     if (auto layout = layoutForItem(item))
         return layout->multiSplitter()->isInMainWindow();
