@@ -1409,7 +1409,10 @@ int main(int argc, char *argv[])
         qputenv("QT_QPA_PLATFORM", "offscreen");
     }
 
-    QTEST_MAIN_IMPL(TestMultiSplitter)
+    QApplication app(argc, argv);
+    TestMultiSplitter test;
+
+    return QTest::qExec(&test, argc, argv);
 }
 
 #include "tst_multisplitter.moc"

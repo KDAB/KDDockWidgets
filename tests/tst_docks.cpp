@@ -5140,7 +5140,10 @@ int main(int argc, char *argv[])
         qputenv("QT_QPA_PLATFORM", "offscreen");
     }
 
-    QTEST_MAIN_IMPL(KDDockWidgets::TestDocks)
+    QApplication app(argc, argv);
+    KDDockWidgets::TestDocks test;
+
+    return QTest::qExec(&test, argc, argv);
 }
 
 
