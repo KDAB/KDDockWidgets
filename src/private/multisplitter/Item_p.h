@@ -351,6 +351,8 @@ public:
     QWidget *hostWidget() const;
     void restore(GuestInterface *guest);
 
+    QVector<int> pathFromRoot() const;
+
     virtual QSize minSize() const;
     virtual QSize maxSize() const;
     virtual void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage);
@@ -555,6 +557,7 @@ public:
     QVector<Layouting::Separator*> separators() const;
     Qt::Orientation m_orientation = Qt::Vertical;
 private:
+    const Item *itemFromPath(const QVector<int> &path) const;
     void resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &sizes, ChildrenResizeStrategy);
     void scheduleCheckSanity() const;
     Separator *neighbourSeparator(const Item *item, Side, Qt::Orientation) const;

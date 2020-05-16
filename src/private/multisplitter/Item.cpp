@@ -215,6 +215,30 @@ void Item::restore(GuestInterface *guest)
     }
 }
 
+QVector<int> Item::pathFromRoot() const
+{
+    // Returns the list of indexes to get to this item, starting from the root container
+    // Example [0, 1, 3] would mean that the item is the 4th child of the 2nd child of the 1st child of root
+    // [] would mean 'this' is the root item
+    // [0] would mean the 1st child of root
+
+    QVector<int> path;
+    path.reserve(10); // random big number, good to bootstrap it
+
+    const Item *it = this;
+    while (it) {
+        if (auto p = it->parentContainer()) {
+            const int index = p->m_children.indexOf(const_cast<Item*>(it));
+            path.prepend(index);
+            it = p;
+        } else {
+            break;
+        }
+    }
+
+    return path;
+}
+
 void Item::setHostWidget(QWidget *host)
 {
     if (m_hostWidget != host) {
@@ -2680,6 +2704,35 @@ QVector<Separator *> ItemContainer::separators_recursive() const
 QVector<Separator *> ItemContainer::separators() const
 {
     return m_separators;
+}
+
+const Item *ItemContainer::itemFromPath(const QVector<int> &path) const
+{
+    const ItemContainer *container = this;
+
+    for (int i = 0; i < path.size() ; ++i) {
+        const int index = path[i];
+        const bool isLast = i == path.size() - 1;
+        if (index < 0 || index >= container->m_children.size()) {
+            // Doesn't happen
+            root()->dumpLayout();
+            qWarning() << Q_FUNC_INFO << "Invalid index" << index
+                       << this << path << isRoot();
+            return nullptr;
+        }
+
+        if (isLast) {
+            return container->m_children.at(index);
+        } else {
+            container = container->m_children.at(index)->asContainer();
+            if (!container) {
+                qWarning() << Q_FUNC_INFO << "Invalid index" << path;
+                return nullptr;
+            }
+        }
+    }
+
+    return this;
 }
 
 Separator *ItemContainer::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const
