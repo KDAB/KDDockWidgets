@@ -718,8 +718,7 @@ void Item::onWidgetDestroyed()
 {
     if (m_refCount) {
         turnIntoPlaceholder();
-    } else {
-        Q_ASSERT(!isRoot());
+    } else if (!isRoot()) {
         parentContainer()->removeItem(this);
     }
 }
@@ -971,6 +970,14 @@ bool ItemContainer::checkSanity()
         }
     }
 
+#ifdef DOCKS_DEVELOPER_MODE
+    // Can cause slowdown, so just use it in developer mode.
+    if (isRoot()) {
+        if (!asContainer()->test_suggestedRect())
+            return false;
+    }
+#endif
+
     return true;
 }
 
@@ -1194,9 +1201,15 @@ void ItemContainer::onChildVisibleChanged(Item */*child*/, bool visible)
     }
 }
 
-QRect ItemContainer::suggestedDropRect(Item *item, const Item *relativeTo, Location loc) const
+QRect ItemContainer::suggestedDropRect(const Item *item, const Item *relativeTo, Location loc) const
 {
-    const QSize minSize = item->minSize();
+    // Returns the drop rect. This is the geometry used by the rubber band when you hover over an indicator.
+    // It's calculated by copying the layout and inserting the item into the dummy/invisible copy
+    // The we see which geometry the item got. This way the returned geometry is always what the item will get
+    // if you drop it.
+    // One exception is if the window doesn't have enough space and it would grow. In this case
+    // we fall back to something reasonable
+
 
     if (relativeTo && !relativeTo->parentContainer()) {
         qWarning() << Q_FUNC_INFO << "No parent container";
@@ -1218,84 +1231,73 @@ QRect ItemContainer::suggestedDropRect(Item *item, const Item *relativeTo, Locat
         return {};
     }
 
+    const QSize availableSize = root()->availableSize();
+    const QSize minSize = item->minSize();
+    const bool isEmpty = !root()->hasVisibleChildren();
+    const int extraWidth = (isEmpty || locationIsVertical(loc)) ? 0 : Item::separatorThickness;
+    const int extraHeight = (isEmpty || !locationIsVertical(loc)) ? 0 : Item::separatorThickness;
+    const bool windowNeedsGrowing = availableSize.width() < minSize.width() + extraWidth ||
+                                    availableSize.height() < minSize.height() + extraHeight;
+
+    if (windowNeedsGrowing)
+        return suggestedDropRectFallback(item, relativeTo, loc);
+
+    const QVariantMap rootSerialized = root()->toVariantMap();
+    ItemContainer rootCopy(nullptr);
+    rootCopy.fillFromVariantMap(rootSerialized, {});
+
+    if (relativeTo)
+        relativeTo = rootCopy.itemFromPath(relativeTo->pathFromRoot());
+
+    const QVariantMap itemSerialized = item->toVariantMap();
+    auto itemCopy = new Item(nullptr);
+    itemCopy->fillFromVariantMap(itemSerialized, {});
+
+    if (relativeTo) {
+        auto r = const_cast<Item*>(relativeTo);
+        r->insertItem(itemCopy, loc,  DefaultSizeMode::FairButFloor);
+    } else {
+        rootCopy.insertItem(itemCopy, loc, DefaultSizeMode::FairButFloor);
+    }
+
+    if (rootCopy.size() != root()->size()) {
+        // Doesn't happen
+        qWarning() << Q_FUNC_INFO << "The root copy grew ?!" << rootCopy.size() << root()->size()
+                   << loc;
+        return suggestedDropRectFallback(item, relativeTo, loc);
+    }
+
+    return itemCopy->mapToRoot(itemCopy->rect());
+}
+
+QRect ItemContainer::suggestedDropRectFallback(const Item *item, const Item *relativeTo, Location loc) const
+{
+    const QSize minSize = item->minSize();
     const int itemMin = Layouting::length(minSize, m_orientation);
     const int available = availableLength() - Item::separatorThickness;
     const SizingInfo::List sizes = this->sizes();
-    const int count = sizes.count();
-
-    if (relativeTo && count == 1) {
-
-        // When the container only has one item we can do some simplifications
-
-        if (isRoot()) {
-            // Means the result is relative to the whole window
-            relativeTo = nullptr;
-        } else {
-            // Do it relative to this container instead
-            return parentContainer()->suggestedDropRect(item, this, loc);
-        }
-    }
-
     if (relativeTo) {
-        const int equitativeLength = usableLength() / (m_children.size() + 1);
-        const int suggestedLength = qMax(qMin(available, equitativeLength), itemMin);
-        const int indexOfRelativeTo = indexOfVisibleChild(relativeTo);
-
         int suggestedPos = 0;
-
-        //const int availableSide2 = availableOnSide(m_children.at(indexOfRelativeTo), Side2);
-        const int relativeToPos = relativeTo->position(m_orientation);
         const QRect relativeToGeo = relativeTo->geometry();
-        const Qt::Orientation orientation = orientationForLocation(loc);
-
-        if (orientation == m_orientation) {
-            if (sideForLocation(loc) == Side1) {
-                if (indexOfRelativeTo == 0) {
-                    suggestedPos = 0;
-                } else {
-                    const LengthOnSide side1Length = lengthOnSide(sizes, indexOfRelativeTo - 1, Side1, m_orientation);
-                    const LengthOnSide side2Length = lengthOnSide(sizes, indexOfRelativeTo, Side2, m_orientation);
-                    const int min1 = relativeToPos - side1Length.available();
-                    const int max2 = relativeToPos + side2Length.available() - suggestedLength;
-                    suggestedPos = relativeToPos - suggestedLength / 2;
-                    suggestedPos = qBound(min1, suggestedPos, max2);
-                }
-            } else { // Side2
-                 if (indexOfRelativeTo == count - 1) { // is last
-                     suggestedPos = length() - suggestedLength;
-                 } else {
-                     const LengthOnSide side1Length = lengthOnSide(sizes, indexOfRelativeTo, Side1, m_orientation);
-                     const LengthOnSide side2Length  = lengthOnSide(sizes, indexOfRelativeTo + 1, Side2, m_orientation);
-                     const int min1 = relativeToPos + relativeTo->length(m_orientation) - side1Length.available();
-                     const int max2 = relativeToPos + relativeTo->length(m_orientation) + side2Length.available() - suggestedLength;
-                     suggestedPos = relativeToPos + relativeTo->length(m_orientation) - (suggestedLength / 2);
-                     suggestedPos = qBound(min1, suggestedPos, max2);
-                 }
-            }
-
-        } else {
-            // Incompatible orientations, takes half then.
-            switch (loc) {
-            case Location_OnLeft:
-                suggestedPos = relativeToGeo.x();
-                break;
-            case Location_OnTop:
-                suggestedPos = relativeToGeo.y();
-                break;
-            case Location_OnRight:
-                suggestedPos = relativeToGeo.right() - suggestedLength + 1;
-                break;
-            case Location_OnBottom:
-                suggestedPos = relativeToGeo.bottom() - suggestedLength + 1;
-                break;
-            default:
-                Q_ASSERT(false);
-            }
+        const int suggestedLength = relativeTo->length(orientationForLocation(loc)) / 2;
+        switch (loc) {
+        case Location_OnLeft:
+            suggestedPos = relativeToGeo.x();
+            break;
+        case Location_OnTop:
+            suggestedPos = relativeToGeo.y();
+            break;
+        case Location_OnRight:
+            suggestedPos = relativeToGeo.right() - suggestedLength + 1;
+            break;
+        case Location_OnBottom:
+            suggestedPos = relativeToGeo.bottom() - suggestedLength + 1;
+            break;
+        default:
+            Q_ASSERT(false);
         }
-
 
         QRect rect;
-
         if (orientationForLocation(loc) == Qt::Vertical) {
             rect.setTopLeft(QPoint(relativeTo->x(), suggestedPos));
             rect.setSize(QSize(relativeTo->width(), suggestedLength));
@@ -1303,13 +1305,6 @@ QRect ItemContainer::suggestedDropRect(Item *item, const Item *relativeTo, Locat
             rect.setTopLeft(QPoint(suggestedPos, relativeTo->y()));
             rect.setSize(QSize(suggestedLength, relativeTo->height()));
         }
-
-        /*qDebug() << "; min1=" << min1
-                 << "; max2=" << max2
-                 << "; a1=" << side1Length.available()
-                 << "; a2=" << side2Length.available()
-                 << "; indexOfRelativeTo=" << indexOfRelativeTo
-                 << "; available=" << available;*/
 
         return rect;
 
@@ -2683,11 +2678,51 @@ void ItemContainer::fillFromVariantMap(const QVariantMap &map,
 
     if (isRoot()) {
         updateChildPercentages_recursive();
-        updateSeparators_recursive();
-        updateWidgets_recursive();
+        if (hostWidget()) {
+            updateSeparators_recursive();
+            updateWidgets_recursive();
+        }
         Q_EMIT minSizeChanged(this);
+#ifdef DOCKS_DEVELOPER_MODE
+    if (!checkSanity())
+        qWarning() << Q_FUNC_INFO << "Resulting layout is invalid";
+#endif
     }
 }
+
+bool ItemContainer::isDummy() const
+{
+    return hostWidget() == nullptr;
+}
+
+#ifdef DOCKS_DEVELOPER_MODE
+bool ItemContainer::test_suggestedRect()
+{
+    auto itemToDrop = new Item(hostWidget());
+
+    const Item::List children = visibleChildren();
+    for (Item *relativeTo : children) {
+        if (auto c = relativeTo->asContainer()) {
+            c->test_suggestedRect();
+        } else {
+            for (Location loc : { Location_OnTop, Location_OnLeft, Location_OnRight, Location_OnBottom}) {
+                const QRect rect = suggestedDropRect(itemToDrop, relativeTo, loc);
+                if (rect.isEmpty()) {
+                    qWarning() << Q_FUNC_INFO << "Empty rect";
+                    return false;
+                } else if (!root()->rect().contains(rect)) {
+                    root()->dumpLayout();
+                    qWarning() << Q_FUNC_INFO << "Suggested rect is out of bounds" << rect
+                               << "; loc=" << loc << "; relativeTo=" << relativeTo;
+                }
+            }
+        }
+    }
+
+    delete itemToDrop;
+    return true;
+}
+#endif
 
 QVector<Separator *> ItemContainer::separators_recursive() const
 {

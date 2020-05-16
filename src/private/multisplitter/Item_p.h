@@ -512,7 +512,8 @@ public:
     QVector<int> calculateSqueezes(SizingInfo::List::ConstIterator begin,
                                    SizingInfo::List::ConstIterator end, int needed,
                                    NeighbourSqueezeStrategy, bool reversed = false) const;
-    QRect suggestedDropRect(Item *item, const Item *relativeTo, Location) const;
+    QRect suggestedDropRect(const Item *item, const Item *relativeTo, Location) const;
+    QRect suggestedDropRectFallback(const Item *item, const Item *relativeTo, Location) const;
     void positionItems();
     void positionItems(SizingInfo::List &sizes);
     void clear();
@@ -543,6 +544,11 @@ public:
 
     QVariantMap toVariantMap() const override;
     void fillFromVariantMap(const QVariantMap &map, const QHash<QString, GuestInterface *> &widgets) override;
+
+    bool isDummy() const;
+#ifdef DOCKS_DEVELOPER_MODE
+    bool test_suggestedRect();
+#endif
 
 Q_SIGNALS:
     void itemsChanged();
