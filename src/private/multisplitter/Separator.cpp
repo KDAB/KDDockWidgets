@@ -168,6 +168,11 @@ QWidget *Separator::hostWidget() const
 
 void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation)
 {
+    if (!parentContainer) {
+        qWarning() << Q_FUNC_INFO << "null parentContainer";
+        return;
+    }
+
     d->parentContainer = parentContainer;
     d->orientation = orientation;
     d->lazyResizeRubberBand = usesLazyResize ? new QRubberBand(QRubberBand::Line, hostWidget())

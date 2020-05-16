@@ -160,7 +160,7 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, Guest
         if (GuestInterface *guest = widgets.value(guestId)) {
             setGuest(guest);
             m_guest->asWidget()->setParent(hostWidget());
-        } else {
+        } else if (hostWidget()) {
             qWarning() << Q_FUNC_INFO << "Couldn't find frame to restore for" << this;
         }
     }
@@ -762,8 +762,6 @@ ItemContainer::ItemContainer(QWidget *hostWidget)
     : Item(true, hostWidget, /*parentContainer=*/ nullptr)
     , d(new Private(this))
 {
-    // CTOR for root item
-    Q_ASSERT(hostWidget);
 }
 
 ItemContainer::~ItemContainer()
@@ -774,6 +772,12 @@ ItemContainer::~ItemContainer()
 bool ItemContainer::checkSanity()
 {
     m_checkSanityScheduled = false;
+
+    if (!hostWidget()) {
+        /// This is a dummy ItemContainer, just return true
+        return true;
+    }
+
     if (!Item::checkSanity())
         return false;
 
@@ -2483,6 +2487,9 @@ QVector<int> ItemContainer::requiredSeparatorPositions() const
 
 void ItemContainer::updateSeparators()
 {
+    if (!hostWidget())
+        return;
+
     const QVector<int> positions = requiredSeparatorPositions();
     const int requiredNumSeparators = positions.size();
 
