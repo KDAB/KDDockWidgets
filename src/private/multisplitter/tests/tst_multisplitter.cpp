@@ -147,6 +147,8 @@ private Q_SLOTS:
     void tst_turnIntoPlaceholder();
     void tst_suggestedRect();
     void tst_suggestedRect2();
+    void tst_suggestedRect3();
+    void tst_suggestedRect4();
     void tst_insertAnotherRoot();
     void tst_misc1();
     void tst_misc2();
@@ -259,6 +261,7 @@ void TestMultiSplitter::tst_insertOne()
     auto root = createRoot();
     auto item = createItem();
     root->insertItem(item, Location_OnTop);
+    QVERIFY(root->checkSanity());
     QCOMPARE(root->numChildren(), 1);
     QVERIFY(!item->isContainer());
     QCOMPARE(root->size(), QSize(1000, 1000));
@@ -266,14 +269,12 @@ void TestMultiSplitter::tst_insertOne()
     QCOMPARE(item->pos(), QPoint());
     QCOMPARE(item->pos(), root->pos());
     QVERIFY(root->hasChildren());
-    QVERIFY(root->checkSanity());
     QVERIFY(serializeDeserializeTest(root));
 }
 
 void TestMultiSplitter::tst_insertThreeSideBySide()
 {
     // Result is [1, 2, 3]
-
     auto root = createRoot();
     auto item1 = createItem();
     auto item2 = createItem();
@@ -891,6 +892,51 @@ void TestMultiSplitter::tst_suggestedRect2()
     root1->insertItem(root2.get(), Location_OnRight);
 
     QVERIFY(item->parentContainer()->suggestedDropRect(&itemBeingDropped, item, Location_OnRight).isValid());
+}
+
+void TestMultiSplitter::tst_suggestedRect3()
+{
+    auto root1 = createRoot();
+    Item *item1 = createItem();
+    Item *item2 = createItem();
+    Item *item3 = createItem();
+    Item *itemToDrop = createItem();
+
+    root1->insertItem(item1, Location_OnLeft);
+    root1->insertItem(item2, Location_OnRight);
+    item2->insertItem(item3, Location_OnBottom);
+
+    QVERIFY(!item3->parentContainer()->suggestedDropRect(itemToDrop, item3, Location_OnLeft).isEmpty());
+    delete itemToDrop;
+}
+
+void TestMultiSplitter::tst_suggestedRect4()
+{
+    auto root = createRoot();
+
+    auto root1 = createRoot();
+    Item *item1 = createItem();
+    root1->insertItem(item1, Location_OnLeft);
+
+    root->insertItem(root1.get(), Location_OnLeft);
+
+    auto root2 = createRoot();
+    Item *item2 = createItem();
+    root2->insertItem(item2, Location_OnLeft);
+
+    auto root3 = createRoot();
+    Item *item3 = createItem();
+    root3->insertItem(item3, Location_OnLeft);
+
+    root1->insertItem(root2.get(), Location_OnRight);
+    root2->insertItem(root3.get(), Location_OnBottom);
+
+    Item *itemToDrop = createItem();
+
+    QVERIFY(root->checkSanity());
+    QVERIFY(!root3->suggestedDropRect(itemToDrop, item3, Location_OnLeft).isEmpty());
+
+    delete itemToDrop;
 }
 
 void TestMultiSplitter::tst_insertAnotherRoot()
