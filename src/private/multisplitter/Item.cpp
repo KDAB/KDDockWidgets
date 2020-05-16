@@ -456,10 +456,13 @@ int Item::minLength(Qt::Orientation o) const
 void Item::setLength(int length, Qt::Orientation o)
 {
     Q_ASSERT(length > 0);
-    if (o == Qt::Vertical)
-        setSize({ width(), length });
-    else
-        setSize({ length, height() });
+    if (o == Qt::Vertical) {
+        const int w = qMax(width(), hardcodedMinimumSize.width());
+        setSize(QSize(w, length));
+    } else {
+        const int h = qMax(height(), hardcodedMinimumSize.height());
+        setSize(QSize(length, h));
+    }
 }
 
 void Item::setLength_recursive(int length, Qt::Orientation o)
