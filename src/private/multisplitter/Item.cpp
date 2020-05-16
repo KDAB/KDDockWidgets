@@ -394,7 +394,7 @@ void Item::insertItem(Item *item, Location loc, DefaultSizeMode defaultSizeMode,
 
     if (m_parent->hasOrientationFor(loc)) {
         const bool locIsSide1 = locationIsSide1(loc);
-        int indexInParent = m_parent->indexOfVisibleChild(this);
+        int indexInParent = m_parent->childItems().indexOf(this);
         if (!locIsSide1)
             indexInParent++;
 
@@ -1013,6 +1013,11 @@ int ItemContainer::indexOfVisibleChild(const Item *item) const
 {
     const Item::List items = visibleChildren();
     return items.indexOf(const_cast<Item*>(item));
+}
+
+const Item::List ItemContainer::childItems() const
+{
+    return m_children;
 }
 
 void ItemContainer::removeItem(Item *item, bool hardRemove)
