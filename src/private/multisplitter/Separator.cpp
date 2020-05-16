@@ -136,6 +136,13 @@ void Separator::mouseReleaseEvent(QMouseEvent *)
     onMouseReleased();
 }
 
+void Separator::mouseDoubleClickEvent(QMouseEvent *)
+{
+    // a double click means we'll resize the left and right neighbour so that they occupy
+    // the same size (or top/bottom, depending on orientation).
+    d->parentContainer->requestEqualSize(this);
+}
+
 void Separator::onMouseReleased()
 {
     if (d->lazyResizeRubberBand) {

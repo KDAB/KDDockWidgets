@@ -2060,6 +2060,51 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
     }
 }
 
+void ItemContainer::requestEqualSize(Separator *separator)
+{
+    const int separatorIndex = m_separators.indexOf(separator);
+    if (separatorIndex == -1) {
+        // Doesn't happen
+        qWarning() << Q_FUNC_INFO << "Separator not found" << separator;
+        return;
+    }
+
+    const Item::List children = visibleChildren();
+    Item *side1Item = children.at(separatorIndex);
+    Item *side2Item = children.at(separatorIndex + 1);
+
+    const int length1 = side1Item->length(m_orientation);
+    const int length2 = side2Item->length(m_orientation);
+
+    if (qAbs(length1 - length2) <= 1) {
+        // items already have the same length, nothing to do.
+        // We allow for a difference of 1px, since you can't split that.
+        return;
+    }
+
+    const int newLength = (length1 + length2) / 2;
+
+    int delta = 0;
+    if (length1 < newLength) {
+        // Let's move separator to the right
+        delta = newLength - length1;
+    } else if (length2 < newLength) {
+        // or left.
+        delta = -(newLength - length2); // negative, since separator is going left
+    }
+
+    // Do some bounds checking, to respect min-sizes
+    const int min = minPosForSeparator_global(separator);
+    const int max = maxPosForSeparator_global(separator);
+    const int newPos = qBound(min, separator->position() + delta, max);
+
+    // correct the delta
+    delta = newPos - separator->position();
+
+    if (delta != 0)
+        requestSeparatorMove(separator, delta);
+}
+
 Item *ItemContainer::visibleNeighbourFor(const Item *item, Side side) const
 {
     // Item might not be visible, so use m_children instead of visibleChildren()
