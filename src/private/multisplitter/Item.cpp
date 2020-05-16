@@ -2709,8 +2709,10 @@ bool ItemContainer::test_suggestedRect()
         if (auto c = relativeTo->asContainer()) {
             c->test_suggestedRect();
         } else {
+            QHash<Location, QRect> rects;
             for (Location loc : { Location_OnTop, Location_OnLeft, Location_OnRight, Location_OnBottom}) {
                 const QRect rect = suggestedDropRect(itemToDrop, relativeTo, loc);
+                rects.insert(loc, rect);
                 if (rect.isEmpty()) {
                     qWarning() << Q_FUNC_INFO << "Empty rect";
                     return false;
@@ -2718,7 +2720,15 @@ bool ItemContainer::test_suggestedRect()
                     root()->dumpLayout();
                     qWarning() << Q_FUNC_INFO << "Suggested rect is out of bounds" << rect
                                << "; loc=" << loc << "; relativeTo=" << relativeTo;
+                    return false;
                 }
+            }
+            if (rects.value(Location_OnBottom).y() <= rects.value(Location_OnTop).y() ||
+                rects.value(Location_OnRight).x() <= rects.value(Location_OnLeft).x()) {
+                root()->dumpLayout();
+                qWarning() << Q_FUNC_INFO << "Invalid suggested rects" << rects
+                           << this << "; relativeTo=" << relativeTo;
+                return false;
             }
         }
     }
