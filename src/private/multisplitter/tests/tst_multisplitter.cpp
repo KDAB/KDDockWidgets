@@ -20,6 +20,8 @@
 
 #include "Item_p.h"
 #include "Separator_p.h"
+#include <QPainter>
+
 #include <QtTest/QtTest>
 #include <memory.h>
 
@@ -77,6 +79,12 @@ public:
         }*/
     }
 
+    void paintEvent(QPaintEvent *) override
+    {
+        QPainter p(this);
+        p.fillRect(rect(), Qt::green);
+    }
+
 Q_SIGNALS:
     void layoutInvalidated();
 private:
@@ -85,7 +93,6 @@ private:
 
 static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
 {
-
     s_original(t, context, msg);
     if (t == QtWarningMsg) {
         if (msg.contains(QLatin1String("checkSanity"))) {
@@ -168,6 +175,12 @@ class MyHostWidget : public QWidget {
 
     ~MyHostWidget() {
         s_testObject->m_hostWidgets.removeOne(this);
+    }
+
+    void paintEvent(QPaintEvent *) override
+    {
+        QPainter p(this);
+        p.fillRect(rect(), Qt::yellow);
     }
 };
 
