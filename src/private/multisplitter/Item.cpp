@@ -577,9 +577,13 @@ void Item::setGeometry(QRect rect)
         if (rect.isEmpty()) {
             // Just a sanity check...
             ItemContainer *c = asContainer();
-            if (c->hasVisibleChildren()) {
-                if (auto r = root()) r->dumpLayout();
-                Q_ASSERT(false);
+            if (c) {
+                if (c->hasVisibleChildren()) {
+                    if (auto r = root()) r->dumpLayout();
+                    Q_ASSERT(false);
+                }
+            } else {
+                qWarning() << Q_FUNC_INFO << "Empty rect";
             }
         }
 
