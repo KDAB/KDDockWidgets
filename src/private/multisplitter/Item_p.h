@@ -39,6 +39,7 @@
 class TestMultiSplitter;
 
 namespace Layouting {
+Q_NAMESPACE
 
 class ItemContainer;
 class Item;
@@ -51,6 +52,7 @@ enum Location {
     Location_OnRight, ///> Right docking location
     Location_OnBottom ///> Bottom docking location
 };
+Q_ENUM_NS(Location);
 
 enum AddingOption {
     AddingOption_None = 0, ///> No option set
