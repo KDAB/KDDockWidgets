@@ -1260,7 +1260,7 @@ QRect ItemContainer::suggestedDropRect(const Item *item, const Item *relativeTo,
 
     if (relativeTo) {
         auto r = const_cast<Item*>(relativeTo);
-        r->insertItem(itemCopy, loc,  DefaultSizeMode::FairButFloor);
+        r->insertItem(itemCopy, loc, DefaultSizeMode::FairButFloor);
     } else {
         rootCopy.insertItem(itemCopy, loc, DefaultSizeMode::FairButFloor);
     }
@@ -1311,8 +1311,7 @@ QRect ItemContainer::suggestedDropRectFallback(const Item *item, const Item *rel
             rect.setSize(QSize(suggestedLength, relativeTo->height()));
         }
 
-        return rect;
-
+        return mapToRoot(rect);
     } else if (isRoot()) {
         // Relative to the window itself
         QRect rect = this->rect();
