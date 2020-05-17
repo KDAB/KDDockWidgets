@@ -48,7 +48,7 @@ public:
     void invalidate() override
     {
         QVBoxLayout::invalidate();
-        m_frameWidget->layoutInvalidated();
+        Q_EMIT m_frameWidget->layoutInvalidated();
     }
 
     FrameWidget *const m_frameWidget;
