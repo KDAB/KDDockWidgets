@@ -436,9 +436,9 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 
     QPoint globalPos = QCursor::pos();
-    auto topLevels = qApp->topLevelWidgets();
 
     if (qApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
+        auto topLevels = qApp->topLevelWidgets();
 # if defined(Q_OS_WIN)
         POINT globalNativePos;
         if (!GetCursorPos(&globalNativePos))

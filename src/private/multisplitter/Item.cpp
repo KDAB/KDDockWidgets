@@ -1280,7 +1280,6 @@ QRect ItemContainer::suggestedDropRectFallback(const Item *item, const Item *rel
     const QSize minSize = item->minSize();
     const int itemMin = Layouting::length(minSize, m_orientation);
     const int available = availableLength() - Item::separatorThickness;
-    const SizingInfo::List sizes = this->sizes();
     if (relativeTo) {
         int suggestedPos = 0;
         const QRect relativeToGeo = relativeTo->geometry();
