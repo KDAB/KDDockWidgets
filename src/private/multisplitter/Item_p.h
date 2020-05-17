@@ -214,6 +214,10 @@ struct SizingInfo {
         return Layouting::length(minSize, o);
     }
 
+    int maxLength(Qt::Orientation o) const {
+        return Layouting::length(maxSize, o);
+    }
+
     int availableLength(Qt::Orientation o) const {
         return qMax(0, length(o) - minLength(o));
     }
@@ -264,6 +268,10 @@ struct SizingInfo {
 
     void setGeometry(QRect geo) {
         geometry = geo;
+    }
+
+    int availableToGrow(Qt::Orientation o) const {
+        return maxLength(o) - length(o);
     }
 
     QVariantMap toVariantMap() const;
@@ -480,6 +488,9 @@ public:
 
     void requestSeparatorMove(Separator *separator, int delta);
     void requestEqualSize(Separator *separator);
+    void layoutEqually();
+    void layoutEqually(SizingInfo::List &sizes);
+    void layoutEqually_recursive();
 
     ///@brief Grows the side1Neighbour to the right and the side2Neighbour to the left
     ///So they occupy the empty space that's between them (or bottom/top if Qt::Vertical).

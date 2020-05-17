@@ -2104,6 +2104,80 @@ void ItemContainer::requestEqualSize(Separator *separator)
         requestSeparatorMove(separator, delta);
 }
 
+void ItemContainer::layoutEqually()
+{
+    SizingInfo::List childSizes = sizes();
+    if (!childSizes.isEmpty()) {
+        layoutEqually(childSizes);
+        applyGeometries(childSizes);
+    }
+}
+
+void ItemContainer::layoutEqually(SizingInfo::List &sizes)
+{
+    const int numItems = sizes.count();
+    QVector<int> satisfiedIndexes;
+    satisfiedIndexes.reserve(numItems);
+
+    int lengthToGive = length() - (m_separators.size() * Item::separatorThickness);
+
+    // clear the sizes before we start distributing
+    for (SizingInfo &size : sizes)
+         size.setLength(0, m_orientation);
+
+    while (satisfiedIndexes.count() < sizes.count()) {
+        const int remainingItems = sizes.count() - satisfiedIndexes.count();
+        int suggestedToGive = qMax(1, lengthToGive / remainingItems);
+        const int oldLengthToGive = lengthToGive;
+
+        for (int i = 0; i < numItems; ++i) {
+            if (satisfiedIndexes.contains(i))
+                continue;
+
+            SizingInfo &size = sizes[i];
+            if (size.availableToGrow(m_orientation) <= 0) {
+                // Was already satisfied from the beginning
+                satisfiedIndexes.push_back(i);
+                continue;
+            }
+
+            const int newItemLenght = qBound(size.minLength(m_orientation),
+                                             size.length(m_orientation) + suggestedToGive,
+                                             size.maxLength(m_orientation));
+            const int toGive = newItemLenght - size.length(m_orientation);
+
+            if (toGive == 0) {
+                Q_ASSERT(false);
+                satisfiedIndexes.push_back(i);
+            } else {
+                lengthToGive -= toGive;
+                size.incrementLength(toGive, m_orientation);
+                if (size.availableToGrow(m_orientation) <= 0) {
+                    satisfiedIndexes.push_back(i);
+                }
+                if (lengthToGive == 0)
+                    return;
+            }
+        }
+
+        if (oldLengthToGive == lengthToGive) {
+            // Nothing happened, we can't satisfy more items, due to min/max constraints
+            return;
+        }
+    }
+}
+
+void ItemContainer::layoutEqually_recursive()
+{
+    layoutEqually();
+    for (Item *item : m_children) {
+        if (item->isVisible()) {
+            if (auto c = item->asContainer())
+                c->layoutEqually_recursive();
+        }
+    }
+}
+
 Item *ItemContainer::visibleNeighbourFor(const Item *item, Side side) const
 {
     // Item might not be visible, so use m_children instead of visibleChildren()
