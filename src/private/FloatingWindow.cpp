@@ -378,7 +378,7 @@ void FloatingWindow::onCloseEvent(QCloseEvent *e)
 
     e->accept(); // Accepted by default (will close unless ignored)
 
-    Frame::List frames = this->frames();
+    const Frame::List frames = this->frames();
     for (Frame *frame : frames) {
         qApp->sendEvent(frame, e);
         if (!e->isAccepted())

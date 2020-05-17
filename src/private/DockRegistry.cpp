@@ -69,7 +69,7 @@ bool DockRegistry::isEmpty() const
 
 void DockRegistry::checkSanityAll(bool dumpLayout)
 {
-    for (auto layout : m_layouts) {
+    for (auto layout : qAsConst(m_layouts)) {
         layout->checkSanity();
         if (dumpLayout)
             layout->dumpDebug();

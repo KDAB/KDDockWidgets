@@ -1855,7 +1855,7 @@ void ItemContainer::dumpLayout(int level)
                                          : QString();
 
     const QString typeStr = isRoot() ? QStringLiteral("* Root: ")
-                                     : "* Layout: ";
+                                     : QStringLiteral("* Layout: ");
 
     qDebug().noquote() << indent << typeStr << m_orientation
                        << m_sizingInfo.geometry /*<< "r=" << m_geometry.right() << "b=" << m_geometry.bottom()*/
@@ -1883,7 +1883,7 @@ void ItemContainer::updateChildPercentages()
         return;
 
     const int usable = usableLength();
-    for (Item *item : m_children) {
+    for (Item *item : qAsConst(m_children)) {
         if (item->isVisible() && !item->isBeingInserted()) {
             item->m_sizingInfo.percentageWithinParent = (1.0 * item->length(m_orientation)) / usable;
             auto p = item->m_sizingInfo.percentageWithinParent;

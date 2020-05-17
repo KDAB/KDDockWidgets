@@ -305,7 +305,7 @@ void Frame::onCloseEvent(QCloseEvent *e)
 {
     qCDebug(closing) << "Frame::closeEvent";
     e->accept(); // Accepted by default (will close unless ignored)
-    DockWidgetBase::List docks = dockWidgets();
+    const DockWidgetBase::List docks = dockWidgets();
     for (DockWidgetBase *dock : docks) {
         qApp->sendEvent(dock, e);
         if (!e->isAccepted())

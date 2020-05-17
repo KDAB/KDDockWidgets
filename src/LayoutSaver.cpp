@@ -521,7 +521,7 @@ void LayoutSaver::Frame::fromVariantMap(const QVariantMap &map)
     options = map.value(QStringLiteral("options")).toUInt();
     currentTabIndex = map.value(QStringLiteral("currentTabIndex")).toInt();
 
-    QVariantList dockWidgetsV = map.value(QStringLiteral("dockWidgets")).toList();
+    const QVariantList dockWidgetsV = map.value(QStringLiteral("dockWidgets")).toList();
 
     dockWidgets.clear();
     dockWidgets.reserve(dockWidgetsV.size());
