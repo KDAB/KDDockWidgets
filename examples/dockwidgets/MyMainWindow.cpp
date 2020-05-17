@@ -96,11 +96,14 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         saver.restoreFromFile(QStringLiteral("mylayout.json"));
     });
 
-    auto closeAllAction = fileMenu->addAction(QStringLiteral("Close all"));
+    auto closeAllAction = fileMenu->addAction(QStringLiteral("Close All"));
     connect(closeAllAction, &QAction::triggered, this, [this] {
         for (auto dw : m_dockwidgets)
             dw->close();
     });
+
+    auto layoutEqually = fileMenu->addAction(QStringLiteral("Layout Equally"));
+    connect(layoutEqually, &QAction::triggered, this, &MainWindow::layoutEqually);
 
     auto quitAction = fileMenu->addAction(QStringLiteral("Quit"));
     connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);

@@ -211,6 +211,12 @@ public:
     /// @brief restores the dockwidget @p dw to its previous position
     void restorePlaceholder(DockWidgetBase *dw, Layouting::Item *, int tabIndex);
 
+    /// @brief See docs for MainWindowBase::layoutEqually()
+    void layoutEqually();
+
+    /// @brief overload that just resizes widgets within a sub-tree
+    void layoutEqually(Layouting::ItemContainer *);
+
 Q_SIGNALS:
     void visibleWidgetCountChanged(int count);
 

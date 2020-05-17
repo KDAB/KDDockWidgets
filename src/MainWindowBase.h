@@ -123,6 +123,19 @@ public:
      */
     QString affinityName() const;
 
+    /// @brief layouts all the widgets so they have an equal size within their parent container
+    ///
+    /// Note that the layout is a tree of nested horizontal and vertical container layouts. The
+    /// nodes closer to the root will have more space.
+    ///
+    /// min/max constraints will still be honoured.
+    void layoutEqually();
+
+    /// @brief like layoutEqually() but starts with the container that has @p dockWidget.
+    /// While layoutEqually() starts from the root of the layout tree this function starts on a
+    /// sub-tree.
+    void layoutParentContainerEqually(DockWidgetBase *dockWidget);
+
 protected:
     void setUniqueName(const QString &uniqueName);
 

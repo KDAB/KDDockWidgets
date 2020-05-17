@@ -138,6 +138,16 @@ QString MainWindowBase::affinityName() const
     return d->affinityName;
 }
 
+void MainWindowBase::layoutEqually()
+{
+    dropArea()->layoutEqually();
+}
+
+void MainWindowBase::layoutParentContainerEqually(DockWidgetBase *dockWidget)
+{
+    dropArea()->layoutParentContainerEqually(dockWidget);
+}
+
 void MainWindowBase::setUniqueName(const QString &uniqueName)
 {
     if (uniqueName.isEmpty())

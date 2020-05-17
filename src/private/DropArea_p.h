@@ -66,6 +66,8 @@ public:
     bool contains(DockWidgetBase *) const;
 
     QString affinityName() const;
+    void layoutEqually();
+    void layoutParentContainerEqually(DockWidgetBase *);
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;

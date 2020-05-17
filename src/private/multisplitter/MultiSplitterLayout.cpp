@@ -296,6 +296,20 @@ void MultiSplitterLayout::restorePlaceholder(DockWidgetBase *dw, Layouting::Item
     frame->setVisible(true);
 }
 
+void MultiSplitterLayout::layoutEqually()
+{
+    layoutEqually(m_rootItem);
+}
+
+void MultiSplitterLayout::layoutEqually(Layouting::ItemContainer *container)
+{
+    if (container) {
+        container->layoutEqually_recursive();
+    } else {
+        qWarning() << Q_FUNC_INFO << "null container";
+    }
+}
+
 bool MultiSplitterLayout::checkSanity() const
 {
     return m_rootItem->checkSanity();

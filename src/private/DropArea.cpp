@@ -147,6 +147,22 @@ QString DropArea::affinityName() const
     return QString();
 }
 
+void DropArea::layoutEqually()
+{
+    m_layout->layoutEqually();
+}
+
+void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
+{
+    Layouting::Item *item = m_layout->itemForFrame(dw->frame());
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "Item not found for" << dw << dw->frame();
+        return;
+    }
+
+    m_layout->layoutEqually(item->parentContainer());
+}
+
 void DropArea::hover(FloatingWindow *floatingWindow, QPoint globalPos)
 {
     if (!validateAffinity(floatingWindow))
