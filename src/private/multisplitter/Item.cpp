@@ -2475,7 +2475,7 @@ QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator be
                 const int available = availabilities.at(i);
                 if (available == 0)
                     continue;
-                const int took = qMin(toTake, available);
+                const int took = qMin(missing, qMin(toTake, available));
                 availabilities[i] -= took;
                 missing -= took;
                 squeezes[i] += took;
@@ -2497,6 +2497,12 @@ QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator be
             if (missing == 0)
                 break;
         }
+    }
+
+    if (missing < 0) {
+        // Doesn't really happen
+        qWarning() << Q_FUNC_INFO << "Missing is negative" << missing
+                   << squeezes;
     }
 
     return squeezes;
