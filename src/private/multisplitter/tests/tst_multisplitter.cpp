@@ -1269,7 +1269,7 @@ void TestMultiSplitter::tst_availableOnSide()
     Item *item31 = createItem(/*min=*/QSize(100, 100));
     item3->insertItem(item31, Location_OnRight);
     auto container31 = item31->parentContainer();
-    auto separator31 = container31->separators()[0];
+    auto separator31 = container31->separators().at(0);
     QCOMPARE(container31->minPosForSeparator_global(separator31), item1->minSize().width() + item2->minSize().width() + item3->minSize().width() + 2*Item::separatorThickness);
     QCOMPARE(container31->maxPosForSeparator_global(separator31), root->width() -item31->minSize().width() - Item::separatorThickness);
 }
