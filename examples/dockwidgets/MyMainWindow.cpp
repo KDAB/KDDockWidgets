@@ -109,6 +109,11 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     createDockWidgets();
 }
 
+MyMainWindow::~MyMainWindow()
+{
+    qDeleteAll(m_dockwidgets);
+}
+
 void MyMainWindow::createDockWidgets()
 {
     Q_ASSERT(m_dockwidgets.isEmpty());

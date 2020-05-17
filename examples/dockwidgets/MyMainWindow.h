@@ -31,6 +31,7 @@ public:
                           bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
                           const QString &affinityName = {}, // Usually not needed. Just here to show the feature.
                           QWidget *parent = nullptr);
+    ~MyMainWindow() override;
 
 private:
     void createDockWidgets();
