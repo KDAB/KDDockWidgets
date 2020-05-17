@@ -166,6 +166,7 @@ private Q_SLOTS:
     void tst_resizeViaSeparator3();
     void tst_mapToRoot();
     void tst_closeAndRestorePreservesPosition();
+    void tst_minSizeChangedBeforeRestore();
 };
 
 class MyHostWidget : public QWidget {
@@ -1451,6 +1452,24 @@ void TestMultiSplitter::tst_closeAndRestorePreservesPosition()
     QCOMPARE(item2->width(), oldW2);
     QCOMPARE(item3->width(), oldW3);
     QCOMPARE(item4->width(), oldW4);
+}
+
+void TestMultiSplitter::tst_minSizeChangedBeforeRestore()
+{
+    auto root = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+
+    root->insertItem(item1, Location_OnTop);
+    root->insertItem(item2, Location_OnBottom);
+    const QSize originalSize2 = item2->size();
+
+    auto guest2 = qobject_cast<GuestWidget*>(item2->guest()->asWidget());
+    const QSize newMinSize = originalSize2 + QSize(10, 10);
+
+    item2->turnIntoPlaceholder();
+    guest2->setMinSize(newMinSize);
+    item2->restore(guest2);
 }
 
 int main(int argc, char *argv[])

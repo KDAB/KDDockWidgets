@@ -1152,7 +1152,7 @@ void ItemContainer::insertItem(Item *item, Location loc, DefaultSizeMode default
 
 void ItemContainer::onChildMinSizeChanged(Item *child)
 {
-    if (m_convertingItemToContainer || m_isDeserializing) {
+    if (m_convertingItemToContainer || m_isDeserializing || !child->isVisible()) {
         // Don't bother our parents, we're converting
         return;
     }
