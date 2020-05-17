@@ -1393,8 +1393,7 @@ void TestDocks::tst_restoreSideBySide()
         LayoutSaver restorer;
         QVERIFY(restorer.restoreFromFile(QStringLiteral("layout.json")));
 
-        auto fw2 = dock2->floatingWindow();
-        QCOMPARE(item2MinSize, fw2->multiSplitterLayout()->itemForFrame(dock2->frame())->minSize());
+        DockRegistry::self()->checkSanityAll();
 
         QCOMPARE(dock1->window(), m.get());
         QCOMPARE(dock2->window(), dock3->window());
