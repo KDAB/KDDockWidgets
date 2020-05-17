@@ -114,6 +114,7 @@ public:
     struct ScreenInfo;
 
 private:
+    Q_DISABLE_COPY(LayoutSaver)
     friend class TestDocks;
 
     class Private;
