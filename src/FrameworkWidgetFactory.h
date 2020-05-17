@@ -66,6 +66,8 @@ class TabBar;
  */
 class DOCKS_EXPORT FrameworkWidgetFactory {
 public:
+    FrameworkWidgetFactory() = default;
+
     ///@brief Destructor.Don't delete FrameworkWidgetFactory directly, it's owned
     /// by the framework.
     virtual ~FrameworkWidgetFactory();
@@ -124,6 +126,8 @@ public:
     ///       Override to provide your own DropIndicatorOverlayInterface sub-class.
     ///@param dropArea Just forward to DropIndicatorOverlayInterface's constructor.
     virtual DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea *dropArea) const = 0;
+private:
+    Q_DISABLE_COPY(FrameworkWidgetFactory)
 };
 
 /**
@@ -132,6 +136,7 @@ public:
 class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
 {
 public:
+    DefaultWidgetFactory() = default;
     Frame *createFrame(QWidgetOrQuick *parent, FrameOptions) const override;
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
@@ -141,6 +146,8 @@ public:
     FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const override;
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const override;
+private:
+    Q_DISABLE_COPY(DefaultWidgetFactory)
 };
 
 }

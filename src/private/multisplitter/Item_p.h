@@ -280,8 +280,11 @@ struct SizingInfo {
 class GuestInterface
 {
 public:
+    GuestInterface() = default;
     virtual void setLayoutItem(Item *) = 0;
     virtual QWidget *asWidget() = 0;
+private:
+    Q_DISABLE_COPY(GuestInterface)
 };
 
 class Item : public QObject
