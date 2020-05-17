@@ -309,7 +309,7 @@ Q_SIGNALS:
 
     ///@brief emitted when the options change
     ///@sa setOptions(), options()
-    void optionsChanged(Options);
+    void optionsChanged(KDDockWidgets::DockWidgetBase::Options);
 
 protected:
     void onParentChanged();
