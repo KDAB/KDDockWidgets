@@ -1294,6 +1294,16 @@ void TestMultiSplitter::tst_resizeViaSeparator()
     oldPos = separator->position();
     root->requestSeparatorMove(separator, -delta);
     QCOMPARE(separator->position(), oldPos -delta);
+
+
+    Item *item3 = createItem(/*min=*/QSize(100, 100));
+    Item *item4 = createItem(/*min=*/QSize(100, 100));
+    root->insertItem(item4, Location_OnLeft);
+    root->insertItem(item3, Location_OnRight);
+    item2->turnIntoPlaceholder();
+    item1->turnIntoPlaceholder();
+    separator = root->separators_recursive().at(0);
+    root->requestSeparatorMove(separator, delta);
 }
 
 void TestMultiSplitter::tst_resizeViaSeparator2()
