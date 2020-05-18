@@ -2020,7 +2020,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
         // Separator is moving left (or top if horizontal)
 
         // This is the available within our container, which we can use without bothering other other separators
-        Item *side2Neighbour = m_children[separatorIndex + 1];
+        Item *side2Neighbour = children[separatorIndex + 1];
         const int available1 = availableOnSide(side2Neighbour, Side1);
         tookLocally = qMin(available1, remainingToTake);
 
@@ -2032,7 +2032,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
 
     } else {
         // Separator is moving right (or bottom if horizontal)
-        Item *side1Neighbour = m_children[separatorIndex];
+        Item *side1Neighbour = children[separatorIndex];
         const int available2 = availableOnSide(side1Neighbour, Side2);
         tookLocally = qMin(available2, remainingToTake);
         if (tookLocally != 0) {
