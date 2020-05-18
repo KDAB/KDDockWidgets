@@ -165,8 +165,8 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location,
     }
 
     Q_ASSERT(!newItem->geometry().isEmpty());
-    relativeTo->insertItem(newItem, Layouting::Location(location),
-                           Layouting::DefaultSizeMode(defaultSizeMode), Layouting::AddingOption(option));
+    relativeTo->insertItem(newItem, Layouting::Item::Location(location),
+                           Layouting::Item::DefaultSizeMode(defaultSizeMode), Layouting::Item::AddingOption(option));
 
     if (dw && option && AddingOption_StartHidden)
         delete frame;
@@ -390,7 +390,7 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widget, Location lo
     Layouting::ItemContainer *container = relativeTo ? relativeTo->parentContainer()
                                                      : m_rootItem;
 
-    return container->suggestedDropRect(&item, relativeTo, Layouting::Location(location));
+    return container->suggestedDropRect(&item, relativeTo, Layouting::Item::Location(location));
 }
 
 bool MultiSplitterLayout::deserialize(const LayoutSaver::MultiSplitterLayout &l)

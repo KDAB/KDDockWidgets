@@ -45,20 +45,6 @@ class ItemContainer;
 class Item;
 class Separator;
 
-enum Location {
-    Location_None,
-    Location_OnLeft, ///> Left docking location
-    Location_OnTop,  ///> Top docking location
-    Location_OnRight, ///> Right docking location
-    Location_OnBottom ///> Bottom docking location
-};
-Q_ENUM_NS(Location)
-
-enum AddingOption {
-    AddingOption_None = 0, ///> No option set
-    AddingOption_StartHidden ///< Don't show the dock widget when adding it
-};
-
 enum Side {
     Side1,
     Side2
@@ -87,16 +73,6 @@ enum class NeighbourSqueezeStrategy {
     ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the next neighbour is squezed, and so forth
 };
 
-///@brief When an item is added we need to figure out what's a decent size for it
-///This enum specifies the different ways to calculate it
-enum class DefaultSizeMode {
-    ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
-    Fair, ///< Gives an equal relative size as the items that are already in the layout
-    FairButFloor, ///< Equal to fair, but if the item is smaller than the fair suggestion, then that small size is used.
-    SizePolicy, ///< Uses the item's sizeHint() and sizePolicy()
-    None, ///< Don't do any sizing
-};
-
 inline Qt::Orientation oppositeOrientation(Qt::Orientation o) {
     return o == Qt::Vertical ? Qt::Horizontal
                              : Qt::Vertical;
@@ -110,16 +86,6 @@ inline int pos(QPoint p, Qt::Orientation o) {
 inline int length(QSize sz, Qt::Orientation o) {
     return o == Qt::Vertical ? sz.height()
                              : sz.width();
-}
-
-inline bool locationIsVertical(Location loc)
-{
-    return loc == Location_OnTop || loc == Location_OnBottom;
-}
-
-inline bool locationIsSide1(Location loc)
-{
-    return loc == Location_OnLeft || loc == Location_OnTop;
 }
 
 inline QRect adjustedRect(QRect r, Qt::Orientation o, int p1, int p2)
@@ -165,35 +131,6 @@ inline QRect mapToRect(const QVariantMap &map)
                  map.value(QStringLiteral("y")).toInt(),
                  map.value(QStringLiteral("width")).toInt(),
                  map.value(QStringLiteral("height")).toInt());
-}
-
-inline Qt::Orientation orientationForLocation(Location loc)
-{
-    switch (loc) {
-    case Location_OnLeft:
-    case Location_OnRight:
-        return Qt::Horizontal;
-    case Location_None:
-    case Location_OnTop:
-    case Location_OnBottom:
-        return Qt::Vertical;
-    }
-
-    return Qt::Vertical;
-}
-
-inline Side sideForLocation(Location loc)
-{
-    switch (loc) {
-    case Location_OnLeft:
-    case Location_OnTop:
-        return Side::Side1;
-    case Location_OnRight:
-    case Location_OnBottom:
-        return Side::Side2;
-    default:
-        return Side::Side1;
-    }
 }
 
 struct SizingInfo {
@@ -306,6 +243,30 @@ class Item : public QObject
     Q_PROPERTY(bool isContainer READ isContainer CONSTANT)
 public:
     typedef QVector<Item*> List;
+
+    enum Location {
+        Location_None,
+        Location_OnLeft, ///> Left docking location
+        Location_OnTop,  ///> Top docking location
+        Location_OnRight, ///> Right docking location
+        Location_OnBottom ///> Bottom docking location
+    };
+    Q_ENUM(Location)
+
+    enum AddingOption {
+        AddingOption_None = 0, ///> No option set
+        AddingOption_StartHidden ///< Don't show the dock widget when adding it
+    };
+
+    ///@brief When an item is added we need to figure out what's a decent size for it
+    ///This enum specifies the different ways to calculate it
+    enum class DefaultSizeMode {
+        ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
+        Fair, ///< Gives an equal relative size as the items that are already in the layout
+        FairButFloor, ///< Equal to fair, but if the item is smaller than the fair suggestion, then that small size is used.
+        SizePolicy, ///< Uses the item's sizeHint() and sizePolicy()
+        None, ///< Don't do any sizing
+    };
 
     explicit Item(QWidget *hostWidget, ItemContainer *parent = nullptr);
     ~Item() override;
@@ -617,6 +578,45 @@ inline QSize widgetMinSize(const QWidget *w)
 
 inline int widgetMinLength(const QWidget *w, Qt::Orientation o) {
     return length(widgetMinSize(w), o);
+}
+
+inline bool locationIsVertical(Item::Location loc)
+{
+    return loc == Item::Location_OnTop || loc == Item::Location_OnBottom;
+}
+
+inline bool locationIsSide1(Item::Location loc)
+{
+    return loc == Item::Location_OnLeft || loc == Item::Location_OnTop;
+}
+
+inline Qt::Orientation orientationForLocation(Item::Location loc)
+{
+    switch (loc) {
+    case Item::Location_OnLeft:
+    case Item::Location_OnRight:
+        return Qt::Horizontal;
+    case Item::Location_None:
+    case Item::Location_OnTop:
+    case Item::Location_OnBottom:
+        return Qt::Vertical;
+    }
+
+    return Qt::Vertical;
+}
+
+inline Side sideForLocation(Item::Location loc)
+{
+    switch (loc) {
+    case Item::Location_OnLeft:
+    case Item::Location_OnTop:
+        return Side::Side1;
+    case Item::Location_OnRight:
+    case Item::Location_OnBottom:
+        return Side::Side2;
+    default:
+        return Side::Side1;
+    }
 }
 
 }
