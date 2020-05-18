@@ -25,6 +25,8 @@
 #include <QDebug>
 #include <QScopedValueRollback>
 #include <QTimer>
+#include <QGuiApplication>
+#include <QScreen>
 
 using namespace Layouting;
 
@@ -1843,8 +1845,17 @@ QRect ItemContainer::rect() const
 
 void ItemContainer::dumpLayout(int level)
 {
-    if (level == 0 && hostWidget())
-        qDebug().noquote() << " Dump Start: Host=" << hostWidget() << hostWidget()->rect() << ")";
+    if (level == 0 && hostWidget()) {
+
+        for (auto screen : qApp->screens()) {
+            qDebug().noquote() << "Screen" << screen->geometry() << screen->availableGeometry()
+                               << "; drp=" << screen->devicePixelRatio();
+        }
+
+        qDebug().noquote() << " Dump Start: Host=" << hostWidget() << hostWidget()->rect()
+                           << "; dpr=" << hostWidget()->devicePixelRatio()
+                           << ")";
+    }
 
     QString indent;
     indent.fill(QLatin1Char(' '), level);
