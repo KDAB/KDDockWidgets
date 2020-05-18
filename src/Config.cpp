@@ -28,7 +28,7 @@
 #include "Config.h"
 #include "DockRegistry_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "Separator_p.h"
+#include "multisplitter/Separator_p.h"
 
 #include <QApplication>
 #include <QDebug>
