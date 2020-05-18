@@ -10,7 +10,9 @@ set(MULTISPLITTER_SRCS
 add_library(kddockwidgets_layouting STATIC ${MULTISPLITTER_SRCS})
 target_link_libraries(kddockwidgets_layouting Qt5::Core Qt5::Widgets)
 
-add_subdirectory(tests)
+if (OPTION_DEVELOPER_MODE)
+    add_subdirectory(tests)
+endif()
 
 target_include_directories(kddockwidgets_layouting
     PUBLIC
