@@ -4345,6 +4345,7 @@ void TestDocks::tst_invalidJSON_data()
                                                        << "Serialization format is too old"
                                                        << false;
     QTest::newRow("invalid") << "invalid.json" << 29 << "" << false;
+    QTest::newRow("overlapping-item") << "overlapping-item.json" << 2 << "Unexpected pos" << true;
 }
 
 void TestDocks::tst_invalidJSON()

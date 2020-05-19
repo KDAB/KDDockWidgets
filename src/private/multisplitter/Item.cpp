@@ -1354,6 +1354,17 @@ void ItemContainer::positionItems()
     updateSeparators_recursive();
 }
 
+void ItemContainer::positionItems_recursive()
+{
+    positionItems();
+    for (Item *item : m_children) {
+        if (item->isVisible()) {
+            if (auto c = item->asContainer())
+                c->positionItems_recursive();
+        }
+    }
+}
+
 void ItemContainer::applyPositions(const SizingInfo::List &sizes)
 {
     const Item::List items = visibleChildren();
@@ -2821,6 +2832,12 @@ void ItemContainer::fillFromVariantMap(const QVariantMap &map,
             updateSeparators_recursive();
             updateWidgets_recursive();
         }
+
+        if (!checkSanity()) {
+            // Layout was invalid to begin with
+            positionItems_recursive();
+        }
+
         Q_EMIT minSizeChanged(this);
 #ifdef DOCKS_DEVELOPER_MODE
     if (!checkSanity())

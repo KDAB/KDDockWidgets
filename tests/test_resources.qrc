@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>layouts/invalid.json</file>
+        <file>layouts/overlapping-item.json</file>
         <file>layouts/unsupported-serialization-version.json</file>
     </qresource>
 </RCC>

@@ -495,6 +495,7 @@ public:
     QRect suggestedDropRect(const Item *item, const Item *relativeTo, Location) const;
     QRect suggestedDropRectFallback(const Item *item, const Item *relativeTo, Location) const;
     void positionItems();
+    void positionItems_recursive();
     void positionItems(SizingInfo::List &sizes);
     void clear();
     Item* itemForWidget(const QWidget *w) const;
