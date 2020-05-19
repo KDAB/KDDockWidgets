@@ -5028,7 +5028,7 @@ void TestDocks::tst_raise()
 
     auto dock1 = createDockWidget("1", new QWidget());
     auto dock2 = createDockWidget("2", new QWidget());
-    auto fw2 = dock2->window();
+    QPointer<QWidget> fw2 = dock2->window();
     dock1->addDockWidgetAsTab(dock2);
     dock1->setAsCurrentTab();
     QVERIFY(dock1->isCurrentTab());
@@ -5044,6 +5044,7 @@ void TestDocks::tst_raise()
         dock1->raise();
         QVERIFY(dock1->isCurrentTab());
         QCOMPARE(qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window(), dock1->window());
+        delete dock3->window();
     }
 
     delete fw2;
