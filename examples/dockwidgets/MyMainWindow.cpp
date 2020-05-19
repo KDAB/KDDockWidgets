@@ -29,13 +29,14 @@
 #include <QDebug>
 #include <QString>
 #include <QTextEdit>
+#include <QRandomGenerator>
 
 #include <stdlib.h>
 #include <time.h>
 
 static MyWidget *newMyWidget()
 {
-    const int randomNumber = qrand() % 100 + 1;
+    const int randomNumber = QRandomGenerator::global()->bounded(0, 100) + 1;
 
     if (randomNumber < 50) {
         if (randomNumber < 33) {
@@ -57,9 +58,6 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     , m_restoreIsRelative(restoreIsRelative)
 {
     // qApp->installEventFilter(this);
-
-    qsrand(time(nullptr));
-
     auto menubar = menuBar();
     auto fileMenu = new QMenu(QStringLiteral("File"));
     m_toggleMenu = new QMenu(QStringLiteral("Toggle"));
