@@ -29,14 +29,20 @@
 #include <QDebug>
 #include <QString>
 #include <QTextEdit>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QRandomGenerator>
+#endif
 
 #include <stdlib.h>
 #include <time.h>
 
 static MyWidget *newMyWidget()
 {
+#if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
+    const int randomNumber = qrand() % 100 + 1;
+#else
     const int randomNumber = QRandomGenerator::global()->bounded(0, 100) + 1;
+#endif
 
     if (randomNumber < 50) {
         if (randomNumber < 33) {
@@ -57,6 +63,10 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     , m_dockWidget9IsNonDockable(nonDockableDockWidget9)
     , m_restoreIsRelative(restoreIsRelative)
 {
+#if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
+    qsrand(time(nullptr));
+#endif
+
     // qApp->installEventFilter(this);
     auto menubar = menuBar();
     auto fileMenu = new QMenu(QStringLiteral("File"));
