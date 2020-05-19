@@ -147,6 +147,18 @@ DebugWindow::DebugWindow(QWidget *parent)
     });
 
     button = new QPushButton(this);
+    button->setText(QStringLiteral("Show All DockWidgets"));
+    layout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [this] {
+        QTimer::singleShot(3000, this, [] {
+            const auto docks = DockRegistry::self()->dockwidgets();
+            for (auto dw : docks) {
+                dw->show();
+            }
+        });
+    });
+
+    button = new QPushButton(this);
     button->setText(QStringLiteral("Save layout"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
