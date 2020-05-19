@@ -2020,8 +2020,11 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
     const int max = maxPosForSeparator_global(separator);
 
     if (pos + delta < min || pos + delta > max) {
+        root()->dumpLayout();
         qWarning() << "Separator would have gone out of bounds"
-                   << separator << min << pos << max << delta;
+                   << "; separators=" << separator
+                   << "; min=" << min << "; pos=" << pos
+                   << "; max=" << max << "; delta=" << delta;
         return;
     }
 
@@ -2073,7 +2076,13 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
             qWarning() << Q_FUNC_INFO << "Not enough space to move separator"
                        << this;
         } else {
-            Separator *nextSeparator = parentContainer()->neighbourSeparator(this, moveDirection, m_orientation);
+            Separator *nextSeparator = parentContainer()->neighbourSeparator_recursive(this, moveDirection, m_orientation);
+            if (!nextSeparator) {
+                // Doesn't happen
+                qWarning() << Q_FUNC_INFO << "nextSeparator is null, report a bug";
+                return;
+            }
+
             // nextSeparator might not belong to parentContainer(), due to different orientation
             const int remainingDelta = moveDirection == Side1 ? -remainingToTake : remainingToTake;
             nextSeparator->parentContainer()->requestSeparatorMove(nextSeparator, remainingDelta);
@@ -2963,6 +2972,19 @@ Separator *ItemContainer::neighbourSeparator(const Item *item, Side side, Qt::Or
         return nullptr;
 
     return m_separators[separatorIndex];
+}
+
+Separator *ItemContainer::neighbourSeparator_recursive(const Item *item, Side side,
+                                                       Qt::Orientation orientation) const
+{
+    Separator *separator = neighbourSeparator(item, side, orientation);
+    if (separator)
+        return separator;
+
+    if (!parentContainer())
+        return nullptr;
+
+    return parentContainer()->neighbourSeparator_recursive(this, side, orientation);
 }
 
 void ItemContainer::updateWidgets_recursive()

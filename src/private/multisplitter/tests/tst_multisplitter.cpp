@@ -167,6 +167,7 @@ private Q_SLOTS:
     void tst_mapToRoot();
     void tst_closeAndRestorePreservesPosition();
     void tst_minSizeChangedBeforeRestore();
+    void tst_separatorMoveCrash();
 };
 
 class MyHostWidget : public QWidget {
@@ -1480,6 +1481,33 @@ void TestMultiSplitter::tst_minSizeChangedBeforeRestore()
     item2->turnIntoPlaceholder();
     guest2->setMinSize(newMinSize);
     item2->restore(guest2);
+}
+
+void TestMultiSplitter::tst_separatorMoveCrash()
+{
+    // Tests a crash I got when moving separator to the right
+
+    auto root = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+    auto item4 = createItem();
+    auto item5 = createItem();
+    auto item6 = createItem();
+    root->insertItem(item1, Item::Location_OnTop);
+    root->insertItem(item2, Item::Location_OnBottom);
+    item2->insertItem(item3, Item::Location_OnRight);
+    item3->insertItem(item4, Item::Location_OnBottom);
+    item4->insertItem(item5, Item::Location_OnRight);
+    root->insertItem(item6, Item::Location_OnRight);
+
+    ItemContainer *c = item5->parentContainer();
+    auto separator = c->separators()[0];
+
+    const int available5 = item5->availableLength(Qt::Horizontal);
+
+    // Separator squeezes item5 and starts squeezing item6 by 10px
+    c->requestSeparatorMove(separator, available5 + 10);
 }
 
 int main(int argc, char *argv[])
