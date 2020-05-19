@@ -57,11 +57,13 @@ static MyWidget *newMyWidget()
 
 MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                            bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
+                           bool maxSizeForDockWidget8,
                            const QString &affinityName, QWidget *parent)
     : MainWindow(uniqueName, options, parent)
     , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
     , m_dockWidget9IsNonDockable(nonDockableDockWidget9)
     , m_restoreIsRelative(restoreIsRelative)
+    , m_maxSizeForDockWidget8(maxSizeForDockWidget8)
 {
 #if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
     qsrand(time(nullptr));
@@ -156,6 +158,10 @@ void MyMainWindow::createDockWidgets()
 
     // Floating windows also support nesting, here we add 8 to the bottom of the group
     m_dockwidgets[6]->addDockWidgetToContainingWindow(m_dockwidgets[8], KDDockWidgets::Location_OnBottom);
+
+    // Set a maximum size on dock #8
+    if (m_maxSizeForDockWidget8)
+        m_dockwidgets[8]->setMaximumSize(200, 200);
 
     auto floatingWindow = m_dockwidgets[6]->window();
     floatingWindow->move(100, 100);

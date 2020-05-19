@@ -61,6 +61,9 @@ int main(int argc, char **argv)
     QCommandLineOption multipleMainWindows("m", QCoreApplication::translate("main", "Shows two multiple main windows"));
     parser.addOption(multipleMainWindows);
 
+    QCommandLineOption maxSizeOption("g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200. (support is work in progress)"));
+    parser.addOption(maxSizeOption);
+
     QCommandLineOption incompatibleMainWindows("i", QCoreApplication::translate("main", "Only usable with -m. Make the two main windows incompatible with each other. (Illustrates (MainWindowBase::setAffinityName))"));
     parser.addOption(incompatibleMainWindows);
 
@@ -132,8 +135,10 @@ int main(int argc, char **argv)
     const bool nonClosableDockWidget0 = parser.isSet(nonClosableDockWidget);
     const bool restoreIsRelative = parser.isSet(relativeRestore);
     const bool nonDockableDockWidget9 = parser.isSet(nonDockable);
+    const bool maxSizeForDockWidget8 = parser.isSet(maxSizeOption);
 
-    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0, nonDockableDockWidget9, restoreIsRelative);
+    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0,
+                            nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8);
     mainWindow.setWindowTitle("Main Window 1");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
@@ -145,7 +150,8 @@ int main(int argc, char **argv)
                                                                        : QString();
 
         auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
-                                            nonClosableDockWidget0, nonDockableDockWidget9, restoreIsRelative, affinity);
+                                            nonClosableDockWidget0, nonDockableDockWidget9,
+                                            restoreIsRelative, maxSizeForDockWidget8, affinity);
         if (affinity.isEmpty())
             mainWindow2->setWindowTitle("Main Window 2");
         else
