@@ -234,6 +234,9 @@ bool DockRegistry::isSane() const
         } else {
             names.insert(name);
         }
+
+        if (!mainwindow->multiSplitterLayout()->checkSanity())
+            return false;
     }
 
     return true;
