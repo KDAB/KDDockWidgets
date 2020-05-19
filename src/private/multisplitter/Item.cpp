@@ -641,16 +641,23 @@ void Item::dumpLayout(int level)
 {
     QString indent;
     indent.fill(QLatin1Char(' '), level);
-    const QString beingInserted = m_sizingInfo.isBeingInserted ? QStringLiteral(";beingInserted;")
-                                                               : QString();
-    const QString visible = !isVisible() ? QStringLiteral(";hidden;")
-                                         : QString();
 
-    qDebug().noquote() << indent << "- Widget: " << objectName()
-                       << m_sizingInfo.geometry// << "r=" << m_geometry.right() << "b=" << m_geometry.bottom()
-                       << "; min=" << minSize()
-                       << visible << beingInserted << this
-                       << "; guest=" << widget();
+    auto dbg = qDebug().noquote();
+
+    dbg  << indent << "- Widget: " << objectName()
+         << m_sizingInfo.geometry// << "r=" << m_geometry.right() << "b=" << m_geometry.bottom()
+         << "; min=" << minSize();
+
+    if (maxSize() != QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT))
+        dbg << "; max=" << maxSize();
+
+    if (!isVisible())
+        dbg << QStringLiteral(";hidden;");
+
+    if (m_sizingInfo.isBeingInserted)
+        dbg << QStringLiteral(";beingInserted;");
+
+    dbg << this << "; guest=" << widget();
 }
 
 Item::Item(QWidget *hostWidget, ItemContainer *parent)
