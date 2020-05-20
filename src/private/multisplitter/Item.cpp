@@ -112,6 +112,7 @@ void Item::setGuest(GuestInterface *guest)
         newWidget->installEventFilter(this);
         newWidget->setParent(m_hostWidget);
         setMinSize(widgetMinSize(newWidget));
+        setMaxSize(newWidget->maximumSize());
 
         connect(newWidget, &QObject::objectNameChanged, this, &Item::updateObjectName);
         connect(newWidget, &QObject::destroyed, this, &Item::onWidgetDestroyed);
