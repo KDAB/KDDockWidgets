@@ -184,3 +184,8 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfigVersion.cmake"
         DESTINATION lib/cmake/KDDockWidgets
 )
+
+if (OPTION_DEVELOPER_MODE)
+    add_executable(kddockwidgets_linter layoutlinter_main.cpp)
+    target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_layouting Qt5::Widgets)
+endif()
