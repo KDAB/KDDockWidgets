@@ -36,6 +36,7 @@
 #include "LastPosition_p.h"
 #include "multisplitter/Item_p.h"
 #include "FrameworkWidgetFactory.h"
+#include "MainWindow.h"
 
 #include <qmath.h>
 #include <QDebug>
@@ -87,6 +88,7 @@ public:
     DockRegistry *const m_dockRegistry;
     const RestoreOptions m_restoreOptions;
     QStringList m_affinityNames;
+
     static bool s_restoreInProgress;
 };
 
@@ -222,9 +224,13 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     // 1. Restore main windows
     for (const LayoutSaver::MainWindow &mw : qAsConst(layout.mainWindows)) {
         MainWindowBase *mainWindow = d->m_dockRegistry->mainWindowByName(mw.uniqueName);
-        if (!mainWindow) {
-            qWarning() << "Failed to restore layout create MainWindow with name" << mw.uniqueName << "first";
-            return false;
+        if (!mainWindow ) {
+            if (auto mwFunc = Config::self().mainWindowFactoryFunc()) {
+                mainWindow = mwFunc(mw.uniqueName);
+            } else {
+                qWarning() << "Failed to restore layout create MainWindow with name" << mw.uniqueName << "first";
+                return false;
+            }
         }
 
         if (!d->matchesAffinity(mainWindow->affinityName()))
@@ -248,6 +254,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(parent);
         d->deserializeWindowGeometry(fw, floatingWindow);
         if (!floatingWindow->deserialize(fw)) {
+            qWarning() << Q_FUNC_INFO << "Failed to deserialize floating window";
             return false;
         }
     }
@@ -294,7 +301,6 @@ DockWidgetBase::List LayoutSaver::restoredDockWidgets() const
     }
 
     return result;
-
 }
 
 void LayoutSaver::Private::clearRestoredProperty()
