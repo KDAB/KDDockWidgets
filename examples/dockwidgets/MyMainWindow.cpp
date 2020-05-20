@@ -159,10 +159,6 @@ void MyMainWindow::createDockWidgets()
     // Floating windows also support nesting, here we add 8 to the bottom of the group
     m_dockwidgets[6]->addDockWidgetToContainingWindow(m_dockwidgets[8], KDDockWidgets::Location_OnBottom);
 
-    // Set a maximum size on dock #8
-    if (m_maxSizeForDockWidget8)
-        m_dockwidgets[8]->setMaximumSize(200, 200);
-
     auto floatingWindow = m_dockwidgets[6]->window();
     floatingWindow->move(100, 100);
 }
@@ -184,9 +180,14 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
 
     if (count == 1)
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
+
+    if (count == 8 && m_maxSizeForDockWidget8) {
+        // Set a maximum size on dock #8
+        dock->setMaximumSize(200, 200);
+    }
+
     auto myWidget = newMyWidget();
     dock->setWidget(myWidget);
-
 
     if (dock->options() & KDDockWidgets::DockWidget::Option_NotDockable) {
         dock->setTitle(QStringLiteral("DockWidget #%1 (%2)").arg(count).arg("non dockable"));
