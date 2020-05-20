@@ -61,9 +61,6 @@ int main(int argc, char **argv)
     QCommandLineOption multipleMainWindows("m", QCoreApplication::translate("main", "Shows two multiple main windows"));
     parser.addOption(multipleMainWindows);
 
-    QCommandLineOption maxSizeOption("g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200. (support is work in progress)"));
-    parser.addOption(maxSizeOption);
-
     QCommandLineOption incompatibleMainWindows("i", QCoreApplication::translate("main", "Only usable with -m. Make the two main windows incompatible with each other. (Illustrates (MainWindowBase::setAffinityName))"));
     parser.addOption(incompatibleMainWindows);
 
@@ -85,9 +82,18 @@ int main(int argc, char **argv)
     QCommandLineOption maximizeButton("b", QCoreApplication::translate("main", "DockWidgets have maximize/restore buttons instead of float/dock button"));
     parser.addOption(maximizeButton);
 
-#if defined(DOCKS_DEVELOPER_MODE)
+    QCommandLineOption dockableMainWindows("j", QCoreApplication::translate("main", "Allow main windows to be docked inside other main windows (this feature is work in progress)"));
+    QCommandLineOption maxSizeOption("g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200. (this feature is work in progress)"));
     QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central frame"));
+
+#if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
+    parser.addOption(dockableMainWindows);
+    parser.addOption(maxSizeOption);
+#else
+    Q_UNUSED(dockableMainWindows)
+    Q_UNUSED(maxSizeOption)
+    Q_UNUSED(centralFrame)
 #endif
 
     parser.process(app);
@@ -136,6 +142,8 @@ int main(int argc, char **argv)
     const bool restoreIsRelative = parser.isSet(relativeRestore);
     const bool nonDockableDockWidget9 = parser.isSet(nonDockable);
     const bool maxSizeForDockWidget8 = parser.isSet(maxSizeOption);
+    const bool usesDockableMainWindows = parser.isSet(dockableMainWindows);
+    const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
 
     MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0,
                             nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8);
@@ -143,7 +151,12 @@ int main(int argc, char **argv)
     mainWindow.resize(1200, 1200);
     mainWindow.show();
 
-    if (parser.isSet(multipleMainWindows)) {
+    if (usesMainWindowsWithAffinity) {
+        if (usesDockableMainWindows) {
+            qWarning() << "MainWindows with affinity option is incompatible with Dockable Main Windows option";
+            return 1;
+        }
+
         // By default a dock widget can dock into any main window.
         // By setting an affinity name we can prevent that. Dock widgets of different affinities are incompatible.
         const QString affinity = parser.isSet(incompatibleMainWindows) ? QStringLiteral("affinity1")
@@ -159,6 +172,12 @@ int main(int argc, char **argv)
 
         mainWindow2->resize(1200, 1200);
         mainWindow2->show();
+    } else if (parser.isSet(dockableMainWindows)) {
+
+        auto dockableMainWindow = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
+                                                   false, false, restoreIsRelative, false);
+        dockableMainWindow->setWindowTitle("Dockable Main Window");
+        dockableMainWindow->show();
     }
 
     return app.exec();
