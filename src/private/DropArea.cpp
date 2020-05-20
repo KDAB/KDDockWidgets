@@ -191,7 +191,6 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
 {
     if (droppedWindow == window()) {
         qWarning() << "Refusing to drop onto itself"; // Doesn't happen
-        Q_ASSERT(false);
         return false;
     }
 
@@ -206,7 +205,6 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
     Frame *acceptingFrame = m_dropIndicatorOverlay->hoveredFrame();
     if (!(acceptingFrame || isOutterLocation(m_dropIndicatorOverlay->currentDropLocation()))) {
         qWarning() << "DropArea::drop: asserted with frame=" << acceptingFrame << "; Location=" << m_dropIndicatorOverlay->currentDropLocation();
-        Q_ASSERT(false);
         return false;
     }
 
@@ -235,7 +233,6 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
 
     default:
         qWarning() << "DropArea::drop: Unexpected drop location" << m_dropIndicatorOverlay->currentDropLocation();
-        Q_ASSERT(false);
         result = false;
         break;
     }
