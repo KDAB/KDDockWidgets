@@ -352,8 +352,10 @@ void Item::setMinSize(QSize sz)
 
 void Item::setMaxSize(QSize sz)
 {
-    Q_ASSERT(!isContainer());
-    m_sizingInfo.maxSize = sz;
+    if (sz != m_sizingInfo.maxSize) {
+        m_sizingInfo.maxSize = sz;
+        Q_EMIT maxSizeChanged(this);
+    }
 }
 
 QSize Item::minSize() const

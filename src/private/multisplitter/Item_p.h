@@ -348,6 +348,7 @@ Q_SIGNALS:
     void heightChanged();
     void visibleChanged(Layouting::Item *thisItem, bool visible);
     void minSizeChanged(Layouting::Item *thisItem);
+    void maxSizeChanged(Layouting::Item *thisItem);
 protected:
     friend class ::TestMultiSplitter;
     explicit Item(bool isContainer, QWidget *hostWidget, ItemContainer *parent);
