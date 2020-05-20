@@ -38,9 +38,11 @@ namespace KDDockWidgets
 {
 
 class DockWidgetBase;
+class MainWindowBase;
 class FrameworkWidgetFactory;
 
 typedef KDDockWidgets::DockWidgetBase* (*DockWidgetFactoryFunc)(const QString &name);
+typedef KDDockWidgets::MainWindowBase* (*MainWindowFactoryFunc)(const QString &name);
 
 /**
  * @brief Singleton to allow to choose certain behaviours of the framework.
@@ -101,6 +103,15 @@ public:
     ///@brief Returns the DockWidgetFactoryFunc.
     ///nullptr by default
     DockWidgetFactoryFunc dockWidgetFactoryFunc() const;
+
+    ///@brief counter-part of DockWidgetFactoryFunc but for the main window.
+    /// Should be rarely used. It's good practice to have the main window before restoring a layout.
+    /// It's here so we can use it in the linter executable
+    void setMainWindowFactoryFunc(MainWindowFactoryFunc);
+
+    ///@brief Returns the MainWindowFactoryFunc.
+    ///nullptr by default
+    MainWindowFactoryFunc mainWindowFactoryFunc() const;
 
     /**
      * @brief Sets the WidgetFactory.

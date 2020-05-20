@@ -53,6 +53,7 @@ public:
 
     QQmlEngine *m_qmlEngine = nullptr;
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
+    MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
     FrameworkWidgetFactory *m_frameworkWidgetFactory;
     Flags m_flags = Flag_Default;
 };
@@ -107,6 +108,16 @@ void Config::setDockWidgetFactoryFunc(DockWidgetFactoryFunc func)
 DockWidgetFactoryFunc Config::dockWidgetFactoryFunc() const
 {
     return d->m_dockWidgetFactoryFunc;
+}
+
+void Config::setMainWindowFactoryFunc(MainWindowFactoryFunc func)
+{
+    d->m_mainWindowFactoryFunc = func;
+}
+
+MainWindowFactoryFunc Config::mainWindowFactoryFunc() const
+{
+    return d->m_mainWindowFactoryFunc;
 }
 
 void Config::setFrameworkWidgetFactory(FrameworkWidgetFactory *wf)
