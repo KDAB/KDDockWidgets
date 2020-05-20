@@ -545,6 +545,8 @@ public:
     QVector<Layouting::Separator*> separators() const;
     Qt::Orientation m_orientation = Qt::Vertical;
 private:
+    bool isOverflowing() const;
+    void relayoutIfNeeded();
     const Item *itemFromPath(const QVector<int> &path) const;
     void resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &sizes, ChildrenResizeStrategy);
     void scheduleCheckSanity() const;

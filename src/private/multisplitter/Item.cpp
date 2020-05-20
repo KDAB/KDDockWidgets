@@ -2852,10 +2852,8 @@ void ItemContainer::fillFromVariantMap(const QVariantMap &map,
             updateWidgets_recursive();
         }
 
-        if (!checkSanity()) {
-            // Layout was invalid to begin with
-            positionItems_recursive();
-        }
+        relayoutIfNeeded();
+        positionItems_recursive();
 
         Q_EMIT minSizeChanged(this);
 #ifdef DOCKS_DEVELOPER_MODE
@@ -2924,6 +2922,50 @@ QVector<Separator *> ItemContainer::separators_recursive() const
 QVector<Separator *> ItemContainer::separators() const
 {
     return m_separators;
+}
+
+bool ItemContainer::isOverflowing() const
+{
+    // This never returns true, unless when loading a buggy layout
+    // or if QWidgets now have bigger min-size
+
+    int contentsLength = 0;
+    int numVisible = 0;
+    for (Item *item : m_children) {
+        if (item->isVisible()) {
+            contentsLength += item->length(m_orientation);
+            numVisible++;
+        }
+    }
+
+    contentsLength += qMax(0, Item::separatorThickness * (numVisible - 1));
+    return contentsLength > length();
+}
+
+void ItemContainer::relayoutIfNeeded()
+{
+    // Checks all the child containers if they have the correct min-size, recursively.
+    // When loading a layout from disk the min-sizes for the host QWidgets might have changed, so we
+    // need to adjust
+
+    if (!missingSize().isNull())
+        setSize_recursive(minSize());
+
+    if (isOverflowing()) {
+        const QSize size = this->size();
+        m_sizingInfo.setSize(size + QSize(1, 1)); // Just so setSize_recursive() doesn't bail out
+        setSize_recursive(size);
+        updateChildPercentages();
+    }
+
+    // Let's see our children too:
+    for (Item *item : m_children) {
+        if (item->isVisible()) {
+            if (auto c = item->asContainer())
+                c->relayoutIfNeeded();
+        }
+    }
+
 }
 
 const Item *ItemContainer::itemFromPath(const QVector<int> &path) const
