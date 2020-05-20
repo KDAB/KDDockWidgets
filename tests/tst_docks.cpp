@@ -349,6 +349,7 @@ private Q_SLOTS:
     void tst_floatingWindowDeleted();
     void tst_raise();
     void tst_floatingAction();
+    void tst_dockableMainWindows();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5132,6 +5133,27 @@ void TestDocks::tst_floatingAction()
 
         Testing::waitForDeleted(fw);
     }
+}
+
+void TestDocks::tst_dockableMainWindows()
+{
+    EnsureTopLevelsDeleted e;
+
+     auto m1 = createMainWindow();
+     auto dock1 = createDockWidget("dock1", new QPushButton("foo"));
+     m1->addDockWidget(dock1, Location_OnTop);
+
+     auto m2 = new KDDockWidgets::MainWindow("mainwindow-dockable");
+     auto dock2 = createDockWidget("mainwindow-dw", m2);
+     dock2->show();
+
+     auto fw = qobject_cast<FloatingWindow*>(dock2->window());
+     TitleBar *titleBar = fw->titleBar();
+
+     QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
+     const QPoint startPoint = titleBar->mapToGlobal(QPoint(5, 5));
+     const QPoint destination = startPoint + QPoint(20, 20);
+     drag(titleBar, startPoint, destination);
 }
 
 int main(int argc, char *argv[])

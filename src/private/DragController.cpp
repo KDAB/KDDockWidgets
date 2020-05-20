@@ -422,6 +422,10 @@ static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<T> &t
         auto tl = topLevels.at(i);
         if (!tl->isVisible() || tl == windowBeingDragged || tl->isMinimized())
             continue;
+
+        if (windowBeingDragged && windowBeingDragged->window() == tl->window())
+            continue;
+
         if (tl->geometry().contains(globalPos)) {
             qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
             return tl;
@@ -487,10 +491,13 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
         // and check the MainWindow last, as the MainWindow will have lower z-order as it's a parent (TODO: How will it work with multiple MainWindows ?)
         // The floating window list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
 
-        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->nestedwindows(), m_windowBeingDragged->floatingWindow()))
+        FloatingWindow *tlwBeingDragged = m_windowBeingDragged->floatingWindow();
+        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->nestedwindows(), tlwBeingDragged))
             return tl;
 
-        return qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->topLevels(/*excludeFloating=*/true), static_cast<QWidget*>(nullptr));
+        return qtTopLevelUnderCursor_impl<QWidget*>(globalPos,
+                                                    DockRegistry::self()->topLevels(/*excludeFloating=*/true),
+                                                    tlwBeingDragged);
     }
 #else
     // QtQuick:
