@@ -121,15 +121,11 @@ public:
     ///@brief removes the Item @p placeholder
     void removePlaceholder(Layouting::Item *placeholder);
 
-    void dumpDebug()
-    {
-        qDebug() << "; placeholdersSize=" << m_placeholders.size();
-    }
-
     void setLastFloatingGeometry(QRect);
     QRect lastFloatingGeometry() const;
 
 private:
+    friend inline QDebug operator<<(QDebug, KDDockWidgets::Position);
 
     // The last places where this dock widget was (or is), so it can be restored when setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
@@ -137,6 +133,12 @@ private:
 
     QRect m_lastFloatingGeo;
 };
+
+inline QDebug operator<<(QDebug d, KDDockWidgets::Position p)
+{
+    d << "; placeholdersSize=" << p.m_placeholders.size();
+    return d;
+}
 
 }
 
