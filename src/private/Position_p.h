@@ -134,6 +134,24 @@ private:
     QRect m_lastFloatingGeo;
 };
 
+struct LastPositions {
+    // TODO: Support multiple old positions, one per main window
+
+    Position lastPosition;
+
+    bool isValid() const {
+        return lastPosition.isValid();
+    }
+
+    void addPosition(Layouting::Item *item) {
+        lastPosition.addPlaceholderItem(item);
+    }
+
+    void setLastFloatingGeometry(QRect geo) {
+        lastPosition.setLastFloatingGeometry(geo);
+    }
+};
+
 inline QDebug operator<<(QDebug d, KDDockWidgets::Position p)
 {
     d << "; placeholdersSize=" << p.m_placeholders.size();
