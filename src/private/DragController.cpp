@@ -514,13 +514,24 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
     return nullptr;
 }
 
+static DropArea* deepestDropAreaInTopLevel(QWidget *topLevel, QPoint globalPos)
+{
+    auto w = topLevel->childAt(topLevel->mapFromGlobal(globalPos));
+    while (w) {
+        if (auto dt = qobject_cast<DropArea *>(w)) {
+            return dt;
+        }
+        w = w->parentWidget();
+    }
+
+    return nullptr;
+}
+
 DropArea *DragController::dropAreaUnderCursor() const
 {
     auto topLevel = qtTopLevelUnderCursor();
-    if (!topLevel) {
-        //qCDebug(state) << "DragController::dropAreaUnderCursor: null";
+    if (!topLevel)
         return nullptr;
-    }
 
     if (auto dt = qobject_cast<DropArea *>(topLevel)) {
         return dt;
@@ -541,13 +552,8 @@ DropArea *DragController::dropAreaUnderCursor() const
         return fw->dropArea();
     }
 
-    auto *w = topLevel->childAt(topLevel->mapFromGlobal(QCursor::pos()));
-    while (w) {
-        if (auto dt = qobject_cast<DropArea *>(w)) {
-            return dt;
-        }
-        w = w->parentWidget();
-    }
+    if (auto dt = deepestDropAreaInTopLevel(topLevel, QCursor::pos()))
+        return dt;
 
     qCDebug(state) << "DragController::dropAreaUnderCursor: null2";
     return nullptr;
