@@ -587,28 +587,26 @@ void DockWidgetBase::Private::restoreToPreviousPosition()
         return;
     }
 
-    auto lp = m_lastPositions.lastPosition;
-    Layouting::Item *item = lp->layoutItem();
+    Layouting::Item *item = m_lastPositions.lastItem();
 
     MultiSplitterLayout *layout = DockRegistry::self()->layoutForItem(item);
     Q_ASSERT(layout);
-    layout->restorePlaceholder(q, lp->layoutItem(), lp->m_tabIndex);
+    layout->restorePlaceholder(q, item, m_lastPositions.lastTabIndex());
 }
 
 void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 {
     // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous position.
 
-    auto lp = m_lastPositions.lastPosition;
-    if (!lp->isValid())
+    if (!m_lastPositions.isValid())
         return;
 
-    Layouting::Item *layoutItem = lp->layoutItem();
-    qCDebug(placeholder) << Q_FUNC_INFO << layoutItem << lp->m_wasFloating;
+    Layouting::Item *layoutItem = m_lastPositions.lastItem();
+    qCDebug(placeholder) << Q_FUNC_INFO << layoutItem << m_lastPositions;
     if (!layoutItem)
         return; // nothing to do, no last position
 
-    if (lp->m_wasFloating)
+    if (m_lastPositions.wasFloating())
         return; // Nothing to do, it was floating before, now it'll just get visible
 
     Frame *frame = q->frame();
@@ -640,8 +638,7 @@ int DockWidgetBase::Private::currentTabIndex() const
 
 void DockWidgetBase::Private::saveTabIndex()
 {
-    m_lastPositions.lastPosition->m_tabIndex = currentTabIndex();
-    m_lastPositions.lastPosition->m_wasFloating = q->isFloating();
+    m_lastPositions.saveTabIndex(currentTabIndex(), q->isFloating());
 }
 
 void DockWidgetBase::Private::show()

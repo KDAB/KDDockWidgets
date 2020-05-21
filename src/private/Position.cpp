@@ -104,10 +104,10 @@ void Position::removePlaceholders()
     m_placeholders.clear();
 }
 
-void Position::removePlaceholders(const MultiSplitterLayout *layout)
+void Position::removePlaceholders(const MultiSplitter *ms)
 {
-    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [layout] (const std::unique_ptr<ItemRef> &itemref) {
-                             return DockRegistry::self()->layoutForItem(itemref->item) == layout;
+    m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [ms] (const std::unique_ptr<ItemRef> &itemref) {
+                             return itemref->item->hostWidget() == ms;
                          }), m_placeholders.end());
 }
 

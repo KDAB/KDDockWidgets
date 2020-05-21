@@ -44,7 +44,7 @@ class Item;
 
 namespace KDDockWidgets {
 
-class MultiSplitterLayout;
+class MultiSplitter;
 
 // Just a RAII class so we don't forget to unref
 struct ItemRef
@@ -114,8 +114,8 @@ public:
 
     const std::vector<std::unique_ptr<ItemRef>>& placeholders() const { return m_placeholders; }
 
-    ///@brief Removes the placeholders that belong to @p layout
-    void removePlaceholders(const MultiSplitterLayout *layout);
+    ///@brief Removes the placeholders that belong to this multisplitter
+    void removePlaceholders(const MultiSplitter *);
 
     ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();
@@ -139,8 +139,6 @@ private:
 struct LastPositions
 {
     // TODO: Support multiple old positions, one per main window
-
-    Position::Ptr lastPosition = std::make_shared<Position>();
 
     bool isValid() const {
         return lastPosition->isValid();
@@ -170,14 +168,35 @@ struct LastPositions
         lastPosition->deserialize(p);
     }
 
+    Layouting::Item* lastItem() const {
+        return lastPosition->layoutItem();
+    }
+
     Layouting::Item::List layoutItems() const {
         Layouting::Item::List items;
         return items;
     }
 
+    void saveTabIndex(int tabIndex, bool isFloating) {
+        lastPosition->m_tabIndex = tabIndex;
+        lastPosition->m_wasFloating = isFloating;
+    }
+
     void removePlaceholders() const {
         lastPosition->removePlaceholders();
     }
+
+    void removePlaceholders(MultiSplitter *hostWidget) const {
+        lastPosition->removePlaceholders(hostWidget);
+    }
+
+    int lastTabIndex() const {
+        return lastPosition->m_tabIndex;
+    }
+
+private:
+    friend inline QDebug operator<<(QDebug d, const KDDockWidgets::LastPositions &);
+    Position::Ptr lastPosition = std::make_shared<Position>();
 };
 
 inline QDebug operator<<(QDebug d, const KDDockWidgets::Position::Ptr &p)

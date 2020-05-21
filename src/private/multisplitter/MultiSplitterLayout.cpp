@@ -319,11 +319,7 @@ void MultiSplitterLayout::unrefOldPlaceholders(const Frame::List &framesBeingAdd
 {
     for (Frame *frame : framesBeingAdded) {
         for (DockWidgetBase *dw : frame->dockWidgets()) {
-            if (Layouting::Item *existingItem = dw->lastPositions().lastPosition->layoutItem()) {
-                if (contains(existingItem)) { // We're only interested in placeholders from this layout
-                    dw->lastPositions().lastPosition->removePlaceholders(this);
-                }
-            }
+            dw->lastPositions().removePlaceholders(multiSplitter());
         }
     }
 }
