@@ -123,17 +123,12 @@ public:
     ///@brief removes the Item @p placeholder
     void removePlaceholder(Layouting::Item *placeholder);
 
-    void setLastFloatingGeometry(QRect);
-    QRect lastFloatingGeometry() const;
-
 private:
     friend inline QDebug operator<<(QDebug, const KDDockWidgets::Position::Ptr &);
 
     // The last places where this dock widget was (or is), so it can be restored when setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
     bool m_clearing = false; // to prevent re-entrancy
-
-    QRect m_lastFloatingGeo;
 };
 
 struct LastPositions
@@ -149,7 +144,7 @@ struct LastPositions
     }
 
     void setLastFloatingGeometry(QRect geo) {
-        lastPosition->setLastFloatingGeometry(geo);
+        m_lastFloatingGeometry = geo;
     }
 
     bool wasFloating() const {
@@ -157,14 +152,19 @@ struct LastPositions
     }
 
     QRect lastFloatingGeometry() const {
-        return lastPosition->lastFloatingGeometry();
+        return m_lastFloatingGeometry;
     }
 
-    LayoutSaver::Position serialize() {
-        return lastPosition->serialize();
+    LayoutSaver::Position serialize()
+    {
+        LayoutSaver::Position result = lastPosition->serialize();
+        result.lastFloatingGeometry = lastFloatingGeometry();
+        return result;
     }
 
-    void deserialize(const LayoutSaver::Position &p) {
+    void deserialize(const LayoutSaver::Position &p)
+    {
+        m_lastFloatingGeometry = p.lastFloatingGeometry;
         lastPosition->deserialize(p);
     }
 
@@ -195,6 +195,8 @@ struct LastPositions
     }
 
 private:
+    QRect m_lastFloatingGeometry;
+
     friend inline QDebug operator<<(QDebug d, const KDDockWidgets::LastPositions &);
     Position::Ptr lastPosition = std::make_shared<Position>();
 };

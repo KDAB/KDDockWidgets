@@ -350,6 +350,7 @@ private Q_SLOTS:
     void tst_raise();
     void tst_floatingAction();
     void tst_dockableMainWindows();
+    void tst_lastFloatingPositionIsRestored();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5153,6 +5154,35 @@ void TestDocks::tst_dockableMainWindows()
      const QPoint startPoint = titleBar->mapToGlobal(QPoint(5, 5));
      const QPoint destination = startPoint + QPoint(20, 20);
      drag(titleBar, startPoint, destination);
+}
+
+void TestDocks::tst_lastFloatingPositionIsRestored()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m1 = createMainWindow();
+    auto dock1 = createDockWidget("dock1", new QPushButton("foo"));
+    dock1->show();
+    const QPoint targetPos = QPoint(340, 340);
+    dock1->window()->move(targetPos);
+    auto oldFw = dock1->window();
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    dock1->window()->move(0, 0);
+    dock1->close();
+    delete oldFw;
+
+    saver.restoreLayout(saved);
+    QCOMPARE(dock1->window()->pos(), targetPos);
+
+    // No dock it:
+    m1->addDockWidget(dock1, Location_OnTop);
+    saver.restoreLayout(saved);
+
+    dock1->setFloating(true);
+    delete dock1->window();
 }
 
 int main(int argc, char *argv[])

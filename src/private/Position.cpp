@@ -133,16 +133,6 @@ void Position::removePlaceholder(Layouting::Item *placeholder)
     }), m_placeholders.end());
 }
 
-void Position::setLastFloatingGeometry(QRect geo)
-{
-    m_lastFloatingGeo = geo;
-}
-
-QRect Position::lastFloatingGeometry() const
-{
-    return m_lastFloatingGeo;
-}
-
 void Position::deserialize(const LayoutSaver::Position &lp)
 {
     for (const auto &placeholder : qAsConst(lp.placeholders)) {
@@ -171,7 +161,6 @@ void Position::deserialize(const LayoutSaver::Position &lp)
 
     }
 
-    m_lastFloatingGeo = lp.lastFloatingGeometry;
     m_tabIndex = lp.tabIndex;
     m_wasFloating = lp.wasFloating;
 }
@@ -203,7 +192,6 @@ LayoutSaver::Position Position::serialize() const
         l.placeholders.push_back(p);
     }
 
-    l.lastFloatingGeometry = lastFloatingGeometry();
     l.tabIndex = m_tabIndex;
     l.wasFloating = m_wasFloating;
 
