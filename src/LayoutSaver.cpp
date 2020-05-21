@@ -33,7 +33,7 @@
 #include "DropArea_p.h"
 #include "Logging_p.h"
 #include "Frame_p.h"
-#include "LastPosition_p.h"
+#include "Position_p.h"
 #include "multisplitter/Item_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "MainWindow.h"
@@ -713,12 +713,12 @@ void LayoutSaver::MultiSplitterLayout::fromVariantMap(const QVariantMap &map)
     }
 }
 
-void LayoutSaver::LastPosition::scaleSizes(const ScalingInfo &scalingInfo)
+void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)
 {
     scalingInfo.applyFactorsTo(/*by-ref*/lastFloatingGeometry);
 }
 
-QVariantMap LayoutSaver::LastPosition::toVariantMap() const
+QVariantMap LayoutSaver::Position::toVariantMap() const
 {
     QVariantMap map;
     map.insert(QStringLiteral("lastFloatingGeometry"), Layouting::rectToMap(lastFloatingGeometry));
@@ -729,7 +729,7 @@ QVariantMap LayoutSaver::LastPosition::toVariantMap() const
     return map;
 }
 
-void LayoutSaver::LastPosition::fromVariantMap(const QVariantMap &map)
+void LayoutSaver::Position::fromVariantMap(const QVariantMap &map)
 {
     lastFloatingGeometry = Layouting::mapToRect(map.value(QStringLiteral("lastFloatingGeometry")).toMap());
     tabIndex = map.value(QStringLiteral("tabIndex")).toInt();

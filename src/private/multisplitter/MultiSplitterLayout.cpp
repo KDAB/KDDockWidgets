@@ -23,7 +23,7 @@
 #include "MultiSplitter_p.h"
 #include "Frame_p.h"
 #include "DockWidgetBase.h"
-#include "LastPosition_p.h"
+#include "Position_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"

@@ -35,7 +35,7 @@
 #include "LayoutSaver_p.h"
 #include "TabWidget_p.h"
 #include "multisplitter/MultiSplitter_p.h"
-#include "LastPosition_p.h"
+#include "Position_p.h"
 #include "utils.h"
 #include "FrameworkWidgetFactory.h"
 #include "DropAreaWithCentralFrame_p.h"
@@ -2199,7 +2199,7 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     QVERIFY(!dock1->isFloating());
     QVERIFY(dock2->isFloating());
 
-    LastPosition *pos2 = dock2->lastPosition();
+    Position *pos2 = dock2->lastPosition();
     QCOMPARE(pos2->m_tabIndex, 1);
     QVERIFY(pos2->isValid());
     dock2->setFloating(false);

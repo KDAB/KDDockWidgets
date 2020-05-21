@@ -107,7 +107,7 @@ struct LayoutSaver::ScalingInfo
     double widthFactor = -1;
 };
 
-struct LayoutSaver::LastPosition
+struct LayoutSaver::Position
 {
     QRect lastFloatingGeometry;
     int tabIndex;
@@ -151,7 +151,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
 
     QString uniqueName;
     QString affinityName;
-    LayoutSaver::LastPosition lastPosition;
+    LayoutSaver::Position lastPosition;
 
 private:
     DockWidget() {}

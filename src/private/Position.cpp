@@ -24,7 +24,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "LastPosition_p.h"
+#include "Position_p.h"
 #include "DockRegistry_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "multisplitter/MultiSplitter_p.h"
@@ -33,12 +33,12 @@
 
 using namespace KDDockWidgets;
 
-LastPosition::~LastPosition()
+Position::~Position()
 {
     m_placeholders.clear();
 }
 
-void LastPosition::addPlaceholderItem(Layouting::Item *placeholder)
+void Position::addPlaceholderItem(Layouting::Item *placeholder)
 {
     Q_ASSERT(placeholder);
 
@@ -68,7 +68,7 @@ void LastPosition::addPlaceholderItem(Layouting::Item *placeholder)
     // the same value always, hence we just shove them into a list, instead of giving them meaningful names in separated variables
 }
 
-QWidgetOrQuick *LastPosition::window() const
+QWidgetOrQuick *Position::window() const
 {
     if (Layouting::Item *placeholder = layoutItem())
         return placeholder->window();
@@ -76,7 +76,7 @@ QWidgetOrQuick *LastPosition::window() const
     return nullptr;
 }
 
-Layouting::Item *LastPosition::layoutItem() const
+Layouting::Item *Position::layoutItem() const
 {
     // Return the layout item that is in a MainWindow, that's where we restore the dock widget to.
     // In the future we might want to restore it to FloatingWindows.
@@ -89,7 +89,7 @@ Layouting::Item *LastPosition::layoutItem() const
     return nullptr;
 }
 
-bool LastPosition::containsPlaceholder(Layouting::Item *item) const
+bool Position::containsPlaceholder(Layouting::Item *item) const
 {
     for (const auto &itemRef : m_placeholders)
         if (itemRef->item == item)
@@ -98,14 +98,20 @@ bool LastPosition::containsPlaceholder(Layouting::Item *item) const
     return false;
 }
 
-void LastPosition::removePlaceholders(const MultiSplitterLayout *layout)
+void Position::removePlaceholders()
+{
+    QScopedValueRollback<bool>(m_clearing, true);
+    m_placeholders.clear();
+}
+
+void Position::removePlaceholders(const MultiSplitterLayout *layout)
 {
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [layout] (const std::unique_ptr<ItemRef> &itemref) {
                              return DockRegistry::self()->layoutForItem(itemref->item) == layout;
                          }), m_placeholders.end());
 }
 
-void LastPosition::removeNonMainWindowPlaceholders()
+void Position::removeNonMainWindowPlaceholders()
 {
     auto it = m_placeholders.begin();
     while (it != m_placeholders.end()) {
@@ -117,7 +123,7 @@ void LastPosition::removeNonMainWindowPlaceholders()
     }
 }
 
-void LastPosition::removePlaceholder(Layouting::Item *placeholder)
+void Position::removePlaceholder(Layouting::Item *placeholder)
 {
     if (m_clearing) // reentrancy guard
         return;
@@ -127,17 +133,17 @@ void LastPosition::removePlaceholder(Layouting::Item *placeholder)
     }), m_placeholders.end());
 }
 
-void LastPosition::setLastFloatingGeometry(QRect geo)
+void Position::setLastFloatingGeometry(QRect geo)
 {
     m_lastFloatingGeo = geo;
 }
 
-QRect LastPosition::lastFloatingGeometry() const
+QRect Position::lastFloatingGeometry() const
 {
     return m_lastFloatingGeo;
 }
 
-void LastPosition::deserialize(const LayoutSaver::LastPosition &lp)
+void Position::deserialize(const LayoutSaver::Position &lp)
 {
     for (const auto &placeholder : qAsConst(lp.placeholders)) {
         MultiSplitterLayout *layout;
@@ -171,9 +177,9 @@ void LastPosition::deserialize(const LayoutSaver::LastPosition &lp)
 
 }
 
-LayoutSaver::LastPosition LastPosition::serialize() const
+LayoutSaver::Position Position::serialize() const
 {
-    LayoutSaver::LastPosition l;
+    LayoutSaver::Position l;
 
     for (auto &itemRef : m_placeholders) {
         LayoutSaver::Placeholder p;

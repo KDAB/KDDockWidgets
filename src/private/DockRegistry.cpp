@@ -22,7 +22,7 @@
 #include "DockWidgetBase.h"
 #include "Logging_p.h"
 #include "DebugWindow_p.h"
-#include "LastPosition_p.h"
+#include "Position_p.h"
 #include "multisplitter/MultiSplitterLayout_p.h"
 #include "multisplitter/MultiSplitter_p.h"
 #include "quick/QmlTypes.h"

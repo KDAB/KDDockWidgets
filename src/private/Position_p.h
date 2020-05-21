@@ -24,15 +24,17 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#ifndef KD_LAST_POSITION_P_H
-#define KD_LAST_POSITION_P_H
+#ifndef KDDOCKWIDGETS_POSITION_P_H
+#define KDDOCKWIDGETS_POSITION_P_H
 
 #include "docks_export.h"
 #include "Logging_p.h"
 #include "LayoutSaver_p.h"
 #include "QWidgetAdapter.h"
 
+#include <QScopedValueRollback>
 #include <QPointer>
+
 #include <memory>
 
 namespace Layouting {
@@ -59,25 +61,26 @@ private:
 
 class DockWidgetBase;
 class Frame;
+
 /**
  * @internal
  * @brief Represents the DockWidget's last position.
  *
- * The DockWidget's position is saved when its closed and restored when it's shown.
+ * The DockWidget's position is saved when it's closed and restored when it's shown.
  * This class holds that position.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS LastPosition
+class DOCKS_EXPORT_FOR_UNIT_TESTS Position
 {
-    Q_DISABLE_COPY(LastPosition)
+    Q_DISABLE_COPY(Position)
 public:
-    LastPosition() = default;
-    ~LastPosition();
+    Position() = default;
+    ~Position();
 
-    void deserialize(const LayoutSaver::LastPosition &);
-    LayoutSaver::LastPosition serialize() const;
+    void deserialize(const LayoutSaver::Position &);
+    LayoutSaver::Position serialize() const;
 
     /**
-     * @brief Returns whether the LastPosition is valid. If invalid then the DockWidget was never
+     * @brief Returns whether the Position is valid. If invalid then the DockWidget was never
      * in a MainWindow.
      */
     bool isValid() const { return layoutItem() != nullptr; }
@@ -105,7 +108,7 @@ public:
     Layouting::Item* layoutItem() const;
 
     bool containsPlaceholder(Layouting::Item*) const;
-    void removePlaceholders() { m_clearing = true; m_placeholders.clear(); m_clearing = false;}
+    void removePlaceholders();
 
     const std::vector<std::unique_ptr<ItemRef>>& placeholders() const { return m_placeholders; }
 

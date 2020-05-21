@@ -28,7 +28,7 @@
 #include "DockRegistry_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "DropArea_p.h"
-#include "LastPosition_p.h"
+#include "Position_p.h"
 #include "multisplitter/Item_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
@@ -116,7 +116,7 @@ public:
     DockWidgetBase::Options options;
     QAction *const toggleAction;
     QAction *const floatAction;
-    LastPosition m_lastPosition;
+    Position m_lastPosition;
     bool m_updatingToggleAction = false;
     bool m_updatingFloatAction = false;
     bool m_isForceClosing = false;
@@ -483,7 +483,7 @@ void DockWidgetBase::addPlaceholderItem(Layouting::Item *item)
     d->m_lastPosition.addPlaceholderItem(item);
 }
 
-LastPosition *DockWidgetBase::lastPosition() const
+Position *DockWidgetBase::lastPosition() const
 {
     return &d->m_lastPosition;
 }

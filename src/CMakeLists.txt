@@ -17,7 +17,7 @@ set(DOCKSLIBS_SRCS
     MainWindow.cpp
     MainWindowBase.cpp
     LayoutSaver.cpp
-    private/LastPosition.cpp
+    private/Position.cpp
     private/ObjectViewer.cpp
     private/DropIndicatorOverlayInterface.cpp
     private/indicators/ClassicIndicators.cpp

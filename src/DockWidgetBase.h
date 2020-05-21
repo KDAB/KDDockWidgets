@@ -49,7 +49,7 @@ namespace KDDockWidgets {
 class Frame;
 class FloatingWindow;
 class DragController;
-class LastPosition;
+class Position;
 class DockRegistry;
 class LayoutSaver;
 class TabWidget;
@@ -370,7 +370,7 @@ private:
     void addPlaceholderItem(Layouting::Item*);
 
     ///@brief returns the last position, just for tests. TODO Make tests just use the d-pointer.
-    LastPosition *lastPosition() const;
+    Position *lastPosition() const;
 
     class Private;
     Private *const d;
