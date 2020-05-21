@@ -411,6 +411,11 @@ void DockWidgetBase::raise()
     }
 }
 
+bool DockWidgetBase::isMainWindow() const
+{
+    return qobject_cast<MainWindowBase*>(widget());
+}
+
 void DockWidgetBase::setAffinityName(const QString &affinity)
 {
     setAffinities({ affinity });

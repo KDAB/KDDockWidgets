@@ -292,6 +292,18 @@ public:
     /// This only applies if the dock widget is already open. If closed, does nothing.
     void raise();
 
+    /**
+     * @brief Returns whether widget() is a KDDockWidget::MainWindow
+     *
+     * This function doesn't have anything to do with this dock widget being inside a main window or
+     * not, but rather the inverse concept. It's not a very popular usage, but some applications
+     * want to dock a main window into another main window. This is done by putting it into a
+     * dock widget first.
+     *
+     * See also kddockwidgets_example -j
+     */
+    bool isMainWindow() const;
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();
