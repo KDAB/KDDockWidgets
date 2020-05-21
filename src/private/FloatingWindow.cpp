@@ -90,8 +90,8 @@ public:
 FloatingWindow::FloatingWindow(MainWindowBase *parent)
     : QWidgetAdapter(parent, KDDockWidgets::usesNativeDraggingAndResizing() ? Qt::Window : Qt::Tool)
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
-    , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_dropArea(new DropArea(this))
+    , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
 {
 #ifdef Q_OS_WIN
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
@@ -219,7 +219,8 @@ DockWidgetBase *FloatingWindow::singleDockWidget() const
 
 const Frame::List FloatingWindow::frames() const
 {
-    return findChildren<Frame *>(QString(), Qt::FindChildrenRecursively);
+    Q_ASSERT(m_dropArea);
+    return m_dropArea->findChildren<Frame *>(QString(), Qt::FindDirectChildrenOnly);
 }
 
 void FloatingWindow::scheduleDeleteLater()

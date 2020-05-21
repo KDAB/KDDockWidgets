@@ -125,8 +125,8 @@ protected:
 
     void onCloseEvent(QCloseEvent *) override;
 
-    TitleBar *const m_titleBar;
     DropArea *const m_dropArea;
+    TitleBar *const m_titleBar;
 private:
     Q_DISABLE_COPY(FloatingWindow)
     void maybeCreateResizeHandler();
