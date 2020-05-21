@@ -2199,7 +2199,7 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     QVERIFY(!dock1->isFloating());
     QVERIFY(dock2->isFloating());
 
-    Position *pos2 = dock2->lastPosition();
+    Position::Ptr pos2 = dock2->lastPosition();
     QCOMPARE(pos2->m_tabIndex, 1);
     QVERIFY(pos2->isValid());
     dock2->setFloating(false);

@@ -28,7 +28,6 @@
 #include "DockRegistry_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "DropArea_p.h"
-#include "Position_p.h"
 #include "multisplitter/Item_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
@@ -478,9 +477,9 @@ void DockWidgetBase::addPlaceholderItem(Layouting::Item *item)
     d->m_lastPositions.addPosition(item);
 }
 
-Position *DockWidgetBase::lastPosition() const
+Position::Ptr DockWidgetBase::lastPosition() const
 {
-    return &d->m_lastPositions.lastPosition;
+    return d->m_lastPositions.lastPosition;
 }
 
 QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
@@ -588,28 +587,28 @@ void DockWidgetBase::Private::restoreToPreviousPosition()
         return;
     }
 
-    auto &lp = m_lastPositions.lastPosition;
-    Layouting::Item *item = lp.layoutItem();
+    auto lp = m_lastPositions.lastPosition;
+    Layouting::Item *item = lp->layoutItem();
 
     MultiSplitterLayout *layout = DockRegistry::self()->layoutForItem(item);
     Q_ASSERT(layout);
-    layout->restorePlaceholder(q, lp.layoutItem(), lp.m_tabIndex);
+    layout->restorePlaceholder(q, lp->layoutItem(), lp->m_tabIndex);
 }
 
 void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 {
     // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous position.
 
-    auto &lp = m_lastPositions.lastPosition;
-    if (!lp.isValid())
+    auto lp = m_lastPositions.lastPosition;
+    if (!lp->isValid())
         return;
 
-    Layouting::Item *layoutItem = lp.layoutItem();
-    qCDebug(placeholder) << Q_FUNC_INFO << layoutItem << lp.m_wasFloating;
+    Layouting::Item *layoutItem = lp->layoutItem();
+    qCDebug(placeholder) << Q_FUNC_INFO << layoutItem << lp->m_wasFloating;
     if (!layoutItem)
         return; // nothing to do, no last position
 
-    if (lp.m_wasFloating)
+    if (lp->m_wasFloating)
         return; // Nothing to do, it was floating before, now it'll just get visible
 
     Frame *frame = q->frame();
@@ -641,8 +640,8 @@ int DockWidgetBase::Private::currentTabIndex() const
 
 void DockWidgetBase::Private::saveTabIndex()
 {
-    m_lastPositions.lastPosition.m_tabIndex = currentTabIndex();
-    m_lastPositions.lastPosition.m_wasFloating = q->isFloating();
+    m_lastPositions.lastPosition->m_tabIndex = currentTabIndex();
+    m_lastPositions.lastPosition->m_wasFloating = q->isFloating();
 }
 
 void DockWidgetBase::Private::show()

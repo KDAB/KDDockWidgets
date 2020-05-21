@@ -32,6 +32,7 @@
 #include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
 #include "LayoutSaver_p.h"
+#include "private/Position_p.h"
 
 #include <QVector>
 #include <QWidget>
@@ -49,7 +50,6 @@ namespace KDDockWidgets {
 class Frame;
 class FloatingWindow;
 class DragController;
-class Position;
 class DockRegistry;
 class LayoutSaver;
 class TabWidget;
@@ -370,7 +370,7 @@ private:
     void addPlaceholderItem(Layouting::Item*);
 
     ///@brief returns the last position, just for tests. TODO Make tests just use the d-pointer.
-    Position *lastPosition() const;
+    Position::Ptr lastPosition() const;
 
     class Private;
     Private *const d;

@@ -174,7 +174,6 @@ void Position::deserialize(const LayoutSaver::Position &lp)
     m_lastFloatingGeo = lp.lastFloatingGeometry;
     m_tabIndex = lp.tabIndex;
     m_wasFloating = lp.wasFloating;
-
 }
 
 LayoutSaver::Position Position::serialize() const

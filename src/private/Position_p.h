@@ -73,6 +73,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Position
 {
     Q_DISABLE_COPY(Position)
 public:
+    typedef std::shared_ptr<Position> Ptr;
     Position() = default;
     ~Position();
 
@@ -125,7 +126,7 @@ public:
     QRect lastFloatingGeometry() const;
 
 private:
-    friend inline QDebug operator<<(QDebug, KDDockWidgets::Position);
+    friend inline QDebug operator<<(QDebug, const KDDockWidgets::Position::Ptr &);
 
     // The last places where this dock widget was (or is), so it can be restored when setFloating(false) or show() is called.
     std::vector<std::unique_ptr<ItemRef>> m_placeholders;
@@ -134,27 +135,31 @@ private:
     QRect m_lastFloatingGeo;
 };
 
-struct LastPositions {
+struct LastPositions
+{
     // TODO: Support multiple old positions, one per main window
 
-    Position lastPosition;
+    Position::Ptr lastPosition = std::make_shared<Position>();
 
     bool isValid() const {
-        return lastPosition.isValid();
+        return lastPosition->isValid();
     }
 
     void addPosition(Layouting::Item *item) {
-        lastPosition.addPlaceholderItem(item);
+        lastPosition->addPlaceholderItem(item);
     }
 
     void setLastFloatingGeometry(QRect geo) {
-        lastPosition.setLastFloatingGeometry(geo);
+        lastPosition->setLastFloatingGeometry(geo);
     }
 };
 
-inline QDebug operator<<(QDebug d, KDDockWidgets::Position p)
+inline QDebug operator<<(QDebug d, const KDDockWidgets::Position::Ptr &p)
 {
-    d << "; placeholdersSize=" << p.m_placeholders.size();
+    if (!p)
+        return d;
+
+    d << "; placeholdersSize=" << p->m_placeholders.size();
     return d;
 }
 
