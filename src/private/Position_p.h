@@ -212,7 +212,7 @@ inline QDebug operator<<(QDebug d, const KDDockWidgets::Position::Ptr &p)
 
 inline QDebug operator<<(QDebug d, const KDDockWidgets::LastPositions &p)
 {
-    d << "; lastPosition=" << p.lastPosition;
+    d << p.lastPosition << "; lastFloatingGeometry=" << p.m_lastFloatingGeometry;
     return d;
 }
 
