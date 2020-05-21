@@ -382,8 +382,7 @@ QString DockWidgetBase::affinityName() const
 
 void DockWidgetBase::show()
 {
-    LastPositions lastPositions = this->lastPositions();
-    if (isWindow() && (lastPositions.wasFloating() || !lastPositions.isValid())) {
+    if (isWindow() && (d->m_lastPositions.wasFloating() || !d->m_lastPositions.isValid())) {
         // Create the FloatingWindow already, instead of waiting for the show event.
         // This reduces flickering on some platforms
         morphIntoFloatingWindow();
@@ -429,7 +428,7 @@ FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
         return fw; // Nothing to do
 
     if (isWindow()) {
-        QRect geo = lastPositions().lastFloatingGeometry();
+        QRect geo = d->m_lastPositions.lastFloatingGeometry();
         if (geo.isNull()) {
             geo = geometry();
             const QPoint center = d->defaultCenterPosForFloating();
