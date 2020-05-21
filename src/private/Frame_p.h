@@ -185,9 +185,6 @@ public:
     ///@brief For tests-only. Returns the number of Frame instances in the whole application.
     static int dbg_numFrames();
 
-    ///@brief for debug only, prints some debug information
-    void dumpDebug();
-
     /**
      * @brief Returns whether a deleteLater has already been issued
      */

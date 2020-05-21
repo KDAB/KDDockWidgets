@@ -396,15 +396,6 @@ int Frame::dbg_numFrames()
     return s_dbg_numFrames;
 }
 
-void Frame::dumpDebug()
-{
-    qDebug() << "        Frame:" << (void*)this;
-    qDebug() << "            layoutItem=" << m_layoutItem << "; num=" << m_tabWidget->numDockWidgets();
-    for (auto dw : dockWidgets()) {
-        qDebug() << "            dockwidget=" << dw << "; dw->lastPositions=" << dw->lastPositions();
-    }
-}
-
 bool Frame::beingDeletedLater() const
 {
     return m_beingDeleted;
