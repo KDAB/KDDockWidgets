@@ -322,7 +322,7 @@ void DockRegistry::clear()
 {
     for (auto dw : qAsConst(m_dockWidgets)) {
         dw->forceClose();
-        dw->lastPosition()->removePlaceholders();
+        dw->lastPositions().removePlaceholders();
     }
 
     for (auto mw : qAsConst(m_mainWindows))
@@ -346,7 +346,7 @@ void DockRegistry::clear(QStringList affinities)
     for (auto dw : qAsConst(m_dockWidgets)) {
         if (affinities.contains(dw->affinityName())) {
             dw->forceClose();
-            dw->lastPosition()->removePlaceholders();
+            dw->lastPositions().removePlaceholders();
         }
     }
 

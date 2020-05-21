@@ -30,6 +30,7 @@
 #include "docks_export.h"
 #include "Logging_p.h"
 #include "LayoutSaver_p.h"
+#include "multisplitter/Item_p.h"
 #include "QWidgetAdapter.h"
 
 #include <QScopedValueRollback>
@@ -152,6 +153,31 @@ struct LastPositions
     void setLastFloatingGeometry(QRect geo) {
         lastPosition->setLastFloatingGeometry(geo);
     }
+
+    bool wasFloating() const {
+        return lastPosition->m_wasFloating;
+    }
+
+    QRect lastFloatingGeometry() const {
+        return lastPosition->lastFloatingGeometry();
+    }
+
+    LayoutSaver::Position serialize() {
+        return lastPosition->serialize();
+    }
+
+    void deserialize(const LayoutSaver::Position &p) {
+        lastPosition->deserialize(p);
+    }
+
+    Layouting::Item::List layoutItems() const {
+        Layouting::Item::List items;
+        return items;
+    }
+
+    void removePlaceholders() const {
+        lastPosition->removePlaceholders();
+    }
 };
 
 inline QDebug operator<<(QDebug d, const KDDockWidgets::Position::Ptr &p)
@@ -160,6 +186,12 @@ inline QDebug operator<<(QDebug d, const KDDockWidgets::Position::Ptr &p)
         return d;
 
     d << "; placeholdersSize=" << p->m_placeholders.size();
+    return d;
+}
+
+inline QDebug operator<<(QDebug d, const KDDockWidgets::LastPositions &p)
+{
+    d << "; lastPosition=" << p.lastPosition;
     return d;
 }
 

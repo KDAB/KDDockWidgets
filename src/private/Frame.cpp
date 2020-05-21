@@ -382,7 +382,7 @@ void Frame::setLayoutItem(Layouting::Item *item)
             dw->addPlaceholderItem(item);
     } else {
         for (DockWidgetBase *dw : dockWidgets())
-            dw->lastPosition()->removePlaceholders();
+            dw->lastPositions().removePlaceholders();
     }
 }
 
@@ -401,8 +401,7 @@ void Frame::dumpDebug()
     qDebug() << "        Frame:" << (void*)this;
     qDebug() << "            layoutItem=" << m_layoutItem << "; num=" << m_tabWidget->numDockWidgets();
     for (auto dw : dockWidgets()) {
-        qDebug() << "            dockwidget=" << dw << "; dw->layoutItem=" << dw->lastPosition()->layoutItem()
-                 << dw->lastPosition();
+        qDebug() << "            dockwidget=" << dw << "; dw->lastPositions=" << dw->lastPositions();
     }
 }
 
