@@ -231,8 +231,10 @@ DockWidgetBase::List TitleBar::dockWidgets() const
 
 void TitleBar::onFloatClicked()
 {
+    const DockWidgetBase::List dockWidgets = this->dockWidgets();
     if (isFloating()) {
-        DockWidgetBase::List dockWidgets = this->dockWidgets();
+        // Let's dock it
+
         if (dockWidgets.isEmpty()) {
             qWarning() << "TitleBar::onFloatClicked: empty list. Shouldn't happen";
             return;
@@ -242,7 +244,7 @@ void TitleBar::onFloatClicked()
             // Case 1: Single dockwidget floating
             dockWidgets[0]->setFloating(false);
         } else {
-            // Case 2: Multiple dockwidgets are tabbed toghether and floating
+            // Case 2: Multiple dockwidgets are tabbed together and floating
             // TODO: Just reuse the whole frame and put it back. The frame currently doesn't remember the position in the main window
             // so use an hack for now
             for (auto dock : qAsConst(dockWidgets)) {
@@ -251,7 +253,14 @@ void TitleBar::onFloatClicked()
             }
         }
     } else {
-        makeWindow();
+        // Let's float it
+        if (dockWidgets.size() == 1) {
+            // If there's a single dock widget, just call DockWidget::setFloating(true). The only difference
+            // is that it has logic for using the last used geometry for the floating window
+            dockWidgets[0]->setFloating(true);
+        } else {
+            makeWindow();
+        }
     }
 }
 
