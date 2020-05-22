@@ -264,6 +264,11 @@ void DockWidgetBase::setFloating(bool floats)
         } else {
             frame()->titleBar()->makeWindow();
         }
+
+        auto lastGeo = lastPositions().lastFloatingGeometry();
+        if (lastGeo.isValid())
+            window()->setGeometry(lastGeo);
+
     } else {
         d->restoreToPreviousPosition();
     }

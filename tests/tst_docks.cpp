@@ -5168,20 +5168,36 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     auto oldFw = dock1->window();
 
     LayoutSaver saver;
-    const QByteArray saved = saver.serializeLayout();
+    QByteArray saved = saver.serializeLayout();
 
     dock1->window()->move(0, 0);
     dock1->close();
+    qDebug() << "FOO " << dock1->lastPositions();
     delete oldFw;
 
     saver.restoreLayout(saved);
     QCOMPARE(dock1->window()->pos(), targetPos);
 
-    // No dock it:
+    // Now dock it:
     m1->addDockWidget(dock1, Location_OnTop);
-    saver.restoreLayout(saved);
+    QCOMPARE(dock1->lastPositions().lastFloatingGeometry().topLeft(), targetPos);
 
     dock1->setFloating(true);
+    QCOMPARE(dock1->window()->pos(), targetPos);
+
+    saver.restoreLayout(saved);
+    QCOMPARE(dock1->window()->pos(), targetPos);
+
+    // Dock again and save:
+    m1->addDockWidget(dock1, Location_OnTop);
+    saved = saver.serializeLayout();
+    dock1->setFloating(true);
+    qDebug() << dock1->window()->geometry() << "bar";
+    dock1->window()->move(0, 0);
+    saver.restoreLayout(saved);
+    QVERIFY(!dock1->isFloating());
+    dock1->setFloating(true);
+    QCOMPARE(dock1->window()->pos(), targetPos);
     delete dock1->window();
 }
 
