@@ -175,6 +175,12 @@ StateDragging::~StateDragging() = default;
 
 void StateDragging::onEntry(QEvent *)
 {
+    if (DockWidgetBase *dw = q->m_draggable->singleDockWidget()) {
+        // When we start to drag a floating window which has a single dock widget, we save the position
+        if (dw->isFloating())
+            dw->saveLastFloatingGeometry();
+    }
+
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (q->m_windowBeingDragged) {
         qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
