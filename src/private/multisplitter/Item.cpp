@@ -657,6 +657,12 @@ void Item::dumpLayout(int level)
     if (!isVisible())
         dbg << QStringLiteral(";hidden;");
 
+    if (auto w = widget()) {
+        if (geometry() != w->geometry()) {
+            dbg << "; guest geometry=" << w->geometry();
+        }
+    }
+
     if (m_sizingInfo.isBeingInserted)
         dbg << QStringLiteral(";beingInserted;");
 
