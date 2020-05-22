@@ -89,6 +89,8 @@ public:
      */
     QWidgetOrQuick *asWidget() const;
 
+    DockWidgetBase *singleDockWidget() const override;
+
 private:
     TabWidget *const m_tabWidget;
     QPointer<DockWidgetBase> m_lastPressedDockWidget = nullptr;
@@ -175,6 +177,7 @@ public:
 
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
+    DockWidgetBase *singleDockWidget() const override;
 
 protected:
     void onTabInserted();

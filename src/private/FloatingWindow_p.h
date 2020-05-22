@@ -53,6 +53,8 @@ public:
 
     // Draggable:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
+    DockWidgetBase *singleDockWidget() const override;
+
     const Frame::List frames() const;
     DropArea *dropArea() const { return m_dropArea; }
 

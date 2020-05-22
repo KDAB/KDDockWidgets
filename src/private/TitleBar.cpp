@@ -153,6 +153,12 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
 }
 
+DockWidgetBase *TitleBar::singleDockWidget() const
+{
+    const DockWidgetBase::List dockWidgets = this->dockWidgets();
+    return dockWidgets.isEmpty() ? nullptr : dockWidgets.first();
+}
+
 bool TitleBar::supportsFloatingButton() const
 {
     if (Config::self().flags() & Config::Flag_TitleBarHasMaximizeButton) {

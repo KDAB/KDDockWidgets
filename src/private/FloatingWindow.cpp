@@ -217,6 +217,18 @@ std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(this, this));
 }
 
+DockWidgetBase *FloatingWindow::singleDockWidget() const
+{
+    const Frame::List frames = this->frames();
+    if (frames.size() == 1) {
+        Frame *frame = frames.first();
+        if (frame->hasSingleDockWidget())
+            return frame->dockWidgetAt(0);
+    }
+
+    return nullptr;
+}
+
 const Frame::List FloatingWindow::frames() const
 {
     return findChildren<Frame *>(QString(), Qt::FindChildrenRecursively);

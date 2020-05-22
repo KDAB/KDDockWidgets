@@ -134,6 +134,11 @@ QWidgetOrQuick *TabBar::asWidget() const
     return m_thisWidget;
 }
 
+DockWidgetBase *TabBar::singleDockWidget() const
+{
+    return m_tabWidget->singleDockWidget();
+}
+
 TabWidget::TabWidget(QWidgetOrQuick *thisWidget, Frame *frame)
     : Draggable(thisWidget, Config::self().flags() & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
     , m_frame(frame)
@@ -232,6 +237,13 @@ std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
 }
 
+DockWidgetBase *TabWidget::singleDockWidget() const
+{
+    if (m_frame->hasSingleDockWidget())
+        return m_frame->dockWidgets().first();
+
+    return nullptr;
+}
 
 void TabWidget::onTabInserted()
 {

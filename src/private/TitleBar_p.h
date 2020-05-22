@@ -60,6 +60,8 @@ public:
     void setIcon(const QIcon &icon);
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
 
+    DockWidgetBase *singleDockWidget() const override;
+
     ///@brief Returns true if the dock widget which has this title bar is floating
     bool isFloating() const;
 
