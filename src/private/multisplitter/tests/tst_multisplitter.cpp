@@ -1326,7 +1326,8 @@ void TestMultiSplitter::tst_resizeViaSeparator2()
     auto resizeChildrenTo1000px = [&root] {
         /// Make sure each item has 1000  of width. Cheating here as we don't have API to resize all.
         const int numChildren = root->numChildren();
-        for (auto item : qAsConst(root->m_children)) {
+        auto children = root->childItems();
+        for (auto item : qAsConst(children)) {
             item->m_sizingInfo.percentageWithinParent = 1.0 / numChildren;
         }
         root->setSize_recursive(QSize(4000 + Item::separatorThickness*(numChildren-1), 1000));

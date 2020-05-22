@@ -537,32 +537,9 @@ Q_SIGNALS:
     void numVisibleItemsChanged(int);
     void numItemsChanged();
 public:
-    Item::List m_children;
-    bool m_isResizing = false;
-    bool m_blockUpdatePercentages = false;
-    bool m_isDeserializing = false;
     QVector<Layouting::Separator*> separators_recursive() const;
     QVector<Layouting::Separator*> separators() const;
-    Qt::Orientation m_orientation = Qt::Vertical;
 private:
-    bool isOverflowing() const;
-    void relayoutIfNeeded();
-    const Item *itemFromPath(const QVector<int> &path) const;
-    void resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &sizes, ChildrenResizeStrategy);
-    void scheduleCheckSanity() const;
-    Separator *neighbourSeparator(const Item *item, Side, Qt::Orientation) const;
-    Separator *neighbourSeparator_recursive(const Item *item, Side, Qt::Orientation) const;
-    void updateWidgets_recursive();
-    /// Returns the positions that each separator should have (x position if Qt::Horizontal, y otherwise)
-    QVector<int> requiredSeparatorPositions() const;
-    void updateSeparators();
-    void deleteSeparators();
-    Separator* separatorAt(int p) const;
-    QVector<double> childPercentages() const;
-    mutable bool m_checkSanityScheduled = false;
-    QVector<Layouting::Separator*> m_separators;
-    bool m_convertingItemToContainer = false;
-
     struct Private;
     Private *const d;
 };
