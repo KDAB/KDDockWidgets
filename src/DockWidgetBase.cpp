@@ -477,7 +477,7 @@ void DockWidgetBase::addPlaceholderItem(Layouting::Item *item)
     d->m_lastPositions.addPosition(item);
 }
 
-LastPositions DockWidgetBase::lastPositions() const
+LastPositions& DockWidgetBase::lastPositions() const
 {
     return d->m_lastPositions;
 }

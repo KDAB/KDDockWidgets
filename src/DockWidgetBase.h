@@ -370,7 +370,7 @@ private:
     void addPlaceholderItem(Layouting::Item*);
 
     ///@brief returns the last position, just for tests. TODO Make tests just use the d-pointer.
-    LastPositions lastPositions() const;
+    LastPositions &lastPositions() const;
 
     class Private;
     Private *const d;
