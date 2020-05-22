@@ -55,6 +55,7 @@ class LayoutSaver;
 class TabWidget;
 class TitleBar;
 class MainWindowBase;
+class StateDragging;
 
 /**
  * @brief The DockWidget base-class. DockWidget and DockWidgetBase are only
@@ -342,6 +343,7 @@ private:
     friend class Frame;
     friend class DropArea;
     friend class TestDocks;
+    friend class StateDragging;
     friend class KDDockWidgets::TabWidget;
     friend class KDDockWidgets::TitleBar;
     friend class KDDockWidgets::DragController;
