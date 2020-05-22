@@ -270,6 +270,7 @@ void DockWidgetBase::setFloating(bool floats)
             window()->setGeometry(lastGeo);
 
     } else {
+        saveLastFloatingGeometry();
         d->restoreToPreviousPosition();
     }
 }
@@ -489,7 +490,7 @@ LastPositions& DockWidgetBase::lastPositions() const
 
 void DockWidgetBase::saveLastFloatingGeometry()
 {
-    if (isFloating()) {
+    if (isFloating() && isVisible()) {
         // It's getting docked, save last floating position
         lastPositions().setLastFloatingGeometry(window()->geometry());
     }
