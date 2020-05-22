@@ -487,6 +487,14 @@ LastPositions& DockWidgetBase::lastPositions() const
     return d->m_lastPositions;
 }
 
+void DockWidgetBase::saveLastFloatingGeometry()
+{
+    if (isFloating()) {
+        // It's getting docked, save last floating position
+        lastPositions().setLastFloatingGeometry(window()->geometry());
+    }
+}
+
 QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
 {
     MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();

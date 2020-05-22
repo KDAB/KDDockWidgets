@@ -372,6 +372,9 @@ private:
     ///@brief returns the last position, just for tests. TODO Make tests just use the d-pointer.
     LastPositions &lastPositions() const;
 
+    ///@brief If this dock widget is floating, then it saves its geometry
+    void saveLastFloatingGeometry();
+
     class Private;
     Private *const d;
 };

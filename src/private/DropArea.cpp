@@ -103,10 +103,7 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
     Frame *frame = nullptr;
     Frame *relativeToFrame = relativeTo ? relativeTo->frame() : nullptr;
 
-    if (dw->isFloating()) {
-        // It's getting docked, save last floating position
-        dw->lastPositions().setLastFloatingGeometry(dw->window()->geometry());
-    }
+    dw->saveLastFloatingGeometry();
 
     // Check if the dock widget already exists in the layout
     if (contains(dw)) {
