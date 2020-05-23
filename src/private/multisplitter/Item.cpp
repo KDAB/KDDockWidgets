@@ -159,8 +159,8 @@ void Item::setGuest(GuestInterface *guest)
         m_guest->setLayoutItem(this);
         newWidget->installEventFilter(this);
         newWidget->setParent(m_hostWidget);
-        setMinSize(widgetMinSize(newWidget));
-        setMaxSize(newWidget->maximumSize());
+        setMinSize(guest->minSize());
+        setMaxSize(guest->maxSize());
 
         connect(newWidget, &QObject::objectNameChanged, this, &Item::updateObjectName);
         connect(newWidget, &QObject::destroyed, this, &Item::onWidgetDestroyed);
@@ -791,7 +791,7 @@ void Item::onWidgetDestroyed()
 
 void Item::onWidgetLayoutRequested()
 {
-    if (QWidget *w = widget()) {
+    if (GuestInterface *w = guest()) {
         if (w->size() != size()) {
             qDebug() << Q_FUNC_INFO << "TODO: Not implemented yet. Widget can't just decide to resize yet"
                        << w->size()
@@ -800,8 +800,8 @@ void Item::onWidgetLayoutRequested()
                        << m_sizingInfo.isBeingInserted;
         }
 
-        if (widgetMinSize(w) != minSize()) {
-            setMinSize(widgetMinSize(w));
+        if (w->minSize() != minSize()) {
+            setMinSize(m_guest->minSize());
         }
     }
 }

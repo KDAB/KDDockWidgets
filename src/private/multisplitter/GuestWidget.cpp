@@ -18,33 +18,30 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "GuestWidget.h"
+#include "Item_p.h"
 
-#include "GuestInterface.h"
+using namespace Layouting;
 
-#include <QWidget>
-
-namespace Layouting {
-
-class GuestWidget : public GuestInterface
+QSize GuestWidget::minSize() const
 {
-public:
-    explicit GuestWidget(QWidget *thisWidget)
-        : m_thisWidget(thisWidget)
-    {
-    }
+    const QWidget *w = asWidget();
 
-    QWidget* asWidget() const override {
-        return m_thisWidget;
-    }
+    const int minW = w->minimumWidth() > 0 ? w->minimumWidth()
+                                           : w->minimumSizeHint().width();
 
-    QSize minSize() const override;
-    QSize maxSize() const override;
-    QSize size() const override;
+    const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
+                                            : w->minimumSizeHint().height();
 
-private:
-    QWidget *const m_thisWidget;
-    Q_DISABLE_COPY(GuestWidget)
-};
+    return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
+}
 
+QSize GuestWidget::maxSize() const
+{
+    return asWidget()->maximumSize();
+}
+
+QSize GuestWidget::size() const
+{
+    return asWidget()->size();
 }

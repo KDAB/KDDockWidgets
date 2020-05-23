@@ -124,7 +124,6 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location,
                        << "; relativeTo=" << relativeToWidget
                        << "; size=" << size()
                        << "; w.size=" << w->size()
-                       << "; w.min=" << Layouting::widgetMinSize(w)
                        << "; frame=" << frame
                        << "; option=" << option;
 

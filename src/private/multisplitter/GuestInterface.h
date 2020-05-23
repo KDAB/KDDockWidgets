@@ -23,7 +23,10 @@
 
 #pragma once
 
+#include <qglobal.h>
+
 class QWidget; // TODO: Remove
+class QSize;
 
 namespace Layouting {
 
@@ -36,7 +39,11 @@ class GuestInterface
 public:
     GuestInterface() = default;
     virtual void setLayoutItem(Item *) = 0;
-    virtual QWidget *asWidget() = 0; // TODO: Move down
+    virtual QWidget *asWidget() const = 0; // TODO: Move down
+    virtual QSize minSize() const = 0;
+    virtual QSize maxSize() const = 0;
+    virtual QSize size() const = 0;
+
 private:
     Q_DISABLE_COPY(GuestInterface)
 };
