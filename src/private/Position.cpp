@@ -26,8 +26,8 @@
 
 #include "Position_p.h"
 #include "DockRegistry_p.h"
-#include "multisplitter/MultiSplitterLayout_p.h"
-#include "multisplitter/MultiSplitter_p.h"
+#include "widgets/MultiSplitterLayout_p.h"
+#include "widgets/MultiSplitter_p.h"
 
 #include <algorithm>
 

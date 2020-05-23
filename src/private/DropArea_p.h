@@ -31,8 +31,8 @@
 #include "docks_export.h"
 #include "Frame_p.h"
 #include "KDDockWidgets.h"
-#include "multisplitter/MultiSplitter_p.h"
-#include "multisplitter/MultiSplitterLayout_p.h"
+#include "widgets/MultiSplitter_p.h"
+#include "widgets/MultiSplitterLayout_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 
 namespace KDDockWidgets {

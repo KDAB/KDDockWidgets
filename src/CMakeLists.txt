@@ -23,8 +23,6 @@ set(DOCKSLIBS_SRCS
     private/indicators/ClassicIndicators.cpp
     # private/indicators/AnimatedIndicators.cpp
     private/DropArea.cpp
-    private/multisplitter/MultiSplitter.cpp
-    private/multisplitter/MultiSplitterLayout.cpp
     private/TabWidget.cpp
     private/FloatingWindow.cpp
     private/Logging.cpp
@@ -96,6 +94,8 @@ else()
         private/widgets/TitleBarWidget.cpp
         private/widgets/DockWidget.cpp
         private/widgets/QWidgetAdapter_widgets.cpp
+        private/widgets/MultiSplitter.cpp
+        private/widgets/MultiSplitterLayout.cpp
         )
 
     set(DOCKS_INSTALLABLE_INCLUDES

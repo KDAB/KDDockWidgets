@@ -34,7 +34,7 @@
 #include "LayoutSaver.h"
 #include "LayoutSaver_p.h"
 #include "TabWidget_p.h"
-#include "multisplitter/MultiSplitter_p.h"
+#include "widgets/MultiSplitter_p.h"
 #include "Position_p.h"
 #include "utils.h"
 #include "FrameworkWidgetFactory.h"

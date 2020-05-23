@@ -23,8 +23,8 @@
 #include "Logging_p.h"
 #include "DebugWindow_p.h"
 #include "Position_p.h"
-#include "multisplitter/MultiSplitterLayout_p.h"
-#include "multisplitter/MultiSplitter_p.h"
+#include "widgets/MultiSplitterLayout_p.h"
+#include "widgets/MultiSplitter_p.h"
 #include "quick/QmlTypes.h"
 
 #include <QPointer>
