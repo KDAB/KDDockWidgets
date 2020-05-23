@@ -166,6 +166,7 @@ install (FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
 install (FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION include/kddockwidgets/private)
 install (FILES private/multisplitter/Item_p.h DESTINATION include/kddockwidgets/multisplitter)
 install (FILES private/multisplitter/GuestInterface.h DESTINATION include/kddockwidgets/multisplitter)
+install (FILES private/multisplitter/GuestWidget.h DESTINATION include/kddockwidgets/multisplitter)
 install (FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
 
 include(CMakePackageConfigHelpers)

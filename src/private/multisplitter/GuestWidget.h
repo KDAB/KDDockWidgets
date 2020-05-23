@@ -18,27 +18,27 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-///@file
-///@brief An abstraction so the layout can host QWidget or QQuickItem or something else
-
 #pragma once
 
-class QWidget; // TODO: Remove
+#include "GuestInterface.h"
+
+#include <QWidget>
 
 namespace Layouting {
-
-class Item;
-
-///@brief An abstraction so the layout can host QWidget or QQuickItem or something else
-/// Instead of Item controlling a QWidget, it controls anything implementing this interface
-class GuestInterface
+class GuestWidget : public GuestInterface
 {
 public:
-    GuestInterface() = default;
-    virtual void setLayoutItem(Item *) = 0;
-    virtual QWidget *asWidget() = 0; // TODO: Move down
-private:
-    Q_DISABLE_COPY(GuestInterface)
-};
+    explicit GuestWidget(QWidget *thisWidget)
+        : m_thisWidget(thisWidget)
+    {
+    }
 
+    QWidget * asWidget() override {
+        return m_thisWidget;
+    }
+
+private:
+    QWidget *const m_thisWidget;
+    Q_DISABLE_COPY(GuestWidget)
+};
 }

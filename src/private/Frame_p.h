@@ -31,7 +31,7 @@
 #include "docks_export.h"
 #include "QWidgetAdapter.h"
 #include "LayoutSaver_p.h"
-#include "multisplitter/GuestInterface.h"
+#include "multisplitter/GuestWidget.h"
 #include "multisplitter/Item_p.h"
 
 #include <QWidget>
@@ -58,7 +58,7 @@ class FloatingWindow;
  * to a FloatingWindow.
  */
 class DOCKS_EXPORT Frame : public QWidgetAdapter
-                         , public Layouting::GuestInterface
+                         , public Layouting::GuestWidget
 {
     Q_OBJECT
 
@@ -202,9 +202,6 @@ public:
 
     ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
     void setLayoutItem(Layouting::Item *item) override;
-
-    ///@brief Overriden from GuestInterface
-    QWidget *asWidget() override;
 
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);

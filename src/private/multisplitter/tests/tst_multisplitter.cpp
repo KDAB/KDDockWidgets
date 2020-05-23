@@ -20,7 +20,7 @@
 
 #include "Item_p.h"
 #include "Separator_p.h"
-#include "GuestInterface.h"
+#include "GuestWidget.h"
 
 #include <QPainter>
 #include <QtTest/QtTest>
@@ -40,15 +40,19 @@ static QString s_expectedWarning;
 class TestMultiSplitter;
 static TestMultiSplitter* s_testObject = nullptr;
 
-class GuestWidget : public QWidget
-                  , public GuestInterface
+class MyGuestWidget : public QWidget
+                    , public GuestWidget
 {
     Q_OBJECT
 public:
-    void setLayoutItem(Item *) override {}
-    QWidget * asWidget() override {
-        return this;
+
+    MyGuestWidget()
+        : QWidget()
+        , GuestWidget(this)
+    {
     }
+
+    void setLayoutItem(Item *) override {}
 
     QSize minimumSizeHint() const override
     {
@@ -202,7 +206,7 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemContainer> &root)
     QHash<QString, GuestInterface*> widgets;
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
-        if (auto w = static_cast<GuestWidget*>(item->widget()))
+        if (auto w = static_cast<MyGuestWidget*>(item->widget()))
             widgets.insert(QString::number(qint64(w)), w);
 
     root2.fillFromVariantMap(serialized, widgets);
@@ -230,7 +234,7 @@ static Item* createItem(QSize minSz = {})
     auto item = new Item(hostWidget);
     item->setGeometry(QRect(0, 0, 200, 200));
     item->setObjectName(QStringLiteral("%1").arg(count));
-    auto guest = new GuestWidget();
+    auto guest = new MyGuestWidget();
     if (!minSz.isNull())
         guest->setMinSize(minSz);
     guest->setObjectName(item->objectName());
@@ -1092,7 +1096,7 @@ void TestMultiSplitter::tst_minSizeChanges()
     root->setSize_recursive(QSize(200, 200));
     QVERIFY(root->checkSanity());
 
-    auto w1 = static_cast<GuestWidget*>(item1->widget()); // TODO: Static cast not required ?
+    auto w1 = static_cast<MyGuestWidget*>(item1->widget()); // TODO: Static cast not required ?
     w1->setMinSize(QSize(300, 300));
     QVERIFY(root->checkSanity());
     QCOMPARE(root->size(), QSize(300, 300));
@@ -1478,7 +1482,7 @@ void TestMultiSplitter::tst_minSizeChangedBeforeRestore()
     root->insertItem(item2, Item::Location_OnBottom);
     const QSize originalSize2 = item2->size();
 
-    auto guest2 = qobject_cast<GuestWidget*>(item2->guest()->asWidget());
+    auto guest2 = qobject_cast<MyGuestWidget*>(item2->guest()->asWidget());
     const QSize newMinSize = originalSize2 + QSize(10, 10);
 
     item2->turnIntoPlaceholder();

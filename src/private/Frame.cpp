@@ -59,6 +59,7 @@ static FrameOptions actualOptions(FrameOptions options)
 
 Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     : QWidgetAdapter(parent)
+    , Layouting::GuestWidget(this)
     , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_options(actualOptions(options))
@@ -418,11 +419,6 @@ QString Frame::affinityName() const
     } else {
         return dockWidgetAt(0)->affinityName();
     }
-}
-
-QWidget *Frame::asWidget()
-{
-    return this;
 }
 
 DockWidgetBase *Frame::dockWidgetAt(int index) const
