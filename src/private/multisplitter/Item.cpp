@@ -21,6 +21,7 @@
 #include "Item_p.h"
 #include "Separator_p.h"
 #include "Config.h"
+#include "GuestInterface.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -134,6 +135,11 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
     if (o == Qt::Vertical)
         return mapFromRoot(QPoint(0, p)).y();
     return mapFromRoot(QPoint(p, 0)).x();
+}
+
+QWidget *Item::widget() const
+{
+    return m_guest ? m_guest->asWidget() : nullptr;
 }
 
 void Item::setGuest(GuestInterface *guest)

@@ -31,6 +31,7 @@
 #include "docks_export.h"
 #include "QWidgetAdapter.h"
 #include "LayoutSaver_p.h"
+#include "multisplitter/GuestInterface.h"
 #include "multisplitter/Item_p.h"
 
 #include <QWidget>

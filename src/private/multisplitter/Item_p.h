@@ -44,6 +44,7 @@ Q_NAMESPACE
 class ItemContainer;
 class Item;
 class Separator;
+class GuestInterface;
 
 enum Side {
     Side1,
@@ -204,16 +205,6 @@ struct SizingInfo {
     bool isBeingInserted = false;
 };
 
-class GuestInterface
-{
-public:
-    GuestInterface() = default;
-    virtual void setLayoutItem(Item *) = 0;
-    virtual QWidget *asWidget() = 0;
-private:
-    Q_DISABLE_COPY(GuestInterface)
-};
-
 class Item : public QObject
 {
     Q_OBJECT
@@ -291,7 +282,7 @@ public:
     QPoint mapFromParent(QPoint) const;
     int mapFromRoot(int p, Qt::Orientation) const;
 
-    QWidget *widget() const { return m_guest ? m_guest->asWidget() : nullptr; }
+    QWidget *widget() const;
     GuestInterface *guest() const { return m_guest; }
     void setGuest(GuestInterface *);
     QWidget *window() const {

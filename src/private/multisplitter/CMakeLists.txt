@@ -3,6 +3,7 @@ set(MULTISPLITTER_SRCS
     Config.h
     Item.cpp
     Item_p.h
+    GuestInterface.h
     Logging.cpp
     Logging_p.h
     Separator.cpp

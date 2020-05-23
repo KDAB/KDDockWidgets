@@ -20,9 +20,11 @@
 
 #include "Item_p.h"
 #include "Separator_p.h"
-#include <QPainter>
+#include "GuestInterface.h"
 
+#include <QPainter>
 #include <QtTest/QtTest>
+
 #include <memory.h>
 
 
