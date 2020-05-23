@@ -32,7 +32,6 @@
 #include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
 #include "LayoutSaver_p.h"
-#include "private/Position_p.h"
 
 #include <QVector>
 #include <QWidget>
@@ -47,6 +46,7 @@ class Item;
 
 namespace KDDockWidgets {
 
+class LastPositions;
 class Frame;
 class FloatingWindow;
 class DragController;

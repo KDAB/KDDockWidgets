@@ -31,6 +31,7 @@
 #include "multisplitter/Item_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+#include "private/Position_p.h"
 
 #include <QAction>
 #include <QEvent>
