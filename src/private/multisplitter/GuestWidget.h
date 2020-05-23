@@ -42,9 +42,17 @@ public:
     QSize maxSize() const override;
     QSize size() const override;
 
+    static QSize widgetMinSize(const QWidget *w);
+
 private:
     QWidget *const m_thisWidget;
     Q_DISABLE_COPY(GuestWidget)
 };
+
+inline int widgetMinLength(const QWidget *w, Qt::Orientation o)
+{
+    const QSize sz = GuestWidget::widgetMinSize(w);
+    return o == Qt::Vertical ? sz.height() : sz.width();
+}
 
 }

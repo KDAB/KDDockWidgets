@@ -514,22 +514,4 @@ private:
     Private *const d;
 };
 
-/**
- * Returns the widget's min size
- */
-inline QSize widgetMinSize(const QWidget *w)
-{
-    const int minW = w->minimumWidth() > 0 ? w->minimumWidth()
-                                           : w->minimumSizeHint().width();
-
-    const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
-                                            : w->minimumSizeHint().height();
-
-    return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
-}
-
-inline int widgetMinLength(const QWidget *w, Qt::Orientation o) {
-    return length(widgetMinSize(w), o);
-}
-
 }

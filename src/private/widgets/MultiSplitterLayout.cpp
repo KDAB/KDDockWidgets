@@ -28,6 +28,7 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "LayoutSaver.h"
+#include "multisplitter/GuestWidget.h"
 
 using namespace KDDockWidgets;
 
@@ -379,7 +380,7 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widget, Location lo
 {
     Layouting::Item item(nullptr);
     item.setSize(widget->size());
-    item.setMinSize(Layouting::widgetMinSize(widget));
+    item.setMinSize(Layouting::GuestWidget::widgetMinSize(widget));
     item.setMaxSize(widget->maximumSize());
 
     Layouting::ItemContainer *container = relativeTo ? relativeTo->parentContainer()

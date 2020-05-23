@@ -25,15 +25,7 @@ using namespace Layouting;
 
 QSize GuestWidget::minSize() const
 {
-    const QWidget *w = asWidget();
-
-    const int minW = w->minimumWidth() > 0 ? w->minimumWidth()
-                                           : w->minimumSizeHint().width();
-
-    const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
-                                            : w->minimumSizeHint().height();
-
-    return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
+    return widgetMinSize(asWidget());
 }
 
 QSize GuestWidget::maxSize() const
@@ -44,4 +36,15 @@ QSize GuestWidget::maxSize() const
 QSize GuestWidget::size() const
 {
     return asWidget()->size();
+}
+
+QSize GuestWidget::widgetMinSize(const QWidget *w)
+{
+    const int minW = w->minimumWidth() > 0 ? w->minimumWidth()
+                                           : w->minimumSizeHint().width();
+
+    const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
+                                            : w->minimumSizeHint().height();
+
+    return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
 }
