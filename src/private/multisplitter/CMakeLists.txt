@@ -1,4 +1,6 @@
 set(MULTISPLITTER_SRCS
+    Config.cpp
+    Config.h
     Item.cpp
     Item_p.h
     Logging.cpp

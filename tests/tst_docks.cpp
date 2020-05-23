@@ -410,7 +410,7 @@ Frame* createFrameWithWidget(const QString &name, MultiSplitter *parent, int min
     QWidget *w = createWidget(minLength, name);
     auto dw = new DockWidget(name);
     dw->setWidget(w);
-    auto frame = Config::self().frameworkWidgetFactory()->createFrame(parent);
+    auto frame =KDDockWidgets::Config::self().frameworkWidgetFactory()->createFrame(parent);
     frame->addWidget(dw);
     return frame;
 }

@@ -20,6 +20,7 @@
 
 #include "Item_p.h"
 #include "Separator_p.h"
+#include "Config.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -2766,7 +2767,7 @@ void ItemContainer::Private::updateSeparators()
                 newSeparators.push_back(separator);
                 m_separators.removeOne(separator);
             } else {
-                separator = Separator::createSeparator(q->hostWidget());
+                separator = Config::self().createSeparator(q->hostWidget());
                 separator->init(q, m_orientation);
                 newSeparators.push_back(separator);
             }

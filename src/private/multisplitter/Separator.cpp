@@ -19,8 +19,9 @@
 */
 
 #include "Separator_p.h"
-#include "Logging_p.h" // TODO: Have our own
+#include "Logging_p.h"
 #include "Item_p.h"
+#include "Config.h"
 
 #include <QMouseEvent>
 #include <QRubberBand>
@@ -34,9 +35,6 @@ using namespace Layouting;
 
 Separator* Separator::s_separatorBeingDragged = nullptr;
 
-static SeparatorFactoryFunc s_separatorFactoryFunc = nullptr;
-bool Separator::usesLazyResize = false;
-
 struct Separator::Private {
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
 
@@ -47,6 +45,7 @@ struct Separator::Private {
     QRubberBand *lazyResizeRubberBand = nullptr;
     ItemContainer *parentContainer = nullptr;
     Layouting::Side lastMoveDirection = Side1;
+    const bool usesLazyResize = Config::self().flags() & Config::Flag::LazyResize;
 };
 
 Separator::Separator(QWidget *hostWidget)
@@ -182,8 +181,8 @@ void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation
 
     d->parentContainer = parentContainer;
     d->orientation = orientation;
-    d->lazyResizeRubberBand = usesLazyResize ? new QRubberBand(QRubberBand::Line, hostWidget())
-                                            : nullptr;
+    d->lazyResizeRubberBand = d->usesLazyResize ? new QRubberBand(QRubberBand::Line, hostWidget())
+                                                : nullptr;
     setVisible(true);
 }
 
@@ -211,19 +210,6 @@ void Separator::setGeometry(int pos, int pos2, int length)
 bool Separator::isResizing()
 {
     return s_separatorBeingDragged != nullptr;
-}
-
-void Separator::setSeparatorFactoryFunc(SeparatorFactoryFunc func)
-{
-    s_separatorFactoryFunc = func;
-}
-
-Separator* Separator::createSeparator(QWidget *host)
-{
-    if (s_separatorFactoryFunc)
-        return s_separatorFactoryFunc(host);
-
-    return new Separator(host);
 }
 
 void Separator::setLazyPosition(int pos)

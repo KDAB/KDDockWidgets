@@ -31,10 +31,9 @@ QT_END_NAMESPACE
 
 namespace Layouting {
 
+class Config;
 class ItemContainer;
 class Separator;
-
-typedef Separator* (*SeparatorFactoryFunc)(QWidget *parent);
 
 class Separator : public QWidget
 {
@@ -59,9 +58,6 @@ public:
 
     ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other work while we're not in the final size
     static bool isResizing();
-    static void setSeparatorFactoryFunc(SeparatorFactoryFunc);
-    static Separator* createSeparator(QWidget *host);
-    static bool usesLazyResize;
 
 protected:
     explicit Separator(QWidget *hostWidget);
@@ -70,9 +66,12 @@ protected:
     void mouseReleaseEvent(QMouseEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
 private:
+    friend class Config;
+
     void onMouseReleased();
     void setLazyPosition(int);
     bool isBeingDragged() const;
+    bool usesLazyResize() const;
     static bool s_isResizing;
     static Separator* s_separatorBeingDragged;
     struct Private;

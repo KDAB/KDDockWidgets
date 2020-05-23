@@ -26,9 +26,9 @@
  */
 
 #include "Config.h"
+#include "multisplitter/Config.h"
 #include "DockRegistry_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "multisplitter/Separator_p.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -68,7 +68,7 @@ Config::Config()
         return Config::self().frameworkWidgetFactory()->createSeparator(parent);
     };
 
-    Layouting::Separator::setSeparatorFactoryFunc(separatorCreator);
+    Layouting::Config::self().setSeparatorFactoryFunc(separatorCreator);
 }
 
 Config& Config::self()
@@ -94,10 +94,12 @@ void Config::setFlags(Flags f)
         return;
     }
 
-    Layouting::Separator::usesLazyResize = f & Flag_LazyResize; // TODO: We'll soon have Layouting::Config and rely less on static members
-
     d->m_flags = f;
     d->fixFlags();
+
+    auto multisplitterFlags = Layouting::Config::self().flags();
+    multisplitterFlags.setFlag(Layouting::Config::Flag::LazyResize, d->m_flags & Flag_LazyResize);
+    Layouting::Config::self().setFlags(multisplitterFlags);
 }
 
 void Config::setDockWidgetFactoryFunc(DockWidgetFactoryFunc func)
@@ -134,22 +136,17 @@ FrameworkWidgetFactory *Config::frameworkWidgetFactory() const
 
 int Config::separatorThickness() const
 {
-    return Layouting::Item::separatorThickness;
+    return Layouting::Config::self().separatorThickness();
 }
 
 void Config::setSeparatorThickness(int value)
 {
-    if (value < 0 || value >= 100) {
-        qWarning() << Q_FUNC_INFO << "Invalid value" << value;
-        return;
-    }
-
     if (!DockRegistry::self()->isEmpty()) {
         qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
         return;
     }
 
-    Layouting::Item::separatorThickness = value;
+    Layouting::Config::self().setSeparatorThickness(value);
 }
 
 void Config::setQmlEngine(QQmlEngine *qmlEngine)
