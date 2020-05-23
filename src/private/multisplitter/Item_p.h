@@ -73,11 +73,6 @@ enum class NeighbourSqueezeStrategy {
     ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the next neighbour is squezed, and so forth
 };
 
-inline Qt::Orientation oppositeOrientation(Qt::Orientation o) {
-    return o == Qt::Vertical ? Qt::Horizontal
-                             : Qt::Vertical;
-}
-
 inline int pos(QPoint p, Qt::Orientation o) {
     return o == Qt::Vertical ? p.y()
                              : p.x();
@@ -86,17 +81,6 @@ inline int pos(QPoint p, Qt::Orientation o) {
 inline int length(QSize sz, Qt::Orientation o) {
     return o == Qt::Vertical ? sz.height()
                              : sz.width();
-}
-
-inline QRect adjustedRect(QRect r, Qt::Orientation o, int p1, int p2)
-{
-    if (o == Qt::Vertical) {
-        r.adjust(0, p1, 0, p2);
-    } else {
-        r.adjust(p1, 0, p2, 0);
-    }
-
-    return r;
 }
 
 inline QVariantMap sizeToMap(QSize sz)
@@ -188,9 +172,7 @@ struct SizingInfo {
         setLength(length(o) + byAmount, o);
     }
 
-    void setOppositeLength(int l, Qt::Orientation o) {
-        setLength(l, oppositeOrientation(o));
-    }
+    void setOppositeLength(int l, Qt::Orientation o);
 
     void setPos(int p, Qt::Orientation o) {
         if (o == Qt::Vertical)
@@ -410,7 +392,35 @@ public:
     explicit ItemContainer(QWidget *parent);
     ~ItemContainer();
     void insertItem(Item *item, int index, DefaultSizeMode);
+    void insertItem(Item *item, Location, DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
+                    AddingOption = AddingOption_None) override;
+    void requestSeparatorMove(Separator *separator, int delta);
+    int minPosForSeparator(Separator *) const;
+    int maxPosForSeparator(Separator *) const;
+    int minPosForSeparator_global(Separator *) const;
+    int maxPosForSeparator_global(Separator *) const;
+    void requestEqualSize(Separator *separator);
+    void layoutEqually();
+    void layoutEqually_recursive();
+    void removeItem(Item *, bool hardRemove = true);
+    bool contains(const Item *item) const;
+    bool contains_recursive(const Item *item) const;
+    int visibleCount_recursive() const override;
+    int count_recursive() const;
+    QSize minSize() const override;
+    QSize maxSize() const override;
+    QSize availableSize() const;
+    Item* itemForWidget(const QWidget *w) const;
+    Item::List items_recursive() const;
     Q_REQUIRED_RESULT bool checkSanity() override;
+    void dumpLayout(int level = 0) override;
+    void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage) override;
+    QRect suggestedDropRect(const Item *item, const Item *relativeTo, Location) const;
+    QVariantMap toVariantMap() const override;
+    void fillFromVariantMap(const QVariantMap &map, const QHash<QString, GuestInterface *> &widgets) override;
+    void clear();
+private:
+    bool isEmpty() const;
     bool hasOrientation() const;
     int numChildren() const;
     int numVisibleChildren() const;
@@ -418,41 +428,26 @@ public:
     bool hasVisibleChildren(bool excludeBeingInserted = false) const;
     int indexOfVisibleChild(const Item *) const;
     const List childItems() const;
+    void restoreChild(Item *, NeighbourSqueezeStrategy neighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours);
 
-    void removeItem(Item *, bool hardRemove = true);
-    bool isEmpty() const;
     void setGeometry_recursive(QRect rect) override;
 
     ItemContainer *convertChildToContainer(Item *leaf);
-    void insertItem(Item *item, Location, DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
-                    AddingOption = AddingOption_None) override;
     bool hasOrientationFor(Location) const;
     Item::List visibleChildren(bool includeBeingInserted = false) const;
     int usableLength() const;
     bool hasSingleVisibleItem() const;
-    bool contains(const Item *item) const;
-    bool contains_recursive(const Item *item) const;
     void setChildren(const Item::List children, Qt::Orientation o);
     void setOrientation(Qt::Orientation);
-    QSize minSize() const override;
-    QSize maxSize() const override;
-    void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage) override;
     int length() const;
     QRect rect() const;
     QVariantList items() const;
-    void dumpLayout(int level = 0) override;
     void updateChildPercentages();
     void updateChildPercentages_recursive();
-    void restoreChild(Item *,
-                      NeighbourSqueezeStrategy neighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours);
     void updateWidgetGeometries() override;
     int oppositeLength() const;
 
-    void requestSeparatorMove(Separator *separator, int delta);
-    void requestEqualSize(Separator *separator);
-    void layoutEqually();
     void layoutEqually(SizingInfo::List &sizes);
-    void layoutEqually_recursive();
 
     ///@brief Grows the side1Neighbour to the right and the side2Neighbour to the left
     ///So they occupy the empty space that's between them (or bottom/top if Qt::Vertical).
@@ -478,7 +473,6 @@ public:
                           NeighbourSqueezeStrategy = NeighbourSqueezeStrategy::AllNeighbours);
 
     Item *visibleNeighbourFor(const Item *item, Side side) const;
-    QSize availableSize() const;
     int availableLength() const;
     LengthOnSide lengthOnSide(const SizingInfo::List &sizes, int fromIndex, Side, Qt::Orientation) const;
     int neighboursLengthFor(const Item *item, Side, Qt::Orientation) const;
@@ -493,18 +487,12 @@ public:
     QVector<int> calculateSqueezes(SizingInfo::List::ConstIterator begin,
                                    SizingInfo::List::ConstIterator end, int needed,
                                    NeighbourSqueezeStrategy, bool reversed = false) const;
-    QRect suggestedDropRect(const Item *item, const Item *relativeTo, Location) const;
     QRect suggestedDropRectFallback(const Item *item, const Item *relativeTo, Location) const;
     void positionItems();
     void positionItems_recursive();
     void positionItems(SizingInfo::List &sizes);
-    void clear();
-    Item* itemForWidget(const QWidget *w) const;
-    int visibleCount_recursive() const override;
-    int count_recursive() const;
     Item *itemAt(QPoint p) const;
     Item *itemAt_recursive(QPoint p) const;
-    Item::List items_recursive() const;
     void setHostWidget(QWidget *) override;
     void setIsVisible(bool) override;
     bool isVisible(bool excludeBeingInserted = false) const override;
@@ -516,18 +504,7 @@ public:
     bool isHorizontal() const;
 
     int indexOf(Separator *) const;
-    int minPosForSeparator(Separator *) const;
-    int maxPosForSeparator(Separator *) const;
-    int minPosForSeparator_global(Separator *) const;
-    int maxPosForSeparator_global(Separator *) const;
 
-    void deleteSeparators_recursive();
-    void updateSeparators_recursive();
-
-    QVariantMap toVariantMap() const override;
-    void fillFromVariantMap(const QVariantMap &map, const QHash<QString, GuestInterface *> &widgets) override;
-
-    bool isDummy() const;
 #ifdef DOCKS_DEVELOPER_MODE
     bool test_suggestedRect();
 #endif
@@ -540,6 +517,8 @@ public:
     QVector<Layouting::Separator*> separators_recursive() const;
     QVector<Layouting::Separator*> separators() const;
 private:
+    friend class Layouting::Item;
+    friend class ::TestMultiSplitter;
     struct Private;
     Private *const d;
 };
@@ -560,45 +539,6 @@ inline QSize widgetMinSize(const QWidget *w)
 
 inline int widgetMinLength(const QWidget *w, Qt::Orientation o) {
     return length(widgetMinSize(w), o);
-}
-
-inline bool locationIsVertical(Item::Location loc)
-{
-    return loc == Item::Location_OnTop || loc == Item::Location_OnBottom;
-}
-
-inline bool locationIsSide1(Item::Location loc)
-{
-    return loc == Item::Location_OnLeft || loc == Item::Location_OnTop;
-}
-
-inline Qt::Orientation orientationForLocation(Item::Location loc)
-{
-    switch (loc) {
-    case Item::Location_OnLeft:
-    case Item::Location_OnRight:
-        return Qt::Horizontal;
-    case Item::Location_None:
-    case Item::Location_OnTop:
-    case Item::Location_OnBottom:
-        return Qt::Vertical;
-    }
-
-    return Qt::Vertical;
-}
-
-inline Side sideForLocation(Item::Location loc)
-{
-    switch (loc) {
-    case Item::Location_OnLeft:
-    case Item::Location_OnTop:
-        return Side::Side1;
-    case Item::Location_OnRight:
-    case Item::Location_OnBottom:
-        return Side::Side2;
-    default:
-        return Side::Side1;
-    }
 }
 
 }

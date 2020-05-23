@@ -4859,19 +4859,6 @@ void TestDocks::tst_resizeWindow()
     m->addDockWidget(dock2, Location_OnRight);
 
     auto layout = m->multiSplitterLayout();
-    Item *item1 = layout->itemForFrame(dock1->frame());
-    Item *item2 = layout->itemForFrame(dock2->frame());
-
-    // Move the separator so both dock widgets have the same space
-    const int delta = dock1->width() - dock2->width();
-
-
-    ItemContainer *root = item2->parentContainer();
-    if (delta > 0) {
-        root->growItem(item2, delta / 2, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
-    } else {
-        root->growItem(item1, delta / 2, GrowthStrategy::BothSidesEqually, NeighbourSqueezeStrategy::AllNeighbours);
-    }
 
     layout->checkSanity();
 
