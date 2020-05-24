@@ -175,7 +175,7 @@ void Item::setGuest(Widget *guest)
     if (m_guest) {
         m_guest->setLayoutItem(this);
         newWidget->installEventFilter(this);
-        newWidget->setParent(m_hostWidget);
+        m_guest->setParent(m_hostWidget);
         setMinSize(guest->minSize());
         setMaxSize(guest->maxSize());
 
@@ -227,14 +227,14 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widge
     if (!guestId.isEmpty()) {
         if (Widget *guest = widgets.value(guestId)) {
             setGuest(guest);
-            m_guest->asWidget()->setParent(hostWidget());
+            m_guest->setParent(hostWidget());
         } else if (hostWidget()) {
             qWarning() << Q_FUNC_INFO << "Couldn't find frame to restore for" << this;
         }
     }
 }
 
-Item *Item::createFromVariantMap(QWidget *hostWidget, ItemContainer *parent,
+Item *Item::createFromVariantMap(Widget *hostWidget, ItemContainer *parent,
                                  const QVariantMap &map, const QHash<QString, Widget *> &widgets)
 {
     auto item = new Item(hostWidget, parent);
@@ -262,9 +262,15 @@ int Item::refCount() const
     return m_refCount;
 }
 
-QWidget *Item::hostWidget() const
+Widget *Item::hostWidget() const
 {
     return m_hostWidget;
+}
+
+QObject *Item::host() const
+{
+    return m_hostWidget ? m_hostWidget->asQObject()
+                        : nullptr;
 }
 
 void Item::restore(Widget *guest)
@@ -307,12 +313,12 @@ QVector<int> Item::pathFromRoot() const
     return path;
 }
 
-void Item::setHostWidget(QWidget *host)
+void Item::setHostWidget(Widget *host)
 {
     if (m_hostWidget != host) {
         m_hostWidget = host;
         if (auto w = widget()) {
-            w->setParent(host);
+            m_guest->setParent(host);
             w->setVisible(true);
             updateWidgetGeometries();
         }
@@ -619,30 +625,31 @@ bool Item::checkSanity()
         return false;
     }
 
-    if (auto w = widget()) {
-
-        if (w->parentWidget() != hostWidget()) {
+    if (m_guest) {
+        if (m_guest->parent() != hostWidget()->asQObject()) {
             qWarning() << Q_FUNC_INFO << "Unexpected parent for our guest"
-                       << w->parentWidget() << "; host=" << hostWidget()
-                       << w << this;
+                       << m_guest->parent() << "; host=" << hostWidget()
+                       << m_guest->asQObject() << this;
             return false;
         }
 
-        if (false && !w->isVisible() && (!w->parentWidget() || w->parentWidget()->isVisible())) {
+        if (false && !m_guest->isVisible() && (!m_guest->parent() || m_guest->parentWidget()->isVisible())) {
             // TODO: if guest is explicitly hidden we're not hidding the item yet
             qWarning() << Q_FUNC_INFO << "Guest widget isn't visible" << this
-                       << w;
+                       << m_guest->asQObject();
             return false;
         }
 
-        if (w->geometry() != mapToRoot(rect())) {
+        if (m_guest->geometry() != mapToRoot(rect())) {
             root()->dumpLayout();
-            qWarning() << Q_FUNC_INFO << "Guest widget doesn't have correct geometry. has"
-                       << "guest.global=" << w->geometry()
-                       << "; item.local=" << geometry()
-                       << "; item.global=" << mapToRoot(rect())
-                       << this
-                       << w;
+            auto d = qWarning();
+            d << Q_FUNC_INFO << "Guest widget doesn't have correct geometry. has"
+              << "guest.global=" << m_guest->geometry()
+              << "; item.local=" << geometry()
+              << "; item.global=" << mapToRoot(rect())
+              << this;
+            m_guest->dumpDebug(d);
+
             return false;
         }
     }
@@ -734,7 +741,7 @@ void Item::dumpLayout(int level)
     dbg << this << "; guest=" << widget();
 }
 
-Item::Item(QWidget *hostWidget, ItemContainer *parent)
+Item::Item(Widget *hostWidget, ItemContainer *parent)
     : QObject(parent)
     , m_isContainer(false)
     , m_parent(parent)
@@ -743,7 +750,7 @@ Item::Item(QWidget *hostWidget, ItemContainer *parent)
     connectParent(parent);
 }
 
-Item::Item(bool isContainer, QWidget *hostWidget, ItemContainer *parent)
+Item::Item(bool isContainer, Widget *hostWidget, ItemContainer *parent)
     : QObject(parent)
     , m_isContainer(isContainer)
     , m_parent(parent)
@@ -761,7 +768,8 @@ bool Item::eventFilter(QObject *widget, QEvent *e)
     if (e->type() != QEvent::ParentChange)
         return false;
 
-    if (widget->parent() != hostWidget()) {
+    QObject *host = hostWidget() ? hostWidget()->asQObject() : nullptr;
+    if (widget->parent() != host) {
         // Frame was detached into floating window. Turn into placeholder
         Q_ASSERT(isVisible());
         turnIntoPlaceholder();
@@ -799,6 +807,8 @@ void Item::updateObjectName()
 
 void Item::onWidgetDestroyed()
 {
+    m_guest = nullptr;
+
     if (m_refCount) {
         turnIntoPlaceholder();
     } else if (!isRoot()) {
@@ -869,7 +879,7 @@ struct ItemContainer::Private
     ItemContainer *const q;
 };
 
-ItemContainer::ItemContainer(QWidget *hostWidget, ItemContainer *parent)
+ItemContainer::ItemContainer(Widget *hostWidget, ItemContainer *parent)
     : Item(true, hostWidget, parent)
     , d(new Private(this))
 {
@@ -888,7 +898,7 @@ ItemContainer::ItemContainer(QWidget *hostWidget, ItemContainer *parent)
     });
 }
 
-ItemContainer::ItemContainer(QWidget *hostWidget)
+ItemContainer::ItemContainer(Widget *hostWidget)
     : Item(true, hostWidget, /*parentContainer=*/ nullptr)
     , d(new Private(this))
 {
@@ -1021,9 +1031,9 @@ bool ItemContainer::checkSanity()
         Item *item = visibleChildren.at(i);
         const int expectedSeparatorPos = mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
 
-        if (separator->hostWidget() != hostWidget()) {
+        if (separator->host() != host()) {
             qWarning() << Q_FUNC_INFO << "Invalid host widget for separator"
-                       << separator->hostWidget() << hostWidget() << this;
+                       << separator->host() << host() << this;
             return false;
         }
 
@@ -1057,9 +1067,9 @@ bool ItemContainer::checkSanity()
             return false;
         }
 
-        if (separator->hostWidget() != hostWidget()) {
+        if (separator->host() != host()) {
             qWarning() << Q_FUNC_INFO << "Unexpected host widget in separator"
-                       << separator->hostWidget() << "; expected=" << hostWidget();
+                       << separator->host() << "; expected=" << host();
             return false;
         }
 
@@ -1605,7 +1615,7 @@ Item::List ItemContainer::items_recursive() const
    return items;
 }
 
-void ItemContainer::setHostWidget(QWidget *host)
+void ItemContainer::setHostWidget(Widget *host)
 {
     Item::setHostWidget(host);
     d->deleteSeparators_recursive();
@@ -1968,9 +1978,7 @@ void ItemContainer::dumpLayout(int level)
                                << "; drp=" << screen->devicePixelRatio();
         }
 
-        qDebug().noquote() << " Dump Start: Host=" << hostWidget() << hostWidget()->rect()
-                           << "; dpr=" << hostWidget()->devicePixelRatio()
-                           << ")";
+        hostWidget()->dumpDebug(qDebug().noquote());
     }
 
     QString indent;

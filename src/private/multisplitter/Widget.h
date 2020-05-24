@@ -23,12 +23,16 @@
 
 #pragma once
 
+#include <QRect>
+#include <QSize>
+#include <QDebug>
+#include <QObject>
 #include <qglobal.h>
+
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 class QWidget; // TODO: Remove
-class QSize;
-class QObject;
 QT_END_NAMESPACE
 
 namespace Layouting {
@@ -41,16 +45,48 @@ class Item;
 class Widget
 {
 public:
-    Widget() = default;
+    explicit Widget(QObject *thisObj)
+        : m_thisObj(thisObj) {}
+
+    virtual ~Widget() {}
+
     virtual void setLayoutItem(Item *) = 0;
     virtual QWidget *asWidget() const = 0; // TODO: Move down
     virtual QSize minSize() const = 0;
     virtual QSize maxSize() const = 0;
-    virtual QSize size() const = 0;
-    virtual void setParent(QObject *) = 0;
+    virtual QRect geometry() const = 0;
+    virtual void setParent(Widget *) = 0;
+    virtual QDebug& dumpDebug(QDebug&) const = 0;
+    virtual bool isVisible() const = 0;
+    virtual std::unique_ptr<Widget> parentWidget() const = 0;
+
+    QSize size() const {
+        return geometry().size();
+    }
+
+    QRect rect() const {
+        return QRect(QPoint(0, 0), size());
+    }
+
+    QObject *asQObject() const { return m_thisObj; }
+    QObject *parent() const { return m_thisObj->parent(); }
+
+
+    bool operator==(const QObject *obj) const {
+        return obj == m_thisObj;
+    }
 
 private:
+    QObject *const m_thisObj;
     Q_DISABLE_COPY(Widget)
 };
+
+inline bool operator==(const Widget *w, const QObject &obj)
+{
+    //if (!w && !obj)
+        //return true;
+
+    return w && w->operator==(&obj);
+}
 
 }

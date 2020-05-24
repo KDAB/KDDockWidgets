@@ -18,6 +18,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "Widget_qwidget.h"
 #include "Config.h"
 #include "Item_p.h"
 #include "Separator_p.h"
@@ -28,7 +29,7 @@ Config::Config()
 {
 }
 
-Separator *Config::createSeparator(QWidget *parent) const
+Separator *Config::createSeparator(Widget *parent) const
 {
     if (m_separatorFactoryFunc)
         return m_separatorFactoryFunc(parent);

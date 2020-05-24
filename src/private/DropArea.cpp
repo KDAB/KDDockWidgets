@@ -63,7 +63,7 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
     const Layouting::Item::List &items = m_layout->items();
     for (Layouting::Item *item : items) {
         auto frame = static_cast<Frame*>(item->widget());
-        if (!frame || !frame->isVisible()) {
+        if (!frame || !frame->QWidget::isVisible()) {
             continue;
         }
 

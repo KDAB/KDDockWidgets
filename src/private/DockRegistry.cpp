@@ -83,7 +83,10 @@ bool DockRegistry::isProcessingAppQuitEvent() const
 
 MultiSplitterLayout *DockRegistry::layoutForItem(const Layouting::Item *item) const
 {
-    if (auto ms = qobject_cast<MultiSplitter*>(item->hostWidget()))
+    if (!item->hostWidget())
+        return nullptr;
+
+    if (auto ms = qobject_cast<MultiSplitter*>(item->hostWidget()->asWidget()))
         return ms->multiSplitterLayout();
 
     return nullptr;

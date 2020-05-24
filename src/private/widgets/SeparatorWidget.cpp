@@ -18,6 +18,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "multisplitter/Widget_qwidget.h"
 #include "SeparatorWidget_p.h"
 #include "Logging_p.h"
 
@@ -27,7 +28,7 @@
 using namespace KDDockWidgets;
 
 SeparatorWidget::SeparatorWidget(QWidget *parent)
-    : Separator(parent)
+    : Separator(new Layouting::Widget_qwidget(parent))
 {
     setMouseTracking(true);
 }

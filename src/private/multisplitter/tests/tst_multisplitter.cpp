@@ -88,7 +88,7 @@ public:
     void paintEvent(QPaintEvent *) override
     {
         QPainter p(this);
-        p.fillRect(rect(), Qt::green);
+        p.fillRect(QWidget::rect(), Qt::green);
     }
 
 Q_SIGNALS:
@@ -219,7 +219,7 @@ static std::unique_ptr<ItemContainer> createRoot()
     auto hostWidget = new QWidget();
     hostWidget->setObjectName("HostWidget");
     hostWidget->show();
-    auto root = new ItemContainer(hostWidget); // todo WIDGET
+    auto root = new ItemContainer(new Layouting::Widget_qwidget(hostWidget));
     root->setSize({ 1000, 1000 });
     return std::unique_ptr<ItemContainer>(root);
 }
@@ -231,7 +231,7 @@ static Item* createItem(QSize minSz = {})
     auto hostWidget = new MyHostWidget();
     hostWidget->setObjectName("HostWidget");
     hostWidget->show();
-    auto item = new Item(hostWidget);
+    auto item = new Item(new Layouting::Widget_qwidget(hostWidget));
     item->setGeometry(QRect(0, 0, 200, 200));
     item->setObjectName(QStringLiteral("%1").arg(count));
     auto guest = new MyGuestWidget();
@@ -244,7 +244,7 @@ static Item* createItem(QSize minSz = {})
 
 static ItemContainer* createRootWithSingleItem()
 {
-    auto root = new ItemContainer(new QWidget()); // todo WIDGET
+    auto root = new ItemContainer(new Layouting::Widget_qwidget(new QWidget()));
     root->setSize({ 1000, 1000 });
 
     Item *item1 = createItem();
@@ -953,7 +953,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         auto root1 = createRoot();
         Item *item1 = createItem();
         root1->insertItem(item1, Item::Location_OnRight);
-        QWidget *host1 = root1->hostWidget();
+        QWidget *host1 = root1->hostWidget()->asWidget();
 
         auto root2 = createRoot();
         Item *item2 = createItem();
@@ -961,10 +961,10 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.get(), Item::Location_OnBottom);
 
-        QCOMPARE(root1->hostWidget(), host1);
-        QCOMPARE(root2->hostWidget(), host1);
+        QCOMPARE(root1->hostWidget()->asWidget(), host1);
+        QCOMPARE(root2->hostWidget()->asWidget(), host1);
         for (Item *item : root1->items_recursive()) {
-            QCOMPARE(item->hostWidget(), host1);
+            QCOMPARE(item->hostWidget()->asWidget(), host1);
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());
@@ -977,7 +977,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         Item *item2 = createItem();
         root1->insertItem(item1, Item::Location_OnLeft);
         root1->insertItem(item2, Item::Location_OnRight);
-        QWidget *host1 = root1->hostWidget();
+        QWidget *host1 = root1->hostWidget()->asWidget();
 
         auto root2 = createRoot();
         Item *item12 = createItem();
@@ -985,10 +985,10 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.get(), Item::Location_OnTop);
 
-        QCOMPARE(root1->hostWidget(), host1);
-        QCOMPARE(root2->hostWidget(), host1);
+        QCOMPARE(root1->hostWidget()->asWidget(), host1);
+        QCOMPARE(root2->hostWidget()->asWidget(), host1);
         for (Item *item : root1->items_recursive()) {
-            QCOMPARE(item->hostWidget(), host1);
+            QCOMPARE(item->hostWidget()->asWidget(), host1);
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());

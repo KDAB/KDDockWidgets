@@ -35,10 +35,11 @@ using namespace KDDockWidgets;
 MultiSplitterLayout::MultiSplitterLayout(MultiSplitter *parent)
     : QObject(parent)
     , m_multiSplitter(parent)
-    , m_rootItem(new Layouting::ItemContainer(parent))
+    , m_hostWidget(new Layouting::Widget_qwidget(parent))
+    , m_rootItem(new Layouting::ItemContainer(m_hostWidget))
 {
     Q_ASSERT(parent);
-    setRootItem(new Layouting::ItemContainer(parent));
+    setRootItem(new Layouting::ItemContainer(m_hostWidget));
     DockRegistry::self()->registerLayout(this);
 
     setSize(parent->size());
@@ -52,9 +53,10 @@ MultiSplitterLayout::MultiSplitterLayout(MultiSplitter *parent)
 MultiSplitterLayout::~MultiSplitterLayout()
 {
     qCDebug(multisplittercreation) << "~MultiSplitter" << this;
-    if (m_rootItem->hostWidget() == multiSplitter())
+    if (m_rootItem->hostWidget()->asWidget() == multiSplitter())
         delete m_rootItem;
     DockRegistry::self()->unregisterLayout(this);
+    delete m_hostWidget;
 }
 
 MultiSplitter *MultiSplitterLayout::multiSplitter() const
@@ -150,17 +152,17 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location,
     auto dw = qobject_cast<DockWidgetBase*>(w);
 
     if (frame) {
-        newItem = new Layouting::Item(multiSplitter());
+        newItem = new Layouting::Item(m_hostWidget);
         newItem->setGuest(frame);
     } else if (dw) {
-        newItem = new Layouting::Item(multiSplitter());
+        newItem = new Layouting::Item(m_hostWidget);
         frame = new Frame();
         newItem->setGuest(frame);
         frame->addWidget(dw, option);
     } else if (auto ms = qobject_cast<MultiSplitter*>(w)) {
         newItem = ms->multiSplitterLayout()->rootItem();
-        Q_ASSERT(newItem->hostWidget() != multiSplitter());
-        newItem->setHostWidget(multiSplitter());
+        Q_ASSERT(newItem->hostWidget()->asWidget() != multiSplitter());
+        newItem->setHostWidget(m_hostWidget);
         delete ms;
     }
 
@@ -391,7 +393,7 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widget, Location lo
 
 bool MultiSplitterLayout::deserialize(const LayoutSaver::MultiSplitterLayout &l)
 {
-    setRootItem(new Layouting::ItemContainer(m_multiSplitter));
+    setRootItem(new Layouting::ItemContainer(m_hostWidget));
 
     QHash<QString, Layouting::Widget*> frames;
     for (const LayoutSaver::Frame &frame : qAsConst(l.frames)) {

@@ -622,7 +622,7 @@ void TestDocks::tst_close()
     QPointer<Frame> frame1 = dock1->frame();
     QVERIFY(dock1->isVisible());
     QVERIFY(dock1->window()->isVisible());
-    QVERIFY(frame1->isVisible());
+    QVERIFY(frame1->QWidget::isVisible());
     QCOMPARE(dock1->window(), window.data());
 
     QVERIFY(dock1->close());
@@ -637,7 +637,7 @@ void TestDocks::tst_close()
     frame1 = dock1->frame();
     QVERIFY(dock1->isVisible());
     QVERIFY(dock1->window()->isVisible());
-    QVERIFY(frame1->isVisible());
+    QVERIFY(frame1->QWidget::isVisible());
     QCOMPARE(dock1->window(), window.data());
 
     QVERIFY(window->close());
@@ -660,12 +660,12 @@ void TestDocks::tst_close()
     QVERIFY(da->checkSanity());
     QCOMPARE(leftDock->frame()->x(), 0);
 
-    QCOMPARE(centralDock->frame()->x(), leftDock->frame()->geometry().right() + Item::separatorThickness + 1);
-    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + Item::separatorThickness + 1);
+    QCOMPARE(centralDock->frame()->x(), leftDock->frame()->QWidget::geometry().right() + Item::separatorThickness + 1);
+    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->QWidget::geometry().right() + Item::separatorThickness + 1);
     leftDock->close();
     QTest::qWait(250); // TODO: wait for some signal
     QCOMPARE(centralDock->frame()->x(), 0);
-    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->geometry().right() + Item::separatorThickness + 1);
+    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->QWidget::geometry().right() + Item::separatorThickness + 1);
 
     rightDock->close();
     QTest::qWait(250); // TODO: wait for some signal
@@ -2292,7 +2292,7 @@ void TestDocks::tst_setFloatingWhenSideBySide()
         dock2->show();
         Testing::waitForResize(dock2);
 
-        QCOMPARE(item2->geometry(), dock2->frame()->geometry());
+        QCOMPARE(item2->geometry(), dock2->frame()->QWidget::geometry());
         layout->checkSanity();
 
         // Cleanup
@@ -2350,7 +2350,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         QCOMPARE(dock2->lastPositions().lastItem(), oldItem2);
         Item *item2 = fw2->dropArea()->multiSplitterLayout()->itemForFrame(dock2->frame());
         QVERIFY(item2);
-        QCOMPARE(item2->hostWidget(), fw2->dropArea());
+        QCOMPARE(item2->hostWidget()->asWidget(), fw2->dropArea());
         QVERIFY(!layout->itemForFrame(dock2->frame()));
 
         // Move from tab to bottom
@@ -2432,7 +2432,7 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
 
     // 2. Check that the parent frame also is hidden now
     dock1->setVisible(false);
-    QVERIFY(!dock1->frame()->isVisible());
+    QVERIFY(!dock1->frame()->QWidget::isVisible());
 
     // Cleanup
     m->deleteLater();
@@ -4700,13 +4700,13 @@ void TestDocks::tst_samePositionAfterHideRestore()
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
     m->addDockWidget(dock3, Location_OnRight);
-    QRect geo2 = dock2->frame()->geometry();
+    QRect geo2 = dock2->frame()->QWidget::geometry();
     dock2->setFloating(true);
 
     auto fw2 = dock2->floatingWindow();
     dock2->setFloating(false);
     QVERIFY(Testing::waitForDeleted(fw2));
-    QCOMPARE(geo2, dock2->frame()->geometry());
+    QCOMPARE(geo2, dock2->frame()->QWidget::geometry());
     m->multiSplitterLayout()->checkSanity();
 }
 

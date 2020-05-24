@@ -242,7 +242,7 @@ public:
         None, ///< Don't do any sizing
     };
 
-    explicit Item(QWidget *hostWidget, ItemContainer *parent = nullptr);
+    explicit Item(Widget *hostWidget, ItemContainer *parent = nullptr);
     ~Item() override;
 
     bool isRoot() const;
@@ -296,7 +296,8 @@ public:
 
     int minLength(Qt::Orientation) const;
 
-    QWidget *hostWidget() const;
+    QObject *host() const;
+    Widget *hostWidget() const;
     void restore(Widget *guest);
 
     QVector<int> pathFromRoot() const;
@@ -307,11 +308,11 @@ public:
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(QRect rect);
     virtual void dumpLayout(int level = 0);
-    virtual void setHostWidget(QWidget *);
+    virtual void setHostWidget(Widget *);
     virtual QVariantMap toVariantMap() const;
     virtual void fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widget*> &widgets);
 
-    static Item* createFromVariantMap(QWidget *hostWidget, ItemContainer *parent,
+    static Item* createFromVariantMap(Widget *hostWidget, ItemContainer *parent,
                                       const QVariantMap &map, const QHash<QString, Widget *> &widgets);
 
 Q_SIGNALS:
@@ -325,7 +326,7 @@ Q_SIGNALS:
     void maxSizeChanged(Layouting::Item *thisItem);
 protected:
     friend class ::TestMultiSplitter;
-    explicit Item(bool isContainer, QWidget *hostWidget, ItemContainer *parent);
+    explicit Item(bool isContainer, Widget *hostWidget, ItemContainer *parent);
     void setParentContainer(ItemContainer *parent);
     void connectParent(ItemContainer *parent);
     Q_REQUIRED_RESULT virtual bool checkSanity();
@@ -358,7 +359,7 @@ private:
     void updateObjectName();
     void onWidgetDestroyed();
     bool m_isVisible = false;
-    QWidget *m_hostWidget = nullptr;
+    Widget *m_hostWidget = nullptr;
     Widget *m_guest = nullptr;
 };
 
@@ -366,8 +367,8 @@ class ItemContainer : public Item
 {
     Q_OBJECT
 public:
-    explicit ItemContainer(QWidget *hostWidget, ItemContainer *parent);
-    explicit ItemContainer(QWidget *parent);
+    explicit ItemContainer(Widget *hostWidget, ItemContainer *parent);
+    explicit ItemContainer(Widget *hostWidget);
     ~ItemContainer();
     void insertItem(Item *item, int index, DefaultSizeMode);
     void insertItem(Item *item, Location, DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
@@ -473,7 +474,7 @@ private:
     void positionItems(SizingInfo::List &sizes);
     Item *itemAt(QPoint p) const;
     Item *itemAt_recursive(QPoint p) const;
-    void setHostWidget(QWidget *) override;
+    void setHostWidget(Widget *) override;
     void setIsVisible(bool) override;
     bool isVisible(bool excludeBeingInserted = false) const override;
     void setLength_recursive(int length, Qt::Orientation) override;

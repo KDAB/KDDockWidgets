@@ -18,6 +18,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "Widget_qwidget.h"
 #include "Separator_p.h"
 #include "Logging_p.h"
 #include "Item_p.h"
@@ -35,8 +36,12 @@ using namespace Layouting;
 
 Separator* Separator::s_separatorBeingDragged = nullptr;
 
-struct Separator::Private {
+struct Separator::Private
+{
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
+
+    Private(Widget *host)
+        : m_hostWidget(host) {}
 
     Qt::Orientation orientation;
     QRect geometry;
@@ -46,11 +51,12 @@ struct Separator::Private {
     ItemContainer *parentContainer = nullptr;
     Layouting::Side lastMoveDirection = Side1;
     const bool usesLazyResize = Config::self().flags() & Config::Flag::LazyResize;
+    Widget *const m_hostWidget;
 };
 
-Separator::Separator(QWidget *hostWidget)
-    : QWidget(hostWidget)
-    , d(new Private())
+Separator::Separator(Widget *hostWidget)
+    : QWidget(hostWidget->asWidget())
+    , d(new Private(hostWidget))
 {
 }
 
@@ -167,9 +173,9 @@ int Separator::position() const
     return isVertical() ? topLeft.y() : topLeft.x();
 }
 
-QWidget *Separator::hostWidget() const
+QObject *Separator::host() const
 {
-    return parentWidget();
+    return d->m_hostWidget ? d->m_hostWidget->asQObject() : nullptr;
 }
 
 void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation)
@@ -181,7 +187,7 @@ void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation
 
     d->parentContainer = parentContainer;
     d->orientation = orientation;
-    d->lazyResizeRubberBand = d->usesLazyResize ? new QRubberBand(QRubberBand::Line, hostWidget())
+    d->lazyResizeRubberBand = d->usesLazyResize ? new QRubberBand(QRubberBand::Line, d->m_hostWidget->asWidget())
                                                 : nullptr;
     setVisible(true);
 }

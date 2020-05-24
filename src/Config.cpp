@@ -27,6 +27,7 @@
 
 #include "Config.h"
 #include "multisplitter/Config.h"
+#include "multisplitter/Widget_qwidget.h"
 #include "DockRegistry_p.h"
 #include "FrameworkWidgetFactory.h"
 
@@ -64,8 +65,8 @@ Config::Config()
     d->fixFlags();
 
     // stuff in multisplitter/ can't include the framework widget factory, so set it here
-    auto separatorCreator = [](QWidget *parent){
-        return Config::self().frameworkWidgetFactory()->createSeparator(parent);
+    auto separatorCreator = [](Layouting::Widget *parent) {
+        return Config::self().frameworkWidgetFactory()->createSeparator(parent->asWidget());
     };
 
     Layouting::Config::self().setSeparatorFactoryFunc(separatorCreator);

@@ -234,7 +234,7 @@ void IndicatorWindow::updatePositions()
     m_outterRight->move(r.x() + width() - indicatorWidth - OUTTER_INDICATOR_MARGIN, r.center().y() - halfIndicatorWidth);
     Frame *hoveredFrame = classicIndicators->m_hoveredFrame;
     if (hoveredFrame) {
-        QRect hoveredRect = hoveredFrame->geometry();
+        QRect hoveredRect = hoveredFrame->QWidget::geometry();
         m_center->move(r.topLeft() + hoveredRect.center() - QPoint(halfIndicatorWidth, halfIndicatorWidth));
         m_top->move(m_center->pos() - QPoint(0, indicatorWidth + OUTTER_INDICATOR_MARGIN));
         m_right->move(m_center->pos() + QPoint(indicatorWidth + OUTTER_INDICATOR_MARGIN, 0));
@@ -355,7 +355,7 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     }
 
     if (location == DropLocation_Center) {
-        m_rubberBand->setGeometry(geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->geometry() : rect()));
+        m_rubberBand->setGeometry(geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->QWidget::geometry() : rect()));
         m_rubberBand->setVisible(true);
         if (rubberBandIsTopLevel()) {
             m_rubberBand->raise();

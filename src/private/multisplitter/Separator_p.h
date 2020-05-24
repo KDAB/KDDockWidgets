@@ -34,6 +34,7 @@ namespace Layouting {
 class Config;
 class ItemContainer;
 class Separator;
+class Widget;
 
 class Separator : public QWidget
 {
@@ -50,7 +51,7 @@ public:
     void setGeometry(int pos, int pos2, int length);
     void setGeometry(QRect r);
     int position() const;
-    QWidget *hostWidget() const;
+    QObject *host() const;
 
     void init(Layouting::ItemContainer*, Qt::Orientation orientation);
 
@@ -60,7 +61,7 @@ public:
     static bool isResizing();
 
 protected:
-    explicit Separator(QWidget *hostWidget);
+    explicit Separator(Widget *hostWidget);
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *) override;
     void mouseReleaseEvent(QMouseEvent *) override;

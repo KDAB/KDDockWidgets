@@ -25,6 +25,10 @@
 
 using namespace Layouting;
 
+Widget_qwidget::~Widget_qwidget()
+{
+}
+
 QSize Widget_qwidget::minSize() const
 {
     return widgetMinSize(asWidget());
@@ -35,20 +39,46 @@ QSize Widget_qwidget::maxSize() const
     return asWidget()->maximumSize();
 }
 
-QSize Widget_qwidget::size() const
+QRect Widget_qwidget::geometry() const
 {
-    return asWidget()->size();
+    return asWidget()->geometry();
 }
 
-void Widget_qwidget::setParent(QObject *parent)
+void Widget_qwidget::setParent(Widget *parent)
 {
-    if (parent && !parent->isWidgetType()) {
-        qWarning() << Q_FUNC_INFO << "parent is not a widget, you have a bug" << parent;
-        Q_ASSERT(false);
+    if (!parent) {
+        m_thisWidget->setParent(nullptr);
         return;
     }
 
-    m_thisWidget->setParent(qobject_cast<QWidget*>(parent));
+    if (auto qwidget = qobject_cast<QWidget*>(parent->asQObject())) {
+        m_thisWidget->setParent(qwidget);
+    } else {
+        qWarning() << Q_FUNC_INFO << "parent is not a widget, you have a bug" << parent->asQObject();
+        Q_ASSERT(false);
+    }
+}
+
+QDebug &Widget_qwidget::dumpDebug(QDebug &d) const
+{
+    d << " Dump Start: Host=" << m_thisWidget << rect()
+      << "; dpr=" << m_thisWidget->devicePixelRatio() << ")";
+
+    return d;
+}
+
+bool Widget_qwidget::isVisible() const
+{
+    return m_thisWidget->isVisible();
+}
+
+std::unique_ptr<Widget> Widget_qwidget::parentWidget() const
+{
+    if (auto pw = m_thisWidget->parentWidget()) {
+        return std::unique_ptr<Widget>(new Widget_qwidget(pw));
+    }
+
+    return {};
 }
 
 QSize Widget_qwidget::widgetMinSize(const QWidget *w)

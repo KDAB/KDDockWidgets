@@ -27,8 +27,9 @@ class QWidget; // TODO
 namespace Layouting {
 
 class Separator;
+class Widget;
 
-typedef Separator* (*SeparatorFactoryFunc)(QWidget *parent);
+typedef Separator* (*SeparatorFactoryFunc)(Layouting::Widget *parent);
 
 class Config {
 public:
@@ -73,7 +74,7 @@ private:
     friend class ItemContainer;
 
     Config();
-    Separator* createSeparator(QWidget*) const;
+    Separator* createSeparator(Layouting::Widget *) const;
 
     SeparatorFactoryFunc m_separatorFactoryFunc = nullptr;
     Flags m_flags = Flag::None;

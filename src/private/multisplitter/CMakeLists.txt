@@ -17,6 +17,7 @@ target_link_libraries(kddockwidgets_layouting Qt5::Core Qt5::Widgets)
 
 if (OPTION_DEVELOPER_MODE)
     add_subdirectory(tests)
+    add_subdirectory(examples)
 endif()
 
 target_include_directories(kddockwidgets_layouting

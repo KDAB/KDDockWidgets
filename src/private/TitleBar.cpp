@@ -139,7 +139,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         }
     }
 
-    QRect r = m_frame->geometry();
+    QRect r = m_frame->QWidget::geometry();
     qCDebug(hovering) << "TitleBar::makeWindow original geometry" << r;
     r.moveTopLeft(m_frame->mapToGlobal(QPoint(0, 0)));
 

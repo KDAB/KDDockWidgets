@@ -36,9 +36,12 @@ class Widget_qwidget : public Widget
 {
 public:
     explicit Widget_qwidget(QWidget *thisWidget)
-        : m_thisWidget(thisWidget)
+        : Widget(thisWidget)
+        , m_thisWidget(thisWidget)
     {
     }
+
+    ~Widget_qwidget() override;
 
     QWidget* asWidget() const override {
         return m_thisWidget;
@@ -46,8 +49,12 @@ public:
 
     QSize minSize() const override;
     QSize maxSize() const override;
-    QSize size() const override;
-    void setParent(QObject *) override;
+    QRect geometry() const override;
+    void setParent(Widget *) override;
+    QDebug& dumpDebug(QDebug&) const override;
+    bool isVisible() const override;
+    std::unique_ptr<Widget> parentWidget() const override;
+    void setLayoutItem(Item *) override {}
 
     static QSize widgetMinSize(const QWidget *w);
 

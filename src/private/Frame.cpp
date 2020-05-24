@@ -220,7 +220,7 @@ void Frame::updateTitleBarVisibility()
 
 bool Frame::containsMouse(QPoint globalPos) const
 {
-    return rect().contains(mapFromGlobal(globalPos));
+    return QWidget::rect().contains(mapFromGlobal(globalPos));
 }
 
 TitleBar *Frame::titleBar() const
@@ -347,8 +347,9 @@ bool Frame::anyNonDockable() const
 void Frame::onDockWidgetShown(DockWidgetBase *w)
 {
     if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
-        if (!isVisible()) {
-            qCDebug(hiding) << "Widget" << w << " was shown, we're=" << "; visible=" << isVisible();
+        if (!QWidget::isVisible()) {
+            qCDebug(hiding) << "Widget" << w << " was shown, we're=" << "; visible="
+                            << QWidget::isVisible();
             setVisible(true);
         }
     }
@@ -357,9 +358,9 @@ void Frame::onDockWidgetShown(DockWidgetBase *w)
 void Frame::onDockWidgetHidden(DockWidgetBase *w)
 {
     if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
-        if (isVisible()) {
+        if (QWidget::isVisible()) {
             qCDebug(hiding) << "Widget" << w << " was hidden, we're="
-                            << "; visible=" << isVisible()
+                            << "; visible=" << QWidget::isVisible()
                             << "; dockWidgets=" << dockWidgets();
             setVisible(false);
         }
@@ -480,11 +481,11 @@ int Frame::dockWidgetCount() const
 bool Frame::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
-        qCDebug(docking) << "Frame: parent changed to =" << parentWidget();
-        if (auto dropArea = qobject_cast<DropArea *>(parentWidget())) {
+        qCDebug(docking) << "Frame: parent changed to =" << QWidget::parentWidget();
+        if (auto dropArea = qobject_cast<DropArea *>(QWidget::parentWidget())) {
             setDropArea(dropArea);
         } else {
-            Q_ASSERT(!parent());
+            Q_ASSERT(!QWidget::parent());
             setDropArea(nullptr);
         }
     }
@@ -520,7 +521,7 @@ LayoutSaver::Frame Frame::serialize() const
     const DockWidgetBase::List docks = dockWidgets();
 
     frame.objectName = objectName();
-    frame.geometry = geometry();
+    frame.geometry = QWidget::geometry();
     frame.options = options();
     frame.currentTabIndex = currentTabIndex();
     frame.id = QString::number(qint64(this)); // for coorelation purposes

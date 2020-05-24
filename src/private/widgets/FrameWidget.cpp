@@ -72,7 +72,7 @@ void FrameWidget::paintEvent(QPaintEvent *)
         QPainter p(this);
         QPen pen(QColor(184, 184, 184, 184));
         p.setPen(pen);
-        p.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 2, 2);
+        p.drawRoundedRect(QWidget::rect().adjusted(0, 0, -1, -1), 2, 2);
     }
 }
 
