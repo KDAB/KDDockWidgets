@@ -20,7 +20,7 @@
 
 #include "MyFrameworkWidgetFactory.h"
 #include <kddockwidgets/FrameworkWidgetFactory.h>
-//#include <kddockwidgets/widgets/SeparatorWidget_p.h>
+#include <kddockwidgets/multisplitter/Separator_qwidget.h>
 #include <QApplication>
 
 class MyTitleBar : public KDDockWidgets::TitleBar
@@ -60,23 +60,21 @@ public:
     }
 };
 
-/*
 // Inheriting from SeparatorWidget instead of Separator as it handles moving and mouse cursor changing
-class MySeparator : public KDDockWidgets::SeparatorWidget
+class MySeparator : public Layouting::SeparatorWidget
 {
 public:
-    explicit MySeparator(KDDockWidgets::QWidgetAdapter *parent = nullptr)
-        : KDDockWidgets::SeparatorWidget(anchor, parent)
+    explicit MySeparator(Layouting::Widget *parent)
+        : Layouting::SeparatorWidget(parent)
     {
     }
 
     void paintEvent(QPaintEvent *) override
     {
         QPainter p(this);
-        p.fillRect(rect(), isStatic() ? Qt::black : Qt::cyan);
+        p.fillRect(rect(), Qt::cyan);
     }
 };
-*/
 
 KDDockWidgets::TitleBar * CustomWidgetFactory::createTitleBar(KDDockWidgets::Frame *frame) const
 {
@@ -87,9 +85,9 @@ KDDockWidgets::TitleBar * CustomWidgetFactory::createTitleBar(KDDockWidgets::Flo
 {
     return new MyTitleBar(fw);
 }
-/*
-KDDockWidgets::Separator * CustomWidgetFactory::createSeparator(KDDockWidgets::QWidgetAdapter *parent) const
+
+Layouting::Separator * CustomWidgetFactory::createSeparator(Layouting::Widget *parent) const
 {
-    return new MySeparator(anchor, parent);
+    return new MySeparator(parent);
 }
-*/
+

@@ -29,6 +29,5 @@ class CustomWidgetFactory : public KDDockWidgets::DefaultWidgetFactory
 public:
     KDDockWidgets::TitleBar *createTitleBar(KDDockWidgets::Frame *frame) const override;
     KDDockWidgets::TitleBar *createTitleBar(KDDockWidgets::FloatingWindow *fw) const override;
-   /* KDDockWidgets::Separator *createSeparator(KDDockWidgets::Anchor *anchor, // Commented-out as we need to install more headers
-                                              KDDockWidgets::QWidgetAdapter *parent = nullptr) const override;*/
+    Layouting::Separator *createSeparator(Layouting::Widget *parent = nullptr) const override;
 };
