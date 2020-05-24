@@ -25,7 +25,7 @@ target_compile_definitions(kddockwidgets_layouting PRIVATE BUILDING_MULTISPLITTE
 
 if (OPTION_DEVELOPER_MODE)
     add_subdirectory(tests)
-    add_subdirectory(examples)
+#    add_subdirectory(examples)
 endif()
 
 target_include_directories(kddockwidgets_layouting
