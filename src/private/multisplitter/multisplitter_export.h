@@ -18,34 +18,15 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_MULTISPLITTER_SEPARATORWIDGET_P_H
-#define KD_MULTISPLITTER_SEPARATORWIDGET_P_H
+#ifndef KD_MULTISPLITTER_EXPORT_H
+#define KD_MULTISPLITTER_EXPORT_H
 
-#include "multisplitter_export.h"
-#include "Separator_p.h"
+#include <QtCore/QtGlobal>
 
-QT_BEGIN_NAMESPACE
-class QPaintEvent;
-QT_END_NAMESPACE
-
-namespace Layouting {
-
-class MULTISPLITTER_EXPORT SeparatorWidget : public Layouting::Separator
-{
-    Q_OBJECT
-public:
-    explicit SeparatorWidget(Layouting::Widget *parent = nullptr);
-protected:
-    void paintEvent(QPaintEvent *) override;
-    void enterEvent(QEvent *) override;
-    void leaveEvent(QEvent *) override;
-    void mousePressEvent(QMouseEvent *) override;
-    void mouseMoveEvent(QMouseEvent *) override;
-    void mouseReleaseEvent(QMouseEvent *) override;
-    void mouseDoubleClickEvent(QMouseEvent *) override;
-    Widget* createRubberBand(Widget *parent) override;
-};
-
-}
+#if defined(BUILDING_MULTISPLITTER_LIBRARY)
+#  define MULTISPLITTER_EXPORT Q_DECL_EXPORT
+#else
+#  define MULTISPLITTER_EXPORT Q_DECL_IMPORT
+#endif
 
 #endif

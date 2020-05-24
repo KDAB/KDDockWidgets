@@ -9,6 +9,8 @@ set(MULTISPLITTER_SRCS
     Separator.cpp
     Separator_p.h
 
+    multisplitter_export.h
+
     # QWidget frontend:
     Widget_qwidget.cpp
     Widget_qwidget.h
@@ -18,6 +20,8 @@ set(MULTISPLITTER_SRCS
 
 add_library(kddockwidgets_layouting STATIC ${MULTISPLITTER_SRCS})
 target_link_libraries(kddockwidgets_layouting Qt5::Core Qt5::Widgets)
+
+target_compile_definitions(kddockwidgets_layouting PRIVATE BUILDING_MULTISPLITTER_LIBRARY)
 
 if (OPTION_DEVELOPER_MODE)
     add_subdirectory(tests)

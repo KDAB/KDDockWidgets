@@ -165,6 +165,7 @@ install (FILES private/multisplitter/Item_p.h DESTINATION include/kddockwidgets/
 install (FILES private/multisplitter/Widget.h DESTINATION include/kddockwidgets/multisplitter)
 install (FILES private/multisplitter/Widget_qwidget.h DESTINATION include/kddockwidgets/multisplitter)
 install (FILES private/multisplitter/Separator_qwidget.h DESTINATION include/kddockwidgets/multisplitter)
+install (FILES private/multisplitter/multisplitter_export.h DESTINATION include/kddockwidgets/multisplitter)
 install (FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
 
 include(CMakePackageConfigHelpers)
