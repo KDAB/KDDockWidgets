@@ -5159,7 +5159,6 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
 
     dock1->window()->move(0, 0);
     dock1->close();
-    qDebug() << "FOO " << dock1->lastPositions();
     delete oldFw;
 
     saver.restoreLayout(saved);
