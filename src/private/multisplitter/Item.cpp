@@ -60,7 +60,8 @@ inline Qt::Orientation orientationForLocation(Item::Location loc)
     return Qt::Vertical;
 }
 
-inline Qt::Orientation oppositeOrientation(Qt::Orientation o) {
+inline Qt::Orientation oppositeOrientation(Qt::Orientation o)
+{
     return o == Qt::Vertical ? Qt::Horizontal
                              : Qt::Vertical;
 }
@@ -74,6 +75,22 @@ inline QRect adjustedRect(QRect r, Qt::Orientation o, int p1, int p2)
     }
 
     return r;
+}
+
+namespace Layouting {
+struct LengthOnSide
+{
+    int length = 0;
+    int minLength = 0;
+
+    int available() const {
+        return qMax(0, length - minLength);
+    }
+
+    int missing() const {
+        return qMax(0, minLength - length);
+    }
+};
 }
 
 ItemContainer *Item::root() const
@@ -2330,8 +2347,8 @@ int ItemContainer::availableLength() const
                         : availableSize().width();
 }
 
-ItemContainer::LengthOnSide ItemContainer::lengthOnSide(const SizingInfo::List &sizes, int fromIndex,
-                                                        Side side, Qt::Orientation o) const
+LengthOnSide ItemContainer::lengthOnSide(const SizingInfo::List &sizes, int fromIndex,
+                                         Side side, Qt::Orientation o) const
 {
     if (fromIndex < 0)
         return {};
@@ -2453,17 +2470,6 @@ int ItemContainer::availableOnSide_recursive(const Item *child, Side side, Qt::O
         return isRoot() ? 0
                         : parentContainer()->availableOnSide_recursive(this, side, orientation);
     }
-}
-
-QVariantList ItemContainer::items() const
-{
-    QVariantList items;
-    items.reserve(d->m_children.size());
-
-    for (auto item : d->m_children)
-        items << QVariant::fromValue(item);
-
-    return items;
 }
 
 void ItemContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)

@@ -45,6 +45,7 @@ class ItemContainer;
 class Item;
 class Separator;
 class GuestInterface;
+class LengthOnSide;
 
 enum Side {
     Side1,
@@ -361,24 +362,10 @@ private:
     GuestInterface *m_guest = nullptr;
 };
 
-class ItemContainer : public Item {
+class ItemContainer : public Item
+{
     Q_OBJECT
-    Q_PROPERTY(QVariantList items READ items NOTIFY itemsChanged)
 public:
-
-    struct LengthOnSide {
-        int length = 0;
-        int minLength = 0;
-
-        int available() const {
-            return qMax(0, length - minLength);
-        }
-
-        int missing() const {
-            return qMax(0, minLength - length);
-        }
-    };
-
     explicit ItemContainer(QWidget *hostWidget, ItemContainer *parent);
     explicit ItemContainer(QWidget *parent);
     ~ItemContainer();
@@ -432,7 +419,6 @@ private:
     void setOrientation(Qt::Orientation);
     int length() const;
     QRect rect() const;
-    QVariantList items() const;
     void updateChildPercentages();
     void updateChildPercentages_recursive();
     void updateWidgetGeometries() override;
@@ -450,7 +436,10 @@ private:
     ///@brief grows an item by @p amount. It calculates how much to grow on side1 and on side2
     ///Then calls growItem(item, side1Growth, side2Growth) which will effectively grow it,
     ///and shrink the neighbours which are donating the size.
-    void growItem(Item *, int amount, GrowthStrategy, NeighbourSqueezeStrategy neighbourSqueezeStrategy, bool accountForNewSeparator = false, ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
+    void growItem(Item *, int amount, GrowthStrategy,
+                  NeighbourSqueezeStrategy neighbourSqueezeStrategy,
+                  bool accountForNewSeparator = false,
+                  ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
     void growItem(int index, SizingInfo::List &sizes, int missing, GrowthStrategy,
                   NeighbourSqueezeStrategy neighbourSqueezeStrategy,
                   bool accountForNewSeparator = false);
