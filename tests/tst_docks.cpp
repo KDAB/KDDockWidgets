@@ -934,7 +934,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
-    QPointer<Frame> centralFrame = static_cast<Frame*>(dropArea->centralFrame()->widget());
+    QPointer<Frame> centralFrame = static_cast<Frame*>(dropArea->centralFrame()->guestAsQObject());
     QVERIFY(central);
     QVERIFY(dropArea);
     QCOMPARE(dropArea->multiSplitterLayout()->count(), 1);
@@ -994,7 +994,7 @@ void TestDocks::tst_dockInternal()
     auto dock1 = createDockWidget("dock1", new QPushButton("one"));
     auto dropArea = m->dropArea();
 
-    auto centralWidget = static_cast<Frame*>(dropArea->multiSplitterLayout()->items()[0]->widget());
+    auto centralWidget = static_cast<Frame*>(dropArea->multiSplitterLayout()->items()[0]->guestAsQObject());
     nestDockWidget(dock1, dropArea, centralWidget, KDDockWidgets::Location_OnRight);
 
     QVERIFY(dock1->width() < dropArea->width() - centralWidget->width());
@@ -1283,7 +1283,7 @@ void TestDocks::tst_restoreCentralFrame()
     QCOMPARE(layout->count(), 1);
     Item *item = m->dropArea()->centralFrame();
     QVERIFY(item);
-    auto frame = static_cast<Frame *>(item->widget());
+    auto frame = static_cast<Frame *>(item->guestAsQObject());
     QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!frame->titleBar()->isVisible());
 
@@ -1294,7 +1294,7 @@ void TestDocks::tst_restoreCentralFrame()
     QCOMPARE(layout->count(), 1);
     item = m->dropArea()->centralFrame();
     QVERIFY(item);
-    frame = static_cast<Frame *>(item->widget());
+    frame = static_cast<Frame *>(item->guestAsQObject());
     QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!frame->titleBar()->isVisible());
 }
@@ -4042,7 +4042,7 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     Item *item30 = layout3->itemForFrame(docks2.at(0).createdDock->frame());
 
     QCOMPARE(item10->geometry(), item30->geometry());
-    QCOMPARE(item10->guest()->minSize(), item10->guest()->minSize());
+    QCOMPARE(item10->guestWidget()->minSize(), item10->guestWidget()->minSize());
     QCOMPARE(item10->minSize(), item30->minSize());
     QCOMPARE(layout1->availableSize(), layout3->availableSize());
 

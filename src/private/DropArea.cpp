@@ -62,7 +62,7 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
 {
     const Layouting::Item::List &items = m_layout->items();
     for (Layouting::Item *item : items) {
-        auto frame = static_cast<Frame*>(item->widget());
+        auto frame = static_cast<Frame*>(item->guestAsQObject());
         if (!frame || !frame->QWidget::isVisible()) {
             continue;
         }
@@ -76,7 +76,7 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
 Layouting::Item *DropArea::centralFrame() const
 {
     for (Layouting::Item *item : m_layout->items()) {
-        if (auto f = static_cast<Frame*>(item->widget())) {
+        if (auto f = static_cast<Frame*>(item->guestAsQObject())) {
             if (f->isCentralFrame())
                 return item;
         }

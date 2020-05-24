@@ -282,9 +282,9 @@ public:
     QPoint mapFromParent(QPoint) const;
     int mapFromRoot(int p, Qt::Orientation) const;
 
-    QObject *widget() const;
-    Widget *guest() const { return m_guest; }
-    void setGuest(Widget *);
+    QObject *guestAsQObject() const;
+    Widget *guestWidget() const { return m_guest; }
+    void setGuestWidget(Widget *);
 
     void ref();
     void unref();
@@ -294,7 +294,7 @@ public:
 
     QObject *host() const;
     Widget *hostWidget() const;
-    void restore(Widget *guest);
+    void restore(Widget *guestWidget);
 
     QVector<int> pathFromRoot() const;
 

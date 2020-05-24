@@ -154,16 +154,16 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
     return mapFromRoot(QPoint(p, 0)).x();
 }
 
-QObject *Item::widget() const
+QObject *Item::guestAsQObject() const
 {
     return m_guest ? m_guest->asQObject() : nullptr;
 }
 
-void Item::setGuest(Widget *guest)
+void Item::setGuestWidget(Widget *guest)
 {   
     Q_ASSERT(!guest || !m_guest);
     QObject *newWidget = guest ? guest->asQObject() : nullptr;
-    QObject *oldWidget = widget();
+    QObject *oldWidget = guestAsQObject();
 
     if (oldWidget) {
         oldWidget->removeEventFilter(this);
@@ -226,7 +226,7 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widge
     const QString guestId = map.value(QStringLiteral("guestId")).toString();
     if (!guestId.isEmpty()) {
         if (Widget *guest = widgets.value(guestId)) {
-            setGuest(guest);
+            setGuestWidget(guest);
             m_guest->setParent(hostWidget());
         } else if (hostWidget()) {
             qWarning() << Q_FUNC_INFO << "Couldn't find frame to restore for" << this;
@@ -275,11 +275,11 @@ QObject *Item::host() const
 
 void Item::restore(Widget *guest)
 {
-    Q_ASSERT(!isVisible() && !widget());
+    Q_ASSERT(!isVisible() && !guestAsQObject());
     if (isContainer()) {
         qWarning() << Q_FUNC_INFO << "Containers can't be restored";
     } else {
-        setGuest(guest);
+        setGuestWidget(guest);
         parentContainer()->restoreChild(this, NeighbourSqueezeStrategy::ImmediateNeighboursFirst);
 
         // When we restore to previous positions, we only still from the immediate neighbours.
@@ -732,7 +732,7 @@ void Item::dumpLayout(int level)
     if (m_sizingInfo.isBeingInserted)
         dbg << QStringLiteral(";beingInserted;");
 
-    dbg << this << "; guest=" << widget();
+    dbg << this << "; guest=" << guestAsQObject();
 }
 
 Item::Item(Widget *hostWidget, ItemContainer *parent)
@@ -788,7 +788,7 @@ void Item::updateObjectName()
     if (isContainer())
         return;
 
-    if (auto w = widget()) {
+    if (auto w = guestAsQObject()) {
         setObjectName(w->objectName().isEmpty() ? QStringLiteral("widget") : w->objectName());
     } else if (!isVisible()) {
         setObjectName(QStringLiteral("hidden"));
@@ -812,7 +812,7 @@ void Item::onWidgetDestroyed()
 
 void Item::onWidgetLayoutRequested()
 {
-    if (Widget *w = guest()) {
+    if (Widget *w = guestWidget()) {
         if (w->size() != size()) {
             qDebug() << Q_FUNC_INFO << "TODO: Not implemented yet. Widget can't just decide to resize yet"
                        << w->size()
@@ -1155,7 +1155,7 @@ void ItemContainer::removeItem(Item *item, bool hardRemove)
             Q_EMIT root()->numItemsChanged();
     } else {
         item->setIsVisible(false);
-        item->setGuest(nullptr);
+        item->setGuestWidget(nullptr);
 
         if (!wasVisible && !isContainer) {
             // Was already hidden
@@ -1540,7 +1540,7 @@ Item *ItemContainer::itemForWidget(const Widget *w) const
         if (item->isContainer()) {
             if (Item *result = item->asContainer()->itemForWidget(w))
                 return result;
-        } else if (item->guest() == w) {
+        } else if (item->guestWidget() == w) {
             return item;
         }
     }
@@ -3134,7 +3134,7 @@ void ItemContainer::Private::updateWidgets_recursive()
             c->d->updateWidgets_recursive();
         } else {
             if (item->isVisible()) {
-                if (Widget *widget = item->guest()) {
+                if (Widget *widget = item->guestWidget()) {
                     widget->setGeometry(q->mapToRoot(item->geometry()));
                     widget->setVisible(true);
                 } else {
