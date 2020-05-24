@@ -72,7 +72,7 @@ public:
     void paintEvent(QPaintEvent *) override
     {
         QPainter p(this);
-        p.fillRect(rect(), Qt::cyan);
+        p.fillRect(QWidget::rect(), Qt::cyan);
     }
 };
 

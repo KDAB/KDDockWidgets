@@ -44,7 +44,9 @@ public:
 }
 
 SeparatorWidget::SeparatorWidget(Layouting::Widget *parent)
-    : Separator(parent)
+    : QWidget(parent->asQWidget())
+    , Separator(parent)
+    , Layouting::Widget_qwidget(this)
 {
     setMouseTracking(true);
 }
@@ -55,7 +57,7 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
 
     QStyleOption opt;
     opt.palette = palette();
-    opt.rect = rect();
+    opt.rect = QWidget::rect();
     opt.state = QStyle::State_None;
     if (!isVertical())
         opt.state |= QStyle::State_Horizontal;
@@ -63,7 +65,7 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
     if (isEnabled())
         opt.state |= QStyle::State_Enabled;
 
-    parentWidget()->style()->drawControl(QStyle::CE_Splitter, &opt, &p, this);
+    QWidget::parentWidget()->style()->drawControl(QStyle::CE_Splitter, &opt, &p, this);
 }
 
 void SeparatorWidget::enterEvent(QEvent *)
@@ -87,7 +89,7 @@ void SeparatorWidget::mousePressEvent(QMouseEvent *)
 
 void SeparatorWidget::mouseMoveEvent(QMouseEvent *ev)
 {
-    onMouseMove(ev->pos());
+    onMouseMove(mapToParent(ev->pos()));
 }
 
 void SeparatorWidget::mouseReleaseEvent(QMouseEvent *)
@@ -108,4 +110,9 @@ Layouting::Widget *SeparatorWidget::createRubberBand(Layouting::Widget *parent)
     }
 
     return new Layouting::Widget_qwidget(new RubberBand(parent));
+}
+
+Widget *SeparatorWidget::asWidget()
+{
+    return this;
 }

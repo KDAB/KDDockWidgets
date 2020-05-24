@@ -77,6 +77,11 @@ bool Widget_qwidget::isVisible() const
     return m_thisWidget->isVisible();
 }
 
+void Widget_qwidget::setVisible(bool is) const
+{
+    m_thisWidget->setVisible(is);
+}
+
 std::unique_ptr<Widget> Widget_qwidget::parentWidget() const
 {
     if (auto pw = m_thisWidget->parentWidget()) {
@@ -94,6 +99,11 @@ void Widget_qwidget::show()
 void Widget_qwidget::hide()
 {
     m_thisWidget->hide();
+}
+
+void Widget_qwidget::move(int x, int y)
+{
+    m_thisWidget->move(x, y);
 }
 
 QSize Widget_qwidget::widgetMinSize(const QWidget *w)

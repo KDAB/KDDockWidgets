@@ -21,6 +21,8 @@
 #include "Item_p.h"
 #include "Separator_p.h"
 #include "Widget_qwidget.h"
+#include "Config.h"
+#include "Separator_qwidget.h"
 
 #include <QPainter>
 #include <QtTest/QtTest>
@@ -123,6 +125,11 @@ public Q_SLOTS:
     {
         s_original = qInstallMessageHandler(fatalWarningsMessageHandler);
         s_testObject = this;
+
+        Config::self().setSeparatorFactoryFunc([] (Layouting::Widget *parent) {
+            //return new SeparatorWidget(parent);
+            return static_cast<Separator*>(new SeparatorWidget(parent));
+        });
     }
 
     void cleanupTestCase()

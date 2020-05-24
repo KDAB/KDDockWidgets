@@ -292,7 +292,7 @@ void MultiSplitterLayout::restorePlaceholder(DockWidgetBase *dw, Layouting::Item
         frame->addWidget(dw);
     }
 
-    frame->setVisible(true);
+    frame->QWidget::setVisible(true);
 }
 
 void MultiSplitterLayout::layoutEqually()

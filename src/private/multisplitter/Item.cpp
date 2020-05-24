@@ -1051,15 +1051,16 @@ bool ItemContainer::checkSanity()
             return false;
         }
 
-        if (separator->geometry().size() != expectedSeparatorSize) {
-            qWarning() << Q_FUNC_INFO << "Unexpected separator size" << separator->geometry().size()
+        Widget *separatorWidget = separator->asWidget();
+        if (separatorWidget->geometry().size() != expectedSeparatorSize) {
+            qWarning() << Q_FUNC_INFO << "Unexpected separator size" << separatorWidget->geometry().size()
                        << "; expected=" << expectedSeparatorSize
                        << separator << "; this=" << this;
             return false;
         }
 
-        const int separatorPos2 = Layouting::pos(separator->geometry().topLeft(), oppositeOrientation(d->m_orientation));
-        if (Layouting::pos(separator->geometry().topLeft(), oppositeOrientation(d->m_orientation)) != pos2) {
+        const int separatorPos2 = Layouting::pos(separatorWidget->geometry().topLeft(), oppositeOrientation(d->m_orientation));
+        if (Layouting::pos(separatorWidget->geometry().topLeft(), oppositeOrientation(d->m_orientation)) != pos2) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Unexpected position pos2=" << separatorPos2
                        << "; expected=" << pos2
@@ -2002,8 +2003,8 @@ void ItemContainer::dumpLayout(int level)
         if (item->isVisible()) {
             if (i < d->m_separators.size()) {
                 auto separator = d->m_separators.at(i);
-                qDebug().noquote() << indent << " - Separator: " << "local.geo=" << mapFromRoot(separator->geometry())
-                                   << "global.geo=" << separator->geometry()
+                qDebug().noquote() << indent << " - Separator: " << "local.geo=" << mapFromRoot(separator->asWidget()->geometry())
+                                   << "global.geo=" << separator->asWidget()->geometry()
                                    << separator;
             }
             ++i;

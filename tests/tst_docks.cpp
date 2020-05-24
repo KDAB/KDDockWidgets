@@ -658,14 +658,14 @@ void TestDocks::tst_close()
     auto da = mainwindow->dropArea();
 
     QVERIFY(da->checkSanity());
-    QCOMPARE(leftDock->frame()->x(), 0);
+    QCOMPARE(leftDock->frame()->QWidget::x(), 0);
 
-    QCOMPARE(centralDock->frame()->x(), leftDock->frame()->QWidget::geometry().right() + Item::separatorThickness + 1);
-    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->QWidget::geometry().right() + Item::separatorThickness + 1);
+    QCOMPARE(centralDock->frame()->QWidget::x(), leftDock->frame()->QWidget::geometry().right() + Item::separatorThickness + 1);
+    QCOMPARE(rightDock->frame()->QWidget::x(), centralDock->frame()->QWidget::geometry().right() + Item::separatorThickness + 1);
     leftDock->close();
     QTest::qWait(250); // TODO: wait for some signal
-    QCOMPARE(centralDock->frame()->x(), 0);
-    QCOMPARE(rightDock->frame()->x(), centralDock->frame()->QWidget::geometry().right() + Item::separatorThickness + 1);
+    QCOMPARE(centralDock->frame()->QWidget::x(), 0);
+    QCOMPARE(rightDock->frame()->QWidget::x(), centralDock->frame()->QWidget::geometry().right() + Item::separatorThickness + 1);
 
     rightDock->close();
     QTest::qWait(250); // TODO: wait for some signal
@@ -676,13 +676,13 @@ void TestDocks::tst_close()
 
     // 1.9 Close tabbed dock, side docks will maintain their position
     mainwindow = createSimpleNestedMainWindow(&centralDock, &leftDock, &rightDock);
-    const int leftX = leftDock->frame()->x();
-    const int rightX = rightDock->frame()->x();
+    const int leftX = leftDock->frame()->QWidget::x();
+    const int rightX = rightDock->frame()->QWidget::x();
 
     centralDock->close();
 
-    QCOMPARE(leftDock->frame()->x(), leftX);
-    QCOMPARE(rightDock->frame()->x(), rightX);
+    QCOMPARE(leftDock->frame()->QWidget::x(), leftX);
+    QCOMPARE(rightDock->frame()->QWidget::x(), rightX);
     delete leftDock; delete rightDock; delete centralDock;
     delete dock1;
 
@@ -1646,8 +1646,8 @@ void TestDocks::tst_addDockWidgetToMainWindow()
 
      QCOMPARE(dock1->window(), m.get());
      QCOMPARE(dock2->window(), m.get());
-     QVERIFY(dock1->frame()->y() > dock2->frame()->y());
-     QCOMPARE(dock1->frame()->x(), dock2->frame()->x());
+     QVERIFY(dock1->frame()->QWidget::y() > dock2->frame()->QWidget::y());
+     QCOMPARE(dock1->frame()->QWidget::x(), dock2->frame()->QWidget::x());
 }
 
 void TestDocks::tst_addDockWidgetToContainingWindow()
@@ -1664,9 +1664,9 @@ void TestDocks::tst_addDockWidgetToContainingWindow()
     QCOMPARE(dock1->window(), dock2->window());
     QCOMPARE(dock2->window(), dock3->window());
 
-    QVERIFY(dock3->frame()->y() < dock2->frame()->y());
-    QVERIFY(dock1->frame()->x() < dock2->frame()->x());
-    QCOMPARE(dock2->frame()->x(), dock3->frame()->x());
+    QVERIFY(dock3->frame()->QWidget::y() < dock2->frame()->QWidget::y());
+    QVERIFY(dock1->frame()->QWidget::x() < dock2->frame()->QWidget::x());
+    QCOMPARE(dock2->frame()->QWidget::x(), dock3->frame()->QWidget::x());
 
     QWidget *window = dock1->window();
     delete dock1;
@@ -2841,14 +2841,14 @@ void TestDocks::tst_invalidPlaceholderPosition()
     auto frame1 = dock1->frame();
     auto frame2 = dock2->frame();
     auto frame3 = dock3->frame();
-    QCOMPARE(frame1->y(), 0);
+    QCOMPARE(frame1->QWidget::y(), 0);
 
     // Close 1
     dock1->close();
     Testing::waitForResize(frame2);
 
     // Check that frame2 moved up to y=1
-    QCOMPARE(frame2->y(), 0);
+    QCOMPARE(frame2->QWidget::y(), 0);
 
     // Close 2
     dock2->close();
@@ -2859,7 +2859,7 @@ void TestDocks::tst_invalidPlaceholderPosition()
     QCOMPARE(layout->placeholderCount(), 2);
 
     // Check that frame3 moved up to y=1
-    QCOMPARE(frame3->y(), 0);
+    QCOMPARE(frame3->QWidget::y(), 0);
 
     // Now restore:
     auto toRestore1 = restore1First ? dock1 : dock2;

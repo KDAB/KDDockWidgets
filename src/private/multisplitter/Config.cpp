@@ -34,9 +34,7 @@ Separator *Config::createSeparator(Widget *parent) const
     if (m_separatorFactoryFunc)
         return m_separatorFactoryFunc(parent);
 
-    // won't be visible, but still create it, so we don't have to look for nullptrs in the code
-    // won't be a use case anyway, you'll want to provide a factory func
-    return new Separator(parent);
+    return nullptr;
 }
 
 Config &Config::self()
@@ -67,6 +65,11 @@ void Config::setSeparatorThickness(int value)
 
 void Config::setSeparatorFactoryFunc(SeparatorFactoryFunc func)
 {
+    if (m_separatorFactoryFunc && !func) {
+        qWarning() << Q_FUNC_INFO << "Refusing to store nullptr separator func";
+        return;
+    }
+
     m_separatorFactoryFunc = func;
 }
 

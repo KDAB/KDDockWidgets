@@ -54,10 +54,12 @@ public:
     void setParent(Widget *) override;
     QDebug& dumpDebug(QDebug&) const override;
     bool isVisible() const override;
+    void setVisible(bool) const override;
     std::unique_ptr<Widget> parentWidget() const override;
     void setLayoutItem(Item *) override {}
     void show() override;
     void hide() override;
+    void move(int x, int y) override;
 
     static QSize widgetMinSize(const QWidget *w);
 

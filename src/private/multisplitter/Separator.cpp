@@ -53,8 +53,7 @@ struct Separator::Private
 };
 
 Separator::Separator(Widget *hostWidget)
-    : QWidget(hostWidget->asQWidget())
-    , d(new Private(hostWidget))
+    : d(new Private(hostWidget))
 {
 }
 
@@ -72,10 +71,14 @@ bool Separator::isVertical() const
 
 void Separator::move(int p)
 {
+    auto w = asWidget();
+    if (!w)
+        return;
+
     if (isVertical()) {
-        QWidget::move(x(), p);
+        w->move(w->x(), p);
     } else {
-        QWidget::move(p, y());
+        w->move(p, w->y());
     }
 }
 
@@ -124,7 +127,7 @@ void Separator::onMouseMove(QPoint pos)
     }
 #endif
 
-    const int positionToGoTo = Layouting::pos(mapToParent(pos), d->orientation);
+    const int positionToGoTo = Layouting::pos(pos, d->orientation);
     const int minPos = d->parentContainer->minPosForSeparator_global(this);
     const int maxPos = d->parentContainer->maxPosForSeparator_global(this);
 
@@ -155,8 +158,10 @@ void Separator::setGeometry(QRect r)
 {
     if (r != d->geometry) {
         d->geometry = r;
-        QWidget::setGeometry(r);
-        setVisible(true);
+        if (auto w = asWidget()) {
+            w->setGeometry(r);
+            w->setVisible(true);
+        }
     }
 }
 
@@ -182,7 +187,7 @@ void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation
     d->orientation = orientation;
     d->lazyResizeRubberBand = d->usesLazyResize ? createRubberBand(d->m_hostWidget)
                                                 : nullptr;
-    setVisible(true);
+    asWidget()->setVisible(true);
 }
 
 ItemContainer *Separator::parentContainer() const
@@ -216,7 +221,7 @@ void Separator::setLazyPosition(int pos)
     if (d->lazyPosition != pos) {
         d->lazyPosition = pos;
 
-        QRect geo = geometry();
+        QRect geo = asWidget()->geometry();
         if (isVertical()) {
             geo.moveTop(pos);
         } else {

@@ -21,9 +21,8 @@
 #ifndef KD_MULTISPLITTER_SEPARATOR_P_H
 #define KD_MULTISPLITTER_SEPARATOR_P_H
 
-
-#include <QWidget>
-#include <QPointer>
+#include <QObject>
+#include <QPoint>
 
 namespace Layouting {
 
@@ -32,14 +31,12 @@ class ItemContainer;
 class Separator;
 class Widget;
 
-class Separator : public QWidget
+class Separator
 {
-    Q_OBJECT
-    Q_PROPERTY(bool isVertical READ isVertical CONSTANT)
 public:
     typedef QVector<Separator*> List;
 
-    ~Separator();
+    virtual ~Separator();
 
     bool isVertical() const;
     void move(int p);
@@ -55,6 +52,8 @@ public:
 
     ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other work while we're not in the final size
     static bool isResizing();
+
+    virtual Widget* asWidget() = 0;
 
 protected:
     explicit Separator(Widget *hostWidget);

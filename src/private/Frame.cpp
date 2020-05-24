@@ -350,7 +350,7 @@ void Frame::onDockWidgetShown(DockWidgetBase *w)
         if (!QWidget::isVisible()) {
             qCDebug(hiding) << "Widget" << w << " was shown, we're=" << "; visible="
                             << QWidget::isVisible();
-            setVisible(true);
+            QWidget::setVisible(true);
         }
     }
 }
@@ -362,7 +362,7 @@ void Frame::onDockWidgetHidden(DockWidgetBase *w)
             qCDebug(hiding) << "Widget" << w << " was hidden, we're="
                             << "; visible=" << QWidget::isVisible()
                             << "; dockWidgets=" << dockWidgets();
-            setVisible(false);
+            QWidget::setVisible(false);
         }
     }
 }

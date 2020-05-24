@@ -23,14 +23,16 @@
 
 #include "multisplitter_export.h"
 #include "Separator_p.h"
+#include "Widget_qwidget.h"
 
-QT_BEGIN_NAMESPACE
-class QPaintEvent;
-QT_END_NAMESPACE
+#include <QWidget>
 
 namespace Layouting {
 
-class MULTISPLITTER_EXPORT SeparatorWidget : public Layouting::Separator
+class MULTISPLITTER_EXPORT SeparatorWidget
+        : public QWidget
+        , public Layouting::Separator
+        , public Layouting::Widget_qwidget
 {
     Q_OBJECT
 public:
@@ -44,6 +46,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
     Widget* createRubberBand(Widget *parent) override;
+    Widget *asWidget() override;
 };
 
 }

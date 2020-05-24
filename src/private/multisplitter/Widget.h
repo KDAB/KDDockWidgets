@@ -64,6 +64,8 @@ public:
     virtual void setParent(Widget *) = 0;
     virtual QDebug& dumpDebug(QDebug&) const = 0;
     virtual bool isVisible() const = 0;
+    virtual void setVisible(bool) const = 0;
+    virtual void move(int x, int y) = 0;
     virtual std::unique_ptr<Widget> parentWidget() const = 0;
     virtual void show() = 0;
     virtual void hide() = 0;
@@ -78,6 +80,15 @@ public:
 
     QObject *asQObject() const { return m_thisObj; }
     QObject *parent() const { return m_thisObj->parent(); }
+
+    int x() const {
+        return geometry().x();
+    }
+
+    int y() const {
+        return geometry().y();
+    }
+
 
 
     bool operator==(const QObject *obj) const {
