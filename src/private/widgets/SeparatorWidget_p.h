@@ -40,6 +40,7 @@ protected:
     void paintEvent(QPaintEvent *) override;
     void enterEvent(QEvent *) override;
     void leaveEvent(QEvent *) override;
+    Layouting::Widget* createRubberBand(Layouting::Widget *parent) override;
 };
 
 }

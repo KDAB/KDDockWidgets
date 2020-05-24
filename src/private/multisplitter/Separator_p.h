@@ -25,10 +25,6 @@
 #include <QWidget>
 #include <QPointer>
 
-QT_BEGIN_NAMESPACE
-class QRubberBand;
-QT_END_NAMESPACE
-
 namespace Layouting {
 
 class Config;
@@ -66,6 +62,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *) override;
     void mouseReleaseEvent(QMouseEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
+    virtual Widget* createRubberBand(Widget *parent) { Q_UNUSED(parent); return nullptr; }
 private:
     friend class Config;
 

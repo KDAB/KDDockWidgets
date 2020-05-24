@@ -25,7 +25,6 @@
 #include "Config.h"
 
 #include <QMouseEvent>
-#include <QRubberBand>
 #include <QApplication>
 
 #ifdef Q_OS_WIN
@@ -47,7 +46,7 @@ struct Separator::Private
     QRect geometry;
     int lazyPosition = 0;
     // SeparatorOptions m_options; TODO: Have a Layouting::Config
-    QRubberBand *lazyResizeRubberBand = nullptr;
+    Widget *lazyResizeRubberBand = nullptr;
     ItemContainer *parentContainer = nullptr;
     Layouting::Side lastMoveDirection = Side1;
     const bool usesLazyResize = Config::self().flags() & Config::Flag::LazyResize;
@@ -187,7 +186,7 @@ void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation
 
     d->parentContainer = parentContainer;
     d->orientation = orientation;
-    d->lazyResizeRubberBand = d->usesLazyResize ? new QRubberBand(QRubberBand::Line, d->m_hostWidget->asWidget())
+    d->lazyResizeRubberBand = d->usesLazyResize ? createRubberBand(d->m_hostWidget)
                                                 : nullptr;
     setVisible(true);
 }

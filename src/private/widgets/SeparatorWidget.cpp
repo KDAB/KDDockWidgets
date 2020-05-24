@@ -24,6 +24,7 @@
 
 #include <QPainter>
 #include <QStyleOption>
+#include <QRubberBand>
 
 using namespace KDDockWidgets;
 
@@ -62,4 +63,14 @@ void SeparatorWidget::enterEvent(QEvent *)
 void SeparatorWidget::leaveEvent(QEvent *)
 {
     setCursor(Qt::ArrowCursor);
+}
+
+Layouting::Widget *SeparatorWidget::createRubberBand(Layouting::Widget *parent)
+{
+    if (!parent) {
+        qWarning() << Q_FUNC_INFO << "Parent is required";
+        return nullptr;
+    }
+
+    return new Layouting::Widget_qwidget(new QRubberBand(QRubberBand::Line, parent->asWidget()));
 }
