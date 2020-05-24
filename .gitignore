@@ -10,6 +10,7 @@ libdocks.so
 tst_docks
 CMakeLists.txt.user*
 /build
+/examples/dockwidgets/build/
 moc_*
 *.moc
 *automoc.cpp
