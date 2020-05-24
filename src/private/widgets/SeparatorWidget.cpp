@@ -25,6 +25,7 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <QRubberBand>
+#include <QMouseEvent>
 
 using namespace KDDockWidgets;
 
@@ -63,6 +64,26 @@ void SeparatorWidget::enterEvent(QEvent *)
 void SeparatorWidget::leaveEvent(QEvent *)
 {
     setCursor(Qt::ArrowCursor);
+}
+
+void SeparatorWidget::mousePressEvent(QMouseEvent *)
+{
+    onMousePress();
+}
+
+void SeparatorWidget::mouseMoveEvent(QMouseEvent *ev)
+{
+    onMouseMove(ev->pos());
+}
+
+void SeparatorWidget::mouseReleaseEvent(QMouseEvent *)
+{
+    onMouseReleased();
+}
+
+void SeparatorWidget::mouseDoubleClickEvent(QMouseEvent *)
+{
+    onMouseDoubleClick();
 }
 
 Layouting::Widget *SeparatorWidget::createRubberBand(Layouting::Widget *parent)

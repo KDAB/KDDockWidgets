@@ -40,6 +40,10 @@ protected:
     void paintEvent(QPaintEvent *) override;
     void enterEvent(QEvent *) override;
     void leaveEvent(QEvent *) override;
+    void mousePressEvent(QMouseEvent *) override;
+    void mouseMoveEvent(QMouseEvent *) override;
+    void mouseReleaseEvent(QMouseEvent *) override;
+    void mouseDoubleClickEvent(QMouseEvent *) override;
     Layouting::Widget* createRubberBand(Layouting::Widget *parent) override;
 };
 

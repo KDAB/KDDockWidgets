@@ -24,8 +24,7 @@
 #include "Item_p.h"
 #include "Config.h"
 
-#include <QMouseEvent>
-#include <QApplication>
+#include <QGuiApplication>
 
 #ifdef Q_OS_WIN
 # include <windows.h>
@@ -85,7 +84,7 @@ Qt::Orientation Separator::orientation() const
     return d->orientation;
 }
 
-void Separator::mousePressEvent(QMouseEvent *)
+void Separator::onMousePress()
 {
     s_separatorBeingDragged = this;
 
@@ -97,7 +96,14 @@ void Separator::mousePressEvent(QMouseEvent *)
     }
 }
 
-void Separator::mouseMoveEvent(QMouseEvent *ev)
+void Separator::onMouseDoubleClick()
+{
+    // a double click means we'll resize the left and right neighbour so that they occupy
+    // the same size (or top/bottom, depending on orientation).
+    d->parentContainer->requestEqualSize(this);
+}
+
+void Separator::onMouseMove(QPoint pos)
 {
     if (!isBeingDragged())
         return;
@@ -118,7 +124,7 @@ void Separator::mouseMoveEvent(QMouseEvent *ev)
     }
 #endif
 
-    const int positionToGoTo = Layouting::pos(mapToParent(ev->pos()), d->orientation);
+    const int positionToGoTo = Layouting::pos(mapToParent(pos), d->orientation);
     const int minPos = d->parentContainer->minPosForSeparator_global(this);
     const int maxPos = d->parentContainer->maxPosForSeparator_global(this);
 
@@ -133,18 +139,6 @@ void Separator::mouseMoveEvent(QMouseEvent *ev)
         setLazyPosition(positionToGoTo);
     else
         d->parentContainer->requestSeparatorMove(this, positionToGoTo - position());
-}
-
-void Separator::mouseReleaseEvent(QMouseEvent *)
-{
-    onMouseReleased();
-}
-
-void Separator::mouseDoubleClickEvent(QMouseEvent *)
-{
-    // a double click means we'll resize the left and right neighbour so that they occupy
-    // the same size (or top/bottom, depending on orientation).
-    d->parentContainer->requestEqualSize(this);
 }
 
 void Separator::onMouseReleased()

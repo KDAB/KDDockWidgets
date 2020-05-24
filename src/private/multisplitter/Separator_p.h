@@ -58,15 +58,14 @@ public:
 
 protected:
     explicit Separator(Widget *hostWidget);
-    void mousePressEvent(QMouseEvent *) override;
-    void mouseMoveEvent(QMouseEvent *) override;
-    void mouseReleaseEvent(QMouseEvent *) override;
-    void mouseDoubleClickEvent(QMouseEvent *) override;
     virtual Widget* createRubberBand(Widget *parent) { Q_UNUSED(parent); return nullptr; }
+    void onMousePress();
+    void onMouseReleased();
+    void onMouseDoubleClick();
+    void onMouseMove(QPoint pos);
 private:
     friend class Config;
 
-    void onMouseReleased();
     void setLazyPosition(int);
     bool isBeingDragged() const;
     bool usesLazyResize() const;
