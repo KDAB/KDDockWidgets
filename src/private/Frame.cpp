@@ -508,7 +508,7 @@ Frame *Frame::deserialize(const LayoutSaver::Frame &f)
     }
 
     frame->setCurrentTabIndex(f.currentTabIndex);
-    frame->setGeometry(f.geometry);
+    frame->QWidget::setGeometry(f.geometry);
 
     return frame;
 }

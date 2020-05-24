@@ -50,11 +50,14 @@ public:
     QSize minSize() const override;
     QSize maxSize() const override;
     QRect geometry() const override;
+    void setGeometry(QRect) override;
     void setParent(Widget *) override;
     QDebug& dumpDebug(QDebug&) const override;
     bool isVisible() const override;
     std::unique_ptr<Widget> parentWidget() const override;
     void setLayoutItem(Item *) override {}
+    void show() override;
+    void hide() override;
 
     static QSize widgetMinSize(const QWidget *w);
 

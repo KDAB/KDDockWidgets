@@ -31,17 +31,22 @@ Widget_qwidget::~Widget_qwidget()
 
 QSize Widget_qwidget::minSize() const
 {
-    return widgetMinSize(asWidget());
+    return widgetMinSize(m_thisWidget);
 }
 
 QSize Widget_qwidget::maxSize() const
 {
-    return asWidget()->maximumSize();
+    return m_thisWidget->maximumSize();
 }
 
 QRect Widget_qwidget::geometry() const
 {
-    return asWidget()->geometry();
+    return m_thisWidget->geometry();
+}
+
+void Widget_qwidget::setGeometry(QRect rect)
+{
+    m_thisWidget->setGeometry(rect);
 }
 
 void Widget_qwidget::setParent(Widget *parent)
@@ -79,6 +84,16 @@ std::unique_ptr<Widget> Widget_qwidget::parentWidget() const
     }
 
     return {};
+}
+
+void Widget_qwidget::show()
+{
+    m_thisWidget->show();
+}
+
+void Widget_qwidget::hide()
+{
+    m_thisWidget->hide();
 }
 
 QSize Widget_qwidget::widgetMinSize(const QWidget *w)

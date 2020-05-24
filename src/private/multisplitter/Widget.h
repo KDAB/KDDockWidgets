@@ -55,10 +55,13 @@ public:
     virtual QSize minSize() const = 0;
     virtual QSize maxSize() const = 0;
     virtual QRect geometry() const = 0;
+    virtual void setGeometry(QRect) = 0;
     virtual void setParent(Widget *) = 0;
     virtual QDebug& dumpDebug(QDebug&) const = 0;
     virtual bool isVisible() const = 0;
     virtual std::unique_ptr<Widget> parentWidget() const = 0;
+    virtual void show() = 0;
+    virtual void hide() = 0;
 
     QSize size() const {
         return geometry().size();
