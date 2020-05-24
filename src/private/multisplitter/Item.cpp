@@ -154,16 +154,16 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
     return mapFromRoot(QPoint(p, 0)).x();
 }
 
-QWidget *Item::widget() const
+QObject *Item::widget() const
 {
-    return m_guest ? m_guest->asQWidget() : nullptr;
+    return m_guest ? m_guest->asQObject() : nullptr;
 }
 
 void Item::setGuest(Widget *guest)
 {   
     Q_ASSERT(!guest || !m_guest);
-    QWidget *newWidget = guest ? guest->asQWidget() : nullptr;
-    QWidget *oldWidget = widget();
+    QObject *newWidget = guest ? guest->asQObject() : nullptr;
+    QObject *oldWidget = widget();
 
     if (oldWidget) {
         oldWidget->removeEventFilter(this);
@@ -185,7 +185,7 @@ void Item::setGuest(Widget *guest)
 
         if (m_sizingInfo.geometry.isEmpty()) {
             // Use the widgets geometry, but ensure it's at least hardcodedMinimumSize
-            QRect widgetGeo = newWidget->geometry();
+            QRect widgetGeo = m_guest->geometry();
             widgetGeo.setSize(widgetGeo.size().expandedTo(Item::hardcodedMinimumSize));
             setGeometry(mapFromRoot(widgetGeo));
         } else {
@@ -198,8 +198,8 @@ void Item::setGuest(Widget *guest)
 
 void Item::updateWidgetGeometries()
 {
-    if (auto w = widget()) {
-        w->setGeometry(mapToRoot(rect()));
+    if (m_guest) {
+        m_guest->setGeometry(mapToRoot(rect()));
     }
 }
 
@@ -317,9 +317,9 @@ void Item::setHostWidget(Widget *host)
 {
     if (m_hostWidget != host) {
         m_hostWidget = host;
-        if (auto w = widget()) {
+        if (m_guest) {
             m_guest->setParent(host);
-            w->setVisible(true);
+            m_guest->setVisible(true);
             updateWidgetGeometries();
         }
     }
@@ -597,11 +597,9 @@ void Item::setIsVisible(bool is)
         Q_EMIT visibleChanged(this, is);
     }
 
-    if (is) {
-        if (auto w = widget()) {
-            w->setGeometry(mapToRoot(rect()));
-            w->setVisible(true); // TODO: Only set visible when apply*() ?
-        }
+    if (is && m_guest) {
+        m_guest->setGeometry(mapToRoot(rect()));
+        m_guest->setVisible(true); // TODO: Only set visible when apply*() ?
     }
 
     updateObjectName();
@@ -655,11 +653,9 @@ bool Item::checkSanity()
     }
 return true;
     if (!isVisible()) {
-        if (auto w = widget()) {
-            if (w->isVisible()) {
-                qWarning() << Q_FUNC_INFO << "Item is not visible but guest is visible";
-                return false;
-            }
+        if (m_guest && m_guest->isVisible()) {
+            qWarning() << Q_FUNC_INFO << "Item is not visible but guest is visible";
+            return false;
         }
     }
 
@@ -729,10 +725,8 @@ void Item::dumpLayout(int level)
     if (!isVisible())
         dbg << QStringLiteral(";hidden;");
 
-    if (auto w = widget()) {
-        if (geometry() != w->geometry()) {
-            dbg << "; guest geometry=" << w->geometry();
-        }
+    if (m_guest && geometry() != m_guest->geometry()) {
+        dbg << "; guest geometry=" << m_guest->geometry();
     }
 
     if (m_sizingInfo.isBeingInserted)
@@ -1540,13 +1534,13 @@ void ItemContainer::clear()
     d->deleteSeparators();
 }
 
-Item *ItemContainer::itemForWidget(const QWidget *w) const
+Item *ItemContainer::itemForWidget(const Widget *w) const
 {
     for (Item *item : d->m_children) {
         if (item->isContainer()) {
             if (Item *result = item->asContainer()->itemForWidget(w))
                 return result;
-        } else if (item->widget() == w) {
+        } else if (item->guest() == w) {
             return item;
         }
     }
@@ -3140,7 +3134,7 @@ void ItemContainer::Private::updateWidgets_recursive()
             c->d->updateWidgets_recursive();
         } else {
             if (item->isVisible()) {
-                if (QWidget *widget = item->widget()) {
+                if (Widget *widget = item->guest()) {
                     widget->setGeometry(q->mapToRoot(item->geometry()));
                     widget->setVisible(true);
                 } else {

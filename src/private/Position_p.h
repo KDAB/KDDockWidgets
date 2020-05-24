@@ -105,8 +105,6 @@ public:
     ///@brief Adds the last layout item where the dock widget was (or is)
     void addPlaceholderItem(Layouting::Item *placeholder);
 
-
-    QWidgetOrQuick *window() const;
     Layouting::Item* layoutItem() const;
 
     bool containsPlaceholder(Layouting::Item*) const;

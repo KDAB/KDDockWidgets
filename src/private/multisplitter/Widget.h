@@ -67,6 +67,7 @@ public:
     virtual void setVisible(bool) const = 0;
     virtual void move(int x, int y) = 0;
     virtual std::unique_ptr<Widget> parentWidget() const = 0;
+    //virtual std::unique_ptr<Widget> window() const = 0; Uncomment when needed
     virtual void show() = 0;
     virtual void hide() = 0;
 
@@ -88,8 +89,6 @@ public:
     int y() const {
         return geometry().y();
     }
-
-
 
     bool operator==(const QObject *obj) const {
         return obj == m_thisObj;

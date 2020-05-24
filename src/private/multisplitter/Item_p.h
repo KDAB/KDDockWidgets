@@ -24,7 +24,6 @@
 #include <QVector>
 #include <QRect>
 #include <QVariant>
-#include <QWidget>
 #include <QDebug>
 #include <QVariant>
 
@@ -283,12 +282,9 @@ public:
     QPoint mapFromParent(QPoint) const;
     int mapFromRoot(int p, Qt::Orientation) const;
 
-    QWidget *widget() const;
+    QObject *widget() const;
     Widget *guest() const { return m_guest; }
     void setGuest(Widget *);
-    QWidget *window() const {
-        return m_guest ? widget()->window() : nullptr;
-    }
 
     void ref();
     void unref();
@@ -389,7 +385,7 @@ public:
     QSize minSize() const override;
     QSize maxSize() const override;
     QSize availableSize() const;
-    Item* itemForWidget(const QWidget *w) const;
+    Item* itemForWidget(const Widget *w) const;
     Item::List items_recursive() const;
     Q_REQUIRED_RESULT bool checkSanity() override;
     void dumpLayout(int level = 0) override;

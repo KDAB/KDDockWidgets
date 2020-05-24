@@ -68,14 +68,6 @@ void Position::addPlaceholderItem(Layouting::Item *placeholder)
     // the same value always, hence we just shove them into a list, instead of giving them meaningful names in separated variables
 }
 
-QWidgetOrQuick *Position::window() const
-{
-    if (Layouting::Item *placeholder = layoutItem())
-        return placeholder->window();
-
-    return nullptr;
-}
-
 Layouting::Item *Position::layoutItem() const
 {
     // Return the layout item that is in a MainWindow, that's where we restore the dock widget to.
