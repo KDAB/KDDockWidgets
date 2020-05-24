@@ -954,7 +954,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     QPoint globalPressPos = dragPointForWidget(centralFrame.data(), 0);
     QTabBar *tabBar = static_cast<FrameWidget*>(centralFrame.data())->tabBar();
     QVERIFY(tabBar);
-    qDebug() << "Detaching tab from dropArea->size=" << dropArea->size() << "; dropArea=" << dropArea;
+    qDebug() << "Detaching tab from dropArea->size=" << dropArea->QWidget::size() << "; dropArea=" << dropArea;
     drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));
 
     QVERIFY(centralFrame);
@@ -4836,7 +4836,7 @@ void TestDocks::tst_restoreResizesLayout()
     QVERIFY(restorer.restoreFromFile("mylayout.json"));
     QVERIFY(layout->checkSanity());
 
-    QCOMPARE(m->dropArea()->size(), layout->rootItem()->size());
+    QCOMPARE(m->dropArea()->QWidget::size(), layout->rootItem()->size());
     QVERIFY(layout->checkSanity());
 }
 

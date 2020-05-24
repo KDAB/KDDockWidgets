@@ -40,6 +40,7 @@ using namespace KDDockWidgets;
 
 MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
     : QWidgetAdapter(parent)
+    , Layouting::Widget_qwidget(this)
     , m_layout(new MultiSplitterLayout(this))
 {
     connect(m_layout, &MultiSplitterLayout::minimumSizeChanged, this, [this] (QSize sz) {
@@ -85,7 +86,7 @@ bool MultiSplitter::isInMainWindow() const
 
 MainWindowBase *MultiSplitter::mainWindow() const
 {
-    if (auto pw = parentWidget()) {
+    if (auto pw = QWidget::parentWidget()) {
         // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as it's parented
         if (pw->objectName() == QLatin1String("MyCentralWidget"))
             return qobject_cast<MainWindowBase*>(pw->parentWidget());
@@ -96,5 +97,5 @@ MainWindowBase *MultiSplitter::mainWindow() const
 
 FloatingWindow *MultiSplitter::floatingWindow() const
 {
-    return qobject_cast<FloatingWindow*>(parentWidget());
+    return qobject_cast<FloatingWindow*>(QWidget::parentWidget());
 }

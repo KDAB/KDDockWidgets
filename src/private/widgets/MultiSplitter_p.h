@@ -30,6 +30,7 @@
 #define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
 #include "docks_export.h"
+#include "multisplitter/Widget_qwidget.h"
 #include "QWidgetAdapter.h"
 
 namespace KDDockWidgets {
@@ -44,7 +45,9 @@ class FloatingWindow;
  *
  * The actual layouting is done by @ref Layouting::Item.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter : public QWidgetAdapter
+class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter
+        : public QWidgetAdapter
+        , public Layouting::Widget_qwidget
 {
     Q_OBJECT
 public:

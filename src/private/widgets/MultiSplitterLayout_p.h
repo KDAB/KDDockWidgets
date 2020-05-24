@@ -276,7 +276,6 @@ private:
     QSize availableSize() const;
 
     MultiSplitter *const m_multiSplitter;
-    Layouting::Widget_qwidget *const m_hostWidget;
     Layouting::ItemContainer *m_rootItem = nullptr;
 };
 
