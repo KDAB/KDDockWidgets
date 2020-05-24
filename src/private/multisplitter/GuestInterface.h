@@ -25,8 +25,10 @@
 
 #include <qglobal.h>
 
+QT_BEGIN_NAMESPACE
 class QWidget; // TODO: Remove
 class QSize;
+QT_END_NAMESPACE
 
 namespace Layouting {
 
