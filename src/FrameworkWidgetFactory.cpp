@@ -76,7 +76,7 @@ TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
     return new TabWidgetWidget(parent);
 }
 
-Layouting::Separator *DefaultWidgetFactory::createSeparator(QWidget *parent) const
+Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *parent) const
 {
     return new SeparatorWidget(parent);
 }

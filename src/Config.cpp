@@ -66,7 +66,7 @@ Config::Config()
 
     // stuff in multisplitter/ can't include the framework widget factory, so set it here
     auto separatorCreator = [](Layouting::Widget *parent) {
-        return Config::self().frameworkWidgetFactory()->createSeparator(parent->asWidget());
+        return Config::self().frameworkWidgetFactory()->createSeparator(parent);
     };
 
     Layouting::Config::self().setSeparatorFactoryFunc(separatorCreator);

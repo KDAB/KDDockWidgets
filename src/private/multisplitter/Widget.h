@@ -39,9 +39,14 @@ namespace Layouting {
 
 class Item;
 
-///@brief An abstraction/wrapper around QWidget, QtQuickItem or anything else
-///
-/// So the layout can host QWidget, etc without depending on it.
+/**
+ * @brief An abstraction/wrapper around QWidget, QtQuickItem or anything else
+ *
+ * So the layout can host QWidget, etc without depending on it.
+ *
+ * Inherit from it via multi-inheritance so this wrapper is deleted when the actual QWidget/QQuickItem
+ * is deleted.
+ */
 class Widget
 {
 public:

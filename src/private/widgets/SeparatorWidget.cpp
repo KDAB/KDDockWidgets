@@ -29,8 +29,22 @@
 
 using namespace KDDockWidgets;
 
-SeparatorWidget::SeparatorWidget(QWidget *parent)
-    : Separator(new Layouting::Widget_qwidget(parent))
+namespace KDDockWidgets {
+class RubberBand : public QRubberBand
+                 , public Layouting::Widget_qwidget
+{
+
+public:
+    RubberBand(Layouting::Widget *parent)
+        : QRubberBand(QRubberBand::Line, parent ? parent->asWidget() : nullptr)
+        , Layouting::Widget_qwidget(this) {
+    }
+};
+
+}
+
+SeparatorWidget::SeparatorWidget(Layouting::Widget *parent)
+    : Separator(parent)
 {
     setMouseTracking(true);
 }
@@ -93,5 +107,5 @@ Layouting::Widget *SeparatorWidget::createRubberBand(Layouting::Widget *parent)
         return nullptr;
     }
 
-    return new Layouting::Widget_qwidget(new QRubberBand(QRubberBand::Line, parent->asWidget()));
+    return new Layouting::Widget_qwidget(new RubberBand(parent));
 }

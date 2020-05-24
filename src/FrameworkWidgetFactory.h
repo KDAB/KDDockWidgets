@@ -34,6 +34,7 @@
 
 namespace Layouting {
 class Separator;
+class Widget;
 }
 
 namespace KDDockWidgets {
@@ -105,9 +106,8 @@ public:
     ///@brief Called internally by the framework to create a Separator
     ///       Override to provide your own Separator sub-class. The Separator allows
     ///       the user to resize nested dock widgets.
-    ///@param anchor Just forward to Sepataror's constructor.
     ///@param parent Just forward to Separator's constructor.
-    virtual Layouting::Separator* createSeparator(QWidget *parent = nullptr) const = 0;
+    virtual Layouting::Separator* createSeparator(Layouting::Widget *parent = nullptr) const = 0;
 
     ///@brief Called internally by the framework to create a FloatingWindow
     ///       Override to provide your own FloatingWindow sub-class. If overridden then
@@ -142,7 +142,7 @@ public:
     TitleBar *createTitleBar(FloatingWindow *) const override;
     TabBar *createTabBar(TabWidget *parent) const override;
     TabWidget *createTabWidget(Frame *parent) const override;
-    Layouting::Separator *createSeparator(QWidget *parent = nullptr) const override;
+    Layouting::Separator *createSeparator(Layouting::Widget *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const override;
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const override;
