@@ -176,9 +176,13 @@ private Q_SLOTS:
     void tst_separatorMoveCrash();
 };
 
-class MyHostWidget : public QWidget {
+class MyHostWidget : public QWidget
+                   , public Layouting::Widget_qwidget
+{
   public:
     MyHostWidget()
+        : QWidget()
+        , Widget_qwidget(this)
     {
         s_testObject->m_hostWidgets << this;
     }
@@ -190,7 +194,7 @@ class MyHostWidget : public QWidget {
     void paintEvent(QPaintEvent *) override
     {
         QPainter p(this);
-        p.fillRect(rect(), Qt::yellow);
+        p.fillRect(QWidget::rect(), Qt::yellow);
     }
 };
 
@@ -216,10 +220,10 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemContainer> &root)
 
 static std::unique_ptr<ItemContainer> createRoot()
 {
-    auto hostWidget = new QWidget();
+    auto hostWidget = new MyHostWidget();
     hostWidget->setObjectName("HostWidget");
-    hostWidget->show();
-    auto root = new ItemContainer(new Layouting::Widget_qwidget(hostWidget));
+    hostWidget->QWidget::show();
+    auto root = new ItemContainer(hostWidget);
     root->setSize({ 1000, 1000 });
     return std::unique_ptr<ItemContainer>(root);
 }
@@ -230,8 +234,8 @@ static Item* createItem(QSize minSz = {})
     count++;
     auto hostWidget = new MyHostWidget();
     hostWidget->setObjectName("HostWidget");
-    hostWidget->show();
-    auto item = new Item(new Layouting::Widget_qwidget(hostWidget));
+    hostWidget->QWidget::show();
+    auto item = new Item(hostWidget);
     item->setGeometry(QRect(0, 0, 200, 200));
     item->setObjectName(QStringLiteral("%1").arg(count));
     auto guest = new MyGuestWidget();
@@ -244,7 +248,7 @@ static Item* createItem(QSize minSz = {})
 
 static ItemContainer* createRootWithSingleItem()
 {
-    auto root = new ItemContainer(new Layouting::Widget_qwidget(new QWidget()));
+    auto root = new ItemContainer(new MyHostWidget());
     root->setSize({ 1000, 1000 });
 
     Item *item1 = createItem();
