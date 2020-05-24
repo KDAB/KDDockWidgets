@@ -156,13 +156,13 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
 
 QWidget *Item::widget() const
 {
-    return m_guest ? m_guest->asWidget() : nullptr;
+    return m_guest ? m_guest->asQWidget() : nullptr;
 }
 
 void Item::setGuest(Widget *guest)
 {   
     Q_ASSERT(!guest || !m_guest);
-    QWidget *newWidget = guest ? guest->asWidget() : nullptr;
+    QWidget *newWidget = guest ? guest->asQWidget() : nullptr;
     QWidget *oldWidget = widget();
 
     if (oldWidget) {
@@ -212,7 +212,7 @@ QVariantMap Item::toVariantMap() const
     result[QStringLiteral("isContainer")] = isContainer();
     result[QStringLiteral("objectName")] = objectName();
     if (m_guest)
-        result[QStringLiteral("guestId")] = QString::number(qint64(m_guest->asWidget())); // just for coorelation purposes when restoring
+        result[QStringLiteral("guestId")] = QString::number(qint64(m_guest->asQWidget())); // just for coorelation purposes when restoring
 
     return result;
 }

@@ -36,7 +36,7 @@ class RubberBand : public QRubberBand
 
 public:
     RubberBand(Layouting::Widget *parent)
-        : QRubberBand(QRubberBand::Line, parent ? parent->asWidget() : nullptr)
+        : QRubberBand(QRubberBand::Line, parent ? parent->asQWidget() : nullptr)
         , Layouting::Widget_qwidget(this) {
     }
 };

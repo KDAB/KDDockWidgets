@@ -957,7 +957,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         auto root1 = createRoot();
         Item *item1 = createItem();
         root1->insertItem(item1, Item::Location_OnRight);
-        QWidget *host1 = root1->hostWidget()->asWidget();
+        QWidget *host1 = root1->hostWidget()->asQWidget();
 
         auto root2 = createRoot();
         Item *item2 = createItem();
@@ -965,10 +965,10 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.get(), Item::Location_OnBottom);
 
-        QCOMPARE(root1->hostWidget()->asWidget(), host1);
-        QCOMPARE(root2->hostWidget()->asWidget(), host1);
+        QCOMPARE(root1->hostWidget()->asQWidget(), host1);
+        QCOMPARE(root2->hostWidget()->asQWidget(), host1);
         for (Item *item : root1->items_recursive()) {
-            QCOMPARE(item->hostWidget()->asWidget(), host1);
+            QCOMPARE(item->hostWidget()->asQWidget(), host1);
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());
@@ -981,7 +981,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         Item *item2 = createItem();
         root1->insertItem(item1, Item::Location_OnLeft);
         root1->insertItem(item2, Item::Location_OnRight);
-        QWidget *host1 = root1->hostWidget()->asWidget();
+        QWidget *host1 = root1->hostWidget()->asQWidget();
 
         auto root2 = createRoot();
         Item *item12 = createItem();
@@ -989,10 +989,10 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.get(), Item::Location_OnTop);
 
-        QCOMPARE(root1->hostWidget()->asWidget(), host1);
-        QCOMPARE(root2->hostWidget()->asWidget(), host1);
+        QCOMPARE(root1->hostWidget()->asQWidget(), host1);
+        QCOMPARE(root2->hostWidget()->asQWidget(), host1);
         for (Item *item : root1->items_recursive()) {
-            QCOMPARE(item->hostWidget()->asWidget(), host1);
+            QCOMPARE(item->hostWidget()->asQWidget(), host1);
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());
@@ -1486,7 +1486,7 @@ void TestMultiSplitter::tst_minSizeChangedBeforeRestore()
     root->insertItem(item2, Item::Location_OnBottom);
     const QSize originalSize2 = item2->size();
 
-    auto guest2 = qobject_cast<MyGuestWidget*>(item2->guest()->asWidget());
+    auto guest2 = qobject_cast<MyGuestWidget*>(item2->guest()->asQWidget());
     const QSize newMinSize = originalSize2 + QSize(10, 10);
 
     item2->turnIntoPlaceholder();

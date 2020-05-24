@@ -56,7 +56,7 @@ public:
     virtual ~Widget() {}
 
     virtual void setLayoutItem(Item *) = 0;
-    virtual QWidget *asWidget() const = 0; // TODO: Move down
+    virtual QWidget *asQWidget() const = 0; // TODO: Move down
     virtual QSize minSize() const = 0;
     virtual QSize maxSize() const = 0;
     virtual QRect geometry() const = 0;

@@ -53,7 +53,7 @@ struct Separator::Private
 };
 
 Separator::Separator(Widget *hostWidget)
-    : QWidget(hostWidget->asWidget())
+    : QWidget(hostWidget->asQWidget())
     , d(new Private(hostWidget))
 {
 }

@@ -86,7 +86,7 @@ MultiSplitterLayout *DockRegistry::layoutForItem(const Layouting::Item *item) co
     if (!item->hostWidget())
         return nullptr;
 
-    if (auto ms = qobject_cast<MultiSplitter*>(item->hostWidget()->asWidget()))
+    if (auto ms = qobject_cast<MultiSplitter*>(item->hostWidget()->asQWidget()))
         return ms->multiSplitterLayout();
 
     return nullptr;

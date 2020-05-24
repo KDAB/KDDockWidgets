@@ -43,7 +43,7 @@ public:
 
     ~Widget_qwidget() override;
 
-    QWidget* asWidget() const override {
+    QWidget* asQWidget() const override {
         return m_thisWidget;
     }
 

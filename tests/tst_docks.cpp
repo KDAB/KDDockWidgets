@@ -2350,7 +2350,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         QCOMPARE(dock2->lastPositions().lastItem(), oldItem2);
         Item *item2 = fw2->dropArea()->multiSplitterLayout()->itemForFrame(dock2->frame());
         QVERIFY(item2);
-        QCOMPARE(item2->hostWidget()->asWidget(), fw2->dropArea());
+        QCOMPARE(item2->hostWidget()->asQWidget(), fw2->dropArea());
         QVERIFY(!layout->itemForFrame(dock2->frame()));
 
         // Move from tab to bottom

@@ -158,7 +158,7 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location,
         frame->addWidget(dw, option);
     } else if (auto ms = qobject_cast<MultiSplitter*>(w)) {
         newItem = ms->multiSplitterLayout()->rootItem();
-        Q_ASSERT(newItem->hostWidget()->asWidget() != multiSplitter());
+        Q_ASSERT(newItem->hostWidget()->asQWidget() != multiSplitter());
         newItem->setHostWidget(m_multiSplitter);
         delete ms;
     }
