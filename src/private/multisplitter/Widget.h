@@ -19,7 +19,7 @@
 */
 
 ///@file
-///@brief An abstraction so the layout can host QWidget or QQuickItem or something else
+///@brief An abstraction/wrapper around QWidget, QtQuickItem or anything else
 
 #pragma once
 
@@ -28,26 +28,29 @@
 QT_BEGIN_NAMESPACE
 class QWidget; // TODO: Remove
 class QSize;
+class QObject;
 QT_END_NAMESPACE
 
 namespace Layouting {
 
 class Item;
 
-///@brief An abstraction so the layout can host QWidget or QQuickItem or something else
-/// Instead of Item controlling a QWidget, it controls anything implementing this interface
-class GuestInterface
+///@brief An abstraction/wrapper around QWidget, QtQuickItem or anything else
+///
+/// So the layout can host QWidget, etc without depending on it.
+class Widget
 {
 public:
-    GuestInterface() = default;
+    Widget() = default;
     virtual void setLayoutItem(Item *) = 0;
     virtual QWidget *asWidget() const = 0; // TODO: Move down
     virtual QSize minSize() const = 0;
     virtual QSize maxSize() const = 0;
     virtual QSize size() const = 0;
+    virtual void setParent(QObject *) = 0;
 
 private:
-    Q_DISABLE_COPY(GuestInterface)
+    Q_DISABLE_COPY(Widget)
 };
 
 }

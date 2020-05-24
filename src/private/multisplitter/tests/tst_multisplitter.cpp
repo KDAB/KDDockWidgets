@@ -20,7 +20,7 @@
 
 #include "Item_p.h"
 #include "Separator_p.h"
-#include "GuestWidget.h"
+#include "Widget_qwidget.h"
 
 #include <QPainter>
 #include <QtTest/QtTest>
@@ -41,14 +41,14 @@ class TestMultiSplitter;
 static TestMultiSplitter* s_testObject = nullptr;
 
 class MyGuestWidget : public QWidget
-                    , public GuestWidget
+                    , public Widget_qwidget
 {
     Q_OBJECT
 public:
 
     MyGuestWidget()
         : QWidget()
-        , GuestWidget(this)
+        , Widget_qwidget(this)
     {
     }
 
@@ -203,7 +203,7 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemContainer> &root)
     const QVariantMap serialized = root->toVariantMap();
     ItemContainer root2(root->hostWidget());
 
-    QHash<QString, GuestInterface*> widgets;
+    QHash<QString, Widget*> widgets;
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
         if (auto w = static_cast<MyGuestWidget*>(item->widget()))

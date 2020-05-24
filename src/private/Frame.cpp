@@ -59,7 +59,7 @@ static FrameOptions actualOptions(FrameOptions options)
 
 Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     : QWidgetAdapter(parent)
-    , Layouting::GuestWidget(this)
+    , Layouting::Widget_qwidget(this)
     , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_options(actualOptions(options))

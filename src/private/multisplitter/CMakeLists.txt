@@ -3,9 +3,9 @@ set(MULTISPLITTER_SRCS
     Config.h
     Item.cpp
     Item_p.h
-    GuestInterface.h
-    GuestWidget.cpp
-    GuestWidget.h
+    Widget.h
+    Widget_qwidget.cpp
+    Widget_qwidget.h
     Logging.cpp
     Logging_p.h
     Separator.cpp

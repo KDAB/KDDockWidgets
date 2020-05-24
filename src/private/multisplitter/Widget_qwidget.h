@@ -20,16 +20,22 @@
 
 #pragma once
 
-#include "GuestInterface.h"
+#include "Widget.h"
 
 #include <QWidget>
 
+///@file
+///@brief A Layouting::Widget that's deals in QWidget
+
 namespace Layouting {
 
-class GuestWidget : public GuestInterface
+
+///@brief A Layouting::Widget that's deals in QWidget
+/// Allows to host a QWidget in the layout
+class Widget_qwidget : public Widget
 {
 public:
-    explicit GuestWidget(QWidget *thisWidget)
+    explicit Widget_qwidget(QWidget *thisWidget)
         : m_thisWidget(thisWidget)
     {
     }
@@ -41,17 +47,18 @@ public:
     QSize minSize() const override;
     QSize maxSize() const override;
     QSize size() const override;
+    void setParent(QObject *) override;
 
     static QSize widgetMinSize(const QWidget *w);
 
 private:
     QWidget *const m_thisWidget;
-    Q_DISABLE_COPY(GuestWidget)
+    Q_DISABLE_COPY(Widget_qwidget)
 };
 
 inline int widgetMinLength(const QWidget *w, Qt::Orientation o)
 {
-    const QSize sz = GuestWidget::widgetMinSize(w);
+    const QSize sz = Widget_qwidget::widgetMinSize(w);
     return o == Qt::Vertical ? sz.height() : sz.width();
 }
 

@@ -28,7 +28,7 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "LayoutSaver.h"
-#include "multisplitter/GuestWidget.h"
+#include "multisplitter/Widget_qwidget.h"
 
 using namespace KDDockWidgets;
 
@@ -131,7 +131,7 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location,
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it.
         // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
-        frame->setParent(nullptr); // so ~Item doesn't delete it
+        frame->QWidget::setParent(nullptr); // so ~Item doesn't delete it
         frame->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
     }
 
@@ -380,7 +380,7 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widget, Location lo
 {
     Layouting::Item item(nullptr);
     item.setSize(widget->size());
-    item.setMinSize(Layouting::GuestWidget::widgetMinSize(widget));
+    item.setMinSize(Layouting::Widget_qwidget::widgetMinSize(widget));
     item.setMaxSize(widget->maximumSize());
 
     Layouting::ItemContainer *container = relativeTo ? relativeTo->parentContainer()
@@ -393,7 +393,7 @@ bool MultiSplitterLayout::deserialize(const LayoutSaver::MultiSplitterLayout &l)
 {
     setRootItem(new Layouting::ItemContainer(m_multiSplitter));
 
-    QHash<QString, Layouting::GuestInterface*> frames;
+    QHash<QString, Layouting::Widget*> frames;
     for (const LayoutSaver::Frame &frame : qAsConst(l.frames)) {
         Frame *f = Frame::deserialize(frame);
         Q_ASSERT(!frame.id.isEmpty());

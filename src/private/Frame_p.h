@@ -31,7 +31,7 @@
 #include "docks_export.h"
 #include "QWidgetAdapter.h"
 #include "LayoutSaver_p.h"
-#include "multisplitter/GuestWidget.h"
+#include "multisplitter/Widget_qwidget.h"
 #include "multisplitter/Item_p.h"
 
 #include <QWidget>
@@ -58,7 +58,7 @@ class FloatingWindow;
  * to a FloatingWindow.
  */
 class DOCKS_EXPORT Frame : public QWidgetAdapter
-                         , public Layouting::GuestWidget
+                         , public Layouting::Widget_qwidget
 {
     Q_OBJECT
 

@@ -44,7 +44,7 @@ Q_NAMESPACE
 class ItemContainer;
 class Item;
 class Separator;
-class GuestInterface;
+class Widget;
 class LengthOnSide;
 
 enum Side {
@@ -284,8 +284,8 @@ public:
     int mapFromRoot(int p, Qt::Orientation) const;
 
     QWidget *widget() const;
-    GuestInterface *guest() const { return m_guest; }
-    void setGuest(GuestInterface *);
+    Widget *guest() const { return m_guest; }
+    void setGuest(Widget *);
     QWidget *window() const {
         return m_guest ? widget()->window() : nullptr;
     }
@@ -297,7 +297,7 @@ public:
     int minLength(Qt::Orientation) const;
 
     QWidget *hostWidget() const;
-    void restore(GuestInterface *guest);
+    void restore(Widget *guest);
 
     QVector<int> pathFromRoot() const;
 
@@ -309,10 +309,10 @@ public:
     virtual void dumpLayout(int level = 0);
     virtual void setHostWidget(QWidget *);
     virtual QVariantMap toVariantMap() const;
-    virtual void fillFromVariantMap(const QVariantMap &map, const QHash<QString, GuestInterface*> &widgets);
+    virtual void fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widget*> &widgets);
 
     static Item* createFromVariantMap(QWidget *hostWidget, ItemContainer *parent,
-                                      const QVariantMap &map, const QHash<QString, GuestInterface *> &widgets);
+                                      const QVariantMap &map, const QHash<QString, Widget *> &widgets);
 
 Q_SIGNALS:
     void geometryChanged();
@@ -359,7 +359,7 @@ private:
     void onWidgetDestroyed();
     bool m_isVisible = false;
     QWidget *m_hostWidget = nullptr;
-    GuestInterface *m_guest = nullptr;
+    Widget *m_guest = nullptr;
 };
 
 class ItemContainer : public Item
@@ -395,7 +395,7 @@ public:
     void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage) override;
     QRect suggestedDropRect(const Item *item, const Item *relativeTo, Location) const;
     QVariantMap toVariantMap() const override;
-    void fillFromVariantMap(const QVariantMap &map, const QHash<QString, GuestInterface *> &widgets) override;
+    void fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widget *> &widgets) override;
     void clear();
 private:
     bool isEmpty() const;

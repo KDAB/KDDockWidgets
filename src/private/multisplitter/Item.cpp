@@ -21,7 +21,7 @@
 #include "Item_p.h"
 #include "Separator_p.h"
 #include "Config.h"
-#include "GuestInterface.h"
+#include "Widget.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -159,7 +159,7 @@ QWidget *Item::widget() const
     return m_guest ? m_guest->asWidget() : nullptr;
 }
 
-void Item::setGuest(GuestInterface *guest)
+void Item::setGuest(Widget *guest)
 {   
     Q_ASSERT(!guest || !m_guest);
     QWidget *newWidget = guest ? guest->asWidget() : nullptr;
@@ -217,7 +217,7 @@ QVariantMap Item::toVariantMap() const
     return result;
 }
 
-void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, GuestInterface *> &widgets)
+void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widget *> &widgets)
 {
     m_sizingInfo.fromVariantMap(map[QStringLiteral("sizingInfo")].toMap());
     m_isVisible = map[QStringLiteral("isVisible")].toBool();
@@ -225,7 +225,7 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, Guest
 
     const QString guestId = map.value(QStringLiteral("guestId")).toString();
     if (!guestId.isEmpty()) {
-        if (GuestInterface *guest = widgets.value(guestId)) {
+        if (Widget *guest = widgets.value(guestId)) {
             setGuest(guest);
             m_guest->asWidget()->setParent(hostWidget());
         } else if (hostWidget()) {
@@ -235,7 +235,7 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, Guest
 }
 
 Item *Item::createFromVariantMap(QWidget *hostWidget, ItemContainer *parent,
-                                 const QVariantMap &map, const QHash<QString, GuestInterface *> &widgets)
+                                 const QVariantMap &map, const QHash<QString, Widget *> &widgets)
 {
     auto item = new Item(hostWidget, parent);
     item->fillFromVariantMap(map, widgets);
@@ -267,7 +267,7 @@ QWidget *Item::hostWidget() const
     return m_hostWidget;
 }
 
-void Item::restore(GuestInterface *guest)
+void Item::restore(Widget *guest)
 {
     Q_ASSERT(!isVisible() && !widget());
     if (isContainer()) {
@@ -808,7 +808,7 @@ void Item::onWidgetDestroyed()
 
 void Item::onWidgetLayoutRequested()
 {
-    if (GuestInterface *w = guest()) {
+    if (Widget *w = guest()) {
         if (w->size() != size()) {
             qDebug() << Q_FUNC_INFO << "TODO: Not implemented yet. Widget can't just decide to resize yet"
                        << w->size()
@@ -2912,7 +2912,7 @@ QVariantMap ItemContainer::toVariantMap() const
 }
 
 void ItemContainer::fillFromVariantMap(const QVariantMap &map,
-                                       const QHash<QString, GuestInterface*> &widgets)
+                                       const QHash<QString, Widget*> &widgets)
 {
     QScopedValueRollback<bool> deserializing(d->m_isDeserializing, true);
 
