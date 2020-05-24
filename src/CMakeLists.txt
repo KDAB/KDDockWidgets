@@ -61,7 +61,6 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/QWidgetAdapter_widgets_p.h
     private/widgets/TitleBarWidget_p.h
-    private/widgets/SeparatorWidget_p.h
     private/widgets/FloatingWindowWidget_p.h
     private/widgets/FrameWidget_p.h
     private/widgets/TabBarWidget_p.h
@@ -79,14 +78,12 @@ if (OPTION_QTQUICK)
         private/quick/FrameQuick.cpp
         private/quick/MainWindowQuick.cpp
         private/quick/TabBarQuick.cpp
-        private/quick/SeparatorQuick.cpp
         private/quick/LayoutSaverQuick.cpp)
 
     qt5_add_resources(RESOURCES_QUICK ${CMAKE_CURRENT_SOURCE_DIR}/qtquick.qrc)
 
 else()
     set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
-        private/widgets/SeparatorWidget.cpp
         private/widgets/TabBarWidget.cpp
         private/widgets/FloatingWindowWidget.cpp
         private/widgets/FrameWidget.cpp
@@ -167,6 +164,7 @@ install (FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION include/kddockw
 install (FILES private/multisplitter/Item_p.h DESTINATION include/kddockwidgets/multisplitter)
 install (FILES private/multisplitter/Widget.h DESTINATION include/kddockwidgets/multisplitter)
 install (FILES private/multisplitter/Widget_qwidget.h DESTINATION include/kddockwidgets/multisplitter)
+install (FILES private/multisplitter/Separator_qwidget.h DESTINATION include/kddockwidgets/multisplitter)
 install (FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
 
 include(CMakePackageConfigHelpers)

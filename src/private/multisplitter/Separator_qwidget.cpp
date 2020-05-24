@@ -18,8 +18,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "multisplitter/Widget_qwidget.h"
-#include "SeparatorWidget_p.h"
+#include "Widget_qwidget.h"
+#include "Separator_qwidget.h"
 #include "Logging_p.h"
 
 #include <QPainter>
@@ -27,9 +27,9 @@
 #include <QRubberBand>
 #include <QMouseEvent>
 
-using namespace KDDockWidgets;
+using namespace Layouting;
 
-namespace KDDockWidgets {
+namespace Layouting {
 class RubberBand : public QRubberBand
                  , public Layouting::Widget_qwidget
 {
@@ -68,7 +68,7 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
 
 void SeparatorWidget::enterEvent(QEvent *)
 {
-    qCDebug(anchors) << Q_FUNC_INFO << this;
+    qCDebug(separators) << Q_FUNC_INFO << this;
     if (isVertical())
         setCursor(Qt::SizeVerCursor);
     else

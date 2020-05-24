@@ -18,24 +18,34 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "SeparatorQuick_p.h"
-#include "multisplitter/MultiSplitterLayout_p.h"
-#include "multisplitter/Anchor_p.h"
-#include "Logging_p.h"
-#include "Config.h"
+#ifndef KD_MULTISPLITTER_SEPARATORWIDGET_P_H
+#define KD_MULTISPLITTER_SEPARATORWIDGET_P_H
 
-#include <QQmlComponent>
+#include "../../docks_export.h"
+#include "Separator_p.h"
 
-using namespace KDDockWidgets;
+QT_BEGIN_NAMESPACE
+class QPaintEvent;
+QT_END_NAMESPACE
 
-SeparatorQuick::SeparatorQuick(KDDockWidgets::Anchor *anchor, QWidgetAdapter *parent)
-    : Separator(anchor, parent)
+namespace Layouting {
+
+class DOCKS_EXPORT SeparatorWidget : public Layouting::Separator
 {
-    auto component = new QQmlComponent(Config::self().qmlEngine(),
-                                       QUrl(QStringLiteral("qrc:/kddockwidgets/quick/qml/Separator.qml")));
+    Q_OBJECT
+public:
+    explicit SeparatorWidget(Layouting::Widget *parent = nullptr);
+protected:
+    void paintEvent(QPaintEvent *) override;
+    void enterEvent(QEvent *) override;
+    void leaveEvent(QEvent *) override;
+    void mousePressEvent(QMouseEvent *) override;
+    void mouseMoveEvent(QMouseEvent *) override;
+    void mouseReleaseEvent(QMouseEvent *) override;
+    void mouseDoubleClickEvent(QMouseEvent *) override;
+    Widget* createRubberBand(Widget *parent) override;
+};
 
-
-    auto separatorItem = static_cast<QQuickItem*>(component->create());
-    separatorItem->setParentItem(this);
-    separatorItem->setParent(this);
 }
+
+#endif

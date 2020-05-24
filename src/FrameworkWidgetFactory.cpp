@@ -32,7 +32,7 @@
 # include "widgets/TitleBarWidget_p.h"
 # include "widgets/TabBarWidget_p.h"
 # include "widgets/TabWidgetWidget_p.h"
-# include "widgets/SeparatorWidget_p.h"
+# include "multisplitter/Separator_qwidget.h"
 # include "widgets/FloatingWindowWidget_p.h"
 #else
 # include "quick/FrameQuick_p.h"
@@ -78,7 +78,7 @@ TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
 
 Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *parent) const
 {
-    return new SeparatorWidget(parent);
+    return new Layouting::SeparatorWidget(parent);
 }
 
 FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent) const

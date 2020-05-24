@@ -4,12 +4,16 @@ set(MULTISPLITTER_SRCS
     Item.cpp
     Item_p.h
     Widget.h
-    Widget_qwidget.cpp
-    Widget_qwidget.h
     Logging.cpp
     Logging_p.h
     Separator.cpp
     Separator_p.h
+
+    # QWidget frontend:
+    Widget_qwidget.cpp
+    Widget_qwidget.h
+    Separator_qwidget.cpp
+    Separator_qwidget.h
 )
 
 add_library(kddockwidgets_layouting STATIC ${MULTISPLITTER_SRCS})
