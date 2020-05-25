@@ -232,6 +232,11 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
         return true;
     }
 
+    if (fw->beingDeleted()) {
+        // Ignore, we're in the middle of recurrency. We're inside StateDragging::handleMouseButtonRelease too
+        return true;
+    }
+
     if (!q->m_nonClientDrag)
         fw->windowHandle()->setPosition(globalPos - q->m_offset);
 
