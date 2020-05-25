@@ -90,7 +90,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(&m_objectViewer);
 
     auto button = new QPushButton(this);
-    button->setText(QStringLiteral("Dump DockWidget Info"));
+    button->setText(QStringLiteral("Dump Debug"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &DebugWindow::dumpDockWidgetInfo);
 
@@ -193,16 +193,6 @@ DebugWindow::DebugWindow(QWidget *parent)
         releaseMouse();
         m_isPickingWidget = nullptr;
         qApp->restoreOverrideCursor();
-    });
-
-    button = new QPushButton(this);
-    button->setText(QStringLiteral("dump main windows"));
-    layout->addWidget(button);
-    connect(button, &QPushButton::clicked, this, [] {
-        const auto mainWindows = DockRegistry::self()->mainwindows();
-        for (MainWindowBase *mainWindow : mainWindows) {
-            mainWindow->multiSplitterLayout()->dumpDebug();
-        }
     });
 
     button = new QPushButton(this);
