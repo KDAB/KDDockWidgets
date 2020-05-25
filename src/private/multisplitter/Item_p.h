@@ -44,7 +44,7 @@ class ItemContainer;
 class Item;
 class Separator;
 class Widget;
-class LengthOnSide;
+struct LengthOnSide;
 
 enum Side {
     Side1,

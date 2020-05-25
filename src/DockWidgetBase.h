@@ -46,7 +46,7 @@ class Item;
 
 namespace KDDockWidgets {
 
-class LastPositions;
+struct LastPositions;
 class Frame;
 class FloatingWindow;
 class DragController;

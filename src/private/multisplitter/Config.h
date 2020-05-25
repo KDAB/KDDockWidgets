@@ -22,8 +22,6 @@
 
 #include <qglobal.h>
 
-class QWidget; // TODO
-
 namespace Layouting {
 
 class Separator;
