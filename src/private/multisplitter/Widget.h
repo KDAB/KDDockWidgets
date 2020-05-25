@@ -32,7 +32,7 @@
 #include <memory>
 
 QT_BEGIN_NAMESPACE
-class QWidget; // TODO: Remove
+class QWidget;
 QT_END_NAMESPACE
 
 namespace Layouting {
@@ -56,7 +56,10 @@ public:
     virtual ~Widget() {}
 
     virtual void setLayoutItem(Item *) = 0;
-    virtual QWidget *asQWidget() const = 0; // TODO: Move down
+
+    // Not strickly necessary, but it's nice conveniance for kddw which is widget based.
+    virtual QWidget *asQWidget() const { return nullptr; };
+
     virtual QSize minSize() const = 0;
     virtual QSize maxSizeHint() const = 0;
     virtual QRect geometry() const = 0;
@@ -66,6 +69,9 @@ public:
     virtual bool isVisible() const = 0;
     virtual void setVisible(bool) const = 0;
     virtual void move(int x, int y) = 0;
+    virtual void setSize(int width, int height) = 0;
+    virtual void setWidth(int width) = 0;
+    virtual void setHeight(int height) = 0;
     virtual std::unique_ptr<Widget> parentWidget() const = 0;
     //virtual std::unique_ptr<Widget> window() const = 0; Uncomment when needed
     virtual void show() = 0;

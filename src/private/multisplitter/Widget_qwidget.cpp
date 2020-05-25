@@ -127,3 +127,18 @@ QSize Widget_qwidget::widgetMinSize(const QWidget *w)
 
     return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
 }
+
+void Widget_qwidget::setSize(int width, int height)
+{
+    m_thisWidget->resize(QSize(width, height));
+}
+
+void Widget_qwidget::setWidth(int width)
+{
+    setSize(width, m_thisWidget->height());
+}
+
+void Widget_qwidget::setHeight(int height)
+{
+    setSize(m_thisWidget->width(), height);
+}

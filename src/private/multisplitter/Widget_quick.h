@@ -21,31 +21,27 @@
 #pragma once
 
 #include "Widget.h"
-#include "multisplitter_export.h"
 
-#include <QWidget>
+#include <QQuickItem>
+
 
 ///@file
-///@brief A Layouting::Widget that's deals in QWidget
+///@brief A Layouting::Widget that's deals in QQuickItem
 
 namespace Layouting {
 
-///@brief A Layouting::Widget that's deals in QWidget
-/// Allows to host a QWidget in the layout
-class MULTISPLITTER_EXPORT Widget_qwidget : public Widget
+///@brief A Layouting::Widget that's deals in QQuickItem
+/// Allows to host a QQuickItem in the layout
+class Widget_quick : public Widget
 {
 public:
-    explicit Widget_qwidget(QWidget *thisWidget)
+    explicit Widget_quick(QQuickItem *thisWidget)
         : Widget(thisWidget)
         , m_thisWidget(thisWidget)
     {
     }
 
-    ~Widget_qwidget() override;
-
-    QWidget* asQWidget() const override {
-        return m_thisWidget;
-    }
+    ~Widget_quick() override;
 
     QSize minSize() const override;
     QSize maxSizeHint() const override;
@@ -67,14 +63,8 @@ public:
     static QSize widgetMinSize(const QWidget *w);
 
 private:
-    QWidget *const m_thisWidget;
-    Q_DISABLE_COPY(Widget_qwidget)
+    QQuickItem *const m_thisWidget;
+    Q_DISABLE_COPY(Widget_quick)
 };
-
-inline int widgetMinLength(const QWidget *w, Qt::Orientation o)
-{
-    const QSize sz = Widget_qwidget::widgetMinSize(w);
-    return o == Qt::Vertical ? sz.height() : sz.width();
-}
 
 }
