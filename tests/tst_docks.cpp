@@ -2772,7 +2772,8 @@ void TestDocks::tst_embeddedMainWindow()
     dock1->setFloating(true);
     auto dropArea = window->mainWindow->dropArea();
     auto fw = dock1->floatingWindow();
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterLeft);
+
+    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Left);
 
     auto layout = dropArea->multiSplitterLayout();
     QVERIFY(Testing::waitForDeleted(fw));

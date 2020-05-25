@@ -287,7 +287,7 @@ void KDDockWidgets::Tests::dragFloatingWindowTo(FloatingWindow *fw, DropArea *ta
     auto draggable = draggableFor(fw);
 
     // First we drag over it, so the drop indicators appear:
-    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(QPoint(50, 50)), ButtonAction_Press);
+    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
 
     // Now we drag over the drop indicator and only then release mouse:
     DropIndicatorOverlayInterface *dropIndicatorOverlay = target->dropIndicatorOverlay();
