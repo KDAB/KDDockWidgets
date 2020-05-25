@@ -352,6 +352,7 @@ private Q_SLOTS:
     void tst_floatingAction();
     void tst_dockableMainWindows();
     void tst_lastFloatingPositionIsRestored();
+    void tst_moreTitleBarCornerCases();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5239,6 +5240,47 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     dock1->setFloating(true);
     QCOMPARE(dock1->window()->geometry().topLeft(), targetPos);
     delete dock1->window();
+}
+
+void TestDocks::tst_moreTitleBarCornerCases()
+{
+    {
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("foo2"));
+        dock1->show();
+        dock2->show();
+        auto fw2 = dock2->window();
+        dock1->addDockWidgetToContainingWindow(dock2, Location_OnLeft);
+        QVERIFY(dock1->frame()->titleBar()->isVisible());
+        QVERIFY(dock2->frame()->titleBar()->isVisible());
+        QVERIFY(dock1->frame()->titleBar() != dock2->frame()->titleBar());
+        auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+        QVERIFY(fw->titleBar()->isVisible());
+        QVERIFY(fw->titleBar() != dock1->frame()->titleBar());
+        QVERIFY(fw->titleBar() != dock2->frame()->titleBar());
+        delete fw;
+        delete fw2;
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("foo2"));
+        dock1->show();
+        dock2->show();
+        auto fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+        auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+        fw1->dropArea()->drop(fw2, Location_OnRight, nullptr);
+        QVERIFY(fw1->titleBar()->isVisible());
+        QVERIFY(dock1->frame()->titleBar()->isVisible());
+        QVERIFY(dock2->frame()->titleBar()->isVisible());
+        QVERIFY(dock1->frame()->titleBar() != dock2->frame()->titleBar());
+        QVERIFY(fw1->titleBar() != dock1->frame()->titleBar());
+        QVERIFY(fw1->titleBar() != dock2->frame()->titleBar());
+        delete fw1;
+        delete fw2;
+    }
 }
 
 int main(int argc, char *argv[])
