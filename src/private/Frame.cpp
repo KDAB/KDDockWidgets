@@ -273,7 +273,27 @@ bool Frame::contains(DockWidgetBase *dockWidget) const
 
 FloatingWindow *Frame::floatingWindow() const
 {
-    return qobject_cast<FloatingWindow*>(window());
+    // Returns the first FloatingWindow* parent in the hierarchy.
+    // However, if there's a MainWindow in the hierarchy it stops, which can
+    // happen with nested main windows.
+
+    QWidget *p = QWidget::parentWidget();
+    while (p) {
+        if (qobject_cast<KDDockWidgets::MainWindowBase*>(p))
+            return nullptr;
+
+        if (auto fw = qobject_cast<FloatingWindow*>(p))
+            return fw;
+
+        if (p == window()) {
+            // We stop at the window. (top-levels can have parent, but we're not interested)
+            return nullptr;
+        }
+
+        p = p->parentWidget();
+    }
+
+    return nullptr;
 }
 
 void Frame::restoreToPreviousPosition()
