@@ -56,7 +56,7 @@ DropArea::~DropArea()
 
 int DropArea::numFrames() const
 {
-    return m_layout->count();
+    return m_layout->visibleCount();
 }
 
 Frame *DropArea::frameContainingPos(QPoint globalPos) const

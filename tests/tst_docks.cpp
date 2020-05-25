@@ -2548,7 +2548,8 @@ void TestDocks::tst_addAndReadd()
     QVERIFY(fw);
     auto dropArea = m->dropArea();
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterRight);
-    dock1->frame()->titleBar()->makeWindow();
+    QVERIFY(!dock1->frame()->titleBar()->isVisible());
+    fw->titleBar()->makeWindow();
     m->multiSplitterLayout()->checkSanity();
 
     //Cleanup
