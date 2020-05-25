@@ -312,15 +312,23 @@ void DebugWindow::repaintWidgetRecursive(QWidget *w)
 
 void DebugWindow::dumpDockWidgetInfo()
 {
-    QVector<FloatingWindow*> floatingWindows = DockRegistry::self()->nestedwindows();
-    MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
+    const QVector<FloatingWindow*> floatingWindows = DockRegistry::self()->nestedwindows();
+    const MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
+    const DockWidgetBase::List dockWidgets = DockRegistry::self()->dockwidgets();
 
     for (FloatingWindow *fw : floatingWindows) {
+        qDebug() << fw << "; affinities=" << fw->affinities();
         fw->dropArea()->multiSplitterLayout()->dumpDebug();
     }
 
-    for (MainWindowBase *mw : mainWindows)
+    for (MainWindowBase *mw : mainWindows) {
+        qDebug() << mw << "; affinities=" << mw->affinities();
         mw->multiSplitterLayout()->dumpDebug();
+    }
+
+    for (DockWidgetBase *dw : dockWidgets) {
+        qDebug() << dw << "; affinities=";
+    }
 }
 
 void DebugWindow::mousePressEvent(QMouseEvent *event)
