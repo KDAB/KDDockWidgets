@@ -51,6 +51,7 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 #include <QToolButton>
+#include <QMenuBar>
 #include <QStyleFactory>
 
 #ifdef Q_OS_WIN
@@ -5133,16 +5134,64 @@ void TestDocks::tst_dockableMainWindows()
      m1->addDockWidget(dock1, Location_OnTop);
 
      auto m2 = new KDDockWidgets::MainWindow("mainwindow-dockable");
-     auto dock2 = createDockWidget("mainwindow-dw", m2);
-     dock2->show();
+     auto m2Container = createDockWidget("mainwindow-dw", m2);
+     auto menubar = m2->menuBar();
+     menubar->addMenu("File");
+     menubar->addMenu("View");
+     menubar->addMenu("Help");
+     m2Container->show();
 
-     auto fw = qobject_cast<FloatingWindow*>(dock2->window());
-     TitleBar *titleBar = fw->titleBar();
+     auto dock21 = createDockWidget("dock21", new QPushButton("foo"));
+     auto dock22 = createDockWidget("dock22", new QPushButton("foo"));
+     m2->addDockWidget(dock21, Location_OnLeft);
+     m2->addDockWidget(dock22, Location_OnRight);
+
+     auto fw = qobject_cast<FloatingWindow*>(m2Container->window());
+     TitleBar *fwTitleBar = fw->titleBar();
+
+     QVERIFY(fw->hasSingleFrame());
+     QVERIFY(fw->hasSingleDockWidget());
+
+     // Check that the inner-inner dock widgets have a visible title-bar
+     QVERIFY(dock21->titleBar()->isVisible());
+     QVERIFY(dock22->titleBar()->isVisible());
+     QVERIFY(dock21->titleBar() != fwTitleBar);
+     QVERIFY(dock22->titleBar() != fwTitleBar);
 
      QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
-     const QPoint startPoint = titleBar->mapToGlobal(QPoint(5, 5));
+     const QPoint startPoint = fwTitleBar->mapToGlobal(QPoint(5, 5));
      const QPoint destination = startPoint + QPoint(20, 20);
-     drag(titleBar, startPoint, destination);
+
+     // Check that we don't get the "Refusing to itself" warning. not actually dropping anywhere
+     drag(fwTitleBar, startPoint, destination);
+
+     // The FloatingWindow has a single DockWidget, so it shows the title bar, while the Frame doesn't
+     QVERIFY(fwTitleBar->isVisible());
+     QVERIFY(!m2Container->frame()->titleBar()->isVisible());
+
+     fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
+     // Now the FloatingWindow has two dock widgets, so our main window dock widget also shows the title bar
+     QVERIFY(fwTitleBar->isVisible());
+     QVERIFY(m2Container->frame()->titleBar()->isVisible());
+
+     // Put it how it was, FloatingWindow is single dock again
+     auto frame1 = dock1->frame();
+     dock1->close();
+     Testing::waitForDeleted(frame1);
+     QVERIFY(fwTitleBar->isVisible());
+     QVERIFY(!m2Container->frame()->titleBar()->isVisible());
+
+     // Repeat, but instead of closing dock1, we float it
+     fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
+     QVERIFY(fwTitleBar->isVisible());
+     QVERIFY(m2Container->frame()->titleBar()->isVisible());
+     frame1 = dock1->frame();
+     frame1->titleBar()->onFloatClicked();
+     QVERIFY(fwTitleBar->isVisible());
+
+     QVERIFY(!m2Container->frame()->titleBar()->isVisible());
+
+     fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
 }
 
 void TestDocks::tst_lastFloatingPositionIsRestored()

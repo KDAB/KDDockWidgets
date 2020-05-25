@@ -30,6 +30,13 @@
 
 #include <QObject>
 
+#ifdef Q_OS_WIN
+// Only on Windows, where this is popular. On linux it the Qt::Tool windows need reparenting. Untested on macOS.
+# define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
+#endif
+
+
+
 namespace KDDockWidgets
 {
     enum Location {

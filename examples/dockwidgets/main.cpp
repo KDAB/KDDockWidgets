@@ -82,16 +82,18 @@ int main(int argc, char **argv)
     QCommandLineOption maximizeButton("b", QCoreApplication::translate("main", "DockWidgets have maximize/restore buttons instead of float/dock button"));
     parser.addOption(maximizeButton);
 
-    QCommandLineOption dockableMainWindows("j", QCoreApplication::translate("main", "Allow main windows to be docked inside other main windows (this feature is work in progress)"));
+#ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
+    QCommandLineOption dockableMainWindows("j", QCoreApplication::translate("main", "Allow main windows to be docked inside other main windows"));
+    parser.addOption(dockableMainWindows);
+#endif
+
     QCommandLineOption maxSizeOption("g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200. (this feature is work in progress)"));
     QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central frame"));
 
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
-    parser.addOption(dockableMainWindows);
     parser.addOption(maxSizeOption);
 #else
-    Q_UNUSED(dockableMainWindows)
     Q_UNUSED(maxSizeOption)
     Q_UNUSED(centralFrame)
 #endif
@@ -142,8 +144,13 @@ int main(int argc, char **argv)
     const bool restoreIsRelative = parser.isSet(relativeRestore);
     const bool nonDockableDockWidget9 = parser.isSet(nonDockable);
     const bool maxSizeForDockWidget8 = parser.isSet(maxSizeOption);
-    const bool usesDockableMainWindows = parser.isSet(dockableMainWindows);
     const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
+
+#ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
+    const bool usesDockableMainWindows = parser.isSet(dockableMainWindows);
+#else
+    const bool usesDockableMainWindows = false;
+#endif
 
     MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0,
                             nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8);
@@ -172,12 +179,22 @@ int main(int argc, char **argv)
 
         mainWindow2->resize(1200, 1200);
         mainWindow2->show();
-    } else if (parser.isSet(dockableMainWindows)) {
+    } else if (usesDockableMainWindows) {
+        auto mainWindowDockWidget = new DockWidget(QStringLiteral("MyMainWindow-2-DW"));
 
+        const QString affinity = QStringLiteral("Inner-DockWidgets-2");
         auto dockableMainWindow = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
-                                                   false, false, restoreIsRelative, false);
+                                                   false, false, restoreIsRelative, false, affinity);
+
+        dockableMainWindow->setAffinities({ affinity });
+
+        dockableMainWindow->setStyleSheet(QStringLiteral("background: yellow"));
+
         dockableMainWindow->setWindowTitle("Dockable Main Window");
         dockableMainWindow->show();
+        mainWindowDockWidget->setWidget(dockableMainWindow);
+        mainWindowDockWidget->show();
+        mainWindowDockWidget->resize(800, 800);
     }
 
     return app.exec();
