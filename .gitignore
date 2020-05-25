@@ -45,3 +45,4 @@ build-*
 .cmake
 CTestTestfile.cmake
 mylayout.json
+*.cbp
