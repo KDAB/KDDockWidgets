@@ -141,27 +141,15 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
     if (windows.size() == 1) {
         return windows.first();
     } else {
-        const QString affinityName = frame ? frame->affinityName() : QString();
+        const QStringList affinities = frame ? frame->affinities() : QStringList();
+        const MainWindowBase::List mainWindows = DockRegistry::self()->mainWindowsWithAffinity(affinities);
 
-        if (affinityName.isEmpty()) {
-
-            for (MainWindowBase *window : windows) {
-                if (window->affinityName().isEmpty())
-                    return window;
-            }
-
-            qWarning() << Q_FUNC_INFO << "No window with empty affinity found";
-
+        if (mainWindows.isEmpty()) {
+            qWarning() << Q_FUNC_INFO << "No window with affinity" << affinities << "found";
+            return nullptr;
         } else {
-            for (MainWindowBase *window : windows) {
-                if (window->affinityName() == affinityName)
-                    return window;
-            }
-
-            qWarning() << Q_FUNC_INFO << "No window with affinity" << affinityName << "found";
+            return mainWindows.first();
         }
-
-        return windows.first();
     }
 #else
     qWarning() << "Implement and abstract me!";
@@ -352,10 +340,10 @@ void FloatingWindow::updateTitleBarVisibility()
     m_titleBar->setVisible(visible);
 }
 
-QString FloatingWindow::affinityName() const
+QStringList FloatingWindow::affinities() const
 {
     auto frames = this->frames();
-    return frames.isEmpty() ? QString() : frames.constFirst()->affinityName();
+    return frames.isEmpty() ? QStringList() : frames.constFirst()->affinities();
 }
 
 void FloatingWindow::updateTitleAndIcon()
@@ -417,7 +405,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
     fw.screenIndex = screenNumberForWidget(this);
     fw.screenSize = screenSizeForWidget(this);
-    fw.affinityName = affinityName();
+    fw.affinities = affinities();
 
     auto mainWindow = qobject_cast<MainWindowBase*>(parentWidget());
     fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)

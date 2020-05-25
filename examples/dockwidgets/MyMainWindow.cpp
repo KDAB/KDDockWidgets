@@ -118,7 +118,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     auto quitAction = fileMenu->addAction(QStringLiteral("Quit"));
     connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
 
-    setAffinityName(affinityName);
+    setAffinities({ affinityName });
     createDockWidgets();
 }
 
@@ -176,7 +176,7 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
         options |= KDDockWidgets::DockWidget::Option_NotDockable;
 
     auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count), options);
-    dock->setAffinityName(affinityName()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
+    dock->setAffinities(affinities()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
 
     if (count == 1)
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));

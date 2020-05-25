@@ -108,7 +108,7 @@ public:
     void saveTabIndex();
 
     const QString name;
-    QString affinityName;
+    QStringList affinities;
     QString title;
     QIcon icon;
     QWidget *widget = nullptr;
@@ -155,9 +155,9 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, AddingOption addi
         return;
     }
 
-    if (other->affinityName() != affinityName()) {
+    if (!DockRegistry::self()->affinitiesMatch(other->affinities(), d->affinities)) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
-                   << other->affinityName() << affinityName();
+                   << other->affinities() << affinities();
         return;
     }
 
@@ -195,9 +195,9 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other, Loca
         return;
     }
 
-    if (other->affinityName() != affinityName()) {
+    if (!DockRegistry::self()->affinitiesMatch(other->affinities(), d->affinities)) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
-                   << other->affinityName() << affinityName();
+                   << other->affinities() << affinities();
         return;
     }
 
@@ -382,9 +382,9 @@ bool DockWidgetBase::isOpen() const
     return d->toggleAction->isChecked();
 }
 
-QString DockWidgetBase::affinityName() const
+QStringList DockWidgetBase::affinities() const
 {
-    return d->affinityName;
+    return d->affinities;
 }
 
 void DockWidgetBase::show()
@@ -411,19 +411,27 @@ void DockWidgetBase::raise()
     }
 }
 
-void DockWidgetBase::setAffinityName(const QString &name)
+void DockWidgetBase::setAffinityName(const QString &affinity)
 {
-    if (d->affinityName == name)
+    setAffinities({ affinity });
+}
+
+void DockWidgetBase::setAffinities(const QStringList &affinityNames)
+{
+    QStringList affinities = affinityNames;
+    affinities.removeAll(QString());
+
+    if (d->affinities == affinities)
         return;
 
-    if (!d->affinityName.isEmpty()) {
+    if (!d->affinities.isEmpty()) {
         qWarning() << Q_FUNC_INFO
                    << "Affinity is already set, refusing to change."
                    << "Submit a feature request with a good justification.";
         return;
     }
 
-    d->affinityName = name;
+    d->affinities = affinities;
 }
 
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
@@ -721,10 +729,10 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
             w->setVisible(true);
         dw->setProperty("kddockwidget_was_restored", true);
 
-        if (dw->affinityName() != saved->affinityName) {
-            qWarning() << Q_FUNC_INFO << "Affinity name changed from" << dw->affinityName()
-                       << "; to" << saved->affinityName;
-            dw->d->affinityName = saved->affinityName;
+        if (dw->affinities() != saved->affinities) {
+            qWarning() << Q_FUNC_INFO << "Affinity name changed from" << dw->affinities()
+                       << "; to" << saved->affinities;
+            dw->d->affinities = saved->affinities;
         }
 
     } else {
@@ -737,7 +745,7 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
 LayoutSaver::DockWidget::Ptr DockWidgetBase::serialize() const
 {
     auto ptr = LayoutSaver::DockWidget::dockWidgetForName(uniqueName());
-    ptr->affinityName = affinityName();
+    ptr->affinities = affinities();
 
     return ptr;
 }

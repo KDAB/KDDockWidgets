@@ -81,6 +81,34 @@ bool DockRegistry::isProcessingAppQuitEvent() const
     return m_isProcessingAppQuitEvent;
 }
 
+bool DockRegistry::affinitiesMatch(const QStringList &affinities1, const QStringList &affinities2) const
+{
+    if (affinities1.isEmpty() && affinities2.isEmpty())
+        return true;
+
+    for (const QString &a1 : affinities1) {
+        for (const QString &a2 : affinities2) {
+            if (a1 == a2)
+                return true;
+        }
+    }
+
+    return false;
+}
+
+MainWindowBase::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
+{
+    MainWindowBase::List result;
+
+    for (auto mw : m_mainWindows) {
+        const QStringList mwAffinities = mw->affinities();
+        if (affinitiesMatch(mwAffinities, affinities))
+            result << mw;
+    }
+
+    return result;
+}
+
 MultiSplitterLayout *DockRegistry::layoutForItem(const Layouting::Item *item) const
 {
     if (!item->hostWidget())
@@ -347,14 +375,14 @@ void DockRegistry::clear(QStringList affinities)
     affinities << QString();
 
     for (auto dw : qAsConst(m_dockWidgets)) {
-        if (affinities.contains(dw->affinityName())) {
+        if (affinitiesMatch(affinities, dw->affinities())) {
             dw->forceClose();
             dw->lastPositions().removePlaceholders();
         }
     }
 
     for (auto mw : qAsConst(m_mainWindows)) {
-        if (affinities.contains(mw->affinityName())) {
+        if (affinitiesMatch(affinities, mw->affinities())) {
             mw->multiSplitterLayout()->rootItem()->clear();
         }
     }

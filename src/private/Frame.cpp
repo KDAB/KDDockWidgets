@@ -413,12 +413,12 @@ bool Frame::hasTabsVisible() const
     return alwaysShowsTabs() || dockWidgetCount() > 1;
 }
 
-QString Frame::affinityName() const
+QStringList Frame::affinities() const
 {
     if (isEmpty()) {
         return {};
     } else {
-        return dockWidgetAt(0)->affinityName();
+        return dockWidgetAt(0)->affinities();
     }
 }
 

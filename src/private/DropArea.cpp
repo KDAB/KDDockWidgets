@@ -28,6 +28,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "MainWindowBase.h"
 #include "multisplitter/Item_p.h"
+#include "DockRegistry_p.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"
@@ -138,15 +139,15 @@ bool DropArea::contains(DockWidgetBase *dw) const
     return dw->frame() && m_layout->contains(dw->frame());
 }
 
-QString DropArea::affinityName() const
+QStringList DropArea::affinities() const
 {
     if (auto mw = mainWindow()) {
-        return mw->affinityName();
+        return mw->affinities();
     } else if (auto fw = floatingWindow()) {
-        return fw->affinityName();
+        return fw->affinities();
     }
 
-    return QString();
+    return {};
 }
 
 void DropArea::layoutEqually()
@@ -280,7 +281,7 @@ void DropArea::removeHover()
 template<typename T>
 bool DropArea::validateAffinity(T *window) const
 {
-    if (window->affinityName() != affinityName()) {
+    if (!DockRegistry::self()->affinitiesMatch(window->affinities(), affinities())) {
         // Commented the warning, so we don't warn when hovering over
         //qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
                    //<< window->affinityName() << affinityName();

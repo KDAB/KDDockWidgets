@@ -52,7 +52,7 @@ public:
     }
 
     QString name;
-    QString affinityName;
+    QStringList affinities;
     const MainWindowOptions m_options;
 };
 
@@ -75,9 +75,9 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
     Q_ASSERT(widget);
     qCDebug(addwidget) << Q_FUNC_INFO << widget;
 
-    if (widget->affinityName() != affinityName()) {
+    if (!DockRegistry::self()->affinitiesMatch(d->affinities, widget->affinities())) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
-                   << widget->affinityName() << affinityName();
+                   << widget->affinities() << affinities();
         return;
     }
 
@@ -118,24 +118,27 @@ MultiSplitterLayout *MainWindowBase::multiSplitterLayout() const
     return dropArea()->multiSplitterLayout();
 }
 
-void MainWindowBase::setAffinityName(const QString &name)
+void MainWindowBase::setAffinities(const QStringList &affinityNames)
 {
-    if (d->affinityName == name)
+    QStringList affinities = affinityNames;
+    affinities.removeAll(QString());
+
+    if (d->affinities == affinities)
         return;
 
-    if (!d->affinityName.isEmpty()) {
+    if (!d->affinities.isEmpty()) {
         qWarning() << Q_FUNC_INFO
                    << "Affinity is already set, refusing to change."
                    << "Submit a feature request with a good justification.";
         return;
     }
 
-    d->affinityName = name;
+    d->affinities = affinities;
 }
 
-QString MainWindowBase::affinityName() const
+QStringList MainWindowBase::affinities() const
 {
-    return d->affinityName;
+    return d->affinities;
 }
 
 void MainWindowBase::layoutEqually()
@@ -170,11 +173,11 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
         return false;
     }
 
-    if (d->affinityName != mw.affinityName) {
-        qWarning() << Q_FUNC_INFO << "Affinty name changed from" << d->affinityName
-                   << "; to" << mw.affinityName;
+    if (d->affinities != mw.affinities) {
+        qWarning() << Q_FUNC_INFO << "Affinty name changed from" << d->affinities
+                   << "; to" << mw.affinities;
 
-        d->affinityName = mw.affinityName;
+        d->affinities = mw.affinities;
     }
 
     return dropArea()->multiSplitterLayout()->deserialize(mw.multiSplitterLayout);
@@ -191,7 +194,7 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     m.screenIndex = screenNumberForWidget(this);
     m.screenSize = screenSizeForWidget(this);
     m.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
-    m.affinityName = d->affinityName;
+    m.affinities = d->affinities;
 
     return m;
 }

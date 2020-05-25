@@ -1497,9 +1497,9 @@ void TestDocks::tst_restoreWithAffinity()
     EnsureTopLevelsDeleted e;
 
     auto m1 = createMainWindow(QSize(500, 500));
-    m1->setAffinityName("a1");
+    m1->setAffinities({ "a1" });
     auto m2 = createMainWindow(QSize(500, 500));
-    m2->setAffinityName("a2");
+    m2->setAffinities({ "a2" });
 
     auto dock1 = createDockWidget("1", new QPushButton("1"), {}, true, "a1");
     m1->addDockWidget(dock1, Location_OnLeft);

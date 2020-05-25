@@ -65,7 +65,7 @@ public:
     bool checkSanity();
     bool contains(DockWidgetBase *) const;
 
-    QString affinityName() const;
+    QStringList affinities() const;
     void layoutEqually();
     void layoutParentContainerEqually(DockWidgetBase *);
 private:

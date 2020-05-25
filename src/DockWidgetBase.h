@@ -254,12 +254,12 @@ public:
     bool isOpen() const;
 
     /**
-     * @brief Sets the affinity name. Dock widgets can only dock into dock widgets of the same affinity.
+     * @brief Sets the affinity names. Dock widgets can only dock into dock widgets of the same affinity.
      *
      * By default the affinity is empty and a dock widget can dock into any main window and into any
      * floating window. Usually you won't ever need to call
      * this function, unless you have requirements where certain dock widgets can only dock into
-     * certain other dock widgets and main windows. @sa MainWindowBase::setAffinityName().
+     * certain other dock widgets and main windows. @sa MainWindowBase::setAffinities().
      *
      * Note: Call this function right after creating your dock widget, before adding to a main window and
      * before restoring any layout.
@@ -268,14 +268,17 @@ public:
      * edge cases. This will only be changed if a good use case comes up that requires changing
      * affinities multiple times.
      *
-     * @p name The affinity name.
+     * @p names the affinity names
      */
+    void setAffinities(const QStringList &);
+
+    /// @deprecated @overload
     void setAffinityName(const QString &name);
 
     /**
      * @brief Returns the affinity name. Empty by default.
      */
-    QString affinityName() const;
+    QStringList affinities() const;
 
     /// @brief Equivalent to QWidget::show(), but it's optimized to reduce flickering on some platforms
     void show();

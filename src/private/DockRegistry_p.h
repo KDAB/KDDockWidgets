@@ -139,11 +139,19 @@ public:
      */
     bool isProcessingAppQuitEvent() const;
 
+    /**
+     * @brief Returns all main windows which match at least one of the @p affinities
+     */
+    MainWindowBase::List mainWindowsWithAffinity(const QStringList &affinities) const;
+
     // TODO: docs
     MultiSplitterLayout* layoutForItem(const Layouting::Item *) const;
 
     // TODO: docs
     bool itemIsInMainWindow(const Layouting::Item *) const;
+
+
+    bool affinitiesMatch(const QStringList &affinities1, const QStringList &affinities2) const;
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;

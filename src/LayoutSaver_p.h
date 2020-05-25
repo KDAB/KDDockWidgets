@@ -150,7 +150,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
     void fromVariantMap(const QVariantMap &map);
 
     QString uniqueName;
-    QString affinityName;
+    QStringList affinities;
     LayoutSaver::Position lastPosition;
 
 private:
@@ -224,7 +224,7 @@ struct LayoutSaver::FloatingWindow
     void fromVariantMap(const QVariantMap &map);
 
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
-    QString affinityName;
+    QStringList affinities;
     int parentIndex = -1;
     QRect geometry;
     int screenIndex;
@@ -248,7 +248,7 @@ public:
     KDDockWidgets::MainWindowOptions options;
     LayoutSaver::MultiSplitterLayout multiSplitterLayout;
     QString uniqueName;
-    QString affinityName;
+    QStringList affinities;
     QRect geometry;
     int screenIndex;
     QSize screenSize;  // for relative-size restoring

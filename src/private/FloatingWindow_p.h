@@ -113,7 +113,7 @@ public:
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
 
-    QString affinityName() const;
+    QStringList affinities() const;
 
 Q_SIGNALS:
     void numFramesChanged();

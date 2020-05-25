@@ -75,8 +75,8 @@ public:
     {
     }
 
-    bool matchesAffinity(const QString &affinityName) const {
-        return m_affinityNames.isEmpty() || affinityName.isEmpty() || m_affinityNames.contains(affinityName);
+    bool matchesAffinity(const QStringList &affinities) const {
+        return m_affinityNames.isEmpty() || affinities.isEmpty() || DockRegistry::self()->affinitiesMatch(m_affinityNames, affinities);
     }
 
     template <typename T>
@@ -93,6 +93,27 @@ public:
 };
 
 bool LayoutSaver::Private::s_restoreInProgress = false;
+
+
+static QVariantList stringListToVariant(const QStringList &strs)
+{
+    QVariantList variantList;
+    variantList.reserve(strs.size());
+    for (const QString &str : strs)
+        variantList.push_back(str);
+
+    return variantList;
+}
+
+static QStringList variantToStringList(const QVariantList &variantList)
+{
+    QStringList stringList;
+    stringList.reserve(variantList.size());
+    for (const QVariant &variant : variantList)
+        stringList.push_back(variant.toString());
+
+    return stringList;
+}
 
 LayoutSaver::LayoutSaver(RestoreOptions options)
     : d(new Private(options))
@@ -147,14 +168,14 @@ QByteArray LayoutSaver::serializeLayout() const
     const MainWindowBase::List mainWindows = d->m_dockRegistry->mainwindows();
     layout.mainWindows.reserve(mainWindows.size());
     for (MainWindowBase *mainWindow : mainWindows) {
-        if (d->matchesAffinity(mainWindow->affinityName()))
+        if (d->matchesAffinity(mainWindow->affinities()))
             layout.mainWindows.push_back(mainWindow->serialize());
     }
 
     const QVector<KDDockWidgets::FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
     layout.floatingWindows.reserve(floatingWindows.size());
     for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
-        if (d->matchesAffinity(floatingWindow->affinityName()))
+        if (d->matchesAffinity(floatingWindow->affinities()))
             layout.floatingWindows.push_back(floatingWindow->serialize());
     }
 
@@ -162,7 +183,7 @@ QByteArray LayoutSaver::serializeLayout() const
     const DockWidgetBase::List closedDockWidgets = d->m_dockRegistry->closedDockwidgets();
     layout.closedDockWidgets.reserve(closedDockWidgets.size());
     for (DockWidgetBase *dockWidget : closedDockWidgets) {
-        if (d->matchesAffinity(dockWidget->affinityName()))
+        if (d->matchesAffinity(dockWidget->affinities()))
             layout.closedDockWidgets.push_back(dockWidget->serialize());
     }
 
@@ -172,7 +193,7 @@ QByteArray LayoutSaver::serializeLayout() const
     const DockWidgetBase::List dockWidgets = d->m_dockRegistry->dockwidgets();
     layout.allDockWidgets.reserve(dockWidgets.size());
     for (DockWidgetBase *dockWidget : dockWidgets) {
-        if (d->matchesAffinity(dockWidget->affinityName())) {
+        if (d->matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->serialize();
             dw->lastPosition = dockWidget->lastPositions().serialize();
             layout.allDockWidgets.push_back(dw);
@@ -233,7 +254,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             }
         }
 
-        if (!d->matchesAffinity(mainWindow->affinityName()))
+        if (!d->matchesAffinity(mainWindow->affinities()))
             continue;
 
         if (!(d->m_restoreOptions & RestoreOption_RelativeToMainWindow))
@@ -245,7 +266,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // 2. Restore FloatingWindows
     for (const LayoutSaver::FloatingWindow &fw : qAsConst(layout.floatingWindows)) {
-        if (!d->matchesAffinity(fw.affinityName))
+        if (!d->matchesAffinity(fw.affinities))
             continue;
 
         MainWindowBase *parent = fw.parentIndex == -1 ? nullptr
@@ -261,14 +282,14 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // 3. Restore closed dock widgets. They remain closed but acquire geometry and placeholder properties
     for (const auto &dw : qAsConst(layout.closedDockWidgets)) {
-        if (d->matchesAffinity(dw->affinityName)) {
+        if (d->matchesAffinity(dw->affinities)) {
             DockWidgetBase::deserialize(dw);
         }
     }
 
     // 4. Restore the placeholder info, now that the Items have been created
     for (const auto &dw : qAsConst(layout.allDockWidgets)) {
-        if (!d->matchesAffinity(dw->affinityName))
+        if (!d->matchesAffinity(dw->affinities))
             continue;
 
         if (DockWidgetBase *dockWidget = d->m_dockRegistry->dockByName(dw->uniqueName)) {
@@ -550,8 +571,8 @@ void LayoutSaver::DockWidget::scaleSizes(const ScalingInfo &scalingInfo)
 QVariantMap LayoutSaver::DockWidget::toVariantMap() const
 {
     QVariantMap map;
-    if (!affinityName.isEmpty())
-        map.insert(QStringLiteral("affinityName"), affinityName);
+    if (!affinities.isEmpty())
+        map.insert(QStringLiteral("affinities"), stringListToVariant(affinities));
     map.insert(QStringLiteral("uniqueName"), uniqueName);
     map.insert(QStringLiteral("lastPosition"), lastPosition.toVariantMap());
 
@@ -560,7 +581,14 @@ QVariantMap LayoutSaver::DockWidget::toVariantMap() const
 
 void LayoutSaver::DockWidget::fromVariantMap(const QVariantMap &map)
 {
-    affinityName = map.value(QStringLiteral("affinityName")).toString();
+    affinities = variantToStringList(map.value(QStringLiteral("affinities")).toList());
+
+    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
+    const QString affinityName = map.value(QStringLiteral("affinityName")).toString();
+    if (!affinityName.isEmpty() && !affinities.contains(affinityName)) {
+        affinities.push_back(affinityName);
+    }
+
     uniqueName = map.value(QStringLiteral("uniqueName")).toString();
     lastPosition.fromVariantMap(map.value(QStringLiteral("lastPosition")).toMap());
 }
@@ -594,8 +622,8 @@ QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
     map.insert(QStringLiteral("screenSize"), Layouting::sizeToMap(screenSize));
     map.insert(QStringLiteral("isVisible"), isVisible);
 
-    if (!affinityName.isEmpty())
-        map.insert(QStringLiteral("affinityName"), affinityName);
+    if (!affinities.isEmpty())
+        map.insert(QStringLiteral("affinityName"), stringListToVariant(affinities));
 
     return map;
 }
@@ -608,7 +636,13 @@ void LayoutSaver::FloatingWindow::fromVariantMap(const QVariantMap &map)
     screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
     screenSize = Layouting::mapToSize(map.value(QStringLiteral("screenSize")).toMap());
     isVisible = map.value(QStringLiteral("isVisible")).toBool();
-    affinityName = map.value(QStringLiteral("affinityName")).toString();
+    affinities = variantToStringList(map.value(QStringLiteral("affinities")).toList());
+
+    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
+    const QString affinityName = map.value(QStringLiteral("affinityName")).toString();
+    if (!affinityName.isEmpty() && !affinities.contains(affinityName)) {
+        affinities.push_back(affinityName);
+    }
 }
 
 bool LayoutSaver::MainWindow::isValid() const
@@ -648,9 +682,7 @@ QVariantMap LayoutSaver::MainWindow::toVariantMap() const
     map.insert(QStringLiteral("screenIndex"), screenIndex);
     map.insert(QStringLiteral("screenSize"), Layouting::sizeToMap(screenSize));
     map.insert(QStringLiteral("isVisible"), isVisible);
-
-    if (!affinityName.isEmpty())
-        map.insert(QStringLiteral("affinityName"), affinityName);
+    map.insert(QStringLiteral("affinities"), stringListToVariant(affinities));
 
     return map;
 }
@@ -660,12 +692,18 @@ void LayoutSaver::MainWindow::fromVariantMap(const QVariantMap &map)
     options = KDDockWidgets::MainWindowOptions(map.value(QStringLiteral("options")).toInt());
     multiSplitterLayout.fromVariantMap(map.value(QStringLiteral("multiSplitterLayout")).toMap());
     uniqueName = map.value(QStringLiteral("uniqueName")).toString();
-    affinityName = map.value(QStringLiteral("affinityName")).toString();
     geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
     screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
     screenSize = Layouting::mapToSize(map.value(QStringLiteral("screenSize")).toMap());
-
     isVisible = map.value(QStringLiteral("isVisible")).toBool();
+    affinities = variantToStringList(map.value(QStringLiteral("affinities")).toList());
+
+    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
+    const QString affinityName = map.value(QStringLiteral("affinityName")).toString();
+    if (!affinityName.isEmpty() && !affinities.contains(affinityName)) {
+        affinities.push_back(affinityName);
+    }
+
 }
 
 bool LayoutSaver::MultiSplitterLayout::isValid() const

@@ -198,7 +198,7 @@ public:
      **/
     bool hasTabsVisible() const;
 
-    QString affinityName() const;
+    QStringList affinities() const;
 
     ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
     void setLayoutItem(Layouting::Item *item) override;
