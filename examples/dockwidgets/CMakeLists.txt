@@ -25,6 +25,5 @@ add_executable(kddockwidgets_example
 target_link_libraries(kddockwidgets_example
     PRIVATE 
         KDAB::kddockwidgets
-        KDAB::kddockwidgets_multisplitter
 )
 

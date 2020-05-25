@@ -145,7 +145,7 @@ endif()
 if (OPTION_QTQUICK)
     target_link_libraries(kddockwidgets Qt5::Widgets Qt5::Quick)
 else()
-    target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets PRIVATE kddockwidgets_multisplitter)
+    target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets kddockwidgets_multisplitter)
 endif()
 
 
