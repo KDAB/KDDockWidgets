@@ -1659,11 +1659,9 @@ void ItemContainer::insertItem(Item *item, int index, DefaultSizeMode defaultSiz
     if (!d->m_convertingItemToContainer && item->isVisible())
         restoreChild(item);
 
-    if (!item->isContainer()) {
-        if (item->isVisible())
-            Q_EMIT root()->numVisibleItemsChanged(root()->numVisibleChildren());
-        Q_EMIT root()->numItemsChanged();
-    }
+    if (item->isVisible())
+        Q_EMIT root()->numVisibleItemsChanged(root()->numVisibleChildren());
+    Q_EMIT root()->numItemsChanged();
 }
 
 bool ItemContainer::hasChildren() const
