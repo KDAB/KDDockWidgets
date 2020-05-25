@@ -5201,7 +5201,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     auto m1 = createMainWindow();
     auto dock1 = createDockWidget("dock1", new QPushButton("foo"));
     dock1->show();
-    const QPoint targetPos = QPoint(340, 340);
+    QPoint targetPos = QPoint(340, 340);
     dock1->window()->move(targetPos);
     auto oldFw = dock1->window();
 
@@ -5214,27 +5214,30 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
 
     saver.restoreLayout(saved);
     QCOMPARE(dock1->window()->pos(), targetPos);
+    QCOMPARE(dock1->window()->frameGeometry().topLeft(), targetPos);
+
+    // Adjsut to what we got without the frame
+    targetPos = dock1->window()->geometry().topLeft();
 
     // Now dock it:
     m1->addDockWidget(dock1, Location_OnTop);
     QCOMPARE(dock1->lastPositions().lastFloatingGeometry().topLeft(), targetPos);
 
     dock1->setFloating(true);
-    QCOMPARE(dock1->window()->pos(), targetPos);
+    QCOMPARE(dock1->window()->geometry().topLeft(), targetPos);
 
     saver.restoreLayout(saved);
-    QCOMPARE(dock1->window()->pos(), targetPos);
+    QCOMPARE(dock1->window()->geometry().topLeft(), targetPos);
 
     // Dock again and save:
     m1->addDockWidget(dock1, Location_OnTop);
     saved = saver.serializeLayout();
     dock1->setFloating(true);
-    qDebug() << dock1->window()->geometry() << "bar";
     dock1->window()->move(0, 0);
     saver.restoreLayout(saved);
     QVERIFY(!dock1->isFloating());
     dock1->setFloating(true);
-    QCOMPARE(dock1->window()->pos(), targetPos);
+    QCOMPARE(dock1->window()->geometry().topLeft(), targetPos);
     delete dock1->window();
 }
 
