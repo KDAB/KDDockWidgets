@@ -519,12 +519,14 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
     return nullptr;
 }
 
-static DropArea* deepestDropAreaInTopLevel(QWidget *topLevel, QPoint globalPos)
+static DropArea* deepestDropAreaInTopLevel(QWidget *topLevel, QPoint globalPos,
+                                           const QStringList &affinities)
 {
     auto w = topLevel->childAt(topLevel->mapFromGlobal(globalPos));
     while (w) {
         if (auto dt = qobject_cast<DropArea *>(w)) {
-            return dt;
+            if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
+                return dt;
         }
         w = w->parentWidget();
     }
@@ -538,12 +540,16 @@ DropArea *DragController::dropAreaUnderCursor() const
     if (!topLevel)
         return nullptr;
 
+    const QStringList affinities = m_windowBeingDragged->floatingWindow()->affinities();
+
     if (auto dt = qobject_cast<DropArea *>(topLevel)) {
-        return dt;
+        if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
+            return dt;
     }
 
     if (auto fw = qobject_cast<FloatingWindow *>(topLevel)) {
-        return fw->dropArea();
+        if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
+            return fw->dropArea();
     }
 
     if (topLevel->objectName() == QStringLiteral("_docks_IndicatorWindow")) {
@@ -554,11 +560,13 @@ DropArea *DragController::dropAreaUnderCursor() const
     if (auto dock = qobject_cast<DockWidgetBase *>(topLevel)) {
         FloatingWindow *fw = dock->morphIntoFloatingWindow();
         m_windowBeingDragged->floatingWindow()->raise();
-        return fw->dropArea();
+        if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
+            return fw->dropArea();
     }
 
-    if (auto dt = deepestDropAreaInTopLevel(topLevel, QCursor::pos()))
+    if (auto dt = deepestDropAreaInTopLevel(topLevel, QCursor::pos(), affinities)) {
         return dt;
+    }
 
     qCDebug(state) << "DragController::dropAreaUnderCursor: null2";
     return nullptr;
