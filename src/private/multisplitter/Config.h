@@ -20,6 +20,8 @@
 
 #pragma once
 
+#include "multisplitter_export.h"
+
 #include <qglobal.h>
 
 namespace Layouting {
@@ -29,7 +31,7 @@ class Widget;
 
 typedef Separator* (*SeparatorFactoryFunc)(Layouting::Widget *parent);
 
-class Config {
+class MULTISPLITTER_EXPORT Config {
 public:
 
     enum class Flag {

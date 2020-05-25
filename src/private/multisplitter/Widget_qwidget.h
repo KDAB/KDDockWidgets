@@ -21,6 +21,7 @@
 #pragma once
 
 #include "Widget.h"
+#include "multisplitter_export.h"
 
 #include <QWidget>
 
@@ -29,10 +30,9 @@
 
 namespace Layouting {
 
-
 ///@brief A Layouting::Widget that's deals in QWidget
 /// Allows to host a QWidget in the layout
-class Widget_qwidget : public Widget
+class MULTISPLITTER_EXPORT Widget_qwidget : public Widget
 {
 public:
     explicit Widget_qwidget(QWidget *thisWidget)

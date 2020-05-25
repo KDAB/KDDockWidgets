@@ -20,6 +20,8 @@
 
 #pragma once
 
+#include "multisplitter_export.h"
+
 #include <QObject>
 #include <QVector>
 #include <QRect>
@@ -205,7 +207,7 @@ struct SizingInfo {
     bool isBeingInserted = false;
 };
 
-class Item : public QObject
+class MULTISPLITTER_EXPORT Item : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int x READ x NOTIFY xChanged)
@@ -359,7 +361,7 @@ private:
     Widget *m_guest = nullptr;
 };
 
-class ItemContainer : public Item
+class MULTISPLITTER_EXPORT ItemContainer : public Item
 {
     Q_OBJECT
 public:

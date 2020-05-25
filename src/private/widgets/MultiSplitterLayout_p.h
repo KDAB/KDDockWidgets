@@ -33,7 +33,7 @@
 #define KD_MULTISPLITTER_LAYOUT_P_H
 
 
-#include "Separator_p.h"
+#include "multisplitter/Separator_p.h"
 #include "docks_export.h"
 #include "KDDockWidgets.h"
 #include "LayoutSaver_p.h"

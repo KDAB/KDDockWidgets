@@ -1304,7 +1304,7 @@ void ItemContainer::updateSizeConstraints()
     Q_EMIT minSizeChanged(this);
 }
 
-void ItemContainer::onChildVisibleChanged(Item */*child*/, bool visible)
+void ItemContainer::onChildVisibleChanged(Item *, bool visible)
 {
     if (d->m_isDeserializing)
         return;

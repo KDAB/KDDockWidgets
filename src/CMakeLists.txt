@@ -145,7 +145,7 @@ endif()
 if (OPTION_QTQUICK)
     target_link_libraries(kddockwidgets Qt5::Widgets Qt5::Quick)
 else()
-    target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets PRIVATE kddockwidgets_layouting)
+    target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets PRIVATE kddockwidgets_multisplitter)
 endif()
 
 
@@ -154,7 +154,7 @@ if (NOT WIN32 AND NOT APPLE)
     target_link_libraries(kddockwidgets PUBLIC Qt5::X11Extras)
 endif()
 
-install (TARGETS kddockwidgets
+install (TARGETS kddockwidgets kddockwidgets_multisplitter
          EXPORT kddockwidgetsTargets
          RUNTIME DESTINATION bin
          LIBRARY DESTINATION lib
@@ -189,5 +189,5 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfig.cmake"
 
 if (OPTION_DEVELOPER_MODE)
     add_executable(kddockwidgets_linter layoutlinter_main.cpp)
-    target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_layouting Qt5::Widgets)
+    target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt5::Widgets)
 endif()
