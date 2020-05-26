@@ -308,6 +308,9 @@ public:
 
     LayoutSaver::MainWindow mainWindowForIndex(int index) const;
 
+    QStringList mainWindowNames() const;
+    QStringList dockWidgetNames() const;
+
     int serializationVersion = KDDOCKWIDGETS_SERIALIZATION_VERSION;
     LayoutSaver::MainWindow::List mainWindows;
     LayoutSaver::FloatingWindow::List floatingWindows;

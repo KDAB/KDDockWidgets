@@ -414,7 +414,7 @@ QVariantMap LayoutSaver::Layout::toVariantMap() const
     map.insert(QStringLiteral("serializationVersion"), serializationVersion);
     map.insert(QStringLiteral("mainWindows"), toVariantList<LayoutSaver::MainWindow>(mainWindows));
     map.insert(QStringLiteral("floatingWindows"), toVariantList<LayoutSaver::FloatingWindow>(floatingWindows));
-    map.insert(QStringLiteral("closedDockWidgets"), dockWidgetNames(closedDockWidgets));
+    map.insert(QStringLiteral("closedDockWidgets"), ::dockWidgetNames(closedDockWidgets));
     map.insert(QStringLiteral("allDockWidgets"), toVariantList(allDockWidgets));
     map.insert(QStringLiteral("screenInfo"), toVariantList<LayoutSaver::ScreenInfo>(screenInfo));
 
@@ -476,6 +476,28 @@ LayoutSaver::MainWindow LayoutSaver::Layout::mainWindowForIndex(int index) const
         return {};
 
     return mainWindows.at(index);
+}
+
+QStringList LayoutSaver::Layout::mainWindowNames() const
+{
+    QStringList names;
+    names.reserve(mainWindows.size());
+    for (const auto &mw : mainWindows) {
+        names << mw.uniqueName;
+    }
+
+    return names;
+}
+
+QStringList LayoutSaver::Layout::dockWidgetNames() const
+{
+    QStringList names;
+    names.reserve(allDockWidgets.size());
+    for (const auto &dw : allDockWidgets) {
+        names << dw->uniqueName;
+    }
+
+    return names;
 }
 
 bool LayoutSaver::Frame::isValid() const
