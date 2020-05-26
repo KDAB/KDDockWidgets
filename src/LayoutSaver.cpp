@@ -240,7 +240,10 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         layout.scaleSizes();
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
-    d->m_dockRegistry->clear(d->m_affinityNames);
+    // We only close the stuff that the loaded JSON knows about. Unknown widgets might be newer.
+    d->m_dockRegistry->clear(d->m_dockRegistry->dockWidgets(layout.dockWidgetNames()),
+                             d->m_dockRegistry->mainWindows(layout.mainWindowNames()),
+                             d->m_affinityNames);
 
     // 1. Restore main windows
     for (const LayoutSaver::MainWindow &mw : qAsConst(layout.mainWindows)) {
