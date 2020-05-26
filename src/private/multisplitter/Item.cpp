@@ -30,6 +30,14 @@
 #include <QGuiApplication>
 #include <QScreen>
 
+#ifdef Q_OS_WIN
+# pragma warning(push)
+# pragma warning(disable:4138)
+# pragma warning(disable:4244)
+# pragma warning(disable:4457)
+# pragma warning(disable:4702)
+#endif
+
 using namespace Layouting;
 
 int Layouting::Item::separatorThickness = 5;
@@ -3194,3 +3202,7 @@ int ItemContainer::Private::defaultLengthFor(Item *item, DefaultSizeMode mode) c
     result = qMax(item->minLength(m_orientation), result); // bound with max-size too
     return result;
 }
+
+#ifdef Q_OS_WIN
+# pragma warning(pop)
+#endif
