@@ -23,7 +23,8 @@
 #include "Item_p.h"
 #include "Separator_p.h"
 
-using namespace Layouting;
+namespace Layouting
+{
 
 Config::Config()
 {
@@ -91,4 +92,6 @@ void Config::setFlags(Flags flags)
     // validations here, if any
 
     m_flags = flags;
+}
+
 }
