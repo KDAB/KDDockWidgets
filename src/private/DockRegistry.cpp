@@ -96,6 +96,26 @@ bool DockRegistry::affinitiesMatch(const QStringList &affinities1, const QString
     return false;
 }
 
+QStringList DockRegistry::mainWindowsNames() const
+{
+    QStringList names;
+    names.reserve(m_mainWindows.size());
+    for (auto mw : m_mainWindows)
+        names.push_back(mw->uniqueName());
+
+    return names;
+}
+
+QStringList DockRegistry::dockWidgetNames() const
+{
+    QStringList names;
+    names.reserve(m_dockWidgets.size());
+    for (auto dw : m_dockWidgets)
+        names.push_back(dw->uniqueName());
+
+    return names;
+}
+
 MainWindowBase::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
 {
     MainWindowBase::List result;
@@ -276,6 +296,32 @@ bool DockRegistry::isSane() const
 const DockWidgetBase::List DockRegistry::dockwidgets() const
 {
     return m_dockWidgets;
+}
+
+const DockWidgetBase::List DockRegistry::dockWidgets(const QStringList &names)
+{
+    DockWidgetBase::List result;
+    result.reserve(names.size());
+
+    for (auto dw : m_dockWidgets) {
+        if (names.contains(dw->uniqueName()))
+            result.push_back(dw);
+    }
+
+    return result;
+}
+
+const MainWindowBase::List DockRegistry::mainWindows(const QStringList &names)
+{
+    MainWindowBase::List result;
+    result.reserve(names.size());
+
+    for (auto mw : m_mainWindows) {
+        if (names.contains(mw->uniqueName()))
+            result.push_back(mw);
+    }
+
+    return result;
 }
 
 const DockWidgetBase::List DockRegistry::closedDockwidgets() const

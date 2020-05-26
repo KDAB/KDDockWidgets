@@ -68,11 +68,17 @@ public:
     ///@brief returns all DockWidget instances
     const DockWidgetBase::List dockwidgets() const;
 
+    ///@brief overload returning only the ones with the specified names
+    const DockWidgetBase::List dockWidgets(const QStringList &names);
+
     ///@brief returns all closed DockWidget instances
     const DockWidgetBase::List closedDockwidgets() const;
 
     ///@brief returns all MainWindow instances
     const MainWindowBase::List mainwindows() const;
+
+    ///@brief overload returning only the ones with the specified names
+    const MainWindowBase::List mainWindows(const QStringList &names);
 
     ///@brief returns the list of MultiSplitterLayout instances
     const QVector<MultiSplitterLayout*> layouts() const;
@@ -152,6 +158,12 @@ public:
 
 
     bool affinitiesMatch(const QStringList &affinities1, const QStringList &affinities2) const;
+
+    /// @brief Returns a list of all known main window unique names
+    QStringList mainWindowsNames() const;
+
+    /// @brief Returns a list of all known dock widget unique names
+    QStringList dockWidgetNames() const;
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
