@@ -82,6 +82,8 @@ int main(int argc, char **argv)
     QCommandLineOption maximizeButton("b", QCoreApplication::translate("main", "DockWidgets have maximize/restore buttons instead of float/dock button"));
     parser.addOption(maximizeButton);
 
+    parser.addPositionalArgument("savedlayout", QCoreApplication::translate("main", "loads the specified json file at startup"));
+
 #ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
     QCommandLineOption dockableMainWindows("j", QCoreApplication::translate("main", "Allow main windows to be docked inside other main windows"));
     parser.addOption(dockableMainWindows);
@@ -196,6 +198,17 @@ int main(int argc, char **argv)
         mainWindowDockWidget->show();
         mainWindowDockWidget->resize(800, 800);
     }
+
+    const QStringList args = parser.positionalArguments();
+    if (args.size() >= 1) {
+        const QString sourceJsonFileName = args[0];
+        KDDockWidgets::LayoutSaver loader;
+        if (!loader.restoreFromFile(sourceJsonFileName)) {
+            qWarning() << Q_FUNC_INFO << "Failed to restore from" << sourceJsonFileName;
+            return 1;
+        }
+    }
+
 
     return app.exec();
 }
