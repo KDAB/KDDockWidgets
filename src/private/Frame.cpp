@@ -201,6 +201,13 @@ void Frame::onCurrentTabChanged(int index)
 
 void Frame::updateTitleBarVisibility()
 {
+    if (m_updatingTitleBar) {
+        // To break a cyclic dependency
+        return;
+    }
+
+    QScopedValueRollback<bool> guard(m_updatingTitleBar, true);
+
     bool visible = false;
     if (isCentralFrame()) {
         visible = false;
@@ -214,8 +221,11 @@ void Frame::updateTitleBarVisibility()
     }
 
     m_titleBar->setVisible(visible);
-    if (auto fw = floatingWindow())
+    if (auto fw = floatingWindow()) {
+        // Update the floating window which might be using Flag_HideTitleBarWhenTabsVisible
+        // In that case it might not show title bar depending on the number of tabs that the frame has
         fw->updateTitleBarVisibility();
+    }
 }
 
 bool Frame::containsMouse(QPoint globalPos) const

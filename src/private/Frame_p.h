@@ -223,6 +223,7 @@ private:
     DropArea *m_dropArea = nullptr;
     const FrameOptions m_options;
     QPointer<Layouting::Item> m_layoutItem;
+    bool m_updatingTitleBar = false;
     bool m_beingDeleted = false;
     QMetaObject::Connection m_visibleWidgetCountChangedConnection;
 };

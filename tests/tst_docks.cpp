@@ -5301,6 +5301,32 @@ void TestDocks::tst_moreTitleBarCornerCases()
         delete fw1;
         delete fw2;
     }
+
+    {
+        // Tests that restoring a single floating dock widget doesn't make it show two title-bars
+        // As reproduced myself... and fixed in this commit
+
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
+        dock1->show();
+
+        auto fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+        QVERIFY(!dock1->frame()->titleBar()->isVisible());
+        QVERIFY(fw1->titleBar()->isVisible());
+
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
+        saver.restoreLayout(saved);
+
+        delete fw1; // the old window
+
+        fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+        QVERIFY(dock1->isVisible());
+        QVERIFY(!dock1->frame()->titleBar()->isVisible());
+        QVERIFY(fw1->titleBar()->isVisible());
+        delete dock1->window();
+    }
+
 }
 
 int main(int argc, char *argv[])

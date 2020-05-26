@@ -336,6 +336,9 @@ void FloatingWindow::updateTitleBarVisibility()
                 visible = !frames().first()->hasTabsVisible();
             }
         }
+
+        for (Frame *frame : frames())
+            frame->updateTitleBarVisibility();
     }
 
     m_titleBar->setVisible(visible);
@@ -390,6 +393,7 @@ void FloatingWindow::onCloseEvent(QCloseEvent *e)
 bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
 {
     if (dropArea()->multiSplitterLayout()->deserialize(fw.multiSplitterLayout)) {
+        updateTitleBarVisibility();
         show();
         return true;
     } else {
