@@ -316,6 +316,7 @@ private Q_SLOTS:
     void tst_restoreAfterResize();
     void tst_restoreWithAffinity();
     void tst_marginsAfterRestore();
+    void tst_restoreWithNewDockWidgets();
     void tst_restoreEmbeddedMainWindow();
     void tst_restoreWithDockFactory();
     void tst_restoreResizesLayout();
@@ -1560,6 +1561,25 @@ void TestDocks::tst_marginsAfterRestore()
 
         layout->checkSanity();
     }
+}
+
+void TestDocks::tst_restoreWithNewDockWidgets()
+{
+    // Tests that if the LayoutSaver doesn't know about some dock widget
+    // when it saves the layout, then it won't close it when restoring layout
+    // it will just be ignored.
+    EnsureTopLevelsDeleted e;
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    auto dock1 = createDockWidget("dock1", new QPushButton("dock1"));
+    dock1->show();
+
+    QVERIFY(saver.restoreLayout(saved));
+    QVERIFY(dock1->isVisible());
+
+    delete dock1->window();
 }
 
 void TestDocks::tst_addDockWidgetAsTabToDockWidget()
