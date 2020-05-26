@@ -395,40 +395,25 @@ QVector<QWidget *> DockRegistry::topLevels(bool excludeFloatingDocks) const
     return windows;
 }
 
-void DockRegistry::clear()
-{
-    for (auto dw : qAsConst(m_dockWidgets)) {
-        dw->forceClose();
-        dw->lastPositions().removePlaceholders();
-    }
-
-    for (auto mw : qAsConst(m_mainWindows))
-        mw->multiSplitterLayout()->rootItem()->clear();
-
-    qCDebug(restoring) << Q_FUNC_INFO << "; dockwidgets=" << m_dockWidgets.size()
-                       << "; nestedwindows=" << m_nestedWindows.size();
-}
-
 void DockRegistry::clear(QStringList affinities)
 {
-    if (affinities.isEmpty()) {
-        // Just clear everything
-        clear();
-        return;
-    }
+    // Clears everything
+    clear(m_dockWidgets, m_mainWindows, affinities);
+}
 
-     // empty affinity also matches and will be closed
-    affinities << QString();
-
-    for (auto dw : qAsConst(m_dockWidgets)) {
-        if (affinitiesMatch(affinities, dw->affinities())) {
+void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
+                         const MainWindowBase::List &mainWindows,
+                         QStringList affinities)
+{
+    for (auto dw : qAsConst(dockWidgets)) {
+        if (affinities.isEmpty() || affinitiesMatch(affinities, dw->affinities())) {
             dw->forceClose();
             dw->lastPositions().removePlaceholders();
         }
     }
 
-    for (auto mw : qAsConst(m_mainWindows)) {
-        if (affinitiesMatch(affinities, mw->affinities())) {
+    for (auto mw : qAsConst(mainWindows)) {
+        if (affinities.isEmpty() || affinitiesMatch(affinities, mw->affinities())) {
             mw->multiSplitterLayout()->rootItem()->clear();
         }
     }

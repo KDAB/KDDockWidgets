@@ -105,15 +105,18 @@ public:
     QVector<QWidget*> topLevels(bool excludeFloatingDocks = false) const;
 
     /**
-     * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Separators.
+     * @brief Closes all dock widgets, and destroys all FloatingWindows
      * This is called before restoring a layout.
+     * @param affinities if specified only closes dock widgets and main windows with the specified affinities
      */
-    void clear();
+    void clear(QStringList affinities = {});
 
     /**
-     * @brief Closes all dock widgets, destroys all FloatingWindow, Item and Separators with the specified affinities.
+     * @brief clear Overload that only clears the specified dockWidgets and main windows.
      */
-    void clear(QStringList affinities);
+    void clear(const DockWidgetBase::List &dockWidgets,
+               const MainWindowBase::List &mainWindows,
+               QStringList affinities);
 
     /**
      * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.
