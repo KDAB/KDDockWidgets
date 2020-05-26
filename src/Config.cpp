@@ -35,7 +35,8 @@
 #include <QDebug>
 #include <QOperatingSystemVersion>
 
-using namespace KDDockWidgets;
+namespace KDDockWidgets
+{
 
 class Config::Private
 {
@@ -191,4 +192,6 @@ void Config::Private::fixFlags()
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
     m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
 #endif
+}
+
 }
