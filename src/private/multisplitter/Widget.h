@@ -58,7 +58,7 @@ public:
     virtual void setLayoutItem(Item *) = 0;
     virtual QWidget *asQWidget() const = 0; // TODO: Move down
     virtual QSize minSize() const = 0;
-    virtual QSize maxSize() const = 0;
+    virtual QSize maxSizeHint() const = 0;
     virtual QRect geometry() const = 0;
     virtual void setGeometry(QRect) = 0;
     virtual void setParent(Widget *) = 0;

@@ -48,7 +48,7 @@ public:
     }
 
     QSize minSize() const override;
-    QSize maxSize() const override;
+    QSize maxSizeHint() const override;
     QRect geometry() const override;
     void setGeometry(QRect) override;
     void setParent(Widget *) override;

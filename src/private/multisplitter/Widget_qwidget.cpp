@@ -34,7 +34,7 @@ QSize Widget_qwidget::minSize() const
     return widgetMinSize(m_thisWidget);
 }
 
-QSize Widget_qwidget::maxSize() const
+QSize Widget_qwidget::maxSizeHint() const
 {
     return m_thisWidget->maximumSize();
 }

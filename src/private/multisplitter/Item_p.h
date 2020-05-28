@@ -139,7 +139,7 @@ struct SizingInfo {
     }
 
     int maxLength(Qt::Orientation o) const {
-        return Layouting::length(maxSize, o);
+        return Layouting::length(maxSizeHint, o);
     }
 
     int availableLength(Qt::Orientation o) const {
@@ -202,7 +202,7 @@ struct SizingInfo {
     typedef QVector<SizingInfo> List;
     QRect geometry;
     QSize minSize = QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
-    QSize maxSize = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT); // TODO: Not supported yet
+    QSize maxSizeHint = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT); // TODO: Not supported yet
     double percentageWithinParent = 0.0;
     bool isBeingInserted = false;
 };
@@ -272,7 +272,7 @@ public:
     bool isContainer() const;
     ItemContainer *parentContainer() const;
     void setMinSize(QSize);
-    void setMaxSize(QSize);
+    void setMaxSizeHint(QSize);
     bool isPlaceholder() const;
     void setGeometry(QRect rect);
     ItemContainer *root() const;
@@ -301,7 +301,7 @@ public:
     QVector<int> pathFromRoot() const;
 
     virtual QSize minSize() const;
-    virtual QSize maxSize() const;
+    virtual QSize maxSizeHint() const;
     virtual void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage);
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(QRect rect);
@@ -385,7 +385,7 @@ public:
     int visibleCount_recursive() const override;
     int count_recursive() const;
     QSize minSize() const override;
-    QSize maxSize() const override;
+    QSize maxSizeHint() const override;
     QSize availableSize() const;
     Item* itemForWidget(const Widget *w) const;
     Item::List items_recursive() const;

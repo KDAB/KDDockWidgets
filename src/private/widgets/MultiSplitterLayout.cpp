@@ -380,7 +380,7 @@ QRect MultiSplitterLayout::rectForDrop(const QWidgetOrQuick *widget, Location lo
     Layouting::Item item(nullptr);
     item.setSize(widget->size());
     item.setMinSize(Layouting::Widget_qwidget::widgetMinSize(widget));
-    item.setMaxSize(widget->maximumSize());
+    item.setMaxSizeHint(widget->maximumSize());
 
     Layouting::ItemContainer *container = relativeTo ? relativeTo->parentContainer()
                                                      : m_rootItem;

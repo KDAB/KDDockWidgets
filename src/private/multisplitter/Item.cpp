@@ -185,7 +185,7 @@ void Item::setGuestWidget(Widget *guest)
         newWidget->installEventFilter(this);
         m_guest->setParent(m_hostWidget);
         setMinSize(guest->minSize());
-        setMaxSize(guest->maxSize());
+        setMaxSizeHint(guest->maxSizeHint());
 
         connect(newWidget, &QObject::objectNameChanged, this, &Item::updateObjectName);
         connect(newWidget, &QObject::destroyed, this, &Item::onWidgetDestroyed);
@@ -430,10 +430,10 @@ void Item::setMinSize(QSize sz)
     }
 }
 
-void Item::setMaxSize(QSize sz)
+void Item::setMaxSizeHint(QSize sz)
 {
-    if (sz != m_sizingInfo.maxSize) {
-        m_sizingInfo.maxSize = sz;
+    if (sz != m_sizingInfo.maxSizeHint) {
+        m_sizingInfo.maxSizeHint = sz;
         Q_EMIT maxSizeChanged(this);
     }
 }
@@ -443,9 +443,9 @@ QSize Item::minSize() const
     return m_sizingInfo.minSize;
 }
 
-QSize Item::maxSize() const
+QSize Item::maxSizeHint() const
 {
-    return m_sizingInfo.maxSize;
+    return m_sizingInfo.maxSizeHint;
 }
 
 void Item::setPos(QPoint pos)
@@ -727,8 +727,8 @@ void Item::dumpLayout(int level)
          << m_sizingInfo.geometry// << "r=" << m_geometry.right() << "b=" << m_geometry.bottom()
          << "; min=" << minSize();
 
-    if (maxSize() != QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT))
-        dbg << "; max=" << maxSize();
+    if (maxSizeHint() != QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT))
+        dbg << "; max=" << maxSizeHint();
 
     if (!isVisible())
         dbg << QStringLiteral(";hidden;");
@@ -1794,7 +1794,7 @@ QSize ItemContainer::minSize() const
     return QSize(minW, minH);
 }
 
-QSize ItemContainer::maxSize() const
+QSize ItemContainer::maxSizeHint() const
 {
     int maxW = 0;
     int maxH = 0;
@@ -1803,11 +1803,11 @@ QSize ItemContainer::maxSize() const
         const Item::List visibleChildren = this->visibleChildren();
         for (Item *item : visibleChildren) {
             if (isVertical()) {
-                maxW = qMin(maxW, item->maxSize().width());
-                maxH += item->maxSize().height();
+                maxW = qMin(maxW, item->maxSizeHint().width());
+                maxH += item->maxSizeHint().height();
             } else {
-                maxH = qMin(maxH, item->maxSize().height());
-                maxW += item->maxSize().width();
+                maxH = qMin(maxH, item->maxSizeHint().height());
+                maxW += item->maxSizeHint().width();
             }
         }
 
@@ -3162,7 +3162,7 @@ QVariantMap SizingInfo::toVariantMap() const
     QVariantMap result;
     result[QStringLiteral("geometry")] = rectToMap(geometry);
     result[QStringLiteral("minSize")] = sizeToMap(minSize);
-    result[QStringLiteral("maxSize")] = sizeToMap(maxSize);
+    result[QStringLiteral("maxSize")] = sizeToMap(maxSizeHint);
     return result;
 }
 
@@ -3171,7 +3171,7 @@ void SizingInfo::fromVariantMap(const QVariantMap &map)
     *this = SizingInfo(); // reset any non-important fields to their default
     geometry = mapToRect(map[QStringLiteral("geometry")].toMap());
     minSize = mapToSize(map[QStringLiteral("minSize")].toMap());
-    maxSize = mapToSize(map[QStringLiteral("maxSize")].toMap());
+    maxSizeHint = mapToSize(map[QStringLiteral("maxSize")].toMap());
 }
 
 int ItemContainer::Private::defaultLengthFor(Item *item, DefaultSizeMode mode) const
