@@ -181,12 +181,12 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
     if (count == 1)
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
 
+    auto myWidget = newMyWidget();
     if (count == 8 && m_maxSizeForDockWidget8) {
         // Set a maximum size on dock #8
-        dock->setMaximumSize(200, 200);
+        myWidget->setMaximumSize(200, 200);
     }
 
-    auto myWidget = newMyWidget();
     dock->setWidget(myWidget);
 
     if (dock->options() & KDDockWidgets::DockWidget::Option_NotDockable) {
