@@ -581,3 +581,20 @@ QSize Frame::dockWidgetsMinSize() const
     return size;
 }
 
+QSize Frame::biggestDockWidgetMaxSize() const
+{
+    QSize size = Layouting::Item::hardcodedMaximumSize;
+    for (DockWidgetBase *dw : dockWidgets()) {
+        if (size == Layouting::Item::hardcodedMaximumSize) {
+            size = dw->maximumSize();
+            continue;
+        }
+
+        const bool hasMaxSize = dw->maximumSize() != Layouting::Item::hardcodedMaximumSize;
+        if (hasMaxSize)
+            size = dw->maximumSize().expandedTo(size);
+    }
+
+    return size;
+}
+

@@ -42,6 +42,7 @@ using namespace Layouting;
 
 int Layouting::Item::separatorThickness = 5;
 const QSize Layouting::Item::hardcodedMinimumSize = QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
+const QSize Layouting::Item::hardcodedMaximumSize = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT);
 
 inline bool locationIsVertical(Item::Location loc)
 {

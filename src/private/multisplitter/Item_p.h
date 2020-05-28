@@ -257,6 +257,7 @@ public:
      * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.
      */
     static const QSize hardcodedMinimumSize;
+    static const QSize hardcodedMaximumSize;
     static int separatorThickness;
 
     int x() const;

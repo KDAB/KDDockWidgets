@@ -218,6 +218,19 @@ protected:
      */
     QSize dockWidgetsMinSize() const;
 
+    /**
+     * @brief Returns the biggest combined maxSize of all dock widgets.
+     *
+     * Example:
+     *   dock 1, max=2000x1000
+     *   dock 2, max=3000x400
+     *   dock3, max=
+     *   result=3000,1000
+     *
+     * Any widget having 16777215x16777215 is ignored (represents not having a max-size, QWIDGETSIZE_MAX)
+     */
+    QSize biggestDockWidgetMaxSize() const;
+
 private:
     Q_DISABLE_COPY(Frame)
     friend class TestDocks;
