@@ -354,6 +354,7 @@ private Q_SLOTS:
     void tst_dockableMainWindows();
     void tst_lastFloatingPositionIsRestored();
     void tst_moreTitleBarCornerCases();
+    void tst_maxSizePropagates();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5327,6 +5328,21 @@ void TestDocks::tst_moreTitleBarCornerCases()
         delete dock1->window();
     }
 
+}
+
+void TestDocks::tst_maxSizePropagates()
+{
+    {
+        auto dock1 = new DockWidget("dock1");
+        auto w = new QWidget();
+        w->setMaximumSize(200, 200);
+        dock1->setWidget(w);
+
+        QEXPECT_FAIL("", "Work in progress", Continue);
+        QCOMPARE(dock1->maximumSize(), w->maximumSize());
+        qDebug() << dock1->maximumSize() << w->maximumSize();
+        delete dock1->window();
+    }
 }
 
 int main(int argc, char *argv[])
