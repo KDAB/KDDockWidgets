@@ -209,6 +209,14 @@ Q_SIGNALS:
     void hasTabsVisibleChanged();
     void layoutInvalidated();
     void isInMainWindowChanged();
+protected:
+
+    /**
+     * @brief Returns the minimum size of the dock widgets.
+     * This might be slightly smaller than Frame::minSize() due to the QTabWidget having some margins
+     * and tab bar.
+     */
+    QSize dockWidgetsMinSize() const;
 
 private:
     Q_DISABLE_COPY(Frame)
