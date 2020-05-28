@@ -40,6 +40,9 @@ public:
     {
         layout->setSpacing(0);
         layout->setContentsMargins(0, 0, 0, 0);
+
+        // propagate the max-size constraints from the guest widget to the DockWidget
+        layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
     }
 
     QVBoxLayout *const layout;

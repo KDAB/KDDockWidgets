@@ -5333,14 +5333,18 @@ void TestDocks::tst_moreTitleBarCornerCases()
 void TestDocks::tst_maxSizePropagates()
 {
     {
-        auto dock1 = new DockWidget("dock1");
-        auto w = new QWidget();
-        w->setMaximumSize(200, 200);
-        dock1->setWidget(w);
+        // Tests that the DockWidget gets the min and max size of its guest widget
 
-        QEXPECT_FAIL("", "Work in progress", Continue);
+        auto dock1 = new DockWidget("dock1");
+
+        auto w = new QWidget();
+        w->setMinimumSize(120, 120);
+        w->setMaximumSize(500, 500);
+        dock1->setWidget(w);
+        dock1->show();
+
+        QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
         QCOMPARE(dock1->maximumSize(), w->maximumSize());
-        qDebug() << dock1->maximumSize() << w->maximumSize();
         delete dock1->window();
     }
 }
