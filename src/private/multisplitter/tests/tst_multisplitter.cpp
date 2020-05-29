@@ -69,6 +69,19 @@ public:
         }
     }
 
+    void setMaxSize(QSize sz)
+    {
+        if (sz != m_maxSize) {
+            m_maxSize = sz;
+            Q_EMIT layoutInvalidated();
+        }
+    }
+
+
+    QSize maxSizeHint() const override {
+        return m_maxSize;
+    }
+
     void resizeEvent(QResizeEvent *ev) override
     {
         QWidget::resizeEvent(ev);
@@ -97,6 +110,7 @@ Q_SIGNALS:
     void layoutInvalidated();
 private:
     QSize m_minSize = QSize(200, 200);
+    QSize m_maxSize = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT);
 };
 
 static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
@@ -181,6 +195,7 @@ private Q_SLOTS:
     void tst_closeAndRestorePreservesPosition();
     void tst_minSizeChangedBeforeRestore();
     void tst_separatorMoveCrash();
+    void tst_maxSizeHonoured1();
 };
 
 class MyHostWidget : public QWidget
@@ -1526,6 +1541,24 @@ void TestMultiSplitter::tst_separatorMoveCrash()
 
     // Separator squeezes item5 and starts squeezing item6 by 10px
     c->requestSeparatorMove(separator, available5 + 10);
+}
+
+void TestMultiSplitter::tst_maxSizeHonoured1()
+{
+    // Tests that the suggested rect honours max size when adding an item to a layout.
+
+    auto root = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+    root->insertItem(item1, Item::Location_OnTop);
+    root->setSize_recursive(QSize(3000, 3000));
+
+    auto guest2 = static_cast<MyGuestWidget*>(item2->guestWidget());
+    const int maxHeight = 250;
+    guest2->setMaxSize(QSize(250, maxHeight));
+
+    root->insertItem(item2, Item::Location_OnBottom);
+    QCOMPARE(item2->height(), maxHeight);
 }
 
 int main(int argc, char *argv[])

@@ -355,6 +355,7 @@ private Q_SLOTS:
     void tst_lastFloatingPositionIsRestored();
     void tst_moreTitleBarCornerCases();
     void tst_maxSizePropagates();
+    void tst_maxSizeHonouredWhenDropped();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5332,34 +5333,55 @@ void TestDocks::tst_moreTitleBarCornerCases()
 
 void TestDocks::tst_maxSizePropagates()
 {
-    {
-        // Tests that the DockWidget gets the min and max size of its guest widget
+    // Tests that the DockWidget gets the min and max size of its guest widget
+    EnsureTopLevelsDeleted e;
+    auto dock1 = new DockWidget("dock1");
 
-        auto dock1 = new DockWidget("dock1");
+    auto w = new QWidget();
+    w->setMinimumSize(120, 120);
+    w->setMaximumSize(500, 500);
+    dock1->setWidget(w);
+    dock1->show();
 
-        auto w = new QWidget();
-        w->setMinimumSize(120, 120);
-        w->setMaximumSize(500, 500);
-        dock1->setWidget(w);
-        dock1->show();
+    QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
+    QCOMPARE(dock1->maximumSize(), w->maximumSize());
 
-        QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
-        QCOMPARE(dock1->maximumSize(), w->maximumSize());
+    w->setMinimumSize(121, 121);
+    w->setMaximumSize(501, 501);
 
-        w->setMinimumSize(121, 121);
-        w->setMaximumSize(501, 501);
+    Testing::waitForEvent(w, QEvent::LayoutRequest);
 
-        Testing::waitForEvent(w, QEvent::LayoutRequest);
+    QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
+    QCOMPARE(dock1->maximumSize(), w->maximumSize());
 
-        QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
-        QCOMPARE(dock1->maximumSize(), w->maximumSize());
+    // Now let's see if our Frame also has proper size-constraints
+    Frame *frame = dock1->frame();
+    QCOMPARE(frame->maximumSize().expandedTo(w->maximumSize()), frame->maximumSize());
 
-        // Now let's see if our Frame also has proper size-constraints
-        Frame *frame = dock1->frame();
-        QCOMPARE(frame->maximumSize().expandedTo(w->maximumSize()), frame->maximumSize());
+    delete dock1->window();
+}
 
-        delete dock1->window();
-    }
+void TestDocks::tst_maxSizeHonouredWhenDropped()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow();
+    auto dock1 = new DockWidget("dock1");
+    auto dock2 = new DockWidget("dock2");
+    m1->addDockWidget(dock1, Location_OnTop);
+    m1->resize(2000, 2000);
+
+    dock2->setWidget(new QWidget);
+    const int maxWidth = 200;
+    dock2->widget()->setMaximumSize(maxWidth, 200);
+    m1->addDockWidget(dock2, Location_OnLeft);
+    const int droppedWidth = dock2->frame()->width();
+    QVERIFY(droppedWidth < maxWidth + 50); // +50 to cover any margins and waste by QTabWidget
+
+    // Try again, but now dropping a multisplitter
+    dock2->setFloating(true);
+    auto fw = qobject_cast<FloatingWindow*>(dock2->window());
+    m1->dropArea()->drop(fw, Location_OnLeft, nullptr);
+    QCOMPARE(dock2->frame()->width(), droppedWidth);
 }
 
 int main(int argc, char *argv[])

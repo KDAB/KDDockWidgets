@@ -138,8 +138,8 @@ struct SizingInfo {
         return Layouting::length(minSize, o);
     }
 
-    int maxLength(Qt::Orientation o) const {
-        return Layouting::length(maxSizeHint, o);
+    int maxLengthHint(Qt::Orientation o) const {
+        return qMax(minLength(o), Layouting::length(maxSizeHint, o));
     }
 
     int availableLength(Qt::Orientation o) const {
@@ -193,7 +193,7 @@ struct SizingInfo {
     }
 
     int availableToGrow(Qt::Orientation o) const {
-        return maxLength(o) - length(o);
+        return maxLengthHint(o) - length(o);
     }
 
     QVariantMap toVariantMap() const;
@@ -294,6 +294,7 @@ public:
     int refCount() const;
 
     int minLength(Qt::Orientation) const;
+    int maxLengthHint(Qt::Orientation) const;
 
     QObject *host() const;
     Widget *hostWidget() const;

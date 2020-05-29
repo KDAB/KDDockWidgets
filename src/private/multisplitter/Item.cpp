@@ -562,6 +562,11 @@ int Item::minLength(Qt::Orientation o) const
     return Layouting::length(minSize(), o);
 }
 
+int Item::maxLengthHint(Qt::Orientation o) const
+{
+    return Layouting::length(maxSizeHint(), o);
+}
+
 void Item::setLength(int length, Qt::Orientation o)
 {
     Q_ASSERT(length > 0);
@@ -833,6 +838,8 @@ void Item::onWidgetLayoutRequested()
         if (w->minSize() != minSize()) {
             setMinSize(m_guest->minSize());
         }
+
+        setMaxSizeHint(w->maxSizeHint());
     }
 }
 
@@ -1797,8 +1804,8 @@ QSize ItemContainer::minSize() const
 
 QSize ItemContainer::maxSizeHint() const
 {
-    int maxW = 0;
-    int maxH = 0;
+    int maxW = KDDOCKWIDGETS_MAX_WIDTH;
+    int maxH = KDDOCKWIDGETS_MAX_HEIGHT;
 
     if (!isEmpty()) {
         const Item::List visibleChildren = this->visibleChildren();
@@ -1819,7 +1826,7 @@ QSize ItemContainer::maxSizeHint() const
             maxW += separatorWaste;
     }
 
-    return { maxW, maxH };
+    return QSize(maxW, maxH).expandedTo(minSize());
 }
 
 void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &childSizes,
@@ -2087,7 +2094,7 @@ void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourS
 
     const int available = availableOnSide(item, Side1) + availableOnSide(item, Side2) - Item::separatorThickness;
 
-    const int max = available;
+    const int max = qMin(available, item->maxLengthHint(d->m_orientation));
     const int min = item->minLength(d->m_orientation);
     const int proposed = Layouting::length(item->size(), d->m_orientation);
     const int newLength = qBound(min, proposed, max);
@@ -2289,7 +2296,7 @@ void ItemContainer::layoutEqually(SizingInfo::List &sizes)
 
             const int newItemLenght = qBound(size.minLength(d->m_orientation),
                                              size.length(d->m_orientation) + suggestedToGive,
-                                             size.maxLength(d->m_orientation));
+                                             size.maxLengthHint(d->m_orientation));
             const int toGive = newItemLenght - size.length(d->m_orientation);
 
             if (toGive == 0) {
