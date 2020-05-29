@@ -41,6 +41,7 @@ public:
     QTabBar *tabBar() const;
 protected:
     void paintEvent(QPaintEvent *) override;
+    QSize maxSizeHint() const override;
 };
 
 

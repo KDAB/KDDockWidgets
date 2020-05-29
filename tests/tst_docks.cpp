@@ -5345,6 +5345,19 @@ void TestDocks::tst_maxSizePropagates()
 
         QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
         QCOMPARE(dock1->maximumSize(), w->maximumSize());
+
+        w->setMinimumSize(121, 121);
+        w->setMaximumSize(501, 501);
+
+        Testing::waitForEvent(w, QEvent::LayoutRequest);
+
+        QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
+        QCOMPARE(dock1->maximumSize(), w->maximumSize());
+
+        // Now let's see if our Frame also has proper size-constraints
+        Frame *frame = dock1->frame();
+        QCOMPARE(frame->maximumSize().expandedTo(w->maximumSize()), frame->maximumSize());
+
         delete dock1->window();
     }
 }

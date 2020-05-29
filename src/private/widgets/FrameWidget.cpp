@@ -76,6 +76,13 @@ void FrameWidget::paintEvent(QPaintEvent *)
     }
 }
 
+QSize FrameWidget::maxSizeHint() const
+{
+    // waste due to QTabWidget margins, tabbar etc.
+    const QSize waste = minSize() - dockWidgetsMinSize();
+    return waste + biggestDockWidgetMaxSize();
+}
+
 QTabBar *FrameWidget::tabBar() const
 {
     auto tw = static_cast<QTabWidget*>(tabWidget()->asWidget());
