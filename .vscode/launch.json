@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "kddockwidgets_example",
+            "name": "(gdb) kddockwidgets_example",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/kddockwidgets_example",
@@ -21,7 +21,7 @@
             ]
         },
         {
-            "name": "kddockwidgets_example",
+            "name": "(vs) kddockwidgets_example",
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/kddockwidgets_example.exe",
@@ -32,7 +32,7 @@
             "externalConsole": false
         },
         {
-            "name": "tst_docks",
+            "name": "(vs) tst_docks",
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/tst_docks.exe",

@@ -1,3 +1,9 @@
 {
-    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools"
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
+    "files.associations": {
+        "qevent": "cpp"
+    },
+    "cmake.configureSettings": {
+        "OPTION_DEVELOPER_MODE" : "ON"
+    }
 }
