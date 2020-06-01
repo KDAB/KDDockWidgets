@@ -1088,7 +1088,7 @@ bool ItemContainer::checkSanity()
         const int separatorMaxPos = maxPosForSeparator_global(separator);
         const int separatorPos = separator->position();
         if (separatorPos < separatorMinPos || separatorPos > separatorMaxPos ||
-                separatorMinPos <= 0 || separatorMaxPos <= 0) {
+                separatorMinPos < 0 || separatorMaxPos <= 0) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Invalid bounds for separator, pos="
                        << separatorPos << "; min=" << separatorMinPos
