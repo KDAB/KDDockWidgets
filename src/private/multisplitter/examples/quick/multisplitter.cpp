@@ -81,12 +81,16 @@ MultiSplitter::MultiSplitter()
     connect(this, &QQuickItem::heightChanged, this, &MultiSplitter::onSizeChanged);
 }
 
+MultiSplitter::~MultiSplitter()
+{
+    delete m_rootContainer;
+}
+
 void MultiSplitter::addItem(const QString &filename, Layouting::Item::Location loc)
 {
     auto item = new Item(this);
     item->setGuestWidget(new QuickItem(filename, this));
     m_rootContainer->insertItem(item, loc);
-
 
 }
 

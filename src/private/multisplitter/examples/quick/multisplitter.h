@@ -36,6 +36,7 @@ class MultiSplitter
     Q_OBJECT
 public:
     MultiSplitter();
+    ~MultiSplitter() override;
     void addItem(const QString &filename, Layouting::Item::Location);
 
 private:
