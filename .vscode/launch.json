@@ -29,7 +29,10 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false
+            "externalConsole": false,
+            "sourceFileMap" : {
+                "C:\\Users\\qt\\work\\qt\\qtbase\\src" : "D:\\Qt\\5.14.2\\Src\\qtbase\\src"
+            }
         },
         {
             "name": "(vs) tst_docks",
