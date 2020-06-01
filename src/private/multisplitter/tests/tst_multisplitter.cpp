@@ -21,7 +21,7 @@
 #include "Item_p.h"
 #include "Separator_p.h"
 #include "Widget_qwidget.h"
-#include "Config.h"
+#include "MultiSplitterConfig.h"
 #include "Separator_qwidget.h"
 
 #include <QPainter>

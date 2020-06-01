@@ -22,7 +22,7 @@
 #include "Separator_p.h"
 #include "Logging_p.h"
 #include "Item_p.h"
-#include "Config.h"
+#include "MultiSplitterConfig.h"
 
 #include <QGuiApplication>
 

@@ -1,13 +1,13 @@
 set(MULTISPLITTER_SRCS
-    Config.cpp
-    Config.h
     Item.cpp
     Item_p.h
-    Widget.h
     Logging.cpp
     Logging_p.h
+    MultiSplitterConfig.cpp
+    MultiSplitterConfig.h
     Separator.cpp
     Separator_p.h
+    Widget.h
     multisplitter_export.h
 )
 

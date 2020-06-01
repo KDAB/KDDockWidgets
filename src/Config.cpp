@@ -26,7 +26,7 @@
  */
 
 #include "Config.h"
-#include "multisplitter/Config.h"
+#include "multisplitter/MultiSplitterConfig.h"
 #include "multisplitter/Widget_qwidget.h"
 #include "DockRegistry_p.h"
 #include "FrameworkWidgetFactory.h"

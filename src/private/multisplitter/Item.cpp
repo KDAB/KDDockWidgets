@@ -20,7 +20,7 @@
 
 #include "Item_p.h"
 #include "Separator_p.h"
-#include "Config.h"
+#include "MultiSplitterConfig.h"
 #include "Widget.h"
 
 #include <QEvent>

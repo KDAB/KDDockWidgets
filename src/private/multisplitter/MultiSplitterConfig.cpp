@@ -19,7 +19,7 @@
 */
 
 #include "Widget_qwidget.h"
-#include "Config.h"
+#include "MultiSplitterConfig.h"
 #include "Item_p.h"
 #include "Separator_p.h"
 

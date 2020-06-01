@@ -21,7 +21,7 @@
 #include "controller.h"
 #include "Item_p.h"
 #include "multisplitter.h"
-#include "Config.h"
+#include "MultiSplitterConfig.h"
 #include "Separator_quick.h"
 
 #include <QGuiApplication>
