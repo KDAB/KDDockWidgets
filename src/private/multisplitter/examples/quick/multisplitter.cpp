@@ -44,7 +44,7 @@ public:
 
     QSize minSize() const override
     {
-        return QSize(100, 100);
+        return QSize(150, 150);
     }
 
 Q_SIGNALS:
