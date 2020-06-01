@@ -39,7 +39,9 @@ if (BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
     add_definitions(-DKDMULTISPLITTER_QTQUICK)
 endif()
 
-add_library(kddockwidgets_multisplitter SHARED ${MULTISPLITTER_SRCS})
+qt5_add_resources(MULTISPLITTER_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/multisplitter.qrc)
+
+add_library(kddockwidgets_multisplitter SHARED ${MULTISPLITTER_SRCS} ${MULTISPLITTER_RESOURCES})
 add_library(KDAB::kddockwidgets_multisplitter ALIAS kddockwidgets_multisplitter)
 target_link_libraries(kddockwidgets_multisplitter Qt5::Core Qt5::Widgets)
 

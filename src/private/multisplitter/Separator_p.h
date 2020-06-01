@@ -54,7 +54,6 @@ public:
 
     ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other work while we're not in the final size
     static bool isResizing();
-
     virtual Widget* asWidget() = 0;
 
 protected:

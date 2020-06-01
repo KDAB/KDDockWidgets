@@ -41,7 +41,7 @@ struct Separator::Private
     Private(Widget *host)
         : m_hostWidget(host) {}
 
-    Qt::Orientation orientation;
+    Qt::Orientation orientation = Qt::Horizontal;
     QRect geometry;
     int lazyPosition = 0;
     // SeparatorOptions m_options; TODO: Have a Layouting::Config

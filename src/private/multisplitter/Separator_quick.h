@@ -35,12 +35,25 @@ class MULTISPLITTER_EXPORT SeparatorQuick
         , public Layouting::Widget_quick
 {
     Q_OBJECT
+    Q_PROPERTY(bool isVertical READ isVertical NOTIFY isVerticalChanged)
 public:
     explicit SeparatorQuick(Layouting::Widget *parent = nullptr);
-protected:
 
+    bool isVertical() const;
+
+protected:
     Widget* createRubberBand(Widget *parent) override;
     Widget *asWidget() override;
+
+public:
+    // Interface with QML:
+    Q_INVOKABLE void onMousePressed();
+    Q_INVOKABLE void onMouseMoved(QPointF localPos);
+    Q_INVOKABLE void onMouseReleased();
+    Q_INVOKABLE void onMouseDoubleClicked();
+Q_SIGNALS:
+    // constant but it's only set after Separator::init
+    void isVerticalChanged();
 };
 
 }
