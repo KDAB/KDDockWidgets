@@ -21,6 +21,7 @@
 #include "Widget_quick.h"
 
 #include <QDebug>
+#include <QQmlEngine>
 
 using namespace Layouting;
 
@@ -133,4 +134,31 @@ void Widget_quick::setWidth(int width)
 void Widget_quick::setHeight(int height)
 {
     m_thisWidget->setHeight(height);
+}
+
+QQuickItem *Widget_quick::createQQuickItem(const QString &filename, QQuickItem *parent) const
+{
+    auto p = parent;
+    QQmlEngine *engine = nullptr;
+    while (p && !engine) {
+        engine = qmlEngine(p);
+        p = p->parentItem();
+    }
+
+    if (!engine) {
+        qWarning() << Q_FUNC_INFO << "No engine found";
+        return nullptr;
+    }
+
+    QQmlComponent component(engine, filename);
+    auto qquickitem = qobject_cast<QQuickItem*>(component.create());
+    if (!qquickitem) {
+        qWarning() << Q_FUNC_INFO << component.errorString();
+        return nullptr;
+    }
+
+    qquickitem->setParentItem(parent);
+    qquickitem->QObject::setParent(parent);
+
+    return qquickitem;
 }

@@ -24,6 +24,7 @@
 
 #include <QQuickItem>
 
+class QQuickItem;
 
 ///@file
 ///@brief A Layouting::Widget that's deals in QQuickItem
@@ -61,6 +62,9 @@ public:
     void setHeight(int height) override;
 
     static QSize widgetMinSize(const QWidget *w);
+
+protected:
+    QQuickItem *createQQuickItem(const QString &filename, QQuickItem *parent) const;
 
 private:
     QQuickItem *const m_thisWidget;

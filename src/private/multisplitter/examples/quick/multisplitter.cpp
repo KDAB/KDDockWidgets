@@ -37,9 +37,8 @@ public:
     explicit QuickItem(const QString &filename, MultiSplitter *parent)
         : QQuickItem(parent)
         , Layouting::Widget_quick(this)
-        , m_multisplitter(parent)
     {
-        loadItem(filename);
+        createQQuickItem(filename, this);
     }
 
     QSize minSize() const override
@@ -49,28 +48,6 @@ public:
 
 Q_SIGNALS:
     void layoutInvalidated();
-
-private:
-    void loadItem(const QString &filename)
-    {
-        QQmlEngine *engine = qmlEngine(m_multisplitter);
-        if (!engine) {
-            qWarning() << Q_FUNC_INFO << "No engine found";
-            return;
-        }
-
-        QQmlComponent component(engine, filename);
-        auto qquickitem = qobject_cast<QQuickItem*>(component.create());
-        if (!qquickitem) {
-            qWarning() << Q_FUNC_INFO << component.errorString();
-            return;
-        }
-
-        qquickitem->setParentItem(this);
-        qquickitem->QObject::setParent(this);
-    }
-
-    MultiSplitter *const m_multisplitter;
 };
 
 }
