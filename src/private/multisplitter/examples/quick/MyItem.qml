@@ -5,6 +5,12 @@ import com.kdab.kddockwidgets.multisplitter 1.0;
 Rectangle {
     id: root
     color: "cyan"
+    radius: 9
+    border {
+        color: "black"
+        width: 2
+    }
+
     readonly property alias multiSplitterItem: root.parent
 
     anchors.fill: parent

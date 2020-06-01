@@ -42,6 +42,11 @@ public:
         loadItem(filename);
     }
 
+    QSize minSize() const override
+    {
+        return QSize(100, 100);
+    }
+
 Q_SIGNALS:
     void layoutInvalidated();
 
@@ -65,7 +70,6 @@ private:
         qquickitem->QObject::setParent(this);
     }
 
-private:
     MultiSplitter *const m_multisplitter;
 };
 

@@ -16,7 +16,6 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            console.log("Clicked");
             _controller.addItem(root.location, root.relativeTo);
         }
     }
