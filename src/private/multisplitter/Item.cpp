@@ -858,6 +858,7 @@ struct ItemContainer::Private
     Private(ItemContainer *q)
         : q(q)
     {
+        (void) Config::self(); // Ensure Config ctor runs, as it registers qml types
     }
 
     int defaultLengthFor(Item *item, DefaultSizeMode) const;
@@ -1548,6 +1549,21 @@ void ItemContainer::clear()
     }
     d->m_children.clear();
     d->deleteSeparators();
+}
+
+Item* ItemContainer::itemForObject(const QObject *o) const
+{
+    for (Item *item : d->m_children) {
+        if (item->isContainer()) {
+            if (Item *result = item->asContainer()->itemForObject(o))
+                return result;
+        } else if (auto guest = item->guestWidget()) {
+            if (guest && guest->asQObject() == o)
+                return item;
+        }
+    }
+
+    return nullptr;
 }
 
 Item *ItemContainer::itemForWidget(const Widget *w) const

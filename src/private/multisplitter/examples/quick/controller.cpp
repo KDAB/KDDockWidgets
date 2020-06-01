@@ -19,6 +19,9 @@
 */
 
 #include "controller.h"
+#include "Item_p.h"
+
+#include <QDebug>
 
 Controller::Controller(Layouting::MultiSplitter *multisplitter)
     : m_multiSplitter(multisplitter)
@@ -26,7 +29,8 @@ Controller::Controller(Layouting::MultiSplitter *multisplitter)
 
 }
 
-void Controller::addItem()
+void Controller::addItem(int loc, QQuickItem *relativeTo)
 {
-    m_multiSplitter->addItem(":/MyItem.qml", Layouting::Item::Location_OnRight);
+    auto location = Layouting::Item::Location(loc);
+    m_multiSplitter->addItem(":/MyItem.qml", location, relativeTo);
 }

@@ -37,7 +37,8 @@ class MultiSplitter
 public:
     MultiSplitter();
     ~MultiSplitter() override;
-    void addItem(const QString &filename, Layouting::Item::Location);
+    void addItem(const QString &filename, Layouting::Item::Location, QQuickItem *relativeTo);
+    void addItem(const QString &filename, Layouting::Item::Location, Layouting::Item *relativeTo);
 
 private:
     void onSizeChanged();

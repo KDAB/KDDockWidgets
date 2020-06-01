@@ -389,6 +389,7 @@ public:
     QSize minSize() const override;
     QSize maxSizeHint() const override;
     QSize availableSize() const;
+    Item* itemForObject(const QObject *) const;
     Item* itemForWidget(const Widget *w) const;
     Item::List items_recursive() const;
     Q_REQUIRED_RESULT bool checkSanity() override;

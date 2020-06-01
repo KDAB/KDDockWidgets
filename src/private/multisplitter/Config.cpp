@@ -23,11 +23,16 @@
 #include "Item_p.h"
 #include "Separator_p.h"
 
+#ifdef KDMULTISPLITTER_QTQUICK
+# include <QQmlEngine>
+#endif
+
 namespace Layouting
 {
 
 Config::Config()
 {
+    registerQmlTypes();
 }
 
 Separator *Config::createSeparator(Widget *parent) const
@@ -36,6 +41,14 @@ Separator *Config::createSeparator(Widget *parent) const
         return m_separatorFactoryFunc(parent);
 
     return nullptr;
+}
+
+void Config::registerQmlTypes()
+{
+#ifdef KDMULTISPLITTER_QTQUICK
+    qmlRegisterUncreatableType<Item>("com.kdab.kddockwidgets.multisplitter", 1, 0,
+                                     "KDMultiSplitter", QStringLiteral("enum access"));
+#endif
 }
 
 Config &Config::self()

@@ -86,12 +86,19 @@ MultiSplitter::~MultiSplitter()
     delete m_rootContainer;
 }
 
-void MultiSplitter::addItem(const QString &filename, Layouting::Item::Location loc)
+void MultiSplitter::addItem(const QString &filename, Layouting::Item::Location loc, QQuickItem *relativeTo)
+{
+    Layouting::Item *relativeToItem = m_rootContainer->itemForObject(relativeTo);
+    addItem(filename, loc, relativeToItem);
+}
+
+void MultiSplitter::addItem(const QString &filename, Layouting::Item::Location loc, Layouting::Item *relativeTo)
 {
     auto item = new Item(this);
     item->setGuestWidget(new QuickItem(filename, this));
-    m_rootContainer->insertItem(item, loc);
 
+    relativeTo = relativeTo ? relativeTo : m_rootContainer;
+    relativeTo->insertItem(item, loc);
 }
 
 void MultiSplitter::onSizeChanged()

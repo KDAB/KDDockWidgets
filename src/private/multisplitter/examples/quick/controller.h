@@ -22,6 +22,7 @@
 #define CONTROLLER_H
 
 #include "multisplitter.h"
+
 #include <QObject>
 
 class Controller : public QObject
@@ -30,7 +31,7 @@ class Controller : public QObject
 public:
     explicit Controller(Layouting::MultiSplitter *);
 public Q_SLOTS:
-    void addItem();
+    void addItem(int loc, QQuickItem *relativeTo);
 private:
     Layouting::MultiSplitter *const m_multiSplitter;
 };

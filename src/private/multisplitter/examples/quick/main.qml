@@ -6,7 +6,7 @@ MultiSplitter {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            _controller.addItem();
+            _controller.addItem(KDMultiSplitter.Location_OnLeft, null);
         }
     }
 }

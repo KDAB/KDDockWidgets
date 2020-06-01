@@ -76,6 +76,8 @@ private:
     Config();
     Separator* createSeparator(Layouting::Widget *) const;
 
+    void registerQmlTypes();
+
     SeparatorFactoryFunc m_separatorFactoryFunc = nullptr;
     Flags m_flags = Flag::None;
 
