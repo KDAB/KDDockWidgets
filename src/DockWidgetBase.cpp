@@ -23,7 +23,6 @@
 #include "Frame_p.h"
 #include "FloatingWindow_p.h"
 #include "Logging_p.h"
-#include "TabWidget_p.h"
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
 #include "WidgetResizeHandler_p.h"
@@ -94,7 +93,6 @@ public:
     void updateFloatAction();
     void onDockWidgetShown();
     void onDockWidgetHidden();
-    TabWidget *parentTabWidget() const;
     void show();
     void close();
     void restoreToPreviousPosition();
@@ -327,8 +325,8 @@ void DockWidgetBase::setOptions(Options options)
 
 bool DockWidgetBase::isTabbed() const
 {
-    if (TabWidget* tabWidget = d->parentTabWidget()) {
-        return frame()->alwaysShowsTabs() || tabWidget->numDockWidgets() > 1;
+    if (Frame *frame = this->frame()) {
+        return frame->alwaysShowsTabs() || frame->dockWidgetCount() > 1;
     } else {
         if (!isFloating())
             qWarning() << "DockWidget::isTabbed() Couldn't find any tab widget.";
@@ -338,8 +336,8 @@ bool DockWidgetBase::isTabbed() const
 
 bool DockWidgetBase::isCurrentTab() const
 {
-    if (TabWidget* tabWidget = d->parentTabWidget()) {
-        return tabWidget->currentIndex() == tabWidget->indexOfDockWidget(const_cast<DockWidgetBase*>(this));
+    if (Frame *frame = this->frame()) {
+        return frame->currentIndex() == frame->indexOfDockWidget(const_cast<DockWidgetBase*>(this));
     } else {
         return true;
     }
@@ -347,8 +345,8 @@ bool DockWidgetBase::isCurrentTab() const
 
 void DockWidgetBase::setAsCurrentTab()
 {
-    if (TabWidget* tabWidget = d->parentTabWidget())
-        tabWidget->setCurrentDockWidget(this);
+    if (Frame *frame = this->frame())
+        frame->setCurrentDockWidget(this);
 }
 
 void DockWidgetBase::setIcon(const QIcon &icon)
@@ -547,9 +545,9 @@ void DockWidgetBase::Private::updateToggleAction()
 {
     QScopedValueRollback<bool> recursionGuard(m_updatingToggleAction, true); // Guard against recursiveness
     m_updatingToggleAction = true;
-    if ((q->isVisible() || parentTabWidget()) && !toggleAction->isChecked()) {
+    if ((q->isVisible() || q->frame()) && !toggleAction->isChecked()) {
         toggleAction->setChecked(true);
-    } else if ((!q->isVisible() && !parentTabWidget()) && toggleAction->isChecked()) {
+    } else if ((!q->isVisible() && !q->frame()) && toggleAction->isChecked()) {
         toggleAction->setChecked(false);
     }
 }
@@ -583,14 +581,6 @@ void DockWidgetBase::Private::onDockWidgetHidden()
     qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 
-TabWidget *DockWidgetBase::Private::parentTabWidget() const
-{
-    if (auto f = q->frame())
-        return f->tabWidget();
-
-    return nullptr;
-}
-
 void DockWidgetBase::Private::close()
 {
     if (!m_isForceClosing && q->isFloating() && q->isVisible()) { // only user-closing is interesting to save the geometry
@@ -602,8 +592,8 @@ void DockWidgetBase::Private::close()
     saveTabIndex();
 
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.
-    if (auto tabWidget = parentTabWidget()) {
-        tabWidget->removeDockWidget(q);
+    if (Frame *frame = q->frame()) {
+        frame->removeWidget(q);
         q->setParent(nullptr);
     }
 }
@@ -660,8 +650,8 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 
 int DockWidgetBase::Private::currentTabIndex() const
 {
-    TabWidget *tabWidget = parentTabWidget();
-    return tabWidget ? tabWidget->indexOfDockWidget(q) : 0;
+    Frame *frame = q->frame();
+    return frame ? frame->indexOfDockWidget(q) : 0;
 }
 
 void DockWidgetBase::Private::saveTabIndex()

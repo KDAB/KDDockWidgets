@@ -43,6 +43,9 @@ protected:
     void paintEvent(QPaintEvent *) override;
     QSize maxSizeHint() const override;
     void detachTab(DockWidgetBase *) override;
+    int indexOfDockWidget(DockWidgetBase *) override;
+    void setCurrentDockWidget(DockWidgetBase *) override;
+    int currentIndex() override;
 };
 
 

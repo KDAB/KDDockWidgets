@@ -88,6 +88,21 @@ void FrameWidget::detachTab(DockWidgetBase *dw)
     tabWidget()->detachTab(dw);
 }
 
+int FrameWidget::indexOfDockWidget(DockWidgetBase *dw)
+{
+    return tabWidget()->indexOfDockWidget(dw);
+}
+
+void FrameWidget::setCurrentDockWidget(DockWidgetBase *dw)
+{
+    tabWidget()->setCurrentDockWidget(dw);
+}
+
+int FrameWidget::currentIndex()
+{
+    return tabWidget()->currentIndex();
+}
+
 QTabBar *FrameWidget::tabBar() const
 {
     auto tw = static_cast<QTabWidget*>(tabWidget()->asWidget());

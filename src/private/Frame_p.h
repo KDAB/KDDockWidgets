@@ -88,6 +88,15 @@ public:
     ///@brief detaches this dock widget
     virtual void detachTab(DockWidgetBase *) = 0;
 
+    ///@brief returns the index of the specified dock widget
+    virtual int indexOfDockWidget(DockWidgetBase *) = 0;
+
+    ///@brief returns the index of the current tab
+    virtual int currentIndex() = 0;
+
+    ///@brief Sets the specified dock widget to be the current tab
+    virtual void setCurrentDockWidget(DockWidgetBase *) = 0;
+
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;
