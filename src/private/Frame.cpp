@@ -168,6 +168,69 @@ void Frame::removeWidget(DockWidgetBase *dw)
     removeWidget_impl(dw);
 }
 
+void Frame::detachTab(DockWidgetBase *dw)
+{
+    if (m_inCtor || m_beingDeleted) return;
+
+    detachTab_impl(dw);
+}
+
+int Frame::indexOfDockWidget(DockWidgetBase *dw)
+{
+    if (m_inCtor || m_beingDeleted) return -1;
+
+    return indexOfDockWidget_impl(dw);
+}
+
+int Frame::currentIndex() const
+{
+    if (m_inCtor || m_beingDeleted) return -1;
+
+    return currentIndex_impl();
+}
+
+void Frame::setCurrentTabIndex(int index)
+{
+    if (m_inCtor || m_beingDeleted) return;
+
+    setCurrentTabIndex_impl(index);
+}
+
+void Frame::setCurrentDockWidget(DockWidgetBase *dw)
+{
+    if (m_inCtor || m_beingDeleted) return;
+
+    setCurrentDockWidget_impl(dw);
+}
+
+void Frame::insertDockWidget(DockWidgetBase *dw, int index)
+{
+    if (m_inCtor || m_beingDeleted) return;
+
+    insertDockWidget_impl(dw, index);
+}
+
+DockWidgetBase *Frame::dockWidgetAt(int index) const
+{
+    if (m_inCtor || m_beingDeleted) return nullptr;
+
+    return dockWidgetAt_impl(index);
+}
+
+DockWidgetBase *Frame::currentDockWidget() const
+{
+    if (m_inCtor || m_beingDeleted) return nullptr;
+
+    return currentDockWidget_impl();
+}
+
+int Frame::dockWidgetCount() const
+{
+    if (m_inCtor || m_beingDeleted) return 0;
+
+    return dockWidgetCount_impl();
+}
+
 void Frame::onDockWidgetCountChanged()
 {
     qCDebug(docking) << "Frame::onDockWidgetCountChanged:" << this << "; widgetCount=" << dockWidgetCount();

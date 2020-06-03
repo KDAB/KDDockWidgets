@@ -88,27 +88,27 @@ QSize FrameWidget::maxSizeHint() const
     return waste + biggestDockWidgetMaxSize();
 }
 
-void FrameWidget::detachTab(DockWidgetBase *dw)
+void FrameWidget::detachTab_impl(DockWidgetBase *dw)
 {
     m_tabWidget->detachTab(dw);
 }
 
-int FrameWidget::indexOfDockWidget(DockWidgetBase *dw)
+int FrameWidget::indexOfDockWidget_impl(DockWidgetBase *dw)
 {
     return m_tabWidget->indexOfDockWidget(dw);
 }
 
-void FrameWidget::setCurrentDockWidget(DockWidgetBase *dw)
+void FrameWidget::setCurrentDockWidget_impl(DockWidgetBase *dw)
 {
     m_tabWidget->setCurrentDockWidget(dw);
 }
 
-int FrameWidget::currentIndex() const
+int FrameWidget::currentIndex_impl() const
 {
     return m_tabWidget->currentIndex();
 }
 
-void FrameWidget::insertDockWidget(DockWidgetBase *dw, int index)
+void FrameWidget::insertDockWidget_impl(DockWidgetBase *dw, int index)
 {
     m_tabWidget->insertDockWidget(dw, index);
 }
@@ -118,17 +118,17 @@ void FrameWidget::removeWidget_impl(DockWidgetBase *dw)
     m_tabWidget->removeDockWidget(dw);
 }
 
-void FrameWidget::setCurrentTabIndex(int index)
+void FrameWidget::setCurrentTabIndex_impl(int index)
 {
     m_tabWidget->setCurrentDockWidget(index);
 }
 
-DockWidgetBase *FrameWidget::currentDockWidget() const
+DockWidgetBase *FrameWidget::currentDockWidget_impl() const
 {
     return m_tabWidget->dockwidgetAt(m_tabWidget->currentIndex());
 }
 
-DockWidgetBase *FrameWidget::dockWidgetAt(int index) const
+DockWidgetBase *FrameWidget::dockWidgetAt_impl(int index) const
 {
     return qobject_cast<DockWidgetBase *>(m_tabWidget->dockwidgetAt(index));
 }
@@ -144,7 +144,7 @@ TabWidget *FrameWidget::tabWidget() const
     return m_tabWidget;
 }
 
-int FrameWidget::dockWidgetCount() const
+int FrameWidget::dockWidgetCount_impl() const
 {
     return m_tabWidget->numDockWidgets();
 }

@@ -47,16 +47,16 @@ public:
 protected:
     void paintEvent(QPaintEvent *) override;
     QSize maxSizeHint() const override;
-    void detachTab(DockWidgetBase *) override;
-    int indexOfDockWidget(DockWidgetBase *) override;
-    void setCurrentDockWidget(DockWidgetBase *) override;
-    int currentIndex() const override;
-    void insertDockWidget(DockWidgetBase *, int index) override;
+    void detachTab_impl(DockWidgetBase *) override;
+    int indexOfDockWidget_impl(DockWidgetBase *) override;
+    void setCurrentDockWidget_impl(DockWidgetBase *) override;
+    int currentIndex_impl() const override;
+    void insertDockWidget_impl(DockWidgetBase *, int index) override;
     void removeWidget_impl(DockWidgetBase *) override;
-    void setCurrentTabIndex(int) override;
-    DockWidgetBase *currentDockWidget() const override;
-    DockWidgetBase *dockWidgetAt(int index) const override;
-    int dockWidgetCount() const override;
+    void setCurrentTabIndex_impl(int) override;
+    DockWidgetBase *currentDockWidget_impl() const override;
+    DockWidgetBase *dockWidgetAt_impl(int index) const override;
+    int dockWidgetCount_impl() const override;
 private:
     friend class TestDocks;
     TabWidget *const m_tabWidget;

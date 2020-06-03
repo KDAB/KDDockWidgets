@@ -85,31 +85,31 @@ public:
     void removeWidget(DockWidgetBase *);
 
     ///@brief detaches this dock widget
-    virtual void detachTab(DockWidgetBase *) = 0;
+    void detachTab(DockWidgetBase *);
 
     ///@brief returns the index of the specified dock widget
-    virtual int indexOfDockWidget(DockWidgetBase *) = 0;
+    int indexOfDockWidget(DockWidgetBase *);
 
     ///@brief returns the index of the current tab
-    virtual int currentIndex() const = 0;
+    int currentIndex() const;
 
     ///@brief sets the current tab index
-    virtual void setCurrentTabIndex(int index) = 0;
+    void setCurrentTabIndex(int index);
 
     ///@brief Sets the specified dock widget to be the current tab
-    virtual void setCurrentDockWidget(DockWidgetBase *) = 0;
+    void setCurrentDockWidget(DockWidgetBase *);
 
     ///@brief Inserts a dock widget into the specified index
-    virtual void insertDockWidget(DockWidgetBase *, int index) = 0;
+    void insertDockWidget(DockWidgetBase *, int index);
 
     /// @brief Returns the dock widget at @p index
-    virtual DockWidgetBase *dockWidgetAt(int index) const = 0;
+    DockWidgetBase *dockWidgetAt(int index) const;
 
     ///@brief Returns the current dock widget
-    virtual DockWidgetBase *currentDockWidget() const = 0;
+    DockWidgetBase *currentDockWidget() const;
 
     /// @brief returns the number of dock widgets inside the frame
-    virtual int dockWidgetCount() const = 0;
+    int dockWidgetCount() const;
 
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
@@ -250,6 +250,15 @@ protected:
     QSize biggestDockWidgetMaxSize() const;
 
     virtual void removeWidget_impl(DockWidgetBase *) = 0;
+    virtual void detachTab_impl(DockWidgetBase *) = 0;
+    virtual int indexOfDockWidget_impl(DockWidgetBase *) = 0;
+    virtual int currentIndex_impl() const = 0;
+    virtual void setCurrentTabIndex_impl(int index) = 0;
+    virtual void setCurrentDockWidget_impl(DockWidgetBase *) = 0;
+    virtual void insertDockWidget_impl(DockWidgetBase *, int index) = 0;
+    virtual DockWidgetBase *dockWidgetAt_impl(int index) const = 0;
+    virtual DockWidgetBase *currentDockWidget_impl() const = 0;
+    virtual int dockWidgetCount_impl() const = 0;
 
 private:
     Q_DISABLE_COPY(Frame)
