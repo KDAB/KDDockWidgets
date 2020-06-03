@@ -254,14 +254,14 @@ void DockWidgetBase::setFloating(bool floats)
     if (floats) {
         d->saveTabIndex();
         if (isTabbed()) {
-            TabWidget *tabWidget= d->parentTabWidget();
-            if (!tabWidget) {
-                qWarning() << "DockWidget::setFloating: Tabbed but no tabbar exists"
+            auto frame = this->frame();
+            if (!frame) {
+                qWarning() << "DockWidget::setFloating: Tabbed but no frame exists"
                            << this;
                 Q_ASSERT(false);
             }
 
-            tabWidget->detachTab(this);
+            frame->detachTab(this);
         } else {
             frame()->titleBar()->makeWindow();
         }

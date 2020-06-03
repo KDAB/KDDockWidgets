@@ -85,6 +85,9 @@ public:
     ///@brief removes a dockwidget from the frame
     void removeWidget(DockWidgetBase *);
 
+    ///@brief detaches this dock widget
+    virtual void detachTab(DockWidgetBase *) = 0;
+
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;

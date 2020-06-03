@@ -83,6 +83,11 @@ QSize FrameWidget::maxSizeHint() const
     return waste + biggestDockWidgetMaxSize();
 }
 
+void FrameWidget::detachTab(DockWidgetBase *dw)
+{
+    tabWidget()->detachTab(dw);
+}
+
 QTabBar *FrameWidget::tabBar() const
 {
     auto tw = static_cast<QTabWidget*>(tabWidget()->asWidget());

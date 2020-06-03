@@ -2367,7 +2367,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
 
 
         // Detach tab
-        dock1->frame()->m_tabWidget->detachTab(dock2);
+        dock1->frame()->detachTab(dock2);
         QVERIFY(layout->checkSanity());
         auto fw2 = dock2->floatingWindow();
         QVERIFY(fw2);
@@ -4345,7 +4345,7 @@ void TestDocks::tst_invalidLayoutAfterRestore()
 
     // Detach dock2
     QPointer<Frame> f2 = dock2->frame();
-    f2->m_tabWidget->detachTab(dock2);
+    f2->detachTab(dock2);
     QVERIFY(!f2.data());
     QTest::qWait(200); // Not sure why. Some event we're waiting for. TODO: Investigate
     auto fw2 = dock2->floatingWindow();
