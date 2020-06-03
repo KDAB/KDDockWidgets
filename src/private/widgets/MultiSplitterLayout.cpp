@@ -153,7 +153,7 @@ void MultiSplitterLayout::addWidget(QWidgetOrQuick *w, Location location,
         newItem->setGuestWidget(frame);
     } else if (dw) {
         newItem = new Layouting::Item(m_multiSplitter);
-        frame = new Frame();
+        frame = Config::self().frameworkWidgetFactory()->createFrame();
         newItem->setGuestWidget(frame);
         frame->addWidget(dw, option);
     } else if (auto ms = qobject_cast<MultiSplitter*>(w)) {
