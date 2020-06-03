@@ -28,6 +28,8 @@
 #include "FrameWidget_p.h"
 #include "TitleBar_p.h"
 #include "TabWidget_p.h"
+#include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QVBoxLayout>
 #include <QPainter>
@@ -58,12 +60,15 @@ VBoxLayout::~VBoxLayout() = default;
 
 FrameWidget::FrameWidget(QWidget *parent, FrameOptions options)
     : Frame(parent, options)
+    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
 {
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
     vlayout->addWidget(titleBar());
-    vlayout->addWidget(tabWidget()->asWidget());
+    vlayout->addWidget(m_tabWidget->asWidget());
+
+    m_tabWidget->setTabBarAutoHide(!alwaysShowsTabs());
 }
 
 void FrameWidget::paintEvent(QPaintEvent *)
@@ -85,26 +90,62 @@ QSize FrameWidget::maxSizeHint() const
 
 void FrameWidget::detachTab(DockWidgetBase *dw)
 {
-    tabWidget()->detachTab(dw);
+    m_tabWidget->detachTab(dw);
 }
 
 int FrameWidget::indexOfDockWidget(DockWidgetBase *dw)
 {
-    return tabWidget()->indexOfDockWidget(dw);
+    return m_tabWidget->indexOfDockWidget(dw);
 }
 
 void FrameWidget::setCurrentDockWidget(DockWidgetBase *dw)
 {
-    tabWidget()->setCurrentDockWidget(dw);
+    m_tabWidget->setCurrentDockWidget(dw);
 }
 
-int FrameWidget::currentIndex()
+int FrameWidget::currentIndex() const
 {
-    return tabWidget()->currentIndex();
+    return m_tabWidget->currentIndex();
+}
+
+void FrameWidget::insertDockWidget(DockWidgetBase *dw, int index)
+{
+    m_tabWidget->insertDockWidget(dw, index);
+}
+
+void FrameWidget::removeWidget_impl(DockWidgetBase *dw)
+{
+    m_tabWidget->removeDockWidget(dw);
+}
+
+void FrameWidget::setCurrentTabIndex(int index)
+{
+    m_tabWidget->setCurrentDockWidget(index);
+}
+
+DockWidgetBase *FrameWidget::currentDockWidget() const
+{
+    return m_tabWidget->dockwidgetAt(m_tabWidget->currentIndex());
+}
+
+DockWidgetBase *FrameWidget::dockWidgetAt(int index) const
+{
+    return qobject_cast<DockWidgetBase *>(m_tabWidget->dockwidgetAt(index));
 }
 
 QTabBar *FrameWidget::tabBar() const
 {
-    auto tw = static_cast<QTabWidget*>(tabWidget()->asWidget());
+    auto tw = static_cast<QTabWidget*>(m_tabWidget->asWidget());
     return tw->tabBar();
 }
+
+TabWidget *FrameWidget::tabWidget() const
+{
+    return m_tabWidget;
+}
+
+int FrameWidget::dockWidgetCount() const
+{
+    return m_tabWidget->numDockWidgets();
+}
+

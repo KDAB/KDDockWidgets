@@ -26,7 +26,6 @@
  */
 
 #include "Frame_p.h"
-#include "TabWidget_p.h"
 #include "DropArea_p.h"
 #include "Logging_p.h"
 #include "DragController_p.h"
@@ -37,7 +36,6 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
-#include <QTabBar>
 #include <QCloseEvent>
 #include <QTimer>
 
@@ -60,7 +58,6 @@ static FrameOptions actualOptions(FrameOptions options)
 Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     : QWidgetAdapter(parent)
     , Layouting::Widget_qwidget(this)
-    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_options(actualOptions(options))
 {
@@ -69,8 +66,7 @@ Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
 
     connect(this, &Frame::currentDockWidgetChanged, this, &Frame::updateTitleAndIcon);
-
-    m_tabWidget->setTabBarAutoHide(!alwaysShowsTabs());
+    m_inCtor = false;
 }
 
 Frame::~Frame()
@@ -107,7 +103,7 @@ void Frame::updateTitleAndIcon()
 
 void Frame::addWidget(DockWidgetBase *dockWidget, AddingOption addingOption)
 {
-    insertWidget(dockWidget, m_tabWidget->numDockWidgets(), addingOption); // append
+    insertWidget(dockWidget, dockWidgetCount(), addingOption); // append
 }
 
 void Frame::addWidget(Frame *frame, AddingOption addingOption)
@@ -143,7 +139,7 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index, AddingOption add
     if (m_layoutItem)
         dockWidget->addPlaceholderItem(m_layoutItem);
 
-    m_tabWidget->insertDockWidget(dockWidget, index);
+    insertDockWidget(dockWidget, index);
 
     if (addingOption == AddingOption_StartHidden) {
         dockWidget->close(); // Ensure closed
@@ -169,7 +165,7 @@ void Frame::removeWidget(DockWidgetBase *dw)
 {
     disconnect(dw, &DockWidgetBase::titleChanged, this, &Frame::updateTitleAndIcon);
     disconnect(dw, &DockWidgetBase::iconChanged, this, &Frame::updateTitleAndIcon);
-    m_tabWidget->removeDockWidget(dw);
+    removeWidget_impl(dw);
 }
 
 void Frame::onDockWidgetCountChanged()
@@ -201,7 +197,7 @@ void Frame::onCurrentTabChanged(int index)
 
 void Frame::updateTitleBarVisibility()
 {
-    if (m_updatingTitleBar) {
+    if (m_updatingTitleBar || m_beingDeleted) {
         // To break a cyclic dependency
         return;
     }
@@ -261,6 +257,9 @@ QIcon Frame::icon() const
 
 const DockWidgetBase::List Frame::dockWidgets() const
 {
+    if (m_inCtor || m_beingDeleted)
+        return {};
+
     DockWidgetBase::List dockWidgets;
     const int count = dockWidgetCount();
     dockWidgets.reserve(count);
@@ -329,7 +328,7 @@ void Frame::restoreToPreviousPosition()
 
 int Frame::currentTabIndex() const
 {
-    return m_tabWidget->currentIndex();
+    return currentIndex();
 }
 
 void Frame::onCloseEvent(QCloseEvent *e)
@@ -342,16 +341,6 @@ void Frame::onCloseEvent(QCloseEvent *e)
         if (!e->isAccepted())
             break; // Stop when the first dockwidget prevents closing
     }
-}
-
-void Frame::setCurrentTabIndex(int index)
-{
-    m_tabWidget->setCurrentDockWidget(index);
-}
-
-DockWidgetBase *Frame::currentDockWidget() const
-{
-    return m_tabWidget->dockwidgetAt(m_tabWidget->currentIndex());
 }
 
 bool Frame::anyNonClosable() const
@@ -433,13 +422,11 @@ bool Frame::beingDeletedLater() const
     return m_beingDeleted;
 }
 
-TabWidget *Frame::tabWidget() const
-{
-    return m_tabWidget;
-}
-
 bool Frame::hasTabsVisible() const
 {
+    if (m_beingDeleted)
+        return false;
+
     return alwaysShowsTabs() || dockWidgetCount() > 1;
 }
 
@@ -450,11 +437,6 @@ QStringList Frame::affinities() const
     } else {
         return dockWidgetAt(0)->affinities();
     }
-}
-
-DockWidgetBase *Frame::dockWidgetAt(int index) const
-{
-    return qobject_cast<DockWidgetBase *>(m_tabWidget->dockwidgetAt(index));
 }
 
 void Frame::setDropArea(DropArea *dt)
@@ -501,11 +483,6 @@ bool Frame::isInFloatingWindow() const
 bool Frame::isInMainWindow() const
 {
     return m_dropArea && m_dropArea->isInMainWindow();
-}
-
-int Frame::dockWidgetCount() const
-{
-    return m_tabWidget->numDockWidgets();
 }
 
 bool Frame::event(QEvent *e)

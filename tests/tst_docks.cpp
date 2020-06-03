@@ -2190,7 +2190,7 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     dock2->setVisible(false);
     QVERIFY(dock2->isTabbed());
     QVERIFY(!dock1->isFloating());
-    QCOMPARE(dock2->frame()->m_tabWidget->numDockWidgets(), 2);
+    QCOMPARE(static_cast<FrameWidget*>(dock2->frame())->m_tabWidget->numDockWidgets(), 2);
 
     // 3. Set one floating. Now both cease to be tabbed, and both are floating.
     dock1->setFloating(true);
@@ -2245,7 +2245,7 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     dock2->setFloating(false);
     QVERIFY(!dock2->isFloating());
     QVERIFY(dock2->isTabbed());
-    QCOMPARE(dock2->frame()->m_tabWidget->indexOfDockWidget(dock2), 1);
+    QCOMPARE(static_cast<FrameWidget*>(dock2->frame())->m_tabWidget->indexOfDockWidget(dock2), 1);
 
 
     // 10. Float dock1, and dock it to main window as tab. This tests Option_AlwaysShowsTabs.
@@ -2258,7 +2258,7 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     QVERIFY(dock1->isTabbed());
     dock1->setFloating(true);
     dock1->setFloating(false);
-    QCOMPARE(dock1->frame()->m_tabWidget->numDockWidgets(), 1);
+    QCOMPARE(static_cast<FrameWidget*>(dock1->frame())->m_tabWidget->numDockWidgets(), 1);
 
     // Cleanup
     m->addDockWidgetAsTab(dock2);
@@ -3694,7 +3694,7 @@ void TestDocks::tst_dragByTabBar()
 
     dock2->addDockWidgetAsTab(dock3);
     if (documentMode)
-        static_cast<QTabWidget*>(dock2->frame()->tabWidget()->asWidget())->setDocumentMode(true);
+        static_cast<QTabWidget*>(static_cast<FrameWidget*>(dock2->frame())->tabWidget()->asWidget())->setDocumentMode(true);
 
     auto fw = dock2->floatingWindow();
     fw->move(m->pos() + QPoint(500, 500));

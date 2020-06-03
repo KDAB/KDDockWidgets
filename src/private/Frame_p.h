@@ -42,7 +42,6 @@
 namespace KDDockWidgets {
 
 class TitleBar;
-class TabWidget;
 class DropArea;
 class DockWidgetBase;
 class FloatingWindow;
@@ -92,21 +91,34 @@ public:
     virtual int indexOfDockWidget(DockWidgetBase *) = 0;
 
     ///@brief returns the index of the current tab
-    virtual int currentIndex() = 0;
+    virtual int currentIndex() const = 0;
+
+    ///@brief sets the current tab index
+    virtual void setCurrentTabIndex(int index) = 0;
 
     ///@brief Sets the specified dock widget to be the current tab
     virtual void setCurrentDockWidget(DockWidgetBase *) = 0;
+
+    ///@brief Inserts a dock widget into the specified index
+    virtual void insertDockWidget(DockWidgetBase *, int index) = 0;
+
+    /// @brief Returns the dock widget at @p index
+    virtual DockWidgetBase *dockWidgetAt(int index) const = 0;
+
+    ///@brief Returns the current dock widget
+    virtual DockWidgetBase *currentDockWidget() const = 0;
+
+    /// @brief returns the number of dock widgets inside the frame
+    virtual int dockWidgetCount() const = 0;
 
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;
     TitleBar *titleBar() const;
     TitleBar *actualTitleBar() const;
-    TabWidget *tabWidget() const;
     QString title() const;
     QIcon icon() const;
     const QVector<DockWidgetBase *> dockWidgets() const;
-    DockWidgetBase *dockWidgetAt(int index) const;
     void setDropArea(DropArea *);
 
     bool isTheOnlyFrame() const;
@@ -151,9 +163,6 @@ public:
     bool alwaysShowsTabs() const { return m_options & FrameOption_AlwaysShowsTabs; }
 
 
-    /// @brief returns the number of dock widgets inside the frame
-    int dockWidgetCount() const;
-
     /// @brief returns whether the dockwidget @p w is inside this frame
     bool contains(DockWidgetBase *w) const;
 
@@ -172,9 +181,6 @@ public:
 
     void onCloseEvent(QCloseEvent *e) override;
     int currentTabIndex() const;
-    void setCurrentTabIndex(int);
-
-    DockWidgetBase *currentDockWidget() const;
 
     FrameOptions options() const { return m_options; }
     bool anyNonClosable() const;
@@ -243,6 +249,8 @@ protected:
      */
     QSize biggestDockWidgetMaxSize() const;
 
+    virtual void removeWidget_impl(DockWidgetBase *) = 0;
+
 private:
     Q_DISABLE_COPY(Frame)
     friend class TestDocks;
@@ -251,7 +259,7 @@ private:
     void onCurrentTabChanged(int index);
     void scheduleDeleteLater();
     bool event(QEvent *) override;
-    TabWidget *const m_tabWidget;
+    bool m_inCtor = true;
     TitleBar *const m_titleBar;
     DropArea *m_dropArea = nullptr;
     const FrameOptions m_options;

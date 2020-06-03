@@ -30,6 +30,9 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+class TestDocks;
+class TabWidget;
+
 /**
  * @brief The GUI counterpart of Frame. Inherits Frame and implements paintEvent().
  */
@@ -39,13 +42,24 @@ class DOCKS_EXPORT FrameWidget : public Frame
 public:
     explicit FrameWidget(QWidget *parent = nullptr, FrameOptions = FrameOption_None);
     QTabBar *tabBar() const;
+    TabWidget *tabWidget() const;
+
 protected:
     void paintEvent(QPaintEvent *) override;
     QSize maxSizeHint() const override;
     void detachTab(DockWidgetBase *) override;
     int indexOfDockWidget(DockWidgetBase *) override;
     void setCurrentDockWidget(DockWidgetBase *) override;
-    int currentIndex() override;
+    int currentIndex() const override;
+    void insertDockWidget(DockWidgetBase *, int index) override;
+    void removeWidget_impl(DockWidgetBase *) override;
+    void setCurrentTabIndex(int) override;
+    DockWidgetBase *currentDockWidget() const override;
+    DockWidgetBase *dockWidgetAt(int index) const override;
+    int dockWidgetCount() const override;
+private:
+    friend class TestDocks;
+    TabWidget *const m_tabWidget;
 };
 
 
