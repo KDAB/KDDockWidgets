@@ -42,8 +42,6 @@
 # include <Windows.h>
 #endif
 
-static int s_dbg_numFloatingWindows = 0;
-
 using namespace KDDockWidgets;
 
 #ifdef Q_OS_WIN
@@ -297,11 +295,6 @@ bool FloatingWindow::beingDeleted() const
     }
 
     return true;
-}
-
-int FloatingWindow::dbg_numFrames()
-{
-    return s_dbg_numFloatingWindows;
 }
 
 void FloatingWindow::onFrameCountChanged(int count)

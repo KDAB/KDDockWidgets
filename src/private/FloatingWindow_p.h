@@ -105,10 +105,6 @@ public:
      */
     bool isInTitleBar(QPoint globalPoint) const;
 
-    ///@brief For tests-only. Returns the number of Frame instances in the whole application.
-    static int dbg_numFrames();
-
-
     ///@brief updates the title and the icon
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
