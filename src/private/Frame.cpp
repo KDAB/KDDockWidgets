@@ -71,6 +71,7 @@ Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
 
 Frame::~Frame()
 {
+    m_inDtor = true;
     s_dbg_numFrames--;
     if (m_layoutItem)
         m_layoutItem->unref();
@@ -170,63 +171,63 @@ void Frame::removeWidget(DockWidgetBase *dw)
 
 void Frame::detachTab(DockWidgetBase *dw)
 {
-    if (m_inCtor || m_beingDeleted) return;
+    if (m_inCtor || m_inDtor) return;
 
     detachTab_impl(dw);
 }
 
 int Frame::indexOfDockWidget(DockWidgetBase *dw)
 {
-    if (m_inCtor || m_beingDeleted) return -1;
+    if (m_inCtor || m_inDtor) return -1;
 
     return indexOfDockWidget_impl(dw);
 }
 
 int Frame::currentIndex() const
 {
-    if (m_inCtor || m_beingDeleted) return -1;
+    if (m_inCtor || m_inDtor) return -1;
 
     return currentIndex_impl();
 }
 
 void Frame::setCurrentTabIndex(int index)
 {
-    if (m_inCtor || m_beingDeleted) return;
+    if (m_inCtor || m_inDtor) return;
 
     setCurrentTabIndex_impl(index);
 }
 
 void Frame::setCurrentDockWidget(DockWidgetBase *dw)
 {
-    if (m_inCtor || m_beingDeleted) return;
+    if (m_inCtor || m_inDtor) return;
 
     setCurrentDockWidget_impl(dw);
 }
 
 void Frame::insertDockWidget(DockWidgetBase *dw, int index)
 {
-    if (m_inCtor || m_beingDeleted) return;
+    if (m_inCtor || m_inDtor) return;
 
     insertDockWidget_impl(dw, index);
 }
 
 DockWidgetBase *Frame::dockWidgetAt(int index) const
 {
-    if (m_inCtor || m_beingDeleted) return nullptr;
+    if (m_inCtor || m_inDtor) return nullptr;
 
     return dockWidgetAt_impl(index);
 }
 
 DockWidgetBase *Frame::currentDockWidget() const
 {
-    if (m_inCtor || m_beingDeleted) return nullptr;
+    if (m_inCtor || m_inDtor) return nullptr;
 
     return currentDockWidget_impl();
 }
 
 int Frame::dockWidgetCount() const
 {
-    if (m_inCtor || m_beingDeleted) return 0;
+    if (m_inCtor || m_inDtor) return 0;
 
     return dockWidgetCount_impl();
 }
@@ -320,7 +321,7 @@ QIcon Frame::icon() const
 
 const DockWidgetBase::List Frame::dockWidgets() const
 {
-    if (m_inCtor || m_beingDeleted)
+    if (m_inCtor || m_inDtor)
         return {};
 
     DockWidgetBase::List dockWidgets;

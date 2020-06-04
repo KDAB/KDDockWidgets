@@ -3655,6 +3655,7 @@ void TestDocks::tst_toggleDockWidgetWithHiddenTitleBar()
     auto f1 = d1->frame();
     Testing::waitForDeleted(f1);
     d1->toggleAction()->setChecked(true);
+    QVERIFY(d1->frame());
     QVERIFY(!d1->frame()->titleBar()->isVisible());
 }
 

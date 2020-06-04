@@ -71,6 +71,11 @@ FrameWidget::FrameWidget(QWidget *parent, FrameOptions options)
     m_tabWidget->setTabBarAutoHide(!alwaysShowsTabs());
 }
 
+FrameWidget::~FrameWidget()
+{
+    m_inDtor = true;
+}
+
 void FrameWidget::paintEvent(QPaintEvent *)
 {
     if (!isFloating()) {

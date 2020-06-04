@@ -259,7 +259,7 @@ protected:
     virtual DockWidgetBase *dockWidgetAt_impl(int index) const = 0;
     virtual DockWidgetBase *currentDockWidget_impl() const = 0;
     virtual int dockWidgetCount_impl() const = 0;
-
+    bool m_inDtor = false;
 private:
     Q_DISABLE_COPY(Frame)
     friend class TestDocks;
