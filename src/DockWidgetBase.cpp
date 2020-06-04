@@ -213,7 +213,7 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other, Loca
     if (isWindow())
         morphIntoFloatingWindow();
 
-    if (auto fw = qobject_cast<FloatingWindow *>(window())) {
+    if (auto fw = floatingWindow()) {
         fw->dropArea()->addDockWidget(other, location, relativeTo);
     } else {
         qWarning() << Q_FUNC_INFO << "Couldn't find floating nested window";
@@ -240,7 +240,7 @@ bool DockWidgetBase::isFloating() const
     if (isWindow())
         return true;
 
-    auto fw = qobject_cast<FloatingWindow *>(window());
+    auto fw = floatingWindow();
     return fw && fw->hasSingleDockWidget();
 }
 
@@ -271,7 +271,7 @@ void DockWidgetBase::setFloating(bool floats)
 
         auto lastGeo = lastPositions().lastFloatingGeometry();
         if (lastGeo.isValid()) {
-            if (auto fw = d->floatingWindow())
+            if (auto fw = floatingWindow())
                 fw->setSuggestedGeometry(lastGeo);
         }
     } else {
@@ -409,7 +409,7 @@ void DockWidgetBase::raise()
 
     setAsCurrentTab();
 
-    if (auto fw = qobject_cast<FloatingWindow*>(window())) {
+    if (auto fw = floatingWindow()) {
         fw->raise();
         fw->activateWindow();
     }
@@ -448,7 +448,7 @@ FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
                       << "; visible=" << isVisible();
 
-    if (auto fw = qobject_cast<FloatingWindow*>(window()))
+    if (auto fw = floatingWindow())
         return fw; // Nothing to do
 
     if (isWindow()) {
@@ -491,7 +491,7 @@ Frame *DockWidgetBase::frame() const
 
 FloatingWindow *DockWidgetBase::floatingWindow() const
 {
-    return qobject_cast<FloatingWindow*>(window());
+    return d->floatingWindow();
 }
 
 void DockWidgetBase::addPlaceholderItem(Layouting::Item *item)
