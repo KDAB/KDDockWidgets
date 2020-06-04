@@ -221,6 +221,12 @@ const Frame::List FloatingWindow::frames() const
     return m_dropArea->findChildren<Frame *>(QString(), Qt::FindDirectChildrenOnly);
 }
 
+void FloatingWindow::setSuggestedGeometry(QRect suggestedRect)
+{
+    // TODO: Honour max-size
+    setGeometry(suggestedRect);
+}
+
 void FloatingWindow::scheduleDeleteLater()
 {
     m_beingDeleted = true;

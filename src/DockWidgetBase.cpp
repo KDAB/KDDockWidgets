@@ -84,6 +84,11 @@ public:
         updateTitle();
     }
 
+    FloatingWindow *floatingWindow() const
+    {
+        return qobject_cast<FloatingWindow*>(q->window());
+    }
+
     QPoint defaultCenterPosForFloating();
 
     void updateTitle();
@@ -265,9 +270,10 @@ void DockWidgetBase::setFloating(bool floats)
         }
 
         auto lastGeo = lastPositions().lastFloatingGeometry();
-        if (lastGeo.isValid())
-            window()->setGeometry(lastGeo);
-
+        if (lastGeo.isValid()) {
+            if (auto fw = d->floatingWindow())
+                fw->setSuggestedGeometry(lastGeo);
+        }
     } else {
         saveLastFloatingGeometry();
         d->restoreToPreviousPosition();

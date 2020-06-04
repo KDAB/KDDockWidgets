@@ -65,6 +65,13 @@ public:
      */
     TitleBar *titleBar() const { return m_titleBar; }
 
+    /**
+     * @brief Equivalent to setGeometry(), but the value might be adjusted.
+     *
+     * For example, if the suggestedRect is bigger than max size, we'll make it smaller.
+     */
+    void setSuggestedGeometry(QRect suggestedRect);
+
     bool anyNonClosable() const;
     bool anyNonDockable() const;
 
