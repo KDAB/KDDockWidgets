@@ -68,3 +68,10 @@ target_include_directories(kddockwidgets_multisplitter
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+
+install (TARGETS kddockwidgets_multisplitter
+         EXPORT kddockwidgetsTargets
+         RUNTIME DESTINATION bin
+         LIBRARY DESTINATION lib
+         ARCHIVE DESTINATION lib)
