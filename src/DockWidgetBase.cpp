@@ -600,10 +600,8 @@ void DockWidgetBase::Private::close()
 
 void DockWidgetBase::Private::restoreToPreviousPosition()
 {
-    if (!m_lastPositions.isValid()) {
-        qWarning() << Q_FUNC_INFO << "Only restoring to MainWindow supported for now";
+    if (!m_lastPositions.isValid())
         return;
-    }
 
     Layouting::Item *item = m_lastPositions.lastItem();
 
