@@ -463,7 +463,7 @@ FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
         auto frame = Config::self().frameworkWidgetFactory()->createFrame();
         frame->addWidget(this);
         auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(frame);
-        floatingWindow->setGeometry(geo);
+        floatingWindow->setSuggestedGeometry(geo);
         floatingWindow->show();
 
         return floatingWindow;
