@@ -223,7 +223,22 @@ const Frame::List FloatingWindow::frames() const
 
 void FloatingWindow::setSuggestedGeometry(QRect suggestedRect)
 {
-    // TODO: Honour max-size
+    const Frame::List frames = this->frames();
+    if (frames.size() == 1) {
+        // Let's honour max-size when we have a single-frame.
+        // multi-frame cases are more complicated and we're not sure if we want the window to bounce around.
+        // single-frame is the most common case, like floating a dock widget, so let's do that first, it's also
+        // easy.
+        Frame *frame = frames[0];
+        const QSize waste = (minimumSize() - frame->minSize()).expandedTo(QSize(0, 0));
+        const QSize size = (frame->maxSizeHint() + waste).boundedTo(suggestedRect.size());
+
+        // Resize to new size but preserve center
+        const QPoint originalCenter = suggestedRect.center();
+        suggestedRect.setSize(size);
+        suggestedRect.moveCenter(originalCenter);
+    }
+
     setGeometry(suggestedRect);
 }
 

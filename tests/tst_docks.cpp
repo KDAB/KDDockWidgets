@@ -5223,7 +5223,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     EnsureTopLevelsDeleted e;
 
     auto m1 = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("foo"));
+    auto dock1 = createDockWidget("dock1", new QWidget());
     dock1->show();
     QPoint targetPos = QPoint(340, 340);
     dock1->window()->move(targetPos);

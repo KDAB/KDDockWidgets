@@ -23,6 +23,8 @@
 
 #pragma once
 
+#include "multisplitter_export.h"
+
 #include <QRect>
 #include <QSize>
 #include <QDebug>
@@ -47,7 +49,7 @@ class Item;
  * Inherit from it via multi-inheritance so this wrapper is deleted when the actual QWidget/QQuickItem
  * is deleted.
  */
-class Widget
+class MULTISPLITTER_EXPORT Widget
 {
 public:
     explicit Widget(QObject *thisObj)

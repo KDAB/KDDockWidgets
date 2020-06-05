@@ -21,7 +21,6 @@
 #pragma once
 
 #include "Widget.h"
-#include "multisplitter_export.h"
 
 #include <QWidget>
 
