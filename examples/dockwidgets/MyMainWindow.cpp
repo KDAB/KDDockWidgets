@@ -196,7 +196,6 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
     }
 
     dock->resize(600, 600);
-    dock->show();
     m_toggleMenu->addAction(dock->toggleAction());
 
     count++;
