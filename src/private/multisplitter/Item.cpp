@@ -446,7 +446,7 @@ QSize Item::minSize() const
 
 QSize Item::maxSizeHint() const
 {
-    return m_sizingInfo.maxSizeHint;
+    return m_sizingInfo.maxSizeHint.boundedTo(QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT));
 }
 
 void Item::setPos(QPoint pos)
