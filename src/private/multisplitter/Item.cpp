@@ -2016,11 +2016,18 @@ void ItemContainer::dumpLayout(int level)
     const QString typeStr = isRoot() ? QStringLiteral("* Root: ")
                                      : QStringLiteral("* Layout: ");
 
-    qDebug().noquote() << indent << typeStr << d->m_orientation
-                       << m_sizingInfo.geometry /*<< "r=" << m_geometry.right() << "b=" << m_geometry.bottom()*/
-                       << "; min=" << minSize()
-                       << "; this=" << this << beingInserted << visible
-                       << "; %=" << d->childPercentages();
+    {
+        auto dbg = qDebug().noquote();
+        dbg << indent << typeStr << d->m_orientation
+            << m_sizingInfo.geometry /*<< "r=" << m_geometry.right() << "b=" << m_geometry.bottom()*/
+            << "; min=" << minSize()
+            << "; this=" << this << beingInserted << visible
+            << "; %=" << d->childPercentages();
+
+        if (maxSizeHint() != Item::hardcodedMaximumSize)
+            dbg << "; max=" << maxSizeHint();
+    }
+
     int i = 0;
     for (Item *item : qAsConst(d->m_children)) {
         item->dumpLayout(level + 1);
