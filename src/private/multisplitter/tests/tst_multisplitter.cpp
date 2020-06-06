@@ -196,6 +196,7 @@ private Q_SLOTS:
     void tst_minSizeChangedBeforeRestore();
     void tst_separatorMoveCrash();
     void tst_maxSizeHonoured1();
+    void tst_maxSizeHonoured2();
 };
 
 class MyHostWidget : public QWidget
@@ -1559,6 +1560,24 @@ void TestMultiSplitter::tst_maxSizeHonoured1()
 
     root->insertItem(item2, Item::Location_OnBottom);
     QCOMPARE(item2->height(), maxHeight);
+}
+
+void TestMultiSplitter::tst_maxSizeHonoured2()
+{
+    // Tests that a container gets the max size of its children
+
+    auto root1 = createRoot();
+    auto root2 = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+
+    root1->insertItem(item1, Item::Location_OnTop);
+    root2->insertItem(item2, Item::Location_OnTop);
+
+    item2->setMaxSizeHint(QSize(200, 200));
+
+    root1->insertItem(root2.release(), Item::Location_OnBottom);
+    QCOMPARE(item2->parentContainer()->maxSizeHint(), item2->maxSizeHint());
 }
 
 int main(int argc, char *argv[])

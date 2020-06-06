@@ -1820,27 +1820,37 @@ QSize ItemContainer::minSize() const
 
 QSize ItemContainer::maxSizeHint() const
 {
-    int maxW = KDDOCKWIDGETS_MAX_WIDTH;
-    int maxH = KDDOCKWIDGETS_MAX_HEIGHT;
+    int maxW = isVertical() ? KDDOCKWIDGETS_MAX_WIDTH : 0;
+    int maxH = isVertical() ? 0 : KDDOCKWIDGETS_MAX_HEIGHT;
 
-    if (!isEmpty()) {
-        const Item::List visibleChildren = this->visibleChildren();
+    const Item::List visibleChildren = this->visibleChildren();
+    if (!visibleChildren.isEmpty()) {
         for (Item *item : visibleChildren) {
+            const QSize itemMaxSz = item->maxSizeHint();
+            const int itemMaxWidth = itemMaxSz.width();
+            const int itemMaxHeight = itemMaxSz.height();
             if (isVertical()) {
-                maxW = qMin(maxW, item->maxSizeHint().width());
-                maxH += item->maxSizeHint().height();
+                maxW = qMin(maxW, itemMaxWidth);
+                maxH = qMin(maxH + itemMaxHeight, KDDOCKWIDGETS_MAX_HEIGHT);
             } else {
-                maxH = qMin(maxH, item->maxSizeHint().height());
-                maxW += item->maxSizeHint().width();
+                maxH = qMin(maxH, itemMaxHeight);
+                maxW = qMin(maxW + itemMaxWidth, KDDOCKWIDGETS_MAX_WIDTH);
             }
         }
 
         const int separatorWaste = (visibleChildren.size() - 1) * separatorThickness;
-        if (isVertical())
-            maxH += separatorWaste;
-        else
-            maxW += separatorWaste;
+        if (isVertical()) {
+            maxH = qMin(maxH + separatorWaste, KDDOCKWIDGETS_MAX_HEIGHT);
+        } else {
+            maxW = qMin(maxW + separatorWaste, KDDOCKWIDGETS_MAX_WIDTH);
+        }
     }
+
+    if (maxW == 0)
+        maxW = KDDOCKWIDGETS_MAX_WIDTH;
+
+    if (maxH == 0)
+        maxH = KDDOCKWIDGETS_MAX_HEIGHT;
 
     return QSize(maxW, maxH).expandedTo(minSize());
 }
