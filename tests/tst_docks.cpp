@@ -357,6 +357,7 @@ private Q_SLOTS:
     void tst_maxSizePropagates();
     void tst_maxSizeHonouredWhenDropped();
     void tst_fixedSizePolicy();
+    void tst_maximumSizePolicy();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5414,6 +5415,30 @@ void TestDocks::tst_fixedSizePolicy()
 
     QCOMPARE(frame->maxSizeHint().height(), qMax(buttonMaxHeight, KDDOCKWIDGETS_MIN_HEIGHT));
 
+    delete dock1->window();
+}
+
+void TestDocks::tst_maximumSizePolicy()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto widget = new MyWidget2();
+    const int maxHeight = 250;
+    widget->setMinSize(QSize(200, 200));
+    widget->setSizeHint(QSize(250, maxHeight));
+    widget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+
+    auto dock1 = createDockWidget("dock1", widget);
+    dock1->show();
+    dock1->window()->resize(QSize(500, 500));
+    auto oldFw = dock1->window();
+    dock1->close();
+    dock1->show();
+
+    QVERIFY(dock1->window()->height() <= maxHeight + 20); // + 20 as the floating window is a bit bigger, due to margins etc.
+    QVERIFY(dock1->height() <= maxHeight);
+
+    delete oldFw;
     delete dock1->window();
 }
 

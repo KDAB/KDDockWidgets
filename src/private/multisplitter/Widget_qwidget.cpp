@@ -144,9 +144,9 @@ QSize Widget_qwidget::widgetMaxSize(const QWidget *w)
 
     const QSizePolicy policy = w->sizePolicy();
 
-    if (policy.verticalPolicy() == QSizePolicy::Fixed)
+    if (policy.verticalPolicy() == QSizePolicy::Fixed || policy.verticalPolicy() == QSizePolicy::Maximum)
         max.setHeight(qMin(max.height(), w->sizeHint().height()));
-    if (policy.horizontalPolicy() == QSizePolicy::Fixed)
+    if (policy.horizontalPolicy() == QSizePolicy::Fixed || policy.horizontalPolicy() == QSizePolicy::Maximum)
         max.setWidth(qMin(max.width(), w->sizeHint().width()));
 
     max = boundedMaxSize(min, max); // for safety against weird values
