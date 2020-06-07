@@ -387,13 +387,14 @@ public:
 
     explicit MyWidget2(QSize minSz = QSize(1,1))
         : m_minSz(minSz)
+        , m_sizeHint(minSz)
     {
 
     }
 
     QSize sizeHint() const override
     {
-        return m_minSz;
+        return m_sizeHint;
     }
 
     QSize minimumSizeHint() const override
@@ -407,7 +408,13 @@ public:
         updateGeometry();
     }
 
+    void setSizeHint(QSize s)
+    {
+        m_sizeHint = s;
+    }
+
     QSize m_minSz;
+    QSize m_sizeHint;
 };
 }
 
