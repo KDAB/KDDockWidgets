@@ -46,6 +46,7 @@ public:
         return m_thisWidget;
     }
 
+    QSize sizeHint() const override;
     QSize minSize() const override;
     QSize maxSizeHint() const override;
     QRect geometry() const override;
@@ -64,7 +65,7 @@ public:
     void setHeight(int height) override;
 
     static QSize widgetMinSize(const QWidget *w);
-
+    static QSize widgetMaxSize(const QWidget *w);
 private:
     QWidget *const m_thisWidget;
     Q_DISABLE_COPY(Widget_qwidget)

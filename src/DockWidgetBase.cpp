@@ -226,6 +226,7 @@ void DockWidgetBase::setWidget(QWidget *w)
     qCDebug(addwidget) << Q_FUNC_INFO << w;
 
     d->widget = w;
+    setSizePolicy(w->sizePolicy());
     Q_EMIT widgetChanged(w);
     setWindowTitle(uniqueName());
 }

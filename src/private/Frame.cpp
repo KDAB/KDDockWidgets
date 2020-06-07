@@ -626,16 +626,16 @@ QSize Frame::biggestDockWidgetMaxSize() const
 {
     QSize size = Layouting::Item::hardcodedMaximumSize;
     for (DockWidgetBase *dw : dockWidgets()) {
+        const QSize dwMax = widgetMaxSize(dw);
         if (size == Layouting::Item::hardcodedMaximumSize) {
-            size = dw->maximumSize();
+            size = dwMax;
             continue;
         }
 
-        const bool hasMaxSize = dw->maximumSize() != Layouting::Item::hardcodedMaximumSize;
+        const bool hasMaxSize = dwMax != Layouting::Item::hardcodedMaximumSize;
         if (hasMaxSize)
             size = dw->maximumSize().expandedTo(size);
     }
-
 
     // Interpret 0 max-size as not having one too.
     if (size.width() == 0)

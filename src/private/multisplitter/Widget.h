@@ -55,13 +55,14 @@ public:
     explicit Widget(QObject *thisObj)
         : m_thisObj(thisObj) {}
 
-    virtual ~Widget() {}
+    virtual ~Widget();
 
     virtual void setLayoutItem(Item *) = 0;
 
     // Not strickly necessary, but it's nice conveniance for kddw which is widget based.
     virtual QWidget *asQWidget() const { return nullptr; };
 
+    virtual QSize sizeHint() const { return {}; }
     virtual QSize minSize() const = 0;
     virtual QSize maxSizeHint() const = 0;
     virtual QRect geometry() const = 0;
@@ -101,6 +102,9 @@ public:
     bool operator==(const QObject *obj) const {
         return obj == m_thisObj;
     }
+
+protected:
+    static QSize boundedMaxSize(QSize min, QSize max);
 
 private:
     QObject *const m_thisObj;

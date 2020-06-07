@@ -356,6 +356,7 @@ private Q_SLOTS:
     void tst_moreTitleBarCornerCases();
     void tst_maxSizePropagates();
     void tst_maxSizeHonouredWhenDropped();
+    void tst_fixedSizePolicy();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5383,6 +5384,30 @@ void TestDocks::tst_maxSizeHonouredWhenDropped()
     auto fw = qobject_cast<FloatingWindow*>(dock2->window());
     m1->dropArea()->drop(fw, Location_OnLeft, nullptr);
     QCOMPARE(dock2->frame()->width(), droppedWidth);
+}
+
+void TestDocks::tst_fixedSizePolicy()
+{
+    // tests that KDDW also takes into account QSizePolicy::Fixed for calculating the max size hint.
+    // Since QPushButton for example doesn't set QWidget::maximumSize(), but instead uses sizeHint()
+    // + QSizePolicy::Fixed.
+    EnsureTopLevelsDeleted e;
+    auto button = new QPushButton("one");
+    auto dock1 = createDockWidget("dock1", button);
+    Frame *frame = dock1->frame();
+
+    // Just a precondition from the test. If QPushButton ever changes, replace with a QWidget and set fixed size policy
+    QCOMPARE(button->sizePolicy().verticalPolicy(), QSizePolicy::Fixed);
+
+    const int buttonMaxHeight = button->sizeHint().height();
+
+    QCOMPARE(dock1->sizeHint(), button->sizeHint());
+    QCOMPARE(dock1->sizePolicy().verticalPolicy(), button->sizePolicy().verticalPolicy());
+    QCOMPARE(dock1->sizePolicy().horizontalPolicy(), button->sizePolicy().horizontalPolicy());
+
+    QCOMPARE(frame->maxSizeHint().height(), qMax(buttonMaxHeight, KDDOCKWIDGETS_MIN_HEIGHT));
+
+    delete dock1->window();
 }
 
 int main(int argc, char *argv[])
