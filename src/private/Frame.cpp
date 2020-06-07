@@ -643,6 +643,5 @@ QSize Frame::biggestDockWidgetMaxSize() const
     if (size.height() == 0)
         size.setHeight(Layouting::Item::hardcodedMaximumSize.height());
 
-    return size.expandedTo(Layouting::Widget_qwidget::minSize());
+    return size;
 }
-
