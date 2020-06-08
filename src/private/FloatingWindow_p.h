@@ -69,8 +69,11 @@ public:
      * @brief Equivalent to setGeometry(), but the value might be adjusted.
      *
      * For example, if the suggestedRect is bigger than max size, we'll make it smaller.
+     *
+     * @param preserveCenter, if true, then the center is preserved
+     *
      */
-    void setSuggestedGeometry(QRect suggestedRect);
+    void setSuggestedGeometry(QRect suggestedRect, bool preserveCenter = false);
 
     bool anyNonClosable() const;
     bool anyNonDockable() const;

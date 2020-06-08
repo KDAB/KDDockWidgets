@@ -184,6 +184,16 @@ void StateDragging::onEntry(QEvent *)
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (q->m_windowBeingDragged) {
         qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
+
+        auto fw = q->m_windowBeingDragged->floatingWindow();
+        if (!fw->geometry().contains(q->m_pressPos)) {
+            // The window shrunk when the drag started, this can happen if it has max-size constraints
+            // we make the floating window smaller. Has the downside that it might not be under the mouse
+            // cursor anymore, so make the change
+            if (fw->width() < q->m_offset.x()) { // make sure it shrunk
+                q->m_offset.setX(fw->width() / 2);
+            }
+        }
     } else {
         // Shouldn't happen
         qWarning() << Q_FUNC_INFO << "No window being dragged for " << q->m_draggable->asWidget();

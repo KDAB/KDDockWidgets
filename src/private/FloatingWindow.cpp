@@ -221,7 +221,7 @@ const Frame::List FloatingWindow::frames() const
     return m_dropArea->findChildren<Frame *>(QString(), Qt::FindDirectChildrenOnly);
 }
 
-void FloatingWindow::setSuggestedGeometry(QRect suggestedRect)
+void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, bool preserveCenter)
 {
     const Frame::List frames = this->frames();
     if (frames.size() == 1) {
@@ -236,7 +236,8 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect)
         // Resize to new size but preserve center
         const QPoint originalCenter = suggestedRect.center();
         suggestedRect.setSize(size);
-        suggestedRect.moveCenter(originalCenter);
+        if (preserveCenter)
+            suggestedRect.moveCenter(originalCenter);
     }
 
     setGeometry(suggestedRect);
