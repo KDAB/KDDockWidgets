@@ -113,7 +113,7 @@ FloatingWindow * TabBar::detachTab(DockWidgetBase *dockWidget)
 
     auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(newFrame);
     r.moveTopLeft(globalPoint);
-    floatingWindow->setGeometry(r);
+    floatingWindow->setSuggestedGeometry(r);
     floatingWindow->show();
 
     return floatingWindow;
@@ -231,7 +231,7 @@ std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
 
     auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(m_frame);
     r.moveTopLeft(globalPoint);
-    floatingWindow->setGeometry(r);
+    floatingWindow->setSuggestedGeometry(r);
     floatingWindow->show();
 
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
