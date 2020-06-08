@@ -60,7 +60,7 @@ public:
     virtual void setLayoutItem(Item *) = 0;
 
     // Not strickly necessary, but it's nice conveniance for kddw which is widget based.
-    virtual QWidget *asQWidget() const { return nullptr; };
+    virtual QWidget *asQWidget() const { return nullptr; }
 
     virtual QSize sizeHint() const { return {}; }
     virtual QSize minSize() const = 0;
