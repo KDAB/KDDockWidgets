@@ -6,7 +6,6 @@ add_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS
                 -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
                 -DQT_STRICT_ITERATORS
                 -DQT_NO_KEYWORDS
-                -DQT_DISABLE_DEPRECATED_BEFORE=0x060000
                 -DQT_NO_FOREACH
                )
 
@@ -188,6 +187,9 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfig.cmake"
 )
 
 if (OPTION_DEVELOPER_MODE)
+    # Under developer mode since kddw might be a sub-folder of a project setting a different value for QT_DISABLE_DEPRECATED_BEFORE
+    target_compile_definitions(kddockwidgets PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
+
     add_executable(kddockwidgets_linter layoutlinter_main.cpp)
     target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt5::Widgets)
 endif()
