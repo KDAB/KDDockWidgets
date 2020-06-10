@@ -3055,41 +3055,57 @@ int ItemContainer::indexOf(Separator *separator) const
     return d->m_separators.indexOf(separator);
 }
 
-int ItemContainer::minPosForSeparator(Separator *separator) const
+int ItemContainer::minPosForSeparator(Separator *separator, bool honourMax) const
 {
-    const int globalMin = minPosForSeparator_global(separator);
+    const int globalMin = minPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMin, d->m_orientation);
 }
 
-int ItemContainer::maxPosForSeparator(Separator *separator) const
+int ItemContainer::maxPosForSeparator(Separator *separator, bool honourMax) const
 {
-    const int globalMax = maxPosForSeparator_global(separator);
+    const int globalMax = maxPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMax, d->m_orientation);
 }
 
-int ItemContainer::minPosForSeparator_global(Separator *separator) const
+int ItemContainer::minPosForSeparator_global(Separator *separator, bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
 
     const Item::List children = visibleChildren();
     Q_ASSERT(separatorIndex + 1 < children.size());
-    Item *item = children.at(separatorIndex + 1);
+    Item *item2 = children.at(separatorIndex + 1);
 
-    const int available1 = availableToSqueezeOnSide_recursive(item, Side1, d->m_orientation);
-    return separator->position() - available1;
+    const int availableToSqueeze = availableToSqueezeOnSide_recursive(item2, Side1, d->m_orientation);
+
+    if (honourMax) {
+        // We can drag the separator left just as much as it doesn't violate max-size constraints of Side2
+        Item *item1 = children.at(separatorIndex);
+        const int availabletoGrow = availableToGrowOnSide_recursive(item1, Side2, d->m_orientation);
+        return separator->position() - qMin(availabletoGrow, availableToSqueeze);
+    }
+
+    return separator->position() - availableToSqueeze;
 }
 
-int ItemContainer::maxPosForSeparator_global(Separator *separator) const
+int ItemContainer::maxPosForSeparator_global(Separator *separator, bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
 
     const Item::List children = visibleChildren();
-    Item *item = children.at(separatorIndex);
+    Item *item1 = children.at(separatorIndex);
 
-    const int available2 = availableToSqueezeOnSide_recursive(item, Side2, d->m_orientation);
-    return separator->position() + available2;
+    const int availableToSqueeze = availableToSqueezeOnSide_recursive(item1, Side2, d->m_orientation);
+
+    if (honourMax) {
+        // We can drag the separator right just as much as it doesn't violate max-size constraints of Side1
+        Item *item2 = children.at(separatorIndex + 1);
+        const int availabletoGrow = availableToGrowOnSide_recursive(item2, Side1, d->m_orientation);
+        return separator->position() + qMin(availabletoGrow, availableToSqueeze);
+    }
+
+    return separator->position() + availableToSqueeze;
 }
 
 QVariantMap ItemContainer::toVariantMap() const

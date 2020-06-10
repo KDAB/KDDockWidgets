@@ -378,10 +378,10 @@ public:
     void insertItem(Item *item, Location, DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
                     AddingOption = AddingOption_None) override;
     void requestSeparatorMove(Separator *separator, int delta);
-    int minPosForSeparator(Separator *) const;
-    int maxPosForSeparator(Separator *) const;
-    int minPosForSeparator_global(Separator *) const;
-    int maxPosForSeparator_global(Separator *) const;
+    int minPosForSeparator(Separator *, bool honourMax = false) const;
+    int maxPosForSeparator(Separator *, bool honourMax = false) const;
+    int minPosForSeparator_global(Separator *, bool honourMax = false) const;
+    int maxPosForSeparator_global(Separator *, bool honourMax = false) const;
     void requestEqualSize(Separator *separator);
     void layoutEqually();
     void layoutEqually_recursive();
