@@ -467,7 +467,7 @@ private:
     int neighboursMaxLengthFor(const Item *item, Side, Qt::Orientation) const;
     int availableToSqueezeOnSide(const Item *child, Side) const;
     int availableToGrowOnSide(const Item *child, Side) const;
-    int availableOnSide_recursive(const Item *child, Side, Qt::Orientation orientation) const;
+    int availableToSqueezeOnSide_recursive(const Item *child, Side, Qt::Orientation orientation) const;
     void onChildMinSizeChanged(Item *child);
     void onChildVisibleChanged(Item *child, bool visible);
     void updateSizeConstraints();

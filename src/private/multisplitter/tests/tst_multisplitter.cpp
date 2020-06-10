@@ -1295,13 +1295,12 @@ void TestMultiSplitter::tst_availableOnSide()
     item3->insertItem(item4, Item::Location_OnBottom);
 
     auto c = item3->parentContainer();
-    QCOMPARE(c->availableOnSide_recursive(item3, Side1, Qt::Horizontal), (item1->width() - item1->minSize().width()) + (item2->width() - item2->minSize().width()));
-    QCOMPARE(c->availableOnSide_recursive(item3, Side2, Qt::Horizontal), 0);
-    QCOMPARE(c->availableOnSide_recursive(item4, Side1, Qt::Horizontal), (item1->width() - item1->minSize().width()) + (item2->width() - item2->minSize().width()));
-    QCOMPARE(c->availableOnSide_recursive(item4, Side2, Qt::Horizontal), 0);
-
-    QCOMPARE(c->availableOnSide_recursive(item4, Side1, Qt::Vertical), (item3->height() - item3->minSize().height()));
-    QCOMPARE(c->availableOnSide_recursive(item4, Side2, Qt::Vertical), 0);
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item3, Side1, Qt::Horizontal), (item1->width() - item1->minSize().width()) + (item2->width() - item2->minSize().width()));
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item3, Side2, Qt::Horizontal), 0);
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Horizontal), (item1->width() - item1->minSize().width()) + (item2->width() - item2->minSize().width()));
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side2, Qt::Horizontal), 0);
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side1, Qt::Vertical), (item3->height() - item3->minSize().height()));
+    QCOMPARE(c->availableToSqueezeOnSide_recursive(item4, Side2, Qt::Vertical), 0);
 
     Item *item31 = createItem(/*min=*/QSize(100, 100));
     item3->insertItem(item31, Item::Location_OnRight);

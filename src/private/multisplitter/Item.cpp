@@ -2641,15 +2641,15 @@ int ItemContainer::availableToGrowOnSide(const Item *child, Side side) const
     return qMin(0, max - length);
 }
 
-int ItemContainer::availableOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
+int ItemContainer::availableToSqueezeOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
 {
     if (orientation == d->m_orientation) {
         const int available = availableToSqueezeOnSide(child, side);
         return isRoot() ? available
-                        : (available + parentContainer()->availableOnSide_recursive(this, side, orientation));
+                        : (available + parentContainer()->availableToSqueezeOnSide_recursive(this, side, orientation));
     } else {
         return isRoot() ? 0
-                        : parentContainer()->availableOnSide_recursive(this, side, orientation);
+                        : parentContainer()->availableToSqueezeOnSide_recursive(this, side, orientation);
     }
 }
 
@@ -3064,7 +3064,7 @@ int ItemContainer::minPosForSeparator_global(Separator *separator) const
     Q_ASSERT(separatorIndex + 1 < children.size());
     Item *item = children.at(separatorIndex + 1);
 
-    const int available1 = availableOnSide_recursive(item, Side1, d->m_orientation);
+    const int available1 = availableToSqueezeOnSide_recursive(item, Side1, d->m_orientation);
     return separator->position() - available1;
 }
 
@@ -3076,7 +3076,7 @@ int ItemContainer::maxPosForSeparator_global(Separator *separator) const
     const Item::List children = visibleChildren();
     Item *item = children.at(separatorIndex);
 
-    const int available2 = availableOnSide_recursive(item, Side2, d->m_orientation);
+    const int available2 = availableToSqueezeOnSide_recursive(item, Side2, d->m_orientation);
     return separator->position() + available2;
 }
 
