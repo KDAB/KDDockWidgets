@@ -2638,7 +2638,7 @@ int ItemContainer::availableToGrowOnSide(const Item *child, Side side) const
     const int max = neighboursMaxLengthFor(child, side, d->m_orientation);
 
     // It's fine if length is bigger than max. As max is just an hint, which we try to honour but some times it's not possible.
-    return qMin(0, max - length);
+    return qMax(0, max - length);
 }
 
 int ItemContainer::availableToSqueezeOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const

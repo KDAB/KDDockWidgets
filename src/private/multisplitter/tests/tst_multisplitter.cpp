@@ -187,6 +187,7 @@ private Q_SLOTS:
     void tst_containerReducesSize();
     void tst_insertHiddenContainer();
     void tst_availableOnSide();
+    void tst_availableToGrowOnSide();
     void tst_resizeViaSeparator();
     void tst_resizeViaSeparator2();
     void tst_resizeViaSeparator3();
@@ -1262,6 +1263,8 @@ void TestMultiSplitter::tst_insertHiddenContainer()
 
 void TestMultiSplitter::tst_availableOnSide()
 {
+    // Tests that items are available to squeeze a certain amount (without violating their min-size)
+
     auto root = createRoot();
     Item *item1 = createItem(/*min=*/QSize(100, 100));
     root->setSize(QSize(1000, 1000));
@@ -1308,6 +1311,44 @@ void TestMultiSplitter::tst_availableOnSide()
     auto separator31 = container31->separators().at(0);
     QCOMPARE(container31->minPosForSeparator_global(separator31), item1->minSize().width() + item2->minSize().width() + item3->minSize().width() + 2*Item::separatorThickness);
     QCOMPARE(container31->maxPosForSeparator_global(separator31), root->width() -item31->minSize().width() - Item::separatorThickness);
+}
+
+void TestMultiSplitter::tst_availableToGrowOnSide()
+{
+    // Tests that items are available to grow a certain amount (without violating their max-size)
+    auto root = createRoot();
+    Item *item1 = createItem(/*min=*/QSize(100, 100), /*max=*/QSize(230, 230));
+    root->setSize(QSize(1000, 1000));
+    root->insertItem(item1, Item::Location_OnLeft);
+
+    QCOMPARE(root->availableToGrowOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableToGrowOnSide(item1, Side2), 0);
+
+    Item *item2 = createItem(/*min=*/QSize(200, 200));
+    root->insertItem(item2, Item::Location_OnRight);
+
+    // give a resize, so item1 gets smaller than its max-size. Will be unneeded soon
+    root->setSize_recursive(QSize(1001, 1001));
+
+    QCOMPARE(root->availableToGrowOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableToGrowOnSide(item2, Side2), 0);
+    QCOMPARE(root->availableToGrowOnSide(item1, Side2), root->length() - item2->width());
+    QCOMPARE(root->availableToGrowOnSide(item2, Side1), item1->maxSizeHint().width() - item1->width());
+
+    auto separator = root->separators_recursive()[0];
+    QCOMPARE(root->minPosForSeparator_global(separator, true), item1->minSize().width());
+    QCOMPARE(root->maxPosForSeparator_global(separator, true), item1->maxSizeHint().width());
+
+    Item *item3 = createItem(/*min=*/QSize(200, 200), /*max=*/QSize(200, 200));
+    root->insertItem(item3, Item::Location_OnRight);
+    QVERIFY(root->checkSanity());
+
+    QCOMPARE(root->availableToGrowOnSide(item3, Side2), 0);
+    QCOMPARE(root->availableToGrowOnSide(item3, Side1), root->length() - item2->width() - item1->width());
+
+
+    QCOMPARE(root->availableToGrowOnSide(item2, Side1), item1->maxSizeHint().width() - item1->width());
+    QCOMPARE(root->availableToGrowOnSide(item2, Side2), item3->maxSizeHint().width() - item3->width());
 }
 
 void TestMultiSplitter::tst_resizeViaSeparator()
