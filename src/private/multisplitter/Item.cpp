@@ -2588,6 +2588,37 @@ int ItemContainer::neighboursMinLengthFor(const Item *item, Side side, Qt::Orien
     }
 }
 
+int ItemContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Orientation o) const
+{
+    const Item::List children = visibleChildren();
+    const int index = children.indexOf(const_cast<Item*>(item));
+    if (index == -1) {
+        qWarning() << Q_FUNC_INFO << "Couldn't find item" << item;
+        return 0;
+    }
+
+    if (o == d->m_orientation) {
+        int neighbourMaxLength = 0;
+        int start = 0;
+        int end = -1;
+        if (side == Side1) {
+            start = 0;
+            end = index - 1;
+        } else {
+            start = index + 1;
+            end = children.size() - 1;
+        }
+
+        for (int i = start; i <= end; ++i)
+            neighbourMaxLength = qMin(length(), neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
+
+         return neighbourMaxLength;
+    } else {
+        // No neighbours here
+        return 0;
+    }
+}
+
 int ItemContainer::availableOnSide(const Item *child, Side side) const
 {
     const int length = neighboursLengthFor(child, side, d->m_orientation);
