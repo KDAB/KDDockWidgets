@@ -51,7 +51,11 @@ class DropAreaWithCentralFrame;
  *
  * Do not use instantiate directly in user code. Use MainWindow instead.
  */
+#ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
 class DOCKS_EXPORT MainWindowBase : public QMainWindowOrQuick
+#else
+class DOCKS_EXPORT MainWindowBase : public QMainWindow
+#endif
 {
     Q_OBJECT
 public:
