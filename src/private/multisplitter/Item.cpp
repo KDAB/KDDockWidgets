@@ -2216,7 +2216,7 @@ void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourS
         return;
     }
 
-    const int available = availableOnSide(item, Side1) + availableOnSide(item, Side2) - Item::separatorThickness;
+    const int available = availableToSqueezeOnSide(item, Side1) + availableToSqueezeOnSide(item, Side2) - Item::separatorThickness;
 
     const int max = qMin(available, item->maxLengthHint(d->m_orientation));
     const int min = item->minLength(d->m_orientation);
@@ -2292,7 +2292,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
 
         // This is the available within our container, which we can use without bothering other other separators
         Item *side2Neighbour = children[separatorIndex + 1];
-        const int available1 = availableOnSide(side2Neighbour, Side1);
+        const int available1 = availableToSqueezeOnSide(side2Neighbour, Side1);
         tookLocally = qMin(available1, remainingToTake);
 
         if (tookLocally != 0) {
@@ -2304,7 +2304,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
     } else {
         // Separator is moving right (or bottom if horizontal)
         Item *side1Neighbour = children[separatorIndex];
-        const int available2 = availableOnSide(side1Neighbour, Side2);
+        const int available2 = availableToSqueezeOnSide(side1Neighbour, Side2);
         tookLocally = qMin(available2, remainingToTake);
         if (tookLocally != 0) {
             growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only,
@@ -2619,7 +2619,7 @@ int ItemContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Orien
     }
 }
 
-int ItemContainer::availableOnSide(const Item *child, Side side) const
+int ItemContainer::availableToSqueezeOnSide(const Item *child, Side side) const
 {
     const int length = neighboursLengthFor(child, side, d->m_orientation);
     const int min = neighboursMinLengthFor(child, side, d->m_orientation);
@@ -2635,7 +2635,7 @@ int ItemContainer::availableOnSide(const Item *child, Side side) const
 int ItemContainer::availableOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
 {
     if (orientation == d->m_orientation) {
-        const int available = availableOnSide(child, side);
+        const int available = availableToSqueezeOnSide(child, side);
         return isRoot() ? available
                         : (available + parentContainer()->availableOnSide_recursive(this, side, orientation));
     } else {

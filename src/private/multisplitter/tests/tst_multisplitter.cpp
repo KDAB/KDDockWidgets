@@ -1267,8 +1267,8 @@ void TestMultiSplitter::tst_availableOnSide()
     root->setSize(QSize(1000, 1000));
     root->insertItem(item1, Item::Location_OnLeft);
 
-    QCOMPARE(root->availableOnSide(item1, Side1), 0);
-    QCOMPARE(root->availableOnSide(item1, Side2), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item1, Side2), 0);
 
     Item *item2 = createItem(/*min=*/QSize(200, 200));
     root->insertItem(item2, Item::Location_OnRight);
@@ -1276,16 +1276,16 @@ void TestMultiSplitter::tst_availableOnSide()
     QCOMPARE(root->minPosForSeparator_global(separator), item1->minSize().width());
     QCOMPARE(root->maxPosForSeparator_global(separator), root->width() - item2->minSize().width() - Item::separatorThickness);
 
-    QCOMPARE(root->availableOnSide(item1, Side1), 0);
-    QCOMPARE(root->availableOnSide(item1, Side2), item2->width() - item2->minSize().width());
-    QCOMPARE(root->availableOnSide(item2, Side1), item1->width() - item1->minSize().width());
-    QCOMPARE(root->availableOnSide(item2, Side2), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item1, Side1), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item1, Side2), item2->width() - item2->minSize().width());
+    QCOMPARE(root->availableToSqueezeOnSide(item2, Side1), item1->width() - item1->minSize().width());
+    QCOMPARE(root->availableToSqueezeOnSide(item2, Side2), 0);
 
     Item *item3 = createItem(/*min=*/QSize(200, 200));
     root->insertItem(item3, Item::Location_OnRight);
     QVERIFY(root->checkSanity());
-    QCOMPARE(root->availableOnSide(item3, Side1), (item1->width() - item1->minSize().width()) + (item2->width() - item2->minSize().width()));
-    QCOMPARE(root->availableOnSide(item3, Side2), 0);
+    QCOMPARE(root->availableToSqueezeOnSide(item3, Side1), (item1->width() - item1->minSize().width()) + (item2->width() - item2->minSize().width()));
+    QCOMPARE(root->availableToSqueezeOnSide(item3, Side2), 0);
 
     auto separator2 = root->separators_recursive()[1];
     QCOMPARE(root->minPosForSeparator_global(separator2), item1->minSize().width() + item2->minSize().width() + Item::separatorThickness);
