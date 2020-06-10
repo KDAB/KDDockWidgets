@@ -198,6 +198,7 @@ private Q_SLOTS:
     void tst_maxSizeHonoured1();
     void tst_maxSizeHonoured2();
     void tst_maxSizeHonoured3();
+    void tst_requestEqualSize();
 };
 
 class MyHostWidget : public QWidget
@@ -1345,8 +1346,6 @@ void TestMultiSplitter::tst_availableToGrowOnSide()
 
     QCOMPARE(root->availableToGrowOnSide(item3, Side2), 0);
     QCOMPARE(root->availableToGrowOnSide(item3, Side1), root->length() - item2->width() - item1->width());
-
-
     QCOMPARE(root->availableToGrowOnSide(item2, Side1), item1->maxSizeHint().width() - item1->width());
     QCOMPARE(root->availableToGrowOnSide(item2, Side2), item3->maxSizeHint().width() - item3->width());
 }
@@ -1385,7 +1384,7 @@ void TestMultiSplitter::tst_resizeViaSeparator()
 
 void TestMultiSplitter::tst_resizeViaSeparator2()
 {
-    // Here we resize one of the separators and make sure onyly the items next to the separator move
+    // Here we resize one of the separators and make sure only the items next to the separator move
     // propagation should only start when constraints have been met
 
     auto root = createRoot();
@@ -1674,6 +1673,63 @@ void TestMultiSplitter::tst_maxSizeHonoured3()
         // and we respected max-size too
         QVERIFY(item1->height() <= maxHeight);
         QVERIFY(item1->height() >= minHeight);
+    }
+}
+
+void TestMultiSplitter::tst_requestEqualSize()
+{
+    // Tests that double-clicking a separator will make both sides equal
+
+    {
+        auto root = createRoot();
+        auto item1 = createItem();
+        auto item2 = createItem();
+        root->insertItem(item1, Item::Location_OnLeft);
+        root->insertItem(item2, Item::Location_OnRight);
+
+        auto separator = root->separators().constFirst();
+
+        const int item1Squeeze = item1->m_sizingInfo.availableLength(Qt::Horizontal);
+
+        root->requestSeparatorMove(separator, -item1Squeeze);
+
+        QCOMPARE(item1->width(), item1->minSize().width());
+        QCOMPARE(item2->width(), root->length() - st - item1->width());
+
+        root->requestEqualSize(separator);
+        QVERIFY(qAbs(item1->width() - item2->width()) < 5);
+    }
+
+    {
+        // Similar, but now we have max-size to honour too
+        auto root = createRoot();
+        const int minWidth1 = 100;
+        const int maxWidth1 = 200;
+        auto item1 = createItem(QSize(minWidth1, 100), QSize(maxWidth1, 200));
+        auto item2 = createItem();
+        root->insertItem(item2, Item::Location_OnRight);
+        root->insertItem(item1, Item::Location_OnLeft);
+
+        QCOMPARE(item1->width(), item1->maxSizeHint().width());
+        auto separator = root->separators().constFirst();
+        root->requestEqualSize(separator);
+        // Separator didn't move, doing so would make item1 bigger than its max size
+        QCOMPARE(item1->width(), item1->maxSizeHint().width());
+
+        // Let's put the separator further right manually, then try again:
+        root->requestSeparatorMove(separator, 20);
+        QCOMPARE(item1->width(), maxWidth1 + 20);
+
+        // Double clicking on the separator will put it back at a sane place
+
+        const int minPos = root->minPosForSeparator_global(separator, true);
+        const int maxPos = root->maxPosForSeparator_global(separator, true);
+
+        QCOMPARE(minPos, minWidth1);
+        QCOMPARE(maxPos, maxWidth1);
+
+        root->requestEqualSize(separator);
+        QCOMPARE(item1->width(), maxWidth1);
     }
 }
 

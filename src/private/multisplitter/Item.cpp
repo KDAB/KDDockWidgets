@@ -2369,9 +2369,9 @@ void ItemContainer::requestEqualSize(Separator *separator)
         delta = -(newLength - length2); // negative, since separator is going left
     }
 
-    // Do some bounds checking, to respect min-sizes
-    const int min = minPosForSeparator_global(separator);
-    const int max = maxPosForSeparator_global(separator);
+    // Do some bounds checking, to respect min-size and max-size
+    const int min = minPosForSeparator_global(separator, true);
+    const int max = maxPosForSeparator_global(separator, true);
     const int newPos = qBound(min, separator->position() + delta, max);
 
     // correct the delta
@@ -2637,8 +2637,7 @@ int ItemContainer::availableToGrowOnSide(const Item *child, Side side) const
     const int length = neighboursLengthFor(child, side, d->m_orientation);
     const int max = neighboursMaxLengthFor(child, side, d->m_orientation);
 
-    // It's fine if length is bigger than max. As max is just an hint, which we try to honour but some times it's not possible.
-    return qMax(0, max - length);
+    return max - length;
 }
 
 int ItemContainer::availableToSqueezeOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
