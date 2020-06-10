@@ -196,6 +196,10 @@ struct SizingInfo {
         return maxLengthHint(o) - length(o);
     }
 
+    int neededToShrink(Qt::Orientation o) const {
+        return qMax(0, length(o) - maxLengthHint(o));
+    }
+
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &);
 

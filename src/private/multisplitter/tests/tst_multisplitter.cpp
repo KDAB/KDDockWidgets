@@ -196,6 +196,7 @@ private Q_SLOTS:
     void tst_separatorMoveCrash();
     void tst_maxSizeHonoured1();
     void tst_maxSizeHonoured2();
+    void tst_maxSizeHonoured3();
 };
 
 class MyHostWidget : public QWidget
@@ -1580,6 +1581,60 @@ void TestMultiSplitter::tst_maxSizeHonoured2()
 
     root1->insertItem(root2.release(), Item::Location_OnBottom);
     QCOMPARE(item2->parentContainer()->maxSizeHint(), item2->maxSizeHint());
+}
+
+void TestMultiSplitter::tst_maxSizeHonoured3()
+{
+    {
+        // Tests that resizing a window will now make the item with max-size grow past its max
+        auto root = createRoot();
+        const int minHeight = 100;
+        const int maxHeight = 200;
+        auto item1 = createItem(QSize(100, minHeight), QSize(200, maxHeight));
+        auto item2 = createItem();
+        root->setSize(QSize(2000, 2000));
+
+        root->insertItem(item2, Item::Location_OnBottom);
+        root->insertItem(item1, Item::Location_OnTop);
+
+        // When adding, we respect max-size
+        QVERIFY(item1->height() <= maxHeight);
+        QVERIFY(item1->height() >= minHeight);
+
+        // Now resize the window
+        root->setSize_recursive(QSize(200, 8000));
+
+        // and we respected max-size too
+        QVERIFY(item1->height() <= maxHeight);
+        QVERIFY(item1->height() >= minHeight);
+    }
+
+    {
+        // Also do it with nested containers
+        auto root1 = createRoot();
+        auto root2 = createRoot();
+        const int minHeight = 100;
+        const int maxHeight = 200;
+        auto item1 = createItem(QSize(100, minHeight), QSize(200, maxHeight));
+        auto item2 = createItem();
+        root1->setSize(QSize(2000, 2000));
+        root2->setSize(QSize(2000, 2000));
+
+        root2->insertItem(item2, Item::Location_OnBottom);
+        root1->insertItem(item1, Item::Location_OnTop);
+        root2->insertItem(root1.release(), Item::Location_OnTop);
+
+        // When adding, we respect max-size
+        QVERIFY(item1->height() <= maxHeight);
+        QVERIFY(item1->height() >= minHeight);
+
+        // Now resize the window
+        root2->setSize_recursive(QSize(200, 8000));
+
+        // and we respected max-size too
+        QVERIFY(item1->height() <= maxHeight);
+        QVERIFY(item1->height() >= minHeight);
+    }
 }
 
 int main(int argc, char *argv[])

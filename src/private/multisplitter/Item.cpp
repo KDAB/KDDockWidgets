@@ -866,6 +866,7 @@ struct ItemContainer::Private
     void relayoutIfNeeded();
     const Item *itemFromPath(const QVector<int> &path) const;
     void resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &sizes, ChildrenResizeStrategy);
+    void honourMaxSizes(SizingInfo::List &sizes);
     void scheduleCheckSanity() const;
     Separator *neighbourSeparator(const Item *item, Side, Qt::Orientation) const;
     Separator *neighbourSeparator_recursive(const Item *item, Side, Qt::Orientation) const;
@@ -1899,16 +1900,17 @@ void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Sizing
                 itemSize.geometry.setSize({ newItemLength, q->height() });
             }
         }
+
+        honourMaxSizes(childSizes);
     } else if (strategy == ChildrenResizeStrategy::Side1SeparatorMove ||
                strategy == ChildrenResizeStrategy::Side2SeparatorMove) {
         int remaining = Layouting::length(newSize - oldSize, m_orientation); // This is how much we need to give to children (when growing the container), or to take from them when shrinking the container
         const bool isGrowing = remaining > 0;
         remaining = qAbs(remaining); // Easier to deal in positive numbers
 
-        // We're resizing the container, and need to decide if we start resizing the 1st children or
-        //, in reverse order.
+        // We're resizing the container, and need to decide if we start resizing the 1st children or in reverse order.
         // If the separator is being dragged left or top, then isSide1SeparatorMove is true.
-        // If isSide1SeparatorMove is true and we're growing, then it means this container is on the right/bottom top of the separator,
+        // If isSide1SeparatorMove is true and we're growing, then it means this container is on the right/bottom of the separator,
         // so should resize its first children first. Same logic for the other 3 cases
 
         const bool isSide1SeparatorMove = strategy == ChildrenResizeStrategy::Side1SeparatorMove;
@@ -1941,6 +1943,95 @@ void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Sizing
 
             if (remaining == 0)
                 break;
+        }
+    }
+}
+
+void ItemContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
+{
+    // Reduces the size of all children that are bigger than max-size.
+    // Assuming there's widgets that are willing to grow to occupy that space.
+
+    int amountNeededToShrink = 0;
+    int amountAvailableToGrow = 0;
+    QVector<int> indexesOfShrinkers;
+    QVector<int> indexesOfGrowers;
+
+    for (int i = 0; i < sizes.count(); ++i) {
+        SizingInfo &info = sizes[i];
+        const int neededToShrink = info.neededToShrink(m_orientation);
+        const int availableToGrow = info.availableToGrow(m_orientation);
+
+        if (neededToShrink > 0) {
+            amountNeededToShrink += neededToShrink;
+            indexesOfShrinkers.push_back(i);
+        } else if (availableToGrow > 0) {
+            amountAvailableToGrow = qMin(amountAvailableToGrow + availableToGrow, q->length());
+            indexesOfGrowers.push_back(i);
+        }
+    }
+
+    // Don't grow more than what's needed
+    amountAvailableToGrow = qMin(amountNeededToShrink, amountAvailableToGrow);
+
+    // Don't shrink more than what's available to grow
+    amountNeededToShrink = qMin(amountAvailableToGrow, amountNeededToShrink);
+
+    if (amountNeededToShrink == 0 || amountAvailableToGrow == 0)
+        return;
+
+    // We gathered who needs to shrink and who can grow, now try to do it evenly so that all
+    // growers participate, and not just one giving everything.
+
+    // Do the growing:
+    while (amountAvailableToGrow > 0) {
+        // Each grower will grow a bit (round-robin)
+        int toGrow = qMax(1, amountAvailableToGrow / indexesOfGrowers.size());
+
+        for (auto it = indexesOfGrowers.begin(); it != indexesOfGrowers.end();) {
+            const int index = *it;
+            SizingInfo &sizing = sizes[index];
+            const int grew = qMin(sizing.availableToGrow(m_orientation), toGrow);
+            sizing.incrementLength(grew, m_orientation);
+            amountAvailableToGrow -= grew;
+
+            if (amountAvailableToGrow == 0) {
+                // We're done growing
+                break;
+            }
+
+            if (sizing.availableToGrow(m_orientation) == 0) {
+                // It's no longer a grower
+                it = indexesOfGrowers.erase(it);
+            } else {
+                it++;
+            }
+        }
+    }
+
+    // Do the shrinking:
+    while (amountNeededToShrink > 0) {
+        // Each shrinker will shrink a bit (round-robin)
+        int toShrink = qMax(1, amountNeededToShrink / indexesOfShrinkers.size());
+
+        for (auto it = indexesOfShrinkers.begin(); it != indexesOfShrinkers.end();) {
+            const int index = *it;
+            SizingInfo &sizing = sizes[index];
+            const int shrunk = qMin(sizing.neededToShrink(m_orientation), toShrink);
+            sizing.incrementLength(-shrunk, m_orientation);
+            amountNeededToShrink -= shrunk;
+
+            if (amountNeededToShrink == 0) {
+                // We're done shrinking
+                break;
+            }
+
+            if (sizing.neededToShrink(m_orientation) == 0) {
+                // It's no longer a shrinker
+                it = indexesOfShrinkers.erase(it);
+            } else {
+                it++;
+            }
         }
     }
 }
@@ -2681,8 +2772,12 @@ SizingInfo::List ItemContainer::sizes(bool ignoreBeingInserted) const
     SizingInfo::List result;
     result.reserve(children.count());
     for (Item *item : children) {
-        if (item->isContainer())
+        if (item->isContainer()) {
+            // Containers have virtual min/maxSize methods, and don't really fill in these properties
+            // So fill them here
             item->m_sizingInfo.minSize = item->minSize();
+            item->m_sizingInfo.maxSizeHint = item->maxSizeHint();
+        }
         result << item->m_sizingInfo;
     }
 
