@@ -77,7 +77,6 @@ public:
         }
     }
 
-
     QSize maxSizeHint() const override {
         return m_maxSize;
     }
@@ -251,7 +250,7 @@ static std::unique_ptr<ItemContainer> createRoot()
     return std::unique_ptr<ItemContainer>(root);
 }
 
-static Item* createItem(QSize minSz = {})
+static Item* createItem(QSize minSz = {}, QSize maxSz = {})
 {
     static int count = 0;
     count++;
@@ -262,8 +261,11 @@ static Item* createItem(QSize minSz = {})
     item->setGeometry(QRect(0, 0, 200, 200));
     item->setObjectName(QStringLiteral("%1").arg(count));
     auto guest = new MyGuestWidget();
-    if (!minSz.isNull())
+    if (minSz.isValid())
         guest->setMinSize(minSz);
+    if (maxSz.isValid())
+        guest->setMaxSize(maxSz);
+
     guest->setObjectName(item->objectName());
     item->setGuestWidget(guest);
     return item;
