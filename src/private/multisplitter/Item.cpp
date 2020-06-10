@@ -2653,6 +2653,18 @@ int ItemContainer::availableToSqueezeOnSide_recursive(const Item *child, Side si
     }
 }
 
+int ItemContainer::availableToGrowOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
+{
+    if (orientation == d->m_orientation) {
+        const int available = availableToGrowOnSide(child, side);
+        return isRoot() ? available
+                        : (available + parentContainer()->availableToGrowOnSide_recursive(this, side, orientation));
+    } else {
+        return isRoot() ? 0
+                        : parentContainer()->availableToGrowOnSide_recursive(this, side, orientation);
+    }
+}
+
 void ItemContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)
 {
     if (!side1Neighbour && !side2Neighbour)
