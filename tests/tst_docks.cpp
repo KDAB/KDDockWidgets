@@ -1104,7 +1104,7 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
                  << "\ndock min sizes=" << dock1->minimumWidth() << dock1->minimumSizeHint().width()
                  << "\nframe1->width()=" << dock1->frame()->width()
                  << "\nframe1->min=" << widgetMinLength(dock1->frame(), Qt::Horizontal);
-        l->dumpDebug();
+        l->dumpLayout();
         QVERIFY(false);
     }
 
@@ -3358,7 +3358,7 @@ void TestDocks::tst_negativeAnchorPosition()
 
     // Now resize the Window, after removing middle one
     const int availableToShrink = layout->size().height() - layout->minimumSize().height();
-    layout->setSize({layout->width(), layout->width() - availableToShrink});
+    layout->setLayoutSize({layout->width(), layout->width() - availableToShrink});
 
     d2->deleteLater();
     Testing::waitForDeleted(d2);

@@ -34,6 +34,7 @@
 #include <QProxyStyle>
 
 namespace KDDockWidgets {
+namespace { // anonymous namespace to silence -Wweak-vtables
 class MyProxy : public QProxyStyle
 {
 public:
@@ -62,6 +63,7 @@ public:
         return baseStyle()->styleHint(hint, option, widget, returnData);
     }
 };
+}
 }
 
 using namespace KDDockWidgets;

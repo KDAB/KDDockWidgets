@@ -161,7 +161,7 @@ public:
      * QWidgets is async and we need it to be sync. As sometimes adding widgets will increase
      * the MultiSplitter size (due to widget's min-size constraints).
      */
-    void setSize(QSize);
+    void setLayoutSize(QSize);
 
     /**
      * @brief returns the contents width.
@@ -190,7 +190,7 @@ public:
     bool checkSanity() const;
 
     /// @brief dumps the layout to stderr
-    void dumpDebug() const;
+    void dumpLayout() const;
 
     /**
      * @brief returns the Item that holds @p frame in this layout

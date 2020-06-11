@@ -318,12 +318,12 @@ void DebugWindow::dumpDockWidgetInfo()
 
     for (FloatingWindow *fw : floatingWindows) {
         qDebug() << fw << "; affinities=" << fw->affinities();
-        fw->dropArea()->dumpDebug();
+        fw->dropArea()->dumpLayout();
     }
 
     for (MainWindowBase *mw : mainWindows) {
         qDebug() << mw << "; affinities=" << mw->affinities();
-        mw->multiSplitter()->dumpDebug();
+        mw->multiSplitter()->dumpLayout();
     }
 
     for (DockWidgetBase *dw : dockWidgets) {

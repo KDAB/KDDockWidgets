@@ -71,7 +71,7 @@ void DockRegistry::checkSanityAll(bool dumpLayout)
     for (auto layout : qAsConst(m_layouts)) {
         layout->checkSanity();
         if (dumpLayout)
-            layout->dumpDebug();
+            layout->dumpLayout();
     }
 }
 

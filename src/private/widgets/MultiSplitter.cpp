@@ -54,7 +54,7 @@ MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
     setRootItem(new Layouting::ItemContainer(this));
     DockRegistry::self()->registerLayout(this);
 
-    setSize(parent->QWidget::size());
+    setLayoutSize(parent->QWidget::size());
 
     qCDebug(multisplittercreation()) << "MultiSplitter";
 
@@ -86,7 +86,7 @@ bool MultiSplitter::onResize(QSize newSize)
 
     if (!LayoutSaver::restoreInProgress()) {
         // don't resize anything while we're restoring the layout
-        setSize(newSize);
+        setLayoutSize(newSize);
     }
 
     return false; // So QWidget::resizeEvent is called
@@ -376,12 +376,12 @@ void MultiSplitter::unrefOldPlaceholders(const Frame::List &framesBeingAdded) co
     }
 }
 
-void MultiSplitter::dumpDebug() const
+void MultiSplitter::dumpLayout() const
 {
     m_rootItem->dumpLayout();
 }
 
-void MultiSplitter::setSize(QSize size)
+void MultiSplitter::setLayoutSize(QSize size)
 {
     if (size != this->size()) {
         m_rootItem->setSize_recursive(size);
@@ -400,7 +400,7 @@ QSize MultiSplitter::size() const { return m_rootItem->size(); }
 void MultiSplitter::setLayoutMinimumSize(QSize sz)
 {
     if (sz != m_rootItem->minSize()) {
-        setSize(size().expandedTo(m_rootItem->minSize())); // Increase size in case we need to
+        setLayoutSize(size().expandedTo(m_rootItem->minSize())); // Increase size in case we need to
         m_rootItem->setMinSize(sz);
     }
 
