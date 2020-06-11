@@ -22,9 +22,9 @@
 #include "MainWindowBase.h"
 #include "Logging_p.h"
 #include "Frame_p.h"
-#include "DragController_p.h"
 #include "widgets/MultiSplitterLayout_p.h"
 #include "DropArea_p.h"
+#include "TitleBar_p.h"
 #include "WindowBeingDragged_p.h"
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
@@ -32,9 +32,7 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
-#include <QApplication>
 #include <QCloseEvent>
-#include <QPainter>
 #include <QAbstractNativeEventFilter>
 #include <QWindow>
 

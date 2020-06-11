@@ -19,18 +19,18 @@
 */
 
 #include "DockWidgetBase.h"
-#include "DragController_p.h"
 #include "Frame_p.h"
 #include "FloatingWindow_p.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
-#include "WidgetResizeHandler_p.h"
 #include "DropArea_p.h"
 #include "multisplitter/Item_p.h"
 #include "Config.h"
+#include "TitleBar_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "private/Position_p.h"
+#include "WindowBeingDragged_p.h"
 
 #include <QAction>
 #include <QEvent>
@@ -130,7 +130,6 @@ DockWidgetBase::DockWidgetBase(const QString &name, Options options)
     , d(new Private(name, options, this))
 {
     d->init();
-    DragController::instance();
     DockRegistry::self()->registerDockWidget(this);
     qCDebug(creation) << "DockWidget" << this;
 
