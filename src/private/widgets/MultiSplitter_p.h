@@ -144,8 +144,8 @@ public:
      */
     QRect rectForDrop(const QWidgetOrQuick *widget, KDDockWidgets::Location location, const Layouting::Item *relativeTo) const;
 
-    bool deserialize(const LayoutSaver::MultiSplitterLayout &);
-    LayoutSaver::MultiSplitterLayout serialize() const;
+    bool deserialize(const LayoutSaver::MultiSplitter &);
+    LayoutSaver::MultiSplitter serialize() const;
 
     ///@brief returns the list of separators
     QVector<Layouting::Separator*> separators() const;

@@ -442,7 +442,7 @@ QRect MultiSplitter::rectForDrop(const QWidgetOrQuick *widget, Location location
     return container->suggestedDropRect(&item, relativeTo, Layouting::Item::Location(location));
 }
 
-bool MultiSplitter::deserialize(const LayoutSaver::MultiSplitterLayout &l)
+bool MultiSplitter::deserialize(const LayoutSaver::MultiSplitter &l)
 {
     setRootItem(new Layouting::ItemContainer(this));
 
@@ -461,9 +461,9 @@ bool MultiSplitter::deserialize(const LayoutSaver::MultiSplitterLayout &l)
     return true;
 }
 
-LayoutSaver::MultiSplitterLayout MultiSplitter::serialize() const
+LayoutSaver::MultiSplitter MultiSplitter::serialize() const
 {
-    LayoutSaver::MultiSplitterLayout l;
+    LayoutSaver::MultiSplitter l;
     l.layout = m_rootItem->toVariantMap();
     const Layouting::Item::List items = m_rootItem->items_recursive();
     l.frames.reserve(items.size());

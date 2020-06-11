@@ -198,7 +198,7 @@ struct LayoutSaver::Frame
     LayoutSaver::DockWidget::List dockWidgets;
 };
 
-struct LayoutSaver::MultiSplitterLayout
+struct LayoutSaver::MultiSplitter
 {
     bool isValid() const;
     /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
@@ -223,7 +223,7 @@ struct LayoutSaver::FloatingWindow
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
-    LayoutSaver::MultiSplitterLayout multiSplitterLayout;
+    LayoutSaver::MultiSplitter multiSplitterLayout;
     QStringList affinities;
     int parentIndex = -1;
     QRect geometry;
@@ -246,7 +246,7 @@ public:
     void fromVariantMap(const QVariantMap &map);
 
     KDDockWidgets::MainWindowOptions options;
-    LayoutSaver::MultiSplitterLayout multiSplitterLayout;
+    LayoutSaver::MultiSplitter multiSplitterLayout;
     QString uniqueName;
     QStringList affinities;
     QRect geometry;

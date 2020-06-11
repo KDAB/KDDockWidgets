@@ -107,7 +107,7 @@ public:
     struct FloatingWindow;
     struct DockWidget;
     struct Position;
-    struct MultiSplitterLayout;
+    struct MultiSplitter;
     struct Frame;
     struct Placeholder;
     struct ScalingInfo;

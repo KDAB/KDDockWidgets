@@ -731,7 +731,7 @@ void LayoutSaver::MainWindow::fromVariantMap(const QVariantMap &map)
 
 }
 
-bool LayoutSaver::MultiSplitterLayout::isValid() const
+bool LayoutSaver::MultiSplitter::isValid() const
 {
     if (layout.isEmpty())
         return false;
@@ -744,14 +744,14 @@ bool LayoutSaver::MultiSplitterLayout::isValid() const
     return true;
 }
 
-void LayoutSaver::MultiSplitterLayout::scaleSizes(const ScalingInfo &)
+void LayoutSaver::MultiSplitter::scaleSizes(const ScalingInfo &)
 {
     // scalingInfo.applyFactorsTo(/*by-ref*/size);
     //for (LayoutSaver::Item &item : items) TODO
     //    item.scaleSizes(scalingInfo);
 }
 
-QVariantMap LayoutSaver::MultiSplitterLayout::toVariantMap() const
+QVariantMap LayoutSaver::MultiSplitter::toVariantMap() const
 {
     QVariantMap result;
     result.insert(QStringLiteral("layout"), layout);
@@ -764,7 +764,7 @@ QVariantMap LayoutSaver::MultiSplitterLayout::toVariantMap() const
     return result;
 }
 
-void LayoutSaver::MultiSplitterLayout::fromVariantMap(const QVariantMap &map)
+void LayoutSaver::MultiSplitter::fromVariantMap(const QVariantMap &map)
 {
     layout = map.value(QStringLiteral("layout")).toMap();
     const QVariantMap framesV = map.value(QStringLiteral("frames")).toMap();
