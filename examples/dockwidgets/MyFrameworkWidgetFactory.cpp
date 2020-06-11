@@ -20,20 +20,21 @@
 
 #include "MyFrameworkWidgetFactory.h"
 #include <kddockwidgets/FrameworkWidgetFactory.h>
+#include <kddockwidgets/private/widgets/TitleBarWidget_p.h>
 #include <kddockwidgets/multisplitter/Separator_qwidget.h>
 #include <QApplication>
 
-class MyTitleBar : public KDDockWidgets::TitleBar
+class MyTitleBar : public KDDockWidgets::TitleBarWidget
 {
 public:
     explicit MyTitleBar(KDDockWidgets::Frame *frame)
-        : KDDockWidgets::TitleBar(frame)
+        : KDDockWidgets::TitleBarWidget(frame)
     {
         init();
     }
 
     explicit MyTitleBar(KDDockWidgets::FloatingWindow *fw)
-        : KDDockWidgets::TitleBar(fw)
+        : KDDockWidgets::TitleBarWidget(fw)
     {
         init();
     }
