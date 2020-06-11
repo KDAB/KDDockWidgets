@@ -56,6 +56,7 @@ public:
     bool isVisible() const override;
     void setVisible(bool) const override;
     std::unique_ptr<Widget> parentWidget() const override;
+    std::unique_ptr<Widget> topLevel() const override;
     void setLayoutItem(Item *) override {}
     void show() override;
     void hide() override;

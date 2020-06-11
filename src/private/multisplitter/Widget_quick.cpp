@@ -87,6 +87,12 @@ std::unique_ptr<Widget> Widget_quick::parentWidget() const
     return {};
 }
 
+std::unique_ptr<Widget> Widget_qwidget::topLevel() const
+{
+    // TODO
+    return {};
+}
+
 QSize Widget_quick::maxSizeHint() const
 {
     // Some arbitrary big value
