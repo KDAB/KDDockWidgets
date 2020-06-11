@@ -165,3 +165,13 @@ void Widget_qwidget::setHeight(int height)
 {
     setSize(m_thisWidget->width(), height);
 }
+
+void Widget_qwidget::update()
+{
+    m_thisWidget->update();
+}
+
+QPoint Widget_qwidget::mapFromGlobal(QPoint p) const
+{
+    return m_thisWidget->mapFromGlobal(p);
+}

@@ -61,6 +61,8 @@ public:
     void setSize(int width, int height) override;
     void setWidth(int width) override;
     void setHeight(int height) override;
+    void update() override;
+    QPoint mapFromGlobal(QPoint p) const override;
 
     static QSize widgetMinSize(const QWidget *w);
 
