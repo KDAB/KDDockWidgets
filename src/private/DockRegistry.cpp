@@ -23,7 +23,6 @@
 #include "Logging_p.h"
 #include "DebugWindow_p.h"
 #include "Position_p.h"
-#include "widgets/MultiSplitterLayout_p.h"
 #include "widgets/MultiSplitter_p.h"
 #include "quick/QmlTypes.h"
 
@@ -129,13 +128,13 @@ MainWindowBase::List DockRegistry::mainWindowsWithAffinity(const QStringList &af
     return result;
 }
 
-MultiSplitterLayout *DockRegistry::layoutForItem(const Layouting::Item *item) const
+MultiSplitter *DockRegistry::layoutForItem(const Layouting::Item *item) const
 {
     if (!item->hostWidget())
         return nullptr;
 
     if (auto ms = qobject_cast<MultiSplitter*>(item->hostWidget()->asQWidget()))
-        return ms->multiSplitterLayout();
+        return ms;
 
     return nullptr;
 }
@@ -143,7 +142,7 @@ MultiSplitterLayout *DockRegistry::layoutForItem(const Layouting::Item *item) co
 bool DockRegistry::itemIsInMainWindow(const Layouting::Item *item) const
 {
     if (auto layout = layoutForItem(item))
-        return layout->multiSplitter()->isInMainWindow();
+        return layout->isInMainWindow();
 
     return false;
 }
@@ -204,12 +203,12 @@ void DockRegistry::unregisterNestedWindow(FloatingWindow *window)
     maybeDelete();
 }
 
-void DockRegistry::registerLayout(MultiSplitterLayout *layout)
+void DockRegistry::registerLayout(MultiSplitter *layout)
 {
     m_layouts << layout;
 }
 
-void DockRegistry::unregisterLayout(MultiSplitterLayout *layout)
+void DockRegistry::unregisterLayout(MultiSplitter *layout)
 {
     m_layouts.removeOne(layout);
 }
@@ -286,7 +285,7 @@ bool DockRegistry::isSane() const
             names.insert(name);
         }
 
-        if (!mainwindow->multiSplitterLayout()->checkSanity())
+        if (!mainwindow->multiSplitter()->checkSanity())
             return false;
     }
 
@@ -342,7 +341,7 @@ const MainWindowBase::List DockRegistry::mainwindows() const
     return m_mainWindows;
 }
 
-const QVector<MultiSplitterLayout *> DockRegistry::layouts() const
+const QVector<MultiSplitter *> DockRegistry::layouts() const
 {
     return m_layouts;
 }
@@ -414,7 +413,7 @@ void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
 
     for (auto mw : qAsConst(mainWindows)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, mw->affinities())) {
-            mw->multiSplitterLayout()->rootItem()->clear();
+            mw->multiSplitter()->rootItem()->clear();
         }
     }
 }

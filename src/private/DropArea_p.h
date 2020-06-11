@@ -32,7 +32,6 @@
 #include "Frame_p.h"
 #include "KDDockWidgets.h"
 #include "widgets/MultiSplitter_p.h"
-#include "widgets/MultiSplitterLayout_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 
 namespace KDDockWidgets {
@@ -62,11 +61,9 @@ public:
     DropIndicatorOverlayInterface *dropIndicatorOverlay() const { return m_dropIndicatorOverlay; }
     void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location, DockWidgetBase *relativeTo, AddingOption option = {});
 
-    bool checkSanity();
     bool contains(DockWidgetBase *) const;
 
     QStringList affinities() const;
-    void layoutEqually();
     void layoutParentContainerEqually(DockWidgetBase *);
 private:
     Q_DISABLE_COPY(DropArea)

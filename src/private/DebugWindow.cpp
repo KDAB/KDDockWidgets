@@ -201,12 +201,12 @@ DebugWindow::DebugWindow(QWidget *parent)
     connect(button, &QPushButton::clicked, this, [] {
         const auto mainWindows = DockRegistry::self()->mainwindows();
         for (MainWindowBase *mainWindow : mainWindows) {
-            mainWindow->multiSplitterLayout()->checkSanity();
+            mainWindow->multiSplitter()->checkSanity();
         }
 
         const auto floatingWindows = DockRegistry::self()->nestedwindows();
         for (FloatingWindow *floatingWindow : floatingWindows) {
-            floatingWindow->multiSplitterLayout()->checkSanity();
+            floatingWindow->multiSplitter()->checkSanity();
         }
     });
 
@@ -239,7 +239,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     connect(button, &QPushButton::clicked, this, [] {
         const auto layouts = DockRegistry::self()->layouts();
         for (auto l : layouts) {
-            QWidget *tlw = l->multiSplitter()->window();
+            QWidget *tlw = l->window();
             tlw->resize(tlw->size() + QSize(1, 1));
         }
     });
@@ -318,12 +318,12 @@ void DebugWindow::dumpDockWidgetInfo()
 
     for (FloatingWindow *fw : floatingWindows) {
         qDebug() << fw << "; affinities=" << fw->affinities();
-        fw->dropArea()->multiSplitterLayout()->dumpDebug();
+        fw->dropArea()->dumpDebug();
     }
 
     for (MainWindowBase *mw : mainWindows) {
         qDebug() << mw << "; affinities=" << mw->affinities();
-        mw->multiSplitterLayout()->dumpDebug();
+        mw->multiSplitter()->dumpDebug();
     }
 
     for (DockWidgetBase *dw : dockWidgets) {

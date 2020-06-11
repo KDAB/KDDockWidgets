@@ -33,7 +33,6 @@
 #include "Utils_p.h"
 #include "Logging_p.h"
 #include "DropAreaWithCentralFrame_p.h"
-#include "widgets/MultiSplitterLayout_p.h"
 #include "widgets/MultiSplitter_p.h"
 
 using namespace KDDockWidgets;
@@ -113,9 +112,9 @@ MainWindowOptions MainWindowBase::options() const
     return d->m_options;
 }
 
-MultiSplitterLayout *MainWindowBase::multiSplitterLayout() const
+MultiSplitter *MainWindowBase::multiSplitter() const
 {
-    return dropArea()->multiSplitterLayout();
+    return dropArea();
 }
 
 void MainWindowBase::setAffinities(const QStringList &affinityNames)
@@ -180,7 +179,7 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
         d->affinities = mw.affinities;
     }
 
-    return dropArea()->multiSplitterLayout()->deserialize(mw.multiSplitterLayout);
+    return dropArea()->deserialize(mw.multiSplitterLayout);
 }
 
 LayoutSaver::MainWindow MainWindowBase::serialize() const
@@ -193,7 +192,7 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     m.uniqueName = uniqueName();
     m.screenIndex = screenNumberForWidget(this);
     m.screenSize = screenSizeForWidget(this);
-    m.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
+    m.multiSplitterLayout = dropArea()->serialize();
     m.affinities = d->affinities;
 
     return m;

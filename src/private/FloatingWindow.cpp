@@ -22,7 +22,6 @@
 #include "MainWindowBase.h"
 #include "Logging_p.h"
 #include "Frame_p.h"
-#include "widgets/MultiSplitterLayout_p.h"
 #include "DropArea_p.h"
 #include "TitleBar_p.h"
 #include "WindowBeingDragged_p.h"
@@ -96,8 +95,6 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     }
 #endif
 
-    auto ms = m_dropArea->multiSplitterLayout();
-
     DockRegistry::self()->registerNestedWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
 
@@ -112,10 +109,10 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     maybeCreateResizeHandler();
 
     updateTitleBarVisibility();
-    connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
-    connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::numFramesChanged);
-    connect(ms, &MultiSplitterLayout::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
-    m_layoutDestroyedConnection = connect(ms, &MultiSplitterLayout::destroyed, this, &FloatingWindow::scheduleDeleteLater);
+    connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
+    connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::numFramesChanged);
+    connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
+    m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
 static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
@@ -160,7 +157,7 @@ FloatingWindow::FloatingWindow(Frame *frame, MainWindowBase *parent)
     // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
     // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
     // So disable the setVisible(true) call while in the ctor.
-    m_dropArea->multiSplitterLayout()->addWidget(frame, KDDockWidgets::Location_OnTop, {});
+    m_dropArea->addWidget(frame, KDDockWidgets::Location_OnTop, {});
     m_disableSetVisible = false;
 }
 
@@ -248,9 +245,9 @@ void FloatingWindow::scheduleDeleteLater()
     deleteLater();
 }
 
-MultiSplitterLayout *FloatingWindow::multiSplitterLayout() const
+MultiSplitter *FloatingWindow::multiSplitter() const
 {
-    return m_dropArea->multiSplitterLayout();
+    return m_dropArea;
 }
 
 bool FloatingWindow::isInTitleBar(QPoint globalPoint) const
@@ -405,7 +402,7 @@ void FloatingWindow::onCloseEvent(QCloseEvent *e)
 
 bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
 {
-    if (dropArea()->multiSplitterLayout()->deserialize(fw.multiSplitterLayout)) {
+    if (dropArea()->deserialize(fw.multiSplitterLayout)) {
         updateTitleBarVisibility();
         show();
         return true;
@@ -420,7 +417,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
 
     fw.geometry = geometry();
     fw.isVisible = isVisible();
-    fw.multiSplitterLayout = dropArea()->multiSplitterLayout()->serialize();
+    fw.multiSplitterLayout = dropArea()->serialize();
     fw.screenIndex = screenNumberForWidget(this);
     fw.screenSize = screenSizeForWidget(this);
     fw.affinities = affinities();

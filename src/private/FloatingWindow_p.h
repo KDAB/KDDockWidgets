@@ -37,7 +37,7 @@ namespace KDDockWidgets {
 class MainWindowBase;
 class DropArea;
 class Frame;
-class MultiSplitterLayout;
+class MultiSplitter;
 
 class DOCKS_EXPORT FloatingWindow : public QWidgetAdapter
     , public Draggable
@@ -106,9 +106,9 @@ public:
     void scheduleDeleteLater();
 
     /**
-     * @brief Returns the MultiSplitterLayout
+     * @brief Returns the MultiSplitter
      */
-    MultiSplitterLayout *multiSplitterLayout() const;
+    MultiSplitter *multiSplitter() const;
 
     /**
      * @brief Returns whether @p globalPoint is inside the title bar

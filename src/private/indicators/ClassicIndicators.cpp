@@ -367,8 +367,6 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     KDDockWidgets::Location multisplitterLocation = locationToMultisplitterLocation(location);
     Frame *relativeToFrame = nullptr;
 
-    MultiSplitterLayout *layout = m_dropArea->multiSplitterLayout();
-
     switch (location) {
     case DropLocation_Left:
     case DropLocation_Top:
@@ -377,7 +375,7 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
         if (!m_hoveredFrame) {
             qWarning() << "ClassicIndicators::setCurrentDropLocation: frame is null. location=" << location
                        << "; windowBeingDragged=" << m_windowBeingDragged
-                       << "; dropArea->widgets=" << layout->items();
+                       << "; dropArea->widgets=" << m_dropArea->items();
             Q_ASSERT(false);
             return;
         }
@@ -392,8 +390,8 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
         break;
     }
 
-    QRect rect = layout->rectForDrop(m_windowBeingDragged, multisplitterLocation,
-                                     layout->itemForFrame(relativeToFrame));
+    QRect rect = m_dropArea->rectForDrop(m_windowBeingDragged, multisplitterLocation,
+                                         m_dropArea->itemForFrame(relativeToFrame));
 
     m_rubberBand->setGeometry(geometryForRubberband(rect));
     m_rubberBand->setVisible(true);

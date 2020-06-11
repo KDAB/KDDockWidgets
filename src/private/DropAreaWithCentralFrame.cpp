@@ -29,7 +29,7 @@ DropAreaWithCentralFrame::DropAreaWithCentralFrame(QWidgetOrQuick *parent, MainW
     , m_centralFrame(createCentralFrame(options))
 {
     if (m_centralFrame)
-        m_layout->addWidget(m_centralFrame, KDDockWidgets::Location_OnTop, {});
+        addWidget(m_centralFrame, KDDockWidgets::Location_OnTop, {});
 }
 
 DropAreaWithCentralFrame::~DropAreaWithCentralFrame()

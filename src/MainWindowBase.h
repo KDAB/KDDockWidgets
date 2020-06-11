@@ -41,7 +41,7 @@ namespace KDDockWidgets {
 class DockWidgetBase;
 class Frame;
 class DropArea;
-class MultiSplitterLayout;
+class MultiSplitter;
 class DropAreaWithCentralFrame;
 
 /**
@@ -97,8 +97,8 @@ public:
     virtual DropAreaWithCentralFrame *dropArea() const = 0;
 
     ///@internal
-    ///@brief returns the MultiSplitterLayout.
-    MultiSplitterLayout* multiSplitterLayout() const;
+    ///@brief returns the MultiSplitter.
+    MultiSplitter* multiSplitter() const;
 
     /**
      * @brief Sets the affinities names. Dock widgets can only dock into main windows of the same affinity.

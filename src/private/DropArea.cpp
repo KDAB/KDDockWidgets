@@ -56,12 +56,12 @@ DropArea::~DropArea()
 
 int DropArea::numFrames() const
 {
-    return m_layout->visibleCount();
+    return visibleCount();
 }
 
 Frame *DropArea::frameContainingPos(QPoint globalPos) const
 {
-    const Layouting::Item::List &items = m_layout->items();
+    const Layouting::Item::List &items = this->items();
     for (Layouting::Item *item : items) {
         auto frame = static_cast<Frame*>(item->guestAsQObject());
         if (!frame || !frame->QWidget::isVisible()) {
@@ -76,7 +76,7 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
 
 Layouting::Item *DropArea::centralFrame() const
 {
-    for (Layouting::Item *item : m_layout->items()) {
+    for (Layouting::Item *item : this->items()) {
         if (auto f = static_cast<Frame*>(item->guestAsQObject())) {
             if (f->isCentralFrame())
                 return item;
@@ -123,20 +123,15 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
     }
 
     if (option & AddingOption_StartHidden) {
-        m_layout->addWidget(dw, location, relativeToFrame, DefaultSizeMode::Fair, option);
+        addWidget(dw, location, relativeToFrame, DefaultSizeMode::Fair, option);
     } else {
-        m_layout->addWidget(frame, location, relativeToFrame, DefaultSizeMode::Fair, option);
+        addWidget(frame, location, relativeToFrame, DefaultSizeMode::Fair, option);
     }
-}
-
-bool DropArea::checkSanity()
-{
-    return m_layout->checkSanity();
 }
 
 bool DropArea::contains(DockWidgetBase *dw) const
 {
-    return dw->frame() && m_layout->contains(dw->frame());
+    return dw->frame() && MultiSplitter::contains(dw->frame());
 }
 
 QStringList DropArea::affinities() const
@@ -150,20 +145,15 @@ QStringList DropArea::affinities() const
     return {};
 }
 
-void DropArea::layoutEqually()
-{
-    m_layout->layoutEqually();
-}
-
 void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
 {
-    Layouting::Item *item = m_layout->itemForFrame(dw->frame());
+    Layouting::Item *item = itemForFrame(dw->frame());
     if (!item) {
         qWarning() << Q_FUNC_INFO << "Item not found for" << dw << dw->frame();
         return;
     }
 
-    m_layout->layoutEqually(item->parentContainer());
+    layoutEqually(item->parentContainer());
 }
 
 void DropArea::hover(FloatingWindow *floatingWindow, QPoint globalPos)
@@ -256,12 +246,12 @@ bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location locat
 
         auto frame = Config::self().frameworkWidgetFactory()->createFrame();
         frame->addWidget(dock);
-        m_layout->addWidget(frame, location, relativeTo, DefaultSizeMode::FairButFloor);
+        addWidget(frame, location, relativeTo, DefaultSizeMode::FairButFloor);
     } else if (auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow)) {
         if (!validateAffinity(floatingWindow))
             return false;
 
-        m_layout->addMultiSplitter(floatingWindow->dropArea(), location, relativeTo);
+        addMultiSplitter(floatingWindow->dropArea(), location, relativeTo);
         floatingWindow->scheduleDeleteLater();
         return true;
     } else {

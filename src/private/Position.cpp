@@ -26,7 +26,6 @@
 
 #include "Position_p.h"
 #include "DockRegistry_p.h"
-#include "widgets/MultiSplitterLayout_p.h"
 #include "widgets/MultiSplitter_p.h"
 
 #include <algorithm>
@@ -128,18 +127,18 @@ void Position::removePlaceholder(Layouting::Item *placeholder)
 void Position::deserialize(const LayoutSaver::Position &lp)
 {
     for (const auto &placeholder : qAsConst(lp.placeholders)) {
-        MultiSplitterLayout *layout;
+        MultiSplitter *layout;
         int itemIndex = placeholder.itemIndex;
         if (placeholder.isFloatingWindow) {
             if (placeholder.indexOfFloatingWindow == -1) {
                 continue; // Skip
             } else {
                 FloatingWindow *fw = DockRegistry::self()->nestedwindows().at(placeholder.indexOfFloatingWindow);
-                layout = fw->multiSplitterLayout();
+                layout = fw->multiSplitter();
             }
         } else {
             MainWindowBase *mainWindow = DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
-            layout = mainWindow->multiSplitterLayout();
+            layout = mainWindow->multiSplitter();
         }
 
         const Layouting::Item::List &items = layout->items();
@@ -165,11 +164,11 @@ LayoutSaver::Position Position::serialize() const
         LayoutSaver::Placeholder p;
 
         Layouting::Item *item = itemRef->item;
-        MultiSplitterLayout *layout = DockRegistry::self()->layoutForItem(item);
+        MultiSplitter *layout = DockRegistry::self()->layoutForItem(item);
         const int itemIndex = layout->items().indexOf(item);
 
-        auto fw = layout->multiSplitter()->floatingWindow();
-        auto mainWindow = layout->multiSplitter()->mainWindow();
+        auto fw = layout->floatingWindow();
+        auto mainWindow = layout->mainWindow();
         Q_ASSERT(mainWindow || fw);
         p.isFloatingWindow = fw;
 

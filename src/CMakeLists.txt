@@ -91,7 +91,6 @@ else()
         private/widgets/DockWidget.cpp
         private/widgets/QWidgetAdapter_widgets.cpp
         private/widgets/MultiSplitter.cpp
-        private/widgets/MultiSplitterLayout.cpp
         )
 
     set(DOCKS_INSTALLABLE_INCLUDES

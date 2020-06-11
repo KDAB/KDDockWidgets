@@ -51,8 +51,8 @@ public:
     void registerNestedWindow(FloatingWindow *);
     void unregisterNestedWindow(FloatingWindow *);
 
-    void registerLayout(MultiSplitterLayout *);
-    void unregisterLayout(MultiSplitterLayout *);
+    void registerLayout(MultiSplitter *);
+    void unregisterLayout(MultiSplitter *);
 
     void registerFrame(Frame *);
     void unregisterFrame(Frame *);
@@ -80,8 +80,8 @@ public:
     ///@brief overload returning only the ones with the specified names
     const MainWindowBase::List mainWindows(const QStringList &names);
 
-    ///@brief returns the list of MultiSplitterLayout instances
-    const QVector<MultiSplitterLayout*> layouts() const;
+    ///@brief returns the list of MultiSplitter instances
+    const QVector<MultiSplitter*> layouts() const;
 
     ///@brief returns a list of all Frame instances
     const Frame::List frames() const;
@@ -132,7 +132,7 @@ public:
     bool isEmpty() const;
 
     /**
-     * @brief Calls MultisplitterLayout::checkSanity() on all layouts.
+     * @brief Calls MultiSplitter::checkSanity() on all layouts.
      *
      * @param dumpDebug If true then each layout is dumped too
      *
@@ -154,7 +154,7 @@ public:
     MainWindowBase::List mainWindowsWithAffinity(const QStringList &affinities) const;
 
     // TODO: docs
-    MultiSplitterLayout* layoutForItem(const Layouting::Item *) const;
+    MultiSplitter* layoutForItem(const Layouting::Item *) const;
 
     // TODO: docs
     bool itemIsInMainWindow(const Layouting::Item *) const;
@@ -178,7 +178,7 @@ private:
     MainWindowBase::List m_mainWindows;
     Frame::List m_frames;
     QVector<FloatingWindow*> m_nestedWindows;
-    QVector<MultiSplitterLayout*> m_layouts;
+    QVector<MultiSplitter*> m_layouts;
 };
 
 }

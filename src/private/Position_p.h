@@ -184,7 +184,7 @@ struct LastPositions
         lastPosition->removePlaceholders();
     }
 
-    void removePlaceholders(MultiSplitter *hostWidget) const {
+    void removePlaceholders(const MultiSplitter *hostWidget) const {
         lastPosition->removePlaceholders(hostWidget);
     }
 

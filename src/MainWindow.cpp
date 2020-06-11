@@ -30,7 +30,6 @@
 #include "Frame_p.h"
 #include "Logging_p.h"
 #include "DropAreaWithCentralFrame_p.h"
-#include "widgets/MultiSplitterLayout_p.h"
 #include "widgets/MultiSplitter_p.h"
 
 #include <QApplication>

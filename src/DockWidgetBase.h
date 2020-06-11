@@ -354,7 +354,7 @@ public:
 private:
 #endif
     Q_DISABLE_COPY(DockWidgetBase)
-    friend class MultiSplitterLayout;
+    friend class MultiSplitter;
     friend class Frame;
     friend class DropArea;
     friend class TestDocks;

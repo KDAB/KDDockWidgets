@@ -611,7 +611,7 @@ void DockWidgetBase::Private::restoreToPreviousPosition()
 
     Layouting::Item *item = m_lastPositions.lastItem();
 
-    MultiSplitterLayout *layout = DockRegistry::self()->layoutForItem(item);
+    MultiSplitter *layout = DockRegistry::self()->layoutForItem(item);
     Q_ASSERT(layout);
     layout->restorePlaceholder(q, item, m_lastPositions.lastTabIndex());
 }
@@ -633,7 +633,7 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 
     Frame *frame = q->frame();
 
-    if (frame && frame->QWidget::parentWidget() == DockRegistry::self()->layoutForItem(layoutItem)->multiSplitter()) {
+    if (frame && frame->QWidget::parentWidget() == DockRegistry::self()->layoutForItem(layoutItem)) {
         // There's a frame already. Means the DockWidget was hidden instead of closed.
         // Nothing to do, the dock widget will simply be shown
         qCDebug(placeholder) << Q_FUNC_INFO << "Already had frame.";
