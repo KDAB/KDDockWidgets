@@ -87,7 +87,7 @@ std::unique_ptr<Widget> Widget_quick::parentWidget() const
     return {};
 }
 
-std::unique_ptr<Widget> Widget_qwidget::topLevel() const
+std::unique_ptr<Widget> Widget_quick::topLevel() const
 {
     // TODO
     return {};
@@ -148,6 +148,12 @@ void Widget_quick::update()
 }
 
 QPoint Widget_quick::mapFromGlobal(QPoint p) const
+{
+    qWarning() << Q_FUNC_INFO << "Implement me!";
+    return p;
+}
+
+QPoint Widget_quick::mapToGlobal(QPoint p) const
 {
     qWarning() << Q_FUNC_INFO << "Implement me!";
     return p;

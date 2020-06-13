@@ -81,6 +81,7 @@ public:
     virtual void hide() = 0;
     virtual void update() = 0;
     virtual QPoint mapFromGlobal(QPoint) const = 0;
+    virtual QPoint mapToGlobal(QPoint) const = 0;
 
     QSize size() const {
         return geometry().size();
