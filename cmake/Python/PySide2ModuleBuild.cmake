@@ -93,10 +93,9 @@ macro(CREATE_PYTHON_BINDINGS
         make_path(shiboken_framework_include_dirs ${shiboken_framework_include_dirs})
         set(shiboken_framework_include_dirs_option "--framework-include-paths=${shiboken_framework_include_dirs}")
     endif()
-
     set_property(SOURCE ${OUTPUT_SOURCES} PROPERTY SKIP_AUTOGEN ON)
     add_custom_command(OUTPUT ${OUTPUT_SOURCES}
-        COMMAND ${SHIBOKEN_BINARY} ${GENERATOR_EXTRA_FLAGS}
+        COMMAND $<TARGET_PROPERTY:Shiboken2::shiboken,LOCATION> ${GENERATOR_EXTRA_FLAGS}
                 ${GLOBAL_INCLUDE}
                 --include-paths=${shiboken_include_dirs}
                 --typesystem-paths=${shiboken_typesystem_dirs}
