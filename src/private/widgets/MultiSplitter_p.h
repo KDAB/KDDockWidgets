@@ -88,7 +88,7 @@ public:
      * of widgetBar when the whole splitter is dropped into this one.
      */
     void addMultiSplitter(MultiSplitter *splitter, KDDockWidgets::Location location,
-                          Frame *relativeTo = nullptr);
+                          Frame *relativeTo = nullptr, DefaultSizeMode = DefaultSizeMode::Fair);
 
     /**
      * @brief Removes an item from this MultiSplitter.

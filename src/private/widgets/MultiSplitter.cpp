@@ -224,12 +224,11 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
         delete frame;
 }
 
-void MultiSplitter::addMultiSplitter(MultiSplitter *sourceMultiSplitter,
-                                           Location location,
-                                           Frame *relativeTo)
+void MultiSplitter::addMultiSplitter(MultiSplitter *sourceMultiSplitter, Location location,
+                                     Frame *relativeTo, DefaultSizeMode defaultSizeMode)
 {
     qCDebug(addwidget) << Q_FUNC_INFO << sourceMultiSplitter << location << relativeTo;
-    addWidget(sourceMultiSplitter, location, relativeTo);
+    addWidget(sourceMultiSplitter, location, relativeTo, defaultSizeMode);
 }
 
 void MultiSplitter::removeItem(Layouting::Item *item)

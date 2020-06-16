@@ -5387,8 +5387,10 @@ void TestDocks::tst_maxSizeHonouredWhenDropped()
     // Try again, but now dropping a multisplitter
     dock2->setFloating(true);
     auto fw = qobject_cast<FloatingWindow*>(dock2->window());
+    const int waste = fw->width() - dock2->frame()->width();
+
     m1->dropArea()->drop(fw, Location_OnLeft, nullptr);
-    QCOMPARE(dock2->frame()->width(), droppedWidth);
+    QCOMPARE(dock2->frame()->width(), droppedWidth - waste);
 }
 
 void TestDocks::tst_fixedSizePolicy()

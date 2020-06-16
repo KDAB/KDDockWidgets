@@ -251,7 +251,7 @@ bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location locat
         if (!validateAffinity(floatingWindow))
             return false;
 
-        addMultiSplitter(floatingWindow->dropArea(), location, relativeTo);
+        addMultiSplitter(floatingWindow->dropArea(), location, relativeTo, DefaultSizeMode::FairButFloor);
         floatingWindow->scheduleDeleteLater();
         return true;
     } else {
