@@ -17,6 +17,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
+set(PYTHON_BINDINGS_INSTALL_PREFIX ${Python3_SITELIB} CACHE FILEPATH "Custom path to install python bindings." )
+message(STATUS "PYTHON INSTALL PREFIX ${PYTHON_BINDINGS_INSTALL_PREFIX}")
 
 if (WIN32)
     set(PATH_SEP "\;")
@@ -137,5 +139,5 @@ macro(CREATE_PYTHON_BINDINGS
                 LINK_FLAGS "-undefined dynamic_lookup")
         endif()
         install(TARGETS ${TARGET_NAME}
-            LIBRARY DESTINATION ${Python3_SITELIB}/${TARGET_NAME})
+            LIBRARY DESTINATION ${PYTHON_BINDINGS_INSTALL_PREFIX}/${TARGET_NAME})
 endmacro()
