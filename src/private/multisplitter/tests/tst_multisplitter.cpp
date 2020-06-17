@@ -199,6 +199,7 @@ private Q_SLOTS:
     void tst_maxSizeHonoured2();
     void tst_maxSizeHonoured3();
     void tst_requestEqualSize();
+    void tst_maxSizeHonouredWhenAnotherRemoved();
 };
 
 class MyHostWidget : public QWidget
@@ -1731,6 +1732,29 @@ void TestMultiSplitter::tst_requestEqualSize()
         root->requestEqualSize(separator);
         QCOMPARE(item1->width(), maxWidth1);
     }
+}
+
+void TestMultiSplitter::tst_maxSizeHonouredWhenAnotherRemoved()
+{
+    // Test that when removing item 3 that all the new available space goes to item1, so that
+    // we don't violate the space of item 1
+
+    auto root = createRoot();
+    root->setSize(QSize(300, 3000));
+    auto item1 = createItem();
+    const int minHeight = 100;
+    const int maxHeight = 200;
+    auto item2 = createItem(QSize(100, minHeight), QSize(200, maxHeight));
+    auto item3 = createItem();
+    root->insertItem(item1, Item::Location_OnTop);
+    root->insertItem(item2, Item::Location_OnBottom);
+    root->insertItem(item3, Item::Location_OnBottom);
+
+    QVERIFY(item2->height() <= maxHeight);
+    root->removeItem(item3);
+    QVERIFY(item2->height() <= maxHeight);
+
+    root->dumpLayout();
 }
 
 int main(int argc, char *argv[])

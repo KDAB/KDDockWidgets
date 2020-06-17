@@ -2669,10 +2669,21 @@ void ItemContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)
     if (!side1Neighbour && !side2Neighbour)
         return;
 
+    SizingInfo::List childSizes = sizes();
+
     if (side1Neighbour && side2Neighbour) {
+        const int index1 = indexOfVisibleChild(side1Neighbour);
+        const int index2 = indexOfVisibleChild(side2Neighbour);
+
+        if (index1 == -1 || index2 == -1 || index1 >= childSizes.count() || index2 >= childSizes.count()) {
+            // Doesn't happen
+            qWarning() << Q_FUNC_INFO << "Invalid indexes" << index1 << index2 << childSizes.count();
+            return;
+        }
+
         // Give half/half to each neighbour
-        QRect geo1 = side1Neighbour->geometry();
-        QRect geo2 = side2Neighbour->geometry();
+        QRect &geo1 = childSizes[index1].geometry;
+        QRect &geo2 = childSizes[index2].geometry;
 
         if (isVertical()) {
             const int available = geo2.y() - geo1.bottom() - separatorThickness;
@@ -2684,33 +2695,41 @@ void ItemContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)
             geo2.setLeft(geo1.right() + separatorThickness + 1);
         }
 
-        side1Neighbour->setGeometry_recursive(geo1);
-        side2Neighbour->setGeometry_recursive(geo2);
-
     } else if (side1Neighbour) {
-        // Grow all the way to the right (or bottom if vertical)
-        QRect geo = side1Neighbour->geometry();
+        const int index1 = indexOfVisibleChild(side1Neighbour);
+        if (index1 == -1 || index1 >= childSizes.count()) {
+            // Doesn't happen
+            qWarning() << Q_FUNC_INFO << "Invalid indexes" << index1 << childSizes.count();
+            return;
+        }
 
+        // Grow all the way to the right (or bottom if vertical)
+        QRect &geo = childSizes[index1].geometry;
         if (isVertical()) {
             geo.setBottom(rect().bottom());
         } else {
             geo.setRight(rect().right());
         }
-
-        side1Neighbour->setGeometry_recursive(geo);
-
     } else if (side2Neighbour) {
-        // Grow all the way to the left (or top if vertical)
-        QRect geo = side2Neighbour->geometry();
+        const int index2 = indexOfVisibleChild(side2Neighbour);
+        if (index2 == -1 || index2 >= childSizes.count()) {
+            // Doesn't happen
+            qWarning() << Q_FUNC_INFO << "Invalid indexes" << index2 << childSizes.count();
+            return;
+        }
 
+        // Grow all the way to the left (or top if vertical)
+        QRect &geo = childSizes[index2].geometry;
         if (isVertical()) {
             geo.setTop(0);
         } else {
             geo.setLeft(0);
         }
-
-        side2Neighbour->setGeometry_recursive(geo);
     }
+
+    d->honourMaxSizes(childSizes);
+    positionItems(/*by-ref*/ childSizes);
+    applyGeometries(childSizes);
 }
 
 void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
