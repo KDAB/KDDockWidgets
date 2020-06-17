@@ -49,6 +49,7 @@ add_subdirectory(examples/dockwidgets)
 if (OPTION_BUILD_PYTHON_BINDINGS)
     add_subdirectory(python)
 endif()
+set_compiler_flags(kddockwidgets_example)
 
 if (OPTION_DEVELOPER_MODE)
     include(ECMEnableSanitizers)
