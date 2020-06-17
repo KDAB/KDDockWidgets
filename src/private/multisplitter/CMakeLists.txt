@@ -45,6 +45,7 @@ qt5_add_resources(MULTISPLITTER_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/multisplit
 add_library(kddockwidgets_multisplitter SHARED ${MULTISPLITTER_SRCS} ${MULTISPLITTER_RESOURCES})
 add_library(KDAB::kddockwidgets_multisplitter ALIAS kddockwidgets_multisplitter)
 target_link_libraries(kddockwidgets_multisplitter Qt5::Core Qt5::Widgets)
+set_compiler_flags(kddockwidgets_multisplitter)
 
 if (BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND)
     find_package(Qt5Widgets)

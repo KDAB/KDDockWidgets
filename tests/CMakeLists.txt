@@ -12,6 +12,7 @@ include_directories(../src/private)
 qt5_add_resources(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
 target_link_libraries(tst_docks kddockwidgets kddockwidgets_multisplitter Qt5::Widgets Qt5::Test)
+set_compiler_flags(tst_docks)
 
 add_subdirectory(fuzzer)
 

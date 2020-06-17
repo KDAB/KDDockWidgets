@@ -7,3 +7,4 @@ add_executable(fuzzer
 
 set_property(TARGET fuzzer PROPERTY CXX_STANDARD 17)
 target_link_libraries(fuzzer kddockwidgets Qt5::Widgets Qt5::Test)
+set_compiler_flags(fuzzer)

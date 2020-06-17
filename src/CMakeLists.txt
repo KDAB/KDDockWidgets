@@ -113,6 +113,7 @@ qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 
 add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES} ${RESOURCES_QUICK})
 add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
+set_compiler_flags(kddockwidgets)
 
 target_include_directories(kddockwidgets
     PUBLIC
