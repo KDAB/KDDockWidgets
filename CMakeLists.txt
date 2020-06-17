@@ -15,6 +15,7 @@ cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
 
 option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
+option(OPTION_BUILD_PYTHON_BINDINGS "Build python bindings" OFF)
 # option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
 find_package(Qt5Widgets)
@@ -22,7 +23,8 @@ find_package(Qt5Widgets)
 set(CMAKE_AUTOMOC ON)
 
 set(ECM_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ECM/modules/")
-set(CMAKE_MODULE_PATH ${ECM_MODULE_DIR})
+set(PYTHON_MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake/Python")
+set(CMAKE_MODULE_PATH ${ECM_MODULE_DIR} ${PYTHON_MODULE_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if (OPTION_DEVELOPER_MODE)
@@ -42,6 +44,9 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(examples/dockwidgets)
+if (OPTION_BUILD_PYTHON_BINDINGS)
+    add_subdirectory(python)
+endif()
 
 if (OPTION_DEVELOPER_MODE)
     if (NOT OPTION_QTQUICK)

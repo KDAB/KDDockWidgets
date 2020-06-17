@@ -51,13 +51,17 @@ class DropAreaWithCentralFrame;
  *
  * Do not use instantiate directly in user code. Use MainWindow instead.
  */
+#ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
 class DOCKS_EXPORT MainWindowBase : public QMainWindowOrQuick
+#else
+class DOCKS_EXPORT MainWindowBase : public QMainWindow
+#endif
 {
     Q_OBJECT
 public:
     typedef QVector<MainWindowBase*> List;
     explicit MainWindowBase(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                            QWidgetOrQuick *parent = nullptr, Qt::WindowFlags flags = {});
+                            QWidgetOrQuick *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 
     ~MainWindowBase() override;
 
@@ -79,7 +83,7 @@ public:
      */
     void addDockWidget(DockWidgetBase *dockWidget,
                        KDDockWidgets::Location location,
-                       DockWidgetBase *relativeTo = nullptr, AddingOption option = {});
+                       DockWidgetBase *relativeTo = nullptr, AddingOption option = KDDockWidgets::AddingOption());
 
     /**
      * @brief Returns the unique name that was passed via constructor.

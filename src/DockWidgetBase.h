@@ -64,7 +64,11 @@ class StateDragging;
  *
  * Do not use instantiate directly in user code. Use DockWidget instead.
  */
+#ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
 class DOCKS_EXPORT DockWidgetBase : public QWidgetOrQuick
+#else
+class DOCKS_EXPORT DockWidgetBase : public QWidget
+#endif
 {
     Q_OBJECT
 public:
@@ -86,7 +90,7 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidgetBase(const QString &uniqueName, Options options = {});
+    explicit DockWidgetBase(const QString &uniqueName, Options options = DockWidgetBase::Options());
 
     ///@brief destructor
     ~DockWidgetBase() override;

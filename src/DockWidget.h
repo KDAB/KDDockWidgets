@@ -56,7 +56,7 @@ public:
      * when visible, or stays without a parent when hidden. This allows to support docking
      * to different main windows.
      */
-    explicit DockWidget(const QString &uniqueName, Options options = {});
+    explicit DockWidget(const QString &uniqueName, Options options = DockWidgetBase::Options());
 
     ///@brief destructor
     ~DockWidget() override;
