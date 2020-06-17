@@ -17,7 +17,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
-set(PYTHON_BINDINGS_INSTALL_PREFIX ${Python3_SITELIB} CACHE FILEPATH "Custom path to install python bindings." )
+
+if (NOT PYTHON_BINDINGS_INSTALL_PREFIX)
+    SET(PYTHON_BINDINGS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} CACHE FILEPATH "Custom path to install python bindings.")
+endif()
+
 message(STATUS "PYTHON INSTALL PREFIX ${PYTHON_BINDINGS_INSTALL_PREFIX}")
 
 if (WIN32)
