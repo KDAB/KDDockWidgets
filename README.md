@@ -60,6 +60,23 @@ $ ./kddockwidgets_example
 
 ```
 
+Python Bindings
+================
+
+To generate PySide2 bindings, pass `-DOPTION_BUILD_PYTHON_BINDINGS=ON` to CMake.
+The bindings will be installed to the passed `-DCMAKE_INSTALL_PREFIX`. Which
+might require setting the `PYTHONPATH` env variable to point to that path when
+running applications. Alternatively, pass `-DPYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.8/site-packages`
+to CMake (adjust to the python path on your system).
+
+To run the KDDW python example
+```
+$ export PYTHONPATH=/kddw/install/path # Only if needed
+$ cd python/examples/
+$ rcc -g python -o rc_assets.py ../../examples/dockwidgets/resources_example.qrc
+$ python3 main.py
+```
+
 Supported Qt versions
 ======================
 KDDockWidgets requires Qt >= 5.9
