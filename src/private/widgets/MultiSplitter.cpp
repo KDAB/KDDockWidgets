@@ -40,6 +40,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "LayoutSaver.h"
 #include "multisplitter/Widget_qwidget.h"
+#include "DropArea_p.h"
 
 #include <QScopedValueRollback>
 
@@ -428,12 +429,20 @@ Layouting::ItemContainer *MultiSplitter::rootItem() const
 }
 
 QRect MultiSplitter::rectForDrop(const QWidgetOrQuick *widget, Location location,
-                                       const Layouting::Item *relativeTo) const
+                                 const Layouting::Item *relativeTo) const
 {
     Layouting::Item item(nullptr);
-    item.setSize(widget->size());
-    item.setMinSize(Layouting::Widget_qwidget::widgetMinSize(widget));
-    item.setMaxSizeHint(widget->maximumSize());
+
+    if (auto fw = qobject_cast<const FloatingWindow*>(widget)) {
+        Layouting::ItemContainer *root = fw->dropArea()->rootItem();
+        item.setSize(root->size());
+        item.setMinSize(root->minSize());
+        item.setMaxSizeHint(root->maxSizeHint());
+    } else {
+        item.setSize(widget->size());
+        item.setMinSize(Layouting::Widget_qwidget::widgetMinSize(widget));
+        item.setMaxSizeHint(Layouting::Widget_qwidget::widgetMaxSize(widget));
+    }
 
     Layouting::ItemContainer *container = relativeTo ? relativeTo->parentContainer()
                                                      : m_rootItem;

@@ -5433,12 +5433,28 @@ void TestDocks::tst_maximumSizePolicy()
     auto oldFw = dock1->window();
     dock1->close();
     dock1->show();
+    auto oldFw2 = dock1->window();
 
     QVERIFY(dock1->window()->height() <= maxHeight + 20); // + 20 as the floating window is a bit bigger, due to margins etc.
     QVERIFY(dock1->height() <= maxHeight);
 
+    auto m1 = createMainWindow();
+    auto dock2 = createDockWidget("dock2", new QWidget());
+    m1->addDockWidget(dock2, Location_OnTop);
+    m1->resize(2000, 3000);
+
+    // Make the floating window big, and see if the suggested highlight is still small
+    dock1->window()->resize(QSize(dock1->width(), 800));
+
+    const QRect highlightRect = m1->multiSplitter()->rectForDrop(dock1->window(), Location_OnBottom, nullptr);
+    QVERIFY(highlightRect.height() <= maxHeight + 20);
+
+    // Now drop it, and check too
+    m1->addDockWidget(dock1, Location_OnBottom);
+    QVERIFY(dock1->height() <= maxHeight);
+
     delete oldFw;
-    delete dock1->window();
+    delete oldFw2;
 }
 
 int main(int argc, char *argv[])
