@@ -89,14 +89,13 @@ int main(int argc, char **argv)
     parser.addOption(dockableMainWindows);
 #endif
 
-    QCommandLineOption maxSizeOption("g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200. (this feature is work in progress)"));
-    QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central frame"));
+    QCommandLineOption maxSizeOption("g", QCoreApplication::translate("main", "Make dock #8 have a max-size of 200x200."));
+    parser.addOption(maxSizeOption);
 
+    QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central frame"));
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
-    parser.addOption(maxSizeOption);
 #else
-    Q_UNUSED(maxSizeOption)
     Q_UNUSED(centralFrame)
 #endif
 
