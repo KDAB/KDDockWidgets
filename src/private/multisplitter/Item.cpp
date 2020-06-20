@@ -1086,8 +1086,9 @@ bool ItemContainer::checkSanity()
             return false;
         }
 
-        const int separatorMinPos = minPosForSeparator_global(separator);
-        const int separatorMaxPos = maxPosForSeparator_global(separator);
+        // Check that the seprator bounds are correct. We can't always honour widget's max-size constraints, so only honour min-size
+        const int separatorMinPos = minPosForSeparator_global(separator, /*honourMax=*/ false);
+        const int separatorMaxPos = maxPosForSeparator_global(separator, /*honourMax=*/ false);
         const int separatorPos = separator->position();
         if (separatorPos < separatorMinPos || separatorPos > separatorMaxPos ||
                 separatorMinPos < 0 || separatorMaxPos <= 0) {
