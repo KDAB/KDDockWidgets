@@ -218,6 +218,9 @@ public Q_SLOTS:
         qApp->setStyle(QStyleFactory::create("fusion"));
 
         Testing::installFatalMessageHandler();
+
+        auto m = createMainWindow();
+        QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
     }
 public:
     static void nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location);
