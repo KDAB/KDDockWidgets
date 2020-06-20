@@ -2154,13 +2154,6 @@ void ItemContainer::updateChildPercentages()
     for (Item *item : qAsConst(d->m_children)) {
         if (item->isVisible() && !item->isBeingInserted()) {
             item->m_sizingInfo.percentageWithinParent = (1.0 * item->length(d->m_orientation)) / usable;
-            auto p = item->m_sizingInfo.percentageWithinParent;
-            if (qFuzzyIsNull(p) || p > 1.0) {
-                root()->dumpLayout();
-                qWarning() << Q_FUNC_INFO << "Invalid percentage" << p << this
-                           << "; item=" << item
-                           << "; item.length=" << item->length(d->m_orientation);
-            }
         } else {
             item->m_sizingInfo.percentageWithinParent = 0.0;
         }
