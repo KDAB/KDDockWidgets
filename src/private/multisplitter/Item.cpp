@@ -2611,7 +2611,7 @@ int ItemContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Orien
         }
 
         for (int i = start; i <= end; ++i)
-            neighbourMaxLength = qMin(length(), neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
+            neighbourMaxLength = qMin(root()->length(), neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
 
          return neighbourMaxLength;
     } else {
@@ -2748,13 +2748,15 @@ void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
 
     // #1. Grow our item
     SizingInfo &sizingInfo = sizes[index];
-    sizingInfo.setLength(sizingInfo.length(d->m_orientation) + missing, d->m_orientation);
     sizingInfo.setOppositeLength(oppositeLength(), d->m_orientation);
+    const bool isFirst = index == 0;
+    const bool isLast = index == sizes.count() - 1;
 
     int side1Growth = 0;
     int side2Growth = 0;
 
     if (growthStrategy == GrowthStrategy::BothSidesEqually) {
+        sizingInfo.setLength(sizingInfo.length(d->m_orientation) + missing, d->m_orientation);
         const int count = sizes.count();
         if (count == 1) {
             //There's no neighbours to push, we're alone. Occupy the full container
@@ -2798,15 +2800,40 @@ void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
             side2Growth += took2;
             available2 -= took2;
         }
+        shrinkNeighbours(index, sizes, side1Growth, side2Growth, neighbourSqueezeStrategy);
     } else if (growthStrategy == GrowthStrategy::Side1Only) {
-        side1Growth = missing;
-        side2Growth = 0;
-    } else if (growthStrategy == GrowthStrategy::Side2Only) {
-        side1Growth = 0;
-        side2Growth = missing;
-    }
+        side1Growth = qMin(missing, sizingInfo.availableToGrow(d->m_orientation));
+        sizingInfo.setLength(sizingInfo.length(d->m_orientation) + side1Growth, d->m_orientation);
+        if (side1Growth > 0)
+            shrinkNeighbours(index, sizes, side1Growth, /*side2Growth=*/ 0, neighbourSqueezeStrategy);
+        if (side1Growth < missing) {
+            missing = missing - side1Growth;
 
-    shrinkNeighbours(index, sizes, side1Growth, side2Growth, neighbourSqueezeStrategy);
+            if (isLast) {
+                // Doesn't happen
+                qWarning() << Q_FUNC_INFO << "No more items to grow";
+            } else {
+                growItem(index + 1, sizes, missing, growthStrategy, neighbourSqueezeStrategy, accountForNewSeparator);
+            }
+        }
+
+    } else if (growthStrategy == GrowthStrategy::Side2Only) {
+        side2Growth = qMin(missing, sizingInfo.availableToGrow(d->m_orientation));
+        sizingInfo.setLength(sizingInfo.length(d->m_orientation) + side2Growth, d->m_orientation);
+
+        if (side2Growth > 0)
+            shrinkNeighbours(index, sizes, /*side1Growth=*/ 0, side2Growth, neighbourSqueezeStrategy);
+        if (side2Growth < missing) {
+            missing = missing - side2Growth;
+
+            if (isFirst) {
+                // Doesn't happen
+                qWarning() << Q_FUNC_INFO << "No more items to grow";
+            } else {
+                growItem(index - 1, sizes, missing, growthStrategy, neighbourSqueezeStrategy, accountForNewSeparator);
+            }
+        }
+    }
 }
 
 void ItemContainer::growItem(Item *item, int amount, GrowthStrategy growthStrategy,

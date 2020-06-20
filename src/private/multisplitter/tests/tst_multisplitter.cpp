@@ -195,6 +195,7 @@ private Q_SLOTS:
     void tst_closeAndRestorePreservesPosition();
     void tst_minSizeChangedBeforeRestore();
     void tst_separatorMoveCrash();
+    void tst_separatorMoveHonoursMax();
     void tst_maxSizeHonoured1();
     void tst_maxSizeHonoured2();
     void tst_maxSizeHonoured3();
@@ -1311,6 +1312,10 @@ void TestMultiSplitter::tst_availableOnSide()
     item3->insertItem(item31, Item::Location_OnRight);
     auto container31 = item31->parentContainer();
     auto separator31 = container31->separators().at(0);
+
+    // Since we don't have widgets with max-size, these two must be the same
+    QCOMPARE(container31->minPosForSeparator_global(separator31, false), container31->minPosForSeparator_global(separator31, true));
+
     QCOMPARE(container31->minPosForSeparator_global(separator31), item1->minSize().width() + item2->minSize().width() + item3->minSize().width() + 2*Item::separatorThickness);
     QCOMPARE(container31->maxPosForSeparator_global(separator31), root->width() -item31->minSize().width() - Item::separatorThickness);
 }
@@ -1587,6 +1592,44 @@ void TestMultiSplitter::tst_separatorMoveCrash()
     c->requestSeparatorMove(separator, available5 + 10);
 }
 
+void TestMultiSplitter::tst_separatorMoveHonoursMax()
+{
+    auto root = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+    root->insertItem(item1, Item::Location_OnLeft);
+    root->insertItem(item2, Item::Location_OnRight);
+    root->insertItem(item3, Item::Location_OnRight);
+
+    auto guest2 = static_cast<MyGuestWidget*>(item2->guestWidget());
+    const int maxWidth = 250;
+    guest2->setMaxSize(QSize(maxWidth, 250));
+    auto separator1 = root->separators()[0];
+    auto separator2 = root->separators()[1];
+
+    const int min1 = root->minPosForSeparator_global(separator1);
+    const int max1 = root->maxPosForSeparator_global(separator1);
+    //const int min2 = root->minPosForSeparator_global(separator2);
+    const int max2 = root->maxPosForSeparator_global(separator2);
+
+    root->requestSeparatorMove(separator1, separator1->position() - min1);
+    QVERIFY(root->checkSanity());
+    QVERIFY(item2->width() <= maxWidth);
+
+    root->requestSeparatorMove(separator2, max2 - separator2->position());
+    QVERIFY(root->checkSanity());
+    QVERIFY(item2->width() <= maxWidth);
+
+    root->requestSeparatorMove(separator1, max1 - separator1->position());
+    QVERIFY(root->checkSanity());
+    QVERIFY(item2->width() <= maxWidth);
+
+    root->requestSeparatorMove(separator1, -(separator1->position() - min1));
+    QVERIFY(root->checkSanity());
+    QVERIFY(item2->width() <= maxWidth);
+}
+
 void TestMultiSplitter::tst_maxSizeHonoured1()
 {
     // Tests that the suggested rect honours max size when adding an item to a layout.
@@ -1717,8 +1760,15 @@ void TestMultiSplitter::tst_requestEqualSize()
         // Separator didn't move, doing so would make item1 bigger than its max size
         QCOMPARE(item1->width(), item1->maxSizeHint().width());
 
-        // Let's put the separator further right manually, then try again:
-        root->requestSeparatorMove(separator, 20);
+        {
+            // Let's put the separator further right manually, then try again:
+            // (Can't use ItemContainer::requstSeparatorMove() as it respects max-size constriants
+            item1->m_sizingInfo.incrementLength(20, Qt::Horizontal);
+            item2->m_sizingInfo.incrementLength(-20, Qt::Horizontal);
+            root->positionItems();
+        }
+
+
         QCOMPARE(item1->width(), maxWidth1 + 20);
 
         // Double clicking on the separator will put it back at a sane place
