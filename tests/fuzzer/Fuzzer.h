@@ -88,6 +88,7 @@ public:
         typedef QVector<DockWidgetDescriptor> List;
         QString name;
         QSize minSize; // the minSize of the hosted widget
+        QSize maxSize;
         QRect geometry;
         bool isFloating;
         bool isVisible;
@@ -97,6 +98,7 @@ public:
             QVariantMap map;
             map[QStringLiteral("name")] = name;
             map[QStringLiteral("minSize")] = sizeToVariantMap(minSize);
+            map[QStringLiteral("maxSize")] = sizeToVariantMap(maxSize);
             map[QStringLiteral("geometry")] = rectToVariantMap(geometry);
             map[QStringLiteral("isFloating")] = isFloating;
             map[QStringLiteral("isVisible")] = isVisible;
@@ -110,6 +112,7 @@ public:
 
             dock.name = map["name"].toString();
             dock.minSize = sizeFromVariantMap(map["minSize"].toMap());
+            dock.maxSize = sizeFromVariantMap(map["maxSize"].toMap());
             dock.geometry = rectFromVariantMap(map["geometry"].toMap());
             dock.isFloating = map["isFloating"].toBool();
             dock.isVisible = map["isVisible"].toBool();

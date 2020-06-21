@@ -175,9 +175,16 @@ Fuzzer::DockWidgetDescriptor Fuzzer::generateRandomDockWidget()
     dwd.minSize.setWidth(minSizeDistriv(m_randomEngine));
     dwd.minSize.setHeight(minSizeDistriv(m_randomEngine));
 
+    const bool hasMaxSize = getRandomBool(25); // 25% of all dock widgets have a max-size
+    if (hasMaxSize) {
+        std::uniform_int_distribution<> maxSizeDistriv(200, 600);
+        dwd.maxSize.setWidth(dwd.minSize.width() + minSizeDistriv(m_randomEngine));
+        dwd.maxSize.setHeight(dwd.minSize.height() + minSizeDistriv(m_randomEngine));
+    }
+
     QPoint pos = getRandomPos();
-    std::uniform_int_distribution<> widthDistrib(dwd.minSize.width() + 50, dwd.minSize.width() + 600);
-    std::uniform_int_distribution<> heightDistrib(dwd.minSize.height() + 50, dwd.minSize.height() + 600);
+    std::uniform_int_distribution<> widthDistrib(dwd.minSize.width(), hasMaxSize ? dwd.maxSize.width() : dwd.minSize.width() + 600);
+    std::uniform_int_distribution<> heightDistrib(dwd.minSize.height(), hasMaxSize ? dwd.maxSize.height() : dwd.minSize.height() + 600);
     dwd.geometry = QRect(pos, QSize(widthDistrib(m_randomEngine), heightDistrib(m_randomEngine)));
 
     return dwd;
