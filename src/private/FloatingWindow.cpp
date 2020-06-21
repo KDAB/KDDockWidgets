@@ -213,7 +213,7 @@ DockWidgetBase *FloatingWindow::singleDockWidget() const
 const Frame::List FloatingWindow::frames() const
 {
     Q_ASSERT(m_dropArea);
-    return m_dropArea->findChildren<Frame *>(QString(), Qt::FindDirectChildrenOnly);
+    return m_dropArea->frames();
 }
 
 void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, bool preserveCenter)

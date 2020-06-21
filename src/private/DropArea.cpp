@@ -29,6 +29,7 @@
 #include "MainWindowBase.h"
 #include "multisplitter/Item_p.h"
 #include "DockRegistry_p.h"
+#include "private/widgets/FrameWidget_p.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"
@@ -57,6 +58,18 @@ DropArea::~DropArea()
 int DropArea::numFrames() const
 {
     return visibleCount();
+}
+
+Frame::List DropArea::frames() const
+{
+    auto frameWidgets = findChildren<FrameWidget *>(QString(), Qt::FindDirectChildrenOnly);
+
+    Frame::List frames;
+    frames.reserve(frameWidgets.size());
+    for (FrameWidget *f : frameWidgets)
+        frames.push_back(f);
+
+    return frames;
 }
 
 Frame *DropArea::frameContainingPos(QPoint globalPos) const
