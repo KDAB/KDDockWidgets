@@ -52,9 +52,7 @@ class Item;
 class MULTISPLITTER_EXPORT Widget
 {
 public:
-    explicit Widget(QObject *thisObj)
-        : m_thisObj(thisObj) {}
-
+    explicit Widget(QObject *thisObj);
     virtual ~Widget();
 
     virtual void setLayoutItem(Item *) = 0;
@@ -106,10 +104,14 @@ public:
         return obj == m_thisObj;
     }
 
+    ///@brief returns an id for corelation purposes for saving layouts
+    QString id() const;
+
 protected:
     static QSize boundedMaxSize(QSize min, QSize max);
 
 private:
+    const QString m_id;
     QObject *const m_thisObj;
     Q_DISABLE_COPY(Widget)
 };

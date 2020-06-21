@@ -221,7 +221,7 @@ QVariantMap Item::toVariantMap() const
     result[QStringLiteral("isContainer")] = isContainer();
     result[QStringLiteral("objectName")] = objectName();
     if (m_guest)
-        result[QStringLiteral("guestId")] = QString::number(qint64(m_guest->asQWidget())); // just for coorelation purposes when restoring
+        result[QStringLiteral("guestId")] = m_guest->id(); // just for coorelation purposes when restoring
 
     return result;
 }

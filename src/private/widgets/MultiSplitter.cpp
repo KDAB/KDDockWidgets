@@ -478,7 +478,7 @@ LayoutSaver::MultiSplitter MultiSplitter::serialize() const
     for (Layouting::Item *item : items) {
         if (!item->isContainer()) {
             if (auto frame = qobject_cast<Frame*>(item->guestAsQObject()))
-                l.frames.insert(QString::number(qint64(frame)), frame->serialize());
+                l.frames.insert(frame->id(), frame->serialize());
         }
     }
 

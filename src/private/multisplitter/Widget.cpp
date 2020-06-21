@@ -23,8 +23,21 @@
 
 using namespace Layouting;
 
+static qint64 s_nextFrameId = 1;
+
+Widget::Widget(QObject *thisObj)
+    : m_id(QString::number(s_nextFrameId++))
+    , m_thisObj(thisObj)
+{
+}
+
 Widget::~Widget()
 {
+}
+
+QString Widget::id() const
+{
+    return m_id;
 }
 
 QSize Widget::boundedMaxSize(QSize min, QSize max)

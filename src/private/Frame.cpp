@@ -595,7 +595,7 @@ LayoutSaver::Frame Frame::serialize() const
     frame.geometry = QWidget::geometry();
     frame.options = options();
     frame.currentTabIndex = currentTabIndex();
-    frame.id = QString::number(qint64(this)); // for coorelation purposes
+    frame.id = id(); // for coorelation purposes
 
     for (DockWidgetBase *dock : docks)
         frame.dockWidgets.push_back(dock->serialize());

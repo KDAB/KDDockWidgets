@@ -238,7 +238,7 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemContainer> &root)
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
         if (auto w = static_cast<MyGuestWidget*>(item->guestAsQObject()))
-            widgets.insert(QString::number(qint64(w)), w);
+            widgets.insert(w->id(), w);
 
     root2.fillFromVariantMap(serialized, widgets);
 
