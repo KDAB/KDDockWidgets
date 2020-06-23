@@ -24,9 +24,11 @@ set(CMAKE_AUTOMOC ON)
 
 set(ECM_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ECM/modules/")
 set(PYTHON_MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake/Python")
-set(CMAKE_MODULE_PATH ${ECM_MODULE_DIR} ${PYTHON_MODULE_DIR})
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake" ${ECM_MODULE_DIR} ${PYTHON_MODULE_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+# setup default install locations
+include(InstallLocation)
 
 macro(set_compiler_flags targetName)
     if (OPTION_DEVELOPER_MODE)

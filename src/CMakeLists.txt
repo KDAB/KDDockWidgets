@@ -153,11 +153,27 @@ if (NOT WIN32 AND NOT APPLE)
     target_link_libraries(kddockwidgets PUBLIC Qt5::X11Extras)
 endif()
 
+# append d to debug libraries for windows builds
+if(WIN32)
+    set(postfix ${${PROJECT_NAME}_VERSION_MAJOR})
+    string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
+    if(${UPPER_BUILD_TYPE} MATCHES "^DEBUG")
+        string(CONCAT postfix ${postfix} "d")
+        set_target_properties(kddockwidgets PROPERTIES DEBUG_POSTFIX ${postfix})
+    else()
+        set_target_properties(kddockwidgets PROPERTIES ${UPPER_BUILD_TYPE}_POSTFIX ${postfix})
+    endif()
+endif()
+
 install (TARGETS kddockwidgets
          EXPORT kddockwidgetsTargets
-         RUNTIME DESTINATION bin
-         LIBRARY DESTINATION lib
-         ARCHIVE DESTINATION lib)
+         RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
+         LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
+         ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
+         )
+if(MSVC)
+    install(FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>" DESTINATION ${INSTALL_LIBRARY_DIR} CONFIGURATIONS Debug RelWithDebInfo)
+endif()
 install (FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
 install (FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION include/kddockwidgets/private)
 install (FILES private/multisplitter/Item_p.h DESTINATION include/kddockwidgets/multisplitter)
