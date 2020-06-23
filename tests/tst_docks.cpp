@@ -1360,7 +1360,7 @@ void TestDocks::tst_restoreTwice()
     {
         LayoutSaver saver;
         QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreTwice.json")));
-        QVERIFY(saver.restoreFromFile(QStringLiteral("layout.json")));
+        QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreTwice.json")));
         QVERIFY(dock2->isVisible());
         QVERIFY(dock3->isVisible());
     }
