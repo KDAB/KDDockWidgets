@@ -11,6 +11,7 @@ EXCLUDE strings,explicit,normalize,passbyvalue,operators,nullstrcompare,nullstra
 #exclude more checks
 EXCLUDE style
 
+SKIP /fwd_headers/
 #skip CMake files
 SKIP /KDDockWidgetsConfig.cmake.in
 #skip the borrowed code in the cmake subdir
