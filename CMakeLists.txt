@@ -2,6 +2,10 @@
 #
 # Pass the following variables to cmake to control the build:
 #
+# -DKDDockWidgets_TESTS=[true|false]
+#  Build the test harness.
+#  Default=false
+#
 # -DKDDockWidgets_EXAMPLES=[true|false]
 #  Build the examples.
 #  Default=true
@@ -46,6 +50,7 @@ else()
   message(WARNING "** Python Bindings are disabled in debug build mode.")
   set(OPTION_BUILD_PYTHON_BINDINGS False)
 endif()
+option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 
 # option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
@@ -101,7 +106,7 @@ endif()
 
 if(OPTION_DEVELOPER_MODE)
   include(ECMEnableSanitizers)
-  if(NOT OPTION_QTQUICK)
+  if(${PROJECT_NAME}_TESTS AND NOT OPTION_QTQUICK)
     enable_testing()
     add_subdirectory(tests)
 
