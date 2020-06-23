@@ -2,6 +2,10 @@
 #
 # Pass the following variables to cmake to control the build:
 #
+# -DKDDockWidgets_EXAMPLES=[true|false]
+#  Build the examples.
+#  Default=true
+#
 # -DOPTION_DEVELOPER_MODE=[true|false]
 #  Configure the build for a developer setup.
 #  Enables some features that are not geared towards end-users.
@@ -42,6 +46,7 @@ else()
   message(WARNING "** Python Bindings are disabled in debug build mode.")
   set(OPTION_BUILD_PYTHON_BINDINGS False)
 endif()
+option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 
 # option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
@@ -85,11 +90,14 @@ install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 install(FILES LICENSE.GPL.txt LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
 
 add_subdirectory(src)
-add_subdirectory(examples/dockwidgets)
 if(OPTION_BUILD_PYTHON_BINDINGS)
   add_subdirectory(python)
 endif()
-set_compiler_flags(kddockwidgets_example)
+
+if(${PROJECT_NAME}_EXAMPLES)
+  add_subdirectory(examples/dockwidgets)
+  set_compiler_flags(kddockwidgets_example)
+endif()
 
 if(OPTION_DEVELOPER_MODE)
   include(ECMEnableSanitizers)
