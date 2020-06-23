@@ -108,7 +108,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
 
     auto closeAllAction = fileMenu->addAction(QStringLiteral("Close All"));
     connect(closeAllAction, &QAction::triggered, this, [this] {
-        for (auto dw : m_dockwidgets)
+        for (auto dw : qAsConst(m_dockwidgets))
             dw->close();
     });
 

@@ -62,7 +62,7 @@ int DropArea::numFrames() const
 
 Frame::List DropArea::frames() const
 {
-    auto frameWidgets = findChildren<FrameWidget *>(QString(), Qt::FindDirectChildrenOnly);
+    const auto frameWidgets = findChildren<FrameWidget *>(QString(), Qt::FindDirectChildrenOnly);
 
     Frame::List frames;
     frames.reserve(frameWidgets.size());

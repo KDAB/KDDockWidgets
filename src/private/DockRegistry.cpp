@@ -302,7 +302,7 @@ const DockWidgetBase::List DockRegistry::dockWidgets(const QStringList &names)
     DockWidgetBase::List result;
     result.reserve(names.size());
 
-    for (auto dw : m_dockWidgets) {
+    for (auto dw : qAsConst(m_dockWidgets)) {
         if (names.contains(dw->uniqueName()))
             result.push_back(dw);
     }
@@ -315,7 +315,7 @@ const MainWindowBase::List DockRegistry::mainWindows(const QStringList &names)
     MainWindowBase::List result;
     result.reserve(names.size());
 
-    for (auto mw : m_mainWindows) {
+    for (auto mw : qAsConst(m_mainWindows)) {
         if (names.contains(mw->uniqueName()))
             result.push_back(mw);
     }

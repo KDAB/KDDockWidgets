@@ -945,7 +945,7 @@ bool ItemContainer::checkSanity()
 
     // Check that the geometries don't overlap
     int expectedPos = 0;
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (!item->isVisible())
             continue;
         const int pos = Layouting::pos(item->pos(), d->m_orientation);
@@ -961,7 +961,7 @@ bool ItemContainer::checkSanity()
     }
 
     const int h1 = Layouting::length(size(), oppositeOrientation(d->m_orientation));
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (item->parentContainer() != this) {
             qWarning() << "Invalid parent container for" << item
                        << "; is=" << item->parentContainer() << "; expected=" << this;
@@ -1133,7 +1133,7 @@ int ItemContainer::numChildren() const
 int ItemContainer::numVisibleChildren() const
 {
     int num = 0;
-    for (Item *child : d->m_children) {
+    for (Item *child : qAsConst(d->m_children)) {
         if (child->isVisible())
             num++;
     }
@@ -1570,7 +1570,7 @@ Item* ItemContainer::itemForObject(const QObject *o) const
 
 Item *ItemContainer::itemForWidget(const Widget *w) const
 {
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (item->isContainer()) {
             if (Item *result = item->asContainer()->itemForWidget(w))
                 return result;
@@ -1585,7 +1585,7 @@ Item *ItemContainer::itemForWidget(const Widget *w) const
 int ItemContainer::visibleCount_recursive() const
 {
     int count = 0;
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         count += item->visibleCount_recursive();
     }
 
@@ -1595,7 +1595,7 @@ int ItemContainer::visibleCount_recursive() const
 int ItemContainer::count_recursive() const
 {
     int count = 0;
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (auto c = item->asContainer()) {
             count += c->count_recursive();
         } else {
@@ -1608,7 +1608,7 @@ int ItemContainer::count_recursive() const
 
 Item *ItemContainer::itemAt(QPoint p) const
 {
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (item->isVisible() && item->geometry().contains(p))
             return item;
     }
@@ -1633,7 +1633,7 @@ Item::List ItemContainer::items_recursive() const
 {
    Item::List items;
    items.reserve(30); // sounds like a good upper number to minimize allocations
-   for (Item *item : d->m_children) {
+   for (Item *item : qAsConst(d->m_children)) {
        if (auto c  = item->asContainer()) {
            items << c->items_recursive();
        } else {
@@ -1725,7 +1725,7 @@ Item::List ItemContainer::visibleChildren(bool includeBeingInserted) const
 {
     Item::List items;
     items.reserve(d->m_children.size());
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (includeBeingInserted) {
             if (item->isVisible() || item->isBeingInserted())
                 items << item;
@@ -1762,7 +1762,7 @@ bool ItemContainer::contains(const Item *item) const
 
 bool ItemContainer::contains_recursive(const Item *item) const
 {
-    for (Item *it : d->m_children) {
+    for (Item *it : qAsConst(d->m_children)) {
         if (it == item) {
             return true;
         } else if (it->isContainer()) {
@@ -1797,7 +1797,7 @@ QSize ItemContainer::minSize() const
     int minH = 0;
     int numVisible = 0;
     if (!d->m_children.isEmpty()) {
-        for (Item *item : d->m_children) {
+        for (Item *item : qAsConst(d->m_children)) {
             if (!(item->isVisible() || item->isBeingInserted()))
                 continue;
             numVisible++;
@@ -2100,7 +2100,8 @@ void ItemContainer::dumpLayout(int level)
 {
     if (level == 0 && hostWidget()) {
 
-        for (auto screen : qApp->screens()) {
+        const auto screens = qApp->screens();
+        for (auto screen : screens) {
             qDebug().noquote() << "Screen" << screen->geometry() << screen->availableGeometry()
                                << "; drp=" << screen->devicePixelRatio();
         }
@@ -2163,7 +2164,7 @@ void ItemContainer::updateChildPercentages()
 void ItemContainer::updateChildPercentages_recursive()
 {
     updateChildPercentages();
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (auto c = item->asContainer())
             c->updateChildPercentages_recursive();
     }
@@ -2441,7 +2442,7 @@ void ItemContainer::layoutEqually(SizingInfo::List &sizes)
 void ItemContainer::layoutEqually_recursive()
 {
     layoutEqually();
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (item->isVisible()) {
             if (auto c = item->asContainer())
                 c->layoutEqually_recursive();
@@ -3051,7 +3052,7 @@ void ItemContainer::Private::deleteSeparators_recursive()
     deleteSeparators();
 
     // recurse into the children:
-    for (Item *item : m_children) {
+    for (Item *item : qAsConst(m_children)) {
         if (auto c = item->asContainer())
             c->d->deleteSeparators_recursive();
     }
@@ -3153,7 +3154,7 @@ QVariantMap ItemContainer::toVariantMap() const
 
     QVariantList childrenV;
     childrenV.reserve(d->m_children.size());
-    for (Item *child : d->m_children) {
+    for (Item *child : qAsConst(d->m_children)) {
         childrenV.push_back(child->toVariantMap());
     }
 
@@ -3247,7 +3248,7 @@ QVector<Separator *> ItemContainer::separators_recursive() const
 {
     Layouting::Separator::List separators = d->m_separators;
 
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (auto c = item->asContainer())
             separators << c->separators_recursive();
     }
@@ -3295,7 +3296,7 @@ void ItemContainer::Private::relayoutIfNeeded()
     }
 
     // Let's see our children too:
-    for (Item *item : m_children) {
+    for (Item *item : qAsConst(m_children)) {
         if (item->isVisible()) {
             if (auto c = item->asContainer())
                 c->d->relayoutIfNeeded();
@@ -3377,8 +3378,7 @@ Separator *ItemContainer::Private::neighbourSeparator_recursive(const Item *item
 
 void ItemContainer::Private::updateWidgets_recursive()
 {
-    for (Item *item : m_children) {
-
+    for (Item *item : qAsConst(m_children)) {
         if (auto c = item->asContainer()) {
             c->d->updateWidgets_recursive();
         } else {
