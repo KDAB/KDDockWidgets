@@ -181,10 +181,13 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, AddingOption addi
             // Doesn't have a frame yet
             morphIntoFloatingWindow();
             frame = this->frame();
+        } else {
+            // Doesn't happen
+            qWarning() << Q_FUNC_INFO << "null frame";
+            return;
         }
     }
 
-    Q_ASSERT(frame);
     other->setParent(nullptr);
     frame->addWidget(other, addingOption);
 }
