@@ -24,7 +24,7 @@
 #  SHIBOKEN_BUILD_TYPE         - Tells if Shiboken was compiled in Release or Debug mode.
 
 # You can install Shiboken from Qt repository with
-# pip3 install --index-url=http://download.qt.io/snapshots/ci/pyside/<Qt-Version>/latest/ shiboken2-generator --trusted-host download.qt.io
+# pip3 install --index-url=https://download.qt.io/snapshots/ci/pyside/<Qt-Version>/latest/ shiboken2-generator --trusted-host download.qt.io
 find_package(PkgConfig REQUIRED) 
 pkg_check_modules(SHIBOKEN2_PRIV shiboken2 QUIET)
 
