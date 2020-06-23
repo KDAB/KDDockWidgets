@@ -278,11 +278,6 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
 
 DragController::DragController(QObject *)
 {
-    if (KDDockWidgets::usesNativeDraggingAndResizing()) { // probably also good for wayland, which doesn't support mouse grabbing
-        // Aero-snap jams if we're grabbing the mouse, so use the fallback grabber
-        m_fallbackMouseGrabber = new FallbackMouseGrabber(this);
-    }
-
     qCDebug(creation) << "DragController()";
 
     auto stateNone = new StateNone(this);
