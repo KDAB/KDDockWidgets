@@ -55,6 +55,8 @@ ecm_generate_pri_file(BASE_NAME KDDockWidgets
 )
 install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
+install(FILES LICENSE.GPL.txt LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
+
 add_subdirectory(src)
 add_subdirectory(examples/dockwidgets)
 if (OPTION_BUILD_PYTHON_BINDINGS)
