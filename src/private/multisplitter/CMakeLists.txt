@@ -64,7 +64,9 @@ if (OPTION_DEVELOPER_MODE)
     target_compile_definitions(kddockwidgets_multisplitter PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
     add_subdirectory(tests)
-    add_subdirectory(examples)
+    if(${PROJECT_NAME}_EXAMPLES)
+      add_subdirectory(examples)
+    endif()
 endif()
 
 target_include_directories(kddockwidgets_multisplitter
