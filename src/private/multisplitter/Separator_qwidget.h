@@ -18,8 +18,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KD_MULTISPLITTER_SEPARATORWIDGET_P_H
-#define KD_MULTISPLITTER_SEPARATORWIDGET_P_H
+#ifndef KD_MULTISPLITTER_SEPARATORQWIDGET_P_H
+#define KD_MULTISPLITTER_SEPARATORQWIDGET_P_H
 
 #include "multisplitter_export.h"
 #include "Separator_p.h"
