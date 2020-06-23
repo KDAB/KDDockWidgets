@@ -1,7 +1,7 @@
 ################################################################################
 ##  This file is part of KDDockWidgets.
 ##
-##  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+##  Copyright (C) 2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 ##  Author: Renato Araujo Oliveira Filho <renato.araujo@kdab.com>
 ##
 ##  This program is free software; you can redistribute it and/or modify
