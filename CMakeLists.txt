@@ -46,6 +46,15 @@ else()
     add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
 endif()
 
+# Generate .pri file for qmake users
+include(ECMGeneratePriFile)
+set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
+ecm_generate_pri_file(BASE_NAME KDDockWidgets
+    LIB_NAME kddockwidgets
+    FILENAME_VAR pri_filename
+)
+install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+
 add_subdirectory(src)
 add_subdirectory(examples/dockwidgets)
 if (OPTION_BUILD_PYTHON_BINDINGS)
