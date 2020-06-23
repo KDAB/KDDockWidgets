@@ -79,7 +79,7 @@ $ python3 main.py
 
 Supported Qt versions
 ======================
-KDDockWidgets requires Qt >= 5.9
+KDDockWidgets requires Qt >= 5.9 (or >=5.12 if Python bindings are enabled).
 
 
 Licensing
