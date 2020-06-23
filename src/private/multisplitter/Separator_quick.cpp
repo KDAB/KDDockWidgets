@@ -18,8 +18,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Widget_quick.h"
 #include "Separator_quick.h"
+#include "Widget_quick.h"
 #include "Logging_p.h"
 #include "Item_p.h"
 

@@ -18,8 +18,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Widget_qwidget.h"
 #include "Separator_qwidget.h"
+#include "Widget_qwidget.h"
 #include "Logging_p.h"
 
 #include <QPainter>
