@@ -1632,7 +1632,7 @@ void TestMultiSplitter::tst_separatorMoveHonoursMax()
 
 void TestMultiSplitter::tst_maxSizeHonoured1()
 {
-    // Tests that the suggested rect honours max size when adding an item to a layout.
+    // Tests that the suggested rect honors max size when adding an item to a layout.
 
     auto root = createRoot();
     auto item1 = createItem();

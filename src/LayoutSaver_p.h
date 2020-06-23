@@ -114,7 +114,7 @@ struct LayoutSaver::Position
     bool wasFloating;
     LayoutSaver::Placeholder::List placeholders;
 
-    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &scalingInfo);
 
     QVariantMap toVariantMap() const;
@@ -130,7 +130,7 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
 
     bool isValid() const;
 
-    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &scalingInfo);
 
     static Ptr dockWidgetForName(const QString &name)
@@ -182,7 +182,7 @@ struct LayoutSaver::Frame
 {
     bool isValid() const;
 
-    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &scalingInfo);
 
     QVariantMap toVariantMap() const;
@@ -201,7 +201,7 @@ struct LayoutSaver::Frame
 struct LayoutSaver::MultiSplitter
 {
     bool isValid() const;
-    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &scalingInfo);
 
     QVariantMap toVariantMap() const;
@@ -217,7 +217,7 @@ struct LayoutSaver::FloatingWindow
 
     bool isValid() const;
 
-    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &);
 
     QVariantMap toVariantMap() const;
@@ -239,7 +239,7 @@ public:
 
     bool isValid() const;
 
-    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes();
 
     QVariantMap toVariantMap() const;
@@ -301,7 +301,7 @@ public:
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
-    /// Iterates throught the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
+    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes();
 
     static LayoutSaver::Layout* s_currentLayoutBeingRestored;
