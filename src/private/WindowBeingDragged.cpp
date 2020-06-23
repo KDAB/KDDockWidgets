@@ -21,6 +21,7 @@
 #include "WindowBeingDragged_p.h"
 #include "DragController_p.h"
 #include "Logging_p.h"
+#include "Utils_p.h"
 
 using namespace KDDockWidgets;
 
@@ -41,6 +42,8 @@ static Draggable* bestDraggable(Draggable *draggable)
             // Defensive, doesn't happen
             return draggable;
         } else {
+            if (KDDockWidgets::usesNativeTitleBar())
+                return fw;
             return fw->titleBar();
         }
     } else {
