@@ -41,7 +41,7 @@ static Draggable* bestDraggable(Draggable *draggable)
             // Defensive, doesn't happen
             return draggable;
         } else {
-            return fw;
+            return fw->titleBar();
         }
     } else {
         return draggable;
