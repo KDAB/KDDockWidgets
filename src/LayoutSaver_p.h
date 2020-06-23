@@ -317,6 +317,8 @@ public:
     LayoutSaver::DockWidget::List closedDockWidgets;
     LayoutSaver::DockWidget::List allDockWidgets;
     ScreenInfo::List screenInfo;
+private:
+    Q_DISABLE_COPY(Layout)
 };
 
 }
