@@ -24,7 +24,7 @@
 #include <QDebug>
 #include <QFile>
 
-static QHash<QString, QImage> s_images;
+static QHash<QString, QImage> s_images; /// clazy:exclude=non-pod-global-static
 
 MyWidget::MyWidget(const QString &backgroundFile, const QString &logoFile, QWidget *parent)
     : QWidget(parent)
