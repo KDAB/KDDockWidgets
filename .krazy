@@ -15,5 +15,5 @@ SKIP /fwd_headers/
 #skip CMake files
 SKIP /KDDockWidgetsConfig.cmake.in
 #skip the borrowed code in the cmake subdir
-SKIP /cmake/Qt5Portability.cmake|/cmake/ECM/
+SKIP /cmake/Qt5Portability.cmake|/cmake/ECM/|/cmake/InstallLocation.cmake
 
