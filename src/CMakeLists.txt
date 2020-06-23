@@ -194,12 +194,12 @@ write_basic_package_version_file(
 install(EXPORT kddockwidgetsTargets
         FILE KDDockWidgetsTargets.cmake
         NAMESPACE KDAB::
-        DESTINATION lib/cmake/KDDockWidgets
+        DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets
 )
 configure_file(KDDockWidgetsConfig.cmake.in KDDockWidgetsConfig.cmake @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfigVersion.cmake"
-        DESTINATION lib/cmake/KDDockWidgets
+        DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets
 )
 
 if (OPTION_DEVELOPER_MODE)
