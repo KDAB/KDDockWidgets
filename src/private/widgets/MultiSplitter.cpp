@@ -38,7 +38,6 @@
 #include "DockRegistry_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
-#include "LayoutSaver.h"
 #include "multisplitter/Widget_qwidget.h"
 #include "DropArea_p.h"
 

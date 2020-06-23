@@ -27,7 +27,6 @@
 #include <QRect>
 #include <QVariant>
 #include <QDebug>
-#include <QVariant>
 
 #include <memory>
 
