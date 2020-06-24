@@ -221,6 +221,13 @@ public:
     ///@brief sets the layout item that either contains this Frame in the layout or is a placeholder
     void setLayoutItem(Layouting::Item *item) override;
 
+    /**
+     * Returns the drag rect in global coordinates. This is usually the title bar rect.
+     * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar background.
+     * Returns global coordinates.
+     */
+    virtual QRect dragRect() const = 0;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();

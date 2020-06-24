@@ -58,6 +58,7 @@ protected:
     DockWidgetBase *currentDockWidget_impl() const override;
     DockWidgetBase *dockWidgetAt_impl(int index) const override;
     int dockWidgetCount_impl() const override;
+    QRect dragRect() const override;
 private:
     friend class TestDocks;
     TabWidget *const m_tabWidget;

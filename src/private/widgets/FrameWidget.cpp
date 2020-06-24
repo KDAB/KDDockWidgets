@@ -154,3 +154,20 @@ int FrameWidget::dockWidgetCount_impl() const
     return m_tabWidget->numDockWidgets();
 }
 
+QRect FrameWidget::dragRect() const
+{
+    QRect rect = Frame::dragRect();
+    if (rect.isValid())
+        return rect;
+
+    if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) {
+        QTabBar *tabBar = this->tabBar();
+        rect.setHeight(tabBar->height());
+        rect.setWidth(width() - tabBar->width());
+        rect.moveTopLeft(QPoint(tabBar->width(), tabBar->y()));
+        rect.moveTopLeft(QWidget::mapToGlobal(rect.topLeft()));
+    }
+
+    return rect;
+}
+

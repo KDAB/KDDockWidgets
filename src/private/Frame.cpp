@@ -645,3 +645,14 @@ QSize Frame::biggestDockWidgetMaxSize() const
 
     return size;
 }
+
+QRect Frame::dragRect() const
+{
+    QRect rect;
+    if (m_titleBar->isVisible()) {
+        QRect rect = m_titleBar->rect();
+        rect.moveTopLeft(m_titleBar->mapToGlobal(QPoint(0, 0)));
+    }
+
+    return rect;
+}

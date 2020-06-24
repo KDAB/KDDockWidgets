@@ -121,6 +121,13 @@ public:
 
     QStringList affinities() const;
 
+    /**
+     * Returns the drag rect in global coordinates. This is usually the title bar rect.
+     * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar background.
+     * Returns global coordinates.
+     */
+    QRect dragRect() const;
+
 Q_SIGNALS:
     void numFramesChanged();
     void windowStateChanged(QWindowStateChangeEvent *);

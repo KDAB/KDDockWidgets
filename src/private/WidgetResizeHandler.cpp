@@ -23,6 +23,7 @@
 #include "TitleBar_p.h"
 #include "DragController_p.h"
 #include "Config.h"
+#include "widgets/FrameWidget_p.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -210,9 +211,6 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
     if (eventType != "windows_generic_MSG")
         return false;
 
-    QRect titleBarRectGlobal = w->titleBar()->rect();
-    titleBarRectGlobal.moveTopLeft(w->titleBar()->mapToGlobal(QPoint(0, 0)));
-
     auto msg = static_cast<MSG *>(message);
     if (msg->message == WM_NCCALCSIZE) {
         *result = 0;
@@ -256,7 +254,8 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
         } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth) {
             *result = HTRIGHT;
         } else {
-            if (yPos >= titleBarRectGlobal.top() && yPos <= titleBarRectGlobal.bottom() && xPos >= titleBarRectGlobal.left() && xPos <= titleBarRectGlobal.right()) {
+            const QRect htCaptionRect = w->dragRect(); // The rect on which we allow for Windows to do a native drag
+            if (yPos >= htCaptionRect.top() && yPos <= htCaptionRect.bottom() && xPos >= htCaptionRect.left() && xPos <= htCaptionRect.right()) {
                 QWidget *hoveredWidget = qApp->widgetAt(QPoint(xPos, yPos));
                 if (!qobject_cast<QAbstractButton*>(hoveredWidget)) {
                     // User clicked on the title bar, let's allow it, so we get Aero-Snap.
