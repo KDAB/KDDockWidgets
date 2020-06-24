@@ -13,6 +13,7 @@
 # -DOPTION_DEVELOPER_MODE=[true|false]
 #  Configure the build for a developer setup.
 #  Enables some features that are not geared towards end-users.
+#  Forces the test harness to be built.
 #  Default=false
 #
 # -DOPTION_BUILD_PYTHON_BINDINGS=[true|false]
@@ -50,6 +51,11 @@ if(OPTION_BUILD_PYTHON_BINDINGS AND NOT CMAKE_BUILD_TYPE MATCHES "^[Rr]el")
 endif()
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
+
+#Always build the test harness in developer-mode
+if(OPTION_DEVELOPER_MODE)
+  set(${PROJECT_NAME}_TESTS ON)
+endif()
 
 # option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
