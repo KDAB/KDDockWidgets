@@ -432,10 +432,10 @@ QRect FloatingWindow::dragRect() const
 {
     QRect rect;
     if (m_titleBar->isVisible()) {
-        QRect rect = m_titleBar->rect();
+        rect = m_titleBar->rect();
         rect.moveTopLeft(m_titleBar->mapToGlobal(QPoint(0, 0)));
     } else if (hasSingleFrame()) {
-        return frames().constFirst()->dragRect();
+        rect = frames().constFirst()->dragRect();
     } else {
         qWarning() << Q_FUNC_INFO << "Expected a title bar";
     }
