@@ -58,9 +58,6 @@ public:
         , toggleAction(new QAction(q))
         , floatAction(new QAction(q))
     {
-        q->connect(q, &DockWidgetBase::shown, q, [this] { onDockWidgetShown(); } );
-        q->connect(q, &DockWidgetBase::hidden, q, [this] { onDockWidgetHidden(); } );
-
         q->connect(toggleAction, &QAction::toggled, q, [this] (bool enabled) {
             if (!m_updatingToggleAction) { // guard against recursiveness
                 toggleAction->blockSignals(true); // and don't emit spurious toggle. Like when a dock widget is inserted into a tab widget it might get hide events, ignore those. The Dock Widget is open.
@@ -681,6 +678,7 @@ void DockWidgetBase::onParentChanged()
 
 void DockWidgetBase::onShown(bool spontaneous)
 {
+    d->onDockWidgetShown();
     Q_EMIT shown();
 
     if (Frame *f = frame()) {
@@ -697,6 +695,7 @@ void DockWidgetBase::onShown(bool spontaneous)
 
 void DockWidgetBase::onHidden(bool spontaneous)
 {
+    d->onDockWidgetHidden();
     Q_EMIT hidden();
 
     if (Frame *f = frame()) {
