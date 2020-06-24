@@ -53,6 +53,7 @@
 #include <QToolButton>
 #include <QMenuBar>
 #include <QStyleFactory>
+#include <QCursor>
 
 #ifdef Q_OS_WIN
 # include <Windows.h>
@@ -361,6 +362,7 @@ private Q_SLOTS:
     void tst_maxSizeHonouredWhenDropped();
     void tst_fixedSizePolicy();
     void tst_maximumSizePolicy();
+    void tst_tabsNotClickable();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5461,6 +5463,34 @@ void TestDocks::tst_maximumSizePolicy()
 
     delete oldFw;
     delete oldFw2;
+}
+
+void TestDocks::tst_tabsNotClickable()
+{
+    // Well, not a great unit-test, as it's only repro when it's Windows sending the native event
+    // Can't repro with fabricated events
+
+    EnsureTopLevelsDeleted e;
+	Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible/* | Config::Flag_AlwaysShowTabs*/);
+
+    auto dock1 = createDockWidget("dock1", new QWidget());
+    auto dock2 = createDockWidget("dock2", new QWidget());
+    dock1->addDockWidgetAsTab(dock2);
+
+    auto frame = qobject_cast<FrameWidget*>(dock1->frame());
+    QCOMPARE(frame->currentIndex(), 1);
+
+    QTest::qWait(500); // wait for window to get proper geometry
+
+    const QPoint clickPoint = frame->tabBar()->mapToGlobal(frame->tabBar()->tabRect(0).center());
+    QCursor::setPos(clickPoint); // Just for visual debug when needed
+
+    pressOn(clickPoint, frame->tabBar());
+    releaseOn(clickPoint, frame->tabBar());
+
+    QCOMPARE(frame->currentIndex(), 0);
+
+    delete frame->window();
 }
 
 int main(int argc, char *argv[])
