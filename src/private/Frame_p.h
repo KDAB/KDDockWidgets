@@ -226,7 +226,7 @@ public:
      * However, when using Config::Flag_HideTitleBarWhenTabsVisible it will be the tab bar background.
      * Returns global coordinates.
      */
-    virtual QRect dragRect() const = 0;
+    virtual QRect dragRect() const;
 
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
