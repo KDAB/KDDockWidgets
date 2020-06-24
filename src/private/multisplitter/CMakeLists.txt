@@ -76,16 +76,15 @@ target_include_directories(kddockwidgets_multisplitter
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-# append d to debug libraries for windows builds
+#version libraries on Windows
 if(WIN32)
     set(postfix ${${PROJECT_NAME}_VERSION_MAJOR})
-    string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
-    if(${UPPER_BUILD_TYPE} MATCHES "^DEBUG")
-        string(CONCAT postfix ${postfix} "d")
-        set_target_properties(kddockwidgets_multisplitter PROPERTIES DEBUG_POSTFIX ${postfix})
-    else()
-        set_target_properties(kddockwidgets_multisplitter PROPERTIES ${UPPER_BUILD_TYPE}_POSTFIX ${postfix})
-    endif()
+    set(CMAKE_RELEASE_POSTFIX ${postfix})
+    set_target_properties(kddockwidgets_multisplitter PROPERTIES RELEASE_POSTFIX ${CMAKE_RELEASE_POSTFIX})
+    #append 'd' to debug libraries
+    string(CONCAT postfix ${postfix} "d")
+    set(CMAKE_DEBUG_POSTFIX ${postfix})
+    set_target_properties(kddockwidgets_multisplitter PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 endif()
 
 install (TARGETS kddockwidgets_multisplitter
