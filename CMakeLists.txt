@@ -55,7 +55,7 @@ option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 
 # option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
-find_package(Qt5Widgets)
+find_package(Qt5Widgets 5.9 REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 
