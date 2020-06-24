@@ -111,9 +111,10 @@ public:
     MultiSplitter *multiSplitter() const;
 
     /**
-     * @brief Returns whether @p globalPoint is inside the title bar
+     * @brief Returns whether @p globalPoint is inside the title bar (or, when there's no title-bar, the draggable empty
+     * area of a tab bar)
      */
-    bool isInTitleBar(QPoint globalPoint) const;
+    bool isInDragArea(QPoint globalPoint) const;
 
     ///@brief updates the title and the icon
     void updateTitleAndIcon();

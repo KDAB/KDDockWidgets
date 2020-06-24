@@ -5468,10 +5468,12 @@ void TestDocks::tst_maximumSizePolicy()
 void TestDocks::tst_tabsNotClickable()
 {
     // Well, not a great unit-test, as it's only repro when it's Windows sending the native event
-    // Can't repro with fabricated events
+    // Can't repro with fabricated events. Uncomment the WAIT and test different configs manually
 
     EnsureTopLevelsDeleted e;
-	Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible/* | Config::Flag_AlwaysShowTabs*/);
+	Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible);
+    //Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs);
+    //Config::self().setFlags(Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs);
 
     auto dock1 = createDockWidget("dock1", new QWidget());
     auto dock2 = createDockWidget("dock2", new QWidget());
@@ -5487,6 +5489,8 @@ void TestDocks::tst_tabsNotClickable()
 
     pressOn(clickPoint, frame->tabBar());
     releaseOn(clickPoint, frame->tabBar());
+
+   // WAIT // Uncomment for MANUAL test. Also test by adding Flag_AlwaysShowTabs
 
     QCOMPARE(frame->currentIndex(), 0);
 

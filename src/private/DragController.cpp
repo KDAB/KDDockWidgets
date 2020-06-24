@@ -384,7 +384,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     switch (e->type()) {
     case QEvent::NonClientAreaMouseButtonPress: {
         if (auto fw = qobject_cast<FloatingWindow*>(o)) {
-            if (fw->isInTitleBar(me->globalPos())) { // TODO: Port to isPositionDraggable()
+            if (fw->isInDragArea(me->globalPos())) {
                 m_nonClientDrag = true;
                 return activeState()->handleMouseButtonPress(draggableForQObject(o), me->globalPos(), me->pos());
             }
