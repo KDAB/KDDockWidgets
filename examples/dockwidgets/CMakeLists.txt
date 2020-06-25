@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.7)
 
 project(kddockwidgets_example)
 
@@ -23,7 +23,7 @@ add_executable(kddockwidgets_example
 )
 
 target_link_libraries(kddockwidgets_example
-    PRIVATE 
+    PRIVATE
         KDAB::kddockwidgets
 )
 
