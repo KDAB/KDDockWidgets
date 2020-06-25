@@ -452,7 +452,7 @@ void TestDocks::tst_createFloatingWindow()
 
     QCOMPARE(dock->uniqueName(), QLatin1String("doc1")); // 1.0 objectName() is inherited
 
-    QPointer<FloatingWindow> window = qobject_cast<FloatingWindow *>(dock->window());
+    QPointer<FloatingWindow> window = dock->floatingWindow();
     QVERIFY(window); // 1.1 DockWidget creates a FloatingWindow and is reparented
     QVERIFY(window->dropArea()->checkSanity());
     dock->deleteLater();
@@ -537,7 +537,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     drag(tabBar, globalPressPos, frame2->window()->geometry().bottomRight() + QPoint(10, 10));
 
     QVERIFY(frame2->dockWidgetCount() == 1);
-    QVERIFY(qobject_cast<FloatingWindow *>(dock1->window()));
+    QVERIFY(dock1->floatingWindow());
 
     // 2.4 Drag the first dock over the second
     frame1 = dock1->frame();
@@ -567,7 +567,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QVERIFY(dock3->frame());
     QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
 
-    auto fw3 = qobject_cast<FloatingWindow *>(dock3->window());
+    auto fw3 = dock3->floatingWindow();
     QVERIFY(fw3);
     QVERIFY(fw3->dropArea()->checkSanity());
 
@@ -577,7 +577,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         m.show();
         m.setGeometry(500, 300, 300, 300);
         QVERIFY(!dock3->isFloating());
-        auto fw3 = qobject_cast<FloatingWindow *>(dock3->window());
+        auto fw3 = dock3->floatingWindow();
         drag(fw3->titleBar(), dock3->window()->mapToGlobal(QPoint(10, 10)), m.geometry().center());
         QVERIFY(!dock3->isFloating());
         QVERIFY(qobject_cast<MainWindow *>(dock3->window()) == &m);
@@ -5182,7 +5182,7 @@ void TestDocks::tst_dockableMainWindows()
      m2->addDockWidget(dock21, Location_OnLeft);
      m2->addDockWidget(dock22, Location_OnRight);
 
-     auto fw = qobject_cast<FloatingWindow*>(m2Container->window());
+     auto fw = m2Container->floatingWindow();
      TitleBar *fwTitleBar = fw->titleBar();
 
      QVERIFY(fw->hasSingleFrame());
@@ -5290,7 +5290,7 @@ void TestDocks::tst_moreTitleBarCornerCases()
         QVERIFY(dock1->frame()->titleBar()->isVisible());
         QVERIFY(dock2->frame()->titleBar()->isVisible());
         QVERIFY(dock1->frame()->titleBar() != dock2->frame()->titleBar());
-        auto fw = qobject_cast<FloatingWindow*>(dock1->window());
+        auto fw = dock1->floatingWindow();
         QVERIFY(fw->titleBar()->isVisible());
         QVERIFY(fw->titleBar() != dock1->frame()->titleBar());
         QVERIFY(fw->titleBar() != dock2->frame()->titleBar());
@@ -5304,8 +5304,8 @@ void TestDocks::tst_moreTitleBarCornerCases()
         auto dock2 = createDockWidget("dock2", new QPushButton("foo2"));
         dock1->show();
         dock2->show();
-        auto fw1 = qobject_cast<FloatingWindow*>(dock1->window());
-        auto fw2 = qobject_cast<FloatingWindow*>(dock2->window());
+        auto fw1 = dock1->floatingWindow();
+        auto fw2 = dock2->floatingWindow();
         fw1->dropArea()->drop(fw2, Location_OnRight, nullptr);
         QVERIFY(fw1->titleBar()->isVisible());
         QVERIFY(dock1->frame()->titleBar()->isVisible());
@@ -5325,7 +5325,7 @@ void TestDocks::tst_moreTitleBarCornerCases()
         auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
         dock1->show();
 
-        auto fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+        auto fw1 = dock1->floatingWindow();
         QVERIFY(!dock1->frame()->titleBar()->isVisible());
         QVERIFY(fw1->titleBar()->isVisible());
 
@@ -5335,7 +5335,7 @@ void TestDocks::tst_moreTitleBarCornerCases()
 
         delete fw1; // the old window
 
-        fw1 = qobject_cast<FloatingWindow*>(dock1->window());
+        fw1 = dock1->floatingWindow();
         QVERIFY(dock1->isVisible());
         QVERIFY(!dock1->frame()->titleBar()->isVisible());
         QVERIFY(fw1->titleBar()->isVisible());
@@ -5392,7 +5392,7 @@ void TestDocks::tst_maxSizeHonouredWhenDropped()
 
     // Try again, but now dropping a multisplitter
     dock2->setFloating(true);
-    auto fw = qobject_cast<FloatingWindow*>(dock2->window());
+    auto fw = dock2->floatingWindow();
     const int waste = fw->width() - dock2->frame()->width();
 
     m1->dropArea()->drop(fw, Location_OnLeft, nullptr);

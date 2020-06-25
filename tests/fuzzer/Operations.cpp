@@ -193,7 +193,7 @@ void CloseViaDockWidgetAPI::updateDescription()
 void CloseViaDockWidgetAPI::execute_impl()
 {
     DockWidgetBase *dw = dockByName(m_dockWidgetName);
-    auto fw = qobject_cast<FloatingWindow*>(dw->window());
+    auto fw = dw->floatingWindow();
     dw->close();
     if (fw && fw->beingDeleted())
         Testing::waitForDeleted(fw);
@@ -242,7 +242,7 @@ void HideViaDockWidgetAPI::execute_impl()
         Q_ASSERT(false);
     }
 
-    auto fw = qobject_cast<FloatingWindow*>(dw->window());
+    auto fw = dw->floatingWindow();
     dw->close();
     if (fw && fw->beingDeleted())
         Testing::waitForDeleted(fw);
@@ -327,7 +327,7 @@ void AddDockWidget::updateDescription()
 
 void AddDockWidget::execute_impl()
 {
-    auto fw = qobject_cast<FloatingWindow*>(m_params.dockWidget()->window());
+    auto fw = m_params.dockWidget()->floatingWindow();
     m_params.mainWindow()->addDockWidget(m_params.dockWidget(), m_params.location,
                                           m_params.relativeTo(), m_params.addingOption);
     if (fw && fw->beingDeleted())
@@ -389,7 +389,7 @@ void AddDockWidgetAsTab::execute_impl()
     DockWidgetBase *dw = dockByName(m_dockWidgetName);
     DockWidgetBase *dw2 = dockByName(m_dockWidgetToAddName);
 
-    auto fw = qobject_cast<FloatingWindow*>(dw2->window());
+    auto fw = dw2->floatingWindow();
     dw->addDockWidgetAsTab(dw2);
     if (fw && fw->beingDeleted())
         Testing::waitForDeleted(fw);
