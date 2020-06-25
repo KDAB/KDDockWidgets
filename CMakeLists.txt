@@ -29,6 +29,12 @@ if(POLICY CMP0042)
   cmake_policy(SET CMP0042 NEW)
 endif()
 
+if("${CMAKE_INSTALL_PREFIX}" STREQUAL "")
+  set(USE_DEFAULT_INSTALL_LOCATION True)
+else()
+  set(USE_DEFAULT_INSTALL_LOCATION False)
+endif()
+
 set(${PROJECT_NAME}_VERSION_MAJOR 0)
 set(${PROJECT_NAME}_VERSION_MINOR 9)
 set(${PROJECT_NAME}_VERSION_PATCH 99)
@@ -85,6 +91,14 @@ if(OPTION_QTQUICK)
   add_definitions(-DKDDOCKWIDGETS_QTQUICK)
 else()
   add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
+endif()
+
+if(USE_DEFAULT_INSTALL_LOCATION)
+  if(UNIX)
+    set(CMAKE_INSTALL_PREFIX "/usr/local/KDAB/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}")
+  elseif(WIN32)
+    set(CMAKE_INSTALL_PREFIX "C:\\KDAB\\${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}")
+  endif()
 endif()
 
 # Generate .pri file for qmake users

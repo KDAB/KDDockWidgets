@@ -31,6 +31,7 @@ Features
 
 ![Screen capture](/screencap.gif?raw=true "The docking system in action")
 
+
 Roadmap
 ========
   - Different forms of docking indicators (through plugins)
@@ -40,7 +41,8 @@ Roadmap
 Trying out the demo
 ====================
 
-Open a terminal capable of building Qt5 applications (Should have cmake, ninja, compiler, Qt, etc in PATH).
+Open a terminal capable of building Qt5 applications.
+Make sure you have cmake, ninja, compiler, Qt, etc in PATH.
 
 Feel free to adapt the instructions to suit your cmake generator and operating system.
 Build and install the KDDockWidgets framework:
@@ -60,6 +62,11 @@ $ ./kddockwidgets_example
 
 ```
 
+The installation directory defaults to `c:\KDAB\KDChart-<version>` on Windows
+and `/usr/local/KDAB/KDChart-<version>` on non-Windows.  You can change this
+location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
+
+
 Python Bindings
 ================
 
@@ -77,6 +84,7 @@ $ rcc -g python -o rc_assets.py ../../examples/dockwidgets/resources_example.qrc
 $ python3 main.py
 ```
 
+
 Supported Qt versions
 ======================
 KDDockWidgets requires Qt >= 5.9 (or >=5.12 if Python bindings are enabled).
@@ -89,6 +97,7 @@ under the terms of the GPLv2 (see LICENSE.GPL.txt).
 
 Contact KDAB at <info@kdab.com> if you need different licensing options.
 
+
 Get Involved
 ============
 KDAB will happily accept external contributions; however, **all**
@@ -99,6 +108,7 @@ Contact info@kdab.com for more information.
 
 Please submit your contributions or issue reports from our GitHub space at
 https://github.com/KDAB/KDDockWidgets
+
 
 About KDAB
 ==========
