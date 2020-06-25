@@ -51,17 +51,17 @@ set(PyKDDockWidgets_DEPENDS
     ${CMAKE_SOURCE_DIR}/src/MainWindow.h
 )
 
-CREATE_PYTHON_BINDINGS(
-    "KDDockWidgets"
-    "${PyKDDockWidgets_typesystem_paths}"
-    "${PyKDDockWidgets_include_paths}"
-    "${PyKDDockWidgets_SRC}"
-    "${PyKDDockWidgets_target_include_directories}"
-    "${PyKDDockWidgets_target_link_libraries}"
-    ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/typesystem_kddockwidgets.xml
-    "${PyKDDockWidgets_DEPENDS}"
-    ${CMAKE_CURRENT_BINARY_DIR}
+create_python_bindings(
+  "KDDockWidgets"
+  "${PyKDDockWidgets_typesystem_paths}"
+  "${PyKDDockWidgets_include_paths}"
+  "${PyKDDockWidgets_SRC}"
+  "${PyKDDockWidgets_target_include_directories}"
+  "${PyKDDockWidgets_target_link_libraries}"
+  ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/typesystem_kddockwidgets.xml
+  "${PyKDDockWidgets_DEPENDS}"
+  ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # Make moduled import from build dir works

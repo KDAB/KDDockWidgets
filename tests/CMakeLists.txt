@@ -1,4 +1,6 @@
-cmake_policy(SET CMP0043 NEW)
+if(POLICY CMP0043)
+  cmake_policy(SET CMP0043 NEW)
+endif()
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

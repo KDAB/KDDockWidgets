@@ -5,8 +5,7 @@ project(kddockwidgets_example)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIRS ON)
 
-
-if (NOT TARGET kddockwidgets)
+if(NOT TARGET kddockwidgets)
   # This will look for Qt, do find_package yourself manually before
   # if you want to look for a specific Qt version for instance.
   find_package(KDDockWidgets REQUIRED)
@@ -23,7 +22,7 @@ add_executable(kddockwidgets_example
 )
 
 target_link_libraries(kddockwidgets_example
-    PRIVATE
-        KDAB::kddockwidgets
+  PRIVATE
+    KDAB::kddockwidgets
 )
 
