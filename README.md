@@ -62,8 +62,8 @@ $ ./kddockwidgets_example
 
 ```
 
-The installation directory defaults to `c:\KDAB\KDChart-<version>` on Windows
-and `/usr/local/KDAB/KDChart-<version>` on non-Windows.  You can change this
+The installation directory defaults to `c:\KDAB\KDDockWidgets-<version>` on Windows
+and `/usr/local/KDAB/KDDockWidgets-<version>` on non-Windows.  You can change this
 location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
 
 
