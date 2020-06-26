@@ -65,9 +65,9 @@ public:
         Flag_None = 0, ///> No option set
         Flag_NativeTitleBar = 1, ///> Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise. This is mutually exclusive with Flag_AeroSnap
         Flag_AeroSnapWithClientDecos = 2, ///> Enables AeroSnap even if we're not using the native title bar. Only supported on Windows 10.
-        Flag_HideTitleBarWhenTabsVisible = 8, ///> Hides the title bar if there's tabs visible. The empty space in the tab bar becomes draggable.
-        Flag_AlwaysShowTabs = 16, ///> Always show tabs, even if there's only one,
-        Flag_AllowReorderTabs = 32, /// Allows user to re-order tabs by dragging them
+        Flag_HideTitleBarWhenTabsVisible = 4, ///> Hides the title bar if there's tabs visible. The empty space in the tab bar becomes draggable.
+        Flag_AlwaysShowTabs = 8, ///> Always show tabs, even if there's only one,
+        Flag_AllowReorderTabs = 16, /// Allows user to re-order tabs by dragging them
         Flag_LazyResize = 32, /// The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
         Flag_TabsHaveCloseButton = 64, /// Tabs will have a close button. Equivalent to QTabWidget::setTabsClosable(true).
         Flag_DoubleClickMaximizes = 128, /// Double clicking the titlebar will maximize a floating window instead of re-docking it
