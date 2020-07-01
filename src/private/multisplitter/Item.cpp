@@ -30,7 +30,7 @@
 #include <QGuiApplication>
 #include <QScreen>
 
-#ifdef Q_OS_WIN
+#ifdef Q_CC_MSVC
 # pragma warning(push)
 # pragma warning(disable:4138)
 # pragma warning(disable:4244)
@@ -3446,6 +3446,6 @@ int ItemContainer::Private::defaultLengthFor(Item *item, DefaultSizeMode mode) c
     return result;
 }
 
-#ifdef Q_OS_WIN
+#ifdef Q_CC_MSVC
 # pragma warning(pop)
 #endif

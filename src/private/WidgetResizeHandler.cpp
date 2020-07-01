@@ -37,7 +37,9 @@
 #if defined(Q_OS_WIN)
 # include <Windowsx.h>
 # include <Windows.h>
-# pragma comment(lib,"User32.lib")
+# if defined(Q_CC_MSVC)
+#  pragma comment(lib,"User32.lib")
+# endif
 #endif
 
 namespace  {
