@@ -41,7 +41,7 @@ endif()
 
 qt5_add_resources(MULTISPLITTER_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/multisplitter.qrc)
 
-add_library(kddockwidgets_multisplitter SHARED ${MULTISPLITTER_SRCS} ${MULTISPLITTER_RESOURCES})
+add_library(kddockwidgets_multisplitter ${KDDockWidgets_LIBRARY_MODE} ${MULTISPLITTER_SRCS} ${MULTISPLITTER_RESOURCES})
 add_library(KDAB::kddockwidgets_multisplitter ALIAS kddockwidgets_multisplitter)
 target_link_libraries(kddockwidgets_multisplitter Qt5::Core Qt5::Widgets)
 set_compiler_flags(kddockwidgets_multisplitter)
@@ -56,7 +56,11 @@ if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
   target_link_libraries(kddockwidgets_multisplitter Qt5::Core Qt5::Quick)
 endif()
 
-target_compile_definitions(kddockwidgets_multisplitter PRIVATE BUILDING_MULTISPLITTER_LIBRARY)
+if(${PROJECT_NAME}_STATIC)
+  target_compile_definitions(kddockwidgets_multisplitter PRIVATE MULTISPLITTER_STATICLIB KDDOCKWIDGETS_STATICLIB)
+else()
+  target_compile_definitions(kddockwidgets_multisplitter PRIVATE BUILDING_MULTISPLITTER_LIBRARY BUILDING_DOCKS_LIBRARY)
+endif()
 
 if(OPTION_DEVELOPER_MODE)
   # Under developer mode since kddw might be a sub-folder of a project setting a different value for QT_DISABLE_DEPRECATED_BEFORE
@@ -94,6 +98,6 @@ install(TARGETS kddockwidgets_multisplitter
         LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
         ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
 )
-if(MSVC)
+if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
   install(FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets_multisplitter>/$<TARGET_PDB_FILE_NAME:kddockwidgets_multisplitter>" DESTINATION ${INSTALL_LIBRARY_DIR} CONFIGURATIONS Debug RelWithDebInfo)
 endif()

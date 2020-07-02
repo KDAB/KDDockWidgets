@@ -110,7 +110,7 @@ add_subdirectory(private/multisplitter)
 
 qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
 
-add_library(kddockwidgets SHARED ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES} ${RESOURCES_QUICK})
+add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES} ${RESOURCES_QUICK})
 add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
 set_compiler_flags(kddockwidgets)
 
@@ -126,12 +126,17 @@ target_include_directories(kddockwidgets
 )
 
 target_compile_definitions(kddockwidgets
-  PRIVATE BUILDING_DOCKS_LIBRARY
+  PRIVATE
   QT_NO_CAST_TO_ASCII
   QT_NO_CAST_FROM_ASCII
   QT_NO_URL_CAST_FROM_STRING
   QT_NO_CAST_FROM_BYTEARRAY
 )
+if(${PROJECT_NAME}_STATIC)
+  target_compile_definitions(kddockwidgets PRIVATE KDDOCKWIDGETS_STATICLIB MULTISPLITTER_STATICLIB)
+else()
+  target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY BUILDING_MULTISPLITTER_LIBRARY)
+endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   target_compile_options(kddockwidgets PRIVATE -Wshadow -Wconversion -fvisibility=hidden)
@@ -169,7 +174,7 @@ install(TARGETS kddockwidgets
         LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
         ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
 )
-if(MSVC)
+if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
   install(FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>" DESTINATION ${INSTALL_LIBRARY_DIR} CONFIGURATIONS Debug RelWithDebInfo)
 endif()
 install(FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
@@ -206,4 +211,9 @@ if(OPTION_DEVELOPER_MODE)
 
   add_executable(kddockwidgets_linter layoutlinter_main.cpp)
   target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt5::Widgets)
+  if(${PROJECT_NAME}_STATIC)
+    target_compile_definitions(kddockwidgets_linter PRIVATE KDDOCKWIDGETS_STATICLIB MULTISPLITTER_STATICLIB)
+  else()
+    target_compile_definitions(kddockwidgets_linter PRIVATE BUILDING_DOCKS_LIBRARY BUILDING_MULTISPLITTER_LIBRARY)
+  endif()
 endif()
