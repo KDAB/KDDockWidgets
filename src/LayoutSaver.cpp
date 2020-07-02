@@ -648,7 +648,7 @@ QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
     map.insert(QStringLiteral("isVisible"), isVisible);
 
     if (!affinities.isEmpty())
-        map.insert(QStringLiteral("affinityName"), stringListToVariant(affinities));
+        map.insert(QStringLiteral("affinities"), stringListToVariant(affinities));
 
     return map;
 }
