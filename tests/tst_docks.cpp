@@ -359,6 +359,7 @@ private Q_SLOTS:
     void tst_lastFloatingPositionIsRestored();
     void tst_moreTitleBarCornerCases();
     void tst_maxSizePropagates();
+    void tst_maxSizePropagates2();
     void tst_maxSizeHonouredWhenDropped();
     void tst_fixedSizePolicy();
     void tst_maximumSizePolicy();
@@ -5372,6 +5373,51 @@ void TestDocks::tst_maxSizePropagates()
     QCOMPARE(frame->maximumSize().expandedTo(w->maximumSize()), frame->maximumSize());
 
     delete dock1->window();
+}
+
+void TestDocks::tst_maxSizePropagates2()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock1 = new DockWidget("dock1");
+
+    auto w = new QWidget();
+    w->setMinimumSize(120, 120);
+    w->setMaximumSize(300, 500);
+    dock1->setWidget(w);
+    dock1->show();
+
+    auto dock2 = new DockWidget("dock2");
+    auto dock3 = new DockWidget("dock3");
+    auto dock4 = new DockWidget("dock4");
+    m1->addDockWidget(dock2, Location_OnLeft);
+    m1->addDockWidget(dock3, Location_OnRight);
+    m1->addDockWidget(dock4, Location_OnBottom, dock3);
+    m1->addDockWidget(dock1, Location_OnLeft, dock4);
+
+    Frame *frame1 = dock1->frame();
+
+    Layouting::ItemContainer *root = m1->multiSplitter()->rootItem();
+    Item *item1 = root->itemForWidget(frame1);
+    auto vertSep1 = root->separators().constFirst();
+    const int min1 = root->minPosForSeparator_global(vertSep1);
+    //const int max1 = root->maxPosForSeparator_global(vertSep1);
+
+    ItemContainer *container1 = item1->parentContainer();
+    auto innerVertSep1 = container1->separators().constFirst();
+    const int minInnerSep = container1->minPosForSeparator_global(innerVertSep1);
+    //const int maxInnerSep = container1->maxPosForSeparator_global(innerVertSep1);
+
+    root->requestSeparatorMove(vertSep1, -(vertSep1->position() - min1));
+    QEXPECT_FAIL("", "To fix", Continue);
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+
+    container1->requestSeparatorMove(innerVertSep1, -(innerVertSep1->position() - minInnerSep));
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+
+    //container1->requestSeparatorMove(innerVertSep1, maxInnerSep - innerVertSep1->position());
+    //QEXPECT_FAIL("", "To fix", Continue);
+    //QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
 }
 
 void TestDocks::tst_maxSizeHonouredWhenDropped()
