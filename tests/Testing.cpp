@@ -68,7 +68,8 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
            msg.contains(QLatin1String("Note that Qt no longer ships fonts")) ||
            msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")) ||
            msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting")) ||
-           msg.contains(QLatin1String("Testing::"));
+           msg.contains(QLatin1String("Testing::")) ||
+           msg.contains(QLatin1String("outside any known screen, using primary screen"));
 }
 
 static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
