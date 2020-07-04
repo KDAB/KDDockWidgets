@@ -2260,7 +2260,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
     const int pos = separator->position();
     const int max = maxPosForSeparator_global(separator);
 
-    if (pos + delta < min || pos + delta > max) {
+    if (pos + delta < min || (pos + delta > max && delta > 0)) { // pos can be bigger than max already and going left/up (negative delta, which is fine), just don't increase if further
         root()->dumpLayout();
         qWarning() << "Separator would have gone out of bounds"
                    << "; separators=" << separator
