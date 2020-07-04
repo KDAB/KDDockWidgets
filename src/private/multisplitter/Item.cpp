@@ -2282,13 +2282,19 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
     int remainingToTake = qAbs(delta);
     int tookLocally = 0;
 
+    Item *side1Neighbour = children[separatorIndex];
+    Item *side2Neighbour = children[separatorIndex + 1];
+
+    Side nextSeparatorDirection = moveDirection;
+
     if (moveDirection == Side1) {
         // Separator is moving left (or top if horizontal)
+        const int availableSqueeze1 = availableToSqueezeOnSide(side2Neighbour, Side1);
+        const int availableGrow2 = availableToGrowOnSide(side1Neighbour, Side2);
 
-        // This is the available within our container, which we can use without bothering other other separators
-        Item *side2Neighbour = children[separatorIndex + 1];
-        const int available1 = availableToSqueezeOnSide(side2Neighbour, Side1);
-        tookLocally = qMin(available1, remainingToTake);
+        // This is the available within our container, which we can use without bothering other separators
+        tookLocally = qMin(availableSqueeze1, remainingToTake);
+        tookLocally = qMin(tookLocally, availableGrow2);
 
         if (tookLocally != 0) {
             growItem(side2Neighbour, tookLocally, GrowthStrategy::Side1Only,
@@ -2296,16 +2302,26 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
                      ChildrenResizeStrategy::Side1SeparatorMove);
         }
 
+        if (availableGrow2 == tookLocally)
+            nextSeparatorDirection = Side2;
+
     } else {
+
+        const int availableSqueeze2 = availableToSqueezeOnSide(side1Neighbour, Side2);
+        const int availableGrow1 = availableToGrowOnSide(side2Neighbour, Side1);
+
         // Separator is moving right (or bottom if horizontal)
-        Item *side1Neighbour = children[separatorIndex];
-        const int available2 = availableToSqueezeOnSide(side1Neighbour, Side2);
-        tookLocally = qMin(available2, remainingToTake);
+        tookLocally = qMin(availableSqueeze2, remainingToTake);
+        tookLocally = qMin(tookLocally, availableGrow1);
+
         if (tookLocally != 0) {
             growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only,
                      NeighbourSqueezeStrategy::ImmediateNeighboursFirst, false,
                      ChildrenResizeStrategy::Side2SeparatorMove);
         }
+
+        if (availableGrow1 == tookLocally)
+            nextSeparatorDirection = Side1;
     }
 
     remainingToTake -= tookLocally;
@@ -2317,7 +2333,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
             qWarning() << Q_FUNC_INFO << "Not enough space to move separator"
                        << this;
         } else {
-            Separator *nextSeparator = parentContainer()->d->neighbourSeparator_recursive(this, moveDirection, d->m_orientation);
+            Separator *nextSeparator = parentContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection, d->m_orientation);
             if (!nextSeparator) {
                 // Doesn't happen
                 qWarning() << Q_FUNC_INFO << "nextSeparator is null, report a bug";

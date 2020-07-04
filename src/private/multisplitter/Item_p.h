@@ -51,6 +51,7 @@ enum Side {
     Side1,
     Side2
 };
+Q_ENUM_NS(Side);
 
 enum class GrowthStrategy {
     BothSidesEqually,

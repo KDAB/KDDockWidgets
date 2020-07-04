@@ -5406,15 +5406,16 @@ void TestDocks::tst_maxSizePropagates2()
     ItemContainer *container1 = item1->parentContainer();
     auto innerVertSep1 = container1->separators().constFirst();
     const int minInnerSep = container1->minPosForSeparator_global(innerVertSep1);
-    //const int maxInnerSep = container1->maxPosForSeparator_global(innerVertSep1);
+    const int maxInnerSep = container1->maxPosForSeparator_global(innerVertSep1);
 
     root->requestSeparatorMove(vertSep1, -(vertSep1->position() - min1));
     QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
 
     container1->requestSeparatorMove(innerVertSep1, -(innerVertSep1->position() - minInnerSep));
     QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
-    //container1->requestSeparatorMove(innerVertSep1, maxInnerSep - innerVertSep1->position());
-    //QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+
+    container1->requestSeparatorMove(innerVertSep1, maxInnerSep - innerVertSep1->position());
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
 }
 
 void TestDocks::tst_maxSizeHonouredWhenDropped()
