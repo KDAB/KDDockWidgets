@@ -1901,8 +1901,6 @@ void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Sizing
                 itemSize.geometry.setSize({ newItemLength, q->height() });
             }
         }
-
-        honourMaxSizes(childSizes);
     } else if (strategy == ChildrenResizeStrategy::Side1SeparatorMove ||
                strategy == ChildrenResizeStrategy::Side2SeparatorMove) {
         int remaining = Layouting::length(newSize - oldSize, m_orientation); // This is how much we need to give to children (when growing the container), or to take from them when shrinking the container
@@ -1946,6 +1944,7 @@ void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Sizing
                 break;
         }
     }
+    honourMaxSizes(childSizes);
 }
 
 void ItemContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
@@ -2065,6 +2064,7 @@ void ItemContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy stra
     // Because we need step #2 where we ensure min sizes for each item are respected. We could
     // calculate and do everything in a single-step, but we already have the code for #2 in growItem()
     // so doing it in 2 steps will reuse much logic.
+
 
     // the sizes:
     d->resizeChildren(oldSize, newSize, /*by-ref*/ childSizes, strategy);

@@ -5409,14 +5409,11 @@ void TestDocks::tst_maxSizePropagates2()
     //const int maxInnerSep = container1->maxPosForSeparator_global(innerVertSep1);
 
     root->requestSeparatorMove(vertSep1, -(vertSep1->position() - min1));
-    QEXPECT_FAIL("", "To fix", Continue);
     QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
 
     container1->requestSeparatorMove(innerVertSep1, -(innerVertSep1->position() - minInnerSep));
     QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
-
     //container1->requestSeparatorMove(innerVertSep1, maxInnerSep - innerVertSep1->position());
-    //QEXPECT_FAIL("", "To fix", Continue);
     //QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
 }
 

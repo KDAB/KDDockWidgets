@@ -69,11 +69,13 @@ enum class ChildrenResizeStrategy {
     Side1SeparatorMove, ///< When resizing a container, it takes/adds space from Side1 children first
     Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
 };
+Q_ENUM_NS(ChildrenResizeStrategy);
 
 enum class NeighbourSqueezeStrategy {
     AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
     ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the next neighbour is squezed, and so forth
 };
+Q_ENUM_NS(NeighbourSqueezeStrategy);
 
 inline int pos(QPoint p, Qt::Orientation o) {
     return o == Qt::Vertical ? p.y()
