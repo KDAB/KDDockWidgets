@@ -361,7 +361,6 @@ private Q_SLOTS:
     void tst_maxSizePropagates();
     void tst_maxSizePropagates2();
     void tst_maxSizeHonouredWhenDropped();
-    void tst_maxSizeHonouredWhenAnotherDropped();
     void tst_fixedSizePolicy();
     void tst_maximumSizePolicy();
     void tst_tabsNotClickable();
