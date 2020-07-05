@@ -880,6 +880,8 @@ struct ItemContainer::Private
     bool isDummy() const;
     void deleteSeparators_recursive();
     void updateSeparators_recursive();
+    QSize minSize(const Item::List &items) const;
+    int excessLength() const;
 
     mutable bool m_checkSanityScheduled = false;
     QVector<Layouting::Separator*> m_separators;
@@ -1791,17 +1793,17 @@ void ItemContainer::setOrientation(Qt::Orientation o)
     }
 }
 
-QSize ItemContainer::minSize() const
+QSize ItemContainer::Private::minSize(const Item::List &items) const
 {
     int minW = 0;
     int minH = 0;
     int numVisible = 0;
-    if (!d->m_children.isEmpty()) {
-        for (Item *item : qAsConst(d->m_children)) {
+    if (!m_children.isEmpty()) {
+        for (Item *item : items) {
             if (!(item->isVisible() || item->isBeingInserted()))
                 continue;
             numVisible++;
-            if (isVertical()) {
+            if (q->isVertical()) {
                 minW = qMax(minW, item->minSize().width());
                 minH += item->minSize().height();
             } else {
@@ -1811,13 +1813,18 @@ QSize ItemContainer::minSize() const
         }
 
         const int separatorWaste = qMax(0, (numVisible - 1) * separatorThickness);
-        if (isVertical())
+        if (q->isVertical())
             minH += separatorWaste;
         else
             minW += separatorWaste;
     }
 
     return QSize(minW, minH);
+}
+
+QSize ItemContainer::minSize() const
+{
+    return d->minSize(d->m_children);
 }
 
 QSize ItemContainer::maxSizeHint() const
@@ -1828,6 +1835,8 @@ QSize ItemContainer::maxSizeHint() const
     const Item::List visibleChildren = this->visibleChildren(/*includeBeingInserted=*/ false);
     if (!visibleChildren.isEmpty()) {
         for (Item *item : visibleChildren) {
+            if (item->isBeingInserted())
+                continue;
             const QSize itemMaxSz = item->maxSizeHint();
             const int itemMaxWidth = itemMaxSz.width();
             const int itemMaxHeight = itemMaxSz.height();
@@ -1854,7 +1863,7 @@ QSize ItemContainer::maxSizeHint() const
     if (maxH == 0)
         maxH = KDDOCKWIDGETS_MAX_HEIGHT;
 
-    return QSize(maxW, maxH).expandedTo(minSize());
+    return QSize(maxW, maxH).expandedTo(d->minSize(visibleChildren));
 }
 
 void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &childSizes,
@@ -2188,8 +2197,11 @@ void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourS
     Q_ASSERT(contains(item));
 
     const bool hadVisibleChildren = hasVisibleChildren(/*excludeBeingInserted=*/ true);
+
     item->setIsVisible(true);
     item->setBeingInserted(true);
+
+    const int excessLength = d->excessLength();
 
     if (!hadVisibleChildren) {
         // This container was hidden and will now be restored too, since a child was restored
@@ -2215,7 +2227,14 @@ void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourS
 
     const int max = qMin(available, item->maxLengthHint(d->m_orientation));
     const int min = item->minLength(d->m_orientation);
-    const int proposed = Layouting::length(item->size(), d->m_orientation);
+
+    /*
+     * Regarding the excessLength:
+     * The layout bigger than its own max-size. The new item will get more (if it can), to counter that excess.
+     * There's just 1 case where we have excess length: A layout with items with max-size, but the layout can't be smaller due to min-size constraints of the higher level layouts, in the nesting hierarchy.
+     * The excess goes away when inserting a widget that can grow indefinitely, it eats all the current excess.
+     */
+    const int proposed = qMax(Layouting::length(item->size(), d->m_orientation), excessLength - Item::separatorThickness);
     const int newLength = qBound(min, proposed, max);
 
     Q_ASSERT(item->isVisible());
@@ -3084,6 +3103,12 @@ void ItemContainer::Private::updateSeparators_recursive()
         if (auto c = item->asContainer())
             c->d->updateSeparators_recursive();
     }
+}
+
+int ItemContainer::Private::excessLength() const
+{
+    // Returns how much bigger this layout is than its max-size
+    return qMax(0, Layouting::length(q->size(), m_orientation) - q->maxLengthHint(m_orientation));
 }
 
 Separator *ItemContainer::Private::separatorAt(int p) const

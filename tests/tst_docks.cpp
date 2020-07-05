@@ -361,6 +361,7 @@ private Q_SLOTS:
     void tst_maxSizePropagates();
     void tst_maxSizePropagates2();
     void tst_maxSizeHonouredWhenDropped();
+    void tst_maxSizeHonouredWhenAnotherDropped();
     void tst_fixedSizePolicy();
     void tst_maximumSizePolicy();
     void tst_tabsNotClickable();
@@ -5401,7 +5402,6 @@ void TestDocks::tst_maxSizePropagates2()
     Item *item1 = root->itemForWidget(frame1);
     auto vertSep1 = root->separators().constFirst();
     const int min1 = root->minPosForSeparator_global(vertSep1);
-    //const int max1 = root->maxPosForSeparator_global(vertSep1);
 
     ItemContainer *container1 = item1->parentContainer();
     auto innerVertSep1 = container1->separators().constFirst();
@@ -5416,6 +5416,38 @@ void TestDocks::tst_maxSizePropagates2()
 
     container1->requestSeparatorMove(innerVertSep1, maxInnerSep - innerVertSep1->position());
     QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+}
+
+void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
+{
+    // dock1 is docked, and has small max-height.
+    // When dropping dock2, which is small too, dock2 should occupy all the height except dock1's max-height
+    // i.e. dock2 should expand and eat all available space
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock1 = new DockWidget("dock1");
+
+    auto w = new QWidget();
+    w->setMinimumSize(120, 100);
+    w->setMaximumSize(300, 150);
+    dock1->setWidget(w);
+    m1->addDockWidget(dock1, Location_OnLeft);
+
+    auto dock2 = new DockWidget("dock2");
+    m1->addDockWidget(dock2, Location_OnBottom);
+
+    auto root = m1->multiSplitter()->rootItem();
+    Separator *separator = root->separators().constFirst();
+    const int min1 = root->minPosForSeparator_global(separator);
+    const int max2 = root->maxPosForSeparator_global(separator);
+
+    QVERIFY(separator->position() >= min1);
+    QVERIFY(separator->position() <= max2);
+    const int item1MaxHeight = dock1->frame()->maxSizeHint().height();
+    QVERIFY(dock1->frame()->height() <= item1MaxHeight);
+    root->dumpLayout();
+    QCOMPARE(dock2->frame()->height(), root->height() - item1MaxHeight - Item::separatorThickness);
 }
 
 void TestDocks::tst_maxSizeHonouredWhenDropped()
@@ -5515,7 +5547,7 @@ void TestDocks::tst_tabsNotClickable()
     // Can't repro with fabricated events. Uncomment the WAIT and test different configs manually
 
     EnsureTopLevelsDeleted e;
-	Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible);
+    Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible);
     //Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs);
     //Config::self().setFlags(Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs);
 
