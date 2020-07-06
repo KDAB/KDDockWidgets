@@ -202,6 +202,10 @@ struct SizingInfo {
         return qMax(0, length(o) - maxLengthHint(o));
     }
 
+    bool isPastMax(Qt::Orientation o) const {
+        return availableToGrow(o) >= 0;
+    }
+
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &);
 

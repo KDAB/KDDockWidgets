@@ -2386,7 +2386,12 @@ void ItemContainer::requestEqualSize(Separator *separator)
     if (qAbs(length1 - length2) <= 1) {
         // items already have the same length, nothing to do.
         // We allow for a difference of 1px, since you can't split that.
-        return;
+
+        // But if at least 1 item is bigger than its max-size, don't bail out early, as then they don't deserve equal sizes.
+        if (!(side1Item->m_sizingInfo.isPastMax(d->m_orientation) ||
+              side2Item->m_sizingInfo.isPastMax(d->m_orientation))) {
+            return;
+        }
     }
 
     const int newLength = (length1 + length2) / 2;
