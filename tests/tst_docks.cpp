@@ -362,6 +362,7 @@ private Q_SLOTS:
     void tst_maxSizePropagates2();
     void tst_maxSizeHonouredWhenDropped();
     void tst_maxSizeHonouredWhenAnotherDropped();
+    void tst_maxSizedHonouredAfterRemoved();
     void tst_fixedSizePolicy();
     void tst_maximumSizePolicy();
     void tst_tabsNotClickable();
@@ -5448,6 +5449,51 @@ void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
     QVERIFY(dock1->frame()->height() <= item1MaxHeight);
     root->dumpLayout();
     QCOMPARE(dock2->frame()->height(), root->height() - item1MaxHeight - Item::separatorThickness);
+}
+
+void TestDocks::tst_maxSizedHonouredAfterRemoved()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock1 = new DockWidget("dock1");
+    dock1->show();
+
+    auto w = new QWidget();
+    w->setMinimumSize(120, 100);
+    w->setMaximumSize(300, 150);
+    dock1->setWidget(w);
+    m1->dropArea()->addMultiSplitter(dock1->floatingWindow()->multiSplitter(), Location_OnLeft);
+
+    auto dock2 = new DockWidget("dock2");
+    dock2->show();
+    m1->dropArea()->addMultiSplitter(dock2->floatingWindow()->multiSplitter(), Location_OnTop);
+
+    auto root = m1->multiSplitter()->rootItem();
+
+    // Wait 1 event loop so we get layout invalidated and get max-size constraints
+    QTest::qWait(10);
+
+    auto sep = root->separators().constFirst();
+    root->requestEqualSize(sep); // Since we're not calling honourMaxSizes() after a widget changes its max size afterwards yet
+    const int sepMin = root->minPosForSeparator_global(sep);
+    const int sepMax = root->maxPosForSeparator_global(sep);
+
+    QVERIFY(sep->position() >= sepMin);
+    QVERIFY(sep->position() <= sepMax);
+
+    auto dock3 = new DockWidget("dock3");
+    dock3->show();
+    m1->dropArea()->addMultiSplitter(dock3->floatingWindow()->multiSplitter(), Location_OnBottom);
+
+    dock1->setFloating(true);
+    m1->dropArea()->addMultiSplitter(dock1->floatingWindow()->multiSplitter(), Location_OnBottom, dock2->frame());
+
+    // Close dock2 and check if dock1's max-size is still honoured
+    dock2->close();
+    QTest::qWait(100); // wait for the resize, so dock1 gets taller"
+
+    QVERIFY(dock1->frame()->height() <= dock1->frame()->maxSizeHint().height());
+    delete dock2;
 }
 
 void TestDocks::tst_maxSizeHonouredWhenDropped()
