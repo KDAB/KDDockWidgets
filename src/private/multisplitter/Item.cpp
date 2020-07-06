@@ -44,6 +44,8 @@ int Layouting::Item::separatorThickness = 5;
 const QSize Layouting::Item::hardcodedMinimumSize = QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
 const QSize Layouting::Item::hardcodedMaximumSize = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT);
 
+bool Layouting::ItemContainer::s_inhibitSimplify = false;
+
 inline bool locationIsVertical(Item::Location loc)
 {
     return loc == Item::Location_OnTop || loc == Item::Location_OnBottom;
@@ -880,6 +882,8 @@ struct ItemContainer::Private
     bool isDummy() const;
     void deleteSeparators_recursive();
     void updateSeparators_recursive();
+    QSize minSize(const Item::List &items) const;
+    int excessLength() const;
 
     mutable bool m_checkSanityScheduled = false;
     QVector<Layouting::Separator*> m_separators;
@@ -1693,7 +1697,12 @@ void ItemContainer::insertItem(Item *item, int index, DefaultSizeMode defaultSiz
     if (!d->m_convertingItemToContainer && item->isVisible())
         restoreChild(item);
 
-    if (item->isVisible())
+    const bool shouldEmitVisibleChanged = item->isVisible();
+
+    if (!d->m_convertingItemToContainer && !s_inhibitSimplify)
+        simplify();
+
+    if (shouldEmitVisibleChanged)
         Q_EMIT root()->numVisibleItemsChanged(root()->numVisibleChildren());
     Q_EMIT root()->numItemsChanged();
 }
@@ -1791,17 +1800,17 @@ void ItemContainer::setOrientation(Qt::Orientation o)
     }
 }
 
-QSize ItemContainer::minSize() const
+QSize ItemContainer::Private::minSize(const Item::List &items) const
 {
     int minW = 0;
     int minH = 0;
     int numVisible = 0;
-    if (!d->m_children.isEmpty()) {
-        for (Item *item : qAsConst(d->m_children)) {
+    if (!m_children.isEmpty()) {
+        for (Item *item : items) {
             if (!(item->isVisible() || item->isBeingInserted()))
                 continue;
             numVisible++;
-            if (isVertical()) {
+            if (q->isVertical()) {
                 minW = qMax(minW, item->minSize().width());
                 minH += item->minSize().height();
             } else {
@@ -1811,7 +1820,7 @@ QSize ItemContainer::minSize() const
         }
 
         const int separatorWaste = qMax(0, (numVisible - 1) * separatorThickness);
-        if (isVertical())
+        if (q->isVertical())
             minH += separatorWaste;
         else
             minW += separatorWaste;
@@ -1820,14 +1829,21 @@ QSize ItemContainer::minSize() const
     return QSize(minW, minH);
 }
 
+QSize ItemContainer::minSize() const
+{
+    return d->minSize(d->m_children);
+}
+
 QSize ItemContainer::maxSizeHint() const
 {
     int maxW = isVertical() ? KDDOCKWIDGETS_MAX_WIDTH : 0;
     int maxH = isVertical() ? 0 : KDDOCKWIDGETS_MAX_HEIGHT;
 
-    const Item::List visibleChildren = this->visibleChildren();
+    const Item::List visibleChildren = this->visibleChildren(/*includeBeingInserted=*/ false);
     if (!visibleChildren.isEmpty()) {
         for (Item *item : visibleChildren) {
+            if (item->isBeingInserted())
+                continue;
             const QSize itemMaxSz = item->maxSizeHint();
             const int itemMaxWidth = itemMaxSz.width();
             const int itemMaxHeight = itemMaxSz.height();
@@ -1854,7 +1870,7 @@ QSize ItemContainer::maxSizeHint() const
     if (maxH == 0)
         maxH = KDDOCKWIDGETS_MAX_HEIGHT;
 
-    return QSize(maxW, maxH).expandedTo(minSize());
+    return QSize(maxW, maxH).expandedTo(d->minSize(visibleChildren));
 }
 
 void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &childSizes,
@@ -1901,8 +1917,6 @@ void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Sizing
                 itemSize.geometry.setSize({ newItemLength, q->height() });
             }
         }
-
-        honourMaxSizes(childSizes);
     } else if (strategy == ChildrenResizeStrategy::Side1SeparatorMove ||
                strategy == ChildrenResizeStrategy::Side2SeparatorMove) {
         int remaining = Layouting::length(newSize - oldSize, m_orientation); // This is how much we need to give to children (when growing the container), or to take from them when shrinking the container
@@ -1946,6 +1960,7 @@ void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Sizing
                 break;
         }
     }
+    honourMaxSizes(childSizes);
 }
 
 void ItemContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
@@ -2065,6 +2080,7 @@ void ItemContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy stra
     // Because we need step #2 where we ensure min sizes for each item are respected. We could
     // calculate and do everything in a single-step, but we already have the code for #2 in growItem()
     // so doing it in 2 steps will reuse much logic.
+
 
     // the sizes:
     d->resizeChildren(oldSize, newSize, /*by-ref*/ childSizes, strategy);
@@ -2188,8 +2204,11 @@ void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourS
     Q_ASSERT(contains(item));
 
     const bool hadVisibleChildren = hasVisibleChildren(/*excludeBeingInserted=*/ true);
+
     item->setIsVisible(true);
     item->setBeingInserted(true);
+
+    const int excessLength = d->excessLength();
 
     if (!hadVisibleChildren) {
         // This container was hidden and will now be restored too, since a child was restored
@@ -2215,7 +2234,14 @@ void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourS
 
     const int max = qMin(available, item->maxLengthHint(d->m_orientation));
     const int min = item->minLength(d->m_orientation);
-    const int proposed = Layouting::length(item->size(), d->m_orientation);
+
+    /*
+     * Regarding the excessLength:
+     * The layout bigger than its own max-size. The new item will get more (if it can), to counter that excess.
+     * There's just 1 case where we have excess length: A layout with items with max-size, but the layout can't be smaller due to min-size constraints of the higher level layouts, in the nesting hierarchy.
+     * The excess goes away when inserting a widget that can grow indefinitely, it eats all the current excess.
+     */
+    const int proposed = qMax(Layouting::length(item->size(), d->m_orientation), excessLength - Item::separatorThickness);
     const int newLength = qBound(min, proposed, max);
 
     Q_ASSERT(item->isVisible());
@@ -2260,7 +2286,8 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
     const int pos = separator->position();
     const int max = maxPosForSeparator_global(separator);
 
-    if (pos + delta < min || pos + delta > max) {
+    if ((pos + delta < min && delta < 0) || // pos can be smaller than min, as long as we're making the distane to minPos smaller, same for max.
+        (pos + delta > max && delta > 0)) { // pos can be bigger than max already and going left/up (negative delta, which is fine), just don't increase if further
         root()->dumpLayout();
         qWarning() << "Separator would have gone out of bounds"
                    << "; separators=" << separator
@@ -2282,13 +2309,19 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
     int remainingToTake = qAbs(delta);
     int tookLocally = 0;
 
+    Item *side1Neighbour = children[separatorIndex];
+    Item *side2Neighbour = children[separatorIndex + 1];
+
+    Side nextSeparatorDirection = moveDirection;
+
     if (moveDirection == Side1) {
         // Separator is moving left (or top if horizontal)
+        const int availableSqueeze1 = availableToSqueezeOnSide(side2Neighbour, Side1);
+        const int availableGrow2 = availableToGrowOnSide(side1Neighbour, Side2);
 
-        // This is the available within our container, which we can use without bothering other other separators
-        Item *side2Neighbour = children[separatorIndex + 1];
-        const int available1 = availableToSqueezeOnSide(side2Neighbour, Side1);
-        tookLocally = qMin(available1, remainingToTake);
+        // This is the available within our container, which we can use without bothering other separators
+        tookLocally = qMin(availableSqueeze1, remainingToTake);
+        tookLocally = qMin(tookLocally, availableGrow2);
 
         if (tookLocally != 0) {
             growItem(side2Neighbour, tookLocally, GrowthStrategy::Side1Only,
@@ -2296,16 +2329,26 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
                      ChildrenResizeStrategy::Side1SeparatorMove);
         }
 
+        if (availableGrow2 == tookLocally)
+            nextSeparatorDirection = Side2;
+
     } else {
+
+        const int availableSqueeze2 = availableToSqueezeOnSide(side1Neighbour, Side2);
+        const int availableGrow1 = availableToGrowOnSide(side2Neighbour, Side1);
+
         // Separator is moving right (or bottom if horizontal)
-        Item *side1Neighbour = children[separatorIndex];
-        const int available2 = availableToSqueezeOnSide(side1Neighbour, Side2);
-        tookLocally = qMin(available2, remainingToTake);
+        tookLocally = qMin(availableSqueeze2, remainingToTake);
+        tookLocally = qMin(tookLocally, availableGrow1);
+
         if (tookLocally != 0) {
             growItem(side1Neighbour, tookLocally, GrowthStrategy::Side2Only,
                      NeighbourSqueezeStrategy::ImmediateNeighboursFirst, false,
                      ChildrenResizeStrategy::Side2SeparatorMove);
         }
+
+        if (availableGrow1 == tookLocally)
+            nextSeparatorDirection = Side1;
     }
 
     remainingToTake -= tookLocally;
@@ -2317,7 +2360,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
             qWarning() << Q_FUNC_INFO << "Not enough space to move separator"
                        << this;
         } else {
-            Separator *nextSeparator = parentContainer()->d->neighbourSeparator_recursive(this, moveDirection, d->m_orientation);
+            Separator *nextSeparator = parentContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection, d->m_orientation);
             if (!nextSeparator) {
                 // Doesn't happen
                 qWarning() << Q_FUNC_INFO << "nextSeparator is null, report a bug";
@@ -2350,7 +2393,12 @@ void ItemContainer::requestEqualSize(Separator *separator)
     if (qAbs(length1 - length2) <= 1) {
         // items already have the same length, nothing to do.
         // We allow for a difference of 1px, since you can't split that.
-        return;
+
+        // But if at least 1 item is bigger than its max-size, don't bail out early, as then they don't deserve equal sizes.
+        if (!(side1Item->m_sizingInfo.isPastMax(d->m_orientation) ||
+              side2Item->m_sizingInfo.isPastMax(d->m_orientation))) {
+            return;
+        }
     }
 
     const int newLength = (length1 + length2) / 2;
@@ -3067,6 +3115,48 @@ void ItemContainer::Private::updateSeparators_recursive()
     for (Item *item : items) {
         if (auto c = item->asContainer())
             c->d->updateSeparators_recursive();
+    }
+}
+
+int ItemContainer::Private::excessLength() const
+{
+    // Returns how much bigger this layout is than its max-size
+    return qMax(0, Layouting::length(q->size(), m_orientation) - q->maxLengthHint(m_orientation));
+}
+
+void ItemContainer::simplify()
+{
+    // Removes unneeded nesting. For example, a vertical layout doesn't need to have vertical layouts
+    // inside. It can simply have the contents of said sub-layouts
+
+    Item::List newChildren;
+    newChildren.reserve(d->m_children.size() + 20); // over-reserve a bit
+
+    for (Item *child : qAsConst(d->m_children)) {
+        if (ItemContainer *childContainer = child->asContainer()) {
+            childContainer->simplify(); // recurse down the hierarchy
+
+            if (childContainer->orientation() == d->m_orientation || childContainer->d->m_children.size() == 1) {
+                // This sub-container is reduntant, as it has the same orientation as its parent
+                // Canibalize it.
+                for (Item *child2 : childContainer->childItems()) {
+                    child2->setParentContainer(this);
+                    newChildren.push_back(child2);
+                }
+
+                delete childContainer;
+            } else {
+                newChildren.push_back(child);
+            }
+        } else {
+            newChildren.push_back(child);
+        }
+    }
+
+    if (d->m_children != newChildren) {
+        d->m_children = newChildren;
+        positionItems();
+        updateChildPercentages();
     }
 }
 

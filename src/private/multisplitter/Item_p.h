@@ -51,6 +51,7 @@ enum Side {
     Side1,
     Side2
 };
+Q_ENUM_NS(Side);
 
 enum class GrowthStrategy {
     BothSidesEqually,
@@ -69,11 +70,13 @@ enum class ChildrenResizeStrategy {
     Side1SeparatorMove, ///< When resizing a container, it takes/adds space from Side1 children first
     Side2SeparatorMove ///< When resizing a container, it takes/adds space from Side2 children first
 };
+Q_ENUM_NS(ChildrenResizeStrategy);
 
 enum class NeighbourSqueezeStrategy {
     AllNeighbours, ///< The squeeze is spread between all neighbours, not just immediate ones first
     ImmediateNeighboursFirst ///< The first neighbour takes as much squeeze as it can, only then the next neighbour is squezed, and so forth
 };
+Q_ENUM_NS(NeighbourSqueezeStrategy);
 
 inline int pos(QPoint p, Qt::Orientation o) {
     return o == Qt::Vertical ? p.y()
@@ -197,6 +200,10 @@ struct SizingInfo {
 
     int neededToShrink(Qt::Orientation o) const {
         return qMax(0, length(o) - maxLengthHint(o));
+    }
+
+    bool isPastMax(Qt::Orientation o) const {
+        return availableToGrow(o) >= 0;
     }
 
     QVariantMap toVariantMap() const;
@@ -505,6 +512,8 @@ public:
     QVector<Layouting::Separator*> separators_recursive() const;
     QVector<Layouting::Separator*> separators() const;
 private:
+    void simplify();
+    static bool s_inhibitSimplify;
     friend class Layouting::Item;
     friend class ::TestMultiSplitter;
     struct Private;

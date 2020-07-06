@@ -359,7 +359,10 @@ private Q_SLOTS:
     void tst_lastFloatingPositionIsRestored();
     void tst_moreTitleBarCornerCases();
     void tst_maxSizePropagates();
+    void tst_maxSizePropagates2();
     void tst_maxSizeHonouredWhenDropped();
+    void tst_maxSizeHonouredWhenAnotherDropped();
+    void tst_maxSizedHonouredAfterRemoved();
     void tst_fixedSizePolicy();
     void tst_maximumSizePolicy();
     void tst_tabsNotClickable();
@@ -5374,6 +5377,125 @@ void TestDocks::tst_maxSizePropagates()
     delete dock1->window();
 }
 
+void TestDocks::tst_maxSizePropagates2()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock1 = new DockWidget("dock1");
+
+    auto w = new QWidget();
+    w->setMinimumSize(120, 120);
+    w->setMaximumSize(300, 500);
+    dock1->setWidget(w);
+    dock1->show();
+
+    auto dock2 = new DockWidget("dock2");
+    auto dock3 = new DockWidget("dock3");
+    auto dock4 = new DockWidget("dock4");
+    m1->addDockWidget(dock2, Location_OnLeft);
+    m1->addDockWidget(dock3, Location_OnRight);
+    m1->addDockWidget(dock4, Location_OnBottom, dock3);
+    m1->addDockWidget(dock1, Location_OnLeft, dock4);
+
+    Frame *frame1 = dock1->frame();
+
+    Layouting::ItemContainer *root = m1->multiSplitter()->rootItem();
+    Item *item1 = root->itemForWidget(frame1);
+    auto vertSep1 = root->separators().constFirst();
+    const int min1 = root->minPosForSeparator_global(vertSep1);
+
+    ItemContainer *container1 = item1->parentContainer();
+    auto innerVertSep1 = container1->separators().constFirst();
+    const int minInnerSep = container1->minPosForSeparator_global(innerVertSep1);
+    const int maxInnerSep = container1->maxPosForSeparator_global(innerVertSep1);
+
+    root->requestSeparatorMove(vertSep1, -(vertSep1->position() - min1));
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+
+    container1->requestSeparatorMove(innerVertSep1, -(innerVertSep1->position() - minInnerSep));
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+
+    container1->requestSeparatorMove(innerVertSep1, maxInnerSep - innerVertSep1->position());
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+}
+
+void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
+{
+    // dock1 is docked, and has small max-height.
+    // When dropping dock2, which is small too, dock2 should occupy all the height except dock1's max-height
+    // i.e. dock2 should expand and eat all available space
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock1 = new DockWidget("dock1");
+
+    auto w = new QWidget();
+    w->setMinimumSize(120, 100);
+    w->setMaximumSize(300, 150);
+    dock1->setWidget(w);
+    m1->addDockWidget(dock1, Location_OnLeft);
+
+    auto dock2 = new DockWidget("dock2");
+    m1->addDockWidget(dock2, Location_OnBottom);
+
+    auto root = m1->multiSplitter()->rootItem();
+    Separator *separator = root->separators().constFirst();
+    const int min1 = root->minPosForSeparator_global(separator);
+    const int max2 = root->maxPosForSeparator_global(separator);
+
+    QVERIFY(separator->position() >= min1);
+    QVERIFY(separator->position() <= max2);
+    const int item1MaxHeight = dock1->frame()->maxSizeHint().height();
+    QVERIFY(dock1->frame()->height() <= item1MaxHeight);
+    root->dumpLayout();
+    QCOMPARE(dock2->frame()->height(), root->height() - item1MaxHeight - Item::separatorThickness);
+}
+
+void TestDocks::tst_maxSizedHonouredAfterRemoved()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock1 = new DockWidget("dock1");
+    dock1->show();
+
+    auto w = new QWidget();
+    w->setMinimumSize(120, 100);
+    w->setMaximumSize(300, 150);
+    dock1->setWidget(w);
+    m1->dropArea()->addMultiSplitter(dock1->floatingWindow()->multiSplitter(), Location_OnLeft);
+
+    auto dock2 = new DockWidget("dock2");
+    dock2->show();
+    m1->dropArea()->addMultiSplitter(dock2->floatingWindow()->multiSplitter(), Location_OnTop);
+
+    auto root = m1->multiSplitter()->rootItem();
+
+    // Wait 1 event loop so we get layout invalidated and get max-size constraints
+    QTest::qWait(10);
+
+    auto sep = root->separators().constFirst();
+    root->requestEqualSize(sep); // Since we're not calling honourMaxSizes() after a widget changes its max size afterwards yet
+    const int sepMin = root->minPosForSeparator_global(sep);
+    const int sepMax = root->maxPosForSeparator_global(sep);
+
+    QVERIFY(sep->position() >= sepMin);
+    QVERIFY(sep->position() <= sepMax);
+
+    auto dock3 = new DockWidget("dock3");
+    dock3->show();
+    m1->dropArea()->addMultiSplitter(dock3->floatingWindow()->multiSplitter(), Location_OnBottom);
+
+    dock1->setFloating(true);
+    m1->dropArea()->addMultiSplitter(dock1->floatingWindow()->multiSplitter(), Location_OnBottom, dock2->frame());
+
+    // Close dock2 and check if dock1's max-size is still honoured
+    dock2->close();
+    QTest::qWait(100); // wait for the resize, so dock1 gets taller"
+
+    QVERIFY(dock1->frame()->height() <= dock1->frame()->maxSizeHint().height());
+    delete dock2;
+}
+
 void TestDocks::tst_maxSizeHonouredWhenDropped()
 {
     EnsureTopLevelsDeleted e;
@@ -5471,7 +5593,7 @@ void TestDocks::tst_tabsNotClickable()
     // Can't repro with fabricated events. Uncomment the WAIT and test different configs manually
 
     EnsureTopLevelsDeleted e;
-	Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible);
+    Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible);
     //Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs);
     //Config::self().setFlags(Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs);
 
