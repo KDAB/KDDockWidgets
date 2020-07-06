@@ -12,6 +12,7 @@ if(NOT TARGET kddockwidgets)
 endif()
 
 qt5_add_resources(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_example.qrc)
+add_definitions(-DBUILDING_DOCKS_LIBRARY -DBUILDING_MULTISPLITTER_LIBRARY)
 
 add_executable(kddockwidgets_example
     main.cpp
