@@ -512,6 +512,8 @@ public:
     QVector<Layouting::Separator*> separators_recursive() const;
     QVector<Layouting::Separator*> separators() const;
 private:
+    void simplify();
+    static bool s_inhibitSimplify;
     friend class Layouting::Item;
     friend class ::TestMultiSplitter;
     struct Private;

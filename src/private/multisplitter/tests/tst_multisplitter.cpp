@@ -201,6 +201,7 @@ private Q_SLOTS:
     void tst_maxSizeHonoured3();
     void tst_requestEqualSize();
     void tst_maxSizeHonouredWhenAnotherRemoved();
+    void tst_simplify();
 };
 
 class MyHostWidget : public QWidget
@@ -1819,6 +1820,31 @@ void TestMultiSplitter::tst_maxSizeHonouredWhenAnotherRemoved()
     QVERIFY(item2->height() <= maxHeight);
 
     root->dumpLayout();
+}
+
+void TestMultiSplitter::tst_simplify()
+{
+    QScopedValueRollback<bool> inhibitSimplify(ItemContainer::s_inhibitSimplify, true);
+
+    auto root = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+    root->insertItem(item1, Item::Location_OnTop);
+    root->insertItem(item2, Item::Location_OnBottom);
+
+    auto root2 = createRoot();
+    auto root22 = createRoot();
+    auto item21 = createItem();
+    root22->insertItem(item21, Item::Location_OnLeft);
+    root2->insertItem(root22.release(), Item::Location_OnLeft);
+    root->insertItem(root2.release(), Item::Location_OnBottom);
+
+    QVERIFY(root->childItems().at(2)->isContainer());
+
+    root->simplify();
+
+    for (Item *item : root->childItems())
+        QVERIFY(!item->isContainer());
 }
 
 int main(int argc, char *argv[])

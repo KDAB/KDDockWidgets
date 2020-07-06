@@ -44,6 +44,8 @@ int Layouting::Item::separatorThickness = 5;
 const QSize Layouting::Item::hardcodedMinimumSize = QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
 const QSize Layouting::Item::hardcodedMaximumSize = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT);
 
+bool Layouting::ItemContainer::s_inhibitSimplify = false;
+
 inline bool locationIsVertical(Item::Location loc)
 {
     return loc == Item::Location_OnTop || loc == Item::Location_OnBottom;
@@ -882,7 +884,6 @@ struct ItemContainer::Private
     void updateSeparators_recursive();
     QSize minSize(const Item::List &items) const;
     int excessLength() const;
-    void simplify();
 
     mutable bool m_checkSanityScheduled = false;
     QVector<Layouting::Separator*> m_separators;
@@ -1698,8 +1699,8 @@ void ItemContainer::insertItem(Item *item, int index, DefaultSizeMode defaultSiz
 
     const bool shouldEmitVisibleChanged = item->isVisible();
 
-    if (!d->m_convertingItemToContainer)
-        d->simplify();
+    if (!d->m_convertingItemToContainer && !s_inhibitSimplify)
+        simplify();
 
     if (shouldEmitVisibleChanged)
         Q_EMIT root()->numVisibleItemsChanged(root()->numVisibleChildren());
@@ -3123,23 +3124,23 @@ int ItemContainer::Private::excessLength() const
     return qMax(0, Layouting::length(q->size(), m_orientation) - q->maxLengthHint(m_orientation));
 }
 
-void ItemContainer::Private::simplify()
+void ItemContainer::simplify()
 {
     // Removes unneeded nesting. For example, a vertical layout doesn't need to have vertical layouts
     // inside. It can simply have the contents of said sub-layouts
 
     Item::List newChildren;
-    newChildren.reserve(m_children.size() + 20); // over-reserve a bit
+    newChildren.reserve(d->m_children.size() + 20); // over-reserve a bit
 
-    for (Item *child : qAsConst(m_children)) {
+    for (Item *child : qAsConst(d->m_children)) {
         if (ItemContainer *childContainer = child->asContainer()) {
-            childContainer->d->simplify(); // recurse down the hierarchy
+            childContainer->simplify(); // recurse down the hierarchy
 
-            if (childContainer->orientation() == m_orientation) {
+            if (childContainer->orientation() == d->m_orientation) {
                 // This sub-container is reduntant, as it has the same orientation as its parent
                 // Canibalize it.
                 for (Item *child2 : childContainer->childItems()) {
-                    child2->setParentContainer(q);
+                    child2->setParentContainer(this);
                     newChildren.push_back(child2);
                 }
 
@@ -3152,10 +3153,10 @@ void ItemContainer::Private::simplify()
         }
     }
 
-    if (m_children != newChildren) {
-        m_children = newChildren;
-        q->positionItems();
-        q->updateChildPercentages();
+    if (d->m_children != newChildren) {
+        d->m_children = newChildren;
+        positionItems();
+        updateChildPercentages();
     }
 }
 
