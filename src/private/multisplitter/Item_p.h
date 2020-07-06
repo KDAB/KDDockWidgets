@@ -499,6 +499,7 @@ private:
     bool isHorizontal() const;
 
     int indexOf(Separator *) const;
+    bool isInSimplify() const;
 
 #ifdef DOCKS_DEVELOPER_MODE
     bool test_suggestedRect();

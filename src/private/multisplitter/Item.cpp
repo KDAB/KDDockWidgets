@@ -890,6 +890,7 @@ struct ItemContainer::Private
     bool m_convertingItemToContainer = false;
     bool m_blockUpdatePercentages = false;
     bool m_isDeserializing = false;
+    bool m_isSimplifying = false;
     Qt::Orientation m_orientation = Qt::Vertical;
     Item::List m_children;
     ItemContainer *const q;
@@ -1329,7 +1330,7 @@ void ItemContainer::updateSizeConstraints()
 
 void ItemContainer::onChildVisibleChanged(Item *, bool visible)
 {
-    if (d->m_isDeserializing)
+    if (d->m_isDeserializing || isInSimplify())
         return;
 
     const int numVisible = numVisibleChildren();
@@ -3129,6 +3130,8 @@ void ItemContainer::simplify()
     // Removes unneeded nesting. For example, a vertical layout doesn't need to have vertical layouts
     // inside. It can simply have the contents of said sub-layouts
 
+    QScopedValueRollback<bool> isInSimplify(d->m_isSimplifying, true);
+
     Item::List newChildren;
     newChildren.reserve(d->m_children.size() + 20); // over-reserve a bit
 
@@ -3183,6 +3186,15 @@ bool ItemContainer::isHorizontal() const
 int ItemContainer::indexOf(Separator *separator) const
 {
     return d->m_separators.indexOf(separator);
+}
+
+bool ItemContainer::isInSimplify() const
+{
+    if (d->m_isSimplifying)
+        return true;
+
+    auto p = parentContainer();
+    return p && p->isInSimplify();
 }
 
 int ItemContainer::minPosForSeparator(Separator *separator, bool honourMax) const
