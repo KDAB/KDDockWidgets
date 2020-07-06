@@ -2654,7 +2654,7 @@ int ItemContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Orien
         }
 
         for (int i = start; i <= end; ++i)
-            neighbourMaxLength = qMin(root()->length(), neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
+            neighbourMaxLength = qMin(Layouting::length(root()->size(), d->m_orientation), neighbourMaxLength + children.at(i)->maxLengthHint(d->m_orientation));
 
          return neighbourMaxLength;
     } else {
