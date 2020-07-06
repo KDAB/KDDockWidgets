@@ -1825,7 +1825,7 @@ QSize ItemContainer::maxSizeHint() const
     int maxW = isVertical() ? KDDOCKWIDGETS_MAX_WIDTH : 0;
     int maxH = isVertical() ? 0 : KDDOCKWIDGETS_MAX_HEIGHT;
 
-    const Item::List visibleChildren = this->visibleChildren();
+    const Item::List visibleChildren = this->visibleChildren(/*includeBeingInserted=*/ false);
     if (!visibleChildren.isEmpty()) {
         for (Item *item : visibleChildren) {
             const QSize itemMaxSz = item->maxSizeHint();
