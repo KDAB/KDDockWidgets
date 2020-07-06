@@ -2,6 +2,10 @@
 #
 # Pass the following variables to cmake to control the build:
 #
+# -DKDDockWidgets_STATIC=[true|false]
+#  Build static versions of the libraries
+#  Default=false
+#
 # -DKDDockWidgets_TESTS=[true|false]
 #  Build the test harness.
 #  Default=false
@@ -50,13 +54,14 @@ else()
           LANGUAGES CXX)
 endif()
 
-option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
-option(OPTION_BUILD_PYTHON_BINDINGS "Build python bindings" OFF)
-if(OPTION_BUILD_PYTHON_BINDINGS AND NOT CMAKE_BUILD_TYPE MATCHES "^[Rr]el")
-  message(FATAL_ERROR "** Python Bindings can only be built in release build mode.")
-endif()
+option(${PROJECT_NAME}_STATIC "Build statically" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
+option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
+option(OPTION_BUILD_PYTHON_BINDINGS "Build python bindings" OFF)
+if(OPTION_BUILD_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC))
+  message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
+endif()
 
 #Always build the test harness in developer-mode
 if(OPTION_DEVELOPER_MODE)
@@ -91,6 +96,12 @@ if(OPTION_QTQUICK)
   add_definitions(-DKDDOCKWIDGETS_QTQUICK)
 else()
   add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
+endif()
+
+if(${PROJECT_NAME}_STATIC)
+  set(${PROJECT_NAME}_LIBRARY_MODE "STATIC")
+else()
+  set(${PROJECT_NAME}_LIBRARY_MODE "SHARED")
 endif()
 
 if(USE_DEFAULT_INSTALL_LOCATION)
