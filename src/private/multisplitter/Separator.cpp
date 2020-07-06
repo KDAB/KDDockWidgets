@@ -131,17 +131,15 @@ void Separator::onMouseMove(QPoint pos)
     const int minPos = d->parentContainer->minPosForSeparator_global(this);
     const int maxPos = d->parentContainer->maxPosForSeparator_global(this);
 
-    if (positionToGoTo < minPos) {
-        // Min is always honoured
-        return;
-    }
-
-    if (positionToGoTo > maxPos && position() <= positionToGoTo) {
-        // is current pos is 100, and max is 80, we do allow going to 90.
+    if ((positionToGoTo > maxPos && position() <= positionToGoTo) ||
+        (positionToGoTo < minPos && position() >= positionToGoTo)) {
+        // if current pos is 100, and max is 80, we do allow going to 90.
         // Would continue to violate, but only by 10, so allow.
 
-        // On the other hand, if we're already violating max-size, don't make it worse and just
-        // return if positionToGoTo is further away from maxPos:
+        // On the other hand, if we're already past max-pos, don't make it worse and just
+        // return if positionToGoTo is further away from maxPos.
+
+        // Same reasoning for minPos
         return;
     }
 
