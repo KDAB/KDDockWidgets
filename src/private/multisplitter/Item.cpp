@@ -882,6 +882,7 @@ struct ItemContainer::Private
     void updateSeparators_recursive();
     QSize minSize(const Item::List &items) const;
     int excessLength() const;
+    void simplify();
 
     mutable bool m_checkSanityScheduled = false;
     QVector<Layouting::Separator*> m_separators;
@@ -1695,7 +1696,12 @@ void ItemContainer::insertItem(Item *item, int index, DefaultSizeMode defaultSiz
     if (!d->m_convertingItemToContainer && item->isVisible())
         restoreChild(item);
 
-    if (item->isVisible())
+    const bool shouldEmitVisibleChanged = item->isVisible();
+
+    if (!d->m_convertingItemToContainer)
+        d->simplify();
+
+    if (shouldEmitVisibleChanged)
         Q_EMIT root()->numVisibleItemsChanged(root()->numVisibleChildren());
     Q_EMIT root()->numItemsChanged();
 }
@@ -3115,6 +3121,42 @@ int ItemContainer::Private::excessLength() const
 {
     // Returns how much bigger this layout is than its max-size
     return qMax(0, Layouting::length(q->size(), m_orientation) - q->maxLengthHint(m_orientation));
+}
+
+void ItemContainer::Private::simplify()
+{
+    // Removes unneeded nesting. For example, a vertical layout doesn't need to have vertical layouts
+    // inside. It can simply have the contents of said sub-layouts
+
+    Item::List newChildren;
+    newChildren.reserve(m_children.size() + 20); // over-reserve a bit
+
+    for (Item *child : qAsConst(m_children)) {
+        if (ItemContainer *childContainer = child->asContainer()) {
+            childContainer->d->simplify(); // recurse down the hierarchy
+
+            if (childContainer->orientation() == m_orientation) {
+                // This sub-container is reduntant, as it has the same orientation as its parent
+                // Canibalize it.
+                for (Item *child2 : childContainer->childItems()) {
+                    child2->setParentContainer(q);
+                    newChildren.push_back(child2);
+                }
+
+                delete childContainer;
+            } else {
+                newChildren.push_back(child);
+            }
+        } else {
+            newChildren.push_back(child);
+        }
+    }
+
+    if (m_children != newChildren) {
+        m_children = newChildren;
+        q->positionItems();
+        q->updateChildPercentages();
+    }
 }
 
 Separator *ItemContainer::Private::separatorAt(int p) const
