@@ -1066,6 +1066,7 @@ void TestMultiSplitter::tst_misc2()
     Item *item3 = root3->childItems().constFirst();
     ItemContainer *root4 = createRootWithSingleItem();
     ItemContainer *root5 = createRootWithSingleItem();
+    Item *item5 = root5->childItems().constFirst();
 
     root->insertItem(root1, Item::Location_OnTop);
     QVERIFY(root->checkSanity());
@@ -1079,7 +1080,7 @@ void TestMultiSplitter::tst_misc2()
     root->insertItem(root5, Item::Location_OnLeft);
     QVERIFY(root->checkSanity());
 
-    root5->parentContainer()->removeItem(root5);
+    item5->parentContainer()->removeItem(item5);
     QVERIFY(root->checkSanity());
     QVERIFY(serializeDeserializeTest(root));
 }

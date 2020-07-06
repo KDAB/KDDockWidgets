@@ -3136,7 +3136,7 @@ void ItemContainer::simplify()
         if (ItemContainer *childContainer = child->asContainer()) {
             childContainer->simplify(); // recurse down the hierarchy
 
-            if (childContainer->orientation() == d->m_orientation) {
+            if (childContainer->orientation() == d->m_orientation || childContainer->d->m_children.size() == 1) {
                 // This sub-container is reduntant, as it has the same orientation as its parent
                 // Canibalize it.
                 for (Item *child2 : childContainer->childItems()) {
