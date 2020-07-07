@@ -366,6 +366,7 @@ private Q_SLOTS:
     void tst_fixedSizePolicy();
     void tst_maximumSizePolicy();
     void tst_tabsNotClickable();
+    void tst_stuckSeparator();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -3922,6 +3923,7 @@ void TestDocks::tst_0_data()
 void TestDocks::tst_0()
 {
     QFETCH(int, thickness);
+    EnsureTopLevelsDeleted e;
     Config::self().setSeparatorThickness(thickness);
 
     auto m = new MainWindow("m1", MainWindowOption_None);
@@ -5617,6 +5619,41 @@ void TestDocks::tst_tabsNotClickable()
     QCOMPARE(frame->currentIndex(), 0);
 
     delete frame->window();
+}
+
+void TestDocks::tst_stuckSeparator()
+{
+    const QString absoluteLayoutFileName = QStringLiteral(":/layouts/stuck-separator.json");
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
+    const int numDockWidgets = 26;
+    DockWidgetBase *dw25 = nullptr;
+    for (int i = 0; i < numDockWidgets; ++i) {
+        auto createdDw = createDockWidget(QStringLiteral("dock-%1").arg(i), new QWidget());
+        if (i == 25)
+            dw25 = createdDw;
+    }
+
+    LayoutSaver restorer;
+    QVERIFY(restorer.restoreFromFile(absoluteLayoutFileName));
+
+    Frame *frame25 = dw25->frame();
+    ItemContainer *root = m1->multiSplitter()->rootItem();
+    Item *item25 = root->itemForWidget(frame25);
+    ItemContainer *container25 = item25->parentContainer();
+    Separator::List separators = container25->separators();
+    QCOMPARE(separators.size(), 1);
+
+    Separator *separator25 = separators.constFirst();
+    const int sepMin = container25->minPosForSeparator_global(separator25);
+    const int sepMax = container25->maxPosForSeparator_global(separator25);
+
+    QVERIFY(sepMin <= sepMax);
+
+    for (auto dw : DockRegistry::self()->dockwidgets()) {
+        delete dw;
+    }
 }
 
 int main(int argc, char *argv[])
