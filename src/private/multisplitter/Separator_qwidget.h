@@ -15,6 +15,7 @@
 #include "multisplitter_export.h"
 #include "Separator_p.h"
 #include "Widget_qwidget.h"
+#include "Qt5Qt6Compat_p.h"
 
 #include <QWidget>
 
@@ -30,7 +31,7 @@ public:
     explicit SeparatorWidget(Layouting::Widget *parent = nullptr);
 protected:
     void paintEvent(QPaintEvent *) override;
-    void enterEvent(QEvent *) override;
+    void enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *) override;
     void leaveEvent(QEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *) override;

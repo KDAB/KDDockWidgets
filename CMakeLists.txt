@@ -80,11 +80,13 @@ set(${PROJECT_NAME}_SOVERSION "1.2")
 
 include(FeatureSummary)
 
+option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
 option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_PYTHON_BINDINGS "Build python bindings" OFF)
 if(${PROJECT_NAME}_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC))
   message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
 endif()
+
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 option(${PROJECT_NAME}_DOCS "Build the API documentation" OFF)
@@ -96,7 +98,15 @@ endif()
 
 #option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
-find_package(Qt5Widgets 5.9 REQUIRED)
+if (OPTION_QT6)
+  find_package(Qt6Widgets REQUIRED)
+  find_package(Qt6Test REQUIRED)
+  set(QT_MAJOR_VERSION 6)
+else()
+  find_package(Qt5Widgets 5.9 REQUIRED)
+  find_package(Qt5Test 5.9 REQUIRED)
+  set(QT_MAJOR_VERSION 5)
+endif()
 
 set(CMAKE_AUTOMOC ON)
 
@@ -112,7 +122,7 @@ include(QtInstallPaths) #to set QT_INSTALL_FOO variables
 macro(set_compiler_flags targetName)
   if(${PROJECT_NAME}_DEVELOPER_MODE)
     target_compile_definitions(${targetName} PRIVATE DOCKS_DEVELOPER_MODE QT_FORCE_ASSERTS)
-    if(NOT MSVC)
+    if(NOT MSVC AND NOT OPTION_QT6) # We're not warnings clean with Qt6 yet
       target_compile_options(${targetName} PRIVATE -Wall -Wextra -Werror -Wno-error=deprecated-declarations)
       if (APPLE)
         target_compile_options(${targetName} PRIVATE -Wweak-vtables)

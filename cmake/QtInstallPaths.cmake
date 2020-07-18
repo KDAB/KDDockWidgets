@@ -30,12 +30,12 @@
 
 #
 # Create variables for all the various install paths for the Qt version in use
-# Make sure to have found Qt5 before using this.
+# Make sure to have found Qt before using this.
 # sets variables like QT_INSTALL_PREFIX, QT_INSTALL_DATA, QT_INSTALL_DOCS, etc.
 # run qmake -query to see a full list
 
-if(TARGET Qt5::qmake)
-  get_target_property(QT_QMAKE_EXECUTABLE Qt5::qmake LOCATION)
+if(TARGET Qt${QT_MAJOR_VERSION}::qmake)
+  get_target_property(QT_QMAKE_EXECUTABLE Qt${QT_MAJOR_VERSION}::qmake LOCATION)
 else()
   message(FATAL_ERROR "No supported Qt version found. Make sure you find Qt before calling this")
 endif()

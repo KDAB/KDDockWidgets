@@ -59,7 +59,7 @@ void SeparatorWidget::paintEvent(QPaintEvent *)
     QWidget::parentWidget()->style()->drawControl(QStyle::CE_Splitter, &opt, &p, this);
 }
 
-void SeparatorWidget::enterEvent(QEvent *)
+void SeparatorWidget::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
 {
     qCDebug(separators) << Q_FUNC_INFO << this;
     if (isVertical())

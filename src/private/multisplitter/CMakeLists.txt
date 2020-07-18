@@ -60,17 +60,17 @@ qt5_add_resources(MULTISPLITTER_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidg
 
 add_library(kddockwidgets_multisplitter ${KDDockWidgets_LIBRARY_MODE} ${MULTISPLITTER_SRCS} ${MULTISPLITTER_RESOURCES})
 add_library(KDAB::kddockwidgets_multisplitter ALIAS kddockwidgets_multisplitter)
-target_link_libraries(kddockwidgets_multisplitter Qt5::Core Qt5::Widgets)
+target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets)
 set_compiler_flags(kddockwidgets_multisplitter)
 
 if(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND)
   find_package(Qt5Widgets)
-  target_link_libraries(kddockwidgets_multisplitter Qt5::Core Qt5::Widgets)
+  target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets)
 endif()
 
 if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
   find_package(Qt5Quick)
-  target_link_libraries(kddockwidgets_multisplitter Qt5::Core Qt5::Quick)
+  target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Quick)
 endif()
 
 if(${PROJECT_NAME}_STATIC)
@@ -94,6 +94,7 @@ endif()
 target_include_directories(kddockwidgets_multisplitter
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )

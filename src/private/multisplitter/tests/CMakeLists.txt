@@ -9,7 +9,8 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-find_package(Qt5Test)
+find_package(Qt${QT_MAJOR_VERSION}Test)
+
 add_executable(tst_multisplitter tst_multisplitter.cpp)
-target_link_libraries(tst_multisplitter kddockwidgets_multisplitter Qt5::Test)
+target_link_libraries(tst_multisplitter kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Test)
 set_compiler_flags(tst_multisplitter)
