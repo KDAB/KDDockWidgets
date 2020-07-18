@@ -24,6 +24,7 @@
 #include "DragController_p.h"
 #include "Config.h"
 #include "widgets/FrameWidget_p.h"
+#include "Qt5Qt6Compat_p.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -74,19 +75,19 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         if (mTarget->isMaximized())
             break;
         auto mouseEvent = static_cast<QMouseEvent *>(e);
-        auto cursorPos = cursorPosition(mouseEvent->globalPos());
+        auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
         if (cursorPos == CursorPosition::Undefined)
             return false;
 
         const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin));
-        const QPoint cursorPoint = mTarget->mapFromGlobal(mouseEvent->globalPos());
+        const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
         if (!widgetRect.contains(cursorPoint))
             return false;
         if (mouseEvent->button() == Qt::LeftButton) {
             mResizeWidget = true;
         }
 
-        mNewPosition = mouseEvent->globalPos();
+        mNewPosition = Qt5Qt6Compat::eventGlobalPos(mouseEvent);
         mCursorPos = cursorPos;
         return true;
     }
@@ -121,7 +122,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
 
 void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 {
-    const QPoint globalPos = e->globalPos();
+    const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(e);
     if (!mResizeWidget) {
         updateCursor(cursorPosition(globalPos));
         return;

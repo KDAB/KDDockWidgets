@@ -32,6 +32,7 @@
 #include "DropArea_p.h"
 #include "MainWindow.h"
 #include "LayoutSaver.h"
+#include "Qt5Qt6Compat_p.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -61,7 +62,11 @@ class DebugAppEventFilter : public QAbstractNativeEventFilter
 public:
     DebugAppEventFilter() {}
     ~DebugAppEventFilter();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *) override
+#else
     bool nativeEventFilter(const QByteArray &eventType, void *message, long *) override
+#endif
     {
 #ifdef Q_OS_WIN
         if (eventType != "windows_generic_MSG")
@@ -336,8 +341,8 @@ void DebugWindow::mousePressEvent(QMouseEvent *event)
     if (!m_isPickingWidget)
         QWidget::mousePressEvent(event);
 
-    QWidget *w = qApp->widgetAt(event->globalPos());
-    qDebug() << "Widget at pos" << event->globalPos() << "is"
+    QWidget *w = qApp->widgetAt(Qt5Qt6Compat::eventGlobalPos(event));
+    qDebug() << "Widget at pos" << Qt5Qt6Compat::eventGlobalPos(event) << "is"
              << w << "; parent="
              << (w ? w->parentWidget() : nullptr) << "; geometry="
              << (w ? w->geometry() : QRect());

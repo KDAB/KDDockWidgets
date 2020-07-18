@@ -26,6 +26,7 @@
 #include "WidgetResizeHandler_p.h"
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
+#include "Qt5Qt6Compat_p.h"
 
 #include <QMouseEvent>
 #include <QApplication>
@@ -384,9 +385,9 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     switch (e->type()) {
     case QEvent::NonClientAreaMouseButtonPress: {
         if (auto fw = qobject_cast<FloatingWindow*>(o)) {
-            if (fw->isInDragArea(me->globalPos())) {
+            if (fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
                 m_nonClientDrag = true;
-                return activeState()->handleMouseButtonPress(draggableForQObject(o), me->globalPos(), me->pos());
+                return activeState()->handleMouseButtonPress(draggableForQObject(o), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
             }
         }
         return QStateMachine::eventFilter(o, e);
@@ -395,14 +396,14 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
         // For top-level windows that support native dragging all goes through the NonClient* events.
         // This also forbids dragging a FloatingWindow simply by pressing outside of the title area, in the background
         if (!KDDockWidgets::usesNativeDraggingAndResizing() || !w->isWindow())
-            return activeState()->handleMouseButtonPress(draggableForQObject(o), me->globalPos(), me->pos());
+            return activeState()->handleMouseButtonPress(draggableForQObject(o), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
         else break;
     case QEvent::MouseButtonRelease:
     case QEvent::NonClientAreaMouseButtonRelease:
-        return activeState()->handleMouseButtonRelease(me->globalPos());
+        return activeState()->handleMouseButtonRelease(Qt5Qt6Compat::eventGlobalPos(me));
     case QEvent::NonClientAreaMouseMove:
     case QEvent::MouseMove:
-        return activeState()->handleMouseMove(me->globalPos());
+        return activeState()->handleMouseMove(Qt5Qt6Compat::eventGlobalPos(me));
     default:
         break;
     }

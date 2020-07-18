@@ -4987,14 +4987,14 @@ void TestDocks::tst_flagDoubleClick()
         FloatingWindow *fw2 = dock2->floatingWindow();
         QVERIFY(!fw2->isMaximized());
         TitleBar *t2 = dock2->titleBar();
-        QPoint pos = t2->mapToGlobal({5, 5});
+        QPoint pos = t2->mapToGlobal(QPoint(5, 5));
         Tests::doubleClickOn(pos, t2);
         QVERIFY(fw2->isMaximized());
         delete fw2;
 
         TitleBar *t1 = dock1->titleBar();
         QVERIFY(!t1->isFloating());
-        pos = t1->mapToGlobal({5, 5});
+        pos = t1->mapToGlobal(QPoint(5, 5));
         Tests::doubleClickOn(pos, t1);
         QVERIFY(t1->isFloating());
         QVERIFY(!dock1->window()->isMaximized());
@@ -5010,16 +5010,15 @@ void TestDocks::tst_flagDoubleClick()
 
         TitleBar *t1 = dock1->titleBar();
         QVERIFY(!t1->isFloating());
-        QPoint pos = t1->mapToGlobal({5, 5});
+        QPoint pos = t1->mapToGlobal(QPoint(5, 5));
         Tests::doubleClickOn(pos, t1);
         QVERIFY(t1->isFloating());
         QVERIFY(dock1->isFloating());
         QVERIFY(!dock1->window()->isMaximized());
 
-        pos = t1->mapToGlobal({5, 5});
+        pos = t1->mapToGlobal(QPoint(5, 5));
         Tests::doubleClickOn(pos, t1);
         QVERIFY(!dock1->isFloating());
-
     }
 }
 

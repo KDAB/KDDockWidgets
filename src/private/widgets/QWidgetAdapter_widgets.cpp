@@ -32,6 +32,7 @@
 
 #include "QWidgetAdapter_widgets_p.h"
 #include "FloatingWindow_p.h"
+#include "Qt5Qt6Compat_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>
@@ -82,7 +83,7 @@ void QWidgetAdapter::mousePressEvent(QMouseEvent *)
 
 void QWidgetAdapter::mouseMoveEvent(QMouseEvent *ev)
 {
-    onMouseMove(ev->globalPos());
+    onMouseMove(Qt5Qt6Compat::eventGlobalPos(ev));
 }
 
 void QWidgetAdapter::mouseReleaseEvent(QMouseEvent *)

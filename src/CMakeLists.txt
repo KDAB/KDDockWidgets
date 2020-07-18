@@ -12,6 +12,7 @@ add_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS
 
 set(DOCKSLIBS_SRCS
     Config.cpp
+    Qt5Qt6Compat_p.h
     FrameworkWidgetFactory.cpp
     DockWidgetBase.cpp
     MainWindow.cpp
