@@ -98,7 +98,7 @@ public:
     {
         QPainter p(this);
         QStyleOptionToolButton opt;
-        opt.init(this);
+        opt.initFrom(this);
 
         if (isEnabled() && underMouse()) {
             if (isDown()) {
