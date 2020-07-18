@@ -143,14 +143,14 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
 endif()
 
 if(OPTION_QTQUICK)
-  target_link_libraries(kddockwidgets Qt5::Widgets Qt5::Quick)
+  target_link_libraries(kddockwidgets KDAB::QtWidgets KDAB::QtQuick)
 else()
-  target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets kddockwidgets_multisplitter)
+  target_link_libraries(kddockwidgets PUBLIC KDAB::QtWidgets kddockwidgets_multisplitter)
 endif()
 
-if(NOT WIN32 AND NOT APPLE)
+if(NOT WIN32 AND NOT APPLE AND NOT OPTION_QT6)
   find_package(Qt5X11Extras)
-  target_link_libraries(kddockwidgets PUBLIC Qt5::X11Extras)
+  target_link_libraries(kddockwidgets PUBLIC Qt5X11Extras)
 endif()
 
 #version libraries on Windows
@@ -206,5 +206,5 @@ if(OPTION_DEVELOPER_MODE)
   target_compile_definitions(kddockwidgets PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
   add_executable(kddockwidgets_linter layoutlinter_main.cpp)
-  target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt5::Widgets)
+  target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter KDAB::QtWidgets)
 endif()
