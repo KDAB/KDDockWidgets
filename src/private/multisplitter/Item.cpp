@@ -623,7 +623,7 @@ void Item::setIsVisible(bool is)
 
 void Item::setGeometry_recursive(QRect rect)
 {
-    // Recursiveness doesn't apply for for non-container items
+    // Recursiveness doesn't apply for non-container items
     setGeometry(rect);
 }
 
@@ -1879,7 +1879,7 @@ void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Sizing
 {
     // This container is being resized to @p newSize, so we must resize our children too, based
     //on @p strategy.
-    // The new sizes are applied to @p childSizes, which will be applied to the widgets when when we're done
+    // The new sizes are applied to @p childSizes, which will be applied to the widgets when we're done
 
     const QVector<double> childPercentages = this->childPercentages();
     const int count = childSizes.count();
