@@ -92,17 +92,16 @@ KDDockWidgets requires Qt >= 5.9 (or >=5.12 if Python bindings are enabled).
 
 Licensing
 =========
-KDDockWidgets is (C) 2018-2020, Klarälvdalens Datakonsult AB, and is available
-under the terms of the GPLv2 (see LICENSE.GPL.txt).
+KDDockWidgets is (C) 2018-2020, Klarälvdalens Datakonsult AB, and is licensed according to
+the terms of the [GPL 2.0](LICENSES/GPL-2.0-only.txt) or [GPL 3.0](LICENSES/GPL-3.0-only.txt).
 
-Contact KDAB at <info@kdab.com> if you need different licensing options.
+Contact KDAB at <info@kdab.com> to inquire about commercial licensing.
 
 
 Get Involved
 ============
-KDAB will happily accept external contributions; however, **all**
-contributions will require a signed Contributor License Agreement
-(see docs/KDDockWidgets-CopyrightAssignmentForm.docx).
+KDAB will happily accept external contributions; however, **all** contributions require a
+signed [Copyright Assignment Agreement](docs/KDDockWidgets-CopyrightAssignmentForm.docx).
 
 Contact info@kdab.com for more information.
 

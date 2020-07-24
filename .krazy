@@ -1,7 +1,7 @@
 CHECKSETS qt5,c++
 
 #KDAB-specific checks
-EXTRA kdabcopyright
+EXTRA kdabcopyright-reuse
 
 #additional checks
 #EXTRA defines,null

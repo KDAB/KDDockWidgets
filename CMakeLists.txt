@@ -1,5 +1,14 @@
-# This is the top-level CMakeLists.txt file for the KDDockWidgets project.
 #
+# This file is part of KDDockWidgets.
+#
+# SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# Author: Sergio Martins <sergio.martins@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+#
+# Contact KDAB at <info@kdab.com> for commercial licensing options.
+#
+
 # Pass the following variables to cmake to control the build:
 #
 # -DKDDockWidgets_TESTS=[true|false]
@@ -110,7 +119,8 @@ ecm_generate_pri_file(BASE_NAME KDDockWidgets
 )
 install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
-install(FILES LICENSE.GPL.txt LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
+install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
+install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 
 add_subdirectory(src)
 if(OPTION_BUILD_PYTHON_BINDINGS)
