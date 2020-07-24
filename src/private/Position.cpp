@@ -130,11 +130,18 @@ void Position::deserialize(const LayoutSaver::Position &lp)
         MultiSplitter *layout;
         int itemIndex = placeholder.itemIndex;
         if (placeholder.isFloatingWindow) {
-            if (placeholder.indexOfFloatingWindow == -1) {
+            const int index = placeholder.indexOfFloatingWindow;
+            if (index == -1) {
                 continue; // Skip
             } else {
-                FloatingWindow *fw = DockRegistry::self()->nestedwindows().at(placeholder.indexOfFloatingWindow);
-                layout = fw->multiSplitter();
+                const auto floatingWindows = DockRegistry::self()->nestedwindows();
+                if (index >= 0 && index < floatingWindows.size()) {
+                    FloatingWindow *fw = floatingWindows.at(index);
+                    layout = fw->multiSplitter();
+                } else {
+                    qWarning() << "Invalid floating window position to restore" << index;
+                    continue;
+                }
             }
         } else {
             MainWindowBase *mainWindow = DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
