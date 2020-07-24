@@ -18,8 +18,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KDDOCKWIDGETS_QT5QT6_COMPAT_H
-#define KDDOCKWIDGETS_QT5QT6_COMPAT_H
+#ifndef KDDOCKWIDGETS_QT5QT6_COMPAT_P_H
+#define KDDOCKWIDGETS_QT5QT6_COMPAT_P_H
 
 #include <QMouseEvent>
 
