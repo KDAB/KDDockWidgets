@@ -9,6 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import QtQuick 2.6
+
 Rectangle {
     id: root
     anchors.fill: parent
