@@ -10,6 +10,7 @@
 */
 
 import "qrc:/"
+import QtQuick 2.6
 import com.kdab.kddockwidgets.multisplitter 1.0;
 
 Rectangle {

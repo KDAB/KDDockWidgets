@@ -9,6 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+import QtQuick 2.6
 import com.kdab.kddockwidgets.multisplitter 1.0;
 
 Image {
