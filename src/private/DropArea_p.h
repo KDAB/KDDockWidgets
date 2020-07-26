@@ -22,7 +22,7 @@
 #include "docks_export.h"
 #include "Frame_p.h"
 #include "KDDockWidgets.h"
-#include "widgets/MultiSplitter_p.h"
+#include "MultiSplitter_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 
 namespace KDDockWidgets {

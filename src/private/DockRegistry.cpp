@@ -13,8 +13,7 @@
 #include "DockWidgetBase.h"
 #include "Logging_p.h"
 #include "Position_p.h"
-#include "widgets/MultiSplitter_p.h"
-#include "quick/QmlTypes.h"
+#include "MultiSplitter_p.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -23,6 +22,8 @@
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "DebugWindow_p.h"
+#else
+# include "quick/QmlTypes.h"
 #endif
 
 using namespace KDDockWidgets;

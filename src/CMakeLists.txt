@@ -28,6 +28,7 @@ set(DOCKSLIBS_SRCS
     DockWidgetBase.cpp
     MainWindowBase.cpp
     LayoutSaver.cpp
+    private/MultiSplitter.cpp
     private/Position.cpp
     private/ObjectViewer.cpp
     private/DropIndicatorOverlayInterface.cpp
@@ -97,7 +98,6 @@ else()
       private/widgets/TitleBarWidget.cpp
       private/widgets/DockWidget.cpp
       private/widgets/QWidgetAdapter_widgets.cpp
-      private/widgets/MultiSplitter.cpp
       private/indicators/ClassicIndicators.cpp
       # private/indicators/AnimatedIndicators.cpp
   )

@@ -17,7 +17,7 @@
 
 #include "Position_p.h"
 #include "DockRegistry_p.h"
-#include "widgets/MultiSplitter_p.h"
+#include "MultiSplitter_p.h"
 
 #include <algorithm>
 
