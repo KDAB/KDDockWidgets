@@ -48,3 +48,4 @@ mylayout.json
 *.cbp
 *.pyc
 /python/examples/rc_assets.py
+*.pri
