@@ -24,14 +24,29 @@
  */
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
+# include "../multisplitter/Widget_qwidget.h"
 # include "private/widgets/QWidgetAdapter_widgets_p.h"
-#include <QMainWindow>
-typedef QWidget QWidgetOrQuick;
-typedef QMainWindow QMainWindowOrQuick;
+# include <QMainWindow>
+  typedef QWidget QWidgetOrQuick;
+  typedef QMainWindow QMainWindowOrQuick;
+  typedef Layouting::Widget_qwidget LayoutGuestWidgetBase;
 #else
+# include "../multisplitter/Widget_quick.h"
 # include "quick/QWidgetAdapter_quick_p.h"
-typedef KDDockWidgets::QWidgetAdapter QWidgetOrQuick;
-typedef QWidgetOrQuick QMainWindowOrQuick;
+  typedef KDDockWidgets::QWidgetAdapter QWidgetOrQuick;
+  typedef QWidgetOrQuick QMainWindowOrQuick;
+  typedef Layouting::Widget_quick LayoutGuestWidgetBase;
 #endif
+
+class LayoutGuestWidget : public KDDockWidgets::QWidgetAdapter
+                        , public LayoutGuestWidgetBase
+{
+public:
+    explicit LayoutGuestWidget(QWidgetOrQuick *parent)
+        : QWidgetAdapter(parent)
+        , LayoutGuestWidgetBase(this)
+    {
+    }
+};
 
 #endif

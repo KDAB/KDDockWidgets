@@ -47,8 +47,7 @@ static FrameOptions actualOptions(FrameOptions options)
 }
 
 Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
-    : QWidgetAdapter(parent)
-    , Layouting::Widget_qwidget(this)
+    : LayoutGuestWidget(parent)
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_options(actualOptions(options))
 {
@@ -281,7 +280,7 @@ void Frame::updateTitleBarVisibility()
 
 bool Frame::containsMouse(QPoint globalPos) const
 {
-    return QWidgetAdapter::rect().contains(Layouting::Widget_qwidget::mapFromGlobal(globalPos));
+    return QWidgetAdapter::rect().contains(LayoutGuestWidgetBase::mapFromGlobal(globalPos));
 }
 
 TitleBar *Frame::titleBar() const
