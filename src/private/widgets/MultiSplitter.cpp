@@ -39,7 +39,6 @@ using namespace KDDockWidgets;
 MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
     : LayoutGuestWidget(this)
 {
-
     Q_ASSERT(parent);
     setRootItem(new Layouting::ItemContainer(this));
     DockRegistry::self()->registerLayout(this);
@@ -417,21 +416,17 @@ Layouting::ItemContainer *MultiSplitter::rootItem() const
     return m_rootItem;
 }
 
-QRect MultiSplitter::rectForDrop(const QWidgetOrQuick *widget, Location location,
+QRect MultiSplitter::rectForDrop(const FloatingWindow *fw, Location location,
                                  const Layouting::Item *relativeTo) const
 {
     Layouting::Item item(nullptr);
+    if (!fw)
+        return {};
 
-    if (auto fw = qobject_cast<const FloatingWindow*>(widget)) {
-        Layouting::ItemContainer *root = fw->dropArea()->rootItem();
-        item.setSize(root->size());
-        item.setMinSize(root->minSize());
-        item.setMaxSizeHint(root->maxSizeHint());
-    } else {
-        item.setSize(widget->size());
-        item.setMinSize(Layouting::Widget_qwidget::widgetMinSize(widget));
-        item.setMaxSizeHint(Layouting::Widget_qwidget::widgetMaxSize(widget));
-    }
+    Layouting::ItemContainer *root = fw->dropArea()->rootItem();
+    item.setSize(root->size());
+    item.setMinSize(root->minSize());
+    item.setMaxSizeHint(root->maxSizeHint());
 
     Layouting::ItemContainer *container = relativeTo ? relativeTo->parentContainer()
                                                      : m_rootItem;
