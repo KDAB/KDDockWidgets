@@ -35,11 +35,9 @@ set(DOCKSLIBS_SRCS
     private/indicators/ClassicIndicators.cpp
     # private/indicators/AnimatedIndicators.cpp
     private/DropArea.cpp
-    private/TabWidget.cpp
     private/FloatingWindow.cpp
     private/Logging.cpp
     private/TitleBar.cpp
-    private/DebugWindow.cpp
     private/DockRegistry.cpp
     private/Draggable.cpp
     private/WindowBeingDragged.cpp
@@ -65,7 +63,6 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/DropIndicatorOverlayInterface_p.h
     private/FloatingWindow_p.h
     private/Frame_p.h
-    private/TabWidget_p.h
     private/TitleBar_p.h
 )
 
@@ -76,6 +73,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/FrameWidget_p.h
     private/widgets/TabBarWidget_p.h
     private/widgets/TabWidgetWidget_p.h
+    private/TabWidget_p.h
 )
 
 if(OPTION_QTQUICK)
@@ -92,6 +90,8 @@ if(OPTION_QTQUICK)
     qt5_add_resources(RESOURCES_QUICK ${CMAKE_CURRENT_SOURCE_DIR}/qtquick.qrc)
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
+      private/DebugWindow.cpp
+      private/TabWidget.cpp
       private/widgets/TabBarWidget.cpp
       private/widgets/FloatingWindowWidget.cpp
       private/widgets/FrameWidget.cpp
