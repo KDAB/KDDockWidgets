@@ -116,6 +116,22 @@ void QWidgetAdapter::resize(QSize sz)
     setHeight(sz.height());
 }
 
+bool QWidgetAdapter::isMaximized() const
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+    return false;
+}
+
+void QWidgetAdapter::showMaximized()
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+}
+
+void QWidgetAdapter::showNormal()
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+}
+
 QWindow *QWidgetAdapter::windowHandle() const { return nullptr; }
 
 void QWidgetAdapter::move(int x, int y)

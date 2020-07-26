@@ -93,6 +93,9 @@ public:
     void setMinimumSize(QSize);
     void resize(QSize);
     bool isWindow() const { return false; }
+    bool isMaximized() const;
+    void showMaximized();
+    void showNormal();
 
     QWindow *windowHandle() const;
     QWidgetAdapter *window() const { return nullptr; }
