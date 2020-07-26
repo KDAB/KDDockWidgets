@@ -23,7 +23,6 @@
 #define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
 #include "docks_export.h"
-#include "multisplitter/Widget_qwidget.h"
 #include "multisplitter/Separator_p.h"
 #include "QWidgetAdapter.h"
 #include "KDDockWidgets.h"
@@ -55,8 +54,7 @@ class Frame;
  * relative to a single widget.
  */
 class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter
-        : public QWidgetAdapter
-        , public Layouting::Widget_qwidget
+        : public LayoutGuestWidget
 {
     Q_OBJECT
 public:
