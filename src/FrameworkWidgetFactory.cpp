@@ -119,4 +119,26 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(
 {
     return nullptr;
 }
+
+TabBar *DefaultWidgetFactory::createTabBar(TabWidget *parent) const
+{
+    Q_UNUSED(parent)
+    Q_ASSERT(false);
+    return nullptr;
+}
+
+TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
+{
+    Q_UNUSED(parent)
+    Q_ASSERT(false);
+    return nullptr;
+}
+
+Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *parent) const
+{
+    Q_UNUSED(parent)
+    Q_ASSERT(false);
+    return nullptr;
+}
+
 #endif
