@@ -29,10 +29,7 @@
 # include "quick/FrameQuick_p.h"
 # include "quick/DockWidgetQuick.h"
 # include "quick/TitleBarQuick_p.h"
-# include "quick/TabBarQuick_p.h"
-# include "quick/TabWidgetQuick_p.h"
 # include "quick/FloatingWindowQuick_p.h"
-# include "quick/SeparatorQuick_p.h"
 #endif
 
 using namespace KDDockWidgets;
@@ -88,7 +85,7 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(
 }
 #else
 
-Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, Frame::Options options) const
+Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options) const
 {
     return new FrameQuick(parent, options);
 }
@@ -103,27 +100,17 @@ TitleBar *DefaultWidgetFactory::createTitleBar(FloatingWindow *fw) const
     return new TitleBarQuick(fw);
 }
 
-TabBar *DefaultWidgetFactory::createTabBar(TabWidget *tb) const
-{
-    return new TabBarQuick(tb);
-}
-
-TabWidget *DefaultWidgetFactory::createTabWidget(Frame *frame) const
-{
-    return new TabWidgetQuick(frame);
-}
-
-Separator *DefaultWidgetFactory::createSeparator(QWidgetAdapter *parent) const
+/*Separator *DefaultWidgetFactory::createSeparator(QWidgetAdapter *parent) const
 {
     return new SeparatorQuick(parent);
-}
+}*/
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(QWidgetOrQuick *parent) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent) const
 {
     return new FloatingWindowQuick(parent);
 }
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, QWidgetOrQuick *parent) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWindowBase *parent) const
 {
     return new FloatingWindowQuick(frame, parent);
 }
