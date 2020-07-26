@@ -19,6 +19,11 @@
 #include <QWidget>
 #include <QWindow>
 
+#ifdef KDDOCKWIDGETS_QTQUICK
+# include <QQuickItem>
+# include <QQuickWindow>
+#endif
+
 #ifdef QT_X11EXTRAS_LIB
 # include <QtX11Extras/QX11Info>
 #endif
@@ -59,10 +64,9 @@ inline bool windowManagerHasTranslucency()
     return true;
 }
 
-inline QSize screenSizeForWidget(const QWidget *w)
+inline QSize screenSizeForWindow(const QWindow *window)
 {
-    QWidget *topLevel = w->window();
-    if (QWindow *window = topLevel->windowHandle()) {
+    if (window) {
         if (QScreen *screen = window->screen()) {
             return screen->size();
         }
@@ -71,10 +75,9 @@ inline QSize screenSizeForWidget(const QWidget *w)
     return {};
 }
 
-inline int screenNumberForWidget(const QWidget *w)
+inline int screenNumberForWindow(const QWindow *window)
 {
-    QWidget *topLevel = w->window();
-    if (QWindow *window = topLevel->windowHandle()) {
+    if (window) {
         if (QScreen *screen = window->screen()) {
             return qApp->screens().indexOf(screen);
         }
@@ -82,6 +85,31 @@ inline int screenNumberForWidget(const QWidget *w)
 
     return -1;
 }
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+inline int screenNumberForWidget(const QWidget *widget)
+{
+    return screenNumberForWindow(widget->window()->windowHandle());
+}
+
+inline QSize screenSizeForWidget(const QWidget *widget)
+{
+    return screenSizeForWindow(widget->window()->windowHandle());
+}
+
+#else
+
+inline int screenNumberForWidget(const QQuickItem *w)
+{
+    return screenNumberForWindow(w->window());
+}
+
+inline QSize screenSizeForWidget(const QQuickItem *w)
+{
+    return screenSizeForWindow(w->window());
+}
+
+#endif
 
 };
 
