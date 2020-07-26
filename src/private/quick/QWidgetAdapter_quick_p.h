@@ -85,6 +85,7 @@ public:
     QSize size() const { return QQuickItem::size().toSize(); }
     QSize minimumSizeHint() const { return m_minimumSize; }
     QSize minimumSize() const { return m_minimumSize; }
+    QSize maximumize() const { return m_maximumSize; }
     int minimumHeight() const { return m_minimumSize.height(); }
     int minimumWidth() const { return m_minimumSize.width(); }
 
@@ -125,6 +126,7 @@ protected:
     virtual void onCloseEvent(QCloseEvent *);
 private:
     QSize m_minimumSize = {0, 0};
+    QSize m_maximumSize = {0, 0};
 };
 
 }

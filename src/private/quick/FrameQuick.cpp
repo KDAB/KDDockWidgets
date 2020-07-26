@@ -23,7 +23,7 @@
 
 using namespace KDDockWidgets;
 
-FrameQuick::sFrameQuick(QWidgetAdapter *parent, FrameOptions options)
+FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     : Frame(parent, options)
 {
     qDebug() << Q_FUNC_INFO << "Created frame";

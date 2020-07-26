@@ -26,7 +26,6 @@ set(DOCKSLIBS_SRCS
     Qt5Qt6Compat_p.h
     FrameworkWidgetFactory.cpp
     DockWidgetBase.cpp
-    MainWindow.cpp
     MainWindowBase.cpp
     LayoutSaver.cpp
     private/Position.cpp
@@ -92,6 +91,7 @@ else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       private/DebugWindow.cpp
       private/TabWidget.cpp
+      MainWindow.cpp
       private/widgets/TabBarWidget.cpp
       private/widgets/FloatingWindowWidget.cpp
       private/widgets/FrameWidget.cpp

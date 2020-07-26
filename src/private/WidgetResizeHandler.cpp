@@ -14,7 +14,6 @@
 #include "TitleBar_p.h"
 #include "DragController_p.h"
 #include "Config.h"
-#include "widgets/FrameWidget_p.h"
 #include "Qt5Qt6Compat_p.h"
 
 #include <QEvent>

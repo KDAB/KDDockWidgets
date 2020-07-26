@@ -516,7 +516,7 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
     return nullptr;
 }
 
-static DropArea* deepestDropAreaInTopLevel(QWidget *topLevel, QPoint globalPos,
+static DropArea* deepestDropAreaInTopLevel(QWidgetOrQuick *topLevel, QPoint globalPos,
                                            const QStringList &affinities)
 {
     auto w = topLevel->childAt(topLevel->mapFromGlobal(globalPos));

@@ -281,7 +281,7 @@ void Frame::updateTitleBarVisibility()
 
 bool Frame::containsMouse(QPoint globalPos) const
 {
-    return QWidget::rect().contains(Layouting::Widget_qwidget::mapFromGlobal(globalPos));
+    return QWidgetAdapter::rect().contains(Layouting::Widget_qwidget::mapFromGlobal(globalPos));
 }
 
 TitleBar *Frame::titleBar() const
@@ -341,7 +341,7 @@ FloatingWindow *Frame::floatingWindow() const
     // However, if there's a MainWindow in the hierarchy it stops, which can
     // happen with nested main windows.
 
-    QWidget *p = QWidget::parentWidget();
+    auto p = QWidgetAdapter::parentWidget();
     while (p) {
         if (qobject_cast<KDDockWidgets::MainWindowBase*>(p))
             return nullptr;
@@ -421,10 +421,10 @@ bool Frame::anyNonDockable() const
 void Frame::onDockWidgetShown(DockWidgetBase *w)
 {
     if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
-        if (!QWidget::isVisible()) {
+        if (!QWidgetAdapter::isVisible()) {
             qCDebug(hiding) << "Widget" << w << " was shown, we're=" << "; visible="
-                            << QWidget::isVisible();
-            QWidget::setVisible(true);
+                            << QWidgetAdapter::isVisible();
+            QWidgetAdapter::setVisible(true);
         }
     }
 }
@@ -432,11 +432,11 @@ void Frame::onDockWidgetShown(DockWidgetBase *w)
 void Frame::onDockWidgetHidden(DockWidgetBase *w)
 {
     if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
-        if (QWidget::isVisible()) {
+        if (QWidgetAdapter::isVisible()) {
             qCDebug(hiding) << "Widget" << w << " was hidden, we're="
-                            << "; visible=" << QWidget::isVisible()
+                            << "; visible=" << QWidgetAdapter::isVisible()
                             << "; dockWidgets=" << dockWidgets();
-            QWidget::setVisible(false);
+            QWidgetAdapter::setVisible(false);
         }
     }
 }
@@ -543,11 +543,11 @@ bool Frame::isInMainWindow() const
 bool Frame::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
-        qCDebug(docking) << "Frame: parent changed to =" << QWidget::parentWidget();
-        if (auto dropArea = qobject_cast<DropArea *>(QWidget::parentWidget())) {
+        qCDebug(docking) << "Frame: parent changed to =" << QWidgetAdapter::parentWidget();
+        if (auto dropArea = qobject_cast<DropArea *>(QWidgetAdapter::parentWidget())) {
             setDropArea(dropArea);
         } else {
-            Q_ASSERT(!QWidget::parent());
+            Q_ASSERT(!QWidgetAdapter::parent());
             setDropArea(nullptr);
         }
     }
@@ -570,7 +570,7 @@ Frame *Frame::deserialize(const LayoutSaver::Frame &f)
     }
 
     frame->setCurrentTabIndex(f.currentTabIndex);
-    frame->QWidget::setGeometry(f.geometry);
+    frame->QWidgetAdapter::setGeometry(f.geometry);
 
     return frame;
 }
@@ -583,7 +583,7 @@ LayoutSaver::Frame Frame::serialize() const
     const DockWidgetBase::List docks = dockWidgets();
 
     frame.objectName = objectName();
-    frame.geometry = QWidget::geometry();
+    frame.geometry = QWidgetAdapter::geometry();
     frame.options = options();
     frame.currentTabIndex = currentTabIndex();
     frame.id = id(); // for coorelation purposes
