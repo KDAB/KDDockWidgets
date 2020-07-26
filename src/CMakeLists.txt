@@ -82,7 +82,7 @@ if(OPTION_QTQUICK)
       private/quick/QmlTypes.cpp
       private/quick/FrameQuick.cpp
       private/quick/MainWindowQuick.cpp
-      private/quick/LayoutSaverQuick.cpp)
+      )
 
     qt5_add_resources(RESOURCES_QUICK ${CMAKE_CURRENT_SOURCE_DIR}/qtquick.qrc)
 else()
