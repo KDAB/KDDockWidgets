@@ -127,7 +127,7 @@ if(OPTION_BUILD_PYTHON_BINDINGS)
   add_subdirectory(python)
 endif()
 
-if(${PROJECT_NAME}_EXAMPLES)
+if(${PROJECT_NAME}_EXAMPLES AND NOT OPTION_QTQUICK)
   add_subdirectory(examples/dockwidgets)
   set_compiler_flags(kddockwidgets_example)
 endif()
