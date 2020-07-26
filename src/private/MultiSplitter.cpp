@@ -43,7 +43,7 @@ MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
     setRootItem(new Layouting::ItemContainer(this));
     DockRegistry::self()->registerLayout(this);
 
-    setLayoutSize(parent->QWidget::size());
+    setLayoutSize(parent->size());
 
     qCDebug(multisplittercreation()) << "MultiSplitter";
 
@@ -88,7 +88,7 @@ bool MultiSplitter::isInMainWindow() const
 
 MainWindowBase *MultiSplitter::mainWindow() const
 {
-    if (auto pw = QWidget::parentWidget()) {
+    if (auto pw = QWidgetAdapter::parentWidget()) {
         // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as it's parented
         if (pw->objectName() == QLatin1String("MyCentralWidget"))
             return qobject_cast<MainWindowBase*>(pw->parentWidget());
@@ -99,9 +99,8 @@ MainWindowBase *MultiSplitter::mainWindow() const
 
 FloatingWindow *MultiSplitter::floatingWindow() const
 {
-    return qobject_cast<FloatingWindow*>(QWidget::parentWidget());
+    return qobject_cast<FloatingWindow*>(QWidgetAdapter::parentWidget());
 }
-
 
 bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
                                          Location location,
@@ -172,7 +171,7 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it.
         // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
-        frame->QWidget::setParent(nullptr); // so ~Item doesn't delete it
+        frame->QWidgetAdapter::setParent(nullptr); // so ~Item doesn't delete it
         frame->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
     }
 
@@ -200,7 +199,6 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
         frame->addWidget(dw, option);
     } else if (auto ms = qobject_cast<MultiSplitter*>(w)) {
         newItem = ms->rootItem();
-        Q_ASSERT(newItem->hostWidget()->asQWidget() != this);
         newItem->setHostWidget(this);
         delete ms;
     }
@@ -333,7 +331,7 @@ void MultiSplitter::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item
         frame->addWidget(dw);
     }
 
-    frame->QWidget::setVisible(true);
+    frame->QWidgetAdapter::setVisible(true);
 }
 
 void MultiSplitter::layoutEqually()
@@ -448,7 +446,7 @@ bool MultiSplitter::deserialize(const LayoutSaver::MultiSplitter &l)
     m_rootItem->fillFromVariantMap(l.layout, frames);
 
     updateSizeConstraints();
-    m_rootItem->setSize_recursive(QWidget::size());
+    m_rootItem->setSize_recursive(QWidgetAdapter::size());
 
     return true;
 }
