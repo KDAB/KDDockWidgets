@@ -20,7 +20,7 @@
 #include "MainWindowBase.h"
 #include "multisplitter/Item_p.h"
 #include "DockRegistry_p.h"
-#include "private/widgets/FrameWidget_p.h"
+#include "Frame_p.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"
@@ -53,14 +53,7 @@ int DropArea::numFrames() const
 
 Frame::List DropArea::frames() const
 {
-    const auto frameWidgets = findChildren<FrameWidget *>(QString(), Qt::FindDirectChildrenOnly);
-
-    Frame::List frames;
-    frames.reserve(frameWidgets.size());
-    for (FrameWidget *f : frameWidgets)
-        frames.push_back(f);
-
-    return frames;
+    return findChildren<Frame *>(QString(), Qt::FindDirectChildrenOnly);
 }
 
 Frame *DropArea::frameContainingPos(QPoint globalPos) const
@@ -68,7 +61,7 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
     const Layouting::Item::List &items = this->items();
     for (Layouting::Item *item : items) {
         auto frame = static_cast<Frame*>(item->guestAsQObject());
-        if (!frame || !frame->QWidget::isVisible()) {
+        if (!frame || !frame->QWidgetAdapter::isVisible()) {
             continue;
         }
 
