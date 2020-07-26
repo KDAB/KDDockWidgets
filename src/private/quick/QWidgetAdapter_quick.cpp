@@ -157,6 +157,18 @@ void QWidgetAdapter::setSizePolicy(QSizePolicy)
     qWarning() << Q_FUNC_INFO << "Implement me";
 }
 
+QSizePolicy QWidgetAdapter::sizePolicy() const
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+    return {};
+}
+
+QSize QWidgetAdapter::sizeHint() const
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+    return {};
+}
+
 void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
 {
     if (auto w = windowHandle()) {

@@ -85,7 +85,7 @@ public:
     QSize size() const { return QQuickItem::size().toSize(); }
     QSize minimumSizeHint() const { return m_minimumSize; }
     QSize minimumSize() const { return m_minimumSize; }
-    QSize maximumize() const { return m_maximumSize; }
+    QSize maximumSize() const { return m_maximumSize; }
     int minimumHeight() const { return m_minimumSize.height(); }
     int minimumWidth() const { return m_minimumSize.width(); }
 
@@ -114,6 +114,8 @@ public:
     void setParent(QQuickItem*);
     void activateWindow();
     void setSizePolicy(QSizePolicy);
+    QSizePolicy sizePolicy() const;
+    QSize sizeHint() const;
 
 protected:
     void raiseAndActivate();
