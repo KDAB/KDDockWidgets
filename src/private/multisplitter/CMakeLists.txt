@@ -38,7 +38,13 @@ set(MULTISPLITTER_SRCS_QTQUICK
 )
 
 option(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND "Build support for QtWidgets" ON)
-option(BUILD_MULTISPLITTER_QTQUICK_FRONTEND "Build support for QtQuick" OFF)
+if (OPTION_QTQUICK)
+    # We're building the layouting engine as part of KDDW. If KDDW has set to build with QtQuick
+    # then so does the layouting engine
+    SET(BUILD_MULTISPLITTER_QTQUICK_FRONTEND ON)
+else()
+  option(BUILD_MULTISPLITTER_QTQUICK_FRONTEND "Build support for QtQuick" OFF)
+endif()
 
 if(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND)
   set(MULTISPLITTER_SRCS ${MULTISPLITTER_SRCS} ${MULTISPLITTER_SRCS_QTWIDGETS})
