@@ -27,15 +27,29 @@
 # include "../multisplitter/Widget_qwidget.h"
 # include "private/widgets/QWidgetAdapter_widgets_p.h"
 # include <QMainWindow>
+  namespace KDDockWidgets {
+    class MainWindow;
+    class DockWidget;
+  }
+
   typedef QWidget QWidgetOrQuick;
   typedef QMainWindow QMainWindowOrQuick;
   typedef Layouting::Widget_qwidget LayoutGuestWidgetBase;
+  typedef KDDockWidgets::MainWindow MainWindowType;
+  typedef KDDockWidgets::DockWidget DockWidgetType;
 #else
 # include "../multisplitter/Widget_quick.h"
 # include "private/quick/QWidgetAdapter_quick_p.h"
+  namespace KDDockWidgets {
+    class MainWindowQuick;
+    class DockWidgetQuick;
+  }
+
   typedef KDDockWidgets::QWidgetAdapter QWidgetOrQuick;
   typedef QWidgetOrQuick QMainWindowOrQuick;
   typedef Layouting::Widget_quick LayoutGuestWidgetBase;
+  typedef KDDockWidgets::MainWindowQuick MainWindowType;
+  typedef KDDockWidgets::DockWidgetQuick DockWidgetType;
 #endif
 
 class LayoutGuestWidget : public KDDockWidgets::QWidgetAdapter

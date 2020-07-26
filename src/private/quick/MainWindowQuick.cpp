@@ -14,8 +14,8 @@
 
 using namespace KDDockWidgets;
 
-MainWindowQuick::MainWindowQuick()
-    : MainWindowBase(QString(), MainWindowOption_HasCentralFrame)
+MainWindowQuick::MainWindowQuick(const QString &uniqueName)
+    : MainWindowBase(uniqueName, MainWindowOption_None)
 {
     qDebug() << "Created";
 }

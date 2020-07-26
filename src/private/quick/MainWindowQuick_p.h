@@ -16,13 +16,13 @@
 
 namespace KDDockWidgets {
 
-class MainWindowQuick : public MainWindowBase
+class DOCKS_EXPORT MainWindowQuick : public MainWindowBase
 {
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
     Q_PROPERTY(KDDockWidgets::DropAreaWithCentralFrame* dropArea READ dropArea WRITE setDropArea NOTIFY dropAreaChanged)
 public:
-    MainWindowQuick();
+    explicit MainWindowQuick(const QString &uniqueName = {});
 protected:
     DropAreaWithCentralFrame *dropArea() const override;
     void setDropArea(DropAreaWithCentralFrame*);

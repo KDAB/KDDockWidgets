@@ -10,8 +10,14 @@
 */
 
 #include "Config.h"
-#include "DockWidget.h"
-#include "MainWindow.h"
+
+#ifdef KDDOCKWIDGETS_QTQUICK
+# include "private/quick/DockWidgetQuick.h"
+# include "private/quick/MainWindowQuick_p.h"
+#else
+# include "DockWidget.h"
+# include "MainWindow.h"
+#endif
 
 #include <QApplication>
 #include <QDebug>
@@ -22,11 +28,11 @@ using namespace KDDockWidgets;
 static bool lint(const QString &filename)
 {
     DockWidgetFactoryFunc dwFunc = [] (const QString &dwName) {
-        return static_cast<DockWidgetBase*>(new DockWidget(dwName));
+        return static_cast<DockWidgetBase*>(new DockWidgetType(dwName));
     };
 
     MainWindowFactoryFunc mwFunc = [] (const QString &dwName) {
-        return static_cast<MainWindowBase*>(new MainWindow(dwName));
+        return static_cast<MainWindowBase*>(new MainWindowType(dwName));
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);
