@@ -15,10 +15,10 @@
 
 using namespace KDDockWidgets;
 
-LayoutSaver::LayoutSaver() : d(nullptr) {}
+LayoutSaver::LayoutSaver(RestoreOptions) : d(nullptr) {}
 LayoutSaver::~LayoutSaver() {}
 
-bool LayoutSaver::saveToDisk() { return false; }
-bool LayoutSaver::restoreFromDisk() { return false; }
+bool LayoutSaver::saveToFile(const QString &) { return false; }
+bool LayoutSaver::restoreFromFile(const QString &) { return false; }
 
 bool LayoutSaver::restoreInProgress() { return false; }
