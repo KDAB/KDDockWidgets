@@ -23,7 +23,7 @@
 
 using namespace KDDockWidgets;
 
-FrameQuick::FrameQuick(QWidgetAdapter *parent, Options options)
+FrameQuick::sFrameQuick(QWidgetAdapter *parent, FrameOptions options)
     : Frame(parent, options)
 {
     qDebug() << Q_FUNC_INFO << "Created frame";
@@ -34,4 +34,55 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, Options options)
     item->setProperty("frameCpp", QVariant::fromValue(this));
     item->setParentItem(this);
     item->setParent(this);
+}
+
+void FrameQuick::removeWidget_impl(DockWidgetBase *)
+{
+
+}
+
+void FrameQuick::detachTab_impl(DockWidgetBase *)
+{
+
+}
+
+int FrameQuick::indexOfDockWidget_impl(DockWidgetBase *)
+{
+    return 0;
+}
+
+int FrameQuick::currentIndex_impl() const
+{
+    return 0;
+}
+
+void FrameQuick::setCurrentTabIndex_impl(int index)
+{
+    Q_UNUSED(index)
+}
+
+void FrameQuick::setCurrentDockWidget_impl(DockWidgetBase *)
+{
+
+}
+
+void FrameQuick::insertDockWidget_impl(DockWidgetBase *, int index)
+{
+    Q_UNUSED(index)
+}
+
+DockWidgetBase *FrameQuick::dockWidgetAt_impl(int index) const
+{
+    Q_UNUSED(index)
+    return nullptr;
+}
+
+DockWidgetBase *FrameQuick::currentDockWidget_impl() const
+{
+    return nullptr;
+}
+
+int FrameQuick::dockWidgetCount_impl() const
+{
+    return 0;
 }

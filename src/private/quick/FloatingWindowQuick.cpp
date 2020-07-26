@@ -17,13 +17,13 @@
 
 using namespace KDDockWidgets;
 
-FloatingWindowQuick::FloatingWindowQuick(QWidgetOrQuick *parent)
+FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
     : FloatingWindow(parent)
 {
     init();
 }
 
-FloatingWindowQuick::FloatingWindowQuick(Frame *frame, QWidgetOrQuick *parent)
+FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
     : FloatingWindow(frame, parent)
 {
     init();

@@ -20,8 +20,8 @@ class DOCKS_EXPORT FloatingWindowQuick : public FloatingWindow
 {
     Q_OBJECT
 public:
-    explicit FloatingWindowQuick(QWidgetOrQuick *parent = nullptr);
-    explicit FloatingWindowQuick(Frame *frame, QWidgetOrQuick *parent = nullptr);
+    explicit FloatingWindowQuick(MainWindowBase *parent = nullptr);
+    explicit FloatingWindowQuick(Frame *frame, MainWindowBase *parent = nullptr);
 
 private:
     void init();

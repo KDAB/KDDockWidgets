@@ -24,8 +24,19 @@ class DOCKS_EXPORT FrameQuick : public Frame
 {
     Q_OBJECT
 public:
-    explicit FrameQuick(QWidgetAdapter *parent = nullptr, Options = Option_None);
+    explicit FrameQuick(QWidgetAdapter *parent = nullptr, FrameOptions = FrameOption::FrameOption_None);
 
+protected:
+    void removeWidget_impl(DockWidgetBase *) override;
+    void detachTab_impl(DockWidgetBase *) override;
+    int indexOfDockWidget_impl(DockWidgetBase *) override;
+    int currentIndex_impl() const override;
+    void setCurrentTabIndex_impl(int index) override;
+    void setCurrentDockWidget_impl(DockWidgetBase *) override;
+    void insertDockWidget_impl(DockWidgetBase *, int index) override;
+    DockWidgetBase *dockWidgetAt_impl(int index) const override;
+    DockWidgetBase *currentDockWidget_impl() const override;
+    int dockWidgetCount_impl() const override;
 };
 
 }
