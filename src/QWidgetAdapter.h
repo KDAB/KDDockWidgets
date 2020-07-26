@@ -32,7 +32,7 @@
   typedef Layouting::Widget_qwidget LayoutGuestWidgetBase;
 #else
 # include "../multisplitter/Widget_quick.h"
-# include "quick/QWidgetAdapter_quick_p.h"
+# include "private/quick/QWidgetAdapter_quick_p.h"
   typedef KDDockWidgets::QWidgetAdapter QWidgetOrQuick;
   typedef QWidgetOrQuick QMainWindowOrQuick;
   typedef Layouting::Widget_quick LayoutGuestWidgetBase;
