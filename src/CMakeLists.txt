@@ -85,10 +85,8 @@ if(OPTION_QTQUICK)
       private/quick/FloatingWindowQuick.cpp
       private/quick/TitleBarQuick.cpp
       private/quick/QmlTypes.cpp
-      private/quick/TabWidgetQuick.cpp
       private/quick/FrameQuick.cpp
       private/quick/MainWindowQuick.cpp
-      private/quick/TabBarQuick.cpp
       private/quick/LayoutSaverQuick.cpp)
 
     qt5_add_resources(RESOURCES_QUICK ${CMAKE_CURRENT_SOURCE_DIR}/qtquick.qrc)
@@ -154,7 +152,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
 endif()
 
 if(OPTION_QTQUICK)
-  target_link_libraries(kddockwidgets Qt5::Widgets Qt5::Quick)
+  target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets Qt5::Quick kddockwidgets_multisplitter)
 else()
   target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets kddockwidgets_multisplitter)
 endif()
