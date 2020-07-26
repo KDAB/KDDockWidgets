@@ -147,6 +147,16 @@ void QWidgetAdapter::setParent(QQuickItem *p)
     QQuickItem::setParentItem(p);
 }
 
+void QWidgetAdapter::activateWindow()
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+}
+
+void QWidgetAdapter::setSizePolicy(QSizePolicy)
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+}
+
 void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
 {
     if (auto w = windowHandle()) {

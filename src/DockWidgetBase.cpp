@@ -389,7 +389,7 @@ void DockWidgetBase::show()
         // This reduces flickering on some platforms
         morphIntoFloatingWindow();
     } else {
-        QWidget::show();
+        QWidgetOrQuick::show();
     }
 }
 
@@ -624,7 +624,7 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 
     Frame *frame = q->frame();
 
-    if (frame && frame->QWidget::parentWidget() == DockRegistry::self()->layoutForItem(layoutItem)) {
+    if (frame && frame->QWidgetAdapter::parentWidget() == DockRegistry::self()->layoutForItem(layoutItem)) {
         // There's a frame already. Means the DockWidget was hidden instead of closed.
         // Nothing to do, the dock widget will simply be shown
         qCDebug(placeholder) << Q_FUNC_INFO << "Already had frame.";

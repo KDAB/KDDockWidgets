@@ -111,6 +111,8 @@ public:
     void move(int x, int y);
 
     void setParent(QQuickItem*);
+    void activateWindow();
+    void setSizePolicy(QSizePolicy);
 
 protected:
     void raiseAndActivate();
