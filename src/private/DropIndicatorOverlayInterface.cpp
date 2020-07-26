@@ -30,7 +30,7 @@ void DropIndicatorOverlayInterface::setWindowBeingDragged(const FloatingWindow *
     if (window != m_windowBeingDragged) {
         m_windowBeingDragged = window;
         if (m_windowBeingDragged) {
-            setGeometry(m_dropArea->QWidget::rect());
+            setGeometry(m_dropArea->QWidgetAdapter::rect());
             raise();
         } else {
             setHoveredFrame(nullptr);

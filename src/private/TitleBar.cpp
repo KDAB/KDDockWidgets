@@ -127,7 +127,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         }
     }
 
-    QRect r = m_frame->QWidget::geometry();
+    QRect r = m_frame->QWidgetAdapter::geometry();
     qCDebug(hovering) << "TitleBar::makeWindow original geometry" << r;
     r.moveTopLeft(static_cast<Layouting::Widget*>(m_frame)->mapToGlobal(QPoint(0, 0))); // TODO: Remove static_cast if it compiles. Ambiguous base for now
 
