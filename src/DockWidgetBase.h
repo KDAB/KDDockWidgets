@@ -56,7 +56,7 @@ class StateDragging;
  * Do not use instantiate directly in user code. Use DockWidget instead.
  */
 #ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
-class DOCKS_EXPORT DockWidgetBase : public QWidgetOrQuick
+class DOCKS_EXPORT DockWidgetBase : public QWidgetAdapter
 #else
 class DOCKS_EXPORT DockWidgetBase : public QWidget
 #endif

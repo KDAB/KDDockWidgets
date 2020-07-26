@@ -114,7 +114,7 @@ public:
 };
 
 DockWidgetBase::DockWidgetBase(const QString &name, Options options)
-    : QWidgetOrQuick(nullptr, Qt::Tool)
+    : QWidgetAdapter(nullptr, Qt::Tool)
     , d(new Private(name, options, this))
 {
     d->init();
