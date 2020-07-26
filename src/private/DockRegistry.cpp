@@ -12,7 +12,6 @@
 #include "DockRegistry_p.h"
 #include "DockWidgetBase.h"
 #include "Logging_p.h"
-#include "DebugWindow_p.h"
 #include "Position_p.h"
 #include "widgets/MultiSplitter_p.h"
 #include "quick/QmlTypes.h"
@@ -21,6 +20,10 @@
 #include <QDebug>
 #include <QApplication>
 #include <QWindow>
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+# include "DebugWindow_p.h"
+#endif
 
 using namespace KDDockWidgets;
 
@@ -365,9 +368,9 @@ FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) con
     return nullptr;
 }
 
-QVector<QWidget *> DockRegistry::topLevels(bool excludeFloatingDocks) const
+QVector<QWidgetOrQuick *> DockRegistry::topLevels(bool excludeFloatingDocks) const
 {
-    QVector<QWidget *> windows;
+    QVector<QWidgetOrQuick *> windows;
     windows.reserve(m_nestedWindows.size() + m_mainWindows.size());
 
     if (!excludeFloatingDocks) {
@@ -379,7 +382,7 @@ QVector<QWidget *> DockRegistry::topLevels(bool excludeFloatingDocks) const
 
     for (MainWindowBase *m : m_mainWindows) {
         if (m->isVisible())
-            windows << m->topLevelWidget();
+            windows << m->window();
     }
 
     return windows;

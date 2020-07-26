@@ -93,7 +93,7 @@ public:
     /// Every returned widget is either a FloatingWindow, MainWindow, or something that contains a MainWindow.
     ///
     /// If @p excludeFloatingDocks is true then FloatingWindow won't be returned
-    QVector<QWidget*> topLevels(bool excludeFloatingDocks = false) const;
+    QVector<QWidgetOrQuick *> topLevels(bool excludeFloatingDocks = false) const;
 
     /**
      * @brief Closes all dock widgets, and destroys all FloatingWindows
