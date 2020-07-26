@@ -31,8 +31,6 @@ set(DOCKSLIBS_SRCS
     private/Position.cpp
     private/ObjectViewer.cpp
     private/DropIndicatorOverlayInterface.cpp
-    private/indicators/ClassicIndicators.cpp
-    # private/indicators/AnimatedIndicators.cpp
     private/DropArea.cpp
     private/FloatingWindow.cpp
     private/Logging.cpp
@@ -100,6 +98,8 @@ else()
       private/widgets/DockWidget.cpp
       private/widgets/QWidgetAdapter_widgets.cpp
       private/widgets/MultiSplitter.cpp
+      private/indicators/ClassicIndicators.cpp
+      # private/indicators/AnimatedIndicators.cpp
   )
 
   set(DOCKS_INSTALLABLE_INCLUDES
