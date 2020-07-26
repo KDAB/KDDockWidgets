@@ -136,6 +136,7 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
         }
     }
 #else
+    Q_UNUSED(frame);
     qWarning() << "Implement and abstract me!";
     return nullptr;
 #endif
