@@ -15,12 +15,14 @@
 #pragma once
 
 #include "multisplitter_export.h"
+#include "Item_p.h"
 
 #include <QRect>
 #include <QSize>
 #include <QDebug>
 #include <QObject>
 #include <qglobal.h>
+#include <QSizePolicy>
 
 #include <memory>
 
@@ -97,6 +99,39 @@ public:
 
     ///@brief returns an id for corelation purposes for saving layouts
     QString id() const;
+
+    template <typename T>
+    static QSize widgetMinSize(const T *w)
+    {
+        const int minW = w->minimumWidth() > 0 ? w->minimumWidth()
+                                               : w->minimumSizeHint().width();
+
+        const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
+                                                : w->minimumSizeHint().height();
+
+        return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
+    }
+
+    template <typename T>
+    static QSize widgetMaxSize(const T *w)
+    {
+        // The max size is usually QWidget::maximumSize(), but we also honour the QSizePolicy::Fixed+sizeHint() case
+        // as widgets don't need to have QWidget::maximumSize() to have a max size honoured
+
+        const QSize min = widgetMinSize(w);
+        QSize max = w->maximumSize();
+        max = boundedMaxSize(min, max); // for safety against weird values
+
+        const QSizePolicy policy = w->sizePolicy();
+
+        if (policy.verticalPolicy() == QSizePolicy::Fixed || policy.verticalPolicy() == QSizePolicy::Maximum)
+            max.setHeight(qMin(max.height(), w->sizeHint().height()));
+        if (policy.horizontalPolicy() == QSizePolicy::Fixed || policy.horizontalPolicy() == QSizePolicy::Maximum)
+            max.setWidth(qMin(max.width(), w->sizeHint().width()));
+
+        max = boundedMaxSize(min, max); // for safety against weird values
+        return max;
+    }
 
 protected:
     static QSize boundedMaxSize(QSize min, QSize max);

@@ -111,37 +111,6 @@ void Widget_qwidget::move(int x, int y)
     m_thisWidget->move(x, y);
 }
 
-QSize Widget_qwidget::widgetMinSize(const QWidget *w)
-{
-    const int minW = w->minimumWidth() > 0 ? w->minimumWidth()
-                                           : w->minimumSizeHint().width();
-
-    const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
-                                            : w->minimumSizeHint().height();
-
-    return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
-}
-
-QSize Widget_qwidget::widgetMaxSize(const QWidget *w)
-{
-    // The max size is usually QWidget::maximumSize(), but we also honour the QSizePolicy::Fixed+sizeHint() case
-    // as widgets don't need to have QWidget::maximumSize() to have a max size honoured
-
-    const QSize min = widgetMinSize(w);
-    QSize max = w->maximumSize();
-    max = boundedMaxSize(min, max); // for safety against weird values
-
-    const QSizePolicy policy = w->sizePolicy();
-
-    if (policy.verticalPolicy() == QSizePolicy::Fixed || policy.verticalPolicy() == QSizePolicy::Maximum)
-        max.setHeight(qMin(max.height(), w->sizeHint().height()));
-    if (policy.horizontalPolicy() == QSizePolicy::Fixed || policy.horizontalPolicy() == QSizePolicy::Maximum)
-        max.setWidth(qMin(max.width(), w->sizeHint().width()));
-
-    max = boundedMaxSize(min, max); // for safety against weird values
-    return max;
-}
-
 void Widget_qwidget::setSize(int width, int height)
 {
     m_thisWidget->resize(QSize(width, height));

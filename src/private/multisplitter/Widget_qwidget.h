@@ -59,8 +59,6 @@ public:
     QPoint mapFromGlobal(QPoint p) const override;
     QPoint mapToGlobal(QPoint p) const override;
 
-    static QSize widgetMinSize(const QWidget *w);
-    static QSize widgetMaxSize(const QWidget *w);
 private:
     QWidget *const m_thisWidget;
     Q_DISABLE_COPY(Widget_qwidget)
