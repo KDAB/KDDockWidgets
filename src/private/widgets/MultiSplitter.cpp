@@ -37,7 +37,7 @@
 using namespace KDDockWidgets;
 
 MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
-    : LayoutGuestWidget(this)
+    : LayoutGuestWidget(parent)
 {
     Q_ASSERT(parent);
     setRootItem(new Layouting::ItemContainer(this));
