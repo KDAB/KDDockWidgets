@@ -59,7 +59,7 @@ void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}
 
 void QWidgetAdapter::raise() {}
 
-int QWidgetAdapter::winId() const
+WId QWidgetAdapter::winId() const
 {
     if (QWindow *w = windowHandle())
         return w->winId();

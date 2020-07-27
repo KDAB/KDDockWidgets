@@ -92,7 +92,7 @@ public:
     bool hasFixedHeight() const {return false; }
     int maximumWidth() const { return m_maximumSize.width(); }
     int maximumHeight() const { return m_maximumSize.height(); }
-    int winId() const;
+    WId winId() const;
 
     void grabMouse();
     void releaseMouse();
