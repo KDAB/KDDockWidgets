@@ -195,7 +195,7 @@ install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/k
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
   KDDockWidgetsConfigVersion.cmake
-  VERSION ${PACKAGE_VERSION}
+  VERSION ${${PROJECT_NAME}_VERSION}
   COMPATIBILITY AnyNewerVersion
 )
 
