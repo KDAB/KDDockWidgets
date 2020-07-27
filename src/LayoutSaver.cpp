@@ -27,7 +27,7 @@
 #include "Position_p.h"
 #include "multisplitter/Item_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "MainWindow.h"
+#include "MainWindowBase.h"
 
 #include <qmath.h>
 #include <QDebug>
