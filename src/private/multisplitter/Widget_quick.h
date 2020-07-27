@@ -24,7 +24,7 @@ namespace Layouting {
 
 ///@brief A Layouting::Widget that's deals in QQuickItem
 /// Allows to host a QQuickItem in the layout
-class Widget_quick : public Widget
+class MULTISPLITTER_EXPORT Widget_quick : public Widget
 {
 public:
     explicit Widget_quick(QQuickItem *thisWidget)
