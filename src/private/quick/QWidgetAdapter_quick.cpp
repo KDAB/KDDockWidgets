@@ -59,6 +59,14 @@ void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}
 
 void QWidgetAdapter::raise() {}
 
+int QWidgetAdapter::winId() const
+{
+    if (QWindow *w = windowHandle())
+        return w->winId();
+
+    return -1;
+}
+
 FloatingWindow * QWidgetAdapter::floatingWindow() const
 {
     return nullptr;

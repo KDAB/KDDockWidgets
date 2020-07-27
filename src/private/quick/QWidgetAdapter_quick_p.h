@@ -88,6 +88,11 @@ public:
     QSize maximumSize() const { return m_maximumSize; }
     int minimumHeight() const { return m_minimumSize.height(); }
     int minimumWidth() const { return m_minimumSize.width(); }
+    bool hasFixedWidth() const {return false; }
+    bool hasFixedHeight() const {return false; }
+    int maximumWidth() const { return m_maximumSize.width(); }
+    int maximumHeight() const { return m_maximumSize.height(); }
+    int winId() const;
 
     void grabMouse();
     void releaseMouse();
