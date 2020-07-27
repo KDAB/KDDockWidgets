@@ -2,10 +2,29 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) kddockwidgets_example",
+            "name": "(gdb) QtWidgets example",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/kddockwidgets_example",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gdb) QtQuick example",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/kddockwidgets_example_quick",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
