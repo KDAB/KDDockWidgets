@@ -124,7 +124,7 @@ Q_SIGNALS:
     void numFramesChanged();
     void windowStateChanged(QWindowStateChangeEvent *);
 protected:
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
 #endif
 
