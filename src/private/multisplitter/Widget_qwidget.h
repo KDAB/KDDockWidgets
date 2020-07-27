@@ -64,10 +64,4 @@ private:
     Q_DISABLE_COPY(Widget_qwidget)
 };
 
-inline int widgetMinLength(const QWidget *w, Qt::Orientation o)
-{
-    const QSize sz = Widget_qwidget::widgetMinSize(w);
-    return o == Qt::Vertical ? sz.height() : sz.width();
-}
-
 }

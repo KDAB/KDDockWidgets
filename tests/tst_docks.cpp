@@ -56,6 +56,12 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
 using namespace Layouting;
 
+inline int widgetMinLength(const QWidget *w, Qt::Orientation o)
+{
+    const QSize sz = Widget_qwidget::widgetMinSize(w);
+    return o == Qt::Vertical ? sz.height() : sz.width();
+}
+
 struct SetExpectedWarning
 {
     explicit SetExpectedWarning(const QString &s)
