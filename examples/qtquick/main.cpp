@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     KDDockWidgets::Config::self().setQmlEngine(view.engine());
 
     auto dw = new KDDockWidgets::DockWidgetQuick("name");
+    dw->resize(QSize(800, 800));
     dw->show();
 
     return app.exec();

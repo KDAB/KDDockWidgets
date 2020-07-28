@@ -42,4 +42,5 @@ void FloatingWindowQuick::init()
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
     m_quickWindow->setFlags(windowFlags());
     m_quickWindow->show();
+    m_quickWindow->setGeometry(200, 200, 800, 800);  // TODO: remove
 }

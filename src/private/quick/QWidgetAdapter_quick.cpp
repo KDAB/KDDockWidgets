@@ -41,7 +41,7 @@ QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags flags)
         onResize(size());
     });
 
-    setSize(QSize(300, 300));
+    setSize(QSize(800, 800));
 }
 
 QWidgetAdapter::~QWidgetAdapter()
