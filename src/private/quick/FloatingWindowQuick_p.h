@@ -14,6 +14,8 @@
 
 #include "FloatingWindow_p.h"
 
+#include <QQuickView>
+
 namespace KDDockWidgets {
 
 class DOCKS_EXPORT FloatingWindowQuick : public FloatingWindow
@@ -25,6 +27,7 @@ public:
 
 private:
     void init();
+    QQuickView *const m_quickWindow;
     Q_DISABLE_COPY(FloatingWindowQuick)
 };
 

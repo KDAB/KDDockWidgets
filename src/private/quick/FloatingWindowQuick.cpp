@@ -14,25 +14,31 @@
 #include "Utils_p.h"
 #include "DropArea_p.h"
 #include "TitleBar_p.h"
+#include "Config.h"
 
+#include <QQuickView>
 #include <QDebug>
 
 using namespace KDDockWidgets;
 
+
 FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
     : FloatingWindow(parent)
+    , m_quickWindow(new QQuickView(Config::self().qmlEngine(), nullptr))
 {
     init();
 }
 
 FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
     : FloatingWindow(frame, parent)
+    , m_quickWindow(new QQuickView(Config::self().qmlEngine(), nullptr))
 {
     init();
 }
 
-
 void FloatingWindowQuick::init()
 {
-    qDebug() << "FLoatingWindow!!";
+    m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
+    QWidgetAdapter::setParent(m_quickWindow->contentItem());
+    m_quickWindow->show();
 }
