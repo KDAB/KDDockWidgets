@@ -39,6 +39,8 @@ QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags)
     connect(this, &QQuickItem::heightChanged, this, [this] {
         onResize(size());
     });
+
+    setSize(QSize(300, 300));
 }
 
 QWidgetAdapter::~QWidgetAdapter()
