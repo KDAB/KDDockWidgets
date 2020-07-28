@@ -59,6 +59,16 @@ void QWidgetAdapter::onMouseMove(QPoint) {}
 void QWidgetAdapter::onMouseRelease() {}
 void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}
 
+void QWidgetAdapter::itemChange(QQuickItem::ItemChange change, const QQuickItem::ItemChangeData &data)
+{
+    QQuickItem::itemChange(change, data);
+
+    if (change == QQuickItem::ItemParentHasChanged) {
+        // Emulate the QWidget behaviour as QQuickItem doesn't emit parentChange event.
+        QEvent ev(QEvent::ParentChange);
+        event(&ev);
+    }
+}
 
 void QWidgetAdapter::raise() {}
 

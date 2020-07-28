@@ -134,6 +134,7 @@ protected:
     virtual void onMouseMove(QPoint globalPos);
     virtual void onMouseRelease();
     virtual void onCloseEvent(QCloseEvent *);
+    void itemChange(QQuickItem::ItemChange, const QQuickItem::ItemChangeData &) override;
 private:
     QSize m_minimumSize = {KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT};
     QSize m_maximumSize = {KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT};
