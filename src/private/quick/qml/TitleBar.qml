@@ -39,7 +39,7 @@ TitleBarBase {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("Float clicked")
+                titleBarCpp.onFloatClicked();
             }
         }
     }
@@ -59,7 +59,7 @@ TitleBarBase {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("Close clicked")
+                titleBarCpp.onCloseClicked();
             }
         }
     }

@@ -88,10 +88,10 @@ Q_SIGNALS:
     void iconChanged();
 
 protected:
-    void onCloseClicked();
-    void onFloatClicked();
-    void onMaximizeClicked();
-    void toggleMaximized();
+    Q_INVOKABLE void onCloseClicked();
+    Q_INVOKABLE void onFloatClicked();
+    Q_INVOKABLE void onMaximizeClicked();
+    Q_INVOKABLE void toggleMaximized();
 
     virtual void updateFloatButton() {}
     virtual void updateMaximizeButton() {}
