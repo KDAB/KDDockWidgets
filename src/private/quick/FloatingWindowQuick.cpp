@@ -15,6 +15,8 @@
 #include "DropArea_p.h"
 #include "TitleBar_p.h"
 
+#include <QDebug>
+
 using namespace KDDockWidgets;
 
 FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
@@ -32,4 +34,5 @@ FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
 
 void FloatingWindowQuick::init()
 {
+    qDebug() << "FLoatingWindow!!";
 }
