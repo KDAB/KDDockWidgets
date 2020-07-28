@@ -106,7 +106,7 @@ public:
 
     QWindow *windowHandle() const;
     QWidgetAdapter *window() const { return nullptr; }
-    QWidgetAdapter *parentWidget() const { return nullptr; }
+    QWidgetAdapter *parentWidget() const;
     QPoint mapToGlobal(QPoint) const { return {}; }
     QPoint mapFromGlobal(QPoint) const { return {}; }
     bool testAttribute(Qt::WidgetAttribute) { return false; }

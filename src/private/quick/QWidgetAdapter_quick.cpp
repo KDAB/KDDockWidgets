@@ -145,6 +145,19 @@ void QWidgetAdapter::showNormal()
 
 QWindow *QWidgetAdapter::windowHandle() const { return nullptr; }
 
+QWidgetAdapter *QWidgetAdapter::parentWidget() const
+{
+    QQuickItem *p = parentItem();
+    while (p) {
+        if (auto qa = qobject_cast<QWidgetAdapter*>(p))
+            return qa;
+
+        p = p->parentItem();
+    }
+
+    return nullptr;
+}
+
 void QWidgetAdapter::move(int x, int y)
 {
     qDebug() << Q_FUNC_INFO << x << y << this;
