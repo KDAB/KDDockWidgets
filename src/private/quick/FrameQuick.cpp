@@ -28,9 +28,15 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
 {
     qDebug() << Q_FUNC_INFO << "Created frame";
     auto component = new QQmlComponent(Config::self().qmlEngine(),
-                                       QUrl(QStringLiteral("qrc:/kddockwidgets/quick/qml/Frame.qml")));
+                                       QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/Frame.qml")));
 
     auto item = static_cast<QQuickItem*>(component->create());
+
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "Failed to create item" << component->errorString();
+        return;
+    }
+
     item->setProperty("frameCpp", QVariant::fromValue(this));
     item->setParentItem(this);
     item->setParent(this);
