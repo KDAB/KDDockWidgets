@@ -22,6 +22,7 @@
 #define KDDOCKWIDGETS_QWIDGETADAPTERQUICK_P_H
 
 #include "docks_export.h"
+#include "Item_p.h"
 
 #include <QQuickItem>
 #include <QObject>
@@ -98,7 +99,7 @@ public:
     void releaseMouse();
     void setMinimumSize(QSize);
     void resize(QSize);
-    bool isWindow() const { return false; }
+    bool isWindow() const { return parentItem() == nullptr; }
     bool isMaximized() const;
     void showMaximized();
     void showNormal();
@@ -132,8 +133,8 @@ protected:
     virtual void onMouseRelease();
     virtual void onCloseEvent(QCloseEvent *);
 private:
-    QSize m_minimumSize = {0, 0};
-    QSize m_maximumSize = {0, 0};
+    QSize m_minimumSize = {KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT};
+    QSize m_maximumSize = {KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT};
 };
 
 }
