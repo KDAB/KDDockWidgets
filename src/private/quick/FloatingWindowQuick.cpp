@@ -40,5 +40,6 @@ void FloatingWindowQuick::init()
 {
     m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
+    m_quickWindow->setFlags(windowFlags());
     m_quickWindow->show();
 }

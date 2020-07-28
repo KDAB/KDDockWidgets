@@ -123,6 +123,8 @@ public:
     QSizePolicy sizePolicy() const;
     QSize sizeHint() const;
 
+    Qt::WindowFlags windowFlags() const;
+
 protected:
     void raiseAndActivate();
 
@@ -135,6 +137,7 @@ protected:
 private:
     QSize m_minimumSize = {KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT};
     QSize m_maximumSize = {KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT};
+    Qt::WindowFlags m_requestedWindowFlags;
 };
 
 }

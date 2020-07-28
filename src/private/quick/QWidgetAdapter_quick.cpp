@@ -27,8 +27,9 @@
 
 using namespace KDDockWidgets;
 
-QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags)
+QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags flags)
     : QQuickItem(parent)
+    , m_requestedWindowFlags(flags)
 {
     this->setParent(parent); // also set parentItem
 
@@ -179,12 +180,25 @@ QSize QWidgetAdapter::sizeHint() const
     return {};
 }
 
+Qt::WindowFlags QWidgetAdapter::windowFlags() const
+{
+    if (QWindow *w = windowHandle())
+        return w->flags();
+
+    return m_requestedWindowFlags;
+}
+
 void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
 {
-    if (auto w = windowHandle()) {
+    if (QWindow *w = windowHandle()) {
         w->setFlag(f, on);
     } else {
-        qWarning() << Q_FUNC_INFO << "Implement me";
+        // When we create a QWindow we'll set these
+        if (on) {
+            m_requestedWindowFlags |= f;
+        } else {
+            m_requestedWindowFlags &= ~f;
+        }
     }
 }
 
