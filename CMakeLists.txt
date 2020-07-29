@@ -19,6 +19,10 @@
 #  Build the examples.
 #  Default=true
 #
+# -DKDDockWidgets_DOCS=[true|false]
+#  Build the API documentation.
+#  Default=true
+#
 # -DOPTION_DEVELOPER_MODE=[true|false]
 #  Configure the build for a developer setup.
 #  Enables some features that are not geared towards end-users.
@@ -58,6 +62,8 @@ set(${PROJECT_NAME}_VERSION_MINOR 9)
 set(${PROJECT_NAME}_VERSION_PATCH 99)
 set(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
 
+include(FeatureSummary)
+
 option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
 option(OPTION_BUILD_PYTHON_BINDINGS "Build python bindings" OFF)
 if(OPTION_BUILD_PYTHON_BINDINGS AND NOT CMAKE_BUILD_TYPE MATCHES "^[Rr]el")
@@ -65,6 +71,7 @@ if(OPTION_BUILD_PYTHON_BINDINGS AND NOT CMAKE_BUILD_TYPE MATCHES "^[Rr]el")
 endif()
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
+option(${PROJECT_NAME}_DOCS "Build the API documentation" ON)
 
 #Always build the test harness in developer-mode
 if(OPTION_DEVELOPER_MODE)
@@ -84,6 +91,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # setup default install locations
 include(InstallLocation)
+include(QtInstallPaths) #to set QT_INSTALL_FOO variables
 
 macro(set_compiler_flags targetName)
   if(OPTION_DEVELOPER_MODE)
@@ -171,4 +179,8 @@ if(OPTION_DEVELOPER_MODE)
     add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
 
   endif()
+endif()
+
+if(${PROJECT_NAME}_DOCS)
+  add_subdirectory(docs) # needs to go last, in case there are build source files
 endif()
