@@ -23,7 +23,7 @@
 
 #include <QResizeEvent>
 #include <QMouseEvent>
-#include <QWindow>
+#include <QQuickWindow>
 #include <QQmlComponent>
 #include <QQuickItem>
 #include <QQmlEngine>
@@ -156,7 +156,21 @@ void QWidgetAdapter::showNormal()
     qWarning() << Q_FUNC_INFO << "Implement me";
 }
 
-QWindow *QWidgetAdapter::windowHandle() const { return nullptr; }
+QWindow *QWidgetAdapter::windowHandle() const
+{
+    return QQuickItem::window();
+}
+
+QWidgetAdapter *QWidgetAdapter::window() const
+{
+    // We return the top-most QWidgetAdapter
+
+    if (QWidgetAdapter *w = parentWidget()) {
+        return w->window();
+    }
+
+    return const_cast<QWidgetAdapter *>(this);
+}
 
 QWidgetAdapter *QWidgetAdapter::parentWidget() const
 {
@@ -169,6 +183,12 @@ QWidgetAdapter *QWidgetAdapter::parentWidget() const
     }
 
     return nullptr;
+}
+
+void QWidgetAdapter::close()
+{
+    if (QWindow *w = windowHandle())
+        w->close();
 }
 
 void QWidgetAdapter::move(int x, int y)

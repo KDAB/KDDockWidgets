@@ -85,7 +85,7 @@ public:
     void showNormal();
 
     QWindow *windowHandle() const;
-    QWidgetAdapter *window() const { return nullptr; }
+    QWidgetAdapter *window() const;
     QWidgetAdapter *parentWidget() const;
     QPoint mapToGlobal(QPoint) const { return {}; }
     QPoint mapFromGlobal(QPoint) const { return {}; }
@@ -93,7 +93,7 @@ public:
 
     void setWindowTitle(const QString &) {}
     void setWindowIcon(const QIcon &) {}
-    void close() {}
+    void close();
     QWidgetAdapter* childAt(QPoint) { return nullptr; }
     void move(int x, int y);
 
