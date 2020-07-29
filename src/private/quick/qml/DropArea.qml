@@ -13,20 +13,6 @@ import QtQuick 2.9
 
 Rectangle {
     id: root
-    property QtObject frameCpp
-    readonly property QtObject titleBarCpp: frameCpp ? frameCpp.titleBar : null
-
-    color: "cyan"
-    anchors.fill: parent
-
-    TitleBar {
-        height: 30
-        titleBarCpp: root.titleBarCpp
-        visible: true
-        anchors {
-            top:  parent.top
-            left: parent.left
-            right: parent.right
-        }
-    }
+    property QtObject dropAreaCpp: null
+    color: "orange"
 }

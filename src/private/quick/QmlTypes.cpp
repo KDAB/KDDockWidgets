@@ -24,4 +24,5 @@ void KDDockWidgets::registerQmlTypes()
     qmlRegisterType<MainWindowQuick>("com.kdab.dockwidgets", 1, 0, "MainWindowQuick");
 
     qmlRegisterUncreatableType<TitleBar>("com.kdab.dockwidgets", 1, 0, "TitleBar", QStringLiteral("Enum access only"));
+    qRegisterMetaType<DropArea*>();
 }

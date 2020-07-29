@@ -30,32 +30,12 @@
 
 QT_BEGIN_NAMESPACE
 class QWindow;
+class QQmlEngine;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
 class FloatingWindow;
-/*
-class QuickItem : public QQuickItem
-{
-public:
-    explicit QuickItem(QQuickItem *parent)
-        : QQuickItem(parent)
-    {
-    }
-    ~QuickItem() override;
-
-    QRect geometry() const { return {}; }
-    void setGeometry(QRect) {}
-
-    void releaseMouse()
-    {
-        ungrabMouse();
-    }
-};
-QuickItem::~QuickItem() {}
-*/
-
 class DOCKS_EXPORT QWidgetAdapter : public QQuickItem
 {
     Q_OBJECT
@@ -125,9 +105,9 @@ public:
 
     Qt::WindowFlags windowFlags() const;
 
+    QQuickItem *createItem(QQmlEngine *, const QString &filename) const;
 protected:
     void raiseAndActivate();
-
     virtual bool onResize(QSize newSize);
     virtual void onLayoutRequest();
     virtual void onMousePress();

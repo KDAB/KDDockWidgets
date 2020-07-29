@@ -30,10 +30,13 @@ class DropArea;
 class Frame;
 class MultiSplitter;
 
-class DOCKS_EXPORT FloatingWindow : public QWidgetAdapter
-    , public Draggable
+class DOCKS_EXPORT FloatingWindow
+        : public QWidgetAdapter
+        , public Draggable
 {
     Q_OBJECT
+    Q_PROPERTY(KDDockWidgets::TitleBar* titleBar READ titleBar CONSTANT)
+    Q_PROPERTY(KDDockWidgets::DropArea* dropArea READ dropArea CONSTANT)
 public:
     explicit FloatingWindow(MainWindowBase *parent = nullptr);
     explicit FloatingWindow(Frame *frame, MainWindowBase *parent = nullptr);

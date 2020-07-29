@@ -40,6 +40,14 @@ void FloatingWindowQuick::init()
 {
     m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
+
+    QQuickItem *visualItem = createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/FloatingWindow.qml"));
+    Q_ASSERT(visualItem);
+    visualItem->setParent(this);
+    visualItem->setParentItem(this);
+
+    //dropArea()->QWidgetAdapter::setParent(visualItem);
+
     m_quickWindow->setFlags(windowFlags());
     m_quickWindow->show();
     m_quickWindow->setGeometry(200, 200, 800, 800);  // TODO: remove

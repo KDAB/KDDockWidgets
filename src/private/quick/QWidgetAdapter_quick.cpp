@@ -24,6 +24,9 @@
 #include <QResizeEvent>
 #include <QMouseEvent>
 #include <QWindow>
+#include <QQmlComponent>
+#include <QQuickItem>
+#include <QQmlEngine>
 
 using namespace KDDockWidgets;
 
@@ -209,6 +212,18 @@ Qt::WindowFlags QWidgetAdapter::windowFlags() const
         return w->flags();
 
     return m_requestedWindowFlags;
+}
+
+QQuickItem *QWidgetAdapter::createItem(QQmlEngine *engine, const QString &filename) const
+{
+    QQmlComponent component(engine, filename);
+    QObject *obj = component.create();
+    if (!obj) {
+        qWarning() << Q_FUNC_INFO << component.errorString();
+        return nullptr;
+    }
+
+    return qobject_cast<QQuickItem*>(obj);
 }
 
 void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
