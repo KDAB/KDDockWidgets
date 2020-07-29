@@ -59,7 +59,7 @@ public:
     /**
      * @brief Docks a DockWidget into the central frame, tabbed.
      * @warning Requires that the MainWindow was constructed with MainWindowOption_HasCentralFrame option.
-     * @param The DockWidget to dock.
+     * @param The dockwidget to dock.
      *
      * @sa DockWidgetBase::addDockWidgetAsTab()
      */

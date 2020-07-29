@@ -69,7 +69,7 @@ public:
     ///       widget that holds the titlebar and tab-widget which holds the
     ///       DockWidgets.
     ///@param parent just forward to Frame's constructor
-    ///@param options just forward to Frame's constructor
+    ///@param FrameOptions just forward to Frame's constructor
     virtual Frame* createFrame(QWidgetOrQuick *parent = nullptr, FrameOptions = FrameOption_None) const = 0;
 
     ///@brief Called internally by the framework to create a TitleBar

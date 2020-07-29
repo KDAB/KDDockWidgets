@@ -75,7 +75,7 @@ public:
 
     /**
      * @brief constructs a new DockWidget
-     * @param name the name of the dockwidget, should be unique. Use title for user visible text.
+     * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
      * @param options optional options controlling behaviour
      *
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
@@ -87,7 +87,7 @@ public:
     ~DockWidgetBase() override;
 
     /**
-     * @param Constructs a dock widget from its serialized form.
+     * @brief Constructs a dock widget from its serialized form.
      * @internal
      */
     static DockWidgetBase *deserialize(const LayoutSaver::DockWidget::Ptr &);
@@ -109,7 +109,7 @@ public:
 
     /**
      * @brief docks @p other widget into the window that contains this one.
-     *        Equivalent to @ref MainWindow::addDockWidge() with the difference
+     *        Equivalent to @ref MainWindow::addDockWidget() with the difference
      *        that it also supports the case where the top-level window is a
      *        @ref FloatingWindow instead of @ref MainWindow.
      *

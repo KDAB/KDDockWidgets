@@ -78,7 +78,7 @@ public:
 
     /**
      * @brief returns a list of dock widgets which were restored since the last
-     * @ref restoreLayout() or @ref restoreFromDisk()
+     * @ref restoreLayout() or @ref restoreFromFile()
      *
      * Useful since some dock widgets can be new, and hence not be included in the last saved layout.
      */
