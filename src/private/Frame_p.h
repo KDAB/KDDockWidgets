@@ -50,7 +50,6 @@ class FloatingWindow;
 class DOCKS_EXPORT Frame : public LayoutGuestWidget
 {
     Q_OBJECT
-
     Q_PROPERTY(KDDockWidgets::TitleBar* titleBar READ titleBar CONSTANT)
 public:
     typedef QList<Frame *> List;
