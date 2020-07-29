@@ -140,14 +140,13 @@ void Position::deserialize(const LayoutSaver::Position &lp)
         }
 
         const Layouting::Item::List &items = layout->items();
-        if (itemIndex < items.size()) {
+        if (itemIndex >= 0 && itemIndex < items.size()) {
             Layouting::Item *item = items.at(itemIndex);
             addPlaceholderItem(item);
         } else {
             // Shouldn't happen, maybe even assert
             qWarning() << Q_FUNC_INFO <<"Couldn't find item index" << itemIndex << "in" << items;
         }
-
     }
 
     m_tabIndex = lp.tabIndex;
