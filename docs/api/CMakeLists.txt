@@ -17,11 +17,11 @@ configure_file(
 )
 
 add_custom_command(
-  OUTPUT ${DOXYGEN_OUTPUT_DIR}/qch/gammaray-api.qch
+  OUTPUT ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch
   COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
   DEPENDS ${_dox_deps} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
-add_custom_target(gammaray-api.qch ALL DEPENDS ${DOXYGEN_OUTPUT_DIR}/qch/gammaray-api.qch)
+add_custom_target(kddockwidgets-api.qch ALL DEPENDS ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch)
 
 install(FILES ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch DESTINATION ${INSTALL_DOC_DIR})
