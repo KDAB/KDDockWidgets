@@ -89,6 +89,8 @@ void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
     }
 
     m_dockWidgets.insert(index, dw);
+    dw->setParent(this);
+
     if (!m_currentDockWidget)
         m_currentDockWidget = dw;
 
