@@ -244,6 +244,7 @@ protected:
      * Any widget having 16777215x16777215 is ignored (represents not having a max-size, QWIDGETSIZE_MAX)
      */
     QSize biggestDockWidgetMaxSize() const;
+    void onDockWidgetCountChanged();
 
     virtual void removeWidget_impl(DockWidgetBase *) = 0;
     virtual void detachTab_impl(DockWidgetBase *) = 0;
@@ -260,7 +261,6 @@ private:
     Q_DISABLE_COPY(Frame)
     friend class TestDocks;
     friend class TabWidget;
-    void onDockWidgetCountChanged();
     void onCurrentTabChanged(int index);
     void scheduleDeleteLater();
     bool event(QEvent *) override;

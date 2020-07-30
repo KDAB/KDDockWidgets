@@ -14,6 +14,7 @@
 #define KD_FRAME_QUICK_P_H
 
 #include "Frame_p.h"
+#include "DockWidgetBase.h"
 
 namespace KDDockWidgets {
 
@@ -37,6 +38,9 @@ protected:
     DockWidgetBase *dockWidgetAt_impl(int index) const override;
     DockWidgetBase *currentDockWidget_impl() const override;
     int dockWidgetCount_impl() const override;
+private:
+    DockWidgetBase::List m_dockWidgets;
+    DockWidgetBase *m_currentDockWidget = nullptr;
 };
 
 }

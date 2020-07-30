@@ -42,9 +42,10 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     item->setParent(this);
 }
 
-void FrameQuick::removeWidget_impl(DockWidgetBase *)
+void FrameQuick::removeWidget_impl(DockWidgetBase *dw)
 {
-
+    m_dockWidgets.removeOne(dw);
+    onDockWidgetCountChanged();
 }
 
 void FrameQuick::detachTab_impl(DockWidgetBase *)
@@ -52,43 +53,64 @@ void FrameQuick::detachTab_impl(DockWidgetBase *)
 
 }
 
-int FrameQuick::indexOfDockWidget_impl(DockWidgetBase *)
+int FrameQuick::indexOfDockWidget_impl(DockWidgetBase *dw)
 {
-    return 0;
+    return m_dockWidgets.indexOf(dw);
 }
 
 int FrameQuick::currentIndex_impl() const
 {
-    return 0;
+    if (!m_currentDockWidget)
+        return -1;
+
+    return m_dockWidgets.indexOf(m_currentDockWidget);
 }
 
 void FrameQuick::setCurrentTabIndex_impl(int index)
 {
-    Q_UNUSED(index)
+    m_currentDockWidget = dockWidgetAt(index);
 }
 
-void FrameQuick::setCurrentDockWidget_impl(DockWidgetBase *)
+void FrameQuick::setCurrentDockWidget_impl(DockWidgetBase *dw)
 {
+    if (dw && !m_dockWidgets.contains(dw)) {
+        qWarning() << Q_FUNC_INFO << "Shouldn't happen";
+        return;
+    }
 
+    m_currentDockWidget = dw;
 }
 
-void FrameQuick::insertDockWidget_impl(DockWidgetBase *, int index)
+void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
 {
-    Q_UNUSED(index)
+    if (m_dockWidgets.contains(dw)) {
+        qWarning() << Q_FUNC_INFO << "Shouldn't happen";
+        return;
+    }
+
+    m_dockWidgets.insert(index, dw);
+    if (!m_currentDockWidget)
+        m_currentDockWidget = dw;
+
+    onDockWidgetCountChanged();
 }
 
 DockWidgetBase *FrameQuick::dockWidgetAt_impl(int index) const
 {
-    Q_UNUSED(index)
-    return nullptr;
+    if (index < 0 || index >= m_dockWidgets.size()) {
+        qWarning() << Q_FUNC_INFO << "Shouldn't happen" << index << m_dockWidgets.size();
+        return nullptr;
+    }
+
+    return m_dockWidgets[index];
 }
 
 DockWidgetBase *FrameQuick::currentDockWidget_impl() const
 {
-    return nullptr;
+    return m_currentDockWidget;
 }
 
 int FrameQuick::dockWidgetCount_impl() const
 {
-    return 0;
+    return m_dockWidgets.size();
 }
