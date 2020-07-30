@@ -126,8 +126,16 @@ void QWidgetAdapter::setGeometry(QRect rect)
     setY(rect.y());
 }
 
-void QWidgetAdapter::grabMouse() {}
-void QWidgetAdapter::releaseMouse() {}
+void QWidgetAdapter::grabMouse()
+{
+    QQuickItem::grabMouse();
+}
+
+void QWidgetAdapter::releaseMouse()
+{
+    QQuickItem::ungrabMouse();
+}
+
 void QWidgetAdapter::setMinimumSize(QSize sz)
 {
     m_minimumSize = sz;

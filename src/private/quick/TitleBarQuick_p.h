@@ -32,10 +32,16 @@ public:
     //QWidget* closeButton() const;
 
 protected:
+
+    Q_INVOKABLE void filterEvents(QObject *);
+    bool eventFilter(QObject *, QEvent *) override;
+
     /*void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void updateFloatButton() override;
     void updateCloseButton() override;*/
+private:
+    bool m_eventFilterInstalled = false;
 //
 };
 

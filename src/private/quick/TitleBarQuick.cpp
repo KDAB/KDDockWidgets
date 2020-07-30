@@ -34,3 +34,29 @@ TitleBarQuick::TitleBarQuick(FloatingWindow *parent)
 TitleBarQuick::~TitleBarQuick()
 {
 }
+
+void TitleBarQuick::filterEvents(QObject *obj)
+{
+    if (!m_eventFilterInstalled) {
+        m_eventFilterInstalled = true;
+        obj->installEventFilter(this);
+    }
+}
+
+bool TitleBarQuick::eventFilter(QObject *, QEvent *ev)
+{
+    switch (ev->type()) {
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseMove:
+    case QEvent::NonClientAreaMouseButtonPress:
+    case QEvent::NonClientAreaMouseButtonRelease:
+    case QEvent::NonClientAreaMouseMove:
+        qApp->sendEvent(this, ev);
+        return false;
+    default:
+        break;
+    }
+
+    return false;
+}

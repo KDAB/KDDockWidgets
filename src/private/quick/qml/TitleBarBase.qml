@@ -19,4 +19,13 @@ Rectangle {
 
     visible: titleBarCpp && titleBarCpp.visible
     implicitHeight: 30
+
+    MouseArea {
+        id: dragMouseArea
+        anchors.fill: parent
+    }
+
+    onTitleBarCppChanged: {
+        titleBarCpp.filterEvents(dragMouseArea)
+    }
 }
