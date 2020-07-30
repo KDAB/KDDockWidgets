@@ -29,7 +29,7 @@ Features
   - Unit-test everything, even the GUI and DnD operations (140 tests currently)
   - Fuzzer for doing random testing
 
-![Screen capture](/screencap.gif?raw=true "The docking system in action")
+![Screen capture](./screencap.gif?raw=true "The docking system in action")
 
 
 Roadmap
