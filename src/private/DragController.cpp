@@ -367,7 +367,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     if (!me)
         return QStateMachine::eventFilter(o, e);
 
-    auto w = qobject_cast<QWidget*>(o);
+    auto w = qobject_cast<QWidgetOrQuick*>(o);
     if (!w)
         return QStateMachine::eventFilter(o, e);
 
