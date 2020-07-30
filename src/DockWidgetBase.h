@@ -93,7 +93,7 @@ public:
     static DockWidgetBase *deserialize(const LayoutSaver::DockWidget::Ptr &);
 
     /**
-     * @param Serializes this dock widget into an intermediate form
+     * @brief Serializes this dock widget into an intermediate form
      */
     LayoutSaver::DockWidget::Ptr serialize() const;
 
@@ -109,9 +109,9 @@ public:
 
     /**
      * @brief docks @p other widget into the window that contains this one.
-     *        Equivalent to @ref MainWindow::addDockWidget() with the difference
+     *        Equivalent to MainWindow::addDockWidget() with the difference
      *        that it also supports the case where the top-level window is a
-     *        @ref FloatingWindow instead of @ref MainWindow.
+     *        FloatingWindow instead of MainWindow.
      *
      * @param other The other dock widget to dock into the window.
      * @param location The location to dock.
@@ -268,6 +268,7 @@ public:
     void setAffinities(const QStringList &);
 
     /// @deprecated @overload
+    /// @param name the affinity name
     void setAffinityName(const QString &name);
 
     /**
