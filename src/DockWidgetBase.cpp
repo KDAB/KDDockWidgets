@@ -102,7 +102,7 @@ public:
     QStringList affinities;
     QString title;
     QIcon icon;
-    QWidget *widget = nullptr;
+    QWidgetOrQuick *widget = nullptr;
     DockWidgetBase *const q;
     DockWidgetBase::Options options;
     QAction *const toggleAction;
@@ -210,7 +210,7 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other, Loca
     }
 }
 
-void DockWidgetBase::setWidget(QWidget *w)
+void DockWidgetBase::setWidget(QWidgetOrQuick *w)
 {
     Q_ASSERT(w && !d->widget);
     qCDebug(addwidget) << Q_FUNC_INFO << w;
@@ -221,7 +221,7 @@ void DockWidgetBase::setWidget(QWidget *w)
     setWindowTitle(uniqueName());
 }
 
-QWidget *DockWidgetBase::widget() const
+QWidgetOrQuick *DockWidgetBase::widget() const
 {
     return d->widget;
 }
@@ -717,7 +717,7 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
     }
 
     if (dw) {
-        if (QWidget *w = dw->widget())
+        if (QWidgetOrQuick *w = dw->widget())
             w->setVisible(true);
         dw->setProperty("kddockwidget_was_restored", true);
 

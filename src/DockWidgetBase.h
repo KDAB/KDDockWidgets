@@ -25,7 +25,6 @@
 #include "LayoutSaver_p.h"
 
 #include <QVector>
-#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -125,12 +124,12 @@ public:
      * @brief sets the widget which this dock widget hosts.
      * @param widget to show inside this dock widget
      */
-    void setWidget(QWidget *widget);
+    void setWidget(QWidgetOrQuick *widget);
 
     /**
      * @brief returns the widget which this dock widget hosts
      */
-    QWidget *widget() const;
+    QWidgetOrQuick *widget() const;
 
     /**
      * @brief Returns whether the dock widget is floating.
@@ -317,7 +316,7 @@ Q_SIGNALS:
     void titleChanged();
 
     ///@brief emitted when the hosted widget changed
-    void widgetChanged(QWidget*);
+    void widgetChanged(QWidgetOrQuick *);
 
     ///@brief emitted when the options change
     ///@sa setOptions(), options()

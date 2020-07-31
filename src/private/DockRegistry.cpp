@@ -238,7 +238,7 @@ MainWindowBase *DockRegistry::mainWindowByName(const QString &name) const
     return nullptr;
 }
 
-DockWidgetBase *DockRegistry::dockWidgetForGuest(QWidget *guest) const
+DockWidgetBase *DockRegistry::dockWidgetForGuest(QWidgetOrQuick *guest) const
 {
     if (!guest)
         return nullptr;
