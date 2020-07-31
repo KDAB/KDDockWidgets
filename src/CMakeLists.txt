@@ -152,7 +152,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
 endif()
 
 if(OPTION_QTQUICK)
-  target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets Qt5::Quick kddockwidgets_multisplitter)
+  target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets Qt5::Quick Qt5::QuickControls2 kddockwidgets_multisplitter)
 else()
   target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets kddockwidgets_multisplitter)
 endif()

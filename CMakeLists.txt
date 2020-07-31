@@ -104,6 +104,7 @@ endmacro()
 
 if(OPTION_QTQUICK)
   find_package(Qt5Quick)
+  find_package(Qt5QuickControls2)
   add_definitions(-DKDDOCKWIDGETS_QTQUICK)
 else()
   add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
