@@ -37,11 +37,8 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     }
 
     item->setProperty("frameCpp", QVariant::fromValue(this));
-    if (m_stackLayout) {
-        qDebug() << "current" << item->parent() << item->parentItem() << m_stackLayout;
-        item->setParentItem(m_stackLayout);
-        //item->setParent(m_stackLayout);
-    }
+    item->setParentItem(this);
+    item->setParent(this);
 }
 
 void FrameQuick::removeWidget_impl(DockWidgetBase *dw)
@@ -91,7 +88,7 @@ void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
     }
 
     m_dockWidgets.insert(index, dw);
-    dw->setParent(this);
+    dw->setParent(m_stackLayout);
 
     if (!m_currentDockWidget)
         m_currentDockWidget = dw;
