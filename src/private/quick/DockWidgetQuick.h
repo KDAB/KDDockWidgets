@@ -50,6 +50,10 @@ public:
     ///@brief destructor
     ~DockWidgetQuick() override;
 
+    /// Sets the DockWidget's guest item
+    /// Similar to DockWidgetBase::setWidget(QQuickItem*)
+    void setWidget(const QString &qmlFilename);
+
 private:
     class Private;
     Private *const d;

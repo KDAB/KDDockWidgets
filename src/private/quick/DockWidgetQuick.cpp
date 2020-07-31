@@ -49,6 +49,19 @@ DockWidgetQuick::~DockWidgetQuick()
     delete d;
 }
 
+void DockWidgetQuick::setWidget(const QString &qmlFilename)
+{
+    QQuickItem *guest = createItem(Config::self().qmlEngine(), qmlFilename);
+    if (!guest)
+        return;
+
+    auto adapter = new QWidgetAdapter(this);
+    guest->setParentItem(adapter);
+    guest->setParent(adapter);
+
+    DockWidgetBase::setWidget(adapter);
+}
+
 /* TODO_QUICK
 bool DockWidget::event(QEvent *e)
 {
