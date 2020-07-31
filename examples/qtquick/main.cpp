@@ -17,9 +17,15 @@ int main(int argc, char *argv[])
 
     KDDockWidgets::Config::self().setQmlEngine(view.engine());
 
-    auto dw = new KDDockWidgets::DockWidgetQuick("name");
+    auto dw = new KDDockWidgets::DockWidgetQuick("Dock #1");
     dw->resize(QSize(800, 800));
     dw->show();
+
+    auto dw2 = new KDDockWidgets::DockWidgetQuick("Dock #2");
+    dw2->resize(QSize(800, 800));
+    dw2->show();
+
+    dw->addDockWidgetAsTab(dw2);
 
     return app.exec();
 }

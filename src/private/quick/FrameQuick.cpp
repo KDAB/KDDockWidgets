@@ -26,7 +26,6 @@ using namespace KDDockWidgets;
 FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     : Frame(parent, options)
 {
-    qDebug() << Q_FUNC_INFO << "Created frame";
     auto component = new QQmlComponent(Config::self().qmlEngine(),
                                        QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/Frame.qml")));
 
@@ -38,8 +37,11 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     }
 
     item->setProperty("frameCpp", QVariant::fromValue(this));
-    item->setParentItem(this);
-    item->setParent(this);
+    if (m_stackLayout) {
+        qDebug() << "current" << item->parent() << item->parentItem() << m_stackLayout;
+        item->setParentItem(m_stackLayout);
+        //item->setParent(m_stackLayout);
+    }
 }
 
 void FrameQuick::removeWidget_impl(DockWidgetBase *dw)
@@ -115,4 +117,26 @@ DockWidgetBase *FrameQuick::currentDockWidget_impl() const
 int FrameQuick::dockWidgetCount_impl() const
 {
     return m_dockWidgets.size();
+}
+
+QStringList FrameQuick::tabTitles() const
+{
+    QStringList titles;
+    titles.reserve(m_dockWidgets.size());
+
+    for (DockWidgetBase *dw : m_dockWidgets) {
+        titles << dw->title();
+    }
+
+    return titles;
+}
+
+void FrameQuick::setStackLayout(QQuickItem *stackLayout)
+{
+    if (m_stackLayout || !stackLayout) {
+        qWarning() << Q_FUNC_INFO << "Shouldn't happen";
+        return;
+    }
+
+    m_stackLayout = stackLayout;
 }

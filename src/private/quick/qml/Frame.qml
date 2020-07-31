@@ -10,6 +10,8 @@
 */
 
 import QtQuick 2.9
+import QtQuick.Controls 2.9
+import QtQuick.Layouts 1.9 
 
 Rectangle {
     id: root
@@ -19,14 +21,51 @@ Rectangle {
     color: "cyan"
     anchors.fill: parent
 
+    onFrameCppChanged: {
+        console.log("Changgeed")
+        frameCpp.setStackLayout(stackLayout);
+    }
+
     TitleBar {
+        id: titleBar
         height: 30
         titleBarCpp: root.titleBarCpp
-        visible: titleBarCpp.visible
+        visible: titleBarCpp && titleBarCpp.visible
         anchors {
             top:  parent.top
             left: parent.left
             right: parent.right
         }
+    }
+
+    TabBar {
+        id: tabbar
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: titleBar.visible ? titleBar.bottom
+                                  : parent.top
+        }
+
+        width: parent.width
+
+        Repeater {
+            model: root.frameCpp ? root.frameCpp.tabTitles : 0
+            TabButton {
+                text: modelData
+            }
+        }
+    }
+
+    StackLayout {
+        id: stackLayout
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: tabbar.bottom
+            bottom: parent.bottom
+        }
+
+        currentIndex: tabbar.currentIndex
     }
 }

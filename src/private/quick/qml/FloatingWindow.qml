@@ -25,7 +25,7 @@ Rectangle {
         id: titleBar
         height: 30
         titleBarCpp: root.titleBarCpp
-        visible: titleBarCpp.visible
+        visible: titleBarCpp && titleBarCpp.visible
 
         anchors {
             top:  parent.top

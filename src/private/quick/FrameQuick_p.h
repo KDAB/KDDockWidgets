@@ -24,8 +24,11 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT FrameQuick : public Frame
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList tabTitles READ tabTitles NOTIFY numDockWidgetsChanged)
 public:
     explicit FrameQuick(QWidgetAdapter *parent = nullptr, FrameOptions = FrameOption::FrameOption_None);
+
+    QStringList tabTitles() const;
 
 protected:
     void removeWidget_impl(DockWidgetBase *) override;
@@ -38,7 +41,13 @@ protected:
     DockWidgetBase *dockWidgetAt_impl(int index) const override;
     DockWidgetBase *currentDockWidget_impl() const override;
     int dockWidgetCount_impl() const override;
+
+    Q_INVOKABLE void setStackLayout(QQuickItem *);
+
+Q_SIGNALS:
+    void tabTitlesChanged();
 private:
+    QQuickItem *m_stackLayout = nullptr;
     DockWidgetBase::List m_dockWidgets;
     DockWidgetBase *m_currentDockWidget = nullptr;
 };
