@@ -107,19 +107,16 @@ void QWidgetAdapter::show()
 
 void QWidgetAdapter::setFixedHeight(int height)
 {
-    qDebug() << Q_FUNC_INFO << height << this;
     setHeight(height);
 }
 
 void QWidgetAdapter::setFixedWidth(int width)
 {
-    qDebug() << Q_FUNC_INFO << width << this;
     setWidth(width);
 }
 
 void QWidgetAdapter::setGeometry(QRect rect)
 {
-    qDebug() << Q_FUNC_INFO << rect << this;
     setWidth(rect.width());
     setHeight(rect.height());
     setX(rect.x());
@@ -143,7 +140,6 @@ void QWidgetAdapter::setMinimumSize(QSize sz)
 
 void QWidgetAdapter::resize(QSize sz)
 {
-    qDebug() << Q_FUNC_INFO << sz << this;
     setWidth(sz.width());
     setHeight(sz.height());
 }
