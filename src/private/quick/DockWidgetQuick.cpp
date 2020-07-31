@@ -11,6 +11,8 @@
 
 #include "DockWidgetQuick.h"
 
+#include <Config.h>
+#include <QQuickItem>
 /**
  * @file
  * @brief Represents a dock widget.
@@ -23,10 +25,17 @@ using namespace KDDockWidgets;
 class DockWidgetQuick::Private
 {
 public:
-    Private(DockWidgetQuick *)
-
+    Private(DockWidgetQuick *dw)
+        : q(dw)
+        , m_visualItem(q->createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/DockWidget.qml")))
     {
+        Q_ASSERT(m_visualItem);
+        m_visualItem->setParent(q);
+        m_visualItem->setParentItem(q);
     }
+
+    DockWidgetBase *const q;
+    QQuickItem *const m_visualItem;
 };
 
 DockWidgetQuick::DockWidgetQuick(const QString &name, Options options)

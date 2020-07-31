@@ -22,7 +22,6 @@ Rectangle {
     anchors.fill: parent
 
     onFrameCppChanged: {
-        console.log("Changgeed")
         frameCpp.setStackLayout(stackLayout);
     }
 
