@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     dw2->resize(QSize(800, 800));
     dw2->show();
 
-    auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #2");
-    dw3->setWidget(QStringLiteral("qrc:/Guest2.qml"));
+    auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #3");
+    dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
     dw3->resize(QSize(800, 800));
     dw3->show();
 
