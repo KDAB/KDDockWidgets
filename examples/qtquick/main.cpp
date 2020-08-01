@@ -27,7 +27,13 @@ int main(int argc, char *argv[])
     dw2->resize(QSize(800, 800));
     dw2->show();
 
+    auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #2");
+    dw3->setWidget(QStringLiteral("qrc:/Guest2.qml"));
+    dw3->resize(QSize(800, 800));
+    dw3->show();
+
     dw->addDockWidgetAsTab(dw2);
+    dw->addDockWidgetToContainingWindow(dw3, KDDockWidgets::Location_OnRight);
 
     return app.exec();
 }

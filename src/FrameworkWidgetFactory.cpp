@@ -30,6 +30,7 @@
 # include "quick/DockWidgetQuick.h"
 # include "quick/TitleBarQuick_p.h"
 # include "quick/FloatingWindowQuick_p.h"
+# include "multisplitter/Separator_quick.h"
 #endif
 
 using namespace KDDockWidgets;
@@ -136,9 +137,7 @@ TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
 
 Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *parent) const
 {
-    Q_UNUSED(parent)
-    Q_ASSERT(false);
-    return nullptr;
+    return new Layouting::SeparatorQuick(parent);
 }
 
 #endif
