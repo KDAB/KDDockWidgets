@@ -53,6 +53,7 @@ private:
     QQuickItem *m_stackLayout = nullptr;
     DockWidgetBase *m_currentDockWidget = nullptr;
     DockWidgetModel *const m_dockWidgetModel;
+    QHash<DockWidgetBase *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambdas
 };
 
 class DockWidgetModel : public QAbstractListModel
@@ -79,7 +80,7 @@ Q_SIGNALS:
 private:
     void emitDataChangedFor(DockWidgetBase *);
     DockWidgetBase::List m_dockWidgets;
-    QHash<DockWidgetBase *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambda
+    QHash<DockWidgetBase *, QVector<QMetaObject::Connection> > m_connections; // To make it easy to disconnect from lambdas
 };
 
 }

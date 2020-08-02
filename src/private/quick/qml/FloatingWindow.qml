@@ -47,7 +47,9 @@ Rectangle {
 
     onDropAreaCppChanged: {
         // Parent the cpp obj to the visual obj. So the user can style it
-        dropAreaCpp.parent = dropArea;
-        dropAreaCpp.anchors.fill = dropArea;
+        if (dropAreaCpp) {
+            dropAreaCpp.parent = dropArea;
+            dropAreaCpp.anchors.fill = dropArea;
+        }
     }
 }

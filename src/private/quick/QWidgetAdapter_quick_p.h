@@ -106,6 +106,8 @@ public:
     Qt::WindowFlags windowFlags() const;
 
     QQuickItem *createItem(QQmlEngine *, const QString &filename) const;
+Q_SIGNALS:
+    void parentChanged();
 protected:
     void raiseAndActivate();
     virtual bool onResize(QSize newSize);

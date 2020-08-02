@@ -26,6 +26,7 @@ Rectangle {
     }
 
     onTitleBarCppChanged: {
-        titleBarCpp.filterEvents(dragMouseArea)
+        if (titleBarCpp)
+            titleBarCpp.filterEvents(dragMouseArea)
     }
 }

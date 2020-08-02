@@ -71,6 +71,7 @@ void QWidgetAdapter::itemChange(QQuickItem::ItemChange change, const QQuickItem:
     case QQuickItem::ItemVisibleHasChanged: {
         QEvent ev(QEvent::ParentChange);
         event(&ev);
+        Q_EMIT parentChanged();
         break;
     }
     case QQuickItem::ItemParentHasChanged: {

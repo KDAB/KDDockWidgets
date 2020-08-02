@@ -22,7 +22,8 @@ Rectangle {
     anchors.fill: parent
 
     onFrameCppChanged: {
-        frameCpp.setStackLayout(stackLayout);
+        if (frameCpp)
+            frameCpp.setStackLayout(stackLayout);
     }
 
     TitleBar {

@@ -53,6 +53,7 @@ DockWidgetModel *FrameQuick::dockWidgetModel() const
 void FrameQuick::removeWidget_impl(DockWidgetBase *dw)
 {
     m_dockWidgetModel->remove(dw);
+    disconnect(m_connections.take(dw));
 }
 
 void FrameQuick::detachTab_impl(DockWidgetBase *)
@@ -92,6 +93,13 @@ void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
 {
     if (m_dockWidgetModel->insert(dw, index)) {
         dw->setParent(m_stackLayout);
+
+        QMetaObject::Connection conn = connect(dw, &DockWidgetBase::parentChanged, this, [dw, this] {
+            if (dw->parent() != m_stackLayout)
+                removeWidget_impl(dw);
+        });
+
+        m_connections[dw] = conn;
 
         if (!m_currentDockWidget)
             m_currentDockWidget = dw;
@@ -191,8 +199,9 @@ void DockWidgetModel::remove(DockWidgetBase *dw)
     if (row == -1) {
         qWarning() << Q_FUNC_INFO << "Nothing to remove" << dw;
     } else {
-        disconnect(m_connections.value(dw));
-        m_connections.remove(dw);
+        const auto connections = m_connections.take(dw);
+        for (QMetaObject::Connection conn : connections)
+            disconnect(conn);
 
         beginRemoveRows(QModelIndex(), row, row);
         m_dockWidgets.removeOne(dw);
@@ -214,11 +223,11 @@ bool DockWidgetModel::insert(DockWidgetBase *dw, int index)
         return false;
     }
 
-    QMetaObject::Connection c = connect(dw, &DockWidgetBase::titleChanged, this, [dw, this] {
+    QMetaObject::Connection conn = connect(dw, &DockWidgetBase::titleChanged, this, [dw, this] {
         emitDataChangedFor(dw);
     });
 
-    m_connections.insert(dw, c);
+    m_connections[dw] = { conn };
 
     beginInsertRows(QModelIndex(), index, index);
     m_dockWidgets.insert(index, dw);
