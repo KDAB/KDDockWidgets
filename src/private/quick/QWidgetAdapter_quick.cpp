@@ -66,10 +66,20 @@ void QWidgetAdapter::itemChange(QQuickItem::ItemChange change, const QQuickItem:
 {
     QQuickItem::itemChange(change, data);
 
-    if (change == QQuickItem::ItemParentHasChanged) {
-        // Emulate the QWidget behaviour as QQuickItem doesn't emit parentChange event.
+    // Emulate the QWidget behaviour as QQuickItem doesn't receive some QEvents.
+    switch (change) {
+    case QQuickItem::ItemVisibleHasChanged: {
         QEvent ev(QEvent::ParentChange);
         event(&ev);
+        break;
+    }
+    case QQuickItem::ItemParentHasChanged: {
+        QEvent ev(isVisible() ? QEvent::Show : QEvent::Hide);
+        event(&ev);
+        break;
+    }
+    default:
+        break;
     }
 }
 

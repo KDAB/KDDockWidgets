@@ -13,6 +13,8 @@
 
 #include <Config.h>
 #include <QQuickItem>
+#include <QCloseEvent>
+
 /**
  * @file
  * @brief Represents a dock widget.
@@ -62,8 +64,7 @@ void DockWidgetQuick::setWidget(const QString &qmlFilename)
     DockWidgetBase::setWidget(adapter);
 }
 
-/* TODO_QUICK
-bool DockWidget::event(QEvent *e)
+bool DockWidgetQuick::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
         onParentChanged();
@@ -71,13 +72,9 @@ bool DockWidget::event(QEvent *e)
         onShown(e->spontaneous());
     } else if (e->type() == QEvent::Hide) {
         onHidden(e->spontaneous());
+    } else if (e->type() == QEvent::Close) {
+        onClosed(static_cast<QCloseEvent*>(e));
     }
 
-    return QWidget::event(e);
+    return DockWidgetBase::event(e);
 }
-
-void DockWidget::closeEvent(QCloseEvent *e)
-{
-    onClosed(e);
-}
-*/

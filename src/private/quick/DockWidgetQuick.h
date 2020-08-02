@@ -54,6 +54,9 @@ public:
     /// Similar to DockWidgetBase::setWidget(QQuickItem*)
     void setWidget(const QString &qmlFilename);
 
+protected:
+    bool event(QEvent *e) override;
+
 private:
     class Private;
     Private *const d;
