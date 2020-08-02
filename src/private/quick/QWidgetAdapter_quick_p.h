@@ -27,6 +27,7 @@
 #include <QQuickItem>
 #include <QObject>
 #include <QCloseEvent>
+#include <QSizePolicy>
 
 QT_BEGIN_NAMESPACE
 class QWindow;
@@ -118,6 +119,8 @@ protected:
     virtual void onCloseEvent(QCloseEvent *);
     void itemChange(QQuickItem::ItemChange, const QQuickItem::ItemChangeData &) override;
 private:
+    QSize m_sizeHint;
+    QSizePolicy m_sizePolicy = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     QSize m_minimumSize = {KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT};
     QSize m_maximumSize = {KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT};
     Qt::WindowFlags m_requestedWindowFlags;

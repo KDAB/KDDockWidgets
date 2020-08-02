@@ -53,6 +53,10 @@ QWidgetAdapter::~QWidgetAdapter()
 
 void QWidgetAdapter::raiseAndActivate()
 {
+    if (QWindow *w = windowHandle()) {
+        w->raise();
+        w->requestActivate();
+    }
 }
 
 bool QWidgetAdapter::onResize(QSize) { return false; }
@@ -157,18 +161,22 @@ void QWidgetAdapter::resize(QSize sz)
 
 bool QWidgetAdapter::isMaximized() const
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    if (QWindow *w = windowHandle())
+        return w->windowStates() & Qt::WindowMaximized;
+
     return false;
 }
 
 void QWidgetAdapter::showMaximized()
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    if (QWindow *w = windowHandle())
+        w->showMaximized();
 }
 
 void QWidgetAdapter::showNormal()
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+     if (QWindow *w = windowHandle())
+         w->showNormal();
 }
 
 QWindow *QWidgetAdapter::windowHandle() const
@@ -180,9 +188,8 @@ QWidgetAdapter *QWidgetAdapter::window() const
 {
     // We return the top-most QWidgetAdapter
 
-    if (QWidgetAdapter *w = parentWidget()) {
+    if (QWidgetAdapter *w = parentWidget())
         return w->window();
-    }
 
     return const_cast<QWidgetAdapter *>(this);
 }
@@ -208,7 +215,6 @@ void QWidgetAdapter::close()
 
 void QWidgetAdapter::move(int x, int y)
 {
-    qDebug() << Q_FUNC_INFO << x << y << this;
     setX(x);
     setY(y);
 }
@@ -221,24 +227,23 @@ void QWidgetAdapter::setParent(QQuickItem *p)
 
 void QWidgetAdapter::activateWindow()
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    if (QWindow *w = windowHandle())
+        w->requestActivate();
 }
 
-void QWidgetAdapter::setSizePolicy(QSizePolicy)
+void QWidgetAdapter::setSizePolicy(QSizePolicy sp)
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    m_sizePolicy = sp;
 }
 
 QSizePolicy QWidgetAdapter::sizePolicy() const
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
-    return {};
+    return m_sizePolicy;
 }
 
 QSize QWidgetAdapter::sizeHint() const
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
-    return {};
+    return m_sizeHint;
 }
 
 Qt::WindowFlags QWidgetAdapter::windowFlags() const
@@ -274,4 +279,3 @@ void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
         }
     }
 }
-
