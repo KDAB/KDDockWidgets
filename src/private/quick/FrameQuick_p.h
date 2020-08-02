@@ -16,7 +16,11 @@
 #include "Frame_p.h"
 #include "DockWidgetBase.h"
 
+#include <QAbstractListModel>
+
 namespace KDDockWidgets {
+
+class DockWidgetModel;
 
 /**
  * @brief The GUI counterpart of Frame.
@@ -24,11 +28,10 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT FrameQuick : public Frame
 {
     Q_OBJECT
-    Q_PROPERTY(QStringList tabTitles READ tabTitles NOTIFY numDockWidgetsChanged)
+    Q_PROPERTY(DockWidgetModel* dockWidgetModel READ dockWidgetModel CONSTANT)
 public:
     explicit FrameQuick(QWidgetAdapter *parent = nullptr, FrameOptions = FrameOption::FrameOption_None);
-
-    QStringList tabTitles() const;
+    DockWidgetModel *dockWidgetModel() const;
 
 protected:
     void removeWidget_impl(DockWidgetBase *) override;
@@ -48,8 +51,35 @@ Q_SIGNALS:
     void tabTitlesChanged();
 private:
     QQuickItem *m_stackLayout = nullptr;
-    DockWidgetBase::List m_dockWidgets;
     DockWidgetBase *m_currentDockWidget = nullptr;
+    DockWidgetModel *const m_dockWidgetModel;
+};
+
+class DockWidgetModel : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    enum Role {
+        Role_Title = Qt::UserRole
+    };
+
+    explicit DockWidgetModel(QObject *parent);
+    int count() const;
+    int rowCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    DockWidgetBase *dockWidgetAt(int index) const;
+    void remove(DockWidgetBase *);
+    int indexOf(DockWidgetBase *);
+    bool insert(DockWidgetBase *dw, int index);
+    bool contains(DockWidgetBase *dw) const;
+protected:
+    QHash<int, QByteArray> roleNames() const override;
+Q_SIGNALS:
+    void countChanged();
+private:
+    void emitDataChangedFor(DockWidgetBase *);
+    DockWidgetBase::List m_dockWidgets;
+    QHash<DockWidgetBase *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambda
 };
 
 }
