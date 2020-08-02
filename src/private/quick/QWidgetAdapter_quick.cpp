@@ -88,7 +88,11 @@ void QWidgetAdapter::itemChange(QQuickItem::ItemChange change, const QQuickItem:
     }
 }
 
-void QWidgetAdapter::raise() {}
+void QWidgetAdapter::raise()
+{
+    if (QWindow *w = windowHandle())
+        w->raise();
+}
 
 WId QWidgetAdapter::winId() const
 {
@@ -150,7 +154,15 @@ void QWidgetAdapter::releaseMouse()
 
 void QWidgetAdapter::setMinimumSize(QSize sz)
 {
-    m_minimumSize = sz;
+    if (m_minimumSize != sz) {
+        m_minimumSize = sz;
+        updateGeometry();
+    }
+}
+
+void QWidgetAdapter::updateGeometry()
+{
+    // TODO
 }
 
 void QWidgetAdapter::resize(QSize sz)

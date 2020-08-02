@@ -65,7 +65,7 @@ public:
     void update() {}
 
     QSize size() const { return QQuickItem::size().toSize(); }
-    QSize minimumSizeHint() const { return m_minimumSize; }
+    virtual QSize minimumSizeHint() const { return m_minimumSize; }
     QSize minimumSize() const { return m_minimumSize; }
     QSize maximumSize() const { return m_maximumSize; }
     int minimumHeight() const { return m_minimumSize.height(); }
@@ -79,6 +79,7 @@ public:
     void grabMouse();
     void releaseMouse();
     void setMinimumSize(QSize);
+    void updateGeometry();
     void resize(QSize);
     bool isWindow() const { return parentItem() == nullptr; }
     bool isMaximized() const;
@@ -102,7 +103,7 @@ public:
     void activateWindow();
     void setSizePolicy(QSizePolicy);
     QSizePolicy sizePolicy() const;
-    QSize sizeHint() const;
+    virtual QSize sizeHint() const;
 
     Qt::WindowFlags windowFlags() const;
 
