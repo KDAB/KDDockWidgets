@@ -15,7 +15,7 @@
 #include "MainWindow.h"
 #include "KDDockWidgets.h"
 #include "DropIndicatorOverlayInterface_p.h"
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 
 #include <QWidget>
 #include <QPointer>
@@ -45,20 +45,17 @@ struct DockDescriptor {
     KDDockWidgets::AddingOption option;
 };
 
-QWidget* draggableFor(QWidget *);
-
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
-QPoint dragPointForWidget(Frame* frame, int index);
-
+#ifdef KDDOCKWIDGETS_QTWIDGETS
 std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QSize sz = {600, 600},
                                                             KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame, const QString &name = {});
 
 
 
 std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
-
-KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidget *w,
+#endif
+KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQuick *w,
                                                 DockWidgetBase::Options options = {}, bool show = true,
                                                 const QString &affinityName = {});
 KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QColor color);
@@ -75,7 +72,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 };
 
-class MyWidget : public QWidget
+class MyWidget : public QWidgetOrQuick
 {
 public:
     explicit MyWidget(const QString &, QColor c);
@@ -88,7 +85,9 @@ public:
     }
 
 protected:
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     void paintEvent(QPaintEvent *) override;
+#endif
 private:
     QColor c;
 };
@@ -98,10 +97,6 @@ void doubleClickOn(QPoint globalPos, QWidget *receiver);
 void pressOn(QPoint globalPos, QWidget *receiver);
 void releaseOn(QPoint globalPos, QWidget *receiver);
 void moveMouseTo(QPoint globalDest, QWidget *receiver);
-void drag(QWidget *sourceWidget, QPoint pressGlobalPos, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release);
-void drag(QWidget *sourceWidget, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release);
-void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release);
-void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation);
 
 }
 

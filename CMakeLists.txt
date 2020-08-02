@@ -181,6 +181,7 @@ if(OPTION_DEVELOPER_MODE)
     endif()
 
     add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
+    add_test(NAME tst_common COMMAND tst_common)
 
   endif()
 endif()

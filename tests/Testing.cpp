@@ -11,12 +11,12 @@
 
 #include "Testing.h"
 #include "MainWindow.h"
-#include "DockWidget.h"
 #include "DockRegistry_p.h"
 
 #include <QApplication>
-#include <QTest>
+#include <QtTest>
 #include <QLoggingCategory>
+#include <QElapsedTimer>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;
@@ -84,7 +84,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
     }
 }
 
-bool Testing::waitForEvent(QWidget *w, QEvent::Type type, int timeout)
+bool Testing::waitForEvent(QWidgetOrQuick *w, QEvent::Type type, int timeout)
 {
     EventFilter filter(type);
     w->installEventFilter(&filter);
@@ -117,7 +117,7 @@ bool Testing::waitForDeleted(QObject *o, int timeout)
     return wasDeleted;
 }
 
-bool Testing::waitForResize(QWidget *w, int timeout)
+bool Testing::waitForResize(QWidgetOrQuick *w, int timeout)
 {
     return waitForEvent(w, QEvent::Resize, timeout);
 }

@@ -34,7 +34,6 @@
 
 namespace KDDockWidgets {
 
-
 namespace Testing {
 
     class WarningObserver
@@ -103,11 +102,11 @@ namespace Testing {
     void installFatalMessageHandler();
     void setExpectedWarning(const QString &);
 
-    bool waitForEvent(QWidget *w, QEvent::Type type, int timeout = 2000);
+    bool waitForEvent(QWidgetOrQuick *w, QEvent::Type type, int timeout = 2000);
     bool waitForDeleted(QObject *o, int timeout = 2000);
-    bool waitForResize(QWidget *w, int timeout = 2000);
+    bool waitForResize(QWidgetOrQuick *w, int timeout = 2000);
 
-    class HostedWidget : public QWidget
+    class HostedWidget : public QWidgetOrQuick
     {
     public:
 
