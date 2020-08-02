@@ -36,6 +36,11 @@ FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
     init();
 }
 
+FloatingWindowQuick::~FloatingWindowQuick()
+{
+    m_quickWindow->deleteLater();
+}
+
 void FloatingWindowQuick::init()
 {
     m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
@@ -45,8 +50,6 @@ void FloatingWindowQuick::init()
     Q_ASSERT(visualItem);
     visualItem->setParent(this);
     visualItem->setParentItem(this);
-
-    //dropArea()->QWidgetAdapter::setParent(visualItem);
 
     m_quickWindow->setFlags(windowFlags());
     m_quickWindow->show();

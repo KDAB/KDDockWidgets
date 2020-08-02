@@ -24,6 +24,7 @@ class DOCKS_EXPORT FloatingWindowQuick : public FloatingWindow
 public:
     explicit FloatingWindowQuick(MainWindowBase *parent = nullptr);
     explicit FloatingWindowQuick(Frame *frame, MainWindowBase *parent = nullptr);
+    ~FloatingWindowQuick();
 
 private:
     void init();
