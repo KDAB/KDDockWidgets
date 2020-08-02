@@ -39,6 +39,7 @@ Rectangle {
 
     TabBar {
         id: tabbar
+        visible: count > 1
         anchors {
             left: parent.left
             right: parent.right
@@ -61,7 +62,7 @@ Rectangle {
         anchors {
             left: parent.left
             right: parent.right
-            top: tabbar.bottom
+            top: tabbar.visible ? tabbar.bottom : parent.top
             bottom: parent.bottom
         }
 
