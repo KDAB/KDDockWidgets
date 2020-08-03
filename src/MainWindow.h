@@ -45,9 +45,6 @@ public:
     ///@brief Destructor
     ~MainWindow() override;
 
-    ///@internal
-    DropAreaWithCentralFrame *dropArea() const override;
-
 private:
     class Private;
     Private *const d;

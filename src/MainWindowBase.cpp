@@ -30,8 +30,10 @@ using namespace KDDockWidgets;
 class MainWindowBase::Private
 {
 public:
-    explicit Private(MainWindowOptions options)
+    explicit Private(MainWindowBase *mainWindow, MainWindowOptions options)
         : m_options(options)
+        , q(mainWindow)
+        , m_dropArea(new DropAreaWithCentralFrame(mainWindow, options))
     {
     }
 
@@ -43,12 +45,14 @@ public:
     QString name;
     QStringList affinities;
     const MainWindowOptions m_options;
+    MainWindowBase *const q;
+    DropAreaWithCentralFrame *const m_dropArea;
 };
 
 MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                                QWidgetOrQuick *parent, Qt::WindowFlags flags)
     : QMainWindowOrQuick(parent, flags)
-    , d(new Private(options))
+    , d(new Private(this, options))
 {
     setUniqueName(uniqueName);
 }
@@ -100,6 +104,11 @@ QString MainWindowBase::uniqueName() const
 MainWindowOptions MainWindowBase::options() const
 {
     return d->m_options;
+}
+
+DropAreaWithCentralFrame *MainWindowBase::dropArea() const
+{
+    return d->m_dropArea;
 }
 
 MultiSplitter *MainWindowBase::multiSplitter() const

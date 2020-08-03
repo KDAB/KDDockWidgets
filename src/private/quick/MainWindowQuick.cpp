@@ -19,20 +19,3 @@ MainWindowQuick::MainWindowQuick(const QString &uniqueName)
 {
     qDebug() << "Created";
 }
-
-DropAreaWithCentralFrame *MainWindowQuick::dropArea() const
-{
-    return m_dropArea;
-}
-
-void MainWindowQuick::setDropArea(DropAreaWithCentralFrame *dropArea)
-{
-    if (m_dropArea) {
-        qWarning() << Q_FUNC_INFO << "Already contains a drop area!";
-        return;
-    }
-
-    qDebug() << "Got drop area";
-    m_dropArea = dropArea;
-    Q_EMIT dropAreaChanged();
-}

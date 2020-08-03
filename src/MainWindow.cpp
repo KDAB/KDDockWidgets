@@ -31,12 +31,9 @@ using namespace KDDockWidgets;
 class MainWindow::Private
 {
 public:
-    explicit Private(MainWindowOptions options, MainWindowBase *mainWindow)
-        : m_dropArea(new DropAreaWithCentralFrame(mainWindow, options))
+    explicit Private(MainWindowOptions, MainWindowBase *)
     {
     }
-
-    DropAreaWithCentralFrame *const m_dropArea;
 };
 
 
@@ -81,9 +78,4 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
 MainWindow::~MainWindow()
 {
     delete d;
-}
-
-DropAreaWithCentralFrame *MainWindow::dropArea() const
-{
-    return d->m_dropArea;
 }

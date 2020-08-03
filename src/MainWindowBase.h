@@ -89,7 +89,7 @@ public:
 
     ///@internal
     ///@brief returns the drop area.
-    virtual DropAreaWithCentralFrame *dropArea() const = 0;
+    DropAreaWithCentralFrame *dropArea() const;
 
     ///@internal
     ///@brief returns the MultiSplitter.

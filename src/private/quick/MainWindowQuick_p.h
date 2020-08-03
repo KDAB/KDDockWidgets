@@ -20,16 +20,8 @@ class DOCKS_EXPORT MainWindowQuick : public MainWindowBase
 {
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
-    Q_PROPERTY(KDDockWidgets::DropAreaWithCentralFrame* dropArea READ dropArea WRITE setDropArea NOTIFY dropAreaChanged)
 public:
     explicit MainWindowQuick(const QString &uniqueName = {});
-protected:
-    DropAreaWithCentralFrame *dropArea() const override;
-    void setDropArea(DropAreaWithCentralFrame*);
-Q_SIGNALS:
-    void dropAreaChanged();
-private:
-    DropAreaWithCentralFrame *m_dropArea = nullptr;
 };
 
 }
