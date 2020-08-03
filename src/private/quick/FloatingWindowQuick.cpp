@@ -45,6 +45,7 @@ void FloatingWindowQuick::init()
 {
     m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
+    QWidgetAdapter::makeItemFillParent(this);
 
     QQuickItem *visualItem = createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/FloatingWindow.qml"));
     Q_ASSERT(visualItem);

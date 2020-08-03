@@ -33,16 +33,16 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     auto component = new QQmlComponent(Config::self().qmlEngine(),
                                        QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/Frame.qml")));
 
-    auto item = static_cast<QQuickItem*>(component->create());
+    auto visualItem = static_cast<QQuickItem*>(component->create());
 
-    if (!item) {
+    if (!visualItem) {
         qWarning() << Q_FUNC_INFO << "Failed to create item" << component->errorString();
         return;
     }
 
-    item->setProperty("frameCpp", QVariant::fromValue(this));
-    item->setParentItem(this);
-    item->setParent(this);
+    visualItem->setProperty("frameCpp", QVariant::fromValue(this));
+    visualItem->setParentItem(this);
+    visualItem->setParent(this);
 }
 
 DockWidgetModel *FrameQuick::dockWidgetModel() const
