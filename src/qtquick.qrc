@@ -4,7 +4,6 @@
         <file>private/quick/qml/DropArea.qml</file>
         <file>private/quick/qml/FloatingWindow.qml</file>
         <file>private/quick/qml/Frame.qml</file>
-        <file>private/quick/qml/MainWindow.qml</file>
         <file>private/quick/qml/Separator.qml</file>
         <file>private/quick/qml/TitleBarBase.qml</file>
         <file>private/quick/qml/TitleBar.qml</file>

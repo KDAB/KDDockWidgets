@@ -266,7 +266,8 @@ Qt::WindowFlags QWidgetAdapter::windowFlags() const
     return m_requestedWindowFlags;
 }
 
-QQuickItem *QWidgetAdapter::createItem(QQmlEngine *engine, const QString &filename) const
+/** static */
+QQuickItem *QWidgetAdapter::createItem(QQmlEngine *engine, const QString &filename)
 {
     QQmlComponent component(engine, filename);
     QObject *obj = component.create();
@@ -276,6 +277,30 @@ QQuickItem *QWidgetAdapter::createItem(QQmlEngine *engine, const QString &filena
     }
 
     return qobject_cast<QQuickItem*>(obj);
+}
+
+void QWidgetAdapter::makeItemFillParent(QQuickItem *item)
+{
+    // This is equivalent to "anchors.fill: parent
+
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "Invalid item";
+        return;
+    }
+
+    QQuickItem *parentItem = item->parentItem();
+    if (!parentItem) {
+        qWarning() << Q_FUNC_INFO << "Invalid parentItem for" << item;
+        return;
+    }
+
+    QObject *anchors = item->property("anchors").value<QObject*>();
+    if (!anchors) {
+        qWarning() << Q_FUNC_INFO << "Invalid anchors for" << item;
+        return;
+    }
+
+    anchors->setProperty("fill", QVariant::fromValue(parentItem));
 }
 
 void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)

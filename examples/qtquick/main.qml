@@ -1,8 +1,13 @@
 
-
 import QtQuick 2.6
+import com.kdab.dockwidgets 1.0 as KDDW
 
-Rectangle {
+KDDW.MainWindow {
     id: root
-    color: "red"
+
+
+    Component.onCompleted: {
+        root.init("MyWindowName-1");
+    }
 }
+

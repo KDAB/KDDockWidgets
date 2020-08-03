@@ -11,7 +11,7 @@
 
 #include "QmlTypes.h"
 #include "DropAreaWithCentralFrame_p.h"
-#include "quick/MainWindowQuick_p.h"
+#include "quick/MainWindowWrapper_p.h"
 #include "TitleBar_p.h"
 
 #include <QQmlEngine>
@@ -21,7 +21,7 @@ void KDDockWidgets::registerQmlTypes()
 {
     qDebug() << "Registering types";
     qmlRegisterType<DropAreaWithCentralFrame>("com.kdab.dockwidgets", 1, 0, "DropAreaWithCentralFrame");
-    qmlRegisterType<MainWindowQuick>("com.kdab.dockwidgets", 1, 0, "MainWindowQuick");
+    qmlRegisterType<MainWindowWrapper>("com.kdab.dockwidgets", 1, 0, "MainWindow");
 
     qmlRegisterUncreatableType<TitleBar>("com.kdab.dockwidgets", 1, 0, "TitleBar", QStringLiteral("Enum access only"));
     qRegisterMetaType<DropArea*>();

@@ -10,12 +10,15 @@
 */
 
 #include "MainWindowQuick_p.h"
+#include "DropAreaWithCentralFrame_p.h"
+
 #include <QDebug>
 
 using namespace KDDockWidgets;
 
-MainWindowQuick::MainWindowQuick(const QString &uniqueName)
-    : MainWindowBase(uniqueName, MainWindowOption_None)
+MainWindowQuick::MainWindowQuick(const QString &uniqueName, QWidgetAdapter *parent)
+    : MainWindowBase(uniqueName, MainWindowOption_None, parent)
 {
-    qDebug() << "Created";
+    QWidgetAdapter::makeItemFillParent(this);
+    QWidgetAdapter::makeItemFillParent(dropArea());
 }

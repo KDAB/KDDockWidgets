@@ -107,7 +107,8 @@ public:
 
     Qt::WindowFlags windowFlags() const;
 
-    QQuickItem *createItem(QQmlEngine *, const QString &filename) const;
+    static QQuickItem *createItem(QQmlEngine *, const QString &filename);
+    static void makeItemFillParent(QQuickItem *item);
 Q_SIGNALS:
     void parentChanged();
 protected:
