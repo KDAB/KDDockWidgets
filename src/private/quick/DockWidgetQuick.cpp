@@ -60,6 +60,7 @@ void DockWidgetQuick::setWidget(const QString &qmlFilename)
     auto adapter = new QWidgetAdapter(this);
     guest->setParentItem(adapter);
     guest->setParent(adapter);
+    QWidgetAdapter::makeItemFillParent(adapter);
 
     DockWidgetBase::setWidget(adapter);
 }
