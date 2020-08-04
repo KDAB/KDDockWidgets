@@ -116,7 +116,6 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
     if (candidateParent)
         return candidateParent;
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
     const MainWindowBase::List windows = DockRegistry::self()->mainwindows();
 
     if (windows.isEmpty())
@@ -135,11 +134,6 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
             return mainWindows.first();
         }
     }
-#else
-    Q_UNUSED(frame);
-    qWarning() << "Implement and abstract me!";
-    return nullptr;
-#endif
 }
 
 FloatingWindow::FloatingWindow(Frame *frame, MainWindowBase *parent)

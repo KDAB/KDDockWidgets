@@ -27,6 +27,7 @@ public:
     ~FloatingWindowQuick();
 
 private:
+    QWindow *candidateParentWindow() const;
     void init();
     QQuickView *const m_quickWindow;
     Q_DISABLE_COPY(FloatingWindowQuick)

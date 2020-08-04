@@ -10,6 +10,7 @@
 */
 
 #include "FloatingWindowQuick_p.h"
+#include "MainWindowBase.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
 #include "DropArea_p.h"
@@ -41,6 +42,15 @@ FloatingWindowQuick::~FloatingWindowQuick()
     m_quickWindow->deleteLater();
 }
 
+QWindow *FloatingWindowQuick::candidateParentWindow() const
+{
+    if (auto mainWindow = qobject_cast<MainWindowBase*>(QObject::parent())) {
+        return mainWindow->QQuickItem::window();
+    }
+
+    return nullptr;
+}
+
 void FloatingWindowQuick::init()
 {
     connect(this, &QQuickItem::visibleChanged, this, [this] {
@@ -50,6 +60,9 @@ void FloatingWindowQuick::init()
     });
 
     m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
+
+    m_quickWindow->setTransientParent(candidateParentWindow());
+
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
     QWidgetAdapter::makeItemFillParent(this);
 
