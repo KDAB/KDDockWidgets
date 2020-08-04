@@ -539,11 +539,6 @@ DropArea *DragController::dropAreaUnderCursor() const
 
     const QStringList affinities = m_windowBeingDragged->floatingWindow()->affinities();
 
-    if (auto dt = qobject_cast<DropArea *>(topLevel)) {
-        if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
-            return dt;
-    }
-
     if (auto fw = qobject_cast<FloatingWindow *>(topLevel)) {
         if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
             return fw->dropArea();
@@ -552,13 +547,6 @@ DropArea *DragController::dropAreaUnderCursor() const
     if (topLevel->objectName() == QStringLiteral("_docks_IndicatorWindow")) {
         qWarning() << "Indicator window should be hidden " << topLevel << topLevel->isVisible();
         Q_ASSERT(false);
-    }
-
-    if (auto dock = qobject_cast<DockWidgetBase *>(topLevel)) {
-        FloatingWindow *fw = dock->morphIntoFloatingWindow();
-        m_windowBeingDragged->floatingWindow()->raise();
-        if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
-            return fw->dropArea();
     }
 
     if (auto dt = deepestDropAreaInTopLevel(topLevel, QCursor::pos(), affinities)) {
