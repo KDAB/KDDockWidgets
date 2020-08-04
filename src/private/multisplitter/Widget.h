@@ -67,7 +67,6 @@ public:
     virtual void setWidth(int width) = 0;
     virtual void setHeight(int height) = 0;
     virtual std::unique_ptr<Widget> parentWidget() const = 0;
-    virtual std::unique_ptr<Widget> topLevel() const = 0;
     virtual void show() = 0;
     virtual void hide() = 0;
     virtual void update() = 0;

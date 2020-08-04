@@ -78,28 +78,11 @@ std::unique_ptr<Widget> Widget_quick::parentWidget() const
     return {};
 }
 
-std::unique_ptr<Widget> Widget_quick::topLevel() const
-{
-    // TODO
-    return {};
-}
-
 QSize Widget_quick::maxSizeHint() const
 {
     // Some arbitrary big value
     return QSize(30000, 30000);
 }
-
-/* uncomment when needed
-std::unique_ptr<Widget> Widget_quick::window() const
-{
-    if (auto window = m_thisWidget->window()) {
-        return std::unique_ptr<Widget>(new Widget_quick(window));
-    }
-
-    return {};
-}
-*/
 
 void Widget_quick::show()
 {

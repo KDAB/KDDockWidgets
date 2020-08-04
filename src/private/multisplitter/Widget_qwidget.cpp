@@ -87,15 +87,6 @@ std::unique_ptr<Widget> Widget_qwidget::parentWidget() const
     return {};
 }
 
-std::unique_ptr<Widget> Widget_qwidget::topLevel() const
-{
-    if (auto window = m_thisWidget->window()) {
-        return std::unique_ptr<Widget>(new Widget_qwidget(window));
-    }
-
-    return {};
-}
-
 void Widget_qwidget::show()
 {
     m_thisWidget->show();
