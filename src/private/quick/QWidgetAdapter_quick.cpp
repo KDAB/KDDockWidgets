@@ -72,13 +72,13 @@ void QWidgetAdapter::itemChange(QQuickItem::ItemChange change, const QQuickItem:
 
     // Emulate the QWidget behaviour as QQuickItem doesn't receive some QEvents.
     switch (change) {
-    case QQuickItem::ItemVisibleHasChanged: {
+    case QQuickItem::ItemParentHasChanged: {
         QEvent ev(QEvent::ParentChange);
         event(&ev);
         Q_EMIT parentChanged();
         break;
     }
-    case QQuickItem::ItemParentHasChanged: {
+    case QQuickItem::ItemVisibleHasChanged: {
         QEvent ev(isVisible() ? QEvent::Show : QEvent::Hide);
         event(&ev);
         break;
