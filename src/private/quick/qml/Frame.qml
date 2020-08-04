@@ -32,9 +32,9 @@ Rectangle {
         titleBarCpp: root.titleBarCpp
         visible: titleBarCpp && titleBarCpp.visible
         anchors {
-            top:  parent.top
-            left: parent.left
-            right: parent.right
+            top:  parent ? parent.top : undefined
+            left: parent ? parent.left : undefined
+            right: parent ? parent.right : undefined
         }
     }
 
@@ -42,10 +42,10 @@ Rectangle {
         id: tabbar
         visible: count > 1
         anchors {
-            left: parent.left
-            right: parent.right
-            top: titleBar.visible ? titleBar.bottom
-                                  : parent.top
+            left: parent ? parent.left : undefined
+            right: parent ? parent.right : undefined
+            top: (titleBar && titleBar.visible) ? titleBar.bottom
+                                                : (parent ? parent.top : undefined)
         }
 
         width: parent.width
@@ -61,11 +61,11 @@ Rectangle {
     StackLayout {
         id: stackLayout
         anchors {
-            left: parent.left
-            right: parent.right
-            top: tabbar.visible ? tabbar.bottom : (titleBar.visible ? titleBar.bottom
-                                                                    : parent.top)
-            bottom: parent.bottom
+            left: parent ? parent.left : undefined
+            right: parent ? parent.right : undefined
+            top: (parent && tabbar.visible) ? tabbar.bottom : ((titleBar && titleBar.visible) ? titleBar.bottom
+                                                                                              : parent ? parent.top : undefined)
+            bottom: parent ? parent.bottom : undefined
         }
 
         currentIndex: tabbar.currentIndex

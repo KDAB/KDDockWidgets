@@ -546,7 +546,6 @@ bool Frame::event(QEvent *e)
         if (auto dropArea = qobject_cast<DropArea *>(QWidgetAdapter::parentWidget())) {
             setDropArea(dropArea);
         } else {
-            Q_ASSERT(!QWidgetAdapter::parent());
             setDropArea(nullptr);
         }
     }

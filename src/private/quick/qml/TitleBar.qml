@@ -18,7 +18,7 @@ TitleBarBase {
         id: title
         text: root.title
         anchors {
-            left: parent.left
+            left: parent ? parent.left : undefined
             leftMargin: 5
         }
     }
@@ -27,8 +27,8 @@ TitleBarBase {
         id: floatButton
         color: "red"
         anchors {
-            top: parent.top
-            bottom: parent.bottom
+            top: parent ? parent.top : undefined
+            bottom: parent ? parent.bottom : undefined
             right: closeButton.left
             topMargin: 5
             bottomMargin: 5
@@ -48,9 +48,9 @@ TitleBarBase {
         id: closeButton
         color: "red"
         anchors {
-            top: parent.top
-            bottom: parent.bottom
-            right: parent.right
+            top: parent ? parent.top : undefined
+            bottom: parent ? parent.bottom : undefined
+            right: parent ? parent.right : undefined
             topMargin: 5
             bottomMargin: 5
             leftMargin: 5
