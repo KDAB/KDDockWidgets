@@ -43,6 +43,12 @@ FloatingWindowQuick::~FloatingWindowQuick()
 
 void FloatingWindowQuick::init()
 {
+    connect(this, &QQuickItem::visibleChanged, this, [this] {
+        if (!isVisible() && !beingDeleted()) {
+            scheduleDeleteLater();
+        }
+    });
+
     m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
     QWidgetAdapter::makeItemFillParent(this);

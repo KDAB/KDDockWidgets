@@ -221,8 +221,12 @@ QWidgetAdapter *QWidgetAdapter::parentWidget() const
 
 void QWidgetAdapter::close()
 {
-    if (QWindow *w = windowHandle())
-        w->close();
+    if (isWindow()) {
+        if (QWindow *w = windowHandle())
+            w->close();
+    } else {
+        setVisible(false);
+    }
 }
 
 void QWidgetAdapter::move(int x, int y)
