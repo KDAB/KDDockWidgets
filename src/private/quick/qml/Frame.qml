@@ -63,7 +63,7 @@ Rectangle {
         anchors {
             left: parent.left
             right: parent.right
-            top: tabbar.visible ? tabbar.bottom : parent.top
+            top: tabbar.visible ? tabbar.bottom : titleBar.bottom
             bottom: parent.bottom
         }
 
