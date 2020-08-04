@@ -221,10 +221,10 @@ QWidgetAdapter *QWidgetAdapter::parentWidget() const
 
 void QWidgetAdapter::close()
 {
-    if (isWindow()) {
-        if (QWindow *w = windowHandle())
-            w->close();
-    } else {
+    QCloseEvent ev;
+    onCloseEvent(&ev);
+
+    if (ev.isAccepted()) {
         setVisible(false);
     }
 }
