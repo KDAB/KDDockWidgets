@@ -23,7 +23,6 @@
 
 #include <QResizeEvent>
 #include <QMouseEvent>
-#include <QQuickWindow>
 #include <QQmlComponent>
 #include <QQuickItem>
 #include <QQmlEngine>
@@ -326,9 +325,8 @@ void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
 
 QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 {
-    auto quickWindow = qobject_cast<QQuickWindow*>(window);
-    if (!quickWindow)
+    if (!window)
         return nullptr;
 
-    return nullptr; // TODO
+    return window->property("kddockwidgets_qwidget").value<QQuickItem*>();
 }
