@@ -1,7 +1,7 @@
 CHECKSETS qt5,c++
 
 #KDAB-specific checks
-EXTRA kdabcopyright
+EXTRA kdabcopyright-reuse
 
 #additional checks
 #EXTRA defines,null
@@ -12,6 +12,8 @@ EXCLUDE strings,explicit,normalize,passbyvalue,operators,nullstrcompare,nullstra
 EXCLUDE style
 
 SKIP /fwd_headers/
+SKIP Doxyfile.cmake
+
 #skip CMake files
 SKIP /KDDockWidgetsConfig.cmake.in
 #skip the borrowed code in the cmake subdir

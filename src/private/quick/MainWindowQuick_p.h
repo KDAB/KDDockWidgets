@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #ifndef KD_MAIN_WINDOW_QUICK_P_H
@@ -25,20 +16,15 @@
 
 namespace KDDockWidgets {
 
-class MainWindowQuick : public MainWindowBase
+///@brief The MainWindow counterpart for QtQuick
+///Provides the ability of acepting drops of dock widgets.
+///It's not a real QWindow and not a main window in the sense of QMainWindow. Would be overkill
+///to have tool bars, menu bar and footer in the QtQuick implementation. That's left for the user to do.
+class DOCKS_EXPORT MainWindowQuick : public MainWindowBase
 {
     Q_OBJECT
-    Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
-    Q_PROPERTY(KDDockWidgets::DropAreaWithCentralFrame* dropArea READ dropArea WRITE setDropArea NOTIFY dropAreaChanged)
 public:
-    MainWindowQuick();
-protected:
-    DropAreaWithCentralFrame *dropArea() const override;
-    void setDropArea(DropAreaWithCentralFrame*);
-Q_SIGNALS:
-    void dropAreaChanged();
-private:
-    DropAreaWithCentralFrame *m_dropArea = nullptr;
+    explicit MainWindowQuick(const QString &uniqueName, QWidgetAdapter *parent);
 };
 
 }

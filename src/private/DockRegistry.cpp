@@ -1,35 +1,30 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #include "DockRegistry_p.h"
 #include "DockWidgetBase.h"
 #include "Logging_p.h"
-#include "DebugWindow_p.h"
 #include "Position_p.h"
-#include "widgets/MultiSplitter_p.h"
-#include "quick/QmlTypes.h"
+#include "MultiSplitter_p.h"
 
 #include <QPointer>
 #include <QDebug>
 #include <QApplication>
 #include <QWindow>
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+# include "DebugWindow_p.h"
+#else
+# include "quick/QmlTypes.h"
+#endif
 
 using namespace KDDockWidgets;
 
@@ -243,7 +238,7 @@ MainWindowBase *DockRegistry::mainWindowByName(const QString &name) const
     return nullptr;
 }
 
-DockWidgetBase *DockRegistry::dockWidgetForGuest(QWidget *guest) const
+DockWidgetBase *DockRegistry::dockWidgetForGuest(QWidgetOrQuick *guest) const
 {
     if (!guest)
         return nullptr;
@@ -364,6 +359,24 @@ const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
     return result;
 }
 
+const QVector<QWindow *> DockRegistry::floatingWindows() const
+{
+    QVector<QWindow *> windows;
+    windows.reserve(m_nestedWindows.size());
+    for (FloatingWindow *fw : m_nestedWindows) {
+        if (!fw->beingDeleted()) {
+            if (QWindow *window = fw->windowHandle()) {
+                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick*>(fw)); // Since QWidgetWindow is private API
+                windows.push_back(window);
+            } else {
+                qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
+            }
+        }
+    }
+
+    return windows;
+}
+
 FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) const
 {
     for (FloatingWindow *fw : m_nestedWindows) {
@@ -374,21 +387,33 @@ FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) con
     return nullptr;
 }
 
-QVector<QWidget *> DockRegistry::topLevels(bool excludeFloatingDocks) const
+QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
 {
-    QVector<QWidget *> windows;
+    QVector<QWindow *> windows;
     windows.reserve(m_nestedWindows.size() + m_mainWindows.size());
 
     if (!excludeFloatingDocks) {
         for (FloatingWindow *fw : m_nestedWindows) {
-            if (fw->isVisible())
-                windows << fw;
+            if (fw->isVisible()) {
+                if (QWindow *window = fw->windowHandle()) {
+                    window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick*>(fw)); // Since QWidgetWindow is private API
+                    windows << window;
+                } else {
+                    qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
+                }
+            }
         }
     }
 
     for (MainWindowBase *m : m_mainWindows) {
-        if (m->isVisible())
-            windows << m->topLevelWidget();
+        if (m->isVisible()) {
+            if (QWindow *window = m->window()->windowHandle()) {
+                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick*>(m));
+                windows << window;
+            } else {
+                qWarning() << Q_FUNC_INFO << "MainWindow doesn't have QWindow";
+            }
+        }
     }
 
     return windows;

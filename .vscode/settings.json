@@ -4,6 +4,7 @@
         "qevent": "cpp"
     },
     "cmake.configureSettings": {
-        "OPTION_DEVELOPER_MODE" : "ON"
+        "OPTION_DEVELOPER_MODE" : "ON",
+        "OPTION_QTQUICK" : true
     }
 }

@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #include "FloatingWindow_p.h"
@@ -35,13 +26,13 @@
 #include <QAbstractNativeEventFilter>
 #include <QWindow>
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 # include <Windows.h>
 #endif
 
 using namespace KDDockWidgets;
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 namespace KDDockWidgets {
 
 
@@ -88,7 +79,7 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     , m_dropArea(new DropArea(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         m_nchittestFilter = new NCHITTESTEventFilter(this);
         qApp->installNativeEventFilter(m_nchittestFilter);
@@ -98,7 +89,7 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     DockRegistry::self()->registerNestedWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 # if QT_VERSION < 0x051000
     // On Windows with Qt 5.9 (and maybe later but we don't care), the WM_NCALCSIZE isn't being processed unless we explicitly create the window.
     // So create it now, otherwise floating dock widgets will show a native title bar until resized.
@@ -125,7 +116,6 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
     if (candidateParent)
         return candidateParent;
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
     const MainWindowBase::List windows = DockRegistry::self()->mainwindows();
 
     if (windows.isEmpty())
@@ -144,10 +134,6 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
             return mainWindows.first();
         }
     }
-#else
-    qWarning() << "Implement and abstract me!";
-    return nullptr;
-#endif
 }
 
 FloatingWindow::FloatingWindow(Frame *frame, MainWindowBase *parent)
@@ -170,7 +156,7 @@ FloatingWindow::~FloatingWindow()
     qCDebug(creation) << "~FloatingWindow";
 }
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)
 {
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {

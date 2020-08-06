@@ -1,5 +1,14 @@
-# This is the top-level CMakeLists.txt file for the KDDockWidgets project.
 #
+# This file is part of KDDockWidgets.
+#
+# SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# Author: Sergio Martins <sergio.martins@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+#
+# Contact KDAB at <info@kdab.com> for commercial licensing options.
+#
+
 # Pass the following variables to cmake to control the build:
 #
 # -DKDDockWidgets_STATIC=[true|false]
@@ -12,6 +21,10 @@
 #
 # -DKDDockWidgets_EXAMPLES=[true|false]
 #  Build the examples.
+#  Default=true
+#
+# -DKDDockWidgets_DOCS=[true|false]
+#  Build the API documentation.
 #  Default=true
 #
 # -DOPTION_DEVELOPER_MODE=[true|false]
@@ -39,29 +52,30 @@ else()
   set(USE_DEFAULT_INSTALL_LOCATION False)
 endif()
 
-set(${PROJECT_NAME}_VERSION_MAJOR 0)
-set(${PROJECT_NAME}_VERSION_MINOR 9)
-set(${PROJECT_NAME}_VERSION_PATCH 99)
-set(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
-
 if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
-  project(KDDockWidgets VERSION ${${PROJECT_NAME}_VERSION} LANGUAGES CXX)
+  project(KDDockWidgets LANGUAGES CXX)
 else()
   project(KDDockWidgets
-          VERSION ${${PROJECT_NAME}_VERSION}
           DESCRIPTION "An advanced docking system for Qt"
           HOMEPAGE_URL "https://github.com/KDAB/KDDockWidgets"
           LANGUAGES CXX)
 endif()
 
-option(${PROJECT_NAME}_STATIC "Build statically" OFF)
-option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
-option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
+set(${PROJECT_NAME}_VERSION_MAJOR 0)
+set(${PROJECT_NAME}_VERSION_MINOR 9)
+set(${PROJECT_NAME}_VERSION_PATCH 99)
+set(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
+
+include(FeatureSummary)
+
 option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
 option(OPTION_BUILD_PYTHON_BINDINGS "Build python bindings" OFF)
 if(OPTION_BUILD_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC))
   message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
 endif()
+option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
+option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
+option(${PROJECT_NAME}_DOCS "Build the API documentation" ON)
 
 #Always build the test harness in developer-mode
 if(OPTION_DEVELOPER_MODE)
@@ -81,6 +95,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # setup default install locations
 include(InstallLocation)
+include(QtInstallPaths) #to set QT_INSTALL_FOO variables
 
 macro(set_compiler_flags targetName)
   if(OPTION_DEVELOPER_MODE)
@@ -93,6 +108,7 @@ endmacro()
 
 if(OPTION_QTQUICK)
   find_package(Qt5Quick)
+  find_package(Qt5QuickControls2)
   add_definitions(-DKDDOCKWIDGETS_QTQUICK)
 else()
   add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
@@ -121,7 +137,8 @@ ecm_generate_pri_file(BASE_NAME KDDockWidgets
 )
 install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
-install(FILES LICENSE.GPL.txt LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
+install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
+install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 
 add_subdirectory(src)
 if(OPTION_BUILD_PYTHON_BINDINGS)
@@ -129,43 +146,56 @@ if(OPTION_BUILD_PYTHON_BINDINGS)
 endif()
 
 if(${PROJECT_NAME}_EXAMPLES)
-  add_subdirectory(examples/dockwidgets)
-  set_compiler_flags(kddockwidgets_example)
+  if (OPTION_QTQUICK)
+    add_subdirectory(examples/qtquick)
+    set_compiler_flags(kddockwidgets_example_quick)
+  else()
+      add_subdirectory(examples/dockwidgets)
+      set_compiler_flags(kddockwidgets_example)
+  endif()
 endif()
 
 if(OPTION_DEVELOPER_MODE)
   include(ECMEnableSanitizers)
-  if(${PROJECT_NAME}_TESTS AND NOT OPTION_QTQUICK)
+  if(${PROJECT_NAME}_TESTS)
     enable_testing()
     add_subdirectory(tests)
 
-    #Require Qt5.15.1 or higher to run the tests_launcher tests on Mac
-    if(NOT APPLE OR Qt5Widgets_VERSION VERSION_GREATER 5.15.0)
-      # tst_docks.exe is pretty big (140 tests), so split it in 6 runs so we can use threads.
-      add_test(NAME tst_docks0 COMMAND tests_launcher 0 5)
-      add_test(NAME tst_docks1 COMMAND tests_launcher 1 5)
-      add_test(NAME tst_docks2 COMMAND tests_launcher 2 5)
-      add_test(NAME tst_docks3 COMMAND tests_launcher 3 5)
-      add_test(NAME tst_docks4 COMMAND tests_launcher 4 5)
-      add_test(NAME tst_docks5 COMMAND tests_launcher 5 5)
-      add_test(NAME tst_docks6 COMMAND tests_launcher 6 5)
-      add_test(NAME tst_docks7 COMMAND tests_launcher 7 5)
-      add_test(NAME tst_docks8 COMMAND tests_launcher 8 5)
-      add_test(NAME tst_docks9 COMMAND tests_launcher 9 5)
-      add_test(NAME tst_docks10 COMMAND tests_launcher 10 5)
-      add_test(NAME tst_docks11 COMMAND tests_launcher 10 5)
-      add_test(NAME tst_docks12 COMMAND tests_launcher 11 5)
-      add_test(NAME tst_docks13 COMMAND tests_launcher 12 5)
-      add_test(NAME tst_docks14 COMMAND tests_launcher 13 5)
-      add_test(NAME tst_docks15 COMMAND tests_launcher 14 5)
-      add_test(NAME tst_docks16 COMMAND tests_launcher 15 5)
-      add_test(NAME tst_docks17 COMMAND tests_launcher 16 5)
-      add_test(NAME tst_docks18 COMMAND tests_launcher 17 5)
-      add_test(NAME tst_docks19 COMMAND tests_launcher 18 5)
-      add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
-      add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
+    if (NOT OPTION_QTQUICK)
+        #Require Qt5.15.1 or higher to run the tests_launcher tests on Mac
+        if(NOT APPLE OR Qt5Widgets_VERSION VERSION_GREATER 5.15.0)
+        # tst_docks.exe is pretty big (140 tests), so split it in 6 runs so we can use threads.
+        add_test(NAME tst_docks0 COMMAND tests_launcher 0 5)
+        add_test(NAME tst_docks1 COMMAND tests_launcher 1 5)
+        add_test(NAME tst_docks2 COMMAND tests_launcher 2 5)
+        add_test(NAME tst_docks3 COMMAND tests_launcher 3 5)
+        add_test(NAME tst_docks4 COMMAND tests_launcher 4 5)
+        add_test(NAME tst_docks5 COMMAND tests_launcher 5 5)
+        add_test(NAME tst_docks6 COMMAND tests_launcher 6 5)
+        add_test(NAME tst_docks7 COMMAND tests_launcher 7 5)
+        add_test(NAME tst_docks8 COMMAND tests_launcher 8 5)
+        add_test(NAME tst_docks9 COMMAND tests_launcher 9 5)
+        add_test(NAME tst_docks10 COMMAND tests_launcher 10 5)
+        add_test(NAME tst_docks11 COMMAND tests_launcher 10 5)
+        add_test(NAME tst_docks12 COMMAND tests_launcher 11 5)
+        add_test(NAME tst_docks13 COMMAND tests_launcher 12 5)
+        add_test(NAME tst_docks14 COMMAND tests_launcher 13 5)
+        add_test(NAME tst_docks15 COMMAND tests_launcher 14 5)
+        add_test(NAME tst_docks16 COMMAND tests_launcher 15 5)
+        add_test(NAME tst_docks17 COMMAND tests_launcher 16 5)
+        add_test(NAME tst_docks18 COMMAND tests_launcher 17 5)
+        add_test(NAME tst_docks19 COMMAND tests_launcher 18 5)
+        add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
+        add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
+        endif()
     endif()
+
     add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
+    add_test(NAME tst_common COMMAND tst_common)
 
   endif()
+endif()
+
+if(${PROJECT_NAME}_DOCS)
+  add_subdirectory(docs) # needs to go last, in case there are build source files
 endif()

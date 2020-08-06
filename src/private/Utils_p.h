@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #ifndef KD_UTILS_P_H
@@ -27,6 +18,11 @@
 #include <QScreen>
 #include <QWidget>
 #include <QWindow>
+
+#ifdef KDDOCKWIDGETS_QTQUICK
+# include <QQuickItem>
+# include <QQuickWindow>
+#endif
 
 #ifdef QT_X11EXTRAS_LIB
 # include <QtX11Extras/QX11Info>
@@ -68,10 +64,9 @@ inline bool windowManagerHasTranslucency()
     return true;
 }
 
-inline QSize screenSizeForWidget(const QWidget *w)
+inline QSize screenSizeForWindow(const QWindow *window)
 {
-    QWidget *topLevel = w->window();
-    if (QWindow *window = topLevel->windowHandle()) {
+    if (window) {
         if (QScreen *screen = window->screen()) {
             return screen->size();
         }
@@ -80,10 +75,9 @@ inline QSize screenSizeForWidget(const QWidget *w)
     return {};
 }
 
-inline int screenNumberForWidget(const QWidget *w)
+inline int screenNumberForWindow(const QWindow *window)
 {
-    QWidget *topLevel = w->window();
-    if (QWindow *window = topLevel->windowHandle()) {
+    if (window) {
         if (QScreen *screen = window->screen()) {
             return qApp->screens().indexOf(screen);
         }
@@ -91,6 +85,31 @@ inline int screenNumberForWidget(const QWidget *w)
 
     return -1;
 }
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+inline int screenNumberForWidget(const QWidget *widget)
+{
+    return screenNumberForWindow(widget->window()->windowHandle());
+}
+
+inline QSize screenSizeForWidget(const QWidget *widget)
+{
+    return screenSizeForWindow(widget->window()->windowHandle());
+}
+
+#else
+
+inline int screenNumberForWidget(const QQuickItem *w)
+{
+    return screenNumberForWindow(w->window());
+}
+
+inline QSize screenSizeForWidget(const QQuickItem *w)
+{
+    return screenSizeForWindow(w->window());
+}
+
+#endif
 
 };
 

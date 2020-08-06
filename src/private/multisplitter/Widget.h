@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 ///@file
@@ -24,12 +15,14 @@
 #pragma once
 
 #include "multisplitter_export.h"
+#include "Item_p.h"
 
 #include <QRect>
 #include <QSize>
 #include <QDebug>
 #include <QObject>
 #include <qglobal.h>
+#include <QSizePolicy>
 
 #include <memory>
 
@@ -74,7 +67,6 @@ public:
     virtual void setWidth(int width) = 0;
     virtual void setHeight(int height) = 0;
     virtual std::unique_ptr<Widget> parentWidget() const = 0;
-    virtual std::unique_ptr<Widget> topLevel() const = 0;
     virtual void show() = 0;
     virtual void hide() = 0;
     virtual void update() = 0;
@@ -106,6 +98,39 @@ public:
 
     ///@brief returns an id for corelation purposes for saving layouts
     QString id() const;
+
+    template <typename T>
+    static QSize widgetMinSize(const T *w)
+    {
+        const int minW = w->minimumWidth() > 0 ? w->minimumWidth()
+                                               : w->minimumSizeHint().width();
+
+        const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
+                                                : w->minimumSizeHint().height();
+
+        return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
+    }
+
+    template <typename T>
+    static QSize widgetMaxSize(const T *w)
+    {
+        // The max size is usually QWidget::maximumSize(), but we also honour the QSizePolicy::Fixed+sizeHint() case
+        // as widgets don't need to have QWidget::maximumSize() to have a max size honoured
+
+        const QSize min = widgetMinSize(w);
+        QSize max = w->maximumSize();
+        max = boundedMaxSize(min, max); // for safety against weird values
+
+        const QSizePolicy policy = w->sizePolicy();
+
+        if (policy.verticalPolicy() == QSizePolicy::Fixed || policy.verticalPolicy() == QSizePolicy::Maximum)
+            max.setHeight(qMin(max.height(), w->sizeHint().height()));
+        if (policy.horizontalPolicy() == QSizePolicy::Fixed || policy.horizontalPolicy() == QSizePolicy::Maximum)
+            max.setWidth(qMin(max.width(), w->sizeHint().width()));
+
+        max = boundedMaxSize(min, max); // for safety against weird values
+        return max;
+    }
 
 protected:
     static QSize boundedMaxSize(QSize min, QSize max);

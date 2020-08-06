@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 
@@ -23,8 +14,13 @@
 #define KD_FRAME_QUICK_P_H
 
 #include "Frame_p.h"
+#include "DockWidgetBase.h"
+
+#include <QAbstractListModel>
 
 namespace KDDockWidgets {
+
+class DockWidgetModel;
 
 /**
  * @brief The GUI counterpart of Frame.
@@ -32,9 +28,59 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT FrameQuick : public Frame
 {
     Q_OBJECT
+    Q_PROPERTY(DockWidgetModel* dockWidgetModel READ dockWidgetModel CONSTANT)
 public:
-    explicit FrameQuick(QWidgetAdapter *parent = nullptr, Options = Option_None);
+    explicit FrameQuick(QWidgetAdapter *parent = nullptr, FrameOptions = FrameOption::FrameOption_None);
+    DockWidgetModel *dockWidgetModel() const;
 
+protected:
+    void removeWidget_impl(DockWidgetBase *) override;
+    void detachTab_impl(DockWidgetBase *) override;
+    int indexOfDockWidget_impl(DockWidgetBase *) override;
+    int currentIndex_impl() const override;
+    void setCurrentTabIndex_impl(int index) override;
+    void setCurrentDockWidget_impl(DockWidgetBase *) override;
+    void insertDockWidget_impl(DockWidgetBase *, int index) override;
+    DockWidgetBase *dockWidgetAt_impl(int index) const override;
+    DockWidgetBase *currentDockWidget_impl() const override;
+    int dockWidgetCount_impl() const override;
+
+    Q_INVOKABLE void setStackLayout(QQuickItem *);
+
+Q_SIGNALS:
+    void tabTitlesChanged();
+private:
+    QQuickItem *m_stackLayout = nullptr;
+    DockWidgetBase *m_currentDockWidget = nullptr;
+    DockWidgetModel *const m_dockWidgetModel;
+    QHash<DockWidgetBase *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambdas
+};
+
+class DockWidgetModel : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    enum Role {
+        Role_Title = Qt::UserRole
+    };
+
+    explicit DockWidgetModel(QObject *parent);
+    int count() const;
+    int rowCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    DockWidgetBase *dockWidgetAt(int index) const;
+    void remove(DockWidgetBase *);
+    int indexOf(DockWidgetBase *);
+    bool insert(DockWidgetBase *dw, int index);
+    bool contains(DockWidgetBase *dw) const;
+protected:
+    QHash<int, QByteArray> roleNames() const override;
+Q_SIGNALS:
+    void countChanged();
+private:
+    void emitDataChangedFor(DockWidgetBase *);
+    DockWidgetBase::List m_dockWidgets;
+    QHash<DockWidgetBase *, QVector<QMetaObject::Connection> > m_connections; // To make it easy to disconnect from lambdas
 };
 
 }

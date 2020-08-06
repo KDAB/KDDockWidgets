@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 
@@ -68,7 +59,7 @@ public:
     /**
      * @brief Docks a DockWidget into the central frame, tabbed.
      * @warning Requires that the MainWindow was constructed with MainWindowOption_HasCentralFrame option.
-     * @param The DockWidget to dock.
+     * @param dockwidget The dockwidget to dock.
      *
      * @sa DockWidgetBase::addDockWidgetAsTab()
      */
@@ -98,7 +89,7 @@ public:
 
     ///@internal
     ///@brief returns the drop area.
-    virtual DropAreaWithCentralFrame *dropArea() const = 0;
+    DropAreaWithCentralFrame *dropArea() const;
 
     ///@internal
     ///@brief returns the MultiSplitter.

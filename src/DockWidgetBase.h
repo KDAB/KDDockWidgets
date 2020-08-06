@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 /**
@@ -34,7 +25,6 @@
 #include "LayoutSaver_p.h"
 
 #include <QVector>
-#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -65,7 +55,7 @@ class StateDragging;
  * Do not use instantiate directly in user code. Use DockWidget instead.
  */
 #ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
-class DOCKS_EXPORT DockWidgetBase : public QWidgetOrQuick
+class DOCKS_EXPORT DockWidgetBase : public QWidgetAdapter
 #else
 class DOCKS_EXPORT DockWidgetBase : public QWidget
 #endif
@@ -84,7 +74,7 @@ public:
 
     /**
      * @brief constructs a new DockWidget
-     * @param name the name of the dockwidget, should be unique. Use title for user visible text.
+     * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
      * @param options optional options controlling behaviour
      *
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
@@ -96,13 +86,13 @@ public:
     ~DockWidgetBase() override;
 
     /**
-     * @param Constructs a dock widget from its serialized form.
+     * @brief Constructs a dock widget from its serialized form.
      * @internal
      */
     static DockWidgetBase *deserialize(const LayoutSaver::DockWidget::Ptr &);
 
     /**
-     * @param Serializes this dock widget into an intermediate form
+     * @brief Serializes this dock widget into an intermediate form
      */
     LayoutSaver::DockWidget::Ptr serialize() const;
 
@@ -118,9 +108,9 @@ public:
 
     /**
      * @brief docks @p other widget into the window that contains this one.
-     *        Equivalent to @ref MainWindow::addDockWidge() with the difference
+     *        Equivalent to MainWindow::addDockWidget() with the difference
      *        that it also supports the case where the top-level window is a
-     *        @ref FloatingWindow instead of @ref MainWindow.
+     *        FloatingWindow instead of MainWindow.
      *
      * @param other The other dock widget to dock into the window.
      * @param location The location to dock.
@@ -134,12 +124,12 @@ public:
      * @brief sets the widget which this dock widget hosts.
      * @param widget to show inside this dock widget
      */
-    void setWidget(QWidget *widget);
+    void setWidget(QWidgetOrQuick *widget);
 
     /**
      * @brief returns the widget which this dock widget hosts
      */
-    QWidget *widget() const;
+    QWidgetOrQuick *widget() const;
 
     /**
      * @brief Returns whether the dock widget is floating.
@@ -277,6 +267,7 @@ public:
     void setAffinities(const QStringList &);
 
     /// @deprecated @overload
+    /// @param name the affinity name
     void setAffinityName(const QString &name);
 
     /**
@@ -325,7 +316,7 @@ Q_SIGNALS:
     void titleChanged();
 
     ///@brief emitted when the hosted widget changed
-    void widgetChanged(QWidget*);
+    void widgetChanged(QWidgetOrQuick *);
 
     ///@brief emitted when the options change
     ///@sa setOptions(), options()

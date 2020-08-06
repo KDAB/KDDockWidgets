@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #ifndef KD_DOCKREGISTRY_P_H
@@ -61,7 +52,7 @@ public:
     MainWindowBase *mainWindowByName(const QString &) const;
 
     /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
-    DockWidgetBase *dockWidgetForGuest(QWidget *guest) const;
+    DockWidgetBase *dockWidgetForGuest(QWidgetOrQuick *guest) const;
 
     bool isSane() const;
 
@@ -90,6 +81,9 @@ public:
     /// As there might be DockWidgets which weren't morphed yet.
     const QVector<FloatingWindow*> nestedwindows() const;
 
+    ///@brief overload that returns list of QWindow. This is more friendly for supporting both QtWidgets and QtQuick
+    const QVector<QWindow*> floatingWindows() const;
+
     ///@brief returns the FloatingWindow with handle @p windowHandle
     FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
 
@@ -102,7 +96,7 @@ public:
     /// Every returned widget is either a FloatingWindow, MainWindow, or something that contains a MainWindow.
     ///
     /// If @p excludeFloatingDocks is true then FloatingWindow won't be returned
-    QVector<QWidget*> topLevels(bool excludeFloatingDocks = false) const;
+    QVector<QWindow*> topLevels(bool excludeFloatingDocks = false) const;
 
     /**
      * @brief Closes all dock widgets, and destroys all FloatingWindows

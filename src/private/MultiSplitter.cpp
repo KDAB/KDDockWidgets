@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 /**
@@ -46,15 +37,13 @@
 using namespace KDDockWidgets;
 
 MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
-    : QWidgetAdapter(parent)
-    , Layouting::Widget_qwidget(this)
+    : LayoutGuestWidget(parent)
 {
-
     Q_ASSERT(parent);
     setRootItem(new Layouting::ItemContainer(this));
     DockRegistry::self()->registerLayout(this);
 
-    setLayoutSize(parent->QWidget::size());
+    setLayoutSize(parent->size());
 
     qCDebug(multisplittercreation()) << "MultiSplitter";
 
@@ -99,7 +88,7 @@ bool MultiSplitter::isInMainWindow() const
 
 MainWindowBase *MultiSplitter::mainWindow() const
 {
-    if (auto pw = QWidget::parentWidget()) {
+    if (auto pw = QWidgetAdapter::parentWidget()) {
         // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as it's parented
         if (pw->objectName() == QLatin1String("MyCentralWidget"))
             return qobject_cast<MainWindowBase*>(pw->parentWidget());
@@ -110,9 +99,8 @@ MainWindowBase *MultiSplitter::mainWindow() const
 
 FloatingWindow *MultiSplitter::floatingWindow() const
 {
-    return qobject_cast<FloatingWindow*>(QWidget::parentWidget());
+    return qobject_cast<FloatingWindow*>(QWidgetAdapter::parentWidget());
 }
-
 
 bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
                                          Location location,
@@ -183,7 +171,7 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it.
         // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
-        frame->QWidget::setParent(nullptr); // so ~Item doesn't delete it
+        frame->QWidgetAdapter::setParent(nullptr); // so ~Item doesn't delete it
         frame->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
     }
 
@@ -211,7 +199,6 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
         frame->addWidget(dw, option);
     } else if (auto ms = qobject_cast<MultiSplitter*>(w)) {
         newItem = ms->rootItem();
-        Q_ASSERT(newItem->hostWidget()->asQWidget() != this);
         newItem->setHostWidget(this);
         delete ms;
     }
@@ -344,7 +331,7 @@ void MultiSplitter::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item
         frame->addWidget(dw);
     }
 
-    frame->QWidget::setVisible(true);
+    frame->QWidgetAdapter::setVisible(true);
 }
 
 void MultiSplitter::layoutEqually()
@@ -427,21 +414,17 @@ Layouting::ItemContainer *MultiSplitter::rootItem() const
     return m_rootItem;
 }
 
-QRect MultiSplitter::rectForDrop(const QWidgetOrQuick *widget, Location location,
+QRect MultiSplitter::rectForDrop(const FloatingWindow *fw, Location location,
                                  const Layouting::Item *relativeTo) const
 {
     Layouting::Item item(nullptr);
+    if (!fw)
+        return {};
 
-    if (auto fw = qobject_cast<const FloatingWindow*>(widget)) {
-        Layouting::ItemContainer *root = fw->dropArea()->rootItem();
-        item.setSize(root->size());
-        item.setMinSize(root->minSize());
-        item.setMaxSizeHint(root->maxSizeHint());
-    } else {
-        item.setSize(widget->size());
-        item.setMinSize(Layouting::Widget_qwidget::widgetMinSize(widget));
-        item.setMaxSizeHint(Layouting::Widget_qwidget::widgetMaxSize(widget));
-    }
+    Layouting::ItemContainer *root = fw->dropArea()->rootItem();
+    item.setSize(root->size());
+    item.setMinSize(root->minSize());
+    item.setMaxSizeHint(root->maxSizeHint());
 
     Layouting::ItemContainer *container = relativeTo ? relativeTo->parentContainer()
                                                      : m_rootItem;
@@ -463,7 +446,7 @@ bool MultiSplitter::deserialize(const LayoutSaver::MultiSplitter &l)
     m_rootItem->fillFromVariantMap(l.layout, frames);
 
     updateSizeConstraints();
-    m_rootItem->setSize_recursive(QWidget::size());
+    m_rootItem->setSize_recursive(QWidgetAdapter::size());
 
     return true;
 }

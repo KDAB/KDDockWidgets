@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #pragma once
@@ -56,7 +47,6 @@ public:
     bool isVisible() const override;
     void setVisible(bool) const override;
     std::unique_ptr<Widget> parentWidget() const override;
-    std::unique_ptr<Widget> topLevel() const override;
     void setLayoutItem(Item *) override {}
     void show() override;
     void hide() override;
@@ -68,17 +58,9 @@ public:
     QPoint mapFromGlobal(QPoint p) const override;
     QPoint mapToGlobal(QPoint p) const override;
 
-    static QSize widgetMinSize(const QWidget *w);
-    static QSize widgetMaxSize(const QWidget *w);
 private:
     QWidget *const m_thisWidget;
     Q_DISABLE_COPY(Widget_qwidget)
 };
-
-inline int widgetMinLength(const QWidget *w, Qt::Orientation o)
-{
-    const QSize sz = Widget_qwidget::widgetMinSize(w);
-    return o == Qt::Vertical ? sz.height() : sz.width();
-}
 
 }

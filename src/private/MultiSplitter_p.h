@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 /**
@@ -32,7 +23,6 @@
 #define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
 #include "docks_export.h"
-#include "multisplitter/Widget_qwidget.h"
 #include "multisplitter/Separator_p.h"
 #include "QWidgetAdapter.h"
 #include "KDDockWidgets.h"
@@ -64,8 +54,7 @@ class Frame;
  * relative to a single widget.
  */
 class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter
-        : public QWidgetAdapter
-        , public Layouting::Widget_qwidget
+        : public LayoutGuestWidget
 {
     Q_OBJECT
 public:
@@ -142,7 +131,8 @@ public:
      * Excludes the Separator thickness, result is actually smaller than what needed. In other words,
      * the result will be exactly the same as the geometry the widget will get.
      */
-    QRect rectForDrop(const QWidgetOrQuick *widget, KDDockWidgets::Location location, const Layouting::Item *relativeTo) const;
+    QRect rectForDrop(const FloatingWindow *, KDDockWidgets::Location location,
+                      const Layouting::Item *relativeTo) const;
 
     bool deserialize(const LayoutSaver::MultiSplitter &);
     LayoutSaver::MultiSplitter serialize() const;

@@ -1,3 +1,14 @@
+#
+# This file is part of KDDockWidgets.
+#
+# SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# Author: Sergio Martins <sergio.martins@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+#
+# Contact KDAB at <info@kdab.com> for commercial licensing options.
+#
+
 if(POLICY CMP0043)
   cmake_policy(SET CMP0043 NEW)
 endif()
@@ -15,20 +26,16 @@ set(DOCKSLIBS_SRCS
     Qt5Qt6Compat_p.h
     FrameworkWidgetFactory.cpp
     DockWidgetBase.cpp
-    MainWindow.cpp
     MainWindowBase.cpp
     LayoutSaver.cpp
+    private/MultiSplitter.cpp
     private/Position.cpp
     private/ObjectViewer.cpp
     private/DropIndicatorOverlayInterface.cpp
-    private/indicators/ClassicIndicators.cpp
-    # private/indicators/AnimatedIndicators.cpp
     private/DropArea.cpp
-    private/TabWidget.cpp
     private/FloatingWindow.cpp
     private/Logging.cpp
     private/TitleBar.cpp
-    private/DebugWindow.cpp
     private/DockRegistry.cpp
     private/Draggable.cpp
     private/WindowBeingDragged.cpp
@@ -54,7 +61,6 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/DropIndicatorOverlayInterface_p.h
     private/FloatingWindow_p.h
     private/Frame_p.h
-    private/TabWidget_p.h
     private/TitleBar_p.h
 )
 
@@ -65,6 +71,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/FrameWidget_p.h
     private/widgets/TabBarWidget_p.h
     private/widgets/TabWidgetWidget_p.h
+    private/TabWidget_p.h
 )
 
 if(OPTION_QTQUICK)
@@ -74,15 +81,17 @@ if(OPTION_QTQUICK)
       private/quick/FloatingWindowQuick.cpp
       private/quick/TitleBarQuick.cpp
       private/quick/QmlTypes.cpp
-      private/quick/TabWidgetQuick.cpp
       private/quick/FrameQuick.cpp
       private/quick/MainWindowQuick.cpp
-      private/quick/TabBarQuick.cpp
-      private/quick/LayoutSaverQuick.cpp)
+      private/quick/MainWindowWrapper.cpp
+      )
 
     qt5_add_resources(RESOURCES_QUICK ${CMAKE_CURRENT_SOURCE_DIR}/qtquick.qrc)
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
+      private/DebugWindow.cpp
+      private/TabWidget.cpp
+      MainWindow.cpp
       private/widgets/TabBarWidget.cpp
       private/widgets/FloatingWindowWidget.cpp
       private/widgets/FrameWidget.cpp
@@ -90,7 +99,8 @@ else()
       private/widgets/TitleBarWidget.cpp
       private/widgets/DockWidget.cpp
       private/widgets/QWidgetAdapter_widgets.cpp
-      private/widgets/MultiSplitter.cpp
+      private/indicators/ClassicIndicators.cpp
+      # private/indicators/AnimatedIndicators.cpp
   )
 
   set(DOCKS_INSTALLABLE_INCLUDES
@@ -148,7 +158,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
 endif()
 
 if(OPTION_QTQUICK)
-  target_link_libraries(kddockwidgets Qt5::Widgets Qt5::Quick)
+  target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets Qt5::Quick Qt5::QuickControls2 kddockwidgets_multisplitter)
 else()
   target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets kddockwidgets_multisplitter)
 endif()
@@ -191,7 +201,7 @@ install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/k
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
   KDDockWidgetsConfigVersion.cmake
-  VERSION ${PACKAGE_VERSION}
+  VERSION ${${PROJECT_NAME}_VERSION}
   COMPATIBILITY AnyNewerVersion
 )
 
@@ -210,11 +220,15 @@ if(OPTION_DEVELOPER_MODE)
   # Under developer mode since kddw might be a sub-folder of a project setting a different value for QT_DISABLE_DEPRECATED_BEFORE
   target_compile_definitions(kddockwidgets PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
-  add_executable(kddockwidgets_linter layoutlinter_main.cpp)
-  target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt5::Widgets)
-  if(${PROJECT_NAME}_STATIC)
-    target_compile_definitions(kddockwidgets_linter PRIVATE KDDOCKWIDGETS_STATICLIB MULTISPLITTER_STATICLIB)
-  else()
-    target_compile_definitions(kddockwidgets_linter PRIVATE BUILDING_DOCKS_LIBRARY BUILDING_MULTISPLITTER_LIBRARY)
+  if (NOT OPTION_QTQUICK) # TODO: We can support it
+    add_executable(kddockwidgets_linter layoutlinter_main.cpp)
+    target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt5::Widgets)
+    if(${PROJECT_NAME}_STATIC)
+      target_compile_definitions(kddockwidgets_linter PRIVATE KDDOCKWIDGETS_STATICLIB MULTISPLITTER_STATICLIB)
+    else()
+      target_compile_definitions(kddockwidgets_linter PRIVATE BUILDING_DOCKS_LIBRARY BUILDING_MULTISPLITTER_LIBRARY)
+
+      add_executable(kddockwidgets_linter layoutlinter_main.cpp)
+      target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt5::Widgets)
   endif()
 endif()

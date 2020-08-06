@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #include "DragController_p.h"
@@ -376,7 +367,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     if (!me)
         return QStateMachine::eventFilter(o, e);
 
-    auto w = qobject_cast<QWidget*>(o);
+    auto w = qobject_cast<QWidgetOrQuick*>(o);
     if (!w)
         return QStateMachine::eventFilter(o, e);
 
@@ -433,10 +424,10 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
 }
 #endif
 template <typename T>
-static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<T> &topLevels, T windowBeingDragged)
+static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow*> &windows, T windowBeingDragged)
 {
-    for (int i = topLevels.size() -1; i >= 0; --i) {
-        auto tl = topLevels.at(i);
+    for (int i = windows.size() -1; i >= 0; --i) {
+        auto tl = KDDockWidgets::widgetForWindow(windows.at(i));
         if (!tl->isVisible() || tl == windowBeingDragged || tl->isMinimized())
             continue;
 
@@ -509,7 +500,7 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
         // The floating window list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
 
         FloatingWindow *tlwBeingDragged = m_windowBeingDragged->floatingWindow();
-        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->nestedwindows(), tlwBeingDragged))
+        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->floatingWindows(), tlwBeingDragged))
             return tl;
 
         return qtTopLevelUnderCursor_impl<QWidget*>(globalPos,
@@ -525,7 +516,7 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
     return nullptr;
 }
 
-static DropArea* deepestDropAreaInTopLevel(QWidget *topLevel, QPoint globalPos,
+static DropArea* deepestDropAreaInTopLevel(QWidgetOrQuick *topLevel, QPoint globalPos,
                                            const QStringList &affinities)
 {
     auto w = topLevel->childAt(topLevel->mapFromGlobal(globalPos));
@@ -534,7 +525,7 @@ static DropArea* deepestDropAreaInTopLevel(QWidget *topLevel, QPoint globalPos,
             if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
                 return dt;
         }
-        w = w->parentWidget();
+        w = KDDockWidgets::parentWidget(w);
     }
 
     return nullptr;
@@ -548,11 +539,6 @@ DropArea *DragController::dropAreaUnderCursor() const
 
     const QStringList affinities = m_windowBeingDragged->floatingWindow()->affinities();
 
-    if (auto dt = qobject_cast<DropArea *>(topLevel)) {
-        if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
-            return dt;
-    }
-
     if (auto fw = qobject_cast<FloatingWindow *>(topLevel)) {
         if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
             return fw->dropArea();
@@ -561,13 +547,6 @@ DropArea *DragController::dropAreaUnderCursor() const
     if (topLevel->objectName() == QStringLiteral("_docks_IndicatorWindow")) {
         qWarning() << "Indicator window should be hidden " << topLevel << topLevel->isVisible();
         Q_ASSERT(false);
-    }
-
-    if (auto dock = qobject_cast<DockWidgetBase *>(topLevel)) {
-        FloatingWindow *fw = dock->morphIntoFloatingWindow();
-        m_windowBeingDragged->floatingWindow()->raise();
-        if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
-            return fw->dropArea();
     }
 
     if (auto dt = deepestDropAreaInTopLevel(topLevel, QCursor::pos(), affinities)) {

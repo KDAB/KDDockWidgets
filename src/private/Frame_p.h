@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 /**
@@ -56,11 +47,9 @@ class FloatingWindow;
  * inside a MultiSplitter (DropArea). Be it a MultiSplitter belonging to a MainWindow or belonging
  * to a FloatingWindow.
  */
-class DOCKS_EXPORT Frame : public QWidgetAdapter
-                         , public Layouting::Widget_qwidget
+class DOCKS_EXPORT Frame : public LayoutGuestWidget
 {
     Q_OBJECT
-
     Q_PROPERTY(KDDockWidgets::TitleBar* titleBar READ titleBar CONSTANT)
 public:
     typedef QList<Frame *> List;
@@ -255,6 +244,7 @@ protected:
      * Any widget having 16777215x16777215 is ignored (represents not having a max-size, QWIDGETSIZE_MAX)
      */
     QSize biggestDockWidgetMaxSize() const;
+    void onDockWidgetCountChanged();
 
     virtual void removeWidget_impl(DockWidgetBase *) = 0;
     virtual void detachTab_impl(DockWidgetBase *) = 0;
@@ -271,7 +261,6 @@ private:
     Q_DISABLE_COPY(Frame)
     friend class TestDocks;
     friend class TabWidget;
-    void onDockWidgetCountChanged();
     void onCurrentTabChanged(int index);
     void scheduleDeleteLater();
     bool event(QEvent *) override;

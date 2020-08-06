@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #include "DockWidgetBase.h"
@@ -111,7 +102,7 @@ public:
     QStringList affinities;
     QString title;
     QIcon icon;
-    QWidget *widget = nullptr;
+    QWidgetOrQuick *widget = nullptr;
     DockWidgetBase *const q;
     DockWidgetBase::Options options;
     QAction *const toggleAction;
@@ -123,7 +114,7 @@ public:
 };
 
 DockWidgetBase::DockWidgetBase(const QString &name, Options options)
-    : QWidgetOrQuick(nullptr, Qt::Tool)
+    : QWidgetAdapter(nullptr, Qt::Tool)
     , d(new Private(name, options, this))
 {
     d->init();
@@ -219,7 +210,7 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other, Loca
     }
 }
 
-void DockWidgetBase::setWidget(QWidget *w)
+void DockWidgetBase::setWidget(QWidgetOrQuick *w)
 {
     Q_ASSERT(w && !d->widget);
     qCDebug(addwidget) << Q_FUNC_INFO << w;
@@ -230,7 +221,7 @@ void DockWidgetBase::setWidget(QWidget *w)
     setWindowTitle(uniqueName());
 }
 
-QWidget *DockWidgetBase::widget() const
+QWidgetOrQuick *DockWidgetBase::widget() const
 {
     return d->widget;
 }
@@ -398,7 +389,7 @@ void DockWidgetBase::show()
         // This reduces flickering on some platforms
         morphIntoFloatingWindow();
     } else {
-        QWidget::show();
+        QWidgetOrQuick::show();
     }
 }
 
@@ -633,7 +624,7 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 
     Frame *frame = q->frame();
 
-    if (frame && frame->QWidget::parentWidget() == DockRegistry::self()->layoutForItem(layoutItem)) {
+    if (frame && frame->QWidgetAdapter::parentWidget() == DockRegistry::self()->layoutForItem(layoutItem)) {
         // There's a frame already. Means the DockWidget was hidden instead of closed.
         // Nothing to do, the dock widget will simply be shown
         qCDebug(placeholder) << Q_FUNC_INFO << "Already had frame.";
@@ -709,7 +700,7 @@ void DockWidgetBase::onClosed(QCloseEvent *e)
 {
     e->accept(); // By default we accept, means DockWidget closes
     if (d->widget)
-        qApp->sendEvent(d->widget, e); // Give a change for the widget to ignore
+        qApp->sendEvent(d->widget, e); // Give a chancefor the widget to ignore
 
     if (e->isAccepted())
         d->close();
@@ -726,7 +717,7 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
     }
 
     if (dw) {
-        if (QWidget *w = dw->widget())
+        if (QWidgetOrQuick *w = dw->widget())
             w->setVisible(true);
         dw->setProperty("kddockwidget_was_restored", true);
 

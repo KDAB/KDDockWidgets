@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #ifndef KDDOCKWIDGETS_TESTS_UTILS_H
@@ -24,7 +15,7 @@
 #include "MainWindow.h"
 #include "KDDockWidgets.h"
 #include "DropIndicatorOverlayInterface_p.h"
-#include "DockWidget.h"
+#include "DockWidgetBase.h"
 
 #include <QWidget>
 #include <QPointer>
@@ -54,20 +45,17 @@ struct DockDescriptor {
     KDDockWidgets::AddingOption option;
 };
 
-QWidget* draggableFor(QWidget *);
-
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
-QPoint dragPointForWidget(Frame* frame, int index);
-
+#ifdef KDDOCKWIDGETS_QTWIDGETS
 std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QSize sz = {600, 600},
                                                             KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame, const QString &name = {});
 
 
 
 std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
-
-KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidget *w,
+#endif
+KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQuick *w,
                                                 DockWidgetBase::Options options = {}, bool show = true,
                                                 const QString &affinityName = {});
 KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QColor color);
@@ -84,7 +72,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 };
 
-class MyWidget : public QWidget
+class MyWidget : public QWidgetOrQuick
 {
 public:
     explicit MyWidget(const QString &, QColor c);
@@ -97,7 +85,9 @@ public:
     }
 
 protected:
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     void paintEvent(QPaintEvent *) override;
+#endif
 private:
     QColor c;
 };
@@ -107,10 +97,6 @@ void doubleClickOn(QPoint globalPos, QWidget *receiver);
 void pressOn(QPoint globalPos, QWidget *receiver);
 void releaseOn(QPoint globalPos, QWidget *receiver);
 void moveMouseTo(QPoint globalDest, QWidget *receiver);
-void drag(QWidget *sourceWidget, QPoint pressGlobalPos, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release);
-void drag(QWidget *sourceWidget, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release);
-void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest, ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release);
-void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation);
 
 }
 

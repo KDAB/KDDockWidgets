@@ -1,24 +1,12 @@
-/*  This file is part of KDDockWidgets.
+/*
+  This file is part of KDDockWidgets.
 
-  Copyright (C) 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY;
-
-
-
-  without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 /**
@@ -35,12 +23,16 @@
 
 #include <QResizeEvent>
 #include <QMouseEvent>
-#include <QWindow>
+#include <QQuickWindow>
+#include <QQmlComponent>
+#include <QQuickItem>
+#include <QQmlEngine>
 
 using namespace KDDockWidgets;
 
-QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags)
+QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags flags)
     : QQuickItem(parent)
+    , m_requestedWindowFlags(flags)
 {
     this->setParent(parent); // also set parentItem
 
@@ -51,6 +43,8 @@ QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags)
     connect(this, &QQuickItem::heightChanged, this, [this] {
         onResize(size());
     });
+
+    setSize(QSize(800, 800));
 }
 
 QWidgetAdapter::~QWidgetAdapter()
@@ -59,6 +53,10 @@ QWidgetAdapter::~QWidgetAdapter()
 
 void QWidgetAdapter::raiseAndActivate()
 {
+    if (QWindow *w = windowHandle()) {
+        w->raise();
+        w->requestActivate();
+    }
 }
 
 bool QWidgetAdapter::onResize(QSize) { return false; }
@@ -68,8 +66,41 @@ void QWidgetAdapter::onMouseMove(QPoint) {}
 void QWidgetAdapter::onMouseRelease() {}
 void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}
 
+void QWidgetAdapter::itemChange(QQuickItem::ItemChange change, const QQuickItem::ItemChangeData &data)
+{
+    QQuickItem::itemChange(change, data);
 
-void QWidgetAdapter::raise() {}
+    // Emulate the QWidget behaviour as QQuickItem doesn't receive some QEvents.
+    switch (change) {
+    case QQuickItem::ItemParentHasChanged: {
+        QEvent ev(QEvent::ParentChange);
+        event(&ev);
+        Q_EMIT parentChanged();
+        break;
+    }
+    case QQuickItem::ItemVisibleHasChanged: {
+        QEvent ev(isVisible() ? QEvent::Show : QEvent::Hide);
+        event(&ev);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void QWidgetAdapter::raise()
+{
+    if (QWindow *w = windowHandle())
+        w->raise();
+}
+
+WId QWidgetAdapter::winId() const
+{
+    if (QWindow *w = windowHandle())
+        return w->winId();
+
+    return -1;
+}
 
 FloatingWindow * QWidgetAdapter::floatingWindow() const
 {
@@ -95,44 +126,116 @@ void QWidgetAdapter::show()
 
 void QWidgetAdapter::setFixedHeight(int height)
 {
-    qDebug() << Q_FUNC_INFO << height << this;
     setHeight(height);
 }
 
 void QWidgetAdapter::setFixedWidth(int width)
 {
-    qDebug() << Q_FUNC_INFO << width << this;
     setWidth(width);
 }
 
 void QWidgetAdapter::setGeometry(QRect rect)
 {
-    qDebug() << Q_FUNC_INFO << rect << this;
     setWidth(rect.width());
     setHeight(rect.height());
     setX(rect.x());
     setY(rect.y());
 }
 
-void QWidgetAdapter::grabMouse() {}
-void QWidgetAdapter::releaseMouse() {}
+void QWidgetAdapter::grabMouse()
+{
+    QQuickItem::grabMouse();
+}
+
+void QWidgetAdapter::releaseMouse()
+{
+    QQuickItem::ungrabMouse();
+}
+
 void QWidgetAdapter::setMinimumSize(QSize sz)
 {
-    m_minimumSize = sz;
+    if (m_minimumSize != sz) {
+        m_minimumSize = sz;
+        updateGeometry();
+    }
+}
+
+void QWidgetAdapter::updateGeometry()
+{
+    // TODO
 }
 
 void QWidgetAdapter::resize(QSize sz)
 {
-    qDebug() << Q_FUNC_INFO << sz << this;
     setWidth(sz.width());
     setHeight(sz.height());
 }
 
-QWindow *QWidgetAdapter::windowHandle() const { return nullptr; }
+bool QWidgetAdapter::isMaximized() const
+{
+    if (QWindow *w = windowHandle())
+        return w->windowStates() & Qt::WindowMaximized;
+
+    return false;
+}
+
+void QWidgetAdapter::showMaximized()
+{
+    if (QWindow *w = windowHandle())
+        w->showMaximized();
+}
+
+void QWidgetAdapter::showNormal()
+{
+     if (QWindow *w = windowHandle())
+         w->showNormal();
+}
+
+QWindow *QWidgetAdapter::windowHandle() const
+{
+    return QQuickItem::window();
+}
+
+QWidgetAdapter *QWidgetAdapter::window() const
+{
+    // We return the top-most QWidgetAdapter
+
+    if (QWidgetAdapter *w = parentWidget())
+        return w->window();
+
+    return const_cast<QWidgetAdapter *>(this);
+}
+
+QWidgetAdapter *QWidgetAdapter::parentWidget() const
+{
+    QQuickItem *p = parentItem();
+    while (p) {
+        if (auto qa = qobject_cast<QWidgetAdapter*>(p))
+            return qa;
+
+        p = p->parentItem();
+    }
+
+    return nullptr;
+}
+
+void QWidgetAdapter::close()
+{
+    QCloseEvent ev;
+    onCloseEvent(&ev);
+
+    if (ev.isAccepted()) {
+        setVisible(false);
+    }
+}
+
+QQuickItem *QWidgetAdapter::childAt(QPoint p) const
+{
+    return QQuickItem::childAt(p.x(), p.y());
+}
 
 void QWidgetAdapter::move(int x, int y)
 {
-    qDebug() << Q_FUNC_INFO << x << y << this;
     setX(x);
     setY(y);
 }
@@ -143,12 +246,91 @@ void QWidgetAdapter::setParent(QQuickItem *p)
     QQuickItem::setParentItem(p);
 }
 
+void QWidgetAdapter::activateWindow()
+{
+    if (QWindow *w = windowHandle())
+        w->requestActivate();
+}
+
+void QWidgetAdapter::setSizePolicy(QSizePolicy sp)
+{
+    m_sizePolicy = sp;
+}
+
+QSizePolicy QWidgetAdapter::sizePolicy() const
+{
+    return m_sizePolicy;
+}
+
+QSize QWidgetAdapter::sizeHint() const
+{
+    return m_sizeHint;
+}
+
+Qt::WindowFlags QWidgetAdapter::windowFlags() const
+{
+    if (QWindow *w = windowHandle())
+        return w->flags();
+
+    return m_requestedWindowFlags;
+}
+
+/** static */
+QQuickItem *QWidgetAdapter::createItem(QQmlEngine *engine, const QString &filename)
+{
+    QQmlComponent component(engine, filename);
+    QObject *obj = component.create();
+    if (!obj) {
+        qWarning() << Q_FUNC_INFO << component.errorString();
+        return nullptr;
+    }
+
+    return qobject_cast<QQuickItem*>(obj);
+}
+
+void QWidgetAdapter::makeItemFillParent(QQuickItem *item)
+{
+    // This is equivalent to "anchors.fill: parent
+
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "Invalid item";
+        return;
+    }
+
+    QQuickItem *parentItem = item->parentItem();
+    if (!parentItem) {
+        qWarning() << Q_FUNC_INFO << "Invalid parentItem for" << item;
+        return;
+    }
+
+    QObject *anchors = item->property("anchors").value<QObject*>();
+    if (!anchors) {
+        qWarning() << Q_FUNC_INFO << "Invalid anchors for" << item;
+        return;
+    }
+
+    anchors->setProperty("fill", QVariant::fromValue(parentItem));
+}
+
 void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
 {
-    if (auto w = windowHandle()) {
+    if (QWindow *w = windowHandle()) {
         w->setFlag(f, on);
     } else {
-        qWarning() << Q_FUNC_INFO << "Implement me";
+        // When we create a QWindow we'll set these
+        if (on) {
+            m_requestedWindowFlags |= f;
+        } else {
+            m_requestedWindowFlags &= ~f;
+        }
     }
 }
 
+QQuickItem* KDDockWidgets::widgetForWindow(QWindow *window)
+{
+    auto quickWindow = qobject_cast<QQuickWindow*>(window);
+    if (!quickWindow)
+        return nullptr;
+
+    return nullptr; // TODO
+}

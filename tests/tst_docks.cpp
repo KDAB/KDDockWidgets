@@ -1,21 +1,12 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 // We don't care about performance related checks in the tests
@@ -27,6 +18,7 @@
 #include "DockRegistry_p.h"
 #include "Frame_p.h"
 #include "private/widgets/FrameWidget_p.h"
+#include "private/widgets/TabWidgetWidget_p.h"
 #include "DropArea_p.h"
 #include "TitleBar_p.h"
 #include "WindowBeingDragged_p.h"
@@ -34,12 +26,13 @@
 #include "LayoutSaver.h"
 #include "LayoutSaver_p.h"
 #include "TabWidget_p.h"
-#include "widgets/MultiSplitter_p.h"
+#include "MultiSplitter_p.h"
 #include "Position_p.h"
 #include "utils.h"
 #include "FrameworkWidgetFactory.h"
 #include "DropAreaWithCentralFrame_p.h"
 #include "Testing.h"
+#include "DockWidget.h"
 
 #include <QtTest/QtTest>
 #include <QPainter>
@@ -64,6 +57,109 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
 using namespace Layouting;
+
+static bool s_pauseBeforePress = false; // for debugging
+static bool s_pauseBeforeMove = false; // for debugging
+#define DEBUGGING_PAUSE_DURATION 5000 // 5 seconds
+
+static QPoint dragPointForWidget(Frame *frame, int index)
+{
+    auto frameW = static_cast<FrameWidget*>(frame);
+
+    if (frameW->hasSingleDockWidget()) {
+        Q_ASSERT(index == 0);
+        return frameW->titleBar()->mapToGlobal(QPoint(5, 5));
+    } else {
+        QRect rect = frameW->tabBar()->tabRect(index);
+        return frameW->tabBar()->mapToGlobal(rect.center());
+    }
+}
+
+static QWidget *draggableFor(QWidget *w)
+{
+    QWidget *draggable = nullptr;
+    if (auto dock = qobject_cast<DockWidgetBase *>(w)) {
+        if (auto frame = dock->frame())
+            draggable = frame->titleBar();
+    } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
+        auto frame = fw->hasSingleFrame() ? static_cast<FrameWidget*>(fw->frames().first())
+                                          : nullptr;
+        draggable = ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) ? static_cast<QWidget*>(frame->tabWidget()->asWidget())
+                                                                                                                                                            : static_cast<QWidget*>(fw->titleBar());
+
+    } else if (qobject_cast<TabWidgetWidget *>(w) || qobject_cast<TitleBar *>(w)) {
+        draggable = w;
+    }
+
+    qDebug() << "Draggable is" << draggable;
+    return draggable;
+}
+
+static void drag(QWidget *sourceWidget, QPoint pressGlobalPos, QPoint globalDest,
+                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
+{
+    if (buttonActions & ButtonAction_Press) {
+        if (s_pauseBeforePress)
+            QTest::qWait(DEBUGGING_PAUSE_DURATION);
+
+        pressOn(pressGlobalPos, sourceWidget);
+    }
+
+    sourceWidget->window()->activateWindow();
+
+    if (s_pauseBeforeMove)
+        QTest::qWait(DEBUGGING_PAUSE_DURATION);
+
+    qDebug() << "Moving sourceWidget to" << globalDest
+             << "; sourceWidget->size=" << sourceWidget->size()
+             << "; from=" << QCursor::pos();
+    moveMouseTo(globalDest, sourceWidget);
+    qDebug() << "Arrived at" << QCursor::pos();
+    pressGlobalPos = sourceWidget->mapToGlobal(QPoint(10, 10));
+    if (buttonActions & ButtonAction_Release)
+        releaseOn(globalDest, sourceWidget);
+}
+
+static void drag(QWidget *sourceWidget, QPoint globalDest,
+                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
+{
+    Q_ASSERT(sourceWidget && sourceWidget->isVisible());
+
+    QWidget *draggable = draggableFor(sourceWidget);
+
+    Q_ASSERT(draggable && draggable->isVisible());
+    const QPoint pressGlobalPos = draggable->mapToGlobal(QPoint(6, 6));
+
+    drag(draggable, pressGlobalPos, globalDest, buttonActions);
+}
+
+static void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest,
+                                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
+{
+    auto draggable = draggableFor(fw);
+    Q_ASSERT(draggable && draggable->isVisible());
+    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
+}
+
+static void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation)
+{
+    auto draggable = draggableFor(fw);
+
+    // First we drag over it, so the drop indicators appear:
+    drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
+
+    // Now we drag over the drop indicator and only then release mouse:
+    DropIndicatorOverlayInterface *dropIndicatorOverlay = target->dropIndicatorOverlay();
+    const QPoint dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
+
+    drag(draggable, QPoint(), dropPoint, ButtonAction_Release);
+}
+
+inline int widgetMinLength(const QWidget *w, Qt::Orientation o)
+{
+    const QSize sz = Widget_qwidget::widgetMinSize(w);
+    return o == Qt::Vertical ? sz.height() : sz.width();
+}
 
 struct SetExpectedWarning
 {
@@ -3517,9 +3613,8 @@ void TestDocks::tst_negativeAnchorPosition6()
 
     layout->checkSanity();
 
-
     Item *centralItem = m->dropArea()->centralFrame();
-    layout->rectForDrop(d2, Location_OnTop, centralItem);
+    layout->rectForDrop(d2->floatingWindow(), Location_OnTop, centralItem);
     layout->checkSanity();
 
     delete m->window();
@@ -4032,7 +4127,7 @@ void TestDocks::tst_rectForDropCrash()
 
     m->addDockWidget(d1, Location_OnTop);
     Item *centralItem = m->dropArea()->centralFrame();
-    layout->rectForDrop(d2, Location_OnTop, centralItem);
+    layout->rectForDrop(d2->floatingWindow(), Location_OnTop, centralItem);
     layout->checkSanity();
 
     delete m->window();
@@ -5577,7 +5672,7 @@ void TestDocks::tst_maximumSizePolicy()
     // Make the floating window big, and see if the suggested highlight is still small
     dock1->window()->resize(QSize(dock1->width(), 800));
 
-    const QRect highlightRect = m1->multiSplitter()->rectForDrop(dock1->window(), Location_OnBottom, nullptr);
+    const QRect highlightRect = m1->multiSplitter()->rectForDrop(dock1->floatingWindow(), Location_OnBottom, nullptr);
     QVERIFY(highlightRect.height() <= maxHeight + tollerance);
 
     // Now drop it, and check too

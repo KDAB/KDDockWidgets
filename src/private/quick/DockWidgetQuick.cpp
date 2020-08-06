@@ -1,24 +1,19 @@
 /*
   This file is part of KDDockWidgets.
 
-  Copyright (C) 2018-2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  SPDX-FileCopyrightText: 2019-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
 #include "DockWidgetQuick.h"
+
+#include <Config.h>
+#include <QQuickItem>
+#include <QCloseEvent>
 
 /**
  * @file
@@ -32,10 +27,17 @@ using namespace KDDockWidgets;
 class DockWidgetQuick::Private
 {
 public:
-    Private(DockWidgetQuick *)
-
+    Private(DockWidgetQuick *dw)
+        : q(dw)
+        , m_visualItem(q->createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/DockWidget.qml")))
     {
+        Q_ASSERT(m_visualItem);
+        m_visualItem->setParent(q);
+        m_visualItem->setParentItem(q);
     }
+
+    DockWidgetBase *const q;
+    QQuickItem *const m_visualItem;
 };
 
 DockWidgetQuick::DockWidgetQuick(const QString &name, Options options)
@@ -49,8 +51,21 @@ DockWidgetQuick::~DockWidgetQuick()
     delete d;
 }
 
-/* TODO_QUICK
-bool DockWidget::event(QEvent *e)
+void DockWidgetQuick::setWidget(const QString &qmlFilename)
+{
+    QQuickItem *guest = createItem(Config::self().qmlEngine(), qmlFilename);
+    if (!guest)
+        return;
+
+    auto adapter = new QWidgetAdapter(this);
+    guest->setParentItem(adapter);
+    guest->setParent(adapter);
+    QWidgetAdapter::makeItemFillParent(adapter);
+
+    DockWidgetBase::setWidget(adapter);
+}
+
+bool DockWidgetQuick::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
         onParentChanged();
@@ -58,13 +73,9 @@ bool DockWidget::event(QEvent *e)
         onShown(e->spontaneous());
     } else if (e->type() == QEvent::Hide) {
         onHidden(e->spontaneous());
+    } else if (e->type() == QEvent::Close) {
+        onClosed(static_cast<QCloseEvent*>(e));
     }
 
-    return QWidget::event(e);
+    return DockWidgetBase::event(e);
 }
-
-void DockWidget::closeEvent(QCloseEvent *e)
-{
-    onClosed(e);
-}
-*/
