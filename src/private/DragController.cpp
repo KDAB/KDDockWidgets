@@ -431,7 +431,7 @@ static WidgetType* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QW
         if (!tl->isVisible() || tl == windowBeingDragged || KDDockWidgets::Private::isMinimized(tl))
             continue;
 
-        if (windowBeingDragged && windowBeingDragged->window() == tl->window())
+        if (windowBeingDragged && KDDockWidgets::Private::windowForWidget(windowBeingDragged) == KDDockWidgets::Private::windowForWidget(tl))
             continue;
 
         if (KDDockWidgets::Private::geometry(tl).contains(globalPos)) {
@@ -443,10 +443,8 @@ static WidgetType* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QW
     return nullptr;
 }
 
-QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
+WidgetType *DragController::qtTopLevelUnderCursor() const
 {
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-
     QPoint globalPos = QCursor::pos();
 
     if (qApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
@@ -503,23 +501,20 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
         if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->floatingWindows(), tlwBeingDragged))
             return tl;
 
-        return qtTopLevelUnderCursor_impl<QWidget*>(globalPos,
-                                                    DockRegistry::self()->topLevels(/*excludeFloating=*/true),
-                                                    tlwBeingDragged);
+        return qtTopLevelUnderCursor_impl<WidgetType*>(globalPos,
+                                                       DockRegistry::self()->topLevels(/*excludeFloating=*/true),
+                                                       tlwBeingDragged);
     }
-#else
-    // QtQuick:
-    qWarning() << Q_FUNC_INFO << "Implement me!";
-#endif
 
     qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found";
     return nullptr;
 }
 
-static DropArea* deepestDropAreaInTopLevel(QWidgetOrQuick *topLevel, QPoint globalPos,
+static DropArea* deepestDropAreaInTopLevel(WidgetType *topLevel, QPoint globalPos,
                                            const QStringList &affinities)
 {
-    auto w = topLevel->childAt(topLevel->mapFromGlobal(globalPos));
+    const auto localPos = topLevel->mapFromGlobal(globalPos);
+    auto w = topLevel->childAt(localPos.x(), localPos.y());
     while (w) {
         if (auto dt = qobject_cast<DropArea *>(w)) {
             if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
@@ -533,7 +528,7 @@ static DropArea* deepestDropAreaInTopLevel(QWidgetOrQuick *topLevel, QPoint glob
 
 DropArea *DragController::dropAreaUnderCursor() const
 {
-    auto topLevel = qtTopLevelUnderCursor();
+    WidgetType *topLevel = qtTopLevelUnderCursor();
     if (!topLevel)
         return nullptr;
 

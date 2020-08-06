@@ -60,6 +60,11 @@ inline QRect geometry(const QQuickItem *item)
     return r;
 }
 
+inline QWindow *windowForWidget(const QQuickItem *item)
+{
+    return item ? item->window() : nullptr;
+}
+
 } // namespace Private
 
 class FloatingWindow;

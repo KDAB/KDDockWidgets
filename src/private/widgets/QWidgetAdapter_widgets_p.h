@@ -46,6 +46,11 @@ inline QRect geometry(const QWidget *w)
     return w ? w->geometry() : QRect();
 }
 
+inline QWindow *windowForWidget(const QWidget *w)
+{
+    return w ? w->window()->windowHandle() : nullptr;
+}
+
 DOCKS_EXPORT QWidget *widgetForWindow(QWindow *window);
 
 }
