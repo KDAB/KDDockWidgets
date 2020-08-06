@@ -27,6 +27,12 @@
 
 namespace KDDockWidgets {
 
+/// @brief Helper since QQuickItem::parentItem() has a different name than QWidget::parentWidget()
+inline QWidget *parentWidget(QWidget *widget)
+{
+    return widget ? widget->parentWidget() : nullptr;
+}
+
 class FloatingWindow;
 
 class DOCKS_EXPORT QWidgetAdapter : public QWidget

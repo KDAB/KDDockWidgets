@@ -36,6 +36,12 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+/// @brief Helper since QQuickItem::parentItem() has a different name than QWidget::parentWidget()
+inline QQuickItem *parentWidget(QQuickItem *item)
+{
+    return item ? item->parentItem() : nullptr;
+}
+
 class FloatingWindow;
 class DOCKS_EXPORT QWidgetAdapter : public QQuickItem
 {
@@ -96,7 +102,7 @@ public:
     void setWindowTitle(const QString &) {}
     void setWindowIcon(const QIcon &) {}
     void close();
-    QWidgetAdapter* childAt(QPoint) { return nullptr; }
+    QQuickItem *childAt(QPoint) const;
     void move(int x, int y);
 
     void setParent(QQuickItem*);

@@ -525,7 +525,7 @@ static DropArea* deepestDropAreaInTopLevel(QWidgetOrQuick *topLevel, QPoint glob
             if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
                 return dt;
         }
-        w = w->parentWidget();
+        w = KDDockWidgets::parentWidget(w);
     }
 
     return nullptr;
