@@ -28,6 +28,13 @@
 
 using namespace KDDockWidgets;
 
+static void initKDDockWidgetResources()
+{
+#ifdef KDDOCKWIDGETS_STATICLIB
+    Q_INIT_RESOURCE(resources);
+#endif
+}
+
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
@@ -44,6 +51,8 @@ DockRegistry::DockRegistry(QObject *parent)
 #else
     KDDockWidgets::registerQmlTypes();
 #endif
+
+    initKDDockWidgetResources();
 }
 
 DockRegistry::~DockRegistry()
