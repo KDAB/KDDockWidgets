@@ -158,6 +158,11 @@ void DropArea::hover(FloatingWindow *floatingWindow, QPoint globalPos)
     if (!validateAffinity(floatingWindow))
         return;
 
+    if (!m_dropIndicatorOverlay) {
+        qWarning() << Q_FUNC_INFO << "The frontend is missing a drop indicator overlay";
+        return;
+    }
+
     Frame *frame = frameContainingPos(globalPos); // Frame is nullptr if MainWindowOption_HasCentralFrame isn't set
     m_dropIndicatorOverlay->setWindowBeingDragged(floatingWindow);
     m_dropIndicatorOverlay->setHoveredFrame(frame);
