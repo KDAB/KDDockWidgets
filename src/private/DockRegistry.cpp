@@ -369,21 +369,31 @@ FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) con
     return nullptr;
 }
 
-QVector<QWidgetOrQuick *> DockRegistry::topLevels(bool excludeFloatingDocks) const
+QWindowList DockRegistry::topLevels(bool excludeFloatingDocks) const
 {
-    QVector<QWidgetOrQuick *> windows;
+    QWindowList windows;
     windows.reserve(m_nestedWindows.size() + m_mainWindows.size());
 
     if (!excludeFloatingDocks) {
         for (FloatingWindow *fw : m_nestedWindows) {
-            if (fw->isVisible())
-                windows << fw;
+            if (fw->isVisible()) {
+                if (QWindow *window = fw->windowHandle()) {
+                    windows << window;
+                } else {
+                    qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
+                }
+            }
         }
     }
 
     for (MainWindowBase *m : m_mainWindows) {
-        if (m->isVisible())
-            windows << m->window();
+        if (m->isVisible()) {
+            if (QWindow *window = m->window()->windowHandle()) {
+                windows << window;
+            } else {
+                qWarning() << Q_FUNC_INFO << "MainWindow doesn't have QWindow";
+            }
+        }
     }
 
     return windows;
