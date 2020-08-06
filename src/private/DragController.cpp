@@ -424,17 +424,17 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
 }
 #endif
 template <typename T>
-static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow*> &windows, T windowBeingDragged)
+static WidgetType* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow*> &windows, T windowBeingDragged)
 {
     for (int i = windows.size() -1; i >= 0; --i) {
-        auto tl = KDDockWidgets::widgetForWindow(windows.at(i));
-        if (!tl->isVisible() || tl == windowBeingDragged || tl->isMinimized())
+        auto tl = KDDockWidgets::Private::widgetForWindow(windows.at(i));
+        if (!tl->isVisible() || tl == windowBeingDragged || KDDockWidgets::Private::isMinimized(tl))
             continue;
 
         if (windowBeingDragged && windowBeingDragged->window() == tl->window())
             continue;
 
-        if (tl->geometry().contains(globalPos)) {
+        if (KDDockWidgets::Private::geometry(tl).contains(globalPos)) {
             qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
             return tl;
         }
@@ -525,7 +525,7 @@ static DropArea* deepestDropAreaInTopLevel(QWidgetOrQuick *topLevel, QPoint glob
             if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
                 return dt;
         }
-        w = KDDockWidgets::parentWidget(w);
+        w = KDDockWidgets::Private::parentWidget(w);
     }
 
     return nullptr;

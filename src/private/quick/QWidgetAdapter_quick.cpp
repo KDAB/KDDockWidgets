@@ -18,7 +18,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "QWidgetAdapter_quick_p.h"
+#include "QWidgetAdapter.h"
 #include "FloatingWindow_p.h"
 
 #include <QResizeEvent>
@@ -109,9 +109,7 @@ FloatingWindow * QWidgetAdapter::floatingWindow() const
 
 QRect QWidgetAdapter::geometry() const
 {
-    QRect r = rect();
-    r.moveTopLeft(QPointF(x(), y()).toPoint());
-    return r;
+    return KDDockWidgets::Private::geometry(this);
 }
 
 QRect QWidgetAdapter::rect() const
@@ -326,7 +324,7 @@ void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
     }
 }
 
-QQuickItem* KDDockWidgets::widgetForWindow(QWindow *window)
+QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 {
     auto quickWindow = qobject_cast<QQuickWindow*>(window);
     if (!quickWindow)
