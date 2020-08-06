@@ -424,10 +424,10 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
 }
 #endif
 template <typename T>
-static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<T> &topLevels, T windowBeingDragged)
+static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow*> &windows, T windowBeingDragged)
 {
-    for (int i = topLevels.size() -1; i >= 0; --i) {
-        auto tl = topLevels.at(i);
+    for (int i = windows.size() -1; i >= 0; --i) {
+        auto tl = KDDockWidgets::widgetForWindow(windows.at(i));
         if (!tl->isVisible() || tl == windowBeingDragged || tl->isMinimized())
             continue;
 
@@ -500,7 +500,7 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
         // The floating window list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
 
         FloatingWindow *tlwBeingDragged = m_windowBeingDragged->floatingWindow();
-        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->nestedwindows(), tlwBeingDragged))
+        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->floatingWindows(), tlwBeingDragged))
             return tl;
 
         return qtTopLevelUnderCursor_impl<QWidget*>(globalPos,

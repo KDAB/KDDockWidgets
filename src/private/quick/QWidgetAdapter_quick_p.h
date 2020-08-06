@@ -36,6 +36,8 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+DOCKS_EXPORT QQuickItem* widgetForWindow(QWindow *window);
+
 /// @brief Helper since QQuickItem::parentItem() has a different name than QWidget::parentWidget()
 inline QQuickItem *parentWidget(QQuickItem *item)
 {

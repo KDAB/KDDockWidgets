@@ -24,6 +24,7 @@
 
 #include <QResizeEvent>
 #include <QMouseEvent>
+#include <QWindow>
 
 using namespace KDDockWidgets;
 
@@ -97,3 +98,11 @@ void QWidgetAdapter::onMouseMove(QPoint) {}
 void QWidgetAdapter::onMouseRelease() {}
 
 void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}
+
+QWidget *KDDockWidgets::widgetForWindow(QWindow *window)
+{
+    if (!window)
+        return nullptr;
+
+    return window->property("kddockwidgets_qwidget").value<QWidget*>();
+}

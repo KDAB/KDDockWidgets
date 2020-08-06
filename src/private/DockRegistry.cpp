@@ -359,6 +359,24 @@ const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
     return result;
 }
 
+const QVector<QWindow *> DockRegistry::floatingWindows() const
+{
+    QVector<QWindow *> windows;
+    windows.reserve(m_nestedWindows.size());
+    for (FloatingWindow *fw : m_nestedWindows) {
+        if (!fw->beingDeleted()) {
+            if (QWindow *window = fw->windowHandle()) {
+                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick*>(fw)); // Since QWidgetWindow is private API
+                windows.push_back(window);
+            } else {
+                qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
+            }
+        }
+    }
+
+    return windows;
+}
+
 FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) const
 {
     for (FloatingWindow *fw : m_nestedWindows) {
@@ -369,15 +387,16 @@ FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) con
     return nullptr;
 }
 
-QWindowList DockRegistry::topLevels(bool excludeFloatingDocks) const
+QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
 {
-    QWindowList windows;
+    QVector<QWindow *> windows;
     windows.reserve(m_nestedWindows.size() + m_mainWindows.size());
 
     if (!excludeFloatingDocks) {
         for (FloatingWindow *fw : m_nestedWindows) {
             if (fw->isVisible()) {
                 if (QWindow *window = fw->windowHandle()) {
+                    window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick*>(fw)); // Since QWidgetWindow is private API
                     windows << window;
                 } else {
                     qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
@@ -389,6 +408,7 @@ QWindowList DockRegistry::topLevels(bool excludeFloatingDocks) const
     for (MainWindowBase *m : m_mainWindows) {
         if (m->isVisible()) {
             if (QWindow *window = m->window()->windowHandle()) {
+                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick*>(m));
                 windows << window;
             } else {
                 qWarning() << Q_FUNC_INFO << "MainWindow doesn't have QWindow";

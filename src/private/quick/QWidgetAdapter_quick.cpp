@@ -325,3 +325,12 @@ void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
         }
     }
 }
+
+QQuickItem* KDDockWidgets::widgetForWindow(QWindow *window)
+{
+    auto quickWindow = qobject_cast<QQuickWindow*>(window);
+    if (!quickWindow)
+        return nullptr;
+
+    return nullptr; // TODO
+}

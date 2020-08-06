@@ -81,6 +81,9 @@ public:
     /// As there might be DockWidgets which weren't morphed yet.
     const QVector<FloatingWindow*> nestedwindows() const;
 
+    ///@brief overload that returns list of QWindow. This is more friendly for supporting both QtWidgets and QtQuick
+    const QVector<QWindow*> floatingWindows() const;
+
     ///@brief returns the FloatingWindow with handle @p windowHandle
     FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
 
@@ -93,7 +96,7 @@ public:
     /// Every returned widget is either a FloatingWindow, MainWindow, or something that contains a MainWindow.
     ///
     /// If @p excludeFloatingDocks is true then FloatingWindow won't be returned
-    QWindowList topLevels(bool excludeFloatingDocks = false) const;
+    QVector<QWindow*> topLevels(bool excludeFloatingDocks = false) const;
 
     /**
      * @brief Closes all dock widgets, and destroys all FloatingWindows

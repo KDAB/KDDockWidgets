@@ -33,6 +33,8 @@ inline QWidget *parentWidget(QWidget *widget)
     return widget ? widget->parentWidget() : nullptr;
 }
 
+DOCKS_EXPORT QWidget *widgetForWindow(QWindow *window);
+
 class FloatingWindow;
 
 class DOCKS_EXPORT QWidgetAdapter : public QWidget
