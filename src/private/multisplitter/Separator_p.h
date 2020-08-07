@@ -57,6 +57,7 @@ protected:
 private:
     friend class Config;
 
+    Q_DISABLE_COPY(Separator)
     void setLazyPosition(int);
     bool isBeingDragged() const;
     bool usesLazyResize() const;
