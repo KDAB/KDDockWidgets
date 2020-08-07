@@ -16,12 +16,24 @@
 # define KDDOCKWIDGETS_QTWIDGETS
 #endif
 
+#include <QWindow>
+
 /**
  * @file
  * @brief Abstraction for supporting both QtWidgets and QtQuick.
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
+
+namespace KDDockWidgets {
+namespace Private {
+
+inline bool isMinimized(QWindow *window)
+{
+    return window && window->windowStates() & Qt::WindowMinimized;
+}
+
+}}
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "../multisplitter/Widget_qwidget.h"
@@ -35,6 +47,7 @@
     typedef Layouting::Widget_qwidget LayoutGuestWidgetBase;
     typedef KDDockWidgets::MainWindow MainWindowType;
     typedef KDDockWidgets::DockWidget DockWidgetType;
+    typedef QWidget WidgetType;
   }
 #else
 # include "../multisplitter/Widget_quick.h"
@@ -47,6 +60,7 @@
     typedef Layouting::Widget_quick LayoutGuestWidgetBase;
     typedef KDDockWidgets::MainWindowQuick MainWindowType;
     typedef KDDockWidgets::DockWidgetQuick DockWidgetType;
+    typedef QQuickItem WidgetType;
   }
 #endif
 

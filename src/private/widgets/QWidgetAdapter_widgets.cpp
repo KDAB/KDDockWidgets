@@ -18,7 +18,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "QWidgetAdapter_widgets_p.h"
+#include "QWidgetAdapter.h"
 #include "FloatingWindow_p.h"
 #include "Qt5Qt6Compat_p.h"
 
@@ -99,7 +99,7 @@ void QWidgetAdapter::onMouseRelease() {}
 
 void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}
 
-QWidget *KDDockWidgets::widgetForWindow(QWindow *window)
+QWidget *KDDockWidgets::Private::widgetForWindow(QWindow *window)
 {
     if (!window)
         return nullptr;

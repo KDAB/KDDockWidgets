@@ -28,6 +28,7 @@
 #include <QObject>
 #include <QCloseEvent>
 #include <QSizePolicy>
+#include <QQuickWindow>
 
 QT_BEGIN_NAMESPACE
 class QWindow;
@@ -36,6 +37,8 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+namespace Private {
+
 DOCKS_EXPORT QQuickItem* widgetForWindow(QWindow *window);
 
 /// @brief Helper since QQuickItem::parentItem() has a different name than QWidget::parentWidget()
@@ -43,6 +46,26 @@ inline QQuickItem *parentWidget(QQuickItem *item)
 {
     return item ? item->parentItem() : nullptr;
 }
+
+inline bool isMinimized(const QQuickItem *item)
+{
+    QWindow *window = item ? item->window() : nullptr;
+    return KDDockWidgets::Private::isMinimized(window);
+}
+
+inline QRect geometry(const QQuickItem *item)
+{
+    QRect r(QPoint(0 , 0), item->size().toSize());
+    r.moveTopLeft(QPointF(item->x(), item->y()).toPoint());
+    return r;
+}
+
+inline QWindow *windowForWidget(const QQuickItem *item)
+{
+    return item ? item->window() : nullptr;
+}
+
+} // namespace Private
 
 class FloatingWindow;
 class DOCKS_EXPORT QWidgetAdapter : public QQuickItem

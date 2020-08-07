@@ -23,9 +23,11 @@
 
 #include "../../docks_export.h"
 
+#include <QWindow>
 #include <QWidget>
 
 namespace KDDockWidgets {
+namespace Private {
 
 /// @brief Helper since QQuickItem::parentItem() has a different name than QWidget::parentWidget()
 inline QWidget *parentWidget(QWidget *widget)
@@ -33,7 +35,25 @@ inline QWidget *parentWidget(QWidget *widget)
     return widget ? widget->parentWidget() : nullptr;
 }
 
+inline bool isMinimized(const QWidget *widget)
+{
+    QWindow *window = widget ? widget->window()->windowHandle() : nullptr;
+    return KDDockWidgets::Private::isMinimized(window);
+}
+
+inline QRect geometry(const QWidget *w)
+{
+    return w ? w->geometry() : QRect();
+}
+
+inline QWindow *windowForWidget(const QWidget *w)
+{
+    return w ? w->window()->windowHandle() : nullptr;
+}
+
 DOCKS_EXPORT QWidget *widgetForWindow(QWindow *window);
+
+}
 
 class FloatingWindow;
 

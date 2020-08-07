@@ -424,17 +424,17 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
 }
 #endif
 template <typename T>
-static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow*> &windows, T windowBeingDragged)
+static WidgetType* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow*> &windows, T windowBeingDragged)
 {
     for (int i = windows.size() -1; i >= 0; --i) {
-        auto tl = KDDockWidgets::widgetForWindow(windows.at(i));
-        if (!tl->isVisible() || tl == windowBeingDragged || tl->isMinimized())
+        auto tl = KDDockWidgets::Private::widgetForWindow(windows.at(i));
+        if (!tl->isVisible() || tl == windowBeingDragged || KDDockWidgets::Private::isMinimized(tl))
             continue;
 
-        if (windowBeingDragged && windowBeingDragged->window() == tl->window())
+        if (windowBeingDragged && KDDockWidgets::Private::windowForWidget(windowBeingDragged) == KDDockWidgets::Private::windowForWidget(tl))
             continue;
 
-        if (tl->geometry().contains(globalPos)) {
+        if (KDDockWidgets::Private::geometry(tl).contains(globalPos)) {
             qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
             return tl;
         }
@@ -443,10 +443,8 @@ static QWidget* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWind
     return nullptr;
 }
 
-QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
+WidgetType *DragController::qtTopLevelUnderCursor() const
 {
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-
     QPoint globalPos = QCursor::pos();
 
     if (qApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
@@ -503,29 +501,26 @@ QWidgetOrQuick *DragController::qtTopLevelUnderCursor() const
         if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->floatingWindows(), tlwBeingDragged))
             return tl;
 
-        return qtTopLevelUnderCursor_impl<QWidget*>(globalPos,
-                                                    DockRegistry::self()->topLevels(/*excludeFloating=*/true),
-                                                    tlwBeingDragged);
+        return qtTopLevelUnderCursor_impl<WidgetType*>(globalPos,
+                                                       DockRegistry::self()->topLevels(/*excludeFloating=*/true),
+                                                       tlwBeingDragged);
     }
-#else
-    // QtQuick:
-    qWarning() << Q_FUNC_INFO << "Implement me!";
-#endif
 
     qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found";
     return nullptr;
 }
 
-static DropArea* deepestDropAreaInTopLevel(QWidgetOrQuick *topLevel, QPoint globalPos,
+static DropArea* deepestDropAreaInTopLevel(WidgetType *topLevel, QPoint globalPos,
                                            const QStringList &affinities)
 {
-    auto w = topLevel->childAt(topLevel->mapFromGlobal(globalPos));
+    const auto localPos = topLevel->mapFromGlobal(globalPos);
+    auto w = topLevel->childAt(localPos.x(), localPos.y());
     while (w) {
         if (auto dt = qobject_cast<DropArea *>(w)) {
             if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
                 return dt;
         }
-        w = KDDockWidgets::parentWidget(w);
+        w = KDDockWidgets::Private::parentWidget(w);
     }
 
     return nullptr;
@@ -533,7 +528,7 @@ static DropArea* deepestDropAreaInTopLevel(QWidgetOrQuick *topLevel, QPoint glob
 
 DropArea *DragController::dropAreaUnderCursor() const
 {
-    auto topLevel = qtTopLevelUnderCursor();
+    WidgetType *topLevel = qtTopLevelUnderCursor();
     if (!topLevel)
         return nullptr;
 

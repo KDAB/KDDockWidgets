@@ -69,7 +69,7 @@ private:
 
     DragController(QObject * = nullptr);
     StateBase *activeState() const;
-    QWidgetOrQuick *qtTopLevelUnderCursor() const;
+    WidgetType *qtTopLevelUnderCursor() const;
     DropArea *dropAreaUnderCursor() const;
     Draggable *draggableForQObject(QObject *o) const;
     QPoint m_pressPos;
