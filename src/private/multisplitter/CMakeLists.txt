@@ -76,7 +76,7 @@ endif()
 if(${PROJECT_NAME}_STATIC)
   target_compile_definitions(kddockwidgets_multisplitter PRIVATE MULTISPLITTER_STATICLIB KDDOCKWIDGETS_STATICLIB)
 else()
-  target_compile_definitions(kddockwidgets_multisplitter PRIVATE BUILDING_MULTISPLITTER_LIBRARY BUILDING_DOCKS_LIBRARY)
+  target_compile_definitions(kddockwidgets_multisplitter PRIVATE BUILDING_MULTISPLITTER_LIBRARY)
 endif()
 
 if(OPTION_DEVELOPER_MODE)
