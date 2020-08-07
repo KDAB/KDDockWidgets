@@ -316,7 +316,7 @@ Q_SIGNALS:
     void titleChanged();
 
     ///@brief emitted when the hosted widget changed
-    void widgetChanged(QWidgetOrQuick *);
+    void widgetChanged(KDDockWidgets::QWidgetOrQuick *);
 
     ///@brief emitted when the options change
     ///@sa setOptions(), options()
