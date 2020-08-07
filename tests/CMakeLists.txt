@@ -20,6 +20,10 @@ endif()
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
+find_package(Qt5Test)
+
+set(TESTING_SRCS utils.cpp Testing.cpp)
+
 include_directories(..)
 include_directories(../src)
 include_directories(../src/private)
