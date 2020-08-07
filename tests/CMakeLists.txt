@@ -23,7 +23,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 find_package(Qt5Test)
 
 set(TESTING_SRCS utils.cpp Testing.cpp)
-add_definitions(-DBUILDING_DOCKS_LIBRARY -DBUILDING_MULTISPLITTER_LIBRARY)
 
 include_directories(..)
 include_directories(../src)
