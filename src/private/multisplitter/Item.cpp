@@ -1482,7 +1482,7 @@ void ItemContainer::positionItems()
 void ItemContainer::positionItems_recursive()
 {
     positionItems();
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (item->isVisible()) {
             if (auto c = item->asContainer())
                 c->positionItems_recursive();
@@ -1551,7 +1551,7 @@ void ItemContainer::clear()
 
 Item* ItemContainer::itemForObject(const QObject *o) const
 {
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (item->isContainer()) {
             if (Item *result = item->asContainer()->itemForObject(o))
                 return result;
@@ -1706,7 +1706,7 @@ bool ItemContainer::hasChildren() const
 
 bool ItemContainer::hasVisibleChildren(bool excludeBeingInserted) const
 {
-    for (Item *item : d->m_children) {
+    for (Item *item : qAsConst(d->m_children)) {
         if (item->isVisible(excludeBeingInserted))
             return true;
     }
