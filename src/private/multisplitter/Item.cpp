@@ -2918,8 +2918,8 @@ SizingInfo::List ItemContainer::sizes(bool ignoreBeingInserted) const
     return result;
 }
 
-QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin,
-                                              SizingInfo::List::ConstIterator end, int needed,
+QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin,  //clazy:exclude=function-args-by-ref
+                                              SizingInfo::List::ConstIterator end, int needed,  //clazy:exclude=function-args-by-ref
                                               NeighbourSqueezeStrategy strategy, bool reversed) const
 {
     QVector<int> availabilities;

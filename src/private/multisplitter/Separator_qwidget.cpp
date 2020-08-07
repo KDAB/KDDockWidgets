@@ -24,7 +24,7 @@ namespace Layouting {
 class RubberBand : public QRubberBand
                  , public Layouting::Widget_qwidget
 {
-
+Q_OBJECT
 public:
     RubberBand(Layouting::Widget *parent)
         : QRubberBand(QRubberBand::Line, parent ? parent->asQWidget() : nullptr)
@@ -107,3 +107,5 @@ Widget *SeparatorWidget::asWidget()
 {
     return this;
 }
+
+#include <Separator_qwidget.moc>

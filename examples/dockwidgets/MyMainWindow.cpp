@@ -27,6 +27,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+// clazy:excludeall=qstring-allocations
+
 static MyWidget *newMyWidget()
 {
 #if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
