@@ -20,6 +20,8 @@
 #include <QDebug>
 #include <QCommandLineParser>
 
+// clazy:excludeall=qstring-allocations
+
 using namespace KDDockWidgets;
 
 int main(int argc, char **argv)

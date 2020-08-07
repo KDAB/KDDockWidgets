@@ -29,6 +29,8 @@
 # pragma warning(disable:4702)
 #endif
 
+// clazy:excludeall=missing-typeinfo,old-style-connect
+
 using namespace Layouting;
 
 int Layouting::Item::separatorThickness = 5;
