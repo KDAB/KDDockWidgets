@@ -103,14 +103,14 @@ public:
      * This is called before restoring a layout.
      * @param affinities if specified only closes dock widgets and main windows with the specified affinities
      */
-    void clear(QStringList affinities = {});
+    void clear(const QStringList &affinities = {});
 
     /**
      * @brief clear Overload that only clears the specified dockWidgets and main windows.
      */
     void clear(const DockWidgetBase::List &dockWidgets,
                const MainWindowBase::List &mainWindows,
-               QStringList affinities);
+               const QStringList &affinities);
 
     /**
      * @brief Ensures that all floating DockWidgets have a FloatingWindow as a window.

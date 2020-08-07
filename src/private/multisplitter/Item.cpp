@@ -1777,7 +1777,7 @@ bool ItemContainer::contains_recursive(const Item *item) const
     return false;
 }
 
-void ItemContainer::setChildren(const Item::List children, Qt::Orientation o)
+void ItemContainer::setChildren(const List &children, Qt::Orientation o)
 {
     d->m_children = children;
     for (Item *item : children)

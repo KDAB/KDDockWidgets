@@ -418,7 +418,7 @@ private:
     Item::List visibleChildren(bool includeBeingInserted = false) const;
     int usableLength() const;
     bool hasSingleVisibleItem() const;
-    void setChildren(const Item::List children, Qt::Orientation o);
+    void setChildren(const Item::List &children, Qt::Orientation o);
     void setOrientation(Qt::Orientation);
     int length() const;
     QRect rect() const;

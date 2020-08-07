@@ -428,7 +428,7 @@ QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
     return windows;
 }
 
-void DockRegistry::clear(QStringList affinities)
+void DockRegistry::clear(const QStringList &affinities)
 {
     // Clears everything
     clear(m_dockWidgets, m_mainWindows, affinities);
@@ -436,7 +436,7 @@ void DockRegistry::clear(QStringList affinities)
 
 void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
                          const MainWindowBase::List &mainWindows,
-                         QStringList affinities)
+                         const QStringList &affinities)
 {
     for (auto dw : qAsConst(dockWidgets)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, dw->affinities())) {
