@@ -74,7 +74,7 @@ if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
 endif()
 
 if(${PROJECT_NAME}_STATIC)
-  target_compile_definitions(kddockwidgets_multisplitter PRIVATE MULTISPLITTER_STATICLIB KDDOCKWIDGETS_STATICLIB)
+  target_compile_definitions(kddockwidgets_multisplitter PUBLIC MULTISPLITTER_STATICLIB)
 else()
   target_compile_definitions(kddockwidgets_multisplitter PRIVATE BUILDING_MULTISPLITTER_LIBRARY)
 endif()

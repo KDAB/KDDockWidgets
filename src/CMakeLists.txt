@@ -144,7 +144,7 @@ target_compile_definitions(kddockwidgets
   QT_NO_CAST_FROM_BYTEARRAY
 )
 if(${PROJECT_NAME}_STATIC)
-  target_compile_definitions(kddockwidgets PRIVATE KDDOCKWIDGETS_STATICLIB MULTISPLITTER_STATICLIB)
+  target_compile_definitions(kddockwidgets PUBLIC KDDOCKWIDGETS_STATICLIB)
 else()
   target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY)
 endif()
@@ -223,8 +223,5 @@ if(OPTION_DEVELOPER_MODE)
   if (NOT OPTION_QTQUICK) # TODO: We can support it
     add_executable(kddockwidgets_linter layoutlinter_main.cpp)
     target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt5::Widgets)
-    if(${PROJECT_NAME}_STATIC)
-      target_compile_definitions(kddockwidgets_linter PRIVATE KDDOCKWIDGETS_STATICLIB MULTISPLITTER_STATICLIB)
-    endif()
   endif()
 endif()
