@@ -10,6 +10,11 @@ and an equal number of days just to fix dozens of regressions.
 to move forward with new features. Furthermore, our customers were getting more
 creative with their requests, so it was clear we needed a better docking framework.
 
+You will find more information in these places:
+
+ * [our official home page](https://www.kdab.com/kddockwidgets)
+ * [online detailed browsable API reference](https://docs.kdab.com/kddockwidgets)
+ * [our example programs](examples/)
 
 Features
 ========
