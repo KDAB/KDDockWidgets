@@ -39,8 +39,9 @@ public:
     {
         QPainter p(this);
         QPen pen(Qt::black);
-        //QBrush brush(isFocused() ? QColor(0xff, 0x80, 0) : Qt::yellow); // Uncomment to color differently if dock widget is focused
-        QBrush brush(Qt::yellow);
+        const QColor focusedBackgroundColor = Qt::yellow;
+        const QColor backgroundColor = focusedBackgroundColor.darker(115);
+        QBrush brush(isFocused() ? focusedBackgroundColor : backgroundColor);
         pen.setWidth(4);
         p.setPen(pen);
         p.setBrush(brush);

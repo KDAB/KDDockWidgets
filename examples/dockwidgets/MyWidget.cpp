@@ -14,6 +14,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QFile>
+#include <QLineEdit>
 
 static QHash<QString, QImage> s_images; /// clazy:exclude=non-pod-global-static
 
@@ -33,6 +34,14 @@ MyWidget::MyWidget(const QString &backgroundFile, const QString &logoFile, QWidg
             it = s_images.insert(logoFile, QImage(logoFile));
         m_logo = it.value();
     }
+
+    setFocusPolicy(Qt::StrongFocus);
+#if 0
+    // Uncomment to show focus propagation working
+    new QLineEdit(this);
+    auto l2 = new QLineEdit(this);
+    l2->move(0, 100);
+#endif
 }
 
 MyWidget::~MyWidget()
