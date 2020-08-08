@@ -176,6 +176,14 @@ bool QWidgetAdapter::isMaximized() const
     return false;
 }
 
+bool KDDockWidgets::QWidgetAdapter::isActiveWindow() const
+{
+    if (QWindow *w = windowHandle())
+        return w->isActive();
+
+    return false;
+}
+
 void QWidgetAdapter::showMaximized()
 {
     if (QWindow *w = windowHandle())

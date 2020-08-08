@@ -24,6 +24,7 @@
 #include "LayoutSaver_p.h"
 #include "multisplitter/Widget_qwidget.h"
 #include "multisplitter/Item_p.h"
+#include "FocusScope.h"
 
 #include <QWidget>
 #include <QVector>
@@ -47,7 +48,9 @@ class FloatingWindow;
  * inside a MultiSplitter (DropArea). Be it a MultiSplitter belonging to a MainWindow or belonging
  * to a FloatingWindow.
  */
-class DOCKS_EXPORT Frame : public LayoutGuestWidget
+class DOCKS_EXPORT Frame
+        : public LayoutGuestWidget
+        , public FocusScope
 {
     Q_OBJECT
     Q_PROPERTY(KDDockWidgets::TitleBar* titleBar READ titleBar CONSTANT)
@@ -223,6 +226,7 @@ Q_SIGNALS:
     void hasTabsVisibleChanged();
     void layoutInvalidated();
     void isInMainWindowChanged();
+    void isFocusedChanged() override; // override from non-QObject
 protected:
 
     /**

@@ -28,6 +28,7 @@ TitleBar::TitleBar(Frame *parent)
     , m_floatingWindow(nullptr)
 {
     connect(m_frame, &Frame::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
+    connect(m_frame, &Frame::isFocusedChanged, this, &TitleBar::isFocusedChanged);
     init();
 }
 
@@ -41,6 +42,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateFloatButton);
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateMaximizeButton);
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, &TitleBar::updateMaximizeButton);
+    connect(m_floatingWindow, &FloatingWindow::activatedChanged , this, &TitleBar::isFocusedChanged);
     init();
 }
 
@@ -48,6 +50,10 @@ void TitleBar::init()
 {
     qCDebug(creation) << "TitleBar" << this;
     setFixedHeight(30);
+    connect(this, &TitleBar::isFocusedChanged, this, [this] {
+        // repaint
+        update();
+    });
 }
 
 TitleBar::~TitleBar()
@@ -172,6 +178,16 @@ bool TitleBar::supportsMaximizeButton() const
 bool TitleBar::hasIcon() const
 {
     return !m_icon.isNull();
+}
+
+bool TitleBar::isFocused() const
+{
+    if (m_frame)
+        return m_frame->isFocused();
+    else if (m_floatingWindow)
+        return m_floatingWindow->isActiveWindow();
+
+    return false;
 }
 
 QIcon TitleBar::icon() const

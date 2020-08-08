@@ -124,6 +124,7 @@ public:
     QRect dragRect() const;
 
 Q_SIGNALS:
+    void activatedChanged();
     void numFramesChanged();
     void windowStateChanged(QWindowStateChangeEvent *);
 protected:
@@ -131,6 +132,7 @@ protected:
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
 #endif
 
+    bool event(QEvent *ev) override;
     void onCloseEvent(QCloseEvent *) override;
 
     DropArea *const m_dropArea;

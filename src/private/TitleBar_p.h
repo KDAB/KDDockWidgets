@@ -69,6 +69,11 @@ public:
     ///@brief returns whether this title bar has an icon
     bool hasIcon() const;
 
+    ///@brief returns whether any of the DockWidgets this TitleBar controls has a child focus
+    ///Not to be confused with QWidget::hasFocus(), which just refers to 1 widget. This works more
+    /// like QtQuick's FocusScope
+    bool isFocused() const;
+
     ///@brief the icon
     QIcon icon() const;
 
@@ -86,6 +91,7 @@ public:
 Q_SIGNALS:
     void titleChanged();
     void iconChanged();
+    void isFocusedChanged();
 
 protected:
     Q_INVOKABLE void onCloseClicked();

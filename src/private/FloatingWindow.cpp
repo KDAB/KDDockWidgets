@@ -416,3 +416,14 @@ QRect FloatingWindow::dragRect() const
 
     return rect;
 }
+
+bool FloatingWindow::event(QEvent *ev)
+{
+    if (ev->type() == QEvent::ActivationChange) {
+        // Since QWidget is missing a signal for window activation
+        Q_EMIT activatedChanged();
+    }
+
+    return QWidgetAdapter::event(ev);
+}
+

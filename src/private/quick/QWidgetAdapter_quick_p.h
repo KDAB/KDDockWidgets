@@ -114,6 +114,7 @@ public:
     void resize(QSize);
     bool isWindow() const { return parentItem() == nullptr; }
     bool isMaximized() const;
+    bool isActiveWindow() const;
     void showMaximized();
     void showNormal();
 

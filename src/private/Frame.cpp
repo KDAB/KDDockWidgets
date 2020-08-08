@@ -48,6 +48,7 @@ static FrameOptions actualOptions(FrameOptions options)
 
 Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     : LayoutGuestWidget(parent)
+    , FocusScope(this)
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_options(actualOptions(options))
 {

@@ -24,6 +24,7 @@ add_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS
 set(DOCKSLIBS_SRCS
     Config.cpp
     Qt5Qt6Compat_p.h
+    FocusScope.cpp
     FrameworkWidgetFactory.cpp
     DockWidgetBase.cpp
     MainWindowBase.cpp
@@ -51,6 +52,7 @@ set(DOCKS_INSTALLABLE_INCLUDES
     FrameworkWidgetFactory.h
     DockWidgetBase.h
     KDDockWidgets.h
+    FocusScope.h
     QWidgetAdapter.h
     LayoutSaver.h
     LayoutSaver_p.h
