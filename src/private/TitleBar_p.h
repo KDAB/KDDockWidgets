@@ -108,6 +108,8 @@ protected:
     virtual bool isFloatButtonVisible() const { return true; }
     virtual bool isFloatButtonEnabled() const { return true; }
 
+    void focusInEvent(QFocusEvent *event) override;
+
 private:
     friend class TestDocks;
 

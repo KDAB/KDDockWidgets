@@ -227,6 +227,7 @@ Q_SIGNALS:
     void layoutInvalidated();
     void isInMainWindowChanged();
     void isFocusedChanged() override; // override from non-QObject
+    void focusedWidgetChanged() override;
 protected:
 
     /**

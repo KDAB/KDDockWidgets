@@ -136,6 +136,7 @@ public:
     void setSizePolicy(QSizePolicy);
     QSizePolicy sizePolicy() const;
     Qt::FocusPolicy focusPolicy() const;
+    void setFocusPolicy(Qt::FocusPolicy) {}
     void setFocusProxy(QQuickItem*);
     virtual QSize sizeHint() const;
 

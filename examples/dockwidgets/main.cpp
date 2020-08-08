@@ -111,6 +111,9 @@ int main(int argc, char **argv)
     if (parser.isSet(noTitleBars))
         flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs;
 
+    if (parser.isSet(customStyle))
+        flags |= KDDockWidgets::Config::Flag_TitleBarIsFocusable; // also showing title bar focus with -p, just to not introduce another switch
+
     if (parser.isSet(reorderTabsOption))
         flags |= KDDockWidgets::Config::Flag_AllowReorderTabs;
 

@@ -63,6 +63,7 @@ public:
         Flag_TabsHaveCloseButton = 64, /// Tabs will have a close button. Equivalent to QTabWidget::setTabsClosable(true).
         Flag_DoubleClickMaximizes = 128, /// Double clicking the titlebar will maximize a floating window instead of re-docking it
         Flag_TitleBarHasMaximizeButton = 256, /// The title bar will have a maximize/restore button when floating. This is mutually-exclusive with the floating button (since many apps behave that way).
+        Flag_TitleBarIsFocusable = 512, /// You can click the title bar and it will focus the last focused widget in the focus scope. If no previously focused widget then it focuses the user's dock widget guest, which should accept focus or use a focus proxy.
         Flag_Default = Flag_AeroSnapWithClientDecos ///> The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)

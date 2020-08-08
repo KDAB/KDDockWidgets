@@ -17,9 +17,11 @@
  */
 
 #include "FocusScope.h"
+#include "TitleBar_p.h"
 
 #include <QObject>
-#include <QGuiApplication>
+#include <QApplication>
+#include <QPointer>
 
 using namespace KDDockWidgets;
 
@@ -46,6 +48,7 @@ public:
     QWidgetAdapter *const m_thisWidget;
     bool m_isFocused = false;
     bool m_inCtor = true;
+    QPointer<WidgetType> m_lastFocusedInScope;
 };
 
 
@@ -64,10 +67,35 @@ bool FocusScope::isFocused() const
     return d->m_isFocused;
 }
 
+WidgetType *FocusScope::focusedWidget() const
+{
+    return d->m_lastFocusedInScope;
+}
+
+void FocusScope::focus(Qt::FocusReason reason)
+{
+    if (d->m_lastFocusedInScope) {
+        d->m_lastFocusedInScope->setFocus(reason);
+    } else {
+        if (auto frame = qobject_cast<Frame*>(d->m_thisWidget)) {
+            if (DockWidgetBase *dw = frame->currentDockWidget()) {
+                if (auto guest = dw->widget()) {
+                    if (guest->focusPolicy() != Qt::NoFocus)
+                        guest->setFocus(reason);
+                }
+            }
+        } else {
+            // Not a use case right now
+            d->m_thisWidget->setFocus(reason);
+        }
+    }
+}
+
 void FocusScope::Private::setIsFocused(bool is)
 {
     if (is != m_isFocused) {
         m_isFocused = is;
+
         if (!m_inCtor) // Hack so we don't call pure-virtual
             Q_EMIT q->isFocusedChanged();
     }
@@ -79,7 +107,13 @@ void FocusScope::Private::onFocusObjectChanged(QObject *obj)
     if (!widget)
         return;
 
-    setIsFocused(isInFocusScope(widget));
+    const bool is = isInFocusScope(widget);
+    if (is && m_lastFocusedInScope != widget && !qobject_cast<TitleBar*>(obj)) {
+        m_lastFocusedInScope = widget;
+        Q_EMIT q->focusedWidgetChanged();
+    }
+
+    setIsFocused(is);
 }
 
 bool FocusScope::Private::isInFocusScope(WidgetType *widget) const

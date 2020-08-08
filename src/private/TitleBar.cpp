@@ -29,7 +29,11 @@ TitleBar::TitleBar(Frame *parent)
 {
     connect(m_frame, &Frame::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
     connect(m_frame, &Frame::isFocusedChanged, this, &TitleBar::isFocusedChanged);
+
     init();
+
+    if (Config::self().flags() & Config::Flag_TitleBarIsFocusable)
+        setFocusPolicy(Qt::StrongFocus);
 }
 
 TitleBar::TitleBar(FloatingWindow *parent)
@@ -83,6 +87,17 @@ void TitleBar::toggleMaximized()
         m_floatingWindow->showNormal();
     else
         m_floatingWindow->showMaximized();
+}
+
+void TitleBar::focusInEvent(QFocusEvent *ev)
+{
+    QWidgetAdapter::focusInEvent(ev);
+
+    if (!m_frame || !(Config::self().flags() & Config::Flag_TitleBarIsFocusable))
+        return;
+
+    // For some reason QWidget::setFocusProxy() isn't working, so forward manually
+    m_frame->FocusScope::focus(ev->reason());
 }
 
 void TitleBar::setTitle(const QString &title)

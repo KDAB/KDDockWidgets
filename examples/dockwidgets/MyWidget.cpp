@@ -41,6 +41,7 @@ MyWidget::MyWidget(const QString &backgroundFile, const QString &logoFile, QWidg
     new QLineEdit(this);
     auto l2 = new QLineEdit(this);
     l2->move(0, 100);
+    setFocusProxy(l2);
 #endif
 }
 

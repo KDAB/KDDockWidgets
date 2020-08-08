@@ -218,12 +218,6 @@ void DockWidgetBase::setWidget(QWidgetOrQuick *w)
     d->widget = w;
     setSizePolicy(w->sizePolicy());
 
-    if (w->focusPolicy() == Qt::NoFocus) {
-        setFocusProxy(nullptr);
-    } else {
-        setFocusProxy(w);
-    }
-
     Q_EMIT widgetChanged(w);
     setWindowTitle(uniqueName());
 }
