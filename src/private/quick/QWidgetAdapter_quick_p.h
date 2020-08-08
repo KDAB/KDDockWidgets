@@ -135,6 +135,8 @@ public:
     void activateWindow();
     void setSizePolicy(QSizePolicy);
     QSizePolicy sizePolicy() const;
+    Qt::FocusPolicy focusPolicy() const;
+    void setFocusProxy(QQuickItem*);
     virtual QSize sizeHint() const;
 
     Qt::WindowFlags windowFlags() const;

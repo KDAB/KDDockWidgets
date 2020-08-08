@@ -331,6 +331,16 @@ void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
     }
 }
 
+Qt::FocusPolicy QWidgetAdapter::focusPolicy() const
+{
+    return Qt::NoFocus;
+}
+
+void QWidgetAdapter::setFocusProxy(QQuickItem *)
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+}
+
 QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 {
     if (!window)
