@@ -72,6 +72,14 @@ public:
     };
     Q_DECLARE_FLAGS(Options, Option)
 
+    enum class IconPlace {
+        TitleBar = 1,
+        TabBar = 2,
+        All = TitleBar | TabBar
+    };
+    Q_ENUM(IconPlace)
+    Q_DECLARE_FLAGS(IconPlaces, IconPlace)
+
     /**
      * @brief constructs a new DockWidget
      * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
@@ -218,14 +226,22 @@ public:
 
     /**
      * @brief Sets an icon to show on title bars and tab bars.
-     * By default none is shown.
+     * @param places Specifies where the icon will be shown (TitleBar, TabBar or both)
+     *
+     * By default there's no icon set.
+     *
+     * @sa icon()
      */
-    void setIcon(const QIcon &icon);
+    void setIcon(const QIcon &icon, IconPlaces places = IconPlace::All);
 
     /**
-     * @brief Returns the dock widget's icon.
+     * @brief Returns the dock widget's titlebar or tabbar icon (depending on the passed @p place)
+     *
+     * By default it's null.
+     *
+     * @sa setIcon()
      */
-    QIcon icon() const;
+    QIcon icon(IconPlace place = IconPlace::TitleBar) const;
 
     /**
      * @brief Like QWidget::close() but the hosted widget won't be asked if we

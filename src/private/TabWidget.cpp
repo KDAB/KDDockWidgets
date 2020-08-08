@@ -172,7 +172,7 @@ void TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
     }
 
     QPointer<Frame> oldFrame = dock->frame();
-    insertDockWidget(index, dock, dock->icon(), dock->title());
+    insertDockWidget(index, dock, dock->icon(DockWidgetBase::IconPlace::TabBar), dock->title());
     setCurrentDockWidget(index);
 
     if (oldFrame && oldFrame->beingDeletedLater()) {

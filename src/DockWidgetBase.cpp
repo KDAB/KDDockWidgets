@@ -80,7 +80,6 @@ public:
     QPoint defaultCenterPosForFloating();
 
     void updateTitle();
-    void updateIcon();
     void toggle(bool enabled);
     void updateToggleAction();
     void updateFloatAction();
@@ -101,7 +100,8 @@ public:
     const QString name;
     QStringList affinities;
     QString title;
-    QIcon icon;
+    QIcon titleBarIcon;
+    QIcon tabBarIcon;
     QWidgetOrQuick *widget = nullptr;
     DockWidgetBase *const q;
     DockWidgetBase::Options options;
@@ -346,16 +346,26 @@ void DockWidgetBase::setAsCurrentTab()
         frame->setCurrentDockWidget(this);
 }
 
-void DockWidgetBase::setIcon(const QIcon &icon)
+void DockWidgetBase::setIcon(const QIcon &icon, IconPlaces places)
 {
-    d->icon = icon;
-    d->updateIcon();
+    if (places & IconPlace::TitleBar)
+        d->titleBarIcon = icon;
+
+    if (places & IconPlace::TabBar)
+        d->tabBarIcon = icon;
+
     Q_EMIT iconChanged();
 }
 
-QIcon DockWidgetBase::icon() const
+QIcon DockWidgetBase::icon(IconPlace place) const
 {
-    return d->icon;
+    if (place == IconPlace::TitleBar)
+        return d->titleBarIcon;
+
+    if (place == IconPlace::TabBar)
+        return d->tabBarIcon;
+
+    return {};
 }
 
 void DockWidgetBase::forceClose()
@@ -523,10 +533,6 @@ void DockWidgetBase::Private::updateTitle()
 
 
     toggleAction->setText(title);
-}
-
-void DockWidgetBase::Private::updateIcon()
-{
 }
 
 void DockWidgetBase::Private::toggle(bool enabled)
