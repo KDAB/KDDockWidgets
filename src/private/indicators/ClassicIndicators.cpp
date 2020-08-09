@@ -18,18 +18,14 @@
 #include "FrameworkWidgetFactory.h"
 #include "ClassicIndicatorsWindow_p.h"
 
-//#define KDDOCKWIDGETS_RUBBERBAND_IS_TOPLEVEL 1
-
 using namespace KDDockWidgets;
 
 ClassicIndicators::ClassicIndicators(DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea) // Is parented on the drop-area, not a toplevel.
-    , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : dropArea))
+    , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(dropArea))
     , m_indicatorWindow(new IndicatorWindow(this, /*parent=*/ nullptr)) // Top-level so the indicators can appear above the window being dragged.
 {
     setVisible(false);
-    if (rubberBandIsTopLevel())
-        m_rubberBand->setWindowOpacity(0.5);
 }
 
 ClassicIndicators::~ClassicIndicators()
@@ -124,10 +120,6 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     if (location == DropLocation_Center) {
         m_rubberBand->setGeometry(geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->QWidget::geometry() : rect()));
         m_rubberBand->setVisible(true);
-        if (rubberBandIsTopLevel()) {
-            m_rubberBand->raise();
-            raiseIndicators();
-        }
         return;
     }
 
@@ -162,30 +154,9 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
 
     m_rubberBand->setGeometry(geometryForRubberband(rect));
     m_rubberBand->setVisible(true);
-    if (rubberBandIsTopLevel()) {
-        m_rubberBand->raise();
-        raiseIndicators();
-    }
 }
 
 QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
 {
-    if (!rubberBandIsTopLevel())
-        return localRect;
-
-    QPoint topLeftLocal = localRect.topLeft();
-    QPoint topLeftGlobal = m_dropArea->QWidget::mapToGlobal(topLeftLocal);
-
-    localRect.moveTopLeft(topLeftGlobal);
-
     return localRect;
-}
-
-bool ClassicIndicators::rubberBandIsTopLevel() const
-{
-#ifdef KDDOCKWIDGETS_RUBBERBAND_IS_TOPLEVEL
-    return true;
-#else
-    return false;
-#endif
 }
