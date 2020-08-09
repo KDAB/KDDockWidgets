@@ -44,6 +44,8 @@ set(DOCKSLIBS_SRCS
     private/Frame.cpp
     private/DropAreaWithCentralFrame.cpp
     private/WidgetResizeHandler.cpp
+    private/indicators/ClassicIndicators.cpp
+    private/indicators/ClassicIndicatorsWindow.cpp
 )
 
 set(DOCKS_INSTALLABLE_INCLUDES
@@ -101,8 +103,6 @@ else()
       private/widgets/TitleBarWidget.cpp
       private/widgets/DockWidget.cpp
       private/widgets/QWidgetAdapter_widgets.cpp
-      private/indicators/ClassicIndicators.cpp
-      private/indicators/ClassicIndicatorsWindow.cpp
       # private/indicators/AnimatedIndicators.cpp
   )
 

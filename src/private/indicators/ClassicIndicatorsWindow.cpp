@@ -13,6 +13,8 @@
 #include "ClassicIndicators_p.h"
 #include "Utils_p.h"
 
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+
 #include <QPainter>
 
 #define INDICATOR_WIDTH 40
@@ -240,3 +242,7 @@ Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *pare
     setFixedSize(m_image.size());
     setVisible(true);
 }
+
+#else
+// TODO: QtQuick
+#endif

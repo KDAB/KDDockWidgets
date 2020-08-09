@@ -29,9 +29,7 @@ public:
     void hover(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;
 protected:
-    void showEvent(QShowEvent *) override;
-    void hideEvent(QHideEvent *) override;
-    void resizeEvent(QResizeEvent *) override;
+    bool onResize(QSize newSize) override;
     void updateVisibility() override;
 private:
     friend class KDDockWidgets::Indicator;

@@ -48,6 +48,12 @@ QPoint ClassicIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLoc
     return m_indicatorWindow->posForIndicator(loc);
 }
 
+bool ClassicIndicators::onResize(QSize)
+{
+     m_indicatorWindow->resize(window()->size());
+     return false;
+}
+
 void ClassicIndicators::updateVisibility()
 {
     if (isHovered()) {
@@ -60,22 +66,6 @@ void ClassicIndicators::updateVisibility()
         m_indicatorWindow->setVisible(false);
         m_indicatorWindow->updateIndicatorVisibility(false);
     }
-}
-
-void ClassicIndicators::showEvent(QShowEvent *e)
-{
-    QWidget::showEvent(e);
-}
-
-void ClassicIndicators::hideEvent(QHideEvent *e)
-{
-    QWidget::hideEvent(e);
-}
-
-void ClassicIndicators::resizeEvent(QResizeEvent *ev)
-{
-    QWidget::resizeEvent(ev);
-    m_indicatorWindow->resize(window()->size());
 }
 
 void ClassicIndicators::raiseIndicators()
@@ -118,7 +108,7 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     }
 
     if (location == DropLocation_Center) {
-        m_rubberBand->setGeometry(m_hoveredFrame ? m_hoveredFrame->QWidget::geometry() : rect());
+        m_rubberBand->setGeometry(m_hoveredFrame ? m_hoveredFrame->QWidgetAdapter::geometry() : rect());
         m_rubberBand->setVisible(true);
         return;
     }

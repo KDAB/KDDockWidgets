@@ -14,6 +14,8 @@
 
 #include "DropIndicatorOverlayInterface_p.h"
 
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+
 #include <QImage>
 #include <QWidget>
 #include <QResizeEvent>
@@ -76,5 +78,24 @@ public:
     const DropIndicatorOverlayInterface::DropLocation m_dropLocation;
 };
 }
+
+#else
+namespace KDDockWidgets
+{
+class ClassicIndicators;
+
+class IndicatorWindow : public QWidgetAdapter
+{
+    Q_OBJECT
+public:
+    explicit IndicatorWindow(ClassicIndicators *, QWidgetAdapter * = nullptr) {}
+    void hover(QPoint) {}
+    void updatePositions() {}
+    void updateIndicatorVisibility(bool) {}
+    QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const { return {}; }
+};
+}
+
+#endif
 
 #endif
