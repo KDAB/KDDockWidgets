@@ -45,58 +45,6 @@ private:
     IndicatorWindow *const m_indicatorWindow;
 };
 
-class IndicatorWindow : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit IndicatorWindow(ClassicIndicators *classicIndicators, QWidget * = nullptr);
-    void hover(QPoint globalPos);
-    void updatePositions();
-    void updateIndicatorVisibility(bool visible);
-    QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const;
-private:
-    void updatePosition();
-    void resizeEvent(QResizeEvent *ev) override;
-    bool event(QEvent *e) override;
-
-    // When the compositor doesn't support translucency, we use a mask instead
-    // Only happens on Linux
-    void updateMask();
-
-    Indicator *indicatorForLocation(DropIndicatorOverlayInterface::DropLocation loc) const;
-
-    ClassicIndicators *const classicIndicators;
-    Indicator *const m_center;
-    Indicator *const m_left;
-    Indicator *const m_right;
-    Indicator *const m_bottom;
-    Indicator *const m_top;
-    Indicator *const m_outterLeft;
-    Indicator *const m_outterRight;
-    Indicator *const m_outterBottom;
-    Indicator *const m_outterTop;
-    QVector<Indicator *> m_indicators;
-};
-
-class Indicator : public QWidget
-{
-    Q_OBJECT
-public:
-    typedef QList<Indicator *> List;
-    explicit Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *parent, ClassicIndicators::DropLocation location);
-    void paintEvent(QPaintEvent *) override;
-
-    void setHovered(bool hovered);
-    QString iconName(bool active) const;
-    QString iconFileName(bool active) const;
-
-    QImage m_image;
-    QImage m_imageActive;
-    ClassicIndicators *const q;
-    bool m_hovered = false;
-    const ClassicIndicators::DropLocation m_dropLocation;
-};
-
 }
 
 #endif

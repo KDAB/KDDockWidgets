@@ -102,6 +102,7 @@ else()
       private/widgets/DockWidget.cpp
       private/widgets/QWidgetAdapter_widgets.cpp
       private/indicators/ClassicIndicators.cpp
+      private/indicators/ClassicIndicatorsWindow.cpp
       # private/indicators/AnimatedIndicators.cpp
   )
 
