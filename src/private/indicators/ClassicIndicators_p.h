@@ -38,7 +38,6 @@ private:
     friend class KDDockWidgets::IndicatorWindow;
     void raiseIndicators();
     void setDropLocation(DropLocation);
-    QRect geometryForRubberband(QRect localRect) const;
 
     QWidgetOrQuick *const m_rubberBand;
     IndicatorWindow *const m_indicatorWindow;

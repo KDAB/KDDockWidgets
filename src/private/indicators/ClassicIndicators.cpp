@@ -118,7 +118,7 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     }
 
     if (location == DropLocation_Center) {
-        m_rubberBand->setGeometry(geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->QWidget::geometry() : rect()));
+        m_rubberBand->setGeometry(m_hoveredFrame ? m_hoveredFrame->QWidget::geometry() : rect());
         m_rubberBand->setVisible(true);
         return;
     }
@@ -152,11 +152,6 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     QRect rect = m_dropArea->rectForDrop(m_windowBeingDragged, multisplitterLocation,
                                          m_dropArea->itemForFrame(relativeToFrame));
 
-    m_rubberBand->setGeometry(geometryForRubberband(rect));
+    m_rubberBand->setGeometry(rect);
     m_rubberBand->setVisible(true);
-}
-
-QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
-{
-    return localRect;
 }
