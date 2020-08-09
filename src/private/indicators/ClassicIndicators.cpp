@@ -197,6 +197,12 @@ void IndicatorWindow::updateIndicatorVisibility(bool visible)
     updateMask();
 }
 
+QPoint IndicatorWindow::posForIndicator(DropIndicatorOverlayInterface::DropLocation loc) const
+{
+    Indicator *indicator = indicatorForLocation(loc);
+    return indicator->mapToGlobal(indicator->rect().center());
+}
+
 void IndicatorWindow::hover(QPoint globalPos)
 {
     for (Indicator *indicator : qAsConst(m_indicators)) {
@@ -272,8 +278,7 @@ void ClassicIndicators::hover(QPoint globalPos)
 
 QPoint ClassicIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLocation loc) const
 {
-    Indicator *indicator = m_indicatorWindow->indicatorForLocation(loc);
-    return indicator->mapToGlobal(indicator->rect().center());
+    return m_indicatorWindow->posForIndicator(loc);
 }
 
 void ClassicIndicators::updateVisibility()
