@@ -50,15 +50,14 @@ class IndicatorWindow : public QWidget
     Q_OBJECT
 public:
     explicit IndicatorWindow(ClassicIndicators *classicIndicators, QWidget * = nullptr);
+    Indicator *indicatorForLocation(DropIndicatorOverlayInterface::DropLocation loc) const;
     void hover(QPoint globalPos);
-
-    void updatePosition();
     void updatePositions();
     void updateIndicatorVisibility(bool visible);
+private:
+    void updatePosition();
     void resizeEvent(QResizeEvent *ev) override;
     bool event(QEvent *e) override;
-
-    Indicator *indicatorForLocation(DropIndicatorOverlayInterface::DropLocation loc) const;
 
     // When the compositor doesn't support translucency, we use a mask instead
     // Only happens on Linux
