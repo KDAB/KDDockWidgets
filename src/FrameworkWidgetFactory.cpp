@@ -16,9 +16,9 @@
 #include "multisplitter/Separator_p.h"
 #include "FloatingWindow_p.h"
 #include "Config.h"
+#include "indicators/ClassicIndicators_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "indicators/ClassicIndicators_p.h"
 # include "widgets/FrameWidget_p.h"
 # include "widgets/TitleBarWidget_p.h"
 # include "widgets/TabBarWidget_p.h"
@@ -125,7 +125,7 @@ FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWin
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *) const
 {
-    return nullptr;
+    return new ClassicIndicators(dropArea);
 }
 
 TabBar *DefaultWidgetFactory::createTabBar(TabWidget *parent) const
