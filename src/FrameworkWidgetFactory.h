@@ -117,6 +117,10 @@ public:
     ///       Override to provide your own DropIndicatorOverlayInterface sub-class.
     ///@param dropArea Just forward to DropIndicatorOverlayInterface's constructor.
     virtual DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea *dropArea) const = 0;
+
+    ///@brief Called internally by the framework to create a RubberBand to show as drop zone
+    ///Returns a rubber band
+    virtual QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const = 0;
 private:
     Q_DISABLE_COPY(FrameworkWidgetFactory)
 };
@@ -137,6 +141,7 @@ public:
     FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const override;
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const override;
+    QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const override;
 private:
     Q_DISABLE_COPY(DefaultWidgetFactory)
 };

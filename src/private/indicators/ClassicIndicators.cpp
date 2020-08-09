@@ -15,9 +15,9 @@
 #include "Frame_p.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QPainter>
-#include <QRubberBand>
 
 #define INDICATOR_WIDTH 40
 #define OUTTER_INDICATOR_MARGIN 10
@@ -247,7 +247,7 @@ Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *pare
 
 ClassicIndicators::ClassicIndicators(DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea) // Is parented on the drop-area, not a toplevel.
-    , m_rubberBand(new QRubberBand(QRubberBand::Rectangle, rubberBandIsTopLevel() ? nullptr : dropArea))
+    , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : dropArea))
     , m_indicatorWindow(new IndicatorWindow(this, /*parent=*/ nullptr)) // Top-level so the indicators can appear above the window being dragged.
 {
     setVisible(false);

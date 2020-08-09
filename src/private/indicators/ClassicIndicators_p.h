@@ -14,10 +14,6 @@
 
 #include "DropIndicatorOverlayInterface_p.h"
 
-QT_BEGIN_NAMESPACE
-class QRubberBand;
-QT_END_NAMESPACE
-
 namespace KDDockWidgets {
 
 class IndicatorWindow;
@@ -45,7 +41,7 @@ private:
     QRect geometryForRubberband(QRect localRect) const;
     bool rubberBandIsTopLevel() const;
 
-    QRubberBand *const m_rubberBand;
+    QWidgetOrQuick *const m_rubberBand;
     IndicatorWindow *const m_indicatorWindow;
 };
 

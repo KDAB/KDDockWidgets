@@ -25,6 +25,7 @@
 # include "widgets/TabWidgetWidget_p.h"
 # include "multisplitter/Separator_qwidget.h"
 # include "widgets/FloatingWindowWidget_p.h"
+# include <QRubberBand>
 #else
 # include "quick/FrameQuick_p.h"
 # include "quick/DockWidgetQuick.h"
@@ -84,6 +85,12 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(
 {
     return new ClassicIndicators(dropArea);
 }
+
+QWidgetOrQuick *DefaultWidgetFactory::createRubberBand(QWidgetOrQuick *parent) const
+{
+    return new QRubberBand(QRubberBand::Rectangle, parent);
+}
+
 #else
 
 Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options) const
@@ -138,6 +145,11 @@ TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
 Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *parent) const
 {
     return new Layouting::SeparatorQuick(parent);
+}
+
+QWidgetOrQuick *DefaultWidgetFactory::createRubberBand(QWidgetOrQuick *parent) const
+{
+    return new QWidgetOrQuick(parent);
 }
 
 #endif
