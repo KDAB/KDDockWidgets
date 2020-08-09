@@ -27,33 +27,35 @@ DropIndicatorOverlayInterface::DropIndicatorOverlayInterface(DropArea *dropArea)
 
 void DropIndicatorOverlayInterface::setWindowBeingDragged(const FloatingWindow *window)
 {
-    if (window != m_windowBeingDragged) {
-        m_windowBeingDragged = window;
-        if (m_windowBeingDragged) {
-            setGeometry(m_dropArea->QWidgetAdapter::rect());
-            raise();
-        } else {
-            setHoveredFrame(nullptr);
-        }
+    if (window == m_windowBeingDragged)
+        return;
 
-        updateVisibility();
+    m_windowBeingDragged = window;
+    if (m_windowBeingDragged) {
+        setGeometry(m_dropArea->QWidgetAdapter::rect());
+        raise();
+    } else {
+        setHoveredFrame(nullptr);
     }
+
+    updateVisibility();
 }
 
 void DropIndicatorOverlayInterface::setHoveredFrame(Frame *frame)
 {
-    if (frame != m_hoveredFrame) {
-        if (m_hoveredFrame)
-            disconnect(m_hoveredFrame, &QObject::destroyed, this, &DropIndicatorOverlayInterface::onFrameDestroyed);
+    if (frame == m_hoveredFrame)
+        return;
 
-        m_hoveredFrame = frame;
-        if (m_hoveredFrame)
-            connect(frame, &QObject::destroyed, this, &DropIndicatorOverlayInterface::onFrameDestroyed);
+    if (m_hoveredFrame)
+        disconnect(m_hoveredFrame, &QObject::destroyed, this, &DropIndicatorOverlayInterface::onFrameDestroyed);
 
-        updateVisibility();
-        Q_EMIT hoveredFrameChanged(m_hoveredFrame);
-        onHoveredFrameChanged(m_hoveredFrame);
-    }
+    m_hoveredFrame = frame;
+    if (m_hoveredFrame)
+        connect(frame, &QObject::destroyed, this, &DropIndicatorOverlayInterface::onFrameDestroyed);
+
+    updateVisibility();
+    Q_EMIT hoveredFrameChanged(m_hoveredFrame);
+    onHoveredFrameChanged(m_hoveredFrame);
 }
 
 bool DropIndicatorOverlayInterface::isHovered() const
