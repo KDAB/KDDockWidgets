@@ -427,14 +427,16 @@ template <typename T>
 static WidgetType* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow*> &windows, T windowBeingDragged)
 {
     for (int i = windows.size() -1; i >= 0; --i) {
-        auto tl = KDDockWidgets::Private::widgetForWindow(windows.at(i));
+        QWindow *window = windows.at(i);
+        auto tl = KDDockWidgets::Private::widgetForWindow(window);
+
         if (!tl->isVisible() || tl == windowBeingDragged || KDDockWidgets::Private::isMinimized(tl))
             continue;
 
         if (windowBeingDragged && KDDockWidgets::Private::windowForWidget(windowBeingDragged) == KDDockWidgets::Private::windowForWidget(tl))
             continue;
 
-        if (KDDockWidgets::Private::geometry(tl).contains(globalPos)) {
+        if (window->geometry().contains(globalPos)) {
             qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
             return tl;
         }
