@@ -1,3 +1,14 @@
+#
+# This file is part of KDDockWidgets.
+#
+# SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# Author: Allen Winter <allen.winter@kdab.com>
+#
+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+#
+# Contact KDAB at <info@kdab.com> for commercial licensing options.
+#
+
 # qhelpgenerator
 find_program(QHELPGEN_EXECUTABLE qhelpgenerator
   HINTS ${QT_INSTALL_BINS}
