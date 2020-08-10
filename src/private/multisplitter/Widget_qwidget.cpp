@@ -121,13 +121,3 @@ void Widget_qwidget::update()
 {
     m_thisWidget->update();
 }
-
-QPoint Widget_qwidget::mapFromGlobal(QPoint p) const
-{
-    return m_thisWidget->mapFromGlobal(p);
-}
-
-QPoint Widget_qwidget::mapToGlobal(QPoint p) const
-{
-     return m_thisWidget->mapToGlobal(p);
-}

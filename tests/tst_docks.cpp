@@ -660,7 +660,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QTest::qWait(1000); // Test is flaky otherwise
 
     auto fw2 = dock2->floatingWindow();
-    drag(fw2->titleBar(), static_cast<Layouting::Widget*>(frame2)->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
+    drag(fw2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
 
     QVERIFY(Testing::waitForDeleted(frame1));
     QVERIFY(Testing::waitForDeleted(frame2));

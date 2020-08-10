@@ -121,18 +121,6 @@ void Widget_quick::update()
     m_thisWidget->update();
 }
 
-QPoint Widget_quick::mapFromGlobal(QPoint p) const
-{
-    qWarning() << Q_FUNC_INFO << "Implement me!";
-    return p;
-}
-
-QPoint Widget_quick::mapToGlobal(QPoint p) const
-{
-    qWarning() << Q_FUNC_INFO << "Implement me!";
-    return p;
-}
-
 QQuickItem *Widget_quick::createQQuickItem(const QString &filename, QQuickItem *parent) const
 {
     auto p = parent;

@@ -281,7 +281,7 @@ void Frame::updateTitleBarVisibility()
 
 bool Frame::containsMouse(QPoint globalPos) const
 {
-    return QWidgetAdapter::rect().contains(LayoutGuestWidgetBase::mapFromGlobal(globalPos));
+    return QWidgetAdapter::rect().contains(KDDockWidgets::QWidgetAdapter::mapFromGlobal(globalPos));
 }
 
 TitleBar *Frame::titleBar() const

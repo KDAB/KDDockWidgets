@@ -55,8 +55,6 @@ public:
     void setWidth(int width) override;
     void setHeight(int height) override;
     void update() override;
-    QPoint mapFromGlobal(QPoint p) const override;
-    QPoint mapToGlobal(QPoint p) const override;
 
 private:
     QWidget *const m_thisWidget;
