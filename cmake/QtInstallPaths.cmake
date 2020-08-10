@@ -1,8 +1,8 @@
 #
-# SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
-# All rights reserved.
-#
+# SPDX-FileCopyrightText: 2016-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 # Author: Allen Winter <allen.winter@kdab.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
