@@ -13,14 +13,14 @@
 #include "ClassicIndicators_p.h"
 #include "Utils_p.h"
 
+using namespace KDDockWidgets;
+
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 
 #include <QPainter>
 
 #define INDICATOR_WIDTH 40
 #define OUTTER_INDICATOR_MARGIN 10
-
-using namespace KDDockWidgets;
 
 void Indicator::paintEvent(QPaintEvent *)
 {
@@ -92,7 +92,7 @@ QString Indicator::iconFileName(bool active) const
                                                          : QStringLiteral(":/img/classic_indicators/opaque/%1.png").arg(name);
 }
 
-IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_, QWidget *)
+IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
     : QWidget(nullptr, Qt::Tool | Qt::BypassWindowManagerHint)
     , classicIndicators(classicIndicators_)
     , m_center(new Indicator(classicIndicators, this, DropIndicatorOverlayInterface::DropLocation_Center)) // Each indicator is not a top-level. Otherwise there's noticeable delay.
@@ -244,5 +244,33 @@ Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *pare
 }
 
 #else
-// TODO: QtQuick
-#endif
+
+IndicatorWindow::IndicatorWindow(KDDockWidgets::ClassicIndicators *classicIndicators)
+    : QQuickView()
+    , m_classicIndicators(classicIndicators)
+{
+    setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/ClassicIndicatorsOverlay.qml")));
+    show();
+}
+
+void IndicatorWindow::hover(QPoint)
+{
+
+}
+
+void IndicatorWindow::updatePositions()
+{
+
+}
+
+void IndicatorWindow::updateIndicatorVisibility(bool)
+{
+
+}
+
+QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation) const
+{
+    return {};
+}
+
+#endif // QtQuick

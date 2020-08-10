@@ -23,7 +23,7 @@ using namespace KDDockWidgets;
 ClassicIndicators::ClassicIndicators(DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea) // Is parented on the drop-area, not a toplevel.
     , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(dropArea))
-    , m_indicatorWindow(new IndicatorWindow(this, /*parent=*/ nullptr)) // Top-level so the indicators can appear above the window being dragged.
+    , m_indicatorWindow(new IndicatorWindow(this))
 {
     setVisible(false);
 }

@@ -29,7 +29,7 @@ class IndicatorWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit IndicatorWindow(ClassicIndicators *classicIndicators, QWidget * = nullptr);
+    explicit IndicatorWindow(ClassicIndicators *classicIndicators);
     void hover(QPoint globalPos);
     void updatePositions();
     void updateIndicatorVisibility(bool visible);
@@ -80,19 +80,24 @@ public:
 }
 
 #else
+
+#include <QQuickView>
+
 namespace KDDockWidgets
 {
 class ClassicIndicators;
 
-class IndicatorWindow : public QWidgetAdapter
+class IndicatorWindow : public QQuickView
 {
     Q_OBJECT
 public:
-    explicit IndicatorWindow(ClassicIndicators *, QWidgetAdapter * = nullptr) {}
-    void hover(QPoint) {}
-    void updatePositions() {}
-    void updateIndicatorVisibility(bool) {}
-    QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const { return {}; }
+    explicit IndicatorWindow(ClassicIndicators *);
+    void hover(QPoint);
+    void updatePositions();
+    void updateIndicatorVisibility(bool);
+    QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const;
+private:
+    ClassicIndicators *const m_classicIndicators;
 };
 }
 

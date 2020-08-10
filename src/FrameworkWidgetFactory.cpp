@@ -123,7 +123,7 @@ FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWin
     return new FloatingWindowQuick(frame, parent);
 }
 
-DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *) const
+DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const
 {
     return new ClassicIndicators(dropArea);
 }
