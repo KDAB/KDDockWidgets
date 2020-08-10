@@ -40,6 +40,7 @@
 # - thread
 # - leak
 # - undefined
+# - fuzzer
 #
 # The sanitizers "address", "memory" and "thread" are mutually exclusive.  You
 # cannot enable two of them in the same build.
@@ -69,30 +70,9 @@
 # Since 1.3.0.
 
 #=============================================================================
-# Copyright 2014 Mathieu Tarral <mathieu.tarral@gmail.com>
+# SPDX-FileCopyrightText: 2014 Mathieu Tarral <mathieu.tarral@gmail.com>
 #
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the distribution.
-# 3. The name of the author may not be used to endorse or promote products
-#    derived from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
-# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
-# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# SPDX-License-Identifier: BSD-3-Clause
 
 # MACRO check_compiler_version
 #-----------------------------
@@ -125,21 +105,24 @@ macro (enable_sanitizer_flags sanitize_option)
     if (${sanitize_option} MATCHES "address")
         check_compiler_version("4.8" "3.1")
         set(XSAN_COMPILE_FLAGS "-fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls")
-        set(XSAN_LINKER_FLAGS "-lasan")
+        set(XSAN_LINKER_FLAGS "asan")
     elseif (${sanitize_option} MATCHES "thread")
         check_compiler_version("4.8" "3.1")
         set(XSAN_COMPILE_FLAGS "-fsanitize=thread")
-        set(XSAN_LINKER_FLAGS "-ltsan")
+        set(XSAN_LINKER_FLAGS "tsan")
     elseif (${sanitize_option} MATCHES "memory")
         check_compiler_version("99.99" "3.1")
         set(XSAN_COMPILE_FLAGS "-fsanitize=memory")
     elseif (${sanitize_option} MATCHES "leak")
         check_compiler_version("4.9" "3.4")
         set(XSAN_COMPILE_FLAGS "-fsanitize=leak")
-        set(XSAN_LINKER_FLAGS "-llsan")
+        set(XSAN_LINKER_FLAGS "lsan")
     elseif (${sanitize_option} MATCHES "undefined")
         check_compiler_version("4.9" "3.1")
         set(XSAN_COMPILE_FLAGS "-fsanitize=undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls")
+    elseif (${sanitize_option} MATCHES "fuzzer")
+        check_compiler_version("99.99" "6.0")
+        set(XSAN_COMPILE_FLAGS "-fsanitize=fuzzer")
     else ()
         message(FATAL_ERROR "Compiler sanitizer option \"${sanitize_option}\" not supported.")
     endif ()
@@ -155,14 +138,13 @@ if (ECM_ENABLE_SANITIZERS)
             enable_sanitizer_flags ( ${CUR_SANITIZER} )
             # TODO: GCC will not link pthread library if enabled ASan
             if(CMAKE_C_COMPILER_ID MATCHES "Clang")
-              set( CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} ${XSAN_COMPILE_FLAGS}" )
+              set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${XSAN_COMPILE_FLAGS}" )
             endif()
-            set( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${XSAN_COMPILE_FLAGS}" )
+            set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${XSAN_COMPILE_FLAGS}" )
             if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-                set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} ${XSAN_LINKER_FLAGS}")
-                set(CMAKE_SHARED_LINKER_FLAGS_DEBUG "${CMAKE_SHARED_LINKER_FLAGS_DEBUG} ${XSAN_LINKER_FLAGS}")
+              link_libraries(${XSAN_LINKER_FLAGS})
             endif()
-            if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+            if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
                 string(REPLACE "-Wl,--no-undefined" "" CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
                 string(REPLACE "-Wl,--no-undefined" "" CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}")
             endif ()
