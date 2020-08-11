@@ -16,6 +16,7 @@ Item {
     id: root
     anchors.fill: parent
     readonly property int outterMargin: 10
+    readonly property int innerMargin: 10
 
     ClassicIndicator {
         indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterLeft
@@ -50,6 +51,56 @@ Item {
             bottom: parent.bottom
             bottomMargin: outterMargin
             horizontalCenter: parent.horizontalCenter
+        }
+    }
+
+    Item {
+        id: innerIndicators
+        anchors.centerIn: parent
+        width: (centerIndicator * 3) + (2 * innerMargin)
+        height: width
+
+        ClassicIndicator {
+            indicatorType: DropIndicatorOverlayInterface.DropLocation_Left
+            anchors {
+                right: centerIndicator.left
+                rightMargin: innerMargin
+                verticalCenter: parent.verticalCenter
+            }
+        }
+
+        ClassicIndicator {
+            id: centerIndicator
+            indicatorType: DropIndicatorOverlayInterface.DropLocation_Center
+            anchors.centerIn: parent
+        }
+
+
+        ClassicIndicator {
+            indicatorType: DropIndicatorOverlayInterface.DropLocation_Right
+            anchors {
+                left: centerIndicator.right
+                leftMargin: innerMargin
+                verticalCenter: parent.verticalCenter
+            }
+        }
+
+        ClassicIndicator {
+            indicatorType: DropIndicatorOverlayInterface.DropLocation_Top
+            anchors {
+                bottom: centerIndicator.top
+                bottomMargin: innerMargin
+                horizontalCenter: parent.horizontalCenter
+            }
+        }
+
+        ClassicIndicator {
+            indicatorType: DropIndicatorOverlayInterface.DropLocation_Bottom
+            anchors {
+                top: centerIndicator.bottom
+                topMargin: innerMargin
+                horizontalCenter: parent.horizontalCenter
+            }
         }
     }
 }
