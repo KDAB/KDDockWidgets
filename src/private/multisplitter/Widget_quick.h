@@ -15,7 +15,9 @@
 
 #include <QQuickItem>
 
+QT_BEGIN_NAMESPACE
 class QQuickItem;
+QT_END_NAMESPACE
 
 ///@file
 ///@brief A Layouting::Widget that's deals in QQuickItem
