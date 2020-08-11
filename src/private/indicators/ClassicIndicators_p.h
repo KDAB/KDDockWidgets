@@ -22,24 +22,38 @@ class Indicator;
 class ClassicIndicators : public DropIndicatorOverlayInterface
 {
     Q_OBJECT
+
+    Q_PROPERTY(bool innerIndicatorsVisible READ innerIndicatorsVisible NOTIFY innerIndicatorsVisibleChanged)
+    Q_PROPERTY(bool outterIndicatorsVisible READ outterIndicatorsVisible NOTIFY outterIndicatorsVisibleChanged)
+
 public:
     explicit ClassicIndicators(DropArea *dropArea);
     ~ClassicIndicators() override;
     Type indicatorType() const override;
     void hover(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;
+
+    bool innerIndicatorsVisible() const;
+    bool outterIndicatorsVisible() const;
+
 protected:
     bool onResize(QSize newSize) override;
     void updateVisibility() override;
+Q_SIGNALS:
+    void innerIndicatorsVisibleChanged();
+    void outterIndicatorsVisibleChanged();
 private:
     friend class KDDockWidgets::Indicator;
     friend class KDDockWidgets::IndicatorWindow;
+    void updateIndicatorsVisibility(bool visible);
     void raiseIndicators();
     void setDropLocation(DropLocation);
     void updateWindowPosition();
 
     QWidgetOrQuick *const m_rubberBand;
     IndicatorWindow *const m_indicatorWindow;
+    bool m_innerIndicatorsVisible = false;
+    bool m_outterIndicatorsVisible = false;
 };
 
 }

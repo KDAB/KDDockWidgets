@@ -117,6 +117,11 @@ IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
     setWindowFlag(Qt::FramelessWindowHint, true);
     setAttribute(Qt::WA_TranslucentBackground);
 
+    connect(classicIndicators, &ClassicIndicators::innerIndicatorsVisibleChanged,
+            this, &IndicatorWindow::updateIndicatorVisibility);
+    connect(classicIndicators, &ClassicIndicators::outterIndicatorsVisibleChanged,
+            this, &IndicatorWindow::updateIndicatorVisibility);
+
     m_indicators << m_center << m_left << m_right << m_top << m_bottom
                  << m_outterBottom << m_outterTop << m_outterLeft << m_outterRight;
 }
@@ -169,19 +174,13 @@ void IndicatorWindow::resizeEvent(QResizeEvent *ev)
     updatePositions();
 }
 
-void IndicatorWindow::updateIndicatorVisibility(bool visible)
+void IndicatorWindow::updateIndicatorVisibility()
 {
-    Frame *hoveredFrame = classicIndicators->m_hoveredFrame;
-    const bool isTheOnlyFrame = hoveredFrame && hoveredFrame->isTheOnlyFrame();
-
-    const bool innerShouldBeVisible = visible && hoveredFrame;
-    const bool outterShouldBeVisible = visible && !isTheOnlyFrame;
-
     for (Indicator *indicator : { m_center, m_left, m_right, m_bottom, m_top })
-        indicator->setVisible(innerShouldBeVisible);
+        indicator->setVisible(classicIndicators->innerIndicatorsVisible());
 
     for (Indicator *indicator : { m_outterTop, m_outterLeft, m_outterRight, m_outterBottom })
-        indicator->setVisible(outterShouldBeVisible);
+        indicator->setVisible(classicIndicators->outterIndicatorsVisible());
 
     updateMask();
 }
@@ -246,19 +245,14 @@ IndicatorWindow::IndicatorWindow(KDDockWidgets::ClassicIndicators *classicIndica
     setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/ClassicIndicatorsOverlay.qml")));
 }
 
-void IndicatorWindow::hover(QPoint)
+void IndicatorWindow::hover(QPoint pt)
 {
-
+    qDebug() << "Hover" << pt;
 }
 
 void IndicatorWindow::updatePositions()
 {
-
-}
-
-void IndicatorWindow::updateIndicatorVisibility(bool)
-{
-
+    qDebug() << "updatePositions";
 }
 
 QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation) const
@@ -269,13 +263,18 @@ QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropIndicatorOverlayInter
         qDebug() << Q_FUNC_INFO << item;
     }
 
-
+    qDebug() << Q_FUNC_INFO;
     return {};
 }
 
 QString IndicatorWindow::iconName(int loc, bool active) const
 {
     return KDDockWidgets::iconName(DropIndicatorOverlayInterface::DropLocation(loc), active);
+}
+
+ClassicIndicators *IndicatorWindow::classicIndicators() const
+{
+    return m_classicIndicators;
 }
 
 #endif // QtQuick

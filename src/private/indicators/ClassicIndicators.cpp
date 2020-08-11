@@ -55,6 +55,16 @@ QPoint ClassicIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLoc
     return m_indicatorWindow->posForIndicator(loc);
 }
 
+bool ClassicIndicators::innerIndicatorsVisible() const
+{
+    return m_innerIndicatorsVisible;
+}
+
+bool ClassicIndicators::outterIndicatorsVisible() const
+{
+    return m_outterIndicatorsVisible;
+}
+
 bool ClassicIndicators::onResize(QSize)
 {
      m_indicatorWindow->resize(window()->size());
@@ -67,13 +77,25 @@ void ClassicIndicators::updateVisibility()
         m_indicatorWindow->updatePositions();
         m_indicatorWindow->setVisible(true);
         updateWindowPosition();
-        m_indicatorWindow->updateIndicatorVisibility(true);
+        updateIndicatorsVisibility(true);
         raiseIndicators();
     } else {
         m_rubberBand->setVisible(false);
         m_indicatorWindow->setVisible(false);
-        m_indicatorWindow->updateIndicatorVisibility(false);
+        updateIndicatorsVisibility(false);
     }
+}
+
+void ClassicIndicators::updateIndicatorsVisibility(bool visible)
+{
+    Frame *hoveredFrame = m_hoveredFrame;
+    const bool isTheOnlyFrame = hoveredFrame && hoveredFrame->isTheOnlyFrame();
+
+    m_innerIndicatorsVisible = visible && hoveredFrame;
+    m_outterIndicatorsVisible = visible && !isTheOnlyFrame;
+
+    Q_EMIT innerIndicatorsVisibleChanged();
+    Q_EMIT outterIndicatorsVisibleChanged();
 }
 
 void ClassicIndicators::raiseIndicators()

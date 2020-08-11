@@ -19,6 +19,7 @@ Item {
     readonly property int innerMargin: 10
 
     ClassicIndicator {
+        visible: _window.classicIndicators.outterIndicatorsVisible
         indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterLeft
         anchors {
             left: parent.left
@@ -28,6 +29,7 @@ Item {
     }
 
     ClassicIndicator {
+        visible: _window.classicIndicators.outterIndicatorsVisible
         indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterRight
         anchors {
             right: parent.right
@@ -37,6 +39,7 @@ Item {
     }
 
     ClassicIndicator {
+        visible: _window.classicIndicators.outterIndicatorsVisible
         indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterTop
         anchors {
             top: parent.top
@@ -46,6 +49,7 @@ Item {
     }
 
     ClassicIndicator {
+        visible: _window.classicIndicators.outterIndicatorsVisible
         indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterBottom
         anchors {
             bottom: parent.bottom
@@ -59,6 +63,7 @@ Item {
         anchors.centerIn: parent
         width: (centerIndicator * 3) + (2 * innerMargin)
         height: width
+        visible: _window.classicIndicators.innerIndicatorsVisible
 
         ClassicIndicator {
             indicatorType: DropIndicatorOverlayInterface.DropLocation_Left
