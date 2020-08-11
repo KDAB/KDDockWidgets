@@ -247,22 +247,37 @@ IndicatorWindow::IndicatorWindow(KDDockWidgets::ClassicIndicators *classicIndica
 
 void IndicatorWindow::hover(QPoint pt)
 {
-    qDebug() << "Hover" << pt;
+    QQuickItem *item = indicatorForPos(pt);
+    if (item) {
+        const auto loc = DropIndicatorOverlayInterface::DropLocation(item->property("indicatorType").toInt());
+        classicIndicators()->setDropLocation(loc);
+    } else {
+        classicIndicators()->setDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
+    }
+}
+
+QQuickItem *IndicatorWindow::indicatorForPos(QPoint pt) const
+{
+    const QVector<QQuickItem *> indicators = indicatorItems();
+    Q_ASSERT(indicators.size() == 9);
+
+    for (QQuickItem *item : indicators) {
+        QRect rect(0, 0, int(item->width()), int(item->height()));
+        rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)).toPoint());
+        if (rect.contains(pt))
+            return item;
+    }
+
+    return nullptr;
 }
 
 void IndicatorWindow::updatePositions()
 {
-    qDebug() << "updatePositions";
+    // Not needed to implement, the Indicators use QML anchors
 }
 
 QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation) const
 {
-    QQuickItem *root = rootObject();
-    const QList<QQuickItem*> items = root->childItems();
-    for (QQuickItem *item : items) {
-        qDebug() << Q_FUNC_INFO << item;
-    }
-
     qDebug() << Q_FUNC_INFO;
     return {};
 }
@@ -275,6 +290,29 @@ QString IndicatorWindow::iconName(int loc, bool active) const
 ClassicIndicators *IndicatorWindow::classicIndicators() const
 {
     return m_classicIndicators;
+}
+
+QVector<QQuickItem *> IndicatorWindow::indicatorItems() const
+{
+    QVector<QQuickItem *> indicators;
+    indicators.reserve(9);
+
+    QQuickItem *root = rootObject();
+    const QList<QQuickItem*> items = root->childItems();
+    for (QQuickItem *item : items) {
+        if (QString::fromLatin1(item->metaObject()->className()).startsWith(QLatin1String("ClassicIndicator_QMLTYPE"))) {
+            indicators.push_back(item);
+        } else if (item->objectName() == QLatin1String("innerIndicators")) {
+            const QList<QQuickItem*> innerIndicators = item->childItems();
+            for (QQuickItem *innerItem : innerIndicators) {
+                if (QString::fromLatin1(innerItem->metaObject()->className()).startsWith(QLatin1String("ClassicIndicator_QMLTYPE"))) {
+                    indicators.push_back(innerItem);
+                }
+            }
+        }
+    }
+
+    return indicators;
 }
 
 #endif // QtQuick

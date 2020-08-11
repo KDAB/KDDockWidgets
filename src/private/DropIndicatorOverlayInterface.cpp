@@ -72,6 +72,11 @@ bool DropIndicatorOverlayInterface::isHovered() const
     return m_windowBeingDragged != nullptr;
 }
 
+DropIndicatorOverlayInterface::DropLocation DropIndicatorOverlayInterface::currentDropLocation() const
+{
+    return m_currentDropLocation;
+}
+
 KDDockWidgets::Location DropIndicatorOverlayInterface::multisplitterLocationFor(DropIndicatorOverlayInterface::DropLocation dropLoc)
 {
     switch (dropLoc) {
@@ -103,14 +108,20 @@ void DropIndicatorOverlayInterface::onFrameDestroyed()
 
 void DropIndicatorOverlayInterface::onHoveredFrameChanged(Frame *)
 {
-
 }
 
 void DropIndicatorOverlayInterface::setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation location)
 {
-    m_currentDropLocation = location;
+    if (m_currentDropLocation != location) {
+        m_currentDropLocation = location;
+        Q_EMIT currentDropLocationChanged();
+    }
 }
 
+void DropIndicatorOverlayInterface::hover(QPoint globalPos)
+{
+    hover_impl(globalPos);
+}
 
 void DropIndicatorOverlayInterface::setHoveredFrameRect(QRect rect)
 {
@@ -118,5 +129,4 @@ void DropIndicatorOverlayInterface::setHoveredFrameRect(QRect rect)
         m_hoveredFrameRect = rect;
         Q_EMIT hoveredFrameRectChanged();
     }
-
 }

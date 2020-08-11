@@ -26,6 +26,7 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS DropIndicatorOverlayInterface : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)
+    Q_PROPERTY(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation currentDropLocation READ currentDropLocation NOTIFY currentDropLocationChanged)
 public:
     enum Type {
         TypeNone = 0,
@@ -53,12 +54,12 @@ public:
     void setWindowBeingDragged(const FloatingWindow *);
     QRect hoveredFrameRect() const;
     bool isHovered() const;
-    DropLocation currentDropLocation() const { return m_currentDropLocation; }
+    DropLocation currentDropLocation() const;
     Frame *hoveredFrame() const { return m_hoveredFrame; }
     void setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation location);
 
     virtual Type indicatorType() const = 0;
-    virtual void hover(QPoint globalPos) = 0;
+    void hover(QPoint globalPos);
 
     virtual QPoint posForIndicator(DropLocation) const = 0; // Used by unit-tests only
 
@@ -67,17 +68,20 @@ public:
 Q_SIGNALS:
     void hoveredFrameChanged(KDDockWidgets::Frame *);
     void hoveredFrameRectChanged();
+    void currentDropLocationChanged();
 
 private:
     void onFrameDestroyed();
     void setHoveredFrameRect(QRect);
     QRect m_hoveredFrameRect;
+    DropLocation m_currentDropLocation = DropLocation_None;
 
 protected:
+    virtual void hover_impl(QPoint globalPos) = 0;
     virtual void onHoveredFrameChanged(Frame *);
     virtual void updateVisibility() = 0;
+
     Frame *m_hoveredFrame = nullptr;
-    DropLocation m_currentDropLocation = DropLocation_None;
     QPointer<const FloatingWindow> m_windowBeingDragged;
     DropArea *const m_dropArea;
 };

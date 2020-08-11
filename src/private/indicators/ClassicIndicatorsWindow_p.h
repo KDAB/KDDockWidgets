@@ -97,6 +97,8 @@ public:
     Q_INVOKABLE QString iconName(int loc, bool active) const;
     KDDockWidgets::ClassicIndicators* classicIndicators() const;
 private:
+    QQuickItem *indicatorForPos(QPoint) const;
+    QVector<QQuickItem*> indicatorItems() const;
     ClassicIndicators *const m_classicIndicators;
 };
 }

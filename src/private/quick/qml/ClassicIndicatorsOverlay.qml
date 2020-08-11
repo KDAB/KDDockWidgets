@@ -17,6 +17,7 @@ Item {
     anchors.fill: parent
     readonly property int outterMargin: 10
     readonly property int innerMargin: 10
+    readonly property QtObject innerIndicators: innerIndicators
 
     ClassicIndicator {
         visible: _window.classicIndicators.outterIndicatorsVisible
@@ -60,6 +61,7 @@ Item {
 
     Item {
         id: innerIndicators
+        objectName: "innerIndicators"
 
         x: _window.classicIndicators.hoveredFrameRect.x + (_window.classicIndicators.hoveredFrameRect.width / 2)
         y: _window.classicIndicators.hoveredFrameRect.y + (_window.classicIndicators.hoveredFrameRect.height / 2)

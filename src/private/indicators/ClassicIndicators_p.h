@@ -30,7 +30,7 @@ public:
     explicit ClassicIndicators(DropArea *dropArea);
     ~ClassicIndicators() override;
     Type indicatorType() const override;
-    void hover(QPoint globalPos) override;
+    void hover_impl(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;
 
     bool innerIndicatorsVisible() const;
