@@ -60,7 +60,10 @@ Item {
 
     Item {
         id: innerIndicators
-        anchors.centerIn: parent
+
+        x: _window.classicIndicators.hoveredFrameRect.x + (_window.classicIndicators.hoveredFrameRect.width / 2)
+        y: _window.classicIndicators.hoveredFrameRect.y + (_window.classicIndicators.hoveredFrameRect.height / 2)
+
         width: (centerIndicator * 3) + (2 * innerMargin)
         height: width
         visible: _window.classicIndicators.innerIndicatorsVisible
@@ -79,7 +82,6 @@ Item {
             indicatorType: DropIndicatorOverlayInterface.DropLocation_Center
             anchors.centerIn: parent
         }
-
 
         ClassicIndicator {
             indicatorType: DropIndicatorOverlayInterface.DropLocation_Right

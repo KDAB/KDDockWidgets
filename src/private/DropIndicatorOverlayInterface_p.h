@@ -25,6 +25,7 @@ class DropArea;
 class DOCKS_EXPORT_FOR_UNIT_TESTS DropIndicatorOverlayInterface : public QWidgetAdapter
 {
     Q_OBJECT
+    Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)
 public:
     enum Type {
         TypeNone = 0,
@@ -50,6 +51,7 @@ public:
     explicit DropIndicatorOverlayInterface(DropArea *dropArea);
     void setHoveredFrame(Frame *);
     void setWindowBeingDragged(const FloatingWindow *);
+    QRect hoveredFrameRect() const;
     bool isHovered() const;
     DropLocation currentDropLocation() const { return m_currentDropLocation; }
     Frame *hoveredFrame() const { return m_hoveredFrame; }
@@ -64,9 +66,12 @@ public:
 
 Q_SIGNALS:
     void hoveredFrameChanged(KDDockWidgets::Frame *);
+    void hoveredFrameRectChanged();
 
 private:
     void onFrameDestroyed();
+    void setHoveredFrameRect(QRect);
+    QRect m_hoveredFrameRect;
 
 protected:
     virtual void onHoveredFrameChanged(Frame *);
