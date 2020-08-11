@@ -20,10 +20,17 @@
 
 using namespace KDDockWidgets;
 
+static IndicatorWindow* createIndicatorWindow(ClassicIndicators *classicIndicators)
+{
+    auto window = new IndicatorWindow(classicIndicators);
+    window->setObjectName(QStringLiteral("_docks_IndicatorWindow_Overlay"));
+    return window;
+}
+
 ClassicIndicators::ClassicIndicators(DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea) // Is parented on the drop-area, not a toplevel.
     , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(dropArea))
-    , m_indicatorWindow(new IndicatorWindow(this))
+    , m_indicatorWindow(createIndicatorWindow(this))
 {
     setVisible(false);
 }
@@ -59,6 +66,7 @@ void ClassicIndicators::updateVisibility()
     if (isHovered()) {
         m_indicatorWindow->updatePositions();
         m_indicatorWindow->setVisible(true);
+        updateWindowPosition();
         m_indicatorWindow->updateIndicatorVisibility(true);
         raiseIndicators();
     } else {
@@ -144,4 +152,12 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
 
     m_rubberBand->setGeometry(rect);
     m_rubberBand->setVisible(true);
+}
+
+void ClassicIndicators::updateWindowPosition()
+{
+    QRect rect = this->rect();
+    QPoint pos = mapToGlobal(QPoint(0, 0));
+    rect.moveTo(pos);
+    m_indicatorWindow->setGeometry(rect);
 }

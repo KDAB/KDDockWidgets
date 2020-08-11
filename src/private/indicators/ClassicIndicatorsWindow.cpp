@@ -15,42 +15,16 @@
 
 using namespace KDDockWidgets;
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-
-#include <QPainter>
-
-#define INDICATOR_WIDTH 40
-#define OUTTER_INDICATOR_MARGIN 10
-
-void Indicator::paintEvent(QPaintEvent *)
+namespace KDDockWidgets
 {
-    QPainter p(this);
-    if (m_hovered)
-        p.drawImage(rect(), m_imageActive, rect());
-    else
-        p.drawImage(rect(), m_image, rect());
-}
 
-void Indicator::setHovered(bool hovered)
-{
-    if (hovered != m_hovered) {
-        m_hovered = hovered;
-        update();
-        if (hovered) {
-            q->setDropLocation(m_dropLocation);
-        } else if (q->currentDropLocation() == m_dropLocation) {
-            q->setDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
-        }
-    }
-}
-
-QString Indicator::iconName(bool active) const
+static QString iconName(DropIndicatorOverlayInterface::DropLocation loc, bool active)
 {
     QString suffix = active ? QStringLiteral("_active")
                             : QString();
 
     QString name;
-    switch (m_dropLocation) {
+    switch (loc) {
     case DropIndicatorOverlayInterface::DropLocation_Center:
         name = QStringLiteral("center");
         break;
@@ -84,6 +58,41 @@ QString Indicator::iconName(bool active) const
 
     return name + suffix;
 }
+}
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+
+#include <QPainter>
+
+#define INDICATOR_WIDTH 40
+#define OUTTER_INDICATOR_MARGIN 10
+
+void Indicator::paintEvent(QPaintEvent *)
+{
+    QPainter p(this);
+    if (m_hovered)
+        p.drawImage(rect(), m_imageActive, rect());
+    else
+        p.drawImage(rect(), m_image, rect());
+}
+
+void Indicator::setHovered(bool hovered)
+{
+    if (hovered != m_hovered) {
+        m_hovered = hovered;
+        update();
+        if (hovered) {
+            q->setDropLocation(m_dropLocation);
+        } else if (q->currentDropLocation() == m_dropLocation) {
+            q->setDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
+        }
+    }
+}
+
+QString Indicator::iconName(bool active) const
+{
+    return KDDockWidgets::iconName(m_dropLocation, active);
+}
 
 QString Indicator::iconFileName(bool active) const
 {
@@ -107,21 +116,9 @@ IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
 {
     setWindowFlag(Qt::FramelessWindowHint, true);
     setAttribute(Qt::WA_TranslucentBackground);
-    updatePosition();
 
     m_indicators << m_center << m_left << m_right << m_top << m_bottom
                  << m_outterBottom << m_outterTop << m_outterLeft << m_outterRight;
-
-    setObjectName(QStringLiteral("_docks_IndicatorWindow_Overlay"));
-}
-
-bool IndicatorWindow::event(QEvent *e)
-{
-    if (e->type() == QEvent::Show) {
-        updatePosition();
-    }
-
-    return QWidget::event(e);
 }
 
 Indicator *IndicatorWindow::indicatorForLocation(DropIndicatorOverlayInterface::DropLocation loc) const
@@ -203,14 +200,6 @@ void IndicatorWindow::hover(QPoint globalPos)
     }
 }
 
-void IndicatorWindow::updatePosition()
-{
-    QRect rect = classicIndicators->rect();
-    QPoint pos = classicIndicators->mapToGlobal(QPoint(0, 0));
-    rect.moveTo(pos);
-    setGeometry(rect);
-}
-
 void IndicatorWindow::updatePositions()
 {
     QRect r = rect();
@@ -245,12 +234,16 @@ Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *pare
 
 #else
 
+#include <QQmlContext>
+
 IndicatorWindow::IndicatorWindow(KDDockWidgets::ClassicIndicators *classicIndicators)
     : QQuickView()
     , m_classicIndicators(classicIndicators)
 {
+    setColor(Qt::transparent);
+    setFlags(flags() | Qt::FramelessWindowHint);
+    rootContext()->setContextProperty(QStringLiteral("_window"), QVariant::fromValue<QObject*>(this));
     setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/ClassicIndicatorsOverlay.qml")));
-    show();
 }
 
 void IndicatorWindow::hover(QPoint)
@@ -270,7 +263,19 @@ void IndicatorWindow::updateIndicatorVisibility(bool)
 
 QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation) const
 {
+    QQuickItem *root = rootObject();
+    const QList<QQuickItem*> items = root->childItems();
+    for (QQuickItem *item : items) {
+        qDebug() << Q_FUNC_INFO << item;
+    }
+
+
     return {};
+}
+
+QString IndicatorWindow::iconName(int loc, bool active) const
+{
+    return KDDockWidgets::iconName(DropIndicatorOverlayInterface::DropLocation(loc), active);
 }
 
 #endif // QtQuick

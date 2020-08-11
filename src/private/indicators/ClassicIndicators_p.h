@@ -36,6 +36,7 @@ private:
     friend class KDDockWidgets::IndicatorWindow;
     void raiseIndicators();
     void setDropLocation(DropLocation);
+    void updateWindowPosition();
 
     QWidgetOrQuick *const m_rubberBand;
     IndicatorWindow *const m_indicatorWindow;

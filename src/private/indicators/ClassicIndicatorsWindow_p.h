@@ -35,9 +35,7 @@ public:
     void updateIndicatorVisibility(bool visible);
     QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const;
 private:
-    void updatePosition();
     void resizeEvent(QResizeEvent *ev) override;
-    bool event(QEvent *e) override;
 
     // When the compositor doesn't support translucency, we use a mask instead
     // Only happens on Linux
@@ -96,6 +94,7 @@ public:
     void updatePositions();
     void updateIndicatorVisibility(bool);
     QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const;
+    Q_INVOKABLE QString iconName(int loc, bool active) const;
 private:
     ClassicIndicators *const m_classicIndicators;
 };

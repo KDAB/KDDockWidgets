@@ -22,17 +22,36 @@
 
 using namespace KDDockWidgets;
 
+namespace KDDockWidgets {
+
+class QuickView : public QQuickView
+{
+    using QQuickView::QQuickView;
+
+    bool event(QEvent *ev) override
+    {
+        if (ev->type() == QEvent::FocusAboutToChange) {
+            // qquickwindow.cpp::event(FocusAboutToChange) removes the item grabber. Inibit that
+            return true;
+        }
+
+        return QQuickView::event(ev);
+    }
+};
+
+}
+
 
 FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
     : FloatingWindow(parent)
-    , m_quickWindow(new QQuickView(Config::self().qmlEngine(), nullptr))
+    , m_quickWindow(new QuickView(Config::self().qmlEngine(), nullptr))
 {
     init();
 }
 
 FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
     : FloatingWindow(frame, parent)
-    , m_quickWindow(new QQuickView(Config::self().qmlEngine(), nullptr))
+    , m_quickWindow(new QuickView(Config::self().qmlEngine(), nullptr))
 {
     init();
 }

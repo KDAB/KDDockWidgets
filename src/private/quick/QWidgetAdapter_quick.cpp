@@ -224,6 +224,28 @@ QWidgetAdapter *QWidgetAdapter::parentWidget() const
     return nullptr;
 }
 
+QPoint QWidgetAdapter::mapToGlobal(QPoint pt) const
+{
+    return QQuickItem::mapToGlobal(pt).toPoint();
+}
+
+QPoint QWidgetAdapter::mapFromGlobal(QPoint pt) const
+{
+    return QQuickItem::mapFromGlobal(pt).toPoint();
+}
+
+void QWidgetAdapter::setWindowTitle(const QString &title)
+{
+    if (QWindow *window = windowHandle())
+        window->setTitle(title);
+}
+
+void QWidgetAdapter::setWindowIcon(const QIcon &icon)
+{
+    if (QWindow *window = windowHandle())
+        window->setIcon(icon);
+}
+
 void QWidgetAdapter::close()
 {
     QCloseEvent ev;

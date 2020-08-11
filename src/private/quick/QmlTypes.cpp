@@ -12,6 +12,7 @@
 #include "QmlTypes.h"
 #include "DropAreaWithCentralFrame_p.h"
 #include "quick/MainWindowWrapper_p.h"
+#include "DropIndicatorOverlayInterface_p.h"
 #include "TitleBar_p.h"
 
 #include <QQmlEngine>
@@ -24,5 +25,7 @@ void KDDockWidgets::registerQmlTypes()
     qmlRegisterType<MainWindowWrapper>("com.kdab.dockwidgets", 1, 0, "MainWindow");
 
     qmlRegisterUncreatableType<TitleBar>("com.kdab.dockwidgets", 1, 0, "TitleBar", QStringLiteral("Enum access only"));
+    qmlRegisterUncreatableType<DropIndicatorOverlayInterface>("com.kdab.dockwidgets", 1, 0, "DropIndicatorOverlayInterface", QStringLiteral("Enum access only"));
+
     qRegisterMetaType<DropArea*>();
 }

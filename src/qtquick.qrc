@@ -8,5 +8,6 @@
         <file>private/quick/qml/TitleBarBase.qml</file>
         <file>private/quick/qml/TitleBar.qml</file>
         <file>private/quick/qml/ClassicIndicatorsOverlay.qml</file>
+        <file>private/quick/qml/ClassicIndicator.qml</file>
     </qresource>
 </RCC>

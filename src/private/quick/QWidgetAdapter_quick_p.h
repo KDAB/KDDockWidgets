@@ -89,7 +89,6 @@ public:
     QRect geometry() const;
     QRect rect() const;
     void show();
-    void setEnabled(bool) {}
     void setFixedHeight(int);
     void setFixedWidth(int);
     void raise();
@@ -121,12 +120,12 @@ public:
     QWindow *windowHandle() const;
     QWidgetAdapter *window() const;
     QWidgetAdapter *parentWidget() const;
-    QPoint mapToGlobal(QPoint) const { return {}; }
-    QPoint mapFromGlobal(QPoint) const { return {}; }
+    QPoint mapToGlobal(QPoint pt) const;
+    QPoint mapFromGlobal(QPoint) const;
     bool testAttribute(Qt::WidgetAttribute) { return false; }
 
-    void setWindowTitle(const QString &) {}
-    void setWindowIcon(const QIcon &) {}
+    void setWindowTitle(const QString &);
+    void setWindowIcon(const QIcon &);
     void close();
     QQuickItem *childAt(QPoint) const;
     void move(int x, int y);
