@@ -13,15 +13,15 @@ Packager:       Klaralvdalens Datakonsult AB (KDAB) <info@kdab.com>
 
 BuildRequires: cmake
 %if %{defined suse_version}
-BuildRequires:  libqt5-qtbase-devel
+BuildRequires:  libqt5-qtbase-devel libqt5-qtx11extras-devel
 %endif
 
 %if %{defined fedora}
-BuildRequires:  gcc-c++ qt5-qtbase-devel desktop-file-utils
+BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtx11extras-devel desktop-file-utils
 %endif
 
 %if %{defined rhel}
-BuildRequires:  gcc-c++ qt5-qtbase-devel desktop-file-utils
+BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtx11extras-devel desktop-file-utils
 %endif
 
 %description
