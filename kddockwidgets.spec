@@ -73,13 +73,15 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 %defattr(-,root,root)
 %{_prefix}/share/doc/KDDockWidgets
 %{_libdir}/libkddockwidgets.so.*
+%{_libdir}/libkddockwidgets_multisplitter.so.*
 
 %files devel
 %defattr(-,root,root,-)
-%{_prefix}/share/mkspecs
+%{_libdir}/qt5/mkspecs/modules/*
 %dir %{_includedir}/kddockwidgets
 %{_includedir}/kddockwidgets/*
 %dir %{_libdir}/cmake/KDDockWidgets
+%{_libdir}/cmake/KDDockWidgets/*
 %{_libdir}/libkddockwidgets.so
 %{_libdir}/libkddockwidgets_multisplitter.so
 
