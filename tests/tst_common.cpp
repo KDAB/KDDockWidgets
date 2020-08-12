@@ -46,7 +46,10 @@ private Q_SLOTS:
 
 void TestCommon::tst_simple1()
 {
-    // TODO
+    // Simply create a MainWindow
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    m->multiSplitter()->checkSanity();
 }
 
 int main(int argc, char *argv[])

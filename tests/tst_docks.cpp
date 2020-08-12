@@ -287,7 +287,6 @@ public:
     static void nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location);
 
 private Q_SLOTS:
-    void tst_simple1();
     void tst_simple2();
     void tst_shutdown();
     void tst_mainWindowAlwaysHasCentralWidget();
@@ -2540,14 +2539,6 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     m->deleteLater();
     auto window = m.release();
     Testing::waitForDeleted(window);
-}
-
-void TestDocks::tst_simple1()
-{
-    // Simply create a MainWindow
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow();
-    m->multiSplitter()->checkSanity();
 }
 
 void TestDocks::tst_simple2()
