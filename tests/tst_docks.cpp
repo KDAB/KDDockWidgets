@@ -5267,13 +5267,11 @@ void TestDocks::tst_floatingAction()
         bool dock2IsFloating = dock2->floatAction()->isChecked();
 
         connect(dock1->floatAction(), &QAction::toggled, [&dock1IsFloating] (bool t) {
-            //qDebug() << "Togglged1" << t;
             Q_ASSERT(dock1IsFloating != t);
             dock1IsFloating = t;
         });
 
         connect(dock2->floatAction(), &QAction::toggled, [&dock2IsFloating] (bool t) {
-            qDebug() << "Togglged2" << t;
             Q_ASSERT(dock2IsFloating != t);
             dock2IsFloating = t;
         });
