@@ -16,8 +16,13 @@
 #include "KDDockWidgets.h"
 #include "DropIndicatorOverlayInterface_p.h"
 #include "DockWidgetBase.h"
+#include "Config.h"
 
-#include <QWidget>
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+# include <QWidget>
+# include <QToolButton>
+#endif
+
 #include <QPointer>
 #include <QVector>
 
@@ -43,6 +48,42 @@ struct DockDescriptor {
     int relativeToIndex;
     QPointer<DockWidgetBase> createdDock;
     KDDockWidgets::AddingOption option;
+};
+
+struct EnsureTopLevelsDeleted
+{
+    EnsureTopLevelsDeleted()
+        : m_originalFlags(Config::self().flags())
+        , m_originalSeparatorThickness(Config::self().separatorThickness())
+    {
+    }
+
+    ~EnsureTopLevelsDeleted()
+    {
+        if (topLevels().size() != 0) {
+            qWarning() << "There's still top-level widgets present!" << topLevels();
+        }
+
+        // Other cleanup, since we use this class everywhere
+        Config::self().setDockWidgetFactoryFunc(nullptr);
+        Config::self().setFlags(m_originalFlags);
+        Config::self().setSeparatorThickness(m_originalSeparatorThickness);
+    }
+
+    QWidgetList topLevels() const
+    {
+        QWidgetList result;
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+        for (QWidget *w : qApp->topLevelWidgets()) {
+            if (!qobject_cast<QToolButton*>(w))
+                result << w;
+        }
+#endif
+        return result;
+    }
+
+    const Config::Flags m_originalFlags;
+    const int m_originalSeparatorThickness;
 };
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});

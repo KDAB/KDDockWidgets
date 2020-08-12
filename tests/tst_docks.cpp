@@ -266,42 +266,6 @@ static QWidget *createWidget(int minLength, const QString &objname = QString())
     return w;
 }
 
-struct EnsureTopLevelsDeleted
-{
-    EnsureTopLevelsDeleted()
-        : m_originalFlags(Config::self().flags())
-        , m_originalSeparatorThickness(Config::self().separatorThickness())
-    {
-    }
-
-    ~EnsureTopLevelsDeleted()
-    {
-        if (topLevels().size() != 0) {
-            qWarning() << "There's still top-level widgets present!" << topLevels();
-        }
-
-        // Other cleanup, since we use this class everywhere
-        Config::self().setDockWidgetFactoryFunc(nullptr);
-        Config::self().setFlags(m_originalFlags);
-        Config::self().setSeparatorThickness(m_originalSeparatorThickness);
-    }
-
-    QWidgetList topLevels() const
-    {
-        QWidgetList result;
-
-        for (QWidget *w : qApp->topLevelWidgets()) {
-            if (!qobject_cast<QToolButton*>(w))
-                result << w;
-        }
-
-        return result;
-    }
-
-    const Config::Flags m_originalFlags;
-    const int m_originalSeparatorThickness;
-};
-
 class TestDocks : public QObject
 {
     Q_OBJECT
