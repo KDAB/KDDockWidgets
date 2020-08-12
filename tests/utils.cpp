@@ -47,7 +47,7 @@ void NonClosableWidget::closeEvent(QCloseEvent *ev)
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-std::unique_ptr<KDDockWidgets::MainWindow> KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options, const QString &name)
+std::unique_ptr<KDDockWidgets::MainWindowBase> KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options, const QString &name)
 {
     static int count = 0;
     count++;
@@ -91,7 +91,7 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QCol
 };
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
+std::unique_ptr<MainWindowBase> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
 {
     static int count = 0;
     count++;
