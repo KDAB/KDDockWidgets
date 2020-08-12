@@ -16,8 +16,9 @@
 
 using namespace KDDockWidgets;
 
-MainWindowQuick::MainWindowQuick(const QString &uniqueName, QWidgetAdapter *parent)
-    : MainWindowBase(uniqueName, MainWindowOption_None, parent)
+MainWindowQuick::MainWindowQuick(const QString &uniqueName, MainWindowOptions options,
+                                 QWidgetAdapter *parent)
+    : MainWindowBase(uniqueName, options, parent)
 {
     QWidgetAdapter::makeItemFillParent(this);
     QWidgetAdapter::makeItemFillParent(dropArea());

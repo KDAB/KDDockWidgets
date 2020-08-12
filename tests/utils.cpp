@@ -23,6 +23,7 @@
 
 #ifdef KDDOCKWIDGETS_QTQUICK
 # include "private/quick/DockWidgetQuick.h"
+# include "private/quick/MainWindowQuick_p.h"
 #else
 # include "DockWidget.h"
 #endif
@@ -46,7 +47,6 @@ void NonClosableWidget::closeEvent(QCloseEvent *ev)
     ev->ignore(); // don't allow to close
 }
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
 std::unique_ptr<KDDockWidgets::MainWindowBase> KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options, const QString &name)
 {
     static int count = 0;
@@ -55,12 +55,11 @@ std::unique_ptr<KDDockWidgets::MainWindowBase> KDDockWidgets::Tests::createMainW
     const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
                                                   : name;
 
-    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(mainWindowName, options));
+    auto ptr = std::unique_ptr<MainWindowType>(new MainWindowType(mainWindowName, options));
     ptr->show();
     ptr->resize(sz);
     return ptr;
 }
-#endif
 
 DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidgetOrQuick *w,
                                                        DockWidgetBase::Options options, bool show,
@@ -90,32 +89,41 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QCol
     return createDockWidget(name, new MyWidget(name, color));
 };
 
+static QWidgetOrQuick *createGuestWidget(int i)
+{
 #ifdef KDDOCKWIDGETS_QTWIDGETS
+    return new QPushButton(QStringLiteral("%1").arg(i));
+#else
+    Q_UNUSED(i);
+    return new QWidgetAdapter();
+#endif
+}
+
 std::unique_ptr<MainWindowBase> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
 {
     static int count = 0;
     count++;
-    auto m = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None));
+    auto m = std::unique_ptr<MainWindowType>(new MainWindowType(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None));
     auto layout = m->multiSplitter();
     m->show();
     m->resize(QSize(700, 700));
 
     int i = 0;
     for (DockDescriptor &desc : docks) {
-        desc.createdDock = createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), new QPushButton(QStringLiteral("%1").arg(i)), {}, false);
+        desc.createdDock = createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), createGuestWidget(i), {}, false);
         DockWidgetBase *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docks.at(desc.relativeToIndex).createdDock;
 
         m->addDockWidget(desc.createdDock, desc.loc, relativeTo, desc.option);
-        qDebug() << "Added" <<i;
+
         layout->checkSanity();
         ++i;
     }
 
     return m;
 }
-#endif
+
 MyWidget::MyWidget(const QString &, QColor c)
     : QWidgetOrQuick()
     , c(c)

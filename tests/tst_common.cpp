@@ -14,12 +14,15 @@
 
 #include "Testing.h"
 #include "utils.h"
+#include "DockWidgetBase.h"
+#include "private/MultiSplitter_p.h"
 
 #include <QtTest/QtTest>
 #include <QObject>
 #include <QApplication>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Tests;
 
 class TestCommon : public QObject
 {

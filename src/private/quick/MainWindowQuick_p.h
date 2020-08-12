@@ -24,7 +24,9 @@ class DOCKS_EXPORT MainWindowQuick : public MainWindowBase
 {
     Q_OBJECT
 public:
-    explicit MainWindowQuick(const QString &uniqueName, QWidgetAdapter *parent);
+    explicit MainWindowQuick(const QString &uniqueName,
+                             MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                             QWidgetAdapter *parent = nullptr);
 };
 
 }

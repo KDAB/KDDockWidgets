@@ -31,5 +31,5 @@ void MainWindowWrapper::init(const QString &uniqueName)
         return;
     }
 
-    m_mainWindow = new MainWindowQuick(uniqueName, this);
+    m_mainWindow = new MainWindowQuick(uniqueName, MainWindowOption_None, this);
 }

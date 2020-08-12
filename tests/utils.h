@@ -88,14 +88,13 @@ struct EnsureTopLevelsDeleted
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
 std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = {600, 600},
                                                             KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame, const QString &name = {});
 
 
 
 std::unique_ptr<KDDockWidgets::MainWindowBase> createMainWindow(QVector<DockDescriptor> &docks);
-#endif
+
 KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQuick *w,
                                                 DockWidgetBase::Options options = {}, bool show = true,
                                                 const QString &affinityName = {});
