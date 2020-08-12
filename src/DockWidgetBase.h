@@ -403,6 +403,9 @@ private:
     ///@brief If this dock widget is floating, then it saves its geometry
     void saveLastFloatingGeometry();
 
+    ///@brief Updates the floatAction state
+    void updateFloatAction();
+
     class Private;
     Private *const d;
 };

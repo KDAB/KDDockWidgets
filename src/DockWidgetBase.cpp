@@ -516,6 +516,11 @@ void DockWidgetBase::saveLastFloatingGeometry()
     }
 }
 
+void DockWidgetBase::updateFloatAction()
+{
+    d->updateFloatAction();
+}
+
 QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
 {
     MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();

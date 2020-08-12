@@ -234,6 +234,10 @@ void Frame::onDockWidgetCountChanged()
         // We don't really keep track of the state, so emit even if the visibility didn't change. No biggie.
         if (!(m_options & FrameOption_AlwaysShowsTabs))
             Q_EMIT hasTabsVisibleChanged();
+
+        const DockWidgetBase::List docks = dockWidgets();
+        for (DockWidgetBase *dock : docks)
+            dock->updateFloatAction();
     }
 
     Q_EMIT numDockWidgetsChanged();

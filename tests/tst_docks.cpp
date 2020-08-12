@@ -5258,6 +5258,52 @@ void TestDocks::tst_floatingAction()
 
         Testing::waitForDeleted(fw);
     }
+    {
+        // 3. A floating window with two tabs
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+
+        bool dock1IsFloating = dock1->floatAction()->isChecked();
+        bool dock2IsFloating = dock2->floatAction()->isChecked();
+
+        connect(dock1->floatAction(), &QAction::toggled, [&dock1IsFloating] (bool t) {
+            //qDebug() << "Togglged1" << t;
+            Q_ASSERT(dock1IsFloating != t);
+            dock1IsFloating = t;
+        });
+
+        connect(dock2->floatAction(), &QAction::toggled, [&dock2IsFloating] (bool t) {
+            qDebug() << "Togglged2" << t;
+            Q_ASSERT(dock2IsFloating != t);
+            dock2IsFloating = t;
+        });
+
+        auto fw2 = dock2->floatingWindow();
+        QVERIFY(dock1->isFloating());
+        QVERIFY(dock2->isFloating());
+        QVERIFY(dock1->floatAction()->isChecked());
+        QVERIFY(dock2->floatAction()->isChecked());
+
+        dock1->addDockWidgetAsTab(dock2);
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!dock2->isFloating());
+        QVERIFY(!dock1->floatAction()->isChecked());
+        QVERIFY(!dock2->floatAction()->isChecked());
+
+        dock2->setFloating(true);
+
+        QVERIFY(dock1->isFloating());
+        QVERIFY(dock1->floatAction()->isChecked());
+        QVERIFY(dock2->isFloating());
+        QVERIFY(dock2->floatAction()->isChecked());
+
+        QVERIFY(dock1IsFloating);
+        QVERIFY(dock2IsFloating);
+
+        delete fw2;
+        delete dock1->window();
+        delete dock2->window();
+    }
 }
 
 void TestDocks::tst_dockableMainWindows()
