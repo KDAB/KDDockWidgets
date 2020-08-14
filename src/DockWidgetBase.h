@@ -315,6 +315,11 @@ public:
      */
     bool isMainWindow() const;
 
+    ///@brief Returns whether This or any child of this dock widget is focused
+    ///Not to be confused with QWidget::hasFocus(), which just refers to 1 widget. This includes
+    ///variant includes children.
+    bool isFocused() const;
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();

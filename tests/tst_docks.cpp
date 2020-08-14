@@ -47,6 +47,7 @@
 #include <QMenuBar>
 #include <QStyleFactory>
 #include <QCursor>
+#include <QLineEdit>
 
 #ifdef Q_OS_WIN
 # include <Windows.h>
@@ -426,6 +427,7 @@ private Q_SLOTS:
     void tst_maximumSizePolicy();
     void tst_tabsNotClickable();
     void tst_stuckSeparator();
+    void tst_isFocused();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5747,6 +5749,64 @@ void TestDocks::tst_stuckSeparator()
     for (auto dw : DockRegistry::self()->dockwidgets()) {
         delete dw;
     }
+}
+
+void TestDocks::tst_isFocused()
+{
+    EnsureTopLevelsDeleted e;
+
+    // 1. Create 2 floating windows
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QLineEdit());
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QLineEdit());
+    dock1->window()->move(400, 200);
+
+    // 2. Raise dock1 and focus its line edit
+    dock1->raise();
+    dock1->widget()->setFocus(Qt::OtherFocusReason);
+    Testing::waitForEvent(dock1->widget(), QEvent::FocusIn);
+
+    QVERIFY(dock1->isFocused());
+    QVERIFY(!dock2->isFocused());
+
+    // 3. Raise dock3 and focus its line edit
+    dock2->raise();
+    dock2->widget()->setFocus(Qt::OtherFocusReason);
+    Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
+    QVERIFY(!dock1->isFocused());
+    QVERIFY(dock2->isFocused());
+
+    // 4. Tab dock1, it's current tab now
+    auto oldFw1 = dock1->window();
+    dock2->addDockWidgetAsTab(dock1);
+    delete oldFw1;
+    QVERIFY(dock1->isFocused());
+    QVERIFY(!dock2->isFocused());
+
+    // 5. Set dock2 as current tab again
+    dock2->raise();
+    QVERIFY(!dock1->isFocused());
+    QVERIFY(dock2->isFocused());
+
+    // 6. Create dock3, focus it
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new QLineEdit());
+    auto oldFw3 = dock3->window();
+    dock3->raise();
+    dock3->widget()->setFocus(Qt::OtherFocusReason);
+    Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
+    QVERIFY(!dock1->isFocused());
+    QVERIFY(!dock2->isFocused());
+    QVERIFY(dock3->isFocused());
+
+    // 4. Add dock3 to the 1st window, bested
+    dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
+    delete oldFw3;
+    dock2->raise();
+    dock2->widget()->setFocus(Qt::OtherFocusReason);
+    Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
+    QVERIFY(!dock1->isFocused());
+    QVERIFY(dock2->isFocused());
+    QVERIFY(!dock3->isFocused());
+    delete dock2->window();
 }
 
 int main(int argc, char *argv[])

@@ -422,6 +422,12 @@ bool DockWidgetBase::isMainWindow() const
     return qobject_cast<MainWindowBase*>(widget());
 }
 
+bool DockWidgetBase::isFocused() const
+{
+    auto f = this->frame();
+    return f && f->isFocused() && isCurrentTab();
+}
+
 void DockWidgetBase::setAffinityName(const QString &affinity)
 {
     setAffinities({ affinity });
