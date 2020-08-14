@@ -14,6 +14,7 @@
 #include "Logging_p.h"
 #include "Position_p.h"
 #include "MultiSplitter_p.h"
+#include "QWidgetAdapter.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -52,6 +53,9 @@ DockRegistry::DockRegistry(QObject *parent)
     KDDockWidgets::registerQmlTypes();
 #endif
 
+    connect(qApp, &QGuiApplication::focusObjectChanged,
+            this, &DockRegistry::onFocusObjectChanged);
+
     initKDDockWidgetResources();
 }
 
@@ -63,6 +67,35 @@ void DockRegistry::maybeDelete()
 {
     if (isEmpty())
         delete this;
+}
+
+void DockRegistry::onFocusObjectChanged(QObject *obj)
+{
+    DockWidgetBase *const unfocusedDW = m_focusedDockWidget.data();
+    DockWidgetBase *newFocusedDockWidget = nullptr;
+
+    // Check if it's inside a dock widget:
+    auto p = qobject_cast<WidgetType*>(obj);
+    while (p) {
+        if (auto dw = qobject_cast<DockWidgetBase*>(p)) {
+            newFocusedDockWidget = dw;
+            break;
+        }
+
+        p = KDDockWidgets::Private::parentWidget(p);
+    }
+
+    // Nothing changed
+    if (m_focusedDockWidget.data() == newFocusedDockWidget)
+        return;
+
+    m_focusedDockWidget = newFocusedDockWidget;
+
+    if (unfocusedDW)
+        Q_EMIT unfocusedDW->isFocusedChanged(false);
+
+    if (m_focusedDockWidget)
+        Q_EMIT m_focusedDockWidget->isFocusedChanged(true);
 }
 
 bool DockRegistry::isEmpty() const

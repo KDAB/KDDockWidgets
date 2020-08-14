@@ -18,6 +18,7 @@
 
 #include <QVector>
 #include <QObject>
+#include <QPointer>
 
 /**
  * DockRegistry is a singleton that knows about all DockWidgets.
@@ -47,6 +48,8 @@ public:
 
     void registerFrame(Frame *);
     void unregisterFrame(Frame *);
+
+    DockWidgetBase *focusedDockWidget() const;
 
     DockWidgetBase *dockByName(const QString &) const;
     MainWindowBase *mainWindowByName(const QString &) const;
@@ -167,12 +170,14 @@ protected:
 private:
     explicit DockRegistry(QObject *parent = nullptr);
     void maybeDelete();
+    void onFocusObjectChanged(QObject *);
     bool m_isProcessingAppQuitEvent = false;
     DockWidgetBase::List m_dockWidgets;
     MainWindowBase::List m_mainWindows;
     Frame::List m_frames;
     QVector<FloatingWindow*> m_nestedWindows;
     QVector<MultiSplitter*> m_layouts;
+    QPointer<DockWidgetBase> m_focusedDockWidget;
 };
 
 }

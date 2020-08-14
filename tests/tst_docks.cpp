@@ -5797,7 +5797,7 @@ void TestDocks::tst_isFocused()
     QVERIFY(!dock2->isFocused());
     QVERIFY(dock3->isFocused());
 
-    // 4. Add dock3 to the 1st window, bested
+    // 4. Add dock3 to the 1st window, nested, focus 2 again
     dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
     delete oldFw3;
     dock2->raise();
