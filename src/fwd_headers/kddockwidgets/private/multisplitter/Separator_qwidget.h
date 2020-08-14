@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../private/multisplitter/Widget_qwidget.h"
+#include "../../../../private/multisplitter/Separator_qwidget.h"
