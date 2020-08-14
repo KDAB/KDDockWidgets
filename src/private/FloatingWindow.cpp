@@ -226,7 +226,7 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, bool preserveCent
 
 void FloatingWindow::scheduleDeleteLater()
 {
-    m_beingDeleted = true;
+    m_deleteScheduled = true;
     DockRegistry::self()->unregisterNestedWindow(this);
     deleteLater();
 }
@@ -276,7 +276,7 @@ bool FloatingWindow::hasSingleDockWidget() const
 
 bool FloatingWindow::beingDeleted() const
 {
-    if (m_beingDeleted)
+    if (m_deleteScheduled)
         return true;
 
     // TODO: Confusing logic
