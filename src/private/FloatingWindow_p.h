@@ -143,7 +143,8 @@ private:
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
     bool m_disableSetVisible = false;
-    bool m_beingDeleted = false;
+    bool m_deleteScheduled = false;
+    bool m_inDtor = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
 };
