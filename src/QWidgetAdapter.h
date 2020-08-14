@@ -41,7 +41,7 @@ inline bool isMinimized(QWindow *window)
 }}
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "../multisplitter/Widget_qwidget.h"
+# include "private/multisplitter/Widget_qwidget.h"
 # include "private/widgets/QWidgetAdapter_widgets_p.h"
 # include <QMainWindow>
   namespace KDDockWidgets {
@@ -55,7 +55,7 @@ inline bool isMinimized(QWindow *window)
     typedef QWidget WidgetType;
   }
 #else
-# include "../multisplitter/Widget_quick.h"
+# include "private/multisplitter/Widget_quick.h"
 # include "private/quick/QWidgetAdapter_quick_p.h"
   namespace KDDockWidgets {
     class MainWindowQuick;

@@ -10,9 +10,11 @@
 */
 
 #include "MyFrameworkWidgetFactory.h"
+
 #include <kddockwidgets/FrameworkWidgetFactory.h>
 #include <kddockwidgets/private/widgets/TitleBarWidget_p.h>
-#include <kddockwidgets/multisplitter/Separator_qwidget.h>
+#include <kddockwidgets/private/multisplitter/Separator_qwidget.h>
+
 #include <QApplication>
 
 class MyTitleBar : public KDDockWidgets::TitleBarWidget
