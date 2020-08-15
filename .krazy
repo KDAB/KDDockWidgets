@@ -1,7 +1,7 @@
 CHECKSETS qt5,c++
 
 #KDAB-specific checks
-EXTRA kdabcopyright-reuse,kdabcontactus
+EXTRA kdabcopyright-reuse,kdabcontactus,fosslicense-reuse
 
 #additional checks
 #EXTRA defines,null
