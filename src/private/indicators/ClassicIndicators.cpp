@@ -32,7 +32,6 @@ ClassicIndicators::ClassicIndicators(DropArea *dropArea)
     , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(dropArea))
     , m_indicatorWindow(createIndicatorWindow(this))
 {
-    setVisible(false);
 }
 
 ClassicIndicators::~ClassicIndicators()
