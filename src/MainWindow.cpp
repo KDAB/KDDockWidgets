@@ -79,3 +79,8 @@ MainWindow::~MainWindow()
 {
     delete d;
 }
+
+void MainWindow::setCentralWidget(QWidget *w)
+{
+    QMainWindow::setCentralWidget(w);
+}
