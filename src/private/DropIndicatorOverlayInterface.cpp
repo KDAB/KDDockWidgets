@@ -57,7 +57,7 @@ void DropIndicatorOverlayInterface::setHoveredFrame(Frame *frame)
     m_hoveredFrame = frame;
     if (m_hoveredFrame) {
         connect(frame, &QObject::destroyed, this, &DropIndicatorOverlayInterface::onFrameDestroyed);
-        setHoveredFrameRect(m_hoveredFrame->QWidgetAdapter::rect());
+        setHoveredFrameRect(m_hoveredFrame->QWidgetAdapter::geometry());
     } else {
         setHoveredFrameRect(QRect());
     }
