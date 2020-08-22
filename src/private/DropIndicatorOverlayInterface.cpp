@@ -38,6 +38,7 @@ void DropIndicatorOverlayInterface::setWindowBeingDragged(const FloatingWindow *
         setHoveredFrame(nullptr);
     }
 
+    setVisible(m_windowBeingDragged != nullptr);
     updateVisibility();
 }
 
