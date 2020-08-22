@@ -41,7 +41,7 @@ ClassicIndicators::~ClassicIndicators()
 
 DropIndicatorOverlayInterface::Type ClassicIndicators::indicatorType() const
 {
-    return TypeClassic;
+    return Type::Classic;
 }
 
 void ClassicIndicators::hover_impl(QPoint globalPos)

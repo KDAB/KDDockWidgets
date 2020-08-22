@@ -28,10 +28,10 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS DropIndicatorOverlayInterface : public QWidget
     Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)
     Q_PROPERTY(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation currentDropLocation READ currentDropLocation NOTIFY currentDropLocationChanged)
 public:
-    enum Type {
-        TypeNone = 0,
-        TypeClassic = 1,
-        TypeAnimated = 2
+    enum class Type {
+        None = 0,
+        Classic = 1,
+        Animated = 2
     };
     Q_ENUM(Type)
 
