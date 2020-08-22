@@ -10,7 +10,6 @@
 */
 
 #include "Testing.h"
-#include "MainWindow.h"
 #include "DockRegistry_p.h"
 
 #include <QApplication>

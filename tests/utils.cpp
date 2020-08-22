@@ -26,6 +26,7 @@
 # include "private/quick/MainWindowQuick_p.h"
 #else
 # include "DockWidget.h"
+# include "MainWindow.h"
 #endif
 
 using namespace KDDockWidgets;

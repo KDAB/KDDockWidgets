@@ -12,7 +12,6 @@
 #ifndef KDDOCKWIDGETS_TESTS_UTILS_H
 #define KDDOCKWIDGETS_TESTS_UTILS_H
 
-#include "MainWindow.h"
 #include "KDDockWidgets.h"
 #include "DropIndicatorOverlayInterface_p.h"
 #include "DockWidgetBase.h"
