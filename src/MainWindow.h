@@ -46,6 +46,8 @@ public:
     ~MainWindow() override;
 
 private:
+    using QMainWindow::setCentralWidget;
+    void setCentralWidget(QWidget *); // overridden just to make it private
     class Private;
     Private *const d;
 };
