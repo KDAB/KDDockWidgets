@@ -58,6 +58,12 @@ void QWidgetAdapter::raiseAndActivate()
     }
 }
 
+void QWidgetAdapter::setWindowOpacity(qreal level)
+{
+     if (QWindow *w = windowHandle())
+         w->setOpacity(level);
+}
+
 bool QWidgetAdapter::onResize(QSize) { return false; }
 void QWidgetAdapter::onLayoutRequest() {}
 void QWidgetAdapter::onMousePress() {}

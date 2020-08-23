@@ -49,6 +49,7 @@ public:
     MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
     FrameworkWidgetFactory *m_frameworkWidgetFactory;
     Flags m_flags = Flag_Default;
+    qreal m_draggedWindowOpacity = Q_QNAN;
 };
 
 Config::Config()
@@ -140,6 +141,16 @@ void Config::setSeparatorThickness(int value)
     }
 
     Layouting::Config::self().setSeparatorThickness(value);
+}
+
+void Config::setDraggedWindowOpacity(qreal opacity)
+{
+    d->m_draggedWindowOpacity = opacity;
+}
+
+qreal Config::draggedWindowOpacity() const
+{
+    return d->m_draggedWindowOpacity;
 }
 
 void Config::setQmlEngine(QQmlEngine *qmlEngine)

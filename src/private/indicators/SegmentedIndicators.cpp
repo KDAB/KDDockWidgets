@@ -11,6 +11,7 @@
 
 #include "SegmentedIndicators_p.h"
 #include "DropArea_p.h"
+#include "Config.h"
 
 #include <QPainter>
 #include <QPainterPath>
@@ -24,6 +25,13 @@ using namespace KDDockWidgets;
 SegmentedIndicators::SegmentedIndicators(DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea)
 {
+    // If the app didn't choose opacity then we choose a suitable default value.
+    // ClassicIndicators works fine with an opaque dragged window because the indicators have higher Z,
+    // However for SegmentedIndicators the indicators are in the main window, so lower Z. Make the
+    // dragged window translucent a bit, so we can see the indicators
+    const bool userChoseOpacity = !qIsNaN(Config::self().draggedWindowOpacity());
+    if (!userChoseOpacity)
+        Config::self().setDraggedWindowOpacity(0.7);
 }
 
 SegmentedIndicators::~SegmentedIndicators()

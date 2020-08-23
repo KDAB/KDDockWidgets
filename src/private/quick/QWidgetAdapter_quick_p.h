@@ -140,6 +140,7 @@ public:
     virtual QSize sizeHint() const;
 
     Qt::WindowFlags windowFlags() const;
+    void setWindowOpacity(qreal);
 
     static QQuickItem *createItem(QQmlEngine *, const QString &filename);
     static void makeItemFillParent(QQuickItem *item);

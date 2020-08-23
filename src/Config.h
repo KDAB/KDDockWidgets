@@ -131,6 +131,14 @@ public:
     ///Note: Only use this function at startup before creating any DockWidget or MainWindow.
     void setSeparatorThickness(int value);
 
+    ///@brief sets the dragged window opacity
+    ///1.0 is fully opaque while 0.0 is fully transparent
+    void setDraggedWindowOpacity(qreal opacity);
+
+    ///@brief returns the opacity to use when dragging dock widgets
+    ///By default it's 1.0, fully opaque
+    qreal draggedWindowOpacity() const;
+
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
     void setQmlEngine(QQmlEngine *);
     QQmlEngine* qmlEngine() const;
