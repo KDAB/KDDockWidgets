@@ -26,3 +26,9 @@
     - Static build support
     - Namespaced Qt support
     - Dozens of crash fixes, bugs and much more...
+
+* v1.1.0 (, 2020)
+    - QtQuick support
+    - New drop indicator style type: Segmented Indicators
+    - Added FocusScope support
+    - Added DockWidget::isFocused() and DockWidgetBase::isFocusedChanged()
