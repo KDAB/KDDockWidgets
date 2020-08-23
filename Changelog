@@ -2,9 +2,27 @@
   - Initial Release and blog
 
 * v1.0.0 (, 2020)
-  Features:
-     - Allow tab re-ordering with mouse, via KDDockWidgets::Config::Flag_AllowReorderTabs.
-     - Allow tabs to have a close button, via KDDockWidgets::Config::Flag_TabsHaveCloseButton.
-     - Add support for lazy resize, via KDDockWidgets::Config::Flag_LazyResize. Resize is only done when mouse is released.
-  Fixes:
-    - Fix dock widgets not filling their complete available space
+    - PySide2 bindings
+    - Rewrote the layouting engine, resulting in a huge stability gain and makes it easy to add new features
+    - Honour min/max sizes and some QSizePolicy heuristics
+    - Lazy resize (resize only when dropping the separator)
+    - Native Windows dragging (supporting Aero-snap)
+    - Allow to hide TitleBar and just show tabs. Allow dragging via the tab bar.
+    - Reordering tabs with mouse
+    - Partial layout save/restore (affecting only a subset)
+    - Double-click on title bar to maximize
+    - Maximize button on the title bar
+    - HDPI: Relative layouting restore
+    - Allow to make a dock widget non-closable and non-dockable
+    - Show close button on tabs
+    - Multiple Main Window support
+    - Allowing to dock on different parents
+    - Support for affinities, making some dock widgets only dockable on certain main windows
+    - 200 unit-tests
+    - Fuzzer which found plenty of crashes in the old layouting engine
+    - ASAN fixes
+    - Double click on separator to distribute equally
+    - Hovering over an indicator returns the true size that the dropped widget will get
+    - Static build support
+    - Namespaced Qt support
+    - Dozens of crash fixes, bugs and much more...
