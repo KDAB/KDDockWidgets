@@ -142,6 +142,8 @@ public:
     FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const override;
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const override;
     QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const override;
+
+    static DropIndicatorType s_dropIndicatorType;
 private:
     Q_DISABLE_COPY(DefaultWidgetFactory)
 };

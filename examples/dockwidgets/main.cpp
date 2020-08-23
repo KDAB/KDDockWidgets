@@ -75,6 +75,9 @@ int main(int argc, char **argv)
     QCommandLineOption maximizeButton("b", QCoreApplication::translate("main", "DockWidgets have maximize/restore buttons instead of float/dock button"));
     parser.addOption(maximizeButton);
 
+    QCommandLineOption segmentedIndicators("y", QCoreApplication::translate("main", "Use segmented indicators instead of classical"));
+    parser.addOption(segmentedIndicators);
+
     parser.addPositionalArgument("savedlayout", QCoreApplication::translate("main", "loads the specified json file at startup"));
 
 #ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
@@ -100,6 +103,9 @@ int main(int argc, char **argv)
         // Increase the separator size, just for demo
         Config::self().setSeparatorThickness(10);
     }
+
+    if (parser.isSet(segmentedIndicators))
+        KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
 
     MainWindowOptions options = MainWindowOption_None;
 #if defined(DOCKS_DEVELOPER_MODE)

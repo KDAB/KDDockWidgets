@@ -37,6 +37,8 @@
 
 using namespace KDDockWidgets;
 
+DropIndicatorType DefaultWidgetFactory::s_dropIndicatorType = DropIndicatorType::Classic;
+
 FrameworkWidgetFactory::~FrameworkWidgetFactory()
 {
 }
@@ -84,6 +86,13 @@ FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWin
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const
 {
+    switch (s_dropIndicatorType) {
+    case DropIndicatorType::Classic:
+        return new ClassicIndicators(dropArea);
+    case DropIndicatorType::Segmented:
+        return new SegmentedIndicators(dropArea);
+    }
+
     return new ClassicIndicators(dropArea);
 }
 

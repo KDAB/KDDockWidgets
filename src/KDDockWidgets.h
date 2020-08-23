@@ -73,6 +73,11 @@ namespace KDDockWidgets
         SizePolicy, ///< Uses the item's sizeHint() and sizePolicy()
     };
 
+    enum class DropIndicatorType {
+        Classic,   ///< The default
+        Segmented
+    };
+
     ///@internal
     inline QString locationStr(Location loc)
     {
