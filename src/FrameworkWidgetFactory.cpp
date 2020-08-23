@@ -25,6 +25,7 @@
 # include "widgets/TabWidgetWidget_p.h"
 # include "multisplitter/Separator_qwidget.h"
 # include "widgets/FloatingWindowWidget_p.h"
+# include "indicators/SegmentedIndicators_p.h"
 # include <QRubberBand>
 #else
 # include "quick/FrameQuick_p.h"

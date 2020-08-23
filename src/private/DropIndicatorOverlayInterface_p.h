@@ -31,7 +31,8 @@ public:
     enum class Type {
         None = 0,
         Classic = 1,
-        Animated = 2
+        Segmented = 2,
+        // Animated = 3
     };
     Q_ENUM(Type)
 
@@ -45,7 +46,10 @@ public:
         DropLocation_OutterLeft,
         DropLocation_OutterTop,
         DropLocation_OutterRight,
-        DropLocation_OutterBottom
+        DropLocation_OutterBottom,
+
+        DropLocation_First = DropLocation_Left,
+        DropLocation_Last = DropLocation_OutterBottom,
     };
     Q_ENUM(DropLocation)
 
@@ -61,7 +65,7 @@ public:
     virtual Type indicatorType() const = 0;
     void hover(QPoint globalPos);
 
-    virtual QPoint posForIndicator(DropLocation) const = 0; // Used by unit-tests only
+    virtual QPoint posForIndicator(DropLocation) const { return {}; }; // Used by unit-tests only
 
     static KDDockWidgets::Location multisplitterLocationFor(DropLocation);
 
@@ -79,7 +83,7 @@ private:
 protected:
     virtual void hover_impl(QPoint globalPos) = 0;
     virtual void onHoveredFrameChanged(Frame *);
-    virtual void updateVisibility() = 0;
+    virtual void updateVisibility() {};
 
     Frame *m_hoveredFrame = nullptr;
     QPointer<const FloatingWindow> m_windowBeingDragged;

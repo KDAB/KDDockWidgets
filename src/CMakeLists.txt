@@ -103,6 +103,7 @@ else()
       private/widgets/TitleBarWidget.cpp
       private/widgets/DockWidget.cpp
       private/widgets/QWidgetAdapter_widgets.cpp
+      private/indicators/SegmentedIndicators.cpp
       # private/indicators/AnimatedIndicators.cpp
   )
 
