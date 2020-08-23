@@ -22,7 +22,7 @@ namespace KDDockWidgets {
 class FloatingWindow;
 class DropArea;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS DropIndicatorOverlayInterface : public QWidgetAdapter
+class DOCKS_EXPORT DropIndicatorOverlayInterface : public QWidgetAdapter
 {
     Q_OBJECT
     Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)

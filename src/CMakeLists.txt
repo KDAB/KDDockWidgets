@@ -203,6 +203,9 @@ install(FILES private/multisplitter/Separator_qwidget.h DESTINATION include/kddo
 install(FILES private/multisplitter/multisplitter_export.h DESTINATION include/kddockwidgets/private/multisplitter)
 install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
 
+install(FILES private/indicators/ClassicIndicators_p.h DESTINATION include/kddockwidgets/private/indicators)
+install(FILES private/indicators/SegmentedIndicators_p.h DESTINATION include/kddockwidgets/private/indicators)
+
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
   KDDockWidgetsConfigVersion.cmake
