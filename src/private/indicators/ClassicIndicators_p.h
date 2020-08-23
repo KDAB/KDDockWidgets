@@ -29,7 +29,6 @@ class ClassicIndicators : public DropIndicatorOverlayInterface
 public:
     explicit ClassicIndicators(DropArea *dropArea);
     ~ClassicIndicators() override;
-    Type indicatorType() const override;
     void hover_impl(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;
 

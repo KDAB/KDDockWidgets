@@ -28,14 +28,6 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS DropIndicatorOverlayInterface : public QWidget
     Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)
     Q_PROPERTY(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation currentDropLocation READ currentDropLocation NOTIFY currentDropLocationChanged)
 public:
-    enum class Type {
-        None = 0,
-        Classic = 1,
-        Segmented = 2,
-        // Animated = 3
-    };
-    Q_ENUM(Type)
-
     enum DropLocation {
         DropLocation_None = 0,
         DropLocation_Left,
@@ -62,7 +54,6 @@ public:
     Frame *hoveredFrame() const { return m_hoveredFrame; }
     void setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation location);
 
-    virtual Type indicatorType() const = 0;
     void hover(QPoint globalPos);
 
     virtual QPoint posForIndicator(DropLocation) const { return {}; }; // Used by unit-tests only

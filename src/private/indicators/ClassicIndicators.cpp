@@ -39,11 +39,6 @@ ClassicIndicators::~ClassicIndicators()
     delete m_indicatorWindow;
 }
 
-DropIndicatorOverlayInterface::Type ClassicIndicators::indicatorType() const
-{
-    return Type::Classic;
-}
-
 void ClassicIndicators::hover_impl(QPoint globalPos)
 {
     m_indicatorWindow->hover(globalPos);

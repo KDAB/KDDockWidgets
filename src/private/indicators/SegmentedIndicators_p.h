@@ -25,7 +25,6 @@ class SegmentedIndicators : public DropIndicatorOverlayInterface
 public:
     explicit SegmentedIndicators(DropArea *dropArea);
     ~SegmentedIndicators() override;
-    Type indicatorType() const override;
     void hover_impl(QPoint globalPos) override;
 
     DropLocation dropLocationForPos(QPoint pos) const;

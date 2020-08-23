@@ -30,11 +30,6 @@ SegmentedIndicators::~SegmentedIndicators()
 {
 }
 
-DropIndicatorOverlayInterface::Type SegmentedIndicators::indicatorType() const
-{
-    return Type::Segmented;
-}
-
 void SegmentedIndicators::hover_impl(QPoint pt)
 {
     m_hoveredPt = mapFromGlobal(pt);
