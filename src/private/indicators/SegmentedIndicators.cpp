@@ -15,7 +15,7 @@
 #include <QPainter>
 #include <QPainterPath>
 
-#define SEGMENT_GIRTH 40
+#define SEGMENT_GIRTH 50
 #define SEGMENT_PEN_WIDTH 4
 
 using namespace KDDockWidgets;
@@ -164,10 +164,10 @@ void SegmentedIndicators::drawSegment(QPainter *p, const QPolygon &segment)
     QPen pen(Qt::black);
     pen.setWidth(SEGMENT_PEN_WIDTH);
     p->setPen(pen);
-    QColor brush = QColor(0, 0xFF, 0xFF, 128);
+    QColor brush(0xbb, 0xd5, 0xee, 200);
 
     if (segment.containsPoint(m_hoveredPt, Qt::OddEvenFill))
-        brush = brush.darker(200);
+        brush = QColor(0x3574c5);
 
     p->setBrush(brush);
     p->drawPolygon(segment);
