@@ -8,6 +8,3 @@
      - Add support for lazy resize, via KDDockWidgets::Config::Flag_LazyResize. Resize is only done when mouse is released.
   Fixes:
     - Fix dock widgets not filling their complete available space
-
-* v1.1.0 (, 2020)
-    - QtQuick support
