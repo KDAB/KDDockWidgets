@@ -1,7 +1,15 @@
 KDDockWidgets
 ==============
-`KDDockWidgets` is a KDAB effort to provide an advanced docking system for Qt.
+`KDDockWidgets` is a Qt dock widget library written by KDAB, suitable for replacing
+`QDockWidget` and implementing advanced functionalities missing in Qt.
 
+Although `KDDockWidgets` is ready to be used out of the box, it can also be seen
+as a framework to allow building very tailored custom docking systems. It tries
+to expose every internal widget and every knob for the app developer to tune.
+
+
+Motivation
+==========
 Throughout the years KDAB contributed and funded bug fixes and features to `QDockWidget`.
 Sadly, this was very painful. Each bug fix or feature took many days of implementation,
 and an equal number of days just to fix dozens of regressions.
@@ -19,37 +27,56 @@ You will find more information in these places:
 Features
 ========
 - Provide advanced docking that QDockWidgets doesn't support
+  - Native window resize on Windows (allowing for Aero-snap even with custom title bar decorations)
+  - Arrow drop indicators for great drop precision
+  - Allow for totally different, user provided, drop indicator types
   - Nesting dock widgets in a floating window and docking that group back to main window
   - Docking to any main window, not only to the parent main window
   - Docking to center of main window, or simply removing the concept of "central widget"
   - Main window supporting detachable tabs in center widget
   - Detaching arbitrary tabs from a tab bar into a dock area
+  - Supporting more than 1 main window
+  - Support for affinities, making some dock widgets only dockable on certain main windows
+  - Allow to hide TitleBar and just show tabs. Allows dragging via the tab bar.
   - Exposing inner helper widgets so the user can customize them or provide his own
     - Customize tab widgets
     - Customize title bars
     - Customize window frames
-
+    - Custom widget separators
+- Layouting engine honouring min/max size constraints and some size policies
+- PySide2 bindings
 - Clean codebase
   - Not mixing GUI with state with logic with animations
-  - Unit-test everything, even the GUI and DnD operations (140 tests currently)
-  - Fuzzer for doing random testing
+  - Great test coverage, even the gui and DnD operations are tested. 200 tests currently.
+  - Fuzzer for doing random testing and finding bugs
+- Lazy separator resize
+- Reordering tabs with mouse
+- Partial layout save/restore, affecting only a chosen sub-set
+- Double click on title bar to maximize
+- Double click on separator to distribute equally
+- Show close button on tabs
+- Allow to make a dock widget non-closable and/or non-dockable
+- Optional maximize button on the title bar
 
 ![Screen capture](./screencap.gif?raw=true "The docking system in action")
 
 
 Roadmap
 ========
-  - Different forms of docking indicators (through plugins)
-  - QtQuick support
+  - QtQuick support for v1.1
+  - "Minimization bar" for v1.2
 
+Trying out the examples
+=======================
+A full demo lives in `examples/dockwidgets/`, it showcasts most of the features.
+A simpler example lives in `examples/minimal/`, which might be more indicated
+to learn the API, as it's less overwelming than the full demo.
 
-Trying out the demo
-====================
 
 Open a terminal capable of building Qt5 applications.
 Make sure you have cmake, ninja, compiler, Qt, etc in PATH.
 
-Feel free to adapt the instructions to suit your cmake generator and operating system.
+Adapt the instructions to suit your cmake generator and operating system.
 Build and install the KDDockWidgets framework:
 
 ```
@@ -93,7 +120,7 @@ $ python3 main.py
 Supported Qt versions
 ======================
 KDDockWidgets requires Qt >= 5.9 (or >=5.12 if Python bindings are enabled).
-
+The QtQuick support will require Qt >= 5.15.
 
 Licensing
 =========

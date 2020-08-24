@@ -50,3 +50,4 @@ mylayout.json
 /python/examples/rc_assets.py
 *.pri
 /docks-w
+kddockwidgets_minimal_example
