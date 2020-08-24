@@ -83,8 +83,6 @@ if(OPTION_DEVELOPER_MODE)
   set(${PROJECT_NAME}_TESTS ON)
 endif()
 
-# option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
-
 find_package(Qt5Widgets 5.9 REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
