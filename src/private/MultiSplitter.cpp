@@ -220,11 +220,10 @@ void MultiSplitter::addMultiSplitter(MultiSplitter *sourceMultiSplitter, Locatio
 
 void MultiSplitter::removeItem(Layouting::Item *item)
 {
-    if (!item)
+    if (!item) {
         qWarning() << Q_FUNC_INFO << "nullptr item";
-
-    if (!item)
         return;
+    }
 
     item->parentContainer()->removeItem(item);
 }
