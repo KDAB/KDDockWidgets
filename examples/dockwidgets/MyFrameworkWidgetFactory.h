@@ -12,7 +12,7 @@
 #pragma once
 
 #include <kddockwidgets/FrameworkWidgetFactory.h>
-#include <kddockwidgets/private/TitleBar_p.h>
+
 #include <QPainter>
 
 class CustomWidgetFactory : public KDDockWidgets::DefaultWidgetFactory
