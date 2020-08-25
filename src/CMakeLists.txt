@@ -71,7 +71,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/FrameWidget_p.h
     private/widgets/TabBarWidget_p.h
     private/widgets/TabWidgetWidget_p.h
-    private/TabWidget_p.h
+    private/widgets/TabWidget_p.h
 )
 
 if(OPTION_QTQUICK)
@@ -90,8 +90,8 @@ if(OPTION_QTQUICK)
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       private/DebugWindow.cpp
-      private/TabWidget.cpp
       MainWindow.cpp
+      private/widgets/TabWidget.cpp
       private/widgets/TabBarWidget.cpp
       private/widgets/FloatingWindowWidget.cpp
       private/widgets/FrameWidget.cpp
