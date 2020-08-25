@@ -21,8 +21,8 @@
 #define KD_TAB_WIDGET_P_H
 
 #include "docks_export.h"
-#include "Draggable_p.h"
-#include "Frame_p.h"
+#include "../Draggable_p.h"
+#include "../Frame_p.h"
 #include "DockWidgetBase.h"
 
 #include <QTabBar>

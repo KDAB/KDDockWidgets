@@ -13,7 +13,6 @@
 #define KD_DRAGCONTROLLER_P_H
 
 #include "TitleBar_p.h"
-#include "TabWidget_p.h"
 #include "WindowBeingDragged_p.h"
 
 #include <QStateMachine>
