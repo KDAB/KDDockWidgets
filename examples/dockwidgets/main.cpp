@@ -45,8 +45,11 @@ int main(int argc, char **argv)
     QCommandLineOption reorderTabsOption("r", QCoreApplication::translate("main", "Support re-ordering tabs with mouse"));
     parser.addOption(reorderTabsOption);
 
-    QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Never show titlebars"));
+    QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Hide titlebars when tabs are visible"));
     parser.addOption(noTitleBars);
+
+    QCommandLineOption alwaysTabs("z", QCoreApplication::translate("main", "Show tabs even if there's only one"));
+    parser.addOption(alwaysTabs);
 
     QCommandLineOption lazyResizeOption("l", QCoreApplication::translate("main", "Use lazy resize"));
     parser.addOption(lazyResizeOption);
@@ -115,7 +118,10 @@ int main(int argc, char **argv)
 
     auto flags = KDDockWidgets::Config::self().flags();
     if (parser.isSet(noTitleBars))
-        flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs;
+        flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
+
+    if (parser.isSet(alwaysTabs))
+        flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
 
     if (parser.isSet(customStyle))
         flags |= KDDockWidgets::Config::Flag_TitleBarIsFocusable; // also showing title bar focus with -p, just to not introduce another switch
