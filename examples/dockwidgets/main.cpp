@@ -48,6 +48,9 @@ int main(int argc, char **argv)
     QCommandLineOption noTitleBars("t", QCoreApplication::translate("main", "Hide titlebars when tabs are visible"));
     parser.addOption(noTitleBars);
 
+    QCommandLineOption alwaysTitleBarWhenFloating("q", QCoreApplication::translate("main", "Don't hide title bars if floating, even if Flag_HideTitleBarWhenTabsVisible is specified."));
+    parser.addOption(alwaysTitleBarWhenFloating);
+
     QCommandLineOption alwaysTabs("z", QCoreApplication::translate("main", "Show tabs even if there's only one"));
     parser.addOption(alwaysTabs);
 
@@ -122,6 +125,14 @@ int main(int argc, char **argv)
 
     if (parser.isSet(alwaysTabs))
         flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
+
+    if (parser.isSet(alwaysTitleBarWhenFloating)) {
+        flags |= KDDockWidgets::Config::Flag_AlwaysTitleBarWhenFloating;
+        if (!(flags & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible)) {
+            qWarning() << "Flag_AlwaysTitleBarWhenFloating is unneeded if Flag_HideTitleBarWhenTabsVisible isn't used."
+                       << "As floating windows already have title bars by default.";
+        }
+    }
 
     if (parser.isSet(customStyle))
         flags |= KDDockWidgets::Config::Flag_TitleBarIsFocusable; // also showing title bar focus with -p, just to not introduce another switch

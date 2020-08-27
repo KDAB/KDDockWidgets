@@ -56,6 +56,7 @@ public:
         Flag_None = 0, ///> No option set
         Flag_NativeTitleBar = 1, ///> Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise. This is mutually exclusive with Flag_AeroSnap
         Flag_AeroSnapWithClientDecos = 2, ///> Enables AeroSnap even if we're not using the native title bar. Only supported on Windows 10.
+        Flag_AlwaysTitleBarWhenFloating = 4, ///> Floating windows will have a title bar even if Flag_HideTitleBarWhenTabsVisible is specified. Unneeded if Flag_HideTitleBarWhenTabsVisible isn't specified, as that's the default already.
         Flag_HideTitleBarWhenTabsVisible = 8, ///> Hides the title bar if there's tabs visible. The empty space in the tab bar becomes draggable.
         Flag_AlwaysShowTabs = 16, ///> Always show tabs, even if there's only one,
         Flag_AllowReorderTabs = 32, /// Allows user to re-order tabs by dragging them
