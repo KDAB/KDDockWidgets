@@ -25,8 +25,8 @@ BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtx11extras-devel desktop-file-util
 %endif
 
 %description
-KDDockWidgets is an advanced docking system for Qt which provides
-many features not found in QDockWidgets, including:
+KDDockWidgets is a Qt dock widget library written by KDAB, suitable for replacing
+QDockWidget and implementing advanced functionalities missing in Qt, including:
  - Nesting dock widgets in a floating window and docking that group back to main window
   - Docking to any main window, not only to the parent main window
   - Docking to center of main window, or simply removing the concept of "central widget"
@@ -36,6 +36,8 @@ many features not found in QDockWidgets, including:
     - Customize tab widgets
     - Customize title bars
     - Customize window frames
+    - Custom widget separators
+  ...and much more
 
 Authors:
 --------
