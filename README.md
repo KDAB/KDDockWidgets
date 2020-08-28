@@ -101,11 +101,26 @@ location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
 
 Python Bindings
 ================
+Make sure you have pyside2, shiboken2 and shiboken2-generator installed.
+As this time, you cannot get shiboken2-generator because the wheels are not on PyPi.
+To use the wheels do this:
+  % pip3 install \
+      --index-url=http://download.qt.io/official_releases/QtForPython/ \
+      --trusted-host download.qt.io \
+      shiboken2 pyside2 shiboken2_generator
 
-To generate PySide2 bindings, pass `-DOPTION_BUILD_PYTHON_BINDINGS=ON` to CMake.
-The bindings will be installed to the passed `-DCMAKE_INSTALL_PREFIX`. Which
+For more info visit https://doc.qt.io/qtforpython/shiboken2/gettingstarted.html
+
+Once QtForPython is installed you are ready to generate the PySide bindings
+for KDDockwWidgets.
+
+Next pass `-DOPTION_BUILD_PYTHON_BINDINGS=ON` to CMake, followed by the
+make command.
+
+The bindings will be installed to the passed `-DCMAKE_INSTALL_PREFIX`, which
 might require setting the `PYTHONPATH` env variable to point to that path when
-running applications. Alternatively, pass `-DPYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.8/site-packages`
+running applications.  Alternatively, configure the bindings install location
+by passing `-DPYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.8/site-packages`
 to CMake (adjust to the python path on your system).
 
 To run the KDDW python example
