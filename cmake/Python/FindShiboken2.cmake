@@ -16,7 +16,7 @@
 
 # You can install Shiboken from Qt repository with
 # pip3 install --index-url=https://download.qt.io/snapshots/ci/pyside/<Qt-Version>/latest/ shiboken2-generator --trusted-host download.qt.io
-find_package(PkgConfig REQUIRED) 
+find_package(PkgConfig REQUIRED)
 pkg_check_modules(SHIBOKEN2_PRIV shiboken2 QUIET)
 
 set(SHIBOKEN_FOUND FALSE)
@@ -92,13 +92,19 @@ else()
             SET(SHIBOKEN_LIBRARY_BASENAMES "")
         elseif(WIN32)
             SET(SHIBOKEN_LIBRARY_BASENAMES "libshiboken2.${PYSIDE2_SUFFIX}")
+        elseif(APPLE)
+             SET(SHIBOKEN_LIBRARY_BASENAMES
+                    libshiboken2.abi3.dylib
+                    libshiboken2.abi3.${SHIBOKEN_MACRO_VERSION}.dylib
+                    libshiboken2.abi3.${SHIBOKEN_MACRO_VERSION}.${SHIBOKEN_MICRO_VERSION}.dylib
+                    libshiboken2.abi3.${SHIBOKEN_VERSION}.dylib
+            )
         else()
             SET(SHIBOKEN_LIBRARY_BASENAMES
                     libshiboken2.abi3.so
                     libshiboken2.abi3.so.${SHIBOKEN_MACRO_VERSION}
                     libshiboken2.abi3.so.${SHIBOKEN_MACRO_VERSION}.${SHIBOKEN_MICRO_VERSION}
                     libshiboken2.abi3.so.${SHIBOKEN_VERSION}
-                    libshiboken2.abi3.so
             )
         endif()
 
@@ -108,7 +114,7 @@ else()
         set(SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_CUSTOM_PATH})
         list(APPEND SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_BASEDIR})
         list(APPEND SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_GENERATOR_BASEDIR})
-
+message(STATUS "BOO: ${SHIBOKEN_SEARCH_PATHS}")
         find_file(SHIBOKEN_LIBRARY
             ${SHIBOKEN_LIBRARY_BASENAMES}
             PATHS ${SHIBOKEN_SEARCH_PATHS}
@@ -167,13 +173,13 @@ if (SHIBOKEN_FOUND)
         INTERFACE_INCLUDE_DIRECTORIES ${SHIBOKEN_INCLUDE_DIR} ${Python3_INCLUDE_DIRS})
     set_property(TARGET Shiboken2::libshiboken APPEND PROPERTY
         INTERFACE_LINK_LIBRARIES ${PYTHON_LIMITED_LIBRARIES})
-        
+
     # Generator target
     add_executable(Shiboken2::shiboken IMPORTED GLOBAL)
     set_property(TARGET Shiboken2::shiboken PROPERTY
         IMPORTED_LOCATION ${SHIBOKEN_BINARY})
 endif()
-    
+
 find_package_handle_standard_args(Shiboken2
     REQUIRED_VARS SHIBOKEN_BASEDIR SHIBOKEN_INCLUDE_DIR SHIBOKEN_LIBRARY SHIBOKEN_BINARY
     VERSION_VAR SHIBOKEN_VERSION

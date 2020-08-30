@@ -212,11 +212,19 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other, Loca
 
 void DockWidgetBase::setWidget(QWidgetOrQuick *w)
 {
-    Q_ASSERT(w && !d->widget);
+    Q_ASSERT(w);
     qCDebug(addwidget) << Q_FUNC_INFO << w;
+    if (w == d->widget)
+        return;
+
+    if (d->widget) {
+        // Unparent the old widget, we're giving back ownership
+        d->widget->setParent(nullptr);
+    }
 
     d->widget = w;
-    setSizePolicy(w->sizePolicy());
+    if (w)
+        setSizePolicy(w->sizePolicy());
 
     Q_EMIT widgetChanged(w);
     setWindowTitle(uniqueName());
