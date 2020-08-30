@@ -463,6 +463,7 @@ private Q_SLOTS:
     void tst_maximumSizePolicy();
     void tst_tabsNotClickable();
     void tst_stuckSeparator();
+    void setWidget();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5748,6 +5749,18 @@ void TestDocks::tst_stuckSeparator()
     for (auto dw : DockRegistry::self()->dockwidgets()) {
         delete dw;
     }
+}
+
+void TestDocks::setWidget()
+{
+    EnsureTopLevelsDeleted e;
+    auto dw = new DockWidget(QStringLiteral("FOO"));
+    auto button1 = new QPushButton("button1");
+    auto button2 = new QPushButton("button2");
+    dw->setWidget(button1);
+    dw->setWidget(button2);
+    delete button1;
+    delete dw;
 }
 
 int main(int argc, char *argv[])
