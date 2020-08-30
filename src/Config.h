@@ -59,10 +59,10 @@ public:
         Flag_HideTitleBarWhenTabsVisible = 8, ///> Hides the title bar if there's tabs visible. The empty space in the tab bar becomes draggable.
         Flag_AlwaysShowTabs = 16, ///> Always show tabs, even if there's only one,
         Flag_AllowReorderTabs = 32, /// Allows user to re-order tabs by dragging them
-        Flag_LazyResize = 32, /// The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
         Flag_TabsHaveCloseButton = 64, /// Tabs will have a close button. Equivalent to QTabWidget::setTabsClosable(true).
         Flag_DoubleClickMaximizes = 128, /// Double clicking the titlebar will maximize a floating window instead of re-docking it
         Flag_TitleBarHasMaximizeButton = 256, /// The title bar will have a maximize/restore button when floating. This is mutually-exclusive with the floating button (since many apps behave that way).
+        Flag_LazyResize = 1024, /// The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
         Flag_Default = Flag_AeroSnapWithClientDecos ///> The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)
