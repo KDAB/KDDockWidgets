@@ -28,9 +28,9 @@ endif()
 get_target_property(QtCore_is_framework Qt5::Core FRAMEWORK)
 if (QtCore_is_framework)
     # Get the path to the framework dir.
+    list(GET Qt5Core_INCLUDE_DIRS 0 QT_INCLUDE_DIR)
     get_filename_component(QT_FRAMEWORK_INCLUDE_DIR "${QT_INCLUDE_DIR}/../" ABSOLUTE)
 
-    list(GET Qt5Core_INCLUDE_DIRS 0 QT_INCLUDE_DIR)
     # QT_INCLUDE_DIR points to the QtCore.framework directory, so we need to adjust this to point
     # to the actual include directory, which has include files for non-framework parts of Qt.
     get_filename_component(QT_INCLUDE_DIR "${QT_INCLUDE_DIR}/../../include" ABSOLUTE)
