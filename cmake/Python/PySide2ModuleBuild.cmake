@@ -23,6 +23,19 @@ endif()
 if (NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 17)
 endif()
+
+# On macOS, check if Qt is a framework build. This affects how include paths should be handled.
+get_target_property(QtCore_is_framework Qt5::Core FRAMEWORK)
+if (QtCore_is_framework)
+    # Get the path to the framework dir.
+    get_filename_component(QT_FRAMEWORK_INCLUDE_DIR "${QT_INCLUDE_DIR}/../" ABSOLUTE)
+
+    list(GET Qt5Core_INCLUDE_DIRS 0 QT_INCLUDE_DIR)
+    # QT_INCLUDE_DIR points to the QtCore.framework directory, so we need to adjust this to point
+    # to the actual include directory, which has include files for non-framework parts of Qt.
+    get_filename_component(QT_INCLUDE_DIR "${QT_INCLUDE_DIR}/../../include" ABSOLUTE)
+endif()
+
 # Flags that we will pass to shiboken-generator
 # --generator-set=shiboken:  tells the generator that we want to use shiboken to generate code,
 #                            a doc generator is also available
