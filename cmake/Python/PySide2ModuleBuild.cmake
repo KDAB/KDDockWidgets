@@ -54,6 +54,15 @@ set(GENERATOR_EXTRA_FLAGS --generator-set=shiboken
                           --enable-return-value-heuristic
                           --use-isnull-as-nb_nonzero
                           -std=c++${CMAKE_CXX_STANDARD})
+
+# 2017-04-24 The protected hack can unfortunately not be disabled, because
+# Clang does produce linker errors when we disable the hack.
+# But the ugly workaround in Python is replaced by a shiboken change.
+if(WIN32 OR DEFINED AVOID_PROTECTED_HACK)
+    set(GENERATOR_EXTRA_FLAGS ${GENERATOR_EXTRA_FLAGS} --avoid-protected-hack)
+    add_definitions(-DAVOID_PROTECTED_HACK)
+endif()
+
 macro(make_path varname)
    # accepts any number of path variables
    string(REPLACE ";" "${PATH_SEP}" ${varname} "${ARGN}")
