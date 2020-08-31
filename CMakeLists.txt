@@ -37,6 +37,9 @@
 #  Build/Generate python bindings.  Always false for Debug builds
 #  Default=false
 #
+# -DPYTHON_BINDINGS_INSTALL_PREFIX=[path]
+#  alternative install path for python bindings
+#  Default=CMAKE_INSTALL_PREFIX
 
 cmake_minimum_required(VERSION 3.7)
 if(POLICY CMP0020)
