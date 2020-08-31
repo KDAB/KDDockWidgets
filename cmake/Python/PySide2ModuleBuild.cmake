@@ -23,6 +23,19 @@ endif()
 if (NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 17)
 endif()
+
+# On macOS, check if Qt is a framework build. This affects how include paths should be handled.
+get_target_property(QtCore_is_framework Qt5::Core FRAMEWORK)
+if (QtCore_is_framework)
+    # Get the path to the framework dir.
+    list(GET Qt5Core_INCLUDE_DIRS 0 QT_INCLUDE_DIR)
+    get_filename_component(QT_FRAMEWORK_INCLUDE_DIR "${QT_INCLUDE_DIR}/../" ABSOLUTE)
+
+    # QT_INCLUDE_DIR points to the QtCore.framework directory, so we need to adjust this to point
+    # to the actual include directory, which has include files for non-framework parts of Qt.
+    get_filename_component(QT_INCLUDE_DIR "${QT_INCLUDE_DIR}/../../include" ABSOLUTE)
+endif()
+
 # Flags that we will pass to shiboken-generator
 # --generator-set=shiboken:  tells the generator that we want to use shiboken to generate code,
 #                            a doc generator is also available
@@ -41,6 +54,15 @@ set(GENERATOR_EXTRA_FLAGS --generator-set=shiboken
                           --enable-return-value-heuristic
                           --use-isnull-as-nb_nonzero
                           -std=c++${CMAKE_CXX_STANDARD})
+
+# 2017-04-24 The protected hack can unfortunately not be disabled, because
+# Clang does produce linker errors when we disable the hack.
+# But the ugly workaround in Python is replaced by a shiboken change.
+if(WIN32 OR DEFINED AVOID_PROTECTED_HACK)
+    set(GENERATOR_EXTRA_FLAGS ${GENERATOR_EXTRA_FLAGS} --avoid-protected-hack)
+    add_definitions(-DAVOID_PROTECTED_HACK)
+endif()
+
 macro(make_path varname)
    # accepts any number of path variables
    string(REPLACE ";" "${PATH_SEP}" ${varname} "${ARGN}")
