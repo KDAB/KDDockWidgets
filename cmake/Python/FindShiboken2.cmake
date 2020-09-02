@@ -1,6 +1,4 @@
 #
-# This file is part of KDDockWidgets.
-#
 # SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 # Author: Renato Araujo Oliveira Filho <renato.araujo@kdab.com>
 #
