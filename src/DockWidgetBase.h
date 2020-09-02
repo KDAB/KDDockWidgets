@@ -122,10 +122,10 @@ public:
 
     /**
      * @brief sets the widget which this dock widget hosts.
-     * @param widget widget to show inside this dock widget. Must not be null.
+     * @param widget the widget to show inside this dock widget. Must not be null.
      *
-     * Ownership for @p widget is transfered to DockWidgetBase.
-     * Ownsership for any previously existing widget is transfered back to the user. Meaning if you
+     * Ownership for @p widget is transferred to DockWidgetBase.
+     * Ownsership for any previously existing widget is transferred back to the user. Meaning if you
      * call setWidget(A) followed by setWidget(B) then A will have to be deleted by you, while B is
      * owned by the dock widget.
      */
