@@ -13,9 +13,12 @@
 #  PYSIDE_TYPESYSTEMS   - Type system files that should be used by other bindings extending PySide2
 #
 # You can install PySide2 from Qt repository with
-# pip3 install --index-url=https://download.qt.io/snapshots/ci/pyside/<Qt-Version>/latest/ pyside2 --trusted-host download.qt.io
-find_package(PkgConfig REQUIRED) 
-pkg_check_modules(PYSIDE2_PRIV pyside2 QUIET)
+# pip3 install --index-url=https://download.qt.io/official_releases/QtForPython --trusted-host download.qt.io pyside2
+
+find_package(PkgConfig)
+if(PKG_CONFIG_FOUND)
+  pkg_check_modules(PYSIDE2_PRIV QUIET pyside2)
+endif()
 
 set(PYSIDE2_FOUND FALSE)
 
