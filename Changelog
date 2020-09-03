@@ -1,3 +1,6 @@
+* v1.0.0 (unreleased)
+  -
+
 * v1.0.0 (2 September 2020)
   - PySide2 bindings
   - Rewrote the layouting engine, resulting in a huge stability gain and makes it easy to add new features
