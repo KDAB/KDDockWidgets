@@ -36,13 +36,13 @@ MyWidget::MyWidget(const QString &backgroundFile, const QString &logoFile, QWidg
     }
 
     setFocusPolicy(Qt::StrongFocus);
-#if 0
-    // Uncomment to show focus propagation working
-    new QLineEdit(this);
-    auto l2 = new QLineEdit(this);
-    l2->move(0, 100);
-    setFocusProxy(l2);
-#endif
+    if (qEnvironmentVariableIsSet("KDDW_DEBUG_FOCUS")) {
+        // Uncomment to show focus propagation working
+        new QLineEdit(this);
+        auto l2 = new QLineEdit(this);
+        l2->move(0, 100);
+        setFocusProxy(l2);
+    }
 }
 
 MyWidget::~MyWidget()
