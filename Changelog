@@ -1,5 +1,5 @@
 * v1.0.1 (unreleased)
-  -
+  - cmake/Python - don't require pkg-config, only use if available (#68)
 
 * v1.0.0 (2 September 2020)
   - PySide2 bindings
