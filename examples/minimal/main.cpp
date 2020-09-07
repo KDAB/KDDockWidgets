@@ -34,10 +34,9 @@ int main(int argc, char **argv)
     mainWindow.resize(1200, 1200);
     mainWindow.show();
 
-    // # 2. Create four dock widgets. Each needs an unique name.
+    // # 2. Create a dock widget, it needs a unique name
     auto dock1 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock1"));
-    auto widget1 = new MyWidget(QStringLiteral(":/assets/base.png"),
-                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
+    auto widget1 = new MyWidget();
     dock1->setWidget(widget1);
 
     auto dock2 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock2"));

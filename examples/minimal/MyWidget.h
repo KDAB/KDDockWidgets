@@ -24,6 +24,7 @@ class MyWidget : public QWidget
 {
     Q_OBJECT
 public:
+    MyWidget() = default;
     explicit MyWidget(const QString &backgroundFile, const QString &logoFile, QWidget *parent = nullptr);
     ~MyWidget();
 protected:

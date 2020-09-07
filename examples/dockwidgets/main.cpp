@@ -134,7 +134,7 @@ int main(int argc, char **argv)
         }
     }
 
-    if (parser.isSet(customStyle))
+    if (parser.isSet(customStyle) || qEnvironmentVariableIsSet("KDDW_DEBUG_FOCUS"))
         flags |= KDDockWidgets::Config::Flag_TitleBarIsFocusable; // also showing title bar focus with -p, just to not introduce another switch
 
     if (parser.isSet(reorderTabsOption))
