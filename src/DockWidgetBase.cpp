@@ -77,6 +77,20 @@ public:
         return qobject_cast<FloatingWindow*>(q->window());
     }
 
+    MainWindowBase *mainWindow() const
+    {
+        // Note: Don't simply use window(), as the MainWindow might be embedded into something else
+        QObject *p = q->parent();
+        while (p) {
+            if (auto window = qobject_cast<MainWindowBase*>(p))
+                return window;
+
+            p = p->parent();
+        }
+
+        return nullptr;
+    }
+
     QPoint defaultCenterPosForFloating();
 
     void updateTitle();
@@ -428,6 +442,11 @@ void DockWidgetBase::raise()
 bool DockWidgetBase::isMainWindow() const
 {
     return qobject_cast<MainWindowBase*>(widget());
+}
+
+bool DockWidgetBase::isInMainWindow() const
+{
+    return d->mainWindow() != nullptr;
 }
 
 bool DockWidgetBase::isFocused() const

@@ -429,6 +429,7 @@ private Q_SLOTS:
     void tst_stuckSeparator();
     void tst_isFocused();
     void tst_setWidget();
+    void tst_isInMainWindow();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5820,6 +5821,19 @@ void TestDocks::tst_setWidget()
     dw->setWidget(button2);
     delete button1;
     delete dw;
+}
+
+void TestDocks::tst_isInMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+    auto dw = new DockWidget(QStringLiteral("FOO"));
+    dw->show();
+    auto fw = dw->window();
+    QVERIFY(!dw->isInMainWindow());
+    auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
+    m1->addDockWidget(dw, KDDockWidgets::Location_OnLeft);
+    QVERIFY(dw->isInMainWindow());
+    delete fw;
 }
 
 int main(int argc, char *argv[])

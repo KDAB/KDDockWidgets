@@ -320,6 +320,16 @@ public:
      */
     bool isMainWindow() const;
 
+
+    /**
+     * @brief Returns whether this dock widget is docked into a main window.
+     *
+     * Note that isFloating() returning false might either mean the dock widget is docked into a
+     * main window or into a floating window (groupped/nested with other dock widgets. Use this function
+     * then if you need to disambiguate
+     */
+    bool isInMainWindow() const;
+
     ///@brief Returns whether This or any child of this dock widget is focused
     ///Not to be confused with QWidget::hasFocus(), which just refers to 1 widget. This includes
     ///variant includes children.
