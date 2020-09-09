@@ -173,6 +173,7 @@ public:
 protected:
     void onTabInserted();
     void onTabRemoved();
+    void onCurrentTabChanged(int index);
 
 private:
     Frame *const m_frame;

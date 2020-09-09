@@ -44,6 +44,9 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
         }
     });
 
+    connect(this, &QTabWidget::currentChanged, this, [this] (int index) {
+        onCurrentTabChanged(index);
+    });
 }
 
 TabBar *TabWidgetWidget::tabBar() const

@@ -430,6 +430,7 @@ private Q_SLOTS:
     void tst_isFocused();
     void tst_setWidget();
     void tst_isInMainWindow();
+    void tst_titleBarFocusedWhenTabsChange();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5834,6 +5835,34 @@ void TestDocks::tst_isInMainWindow()
     m1->addDockWidget(dw, KDDockWidgets::Location_OnLeft);
     QVERIFY(dw->isInMainWindow());
     delete fw;
+}
+
+void TestDocks::tst_titleBarFocusedWhenTabsChange()
+{
+     EnsureTopLevelsDeleted e;
+     Config::self().setFlags(Config::Flag_TitleBarIsFocusable);
+
+     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QLineEdit());
+     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QLineEdit());
+     auto dock3 = createDockWidget(QStringLiteral("dock3"), new QLineEdit());
+
+     auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
+
+     m1->addDockWidget(dock1, Location_OnLeft);
+     m1->addDockWidget(dock2, Location_OnRight);
+     dock2->addDockWidgetAsTab(dock3);
+
+     dock1->setFocus(Qt::NoFocusReason);
+
+     QVERIFY(Testing::waitForEvent(dock1, QEvent::FocusIn));
+     QVERIFY(dock1->titleBar()->isFocused());
+
+     auto frame2 = qobject_cast<FrameWidget*>(dock2->frame());
+     TabWidget *tb = frame2->tabWidget();
+     QCOMPARE(tb->currentIndex(), 1); // Was the last to be added
+     tb->setCurrentDockWidget(0);
+     QVERIFY(!dock1->titleBar()->isFocused());
+     QVERIFY(dock2->titleBar()->isFocused());
 }
 
 int main(int argc, char *argv[])
