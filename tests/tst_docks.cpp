@@ -5835,6 +5835,12 @@ void TestDocks::tst_isInMainWindow()
     m1->addDockWidget(dw, KDDockWidgets::Location_OnLeft);
     QVERIFY(dw->isInMainWindow());
     delete fw;
+
+    // Also test after creating the MainWindow, as the FloatingWindow will get parented to it
+    auto dw2 = new DockWidget(QStringLiteral("2"));
+    dw2->show();
+    QVERIFY(!dw2->isInMainWindow());
+    delete dw2->window();
 }
 
 void TestDocks::tst_titleBarFocusedWhenTabsChange()

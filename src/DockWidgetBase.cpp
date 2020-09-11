@@ -79,13 +79,19 @@ public:
 
     MainWindowBase *mainWindow() const
     {
+        if (q->isWindow())
+            return nullptr;
+
         // Note: Don't simply use window(), as the MainWindow might be embedded into something else
-        QObject *p = q->parent();
+        QWidgetOrQuick *p = q->parentWidget();
         while (p) {
             if (auto window = qobject_cast<MainWindowBase*>(p))
                 return window;
 
-            p = p->parent();
+            if (p->isWindow())
+                return nullptr;
+
+            p = p->parentWidget();
         }
 
         return nullptr;
