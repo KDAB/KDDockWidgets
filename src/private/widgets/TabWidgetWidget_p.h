@@ -49,7 +49,6 @@ protected:
     void setTabBarAutoHide(bool) override;
     void detachTab(DockWidgetBase *dockWidget) override;
 
-
     DockWidgetBase *dockwidgetAt(int index) const override;
     int currentIndex() const override;
 

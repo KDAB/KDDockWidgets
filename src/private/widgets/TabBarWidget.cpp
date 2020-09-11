@@ -68,6 +68,7 @@ static MyProxy *proxyStyle()
 TabBarWidget::TabBarWidget(TabWidget *parent)
     : QTabBar(parent->asWidget())
     , TabBar(this, parent)
+    , m_tabWidget(parent)
 {
     setMovable(Config::self().flags() & Config::Flag_AllowReorderTabs);
     setStyle(proxyStyle());
