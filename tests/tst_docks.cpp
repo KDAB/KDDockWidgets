@@ -5866,7 +5866,12 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
      auto frame2 = qobject_cast<FrameWidget*>(dock2->frame());
      TabWidget *tb = frame2->tabWidget();
      QCOMPARE(tb->currentIndex(), 1); // Was the last to be added
-     tb->setCurrentDockWidget(0);
+
+     auto tabBar = dynamic_cast<QTabBar*>(tb->tabBar());
+     const QRect rect0 = tabBar->tabRect(0);
+     const QPoint globalPos = tabBar->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
+     Tests::clickOn(globalPos, tabBar);
+
      QVERIFY(!dock1->titleBar()->isFocused());
      QVERIFY(dock2->titleBar()->isFocused());
 }
