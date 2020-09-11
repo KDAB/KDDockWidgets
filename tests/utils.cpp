@@ -180,6 +180,12 @@ void KDDockWidgets::Tests::releaseOn(QPoint globalPos, QWidget *receiver)
     qApp->sendEvent(receiver, &ev);
 }
 
+void KDDockWidgets::Tests::clickOn(QPoint globalPos, QWidget *receiver)
+{
+    pressOn(globalPos, receiver);
+    releaseOn(globalPos, receiver);
+}
+
 void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, QWidget *receiver)
 {
     QPoint globalSrc(receiver->mapToGlobal(QPoint(5, 5)));
