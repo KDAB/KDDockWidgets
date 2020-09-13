@@ -51,7 +51,7 @@ PROJECT_BRIEF          =
 # pixels and the maximum width should not exceed 200 pixels. Doxygen will copy
 # the logo to the output directory.
 
-PROJECT_LOGO           =
+PROJECT_LOGO           = "@CMAKE_SOURCE_DIR@/images/KDDockWidgets-64x64.png"
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) path
 # into which the generated documentation will be written. If a relative path is
@@ -1196,7 +1196,8 @@ HTML_EXTRA_STYLESHEET  =
 # files will be copied as-is; there are no commands or markers available.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_FILES       = "@CMAKE_CURRENT_SOURCE_DIR@/kdab-logo-16x16.png"
+HTML_EXTRA_FILES       = "@CMAKE_CURRENT_SOURCE_DIR@/kdab-logo-16x16.png" \
+                         "@CMAKE_CURRENT_SOURCE_DIR@/kdab-kddockwidgets-logo-16x16.png"
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to
