@@ -73,6 +73,36 @@ public:
 }
 #endif
 
+static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
+{
+    // TODO: Using a parent helps the floating windows stay in front of the main window always.
+    // We're not receiving the parent via ctor argument as the app can have multiple-main windows,
+    // so use a hack here.
+    // Not quite clear what to do if the app supports multiple main windows though.
+
+    if (candidateParent)
+        return candidateParent;
+
+    const MainWindowBase::List windows = DockRegistry::self()->mainwindows();
+
+    if (windows.isEmpty())
+        return nullptr;
+
+    if (windows.size() == 1) {
+        return windows.first();
+    } else {
+        const QStringList affinities = frame ? frame->affinities() : QStringList();
+        const MainWindowBase::List mainWindows = DockRegistry::self()->mainWindowsWithAffinity(affinities);
+
+        if (mainWindows.isEmpty()) {
+            qWarning() << Q_FUNC_INFO << "No window with affinity" << affinities << "found";
+            return nullptr;
+        } else {
+            return mainWindows.first();
+        }
+    }
+}
+
 static Qt::WindowFlags windowFlagsToUse()
 {
     if (KDDockWidgets::usesNativeDraggingAndResizing())
@@ -115,36 +145,6 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::numFramesChanged);
     connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
     m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
-}
-
-static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
-{
-    // TODO: Using a parent helps the floating windows stay in front of the main window always.
-    // We're not receiving the parent via ctor argument as the app can have multiple-main windows,
-    // so use a hack here.
-    // Not quite clear what to do if the app supports multiple main windows though.
-
-    if (candidateParent)
-        return candidateParent;
-
-    const MainWindowBase::List windows = DockRegistry::self()->mainwindows();
-
-    if (windows.isEmpty())
-        return nullptr;
-
-    if (windows.size() == 1) {
-        return windows.first();
-    } else {
-        const QStringList affinities = frame ? frame->affinities() : QStringList();
-        const MainWindowBase::List mainWindows = DockRegistry::self()->mainWindowsWithAffinity(affinities);
-
-        if (mainWindows.isEmpty()) {
-            qWarning() << Q_FUNC_INFO << "No window with affinity" << affinities << "found";
-            return nullptr;
-        } else {
-            return mainWindows.first();
-        }
-    }
 }
 
 FloatingWindow::FloatingWindow(Frame *frame, MainWindowBase *parent)
