@@ -73,6 +73,17 @@ public:
 }
 #endif
 
+static Qt::WindowFlags windowFlagsToUse()
+{
+    if (KDDockWidgets::usesNativeDraggingAndResizing())
+        return Qt::Window;
+
+    if (Config::self().flags() & Config::Flag_DontUseUtilityWindowsForFloating)
+        return Qt::Window;
+
+    return Qt::Tool;
+}
+
 static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
 {
     // TODO: Using a parent helps the floating windows stay in front of the main window always.
@@ -101,17 +112,6 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
             return mainWindows.first();
         }
     }
-}
-
-static Qt::WindowFlags windowFlagsToUse()
-{
-    if (KDDockWidgets::usesNativeDraggingAndResizing())
-        return Qt::Window;
-
-    if (Config::self().flags() & Config::Flag_DontUseUtilityWindowsForFloating)
-        return Qt::Window;
-
-    return Qt::Tool;
 }
 
 FloatingWindow::FloatingWindow(MainWindowBase *parent)
