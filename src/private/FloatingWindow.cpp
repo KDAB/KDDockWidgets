@@ -78,7 +78,7 @@ static Qt::WindowFlags windowFlagsToUse()
     if (KDDockWidgets::usesNativeDraggingAndResizing())
         return Qt::Window;
 
-    if (Config::self().flags() & Config::Flag_DontUseUtilityWindowsForFloating)
+    if (Config::self().flags() & Config::Flag_internal_DontUseQtToolWindowsForFloatingWindows)
         return Qt::Window;
 
     return Qt::Tool;
@@ -86,6 +86,10 @@ static Qt::WindowFlags windowFlagsToUse()
 
 static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
 {
+    if (Config::self().flags() & Config::Flag_internal_DontUseParentForFloatingWindows) {
+        return nullptr;
+    }
+
     // TODO: Using a parent helps the floating windows stay in front of the main window always.
     // We're not receiving the parent via ctor argument as the app can have multiple-main windows,
     // so use a hack here.
@@ -114,8 +118,15 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
     }
 }
 
+MainWindowBase *actualParent(MainWindowBase *candidate)
+{
+    return (Config::self().flags() & Config::Flag_internal_DontUseParentForFloatingWindows)
+            ? nullptr
+            : candidate;
+}
+
 FloatingWindow::FloatingWindow(MainWindowBase *parent)
-    : QWidgetAdapter(parent, windowFlagsToUse())
+    : QWidgetAdapter(actualParent(parent), windowFlagsToUse())
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_dropArea(new DropArea(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))

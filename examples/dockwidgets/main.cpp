@@ -127,7 +127,7 @@ int main(int argc, char **argv)
         flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
 
     if (parser.isSet(noUtilityWindows))
-        flags |= KDDockWidgets::Config::Flag_DontUseUtilityWindowsForFloating;
+        flags |= KDDockWidgets::Config::Flag_DontUseUtilityFloatingWindows;
 
     if (parser.isSet(alwaysTabs))
         flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
