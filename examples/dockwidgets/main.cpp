@@ -98,8 +98,14 @@ int main(int argc, char **argv)
     parser.addOption(maxSizeOption);
 
     QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central frame"));
+
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
+
+    QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
+    QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
+    parser.addOption(noQtTool);
+    parser.addOption(noParentForFloating);
 #else
     Q_UNUSED(centralFrame)
 #endif
@@ -117,12 +123,18 @@ int main(int argc, char **argv)
         KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
 
     MainWindowOptions options = MainWindowOption_None;
+    auto flags = KDDockWidgets::Config::self().flags();
 #if defined(DOCKS_DEVELOPER_MODE)
     options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralFrame
                                          : MainWindowOption_None;
+
+    if (parser.isSet(noQtTool))
+        flags |= KDDockWidgets::Config::Flag_internal_DontUseQtToolWindowsForFloatingWindows;
+
+    if (parser.isSet(noParentForFloating))
+        flags |= KDDockWidgets::Config::Flag_internal_DontUseParentForFloatingWindows;
 #endif
 
-    auto flags = KDDockWidgets::Config::self().flags();
     if (parser.isSet(noTitleBars))
         flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
 
