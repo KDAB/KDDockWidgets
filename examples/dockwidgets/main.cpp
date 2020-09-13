@@ -84,6 +84,9 @@ int main(int argc, char **argv)
     QCommandLineOption segmentedIndicators("y", QCoreApplication::translate("main", "Use segmented indicators instead of classical"));
     parser.addOption(segmentedIndicators);
 
+    QCommandLineOption noUtilityWindows("u", QCoreApplication::translate("main", "FloatingWindows will be normal windows instead of utility windows"));
+    parser.addOption(noUtilityWindows);
+
     parser.addPositionalArgument("savedlayout", QCoreApplication::translate("main", "loads the specified json file at startup"));
 
 #ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
@@ -122,6 +125,9 @@ int main(int argc, char **argv)
     auto flags = KDDockWidgets::Config::self().flags();
     if (parser.isSet(noTitleBars))
         flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
+
+    if (parser.isSet(noUtilityWindows))
+        flags |= KDDockWidgets::Config::Flag_DontUseUtilityWindowsForFloating;
 
     if (parser.isSet(alwaysTabs))
         flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;

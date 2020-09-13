@@ -65,6 +65,7 @@ public:
         Flag_TitleBarHasMaximizeButton = 256, /// The title bar will have a maximize/restore button when floating. This is mutually-exclusive with the floating button (since many apps behave that way).
         Flag_TitleBarIsFocusable = 512, /// You can click the title bar and it will focus the last focused widget in the focus scope. If no previously focused widget then it focuses the user's dock widget guest, which should accept focus or use a focus proxy.
         Flag_LazyResize = 1024, /// The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
+        Flag_DontUseUtilityWindowsForFloating = 2048, ///> FloatingWindows will use Qt::Window instead of Qt::Tool
         Flag_Default = Flag_AeroSnapWithClientDecos ///> The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)

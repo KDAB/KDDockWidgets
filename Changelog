@@ -3,6 +3,7 @@
   - Added FocusScope support
   - Added DockWidget::isFocused() and DockWidgetBase::isFocusedChanged()
   - Added Config::Flag_AlwaysTitleBarWhenFloating, which complements Flag_HideTitleBarWhenTabsVisible
+  - Added Config::Flag_DontUseUtilityWindowsForFloating
 
 * Roadmap
   - QtQuick support

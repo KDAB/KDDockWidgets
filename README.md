@@ -57,6 +57,7 @@ Features
 - Show close button on tabs
 - Allow to make a dock widget non-closable and/or non-dockable
 - Optional maximize button on the title bar
+- FloatingWindows can be utility windows or full native
 
 ![Screen capture](./screencap.gif?raw=true "The docking system in action")
 

@@ -73,8 +73,19 @@ public:
 }
 #endif
 
+static Qt::WindowFlags windowFlagsToUse()
+{
+    if (KDDockWidgets::usesNativeDraggingAndResizing())
+        return Qt::Window;
+
+    if (Config::self().flags() & Config::Flag_DontUseUtilityWindowsForFloating)
+        return Qt::Window;
+
+    return Qt::Tool;
+}
+
 FloatingWindow::FloatingWindow(MainWindowBase *parent)
-    : QWidgetAdapter(parent, KDDockWidgets::usesNativeDraggingAndResizing() ? Qt::Window : Qt::Tool)
+    : QWidgetAdapter(parent, windowFlagsToUse())
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_dropArea(new DropArea(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
