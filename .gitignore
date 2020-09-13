@@ -57,3 +57,5 @@ kddockwidgets_minimal_example
 /kddockwidgets.tag
 /CMakeDoxyfile.in
 /CMakeDoxygenDefaults.cmake
+/Testing
+/layout_tst*
