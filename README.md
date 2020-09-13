@@ -1,5 +1,5 @@
 KDDockWidgets
-==============
+=============
 `KDDockWidgets` is a Qt dock widget library written by KDAB, suitable for replacing
 `QDockWidget` and implementing advanced functionalities missing in Qt.
 
@@ -20,7 +20,7 @@ creative with their requests, so it was clear we needed a better docking framewo
 
 You will find more information in these places:
 
- * [our official home page](https://www.kdab.com/kddockwidgets)
+ * [our official home page](https://www.kdab.com/development-resources/qt-tools/kddockwidgets)
  * [online detailed browsable API reference](https://docs.kdab.com/kddockwidgets)
  * [our example programs](examples/)
 
