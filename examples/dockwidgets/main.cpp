@@ -106,6 +106,11 @@ int main(int argc, char **argv)
     QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
+
+# if defined(Q_OS_WIN)
+    QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
+    parser.addOption(noAeroSnap);
+# endif
 #else
     Q_UNUSED(centralFrame)
 #endif
@@ -133,6 +138,12 @@ int main(int argc, char **argv)
 
     if (parser.isSet(noParentForFloating))
         flags |= KDDockWidgets::Config::Flag_internal_DontUseParentForFloatingWindows;
+
+# if defined(Q_OS_WIN)
+    if (parser.isSet(noAeroSnap))
+        flags &= ~KDDockWidgets::Config::Flag_AeroSnapWithClientDecos;
+# endif
+
 #endif
 
     if (parser.isSet(noTitleBars))
