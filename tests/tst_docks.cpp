@@ -5848,7 +5848,9 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
      EnsureTopLevelsDeleted e;
      Config::self().setFlags(Config::Flag_TitleBarIsFocusable);
 
-     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QLineEdit());
+     auto le1 = new QLineEdit();
+     le1->setObjectName("le1");
+     auto dock1 = createDockWidget(QStringLiteral("dock1"), le1);
      auto dock2 = createDockWidget(QStringLiteral("dock2"), new QLineEdit());
      auto dock3 = createDockWidget(QStringLiteral("dock3"), new QLineEdit());
 
@@ -5858,12 +5860,14 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
      m1->addDockWidget(dock2, Location_OnRight);
      dock2->addDockWidgetAsTab(dock3);
 
-     dock1->setFocus(Qt::NoFocusReason);
+     TitleBar *titleBar1 = dock1->titleBar();
+     dock1->widget()->setFocus(Qt::MouseFocusReason);
 
-     QVERIFY(Testing::waitForEvent(dock1, QEvent::FocusIn));
-     QVERIFY(dock1->titleBar()->isFocused());
+     QVERIFY(Testing::waitForEvent(dock1->widget(), QEvent::FocusIn));
+     QVERIFY(titleBar1->isFocused());
 
      auto frame2 = qobject_cast<FrameWidget*>(dock2->frame());
+
      TabWidget *tb = frame2->tabWidget();
      QCOMPARE(tb->currentIndex(), 1); // Was the last to be added
 
@@ -5871,8 +5875,18 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
      const QRect rect0 = tabBar->tabRect(0);
      const QPoint globalPos = tabBar->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
      Tests::clickOn(globalPos, tabBar);
+     QVERIFY(!titleBar1->isFocused());
+     QVERIFY(dock2->titleBar()->isFocused());
 
+     // Test that clicking on a tab that is already current will also set focus
+     dock1->setFocus(Qt::MouseFocusReason);
+     QVERIFY(dock1->titleBar()->isFocused());
+     QVERIFY(!dock2->titleBar()->isFocused());
+
+     Tests::clickOn(globalPos, tabBar);
+     QEXPECT_FAIL("", "Fix pending", Continue);
      QVERIFY(!dock1->titleBar()->isFocused());
+     QEXPECT_FAIL("", "Fix pending", Continue);
      QVERIFY(dock2->titleBar()->isFocused());
 }
 
