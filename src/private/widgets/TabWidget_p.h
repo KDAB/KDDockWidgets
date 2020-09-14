@@ -82,6 +82,8 @@ public:
 
     DockWidgetBase *singleDockWidget() const override;
 
+    Frame *frame() const;
+
 private:
     TabWidget *const m_tabWidget;
     QPointer<DockWidgetBase> m_lastPressedDockWidget = nullptr;

@@ -130,6 +130,11 @@ DockWidgetBase *TabBar::singleDockWidget() const
     return m_tabWidget->singleDockWidget();
 }
 
+Frame *TabBar::frame() const
+{
+    return m_tabWidget->frame();
+}
+
 TabWidget::TabWidget(QWidgetOrQuick *thisWidget, Frame *frame)
     : Draggable(thisWidget, Config::self().flags() & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
     , m_frame(frame)
