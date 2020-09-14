@@ -253,11 +253,5 @@ void TabWidget::onTabRemoved()
 
 void TabWidget::onCurrentTabChanged(int index)
 {
-    if (index < 0 || !(Config::self().flags() & Config::Flag_TitleBarIsFocusable) )
-        return;
-
-    // A tab changing also counts as a change of scope
-    if (!m_frame->isFocused()) {
-        m_frame->FocusScope::focus(Qt::MouseFocusReason);
-    }
+    Q_UNUSED(index);
 }

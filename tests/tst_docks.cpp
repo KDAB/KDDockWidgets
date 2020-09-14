@@ -5884,9 +5884,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
      QVERIFY(!dock2->titleBar()->isFocused());
 
      Tests::clickOn(globalPos, tabBar);
-     QEXPECT_FAIL("", "Fix pending", Continue);
      QVERIFY(!dock1->titleBar()->isFocused());
-     QEXPECT_FAIL("", "Fix pending", Continue);
      QVERIFY(dock2->titleBar()->isFocused());
 }
 
