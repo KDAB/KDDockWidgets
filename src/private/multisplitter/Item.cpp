@@ -177,9 +177,9 @@ void Item::setGuestWidget(Widget *guest)
     m_guest = guest;
 
     if (m_guest) {
+        m_guest->setParent(m_hostWidget);
         m_guest->setLayoutItem(this);
         newWidget->installEventFilter(this);
-        m_guest->setParent(m_hostWidget);
         setMinSize(guest->minSize());
         setMaxSizeHint(guest->maxSizeHint());
 
