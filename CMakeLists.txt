@@ -25,7 +25,7 @@
 #
 # -DKDDockWidgets_DOCS=[true|false]
 #  Build the API documentation.
-#  Default=true
+#  Default=false
 #
 # -DOPTION_DEVELOPER_MODE=[true|false]
 #  Configure the build for a developer setup.
@@ -79,7 +79,7 @@ if(OPTION_BUILD_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PRO
 endif()
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
-option(${PROJECT_NAME}_DOCS "Build the API documentation" ON)
+option(${PROJECT_NAME}_DOCS "Build the API documentation" OFF)
 
 #Always build the test harness in developer-mode
 if(OPTION_DEVELOPER_MODE)
