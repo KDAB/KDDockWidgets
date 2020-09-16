@@ -432,6 +432,7 @@ private Q_SLOTS:
     void tst_isInMainWindow();
     void tst_titleBarFocusedWhenTabsChange();
     void tst_floatingWindowTitleBug();
+    void tst_honourUserGeometry();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5891,7 +5892,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
 void TestDocks::tst_floatingWindowTitleBug()
 {
     // Test for #74
-
+    EnsureTopLevelsDeleted e;
     auto dw1 = new DockWidget(QStringLiteral("1"));
     auto dw2 = new DockWidget(QStringLiteral("2"));
     auto dw3 = new DockWidget(QStringLiteral("3"));
@@ -5910,6 +5911,21 @@ void TestDocks::tst_floatingWindowTitleBug()
 
     delete dw1->window();
     delete dw3->window();
+}
+
+void TestDocks::tst_honourUserGeometry()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dw1 = new DockWidget(QStringLiteral("1"));
+
+    const QPoint pt(10, 10);
+    dw1->move(pt);
+    dw1->show();
+
+    QCOMPARE(dw1->window()->geometry().topLeft(), pt);
+
+    delete dw1->window();
 }
 
 int main(int argc, char *argv[])

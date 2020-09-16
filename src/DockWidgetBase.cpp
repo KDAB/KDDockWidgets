@@ -496,9 +496,12 @@ FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
         QRect geo = d->m_lastPositions.lastFloatingGeometry();
         if (geo.isNull()) {
             geo = geometry();
-            const QPoint center = d->defaultCenterPosForFloating();
-            if (!center.isNull())
-                geo.moveCenter(center);
+
+            if (!testAttribute(Qt::WA_Moved)) { // If user already moved it, we don't interfere
+                const QPoint center = d->defaultCenterPosForFloating();
+                if (!center.isNull())
+                    geo.moveCenter(center);
+            }
         }
 
         auto frame = Config::self().frameworkWidgetFactory()->createFrame();
