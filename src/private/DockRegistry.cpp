@@ -15,6 +15,7 @@
 #include "Position_p.h"
 #include "MultiSplitter_p.h"
 #include "QWidgetAdapter.h"
+#include "Config.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -150,6 +151,38 @@ QStringList DockRegistry::dockWidgetNames() const
         names.push_back(dw->uniqueName());
 
     return names;
+}
+
+bool DockRegistry::isProbablyObscured(QWindow *window, FloatingWindow *exclude) const
+{
+    if (!window)
+        return false;
+
+    const QRect geo = window->geometry();
+    for (FloatingWindow *fw : m_nestedWindows) {
+        QWindow *fwWindow = fw->QWidgetAdapter::windowHandle();
+        if (fw == exclude || fwWindow == window)
+            continue;
+
+        if (fwWindow->geometry().intersects(geo)) {
+            // fw might be bellow, but we don't have a way to check. So be conservative and return true.
+            return true;
+        }
+    }
+
+    // Floating windows are Tool (keep above), unless we disabled it in Config
+    const bool targetIsToolWindow = !(Config::self().flags() & Config::Flag_DontUseUtilityFloatingWindows) && floatingWindowForHandle(window) != nullptr;
+
+    for (MainWindowBase *mw : m_mainWindows) {
+        QWindow *mwWindow = mw->window()->windowHandle();
+
+        if (mwWindow != window && !targetIsToolWindow && mwWindow->geometry().intersects(geo)) {
+            // Two main windows that intersect. Return true. If the target is a tool window it will be above, so we don't care.
+            return true;
+        }
+    }
+
+    return false;
 }
 
 MainWindowBase::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const

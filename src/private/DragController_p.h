@@ -50,6 +50,8 @@ public:
     void grabMouseFor(QWidgetOrQuick *);
     void releaseMouse(QWidgetOrQuick *);
 
+    FloatingWindow *windowBeingDragged() const;
+
 Q_SIGNALS:
     void mousePressed();
     void manhattanLengthMove();

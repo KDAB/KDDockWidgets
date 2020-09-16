@@ -165,6 +165,13 @@ public:
     /// @brief Returns a list of all known dock widget unique names
     QStringList dockWidgetNames() const;
 
+    /// @brief returns if the specified window has some other window on top (with higher Z)
+    /// This is an approximation, as we don't have ways to compare Z, so we mostly intersect
+    /// geometries.
+    /// @param target The window which we want to know if it's probably obscured
+    /// @param exclude This window should not be counted as an obscurer. (It's being dragged).
+    bool isProbablyObscured(QWindow *target, FloatingWindow *exclude) const;
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 private:

@@ -15,6 +15,7 @@
 #include "Frame_p.h"
 #include "Logging_p.h"
 #include "Config.h"
+#include "DockRegistry_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "ClassicIndicatorsWindow_p.h"
 
@@ -86,7 +87,11 @@ void ClassicIndicators::updateIndicatorsVisibility(bool visible)
     const bool isTheOnlyFrame = hoveredFrame && hoveredFrame->isTheOnlyFrame();
 
     m_innerIndicatorsVisible = visible && hoveredFrame;
-    m_outterIndicatorsVisible = visible && !isTheOnlyFrame;
+
+    // If there's only 1 frame in the layout, the outter indicators are redundant, as they do the same thing as the internal ones.
+    // But there might be another window obscuring our target, so it's useful to show the outter indicators in this case
+    m_outterIndicatorsVisible = visible && (!isTheOnlyFrame ||
+                                            DockRegistry::self()->isProbablyObscured(hoveredFrame->window()->windowHandle(), DragController::instance()->windowBeingDragged()));
 
     Q_EMIT innerIndicatorsVisibleChanged();
     Q_EMIT outterIndicatorsVisibleChanged();

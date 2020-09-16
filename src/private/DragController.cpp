@@ -337,6 +337,12 @@ void DragController::releaseMouse(QWidgetOrQuick *target)
     }
 }
 
+FloatingWindow *DragController::windowBeingDragged() const
+{
+    return m_windowBeingDragged ? m_windowBeingDragged->floatingWindow()
+                                : nullptr;
+}
+
 static QMouseEvent *mouseEvent(QEvent *e)
 {
     switch (e->type()) {
