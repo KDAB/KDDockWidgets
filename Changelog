@@ -4,6 +4,13 @@
   - Added DockWidget::isFocused() and DockWidgetBase::isFocusedChanged()
   - Added Config::Flag_AlwaysTitleBarWhenFloating, which complements Flag_HideTitleBarWhenTabsVisible
   - Added Config::Flag_DontUseUtilityWindowsForFloating
+  - Added Config::Flag_TitleBarHasMinimizeButton
+  - Bugfixes:
+    - Windows: Fixed windows not having proper minimum size.
+    - Windows: Fixed moving windows across screens with different DPI (#72)
+    - Don't center floating windows if the user set a custom position (#75)
+    - Fixed floating window's title not being correct (#74)
+    - Fixed focus scope not reacting when clicking on current tab (#71)
 
 * Roadmap
   - QtQuick support
