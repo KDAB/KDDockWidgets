@@ -26,6 +26,7 @@
 #include <QAbstractButton>
 
 #if defined(Q_OS_WIN)
+# include <QtGui/private/qhighdpiscaling_p.h>
 # include <Windowsx.h>
 # include <Windows.h>
 # if defined(Q_CC_MSVC)
@@ -247,9 +248,11 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
         } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth) {
             *result = HTRIGHT;
         } else {
-            const QRect htCaptionRect = w->dragRect(); // The rect on which we allow for Windows to do a native drag
-            if (yPos >= htCaptionRect.top() && yPos <= htCaptionRect.bottom() && xPos >= htCaptionRect.left() && xPos <= htCaptionRect.right()) {
-                QWidget *hoveredWidget = qApp->widgetAt(QPoint(xPos, yPos));
+            const QPoint globalPosQt = QHighDpi::fromNativePixels(QPoint(xPos, yPos), w->windowHandle());
+
+            const QRect htCaptionRect = w->dragRect(); // The rect on which we allow for Windows to do Ba native drag
+            if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
+                QWidget *hoveredWidget = qApp->widgetAt(globalPosQt);
                 if (!qobject_cast<QAbstractButton*>(hoveredWidget)) {
                     // User clicked on the title bar, let's allow it, so we get Aero-Snap.
                     *result = HTCAPTION;
