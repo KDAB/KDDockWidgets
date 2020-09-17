@@ -71,6 +71,7 @@ public:
         Flag_internal_DontUseParentForFloatingWindows = 0x1000, ///> FloatingWindows won't have a parent top-level. Internal, use Flag_DontUseUtilityFloatingWindows instead.
 
         Flag_DontUseUtilityFloatingWindows = Flag_internal_DontUseQtToolWindowsForFloatingWindows | Flag_internal_DontUseParentForFloatingWindows,
+        Flag_TitleBarHasMinimizeButton = 0x2000 | Flag_DontUseUtilityFloatingWindows, ///> The title bar will have a minimize button when floating. This implies Flag_DontUseUtilityFloatingWindows too, otherwise they wouldn't appear in the task bar.
         Flag_Default = Flag_AeroSnapWithClientDecos ///> The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)

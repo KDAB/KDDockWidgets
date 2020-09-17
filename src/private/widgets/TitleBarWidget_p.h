@@ -51,6 +51,7 @@ protected:
     void updateFloatButton() override;
     void updateCloseButton() override;
     void updateMaximizeButton() override;
+    void updateMinimizeButton() override;
 
      // The following are needed for the unit-tests
     bool isCloseButtonVisible() const override;
@@ -68,6 +69,7 @@ private:
     QAbstractButton *m_closeButton = nullptr;
     QAbstractButton *m_floatButton = nullptr;
     QAbstractButton *m_maximizeButton = nullptr;
+    QAbstractButton *m_minimizeButton = nullptr;
     QLabel *m_dockWidgetIcon = nullptr;
 };
 

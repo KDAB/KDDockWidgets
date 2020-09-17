@@ -78,8 +78,11 @@ int main(int argc, char **argv)
     QCommandLineOption nonDockable("d", QCoreApplication::translate("main", "DockWidget #9 will be non-dockable"));
     parser.addOption(nonDockable);
 
-    QCommandLineOption maximizeButton("b", QCoreApplication::translate("main", "DockWidgets have maximize/restore buttons instead of float/dock button"));
-    parser.addOption(maximizeButton);
+    QCommandLineOption maximizeButtonOption("b", QCoreApplication::translate("main", "Floating dockWidgets have maximize/restore buttons instead of float/dock button"));
+    parser.addOption(maximizeButtonOption);
+
+    QCommandLineOption minimizeButtonOption("k", QCoreApplication::translate("main", "Floating dockWidgets have a minimize button. Implies not being an utility window (~Qt::Tool)"));
+    parser.addOption(minimizeButtonOption);
 
     QCommandLineOption segmentedIndicators("y", QCoreApplication::translate("main", "Use segmented indicators instead of classical"));
     parser.addOption(segmentedIndicators);
@@ -169,8 +172,11 @@ int main(int argc, char **argv)
     if (parser.isSet(reorderTabsOption))
         flags |= KDDockWidgets::Config::Flag_AllowReorderTabs;
 
-    if (parser.isSet(maximizeButton))
+    if (parser.isSet(maximizeButtonOption))
         flags |= KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton;
+
+    if (parser.isSet(minimizeButtonOption))
+        flags |= KDDockWidgets::Config::Flag_TitleBarHasMinimizeButton;
 
     if (parser.isSet(lazyResizeOption))
         flags |= KDDockWidgets::Config::Flag_LazyResize;

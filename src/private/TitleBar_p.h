@@ -66,6 +66,9 @@ public:
     ///@brief returns whether this title bar supports a maximize/restore button
     bool supportsMaximizeButton() const;
 
+    ///@brief returns whether this title bar supports a minimize button
+    bool supportsMinimizeButton() const;
+
     ///@brief returns whether this title bar has an icon
     bool hasIcon() const;
 
@@ -97,10 +100,12 @@ protected:
     Q_INVOKABLE void onCloseClicked();
     Q_INVOKABLE void onFloatClicked();
     Q_INVOKABLE void onMaximizeClicked();
+    Q_INVOKABLE void onMinimizeClicked();
     Q_INVOKABLE void toggleMaximized();
 
     virtual void updateFloatButton() {}
     virtual void updateMaximizeButton() {}
+    virtual void updateMinimizeButton() {}
 
     // The following are needed for the unit-tests
     virtual bool isCloseButtonVisible() const { return true; }

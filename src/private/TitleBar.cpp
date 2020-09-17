@@ -45,6 +45,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateCloseButton);
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateFloatButton);
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateMaximizeButton);
+    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateMinimizeButton);
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, &TitleBar::updateMaximizeButton);
     connect(m_floatingWindow, &FloatingWindow::activatedChanged , this, &TitleBar::isFocusedChanged);
     init();
@@ -190,6 +191,14 @@ bool TitleBar::supportsMaximizeButton() const
     return m_floatingWindow != nullptr;
 }
 
+bool TitleBar::supportsMinimizeButton() const
+{
+    if ((Config::self().flags() & Config::Flag_TitleBarHasMinimizeButton) != Config::Flag_TitleBarHasMinimizeButton) // this specific flag is not base^2
+        return false;
+
+    return m_floatingWindow != nullptr;
+}
+
 bool TitleBar::hasIcon() const
 {
     return !m_icon.isNull();
@@ -292,4 +301,18 @@ void TitleBar::onFloatClicked()
 void TitleBar::onMaximizeClicked()
 {
     toggleMaximized();
+}
+
+void TitleBar::onMinimizeClicked()
+{
+    if (!m_floatingWindow)
+        return;
+
+    if (!(Config::self().flags() & Config::Flag_DontUseUtilityFloatingWindows)) {
+        // Qt::Tool windows don't appear in the task bar.
+        // Unless someone tells me a good reason to allow this situation.
+        return;
+    }
+
+    m_floatingWindow->showMinimized();
 }

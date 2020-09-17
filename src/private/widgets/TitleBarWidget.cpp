@@ -50,8 +50,11 @@ void TitleBarWidget::init()
     m_layout->setSpacing(2);
 
     m_maximizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMaxButton));
+    m_minimizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMinButton));
     m_floatButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarNormalButton));
     m_closeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarCloseButton));
+
+    m_layout->addWidget(m_minimizeButton);
     m_layout->addWidget(m_maximizeButton);
     m_layout->addWidget(m_floatButton);
     m_layout->addWidget(m_closeButton);
@@ -59,10 +62,12 @@ void TitleBarWidget::init()
     connect(m_floatButton, &QAbstractButton::clicked, this, &TitleBarWidget::onFloatClicked);
     connect(m_closeButton, &QAbstractButton::clicked, this, &TitleBarWidget::onCloseClicked);
     connect(m_maximizeButton, &QAbstractButton::clicked, this, &TitleBarWidget::onMaximizeClicked);
+    connect(m_minimizeButton, &QAbstractButton::clicked, this, &TitleBarWidget::onMinimizeClicked);
 
     updateCloseButton();
     updateFloatButton();
     updateMaximizeButton();
+    updateMinimizeButton();
 
     connect(this, &TitleBar::titleChanged, this, [this] {
         update();
@@ -99,7 +104,7 @@ int TitleBarWidget::buttonAreaWidth() const
 TitleBarWidget::~TitleBarWidget()
 {
     // To avoid a crash
-    for (auto button : { m_floatButton, m_maximizeButton, m_closeButton }) {
+    for (auto button : { m_minimizeButton, m_floatButton, m_maximizeButton, m_closeButton }) {
         button->setParent(nullptr);
         button->deleteLater();
     }
@@ -141,6 +146,11 @@ void TitleBarWidget::updateCloseButton()
 
     qCDebug(closebutton) << Q_FUNC_INFO << "enabled=" << !anyNonClosable;
     m_closeButton->setEnabled(!anyNonClosable);
+}
+
+void TitleBarWidget::updateMinimizeButton()
+{
+    m_minimizeButton->setVisible(supportsMinimizeButton());
 }
 
 void TitleBarWidget::updateMaximizeButton()
