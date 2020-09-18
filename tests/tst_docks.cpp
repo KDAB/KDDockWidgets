@@ -5128,6 +5128,8 @@ void TestDocks::tst_raise()
     if (qApp->platformName() != QLatin1String("offscreen")) { // offscreen qpa doesn't seem to keep Window Z.
         auto dock3 = createDockWidget("3", new QWidget());
         dock3->window()->setGeometry(dock1->window()->geometry());
+        dock3->window()->setObjectName("3");
+        dock1->window()->setObjectName("1");
 
         if (qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() != dock3->window()) {
             qDebug() << "Failing before raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window();
