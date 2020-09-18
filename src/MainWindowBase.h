@@ -34,6 +34,7 @@ class Frame;
 class DropArea;
 class MultiSplitter;
 class DropAreaWithCentralFrame;
+class SideBar;
 
 /**
  * @brief The MainWindow base-class. MainWindow and MainWindowBase are only
@@ -131,8 +132,13 @@ public:
     /// sub-tree.
     void layoutParentContainerEqually(DockWidgetBase *dockWidget);
 
+    ///@brief Minimizes dock widget @p into the side bar
+    void minimizeToSideBar(DockWidgetBase *dw);
+
 protected:
     void setUniqueName(const QString &uniqueName);
+
+    virtual SideBar* sideBar() const = 0;
 
 Q_SIGNALS:
     void uniqueNameChanged();

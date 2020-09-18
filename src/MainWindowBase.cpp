@@ -22,6 +22,7 @@
 #include "DropArea_p.h"
 #include "Frame_p.h"
 #include "Utils_p.h"
+#include "SideBar_p.h"
 #include "Logging_p.h"
 #include "DropAreaWithCentralFrame_p.h"
 
@@ -147,6 +148,17 @@ void MainWindowBase::layoutEqually()
 void MainWindowBase::layoutParentContainerEqually(DockWidgetBase *dockWidget)
 {
     dropArea()->layoutParentContainerEqually(dockWidget);
+}
+
+void MainWindowBase::minimizeToSideBar(DockWidgetBase *dw)
+{
+    if (SideBar *sb = sideBar()) {
+        dw->forceClose();
+        sb->addDockWidget(dw);
+    } else {
+        // Shouldn't happen
+        qWarning() << Q_FUNC_INFO << "Minimization support is disabled in Config.cpp";
+    }
 }
 
 void MainWindowBase::setUniqueName(const QString &uniqueName)

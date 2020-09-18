@@ -23,6 +23,8 @@
 
 namespace KDDockWidgets {
 
+class SideBar;
+
 /**
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget::DockWidget instances.
@@ -44,6 +46,9 @@ public:
 
     ///@brief Destructor
     ~MainWindow() override;
+
+    ///@brief returns the sidebar
+    SideBar *sideBar() const override;
 
 private:
     using QMainWindow::setCentralWidget;

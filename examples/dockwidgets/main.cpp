@@ -110,6 +110,9 @@ int main(int argc, char **argv)
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
 
+    QCommandLineOption autoHideSupport("w", QCoreApplication::translate("main", "Enables auto-hide/minimization to side-bar support"));
+    parser.addOption(autoHideSupport);
+
 # if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
     parser.addOption(noAeroSnap);
@@ -141,6 +144,9 @@ int main(int argc, char **argv)
 
     if (parser.isSet(noParentForFloating))
         flags |= KDDockWidgets::Config::Flag_internal_DontUseParentForFloatingWindows;
+
+    if (parser.isSet(autoHideSupport))
+        flags |= Config::Flag_internal_AutoHideSupport;
 
 # if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))

@@ -69,6 +69,9 @@ public:
     ///@brief returns whether this title bar supports a minimize button
     bool supportsMinimizeButton() const;
 
+    ///@brief returns whether this title bar supports the auto-hide button
+    bool supportsAutoHideButton() const;
+
     ///@brief returns whether this title bar has an icon
     bool hasIcon() const;
 
@@ -97,15 +100,19 @@ Q_SIGNALS:
     void isFocusedChanged();
 
 protected:
+
     Q_INVOKABLE void onCloseClicked();
     Q_INVOKABLE void onFloatClicked();
     Q_INVOKABLE void onMaximizeClicked();
     Q_INVOKABLE void onMinimizeClicked();
     Q_INVOKABLE void toggleMaximized();
+    Q_INVOKABLE void onAutoHideClicked();
 
     virtual void updateFloatButton() {}
     virtual void updateMaximizeButton() {}
+
     virtual void updateMinimizeButton() {}
+    virtual void updateAutoHideButton() {}
 
     // The following are needed for the unit-tests
     virtual bool isCloseButtonVisible() const { return true; }
@@ -126,6 +133,7 @@ private:
 
     Frame *const m_frame;
     FloatingWindow *const m_floatingWindow;
+    const bool m_supportsAutoHide;
 };
 
 

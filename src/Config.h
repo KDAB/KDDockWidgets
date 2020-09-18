@@ -72,6 +72,8 @@ public:
 
         Flag_DontUseUtilityFloatingWindows = Flag_internal_DontUseQtToolWindowsForFloatingWindows | Flag_internal_DontUseParentForFloatingWindows,
         Flag_TitleBarHasMinimizeButton = 0x2000 | Flag_DontUseUtilityFloatingWindows, ///> The title bar will have a minimize button when floating. This implies Flag_DontUseUtilityFloatingWindows too, otherwise they wouldn't appear in the task bar.
+
+        Flag_internal_AutoHideSupport = 0x4000, ///> Supports minimizing dock widgets to the side-bar. Internal for now. Will be public once the feature is finished.
         Flag_Default = Flag_AeroSnapWithClientDecos ///> The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)

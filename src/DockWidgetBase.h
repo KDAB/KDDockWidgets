@@ -338,6 +338,15 @@ public:
     ///@sa isFocusedChanged()
     bool isFocused() const;
 
+    /**
+     * @brief Minimizes this dock widget to the MainWindow's side-bar.
+     *
+     * It will be undocked from current layout. It's previous docked position will be remembered.
+     *
+     * This action is only available if the dock widget is docked into a MainWindow.
+     */
+    void minimizeToSideBar();
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();

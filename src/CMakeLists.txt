@@ -37,6 +37,7 @@ set(DOCKSLIBS_SRCS
     private/FloatingWindow.cpp
     private/Logging.cpp
     private/TitleBar.cpp
+    private/SideBar.cpp
     private/DockRegistry.cpp
     private/Draggable.cpp
     private/WindowBeingDragged.cpp
@@ -65,12 +66,14 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/DropIndicatorOverlayInterface_p.h
     private/FloatingWindow_p.h
     private/Frame_p.h
+    private/SideBar_p.h
     private/TitleBar_p.h
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/QWidgetAdapter_widgets_p.h
     private/widgets/TitleBarWidget_p.h
+    private/widgets/SideBarWidget_p.h
     private/widgets/FloatingWindowWidget_p.h
     private/widgets/FrameWidget_p.h
     private/widgets/TabBarWidget_p.h
@@ -99,6 +102,7 @@ else()
       private/widgets/TabBarWidget.cpp
       private/widgets/FloatingWindowWidget.cpp
       private/widgets/FrameWidget.cpp
+      private/widgets/SideBarWidget.cpp
       private/widgets/TabWidgetWidget.cpp
       private/widgets/TitleBarWidget.cpp
       private/widgets/DockWidget.cpp
