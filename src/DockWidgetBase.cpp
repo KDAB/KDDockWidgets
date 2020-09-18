@@ -455,6 +455,11 @@ bool DockWidgetBase::isInMainWindow() const
     return d->mainWindow() != nullptr;
 }
 
+MainWindowBase* DockWidgetBase::mainWindow() const
+{
+    return d->mainWindow();
+}
+
 bool DockWidgetBase::isFocused() const
 {
     auto f = this->frame();

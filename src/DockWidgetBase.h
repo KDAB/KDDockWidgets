@@ -320,7 +320,6 @@ public:
      */
     bool isMainWindow() const;
 
-
     /**
      * @brief Returns whether this dock widget is docked into a main window.
      *
@@ -329,6 +328,9 @@ public:
      * then if you need to disambiguate
      */
     bool isInMainWindow() const;
+
+    /// @brief Returns the main window this dock widget is in. nullptr if it's not inside a main window
+    MainWindowBase *mainWindow() const;
 
     ///@brief Returns whether This or any child of this dock widget is focused
     ///Not to be confused with QWidget::hasFocus(), which just refers to 1 widget. This includes
