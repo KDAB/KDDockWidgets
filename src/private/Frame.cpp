@@ -58,6 +58,8 @@ Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
 
     connect(this, &Frame::currentDockWidgetChanged, this, &Frame::updateTitleAndIcon);
     m_inCtor = false;
+
+    setDropArea(qobject_cast<DropArea *>(QWidgetAdapter::parentWidget()));
 }
 
 Frame::~Frame()
