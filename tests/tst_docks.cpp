@@ -5130,7 +5130,7 @@ void TestDocks::tst_raise()
         dock3->window()->setGeometry(dock1->window()->geometry());
 
         if (qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() != dock3->window()) {
-            qDebug() << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window();
+            qDebug() << "Failing before raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window();
             QVERIFY(false);
         }
 
@@ -5138,7 +5138,7 @@ void TestDocks::tst_raise()
         QVERIFY(dock1->isCurrentTab());
 
         if (qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() != dock1->window()) {
-            qDebug() << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock1->window();
+            qDebug() << "Failing after raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock1->window();
             QVERIFY(false);
         }
 
