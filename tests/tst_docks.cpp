@@ -5780,6 +5780,9 @@ void TestDocks::tst_isFocused()
     // 1. Create 2 floating windows
     auto dock1 = createDockWidget(QStringLiteral("dock1"), new QLineEdit());
     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QLineEdit());
+
+    QTest::qWait(200); // macOS is flaky here, needs dock2 to be shown first before focusing dock1, otherwise dock1 looses again
+
     dock1->window()->move(400, 200);
 
     // 2. Raise dock1 and focus its line edit
