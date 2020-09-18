@@ -112,7 +112,11 @@ public:
     QString title() const;
     QIcon icon() const;
     const QVector<DockWidgetBase *> dockWidgets() const;
+
     void setDropArea(DropArea *);
+
+    ///@brief Returns the drop area this Frame is in.
+    DropArea *dropArea() const;
 
     bool isTheOnlyFrame() const;
 
@@ -136,13 +140,6 @@ public:
      */
     bool isInMainWindow() const;
 
-
-    /**
-     * @brief Returns the main window this frame is in.
-     * nullptr if not inside a main window.
-     */
-    MainWindowBase *mainWindow() const;
-
     /**
      * @brief returns if this widget is the central frame
      * MainWindow supports a mode where the middle frame is persistent even if no dock widget is there.
@@ -162,13 +159,17 @@ public:
      */
     bool alwaysShowsTabs() const { return m_options & FrameOption_AlwaysShowsTabs; }
 
-
     /// @brief returns whether the dockwidget @p w is inside this frame
     bool contains(DockWidgetBase *w) const;
 
-
     ///@brief returns the FloatingWindow this frame is in, if any
     FloatingWindow *floatingWindow() const;
+
+    /**
+     * @brief Returns the main window this frame is in.
+     * nullptr if not inside a main window.
+     */
+    MainWindowBase *mainWindow() const;
 
     /**
      * @brief Puts the Frame back in its previous main window position
@@ -227,9 +228,6 @@ public:
      * Returns global coordinates.
      */
     virtual QRect dragRect() const;
-
-    ///@brief Returns the drop area this Frame is in.
-    DropArea *dropArea() const;
 
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);

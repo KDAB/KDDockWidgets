@@ -541,7 +541,7 @@ bool Frame::isInFloatingWindow() const
 
 bool Frame::isInMainWindow() const
 {
-    return m_dropArea && m_dropArea->isInMainWindow();
+    return mainWindow() != nullptr;
 }
 
 bool Frame::event(QEvent *e)
