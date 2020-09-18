@@ -650,3 +650,14 @@ QRect Frame::dragRect() const
 
     return rect;
 }
+
+DropArea *Frame::dropArea() const
+{
+    return m_dropArea;
+}
+
+MainWindowBase *Frame::mainWindow() const
+{
+    return m_dropArea ? m_dropArea->mainWindow()
+                      : nullptr;
+}

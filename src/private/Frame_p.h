@@ -37,6 +37,7 @@ class TitleBar;
 class DropArea;
 class DockWidgetBase;
 class FloatingWindow;
+class MainWindowBase;
 
 /**
  * @brief A DockWidget wrapper that adds a QTabWidget and a TitleBar
@@ -135,6 +136,13 @@ public:
      */
     bool isInMainWindow() const;
 
+
+    /**
+     * @brief Returns the main window this frame is in.
+     * nullptr if not inside a main window.
+     */
+    MainWindowBase *mainWindow() const;
+
     /**
      * @brief returns if this widget is the central frame
      * MainWindow supports a mode where the middle frame is persistent even if no dock widget is there.
@@ -219,6 +227,9 @@ public:
      * Returns global coordinates.
      */
     virtual QRect dragRect() const;
+
+    ///@brief Returns the drop area this Frame is in.
+    DropArea *dropArea() const;
 
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
