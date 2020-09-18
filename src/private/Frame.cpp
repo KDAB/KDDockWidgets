@@ -500,23 +500,26 @@ QStringList Frame::affinities() const
 
 void Frame::setDropArea(DropArea *dt)
 {
-    if (dt != m_dropArea) {
-        qCDebug(docking) << "Frame::setDropArea dt=" << dt;
-        const bool wasInMainWindow = dt && isInMainWindow();
-        if (m_dropArea)
-            disconnect(m_visibleWidgetCountChangedConnection);
+    if (dt == m_dropArea)
+        return;
 
-        m_dropArea = dt;
 
-        if (m_dropArea) {
-            // We keep the connect result so we don't dereference m_dropArea at shutdown
-            m_visibleWidgetCountChangedConnection = connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged,
-                                                            this, &Frame::updateTitleBarVisibility);
-            updateTitleBarVisibility();
-            if (wasInMainWindow != isInMainWindow())
-                Q_EMIT isInMainWindowChanged();
-        }
+    qCDebug(docking) << "Frame::setDropArea dt=" << dt;
+    const bool wasInMainWindow = dt && isInMainWindow();
+    if (m_dropArea)
+        disconnect(m_visibleWidgetCountChangedConnection);
+
+    m_dropArea = dt;
+
+    if (m_dropArea) {
+        // We keep the connect result so we don't dereference m_dropArea at shutdown
+        m_visibleWidgetCountChangedConnection = connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged,
+                                                        this, &Frame::updateTitleBarVisibility);
+        updateTitleBarVisibility();
+        if (wasInMainWindow != isInMainWindow())
+            Q_EMIT isInMainWindowChanged();
     }
+
 }
 
 bool Frame::isTheOnlyFrame() const
