@@ -5131,7 +5131,7 @@ void TestDocks::tst_raise()
         dock3->window()->setObjectName("3");
         dock1->window()->setObjectName("1");
         dock3->raise();
-        QTest::qWait(1000);
+        QTest::qWait(200);
 
         if (qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() != dock3->window()) {
             qDebug() << "Failing before raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window()
@@ -5140,6 +5140,7 @@ void TestDocks::tst_raise()
         }
 
         dock1->raise();
+        QTest::qWait(200);
         QVERIFY(dock1->isCurrentTab());
 
         if (qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() != dock1->window()) {
