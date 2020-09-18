@@ -5130,6 +5130,7 @@ void TestDocks::tst_raise()
         dock3->window()->setGeometry(dock1->window()->geometry());
         dock3->window()->setObjectName("3");
         dock1->window()->setObjectName("1");
+        dock3->raise();
 
         if (qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() != dock3->window()) {
             qDebug() << "Failing before raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window();
