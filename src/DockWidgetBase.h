@@ -350,7 +350,8 @@ Q_SIGNALS:
     void iconChanged();
 
     ///@brief signal emitted when the title changed
-    void titleChanged();
+    ///@param title the new title
+    void titleChanged(const QString &title);
 
     ///@brief emitted when the hosted widget changed
     void widgetChanged(KDDockWidgets::QWidgetOrQuick *);

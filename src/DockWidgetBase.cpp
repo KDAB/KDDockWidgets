@@ -325,7 +325,7 @@ void DockWidgetBase::setTitle(const QString &title)
     if (title != d->title) {
         d->title = title;
         d->updateTitle();
-        Q_EMIT titleChanged();
+        Q_EMIT titleChanged(title);
     }
 }
 
