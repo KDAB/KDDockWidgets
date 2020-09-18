@@ -295,7 +295,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
         const QRect availableGeometry = screen->availableGeometry();
 
         auto mmi = reinterpret_cast<MINMAXINFO *>(msg->lParam);
-        const int dpr = screen->devicePixelRatio();
+        const qreal dpr = screen->devicePixelRatio();
 
         mmi->ptMaxSize.y = availableGeometry.height() * dpr;
         mmi->ptMaxSize.x = availableGeometry.width() * dpr - 1; // -1 otherwise it gets bogus size
