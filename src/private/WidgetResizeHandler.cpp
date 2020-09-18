@@ -297,14 +297,14 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
         auto mmi = reinterpret_cast<MINMAXINFO *>(msg->lParam);
         const qreal dpr = screen->devicePixelRatio();
 
-        mmi->ptMaxSize.y = availableGeometry.height() * dpr;
-        mmi->ptMaxSize.x = availableGeometry.width() * dpr - 1; // -1 otherwise it gets bogus size
+        mmi->ptMaxSize.y = int(availableGeometry.height() * dpr);
+        mmi->ptMaxSize.x = int(availableGeometry.width() * dpr) - 1; // -1 otherwise it gets bogus size
         mmi->ptMaxPosition.x = availableGeometry.x();
         mmi->ptMaxPosition.y = availableGeometry.y();
 
         QWindow *window = w->windowHandle();
-        mmi->ptMinTrackSize.x = window->minimumWidth() * dpr;
-        mmi->ptMinTrackSize.y = window->minimumHeight() * dpr;
+        mmi->ptMinTrackSize.x = int(window->minimumWidth() * dpr);
+        mmi->ptMinTrackSize.y = int(window->minimumHeight() * dpr);
 
         *result = 0;
         return true;
