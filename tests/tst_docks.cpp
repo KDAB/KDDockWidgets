@@ -5677,7 +5677,7 @@ void TestDocks::tst_maximumSizePolicy()
     auto dock1 = createDockWidget("dock1", widget);
     dock1->show();
     dock1->window()->resize(QSize(500, 500));
-    auto oldFw = dock1->window();
+    QPointer<QWidget> oldFw = dock1->window();
     dock1->close();
     dock1->show();
     auto oldFw2 = dock1->window();
@@ -5702,7 +5702,7 @@ void TestDocks::tst_maximumSizePolicy()
     m1->addDockWidget(dock1, Location_OnBottom);
     QVERIFY(dock1->height() <= maxHeight);
 
-    delete oldFw;
+    delete oldFw.data();
     delete oldFw2;
 }
 
