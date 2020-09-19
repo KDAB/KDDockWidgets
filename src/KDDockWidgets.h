@@ -96,6 +96,14 @@ namespace KDDockWidgets
 
         return QString();
     }
+
+    /// @brief Each main window supports 4 sidebars
+    enum class SideBarLocation {
+        North,
+        East,
+        West,
+        South
+    };
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)

@@ -36,7 +36,7 @@ public:
 
     explicit Private(MainWindowOptions, MainWindowBase *mainWindow)
         : m_supportsAutoHide(Config::self().flags() & Config::Flag_internal_AutoHideSupport)
-        , m_sideBar(m_supportsAutoHide ? new SideBarWidget(Qt::Horizontal, mainWindow)
+        , m_sideBar(m_supportsAutoHide ? new SideBarWidget(SideBarLocation::South, mainWindow)
                                        : nullptr)
     {
     }

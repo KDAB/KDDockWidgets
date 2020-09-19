@@ -13,6 +13,7 @@
 #define KD_SIDEBAR_P_H
 
 #include "docks_export.h"
+#include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
 
 namespace KDDockWidgets {
@@ -23,7 +24,7 @@ class DOCKS_EXPORT SideBar : public QWidgetAdapter
 {
     Q_OBJECT
 public:
-    explicit SideBar(Qt::Orientation orientation, QWidgetOrQuick *parent = nullptr);
+    explicit SideBar(SideBarLocation, QWidgetOrQuick *parent = nullptr);
 
     void addDockWidget(DockWidgetBase *dw);
     void removeDockWidget(DockWidgetBase *dw);
@@ -38,6 +39,9 @@ public:
     /// @brief returns whether there's no dock widgets
     bool isEmpty() const;
 
+    /// @brief returns the sidebar's location in the main window
+    SideBarLocation location() const;
+
 protected:
     virtual void addDockWidget_Impl(DockWidgetBase *dock) = 0;
     virtual void removeDockWidget_Impl(DockWidgetBase *dock) = 0;
@@ -49,6 +53,7 @@ private:
     void updateSize();
 
     QVector<DockWidgetBase *> m_dockWidgets;
+    const SideBarLocation m_location;
     const Qt::Orientation m_orientation;
 };
 

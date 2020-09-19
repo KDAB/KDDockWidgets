@@ -20,8 +20,8 @@
 
 using namespace KDDockWidgets;
 
-SideBarWidget::SideBarWidget(Qt::Orientation orientation, QWidget *parent)
-    : SideBar(orientation, parent)
+SideBarWidget::SideBarWidget(SideBarLocation location, QWidget *parent)
+    : SideBar(location, parent)
     , m_layout(isVertical() ? static_cast<QBoxLayout*>(new QVBoxLayout(this))
                             : static_cast<QBoxLayout*>(new QHBoxLayout(this))) // ternary operator requires static_cast
 {

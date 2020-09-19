@@ -16,9 +16,11 @@
 
 using namespace KDDockWidgets;
 
-SideBar::SideBar(Qt::Orientation orientation, QWidgetOrQuick *parent)
+SideBar::SideBar(SideBarLocation location, QWidgetOrQuick *parent)
     : QWidgetAdapter(parent)
-    , m_orientation(orientation)
+    , m_location(location)
+    , m_orientation((location == SideBarLocation::North || location == SideBarLocation::South) ? Qt::Horizontal
+                                                                                               : Qt::Vertical)
 {
     updateSize();
 }
