@@ -843,6 +843,75 @@ bool Item::isRoot() const
     return m_parent == nullptr;
 }
 
+Item::LayoutBorderLocations Item::adjacentLayoutBorders() const
+{
+    if (isRoot()) {
+        return Item::LayoutBorderLocation_All;
+    }
+
+    ItemContainer *c = parentContainer();
+    if (!c)
+        return Item::LayoutBorderLocation_None;
+
+    const int indexInParent = c->indexOfVisibleChild(this);
+    const int numVisibleChildren = c->numVisibleChildren();
+    const bool isFirst = indexInParent == 0;
+    const bool isLast = indexInParent == numVisibleChildren - 1;
+    if (indexInParent == -1)
+        return Item::LayoutBorderLocation_None;
+
+    Item::LayoutBorderLocations locations = Item::LayoutBorderLocation_None;
+    if (c->isRoot()) {
+        if (c->isVertical()) {
+            locations |= Item::LayoutBorderLocation_West;
+            locations |= Item::LayoutBorderLocation_East;
+
+            if (isFirst)
+                locations |= Item::LayoutBorderLocation_North;
+            if (isLast)
+                locations |= Item::LayoutBorderLocation_South;
+        } else {
+            locations |= Item::LayoutBorderLocation_North;
+            locations |= Item::LayoutBorderLocation_South;
+
+            if (isFirst)
+                locations |= Item::LayoutBorderLocation_West;
+            if (isLast)
+                locations |= Item::LayoutBorderLocation_East;
+        }
+    } else {
+        const Item::LayoutBorderLocations parentBorders = c->adjacentLayoutBorders();
+        if (c->isVertical()) {
+            if (parentBorders & Item::LayoutBorderLocation_West)
+                locations |= Item::LayoutBorderLocation_West;
+
+            if (parentBorders & Item::LayoutBorderLocation_East)
+                locations |= Item::LayoutBorderLocation_East;
+
+            if (isFirst && (parentBorders & Item::LayoutBorderLocation_North))
+                locations |= Item::LayoutBorderLocation_North;
+
+            if (isLast && (parentBorders & Item::LayoutBorderLocation_South))
+                locations |= Item::LayoutBorderLocation_South;
+
+        } else {
+            if (parentBorders & Item::LayoutBorderLocation_North)
+                locations |= Item::LayoutBorderLocation_North;
+
+            if (parentBorders & Item::LayoutBorderLocation_South)
+                locations |= Item::LayoutBorderLocation_South;
+
+            if (isFirst && (parentBorders & Item::LayoutBorderLocation_West))
+                locations |= Item::LayoutBorderLocation_West;
+
+            if (isLast && (parentBorders & Item::LayoutBorderLocation_East))
+                locations |= Item::LayoutBorderLocation_East;
+        }
+    }
+
+    return locations;
+}
+
 int Item::visibleCount_recursive() const
 {
     return isVisible() ? 1 : 0;

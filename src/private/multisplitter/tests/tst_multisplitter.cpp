@@ -193,6 +193,7 @@ private Q_SLOTS:
     void tst_requestEqualSize();
     void tst_maxSizeHonouredWhenAnotherRemoved();
     void tst_simplify();
+    void tst_adjacentLayoutBorders();
 };
 
 class MyHostWidget : public QWidget
@@ -1837,6 +1838,48 @@ void TestMultiSplitter::tst_simplify()
 
     for (Item *item : root->childItems())
         QVERIFY(!item->isContainer());
+}
+
+void TestMultiSplitter::tst_adjacentLayoutBorders()
+{
+    auto root = createRoot();
+    auto item1 = createItem();
+    auto item2 = createItem();
+    auto item3 = createItem();
+    auto item4 = createItem();
+    auto item5 = createItem();
+
+    root->insertItem(item1, Item::Location_OnTop);
+    const int allBorders = int(Item::LayoutBorderLocation_All);
+
+    auto borders1 = item1->adjacentLayoutBorders();
+    QCOMPARE(borders1, allBorders);
+    root->insertItem(item2, Item::Location_OnBottom);
+
+    borders1 = item1->adjacentLayoutBorders();
+    QCOMPARE(borders1, allBorders & ~Item::LayoutBorderLocation_South);
+
+    auto borders2 = item2->adjacentLayoutBorders();
+    QCOMPARE(borders2, allBorders & ~Item::LayoutBorderLocation_North);
+
+    root->insertItem(item3, Item::Location_OnRight);
+
+    borders1 = item1->adjacentLayoutBorders();
+    QCOMPARE(borders1, Item::LayoutBorderLocation_North | Item::LayoutBorderLocation_West);
+
+    borders2 = item2->adjacentLayoutBorders();
+    QCOMPARE(borders2, Item::LayoutBorderLocation_South | Item::LayoutBorderLocation_West);
+
+    auto borders3 = item3->adjacentLayoutBorders();
+    QCOMPARE(borders3, allBorders & ~(Item::LayoutBorderLocation_West));
+
+    item3->insertItem(item4, Item::Location_OnBottom);
+    auto borders4 = item4->adjacentLayoutBorders();
+    QCOMPARE(borders4, Item::LayoutBorderLocation_East | Item::LayoutBorderLocation_South);
+
+    root->insertItem(item5, Item::Location_OnRight);
+    borders4 = item4->adjacentLayoutBorders();
+    QCOMPARE(borders4, Item::LayoutBorderLocation_South);
 }
 
 int main(int argc, char *argv[])

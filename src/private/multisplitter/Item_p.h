@@ -229,6 +229,17 @@ public:
     };
     Q_ENUM(Location)
 
+    enum LayoutBorderLocation {
+        LayoutBorderLocation_None = 0,
+        LayoutBorderLocation_North = 1,
+        LayoutBorderLocation_East = 2,
+        LayoutBorderLocation_West = 4,
+        LayoutBorderLocation_South = 8,
+        LayoutBorderLocation_All = LayoutBorderLocation_North | LayoutBorderLocation_East |
+                                   LayoutBorderLocation_West | LayoutBorderLocation_South
+    };
+    Q_DECLARE_FLAGS(LayoutBorderLocations, LayoutBorderLocation)
+
     enum AddingOption {
         AddingOption_None = 0, ///> No option set
         AddingOption_StartHidden ///< Don't show the dock widget when adding it
@@ -248,6 +259,10 @@ public:
     ~Item() override;
 
     bool isRoot() const;
+
+    ///@brief Returns whether the item is touching the layout's borders.
+    ///Returns Location_None if it's not touching a border.
+    LayoutBorderLocations adjacentLayoutBorders() const;
 
     virtual int visibleCount_recursive() const;
     virtual void insertItem(Item *item, Location,
