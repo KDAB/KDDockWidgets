@@ -134,11 +134,12 @@ public:
 
     ///@brief Minimizes dock widget @p into the side bar
     void minimizeToSideBar(DockWidgetBase *dw);
+    void minimizeToSideBar(DockWidgetBase *dw, SideBarLocation);
 
 protected:
     void setUniqueName(const QString &uniqueName);
 
-    virtual SideBar* sideBar() const = 0;
+    virtual SideBar* sideBar(SideBarLocation) const = 0;
 
 Q_SIGNALS:
     void uniqueNameChanged();

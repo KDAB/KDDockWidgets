@@ -152,7 +152,12 @@ void MainWindowBase::layoutParentContainerEqually(DockWidgetBase *dockWidget)
 
 void MainWindowBase::minimizeToSideBar(DockWidgetBase *dw)
 {
-    if (SideBar *sb = sideBar()) {
+    minimizeToSideBar(dw, SideBarLocation::South); // For now.
+}
+
+void MainWindowBase::minimizeToSideBar(DockWidgetBase *dw, SideBarLocation location)
+{
+    if (SideBar *sb = sideBar(location)) {
         dw->forceClose();
         sb->addDockWidget(dw);
     } else {

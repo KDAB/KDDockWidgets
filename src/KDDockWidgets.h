@@ -104,6 +104,12 @@ namespace KDDockWidgets
         West,
         South
     };
+
+    ///@internal
+    inline uint qHash(SideBarLocation loc, uint seed)
+    {
+        return ::qHash(static_cast<uint>(loc), seed);
+    }
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)

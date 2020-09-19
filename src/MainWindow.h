@@ -47,8 +47,8 @@ public:
     ///@brief Destructor
     ~MainWindow() override;
 
-    ///@brief returns the sidebar
-    SideBar *sideBar() const override;
+    ///@brief returns the sidebar for the specified location
+    SideBar *sideBar(SideBarLocation) const override;
 
 private:
     using QMainWindow::setCentralWidget;

@@ -36,13 +36,17 @@ public:
 
     explicit Private(MainWindowOptions, MainWindowBase *mainWindow)
         : m_supportsAutoHide(Config::self().flags() & Config::Flag_internal_AutoHideSupport)
-        , m_sideBar(m_supportsAutoHide ? new SideBarWidget(SideBarLocation::South, mainWindow)
-                                       : nullptr)
     {
+        if (m_supportsAutoHide) {
+            for (auto location : { SideBarLocation::North, SideBarLocation::East,
+                                   SideBarLocation::West, SideBarLocation::South}) {
+                m_sideBars.insert(location, new SideBarWidget(location, mainWindow));
+            }
+        }
     }
 
     const bool m_supportsAutoHide;
-    SideBar *const m_sideBar;
+    QHash<SideBarLocation, SideBar*> m_sideBars;
 };
 
 namespace KDDockWidgets {
@@ -75,13 +79,23 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
     , d(new Private(options, this))
 {
     auto centralWidget = new MyCentralWidget(this);
-    auto layout = new QVBoxLayout(centralWidget);
+    auto layout = new QHBoxLayout(centralWidget);  // 1 level of indirection so we can add some margins
     layout->setSpacing(0);
     layout->setContentsMargins(1, 5, 1, 1);
-    layout->addWidget(dropArea()); // 1 level of indirection so we can add some margins
 
-    if (d->m_supportsAutoHide)
-        layout->addWidget(d->m_sideBar);
+    if (d->m_supportsAutoHide) {
+        layout->addWidget(sideBar(SideBarLocation::West));
+        auto innerVLayout = new QVBoxLayout();
+        innerVLayout->setSpacing(0);
+        innerVLayout->setContentsMargins(0, 0, 0, 0);
+        innerVLayout->addWidget(sideBar(SideBarLocation::North));
+        innerVLayout->addWidget(dropArea());
+        innerVLayout->addWidget(sideBar(SideBarLocation::South));
+        layout->addLayout(innerVLayout);
+        layout->addWidget(sideBar(SideBarLocation::East));
+    } else {
+        layout->addWidget(dropArea());
+    }
 
     setCentralWidget(centralWidget);
 
@@ -98,7 +112,7 @@ void MainWindow::setCentralWidget(QWidget *w)
     QMainWindow::setCentralWidget(w);
 }
 
-SideBar *MainWindow::sideBar() const
+SideBar *MainWindow::sideBar(SideBarLocation location) const
 {
-    return d->m_sideBar;
+    return d->m_sideBars.value(location);
 }
