@@ -99,6 +99,7 @@ namespace KDDockWidgets
 
     /// @brief Each main window supports 4 sidebars
     enum class SideBarLocation {
+        None,
         North,
         East,
         West,

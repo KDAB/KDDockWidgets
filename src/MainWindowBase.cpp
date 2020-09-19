@@ -24,6 +24,7 @@
 #include "Utils_p.h"
 #include "SideBar_p.h"
 #include "Logging_p.h"
+#include "Item_p.h"
 #include "DropAreaWithCentralFrame_p.h"
 
 using namespace KDDockWidgets;
@@ -42,6 +43,8 @@ public:
     {
         return m_options & MainWindowOption_HasCentralFrame;
     }
+
+    SideBarLocation preferredSideBar(DockWidgetBase *) const;
 
     QString name;
     QStringList affinities;
@@ -150,9 +153,29 @@ void MainWindowBase::layoutParentContainerEqually(DockWidgetBase *dockWidget)
     dropArea()->layoutParentContainerEqually(dockWidget);
 }
 
+SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) const
+{
+    Layouting::Item *item = q->multiSplitter()->itemForFrame(dw->frame());
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "No item for dock widget";
+        return SideBarLocation::None;
+    }
+
+    const Layouting::Item::LayoutBorderLocations borders = item->adjacentLayoutBorders();
+
+    // Simple algorithm for now.
+    if (borders & Layouting::Item::LayoutBorderLocation_South)
+        return SideBarLocation::South;
+
+    if (borders & Layouting::Item::LayoutBorderLocation_North)
+        return SideBarLocation::North;
+
+    return SideBarLocation::South;
+}
+
 void MainWindowBase::minimizeToSideBar(DockWidgetBase *dw)
 {
-    minimizeToSideBar(dw, SideBarLocation::South); // For now.
+    minimizeToSideBar(dw, d->preferredSideBar(dw));
 }
 
 void MainWindowBase::minimizeToSideBar(DockWidgetBase *dw, SideBarLocation location)
