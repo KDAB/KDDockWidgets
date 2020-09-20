@@ -489,10 +489,12 @@ void DockWidgetBase::setAffinities(const QStringList &affinityNames)
     d->affinities = affinities;
 }
 
-void DockWidgetBase::minimizeToSideBar()
+void DockWidgetBase::moveToSideBar()
 {
-    if (MainWindowBase *m = mainWindow())
+    if (MainWindowBase *m = mainWindow()) {
+        m->moveToSideBar(this);
         m->overlayOnSideBar(this);
+    }
 }
 
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()

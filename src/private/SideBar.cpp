@@ -64,8 +64,7 @@ bool SideBar::contains(DockWidgetBase *dw) const
 
 void SideBar::onButtonClicked(DockWidgetBase *dw)
 {
-    dw->show();
-    removeDockWidget(dw);
+    m_mainWindow->toggleOverlayOnSideBar(dw);
 }
 
 void SideBar::onDockWidgetDestroyed(QObject *dw)
@@ -91,6 +90,11 @@ Qt::Orientation SideBar::orientation() const
 bool SideBar::isEmpty() const
 {
     return m_dockWidgets.isEmpty();
+}
+
+SideBarLocation SideBar::location() const
+{
+    return m_location;
 }
 
 MainWindowBase *SideBar::mainWindow() const

@@ -219,12 +219,12 @@ SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) co
     return SideBarLocation::South;
 }
 
-void MainWindowBase::minimizeToSideBar(DockWidgetBase *dw)
+void MainWindowBase::moveToSideBar(DockWidgetBase *dw)
 {
-    minimizeToSideBar(dw, d->preferredSideBar(dw));
+    moveToSideBar(dw, d->preferredSideBar(dw));
 }
 
-void MainWindowBase::minimizeToSideBar(DockWidgetBase *dw, SideBarLocation location)
+void MainWindowBase::moveToSideBar(DockWidgetBase *dw, SideBarLocation location)
 {
     if (SideBar *sb = sideBar(location)) {
         dw->forceClose();
@@ -237,15 +237,9 @@ void MainWindowBase::minimizeToSideBar(DockWidgetBase *dw, SideBarLocation locat
 
 void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
 {
-    overlayOnSideBar(dw, d->preferredSideBar(dw));
-}
-
-void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw, SideBarLocation location)
-{
-    SideBar *sb = sideBar(location);
-    if (!sb) {
-        // Shouldn't happen
-        qWarning() << Q_FUNC_INFO << "Overlaying not supported, probably disabled in Config::self().flags()";
+    const SideBar *sb = sideBarForDockWidget(dw);
+    if (sb == nullptr) {
+        qWarning() << Q_FUNC_INFO << "You need to add the dock widget to the sidebar before you can overlay it";
         return;
     }
 
@@ -254,21 +248,24 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw, SideBarLocation locati
         return;
     }
 
-    // We only support one overlay at a time, remove any existing one
+    // We only support one overlay at a time, remove any existing overlay
     clearSideBarOverlay();
-
-    if (!sb->contains(dw))
-        sb->addDockWidget(dw);
-
-    // Detach in case it's docked to a main window
-    dw->forceClose();
 
     auto frame = Config::self().frameworkWidgetFactory()->createFrame(this, FrameOption_IsOverlayed);
     frame->addWidget(dw);
-    frame->QWidgetAdapter::setGeometry(d->rectForOverlay(frame, location));
+    frame->QWidgetAdapter::setGeometry(d->rectForOverlay(frame, sb->location()));
     frame->QWidgetAdapter::show();
 
     d->m_overlayedDockWidget = dw;
+}
+
+void MainWindowBase::toggleOverlayOnSideBar(DockWidgetBase *dw)
+{
+    const bool wasOverlayed = d->m_overlayedDockWidget == dw;
+    clearSideBarOverlay();
+    if (!wasOverlayed) {
+        overlayOnSideBar(dw);
+    }
 }
 
 void MainWindowBase::clearSideBarOverlay()

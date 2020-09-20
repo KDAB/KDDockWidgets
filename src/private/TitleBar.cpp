@@ -342,7 +342,7 @@ void TitleBar::onAutoHideClicked()
     if (m_frame) {
         const auto &dockwidgets = m_frame->dockWidgets();
         for (DockWidgetBase *dw : dockwidgets)
-            dw->minimizeToSideBar();
+            dw->moveToSideBar();
     } else {
         // Doesn't happen
         qWarning() << Q_FUNC_INFO << "Minimize not supported on floating windows";

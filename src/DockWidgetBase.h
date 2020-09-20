@@ -344,8 +344,10 @@ public:
      * It will be undocked from current layout. It's previous docked position will be remembered.
      *
      * This action is only available if the dock widget is docked into a MainWindow.
+     * The dockwidget will initially be visible and overlayed on top of the current layout (this is
+     * the auto-hide feature).
      */
-    void minimizeToSideBar();
+    void moveToSideBar();
 
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed

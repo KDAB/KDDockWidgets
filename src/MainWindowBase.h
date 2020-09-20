@@ -132,14 +132,22 @@ public:
     /// sub-tree.
     void layoutParentContainerEqually(DockWidgetBase *dockWidget);
 
-    ///@brief Minimizes dock widget @p into the side bar.
-    ///The DockWidget will be hidden and show a button in the side bar.
-    void minimizeToSideBar(DockWidgetBase *dw);
-    void minimizeToSideBar(DockWidgetBase *dw, SideBarLocation);
+    ///@brief Moves the dock widget into one of the MainWindow's sidebar.
+    /// Means the dock widget is removed from the layout, and the sidebar shows a button that if pressed
+    /// will toggle the dock widget's visibility as an overlay over the layout. This is the auto-hide
+    /// functionality.
+    ///
+    /// The chosen side bar will depend on some heuristics, mostly proximity.
+    void moveToSideBar(DockWidgetBase *dw);
+
+    /// @brief overload that allows to specify which sidebar to use, instead of using heuristics.
+    void moveToSideBar(DockWidgetBase *dw, SideBarLocation);
 
     ///@brief Shows the dock widget overlayed on top of the main window, placed next to the sidebar
     void overlayOnSideBar(DockWidgetBase *dw);
-    void overlayOnSideBar(DockWidgetBase *dw, SideBarLocation);
+
+    ///@brief Shows or hides an overlay. It's assumed the dock widget is already in a side-bar.
+    void toggleOverlayOnSideBar(DockWidgetBase *dw);
 
     /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
     void clearSideBarOverlay();
