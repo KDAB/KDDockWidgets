@@ -541,7 +541,35 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
                 m_nestedWindows.append(fw);
             }
         }
+    } else if (event->type() == QEvent::MouseButtonPress) {
+        if (!(Config::self().flags() & Config::Flag_internal_AutoHideSupport))
+            return false;
+
+        auto p = watched;
+        while (p) {
+            if (auto dw = qobject_cast<DockWidgetBase*>(p)) {
+                onDockWidgetPressed(dw);
+                return false;
+            }
+
+            p = p->parent();
+        }
     }
 
     return false;
+}
+
+void DockRegistry::onDockWidgetPressed(DockWidgetBase *dw)
+{
+    // Here we implement "auto-hide". If there's a overlayed dock widget, we hide it if some other
+    // dock widget is clicked.
+
+    MainWindowBase *mainWindow = dw->mainWindow();
+    if (!mainWindow) // Only docked widgets are interesting
+        return;
+
+    DockWidgetBase *overlayedDockWidget = mainWindow->overlayedDockWidget();
+    if (overlayedDockWidget && dw != overlayedDockWidget) {
+        mainWindow->clearSideBarOverlay();
+    }
 }

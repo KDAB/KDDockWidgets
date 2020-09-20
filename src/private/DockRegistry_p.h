@@ -176,6 +176,7 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 private:
     explicit DockRegistry(QObject *parent = nullptr);
+    void onDockWidgetPressed(DockWidgetBase *dw);
     void maybeDelete();
     void onFocusObjectChanged(QObject *);
     bool m_isProcessingAppQuitEvent = false;
