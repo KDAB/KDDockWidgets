@@ -47,6 +47,7 @@ public:
 
     QRect rectForOverlay(Frame *, SideBarLocation) const;
     SideBarLocation preferredSideBar(DockWidgetBase *) const;
+    void updateOverlayGeometry();
 
     QString name;
     QStringList affinities;
@@ -219,6 +220,20 @@ SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) co
     return SideBarLocation::South;
 }
 
+void MainWindowBase::Private::updateOverlayGeometry()
+{
+    if (!m_overlayedDockWidget)
+        return;
+
+    SideBar *sb = q->sideBarForDockWidget(m_overlayedDockWidget);
+    if (!sb) {
+        qWarning() << Q_FUNC_INFO << "Expected a sidebar";
+        return;
+    }
+
+    m_overlayedDockWidget->setGeometry(rectForOverlay(m_overlayedDockWidget->frame(), sb->location()));
+}
+
 void MainWindowBase::moveToSideBar(DockWidgetBase *dw)
 {
     moveToSideBar(dw, d->preferredSideBar(dw));
@@ -272,11 +287,12 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     clearSideBarOverlay();
 
     auto frame = Config::self().frameworkWidgetFactory()->createFrame(this, FrameOption_IsOverlayed);
+    d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
+    d->updateOverlayGeometry();
     frame->QWidgetAdapter::setGeometry(d->rectForOverlay(frame, sb->location()));
     frame->QWidgetAdapter::show();
 
-    d->m_overlayedDockWidget = dw;
     Q_EMIT dw->isOverlayedChanged(true);
 }
 
