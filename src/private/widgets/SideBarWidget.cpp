@@ -68,13 +68,44 @@ bool SideBarButton::isVertical() const
     return m_sideBar->isVertical();
 }
 
-void SideBarButton::paintEvent(QPaintEvent *ev)
+void SideBarButton::paintEvent(QPaintEvent *)
 {
-    QToolButton::paintEvent(ev);
+    QPixmap pixmap(size());
+
+    {
+        // Draw to an horizontal button, it's easier.
+
+        pixmap.fill(Qt::transparent);
+
+        QStyleOptionToolButton opt;
+        initStyleOption(&opt);
+        const bool isHovered = opt.state & QStyle::State_MouseOver;
+
+        QPainter p(&pixmap);
+
+        const QRect r = isVertical() ? rect().transposed() : rect();
+        const QRect textRect = r.adjusted(3, 0, 5, 0);
+        // p.drawRect(r.adjusted(0, 0, -1, -1));
+        p.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
+
+        QPen pen(isHovered ? 0x2ca7ff : 0xc8c8c8);
+        pen.setWidth(isHovered ? 2 : 1);
+        p.setPen(pen);
+        p.drawLine(3, r.bottom() - 1, r.width() - 3*2, r.bottom() - 1);
+     }
+
+    QPainter p(this);
+    if (isVertical()) {
+
+    } else {
+        p.drawPixmap(rect(), pixmap);
+    }
+
 }
 
 QSize SideBarButton::sizeHint() const
 {
     const QSize hint = QToolButton::sizeHint();
-    return isVertical() ? hint.transposed() : hint;
+    return isVertical() ? (hint.transposed() + QSize(2, 0))
+                        : (hint + QSize(0, 2));
 }
