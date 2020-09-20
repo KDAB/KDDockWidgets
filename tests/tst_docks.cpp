@@ -5982,7 +5982,6 @@ void TestDocks::tst_closeRemovesFromSideBar()
     QVERIFY(!dw1->isOverlayed());
     QVERIFY(!dw1->isVisible());
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
-    QVERIFY(!sb->isVisible());
 
     delete fw1;
 }
