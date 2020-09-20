@@ -53,7 +53,8 @@ namespace KDDockWidgets
     enum FrameOption {
         FrameOption_None = 0,
         FrameOption_AlwaysShowsTabs = 1,
-        FrameOption_IsCentralFrame = 2
+        FrameOption_IsCentralFrame = 2,
+        FrameOption_IsOverlayed = 4
     };
     Q_DECLARE_FLAGS(FrameOptions, FrameOption)
 

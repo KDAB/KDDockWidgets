@@ -132,9 +132,15 @@ public:
     /// sub-tree.
     void layoutParentContainerEqually(DockWidgetBase *dockWidget);
 
-    ///@brief Minimizes dock widget @p into the side bar
+    ///@brief Minimizes dock widget @p into the side bar.
+    ///The DockWidget will be hidden and show a button in the side bar.
     void minimizeToSideBar(DockWidgetBase *dw);
     void minimizeToSideBar(DockWidgetBase *dw, SideBarLocation);
+
+    ///@brief Shows the dock widget overlayed on top of the main window, placed next to the sidebar
+    void overlayOnSideBar(DockWidgetBase *dw);
+    void overlayOnSideBar(DockWidgetBase *dw, SideBarLocation);
+    void clearSideBarOverlay();
 
 protected:
     void setUniqueName(const QString &uniqueName);

@@ -122,6 +122,8 @@ protected:
 
     void focusInEvent(QFocusEvent *event) override;
 
+    bool isOverlayed() const;
+
 private:
     friend class TestDocks;
 

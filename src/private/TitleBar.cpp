@@ -110,6 +110,11 @@ void TitleBar::focusInEvent(QFocusEvent *ev)
     m_frame->FocusScope::focus(ev->reason());
 }
 
+bool TitleBar::isOverlayed() const
+{
+    return m_frame && m_frame->isOverlayed();
+}
+
 void TitleBar::setTitle(const QString &title)
 {
     if (title != m_title) {

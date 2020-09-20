@@ -60,6 +60,9 @@ FrameWidget::FrameWidget(QWidget *parent, FrameOptions options)
     vlayout->addWidget(m_tabWidget->asWidget());
 
     m_tabWidget->setTabBarAutoHide(!alwaysShowsTabs());
+
+    if (isOverlayed())
+        setAutoFillBackground(true);
 }
 
 FrameWidget::~FrameWidget()
@@ -71,9 +74,14 @@ void FrameWidget::paintEvent(QPaintEvent *)
 {
     if (!isFloating()) {
         QPainter p(this);
-        QPen pen(QColor(184, 184, 184, 184));
-        p.setPen(pen);
-        p.drawRoundedRect(QWidget::rect().adjusted(0, 0, -1, -1), 2, 2);
+
+        if (isOverlayed()) {
+            p.setPen(0x666666);
+            p.drawRect(QWidget::rect().adjusted(0, 1, -1, -1));
+        } else {
+            p.setPen(QColor(184, 184, 184, 184));
+            p.drawRoundedRect(QWidget::rect().adjusted(0, 0, -1, -1), 2, 2);
+        }
     }
 }
 

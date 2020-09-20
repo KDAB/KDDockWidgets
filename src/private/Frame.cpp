@@ -531,6 +531,11 @@ bool Frame::isTheOnlyFrame() const
     return m_dropArea && m_dropArea->numFrames() == 1;
 }
 
+bool Frame::isOverlayed() const
+{
+    return m_options & FrameOption_IsOverlayed;
+}
+
 bool Frame::isFloating() const
 {
     if (isInMainWindow())

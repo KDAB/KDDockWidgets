@@ -120,6 +120,9 @@ public:
 
     bool isTheOnlyFrame() const;
 
+    ///@brief Returns whether this frame is overlayed on top of the MainWindow (auto-hide feature);
+    bool isOverlayed() const;
+
     /**
      * @brief Returns whether this frame is floating. A floating frame isn't attached to any other MainWindow,
      * and if it's attached to a FloatingWindow then it's considered floating if it's the only frame in that Window.

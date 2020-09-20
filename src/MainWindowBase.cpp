@@ -25,6 +25,7 @@
 #include "SideBar_p.h"
 #include "Logging_p.h"
 #include "Item_p.h"
+#include "FrameworkWidgetFactory.h"
 #include "DropAreaWithCentralFrame_p.h"
 
 using namespace KDDockWidgets;
@@ -44,12 +45,14 @@ public:
         return m_options & MainWindowOption_HasCentralFrame;
     }
 
+    QRect rectForOverlay(Frame *, SideBarLocation) const;
     SideBarLocation preferredSideBar(DockWidgetBase *) const;
 
     QString name;
     QStringList affinities;
     const MainWindowOptions m_options;
     MainWindowBase *const q;
+    QPointer<DockWidgetBase> m_overlayedDockWidget;
     DropAreaWithCentralFrame *const m_dropArea;
 };
 
@@ -153,6 +156,49 @@ void MainWindowBase::layoutParentContainerEqually(DockWidgetBase *dockWidget)
     dropArea()->layoutParentContainerEqually(dockWidget);
 }
 
+QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation location) const
+{
+    SideBar *sb = q->sideBar(location);
+    if (!sb)
+        return {};
+
+    DropArea *da = q->dropArea();
+    const QPoint dropAreaPos = da->mapTo(q, QPoint(0,0));
+
+    QRect rect;
+    switch (location) {
+    case SideBarLocation::North:
+    case SideBarLocation::South: {
+        const int margin = 1;
+        rect.setHeight(qMax(200, frame->minSize().height()));
+        rect.setWidth(q->width() - margin * 2);
+        rect.moveLeft(margin * 2);
+        if (location == SideBarLocation::South) {
+            rect.moveTop(q->height() - rect.height() - sb->height());
+        } else {
+            rect.moveTop(dropAreaPos.y() + sb->height());
+        }
+        break;
+    }
+    case SideBarLocation::West:
+    case SideBarLocation::East:
+        rect.setWidth(qMax(200, frame->minSize().width()));
+        rect.setHeight(q->height());
+
+        if (location == SideBarLocation::South) {
+            rect.moveLeft(q->width() - rect.width() - sb->width());
+        } else {
+            rect.moveLeft(dropAreaPos.x() + sb->width());
+        }
+
+        break;
+    case SideBarLocation::None:
+        break;
+    }
+
+    return rect;
+}
+
 SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) const
 {
     Layouting::Item *item = q->multiSplitter()->itemForFrame(dw->frame());
@@ -185,8 +231,55 @@ void MainWindowBase::minimizeToSideBar(DockWidgetBase *dw, SideBarLocation locat
         sb->addDockWidget(dw);
     } else {
         // Shouldn't happen
-        qWarning() << Q_FUNC_INFO << "Minimization support is disabled in Config.cpp";
+        qWarning() << Q_FUNC_INFO << "Minimization supported, probably disabled in Config::self().flags()";
     }
+}
+
+void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
+{
+    overlayOnSideBar(dw, d->preferredSideBar(dw));
+}
+
+void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw, SideBarLocation location)
+{
+    SideBar *sb = sideBar(location);
+    if (!sb) {
+        // Shouldn't happen
+        qWarning() << Q_FUNC_INFO << "Overlaying not supported, probably disabled in Config::self().flags()";
+        return;
+    }
+
+    if (d->m_overlayedDockWidget == dw) {
+        // Already overlayed
+        return;
+    }
+
+    // We only support one overlay at a time, remove any existing one
+    clearSideBarOverlay();
+
+    if (!sb->contains(dw))
+        sb->addDockWidget(dw);
+
+    // Detach in case it's docked to a main window
+    dw->forceClose();
+
+    auto frame = Config::self().frameworkWidgetFactory()->createFrame(this, FrameOption_IsOverlayed);
+    frame->addWidget(dw);
+    frame->QWidgetAdapter::setGeometry(d->rectForOverlay(frame, location));
+    frame->QWidgetAdapter::show();
+
+    d->m_overlayedDockWidget = dw;
+}
+
+void MainWindowBase::clearSideBarOverlay()
+{
+    if (!d->m_overlayedDockWidget)
+        return;
+
+    Frame *frame = d->m_overlayedDockWidget->frame();
+    d->m_overlayedDockWidget->setParent(nullptr);
+    d->m_overlayedDockWidget = nullptr;
+    delete frame;
 }
 
 void MainWindowBase::setUniqueName(const QString &uniqueName)
