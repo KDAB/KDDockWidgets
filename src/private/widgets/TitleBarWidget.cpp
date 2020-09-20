@@ -103,16 +103,20 @@ QRect TitleBarWidget::iconRect() const
 
 int TitleBarWidget::buttonAreaWidth() const
 {
-    if (m_floatButton->isVisible())
-        return width() - m_floatButton->x();
-    else
-        return width() - m_closeButton->x();
+    int smallestX = width();
+
+    for (auto button : { m_autoHideButton, m_minimizeButton, m_floatButton, m_maximizeButton, m_closeButton }) {
+        if (button->isVisible() && button->x() < smallestX)
+            smallestX = button->x();
+    }
+
+    return width() - smallestX;
 }
 
 TitleBarWidget::~TitleBarWidget()
 {
     // To avoid a crash
-    for (auto button : { m_minimizeButton, m_floatButton, m_maximizeButton, m_closeButton }) {
+    for (auto button : { m_autoHideButton, m_minimizeButton, m_floatButton, m_maximizeButton, m_closeButton }) {
         button->setParent(nullptr);
         button->deleteLater();
     }
