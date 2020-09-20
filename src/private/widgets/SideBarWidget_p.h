@@ -16,6 +16,7 @@
 #include "../SideBar_p.h"
 
 #include <QToolButton>
+#include <QPointer>
 
 QT_BEGIN_NAMESPACE
 class QBoxLayout;
@@ -32,12 +33,13 @@ class SideBarButton : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit SideBarButton(SideBarWidget *parent);
+    explicit SideBarButton(DockWidgetBase *dw, SideBarWidget *parent);
     bool isVertical() const;
     void paintEvent(QPaintEvent *) override;
     QSize sizeHint() const override;
 private:
     SideBarWidget *const m_sideBar;
+    const QPointer<DockWidgetBase> m_dockWidget;
 };
 
 class DOCKS_EXPORT SideBarWidget : public SideBar
@@ -51,7 +53,7 @@ protected:
     void removeDockWidget_Impl(DockWidgetBase *dock) override;
 
     // virtual so users can provide their own buttons
-    virtual SideBarButton *createButton(SideBarWidget *parent) const;
+    virtual SideBarButton *createButton(DockWidgetBase *dw, SideBarWidget *parent) const;
 
 private:
     QBoxLayout *const m_layout;

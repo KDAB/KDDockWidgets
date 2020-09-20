@@ -34,9 +34,12 @@ SideBarWidget::SideBarWidget(SideBarLocation location, MainWindowBase *parent)
 
 void SideBarWidget::addDockWidget_Impl(DockWidgetBase *dw)
 {
-    auto button = createButton(this);
+    auto button = createButton(dw, this);
     button->setText(dw->title());
     connect(dw, &DockWidgetBase::titleChanged, button, &SideBarButton::setText);
+    connect(dw, &DockWidgetBase::isOverlayedChanged, button, [button]{
+        button->update();
+    });
     connect(dw, &DockWidgetBase::removedFromSideBar, button, &QObject::deleteLater);
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
     connect(button, &SideBarButton::clicked, this, [this, dw] {
@@ -52,14 +55,15 @@ void SideBarWidget::removeDockWidget_Impl(DockWidgetBase *)
     // Nothing is needed. Button is removed automatically.
 }
 
-SideBarButton *SideBarWidget::createButton(SideBarWidget *parent) const
+SideBarButton *SideBarWidget::createButton(DockWidgetBase *dw, SideBarWidget *parent) const
 {
-    return new SideBarButton(parent);
+    return new SideBarButton(dw, parent);
 }
 
-SideBarButton::SideBarButton(SideBarWidget *parent)
+SideBarButton::SideBarButton(DockWidgetBase *dw, SideBarWidget *parent)
     : QToolButton(parent)
     , m_sideBar(parent)
+    , m_dockWidget(dw)
 {
 }
 
@@ -70,6 +74,11 @@ bool SideBarButton::isVertical() const
 
 void SideBarButton::paintEvent(QPaintEvent *)
 {
+    if (!m_dockWidget) {
+        // Can happen during destruction
+        return;
+    }
+
     QPixmap pixmap(size());
 
     {
@@ -80,6 +89,8 @@ void SideBarButton::paintEvent(QPaintEvent *)
         QStyleOptionToolButton opt;
         initStyleOption(&opt);
         const bool isHovered = opt.state & QStyle::State_MouseOver;
+        const bool isOverlayed = m_dockWidget->isOverlayed();
+        const bool isHoveredOrOverlayed = isHovered || isOverlayed;
 
         QPainter p(&pixmap);
 
@@ -88,8 +99,8 @@ void SideBarButton::paintEvent(QPaintEvent *)
         // p.drawRect(r.adjusted(0, 0, -1, -1));
         p.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
 
-        QPen pen(isHovered ? 0x2ca7ff : 0xc8c8c8);
-        pen.setWidth(isHovered ? 2 : 1);
+        QPen pen(isHoveredOrOverlayed ? 0x2ca7ff : 0xc8c8c8);
+        pen.setWidth(isHoveredOrOverlayed ? 2 : 1);
         p.setPen(pen);
         p.drawLine(3, r.bottom() - 1, r.width() - 3*2, r.bottom() - 1);
      }
