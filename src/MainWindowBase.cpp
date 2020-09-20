@@ -171,9 +171,16 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
     case SideBarLocation::North:
     case SideBarLocation::South: {
         const int margin = 1;
+
+        SideBar *leftSideBar = q->sideBar(SideBarLocation::West);
+        SideBar *rightSideBar = q->sideBar(SideBarLocation::East);
+        const int leftSideBarWidth = (leftSideBar && leftSideBar->isVisible()) ? leftSideBar->width()
+                                                                               : 0;
+        const int rightSideBarWidth = (rightSideBar && rightSideBar->isVisible()) ? rightSideBar->width()
+                                                                                  : 0;
         rect.setHeight(qMax(200, frame->minSize().height()));
-        rect.setWidth(q->width() - margin * 2);
-        rect.moveLeft(margin);
+        rect.setWidth(centralWidget->width() - margin * 2 - leftSideBarWidth - rightSideBarWidth);
+        rect.moveLeft(margin + leftSideBarWidth);
         if (location == SideBarLocation::South) {
             rect.moveTop(centralWidget->geometry().bottom() - q->centerWidgetMargins().bottom() - rect.height() - sb->height());
         } else {
@@ -182,9 +189,15 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
         break;
     }
     case SideBarLocation::West:
-    case SideBarLocation::East:
+    case SideBarLocation::East: {
+        SideBar *topSideBar = q->sideBar(SideBarLocation::North);
+        SideBar *bottomSideBar = q->sideBar(SideBarLocation::South);
+        const int topSideBarHeight = (topSideBar && topSideBar->isVisible()) ? topSideBar->height()
+                                                                             : 0;
+        const int bottomSideBarHeight = (bottomSideBar && bottomSideBar->isVisible()) ? bottomSideBar->height()
+                                                                                      : 0;
         rect.setWidth(qMax(200, frame->minSize().width()));
-        rect.setHeight(q->height());
+        rect.setHeight(q->height() - topSideBarHeight - bottomSideBarHeight);
 
         if (location == SideBarLocation::South) {
             rect.moveLeft(q->width() - rect.width() - sb->width());
@@ -193,6 +206,7 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
         }
 
         break;
+    }
     case SideBarLocation::None:
         break;
     }
@@ -333,6 +347,14 @@ SideBar *MainWindowBase::sideBarForDockWidget(DockWidgetBase *dw) const
 DockWidgetBase *MainWindowBase::overlayedDockWidget() const
 {
     return d->m_overlayedDockWidget;
+}
+
+bool MainWindowBase::sideBarIsVisible(SideBarLocation loc) const
+{
+    if (SideBar *sb = sideBar(loc))
+        return sb->isVisible();
+
+    return false;
 }
 
 void MainWindowBase::setUniqueName(const QString &uniqueName)

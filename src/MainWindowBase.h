@@ -163,6 +163,9 @@ public:
     /// This is only relevant when using the auto-hide and side-bar feature.
     DockWidgetBase *overlayedDockWidget() const;
 
+    /// @brief Returns whether the specified sidebar is visible
+    bool sideBarIsVisible(SideBarLocation) const;
+
 protected:
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()
