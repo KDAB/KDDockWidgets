@@ -491,10 +491,8 @@ void DockWidgetBase::setAffinities(const QStringList &affinityNames)
 
 void DockWidgetBase::moveToSideBar()
 {
-    if (MainWindowBase *m = mainWindow()) {
+    if (MainWindowBase *m = mainWindow())
         m->moveToSideBar(this);
-        m->overlayOnSideBar(this);
-    }
 }
 
 bool DockWidgetBase::isOverlayed() const
