@@ -164,6 +164,7 @@ public:
 
 protected:
     void setUniqueName(const QString &uniqueName);
+    void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()
 
     virtual SideBar* sideBar(SideBarLocation) const = 0;
 

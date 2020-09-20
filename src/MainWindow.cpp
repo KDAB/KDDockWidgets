@@ -116,3 +116,9 @@ SideBar *MainWindow::sideBar(SideBarLocation location) const
 {
     return d->m_sideBars.value(location);
 }
+
+void MainWindow::resizeEvent(QResizeEvent *ev)
+{
+    MainWindowBase::resizeEvent(ev);
+    onResized(ev); // Also call our own handler, since QtQuick doesn't have resizeEvent()
+}

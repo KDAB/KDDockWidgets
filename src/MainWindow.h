@@ -50,6 +50,9 @@ public:
     ///@brief returns the sidebar for the specified location
     SideBar *sideBar(SideBarLocation) const override;
 
+protected:
+    void resizeEvent(QResizeEvent *) override;
+
 private:
     using QMainWindow::setCentralWidget;
     void setCentralWidget(QWidget *); // overridden just to make it private

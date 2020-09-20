@@ -231,7 +231,7 @@ void MainWindowBase::Private::updateOverlayGeometry()
         return;
     }
 
-    m_overlayedDockWidget->setGeometry(rectForOverlay(m_overlayedDockWidget->frame(), sb->location()));
+    m_overlayedDockWidget->frame()->QWidgetAdapter::setGeometry(rectForOverlay(m_overlayedDockWidget->frame(), sb->location()));
 }
 
 void MainWindowBase::moveToSideBar(DockWidgetBase *dw)
@@ -348,6 +348,12 @@ void MainWindowBase::setUniqueName(const QString &uniqueName)
     } else {
         qWarning() << Q_FUNC_INFO << "Already has a name." << this->uniqueName() << uniqueName;
     }
+}
+
+void MainWindowBase::onResized(QResizeEvent *)
+{
+    if (d->m_overlayedDockWidget)
+        d->updateOverlayGeometry();
 }
 
 bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
