@@ -138,22 +138,25 @@ public:
     /// functionality.
     ///
     /// The chosen side bar will depend on some heuristics, mostly proximity.
-    void moveToSideBar(DockWidgetBase *dw);
+    void moveToSideBar(DockWidgetBase *);
 
     /// @brief overload that allows to specify which sidebar to use, instead of using heuristics.
-    void moveToSideBar(DockWidgetBase *dw, SideBarLocation);
+    void moveToSideBar(DockWidgetBase *, SideBarLocation);
+
+    /// @brief Removes the dock widget from the sidebar and docks it into the main window again
+    void restoreFromSideBar(DockWidgetBase *);
 
     ///@brief Shows the dock widget overlayed on top of the main window, placed next to the sidebar
-    void overlayOnSideBar(DockWidgetBase *dw);
+    void overlayOnSideBar(DockWidgetBase *);
 
     ///@brief Shows or hides an overlay. It's assumed the dock widget is already in a side-bar.
-    void toggleOverlayOnSideBar(DockWidgetBase *dw);
+    void toggleOverlayOnSideBar(DockWidgetBase *);
 
     /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
     void clearSideBarOverlay();
 
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
-    SideBar * sideBarForDockWidget(DockWidgetBase *) const;
+    SideBar *sideBarForDockWidget(DockWidgetBase *) const;
 
     /// @brief returns the dock widget which is currently overlayed. nullptr if none.
     /// This is only relevant when using the auto-hide and side-bar feature.

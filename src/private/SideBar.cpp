@@ -54,6 +54,7 @@ void SideBar::removeDockWidget(DockWidgetBase *dw)
     disconnect(dw, &QObject::destroyed, this, &SideBar::onDockWidgetDestroyed);
     m_dockWidgets.removeOne(dw);
     removeDockWidget_Impl(dw);
+    Q_EMIT dw->removedFromSideBar();
     updateSize();
 }
 

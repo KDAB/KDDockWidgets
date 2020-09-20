@@ -17,6 +17,7 @@
 #include "Utils_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "Config.h"
+#include "MainWindowBase.h"
 
 #include <QTimer>
 #include <QWindowStateChangeEvent>
@@ -339,12 +340,20 @@ void TitleBar::onMinimizeClicked()
 
 void TitleBar::onAutoHideClicked()
 {
-    if (m_frame) {
-        const auto &dockwidgets = m_frame->dockWidgets();
-        for (DockWidgetBase *dw : dockwidgets)
-            dw->moveToSideBar();
-    } else {
+    if (!m_frame) {
         // Doesn't happen
         qWarning() << Q_FUNC_INFO << "Minimize not supported on floating windows";
+        return;
+    }
+
+    const auto &dockwidgets = m_frame->dockWidgets();
+    for (DockWidgetBase *dw : dockwidgets) {
+        if (dw->isOverlayed()) {
+            // restore
+            MainWindowBase *mainWindow = dw->mainWindow();
+            mainWindow->restoreFromSideBar(dw);
+        } else {
+            dw->moveToSideBar();
+        }
     }
 }

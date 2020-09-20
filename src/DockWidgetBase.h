@@ -385,6 +385,10 @@ Q_SIGNALS:
     ///@sa isOverlayed
     void isOverlayedChanged(bool);
 
+    ///@brief emitted when this dock widget is removed from a side-bar.
+    ///Only relevant for the auto-hide/sidebar feature
+    void removedFromSideBar();
+
 protected:
     void onParentChanged();
     void onShown(bool spontaneous);

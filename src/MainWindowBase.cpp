@@ -235,6 +235,23 @@ void MainWindowBase::moveToSideBar(DockWidgetBase *dw, SideBarLocation location)
     }
 }
 
+void MainWindowBase::restoreFromSideBar(DockWidgetBase *dw)
+{
+    // First un-overlay it, if it's overlayed
+    if (dw == d->m_overlayedDockWidget)
+        clearSideBarOverlay();
+
+    SideBar *sb = sideBarForDockWidget(dw);
+    if (!sb) {
+        // Doesn't happen
+        qWarning() << Q_FUNC_INFO << "Dock widget isn't in any sidebar";
+        return;
+    }
+
+    sb->removeDockWidget(dw);
+    dw->setFloating(false); // dock it
+}
+
 void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
 {
     if (!dw)

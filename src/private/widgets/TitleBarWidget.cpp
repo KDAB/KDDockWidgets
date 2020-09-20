@@ -162,7 +162,7 @@ void TitleBarWidget::updateAutoHideButton()
 {
     if (Config::self().flags() & Config::Flag_internal_AutoHideSupport) {
         const Frame *f = frame();
-        m_autoHideButton->setVisible(f && f->isInMainWindow());
+        m_autoHideButton->setVisible(f && (f->isInMainWindow() || f->isOverlayed()));
     } else {
         m_autoHideButton->setVisible(false);
     }

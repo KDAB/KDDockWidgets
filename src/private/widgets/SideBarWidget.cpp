@@ -36,6 +36,7 @@ void SideBarWidget::addDockWidget_Impl(DockWidgetBase *dw)
     auto button = createButton();
     button->setText(dw->title());
     connect(dw, &DockWidgetBase::titleChanged, button, &QToolButton::setText);
+    connect(dw, &DockWidgetBase::removedFromSideBar, button, &QObject::deleteLater);
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
 
     connect(button, &QAbstractButton::clicked, this, [this, dw] {
