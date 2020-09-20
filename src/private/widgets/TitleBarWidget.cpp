@@ -74,6 +74,9 @@ void TitleBarWidget::init()
     updateMaximizeButton();
     updateMinimizeButton();
 
+    m_minimizeButton->setToolTip(tr("Minimize"));
+    m_closeButton->setToolTip(tr("Close"));
+
     connect(this, &TitleBar::titleChanged, this, [this] {
         update();
     });
@@ -140,6 +143,7 @@ void TitleBarWidget::paintEvent(QPaintEvent *)
 
 void TitleBarWidget::updateFloatButton()
 {
+    m_floatButton->setToolTip(floatingWindow()? tr("Dock window") : tr("Undock window"));
     m_floatButton->setVisible(supportsFloatingButton());
 }
 
@@ -164,8 +168,10 @@ void TitleBarWidget::updateAutoHideButton()
         if (const Frame *f = frame()) {
             if (f->isInMainWindow()) {
                 m_autoHideButton->setIcon(QIcon(QStringLiteral(":/img/auto-hide.png")));
+                m_autoHideButton->setToolTip(tr("Auto-hide"));
             } else if (f->isOverlayed()) {
                 m_autoHideButton->setIcon(QIcon(QStringLiteral(":/img/unauto-hide.png")));
+                m_autoHideButton->setToolTip(tr("Disable auto-hide"));
             }
 
             m_autoHideButton->setVisible(true);
@@ -184,6 +190,7 @@ void TitleBarWidget::updateMaximizeButton()
                                                                           : QStyle::SP_TitleBarMaxButton));
 
         m_maximizeButton->setVisible(supportsMaximizeButton());
+        m_maximizeButton->setToolTip(fw->isMaximized() ? tr("Restore") : tr("Maximize"));
     } else {
         m_maximizeButton->setVisible(false);
     }
