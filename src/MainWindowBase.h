@@ -26,6 +26,7 @@
 #include "LayoutSaver_p.h"
 
 #include <QVector>
+#include <QMargins>
 
 namespace KDDockWidgets {
 
@@ -165,6 +166,7 @@ public:
 protected:
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()
+    virtual QMargins centerWidgetMargins() const = 0;
 
     virtual SideBar* sideBar(SideBarLocation) const = 0;
 

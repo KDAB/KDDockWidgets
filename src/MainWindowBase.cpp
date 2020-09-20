@@ -163,8 +163,8 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
     if (!sb)
         return {};
 
-    DropArea *da = q->dropArea();
-    const QPoint dropAreaPos = da->mapTo(q, QPoint(0,0));
+    const QWidget *centralWidget = q->centralWidget();
+    //const QPoint dropAreaPos = da->mapTo(q, QPoint(0,0));
 
     QRect rect;
     switch (location) {
@@ -173,11 +173,11 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
         const int margin = 1;
         rect.setHeight(qMax(200, frame->minSize().height()));
         rect.setWidth(q->width() - margin * 2);
-        rect.moveLeft(margin * 2);
+        rect.moveLeft(margin);
         if (location == SideBarLocation::South) {
-            rect.moveTop(q->height() - rect.height() - sb->height());
+            rect.moveTop(centralWidget->geometry().bottom() - q->centerWidgetMargins().bottom() - rect.height() - sb->height());
         } else {
-            rect.moveTop(dropAreaPos.y() + sb->height());
+            rect.moveTop(centralWidget->y() + sb->height() + q->centerWidgetMargins().top());
         }
         break;
     }
@@ -189,7 +189,7 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
         if (location == SideBarLocation::South) {
             rect.moveLeft(q->width() - rect.width() - sb->width());
         } else {
-            rect.moveLeft(dropAreaPos.x() + sb->width());
+            rect.moveLeft(centralWidget->x() + sb->width());
         }
 
         break;
@@ -290,7 +290,6 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
     d->updateOverlayGeometry();
-    frame->QWidgetAdapter::setGeometry(d->rectForOverlay(frame, sb->location()));
     frame->QWidgetAdapter::show();
 
     Q_EMIT dw->isOverlayedChanged(true);

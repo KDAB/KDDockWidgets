@@ -52,7 +52,7 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *) override;
-
+    QMargins centerWidgetMargins() const override;
 private:
     using QMainWindow::setCentralWidget;
     void setCentralWidget(QWidget *); // overridden just to make it private

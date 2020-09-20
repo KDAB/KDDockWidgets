@@ -81,7 +81,7 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
     auto centralWidget = new MyCentralWidget(this);
     auto layout = new QHBoxLayout(centralWidget);  // 1 level of indirection so we can add some margins
     layout->setSpacing(0);
-    layout->setContentsMargins(1, 5, 1, 1);
+    layout->setContentsMargins(centerWidgetMargins());
 
     if (d->m_supportsAutoHide) {
         layout->addWidget(sideBar(SideBarLocation::West));
@@ -121,4 +121,9 @@ void MainWindow::resizeEvent(QResizeEvent *ev)
 {
     MainWindowBase::resizeEvent(ev);
     onResized(ev); // Also call our own handler, since QtQuick doesn't have resizeEvent()
+}
+
+QMargins MainWindow::centerWidgetMargins() const
+{
+    return { 1, 5, 1, 1};
 }
