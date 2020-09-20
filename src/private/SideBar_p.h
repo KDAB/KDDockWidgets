@@ -19,12 +19,13 @@
 namespace KDDockWidgets {
 
 class DockWidgetBase;
+class MainWindowBase;
 
 class DOCKS_EXPORT SideBar : public QWidgetAdapter
 {
     Q_OBJECT
 public:
-    explicit SideBar(SideBarLocation, QWidgetOrQuick *parent = nullptr);
+    explicit SideBar(SideBarLocation, MainWindowBase *parent = nullptr);
 
     void addDockWidget(DockWidgetBase *dw);
     void removeDockWidget(DockWidgetBase *dw);
@@ -42,6 +43,9 @@ public:
     /// @brief returns the sidebar's location in the main window
     SideBarLocation location() const;
 
+    /// @brief Returns the main window this side bar belongs to
+    MainWindowBase *mainWindow() const;
+
 protected:
     virtual void addDockWidget_Impl(DockWidgetBase *dock) = 0;
     virtual void removeDockWidget_Impl(DockWidgetBase *dock) = 0;
@@ -52,6 +56,7 @@ private:
     void onDockWidgetDestroyed(QObject *dw);
     void updateSize();
 
+    MainWindowBase *const m_mainWindow;
     QVector<DockWidgetBase *> m_dockWidgets;
     const SideBarLocation m_location;
     const Qt::Orientation m_orientation;

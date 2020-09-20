@@ -11,6 +11,7 @@
 
 #include "SideBarWidget_p.h"
 #include "DockWidgetBase.h"
+#include "MainWindowBase.h"
 
 #include <QToolButton>
 #include <QVBoxLayout>
@@ -20,7 +21,7 @@
 
 using namespace KDDockWidgets;
 
-SideBarWidget::SideBarWidget(SideBarLocation location, QWidget *parent)
+SideBarWidget::SideBarWidget(SideBarLocation location, MainWindowBase *parent)
     : SideBar(location, parent)
     , m_layout(isVertical() ? static_cast<QBoxLayout*>(new QVBoxLayout(this))
                             : static_cast<QBoxLayout*>(new QHBoxLayout(this))) // ternary operator requires static_cast

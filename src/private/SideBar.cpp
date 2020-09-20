@@ -11,13 +11,15 @@
 
 #include "SideBar_p.h"
 #include "DockWidgetBase.h"
+#include "MainWindowBase.h"
 
 #include <QDebug>
 
 using namespace KDDockWidgets;
 
-SideBar::SideBar(SideBarLocation location, QWidgetOrQuick *parent)
+SideBar::SideBar(SideBarLocation location, MainWindowBase *parent)
     : QWidgetAdapter(parent)
+    , m_mainWindow(parent)
     , m_location(location)
     , m_orientation((location == SideBarLocation::North || location == SideBarLocation::South) ? Qt::Horizontal
                                                                                                : Qt::Vertical)
@@ -89,4 +91,9 @@ Qt::Orientation SideBar::orientation() const
 bool SideBar::isEmpty() const
 {
     return m_dockWidgets.isEmpty();
+}
+
+MainWindowBase *SideBar::mainWindow() const
+{
+    return m_mainWindow;
 }

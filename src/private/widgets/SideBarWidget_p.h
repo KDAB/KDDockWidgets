@@ -30,7 +30,7 @@ class DOCKS_EXPORT SideBarWidget : public SideBar
 {
     Q_OBJECT
 public:
-    explicit SideBarWidget(SideBarLocation, QWidget *parent);
+    explicit SideBarWidget(SideBarLocation, KDDockWidgets::MainWindowBase *parent);
 
 protected:
     void addDockWidget_Impl(DockWidgetBase *dock) override;
