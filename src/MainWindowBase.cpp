@@ -293,6 +293,11 @@ SideBar *MainWindowBase::sideBarForDockWidget(DockWidgetBase *dw) const
     return nullptr;
 }
 
+DockWidgetBase *MainWindowBase::overlayedDockWidget() const
+{
+    return d->m_overlayedDockWidget;
+}
+
 void MainWindowBase::setUniqueName(const QString &uniqueName)
 {
     if (uniqueName.isEmpty())

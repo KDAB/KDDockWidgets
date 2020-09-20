@@ -349,6 +349,10 @@ public:
      */
     void moveToSideBar();
 
+    /// @brief Returns whether this dock widget is overlayed on top of the main window, instead of
+    /// docked into the layout. This is only relevant when using the auto-hide and side-bar feature.
+    bool isOverlayed() const;
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();

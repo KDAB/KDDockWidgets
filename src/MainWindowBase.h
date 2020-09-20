@@ -155,6 +155,10 @@ public:
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
     SideBar * sideBarForDockWidget(DockWidgetBase *) const;
 
+    /// @brief returns the dock widget which is currently overlayed. nullptr if none.
+    /// This is only relevant when using the auto-hide and side-bar feature.
+    DockWidgetBase *overlayedDockWidget() const;
+
 protected:
     void setUniqueName(const QString &uniqueName);
 

@@ -497,6 +497,14 @@ void DockWidgetBase::moveToSideBar()
     }
 }
 
+bool DockWidgetBase::isOverlayed() const
+{
+    if (MainWindowBase *m = mainWindow())
+        return m->overlayedDockWidget() == this;
+
+    return false;
+}
+
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
