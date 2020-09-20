@@ -21,8 +21,9 @@
 #include "DropArea_p.h"
 #include "Frame_p.h"
 #include "Logging_p.h"
-#include "private/widgets/SideBarWidget_p.h"
+#include "SideBar_p.h"
 #include "DropAreaWithCentralFrame_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QApplication>
 #include <QVBoxLayout>
@@ -40,7 +41,7 @@ public:
         if (m_supportsAutoHide) {
             for (auto location : { SideBarLocation::North, SideBarLocation::East,
                                    SideBarLocation::West, SideBarLocation::South}) {
-                m_sideBars.insert(location, new SideBarWidget(location, mainWindow));
+                m_sideBars.insert(location, Config::self().frameworkWidgetFactory()->createSideBar(location, mainWindow) );
             }
         }
     }

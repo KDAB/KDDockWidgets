@@ -37,6 +37,7 @@ class TabWidget;
 class TitleBar;
 class Frame;
 class DropArea;
+class SideBar;
 class TabBar;
 
 /**
@@ -121,6 +122,12 @@ public:
     ///@brief Called internally by the framework to create a RubberBand to show as drop zone
     ///Returns a rubber band
     virtual QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const = 0;
+
+    ///@brief Called internally by the framework to create a SideBar
+    ///@param loc The side-bar location without the main window. Just forward into your SideBar sub-class ctor.
+    ///@param parent The MainWindow. Just forward into your SideBar sub-class ctor.
+    virtual SideBar *createSideBar(SideBarLocation loc, MainWindowBase *parent) const = 0;
+
 private:
     Q_DISABLE_COPY(FrameworkWidgetFactory)
 };
@@ -142,6 +149,7 @@ public:
     FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const override;
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const override;
     QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const override;
+    SideBar *createSideBar(SideBarLocation loc, MainWindowBase *parent) const override;
 
     static DropIndicatorType s_dropIndicatorType;
 private:

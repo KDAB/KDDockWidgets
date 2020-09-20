@@ -23,10 +23,12 @@
 # include "widgets/FrameWidget_p.h"
 # include "widgets/TitleBarWidget_p.h"
 # include "widgets/TabBarWidget_p.h"
+# include "widgets/SideBarWidget_p.h"
 # include "widgets/TabWidgetWidget_p.h"
 # include "multisplitter/Separator_qwidget.h"
 # include "widgets/FloatingWindowWidget_p.h"
 # include "indicators/SegmentedIndicators_p.h"
+
 # include <QRubberBand>
 #else
 # include "quick/FrameQuick_p.h"
@@ -100,6 +102,11 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(
 QWidgetOrQuick *DefaultWidgetFactory::createRubberBand(QWidgetOrQuick *parent) const
 {
     return new QRubberBand(QRubberBand::Rectangle, parent);
+}
+
+SideBar *DefaultWidgetFactory::createSideBar(SideBarLocation loc, MainWindowBase *parent) const
+{
+    return new SideBarWidget(loc, parent);
 }
 
 #else
