@@ -178,7 +178,7 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
                                                                                : 0;
         const int rightSideBarWidth = (rightSideBar && rightSideBar->isVisible()) ? rightSideBar->width()
                                                                                   : 0;
-        rect.setHeight(qMax(200, frame->minSize().height()));
+        rect.setHeight(qMax(300, frame->minSize().height()));
         rect.setWidth(centralWidget->width() - margin * 2 - leftSideBarWidth - rightSideBarWidth);
         rect.moveLeft(margin + leftSideBarWidth);
         if (location == SideBarLocation::South) {
@@ -196,7 +196,7 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
                                                                              : 0;
         const int bottomSideBarHeight = (bottomSideBar && bottomSideBar->isVisible()) ? bottomSideBar->height()
                                                                                       : 0;
-        rect.setWidth(qMax(200, frame->minSize().width()));
+        rect.setWidth(qMax(300, frame->minSize().width()));
         rect.setHeight(centralWidget->height() - topSideBarHeight - bottomSideBarHeight - centerWidgetMargins.top() - centerWidgetMargins.bottom());
         rect.moveTop(sb->mapTo(q, QPoint(0, 0)).y() + topSideBarHeight - 1);
         if (location == SideBarLocation::East) {
