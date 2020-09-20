@@ -75,11 +75,6 @@ void SideBarButton::paintEvent(QPaintEvent *ev)
 
 QSize SideBarButton::sizeHint() const
 {
-    QStyleOptionToolButton opt;
-    initStyleOption(&opt);
-    const QFontMetrics fm = fontMetrics();
-    const QSize size = fm.size(Qt::TextShowMnemonic, text());
-    const QSize hint = style()->sizeFromContents(QStyle::CT_ToolButton, &opt, size, this);
-
+    const QSize hint = QToolButton::sizeHint();
     return isVertical() ? hint.transposed() : hint;
 }
