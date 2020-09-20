@@ -79,11 +79,10 @@ void SideBarButton::paintEvent(QPaintEvent *)
         return;
     }
 
-    QPixmap pixmap(size());
+    // Draw to an horizontal button, it's easier. Rotate later.
+    QPixmap pixmap(isVertical() ? size().transposed() : size());
 
     {
-        // Draw to an horizontal button, it's easier.
-
         pixmap.fill(Qt::transparent);
 
         QStyleOptionToolButton opt;
@@ -107,11 +106,11 @@ void SideBarButton::paintEvent(QPaintEvent *)
 
     QPainter p(this);
     if (isVertical()) {
-
-    } else {
-        p.drawPixmap(rect(), pixmap);
+        pixmap = pixmap.transformed(QTransform().rotate(90));
+        pixmap.save(QStringLiteral("foo.png"));
     }
 
+    p.drawPixmap(rect(), pixmap);
 }
 
 QSize SideBarButton::sizeHint() const

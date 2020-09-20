@@ -53,7 +53,7 @@ void TitleBarWidget::init()
     m_minimizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMinButton));
     m_floatButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarNormalButton));
     m_closeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarCloseButton));
-    m_autoHideButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMinButton)); // TODO change icon
+    m_autoHideButton = TitleBarWidget::createButton(this, QIcon());
 
     m_layout->addWidget(m_autoHideButton);
     m_layout->addWidget(m_minimizeButton);
@@ -161,8 +161,19 @@ void TitleBarWidget::updateMinimizeButton()
 void TitleBarWidget::updateAutoHideButton()
 {
     if (Config::self().flags() & Config::Flag_internal_AutoHideSupport) {
-        const Frame *f = frame();
-        m_autoHideButton->setVisible(f && (f->isInMainWindow() || f->isOverlayed()));
+
+
+        if (const Frame *f = frame()) {
+            if (f->isInMainWindow()) {
+                m_autoHideButton->setIcon(QIcon(QStringLiteral(":/img/auto-hide.png")));
+            } else if (f->isOverlayed()) {
+                m_autoHideButton->setIcon(QIcon(QStringLiteral(":/img/unauto-hide.png")));
+            }
+
+            m_autoHideButton->setVisible(true);
+        } else {
+            m_autoHideButton->setVisible(false);
+        }
     } else {
         m_autoHideButton->setVisible(false);
     }
