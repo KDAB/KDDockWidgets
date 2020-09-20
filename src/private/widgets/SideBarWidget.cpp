@@ -107,7 +107,6 @@ void SideBarButton::paintEvent(QPaintEvent *)
     QPainter p(this);
     if (isVertical()) {
         pixmap = pixmap.transformed(QTransform().rotate(90));
-        pixmap.save(QStringLiteral("foo.png"));
     }
 
     p.drawPixmap(rect(), pixmap);
