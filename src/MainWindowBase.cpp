@@ -237,6 +237,9 @@ void MainWindowBase::moveToSideBar(DockWidgetBase *dw, SideBarLocation location)
 
 void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
 {
+    if (!dw)
+        return;
+
     const SideBar *sb = sideBarForDockWidget(dw);
     if (sb == nullptr) {
         qWarning() << Q_FUNC_INFO << "You need to add the dock widget to the sidebar before you can overlay it";
@@ -257,6 +260,7 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     frame->QWidgetAdapter::show();
 
     d->m_overlayedDockWidget = dw;
+    Q_EMIT dw->isOverlayedChanged(true);
 }
 
 void MainWindowBase::toggleOverlayOnSideBar(DockWidgetBase *dw)
@@ -275,6 +279,7 @@ void MainWindowBase::clearSideBarOverlay()
 
     Frame *frame = d->m_overlayedDockWidget->frame();
     d->m_overlayedDockWidget->setParent(nullptr);
+    Q_EMIT d->m_overlayedDockWidget->isOverlayedChanged(false);
     d->m_overlayedDockWidget = nullptr;
     delete frame;
 }

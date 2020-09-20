@@ -381,6 +381,10 @@ Q_SIGNALS:
     ///@sa isFocused
     void isFocusedChanged(bool);
 
+    ///@brief emitted when isOverlayed changes
+    ///@sa isOverlayed
+    void isOverlayedChanged(bool);
+
 protected:
     void onParentChanged();
     void onShown(bool spontaneous);
