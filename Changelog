@@ -5,6 +5,7 @@
   - Added Config::Flag_AlwaysTitleBarWhenFloating, which complements Flag_HideTitleBarWhenTabsVisible
   - Added Config::Flag_DontUseUtilityWindowsForFloating
   - Added Config::Flag_TitleBarHasMinimizeButton
+  - Added Config::Flag_TitleBarNoFloatButton
   - Bugfixes:
     - Windows: Fixed windows not having proper minimum size.
     - Windows: Fixed moving windows across screens with different DPI (#72)

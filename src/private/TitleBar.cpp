@@ -193,6 +193,11 @@ bool TitleBar::supportsFloatingButton() const
         return false;
     }
 
+    if (Config::self().flags() & Config::Flag_TitleBarNoFloatButton) {
+        // Was explicitly disabled
+        return false;
+    }
+
     // If we have a floating window with nested dock widgets we can't re-attach, because we don't
     // know where to
     return !m_floatingWindow || m_floatingWindow->hasSingleFrame();
