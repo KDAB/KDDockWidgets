@@ -33,6 +33,7 @@
 #include "DropAreaWithCentralFrame_p.h"
 #include "Testing.h"
 #include "DockWidget.h"
+#include "SideBar_p.h"
 
 #include <QtTest/QtTest>
 #include <QPainter>
@@ -433,6 +434,8 @@ private Q_SLOTS:
     void tst_titleBarFocusedWhenTabsChange();
     void tst_floatingWindowTitleBug();
     void tst_honourUserGeometry();
+
+    void tst_closeRemovesFromSideBar();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5946,6 +5949,42 @@ void TestDocks::tst_honourUserGeometry()
     QCOMPARE(dw1->window()->geometry().topLeft(), pt);
 
     delete dw1->window();
+}
+
+void TestDocks::tst_closeRemovesFromSideBar()
+{
+    EnsureTopLevelsDeleted e;
+    Config::self().setFlags(Config::Flag_internal_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dw1 = new DockWidget(QStringLiteral("1"));
+    auto fw1 = dw1->window();
+    m1->addDockWidget(dw1, Location_OnBottom);
+    m1->moveToSideBar(dw1);
+
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(!dw1->isVisible());
+    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
+
+    SideBar *sb = m1->sideBarForDockWidget(dw1);
+    QVERIFY(sb);
+
+    // Overlay it:
+    sb->toggleOverlay(dw1);
+    QVERIFY(dw1->isOverlayed());
+    QVERIFY(dw1->isVisible());
+    QCOMPARE(dw1->sideBarLocation(), sb->location());
+    QVERIFY(dw1->isInMainWindow());
+    QVERIFY(!dw1->isFloating());
+
+    // Close it while it's overlayed:
+    dw1->close();
+    QVERIFY(!dw1->isInMainWindow());
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(!dw1->isVisible());
+    QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
+    QVERIFY(!sb->isVisible());
+
+    delete fw1;
 }
 
 int main(int argc, char *argv[])

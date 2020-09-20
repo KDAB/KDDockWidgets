@@ -65,7 +65,7 @@ bool SideBar::contains(DockWidgetBase *dw) const
 
 void SideBar::onButtonClicked(DockWidgetBase *dw)
 {
-    m_mainWindow->toggleOverlayOnSideBar(dw);
+    toggleOverlay(dw);
 }
 
 void SideBar::onDockWidgetDestroyed(QObject *dw)
@@ -101,4 +101,9 @@ SideBarLocation SideBar::location() const
 MainWindowBase *SideBar::mainWindow() const
 {
     return m_mainWindow;
+}
+
+void SideBar::toggleOverlay(DockWidgetBase *dw)
+{
+    m_mainWindow->toggleOverlayOnSideBar(dw);
 }

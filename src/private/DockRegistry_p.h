@@ -28,6 +28,8 @@
 namespace KDDockWidgets
 {
 
+class SideBar;
+
 class DOCKS_EXPORT DockRegistry : public QObject
 {
     Q_OBJECT
@@ -171,6 +173,14 @@ public:
     /// @param target The window which we want to know if it's probably obscured
     /// @param exclude This window should not be counted as an obscurer. (It's being dragged).
     bool isProbablyObscured(QWindow *target, FloatingWindow *exclude) const;
+
+    ///@brief Returns whether the specified dock widget is in a side bar, and which.
+    /// SideBarLocation::None is returned if it's not in a sidebar.
+    /// This is only relevant when using the auto-hide and side-bar feature.
+    SideBarLocation sideBarLocationForDockWidget(const DockWidgetBase *) const;
+
+    ///@brief Overload that returns the SideBar itself
+    SideBar* sideBarForDockWidget(const DockWidgetBase *) const;
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;

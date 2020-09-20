@@ -22,6 +22,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "private/Position_p.h"
 #include "WindowBeingDragged_p.h"
+#include "SideBar_p.h"
 
 #include <QAction>
 #include <QEvent>
@@ -503,6 +504,11 @@ bool DockWidgetBase::isOverlayed() const
     return false;
 }
 
+SideBarLocation DockWidgetBase::sideBarLocation() const
+{
+    return DockRegistry::self()->sideBarLocationForDockWidget(this);
+}
+
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
@@ -665,6 +671,10 @@ void DockWidgetBase::Private::close()
     if (Frame *frame = q->frame()) {
         frame->removeWidget(q);
         q->setParent(nullptr);
+
+        if (SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
+            sb->removeDockWidget(q);
+        }
     }
 }
 

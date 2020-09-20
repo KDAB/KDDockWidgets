@@ -353,6 +353,11 @@ public:
     /// docked into the layout. This is only relevant when using the auto-hide and side-bar feature.
     bool isOverlayed() const;
 
+    ///@brief Returns whether this dock widget is in a side bar, and which.
+    /// SideBarLocation::None is returned if it's not in a sidebar.
+    /// This is only relevant when using the auto-hide and side-bar feature.
+    SideBarLocation sideBarLocation() const;
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();

@@ -330,13 +330,13 @@ void MainWindowBase::clearSideBarOverlay()
     delete frame;
 }
 
-SideBar *MainWindowBase::sideBarForDockWidget(DockWidgetBase *dw) const
+SideBar *MainWindowBase::sideBarForDockWidget(const DockWidgetBase *dw) const
 {
     for (auto loc : { SideBarLocation::North, SideBarLocation::South,
                       SideBarLocation::East, SideBarLocation::West }) {
 
         if (SideBar *sb = sideBar(loc)) {
-            if (sb->contains(dw))
+            if (sb->contains(const_cast<DockWidgetBase *>(dw)))
                 return sb;
         }
     }

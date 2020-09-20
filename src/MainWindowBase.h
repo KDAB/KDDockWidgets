@@ -157,7 +157,7 @@ public:
     void clearSideBarOverlay();
 
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
-    SideBar *sideBarForDockWidget(DockWidgetBase *) const;
+    SideBar *sideBarForDockWidget(const DockWidgetBase *) const;
 
     /// @brief returns the dock widget which is currently overlayed. nullptr if none.
     /// This is only relevant when using the auto-hide and side-bar feature.

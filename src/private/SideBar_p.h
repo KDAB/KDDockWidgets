@@ -46,6 +46,9 @@ public:
     /// @brief Returns the main window this side bar belongs to
     MainWindowBase *mainWindow() const;
 
+    /// @brief Toggles the dock widget overlay. Equivalent to the user clicking on the button.
+    void toggleOverlay(DockWidgetBase *);
+
 protected:
     virtual void addDockWidget_Impl(DockWidgetBase *dock) = 0;
     virtual void removeDockWidget_Impl(DockWidgetBase *dock) = 0;
