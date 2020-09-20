@@ -12,9 +12,10 @@
 #ifndef KD_SIDEBARWIDGET_P_H
 #define KD_SIDEBARWIDGET_P_H
 
-
 #include "../../docks_export.h"
 #include "../SideBar_p.h"
+
+#include <QToolButton>
 
 QT_BEGIN_NAMESPACE
 class QBoxLayout;
@@ -25,6 +26,19 @@ namespace KDDockWidgets {
 
 class DockWidget;
 class Frame;
+class SideBarWidget;
+
+class SideBarButton : public QToolButton
+{
+    Q_OBJECT
+public:
+    explicit SideBarButton(SideBarWidget *parent);
+    bool isVertical() const;
+    void paintEvent(QPaintEvent *) override;
+    QSize sizeHint() const override;
+private:
+    SideBarWidget *const m_sideBar;
+};
 
 class DOCKS_EXPORT SideBarWidget : public SideBar
 {
@@ -37,7 +51,7 @@ protected:
     void removeDockWidget_Impl(DockWidgetBase *dock) override;
 
     // virtual so users can provide their own buttons
-    virtual QAbstractButton* createButton();
+    virtual SideBarButton *createButton(SideBarWidget *parent) const;
 
 private:
     QBoxLayout *const m_layout;

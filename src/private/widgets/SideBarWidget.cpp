@@ -13,11 +13,12 @@
 #include "DockWidgetBase.h"
 #include "MainWindowBase.h"
 
-#include <QToolButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QAbstractButton>
+#include <QStyle>
+#include <QStyleOptionToolButton>
 
 using namespace KDDockWidgets;
 
@@ -33,13 +34,12 @@ SideBarWidget::SideBarWidget(SideBarLocation location, MainWindowBase *parent)
 
 void SideBarWidget::addDockWidget_Impl(DockWidgetBase *dw)
 {
-    auto button = createButton();
+    auto button = createButton(this);
     button->setText(dw->title());
-    connect(dw, &DockWidgetBase::titleChanged, button, &QToolButton::setText);
+    connect(dw, &DockWidgetBase::titleChanged, button, &SideBarButton::setText);
     connect(dw, &DockWidgetBase::removedFromSideBar, button, &QObject::deleteLater);
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
-
-    connect(button, &QAbstractButton::clicked, this, [this, dw] {
+    connect(button, &SideBarButton::clicked, this, [this, dw] {
         onButtonClicked(dw);
     });
 
@@ -52,7 +52,34 @@ void SideBarWidget::removeDockWidget_Impl(DockWidgetBase *)
     // Nothing is needed. Button is removed automatically.
 }
 
-QAbstractButton *SideBarWidget::createButton()
+SideBarButton *SideBarWidget::createButton(SideBarWidget *parent) const
 {
-    return new QToolButton(this);
+    return new SideBarButton(parent);
+}
+
+SideBarButton::SideBarButton(SideBarWidget *parent)
+    : QToolButton(parent)
+    , m_sideBar(parent)
+{
+}
+
+bool SideBarButton::isVertical() const
+{
+    return m_sideBar->isVertical();
+}
+
+void SideBarButton::paintEvent(QPaintEvent *ev)
+{
+    QToolButton::paintEvent(ev);
+}
+
+QSize SideBarButton::sizeHint() const
+{
+    QStyleOptionToolButton opt;
+    initStyleOption(&opt);
+    const QFontMetrics fm = fontMetrics();
+    const QSize size = fm.size(Qt::TextShowMnemonic, text());
+    const QSize hint = style()->sizeFromContents(QStyle::CT_ToolButton, &opt, size, this);
+
+    return isVertical() ? hint.transposed() : hint;
 }
