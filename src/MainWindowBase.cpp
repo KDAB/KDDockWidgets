@@ -164,13 +164,13 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
         return {};
 
     const QWidget *centralWidget = q->centralWidget();
-    //const QPoint dropAreaPos = da->mapTo(q, QPoint(0,0));
+    const QMargins centerWidgetMargins = q->centerWidgetMargins();
 
     QRect rect;
+    const int margin = 1;
     switch (location) {
     case SideBarLocation::North:
     case SideBarLocation::South: {
-        const int margin = 1;
 
         SideBar *leftSideBar = q->sideBar(SideBarLocation::West);
         SideBar *rightSideBar = q->sideBar(SideBarLocation::East);
@@ -182,9 +182,9 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
         rect.setWidth(centralWidget->width() - margin * 2 - leftSideBarWidth - rightSideBarWidth);
         rect.moveLeft(margin + leftSideBarWidth);
         if (location == SideBarLocation::South) {
-            rect.moveTop(centralWidget->geometry().bottom() - q->centerWidgetMargins().bottom() - rect.height() - sb->height());
+            rect.moveTop(centralWidget->geometry().bottom() - centerWidgetMargins.bottom() - rect.height() - sb->height());
         } else {
-            rect.moveTop(centralWidget->y() + sb->height() + q->centerWidgetMargins().top());
+            rect.moveTop(centralWidget->y() + sb->height() + centerWidgetMargins.top());
         }
         break;
     }
@@ -197,12 +197,12 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
         const int bottomSideBarHeight = (bottomSideBar && bottomSideBar->isVisible()) ? bottomSideBar->height()
                                                                                       : 0;
         rect.setWidth(qMax(200, frame->minSize().width()));
-        rect.setHeight(q->height() - topSideBarHeight - bottomSideBarHeight);
-
-        if (location == SideBarLocation::South) {
-            rect.moveLeft(q->width() - rect.width() - sb->width());
+        rect.setHeight(centralWidget->height() - topSideBarHeight - bottomSideBarHeight - centerWidgetMargins.top() - centerWidgetMargins.bottom());
+        rect.moveTop(sb->mapTo(q, QPoint(0, 0)).y() + topSideBarHeight - 1);
+        if (location == SideBarLocation::East) {
+            rect.moveLeft(centralWidget->width() - rect.width() - sb->width() - centerWidgetMargins.right() - margin);
         } else {
-            rect.moveLeft(centralWidget->x() + sb->width());
+            rect.moveLeft(margin + centralWidget->x() + centerWidgetMargins.left() + sb->width());
         }
 
         break;
