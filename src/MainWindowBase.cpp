@@ -231,6 +231,12 @@ SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) co
     if (borders & Layouting::Item::LayoutBorderLocation_North)
         return SideBarLocation::North;
 
+    if (borders & Layouting::Item::LayoutBorderLocation_East)
+        return SideBarLocation::East;
+
+    if (borders & Layouting::Item::LayoutBorderLocation_West)
+        return SideBarLocation::West;
+
     return SideBarLocation::South;
 }
 
