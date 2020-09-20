@@ -140,7 +140,12 @@ public:
     ///@brief Shows the dock widget overlayed on top of the main window, placed next to the sidebar
     void overlayOnSideBar(DockWidgetBase *dw);
     void overlayOnSideBar(DockWidgetBase *dw, SideBarLocation);
+
+    /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
     void clearSideBarOverlay();
+
+    /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
+    SideBar * sideBarForDockWidget(DockWidgetBase *) const;
 
 protected:
     void setUniqueName(const QString &uniqueName);

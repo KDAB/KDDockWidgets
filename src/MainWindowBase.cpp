@@ -282,6 +282,20 @@ void MainWindowBase::clearSideBarOverlay()
     delete frame;
 }
 
+SideBar *MainWindowBase::sideBarForDockWidget(DockWidgetBase *dw) const
+{
+    for (auto loc : { SideBarLocation::North, SideBarLocation::South,
+                      SideBarLocation::East, SideBarLocation::West }) {
+
+        if (SideBar *sb = sideBar(loc)) {
+            if (sb->contains(dw))
+                return sb;
+        }
+    }
+
+    return nullptr;
+}
+
 void MainWindowBase::setUniqueName(const QString &uniqueName)
 {
     if (uniqueName.isEmpty())
