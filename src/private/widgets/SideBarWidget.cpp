@@ -38,11 +38,6 @@ void SideBarWidget::addDockWidget_Impl(DockWidgetBase *dw)
     connect(dw, &DockWidgetBase::titleChanged, button, &QToolButton::setText);
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
 
-    connect(dw, &DockWidgetBase::isOverlayedChanged, button, [button] (bool isOverlayed) {
-        if (!isOverlayed)
-            button->deleteLater();
-    });
-
     connect(button, &QAbstractButton::clicked, this, [this, dw] {
         onButtonClicked(dw);
     });
