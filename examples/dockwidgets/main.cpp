@@ -102,6 +102,9 @@ int main(int argc, char **argv)
 
     QCommandLineOption centralFrame("f", QCoreApplication::translate("main", "Persistent central frame"));
 
+    QCommandLineOption autoHideSupport("w", QCoreApplication::translate("main", "Enables auto-hide/minimization to side-bar support"));
+    parser.addOption(autoHideSupport);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
 
@@ -109,9 +112,6 @@ int main(int argc, char **argv)
     QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
-
-    QCommandLineOption autoHideSupport("w", QCoreApplication::translate("main", "Enables auto-hide/minimization to side-bar support"));
-    parser.addOption(autoHideSupport);
 
 # if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
@@ -145,15 +145,15 @@ int main(int argc, char **argv)
     if (parser.isSet(noParentForFloating))
         flags |= KDDockWidgets::Config::Flag_internal_DontUseParentForFloatingWindows;
 
-    if (parser.isSet(autoHideSupport))
-        flags |= Config::Flag_internal_AutoHideSupport;
-
 # if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
         flags &= ~KDDockWidgets::Config::Flag_AeroSnapWithClientDecos;
 # endif
 
 #endif
+
+    if (parser.isSet(autoHideSupport))
+        flags |= Config::Flag_AutoHideSupport;
 
     if (parser.isSet(noTitleBars))
         flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;

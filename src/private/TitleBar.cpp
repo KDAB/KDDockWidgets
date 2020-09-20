@@ -29,7 +29,7 @@ TitleBar::TitleBar(Frame *parent)
     , Draggable(this)
     , m_frame(parent)
     , m_floatingWindow(nullptr)
-    , m_supportsAutoHide(Config::self().flags() & Config::Flag_internal_AutoHideSupport)
+    , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
 {
     connect(m_frame, &Frame::numDockWidgetsChanged, this, &TitleBar::updateCloseButton);
     connect(m_frame, &Frame::isFocusedChanged, this, &TitleBar::isFocusedChanged);
@@ -49,7 +49,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
     , Draggable(this)
     , m_frame(nullptr)
     , m_floatingWindow(parent)
-    , m_supportsAutoHide(Config::self().flags() & Config::Flag_internal_AutoHideSupport)
+    , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
 {
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateCloseButton);
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateFloatButton);

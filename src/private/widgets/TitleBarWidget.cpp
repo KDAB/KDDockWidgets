@@ -168,7 +168,7 @@ void TitleBarWidget::updateMinimizeButton()
 
 void TitleBarWidget::updateAutoHideButton()
 {
-    if (Config::self().flags() & Config::Flag_internal_AutoHideSupport) {
+    if (Config::self().flags() & Config::Flag_AutoHideSupport) {
         if (const Frame *f = frame()) {
             if (f->isInMainWindow()) {
                 m_autoHideButton->setIcon(QIcon(QStringLiteral(":/img/auto-hide.png")));

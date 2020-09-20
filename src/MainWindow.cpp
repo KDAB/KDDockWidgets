@@ -36,7 +36,7 @@ class MainWindow::Private
 public:
 
     explicit Private(MainWindowOptions, MainWindowBase *mainWindow)
-        : m_supportsAutoHide(Config::self().flags() & Config::Flag_internal_AutoHideSupport)
+        : m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
     {
         if (m_supportsAutoHide) {
             for (auto location : { SideBarLocation::North, SideBarLocation::East,

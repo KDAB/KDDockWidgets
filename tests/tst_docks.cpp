@@ -5954,7 +5954,7 @@ void TestDocks::tst_honourUserGeometry()
 void TestDocks::tst_closeRemovesFromSideBar()
 {
     EnsureTopLevelsDeleted e;
-    Config::self().setFlags(Config::Flag_internal_AutoHideSupport);
+    Config::self().setFlags(Config::Flag_AutoHideSupport);
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
     auto dw1 = new DockWidget(QStringLiteral("1"));
     auto fw1 = dw1->window();

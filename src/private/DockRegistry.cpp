@@ -561,7 +561,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
             }
         }
     } else if (event->type() == QEvent::MouseButtonPress) {
-        if (!(Config::self().flags() & Config::Flag_internal_AutoHideSupport))
+        if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
             return false;
 
         auto p = watched;
