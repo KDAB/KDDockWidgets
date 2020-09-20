@@ -80,7 +80,8 @@ void SideBarButton::paintEvent(QPaintEvent *)
     }
 
     // Draw to an horizontal button, it's easier. Rotate later.
-    QPixmap pixmap(isVertical() ? size().transposed() : size());
+    QPixmap pixmap((isVertical() ? size().transposed() : size()) * devicePixelRatioF());
+    pixmap.setDevicePixelRatio(devicePixelRatioF());
 
     {
         pixmap.fill(Qt::transparent);
