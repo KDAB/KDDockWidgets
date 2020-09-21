@@ -118,6 +118,11 @@ void TabWidgetWidget::detachTab(DockWidgetBase *dockWidget)
     tabBar()->detachTab(dockWidget);
 }
 
+void TabWidgetWidget::renameTab(int index, const QString &text)
+{
+    setTabText(index, text);
+}
+
 DockWidgetBase *TabWidgetWidget::dockwidgetAt(int index) const
 {
     return qobject_cast<DockWidgetBase *>(widget(index));

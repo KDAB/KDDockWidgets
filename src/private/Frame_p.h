@@ -105,6 +105,7 @@ public:
     int dockWidgetCount() const;
 
     void updateTitleAndIcon();
+    void onDockWidgetTitleChanged();
     void updateTitleBarVisibility();
     bool containsMouse(QPoint globalPos) const;
     TitleBar *titleBar() const;
@@ -241,6 +242,8 @@ Q_SIGNALS:
     void isFocusedChanged() override; // override from non-QObject
     void focusedWidgetChanged() override;
 protected:
+
+    virtual void renameTab(int index, const QString &) = 0;
 
     /**
      * @brief Returns the minimum size of the dock widgets.

@@ -123,6 +123,9 @@ public:
 
     virtual void setTabBarAutoHide(bool) = 0;
 
+    ///@brief rename's the tab's text
+    virtual void renameTab(int index, const QString &) = 0;
+
     /**
      * @brief Returns the current index
      */

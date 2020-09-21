@@ -436,6 +436,7 @@ private Q_SLOTS:
     void tst_honourUserGeometry();
 
     void tst_closeRemovesFromSideBar();
+    void tst_tabTitleChanges();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -5984,6 +5985,26 @@ void TestDocks::tst_closeRemovesFromSideBar()
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
 
     delete fw1;
+}
+
+void TestDocks::tst_tabTitleChanges()
+{
+    // Tests that the tab's title changes if the dock widget's title changes
+
+    EnsureTopLevelsDeleted e;
+    auto dw1 = new DockWidget(QStringLiteral("1"));
+    auto dw2 = new DockWidget(QStringLiteral("2"));
+
+    dw1->addDockWidgetAsTab(dw2);
+
+    auto frame = qobject_cast<FrameWidget*>(dw1->frame());
+    QTabBar *tb = frame->tabBar();
+    QCOMPARE(tb->tabText(0), QStringLiteral("1"));
+
+    dw1->setTitle(QStringLiteral("other"));
+    QCOMPARE(tb->tabText(0), QStringLiteral("other"));
+
+    delete dw1->window();
 }
 
 int main(int argc, char *argv[])

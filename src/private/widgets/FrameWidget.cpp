@@ -170,3 +170,8 @@ QRect FrameWidget::dragRect() const
     return rect;
 }
 
+void FrameWidget::renameTab(int index, const QString &text)
+{
+    m_tabWidget->renameTab(index, text);
+}
+

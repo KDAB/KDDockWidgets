@@ -57,9 +57,8 @@ Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
 
     connect(this, &Frame::currentDockWidgetChanged, this, &Frame::updateTitleAndIcon);
-    m_inCtor = false;
-
     setDropArea(qobject_cast<DropArea *>(QWidgetAdapter::parentWidget()));
+    m_inCtor = false;
 }
 
 Frame::~Frame()
@@ -92,6 +91,16 @@ void Frame::updateTitleAndIcon()
 
     } else if (currentTabIndex() != -1) {
         qWarning() << Q_FUNC_INFO << "Invalid dock widget for frame." << currentTabIndex();
+    }
+}
+
+void Frame::onDockWidgetTitleChanged()
+{
+    updateTitleAndIcon();
+
+    if (!m_inCtor) { // don't call pure virtual in ctor
+        if (auto dw = qobject_cast<DockWidgetBase*>(sender()))
+            renameTab(indexOfDockWidget(dw), dw->title());
     }
 }
 
@@ -151,14 +160,14 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index, AddingOption add
         }
     }
 
-    connect(dockWidget, &DockWidgetBase::titleChanged, this, &Frame::updateTitleAndIcon);
-    connect(dockWidget, &DockWidgetBase::iconChanged, this, &Frame::updateTitleAndIcon);
+    connect(dockWidget, &DockWidgetBase::titleChanged, this, &Frame::onDockWidgetTitleChanged);
+    connect(dockWidget, &DockWidgetBase::iconChanged, this, &Frame::onDockWidgetTitleChanged);
 }
 
 void Frame::removeWidget(DockWidgetBase *dw)
 {
-    disconnect(dw, &DockWidgetBase::titleChanged, this, &Frame::updateTitleAndIcon);
-    disconnect(dw, &DockWidgetBase::iconChanged, this, &Frame::updateTitleAndIcon);
+    disconnect(dw, &DockWidgetBase::titleChanged, this, &Frame::onDockWidgetTitleChanged);
+    disconnect(dw, &DockWidgetBase::iconChanged, this, &Frame::onDockWidgetTitleChanged);
     removeWidget_impl(dw);
 }
 
