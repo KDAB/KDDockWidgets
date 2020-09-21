@@ -431,6 +431,7 @@ private:
     friend class KDDockWidgets::DragController;
     friend class KDDockWidgets::DockRegistry;
     friend class KDDockWidgets::LayoutSaver;
+    friend class KDDockWidgets::MainWindowBase;
 
     /**
      * @brief the Frame which contains this dock widgets.
