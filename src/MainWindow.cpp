@@ -16,8 +16,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "Config.h"
 #include "MainWindow.h"
+#include "Config.h"
 #include "DropArea_p.h"
 #include "Frame_p.h"
 #include "Logging_p.h"
