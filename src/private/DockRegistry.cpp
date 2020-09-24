@@ -260,6 +260,9 @@ void DockRegistry::registerDockWidget(DockWidgetBase *dock)
 
 void DockRegistry::unregisterDockWidget(DockWidgetBase *dock)
 {
+    if (m_focusedDockWidget == dock)
+        m_focusedDockWidget = nullptr;
+
     m_dockWidgets.removeOne(dock);
     maybeDelete();
 }
