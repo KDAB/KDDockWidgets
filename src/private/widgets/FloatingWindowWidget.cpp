@@ -54,10 +54,7 @@ bool FloatingWindowWidget::event(QEvent *ev)
 void FloatingWindowWidget::init()
 {
     m_vlayout->setSpacing(0);
-    m_vlayout->setContentsMargins(0, 0, 0, 0);
+    m_vlayout->setContentsMargins(4, 4, 4, 4);
     m_vlayout->addWidget(m_titleBar);
     m_vlayout->addWidget(m_dropArea);
-
-    if (!KDDockWidgets::usesNativeDraggingAndResizing())
-        m_vlayout->setContentsMargins(4, 4, 4, 4);
 }
