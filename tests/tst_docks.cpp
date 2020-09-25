@@ -5301,10 +5301,16 @@ void TestDocks::tst_floatingAction()
 
         QSignalSpy spy1(dock1->floatAction(), &QAction::toggled);
         QSignalSpy spy2(dock2->floatAction(), &QAction::toggled);
+
+        QSignalSpy spy11(dock1, &DockWidgetBase::isFloatingChanged);
+        QSignalSpy spy21(dock2, &DockWidgetBase::isFloatingChanged);
+
         dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
 
         QVERIFY(spy1.count() == 1);
         QVERIFY(spy2.count() == 1);
+        QVERIFY(spy11.count() == 1);
+        QVERIFY(spy21.count() == 1);
 
         QVERIFY(!dock1->isFloating());
         QVERIFY(!dock2->isFloating());
@@ -5328,10 +5334,14 @@ void TestDocks::tst_floatingAction()
 
         QSignalSpy spy1(dock1->floatAction(), &QAction::toggled);
         QSignalSpy spy2(dock2->floatAction(), &QAction::toggled);
+        QSignalSpy spy11(dock1, &DockWidgetBase::isFloatingChanged);
+        QSignalSpy spy21(dock2, &DockWidgetBase::isFloatingChanged);
         dock1->addDockWidgetAsTab(dock2);
 
         QVERIFY(spy1.count() == 1);
         QVERIFY(spy2.count() == 1);
+        QVERIFY(spy11.count() == 1);
+        QVERIFY(spy21.count() == 1);
 
         QVERIFY(!dock1->isFloating());
         QVERIFY(!dock2->isFloating());

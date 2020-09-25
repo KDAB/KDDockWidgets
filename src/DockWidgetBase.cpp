@@ -58,10 +58,12 @@ public:
             }
         });
 
-        q->connect(floatAction, &QAction::toggled, q, [this] (bool enabled) {
+        q->connect(floatAction, &QAction::toggled, q, [this] (bool checked) {
             if (!m_updatingFloatAction) { // guard against recursiveness
-                q->setFloating(enabled);
+                q->setFloating(checked);
             }
+
+            Q_EMIT q->isFloatingChanged(checked);
         });
 
         toggleAction->setCheckable(true);

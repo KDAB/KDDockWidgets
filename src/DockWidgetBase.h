@@ -61,6 +61,7 @@ class DOCKS_EXPORT DockWidgetBase : public QWidget
 #endif
 {
     Q_OBJECT
+    Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
 public:
     typedef QVector<DockWidgetBase *> List;
 
@@ -389,6 +390,9 @@ Q_SIGNALS:
     ///@brief emitted when isOverlayed changes
     ///@sa isOverlayed
     void isOverlayedChanged(bool);
+
+    ///@brief emitted when isFloating changes
+    bool isFloatingChanged(bool);
 
     ///@brief emitted when this dock widget is removed from a side-bar.
     ///Only relevant for the auto-hide/sidebar feature
