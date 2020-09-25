@@ -5315,7 +5315,33 @@ void TestDocks::tst_floatingAction()
         delete dock1->window();
         delete oldFw2->window();
     }
+    {
+        // Same test as before, but now tab instead of side-by-side
+        auto dock1 = createDockWidget("one", new QPushButton("one"));
+        auto dock2 = createDockWidget("two", new QPushButton("two"));
 
+        QVERIFY(dock1->isFloating());
+        QVERIFY(dock2->isFloating());
+        QVERIFY(dock1->floatAction()->isChecked());
+        QVERIFY(dock2->floatAction()->isChecked());
+        auto oldFw2 = dock2->window();
+
+        QSignalSpy spy1(dock1->floatAction(), &QAction::toggled);
+        QSignalSpy spy2(dock2->floatAction(), &QAction::toggled);
+        dock1->addDockWidgetAsTab(dock2);
+
+        QVERIFY(spy1.count() == 1);
+        QVERIFY(spy2.count() == 1);
+
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!dock2->isFloating());
+
+        QVERIFY(!dock2->floatAction()->isChecked());
+        QVERIFY(!dock1->floatAction()->isChecked());
+
+        delete dock1->window();
+        delete oldFw2->window();
+    }
 }
 
 void TestDocks::tst_dockableMainWindows()
