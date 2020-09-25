@@ -55,6 +55,10 @@ public:
 
     bool contains(DockWidgetBase *) const;
 
+    /// Returns whether this layout has a single dock widget which is floating
+    /// Implies it's in a FloatingWindow and that it has only one dock widget
+    bool hasSingleFloatingFrame() const;
+
     QStringList affinities() const;
     void layoutParentContainerEqually(DockWidgetBase *);
 private:
@@ -66,6 +70,8 @@ private:
     template <typename T>
     bool validateAffinity(T *) const;
     Frame *frameContainingPos(QPoint globalPos) const;
+    void updateFloatingActions();
+
     bool m_inDestructor = false;
     QString m_affinityName;
     DropIndicatorOverlayInterface *m_dropIndicatorOverlay = nullptr;

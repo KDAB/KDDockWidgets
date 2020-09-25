@@ -71,6 +71,13 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
     return nullptr;
 }
 
+void DropArea::updateFloatingActions()
+{
+    const Frame::List frames = this->frames();
+    for (Frame *frame : frames)
+        frame->updateFloatingActions();
+}
+
 Layouting::Item *DropArea::centralFrame() const
 {
     for (Layouting::Item *item : this->items()) {
@@ -103,6 +110,8 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
 
     dw->saveLastFloatingGeometry();
 
+    const bool hadSingleFloatingFrame = hasSingleFloatingFrame();
+
     // Check if the dock widget already exists in the layout
     if (contains(dw)) {
         Frame *oldFrame = dw->frame();
@@ -124,11 +133,23 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
     } else {
         addWidget(frame, location, relativeToFrame, DefaultSizeMode::Fair, option);
     }
+
+    if (hadSingleFloatingFrame && !hasSingleFloatingFrame()) {
+        // The dock widgets that already existed in our layout need to have their floatAction() updated
+        // otherwise it's still checked. Only the dropped dock widget got updated
+        updateFloatingActions();
+    }
 }
 
 bool DropArea::contains(DockWidgetBase *dw) const
 {
     return dw->frame() && MultiSplitter::contains(dw->frame());
+}
+
+bool DropArea::hasSingleFloatingFrame() const
+{
+    const Frame::List frames = this->frames();
+    return frames.size() == 1 && frames.first()->isFloating();
 }
 
 QStringList DropArea::affinities() const

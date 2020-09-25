@@ -107,6 +107,7 @@ public:
     void updateTitleAndIcon();
     void onDockWidgetTitleChanged();
     void updateTitleBarVisibility();
+    void updateFloatingActions();
     bool containsMouse(QPoint globalPos) const;
     TitleBar *titleBar() const;
     TitleBar *actualTitleBar() const;

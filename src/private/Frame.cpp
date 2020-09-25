@@ -294,6 +294,13 @@ void Frame::updateTitleBarVisibility()
     }
 }
 
+void Frame::updateFloatingActions()
+{
+    const QVector<DockWidgetBase *> widgets = dockWidgets();
+    for (DockWidgetBase *dw : widgets)
+        dw->updateFloatAction();
+}
+
 bool Frame::containsMouse(QPoint globalPos) const
 {
     return QWidgetAdapter::rect().contains(KDDockWidgets::QWidgetAdapter::mapFromGlobal(globalPos));
