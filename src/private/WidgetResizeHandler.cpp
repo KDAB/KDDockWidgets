@@ -24,6 +24,7 @@
 #include <QScreen>
 #include <QWindow>
 #include <QAbstractButton>
+#include <QLineEdit>
 
 #if defined(Q_OS_WIN)
 # include <QtGui/private/qhighdpiscaling_p.h>
@@ -253,7 +254,8 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
             const QRect htCaptionRect = w->dragRect(); // The rect on which we allow for Windows to do Ba native drag
             if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
                 QWidget *hoveredWidget = qApp->widgetAt(globalPosQt);
-                if (!qobject_cast<QAbstractButton*>(hoveredWidget)) {
+                if (!qobject_cast<QAbstractButton*>(hoveredWidget) &&
+                    !qobject_cast<QLineEdit*>(hoveredWidget)) { // User might have a line edit on the toolbar. TODO: Not so elegant fix, we should make the user's tabbar implement some virtual method...
                     // User clicked on the title bar, let's allow it, so we get Aero-Snap.
                     *result = HTCAPTION;
                 }
