@@ -6105,9 +6105,8 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
     /// We dropped into floating window 1, it should still be active
     QVERIFY(fw1->isActiveWindow());
 
-    QEXPECT_FAIL("", "To be fixed", Continue);
+    // DockWidget 2 was dropped, it should now be focused
     QVERIFY(!dw1->isFocused());
-    QEXPECT_FAIL("", "To be fixed", Continue);
     QVERIFY(dw2->isFocused());
 
     delete fw1;

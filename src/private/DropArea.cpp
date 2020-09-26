@@ -225,6 +225,9 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
     }
 
     bool result = true;
+    const bool needToFocusNewlyDroppedWidgets = Config::self().flags() & Config::Flag_TitleBarIsFocusable;
+    const DockWidgetBase::List droppedDockWidgets = needToFocusNewlyDroppedWidgets ? droppedWindow->multiSplitter()->dockWidgets()
+                                                                                   : DockWidgetBase::List(); // just so save some memory allocations for the case where this variable isn't used
 
     auto droploc = m_dropIndicatorOverlay->currentDropLocation();
     switch (droploc) {
@@ -253,8 +256,22 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
         break;
     }
 
-    if (result)
+    if (result) {
+        // Window receiving the drop gets raised:
         raiseAndActivate();
+
+        if (needToFocusNewlyDroppedWidgets) {
+            // Let's also focus the newly dropped dock widget
+            if (droppedDockWidgets.size() > 0) {
+                // If more than 1 was dropped, we only focus the first one
+                Frame *frame = droppedDockWidgets.first()->frame();
+                frame->FocusScope::focus(Qt::MouseFocusReason);
+            } else {
+                // Doesn't happen.
+                qWarning() << Q_FUNC_INFO << "Nothing was dropped?";
+            }
+        }
+    }
 
     return result;
 }

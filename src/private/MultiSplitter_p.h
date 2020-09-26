@@ -188,9 +188,12 @@ public:
     Layouting::Item *itemForFrame(const Frame *frame) const;
 
     /**
-     * @brief Returns a list of Frame objects contained in this layout
+     * @brief Returns this list of Frame objects contained in this layout
      */
     QList<Frame*> frames() const;
+
+    /// @brief Returns the list of dock widgets contained in this layout
+    QVector<DockWidgetBase*> dockWidgets() const;
 
     /// @brief restores the dockwidget @p dw to its previous position
     void restorePlaceholder(DockWidgetBase *dw, Layouting::Item *, int tabIndex);

@@ -288,6 +288,16 @@ Layouting::Item *MultiSplitter::itemForFrame(const Frame *frame) const
     return m_rootItem->itemForWidget(frame);
 }
 
+DockWidgetBase::List MultiSplitter::dockWidgets() const
+{
+    DockWidgetBase::List dockWidgets;
+    const Frame::List frames = this->frames();
+    for (Frame *frame : frames)
+        dockWidgets << frame->dockWidgets();
+
+    return dockWidgets;
+}
+
 Frame::List MultiSplitter::framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const
 {
     if (auto frame = qobject_cast<Frame*>(frameOrMultiSplitter))
