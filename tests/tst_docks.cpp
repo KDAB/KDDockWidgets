@@ -437,6 +437,7 @@ private Q_SLOTS:
 
     void tst_closeRemovesFromSideBar();
     void tst_tabTitleChanges();
+    void tst_dockWidgetGetsFocusWhenDocked();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -6072,6 +6073,45 @@ void TestDocks::tst_tabTitleChanges()
     QCOMPARE(tb->tabText(0), QStringLiteral("other"));
 
     delete dw1->window();
+}
+void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
+{
+    EnsureTopLevelsDeleted e;
+    Config::self().setFlags(Config::Flag_TitleBarIsFocusable);
+
+    auto dw1 = new DockWidget(QStringLiteral("1"));
+    auto dw2 = new DockWidget(QStringLiteral("2"));
+    auto le1 = new QLineEdit();
+    auto le2 = new QLineEdit();
+    dw1->setWidget(le1);
+    dw2->setWidget(le2);
+    dw1->show();
+    dw2->show();
+
+    auto fw1 = dw1->floatingWindow();
+    QPointer<FloatingWindow> fw2 = dw2->floatingWindow();
+
+    // Focus dock widget 1 first
+    QVERIFY(!dw1->isFocused());
+    dw1->window()->activateWindow();
+    le1->setFocus(Qt::MouseFocusReason);
+    QTest::qWait(200);
+    QVERIFY(dw1->isFocused());
+
+    QVERIFY(fw1->isActiveWindow());
+    dragFloatingWindowTo(fw2, fw1->dropArea(), DropIndicatorOverlayInterface::DropLocation_Left);
+    Testing::waitForEvent(fw1, QEvent::WindowActivate);
+
+    /// We dropped into floating window 1, it should still be active
+    QVERIFY(fw1->isActiveWindow());
+
+    QEXPECT_FAIL("", "To be fixed", Continue);
+    QVERIFY(!dw1->isFocused());
+    QEXPECT_FAIL("", "To be fixed", Continue);
+    QVERIFY(dw2->isFocused());
+
+    delete fw1;
+    delete fw2;
 }
 
 int main(int argc, char *argv[])
