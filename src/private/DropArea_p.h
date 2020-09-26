@@ -44,8 +44,8 @@ public:
 
     void removeHover();
     void hover(FloatingWindow *floatingWindow, QPoint globalPos);
+    ///@brief Called when a user drops a widget via DND
     bool drop(FloatingWindow *droppedWindow, QPoint globalPos);
-    bool drop(QWidgetOrQuick *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     int numFrames() const;
     Frame::List frames() const;
 
@@ -69,6 +69,7 @@ private:
     friend class AnimatedIndicators;
     template <typename T>
     bool validateAffinity(T *) const;
+    bool drop(QWidgetOrQuick *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     Frame *frameContainingPos(QPoint globalPos) const;
     void updateFloatingActions();
 
