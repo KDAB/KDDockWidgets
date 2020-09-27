@@ -39,8 +39,11 @@ FloatingWindowWidget::FloatingWindowWidget(Frame *frame, MainWindowBase *parent)
 void FloatingWindowWidget::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
-    p.setPen(0x666666);
-    p.drawRect(rect().adjusted(0, 0, -1, -1));
+    QPen pen(0x666666);
+    pen.setWidth(1);
+    const qreal halfPenWidth = p.pen().widthF() / 2;
+    const QRectF rectf = rect();
+    p.drawRect(rectf.adjusted(halfPenWidth, halfPenWidth, -halfPenWidth, -halfPenWidth));
 }
 
 bool FloatingWindowWidget::event(QEvent *ev)
