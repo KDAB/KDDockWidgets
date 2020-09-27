@@ -14,6 +14,7 @@
     - Don't center floating windows if the user set a custom position (#75)
     - Fixed floating window's title not being correct (#74)
     - Fixed focus scope not reacting when clicking on current tab (#71)
+    - Fixed floating window borders not being rendered correctly on HDPI due to rounding errors.
 
 * Roadmap
   - QtQuick support
