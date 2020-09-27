@@ -74,13 +74,22 @@ void FrameWidget::paintEvent(QPaintEvent *)
 {
     if (!isFloating()) {
         QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
+
+        const qreal penWidth = 1;
+        const qreal halfPenWidth = penWidth / 2;
+        const QRectF rectf = QWidget::rect();
 
         if (isOverlayed()) {
-            p.setPen(0x666666);
-            p.drawRect(QWidget::rect().adjusted(0, 1, -1, -1));
+            QPen pen(0x666666);
+            pen.setWidthF(penWidth);
+            p.setPen(pen);
+            p.drawRect(rectf.adjusted(halfPenWidth, penWidth, -halfPenWidth, -halfPenWidth));
         } else {
-            p.setPen(QColor(184, 184, 184, 184));
-            p.drawRoundedRect(QWidget::rect().adjusted(0, 0, -1, -1), 2, 2);
+            QPen pen(QColor(184, 184, 184, 184));
+            pen.setWidthF(penWidth);
+            p.setPen(pen);
+            p.drawRoundedRect(rectf.adjusted(halfPenWidth, halfPenWidth, -halfPenWidth, -halfPenWidth), 2, 2);
         }
     }
 }
