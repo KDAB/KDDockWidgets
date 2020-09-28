@@ -3339,7 +3339,7 @@ void ItemContainer::fillFromVariantMap(const QVariantMap &map,
 
     for (const QVariant &childV : childrenV) {
         const QVariantMap childMap = childV.toMap();
-        const bool isContainer = childMap[QStringLiteral("isContainer")].toBool();
+        const bool isContainer = childMap.value(QStringLiteral("isContainer")).toBool();
         Item *child = isContainer ? new ItemContainer(hostWidget(), this)
                                   : new Item(hostWidget(), this);
         child->fillFromVariantMap(childMap, widgets);
