@@ -200,6 +200,11 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
     } else if (auto ms = qobject_cast<MultiSplitter*>(w)) {
         newItem = ms->rootItem();
         newItem->setHostWidget(this);
+
+        if (FloatingWindow *fw = ms->floatingWindow()) {
+            newItem->setSize_recursive(fw->size());
+        }
+
         delete ms;
     }
 
@@ -431,7 +436,7 @@ QRect MultiSplitter::rectForDrop(const FloatingWindow *fw, Location location,
         return {};
 
     Layouting::ItemContainer *root = fw->dropArea()->rootItem();
-    item.setSize(root->size());
+    item.setSize(fw->size().boundedTo(root->maxSizeHint()));
     item.setMinSize(root->minSize());
     item.setMaxSizeHint(root->maxSizeHint());
 
