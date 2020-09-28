@@ -175,6 +175,27 @@ void StateDragging::onEntry(QEvent *)
 
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (q->m_windowBeingDragged) {
+#ifdef Q_OS_WIN
+# if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+        if (!q->m_nonClientDrag && KDDockWidgets::usesNativeDraggingAndResizing()) {
+            // Started as a client move, as the dock widget was docked,
+            // but now that we're dragging it as a floating window, switch to native drag
+            FloatingWindow *fw = q->m_windowBeingDragged->floatingWindow();
+            q->m_nonClientDrag = true;
+            q->m_windowBeingDragged.reset();
+            const HWND hwnd = HWND(fw->windowHandle()->winId());
+            q->m_windowBeingDragged = fw->makeWindow();
+
+            QWindow *window = fw->windowHandle();
+            window->startSystemMove();
+
+            // Mouse press was done in another window, so we need to ungrab
+            ReleaseCapture();
+            PostMessage(hwnd, WM_SYSCOMMAND, 0xF012, 0); // SC_DRAGMOVE
+        }
+# endif
+#endif
+
         qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
 
         auto fw = q->m_windowBeingDragged->floatingWindow();
@@ -377,7 +398,8 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     if (!w)
         return QStateMachine::eventFilter(o, e);
 
-    qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o;
+    qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o
+                         << "; m_nonClientDrag=" << m_nonClientDrag;
 
     switch (e->type()) {
     case QEvent::NonClientAreaMouseButtonPress: {
