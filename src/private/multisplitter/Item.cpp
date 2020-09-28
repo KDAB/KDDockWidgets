@@ -164,7 +164,7 @@ QObject *Item::guestAsQObject() const
 }
 
 void Item::setGuestWidget(Widget *guest)
-{   
+{
     Q_ASSERT(!guest || !m_guest);
     QObject *newWidget = guest ? guest->asQObject() : nullptr;
     QObject *oldWidget = guestAsQObject();
@@ -3202,8 +3202,8 @@ void ItemContainer::simplify()
             childContainer->simplify(); // recurse down the hierarchy
 
             if (childContainer->orientation() == d->m_orientation || childContainer->d->m_children.size() == 1) {
-                // This sub-container is reduntant, as it has the same orientation as its parent
-                // Canibalize it.
+                // This sub-container is redundant, as it has the same orientation as its parent
+                // Cannibalize it.
                 for (Item *child2 : childContainer->childItems()) {
                     child2->setParentContainer(this);
                     newChildren.push_back(child2);

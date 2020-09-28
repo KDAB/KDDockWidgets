@@ -5289,7 +5289,7 @@ void TestDocks::tst_floatingAction()
     }
 
     {
-        // If the dock widget is alone then it's floating, but we we suddenly dock a widget side-by-side
+        // If the dock widget is alone then it's floating, but we suddenly dock a widget side-by-side
         // to it, then both aren't floating anymore. This test tests if the signal was emitted
 
         auto dock1 = createDockWidget("one", new QPushButton("one"));
