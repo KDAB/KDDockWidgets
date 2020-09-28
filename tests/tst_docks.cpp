@@ -5710,7 +5710,7 @@ void TestDocks::tst_maxSizeHonouredWhenDropped()
     const int waste = fw->width() - dock2->frame()->width();
 
     m1->dropArea()->drop(fw, Location_OnLeft, nullptr);
-    QCOMPARE(dock2->frame()->width(), droppedWidth - waste);
+    QCOMPARE(dock2->frame()->width(), droppedWidth);
 }
 
 void TestDocks::tst_fixedSizePolicy()
