@@ -80,15 +80,16 @@ void FrameWidget::paintEvent(QPaintEvent *)
         const qreal halfPenWidth = penWidth / 2;
         const QRectF rectf = QWidget::rect();
 
+        const QColor penColor = isOverlayed() ? QColor(0x666666)
+                                              : QColor(184, 184, 184, 184);
+        QPen pen(penColor);
+        pen.setWidthF(penWidth);
+        p.setPen(pen);
+
         if (isOverlayed()) {
-            QPen pen(0x666666);
-            pen.setWidthF(penWidth);
-            p.setPen(pen);
+            pen.setJoinStyle(Qt::MiterJoin);
             p.drawRect(rectf.adjusted(halfPenWidth, penWidth, -halfPenWidth, -halfPenWidth));
         } else {
-            QPen pen(QColor(184, 184, 184, 184));
-            pen.setWidthF(penWidth);
-            p.setPen(pen);
             p.drawRoundedRect(rectf.adjusted(halfPenWidth, halfPenWidth, -halfPenWidth, -halfPenWidth), 2, 2);
         }
     }
