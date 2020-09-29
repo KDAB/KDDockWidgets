@@ -37,6 +37,7 @@ int main(int argc, char **argv)
     parser.setApplicationDescription("KDDockWidgets example application");
     parser.addHelpOption();
 
+    // Fusion looks better in general, but feel free to change
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
     QCommandLineOption customStyle("p", QCoreApplication::translate("main", "Shows how to style framework internals via FrameworkWidgetFactory"));

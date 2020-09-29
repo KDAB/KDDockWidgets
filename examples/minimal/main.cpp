@@ -14,6 +14,8 @@
 #include <kddockwidgets/DockWidget.h>
 #include <kddockwidgets/MainWindow.h>
 
+#include <QStyleFactory>
+
 // clazy:excludeall=qstring-allocations
 
 using namespace KDDockWidgets;
@@ -26,6 +28,9 @@ int main(int argc, char **argv)
 
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("Test app"));
+
+    // Fusion looks better in general, but feel free to change
+    qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
     // # 1. Create our main window
 
