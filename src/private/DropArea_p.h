@@ -67,6 +67,8 @@ private:
     friend class TestDocks;
     friend class DropIndicatorOverlayInterface;
     friend class AnimatedIndicators;
+    friend class FloatingWindow;
+
     template <typename T>
     bool validateAffinity(T *) const;
     bool drop(QWidgetOrQuick *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);

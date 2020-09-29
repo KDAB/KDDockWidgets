@@ -5352,11 +5352,18 @@ void TestDocks::tst_floatingAction()
 
         QVERIFY(!dock1->isFloating());
         QVERIFY(!dock2->isFloating());
-
         QVERIFY(!dock2->floatAction()->isChecked());
         QVERIFY(!dock1->floatAction()->isChecked());
 
+        // Let's now remove dock1, dock2 should be floating
+        dock1->setFloating(true);
+        QVERIFY(dock1->isFloating());
+        QVERIFY(dock2->isFloating());
+        QVERIFY(dock2->floatAction()->isChecked());
+        QVERIFY(dock1->floatAction()->isChecked());
+
         delete dock1->window();
+        delete dock2->window();
         delete oldFw2->window();
     }
 
