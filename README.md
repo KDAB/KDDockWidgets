@@ -64,8 +64,7 @@ Features
 
 Roadmap
 ========
-  - QtQuick support for v1.1
-  - "Minimization bar" for v1.2
+  - QtQuick support
 
 Trying out the examples
 =======================
