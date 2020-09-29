@@ -291,7 +291,11 @@ bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location locat
         if (!validateAffinity(floatingWindow))
             return false;
 
+        const bool hadSingleFloatingFrame = hasSingleFloatingFrame();
         addMultiSplitter(floatingWindow->dropArea(), location, relativeTo, DefaultSizeMode::FairButFloor);
+        if (hadSingleFloatingFrame != hasSingleFloatingFrame())
+            updateFloatingActions();
+
         floatingWindow->scheduleDeleteLater();
         return true;
     } else {

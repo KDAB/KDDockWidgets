@@ -5323,6 +5323,43 @@ void TestDocks::tst_floatingAction()
         delete dock1->window();
         delete oldFw2->window();
     }
+
+    {
+        // Like before, but now we use addMultiSplitter()
+
+        auto dock1 = createDockWidget("one", new QPushButton("one"));
+        auto dock2 = createDockWidget("two", new QPushButton("two"));
+
+        QVERIFY(dock1->isFloating());
+        QVERIFY(dock2->isFloating());
+        QVERIFY(dock1->floatAction()->isChecked());
+        QVERIFY(dock2->floatAction()->isChecked());
+        auto oldFw2 = dock2->floatingWindow();
+
+        QSignalSpy spy1(dock1->floatAction(), &QAction::toggled);
+        QSignalSpy spy2(dock2->floatAction(), &QAction::toggled);
+
+        QSignalSpy spy11(dock1, &DockWidgetBase::isFloatingChanged);
+        QSignalSpy spy21(dock2, &DockWidgetBase::isFloatingChanged);
+
+        auto dropArea1 = dock1->floatingWindow()->dropArea();
+        dropArea1->drop(oldFw2, Location_OnRight, nullptr);
+
+        QCOMPARE(spy1.count(), 1);
+        QCOMPARE(spy2.count(), 1);
+        QCOMPARE(spy11.count(), 1);
+        QCOMPARE(spy21.count(), 1);
+
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(!dock2->isFloating());
+
+        QVERIFY(!dock2->floatAction()->isChecked());
+        QVERIFY(!dock1->floatAction()->isChecked());
+
+        delete dock1->window();
+        delete oldFw2->window();
+    }
+
     {
         // Same test as before, but now tab instead of side-by-side
         auto dock1 = createDockWidget("one", new QPushButton("one"));
