@@ -5385,9 +5385,18 @@ void TestDocks::tst_floatingAction()
         dock1->addDockWidgetAsTab(dock2);
 
         QCOMPARE(spy1.count(), 1);
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         QCOMPARE(spy2.count(), 1);
-        QCOMPARE(spy11.count(), 1);
         QCOMPARE(spy21.count(), 1);
+#else
+        // On earlier Qt versions this is flaky, but technically correct.
+        // Windows can get hidden while being reparented and floating changes momentarily.
+        // This works well on 5.15 though.
+        QVERIFY(spy2.count() == 1 || spy2.count() == 3);
+        QVERIFY(spy21.count() == 1 || spy21.count() == 3);
+#endif
+        QCOMPARE(spy11.count(), 1);
 
         QVERIFY(!dock1->isFloating());
         QVERIFY(!dock2->isFloating());
