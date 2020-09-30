@@ -174,6 +174,9 @@ void Config::Private::fixFlags()
     if (QOperatingSystemVersion::current().majorVersion() < 10) {
         // Aero-snap requires Windows 10
         m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
+    } else {
+        // Unconditional now
+        m_flags |= Flag_AeroSnapWithClientDecos;
     }
 
     // These are mutually exclusive:
