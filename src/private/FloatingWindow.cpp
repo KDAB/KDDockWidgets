@@ -139,6 +139,13 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         m_nchittestFilter = new NCHITTESTEventFilter(this);
         qApp->installNativeEventFilter(m_nchittestFilter);
+
+        connect(windowHandle(), &QWindow::screenChanged, this, [this] {
+            // Qt honours our frame hijaking usually... but when screen changes we must give it a nudge.
+            // Otherwise what Qt thinks is the client area is not what Windows knows it is.
+            // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take note of the margins we're using.
+            SetWindowPos(HWND(winId()), 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+        });
     }
 #endif
 
