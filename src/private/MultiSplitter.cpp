@@ -206,6 +206,11 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
         }
 
         delete ms;
+    } else {
+        // This doesn't happen but let's make coverity happy.
+        // Tests will fail if this is ever printed.
+        qWarning() << Q_FUNC_INFO << "Unknown widget added" << w;
+        return;
     }
 
     Q_ASSERT(!newItem->geometry().isEmpty());
