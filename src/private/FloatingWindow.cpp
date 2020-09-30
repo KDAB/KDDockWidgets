@@ -132,6 +132,10 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
 {
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+    // On Windows with Qt 5.9 (and maybe earlier), the WM_NCALCSIZE isn't being processed unless we explicitly create the window.
+    // So create it now, otherwise floating dock widgets will show a native title bar until resized.
+    create();
+
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         m_nchittestFilter = new NCHITTESTEventFilter(this);
         qApp->installNativeEventFilter(m_nchittestFilter);
@@ -140,14 +144,6 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
 
     DockRegistry::self()->registerNestedWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
-
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
-# if QT_VERSION < 0x051000
-    // On Windows with Qt 5.9 (and maybe later but we don't care), the WM_NCALCSIZE isn't being processed unless we explicitly create the window.
-    // So create it now, otherwise floating dock widgets will show a native title bar until resized.
-    create();
-# endif
-#endif
 
     maybeCreateResizeHandler();
 
