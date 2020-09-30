@@ -1836,8 +1836,9 @@ void TestMultiSplitter::tst_simplify()
 
     root->simplify();
 
-    for (Item *item : root->childItems())
+    for (Item *item : root->childItems()) {
         QVERIFY(!item->isContainer());
+    }
 }
 
 void TestMultiSplitter::tst_adjacentLayoutBorders()
