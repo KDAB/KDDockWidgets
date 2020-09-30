@@ -1835,8 +1835,9 @@ void TestMultiSplitter::tst_simplify()
 
     root->simplify();
 
-    for (Item *item : root->childItems())
+    for (Item *item : root->childItems()) {
         QVERIFY(!item->isContainer());
+    }
 }
 
 int main(int argc, char *argv[])
