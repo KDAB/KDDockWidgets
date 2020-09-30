@@ -136,7 +136,7 @@ void Separator::onMouseMove(QPoint pos)
 
     d->lastMoveDirection = positionToGoTo < position() ? Side1
                                                        : (positionToGoTo > position() ? Side2
-                                                                                      : Side2); // Last case shouldn't happen though.
+                                                                                      : Side1); // Last case shouldn't happen though.
 
     if (d->lazyResizeRubberBand)
         setLazyPosition(positionToGoTo);
