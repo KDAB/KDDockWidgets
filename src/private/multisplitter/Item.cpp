@@ -660,13 +660,6 @@ bool Item::checkSanity()
             return false;
         }
     }
-return true;
-    if (!isVisible()) {
-        if (m_guest && m_guest->isVisible()) {
-            qWarning() << Q_FUNC_INFO << "Item is not visible but guest is visible";
-            return false;
-        }
-    }
 
     return true;
 }
