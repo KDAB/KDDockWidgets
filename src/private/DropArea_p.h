@@ -29,7 +29,6 @@ namespace KDDockWidgets {
 
 class Frame;
 class Draggable;
-class DropIndicatorOverlayInterface;
 struct WindowBeingDragged;
 
 /**
@@ -71,6 +70,7 @@ private:
 
     template <typename T>
     bool validateAffinity(T *) const;
+    bool drop(FloatingWindow *droppedWindow, Frame *acceptingFrame, DropIndicatorOverlayInterface::DropLocation);
     bool drop(QWidgetOrQuick *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     Frame *frameContainingPos(QPoint globalPos) const;
     void updateFloatingActions();

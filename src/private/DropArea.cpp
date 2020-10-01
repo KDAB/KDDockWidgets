@@ -218,18 +218,24 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
     qCDebug(dropping) << "DropArea::drop:" << droppedWindow;
 
     hover(droppedWindow, globalPos);
+    auto droploc = m_dropIndicatorOverlay->currentDropLocation();
     Frame *acceptingFrame = m_dropIndicatorOverlay->hoveredFrame();
     if (!(acceptingFrame || isOutterLocation(m_dropIndicatorOverlay->currentDropLocation()))) {
         qWarning() << "DropArea::drop: asserted with frame=" << acceptingFrame << "; Location=" << m_dropIndicatorOverlay->currentDropLocation();
         return false;
     }
 
+    return drop(droppedWindow, acceptingFrame, droploc);
+}
+
+bool DropArea::drop(FloatingWindow *droppedWindow, Frame *acceptingFrame,
+                    DropIndicatorOverlayInterface::DropLocation droploc)
+{
     bool result = true;
     const bool needToFocusNewlyDroppedWidgets = Config::self().flags() & Config::Flag_TitleBarIsFocusable;
     const DockWidgetBase::List droppedDockWidgets = needToFocusNewlyDroppedWidgets ? droppedWindow->multiSplitter()->dockWidgets()
                                                                                    : DockWidgetBase::List(); // just so save some memory allocations for the case where this variable isn't used
 
-    auto droploc = m_dropIndicatorOverlay->currentDropLocation();
     switch (droploc) {
     case DropIndicatorOverlayInterface::DropLocation_Left:
     case DropIndicatorOverlayInterface::DropLocation_Top:
