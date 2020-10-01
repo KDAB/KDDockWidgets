@@ -81,15 +81,15 @@ Build and install the KDDockWidgets framework:
 
 ```
 $ cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/path/where/to/install ../path/to/kddockwidgets
-$ make
-$ make install
+$ cmake --build .
+$ cmake --build . --target install
 ```
 
 Now build and run the example:
 ```
 $ cd path/to/kddockwidgets/examples/dockwidgets/
-$ cmake -DCMAKE_PREFIX_PATH=/path/where/to/install
-$ make
+$ cmake -G Ninja -DCMAKE_PREFIX_PATH=/path/where/to/install
+$ cmake --build .
 $ ./kddockwidgets_example
 
 ```
