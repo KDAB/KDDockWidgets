@@ -251,7 +251,7 @@ bool DropArea::drop(FloatingWindow *droppedWindow, Frame *acceptingFrame,
         break;
     case DropIndicatorOverlayInterface::DropLocation_Center:
         qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingFrame;
-        if (!validateAffinity(droppedWindow))
+        if (!validateAffinity(droppedWindow, acceptingFrame))
             return false;
         acceptingFrame->addWidget(droppedWindow);
         break;
@@ -319,13 +319,18 @@ void DropArea::removeHover()
 }
 
 template<typename T>
-bool DropArea::validateAffinity(T *window) const
+bool DropArea::validateAffinity(T *window, Frame *acceptingFrame) const
 {
     if (!DockRegistry::self()->affinitiesMatch(window->affinities(), affinities())) {
-        // Commented the warning, so we don't warn when hovering over
-        //qWarning() << Q_FUNC_INFO << "Refusing to dock widget with incompatible affinity."
-                   //<< window->affinityName() << affinityName();
         return false;
+    }
+
+    if (acceptingFrame) {
+        // We're dropping into another frame (as tabbed), so also check the affinity of the frame
+        // not only of the main window, which might be more forgiving
+        if (!DockRegistry::self()->affinitiesMatch(window->affinities(), acceptingFrame->affinities())) {
+            return false;
+        }
     }
 
     return true;
