@@ -28,6 +28,8 @@
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 # include <Windows.h>
+# include <dwmapi.h>
+# pragma comment(lib, "Dwmapi.lib")
 #endif
 
 using namespace KDDockWidgets;
@@ -146,6 +148,10 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
             // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take note of the margins we're using.
             SetWindowPos(HWND(winId()), 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
         });
+
+        // Show drop-shadow:
+        MARGINS margins = {0, 0, 0, 1}; // arbitrary, just needs to be > 0 it seems
+        DwmExtendFrameIntoClientArea(HWND(winId()), &margins);
     }
 #endif
 
