@@ -80,16 +80,18 @@ Adapt the instructions to suit your cmake generator and operating system.
 Build and install the KDDockWidgets framework:
 
 ```
-$ cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/path/where/to/install ../path/to/kddockwidgets
-$ make
-$ make install
+$ mkdir build && cd $_
+$ cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/kddockwidgets/install/location ..
+$ ninja
+$ ninja install (as root)
 ```
 
 Now build and run the example:
 ```
-$ cd path/to/kddockwidgets/examples/dockwidgets/
-$ cmake -DCMAKE_PREFIX_PATH=/path/where/to/install
-$ make
+$ cd examples/dockwidgets/
+$ mkdir build && cd $_
+$ cmake -G Ninja ..
+$ ninja
 $ ./kddockwidgets_example
 
 ```
