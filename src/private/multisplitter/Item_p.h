@@ -236,7 +236,9 @@ public:
         LayoutBorderLocation_West = 4,
         LayoutBorderLocation_South = 8,
         LayoutBorderLocation_All = LayoutBorderLocation_North | LayoutBorderLocation_East |
-                                   LayoutBorderLocation_West | LayoutBorderLocation_South
+                                   LayoutBorderLocation_West | LayoutBorderLocation_South,
+        LayoutBorderLocation_Verticals = LayoutBorderLocation_West | LayoutBorderLocation_East,
+        LayoutBorderLocation_Horizontals = LayoutBorderLocation_North | LayoutBorderLocation_South,
     };
     Q_DECLARE_FLAGS(LayoutBorderLocations, LayoutBorderLocation)
 
