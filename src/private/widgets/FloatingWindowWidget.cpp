@@ -42,6 +42,7 @@ void FloatingWindowWidget::paintEvent(QPaintEvent *)
     QPen pen(0x666666);
     pen.setWidth(1);
     pen.setJoinStyle(Qt::MiterJoin);
+    p.setPen(pen);
     const qreal halfPenWidth = p.pen().widthF() / 2;
     const QRectF rectf = rect();
     p.drawRect(rectf.adjusted(halfPenWidth, halfPenWidth, -halfPenWidth, -halfPenWidth));
