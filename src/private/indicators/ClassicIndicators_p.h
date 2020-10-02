@@ -35,6 +35,9 @@ public:
     bool innerIndicatorsVisible() const;
     bool outterIndicatorsVisible() const;
 
+    // The tab/center indicator
+    bool tabIndicatorVisible() const;
+
 protected:
     bool onResize(QSize newSize) override;
     void updateVisibility() override;
@@ -53,6 +56,7 @@ private:
     IndicatorWindow *const m_indicatorWindow;
     bool m_innerIndicatorsVisible = false;
     bool m_outterIndicatorsVisible = false;
+    bool m_tabIndicatorVisible = false;
 };
 
 }

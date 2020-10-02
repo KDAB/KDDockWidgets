@@ -60,6 +60,11 @@ bool ClassicIndicators::outterIndicatorsVisible() const
     return m_outterIndicatorsVisible;
 }
 
+bool ClassicIndicators::tabIndicatorVisible() const
+{
+    return m_tabIndicatorVisible;
+}
+
 bool ClassicIndicators::onResize(QSize)
 {
      m_indicatorWindow->resize(window()->size());
@@ -91,6 +96,11 @@ void ClassicIndicators::updateIndicatorsVisibility(bool visible)
     // But there might be another window obscuring our target, so it's useful to show the outter indicators in this case
     m_outterIndicatorsVisible = visible && (!isTheOnlyFrame ||
                                             DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), DragController::instance()->windowBeingDragged()));
+
+
+    // Only allow to dock to center if the affinities match
+    m_tabIndicatorVisible = m_innerIndicatorsVisible && m_windowBeingDragged &&
+                            DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), m_windowBeingDragged->affinities());
 
     Q_EMIT innerIndicatorsVisibleChanged();
     Q_EMIT outterIndicatorsVisibleChanged();

@@ -176,11 +176,13 @@ void IndicatorWindow::resizeEvent(QResizeEvent *ev)
 
 void IndicatorWindow::updateIndicatorVisibility()
 {
-    for (Indicator *indicator : { m_center, m_left, m_right, m_bottom, m_top })
+    for (Indicator *indicator : { m_left, m_right, m_bottom, m_top })
         indicator->setVisible(classicIndicators->innerIndicatorsVisible());
 
     for (Indicator *indicator : { m_outterTop, m_outterLeft, m_outterRight, m_outterBottom })
         indicator->setVisible(classicIndicators->outterIndicatorsVisible());
+
+    m_center->setVisible(classicIndicators->tabIndicatorVisible());
 
     updateMask();
 }
