@@ -270,7 +270,7 @@ MultiSplitter *FloatingWindow::multiSplitter() const
 
 bool FloatingWindow::isInDragArea(QPoint globalPoint) const
 {
-    return dragRect().adjusted(8, 8, 0, 0).contains(globalPoint);
+    return dragRect().contains(globalPoint);
 }
 
 bool FloatingWindow::anyNonClosable() const
