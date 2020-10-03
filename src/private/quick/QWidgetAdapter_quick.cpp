@@ -196,6 +196,12 @@ void QWidgetAdapter::showMaximized()
         w->showMaximized();
 }
 
+void QWidgetAdapter::showMinimized()
+{
+    if (QWindow *w = windowHandle())
+        w->showMinimized();
+}
+
 void QWidgetAdapter::showNormal()
 {
      if (QWindow *w = windowHandle())

@@ -115,6 +115,7 @@ public:
     bool isMaximized() const;
     bool isActiveWindow() const;
     void showMaximized();
+    void showMinimized();
     void showNormal();
 
     QWindow *windowHandle() const;
