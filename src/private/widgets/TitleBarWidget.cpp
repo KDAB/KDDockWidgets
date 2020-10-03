@@ -177,6 +177,7 @@ QIcon TitleBarWidget::iconForButton(const QString &iconName) const
         // Linux is the only one affected as Windows and macOS use integral factors.
         // Problem with Linux is that rendering is off due to a rounding bug only fixed in 5.15.2
         // Will enable for fractional later.
+        // QTBUG-86170
         return icon;
     }
 #else
