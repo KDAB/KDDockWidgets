@@ -36,13 +36,13 @@ public Q_SLOTS:
     void initTestCase()
     {
         qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
-        QQuickStyle::setStyle("Material"); // so we don't load KDE pluginss
         qApp->setOrganizationName("KDAB");
         qApp->setApplicationName("dockwidgets-unit-tests");
 
         Testing::installFatalMessageHandler();
 
 #ifdef KDDOCKWIDGETS_QTQUICK
+        QQuickStyle::setStyle("Material"); // so we don't load KDE pluginss
         Config::self().setQmlEngine(new QQmlEngine(this));
 #endif
         QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
