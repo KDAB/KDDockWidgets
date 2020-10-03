@@ -52,6 +52,9 @@ public:
 
     FloatingWindow *windowBeingDragged() const;
 
+    /// Experimental, internal, not for general use.
+    void enableFallbackMouseGrabber();
+
 Q_SIGNALS:
     void mousePressed();
     void manhattanLengthMove();

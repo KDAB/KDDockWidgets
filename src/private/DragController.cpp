@@ -364,6 +364,12 @@ FloatingWindow *DragController::windowBeingDragged() const
                                 : nullptr;
 }
 
+void DragController::enableFallbackMouseGrabber()
+{
+    if (!m_fallbackMouseGrabber)
+        m_fallbackMouseGrabber = new FallbackMouseGrabber(this);
+}
+
 static QMouseEvent *mouseEvent(QEvent *e)
 {
     switch (e->type()) {
