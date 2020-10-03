@@ -49,11 +49,11 @@ void TitleBarWidget::init()
     m_layout->setContentsMargins(2, 2, 2, 2);
     m_layout->setSpacing(2);
 
-    m_maximizeButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("max")));
-    m_minimizeButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("min")));
-    m_floatButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("dock-float")));
-    m_closeButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("close")));
-    m_autoHideButton = TitleBarWidget::createButton(this, QIcon());
+    m_maximizeButton = TitleBarWidget::createButton(this, TitleBarButtonType::Maximize);
+    m_minimizeButton = TitleBarWidget::createButton(this, TitleBarButtonType::Minimize);
+    m_floatButton = TitleBarWidget::createButton(this, TitleBarButtonType::Float);
+    m_closeButton = TitleBarWidget::createButton(this, TitleBarButtonType::Close);
+    m_autoHideButton = TitleBarWidget::createButton(this, TitleBarButtonType::AutoHide);
 
     m_layout->addWidget(m_autoHideButton);
     m_layout->addWidget(m_minimizeButton);
@@ -166,8 +166,12 @@ void TitleBarWidget::updateMinimizeButton()
     m_minimizeButton->setVisible(supportsMinimizeButton());
 }
 
-QIcon TitleBarWidget::iconForButton(const QString &iconName) const
+QIcon TitleBarWidget::iconForButtonType(TitleBarButtonType type) const
 {
+    const QString iconName = iconNameForButtonType(type);
+    if (iconName.isEmpty())
+        return {};
+
     QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 2)
@@ -191,16 +195,37 @@ QIcon TitleBarWidget::iconForButton(const QString &iconName) const
     return icon;
 }
 
+QString TitleBarWidget::iconNameForButtonType(TitleBar::TitleBarButtonType type) const
+{
+    switch (type) {
+    case TitleBarButtonType::AutoHide:
+        return QStringLiteral("auto-hide");
+    case TitleBarButtonType::UnautoHide:
+        return QStringLiteral("unauto-hide");
+    case TitleBarButtonType::Close:
+        return QStringLiteral("close");
+    case TitleBarButtonType::Minimize:
+        return QStringLiteral("min");
+    case TitleBarButtonType::Maximize:
+        return QStringLiteral("max");
+    case TitleBarButtonType::Float:
+        return QStringLiteral("dock-float");
+    }
+
+    qWarning() << Q_FUNC_INFO << "Unknown icon type";
+    return QString();
+}
+
 void TitleBarWidget::updateAutoHideButton()
 {
     if (Config::self().flags() & Config::Flag_AutoHideSupport) {
         if (const Frame *f = frame()) {
             if (f->isInMainWindow()) {
                 QIcon icon(QStringLiteral(":/img/auto-hide.png"));
-                m_autoHideButton->setIcon(iconForButton(QStringLiteral("auto-hide")));
+                m_autoHideButton->setIcon(iconForButtonType(TitleBarButtonType::AutoHide));
                 m_autoHideButton->setToolTip(tr("Auto-hide"));
             } else if (f->isOverlayed()) {
-                m_autoHideButton->setIcon(iconForButton(QStringLiteral("unauto-hide")));
+                m_autoHideButton->setIcon(iconForButtonType(TitleBarButtonType::UnautoHide));
                 m_autoHideButton->setToolTip(tr("Disable auto-hide"));
             }
 
@@ -216,8 +241,8 @@ void TitleBarWidget::updateAutoHideButton()
 void TitleBarWidget::updateMaximizeButton()
 {
     if (auto fw = floatingWindow()) {
-        m_maximizeButton->setIcon(fw->isMaximized() ? iconForButton(QStringLiteral("dock-float"))
-                                                    : iconForButton(QStringLiteral("max")));
+        m_maximizeButton->setIcon(fw->isMaximized() ? iconForButtonType(TitleBarButtonType::Float)
+                                                    : iconForButtonType(TitleBarButtonType::Maximize));
 
         m_maximizeButton->setVisible(supportsMaximizeButton());
         m_maximizeButton->setToolTip(fw->isMaximized() ? tr("Restore") : tr("Maximize"));
@@ -246,9 +271,9 @@ bool TitleBarWidget::isFloatButtonEnabled() const
     return m_floatButton->isEnabled();
 }
 
-QAbstractButton *TitleBarWidget::createButton(QWidget *parent, const QIcon &icon)
+QAbstractButton *TitleBarWidget::createButton(QWidget *parent, TitleBarButtonType type)
 {
     auto button = new Button(parent);
-    button->setIcon(icon);
+    button->setIcon(iconForButtonType(type));
     return button;
 }
