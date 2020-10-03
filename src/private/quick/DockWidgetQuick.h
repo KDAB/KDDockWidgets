@@ -54,6 +54,9 @@ public:
     /// Similar to DockWidgetBase::setWidget(QQuickItem*)
     void setWidget(const QString &qmlFilename);
 
+    /// @reimp
+    void setWidget(QWidgetOrQuick *widget) override;
+
 protected:
     bool event(QEvent *e) override;
 

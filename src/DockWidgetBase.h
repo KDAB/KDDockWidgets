@@ -139,7 +139,7 @@ public:
      * call setWidget(A) followed by setWidget(B) then A will have to be deleted by you, while B is
      * owned by the dock widget.
      */
-    void setWidget(QWidgetOrQuick *widget);
+    virtual void setWidget(QWidgetOrQuick *widget);
 
     /**
      * @brief returns the widget which this dock widget hosts

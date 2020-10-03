@@ -78,7 +78,7 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWid
     w->setFocusPolicy(Qt::StrongFocus);
     auto dock = new DockWidgetType(name, options);
     dock->setAffinityName(affinityName);
-    dock->DockWidgetBase::setWidget(w);
+    dock->setWidget(w);
     dock->setObjectName(name);
     dock->setGeometry(QRect(0, 0, 400, 400));
     if (show) {
