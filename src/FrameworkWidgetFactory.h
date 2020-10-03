@@ -23,6 +23,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+class QAbstractButton;
+
 namespace Layouting {
 class Separator;
 class Widget;
@@ -128,6 +130,17 @@ public:
     ///@param parent The MainWindow. Just forward into your SideBar sub-class ctor.
     virtual SideBar *createSideBar(SideBarLocation loc, MainWindowBase *parent) const = 0;
 
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    ///@brief Called internally by the framework to create a title bar button
+    ///@parent the button's parent
+    virtual QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const = 0;
+#else
+    // QtQuick will have some other base class for buttons
+#endif
+
+    /// @brief Returns the icon to be used with the specified @p type
+    /// @param dpr the device pixel ratio of the button
+    virtual QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const = 0;
 private:
     Q_DISABLE_COPY(FrameworkWidgetFactory)
 };
@@ -150,6 +163,12 @@ public:
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const override;
     QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const override;
     SideBar *createSideBar(SideBarLocation loc, MainWindowBase *parent) const override;
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const override;
+#endif
+
+    QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
 
     static DropIndicatorType s_dropIndicatorType;
 private:

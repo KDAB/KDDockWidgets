@@ -30,6 +30,7 @@
 # include "indicators/SegmentedIndicators_p.h"
 
 # include <QRubberBand>
+# include <QToolButton>
 #else
 # include "quick/FrameQuick_p.h"
 # include "quick/DockWidgetQuick.h"
@@ -107,6 +108,70 @@ QWidgetOrQuick *DefaultWidgetFactory::createRubberBand(QWidgetOrQuick *parent) c
 SideBar *DefaultWidgetFactory::createSideBar(SideBarLocation loc, MainWindowBase *parent) const
 {
     return new SideBarWidget(loc, parent);
+}
+
+QAbstractButton* DefaultWidgetFactory::createTitleBarButton(QWidget *parent, TitleBarButtonType type) const
+{
+    if (!parent) {
+        qWarning() << Q_FUNC_INFO << "Parent not provided";
+        return nullptr;
+    }
+
+    auto button = new Button(parent);
+    button->setIcon(iconForButtonType(type, parent->devicePixelRatioF()));
+
+    return button;
+}
+
+QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr) const
+{
+    QString iconName;
+    switch (type) {
+    case TitleBarButtonType::AutoHide:
+        iconName = QStringLiteral("auto-hide");
+        break;
+    case TitleBarButtonType::UnautoHide:
+        iconName = QStringLiteral("unauto-hide");
+        break;
+    case TitleBarButtonType::Close:
+        iconName = QStringLiteral("close");
+        break;
+    case TitleBarButtonType::Minimize:
+        iconName = QStringLiteral("min");
+        break;
+    case TitleBarButtonType::Maximize:
+        iconName = QStringLiteral("max");
+        break;
+    case TitleBarButtonType::Float:
+        iconName = QStringLiteral("dock-float");
+        break;
+    }
+
+    if (iconName.isEmpty())
+        return {};
+
+    QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 2)
+    const bool isFractional = int(dpr) != dpr;
+    if (isFractional) {
+        // We don't support 1.5x yet.
+        // Linux is the only one affected as Windows and macOS use integral factors.
+        // Problem with Linux is that rendering is off due to a rounding bug only fixed in 5.15.2
+        // Will enable for fractional later.
+        // QTBUG-86170
+        return icon;
+    }
+#else
+    // Not using Qt's sugar syntax, which doesn't support 1.5x anyway when we need it.
+    // Simply add the high-res files and Qt will pick them when needed
+
+    icon.addFile(QStringLiteral(":/img/%1-1.5x.png").arg(iconName));
+    Q_UNUSED(dpr);
+#endif
+    icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
+
+    return icon;
 }
 
 #else

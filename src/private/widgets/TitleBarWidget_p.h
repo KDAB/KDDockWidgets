@@ -43,9 +43,6 @@ public:
     ///@brief getter for the close button
     QWidget* closeButton() const;
 
-    ///@brief
-    virtual QAbstractButton* createButton(QWidget *parent, TitleBarButtonType);
-
 protected:
     void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
@@ -61,10 +58,7 @@ protected:
     bool isFloatButtonVisible() const override;
     bool isFloatButtonEnabled() const override;
 
-    QIcon iconForButtonType(TitleBarButtonType) const;
-
 private:
-    QString iconNameForButtonType(TitleBarButtonType) const;
     void init();
     int buttonAreaWidth() const;
 

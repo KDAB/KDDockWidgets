@@ -15,6 +15,7 @@
 #include "FloatingWindow_p.h"
 #include "Logging_p.h"
 #include "WindowBeingDragged_p.h"
+#include "FrameworkWidgetFactory.h"
 #include "Utils_p.h"
 
 #include <QHBoxLayout>
@@ -49,11 +50,13 @@ void TitleBarWidget::init()
     m_layout->setContentsMargins(2, 2, 2, 2);
     m_layout->setSpacing(2);
 
-    m_maximizeButton = TitleBarWidget::createButton(this, TitleBarButtonType::Maximize);
-    m_minimizeButton = TitleBarWidget::createButton(this, TitleBarButtonType::Minimize);
-    m_floatButton = TitleBarWidget::createButton(this, TitleBarButtonType::Float);
-    m_closeButton = TitleBarWidget::createButton(this, TitleBarButtonType::Close);
-    m_autoHideButton = TitleBarWidget::createButton(this, TitleBarButtonType::AutoHide);
+    auto factory = Config::self().frameworkWidgetFactory();
+
+    m_maximizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Maximize);
+    m_minimizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Minimize);
+    m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
+    m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
+    m_autoHideButton = factory->createTitleBarButton(this, TitleBarButtonType::AutoHide);
 
     m_layout->addWidget(m_autoHideButton);
     m_layout->addWidget(m_minimizeButton);
@@ -166,66 +169,17 @@ void TitleBarWidget::updateMinimizeButton()
     m_minimizeButton->setVisible(supportsMinimizeButton());
 }
 
-QIcon TitleBarWidget::iconForButtonType(TitleBarButtonType type) const
-{
-    const QString iconName = iconNameForButtonType(type);
-    if (iconName.isEmpty())
-        return {};
-
-    QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 2)
-    const bool isFractional = (1.0 * devicePixelRatio() != devicePixelRatioF());
-    if (isFractional) {
-        // We don't support 1.5x yet.
-        // Linux is the only one affected as Windows and macOS use integral factors.
-        // Problem with Linux is that rendering is off due to a rounding bug only fixed in 5.15.2
-        // Will enable for fractional later.
-        // QTBUG-86170
-        return icon;
-    }
-#else
-    // Not using Qt's sugar syntax, which doesn't support 1.5x anyway when we need it.
-    // Simply add the high-res files and Qt will pick them when needed
-
-    icon.addFile(QStringLiteral(":/img/%1-1.5x.png").arg(iconName));
-#endif
-    icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
-
-    return icon;
-}
-
-QString TitleBarWidget::iconNameForButtonType(TitleBarButtonType type) const
-{
-    switch (type) {
-    case TitleBarButtonType::AutoHide:
-        return QStringLiteral("auto-hide");
-    case TitleBarButtonType::UnautoHide:
-        return QStringLiteral("unauto-hide");
-    case TitleBarButtonType::Close:
-        return QStringLiteral("close");
-    case TitleBarButtonType::Minimize:
-        return QStringLiteral("min");
-    case TitleBarButtonType::Maximize:
-        return QStringLiteral("max");
-    case TitleBarButtonType::Float:
-        return QStringLiteral("dock-float");
-    }
-
-    qWarning() << Q_FUNC_INFO << "Unknown icon type";
-    return QString();
-}
-
 void TitleBarWidget::updateAutoHideButton()
 {
     if (Config::self().flags() & Config::Flag_AutoHideSupport) {
+        auto factory = Config::self().frameworkWidgetFactory();
         if (const Frame *f = frame()) {
             if (f->isInMainWindow()) {
                 QIcon icon(QStringLiteral(":/img/auto-hide.png"));
-                m_autoHideButton->setIcon(iconForButtonType(TitleBarButtonType::AutoHide));
+                m_autoHideButton->setIcon(factory->iconForButtonType(TitleBarButtonType::AutoHide, devicePixelRatioF()));
                 m_autoHideButton->setToolTip(tr("Auto-hide"));
             } else if (f->isOverlayed()) {
-                m_autoHideButton->setIcon(iconForButtonType(TitleBarButtonType::UnautoHide));
+                m_autoHideButton->setIcon(factory->iconForButtonType(TitleBarButtonType::UnautoHide, devicePixelRatioF()));
                 m_autoHideButton->setToolTip(tr("Disable auto-hide"));
             }
 
@@ -241,8 +195,9 @@ void TitleBarWidget::updateAutoHideButton()
 void TitleBarWidget::updateMaximizeButton()
 {
     if (auto fw = floatingWindow()) {
-        m_maximizeButton->setIcon(fw->isMaximized() ? iconForButtonType(TitleBarButtonType::Float)
-                                                    : iconForButtonType(TitleBarButtonType::Maximize));
+        auto factory = Config::self().frameworkWidgetFactory();
+        const TitleBarButtonType iconType = fw->isMaximized() ? TitleBarButtonType::Float : TitleBarButtonType::Maximize;
+        m_maximizeButton->setIcon(factory->iconForButtonType(iconType, devicePixelRatioF()));
 
         m_maximizeButton->setVisible(supportsMaximizeButton());
         m_maximizeButton->setToolTip(fw->isMaximized() ? tr("Restore") : tr("Maximize"));
@@ -269,11 +224,4 @@ bool TitleBarWidget::isFloatButtonVisible() const
 bool TitleBarWidget::isFloatButtonEnabled() const
 {
     return m_floatButton->isEnabled();
-}
-
-QAbstractButton *TitleBarWidget::createButton(QWidget *parent, TitleBarButtonType type)
-{
-    auto button = new Button(parent);
-    button->setIcon(iconForButtonType(type));
-    return button;
 }
