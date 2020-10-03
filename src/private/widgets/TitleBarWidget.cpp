@@ -195,7 +195,7 @@ void TitleBarWidget::updateAutoHideButton()
                 m_autoHideButton->setIcon(iconForButton(QStringLiteral("auto-hide")));
                 m_autoHideButton->setToolTip(tr("Auto-hide"));
             } else if (f->isOverlayed()) {
-                m_autoHideButton->setIcon(QIcon(QStringLiteral(":/img/unauto-hide.png")));
+                m_autoHideButton->setIcon(iconForButton(QStringLiteral("unauto-hide")));
                 m_autoHideButton->setToolTip(tr("Disable auto-hide"));
             }
 
