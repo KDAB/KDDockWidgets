@@ -166,12 +166,34 @@ void TitleBarWidget::updateMinimizeButton()
     m_minimizeButton->setVisible(supportsMinimizeButton());
 }
 
+QIcon TitleBarWidget::iconForButton(const QString &iconName) const
+{
+    const bool isFractional = (1.0 * devicePixelRatio() != devicePixelRatioF());
+    QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
+
+    if (isFractional) {
+        // We don't support 1.5x yet.
+        // Linux is the only one affected as Windows and macOS use integral factors.
+        // Problem with Linux is that rendering is off due to a rounding bug only fixed in 5.15.2
+        // Will enable for fractional later.
+        return icon;
+    }
+
+    // Not using Qt's sugar syntax, which doesn't support 1.5x anyway when we need it.
+    // Simply add the high-res files and Qt will pick them when needed
+    icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
+    qDebug() << QStringLiteral(":/img/%1-2x.png").arg(iconName);
+
+    return icon;
+}
+
 void TitleBarWidget::updateAutoHideButton()
 {
     if (Config::self().flags() & Config::Flag_AutoHideSupport) {
         if (const Frame *f = frame()) {
             if (f->isInMainWindow()) {
-                m_autoHideButton->setIcon(QIcon(QStringLiteral(":/img/auto-hide.png")));
+                QIcon icon(QStringLiteral(":/img/auto-hide.png"));
+                m_autoHideButton->setIcon(iconForButton(QStringLiteral("auto-hide")));
                 m_autoHideButton->setToolTip(tr("Auto-hide"));
             } else if (f->isOverlayed()) {
                 m_autoHideButton->setIcon(QIcon(QStringLiteral(":/img/unauto-hide.png")));

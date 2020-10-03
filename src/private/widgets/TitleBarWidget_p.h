@@ -60,6 +60,8 @@ protected:
     bool isFloatButtonVisible() const override;
     bool isFloatButtonEnabled() const override;
 
+    QIcon iconForButton(const QString &iconName) const;
+
 private:
     void init();
     int buttonAreaWidth() const;

@@ -1,7 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>img/auto-hide.png</file>
+        <file>img/auto-hide-1.5x.png</file>
+        <file>img/auto-hide-2x.png</file>
         <file>img/unauto-hide.png</file>
+        <file>img/unauto-hide-1.5x.png</file>
+        <file>img/unauto-hide-2x.png</file>
         <file>img/classic_indicators/center_active.png</file>
         <file>img/classic_indicators/center.png</file>
         <file>img/classic_indicators/inner_bottom_active.png</file>
