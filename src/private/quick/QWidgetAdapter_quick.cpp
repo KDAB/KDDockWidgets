@@ -240,6 +240,14 @@ QPoint QWidgetAdapter::mapFromGlobal(QPoint pt) const
     return QQuickItem::mapFromGlobal(pt).toPoint();
 }
 
+QPoint QWidgetAdapter::mapTo(const QQuickItem *parent, const QPoint &pos) const
+{
+    if (!parent)
+        return {};
+
+    return parent->mapFromGlobal(QQuickItem::mapToGlobal(pos)).toPoint();
+}
+
 void QWidgetAdapter::setWindowTitle(const QString &title)
 {
     if (QWindow *window = windowHandle())

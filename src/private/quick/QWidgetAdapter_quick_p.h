@@ -122,6 +122,7 @@ public:
     QWidgetAdapter *parentWidget() const;
     QPoint mapToGlobal(QPoint pt) const;
     QPoint mapFromGlobal(QPoint) const;
+    QPoint mapTo(const QQuickItem *parent, const QPoint &pos) const;
     bool testAttribute(Qt::WidgetAttribute) { return false; }
 
     void setWindowTitle(const QString &);

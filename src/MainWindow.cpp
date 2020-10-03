@@ -128,3 +128,8 @@ QMargins MainWindow::centerWidgetMargins() const
 {
     return { 1, 5, 1, 1};
 }
+
+QRect MainWindow::centralAreaGeometry() const
+{
+    return centralWidget()->geometry();
+}

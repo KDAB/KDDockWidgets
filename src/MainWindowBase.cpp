@@ -163,7 +163,7 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
     if (!sb)
         return {};
 
-    const QWidget *centralWidget = q->centralWidget();
+    const QRect centralAreaGeo = q->centralAreaGeometry();
     const QMargins centerWidgetMargins = q->centerWidgetMargins();
 
     QRect rect;
@@ -179,12 +179,12 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
         const int rightSideBarWidth = (rightSideBar && rightSideBar->isVisible()) ? rightSideBar->width()
                                                                                   : 0;
         rect.setHeight(qMax(300, frame->minSize().height()));
-        rect.setWidth(centralWidget->width() - margin * 2 - leftSideBarWidth - rightSideBarWidth);
+        rect.setWidth(centralAreaGeo.width() - margin * 2 - leftSideBarWidth - rightSideBarWidth);
         rect.moveLeft(margin + leftSideBarWidth);
         if (location == SideBarLocation::South) {
-            rect.moveTop(centralWidget->geometry().bottom() - centerWidgetMargins.bottom() - rect.height() - sb->height());
+            rect.moveTop(centralAreaGeo.bottom() - centerWidgetMargins.bottom() - rect.height() - sb->height());
         } else {
-            rect.moveTop(centralWidget->y() + sb->height() + centerWidgetMargins.top());
+            rect.moveTop(centralAreaGeo.y() + sb->height() + centerWidgetMargins.top());
         }
         break;
     }
@@ -197,12 +197,12 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
         const int bottomSideBarHeight = (bottomSideBar && bottomSideBar->isVisible()) ? bottomSideBar->height()
                                                                                       : 0;
         rect.setWidth(qMax(300, frame->minSize().width()));
-        rect.setHeight(centralWidget->height() - topSideBarHeight - bottomSideBarHeight - centerWidgetMargins.top() - centerWidgetMargins.bottom());
+        rect.setHeight(centralAreaGeo.height() - topSideBarHeight - bottomSideBarHeight - centerWidgetMargins.top() - centerWidgetMargins.bottom());
         rect.moveTop(sb->mapTo(q, QPoint(0, 0)).y() + topSideBarHeight - 1);
         if (location == SideBarLocation::East) {
-            rect.moveLeft(centralWidget->width() - rect.width() - sb->width() - centerWidgetMargins.right() - margin);
+            rect.moveLeft(centralAreaGeo.width() - rect.width() - sb->width() - centerWidgetMargins.right() - margin);
         } else {
-            rect.moveLeft(margin + centralWidget->x() + centerWidgetMargins.left() + sb->width());
+            rect.moveLeft(margin + centralAreaGeo.x() + centerWidgetMargins.left() + sb->width());
         }
 
         break;

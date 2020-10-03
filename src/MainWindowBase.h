@@ -170,8 +170,8 @@ protected:
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()
     virtual QMargins centerWidgetMargins() const = 0;
-
     virtual SideBar* sideBar(SideBarLocation) const = 0;
+    virtual QRect centralAreaGeometry() const { return {}; }
 
 Q_SIGNALS:
     void uniqueNameChanged();
