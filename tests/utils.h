@@ -107,7 +107,7 @@ std::unique_ptr<KDDockWidgets::MainWindowBase> createMainWindow(QVector<DockDesc
 KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQuick *w,
                                                 DockWidgetBase::Options options = {}, bool show = true,
                                                 const QString &affinityName = {});
-KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QColor color);
+KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QColor color = Qt::black);
 
 class NonClosableWidget : public QWidget
 {

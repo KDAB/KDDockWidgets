@@ -57,6 +57,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void tst_simple1();
+    void tst_doesntHaveNativeTitleBar();
 };
 
 void TestCommon::tst_simple1()
@@ -65,6 +66,27 @@ void TestCommon::tst_simple1()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
     m->multiSplitter()->checkSanity();
+}
+
+void TestCommon::tst_doesntHaveNativeTitleBar()
+{
+    // Tests that a floating window doesn't have a native title bar
+    // This test is mostly to test a bug that was happening with QtQuick, where the native title bar
+    // would appear on linux
+    EnsureTopLevelsDeleted e;
+
+    auto dw1 = createDockWidget("dock1");
+    FloatingWindow *fw = dw1->floatingWindow();
+    QVERIFY(fw);
+    QVERIFY(fw->windowFlags() & Qt::Tool);
+
+#if defined(Q_OS_LINUX)
+    QVERIFY(fw->windowFlags() & Qt::FramelessWindowHint);
+#elif defined(Q_OS_WIN)
+    QVERIFY(!(fw->windowFlags() & Qt::FramelessWindowHint));
+#endif
+
+    delete dw1->window();
 }
 
 int main(int argc, char *argv[])

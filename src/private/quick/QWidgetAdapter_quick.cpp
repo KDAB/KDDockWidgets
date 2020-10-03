@@ -291,6 +291,18 @@ void QWidgetAdapter::setParent(QQuickItem *p)
 {
     QQuickItem::setParent(p);
     QQuickItem::setParentItem(p);
+
+    if (m_requestedWindowFlags) {
+        // With QtWidgets, when we create a QWidget it creates the QWindow immediately,
+        //so the flags are passed from QWidget to QWindow in one go. But with QtQuick this needs to
+        //be done in two steps. Our FloatingWindow is a QQuickItem, when it gets a window, we
+        // set the flags that were requested
+
+        if (QWindow *w = windowHandle()) {
+            w->setFlags(m_requestedWindowFlags);
+            m_requestedWindowFlags = {};
+        }
+    }
 }
 
 void QWidgetAdapter::activateWindow()

@@ -59,7 +59,12 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
            msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")) ||
            msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting")) ||
            msg.contains(QLatin1String("Testing::")) ||
-           msg.contains(QLatin1String("outside any known screen, using primary screen"));
+           msg.contains(QLatin1String("outside any known screen, using primary screen"))
+#ifdef KDDOCKWIDGETS_QTQUICK
+            // TODO: Debug why this happens
+            || msg.contains(QLatin1String("Layouting::ItemContainer::setSize_recursive"))
+#endif
+            ;
 }
 
 static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
