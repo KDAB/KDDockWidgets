@@ -49,8 +49,8 @@ void TitleBarWidget::init()
     m_layout->setContentsMargins(2, 2, 2, 2);
     m_layout->setSpacing(2);
 
-    m_maximizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMaxButton));
-    m_minimizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMinButton));
+    m_maximizeButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("max")));
+    m_minimizeButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("min")));
     m_floatButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("dock-float")));
     m_closeButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("close")));
     m_autoHideButton = TitleBarWidget::createButton(this, QIcon());
@@ -211,8 +211,8 @@ void TitleBarWidget::updateAutoHideButton()
 void TitleBarWidget::updateMaximizeButton()
 {
     if (auto fw = floatingWindow()) {
-        m_maximizeButton->setIcon(style()->standardIcon(fw->isMaximized() ? QStyle::SP_TitleBarNormalButton
-                                                                          : QStyle::SP_TitleBarMaxButton));
+        m_maximizeButton->setIcon(fw->isMaximized() ? iconForButton(QStringLiteral("dock-float"))
+                                                    : iconForButton(QStringLiteral("max")));
 
         m_maximizeButton->setVisible(supportsMaximizeButton());
         m_maximizeButton->setToolTip(fw->isMaximized() ? tr("Restore") : tr("Maximize"));

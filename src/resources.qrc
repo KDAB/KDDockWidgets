@@ -12,6 +12,12 @@
         <file>img/dock-float.png</file>
         <file>img/dock-float-1.5x.png</file>
         <file>img/dock-float-2x.png</file>
+        <file>img/min.png</file>
+        <file>img/min-1.5x.png</file>
+        <file>img/min-2x.png</file>
+        <file>img/max.png</file>
+        <file>img/max-1.5x.png</file>
+        <file>img/max-2x.png</file>
         <file>img/classic_indicators/center_active.png</file>
         <file>img/classic_indicators/center.png</file>
         <file>img/classic_indicators/inner_bottom_active.png</file>
