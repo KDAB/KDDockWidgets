@@ -30,13 +30,13 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged,
             this, &FrameQuick::onDockWidgetCountChanged);
 
-    auto component = new QQmlComponent(Config::self().qmlEngine(),
-                                       QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/Frame.qml")));
+    QQmlComponent component(Config::self().qmlEngine(),
+                            QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/Frame.qml")));
 
-    auto visualItem = static_cast<QQuickItem*>(component->create());
+    auto visualItem = static_cast<QQuickItem*>(component.create());
 
     if (!visualItem) {
-        qWarning() << Q_FUNC_INFO << "Failed to create item" << component->errorString();
+        qWarning() << Q_FUNC_INFO << "Failed to create item" << component.errorString();
         return;
     }
 
