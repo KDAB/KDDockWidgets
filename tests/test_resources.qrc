@@ -4,5 +4,6 @@
         <file>layouts/overlapping-item.json</file>
         <file>layouts/unsupported-serialization-version.json</file>
         <file>layouts/stuck-separator.json</file>
+        <file>main.qml</file>
     </qresource>
 </RCC>

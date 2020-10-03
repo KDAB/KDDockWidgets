@@ -21,6 +21,10 @@
 #include <QObject>
 #include <QApplication>
 
+#ifdef KDDOCKWIDGETS_QTQUICK
+# include <QQmlEngine>
+#endif
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
 
@@ -36,8 +40,10 @@ public Q_SLOTS:
 
         Testing::installFatalMessageHandler();
 
-        // auto m = createMainWindow(); TODO
-        // QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
+#ifdef KDDOCKWIDGETS_QTQUICK
+        Config::self().setQmlEngine(new QQmlEngine(this));
+#endif
+        QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
     }
 
 private Q_SLOTS:

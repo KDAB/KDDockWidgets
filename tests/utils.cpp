@@ -24,6 +24,7 @@
 #ifdef KDDOCKWIDGETS_QTQUICK
 # include "private/quick/DockWidgetQuick.h"
 # include "private/quick/MainWindowQuick_p.h"
+# include <QQuickView>
 #else
 # include "DockWidget.h"
 # include "MainWindow.h"
@@ -56,7 +57,14 @@ std::unique_ptr<KDDockWidgets::MainWindowBase> KDDockWidgets::Tests::createMainW
     const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
                                                   : name;
 
-    auto ptr = std::unique_ptr<MainWindowType>(new MainWindowType(mainWindowName, options));
+    WidgetType *parent = nullptr;
+#ifdef KDDOCKWIDGETS_QTQUICK
+    auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
+    view->setSource(QUrl("qrc:/main.qml"));
+    parent = view->rootObject();
+#endif
+
+    auto ptr = std::unique_ptr<MainWindowType>(new MainWindowType(mainWindowName, options, parent));
     ptr->show();
     ptr->resize(sz);
     return ptr;

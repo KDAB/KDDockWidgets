@@ -32,13 +32,13 @@ find_package(Qt5Test)
 set(TESTING_SRCS utils.cpp Testing.cpp)
 
 # tst_common
-add_executable(tst_common tst_common.cpp ${TESTING_SRCS})
+qt5_add_resources(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
+add_executable(tst_common tst_common.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
 target_link_libraries(tst_common kddockwidgets kddockwidgets_multisplitter Qt5::Test)
 set_compiler_flags(tst_common)
 
 # tst_docks
 if (NOT OPTION_QTQUICK)
-    qt5_add_resources(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
     add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
     target_link_libraries(tst_docks kddockwidgets kddockwidgets_multisplitter Qt5::Widgets Qt5::Test)
     set_compiler_flags(tst_docks)
