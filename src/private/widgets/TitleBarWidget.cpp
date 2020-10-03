@@ -52,7 +52,7 @@ void TitleBarWidget::init()
     m_maximizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMaxButton));
     m_minimizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMinButton));
     m_floatButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarNormalButton));
-    m_closeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarCloseButton));
+    m_closeButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("close")));
     m_autoHideButton = TitleBarWidget::createButton(this, QIcon());
 
     m_layout->addWidget(m_autoHideButton);
@@ -182,7 +182,6 @@ QIcon TitleBarWidget::iconForButton(const QString &iconName) const
     // Not using Qt's sugar syntax, which doesn't support 1.5x anyway when we need it.
     // Simply add the high-res files and Qt will pick them when needed
     icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
-    qDebug() << QStringLiteral(":/img/%1-2x.png").arg(iconName);
 
     return icon;
 }
