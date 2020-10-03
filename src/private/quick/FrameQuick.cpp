@@ -121,6 +121,11 @@ int FrameQuick::dockWidgetCount_impl() const
     return m_dockWidgetModel->count();
 }
 
+void FrameQuick::renameTab(int, const QString &)
+{
+    // Not needed for QtQuick. Our model reacts to titleChanged()
+}
+
 void FrameQuick::setStackLayout(QQuickItem *stackLayout)
 {
     if (m_stackLayout || !stackLayout) {

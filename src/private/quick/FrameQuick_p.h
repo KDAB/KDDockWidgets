@@ -44,7 +44,7 @@ protected:
     DockWidgetBase *dockWidgetAt_impl(int index) const override;
     DockWidgetBase *currentDockWidget_impl() const override;
     int dockWidgetCount_impl() const override;
-
+    void renameTab(int index, const QString &) override;
     Q_INVOKABLE void setStackLayout(QQuickItem *);
 
 Q_SIGNALS:
