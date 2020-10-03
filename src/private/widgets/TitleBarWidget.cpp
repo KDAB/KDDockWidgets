@@ -51,7 +51,7 @@ void TitleBarWidget::init()
 
     m_maximizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMaxButton));
     m_minimizeButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarMinButton));
-    m_floatButton = TitleBarWidget::createButton(this, style()->standardIcon(QStyle::SP_TitleBarNormalButton));
+    m_floatButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("dock-float")));
     m_closeButton = TitleBarWidget::createButton(this, iconForButton(QStringLiteral("close")));
     m_autoHideButton = TitleBarWidget::createButton(this, QIcon());
 
