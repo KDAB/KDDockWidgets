@@ -20,6 +20,8 @@
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include <QWidget>
 # include <QToolButton>
+#else
+# include <QQuickView>
 #endif
 
 #include <QPointer>
@@ -59,6 +61,14 @@ struct EnsureTopLevelsDeleted
 
     ~EnsureTopLevelsDeleted()
     {
+#ifdef KDDOCKWIDGETS_QTQUICK
+        // Delete the QQuickView. Too much assle to create and delete them for each test.
+        for (QWindow *window : qApp->topLevelWindows()) {
+            if (qobject_cast<QQuickView*>(window))
+                delete window;
+        }
+#endif
+
         if (topLevels().size() != 0) {
             qWarning() << "There's still top-level widgets present!" << topLevels();
         }

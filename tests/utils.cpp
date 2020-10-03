@@ -61,6 +61,7 @@ std::unique_ptr<KDDockWidgets::MainWindowBase> KDDockWidgets::Tests::createMainW
 #ifdef KDDOCKWIDGETS_QTQUICK
     auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
     view->setSource(QUrl("qrc:/main.qml"));
+    view->show();
     parent = view->rootObject();
 #endif
 
