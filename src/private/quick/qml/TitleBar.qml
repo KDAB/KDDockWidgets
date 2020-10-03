@@ -23,44 +23,33 @@ TitleBarBase {
         }
     }
 
-    Rectangle {
+    TitleBarButton {
         id: floatButton
-        color: "red"
+        imageSource: "qrc:/img/dock-float.png"
         anchors {
-            top: parent ? parent.top : undefined
-            bottom: parent ? parent.bottom : undefined
+            verticalCenter: parent ? parent.verticalCenter : undefined
             right: closeButton.left
             topMargin: 5
             bottomMargin: 5
             rightMargin: 5
         }
-        width: height
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                titleBarCpp.onFloatClicked();
-            }
+        onClicked: {
+            titleBarCpp.onFloatClicked();
         }
     }
 
-    Rectangle {
+    TitleBarButton {
         id: closeButton
-        color: "red"
+        imageSource: "qrc:/img/close.png"
         anchors {
-            top: parent ? parent.top : undefined
-            bottom: parent ? parent.bottom : undefined
+            verticalCenter: parent ? parent.verticalCenter : undefined
             right: parent ? parent.right : undefined
             topMargin: 5
             bottomMargin: 5
             leftMargin: 5
         }
-        width: height
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                titleBarCpp.onCloseClicked();
-            }
+        onClicked: {
+            titleBarCpp.onCloseClicked();
         }
     }
 }
