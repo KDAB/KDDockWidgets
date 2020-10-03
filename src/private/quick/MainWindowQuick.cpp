@@ -23,3 +23,15 @@ MainWindowQuick::MainWindowQuick(const QString &uniqueName, MainWindowOptions op
     QWidgetAdapter::makeItemFillParent(this);
     QWidgetAdapter::makeItemFillParent(dropArea());
 }
+
+SideBar *MainWindowQuick::sideBar(SideBarLocation) const
+{
+    qWarning() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";
+    return nullptr;
+}
+
+QMargins MainWindowQuick::centerWidgetMargins() const
+{
+    qWarning() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";
+    return {};
+}

@@ -27,6 +27,10 @@ public:
     explicit MainWindowQuick(const QString &uniqueName,
                              MainWindowOptions options = MainWindowOption_HasCentralFrame,
                              QWidgetAdapter *parent = nullptr);
+
+protected:
+    SideBar *sideBar(SideBarLocation) const override;
+    QMargins centerWidgetMargins() const override;
 };
 
 }
