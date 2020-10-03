@@ -58,7 +58,7 @@ public:
 };
 
 MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                               QWidgetOrQuick *parent, Qt::WindowFlags flags)
+                               WidgetType *parent, Qt::WindowFlags flags)
     : QMainWindowOrQuick(parent, flags)
     , d(new Private(this, options))
 {

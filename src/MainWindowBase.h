@@ -54,7 +54,7 @@ class DOCKS_EXPORT MainWindowBase : public QMainWindow
 public:
     typedef QVector<MainWindowBase*> List;
     explicit MainWindowBase(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                            QWidgetOrQuick *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
+                            WidgetType *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 
     ~MainWindowBase() override;
 
