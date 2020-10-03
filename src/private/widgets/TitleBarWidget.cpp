@@ -168,9 +168,10 @@ void TitleBarWidget::updateMinimizeButton()
 
 QIcon TitleBarWidget::iconForButton(const QString &iconName) const
 {
-    const bool isFractional = (1.0 * devicePixelRatio() != devicePixelRatioF());
     QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 2)
+    const bool isFractional = (1.0 * devicePixelRatio() != devicePixelRatioF());
     if (isFractional) {
         // We don't support 1.5x yet.
         // Linux is the only one affected as Windows and macOS use integral factors.
@@ -178,9 +179,12 @@ QIcon TitleBarWidget::iconForButton(const QString &iconName) const
         // Will enable for fractional later.
         return icon;
     }
-
+#else
     // Not using Qt's sugar syntax, which doesn't support 1.5x anyway when we need it.
     // Simply add the high-res files and Qt will pick them when needed
+
+    icon.addFile(QStringLiteral(":/img/%1-1.5x.png").arg(iconName));
+#endif
     icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
 
     return icon;
