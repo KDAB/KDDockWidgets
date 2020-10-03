@@ -175,7 +175,6 @@ void TitleBarWidget::updateAutoHideButton()
         auto factory = Config::self().frameworkWidgetFactory();
         if (const Frame *f = frame()) {
             if (f->isInMainWindow()) {
-                QIcon icon(QStringLiteral(":/img/auto-hide.png"));
                 m_autoHideButton->setIcon(factory->iconForButtonType(TitleBarButtonType::AutoHide, devicePixelRatioF()));
                 m_autoHideButton->setToolTip(tr("Auto-hide"));
             } else if (f->isOverlayed()) {
