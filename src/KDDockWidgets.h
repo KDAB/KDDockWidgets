@@ -113,6 +113,7 @@ namespace KDDockWidgets
         Float,
         Minimize,
         Maximize,
+        Normal, // Restore from maximized state
         AutoHide,
         UnautoHide
     };

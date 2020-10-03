@@ -196,7 +196,8 @@ void TitleBarWidget::updateMaximizeButton()
 {
     if (auto fw = floatingWindow()) {
         auto factory = Config::self().frameworkWidgetFactory();
-        const TitleBarButtonType iconType = fw->isMaximized() ? TitleBarButtonType::Float : TitleBarButtonType::Maximize;
+        const TitleBarButtonType iconType = fw->isMaximized() ? TitleBarButtonType::Normal
+                                                              : TitleBarButtonType::Maximize;
         m_maximizeButton->setIcon(factory->iconForButtonType(iconType, devicePixelRatioF()));
 
         m_maximizeButton->setVisible(supportsMaximizeButton());

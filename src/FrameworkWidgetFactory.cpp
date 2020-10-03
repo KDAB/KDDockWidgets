@@ -142,6 +142,10 @@ QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr
     case TitleBarButtonType::Maximize:
         iconName = QStringLiteral("max");
         break;
+    case TitleBarButtonType::Normal:
+        // We're using the same icon as dock/float
+        iconName = QStringLiteral("dock-float");
+        break;
     case TitleBarButtonType::Float:
         iconName = QStringLiteral("dock-float");
         break;
