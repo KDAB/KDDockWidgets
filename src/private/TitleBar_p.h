@@ -42,16 +42,6 @@ class DOCKS_EXPORT TitleBar : public QWidgetAdapter
 public:
     typedef QVector<TitleBar *> List;
 
-    ///@brief describes a type of button you can have in the title bar
-    enum class TitleBarButtonType {
-        Close,
-        Float,
-        Minimize,
-        Maximize,
-        AutoHide,
-        UnautoHide
-    };
-
     explicit TitleBar(Frame *parent);
     explicit TitleBar(FloatingWindow *parent);
     ~TitleBar() override;

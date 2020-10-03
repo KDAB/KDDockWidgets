@@ -195,7 +195,7 @@ QIcon TitleBarWidget::iconForButtonType(TitleBarButtonType type) const
     return icon;
 }
 
-QString TitleBarWidget::iconNameForButtonType(TitleBar::TitleBarButtonType type) const
+QString TitleBarWidget::iconNameForButtonType(TitleBarButtonType type) const
 {
     switch (type) {
     case TitleBarButtonType::AutoHide:

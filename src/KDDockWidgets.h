@@ -107,6 +107,16 @@ namespace KDDockWidgets
         South
     };
 
+    ///@brief describes a type of button you can have in the title bar
+    enum class TitleBarButtonType {
+        Close,
+        Float,
+        Minimize,
+        Maximize,
+        AutoHide,
+        UnautoHide
+    };
+
     ///@internal
     inline uint qHash(SideBarLocation loc, uint seed)
     {
