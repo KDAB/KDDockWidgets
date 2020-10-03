@@ -75,6 +75,9 @@ private:
     QLabel *m_dockWidgetIcon = nullptr;
 };
 
+/// @brief Button widget to be used in the TitleBar.
+/// These are the the KDDockWidget default buttons. Users can replace with their own and are not
+/// forced to use these.
 class Button : public QToolButton
 {
     Q_OBJECT
@@ -82,9 +85,7 @@ public:
     explicit Button(QWidget *parent)
         : QToolButton(parent)
     {
-        //const int margin = style()->pixelMetric(QStyle::PM_DockWidgetTitleBarButtonMargin, nullptr, this) * 2;
-        QSize sz = /*QSize(margin, margin) + */ QSize(16, 16);
-        setFixedSize(sz);
+        setFixedSize(QSize(16, 16));
     }
 
     ~Button() override;
@@ -107,7 +108,11 @@ public:
         opt.subControls = QStyle::SC_None;
         opt.features = QStyleOptionToolButton::None;
         opt.icon = icon();
-        opt.iconSize = size();
+
+        // The first icon size is for scaling 1x, and is what QStyle expects. QStyle will pick ones
+        // with higher resolution automatically when needed.
+        const QList<QSize> iconSizes = opt.icon.availableSizes();
+        opt.iconSize = iconSizes.isEmpty() ? QSize() : iconSizes.constFirst();
         style()->drawComplexControl(QStyle::CC_ToolButton, &opt, &p, this);
     }
 };
