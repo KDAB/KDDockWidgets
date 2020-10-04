@@ -15,6 +15,7 @@
 #include "Testing.h"
 #include "utils.h"
 #include "DockWidgetBase.h"
+#include "multisplitter/Separator_p.h"
 #include "private/MultiSplitter_p.h"
 
 #include <QtTest/QtTest>
@@ -27,6 +28,7 @@
 #endif
 
 using namespace KDDockWidgets;
+using namespace Layouting;
 using namespace KDDockWidgets::Tests;
 
 class TestCommon : public QObject
@@ -43,7 +45,7 @@ public Q_SLOTS:
 
 #ifdef KDDOCKWIDGETS_QTQUICK
         QQuickStyle::setStyle("Material"); // so we don't load KDE pluginss
-        Config::self().setQmlEngine(new QQmlEngine(this));
+        KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
 #endif
         QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
     }
@@ -51,13 +53,14 @@ public Q_SLOTS:
     void cleanupTestCase()
     {
 #ifdef KDDOCKWIDGETS_QTQUICK
-        delete Config::self().qmlEngine();
+        delete KDDockWidgets::Config::Config::self().qmlEngine();
 #endif
     }
 
 private Q_SLOTS:
     void tst_simple1();
     void tst_doesntHaveNativeTitleBar();
+    void tst_resizeWindow2();
 };
 
 void TestCommon::tst_simple1()
@@ -87,6 +90,25 @@ void TestCommon::tst_doesntHaveNativeTitleBar()
 #endif
 
     delete dw1->window();
+}
+
+void TestCommon::tst_resizeWindow2()
+{
+    // Tests that resizing the width of the main window will never move horizontal anchors
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1");
+    auto dock2 = createDockWidget("2");
+    m->addDockWidget(dock1, Location_OnTop);
+    m->addDockWidget(dock2, Location_OnBottom);
+
+    auto layout = m->multiSplitter();
+    Separator *anchor = layout->separators().at(0);
+    const int oldPosY = anchor->position();
+    m->resize(QSize(m->width() + 10, m->height()));
+    QCOMPARE(anchor->position(), oldPosY);
+    layout->checkSanity();
 }
 
 int main(int argc, char *argv[])

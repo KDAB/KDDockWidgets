@@ -391,7 +391,6 @@ private Q_SLOTS:
 
     void tst_resizeWindow_data();
     void tst_resizeWindow();
-    void tst_resizeWindow2();
     void tst_rectForDropCrash();
 
     void tst_tabBarWithHiddenTitleBar_data();
@@ -4998,25 +4997,6 @@ void TestDocks::tst_resizeWindow()
 
     QCOMPARE(oldWidth1, newWidth1);
     QCOMPARE(oldWidth2, newWidth2);
-    layout->checkSanity();
-}
-
-void TestDocks::tst_resizeWindow2()
-{
-    // Tests that resizing the width of the main window will never move horizontal anchors
-
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
-    m->addDockWidget(dock1, Location_OnTop);
-    m->addDockWidget(dock2, Location_OnBottom);
-
-    auto layout = m->multiSplitter();
-    Separator *anchor = layout->separators().at(0);
-    const int oldPosY = anchor->position();
-    m->resize(m->width() + 10, m->height());
-    QCOMPARE(anchor->position(), oldPosY);
     layout->checkSanity();
 }
 
