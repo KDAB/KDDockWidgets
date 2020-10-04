@@ -22,12 +22,15 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQuickView view;
+    view.setObjectName("MainWindow QQuickView");
     KDDockWidgets::Config::self().setQmlEngine(view.engine());
     view.resize(1000, 800);
     view.show();
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
     auto dw1 = new KDDockWidgets::DockWidgetQuick("Dock #1");
+    view.setSource(QUrl("qrc:/main.qml"));
+
     dw1->setWidget(QStringLiteral("qrc:/Guest1.qml"));
     dw1->resize(QSize(800, 800));
     dw1->show();
@@ -41,8 +44,6 @@ int main(int argc, char *argv[])
     dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
     dw3->resize(QSize(800, 800));
     dw3->show();
-
-    view.setSource(QUrl("qrc:/main.qml"));
 
     dw1->addDockWidgetToContainingWindow(dw3, KDDockWidgets::Location_OnRight);
 
