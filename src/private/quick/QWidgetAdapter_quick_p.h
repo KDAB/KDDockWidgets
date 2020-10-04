@@ -162,7 +162,7 @@ private:
     QSizePolicy m_sizePolicy = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     QSize m_minimumSize = {KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT};
     QSize m_maximumSize = {KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT};
-    Qt::WindowFlags m_requestedWindowFlags;
+    Qt::WindowFlags m_windowFlags;
 };
 
 }
