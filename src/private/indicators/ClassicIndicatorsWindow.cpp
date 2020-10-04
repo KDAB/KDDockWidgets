@@ -241,8 +241,9 @@ IndicatorWindow::IndicatorWindow(KDDockWidgets::ClassicIndicators *classicIndica
     : QQuickView()
     , m_classicIndicators(classicIndicators)
 {
+    setFlags(flags() | Qt::FramelessWindowHint | Qt::BypassWindowManagerHint | Qt::Tool);
     setColor(Qt::transparent);
-    setFlags(flags() | Qt::FramelessWindowHint);
+
     rootContext()->setContextProperty(QStringLiteral("_window"), QVariant::fromValue<QObject*>(this));
     setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/ClassicIndicatorsOverlay.qml")));
 }
