@@ -58,7 +58,8 @@ FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
 
 FloatingWindowQuick::~FloatingWindowQuick()
 {
-    m_quickWindow->deleteLater();
+    QWidgetAdapter::setParent(nullptr);
+    delete m_quickWindow;
 }
 
 QWindow *FloatingWindowQuick::candidateParentWindow() const
