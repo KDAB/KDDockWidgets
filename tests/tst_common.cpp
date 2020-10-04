@@ -100,6 +100,9 @@ void TestCommon::tst_resizeWindow2()
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1");
     auto dock2 = createDockWidget("2");
+
+    FloatingWindow *fw1 = dock1->floatingWindow();
+    FloatingWindow *fw2 = dock2->floatingWindow();
     m->addDockWidget(dock1, Location_OnTop);
     m->addDockWidget(dock2, Location_OnBottom);
 
@@ -109,6 +112,9 @@ void TestCommon::tst_resizeWindow2()
     m->resize(QSize(m->width() + 10, m->height()));
     QCOMPARE(anchor->position(), oldPosY);
     layout->checkSanity();
+
+    delete fw1;
+    delete fw2;
 }
 
 int main(int argc, char *argv[])
