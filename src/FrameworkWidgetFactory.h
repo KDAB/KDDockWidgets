@@ -23,7 +23,9 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+QT_BEGIN_NAMESPACE
 class QAbstractButton;
+QT_END_NAMESPACE
 
 namespace Layouting {
 class Separator;
