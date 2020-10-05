@@ -61,6 +61,7 @@ private Q_SLOTS:
     void tst_simple1();
     void tst_doesntHaveNativeTitleBar();
     void tst_resizeWindow2();
+    void tst_hasLastDockedLocation();
 };
 
 void TestCommon::tst_simple1()
@@ -115,6 +116,30 @@ void TestCommon::tst_resizeWindow2()
 
     delete fw1;
     delete fw2;
+}
+
+void TestCommon::tst_hasLastDockedLocation()
+{
+    // Tests DockWidgetBase::hasPreviousDockedLocation()
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1");
+    auto window1 = dock1->window();
+    QVERIFY(dock1->isFloating());
+    QVERIFY(!dock1->hasPreviousDockedLocation());
+    QVERIFY(dock1->setFloating(true));
+    QVERIFY(!dock1->setFloating(false)); // No docking location, so it's not docked
+    QVERIFY(dock1->isFloating());
+    QVERIFY(!dock1->hasPreviousDockedLocation());
+
+    m->addDockWidget(dock1, Location_OnBottom);
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(dock1->setFloating(true));
+    QVERIFY(dock1->hasPreviousDockedLocation());
+    QVERIFY(dock1->setFloating(false));
+
+    delete window1;
 }
 
 int main(int argc, char *argv[])

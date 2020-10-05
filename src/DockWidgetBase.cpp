@@ -110,7 +110,7 @@ public:
     void onDockWidgetHidden();
     void show();
     void close();
-    void restoreToPreviousPosition();
+    bool restoreToPreviousPosition();
     void maybeRestoreToPreviousPosition();
     int currentTabIndex() const;
 
@@ -267,15 +267,12 @@ bool DockWidgetBase::isFloating() const
     return fw && fw->hasSingleDockWidget();
 }
 
-void DockWidgetBase::setFloating(bool floats)
+bool DockWidgetBase::setFloating(bool floats)
 {
     const bool alreadyFloating = isFloating();
 
-    qCDebug(docking) << Q_FUNC_INFO << "yes=" << floats
-                     << "; already floating=" << alreadyFloating;
-
     if ((floats && alreadyFloating) || (!floats && !alreadyFloating))
-        return; // Nothing to do
+        return true; // Nothing to do
 
     if (floats) {
         d->saveTabIndex();
@@ -285,6 +282,7 @@ void DockWidgetBase::setFloating(bool floats)
                 qWarning() << "DockWidget::setFloating: Tabbed but no frame exists"
                            << this;
                 Q_ASSERT(false);
+                return false;
             }
 
             frame->detachTab(this);
@@ -297,9 +295,10 @@ void DockWidgetBase::setFloating(bool floats)
             if (auto fw = floatingWindow())
                 fw->setSuggestedGeometry(lastGeo, /*preserveCenter=*/true);
         }
+        return true;
     } else {
         saveLastFloatingGeometry();
-        d->restoreToPreviousPosition();
+        return d->restoreToPreviousPosition();
     }
 }
 
@@ -511,6 +510,11 @@ SideBarLocation DockWidgetBase::sideBarLocation() const
     return DockRegistry::self()->sideBarLocationForDockWidget(this);
 }
 
+bool DockWidgetBase::hasPreviousDockedLocation() const
+{
+    return d->m_lastPositions.isValid();
+}
+
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
@@ -680,16 +684,17 @@ void DockWidgetBase::Private::close()
     }
 }
 
-void DockWidgetBase::Private::restoreToPreviousPosition()
+bool DockWidgetBase::Private::restoreToPreviousPosition()
 {
     if (!m_lastPositions.isValid())
-        return;
+        return false;
 
     Layouting::Item *item = m_lastPositions.lastItem();
 
     MultiSplitter *layout = DockRegistry::self()->layoutForItem(item);
     Q_ASSERT(layout);
     layout->restorePlaceholder(q, item, m_lastPositions.lastTabIndex());
+    return true;
 }
 
 void DockWidgetBase::Private::maybeRestoreToPreviousPosition()

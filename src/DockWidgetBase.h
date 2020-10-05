@@ -158,8 +158,10 @@ public:
     /**
      * @brief setter to make the dock widget float or dock.
      * @param floats If true makes the dock widget float, otherwise docks it.
+     *
+     * Returns true if the request was accomplished
      */
-    void setFloating(bool floats);
+    bool setFloating(bool floats);
 
     /**
      * @brief Returns the QAction that allows to hide/show the dock widget
@@ -359,6 +361,12 @@ public:
     /// SideBarLocation::None is returned if it's not in a sidebar.
     /// This is only relevant when using the auto-hide and side-bar feature.
     SideBarLocation sideBarLocation() const;
+
+    /// @brief Returns whether this floating dock widget knows its previous docked location
+    /// Result only makes sense if it's floating.
+    ///
+    /// When you call dockWidget->setFloating(false) it will only dock if it knows where to.
+    bool hasPreviousDockedLocation() const;
 
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
