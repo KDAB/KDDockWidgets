@@ -26,10 +26,9 @@
 #include <QAbstractNativeEventFilter>
 #include <QWindow>
 
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN)
 # include <Windows.h>
 # include <dwmapi.h>
-# pragma comment(lib, "Dwmapi.lib")
 #endif
 
 using namespace KDDockWidgets;
