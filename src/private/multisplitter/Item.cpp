@@ -918,6 +918,12 @@ struct ItemContainer::Private
         (void) Config::self(); // Ensure Config ctor runs, as it registers qml types
     }
 
+    ~Private()
+    {
+        qDeleteAll(m_separators);
+        m_separators.clear();
+    }
+
     int defaultLengthFor(Item *item, DefaultSizeMode) const;
     bool isOverflowing() const;
     void relayoutIfNeeded();

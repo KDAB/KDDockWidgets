@@ -62,6 +62,7 @@ private Q_SLOTS:
     void tst_doesntHaveNativeTitleBar();
     void tst_resizeWindow2();
     void tst_hasLastDockedLocation();
+    void tst_ghostSeparator();
 };
 
 void TestCommon::tst_simple1()
@@ -140,6 +141,36 @@ void TestCommon::tst_hasLastDockedLocation()
     QVERIFY(dock1->setFloating(false));
 
     delete window1;
+}
+
+void TestCommon::tst_ghostSeparator()
+{
+    // Tests a situation where a separator wouldn't be removed after a widget had been removed
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1");
+    auto dock2 = createDockWidget("2");
+    auto dock3 = createDockWidget("3");
+
+    QPointer<FloatingWindow> fw1 = dock1->floatingWindow();
+    QPointer<FloatingWindow> fw2 = dock2->floatingWindow();
+    QPointer<FloatingWindow> fw3 = dock3->floatingWindow();
+
+    dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
+    QCOMPARE(fw1->multiSplitter()->separators().size(), 1);
+    QCOMPARE(Layouting::Separator::numSeparators(), 1);
+
+    m->addDockWidget(dock3, Location_OnBottom);
+    QCOMPARE(m->multiSplitter()->separators().size(), 0);
+    QCOMPARE(Layouting::Separator::numSeparators(), 1);
+
+    m->multiSplitter()->addMultiSplitter(fw1->multiSplitter(), Location_OnRight);
+    QCOMPARE(m->multiSplitter()->separators().size(), 2);
+    QCOMPARE(Layouting::Separator::numSeparators(), 2);
+
+    delete fw1;
+    delete fw2;
+    delete fw3;
 }
 
 int main(int argc, char *argv[])

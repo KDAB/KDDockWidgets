@@ -25,6 +25,9 @@ using namespace Layouting;
 
 Separator* Separator::s_separatorBeingDragged = nullptr;
 
+/// @brief internal counter just for unit-tests
+static int s_numSeparators = 0;
+
 struct Separator::Private
 {
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
@@ -46,10 +49,12 @@ struct Separator::Private
 Separator::Separator(Widget *hostWidget)
     : d(new Private(hostWidget))
 {
+    s_numSeparators++;
 }
 
 Separator::~Separator()
 {
+    s_numSeparators--;
     delete d;
     if (isBeingDragged())
         s_separatorBeingDragged = nullptr;
@@ -214,6 +219,11 @@ void Separator::setGeometry(int pos, int pos2, int length)
 bool Separator::isResizing()
 {
     return s_separatorBeingDragged != nullptr;
+}
+
+int Separator::numSeparators()
+{
+    return s_numSeparators;
 }
 
 void Separator::setLazyPosition(int pos)

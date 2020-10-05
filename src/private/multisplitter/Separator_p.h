@@ -47,6 +47,10 @@ public:
     static bool isResizing();
     virtual Widget* asWidget() = 0;
 
+    /// @internal Just for the unit-tests.
+    /// Returns the total amount of Separator() instances currently alive.
+    static int numSeparators();
+
 protected:
     explicit Separator(Widget *hostWidget);
     virtual Widget* createRubberBand(Widget *parent) { Q_UNUSED(parent); return nullptr; }
