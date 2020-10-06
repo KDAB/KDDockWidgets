@@ -417,11 +417,16 @@ public:
     QVariantMap toVariantMap() const override;
     void fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widget *> &widgets) override;
     void clear();
-private:
-    bool isEmpty() const;
-    bool hasOrientation() const;
+    Qt::Orientation orientation() const;
+    bool isVertical() const;
+    bool isHorizontal() const;
     int numChildren() const;
     int numVisibleChildren() const;
+    bool isEmpty() const;
+    int length() const;
+    QRect rect() const;
+private:
+    bool hasOrientation() const;
     bool hasChildren() const;
     bool hasVisibleChildren(bool excludeBeingInserted = false) const;
     int indexOfVisibleChild(const Item *) const;
@@ -437,8 +442,6 @@ private:
     bool hasSingleVisibleItem() const;
     void setChildren(const Item::List &children, Qt::Orientation o);
     void setOrientation(Qt::Orientation);
-    int length() const;
-    QRect rect() const;
     void updateChildPercentages();
     void updateChildPercentages_recursive();
     void updateWidgetGeometries() override;
@@ -502,9 +505,6 @@ private:
     void setLength_recursive(int length, Qt::Orientation) override;
     void applyGeometries(const SizingInfo::List &sizes, ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
     void applyPositions(const SizingInfo::List &sizes);
-    Qt::Orientation orientation() const;
-    bool isVertical() const;
-    bool isHorizontal() const;
 
     int indexOf(Separator *) const;
     bool isInSimplify() const;
