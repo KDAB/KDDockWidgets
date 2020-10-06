@@ -92,6 +92,9 @@ MainWindowBase *MultiSplitter::mainWindow() const
         // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as it's parented
         if (pw->objectName() == QLatin1String("MyCentralWidget"))
             return qobject_cast<MainWindowBase*>(pw->parentWidget());
+
+        if (auto mw = qobject_cast<MainWindowBase*>(pw))
+            return mw;
     }
 
     return nullptr;

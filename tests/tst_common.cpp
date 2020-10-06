@@ -17,6 +17,7 @@
 #include "DockWidgetBase.h"
 #include "multisplitter/Separator_p.h"
 #include "private/MultiSplitter_p.h"
+#include "TitleBar_p.h"
 
 #include <QtTest/QtTest>
 #include <QObject>
@@ -63,6 +64,7 @@ private Q_SLOTS:
     void tst_resizeWindow2();
     void tst_hasLastDockedLocation();
     void tst_ghostSeparator();
+    void tst_detachFromMainWindow();
 };
 
 void TestCommon::tst_simple1()
@@ -171,6 +173,25 @@ void TestCommon::tst_ghostSeparator()
     delete fw1;
     delete fw2;
     delete fw3;
+}
+
+void TestCommon::tst_detachFromMainWindow()
+{
+    // Tests a situation where clicking the float button
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1");
+    auto fw1 = dock1->window();
+    m->addDockWidget(dock1, Location_OnTop);
+
+    QVERIFY(m->multiSplitter()->mainWindow() != nullptr);
+    QVERIFY(!dock1->isFloating());
+    TitleBar *tb = dock1->titleBar();
+    QVERIFY(tb == dock1->frame()->titleBar());
+    QVERIFY(tb->isVisible());
+    QVERIFY(!tb->isFloating());
+
+    delete fw1;
 }
 
 int main(int argc, char *argv[])
