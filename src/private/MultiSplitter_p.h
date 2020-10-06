@@ -53,7 +53,7 @@ class Frame;
  * It supports adding a widget to the left/top/bottom/right of the whole MultiSplitter or adding
  * relative to a single widget.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS MultiSplitter
+class DOCKS_EXPORT MultiSplitter
         : public LayoutGuestWidget
 {
     Q_OBJECT
