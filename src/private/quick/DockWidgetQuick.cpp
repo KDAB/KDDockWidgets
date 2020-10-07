@@ -44,6 +44,8 @@ DockWidgetQuick::DockWidgetQuick(const QString &name, Options options)
     : DockWidgetBase(name, options)
     , d(new Private(this))
 {
+    // To mimic what QtWidgets does when creating a new QWidget.
+    setVisible(false);
 }
 
 DockWidgetQuick::~DockWidgetQuick()

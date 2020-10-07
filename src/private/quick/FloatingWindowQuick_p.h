@@ -26,6 +26,9 @@ public:
     explicit FloatingWindowQuick(Frame *frame, MainWindowBase *parent = nullptr);
     ~FloatingWindowQuick();
 
+protected:
+    void setGeometry(QRect) override;
+
 private:
     QWindow *candidateParentWindow() const;
     void init();

@@ -18,6 +18,7 @@
 #include "multisplitter/Separator_p.h"
 #include "private/MultiSplitter_p.h"
 #include "TitleBar_p.h"
+#include "Position_p.h"
 
 #include <QtTest/QtTest>
 #include <QObject>
@@ -65,6 +66,7 @@ private Q_SLOTS:
     void tst_hasLastDockedLocation();
     void tst_ghostSeparator();
     void tst_detachFromMainWindow();
+    void tst_detachPos();
 };
 
 void TestCommon::tst_simple1()
@@ -177,7 +179,7 @@ void TestCommon::tst_ghostSeparator()
 
 void TestCommon::tst_detachFromMainWindow()
 {
-    // Tests a situation where clicking the float button
+    // Tests a situation where clicking the float button wouldn't work on QtQuick
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1");
@@ -192,6 +194,31 @@ void TestCommon::tst_detachFromMainWindow()
     QVERIFY(!tb->isFloating());
 
     delete fw1;
+}
+
+void TestCommon::tst_detachPos()
+{
+    // Tests a situation where detaching a dock widget would send it to a bogus position
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new MyWidget(QStringLiteral("1"), Qt::black), {}, /** show = */false); // we're creating the dock widgets without showing them as floating initially, so it doesn't record the previous floating position
+    auto dock2 = createDockWidget("2", new MyWidget(QStringLiteral("2"), Qt::black), {}, /** show = */false);
+
+    QVERIFY(!dock1->isVisible());
+    QVERIFY(!dock2->isVisible());
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+
+    QVERIFY(!dock1->lastPositions().lastFloatingGeometry().isValid());
+    QVERIFY(!dock2->lastPositions().lastFloatingGeometry().isValid());
+
+    const int previousWidth = dock1->width();
+    dock1->setFloating(true);
+    QTest::qWait(400); // Needed for QtQuick
+
+    QVERIFY(qAbs(previousWidth - dock1->width()) < 15); // 15px of difference when floating is fine, due to margins and what not.
+    delete dock1->window();
 }
 
 int main(int argc, char *argv[])

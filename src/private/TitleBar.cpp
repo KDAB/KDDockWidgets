@@ -166,7 +166,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 
     QRect r = m_frame->QWidgetAdapter::geometry();
     qCDebug(hovering) << "TitleBar::makeWindow original geometry" << r;
-    r.moveTopLeft(m_frame->mapToGlobal(QPoint(0, 0))); // TODO: Remove static_cast if it compiles. Ambiguous base for now
+    r.moveTopLeft(m_frame->mapToGlobal(QPoint(0, 0)));
 
     auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(m_frame);
     floatingWindow->setSuggestedGeometry(r);

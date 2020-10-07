@@ -62,6 +62,12 @@ FloatingWindowQuick::~FloatingWindowQuick()
     delete m_quickWindow;
 }
 
+void FloatingWindowQuick::setGeometry(QRect geo)
+{
+    FloatingWindow::setGeometry(geo);
+    m_quickWindow->setGeometry(geo);
+}
+
 QWindow *FloatingWindowQuick::candidateParentWindow() const
 {
     if (auto mainWindow = qobject_cast<MainWindowBase*>(QObject::parent())) {
@@ -79,7 +85,7 @@ void FloatingWindowQuick::init()
         }
     });
 
-    m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
+    m_quickWindow->setResizeMode(QQuickView::SizeRootObjectToView);
 
     m_quickWindow->setTransientParent(candidateParentWindow());
 

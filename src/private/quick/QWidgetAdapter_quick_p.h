@@ -85,7 +85,7 @@ public:
     int width() const { return int(QQuickItem::width()); }
     int height() const { return int(QQuickItem::height()); }
 
-    void setGeometry(QRect);
+    virtual void setGeometry(QRect);
     QRect geometry() const;
     QRect rect() const;
     void show();
