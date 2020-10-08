@@ -64,7 +64,7 @@ FloatingWindowQuick::~FloatingWindowQuick()
 
 void FloatingWindowQuick::setGeometry(QRect geo)
 {
-    FloatingWindow::setGeometry(geo);
+    parentItem()->setSize(geo.size());
     m_quickWindow->setGeometry(geo);
 }
 
@@ -85,7 +85,7 @@ void FloatingWindowQuick::init()
         }
     });
 
-    m_quickWindow->setResizeMode(QQuickView::SizeRootObjectToView);
+    m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
 
     m_quickWindow->setTransientParent(candidateParentWindow());
 

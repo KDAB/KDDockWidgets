@@ -67,6 +67,7 @@ private Q_SLOTS:
     void tst_ghostSeparator();
     void tst_detachFromMainWindow();
     void tst_detachPos();
+    void tst_floatingWindowSize();
 };
 
 void TestCommon::tst_simple1()
@@ -221,6 +222,22 @@ void TestCommon::tst_detachPos()
     delete dock1->window();
 }
 
+void TestCommon::tst_floatingWindowSize()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1");
+    auto fw1 = dock1->window();
+
+
+    QTest::qWait(2000);
+
+    QVERIFY(!fw1->geometry().isNull());
+    QCOMPARE(fw1->size(), fw1->windowHandle()->size());
+
+    delete fw1;
+}
+
 int main(int argc, char *argv[])
 {
     if (!qpaPassedAsArgument(argc, argv)) {
@@ -233,6 +250,5 @@ int main(int argc, char *argv[])
 
     return QTest::qExec(&test, argc, argv);
 }
-
 
 #include "tst_common.moc"
