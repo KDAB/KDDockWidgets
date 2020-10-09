@@ -634,9 +634,14 @@ bool Item::checkSanity()
 
     if (m_guest) {
         if (m_guest->parent() != hostWidget()->asQObject()) {
-            qWarning() << Q_FUNC_INFO << "Unexpected parent for our guest"
-                       << m_guest->parent() << "; host=" << hostWidget()
-                       << m_guest->asQObject() << this;
+            if (root())
+                root()->dumpLayout();
+            qWarning() << Q_FUNC_INFO << "Unexpected parent for our guest. guest.parent="
+                       << m_guest->parent() << "; host=" << hostWidget()->asQObject()
+                       << "; guest.asObj=" << m_guest->asQObject()
+                       << "; this=" << this
+                       << "; item.parentContainer=" << parentContainer()
+                       << "; item.root.parent=" << (root() ? root()->parent() : nullptr);
             return false;
         }
 
