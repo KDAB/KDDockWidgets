@@ -83,8 +83,11 @@ Config::Flags Config::flags() const
 
 void Config::setFlags(Flags f)
 {
-    if (!DockRegistry::self()->isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
+    auto dr = DockRegistry::self();
+    if (!dr->isEmpty()) {
+        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow"
+                   << "; These are already created: " << dr->mainWindowsNames()
+                   << dr->dockWidgetNames() << dr->nestedwindows();
         return;
     }
 

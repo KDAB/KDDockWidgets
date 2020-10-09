@@ -131,6 +131,10 @@ void TestCommon::tst_hasLastDockedLocation()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1");
+    m->multiSplitter()->checkSanity();
+    m->multiSplitter()->setObjectName("mainWindow-dropArea");
+    dock1->floatingWindow()->multiSplitter()->setObjectName("first-dropArea1");
+    dock1->floatingWindow()->multiSplitter()->checkSanity();
     auto window1 = dock1->window();
     QVERIFY(dock1->isFloating());
     QVERIFY(!dock1->hasPreviousDockedLocation());
@@ -140,12 +144,20 @@ void TestCommon::tst_hasLastDockedLocation()
     QVERIFY(!dock1->hasPreviousDockedLocation());
 
     m->addDockWidget(dock1, Location_OnBottom);
+    m->multiSplitter()->checkSanity();
+
     QVERIFY(!dock1->isFloating());
     QVERIFY(dock1->setFloating(true));
+
+    auto ms1 = dock1->floatingWindow()->multiSplitter();
+    ms1->setObjectName("dropArea1");
+    ms1->checkSanity();
     QVERIFY(dock1->hasPreviousDockedLocation());
+    auto window11 = dock1->window();
     QVERIFY(dock1->setFloating(false));
 
     delete window1;
+    delete window11;
 }
 
 void TestCommon::tst_ghostSeparator()
