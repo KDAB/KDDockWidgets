@@ -12,6 +12,8 @@
 #ifndef KD_DRAGCONTROLLER_P_H
 #define KD_DRAGCONTROLLER_P_H
 
+#include "docks_export.h"
+
 #include "TitleBar_p.h"
 #include "WindowBeingDragged_p.h"
 
@@ -26,7 +28,7 @@ class DropArea;
 class Draggable;
 class FallbackMouseGrabber;
 
-class DragController : public QStateMachine
+class DOCKS_EXPORT DragController : public QStateMachine
 {
     Q_OBJECT
 public:
