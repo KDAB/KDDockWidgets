@@ -79,7 +79,7 @@ void QWidgetAdapter::itemChange(QQuickItem::ItemChange change, const QQuickItem:
     switch (change) {
     case QQuickItem::ItemParentHasChanged: {
         QEvent ev(QEvent::ParentChange);
-        event(&ev);
+        qApp->sendEvent(this, &ev); // Not calling event() directly, otherwise it would skip event filters
         Q_EMIT parentChanged();
         break;
     }

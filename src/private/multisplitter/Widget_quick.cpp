@@ -45,8 +45,8 @@ void Widget_quick::setParent(Widget *parent)
     }
 
     if (auto qquickitem = qobject_cast<QQuickItem*>(parent->asQObject())) {
-        m_thisWidget->setParentItem(qquickitem);
         m_thisWidget->setParent(qquickitem);
+        m_thisWidget->setParentItem(qquickitem);
     } else {
         qWarning() << Q_FUNC_INFO << "parent is not a widget, you have a bug" << parent->asQObject();
         Q_ASSERT(false);
