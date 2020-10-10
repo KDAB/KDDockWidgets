@@ -416,7 +416,6 @@ private Q_SLOTS:
     void tst_setWidget();
     void tst_isInMainWindow();
     void tst_titleBarFocusedWhenTabsChange();
-    void tst_floatingWindowTitleBug();
 
     void tst_closeRemovesFromSideBar();
     void tst_tabTitleChanges();
@@ -5995,29 +5994,6 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
      Tests::clickOn(globalPos, tabBar);
      QVERIFY(!dock1->titleBar()->isFocused());
      QVERIFY(dock2->titleBar()->isFocused());
-}
-void TestDocks::tst_floatingWindowTitleBug()
-{
-    // Test for #74
-    EnsureTopLevelsDeleted e;
-    auto dw1 = new DockWidgetType(QStringLiteral("1"));
-    auto dw2 = new DockWidgetType(QStringLiteral("2"));
-    auto dw3 = new DockWidgetType(QStringLiteral("3"));
-
-    dw1->setObjectName(QStringLiteral("1"));
-    dw2->setObjectName(QStringLiteral("2"));
-    dw3->setObjectName(QStringLiteral("3"));
-
-    dw1->show();
-    dw1->addDockWidgetAsTab(dw2);
-    dw1->addDockWidgetToContainingWindow(dw3, Location_OnBottom);
-
-    dw1->titleBar()->onFloatClicked();
-
-    QCOMPARE(dw3->titleBar()->title(), QLatin1String("3"));
-
-    delete dw1->window();
-    delete dw3->window();
 }
 
 void TestDocks::tst_closeRemovesFromSideBar()
