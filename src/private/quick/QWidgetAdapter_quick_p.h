@@ -124,7 +124,8 @@ public:
     QPoint mapToGlobal(QPoint pt) const;
     QPoint mapFromGlobal(QPoint) const;
     QPoint mapTo(const QQuickItem *parent, const QPoint &pos) const;
-    bool testAttribute(Qt::WidgetAttribute) { return false; }
+    bool testAttribute(Qt::WidgetAttribute) const;
+    void setAttribute(Qt::WidgetAttribute, bool enabled = true);
 
     void setWindowTitle(const QString &);
     void setWindowIcon(const QIcon &);
@@ -164,6 +165,7 @@ private:
     QSize m_minimumSize = {KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT};
     QSize m_maximumSize = {KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT};
     Qt::WindowFlags m_windowFlags;
+    int m_widgetAttributes = 0; // Qt::WidgetAttribute
 };
 
 }

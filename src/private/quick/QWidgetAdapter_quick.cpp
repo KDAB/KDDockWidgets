@@ -141,8 +141,7 @@ void QWidgetAdapter::setGeometry(QRect rect)
 {
     setWidth(rect.width());
     setHeight(rect.height());
-    setX(rect.x());
-    setY(rect.y());
+    move(rect.topLeft());
 }
 
 void QWidgetAdapter::grabMouse()
@@ -254,6 +253,19 @@ QPoint QWidgetAdapter::mapTo(const QQuickItem *parent, const QPoint &pos) const
     return parent->mapFromGlobal(QQuickItem::mapToGlobal(pos)).toPoint();
 }
 
+bool QWidgetAdapter::testAttribute(Qt::WidgetAttribute attr) const
+{
+    return m_widgetAttributes & attr;
+}
+
+void QWidgetAdapter::setAttribute(Qt::WidgetAttribute attr, bool enable)
+{
+    if (enable)
+        m_widgetAttributes |= attr;
+    else
+        m_widgetAttributes &= ~attr;
+}
+
 void QWidgetAdapter::setWindowTitle(const QString &title)
 {
     if (QWindow *window = windowHandle())
@@ -290,6 +302,7 @@ void QWidgetAdapter::move(int x, int y)
 {
     setX(x);
     setY(y);
+    setAttribute(Qt::WA_Moved);
 }
 
 void QWidgetAdapter::setParent(QQuickItem *p)
