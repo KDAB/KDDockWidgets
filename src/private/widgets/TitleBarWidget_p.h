@@ -74,7 +74,7 @@ private:
 };
 
 /// @brief Button widget to be used in the TitleBar.
-/// These are the the KDDockWidget default buttons. Users can replace with their own and are not
+/// These are the KDDockWidget default buttons. Users can replace with their own and are not
 /// forced to use these.
 class Button : public QToolButton
 {
