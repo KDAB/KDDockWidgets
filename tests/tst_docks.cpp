@@ -41,7 +41,6 @@
 #include <QTabBar>
 #include <QAction>
 #include <QTime>
-#include <QPushButton>
 #include <QTextEdit>
 #include <QVBoxLayout>
 #include <QToolButton>
@@ -52,6 +51,10 @@
 
 #ifdef Q_OS_WIN
 # include <Windows.h>
+#endif
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+# include <QPushButton>
 #endif
 
 #define WAIT QTest::qWait(5000000);

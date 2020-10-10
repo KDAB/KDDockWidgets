@@ -134,6 +134,24 @@ private:
 };
 
 
+#ifdef KDDOCKWIDGETS_QTQUICK
+// Don't want to adapt dozens of locations so it compiles for QtQuick, so just typedef.
+// the fact it's a button isn't important for the tests anyway
+
+class QPushButton : public MyWidget
+{
+public:
+    // use const char* to silence QtCreator static analizer warnings when using const char * in tst_docks.cpp
+    // We don't have QT_NO_CAST_FROM_ASCII and still it complains, so use an indirection so I can read tst_docks while
+    // porting to QtQuick without noise. Once the port is done feel free to change to QString.
+    explicit QPushButton(const char *name)
+        : MyWidget(QString::fromLatin1(name))
+    {
+    }
+};
+
+#endif
+
 void doubleClickOn(QPoint globalPos, QWidget *receiver);
 void pressOn(QPoint globalPos, QWidget *receiver);
 void releaseOn(QPoint globalPos, QWidget *receiver);
