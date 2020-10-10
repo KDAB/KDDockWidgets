@@ -200,7 +200,7 @@ DebugWindow::DebugWindow(QWidget *parent)
             mainWindow->multiSplitter()->checkSanity();
         }
 
-        const auto floatingWindows = DockRegistry::self()->nestedwindows();
+        const auto floatingWindows = DockRegistry::self()->floatingWindows();
         for (FloatingWindow *floatingWindow : floatingWindows) {
             floatingWindow->multiSplitter()->checkSanity();
         }
@@ -308,7 +308,7 @@ void DebugWindow::repaintWidgetRecursive(QWidget *w)
 
 void DebugWindow::dumpDockWidgetInfo()
 {
-    const QVector<FloatingWindow*> floatingWindows = DockRegistry::self()->nestedwindows();
+    const QVector<FloatingWindow*> floatingWindows = DockRegistry::self()->floatingWindows();
     const MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
     const DockWidgetBase::List dockWidgets = DockRegistry::self()->dockwidgets();
 

@@ -42,8 +42,8 @@ public:
     void registerMainWindow(MainWindowBase *);
     void unregisterMainWindow(MainWindowBase *);
 
-    void registerNestedWindow(FloatingWindow *);
-    void unregisterNestedWindow(FloatingWindow *);
+    void registerFloatingWindow(FloatingWindow *);
+    void unregisterFloatingWindow(FloatingWindow *);
 
     void registerLayout(MultiSplitter *);
     void unregisterLayout(MultiSplitter *);
@@ -84,10 +84,10 @@ public:
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
-    const QVector<FloatingWindow*> nestedwindows() const;
+    const QVector<FloatingWindow*> floatingWindows() const;
 
     ///@brief overload that returns list of QWindow. This is more friendly for supporting both QtWidgets and QtQuick
-    const QVector<QWindow*> floatingWindows() const;
+    const QVector<QWindow*> floatingQWindows() const;
 
     ///@brief returns the FloatingWindow with handle @p windowHandle
     FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
@@ -193,7 +193,7 @@ private:
     DockWidgetBase::List m_dockWidgets;
     MainWindowBase::List m_mainWindows;
     Frame::List m_frames;
-    QVector<FloatingWindow*> m_nestedWindows;
+    QVector<FloatingWindow*> m_floatingWindows;
     QVector<MultiSplitter*> m_layouts;
     QPointer<DockWidgetBase> m_focusedDockWidget;
 };

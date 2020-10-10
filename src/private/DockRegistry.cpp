@@ -102,7 +102,7 @@ void DockRegistry::onFocusObjectChanged(QObject *obj)
 
 bool DockRegistry::isEmpty() const
 {
-    return m_dockWidgets.isEmpty() && m_mainWindows.isEmpty() && m_nestedWindows.isEmpty();
+    return m_dockWidgets.isEmpty() && m_mainWindows.isEmpty() && m_floatingWindows.isEmpty();
 }
 
 void DockRegistry::checkSanityAll(bool dumpLayout)
@@ -160,7 +160,7 @@ bool DockRegistry::isProbablyObscured(QWindow *window, FloatingWindow *exclude) 
         return false;
 
     const QRect geo = window->geometry();
-    for (FloatingWindow *fw : m_nestedWindows) {
+    for (FloatingWindow *fw : m_floatingWindows) {
         QWindow *fwWindow = fw->QWidgetAdapter::windowHandle();
         if (fw == exclude || fwWindow == window)
             continue;
@@ -284,14 +284,14 @@ void DockRegistry::unregisterMainWindow(MainWindowBase *mainWindow)
     maybeDelete();
 }
 
-void DockRegistry::registerNestedWindow(FloatingWindow *window)
+void DockRegistry::registerFloatingWindow(FloatingWindow *window)
 {
-    m_nestedWindows << window;
+    m_floatingWindows << window;
 }
 
-void DockRegistry::unregisterNestedWindow(FloatingWindow *window)
+void DockRegistry::unregisterFloatingWindow(FloatingWindow *window)
 {
-    m_nestedWindows.removeOne(window);
+    m_floatingWindows.removeOne(window);
     maybeDelete();
 }
 
@@ -443,12 +443,12 @@ const Frame::List DockRegistry::frames() const
     return m_frames;
 }
 
-const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
+const QVector<FloatingWindow *> DockRegistry::floatingWindows() const
 {
     // Returns all the FloatingWindow which aren't being deleted
     QVector<FloatingWindow *> result;
-    result.reserve(m_nestedWindows.size());
-    for (FloatingWindow *fw : m_nestedWindows) {
+    result.reserve(m_floatingWindows.size());
+    for (FloatingWindow *fw : m_floatingWindows) {
         if (!fw->beingDeleted())
             result.push_back(fw);
     }
@@ -456,11 +456,11 @@ const QVector<FloatingWindow *> DockRegistry::nestedwindows() const
     return result;
 }
 
-const QVector<QWindow *> DockRegistry::floatingWindows() const
+const QVector<QWindow *> DockRegistry::floatingQWindows() const
 {
     QVector<QWindow *> windows;
-    windows.reserve(m_nestedWindows.size());
-    for (FloatingWindow *fw : m_nestedWindows) {
+    windows.reserve(m_floatingWindows.size());
+    for (FloatingWindow *fw : m_floatingWindows) {
         if (!fw->beingDeleted()) {
             if (QWindow *window = fw->windowHandle()) {
                 window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick*>(fw)); // Since QWidgetWindow is private API
@@ -476,7 +476,7 @@ const QVector<QWindow *> DockRegistry::floatingWindows() const
 
 FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) const
 {
-    for (FloatingWindow *fw : m_nestedWindows) {
+    for (FloatingWindow *fw : m_floatingWindows) {
         if (fw->windowHandle() == windowHandle)
             return fw;
     }
@@ -487,10 +487,10 @@ FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) con
 QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
 {
     QVector<QWindow *> windows;
-    windows.reserve(m_nestedWindows.size() + m_mainWindows.size());
+    windows.reserve(m_floatingWindows.size() + m_mainWindows.size());
 
     if (!excludeFloatingDocks) {
-        for (FloatingWindow *fw : m_nestedWindows) {
+        for (FloatingWindow *fw : m_floatingWindows) {
             if (fw->isVisible()) {
                 if (QWindow *window = fw->windowHandle()) {
                     window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick*>(fw)); // Since QWidgetWindow is private API
@@ -559,8 +559,8 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         if (auto windowHandle = qobject_cast<QWindow*>(watched)) {
             if (FloatingWindow *fw = floatingWindowForHandle(windowHandle)) {
                 // This floating window was exposed
-                m_nestedWindows.removeOne(fw);
-                m_nestedWindows.append(fw);
+                m_floatingWindows.removeOne(fw);
+                m_floatingWindows.append(fw);
             }
         }
     } else if (event->type() == QEvent::MouseButtonPress) {

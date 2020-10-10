@@ -107,7 +107,7 @@ void Fuzzer::runTest(const Test &test)
         for (MainWindowBase *mw : DockRegistry::self()->mainwindows())
             delete mw;
 
-        for (FloatingWindow *fw : DockRegistry::self()->nestedwindows())
+        for (FloatingWindow *fw : DockRegistry::self()->floatingWindows())
             delete fw;
 
         for (DockWidgetBase *dw : DockRegistry::self()->dockwidgets())

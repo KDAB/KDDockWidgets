@@ -125,7 +125,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             if (index == -1) {
                 continue; // Skip
             } else {
-                const auto floatingWindows = DockRegistry::self()->nestedwindows();
+                const auto floatingWindows = DockRegistry::self()->floatingWindows();
                 if (index >= 0 && index < floatingWindows.size()) {
                     FloatingWindow *fw = floatingWindows.at(index);
                     layout = fw->multiSplitter();
@@ -170,7 +170,7 @@ LayoutSaver::Position Position::serialize() const
         p.isFloatingWindow = fw;
 
         if (p.isFloatingWindow) {
-            p.indexOfFloatingWindow = fw->beingDeleted() ? -1 : DockRegistry::self()->nestedwindows().indexOf(fw); // TODO: Remove once we stop using deleteLater with FloatingWindow. delete would be better
+            p.indexOfFloatingWindow = fw->beingDeleted() ? -1 : DockRegistry::self()->floatingWindows().indexOf(fw); // TODO: Remove once we stop using deleteLater with FloatingWindow. delete would be better
         } else {
             p.mainWindowUniqueName = mainWindow->uniqueName();
             Q_ASSERT(!p.mainWindowUniqueName.isEmpty());

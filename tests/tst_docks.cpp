@@ -1248,7 +1248,7 @@ void TestDocks::tst_restoreSimple()
     QVERIFY(Testing::waitForDeleted(f1));
     QCOMPARE(layout->placeholderCount(), 1);
 
-    QCOMPARE(DockRegistry::self()->nestedwindows().size(), 0);
+    QCOMPARE(DockRegistry::self()->floatingWindows().size(), 0);
     QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimple.json")));
     QVERIFY(layout->checkSanity());
     QCOMPARE(layout->count(), 1);

@@ -154,7 +154,7 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     }
 #endif
 
-    DockRegistry::self()->registerNestedWindow(this);
+    DockRegistry::self()->registerFloatingWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
 
     maybeCreateResizeHandler();
@@ -183,7 +183,7 @@ FloatingWindow::~FloatingWindow()
     disconnect(m_layoutDestroyedConnection);
     delete m_nchittestFilter;
 
-    DockRegistry::self()->unregisterNestedWindow(this);
+    DockRegistry::self()->unregisterFloatingWindow(this);
     qCDebug(creation) << "~FloatingWindow";
 }
 
@@ -258,7 +258,7 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, bool preserveCent
 void FloatingWindow::scheduleDeleteLater()
 {
     m_deleteScheduled = true;
-    DockRegistry::self()->unregisterNestedWindow(this);
+    DockRegistry::self()->unregisterFloatingWindow(this);
     deleteLater();
 }
 

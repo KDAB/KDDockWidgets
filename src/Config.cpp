@@ -87,7 +87,7 @@ void Config::setFlags(Flags f)
     if (!dr->isEmpty()) {
         qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow"
                    << "; These are already created: " << dr->mainWindowsNames()
-                   << dr->dockWidgetNames() << dr->nestedwindows();
+                   << dr->dockWidgetNames() << dr->floatingWindows();
         return;
     }
 

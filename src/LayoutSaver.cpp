@@ -163,7 +163,7 @@ QByteArray LayoutSaver::serializeLayout() const
             layout.mainWindows.push_back(mainWindow->serialize());
     }
 
-    const QVector<KDDockWidgets::FloatingWindow*> floatingWindows = d->m_dockRegistry->nestedwindows();
+    const QVector<KDDockWidgets::FloatingWindow*> floatingWindows = d->m_dockRegistry->floatingWindows();
     layout.floatingWindows.reserve(floatingWindows.size());
     for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
         if (d->matchesAffinity(floatingWindow->affinities()))

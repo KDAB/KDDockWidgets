@@ -534,7 +534,7 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
         // The floating window list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
 
         FloatingWindow *tlwBeingDragged = m_windowBeingDragged->floatingWindow();
-        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->floatingWindows(), tlwBeingDragged))
+        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->floatingQWindows(), tlwBeingDragged))
             return tl;
 
         return qtTopLevelUnderCursor_impl<WidgetType*>(globalPos,
