@@ -485,7 +485,7 @@ public:
 Frame* createFrameWithWidget(const QString &name, MultiSplitter *parent, int minLength = -1)
 {
     QWidget *w = createWidget(minLength, name);
-    auto dw = new DockWidget(name);
+    auto dw = new DockWidgetType(name);
     dw->setWidget(w);
     auto frame =KDDockWidgets::Config::self().frameworkWidgetFactory()->createFrame(parent);
     frame->addWidget(dw);
@@ -838,7 +838,7 @@ void TestDocks::tst_preventClose()
     EnsureTopLevelsDeleted e;
 
     auto nonClosableWidget = new NonClosableWidget();
-    auto dock1 = new DockWidget("1");
+    auto dock1 = new DockWidgetType("1");
     dock1->setWidget(nonClosableWidget);
 
     // 1. Test a floating dock widget
@@ -2157,7 +2157,7 @@ void TestDocks::tst_crash2()
         DockWidget::List docks;
         const int num = 4;
         for (int i = 0; i < num; ++i)
-            docks << new DockWidget(QString::number(i));
+            docks << new DockWidgetType(QString::number(i));
 
         QVector<KDDockWidgets::Location> locations = {Location_OnLeft,
                                                       Location_OnRight, Location_OnRight, Location_OnRight};
@@ -2188,7 +2188,7 @@ void TestDocks::tst_crash2()
         const int num = 3;
         DockWidget::List docks;
         for (int i = 0; i < num; ++i)
-            docks << new DockWidget(QString::number(i));
+            docks << new DockWidgetType(QString::number(i));
 
         QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft,
                                                       Location_OnRight};
@@ -3578,13 +3578,13 @@ void TestDocks::tst_negativeAnchorPosition7()
     auto w1 = new MyWidget2(QSize(400,400));
     auto w2 = new MyWidget2(QSize(400,400));
 
-    auto d1 = new DockWidget("1");
+    auto d1 = new DockWidgetType("1");
     d1->setWidget(w1);
-    auto d2 = new DockWidget("2");
+    auto d2 = new DockWidgetType("2");
     d2->setWidget(w2);
 
     auto w3 = new MyWidget2(QSize(100,100));
-    auto d3 = new DockWidget("3");
+    auto d3 = new DockWidgetType("3");
     d3->setWidget(w3);
 
     // Stack 1, 2
@@ -3817,9 +3817,9 @@ void TestDocks::tst_minSizeChanges()
     auto w1 = new MyWidget2(QSize(400,400));
     auto w2 = new MyWidget2(QSize(400,400));
 
-    auto d1 = new DockWidget("1");
+    auto d1 = new DockWidgetType("1");
     d1->setWidget(w1);
-    auto d2 = new DockWidget("2");
+    auto d2 = new DockWidgetType("2");
     d2->setWidget(w2);
 
     m->addDockWidget(d1, Location_OnTop);
@@ -3852,7 +3852,7 @@ void TestDocks::tst_minSizeChanges()
 
     // add a small one to the middle
     auto w3 = new MyWidget2(QSize(100,100));
-    auto d3 = new DockWidget("3");
+    auto d3 = new DockWidgetType("3");
     d3->setWidget(w3);
     m->addDockWidget(d3, Location_OnTop, d1);
 
@@ -3916,7 +3916,7 @@ void TestDocks::tst_complex()
     const int num = 21;
     for (int i = 0; i < num; ++i) {
         auto widget = new MyWidget2(minSizes.at(i));
-        auto dw = new DockWidget(QString::number(i));
+        auto dw = new DockWidgetType(QString::number(i));
         dw->setWidget(widget);
         docks << dw;
     }
@@ -3988,7 +3988,7 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
 {
     EnsureTopLevelsDeleted e;
 
-    auto d1 = new DockWidget("1");
+    auto d1 = new DockWidgetType("1");
     d1->setWidget(new QTextEdit());
 
     QVERIFY(!d1->isVisible());
@@ -4012,7 +4012,7 @@ void TestDocks::tst_registry()
     auto dr = DockRegistry::self();
 
     QCOMPARE(dr->dockwidgets().size(), 0);
-    auto dw = new DockWidget(QStringLiteral("dw1"));
+    auto dw = new DockWidgetType(QStringLiteral("dw1"));
     auto guest = new QWidget();
     dw->setWidget(guest);
     QCOMPARE(dr->dockWidgetForGuest(nullptr), nullptr);
@@ -4051,7 +4051,7 @@ void TestDocks::tst_dockNotFillingSpace()
 void TestDocks::tst_floatingLastPosAfterDoubleClose()
 {
     EnsureTopLevelsDeleted e;
-    auto d1 = new DockWidget(QStringLiteral("a"));
+    auto d1 = new DockWidgetType(QStringLiteral("a"));
     QVERIFY(d1->lastPositions().lastFloatingGeometry().isNull());
     QVERIFY(!d1->isVisible());
     d1->close();
@@ -4189,7 +4189,7 @@ void TestDocks::tst_positionWhenShown()
     // Tests that when showing a dockwidget it shows in the same position as before
     EnsureTopLevelsDeleted e;
     auto window = createMainWindow();
-    auto dock1 = new DockWidget("1");
+    auto dock1 = new DockWidgetType("1");
     dock1->show();
     dock1->window()->move(100, 100);
     QCOMPARE(dock1->window()->pos(), QPoint(100, 100));
@@ -4215,97 +4215,97 @@ void TestDocks::tst_sizeConstraintWarning()
     auto window = createMainWindow();
     QList<DockWidgetBase *> listDockWidget;
     {
-       auto dock = new DockWidget("foo-0");
+       auto dock = new DockWidgetType("foo-0");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-1");
+       auto dock = new DockWidgetType("foo-1");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-2");
+       auto dock = new DockWidgetType("foo-2");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-3");
+       auto dock = new DockWidgetType("foo-3");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-4");
+       auto dock = new DockWidgetType("foo-4");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-5");
+       auto dock = new DockWidgetType("foo-5");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-6");
+       auto dock = new DockWidgetType("foo-6");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-7");
+       auto dock = new DockWidgetType("foo-7");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-8");
+       auto dock = new DockWidgetType("foo-8");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-9");
+       auto dock = new DockWidgetType("foo-9");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-10");
+       auto dock = new DockWidgetType("foo-10");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-11");
+       auto dock = new DockWidgetType("foo-11");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-12");
+       auto dock = new DockWidgetType("foo-12");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-13");
+       auto dock = new DockWidgetType("foo-13");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-14");
+       auto dock = new DockWidgetType("foo-14");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-15");
+       auto dock = new DockWidgetType("foo-15");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-16");
+       auto dock = new DockWidgetType("foo-16");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-17");
+       auto dock = new DockWidgetType("foo-17");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
     {
-       auto dock = new DockWidget("foo-18");
+       auto dock = new DockWidgetType("foo-18");
        dock->setWidget(new QTextEdit(dock));
        listDockWidget.append(dock);
     }
@@ -5559,7 +5559,7 @@ void TestDocks::tst_maxSizePropagates()
 {
     // Tests that the DockWidget gets the min and max size of its guest widget
     EnsureTopLevelsDeleted e;
-    auto dock1 = new DockWidget("dock1");
+    auto dock1 = new DockWidgetType("dock1");
 
     auto w = new QWidget();
     w->setMinimumSize(120, 120);
@@ -5589,7 +5589,7 @@ void TestDocks::tst_maxSizePropagates2()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dock1 = new DockWidget("dock1");
+    auto dock1 = new DockWidgetType("dock1");
 
     auto w = new QWidget();
     w->setMinimumSize(120, 120);
@@ -5597,9 +5597,9 @@ void TestDocks::tst_maxSizePropagates2()
     dock1->setWidget(w);
     dock1->show();
 
-    auto dock2 = new DockWidget("dock2");
-    auto dock3 = new DockWidget("dock3");
-    auto dock4 = new DockWidget("dock4");
+    auto dock2 = new DockWidgetType("dock2");
+    auto dock3 = new DockWidgetType("dock3");
+    auto dock4 = new DockWidgetType("dock4");
     m1->addDockWidget(dock2, Location_OnLeft);
     m1->addDockWidget(dock3, Location_OnRight);
     m1->addDockWidget(dock4, Location_OnBottom, dock3);
@@ -5635,7 +5635,7 @@ void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
 
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dock1 = new DockWidget("dock1");
+    auto dock1 = new DockWidgetType("dock1");
 
     auto w = new QWidget();
     w->setMinimumSize(120, 100);
@@ -5643,7 +5643,7 @@ void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
     dock1->setWidget(w);
     m1->addDockWidget(dock1, Location_OnLeft);
 
-    auto dock2 = new DockWidget("dock2");
+    auto dock2 = new DockWidgetType("dock2");
     m1->addDockWidget(dock2, Location_OnBottom);
 
     auto root = m1->multiSplitter()->rootItem();
@@ -5663,7 +5663,7 @@ void TestDocks::tst_maxSizedHonouredAfterRemoved()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dock1 = new DockWidget("dock1");
+    auto dock1 = new DockWidgetType("dock1");
     dock1->show();
 
     auto w = new QWidget();
@@ -5672,7 +5672,7 @@ void TestDocks::tst_maxSizedHonouredAfterRemoved()
     dock1->setWidget(w);
     m1->dropArea()->addMultiSplitter(dock1->floatingWindow()->multiSplitter(), Location_OnLeft);
 
-    auto dock2 = new DockWidget("dock2");
+    auto dock2 = new DockWidgetType("dock2");
     dock2->show();
     m1->dropArea()->addMultiSplitter(dock2->floatingWindow()->multiSplitter(), Location_OnTop);
 
@@ -5689,7 +5689,7 @@ void TestDocks::tst_maxSizedHonouredAfterRemoved()
     QVERIFY(sep->position() >= sepMin);
     QVERIFY(sep->position() <= sepMax);
 
-    auto dock3 = new DockWidget("dock3");
+    auto dock3 = new DockWidgetType("dock3");
     dock3->show();
     m1->dropArea()->addMultiSplitter(dock3->floatingWindow()->multiSplitter(), Location_OnBottom);
 
@@ -5708,8 +5708,8 @@ void TestDocks::tst_maxSizeHonouredWhenDropped()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow();
-    auto dock1 = new DockWidget("dock1");
-    auto dock2 = new DockWidget("dock2");
+    auto dock1 = new DockWidgetType("dock1");
+    auto dock2 = new DockWidgetType("dock2");
     m1->addDockWidget(dock1, Location_OnTop);
     m1->resize(2000, 2000);
 
@@ -5925,7 +5925,7 @@ void TestDocks::tst_isFocused()
 void TestDocks::tst_setWidget()
 {
     EnsureTopLevelsDeleted e;
-    auto dw = new DockWidget(QStringLiteral("FOO"));
+    auto dw = new DockWidgetType(QStringLiteral("FOO"));
     auto button1 = new QPushButton("button1");
     auto button2 = new QPushButton("button2");
     dw->setWidget(button1);
@@ -5937,7 +5937,7 @@ void TestDocks::tst_setWidget()
 void TestDocks::tst_isInMainWindow()
 {
     EnsureTopLevelsDeleted e;
-    auto dw = new DockWidget(QStringLiteral("FOO"));
+    auto dw = new DockWidgetType(QStringLiteral("FOO"));
     dw->show();
     auto fw = dw->window();
     QVERIFY(!dw->isInMainWindow());
@@ -5947,7 +5947,7 @@ void TestDocks::tst_isInMainWindow()
     delete fw;
 
     // Also test after creating the MainWindow, as the FloatingWindow will get parented to it
-    auto dw2 = new DockWidget(QStringLiteral("2"));
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
     dw2->show();
     QVERIFY(!dw2->isInMainWindow());
     delete dw2->window();
@@ -6001,9 +6001,9 @@ void TestDocks::tst_floatingWindowTitleBug()
 {
     // Test for #74
     EnsureTopLevelsDeleted e;
-    auto dw1 = new DockWidget(QStringLiteral("1"));
-    auto dw2 = new DockWidget(QStringLiteral("2"));
-    auto dw3 = new DockWidget(QStringLiteral("3"));
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
+    auto dw3 = new DockWidgetType(QStringLiteral("3"));
 
     dw1->setObjectName(QStringLiteral("1"));
     dw2->setObjectName(QStringLiteral("2"));
@@ -6025,7 +6025,7 @@ void TestDocks::tst_honourUserGeometry()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dw1 = new DockWidget(QStringLiteral("1"));
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
 
     const QPoint pt(10, 10);
     dw1->move(pt);
@@ -6041,7 +6041,7 @@ void TestDocks::tst_closeRemovesFromSideBar()
     EnsureTopLevelsDeleted e;
     Config::self().setFlags(Config::Flag_AutoHideSupport);
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dw1 = new DockWidget(QStringLiteral("1"));
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
     auto fw1 = dw1->window();
     m1->addDockWidget(dw1, Location_OnBottom);
     m1->moveToSideBar(dw1);
@@ -6076,8 +6076,8 @@ void TestDocks::tst_tabTitleChanges()
     // Tests that the tab's title changes if the dock widget's title changes
 
     EnsureTopLevelsDeleted e;
-    auto dw1 = new DockWidget(QStringLiteral("1"));
-    auto dw2 = new DockWidget(QStringLiteral("2"));
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
 
     dw1->addDockWidgetAsTab(dw2);
 
@@ -6095,8 +6095,8 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
     EnsureTopLevelsDeleted e;
     Config::self().setFlags(Config::Flag_TitleBarIsFocusable);
 
-    auto dw1 = new DockWidget(QStringLiteral("1"));
-    auto dw2 = new DockWidget(QStringLiteral("2"));
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
     auto le1 = new QLineEdit();
     auto le2 = new QLineEdit();
     dw1->setWidget(le1);
