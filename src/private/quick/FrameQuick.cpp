@@ -170,7 +170,7 @@ QVariant DockWidgetModel::data(const QModelIndex &index, int role) const
 DockWidgetBase *DockWidgetModel::dockWidgetAt(int index) const
 {
     if (index < 0 || index >= m_dockWidgets.size()) {
-        qWarning() << Q_FUNC_INFO << "Shouldn't happen" << index << m_dockWidgets.size();
+        // Can happen. Benign.
         return nullptr;
     }
 

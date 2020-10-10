@@ -80,6 +80,7 @@ private Q_SLOTS:
     void tst_floatingWindowTitleBug();
     void tst_resizeWindow_data();
     void tst_resizeWindow();
+    void tst_restoreCentralFrame();
 };
 
 void TestCommon::tst_simple1()
@@ -440,6 +441,31 @@ void TestCommon::tst_resizeWindow()
 
     delete fw1;
     delete fw2;
+}
+
+void TestCommon::tst_restoreCentralFrame()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500));
+    auto layout = m->multiSplitter();
+
+    QCOMPARE(layout->count(), 1);
+    Item *item = m->dropArea()->centralFrame();
+    QVERIFY(item);
+    auto frame = static_cast<Frame *>(item->guestAsQObject());
+    QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
+    QVERIFY(!frame->titleBar()->isVisible());
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreCentralFrame.json")));
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreCentralFrame.json")));
+
+    QCOMPARE(layout->count(), 1);
+    item = m->dropArea()->centralFrame();
+    QVERIFY(item);
+    frame = static_cast<Frame *>(item->guestAsQObject());
+    QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
+    QVERIFY(!frame->titleBar()->isVisible());
 }
 
 int main(int argc, char *argv[])

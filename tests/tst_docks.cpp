@@ -356,7 +356,6 @@ private Q_SLOTS:
     void tst_restoreSimplest();
     void tst_restoreSimple();
     void tst_restoreNestedAndTabbed();
-    void tst_restoreCentralFrame();
     void tst_restoreCrash();
     void tst_restoreTwice();
     void tst_restoreSideBySide();
@@ -1344,31 +1343,6 @@ void TestDocks::tst_restoreNestedAndTabbed()
 
     qDebug() << m->frameGeometry() << m->geometry();
     QCOMPARE(m->geometry(), oldGeo);
-}
-
-void TestDocks::tst_restoreCentralFrame()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500));
-    auto layout = m->multiSplitter();
-
-    QCOMPARE(layout->count(), 1);
-    Item *item = m->dropArea()->centralFrame();
-    QVERIFY(item);
-    auto frame = static_cast<Frame *>(item->guestAsQObject());
-    QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
-    QVERIFY(!frame->titleBar()->isVisible());
-
-    LayoutSaver saver;
-    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreCentralFrame.json")));
-    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreCentralFrame.json")));
-
-    QCOMPARE(layout->count(), 1);
-    item = m->dropArea()->centralFrame();
-    QVERIFY(item);
-    frame = static_cast<Frame *>(item->guestAsQObject());
-    QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
-    QVERIFY(!frame->titleBar()->isVisible());
 }
 
 void TestDocks::tst_restoreCrash()
