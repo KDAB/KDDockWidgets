@@ -73,6 +73,7 @@ private Q_SLOTS:
     void tst_detachFromMainWindow();
     void tst_detachPos();
     void tst_floatingWindowSize();
+    void tst_sizeAfterRedock();
     void tst_tabbingWithAffinities();
 };
 
@@ -293,6 +294,36 @@ void TestCommon::tst_tabbingWithAffinities()
 
     delete fw1;
     delete fw2;
+}
+
+void TestCommon::tst_sizeAfterRedock()
+{
+    EnsureTopLevelsDeleted e;
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
+    dw2->setWidget(new MyWidget("2", Qt::red));
+
+    dw1->addDockWidgetToContainingWindow(dw2, Location_OnBottom);
+    const int height2 = dw2->frame()->height();
+
+    dw2->setFloating(true);
+    QCOMPARE(height2, dw2->window()->height());
+    auto oldFw2 = dw2->floatingWindow();
+
+    // Redock
+    FloatingWindow *fw1 = dw1->floatingWindow();
+    DropArea *dropArea = fw1->dropArea();
+
+    MultiSplitter *ms1 = fw1->multiSplitter();
+    const QRect suggestedDropRect = ms1->rectForDrop(oldFw2, Location_OnBottom, nullptr);
+    QCOMPARE(suggestedDropRect.height(), height2);
+
+    dropArea->drop(dw2->floatingWindow(), Location_OnBottom, nullptr);
+
+    QCOMPARE(dw2->frame()->height(), height2);
+
+    delete dw1->window();
+    delete oldFw2;
 }
 
 int main(int argc, char *argv[])
