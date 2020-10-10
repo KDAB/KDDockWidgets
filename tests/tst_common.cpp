@@ -75,6 +75,7 @@ private Q_SLOTS:
     void tst_floatingWindowSize();
     void tst_sizeAfterRedock();
     void tst_tabbingWithAffinities();
+    void tst_honourUserGeometry();
 };
 
 void TestCommon::tst_simple1()
@@ -324,6 +325,21 @@ void TestCommon::tst_sizeAfterRedock()
 
     delete dw1->window();
     delete oldFw2;
+}
+
+void TestCommon::tst_honourUserGeometry()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+
+    const QPoint pt(10, 10);
+    dw1->move(pt);
+    dw1->show();
+    FloatingWindow *fw1 = dw1->floatingWindow();
+    QCOMPARE(fw1->windowHandle()->geometry().topLeft(), pt);
+
+    delete dw1->window();
 }
 
 int main(int argc, char *argv[])

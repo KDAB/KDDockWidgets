@@ -417,7 +417,6 @@ private Q_SLOTS:
     void tst_isInMainWindow();
     void tst_titleBarFocusedWhenTabsChange();
     void tst_floatingWindowTitleBug();
-    void tst_honourUserGeometry();
 
     void tst_closeRemovesFromSideBar();
     void tst_tabTitleChanges();
@@ -6019,21 +6018,6 @@ void TestDocks::tst_floatingWindowTitleBug()
 
     delete dw1->window();
     delete dw3->window();
-}
-
-void TestDocks::tst_honourUserGeometry()
-{
-    EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dw1 = new DockWidgetType(QStringLiteral("1"));
-
-    const QPoint pt(10, 10);
-    dw1->move(pt);
-    dw1->show();
-
-    QCOMPARE(dw1->window()->geometry().topLeft(), pt);
-
-    delete dw1->window();
 }
 
 void TestDocks::tst_closeRemovesFromSideBar()

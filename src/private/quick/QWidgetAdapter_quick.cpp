@@ -281,6 +281,11 @@ QQuickItem *QWidgetAdapter::childAt(QPoint p) const
     return QQuickItem::childAt(p.x(), p.y());
 }
 
+void QWidgetAdapter::move(QPoint pt)
+{
+    move(pt.x(), pt.y());
+}
+
 void QWidgetAdapter::move(int x, int y)
 {
     setX(x);
