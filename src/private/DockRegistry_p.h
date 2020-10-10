@@ -89,6 +89,9 @@ public:
     ///@brief overload that returns list of QWindow. This is more friendly for supporting both QtWidgets and QtQuick
     const QVector<QWindow*> floatingQWindows() const;
 
+    ///@brief returns whether if there's at least one floating window
+    bool hasFloatingWindows() const;
+
     ///@brief returns the FloatingWindow with handle @p windowHandle
     FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
 
@@ -127,8 +130,10 @@ public:
 
     /**
      * @brief returns true if there's 0 dockwidgets, 0 main windows
+     *
+     * @param excludeBeingDeleted if true, any window currently being deleted won't count
      */
-    bool isEmpty() const;
+    bool isEmpty(bool excludeBeingDeleted = false) const;
 
     /**
      * @brief Calls MultiSplitter::checkSanity() on all layouts.

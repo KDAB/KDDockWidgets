@@ -84,7 +84,7 @@ Config::Flags Config::flags() const
 void Config::setFlags(Flags f)
 {
     auto dr = DockRegistry::self();
-    if (!dr->isEmpty()) {
+    if (!dr->isEmpty(/*excludeBeingDeleted=*/ true)) {
         qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow"
                    << "; These are already created: " << dr->mainWindowsNames()
                    << dr->dockWidgetNames() << dr->floatingWindows();
@@ -138,7 +138,7 @@ int Config::separatorThickness() const
 
 void Config::setSeparatorThickness(int value)
 {
-    if (!DockRegistry::self()->isEmpty()) {
+    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/ true)) {
         qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
         return;
     }

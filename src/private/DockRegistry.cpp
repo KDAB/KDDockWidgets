@@ -100,9 +100,13 @@ void DockRegistry::onFocusObjectChanged(QObject *obj)
         Q_EMIT m_focusedDockWidget->isFocusedChanged(true);
 }
 
-bool DockRegistry::isEmpty() const
+bool DockRegistry::isEmpty(bool excludeBeingDeleted) const
 {
-    return m_dockWidgets.isEmpty() && m_mainWindows.isEmpty() && m_floatingWindows.isEmpty();
+    if (!m_dockWidgets.isEmpty() || !m_mainWindows.isEmpty())
+        return false;
+
+    return excludeBeingDeleted ? !hasFloatingWindows()
+                               : m_floatingWindows.isEmpty();
 }
 
 void DockRegistry::checkSanityAll(bool dumpLayout)
@@ -472,6 +476,13 @@ const QVector<QWindow *> DockRegistry::floatingQWindows() const
     }
 
     return windows;
+}
+
+bool DockRegistry::hasFloatingWindows() const
+{
+    return std::any_of(m_floatingWindows.begin(), m_floatingWindows.end(), [] (FloatingWindow *fw) {
+        return !fw->beingDeleted();
+    });
 }
 
 FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) const
