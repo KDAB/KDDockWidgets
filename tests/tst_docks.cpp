@@ -311,7 +311,6 @@ private Q_SLOTS:
     void tst_crash(); // tests some crash I got
     void tst_crash2_data();
     void tst_crash2();
-    void tst_setFloatingSimple();
     void tst_setFloatingWhenWasTabbed();
     void tst_setFloatingWhenSideBySide();
     void tst_setFloatingAfterDraggedFromTabToSideBySide();
@@ -352,7 +351,6 @@ private Q_SLOTS:
     void tst_samePositionAfterHideRestore();
     void tst_anchorFollowingItselfAssert();
     void tst_positionWhenShown();
-    void tst_restoreEmpty();
     void tst_restoreSimplest();
     void tst_restoreSimple();
     void tst_restoreNestedAndTabbed();
@@ -1178,24 +1176,6 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
 
     min1 = widgetMinLength(dock1, Qt::Vertical);
     QVERIFY(dock1->height() >= min1);
-}
-
-void TestDocks::tst_restoreEmpty()
-{
-    EnsureTopLevelsDeleted e;
-
-    // Create an empty main window, save it to disk.
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto layout = m->multiSplitter();
-    LayoutSaver saver;
-    const QSize oldSize = m->size();
-    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreEmpty.json")));
-    saver.restoreFromFile(QStringLiteral("layout_tst_restoreEmpty.json"));
-    QVERIFY(m->multiSplitter()->checkSanity());
-    QCOMPARE(layout->separators().size(), 0);
-    QCOMPARE(layout->count(), 0);
-    QCOMPARE(m->size(), oldSize);
-    QVERIFY(layout->checkSanity());
 }
 
 void TestDocks::tst_restoreSimplest()
@@ -2184,23 +2164,6 @@ void TestDocks::tst_crash2()
         delete m;
     }
 
-}
-
-void TestDocks::tst_setFloatingSimple()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    m->addDockWidget(dock1, Location_OnTop);
-    auto l = m->multiSplitter();
-    dock1->setFloating(true);
-    QVERIFY(l->checkSanity());
-    dock1->setFloating(false);
-    QVERIFY(l->checkSanity());
-    dock1->setFloating(true);
-    QVERIFY(l->checkSanity());
-    dock1->setFloating(false);
-    QVERIFY(l->checkSanity());
 }
 
 void TestDocks::tst_setFloatingWhenWasTabbed()

@@ -116,7 +116,7 @@ protected:
 class MyWidget : public QWidgetOrQuick
 {
 public:
-    explicit MyWidget(const QString &, QColor c);
+    explicit MyWidget(const QString &, QColor c = Qt::black);
     ~MyWidget() override;
 
 

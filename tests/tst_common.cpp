@@ -78,8 +78,11 @@ private Q_SLOTS:
     void tst_tabbingWithAffinities();
     void tst_honourUserGeometry();
     void tst_floatingWindowTitleBug();
+    void tst_setFloatingSimple();
+
     void tst_resizeWindow_data();
     void tst_resizeWindow();
+    void tst_restoreEmpty();
     void tst_restoreCentralFrame();
 };
 
@@ -443,6 +446,24 @@ void TestCommon::tst_resizeWindow()
     delete fw2;
 }
 
+void TestCommon::tst_restoreEmpty()
+{
+    EnsureTopLevelsDeleted e;
+
+    // Create an empty main window, save it to disk.
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto layout = m->multiSplitter();
+    LayoutSaver saver;
+    const QSize oldSize = m->size();
+    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreEmpty.json")));
+    saver.restoreFromFile(QStringLiteral("layout_tst_restoreEmpty.json"));
+    QVERIFY(m->multiSplitter()->checkSanity());
+    QCOMPARE(layout->separators().size(), 0);
+    QCOMPARE(layout->count(), 0);
+    QCOMPARE(m->size(), oldSize);
+    QVERIFY(layout->checkSanity());
+}
+
 void TestCommon::tst_restoreCentralFrame()
 {
     EnsureTopLevelsDeleted e;
@@ -466,6 +487,23 @@ void TestCommon::tst_restoreCentralFrame()
     frame = static_cast<Frame *>(item->guestAsQObject());
     QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!frame->titleBar()->isVisible());
+}
+
+void TestCommon::tst_setFloatingSimple()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+    m->addDockWidget(dock1, Location_OnTop);
+    auto l = m->multiSplitter();
+    dock1->setFloating(true);
+    QVERIFY(l->checkSanity());
+    dock1->setFloating(false);
+    QVERIFY(l->checkSanity());
+    dock1->setFloating(true);
+    QVERIFY(l->checkSanity());
+    dock1->setFloating(false);
+    QVERIFY(l->checkSanity());
 }
 
 int main(int argc, char *argv[])
