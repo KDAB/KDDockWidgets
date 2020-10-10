@@ -66,6 +66,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void tst_simple1();
+    void tst_simple2();
     void tst_doesntHaveNativeTitleBar();
     void tst_resizeWindow2();
     void tst_hasLastDockedLocation();
@@ -88,6 +89,19 @@ void TestCommon::tst_simple1()
     auto m = createMainWindow();
     m->multiSplitter()->checkSanity();
 }
+
+void TestCommon::tst_simple2()
+{
+    // Simply create a MainWindow, and dock something on top
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dw = createDockWidget("dw", new MyWidget("dw", Qt::blue));
+    auto fw = dw->floatingWindow();
+    m->addDockWidget(dw, KDDockWidgets::Location_OnTop);
+    m->multiSplitter()->checkSanity();
+    delete fw;
+}
+
 
 void TestCommon::tst_doesntHaveNativeTitleBar()
 {

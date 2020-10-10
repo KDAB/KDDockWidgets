@@ -274,7 +274,6 @@ public:
     static void nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo, KDDockWidgets::Location location);
 
 private Q_SLOTS:
-    void tst_simple2();
     void tst_shutdown();
     void tst_mainWindowAlwaysHasCentralWidget();
     void tst_createFloatingWindow();
@@ -2530,16 +2529,6 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     m->deleteLater();
     auto window = m.release();
     Testing::waitForDeleted(window);
-}
-
-void TestDocks::tst_simple2()
-{
-    // Simply create a MainWindow, and dock something on top
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow();
-    auto dw = createDockWidget("dw", new QPushButton("dw"));
-    m->addDockWidget(dw, KDDockWidgets::Location_OnTop);
-    m->multiSplitter()->checkSanity();
 }
 
 void TestDocks::tst_refUnrefItem()
