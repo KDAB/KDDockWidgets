@@ -93,6 +93,24 @@ void QWidgetAdapter::itemChange(QQuickItem::ItemChange change, const QQuickItem:
     }
 }
 
+void QWidgetAdapter::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
+{
+    // Send a few events manually, since QQuickItem doesn't do it for us.
+    QQuickItem::geometryChanged(newGeometry, oldGeometry);
+
+    // Not calling event() directly, otherwise it would skip event filters
+
+    if (newGeometry.size() != oldGeometry.size()) {
+        QEvent ev(QEvent::Resize);
+        qApp->sendEvent(this, &ev);
+    }
+
+    if (newGeometry.topLeft() != oldGeometry.topLeft()) {
+        QEvent ev(QEvent::Move);
+        qApp->sendEvent(this, &ev);
+    }
+}
+
 void QWidgetAdapter::raise()
 {
     if (QWindow *w = windowHandle())

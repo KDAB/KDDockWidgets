@@ -151,6 +151,7 @@ public:
 Q_SIGNALS:
     void parentChanged();
 protected:
+    void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
     void raiseAndActivate();
     virtual bool onResize(QSize newSize);
     virtual void onLayoutRequest();

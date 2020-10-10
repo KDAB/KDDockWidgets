@@ -77,6 +77,8 @@ private Q_SLOTS:
     void tst_tabbingWithAffinities();
     void tst_honourUserGeometry();
     void tst_floatingWindowTitleBug();
+    void tst_resizeWindow_data();
+    void tst_resizeWindow();
 };
 
 void TestCommon::tst_simple1()
@@ -367,6 +369,64 @@ void TestCommon::tst_floatingWindowTitleBug()
     delete dw3->window();
 }
 
+void TestCommon::tst_resizeWindow_data()
+{
+    QTest::addColumn<bool>("doASaveRestore");
+    QTest::newRow("false") << false;
+    QTest::newRow("true") << true;
+}
+
+void TestCommon::tst_resizeWindow()
+{
+    QFETCH(bool, doASaveRestore);
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new MyWidget("1", Qt::red));
+    auto dock2 = createDockWidget("2", new MyWidget("2", Qt::blue));
+    QPointer<FloatingWindow> fw1 = dock1->floatingWindow();
+    QPointer<FloatingWindow> fw2 = dock2->floatingWindow();
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+
+    auto layout = m->multiSplitter();
+
+    layout->checkSanity();
+
+    const int oldWidth1 = dock1->width();
+    const int oldWidth2 = dock2->width();
+
+    QVERIFY(oldWidth2 - oldWidth1 <= 1); // They're not equal if separator thickness if even
+
+    if (doASaveRestore) {
+        LayoutSaver saver;
+        saver.restoreLayout(saver.serializeLayout());
+    }
+
+    m->showMaximized();
+    Testing::waitForResize(m.get());
+
+    const int maximizedWidth1 = dock1->width();
+    const int maximizedWidth2 = dock2->width();
+
+    const double relativeDifference = qAbs((maximizedWidth1 - maximizedWidth2) / (1.0 * layout->width()));
+
+    qDebug() << oldWidth1 << oldWidth2 << maximizedWidth1 << maximizedWidth2 << relativeDifference;
+    QVERIFY(relativeDifference <= 0.01);
+
+    m->showNormal();
+    Testing::waitForResize(m.get());
+
+    const int newWidth1 = dock1->width();
+    const int newWidth2 = dock2->width();
+
+    QCOMPARE(oldWidth1, newWidth1);
+    QCOMPARE(oldWidth2, newWidth2);
+    layout->checkSanity();
+
+    delete fw1;
+    delete fw2;
+}
 
 int main(int argc, char *argv[])
 {

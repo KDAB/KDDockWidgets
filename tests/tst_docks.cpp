@@ -374,8 +374,6 @@ private Q_SLOTS:
     void tst_invalidJSON_data();
     void tst_invalidJSON();
 
-    void tst_resizeWindow_data();
-    void tst_resizeWindow();
     void tst_rectForDropCrash();
 
     void tst_tabBarWithHiddenTitleBar_data();
@@ -4925,60 +4923,6 @@ void TestDocks::tst_restoreResizesLayout()
 
     QCOMPARE(m->dropArea()->QWidget::size(), layout->rootItem()->size());
     QVERIFY(layout->checkSanity());
-}
-
-void TestDocks::tst_resizeWindow_data()
-{
-    QTest::addColumn<bool>("doASaveRestore");
-    QTest::newRow("false") << false;
-    QTest::newRow("true") << true;
-}
-
-void TestDocks::tst_resizeWindow()
-{
-    QFETCH(bool, doASaveRestore);
-
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
-    m->addDockWidget(dock1, Location_OnLeft);
-    m->addDockWidget(dock2, Location_OnRight);
-
-    auto layout = m->multiSplitter();
-
-    layout->checkSanity();
-
-    const int oldWidth1 = dock1->width();
-    const int oldWidth2 = dock2->width();
-
-    QVERIFY(oldWidth2 - oldWidth1 <= 1); // They're not equal if separator thickness if even
-
-    if (doASaveRestore) {
-        LayoutSaver saver;
-        saver.restoreLayout(saver.serializeLayout());
-    }
-
-    m->showMaximized();
-    QVERIFY(Testing::waitForResize(m.get()));
-
-    const int maximizedWidth1 = dock1->width();
-    const int maximizedWidth2 = dock2->width();
-
-    const double relativeDifference = qAbs((maximizedWidth1 - maximizedWidth2) / (1.0 * layout->width()));
-
-    qDebug() << oldWidth1 << oldWidth2 << maximizedWidth1 << maximizedWidth2 << relativeDifference;
-    QVERIFY(relativeDifference <= 0.01);
-
-    m->showNormal();
-    QVERIFY(Testing::waitForResize(m.get()));
-
-    const int newWidth1 = dock1->width();
-    const int newWidth2 = dock2->width();
-
-    QCOMPARE(oldWidth1, newWidth1);
-    QCOMPARE(oldWidth2, newWidth2);
-    layout->checkSanity();
 }
 
 void TestDocks::tst_addingOptionHiddenTabbed()
