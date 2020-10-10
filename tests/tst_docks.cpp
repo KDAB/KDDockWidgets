@@ -163,21 +163,6 @@ inline int widgetMinLength(const QWidget *w, Qt::Orientation o)
     return o == Qt::Vertical ? sz.height() : sz.width();
 }
 
-struct SetExpectedWarning
-{
-    explicit SetExpectedWarning(const QString &s)
-    {
-        if (!s.isEmpty())
-            Testing::setExpectedWarning(s);
-    }
-
-    ~SetExpectedWarning()
-    {
-        Testing::setExpectedWarning({});
-    }
-    Q_DISABLE_COPY(SetExpectedWarning)
-};
-
 struct WidgetResize
 {
     int length;
@@ -438,7 +423,6 @@ private Q_SLOTS:
     void tst_tabTitleChanges();
     void tst_dockWidgetGetsFocusWhenDocked();
     void tst_sizeAfterRedock();
-    void tst_tabbingWithAffinities();
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
@@ -6174,45 +6158,6 @@ void TestDocks::tst_sizeAfterRedock()
 
     delete dw1->window();
     delete oldFw2;
-}
-
-void TestDocks::tst_tabbingWithAffinities()
-{
-    EnsureTopLevelsDeleted e;
-    // Tests that dock widgets with different affinities should not tab together
-
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    m1->setAffinities({ "af1", "af2" });
-
-    auto dw1 = new DockWidget("1");
-    dw1->setAffinities({ "af1" });
-    dw1->show();
-
-    auto dw2 = new DockWidget("2");
-    dw2->setAffinities({ "af2" });
-    dw2->show();
-
-    FloatingWindow *fw1 = dw1->floatingWindow();
-    FloatingWindow *fw2 = dw2->floatingWindow();
-
-    {
-        SetExpectedWarning ignoreWarning("Refusing to dock widget with incompatible affinity");
-        dw1->addDockWidgetAsTab(dw2);
-        QVERIFY(dw1->window() != dw2->window());
-    }
-
-    m1->addDockWidget(dw1, Location_OnBottom);
-    QVERIFY(!dw1->isFloating());
-
-    {
-        SetExpectedWarning ignoreWarning("Refusing to dock widget with incompatible affinity");
-        DropArea *dropArea = m1->dropArea();
-        QVERIFY(!dropArea->drop(fw2, dw1->frame(), DropIndicatorOverlayInterface::DropLocation_Center));
-        QVERIFY(dw1->window() != dw2->window());
-    }
-
-    delete fw1;
-    delete fw2;
 }
 
 int main(int argc, char *argv[])

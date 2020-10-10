@@ -136,6 +136,22 @@ namespace Testing {
         QSize m_minSz;
     };
 }
+
+struct SetExpectedWarning
+{
+    explicit SetExpectedWarning(const QString &s)
+    {
+        if (!s.isEmpty())
+            Testing::setExpectedWarning(s);
+    }
+
+    ~SetExpectedWarning()
+    {
+        Testing::setExpectedWarning({});
+    }
+    Q_DISABLE_COPY(SetExpectedWarning)
+};
+
 }
 
 #endif

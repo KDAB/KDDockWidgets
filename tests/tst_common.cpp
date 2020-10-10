@@ -19,14 +19,19 @@
 #include "private/MultiSplitter_p.h"
 #include "TitleBar_p.h"
 #include "Position_p.h"
+#include "DropAreaWithCentralFrame_p.h"
 
 #include <QtTest/QtTest>
 #include <QObject>
 #include <QApplication>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
+# include "quick/DockWidgetQuick.h"
+
 # include <QQmlEngine>
 # include <QQuickStyle>
+# else
+# include "DockWidget.h"
 #endif
 
 using namespace KDDockWidgets;
@@ -68,6 +73,7 @@ private Q_SLOTS:
     void tst_detachFromMainWindow();
     void tst_detachPos();
     void tst_floatingWindowSize();
+    void tst_tabbingWithAffinities();
 };
 
 void TestCommon::tst_simple1()
@@ -248,6 +254,45 @@ void TestCommon::tst_floatingWindowSize()
     QCOMPARE(fw1->size(), fw1->windowHandle()->size());
 
     delete fw1;
+}
+
+void TestCommon::tst_tabbingWithAffinities()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests that dock widgets with different affinities should not tab together
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    m1->setAffinities({ "af1", "af2" });
+
+    auto dw1 = new DockWidgetType("1");
+    dw1->setAffinities({ "af1" });
+    dw1->show();
+
+    auto dw2 = new DockWidgetType("2");
+    dw2->setAffinities({ "af2" });
+    dw2->show();
+
+    FloatingWindow *fw1 = dw1->floatingWindow();
+    FloatingWindow *fw2 = dw2->floatingWindow();
+
+    {
+        SetExpectedWarning ignoreWarning("Refusing to dock widget with incompatible affinity");
+        dw1->addDockWidgetAsTab(dw2);
+        QVERIFY(dw1->window() != dw2->window());
+    }
+
+    m1->addDockWidget(dw1, Location_OnBottom);
+    QVERIFY(!dw1->isFloating());
+
+    {
+        SetExpectedWarning ignoreWarning("Refusing to dock widget with incompatible affinity");
+        auto dropArea = m1->dropArea();
+        QVERIFY(!dropArea->drop(fw2, dw1->frame(), DropIndicatorOverlayInterface::DropLocation_Center));
+        QVERIFY(dw1->window() != dw2->window());
+    }
+
+    delete fw1;
+    delete fw2;
 }
 
 int main(int argc, char *argv[])
