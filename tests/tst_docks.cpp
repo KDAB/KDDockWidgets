@@ -326,8 +326,6 @@ private Q_SLOTS:
     void tst_invalidPlaceholderPosition();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
     void tst_negativeAnchorPosition();
-    void tst_negativeAnchorPosition4();
-    void tst_negativeAnchorPosition5();
     void tst_negativeAnchorPosition6();
     void tst_negativeAnchorPosition7();
     void tst_negativeAnchorPositionWhenEmbedded_data();
@@ -2894,67 +2892,6 @@ void TestDocks::tst_negativeAnchorPosition()
     d2->deleteLater();
     Testing::waitForDeleted(d2);
     layout->checkSanity();
-}
-
-void TestDocks::tst_negativeAnchorPosition4()
-{
-    // 1. Tests that we don't get a warning
-    // Out of bounds position= -5 ; oldPosition= 0 KDDockWidgets::Anchor(0x55e726be9090, name = "left") KDDockWidgets::MainWindow(0x55e726beb8d0)
-    EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = { { Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
-                                      { Location_OnTop, -1, nullptr, AddingOption_None },
-                                      { Location_OnRight, -1, nullptr, AddingOption_None },
-                                      { Location_OnLeft, -1, nullptr, AddingOption_None },
-                                      { Location_OnRight, -1, nullptr, AddingOption_None } };
-
-    auto m = createMainWindow(docks);
-    auto dropArea = m->dropArea();
-    MultiSplitter *layout = dropArea;
-    layout->checkSanity();
-
-    auto dock1 = docks.at(1).createdDock;
-    auto dock2 = docks.at(2).createdDock;
-    dock2->setFloating(true);
-    auto fw2 = dock2->floatingWindow();
-    dropArea->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
-    dock2->setFloating(true);
-    fw2 = dock2->floatingWindow();
-
-    dropArea->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
-
-    layout->checkSanity();
-    docks.at(0).createdDock->deleteLater();
-    docks.at(4).createdDock->deleteLater();
-    Testing::waitForDeleted(docks.at(4).createdDock);
-}
-
-void TestDocks::tst_negativeAnchorPosition5()
-{
-    EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = {
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        };
-
-    auto m = createMainWindow(docks);
-    auto dropArea = m->dropArea();
-    MultiSplitter *layout = dropArea;
-    layout->checkSanity();
-
-    auto dock0 = docks.at(0).createdDock;
-    auto dock1 = docks.at(1).createdDock;
-
-    dock1->show();
-
-    dock0->show();
-    layout->checkSanity();
-
-    // Cleanup
-    for (auto dock : DockRegistry::self()->dockwidgets())
-        dock->deleteLater();
-
-    QVERIFY(Testing::waitForDeleted(dock0));
 }
 
 void TestDocks::tst_negativeAnchorPosition6()
