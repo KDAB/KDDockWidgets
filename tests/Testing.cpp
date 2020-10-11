@@ -63,6 +63,9 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
 #ifdef KDDOCKWIDGETS_QTQUICK
             // TODO: Debug why this happens
             || msg.contains(QLatin1String("Layouting::ItemContainer::setSize_recursive"))
+
+            // TODO: Fix later, not important right now
+            || msg.contains(QLatin1String("Binding loop detected for property"))
 #endif
             ;
 }
