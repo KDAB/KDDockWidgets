@@ -93,8 +93,10 @@ private Q_SLOTS:
     void tst_28NestedWidgets();
     void tst_28NestedWidgets_data();
     void tst_negativeAnchorPosition2();
+    void tst_negativeAnchorPosition3();
     void tst_startHidden();
     void tst_closeReparentsToNull();
+    void tst_invalidAnchorGroup();
 };
 
 void TestCommon::tst_simple1()
@@ -957,6 +959,75 @@ void TestCommon::tst_negativeAnchorPosition2()
     dock2->deleteLater();
     layout->checkSanity();
     QVERIFY(Testing::waitForDeleted(dock2));
+}
+
+void TestCommon::tst_negativeAnchorPosition3()
+{
+    // 1. Another case, when floating a dock:
+    EnsureTopLevelsDeleted e;
+    QVector<DockDescriptor> docks = { {Location_OnLeft, -1, nullptr, AddingOption_None },
+                                     {Location_OnRight, -1, nullptr, AddingOption_None },
+                                     {Location_OnLeft, -1, nullptr, AddingOption_None },
+                                     {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+                                     {Location_OnRight, -1, nullptr, AddingOption_None } };
+    auto m = createMainWindow(docks);
+    auto dropArea = m->dropArea();
+    MultiSplitter *layout = dropArea;
+    layout->checkSanity();
+
+    auto dock1 = docks.at(1).createdDock;
+    auto dock3 = docks.at(3).createdDock;
+
+    dock1->setFloating(true);
+
+    dock1->deleteLater();
+    dock3->deleteLater();
+    layout->checkSanity();
+    Testing::waitForDeleted(dock3);
+}
+
+void TestCommon::tst_invalidAnchorGroup()
+{
+    // Tests a bug I got. Should not warn.
+    EnsureTopLevelsDeleted e;
+
+    {
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+
+        QPointer<FloatingWindow> fw = dock2->morphIntoFloatingWindow();
+        nestDockWidget(dock1, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
+
+        dock1->close();
+        Testing::waitForResize(dock2);
+        auto layout = fw->dropArea();
+        layout->checkSanity();
+
+        dock2->close();
+        dock1->deleteLater();
+        dock2->deleteLater();
+        Testing::waitForDeleted(dock1);
+    }
+
+    {
+        // Stack 1, 2, 3, close 2, close 1
+
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+
+        m->addDockWidget(dock3, Location_OnTop);
+        m->addDockWidget(dock2, Location_OnTop);
+        m->addDockWidget(dock1, Location_OnTop);
+
+        dock2->close();
+        dock1->close();
+
+        dock1->deleteLater();
+        dock2->deleteLater();
+        Testing::waitForDeleted(dock1);
+    }
 }
 
 #include "tst_common.moc"
