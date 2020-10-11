@@ -279,7 +279,12 @@ QObject *Item::host() const
 
 void Item::restore(Widget *guest)
 {
-    Q_ASSERT(!isVisible() && !guestAsQObject());
+    if (isVisible() || guestAsQObject()) {
+        qWarning() << Q_FUNC_INFO << "Hitting assert. visible="
+                   << isVisible() << "; guest=" << guestAsQObject();
+        Q_ASSERT(false);
+    }
+
     if (isContainer()) {
         qWarning() << Q_FUNC_INFO << "Containers can't be restored";
     } else {
