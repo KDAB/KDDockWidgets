@@ -82,7 +82,7 @@ bool DockWidgetQuick::event(QEvent *e)
     } else if (e->type() == QEvent::Hide) {
         onHidden(e->spontaneous());
     } else if (e->type() == QEvent::Close) {
-        onClosed(static_cast<QCloseEvent*>(e));
+        onCloseEvent(static_cast<QCloseEvent*>(e));
     }
 
     return DockWidgetBase::event(e);

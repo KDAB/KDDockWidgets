@@ -411,7 +411,7 @@ protected:
     void onParentChanged();
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);
-    void onClosed(QCloseEvent *e);
+    void onCloseEvent(QCloseEvent *e) override;
 
 #if defined(DOCKS_DEVELOPER_MODE)
 public Q_SLOTS:

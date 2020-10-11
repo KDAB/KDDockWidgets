@@ -327,7 +327,6 @@ private Q_SLOTS:
     void tst_invalidAnchorGroup();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
     void tst_negativeAnchorPosition();
-    void tst_negativeAnchorPosition2();
     void tst_negativeAnchorPosition3();
     void tst_negativeAnchorPosition4();
     void tst_negativeAnchorPosition5();
@@ -2941,31 +2940,6 @@ void TestDocks::tst_negativeAnchorPosition()
     d2->deleteLater();
     Testing::waitForDeleted(d2);
     layout->checkSanity();
-}
-
-void TestDocks::tst_negativeAnchorPosition2()
-{
-    // Tests that the "Out of bounds position" warning doesn't appear. Test will abort if yes.
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dropArea = m->dropArea();
-    MultiSplitter *layout = dropArea;
-
-    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, /*show=*/false);
-    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, /*show=*/false);
-    auto dock3 = createDockWidget("3", new QPushButton("3"), {}, /*show=*/false);
-
-    m->addDockWidget(dock1, Location_OnLeft);
-    m->addDockWidget(dock2, Location_OnRight, nullptr, AddingOption_StartHidden);
-    m->addDockWidget(dock3, Location_OnRight);
-    QCOMPARE(layout->placeholderCount(), 1);
-    QCOMPARE(layout->count(), 3);
-
-    dock1->setFloating(true);
-    dock1->setFloating(false);
-    dock2->deleteLater();
-    layout->checkSanity();
-    QVERIFY(Testing::waitForDeleted(dock2));
 }
 
 void TestDocks::tst_negativeAnchorPosition3()

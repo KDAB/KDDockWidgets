@@ -786,7 +786,7 @@ void DockWidgetBase::onHidden(bool spontaneous)
     }
 }
 
-void DockWidgetBase::onClosed(QCloseEvent *e)
+void DockWidgetBase::onCloseEvent(QCloseEvent *e)
 {
     e->accept(); // By default we accept, means DockWidget closes
     if (d->widget)

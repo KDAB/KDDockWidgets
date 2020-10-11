@@ -68,5 +68,5 @@ bool DockWidget::event(QEvent *e)
 
 void DockWidget::closeEvent(QCloseEvent *e)
 {
-    onClosed(e);
+    onCloseEvent(e);
 }

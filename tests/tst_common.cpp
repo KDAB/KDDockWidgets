@@ -92,6 +92,9 @@ private Q_SLOTS:
     void tst_propagateResize2();
     void tst_28NestedWidgets();
     void tst_28NestedWidgets_data();
+    void tst_negativeAnchorPosition2();
+    void tst_startHidden();
+    void tst_closeReparentsToNull();
 };
 
 void TestCommon::tst_simple1()
@@ -906,6 +909,54 @@ void TestCommon::tst_28NestedWidgets()
         dock->deleteLater();
         QVERIFY(Testing::waitForDeleted(dock));
     }
+}
+
+void TestCommon::tst_closeReparentsToNull()
+{
+    EnsureTopLevelsDeleted e;
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto fw1 = dock1->window();
+    QVERIFY(dock1->parent() != nullptr);
+    dock1->close();
+    QVERIFY(dock1->parent() == nullptr);
+    delete fw1;
+    delete dock1;
+}
+
+void TestCommon::tst_startHidden()
+{
+    // A really simple test for AddingOption_StartHidden
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, /*show=*/false);
+    m->addDockWidget(dock1, Location_OnRight, nullptr, AddingOption_StartHidden);
+    delete dock1;
+}
+
+void TestCommon::tst_negativeAnchorPosition2()
+{
+    // Tests that the "Out of bounds position" warning doesn't appear. Test will abort if yes.
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dropArea = m->dropArea();
+    MultiSplitter *layout = dropArea;
+
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, /*show=*/false);
+    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, /*show=*/false);
+    auto dock3 = createDockWidget("3", new QPushButton("3"), {}, /*show=*/false);
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight, nullptr, AddingOption_StartHidden);
+    m->addDockWidget(dock3, Location_OnRight);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->count(), 3);
+
+    dock1->setFloating(true);
+    dock1->setFloating(false);
+    dock2->deleteLater();
+    layout->checkSanity();
+    QVERIFY(Testing::waitForDeleted(dock2));
 }
 
 #include "tst_common.moc"
