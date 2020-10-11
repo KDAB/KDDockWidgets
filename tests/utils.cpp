@@ -115,7 +115,16 @@ std::unique_ptr<MainWindowBase> KDDockWidgets::Tests::createMainWindow(QVector<D
 {
     static int count = 0;
     count++;
-    auto m = std::unique_ptr<MainWindowType>(new MainWindowType(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None));
+
+    WidgetType *parent = nullptr;
+#ifdef KDDOCKWIDGETS_QTQUICK
+    auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
+    view->setSource(QUrl("qrc:/main.qml"));
+    view->show();
+    parent = view->rootObject();
+#endif
+
+    auto m = std::unique_ptr<MainWindowType>(new MainWindowType(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
     auto layout = m->multiSplitter();
     m->show();
     m->resize(QSize(700, 700));

@@ -979,11 +979,10 @@ void TestCommon::tst_negativeAnchorPosition3()
     auto dock3 = docks.at(3).createdDock;
 
     dock1->setFloating(true);
+    delete dock1->window();
+    delete dock3->window();
 
-    dock1->deleteLater();
-    dock3->deleteLater();
     layout->checkSanity();
-    Testing::waitForDeleted(dock3);
 }
 
 void TestCommon::tst_invalidAnchorGroup()
