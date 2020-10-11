@@ -101,6 +101,9 @@ KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQu
                                                 const QString &affinityName = {});
 KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QColor color = Qt::black);
 
+void nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo,
+                    KDDockWidgets::Location location);
+
 class NonClosableWidget : public QWidget
 {
 public:

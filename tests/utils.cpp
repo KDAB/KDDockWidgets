@@ -14,6 +14,7 @@
 #include "Config.h"
 #include "TitleBar_p.h"
 #include "FloatingWindow_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -225,4 +226,14 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, QWidget *receiver)
         qApp->sendEvent(receiver, &ev);
         QTest::qWait(2);
     }
+}
+
+void KDDockWidgets::Tests::nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo, Location location)
+{
+    auto frame = Config::self().frameworkWidgetFactory()->createFrame();
+    frame->addWidget(dock);
+    dock->frame()->setObjectName(dock->objectName());
+
+    dropArea->addWidget(frame, location, relativeTo);
+    QVERIFY(dropArea->checkSanity());
 }
