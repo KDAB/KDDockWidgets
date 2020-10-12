@@ -25,6 +25,7 @@
 #include <QCloseEvent>
 #include <QAbstractNativeEventFilter>
 #include <QWindow>
+#include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN)
 # include <Windows.h>
@@ -341,6 +342,10 @@ void FloatingWindow::onVisibleFrameCountChanged(int count)
 
 void FloatingWindow::updateTitleBarVisibility()
 {
+    if (m_updatingTitleBarVisibility)
+        return; // Break recursion
+
+    QScopedValueRollback<bool> guard(m_updatingTitleBarVisibility, true);
     updateTitleAndIcon();
 
     bool visible = true;
