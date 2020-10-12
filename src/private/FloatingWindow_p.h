@@ -143,6 +143,7 @@ private:
     bool m_disableSetVisible = false;
     bool m_deleteScheduled = false;
     bool m_inDtor = false;
+    bool m_updatingTitleBarVisibility = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
 };
