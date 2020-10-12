@@ -85,12 +85,16 @@ void FloatingWindowQuick::init()
         }
     });
 
-    m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
+    const QSize minSize(100, 100);
+    m_quickWindow->resize(minSize);
+    m_quickWindow->contentItem()->setSize(minSize);
+
 
     m_quickWindow->setTransientParent(candidateParentWindow());
-
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
     QWidgetAdapter::makeItemFillParent(this);
+
+    m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
 
     QQuickItem *visualItem = createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/FloatingWindow.qml"));
     Q_ASSERT(visualItem);

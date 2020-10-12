@@ -61,9 +61,6 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
            msg.contains(QLatin1String("Testing::")) ||
            msg.contains(QLatin1String("outside any known screen, using primary screen"))
 #ifdef KDDOCKWIDGETS_QTQUICK
-            // TODO: Debug why this happens
-            || msg.contains(QLatin1String("Layouting::ItemContainer::setSize_recursive"))
-
             // TODO: Fix later, not important right now
             || msg.contains(QLatin1String("Binding loop detected for property"))
 #endif
