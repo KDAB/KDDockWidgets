@@ -21,7 +21,6 @@
 
 void KDDockWidgets::registerQmlTypes()
 {
-    qDebug() << "Registering types";
     qmlRegisterType<DropAreaWithCentralFrame>("com.kdab.dockwidgets", 1, 0, "DropAreaWithCentralFrame");
     qmlRegisterType<MainWindowWrapper>("com.kdab.dockwidgets", 1, 0, "MainWindow");
 
