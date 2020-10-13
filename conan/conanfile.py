@@ -51,7 +51,7 @@ class KDDockWidgetsConan(ConanFile):
         self.cmake.definitions["KDDockWidgets_STATIC"] = self.options.build_static
         self.cmake.definitions["KDDockWidgets_EXAMPLES"] = self.options.build_examples
         self.cmake.definitions["KDDockWidgets_TESTS"] = self.options.build_tests
-        self.cmake.definitions["OPTION_BUILD_PYTHON_BINDINGS"] = self.options.build_python_bindings
+        self.cmake.definitions["KDDockWidgets_PYTHON_BINDINGS"] = self.options.build_python_bindings
         self.cmake.configure()
         self.cmake.build()
 

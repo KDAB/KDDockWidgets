@@ -83,7 +83,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/TabWidget_p.h
 )
 
-if(OPTION_QTQUICK)
+if(${PROJECT_NAME}_QTQUICK)
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       private/quick/DockWidgetQuick.cpp
       private/quick/QWidgetAdapter_quick.cpp
@@ -167,7 +167,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   endif()
 endif()
 
-if(OPTION_QTQUICK)
+if(${PROJECT_NAME}_QTQUICK)
   target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets Qt5::Quick Qt5::QuickControls2 kddockwidgets_multisplitter PRIVATE Qt5::GuiPrivate)
 else()
   target_link_libraries(kddockwidgets PUBLIC Qt5::Widgets kddockwidgets_multisplitter PRIVATE Qt5::GuiPrivate)
@@ -232,11 +232,11 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfig.cmake"
         DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets
 )
 
-if(OPTION_DEVELOPER_MODE)
+if(${PROJECT_NAME}_DEVELOPER_MODE)
   # Under developer mode since kddw might be a sub-folder of a project setting a different value for QT_DISABLE_DEPRECATED_BEFORE
   target_compile_definitions(kddockwidgets PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
-  if (NOT OPTION_QTQUICK) # TODO: We can support it
+  if (NOT ${PROJECT_NAME}_QTQUICK) # TODO: We can support it
     add_executable(kddockwidgets_linter layoutlinter_main.cpp)
     target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt5::Widgets)
   endif()
