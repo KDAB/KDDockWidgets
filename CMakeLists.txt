@@ -27,19 +27,24 @@
 #  Build the API documentation.
 #  Default=false
 #
-# -DOPTION_DEVELOPER_MODE=[true|false]
+# -DKDDockWidgets_DEVELOPER_MODE=[true|false]
 #  Configure the build for a developer setup.
 #  Enables some features that are not geared towards end-users.
 #  Forces the test harness to be built.
 #  Default=false
 #
-# -DOPTION_BUILD_PYTHON_BINDINGS=[true|false]
+# -DKDDockWidgets_QTQUICK == IN DEVELOPMENT. DO NOT USE! ==
+#  Build for QtQuick instead of QtWidgets
+#  Default=false
+#
+# -DKDDockWidgets_PYTHON_BINDINGS=[true|false]
 #  Build/Generate python bindings.  Always false for Debug builds
 #  Default=false
 #
-# -DPYTHON_BINDINGS_INSTALL_PREFIX=[path]
+# -DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=[path]
 #  alternative install path for python bindings
 #  Default=CMAKE_INSTALL_PREFIX
+#
 
 cmake_minimum_required(VERSION 3.7)
 if(POLICY CMP0020)
@@ -49,10 +54,12 @@ if(POLICY CMP0042)
   cmake_policy(SET CMP0042 NEW)
 endif()
 
-if("${CMAKE_INSTALL_PREFIX}" STREQUAL "")
-  set(USE_DEFAULT_INSTALL_LOCATION True)
-else()
-  set(USE_DEFAULT_INSTALL_LOCATION False)
+set(KDAB_INSTALL True)
+if((NOT DEFINED ${USE_DEFAULT_INSTALL_LOCATION}) OR (NOT ${USE_DEFAULT_INSTALL_LOCATION}))
+  if(NOT "${CMAKE_INSTALL_PREFIX}" STREQUAL "")
+    set(KDAB_INSTALL False)
+  endif()
+  set(USE_DEFAULT_INSTALL_LOCATION ${KDAB_INSTALL} CACHE INTERNAL "Install to default KDAB Location" FORCE)
 endif()
 
 if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
@@ -72,9 +79,9 @@ set(${PROJECT_NAME}_SOVERSION "1.2")
 
 include(FeatureSummary)
 
-option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
-option(OPTION_BUILD_PYTHON_BINDINGS "Build python bindings" OFF)
-if(OPTION_BUILD_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC))
+option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
+option(${PROJECT_NAME}_PYTHON_BINDINGS "Build python bindings" OFF)
+if(${PROJECT_NAME}_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC))
   message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
 endif()
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
@@ -82,11 +89,11 @@ option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 option(${PROJECT_NAME}_DOCS "Build the API documentation" OFF)
 
 #Always build the test harness in developer-mode
-if(OPTION_DEVELOPER_MODE)
+if(${PROJECT_NAME}_DEVELOPER_MODE)
   set(${PROJECT_NAME}_TESTS ON)
 endif()
 
-# option(OPTION_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
+#option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
 find_package(Qt5Widgets 5.9 REQUIRED)
 
@@ -102,7 +109,7 @@ include(InstallLocation)
 include(QtInstallPaths) #to set QT_INSTALL_FOO variables
 
 macro(set_compiler_flags targetName)
-  if(OPTION_DEVELOPER_MODE)
+  if(${PROJECT_NAME}_DEVELOPER_MODE)
     target_compile_definitions(${targetName} PRIVATE DOCKS_DEVELOPER_MODE QT_FORCE_ASSERTS)
     if(NOT MSVC)
       target_compile_options(${targetName} PRIVATE -Wall -Wextra -Werror -Wno-error=deprecated-declarations)
@@ -110,7 +117,7 @@ macro(set_compiler_flags targetName)
   endif()
 endmacro()
 
-if(OPTION_QTQUICK)
+if(${PROJECT_NAME}_QTQUICK)
   find_package(Qt5Quick)
   find_package(Qt5QuickControls2)
   add_definitions(-DKDDOCKWIDGETS_QTQUICK)
@@ -145,12 +152,12 @@ install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
 install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 
 add_subdirectory(src)
-if(OPTION_BUILD_PYTHON_BINDINGS)
+if(${PROJECT_NAME}_PYTHON_BINDINGS)
   add_subdirectory(python)
 endif()
 
 if(${PROJECT_NAME}_EXAMPLES)
-  if (OPTION_QTQUICK)
+  if (${PROJECT_NAME}_QTQUICK)
     add_subdirectory(examples/qtquick)
     set_compiler_flags(kddockwidgets_example_quick)
   else()
@@ -161,13 +168,13 @@ if(${PROJECT_NAME}_EXAMPLES)
   endif()
 endif()
 
-if(OPTION_DEVELOPER_MODE)
+if(${PROJECT_NAME}_DEVELOPER_MODE)
   include(ECMEnableSanitizers)
   if(${PROJECT_NAME}_TESTS)
     enable_testing()
     add_subdirectory(tests)
 
-    if (NOT OPTION_QTQUICK)
+    if (NOT ${PROJECT_NAME}_QTQUICK)
         #Require Qt5.15.1 or higher to run the tests_launcher tests on Mac
         if(NOT APPLE OR Qt5Widgets_VERSION VERSION_GREATER 5.15.0)
         # tst_docks.exe is pretty big (140 tests), so split it in 6 runs so we can use threads.

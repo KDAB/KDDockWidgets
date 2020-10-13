@@ -12,7 +12,7 @@
 include(CMakeFindDependencyMacro)
 
 find_dependency(Qt5Widgets REQUIRED)
-if (@OPTION_QTQUICK@)
+if (@KDDockWidgets_QTQUICK@)
     find_dependency(Qt5Quick REQUIRED)
 endif()
 

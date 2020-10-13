@@ -114,13 +114,13 @@ For more info visit https://doc.qt.io/qtforpython/shiboken2/gettingstarted.html
 Once QtForPython is installed you are ready to generate the PySide bindings
 for KDDockwWidgets.
 
-Next pass `-DOPTION_BUILD_PYTHON_BINDINGS=ON` to CMake, followed by the
+Next pass `-DKDDockWidgets_PYTHON_BINDINGS=ON` to CMake, followed by the
 make command.
 
 The bindings will be installed to the passed `-DCMAKE_INSTALL_PREFIX`, which
 might require setting the `PYTHONPATH` env variable to point to that path when
 running applications.  Alternatively, configure the bindings install location
-by passing `-DPYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.8/site-packages`
+by passing `-DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.8/site-packages`
 to CMake (adjust to the python path on your system).
 
 To run the KDDW python example

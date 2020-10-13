@@ -38,7 +38,7 @@ target_link_libraries(tst_common kddockwidgets kddockwidgets_multisplitter Qt5::
 set_compiler_flags(tst_common)
 
 # tst_docks
-if (NOT OPTION_QTQUICK)
+if (NOT ${PROJECT_NAME}_QTQUICK)
     add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
     target_link_libraries(tst_docks kddockwidgets kddockwidgets_multisplitter Qt5::Widgets Qt5::Test)
     set_compiler_flags(tst_docks)
