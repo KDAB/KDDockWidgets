@@ -21,6 +21,7 @@
 #include "multisplitter/Widget_qwidget.h"
 #include "DockRegistry_p.h"
 #include "FrameworkWidgetFactory.h"
+#include "Utils_p.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -191,10 +192,18 @@ void Config::Private::fixFlags()
     // Not supported on macOS:
     m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
 #else
-    // Not supported on linux.
-    // On Linux, dragging the title bar of a window doesn't generate NonClientMouseEvents
-    m_flags = m_flags & ~Flag_NativeTitleBar;
-    m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
+    if (KDDockWidgets::isWayland()) {
+        // Native title bar is forced on Wayland. Needed for moving the window.
+        // The inner KDDW title bar is used for DnD.
+        m_flags |= Flag_NativeTitleBar;
+    } else {
+        // Not supported on linux/X11
+        // On Linux, dragging the title bar of a window doesn't generate NonClientMouseEvents
+        // at least with KWin anyway. We can make this more granular and allow it for other
+        // X11 window managers
+        m_flags = m_flags & ~Flag_NativeTitleBar;
+        m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
+    }
 #endif
 
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)

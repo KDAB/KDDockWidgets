@@ -30,6 +30,11 @@
 
 namespace KDDockWidgets {
 
+inline bool isWayland()
+{
+    return qApp->platformName() == QLatin1String("wayland");
+}
+
 inline bool isLeftButtonPressed()
 {
     return qApp->mouseButtons() & Qt::LeftButton;
