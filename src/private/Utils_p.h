@@ -45,6 +45,17 @@ inline bool usesNativeTitleBar()
     return Config::self().flags() & Config::Flag_NativeTitleBar;
 }
 
+inline bool usesClientTitleBar()
+{
+    if (isWayland()) {
+        // Wayland has both client and native title bars, due to limitations.
+        return true;
+    }
+
+    // All other platforms have either the OS native title bar or a Qt title bar (aka client title bar).
+    return !usesNativeTitleBar();
+}
+
 inline bool usesAeroSnapWithCustomDecos()
 {
     return Config::self().flags() & Config::Flag_AeroSnapWithClientDecos;
