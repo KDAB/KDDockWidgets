@@ -29,7 +29,8 @@ class EventFilter : public QObject
 {
 public:
     EventFilter(QEvent::Type type) : m_type(type) {}
-    bool eventFilter(QObject *, QEvent *e)
+    ~EventFilter() override;
+    bool eventFilter(QObject *, QEvent *e) override
     {
         if (e->type() == m_type)
             m_got = true;
@@ -40,6 +41,8 @@ public:
     const QEvent::Type m_type;
     bool m_got = false;
 };
+
+EventFilter::~EventFilter() = default;
 
 static bool isGammaray()
 {
@@ -142,3 +145,5 @@ void Testing::setWarningObserver(WarningObserver *observer)
 {
     s_warningObserver = observer;
 }
+
+WarningObserver::~WarningObserver() = default;

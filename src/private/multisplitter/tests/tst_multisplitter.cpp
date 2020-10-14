@@ -207,9 +207,7 @@ class MyHostWidget : public QWidget
         s_testObject->m_hostWidgets << this;
     }
 
-    ~MyHostWidget() {
-        s_testObject->m_hostWidgets.removeOne(this);
-    }
+    ~MyHostWidget() override;
 
     void paintEvent(QPaintEvent *) override
     {
@@ -217,6 +215,10 @@ class MyHostWidget : public QWidget
         p.fillRect(QWidget::rect(), Qt::yellow);
     }
 };
+
+MyHostWidget::~MyHostWidget() {
+    s_testObject->m_hostWidgets.removeOne(this);
+}
 
 static bool serializeDeserializeTest(const std::unique_ptr<ItemContainer> &root)
 {

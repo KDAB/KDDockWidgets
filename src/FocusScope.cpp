@@ -40,6 +40,8 @@ public:
         m_inCtor = false;
     }
 
+    ~Private() override;
+
     void setIsFocused(bool);
     void onFocusObjectChanged(QObject *);
     bool isInFocusScope(WidgetType *) const;
@@ -51,6 +53,9 @@ public:
     QPointer<WidgetType> m_lastFocusedInScope;
 };
 
+FocusScope::Private::~Private()
+{
+}
 
 FocusScope::FocusScope(QWidgetAdapter *thisWidget)
     : d(new Private(this, thisWidget))

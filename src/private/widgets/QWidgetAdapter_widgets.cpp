@@ -106,3 +106,5 @@ QWidget *KDDockWidgets::Private::widgetForWindow(QWindow *window)
 
     return window->property("kddockwidgets_qwidget").value<QWidget*>();
 }
+
+LayoutGuestWidget::~LayoutGuestWidget() = default;
