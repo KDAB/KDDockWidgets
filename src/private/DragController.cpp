@@ -294,13 +294,39 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
     return true;
 }
 
+StateDraggingWayland::StateDraggingWayland(DragController *parent)
+    : StateDragging(parent)
+{
+}
+
+StateDraggingWayland::~StateDraggingWayland()
+{
+}
+
+void StateDraggingWayland::onEntry(QEvent *)
+{
+    // Create a QDrag here
+}
+
+bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
+{
+    Q_EMIT q->dragCanceled();
+    return true;
+}
+
+bool StateDraggingWayland::handleMouseMove(QPoint /*globalPos*/)
+{
+    return true;
+}
+
 DragController::DragController(QObject *)
 {
     qCDebug(creation) << "DragController()";
 
     auto stateNone = new StateNone(this);
     auto statepreDrag = new StatePreDrag(this);
-    auto stateDragging = new StateDragging(this);
+    auto stateDragging = isWayland() ? new StateDraggingWayland(this)
+                                     : new StateDragging(this);
 
     stateNone->addTransition(this, &DragController::mousePressed, statepreDrag);
     statepreDrag->addTransition(this, &DragController::dragCanceled, stateNone);

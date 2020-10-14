@@ -128,12 +128,25 @@ public:
     bool handleMouseButtonRelease(QPoint) override;
 };
 
+// Used on all platforms except Wayland. @see StateDraggingWayland
 class StateDragging : public StateBase
 {
     Q_OBJECT
 public:
     explicit StateDragging(DragController *parent);
     ~StateDragging() override;
+    void onEntry(QEvent *) override;
+    bool handleMouseButtonRelease(QPoint globalPos) override;
+    bool handleMouseMove(QPoint globalPos) override;
+};
+
+// Used on wayland only to use QDrag instead of setting geometry on mouse-move.
+class StateDraggingWayland : public StateDragging
+{
+    Q_OBJECT
+public:
+    explicit StateDraggingWayland(DragController *parent);
+    ~StateDraggingWayland() override;
     void onEntry(QEvent *) override;
     bool handleMouseButtonRelease(QPoint globalPos) override;
     bool handleMouseMove(QPoint globalPos) override;
