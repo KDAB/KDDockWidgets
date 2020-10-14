@@ -11,7 +11,7 @@ from conans import ConanFile, CMake, tools
 
 class KDDockWidgetsConan(ConanFile):
     name = "kddockwidgets"
-    version = "1.0.0"
+    version = "1.1.0"
     default_user = "kdab"
     default_channel = "stable"
     license = ("https://raw.githubusercontent.com/KDAB/KDDockWidgets/master/LICENSES/GPL-2.0-only.txt",
