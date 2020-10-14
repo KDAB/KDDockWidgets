@@ -34,10 +34,14 @@ public:
     ///@brief grabs or releases the mouse
     void grabMouse(bool grab);
 
+    ///@brief returns the affinities of the window being dragged
+    QStringList affinities() const;
+
 private:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<FloatingWindow> m_floatingWindow;
     QPointer<QWidgetOrQuick> m_draggable;
+    const QStringList m_affinities;
 };
 }
 

@@ -45,6 +45,7 @@ static Draggable* bestDraggable(Draggable *draggable)
 WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
     : m_floatingWindow(fw)
     , m_draggable(bestDraggable(draggable)->asWidget())
+    , m_affinities(fw->affinities())
 {
     init();
 
@@ -81,4 +82,9 @@ void WindowBeingDragged::grabMouse(bool grab)
         DragController::instance()->grabMouseFor(m_draggable);
     else
         DragController::instance()->releaseMouse(m_draggable);
+}
+
+QStringList WindowBeingDragged::affinities() const
+{
+    return m_affinities;
 }
