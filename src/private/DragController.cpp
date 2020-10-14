@@ -89,6 +89,11 @@ StateBase::StateBase(DragController *parent)
 {
 }
 
+bool StateBase::isActiveState() const
+{
+    return q->activeState() == this;
+}
+
 StateBase::~StateBase() = default;
 
 StateNone::StateNone(DragController *parent)

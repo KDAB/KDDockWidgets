@@ -101,6 +101,9 @@ public:
     virtual bool handleMouseMove(QPoint /*globalPos*/) { return false; }
     virtual bool handleMouseButtonRelease(QPoint /*globalPos*/) { return false; }
 
+    // Returns whether this is the current state
+    bool isActiveState() const;
+
     DragController *const q;
 };
 
