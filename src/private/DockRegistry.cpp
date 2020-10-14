@@ -17,6 +17,7 @@
 #include "QWidgetAdapter.h"
 #include "Config.h"
 #include "SideBar_p.h"
+#include "WindowBeingDragged_p.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -188,6 +189,14 @@ bool DockRegistry::isProbablyObscured(QWindow *window, FloatingWindow *exclude) 
     }
 
     return false;
+}
+
+bool DockRegistry::isProbablyObscured(QWindow *target, WindowBeingDragged *exclude) const
+{
+    FloatingWindow *fw = exclude ? exclude->floatingWindow()
+                                 : nullptr; // It's null on Wayland. On wayland obscuring never happens anyway, so not a problem.
+
+    return isProbablyObscured(target, fw);
 }
 
 SideBarLocation DockRegistry::sideBarLocationForDockWidget(const DockWidgetBase *dw) const

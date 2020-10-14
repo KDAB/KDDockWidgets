@@ -389,7 +389,7 @@ void DragController::releaseMouse(QWidgetOrQuick *target)
     }
 }
 
-FloatingWindow *DragController::windowBeingDragged() const
+FloatingWindow *DragController::floatingWindowBeingDragged() const
 {
     return m_windowBeingDragged ? m_windowBeingDragged->floatingWindow()
                                 : nullptr;
@@ -399,6 +399,11 @@ void DragController::enableFallbackMouseGrabber()
 {
     if (!m_fallbackMouseGrabber)
         m_fallbackMouseGrabber = new FallbackMouseGrabber(this);
+}
+
+WindowBeingDragged *DragController::windowBeingDragged() const
+{
+    return m_windowBeingDragged.get();
 }
 
 static QMouseEvent *mouseEvent(QEvent *e)

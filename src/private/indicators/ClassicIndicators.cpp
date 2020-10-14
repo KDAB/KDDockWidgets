@@ -92,15 +92,17 @@ void ClassicIndicators::updateIndicatorsVisibility(bool visible)
 
     m_innerIndicatorsVisible = visible && m_hoveredFrame;
 
+    WindowBeingDragged *windowBeingDragged = DragController::instance()->windowBeingDragged();
+
     // If there's only 1 frame in the layout, the outter indicators are redundant, as they do the same thing as the internal ones.
     // But there might be another window obscuring our target, so it's useful to show the outter indicators in this case
     m_outterIndicatorsVisible = visible && (!isTheOnlyFrame ||
-                                            DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), DragController::instance()->windowBeingDragged()));
+                                            DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), windowBeingDragged));
 
 
     // Only allow to dock to center if the affinities match
-    m_tabIndicatorVisible = m_innerIndicatorsVisible && m_windowBeingDragged &&
-                            DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), m_windowBeingDragged->affinities());
+    m_tabIndicatorVisible = m_innerIndicatorsVisible && windowBeingDragged &&
+                            DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities());
 
     Q_EMIT innerIndicatorsVisibleChanged();
     Q_EMIT outterIndicatorsVisibleChanged();
@@ -161,7 +163,7 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     case DropLocation_Bottom:
         if (!m_hoveredFrame) {
             qWarning() << "ClassicIndicators::setCurrentDropLocation: frame is null. location=" << location
-                       << "; windowBeingDragged=" << m_windowBeingDragged
+                       << "; isHovered=" << isHovered()
                        << "; dropArea->widgets=" << m_dropArea->items();
             Q_ASSERT(false);
             return;
@@ -177,7 +179,9 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
         break;
     }
 
-    QRect rect = m_dropArea->rectForDrop(m_windowBeingDragged, multisplitterLocation,
+    auto windowBeingDragged = DragController::instance()->windowBeingDragged();
+
+    QRect rect = m_dropArea->rectForDrop(windowBeingDragged->floatingWindow(), multisplitterLocation,
                                          m_dropArea->itemForFrame(relativeToFrame));
 
     m_rubberBand->setGeometry(rect);

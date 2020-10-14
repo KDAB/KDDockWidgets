@@ -52,7 +52,10 @@ public:
     void grabMouseFor(QWidgetOrQuick *);
     void releaseMouse(QWidgetOrQuick *);
 
-    FloatingWindow *windowBeingDragged() const;
+    FloatingWindow *floatingWindowBeingDragged() const;
+
+    ///@brief Returns the window being dragged
+    WindowBeingDragged* windowBeingDragged() const;
 
     /// Experimental, internal, not for general use.
     void enableFallbackMouseGrabber();

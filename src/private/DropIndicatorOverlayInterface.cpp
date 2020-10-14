@@ -13,7 +13,6 @@
 
 #include "Frame_p.h"
 #include "DropArea_p.h"
-#include "FloatingWindow_p.h"
 
 using namespace KDDockWidgets;
 
@@ -25,20 +24,20 @@ DropIndicatorOverlayInterface::DropIndicatorOverlayInterface(DropArea *dropArea)
     setObjectName(QStringLiteral("DropIndicatorOverlayInterface"));
 }
 
-void DropIndicatorOverlayInterface::setWindowBeingDragged(const FloatingWindow *window)
+void DropIndicatorOverlayInterface::setWindowBeingDragged(bool is)
 {
-    if (window == m_windowBeingDragged)
+    if (is == m_draggedWindowIsHovering)
         return;
 
-    m_windowBeingDragged = window;
-    if (m_windowBeingDragged) {
+    m_draggedWindowIsHovering = is;
+    if (is) {
         setGeometry(m_dropArea->QWidgetAdapter::rect());
         raise();
     } else {
         setHoveredFrame(nullptr);
     }
 
-    setVisible(m_windowBeingDragged != nullptr);
+    setVisible(is);
     updateVisibility();
 }
 
@@ -70,7 +69,7 @@ void DropIndicatorOverlayInterface::setHoveredFrame(Frame *frame)
 
 bool DropIndicatorOverlayInterface::isHovered() const
 {
-    return m_windowBeingDragged != nullptr;
+    return m_draggedWindowIsHovering;
 }
 
 DropIndicatorOverlayInterface::DropLocation DropIndicatorOverlayInterface::currentDropLocation() const

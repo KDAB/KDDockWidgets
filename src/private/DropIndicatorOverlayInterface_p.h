@@ -19,7 +19,6 @@
 
 namespace KDDockWidgets {
 
-class FloatingWindow;
 class DropArea;
 
 class DOCKS_EXPORT DropIndicatorOverlayInterface : public QWidgetAdapter
@@ -47,7 +46,7 @@ public:
 
     explicit DropIndicatorOverlayInterface(DropArea *dropArea);
     void setHoveredFrame(Frame *);
-    void setWindowBeingDragged(const FloatingWindow *);
+    void setWindowBeingDragged(bool);
     QRect hoveredFrameRect() const;
     bool isHovered() const;
     DropLocation currentDropLocation() const;
@@ -77,8 +76,8 @@ protected:
     virtual void updateVisibility() {};
 
     Frame *m_hoveredFrame = nullptr;
-    QPointer<const FloatingWindow> m_windowBeingDragged;
     DropArea *const m_dropArea;
+    bool m_draggedWindowIsHovering = false;
 };
 }
 

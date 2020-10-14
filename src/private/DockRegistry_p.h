@@ -179,6 +179,9 @@ public:
     /// @param exclude This window should not be counted as an obscurer. (It's being dragged).
     bool isProbablyObscured(QWindow *target, FloatingWindow *exclude) const;
 
+    /// @overload
+    bool isProbablyObscured(QWindow *target, WindowBeingDragged *exclude) const;
+
     ///@brief Returns whether the specified dock widget is in a side bar, and which.
     /// SideBarLocation::None is returned if it's not in a sidebar.
     /// This is only relevant when using the auto-hide and side-bar feature.
