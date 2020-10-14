@@ -32,6 +32,8 @@ public:
         init();
     }
 
+    ~MyTitleBar() override;
+
     void init()
     {
         setFixedHeight(60);
@@ -56,6 +58,8 @@ public:
     }
 };
 
+MyTitleBar::~MyTitleBar() = default;
+
 // Inheriting from SeparatorWidget instead of Separator as it handles moving and mouse cursor changing
 class MySeparator : public Layouting::SeparatorWidget
 {
@@ -65,12 +69,16 @@ public:
     {
     }
 
+    ~MySeparator() override;
+
     void paintEvent(QPaintEvent *) override
     {
         QPainter p(this);
         p.fillRect(QWidget::rect(), Qt::cyan);
     }
 };
+
+MySeparator::~MySeparator() = default;
 
 KDDockWidgets::TitleBar * CustomWidgetFactory::createTitleBar(KDDockWidgets::Frame *frame) const
 {

@@ -79,6 +79,8 @@ public:
         , LayoutGuestWidgetBase(this)
     {
     }
+
+  ~LayoutGuestWidget() override;
 };
 }
 

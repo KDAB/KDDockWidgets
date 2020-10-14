@@ -206,8 +206,12 @@ public:
     {
     }
 
+    ~EmbeddedWindow() override;
+
     MainWindow *const mainWindow;
 };
+
+EmbeddedWindow::~EmbeddedWindow() = default;
 
 struct ExpectedAvailableSize // struct for testing MultiSplitterLayout::availableLengthForDrop()
 {

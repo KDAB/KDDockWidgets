@@ -30,7 +30,7 @@ class FocusScope
 public:
     ///@brief constructor
     explicit FocusScope(QWidgetAdapter *thisWidget);
-    ~FocusScope();
+    virtual ~FocusScope();
 
     ///@brief Returns true if this FocusScope is focused.
     ///This is similar to the QWidget::hasFocus(), except that it counts with the children being focused too.

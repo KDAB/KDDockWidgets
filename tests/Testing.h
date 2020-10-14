@@ -39,6 +39,7 @@ namespace Testing {
     class WarningObserver
     {
     public:
+        virtual ~WarningObserver();
         virtual void onFatal() = 0;
     };
 
