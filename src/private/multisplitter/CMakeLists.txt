@@ -98,7 +98,11 @@ target_include_directories(kddockwidgets_multisplitter
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-set_target_properties(kddockwidgets_multisplitter PROPERTIES VERSION ${${PROJECT_NAME}_SOVERSION})
+set_target_properties(kddockwidgets_multisplitter PROPERTIES
+  SOVERSION ${${PROJECT_NAME}_SOVERSION}
+  VERSION ${${PROJECT_NAME}_VERSION}
+)
+
 #version libraries on Windows
 if(WIN32)
   set(postfix ${${PROJECT_NAME}_VERSION_MAJOR})
