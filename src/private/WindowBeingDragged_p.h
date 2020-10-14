@@ -26,6 +26,11 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS WindowBeingDragged
 {
 public:
     explicit WindowBeingDragged(FloatingWindow *fw, Draggable *draggable);
+#if DOCKS_DEVELOPER_MODE
+    // For tests.
+    explicit WindowBeingDragged(FloatingWindow *fw);
+#endif
+
     ~WindowBeingDragged();
     void init();
 

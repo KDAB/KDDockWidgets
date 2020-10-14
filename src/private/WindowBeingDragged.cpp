@@ -18,6 +18,9 @@ using namespace KDDockWidgets;
 
 static Draggable* bestDraggable(Draggable *draggable)
 {
+    if (!draggable)
+        return nullptr;
+
     // When de detach a title bar it will get hidden and we only the title bar of the FloatingWindow is visible
     /// Apparently that causes problems with grabbing the mouse, so instead use a visible draggable.
     // grabbing mouse on an hidden window works usually, it's some edge case on Windows with MFC.
@@ -54,6 +57,17 @@ WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
     if (!qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity))
         fw->setWindowOpacity(opacity);
 }
+#if DOCKS_DEVELOPER_MODE
+
+// Just used by tests
+WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw)
+    : m_floatingWindow(fw)
+    , m_draggable(nullptr)
+    , m_affinities(fw->affinities())
+{
+}
+
+#endif
 
 WindowBeingDragged::~WindowBeingDragged()
 {

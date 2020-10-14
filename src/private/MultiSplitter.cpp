@@ -31,6 +31,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "multisplitter/Widget_qwidget.h"
 #include "DropArea_p.h"
+#include "WindowBeingDragged_p.h"
 
 #include <QScopedValueRollback>
 
@@ -436,10 +437,11 @@ Layouting::ItemContainer *MultiSplitter::rootItem() const
     return m_rootItem;
 }
 
-QRect MultiSplitter::rectForDrop(const FloatingWindow *fw, Location location,
+QRect MultiSplitter::rectForDrop(const WindowBeingDragged *wbd, Location location,
                                  const Layouting::Item *relativeTo) const
 {
     Layouting::Item item(nullptr);
+    FloatingWindow *fw = wbd ? wbd->floatingWindow() : nullptr;
     if (!fw)
         return {};
 

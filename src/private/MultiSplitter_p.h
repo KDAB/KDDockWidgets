@@ -40,7 +40,7 @@ namespace KDDockWidgets {
 class MainWindowBase;
 class FloatingWindow;
 class Frame;
-
+class WindowBeingDragged;
 
 /**
  * MultiSplitter is simply a wrapper around Layouting::Item in which the hosted widgets are
@@ -131,7 +131,7 @@ public:
      * Excludes the Separator thickness, result is actually smaller than what needed. In other words,
      * the result will be exactly the same as the geometry the widget will get.
      */
-    QRect rectForDrop(const FloatingWindow *, KDDockWidgets::Location location,
+    QRect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
                       const Layouting::Item *relativeTo) const;
 
     bool deserialize(const LayoutSaver::MultiSplitter &);

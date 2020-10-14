@@ -2930,7 +2930,7 @@ void TestDocks::tst_negativeAnchorPosition6()
     layout->checkSanity();
 
     Item *centralItem = m->dropArea()->centralFrame();
-    layout->rectForDrop(d2->floatingWindow(), Location_OnTop, centralItem);
+    layout->rectForDrop(nullptr, Location_OnTop, centralItem);
     layout->checkSanity();
 
     delete m->window();
@@ -3443,7 +3443,10 @@ void TestDocks::tst_rectForDropCrash()
 
     m->addDockWidget(d1, Location_OnTop);
     Item *centralItem = m->dropArea()->centralFrame();
-    layout->rectForDrop(d2->floatingWindow(), Location_OnTop, centralItem);
+    {
+        WindowBeingDragged wbd2(d2->floatingWindow());
+        layout->rectForDrop(&wbd2, Location_OnTop, centralItem);
+    }
     layout->checkSanity();
 
     delete m->window();
@@ -5095,8 +5098,11 @@ void TestDocks::tst_maximumSizePolicy()
     // Make the floating window big, and see if the suggested highlight is still small
     dock1->window()->resize(QSize(dock1->width(), 800));
 
-    const QRect highlightRect = m1->multiSplitter()->rectForDrop(dock1->floatingWindow(), Location_OnBottom, nullptr);
-    QVERIFY(highlightRect.height() <= maxHeight + tollerance);
+    {
+        WindowBeingDragged wbd1(dock1->floatingWindow());
+        const QRect highlightRect = m1->multiSplitter()->rectForDrop(&wbd1, Location_OnBottom, nullptr);
+        QVERIFY(highlightRect.height() <= maxHeight + tollerance);
+    }
 
     // Now drop it, and check too
     m1->addDockWidget(dock1, Location_OnBottom);

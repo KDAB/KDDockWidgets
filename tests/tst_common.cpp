@@ -20,6 +20,7 @@
 #include "TitleBar_p.h"
 #include "Position_p.h"
 #include "DropAreaWithCentralFrame_p.h"
+#include "WindowBeingDragged_p.h"
 
 #include <QtTest/QtTest>
 #include <QObject>
@@ -352,8 +353,11 @@ void TestCommon::tst_sizeAfterRedock()
     DropArea *dropArea = fw1->dropArea();
 
     MultiSplitter *ms1 = fw1->multiSplitter();
-    const QRect suggestedDropRect = ms1->rectForDrop(oldFw2, Location_OnBottom, nullptr);
-    QCOMPARE(suggestedDropRect.height(), height2);
+    {
+        WindowBeingDragged wbd2(oldFw2);
+        const QRect suggestedDropRect = ms1->rectForDrop(&wbd2, Location_OnBottom, nullptr);
+        QCOMPARE(suggestedDropRect.height(), height2);
+    }
 
     dropArea->drop(dw2->floatingWindow(), Location_OnBottom, nullptr);
 

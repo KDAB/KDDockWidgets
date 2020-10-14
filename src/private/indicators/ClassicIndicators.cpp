@@ -181,7 +181,7 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
 
     auto windowBeingDragged = DragController::instance()->windowBeingDragged();
 
-    QRect rect = m_dropArea->rectForDrop(windowBeingDragged->floatingWindow(), multisplitterLocation,
+    QRect rect = m_dropArea->rectForDrop(windowBeingDragged, multisplitterLocation,
                                          m_dropArea->itemForFrame(relativeToFrame));
 
     m_rubberBand->setGeometry(rect);
