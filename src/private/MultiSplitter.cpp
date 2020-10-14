@@ -441,14 +441,12 @@ QRect MultiSplitter::rectForDrop(const WindowBeingDragged *wbd, Location locatio
                                  const Layouting::Item *relativeTo) const
 {
     Layouting::Item item(nullptr);
-    FloatingWindow *fw = wbd ? wbd->floatingWindow() : nullptr;
-    if (!fw)
+    if (!wbd)
         return {};
 
-    Layouting::ItemContainer *root = fw->dropArea()->rootItem();
-    item.setSize(fw->size().boundedTo(root->maxSizeHint()));
-    item.setMinSize(root->minSize());
-    item.setMaxSizeHint(root->maxSizeHint());
+    item.setSize(wbd->size().boundedTo(wbd->maxSize()));
+    item.setMinSize(wbd->minSize());
+    item.setMaxSizeHint(wbd->maxSize());
 
     Layouting::ItemContainer *container = relativeTo ? relativeTo->parentContainer()
                                                      : m_rootItem;

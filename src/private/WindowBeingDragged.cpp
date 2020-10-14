@@ -13,6 +13,7 @@
 #include "DragController_p.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
+#include "DropArea_p.h"
 
 using namespace KDDockWidgets;
 
@@ -101,4 +102,32 @@ void WindowBeingDragged::grabMouse(bool grab)
 QStringList WindowBeingDragged::affinities() const
 {
     return m_affinities;
+}
+
+QSize WindowBeingDragged::size() const
+{
+    if (m_floatingWindow)
+        return m_floatingWindow->size();
+
+    return QSize();
+}
+
+QSize WindowBeingDragged::minSize() const
+{
+    if (m_floatingWindow) {
+        Layouting::ItemContainer *root = m_floatingWindow->dropArea()->rootItem();
+        return root->minSize();
+    }
+
+    return {};
+}
+
+QSize WindowBeingDragged::maxSize() const
+{
+    if (m_floatingWindow) {
+        Layouting::ItemContainer *root = m_floatingWindow->dropArea()->rootItem();
+        return root->maxSizeHint();
+    }
+
+    return {};
 }

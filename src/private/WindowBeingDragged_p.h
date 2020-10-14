@@ -42,6 +42,15 @@ public:
     ///@brief returns the affinities of the window being dragged
     QStringList affinities() const;
 
+    ///@brief size of the window being dragged contents
+    QSize size() const;
+
+    /// @brief returns the min-size of the window being dragged contents
+    QSize minSize() const;
+
+    /// @brief returns the max-size of the window being dragged contents
+    QSize maxSize() const;
+
 private:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<FloatingWindow> m_floatingWindow;
