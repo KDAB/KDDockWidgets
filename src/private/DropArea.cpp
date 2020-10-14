@@ -174,7 +174,7 @@ void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
     layoutEqually(item->parentContainer());
 }
 
-void DropArea::hover(FloatingWindow *floatingWindow, QPoint globalPos)
+void DropArea::hover(WindowBeingDragged *floatingWindow, QPoint globalPos)
 {
     if (!validateAffinity(floatingWindow))
         return;
@@ -203,9 +203,12 @@ static bool isOutterLocation(DropIndicatorOverlayInterface::DropLocation locatio
     }
 }
 
-bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
+bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 {
-    if (droppedWindow == window()) {
+    FloatingWindow *floatingWindow = droppedWindow ? droppedWindow->floatingWindow()
+                                                   : nullptr;
+
+    if (floatingWindow == window()) {
         qWarning() << "Refusing to drop onto itself"; // Doesn't happen
         return false;
     }
@@ -225,7 +228,7 @@ bool DropArea::drop(FloatingWindow *droppedWindow, QPoint globalPos)
         return false;
     }
 
-    return drop(droppedWindow, acceptingFrame, droploc);
+    return drop(floatingWindow, acceptingFrame, droploc);
 }
 
 bool DropArea::drop(FloatingWindow *droppedWindow, Frame *acceptingFrame,

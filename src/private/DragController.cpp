@@ -238,7 +238,7 @@ bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
     }
 
     if (q->m_currentDropArea) {
-        if (q->m_currentDropArea->drop(floatingWindow, globalPos)) {
+        if (q->m_currentDropArea->drop(q->m_windowBeingDragged.get(), globalPos)) {
             Q_EMIT q->dropped();
         } else {
             qCDebug(state) << "StateDragging: Bailling out, drop not accepted";
@@ -286,7 +286,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
             }
         }
 
-        dropArea->hover(fw, globalPos);
+        dropArea->hover(q->m_windowBeingDragged.get(), globalPos);
     }
 
     q->m_currentDropArea = dropArea;

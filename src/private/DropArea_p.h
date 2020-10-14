@@ -44,9 +44,9 @@ public:
     ~DropArea();
 
     void removeHover();
-    void hover(FloatingWindow *floatingWindow, QPoint globalPos);
+    void hover(WindowBeingDragged *floatingWindow, QPoint globalPos);
     ///@brief Called when a user drops a widget via DND
-    bool drop(FloatingWindow *droppedWindow, QPoint globalPos);
+    bool drop(WindowBeingDragged *droppedWindow, QPoint globalPos);
     int numFrames() const;
     Frame::List frames() const;
 
