@@ -174,9 +174,9 @@ void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
     layoutEqually(item->parentContainer());
 }
 
-void DropArea::hover(WindowBeingDragged *floatingWindow, QPoint globalPos)
+void DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos)
 {
-    if (!validateAffinity(floatingWindow))
+    if (!validateAffinity(draggedWindow))
         return;
 
     if (!m_dropIndicatorOverlay) {
@@ -185,7 +185,7 @@ void DropArea::hover(WindowBeingDragged *floatingWindow, QPoint globalPos)
     }
 
     Frame *frame = frameContainingPos(globalPos); // Frame is nullptr if MainWindowOption_HasCentralFrame isn't set
-    m_dropIndicatorOverlay->setWindowBeingDragged(floatingWindow != nullptr);
+    m_dropIndicatorOverlay->setWindowBeingDragged(draggedWindow != nullptr);
     m_dropIndicatorOverlay->setHoveredFrame(frame);
     m_dropIndicatorOverlay->hover(globalPos);
 }
