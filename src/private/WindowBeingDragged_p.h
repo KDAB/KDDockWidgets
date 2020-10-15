@@ -17,6 +17,10 @@
 
 #include <QPointer>
 
+QT_BEGIN_NAMESPACE
+class QPixmap;
+QT_END_NAMESPACE
+
 namespace KDDockWidgets {
 
 class FloatingWindow;
@@ -55,6 +59,10 @@ public:
     /// @brief returns whether the window being dragged contains the specified drop area
     /// useful since we don't want to drop onto outselves.
     bool contains(DropArea *) const;
+
+    /// @brief Returns a pixmap representing this Window. For purposes of QDrag
+    /// For wayland only
+    QPixmap pixmap() const;
 private:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<FloatingWindow> m_floatingWindow;

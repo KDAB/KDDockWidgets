@@ -331,6 +331,7 @@ void StateDraggingWayland::onEntry(QEvent *)
     auto mimeData = new WaylandMimeData();
     QDrag drag(this);
     drag.setMimeData(mimeData);
+    drag.setPixmap(q->m_windowBeingDragged->pixmap());
 
     qApp->installEventFilter(q);
     const Qt::DropAction result = drag.exec();

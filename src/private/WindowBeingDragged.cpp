@@ -15,6 +15,8 @@
 #include "Utils_p.h"
 #include "DropArea_p.h"
 
+#include <QPixmap>
+
 using namespace KDDockWidgets;
 
 static Draggable* bestDraggable(Draggable *draggable)
@@ -142,4 +144,14 @@ bool WindowBeingDragged::contains(DropArea *dropArea) const
         return false;
 
     return m_floatingWindow && m_floatingWindow->dropArea() == dropArea;
+}
+
+QPixmap WindowBeingDragged::pixmap() const
+{
+    QPixmap pixmap(size());
+
+    if (m_floatingWindow)
+        m_floatingWindow->render(&pixmap);
+
+    return pixmap;
 }
