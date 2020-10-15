@@ -170,3 +170,8 @@ to the Qt Project. We can give advanced or standard trainings anywhere
 around the globe on Qt as well as C++, OpenGL, 3D and more.
 
 Please visit https://www.kdab.com to meet the people who write code like this.
+
+Stay up-to-date with KDAB product announcements:
+
+* [KDAB Newsletter](https://news.kdab.com)
+* [KDAB Blogs](https://www.kdab.com/category/blogs)
