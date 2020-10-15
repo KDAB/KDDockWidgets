@@ -307,6 +307,8 @@ StateDraggingWayland::~StateDraggingWayland()
 
 void StateDraggingWayland::onEntry(QEvent *)
 {
+    qCDebug(state) << "StateDragging entered";
+
     if (m_inQDrag) {
         // Maybe we can exit the state due to the nested event loop of QDrag::Exec();
         qWarning() << Q_FUNC_INFO << "Impossible!";
@@ -331,10 +333,10 @@ void StateDraggingWayland::onEntry(QEvent *)
     drag.setMimeData(mimeData);
 
     qApp->installEventFilter(q);
-    drag.exec();
+    const Qt::DropAction result = drag.exec();
     qApp->removeEventFilter(q);
-
-    qDebug() << "Drag ended";
+    if (result == Qt::IgnoreAction)
+        Q_EMIT q->dragCanceled();
 }
 
 bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
@@ -374,6 +376,8 @@ bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
         return false; // Not for us, some other user drag.
 
     if (dropArea->drop(q->m_windowBeingDragged.get(), ev->pos())) {
+        ev->setDropAction(Qt::MoveAction);
+        ev->accept();
         Q_EMIT q->dropped();
     } else {
         Q_EMIT q->dragCanceled();
