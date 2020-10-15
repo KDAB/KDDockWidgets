@@ -16,6 +16,7 @@
 #include "DropArea_p.h"
 
 #include <QPixmap>
+#include <QPainter>
 
 using namespace KDDockWidgets;
 
@@ -150,8 +151,11 @@ QPixmap WindowBeingDragged::pixmap() const
 {
     QPixmap pixmap(size());
 
-    if (m_floatingWindow)
-        m_floatingWindow->render(&pixmap);
+    if (m_floatingWindow) {
+        QPainter p(&pixmap);
+        p.setOpacity(0.8);
+        m_floatingWindow->render(&p);
+    }
 
     return pixmap;
 }
