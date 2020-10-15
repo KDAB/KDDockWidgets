@@ -32,7 +32,7 @@
 using namespace KDDockWidgets;
 
 namespace KDDockWidgets {
-///@brief Custom mouse grabber, as platforms like wayland don't support grabbing the mouse
+///@brief Custom mouse grabber, for platforms that dont support grabbing the mouse
 class FallbackMouseGrabber : public QObject /// clazy:exclude=missing-qobject-macro
 {
 public:
@@ -373,6 +373,9 @@ bool DragController::isInClientDrag() const
 
 void DragController::grabMouseFor(QWidgetOrQuick *target)
 {
+    if (isWayland())
+        return; // No grabbing supported on wayland
+
     if (m_fallbackMouseGrabber) {
         m_fallbackMouseGrabber->grabMouse(target);
     } else {
@@ -382,6 +385,9 @@ void DragController::grabMouseFor(QWidgetOrQuick *target)
 
 void DragController::releaseMouse(QWidgetOrQuick *target)
 {
+    if (isWayland())
+        return; // No grabbing supported on wayland
+
     if (m_fallbackMouseGrabber) {
         m_fallbackMouseGrabber->releaseMouse();
     } else {
