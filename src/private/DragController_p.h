@@ -19,6 +19,8 @@
 
 #include <QStateMachine>
 #include <QPoint>
+#include <QMimeData>
+
 #include <memory>
 
 namespace KDDockWidgets {
@@ -75,6 +77,7 @@ private:
     friend class StatePreDrag;
     friend class StateDragging;
     friend class StateDropped;
+    friend class StateDraggingWayland;
 
     DragController(QObject * = nullptr);
     StateBase *activeState() const;
@@ -103,6 +106,12 @@ public:
     virtual bool handleMouseButtonPress(Draggable * /*receiver*/, QPoint /*globalPos*/, QPoint /*pos*/) { return false; }
     virtual bool handleMouseMove(QPoint /*globalPos*/) { return false; }
     virtual bool handleMouseButtonRelease(QPoint /*globalPos*/) { return false; }
+
+    // Only interesting for Wayland
+    virtual bool handleDragEnter(QDragEnterEvent *, DropArea *) { return false; }
+    virtual bool handleDragLeave(DropArea *) { return false; }
+    virtual bool handleDragMove(QDragMoveEvent *, DropArea *) { return false; }
+    virtual bool handleDrop(QDropEvent *, DropArea *) { return false; }
 
     // Returns whether this is the current state
     bool isActiveState() const;
@@ -152,7 +161,20 @@ public:
     ~StateDraggingWayland() override;
     void onEntry(QEvent *) override;
     bool handleMouseButtonRelease(QPoint globalPos) override;
-    bool handleMouseMove(QPoint globalPos) override;
+    bool handleDragEnter(QDragEnterEvent *, DropArea *) override;
+    bool handleDragMove(QDragMoveEvent *, DropArea *) override;
+    bool handleDragLeave(DropArea *) override;
+    bool handleDrop(QDropEvent *, DropArea *) override;
+    bool m_inQDrag = false;
+};
+
+// A sub-class just so we don't use QMimeData directly. We'll only accept drops if its mime data
+// Can be qobject_casted to this class. For safety.
+class WaylandMimeData : public QMimeData
+{
+    Q_OBJECT
+public:
+    using QMimeData::QMimeData;
 };
 
 }

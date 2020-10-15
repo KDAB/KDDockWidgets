@@ -23,6 +23,8 @@
 #include <QApplication>
 #include <QCursor>
 #include <QWindow>
+#include <QDrag>
+#include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN)
 # include <QWindow>
@@ -305,17 +307,80 @@ StateDraggingWayland::~StateDraggingWayland()
 
 void StateDraggingWayland::onEntry(QEvent *)
 {
-    // Create a QDrag here
+    if (m_inQDrag) {
+        // Maybe we can exit the state due to the nested event loop of QDrag::Exec();
+        qWarning() << Q_FUNC_INFO << "Impossible!";
+        return;
+    }
+
+    QScopedValueRollback<bool> guard(m_inQDrag, true);
+
+    auto tb = qobject_cast<TitleBar*>(q->m_draggable->asWidget());
+    FloatingWindow *fw = tb ? tb->floatingWindow() : nullptr;
+    if (!fw) {
+        // We're handling the easy case first.
+        // TODO: Remove this if.
+        Q_EMIT q->dragCanceled();
+        return;
+    }
+
+    q->m_windowBeingDragged = std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, fw));
+
+    auto mimeData = new WaylandMimeData();
+    QDrag drag(this);
+    drag.setMimeData(mimeData);
+
+    qApp->installEventFilter(q);
+    drag.exec();
+    qApp->removeEventFilter(q);
+
+    qDebug() << "Drag ended";
 }
 
 bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
 {
+    qCDebug(state) << Q_FUNC_INFO;
     Q_EMIT q->dragCanceled();
     return true;
 }
 
-bool StateDraggingWayland::handleMouseMove(QPoint /*globalPos*/)
+bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropArea)
 {
+    auto mimeData = qobject_cast<const WaylandMimeData*>(ev->mimeData());
+    if (!mimeData)
+        return false; // Not for us, some other user drag.
+
+    dropArea->hover(q->m_windowBeingDragged.get(), ev->pos());
+
+    ev->accept();
+    return true;
+}
+
+bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
+{
+    dropArea->removeHover();
+    return true;
+}
+
+bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
+{
+    auto mimeData = qobject_cast<const WaylandMimeData*>(ev->mimeData());
+    if (!mimeData)
+        return false; // Not for us, some other user drag.
+
+    dropArea->drop(q->m_windowBeingDragged.get(), ev->pos());
+    dropArea->removeHover();
+    return true;
+}
+
+bool StateDraggingWayland::handleDragMove(QDragMoveEvent *ev, DropArea *dropArea)
+{
+    auto mimeData = qobject_cast<const WaylandMimeData*>(ev->mimeData());
+    if (!mimeData)
+        return false; // Not for us, some other user drag.
+
+    dropArea->hover(q->m_windowBeingDragged.get(), ev->pos());
+
     return true;
 }
 
@@ -436,6 +501,30 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
         qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o;
         activeState()->handleMouseMove(QCursor::pos());
         return QStateMachine::eventFilter(o, e);
+    }
+
+    if (isWayland()) {
+        // Wayland is very different. It uses QDrag for the dragging of a window.
+        if (auto dropArea = qobject_cast<DropArea*>(o)) {
+            switch (int(e->type())) {
+            case QEvent::DragEnter:
+                if (activeState()->handleDragEnter(static_cast<QDragEnterEvent*>(e), dropArea))
+                    return true;
+                break;
+            case QEvent::DragLeave:
+                if (activeState()->handleDragLeave(dropArea))
+                    return true;
+                break;
+            case QEvent::DragMove:
+                if (activeState()->handleDragMove(static_cast<QDragMoveEvent*>(e), dropArea))
+                    return true;
+                break;
+            case QEvent::Drop:
+                if (activeState()->handleDrop(static_cast<QDropEvent*>(e), dropArea))
+                    return true;
+                break;
+            }
+        }
     }
 
     QMouseEvent *me = mouseEvent(e);

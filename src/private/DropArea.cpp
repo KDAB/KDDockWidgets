@@ -21,6 +21,7 @@
 #include "multisplitter/Item_p.h"
 #include "DockRegistry_p.h"
 #include "Frame_p.h"
+#include "Utils_p.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
 #include "WindowBeingDragged_p.h"
@@ -38,6 +39,13 @@ DropArea::DropArea(QWidgetOrQuick *parent)
     , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
 {
     qCDebug(creation) << "DropArea";
+    if (isWayland()) {
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+        setAcceptDrops(true);
+#else
+        qWarning() << "Dropping not implement for QtQuick on Wayland yet!"
+#endif
+    }
 }
 
 DropArea::~DropArea()
