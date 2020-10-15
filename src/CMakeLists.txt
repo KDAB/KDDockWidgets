@@ -180,7 +180,11 @@ elseif(NOT APPLE)
     target_link_libraries(kddockwidgets PUBLIC Qt5::X11Extras)
 endif()
 
-set_target_properties(kddockwidgets PROPERTIES VERSION ${${PROJECT_NAME}_SOVERSION})
+set_target_properties(kddockwidgets PROPERTIES
+  SOVERSION ${${PROJECT_NAME}_SOVERSION}
+  VERSION ${${PROJECT_NAME}_VERSION}
+)
+
 #version libraries on Windows
 if(WIN32)
   set(postfix ${${PROJECT_NAME}_VERSION_MAJOR})
