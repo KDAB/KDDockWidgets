@@ -93,7 +93,7 @@ public:
     const Frame *frame() const { return m_frame; }
 
     ///@brief getter for m_floatingWindow
-    const FloatingWindow *floatingWindow() const { return m_floatingWindow; }
+    FloatingWindow *floatingWindow() const { return m_floatingWindow; }
 
     virtual void updateCloseButton() {}
 
