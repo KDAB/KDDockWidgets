@@ -373,7 +373,12 @@ bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
     if (!mimeData)
         return false; // Not for us, some other user drag.
 
-    dropArea->drop(q->m_windowBeingDragged.get(), ev->pos());
+    if (dropArea->drop(q->m_windowBeingDragged.get(), ev->pos())) {
+        Q_EMIT q->dropped();
+    } else {
+        Q_EMIT q->dragCanceled();
+    }
+
     dropArea->removeHover();
     return true;
 }
