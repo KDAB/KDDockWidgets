@@ -411,9 +411,7 @@ protected:
     void onParentChanged();
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);
-#ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
-    void onCloseEvent(QCloseEvent *e);
-#endif
+    void onClosed(QCloseEvent *e);
 
 #if defined(DOCKS_DEVELOPER_MODE)
 public Q_SLOTS:
