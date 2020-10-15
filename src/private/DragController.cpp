@@ -350,6 +350,11 @@ bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropAr
     if (!mimeData)
         return false; // Not for us, some other user drag.
 
+    if (q->m_windowBeingDragged && q->m_windowBeingDragged->contains(dropArea)) {
+        ev->ignore();
+        return true;
+    }
+
     dropArea->hover(q->m_windowBeingDragged.get(), ev->pos());
 
     ev->accept();

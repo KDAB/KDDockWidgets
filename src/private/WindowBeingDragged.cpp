@@ -135,3 +135,11 @@ QSize WindowBeingDragged::maxSize() const
 
     return {};
 }
+
+bool WindowBeingDragged::contains(DropArea *dropArea) const
+{
+    if (!dropArea)
+        return false;
+
+    return m_floatingWindow && m_floatingWindow->dropArea() == dropArea;
+}

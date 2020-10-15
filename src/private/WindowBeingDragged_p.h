@@ -21,6 +21,7 @@ namespace KDDockWidgets {
 
 class FloatingWindow;
 class Draggable;
+class DropArea;
 
 struct DOCKS_EXPORT_FOR_UNIT_TESTS WindowBeingDragged
 {
@@ -51,6 +52,9 @@ public:
     /// @brief returns the max-size of the window being dragged contents
     QSize maxSize() const;
 
+    /// @brief returns whether the window being dragged contains the specified drop area
+    /// useful since we don't want to drop onto outselves.
+    bool contains(DropArea *) const;
 private:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<FloatingWindow> m_floatingWindow;
