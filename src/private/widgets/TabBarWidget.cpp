@@ -84,6 +84,13 @@ int TabBarWidget::tabAt(QPoint localPos) const
     return QTabBar::tabAt(localPos);
 }
 
+DockWidgetBase *TabBarWidget::currentDockWidget() const
+{
+    const int index = currentIndex();
+    return index == -1 ? nullptr
+                       : dockWidgetAt(index);
+}
+
 void TabBarWidget::mousePressEvent(QMouseEvent *e)
 {
     onMousePress(e->pos());

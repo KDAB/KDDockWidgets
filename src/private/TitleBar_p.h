@@ -90,7 +90,7 @@ public:
     bool onDoubleClicked();
 
     ///@brief getter for m_frame
-    const Frame *frame() const { return m_frame; }
+    Frame *frame() const { return m_frame; }
 
     ///@brief getter for m_floatingWindow
     FloatingWindow *floatingWindow() const { return m_floatingWindow; }

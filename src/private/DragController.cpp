@@ -316,17 +316,7 @@ void StateDraggingWayland::onEntry(QEvent *)
     }
 
     QScopedValueRollback<bool> guard(m_inQDrag, true);
-
-    auto tb = qobject_cast<TitleBar*>(q->m_draggable->asWidget());
-    FloatingWindow *fw = tb ? tb->floatingWindow() : nullptr;
-    if (!fw) {
-        // We're handling the easy case first.
-        // TODO: Remove this if.
-        Q_EMIT q->dragCanceled();
-        return;
-    }
-
-    q->m_windowBeingDragged = std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, fw));
+    q->m_windowBeingDragged = std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(q->m_draggable));
 
     auto mimeData = new WaylandMimeData();
     QDrag drag(this);

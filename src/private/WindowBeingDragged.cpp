@@ -14,6 +14,11 @@
 #include "Logging_p.h"
 #include "Utils_p.h"
 #include "DropArea_p.h"
+#include "Frame_p.h"
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+# include "widgets/TabBarWidget_p.h"
+#endif
 
 #include <QPixmap>
 #include <QPainter>
@@ -63,6 +68,39 @@ WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
             fw->setWindowOpacity(opacity);
     }
 }
+
+WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
+{
+    if (!isWayland()) {
+        // Doesn't happen
+        qWarning() << Q_FUNC_INFO << "This CTOR is only called on Wayland";
+        Q_ASSERT(false);
+        return;
+    }
+
+    if (auto tb = qobject_cast<TitleBar*>(draggable->asWidget())) {
+        if (auto fw = tb->floatingWindow()) {
+            // case #1: we're dragging the whole floating window by its titlebar
+            m_floatingWindow = fw;
+        } else if (Frame *frame = tb->frame()) {
+            m_frame = frame;
+        } else {
+            qWarning() << Q_FUNC_INFO <<"Shouldn't happen. TitleBar of what ?";
+        }
+    } else if (auto fw = qobject_cast<FloatingWindow*>(draggable->asWidget())) {
+        // case #2: the floating window itself is the draggable, happens on platforms that support
+        // native dragging. Not the case for Wayland. But adding this case for completeness.
+        m_floatingWindow = fw;
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    } else if (auto tbw = qobject_cast<TabBarWidget*>(draggable->asWidget())) {
+        m_dockWidget = tbw->currentDockWidget();
+#endif
+    } else {
+        qWarning() << "Unknown draggable" << draggable->asWidget()
+                   << "please fix";
+    }
+}
+
 #if DOCKS_DEVELOPER_MODE
 
 // Just used by tests
@@ -115,6 +153,10 @@ QSize WindowBeingDragged::size() const
 {
     if (m_floatingWindow)
         return m_floatingWindow->size();
+    else if (m_frame)
+        return m_frame->QWidgetAdapter::size();
+    else if (m_dockWidget)
+        return m_dockWidget->size();
 
     return QSize();
 }
@@ -150,11 +192,15 @@ bool WindowBeingDragged::contains(DropArea *dropArea) const
 QPixmap WindowBeingDragged::pixmap() const
 {
     QPixmap pixmap(size());
+    QPainter p(&pixmap);
+    p.setOpacity(0.8);
 
     if (m_floatingWindow) {
-        QPainter p(&pixmap);
-        p.setOpacity(0.8);
         m_floatingWindow->render(&p);
+    } else if (m_frame) {
+        m_frame->render(&p);
+    } else if (m_dockWidget) {
+        m_dockWidget->render(&p);
     }
 
     return pixmap;

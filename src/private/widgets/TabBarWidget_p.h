@@ -40,6 +40,9 @@ public:
     explicit TabBarWidget(TabWidget *parent = nullptr);
     int numDockWidgets() const override;
     int tabAt(QPoint localPos) const override;
+
+    DockWidgetBase *currentDockWidget() const;
+
 protected:
     bool dragCanStart(QPoint pressPos, QPoint pos) const override;
     void mousePressEvent(QMouseEvent *) override;
