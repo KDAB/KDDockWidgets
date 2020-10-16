@@ -5411,8 +5411,10 @@ int main(int argc, char *argv[])
     }
 
     QApplication app(argc, argv);
-    KDDockWidgets::TestDocks test;
+    if (shouldSkipTests())
+        return 0;
 
+    KDDockWidgets::TestDocks test;
     return QTest::qExec(&test, argc, argv);
 }
 
