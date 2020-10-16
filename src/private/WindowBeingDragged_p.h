@@ -32,16 +32,12 @@ struct DOCKS_EXPORT_FOR_UNIT_TESTS WindowBeingDragged
 public:
     explicit WindowBeingDragged(FloatingWindow *fw, Draggable *draggable);
 
-    ///@brief Constructor for Wayland only, where we aren't dragging a FloatingWindow
-    /// bue faking it with a QDrag+pixmap
-    explicit WindowBeingDragged(Draggable *draggable);
-
 #if DOCKS_DEVELOPER_MODE
     // For tests.
     explicit WindowBeingDragged(FloatingWindow *fw);
 #endif
 
-    ~WindowBeingDragged();
+    virtual ~WindowBeingDragged();
     void init();
 
     FloatingWindow *floatingWindow() const { return m_floatingWindow; }
@@ -53,29 +49,38 @@ public:
     QStringList affinities() const;
 
     ///@brief size of the window being dragged contents
-    QSize size() const;
+    virtual QSize size() const;
 
     /// @brief returns the min-size of the window being dragged contents
-    QSize minSize() const;
+    virtual QSize minSize() const;
 
     /// @brief returns the max-size of the window being dragged contents
-    QSize maxSize() const;
+    virtual QSize maxSize() const;
 
     /// @brief returns whether the window being dragged contains the specified drop area
     /// useful since we don't want to drop onto outselves.
     bool contains(DropArea *) const;
 
-    /// @brief Returns a pixmap representing this Window. For purposes of QDrag
-    /// For wayland only
-    QPixmap pixmap() const;
+    /// @brief Returns a pixmap representing this Window. For purposes of QDrag. Wayland only.
+    virtual QPixmap pixmap() const { return {}; }
 
     /// @brief Returns the draggable
     Draggable *draggable() const;
-private:
+protected:
+    explicit WindowBeingDragged(Draggable *);
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
     QPointer<QWidgetOrQuick> m_draggableWidget; // Just to have a QPointer on it
+
+    const QStringList m_affinities;
+};
+
+struct WindowBeingDraggedWayland : public WindowBeingDragged
+{
+public:
+    explicit WindowBeingDraggedWayland(Draggable *draggable);
+    ~WindowBeingDraggedWayland() override;
 
     // These two are set for Wayland only, where we can't make the floating window immediately (no way to position it)
     // So we're dragging either a frame with multiple dock widgets or a single tab, keep them here.
@@ -83,8 +88,12 @@ private:
     QPointer<Frame> m_frame;
     QPointer<DockWidgetBase> m_dockWidget;
 
-    const QStringList m_affinities;
+    QSize size() const override;
+    QSize minSize() const override;
+    QSize maxSize() const override;
+    QPixmap pixmap() const override;
 };
+
 }
 
 #endif

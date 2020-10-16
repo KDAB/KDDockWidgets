@@ -76,34 +76,9 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
     , m_draggableWidget(m_draggable->asWidget())
 {
     if (!isWayland()) {
-        // Doesn't happen
-        qWarning() << Q_FUNC_INFO << "This CTOR is only called on Wayland";
+        qWarning() << Q_FUNC_INFO << "Wrong ctor called."; // Doesn't happen
         Q_ASSERT(false);
         return;
-    }
-
-    if (auto tb = qobject_cast<TitleBar*>(draggable->asWidget())) {
-        if (auto fw = tb->floatingWindow()) {
-            // case #1: we're dragging the whole floating window by its titlebar
-            m_floatingWindow = fw;
-        } else if (Frame *frame = tb->frame()) {
-            m_frame = frame;
-        } else {
-            qWarning() << Q_FUNC_INFO <<"Shouldn't happen. TitleBar of what ?";
-        }
-    } else if (auto fw = qobject_cast<FloatingWindow*>(draggable->asWidget())) {
-        // case #2: the floating window itself is the draggable, happens on platforms that support
-        // native dragging. Not the case for Wayland. But adding this case for completeness.
-        m_floatingWindow = fw;
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    } else if (auto tbw = qobject_cast<TabBarWidget*>(draggable->asWidget())) {
-        m_dockWidget = tbw->currentDockWidget();
-    } else if (auto tw = qobject_cast<TabWidgetWidget*>(draggable->asWidget())) {
-        m_frame = tw->frame();
-#endif
-    } else {
-        qWarning() << "Unknown draggable" << draggable->asWidget()
-                   << "please fix";
     }
 }
 
@@ -159,10 +134,6 @@ QSize WindowBeingDragged::size() const
 {
     if (m_floatingWindow)
         return m_floatingWindow->size();
-    else if (m_frame)
-        return m_frame->QWidgetAdapter::size();
-    else if (m_dockWidget)
-        return m_dockWidget->size();
 
     return QSize();
 }
@@ -172,10 +143,6 @@ QSize WindowBeingDragged::minSize() const
     if (m_floatingWindow) {
         Layouting::ItemContainer *root = m_floatingWindow->dropArea()->rootItem();
         return root->minSize();
-    } else if (m_frame) {
-        return m_frame->minSize();
-    } else if (m_dockWidget) {
-        return Layouting::Widget::widgetMinSize(m_dockWidget.data());
     }
 
     return {};
@@ -186,10 +153,6 @@ QSize WindowBeingDragged::maxSize() const
     if (m_floatingWindow) {
         Layouting::ItemContainer *root = m_floatingWindow->dropArea()->rootItem();
         return root->maxSizeHint();
-    } else if (m_frame) {
-        return m_frame->maxSizeHint();
-    } else if (m_dockWidget) {
-        return Layouting::Widget::widgetMaxSize(m_dockWidget.data());
     }
 
     return {};
@@ -203,7 +166,51 @@ bool WindowBeingDragged::contains(DropArea *dropArea) const
     return m_floatingWindow && m_floatingWindow->dropArea() == dropArea;
 }
 
-QPixmap WindowBeingDragged::pixmap() const
+Draggable *WindowBeingDragged::draggable() const
+{
+    return m_draggable;
+}
+
+WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
+    : WindowBeingDragged(draggable)
+{
+    if (!isWayland()) {
+        // Doesn't happen
+        qWarning() << Q_FUNC_INFO << "This CTOR is only called on Wayland";
+        Q_ASSERT(false);
+        return;
+    }
+
+    if (auto tb = qobject_cast<TitleBar*>(draggable->asWidget())) {
+        if (auto fw = tb->floatingWindow()) {
+            // case #1: we're dragging the whole floating window by its titlebar
+            m_floatingWindow = fw;
+        } else if (Frame *frame = tb->frame()) {
+            m_frame = frame;
+        } else {
+            qWarning() << Q_FUNC_INFO <<"Shouldn't happen. TitleBar of what ?";
+        }
+    } else if (auto fw = qobject_cast<FloatingWindow*>(draggable->asWidget())) {
+        // case #2: the floating window itself is the draggable, happens on platforms that support
+        // native dragging. Not the case for Wayland. But adding this case for completeness.
+        m_floatingWindow = fw;
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    } else if (auto tbw = qobject_cast<TabBarWidget*>(draggable->asWidget())) {
+        m_dockWidget = tbw->currentDockWidget();
+    } else if (auto tw = qobject_cast<TabWidgetWidget*>(draggable->asWidget())) {
+        m_frame = tw->frame();
+#endif
+    } else {
+        qWarning() << "Unknown draggable" << draggable->asWidget()
+                   << "please fix";
+    }
+}
+
+WindowBeingDraggedWayland::~WindowBeingDraggedWayland()
+{
+}
+
+QPixmap WindowBeingDraggedWayland::pixmap() const
 {
     QPixmap pixmap(size());
     QPainter p(&pixmap);
@@ -220,7 +227,43 @@ QPixmap WindowBeingDragged::pixmap() const
     return pixmap;
 }
 
-Draggable *WindowBeingDragged::draggable() const
+QSize WindowBeingDraggedWayland::size() const
 {
-    return m_draggable;
+    if (m_floatingWindow)
+        return WindowBeingDragged::size();
+    else if (m_frame)
+        return m_frame->QWidgetAdapter::size();
+    else if (m_dockWidget)
+        return m_dockWidget->size();
+
+    qWarning() << Q_FUNC_INFO << "Unknown size, shouldn't happen";
+    return QSize();
+}
+
+QSize WindowBeingDraggedWayland::minSize() const
+{
+    if (m_floatingWindow) {
+        return WindowBeingDragged::minSize();
+    } else if (m_frame) {
+        return m_frame->minSize();
+    } else if (m_dockWidget) {
+        return Layouting::Widget::widgetMinSize(m_dockWidget.data());
+    }
+
+    qWarning() << Q_FUNC_INFO << "Unknown minSize, shouldn't happen";
+    return {};
+}
+
+QSize WindowBeingDraggedWayland::maxSize() const
+{
+    if (m_floatingWindow) {
+        return WindowBeingDragged::maxSize();
+    } else if (m_frame) {
+        return m_frame->maxSizeHint();
+    } else if (m_dockWidget) {
+        return Layouting::Widget::widgetMaxSize(m_dockWidget.data());
+    }
+
+    qWarning() << Q_FUNC_INFO << "Unknown maxSize, shouldn't happen";
+    return {};
 }

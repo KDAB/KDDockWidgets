@@ -316,7 +316,7 @@ void StateDraggingWayland::onEntry(QEvent *)
     }
 
     QScopedValueRollback<bool> guard(m_inQDrag, true);
-    q->m_windowBeingDragged = std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(q->m_draggable));
+    q->m_windowBeingDragged = std::unique_ptr<WindowBeingDragged>(new WindowBeingDraggedWayland(q->m_draggable));
 
     auto mimeData = new WaylandMimeData();
     QDrag drag(this);
