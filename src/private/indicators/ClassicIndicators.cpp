@@ -105,7 +105,7 @@ void ClassicIndicators::updateIndicatorsVisibility(bool visible)
     m_tabIndicatorVisible = m_innerIndicatorsVisible && windowBeingDragged &&
                             DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities());
     if (m_tabIndicatorVisible && tabbingAllowedFunc) {
-        const DockWidgetBase::List source = windowBeingDragged->floatingWindow()->dockWidgets();
+        const DockWidgetBase::List source = windowBeingDragged->dockWidgets();
         const DockWidgetBase::List target = m_hoveredFrame->dockWidgets();
         m_tabIndicatorVisible = tabbingAllowedFunc(source, target);
     }

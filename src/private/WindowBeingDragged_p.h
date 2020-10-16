@@ -64,6 +64,9 @@ public:
     /// @brief Returns a pixmap representing this Window. For purposes of QDrag. Wayland only.
     virtual QPixmap pixmap() const { return {}; }
 
+    /// @brief Returns the list of dock widgets being dragged
+    virtual QVector<DockWidgetBase*> dockWidgets() const;
+
     /// @brief Returns the draggable
     Draggable *draggable() const;
 protected:
@@ -82,16 +85,17 @@ public:
     explicit WindowBeingDraggedWayland(Draggable *draggable);
     ~WindowBeingDraggedWayland() override;
 
+    QSize size() const override;
+    QSize minSize() const override;
+    QSize maxSize() const override;
+    QPixmap pixmap() const override;
+    QVector<DockWidgetBase*> dockWidgets() const override;
+
     // These two are set for Wayland only, where we can't make the floating window immediately (no way to position it)
     // So we're dragging either a frame with multiple dock widgets or a single tab, keep them here.
     // It's important to know what we're dragging, so drop rubber band respect min/max sizes.
     QPointer<Frame> m_frame;
     QPointer<DockWidgetBase> m_dockWidget;
-
-    QSize size() const override;
-    QSize minSize() const override;
-    QSize maxSize() const override;
-    QPixmap pixmap() const override;
 };
 
 }

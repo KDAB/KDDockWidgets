@@ -166,6 +166,14 @@ bool WindowBeingDragged::contains(DropArea *dropArea) const
     return m_floatingWindow && m_floatingWindow->dropArea() == dropArea;
 }
 
+QVector<DockWidgetBase *> WindowBeingDragged::dockWidgets() const
+{
+    if (m_floatingWindow)
+        return m_floatingWindow->dockWidgets();
+
+    return {};
+}
+
 Draggable *WindowBeingDragged::draggable() const
 {
     return m_draggable;
@@ -225,6 +233,18 @@ QPixmap WindowBeingDraggedWayland::pixmap() const
     }
 
     return pixmap;
+}
+
+QVector<DockWidgetBase *> WindowBeingDraggedWayland::dockWidgets() const
+{
+    if (m_floatingWindow)
+        return WindowBeingDragged::dockWidgets();
+    else if (m_frame)
+        return m_frame->dockWidgets();
+    else if (m_dockWidget)
+        return { m_dockWidget };
+
+    return {};
 }
 
 QSize WindowBeingDraggedWayland::size() const
