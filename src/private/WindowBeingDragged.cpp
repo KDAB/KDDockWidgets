@@ -56,7 +56,8 @@ static Draggable* bestDraggable(Draggable *draggable)
 
 WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
     : m_floatingWindow(fw)
-    , m_draggable(bestDraggable(draggable)->asWidget())
+    , m_draggable(bestDraggable(draggable))
+    , m_draggableWidget(m_draggable ? m_draggable->asWidget() : nullptr)
     , m_affinities(fw->affinities())
 {
     init();
@@ -70,6 +71,8 @@ WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
 }
 
 WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
+    : m_draggable(draggable)
+    , m_draggableWidget(m_draggable->asWidget())
 {
     if (!isWayland()) {
         // Doesn't happen
@@ -134,14 +137,14 @@ void WindowBeingDragged::init()
 
 void WindowBeingDragged::grabMouse(bool grab)
 {
-    if (!m_draggable)
+    if (!m_draggableWidget)
         return;
 
-    qCDebug(hovering) << "WindowBeingDragged: grab " << m_floatingWindow << grab << m_draggable;
+    qCDebug(hovering) << "WindowBeingDragged: grab " << m_floatingWindow << grab << m_draggableWidget;
     if (grab)
-        DragController::instance()->grabMouseFor(m_draggable);
+        DragController::instance()->grabMouseFor(m_draggableWidget);
     else
-        DragController::instance()->releaseMouse(m_draggable);
+        DragController::instance()->releaseMouse(m_draggableWidget);
 }
 
 QStringList WindowBeingDragged::affinities() const
@@ -212,4 +215,9 @@ QPixmap WindowBeingDragged::pixmap() const
     }
 
     return pixmap;
+}
+
+Draggable *WindowBeingDragged::draggable() const
+{
+    return m_draggable;
 }

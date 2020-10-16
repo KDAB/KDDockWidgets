@@ -68,10 +68,14 @@ public:
     /// @brief Returns a pixmap representing this Window. For purposes of QDrag
     /// For wayland only
     QPixmap pixmap() const;
+
+    /// @brief Returns the draggable
+    Draggable *draggable() const;
 private:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<FloatingWindow> m_floatingWindow;
-    QPointer<QWidgetOrQuick> m_draggable;
+    Draggable *const m_draggable;
+    QPointer<QWidgetOrQuick> m_draggableWidget; // Just to have a QPointer on it
 
     // These two are set for Wayland only, where we can't make the floating window immediately (no way to position it)
     // So we're dragging either a frame with multiple dock widgets or a single tab, keep them here.
