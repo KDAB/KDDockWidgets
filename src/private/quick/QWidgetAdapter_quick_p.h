@@ -146,6 +146,8 @@ public:
     Qt::WindowFlags windowFlags() const;
     void setWindowOpacity(qreal);
 
+    void render(QPainter *);
+
     static QQuickItem *createItem(QQmlEngine *, const QString &filename);
     static void makeItemFillParent(QQuickItem *item);
 Q_SIGNALS:

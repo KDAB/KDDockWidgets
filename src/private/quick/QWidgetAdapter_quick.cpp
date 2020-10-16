@@ -411,6 +411,11 @@ void QWidgetAdapter::setFocusProxy(QQuickItem *)
     qWarning() << Q_FUNC_INFO << "Implement me";
 }
 
+void QWidgetAdapter::render(QPainter *)
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+}
+
 QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 {
     if (!window)
@@ -418,3 +423,5 @@ QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 
     return window->property("kddockwidgets_qwidget").value<QQuickItem*>();
 }
+
+LayoutGuestWidget::~LayoutGuestWidget() = default;

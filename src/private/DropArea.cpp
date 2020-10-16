@@ -43,7 +43,7 @@ DropArea::DropArea(QWidgetOrQuick *parent)
 #ifdef KDDOCKWIDGETS_QTWIDGETS
         setAcceptDrops(true);
 #else
-        qWarning() << "Dropping not implement for QtQuick on Wayland yet!"
+        qWarning() << "Dropping not implement for QtQuick on Wayland yet!";
 #endif
     }
 }
