@@ -51,6 +51,17 @@ struct DockDescriptor {
     KDDockWidgets::AddingOption option;
 };
 
+inline bool shouldSkipTests()
+{
+    // Skip mac+offscreen on Qt <= 5.15.0 due to a QPA crash, fixed in 5.15.1
+#if defined(Q_OS_MACOS) && QT_VERSION <= QT_VERSION_CHECK(5, 15, 0)
+    if (app.platformName() == QLatin1String("offscreen"))
+        return true;
+#endif
+
+    return false;
+}
+
 struct EnsureTopLevelsDeleted
 {
     EnsureTopLevelsDeleted()
