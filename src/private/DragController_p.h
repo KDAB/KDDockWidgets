@@ -174,7 +174,6 @@ class WaylandMimeData : public QMimeData
 {
     Q_OBJECT
 public:
-    using QMimeData::QMimeData;
 };
 
 }
