@@ -228,6 +228,11 @@ DockWidgetBase *FloatingWindow::singleDockWidget() const
     return nullptr;
 }
 
+const DockWidgetBase::List FloatingWindow::dockWidgets() const
+{
+    return m_dropArea->dockWidgets();
+}
+
 const Frame::List FloatingWindow::frames() const
 {
     Q_ASSERT(m_dropArea);
