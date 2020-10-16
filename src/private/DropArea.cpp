@@ -236,12 +236,18 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
         return false;
     }
 
-    return drop(floatingWindow, acceptingFrame, droploc);
+    return drop(droppedWindow, acceptingFrame, droploc);
 }
 
-bool DropArea::drop(FloatingWindow *droppedWindow, Frame *acceptingFrame,
+bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
                     DropIndicatorOverlayInterface::DropLocation droploc)
 {
+    FloatingWindow *droppedWindow = draggedWindow ? draggedWindow->floatingWindow()
+                                                  : nullptr;
+
+    if (!droppedWindow)
+        return false;
+
     bool result = true;
     const bool needToFocusNewlyDroppedWidgets = Config::self().flags() & Config::Flag_TitleBarIsFocusable;
     const DockWidgetBase::List droppedDockWidgets = needToFocusNewlyDroppedWidgets ? droppedWindow->multiSplitter()->dockWidgets()

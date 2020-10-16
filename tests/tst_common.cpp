@@ -326,7 +326,8 @@ void TestCommon::tst_tabbingWithAffinities()
     {
         SetExpectedWarning ignoreWarning("Refusing to dock widget with incompatible affinity");
         auto dropArea = m1->dropArea();
-        QVERIFY(!dropArea->drop(fw2, dw1->frame(), DropIndicatorOverlayInterface::DropLocation_Center));
+        WindowBeingDragged wbd(fw2, fw2);
+        QVERIFY(!dropArea->drop(&wbd, dw1->frame(), DropIndicatorOverlayInterface::DropLocation_Center));
         QVERIFY(dw1->window() != dw2->window());
     }
 
