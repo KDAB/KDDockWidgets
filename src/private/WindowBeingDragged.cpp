@@ -18,6 +18,7 @@
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "widgets/TabBarWidget_p.h"
+# include "widgets/TabWidgetWidget_p.h"
 #endif
 
 #include <QPixmap>
@@ -97,6 +98,8 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     } else if (auto tbw = qobject_cast<TabBarWidget*>(draggable->asWidget())) {
         m_dockWidget = tbw->currentDockWidget();
+    } else if (auto tw = qobject_cast<TabWidgetWidget*>(draggable->asWidget())) {
+        m_frame = tw->frame();
 #endif
     } else {
         qWarning() << "Unknown draggable" << draggable->asWidget()
