@@ -245,8 +245,19 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
     FloatingWindow *droppedWindow = draggedWindow ? draggedWindow->floatingWindow()
                                                   : nullptr;
 
-    if (!droppedWindow)
-        return false;
+    if (isWayland() && !droppedWindow) {
+        // This is the Wayland special case.
+        // With other platforms, when detaching a tab or dock widget we create the FloatingWindow immediately.
+        // With Wayland we delay the floating window until we drop it.
+        // Ofc, we could just dock the dockwidget without the temporary FloatingWindow, but this way we reuse
+        // 99% of the rest of the code, without adding more wayland special cases
+        droppedWindow = draggedWindow->draggable()->makeWindow()->floatingWindow();
+        if (!droppedWindow) {
+            // Doesn't happen
+            qWarning() << Q_FUNC_INFO << "Wayland: Expected window" << draggedWindow;
+            return false;
+        }
+    }
 
     bool result = true;
     const bool needToFocusNewlyDroppedWidgets = Config::self().flags() & Config::Flag_TitleBarIsFocusable;
