@@ -101,8 +101,14 @@ void ClassicIndicators::updateIndicatorsVisibility(bool visible)
 
 
     // Only allow to dock to center if the affinities match
+    auto tabbingAllowedFunc = Config::self().tabbingAllowedFunc();
     m_tabIndicatorVisible = m_innerIndicatorsVisible && windowBeingDragged &&
                             DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities());
+    if (m_tabIndicatorVisible && tabbingAllowedFunc) {
+        const DockWidgetBase::List source = windowBeingDragged->floatingWindow()->dockWidgets();
+        const DockWidgetBase::List target = m_hoveredFrame->dockWidgets();
+        m_tabIndicatorVisible = tabbingAllowedFunc(source, target);
+    }
 
     Q_EMIT innerIndicatorsVisibleChanged();
     Q_EMIT outterIndicatorsVisibleChanged();

@@ -48,6 +48,7 @@ public:
     QQmlEngine *m_qmlEngine = nullptr;
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
+    TabbingAllowedFunc m_tabbingAllowedFunc = nullptr;
     FrameworkWidgetFactory *m_frameworkWidgetFactory;
     Flags m_flags = Flag_Default;
     qreal m_draggedWindowOpacity = Q_QNAN;
@@ -155,6 +156,16 @@ void Config::setDraggedWindowOpacity(qreal opacity)
 qreal Config::draggedWindowOpacity() const
 {
     return d->m_draggedWindowOpacity;
+}
+
+void Config::setTabbingAllowedFunc(TabbingAllowedFunc func)
+{
+    d->m_tabbingAllowedFunc = func;
+}
+
+TabbingAllowedFunc Config::tabbingAllowedFunc() const
+{
+    return d->m_tabbingAllowedFunc;
 }
 
 void Config::setQmlEngine(QQmlEngine *qmlEngine)

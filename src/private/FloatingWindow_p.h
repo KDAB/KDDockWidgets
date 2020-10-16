@@ -49,6 +49,7 @@ public:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     DockWidgetBase *singleDockWidget() const override;
 
+    const QVector<DockWidgetBase*> dockWidgets() const;
     const Frame::List frames() const;
     DropArea *dropArea() const { return m_dropArea; }
 
