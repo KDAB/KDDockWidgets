@@ -40,7 +40,7 @@ namespace KDDockWidgets {
 class MainWindowBase;
 class FloatingWindow;
 class Frame;
-class WindowBeingDragged;
+struct WindowBeingDragged;
 
 /**
  * MultiSplitter is simply a wrapper around Layouting::Item in which the hosted widgets are
