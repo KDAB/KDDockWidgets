@@ -35,6 +35,14 @@ class FrameworkWidgetFactory;
 typedef KDDockWidgets::DockWidgetBase* (*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::MainWindowBase* (*MainWindowFactoryFunc)(const QString &name);
 
+/// @brief Function to allow the user more granularity to disallow dock widgets to tab together
+/// @param source The dock widgets being dragged
+/// @param target The dock widgets within an existing docked tab group
+/// @return true if the docking is allowed.
+/// @sa setTabbingAllowedFunc
+typedef bool (*TabbingAllowedFunc)(const QVector<DockWidgetBase*> &source,
+                                   const QVector<DockWidgetBase*> &target);
+
 /**
  * @brief Singleton to allow to choose certain behaviours of the framework.
  *
@@ -149,6 +157,33 @@ public:
     ///@brief returns the opacity to use when dragging dock widgets
     ///By default it's 1.0, fully opaque
     qreal draggedWindowOpacity() const;
+
+    /**
+     * @brief Allows the user to intercept a docking attempt to center (tabbed) and disallow it.
+     *
+     * Whenever the user tries to tab two widgets together, the framework will call @ref func. If
+     * it returns true, then tabbing is allowed, otherwise not.
+     *
+     * Example
+     *
+     * #include <kddockwidgets/Config.h>
+     * (...)
+     *
+     * auto func = [] (const KDDockWidgets::DockWidgetBase::List &source,
+     *                 const KDDockWidgets::DockWidgetBase::List &target)
+     * {
+     *    // disallows dockFoo to be tabbed with dockBar.
+     *    return !(source.contains(dockFoo) && target.contains(dockBar));
+     * }
+     *
+     * KDDockWidgets::Config::self()->setTabbingAllowedFunc(func);
+     */
+    void setTabbingAllowedFunc(TabbingAllowedFunc func);
+
+    ///@brief Used internally by the framework. Returns the function which was passed to setTabbingAllowedFunc()
+    ///By default it's nullptr.
+    ///@sa setTabbingAllowedFunc().
+    TabbingAllowedFunc tabbingAllowedFunc() const;
 
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
     void setQmlEngine(QQmlEngine *);
