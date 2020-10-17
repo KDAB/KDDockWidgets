@@ -46,7 +46,7 @@ public:
     void grabMouse(bool grab);
 
     ///@brief returns the affinities of the window being dragged
-    QStringList affinities() const;
+    virtual QStringList affinities() const;
 
     ///@brief size of the window being dragged contents
     virtual QSize size() const;
@@ -75,8 +75,6 @@ protected:
     QPointer<FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
     QPointer<QWidgetOrQuick> m_draggableWidget; // Just to have a QPointer on it
-
-    const QStringList m_affinities;
 };
 
 struct WindowBeingDraggedWayland : public WindowBeingDragged
@@ -89,6 +87,7 @@ public:
     QSize minSize() const override;
     QSize maxSize() const override;
     QPixmap pixmap() const override;
+    QStringList affinities() const override;
     QVector<DockWidgetBase*> dockWidgets() const override;
 
     // These two are set for Wayland only, where we can't make the floating window immediately (no way to position it)

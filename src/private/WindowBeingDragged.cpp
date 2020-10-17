@@ -59,7 +59,6 @@ WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
     : m_floatingWindow(fw)
     , m_draggable(bestDraggable(draggable))
     , m_draggableWidget(m_draggable ? m_draggable->asWidget() : nullptr)
-    , m_affinities(fw->affinities())
 {
     init();
 
@@ -88,7 +87,6 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
 WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw)
     : m_floatingWindow(fw)
     , m_draggable(nullptr)
-    , m_affinities(fw->affinities())
 {
 }
 
@@ -127,7 +125,8 @@ void WindowBeingDragged::grabMouse(bool grab)
 
 QStringList WindowBeingDragged::affinities() const
 {
-    return m_affinities;
+    return m_floatingWindow ? m_floatingWindow->affinities()
+                            : QStringList();
 }
 
 QSize WindowBeingDragged::size() const
@@ -233,6 +232,18 @@ QPixmap WindowBeingDraggedWayland::pixmap() const
     }
 
     return pixmap;
+}
+
+QStringList WindowBeingDraggedWayland::affinities() const
+{
+    if (m_floatingWindow)
+        return WindowBeingDragged::affinities();
+    else if (m_frame)
+        return m_frame->affinities();
+    else if (m_dockWidget)
+        return { m_dockWidget->affinities() };
+
+    return {};
 }
 
 QVector<DockWidgetBase *> WindowBeingDraggedWayland::dockWidgets() const
