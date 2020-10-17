@@ -1,5 +1,8 @@
+* v1.3.0 (unreleased, December/January)
+  - [TODO] QtQuick support
+
 * v1.2.0 (unreleased)
-  - QtQuick support
+  - [DONE] Wayland support
 
 * v1.1.0 (unreleased)
   - New drop indicator style type: Segmented Indicators
@@ -12,6 +15,7 @@
   - Added Config::Flag_TitleBarHasMinimizeButton
   - Added Config::Flag_TitleBarNoFloatButton
   - Added Config::Flag_AutoHideSupport
+  - Added Config::setTabbingAllowedFunc(TabbingAllowedFunc func)
   - Bugfixes:
     - Windows: Fixed windows not having proper minimum size.
     - Windows: Fixed moving windows across screens with different DPI (#72)
@@ -19,9 +23,7 @@
     - Fixed floating window's title not being correct (#74)
     - Fixed focus scope not reacting when clicking on current tab (#71)
     - Fixed floating window borders not being rendered correctly on HDPI due to rounding errors.
-
-* v1.0.1 (unreleased)
-  - cmake/Python - don't require pkg-config, only use if available (#68)
+    - cmake/Python - don't require pkg-config, only use if available (#68)
 
 * v1.0.0 (2 September 2020)
   - PySide2 bindings
