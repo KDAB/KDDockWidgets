@@ -21,6 +21,7 @@
 #include "QWidgetAdapter.h"
 #include "FloatingWindow_p.h"
 #include "Qt5Qt6Compat_p.h"
+#include "Utils_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>
@@ -48,7 +49,8 @@ FloatingWindow *QWidgetAdapter::floatingWindow() const
 void QWidgetAdapter::raiseAndActivate()
 {
     window()->raise();
-    window()->activateWindow();
+    if (!isWayland())
+        window()->activateWindow();
 }
 
 bool QWidgetAdapter::event(QEvent *e)
