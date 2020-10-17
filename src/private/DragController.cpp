@@ -348,7 +348,7 @@ bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropAr
         return true;
     }
 
-    dropArea->hover(q->m_windowBeingDragged.get(), ev->pos());
+    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(ev->pos()));
 
     ev->accept();
     return true;
@@ -384,7 +384,7 @@ bool StateDraggingWayland::handleDragMove(QDragMoveEvent *ev, DropArea *dropArea
     if (!mimeData)
         return false; // Not for us, some other user drag.
 
-    dropArea->hover(q->m_windowBeingDragged.get(), ev->pos());
+    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(ev->pos()));
 
     return true;
 }
