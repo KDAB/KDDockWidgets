@@ -91,12 +91,6 @@ FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWin
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const
 {
-    if (isWayland() && s_dropIndicatorType == DropIndicatorType::Classic) {
-        qWarning() << Q_FUNC_INFO << "Classical indicators aren't supported on Wayland yet."
-                   << "Falling back to Segmented Indicators";
-        s_dropIndicatorType = DropIndicatorType::Segmented;
-    }
-
     switch (s_dropIndicatorType) {
     case DropIndicatorType::Classic:
         return new ClassicIndicators(dropArea);

@@ -221,7 +221,7 @@ QPixmap WindowBeingDraggedWayland::pixmap() const
 {
     QPixmap pixmap(size());
     QPainter p(&pixmap);
-    p.setOpacity(0.8);
+    p.setOpacity(0.7);
 
     if (m_floatingWindow) {
         m_floatingWindow->render(&p);

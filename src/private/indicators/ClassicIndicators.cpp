@@ -197,7 +197,10 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
 void ClassicIndicators::updateWindowPosition()
 {
     QRect rect = this->rect();
-    QPoint pos = mapToGlobal(QPoint(0, 0));
-    rect.moveTo(pos);
+    if (m_indicatorWindow->isWindow()) {
+        // On all non-wayland platforms it's a top-level.
+        QPoint pos = mapToGlobal(QPoint(0, 0));
+        rect.moveTo(pos);
+    }
     m_indicatorWindow->setGeometry(rect);
 }
