@@ -115,6 +115,12 @@ void TabBar::onMousePress(QPoint localPos)
     m_lastPressedDockWidget = dockWidgetAt(localPos);
 }
 
+void TabBar::onMouseDoubleClick(QPoint localPos)
+{
+    if (DockWidgetBase *dw = dockWidgetAt(localPos))
+        dw->setFloating(true);
+}
+
 bool TabBar::hasSingleDockWidget() const
 {
     return numDockWidgets() == 1;

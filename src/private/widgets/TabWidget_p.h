@@ -67,6 +67,7 @@ public:
     FloatingWindow *detachTab(DockWidgetBase *dockWidget);
 
     void onMousePress(QPoint localPos);
+    void onMouseDoubleClick(QPoint localPos);
 
     ///@brief returns whether there's only 1 tab
     bool hasSingleDockWidget() const;

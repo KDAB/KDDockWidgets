@@ -111,6 +111,11 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *e)
     }
 }
 
+void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *e)
+{
+    TabBar::onMouseDoubleClick(e->pos());
+}
+
 bool TabBarWidget::dragCanStart(QPoint pressPos, QPoint pos) const
 {
     // Here we allow the user to re-order tabs instead of dragging them off.

@@ -47,6 +47,7 @@ protected:
     bool dragCanStart(QPoint pressPos, QPoint pos) const override;
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseDoubleClickEvent(QMouseEvent *e) override;
 private:
     TabWidget *const m_tabWidget;
 };
