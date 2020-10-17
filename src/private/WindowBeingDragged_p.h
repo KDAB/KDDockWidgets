@@ -45,6 +45,10 @@ public:
     ///@brief grabs or releases the mouse
     void grabMouse(bool grab);
 
+    /// @brief returns whether the window being dragged contains the specified drop area
+    /// useful since we don't want to drop onto outselves.
+    bool contains(DropArea *) const;
+
     ///@brief returns the affinities of the window being dragged
     virtual QStringList affinities() const;
 
@@ -56,10 +60,6 @@ public:
 
     /// @brief returns the max-size of the window being dragged contents
     virtual QSize maxSize() const;
-
-    /// @brief returns whether the window being dragged contains the specified drop area
-    /// useful since we don't want to drop onto outselves.
-    bool contains(DropArea *) const;
 
     /// @brief Returns a pixmap representing this Window. For purposes of QDrag. Wayland only.
     virtual QPixmap pixmap() const { return {}; }
