@@ -95,15 +95,15 @@ public:
     void update() {}
 
     QSize size() const { return QQuickItem::size().toSize(); }
-    virtual QSize minimumSizeHint() const { return m_minimumSize; }
-    QSize minimumSize() const { return m_minimumSize; }
-    QSize maximumSize() const { return m_maximumSize; }
-    int minimumHeight() const { return m_minimumSize.height(); }
-    int minimumWidth() const { return m_minimumSize.width(); }
-    bool hasFixedWidth() const {return false; }
-    bool hasFixedHeight() const {return false; }
-    int maximumWidth() const { return m_maximumSize.width(); }
-    int maximumHeight() const { return m_maximumSize.height(); }
+    virtual QSize minimumSizeHint() const { return minimumSize(); }
+    QSize minimumSize() const;
+    QSize maximumSize() const;
+    int minimumHeight() const { return minimumSize().height(); }
+    int minimumWidth() const { return minimumSize().width(); }
+    bool hasFixedWidth() const { return false; }
+    bool hasFixedHeight() const { return false; }
+    int maximumWidth() const { return maximumSize().width(); }
+    int maximumHeight() const { return maximumSize().height(); }
     WId winId() const;
 
     void grabMouse();
@@ -164,9 +164,7 @@ protected:
     void itemChange(QQuickItem::ItemChange, const QQuickItem::ItemChangeData &) override;
 private:
     QSize m_sizeHint;
-    QSizePolicy m_sizePolicy = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    QSize m_minimumSize = {KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT};
-    QSize m_maximumSize = {KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT};
+    QSizePolicy m_sizePolicy = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);;
     Qt::WindowFlags m_windowFlags;
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
 };

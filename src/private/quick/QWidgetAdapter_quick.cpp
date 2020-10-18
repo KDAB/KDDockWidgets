@@ -117,6 +117,20 @@ void QWidgetAdapter::raise()
         w->raise();
 }
 
+QSize QWidgetAdapter::minimumSize() const
+{
+    const QSize min = property("kddockwidgets_min_size").toSize();
+    return min.expandedTo({KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT});
+}
+
+QSize QWidgetAdapter::maximumSize() const
+{
+    const QSize max = property("kddockwidgets_max_size").toSize();
+    const QSize defaultMax(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT);
+    return max.isEmpty() ? defaultMax
+                         : max.boundedTo(defaultMax);
+}
+
 WId QWidgetAdapter::winId() const
 {
     if (QWindow *w = windowHandle())
@@ -174,8 +188,8 @@ void QWidgetAdapter::releaseMouse()
 
 void QWidgetAdapter::setMinimumSize(QSize sz)
 {
-    if (m_minimumSize != sz) {
-        m_minimumSize = sz;
+    if (minimumSize() != sz) {
+        setProperty("kddockwidgets_min_size", sz);
         updateGeometry();
     }
 }
