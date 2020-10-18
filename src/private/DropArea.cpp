@@ -193,7 +193,7 @@ void DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos)
     }
 
     Frame *frame = frameContainingPos(globalPos); // Frame is nullptr if MainWindowOption_HasCentralFrame isn't set
-    m_dropIndicatorOverlay->setWindowBeingDragged(draggedWindow != nullptr);
+    m_dropIndicatorOverlay->setWindowBeingDragged(true);
     m_dropIndicatorOverlay->setHoveredFrame(frame);
     m_dropIndicatorOverlay->hover(globalPos);
 }

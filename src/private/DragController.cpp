@@ -340,10 +340,10 @@ bool StateDraggingWayland::handleMouseButtonRelease(QPoint /*globalPos*/)
 bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropArea)
 {
     auto mimeData = qobject_cast<const WaylandMimeData*>(ev->mimeData());
-    if (!mimeData)
+    if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
-    if (q->m_windowBeingDragged && q->m_windowBeingDragged->contains(dropArea)) {
+    if (q->m_windowBeingDragged->contains(dropArea)) {
         ev->ignore();
         return true;
     }
@@ -381,7 +381,7 @@ bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
 bool StateDraggingWayland::handleDragMove(QDragMoveEvent *ev, DropArea *dropArea)
 {
     auto mimeData = qobject_cast<const WaylandMimeData*>(ev->mimeData());
-    if (!mimeData)
+    if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
     dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(ev->pos()));
