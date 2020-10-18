@@ -22,7 +22,8 @@ Widget_quick::~Widget_quick()
 
 QSize Widget_quick::minSize() const
 {
-    return QSize(0, 0);
+    const QSize minSize = m_thisWidget->property("kddockwidgets_min_size").toSize();
+    return minSize.expandedTo(Item::hardcodedMinimumSize);
 }
 
 QRect Widget_quick::geometry() const
@@ -80,8 +81,9 @@ std::unique_ptr<Widget> Widget_quick::parentWidget() const
 
 QSize Widget_quick::maxSizeHint() const
 {
-    // Some arbitrary big value
-    return QSize(30000, 30000);
+    const QSize maxSize = m_thisWidget->property("kddockwidgets_max_size").toSize();
+    return maxSize.isEmpty() ? QSize(30000, 30000) // Some arbitrary big value
+                             : maxSize;
 }
 
 void Widget_quick::show()

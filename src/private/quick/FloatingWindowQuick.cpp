@@ -85,7 +85,7 @@ void FloatingWindowQuick::init()
         }
     });
 
-    const QSize minSize(100, 100);
+    const QSize minSize(200, 200);
     m_quickWindow->resize(minSize);
     m_quickWindow->contentItem()->setSize(minSize);
 

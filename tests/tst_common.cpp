@@ -1044,9 +1044,9 @@ void TestCommon::tst_negativeAnchorPosition5()
     auto dock1 = docks.at(1).createdDock;
 
     dock1->show();
-
+    QVERIFY(layout->checkSanity());
     dock0->show();
-    layout->checkSanity();
+    QVERIFY(layout->checkSanity());
 
     // Cleanup
     for (auto dock : DockRegistry::self()->dockwidgets())
