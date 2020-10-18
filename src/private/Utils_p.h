@@ -28,6 +28,11 @@
 # include <QtX11Extras/QX11Info>
 #endif
 
+QT_BEGIN_NAMESPACE
+class QWidget;
+class QWindow;
+QT_END_NAMESPACE
+
 namespace KDDockWidgets {
 
 inline bool isWayland()
@@ -100,6 +105,16 @@ inline int screenNumberForWindow(const QWindow *window)
     }
 
     return -1;
+}
+
+inline bool isWindow(const QWidget *w)
+{
+    return w && w->isWindow();
+}
+
+inline bool isWindow(const QWindow *w)
+{
+    return w != nullptr;
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
