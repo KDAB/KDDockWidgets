@@ -363,7 +363,7 @@ bool StateDraggingWayland::handleDragLeave(DropArea *dropArea)
 bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
 {
     auto mimeData = qobject_cast<const WaylandMimeData*>(ev->mimeData());
-    if (!mimeData)
+    if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
     if (dropArea->drop(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(ev->pos()))) {

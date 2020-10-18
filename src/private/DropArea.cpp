@@ -213,8 +213,7 @@ static bool isOutterLocation(DropIndicatorOverlayInterface::DropLocation locatio
 
 bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 {
-    FloatingWindow *floatingWindow = droppedWindow ? droppedWindow->floatingWindow()
-                                                   : nullptr;
+    FloatingWindow *floatingWindow = droppedWindow->floatingWindow();
 
     if (floatingWindow == window()) {
         qWarning() << "Refusing to drop onto itself"; // Doesn't happen
