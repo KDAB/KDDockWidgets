@@ -98,8 +98,17 @@ private Q_SLOTS:
     void tst_negativeAnchorPosition4();
     void tst_negativeAnchorPosition5();
     void tst_startHidden();
+    void tst_startHidden2();
+    void tst_startClosed();
     void tst_closeReparentsToNull();
     void tst_invalidAnchorGroup();
+    void tst_addAsPlaceholder();
+    void tst_removeItem();
+    void tst_clear();
+    void tst_samePositionAfterHideRestore();
+    void tst_dockDockWidgetNested();
+    void tst_dockFloatingWindowNested();
+    void tst_crash();
 };
 
 void TestCommon::tst_simple1()
@@ -945,6 +954,63 @@ void TestCommon::tst_startHidden()
     delete dock1;
 }
 
+void TestCommon::tst_startHidden2()
+{
+    EnsureTopLevelsDeleted e;
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, false);
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, false);
+
+        auto dropArea = m->dropArea();
+        MultiSplitter *layout = dropArea;
+
+        m->addDockWidget(dock1, Location_OnTop, nullptr, AddingOption_StartHidden);
+        QVERIFY(layout->checkSanity());
+
+        QCOMPARE(layout->count(), 1);
+        QCOMPARE(layout->placeholderCount(), 1);
+
+        m->addDockWidget(dock2, Location_OnTop);
+        QVERIFY(layout->checkSanity());
+
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 1);
+
+        qDebug() << dock1->isVisible();
+        dock1->show();
+
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 0);
+
+        Testing::waitForResize(dock2);
+    }
+
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, false);
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, false);
+        auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, false);
+
+        auto dropArea = m->dropArea();
+        MultiSplitter *layout = dropArea;
+        m->addDockWidget(dock1, Location_OnLeft, nullptr, AddingOption_StartHidden);
+
+        m->addDockWidget(dock2, Location_OnBottom, nullptr, AddingOption_StartHidden);
+        m->addDockWidget(dock3, Location_OnRight, nullptr, AddingOption_StartHidden);
+
+        dock1->show();
+
+        QCOMPARE(layout->count(), 3);
+        QCOMPARE(layout->placeholderCount(), 2);
+
+        dock2->show();
+        dock3->show();
+        Testing::waitForResize(dock2);
+        layout->checkSanity();
+    }
+}
+
 void TestCommon::tst_negativeAnchorPosition2()
 {
     // Tests that the "Out of bounds position" warning doesn't appear. Test will abort if yes.
@@ -1095,6 +1161,264 @@ void TestCommon::tst_invalidAnchorGroup()
 
         dock1->deleteLater();
         dock2->deleteLater();
+        Testing::waitForDeleted(dock1);
+    }
+}
+
+void TestCommon::tst_addAsPlaceholder()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, false);
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, false);
+
+    m->addDockWidget(dock1, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnTop, nullptr, AddingOption_StartHidden);
+
+    auto dropArea = m->dropArea();
+    MultiSplitter *layout = dropArea;
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QVERIFY(!dock2->isVisible());
+
+    dock2->show();
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    layout->checkSanity();
+
+    // Cleanup
+    dock2->deleteLater();
+    Testing::waitForDeleted(dock2);
+}
+
+void TestCommon::tst_removeItem()
+{
+    // Tests that MultiSplitterLayout::removeItem() works
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, false);
+    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+
+    m->addDockWidget(dock1, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnTop, nullptr, AddingOption_StartHidden);
+    Item *item2 = dock2->lastPositions().lastItem();
+
+    auto dropArea = m->dropArea();
+    MultiSplitter *layout = dropArea;
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    // 1. Remove an item that's a placeholder
+
+    layout->removeItem(item2);
+
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 2. Remove an item that has an actual widget
+    Item *item1 = dock1->lastPositions().lastItem();
+    layout->removeItem(item1);
+    QCOMPARE(layout->count(), 0);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 3. Remove an item that has anchors following one of its other anchors (Tests that anchors stop following)
+    // Stack 1, 2, 3
+    m->addDockWidget(dock3, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnBottom);
+    m->addDockWidget(dock1, Location_OnBottom);
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    dock2->close();
+    auto frame1 = dock1->frame();
+    dock1->close();
+    QVERIFY(Testing::waitForDeleted(frame1));
+
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 2);
+
+    // Now remove the items
+    layout->removeItem(dock2->lastPositions().lastItem());
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    layout->checkSanity();
+    layout->removeItem(dock1->lastPositions().lastItem());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // Add again
+    m->addDockWidget(dock2, Location_OnBottom);
+    m->addDockWidget(dock1, Location_OnBottom);
+    dock2->close();
+    frame1 = dock1->frame();
+    dock1->close();
+    QVERIFY(Testing::waitForDeleted(frame1));
+
+    // Now remove the items, but first dock1
+    layout->removeItem(dock1->lastPositions().lastItem());
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    layout->checkSanity();
+    layout->removeItem(dock2->lastPositions().lastItem());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    layout->checkSanity();
+
+    // Add again, stacked as 1, 2, 3, then close 2 and 3.
+    m->addDockWidget(dock2, Location_OnTop);
+    m->addDockWidget(dock1, Location_OnTop);
+
+    auto frame2 = dock2->frame();
+    dock2->close();
+    Testing::waitForDeleted(frame2);
+
+    auto frame3 = dock3->frame();
+    dock3->close();
+    Testing::waitForDeleted(frame3);
+
+    // The second anchor is now following the 3rd, while the 3rd is following 'bottom'
+    layout->removeItem(dock3->lastPositions().lastItem()); // will trigger the 3rd anchor to be removed
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    layout->checkSanity();
+
+    dock1->deleteLater();
+    dock2->deleteLater();
+    dock3->deleteLater();
+    Testing::waitForDeleted(dock3);
+}
+
+void TestCommon::tst_clear()
+{
+    // Tests MultiSplitterLayout::clear()
+    EnsureTopLevelsDeleted e;
+    QCOMPARE(Frame::dbg_numFrames(), 0);
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock3 = createDockWidget("3", new QPushButton("3"));
+    auto fw3 = dock3->floatingWindow();
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+    m->addDockWidget(dock3, Location_OnRight);
+    QVERIFY(Testing::waitForDeleted(fw3));
+    dock3->close();
+
+    QCOMPARE(Frame::dbg_numFrames(), 3);
+
+    auto layout = m->multiSplitter();
+    layout->rootItem()->clear();
+
+    QCOMPARE(layout->count(), 0);
+    QCOMPARE(layout->placeholderCount(), 0);
+    layout->checkSanity();
+
+    // Cleanup
+    dock3->deleteLater();
+    QVERIFY(Testing::waitForDeleted(dock3));
+}
+
+void TestCommon::tst_samePositionAfterHideRestore()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock3 = createDockWidget("3", new QPushButton("3"));
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+    m->addDockWidget(dock3, Location_OnRight);
+    QRect geo2 = dock2->frame()->QWidgetAdapter::geometry();
+    dock2->setFloating(true);
+
+    auto fw2 = dock2->floatingWindow();
+    dock2->setFloating(false);
+    QVERIFY(Testing::waitForDeleted(fw2));
+    QCOMPARE(geo2, dock2->frame()->QWidgetAdapter::geometry());
+    m->multiSplitter()->checkSanity();
+}
+
+void TestCommon::tst_startClosed()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+
+    auto dropArea = m->dropArea();
+    MultiSplitter *layout = dropArea;
+
+    m->addDockWidget(dock1, Location_OnTop);
+    Frame *frame1 = dock1->frame();
+    dock1->close();
+    Testing::waitForDeleted(frame1);
+
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    m->addDockWidget(dock2, Location_OnTop);
+
+    layout->checkSanity();
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    dock1->show();
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+}
+
+void TestCommon::tst_dockDockWidgetNested()
+{
+    EnsureTopLevelsDeleted e;
+    // Test detaching too, and check if the window size is correct
+    // TODO
+}
+
+void TestCommon::tst_dockFloatingWindowNested()
+{
+    EnsureTopLevelsDeleted e;
+    // TODO
+}
+
+void TestCommon::tst_crash()
+{
+     // tests some crash I got
+
+    EnsureTopLevelsDeleted e;
+    {
+        // 1. Teste an assert I got
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto layout = m->multiSplitter();
+
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        Item *item1 = layout->itemForFrame(dock1->frame());
+        dock1->addDockWidgetAsTab(dock2);
+
+        dock1->setFloating(true);
+        Item *layoutItem = dock1->lastPositions().lastItem();
+        QVERIFY(layoutItem && DockRegistry::self()->itemIsInMainWindow(layoutItem));
+        QCOMPARE(layoutItem, item1);
+
+        QCOMPARE(layout->placeholderCount(), 0);
+        QCOMPARE(layout->count(), 1);
+
+        // Move from tab to bottom
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+
+        QCOMPARE(layout->count(), 2);
+        QCOMPARE(layout->placeholderCount(), 1);
+
+        dock1->deleteLater();
         Testing::waitForDeleted(dock1);
     }
 }
