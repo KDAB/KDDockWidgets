@@ -58,14 +58,6 @@ public:
     // Draggable
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
 
-    /**
-     * @brief detaches a dock widget and shows it as a floating dock widget
-     * The dock widget is morphed into a FloatingWindow for convenience.
-     * @param dockWidget the dock widget to detach
-     * @returns the created FloatingWindow
-     */
-    FloatingWindow *detachTab(DockWidgetBase *dockWidget);
-
     void onMousePress(QPoint localPos);
     void onMouseDoubleClick(QPoint localPos);
 
@@ -139,12 +131,6 @@ public:
      * @brief Returns the dock widget tabbed at index @p index
      */
     virtual DockWidgetBase *dockwidgetAt(int index) const = 0;
-
-    /**
-     * @brief detaches a dock widget and shows it as a floating dock widget
-     * @param dockWidget the dock widget to detach
-     */
-    virtual void detachTab(DockWidgetBase *dockWidget) = 0;
 
     /**
      * @brief inserts @p dockwidget into the TabWidget, at @p index

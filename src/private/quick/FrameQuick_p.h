@@ -35,7 +35,6 @@ public:
 
 protected:
     void removeWidget_impl(DockWidgetBase *) override;
-    void detachTab_impl(DockWidgetBase *) override;
     int indexOfDockWidget_impl(DockWidgetBase *) override;
     int currentIndex_impl() const override;
     void setCurrentTabIndex_impl(int index) override;

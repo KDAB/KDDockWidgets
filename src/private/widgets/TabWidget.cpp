@@ -84,30 +84,13 @@ std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
     if (!dock)
         return {};
 
-    FloatingWindow *floatingWindow = detachTab(dock);
+    FloatingWindow *floatingWindow = frame()->detachTab(dock);
+    if (!floatingWindow)
+        return {};
 
     auto draggable = KDDockWidgets::usesNativeTitleBar() ? static_cast<Draggable*>(floatingWindow)
                                                          : static_cast<Draggable*>(this);
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
-}
-
-FloatingWindow * TabBar::detachTab(DockWidgetBase *dockWidget)
-{
-    QRect r = dockWidget->geometry();
-    m_tabWidget->removeDockWidget(dockWidget);
-
-    auto newFrame = Config::self().frameworkWidgetFactory()->createFrame();
-    const QPoint globalPoint = m_thisWidget->mapToGlobal(QPoint(0, 0));
-    newFrame->addWidget(dockWidget);
-
-    // We're potentially already dead at this point, as frames with 0 tabs auto-destruct. Don't access members from this point.
-
-    auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(newFrame);
-    r.moveTopLeft(globalPoint);
-    floatingWindow->setSuggestedGeometry(r);
-    floatingWindow->show();
-
-    return floatingWindow;
 }
 
 void TabBar::onMousePress(QPoint localPos)

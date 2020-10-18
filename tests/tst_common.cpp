@@ -1393,34 +1393,35 @@ void TestCommon::tst_crash()
      // tests some crash I got
 
     EnsureTopLevelsDeleted e;
-    {
-        // 1. Teste an assert I got
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        auto layout = m->multiSplitter();
 
-        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-        Item *item1 = layout->itemForFrame(dock1->frame());
-        dock1->addDockWidgetAsTab(dock2);
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto layout = m->multiSplitter();
 
-        dock1->setFloating(true);
-        Item *layoutItem = dock1->lastPositions().lastItem();
-        QVERIFY(layoutItem && DockRegistry::self()->itemIsInMainWindow(layoutItem));
-        QCOMPARE(layoutItem, item1);
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    Item *item1 = layout->itemForFrame(dock1->frame());
+    dock1->addDockWidgetAsTab(dock2);
 
-        QCOMPARE(layout->placeholderCount(), 0);
-        QCOMPARE(layout->count(), 1);
+    QVERIFY(!dock1->isFloating());
+    dock1->setFloating(true);
+    QVERIFY(dock1->isFloating());
+    QVERIFY(!dock1->isInMainWindow());
 
-        // Move from tab to bottom
-        m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+    Item *layoutItem = dock1->lastPositions().lastItem();
+    QVERIFY(layoutItem && DockRegistry::self()->itemIsInMainWindow(layoutItem));
+    QCOMPARE(layoutItem, item1);
 
-        QCOMPARE(layout->count(), 2);
-        QCOMPARE(layout->placeholderCount(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->count(), 1);
 
-        dock1->deleteLater();
-        Testing::waitForDeleted(dock1);
-    }
+    // Move from tab to bottom
+    m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    delete dock1->window();
 }
 
 #include "tst_common.moc"

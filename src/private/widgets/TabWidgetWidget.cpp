@@ -113,11 +113,6 @@ void TabWidgetWidget::setTabBarAutoHide(bool b)
     QTabWidget::setTabBarAutoHide(b);
 }
 
-void TabWidgetWidget::detachTab(DockWidgetBase *dockWidget)
-{
-    tabBar()->detachTab(dockWidget);
-}
-
 void TabWidgetWidget::renameTab(int index, const QString &text)
 {
     setTabText(index, text);

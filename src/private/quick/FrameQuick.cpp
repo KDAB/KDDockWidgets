@@ -56,11 +56,6 @@ void FrameQuick::removeWidget_impl(DockWidgetBase *dw)
     disconnect(m_connections.take(dw));
 }
 
-void FrameQuick::detachTab_impl(DockWidgetBase *)
-{
-
-}
-
 int FrameQuick::indexOfDockWidget_impl(DockWidgetBase *dw)
 {
     return m_dockWidgetModel->indexOf(dw);

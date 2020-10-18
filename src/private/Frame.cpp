@@ -171,11 +171,25 @@ void Frame::removeWidget(DockWidgetBase *dw)
     removeWidget_impl(dw);
 }
 
-void Frame::detachTab(DockWidgetBase *dw)
+FloatingWindow* Frame::detachTab(DockWidgetBase *dockWidget)
 {
-    if (m_inCtor || m_inDtor) return;
+    if (m_inCtor || m_inDtor) return nullptr;
 
-    detachTab_impl(dw);
+    QRect r = dockWidget->geometry();
+    removeWidget(dockWidget);
+
+    auto newFrame = Config::self().frameworkWidgetFactory()->createFrame();
+    const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
+    newFrame->addWidget(dockWidget);
+
+    // We're potentially already dead at this point, as frames with 0 tabs auto-destruct. Don't access members from this point.
+
+    auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(newFrame);
+    r.moveTopLeft(globalPoint);
+    floatingWindow->setSuggestedGeometry(r);
+    floatingWindow->show();
+
+    return floatingWindow;
 }
 
 int Frame::indexOfDockWidget(DockWidgetBase *dw)
