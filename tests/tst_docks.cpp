@@ -318,9 +318,6 @@ private Q_SLOTS:
     void tst_invalidPlaceholderPosition_data();
     void tst_invalidPlaceholderPosition();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
-    void tst_negativeAnchorPosition();
-    void tst_negativeAnchorPosition6();
-    void tst_negativeAnchorPosition7();
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_negativeAnchorPositionWhenEmbedded();
     void tst_availableSizeWithPlaceholders();
@@ -410,45 +407,6 @@ static EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
     window->show();
     window->resize(sz);
     return window;
-}
-
-namespace {
-
-class MyWidget2 : public QWidget
-{
-public:
-
-    explicit MyWidget2(QSize minSz = QSize(1,1))
-        : m_minSz(minSz)
-        , m_sizeHint(minSz)
-    {
-
-    }
-
-    QSize sizeHint() const override
-    {
-        return m_sizeHint;
-    }
-
-    QSize minimumSizeHint() const override
-    {
-        return m_minSz;
-    }
-
-    void setMinSize(QSize s)
-    {
-        m_minSz = s;
-        updateGeometry();
-    }
-
-    void setSizeHint(QSize s)
-    {
-        m_sizeHint = s;
-    }
-
-    QSize m_minSz;
-    QSize m_sizeHint;
-};
 }
 
 Frame* createFrameWithWidget(const QString &name, MultiSplitter *parent, int minLength = -1)
@@ -2517,120 +2475,6 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
         dock3->deleteLater();
         Testing::waitForDeleted(dock3);
     }
-}
-
-void TestDocks::tst_negativeAnchorPosition()
-{
-    // Tests that we don't hit:
-    // void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position
-
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1002, 806));
-
-    auto w1 = new MyWidget2(QSize(104, 104));
-    w1->resize(994, 718);
-    auto w2 = new MyWidget2(QSize(133, 343));
-    w2->resize(392, 362);
-    auto w3 = new MyWidget2(QSize(133, 343));
-    w3->resize(392, 362);
-
-    MultiSplitter *layout = m->multiSplitter();
-
-    auto d1 = createDockWidget("1", w1);
-    auto d2 = createDockWidget("2", w2);
-    auto d3 = createDockWidget("3", w3);
-
-    m->addDockWidgetAsTab(d1);
-
-    m->addDockWidget(d2, Location_OnTop);
-    m->addDockWidget(d3, Location_OnTop);
-
-    d2->close();
-
-    Testing::waitForResize(d3);
-    d2->show(); // Should not result in negative anchor positions (Test will fail due to a qWarning)
-    Testing::waitForResize(d3);
-    layout->checkSanity();
-
-    d2->close();
-    Testing::waitForResize(d3);
-    layout->checkSanity();
-
-    // Now resize the Window, after removing middle one
-    const int availableToShrink = layout->size().height() - layout->minimumSize().height();
-    layout->setLayoutSize({layout->width(), layout->width() - availableToShrink});
-
-    d2->deleteLater();
-    Testing::waitForDeleted(d2);
-    layout->checkSanity();
-}
-
-void TestDocks::tst_negativeAnchorPosition6()
-{
-    // Tests a case when we add a widget to left/right but the layout doesn't have enough height (or vice-versa)
-    EnsureTopLevelsDeleted e;
-
-    auto m = new MainWindow("m1", MainWindowOption_None);
-    m->resize(QSize(100, 100));
-    m->show();
-
-    auto layout = m->multiSplitter();
-
-    auto w1 = new MyWidget2(QSize(400,100));
-    auto w2 = new MyWidget2(QSize(400,100));
-    auto w3 = new MyWidget2(QSize(400,100));
-    auto w4 = new MyWidget2(QSize(400,900));
-    auto d1 = createDockWidget("1", w1);
-    auto d2 = createDockWidget("2", w2);
-    auto d3 = createDockWidget("3", w3);
-    auto d4 = createDockWidget("4", w4);
-
-    m->addDockWidget(d1, Location_OnBottom);
-    m->addDockWidget(d2, Location_OnBottom);
-    m->addDockWidget(d3, Location_OnBottom);
-
-    QCOMPARE(layout->count(), 3);
-    QCOMPARE(layout->placeholderCount(), 0);
-
-    m->addDockWidget(d4, Location_OnRight, d3);
-
-    layout->checkSanity();
-
-    Item *centralItem = m->dropArea()->centralFrame();
-    layout->rectForDrop(nullptr, Location_OnTop, centralItem);
-    layout->checkSanity();
-
-    delete m->window();
-}
-
-void TestDocks::tst_negativeAnchorPosition7()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = new MainWindow("m1", MainWindowOption_None);
-    m->show();
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
-
-    auto d1 = new DockWidgetType("1");
-    d1->setWidget(w1);
-    auto d2 = new DockWidgetType("2");
-    d2->setWidget(w2);
-
-    auto w3 = new MyWidget2(QSize(100,100));
-    auto d3 = new DockWidgetType("3");
-    d3->setWidget(w3);
-
-    // Stack 1, 2
-    m->addDockWidget(d2, Location_OnTop);
-    m->addDockWidget(d1, Location_OnTop);
-
-    // add a small one to the middle
-
-    // Stack: 1, 3, 2
-    m->addDockWidget(d3, Location_OnTop, d2);
-    m->multiSplitter()->checkSanity();
-
-    delete m;
 }
 
 void TestDocks::tst_negativeAnchorPositionWhenEmbedded_data()

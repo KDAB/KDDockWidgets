@@ -171,6 +171,70 @@ public:
     }
 };
 
+class MyWidget2 : public QWidgetAdapter
+{
+public:
+
+    explicit MyWidget2(QSize minSz = QSize(1, 1))
+    {
+        setMinimumSize(minSz);
+        setSizeHint(minSz);
+    }
+
+    QSize sizeHint() const
+    {
+        return m_sizeHint;
+    }
+
+    void setSizeHint(QSize s)
+    {
+        m_sizeHint = s;
+    }
+
+    QSize m_sizeHint;
+};
+
+#else
+
+namespace {
+
+class MyWidget2 : public QWidget
+{
+public:
+
+    explicit MyWidget2(QSize minSz = QSize(1,1))
+        : m_minSz(minSz)
+        , m_sizeHint(minSz)
+    {
+
+    }
+
+    QSize sizeHint() const override
+    {
+        return m_sizeHint;
+    }
+
+    QSize minimumSizeHint() const override
+    {
+        return m_minSz;
+    }
+
+    void setMinSize(QSize s)
+    {
+        m_minSz = s;
+        updateGeometry();
+    }
+
+    void setSizeHint(QSize s)
+    {
+        m_sizeHint = s;
+    }
+
+    QSize m_minSz;
+    QSize m_sizeHint;
+};
+}
+
 #endif
 
 void doubleClickOn(QPoint globalPos, QWidget *receiver);

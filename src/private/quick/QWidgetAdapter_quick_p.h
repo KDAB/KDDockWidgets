@@ -111,6 +111,7 @@ public:
     void setMinimumSize(QSize);
     void updateGeometry();
     void resize(QSize);
+    void resize(int w, int h);
     bool isWindow() const { return parentItem() == nullptr; }
     bool isMaximized() const;
     bool isActiveWindow() const;

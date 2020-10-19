@@ -210,6 +210,11 @@ void QWidgetAdapter::resize(QSize sz)
     setHeight(sz.height());
 }
 
+void QWidgetAdapter::resize(int w, int h)
+{
+    resize({w, h});
+}
+
 bool QWidgetAdapter::isMaximized() const
 {
     if (QWindow *w = windowHandle())
