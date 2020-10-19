@@ -1188,7 +1188,7 @@ void TestCommon::tst_negativeAnchorPosition6()
     // Tests a case when we add a widget to left/right but the layout doesn't have enough height (or vice-versa)
     EnsureTopLevelsDeleted e;
 
-    auto m = new MainWindowType("m1", MainWindowOption_None);
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
     m->resize(QSize(100, 100));
     m->show();
 
@@ -1217,14 +1217,12 @@ void TestCommon::tst_negativeAnchorPosition6()
     Item *centralItem = m->dropArea()->centralFrame();
     layout->rectForDrop(nullptr, Location_OnTop, centralItem);
     layout->checkSanity();
-
-    delete m->window();
 }
 
 void TestCommon::tst_negativeAnchorPosition7()
 {
     EnsureTopLevelsDeleted e;
-    auto m = new MainWindowType("m1", MainWindowOption_None);
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
     m->show();
     auto w1 = new MyWidget2(QSize(400,400));
     auto w2 = new MyWidget2(QSize(400,400));
@@ -1247,8 +1245,6 @@ void TestCommon::tst_negativeAnchorPosition7()
     // Stack: 1, 3, 2
     m->addDockWidget(d3, Location_OnTop, d2);
     m->multiSplitter()->checkSanity();
-
-    delete m;
 }
 
 void TestCommon::tst_invalidAnchorGroup()
@@ -1835,7 +1831,7 @@ void TestCommon::tst_crash2()
 
     {
         EnsureTopLevelsDeleted e;
-        auto m = new MainWindowType("m1", MainWindowOption_None);
+        auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
         auto layout = m->multiSplitter();
         m->setVisible(show);
 
@@ -1861,12 +1857,11 @@ void TestCommon::tst_crash2()
 
         qDeleteAll(docks);
         qDeleteAll(DockRegistry::self()->frames());
-        delete m;
     }
 
     {
         EnsureTopLevelsDeleted e;
-        auto m = new MainWindowType("m1", MainWindowOption_HasCentralFrame);
+        auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
         auto layout = m->multiSplitter();
         m->show();
 
@@ -1897,7 +1892,6 @@ void TestCommon::tst_crash2()
 
         qDeleteAll(docks);
         qDeleteAll(DockRegistry::self()->frames());
-        delete m;
     }
 
 }
