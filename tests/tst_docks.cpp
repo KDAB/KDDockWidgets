@@ -284,7 +284,6 @@ private Q_SLOTS:
     void tst_dock2FloatingWidgetsTabbed();
     void tst_close();
     void tst_preventClose();
-    void tst_closeAllDockWidgets();
     void tst_dockWindowWithTwoSideBySideFramesIntoCenter();
     void tst_dockWindowWithTwoSideBySideFramesIntoLeft();
     void tst_dockWindowWithTwoSideBySideFramesIntoRight();
@@ -920,64 +919,6 @@ void TestDocks::tst_propagateMinSize()
     // TODO finish this when the 3 dock widgets have proper sizes
     //QTest::qWait(50000);
 
-}
-
-void TestDocks::tst_closeAllDockWidgets()
-{
-    EnsureTopLevelsDeleted e;
-
-    auto m = createMainWindow();
-    auto dropArea = m->dropArea();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("one"));
-    auto dock3 = createDockWidget("dock3", new QPushButton("one"));
-    auto dock4 = createDockWidget("dock4", new QPushButton("one"));
-    auto dock5 = createDockWidget("dock5", new QPushButton("one"));
-    auto dock6 = createDockWidget("dock6", new QPushButton("one"));
-
-    QPointer<FloatingWindow> fw = dock3->morphIntoFloatingWindow();
-
-    nestDockWidget(dock4, dropArea, nullptr, KDDockWidgets::Location_OnRight);
-    nestDockWidget(dock5, dropArea, nullptr, KDDockWidgets::Location_OnTop);
-
-    const int oldFWHeight = fw->height();
-    nestDockWidget(dock6, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
-
-    QVERIFY(oldFWHeight <= fw->height());
-    QCOMPARE(fw->frames().size(), 2);
-
-    QCOMPARE(dock3->window(), fw.data());
-    QCOMPARE(dock4->window(), m.get());
-    QCOMPARE(dock5->window(), m.get());
-    QCOMPARE(dock6->window(), fw.data());
-    auto layout = m->multiSplitter();
-    layout->checkSanity();
-    DockRegistry::self()->clear();
-    layout->checkSanity();
-
-    Testing::waitForDeleted(fw);
-    QVERIFY(!fw);
-
-    QCOMPARE(dock1->window(), dock1);
-    QCOMPARE(dock2->window(), dock2);
-    QCOMPARE(dock3->window(), dock3);
-    QCOMPARE(dock4->window(), dock4);
-    QCOMPARE(dock5->window(), dock5);
-    QCOMPARE(dock6->window(), dock6);
-
-    QVERIFY(!dock1->isVisible());
-    QVERIFY(!dock2->isVisible());
-    QVERIFY(!dock3->isVisible());
-    QVERIFY(!dock4->isVisible());
-    QVERIFY(!dock5->isVisible());
-    QVERIFY(!dock6->isVisible());
-
-    delete dock1;
-    delete dock2;
-    delete dock3;
-    delete dock4;
-    delete dock5;
-    delete dock6;
 }
 
 void TestDocks::tst_propagateSizeHonoursMinSize()
