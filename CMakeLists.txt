@@ -33,10 +33,6 @@
 #  Forces the test harness to be built.
 #  Default=false
 #
-# -DKDDockWidgets_QTQUICK == IN DEVELOPMENT. DO NOT USE! ==
-#  Build for QtQuick instead of QtWidgets
-#  Default=false
-#
 # -DKDDockWidgets_PYTHON_BINDINGS=[true|false]
 #  Build/Generate python bindings.  Always false for Debug builds
 #  Default=false
@@ -93,8 +89,6 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
   set(${PROJECT_NAME}_TESTS ON)
 endif()
 
-#option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
-
 find_package(Qt5Widgets 5.9 REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
@@ -120,13 +114,7 @@ macro(set_compiler_flags targetName)
   endif()
 endmacro()
 
-if(${PROJECT_NAME}_QTQUICK)
-  find_package(Qt5Quick)
-  find_package(Qt5QuickControls2)
-  add_definitions(-DKDDOCKWIDGETS_QTQUICK)
-else()
-  add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
-endif()
+add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
 
 if(${PROJECT_NAME}_STATIC)
   set(${PROJECT_NAME}_LIBRARY_MODE "STATIC")
