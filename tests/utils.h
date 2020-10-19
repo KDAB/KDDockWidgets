@@ -37,6 +37,13 @@ class FrameWidget;
 
 namespace Tests {
 
+template <typename T>
+inline QPointer<T> make_qpointer(T *t)
+{
+    // To support both QWidget and QtQuick we need QPointer<auto>, so use a function instead.
+    return QPointer<T>(t);
+}
+
 enum ButtonAction {
     ButtonAction_None,
     ButtonAction_Press = 1,

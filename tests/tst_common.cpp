@@ -109,6 +109,13 @@ private Q_SLOTS:
     void tst_dockDockWidgetNested();
     void tst_dockFloatingWindowNested();
     void tst_crash();
+    void tst_refUnrefItem();
+    void tst_placeholderCount();
+    void tst_availableLengthForOrientation();
+    void tst_closeShowWhenNoCentralFrame();
+    void tst_setAstCurrentTab();
+    void tst_placeholderDisappearsOnReadd();
+    void tst_placeholdersAreRemovedProperly();
 };
 
 void TestCommon::tst_simple1()
@@ -1422,6 +1429,274 @@ void TestCommon::tst_crash()
     QCOMPARE(layout->placeholderCount(), 1);
 
     delete dock1->window();
+}
+
+void TestCommon::tst_refUnrefItem()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget("dock1", new QPushButton("1"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("2"));
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+    auto dropArea = m->dropArea();
+    auto layout = dropArea;
+    QPointer<Frame> frame1 = dock1->frame();
+    QPointer<Frame> frame2 = dock2->frame();
+    QPointer<Item> item1 = layout->itemForFrame(frame1);
+    QPointer<Item> item2 = layout->itemForFrame(frame2);
+    QVERIFY(item1.data());
+    QVERIFY(item2.data());
+    QCOMPARE(item1->refCount(), 2); // 2 - the item and its frame, which can be persistent
+    QCOMPARE(item2->refCount(), 2);
+
+    // 1. Delete a dock widget directly. It should delete its frame and also the Item
+    delete dock1;
+    Testing::waitForDeleted(frame1);
+    QVERIFY(!frame1.data());
+    QVERIFY(!item1.data());
+
+    // 2. Delete dock3, but neither the frame or the item is deleted, since there were two tabs to begin with
+    auto dock3 = createDockWidget("dock3", new QPushButton("3"));
+    QCOMPARE(item2->refCount(), 2);
+    dock2->addDockWidgetAsTab(dock3);
+    QCOMPARE(item2->refCount(), 3);
+    delete dock3;
+    QVERIFY(item2.data());
+    QCOMPARE(frame2->dockWidgets().size(), 1);
+
+    // 3. Close dock2. frame2 should be deleted, but item2 preserved.
+    QCOMPARE(item2->refCount(), 2);
+    dock2->close();
+    Testing::waitForDeleted(frame2);
+    QVERIFY(dock2);
+    QVERIFY(item2.data());
+    QCOMPARE(item2->refCount(), 1);
+    QCOMPARE(dock2->lastPositions().lastItem(), item2.data());
+    delete dock2;
+
+    QVERIFY(!item2.data());
+    QCOMPARE(layout->count(), 1);
+
+    // 4. Move a closed dock widget from one mainwindow to another
+    // It should delete its old placeholder
+    auto dock4 = createDockWidget("dock4", new QPushButton("4"));
+    m->addDockWidget(dock4, KDDockWidgets::Location_OnLeft);
+
+    QPointer<Frame> frame4 = dock4->frame();
+    QPointer<Item> item4 = layout->itemForFrame(frame4);
+    dock4->close();
+    Testing::waitForDeleted(frame4);
+    QCOMPARE(item4->refCount(), 1);
+    QVERIFY(item4->isPlaceholder());
+    layout->checkSanity();
+
+    auto m2 = createMainWindow();
+    m2->addDockWidget(dock4, KDDockWidgets::Location_OnLeft);
+    m2->multiSplitter()->checkSanity();
+    QVERIFY(!item4.data());
+}
+
+void TestCommon::tst_placeholderCount()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests MultiSplitterLayout::count(),visibleCount() and placeholdercount()
+
+    // 1. MainWindow with just the initial frame.
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dropArea = m->dropArea();
+    auto layout = dropArea;
+
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->visibleCount(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 2. MainWindow with central frame and left widget
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 3. Add another dockwidget, this time tabbed in the center. It won't increase count, as it reuses an existing frame.
+    m->addDockWidgetAsTab(dock2);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 4. Float dock1. It should create a placeholder
+    dock1->setFloating(true);
+
+    auto fw = dock1->floatingWindow();
+
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 1);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    // 5. Re-dock dock1. It should reuse the placeholder
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 6. Again
+    dock1->setFloating(true);
+    fw = dock1->floatingWindow();
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->visibleCount(), 2);
+    QCOMPARE(layout->placeholderCount(), 0);
+    layout->checkSanity();
+
+    Testing::waitForDeleted(fw);
+}
+
+void TestCommon::tst_availableLengthForOrientation()
+{
+    EnsureTopLevelsDeleted e;
+
+    // 1. Test a completely empty window, it's available space is its size minus the static separators thickness
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    auto dropArea = m->dropArea();
+    MultiSplitter *layout = dropArea;
+
+    int availableWidth = layout->availableLengthForOrientation(Qt::Horizontal);
+    int availableHeight = layout->availableLengthForOrientation(Qt::Vertical);
+    QCOMPARE(availableWidth, layout->width());
+    QCOMPARE(availableHeight, layout->height());
+
+    //2. Now do the same, but we have some widget docked
+
+    auto dock1 = createDockWidget("dock1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+
+    const int dock1MinWidth = layout->itemForFrame(dock1->frame())->minLength(Qt::Horizontal);
+    const int dock1MinHeight = layout->itemForFrame(dock1->frame())->minLength(Qt::Vertical);
+
+    availableWidth = layout->availableLengthForOrientation(Qt::Horizontal);
+    availableHeight = layout->availableLengthForOrientation(Qt::Vertical);
+    QCOMPARE(availableWidth, layout->width() - dock1MinWidth);
+    QCOMPARE(availableHeight, layout->height() - dock1MinHeight);
+    m->multiSplitter()->checkSanity();
+}
+
+void TestCommon::tst_closeShowWhenNoCentralFrame()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests a crash I got when hidding and showing and no central frame
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->close();
+    m->multiSplitter()->checkSanity();
+
+    QVERIFY(!dock1->frame());
+    QVERIFY(!Testing::waitForDeleted(dock1)); // It was being deleted due to a bug
+    QVERIFY(dock1);
+    dock1->show();
+    m->multiSplitter()->checkSanity();
+}
+
+void TestCommon::tst_setAstCurrentTab()
+{
+    EnsureTopLevelsDeleted e;
+
+    // Tests DockWidget::setAsCurrentTab() and DockWidget::isCurrentTab()
+    // 1. a single dock widget is current, by definition
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    QVERIFY(dock1->isCurrentTab());
+
+    // 2. Tab dock2 to the group, dock2 is current now
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    dock1->addDockWidgetAsTab(dock2);
+    QVERIFY(!dock1->isCurrentTab());
+    QVERIFY(dock2->isCurrentTab());
+
+    // 3. Set dock1 as current
+    dock1->setAsCurrentTab();
+    QVERIFY(dock1->isCurrentTab());
+    QVERIFY(!dock2->isCurrentTab());
+
+    auto fw = dock1->floatingWindow();
+    QVERIFY(fw);
+    fw->multiSplitter()->checkSanity();
+
+    delete dock1; delete dock2;
+    Testing::waitForDeleted(fw);
+}
+
+void TestCommon::tst_placeholderDisappearsOnReadd()
+{
+    // This tests that addMultiSplitter also updates refcount of placeholders
+
+    // 1. Detach a widget and dock it on the opposite side. Placeholder
+    // should have been deleted and anchors properly positioned
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    MultiSplitter *layout = m->multiSplitter();
+
+    QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    dock1->setFloating(true);
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    dock1->morphIntoFloatingWindow();
+    auto fw = dock1->floatingWindow();
+    layout->addMultiSplitter(fw->dropArea(), Location_OnRight );
+
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->count(), 1);
+
+    layout->checkSanity();
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // The dock1 should occupy the entire width
+    QCOMPARE(dock1->frame()->width(), layout->width());
+
+    QVERIFY(Testing::waitForDeleted(fw));
+}
+
+void TestCommon::tst_placeholdersAreRemovedProperly()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    MultiSplitter *layout = m->multiSplitter();
+    QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
+    QPointer<DockWidgetBase> dock2 = createDockWidget("2", new QPushButton("2"));
+    m->addDockWidget(dock1, Location_OnLeft);
+    Item *item = layout->items().constFirst();
+    m->addDockWidget(dock2, Location_OnRight);
+    QVERIFY(!item->isPlaceholder());
+    dock1->setFloating(true);
+    QVERIFY(item->isPlaceholder());
+
+    QCOMPARE(layout->separators().size(), 0);
+    QCOMPARE(layout->count(), 2);
+    QCOMPARE(layout->placeholderCount(), 1);
+    layout->removeItem(item);
+    QCOMPARE(layout->separators().size(), 0);
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    // 2. Recreate the placeholder. This time delete the dock widget to see if placeholder is deleted too.
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->setFloating(true);
+    auto window1 = Tests::make_qpointer(dock1->window());
+    delete dock1;
+    QCOMPARE(layout->separators().size(), 0);
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    layout->checkSanity();
+
+    delete window1;
 }
 
 #include "tst_common.moc"
