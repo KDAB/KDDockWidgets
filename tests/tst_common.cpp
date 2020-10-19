@@ -122,6 +122,9 @@ private Q_SLOTS:
     void tst_setAstCurrentTab();
     void tst_placeholderDisappearsOnReadd();
     void tst_placeholdersAreRemovedProperly();
+
+    void tst_crash2_data();
+    void tst_crash2();
 };
 
 void TestCommon::tst_simple1()
@@ -1817,6 +1820,86 @@ void TestCommon::tst_placeholdersAreRemovedProperly()
     layout->checkSanity();
 
     delete window1;
+}
+
+void TestCommon::tst_crash2_data()
+{
+    QTest::addColumn<bool>("show");
+    QTest::newRow("true") << true;
+    QTest::newRow("false") << false;
+}
+
+void TestCommon::tst_crash2()
+{
+    QFETCH(bool, show);
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = new MainWindowType("m1", MainWindowOption_None);
+        auto layout = m->multiSplitter();
+        m->setVisible(show);
+
+        DockWidgetBase::List docks;
+        const int num = 4;
+        for (int i = 0; i < num; ++i)
+            docks << new DockWidgetType(QString::number(i));
+
+        QVector<KDDockWidgets::Location> locations = {Location_OnLeft,
+                                                      Location_OnRight, Location_OnRight, Location_OnRight};
+
+        QVector<KDDockWidgets::AddingOption> options = { AddingOption_StartHidden,
+                                                        AddingOption_StartHidden, AddingOption_None, AddingOption_StartHidden};
+
+        QVector<bool> floatings =  {true, false, false, false};
+
+        for (int i = 0; i < num; ++i) {
+
+            m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
+            layout->checkSanity();
+            docks[i]->setFloating(floatings[i]);
+        }
+
+        qDeleteAll(docks);
+        qDeleteAll(DockRegistry::self()->frames());
+        delete m;
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = new MainWindowType("m1", MainWindowOption_HasCentralFrame);
+        auto layout = m->multiSplitter();
+        m->show();
+
+        const int num = 3;
+        DockWidgetBase::List docks;
+        for (int i = 0; i < num; ++i)
+            docks << new DockWidgetType(QString::number(i));
+
+        QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft,
+                                                      Location_OnRight};
+
+        QVector<KDDockWidgets::AddingOption> options = { AddingOption_None, AddingOption_None,
+                                                        AddingOption_StartHidden};
+
+        QVector<bool> floatings =  {true, false, false};
+
+        for (int i = 0; i < num; ++i) {
+            m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
+            layout->checkSanity();
+            if (i == 2) {
+                // Wait for the resizes. This used to make the app crash.
+                QTest::qWait(1000);
+            }
+
+            docks[i]->setFloating(floatings[i]);
+        }
+        layout->checkSanity();
+
+        qDeleteAll(docks);
+        qDeleteAll(DockRegistry::self()->frames());
+        delete m;
+    }
+
 }
 
 #include "tst_common.moc"
