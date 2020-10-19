@@ -1500,7 +1500,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         dock1->morphIntoFloatingWindow();
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
         dock2->morphIntoFloatingWindow();
-        QPointer<QWidget> originalWindow2 = dock2->window();
+        auto originalWindow2 = Tests::make_qpointer(dock2->window());
 
         dock1->addDockWidgetAsTab(dock2);
 
@@ -3561,7 +3561,7 @@ void TestDocks::tst_raise()
 
     auto dock1 = createDockWidget("1", new QWidget());
     auto dock2 = createDockWidget("2", new QWidget());
-    QPointer<QWidget> fw2 = dock2->window();
+    auto fw2 = Tests::make_qpointer(dock2->window());
     dock1->addDockWidgetAsTab(dock2);
     dock1->setAsCurrentTab();
     QVERIFY(dock1->isCurrentTab());
@@ -4235,7 +4235,7 @@ void TestDocks::tst_maximumSizePolicy()
     auto dock1 = createDockWidget("dock1", widget);
     dock1->show();
     dock1->window()->resize(QSize(500, 500));
-    QPointer<QWidget> oldFw = dock1->window();
+    auto oldFw = Tests::make_qpointer(dock1->window());
     dock1->close();
     dock1->show();
     auto oldFw2 = dock1->window();
