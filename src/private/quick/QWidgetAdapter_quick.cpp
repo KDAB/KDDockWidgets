@@ -141,6 +141,9 @@ WId QWidgetAdapter::winId() const
 
 FloatingWindow * QWidgetAdapter::floatingWindow() const
 {
+    if (auto fw = qobject_cast<FloatingWindow*>(window()))
+        return fw;
+
     return nullptr;
 }
 
