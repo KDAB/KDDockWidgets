@@ -19,6 +19,8 @@ when running on Wayland:
   - Clicking the title-bar's float button
   - Double-clicking the title bar of a docked widget
   - Double-clicking a tab
+  - If no title bar is shown, double-clicking the empty space of the tab bar will detach
+  the entire group of tabbed dock widgets
 
 - Layout save/restore won't restore the position of floating windows, as wayland
   doesn't allow us to set geometry.
