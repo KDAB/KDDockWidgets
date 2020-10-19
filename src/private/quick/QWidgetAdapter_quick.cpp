@@ -37,10 +37,12 @@ QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags flags)
 
     connect(this, &QQuickItem::widthChanged, this, [this] {
         onResize(size());
+        updateGeometry();
     });
 
     connect(this, &QQuickItem::heightChanged, this, [this] {
         onResize(size());
+        updateGeometry();
     });
 
     setSize(QSize(800, 800));
@@ -199,7 +201,7 @@ void QWidgetAdapter::setMinimumSize(QSize sz)
 
 void QWidgetAdapter::updateGeometry()
 {
-    // TODO
+    Q_EMIT geometryUpdated();
 }
 
 void QWidgetAdapter::resize(QSize sz)

@@ -30,6 +30,8 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged,
             this, &FrameQuick::onDockWidgetCountChanged);
 
+    connect(this, &QWidgetAdapter::geometryUpdated, this, &Frame::layoutInvalidated);
+
     QQmlComponent component(Config::self().qmlEngine(),
                             QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/Frame.qml")));
 
