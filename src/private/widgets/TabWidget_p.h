@@ -166,6 +166,7 @@ protected:
     void onTabInserted();
     void onTabRemoved();
     void onCurrentTabChanged(int index);
+    bool onMouseDoubleClick(QPoint localPos);
 
 private:
     Frame *const m_frame;

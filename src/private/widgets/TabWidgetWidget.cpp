@@ -21,6 +21,8 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
+#include <QMouseEvent>
+
 using namespace KDDockWidgets;
 
 TabWidgetWidget::TabWidgetWidget(Frame *parent)
@@ -75,6 +77,15 @@ void TabWidgetWidget::paintEvent(QPaintEvent *p)
     // Otherwise it looks weird because the colors change when transforming a QDockWidget into FloatingWindow
     if (count() > 1)
         QTabWidget::paintEvent(p);
+}
+
+void TabWidgetWidget::mouseDoubleClickEvent(QMouseEvent *ev)
+{
+    if (onMouseDoubleClick(ev->pos())) {
+        ev->accept();
+    } else {
+        ev->ignore();
+    }
 }
 
 void TabWidgetWidget::tabInserted(int)

@@ -244,3 +244,26 @@ void TabWidget::onCurrentTabChanged(int index)
 {
     Q_UNUSED(index);
 }
+
+bool TabWidget::onMouseDoubleClick(QPoint localPos)
+{
+    // User clicked the empty space of the tab widget and we don't have title bar
+    // We float the entire frame.
+
+    if (!(Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) || tabBar()->dockWidgetAt(localPos))
+        return false;
+
+    Frame *frame = this->frame();
+
+    if (FloatingWindow *fw = frame->floatingWindow()) {
+        if (!fw->hasSingleFrame()) {
+            makeWindow();
+            return true;
+        }
+    } else if (frame->isInMainWindow()) {
+        makeWindow();
+        return true;
+    }
+
+    return false;
+}
