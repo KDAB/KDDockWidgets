@@ -126,6 +126,8 @@ private Q_SLOTS:
     void tst_crash2_data();
     void tst_crash2();
     void tst_closeAllDockWidgets();
+    void tst_toggleMiddleDockCrash();
+    void tst_stealFrame();
 };
 
 void TestCommon::tst_simple1()
@@ -1953,6 +1955,138 @@ void TestCommon::tst_closeAllDockWidgets()
     delete dock4;
     delete dock5;
     delete dock6;
+}
+
+void TestCommon::tst_toggleMiddleDockCrash()
+{
+    // tests some crash I got
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
+    MultiSplitter *layout = m->multiSplitter();
+    QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
+    QPointer<DockWidgetBase> dock2 = createDockWidget("2", new QPushButton("2"));
+    QPointer<DockWidgetBase> dock3 = createDockWidget("3", new QPushButton("3"));
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+    m->addDockWidget(dock3, Location_OnRight);
+
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 0);
+
+    auto frame = dock2->frame();
+    dock2->close();
+    QVERIFY(Testing::waitForDeleted(frame));
+
+    QCOMPARE(layout->count(), 3);
+    QCOMPARE(layout->placeholderCount(), 1);
+    QVERIFY(layout->checkSanity());
+
+    dock2->show();
+    layout->checkSanity();
+}
+
+void TestCommon::tst_stealFrame()
+{
+    // Tests using addWidget() with dock widgets which are already in a layout
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+
+    auto m2 = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+    auto dock4 = createDockWidget("dock4", new QPushButton("four"));
+
+    auto dropArea1 = m1->dropArea();
+    auto dropArea2 = m2->dropArea();
+
+    m1->addDockWidget(dock1, Location_OnRight);
+    m1->addDockWidget(dock2, Location_OnRight);
+    m2->addDockWidget(dock3, Location_OnRight);
+    m2->addDockWidget(dock4, Location_OnRight);
+
+    // 1. MainWindow #1 steals a widget from MainWindow2 and vice-versa
+    m1->addDockWidget(dock3, Location_OnRight);
+    m1->addDockWidget(dock4, Location_OnRight);
+    m2->addDockWidget(dock1, Location_OnRight);
+    QPointer<Item> item2 = dropArea1->itemForFrame(dock2->frame());
+    m2->addDockWidget(dock2, Location_OnRight);
+    QVERIFY(!item2.data());
+
+    QCOMPARE(dropArea1->count(), 2);
+    QCOMPARE(dropArea2->count(), 2);
+    QCOMPARE(dropArea1->placeholderCount(), 0);
+    QCOMPARE(dropArea2->placeholderCount(), 0);
+
+    // 2. MainWindow #1 steals a widget from MainWindow2 and vice-versa, but adds as tabs
+    dock1->addDockWidgetAsTab(dock3);
+    QPointer<Frame> f2 = dock2->frame();
+    dock4->addDockWidgetAsTab(dock2);
+    QVERIFY(Testing::waitForDeleted(f2.data()));
+    QVERIFY(!f2.data());
+
+    QCOMPARE(dropArea1->count(), 1);
+    QCOMPARE(dropArea2->count(), 1);
+    QCOMPARE(dropArea1->placeholderCount(), 0);
+    QCOMPARE(dropArea2->placeholderCount(), 0);
+
+    // 3. Test stealing a tab from the same tab-widget we're in. Nothing happens
+    {
+        SetExpectedWarning sew("Already contains KDDockWidgets::DockWidget"); // Suppress the qFatal this time
+        dock1->addDockWidgetAsTab(dock3);
+        QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
+    }
+
+    // 4. Steal from another tab which resides in another Frame, which resides in the same main window
+    m1->addDockWidget(dock1, Location_OnTop);
+    f2 = dock2->frame();
+    dock1->addDockWidgetAsTab(dock2);
+    QCOMPARE(dock1->frame()->dockWidgetCount(), 2);
+    QCOMPARE(dock4->frame()->dockWidgetCount(), 1);
+
+    QCOMPARE(dropArea1->count(), 2);
+    QCOMPARE(dropArea1->placeholderCount(), 0);
+
+    // 5. And also steal a side-by-side one into the tab
+    QPointer<Frame> f4 = dock4->frame();
+    dock1->addDockWidgetAsTab(dock4);
+    QVERIFY(Testing::waitForDeleted(f4.data()));
+    QCOMPARE(dropArea1->count(), 1);
+    QCOMPARE(dropArea1->placeholderCount(), 0);
+
+    // 6. Steal from tab to side-by-side within the same MainWindow
+    m1->addDockWidget(dock1, Location_OnLeft);
+    QCOMPARE(dropArea1->count(), 2);
+    QCOMPARE(dropArea1->placeholderCount(), 0);
+
+    // 6. side-by-side to side-by-side within same MainWindow
+    m2->addDockWidget(dock1, Location_OnRight);
+    QCOMPARE(dropArea2->count(), 2);
+    QCOMPARE(dropArea2->placeholderCount(), 0);
+
+    {
+        SetExpectedWarning sew("Invalid parameters KDDockWidgets::DockWidget"); // Suppress the qFatal this time
+        m2->addDockWidget(dock1, Location_OnLeft, dock1);
+        QCOMPARE(dropArea2->count(), 2);  // Nothing happened
+        QCOMPARE(dropArea2->placeholderCount(), 0);
+        QVERIFY(dock1->isVisible());
+    }
+
+    QVERIFY(dock1->isVisible());
+    m2->addDockWidget(dock1, Location_OnLeft, nullptr); // Should not warn
+
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(dropArea2->count(), 2);  // Nothing happened
+    QCOMPARE(dropArea2->placeholderCount(), 0);
+
+    m2->addDockWidget(dock1, Location_OnLeft, nullptr);
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(dropArea2->count(), 2);  // Nothing happened
+    QCOMPARE(dropArea2->placeholderCount(), 0);
+    dropArea1->checkSanity();
+    dropArea2->checkSanity();
 }
 
 #include "tst_common.moc"
