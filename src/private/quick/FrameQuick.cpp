@@ -88,6 +88,7 @@ void FrameQuick::setCurrentDockWidget_impl(DockWidgetBase *dw)
 
 void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
 {
+    QPointer<Frame> oldFrame = dw->frame();
     if (m_dockWidgetModel->insert(dw, index)) {
         dw->setParent(m_stackLayout);
 
@@ -100,6 +101,18 @@ void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
 
         if (!m_currentDockWidget)
             m_currentDockWidget = dw;
+
+        if (oldFrame && oldFrame->beingDeletedLater()) {
+            // give it a push and delete it immediately.
+            // Having too many deleteLater() puts us in an inconsistent state. For example if LayoutSaver::saveState()
+            // would to be called while the Frame hadn't been deleted yet it would count with that frame unless hacks.
+            // Also the unit-tests are full of waitForDeleted() due to deleteLater.
+
+            // Ideally we would just remove the deleteLater from frame.cpp, but QTabWidget::insertTab()
+            // would crash, as it accesses the old tab-widget we're stealing from
+
+            delete oldFrame;
+        }
     }
 }
 
