@@ -16,8 +16,14 @@
 #include "DropIndicatorOverlayInterface_p.h"
 #include "DockWidgetBase.h"
 #include "Config.h"
+#include "TitleBar_p.h"
+#include "FloatingWindow_p.h"
+#include "DropArea_p.h"
+#include "Utils_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
+# include "widgets/TabWidgetWidget_p.h"
+# include "widgets/FrameWidget_p.h"
 # include <QWidget>
 # include <QToolButton>
 #else
@@ -26,8 +32,13 @@
 
 #include <QPointer>
 #include <QVector>
+#include <QtTest/QtTest>
 
 #include <memory>
+
+static bool s_pauseBeforePress = false; // for debugging
+static bool s_pauseBeforeMove = false; // for debugging
+#define DEBUGGING_PAUSE_DURATION 5000 // 5 seconds
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
 
@@ -237,11 +248,104 @@ public:
 
 #endif
 
-void doubleClickOn(QPoint globalPos, QWidget *receiver);
-void pressOn(QPoint globalPos, QWidget *receiver);
-void releaseOn(QPoint globalPos, QWidget *receiver);
-void clickOn(QPoint globalPos, QWidget *receiver);
-void moveMouseTo(QPoint globalDest, QWidget *receiver);
+void doubleClickOn(QPoint globalPos, WidgetType *receiver);
+void pressOn(QPoint globalPos, WidgetType *receiver);
+void releaseOn(QPoint globalPos, WidgetType *receiver);
+void clickOn(QPoint globalPos, WidgetType *receiver);
+void moveMouseTo(QPoint globalDest, WidgetType *receiver);
+
+inline FloatingWindow *createFloatingWindow()
+{
+    static int count = 0;
+    count++;
+    auto dock = createDockWidget(QString("dock %1").arg(count), Qt::green);
+    return dock->morphIntoFloatingWindow();
+}
+
+inline WidgetType *draggableFor(WidgetType *w)
+{
+    WidgetType *draggable = nullptr;
+    if (auto dock = qobject_cast<DockWidgetBase *>(w)) {
+        if (auto frame = dock->frame())
+            draggable = frame->titleBar();
+    } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+        auto frame = fw->hasSingleFrame() ? static_cast<FrameWidget*>(fw->frames().first())
+                                          : nullptr;
+        draggable = ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) ? static_cast<QWidget*>(frame->tabWidget()->asWidget())
+                                                                                                                                                            : static_cast<QWidget*>(fw->titleBar());
+    } else if (qobject_cast<TabWidgetWidget *>(w)) {
+        draggable = w;
+#else
+        Q_UNUSED(fw);
+#endif
+    } else if (qobject_cast<TitleBar *>(w)) {
+        draggable = w;
+    }
+
+    qDebug() << "Draggable is" << draggable;
+    return draggable;
+}
+
+inline void drag(WidgetType *sourceWidget, QPoint pressGlobalPos, QPoint globalDest,
+                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
+{
+    if (buttonActions & ButtonAction_Press) {
+        if (s_pauseBeforePress)
+            QTest::qWait(DEBUGGING_PAUSE_DURATION);
+
+        pressOn(pressGlobalPos, sourceWidget);
+    }
+
+    activateWindow(sourceWidget->window());
+
+    if (s_pauseBeforeMove)
+        QTest::qWait(DEBUGGING_PAUSE_DURATION);
+
+    qDebug() << "Moving sourceWidget to" << globalDest
+             << "; sourceWidget->size=" << sourceWidget->size()
+             << "; from=" << QCursor::pos();
+    moveMouseTo(globalDest, sourceWidget);
+    qDebug() << "Arrived at" << QCursor::pos();
+    pressGlobalPos = KDDockWidgets::mapToGlobal(sourceWidget, QPoint(10, 10));
+    if (buttonActions & ButtonAction_Release)
+        releaseOn(globalDest, sourceWidget);
+}
+
+inline void drag(WidgetType *sourceWidget, QPoint globalDest,
+                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
+{
+    Q_ASSERT(sourceWidget && sourceWidget->isVisible());
+
+    WidgetType *draggable = draggableFor(sourceWidget);
+
+    Q_ASSERT(draggable && draggable->isVisible());
+    const QPoint pressGlobalPos = KDDockWidgets::mapToGlobal(draggable, QPoint(6, 6));
+
+    drag(draggable, pressGlobalPos, globalDest, buttonActions);
+}
+
+inline void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest,
+                                 ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
+{
+    auto draggable = draggableFor(fw);
+    Q_ASSERT(draggable && draggable->isVisible());
+    drag(draggable, KDDockWidgets::mapToGlobal(draggable, QPoint(10, 10)), globalDest, buttonActions);
+}
+
+inline void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation)
+{
+    auto draggable = draggableFor(fw);
+
+    // First we drag over it, so the drop indicators appear:
+    drag(draggable, KDDockWidgets::mapToGlobal(draggable, QPoint(10, 10)), target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
+
+    // Now we drag over the drop indicator and only then release mouse:
+    DropIndicatorOverlayInterface *dropIndicatorOverlay = target->dropIndicatorOverlay();
+    const QPoint dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
+
+    drag(draggable, QPoint(), dropPoint, ButtonAction_Release);
+}
 
 }
 

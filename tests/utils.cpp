@@ -176,7 +176,7 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
            msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
 }
 
-void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, QWidget *receiver)
+void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, WidgetType *receiver)
 {
     QCursor::setPos(globalPos);
     QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
@@ -184,7 +184,7 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, QWidget *receiver)
     qApp->sendEvent(receiver, &ev);
 }
 
-void KDDockWidgets::Tests::pressOn(QPoint globalPos, QWidget *receiver)
+void KDDockWidgets::Tests::pressOn(QPoint globalPos, WidgetType *receiver)
 {
     QCursor::setPos(globalPos);
     QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
@@ -192,24 +192,23 @@ void KDDockWidgets::Tests::pressOn(QPoint globalPos, QWidget *receiver)
     qApp->sendEvent(receiver, &ev);
 }
 
-void KDDockWidgets::Tests::releaseOn(QPoint globalPos, QWidget *receiver)
+void KDDockWidgets::Tests::releaseOn(QPoint globalPos, WidgetType *receiver)
 {
     QMouseEvent ev(QEvent::MouseButtonRelease, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     qApp->sendEvent(receiver, &ev);
 }
 
-void KDDockWidgets::Tests::clickOn(QPoint globalPos, QWidget *receiver)
+void KDDockWidgets::Tests::clickOn(QPoint globalPos, WidgetType *receiver)
 {
     pressOn(globalPos, receiver);
     releaseOn(globalPos, receiver);
 }
 
-void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, QWidget *receiver)
+void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, WidgetType *receiver)
 {
-    QPoint globalSrc(receiver->mapToGlobal(QPoint(5, 5)));
-
-    QPointer<QWidget> receiverP = receiver;
+    QPoint globalSrc = KDDockWidgets::mapToGlobal(receiver, QPoint(5, 5));
+    auto receiverP = Tests::make_qpointer(receiver);
 
     while (globalSrc != globalDest) {
         if (globalSrc.x() < globalDest.x()) {

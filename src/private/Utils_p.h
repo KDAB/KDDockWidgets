@@ -74,6 +74,11 @@ inline bool usesNativeDraggingAndResizing()
     return usesNativeTitleBar() || usesAeroSnapWithCustomDecos();
 }
 
+inline void activateWindow(QWindow *window)
+{
+    window->requestActivate();
+}
+
 inline bool windowManagerHasTranslucency()
 {
 #ifdef QT_X11EXTRAS_LIB
@@ -128,6 +133,16 @@ inline QSize screenSizeForWidget(const QWidget *widget)
     return screenSizeForWindow(widget->window()->windowHandle());
 }
 
+inline QPoint mapToGlobal(QWidget *w, QPoint p)
+{
+    return w->mapToGlobal(p);
+}
+
+inline void activateWindow(QWidget *widget)
+{
+    widget->activateWindow();
+}
+
 #else
 
 inline int screenNumberForWidget(const QQuickItem *w)
@@ -138,6 +153,11 @@ inline int screenNumberForWidget(const QQuickItem *w)
 inline QSize screenSizeForWidget(const QQuickItem *w)
 {
     return screenSizeForWindow(w->window());
+}
+
+inline QPoint mapToGlobal(QQuickItem *item, QPoint p)
+{
+    return item->mapToGlobal(p).toPoint();
 }
 
 #endif
