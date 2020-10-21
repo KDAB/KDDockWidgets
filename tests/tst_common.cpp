@@ -35,7 +35,7 @@
 # else
 # include "DockWidget.h"
 # include "MainWindow.h"
-
+# include "widgets/FrameWidget_p.h"
 # include <QPushButton>
 #endif
 
@@ -128,6 +128,7 @@ private Q_SLOTS:
     void tst_closeAllDockWidgets();
     void tst_toggleMiddleDockCrash();
     void tst_stealFrame();
+    void tst_setFloatingWhenWasTabbed();
 };
 
 void TestCommon::tst_simple1()
@@ -2087,6 +2088,115 @@ void TestCommon::tst_stealFrame()
     QCOMPARE(dropArea2->placeholderCount(), 0);
     dropArea1->checkSanity();
     dropArea2->checkSanity();
+}
+
+void TestCommon::tst_setFloatingWhenWasTabbed()
+{
+    // Tests DockWidget::isTabbed() and DockWidget::setFloating(false|true) when tabbed (it should redock)
+    // setFloating(false) for side-by-side is tested in another function
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+
+    // 1. Two floating dock widgets. They are floating, not tabbed.
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+
+    // 2. Dock a floating dock into another floating dock. They're not floating anymore, just tabbed.
+    dock1->addDockWidgetAsTab(dock2);
+    QVERIFY(dock1->isTabbed());
+    QVERIFY(dock2->isTabbed());
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
+
+    // 2.1 Set one of them invisible. // Not much will happen, the tab will be still there, just showing an empty space.
+    // Users should use close() instead. Tabwidgets control visibility, they hide the widget when it's not the current tab.
+    dock2->setVisible(false);
+    QVERIFY(dock2->isTabbed());
+    QVERIFY(!dock1->isFloating());
+#ifdef KDDOCKWIDGETS_QTWIDGETS // TODO
+    QCOMPARE(static_cast<FrameWidget*>(dock2->frame())->m_tabWidget->numDockWidgets(), 2);
+#endif
+    // 3. Set one floating. Now both cease to be tabbed, and both are floating.
+    dock1->setFloating(true);
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());
+
+    // 4. Dock one floating dock into another, side-by-side. They're neither docking or tabbed now.
+    dock1->addDockWidgetToContainingWindow(dock2, KDDockWidgets::Location_OnLeft);
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());
+
+    // 5. float one of them, now both are floating, not tabbed anymore.
+    dock2->setFloating(true);
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());
+
+    // 6. With two dock widgets tabbed, detach 1, and reattach it, via DockWidget::setFloating(false)
+    m->addDockWidgetAsTab(dock1);
+    m->addDockWidgetAsTab(dock2);
+
+    qDebug() << "6.";
+    dock2->setFloating(true);
+    QVERIFY(dock1->isTabbed());
+    QVERIFY(!dock2->isTabbed());
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+
+    QCOMPARE(dock2->lastPositions().lastTabIndex(), 1);
+    QVERIFY(dock2->lastPositions().isValid());
+    dock2->setFloating(false);
+
+    QVERIFY(dock1->isTabbed());
+    QVERIFY(dock2->isTabbed());
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(!dock2->isFloating());
+
+    // 7. Call setFloating(true) on an already docked widget
+    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+    dock3->setFloating(true);
+    dock3->setFloating(true);
+
+    // 8. Tab 3 together, detach the middle one, reattach the middle one, it should go to the middle.
+    m->addDockWidgetAsTab(dock3);
+    dock2->setFloating(true);
+    QVERIFY(dock2->isFloating());
+    dock2->setFloating(false);
+    QVERIFY(!dock2->isFloating());
+    QVERIFY(dock2->isTabbed());
+#ifdef KDDOCKWIDGETS_QTWIDGETS // TODO
+    QCOMPARE(static_cast<FrameWidget*>(dock2->frame())->m_tabWidget->indexOfDockWidget(dock2), 1);
+#endif
+
+    // 10. Float dock1, and dock it to main window as tab. This tests Option_AlwaysShowsTabs.
+    dock1->setFloating(true);
+    dock2->setFloating(true);
+    dock3->setFloating(true);
+
+    m->addDockWidgetAsTab(dock1);
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(dock1->isTabbed());
+    dock1->setFloating(true);
+    dock1->setFloating(false);
+#ifdef KDDOCKWIDGETS_QTWIDGETS // TODO
+    QCOMPARE(static_cast<FrameWidget*>(dock1->frame())->m_tabWidget->numDockWidgets(), 1);
+#endif
+    // Cleanup
+    m->addDockWidgetAsTab(dock2);
+    m->addDockWidgetAsTab(dock3);
+    m->deleteLater();
+    auto window = m.release();
+    Testing::waitForDeleted(window);
 }
 
 #include "tst_common.moc"
