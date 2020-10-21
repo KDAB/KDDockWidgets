@@ -35,7 +35,7 @@
 # else
 # include "DockWidget.h"
 # include "MainWindow.h"
-# include "widgets/FrameWidget_p.h"
+
 # include <QPushButton>
 #endif
 
@@ -2118,9 +2118,7 @@ void TestCommon::tst_setFloatingWhenWasTabbed()
     dock2->setVisible(false);
     QVERIFY(dock2->isTabbed());
     QVERIFY(!dock1->isFloating());
-#ifdef KDDOCKWIDGETS_QTWIDGETS // TODO
-    QCOMPARE(static_cast<FrameWidget*>(dock2->frame())->m_tabWidget->numDockWidgets(), 2);
-#endif
+    QCOMPARE(dock2->frame()->dockWidgetCount(), 2);
     // 3. Set one floating. Now both cease to be tabbed, and both are floating.
     dock1->setFloating(true);
     QVERIFY(dock1->isFloating());
@@ -2174,9 +2172,7 @@ void TestCommon::tst_setFloatingWhenWasTabbed()
     dock2->setFloating(false);
     QVERIFY(!dock2->isFloating());
     QVERIFY(dock2->isTabbed());
-#ifdef KDDOCKWIDGETS_QTWIDGETS // TODO
-    QCOMPARE(static_cast<FrameWidget*>(dock2->frame())->m_tabWidget->indexOfDockWidget(dock2), 1);
-#endif
+    QCOMPARE(dock2->frame()->indexOfDockWidget(dock2), 1);
 
     // 10. Float dock1, and dock it to main window as tab. This tests Option_AlwaysShowsTabs.
     dock1->setFloating(true);
@@ -2188,9 +2184,7 @@ void TestCommon::tst_setFloatingWhenWasTabbed()
     QVERIFY(dock1->isTabbed());
     dock1->setFloating(true);
     dock1->setFloating(false);
-#ifdef KDDOCKWIDGETS_QTWIDGETS // TODO
-    QCOMPARE(static_cast<FrameWidget*>(dock1->frame())->m_tabWidget->numDockWidgets(), 1);
-#endif
+    QCOMPARE(dock1->frame()->dockWidgetCount(), 1);
     // Cleanup
     m->addDockWidgetAsTab(dock2);
     m->addDockWidgetAsTab(dock3);
