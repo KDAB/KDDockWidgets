@@ -21,6 +21,8 @@
 #include "Position_p.h"
 #include "DropAreaWithCentralFrame_p.h"
 #include "WindowBeingDragged_p.h"
+#include "Config.h"
+#include "SideBar_p.h"
 
 #include <QtTest/QtTest>
 #include <QObject>
@@ -37,6 +39,8 @@
 # include "MainWindow.h"
 
 # include <QPushButton>
+# include <QLineEdit>
+# include <QTextEdit>
 #endif
 
 using namespace KDDockWidgets;
@@ -56,7 +60,7 @@ public Q_SLOTS:
         Testing::installFatalMessageHandler();
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-        QQuickStyle::setStyle("Material"); // so we don't load KDE pluginss
+        QQuickStyle::setStyle("Material"); // so we don't load KDE plugins
         KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
 #endif
         QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
@@ -131,6 +135,16 @@ private Q_SLOTS:
     void tst_setFloatingWhenWasTabbed();
     void tst_setFloatingWhenSideBySide();
     void tst_dockWindowWithTwoSideBySideFramesIntoCenter();
+    void tst_closeRemovesFromSideBar();
+    void tst_tabTitleChanges();
+    void tst_dockWidgetGetsFocusWhenDocked();
+    void tst_setWidget();
+    void tst_isFocused();
+    void tst_floatingLastPosAfterDoubleClose();
+    void tst_registry();
+    void tst_honourGeometryOfHiddenWindow();
+    void tst_0_data();
+    void tst_0();
 };
 
 void TestCommon::tst_simple1()
@@ -2276,5 +2290,242 @@ void TestCommon::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     delete fw2;
 }
 
+void TestCommon::tst_closeRemovesFromSideBar()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    auto fw1 = dw1->window();
+    m1->addDockWidget(dw1, Location_OnBottom);
+    m1->moveToSideBar(dw1);
+
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(!dw1->isVisible());
+    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
+
+    SideBar *sb = m1->sideBarForDockWidget(dw1);
+    QVERIFY(sb);
+
+    // Overlay it:
+    sb->toggleOverlay(dw1);
+    QVERIFY(dw1->isOverlayed());
+    QVERIFY(dw1->isVisible());
+    QCOMPARE(dw1->sideBarLocation(), sb->location());
+    QVERIFY(dw1->isInMainWindow());
+    QVERIFY(!dw1->isFloating());
+
+    // Close it while it's overlayed:
+    dw1->close();
+    QVERIFY(!dw1->isInMainWindow());
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(!dw1->isVisible());
+    QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
+
+    delete fw1;
+}
+
+void TestCommon::tst_tabTitleChanges()
+{
+    // Tests that the tab's title changes if the dock widget's title changes
+#ifdef KDDOCKWIDGETS_QTWIDGETS // TODO
+    EnsureTopLevelsDeleted e;
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
+
+    dw1->addDockWidgetAsTab(dw2);
+
+    auto frame = qobject_cast<FrameWidget*>(dw1->frame());
+    QTabBar *tb = frame->tabBar();
+    QCOMPARE(tb->tabText(0), QStringLiteral("1"));
+    dw1->setTitle(QStringLiteral("other"));
+    QCOMPARE(tb->tabText(0), QStringLiteral("other"));
+
+    delete dw1->window();
+#endif
+}
+void TestCommon::tst_dockWidgetGetsFocusWhenDocked()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
+
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
+    auto le1 = new QLineEdit();
+    auto le2 = new QLineEdit();
+    dw1->setWidget(le1);
+    dw2->setWidget(le2);
+    dw1->show();
+    dw2->show();
+
+    auto fw1 = dw1->floatingWindow();
+    QPointer<FloatingWindow> fw2 = dw2->floatingWindow();
+
+    // Focus dock widget 1 first
+    QVERIFY(!dw1->isFocused());
+    dw1->window()->activateWindow();
+    le1->setFocus(Qt::MouseFocusReason);
+    QTest::qWait(200);
+    QVERIFY(dw1->isFocused());
+
+    QVERIFY(fw1->isActiveWindow());
+    dragFloatingWindowTo(fw2, fw1->dropArea(), DropIndicatorOverlayInterface::DropLocation_Left);
+    Testing::waitForEvent(fw1, QEvent::WindowActivate);
+
+    /// We dropped into floating window 1, it should still be active
+    QVERIFY(fw1->isActiveWindow());
+
+    // DockWidget 2 was dropped, it should now be focused
+    QVERIFY(!dw1->isFocused());
+    QVERIFY(dw2->isFocused());
+
+    delete fw1;
+    delete fw2;
+}
+
+void TestCommon::tst_isFocused()
+{
+    EnsureTopLevelsDeleted e;
+
+    // 1. Create 2 floating windows
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QLineEdit());
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QLineEdit());
+
+    QTest::qWait(200); // macOS is flaky here, needs dock2 to be shown first before focusing dock1, otherwise dock1 looses again
+
+    dock1->window()->move(400, 200);
+
+    // 2. Raise dock1 and focus its line edit
+    dock1->raise();
+    dock1->widget()->setFocus(Qt::OtherFocusReason);
+    Testing::waitForEvent(dock1->widget(), QEvent::FocusIn);
+
+    QVERIFY(dock1->isFocused());
+    QVERIFY(!dock2->isFocused());
+
+    // 3. Raise dock3 and focus its line edit
+    dock2->raise();
+    dock2->widget()->setFocus(Qt::OtherFocusReason);
+    Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
+    QVERIFY(!dock1->isFocused());
+    QVERIFY(dock2->isFocused());
+
+    // 4. Tab dock1, it's current tab now
+    auto oldFw1 = dock1->window();
+    dock2->addDockWidgetAsTab(dock1);
+    delete oldFw1;
+    QVERIFY(dock1->isFocused());
+    QVERIFY(!dock2->isFocused());
+
+    // 5. Set dock2 as current tab again
+    dock2->raise();
+    QVERIFY(!dock1->isFocused());
+    QVERIFY(dock2->isFocused());
+
+    // 6. Create dock3, focus it
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new QLineEdit());
+    auto oldFw3 = dock3->window();
+    dock3->raise();
+    dock3->widget()->setFocus(Qt::OtherFocusReason);
+    Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
+    QVERIFY(!dock1->isFocused());
+    QVERIFY(!dock2->isFocused());
+    QVERIFY(dock3->isFocused());
+
+    // 4. Add dock3 to the 1st window, nested, focus 2 again
+    dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
+    delete oldFw3;
+    dock2->raise();
+    dock2->widget()->setFocus(Qt::OtherFocusReason);
+    Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
+    QVERIFY(!dock1->isFocused());
+    QVERIFY(dock2->isFocused());
+    QVERIFY(!dock3->isFocused());
+    delete dock2->window();
+}
+
+void TestCommon::tst_setWidget()
+{
+    EnsureTopLevelsDeleted e;
+    auto dw = new DockWidgetType(QStringLiteral("FOO"));
+    auto button1 = new QPushButton("button1");
+    auto button2 = new QPushButton("button2");
+    dw->setWidget(button1);
+    dw->setWidget(button2);
+    delete button1;
+    delete dw;
+}
+
+void TestCommon::tst_floatingLastPosAfterDoubleClose()
+{
+    EnsureTopLevelsDeleted e;
+    auto d1 = new DockWidgetType(QStringLiteral("a"));
+    QVERIFY(d1->lastPositions().lastFloatingGeometry().isNull());
+    QVERIFY(!d1->isVisible());
+    d1->close();
+    QVERIFY(d1->lastPositions().lastFloatingGeometry().isNull());
+    delete d1;
+}
+
+void TestCommon::tst_0_data()
+{
+    QTest::addColumn<int>("thickness");
+    QTest::newRow("2") << 2;
+    QTest::newRow("1") << 1;
+    QTest::newRow("0") << 0;
+}
+
+void TestCommon::tst_0()
+{
+    QFETCH(int, thickness);
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setSeparatorThickness(thickness);
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    m->resize(QSize(502, 500));
+    m->show();
+
+    auto d1 = createDockWidget("1", new QTextEdit());
+    auto d2 = createDockWidget("2", new QTextEdit());
+
+    m->addDockWidget(d1, Location_OnLeft);
+    m->addDockWidget(d2, Location_OnRight);
+}
+
+void TestCommon::tst_honourGeometryOfHiddenWindow()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto d1 = new DockWidgetType("1");
+    d1->setWidget(new QTextEdit());
+
+    QVERIFY(!d1->isVisible());
+
+    // Clear had a bug where it saved the position of all dock widgets being closed
+    DockRegistry::self()->clear();
+
+    const QRect suggestedGeo(150, 150, 250, 250);
+    d1->setGeometry(suggestedGeo);
+
+    d1->show();
+    Testing::waitForEvent(d1, QEvent::Show);
+
+    QCOMPARE( d1->window()->geometry(), suggestedGeo);
+    delete d1->window();
+}
+
+void TestCommon::tst_registry()
+{
+    EnsureTopLevelsDeleted e;
+    auto dr = DockRegistry::self();
+
+    QCOMPARE(dr->dockwidgets().size(), 0);
+    auto dw = new DockWidgetType(QStringLiteral("dw1"));
+    auto guest = new QWidgetOrQuick();
+    dw->setWidget(guest);
+    QCOMPARE(dr->dockWidgetForGuest(nullptr), nullptr);
+    QCOMPARE(dr->dockWidgetForGuest(guest), dw);
+    delete dw;
+}
 
 #include "tst_common.moc"

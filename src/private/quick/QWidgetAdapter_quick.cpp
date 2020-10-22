@@ -435,6 +435,11 @@ void QWidgetAdapter::setFocusProxy(QQuickItem *)
     qWarning() << Q_FUNC_INFO << "Implement me";
 }
 
+void QWidgetAdapter::setFocus(Qt::FocusReason reason)
+{
+    QQuickItem::setFocus(true, reason);
+}
+
 void QWidgetAdapter::render(QPainter *)
 {
     qWarning() << Q_FUNC_INFO << "Implement me";

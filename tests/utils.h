@@ -182,6 +182,24 @@ public:
     }
 };
 
+class QLineEdit : public QWidgetAdapter
+{
+public:
+    explicit QLineEdit()
+        : QWidgetAdapter()
+    {
+    }
+};
+
+class QTextEdit : public QWidgetAdapter
+{
+public:
+    explicit QTextEdit()
+        : QWidgetAdapter()
+    {
+    }
+};
+
 class MyWidget2 : public QWidgetAdapter
 {
 public:

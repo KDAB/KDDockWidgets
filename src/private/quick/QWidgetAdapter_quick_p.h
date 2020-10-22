@@ -142,6 +142,7 @@ public:
     Qt::FocusPolicy focusPolicy() const;
     void setFocusPolicy(Qt::FocusPolicy) {}
     void setFocusProxy(QQuickItem*);
+    void setFocus(Qt::FocusReason);
     virtual QSize sizeHint() const;
 
     Qt::WindowFlags windowFlags() const;
