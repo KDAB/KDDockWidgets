@@ -12,6 +12,7 @@
   - Added Config::Flag_TitleBarHasMinimizeButton
   - Added Config::Flag_TitleBarNoFloatButton
   - Added Config::Flag_AutoHideSupport
+  - HDPI improvements, new high-res icons
   - Bugfixes:
     - Windows: Fixed windows not having proper minimum size.
     - Windows: Fixed moving windows across screens with different DPI (#72)
