@@ -418,6 +418,7 @@ void TestCommon::tst_honourUserGeometry()
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
     auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    QVERIFY(!dw1->testAttribute(Qt::WA_PendingMoveEvent));
 
     const QPoint pt(10, 10);
     dw1->move(pt);

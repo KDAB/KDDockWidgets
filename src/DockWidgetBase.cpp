@@ -146,6 +146,8 @@ DockWidgetBase::DockWidgetBase(const QString &name, Options options)
 
     if (name.isEmpty())
         qWarning() << Q_FUNC_INFO << "Name can't be null";
+
+    setAttribute(Qt::WA_PendingMoveEvent, false);
 }
 
 DockWidgetBase::~DockWidgetBase()
@@ -528,7 +530,7 @@ FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
         if (geo.isNull()) {
             geo = geometry();
 
-            if (!testAttribute(Qt::WA_Moved)) { // If user already moved it, we don't interfere
+            if (!testAttribute(Qt::WA_PendingMoveEvent)) { // If user already moved it, we don't interfere
                 const QPoint center = d->defaultCenterPosForFloating();
                 if (!center.isNull())
                     geo.moveCenter(center);
