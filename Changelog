@@ -9,6 +9,7 @@
   - Added Config::Flag_TitleBarHasMinimizeButton
   - Added Config::Flag_TitleBarNoFloatButton
   - Added Config::Flag_AutoHideSupport
+  - Added Config::setTabbingAllowedFunc(TabbingAllowedFunc func)
   - HDPI improvements, new high-res icons
   - Bugfixes:
     - Windows: Fixed windows not having proper minimum size.
