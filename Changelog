@@ -1,6 +1,3 @@
-* v1.2.0 (unreleased)
-  - QtQuick support
-
 * v1.1.0 (unreleased)
   - New drop indicator style type: Segmented Indicators
   - Windows: Drop Shadow for floating windows
