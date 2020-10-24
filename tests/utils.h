@@ -133,18 +133,6 @@ KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QColor colo
 void nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo,
                     KDDockWidgets::Location location);
 
-class NonClosableWidget : public QWidget
-{
-public:
-    Q_OBJECT
-public:
-    explicit NonClosableWidget(QWidget *parent = nullptr);
-    ~NonClosableWidget() override;
-
-protected:
-    void closeEvent(QCloseEvent *event) override;
-};
-
 class MyWidget : public QWidgetOrQuick
 {
 public:
@@ -200,6 +188,17 @@ public:
     }
 };
 
+class NonClosableWidget : public QWidgetAdapter
+{
+public:
+    Q_OBJECT
+public:
+    explicit NonClosableWidget()
+        : QWidgetAdapter()
+    {
+    }
+};
+
 class MyWidget2 : public QWidgetAdapter
 {
 public:
@@ -224,6 +223,18 @@ public:
 };
 
 #else
+
+class NonClosableWidget : public QWidget
+{
+public:
+    Q_OBJECT
+public:
+    explicit NonClosableWidget(QWidget *parent = nullptr);
+    ~NonClosableWidget() override;
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+};
 
 namespace {
 

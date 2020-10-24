@@ -36,19 +36,6 @@ using namespace KDDockWidgets::Tests;
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
 
-NonClosableWidget::NonClosableWidget(QWidget *parent)
-    : QWidget(parent)
-{
-}
-
-NonClosableWidget::~NonClosableWidget()
-{
-}
-
-void NonClosableWidget::closeEvent(QCloseEvent *ev)
-{
-    ev->ignore(); // don't allow to close
-}
 
 std::unique_ptr<KDDockWidgets::MainWindowBase> KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options, const QString &name)
 {
@@ -161,6 +148,21 @@ void MyWidget::paintEvent(QPaintEvent *)
     QPainter p(this);
     p.fillRect(rect(), c);
 }
+
+NonClosableWidget::NonClosableWidget(QWidget *parent)
+    : QWidget(parent)
+{
+}
+
+NonClosableWidget::~NonClosableWidget()
+{
+}
+
+void NonClosableWidget::closeEvent(QCloseEvent *ev)
+{
+    ev->ignore(); // don't allow to close
+}
+
 #endif
 
 bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QString &category)

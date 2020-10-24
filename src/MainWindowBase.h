@@ -28,6 +28,8 @@
 #include <QVector>
 #include <QMargins>
 
+class TestCommon;
+
 namespace KDDockWidgets {
 
 class DockWidgetBase;
@@ -180,6 +182,7 @@ private:
     class Private;
     Private *const d;
 
+    friend class ::TestCommon;
     friend class LayoutSaver;
     bool deserialize(const LayoutSaver::MainWindow &);
     LayoutSaver::MainWindow serialize() const;
