@@ -24,9 +24,14 @@
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "widgets/TabWidgetWidget_p.h"
 # include "widgets/FrameWidget_p.h"
+# include "MainWindow.h"
+
+#include <QVBoxLayout>
 # include <QWidget>
 # include <QToolButton>
 #else
+# include "quick/MainWindowQuick_p.h"
+
 # include <QQuickView>
 #endif
 
@@ -222,7 +227,29 @@ public:
     QSize m_sizeHint;
 };
 
+class EmbeddedWindow : public QWidgetAdapter
+{
+public:
+    explicit EmbeddedWindow(MainWindowBase *m)
+        : mainWindow(m)
+    {
+    }
+
+    MainWindowBase *const mainWindow;
+};
+
 #else
+
+class EmbeddedWindow : public QWidget
+{
+public:
+    explicit EmbeddedWindow(MainWindowBase *m)
+        : mainWindow(m)
+    {
+    }
+
+    MainWindowBase *const mainWindow;
+};
 
 class NonClosableWidget : public QWidget
 {
@@ -374,6 +401,26 @@ inline void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndic
     const QPoint dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
 
     drag(draggable, QPoint(), dropPoint, ButtonAction_Release);
+}
+
+inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
+{
+    static int count = 0;
+    count++;
+    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
+    auto mainwindow = createMainWindow(QSize(600, 600), MainWindowOption_HasCentralFrame).release();
+
+    auto window = new EmbeddedWindow(mainwindow);
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    auto lay = new QVBoxLayout(window);
+    lay->setContentsMargins(100, 100, 100, 100);
+    lay->addWidget(mainwindow);
+#else
+    // TODO: For QtQuick we need some QML
+#endif
+    window->show();
+    window->resize(sz);
+    return window;
 }
 
 }

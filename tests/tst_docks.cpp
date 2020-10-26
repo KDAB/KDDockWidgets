@@ -102,20 +102,6 @@ struct MultiSplitterSetup
 };
 Q_DECLARE_METATYPE(MultiSplitterSetup)
 
-class EmbeddedWindow : public QWidget
-{
-public:
-    explicit EmbeddedWindow(MainWindow *m)
-        : mainWindow(m)
-    {
-    }
-
-    ~EmbeddedWindow() override;
-
-    MainWindow *const mainWindow;
-};
-
-EmbeddedWindow::~EmbeddedWindow() = default;
 
 struct ExpectedAvailableSize // struct for testing MultiSplitterLayout::availableLengthForDrop()
 {
@@ -209,8 +195,6 @@ private Q_SLOTS:
     void tst_constraintsAfterPlaceholder();
     void tst_setFloatingAfterDraggedFromTabToSideBySide();
     void tst_setFloatingAFrameWithTabs();
-    void tst_setVisibleFalseWhenSideBySide();
-    void tst_embeddedMainWindow();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_negativeAnchorPositionWhenEmbedded();
@@ -272,22 +256,6 @@ private Q_SLOTS:
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
 };
-}
-
-static EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
-{
-    static int count = 0;
-    count++;
-    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
-    auto mainwindow = new MainWindow(QString("MyMainWindow%1").arg(count), MainWindowOption_HasCentralFrame);
-
-    auto window = new EmbeddedWindow(mainwindow);
-    auto lay = new QVBoxLayout(window);
-    lay->setContentsMargins(100, 100, 100, 100);
-    lay->addWidget(mainwindow);
-    window->show();
-    window->resize(sz);
-    return window;
 }
 
 Frame* createFrameWithWidget(const QString &name, MultiSplitter *parent, int minLength = -1)
@@ -1437,65 +1405,6 @@ void TestDocks::tst_setFloatingAFrameWithTabs()
     Testing::waitForDeleted(fw);
 }
 
-void TestDocks::tst_setVisibleFalseWhenSideBySide()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-    m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
-
-    const QRect oldGeo = dock1->geometry();
-    QWidget *oldParent = dock1->parentWidget();
-
-    // 1. Just toggle visibility and check that stuff remained sane
-    dock1->setVisible(false);
-
-    QVERIFY(!dock1->isTabbed());
-    QVERIFY(!dock1->isFloating());
-
-    dock1->setVisible(true);
-    QVERIFY(!dock1->isTabbed());
-    QVERIFY(!dock1->isFloating());
-    QCOMPARE(dock1->geometry(), oldGeo);
-    QCOMPARE(dock1->parentWidget(), oldParent);
-
-    // 2. Check that the parent frame also is hidden now
-    dock1->setVisible(false);
-    QVERIFY(!dock1->frame()->QWidgetAdapter::isVisible());
-
-    // Cleanup
-    m->deleteLater();
-    auto window = m.release();
-    Testing::waitForDeleted(window);
-}
-
-void TestDocks::tst_embeddedMainWindow()
-{
-    EnsureTopLevelsDeleted e;
-    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
-    EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
-
-    QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
-
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    window->mainWindow->addDockWidget(dock1, Location_OnTop);
-    dock1->setFloating(true);
-    auto dropArea = window->mainWindow->dropArea();
-    auto fw = dock1->floatingWindow();
-
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Left);
-
-    auto layout = dropArea;
-    QVERIFY(Testing::waitForDeleted(fw));
-    QCOMPARE(layout->count(), 2); // 2, as it has the central frame
-    QCOMPARE(layout->visibleCount(), 2);
-    layout->checkSanity();
-
-    delete window;
-}
-
 void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
 {
     EnsureTopLevelsDeleted e;
@@ -1585,13 +1494,13 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
     QFETCH(bool, embedded);
     EnsureTopLevelsDeleted e;
 
-    MainWindow *m;
+    MainWindowBase *m;
 
     if (embedded) {
         auto em = createEmbeddedMainWindow(QSize(500, 500));
         m = em->mainWindow;
     } else {
-        m =new MainWindow("m1", MainWindowOption_HasCentralFrame);
+        m = new MainWindow("m1", MainWindowOption_HasCentralFrame);
         m->resize(QSize(500, 500));
         m->show();
     }

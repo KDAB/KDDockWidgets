@@ -172,6 +172,8 @@ private Q_SLOTS:
 
     void tst_invalidPlaceholderPosition_data();
     void tst_invalidPlaceholderPosition();
+    void tst_setVisibleFalseWhenSideBySide();
+    void tst_embeddedMainWindow();
 };
 
 void TestCommon::tst_simple1()
@@ -3013,6 +3015,65 @@ void TestCommon::tst_invalidPlaceholderPosition()
     dock1->deleteLater();
     dock2->deleteLater();
     QVERIFY(Testing::waitForDeleted(dock2));
+}
+
+void TestCommon::tst_setVisibleFalseWhenSideBySide()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+
+    const QRect oldGeo = dock1->geometry();
+    auto oldParent = dock1->parentWidget();
+
+    // 1. Just toggle visibility and check that stuff remained sane
+    dock1->setVisible(false);
+
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock1->isFloating());
+
+    dock1->setVisible(true);
+    QVERIFY(!dock1->isTabbed());
+    QVERIFY(!dock1->isFloating());
+    QCOMPARE(dock1->geometry(), oldGeo);
+    QCOMPARE(dock1->parentWidget(), oldParent);
+
+    // 2. Check that the parent frame also is hidden now
+    dock1->setVisible(false);
+    QVERIFY(!dock1->frame()->QWidgetAdapter::isVisible());
+
+    // Cleanup
+    m->deleteLater();
+    auto window = m.release();
+    Testing::waitForDeleted(window);
+}
+
+void TestCommon::tst_embeddedMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
+    EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
+
+    QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
+
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    window->mainWindow->addDockWidget(dock1, Location_OnTop);
+    dock1->setFloating(true);
+    auto dropArea = window->mainWindow->dropArea();
+    auto fw = dock1->floatingWindow();
+
+    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Left);
+
+    auto layout = dropArea;
+    QVERIFY(Testing::waitForDeleted(fw));
+    QCOMPARE(layout->count(), 2); // 2, as it has the central frame
+    QCOMPARE(layout->visibleCount(), 2);
+    layout->checkSanity();
+
+    delete window;
 }
 
 #include "tst_common.moc"
