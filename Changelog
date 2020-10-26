@@ -1,10 +1,10 @@
 * v1.3.0 (unreleased, December/January)
   - [TODO] QtQuick support
 
-* v1.2.0 (unreleased)
+* v1.2.0 (unreleased, November)
   - [DONE] Wayland support
 
-* v1.1.0 (unreleased)
+* v1.1.0 (26 October 2020)
   - New drop indicator style type: Segmented Indicators
   - Windows: Drop Shadow for floating windows
   - Added AutoHide / SideBar support
