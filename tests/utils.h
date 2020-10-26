@@ -235,6 +235,8 @@ public:
     {
     }
 
+    ~EmbeddedWindow() override;
+
     MainWindowBase *const mainWindow;
 };
 
@@ -247,6 +249,8 @@ public:
         : mainWindow(m)
     {
     }
+
+    ~EmbeddedWindow() override;
 
     MainWindowBase *const mainWindow;
 };

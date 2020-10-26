@@ -247,3 +247,5 @@ void KDDockWidgets::Tests::nestDockWidget(DockWidgetBase *dock, DropArea *dropAr
     dropArea->addWidget(frame, location, relativeTo);
     QVERIFY(dropArea->checkSanity());
 }
+
+EmbeddedWindow::~EmbeddedWindow() = default;
