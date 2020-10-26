@@ -43,6 +43,10 @@
 # include <QTextEdit>
 #endif
 
+#ifdef Q_OS_WIN
+# include <Windows.h>
+#endif
+
 using namespace KDDockWidgets;
 using namespace Layouting;
 using namespace KDDockWidgets::Tests;
@@ -174,6 +178,7 @@ private Q_SLOTS:
     void tst_invalidPlaceholderPosition();
     void tst_setVisibleFalseWhenSideBySide();
     void tst_embeddedMainWindow();
+    void tst_restoreSimplest();
 };
 
 void TestCommon::tst_simple1()
@@ -3074,6 +3079,23 @@ void TestCommon::tst_embeddedMainWindow()
     layout->checkSanity();
 
     delete window;
+}
+
+void TestCommon::tst_restoreSimplest()
+{
+   EnsureTopLevelsDeleted e;
+    // Tests restoring a very simple layout, composed of just 1 docked widget
+   auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+   auto layout = m->multiSplitter();
+   auto dock1 = createDockWidget("one", new QTextEdit());
+   m->addDockWidget(dock1, Location_OnTop);
+
+   LayoutSaver saver;
+   QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSimplest.json")));
+   QTest::qWait(200);
+   QVERIFY(layout->checkSanity());
+   QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimplest.json")));
+   QVERIFY(layout->checkSanity());
 }
 
 #include "tst_common.moc"

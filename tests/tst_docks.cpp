@@ -202,7 +202,6 @@ private Q_SLOTS:
     void tst_sizeConstraintWarning();
     void tst_anchorFollowingItselfAssert();
     void tst_positionWhenShown();
-    void tst_restoreSimplest();
     void tst_restoreSimple();
     void tst_restoreNestedAndTabbed();
     void tst_restoreCrash();
@@ -636,23 +635,6 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
 
     min1 = widgetMinLength(dock1, Qt::Vertical);
     QVERIFY(dock1->height() >= min1);
-}
-
-void TestDocks::tst_restoreSimplest()
-{
-   EnsureTopLevelsDeleted e;
-    // Tests restoring a very simple layout, composed of just 1 docked widget
-   auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-   auto layout = m->multiSplitter();
-   auto dock1 = createDockWidget("one", new QTextEdit());
-   m->addDockWidget(dock1, Location_OnTop);
-
-   LayoutSaver saver;
-   QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSimplest.json")));
-   QTest::qWait(200);
-   QVERIFY(layout->checkSanity());
-   QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimplest.json")));
-   QVERIFY(layout->checkSanity());
 }
 
 void TestDocks::tst_restoreSimple()
