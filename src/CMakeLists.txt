@@ -138,8 +138,6 @@ set_compiler_flags(kddockwidgets)
 target_include_directories(kddockwidgets
   PUBLIC
     $<INSTALL_INTERFACE:include>
-    $<INSTALL_INTERFACE:include/kddockwidgets>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}

@@ -12,12 +12,12 @@
 #ifndef KD_TITLEBAR_P_H
 #define KD_TITLEBAR_P_H
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
 
-#include "QWidgetAdapter.h"
+#include "kddockwidgets/QWidgetAdapter.h"
+#include "kddockwidgets/DockWidgetBase.h"
 #include "Draggable_p.h"
 #include "Frame_p.h"
-#include "DockWidgetBase.h"
 
 #include <QVector>
 #include <QIcon>

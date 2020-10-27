@@ -19,12 +19,13 @@
 #ifndef KD_FRAME_P_H
 #define KD_FRAME_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
-#include "LayoutSaver_p.h"
+#include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/QWidgetAdapter.h"
+#include "kddockwidgets/FocusScope.h"
+#include "../LayoutSaver_p.h"
 #include "multisplitter/Widget_qwidget.h"
 #include "multisplitter/Item_p.h"
-#include "FocusScope.h"
+
 
 #include <QWidget>
 #include <QVector>
