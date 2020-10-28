@@ -33,8 +33,8 @@
 # include <QRubberBand>
 # include <QToolButton>
 #else
+# include "DockWidgetQuick.h"
 # include "quick/FrameQuick_p.h"
-# include "quick/DockWidgetQuick.h"
 # include "quick/TitleBarQuick_p.h"
 # include "quick/FloatingWindowQuick_p.h"
 # include "multisplitter/Separator_quick.h"

@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../private/DragRegistry_p.h"
+#include "../../../private/DockRegistry_p.h"

@@ -12,8 +12,8 @@
 #ifndef KD_DOCKREGISTRY_P_H
 #define KD_DOCKREGISTRY_P_H
 
-#include "DockWidgetBase.h"
-#include "MainWindowBase.h"
+#include "../DockWidgetBase.h"
+#include "../MainWindowBase.h"
 #include "FloatingWindow_p.h"
 
 #include <QVector>

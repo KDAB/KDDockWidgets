@@ -21,7 +21,7 @@
 #ifndef KDDOCKWIDGETS_QWIDGETADAPTERQUICK_P_H
 #define KDDOCKWIDGETS_QWIDGETADAPTERQUICK_P_H
 
-#include "docks_export.h"
+#include "../../docks_export.h"
 #include "Item_p.h"
 
 #include <QQuickItem>

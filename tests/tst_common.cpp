@@ -29,7 +29,7 @@
 #include <QApplication>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-# include "quick/DockWidgetQuick.h"
+# include "DockWidgetQuick.h"
 # include "quick/MainWindowQuick_p.h"
 
 # include <QQmlEngine>

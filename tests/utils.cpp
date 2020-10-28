@@ -23,7 +23,7 @@
 #include <QtTest/QtTest>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-# include "private/quick/DockWidgetQuick.h"
+# include "DockWidgetQuick.h"
 # include "private/quick/MainWindowQuick_p.h"
 # include <QQuickView>
 #else

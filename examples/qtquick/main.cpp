@@ -10,9 +10,9 @@
 */
 
 
-#include "private/DockRegistry_p.h"
-#include "private/quick/DockWidgetQuick.h"
-#include "Config.h"
+#include <kddockwidgets/Config.h>
+#include <kddockwidgets/DockWidgetQuick.h>
+#include <kddockwidgets/private/DockRegistry_p.h>
 
 #include <QQuickView>
 #include <QGuiApplication>
