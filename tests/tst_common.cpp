@@ -179,6 +179,11 @@ private Q_SLOTS:
     void tst_setVisibleFalseWhenSideBySide();
     void tst_embeddedMainWindow();
     void tst_restoreSimplest();
+    void tst_restoreTwice();
+    void tst_restoreAfterResize();
+    void tst_resizeViaAnchorsAfterPlaceholderCreation();
+    void tst_rectForDropCrash();
+    void tst_restoreWithNonClosableWidget();
 };
 
 void TestCommon::tst_simple1()
@@ -544,6 +549,40 @@ void TestCommon::tst_resizeWindow()
 
     delete fw1;
     delete fw2;
+}
+
+void TestCommon::tst_restoreTwice()
+{
+    // Tests that restoring multiple times doesn't hide the floating windows for some reason
+
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidgetAsTab(dock1);
+
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock3 = createDockWidget("3", new QPushButton("3"));
+
+    dock2->morphIntoFloatingWindow();
+    dock3->morphIntoFloatingWindow();
+
+    {
+        LayoutSaver saver;
+        QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreTwice.json")));
+        QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreTwice.json")));
+        QVERIFY(dock2->isVisible());
+        QVERIFY(dock3->isVisible());
+    }
+
+    {
+        LayoutSaver saver;
+        QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreTwice.json")));
+        QVERIFY(dock2->isVisible());
+        QVERIFY(dock3->isVisible());
+        QVERIFY(dock2->window()->isVisible());
+        QVERIFY(dock3->window()->isVisible());
+        auto fw = dock2->floatingWindow();
+        QVERIFY(fw);
+    }
 }
 
 void TestCommon::tst_restoreEmpty()
@@ -3096,6 +3135,140 @@ void TestCommon::tst_restoreSimplest()
    QVERIFY(layout->checkSanity());
    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimplest.json")));
    QVERIFY(layout->checkSanity());
+}
+
+void TestCommon::tst_resizeViaAnchorsAfterPlaceholderCreation()
+{
+    EnsureTopLevelsDeleted e;
+
+    // Stack 1, 2, 3, close 2, close 2
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        MultiSplitter *layout = m->multiSplitter();
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+        m->addDockWidget(dock3, Location_OnTop);
+        m->addDockWidget(dock2, Location_OnTop);
+        m->addDockWidget(dock1, Location_OnTop);
+        QCOMPARE(layout->separators().size(), 2);
+        dock2->close();
+        Testing::waitForResize(dock3);
+        QCOMPARE(layout->separators().size(), 1);
+        layout->checkSanity();
+
+        // Cleanup:
+        dock2->deleteLater();
+        Testing::waitForDeleted(dock2);
+    }
+
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+        auto dock4 = createDockWidget("dock4", new QPushButton("four"));
+        m->addDockWidget(dock1, Location_OnRight);
+        m->addDockWidget(dock2, Location_OnRight);
+        m->addDockWidget(dock3, Location_OnRight);
+        m->addDockWidget(dock4, Location_OnRight);
+
+        MultiSplitter *layout = m->multiSplitter();
+
+        Item *item1 = layout->itemForFrame(dock1->frame());
+        Item *item2 = layout->itemForFrame(dock2->frame());
+        Item *item3 = layout->itemForFrame(dock3->frame());
+        Item *item4 = layout->itemForFrame(dock4->frame());
+
+        const auto separators = layout->separators();
+        QCOMPARE(separators.size(), 3);
+
+        Separator *anchor1 = separators[0];
+        int boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
+        int expectedBoundToTheRight = layout->size().width() -
+                                      3*Item::separatorThickness -
+                                      item2->minLength(Qt::Horizontal) -
+                                      item3->minLength(Qt::Horizontal) -
+                                      item4->minLength(Qt::Horizontal);
+
+        QCOMPARE(boundToTheRight, expectedBoundToTheRight);
+
+        dock3->close();
+        Testing::waitForResize(dock2);
+
+        QVERIFY(!item1->isPlaceholder());
+        QVERIFY(!item2->isPlaceholder());
+        QVERIFY(item3->isPlaceholder());
+        QVERIFY(!item4->isPlaceholder());
+
+        boundToTheRight = layout->rootItem()->maxPosForSeparator(anchor1);
+        expectedBoundToTheRight = layout->size().width() -
+                                  2*Item::separatorThickness -
+                                  item2->minLength(Qt::Horizontal) -
+                                  item4->minLength(Qt::Horizontal) ;
+
+        QCOMPARE(boundToTheRight, expectedBoundToTheRight);
+        dock3->deleteLater();
+        Testing::waitForDeleted(dock3);
+    }
+}
+
+void TestCommon::tst_rectForDropCrash()
+{
+    // Tests a crash I got in MultiSplitterLayout::rectForDrop() (asserts being hit)
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow();
+    m->resize(QSize(500, 500));
+    m->show();
+
+    auto layout = m->multiSplitter();
+
+    auto w1 = new MyWidget2(QSize(400,400));
+    auto w2 = new MyWidget2(QSize(400,400));
+    auto d1 = createDockWidget("1", w1);
+    auto d2 = createDockWidget("2", w2);
+
+    m->addDockWidget(d1, Location_OnTop);
+    Item *centralItem = m->dropArea()->centralFrame();
+    {
+        WindowBeingDragged wbd2(d2->floatingWindow());
+        layout->rectForDrop(&wbd2, Location_OnTop, centralItem);
+    }
+    layout->checkSanity();
+}
+
+void TestCommon::tst_restoreAfterResize()
+{
+    // Tests a crash I got when the layout received a resize event *while* restoring
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreAfterResize");
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+    auto layout = m->multiSplitter();
+    const QSize oldContentsSize = layout->size();
+    const QSize oldWindowSize = m->size();
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreAfterResize.json")));
+    m->resize(1000, 1000);
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreAfterResize.json")));
+    QCOMPARE(oldContentsSize, layout->size());
+    QCOMPARE(oldWindowSize, m->size());
+}
+
+void TestCommon::tst_restoreWithNonClosableWidget()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithNonClosableWidget");
+    auto dock1 = createDockWidget("1", new NonClosableWidget(), DockWidgetBase::Option_NotClosable);
+    m->addDockWidget(dock1, Location_OnLeft);
+    auto layout = m->multiSplitter();
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreWithNonClosableWidget.json")));
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreWithNonClosableWidget.json")));
+    QVERIFY(layout->checkSanity());
 }
 
 #include "tst_common.moc"
