@@ -159,6 +159,11 @@ QRect QWidgetAdapter::rect() const
     return QRectF(0, 0, width(), height()).toRect();
 }
 
+QPoint QWidgetAdapter::pos() const
+{
+    return geometry().topLeft();
+}
+
 void QWidgetAdapter::show()
 {
     setVisible(true);

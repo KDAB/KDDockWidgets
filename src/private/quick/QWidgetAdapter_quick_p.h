@@ -88,6 +88,7 @@ public:
     virtual void setGeometry(QRect);
     QRect geometry() const;
     QRect rect() const;
+    QPoint pos() const;
     void show();
     void setFixedHeight(int);
     void setFixedWidth(int);

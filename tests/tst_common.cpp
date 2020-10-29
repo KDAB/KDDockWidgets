@@ -184,6 +184,16 @@ private Q_SLOTS:
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
     void tst_rectForDropCrash();
     void tst_restoreWithNonClosableWidget();
+    void tst_restoreNestedAndTabbed();
+    void tst_restoreCrash();
+    void tst_restoreSideBySide();
+    void tst_restoreWithPlaceholder();
+    void tst_restoreWithAffinity();
+    void tst_marginsAfterRestore();
+    void tst_restoreWithNewDockWidgets();
+    void tst_restoreEmbeddedMainWindow();
+    void tst_restoreWithDockFactory();
+    void tst_restoreResizesLayout();
 };
 
 void TestCommon::tst_simple1()
@@ -3268,6 +3278,377 @@ void TestCommon::tst_restoreWithNonClosableWidget()
     LayoutSaver saver;
     QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreWithNonClosableWidget.json")));
     QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreWithNonClosableWidget.json")));
+    QVERIFY(layout->checkSanity());
+}
+
+void TestCommon::tst_restoreNestedAndTabbed()
+{
+    // Just a more involved test
+
+    EnsureTopLevelsDeleted e;
+    QPoint oldFW4Pos;
+    QRect oldGeo;
+    {
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, "tst_restoreNestedAndTabbed");
+        m->move(500, 500);
+        oldGeo = m->geometry();
+        auto layout = m->multiSplitter();
+        auto dock1 = createDockWidget("1", new QTextEdit());
+        auto dock2 = createDockWidget("2", new QTextEdit());
+        auto dock3 = createDockWidget("3", new QTextEdit());
+
+        auto dock4 = createDockWidget("4", new QTextEdit());
+        auto dock5 = createDockWidget("5", new QTextEdit());
+        dock4->addDockWidgetAsTab(dock5);
+        oldFW4Pos = dock4->window()->pos();
+
+        m->addDockWidget(dock1, Location_OnLeft);
+        m->addDockWidget(dock2, Location_OnRight);
+        dock2->addDockWidgetAsTab(dock3);
+        dock2->setAsCurrentTab();
+        QCOMPARE(dock2->frame()->currentTabIndex(), 0);
+        QCOMPARE(dock4->frame()->currentTabIndex(), 1);
+
+        LayoutSaver saver;
+        QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreNestedAndTabbed.json")));
+        QVERIFY(layout->checkSanity());
+        // Let it be destroyed, we'll restore a new one
+    }
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, "tst_restoreNestedAndTabbed");
+    auto layout = m->multiSplitter();
+    auto dock1 = createDockWidget("1", new QTextEdit());
+    auto dock2 = createDockWidget("2", new QTextEdit());
+    auto dock3 = createDockWidget("3", new QTextEdit());
+    auto dock4 = createDockWidget("4", new QTextEdit());
+    auto dock5 = createDockWidget("5", new QTextEdit());
+
+    LayoutSaver saver;
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreNestedAndTabbed.json")));
+    QVERIFY(layout->checkSanity());
+
+    auto fw4 = dock4->floatingWindow();
+    QVERIFY(fw4);
+    QCOMPARE(dock4->window(), dock5->window());
+    QCOMPARE(fw4->pos(), oldFW4Pos);
+
+    QCOMPARE(dock1->window(), m.get());
+    QCOMPARE(dock2->window(), m.get());
+    QCOMPARE(dock3->window(), m.get());
+
+    QCOMPARE(dock2->frame()->currentTabIndex(), 0);
+    QCOMPARE(dock4->frame()->currentTabIndex(), 1);
+
+    QCOMPARE(m->geometry(), oldGeo);
+}
+
+void TestCommon::tst_restoreCrash()
+{
+    EnsureTopLevelsDeleted e;
+
+    {
+        // Create a main window, with a left dock, save it to disk.
+        auto m = createMainWindow({}, {}, "tst_restoreCrash");
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        m->addDockWidget(dock1, Location_OnLeft);
+        LayoutSaver saver;
+        QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreCrash.json")));
+    }
+
+    // Restore
+    qDebug() << Q_FUNC_INFO << "Restoring";
+    auto m = createMainWindow({}, {}, "tst_restoreCrash");
+    auto layout = m->multiSplitter();
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    QVERIFY(dock1->isFloating());
+    QVERIFY(layout->checkSanity());
+
+    LayoutSaver saver;
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreCrash.json")));
+    QVERIFY(layout->checkSanity());
+    QVERIFY(!dock1->isFloating());
+}
+
+void TestCommon::tst_restoreSideBySide()
+{
+    // Save a layout that has a floating window with nesting
+
+    EnsureTopLevelsDeleted e;
+
+    QSize item2MinSize;
+    {
+        EnsureTopLevelsDeleted e1;
+        // MainWindow:
+        auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        m->addDockWidgetAsTab(dock1);
+        auto layout = m->multiSplitter();
+
+        // FloatingWindow:
+        auto dock2 = createDockWidget("2", new QPushButton("2"));
+        auto dock3 = createDockWidget("3", new QPushButton("3"));
+        dock2->addDockWidgetToContainingWindow(dock3, Location_OnRight);
+        auto fw2 = dock2->floatingWindow();
+        item2MinSize = fw2->multiSplitter()->itemForFrame(dock2->frame())->minSize();
+        LayoutSaver saver;
+        QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSideBySide.json")));
+        QVERIFY(layout->checkSanity());
+    }
+
+    {
+        auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        auto dock2 = createDockWidget("2", new QPushButton("2"));
+        auto dock3 = createDockWidget("3", new QPushButton("3"));
+
+        LayoutSaver restorer;
+        QVERIFY(restorer.restoreFromFile(QStringLiteral("layout_tst_restoreSideBySide.json")));
+
+        DockRegistry::self()->checkSanityAll();
+
+        QCOMPARE(dock1->window(), m.get());
+        QCOMPARE(dock2->window(), dock3->window());
+    }
+}
+
+void TestCommon::tst_restoreWithPlaceholder()
+{
+    // Float dock1, save and restore, then unfloat and see if dock2 goes back to where it was
+
+    EnsureTopLevelsDeleted e;
+    {
+        auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithPlaceholder");
+
+        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        m->addDockWidget(dock1, Location_OnLeft);
+        auto layout = m->multiSplitter();
+        dock1->setFloating(true);
+
+        LayoutSaver saver;
+        QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreWithPlaceholder.json")));
+
+        dock1->close();
+
+        QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreWithPlaceholder.json")));
+        QVERIFY(layout->checkSanity());
+
+        QVERIFY(dock1->isFloating());
+        QVERIFY(dock1->isVisible());
+        QCOMPARE(layout->count(), 1);
+        QCOMPARE(layout->placeholderCount(), 1);
+
+        dock1->setFloating(false); // Put it back. Should go back because the placeholder was restored.
+
+        QVERIFY(!dock1->isFloating());
+        QVERIFY(dock1->isVisible());
+        QCOMPARE(layout->count(), 1);
+        QCOMPARE(layout->placeholderCount(), 0);
+
+    }
+
+    // Try again, but on a different main window
+    auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithPlaceholder");
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto layout = m->multiSplitter();
+
+    LayoutSaver saver;
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreWithPlaceholder.json")));
+    QVERIFY(layout->checkSanity());
+
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    dock1->setFloating(false); // Put it back. Should go back because the placeholder was restored.
+
+    QVERIFY(!dock1->isFloating());
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+}
+
+void TestCommon::tst_restoreWithAffinity()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m1 = createMainWindow(QSize(500, 500));
+    m1->setAffinities({ "a1" });
+    auto m2 = createMainWindow(QSize(500, 500));
+    m2->setAffinities({ "a2" });
+
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, true, "a1");
+    m1->addDockWidget(dock1, Location_OnLeft);
+
+    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, true, "a2");
+    dock2->setFloating(true);
+    dock2->show();
+
+    LayoutSaver saver;
+    saver.setAffinityNames({"a1"});
+    const QByteArray saved1 = saver.serializeLayout();
+
+    QPointer<FloatingWindow> fw2 = dock2->floatingWindow();
+    saver.restoreLayout(saved1);
+
+    // Restoring affinity 1 shouldn't close affinity 2
+    QVERIFY(!fw2.isNull());
+    QVERIFY(dock2->isVisible());
+
+    // Close all and restore again
+    DockRegistry::self()->clear();
+    saver.restoreLayout(saved1);
+
+    // dock2 continues closed
+    QVERIFY(!dock2->isVisible());
+
+    // dock1 was restored
+    QVERIFY(dock1->isVisible());
+    QVERIFY(!dock1->isFloating());
+    QCOMPARE(dock1->window(), m1.get());
+
+    delete dock2->window();
+}
+
+void TestCommon::tst_marginsAfterRestore()
+{
+    EnsureTopLevelsDeleted e;
+    {
+        EnsureTopLevelsDeleted e1;
+        // MainWindow:
+        auto m = createMainWindow(QSize(500, 500), {}, "tst_marginsAfterRestore");
+        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        m->addDockWidget(dock1, Location_OnLeft);
+        auto layout = m->multiSplitter();
+
+        LayoutSaver saver;
+        QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_marginsAfterRestore.json")));
+        QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_marginsAfterRestore.json")));
+        QVERIFY(layout->checkSanity());
+
+        dock1->setFloating(true);
+
+        auto fw = dock1->floatingWindow();
+        QVERIFY(fw);
+        layout->addWidget(fw->dropArea(), Location_OnRight);
+
+        layout->checkSanity();
+    }
+}
+
+void TestCommon::tst_restoreWithNewDockWidgets()
+{
+    // Tests that if the LayoutSaver doesn't know about some dock widget
+    // when it saves the layout, then it won't close it when restoring layout
+    // it will just be ignored.
+    EnsureTopLevelsDeleted e;
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    auto dock1 = createDockWidget("dock1", new QPushButton("dock1"));
+    dock1->show();
+
+    QVERIFY(saver.restoreLayout(saved));
+    QVERIFY(dock1->isVisible());
+
+    delete dock1->window();
+}
+
+void TestCommon::tst_restoreEmbeddedMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
+    EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
+
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    window->mainWindow->addDockWidget(dock1, Location_OnTop);
+
+    const QPoint originalPos(250, 250);
+    const QSize originalSize = window->size();
+    window->move(originalPos);
+
+    LayoutSaver saver;
+    QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    window->resize(555, 555);
+    const QPoint newPos(500, 500);
+    window->move(newPos);
+    QVERIFY(saver.restoreLayout(saved));
+
+    QCOMPARE(window->pos(), originalPos);
+    QCOMPARE(window->size(), originalSize);
+    window->mainWindow->multiSplitter()->checkSanity();
+
+    delete window;
+}
+
+void TestCommon::tst_restoreWithDockFactory()
+{
+    // Tests that restore the layout with a missing dock widget will recreate the dock widget using a factory
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+    auto layout = m->multiSplitter();
+
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QCOMPARE(layout->visibleCount(), 1);
+
+    LayoutSaver saver;
+    QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+    QPointer<Frame> f1 = dock1->frame();
+    delete dock1;
+    Testing::waitForDeleted(f1);
+    QVERIFY(!f1);
+
+    // Directly deleted don't leave placeolders. We could though.
+    QCOMPARE(layout->count(), 0);
+
+    {
+        // We don't know how to create the dock widget
+        SetExpectedWarning expectedWarning("Couldn't find dock widget");
+        QVERIFY(saver.restoreLayout(saved));
+        QCOMPARE(layout->count(), 0);
+    }
+
+    // Now try with a factory func
+    DockWidgetFactoryFunc func = [] (const QString &) {
+        return createDockWidget("1", new QPushButton("1"), {}, /*show=*/ false);
+    };
+
+    KDDockWidgets::Config::self().setDockWidgetFactoryFunc(func);
+    QVERIFY(saver.restoreLayout(saved));
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->visibleCount(), 1);
+    layout->checkSanity();
+}
+
+void TestCommon::tst_restoreResizesLayout()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile("layout_tst_restoreResizesLayout.json"));
+
+    // Now resize the window, and then restore. The layout should have the new size
+
+    auto layout = m->multiSplitter();
+    m->resize(1050, 1050);
+    QCOMPARE(m->size(), QSize(1050, 1050));
+
+    LayoutSaver restorer(RestoreOption_RelativeToMainWindow);
+    QVERIFY(restorer.restoreFromFile("layout_tst_restoreResizesLayout.json"));
+    QVERIFY(layout->checkSanity());
+
+    QCOMPARE(m->dropArea()->QWidgetAdapter::size(), layout->rootItem()->size());
     QVERIFY(layout->checkSanity());
 }
 
