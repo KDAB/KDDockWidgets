@@ -187,26 +187,15 @@ private Q_SLOTS:
     void tst_propagateSizeHonoursMinSize();
 
     void tst_addDockWidgetAsTabToDockWidget();
-    void tst_addDockWidgetToMainWindow(); // Tests MainWindow::addDockWidget();
-    void tst_addDockWidgetToContainingWindow();
     void tst_addToSmallMainWindow6();
-    void tst_notClosable();
 
     void tst_constraintsAfterPlaceholder();
-    void tst_setFloatingAfterDraggedFromTabToSideBySide();
-    void tst_setFloatingAFrameWithTabs();
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_negativeAnchorPositionWhenEmbedded();
-    void tst_availableSizeWithPlaceholders();
     void tst_sizeConstraintWarning();
-    void tst_anchorFollowingItselfAssert();
-    void tst_positionWhenShown();
     void tst_restoreSimple();
     void tst_invalidLayoutAfterRestore();
 
-    void tst_tabBarWithHiddenTitleBar_data();
-    void tst_tabBarWithHiddenTitleBar();
-    void tst_toggleDockWidgetWithHiddenTitleBar();
     void tst_dragByTabBar_data();
     void tst_dragByTabBar();
     void tst_dragBySingleTab();
@@ -762,48 +751,6 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
     }
 }
 
-void TestDocks::tst_addDockWidgetToMainWindow()
-{
-    EnsureTopLevelsDeleted e;
-     auto m = createMainWindow();
-     auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-     auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-
-     m->addDockWidget(dock1, Location_OnRight, nullptr);
-     m->addDockWidget(dock2, Location_OnTop, dock1);
-     QVERIFY(m->dropArea()->checkSanity());
-
-     QCOMPARE(dock1->window(), m.get());
-     QCOMPARE(dock2->window(), m.get());
-     QVERIFY(dock1->frame()->QWidgetAdapter::y() > dock2->frame()->QWidgetAdapter::y());
-     QCOMPARE(dock1->frame()->QWidgetAdapter::x(), dock2->frame()->QWidgetAdapter::x());
-}
-
-void TestDocks::tst_addDockWidgetToContainingWindow()
-{
-    EnsureTopLevelsDeleted e;
-
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
-
-    dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
-    dock1->addDockWidgetToContainingWindow(dock3, Location_OnTop, dock2);
-
-    QCOMPARE(dock1->window(), dock2->window());
-    QCOMPARE(dock2->window(), dock3->window());
-
-    QVERIFY(dock3->frame()->QWidgetAdapter::y() < dock2->frame()->QWidgetAdapter::y());
-    QVERIFY(dock1->frame()->QWidgetAdapter::x() < dock2->frame()->QWidgetAdapter::x());
-    QCOMPARE(dock2->frame()->QWidgetAdapter::x(), dock3->frame()->QWidgetAdapter::x());
-
-    QWidget *window = dock1->window();
-    delete dock1;
-    delete dock2;
-    delete dock3;
-    Testing::waitForDeleted(window);
-}
-
 void TestDocks::tst_addToSmallMainWindow6()
 {
     EnsureTopLevelsDeleted e;
@@ -823,64 +770,6 @@ void TestDocks::tst_addToSmallMainWindow6()
     m.addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
     Testing::waitForResize(&m);
     QVERIFY(m.dropArea()->checkSanity());
-}
-
-void TestDocks::tst_notClosable()
-{
-    EnsureTopLevelsDeleted e;
-    {
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), DockWidgetBase::Option_NotClosable);
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        dock1->addDockWidgetAsTab(dock2);
-
-        auto fw = dock1->floatingWindow();
-        QVERIFY(fw);
-        TitleBar *titlebarFW = fw->titleBar();
-        TitleBar *titleBarFrame = fw->frames().at(0)->titleBar();
-        QVERIFY(titlebarFW->isCloseButtonVisible());
-        QVERIFY(!titlebarFW->isCloseButtonEnabled());
-        QVERIFY(!titleBarFrame->isCloseButtonVisible());
-        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
-
-        dock1->setOptions(DockWidgetBase::Option_None);
-        QVERIFY(titlebarFW->isCloseButtonVisible());
-        QVERIFY(titlebarFW->isCloseButtonEnabled());
-        QVERIFY(!titleBarFrame->isCloseButtonVisible());
-        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
-
-        dock1->setOptions(DockWidgetBase::Option_NotClosable);
-        QVERIFY(titlebarFW->isCloseButtonVisible());
-        QVERIFY(!titlebarFW->isCloseButtonEnabled());
-        QVERIFY(!titleBarFrame->isCloseButtonVisible());
-        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
-
-        auto window = dock1->window();
-        window->deleteLater();
-        Testing::waitForDeleted(window);
-    }
-
-    {
-        // Now dock dock1 into dock1 instead
-
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), DockWidgetBase::Option_NotClosable);
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-
-        dock2->morphIntoFloatingWindow();
-        dock2->addDockWidgetAsTab(dock1);
-
-        auto fw = dock1->floatingWindow();
-        QVERIFY(fw);
-        TitleBar *titlebarFW = fw->titleBar();
-        TitleBar *titleBarFrame = fw->frames().at(0)->titleBar();
-
-        QVERIFY(titlebarFW->isCloseButtonVisible());
-        QVERIFY(!titleBarFrame->isCloseButtonVisible());
-        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
-
-        auto window = dock2->window();
-        window->deleteLater();
-        Testing::waitForDeleted(window);
-    }
 }
 
 void TestDocks::tst_constraintsAfterPlaceholder()
@@ -924,111 +813,6 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     Testing::waitForDeleted(dock1);
 }
 
-void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
-{
-    EnsureTopLevelsDeleted e;
-    {
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        auto dropArea = m->dropArea();
-        auto layout = dropArea;
-
-        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-        dock1->addDockWidgetAsTab(dock2);
-
-        // Move from tab to bottom
-        m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
-
-        QCOMPARE(layout->count(), 2);
-        QCOMPARE(layout->placeholderCount(), 0);
-
-        dock2->setFloating(true);
-        dock2->setFloating(false);
-        QCOMPARE(layout->count(), 2);
-        QCOMPARE(layout->placeholderCount(), 0);
-        QVERIFY(!dock2->isFloating());
-    }
-
-    {
-        // 2. Try again, but now detach from tab before putting it on the bottom. What was happening was that MultiSplitterLayout::addWidget()
-        // called with a MultiSplitter as widget wasn't setting the layout items for the dock widgets
-        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        auto dropArea = m->dropArea();
-        auto layout = dropArea;
-
-        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-        dock1->addDockWidgetAsTab(dock2);
-        Item *oldItem2 = dock2->lastPositions().lastItem();
-        QCOMPARE(oldItem2, layout->itemForFrame(dock2->frame()));
-
-
-        // Detach tab
-        dock1->frame()->detachTab(dock2);
-        QVERIFY(layout->checkSanity());
-        auto fw2 = dock2->floatingWindow();
-        QVERIFY(fw2);
-        QCOMPARE(dock2->lastPositions().lastItem(), oldItem2);
-        Item *item2 = fw2->dropArea()->itemForFrame(dock2->frame());
-        QVERIFY(item2);
-        QCOMPARE(item2->hostWidget()->asQWidget(), fw2->dropArea());
-        QVERIFY(!layout->itemForFrame(dock2->frame()));
-
-        // Move from tab to bottom
-        layout->addWidget(fw2->dropArea(), KDDockWidgets::Location_OnRight, nullptr);
-        QVERIFY(layout->checkSanity());
-        QVERIFY(dock2->lastPositions().lastItem());
-        QCOMPARE(layout->count(), 2);
-        QCOMPARE(layout->placeholderCount(), 0);
-
-        dock2->setFloating(true);
-        QVERIFY(layout->checkSanity());
-
-        dock2->setFloating(false);
-
-        QCOMPARE(layout->count(), 2);
-        QCOMPARE(layout->placeholderCount(), 0);
-        QVERIFY(!dock2->isFloating());
-        QVERIFY(layout->checkSanity());
-
-        Testing::waitForDeleted(fw2);
-    }
-}
-
-void TestDocks::tst_setFloatingAFrameWithTabs()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow();
-    auto dropArea = m->dropArea();
-    auto layout = dropArea;
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-    m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-    dock1->addDockWidgetAsTab(dock2);
-
-    // Make it float
-    dock1->frame()->titleBar()->onFloatClicked();
-
-    auto fw = dock1->floatingWindow();
-    QVERIFY(fw);
-    QCOMPARE(layout->count(), 2);
-    QCOMPARE(layout->placeholderCount(), 1);
-
-    auto frame1 = dock1->frame();
-    QVERIFY(frame1->layoutItem());
-
-    // Attach it again
-    dock1->frame()->titleBar()->onFloatClicked();
-
-    QCOMPARE(layout->count(), 2);
-    QCOMPARE(layout->placeholderCount(), 0);
-    QCOMPARE(dock1->window(), m.get());
-
-    Testing::waitForDeleted(fw);
-}
-
 void TestDocks::tst_negativeAnchorPositionWhenEmbedded_data()
 {
     QTest::addColumn<bool>("embedded");
@@ -1067,89 +851,6 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
     layout->checkSanity();
 
     delete m->window();
-}
-
-void TestDocks::tst_tabBarWithHiddenTitleBar_data()
-{
-    QTest::addColumn<bool>("hiddenTitleBar");
-    QTest::addColumn<bool>("tabsAlwaysVisible");
-
-    QTest::newRow("false-false") << false << false;
-    QTest::newRow("true-false") << true << false;
-
-    QTest::newRow("false-true") << false << true;
-    QTest::newRow("true-true") << true << true;
-
-}
-
-void TestDocks::tst_tabBarWithHiddenTitleBar()
-{
-    EnsureTopLevelsDeleted e;
-    QFETCH(bool, hiddenTitleBar);
-    QFETCH(bool, tabsAlwaysVisible);
-
-    const auto originalFlags = Config::self().flags();
-
-    auto newFlags = originalFlags;
-
-    if (hiddenTitleBar)
-        newFlags = newFlags | Config::Flag_HideTitleBarWhenTabsVisible;
-
-    if (tabsAlwaysVisible)
-        newFlags = newFlags | Config::Flag_AlwaysShowTabs;
-
-
-    Config::self().setFlags(newFlags);
-
-    auto m = createMainWindow();
-
-    auto d1 = createDockWidget("1", new QTextEdit());
-    auto d2 = createDockWidget("2", new QTextEdit());
-    m->addDockWidget(d1, Location_OnTop);
-
-    if (tabsAlwaysVisible) {
-        if (hiddenTitleBar)
-            QVERIFY(!d1->frame()->titleBar()->isVisible());
-        else
-            QVERIFY(d1->frame()->titleBar()->isVisible());
-    } else {
-        QVERIFY(d1->frame()->titleBar()->isVisible());
-    }
-
-    d1->addDockWidgetAsTab(d2);
-
-    QVERIFY(d2->frame()->titleBar()->isVisible() ^ hiddenTitleBar);
-
-    d2->close();
-    m->multiSplitter()->checkSanity();
-    delete d2;
-    if (tabsAlwaysVisible) {
-        if (hiddenTitleBar)
-            QVERIFY(!d1->frame()->titleBar()->isVisible());
-        else
-            QVERIFY(d1->frame()->titleBar()->isVisible());
-    } else {
-        QVERIFY(d1->frame()->titleBar()->isVisible());
-    }
-}
-
-void TestDocks::tst_toggleDockWidgetWithHiddenTitleBar()
-{
-    EnsureTopLevelsDeleted e;
-    Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
-    auto m = createMainWindow();
-
-    auto d1 = createDockWidget("1", new QTextEdit());
-    m->addDockWidget(d1, Location_OnTop);
-
-    QVERIFY(!d1->frame()->titleBar()->isVisible());
-
-    d1->toggleAction()->setChecked(false);
-    auto f1 = d1->frame();
-    Testing::waitForDeleted(f1);
-    d1->toggleAction()->setChecked(true);
-    QVERIFY(d1->frame());
-    QVERIFY(!d1->frame()->titleBar()->isVisible());
 }
 
 void TestDocks::tst_dragByTabBar_data()
@@ -1412,128 +1113,6 @@ void TestDocks::tst_dockNotFillingSpace()
      delete d1;
      delete d2;
      delete m;
-}
-
-void TestDocks::tst_availableSizeWithPlaceholders()
-{
-    // Tests MultiSplitterLayout::available() with and without placeholders. The result should be the same.
-
-    EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks1 = {
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        };
-
-    QVector<DockDescriptor> docks2 = {
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        };
-
-    QVector<DockDescriptor> empty;
-
-    auto m1 = createMainWindow(docks1);
-    auto m2 = createMainWindow(docks2);
-    auto m3 = createMainWindow(empty);
-
-    auto layout1 = m1->multiSplitter();
-    auto layout2 = m2->multiSplitter();
-    auto layout3 = m3->multiSplitter();
-
-    auto f20 = docks2.at(0).createdDock->frame();
-
-    docks2.at(0).createdDock->close();
-    docks2.at(1).createdDock->close();
-    docks2.at(2).createdDock->close();
-    QVERIFY(Testing::waitForDeleted(f20));
-
-    QCOMPARE(layout1->size(), layout2->size());
-    QCOMPARE(layout1->size(), layout3->size());
-
-    QCOMPARE(layout1->availableSize(), layout2->availableSize());
-    QCOMPARE(layout1->availableSize(), layout3->availableSize());
-
-    // Now show 1 widget in m1 and m3
-    docks1.at(0).createdDock->show();
-    m3->addDockWidget(docks2.at(0).createdDock, Location_OnBottom); // just steal from m2
-
-    QCOMPARE(layout1->size(), layout3->size());
-
-    Frame *f10 = docks1.at(0).createdDock->frame();
-    Item *item10 = layout1->itemForFrame(f10);
-    Item *item30 = layout3->itemForFrame(docks2.at(0).createdDock->frame());
-
-    QCOMPARE(item10->geometry(), item30->geometry());
-    QCOMPARE(item10->guestWidget()->minSize(), item10->guestWidget()->minSize());
-    QCOMPARE(item10->minSize(), item30->minSize());
-    QCOMPARE(layout1->availableSize(), layout3->availableSize());
-
-    layout1->checkSanity();
-    layout2->checkSanity();
-    layout3->checkSanity();
-
-    // Cleanup
-    docks1.at(0).createdDock->deleteLater();
-    docks1.at(1).createdDock->deleteLater();
-    docks1.at(2).createdDock->deleteLater();
-    docks2.at(0).createdDock->deleteLater();
-    docks2.at(1).createdDock->deleteLater();
-    docks2.at(2).createdDock->deleteLater();
-    QVERIFY(Testing::waitForDeleted(docks2.at(2).createdDock));
-}
-
-void TestDocks::tst_anchorFollowingItselfAssert()
-{
-    // 1. Tests that we don't assert in Anchor::setFollowee()
-    //  ASSERT: "this != m_followee" in file ../src/multisplitter/Anchor.cpp
-    EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_None } };
-
-    auto m = createMainWindow(docks);
-    auto dropArea = m->dropArea();
-    MultiSplitter *layout = dropArea;
-    layout->checkSanity();
-
-    auto dock1 = docks.at(1).createdDock;
-    auto dock2 = docks.at(2).createdDock;
-    dock2->setFloating(true);
-    auto fw2 = dock2->floatingWindow();
-    dropArea->addWidget(fw2->dropArea(), Location_OnLeft, dock1->frame());
-    dock2->setFloating(true);
-    fw2 = dock2->floatingWindow();
-    dropArea->addWidget(fw2->dropArea(), Location_OnRight, dock1->frame());
-
-    docks.at(0).createdDock->deleteLater();
-    docks.at(4).createdDock->deleteLater();
-    Testing::waitForDeleted(docks.at(4).createdDock);
-}
-
-void TestDocks::tst_positionWhenShown()
-{
-    // Tests that when showing a dockwidget it shows in the same position as before
-    EnsureTopLevelsDeleted e;
-    auto window = createMainWindow();
-    auto dock1 = new DockWidgetType("1");
-    dock1->show();
-    dock1->window()->move(100, 100);
-    QCOMPARE(dock1->window()->pos(), QPoint(100, 100));
-
-    dock1->close();
-    dock1->show();
-    QCOMPARE(dock1->window()->pos(), QPoint(100, 100));
-
-    window->multiSplitter()->checkSanity();
-
-    // Cleanup
-    dock1->deleteLater();
-    QVERIFY(Testing::waitForDeleted(dock1));
 }
 
 void TestDocks::tst_sizeConstraintWarning()
