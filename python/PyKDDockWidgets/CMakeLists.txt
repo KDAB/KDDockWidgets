@@ -41,7 +41,7 @@ set(PyKDDockWidgets_typesystem_paths
 
 # Include flags/path that will be set in 'target_include_directories'
 set(PyKDDockWidgets_target_include_directories
-    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/src
 )
 
 # Libraries that will be necessary to link the target, this will used in the command 'target_link_libraries'
