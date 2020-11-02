@@ -204,6 +204,24 @@ void QWidgetAdapter::setMinimumSize(QSize sz)
     }
 }
 
+void QWidgetAdapter::setMaximumSize(QSize sz)
+{
+    if (minimumSize() != sz) {
+        setProperty("kddockwidgets_min_size", sz);
+        updateGeometry();
+    }
+}
+
+void QWidgetAdapter::setMaximumSize(int w, int h)
+{
+    QWidgetAdapter::setMaximumSize(QSize(w, h));
+}
+
+void QWidgetAdapter::setMinimumSize(int w, int h)
+{
+    QWidgetAdapter::setMinimumSize(QSize(w, h));
+}
+
 void QWidgetAdapter::updateGeometry()
 {
     Q_EMIT geometryUpdated();

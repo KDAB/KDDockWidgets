@@ -206,6 +206,12 @@ private Q_SLOTS:
     void tst_availableSizeWithPlaceholders();
     void tst_anchorFollowingItselfAssert();
     void tst_positionWhenShown();
+    void tst_moreTitleBarCornerCases();
+    void tst_maxSizePropagates();
+    void tst_maxSizePropagates2();
+    void tst_maxSizeHonouredWhenDropped();
+    void tst_fixedSizePolicy();
+    void tst_isInMainWindow();
 };
 
 void TestCommon::tst_simple1()
@@ -4071,6 +4077,212 @@ void TestCommon::tst_positionWhenShown()
     // Cleanup
     dock1->deleteLater();
     QVERIFY(Testing::waitForDeleted(dock1));
+}
+
+void TestCommon::tst_moreTitleBarCornerCases()
+{
+    {
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("foo2"));
+        dock1->show();
+        dock2->show();
+        auto fw2 = dock2->window();
+        dock1->addDockWidgetToContainingWindow(dock2, Location_OnLeft);
+        QVERIFY(dock1->frame()->titleBar()->isVisible());
+        QVERIFY(dock2->frame()->titleBar()->isVisible());
+        QVERIFY(dock1->frame()->titleBar() != dock2->frame()->titleBar());
+        auto fw = dock1->floatingWindow();
+        QVERIFY(fw->titleBar()->isVisible());
+        QVERIFY(fw->titleBar() != dock1->frame()->titleBar());
+        QVERIFY(fw->titleBar() != dock2->frame()->titleBar());
+        delete fw;
+        delete fw2;
+    }
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("foo2"));
+        dock1->show();
+        dock2->show();
+        auto fw1 = dock1->floatingWindow();
+        auto fw2 = dock2->floatingWindow();
+        fw1->dropArea()->drop(fw2, Location_OnRight, nullptr);
+        QVERIFY(fw1->titleBar()->isVisible());
+        QVERIFY(dock1->frame()->titleBar()->isVisible());
+        QVERIFY(dock2->frame()->titleBar()->isVisible());
+        QVERIFY(dock1->frame()->titleBar() != dock2->frame()->titleBar());
+        QVERIFY(fw1->titleBar() != dock1->frame()->titleBar());
+        QVERIFY(fw1->titleBar() != dock2->frame()->titleBar());
+        delete fw1;
+        delete fw2;
+    }
+
+    {
+        // Tests that restoring a single floating dock widget doesn't make it show two title-bars
+        // As reproduced myself... and fixed in this commit
+
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
+        dock1->show();
+
+        auto fw1 = dock1->floatingWindow();
+        QVERIFY(!dock1->frame()->titleBar()->isVisible());
+        QVERIFY(fw1->titleBar()->isVisible());
+
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
+        saver.restoreLayout(saved);
+
+        delete fw1; // the old window
+
+        fw1 = dock1->floatingWindow();
+        QVERIFY(dock1->isVisible());
+        QVERIFY(!dock1->frame()->titleBar()->isVisible());
+        QVERIFY(fw1->titleBar()->isVisible());
+        delete dock1->window();
+    }
+}
+
+void TestCommon::tst_maxSizePropagates()
+{
+    // Tests that the DockWidget gets the min and max size of its guest widget
+    EnsureTopLevelsDeleted e;
+    auto dock1 = new DockWidgetType("dock1");
+
+    auto w = new MyWidget2(QSize(200, 200));
+    w->setMinimumSize(120, 120);
+    w->setMaximumSize(500, 500);
+    dock1->setWidget(w);
+    dock1->show();
+
+    QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
+    QCOMPARE(dock1->maximumSize(), w->maximumSize());
+
+    w->setMinimumSize(121, 121);
+    w->setMaximumSize(501, 501);
+
+    Testing::waitForEvent(w, QEvent::LayoutRequest);
+
+    QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
+    QCOMPARE(dock1->maximumSize(), w->maximumSize());
+
+    // Now let's see if our Frame also has proper size-constraints
+    Frame *frame = dock1->frame();
+    QCOMPARE(frame->maximumSize().expandedTo(w->maximumSize()), frame->maximumSize());
+
+    delete dock1->window();
+}
+
+void TestCommon::tst_maxSizePropagates2()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock1 = new DockWidgetType("dock1");
+
+    auto w = new MyWidget2(QSize(200, 200));
+    w->setMinimumSize(120, 120);
+    w->setMaximumSize(300, 500);
+    dock1->setWidget(w);
+    dock1->show();
+
+    auto dock2 = new DockWidgetType("dock2");
+    auto dock3 = new DockWidgetType("dock3");
+    auto dock4 = new DockWidgetType("dock4");
+    m1->addDockWidget(dock2, Location_OnLeft);
+    m1->addDockWidget(dock3, Location_OnRight);
+    m1->addDockWidget(dock4, Location_OnBottom, dock3);
+    m1->addDockWidget(dock1, Location_OnLeft, dock4);
+
+    Frame *frame1 = dock1->frame();
+
+    Layouting::ItemContainer *root = m1->multiSplitter()->rootItem();
+    Item *item1 = root->itemForWidget(frame1);
+    auto vertSep1 = root->separators().constFirst();
+    const int min1 = root->minPosForSeparator_global(vertSep1);
+
+    ItemContainer *container1 = item1->parentContainer();
+    auto innerVertSep1 = container1->separators().constFirst();
+    const int minInnerSep = container1->minPosForSeparator_global(innerVertSep1);
+    const int maxInnerSep = container1->maxPosForSeparator_global(innerVertSep1);
+
+    root->requestSeparatorMove(vertSep1, -(vertSep1->position() - min1));
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+
+    container1->requestSeparatorMove(innerVertSep1, -(innerVertSep1->position() - minInnerSep));
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+
+    container1->requestSeparatorMove(innerVertSep1, maxInnerSep - innerVertSep1->position());
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+}
+
+void TestCommon::tst_maxSizeHonouredWhenDropped()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow();
+    auto dock1 = new DockWidgetType("dock1");
+    auto dock2 = new DockWidgetType("dock2");
+    m1->addDockWidget(dock1, Location_OnTop);
+    m1->resize(2000, 2000);
+
+    auto w2 = new MyWidget2(QSize(400,400));
+    dock2->setWidget(w2);
+    const int maxWidth = 200;
+    w2->setMaximumSize(maxWidth, 200);
+    m1->addDockWidget(dock2, Location_OnLeft);
+    const int droppedWidth = dock2->frame()->width();
+    QVERIFY(droppedWidth < maxWidth + 50); // +50 to cover any margins and waste by QTabWidget
+
+    // Try again, but now dropping a multisplitter
+    dock2->setFloating(true);
+    auto fw = dock2->floatingWindow();
+
+    m1->dropArea()->drop(fw, Location_OnLeft, nullptr);
+    QCOMPARE(dock2->frame()->width(), droppedWidth);
+}
+
+void TestCommon::tst_fixedSizePolicy()
+{
+    // tests that KDDW also takes into account QSizePolicy::Fixed for calculating the max size hint.
+    // Since QPushButton for example doesn't set QWidget::maximumSize(), but instead uses sizeHint()
+    // + QSizePolicy::Fixed.
+    EnsureTopLevelsDeleted e;
+    auto button = new QPushButton("one");
+    auto dock1 = createDockWidget("dock1", button);
+    Frame *frame = dock1->frame();
+
+    // Just a precondition from the test. If QPushButton ever changes, replace with a QWidget and set fixed size policy
+    QCOMPARE(button->sizePolicy().verticalPolicy(), QSizePolicy::Fixed);
+
+    const int buttonMaxHeight = button->sizeHint().height();
+
+    QCOMPARE(dock1->sizeHint(), button->sizeHint());
+    QCOMPARE(dock1->sizePolicy().verticalPolicy(), button->sizePolicy().verticalPolicy());
+    QCOMPARE(dock1->sizePolicy().horizontalPolicy(), button->sizePolicy().horizontalPolicy());
+
+    QCOMPARE(frame->maxSizeHint().height(), qMax(buttonMaxHeight, KDDOCKWIDGETS_MIN_HEIGHT));
+
+    delete dock1->window();
+}
+
+void TestCommon::tst_isInMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+    auto dw = new DockWidgetType(QStringLiteral("FOO"));
+    dw->show();
+    auto fw = dw->window();
+    QVERIFY(!dw->isInMainWindow());
+    auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
+    m1->addDockWidget(dw, KDDockWidgets::Location_OnLeft);
+    QVERIFY(dw->isInMainWindow());
+    delete fw;
+
+    // Also test after creating the MainWindow, as the FloatingWindow will get parented to it
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
+    dw2->show();
+    QVERIFY(!dw2->isInMainWindow());
+    delete dw2->window();
 }
 
 #include "tst_common.moc"

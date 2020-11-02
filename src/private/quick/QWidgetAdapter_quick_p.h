@@ -110,6 +110,9 @@ public:
     void grabMouse();
     void releaseMouse();
     void setMinimumSize(QSize);
+    void setMinimumSize(int w, int h);
+    void setMaximumSize(QSize sz);
+    void setMaximumSize(int w, int h);
     void updateGeometry();
     void resize(QSize);
     void resize(int w, int h);
