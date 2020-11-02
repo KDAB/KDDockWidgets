@@ -233,10 +233,11 @@ QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr
     const bool isFractional = int(dpr) != dpr;
     if (isFractional) {
         // We don't support 1.5x yet.
-        // Linux is the only one affected as Windows and macOS use integral factors.
         // Problem with Linux is that rendering is off due to a rounding bug only fixed in 5.15.2
         // Will enable for fractional later.
         // QTBUG-86170
+        // Mostly affects Linux. Unless you're using Qt::HighDpiScaleFactorRoundingPolicy::PassThrough, in which case it will
+        // affect other OSes too.
         return icon;
     }
 #else
