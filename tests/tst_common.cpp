@@ -4372,7 +4372,7 @@ void TestCommon::tst_sizeConstraintWarning()
     }
     {
        auto dock = new DockWidgetType("foo-15");
-       dock->setWidget(new QTextEdit(dock));
+       dock->setWidget(new QTextEdit());
        listDockWidget.append(dock);
     }
     {
