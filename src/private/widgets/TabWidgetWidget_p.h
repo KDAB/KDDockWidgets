@@ -42,6 +42,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
+    void mousePressEvent(QMouseEvent *) override;
     void tabInserted(int index) override;
     void tabRemoved(int index) override;
     bool isPositionDraggable(QPoint p) const override;

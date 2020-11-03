@@ -88,6 +88,16 @@ void TabWidgetWidget::mouseDoubleClickEvent(QMouseEvent *ev)
     }
 }
 
+void TabWidgetWidget::mousePressEvent(QMouseEvent *ev)
+{
+    QTabWidget::mousePressEvent(ev);
+
+    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !frame()->isFocused()) {
+        // User clicked on the tab widget itself
+        frame()->FocusScope::focus(Qt::MouseFocusReason);
+    }
+}
+
 void TabWidgetWidget::tabInserted(int)
 {
     onTabInserted();
