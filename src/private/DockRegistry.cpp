@@ -74,28 +74,27 @@ void DockRegistry::maybeDelete()
 
 void DockRegistry::onFocusObjectChanged(QObject *obj)
 {
-    DockWidgetBase *const unfocusedDW = m_focusedDockWidget.data();
-    DockWidgetBase *newFocusedDockWidget = nullptr;
+    // In this function we reset the focused dock widget.
 
-    // Check if it's inside a dock widget:
     auto p = qobject_cast<WidgetType*>(obj);
     while (p) {
-        if (auto dw = qobject_cast<DockWidgetBase*>(p)) {
-            newFocusedDockWidget = dw;
-            break;
-        }
-
+        if (qobject_cast<DockWidgetBase*>(p) || qobject_cast<Frame*>(p))
+            return;
         p = KDDockWidgets::Private::parentWidget(p);
     }
 
-    // Nothing changed
-    if (m_focusedDockWidget.data() == newFocusedDockWidget)
+    setFocusedDockWidget(nullptr);
+}
+
+void DockRegistry::setFocusedDockWidget(DockWidgetBase *dw)
+{
+    if (m_focusedDockWidget.data() == dw)
         return;
 
-    m_focusedDockWidget = newFocusedDockWidget;
+    if (m_focusedDockWidget)
+        Q_EMIT m_focusedDockWidget->isFocusedChanged(false);
 
-    if (unfocusedDW)
-        Q_EMIT unfocusedDW->isFocusedChanged(false);
+    m_focusedDockWidget = dw;
 
     if (m_focusedDockWidget)
         Q_EMIT m_focusedDockWidget->isFocusedChanged(true);

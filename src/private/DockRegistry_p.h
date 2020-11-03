@@ -193,10 +193,13 @@ public:
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 private:
+    friend class FocusScope;
     explicit DockRegistry(QObject *parent = nullptr);
     void onDockWidgetPressed(DockWidgetBase *dw);
+    void onFocusObjectChanged(QObject *obj);
     void maybeDelete();
-    void onFocusObjectChanged(QObject *);
+    void setFocusedDockWidget(DockWidgetBase *);
+
     bool m_isProcessingAppQuitEvent = false;
     DockWidgetBase::List m_dockWidgets;
     MainWindowBase::List m_mainWindows;
