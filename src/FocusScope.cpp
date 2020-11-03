@@ -115,10 +115,11 @@ void FocusScope::Private::onFocusObjectChanged(QObject *obj)
     const bool is = isInFocusScope(widget);
     if (is && m_lastFocusedInScope != widget && !qobject_cast<TitleBar*>(obj)) {
         m_lastFocusedInScope = widget;
+        setIsFocused(is);
         Q_EMIT q->focusedWidgetChanged();
+    } else {
+        setIsFocused(is);
     }
-
-    setIsFocused(is);
 }
 
 bool FocusScope::Private::isInFocusScope(WidgetType *widget) const
