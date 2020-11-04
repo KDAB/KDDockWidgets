@@ -25,7 +25,7 @@
 namespace KDDockWidgets
 {
 ///@brief Allows to implement a similar functionality to QtQuick's FocusScope item, in QtWidgets
-class FocusScope
+class DOCKS_EXPORT FocusScope
 {
 public:
     ///@brief constructor
