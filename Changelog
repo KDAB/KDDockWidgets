@@ -3,6 +3,8 @@
 
 * v1.2.0 (unreleased, November)
   - [DONE] Wayland support
+  - Added Flag_KeepAboveIfNotUtilityWindow, so you can have keep above even if
+    floating window is shown in the task-bar.
 
 * v1.1.0 (26 October 2020)
   - New drop indicator style type: Segmented Indicators

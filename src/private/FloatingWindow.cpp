@@ -158,6 +158,9 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     DockRegistry::self()->registerFloatingWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
 
+    if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
+        setWindowFlag(Qt::WindowStaysOnTopHint, true);
+
     maybeCreateResizeHandler();
 
     updateTitleBarVisibility();

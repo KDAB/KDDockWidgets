@@ -397,6 +397,12 @@ QSize QWidgetAdapter::sizeHint() const
     return m_sizeHint;
 }
 
+void QWidgetAdapter::setWindowFlag(int flag, bool enable)
+{
+    Q_UNUSED(flag);
+    Q_UNUSED(enable);
+}
+
 Qt::WindowFlags QWidgetAdapter::windowFlags() const
 {
     return m_windowFlags;

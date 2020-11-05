@@ -149,6 +149,7 @@ public:
     void setFocus(Qt::FocusReason);
     virtual QSize sizeHint() const;
 
+    void setWindowFlag(int flag, bool enable = true);
     Qt::WindowFlags windowFlags() const;
     void setWindowOpacity(qreal);
 

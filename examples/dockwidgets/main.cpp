@@ -91,6 +91,9 @@ int main(int argc, char **argv)
     QCommandLineOption noUtilityWindows("u", QCoreApplication::translate("main", "FloatingWindows will be normal windows instead of utility windows"));
     parser.addOption(noUtilityWindows);
 
+    QCommandLineOption keepAbove("o", QCoreApplication::translate("main", "FloatingWindows will have Qt::WindowStaysOnTopHint. Implies not being an utility window (try it with -u too)"));
+    parser.addOption(keepAbove);
+
     parser.addPositionalArgument("savedlayout", QCoreApplication::translate("main", "loads the specified json file at startup"));
 
 #ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
@@ -142,6 +145,9 @@ int main(int argc, char **argv)
 
     if (parser.isSet(noQtTool))
         flags |= KDDockWidgets::Config::Flag_internal_DontUseQtToolWindowsForFloatingWindows;
+
+    if (parser.isSet(keepAbove))
+        flags |= KDDockWidgets::Config::Flag_KeepAboveIfNotUtilityWindow;
 
     if (parser.isSet(noParentForFloating))
         flags |= KDDockWidgets::Config::Flag_internal_DontUseParentForFloatingWindows;
