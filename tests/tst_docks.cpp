@@ -199,11 +199,8 @@ private Q_SLOTS:
     void tst_dragByTabBar();
     void tst_dragBySingleTab();
 
-    void tst_addToHiddenMainWindow();
     void tst_minSizeChanges();
     void tst_complex();
-    void tst_titlebar_getter();
-    void tst_dockNotFillingSpace();
     void tst_addingOptionHiddenTabbed();
     void tst_flagDoubleClick();
     void tst_floatingWindowDeleted();
@@ -211,11 +208,9 @@ private Q_SLOTS:
     void tst_floatingAction();
     void tst_dockableMainWindows();
     void tst_lastFloatingPositionIsRestored();
-    void tst_maxSizeHonouredWhenAnotherDropped();
     void tst_maxSizedHonouredAfterRemoved();
     void tst_maximumSizePolicy();
     void tst_tabsNotClickable();
-    void tst_stuckSeparator();
     void tst_titleBarFocusedWhenTabsChange();
 
 private:
@@ -912,26 +907,6 @@ void TestDocks::tst_dragBySingleTab()
     Testing::waitForDeleted(frame1);
 }
 
-void TestDocks::tst_addToHiddenMainWindow()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = new MainWindow("m1", MainWindowOption_HasCentralFrame);
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
-    auto d1 = createDockWidget("1", w1);
-    auto d2 = createDockWidget("2", w2);
-
-    m->addDockWidget(d1, Location_OnTop);
-    m->addDockWidget(d2, Location_OnTop);
-
-    QVERIFY(!m->isVisible());
-    d1->setFloating(true);
-    d2->setFloating(false);
-    m->multiSplitter()->checkSanity();
-
-    delete m;
-}
-
 void TestDocks::tst_minSizeChanges()
 {
     EnsureTopLevelsDeleted e;
@@ -1057,55 +1032,6 @@ void TestDocks::tst_complex()
     qDeleteAll(docks);
     qDeleteAll(DockRegistry::self()->frames());
     delete m;
-}
-
-void TestDocks::tst_titlebar_getter()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = new MainWindow("m1", MainWindowOption_HasCentralFrame);
-    m->resize(QSize(500, 500));
-    m->show();
-
-    auto w1 = new MyWidget2(QSize(400, 400));
-    auto d1 = createDockWidget("1", w1);
-
-    m->addDockWidget(d1, Location_OnTop);
-
-    QVERIFY(d1->titleBar()->isVisible());
-    d1->setFloating(true);
-    QVERIFY(d1->floatingWindow());
-    QVERIFY(d1->floatingWindow()->isVisible());
-    QVERIFY(d1->titleBar()->isVisible());
-
-    delete m;
-}
-
-void TestDocks::tst_dockNotFillingSpace()
-{
-     EnsureTopLevelsDeleted e;
-     auto m = new MainWindow("m1");
-     m->resize(QSize(500, 500));
-     m->show();
-
-     auto d1 = createDockWidget("1", new QTextEdit());
-     auto d2 = createDockWidget("2", new QTextEdit());
-     auto d3 = createDockWidget("3", new QTextEdit());
-
-     m->addDockWidget(d1, Location_OnTop);
-     m->addDockWidget(d2, Location_OnBottom);
-     m->addDockWidget(d3, Location_OnBottom);
-
-     Frame *frame2 = d2->frame();
-     d1->close();
-     d2->close();
-     Testing::waitForDeleted(frame2);
-
-     auto layout = m->multiSplitter();
-     QVERIFY(layout->checkSanity());
-
-     delete d1;
-     delete d2;
-     delete m;
 }
 
 void TestDocks::tst_invalidLayoutAfterRestore()
@@ -1657,38 +1583,6 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     delete dock1->window();
 }
 
-void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
-{
-    // dock1 is docked, and has small max-height.
-    // When dropping dock2, which is small too, dock2 should occupy all the height except dock1's max-height
-    // i.e. dock2 should expand and eat all available space
-
-    EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dock1 = new DockWidgetType("dock1");
-
-    auto w = new QWidget();
-    w->setMinimumSize(120, 100);
-    w->setMaximumSize(300, 150);
-    dock1->setWidget(w);
-    m1->addDockWidget(dock1, Location_OnLeft);
-
-    auto dock2 = new DockWidgetType("dock2");
-    m1->addDockWidget(dock2, Location_OnBottom);
-
-    auto root = m1->multiSplitter()->rootItem();
-    Separator *separator = root->separators().constFirst();
-    const int min1 = root->minPosForSeparator_global(separator);
-    const int max2 = root->maxPosForSeparator_global(separator);
-
-    QVERIFY(separator->position() >= min1);
-    QVERIFY(separator->position() <= max2);
-    const int item1MaxHeight = dock1->frame()->maxSizeHint().height();
-    QVERIFY(dock1->frame()->height() <= item1MaxHeight);
-    root->dumpLayout();
-    QCOMPARE(dock2->frame()->height(), root->height() - item1MaxHeight - Item::separatorThickness);
-}
-
 void TestDocks::tst_maxSizedHonouredAfterRemoved()
 {
     EnsureTopLevelsDeleted e;
@@ -1809,41 +1703,6 @@ void TestDocks::tst_tabsNotClickable()
     QCOMPARE(frame->currentIndex(), 0);
 
     delete frame->window();
-}
-
-void TestDocks::tst_stuckSeparator()
-{
-    const QString absoluteLayoutFileName = QStringLiteral(":/layouts/stuck-separator.json");
-
-    EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
-    const int numDockWidgets = 26;
-    DockWidgetBase *dw25 = nullptr;
-    for (int i = 0; i < numDockWidgets; ++i) {
-        auto createdDw = createDockWidget(QStringLiteral("dock-%1").arg(i), new QWidget());
-        if (i == 25)
-            dw25 = createdDw;
-    }
-
-    LayoutSaver restorer;
-    QVERIFY(restorer.restoreFromFile(absoluteLayoutFileName));
-
-    Frame *frame25 = dw25->frame();
-    ItemContainer *root = m1->multiSplitter()->rootItem();
-    Item *item25 = root->itemForWidget(frame25);
-    ItemContainer *container25 = item25->parentContainer();
-    Separator::List separators = container25->separators();
-    QCOMPARE(separators.size(), 1);
-
-    Separator *separator25 = separators.constFirst();
-    const int sepMin = container25->minPosForSeparator_global(separator25);
-    const int sepMax = container25->maxPosForSeparator_global(separator25);
-
-    QVERIFY(sepMin <= sepMax);
-
-    for (auto dw : DockRegistry::self()->dockwidgets()) {
-        delete dw;
-    }
 }
 
 void TestDocks::tst_titleBarFocusedWhenTabsChange()

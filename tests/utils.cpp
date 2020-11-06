@@ -37,7 +37,9 @@ using namespace KDDockWidgets::Tests;
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
 
 
-std::unique_ptr<KDDockWidgets::MainWindowBase> KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options, const QString &name)
+std::unique_ptr<KDDockWidgets::MainWindowBase>
+KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options,
+                                       const QString &name, bool show)
 {
     static int count = 0;
     count++;
@@ -49,12 +51,14 @@ std::unique_ptr<KDDockWidgets::MainWindowBase> KDDockWidgets::Tests::createMainW
 #ifdef KDDOCKWIDGETS_QTQUICK
     auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
     view->setSource(QUrl("qrc:/main.qml"));
-    view->show();
+    if (show)
+        view->show();
     parent = view->rootObject();
 #endif
 
     auto ptr = std::unique_ptr<MainWindowType>(new MainWindowType(mainWindowName, options, parent));
-    ptr->show();
+    if (show)
+        ptr->show();
     ptr->resize(sz);
     return ptr;
 }
