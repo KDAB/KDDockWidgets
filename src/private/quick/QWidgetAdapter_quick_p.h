@@ -86,6 +86,7 @@ public:
     int height() const { return int(QQuickItem::height()); }
 
     virtual void setGeometry(QRect);
+    QRect frameGeometry() const;
     QRect geometry() const;
     QRect rect() const;
     QPoint pos() const;
@@ -117,6 +118,7 @@ public:
     void resize(QSize);
     void resize(int w, int h);
     bool isWindow() const { return parentItem() == nullptr; }
+    bool isTopLevel() const { return isWindow(); }
     bool isMaximized() const;
     bool isActiveWindow() const;
     void showMaximized();

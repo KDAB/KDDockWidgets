@@ -186,6 +186,14 @@ void QWidgetAdapter::setGeometry(QRect rect)
     move(rect.topLeft());
 }
 
+QRect QWidgetAdapter::frameGeometry() const
+{
+    if (QWindow *w = windowHandle())
+        return w->frameGeometry();
+
+    return geometry();
+}
+
 void QWidgetAdapter::grabMouse()
 {
     QQuickItem::grabMouse();

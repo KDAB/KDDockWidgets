@@ -218,6 +218,8 @@ private Q_SLOTS:
     void tst_addToHiddenMainWindow();
     void tst_dockNotFillingSpace();
     void tst_titlebar_getter();
+    void tst_restoreSimple();
+    void tst_lastFloatingPositionIsRestored();
 };
 
 void TestCommon::tst_simple1()
@@ -238,6 +240,74 @@ void TestCommon::tst_simple2()
     m->addDockWidget(dw, KDDockWidgets::Location_OnTop);
     m->multiSplitter()->checkSanity();
     delete fw;
+}
+
+void TestCommon::tst_restoreSimple()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests restoring a very simple layout, composed of just 1 docked widget
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto layout = m->multiSplitter();
+    auto dock1 = createDockWidget("one", new QTextEdit());
+    auto dock2 = createDockWidget("two", new QTextEdit());
+    auto dock3 = createDockWidget("three", new QTextEdit());
+    m->addDockWidget(dock1, Location_OnTop);
+
+    // Dock2 floats at 150,150
+    const QPoint dock2FloatingPoint = QPoint(150, 150);
+    dock2->window()->move(dock2FloatingPoint);
+    QVERIFY(dock2->isVisible());
+
+    const QPoint dock3FloatingPoint = QPoint(200, 200);
+    dock3->window()->move(dock3FloatingPoint);
+    dock3->close();
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSimple.json")));
+    auto f1 = dock1->frame();
+    dock2->window()->move(QPoint(0, 0)); // Move *after* we saved.
+    dock3->window()->move(QPoint(0, 0)); // Move *after* we saved.
+    dock1->close();
+    dock2->close();
+    QVERIFY(!dock2->isVisible());
+    QCOMPARE(layout->count(), 1);
+    QVERIFY(Testing::waitForDeleted(f1));
+    QCOMPARE(layout->placeholderCount(), 1);
+
+    QCOMPARE(DockRegistry::self()->floatingWindows().size(), 0);
+    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimple.json")));
+    QVERIFY(layout->checkSanity());
+    QCOMPARE(layout->count(), 1);
+    QCOMPARE(layout->placeholderCount(), 0);
+    QVERIFY(dock1->isVisible());
+    QCOMPARE(saver.restoredDockWidgets().size(), 3);
+
+    // Test a crash I got:
+    dock1->setFloating(true);
+    QVERIFY(layout->checkSanity());
+    dock1->setFloating(false);
+
+    auto fw2 = dock2->floatingWindow();
+    QVERIFY(fw2);
+    QVERIFY(fw2->isVisible());
+    QVERIFY(fw2->isTopLevel());
+    QCOMPARE(fw2->pos(), dock2FloatingPoint);
+    QCOMPARE(fw2->parent(), m.get());
+    QVERIFY(dock2->isFloating());
+    QVERIFY(dock2->isVisible());
+
+    QVERIFY(!dock3->isVisible()); // Remains closed
+    QVERIFY(dock3->parentWidget() == nullptr);
+
+    dock3->show();
+    dock3->morphIntoFloatingWindow(); // as it would take 1 event loop. Do it now so we can compare already.
+
+    QCOMPARE(dock3->window()->pos(), dock3FloatingPoint);
+
+    // Cleanup
+    dock3->deleteLater();
+    QVERIFY(Testing::waitForDeleted(dock3));
 }
 
 
@@ -4590,6 +4660,53 @@ void TestCommon::tst_dockNotFillingSpace()
 
      delete d1;
      delete d2;
+}
+
+void TestCommon::tst_lastFloatingPositionIsRestored()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto m1 = createMainWindow();
+    auto dock1 = createDockWidget("dock1");
+    dock1->show();
+    QPoint targetPos = QPoint(340, 340);
+    dock1->window()->move(targetPos);
+    auto oldFw = dock1->window();
+
+    LayoutSaver saver;
+    QByteArray saved = saver.serializeLayout();
+
+    dock1->window()->move(0, 0);
+    dock1->close();
+    delete oldFw;
+
+    saver.restoreLayout(saved);
+    QCOMPARE(dock1->window()->pos(), targetPos);
+    QCOMPARE(dock1->window()->frameGeometry().topLeft(), targetPos);
+
+    // Adjsut to what we got without the frame
+    targetPos = dock1->window()->geometry().topLeft();
+
+    // Now dock it:
+    m1->addDockWidget(dock1, Location_OnTop);
+    QCOMPARE(dock1->lastPositions().lastFloatingGeometry().topLeft(), targetPos);
+
+    dock1->setFloating(true);
+    QCOMPARE(dock1->window()->geometry().topLeft(), targetPos);
+
+    saver.restoreLayout(saved);
+    QCOMPARE(dock1->window()->geometry().topLeft(), targetPos);
+
+    // Dock again and save:
+    m1->addDockWidget(dock1, Location_OnTop);
+    saved = saver.serializeLayout();
+    dock1->setFloating(true);
+    dock1->window()->move(0, 0);
+    saver.restoreLayout(saved);
+    QVERIFY(!dock1->isFloating());
+    dock1->setFloating(true);
+    QCOMPARE(dock1->window()->geometry().topLeft(), targetPos);
+    delete dock1->window();
 }
 
 #include "tst_common.moc"
