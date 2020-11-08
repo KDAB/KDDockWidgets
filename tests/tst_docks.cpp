@@ -38,7 +38,6 @@
 #include <QtTest/QtTest>
 #include <QPainter>
 #include <QApplication>
-#include <QTabBar>
 #include <QAction>
 #include <QTime>
 #include <QTextEdit>
@@ -62,19 +61,6 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Tests;
 using namespace Layouting;
-
-static QPoint dragPointForWidget(Frame *frame, int index)
-{
-    auto frameW = static_cast<FrameWidget*>(frame);
-
-    if (frameW->hasSingleDockWidget()) {
-        Q_ASSERT(index == 0);
-        return frameW->titleBar()->mapToGlobal(QPoint(5, 5));
-    } else {
-        QRect rect = frameW->tabBar()->tabRect(index);
-        return frameW->tabBar()->mapToGlobal(rect.center());
-    }
-}
 
 inline int widgetMinLength(const QWidget *w, Qt::Orientation o)
 {
@@ -125,14 +111,6 @@ struct ExpectedRectForDrop // struct for testing MultiSplitterLayout::availableL
 typedef QVector<ExpectedRectForDrop> ExpectedRectsForDrop;
 Q_DECLARE_METATYPE(ExpectedRectForDrop)
 
-static int osWindowMinWidth()
-{
-#ifdef Q_OS_WIN
-    return GetSystemMetrics(SM_CXMIN);
-#else
-    return 140; // Some random value for our windows. It's only important on Windows
-#endif
-}
 
 namespace KDDockWidgets {
 
@@ -181,8 +159,6 @@ public Q_SLOTS:
     }
 
 private Q_SLOTS:
-    void tst_mainWindowAlwaysHasCentralWidget();
-    void tst_dock2FloatingWidgetsTabbed();
     void tst_close();
     void tst_propagateSizeHonoursMinSize();
 
@@ -190,13 +166,7 @@ private Q_SLOTS:
     void tst_addToSmallMainWindow6();
 
     void tst_constraintsAfterPlaceholder();
-    void tst_negativeAnchorPositionWhenEmbedded_data();
-    void tst_negativeAnchorPositionWhenEmbedded();
     void tst_invalidLayoutAfterRestore();
-
-    void tst_dragByTabBar_data();
-    void tst_dragByTabBar();
-    void tst_dragBySingleTab();
 
     void tst_minSizeChanges();
     void tst_complex();
@@ -208,8 +178,6 @@ private Q_SLOTS:
     void tst_dockableMainWindows();
     void tst_maxSizedHonouredAfterRemoved();
     void tst_maximumSizePolicy();
-    void tst_tabsNotClickable();
-    void tst_titleBarFocusedWhenTabsChange();
 
 private:
     std::unique_ptr<MultiSplitter> createMultiSplitterFromSetup(MultiSplitterSetup setup, QHash<QWidget *, Frame *> &frameMap) const;
@@ -221,7 +189,7 @@ Frame* createFrameWithWidget(const QString &name, MultiSplitter *parent, int min
     QWidget *w = createWidget(minLength, name);
     auto dw = new DockWidgetType(name);
     dw->setWidget(w);
-    auto frame =KDDockWidgets::Config::self().frameworkWidgetFactory()->createFrame(parent);
+    auto frame = KDDockWidgets::Config::self().frameworkWidgetFactory()->createFrame(parent);
     frame->addWidget(dw);
     return frame;
 }
@@ -248,103 +216,6 @@ std::unique_ptr<MainWindowBase> createSimpleNestedMainWindow(DockWidgetBase * *c
     *leftDock = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnLeft);
     *rightDock = createAndNestDockWidget(dropArea, nullptr, KDDockWidgets::Location_OnRight);
     return window;
-}
-
-void TestDocks::tst_dock2FloatingWidgetsTabbed()
-{
-    EnsureTopLevelsDeleted e;
-
-    if (KDDockWidgets::usesNativeTitleBar())
-        return; // Unit-tests can't drag via tab, yet
-
-    auto dock1 = createDockWidget("doc1", Qt::green);
-    auto fw1 = dock1->floatingWindow();
-    fw1->setGeometry(500, 500, 400, 400);
-    QVERIFY(dock1);
-    QPointer<Frame> frame1 = dock1->frame();
-
-    auto titlebar1 = fw1->titleBar();
-    auto dock2 = createDockWidget("doc2", Qt::red);
-
-    QVERIFY(dock1->isFloating());
-    QVERIFY(dock2->isFloating());
-
-    drag(titlebar1, titlebar1->mapToGlobal(QPoint(5, 5)), dock2->window()->geometry().center(), ButtonAction_Press);
-
-    // It morphed into a FloatingWindow
-    QPointer<Frame> frame2 = dock2->frame();
-    if (!dock2->floatingWindow()) {
-        qWarning() << "dock2->floatingWindow()=" << dock2->floatingWindow();
-        QVERIFY(false);
-    }
-    QVERIFY(frame2);
-    QCOMPARE(frame2->dockWidgetCount(), 1);
-
-    releaseOn(dock2->window()->geometry().center(), titlebar1);
-    QCOMPARE(frame2->dockWidgetCount(), 2); // 2.2 Frame has 2 widgets when one is dropped
-
-    QVERIFY(Testing::waitForDeleted(frame1));
-
-    // 2.3 Detach tab1 to empty space
-    QPoint globalPressPos = dragPointForWidget(frame2.data(), 0);
-    QTabBar *tabBar = static_cast<FrameWidget*>(frame2.data())->tabBar();
-    QVERIFY(tabBar);
-    drag(tabBar, globalPressPos, frame2->window()->geometry().bottomRight() + QPoint(10, 10));
-
-    QVERIFY(frame2->dockWidgetCount() == 1);
-    QVERIFY(dock1->floatingWindow());
-
-    // 2.4 Drag the first dock over the second
-    frame1 = dock1->frame();
-    frame2 = dock2->frame();
-    fw1 = dock1->floatingWindow();
-    globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100,5));
-    drag(fw1->titleBar(), globalPressPos, dock2->window()->geometry().center());
-
-    QCOMPARE(frame2->dockWidgetCount(), 2);
-
-    // 2.5 Detach and drop to the same place, should tab again
-    globalPressPos = dragPointForWidget(frame2.data(), 0);
-    tabBar = static_cast<FrameWidget*>(frame2.data())->tabBar();
-
-    drag(tabBar, globalPressPos, dock2->window()->geometry().center());
-    QCOMPARE(frame2->dockWidgetCount(), 2);
-
-    // 2.6 Drag the tabbed group over a 3rd floating window
-    auto dock3 = createDockWidget("doc3", Qt::black);
-    QTest::qWait(1000); // Test is flaky otherwise
-
-    auto fw2 = dock2->floatingWindow();
-    drag(fw2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
-
-    QVERIFY(Testing::waitForDeleted(frame1));
-    QVERIFY(Testing::waitForDeleted(frame2));
-    QVERIFY(dock3->frame());
-    QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
-
-    auto fw3 = dock3->floatingWindow();
-    QVERIFY(fw3);
-    QVERIFY(fw3->dropArea()->checkSanity());
-
-    // 2.7 Drop the window into a MainWindow
-    {
-        MainWindow m("MyMainWindow_tst_dock2FloatingWidgetsTabbed", MainWindowOption_HasCentralFrame);
-        m.show();
-        m.setGeometry(500, 300, 300, 300);
-        QVERIFY(!dock3->isFloating());
-        auto fw3 = dock3->floatingWindow();
-        drag(fw3->titleBar(), dock3->window()->mapToGlobal(QPoint(10, 10)), m.geometry().center());
-        QVERIFY(!dock3->isFloating());
-        QVERIFY(qobject_cast<MainWindow *>(dock3->window()) == &m);
-        QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
-        QVERIFY(m.dropArea()->checkSanity());
-
-        delete dock1;
-        delete dock2;
-        delete dock3;
-        QVERIFY(Testing::waitForDeleted(frame2));
-        QVERIFY(Testing::waitForDeleted(fw3));
-    }
 }
 
 void TestDocks::tst_close()
@@ -501,48 +372,6 @@ void TestDocks::tst_close()
         QVERIFY(mainWindowPtr->isVisible());
         delete dock1;
     }
-}
-
-void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
-{
-    EnsureTopLevelsDeleted e;
-
-    auto m = createMainWindow();
-    QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
-
-    QWidget *central = m->centralWidget();
-    auto dropArea = m->dropArea();
-    QVERIFY(dropArea);
-
-    QPointer<Frame> centralFrame = static_cast<Frame*>(dropArea->centralFrame()->guestAsQObject());
-    QVERIFY(central);
-    QVERIFY(dropArea);
-    QCOMPARE(dropArea->count(), 1);
-    QVERIFY(centralFrame);
-    QCOMPARE(centralFrame->dockWidgetCount(), 0);
-
-    // Add a tab
-    auto dock = createDockWidget("doc1", Qt::green);
-    m->addDockWidgetAsTab(dock);
-    QCOMPARE(dropArea->count(), 1);
-    QCOMPARE(centralFrame->dockWidgetCount(), 1);
-
-    qDebug() << "Central widget width=" << central->size() << "; mainwindow="
-             << m->size();
-
-    // Detach tab
-    QPoint globalPressPos = dragPointForWidget(centralFrame.data(), 0);
-    QTabBar *tabBar = static_cast<FrameWidget*>(centralFrame.data())->tabBar();
-    QVERIFY(tabBar);
-    qDebug() << "Detaching tab from dropArea->size=" << dropArea->QWidget::size() << "; dropArea=" << dropArea;
-    drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));
-
-    QVERIFY(centralFrame);
-    QCOMPARE(dropArea->count(), 1);
-    QCOMPARE(centralFrame->dockWidgetCount(), 0);
-    QVERIFY(dropArea->checkSanity());
-
-    delete dock->window();
 }
 
 void TestDocks::tst_propagateSizeHonoursMinSize()
@@ -729,112 +558,6 @@ void TestDocks::tst_constraintsAfterPlaceholder()
 
     dock1->deleteLater();
     Testing::waitForDeleted(dock1);
-}
-
-void TestDocks::tst_negativeAnchorPositionWhenEmbedded_data()
-{
-    QTest::addColumn<bool>("embedded");
-
-     QTest::newRow("false") << false;
-     QTest::newRow("true") << true;
-}
-
-void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
-{
-    QFETCH(bool, embedded);
-    EnsureTopLevelsDeleted e;
-
-    MainWindowBase *m;
-
-    if (embedded) {
-        auto em = createEmbeddedMainWindow(QSize(500, 500));
-        m = em->mainWindow;
-    } else {
-        m = new MainWindow("m1", MainWindowOption_HasCentralFrame);
-        m->resize(QSize(500, 500));
-        m->show();
-    }
-    auto layout = m->multiSplitter();
-
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
-    auto d1 = createDockWidget("1", w1);
-    auto d2 = createDockWidget("2", w2);
-    auto d3 = createDockWidget("3", w2);
-
-    m->addDockWidget(d1, Location_OnLeft);
-    m->addDockWidget(d2, Location_OnLeft);
-    m->addDockWidget(d3, Location_OnLeft);
-
-    layout->checkSanity();
-
-    delete m->window();
-}
-
-void TestDocks::tst_dragByTabBar_data()
-{
-    QTest::addColumn<bool>("documentMode");
-    QTest::addColumn<bool>("tabsAlwaysVisible");
-
-    QTest::newRow("false-false") << false << false;
-    QTest::newRow("true-false") << true << false;
-    QTest::newRow("false-true") << false << true;
-    QTest::newRow("true-true") << true << true;
-}
-
-void TestDocks::tst_dragByTabBar()
-{
-    QFETCH(bool, documentMode);
-    QFETCH(bool, tabsAlwaysVisible);
-
-    EnsureTopLevelsDeleted e;
-    auto flags = Config::self().flags() | Config::Flag_HideTitleBarWhenTabsVisible;
-    if (tabsAlwaysVisible)
-        flags |= Config::Flag_AlwaysShowTabs;
-
-    Config::self().setFlags(flags);
-
-    auto m = createMainWindow();
-    QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
-
-    auto dropArea = m->dropArea();
-    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
-
-    auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(400, 400)));
-    auto dock3 = createDockWidget("dock3", new MyWidget2(QSize(400, 400)));
-    m->addDockWidgetAsTab(dock1);
-    m->resize(osWindowMinWidth(), 200);
-
-    dock2->addDockWidgetAsTab(dock3);
-    if (documentMode)
-        static_cast<QTabWidget*>(static_cast<FrameWidget*>(dock2->frame())->tabWidget()->asWidget())->setDocumentMode(true);
-
-    auto fw = dock2->floatingWindow();
-    fw->move(m->pos() + QPoint(500, 500));
-    QVERIFY(fw->isVisible());
-    QVERIFY(!fw->titleBar()->isVisible());
-
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
-}
-
-void TestDocks::tst_dragBySingleTab()
-{
-    // Tests dragging via a tab when there's only 1 tab, and we're using Flag_AlwaysShowTabs
-    EnsureTopLevelsDeleted e;
-    Config::self().setFlags(Config::Flag_AlwaysShowTabs);
-    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
-    dock1->show();
-
-    auto frame1 = dock1->frame();
-
-    QPoint globalPressPos = dragPointForWidget(frame1, 0);
-    QTabBar *tabBar = static_cast<FrameWidget*>(frame1)->tabBar();
-    QVERIFY(tabBar);
-    SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing in this case
-    drag(tabBar, globalPressPos, QPoint(0, 0));
-
-    delete dock1;
-    Testing::waitForDeleted(frame1);
 }
 
 void TestDocks::tst_minSizeChanges()
@@ -1035,7 +758,7 @@ void TestDocks::tst_flagDoubleClick()
 {
     {
         EnsureTopLevelsDeleted e;
-        Config::self().setFlags(Config::Flag_DoubleClickMaximizes);
+        KDDockWidgets::Config::self().setFlags(Config::Flag_DoubleClickMaximizes);
         auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
         auto dock1 = createDockWidget("1", new QPushButton("1"));
         auto dock2 = createDockWidget("2", new QPushButton("2"));
@@ -1554,83 +1277,6 @@ void TestDocks::tst_maximumSizePolicy()
 
     delete oldFw.data();
     delete oldFw2;
-}
-
-void TestDocks::tst_tabsNotClickable()
-{
-    // Well, not a great unit-test, as it's only repro when it's Windows sending the native event
-    // Can't repro with fabricated events. Uncomment the WAIT and test different configs manually
-
-    EnsureTopLevelsDeleted e;
-    Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible);
-    //Config::self().setFlags(Config::Flag_Default  | Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs);
-    //Config::self().setFlags(Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs);
-
-    auto dock1 = createDockWidget("dock1", new QWidget());
-    auto dock2 = createDockWidget("dock2", new QWidget());
-    dock1->addDockWidgetAsTab(dock2);
-
-    auto frame = qobject_cast<FrameWidget*>(dock1->frame());
-    QCOMPARE(frame->currentIndex(), 1);
-
-    QTest::qWait(500); // wait for window to get proper geometry
-
-    const QPoint clickPoint = frame->tabBar()->mapToGlobal(frame->tabBar()->tabRect(0).center());
-    QCursor::setPos(clickPoint); // Just for visual debug when needed
-
-    pressOn(clickPoint, frame->tabBar());
-    releaseOn(clickPoint, frame->tabBar());
-
-   // WAIT // Uncomment for MANUAL test. Also test by adding Flag_AlwaysShowTabs
-
-    QCOMPARE(frame->currentIndex(), 0);
-
-    delete frame->window();
-}
-
-void TestDocks::tst_titleBarFocusedWhenTabsChange()
-{
-     EnsureTopLevelsDeleted e;
-     Config::self().setFlags(Config::Flag_TitleBarIsFocusable);
-
-     auto le1 = new QLineEdit();
-     le1->setObjectName("le1");
-     auto dock1 = createDockWidget(QStringLiteral("dock1"), le1);
-     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QLineEdit());
-     auto dock3 = createDockWidget(QStringLiteral("dock3"), new QLineEdit());
-
-     auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
-
-     m1->addDockWidget(dock1, Location_OnLeft);
-     m1->addDockWidget(dock2, Location_OnRight);
-     dock2->addDockWidgetAsTab(dock3);
-
-     TitleBar *titleBar1 = dock1->titleBar();
-     dock1->widget()->setFocus(Qt::MouseFocusReason);
-
-     QVERIFY(Testing::waitForEvent(dock1->widget(), QEvent::FocusIn));
-     QVERIFY(titleBar1->isFocused());
-
-     auto frame2 = qobject_cast<FrameWidget*>(dock2->frame());
-
-     TabWidget *tb = frame2->tabWidget();
-     QCOMPARE(tb->currentIndex(), 1); // Was the last to be added
-
-     auto tabBar = dynamic_cast<QTabBar*>(tb->tabBar());
-     const QRect rect0 = tabBar->tabRect(0);
-     const QPoint globalPos = tabBar->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
-     Tests::clickOn(globalPos, tabBar);
-     QVERIFY(!titleBar1->isFocused());
-     QVERIFY(dock2->titleBar()->isFocused());
-
-     // Test that clicking on a tab that is already current will also set focus
-     dock1->setFocus(Qt::MouseFocusReason);
-     QVERIFY(dock1->titleBar()->isFocused());
-     QVERIFY(!dock2->titleBar()->isFocused());
-
-     Tests::clickOn(globalPos, tabBar);
-     QVERIFY(!dock1->titleBar()->isFocused());
-     QVERIFY(dock2->titleBar()->isFocused());
 }
 
 int main(int argc, char *argv[])
