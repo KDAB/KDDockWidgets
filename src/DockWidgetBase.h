@@ -407,6 +407,11 @@ Q_SIGNALS:
     ///Only relevant for the auto-hide/sidebar feature
     void removedFromSideBar();
 
+    ///@brief Emitted when the top-level window this dock widget is in is activated or deactivated
+    ///This is convenience to replace tracking dockWidget->window(), since the window changes when
+    ///docking and undocking
+    void windowActiveChanged(bool activated);
+
 protected:
     void onParentChanged();
     void onShown(bool spontaneous);
@@ -477,6 +482,9 @@ private:
 
     ///@brief Updates the floatAction state
     void updateFloatAction();
+
+    ///@reimp
+    bool eventFilter(QObject *, QEvent *) override;
 
     class Private;
     Private *const d;

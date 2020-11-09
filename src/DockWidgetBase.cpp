@@ -148,6 +148,7 @@ DockWidgetBase::DockWidgetBase(const QString &name, Options options)
         qWarning() << Q_FUNC_INFO << "Name can't be null";
 
     setAttribute(Qt::WA_PendingMoveEvent, false);
+    qApp->installEventFilter(this);
 }
 
 DockWidgetBase::~DockWidgetBase()
@@ -594,6 +595,16 @@ void DockWidgetBase::saveLastFloatingGeometry()
 void DockWidgetBase::updateFloatAction()
 {
     d->updateFloatAction();
+}
+
+bool DockWidgetBase::eventFilter(QObject *watched, QEvent *event)
+{
+    const bool isWindowActivate = event->type() == QEvent::WindowActivate;
+    const bool isWindowDeactivate = event->type() == QEvent::WindowDeactivate;
+    if (isWindowActivate || isWindowDeactivate)
+        Q_EMIT windowActiveChanged(isWindowActivate);
+
+    return QWidgetAdapter::eventFilter(watched, event);
 }
 
 QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
