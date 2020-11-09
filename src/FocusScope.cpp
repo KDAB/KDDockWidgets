@@ -116,8 +116,10 @@ void FocusScope::Private::setIsFocused(bool is)
 void FocusScope::Private::onFocusObjectChanged(QObject *obj)
 {
     auto widget = qobject_cast<WidgetType*>(obj);
-    if (!widget)
+    if (!widget) {
+        setIsFocused(false);
         return;
+    }
 
     const bool is = isInFocusScope(widget);
     if (is && m_lastFocusedInScope != widget && !qobject_cast<TitleBar*>(obj)) {
