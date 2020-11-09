@@ -602,7 +602,7 @@ bool DockWidgetBase::eventFilter(QObject *watched, QEvent *event)
     const bool isWindowActivate = event->type() == QEvent::WindowActivate;
     const bool isWindowDeactivate = event->type() == QEvent::WindowDeactivate;
     if (isWindowActivate || isWindowDeactivate)
-        Q_EMIT windowActiveChanged(isWindowActivate);
+        Q_EMIT windowActiveAboutToChange(isWindowActivate);
 
     return QWidgetAdapter::eventFilter(watched, event);
 }

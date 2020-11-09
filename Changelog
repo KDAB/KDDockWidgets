@@ -5,7 +5,7 @@
   - Wayland support
   - Added Flag_KeepAboveIfNotUtilityWindow, so you can have keep above even if
     floating window is shown in the task-bar.
-  - Added DockWidget::windowActiveChanged() signal
+  - Added DockWidget::windowActiveAboutToChange() signal
 
 * v1.1.0 (26 October 2020)
   - New drop indicator style type: Segmented Indicators

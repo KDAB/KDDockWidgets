@@ -410,7 +410,10 @@ Q_SIGNALS:
     ///@brief Emitted when the top-level window this dock widget is in is activated or deactivated
     ///This is convenience to replace tracking dockWidget->window(), since the window changes when
     ///docking and undocking
-    void windowActiveChanged(bool activated);
+    ///
+    /// It's called 'aboutTo' because it's done in an event filter and the target window doesn't
+    /// have it's 'activeWindow' property updated yet at this point.
+    void windowActiveAboutToChange(bool activated);
 
 protected:
     void onParentChanged();
