@@ -43,8 +43,8 @@ Features
     - Customize title bars
     - Customize window frames
     - Custom widget separators
-- Crossplatform (macOS, Linux, Windows)
-- And on Linux: Wayland, X11/XCB, EGLFS are working
+- Crossplatform (macOS, Linux, Windows, WebAssembly, Wayland, X11/XCB, EGLFS are working)
+  See README-Wayland.md and README-WASM.md for platform specific information.
 - Layouting engine honouring min/max size constraints and some size policies
 - PySide2 bindings
 - Clean codebase
