@@ -33,6 +33,10 @@ int main(int argc, char **argv)
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("Test app"));
 
+#ifdef QT_STATIC
+    Q_INIT_RESOURCE(resources);
+    Q_INIT_RESOURCE(multisplitter);
+#endif
     QCommandLineParser parser;
     parser.setApplicationDescription("KDDockWidgets example application");
     parser.addHelpOption();

@@ -26,6 +26,11 @@ int main(int argc, char **argv)
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
 
+#ifdef QT_STATIC
+    Q_INIT_RESOURCE(resources);
+    Q_INIT_RESOURCE(multisplitter);
+#endif
+
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("Test app"));
 
