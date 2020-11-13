@@ -226,7 +226,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_floatingAction();
     void tst_raise();
-
+    void tst_nonDockable();
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
     void tst_titleBarFocusedWhenTabsChange();
@@ -765,6 +765,32 @@ void TestCommon::tst_setFloatingSimple()
     QVERIFY(l->checkSanity());
     dock1->setFloating(false);
     QVERIFY(l->checkSanity());
+}
+
+void TestCommon::tst_nonDockable()
+{
+    { // First test without Option_NotDockable
+        auto dock = new DockWidgetType("1");
+        dock->show();
+
+        TitleBar *tb = dock->titleBar();
+        QVERIFY(tb->isVisible());
+        QVERIFY(tb->isFloatButtonVisible());
+
+        delete dock->window();
+    }
+
+    {
+        // Test that when using Option_NotDockable we don't get a dock/undock icon
+        auto dock = new DockWidgetType("1", DockWidgetBase::Option_NotDockable);
+        dock->show();
+
+        TitleBar *tb = dock->titleBar();
+        QVERIFY(tb->isVisible());
+        QVERIFY(!tb->isFloatButtonVisible());
+
+        delete dock->window();
+    }
 }
 
 int main(int argc, char *argv[])
