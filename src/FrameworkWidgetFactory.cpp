@@ -91,6 +91,11 @@ FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWin
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const
 {
+#ifdef Q_OS_WASM
+    // On WASM windows don't support translucency, which is required for the classic indicators.
+    return new SegmentedIndicators(dropArea);
+#endif
+
     switch (s_dropIndicatorType) {
     case DropIndicatorType::Classic:
         return new ClassicIndicators(dropArea);
