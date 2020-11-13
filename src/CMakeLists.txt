@@ -174,7 +174,7 @@ endif()
 
 if (WIN32)
     target_link_libraries(kddockwidgets PRIVATE Qt5::GuiPrivate Dwmapi)
-elseif(NOT APPLE)
+elseif(NOT APPLE AND NOT EMSCRIPTEN)
     find_package(Qt5X11Extras)
     target_link_libraries(kddockwidgets PUBLIC Qt5::X11Extras)
 endif()
