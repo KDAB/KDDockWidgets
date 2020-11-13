@@ -27,6 +27,8 @@
 #ifdef KDDOCKWIDGETS_QTQUICK
 # include <QQmlEngine>
 # include <QQuickStyle>
+#else
+# include "DockWidget.h"
 #endif
 
 using namespace KDDockWidgets;
@@ -67,6 +69,7 @@ private Q_SLOTS:
     void tst_ghostSeparator();
     void tst_detachFromMainWindow();
     void tst_detachPos();
+    void tst_nonDockable();
 };
 
 void TestCommon::tst_simple1()
@@ -221,6 +224,32 @@ void TestCommon::tst_detachPos()
     delete dock1->window();
 }
 
+void TestCommon::tst_nonDockable()
+{
+    { // First test without Option_NotDockable
+        auto dock = new DockWidgetType("1");
+        dock->show();
+
+        TitleBar *tb = dock->titleBar();
+        QVERIFY(tb->isVisible());
+        QVERIFY(tb->isFloatButtonVisible());
+
+        delete dock->window();
+    }
+
+    {
+        // Test that when using Option_NotDockable we don't get a dock/undock icon
+        auto dock = new DockWidgetType("1", DockWidgetBase::Option_NotDockable);
+        dock->show();
+
+        TitleBar *tb = dock->titleBar();
+        QVERIFY(tb->isVisible());
+        QVERIFY(!tb->isFloatButtonVisible());
+
+        delete dock->window();
+    }
+}
+
 int main(int argc, char *argv[])
 {
     if (!qpaPassedAsArgument(argc, argv)) {
@@ -235,6 +264,5 @@ int main(int argc, char *argv[])
     TestCommon test;
     return QTest::qExec(&test, argc, argv);
 }
-
 
 #include "tst_common.moc"

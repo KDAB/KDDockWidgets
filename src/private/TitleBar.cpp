@@ -198,6 +198,12 @@ bool TitleBar::supportsFloatingButton() const
         return false;
     }
 
+    if (DockWidgetBase *dw = singleDockWidget()) {
+        // Don't show the dock/undock button if the window is not dockable
+        if (dw->options() & DockWidgetBase::Option_NotDockable)
+            return false;
+    }
+
     // If we have a floating window with nested dock widgets we can't re-attach, because we don't
     // know where to
     return !m_floatingWindow || m_floatingWindow->hasSingleFrame();

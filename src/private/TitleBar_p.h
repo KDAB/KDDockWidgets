@@ -27,6 +27,8 @@ class QHBoxLayout;
 class QLabel;
 QT_END_NAMESPACE
 
+class TestCommon;
+
 namespace KDDockWidgets {
 
 class DockWidgetBase;
@@ -127,6 +129,7 @@ protected:
 
 private:
     friend class TestDocks;
+    friend class ::TestCommon;
 
     void init();
 
