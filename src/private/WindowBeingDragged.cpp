@@ -162,7 +162,15 @@ bool WindowBeingDragged::contains(DropArea *dropArea) const
     if (!dropArea)
         return false;
 
-    return m_floatingWindow && m_floatingWindow->dropArea() == dropArea;
+    if (m_floatingWindow)
+        return m_floatingWindow->dropArea() == dropArea;
+
+    if (auto fw = qobject_cast<FloatingWindow*>(m_draggableWidget->window())) {
+        // We're not dragging via the floating window itself, but via the tab bar. Still might represent floating window though.
+        return fw->dropArea() == dropArea && fw->hasSingleFrame();
+    }
+
+    return false;
 }
 
 QVector<DockWidgetBase *> WindowBeingDragged::dockWidgets() const

@@ -45,7 +45,7 @@ public:
     ///@brief grabs or releases the mouse
     void grabMouse(bool grab);
 
-    /// @brief returns whether the window being dragged contains the specified drop area
+    /// @brief returns whether this window being dragged contains the specified drop area
     /// useful since we don't want to drop onto outselves.
     bool contains(DropArea *) const;
 
