@@ -48,6 +48,7 @@ class TabWidget;
 class TitleBar;
 class MainWindowBase;
 class StateDragging;
+class FrameQuick;
 
 /**
  * @brief The DockWidget base-class. DockWidget and DockWidgetBase are only
@@ -457,6 +458,7 @@ private:
     friend class KDDockWidgets::DockRegistry;
     friend class KDDockWidgets::LayoutSaver;
     friend class KDDockWidgets::MainWindowBase;
+    friend class KDDockWidgets::FrameQuick;
 
     /**
      * @brief the Frame which contains this dock widgets.
