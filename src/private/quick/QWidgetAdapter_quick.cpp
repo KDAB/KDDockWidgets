@@ -351,14 +351,17 @@ void QWidgetAdapter::setWindowIcon(const QIcon &icon)
         window->setIcon(icon);
 }
 
-void QWidgetAdapter::close()
+bool QWidgetAdapter::close()
 {
     QCloseEvent ev;
     onCloseEvent(&ev);
 
     if (ev.isAccepted()) {
         setVisible(false);
+        return true;
     }
+
+    return false;
 }
 
 QQuickItem *QWidgetAdapter::childAt(QPoint p) const
