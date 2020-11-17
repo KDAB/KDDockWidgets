@@ -212,7 +212,8 @@ void DockWidgetModel::remove(DockWidgetBase *dw)
 {
     const int row = indexOf(dw);
     if (row == -1) {
-        qWarning() << Q_FUNC_INFO << "Nothing to remove" << dw;
+        qWarning() << Q_FUNC_INFO << "Nothing to remove"
+                   << static_cast<void*>(dw); // Print address only, as it might be deleted already
     } else {
         const auto connections = m_connections.take(dw);
         for (QMetaObject::Connection conn : connections)
@@ -242,7 +243,11 @@ bool DockWidgetModel::insert(DockWidgetBase *dw, int index)
         emitDataChangedFor(dw);
     });
 
-    m_connections[dw] = { conn };
+    QMetaObject::Connection conn2 = connect(dw, &QObject::destroyed, this, [dw, this] {
+        remove(dw);
+    });
+
+    m_connections[dw] = { conn, conn2 };
 
     beginInsertRows(QModelIndex(), index, index);
     m_dockWidgets.insert(index, dw);
