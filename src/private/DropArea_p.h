@@ -25,7 +25,7 @@
 #include "MultiSplitter_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 
-class TestCommon;
+class TestDocks;
 
 namespace KDDockWidgets {
 
@@ -65,8 +65,7 @@ public:
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;
-    friend class TestDocks;
-    friend class ::TestCommon;
+    friend class ::TestDocks;
     friend class DropIndicatorOverlayInterface;
     friend class AnimatedIndicators;
     friend class FloatingWindow;

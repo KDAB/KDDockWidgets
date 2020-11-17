@@ -35,7 +35,7 @@ class Separator;
 class Widget_qwidget;
 }
 
-class TestCommon;
+class TestDocks;
 
 namespace KDDockWidgets {
 
@@ -215,8 +215,7 @@ protected:
 private:
     bool m_inResizeEvent = false;
 
-    friend class TestDocks;
-    friend class ::TestCommon;
+    friend class ::TestDocks;
 
     /**
      * @brief returns the frames contained in @p frameOrMultiSplitter

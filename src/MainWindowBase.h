@@ -28,7 +28,7 @@
 #include <QVector>
 #include <QMargins>
 
-class TestCommon;
+class TestDocks;
 
 namespace KDDockWidgets {
 
@@ -182,7 +182,7 @@ private:
     class Private;
     Private *const d;
 
-    friend class ::TestCommon;
+    friend class ::TestDocks;
     friend class LayoutSaver;
     bool deserialize(const LayoutSaver::MainWindow &);
     LayoutSaver::MainWindow serialize() const;

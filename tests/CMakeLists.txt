@@ -10,9 +10,8 @@
 #
 
 # Tests:
-# 1. tst_common     - tests which are common between QtWidgets and QtQuick frontends
-# 2. tst_docks      - the old tests, mostly specific to QWidget, unless ported. Ideally we should move code from here into tst_common
-# 3. tests_launcher - helper executable to paralelize the execution of tests
+# 1. tst_docks      - The KDDockWidge tests. Compatible with QtWidgets and QtQuick.
+# 2. tests_launcher - helper executable to paralelize the execution of tests
 
 if(POLICY CMP0043)
   cmake_policy(SET CMP0043 NEW)
@@ -31,11 +30,11 @@ include_directories(../src/private)
 find_package(Qt5Test)
 set(TESTING_SRCS utils.cpp Testing.cpp)
 
-# tst_common
+# tst_docks
 qt5_add_resources(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
-add_executable(tst_common tst_common.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-target_link_libraries(tst_common kddockwidgets kddockwidgets_multisplitter Qt5::Test)
-set_compiler_flags(tst_common)
+add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
+target_link_libraries(tst_docks kddockwidgets kddockwidgets_multisplitter Qt5::Test)
+set_compiler_flags(tst_docks)
 
 if (NOT ${PROJECT_NAME}_QTQUICK)
     add_subdirectory(fuzzer)

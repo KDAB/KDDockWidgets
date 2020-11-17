@@ -40,7 +40,7 @@ static QStringList availableTests()
     for (QString &function : functions) {
         function = function.replace("()", "").trimmed();
         function = function.replace(" ", ":"); // datatags
-        function = function.replace("KDDockWidgets::TestDocks:", "");
+        function = function.replace("TestDocks:", "");
         if (!function.isEmpty())
             result << function;
     }

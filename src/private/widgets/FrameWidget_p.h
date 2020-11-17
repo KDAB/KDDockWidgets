@@ -19,9 +19,10 @@ QT_BEGIN_NAMESPACE
 class QTabBar;
 QT_END_NAMESPACE
 
+class TestDocks;
+
 namespace KDDockWidgets {
 
-class TestDocks;
 class TabWidget;
 
 /**

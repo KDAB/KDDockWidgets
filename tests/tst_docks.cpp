@@ -64,7 +64,7 @@ static int osWindowMinWidth()
 #endif
 }
 
-class TestCommon : public QObject
+class TestDocks : public QObject
 {
     Q_OBJECT
 public Q_SLOTS:
@@ -292,7 +292,7 @@ static std::unique_ptr<MainWindowBase> createSimpleNestedMainWindow(DockWidgetBa
     return window;
 }
 
-void TestCommon::tst_simple1()
+void TestDocks::tst_simple1()
 {
     // Simply create a MainWindow
     EnsureTopLevelsDeleted e;
@@ -300,7 +300,7 @@ void TestCommon::tst_simple1()
     m->multiSplitter()->checkSanity();
 }
 
-void TestCommon::tst_simple2()
+void TestDocks::tst_simple2()
 {
     // Simply create a MainWindow, and dock something on top
     EnsureTopLevelsDeleted e;
@@ -312,7 +312,7 @@ void TestCommon::tst_simple2()
     delete fw;
 }
 
-void TestCommon::tst_restoreSimple()
+void TestDocks::tst_restoreSimple()
 {
     EnsureTopLevelsDeleted e;
     // Tests restoring a very simple layout, composed of just 1 docked widget
@@ -381,7 +381,7 @@ void TestCommon::tst_restoreSimple()
 }
 
 
-void TestCommon::tst_doesntHaveNativeTitleBar()
+void TestDocks::tst_doesntHaveNativeTitleBar()
 {
     // Tests that a floating window doesn't have a native title bar
     // This test is mostly to test a bug that was happening with QtQuick, where the native title bar
@@ -402,7 +402,7 @@ void TestCommon::tst_doesntHaveNativeTitleBar()
     delete dw1->window();
 }
 
-void TestCommon::tst_resizeWindow2()
+void TestDocks::tst_resizeWindow2()
 {
     // Tests that resizing the width of the main window will never move horizontal anchors
 
@@ -427,7 +427,7 @@ void TestCommon::tst_resizeWindow2()
     delete fw2;
 }
 
-void TestCommon::tst_hasLastDockedLocation()
+void TestDocks::tst_hasLastDockedLocation()
 {
     // Tests DockWidgetBase::hasPreviousDockedLocation()
 
@@ -463,7 +463,7 @@ void TestCommon::tst_hasLastDockedLocation()
     delete window11;
 }
 
-void TestCommon::tst_ghostSeparator()
+void TestDocks::tst_ghostSeparator()
 {
     // Tests a situation where a separator wouldn't be removed after a widget had been removed
     EnsureTopLevelsDeleted e;
@@ -493,7 +493,7 @@ void TestCommon::tst_ghostSeparator()
     delete fw3;
 }
 
-void TestCommon::tst_detachFromMainWindow()
+void TestDocks::tst_detachFromMainWindow()
 {
     // Tests a situation where clicking the float button wouldn't work on QtQuick
     EnsureTopLevelsDeleted e;
@@ -512,7 +512,7 @@ void TestCommon::tst_detachFromMainWindow()
     delete fw1;
 }
 
-void TestCommon::tst_detachPos()
+void TestDocks::tst_detachPos()
 {
     // Tests a situation where detaching a dock widget would send it to a bogus position
     EnsureTopLevelsDeleted e;
@@ -537,7 +537,7 @@ void TestCommon::tst_detachPos()
     delete dock1->window();
 }
 
-void TestCommon::tst_floatingWindowSize()
+void TestDocks::tst_floatingWindowSize()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
@@ -553,7 +553,7 @@ void TestCommon::tst_floatingWindowSize()
     delete fw1;
 }
 
-void TestCommon::tst_tabbingWithAffinities()
+void TestDocks::tst_tabbingWithAffinities()
 {
     EnsureTopLevelsDeleted e;
     // Tests that dock widgets with different affinities should not tab together
@@ -593,7 +593,7 @@ void TestCommon::tst_tabbingWithAffinities()
     delete fw2;
 }
 
-void TestCommon::tst_sizeAfterRedock()
+void TestDocks::tst_sizeAfterRedock()
 {
     EnsureTopLevelsDeleted e;
     auto dw1 = new DockWidgetType(QStringLiteral("1"));
@@ -626,7 +626,7 @@ void TestCommon::tst_sizeAfterRedock()
     delete oldFw2;
 }
 
-void TestCommon::tst_honourUserGeometry()
+void TestDocks::tst_honourUserGeometry()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
@@ -642,7 +642,7 @@ void TestCommon::tst_honourUserGeometry()
     delete dw1->window();
 }
 
-void TestCommon::tst_floatingWindowTitleBug()
+void TestDocks::tst_floatingWindowTitleBug()
 {
     // Test for #74
     EnsureTopLevelsDeleted e;
@@ -666,14 +666,14 @@ void TestCommon::tst_floatingWindowTitleBug()
     delete dw3->window();
 }
 
-void TestCommon::tst_resizeWindow_data()
+void TestDocks::tst_resizeWindow_data()
 {
     QTest::addColumn<bool>("doASaveRestore");
     QTest::newRow("false") << false;
     QTest::newRow("true") << true;
 }
 
-void TestCommon::tst_resizeWindow()
+void TestDocks::tst_resizeWindow()
 {
     QFETCH(bool, doASaveRestore);
 
@@ -725,7 +725,7 @@ void TestCommon::tst_resizeWindow()
     delete fw2;
 }
 
-void TestCommon::tst_restoreTwice()
+void TestDocks::tst_restoreTwice()
 {
     // Tests that restoring multiple times doesn't hide the floating windows for some reason
 
@@ -759,7 +759,7 @@ void TestCommon::tst_restoreTwice()
     }
 }
 
-void TestCommon::tst_restoreEmpty()
+void TestDocks::tst_restoreEmpty()
 {
     EnsureTopLevelsDeleted e;
 
@@ -777,7 +777,7 @@ void TestCommon::tst_restoreEmpty()
     QVERIFY(layout->checkSanity());
 }
 
-void TestCommon::tst_restoreCentralFrame()
+void TestDocks::tst_restoreCentralFrame()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500));
@@ -802,7 +802,7 @@ void TestCommon::tst_restoreCentralFrame()
     QVERIFY(!frame->titleBar()->isVisible());
 }
 
-void TestCommon::tst_setFloatingSimple()
+void TestDocks::tst_setFloatingSimple()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -819,7 +819,7 @@ void TestCommon::tst_setFloatingSimple()
     QVERIFY(l->checkSanity());
 }
 
-void TestCommon::tst_nonDockable()
+void TestDocks::tst_nonDockable()
 {
     { // First test without Option_NotDockable
         auto dock = new DockWidgetType("1");
@@ -856,11 +856,11 @@ int main(int argc, char *argv[])
     if (shouldSkipTests())
         return 0;
 
-    TestCommon test;
+    TestDocks test;
     return QTest::qExec(&test, argc, argv);
 }
 
-void TestCommon::tst_doubleClose()
+void TestDocks::tst_doubleClose()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -885,7 +885,7 @@ void TestCommon::tst_doubleClose()
     }
 }
 
-void TestCommon::tst_dockInternal()
+void TestDocks::tst_dockInternal()
 {
     /**
      * Here we dock relative to an existing widget, and not to the drop-area.
@@ -901,7 +901,7 @@ void TestCommon::tst_dockInternal()
     QVERIFY(dock1->width() < dropArea->width() - centralWidget->width());
 }
 
-void TestCommon::tst_maximizeAndRestore()
+void TestDocks::tst_maximizeAndRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -925,7 +925,7 @@ void TestCommon::tst_maximizeAndRestore()
     QVERIFY(dropArea->checkSanity());
 }
 
-void TestCommon::tst_propagateResize2()
+void TestDocks::tst_propagateResize2()
 {
     // |5|1|2|
     // | |3|4|
@@ -950,7 +950,7 @@ void TestCommon::tst_propagateResize2()
     dropArea->checkSanity();
 }
 
-void TestCommon::tst_shutdown()
+void TestDocks::tst_shutdown()
 {
     EnsureTopLevelsDeleted e;
     auto dock = createDockWidget("doc1", Qt::green);
@@ -961,7 +961,7 @@ void TestCommon::tst_shutdown()
     delete dock->window();
 }
 
-void TestCommon::tst_28NestedWidgets_data()
+void TestDocks::tst_28NestedWidgets_data()
 {
     QTest::addColumn<QVector<DockDescriptor>>("docksToCreate");
     QTest::addColumn<QVector<int>>("docksToHide");
@@ -1174,7 +1174,7 @@ void TestCommon::tst_28NestedWidgets_data()
     QTest::newRow("bug3") << docks << docksToHide;
 }
 
-void TestCommon::tst_28NestedWidgets()
+void TestDocks::tst_28NestedWidgets()
 {
     QFETCH(QVector<DockDescriptor>, docksToCreate);
     QFETCH(QVector<int>, docksToHide);
@@ -1241,7 +1241,7 @@ void TestCommon::tst_28NestedWidgets()
     }
 }
 
-void TestCommon::tst_closeReparentsToNull()
+void TestDocks::tst_closeReparentsToNull()
 {
     EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget("1", new QPushButton("1"));
@@ -1253,7 +1253,7 @@ void TestCommon::tst_closeReparentsToNull()
     delete dock1;
 }
 
-void TestCommon::tst_startHidden()
+void TestDocks::tst_startHidden()
 {
     // A really simple test for AddingOption_StartHidden
 
@@ -1264,7 +1264,7 @@ void TestCommon::tst_startHidden()
     delete dock1;
 }
 
-void TestCommon::tst_startHidden2()
+void TestDocks::tst_startHidden2()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -1321,7 +1321,7 @@ void TestCommon::tst_startHidden2()
     }
 }
 
-void TestCommon::tst_negativeAnchorPosition()
+void TestDocks::tst_negativeAnchorPosition()
 {
     // Tests that we don't hit:
     // void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position
@@ -1367,7 +1367,7 @@ void TestCommon::tst_negativeAnchorPosition()
     layout->checkSanity();
 }
 
-void TestCommon::tst_negativeAnchorPosition2()
+void TestDocks::tst_negativeAnchorPosition2()
 {
     // Tests that the "Out of bounds position" warning doesn't appear. Test will abort if yes.
     EnsureTopLevelsDeleted e;
@@ -1392,7 +1392,7 @@ void TestCommon::tst_negativeAnchorPosition2()
     QVERIFY(Testing::waitForDeleted(dock2));
 }
 
-void TestCommon::tst_negativeAnchorPosition3()
+void TestDocks::tst_negativeAnchorPosition3()
 {
     // 1. Another case, when floating a dock:
     EnsureTopLevelsDeleted e;
@@ -1416,7 +1416,7 @@ void TestCommon::tst_negativeAnchorPosition3()
     layout->checkSanity();
 }
 
-void TestCommon::tst_negativeAnchorPosition4()
+void TestDocks::tst_negativeAnchorPosition4()
 {
     // 1. Tests that we don't get a warning
     // Out of bounds position= -5 ; oldPosition= 0 KDDockWidgets::Anchor(0x55e726be9090, name = "left") KDDockWidgets::MainWindow(0x55e726beb8d0)
@@ -1448,7 +1448,7 @@ void TestCommon::tst_negativeAnchorPosition4()
     Testing::waitForDeleted(docks.at(4).createdDock);
 }
 
-void TestCommon::tst_negativeAnchorPosition5()
+void TestDocks::tst_negativeAnchorPosition5()
 {
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = {
@@ -1477,7 +1477,7 @@ void TestCommon::tst_negativeAnchorPosition5()
     QVERIFY(Testing::waitForDeleted(dock0));
 }
 
-void TestCommon::tst_negativeAnchorPosition6()
+void TestDocks::tst_negativeAnchorPosition6()
 {
     // Tests a case when we add a widget to left/right but the layout doesn't have enough height (or vice-versa)
     EnsureTopLevelsDeleted e;
@@ -1513,7 +1513,7 @@ void TestCommon::tst_negativeAnchorPosition6()
     layout->checkSanity();
 }
 
-void TestCommon::tst_negativeAnchorPosition7()
+void TestDocks::tst_negativeAnchorPosition7()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
@@ -1541,7 +1541,7 @@ void TestCommon::tst_negativeAnchorPosition7()
     m->multiSplitter()->checkSanity();
 }
 
-void TestCommon::tst_invalidAnchorGroup()
+void TestDocks::tst_invalidAnchorGroup()
 {
     // Tests a bug I got. Should not warn.
     EnsureTopLevelsDeleted e;
@@ -1585,7 +1585,7 @@ void TestCommon::tst_invalidAnchorGroup()
     }
 }
 
-void TestCommon::tst_addAsPlaceholder()
+void TestDocks::tst_addAsPlaceholder()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
@@ -1613,7 +1613,7 @@ void TestCommon::tst_addAsPlaceholder()
     Testing::waitForDeleted(dock2);
 }
 
-void TestCommon::tst_removeItem()
+void TestDocks::tst_removeItem()
 {
     // Tests that MultiSplitterLayout::removeItem() works
     EnsureTopLevelsDeleted e;
@@ -1712,7 +1712,7 @@ void TestCommon::tst_removeItem()
     Testing::waitForDeleted(dock3);
 }
 
-void TestCommon::tst_clear()
+void TestDocks::tst_clear()
 {
     // Tests MultiSplitterLayout::clear()
     EnsureTopLevelsDeleted e;
@@ -1744,7 +1744,7 @@ void TestCommon::tst_clear()
     QVERIFY(Testing::waitForDeleted(dock3));
 }
 
-void TestCommon::tst_samePositionAfterHideRestore()
+void TestDocks::tst_samePositionAfterHideRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
@@ -1765,7 +1765,7 @@ void TestCommon::tst_samePositionAfterHideRestore()
     m->multiSplitter()->checkSanity();
 }
 
-void TestCommon::tst_startClosed()
+void TestDocks::tst_startClosed()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
@@ -1795,20 +1795,20 @@ void TestCommon::tst_startClosed()
     QCOMPARE(layout->placeholderCount(), 0);
 }
 
-void TestCommon::tst_dockDockWidgetNested()
+void TestDocks::tst_dockDockWidgetNested()
 {
     EnsureTopLevelsDeleted e;
     // Test detaching too, and check if the window size is correct
     // TODO
 }
 
-void TestCommon::tst_dockFloatingWindowNested()
+void TestDocks::tst_dockFloatingWindowNested()
 {
     EnsureTopLevelsDeleted e;
     // TODO
 }
 
-void TestCommon::tst_crash()
+void TestDocks::tst_crash()
 {
      // tests some crash I got
 
@@ -1844,7 +1844,7 @@ void TestCommon::tst_crash()
     delete dock1->window();
 }
 
-void TestCommon::tst_refUnrefItem()
+void TestDocks::tst_refUnrefItem()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -1910,7 +1910,7 @@ void TestCommon::tst_refUnrefItem()
     QVERIFY(!item4.data());
 }
 
-void TestCommon::tst_placeholderCount()
+void TestDocks::tst_placeholderCount()
 {
     EnsureTopLevelsDeleted e;
     // Tests MultiSplitterLayout::count(),visibleCount() and placeholdercount()
@@ -1965,7 +1965,7 @@ void TestCommon::tst_placeholderCount()
     Testing::waitForDeleted(fw);
 }
 
-void TestCommon::tst_availableLengthForOrientation()
+void TestDocks::tst_availableLengthForOrientation()
 {
     EnsureTopLevelsDeleted e;
 
@@ -1994,7 +1994,7 @@ void TestCommon::tst_availableLengthForOrientation()
     m->multiSplitter()->checkSanity();
 }
 
-void TestCommon::tst_closeShowWhenNoCentralFrame()
+void TestDocks::tst_closeShowWhenNoCentralFrame()
 {
     EnsureTopLevelsDeleted e;
     // Tests a crash I got when hidding and showing and no central frame
@@ -2012,7 +2012,7 @@ void TestCommon::tst_closeShowWhenNoCentralFrame()
     m->multiSplitter()->checkSanity();
 }
 
-void TestCommon::tst_setAstCurrentTab()
+void TestDocks::tst_setAstCurrentTab()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2040,7 +2040,7 @@ void TestCommon::tst_setAstCurrentTab()
     Testing::waitForDeleted(fw);
 }
 
-void TestCommon::tst_placeholderDisappearsOnReadd()
+void TestDocks::tst_placeholderDisappearsOnReadd()
 {
     // This tests that addMultiSplitter also updates refcount of placeholders
 
@@ -2077,7 +2077,7 @@ void TestCommon::tst_placeholderDisappearsOnReadd()
     QVERIFY(Testing::waitForDeleted(fw));
 }
 
-void TestCommon::tst_placeholdersAreRemovedProperly()
+void TestDocks::tst_placeholdersAreRemovedProperly()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
@@ -2112,14 +2112,14 @@ void TestCommon::tst_placeholdersAreRemovedProperly()
     delete window1;
 }
 
-void TestCommon::tst_crash2_data()
+void TestDocks::tst_crash2_data()
 {
     QTest::addColumn<bool>("show");
     QTest::newRow("true") << true;
     QTest::newRow("false") << false;
 }
 
-void TestCommon::tst_crash2()
+void TestDocks::tst_crash2()
 {
     QFETCH(bool, show);
 
@@ -2190,7 +2190,7 @@ void TestCommon::tst_crash2()
 
 }
 
-void TestCommon::tst_closeAllDockWidgets()
+void TestDocks::tst_closeAllDockWidgets()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2248,7 +2248,7 @@ void TestCommon::tst_closeAllDockWidgets()
     delete dock6;
 }
 
-void TestCommon::tst_toggleMiddleDockCrash()
+void TestDocks::tst_toggleMiddleDockCrash()
 {
     // tests some crash I got
 
@@ -2278,7 +2278,7 @@ void TestCommon::tst_toggleMiddleDockCrash()
     layout->checkSanity();
 }
 
-void TestCommon::tst_stealFrame()
+void TestDocks::tst_stealFrame()
 {
     // Tests using addWidget() with dock widgets which are already in a layout
     EnsureTopLevelsDeleted e;
@@ -2380,7 +2380,7 @@ void TestCommon::tst_stealFrame()
     dropArea2->checkSanity();
 }
 
-void TestCommon::tst_setFloatingWhenWasTabbed()
+void TestDocks::tst_setFloatingWhenWasTabbed()
 {
     // Tests DockWidget::isTabbed() and DockWidget::setFloating(false|true) when tabbed (it should redock)
     // setFloating(false) for side-by-side is tested in another function
@@ -2483,7 +2483,7 @@ void TestCommon::tst_setFloatingWhenWasTabbed()
     Testing::waitForDeleted(window);
 }
 
-void TestCommon::tst_setFloatingWhenSideBySide()
+void TestDocks::tst_setFloatingWhenSideBySide()
 {
     // Tests DockWidget::setFloating(false|true) when side-by-side (it should put it where it was)
     EnsureTopLevelsDeleted e;
@@ -2540,7 +2540,7 @@ void TestCommon::tst_setFloatingWhenSideBySide()
     }
 }
 
-void TestCommon::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
+void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2564,7 +2564,7 @@ void TestCommon::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     delete fw2;
 }
 
-void TestCommon::tst_closeRemovesFromSideBar()
+void TestDocks::tst_closeRemovesFromSideBar()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
@@ -2599,7 +2599,7 @@ void TestCommon::tst_closeRemovesFromSideBar()
     delete fw1;
 }
 
-void TestCommon::tst_tabTitleChanges()
+void TestDocks::tst_tabTitleChanges()
 {
     // Tests that the tab's title changes if the dock widget's title changes
 #ifdef KDDOCKWIDGETS_QTWIDGETS // TODO
@@ -2618,7 +2618,7 @@ void TestCommon::tst_tabTitleChanges()
     delete dw1->window();
 #endif
 }
-void TestCommon::tst_dockWidgetGetsFocusWhenDocked()
+void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
@@ -2657,7 +2657,7 @@ void TestCommon::tst_dockWidgetGetsFocusWhenDocked()
     delete fw2;
 }
 
-void TestCommon::tst_isFocused()
+void TestDocks::tst_isFocused()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2718,7 +2718,7 @@ void TestCommon::tst_isFocused()
     delete dock2->window();
 }
 
-void TestCommon::tst_setWidget()
+void TestDocks::tst_setWidget()
 {
     EnsureTopLevelsDeleted e;
     auto dw = new DockWidgetType(QStringLiteral("FOO"));
@@ -2730,7 +2730,7 @@ void TestCommon::tst_setWidget()
     delete dw;
 }
 
-void TestCommon::tst_floatingLastPosAfterDoubleClose()
+void TestDocks::tst_floatingLastPosAfterDoubleClose()
 {
     EnsureTopLevelsDeleted e;
     auto d1 = new DockWidgetType(QStringLiteral("a"));
@@ -2741,7 +2741,7 @@ void TestCommon::tst_floatingLastPosAfterDoubleClose()
     delete d1;
 }
 
-void TestCommon::tst_0_data()
+void TestDocks::tst_0_data()
 {
     QTest::addColumn<int>("thickness");
     QTest::newRow("2") << 2;
@@ -2749,7 +2749,7 @@ void TestCommon::tst_0_data()
     QTest::newRow("0") << 0;
 }
 
-void TestCommon::tst_0()
+void TestDocks::tst_0()
 {
     QFETCH(int, thickness);
     EnsureTopLevelsDeleted e;
@@ -2766,7 +2766,7 @@ void TestCommon::tst_0()
     m->addDockWidget(d2, Location_OnRight);
 }
 
-void TestCommon::tst_honourGeometryOfHiddenWindow()
+void TestDocks::tst_honourGeometryOfHiddenWindow()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2788,7 +2788,7 @@ void TestCommon::tst_honourGeometryOfHiddenWindow()
     delete d1->window();
 }
 
-void TestCommon::tst_registry()
+void TestDocks::tst_registry()
 {
     EnsureTopLevelsDeleted e;
     auto dr = DockRegistry::self();
@@ -2802,7 +2802,7 @@ void TestCommon::tst_registry()
     delete dw;
 }
 
-void TestCommon::tst_dockWindowWithTwoSideBySideFramesIntoRight()
+void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2822,7 +2822,7 @@ void TestCommon::tst_dockWindowWithTwoSideBySideFramesIntoRight()
     Testing::waitForDeleted(fw2);
 }
 
-void TestCommon::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
+void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2848,7 +2848,7 @@ void TestCommon::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     Testing::waitForDeleted(fw2);
 }
 
-void TestCommon::tst_posAfterLeftDetach()
+void TestDocks::tst_posAfterLeftDetach()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -2889,7 +2889,7 @@ void TestCommon::tst_posAfterLeftDetach()
     }
 }
 
-void TestCommon::tst_preventClose()
+void TestDocks::tst_preventClose()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2918,7 +2918,7 @@ void TestCommon::tst_preventClose()
     QVERIFY(Testing::waitForDeleted(dock1));
 }
 
-void TestCommon::tst_propagateMinSize()
+void TestDocks::tst_propagateMinSize()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -2937,7 +2937,7 @@ void TestCommon::tst_propagateMinSize()
 
 }
 
-void TestCommon::tst_createFloatingWindow()
+void TestDocks::tst_createFloatingWindow()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2956,7 +2956,7 @@ void TestCommon::tst_createFloatingWindow()
     QVERIFY(!window);
 }
 
-void TestCommon::tst_addAndReadd()
+void TestDocks::tst_addAndReadd()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2990,7 +2990,7 @@ void TestCommon::tst_addAndReadd()
 }
 
 
-void TestCommon::tst_addToSmallMainWindow1()
+void TestDocks::tst_addToSmallMainWindow1()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -3026,7 +3026,7 @@ void TestCommon::tst_addToSmallMainWindow1()
     QVERIFY(dock4->height() < m->height());
 }
 
-void TestCommon::tst_addToSmallMainWindow2()
+void TestDocks::tst_addToSmallMainWindow2()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -3048,7 +3048,7 @@ void TestCommon::tst_addToSmallMainWindow2()
     QVERIFY(m->dropArea()->checkSanity());
 }
 
-void TestCommon::tst_addToSmallMainWindow3()
+void TestDocks::tst_addToSmallMainWindow3()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -3068,7 +3068,7 @@ void TestCommon::tst_addToSmallMainWindow3()
     delete fw;
 }
 
-void TestCommon::tst_addToSmallMainWindow4()
+void TestDocks::tst_addToSmallMainWindow4()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(100, 100), MainWindowOption_None);
@@ -3087,7 +3087,7 @@ void TestCommon::tst_addToSmallMainWindow4()
     QCOMPARE(dropArea->height(), dock1->frame()->height() + item2MinHeight + Item::separatorThickness);
 }
 
-void TestCommon::tst_addToSmallMainWindow5()
+void TestDocks::tst_addToSmallMainWindow5()
 {
     EnsureTopLevelsDeleted e;
     // Test test shouldn't spit any warnings
@@ -3100,7 +3100,7 @@ void TestCommon::tst_addToSmallMainWindow5()
     QVERIFY(m->dropArea()->checkSanity());
 }
 
-void TestCommon::tst_fairResizeAfterRemoveWidget()
+void TestDocks::tst_fairResizeAfterRemoveWidget()
 {
     // 1. Add 3 dock widgets horizontally, remove the middle one, make sure
     // both left and right widgets get a share of the new available space
@@ -3150,7 +3150,7 @@ void TestCommon::tst_fairResizeAfterRemoveWidget()
     delete dock1->window();
 }
 
-void TestCommon::tst_invalidJSON_data()
+void TestDocks::tst_invalidJSON_data()
 {
     // Be sure that the main windows in the json are called "MyMainWindow1" and the dock widgets
     // dock-x where x starts at 0
@@ -3166,7 +3166,7 @@ void TestCommon::tst_invalidJSON_data()
     QTest::newRow("overlapping-item") << "overlapping-item.json" << 2 << "Unexpected pos" << true;
 }
 
-void TestCommon::tst_invalidJSON()
+void TestDocks::tst_invalidJSON()
 {
     QFETCH(QString, layoutFileName);
     QFETCH(int, numDockWidgets);
@@ -3187,14 +3187,14 @@ void TestCommon::tst_invalidJSON()
     QCOMPARE(restorer.restoreFromFile(absoluteLayoutFileName), expectedResult);
 }
 
-void TestCommon::tst_invalidPlaceholderPosition_data()
+void TestDocks::tst_invalidPlaceholderPosition_data()
 {
     QTest::addColumn<bool>("restore1First");
     QTest::newRow("restore1First") << true;
     QTest::newRow("restore2First") << false;
 }
 
-void TestCommon::tst_invalidPlaceholderPosition()
+void TestDocks::tst_invalidPlaceholderPosition()
 {
     QFETCH(bool, restore1First);
 
@@ -3261,7 +3261,7 @@ void TestCommon::tst_invalidPlaceholderPosition()
     QVERIFY(Testing::waitForDeleted(dock2));
 }
 
-void TestCommon::tst_setVisibleFalseWhenSideBySide()
+void TestDocks::tst_setVisibleFalseWhenSideBySide()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -3295,7 +3295,7 @@ void TestCommon::tst_setVisibleFalseWhenSideBySide()
     Testing::waitForDeleted(window);
 }
 
-void TestCommon::tst_embeddedMainWindow()
+void TestDocks::tst_embeddedMainWindow()
 {
     EnsureTopLevelsDeleted e;
     // Tests a MainWindow which isn't a top-level window, but is embedded in another window
@@ -3320,7 +3320,7 @@ void TestCommon::tst_embeddedMainWindow()
     delete window;
 }
 
-void TestCommon::tst_restoreSimplest()
+void TestDocks::tst_restoreSimplest()
 {
    EnsureTopLevelsDeleted e;
     // Tests restoring a very simple layout, composed of just 1 docked widget
@@ -3337,7 +3337,7 @@ void TestCommon::tst_restoreSimplest()
    QVERIFY(layout->checkSanity());
 }
 
-void TestCommon::tst_resizeViaAnchorsAfterPlaceholderCreation()
+void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
 {
     EnsureTopLevelsDeleted e;
 
@@ -3413,7 +3413,7 @@ void TestCommon::tst_resizeViaAnchorsAfterPlaceholderCreation()
     }
 }
 
-void TestCommon::tst_rectForDropCrash()
+void TestDocks::tst_rectForDropCrash()
 {
     // Tests a crash I got in MultiSplitterLayout::rectForDrop() (asserts being hit)
     EnsureTopLevelsDeleted e;
@@ -3438,7 +3438,7 @@ void TestCommon::tst_rectForDropCrash()
     layout->checkSanity();
 }
 
-void TestCommon::tst_restoreAfterResize()
+void TestDocks::tst_restoreAfterResize()
 {
     // Tests a crash I got when the layout received a resize event *while* restoring
 
@@ -3457,7 +3457,7 @@ void TestCommon::tst_restoreAfterResize()
     QCOMPARE(oldWindowSize, m->size());
 }
 
-void TestCommon::tst_restoreWithNonClosableWidget()
+void TestDocks::tst_restoreWithNonClosableWidget()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithNonClosableWidget");
@@ -3471,7 +3471,7 @@ void TestCommon::tst_restoreWithNonClosableWidget()
     QVERIFY(layout->checkSanity());
 }
 
-void TestCommon::tst_restoreNestedAndTabbed()
+void TestDocks::tst_restoreNestedAndTabbed()
 {
     // Just a more involved test
 
@@ -3532,7 +3532,7 @@ void TestCommon::tst_restoreNestedAndTabbed()
     QCOMPARE(m->geometry(), oldGeo);
 }
 
-void TestCommon::tst_restoreCrash()
+void TestDocks::tst_restoreCrash()
 {
     EnsureTopLevelsDeleted e;
 
@@ -3559,7 +3559,7 @@ void TestCommon::tst_restoreCrash()
     QVERIFY(!dock1->isFloating());
 }
 
-void TestCommon::tst_restoreSideBySide()
+void TestDocks::tst_restoreSideBySide()
 {
     // Save a layout that has a floating window with nesting
 
@@ -3601,7 +3601,7 @@ void TestCommon::tst_restoreSideBySide()
     }
 }
 
-void TestCommon::tst_restoreWithPlaceholder()
+void TestDocks::tst_restoreWithPlaceholder()
 {
     // Float dock1, save and restore, then unfloat and see if dock2 goes back to where it was
 
@@ -3658,7 +3658,7 @@ void TestCommon::tst_restoreWithPlaceholder()
     QCOMPARE(layout->placeholderCount(), 0);
 }
 
-void TestCommon::tst_restoreWithAffinity()
+void TestDocks::tst_restoreWithAffinity()
 {
     EnsureTopLevelsDeleted e;
 
@@ -3700,7 +3700,7 @@ void TestCommon::tst_restoreWithAffinity()
     delete dock2->window();
 }
 
-void TestCommon::tst_marginsAfterRestore()
+void TestDocks::tst_marginsAfterRestore()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -3726,7 +3726,7 @@ void TestCommon::tst_marginsAfterRestore()
     }
 }
 
-void TestCommon::tst_restoreWithNewDockWidgets()
+void TestDocks::tst_restoreWithNewDockWidgets()
 {
     // Tests that if the LayoutSaver doesn't know about some dock widget
     // when it saves the layout, then it won't close it when restoring layout
@@ -3745,7 +3745,7 @@ void TestCommon::tst_restoreWithNewDockWidgets()
     delete dock1->window();
 }
 
-void TestCommon::tst_restoreEmbeddedMainWindow()
+void TestDocks::tst_restoreEmbeddedMainWindow()
 {
     EnsureTopLevelsDeleted e;
     // Tests a MainWindow which isn't a top-level window, but is embedded in another window
@@ -3774,7 +3774,7 @@ void TestCommon::tst_restoreEmbeddedMainWindow()
     delete window;
 }
 
-void TestCommon::tst_restoreWithDockFactory()
+void TestDocks::tst_restoreWithDockFactory()
 {
     // Tests that restore the layout with a missing dock widget will recreate the dock widget using a factory
 
@@ -3818,7 +3818,7 @@ void TestCommon::tst_restoreWithDockFactory()
     layout->checkSanity();
 }
 
-void TestCommon::tst_restoreResizesLayout()
+void TestDocks::tst_restoreResizesLayout()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
@@ -3842,7 +3842,7 @@ void TestCommon::tst_restoreResizesLayout()
     QVERIFY(layout->checkSanity());
 }
 
-void TestCommon::tst_addDockWidgetToMainWindow()
+void TestDocks::tst_addDockWidgetToMainWindow()
 {
     EnsureTopLevelsDeleted e;
      auto m = createMainWindow();
@@ -3859,7 +3859,7 @@ void TestCommon::tst_addDockWidgetToMainWindow()
      QCOMPARE(dock1->frame()->QWidgetAdapter::x(), dock2->frame()->QWidgetAdapter::x());
 }
 
-void TestCommon::tst_addDockWidgetToContainingWindow()
+void TestDocks::tst_addDockWidgetToContainingWindow()
 {
     EnsureTopLevelsDeleted e;
 
@@ -3884,7 +3884,7 @@ void TestCommon::tst_addDockWidgetToContainingWindow()
     Testing::waitForDeleted(window);
 }
 
-void TestCommon::tst_notClosable()
+void TestDocks::tst_notClosable()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -3942,7 +3942,7 @@ void TestCommon::tst_notClosable()
     }
 }
 
-void TestCommon::tst_setFloatingAfterDraggedFromTabToSideBySide()
+void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -4015,7 +4015,7 @@ void TestCommon::tst_setFloatingAfterDraggedFromTabToSideBySide()
     }
 }
 
-void TestCommon::tst_setFloatingAFrameWithTabs()
+void TestDocks::tst_setFloatingAFrameWithTabs()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -4047,7 +4047,7 @@ void TestCommon::tst_setFloatingAFrameWithTabs()
     Testing::waitForDeleted(fw);
 }
 
-void TestCommon::tst_tabBarWithHiddenTitleBar_data()
+void TestDocks::tst_tabBarWithHiddenTitleBar_data()
 {
     QTest::addColumn<bool>("hiddenTitleBar");
     QTest::addColumn<bool>("tabsAlwaysVisible");
@@ -4060,7 +4060,7 @@ void TestCommon::tst_tabBarWithHiddenTitleBar_data()
 
 }
 
-void TestCommon::tst_tabBarWithHiddenTitleBar()
+void TestDocks::tst_tabBarWithHiddenTitleBar()
 {
     EnsureTopLevelsDeleted e;
     QFETCH(bool, hiddenTitleBar);
@@ -4110,7 +4110,7 @@ void TestCommon::tst_tabBarWithHiddenTitleBar()
     }
 }
 
-void TestCommon::tst_toggleDockWidgetWithHiddenTitleBar()
+void TestDocks::tst_toggleDockWidgetWithHiddenTitleBar()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
@@ -4129,7 +4129,7 @@ void TestCommon::tst_toggleDockWidgetWithHiddenTitleBar()
     QVERIFY(!d1->frame()->titleBar()->isVisible());
 }
 
-void TestCommon::tst_availableSizeWithPlaceholders()
+void TestDocks::tst_availableSizeWithPlaceholders()
 {
     // Tests MultiSplitterLayout::available() with and without placeholders. The result should be the same.
 
@@ -4198,7 +4198,7 @@ void TestCommon::tst_availableSizeWithPlaceholders()
     QVERIFY(Testing::waitForDeleted(docks2.at(2).createdDock));
 }
 
-void TestCommon::tst_anchorFollowingItselfAssert()
+void TestDocks::tst_anchorFollowingItselfAssert()
 {
     // 1. Tests that we don't assert in Anchor::setFollowee()
     //  ASSERT: "this != m_followee" in file ../src/multisplitter/Anchor.cpp
@@ -4230,7 +4230,7 @@ void TestCommon::tst_anchorFollowingItselfAssert()
     Testing::waitForDeleted(docks.at(4).createdDock);
 }
 
-void TestCommon::tst_positionWhenShown()
+void TestDocks::tst_positionWhenShown()
 {
     // Tests that when showing a dockwidget it shows in the same position as before
     EnsureTopLevelsDeleted e;
@@ -4251,7 +4251,7 @@ void TestCommon::tst_positionWhenShown()
     QVERIFY(Testing::waitForDeleted(dock1));
 }
 
-void TestCommon::tst_moreTitleBarCornerCases()
+void TestDocks::tst_moreTitleBarCornerCases()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -4317,7 +4317,7 @@ void TestCommon::tst_moreTitleBarCornerCases()
     }
 }
 
-void TestCommon::tst_maxSizePropagates()
+void TestDocks::tst_maxSizePropagates()
 {
     // Tests that the DockWidget gets the min and max size of its guest widget
     EnsureTopLevelsDeleted e;
@@ -4347,7 +4347,7 @@ void TestCommon::tst_maxSizePropagates()
     delete dock1->window();
 }
 
-void TestCommon::tst_maxSizePropagates2()
+void TestDocks::tst_maxSizePropagates2()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
@@ -4389,7 +4389,7 @@ void TestCommon::tst_maxSizePropagates2()
     QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
 }
 
-void TestCommon::tst_maxSizeHonouredWhenDropped()
+void TestDocks::tst_maxSizeHonouredWhenDropped()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow();
@@ -4414,7 +4414,7 @@ void TestCommon::tst_maxSizeHonouredWhenDropped()
     QCOMPARE(dock2->frame()->width(), droppedWidth);
 }
 
-void TestCommon::tst_fixedSizePolicy()
+void TestDocks::tst_fixedSizePolicy()
 {
     // tests that KDDW also takes into account QSizePolicy::Fixed for calculating the max size hint.
     // Since QPushButton for example doesn't set QWidget::maximumSize(), but instead uses sizeHint()
@@ -4438,7 +4438,7 @@ void TestCommon::tst_fixedSizePolicy()
     delete dock1->window();
 }
 
-void TestCommon::tst_isInMainWindow()
+void TestDocks::tst_isInMainWindow()
 {
     EnsureTopLevelsDeleted e;
     auto dw = new DockWidgetType(QStringLiteral("FOO"));
@@ -4457,7 +4457,7 @@ void TestCommon::tst_isInMainWindow()
     delete dw2->window();
 }
 
-void TestCommon::tst_sizeConstraintWarning()
+void TestDocks::tst_sizeConstraintWarning()
 {
     // Tests that we don't get the warning: MultiSplitterLayout::checkSanity: Widget has height= 122 but minimum is 144 KDDockWidgets::Item
     // Code autogenerated by the fuzzer:
@@ -4627,7 +4627,7 @@ void TestCommon::tst_sizeConstraintWarning()
     Testing::waitForDeleted(lastDock);
 }
 
-void TestCommon::tst_stuckSeparator()
+void TestDocks::tst_stuckSeparator()
 {
     const QString absoluteLayoutFileName = QStringLiteral(":/layouts/stuck-separator.json");
 
@@ -4662,7 +4662,7 @@ void TestCommon::tst_stuckSeparator()
     }
 }
 
-void TestCommon::tst_maxSizeHonouredWhenAnotherDropped()
+void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
 {
     // dock1 is docked, and has small max-height.
     // When dropping dock2, which is small too, dock2 should occupy all the height except dock1's max-height
@@ -4694,7 +4694,7 @@ void TestCommon::tst_maxSizeHonouredWhenAnotherDropped()
     QCOMPARE(dock2->frame()->height(), root->height() - item1MaxHeight - Item::separatorThickness);
 }
 
-void TestCommon::tst_addToHiddenMainWindow()
+void TestDocks::tst_addToHiddenMainWindow()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, {}, false);
@@ -4712,7 +4712,7 @@ void TestCommon::tst_addToHiddenMainWindow()
     m->multiSplitter()->checkSanity();
 }
 
-void TestCommon::tst_titlebar_getter()
+void TestDocks::tst_titlebar_getter()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame);
@@ -4731,7 +4731,7 @@ void TestCommon::tst_titlebar_getter()
     QVERIFY(d1->titleBar()->isVisible());
 }
 
-void TestCommon::tst_dockNotFillingSpace()
+void TestDocks::tst_dockNotFillingSpace()
 {
      EnsureTopLevelsDeleted e;
      auto m = createMainWindow(QSize(1000, 1000));
@@ -4758,7 +4758,7 @@ void TestCommon::tst_dockNotFillingSpace()
      delete d2;
 }
 
-void TestCommon::tst_lastFloatingPositionIsRestored()
+void TestDocks::tst_lastFloatingPositionIsRestored()
 {
     EnsureTopLevelsDeleted e;
 
@@ -4820,7 +4820,7 @@ static QPoint dragPointForWidget(Frame *frame, int index)
     }
 }
 
-void TestCommon::tst_titleBarFocusedWhenTabsChange()
+void TestDocks::tst_titleBarFocusedWhenTabsChange()
 {
      EnsureTopLevelsDeleted e;
      KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
@@ -4865,7 +4865,7 @@ void TestCommon::tst_titleBarFocusedWhenTabsChange()
      QVERIFY(dock2->titleBar()->isFocused());
 }
 
-void TestCommon::tst_tabsNotClickable()
+void TestDocks::tst_tabsNotClickable()
 {
     // Well, not a great unit-test, as it's only repro when it's Windows sending the native event
     // Can't repro with fabricated events. Uncomment the WAIT and test different configs manually
@@ -4894,7 +4894,7 @@ void TestCommon::tst_tabsNotClickable()
     delete frame->window();
 }
 
-void TestCommon::tst_dock2FloatingWidgetsTabbed()
+void TestDocks::tst_dock2FloatingWidgetsTabbed()
 {
     EnsureTopLevelsDeleted e;
 
@@ -4991,7 +4991,7 @@ void TestCommon::tst_dock2FloatingWidgetsTabbed()
     }
 }
 
-void TestCommon::tst_dragByTabBar_data()
+void TestDocks::tst_dragByTabBar_data()
 {
     QTest::addColumn<bool>("documentMode");
     QTest::addColumn<bool>("tabsAlwaysVisible");
@@ -5002,7 +5002,7 @@ void TestCommon::tst_dragByTabBar_data()
     QTest::newRow("true-true") << true << true;
 }
 
-void TestCommon::tst_dragByTabBar()
+void TestDocks::tst_dragByTabBar()
 {
     QFETCH(bool, documentMode);
     QFETCH(bool, tabsAlwaysVisible);
@@ -5037,7 +5037,7 @@ void TestCommon::tst_dragByTabBar()
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
 }
 
-void TestCommon::tst_dragBySingleTab()
+void TestDocks::tst_dragBySingleTab()
 {
     // Tests dragging via a tab when there's only 1 tab, and we're using Flag_AlwaysShowTabs
     EnsureTopLevelsDeleted e;
@@ -5057,7 +5057,7 @@ void TestCommon::tst_dragBySingleTab()
     Testing::waitForDeleted(frame1);
 }
 
-void TestCommon::tst_mainWindowAlwaysHasCentralWidget()
+void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
 {
     EnsureTopLevelsDeleted e;
 
@@ -5099,7 +5099,7 @@ void TestCommon::tst_mainWindowAlwaysHasCentralWidget()
     delete dock->window();
 }
 
-void TestCommon::tst_dockableMainWindows()
+void TestDocks::tst_dockableMainWindows()
 {
     EnsureTopLevelsDeleted e;
 
@@ -5169,7 +5169,7 @@ void TestCommon::tst_dockableMainWindows()
 }
 
 // No need to port to QtQuick
-void TestCommon::tst_floatingWindowDeleted()
+void TestDocks::tst_floatingWindowDeleted()
 {
     // Tests a case where the empty floating dock widget wouldn't be deleted
     // Doesn't repro QTBUG-83030 unfortunately, as we already have an event loop running
@@ -5199,7 +5199,7 @@ void TestCommon::tst_floatingWindowDeleted()
     MyMainWindow m;
 }
 
-void TestCommon::tst_addToSmallMainWindow6()
+void TestDocks::tst_addToSmallMainWindow6()
 {
     EnsureTopLevelsDeleted e;
     // Test test shouldn't spit any warnings
@@ -5222,7 +5222,7 @@ void TestCommon::tst_addToSmallMainWindow6()
 
 #endif
 
-void TestCommon::tst_negativeAnchorPositionWhenEmbedded_data()
+void TestDocks::tst_negativeAnchorPositionWhenEmbedded_data()
 {
     QTest::addColumn<bool>("embedded");
 
@@ -5230,7 +5230,7 @@ void TestCommon::tst_negativeAnchorPositionWhenEmbedded_data()
     QTest::newRow("true") << true;
 }
 
-void TestCommon::tst_negativeAnchorPositionWhenEmbedded()
+void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
 {
     QFETCH(bool, embedded);
     EnsureTopLevelsDeleted e;
@@ -5261,7 +5261,7 @@ void TestCommon::tst_negativeAnchorPositionWhenEmbedded()
     delete m->window();
 }
 
-void TestCommon::tst_floatingAction()
+void TestDocks::tst_floatingAction()
 {
     // Tests DockWidget::floatAction()
     EnsureTopLevelsDeleted e;
@@ -5502,7 +5502,7 @@ void TestCommon::tst_floatingAction()
     }
 }
 
-void TestCommon::tst_raise()
+void TestDocks::tst_raise()
 {
     // Tests DockWidget::raise();
     EnsureTopLevelsDeleted e;
@@ -5549,7 +5549,7 @@ void TestCommon::tst_raise()
     delete dock1->window();
 }
 
-void TestCommon::tst_complex()
+void TestDocks::tst_complex()
 {
     // Tests some anchors out of bounds I got
 
@@ -5625,7 +5625,7 @@ void TestCommon::tst_complex()
     qDeleteAll(DockRegistry::self()->frames());
 }
 
-void TestCommon::tst_invalidLayoutAfterRestore()
+void TestDocks::tst_invalidLayoutAfterRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
@@ -5675,7 +5675,7 @@ void TestCommon::tst_invalidLayoutAfterRestore()
     layout->checkSanity();
 }
 
-void TestCommon::tst_addingOptionHiddenTabbed()
+void TestDocks::tst_addingOptionHiddenTabbed()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
@@ -5692,7 +5692,7 @@ void TestCommon::tst_addingOptionHiddenTabbed()
     QVERIFY(dock1->frame() == dock2->frame());
 }
 
-void TestCommon::tst_flagDoubleClick()
+void TestDocks::tst_flagDoubleClick()
 {
     {
         EnsureTopLevelsDeleted e;
@@ -5740,7 +5740,7 @@ void TestCommon::tst_flagDoubleClick()
     }
 }
 
-void TestCommon::tst_maxSizedHonouredAfterRemoved()
+void TestDocks::tst_maxSizedHonouredAfterRemoved()
 {
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
@@ -5785,7 +5785,7 @@ void TestCommon::tst_maxSizedHonouredAfterRemoved()
     delete dock2;
 }
 
-void TestCommon::tst_addDockWidgetAsTabToDockWidget()
+void TestDocks::tst_addDockWidgetAsTabToDockWidget()
 {
     EnsureTopLevelsDeleted e;
     {
@@ -5858,7 +5858,7 @@ void TestCommon::tst_addDockWidgetAsTabToDockWidget()
     }
 }
 
-void TestCommon::tst_close()
+void TestDocks::tst_close()
 {
     EnsureTopLevelsDeleted e;
 
@@ -6013,7 +6013,7 @@ void TestCommon::tst_close()
     }
 }
 
-void TestCommon::tst_propagateSizeHonoursMinSize()
+void TestDocks::tst_propagateSizeHonoursMinSize()
 {
     // Here we dock a widget on the left size, and on the right side.
     // When docking the second one, the 1st one shouldn't be squeezed too much, as it has a min size
@@ -6064,7 +6064,7 @@ void TestCommon::tst_propagateSizeHonoursMinSize()
     QVERIFY(dock1->height() >= min1);
 }
 
-void TestCommon::tst_constraintsAfterPlaceholder()
+void TestDocks::tst_constraintsAfterPlaceholder()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
@@ -6105,7 +6105,7 @@ void TestCommon::tst_constraintsAfterPlaceholder()
     Testing::waitForDeleted(dock1);
 }
 
-void TestCommon::tst_minSizeChanges()
+void TestDocks::tst_minSizeChanges()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(600, 600), MainWindowOption_None);
@@ -6153,7 +6153,7 @@ void TestCommon::tst_minSizeChanges()
     m->addDockWidget(d3, Location_OnTop, d1);
 }
 
-void TestCommon::tst_maximumSizePolicy()
+void TestDocks::tst_maximumSizePolicy()
 {
     EnsureTopLevelsDeleted e;
 
@@ -6198,4 +6198,4 @@ void TestCommon::tst_maximumSizePolicy()
     delete oldFw2;
 }
 
-#include "tst_common.moc"
+#include "tst_docks.moc"

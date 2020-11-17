@@ -30,6 +30,8 @@ QT_BEGIN_NAMESPACE
 class QAction;
 QT_END_NAMESPACE
 
+class TestDocks;
+
 namespace Layouting {
 class Item;
 }
@@ -447,7 +449,7 @@ private:
     friend class MultiSplitter;
     friend class Frame;
     friend class DropArea;
-    friend class TestDocks;
+    friend class ::TestDocks;
     friend class StateDragging;
     friend class KDDockWidgets::TabWidget;
     friend class KDDockWidgets::TitleBar;

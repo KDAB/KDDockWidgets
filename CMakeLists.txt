@@ -179,9 +179,9 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
     add_subdirectory(tests)
 
     if (NOT ${PROJECT_NAME}_QTQUICK)
-        #Require Qt5.15.1 or higher to run the tests_launcher tests on Mac
-        if(NOT APPLE OR Qt5Widgets_VERSION VERSION_GREATER 5.15.0)
-            # tst_docks.exe is pretty big (140 tests), so split it in 6 runs so we can use threads.
+        # Require Qt5.15.1 or higher to run the tests_launcher tests on Mac
+        if (NOT APPLE OR Qt5Widgets_VERSION VERSION_GREATER 5.15.0)
+            # tst_docks.exe is pretty big (160 tests), so split it in more runs so we can use threads.
             add_test(NAME tst_docks0 COMMAND tests_launcher 0 5)
             add_test(NAME tst_docks1 COMMAND tests_launcher 1 5)
             add_test(NAME tst_docks2 COMMAND tests_launcher 2 5)
@@ -208,7 +208,7 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
     endif()
 
     add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
-    add_test(NAME tst_common COMMAND tst_common)
+    add_test(NAME tst_docks COMMAND tst_docks)
 
   endif()
 endif()

@@ -27,7 +27,7 @@ class QHBoxLayout;
 class QLabel;
 QT_END_NAMESPACE
 
-class TestCommon;
+class TestDocks;
 
 namespace KDDockWidgets {
 
@@ -128,8 +128,7 @@ protected:
     bool isOverlayed() const;
 
 private:
-    friend class TestDocks;
-    friend class ::TestCommon;
+    friend class ::TestDocks;
 
     void init();
 
