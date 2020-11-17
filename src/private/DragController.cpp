@@ -556,8 +556,10 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     case QEvent::MouseButtonPress:
         // For top-level windows that support native dragging all goes through the NonClient* events.
         // This also forbids dragging a FloatingWindow simply by pressing outside of the title area, in the background
-        if (!KDDockWidgets::usesNativeDraggingAndResizing() || !w->isWindow())
+        if (!KDDockWidgets::usesNativeDraggingAndResizing() || !w->isWindow()) {
+            Q_ASSERT(activeState());
             return activeState()->handleMouseButtonPress(draggableForQObject(o), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
+        }
         else break;
     case QEvent::MouseButtonRelease:
     case QEvent::NonClientAreaMouseButtonRelease:
