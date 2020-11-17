@@ -330,15 +330,22 @@ inline WidgetType *draggableFor(WidgetType *w)
         if (auto frame = dock->frame())
             draggable = frame->titleBar();
     } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
+        Frame *frame = fw->hasSingleFrame() ? static_cast<Frame*>(fw->frames().first())
+                                            : nullptr;
+
+        if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-        auto frame = fw->hasSingleFrame() ? static_cast<FrameWidget*>(fw->frames().first())
-                                          : nullptr;
-        draggable = ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) ? static_cast<QWidget*>(frame->tabWidget()->asWidget())
-                                                                                                                                                            : static_cast<QWidget*>(fw->titleBar());
+            auto frameWidget = static_cast<FrameWidget*>(frame);
+            draggable = frameWidget->tabWidget()->asWidget();
+#else
+            qWarning() << Q_FUNC_INFO << "Implement me";
+#endif
+        } else {
+            draggable = fw->titleBar();
+        }
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     } else if (qobject_cast<TabWidgetWidget *>(w)) {
         draggable = w;
-#else
-        Q_UNUSED(fw);
 #endif
     } else if (qobject_cast<TitleBar *>(w)) {
         draggable = w;
@@ -390,7 +397,8 @@ inline void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest,
                                  ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
 {
     auto draggable = draggableFor(fw);
-    Q_ASSERT(draggable && draggable->isVisible());
+    Q_ASSERT(draggable);
+    Q_ASSERT(draggable->isVisible());
     drag(draggable, KDDockWidgets::mapToGlobal(draggable, QPoint(10, 10)), globalDest, buttonActions);
 }
 
