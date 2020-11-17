@@ -34,7 +34,7 @@ using namespace KDDockWidgets;
 
 static void initKDDockWidgetResources()
 {
-#ifdef KDDOCKWIDGETS_STATICLIB
+#if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
     Q_INIT_RESOURCE(kddockwidgets_resources);
     Q_INIT_RESOURCE(kddockwidgets_multisplitter);
 #endif
