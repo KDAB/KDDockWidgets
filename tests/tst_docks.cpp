@@ -81,7 +81,11 @@ public Q_SLOTS:
         QQuickStyle::setStyle("Material"); // so we don't load KDE plugins
         KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
 #endif
-        QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
+        {
+            // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
+            auto m = createMainWindow();
+            QTest::qWait(10);
+        }
     }
 
     void cleanupTestCase()
