@@ -34,8 +34,8 @@ int main(int argc, char **argv)
     app.setApplicationName(QStringLiteral("Test app"));
 
 #ifdef QT_STATIC
-    Q_INIT_RESOURCE(resources);
-    Q_INIT_RESOURCE(multisplitter);
+    Q_INIT_RESOURCE(kddockwidgets_resources);
+    Q_INIT_RESOURCE(kddockwidgets_multisplitter);
 #endif
     QCommandLineParser parser;
     parser.setApplicationDescription("KDDockWidgets example application");

@@ -24,7 +24,7 @@ Builds tips for your own app:
 - As the build is static, don't forget to initialize KDDW's resources:
 ```
 #ifdef QT_STATIC
-    Q_INIT_RESOURCE(resources);
-    Q_INIT_RESOURCE(multisplitter);
+    Q_INIT_RESOURCE(kddockwidgets_resources);
+    Q_INIT_RESOURCE(kddockwidgets_multisplitter);
 #endif
 ```

@@ -96,7 +96,7 @@ if(${PROJECT_NAME}_QTQUICK)
       private/quick/MainWindowWrapper.cpp
       )
 
-    qt5_add_resources(RESOURCES_QUICK ${CMAKE_CURRENT_SOURCE_DIR}/qtquick.qrc)
+    qt5_add_resources(RESOURCES_QUICK ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_qtquick.qrc)
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       private/DebugWindow.cpp
@@ -130,7 +130,7 @@ endif()
 
 add_subdirectory(private/multisplitter)
 
-qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc)
+qt5_add_resources(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES} ${RESOURCES_QUICK})
 add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
