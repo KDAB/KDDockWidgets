@@ -86,7 +86,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
             if (s_warningObserver)
                 s_warningObserver->onFatal();
 
-            qFatal("Got a warning, category=%s", context.category);
+            QFAIL("Test caused warning");
         }
     }
 }
