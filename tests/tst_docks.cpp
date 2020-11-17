@@ -708,7 +708,6 @@ void TestDocks::tst_resizeWindow()
 
     const double relativeDifference = qAbs((maximizedWidth1 - maximizedWidth2) / (1.0 * layout->width()));
 
-    qDebug() << oldWidth1 << oldWidth2 << maximizedWidth1 << maximizedWidth2 << relativeDifference;
     QVERIFY(relativeDifference <= 0.01);
 
     m->showNormal();
