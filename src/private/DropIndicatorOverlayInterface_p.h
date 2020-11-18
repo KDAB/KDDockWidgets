@@ -55,7 +55,7 @@ public:
 
     void hover(QPoint globalPos);
 
-    virtual QPoint posForIndicator(DropLocation) const { return {}; }; // Used by unit-tests only
+    virtual QPoint posForIndicator(DropLocation) const = 0;
 
     static KDDockWidgets::Location multisplitterLocationFor(DropLocation);
 

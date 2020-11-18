@@ -180,3 +180,9 @@ void SegmentedIndicators::drawSegment(QPainter *p, const QPolygon &segment)
     p->setBrush(brush);
     p->drawPolygon(segment);
 }
+
+QPoint KDDockWidgets::SegmentedIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLocation) const
+{
+    /// Doesn't apply to segmented indicators, completely different concept
+    return {};
+}

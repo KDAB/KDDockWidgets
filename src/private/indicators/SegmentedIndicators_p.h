@@ -31,7 +31,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *) override;
-
+    QPoint posForIndicator(DropLocation) const override;
 private:
     QVector<QPolygon> segmentsForRect(QRect, QPolygon &center, bool useOffset = false) const;
     void updateSegments();
