@@ -2761,7 +2761,7 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
     d1->show();
     Testing::waitForEvent(d1, QEvent::Show);
 
-    QCOMPARE( d1->window()->geometry(), suggestedGeo);
+    QCOMPARE(d1->window()->windowHandle()->geometry(), suggestedGeo);
     delete d1->window();
 }
 
