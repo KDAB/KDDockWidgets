@@ -2956,8 +2956,8 @@ void TestDocks::tst_addAndReadd()
     auto fw = dock1->floatingWindow();
     QVERIFY(fw);
     auto dropArea = m->dropArea();
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_OutterRight);
-    QVERIFY(!dock1->frame()->titleBar()->isVisible());
+    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
+    QVERIFY(dock1->frame()->titleBar()->isVisible());
     fw->titleBar()->makeWindow();
     m->multiSplitter()->checkSanity();
 
@@ -2965,7 +2965,6 @@ void TestDocks::tst_addAndReadd()
     delete dock1;
     Testing::waitForDeleted(fw);
 }
-
 
 void TestDocks::tst_addToSmallMainWindow1()
 {
