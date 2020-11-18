@@ -146,8 +146,7 @@ public:
     void setSizePolicy(QSizePolicy);
     QSizePolicy sizePolicy() const;
     Qt::FocusPolicy focusPolicy() const;
-    void setFocusPolicy(Qt::FocusPolicy) {}
-    void setFocusProxy(QQuickItem*);
+    void setFocusPolicy(Qt::FocusPolicy);
     void setFocus(Qt::FocusReason);
     virtual QSize sizeHint() const;
 
@@ -177,6 +176,7 @@ private:
     QSizePolicy m_sizePolicy = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);;
     Qt::WindowFlags m_windowFlags;
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
+    Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;
 };
 
 }

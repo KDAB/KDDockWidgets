@@ -296,7 +296,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
 
         if (needToFocusNewlyDroppedWidgets) {
             // Let's also focus the newly dropped dock widget
-            if (droppedDockWidgets.size() > 0) {
+            if (!droppedDockWidgets.isEmpty()) {
                 // If more than 1 was dropped, we only focus the first one
                 Frame *frame = droppedDockWidgets.first()->frame();
                 frame->FocusScope::focus(Qt::MouseFocusReason);

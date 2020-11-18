@@ -182,6 +182,7 @@ public:
     explicit QLineEdit()
         : QWidgetAdapter()
     {
+        setFocusPolicy(Qt::StrongFocus);
     }
 };
 
@@ -191,6 +192,7 @@ public:
     explicit QTextEdit()
         : QWidgetAdapter()
     {
+        setFocusPolicy(Qt::StrongFocus);
     }
 };
 

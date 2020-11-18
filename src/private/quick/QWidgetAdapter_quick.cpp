@@ -467,12 +467,12 @@ void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
 
 Qt::FocusPolicy QWidgetAdapter::focusPolicy() const
 {
-    return Qt::NoFocus;
+    return m_focusPolicy;
 }
 
-void QWidgetAdapter::setFocusProxy(QQuickItem *)
+void QWidgetAdapter::setFocusPolicy(Qt::FocusPolicy policy)
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    m_focusPolicy = policy;
 }
 
 void QWidgetAdapter::setFocus(Qt::FocusReason reason)
