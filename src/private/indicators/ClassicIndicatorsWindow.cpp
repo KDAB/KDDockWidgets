@@ -266,8 +266,7 @@ void IndicatorWindow::hover(QPoint pt)
 {
     QQuickItem *item = indicatorForPos(pt);
     if (item) {
-        const auto loc = DropIndicatorOverlayInterface::DropLocation(item->property("indicatorType").toInt());
-        classicIndicators()->setDropLocation(loc);
+        classicIndicators()->setDropLocation(locationForIndicator(item));
     } else {
         classicIndicators()->setDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
     }
@@ -293,10 +292,10 @@ void IndicatorWindow::updatePositions()
     // Not needed to implement, the Indicators use QML anchors
 }
 
-QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation) const
+QPoint IndicatorWindow::posForIndicator(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation loc) const
 {
-    qDebug() << Q_FUNC_INFO;
-    return {};
+    QQuickItem *indicator = IndicatorWindow::indicatorForLocation(loc);
+    return indicator->mapToGlobal(indicator->boundingRect().center()).toPoint();
 }
 
 QString IndicatorWindow::iconName(int loc, bool active) const
@@ -307,6 +306,25 @@ QString IndicatorWindow::iconName(int loc, bool active) const
 ClassicIndicators *IndicatorWindow::classicIndicators() const
 {
     return m_classicIndicators;
+}
+
+QQuickItem *IndicatorWindow::indicatorForLocation(DropIndicatorOverlayInterface::DropLocation loc) const
+{
+    const QVector<QQuickItem *> indicators = indicatorItems();
+    Q_ASSERT(indicators.size() == 9);
+
+    for (QQuickItem *item : indicators) {
+        if (locationForIndicator(item) == loc)
+            return item;
+    }
+
+    qWarning() << Q_FUNC_INFO << "Couldn't find indicator for location" << loc;
+    return nullptr;
+}
+
+DropIndicatorOverlayInterface::DropLocation IndicatorWindow::locationForIndicator(const QQuickItem *item) const
+{
+    return DropIndicatorOverlayInterface::DropLocation(item->property("indicatorType").toInt());
 }
 
 QVector<QQuickItem *> IndicatorWindow::indicatorItems() const

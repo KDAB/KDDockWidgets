@@ -55,6 +55,8 @@ public:
 
     void hover(QPoint globalPos);
 
+    /// @brief returns the position of the specified drop location
+    /// The return is in global coordinates
     virtual QPoint posForIndicator(DropLocation) const = 0;
 
     static KDDockWidgets::Location multisplitterLocationFor(DropLocation);

@@ -230,8 +230,9 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
     hover(droppedWindow, globalPos);
     auto droploc = m_dropIndicatorOverlay->currentDropLocation();
     Frame *acceptingFrame = m_dropIndicatorOverlay->hoveredFrame();
-    if (!(acceptingFrame || isOutterLocation(m_dropIndicatorOverlay->currentDropLocation()))) {
-        qWarning() << "DropArea::drop: asserted with frame=" << acceptingFrame << "; Location=" << m_dropIndicatorOverlay->currentDropLocation();
+    if (!(acceptingFrame || isOutterLocation(droploc))) {
+        qWarning() << "DropArea::drop: asserted with frame=" << acceptingFrame
+                   << "; Location=" << droploc;
         return false;
     }
 

@@ -96,7 +96,9 @@ public:
     QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const;
     Q_INVOKABLE QString iconName(int loc, bool active) const;
     KDDockWidgets::ClassicIndicators* classicIndicators() const;
+    QQuickItem* indicatorForLocation(DropIndicatorOverlayInterface::DropLocation loc) const;
 private:
+    DropIndicatorOverlayInterface::DropLocation locationForIndicator(const QQuickItem *) const;
     QQuickItem *indicatorForPos(QPoint) const;
     QVector<QQuickItem*> indicatorItems() const;
     ClassicIndicators *const m_classicIndicators;

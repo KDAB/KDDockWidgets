@@ -145,7 +145,7 @@ private Q_SLOTS:
     void tst_placeholderCount();
     void tst_availableLengthForOrientation();
     void tst_closeShowWhenNoCentralFrame();
-    void tst_setAstCurrentTab();
+    void tst_setAsCurrentTab();
     void tst_placeholderDisappearsOnReadd();
     void tst_placeholdersAreRemovedProperly();
 
@@ -157,7 +157,6 @@ private Q_SLOTS:
     void tst_setFloatingWhenWasTabbed();
     void tst_setFloatingWhenSideBySide();
     void tst_dockWindowWithTwoSideBySideFramesIntoCenter();
-    void tst_closeRemovesFromSideBar();
     void tst_tabTitleChanges();
     void tst_dockWidgetGetsFocusWhenDocked();
     void tst_setWidget();
@@ -259,6 +258,7 @@ private Q_SLOTS:
     // But these are fine to be widget only:
     void tst_floatingWindowDeleted();
     void tst_addToSmallMainWindow6();
+    void tst_closeRemovesFromSideBar();
 #endif
 };
 
@@ -2015,7 +2015,7 @@ void TestDocks::tst_closeShowWhenNoCentralFrame()
     m->multiSplitter()->checkSanity();
 }
 
-void TestDocks::tst_setAstCurrentTab()
+void TestDocks::tst_setAsCurrentTab()
 {
     EnsureTopLevelsDeleted e;
 
@@ -2027,6 +2027,7 @@ void TestDocks::tst_setAstCurrentTab()
     // 2. Tab dock2 to the group, dock2 is current now
     auto dock2 = createDockWidget("2", new QPushButton("2"));
     dock1->addDockWidgetAsTab(dock2);
+
     QVERIFY(!dock1->isCurrentTab());
     QVERIFY(dock2->isCurrentTab());
 
@@ -2039,7 +2040,8 @@ void TestDocks::tst_setAstCurrentTab()
     QVERIFY(fw);
     fw->multiSplitter()->checkSanity();
 
-    delete dock1; delete dock2;
+    delete dock1;
+    delete dock2;
     Testing::waitForDeleted(fw);
 }
 
@@ -2567,41 +2569,6 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     delete fw2;
 }
 
-void TestDocks::tst_closeRemovesFromSideBar()
-{
-    EnsureTopLevelsDeleted e;
-    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dw1 = new DockWidgetType(QStringLiteral("1"));
-    auto fw1 = dw1->window();
-    m1->addDockWidget(dw1, Location_OnBottom);
-    m1->moveToSideBar(dw1);
-
-    QVERIFY(!dw1->isOverlayed());
-    QVERIFY(!dw1->isVisible());
-    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
-
-    SideBar *sb = m1->sideBarForDockWidget(dw1);
-    QVERIFY(sb);
-
-    // Overlay it:
-    sb->toggleOverlay(dw1);
-    QVERIFY(dw1->isOverlayed());
-    QVERIFY(dw1->isVisible());
-    QCOMPARE(dw1->sideBarLocation(), sb->location());
-    QVERIFY(dw1->isInMainWindow());
-    QVERIFY(!dw1->isFloating());
-
-    // Close it while it's overlayed:
-    dw1->close();
-    QVERIFY(!dw1->isInMainWindow());
-    QVERIFY(!dw1->isOverlayed());
-    QVERIFY(!dw1->isVisible());
-    QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
-
-    delete fw1;
-}
-
 void TestDocks::tst_tabTitleChanges()
 {
     // Tests that the tab's title changes if the dock widget's title changes
@@ -2625,6 +2592,8 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
+
+    // We drag dw2 onto dw2 and drop it
 
     auto dw1 = new DockWidgetType(QStringLiteral("1"));
     auto dw2 = new DockWidgetType(QStringLiteral("2"));
@@ -5221,6 +5190,42 @@ void TestDocks::tst_addToSmallMainWindow6()
     m.addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
     Testing::waitForResize(&m);
     QVERIFY(m.dropArea()->checkSanity());
+}
+
+
+void TestDocks::tst_closeRemovesFromSideBar()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    auto fw1 = dw1->window();
+    m1->addDockWidget(dw1, Location_OnBottom);
+    m1->moveToSideBar(dw1);
+
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(!dw1->isVisible());
+    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
+
+    SideBar *sb = m1->sideBarForDockWidget(dw1);
+    QVERIFY(sb);
+
+    // Overlay it:
+    sb->toggleOverlay(dw1);
+    QVERIFY(dw1->isOverlayed());
+    QVERIFY(dw1->isVisible());
+    QCOMPARE(dw1->sideBarLocation(), sb->location());
+    QVERIFY(dw1->isInMainWindow());
+    QVERIFY(!dw1->isFloating());
+
+    // Close it while it's overlayed:
+    dw1->close();
+    QVERIFY(!dw1->isInMainWindow());
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(!dw1->isVisible());
+    QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
+
+    delete fw1;
 }
 
 #endif
