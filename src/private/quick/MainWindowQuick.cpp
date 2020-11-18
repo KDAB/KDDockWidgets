@@ -24,6 +24,16 @@ MainWindowQuick::MainWindowQuick(const QString &uniqueName, MainWindowOptions op
     QWidgetAdapter::makeItemFillParent(dropArea());
 }
 
+MainWindowQuick::~MainWindowQuick()
+{
+    if (isTopLevel()) {
+        if (QWindow *window = windowHandle()) {
+            QObject::setParent(nullptr);
+            delete window;
+        }
+    }
+}
+
 SideBar *MainWindowQuick::sideBar(SideBarLocation) const
 {
     qDebug() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";

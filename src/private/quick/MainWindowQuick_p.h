@@ -28,6 +28,8 @@ public:
                              MainWindowOptions options = MainWindowOption_HasCentralFrame,
                              QQuickItem *parent = nullptr);
 
+    ~MainWindowQuick() override;
+
 protected:
     SideBar *sideBar(SideBarLocation) const override;
     QMargins centerWidgetMargins() const override;
