@@ -73,7 +73,7 @@ int FrameQuick::currentIndex_impl() const
 
 void FrameQuick::setCurrentTabIndex_impl(int index)
 {
-    m_currentDockWidget = dockWidgetAt(index);
+    setCurrentDockWidget_impl(dockWidgetAt(index));
 }
 
 void FrameQuick::setCurrentDockWidget_impl(DockWidgetBase *dw)
@@ -83,7 +83,10 @@ void FrameQuick::setCurrentDockWidget_impl(DockWidgetBase *dw)
         return;
     }
 
-    m_currentDockWidget = dw;
+    if (m_currentDockWidget != dw) {
+        m_currentDockWidget = dw;
+        Q_EMIT currentDockWidgetChanged(dw);
+    }
 }
 
 void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
@@ -98,9 +101,7 @@ void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
         });
 
         m_connections[dw] = conn;
-
-        if (!m_currentDockWidget)
-            m_currentDockWidget = dw;
+        setCurrentDockWidget_impl(dw);
 
         if (oldFrame && oldFrame->beingDeletedLater()) {
             // give it a push and delete it immediately.

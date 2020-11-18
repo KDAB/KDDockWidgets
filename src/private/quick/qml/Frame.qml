@@ -38,6 +38,13 @@ Rectangle {
         }
     }
 
+    Connections {
+        target: frameCpp
+        function onCurrentIndexChanged() {
+            tabbar.currentIndex = frameCpp.currentIndex;
+        }
+    }
+
     TabBar {
         id: tabbar
         visible: count > 1

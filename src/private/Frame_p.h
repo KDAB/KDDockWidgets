@@ -56,6 +56,7 @@ class DOCKS_EXPORT Frame
 {
     Q_OBJECT
     Q_PROPERTY(KDDockWidgets::TitleBar* titleBar READ titleBar CONSTANT)
+    Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentDockWidgetChanged)
 public:
     typedef QList<Frame *> List;
 
