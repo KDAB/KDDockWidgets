@@ -408,6 +408,11 @@ QSize QWidgetAdapter::sizeHint() const
     return m_sizeHint;
 }
 
+bool QWidgetAdapter::hasFocus() const
+{
+    return hasActiveFocus();
+}
+
 void QWidgetAdapter::setWindowFlag(int flag, bool enable)
 {
     Q_UNUSED(flag);
@@ -478,6 +483,7 @@ void QWidgetAdapter::setFocusPolicy(Qt::FocusPolicy policy)
 void QWidgetAdapter::setFocus(Qt::FocusReason reason)
 {
     QQuickItem::setFocus(true, reason);
+    forceActiveFocus(reason);
 }
 
 void QWidgetAdapter::render(QPainter *)

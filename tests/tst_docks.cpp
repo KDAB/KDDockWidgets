@@ -2649,11 +2649,16 @@ void TestDocks::tst_isFocused()
     QVERIFY(dock1->isFocused());
     QVERIFY(!dock2->isFocused());
 
-    // 3. Raise dock3 and focus its line edit
-    dock2->raise();
+    // 3. Raise dock2 and focus its line edit
+    dock2->raiseAndActivate();
+    if (!dock2->window()->windowHandle()->isActive())
+        Testing::waitForEvent(dock2->window()->windowHandle(), QEvent::WindowActivate);
+
     dock2->widget()->setFocus(Qt::OtherFocusReason);
     Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
+
     QVERIFY(!dock1->isFocused());
+    QVERIFY(dock2->widget()->hasFocus());
     QVERIFY(dock2->isFocused());
 
     // 4. Tab dock1, it's current tab now

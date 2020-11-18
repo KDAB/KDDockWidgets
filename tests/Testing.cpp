@@ -91,7 +91,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
     }
 }
 
-bool Testing::waitForEvent(QWidgetOrQuick *w, QEvent::Type type, int timeout)
+bool Testing::waitForEvent(QObject *w, QEvent::Type type, int timeout)
 {
     EventFilter filter(type);
     w->installEventFilter(&filter);

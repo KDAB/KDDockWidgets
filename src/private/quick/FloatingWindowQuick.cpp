@@ -85,6 +85,11 @@ void FloatingWindowQuick::init()
         }
     });
 
+    /* for debug:
+      connect(m_quickWindow, &QQuickView::focusObjectChanged, this, [this] (QObject *object) {
+        qDebug() << "Focus object changed to " << object << this << m_quickWindow;
+    });*/
+
     const QSize minSize(200, 200);
     m_quickWindow->resize(minSize);
     m_quickWindow->contentItem()->setSize(minSize);

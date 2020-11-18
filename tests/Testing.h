@@ -103,7 +103,7 @@ namespace Testing {
     void installFatalMessageHandler();
     void setExpectedWarning(const QString &);
 
-    bool waitForEvent(QWidgetOrQuick *w, QEvent::Type type, int timeout = 2000);
+    bool waitForEvent(QObject *w, QEvent::Type type, int timeout = 2000);
     bool waitForDeleted(QObject *o, int timeout = 2000);
     bool waitForResize(QWidgetOrQuick *w, int timeout = 2000);
 

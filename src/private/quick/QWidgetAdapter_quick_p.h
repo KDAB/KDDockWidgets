@@ -149,6 +149,7 @@ public:
     void setFocusPolicy(Qt::FocusPolicy);
     void setFocus(Qt::FocusReason);
     virtual QSize sizeHint() const;
+    bool hasFocus() const;
 
     void setWindowFlag(int flag, bool enable = true);
     Qt::WindowFlags windowFlags() const;
