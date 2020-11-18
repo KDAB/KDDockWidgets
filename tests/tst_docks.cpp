@@ -2875,7 +2875,7 @@ void TestDocks::tst_preventClose()
     dock1->setWidget(nonClosableWidget);
 
     // 1. Test a floating dock widget
-    dock1->resize(100, 100);
+    dock1->resize(200, 200);
     dock1->show();
     QVERIFY(dock1->isVisible());
     dock1->close();

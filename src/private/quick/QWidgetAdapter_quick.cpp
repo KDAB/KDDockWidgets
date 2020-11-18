@@ -511,6 +511,14 @@ void QWidgetAdapter::render(QPainter *)
     qWarning() << Q_FUNC_INFO << "Implement me";
 }
 
+bool QWidgetAdapter::event(QEvent *ev)
+{
+    if (ev->type() == QEvent::Close)
+        onCloseEvent(static_cast<QCloseEvent*>(ev));
+
+    return QQuickItem::event(ev);
+}
+
 QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 {
     if (!window)

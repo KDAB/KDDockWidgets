@@ -205,6 +205,12 @@ public:
         : QWidgetAdapter()
     {
     }
+
+protected:
+    void onCloseEvent(QCloseEvent *ev) override
+    {
+        ev->ignore(); // don't allow to close
+    }
 };
 
 class MyWidget2 : public QWidgetAdapter
