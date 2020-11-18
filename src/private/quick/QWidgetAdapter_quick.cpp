@@ -26,6 +26,7 @@
 #include <QQmlComponent>
 #include <QQuickItem>
 #include <QQmlEngine>
+#include <QQuickView>
 
 using namespace KDDockWidgets;
 
@@ -246,6 +247,20 @@ void QWidgetAdapter::resize(int w, int h)
     resize({w, h});
 }
 
+bool QWidgetAdapter::isWindow() const
+{
+    QQuickItem *parent = parentItem();
+    if (!parent)
+        return true;
+
+    if (QQuickView *w = quickView()) {
+        if (parent == w->contentItem() || parent == w->rootObject())
+            return true;
+    }
+
+    return false;
+}
+
 bool QWidgetAdapter::isMaximized() const
 {
     if (QWindow *w = windowHandle())
@@ -278,6 +293,11 @@ void QWidgetAdapter::showNormal()
 {
      if (QWindow *w = windowHandle())
          w->showNormal();
+}
+
+QQuickView *QWidgetAdapter::quickView() const
+{
+    return qobject_cast<QQuickView *>(QQuickItem::window());
 }
 
 QWindow *QWidgetAdapter::windowHandle() const

@@ -59,7 +59,8 @@ FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
 FloatingWindowQuick::~FloatingWindowQuick()
 {
     QWidgetAdapter::setParent(nullptr);
-    delete m_quickWindow;
+    if (qobject_cast<QQuickView*>(m_quickWindow)) // QObject cast just to make sure the QWindow is not in ~QObject already
+        delete m_quickWindow;
 }
 
 void FloatingWindowQuick::setGeometry(QRect geo)

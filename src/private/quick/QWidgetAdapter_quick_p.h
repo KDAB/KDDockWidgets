@@ -33,6 +33,7 @@
 QT_BEGIN_NAMESPACE
 class QWindow;
 class QQmlEngine;
+class QQuickView;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
@@ -117,7 +118,7 @@ public:
     void updateGeometry();
     void resize(QSize);
     void resize(int w, int h);
-    bool isWindow() const { return parentItem() == nullptr; }
+    bool isWindow() const;
     bool isTopLevel() const { return isWindow(); }
     bool isMaximized() const;
     bool isActiveWindow() const;
@@ -125,6 +126,7 @@ public:
     void showMinimized();
     void showNormal();
 
+    QQuickView *quickView() const;
     QWindow *windowHandle() const;
     QWidgetAdapter *window() const;
     QWidgetAdapter *parentWidget() const;
