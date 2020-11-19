@@ -129,7 +129,7 @@ public:
     QQuickView *quickView() const;
     QWindow *windowHandle() const;
     QWidgetAdapter *window() const;
-    QWidgetAdapter *parentWidget() const;
+    QWidgetAdapter *parentWidget(bool includeTransient = true) const;
     QPoint mapToGlobal(QPoint pt) const;
     QPoint mapFromGlobal(QPoint) const;
     QPoint mapTo(const QQuickItem *parent, const QPoint &pos) const;

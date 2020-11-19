@@ -446,6 +446,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     auto mainWindow = qobject_cast<MainWindowBase*>(parentWidget());
     fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
                                 : -1;
+
     return fw;
 }
 

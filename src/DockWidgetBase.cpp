@@ -666,14 +666,12 @@ void DockWidgetBase::Private::onDockWidgetShown()
 {
     updateToggleAction();
     updateFloatAction();
-    qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 
 void DockWidgetBase::Private::onDockWidgetHidden()
 {
     updateToggleAction();
     updateFloatAction();
-    qCDebug(hiding) << Q_FUNC_INFO << "parent=" << q->parentWidget();
 }
 
 void DockWidgetBase::Private::close()

@@ -20,6 +20,8 @@
 
 #include "QWidgetAdapter.h"
 #include "FloatingWindow_p.h"
+#include "MainWindowBase.h"
+#include "DockRegistry_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>
@@ -309,13 +311,13 @@ QWidgetAdapter *QWidgetAdapter::window() const
 {
     // We return the top-most QWidgetAdapter
 
-    if (QWidgetAdapter *w = parentWidget())
+    if (QWidgetAdapter *w = parentWidget(/*includeTransient =*/ false))
         return w->window();
 
     return const_cast<QWidgetAdapter *>(this);
 }
 
-QWidgetAdapter *QWidgetAdapter::parentWidget() const
+QWidgetAdapter *QWidgetAdapter::parentWidget(bool includeTransient) const
 {
     QQuickItem *p = parentItem();
     while (p) {
@@ -324,6 +326,16 @@ QWidgetAdapter *QWidgetAdapter::parentWidget() const
 
         p = p->parentItem();
     }
+
+    if (includeTransient) {
+        if (QQuickView *w = quickView()) {
+            // Here we're mimicing QWidget::parentWidget(), which can return the transient parent of the QWindow.
+            MainWindowBase *mw = DockRegistry::self()->mainWindowForHandle(w->transientParent());
+            if (mw)
+                return mw;
+        }
+    }
+
 
     return nullptr;
 }

@@ -504,6 +504,16 @@ FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) con
     return nullptr;
 }
 
+MainWindowBase *DockRegistry::mainWindowForHandle(QWindow *windowHandle) const
+{
+    for (MainWindowBase *mw : m_mainWindows) {
+        if (mw->windowHandle() == windowHandle)
+            return mw;
+    }
+
+    return nullptr;
+}
+
 QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
 {
     QVector<QWindow *> windows;

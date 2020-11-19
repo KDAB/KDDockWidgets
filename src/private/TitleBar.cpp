@@ -120,11 +120,6 @@ void TitleBar::setTitle(const QString &title)
 {
     if (title != m_title) {
         m_title = title;
-        qCDebug(::title) << Q_FUNC_INFO << "\n    title=" << title
-                         << "\n    this=" << this
-                         << "\n    parentWidget=" << parentWidget()
-                         << "\n    isVisible=" << isVisible()
-                         << "\nwindow=" << window();
         update();
         Q_EMIT titleChanged();
     }
@@ -140,7 +135,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 {
     if (!isVisible() && window()->isVisible()) {
         qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar"
-                   << this << window()->isVisible() << parentWidget();
+                   << this << window()->isVisible();
 
         if (m_floatingWindow) {
             qWarning() << "Has floating window with titlebar=" << m_floatingWindow->titleBar()

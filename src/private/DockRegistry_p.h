@@ -95,6 +95,9 @@ public:
     ///@brief returns the FloatingWindow with handle @p windowHandle
     FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
 
+    ///@brief returns the MainWindow with handle @p windowHandle
+    MainWindowBase *mainWindowForHandle(QWindow *windowHandle) const;
+
     ///@brief Returns the list with all visiblye top-level parents of our FloatingWindow and MainWindow instances.
     ///
     /// Typically these are the FloatingWindows and MainWindows themselves. However, since a

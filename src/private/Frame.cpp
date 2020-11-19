@@ -587,7 +587,6 @@ bool Frame::isInMainWindow() const
 bool Frame::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
-        qCDebug(docking) << "Frame: parent changed to =" << QWidgetAdapter::parentWidget();
         if (auto dropArea = qobject_cast<DropArea *>(QWidgetAdapter::parentWidget())) {
             setDropArea(dropArea);
         } else {

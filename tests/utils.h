@@ -15,6 +15,7 @@
 #include "KDDockWidgets.h"
 #include "DropIndicatorOverlayInterface_p.h"
 #include "DockWidgetBase.h"
+#include "DockRegistry_p.h"
 #include "Config.h"
 #include "TitleBar_p.h"
 #include "FloatingWindow_p.h"
@@ -96,8 +97,14 @@ struct EnsureTopLevelsDeleted
     ~EnsureTopLevelsDeleted()
     {
         const QWindowList topLevels = qApp->topLevelWindows();
+
+        auto dr = DockRegistry::self();
+
         if (!topLevels.isEmpty())
-            qWarning() << "There's still top-level widgets present!" << topLevels;
+            qWarning() << "There's still top-level widgets present!" << topLevels
+                       << "\nfloatings:" << dr->floatingWindows()
+                       << "\nmainwindows:" << dr->mainWindowsNames()
+                       << "\ndocks:" << dr->dockWidgetNames();
 
         // Other cleanup, since we use this class everywhere
         Config::self().setDockWidgetFactoryFunc(nullptr);

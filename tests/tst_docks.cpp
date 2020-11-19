@@ -120,8 +120,6 @@ private Q_SLOTS:
     void tst_dockInternal();
     void tst_maximizeAndRestore();
     void tst_propagateResize2();
-    void tst_28NestedWidgets();
-    void tst_28NestedWidgets_data();
     void tst_negativeAnchorPosition();
     void tst_negativeAnchorPosition2();
     void tst_negativeAnchorPosition3();
@@ -173,11 +171,6 @@ private Q_SLOTS:
     void tst_propagateMinSize();
     void tst_createFloatingWindow();
     void tst_addAndReadd();
-    void tst_addToSmallMainWindow1();
-    void tst_addToSmallMainWindow2();
-    void tst_addToSmallMainWindow3();
-    void tst_addToSmallMainWindow4();
-    void tst_addToSmallMainWindow5();
     void tst_fairResizeAfterRemoveWidget();
     void tst_invalidJSON_data();
     void tst_invalidJSON();
@@ -186,7 +179,6 @@ private Q_SLOTS:
     void tst_invalidPlaceholderPosition();
     void tst_setVisibleFalseWhenSideBySide_data();
     void tst_setVisibleFalseWhenSideBySide();
-    void tst_embeddedMainWindow();
     void tst_restoreSimplest();
     void tst_restoreTwice();
     void tst_restoreAfterResize();
@@ -245,6 +237,13 @@ private Q_SLOTS:
     void tst_minSizeChanges();;
     void tst_maximumSizePolicy();
 
+    void tst_addToSmallMainWindow1();
+    void tst_addToSmallMainWindow2();
+    void tst_addToSmallMainWindow3();
+    void tst_addToSmallMainWindow4();
+    void tst_addToSmallMainWindow5();
+    void tst_28NestedWidgets();
+    void tst_28NestedWidgets_data();
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
     void tst_titleBarFocusedWhenTabsChange();
@@ -260,6 +259,7 @@ private Q_SLOTS:
     void tst_floatingWindowDeleted();
     void tst_addToSmallMainWindow6();
     void tst_closeRemovesFromSideBar();
+    void tst_embeddedMainWindow();
 #endif
 };
 
@@ -732,6 +732,7 @@ void TestDocks::tst_resizeWindow()
 void TestDocks::tst_restoreTwice()
 {
     // Tests that restoring multiple times doesn't hide the floating windows for some reason
+    EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
     auto dock1 = createDockWidget("1", new QPushButton("1"));
@@ -3290,31 +3291,6 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     delete dock1;
 }
 
-void TestDocks::tst_embeddedMainWindow()
-{
-    EnsureTopLevelsDeleted e;
-    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
-    EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
-
-    QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
-
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    window->mainWindow->addDockWidget(dock1, Location_OnTop);
-    dock1->setFloating(true);
-    auto dropArea = window->mainWindow->dropArea();
-    auto fw = dock1->floatingWindow();
-
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Left);
-
-    auto layout = dropArea;
-    QVERIFY(Testing::waitForDeleted(fw));
-    QCOMPARE(layout->count(), 2); // 2, as it has the central frame
-    QCOMPARE(layout->visibleCount(), 2);
-    layout->checkSanity();
-
-    delete window;
-}
-
 void TestDocks::tst_restoreSimplest()
 {
    EnsureTopLevelsDeleted e;
@@ -3557,7 +3533,6 @@ void TestDocks::tst_restoreCrash()
 void TestDocks::tst_restoreSideBySide()
 {
     // Save a layout that has a floating window with nesting
-
     EnsureTopLevelsDeleted e;
 
     QSize item2MinSize;
@@ -5249,6 +5224,29 @@ void TestDocks::tst_closeRemovesFromSideBar()
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
 
     delete fw1;
+}
+
+void TestDocks::tst_embeddedMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
+    EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
+
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    window->mainWindow->addDockWidget(dock1, Location_OnTop);
+    dock1->setFloating(true);
+    auto dropArea = window->mainWindow->dropArea();
+    auto fw = dock1->floatingWindow();
+
+    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Left);
+
+    auto layout = dropArea;
+    QVERIFY(Testing::waitForDeleted(fw));
+    QCOMPARE(layout->count(), 2); // 2, as it has the central frame
+    QCOMPARE(layout->visibleCount(), 2);
+    layout->checkSanity();
+
+    delete window;
 }
 
 #endif

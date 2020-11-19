@@ -95,12 +95,14 @@ void FloatingWindowQuick::init()
     m_quickWindow->resize(minSize);
     m_quickWindow->contentItem()->setSize(minSize);
 
-
     if (QWindow *transientParent = candidateParentWindow()) {
         m_quickWindow->setTransientParent(candidateParentWindow());
         // This mimics the QWidget beaviour, where we not only have a transient parent but also
         // a parent for cleanup. Calling QWindow::setParent() here would clip it to the parent
         m_quickWindow->QObject::setParent(transientParent);
+        m_quickWindow->setObjectName(QStringLiteral("Floating QWindow with parent")); // for debug
+    } else {
+        m_quickWindow->setObjectName(QStringLiteral("Floating QWindow"));
     }
 
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
