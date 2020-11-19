@@ -192,7 +192,6 @@ private Q_SLOTS:
     void tst_restoreWithAffinity();
     void tst_marginsAfterRestore();
     void tst_restoreWithNewDockWidgets();
-    void tst_restoreEmbeddedMainWindow();
     void tst_restoreWithDockFactory();
     void tst_restoreResizesLayout();
     void tst_addDockWidgetToMainWindow();
@@ -260,6 +259,7 @@ private Q_SLOTS:
     void tst_addToSmallMainWindow6();
     void tst_closeRemovesFromSideBar();
     void tst_embeddedMainWindow();
+    void tst_restoreEmbeddedMainWindow();
 #endif
 };
 
@@ -3715,35 +3715,6 @@ void TestDocks::tst_restoreWithNewDockWidgets()
     delete dock1->window();
 }
 
-void TestDocks::tst_restoreEmbeddedMainWindow()
-{
-    EnsureTopLevelsDeleted e;
-    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
-    EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
-
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    window->mainWindow->addDockWidget(dock1, Location_OnTop);
-
-    const QPoint originalPos(250, 250);
-    const QSize originalSize = window->size();
-    window->move(originalPos);
-
-    LayoutSaver saver;
-    QByteArray saved = saver.serializeLayout();
-    QVERIFY(!saved.isEmpty());
-
-    window->resize(555, 555);
-    const QPoint newPos(500, 500);
-    window->move(newPos);
-    QVERIFY(saver.restoreLayout(saved));
-
-    QCOMPARE(window->pos(), originalPos);
-    QCOMPARE(window->size(), originalSize);
-    window->mainWindow->multiSplitter()->checkSanity();
-
-    delete window;
-}
-
 void TestDocks::tst_restoreWithDockFactory()
 {
     // Tests that restore the layout with a missing dock widget will recreate the dock widget using a factory
@@ -5245,6 +5216,35 @@ void TestDocks::tst_embeddedMainWindow()
     QCOMPARE(layout->count(), 2); // 2, as it has the central frame
     QCOMPARE(layout->visibleCount(), 2);
     layout->checkSanity();
+
+    delete window;
+}
+
+void TestDocks::tst_restoreEmbeddedMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
+    EmbeddedWindow *window = createEmbeddedMainWindow(QSize(800, 800));
+
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    window->mainWindow->addDockWidget(dock1, Location_OnTop);
+
+    const QPoint originalPos(250, 250);
+    const QSize originalSize = window->size();
+    window->move(originalPos);
+
+    LayoutSaver saver;
+    QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    window->resize(555, 555);
+    const QPoint newPos(500, 500);
+    window->move(newPos);
+    QVERIFY(saver.restoreLayout(saved));
+
+    QCOMPARE(window->pos(), originalPos);
+    QCOMPARE(window->size(), originalSize);
+    window->mainWindow->multiSplitter()->checkSanity();
 
     delete window;
 }
