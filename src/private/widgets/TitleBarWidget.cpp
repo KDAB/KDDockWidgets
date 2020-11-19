@@ -72,7 +72,6 @@ void TitleBarWidget::init()
     connect(m_minimizeButton, &QAbstractButton::clicked, this, &TitleBarWidget::onMinimizeClicked);
     connect(m_autoHideButton, &QAbstractButton::clicked, this, &TitleBarWidget::onAutoHideClicked);
 
-    updateCloseButton();
     updateFloatButton();
     updateMaximizeButton();
     updateMinimizeButton();
@@ -93,6 +92,9 @@ void TitleBarWidget::init()
         }
         update();
     });
+
+    m_closeButton->setEnabled(closeButtonEnabled());
+    connect(this, &TitleBar::closeButtonEnabledChanged, m_closeButton, &QAbstractButton::setEnabled);
 }
 
 QRect TitleBarWidget::iconRect() const
@@ -152,16 +154,6 @@ void TitleBarWidget::updateFloatButton()
 {
     m_floatButton->setToolTip(floatingWindow()? tr("Dock window") : tr("Undock window"));
     m_floatButton->setVisible(supportsFloatingButton());
-}
-
-void TitleBarWidget::updateCloseButton()
-{
-    const bool anyNonClosable = frame() ? frame()->anyNonClosable()
-                                        : (floatingWindow() ? floatingWindow()->anyNonClosable()
-                                                            : false);
-
-    qCDebug(closebutton) << Q_FUNC_INFO << "enabled=" << !anyNonClosable;
-    m_closeButton->setEnabled(!anyNonClosable);
 }
 
 void TitleBarWidget::updateMinimizeButton()

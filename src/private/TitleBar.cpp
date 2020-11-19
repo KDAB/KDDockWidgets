@@ -69,6 +69,7 @@ void TitleBar::init()
         // repaint
         update();
     });
+    updateCloseButton();
 }
 
 TitleBar::~TitleBar()
@@ -87,6 +88,16 @@ bool TitleBar::onDoubleClicked()
     }
 
     return false;
+}
+
+void TitleBar::updateCloseButton()
+{
+
+    const bool anyNonClosable = frame() ? frame()->anyNonClosable()
+                                        : (floatingWindow() ? floatingWindow()->anyNonClosable()
+                                                            : false);
+
+    setCloseButtonEnabled(!anyNonClosable);
 }
 
 void TitleBar::toggleMaximized()
@@ -114,6 +125,14 @@ void TitleBar::focusInEvent(QFocusEvent *ev)
 bool TitleBar::isOverlayed() const
 {
     return m_frame && m_frame->isOverlayed();
+}
+
+void TitleBar::setCloseButtonEnabled(bool enabled)
+{
+    if (enabled != m_closeButtonEnabled) {
+        m_closeButtonEnabled = enabled;
+        Q_EMIT closeButtonEnabledChanged(enabled);
+    }
 }
 
 void TitleBar::setTitle(const QString &title)
@@ -361,4 +380,9 @@ void TitleBar::onAutoHideClicked()
             dw->moveToSideBar();
         }
     }
+}
+
+bool TitleBar::closeButtonEnabled() const
+{
+    return m_closeButtonEnabled;
 }

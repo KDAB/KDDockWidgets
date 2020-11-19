@@ -41,6 +41,7 @@ class DOCKS_EXPORT TitleBar : public QWidgetAdapter
     Q_OBJECT
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(bool hasIcon READ hasIcon NOTIFY iconChanged)
+    Q_PROPERTY(bool closeButtonEnabled READ closeButtonEnabled WRITE setCloseButtonEnabled NOTIFY closeButtonEnabledChanged)
 public:
     typedef QVector<TitleBar *> List;
 
@@ -95,12 +96,14 @@ public:
     ///@brief getter for m_floatingWindow
     FloatingWindow *floatingWindow() const { return m_floatingWindow; }
 
-    virtual void updateCloseButton() {}
+    /// @brief updates the close button enabled state
+    void updateCloseButton();
 
 Q_SIGNALS:
     void titleChanged();
     void iconChanged();
     void isFocusedChanged();
+    void closeButtonEnabledChanged(bool);
 
 protected:
 
@@ -110,6 +113,8 @@ protected:
     Q_INVOKABLE void onMinimizeClicked();
     Q_INVOKABLE void toggleMaximized();
     Q_INVOKABLE void onAutoHideClicked();
+
+    bool closeButtonEnabled() const;
 
     virtual void updateFloatButton() {}
     virtual void updateMaximizeButton() {}
@@ -124,11 +129,10 @@ protected:
     virtual bool isFloatButtonEnabled() const { return true; }
 
     void focusInEvent(QFocusEvent *event) override;
-
     bool isOverlayed() const;
-
 private:
     friend class ::TestDocks;
+    void setCloseButtonEnabled(bool);
 
     void init();
 
@@ -139,6 +143,7 @@ private:
     Frame *const m_frame;
     FloatingWindow *const m_floatingWindow;
     const bool m_supportsAutoHide;
+    bool m_closeButtonEnabled = true;
 };
 
 
