@@ -95,26 +95,14 @@ struct EnsureTopLevelsDeleted
 
     ~EnsureTopLevelsDeleted()
     {
-        if (topLevels().size() != 0) {
-            qWarning() << "There's still top-level widgets present!" << topLevels();
-        }
+        const QWindowList topLevels = qApp->topLevelWindows();
+        if (!topLevels.isEmpty())
+            qWarning() << "There's still top-level widgets present!" << topLevels;
 
         // Other cleanup, since we use this class everywhere
         Config::self().setDockWidgetFactoryFunc(nullptr);
         Config::self().setFlags(m_originalFlags);
         Config::self().setSeparatorThickness(m_originalSeparatorThickness);
-    }
-
-    QWidgetList topLevels() const
-    {
-        QWidgetList result;
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-        for (QWidget *w : qApp->topLevelWidgets()) {
-            if (!qobject_cast<QToolButton*>(w))
-                result << w;
-        }
-#endif
-        return result;
     }
 
     const Config::Flags m_originalFlags;
@@ -438,6 +426,7 @@ inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
     lay->addWidget(mainwindow);
 #else
     // TODO: For QtQuick we need some QML
+    qWarning() << "Parent me!";
 #endif
     window->show();
     window->resize(sz);
