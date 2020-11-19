@@ -60,3 +60,59 @@ bool TitleBarQuick::eventFilter(QObject *, QEvent *ev)
 
     return false;
 }
+
+bool TitleBarQuick::isCloseButtonEnabled() const
+{
+    if (QQuickItem *button = closeButton())
+        return button->isEnabled();
+    return false;
+}
+
+bool TitleBarQuick::isCloseButtonVisible() const
+{
+    if (QQuickItem *button = closeButton())
+        return button->isVisible();
+
+    return true;
+}
+
+bool TitleBarQuick::isFloatButtonEnabled() const
+{
+    if (QQuickItem *button = floatButton())
+        return button->isEnabled();
+
+    return true;
+}
+
+bool TitleBarQuick::isFloatButtonVisible() const
+{
+    if (QQuickItem *button = floatButton())
+        return button->isVisible();
+
+    return true;
+}
+
+QQuickItem *TitleBarQuick::titleBarQmlItem() const
+{
+    return m_titleBarQmlItem;
+}
+
+void TitleBarQuick::setTitleBarQmlItem(QQuickItem *item)
+{
+    if (item != m_titleBarQmlItem) {
+        m_titleBarQmlItem = item;
+        Q_EMIT titleBarQmlItemChanged();
+    }
+}
+
+QQuickItem *TitleBarQuick::floatButton() const
+{
+    return m_titleBarQmlItem ? m_titleBarQmlItem->property("floatButton").value<QQuickItem*>()
+                             : nullptr;
+}
+
+QQuickItem *TitleBarQuick::closeButton() const
+{
+    return m_titleBarQmlItem ? m_titleBarQmlItem->property("closeButton").value<QQuickItem*>()
+                             : nullptr;
+}

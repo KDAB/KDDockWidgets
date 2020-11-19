@@ -14,6 +14,16 @@ import QtQuick 2.9
 TitleBarBase {
     id: root
 
+    readonly property QtObject floatButton: floatButton
+    readonly property QtObject closeButton: closeButton
+
+    onTitleBarCppChanged: {
+        if (titleBarCpp) {
+            // Setting just so the unit-tests can access the buttons
+            titleBarCpp.titleBarQmlItem = this;
+        }
+    }
+
     Text {
         id: title
         text: root.title
