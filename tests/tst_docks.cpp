@@ -179,7 +179,6 @@ private Q_SLOTS:
     void tst_invalidPlaceholderPosition();
     void tst_setVisibleFalseWhenSideBySide_data();
     void tst_setVisibleFalseWhenSideBySide();
-    void tst_restoreSimplest();
     void tst_restoreTwice();
     void tst_restoreAfterResize();
     void tst_resizeViaAnchorsAfterPlaceholderCreation();
@@ -193,7 +192,6 @@ private Q_SLOTS:
     void tst_marginsAfterRestore();
     void tst_restoreWithNewDockWidgets();
     void tst_restoreWithDockFactory();
-    void tst_restoreResizesLayout();
     void tst_addDockWidgetToMainWindow();
     void tst_addDockWidgetToContainingWindow();
     void tst_notClosable();
@@ -204,37 +202,20 @@ private Q_SLOTS:
     void tst_tabBarWithHiddenTitleBar();
     void tst_availableSizeWithPlaceholders();
     void tst_anchorFollowingItselfAssert();
-    void tst_positionWhenShown();
     void tst_moreTitleBarCornerCases();
-    void tst_maxSizePropagates();
-    void tst_maxSizePropagates2();
-    void tst_maxSizeHonouredWhenDropped();
-    void tst_fixedSizePolicy();
     void tst_isInMainWindow();
     void tst_sizeConstraintWarning();
     void tst_stuckSeparator();
-    void tst_maxSizeHonouredWhenAnotherDropped();
-    void tst_addToHiddenMainWindow();
     void tst_dockNotFillingSpace();
     void tst_titlebar_getter();
-    void tst_restoreSimple();
-    void tst_lastFloatingPositionIsRestored();
-    void tst_negativeAnchorPositionWhenEmbedded();
-    void tst_negativeAnchorPositionWhenEmbedded_data();
-    void tst_floatingAction();
     void tst_raise();
-    void tst_nonDockable();
     void tst_complex();
-    void tst_flagDoubleClick();
     void tst_addingOptionHiddenTabbed();
     void tst_invalidLayoutAfterRestore();
     void tst_maxSizedHonouredAfterRemoved();
     void tst_addDockWidgetAsTabToDockWidget();
     void tst_close();
     void tst_propagateSizeHonoursMinSize();
-    void tst_constraintsAfterPlaceholder();
-    void tst_minSizeChanges();;
-    void tst_maximumSizePolicy();
 
     void tst_addToSmallMainWindow1();
     void tst_addToSmallMainWindow2();
@@ -243,6 +224,23 @@ private Q_SLOTS:
     void tst_addToSmallMainWindow5();
     void tst_28NestedWidgets();
     void tst_28NestedWidgets_data();
+    void tst_positionWhenShown();
+    void tst_maxSizePropagates();
+    void tst_maxSizePropagates2();
+    void tst_restoreResizesLayout();
+    void tst_maxSizeHonouredWhenDropped();
+    void tst_fixedSizePolicy();
+    void tst_maxSizeHonouredWhenAnotherDropped();
+    void tst_addToHiddenMainWindow();
+    void tst_restoreSimple();
+    void tst_restoreSimplest();
+    void tst_lastFloatingPositionIsRestored();
+    void tst_floatingAction();
+    void tst_nonDockable();
+    void tst_flagDoubleClick();
+    void tst_constraintsAfterPlaceholder();
+    void tst_minSizeChanges();
+    void tst_maximumSizePolicy();
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
     void tst_titleBarFocusedWhenTabsChange();
@@ -260,6 +258,8 @@ private Q_SLOTS:
     void tst_closeRemovesFromSideBar();
     void tst_embeddedMainWindow();
     void tst_restoreEmbeddedMainWindow();
+    void tst_negativeAnchorPositionWhenEmbedded();
+    void tst_negativeAnchorPositionWhenEmbedded_data();
 #endif
 };
 
@@ -5246,10 +5246,8 @@ void TestDocks::tst_restoreEmbeddedMainWindow()
     QCOMPARE(window->size(), originalSize);
     window->mainWindow->multiSplitter()->checkSanity();
 
-    delete window;
+    delete window;   
 }
-
-#endif
 
 void TestDocks::tst_negativeAnchorPositionWhenEmbedded_data()
 {
@@ -5289,6 +5287,8 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
 
     delete m->window();
 }
+
+#endif
 
 void TestDocks::tst_floatingAction()
 {
