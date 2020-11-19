@@ -184,6 +184,7 @@ private Q_SLOTS:
 
     void tst_invalidPlaceholderPosition_data();
     void tst_invalidPlaceholderPosition();
+    void tst_setVisibleFalseWhenSideBySide_data();
     void tst_setVisibleFalseWhenSideBySide();
     void tst_embeddedMainWindow();
     void tst_restoreSimplest();
@@ -3237,8 +3238,26 @@ void TestDocks::tst_invalidPlaceholderPosition()
     QVERIFY(Testing::waitForDeleted(dock2));
 }
 
+void TestDocks::tst_setVisibleFalseWhenSideBySide_data()
+{
+    QTest::addColumn<bool>("useSetVisible");
+    QTest::newRow("false") << false;
+    // QTest::newRow("true") << true; // We don't support closing dock widgets via setVisible(false). (Yet ? Maybe never).
+}
+
 void TestDocks::tst_setVisibleFalseWhenSideBySide()
 {
+    QFETCH(bool, useSetVisible);
+
+    auto setVisible = [useSetVisible] (DockWidgetBase *dw, bool visible) {
+        if (useSetVisible)
+            dw->setVisible(visible);
+        else if (visible)
+            dw->show();
+        else
+            dw->close();
+    };
+
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
     auto dock1 = createDockWidget("dock1", new QPushButton("one"));
@@ -3250,25 +3269,25 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
     auto oldParent = dock1->parentWidget();
 
     // 1. Just toggle visibility and check that stuff remained sane
-    dock1->setVisible(false);
+    QVERIFY(dock1->titleBar()->isVisible());
+    setVisible(dock1, false);
 
+    QVERIFY(!dock1->titleBar());
     QVERIFY(!dock1->isTabbed());
-    QVERIFY(!dock1->isFloating());
+    QVERIFY(dock1->isFloating());
 
-    dock1->setVisible(true);
+    setVisible(dock1, true);
+    QVERIFY(dock1->titleBar()->isVisible());
     QVERIFY(!dock1->isTabbed());
     QVERIFY(!dock1->isFloating());
     QCOMPARE(dock1->geometry(), oldGeo);
     QCOMPARE(dock1->parentWidget(), oldParent);
 
     // 2. Check that the parent frame also is hidden now
-    dock1->setVisible(false);
-    QVERIFY(!dock1->frame()->QWidgetAdapter::isVisible());
-
-    // Cleanup
-    m->deleteLater();
-    auto window = m.release();
-    Testing::waitForDeleted(window);
+    //auto fw1 = dock1->window();
+    setVisible(dock1, false);
+    QVERIFY(!dock1->frame());
+    delete dock1;
 }
 
 void TestDocks::tst_embeddedMainWindow()
