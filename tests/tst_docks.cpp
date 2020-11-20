@@ -216,6 +216,7 @@ private Q_SLOTS:
     void tst_addDockWidgetAsTabToDockWidget();
     void tst_close();
     void tst_propagateSizeHonoursMinSize();
+    void tst_nonDockable();
 
     void tst_addToSmallMainWindow1();
     void tst_addToSmallMainWindow2();
@@ -236,7 +237,6 @@ private Q_SLOTS:
     void tst_restoreSimplest();
     void tst_lastFloatingPositionIsRestored();
     void tst_floatingAction();
-    void tst_nonDockable();
     void tst_flagDoubleClick();
     void tst_constraintsAfterPlaceholder();
     void tst_minSizeChanges();
@@ -5310,6 +5310,7 @@ void TestDocks::tst_floatingAction()
         QCOMPARE(action->toolTip(), tr("Detach"));
 
         action->toggle();
+
         QVERIFY(dock1->isFloating());
         QVERIFY(action->isChecked());
         QVERIFY(action->isEnabled());

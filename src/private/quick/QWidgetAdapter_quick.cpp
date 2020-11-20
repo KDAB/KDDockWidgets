@@ -32,11 +32,27 @@
 
 using namespace KDDockWidgets;
 
+static bool flagsAreTopLevelFlags(Qt::WindowFlags flags)
+{
+    return flags & (Qt::Window | Qt::Tool);
+}
+
+static QQuickItem* actualParentItem(QQuickItem *candidateParentItem, Qt::WindowFlags flags)
+{
+    // When we have a top-level, such as FloatingWindow, we only want to set QObject parentship
+    // and not parentItem.
+    return flagsAreTopLevelFlags(flags) ? nullptr
+                                        : candidateParentItem;
+}
+
 QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags flags)
-    : QQuickItem(parent)
+    : QQuickItem(actualParentItem(parent, flags))
     , m_windowFlags(flags)
 {
-    this->setParent(parent); // also set parentItem
+    if (parent && flagsAreTopLevelFlags(flags)) {
+        // See comment in actualParentItem(). We set only the QObject parent. Mimics QWidget behaviour
+        QObject::setParent(parent);
+    }
 
     connect(this, &QQuickItem::widthChanged, this, [this] {
         onResize(size());
