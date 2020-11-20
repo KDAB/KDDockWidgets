@@ -35,6 +35,7 @@ TitleBarBase {
 
     TitleBarButton {
         id: floatButton
+        visible: root.titleBarCpp && root.titleBarCpp.floatButtonVisible
         imageSource: "qrc:/img/dock-float.png"
         anchors {
             verticalCenter: parent ? parent.verticalCenter : undefined

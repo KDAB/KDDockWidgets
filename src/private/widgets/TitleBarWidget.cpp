@@ -72,7 +72,6 @@ void TitleBarWidget::init()
     connect(m_minimizeButton, &QAbstractButton::clicked, this, &TitleBarWidget::onMinimizeClicked);
     connect(m_autoHideButton, &QAbstractButton::clicked, this, &TitleBarWidget::onAutoHideClicked);
 
-    updateFloatButton();
     updateMaximizeButton();
     updateMinimizeButton();
 
@@ -95,6 +94,11 @@ void TitleBarWidget::init()
 
     m_closeButton->setEnabled(closeButtonEnabled());
     connect(this, &TitleBar::closeButtonEnabledChanged, m_closeButton, &QAbstractButton::setEnabled);
+
+    connect(this, &TitleBar::floatButtonToolTipChanged, m_floatButton, &QWidget::setToolTip);
+    connect(this, &TitleBar::floatButtonVisibleChanged, m_floatButton, &QWidget::setVisible);
+    m_floatButton->setVisible(floatButtonVisible());
+    m_floatButton->setToolTip(floatButtonToolTip());
 }
 
 QRect TitleBarWidget::iconRect() const
@@ -148,12 +152,6 @@ void TitleBarWidget::paintEvent(QPaintEvent *)
                                          : rect().adjusted(iconRect().right(), 0, -buttonAreaWidth(), 0);
 
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
-}
-
-void TitleBarWidget::updateFloatButton()
-{
-    m_floatButton->setToolTip(floatingWindow()? tr("Dock window") : tr("Undock window"));
-    m_floatButton->setVisible(supportsFloatingButton());
 }
 
 void TitleBarWidget::updateMinimizeButton()

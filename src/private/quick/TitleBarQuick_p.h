@@ -30,9 +30,6 @@ public:
     explicit TitleBarQuick(FloatingWindow *parent);
     ~TitleBarQuick() override;
 
-    ///@brief getter for the close button
-    //QWidget* closeButton() const;
-
 protected:
 
     Q_INVOKABLE void filterEvents(QObject *);
@@ -46,8 +43,7 @@ protected:
 
     /*void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
-    void updateFloatButton() override;
-    void updateCloseButton() override;*/
+*/
 
     QQuickItem *titleBarQmlItem() const;
     void setTitleBarQmlItem(QQuickItem *);

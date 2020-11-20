@@ -42,6 +42,8 @@ class DOCKS_EXPORT TitleBar : public QWidgetAdapter
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(bool hasIcon READ hasIcon NOTIFY iconChanged)
     Q_PROPERTY(bool closeButtonEnabled READ closeButtonEnabled WRITE setCloseButtonEnabled NOTIFY closeButtonEnabledChanged)
+    Q_PROPERTY(bool floatButtonVisible READ floatButtonVisible WRITE setFloatButtonVisible NOTIFY floatButtonVisibleChanged)
+    Q_PROPERTY(QString floatButtonToolTip READ floatButtonToolTip NOTIFY floatButtonToolTipChanged)
 public:
     typedef QVector<TitleBar *> List;
 
@@ -104,6 +106,8 @@ Q_SIGNALS:
     void iconChanged();
     void isFocusedChanged();
     void closeButtonEnabledChanged(bool);
+    void floatButtonVisibleChanged(bool);
+    void floatButtonToolTipChanged(const QString &);
 
 protected:
 
@@ -115,24 +119,28 @@ protected:
     Q_INVOKABLE void onAutoHideClicked();
 
     bool closeButtonEnabled() const;
+    bool floatButtonVisible() const;
+    QString floatButtonToolTip() const;
 
-    virtual void updateFloatButton() {}
     virtual void updateMaximizeButton() {}
 
     virtual void updateMinimizeButton() {}
     virtual void updateAutoHideButton() {}
 
     // The following are needed for the unit-tests
-    virtual bool isCloseButtonVisible() const { return true; }
-    virtual bool isCloseButtonEnabled() const { return true; }
-    virtual bool isFloatButtonVisible() const { return true; }
-    virtual bool isFloatButtonEnabled() const { return true; }
+    virtual bool isCloseButtonVisible() const = 0;
+    virtual bool isCloseButtonEnabled() const = 0;
+    virtual bool isFloatButtonVisible() const = 0;
+    virtual bool isFloatButtonEnabled() const = 0;
 
     void focusInEvent(QFocusEvent *event) override;
     bool isOverlayed() const;
 private:
     friend class ::TestDocks;
+    void updateFloatButton();
     void setCloseButtonEnabled(bool);
+    void setFloatButtonVisible(bool);
+    void setFloatButtonToolTip(const QString &);
 
     void init();
 
@@ -144,6 +152,8 @@ private:
     FloatingWindow *const m_floatingWindow;
     const bool m_supportsAutoHide;
     bool m_closeButtonEnabled = true;
+    bool m_floatButtonVisible = true;
+    QString m_floatButtonToolTip;
 };
 
 

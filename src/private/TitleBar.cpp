@@ -70,6 +70,7 @@ void TitleBar::init()
         update();
     });
     updateCloseButton();
+    updateFloatButton();
 }
 
 TitleBar::~TitleBar()
@@ -132,6 +133,22 @@ void TitleBar::setCloseButtonEnabled(bool enabled)
     if (enabled != m_closeButtonEnabled) {
         m_closeButtonEnabled = enabled;
         Q_EMIT closeButtonEnabledChanged(enabled);
+    }
+}
+
+void TitleBar::setFloatButtonVisible(bool visible)
+{
+    if (visible != m_floatButtonVisible) {
+        m_floatButtonVisible = visible;
+        Q_EMIT floatButtonVisibleChanged(visible);
+    }
+}
+
+void TitleBar::setFloatButtonToolTip(const QString &tip)
+{
+    if (tip != m_floatButtonToolTip) {
+        m_floatButtonToolTip = tip;
+        Q_EMIT floatButtonToolTipChanged(tip);
     }
 }
 
@@ -385,4 +402,20 @@ void TitleBar::onAutoHideClicked()
 bool TitleBar::closeButtonEnabled() const
 {
     return m_closeButtonEnabled;
+}
+
+bool TitleBar::floatButtonVisible() const
+{
+    return m_floatButtonVisible;
+}
+
+QString TitleBar::floatButtonToolTip() const
+{
+    return m_floatButtonToolTip;
+}
+
+void TitleBar::updateFloatButton()
+{
+    setFloatButtonToolTip(floatingWindow() ? tr("Dock window") : tr("Undock window"));
+    setFloatButtonVisible(supportsFloatingButton());
 }

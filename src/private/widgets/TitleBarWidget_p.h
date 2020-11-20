@@ -46,7 +46,6 @@ public:
 protected:
     void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
-    void updateFloatButton() override;
     void updateMaximizeButton() override;
     void updateMinimizeButton() override;
     void updateAutoHideButton() override;
