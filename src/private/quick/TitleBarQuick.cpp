@@ -97,6 +97,14 @@ QQuickItem *TitleBarQuick::titleBarQmlItem() const
     return m_titleBarQmlItem;
 }
 
+QQuickItem *TitleBarQuick::titleBarMouseArea() const
+{
+    if (m_titleBarQmlItem)
+        return m_titleBarQmlItem->property("mouseAreaForTests").value<QQuickItem *>();
+
+    return nullptr;
+}
+
 void TitleBarQuick::setTitleBarQmlItem(QQuickItem *item)
 {
     if (item != m_titleBarQmlItem) {

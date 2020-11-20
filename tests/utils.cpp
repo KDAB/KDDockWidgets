@@ -187,7 +187,14 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, WidgetType *receiver)
     QCursor::setPos(globalPos);
     QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-    qApp->sendEvent(receiver, &ev);
+
+    if (auto actualReceiver = receiver->property("titleBarMouseArea").value<QObject*>()) {
+        // QtQuick case, we need to send the event to the mouse area
+        qApp->sendEvent(actualReceiver, &ev);
+    } else {
+        // QtWidgets case
+        qApp->sendEvent(receiver, &ev);
+    }
 }
 
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, WidgetType *receiver)

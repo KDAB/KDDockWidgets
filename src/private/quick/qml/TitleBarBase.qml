@@ -17,12 +17,20 @@ Rectangle {
     property QtObject titleBarCpp
     readonly property string title: titleBarCpp ? titleBarCpp.title : ""
 
+    // So the tests can send mouse events programatically
+    readonly property QtObject mouseAreaForTests: dragMouseArea
+
     visible: titleBarCpp && titleBarCpp.visible
     implicitHeight: 30
 
     MouseArea {
         id: dragMouseArea
         anchors.fill: parent
+        onDoubleClicked: {
+            if (titleBarCpp) {
+                titleBarCpp.onDoubleClicked();
+            }
+        }
     }
 
     onTitleBarCppChanged: {

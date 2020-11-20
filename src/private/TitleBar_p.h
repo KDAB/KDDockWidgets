@@ -90,7 +90,7 @@ public:
     QIcon icon() const;
 
     ///@brief toggle floating
-    bool onDoubleClicked();
+    Q_INVOKABLE bool onDoubleClicked();
 
     ///@brief getter for m_frame
     Frame *frame() const { return m_frame; }
