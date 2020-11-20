@@ -72,7 +72,7 @@ bool MultiSplitter::onResize(QSize newSize)
     qCDebug(sizing) << Q_FUNC_INFO << "; new=" << newSize
                     << "; window=" << window();
 
-    QScopedValueRollback<bool>(m_inResizeEvent, true); // to avoid re-entrancy
+    QScopedValueRollback<bool> resizeGuard(m_inResizeEvent, true); // to avoid re-entrancy
 
     if (!LayoutSaver::restoreInProgress()) {
         // don't resize anything while we're restoring the layout

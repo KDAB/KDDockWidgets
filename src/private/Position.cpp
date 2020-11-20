@@ -82,7 +82,7 @@ bool Position::containsPlaceholder(Layouting::Item *item) const
 
 void Position::removePlaceholders()
 {
-    QScopedValueRollback<bool>(m_clearing, true);
+    QScopedValueRollback<bool> clearGuard(m_clearing, true);
     m_placeholders.clear();
 }
 
