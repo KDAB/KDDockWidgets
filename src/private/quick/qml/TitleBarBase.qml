@@ -27,9 +27,8 @@ Rectangle {
         id: dragMouseArea
         anchors.fill: parent
         onDoubleClicked: {
-            if (titleBarCpp) {
+            if (titleBarCpp)
                 titleBarCpp.onDoubleClicked();
-            }
         }
     }
 
