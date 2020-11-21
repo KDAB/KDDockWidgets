@@ -35,16 +35,31 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     QQmlComponent component(Config::self().qmlEngine(),
                             QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/Frame.qml")));
 
-    auto visualItem = static_cast<QQuickItem*>(component.create());
+    m_visualItem = static_cast<QQuickItem*>(component.create());
 
-    if (!visualItem) {
+    if (!m_visualItem) {
         qWarning() << Q_FUNC_INFO << "Failed to create item" << component.errorString();
         return;
     }
 
-    visualItem->setProperty("frameCpp", QVariant::fromValue(this));
-    visualItem->setParentItem(this);
-    visualItem->setParent(this);
+    m_visualItem->setProperty("frameCpp", QVariant::fromValue(this));
+    m_visualItem->setParentItem(this);
+    m_visualItem->setParent(this);
+}
+
+FrameQuick::~FrameQuick()
+{
+    {
+        const DockWidgetBase::List docks = dockWidgets();
+
+        // The QML item must be deleted with deleteLater(), has we might be currently with its mouse
+        // handler in the stack. QML doesn't support it being deleted in that case.
+        // So unparent it and deleteLater().
+        m_visualItem->setParent(nullptr);
+        m_visualItem->deleteLater();
+
+        qDeleteAll(docks);
+    }
 }
 
 DockWidgetModel *FrameQuick::dockWidgetModel() const

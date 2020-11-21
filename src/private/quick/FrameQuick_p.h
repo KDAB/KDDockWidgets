@@ -18,6 +18,8 @@
 
 #include <QAbstractListModel>
 
+class QQuickItem;
+
 namespace KDDockWidgets {
 
 class DockWidgetModel;
@@ -31,6 +33,7 @@ class DOCKS_EXPORT FrameQuick : public Frame
     Q_PROPERTY(DockWidgetModel* dockWidgetModel READ dockWidgetModel CONSTANT)
 public:
     explicit FrameQuick(QWidgetAdapter *parent = nullptr, FrameOptions = FrameOption::FrameOption_None);
+    ~FrameQuick() override;
     DockWidgetModel *dockWidgetModel() const;
 
 protected:
@@ -50,6 +53,7 @@ Q_SIGNALS:
     void tabTitlesChanged();
 private:
     QQuickItem *m_stackLayout = nullptr;
+    QQuickItem *m_visualItem = nullptr;
     DockWidgetBase *m_currentDockWidget = nullptr;
     DockWidgetModel *const m_dockWidgetModel;
     QHash<DockWidgetBase *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambdas
