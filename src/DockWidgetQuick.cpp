@@ -87,3 +87,23 @@ bool DockWidgetQuick::event(QEvent *e)
 
     return DockWidgetBase::event(e);
 }
+
+QSize DockWidgetQuick::minimumSize() const
+{
+    if (QWidgetAdapter *guestWidget = widget()) {
+        // The guests min-size is the same as the widget's, there's no spacing or margins.
+        return guestWidget->minimumSize();
+    }
+
+    return DockWidgetBase::minimumSize();
+}
+
+QSize DockWidgetQuick::maximumSize() const
+{
+    if (QWidgetAdapter *guestWidget = widget()) {
+        // The guests max-size is the same as the widget's, there's no spacing or margins.
+        return guestWidget->maximumSize();
+    }
+
+    return DockWidgetBase::maximumSize();
+}

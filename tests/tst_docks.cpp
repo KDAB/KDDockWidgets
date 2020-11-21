@@ -217,6 +217,10 @@ private Q_SLOTS:
     void tst_close();
     void tst_propagateSizeHonoursMinSize();
     void tst_nonDockable();
+    void tst_floatingAction();
+    void tst_flagDoubleClick();
+    void tst_constraintsPropagateUp();
+    void tst_constraintsAfterPlaceholder();
 
     void tst_addToSmallMainWindow1();
     void tst_addToSmallMainWindow2();
@@ -236,9 +240,7 @@ private Q_SLOTS:
     void tst_restoreSimple();
     void tst_restoreSimplest();
     void tst_lastFloatingPositionIsRestored();
-    void tst_floatingAction();
-    void tst_flagDoubleClick();
-    void tst_constraintsAfterPlaceholder();
+
     void tst_minSizeChanges();
     void tst_maximumSizePolicy();
 #ifdef KDDOCKWIDGETS_QTWIDGETS
@@ -6092,6 +6094,21 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
 
     min1 = widgetMinLength(dock1, Qt::Vertical);
     QVERIFY(dock1->height() >= min1);
+}
+void TestDocks::tst_constraintsPropagateUp()
+{
+    // Mostly for QtQuick, which doesn't have any layouts, so we need to make the propagation
+    // Manually in DockWidgetQuick::minimumSize(), in FrameQuick, etc.
+
+    EnsureTopLevelsDeleted e;
+    const int minHeight = 400;
+    auto guestWidget = new MyWidget2(QSize(400, minHeight));
+    auto dock1 = createDockWidget("dock1", guestWidget);
+    QCOMPARE(widgetMinLength(guestWidget, Qt::Vertical), minHeight);
+    QCOMPARE(dock1->minimumHeight(), minHeight);
+
+    delete dock1->window();
+
 }
 
 void TestDocks::tst_constraintsAfterPlaceholder()

@@ -57,6 +57,12 @@ public:
     /// @reimp
     void setWidget(QWidgetOrQuick *widget) override;
 
+    /// @reimp
+    QSize minimumSize() const override;
+
+    /// @reimp
+    QSize maximumSize() const override;
+
 protected:
     bool event(QEvent *e) override;
 

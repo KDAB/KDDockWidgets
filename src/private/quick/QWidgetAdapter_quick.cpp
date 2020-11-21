@@ -234,7 +234,7 @@ void QWidgetAdapter::setMinimumSize(QSize sz)
 void QWidgetAdapter::setMaximumSize(QSize sz)
 {
     if (minimumSize() != sz) {
-        setProperty("kddockwidgets_min_size", sz);
+        setProperty("kddockwidgets_max_size", sz);
         updateGeometry();
     }
 }

@@ -99,8 +99,8 @@ public:
 
     QSize size() const { return QQuickItem::size().toSize(); }
     virtual QSize minimumSizeHint() const { return minimumSize(); }
-    QSize minimumSize() const;
-    QSize maximumSize() const;
+    virtual QSize minimumSize() const;
+    virtual QSize maximumSize() const;
     int minimumHeight() const { return minimumSize().height(); }
     int minimumWidth() const { return minimumSize().width(); }
     bool hasFixedWidth() const { return false; }
