@@ -134,7 +134,7 @@ public:
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     ///@brief Called internally by the framework to create a title bar button
-    ///@parent the button's parent
+    ///@p parent the button's parent
     virtual QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const = 0;
 #else
     // QtQuick will have some other base class for buttons
