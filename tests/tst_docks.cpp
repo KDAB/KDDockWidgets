@@ -6095,20 +6095,40 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
     min1 = widgetMinLength(dock1, Qt::Vertical);
     QVERIFY(dock1->height() >= min1);
 }
+
 void TestDocks::tst_constraintsPropagateUp()
 {
     // Mostly for QtQuick, which doesn't have any layouts, so we need to make the propagation
     // Manually in DockWidgetQuick::minimumSize(), in FrameQuick, etc.
 
     EnsureTopLevelsDeleted e;
+    const int minWidth = 500;
     const int minHeight = 400;
-    auto guestWidget = new MyWidget2(QSize(400, minHeight));
+    const QSize minSz = { minWidth, minHeight };
+    auto guestWidget = new MyWidget2(QSize(minWidth, minHeight));
     auto dock1 = createDockWidget("dock1", guestWidget);
+    auto dock2= createDockWidget("dock2", new MyWidget2(QSize(minWidth, minHeight)));
+
     QCOMPARE(widgetMinLength(guestWidget, Qt::Vertical), minHeight);
+    QCOMPARE(widgetMinLength(guestWidget, Qt::Horizontal), minWidth);
+    QCOMPARE(dock1->minimumWidth(), minWidth);
     QCOMPARE(dock1->minimumHeight(), minHeight);
+    QCOMPARE(dock1->minimumSize(), minSz);
+
+    auto frame1 = dock1->frame();
+
+    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Vertical) - minHeight) < 10); //10px for styling differences
+    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Horizontal) - minWidth) < 10); //10px for styling differences
+
+    // Add dock2 side-by side, so the Frame now has a title bar.
+    auto oldFw2 = dock2->window();
+    dock1->addDockWidgetToContainingWindow(dock2, Location_OnLeft);
+    TitleBar *tb = dock1->titleBar();
+    QVERIFY(tb->isVisible());
+    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Vertical) - (minHeight + tb->height())) < 10);
 
     delete dock1->window();
-
+    delete oldFw2;
 }
 
 void TestDocks::tst_constraintsAfterPlaceholder()

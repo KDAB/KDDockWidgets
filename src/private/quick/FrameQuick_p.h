@@ -36,6 +36,12 @@ public:
     ~FrameQuick() override;
     DockWidgetModel *dockWidgetModel() const;
 
+    /// @reimp
+    QSize minimumSize() const override;
+
+    /// @reimp
+    QSize maximumSize() const override;
+
 protected:
     void removeWidget_impl(DockWidgetBase *) override;
     int indexOfDockWidget_impl(DockWidgetBase *) override;
@@ -52,6 +58,7 @@ protected:
 Q_SIGNALS:
     void tabTitlesChanged();
 private:
+    int nonContentsHeight() const;
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;
     DockWidgetBase *m_currentDockWidget = nullptr;

@@ -17,7 +17,8 @@ Rectangle {
     id: root
     property QtObject frameCpp
     readonly property QtObject titleBarCpp: frameCpp ? frameCpp.titleBar : null
-
+    readonly property int nonContentsHeight: (titleBar.visible ? titleBar.height : 0) +
+                                             (tabbar.visible ? tabbar.height : 0)
     color: "cyan"
     anchors.fill: parent
 

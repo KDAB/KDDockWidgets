@@ -162,6 +162,22 @@ void FrameQuick::setStackLayout(QQuickItem *stackLayout)
     m_stackLayout = stackLayout;
 }
 
+QSize FrameQuick::minimumSize() const
+{
+    const QSize contentsSize = dockWidgetsMinSize();
+    return contentsSize + QSize(0, nonContentsHeight());
+}
+
+QSize FrameQuick::maximumSize() const
+{
+    return Frame::maximumSize();
+}
+
+int FrameQuick::nonContentsHeight() const
+{
+    return m_visualItem->property("nonContentsHeight").toInt();
+}
+
 DockWidgetModel::DockWidgetModel(QObject *parent)
     : QAbstractListModel(parent)
 {
