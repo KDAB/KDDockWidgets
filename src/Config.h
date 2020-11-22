@@ -61,29 +61,29 @@ public:
 
     ///@brief Flag enum to tune certain behaviours, the defaults are Flag_Default
     enum Flag {
-        Flag_None = 0, ///> No option set
-        Flag_NativeTitleBar = 1, ///> Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise. This is mutually exclusive with Flag_AeroSnap
-        Flag_AeroSnapWithClientDecos = 2, ///> Deprecated. This is now default and cannot be turned off. Moving a window on Windows 10 uses native moving, as that works well across screens with different HDPI settings. There's no reason to use manual client/Qt window moving.
-        Flag_AlwaysTitleBarWhenFloating = 4, ///> Floating windows will have a title bar even if Flag_HideTitleBarWhenTabsVisible is specified. Unneeded if Flag_HideTitleBarWhenTabsVisible isn't specified, as that's the default already.
-        Flag_HideTitleBarWhenTabsVisible = 8, ///> Hides the title bar if there's tabs visible. The empty space in the tab bar becomes draggable.
-        Flag_AlwaysShowTabs = 16, ///> Always show tabs, even if there's only one,
-        Flag_AllowReorderTabs = 32, /// Allows user to re-order tabs by dragging them
-        Flag_TabsHaveCloseButton = 64, /// Tabs will have a close button. Equivalent to QTabWidget::setTabsClosable(true).
-        Flag_DoubleClickMaximizes = 128, /// Double clicking the titlebar will maximize a floating window instead of re-docking it
-        Flag_TitleBarHasMaximizeButton = 256, /// The title bar will have a maximize/restore button when floating. This is mutually-exclusive with the floating button (since many apps behave that way).
-        Flag_TitleBarIsFocusable = 512, /// You can click the title bar and it will focus the last focused widget in the focus scope. If no previously focused widget then it focuses the user's dock widget guest, which should accept focus or use a focus proxy.
-        Flag_LazyResize = 1024, /// The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
+        Flag_None = 0, ///< No option set
+        Flag_NativeTitleBar = 1, ///< Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise. This is mutually exclusive with Flag_AeroSnap
+        Flag_AeroSnapWithClientDecos = 2, ///< Deprecated. This is now default and cannot be turned off. Moving a window on Windows 10 uses native moving, as that works well across screens with different HDPI settings. There's no reason to use manual client/Qt window moving.
+        Flag_AlwaysTitleBarWhenFloating = 4, ///< Floating windows will have a title bar even if Flag_HideTitleBarWhenTabsVisible is specified. Unneeded if Flag_HideTitleBarWhenTabsVisible isn't specified, as that's the default already.
+        Flag_HideTitleBarWhenTabsVisible = 8, ///< Hides the title bar if there's tabs visible. The empty space in the tab bar becomes draggable.
+        Flag_AlwaysShowTabs = 16, ///< Always show tabs, even if there's only one,
+        Flag_AllowReorderTabs = 32, ///< Allows user to re-order tabs by dragging them
+        Flag_TabsHaveCloseButton = 64, ///< Tabs will have a close button. Equivalent to QTabWidget::setTabsClosable(true).
+        Flag_DoubleClickMaximizes = 128, ///< Double clicking the titlebar will maximize a floating window instead of re-docking it
+        Flag_TitleBarHasMaximizeButton = 256, ///< The title bar will have a maximize/restore button when floating. This is mutually-exclusive with the floating button (since many apps behave that way).
+        Flag_TitleBarIsFocusable = 512, ///< You can click the title bar and it will focus the last focused widget in the focus scope. If no previously focused widget then it focuses the user's dock widget guest, which should accept focus or use a focus proxy.
+        Flag_LazyResize = 1024, ///< The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
 
         // These two are internal, for testing purposes across platforms. Use Flag_DontUseUtilityFloatingWindows instead.
-        Flag_internal_DontUseQtToolWindowsForFloatingWindows = 0x800, ///> FloatingWindows will use Qt::Window instead of Qt::Tool. Internal, use Flag_DontUseUtilityFloatingWindows instead.
-        Flag_internal_DontUseParentForFloatingWindows = 0x1000, ///> FloatingWindows won't have a parent top-level. Internal, use Flag_DontUseUtilityFloatingWindows instead.
+        Flag_internal_DontUseQtToolWindowsForFloatingWindows = 0x800, ///< FloatingWindows will use Qt::Window instead of Qt::Tool. Internal, use Flag_DontUseUtilityFloatingWindows instead.
+        Flag_internal_DontUseParentForFloatingWindows = 0x1000, ///< FloatingWindows won't have a parent top-level. Internal, use Flag_DontUseUtilityFloatingWindows instead.
 
         Flag_DontUseUtilityFloatingWindows = Flag_internal_DontUseQtToolWindowsForFloatingWindows | Flag_internal_DontUseParentForFloatingWindows,
-        Flag_TitleBarHasMinimizeButton = 0x2000 | Flag_DontUseUtilityFloatingWindows, ///> The title bar will have a minimize button when floating. This implies Flag_DontUseUtilityFloatingWindows too, otherwise they wouldn't appear in the task bar.        
-        Flag_TitleBarNoFloatButton = 0x4000, ///> The TitleBar won't show the float button
-        Flag_AutoHideSupport = 0x8000 | Flag_TitleBarNoFloatButton, ///> Supports minimizing dock widgets to the side-bar.
-                                                                    ///> By default it also turns off the float button, but you can remove Flag_TitleBarNoFloatButton to have both.
-        Flag_Default = Flag_AeroSnapWithClientDecos ///> The defaults
+        Flag_TitleBarHasMinimizeButton = 0x2000 | Flag_DontUseUtilityFloatingWindows, ///< The title bar will have a minimize button when floating. This implies Flag_DontUseUtilityFloatingWindows too, otherwise they wouldn't appear in the task bar.
+        Flag_TitleBarNoFloatButton = 0x4000, ///< The TitleBar won't show the float button
+        Flag_AutoHideSupport = 0x8000 | Flag_TitleBarNoFloatButton, ///< Supports minimizing dock widgets to the side-bar.
+                                                                    ///< By default it also turns off the float button, but you can remove Flag_TitleBarNoFloatButton to have both.
+        Flag_Default = Flag_AeroSnapWithClientDecos ///< The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)
 
@@ -161,11 +161,11 @@ public:
     /**
      * @brief Allows the user to intercept a docking attempt to center (tabbed) and disallow it.
      *
-     * Whenever the user tries to tab two widgets together, the framework will call @ref func. If
+     * Whenever the user tries to tab two widgets together, the framework will call @p func. If
      * it returns true, then tabbing is allowed, otherwise not.
      *
-     * Example
-     *
+     * Example:
+     * @code
      * #include <kddockwidgets/Config.h>
      * (...)
      *
@@ -175,7 +175,7 @@ public:
      *    // disallows dockFoo to be tabbed with dockBar.
      *    return !(source.contains(dockFoo) && target.contains(dockBar));
      * }
-     *
+     * @endcode
      * KDDockWidgets::Config::self()->setTabbingAllowedFunc(func);
      */
     void setTabbingAllowedFunc(TabbingAllowedFunc func);
