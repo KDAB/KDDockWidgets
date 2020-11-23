@@ -27,6 +27,8 @@ QT_BEGIN_NAMESPACE
 class QByteArray;
 QT_END_NAMESPACE
 
+class TestDocks;
+
 namespace KDDockWidgets {
 
 class DockWidgetBase;
@@ -105,7 +107,7 @@ public:
     struct ScreenInfo;
 private:
     Q_DISABLE_COPY(LayoutSaver)
-    friend class TestDocks;
+    friend class ::TestDocks;
 
     class Private;
     Private *const d;
