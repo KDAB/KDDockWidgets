@@ -61,6 +61,7 @@ bool TitleBarQuick::eventFilter(QObject *, QEvent *ev)
     return false;
 }
 
+#ifdef DOCKS_DEVELOPER_MODE
 bool TitleBarQuick::isCloseButtonEnabled() const
 {
     if (QQuickItem *button = closeButton())
@@ -91,6 +92,7 @@ bool TitleBarQuick::isFloatButtonVisible() const
 
     return true;
 }
+#endif
 
 QQuickItem *TitleBarQuick::titleBarQmlItem() const
 {

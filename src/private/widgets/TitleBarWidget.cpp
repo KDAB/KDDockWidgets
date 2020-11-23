@@ -196,6 +196,8 @@ void TitleBarWidget::updateMaximizeButton()
     }
 }
 
+#ifdef DOCKS_DEVELOPER_MODE
+
 bool TitleBarWidget::isCloseButtonVisible() const
 {
     return m_closeButton->isVisible();
@@ -215,3 +217,5 @@ bool TitleBarWidget::isFloatButtonEnabled() const
 {
     return m_floatButton->isEnabled();
 }
+
+#endif

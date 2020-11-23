@@ -37,15 +37,16 @@ protected:
     Q_INVOKABLE void filterEvents(QObject *);
     bool eventFilter(QObject *, QEvent *) override;
 
+#ifdef DOCKS_DEVELOPER_MODE
     // These 4 just for unit-tests
     bool isCloseButtonEnabled() const override;
     bool isCloseButtonVisible() const override;
     bool isFloatButtonEnabled() const override;
     bool isFloatButtonVisible() const override;
+#endif
 
     /*void paintEvent(QPaintEvent *) override;
-    void mouseDoubleClickEvent(QMouseEvent *) override;
-*/
+    void mouseDoubleClickEvent(QMouseEvent *) override; */
 
     QQuickItem *titleBarQmlItem() const;
     QQuickItem *titleBarMouseArea() const;

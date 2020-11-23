@@ -127,11 +127,13 @@ protected:
     virtual void updateMinimizeButton() {}
     virtual void updateAutoHideButton() {}
 
+#ifdef DOCKS_DEVELOPER_MODE
     // The following are needed for the unit-tests
     virtual bool isCloseButtonVisible() const = 0;
     virtual bool isCloseButtonEnabled() const = 0;
     virtual bool isFloatButtonVisible() const = 0;
     virtual bool isFloatButtonEnabled() const = 0;
+#endif
 
     void focusInEvent(QFocusEvent *event) override;
     bool isOverlayed() const;

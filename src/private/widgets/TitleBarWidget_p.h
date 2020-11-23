@@ -50,11 +50,13 @@ protected:
     void updateMinimizeButton() override;
     void updateAutoHideButton() override;
 
+#ifdef DOCKS_DEVELOPER_MODE
      // The following are needed for the unit-tests
     bool isCloseButtonVisible() const override;
     bool isCloseButtonEnabled() const override;
     bool isFloatButtonVisible() const override;
     bool isFloatButtonEnabled() const override;
+#endif
 
 private:
     void init();
