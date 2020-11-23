@@ -118,8 +118,11 @@ int main(int argc, char **argv)
 
     QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
     QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
+    QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
+
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
+    parser.addOption(nativeTitleBar);
 
 # if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
@@ -155,6 +158,9 @@ int main(int argc, char **argv)
 
     if (parser.isSet(noParentForFloating))
         flags |= KDDockWidgets::Config::Flag_internal_DontUseParentForFloatingWindows;
+
+    if (parser.isSet(nativeTitleBar))
+        flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
 
 # if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
