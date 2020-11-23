@@ -392,10 +392,10 @@ void FloatingWindow::updateTitleAndIcon()
     m_titleBar->setTitle(title);
     m_titleBar->setIcon(icon);
 
-    if (KDDockWidgets::usesNativeTitleBar()) {
-        setWindowTitle(title);
-        setWindowIcon(icon);
-    }
+    // Even without a native title bar it's nice to set the window title/icon, so it shows
+    // in the taskbar (when minimization is supported), or Alt-Tab (in supporting Window Managers)
+    setWindowTitle(title);
+    setWindowIcon(icon);
 }
 
 void FloatingWindow::onCloseEvent(QCloseEvent *e)
