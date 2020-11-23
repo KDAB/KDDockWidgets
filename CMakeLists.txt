@@ -121,7 +121,7 @@ include(QtInstallPaths) #to set QT_INSTALL_FOO variables
 
 macro(set_compiler_flags targetName)
   if(${PROJECT_NAME}_DEVELOPER_MODE)
-    target_compile_definitions(${targetName} PRIVATE DOCKS_DEVELOPER_MODE QT_FORCE_ASSERTS)
+    target_compile_definitions(${targetName} PUBLIC DOCKS_DEVELOPER_MODE PRIVATE QT_FORCE_ASSERTS)
     if(NOT MSVC AND NOT OPTION_QT6) # We're not warnings clean with Qt6 yet
       target_compile_options(${targetName} PRIVATE -Wall -Wextra -Werror -Wno-error=deprecated-declarations)
       if (APPLE)
