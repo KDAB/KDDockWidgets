@@ -81,7 +81,7 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
     }
 }
 
-#if DOCKS_DEVELOPER_MODE
+#ifdef DOCKS_DEVELOPER_MODE
 
 // Just used by tests
 WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw)
