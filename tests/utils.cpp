@@ -50,10 +50,14 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     WidgetType *parent = nullptr;
 #ifdef KDDOCKWIDGETS_QTQUICK
     auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
+    const QSize initialSize(1000, 1000);
+    view->resize(initialSize);
+    view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->setSource(QUrl("qrc:/main.qml"));
     if (show)
         view->show();
     parent = view->rootObject();
+    QTest::qWait(100); // the root object gets sized delayed
 #endif
 
     auto ptr = std::unique_ptr<MainWindowType>(new MainWindowType(mainWindowName, options, parent));
@@ -110,9 +114,13 @@ std::unique_ptr<MainWindowBase> KDDockWidgets::Tests::createMainWindow(QVector<D
     WidgetType *parent = nullptr;
 #ifdef KDDOCKWIDGETS_QTQUICK
     auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
+    const QSize initialSize(1000, 1000);
+    view->setResizeMode(QQuickView::SizeRootObjectToView);
+    view->resize(initialSize);
     view->setSource(QUrl("qrc:/main.qml"));
     view->show();
     parent = view->rootObject();
+    QTest::qWait(100); // the root object gets sized delayed
 #endif
 
     auto m = std::unique_ptr<MainWindowType>(new MainWindowType(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));

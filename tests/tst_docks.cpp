@@ -3021,14 +3021,15 @@ void TestDocks::tst_addToSmallMainWindow2()
     auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(100, 100)));
     auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(100, 100)));
     m->addDockWidgetAsTab(dock1);
-    m->resize(osWindowMinWidth(), 200);
+    m->windowHandle()->resize(osWindowMinWidth(), 200);
 
     Testing::waitForResize(m.get());
 
     QVERIFY(qAbs(m->width() - osWindowMinWidth()) < 15); // Not very important verification. Anyway, using 15 to account for margins and what not.
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     QVERIFY(Testing::waitForResize(m.get()));
-
+#endif
     QVERIFY(dropArea->width() > osWindowMinWidth());
     QMargins margins = m->centerWidgetMargins();
     QCOMPARE(dropArea->width(), m->width() - margins.left() - margins.right());

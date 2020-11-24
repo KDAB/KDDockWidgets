@@ -13,6 +13,6 @@ import QtQuick 2.9
 
 Item {
     id: root
-    width: 1000
-    height: 1000
+    anchors.fill: parent
+    objectName: "main.qml"
 }
