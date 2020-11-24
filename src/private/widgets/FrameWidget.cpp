@@ -180,3 +180,12 @@ void FrameWidget::renameTab(int index, const QString &text)
     m_tabWidget->renameTab(index, text);
 }
 
+
+int KDDockWidgets::FrameWidget::nonContentsHeight() const
+{
+    TitleBar *tb = titleBar();
+    QWidget *tabBar = this->tabBar();
+
+    return (tb->isVisible() ? tb->height() : 0) +
+           (tabBar->isVisible() ? tabBar->height() : 0);
+}

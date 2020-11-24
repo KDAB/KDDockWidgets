@@ -44,13 +44,23 @@ Rectangle {
             top: titleBar.bottom
             bottom: parent.bottom
         }
+
+        onHeightChanged: {
+            // console.log("FloatingWindow.qml.dropArea height changed to " + height + " ; root.height= " + root.height)
+        }
     }
 
     onDropAreaCppChanged: {
         // Parent the cpp obj to the visual obj. So the user can style it
         if (dropAreaCpp) {
+            //console.log("Setup start: height=" + height + "; dropArea.height=" + dropAreaCpp.height);
             dropAreaCpp.parent = dropArea;
             dropAreaCpp.anchors.fill = dropArea;
+            //console.log("Setup done: height=" + height + "; dropArea.height=" + dropAreaCpp.height);
         }
+    }
+
+    onHeightChanged: {
+        //console.log("FloatingWindow.qml.root height changed to " + height)
     }
 }

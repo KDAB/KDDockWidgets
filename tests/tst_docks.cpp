@@ -6125,15 +6125,15 @@ void TestDocks::tst_constraintsPropagateUp()
 
     auto frame1 = dock1->frame();
 
-    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Vertical) - minHeight) < 10); //10px for styling differences
     QVERIFY(qAbs(widgetMinLength(frame1, Qt::Horizontal) - minWidth) < 10); //10px for styling differences
+    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Vertical) - (minHeight + frame1->nonContentsHeight()) < 10)); //10px for styling differences
 
     // Add dock2 side-by side, so the Frame now has a title bar.
     auto oldFw2 = dock2->window();
     dock1->addDockWidgetToContainingWindow(dock2, Location_OnLeft);
     TitleBar *tb = dock1->titleBar();
     QVERIFY(tb->isVisible());
-    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Vertical) - (minHeight + tb->height())) < 10);
+    QVERIFY(qAbs(widgetMinLength(frame1, Qt::Vertical) - (minHeight + frame1->nonContentsHeight())) < 10);
 
     delete dock1->window();
     delete oldFw2;

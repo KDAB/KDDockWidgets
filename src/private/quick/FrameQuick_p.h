@@ -55,11 +55,12 @@ protected:
     void renameTab(int index, const QString &) override;
     Q_INVOKABLE void setStackLayout(QQuickItem *);
 
+    int nonContentsHeight() const override;
+
 Q_SIGNALS:
     void tabTitlesChanged();
 private:
     void updateConstriants();
-    int nonContentsHeight() const;
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;
     DockWidgetBase *m_currentDockWidget = nullptr;

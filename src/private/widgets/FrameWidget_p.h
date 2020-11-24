@@ -51,6 +51,7 @@ protected:
     int dockWidgetCount_impl() const override;
     QRect dragRect() const override;
     void renameTab(int index, const QString &) override;
+    int nonContentsHeight() const override;
 private:
     friend class TestDocks;
     TabWidget *const m_tabWidget;
