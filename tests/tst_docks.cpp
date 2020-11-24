@@ -1367,7 +1367,14 @@ void TestDocks::tst_negativeAnchorPosition()
 
     // Now resize the Window, after removing middle one
     const int availableToShrink = layout->size().height() - layout->minimumSize().height();
-    layout->setLayoutSize({layout->width(), layout->width() - availableToShrink});
+    const QSize newSize = { layout->width(), layout->height() - availableToShrink };
+    if (layout->rootItem()->minSize().expandedTo(newSize) != newSize) {
+        qDebug() << "Size to set is too small=" << newSize
+                 << "; min=" << layout->rootItem()->minSize();
+        QFAIL("");
+    }
+
+    layout->setLayoutSize(newSize);
 
     d2->deleteLater();
     Testing::waitForDeleted(d2);
@@ -3399,6 +3406,7 @@ void TestDocks::tst_rectForDropCrash()
 
     auto w1 = new MyWidget2(QSize(400,400));
     auto w2 = new MyWidget2(QSize(400,400));
+
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
 
