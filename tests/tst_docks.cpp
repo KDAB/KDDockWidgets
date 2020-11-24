@@ -6155,7 +6155,9 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     m->addDockWidget(dock2, Location_OnTop);
     m->addDockWidget(dock3, Location_OnTop);
 
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     QVERIFY(Testing::waitForResize(m.get()));
+#endif
 
     QVERIFY(widgetMinLength(m.get(), Qt::Vertical) > minHeight * 3); // > since some vertical space is occupied by the separators
 
