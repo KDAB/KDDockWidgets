@@ -20,17 +20,25 @@ namespace KDDockWidgets {
 class DockWidget;
 class Frame;
 
+enum {
+    TitleBarHeight = 30
+};
+
 class DOCKS_EXPORT TitleBarQuick : public TitleBar
 {
     Q_OBJECT
     // These properties is just for the unit-tests
     Q_PROPERTY(QQuickItem* titleBarQmlItem READ titleBarQmlItem WRITE setTitleBarQmlItem NOTIFY titleBarQmlItemChanged)
     Q_PROPERTY(QQuickItem* titleBarMouseArea READ titleBarMouseArea CONSTANT)
-
+    Q_PROPERTY(int titleBarHeight READ titleBarHeight CONSTANT)
 public:
     explicit TitleBarQuick(Frame *parent);
     explicit TitleBarQuick(FloatingWindow *parent);
     ~TitleBarQuick() override;
+
+    int titleBarHeight() const {
+        return TitleBarHeight;
+    }
 
 protected:
 

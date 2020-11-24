@@ -14,7 +14,7 @@
 #include "Logging_p.h"
 #include "Utils_p.h"
 #include "DropArea_p.h"
-#include "TitleBar_p.h"
+#include "TitleBarQuick_p.h"
 #include "Config.h"
 
 #include <QQuickView>
@@ -58,13 +58,28 @@ FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
 
 FloatingWindowQuick::~FloatingWindowQuick()
 {
+    // Avoid a bunch of QML warnings and constriants being violated at destruction.
+    // Also simply avoiding unneeded work, as QML is destroying stuff 1 by 1
+    if (m_dropArea)
+        m_dropArea->setWindowIsBeingDestroyed(true);
+
     QWidgetAdapter::setParent(nullptr);
     if (qobject_cast<QQuickView*>(m_quickWindow)) // QObject cast just to make sure the QWindow is not in ~QObject already
         delete m_quickWindow;
 }
 
+QSize FloatingWindowQuick::minimumSize() const
+{
+    // Doesn't matter if it's not visible. We don't want the min-size to jump around. Also not so
+    // easy to track as we don't have layouts
+    return multiSplitter()->minimumSize() + QSize(0, TitleBarHeight);
+}
+
 void FloatingWindowQuick::setGeometry(QRect geo)
 {
+    // Not needed with QtWidgets, but needed with QtQuick as we don't have layouts
+    geo.setSize(geo.size().expandedTo(minimumSize()));
+
     parentItem()->setSize(geo.size());
     m_quickWindow->setGeometry(geo);
 }
@@ -91,7 +106,7 @@ void FloatingWindowQuick::init()
         qDebug() << "Focus object changed to " << object << this << m_quickWindow;
     });*/
 
-    const QSize minSize(200, 200);
+    const QSize minSize = minimumSize();
     m_quickWindow->resize(minSize);
     m_quickWindow->contentItem()->setSize(minSize);
 

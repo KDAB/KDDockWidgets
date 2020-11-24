@@ -17,13 +17,14 @@ Rectangle {
     readonly property QtObject floatingWindowCpp: parent
     readonly property QtObject titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
     readonly property QtObject dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
+    readonly property int titleBarHeight: titleBarCpp ? titleBarCpp.titleBarHeight : 0
 
     color: "yellow"
     anchors.fill: parent
 
     KDDW.TitleBar {
         id: titleBar
-        height: 30
+        height: root.titleBarHeight
         titleBarCpp: root.titleBarCpp
         visible: titleBarCpp && titleBarCpp.visible
 

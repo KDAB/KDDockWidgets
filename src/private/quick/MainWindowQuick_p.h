@@ -30,6 +30,12 @@ public:
 
     ~MainWindowQuick() override;
 
+    /// @reimp
+    QSize minimumSize() const override;
+
+    /// @reimp
+    QSize maximumSize() const override;
+
 protected:
     SideBar *sideBar(SideBarLocation) const override;
     QMargins centerWidgetMargins() const override;

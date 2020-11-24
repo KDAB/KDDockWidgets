@@ -26,6 +26,8 @@ public:
     explicit FloatingWindowQuick(Frame *frame, MainWindowBase *parent = nullptr);
     ~FloatingWindowQuick();
 
+    QSize minimumSize() const override;
+
 protected:
     void setGeometry(QRect) override;
 

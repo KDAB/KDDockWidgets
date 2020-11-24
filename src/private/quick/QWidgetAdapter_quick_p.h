@@ -159,6 +159,8 @@ public:
 
     void render(QPainter *);
 
+    void setWindowIsBeingDestroyed(bool);
+
     static QQuickItem *createItem(QQmlEngine *, const QString &filename);
     static void makeItemFillParent(QQuickItem *item);
 Q_SIGNALS:
@@ -181,6 +183,7 @@ private:
     Qt::WindowFlags m_windowFlags;
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;
+    bool m_windowIsBeingDestroyed = false;
 };
 
 }

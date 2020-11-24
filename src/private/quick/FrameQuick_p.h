@@ -58,6 +58,7 @@ protected:
 Q_SIGNALS:
     void tabTitlesChanged();
 private:
+    void updateConstriants();
     int nonContentsHeight() const;
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;

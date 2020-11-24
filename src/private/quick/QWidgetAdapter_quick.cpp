@@ -60,8 +60,10 @@ QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags flags)
     });
 
     connect(this, &QQuickItem::heightChanged, this, [this] {
-        onResize(size());
-        updateGeometry();
+        if (!m_windowIsBeingDestroyed) { // If Window is being destroyed we don't bother
+            onResize(size());
+            updateGeometry();
+        }
     });
 
     setSize(QSize(800, 800));
@@ -545,6 +547,11 @@ bool QWidgetAdapter::event(QEvent *ev)
         onCloseEvent(static_cast<QCloseEvent*>(ev));
 
     return QQuickItem::event(ev);
+}
+
+void QWidgetAdapter::setWindowIsBeingDestroyed(bool is)
+{
+    m_windowIsBeingDestroyed = is;
 }
 
 QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)

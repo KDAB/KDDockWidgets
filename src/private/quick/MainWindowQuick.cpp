@@ -34,6 +34,17 @@ MainWindowQuick::~MainWindowQuick()
     }
 }
 
+QSize MainWindowQuick::minimumSize() const
+{
+    qDebug() << "FOO" << multiSplitter()->rootItem()->minSize();
+    return multiSplitter()->rootItem()->minSize();
+}
+
+QSize MainWindowQuick::maximumSize() const
+{
+    return multiSplitter()->rootItem()->maxSizeHint();
+}
+
 SideBar *MainWindowQuick::sideBar(SideBarLocation) const
 {
     qDebug() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";

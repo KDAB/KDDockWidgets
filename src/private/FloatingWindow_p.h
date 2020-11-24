@@ -17,6 +17,7 @@
 #include "../LayoutSaver_p.h"
 #include "Frame_p.h"
 #include "Draggable_p.h"
+#include "DropArea_p.h"
 
 QT_BEGIN_NAMESPACE
 class QAbstractNativeEventFilter;
@@ -136,7 +137,7 @@ protected:
     bool event(QEvent *ev) override;
     void onCloseEvent(QCloseEvent *) override;
 
-    DropArea *const m_dropArea;
+    QPointer<DropArea> m_dropArea;
     TitleBar *const m_titleBar;
 private:
     Q_DISABLE_COPY(FloatingWindow)

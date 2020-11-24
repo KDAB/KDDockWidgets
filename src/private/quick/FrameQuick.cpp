@@ -30,6 +30,9 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged,
             this, &FrameQuick::onDockWidgetCountChanged);
 
+    connect(m_dockWidgetModel, &DockWidgetModel::countChanged,
+            this, &FrameQuick::updateConstriants);
+
     connect(this, &QWidgetAdapter::geometryUpdated, this, &Frame::layoutInvalidated);
 
     QQmlComponent component(Config::self().qmlEngine(),
@@ -60,6 +63,16 @@ FrameQuick::~FrameQuick()
 
         qDeleteAll(docks);
     }
+}
+
+void FrameQuick::updateConstriants()
+{
+    // QtQuick doesn't have layouts, so we need to do constraint propagation manually
+
+    setProperty("kddockwidgets_min_size", minimumSize());
+    setProperty("kddockwidgets_max_size", maximumSize());
+
+    Q_EMIT layoutInvalidated();
 }
 
 DockWidgetModel *FrameQuick::dockWidgetModel() const
