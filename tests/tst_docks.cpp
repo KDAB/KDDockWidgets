@@ -229,6 +229,8 @@ private Q_SLOTS:
     void tst_addToSmallMainWindow5();
     void tst_positionWhenShown();
     void tst_lastFloatingPositionIsRestored();
+    void tst_28NestedWidgets();
+    void tst_28NestedWidgets_data();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
@@ -260,8 +262,6 @@ private Q_SLOTS:
     void tst_maxSizeHonouredWhenAnotherDropped();
     void tst_addToHiddenMainWindow();
     void tst_maximumSizePolicy();
-    void tst_28NestedWidgets();
-    void tst_28NestedWidgets_data();
     void tst_complex();
 #endif
 };
@@ -1047,6 +1047,7 @@ void TestDocks::tst_complex()
     qDeleteAll(docks);
     qDeleteAll(DockRegistry::self()->frames());
 }
+#endif
 
 void TestDocks::tst_28NestedWidgets_data()
 {
@@ -1083,9 +1084,9 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnRight, -1, nullptr, AddingOption_None },
         {Location_OnRight, -1, nullptr, AddingOption_None }
     };
-
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     QTest::newRow("28") << docks << QVector<int>{11, 0};
-
+#endif
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_None },
         {Location_OnRight, -1, nullptr, AddingOption_None },
@@ -1112,18 +1113,19 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnTop, -1, nullptr, AddingOption_None },
         {Location_OnRight, -1, nullptr, AddingOption_None },
     };
-
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     // 2. Produced valgrind invalid reads while adding
     QTest::newRow("valgrind") << docks << QVector<int>{};
-
+#endif
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_None },
         {Location_OnBottom, -1, nullptr, AddingOption_None },
         {Location_OnTop, -1, nullptr, AddingOption_None },
         {Location_OnRight, -1, nullptr, AddingOption_None },
     };
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     QTest::newRow("bug_when_closing") << docks << QVector<int>{}; // Q_ASSERT(!isSquashed())
-
+#endif
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_None },
         {Location_OnBottom, 0, nullptr, AddingOption_None },
@@ -1131,9 +1133,9 @@ void TestDocks::tst_28NestedWidgets_data()
         {Location_OnRight, -1, nullptr, AddingOption_None },
         {Location_OnBottom, -1, nullptr, AddingOption_None },
     };
-
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     QTest::newRow("bug_when_closing2") << docks << QVector<int>{};    // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
-
+#endif
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_None },
         {Location_OnBottom, 0, nullptr, AddingOption_None },
@@ -1170,9 +1172,9 @@ void TestDocks::tst_28NestedWidgets_data()
         if (i != 16 && i != 17 && i != 18 && i != 27)
             docksToHide << i;
     }
-
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     QTest::newRow("bug_with_holes") << docks << docksToHide;
-
+#endif
     docks = {
         {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
         {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
@@ -1327,7 +1329,6 @@ void TestDocks::tst_28NestedWidgets()
         QVERIFY(Testing::waitForDeleted(dock));
     }
 }
-#endif
 
 void TestDocks::tst_closeReparentsToNull()
 {
