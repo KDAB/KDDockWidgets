@@ -44,6 +44,9 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     static int count = 0;
     count++;
 
+    if (!sz.isValid())
+        sz = QSize(1000, 1000);
+
     const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
                                                   : name;
 

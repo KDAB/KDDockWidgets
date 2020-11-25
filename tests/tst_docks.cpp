@@ -3539,7 +3539,6 @@ void TestDocks::tst_restoreCrash()
     }
 
     // Restore
-    qDebug() << Q_FUNC_INFO << "Restoring";
     auto m = createMainWindow({}, {}, "tst_restoreCrash");
     auto layout = m->multiSplitter();
     auto dock1 = createDockWidget("dock1", new QPushButton("one"));
