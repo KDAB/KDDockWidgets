@@ -11,10 +11,8 @@
 
 import QtQuick 2.9
 
-Rectangle {
-    color: "gray"
+Guest {
     anchors.fill: parent
-    Text {
-        text: "Guest Widget #3!"
-    }
+    background: "qrc:/assets/base.png"
+    logo: "qrc:/assets/KDAB_bubble_fulcolor.png"
 }

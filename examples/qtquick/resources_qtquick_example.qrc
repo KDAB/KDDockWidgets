@@ -4,5 +4,6 @@
         <file>Guest1.qml</file>
         <file>Guest2.qml</file>
         <file>Guest3.qml</file>
+        <file>Guest.qml</file>
     </qresource>
 </RCC>

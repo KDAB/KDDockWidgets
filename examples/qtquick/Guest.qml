@@ -11,10 +11,26 @@
 
 import QtQuick 2.9
 
-Rectangle {
-    color: "blue"
+Item {
     anchors.fill: parent
-    Text {
-        text: "Guest Widget!"
+
+    property alias background: background.source
+    property alias logo: logo.source
+
+
+    Image {
+        id: background
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectCrop
+
+        Image {
+            id: logo
+
+            fillMode: Image.PreserveAspectFit
+            anchors {
+                fill: parent
+                margins: 50
+            }
+        }
     }
 }

@@ -11,8 +11,7 @@
 
 import QtQuick 2.9
 
-Rectangle {
+Item {
     id: root
     property QtObject dropAreaCpp: null
-    color: "orange"
 }
