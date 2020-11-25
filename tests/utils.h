@@ -118,7 +118,7 @@ struct EnsureTopLevelsDeleted
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
-std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = {600, 600},
+std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = {1000, 1000},
                                                  KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame,
                                                  const QString &name = {}, bool show = true);
 

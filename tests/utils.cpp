@@ -50,8 +50,7 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     WidgetType *parent = nullptr;
 #ifdef KDDOCKWIDGETS_QTQUICK
     auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
-    const QSize initialSize(1000, 1000);
-    view->resize(initialSize);
+    view->resize(sz);
     view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->setSource(QUrl("qrc:/main.qml"));
     if (show)
