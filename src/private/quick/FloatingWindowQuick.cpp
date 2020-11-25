@@ -64,7 +64,6 @@ public:
     void updateSize()
     {
         resize(m_floatingWindow->size().toSize());
-        // contentItem()->setSize(size()); // TODO: Needed ?
     }
 
     void updateRootItemSize()
