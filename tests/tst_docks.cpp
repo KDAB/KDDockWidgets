@@ -2988,7 +2988,9 @@ void TestDocks::tst_addToSmallMainWindow1()
 
     const int mainWindowLength = 400;
 
-    m->resize(mainWindowLength, mainWindowLength);
+    m->windowHandle()->resize(mainWindowLength, mainWindowLength);
+    QTest::qWait(100);
+
     dock1->resize(800, 800);
     dock2->resize(800, 800);
     dock3->resize(800, 800);
@@ -2997,8 +2999,10 @@ void TestDocks::tst_addToSmallMainWindow1()
     m->addDockWidgetAsTab(dock1);
 
     QCOMPARE(m->height(), mainWindowLength);
-    QVERIFY(dock1->height() < mainWindowLength);
-    QVERIFY(dock1->width() < mainWindowLength);
+
+    QTest::qWait(100);
+    QVERIFY(dock1->height() <= mainWindowLength);
+    QVERIFY(dock1->width() <= mainWindowLength);
 
     //Add in area:
     m->addDockWidget(dock2, Location_OnLeft);
