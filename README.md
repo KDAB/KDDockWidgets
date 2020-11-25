@@ -138,6 +138,7 @@ Supported Qt versions
 ======================
 KDDockWidgets requires Qt >= 5.9 (or >=5.12 if Python bindings are enabled).
 The QtQuick support will require Qt >= 5.15.
+Qt 6 will be support as long as QTBUG-88611 is finished, most likely for 6.1.
 
 Licensing
 =========
