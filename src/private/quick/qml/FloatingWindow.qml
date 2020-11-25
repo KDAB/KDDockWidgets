@@ -12,14 +12,21 @@
 import QtQuick 2.9
 import "." as KDDW
 
-Item {
+Rectangle {
     id: root
     readonly property QtObject floatingWindowCpp: parent
     readonly property QtObject titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
     readonly property QtObject dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
     readonly property int titleBarHeight: titleBarCpp ? titleBarCpp.titleBarHeight : 0
+    readonly property int margins: 4
 
     anchors.fill: parent
+
+    color: "transparent"
+    border {
+        color: "#666666"
+        width: 1
+    }
 
     KDDW.TitleBar {
         id: titleBar
@@ -31,6 +38,7 @@ Item {
             top:  parent.top
             left: parent.left
             right: parent.right
+            margins: root.margins
         }
     }
 
@@ -42,6 +50,10 @@ Item {
             right: parent.right
             top: titleBar.bottom
             bottom: parent.bottom
+
+            leftMargin: root.margins
+            rightMargin: root.margins
+            bottomMargin: root.margins
         }
 
         onHeightChanged: {

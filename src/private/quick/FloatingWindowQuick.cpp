@@ -107,7 +107,10 @@ QSize FloatingWindowQuick::minimumSize() const
 {
     // Doesn't matter if it's not visible. We don't want the min-size to jump around. Also not so
     // easy to track as we don't have layouts
-    return multiSplitter()->minimumSize() + QSize(0, TitleBarHeight);
+    const int margins = contentsMargins();
+    return multiSplitter()->minimumSize() +
+            QSize(0, TitleBarHeight) +
+            QSize(margins * 2, margins * 2);
 }
 
 void FloatingWindowQuick::setGeometry(QRect geo)
@@ -117,6 +120,11 @@ void FloatingWindowQuick::setGeometry(QRect geo)
 
     parentItem()->setSize(geo.size());
     m_quickWindow->setGeometry(geo);
+}
+
+int FloatingWindowQuick::contentsMargins() const
+{
+    return m_visualItem->property("margins").toInt();
 }
 
 QWindow *FloatingWindowQuick::candidateParentWindow() const
@@ -154,13 +162,14 @@ void FloatingWindowQuick::init()
 
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
 
+    m_visualItem = createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/FloatingWindow.qml"));
+    Q_ASSERT(m_visualItem);
+
     // Ensure our window size is never smaller than our min-size
     setSize(size().expandedTo(minimumSize()));
 
-    QQuickItem *visualItem = createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/FloatingWindow.qml"));
-    Q_ASSERT(visualItem);
-    visualItem->setParent(this);
-    visualItem->setParentItem(this);
+    m_visualItem->setParent(this);
+    m_visualItem->setParentItem(this);
 
     m_quickWindow->setFlags(windowFlags());
 
