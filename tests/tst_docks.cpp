@@ -209,7 +209,6 @@ private Q_SLOTS:
     void tst_dockNotFillingSpace();
     void tst_titlebar_getter();
     void tst_raise();
-    void tst_complex();
     void tst_addingOptionHiddenTabbed();
     void tst_invalidLayoutAfterRestore();
     void tst_maxSizedHonouredAfterRemoved();
@@ -221,28 +220,16 @@ private Q_SLOTS:
     void tst_flagDoubleClick();
     void tst_constraintsPropagateUp();
     void tst_constraintsAfterPlaceholder();
-
+    void tst_restoreSimple();
+    void tst_restoreSimplest();
     void tst_addToSmallMainWindow1();
     void tst_addToSmallMainWindow2();
     void tst_addToSmallMainWindow3();
     void tst_addToSmallMainWindow4();
     void tst_addToSmallMainWindow5();
-    void tst_28NestedWidgets();
-    void tst_28NestedWidgets_data();
     void tst_positionWhenShown();
-    void tst_maxSizePropagates();
-    void tst_maxSizePropagates2();
-    void tst_restoreResizesLayout();
-    void tst_maxSizeHonouredWhenDropped();
-    void tst_fixedSizePolicy();
-    void tst_maxSizeHonouredWhenAnotherDropped();
-    void tst_addToHiddenMainWindow();
-    void tst_restoreSimple();
-    void tst_restoreSimplest();
     void tst_lastFloatingPositionIsRestored();
 
-    void tst_minSizeChanges();
-    void tst_maximumSizePolicy();
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
     void tst_titleBarFocusedWhenTabsChange();
@@ -255,13 +242,27 @@ private Q_SLOTS:
     void tst_dockableMainWindows();
 
     // But these are fine to be widget only:
-    void tst_floatingWindowDeleted();
-    void tst_addToSmallMainWindow6();
-    void tst_closeRemovesFromSideBar();
     void tst_embeddedMainWindow();
     void tst_restoreEmbeddedMainWindow();
     void tst_negativeAnchorPositionWhenEmbedded();
     void tst_negativeAnchorPositionWhenEmbedded_data();
+    void tst_closeRemovesFromSideBar();
+
+    // And fix these
+    void tst_floatingWindowDeleted();
+    void tst_addToSmallMainWindow6();
+    void tst_minSizeChanges();
+    void tst_maxSizePropagates();
+    void tst_maxSizePropagates2();
+    void tst_restoreResizesLayout();
+    void tst_maxSizeHonouredWhenDropped();
+    void tst_fixedSizePolicy();
+    void tst_maxSizeHonouredWhenAnotherDropped();
+    void tst_addToHiddenMainWindow();
+    void tst_maximumSizePolicy();
+    void tst_28NestedWidgets();
+    void tst_28NestedWidgets_data();
+    void tst_complex();
 #endif
 };
 
@@ -969,6 +970,84 @@ void TestDocks::tst_shutdown()
     delete dock->window();
 }
 
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+
+void TestDocks::tst_complex()
+{
+    // Tests some anchors out of bounds I got
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(600, 500), MainWindowOption_None);
+    auto layout = m->multiSplitter();
+    m->resize(3266, 2239);
+    m->show(); // TODO: Remove and see if it crashes
+
+    DockWidgetBase::List docks;
+
+    QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft, Location_OnLeft,
+                                                  Location_OnRight, Location_OnRight, Location_OnRight, Location_OnRight,
+                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
+                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
+                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom
+                                                  };
+
+    QVector<KDDockWidgets::AddingOption> options = { AddingOption_None, AddingOption_None,
+                                                    AddingOption_StartHidden, AddingOption_StartHidden,
+                                                    AddingOption_None,
+                                                    AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,
+                                                    AddingOption_None, AddingOption_None,
+                                                    AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden
+    };
+
+    QVector<bool> floatings =  {true, false, true, false, false, false, false, false, false, false, false, false,
+                               true, false, false, true, true, true, true, true, false };
+
+    QVector<QSize> minSizes= {
+        QSize(316, 219),
+        QSize(355, 237),
+        QSize(293, 66),
+        QSize(158, 72),
+        QSize(30, 141),
+        QSize(104, 143),
+        QSize(104, 105),
+        QSize(84, 341),
+        QSize(130, 130),
+        QSize(404, 205),
+        QSize(296, 177),
+        QSize(914, 474),
+        QSize(355, 237),
+        QSize(104, 104),
+        QSize(104, 138),
+        QSize(1061, 272),
+        QSize(165, 196),
+        QSize(296, 177),
+        QSize(104, 104),
+        QSize(355, 237),
+        QSize(104, 138)
+    };
+
+    const int num = 21;
+    for (int i = 0; i < num; ++i) {
+        auto widget = new MyWidget2(minSizes.at(i));
+        auto dw = new DockWidgetType(QString::number(i));
+        dw->setWidget(widget);
+        docks << dw;
+    }
+
+    for (int i = 0; i < num; ++i) {
+        m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
+        layout->checkSanity();
+        docks[i]->setFloating(floatings[i]);
+        layout->checkSanity();
+    }
+
+    m->show();
+
+    // Cleanup
+    qDeleteAll(docks);
+    qDeleteAll(DockRegistry::self()->frames());
+}
+
 void TestDocks::tst_28NestedWidgets_data()
 {
     QTest::addColumn<QVector<DockDescriptor>>("docksToCreate");
@@ -1248,6 +1327,7 @@ void TestDocks::tst_28NestedWidgets()
         QVERIFY(Testing::waitForDeleted(dock));
     }
 }
+#endif
 
 void TestDocks::tst_closeReparentsToNull()
 {
@@ -3779,30 +3859,6 @@ void TestDocks::tst_restoreWithDockFactory()
     layout->checkSanity();
 }
 
-void TestDocks::tst_restoreResizesLayout()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    m->addDockWidget(dock1, Location_OnLeft);
-
-    LayoutSaver saver;
-    QVERIFY(saver.saveToFile("layout_tst_restoreResizesLayout.json"));
-
-    // Now resize the window, and then restore. The layout should have the new size
-
-    auto layout = m->multiSplitter();
-    m->resize(1050, 1050);
-    QCOMPARE(m->size(), QSize(1050, 1050));
-
-    LayoutSaver restorer(RestoreOption_RelativeToMainWindow);
-    QVERIFY(restorer.restoreFromFile("layout_tst_restoreResizesLayout.json"));
-    QVERIFY(layout->checkSanity());
-
-    QCOMPARE(m->dropArea()->QWidgetAdapter::size(), layout->rootItem()->size());
-    QVERIFY(layout->checkSanity());
-}
-
 void TestDocks::tst_addDockWidgetToMainWindow()
 {
     EnsureTopLevelsDeleted e;
@@ -4277,126 +4333,7 @@ void TestDocks::tst_moreTitleBarCornerCases()
     }
 }
 
-void TestDocks::tst_maxSizePropagates()
-{
-    // Tests that the DockWidget gets the min and max size of its guest widget
-    EnsureTopLevelsDeleted e;
-    auto dock1 = new DockWidgetType("dock1");
 
-    auto w = new MyWidget2(QSize(200, 200));
-    w->setMinimumSize(120, 120);
-    w->setMaximumSize(500, 500);
-    dock1->setWidget(w);
-    dock1->show();
-
-    QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
-    QCOMPARE(dock1->maximumSize(), w->maximumSize());
-
-    w->setMinimumSize(121, 121);
-    w->setMaximumSize(501, 501);
-
-    Testing::waitForEvent(w, QEvent::LayoutRequest);
-
-    QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
-    QCOMPARE(dock1->maximumSize(), w->maximumSize());
-
-    // Now let's see if our Frame also has proper size-constraints
-    Frame *frame = dock1->frame();
-    QCOMPARE(frame->maximumSize().expandedTo(w->maximumSize()), frame->maximumSize());
-
-    delete dock1->window();
-}
-
-void TestDocks::tst_maxSizePropagates2()
-{
-    EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dock1 = new DockWidgetType("dock1");
-
-    auto w = new MyWidget2(QSize(200, 200));
-    w->setMinimumSize(120, 120);
-    w->setMaximumSize(300, 500);
-    dock1->setWidget(w);
-    dock1->show();
-
-    auto dock2 = new DockWidgetType("dock2");
-    auto dock3 = new DockWidgetType("dock3");
-    auto dock4 = new DockWidgetType("dock4");
-    m1->addDockWidget(dock2, Location_OnLeft);
-    m1->addDockWidget(dock3, Location_OnRight);
-    m1->addDockWidget(dock4, Location_OnBottom, dock3);
-    m1->addDockWidget(dock1, Location_OnLeft, dock4);
-
-    Frame *frame1 = dock1->frame();
-
-    Layouting::ItemContainer *root = m1->multiSplitter()->rootItem();
-    Item *item1 = root->itemForWidget(frame1);
-    auto vertSep1 = root->separators().constFirst();
-    const int min1 = root->minPosForSeparator_global(vertSep1);
-
-    ItemContainer *container1 = item1->parentContainer();
-    auto innerVertSep1 = container1->separators().constFirst();
-    const int minInnerSep = container1->minPosForSeparator_global(innerVertSep1);
-    const int maxInnerSep = container1->maxPosForSeparator_global(innerVertSep1);
-
-    root->requestSeparatorMove(vertSep1, -(vertSep1->position() - min1));
-    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
-
-    container1->requestSeparatorMove(innerVertSep1, -(innerVertSep1->position() - minInnerSep));
-    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
-
-    container1->requestSeparatorMove(innerVertSep1, maxInnerSep - innerVertSep1->position());
-    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
-}
-
-void TestDocks::tst_maxSizeHonouredWhenDropped()
-{
-    EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow();
-    auto dock1 = new DockWidgetType("dock1");
-    auto dock2 = new DockWidgetType("dock2");
-    m1->addDockWidget(dock1, Location_OnTop);
-    m1->resize(2000, 2000);
-
-    auto w2 = new MyWidget2(QSize(400,400));
-    dock2->setWidget(w2);
-    const int maxWidth = 200;
-    w2->setMaximumSize(maxWidth, 200);
-    m1->addDockWidget(dock2, Location_OnLeft);
-    const int droppedWidth = dock2->frame()->width();
-    QVERIFY(droppedWidth < maxWidth + 50); // +50 to cover any margins and waste by QTabWidget
-
-    // Try again, but now dropping a multisplitter
-    dock2->setFloating(true);
-    auto fw = dock2->floatingWindow();
-
-    m1->dropArea()->drop(fw, Location_OnLeft, nullptr);
-    QCOMPARE(dock2->frame()->width(), droppedWidth);
-}
-
-void TestDocks::tst_fixedSizePolicy()
-{
-    // tests that KDDW also takes into account QSizePolicy::Fixed for calculating the max size hint.
-    // Since QPushButton for example doesn't set QWidget::maximumSize(), but instead uses sizeHint()
-    // + QSizePolicy::Fixed.
-    EnsureTopLevelsDeleted e;
-    auto button = new QPushButton("one");
-    auto dock1 = createDockWidget("dock1", button);
-    Frame *frame = dock1->frame();
-
-    // Just a precondition from the test. If QPushButton ever changes, replace with a QWidget and set fixed size policy
-    QCOMPARE(button->sizePolicy().verticalPolicy(), QSizePolicy::Fixed);
-
-    const int buttonMaxHeight = button->sizeHint().height();
-
-    QCOMPARE(dock1->sizeHint(), button->sizeHint());
-    QCOMPARE(dock1->sizePolicy().verticalPolicy(), button->sizePolicy().verticalPolicy());
-    QCOMPARE(dock1->sizePolicy().horizontalPolicy(), button->sizePolicy().horizontalPolicy());
-
-    QCOMPARE(frame->maxSizeHint().height(), qMax(buttonMaxHeight, KDDOCKWIDGETS_MIN_HEIGHT));
-
-    delete dock1->window();
-}
 
 void TestDocks::tst_isInMainWindow()
 {
@@ -4620,56 +4557,6 @@ void TestDocks::tst_stuckSeparator()
     for (auto dw : DockRegistry::self()->dockwidgets()) {
         delete dw;
     }
-}
-
-void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
-{
-    // dock1 is docked, and has small max-height.
-    // When dropping dock2, which is small too, dock2 should occupy all the height except dock1's max-height
-    // i.e. dock2 should expand and eat all available space
-
-    EnsureTopLevelsDeleted e;
-    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
-    auto dock1 = new DockWidgetType("dock1");
-
-    auto w = new MyWidget2(QSize(400,400));
-    w->setMinimumSize(120, 100);
-    w->setMaximumSize(300, 150);
-    dock1->setWidget(w);
-    m1->addDockWidget(dock1, Location_OnLeft);
-
-    auto dock2 = new DockWidgetType("dock2");
-    m1->addDockWidget(dock2, Location_OnBottom);
-
-    auto root = m1->multiSplitter()->rootItem();
-    Separator *separator = root->separators().constFirst();
-    const int min1 = root->minPosForSeparator_global(separator);
-    const int max2 = root->maxPosForSeparator_global(separator);
-
-    QVERIFY(separator->position() >= min1);
-    QVERIFY(separator->position() <= max2);
-    const int item1MaxHeight = dock1->frame()->maxSizeHint().height();
-    QVERIFY(dock1->frame()->height() <= item1MaxHeight);
-    root->dumpLayout();
-    QCOMPARE(dock2->frame()->height(), root->height() - item1MaxHeight - Item::separatorThickness);
-}
-
-void TestDocks::tst_addToHiddenMainWindow()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, {}, false);
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
-    auto d1 = createDockWidget("1", w1);
-    auto d2 = createDockWidget("2", w2);
-
-    m->addDockWidget(d1, Location_OnTop);
-    m->addDockWidget(d2, Location_OnTop);
-
-    QVERIFY(!m->isVisible());
-    d1->setFloating(true);
-    d2->setFloating(false);
-    m->multiSplitter()->checkSanity();
 }
 
 void TestDocks::tst_titlebar_getter()
@@ -5307,6 +5194,292 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
     delete m->window();
 }
 
+void TestDocks::tst_restoreResizesLayout()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+
+    LayoutSaver saver;
+    QVERIFY(saver.saveToFile("layout_tst_restoreResizesLayout.json"));
+
+    // Now resize the window, and then restore. The layout should have the new size
+
+    auto layout = m->multiSplitter();
+    m->resize(1050, 1050);
+    QCOMPARE(m->size(), QSize(1050, 1050));
+
+    LayoutSaver restorer(RestoreOption_RelativeToMainWindow);
+    QVERIFY(restorer.restoreFromFile("layout_tst_restoreResizesLayout.json"));
+    QVERIFY(layout->checkSanity());
+
+    QCOMPARE(m->dropArea()->QWidgetAdapter::size(), layout->rootItem()->size());
+    QVERIFY(layout->checkSanity());
+}
+
+void TestDocks::tst_maximumSizePolicy()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto widget = new MyWidget2();
+    const int maxHeight = 250;
+    widget->setMinimumSize(QSize(200, 200));
+    widget->setSizeHint(QSize(250, maxHeight));
+    widget->setSizePolicy({QSizePolicy::Preferred, QSizePolicy::Maximum});
+
+    auto dock1 = createDockWidget("dock1", widget);
+    dock1->show();
+    dock1->window()->resize(QSize(500, 500));
+    auto oldFw = Tests::make_qpointer(dock1->window());
+    dock1->close();
+    dock1->show();
+    auto oldFw2 = dock1->window();
+
+
+    const int tollerance = 50;
+    QVERIFY(dock1->window()->height() <= maxHeight + tollerance); // +tollerance as the floating window is a bit bigger, due to margins etc.
+    QVERIFY(dock1->height() <= maxHeight);
+
+    auto m1 = createMainWindow();
+    auto dock2 = createDockWidget("dock2", new QPushButton("foo"));
+    m1->addDockWidget(dock2, Location_OnTop);
+    m1->resize(2000, 3000);
+
+    // Make the floating window big, and see if the suggested highlight is still small
+    dock1->window()->resize(QSize(dock1->width(), 800));
+
+    {
+        WindowBeingDragged wbd1(dock1->floatingWindow());
+        const QRect highlightRect = m1->multiSplitter()->rectForDrop(&wbd1, Location_OnBottom, nullptr);
+        QVERIFY(highlightRect.height() <= maxHeight + tollerance);
+    }
+
+    // Now drop it, and check too
+    m1->addDockWidget(dock1, Location_OnBottom);
+    QVERIFY(dock1->height() <= maxHeight);
+
+    delete oldFw.data();
+    delete oldFw2;
+}
+
+void TestDocks::tst_minSizeChanges()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(600, 600), MainWindowOption_None);
+    m->show();
+    auto w1 = new MyWidget2(QSize(400,400));
+    auto w2 = new MyWidget2(QSize(400,400));
+
+    auto d1 = new DockWidgetType("1");
+    d1->setWidget(w1);
+    auto d2 = new DockWidgetType("2");
+    d2->setWidget(w2);
+
+    m->addDockWidget(d1, Location_OnTop);
+    m->addDockWidget(d2, Location_OnTop, nullptr, AddingOption_StartHidden);
+    auto layout = m->multiSplitter();
+
+    // 1. d2 is a placeholder, let's change its min size before showing it
+    w2->setMinimumSize(QSize(800, 800));
+    d2->show();
+
+    Item *item2 = layout->itemForFrame(d2->frame());
+
+    QVERIFY(layout->checkSanity());
+
+    Testing::waitForResize(m.get());
+
+    QVERIFY(item2->width() >= 800);
+    QVERIFY(item2->height() >= 800);
+    QVERIFY(m->height() >= 1200);
+
+    // 2. d1 is visible, let's change its min size
+    w1->setMinimumSize(QSize(800, 800));
+
+    Testing::waitForResize(m.get());
+    layout->checkSanity();
+
+    QVERIFY(m->height() >= 1600);
+
+    // add a small one to the middle
+    auto w3 = new MyWidget2(QSize(100,100));
+    auto d3 = new DockWidgetType("3");
+    d3->setWidget(w3);
+    m->addDockWidget(d3, Location_OnTop, d1);
+}
+
+void TestDocks::tst_maxSizePropagates()
+{
+    // Tests that the DockWidget gets the min and max size of its guest widget
+    EnsureTopLevelsDeleted e;
+    auto dock1 = new DockWidgetType("dock1");
+
+    auto w = new MyWidget2(QSize(200, 200));
+    w->setMinimumSize(120, 120);
+    w->setMaximumSize(500, 500);
+    dock1->setWidget(w);
+    dock1->show();
+
+    QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
+    QCOMPARE(dock1->maximumSize(), w->maximumSize());
+
+    w->setMinimumSize(121, 121);
+    w->setMaximumSize(501, 501);
+
+    Testing::waitForEvent(w, QEvent::LayoutRequest);
+
+    QCOMPARE(Widget_qwidget::widgetMinSize(dock1), Widget_qwidget::widgetMinSize(w));
+    QCOMPARE(dock1->maximumSize(), w->maximumSize());
+
+    // Now let's see if our Frame also has proper size-constraints
+    Frame *frame = dock1->frame();
+    QCOMPARE(frame->maximumSize().expandedTo(w->maximumSize()), frame->maximumSize());
+
+    delete dock1->window();
+}
+
+void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
+{
+    // dock1 is docked, and has small max-height.
+    // When dropping dock2, which is small too, dock2 should occupy all the height except dock1's max-height
+    // i.e. dock2 should expand and eat all available space
+
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock1 = new DockWidgetType("dock1");
+
+    auto w = new MyWidget2(QSize(400,400));
+    w->setMinimumSize(120, 100);
+    w->setMaximumSize(300, 150);
+    dock1->setWidget(w);
+    m1->addDockWidget(dock1, Location_OnLeft);
+
+    auto dock2 = new DockWidgetType("dock2");
+    m1->addDockWidget(dock2, Location_OnBottom);
+
+    auto root = m1->multiSplitter()->rootItem();
+    Separator *separator = root->separators().constFirst();
+    const int min1 = root->minPosForSeparator_global(separator);
+    const int max2 = root->maxPosForSeparator_global(separator);
+
+    QVERIFY(separator->position() >= min1);
+    QVERIFY(separator->position() <= max2);
+    const int item1MaxHeight = dock1->frame()->maxSizeHint().height();
+    QVERIFY(dock1->frame()->height() <= item1MaxHeight);
+    root->dumpLayout();
+    QCOMPARE(dock2->frame()->height(), root->height() - item1MaxHeight - Item::separatorThickness);
+}
+
+void TestDocks::tst_addToHiddenMainWindow()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, {}, false);
+    auto w1 = new MyWidget2(QSize(400,400));
+    auto w2 = new MyWidget2(QSize(400,400));
+    auto d1 = createDockWidget("1", w1);
+    auto d2 = createDockWidget("2", w2);
+
+    m->addDockWidget(d1, Location_OnTop);
+    m->addDockWidget(d2, Location_OnTop);
+
+    QVERIFY(!m->isVisible());
+    d1->setFloating(true);
+    d2->setFloating(false);
+    m->multiSplitter()->checkSanity();
+}
+
+void TestDocks::tst_maxSizePropagates2()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock1 = new DockWidgetType("dock1");
+
+    auto w = new MyWidget2(QSize(200, 200));
+    w->setMinimumSize(120, 120);
+    w->setMaximumSize(300, 500);
+    dock1->setWidget(w);
+    dock1->show();
+
+    auto dock2 = new DockWidgetType("dock2");
+    auto dock3 = new DockWidgetType("dock3");
+    auto dock4 = new DockWidgetType("dock4");
+    m1->addDockWidget(dock2, Location_OnLeft);
+    m1->addDockWidget(dock3, Location_OnRight);
+    m1->addDockWidget(dock4, Location_OnBottom, dock3);
+    m1->addDockWidget(dock1, Location_OnLeft, dock4);
+
+    Frame *frame1 = dock1->frame();
+
+    Layouting::ItemContainer *root = m1->multiSplitter()->rootItem();
+    Item *item1 = root->itemForWidget(frame1);
+    auto vertSep1 = root->separators().constFirst();
+    const int min1 = root->minPosForSeparator_global(vertSep1);
+
+    ItemContainer *container1 = item1->parentContainer();
+    auto innerVertSep1 = container1->separators().constFirst();
+    const int minInnerSep = container1->minPosForSeparator_global(innerVertSep1);
+    const int maxInnerSep = container1->maxPosForSeparator_global(innerVertSep1);
+
+    root->requestSeparatorMove(vertSep1, -(vertSep1->position() - min1));
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+
+    container1->requestSeparatorMove(innerVertSep1, -(innerVertSep1->position() - minInnerSep));
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+
+    container1->requestSeparatorMove(innerVertSep1, maxInnerSep - innerVertSep1->position());
+    QVERIFY(frame1->width() <= frame1->maxSizeHint().width());
+}
+
+void TestDocks::tst_maxSizeHonouredWhenDropped()
+{
+    EnsureTopLevelsDeleted e;
+    auto m1 = createMainWindow();
+    auto dock1 = new DockWidgetType("dock1");
+    auto dock2 = new DockWidgetType("dock2");
+    m1->addDockWidget(dock1, Location_OnTop);
+    m1->resize(2000, 2000);
+
+    auto w2 = new MyWidget2(QSize(400,400));
+    dock2->setWidget(w2);
+    const int maxWidth = 200;
+    w2->setMaximumSize(maxWidth, 200);
+    m1->addDockWidget(dock2, Location_OnLeft);
+    const int droppedWidth = dock2->frame()->width();
+    QVERIFY(droppedWidth < maxWidth + 50); // +50 to cover any margins and waste by QTabWidget
+
+    // Try again, but now dropping a multisplitter
+    dock2->setFloating(true);
+    auto fw = dock2->floatingWindow();
+
+    m1->dropArea()->drop(fw, Location_OnLeft, nullptr);
+    QCOMPARE(dock2->frame()->width(), droppedWidth);
+}
+
+void TestDocks::tst_fixedSizePolicy()
+{
+    // tests that KDDW also takes into account QSizePolicy::Fixed for calculating the max size hint.
+    // Since QPushButton for example doesn't set QWidget::maximumSize(), but instead uses sizeHint()
+    // + QSizePolicy::Fixed.
+    EnsureTopLevelsDeleted e;
+    auto button = new QPushButton("one");
+    auto dock1 = createDockWidget("dock1", button);
+    Frame *frame = dock1->frame();
+
+    // Just a precondition from the test. If QPushButton ever changes, replace with a QWidget and set fixed size policy
+    QCOMPARE(button->sizePolicy().verticalPolicy(), QSizePolicy::Fixed);
+
+    const int buttonMaxHeight = button->sizeHint().height();
+
+    QCOMPARE(dock1->sizeHint(), button->sizeHint());
+    QCOMPARE(dock1->sizePolicy().verticalPolicy(), button->sizePolicy().verticalPolicy());
+    QCOMPARE(dock1->sizePolicy().horizontalPolicy(), button->sizePolicy().horizontalPolicy());
+
+    QCOMPARE(frame->maxSizeHint().height(), qMax(buttonMaxHeight, KDDOCKWIDGETS_MIN_HEIGHT));
+
+    delete dock1->window();
+}
+
 #endif
 
 void TestDocks::tst_floatingAction()
@@ -5596,82 +5769,6 @@ void TestDocks::tst_raise()
 
     delete fw2;
     delete dock1->window();
-}
-
-void TestDocks::tst_complex()
-{
-    // Tests some anchors out of bounds I got
-
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(600, 500), MainWindowOption_None);
-    auto layout = m->multiSplitter();
-    m->resize(3266, 2239);
-    m->show(); // TODO: Remove and see if it crashes
-
-    DockWidgetBase::List docks;
-
-    QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft, Location_OnLeft,
-                                                  Location_OnRight, Location_OnRight, Location_OnRight, Location_OnRight,
-                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
-                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom,
-                                                  Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom
-                                                  };
-
-    QVector<KDDockWidgets::AddingOption> options = { AddingOption_None, AddingOption_None,
-                                                    AddingOption_StartHidden, AddingOption_StartHidden,
-                                                    AddingOption_None,
-                                                    AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,
-                                                    AddingOption_None, AddingOption_None,
-                                                    AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden
-    };
-
-    QVector<bool> floatings =  {true, false, true, false, false, false, false, false, false, false, false, false,
-                               true, false, false, true, true, true, true, true, false };
-
-    QVector<QSize> minSizes= {
-        QSize(316, 219),
-        QSize(355, 237),
-        QSize(293, 66),
-        QSize(158, 72),
-        QSize(30, 141),
-        QSize(104, 143),
-        QSize(104, 105),
-        QSize(84, 341),
-        QSize(130, 130),
-        QSize(404, 205),
-        QSize(296, 177),
-        QSize(914, 474),
-        QSize(355, 237),
-        QSize(104, 104),
-        QSize(104, 138),
-        QSize(1061, 272),
-        QSize(165, 196),
-        QSize(296, 177),
-        QSize(104, 104),
-        QSize(355, 237),
-        QSize(104, 138)
-    };
-
-    const int num = 21;
-    for (int i = 0; i < num; ++i) {
-        auto widget = new MyWidget2(minSizes.at(i));
-        auto dw = new DockWidgetType(QString::number(i));
-        dw->setWidget(widget);
-        docks << dw;
-    }
-
-    for (int i = 0; i < num; ++i) {
-        m->addDockWidget(docks[i], locations[i], nullptr, options[i]);
-        layout->checkSanity();
-        docks[i]->setFloating(floatings[i]);
-        layout->checkSanity();
-    }
-
-    m->show();
-
-    // Cleanup
-    qDeleteAll(docks);
-    qDeleteAll(DockRegistry::self()->frames());
 }
 
 void TestDocks::tst_invalidLayoutAfterRestore()
@@ -6189,99 +6286,6 @@ void TestDocks::tst_constraintsAfterPlaceholder()
 
     dock1->deleteLater();
     Testing::waitForDeleted(dock1);
-}
-
-void TestDocks::tst_minSizeChanges()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(600, 600), MainWindowOption_None);
-    m->show();
-    auto w1 = new MyWidget2(QSize(400,400));
-    auto w2 = new MyWidget2(QSize(400,400));
-
-    auto d1 = new DockWidgetType("1");
-    d1->setWidget(w1);
-    auto d2 = new DockWidgetType("2");
-    d2->setWidget(w2);
-
-    m->addDockWidget(d1, Location_OnTop);
-    m->addDockWidget(d2, Location_OnTop, nullptr, AddingOption_StartHidden);
-    auto layout = m->multiSplitter();
-
-    // 1. d2 is a placeholder, let's change its min size before showing it
-    w2->setMinimumSize(QSize(800, 800));
-    d2->show();
-
-    Item *item1 = layout->itemForFrame(d1->frame());
-    Item *item2 = layout->itemForFrame(d2->frame());
-
-    QVERIFY(layout->checkSanity());
-
-    Testing::waitForResize(m.get());
-
-    qDebug() << item2->width();
-    QVERIFY(item2->width() >= 800);
-    QVERIFY(item2->height() >= 800);
-    QVERIFY(m->height() >= 1200);
-
-    // 2. d1 is visible, let's change its min size
-    qDebug() << item1->minSize() << item1->size();
-    w1->setMinimumSize(QSize(800, 800));
-
-    Testing::waitForResize(m.get());
-    layout->checkSanity();
-    QVERIFY(m->height() >= 1600);
-
-    // add a small one to the middle
-    auto w3 = new MyWidget2(QSize(100,100));
-    auto d3 = new DockWidgetType("3");
-    d3->setWidget(w3);
-    m->addDockWidget(d3, Location_OnTop, d1);
-}
-
-void TestDocks::tst_maximumSizePolicy()
-{
-    EnsureTopLevelsDeleted e;
-
-    auto widget = new MyWidget2();
-    const int maxHeight = 250;
-    widget->setMinimumSize(QSize(200, 200));
-    widget->setSizeHint(QSize(250, maxHeight));
-    widget->setSizePolicy({QSizePolicy::Preferred, QSizePolicy::Maximum});
-
-    auto dock1 = createDockWidget("dock1", widget);
-    dock1->show();
-    dock1->window()->resize(QSize(500, 500));
-    auto oldFw = Tests::make_qpointer(dock1->window());
-    dock1->close();
-    dock1->show();
-    auto oldFw2 = dock1->window();
-
-
-    const int tollerance = 50;
-    QVERIFY(dock1->window()->height() <= maxHeight + tollerance); // +tollerance as the floating window is a bit bigger, due to margins etc.
-    QVERIFY(dock1->height() <= maxHeight);
-
-    auto m1 = createMainWindow();
-    auto dock2 = createDockWidget("dock2", new QPushButton("foo"));
-    m1->addDockWidget(dock2, Location_OnTop);
-    m1->resize(2000, 3000);
-
-    // Make the floating window big, and see if the suggested highlight is still small
-    dock1->window()->resize(QSize(dock1->width(), 800));
-
-    {
-        WindowBeingDragged wbd1(dock1->floatingWindow());
-        const QRect highlightRect = m1->multiSplitter()->rectForDrop(&wbd1, Location_OnBottom, nullptr);
-        QVERIFY(highlightRect.height() <= maxHeight + tollerance);
-    }
-
-    // Now drop it, and check too
-    m1->addDockWidget(dock1, Location_OnBottom);
-    QVERIFY(dock1->height() <= maxHeight);
-
-    delete oldFw.data();
-    delete oldFw2;
 }
 
 #include "tst_docks.moc"
