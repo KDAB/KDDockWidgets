@@ -172,6 +172,12 @@ FloatingWindow * QWidgetAdapter::floatingWindow() const
 
 QRect QWidgetAdapter::geometry() const
 {
+    if (isTopLevel()) {
+        if (QWindow *w = windowHandle()) {
+            return w->geometry();
+        }
+    }
+
     return KDDockWidgets::Private::geometry(this);
 }
 
@@ -426,6 +432,13 @@ void QWidgetAdapter::move(QPoint pt)
 
 void QWidgetAdapter::move(int x, int y)
 {
+    if (isTopLevel()) {
+        if (QWindow *w = windowHandle()) {
+            w->setPosition(x, y);
+            return;
+        }
+    }
+
     setX(x);
     setY(y);
     setAttribute(Qt::WA_Moved);

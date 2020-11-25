@@ -925,7 +925,6 @@ void TestDocks::tst_maximizeAndRestore()
     Testing::waitForResize(m.get());
 
     QVERIFY(dropArea->checkSanity());
-    qDebug() << "About to show normal";
     m->showNormal();
     Testing::waitForResize(m.get());
 
@@ -3240,8 +3239,6 @@ void TestDocks::tst_invalidPlaceholderPosition()
     auto toRestore1 = restore1First ? dock1 : dock2;
     auto toRestore2 = restore1First ? dock2 : dock1;
 
-
-    qDebug() << "About to show dock1";
     toRestore1->show();
     QCOMPARE(layout->placeholderCount(), 1);
     QVERIFY(dock3->isVisible());
@@ -4200,15 +4197,14 @@ void TestDocks::tst_positionWhenShown()
     auto dock1 = new DockWidgetType("1");
     dock1->show();
     dock1->window()->move(100, 100);
-    QCOMPARE(dock1->window()->pos(), QPoint(100, 100));
+    QCOMPARE(dock1->window()->windowHandle()->position(), QPoint(100, 100));
 
     dock1->close();
     dock1->show();
-    QCOMPARE(dock1->window()->pos(), QPoint(100, 100));
-
-    window->multiSplitter()->checkSanity();
+    QCOMPARE(dock1->window()->windowHandle()->position(), QPoint(100, 100));
 
     // Cleanup
+    window->multiSplitter()->checkSanity();
     dock1->deleteLater();
     QVERIFY(Testing::waitForDeleted(dock1));
 }
