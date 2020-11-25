@@ -329,6 +329,7 @@ void TestDocks::tst_restoreSimple()
     auto dock1 = createDockWidget("one", new QTextEdit());
     auto dock2 = createDockWidget("two", new QTextEdit());
     auto dock3 = createDockWidget("three", new QTextEdit());
+
     m->addDockWidget(dock1, Location_OnTop);
 
     // Dock2 floats at 150,150
@@ -551,8 +552,7 @@ void TestDocks::tst_floatingWindowSize()
     auto dock1 = createDockWidget("1");
     auto fw1 = dock1->window();
 
-
-    QTest::qWait(2000);
+    QTest::qWait(100);
 
     QVERIFY(!fw1->geometry().isNull());
     QCOMPARE(fw1->size(), fw1->windowHandle()->size());
@@ -611,6 +611,8 @@ void TestDocks::tst_sizeAfterRedock()
     const int height2 = dw2->frame()->height();
 
     dw2->setFloating(true);
+    QTest::qWait(100);
+
     QCOMPARE(height2, dw2->window()->height());
     auto oldFw2 = dw2->floatingWindow();
 

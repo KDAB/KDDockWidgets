@@ -61,6 +61,10 @@ Rectangle {
     }
 
     onHeightChanged: {
-        //console.log("FloatingWindow.qml.root height changed to " + height)
+        // console.log("FloatingWindow.qml.root height changed to " + height)
+    }
+
+    onWidthChanged: {
+        // console.log("FloatingWindow.qml.root width changed to " + width)
     }
 }

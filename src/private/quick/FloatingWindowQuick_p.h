@@ -14,7 +14,7 @@
 
 #include "FloatingWindow_p.h"
 
-#include <QQuickView>
+class QQuickView;
 
 namespace KDDockWidgets {
 

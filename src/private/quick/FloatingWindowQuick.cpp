@@ -26,17 +26,53 @@ namespace KDDockWidgets {
 
 class QuickView : public QQuickView
 {
-    using QQuickView::QQuickView;
+public:
+    explicit QuickView(QQuickItem *floatingWindow)
+        : QQuickView(Config::self().qmlEngine(), nullptr)
+        , m_floatingWindow(floatingWindow)
+    {
+
+        updateSize();
+
+        connect(m_floatingWindow, &QQuickItem::widthChanged, this, &QuickView::onRootItemWidthChanged);
+        connect(m_floatingWindow, &QQuickItem::heightChanged, this, &QuickView::onRootItemHeightChanged);
+    }
 
     bool event(QEvent *ev) override
     {
         if (ev->type() == QEvent::FocusAboutToChange) {
             // qquickwindow.cpp::event(FocusAboutToChange) removes the item grabber. Inibit that
             return true;
+        } else if (ev->type() == QEvent::Resize) {
+            updateRootItemSize();
         }
 
         return QQuickView::event(ev);
     }
+
+
+    void onRootItemWidthChanged()
+    {
+        setWidth(int(m_floatingWindow->width()));
+    }
+
+    void onRootItemHeightChanged()
+    {
+        setHeight(int(m_floatingWindow->height()));
+    }
+
+    void updateSize()
+    {
+        resize(m_floatingWindow->size().toSize());
+        // contentItem()->setSize(size()); // TODO: Needed ?
+    }
+
+    void updateRootItemSize()
+    {
+        m_floatingWindow->setSize(size());
+    }
+
+    QQuickItem *const m_floatingWindow;
 };
 
 }
@@ -44,14 +80,14 @@ class QuickView : public QQuickView
 
 FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
     : FloatingWindow(parent)
-    , m_quickWindow(new QuickView(Config::self().qmlEngine(), nullptr))
+    , m_quickWindow(new QuickView(this))
 {
     init();
 }
 
 FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
     : FloatingWindow(frame, parent)
-    , m_quickWindow(new QuickView(Config::self().qmlEngine(), nullptr))
+    , m_quickWindow(new QuickView(this))
 {
     init();
 }
@@ -106,9 +142,6 @@ void FloatingWindowQuick::init()
         qDebug() << "Focus object changed to " << object << this << m_quickWindow;
     });*/
 
-    const QSize minSize = minimumSize();
-    m_quickWindow->resize(minSize);
-    m_quickWindow->contentItem()->setSize(minSize);
 
     if (QWindow *transientParent = candidateParentWindow()) {
         m_quickWindow->setTransientParent(candidateParentWindow());
@@ -121,9 +154,6 @@ void FloatingWindowQuick::init()
     }
 
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
-    QWidgetAdapter::makeItemFillParent(this);
-
-    m_quickWindow->setResizeMode(QQuickView::SizeViewToRootObject);
 
     QQuickItem *visualItem = createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/FloatingWindow.qml"));
     Q_ASSERT(visualItem);
@@ -131,5 +161,6 @@ void FloatingWindowQuick::init()
     visualItem->setParentItem(this);
 
     m_quickWindow->setFlags(windowFlags());
+
     m_quickWindow->show();
 }
