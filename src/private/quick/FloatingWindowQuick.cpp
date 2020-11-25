@@ -154,6 +154,9 @@ void FloatingWindowQuick::init()
 
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
 
+    // Ensure our window size is never smaller than our min-size
+    setSize(size().expandedTo(minimumSize()));
+
     QQuickItem *visualItem = createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/FloatingWindow.qml"));
     Q_ASSERT(visualItem);
     visualItem->setParent(this);
