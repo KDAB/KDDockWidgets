@@ -13,12 +13,13 @@ import QtQuick 2.9
 import QtQuick.Controls 2.9
 import QtQuick.Layouts 1.9 
 
-Rectangle {
+Item {
     id: root
+
     property QtObject frameCpp
     readonly property QtObject titleBarCpp: frameCpp ? frameCpp.titleBar : null
     readonly property int nonContentsHeight: titleBar.height + tabbar.height
-    color: "cyan"
+
     anchors.fill: parent
 
     onFrameCppChanged: {

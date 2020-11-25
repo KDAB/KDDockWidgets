@@ -11,10 +11,9 @@
 
 import QtQuick 2.9
 
-Rectangle {
+Item {
     id: root
-    readonly property QtObject dockWidgetCpp: parent
 
-    color: "green"
+    readonly property QtObject dockWidgetCpp: parent
     anchors.fill: parent
 }
