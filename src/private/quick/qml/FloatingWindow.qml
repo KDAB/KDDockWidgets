@@ -12,14 +12,13 @@
 import QtQuick 2.9
 import "." as KDDW
 
-Rectangle {
+Item {
     id: root
     readonly property QtObject floatingWindowCpp: parent
     readonly property QtObject titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
     readonly property QtObject dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
     readonly property int titleBarHeight: titleBarCpp ? titleBarCpp.titleBarHeight : 0
 
-    color: "yellow"
     anchors.fill: parent
 
     KDDW.TitleBar {
