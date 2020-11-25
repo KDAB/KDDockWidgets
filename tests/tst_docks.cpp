@@ -371,7 +371,7 @@ void TestDocks::tst_restoreSimple()
     QVERIFY(fw2->isVisible());
     QVERIFY(fw2->isTopLevel());
     QCOMPARE(fw2->pos(), dock2FloatingPoint);
-    QCOMPARE(fw2->parent(), m.get());
+    QCOMPARE(fw2->windowHandle()->transientParent(), m->windowHandle());
     QVERIFY(dock2->isFloating());
     QVERIFY(dock2->isVisible());
 
