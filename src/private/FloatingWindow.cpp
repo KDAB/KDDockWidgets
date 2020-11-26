@@ -139,27 +139,8 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     , m_dropArea(new DropArea(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
 {
-#if defined(Q_OS_WIN)
-    // On Windows with Qt 5.9 (and maybe earlier), the WM_NCALCSIZE isn't being processed unless we explicitly create the window.
-    // So create it now, otherwise floating dock widgets will show a native title bar until resized.
-    create();
 
-    if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
-        m_nchittestFilter = new NCHITTESTEventFilter(this);
-        qApp->installNativeEventFilter(m_nchittestFilter);
-
-        connect(windowHandle(), &QWindow::screenChanged, this, [this] {
-            // Qt honors our frame hijacking usually... but when screen changes we must give it a nudge.
-            // Otherwise what Qt thinks is the client area is not what Windows knows it is.
-            // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take note of the margins we're using.
-            SetWindowPos(HWND(winId()), 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
-        });
-
-        // Show drop-shadow:
-        MARGINS margins = {0, 0, 0, 1}; // arbitrary, just needs to be > 0 it seems
-        DwmExtendFrameIntoClientArea(HWND(winId()), &margins);
-    }
-#endif
+    setupWindow();
 
     DockRegistry::self()->registerFloatingWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
@@ -195,6 +176,34 @@ FloatingWindow::~FloatingWindow()
 
     DockRegistry::self()->unregisterFloatingWindow(this);
     qCDebug(creation) << "~FloatingWindow";
+}
+
+void FloatingWindow::setupWindow()
+{
+    // Does some minor setup on our QWindow.
+    // Like adding the drop shadow on Windows and two other workarounds.
+
+#if defined(Q_OS_WIN)
+    // On Windows with Qt 5.9 (and maybe earlier), the WM_NCALCSIZE isn't being processed unless we explicitly create the window.
+    // So create it now, otherwise floating dock widgets will show a native title bar until resized.
+    create();
+
+    if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
+        m_nchittestFilter = new NCHITTESTEventFilter(this);
+        qApp->installNativeEventFilter(m_nchittestFilter);
+
+        connect(windowHandle(), &QWindow::screenChanged, this, [this] {
+            // Qt honors our frame hijacking usually... but when screen changes we must give it a nudge.
+            // Otherwise what Qt thinks is the client area is not what Windows knows it is.
+            // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take note of the margins we're using.
+            SetWindowPos(HWND(winId()), 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+        });
+
+        // Show drop-shadow:
+        MARGINS margins = {0, 0, 0, 1}; // arbitrary, just needs to be > 0 it seems
+        DwmExtendFrameIntoClientArea(HWND(winId()), &margins);
+    }
+#endif
 }
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
