@@ -42,6 +42,7 @@ if (${PROJECT_NAME}_QTQUICK)
     # We're building the layouting engine as part of KDDW. If KDDW has set to build with QtQuick
     # then so does the layouting engine
     SET(BUILD_MULTISPLITTER_QTQUICK_FRONTEND ON)
+    SET(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND OFF)
 else()
   option(BUILD_MULTISPLITTER_QTQUICK_FRONTEND "Build support for QtQuick" OFF)
 endif()
@@ -83,7 +84,7 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
   # Under developer mode since kddw might be a sub-folder of a project setting a different value for QT_DISABLE_DEPRECATED_BEFORE
   target_compile_definitions(kddockwidgets_multisplitter PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
-  if(${PROJECT_NAME}_TESTS)
+  if(${PROJECT_NAME}_TESTS AND BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND)
     add_subdirectory(tests)
   endif()
   if(${PROJECT_NAME}_EXAMPLES)

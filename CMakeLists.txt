@@ -214,10 +214,12 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
         add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
         add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
     endif()
+    if (NOT ${PROJECT_NAME}_QTQUICK)
+        # tst_multisplitter depends on QWidget
+        add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
+    endif()
 
-    add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
     add_test(NAME tst_docks COMMAND tst_docks)
-
   endif()
 endif()
 
