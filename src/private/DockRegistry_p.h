@@ -95,6 +95,9 @@ public:
     ///@brief returns the FloatingWindow with handle @p windowHandle
     FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
 
+    ///@brief returns the FloatingWindow with handle @p hwnd
+    FloatingWindow *floatingWindowForHandle(WId hwnd) const;
+
     ///@brief returns the MainWindow with handle @p windowHandle
     MainWindowBase *mainWindowForHandle(QWindow *windowHandle) const;
 

@@ -504,6 +504,16 @@ FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) con
     return nullptr;
 }
 
+FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) const
+{
+    for (FloatingWindow *fw : m_floatingWindows) {
+        if (fw->windowHandle() && fw->windowHandle()->winId() == hwnd)
+            return fw;
+    }
+
+    return nullptr;
+}
+
 MainWindowBase *DockRegistry::mainWindowForHandle(QWindow *windowHandle) const
 {
     for (MainWindowBase *mw : m_mainWindows) {
