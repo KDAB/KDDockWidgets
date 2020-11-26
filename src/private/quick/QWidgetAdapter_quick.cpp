@@ -567,6 +567,11 @@ void QWidgetAdapter::setWindowIsBeingDestroyed(bool is)
     m_windowIsBeingDestroyed = is;
 }
 
+void QWidgetAdapter::create()
+{
+    // Nothing to do, for QtQuick ?
+}
+
 QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 {
     if (!window)

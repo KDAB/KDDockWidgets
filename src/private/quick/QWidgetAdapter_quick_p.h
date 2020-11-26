@@ -167,6 +167,7 @@ Q_SIGNALS:
     void parentChanged();
     void geometryUpdated(); // similar to QLayout stuff, when size constraints change
 protected:
+    void create();
     bool event(QEvent *) override;
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
     void raiseAndActivate();
