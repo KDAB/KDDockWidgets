@@ -41,6 +41,16 @@ inline bool isWayland()
     return qApp->platformName() == QLatin1String("wayland");
 }
 
+inline bool kddwUsesQtWidgets()
+{
+    // Returns whether KDDW is built for QtWidgets or QtQuick
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    return true;
+#else
+    return false;
+#endif
+}
+
 inline bool isLeftButtonPressed()
 {
     return qApp->mouseButtons() & Qt::LeftButton;

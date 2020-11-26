@@ -139,8 +139,10 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     , m_dropArea(new DropArea(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
 {
-
-    setupWindow();
+    if (kddwUsesQtWidgets()) {
+        // For QtQuick we do it a bit later, once we have the QQuickWindow
+        setupWindow();
+    }
 
     DockRegistry::self()->registerFloatingWindow(this);
     qCDebug(creation) << "FloatingWindow()" << this;
