@@ -623,7 +623,6 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
 
     if (qApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
 # if defined(Q_OS_WIN)
-        auto topLevels = qApp->topLevelWidgets();
         POINT globalNativePos;
         if (!GetCursorPos(&globalNativePos))
             return nullptr;
@@ -646,7 +645,8 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
                     return tl;
                 }
             } else {
-                // Maybe it's embedded in a QWinWidget:
+#  ifdef KDDOCKWIDGETS_QTWIDGETS // Maybe it's embedded in a QWinWidget:
+                auto topLevels = qApp->topLevelWidgets();
                 for (auto topLevel : topLevels) {
                     if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
                         if (hwnd == GetParent(HWND(topLevel->windowHandle()->winId()))) {
@@ -657,13 +657,13 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
                         }
                     }
                 }
-
+#  endif // QtWidgets
                 // A window belonging to another app is below the cursor
                 qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
                 return nullptr;
             }
         }
-# endif
+# endif // Q_OS_WIN
     } else {
         // !Windows: Linux, macOS, offscreen (offscreen on Windows too), etc.
 
