@@ -42,8 +42,6 @@ int main(int argc, char *argv[])
 
     auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #3");
     dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
-    dw3->resize(QSize(800, 800));
-    dw3->show();
 
     dw1->addDockWidgetToContainingWindow(dw3, KDDockWidgets::Location_OnRight);
 

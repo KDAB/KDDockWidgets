@@ -146,6 +146,7 @@ private Q_SLOTS:
     void tst_setAsCurrentTab();
     void tst_placeholderDisappearsOnReadd();
     void tst_placeholdersAreRemovedProperly();
+    void tst_floatMaintainsSize();
 
     void tst_crash2_data();
     void tst_crash2();
@@ -2208,6 +2209,27 @@ void TestDocks::tst_placeholdersAreRemovedProperly()
     layout->checkSanity();
 
     delete window1;
+}
+
+void TestDocks::tst_floatMaintainsSize()
+{
+    // Tests that when we make a window float by pressing the float button, it will popup with
+    // the same size it had when docked
+
+    EnsureTopLevelsDeleted e;
+    auto dw1 = new DockWidgetType("1");
+    auto dw2 = new DockWidgetType("2");
+
+    const int oldWidth2 = dw2->width();
+    dw1->addDockWidgetToContainingWindow(dw2, Location_OnRight);
+    dw1->show();
+
+    dw2->setFloating(true);
+
+    QVERIFY(qAbs(dw2->width() - oldWidth2) < 16); // 15px for margins
+
+    delete dw1->window();
+    delete dw2->window();
 }
 
 void TestDocks::tst_crash2_data()
