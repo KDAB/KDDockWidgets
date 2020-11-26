@@ -583,12 +583,13 @@ StateBase *DragController::activeState() const
 }
 
 #if defined(Q_OS_WIN)
-static QWidget *qtTopLevelForHWND(HWND hwnd)
+static WidgetType *qtTopLevelForHWND(HWND hwnd)
 {
-    auto topLevels = qApp->topLevelWidgets();
-    for (auto topLevel : topLevels) {
-        if (hwnd == (HWND)topLevel->winId())
-            return topLevel;
+    const QList<QWindow*> windows = qApp->topLevelWindows();
+    for (QWindow *window : windows) {
+        if (hwnd == (HWND)window->winId()) {
+            return DockRegistry::self()->topLevelForHandle(window);
+        }
     }
 
     qCDebug(toplevels) << Q_FUNC_INFO << "Couldn't find hwnd for top-level" << hwnd;
@@ -622,7 +623,7 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
     QPoint globalPos = QCursor::pos();
 
     if (qApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
-# if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN)
         POINT globalNativePos;
         if (!GetCursorPos(&globalNativePos))
             return nullptr;
@@ -645,7 +646,7 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
                     return tl;
                 }
             } else {
-#  ifdef KDDOCKWIDGETS_QTWIDGETS // Maybe it's embedded in a QWinWidget:
+# ifdef KDDOCKWIDGETS_QTWIDGETS // Maybe it's embedded in a QWinWidget:
                 auto topLevels = qApp->topLevelWidgets();
                 for (auto topLevel : topLevels) {
                     if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
@@ -657,13 +658,13 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
                         }
                     }
                 }
-#  endif // QtWidgets
+# endif // QtWidgets
                 // A window belonging to another app is below the cursor
                 qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
                 return nullptr;
             }
         }
-# endif // Q_OS_WIN
+#endif // Q_OS_WIN
     } else {
         // !Windows: Linux, macOS, offscreen (offscreen on Windows too), etc.
 
