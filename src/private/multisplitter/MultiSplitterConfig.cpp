@@ -10,7 +10,7 @@
 */
 
 #include "MultiSplitterConfig.h"
-#include "Widget_qwidget.h"
+#include "Widget.h"
 #include "Item_p.h"
 #include "Separator_p.h"
 
