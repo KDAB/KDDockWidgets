@@ -12,7 +12,8 @@
 #ifndef KD_WIDGET_RESIZE_HANDLER_P_H
 #define KD_WIDGET_RESIZE_HANDLER_P_H
 
-#include <QWidget>
+#include "QWidgetAdapter.h"
+
 #include <QPoint>
 #include <QDebug>
 
@@ -28,10 +29,10 @@ class WidgetResizeHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit WidgetResizeHandler(QWidget *target = nullptr);
+    explicit WidgetResizeHandler(QWidgetOrQuick *target = nullptr);
     ~WidgetResizeHandler() override;
 
-    void setTarget(QWidget *w);
+    void setTarget(QWidgetOrQuick *w);
 
 #ifdef Q_OS_WIN
     static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, long *result);
@@ -55,7 +56,7 @@ private:
     void mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);
     CursorPosition cursorPosition(QPoint) const;
-    QWidget *mTarget = nullptr;
+    QWidgetOrQuick *mTarget = nullptr;
     CursorPosition mCursorPos = CursorPosition::Undefined;
     QPoint mNewPosition;
     bool mResizeWidget = false;

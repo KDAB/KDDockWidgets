@@ -42,7 +42,7 @@ int widgetResizeHandlerMargin = 4; //4 pixel
 using namespace KDDockWidgets;
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
-WidgetResizeHandler::WidgetResizeHandler(QWidget *target)
+WidgetResizeHandler::WidgetResizeHandler(QWidgetOrQuick *target)
     : QObject(target)
 {
     setTarget(target);
@@ -317,7 +317,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
 
 #endif
 
-void WidgetResizeHandler::setTarget(QWidget *w)
+void WidgetResizeHandler::setTarget(QWidgetOrQuick *w)
 {
     if (w) {
         mTarget = w;

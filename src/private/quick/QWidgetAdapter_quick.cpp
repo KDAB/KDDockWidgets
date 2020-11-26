@@ -231,6 +231,11 @@ void QWidgetAdapter::releaseMouse()
     QQuickItem::ungrabMouse();
 }
 
+void QWidgetAdapter::releaseKeyboard()
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+}
+
 void QWidgetAdapter::setMinimumSize(QSize sz)
 {
     if (minimumSize() != sz) {
@@ -550,6 +555,11 @@ void QWidgetAdapter::setFocus(Qt::FocusReason reason)
 }
 
 void QWidgetAdapter::render(QPainter *)
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+}
+
+void QWidgetAdapter::setMouseTracking(bool)
 {
     qWarning() << Q_FUNC_INFO << "Implement me";
 }

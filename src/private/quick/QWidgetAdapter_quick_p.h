@@ -111,6 +111,7 @@ public:
 
     void grabMouse();
     void releaseMouse();
+    void releaseKeyboard();
     void setMinimumSize(QSize);
     void setMinimumSize(int w, int h);
     void setMaximumSize(QSize sz);
@@ -158,7 +159,7 @@ public:
     void setWindowOpacity(qreal);
 
     void render(QPainter *);
-
+    void setMouseTracking(bool);
     void setWindowIsBeingDestroyed(bool);
 
     static QQuickItem *createItem(QQmlEngine *, const QString &filename);
