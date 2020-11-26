@@ -514,6 +514,17 @@ MainWindowBase *DockRegistry::mainWindowForHandle(QWindow *windowHandle) const
     return nullptr;
 }
 
+QWidgetOrQuick *DockRegistry::topLevelForHandle(QWindow *windowHandle) const
+{
+    if (auto fw = floatingWindowForHandle(windowHandle))
+        return fw;
+
+    if (auto mw = mainWindowForHandle(windowHandle))
+        return mw;
+
+    return nullptr;
+}
+
 QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
 {
     QVector<QWindow *> windows;

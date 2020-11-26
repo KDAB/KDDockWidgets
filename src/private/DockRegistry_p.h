@@ -98,6 +98,11 @@ public:
     ///@brief returns the MainWindow with handle @p windowHandle
     MainWindowBase *mainWindowForHandle(QWindow *windowHandle) const;
 
+    ///@brief returns the top level widget associated with the specified QWindow.
+    ///For QtWidgets, it returns a QWidget which is either a KDDockWidgets::MainWindow or a FloatingWindow.
+    ///For QtQuick ir returns the same, but the type is a QWidgetAdapter (a QQuickItem), not QWidget obviously.
+    QWidgetOrQuick *topLevelForHandle(QWindow *windowHandle) const;
+
     ///@brief Returns the list with all visiblye top-level parents of our FloatingWindow and MainWindow instances.
     ///
     /// Typically these are the FloatingWindows and MainWindows themselves. However, since a
