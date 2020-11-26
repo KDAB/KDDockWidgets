@@ -169,6 +169,8 @@ public:
         : MyWidget(QString::fromLatin1(name))
     {
     }
+
+    ~QPushButton();
 };
 
 class QLineEdit : public QWidgetAdapter
@@ -179,6 +181,8 @@ public:
     {
         setFocusPolicy(Qt::StrongFocus);
     }
+
+    ~QLineEdit();
 };
 
 class QTextEdit : public QWidgetAdapter
@@ -189,6 +193,8 @@ public:
     {
         setFocusPolicy(Qt::StrongFocus);
     }
+
+    ~QTextEdit();
 };
 
 class NonClosableWidget : public QWidgetAdapter
@@ -200,6 +206,8 @@ public:
         : QWidgetAdapter()
     {
     }
+
+    ~NonClosableWidget();
 
 protected:
     void onCloseEvent(QCloseEvent *ev) override
@@ -217,6 +225,8 @@ public:
         setMinimumSize(minSz);
         setSizeHint(minSz);
     }
+
+    ~MyWidget2();
 
     QSize sizeHint() const
     {

@@ -19,7 +19,6 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QPainter>
-#include <QPushButton>
 #include <QtTest/QtTest>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
@@ -29,6 +28,7 @@
 #else
 # include "DockWidget.h"
 # include "MainWindow.h"
+# include <QPushButton>
 #endif
 
 using namespace KDDockWidgets;
@@ -270,3 +270,11 @@ void KDDockWidgets::Tests::nestDockWidget(DockWidgetBase *dock, DropArea *dropAr
 }
 
 EmbeddedWindow::~EmbeddedWindow() = default;
+
+#ifdef KDDOCKWIDGETS_QTQUICK
+    MyWidget2::~MyWidget2() = default;
+    NonClosableWidget::~NonClosableWidget() = default;
+    QTextEdit::~QTextEdit() = default;
+    QLineEdit::~QLineEdit() = default;
+    QPushButton::~QPushButton() = default;
+#endif
