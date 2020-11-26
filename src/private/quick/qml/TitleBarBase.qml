@@ -20,6 +20,7 @@ Rectangle {
     // So the tests can send mouse events programatically
     readonly property QtObject mouseAreaForTests: dragMouseArea
 
+    color: "#eff0f1"
     visible: titleBarCpp && titleBarCpp.visible
     implicitHeight: 30
 

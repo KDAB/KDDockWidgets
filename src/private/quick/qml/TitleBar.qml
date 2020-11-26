@@ -30,6 +30,7 @@ TitleBarBase {
         anchors {
             left: parent ? parent.left : undefined
             leftMargin: 5
+            verticalCenter: parent.verticalCenter
         }
     }
 
@@ -42,7 +43,7 @@ TitleBarBase {
             right: closeButton.left
             topMargin: 5
             bottomMargin: 5
-            rightMargin: 5
+            rightMargin: 2
         }
         onClicked: {
             titleBarCpp.onFloatClicked();
@@ -59,6 +60,7 @@ TitleBarBase {
             topMargin: 5
             bottomMargin: 5
             leftMargin: 5
+            rightMargin: 2
         }
         onClicked: {
             titleBarCpp.onCloseClicked();
