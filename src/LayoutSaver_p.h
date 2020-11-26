@@ -18,7 +18,7 @@
 #include <QRect>
 #include <QDebug>
 #include <QScreen>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QJsonDocument>
 
 #include <memory>

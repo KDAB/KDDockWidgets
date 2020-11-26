@@ -21,7 +21,7 @@
 
 #include <QPointer>
 #include <QDebug>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QWindow>
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS

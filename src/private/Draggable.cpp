@@ -13,8 +13,8 @@
 #include "DragController_p.h"
 #include "FloatingWindow_p.h"
 #include "WidgetResizeHandler_p.h"
+#include "Utils_p.h"
 
-#include <QApplication>
 
 using namespace KDDockWidgets;
 
@@ -54,7 +54,7 @@ QWidgetOrQuick *Draggable::asWidget() const
 
 bool Draggable::dragCanStart(QPoint pressPos, QPoint globalPos) const
 {
-     return (globalPos - pressPos).manhattanLength() > QApplication::startDragDistance();
+    return (globalPos - pressPos).manhattanLength() > KDDockWidgets::startDragDistance();
 }
 
 WidgetResizeHandler *Draggable::widgetResizeHandler() const

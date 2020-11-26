@@ -15,6 +15,7 @@
 #include <kddockwidgets/MainWindow.h>
 
 #include <QStyleFactory>
+#include <QApplication>
 
 // clazy:excludeall=qstring-allocations
 

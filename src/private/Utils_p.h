@@ -14,7 +14,6 @@
 
 #include "Config.h"
 
-#include <QApplication>
 #include <QScreen>
 #include <QWidget>
 #include <QWindow>
@@ -22,6 +21,8 @@
 #ifdef KDDOCKWIDGETS_QTQUICK
 # include <QQuickItem>
 # include <QQuickWindow>
+#else
+# include <QApplication>
 #endif
 
 #ifdef QT_X11EXTRAS_LIB
@@ -120,6 +121,15 @@ inline bool isWindow(const QWidget *w)
 inline bool isWindow(const QWindow *w)
 {
     return w != nullptr;
+}
+
+inline int startDragDistance()
+{
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    return QApplication::startDragDistance();
+#else
+    return 4;
+#endif
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS

@@ -32,7 +32,6 @@
 #include <qmath.h>
 #include <QDebug>
 #include <QSettings>
-#include <QApplication>
 #include <QFile>
 
 #include <memory>

@@ -23,7 +23,6 @@
 #include "FrameworkWidgetFactory.h"
 #include "Utils_p.h"
 
-#include <QApplication>
 #include <QDebug>
 #include <QOperatingSystemVersion>
 

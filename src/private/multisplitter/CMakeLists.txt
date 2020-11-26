@@ -61,7 +61,7 @@ qt5_add_resources(MULTISPLITTER_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidg
 
 add_library(kddockwidgets_multisplitter ${KDDockWidgets_LIBRARY_MODE} ${MULTISPLITTER_SRCS} ${MULTISPLITTER_RESOURCES})
 add_library(KDAB::kddockwidgets_multisplitter ALIAS kddockwidgets_multisplitter)
-target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets)
+
 set_compiler_flags(kddockwidgets_multisplitter)
 
 if(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND)
@@ -71,7 +71,8 @@ endif()
 
 if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
   find_package(Qt5Quick)
-  target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Quick)
+  find_package(Qt5Widgets) # QtWidgets required for QSizePolicy, for example
+  target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Quick Qt${QT_MAJOR_VERSION}::Widgets)
 endif()
 
 if(${PROJECT_NAME}_STATIC)

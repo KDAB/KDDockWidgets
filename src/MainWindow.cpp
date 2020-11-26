@@ -25,7 +25,6 @@
 #include "DropAreaWithCentralFrame_p.h"
 #include "FrameworkWidgetFactory.h"
 
-#include <QApplication>
 #include <QVBoxLayout>
 #include <QPainter>
 
@@ -99,8 +98,6 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
     }
 
     setCentralWidget(centralWidget);
-
-    // qApp->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()

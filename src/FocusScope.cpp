@@ -23,7 +23,7 @@
 #include "DockRegistry_p.h"
 
 #include <QObject>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QPointer>
 
 using namespace KDDockWidgets;
