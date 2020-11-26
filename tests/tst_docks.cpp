@@ -2220,11 +2220,12 @@ void TestDocks::tst_floatMaintainsSize()
     auto dw1 = new DockWidgetType("1");
     auto dw2 = new DockWidgetType("2");
 
-    const int oldWidth2 = dw2->width();
     dw1->addDockWidgetToContainingWindow(dw2, Location_OnRight);
+    const int oldWidth2 = dw2->width();
     dw1->show();
 
     dw2->setFloating(true);
+    QTest::qWait(100);
 
     QVERIFY(qAbs(dw2->width() - oldWidth2) < 16); // 15px for margins
 
