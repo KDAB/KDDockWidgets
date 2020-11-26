@@ -38,6 +38,8 @@ public:
         connect(m_floatingWindow, &QQuickItem::heightChanged, this, &QuickView::onRootItemHeightChanged);
     }
 
+    ~QuickView();
+
     bool event(QEvent *ev) override
     {
         if (ev->type() == QEvent::FocusAboutToChange) {
@@ -73,6 +75,8 @@ public:
 
     QQuickItem *const m_floatingWindow;
 };
+
+QuickView::~QuickView() = default;
 
 }
 
