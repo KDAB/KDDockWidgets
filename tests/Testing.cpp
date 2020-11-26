@@ -12,7 +12,7 @@
 #include "Testing.h"
 #include "DockRegistry_p.h"
 
-#include <QApplication>
+#include <QGuiApplication>
 #include <QtTest>
 #include <QLoggingCategory>
 #include <QElapsedTimer>

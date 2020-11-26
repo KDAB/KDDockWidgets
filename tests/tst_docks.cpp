@@ -27,7 +27,6 @@
 #include <QtTest/QtTest>
 #include <QObject>
 #include <QAction>
-#include <QApplication>
 #include <QStyleFactory>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
