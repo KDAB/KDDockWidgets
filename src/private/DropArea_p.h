@@ -54,7 +54,7 @@ public:
     DropIndicatorOverlayInterface *dropIndicatorOverlay() const { return m_dropIndicatorOverlay; }
     void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location, DockWidgetBase *relativeTo, AddingOption option = {});
 
-    bool contains(DockWidgetBase *) const;
+    bool containsDockWidget(DockWidgetBase *) const;
 
     /// Returns whether this layout has a single dock widget which is floating
     /// Implies it's in a FloatingWindow and that it has only one dock widget

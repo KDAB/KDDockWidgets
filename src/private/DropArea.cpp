@@ -121,7 +121,7 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
     const bool hadSingleFloatingFrame = hasSingleFloatingFrame();
 
     // Check if the dock widget already exists in the layout
-    if (contains(dw)) {
+    if (containsDockWidget(dw)) {
         Frame *oldFrame = dw->frame();
         if (oldFrame->hasSingleDockWidget()) {
             Q_ASSERT(oldFrame->containsDockWidget(dw));
@@ -149,7 +149,7 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
     }
 }
 
-bool DropArea::contains(DockWidgetBase *dw) const
+bool DropArea::containsDockWidget(DockWidgetBase *dw) const
 {
     return dw->frame() && MultiSplitter::containsFrame(dw->frame());
 }
