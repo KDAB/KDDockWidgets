@@ -135,7 +135,7 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index, AddingOption add
                          << "; addingOption=" << addingOption;
 
     Q_ASSERT(dockWidget);
-    if (contains(dockWidget)) {
+    if (containsDockWidget(dockWidget)) {
         qWarning() << "Frame::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
         return;
     }
@@ -361,7 +361,7 @@ const DockWidgetBase::List Frame::dockWidgets() const
     return dockWidgets;
 }
 
-bool Frame::contains(DockWidgetBase *dockWidget) const
+bool Frame::containsDockWidget(DockWidgetBase *dockWidget) const
 {
     const int count = dockWidgetCount();
     for (int i = 0, e = count; i != e; ++i) {
@@ -456,7 +456,7 @@ bool Frame::anyNonDockable() const
 
 void Frame::onDockWidgetShown(DockWidgetBase *w)
 {
-    if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
+    if (hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
         if (!QWidgetAdapter::isVisible()) {
             qCDebug(hiding) << "Widget" << w << " was shown, we're=" << "; visible="
                             << QWidgetAdapter::isVisible();
@@ -467,7 +467,7 @@ void Frame::onDockWidgetShown(DockWidgetBase *w)
 
 void Frame::onDockWidgetHidden(DockWidgetBase *w)
 {
-    if (hasSingleDockWidget() && contains(w)) { // We have to call contains because it might be being in process of being reparented
+    if (hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
         if (QWidgetAdapter::isVisible()) {
             qCDebug(hiding) << "Widget" << w << " was hidden, we're="
                             << "; visible=" << QWidgetAdapter::isVisible()

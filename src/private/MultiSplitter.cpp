@@ -135,7 +135,7 @@ bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
 
     Layouting::Item *item = itemForFrame(qobject_cast<Frame*>(widget));
 
-    if (contains(item)) {
+    if (containsItem(item)) {
         qWarning() << "MultiSplitter::addWidget: Already contains" << widget;
         return false;
     }
@@ -148,7 +148,7 @@ bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
     const bool relativeToThis = relativeToFrame == nullptr;
 
     Layouting::Item *relativeToItem = itemForFrame(relativeToFrame);
-    if (!relativeToThis && !contains(relativeToItem)) {
+    if (!relativeToThis && !containsItem(relativeToItem)) {
         qWarning() << "MultiSplitter::addWidget: Doesn't contain relativeTo:"
                    << "; relativeToFrame=" << relativeToFrame
                    << "; relativeToItem=" << relativeToItem
@@ -242,12 +242,12 @@ void MultiSplitter::removeItem(Layouting::Item *item)
     item->parentContainer()->removeItem(item);
 }
 
-bool MultiSplitter::contains(const Layouting::Item *item) const
+bool MultiSplitter::containsItem(const Layouting::Item *item) const
 {
     return m_rootItem->contains_recursive(item);
 }
 
-bool MultiSplitter::contains(const Frame *frame) const
+bool MultiSplitter::containsFrame(const Frame *frame) const
 {
     return itemForFrame(frame) != nullptr;
 }

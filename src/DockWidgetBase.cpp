@@ -186,7 +186,7 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, AddingOption addi
     Frame *frame = this->frame();
 
     if (frame) {
-        if (frame->contains(other)) {
+        if (frame->containsDockWidget(other)) {
             qWarning() << Q_FUNC_INFO << "Already contains" << other;
             return;
         }

@@ -89,12 +89,12 @@ public:
     /**
      * @brief Returns true if this layout contains the specified item.
      */
-    bool contains(const Layouting::Item *) const;
+    bool containsItem(const Layouting::Item *) const;
 
     /**
      * @brief  Returns true if this layout contains the specified frame.
      */
-    bool contains(const Frame *) const;
+    bool containsFrame(const Frame *) const;
 
     /**
      * @brief Returns the number of Item objects in this layout.

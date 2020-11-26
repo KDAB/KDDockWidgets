@@ -169,7 +169,7 @@ public:
     bool alwaysShowsTabs() const { return m_options & FrameOption_AlwaysShowsTabs; }
 
     /// @brief returns whether the dockwidget @p w is inside this frame
-    bool contains(DockWidgetBase *w) const;
+    bool containsDockWidget(DockWidgetBase *w) const;
 
     ///@brief returns the FloatingWindow this frame is in, if any
     FloatingWindow *floatingWindow() const;
