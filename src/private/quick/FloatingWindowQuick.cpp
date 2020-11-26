@@ -28,7 +28,7 @@ namespace KDDockWidgets {
 class QuickView : public QQuickView
 {
 public:
-    explicit QuickView(QQuickItem *floatingWindow)
+    explicit QuickView(FloatingWindow *floatingWindow)
         : QQuickView(Config::self().qmlEngine(), nullptr)
         , m_floatingWindow(floatingWindow)
     {
@@ -65,7 +65,7 @@ public:
 
     void updateSize()
     {
-        resize(m_floatingWindow->size().toSize());
+        resize(m_floatingWindow->size());
     }
 
     void updateRootItemSize()
@@ -77,14 +77,14 @@ public:
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override
     {
         // To enable aero snap we need to tell Windows where's our custom title bar
-        if (WidgetResizeHandler::handleWindowsNativeEvent(this, eventType, message, result))
+        if (WidgetResizeHandler::handleWindowsNativeEvent(m_floatingWindow, eventType, message, result))
             return true;
 
         return QWindow::nativeEvent(eventType, message, result);
     }
 #endif
 private:
-    QQuickItem *const m_floatingWindow;
+    FloatingWindow *const m_floatingWindow;
 };
 
 QuickView::~QuickView() = default;
