@@ -16,6 +16,7 @@
 #include "DropArea_p.h"
 #include "TitleBarQuick_p.h"
 #include "Config.h"
+#include "WidgetResizeHandler_p.h"
 
 #include <QQuickView>
 #include <QDebug>
@@ -52,7 +53,6 @@ public:
         return QQuickView::event(ev);
     }
 
-
     void onRootItemWidthChanged()
     {
         setWidth(int(m_floatingWindow->width()));
@@ -73,6 +73,17 @@ public:
         m_floatingWindow->setSize(size());
     }
 
+#ifdef Q_OS_WIN
+    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override
+    {
+        // To enable aero snap we need to tell Windows where's our custom title bar
+        if (WidgetResizeHandler::handleWindowsNativeEvent(this, eventType, message, result))
+            return true;
+
+        return QWindow::nativeEvent(eventType, message, result);
+    }
+#endif
+private:
     QQuickItem *const m_floatingWindow;
 };
 
