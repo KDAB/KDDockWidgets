@@ -13,7 +13,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.9
 import QtQuick.Layouts 1.9 
 
-Item {
+Rectangle {
     id: root
 
     property QtObject frameCpp
@@ -21,6 +21,13 @@ Item {
     readonly property int nonContentsHeight: titleBar.height + tabbar.height
 
     anchors.fill: parent
+
+    radius: 2
+    color: "transparent"
+    border {
+        color: "#b8b8b8"
+        width: 1
+    }
 
     onFrameCppChanged: {
         if (frameCpp)
@@ -36,6 +43,9 @@ Item {
             top:  parent ? parent.top : undefined
             left: parent ? parent.left : undefined
             right: parent ? parent.right : undefined
+            topMargin: 1
+            leftMargin: 1
+            rightMargin: 1
         }
     }
 
@@ -54,6 +64,9 @@ Item {
             right: parent ? parent.right : undefined
             top: (titleBar && titleBar.visible) ? titleBar.bottom
                                                 : (parent ? parent.top : undefined)
+            topMargin: 1
+            leftMargin: 1
+            rightMargin: 1
         }
 
         width: parent.width
