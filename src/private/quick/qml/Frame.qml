@@ -87,6 +87,10 @@ Rectangle {
             top: (parent && tabbar.visible) ? tabbar.bottom : ((titleBar && titleBar.visible) ? titleBar.bottom
                                                                                               : parent ? parent.top : undefined)
             bottom: parent ? parent.bottom : undefined
+
+            leftMargin: 2
+            rightMargin: 2
+            bottomMargin: 2
         }
 
         currentIndex: tabbar.currentIndex
