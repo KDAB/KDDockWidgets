@@ -159,7 +159,7 @@ WId QWidgetAdapter::winId() const
     if (QWindow *w = windowHandle())
         return w->winId();
 
-    return -1;
+    return WId(-1);
 }
 
 FloatingWindow * QWidgetAdapter::floatingWindow() const
