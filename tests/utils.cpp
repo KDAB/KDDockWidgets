@@ -275,6 +275,6 @@ EmbeddedWindow::~EmbeddedWindow() = default;
     MyWidget2::~MyWidget2() = default;
     NonClosableWidget::~NonClosableWidget() = default;
     QTextEdit::~QTextEdit() = default;
-    QLineEdit::~QLineEdit() = default;
+    FocusableWidget::~FocusableWidget() = default;
     QPushButton::~QPushButton() = default;
 #endif

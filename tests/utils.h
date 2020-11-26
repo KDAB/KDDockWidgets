@@ -27,9 +27,11 @@
 # include "widgets/FrameWidget_p.h"
 # include "MainWindow.h"
 
-#include <QVBoxLayout>
+# include <QVBoxLayout>
 # include <QWidget>
 # include <QToolButton>
+# include <QLineEdit>
+using FocusableWidget = QLineEdit;
 #else
 # include "quick/MainWindowQuick_p.h"
 
@@ -173,16 +175,16 @@ public:
     ~QPushButton();
 };
 
-class QLineEdit : public QWidgetAdapter
+class FocusableWidget : public QWidgetAdapter
 {
 public:
-    explicit QLineEdit()
+    explicit FocusableWidget()
         : QWidgetAdapter()
     {
         setFocusPolicy(Qt::StrongFocus);
     }
 
-    ~QLineEdit();
+    ~FocusableWidget();
 };
 
 class QTextEdit : public QWidgetAdapter

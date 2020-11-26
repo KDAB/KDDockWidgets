@@ -2712,8 +2712,8 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
 
     auto dw1 = new DockWidgetType(QStringLiteral("1"));
     auto dw2 = new DockWidgetType(QStringLiteral("2"));
-    auto le1 = new QLineEdit();
-    auto le2 = new QLineEdit();
+    auto le1 = new FocusableWidget();
+    auto le2 = new FocusableWidget();
     dw1->setWidget(le1);
     dw2->setWidget(le2);
     dw1->show();
@@ -2749,8 +2749,8 @@ void TestDocks::tst_isFocused()
     EnsureTopLevelsDeleted e;
 
     // 1. Create 2 floating windows
-    auto dock1 = createDockWidget(QStringLiteral("dock1"), new QLineEdit());
-    auto dock2 = createDockWidget(QStringLiteral("dock2"), new QLineEdit());
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), new FocusableWidget());
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), new FocusableWidget());
 
     QTest::qWait(200); // macOS is flaky here, needs dock2 to be shown first before focusing dock1, otherwise dock1 looses again
 
@@ -2789,7 +2789,7 @@ void TestDocks::tst_isFocused()
     QVERIFY(dock2->isFocused());
 
     // 6. Create dock3, focus it
-    auto dock3 = createDockWidget(QStringLiteral("dock3"), new QLineEdit());
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), new FocusableWidget());
     auto oldFw3 = dock3->window();
     dock3->raise();
     dock3->widget()->setFocus(Qt::OtherFocusReason);
