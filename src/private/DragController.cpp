@@ -583,7 +583,7 @@ StateBase *DragController::activeState() const
 }
 
 #if defined(Q_OS_WIN)
-static WidgetType *qtTopLevelForHWND(HWND hwnd)
+static QWidgetOrQuick *qtTopLevelForHWND(HWND hwnd)
 {
     const QList<QWindow*> windows = qApp->topLevelWindows();
     for (QWindow *window : windows) {

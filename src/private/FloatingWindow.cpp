@@ -33,7 +33,7 @@
 
 using namespace KDDockWidgets;
 
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN)
 namespace KDDockWidgets {
 
 
@@ -57,11 +57,18 @@ public:
         auto msg = static_cast<MSG *>(message);
         if (msg->message != WM_NCHITTEST)
             return false;
-        QWidget *child = QWidget::find(WId(msg->hwnd));
+        const WId wid = WId(msg->hwnd);
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+        QWidget *child = QWidget::find(wid);
         if (!child || child->window() != m_floatingWindow)
             return false;
-
-        if (child != m_floatingWindow) {
+        const bool isThisWindow = child == m_floatingWindow;
+#else
+        // Probably the QtWidgets path could also use this one, which is generic and not specific to QtQuick
+        FloatingWindow *fw = DockRegistry::self()->floatingWindowForHandle(wid);
+        const bool isThisWindow = fw == m_floatingWindow;
+#endif
+        if (!isThisWindow) {
             *result = HTTRANSPARENT;
             return true;
         }
