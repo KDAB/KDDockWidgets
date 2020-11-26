@@ -29,7 +29,7 @@ public:
 
     void addDockWidget(DockWidgetBase *dw);
     void removeDockWidget(DockWidgetBase *dw);
-    bool contains(DockWidgetBase *) const;
+    bool containsDockWidget(DockWidgetBase *) const;
 
     /// @brief Returns this side bar's orientation
     Qt::Orientation orientation() const;

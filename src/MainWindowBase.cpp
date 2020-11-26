@@ -425,7 +425,7 @@ SideBar *MainWindowBase::sideBarForDockWidget(const DockWidgetBase *dw) const
                       SideBarLocation::East, SideBarLocation::West }) {
 
         if (SideBar *sb = sideBar(loc)) {
-            if (sb->contains(const_cast<DockWidgetBase *>(dw)))
+            if (sb->containsDockWidget(const_cast<DockWidgetBase *>(dw)))
                 return sb;
         }
     }

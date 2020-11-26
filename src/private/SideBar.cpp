@@ -58,7 +58,7 @@ void SideBar::removeDockWidget(DockWidgetBase *dw)
     updateSize();
 }
 
-bool SideBar::contains(DockWidgetBase *dw) const
+bool SideBar::containsDockWidget(DockWidgetBase *dw) const
 {
     return m_dockWidgets.contains(dw);
 }
