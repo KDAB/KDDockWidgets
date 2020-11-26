@@ -30,9 +30,13 @@ public:
         , Layouting::Widget_quick(this)
     {
     }
+
+    ~RubberBand();
 };
 
 }
+
+RubberBand::~RubberBand() = default;
 
 SeparatorQuick::SeparatorQuick(Layouting::Widget *parent)
     : QQuickItem(qobject_cast<QQuickItem*>(parent->asQObject()))
