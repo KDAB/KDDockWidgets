@@ -15,12 +15,13 @@
 #include "DragController_p.h"
 #include "Config.h"
 #include "Qt5Qt6Compat_p.h"
+#include "Utils_p.h"
 
 #include <QEvent>
 #include <QMouseEvent>
 #include <QWidget>
 #include <QDebug>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QScreen>
 #include <QWindow>
 #include <QAbstractButton>
@@ -254,7 +255,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
 
             const QRect htCaptionRect = w->dragRect(); // The rect on which we allow for Windows to do Ba native drag
             if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
-                QWidget *hoveredWidget = qApp->widgetAt(globalPosQt);
+                WidgetType *hoveredWidget = KDDockWidgets::widgetAt(globalPosQt);
                 if (!qobject_cast<QAbstractButton*>(hoveredWidget) &&
                     !qobject_cast<QLineEdit*>(hoveredWidget)) { // User might have a line edit on the toolbar. TODO: Not so elegant fix, we should make the user's tabbar implement some virtual method...
                     // User clicked on the title bar, let's allow it, so we get Aero-Snap.
@@ -288,7 +289,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
         // and patch the size
 
         // According to microsoft docs it only works for the primary screen, but extrapolates for the others
-        QScreen *screen = QApplication::primaryScreen();
+        QScreen *screen = QGuiApplication::primaryScreen();
         if (!screen || w->windowHandle()->screen() != screen) {
             return false;
         }

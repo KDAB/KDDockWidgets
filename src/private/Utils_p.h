@@ -13,6 +13,7 @@
 #define KD_UTILS_P_H
 
 #include "Config.h"
+#include "QWidgetAdapter.h"
 
 #include <QScreen>
 #include <QWidget>
@@ -139,6 +140,17 @@ inline int startDragDistance()
     return QApplication::startDragDistance();
 #else
     return 4;
+#endif
+}
+
+/// @brief Returns the QWidget or QtQuickItem at the specified position
+/// Basically QApplication::widgetAt() but with support for QtQuick
+inline WidgetType* widgetAt(QPoint globalPos)
+{
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    return qApp->widgetAt(globalPos);
+#else
+    return nullptr;
 #endif
 }
 
