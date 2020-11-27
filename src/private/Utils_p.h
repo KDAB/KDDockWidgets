@@ -16,7 +16,6 @@
 #include "QWidgetAdapter.h"
 
 #include <QScreen>
-#include <QWidget>
 #include <QWindow>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
@@ -24,6 +23,8 @@
 # include <QQuickWindow>
 #else
 # include <QApplication>
+# include <QAbstractButton>
+# include <QLineEdit>
 #endif
 
 #ifdef QT_X11EXTRAS_LIB
@@ -150,7 +151,26 @@ inline WidgetType* widgetAt(QPoint globalPos)
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     return qApp->widgetAt(globalPos);
 #else
+    Q_UNUSED(globalPos);
     return nullptr;
+#endif
+}
+
+/// Not the entire TitleBar is draggable. For example, the close button won't allow to start a drag from there.
+/// Returns true if we're over such controls where we shouldn't drag.
+inline bool inDisallowDragWidget(QPoint globalPos)
+{
+    WidgetType *widget = widgetAt(globalPos);
+    if (!widget)
+        return false;
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    // User might have a line edit on the toolbar. TODO: Not so elegant fix, we should make the user's tabbar implement some virtual method...
+    return qobject_cast<QAbstractButton*>(widget) ||
+           qobject_cast<QLineEdit*>(widget);
+#else
+    // TODO
+    return false;
 #endif
 }
 
