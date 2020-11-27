@@ -89,7 +89,7 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
     add_subdirectory(tests)
   endif()
   if(${PROJECT_NAME}_EXAMPLES)
-    add_subdirectory(examples)
+    #add_subdirectory(examples)
   endif()
 endif()
 
