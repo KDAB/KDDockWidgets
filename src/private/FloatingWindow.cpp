@@ -334,7 +334,7 @@ bool FloatingWindow::hasSingleDockWidget() const
 
 bool FloatingWindow::beingDeleted() const
 {
-    if (m_deleteScheduled)
+    if (m_deleteScheduled || m_inDtor)
         return true;
 
     // TODO: Confusing logic

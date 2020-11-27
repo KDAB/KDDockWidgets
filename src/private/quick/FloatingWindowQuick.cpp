@@ -77,7 +77,7 @@ public:
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override
     {
         // To enable aero snap we need to tell Windows where's our custom title bar
-        if (WidgetResizeHandler::handleWindowsNativeEvent(m_floatingWindow, eventType, message, result))
+        if (!m_floatingWindow->beingDeleted() && WidgetResizeHandler::handleWindowsNativeEvent(m_floatingWindow, eventType, message, result))
             return true;
 
         return QWindow::nativeEvent(eventType, message, result);
