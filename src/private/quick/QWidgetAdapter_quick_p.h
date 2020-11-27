@@ -170,6 +170,7 @@ Q_SIGNALS:
 protected:
     void create();
     bool event(QEvent *) override;
+    bool eventFilter(QObject *, QEvent *) override;
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
     void raiseAndActivate();
     virtual bool onResize(QSize newSize);
@@ -186,6 +187,7 @@ private:
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;
     bool m_windowIsBeingDestroyed = false;
+    bool m_mouseTrackingEnabled = false;
 };
 
 }

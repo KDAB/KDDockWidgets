@@ -559,9 +559,9 @@ void QWidgetAdapter::render(QPainter *)
     qWarning() << Q_FUNC_INFO << "Implement me";
 }
 
-void QWidgetAdapter::setMouseTracking(bool)
+void QWidgetAdapter::setMouseTracking(bool enabled)
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    m_mouseTrackingEnabled = enabled;
 }
 
 bool QWidgetAdapter::event(QEvent *ev)
@@ -570,6 +570,29 @@ bool QWidgetAdapter::event(QEvent *ev)
         onCloseEvent(static_cast<QCloseEvent*>(ev));
 
     return QQuickItem::event(ev);
+}
+
+bool QWidgetAdapter::eventFilter(QObject *watched, QEvent *ev)
+{
+    if (qobject_cast<QWindow*>(watched)) {
+        if (m_mouseTrackingEnabled) {
+            switch (ev->type()) {
+            case QEvent::MouseMove:
+            case QEvent::MouseButtonPress:
+            case QEvent::MouseButtonRelease:
+                ev->ignore();
+                qApp->sendEvent(this, ev);
+                //qDebug() << "Mouse event" << ev;
+                if (ev->isAccepted())
+                    return true;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    return QQuickItem::eventFilter(watched, ev);
 }
 
 void QWidgetAdapter::setWindowIsBeingDestroyed(bool is)

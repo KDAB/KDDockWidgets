@@ -54,10 +54,11 @@ WidgetResizeHandler::~WidgetResizeHandler()
 
 bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
 {
-    if (s_disableAllHandlers || o != mTarget)
+    if (s_disableAllHandlers || o != mTarget) {
         return false;
+    }
 
-    auto widget = qobject_cast<QWidget*>(o);
+    auto widget = qobject_cast<QWidgetOrQuick*>(o);
     if (!widget || !widget->isTopLevel()) {
         return false;
     }

@@ -130,8 +130,8 @@ Q_SIGNALS:
     void numFramesChanged();
     void windowStateChanged(QWindowStateChangeEvent *);
 protected:
-
     void setupWindow();
+    void maybeCreateResizeHandler();
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
@@ -144,7 +144,6 @@ protected:
     TitleBar *const m_titleBar;
 private:
     Q_DISABLE_COPY(FloatingWindow)
-    void maybeCreateResizeHandler();
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
     bool m_disableSetVisible = false;

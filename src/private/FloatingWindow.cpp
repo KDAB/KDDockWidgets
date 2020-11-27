@@ -79,7 +79,7 @@ public:
     QPointer<FloatingWindow> m_floatingWindow;
 };
 }
-#endif
+#endif // Q_OS_WIN
 
 static Qt::WindowFlags windowFlagsToUse()
 {
@@ -150,7 +150,10 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
         setWindowFlag(Qt::WindowStaysOnTopHint, true);
 
-    maybeCreateResizeHandler();
+    if (kddwUsesQtWidgets()) {
+        // QtQuick will do it a bit later, once it has a QWindow
+        maybeCreateResizeHandler();
+    }
 
     updateTitleBarVisibility();
     connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
@@ -205,7 +208,7 @@ void FloatingWindow::setupWindow()
         MARGINS margins = {0, 0, 0, 1}; // arbitrary, just needs to be > 0 it seems
         DwmExtendFrameIntoClientArea(HWND(winId()), &margins);
     }
-#endif
+#endif // Q_OS_WIN
 }
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
@@ -489,4 +492,3 @@ bool FloatingWindow::event(QEvent *ev)
 
     return QWidgetAdapter::event(ev);
 }
-
