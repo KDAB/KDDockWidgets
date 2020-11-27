@@ -66,6 +66,7 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
 #ifdef KDDOCKWIDGETS_QTQUICK
             // TODO: Fix later, not important right now
             || msg.contains(QLatin1String("Binding loop detected for property"))
+            || msg.contains(QLatin1String("Implement me"))
 #endif
             ;
 }
