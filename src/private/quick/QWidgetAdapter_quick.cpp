@@ -233,7 +233,7 @@ void QWidgetAdapter::releaseMouse()
 
 void QWidgetAdapter::releaseKeyboard()
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    // Not needed apparently
 }
 
 void QWidgetAdapter::setMinimumSize(QSize sz)
