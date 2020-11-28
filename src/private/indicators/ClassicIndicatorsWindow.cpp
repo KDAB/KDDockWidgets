@@ -268,6 +268,15 @@ IndicatorWindow::IndicatorWindow(KDDockWidgets::ClassicIndicators *classicIndica
 
     rootContext()->setContextProperty(QStringLiteral("_window"), QVariant::fromValue<QObject*>(this));
     setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/ClassicIndicatorsOverlay.qml")));
+
+    {
+        // Small hack to avoid flickering when we drag over a window the first time
+        // Not sure why a simply create() doesn't work instead
+
+        resize(QSize(1, 1));
+        show();
+        hide();
+    }
 }
 
 DropIndicatorOverlayInterface::DropLocation IndicatorWindow::hover(QPoint pt)
