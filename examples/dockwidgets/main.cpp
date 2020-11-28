@@ -164,7 +164,7 @@ int main(int argc, char **argv)
 
 # if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
-        flags &= ~KDDockWidgets::Config::Flag_AeroSnapWithClientDecos;
+        flags |= KDDockWidgets::Config::Flag_internal_NoAeroSnap;
 # endif
 
 #endif

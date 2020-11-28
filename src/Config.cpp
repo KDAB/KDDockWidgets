@@ -219,6 +219,15 @@ void Config::Private::fixFlags()
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
     m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
 #endif
+
+
+#if defined(DOCKS_DEVELOPER_MODE)
+    // We allow to disable aero-snap during development
+    if (m_flags & Flag_internal_NoAeroSnap) {
+        // The only way to disable AeroSnap
+        m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
+    }
+#endif
 }
 
 }
