@@ -136,8 +136,10 @@ void QWidgetAdapter::geometryChanged(const QRectF &newGeometry, const QRectF &ol
 
 void QWidgetAdapter::raise()
 {
-    if (QWindow *w = windowHandle())
-        w->raise();
+    if (isTopLevel()) {
+        if (QWindow *w = windowHandle())
+            w->raise();
+    }
 }
 
 QSize QWidgetAdapter::minimumSize() const
