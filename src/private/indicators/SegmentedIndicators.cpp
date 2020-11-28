@@ -38,11 +38,13 @@ SegmentedIndicators::~SegmentedIndicators()
 {
 }
 
-void SegmentedIndicators::hover_impl(QPoint pt)
+DropIndicatorOverlayInterface::DropLocation SegmentedIndicators::hover_impl(QPoint pt)
 {
     m_hoveredPt = mapFromGlobal(pt);
     updateSegments();
     setCurrentDropLocation(dropLocationForPos(m_hoveredPt));
+
+    return currentDropLocation();
 }
 
 DropIndicatorOverlayInterface::DropLocation SegmentedIndicators::dropLocationForPos(QPoint pos) const

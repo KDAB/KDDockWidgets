@@ -29,7 +29,7 @@ class DOCKS_EXPORT ClassicIndicators : public DropIndicatorOverlayInterface
 public:
     explicit ClassicIndicators(DropArea *dropArea);
     ~ClassicIndicators() override;
-    void hover_impl(QPoint globalPos) override;
+    DropLocation hover_impl(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;
 
     bool innerIndicatorsVisible() const;

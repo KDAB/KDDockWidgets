@@ -207,12 +207,20 @@ QPoint IndicatorWindow::posForIndicator(DropIndicatorOverlayInterface::DropLocat
     return indicator->mapToGlobal(indicator->rect().center());
 }
 
-void IndicatorWindow::hover(QPoint globalPos)
+DropIndicatorOverlayInterface::DropLocation IndicatorWindow::hover(QPoint globalPos)
 {
+    DropIndicatorOverlayInterface::DropLocation loc = DropIndicatorOverlayInterface::DropLocation_None;
+
     for (Indicator *indicator : qAsConst(m_indicators)) {
-        if (indicator->isVisible())
-            indicator->setHovered(indicator->rect().contains(indicator->mapFromGlobal(globalPos)));
+        if (indicator->isVisible()) {
+            const bool hovered = indicator->rect().contains(indicator->mapFromGlobal(globalPos));
+            indicator->setHovered(hovered);
+            if (hovered)
+                loc = indicator->m_dropLocation;
+        }
     }
+
+    return loc;
 }
 
 void IndicatorWindow::updatePositions()
@@ -262,14 +270,13 @@ IndicatorWindow::IndicatorWindow(KDDockWidgets::ClassicIndicators *classicIndica
     setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/ClassicIndicatorsOverlay.qml")));
 }
 
-void IndicatorWindow::hover(QPoint pt)
+DropIndicatorOverlayInterface::DropLocation IndicatorWindow::hover(QPoint pt)
 {
     QQuickItem *item = indicatorForPos(pt);
-    if (item) {
-        classicIndicators()->setDropLocation(locationForIndicator(item));
-    } else {
-        classicIndicators()->setDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
-    }
+    const DropIndicatorOverlayInterface::DropLocation loc = item ? locationForIndicator(item)
+                                                                 : DropIndicatorOverlayInterface::DropLocation_None;
+    classicIndicators()->setDropLocation(loc);
+    return loc;
 }
 
 QQuickItem *IndicatorWindow::indicatorForPos(QPoint pt) const

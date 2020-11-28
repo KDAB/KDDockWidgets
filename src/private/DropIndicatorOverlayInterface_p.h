@@ -73,7 +73,7 @@ private:
     DropLocation m_currentDropLocation = DropLocation_None;
 
 protected:
-    virtual void hover_impl(QPoint globalPos) = 0;
+    virtual DropIndicatorOverlayInterface::DropLocation hover_impl(QPoint globalPos) = 0;
     virtual void onHoveredFrameChanged(Frame *);
     virtual void updateVisibility() {};
 

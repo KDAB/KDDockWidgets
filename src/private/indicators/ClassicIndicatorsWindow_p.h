@@ -30,7 +30,7 @@ class IndicatorWindow : public QWidget
     Q_OBJECT
 public:
     explicit IndicatorWindow(ClassicIndicators *classicIndicators);
-    void hover(QPoint globalPos);
+    DropIndicatorOverlayInterface::DropLocation hover(QPoint globalPos);
     void updatePositions();
     QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const;
 private:
@@ -91,7 +91,7 @@ class IndicatorWindow : public QQuickView
     Q_PROPERTY(KDDockWidgets::ClassicIndicators* classicIndicators READ classicIndicators CONSTANT)
 public:
     explicit IndicatorWindow(ClassicIndicators *);
-    void hover(QPoint);
+    DropIndicatorOverlayInterface::DropLocation hover(QPoint);
     void updatePositions();
     QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const;
     Q_INVOKABLE QString iconName(int loc, bool active) const;
