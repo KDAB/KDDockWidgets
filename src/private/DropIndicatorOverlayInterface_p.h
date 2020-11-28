@@ -81,6 +81,7 @@ protected:
     DropArea *const m_dropArea;
     bool m_draggedWindowIsHovering = false;
 };
+
 }
 
 #endif

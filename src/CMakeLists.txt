@@ -45,6 +45,7 @@ set(DOCKSLIBS_SRCS
     private/Frame.cpp
     private/DropAreaWithCentralFrame.cpp
     private/WidgetResizeHandler.cpp
+    private/indicators/NullIndicators.cpp
     private/indicators/ClassicIndicators.cpp
     private/indicators/ClassicIndicatorsWindow.cpp
 )

@@ -16,10 +16,10 @@
 #include "FloatingWindow_p.h"
 #include "Config.h"
 #include "indicators/ClassicIndicators_p.h"
+#include "indicators/NullIndicators_p.h"
 #include "Utils_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "indicators/ClassicIndicators_p.h"
 # include "widgets/TabWidget_p.h"
 # include "widgets/FrameWidget_p.h"
 # include "widgets/TitleBarWidget_p.h"
@@ -101,6 +101,8 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(
         return new ClassicIndicators(dropArea);
     case DropIndicatorType::Segmented:
         return new SegmentedIndicators(dropArea);
+    case DropIndicatorType::None:
+        return new NullIndicators(dropArea);
     }
 
     return new ClassicIndicators(dropArea);
@@ -163,6 +165,16 @@ FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWin
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const
 {
+    switch (s_dropIndicatorType) {
+    case DropIndicatorType::Classic:
+        return new ClassicIndicators(dropArea);
+    case DropIndicatorType::Segmented:
+        qWarning() << "Segmented indicators not supported for QtQuick yet";
+        return new NullIndicators(dropArea);
+    case DropIndicatorType::None:
+        return new NullIndicators(dropArea);
+    }
+
     return new ClassicIndicators(dropArea);
 }
 

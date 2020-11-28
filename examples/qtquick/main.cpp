@@ -13,6 +13,7 @@
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/DockWidgetQuick.h>
 #include <kddockwidgets/private/DockRegistry_p.h>
+#include <kddockwidgets/FrameworkWidgetFactory.h>
 
 #include <QQuickView>
 #include <QGuiApplication>
@@ -33,10 +34,12 @@ int main(int argc, char *argv[])
     QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
     QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
     QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
+    QCommandLineOption noDropIndicators("no-drop-indicators", QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
 
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
     parser.addOption(nativeTitleBar);
+    parser.addOption(noDropIndicators);
 
 # if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
@@ -59,6 +62,8 @@ int main(int argc, char *argv[])
 
     if (parser.isSet(nativeTitleBar))
         flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
+    else if (parser.isSet(noDropIndicators))
+        KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
 # if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))

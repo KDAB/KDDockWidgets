@@ -119,10 +119,12 @@ int main(int argc, char **argv)
     QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
     QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
     QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
+    QCommandLineOption noDropIndicators("no-drop-indicators", QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
 
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
     parser.addOption(nativeTitleBar);
+    parser.addOption(noDropIndicators);
 
 # if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
@@ -143,6 +145,9 @@ int main(int argc, char **argv)
 
     if (parser.isSet(segmentedIndicators))
         KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
+    else if (parser.isSet(noDropIndicators))
+        KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
+
 
     MainWindowOptions options = MainWindowOption_None;
     auto flags = KDDockWidgets::Config::self().flags();

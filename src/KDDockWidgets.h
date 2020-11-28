@@ -76,7 +76,8 @@ namespace KDDockWidgets
 
     enum class DropIndicatorType {
         Classic,   ///< The default
-        Segmented
+        Segmented, ///< Segmented indicators
+        None ///< Don't show any drop indicators while dragging
     };
 
     ///@internal
