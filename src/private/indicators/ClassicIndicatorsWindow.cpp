@@ -285,10 +285,13 @@ QQuickItem *IndicatorWindow::indicatorForPos(QPoint pt) const
     Q_ASSERT(indicators.size() == 9);
 
     for (QQuickItem *item : indicators) {
-        QRect rect(0, 0, int(item->width()), int(item->height()));
-        rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)).toPoint());
-        if (rect.contains(pt))
-            return item;
+        if (item->isVisible()) {
+            QRect rect(0, 0, int(item->width()), int(item->height()));
+            rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)).toPoint());
+            if (rect.contains(pt)) {
+                return item;
+            }
+        }
     }
 
     return nullptr;

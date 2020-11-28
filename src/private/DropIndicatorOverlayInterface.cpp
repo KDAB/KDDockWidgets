@@ -118,9 +118,9 @@ void DropIndicatorOverlayInterface::setCurrentDropLocation(DropIndicatorOverlayI
     }
 }
 
-void DropIndicatorOverlayInterface::hover(QPoint globalPos)
+DropIndicatorOverlayInterface::DropLocation DropIndicatorOverlayInterface::hover(QPoint globalPos)
 {
-    hover_impl(globalPos);
+    return hover_impl(globalPos);
 }
 
 void DropIndicatorOverlayInterface::setHoveredFrameRect(QRect rect)

@@ -53,7 +53,7 @@ public:
     Frame *hoveredFrame() const { return m_hoveredFrame; }
     void setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation location);
 
-    void hover(QPoint globalPos);
+    KDDockWidgets::DropIndicatorOverlayInterface::DropLocation hover(QPoint globalPos);
 
     /// @brief returns the position of the specified drop location
     /// The return is in global coordinates

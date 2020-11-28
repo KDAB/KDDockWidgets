@@ -182,20 +182,20 @@ void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
     layoutEqually(item->parentContainer());
 }
 
-void DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos)
+DropIndicatorOverlayInterface::DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos)
 {
     if (!validateAffinity(draggedWindow))
-        return;
+        return DropIndicatorOverlayInterface::DropLocation_None;
 
     if (!m_dropIndicatorOverlay) {
         qWarning() << Q_FUNC_INFO << "The frontend is missing a drop indicator overlay";
-        return;
+        return DropIndicatorOverlayInterface::DropLocation_None;
     }
 
     Frame *frame = frameContainingPos(globalPos); // Frame is nullptr if MainWindowOption_HasCentralFrame isn't set
     m_dropIndicatorOverlay->setWindowBeingDragged(true);
     m_dropIndicatorOverlay->setHoveredFrame(frame);
-    m_dropIndicatorOverlay->hover(globalPos);
+    return m_dropIndicatorOverlay->hover(globalPos);
 }
 
 static bool isOutterLocation(DropIndicatorOverlayInterface::DropLocation location)

@@ -109,6 +109,7 @@ private Q_SLOTS:
     void tst_honourUserGeometry();
     void tst_floatingWindowTitleBug();
     void tst_setFloatingSimple();
+    void tst_dragOverTitleBar();
 
     void tst_resizeWindow_data();
     void tst_resizeWindow();
@@ -3980,6 +3981,28 @@ void TestDocks::tst_notClosable()
         window->deleteLater();
         Testing::waitForDeleted(window);
     }
+}
+
+void TestDocks::tst_dragOverTitleBar()
+{
+    // Tests that dragging over the title bar is returning DropLocation_None
+
+    EnsureTopLevelsDeleted e;
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("Two"));
+
+    DropArea *da = dock1->floatingWindow()->dropArea();
+    FloatingWindow *fw1 = dock1->floatingWindow();
+    FloatingWindow *fw2 = dock2->floatingWindow();
+    WindowBeingDragged wbd(fw2, fw2);
+
+    const QPoint titleBarPoint = fw1->titleBar()->mapToGlobal(QPoint(5, 5));
+
+    auto loc = da->hover(&wbd, titleBarPoint);
+    QCOMPARE(loc, DropIndicatorOverlayInterface::DropLocation_None);
+
+    delete fw1;
+    delete fw2;
 }
 
 void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
