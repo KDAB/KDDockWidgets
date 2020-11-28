@@ -16,6 +16,7 @@
 
 #include <QQuickView>
 #include <QGuiApplication>
+#include <QCommandLineParser>
 
 int main(int argc, char *argv[])
 {
@@ -23,6 +24,50 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
     QGuiApplication app(argc, argv);
+    QCommandLineParser parser;
+    parser.setApplicationDescription("KDDockWidgets example application");
+    parser.addHelpOption();
+
+
+#if defined(DOCKS_DEVELOPER_MODE)
+    QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
+    QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
+    QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
+
+    parser.addOption(noQtTool);
+    parser.addOption(noParentForFloating);
+    parser.addOption(nativeTitleBar);
+
+# if defined(Q_OS_WIN)
+    QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
+    parser.addOption(noAeroSnap);
+# endif
+#else
+    Q_UNUSED(centralFrame)
+#endif
+
+    auto flags = KDDockWidgets::Config::self().flags();
+
+#if defined(DOCKS_DEVELOPER_MODE)
+    parser.process(app);
+
+    if (parser.isSet(noQtTool))
+        flags |= KDDockWidgets::Config::Flag_internal_DontUseQtToolWindowsForFloatingWindows;
+
+    if (parser.isSet(noParentForFloating))
+        flags |= KDDockWidgets::Config::Flag_internal_DontUseParentForFloatingWindows;
+
+    if (parser.isSet(nativeTitleBar))
+        flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
+
+# if defined(Q_OS_WIN)
+    if (parser.isSet(noAeroSnap))
+        flags &= ~KDDockWidgets::Config::Flag_AeroSnapWithClientDecos;
+# endif
+
+#endif
+
+    KDDockWidgets::Config::self().setFlags(flags);
 
     QQuickView view;
     view.setObjectName("MainWindow QQuickView");
