@@ -11,7 +11,7 @@
 
 #include "Rubberband_quick.h"
 
-using namespace KDDockWidgets;
+using namespace Layouting;
 
 KDDockWidgets::RubberBand::RubberBand(Layouting::Widget *parent)
     : QQuickItem(parent ? qobject_cast<QQuickItem*>(parent->asQObject()) : nullptr)

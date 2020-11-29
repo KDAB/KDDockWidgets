@@ -42,7 +42,7 @@ Layouting::Widget *SeparatorQuick::createRubberBand(Layouting::Widget *parent)
         return nullptr;
     }
 
-    return new Layouting::Widget_quick(new KDDockWidgets::RubberBand(parent));
+    return new Layouting::Widget_quick(new Layouting::RubberBand(parent));
 }
 
 Widget *SeparatorQuick::asWidget()

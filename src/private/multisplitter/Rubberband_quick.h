@@ -17,7 +17,7 @@
 
 #include <QQuickItem>
 
-namespace KDDockWidgets {
+namespace Layouting {
 
 // TODO: Finish rubberband
 class MULTISPLITTER_EXPORT RubberBand
