@@ -37,6 +37,7 @@
 # include "quick/FrameQuick_p.h"
 # include "quick/TitleBarQuick_p.h"
 # include "quick/FloatingWindowQuick_p.h"
+# include "quick/RubberBandQuick.h"
 # include "multisplitter/Separator_quick.h"
 #endif
 
@@ -199,7 +200,7 @@ Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *p
 
 QWidgetOrQuick *DefaultWidgetFactory::createRubberBand(QWidgetOrQuick *parent) const
 {
-    return new QWidgetOrQuick(parent);
+    return new RubberBandQuick(parent);
 }
 
 SideBar *DefaultWidgetFactory::createSideBar(SideBarLocation loc, MainWindowBase *parent) const

@@ -92,6 +92,7 @@ if(${PROJECT_NAME}_QTQUICK)
       private/quick/TitleBarQuick.cpp
       private/quick/QmlTypes.cpp
       private/quick/FrameQuick.cpp
+      private/quick/RubberBandQuick.cpp
       private/quick/MainWindowQuick.cpp
       private/quick/MainWindowWrapper.cpp
       )
