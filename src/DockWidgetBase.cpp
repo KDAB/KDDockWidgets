@@ -24,7 +24,6 @@
 #include "WindowBeingDragged_p.h"
 #include "SideBar_p.h"
 
-#include <QAction>
 #include <QEvent>
 #include <QCloseEvent>
 #include <QTimer>

@@ -36,6 +36,75 @@ namespace Layouting {
 class Item;
 }
 
+#if defined(QT_WIDGETS_LIB)
+# include <QAction>
+#else
+// A QAction for QtQuick. Just so it compiles, for now
+class QAction : public QObject
+{
+    Q_OBJECT
+public:
+    using QObject::QObject;
+
+    bool isChecked() const {
+        return m_isChecked ;
+    }
+
+    void setCheckable(bool is) {
+        m_isCheckable = is;
+    }
+
+    void setText(const QString &text) {
+        m_text = text;
+    }
+
+    void setToolTip(const QString &text) {
+        m_toolTip = text;
+    }
+
+    QString toolTip() const {
+        returm m_toolTip;
+    }
+
+    bool enabled() const {
+        return m_enabled;
+    }
+
+    void setEnabled(bool enabled) {
+        m_enabled = enabled;
+    }
+
+    bool checked() const {
+        return m_checked;
+    }
+
+    void setChecked(bool checked) {
+        m_checked = checked;
+    }
+
+    bool isEnabled() const {
+        return m_enabled;
+    }
+
+    void toggle() {
+        m_enabled = !m_enabled;
+        Q_EMIT toggled(m_enabled);
+    }
+
+Q_SIGNALS:
+    bool toggled(bool);
+private:
+    QString m_text;
+    QString m_toolTip;
+
+    bool m_isChecked = false;
+    bool m_isCheckable = false;
+    bool m_enabled = false;
+    bool m_checked = false;
+};
+
+#endif
+
 namespace KDDockWidgets {
 
 struct LastPositions;
