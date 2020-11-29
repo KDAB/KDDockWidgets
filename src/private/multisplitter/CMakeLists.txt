@@ -35,6 +35,8 @@ set(MULTISPLITTER_SRCS_QTQUICK
     Widget_quick.h
     Separator_quick.cpp
     Separator_quick.h
+    Rubberband_quick.cpp
+    Rubberband_quick.h
 )
 
 option(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND "Build support for QtWidgets" ON)

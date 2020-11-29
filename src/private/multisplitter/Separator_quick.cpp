@@ -13,30 +13,11 @@
 #include "Widget_quick.h"
 #include "Logging_p.h"
 #include "Item_p.h"
+#include "Rubberband_quick.h"
 
 #include <QTimer>
 
 using namespace Layouting;
-
-namespace Layouting {
-// TODO: Finish rubberband
-class RubberBand : public QQuickItem
-                 , public Layouting::Widget_quick
-{
-
-public:
-    RubberBand(Layouting::Widget *parent)
-        : QQuickItem(parent ? qobject_cast<QQuickItem*>(parent->asQObject()) : nullptr)
-        , Layouting::Widget_quick(this)
-    {
-    }
-
-    ~RubberBand();
-};
-
-}
-
-RubberBand::~RubberBand() = default;
 
 SeparatorQuick::SeparatorQuick(Layouting::Widget *parent)
     : QQuickItem(qobject_cast<QQuickItem*>(parent->asQObject()))
@@ -61,7 +42,7 @@ Layouting::Widget *SeparatorQuick::createRubberBand(Layouting::Widget *parent)
         return nullptr;
     }
 
-    return new Layouting::Widget_quick(new RubberBand(parent));
+    return new Layouting::Widget_quick(new KDDockWidgets::RubberBand(parent));
 }
 
 Widget *SeparatorQuick::asWidget()
