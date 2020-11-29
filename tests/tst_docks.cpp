@@ -2717,8 +2717,9 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
     auto le2 = new FocusableWidget();
     dw1->setWidget(le1);
     dw2->setWidget(le2);
-    dw1->show();
     dw2->show();
+    dw1->show();
+    QTest::qWait(200);
 
     auto fw1 = dw1->floatingWindow();
     QPointer<FloatingWindow> fw2 = dw2->floatingWindow();

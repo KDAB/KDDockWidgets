@@ -272,10 +272,12 @@ IndicatorWindow::IndicatorWindow(KDDockWidgets::ClassicIndicators *classicIndica
     {
         // Small hack to avoid flickering when we drag over a window the first time
         // Not sure why a simply create() doesn't work instead
-
-        resize(QSize(1, 1));
-        show();
-        hide();
+        // Not if offscreen though, as that QPA is flaky with window activation/focus
+        if (!KDDockWidgets::isOffscreen()) {
+            resize(QSize(1, 1));
+            show();
+            hide();
+        }
     }
 }
 

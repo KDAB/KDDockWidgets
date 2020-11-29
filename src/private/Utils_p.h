@@ -43,6 +43,11 @@ inline bool isWayland()
     return qApp->platformName() == QLatin1String("wayland");
 }
 
+inline bool isOffscreen()
+{
+    return qApp->platformName() == QLatin1String("offscreen");
+}
+
 inline bool kddwUsesQtWidgets()
 {
     // Returns whether KDDW is built for QtWidgets or QtQuick

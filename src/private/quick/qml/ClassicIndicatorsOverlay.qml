@@ -18,7 +18,7 @@ Item {
     readonly property int outterMargin: 10
     readonly property int innerMargin: 10
     readonly property QtObject innerIndicators: innerIndicators
-    visible: width > 0 && height > 0
+    visible: width > 50 && height > 50 // don't show if window is too small'
 
     ClassicIndicator {
         visible: _window.classicIndicators.outterIndicatorsVisible
