@@ -31,7 +31,6 @@ set(DOCKSLIBS_SRCS
     LayoutSaver.cpp
     private/MultiSplitter.cpp
     private/Position.cpp
-    private/ObjectViewer.cpp
     private/DropIndicatorOverlayInterface.cpp
     private/DropArea.cpp
     private/FloatingWindow.cpp
@@ -101,6 +100,7 @@ if(${PROJECT_NAME}_QTQUICK)
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       private/DebugWindow.cpp
+      private/ObjectViewer.cpp
       MainWindow.cpp
       private/widgets/TabWidget.cpp
       private/widgets/TabBarWidget.cpp
