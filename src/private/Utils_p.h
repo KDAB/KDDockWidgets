@@ -130,11 +130,6 @@ inline int screenNumberForWindow(const QWindow *window)
     return -1;
 }
 
-inline bool isWindow(const QWidget *w)
-{
-    return w && w->isWindow();
-}
-
 inline bool isWindow(const QWindow *w)
 {
     return w != nullptr;
@@ -198,6 +193,11 @@ inline QPoint mapToGlobal(QWidget *w, QPoint p)
 inline void activateWindow(QWidget *widget)
 {
     widget->activateWindow();
+}
+
+inline bool isWindow(const QWidget *w)
+{
+    return w && w->isWindow();
 }
 
 #else

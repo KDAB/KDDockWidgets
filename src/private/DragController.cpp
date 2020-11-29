@@ -20,7 +20,7 @@
 #include "Qt5Qt6Compat_p.h"
 
 #include <QMouseEvent>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QCursor>
 #include <QWindow>
 #include <QDrag>

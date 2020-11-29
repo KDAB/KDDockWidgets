@@ -24,7 +24,6 @@
 #include <QRect>
 #include <QVector>
 #include <QEvent>
-#include <QWidget>
 #include <QVariant>
 
 /**

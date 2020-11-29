@@ -650,7 +650,7 @@ QSize Frame::dockWidgetsMinSize() const
 {
     QSize size = Layouting::Item::hardcodedMinimumSize;
     for (DockWidgetBase *dw : dockWidgets())
-        size = size.expandedTo(Layouting::Widget_qwidget::widgetMinSize(dw));
+        size = size.expandedTo(Layouting::Widget::widgetMinSize(dw));
 
     return size;
 }

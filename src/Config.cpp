@@ -18,7 +18,7 @@
 
 #include "Config.h"
 #include "multisplitter/MultiSplitterConfig.h"
-#include "multisplitter/Widget_qwidget.h"
+#include "multisplitter/Widget.h"
 #include "DockRegistry_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "Utils_p.h"

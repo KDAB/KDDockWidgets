@@ -29,7 +29,7 @@
 #include "DockRegistry_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
-#include "multisplitter/Widget_qwidget.h"
+#include "multisplitter/Widget.h"
 #include "DropArea_p.h"
 #include "WindowBeingDragged_p.h"
 

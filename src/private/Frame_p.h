@@ -23,11 +23,9 @@
 #include "kddockwidgets/QWidgetAdapter.h"
 #include "kddockwidgets/FocusScope.h"
 #include "../LayoutSaver_p.h"
-#include "multisplitter/Widget_qwidget.h"
+#include "multisplitter/Widget.h"
 #include "multisplitter/Item_p.h"
 
-
-#include <QWidget>
 #include <QVector>
 #include <QDebug>
 #include <QPointer>
