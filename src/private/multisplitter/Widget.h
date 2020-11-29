@@ -22,13 +22,43 @@
 #include <QDebug>
 #include <QObject>
 #include <qglobal.h>
-#include <QSizePolicy>
 
 #include <memory>
 
 QT_BEGIN_NAMESPACE
 class QWidget;
 QT_END_NAMESPACE
+
+#ifdef QT_WIDGETS_LIB
+# include <QSizePolicy>
+# else
+class QSizePolicy
+{
+public:
+    enum Policy {
+        Fixed,
+        Preferred,
+        Maximum
+    };
+
+    explicit QSizePolicy(Policy h, Policy v)
+        : horizontal(h)
+        , vertical(v)
+    {
+    }
+
+    Policy verticalPolicy() const {
+        return vertical;
+    }
+
+    Policy horizontalPolicy() const {
+        return horizontal;
+    }
+
+    Policy horizontal = Fixed;
+    Policy vertical = Fixed;
+};
+#endif
 
 namespace Layouting {
 

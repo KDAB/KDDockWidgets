@@ -71,8 +71,7 @@ endif()
 
 if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
   find_package(Qt5Quick)
-  find_package(Qt5Widgets) # QtWidgets required for QSizePolicy, for example
-  target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Quick Qt${QT_MAJOR_VERSION}::Widgets)
+  target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Quick)
 endif()
 
 if(${PROJECT_NAME}_STATIC)

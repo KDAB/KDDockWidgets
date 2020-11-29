@@ -27,7 +27,6 @@
 #include <QQuickItem>
 #include <QObject>
 #include <QCloseEvent>
-#include <QSizePolicy>
 #include <QQuickWindow>
 
 QT_BEGIN_NAMESPACE
