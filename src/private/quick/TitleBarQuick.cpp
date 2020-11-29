@@ -46,6 +46,7 @@ void TitleBarQuick::filterEvents(QObject *obj)
 bool TitleBarQuick::eventFilter(QObject *, QEvent *ev)
 {
     switch (ev->type()) {
+    case QEvent::MouseButtonDblClick:
     case QEvent::MouseButtonPress:
     case QEvent::MouseButtonRelease:
     case QEvent::MouseMove:

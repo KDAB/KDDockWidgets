@@ -165,6 +165,15 @@ bool StatePreDrag::handleMouseButtonRelease(QPoint)
     return false;
 }
 
+bool StatePreDrag::handleMouseDoubleClick()
+{
+    // This is only needed for QtQuick.
+    // With QtQuick, when double clicking, we get: Press, Release, Press, Double-click. and never
+    // receive the last Release event.
+    Q_EMIT q->dragCanceled();
+    return false;
+}
+
 StateDragging::StateDragging(DragController *parent)
     : StateBase(parent)
 {
@@ -294,6 +303,14 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
     q->m_currentDropArea = dropArea;
 
     return true;
+}
+
+bool StateDragging::handleMouseDoubleClick()
+{
+    // See comment in StatePreDrag::handleMouseDoubleClick().
+    // Very unlikely that we're in this state though, due to manhattan length
+    Q_EMIT q->dragCanceled();
+    return false;
 }
 
 StateDraggingWayland::StateDraggingWayland(DragController *parent)
@@ -486,6 +503,7 @@ static QMouseEvent *mouseEvent(QEvent *e)
 {
     switch (e->type()) {
     case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonDblClick:
     case QEvent::MouseButtonRelease:
     case QEvent::MouseMove:
     case QEvent::NonClientAreaMouseButtonPress:
@@ -567,6 +585,8 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     case QEvent::NonClientAreaMouseMove:
     case QEvent::MouseMove:
         return activeState()->handleMouseMove(Qt5Qt6Compat::eventGlobalPos(me));
+    case QEvent::MouseButtonDblClick:
+        return activeState()->handleMouseDoubleClick();
     default:
         break;
     }

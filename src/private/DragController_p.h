@@ -106,6 +106,7 @@ public:
     virtual bool handleMouseButtonPress(Draggable * /*receiver*/, QPoint /*globalPos*/, QPoint /*pos*/) { return false; }
     virtual bool handleMouseMove(QPoint /*globalPos*/) { return false; }
     virtual bool handleMouseButtonRelease(QPoint /*globalPos*/) { return false; }
+    virtual bool handleMouseDoubleClick() { return false; }
 
     // Only interesting for Wayland
     virtual bool handleDragEnter(QDragEnterEvent *, DropArea *) { return false; }
@@ -138,6 +139,7 @@ public:
     void onEntry(QEvent *) override;
     bool handleMouseMove(QPoint globalPos) override;
     bool handleMouseButtonRelease(QPoint) override;
+    bool handleMouseDoubleClick() override;
 };
 
 // Used on all platforms except Wayland. @see StateDraggingWayland
@@ -150,6 +152,7 @@ public:
     void onEntry(QEvent *) override;
     bool handleMouseButtonRelease(QPoint globalPos) override;
     bool handleMouseMove(QPoint globalPos) override;
+    bool handleMouseDoubleClick() override;
 };
 
 // Used on wayland only to use QDrag instead of setting geometry on mouse-move.
