@@ -62,14 +62,9 @@ public:
         if (m_reentrancyGuard || !m_target)
             return false;
 
-        if (ev->type() == QEvent::MouseButtonPress ||
-            ev->type() == QEvent::MouseButtonRelease ||
-            ev->type() == QEvent::MouseMove ||
-            ev->type() == QEvent::NonClientAreaMouseButtonPress ||
-            ev->type() == QEvent::NonClientAreaMouseButtonRelease ||
-            ev->type() == QEvent::NonClientAreaMouseMove) {
+        if (QMouseEvent *me = mouseEvent(ev)) {
             m_reentrancyGuard = true;
-            qApp->sendEvent(m_target, ev);
+            qApp->sendEvent(m_target, me);
             m_reentrancyGuard = false;
             return true;
         }
