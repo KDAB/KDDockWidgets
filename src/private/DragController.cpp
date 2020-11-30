@@ -499,24 +499,6 @@ WindowBeingDragged *DragController::windowBeingDragged() const
     return m_windowBeingDragged.get();
 }
 
-static QMouseEvent *mouseEvent(QEvent *e)
-{
-    switch (e->type()) {
-    case QEvent::MouseButtonPress:
-    case QEvent::MouseButtonDblClick:
-    case QEvent::MouseButtonRelease:
-    case QEvent::MouseMove:
-    case QEvent::NonClientAreaMouseButtonPress:
-    case QEvent::NonClientAreaMouseButtonRelease:
-    case QEvent::NonClientAreaMouseMove:
-        return static_cast<QMouseEvent *>(e);
-    default:
-        break;
-    }
-
-    return nullptr;
-}
-
 bool DragController::eventFilter(QObject *o, QEvent *e)
 {
     if (m_nonClientDrag && e->type() == QEvent::Move) {

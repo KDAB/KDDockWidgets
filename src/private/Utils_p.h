@@ -17,6 +17,7 @@
 
 #include <QScreen>
 #include <QWindow>
+#include <QMouseEvent>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
 # include <QQuickItem>
@@ -128,6 +129,24 @@ inline int screenNumberForWindow(const QWindow *window)
     }
 
     return -1;
+}
+
+inline QMouseEvent *mouseEvent(QEvent *e)
+{
+    switch (e->type()) {
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseMove:
+    case QEvent::NonClientAreaMouseButtonPress:
+    case QEvent::NonClientAreaMouseButtonRelease:
+    case QEvent::NonClientAreaMouseMove:
+        return static_cast<QMouseEvent *>(e);
+    default:
+        break;
+    }
+
+    return nullptr;
 }
 
 inline bool isWindow(const QWindow *w)
