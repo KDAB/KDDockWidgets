@@ -45,8 +45,6 @@ int main(int argc, char *argv[])
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
     parser.addOption(noAeroSnap);
 # endif
-#else
-    Q_UNUSED(centralFrame)
 #endif
 
     auto flags = KDDockWidgets::Config::self().flags();
