@@ -25,7 +25,7 @@ class DOCKS_EXPORT NullIndicators : public DropIndicatorOverlayInterface
 {
     Q_OBJECT
 public:
-    using DropIndicatorOverlayInterface::DropIndicatorOverlayInterface;
+    explicit NullIndicators(DropArea *);
     ~NullIndicators() override;
     DropIndicatorOverlayInterface::DropLocation hover_impl(QPoint) override { return {}; };
 

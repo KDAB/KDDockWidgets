@@ -13,5 +13,11 @@
 
 namespace KDDockWidgets {
 
-    NullIndicators::~NullIndicators() = default;
+NullIndicators::NullIndicators(DropArea *dropArea)
+    : DropIndicatorOverlayInterface(dropArea)
+{
+}
+
+NullIndicators::~NullIndicators() = default;
+
 }
