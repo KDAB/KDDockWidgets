@@ -13,8 +13,15 @@
 #include "Item_p.h"
 
 #include <QDebug>
+#include <QWidget>
 
 using namespace Layouting;
+
+Widget_qwidget::Widget_qwidget(QWidget *thisWidget)
+    : Widget(thisWidget)
+    , m_thisWidget(thisWidget)
+{
+}
 
 Widget_qwidget::~Widget_qwidget()
 {

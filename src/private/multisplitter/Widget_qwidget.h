@@ -13,7 +13,9 @@
 
 #include "Widget.h"
 
-#include <QWidget>
+QT_BEGIN_NAMESPACE
+class QWidget;
+QT_END_NAMESPACE
 
 ///@file
 ///@brief A Layouting::Widget that's deals in QWidget
@@ -25,12 +27,7 @@ namespace Layouting {
 class MULTISPLITTER_EXPORT Widget_qwidget : public Widget
 {
 public:
-    explicit Widget_qwidget(QWidget *thisWidget)
-        : Widget(thisWidget)
-        , m_thisWidget(thisWidget)
-    {
-    }
-
+    explicit Widget_qwidget(QWidget *thisWidget);
     ~Widget_qwidget() override;
 
     QWidget* asQWidget() const override {
