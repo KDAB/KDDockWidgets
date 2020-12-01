@@ -21,7 +21,7 @@
 
 #ifdef KDDOCKWIDGETS_QTQUICK
 # include <QQuickItem>
-# include <QQuickWindow>
+# include <QQuickView>
 #else
 # include <QApplication>
 # include <QAbstractButton>
@@ -91,6 +91,19 @@ inline bool usesNativeDraggingAndResizing()
     // Windows Aero-Snap also implies native dragging, and implies no native-title bar
     Q_ASSERT(!(usesNativeTitleBar() && usesAeroSnapWithCustomDecos()));
     return usesNativeTitleBar() || usesAeroSnapWithCustomDecos();
+}
+
+inline bool usesFallbackMouseGrabber()
+{
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    // Will use QWidget::grabMouse()
+    return false;
+#else
+    // For QtQuick we use the global event filter as mouse delivery is flaky
+    // For example, the same QQuickItem that receives the press isn't receiving the mouse moves
+    // when the top-level window moves.
+    return true;
+#endif
 }
 
 inline void activateWindow(QWindow *window)
