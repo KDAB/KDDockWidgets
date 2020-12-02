@@ -38,7 +38,6 @@ Rectangle {
     /// @brief Signal emitted by a TitleBar.qml component when the float button is clicked
     signal floatButtonClicked();
 
-    color: "#eff0f1"
     visible: titleBarCpp && titleBarCpp.visible
     implicitHeight: 30
 

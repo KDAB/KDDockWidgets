@@ -24,6 +24,9 @@ TitleBarBase {
     readonly property QtObject floatButton: floatButton
     readonly property QtObject closeButton: closeButton
 
+    color: "#eff0f1"
+    height: 30
+
     Text {
         id: title
         text: root.title
