@@ -17,7 +17,15 @@
 
 #include <QQuickView>
 #include <QGuiApplication>
-#include <QCommandLineParser>
+
+class CustomFrameworkWidgetFactory : public KDDockWidgets::DefaultWidgetFactory
+{
+public:
+    QUrl titleBarFilename() const override
+    {
+        return QUrl("qrc:/MyTitleBar.qml");
+    }
+};
 
 int main(int argc, char *argv[])
 {
@@ -25,52 +33,12 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
     QGuiApplication app(argc, argv);
-    QCommandLineParser parser;
-    parser.setApplicationDescription("KDDockWidgets example application");
-    parser.addHelpOption();
 
+    auto &config = KDDockWidgets::Config::self();
+    auto flags = config.flags();
 
-#if defined(DOCKS_DEVELOPER_MODE)
-    QCommandLineOption noQtTool("no-qttool", QCoreApplication::translate("main", "(internal) Don't use Qt::Tool"));
-    QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
-    QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
-    QCommandLineOption noDropIndicators("no-drop-indicators", QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
-
-    parser.addOption(noQtTool);
-    parser.addOption(noParentForFloating);
-    parser.addOption(nativeTitleBar);
-    parser.addOption(noDropIndicators);
-
-# if defined(Q_OS_WIN)
-    QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
-    parser.addOption(noAeroSnap);
-# endif
-#endif
-
-    auto flags = KDDockWidgets::Config::self().flags();
-
-#if defined(DOCKS_DEVELOPER_MODE)
-    parser.process(app);
-
-    if (parser.isSet(noQtTool))
-        flags |= KDDockWidgets::Config::Flag_internal_DontUseQtToolWindowsForFloatingWindows;
-
-    if (parser.isSet(noParentForFloating))
-        flags |= KDDockWidgets::Config::Flag_internal_DontUseParentForFloatingWindows;
-
-    if (parser.isSet(nativeTitleBar))
-        flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
-    else if (parser.isSet(noDropIndicators))
-        KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
-
-# if defined(Q_OS_WIN)
-    if (parser.isSet(noAeroSnap))
-        flags |= KDDockWidgets::Config::Flag_internal_NoAeroSnap;
-# endif
-
-#endif
-
-    KDDockWidgets::Config::self().setFlags(flags);
+    config.setFlags(flags);
+    config.setFrameworkWidgetFactory(new CustomFrameworkWidgetFactory());
 
     QQuickView view;
     view.setObjectName("MainWindow QQuickView");
@@ -98,6 +66,5 @@ int main(int argc, char *argv[])
 
     KDDockWidgets::MainWindowBase *mainWindow = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst();
     mainWindow->addDockWidget(dw2, KDDockWidgets::Location_OnTop);
-
     return app.exec();
 }

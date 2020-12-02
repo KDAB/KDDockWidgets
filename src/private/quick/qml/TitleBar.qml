@@ -49,7 +49,7 @@ TitleBarBase {
             rightMargin: 2
         }
         onClicked: {
-            root.floatClicked();
+            root.floatButtonClicked();
         }
     }
 
@@ -66,7 +66,7 @@ TitleBarBase {
             rightMargin: 2
         }
         onClicked: {
-            root.closeClicked();
+            root.closeButtonClicked();
         }
     }
 }
