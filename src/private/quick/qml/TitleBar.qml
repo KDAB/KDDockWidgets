@@ -11,18 +11,18 @@
 
 import QtQuick 2.9
 
+/**
+  * @brief Implements a Title Bar which looks like its QWidgets counterpart.
+  *
+  * For custom title bars please derive directly from TitleBarBase.qml and not TitleBar.qml,
+  * as there's not much to reuse in this one.
+  */
 TitleBarBase {
     id: root
 
+    // These two are just for unit-tests
     readonly property QtObject floatButton: floatButton
     readonly property QtObject closeButton: closeButton
-
-    onTitleBarCppChanged: {
-        if (titleBarCpp) {
-            // Setting just so the unit-tests can access the buttons
-            titleBarCpp.titleBarQmlItem = this;
-        }
-    }
 
     Text {
         id: title
@@ -36,7 +36,7 @@ TitleBarBase {
 
     TitleBarButton {
         id: floatButton
-        visible: root.titleBarCpp && root.titleBarCpp.floatButtonVisible
+        visible: root.floatButtonVisible
         imageSource: "qrc:/img/dock-float.png"
         anchors {
             verticalCenter: parent ? parent.verticalCenter : undefined
@@ -46,13 +46,13 @@ TitleBarBase {
             rightMargin: 2
         }
         onClicked: {
-            titleBarCpp.onFloatClicked();
+            root.floatClicked();
         }
     }
 
     TitleBarButton {
         id: closeButton
-        enabled: root.titleBarCpp && root.titleBarCpp.closeButtonEnabled
+        enabled: root.closeButtonEnabled
         imageSource: "qrc:/img/close.png"
         anchors {
             verticalCenter: parent ? parent.verticalCenter : undefined
@@ -63,7 +63,7 @@ TitleBarBase {
             rightMargin: 2
         }
         onClicked: {
-            titleBarCpp.onCloseClicked();
+            root.closeClicked();
         }
     }
 }
