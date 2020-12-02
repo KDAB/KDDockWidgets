@@ -61,7 +61,12 @@ class TabBar;
  *
  * @sa Config::setFrameworkWidgetFactory()
  */
-class DOCKS_EXPORT FrameworkWidgetFactory {
+class DOCKS_EXPORT FrameworkWidgetFactory : public QObject
+{
+#ifdef KDDOCKWIDGETS_QTQUICK
+    Q_PROPERTY(QUrl titleBarFilename READ titleBarFilename CONSTANT)
+#endif
+    Q_OBJECT
 public:
     FrameworkWidgetFactory() = default;
 
@@ -137,7 +142,7 @@ public:
     ///@p parent the button's parent
     virtual QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const = 0;
 #else
-    // QtQuick will have some other base class for buttons
+    virtual QUrl titleBarFilename() const = 0;
 #endif
 
     /// @brief Returns the icon to be used with the specified @p type
@@ -168,6 +173,8 @@ public:
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const override;
+#else
+    QUrl titleBarFilename() const override;
 #endif
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
