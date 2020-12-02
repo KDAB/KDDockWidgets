@@ -172,7 +172,7 @@ endif()
 
 if(${PROJECT_NAME}_EXAMPLES)
   if (${PROJECT_NAME}_QTQUICK)
-    add_subdirectory(examples/qtquick)
+    add_subdirectory(examples/qtquick/dockwidgets)
     set_compiler_flags(kddockwidgets_example_quick)
   else()
       add_subdirectory(examples/dockwidgets)

@@ -23,7 +23,7 @@ endif()
 
 qt5_add_resources(RESOURCES_EXAMPLE_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/resources_qtquick_example.qrc
-    ${CMAKE_CURRENT_SOURCE_DIR}/../dockwidgets/resources_example.qrc)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../dockwidgets/resources_example.qrc)
 
 add_executable(kddockwidgets_example_quick
     main.cpp
