@@ -56,7 +56,6 @@ QSize MainWindowQuick::maximumSize() const
 
 SideBar *MainWindowQuick::sideBar(SideBarLocation) const
 {
-    qDebug() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";
     return nullptr;
 }
 
