@@ -19,7 +19,7 @@ KDDW.TitleBarBase {
     color: "black"
     border.color: "orange"
     border.width: 2
-    height: 50
+    height: visible ? 50 : 0
 
     Text {
         color: "orange"

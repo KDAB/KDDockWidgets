@@ -25,7 +25,7 @@ TitleBarBase {
     readonly property QtObject closeButton: closeButton
 
     color: "#eff0f1"
-    height: 30
+    height: visible ? 30 : 0
 
     Text {
         id: title
