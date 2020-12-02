@@ -26,6 +26,11 @@
 #include <QDebug>
 #include <QOperatingSystemVersion>
 
+#ifdef KDDOCKWIDGETS_QTQUICK
+# include <QQmlEngine>
+# include <QQmlContext>
+#endif
+
 namespace KDDockWidgets
 {
 
@@ -48,7 +53,7 @@ public:
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
     TabbingAllowedFunc m_tabbingAllowedFunc = nullptr;
-    FrameworkWidgetFactory *m_frameworkWidgetFactory;
+    FrameworkWidgetFactory *m_frameworkWidgetFactory = nullptr;
     Flags m_flags = Flag_Default;
     qreal m_draggedWindowOpacity = Q_QNAN;
 };
@@ -167,6 +172,7 @@ TabbingAllowedFunc Config::tabbingAllowedFunc() const
     return d->m_tabbingAllowedFunc;
 }
 
+#ifdef KDDOCKWIDGETS_QTQUICK
 void Config::setQmlEngine(QQmlEngine *qmlEngine)
 {
     if (d->m_qmlEngine) {
@@ -174,13 +180,22 @@ void Config::setQmlEngine(QQmlEngine *qmlEngine)
         return;
     }
 
+    if (!qmlEngine) {
+        qWarning() << Q_FUNC_INFO << "Null QML engine";
+        return;
+    }
+
     d->m_qmlEngine = qmlEngine;
+
+    QQmlContext *context = qmlEngine->rootContext();
+    context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), d->m_frameworkWidgetFactory);
 }
 
 QQmlEngine *Config::qmlEngine() const
 {
     return d->m_qmlEngine;
 }
+#endif
 
 void Config::Private::fixFlags()
 {

@@ -187,9 +187,11 @@ public:
     ///@sa setTabbingAllowedFunc().
     TabbingAllowedFunc tabbingAllowedFunc() const;
 
+#ifdef KDDOCKWIDGETS_QTQUICK
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
     void setQmlEngine(QQmlEngine *);
     QQmlEngine* qmlEngine() const;
+#endif
 
 private:
     Q_DISABLE_COPY(Config)
