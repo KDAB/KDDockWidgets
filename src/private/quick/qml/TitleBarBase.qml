@@ -24,7 +24,7 @@ import QtQuick 2.9
 Rectangle {
     id: root
 
-    property QtObject titleBarCpp
+    readonly property QtObject titleBarCpp: parent.titleBarCpp // It's set in the loader
     readonly property string title: titleBarCpp ? titleBarCpp.title : ""
     readonly property bool floatButtonVisible: titleBarCpp && titleBarCpp.floatButtonVisible
     readonly property bool closeButtonEnabled: titleBarCpp && titleBarCpp.closeButtonEnabled

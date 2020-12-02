@@ -34,11 +34,11 @@ Rectangle {
             frameCpp.setStackLayout(stackLayout);
     }
 
-    TitleBar {
+    Loader {
         id: titleBar
-        height: 30
-        titleBarCpp: root.titleBarCpp
-        visible: titleBarCpp && titleBarCpp.visible
+        readonly property QtObject titleBarCpp: root.titleBarCpp
+        source: "TitleBar.qml"
+
         anchors {
             top:  parent ? parent.top : undefined
             left: parent ? parent.left : undefined

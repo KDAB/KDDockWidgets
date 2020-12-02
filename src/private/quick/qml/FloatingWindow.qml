@@ -28,11 +28,10 @@ Rectangle {
         width: 1
     }
 
-    KDDW.TitleBar {
+    Loader {
         id: titleBar
-        height: root.titleBarHeight
-        titleBarCpp: root.titleBarCpp
-        visible: titleBarCpp && titleBarCpp.visible
+        readonly property QtObject titleBarCpp: root.titleBarCpp
+        source: "TitleBar.qml"
 
         anchors {
             top:  parent.top
@@ -41,6 +40,7 @@ Rectangle {
             margins: root.margins
         }
     }
+
 
     KDDW.DropArea {
         id: dropArea
