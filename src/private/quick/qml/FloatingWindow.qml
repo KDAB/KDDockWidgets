@@ -17,7 +17,7 @@ Rectangle {
     readonly property QtObject floatingWindowCpp: parent
     readonly property QtObject titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
     readonly property QtObject dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
-    readonly property int titleBarHeight: titleBarCpp ? titleBarCpp.titleBarHeight : 0
+    readonly property int titleBarHeight: titleBar.height
     readonly property int margins: 4
 
     anchors.fill: parent
@@ -39,8 +39,12 @@ Rectangle {
             right: parent.right
             margins: root.margins
         }
-    }
 
+        onHeightChanged: {
+            if (floatingWindowCpp)
+                floatingWindowCpp.geometryUpdated();
+        }
+    }
 
     KDDW.DropArea {
         id: dropArea

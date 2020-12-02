@@ -33,6 +33,7 @@ protected:
 
 private:
     int contentsMargins() const;
+    int titleBarHeight() const;
     QWindow *candidateParentWindow() const;
     void init();
     QQuickView *const m_quickWindow;

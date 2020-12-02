@@ -124,7 +124,7 @@ QSize FloatingWindowQuick::minimumSize() const
     // easy to track as we don't have layouts
     const int margins = contentsMargins();
     return multiSplitter()->minimumSize() +
-            QSize(0, TitleBarHeight) +
+            QSize(0, titleBarHeight()) +
             QSize(margins * 2, margins * 2);
 }
 
@@ -140,6 +140,11 @@ void FloatingWindowQuick::setGeometry(QRect geo)
 int FloatingWindowQuick::contentsMargins() const
 {
     return m_visualItem->property("margins").toInt();
+}
+
+int FloatingWindowQuick::titleBarHeight() const
+{
+    return m_visualItem->property("titleBarHeight").toInt();
 }
 
 QWindow *FloatingWindowQuick::candidateParentWindow() const
