@@ -87,6 +87,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
 if(${PROJECT_NAME}_QTQUICK)
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       DockWidgetQuick.cpp
+      private/quick/DockWidgetInstantiator.cpp
       private/quick/QWidgetAdapter_quick.cpp
       private/quick/FloatingWindowQuick.cpp
       private/quick/TitleBarQuick.cpp

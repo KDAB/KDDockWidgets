@@ -328,6 +328,11 @@ void DockRegistry::unregisterFrame(Frame *frame)
     m_frames.removeOne(frame);
 }
 
+bool DockRegistry::containsDockWidget(const QString &uniqueName) const
+{
+    return dockByName(uniqueName) != nullptr;
+}
+
 DockWidgetBase *DockRegistry::dockByName(const QString &name) const
 {
     for (auto dock : qAsConst(m_dockWidgets)) {

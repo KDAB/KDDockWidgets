@@ -328,7 +328,7 @@ public:
      * @brief Like QWidget::close() but the hosted widget won't be asked if we
      * should close.
      */
-    void forceClose();
+    Q_INVOKABLE void forceClose();
 
     /**
      * @brief Returns this dock widget's title bar.
@@ -373,7 +373,7 @@ public:
     QStringList affinities() const;
 
     /// @brief Equivalent to QWidget::show(), but it's optimized to reduce flickering on some platforms
-    void show();
+    Q_INVOKABLE void show();
 
     /// @brief Brings the dock widget to the front.
     ///
@@ -382,7 +382,7 @@ public:
     /// - If the dock widget is floating, QWindow::raise() is called.
     ///
     /// This only applies if the dock widget is already open. If closed, does nothing.
-    void raise();
+    Q_INVOKABLE void raise();
 
     /**
      * @brief Returns whether widget() is a KDDockWidget::MainWindow

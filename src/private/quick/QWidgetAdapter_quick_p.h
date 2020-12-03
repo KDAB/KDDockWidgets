@@ -122,9 +122,9 @@ public:
     bool isTopLevel() const { return isWindow(); }
     bool isMaximized() const;
     bool isActiveWindow() const;
-    void showMaximized();
-    void showMinimized();
-    void showNormal();
+    Q_INVOKABLE void showMaximized();
+    Q_INVOKABLE void showMinimized();
+    Q_INVOKABLE void showNormal();
 
     QQuickView *quickView() const;
     QWindow *windowHandle() const;
@@ -138,7 +138,7 @@ public:
 
     void setWindowTitle(const QString &);
     void setWindowIcon(const QIcon &);
-    bool close();
+    Q_INVOKABLE bool close();
     QQuickItem *childAt(QPoint) const;
     void move(int x, int y);
     void move(QPoint);

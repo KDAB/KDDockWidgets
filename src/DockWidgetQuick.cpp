@@ -66,7 +66,7 @@ void DockWidgetQuick::setWidget(const QString &qmlFilename)
     setWidget(adapter);
 }
 
-void DockWidgetQuick::setWidget(QWidgetOrQuick *widget)
+void DockWidgetQuick::setWidget(QWidgetAdapter *widget)
 {
     widget->QWidgetAdapter::setParent(this);
     QWidgetAdapter::makeItemFillParent(widget);

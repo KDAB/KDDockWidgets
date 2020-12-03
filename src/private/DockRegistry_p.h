@@ -53,6 +53,7 @@ public:
 
     DockWidgetBase *focusedDockWidget() const;
 
+    bool containsDockWidget(const QString &uniqueName) const;
     DockWidgetBase *dockByName(const QString &) const;
     MainWindowBase *mainWindowByName(const QString &) const;
 

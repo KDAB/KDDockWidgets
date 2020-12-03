@@ -55,7 +55,7 @@ public:
     void setWidget(const QString &qmlFilename);
 
     /// @reimp
-    void setWidget(QWidgetOrQuick *widget) override;
+    void setWidget(QWidgetAdapter *widget) override;
 
     /// @reimp
     QSize minimumSize() const override;
