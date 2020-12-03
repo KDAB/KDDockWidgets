@@ -18,7 +18,7 @@ Rectangle {
 
     property QtObject frameCpp
     readonly property QtObject titleBarCpp: frameCpp ? frameCpp.titleBar : null
-    readonly property int nonContentsHeight: titleBar.height + tabbar.height
+    readonly property int nonContentsHeight: titleBar.heightWhenVisible + tabbar.height
 
     anchors.fill: parent
 
@@ -32,6 +32,11 @@ Rectangle {
     onFrameCppChanged: {
         if (frameCpp)
             frameCpp.setStackLayout(stackLayout);
+    }
+
+    onNonContentsHeightChanged: {
+        if (frameCpp)
+            frameCpp.geometryUpdated();
     }
 
     Loader {

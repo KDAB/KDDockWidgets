@@ -17,7 +17,7 @@ Rectangle {
     readonly property QtObject floatingWindowCpp: parent
     readonly property QtObject titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
     readonly property QtObject dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
-    readonly property int titleBarHeight: titleBar.height
+    readonly property int titleBarHeight: titleBar.heightWhenVisible
     readonly property int margins: 4
 
     anchors.fill: parent
@@ -28,9 +28,15 @@ Rectangle {
         width: 1
     }
 
+    onTitleBarHeightChanged: {
+        if (floatingWindowCpp)
+            floatingWindowCpp.geometryUpdated();
+    }
+
     Loader {
         id: titleBar
         readonly property QtObject titleBarCpp: root.titleBarCpp
+        readonly property int heightWhenVisible: item.heightWhenVisible
         source: _kddw_widgetFactory.titleBarFilename
 
         anchors {
@@ -38,11 +44,6 @@ Rectangle {
             left: parent.left
             right: parent.right
             margins: root.margins
-        }
-
-        onHeightChanged: {
-            if (floatingWindowCpp)
-                floatingWindowCpp.geometryUpdated();
         }
     }
 

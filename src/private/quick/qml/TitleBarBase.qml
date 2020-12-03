@@ -32,6 +32,10 @@ Rectangle {
     // So the tests can send mouse events programatically
     readonly property QtObject mouseAreaForTests: dragMouseArea
 
+    /// The hight the title bar should have when visible. Override in your component with another value
+    /// Don't set 'hight' directly in the overridden component
+    property int heightWhenVisible: 30
+
     /// @brief Signal emitted by a TitleBar.qml component when the close button is clicked
     signal closeButtonClicked();
 
@@ -39,7 +43,8 @@ Rectangle {
     signal floatButtonClicked();
 
     visible: titleBarCpp && titleBarCpp.visible
-    implicitHeight: 30
+    height: visible ? heightWhenVisible : 0
+    implicitHeight: heightWhenVisible
 
     MouseArea {
         id: dragMouseArea
