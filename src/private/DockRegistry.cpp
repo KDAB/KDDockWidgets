@@ -55,6 +55,7 @@ DockRegistry::DockRegistry(QObject *parent)
 
 #else
     KDDockWidgets::registerQmlTypes();
+    QQuickWindow::setDefaultAlphaBuffer(true);
 #endif
 
     connect(qApp, &QGuiApplication::focusObjectChanged,
