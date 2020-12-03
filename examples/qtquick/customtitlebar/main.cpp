@@ -21,11 +21,16 @@
 class CustomFrameworkWidgetFactory : public KDDockWidgets::DefaultWidgetFactory
 {
 public:
+
+    ~CustomFrameworkWidgetFactory() override;
+
     QUrl titleBarFilename() const override
     {
         return QUrl("qrc:/MyTitleBar.qml");
     }
 };
+
+CustomFrameworkWidgetFactory::~CustomFrameworkWidgetFactory() = default;
 
 int main(int argc, char *argv[])
 {
