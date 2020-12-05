@@ -146,7 +146,6 @@ KDDockWidgets::Location locationToMultisplitterLocation(ClassicIndicators::DropL
 
 void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location)
 {
-    qCDebug(overlay) << "ClassicIndicators::setCurrentDropLocation" << location;
     setCurrentDropLocation(location);
 
     if (location == DropLocation_None) {

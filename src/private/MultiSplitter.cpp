@@ -46,7 +46,7 @@ MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
 
     setLayoutSize(parent->size());
 
-    qCDebug(multisplittercreation()) << "MultiSplitter";
+    qCDebug(creation) << "MultiSplitter";
 
     // Initialize min size
     updateSizeConstraints();
@@ -56,7 +56,7 @@ MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
 
 MultiSplitter::~MultiSplitter()
 {
-    qCDebug(multisplittercreation) << "~MultiSplitter" << this;
+    qCDebug(creation) << "~MultiSplitter" << this;
     if (m_rootItem->hostWidget()->asQObject() == this)
         delete m_rootItem;
     DockRegistry::self()->unregisterLayout(this);
