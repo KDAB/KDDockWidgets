@@ -41,7 +41,9 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+#ifdef KDDOCKWIDGETS_QTQUICK
 inline QQuickItem* mouseAreaForPos(QQuickItem *item, QPointF globalPos);
+#endif
 
 inline bool isWayland()
 {
@@ -196,7 +198,7 @@ inline int startDragDistance()
 
 /// @brief Returns the QWidget or QtQuickItem at the specified position
 /// Basically QApplication::widgetAt() but with support for QtQuick
-inline WidgetType* widgetAt(QPoint globalPos)
+inline WidgetType* mouseReceiverAt(QPoint globalPos)
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     return qApp->widgetAt(globalPos);
@@ -213,7 +215,7 @@ inline WidgetType* widgetAt(QPoint globalPos)
 /// Returns true if we're over such controls where we shouldn't drag.
 inline bool inDisallowDragWidget(QPoint globalPos)
 {
-    WidgetType *widget = widgetAt(globalPos);
+    WidgetType *widget = mouseReceiverAt(globalPos);
     if (!widget)
         return false;
 
