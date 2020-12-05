@@ -20,6 +20,8 @@
 #include <QMouseEvent>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
+# include "private/quick/TitleBarQuick_p.h"
+
 # include <QQuickItem>
 # include <QQuickView>
 #else
@@ -38,6 +40,8 @@ class QWindow;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
+
+inline QQuickItem* mouseAreaForPos(QQuickItem *item, QPointF globalPos);
 
 inline bool isWayland()
 {
@@ -197,8 +201,11 @@ inline WidgetType* widgetAt(QPoint globalPos)
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     return qApp->widgetAt(globalPos);
 #else
-    Q_UNUSED(globalPos);
-    return nullptr;
+    auto window = qobject_cast<QQuickWindow*>(qApp->topLevelAt(globalPos));
+    if (!window)
+        return false;
+
+    return mouseAreaForPos(window->contentItem(), globalPos);
 #endif
 }
 
@@ -215,8 +222,7 @@ inline bool inDisallowDragWidget(QPoint globalPos)
     return qobject_cast<QAbstractButton*>(widget) ||
            qobject_cast<QLineEdit*>(widget);
 #else
-    // TODO
-    return false;
+    return widget->objectName() != QLatin1String("draggableMouseArea");
 #endif
 }
 
@@ -261,6 +267,29 @@ inline QSize screenSizeForWidget(const QQuickItem *w)
 inline QPoint mapToGlobal(QQuickItem *item, QPoint p)
 {
     return item->mapToGlobal(p).toPoint();
+}
+
+inline QQuickItem* mouseAreaForPos(QQuickItem *item, QPointF globalPos)
+{
+    QRectF rect = item->boundingRect();
+    rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)));
+
+    // Assumes children are inside its parent. That's fine for KDDW's purposes.
+    if (!rect.contains(globalPos)) {
+        return nullptr;
+    }
+
+    const QList<QQuickItem*> children = item->childItems();
+
+    for (auto it = children.rbegin(), end = children.rend(); it != end; ++it) {
+        if (QQuickItem *receiver = mouseAreaForPos(*it, globalPos))
+            return receiver;
+    }
+
+    if (QLatin1String(item->metaObject()->className()) == QLatin1String("QQuickMouseArea"))
+        return item;
+
+    return nullptr;
 }
 
 #endif
