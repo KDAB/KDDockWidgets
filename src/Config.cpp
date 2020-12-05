@@ -231,7 +231,7 @@ void Config::Private::fixFlags()
     }
 #endif
 
-#if (!defined(Q_OS_WIN) && !defined(Q_OS_MACOS)) || defined(KDDOCKWIDGETS_QTQUICK)
+#if (!defined(Q_OS_WIN) && !defined(Q_OS_MACOS))
     // QtQuick doesn't support AeroSnap yet. Some problem with the native events not being received...
     m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
 #endif

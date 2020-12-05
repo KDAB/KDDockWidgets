@@ -162,6 +162,20 @@ inline QMouseEvent *mouseEvent(QEvent *e)
     return nullptr;
 }
 
+inline bool isNonClientMouseEvent(const QEvent *e)
+{
+    switch (e->type()) {
+    case QEvent::NonClientAreaMouseButtonPress:
+    case QEvent::NonClientAreaMouseButtonRelease:
+    case QEvent::NonClientAreaMouseMove:
+        return true;
+    default:
+        break;
+    }
+
+    return false;
+}
+
 inline bool isWindow(const QWindow *w)
 {
     return w != nullptr;
