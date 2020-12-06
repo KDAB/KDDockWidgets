@@ -34,8 +34,8 @@
 using namespace KDDockWidgets;
 
 #if defined(Q_OS_WIN)
+# ifdef KDDOCKWIDGETS_QTWIDGETS
 namespace KDDockWidgets {
-
 
 /**
  * @brief Helper to rediriect WM_NCHITTEST from child widgets to the top-level widget
@@ -44,6 +44,8 @@ namespace KDDockWidgets {
  * in FloatingWindow::nativeEvent(). But if the child widgets have a native handle, then
  * the WM_NCHITTEST will go to them. They have to respond HTTRANSPARENT so the event
  * is redirected.
+ *
+ * This only affects QtWidgets, since QQuickItems never have native WId.
  */
 class NCHITTESTEventFilter : public QAbstractNativeEventFilter
 {
@@ -58,16 +60,12 @@ public:
         if (msg->message != WM_NCHITTEST)
             return false;
         const WId wid = WId(msg->hwnd);
-#ifdef KDDOCKWIDGETS_QTWIDGETS
+
         QWidget *child = QWidget::find(wid);
         if (!child || child->window() != m_floatingWindow)
             return false;
         const bool isThisWindow = child == m_floatingWindow;
-#else
-        // Probably the QtWidgets path could also use this one, which is generic and not specific to QtQuick
-        FloatingWindow *fw = DockRegistry::self()->floatingWindowForHandle(wid);
-        const bool isThisWindow = fw == m_floatingWindow;
-#endif
+
         if (!isThisWindow) {
             *result = HTTRANSPARENT;
             return true;
@@ -79,6 +77,8 @@ public:
     QPointer<FloatingWindow> m_floatingWindow;
 };
 }
+
+# endif
 #endif // Q_OS_WIN
 
 static Qt::WindowFlags windowFlagsToUse()
@@ -194,9 +194,10 @@ void FloatingWindow::setupWindow()
     create();
 
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
+# ifdef KDDOCKWIDGETS_QTWIDGETS
         m_nchittestFilter = new NCHITTESTEventFilter(this);
         qApp->installNativeEventFilter(m_nchittestFilter);
-
+#endif
         connect(windowHandle(), &QWindow::screenChanged, this, [this] {
             // Qt honors our frame hijacking usually... but when screen changes we must give it a nudge.
             // Otherwise what Qt thinks is the client area is not what Windows knows it is.
