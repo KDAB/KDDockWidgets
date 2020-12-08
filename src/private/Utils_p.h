@@ -205,7 +205,7 @@ inline WidgetType* mouseReceiverAt(QPoint globalPos)
 #else
     auto window = qobject_cast<QQuickWindow*>(qApp->topLevelAt(globalPos));
     if (!window)
-        return false;
+        return nullptr;
 
     return mouseAreaForPos(window->contentItem(), globalPos);
 #endif
