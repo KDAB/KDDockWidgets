@@ -18,6 +18,7 @@
 #include "Frame_p.h"
 #include "Draggable_p.h"
 #include "DropArea_p.h"
+#include "Qt5Qt6Compat_p.h"
 
 QT_BEGIN_NAMESPACE
 class QAbstractNativeEventFilter;
@@ -134,7 +135,7 @@ protected:
     void maybeCreateResizeHandler();
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
-    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
+    bool nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override;
 #endif
 
     bool event(QEvent *ev) override;

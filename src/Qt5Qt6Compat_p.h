@@ -20,6 +20,7 @@ namespace Qt5Qt6Compat {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 
 using QEnterEvent = QEnterEvent;
+using qintptr = ::qintptr;
 
 inline QPoint eventGlobalPos(QMouseEvent *ev)
 {
@@ -27,10 +28,11 @@ inline QPoint eventGlobalPos(QMouseEvent *ev)
 }
 
 #else
+// Qt 5:
 
 using QEnterEvent = QEvent;
+using qintptr = long;
 
-// Qt 5:
 inline QPoint eventGlobalPos(QMouseEvent *ev)
 {
     return ev->globalPos();
