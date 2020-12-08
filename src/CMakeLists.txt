@@ -182,10 +182,6 @@ elseif(NOT APPLE AND NOT EMSCRIPTEN AND NOT OPTION_QT6)
     target_link_libraries(kddockwidgets PUBLIC Qt${QT_MAJOR_VERSION}::X11Extras)
 endif()
 
-#if (OPTION_QT6)
-#  target_link_libraries(kddockwidgets PUBLIC Qt6::StateMachine)
-#endif()
-
 set_target_properties(kddockwidgets PROPERTIES
   SOVERSION ${${PROJECT_NAME}_SOVERSION}
   VERSION ${${PROJECT_NAME}_VERSION}

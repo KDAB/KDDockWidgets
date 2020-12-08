@@ -94,8 +94,49 @@ FallbackMouseGrabber::~FallbackMouseGrabber() {}
 
 }
 
+State::State(MinimalStateMachine *parent)
+    : QObject(parent)
+    , m_machine(parent)
+{
+}
+
+bool State::isCurrentState() const
+{
+    return m_machine->currentState() == this;
+}
+
+MinimalStateMachine::MinimalStateMachine(QObject *parent)
+    : QObject(parent)
+{
+}
+
+template<typename Obj, typename Signal>
+void State::addTransition(Obj *obj, Signal signal, State *dest)
+{
+    connect(obj, signal, this, [this, dest] {
+        if (isCurrentState()) {
+            m_machine->setCurrentState(dest);
+        }
+    });
+}
+
+
+State *MinimalStateMachine::currentState() const
+{
+    return m_currentState;
+}
+
+void MinimalStateMachine::setCurrentState(State *state)
+{
+    if (state != m_currentState) {
+        m_currentState = state;
+        if (state)
+            state->onEntry();
+    }
+}
+
 StateBase::StateBase(DragController *parent)
-    : QState(parent)
+    : State(parent)
     , q(parent)
 {
 }
@@ -112,7 +153,7 @@ StateNone::StateNone(DragController *parent)
 {
 }
 
-void StateNone::onEntry(QEvent *)
+void StateNone::onEntry()
 {
     qCDebug(state) << "StateNone entered";
     q->m_pressPos = QPoint();
@@ -153,7 +194,7 @@ StatePreDrag::StatePreDrag(DragController *parent)
 
 StatePreDrag::~StatePreDrag() = default;
 
-void StatePreDrag::onEntry(QEvent *)
+void StatePreDrag::onEntry()
 {
     qCDebug(state) << "StatePreDrag entered";
     WidgetResizeHandler::s_disableAllHandlers = true; // Disable the resize handler during dragging
@@ -190,7 +231,7 @@ StateDragging::StateDragging(DragController *parent)
 
 StateDragging::~StateDragging() = default;
 
-void StateDragging::onEntry(QEvent *)
+void StateDragging::onEntry()
 {
     if (DockWidgetBase *dw = q->m_draggable->singleDockWidget()) {
         // When we start to drag a floating window which has a single dock widget, we save the position
@@ -331,7 +372,7 @@ StateDraggingWayland::~StateDraggingWayland()
 {
 }
 
-void StateDraggingWayland::onEntry(QEvent *)
+void StateDraggingWayland::onEntry()
 {
     qCDebug(state) << "StateDragging entered";
 
@@ -415,7 +456,8 @@ bool StateDraggingWayland::handleDragMove(QDragMoveEvent *ev, DropArea *dropArea
     return true;
 }
 
-DragController::DragController(QObject *)
+DragController::DragController(QObject *parent)
+    : MinimalStateMachine(parent)
 {
     qCDebug(creation) << "DragController()";
 
@@ -433,8 +475,7 @@ DragController::DragController(QObject *)
     if (usesFallbackMouseGrabber())
         enableFallbackMouseGrabber();
 
-    setInitialState(stateNone);
-    start();
+    setCurrentState(stateNone);
 }
 
 DragController *DragController::instance()
@@ -517,7 +558,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
         // On Windows, non-client mouse moves are only sent at the end, so we must fake it:
         qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o;
         activeState()->handleMouseMove(QCursor::pos());
-        return QStateMachine::eventFilter(o, e);
+        return false;
     }
 
     if (isWayland()) {
@@ -546,11 +587,11 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
 
     QMouseEvent *me = mouseEvent(e);
     if (!me)
-        return QStateMachine::eventFilter(o, e);
+        return false;
 
     auto w = qobject_cast<QWidgetOrQuick*>(o);
     if (!w)
-        return QStateMachine::eventFilter(o, e);
+        return false;
 
     qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o
                          << "; m_nonClientDrag=" << m_nonClientDrag;
@@ -563,7 +604,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
                 return activeState()->handleMouseButtonPress(draggableForQObject(o), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
             }
         }
-        return QStateMachine::eventFilter(o, e);
+        return false;
     }
     case QEvent::MouseButtonPress:
         // For top-level windows that support native dragging all goes through the NonClient* events.
@@ -585,15 +626,12 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
         break;
     }
 
-    return QStateMachine::eventFilter(o, e);
+    return false;
 }
 
 StateBase *DragController::activeState() const
 {
-    auto set = configuration();
-    if (set.isEmpty())
-        return nullptr;
-    return static_cast<StateBase *>(*(set.begin()));
+    return static_cast<StateBase *>(currentState());
 }
 
 #if defined(Q_OS_WIN)

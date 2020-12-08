@@ -14,8 +14,6 @@
 
 #include <QPainter>
 #include <QPainterPath>
-#include <QState>
-#include <QStateMachine>
 
 #define RUBBERBAND_LENGTH 11
 #define RUBBERBAND_SPACING 2
