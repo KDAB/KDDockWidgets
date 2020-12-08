@@ -21,7 +21,7 @@ if(NOT TARGET kddockwidgets)
   find_package(KDDockWidgets REQUIRED)
 endif()
 
-qt5_add_resources(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_example.qrc)
+set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_example.qrc)
 
 add_executable(kddockwidgets_example
     main.cpp

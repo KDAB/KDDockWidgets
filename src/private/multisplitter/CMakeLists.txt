@@ -59,7 +59,7 @@ if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
   add_definitions(-DKDMULTISPLITTER_QTQUICK)
 endif()
 
-qt5_add_resources(MULTISPLITTER_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_multisplitter.qrc)
+set(MULTISPLITTER_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_multisplitter.qrc)
 
 add_library(kddockwidgets_multisplitter ${KDDockWidgets_LIBRARY_MODE} ${MULTISPLITTER_SRCS} ${MULTISPLITTER_RESOURCES})
 add_library(KDAB::kddockwidgets_multisplitter ALIAS kddockwidgets_multisplitter)
