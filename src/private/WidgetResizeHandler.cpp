@@ -200,7 +200,7 @@ void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 #ifdef Q_OS_WIN
 
 /// Handler to enable Aero-snap
-bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, long *result)
+bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result)
 {
     if (eventType != "windows_generic_MSG")
         return false;

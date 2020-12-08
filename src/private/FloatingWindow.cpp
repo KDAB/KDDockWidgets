@@ -51,7 +51,7 @@ class NCHITTESTEventFilter : public QAbstractNativeEventFilter
 {
 public:
     explicit NCHITTESTEventFilter(FloatingWindow *fw) : m_floatingWindow(fw) {}
-    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override
+    bool nativeEventFilter(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override
     {
         if (eventType != "windows_generic_MSG" || !m_floatingWindow)
             return false;

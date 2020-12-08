@@ -13,6 +13,7 @@
 #define KD_WIDGET_RESIZE_HANDLER_P_H
 
 #include "QWidgetAdapter.h"
+#include "Qt5Qt6Compat_p.h"
 
 #include <QPoint>
 #include <QDebug>
@@ -35,7 +36,7 @@ public:
     void setTarget(QWidgetOrQuick *w);
 
 #ifdef Q_OS_WIN
-    static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, long *result);
+    static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result);
 #endif
     static bool s_disableAllHandlers;
 protected:
