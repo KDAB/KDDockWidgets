@@ -26,7 +26,6 @@ include_directories(..)
 include_directories(../src)
 include_directories(../src/private)
 
-find_package(Qt5Test)
 set(TESTING_SRCS utils.cpp Testing.cpp)
 
 # tst_docks
