@@ -67,12 +67,12 @@ add_library(KDAB::kddockwidgets_multisplitter ALIAS kddockwidgets_multisplitter)
 set_compiler_flags(kddockwidgets_multisplitter)
 
 if(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND)
-  find_package(Qt5Widgets)
+  find_package(Qt${QT_MAJOR_VERSION}Widgets)
   target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets)
 endif()
 
 if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
-  find_package(Qt5Quick)
+  find_package(Qt${QT_MAJOR_VERSION}Quick)
   target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Quick)
 endif()
 
