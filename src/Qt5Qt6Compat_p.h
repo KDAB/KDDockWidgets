@@ -13,6 +13,7 @@
 #define KDDOCKWIDGETS_QT5QT6_COMPAT_P_H
 
 #include <QMouseEvent>
+#include <QDropEvent>
 
 namespace KDDockWidgets {
 namespace Qt5Qt6Compat {
@@ -21,6 +22,12 @@ namespace Qt5Qt6Compat {
 
 using QEnterEvent = QEnterEvent;
 using qintptr = ::qintptr;
+using qhashtype = size_t;
+
+inline QPoint eventPos(QDropEvent *ev)
+{
+    return ev->position().toPoint();
+}
 
 inline QPoint eventGlobalPos(QMouseEvent *ev)
 {
@@ -32,6 +39,12 @@ inline QPoint eventGlobalPos(QMouseEvent *ev)
 
 using QEnterEvent = QEvent;
 using qintptr = long;
+using qhashtype = uint;
+
+inline QPoint eventPos(QDropEvent *ev)
+{
+    return ev->pos();
+}
 
 inline QPoint eventGlobalPos(QMouseEvent *ev)
 {

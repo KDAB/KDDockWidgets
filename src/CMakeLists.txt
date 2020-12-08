@@ -55,6 +55,7 @@ set(DOCKS_INSTALLABLE_INCLUDES
     FrameworkWidgetFactory.h
     DockWidgetBase.h
     KDDockWidgets.h
+    Qt5Qt6Compat_p.h
     FocusScope.h
     QWidgetAdapter.h
     LayoutSaver.h

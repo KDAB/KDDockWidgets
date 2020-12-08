@@ -415,7 +415,7 @@ bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropAr
         return true;
     }
 
-    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(ev->pos()));
+    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
 
     ev->accept();
     return true;
@@ -433,7 +433,7 @@ bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
-    if (dropArea->drop(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(ev->pos()))) {
+    if (dropArea->drop(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)))) {
         ev->setDropAction(Qt::MoveAction);
         ev->accept();
         Q_EMIT q->dropped();
@@ -451,7 +451,7 @@ bool StateDraggingWayland::handleDragMove(QDragMoveEvent *ev, DropArea *dropArea
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
-    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(ev->pos()));
+    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
 
     return true;
 }

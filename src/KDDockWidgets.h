@@ -19,14 +19,14 @@
 #ifndef KD_KDDOCKWIDGETS_H
 #define KD_KDDOCKWIDGETS_H
 
+#include "Qt5Qt6Compat_p.h"
+
 #include <QObject>
 
 #ifdef Q_OS_WIN
-// Only on Windows, where this is popular. On linux it the Qt::Tool windows need reparenting. Untested on macOS.
+// Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting. Untested on macOS.
 # define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
 #endif
-
-
 
 namespace KDDockWidgets
 {
@@ -120,7 +120,7 @@ namespace KDDockWidgets
     };
 
     ///@internal
-    inline uint qHash(SideBarLocation loc, uint seed)
+    inline Qt5Qt6Compat::qhashtype qHash(SideBarLocation loc, Qt5Qt6Compat::qhashtype seed)
     {
         return ::qHash(static_cast<uint>(loc), seed);
     }
