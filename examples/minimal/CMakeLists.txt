@@ -13,6 +13,7 @@ cmake_minimum_required(VERSION 3.7)
 project(kddockwidgets_minimal_example)
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIRS ON)
 
 if(NOT TARGET kddockwidgets)
