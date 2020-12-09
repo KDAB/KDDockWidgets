@@ -34,6 +34,7 @@ class State : public QObject
 {
 public:
     explicit State(MinimalStateMachine *parent);
+    ~State() override;
 
     template <typename Obj, typename Signal>
     void addTransition(Obj *, Signal, State *dest);

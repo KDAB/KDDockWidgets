@@ -100,6 +100,8 @@ State::State(MinimalStateMachine *parent)
 {
 }
 
+State::~State() = default;
+
 bool State::isCurrentState() const
 {
     return m_machine->currentState() == this;
