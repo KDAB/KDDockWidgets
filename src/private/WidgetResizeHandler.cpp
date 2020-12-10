@@ -257,6 +257,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
             }
         }
 
+        w->setLastHitTest(*result);
         return *result != 0;
     } else if (msg->message == WM_NCLBUTTONDBLCLK) {
         if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes)) {
