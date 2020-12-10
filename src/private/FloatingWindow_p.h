@@ -53,6 +53,11 @@ public:
     const Frame::List frames() const;
     DropArea *dropArea() const { return m_dropArea; }
 
+#ifdef Q_OS_WIN
+    void setLastHitTest(int hitTest) {
+        m_lastHitTest = hitTest;
+    }
+#endif
     /**
      * @brief Returns the title bar.
      *
@@ -149,6 +154,9 @@ private:
     bool m_updatingTitleBarVisibility = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
+#ifdef Q_OS_WIN
+    int m_lastHitTest = 0;
+#endif
 };
 
 }
