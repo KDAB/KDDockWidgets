@@ -1,3 +1,7 @@
+* v1.1.1 (11 December 2020)
+  - Windows: Fixed a crash when clicking on the close button for floating windows in some situations (#110)
+  - Don't show dock/undock icon when dockwidget is not dockable (#99)
+
 * v1.1.0 (26 October 2020)
   - New drop indicator style type: Segmented Indicators
   - Windows: Drop Shadow for floating windows
