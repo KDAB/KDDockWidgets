@@ -1,11 +1,15 @@
-* v1.3.0 (unreleased, December/January)
+* v1.3.0 (unreleased)
   - [TODO] QtQuick support
 
-* v1.2.0 (unreleased, November)
+* v1.2.0 (unreleased)
   - Wayland support
   - Added Flag_KeepAboveIfNotUtilityWindow, so you can have keep above even if
     floating window is shown in the task-bar.
   - Added DockWidget::windowActiveAboutToChange() signal
+
+* v1.1.1 (11 December 2020)
+  - Windows: Fixed a crash when clicking on the close button for floating windows in some situations (#110)
+  - Don't show dock/undock icon when dockwidget is not dockable (#99)
 
 * v1.1.0 (26 October 2020)
   - New drop indicator style type: Segmented Indicators
