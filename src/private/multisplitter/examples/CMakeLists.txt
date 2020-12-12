@@ -9,6 +9,6 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
+if(${PROJECT_NAME}_QTQUICK)
   add_subdirectory(quick)
 endif()

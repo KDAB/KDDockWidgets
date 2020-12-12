@@ -39,24 +39,15 @@ set(MULTISPLITTER_SRCS_QTQUICK
     Rubberband_quick.h
 )
 
-option(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND "Build support for QtWidgets" ON)
-if (${PROJECT_NAME}_QTQUICK)
-    # We're building the layouting engine as part of KDDW. If KDDW has set to build with QtQuick
-    # then so does the layouting engine
-    SET(BUILD_MULTISPLITTER_QTQUICK_FRONTEND ON)
-    SET(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND OFF)
-else()
-  option(BUILD_MULTISPLITTER_QTQUICK_FRONTEND "Build support for QtQuick" OFF)
-endif()
 
-if(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND)
-  set(MULTISPLITTER_SRCS ${MULTISPLITTER_SRCS} ${MULTISPLITTER_SRCS_QTWIDGETS})
-  add_definitions(-DKDMULTISPLITTER_QTWIDGETS)
-endif()
-
-if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
+if(${PROJECT_NAME}_QTQUICK)
+  find_package(Qt${QT_MAJOR_VERSION}Quick)
   set(MULTISPLITTER_SRCS ${MULTISPLITTER_SRCS} ${MULTISPLITTER_SRCS_QTQUICK})
   add_definitions(-DKDMULTISPLITTER_QTQUICK)
+else()
+  find_package(Qt${QT_MAJOR_VERSION}Widgets)
+  set(MULTISPLITTER_SRCS ${MULTISPLITTER_SRCS} ${MULTISPLITTER_SRCS_QTWIDGETS})
+  add_definitions(-DKDMULTISPLITTER_QTWIDGETS)
 endif()
 
 set(MULTISPLITTER_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_multisplitter.qrc)
@@ -66,14 +57,10 @@ add_library(KDAB::kddockwidgets_multisplitter ALIAS kddockwidgets_multisplitter)
 
 set_compiler_flags(kddockwidgets_multisplitter)
 
-if(BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND)
-  find_package(Qt${QT_MAJOR_VERSION}Widgets)
-  target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets)
-endif()
-
-if(BUILD_MULTISPLITTER_QTQUICK_FRONTEND)
-  find_package(Qt${QT_MAJOR_VERSION}Quick)
+if(${PROJECT_NAME}_QTQUICK)
   target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Quick)
+else()
+  target_link_libraries(kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets)
 endif()
 
 if(${PROJECT_NAME}_STATIC)
@@ -86,11 +73,8 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
   # Under developer mode since kddw might be a sub-folder of a project setting a different value for QT_DISABLE_DEPRECATED_BEFORE
   target_compile_definitions(kddockwidgets_multisplitter PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
-  if(${PROJECT_NAME}_TESTS AND BUILD_MULTISPLITTER_QTWIDGETS_FRONTEND)
+  if(${PROJECT_NAME}_TESTS AND NOT ${PROJECT_NAME}_QTQUICK)
     add_subdirectory(tests)
-  endif()
-  if(${PROJECT_NAME}_EXAMPLES)
-    #add_subdirectory(examples)
   endif()
 endif()
 
