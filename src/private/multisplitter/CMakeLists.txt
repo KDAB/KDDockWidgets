@@ -73,6 +73,8 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
   # Under developer mode since kddw might be a sub-folder of a project setting a different value for QT_DISABLE_DEPRECATED_BEFORE
   target_compile_definitions(kddockwidgets_multisplitter PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
+  set_target_properties(kddockwidgets_multisplitter PROPERTIES UNITY_BUILD ON)
+
   if(${PROJECT_NAME}_TESTS AND NOT ${PROJECT_NAME}_QTQUICK)
     add_subdirectory(tests)
   endif()
