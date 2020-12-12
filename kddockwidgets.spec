@@ -1,5 +1,5 @@
 Name:           kddockwidgets
-Version:        1.1.0
+Version:        1.1.1
 Release:        1
 Summary:        KDAB's Dock Widget Framework for Qt
 Source0:        %{name}-%{version}.tar.gz
@@ -88,6 +88,8 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 %{_libdir}/libkddockwidgets_multisplitter.so
 
 %changelog
+* Fri Dec 11 2020 Allen Winter <allen.winter@kdab.com> 1.1.1
+  1.1.1 final
 * Mon Oct 26 2020 Allen Winter <allen.winter@kdab.com> 1.1.0
   1.1.0 final
 * Wed Sep 02 2020 Allen Winter <allen.winter@kdab.com> 1.0.0
