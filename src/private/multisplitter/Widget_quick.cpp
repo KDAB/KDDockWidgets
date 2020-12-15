@@ -28,8 +28,8 @@ QSize Widget_quick::minSize() const
 
 QRect Widget_quick::geometry() const
 {
-    return QRect(m_thisWidget->x(), m_thisWidget->y(),
-                 m_thisWidget->width(), m_thisWidget->height());
+    return QRectF(m_thisWidget->x(), m_thisWidget->y(),
+                  m_thisWidget->width(), m_thisWidget->height()).toRect();
 }
 
 void Widget_quick::setGeometry(QRect rect)

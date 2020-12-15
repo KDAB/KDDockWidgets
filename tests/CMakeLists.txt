@@ -34,13 +34,12 @@ add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
 target_link_libraries(tst_docks kddockwidgets Qt${QT_MAJOR_VERSION}::Test)
 set_compiler_flags(tst_docks)
 
-add_executable(tst_multisplitter tst_multisplitter.cpp)
-target_link_libraries(tst_multisplitter kddockwidgets Qt${QT_MAJOR_VERSION}::Test)
-set_compiler_flags(tst_multisplitter)
-
-
 if (NOT ${PROJECT_NAME}_QTQUICK)
-    add_subdirectory(fuzzer)
+  add_executable(tst_multisplitter tst_multisplitter.cpp)
+  target_link_libraries(tst_multisplitter kddockwidgets Qt${QT_MAJOR_VERSION}::Test)
+  set_compiler_flags(tst_multisplitter)
+
+  add_subdirectory(fuzzer)
 endif()
 
 # tests_launcher
