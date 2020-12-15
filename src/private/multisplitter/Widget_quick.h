@@ -26,7 +26,7 @@ namespace Layouting {
 
 ///@brief A Layouting::Widget that's deals in QQuickItem
 /// Allows to host a QQuickItem in the layout
-class DOCKS_EXPORT_FOR_UNIT_TESTS Widget_quick : public Widget
+class DOCKS_EXPORT Widget_quick : public Widget
 {
 public:
     explicit Widget_quick(QQuickItem *thisWidget)

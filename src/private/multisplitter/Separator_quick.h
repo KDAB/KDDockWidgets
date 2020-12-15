@@ -20,7 +20,7 @@
 
 namespace Layouting {
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS SeparatorQuick
+class DOCKS_EXPORT SeparatorQuick
         : public QQuickItem
         , public Layouting::Separator
         , public Layouting::Widget_quick

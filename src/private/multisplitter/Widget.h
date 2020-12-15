@@ -72,7 +72,7 @@ class Item;
  * Inherit from it via multi-inheritance so this wrapper is deleted when the actual QWidget/QQuickItem
  * is deleted.
  */
-class DOCKS_EXPORT_FOR_UNIT_TESTS Widget
+class DOCKS_EXPORT Widget
 {
 public:
     explicit Widget(QObject *thisObj);

@@ -24,7 +24,7 @@ namespace Layouting {
 
 ///@brief A Layouting::Widget that's deals in QWidget
 /// Allows to host a QWidget in the layout
-class DOCKS_EXPORT_FOR_UNIT_TESTS Widget_qwidget : public Widget
+class DOCKS_EXPORT Widget_qwidget : public Widget
 {
 public:
     explicit Widget_qwidget(QWidget *thisWidget);

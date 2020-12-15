@@ -24,7 +24,7 @@ class ItemContainer;
 class Separator;
 class Widget;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS Separator
+class DOCKS_EXPORT Separator
 {
 public:
     typedef QVector<Separator*> List;

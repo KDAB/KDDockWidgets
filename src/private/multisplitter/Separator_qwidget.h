@@ -21,7 +21,7 @@
 
 namespace Layouting {
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS SeparatorWidget
+class DOCKS_EXPORT SeparatorWidget
         : public QWidget
         , public Layouting::Separator
         , public Layouting::Widget_qwidget
