@@ -17,6 +17,8 @@
 #include "DockRegistry_p.h"
 #include "Fuzzer.h"
 #include "../Testing.h"
+#include "Frame_p.h"
+#include "FloatingWindow_p.h"
 
 #include <QTest>
 

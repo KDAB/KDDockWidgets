@@ -16,6 +16,7 @@
 #include "DockRegistry_p.h"
 #include "DockWidget.h"
 #include "MainWindow.h"
+#include "FloatingWindow_p.h"
 
 #include <QJsonDocument>
 

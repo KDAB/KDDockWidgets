@@ -14,7 +14,6 @@
 
 #include "../DockWidgetBase.h"
 #include "../MainWindowBase.h"
-#include "FloatingWindow_p.h"
 
 #include <QVector>
 #include <QObject>
@@ -28,7 +27,10 @@
 namespace KDDockWidgets
 {
 
+class FloatingWindow;
+class Frame;
 class SideBar;
+class WindowBeingDragged;
 
 class DOCKS_EXPORT DockRegistry : public QObject
 {
@@ -81,7 +83,7 @@ public:
     const QVector<MultiSplitter*> layouts() const;
 
     ///@brief returns a list of all Frame instances
-    const Frame::List frames() const;
+    const QList<Frame*> frames() const;
 
     ///@brief returns all FloatingWindow instances. Not necessarily all floating dock widgets,
     /// As there might be DockWidgets which weren't morphed yet.
@@ -215,7 +217,7 @@ private:
     bool m_isProcessingAppQuitEvent = false;
     DockWidgetBase::List m_dockWidgets;
     MainWindowBase::List m_mainWindows;
-    Frame::List m_frames;
+    QList<Frame*> m_frames;
     QVector<FloatingWindow*> m_floatingWindows;
     QVector<MultiSplitter*> m_layouts;
     QPointer<DockWidgetBase> m_focusedDockWidget;

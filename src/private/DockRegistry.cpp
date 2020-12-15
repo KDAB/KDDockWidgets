@@ -18,6 +18,7 @@
 #include "Config.h"
 #include "SideBar_p.h"
 #include "WindowBeingDragged_p.h"
+#include "FloatingWindow_p.h"
 
 #include <QPointer>
 #include <QDebug>
