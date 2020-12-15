@@ -12,7 +12,7 @@
 #ifndef KD_MULTISPLITTER_SEPARATORQWIDGET_P_H
 #define KD_MULTISPLITTER_SEPARATORQWIDGET_P_H
 
-#include "multisplitter_export.h"
+#include "kddockwidgets/docks_export.h"
 #include "Separator_p.h"
 #include "Widget_qwidget.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
@@ -21,7 +21,7 @@
 
 namespace Layouting {
 
-class MULTISPLITTER_EXPORT SeparatorWidget
+class DOCKS_EXPORT_FOR_UNIT_TESTS SeparatorWidget
         : public QWidget
         , public Layouting::Separator
         , public Layouting::Widget_qwidget

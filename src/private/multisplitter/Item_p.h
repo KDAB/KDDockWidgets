@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "multisplitter_export.h"
+#include "kddockwidgets/docks_export.h"
 
 #include <QObject>
 #include <QVector>
@@ -208,7 +208,7 @@ struct SizingInfo {
     bool isBeingInserted = false;
 };
 
-class MULTISPLITTER_EXPORT Item : public QObject
+class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int x READ x NOTIFY xChanged)
@@ -381,7 +381,7 @@ private:
     Widget *m_guest = nullptr;
 };
 
-class MULTISPLITTER_EXPORT ItemContainer : public Item
+class DOCKS_EXPORT_FOR_UNIT_TESTS ItemContainer : public Item
 {
     Q_OBJECT
 public:

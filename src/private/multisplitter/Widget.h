@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "multisplitter_export.h"
+#include "kddockwidgets/docks_export.h"
 #include "Item_p.h"
 
 #include <QRect>
@@ -72,7 +72,7 @@ class Item;
  * Inherit from it via multi-inheritance so this wrapper is deleted when the actual QWidget/QQuickItem
  * is deleted.
  */
-class MULTISPLITTER_EXPORT Widget
+class DOCKS_EXPORT_FOR_UNIT_TESTS Widget
 {
 public:
     explicit Widget(QObject *thisObj);

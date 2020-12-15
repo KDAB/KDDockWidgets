@@ -58,8 +58,6 @@ set(DOCKSLIBS_SRCS
     private/multisplitter/Separator_p.h
     private/multisplitter/Widget.cpp
     private/multisplitter/Widget.h
-    private/multisplitter/multisplitter_export.h
-
 )
 
 set(DOCKS_INSTALLABLE_INCLUDES
@@ -236,7 +234,6 @@ install(FILES private/multisplitter/Widget.h DESTINATION include/kddockwidgets/p
 install(FILES private/multisplitter/Widget_qwidget.h DESTINATION include/kddockwidgets/private/multisplitter)
 install(FILES private/multisplitter/Separator_p.h DESTINATION include/kddockwidgets/private/multisplitter)
 install(FILES private/multisplitter/Separator_qwidget.h DESTINATION include/kddockwidgets/private/multisplitter)
-install(FILES private/multisplitter/multisplitter_export.h DESTINATION include/kddockwidgets/private/multisplitter)
 install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
 
 install(FILES private/indicators/ClassicIndicators_p.h DESTINATION include/kddockwidgets/private/indicators)

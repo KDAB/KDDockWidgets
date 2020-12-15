@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "multisplitter_export.h"
+#include "kddockwidgets/docks_export.h"
 
 #include <qglobal.h>
 
@@ -22,7 +22,7 @@ class Widget;
 
 typedef Separator* (*SeparatorFactoryFunc)(Layouting::Widget *parent);
 
-class MULTISPLITTER_EXPORT Config {
+class DOCKS_EXPORT_FOR_UNIT_TESTS Config {
 public:
 
     enum class Flag {

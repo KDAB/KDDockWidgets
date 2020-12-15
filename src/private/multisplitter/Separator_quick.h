@@ -12,7 +12,7 @@
 #ifndef KD_MULTISPLITTER_SEPARATOR_QUICK_H
 #define KD_MULTISPLITTER_SEPARATOR_QUICK_H
 
-#include "multisplitter_export.h"
+#include "kddockwidgets/docks_export.h"
 #include "Separator_p.h"
 #include "Widget_quick.h"
 
@@ -20,7 +20,7 @@
 
 namespace Layouting {
 
-class MULTISPLITTER_EXPORT SeparatorQuick
+class DOCKS_EXPORT_FOR_UNIT_TESTS SeparatorQuick
         : public QQuickItem
         , public Layouting::Separator
         , public Layouting::Widget_quick

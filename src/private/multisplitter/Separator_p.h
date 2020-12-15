@@ -12,7 +12,7 @@
 #ifndef KD_MULTISPLITTER_SEPARATOR_P_H
 #define KD_MULTISPLITTER_SEPARATOR_P_H
 
-#include "multisplitter_export.h"
+#include "kddockwidgets/docks_export.h"
 
 #include <QObject>
 #include <QPoint>
@@ -24,7 +24,7 @@ class ItemContainer;
 class Separator;
 class Widget;
 
-class MULTISPLITTER_EXPORT Separator
+class DOCKS_EXPORT_FOR_UNIT_TESTS Separator
 {
 public:
     typedef QVector<Separator*> List;

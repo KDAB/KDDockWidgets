@@ -12,7 +12,7 @@
 #ifndef KD_MULTISPLITTER_RUBBERBAND_H
 #define KD_MULTISPLITTER_RUBBERBAND_H
 
-#include "multisplitter_export.h"
+#include "kddockwidgets/docks_export.h"
 #include "Widget_quick.h"
 
 #include <QQuickItem>
@@ -20,7 +20,7 @@
 namespace Layouting {
 
 // TODO: Finish rubberband
-class MULTISPLITTER_EXPORT RubberBand
+class DOCKS_EXPORT_FOR_UNIT_TESTS RubberBand
         : public QQuickItem
         , public Layouting::Widget_quick
 {
