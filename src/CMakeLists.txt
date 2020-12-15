@@ -114,7 +114,8 @@ if(${PROJECT_NAME}_QTQUICK)
       private/multisplitter/Separator_quick.h
       private/multisplitter/Rubberband_quick.cpp
       private/multisplitter/Rubberband_quick.h
-      ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_qtquick.qrc
+      kddockwidgets_qtquick.qrc
+      private/multisplitter/kddockwidgets_multisplitter.qrc
       )
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
