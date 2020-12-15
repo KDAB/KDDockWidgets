@@ -922,8 +922,8 @@ int Item::visibleCount_recursive() const
 
 struct ItemContainer::Private
 {
-    Private(ItemContainer *q)
-        : q(q)
+    Private(ItemContainer *qq)
+        : q(qq)
     {
         (void) Config::self(); // Ensure Config ctor runs, as it registers qml types
     }
@@ -2577,15 +2577,15 @@ Item *ItemContainer::visibleNeighbourFor(const Item *item, Side side) const
 
     if (side == Side1) {
         for (int i = index - 1; i >= 0; i--) {
-            Item *item = d->m_children.at(i);
-            if (item->isVisible())
-                return item;
+            Item *child = d->m_children.at(i);
+            if (child->isVisible())
+                return child;
         }
     } else {
         for (int i = index + 1; i < d->m_children.size(); ++i) {
-            Item *item = d->m_children.at(i);
-            if (item->isVisible())
-                return item;
+            Item *child = d->m_children.at(i);
+            if (child->isVisible())
+                return child;
         }
     }
 
