@@ -18,6 +18,7 @@
 #include "Position_p.h"
 #include "DockRegistry_p.h"
 #include "MultiSplitter_p.h"
+#include "FloatingWindow_p.h"
 
 #include <algorithm>
 
