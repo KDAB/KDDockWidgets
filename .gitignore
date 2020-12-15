@@ -34,7 +34,6 @@ latex
 html
 custom_titlebar
 libkddockwidgets.so*
-libkddockwidgets_multisplitter.so*
 *.depends
 kddockwidgets_basic_quick
 /src/KDDockWidgetsConfig.cmake

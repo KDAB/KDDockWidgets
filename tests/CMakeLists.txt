@@ -31,10 +31,13 @@ set(TESTING_SRCS utils.cpp Testing.cpp)
 # tst_docks
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
-
-target_link_libraries(tst_docks kddockwidgets kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Test)
-
+target_link_libraries(tst_docks kddockwidgets Qt${QT_MAJOR_VERSION}::Test)
 set_compiler_flags(tst_docks)
+
+add_executable(tst_multisplitter tst_multisplitter.cpp)
+target_link_libraries(tst_multisplitter kddockwidgets Qt${QT_MAJOR_VERSION}::Test)
+set_compiler_flags(tst_multisplitter)
+
 
 if (NOT ${PROJECT_NAME}_QTQUICK)
     add_subdirectory(fuzzer)

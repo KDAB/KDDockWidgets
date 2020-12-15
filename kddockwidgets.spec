@@ -75,7 +75,6 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 %defattr(-,root,root)
 %{_prefix}/share/doc/KDDockWidgets
 %{_libdir}/libkddockwidgets.so.*
-%{_libdir}/libkddockwidgets_multisplitter.so.*
 
 %files devel
 %defattr(-,root,root,-)
@@ -85,7 +84,6 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 %dir %{_libdir}/cmake/KDDockWidgets
 %{_libdir}/cmake/KDDockWidgets/*
 %{_libdir}/libkddockwidgets.so
-%{_libdir}/libkddockwidgets_multisplitter.so
 
 %changelog
 * Fri Dec 11 2020 Allen Winter <allen.winter@kdab.com> 1.1.1

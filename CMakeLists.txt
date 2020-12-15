@@ -234,5 +234,4 @@ endif()
 
 if (${PROJECT_NAME}_UNITY_BUILD)
   set_target_properties(kddockwidgets PROPERTIES UNITY_BUILD ON)
-  set_target_properties(kddockwidgets_multisplitter PROPERTIES UNITY_BUILD ON)
 endif()

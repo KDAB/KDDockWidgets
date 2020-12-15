@@ -47,6 +47,19 @@ set(DOCKSLIBS_SRCS
     private/indicators/NullIndicators.cpp
     private/indicators/ClassicIndicators.cpp
     private/indicators/ClassicIndicatorsWindow.cpp
+
+    private/multisplitter/Item.cpp
+    private/multisplitter/Item_p.h
+    private/multisplitter/Logging.cpp
+    private/multisplitter/Logging_p.h
+    private/multisplitter/MultiSplitterConfig.cpp
+    private/multisplitter/MultiSplitterConfig.h
+    private/multisplitter/Separator.cpp
+    private/multisplitter/Separator_p.h
+    private/multisplitter/Widget.cpp
+    private/multisplitter/Widget.h
+    private/multisplitter/multisplitter_export.h
+
 )
 
 set(DOCKS_INSTALLABLE_INCLUDES
@@ -97,6 +110,12 @@ if(${PROJECT_NAME}_QTQUICK)
       private/quick/RubberBandQuick.cpp
       private/quick/MainWindowQuick.cpp
       private/quick/MainWindowWrapper.cpp
+      private/multisplitter/Widget_quick.cpp
+      private/multisplitter/Widget_quick.h
+      private/multisplitter/Separator_quick.cpp
+      private/multisplitter/Separator_quick.h
+      private/multisplitter/Rubberband_quick.cpp
+      private/multisplitter/Rubberband_quick.h
       ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_qtquick.qrc
       )
 else()
@@ -104,6 +123,10 @@ else()
       private/DebugWindow.cpp
       private/ObjectViewer.cpp
       MainWindow.cpp
+      private/multisplitter/Widget_qwidget.cpp
+      private/multisplitter/Widget_qwidget.h
+      private/multisplitter/Separator_qwidget.cpp
+      private/multisplitter/Separator_qwidget.h
       private/widgets/TabWidget.cpp
       private/widgets/TabBarWidget.cpp
       private/widgets/FloatingWindowWidget.cpp
@@ -131,8 +154,6 @@ else()
   set(IS_CLANG_BUILD FALSE)
 endif()
 
-add_subdirectory(private/multisplitter)
-
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES} ${RESOURCES_QUICK})
@@ -146,6 +167,7 @@ target_include_directories(kddockwidgets
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/private
+    ${CMAKE_CURRENT_SOURCE_DIR}/private/multisplitter/
 )
 
 target_compile_definitions(kddockwidgets
@@ -170,10 +192,9 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
 endif()
 
 if(${PROJECT_NAME}_QTQUICK)
-  target_link_libraries(kddockwidgets PUBLIC Qt${QT_MAJOR_VERSION}::Widgets Qt${QT_MAJOR_VERSION}::Quick Qt${QT_MAJOR_VERSION}::QuickControls2 kddockwidgets_multisplitter)
-
+  target_link_libraries(kddockwidgets PUBLIC Qt${QT_MAJOR_VERSION}::Widgets Qt${QT_MAJOR_VERSION}::Quick Qt${QT_MAJOR_VERSION}::QuickControls2)
 else()
-  target_link_libraries(kddockwidgets PUBLIC Qt${QT_MAJOR_VERSION}::Widgets kddockwidgets_multisplitter)
+  target_link_libraries(kddockwidgets PUBLIC Qt${QT_MAJOR_VERSION}::Widgets)
 endif()
 
 if (WIN32)
@@ -245,7 +266,7 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
 
   if (NOT ${PROJECT_NAME}_QTQUICK) # TODO: We can support it
     add_executable(kddockwidgets_linter layoutlinter_main.cpp)
-    target_link_libraries(kddockwidgets_linter kddockwidgets kddockwidgets_multisplitter Qt${QT_MAJOR_VERSION}::Widgets)
+    target_link_libraries(kddockwidgets_linter kddockwidgets Qt${QT_MAJOR_VERSION}::Widgets)
   endif()
 
 endif()
