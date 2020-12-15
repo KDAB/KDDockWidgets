@@ -9,6 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_DOCKWIDGET_INSTANTIATOR_P_H
+#define KD_DOCKWIDGET_INSTANTIATOR_P_H
+
 #include "DockWidgetQuick.h"
 
 #include <QObject>
@@ -62,3 +65,5 @@ private:
 };
 
 }
+
+#endif
