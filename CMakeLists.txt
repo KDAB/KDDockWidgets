@@ -82,6 +82,12 @@ include(FeatureSummary)
 option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
 option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_PYTHON_BINDINGS "Build python bindings" OFF)
+
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16.0")
+  option(${PROJECT_NAME}_UNITY_BUILD "Build with CMake's UNITY_BUILD" ON)
+endif()
+
+
 if(${PROJECT_NAME}_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC))
   message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
 endif()
@@ -224,4 +230,9 @@ endif()
 
 if(${PROJECT_NAME}_DOCS)
   add_subdirectory(docs) # needs to go last, in case there are build source files
+endif()
+
+if (${PROJECT_NAME}_UNITY_BUILD)
+  set_target_properties(kddockwidgets PROPERTIES UNITY_BUILD ON)
+  set_target_properties(kddockwidgets_multisplitter PROPERTIES UNITY_BUILD ON)
 endif()
