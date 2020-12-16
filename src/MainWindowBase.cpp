@@ -401,7 +401,7 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
 void MainWindowBase::toggleOverlayOnSideBar(DockWidgetBase *dw)
 {
     const bool wasOverlayed = d->m_overlayedDockWidget == dw;
-    clearSideBarOverlay();
+    clearSideBarOverlay(); // Because only 1 dock widget can be overlayed each time
     if (!wasOverlayed) {
         overlayOnSideBar(dw);
     }
