@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/kddockwidgets/multisplitter/">
-        <file>qml/Separator.qml</file>
-    </qresource>
-</RCC>

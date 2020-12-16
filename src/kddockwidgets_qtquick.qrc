@@ -11,4 +11,7 @@
         <file>private/quick/qml/ClassicIndicatorsOverlay.qml</file>
         <file>private/quick/qml/ClassicIndicator.qml</file>
     </qresource>
+    <qresource prefix="/kddockwidgets/multisplitter/">
+        <file>private/multisplitter/qml/Separator.qml</file>
+    </qresource>
 </RCC>

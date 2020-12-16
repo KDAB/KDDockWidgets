@@ -114,9 +114,7 @@ if(${PROJECT_NAME}_QTQUICK)
       private/multisplitter/Separator_quick.h
       private/multisplitter/Rubberband_quick.cpp
       private/multisplitter/Rubberband_quick.h
-      kddockwidgets_qtquick.qrc
-      private/multisplitter/kddockwidgets_multisplitter.qrc
-      )
+      kddockwidgets_qtquick.qrc)
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       private/DebugWindow.cpp
@@ -137,7 +135,7 @@ else()
       private/widgets/QWidgetAdapter_widgets.cpp
       private/indicators/SegmentedIndicators.cpp
       # private/indicators/AnimatedIndicators.cpp
-  )
+      )
 
   set(DOCKS_INSTALLABLE_INCLUDES
       ${DOCKS_INSTALLABLE_INCLUDES}

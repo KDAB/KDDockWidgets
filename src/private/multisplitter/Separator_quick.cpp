@@ -24,7 +24,7 @@ SeparatorQuick::SeparatorQuick(Layouting::Widget *parent)
     , Separator(parent)
     , Layouting::Widget_quick(this)
 {
-    createQQuickItem(QStringLiteral(":/kddockwidgets/multisplitter/qml/Separator.qml"), this);
+    createQQuickItem(QStringLiteral(":/kddockwidgets/multisplitter/private/multisplitter/qml/Separator.qml"), this);
 
     // Only set on Separator::init(), so single-shot
     QTimer::singleShot(0, this, &SeparatorQuick::isVerticalChanged);
