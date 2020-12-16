@@ -37,7 +37,9 @@ static void initKDDockWidgetResources()
 {
 #if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
     Q_INIT_RESOURCE(kddockwidgets_resources);
+# if defined(KDDOCKWIDGETS_QTUICK)
     Q_INIT_RESOURCE(kddockwidgets_multisplitter);
+# endif
 #endif
 }
 

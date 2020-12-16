@@ -25,6 +25,5 @@ Builds tips for your own app:
 ```
 #ifdef QT_STATIC
     Q_INIT_RESOURCE(kddockwidgets_resources);
-    Q_INIT_RESOURCE(kddockwidgets_multisplitter);
 #endif
 ```
