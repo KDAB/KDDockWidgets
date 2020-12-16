@@ -481,7 +481,29 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
         d->affinities = mw.affinities;
     }
 
-    return dropArea()->deserialize(mw.multiSplitterLayout);
+    const bool success = dropArea()->deserialize(mw.multiSplitterLayout);
+
+    // Restore the SideBars
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+        SideBar *sb = sideBar(loc);
+        if (!sb)
+            continue;
+
+        const QStringList dockWidgets = mw.dockWidgetsPerSideBar.value(loc);
+        for (const QString &uniqueName : dockWidgets) {
+
+            DockWidgetBase *dw = DockRegistry::self()->dockByName(uniqueName);
+            if (!dw) {
+                qWarning() << Q_FUNC_INFO << "Could not find dock widget" << uniqueName
+                           << ". Won't restore it to sidebar";
+                continue;
+            }
+
+            sb->addDockWidget(dw);
+        }
+    }
+
+    return success;
 }
 
 LayoutSaver::MainWindow MainWindowBase::serialize() const

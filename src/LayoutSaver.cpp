@@ -725,6 +725,13 @@ void LayoutSaver::MainWindow::fromVariantMap(const QVariantMap &map)
         affinities.push_back(affinityName);
     }
 
+    // Load the SideBars:
+    dockWidgetsPerSideBar.clear();
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+        const QVariantList dockWidgets = map.value(QStringLiteral("sidebar-%1").arg(int(loc))).toList();
+        if (!dockWidgets.isEmpty())
+            dockWidgetsPerSideBar.insert(loc, variantToStringList(dockWidgets));
+    }
 }
 
 bool LayoutSaver::MultiSplitter::isValid() const

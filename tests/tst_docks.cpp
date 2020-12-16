@@ -251,6 +251,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPositionWhenEmbedded();
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_closeRemovesFromSideBar();
+    void tst_restoreSideBar();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -5147,6 +5148,54 @@ void TestDocks::tst_closeRemovesFromSideBar()
     QVERIFY(!dw1->isOverlayed());
     QVERIFY(!dw1->isVisible());
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
+
+    delete fw1;
+}
+
+void TestDocks::tst_restoreSideBar()
+{
+    SideBarLocation loc;
+    QByteArray serialized;
+
+    {
+        EnsureTopLevelsDeleted e;
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = new DockWidgetType(QStringLiteral("1"));
+        auto fw1 = dw1->window();
+        m1->addDockWidget(dw1, Location_OnBottom);
+        m1->moveToSideBar(dw1);
+
+        QVERIFY(!dw1->isOverlayed());
+        QVERIFY(!dw1->isVisible());
+        loc = dw1->sideBarLocation();
+        QVERIFY(loc != SideBarLocation::None);
+
+        LayoutSaver saver;
+        serialized = saver.serializeLayout();
+
+        delete fw1;
+    }
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    auto fw1 = dw1->window();
+    m1->addDockWidget(dw1, Location_OnBottom);
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(dw1->isVisible());
+    QVERIFY(!dw1->isFloating());
+    QVERIFY(dw1->isInMainWindow());
+
+    LayoutSaver restorer;
+    restorer.restoreLayout(serialized);
+
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(!dw1->isVisible());
+    QVERIFY(!dw1->isInMainWindow());
+
+    QCOMPARE(loc, dw1->sideBarLocation());
 
     delete fw1;
 }
