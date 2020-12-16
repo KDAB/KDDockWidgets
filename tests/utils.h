@@ -164,7 +164,7 @@ private:
 class QPushButton : public MyWidget
 {
 public:
-    // use const char* to silence QtCreator static analizer warnings when using const char * in tst_docks.cpp
+    // use const char* to silence QtCreator static analyzer warnings when using const char * in tst_docks.cpp
     // We don't have QT_NO_CAST_FROM_ASCII and still it complains, so use an indirection so I can read tst_docks while
     // porting to QtQuick without noise. Once the port is done feel free to change to QString.
     explicit QPushButton(const char *name)

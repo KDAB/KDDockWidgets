@@ -34,7 +34,7 @@
 using namespace KDDockWidgets;
 
 namespace KDDockWidgets {
-///@brief Custom mouse grabber, for platforms that dont support grabbing the mouse
+///@brief Custom mouse grabber, for platforms that don't support grabbing the mouse
 class FallbackMouseGrabber : public QObject /// clazy:exclude=missing-qobject-macro
 {
 public:

@@ -14,7 +14,7 @@ import QtQuick 2.9
 /**
  * @brief Base component for title bars.
  *
- * You need to derive from it to give it a GUI appearence you desire.
+ * You need to derive from it to give it a GUI appearance you desire.
  * See TitleBar.qml for an example.
  * Basically you should:
  *  - Show the title
