@@ -17,7 +17,7 @@
 #include "Widget_qwidget.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 
-#include <QWidget>
+#include <QRubberBand>
 
 namespace Layouting {
 
@@ -39,6 +39,14 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *) override;
     Widget* createRubberBand(Widget *parent) override;
     Widget *asWidget() override;
+};
+
+class RubberBand : public QRubberBand
+                 , public Layouting::Widget_qwidget
+{
+Q_OBJECT
+public:
+    explicit RubberBand(Layouting::Widget *parent);
 };
 
 }
