@@ -23,30 +23,55 @@ add_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS
 
 set(DOCKSLIBS_SRCS
     Config.cpp
+    Config.h
     Qt5Qt6Compat_p.h
     FocusScope.cpp
+    FocusScope.h
     FrameworkWidgetFactory.cpp
+    FrameworkWidgetFactory.h
     DockWidgetBase.cpp
+    DockWidgetBase.h
     MainWindowBase.cpp
+    MainWindowBase.h
     LayoutSaver.cpp
+    LayoutSaver.h
+    LayoutSaver_p.h
     private/MultiSplitter.cpp
+    private/MultiSplitter_p.h
     private/Position.cpp
+    private/Position_p.h
     private/DropIndicatorOverlayInterface.cpp
+    private/DropIndicatorOverlayInterface_p.h
     private/DropArea.cpp
+    private/DropArea_p.h
     private/FloatingWindow.cpp
+    private/FloatingWindow_p.h
     private/Logging.cpp
+    private/Logging_p.h
     private/TitleBar.cpp
+    private/TitleBar_p.h
     private/SideBar.cpp
+    private/SideBar_p.h
     private/DockRegistry.cpp
+    private/DockRegistry_p.h
     private/Draggable.cpp
+    private/Draggable_p.h
     private/WindowBeingDragged.cpp
+    private/WindowBeingDragged_p.h
     private/DragController.cpp
+    private/DragController_p.h
     private/Frame.cpp
+    private/Frame_p.h
     private/DropAreaWithCentralFrame.cpp
+    private/DropAreaWithCentralFrame_p.h
     private/WidgetResizeHandler.cpp
+    private/WidgetResizeHandler_p.h
     private/indicators/NullIndicators.cpp
+    private/indicators/NullIndicators_p.h
     private/indicators/ClassicIndicators.cpp
+    private/indicators/ClassicIndicators_p.h
     private/indicators/ClassicIndicatorsWindow.cpp
+    private/indicators/ClassicIndicatorsWindow_p.h
 
     private/multisplitter/Item.cpp
     private/multisplitter/Item_p.h
@@ -106,7 +131,9 @@ if(${PROJECT_NAME}_QTQUICK)
       private/quick/QmlTypes.cpp
       private/quick/FrameQuick.cpp
       private/quick/RubberBandQuick.cpp
+      private/quick/RubberBandQuick_p.h
       private/quick/MainWindowQuick.cpp
+      private/quick/MainWindowQuick_p.h
       private/quick/MainWindowWrapper.cpp
       private/multisplitter/Widget_quick.cpp
       private/multisplitter/Widget_quick.h
@@ -118,22 +145,35 @@ if(${PROJECT_NAME}_QTQUICK)
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       private/DebugWindow.cpp
+      private/DebugWindow_p.h
       private/ObjectViewer.cpp
+      private/ObjectViewer_p.h
       MainWindow.cpp
+      MainWindow.h
+      DockWidget.h
       private/multisplitter/Widget_qwidget.cpp
       private/multisplitter/Widget_qwidget.h
       private/multisplitter/Separator_qwidget.cpp
       private/multisplitter/Separator_qwidget.h
       private/widgets/TabWidget.cpp
+      private/widgets/TabWidget_p.h
       private/widgets/TabBarWidget.cpp
+      private/widgets/TabBarWidget_p.h
       private/widgets/FloatingWindowWidget.cpp
+      private/widgets/FloatingWindowWidget_p.h
       private/widgets/FrameWidget.cpp
+      private/widgets/FrameWidget_p.h
       private/widgets/SideBarWidget.cpp
+      private/widgets/SideBarWidget_p.h
       private/widgets/TabWidgetWidget.cpp
+      private/widgets/TabWidgetWidget_p.h
       private/widgets/TitleBarWidget.cpp
+      private/widgets/TitleBarWidget_p.h
       private/widgets/DockWidget.cpp
       private/widgets/QWidgetAdapter_widgets.cpp
+      private/widgets/QWidgetAdapter_widgets_p.h
       private/indicators/SegmentedIndicators.cpp
+      private/indicators/SegmentedIndicators_p.h
       # private/indicators/AnimatedIndicators.cpp
       )
 
