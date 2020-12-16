@@ -124,6 +124,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
 if(${PROJECT_NAME}_QTQUICK)
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       DockWidgetQuick.cpp
+      DockWidgetQuick.h
       private/quick/DockWidgetInstantiator.cpp
       private/quick/DockWidgetInstantiator_p.h
       private/quick/QWidgetAdapter_quick.cpp
@@ -147,7 +148,7 @@ if(${PROJECT_NAME}_QTQUICK)
       private/multisplitter/Separator_quick.cpp
       private/multisplitter/Separator_quick.h
       private/multisplitter/Rubberband_quick.cpp
-      private/multisplitter/Rubberband_quick_p.h
+      private/multisplitter/Rubberband_quick.h
       kddockwidgets_qtquick.qrc)
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
