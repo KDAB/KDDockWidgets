@@ -107,3 +107,13 @@ void SideBar::toggleOverlay(DockWidgetBase *dw)
 {
     m_mainWindow->toggleOverlayOnSideBar(dw);
 }
+
+QStringList SideBar::serialize() const
+{
+    QStringList ids;
+    ids.reserve(m_dockWidgets.size());
+    for (DockWidgetBase *dw : m_dockWidgets)
+        ids << dw->uniqueName();
+
+    return ids;
+}

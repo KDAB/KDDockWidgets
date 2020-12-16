@@ -497,5 +497,13 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     m.multiSplitterLayout = dropArea()->serialize();
     m.affinities = d->affinities;
 
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+        if (SideBar *sb = sideBar(loc)) {
+            const QStringList dockwidgets = sb->serialize();
+            if (!dockwidgets.isEmpty())
+                m.dockWidgetsPerSideBar.insert(loc, dockwidgets);
+        }
+    }
+
     return m;
 }

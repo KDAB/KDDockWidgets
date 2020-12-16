@@ -699,6 +699,12 @@ QVariantMap LayoutSaver::MainWindow::toVariantMap() const
     map.insert(QStringLiteral("isVisible"), isVisible);
     map.insert(QStringLiteral("affinities"), stringListToVariant(affinities));
 
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+        const QStringList dockWidgets = dockWidgetsPerSideBar.value(loc);
+        if (!dockWidgets.isEmpty())
+            map.insert(QStringLiteral("sidebar-%1").arg(int(loc)), stringListToVariant(dockWidgets));
+    }
+
     return map;
 }
 

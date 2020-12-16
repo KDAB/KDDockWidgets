@@ -49,6 +49,10 @@ public:
     /// @brief Toggles the dock widget overlay. Equivalent to the user clicking on the button.
     void toggleOverlay(DockWidgetBase *);
 
+    /// @brief returns a serialization of this sidebar's state
+    /// Currently it's just a list of dock widget ids
+    QStringList serialize() const;
+
 protected:
     virtual void addDockWidget_Impl(DockWidgetBase *dock) = 0;
     virtual void removeDockWidget_Impl(DockWidgetBase *dock) = 0;

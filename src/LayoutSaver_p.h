@@ -236,6 +236,7 @@ public:
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
+    QHash<SideBarLocation, QStringList> dockWidgetsPerSideBar;
     KDDockWidgets::MainWindowOptions options;
     LayoutSaver::MultiSplitter multiSplitterLayout;
     QString uniqueName;
