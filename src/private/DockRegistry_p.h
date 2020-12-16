@@ -30,7 +30,7 @@ namespace KDDockWidgets
 class FloatingWindow;
 class Frame;
 class SideBar;
-class WindowBeingDragged;
+struct WindowBeingDragged;
 
 class DOCKS_EXPORT DockRegistry : public QObject
 {
