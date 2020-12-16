@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KDDOCKWIDGETS_RUBBERBAND_H
-#define KDDOCKWIDGETS_RUBBERBAND_H
+#ifndef KDDOCKWIDGETS_RUBBERBANDQUICK_H
+#define KDDOCKWIDGETS_RUBBERBANDQUICK_H
 
 #include "QWidgetAdapter.h"
 

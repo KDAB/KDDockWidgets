@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_MULTISPLITTER_RUBBERBAND_H
-#define KD_MULTISPLITTER_RUBBERBAND_H
+#ifndef KD_MULTISPLITTER_RUBBERBAND_QUICK_H
+#define KD_MULTISPLITTER_RUBBERBAND_QUICK_H
 
 #include "kddockwidgets/docks_export.h"
 #include "Widget_quick.h"
