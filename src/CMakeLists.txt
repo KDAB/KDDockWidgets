@@ -125,22 +125,29 @@ if(${PROJECT_NAME}_QTQUICK)
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       DockWidgetQuick.cpp
       private/quick/DockWidgetInstantiator.cpp
+      private/quick/DockWidgetInstantiator_p.h
       private/quick/QWidgetAdapter_quick.cpp
+      private/quick/QWidgetAdapter_quick_p.h
       private/quick/FloatingWindowQuick.cpp
+      private/quick/FloatingWindowQuick_p.h
       private/quick/TitleBarQuick.cpp
+      private/quick/TitleBarQuick_p.h
       private/quick/QmlTypes.cpp
+      private/quick/QmlTypes.h
       private/quick/FrameQuick.cpp
+      private/quick/FrameQuick_p.h
       private/quick/RubberBandQuick.cpp
-      private/quick/RubberBandQuick_p.h
+      private/quick/RubberBandQuick.h
       private/quick/MainWindowQuick.cpp
       private/quick/MainWindowQuick_p.h
       private/quick/MainWindowWrapper.cpp
+      private/quick/MainWindowWrapper_p.h
       private/multisplitter/Widget_quick.cpp
       private/multisplitter/Widget_quick.h
       private/multisplitter/Separator_quick.cpp
       private/multisplitter/Separator_quick.h
       private/multisplitter/Rubberband_quick.cpp
-      private/multisplitter/Rubberband_quick.h
+      private/multisplitter/Rubberband_quick_p.h
       kddockwidgets_qtquick.qrc)
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
