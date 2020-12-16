@@ -13,7 +13,7 @@
 #include "DockRegistry_p.h"
 
 #include <QGuiApplication>
-#include <QtTest>
+#include <QTest>
 #include <QLoggingCategory>
 #include <QElapsedTimer>
 
