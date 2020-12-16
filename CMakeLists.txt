@@ -11,12 +11,17 @@
 
 # Pass the following variables to cmake to control the build:
 #
+# -DKDDockWidgets_QT6=[true|false]
+#  Build against Qt6 rather than Qt5
+#  Default=false (Qt5 will be used even if Qt6 is available)
+#
 # -DKDDockWidgets_STATIC=[true|false]
 #  Build static versions of the libraries
 #  Default=false
 #
 # -DKDDockWidgets_TESTS=[true|false]
 #  Build the test harness.
+#  Currently does nothing unless you also set KDDockWidgets_DEVELOPER_MODE=True
 #  Default=false
 #
 # -DKDDockWidgets_EXAMPLES=[true|false]
@@ -42,8 +47,12 @@
 #  Default=false
 #
 # -DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=[path]
-#  alternative install path for python bindings
+#  Set an alternative install path for Python bindings
 #  Default=CMAKE_INSTALL_PREFIX
+#
+# -DKDDockWidgets_UNITY_BUILD=[true|false]
+#  Build with CMake's UNITY_BUILD (requires CMake version 3.16 or higher)
+#  Default=true
 #
 
 cmake_minimum_required(VERSION 3.7)
