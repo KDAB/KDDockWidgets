@@ -117,3 +117,9 @@ QStringList SideBar::serialize() const
 
     return ids;
 }
+
+void SideBar::clear()
+{
+    for (DockWidgetBase *dw : qAsConst(m_dockWidgets))
+        removeDockWidget(dw);
+}

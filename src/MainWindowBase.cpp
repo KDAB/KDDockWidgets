@@ -48,6 +48,7 @@ public:
     QRect rectForOverlay(Frame *, SideBarLocation) const;
     SideBarLocation preferredSideBar(DockWidgetBase *) const;
     void updateOverlayGeometry();
+    void clearSideBars();
 
     QString name;
     QStringList affinities;
@@ -337,6 +338,15 @@ void MainWindowBase::Private::updateOverlayGeometry()
     m_overlayedDockWidget->frame()->QWidgetAdapter::setGeometry(rectForOverlay(m_overlayedDockWidget->frame(), sb->location()));
 }
 
+void MainWindowBase::Private::clearSideBars()
+{
+    for (auto loc : { SideBarLocation::North, SideBarLocation::South,
+                      SideBarLocation::East, SideBarLocation::West }) {
+        if (SideBar *sb = q->sideBar(loc))
+            sb->clear();
+    }
+}
+
 void MainWindowBase::moveToSideBar(DockWidgetBase *dw)
 {
     moveToSideBar(dw, d->preferredSideBar(dw));
@@ -440,8 +450,20 @@ DockWidgetBase *MainWindowBase::overlayedDockWidget() const
 
 bool MainWindowBase::sideBarIsVisible(SideBarLocation loc) const
 {
-    if (SideBar *sb = sideBar(loc))
-        return sb->isVisible();
+    if (SideBar *sb = sideBar(loc)) {
+        return !sb->isEmpty(); // isVisible() is always true, but its height is 0 when empty.
+    }
+
+    return false;
+}
+
+bool MainWindowBase::anySideBarIsVisible() const
+{
+    for (auto loc : { SideBarLocation::North, SideBarLocation::South,
+                      SideBarLocation::East, SideBarLocation::West }) {
+        if (sideBarIsVisible(loc))
+            return true;
+    }
 
     return false;
 }
@@ -484,6 +506,7 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
     const bool success = dropArea()->deserialize(mw.multiSplitterLayout);
 
     // Restore the SideBars
+    d->clearSideBars();
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
         SideBar *sb = sideBar(loc);
         if (!sb)

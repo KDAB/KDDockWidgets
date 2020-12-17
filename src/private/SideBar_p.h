@@ -53,6 +53,9 @@ public:
     /// Currently it's just a list of dock widget ids
     QStringList serialize() const;
 
+    /// @brief clears the sidebar (removes all dock widgets from it)
+    void clear();
+
 protected:
     virtual void addDockWidget_Impl(DockWidgetBase *dock) = 0;
     virtual void removeDockWidget_Impl(DockWidgetBase *dock) = 0;

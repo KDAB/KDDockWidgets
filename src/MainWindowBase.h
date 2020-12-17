@@ -168,6 +168,9 @@ public:
     /// @brief Returns whether the specified sidebar is visible
     bool sideBarIsVisible(SideBarLocation) const;
 
+    /// @brief Returns whether any side bar is visible
+    bool anySideBarIsVisible() const;
+
 protected:
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()

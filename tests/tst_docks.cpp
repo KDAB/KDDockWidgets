@@ -5155,23 +5155,27 @@ void TestDocks::tst_closeRemovesFromSideBar()
 void TestDocks::tst_restoreSideBar()
 {
     SideBarLocation loc;
-    QByteArray serialized;
+    QByteArray serialized; // serialization after having 1 sidebar visible
+    QByteArray beforeSideBarSerialized; // serialization without any sidebar visible
 
     {
+        LayoutSaver saver;
         EnsureTopLevelsDeleted e;
         KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
         auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
         auto dw1 = new DockWidgetType(QStringLiteral("1"));
         auto fw1 = dw1->window();
         m1->addDockWidget(dw1, Location_OnBottom);
+        beforeSideBarSerialized = saver.serializeLayout();
+        QVERIFY(!m1->anySideBarIsVisible());
         m1->moveToSideBar(dw1);
+        QVERIFY(m1->anySideBarIsVisible());
 
         QVERIFY(!dw1->isOverlayed());
         QVERIFY(!dw1->isVisible());
         loc = dw1->sideBarLocation();
         QVERIFY(loc != SideBarLocation::None);
 
-        LayoutSaver saver;
         serialized = saver.serializeLayout();
 
         delete fw1;
@@ -5183,6 +5187,7 @@ void TestDocks::tst_restoreSideBar()
     auto dw1 = new DockWidgetType(QStringLiteral("1"));
     auto fw1 = dw1->window();
     m1->addDockWidget(dw1, Location_OnBottom);
+    QVERIFY(!m1->anySideBarIsVisible());
     QVERIFY(!dw1->isOverlayed());
     QVERIFY(dw1->isVisible());
     QVERIFY(!dw1->isFloating());
@@ -5194,8 +5199,16 @@ void TestDocks::tst_restoreSideBar()
     QVERIFY(!dw1->isOverlayed());
     QVERIFY(!dw1->isVisible());
     QVERIFY(!dw1->isInMainWindow());
+    QVERIFY(m1->anySideBarIsVisible());
 
     QCOMPARE(loc, dw1->sideBarLocation());
+
+    restorer.restoreLayout(beforeSideBarSerialized);
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(dw1->isVisible());
+    QVERIFY(!dw1->isFloating());
+    QVERIFY(dw1->isInMainWindow());
+    QVERIFY(!m1->anySideBarIsVisible());
 
     delete fw1;
 }
