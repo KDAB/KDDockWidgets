@@ -111,12 +111,13 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     return false;
 }
 
-void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
+bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 {
     const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(e);
     if (!mResizeWidget) {
-        updateCursor(cursorPosition(globalPos));
-        return;
+        const CursorPosition pos = cursorPosition(globalPos);
+        updateCursor(pos);
+        return pos != CursorPosition_Undefined;
     }
 
     const QRect oldGeometry = mTarget->geometry();
@@ -194,8 +195,9 @@ void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 
     if (newGeometry != mTarget->geometry())
         mTarget->setGeometry(newGeometry);
-}
 
+    return true;
+}
 
 #ifdef Q_OS_WIN
 

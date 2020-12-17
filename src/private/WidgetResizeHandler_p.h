@@ -59,7 +59,7 @@ protected:
 
 private:
     void setTarget(QWidgetOrQuick *w);
-    void mouseMoveEvent(QMouseEvent *e);
+    bool mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);
     void setMouseCursor(Qt::CursorShape cursor);
     void restoreMouseCursor();
