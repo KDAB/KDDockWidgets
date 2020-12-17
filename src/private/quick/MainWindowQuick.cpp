@@ -46,12 +46,12 @@ MainWindowQuick::~MainWindowQuick()
 
 QSize MainWindowQuick::minimumSize() const
 {
-    return multiSplitter()->rootItem()->minSize();
+    return multiSplitter()->layoutMinimumSize();
 }
 
 QSize MainWindowQuick::maximumSize() const
 {
-    return multiSplitter()->rootItem()->maxSizeHint();
+    return multiSplitter()->layoutMaximumSizeHint();
 }
 
 SideBar *MainWindowQuick::sideBar(SideBarLocation) const

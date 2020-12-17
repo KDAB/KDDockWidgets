@@ -30,7 +30,24 @@ class WidgetResizeHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit WidgetResizeHandler(QWidgetOrQuick *target = nullptr);
+
+    enum CursorPosition {
+        CursorPosition_Undefined = 0,
+        CursorPosition_Left = 1,
+        CursorPosition_Right = 2,
+        CursorPosition_Top = 4,
+        CursorPosition_Bottom = 8,
+        CursorPosition_TopLeft = CursorPosition_Top | CursorPosition_Left,
+        CursorPosition_TopRight = CursorPosition_Top | CursorPosition_Right,
+        CursorPosition_BottomRight = CursorPosition_Bottom | CursorPosition_Right,
+        CursorPosition_BottomLeft = CursorPosition_Bottom | CursorPosition_Left
+    };
+
+    /**
+     * @brief CTOR
+     * @param target The target widget that will be resized. Also acts as parent QObject.
+     */
+    explicit WidgetResizeHandler(bool filterIsGlobal, QWidgetOrQuick *target);
     ~WidgetResizeHandler() override;
 
 #ifdef Q_OS_WIN
@@ -41,25 +58,17 @@ protected:
     bool eventFilter(QObject *o, QEvent *e) override;
 
 private:
-    enum class CursorPosition {
-        Left,
-        Right,
-        TopLeft,
-        TopRight,
-        BottomRight,
-        BottomLeft,
-        Top,
-        Bottom,
-        Undefined
-    };
     void setTarget(QWidgetOrQuick *w);
-    void mouseMoveEvent(QMouseEvent *e);
+    bool mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);
+    void setMouseCursor(Qt::CursorShape cursor);
+    void restoreMouseCursor();
     CursorPosition cursorPosition(QPoint) const;
     QWidgetOrQuick *mTarget = nullptr;
-    CursorPosition mCursorPos = CursorPosition::Undefined;
+    CursorPosition mCursorPos = CursorPosition_Undefined;
     QPoint mNewPosition;
     bool mResizeWidget = false;
+    const bool mFilterIsGlobal;
 };
 
 }
