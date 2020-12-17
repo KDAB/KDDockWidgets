@@ -57,11 +57,6 @@ bool Draggable::dragCanStart(QPoint pressPos, QPoint globalPos) const
     return (globalPos - pressPos).manhattanLength() > KDDockWidgets::startDragDistance();
 }
 
-WidgetResizeHandler *Draggable::widgetResizeHandler() const
-{
-    return d->widgetResizeHandler;
-}
-
 void Draggable::setWidgetResizeHandler(WidgetResizeHandler *w)
 {
     Q_ASSERT(!d->widgetResizeHandler);

@@ -62,9 +62,10 @@ public:
      */
     virtual bool dragCanStart(QPoint pressPos, QPoint globalPos) const;
 
-    WidgetResizeHandler *widgetResizeHandler() const;
+    /**
+     * @brief Sets a widget resize handler
+     */
     void setWidgetResizeHandler(WidgetResizeHandler *w);
-
 
     /**
      * @brief If this draggable contains a single dock widget, then it's returned.
