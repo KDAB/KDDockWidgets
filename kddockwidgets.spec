@@ -4,6 +4,7 @@ Release:        1
 Summary:        KDAB's Dock Widget Framework for Qt
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-%{version}.tar.gz.asc
+Source2:        %{name}-rpmlintrc
 URL:            https://github.com/KDAB/KDDockWidgets
 Group:          System/Libraries
 License:        GPL-2.0-only OR GPL-3.0-only
