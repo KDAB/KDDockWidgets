@@ -43,6 +43,10 @@ public:
         CursorPosition_BottomLeft = CursorPosition_Bottom | CursorPosition_Left
     };
 
+    /**
+     * @brief CTOR
+     * @param target The target widget that will be resized. Also acts as parent QObject.
+     */
     explicit WidgetResizeHandler(QWidgetOrQuick *target = nullptr);
     ~WidgetResizeHandler() override;
 
