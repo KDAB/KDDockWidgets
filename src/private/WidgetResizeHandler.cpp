@@ -357,7 +357,7 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
         setMouseCursor(Qt::SizeHorCursor);
         break;
     case CursorPosition_Undefined:
-        setMouseCursor(Qt::ArrowCursor);
+        restoreMouseCursor();
         break;
     }
 }
@@ -365,6 +365,11 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
 {
     mTarget->setCursor(cursor);
+}
+
+void WidgetResizeHandler::restoreMouseCursor()
+{
+    mTarget->setCursor(Qt::ArrowCursor);
 }
 
 WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const

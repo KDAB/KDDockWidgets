@@ -63,6 +63,7 @@ private:
     void mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);
     void setMouseCursor(Qt::CursorShape cursor);
+    void restoreMouseCursor();
     CursorPosition cursorPosition(QPoint) const;
     QWidgetOrQuick *mTarget = nullptr;
     CursorPosition mCursorPos = CursorPosition_Undefined;
