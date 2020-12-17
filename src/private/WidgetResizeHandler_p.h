@@ -50,8 +50,6 @@ public:
     explicit WidgetResizeHandler(QWidgetOrQuick *target = nullptr);
     ~WidgetResizeHandler() override;
 
-    void setTarget(QWidgetOrQuick *w);
-
 #ifdef Q_OS_WIN
     static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result);
 #endif
@@ -60,6 +58,7 @@ protected:
     bool eventFilter(QObject *o, QEvent *e) override;
 
 private:
+    void setTarget(QWidgetOrQuick *w);
     void mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);
     void setMouseCursor(Qt::CursorShape cursor);
