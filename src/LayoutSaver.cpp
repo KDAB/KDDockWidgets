@@ -28,6 +28,7 @@
 #include "multisplitter/Item_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "MainWindowBase.h"
+#include "FloatingWindow_p.h"
 
 #include <qmath.h>
 #include <QDebug>
