@@ -31,18 +31,17 @@ class WidgetResizeHandler : public QObject
     Q_OBJECT
 public:
 
-    enum class CursorPosition {
-        Left,
-        Right,
-        TopLeft,
-        TopRight,
-        BottomRight,
-        BottomLeft,
-        Top,
-        Bottom,
-        Undefined
+    enum CursorPosition {
+        CursorPosition_Undefined = 0,
+        CursorPosition_Left = 1,
+        CursorPosition_Right = 2,
+        CursorPosition_Top = 4,
+        CursorPosition_Bottom = 8,
+        CursorPosition_TopLeft = CursorPosition_Top | CursorPosition_Left,
+        CursorPosition_TopRight = CursorPosition_Top | CursorPosition_Right,
+        CursorPosition_BottomRight = CursorPosition_Bottom | CursorPosition_Right,
+        CursorPosition_BottomLeft = CursorPosition_Bottom | CursorPosition_Left
     };
-    Q_ENUM(CursorPosition)
 
     explicit WidgetResizeHandler(QWidgetOrQuick *target = nullptr);
     ~WidgetResizeHandler() override;
@@ -61,7 +60,7 @@ private:
     void updateCursor(CursorPosition m);
     CursorPosition cursorPosition(QPoint) const;
     QWidgetOrQuick *mTarget = nullptr;
-    CursorPosition mCursorPos = CursorPosition::Undefined;
+    CursorPosition mCursorPos = CursorPosition_Undefined;
     QPoint mNewPosition;
     bool mResizeWidget = false;
 };

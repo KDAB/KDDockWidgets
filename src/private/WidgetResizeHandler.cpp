@@ -67,7 +67,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             break;
         auto mouseEvent = static_cast<QMouseEvent *>(e);
         auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
-        if (cursorPos == CursorPosition::Undefined)
+        if (cursorPos == CursorPosition_Undefined)
             return false;
 
         const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin));
@@ -128,9 +128,9 @@ void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         const int minWidth = mTarget->minimumWidth();
         const int maxWidth = mTarget->maximumWidth();
         switch (mCursorPos) {
-        case CursorPosition::TopLeft:
-        case CursorPosition::Left:
-        case CursorPosition::BottomLeft: {
+        case CursorPosition_TopLeft:
+        case CursorPosition_Left:
+        case CursorPosition_BottomLeft: {
             deltaWidth = oldGeometry.left() - globalPos.x();
             newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
             deltaWidth = newWidth - mTarget->width();
@@ -141,9 +141,9 @@ void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
             break;
         }
 
-        case CursorPosition::TopRight:
-        case CursorPosition::Right:
-        case CursorPosition::BottomRight: {
+        case CursorPosition_TopRight:
+        case CursorPosition_Right:
+        case CursorPosition_BottomRight: {
             deltaWidth = globalPos.x() - newGeometry.right();
             newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
             deltaWidth = newWidth - mTarget->width();
@@ -163,9 +163,9 @@ void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         int deltaHeight = 0;
         int newHeight = 0;
         switch (mCursorPos) {
-        case CursorPosition::TopLeft:
-        case CursorPosition::Top:
-        case CursorPosition::TopRight: {
+        case CursorPosition_TopLeft:
+        case CursorPosition_Top:
+        case CursorPosition_TopRight: {
             deltaHeight = oldGeometry.top() - globalPos.y();
             newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
             deltaHeight = newHeight - mTarget->height();
@@ -176,9 +176,9 @@ void WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
             break;
         }
 
-        case CursorPosition::BottomLeft:
-        case CursorPosition::Bottom:
-        case CursorPosition::BottomRight: {
+        case CursorPosition_BottomLeft:
+        case CursorPosition_Bottom:
+        case CursorPosition_BottomRight: {
             deltaHeight = globalPos.y() - newGeometry.bottom();
             newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
             deltaHeight = newHeight - mTarget->height();
@@ -340,23 +340,23 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 #endif
 
     switch (m) {
-    case CursorPosition::TopLeft:
-    case CursorPosition::BottomRight:
+    case CursorPosition_TopLeft:
+    case CursorPosition_BottomRight:
         mTarget->setCursor(Qt::SizeFDiagCursor);
         break;
-    case CursorPosition::BottomLeft:
-    case CursorPosition::TopRight:
+    case CursorPosition_BottomLeft:
+    case CursorPosition_TopRight:
         mTarget->setCursor(Qt::SizeBDiagCursor);
         break;
-    case CursorPosition::Top:
-    case CursorPosition::Bottom:
+    case CursorPosition_Top:
+    case CursorPosition_Bottom:
         mTarget->setCursor(Qt::SizeVerCursor);
         break;
-    case CursorPosition::Left:
-    case CursorPosition::Right:
+    case CursorPosition_Left:
+    case CursorPosition_Right:
         mTarget->setCursor(Qt::SizeHorCursor);
         break;
-    case CursorPosition::Undefined:
+    case CursorPosition_Undefined:
         mTarget->setCursor(Qt::ArrowCursor);
         break;
     }
@@ -365,27 +365,27 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
 {
     if (!mTarget)
-        return CursorPosition::Undefined;
+        return CursorPosition_Undefined;
 
     QPoint pos = mTarget->mapFromGlobal(globalPos);
 
     if (pos.y() <= widgetResizeHandlerMargin && pos.x() <= widgetResizeHandlerMargin) {
-        return CursorPosition::TopLeft;
+        return CursorPosition_TopLeft;
     } else if (pos.y() >= mTarget->height() - widgetResizeHandlerMargin && pos.x() >= mTarget->width() - widgetResizeHandlerMargin) {
-        return CursorPosition::BottomRight;
+        return CursorPosition_BottomRight;
     } else if (pos.y() >= mTarget->height() - widgetResizeHandlerMargin && pos.x() <= widgetResizeHandlerMargin) {
-        return CursorPosition::BottomLeft;
+        return CursorPosition_BottomLeft;
     } else if (pos.y() <= widgetResizeHandlerMargin && pos.x() >= mTarget->width() - widgetResizeHandlerMargin) {
-        return CursorPosition::TopRight;
+        return CursorPosition_TopRight;
     } else if (pos.y() <= widgetResizeHandlerMargin) {
-        return CursorPosition::Top;
+        return CursorPosition_Top;
     } else if (pos.y() >= mTarget->height() - widgetResizeHandlerMargin) {
-        return CursorPosition::Bottom;
+        return CursorPosition_Bottom;
     } else if (pos.x() <= widgetResizeHandlerMargin) {
-        return CursorPosition::Left;
+        return CursorPosition_Left;
     } else if ( pos.x() >= mTarget->width() - widgetResizeHandlerMargin) {
-        return CursorPosition::Right;
+        return CursorPosition_Right;
     } else {
-        return CursorPosition::Undefined;
+        return CursorPosition_Undefined;
     }
 }
