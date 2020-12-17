@@ -62,6 +62,7 @@ protected:
 private:
     void mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);
+    void setMouseCursor(Qt::CursorShape cursor);
     CursorPosition cursorPosition(QPoint) const;
     QWidgetOrQuick *mTarget = nullptr;
     CursorPosition mCursorPos = CursorPosition_Undefined;

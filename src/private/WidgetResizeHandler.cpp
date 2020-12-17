@@ -342,24 +342,29 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
     switch (m) {
     case CursorPosition_TopLeft:
     case CursorPosition_BottomRight:
-        mTarget->setCursor(Qt::SizeFDiagCursor);
+        setMouseCursor(Qt::SizeFDiagCursor);
         break;
     case CursorPosition_BottomLeft:
     case CursorPosition_TopRight:
-        mTarget->setCursor(Qt::SizeBDiagCursor);
+        setMouseCursor(Qt::SizeBDiagCursor);
         break;
     case CursorPosition_Top:
     case CursorPosition_Bottom:
-        mTarget->setCursor(Qt::SizeVerCursor);
+        setMouseCursor(Qt::SizeVerCursor);
         break;
     case CursorPosition_Left:
     case CursorPosition_Right:
-        mTarget->setCursor(Qt::SizeHorCursor);
+        setMouseCursor(Qt::SizeHorCursor);
         break;
     case CursorPosition_Undefined:
-        mTarget->setCursor(Qt::ArrowCursor);
+        setMouseCursor(Qt::ArrowCursor);
         break;
     }
+}
+
+void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
+{
+    mTarget->setCursor(cursor);
 }
 
 WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
