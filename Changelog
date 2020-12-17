@@ -6,6 +6,8 @@
   - Added Flag_KeepAboveIfNotUtilityWindow, so you can have keep above even if
     floating window is shown in the task-bar.
   - Added DockWidget::windowActiveAboutToChange() signal
+  - Added support for Qt6 (PySide6 support is lacking)
+  - Added WASM support
 
 * v1.1.1 (11 December 2020)
   - Windows: Fixed a crash when clicking on the close button for floating windows in some situations (#110)
