@@ -369,23 +369,21 @@ WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint g
 
     QPoint pos = mTarget->mapFromGlobal(globalPos);
 
-    if (pos.y() <= widgetResizeHandlerMargin && pos.x() <= widgetResizeHandlerMargin) {
-        return CursorPosition_TopLeft;
-    } else if (pos.y() >= mTarget->height() - widgetResizeHandlerMargin && pos.x() >= mTarget->width() - widgetResizeHandlerMargin) {
-        return CursorPosition_BottomRight;
-    } else if (pos.y() >= mTarget->height() - widgetResizeHandlerMargin && pos.x() <= widgetResizeHandlerMargin) {
-        return CursorPosition_BottomLeft;
-    } else if (pos.y() <= widgetResizeHandlerMargin && pos.x() >= mTarget->width() - widgetResizeHandlerMargin) {
-        return CursorPosition_TopRight;
-    } else if (pos.y() <= widgetResizeHandlerMargin) {
-        return CursorPosition_Top;
-    } else if (pos.y() >= mTarget->height() - widgetResizeHandlerMargin) {
-        return CursorPosition_Bottom;
-    } else if (pos.x() <= widgetResizeHandlerMargin) {
-        return CursorPosition_Left;
-    } else if ( pos.x() >= mTarget->width() - widgetResizeHandlerMargin) {
-        return CursorPosition_Right;
-    } else {
-        return CursorPosition_Undefined;
-    }
+    int result = CursorPosition_Undefined;
+
+    const int x = pos.x();
+    const int y = pos.y();
+    const int margin = widgetResizeHandlerMargin;
+
+    if (x <= margin)
+        result |= CursorPosition_Left;
+    else if (x >= mTarget->width() - margin)
+        result |= CursorPosition_Right;
+
+    if (y <= margin)
+        result |= CursorPosition_Top;
+    else if (y >= mTarget->height() - margin)
+        result |= CursorPosition_Bottom;
+
+    return static_cast<CursorPosition>(result);
 }
