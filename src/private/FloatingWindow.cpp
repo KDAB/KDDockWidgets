@@ -229,7 +229,7 @@ void FloatingWindow::maybeCreateResizeHandler()
 {
     if (!KDDockWidgets::usesNativeDraggingAndResizing()) {
         setFlag(Qt::FramelessWindowHint, true);
-        setWidgetResizeHandler(new WidgetResizeHandler(this));
+        setWidgetResizeHandler(new WidgetResizeHandler(false, this));
     }
 }
 

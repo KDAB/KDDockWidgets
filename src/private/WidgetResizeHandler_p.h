@@ -47,7 +47,7 @@ public:
      * @brief CTOR
      * @param target The target widget that will be resized. Also acts as parent QObject.
      */
-    explicit WidgetResizeHandler(QWidgetOrQuick *target = nullptr);
+    explicit WidgetResizeHandler(bool filterIsGlobal, QWidgetOrQuick *target);
     ~WidgetResizeHandler() override;
 
 #ifdef Q_OS_WIN
@@ -68,6 +68,7 @@ private:
     CursorPosition mCursorPos = CursorPosition_Undefined;
     QPoint mNewPosition;
     bool mResizeWidget = false;
+    const bool mFilterIsGlobal;
 };
 
 }

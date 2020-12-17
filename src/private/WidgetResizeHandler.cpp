@@ -40,8 +40,9 @@ int widgetResizeHandlerMargin = 4; //4 pixel
 using namespace KDDockWidgets;
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
-WidgetResizeHandler::WidgetResizeHandler(QWidgetOrQuick *target)
+WidgetResizeHandler::WidgetResizeHandler(bool filterIsGlobal, QWidgetOrQuick *target)
     : QObject(target)
+    , mFilterIsGlobal(filterIsGlobal)
 {
     setTarget(target);
 }
@@ -52,14 +53,15 @@ WidgetResizeHandler::~WidgetResizeHandler()
 
 bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
 {
-    if (s_disableAllHandlers || o != mTarget) {
+    if (s_disableAllHandlers)
         return false;
-    }
 
     auto widget = qobject_cast<QWidgetOrQuick*>(o);
-    if (!widget || !widget->isTopLevel()) {
+    if (!widget)
         return false;
-    }
+
+    if (!mFilterIsGlobal && (!widget->isTopLevel() || o != mTarget))
+        return false;
 
     switch (e->type()) {
     case QEvent::MouseButtonPress: {
@@ -101,9 +103,9 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         mResizeWidget = mResizeWidget && (mouseEvent->buttons() & Qt::LeftButton);
         const bool state = mResizeWidget;
         mResizeWidget = ((o == mTarget) && mResizeWidget);
-        mouseMoveEvent(mouseEvent);
+        const bool consumed = mouseMoveEvent(mouseEvent);
         mResizeWidget = state;
-        return true;
+        return consumed;
     }
     default:
         break;
@@ -320,7 +322,11 @@ void WidgetResizeHandler::setTarget(QWidgetOrQuick *w)
     if (w) {
         mTarget = w;
         mTarget->setMouseTracking(true);
-        mTarget->installEventFilter(this);
+        if (mFilterIsGlobal) {
+            qApp->installEventFilter(this);
+        } else {
+            mTarget->installEventFilter(this);
+        }
     } else {
         qWarning() << "Target widget is null!";
     }
@@ -366,12 +372,18 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 
 void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
 {
-    mTarget->setCursor(cursor);
+    if (mFilterIsGlobal)
+        qApp->setOverrideCursor(cursor);
+    else
+        mTarget->setCursor(cursor);
 }
 
 void WidgetResizeHandler::restoreMouseCursor()
 {
-    mTarget->setCursor(Qt::ArrowCursor);
+    if (mFilterIsGlobal)
+        qApp->restoreOverrideCursor();
+    else
+        mTarget->setCursor(Qt::ArrowCursor);
 }
 
 WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
