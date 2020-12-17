@@ -202,7 +202,7 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
         newItem->setGuestWidget(frame);
         frame->addWidget(dw, option);
     } else if (auto ms = qobject_cast<MultiSplitter*>(w)) {
-        newItem = ms->rootItem();
+        newItem = ms->m_rootItem;
         newItem->setHostWidget(this);
 
         if (FloatingWindow *fw = ms->floatingWindow()) {
@@ -267,7 +267,7 @@ int MultiSplitter::placeholderCount() const
     return count() - visibleCount();
 }
 
-Layouting::Separator::List MultiSplitter::separators() const
+QVector<Layouting::Separator*> MultiSplitter::separators() const
 {
     return m_rootItem->separators_recursive();
 }
@@ -371,6 +371,11 @@ void MultiSplitter::layoutEqually(Layouting::ItemContainer *container)
     }
 }
 
+void MultiSplitter::clearLayout()
+{
+    m_rootItem->clear();
+}
+
 bool MultiSplitter::checkSanity() const
 {
     return m_rootItem->checkSanity();
@@ -402,6 +407,11 @@ void MultiSplitter::setLayoutSize(QSize size)
 QSize MultiSplitter::layoutMinimumSize() const
 {
     return m_rootItem->minSize();
+}
+
+QSize MultiSplitter::layoutMaximumSizeHint() const
+{
+    return m_rootItem->maxSizeHint();
 }
 
 QSize MultiSplitter::size() const { return m_rootItem->size(); }

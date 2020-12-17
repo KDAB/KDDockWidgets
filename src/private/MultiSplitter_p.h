@@ -23,7 +23,6 @@
 #define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
 #include "docks_export.h"
-#include "multisplitter/Separator_p.h"
 #include "QWidgetAdapter.h"
 #include "KDDockWidgets.h"
 #include "LayoutSaver_p.h"
@@ -122,10 +121,6 @@ public:
      */
     const QVector<Layouting::Item*> items() const;
 
-    /**
-     * @brief Returns the root container item
-     */
-    Layouting::ItemContainer *rootItem() const;
 
     /**
      * Called by the indicators, so they draw the drop rubber band at the correct place.
@@ -174,6 +169,11 @@ public:
     QSize layoutMinimumSize() const;
 
     /**
+     * @brief returns the layout's maximum size hint
+     */
+    QSize layoutMaximumSizeHint() const;
+
+    /**
      * @brief getter for the size
      */
     QSize size() const;
@@ -206,6 +206,9 @@ public:
     /// @brief overload that just resizes widgets within a sub-tree
     void layoutEqually(Layouting::ItemContainer *);
 
+    /// @brief clears the layout
+    void clearLayout();
+
 Q_SIGNALS:
     void visibleWidgetCountChanged(int count);
 
@@ -224,6 +227,7 @@ private:
      */
     QList<Frame*> framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
 
+    Layouting::ItemContainer *rootItem() const;
 
     // For debug/hardening
     bool validateInputs(QWidgetOrQuick *widget, KDDockWidgets::Location location,

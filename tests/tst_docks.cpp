@@ -1453,9 +1453,9 @@ void TestDocks::tst_negativeAnchorPosition()
     // Now resize the Window, after removing middle one
     const int availableToShrink = layout->size().height() - layout->minimumSize().height();
     const QSize newSize = { layout->width(), layout->height() - availableToShrink };
-    if (layout->rootItem()->minSize().expandedTo(newSize) != newSize) {
+    if (layout->layoutMinimumSize().expandedTo(newSize) != newSize) {
         qDebug() << "Size to set is too small=" << newSize
-                 << "; min=" << layout->rootItem()->minSize();
+                 << "; min=" << layout->layoutMinimumSize();
         QFAIL("");
     }
 
@@ -1832,7 +1832,7 @@ void TestDocks::tst_clear()
     QCOMPARE(Frame::dbg_numFrames(), 3);
 
     auto layout = m->multiSplitter();
-    layout->rootItem()->clear();
+    layout->clearLayout();
 
     QCOMPARE(layout->count(), 0);
     QCOMPARE(layout->placeholderCount(), 0);
@@ -5324,7 +5324,7 @@ void TestDocks::tst_restoreResizesLayout()
     QVERIFY(restorer.restoreFromFile("layout_tst_restoreResizesLayout.json"));
     QVERIFY(layout->checkSanity());
 
-    QCOMPARE(m->dropArea()->QWidgetAdapter::size(), layout->rootItem()->size());
+    QCOMPARE(m->dropArea()->QWidgetAdapter::size(), layout->size());
     QVERIFY(layout->checkSanity());
 }
 
@@ -6395,8 +6395,6 @@ void TestDocks::tst_constraintsAfterPlaceholder()
                                   item3->minLength(Qt::Vertical) +
                                   1 * Item::separatorThickness
                                   + margins.top() + margins.bottom();
-
-    qDebug() << layout->rootItem()->minSize() << margins;
 
     QCOMPARE(m->minimumSizeHint().height(), expectedMinHeight);
 

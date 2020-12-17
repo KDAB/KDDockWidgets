@@ -595,7 +595,7 @@ void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
 
     for (auto mw : qAsConst(mainWindows)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, mw->affinities())) {
-            mw->multiSplitter()->rootItem()->clear();
+            mw->multiSplitter()->clearLayout();
         }
     }
 }

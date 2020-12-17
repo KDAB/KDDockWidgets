@@ -24,7 +24,6 @@
 #include "kddockwidgets/FocusScope.h"
 #include "../LayoutSaver_p.h"
 #include "multisplitter/Widget.h"
-#include "multisplitter/Item_p.h"
 
 #include <QVector>
 #include <QDebug>

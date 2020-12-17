@@ -139,20 +139,16 @@ QSize WindowBeingDragged::size() const
 
 QSize WindowBeingDragged::minSize() const
 {
-    if (m_floatingWindow) {
-        Layouting::ItemContainer *root = m_floatingWindow->dropArea()->rootItem();
-        return root->minSize();
-    }
+    if (m_floatingWindow)
+        return m_floatingWindow->dropArea()->layoutMinimumSize();
 
     return {};
 }
 
 QSize WindowBeingDragged::maxSize() const
 {
-    if (m_floatingWindow) {
-        Layouting::ItemContainer *root = m_floatingWindow->dropArea()->rootItem();
-        return root->maxSizeHint();
-    }
+    if (m_floatingWindow)
+        return m_floatingWindow->dropArea()->layoutMaximumSizeHint();
 
     return {};
 }

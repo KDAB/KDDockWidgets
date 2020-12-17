@@ -21,7 +21,6 @@
 #include "docks_export.h"
 #include "Logging_p.h"
 #include "LayoutSaver_p.h"
-#include "multisplitter/Item_p.h"
 #include "QWidgetAdapter.h"
 
 #include <QScopedValueRollback>

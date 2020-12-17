@@ -24,7 +24,6 @@
 #include "Utils_p.h"
 #include "SideBar_p.h"
 #include "Logging_p.h"
-#include "Item_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "DropAreaWithCentralFrame_p.h"
 

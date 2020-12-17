@@ -25,7 +25,6 @@
 #include "Logging_p.h"
 #include "Frame_p.h"
 #include "Position_p.h"
-#include "multisplitter/Item_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "MainWindowBase.h"
 #include "FloatingWindow_p.h"

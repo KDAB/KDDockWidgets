@@ -16,7 +16,6 @@
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
 #include "DropArea_p.h"
-#include "multisplitter/Item_p.h"
 #include "Config.h"
 #include "TitleBar_p.h"
 #include "FrameworkWidgetFactory.h"
