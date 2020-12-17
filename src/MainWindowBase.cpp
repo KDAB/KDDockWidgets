@@ -386,7 +386,7 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
         return;
 
     const SideBar *sb = sideBarForDockWidget(dw);
-    if (sb == nullptr) {
+    if (!sb) {
         qWarning() << Q_FUNC_INFO << "You need to add the dock widget to the sidebar before you can overlay it";
         return;
     }
