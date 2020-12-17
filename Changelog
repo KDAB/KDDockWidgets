@@ -1,7 +1,7 @@
 * v1.3.0 (unreleased)
   - [TODO] QtQuick support
 
-* v1.2.0 (unreleased)
+* v1.2.0 (17 December 2020)
   - Wayland support
   - Added Flag_KeepAboveIfNotUtilityWindow, so you can have keep above even if
     floating window is shown in the task-bar.
