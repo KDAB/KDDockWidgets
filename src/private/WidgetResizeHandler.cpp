@@ -381,20 +381,19 @@ WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint g
 
     QPoint pos = mTarget->mapFromGlobal(globalPos);
 
-    int result = CursorPosition_Undefined;
-
     const int x = pos.x();
     const int y = pos.y();
     const int margin = widgetResizeHandlerMargin;
 
-    if (x <= margin)
+    int result = CursorPosition_Undefined;
+    if (qAbs(x) <= margin)
         result |= CursorPosition_Left;
-    else if (x >= mTarget->width() - margin)
+    else if (qAbs(x - (mTarget->width() - margin)) <= margin)
         result |= CursorPosition_Right;
 
-    if (y <= margin)
+    if (qAbs(y) <= margin)
         result |= CursorPosition_Top;
-    else if (y >= mTarget->height() - margin)
+    else if (qAbs(y - (mTarget->height() - margin)) <= margin)
         result |= CursorPosition_Bottom;
 
     return static_cast<CursorPosition>(result);
