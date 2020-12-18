@@ -50,7 +50,7 @@ public:
 
     QRect rectForOverlay(Frame *, SideBarLocation) const;
     SideBarLocation preferredSideBar(DockWidgetBase *) const;
-    void updateOverlayGeometry();
+    void updateOverlayGeometry(bool reusePreviousSize = false);
     void clearSideBars();
 
     QString name;
@@ -348,7 +348,7 @@ SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) co
                              : SideBarLocation::West;
 }
 
-void MainWindowBase::Private::updateOverlayGeometry()
+void MainWindowBase::Private::updateOverlayGeometry(bool reusePreviousSize)
 {
     if (!m_overlayedDockWidget)
         return;
@@ -359,7 +359,30 @@ void MainWindowBase::Private::updateOverlayGeometry()
         return;
     }
 
-    m_overlayedDockWidget->frame()->QWidgetAdapter::setGeometry(rectForOverlay(m_overlayedDockWidget->frame(), sb->location()));
+    const QRect defaultGeometry = rectForOverlay(m_overlayedDockWidget->frame(), sb->location());
+    QRect newGeometry = defaultGeometry;
+
+    Frame *frame = m_overlayedDockWidget->frame();
+
+    if (reusePreviousSize) {
+        // Let's try to honour the previous overlay size
+        switch (sb->location()) {
+        case SideBarLocation::North:
+        case SideBarLocation::South:
+            newGeometry.setHeight(frame->height());
+            break;
+        case SideBarLocation::East:
+        case SideBarLocation::West:
+            newGeometry.setHeight(frame->width());
+            break;
+
+        case SideBarLocation::None:
+            break;
+        }
+
+    }
+
+    m_overlayedDockWidget->frame()->QWidgetAdapter::setGeometry(newGeometry);
 }
 
 void MainWindowBase::Private::clearSideBars()
@@ -426,7 +449,7 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     auto frame = Config::self().frameworkWidgetFactory()->createFrame(this, FrameOption_IsOverlayed);
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
-    d->updateOverlayGeometry();
+    d->updateOverlayGeometry(/*reusePreviousSize=*/ false);
 
     // Uncomment once I'm happy with the resizing
     auto resizeHandler = new WidgetResizeHandler(true, frame);
@@ -514,7 +537,7 @@ void MainWindowBase::setUniqueName(const QString &uniqueName)
 void MainWindowBase::onResized(QResizeEvent *)
 {
     if (d->m_overlayedDockWidget)
-        d->updateOverlayGeometry();
+        d->updateOverlayGeometry(/*reusePreviousSize=*/ true);
 }
 
 bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
