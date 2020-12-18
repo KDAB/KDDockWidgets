@@ -136,8 +136,9 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     {
         int deltaWidth = 0;
         int newWidth = 0;
-        const int minWidth = mTarget->minimumWidth();
-        const int maxWidth = mTarget->maximumWidth();
+        const int maxWidth = Layouting::Widget::widgetMaxSize(mTarget).width();
+        const int minWidth = Layouting::Widget::widgetMinSize(mTarget).width();
+
         switch (mCursorPos) {
         case CursorPosition_TopLeft:
         case CursorPosition_Left:
@@ -169,8 +170,8 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     }
 
     {
-        const int maxHeight = mTarget->maximumHeight();
-        const int minHeight = mTarget->minimumHeight();
+        const int maxHeight = Layouting::Widget::widgetMaxSize(mTarget).height();
+        const int minHeight = Layouting::Widget::widgetMinSize(mTarget).height();
         int deltaHeight = 0;
         int newHeight = 0;
         switch (mCursorPos) {
