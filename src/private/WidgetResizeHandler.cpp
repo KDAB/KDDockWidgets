@@ -107,7 +107,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         auto mouseEvent = static_cast<QMouseEvent *>(e);
         mResizeWidget = mResizeWidget && (mouseEvent->buttons() & Qt::LeftButton);
         const bool state = mResizeWidget;
-        mResizeWidget = ((o == mTarget) && mResizeWidget);
+        if (!mFilterIsGlobal)
+            mResizeWidget = ((o == mTarget) && mResizeWidget);
         const bool consumed = mouseMoveEvent(mouseEvent);
         mResizeWidget = state;
         return consumed;
@@ -127,7 +128,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         return pos != CursorPosition_Undefined;
     }
 
-    const QRect oldGeometry = mTarget->geometry();
+    const QRect oldGeometry = KDDockWidgets::globalGeometry(mTarget);
     QRect newGeometry = oldGeometry;
 
     {
@@ -200,8 +201,14 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         }
     }
 
-    if (newGeometry != mTarget->geometry())
+    if (newGeometry != mTarget->geometry()) {
+        if (!mTarget->isTopLevel()) {
+            // Back to local.
+            newGeometry.moveTopLeft(mTarget->mapFromGlobal(newGeometry.topLeft()) + mTarget->pos());
+        }
+
         mTarget->setGeometry(newGeometry);
+    }
 
     return true;
 }
