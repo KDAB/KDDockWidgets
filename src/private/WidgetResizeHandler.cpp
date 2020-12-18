@@ -33,10 +33,6 @@
 # endif
 #endif
 
-namespace  {
-int widgetResizeHandlerMargin = 4; //4 pixel
-}
-
 using namespace KDDockWidgets;
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
@@ -54,6 +50,11 @@ WidgetResizeHandler::~WidgetResizeHandler()
 void WidgetResizeHandler::setAllowedResizeSides(CursorPositions sides)
 {
     mAllowedResizeSides = sides;
+}
+
+int WidgetResizeHandler::widgetResizeHandlerMargin()
+{
+    return 4; // pixels
 }
 
 bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
@@ -77,7 +78,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         if (cursorPos == CursorPosition_Undefined)
             return false;
 
-        const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin));
+        const int m = widgetResizeHandlerMargin();
+        const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(m, m, m, m));
         const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
         if (!widgetRect.contains(cursorPoint) || mouseEvent->button() != Qt::LeftButton)
             return false;
@@ -410,7 +412,7 @@ WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint g
 
     const int x = pos.x();
     const int y = pos.y();
-    const int margin = widgetResizeHandlerMargin;
+    const int margin = widgetResizeHandlerMargin();
 
     int result = CursorPosition_Undefined;
     if (qAbs(x) <= margin)

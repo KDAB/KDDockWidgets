@@ -60,6 +60,8 @@ public:
      */
     void setAllowedResizeSides(CursorPositions);
 
+    static int widgetResizeHandlerMargin();
+
 #ifdef Q_OS_WIN
     static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result);
 #endif
