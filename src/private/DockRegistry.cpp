@@ -627,12 +627,15 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
             return false;
 
+        if (qobject_cast<Frame*>(watched)) {
+            // break recursion
+            return false;
+        }
+
         auto p = watched;
         while (p) {
-            if (auto dw = qobject_cast<DockWidgetBase*>(p)) {
-                onDockWidgetPressed(dw);
-                return false;
-            }
+            if (auto dw = qobject_cast<DockWidgetBase*>(p))
+                return onDockWidgetPressed(dw, static_cast<QMouseEvent*>(event));
 
             p = p->parent();
         }
@@ -641,17 +644,29 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
     return false;
 }
 
-void DockRegistry::onDockWidgetPressed(DockWidgetBase *dw)
+bool DockRegistry::onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *ev)
 {
     // Here we implement "auto-hide". If there's a overlayed dock widget, we hide it if some other
     // dock widget is clicked.
 
     MainWindowBase *mainWindow = dw->mainWindow();
     if (!mainWindow) // Only docked widgets are interesting
-        return;
+        return false;
 
-    DockWidgetBase *overlayedDockWidget = mainWindow->overlayedDockWidget();
-    if (overlayedDockWidget && dw != overlayedDockWidget) {
-        mainWindow->clearSideBarOverlay();
+    if (DockWidgetBase *overlayedDockWidget = mainWindow->overlayedDockWidget()) {
+        ev->ignore();
+        qApp->sendEvent(overlayedDockWidget->frame(), ev);
+
+        if (ev->isAccepted()) {
+            // The Frame accepted it. It means the user is resizing it. We allow for 4px outside for better resize.
+            return true; // don't propagate the event further
+        }
+        if (dw != overlayedDockWidget) {
+            // User clicked outside if the overlay, then we close the overlay.
+            mainWindow->clearSideBarOverlay();
+            return false;
+        }
     }
+
+    return false;
 }

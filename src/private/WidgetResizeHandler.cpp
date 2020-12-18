@@ -33,10 +33,6 @@
 # endif
 #endif
 
-namespace  {
-int widgetResizeHandlerMargin = 4; //4 pixel
-}
-
 using namespace KDDockWidgets;
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
@@ -49,6 +45,21 @@ WidgetResizeHandler::WidgetResizeHandler(bool filterIsGlobal, QWidgetOrQuick *ta
 
 WidgetResizeHandler::~WidgetResizeHandler()
 {
+}
+
+void WidgetResizeHandler::setAllowedResizeSides(CursorPositions sides)
+{
+    mAllowedResizeSides = sides;
+}
+
+void WidgetResizeHandler::setResizeGap(int gap)
+{
+    m_resizeGap = gap;
+}
+
+int WidgetResizeHandler::widgetResizeHandlerMargin()
+{
+    return 4; // pixels
 }
 
 bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
@@ -72,28 +83,29 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         if (cursorPos == CursorPosition_Undefined)
             return false;
 
-        const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin));
+        const int m = widgetResizeHandlerMargin();
+        const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(m, m, m, m));
         const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
-        if (!widgetRect.contains(cursorPoint))
+        if (!widgetRect.contains(cursorPoint) || mouseEvent->button() != Qt::LeftButton)
             return false;
-        if (mouseEvent->button() == Qt::LeftButton) {
-            mResizeWidget = true;
-        }
 
+        mResizeWidget = true;
         mNewPosition = Qt5Qt6Compat::eventGlobalPos(mouseEvent);
         mCursorPos = cursorPos;
+
         return true;
     }
     case QEvent::MouseButtonRelease: {
-        if (mTarget->isMaximized())
-            break;
+        mResizeWidget = false;
         auto mouseEvent = static_cast<QMouseEvent *>(e);
-        if (mouseEvent->button() == Qt::LeftButton) {
-            mResizeWidget = false;
-            mTarget->releaseMouse();
-            mTarget->releaseKeyboard();
-            return true;
-        }
+
+        if (mTarget->isMaximized() || !mResizeWidget || mouseEvent->button() != Qt::LeftButton)
+            break;
+
+        mTarget->releaseMouse();
+        mTarget->releaseKeyboard();
+        return true;
+
         break;
     }
     case QEvent::MouseMove: {
@@ -102,7 +114,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         auto mouseEvent = static_cast<QMouseEvent *>(e);
         mResizeWidget = mResizeWidget && (mouseEvent->buttons() & Qt::LeftButton);
         const bool state = mResizeWidget;
-        mResizeWidget = ((o == mTarget) && mResizeWidget);
+        if (!mFilterIsGlobal)
+            mResizeWidget = ((o == mTarget) && mResizeWidget);
         const bool consumed = mouseMoveEvent(mouseEvent);
         mResizeWidget = state;
         return consumed;
@@ -122,18 +135,25 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         return pos != CursorPosition_Undefined;
     }
 
-    const QRect oldGeometry = mTarget->geometry();
+    const QRect oldGeometry = KDDockWidgets::globalGeometry(mTarget);
     QRect newGeometry = oldGeometry;
+
+    QRect parentGeometry;
+    if (!mTarget->isTopLevel())
+        parentGeometry = KDDockWidgets::Private::parentGeometry(mTarget);
+
 
     {
         int deltaWidth = 0;
         int newWidth = 0;
-        const int minWidth = mTarget->minimumWidth();
-        const int maxWidth = mTarget->maximumWidth();
+        const int maxWidth = Layouting::Widget::widgetMaxSize(mTarget).width();
+        const int minWidth = Layouting::Widget::widgetMinSize(mTarget).width();
+
         switch (mCursorPos) {
         case CursorPosition_TopLeft:
         case CursorPosition_Left:
         case CursorPosition_BottomLeft: {
+            parentGeometry = parentGeometry.adjusted(0, m_resizeGap, 0, 0);
             deltaWidth = oldGeometry.left() - globalPos.x();
             newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
             deltaWidth = newWidth - mTarget->width();
@@ -147,6 +167,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         case CursorPosition_TopRight:
         case CursorPosition_Right:
         case CursorPosition_BottomRight: {
+            parentGeometry = parentGeometry.adjusted(0, 0, -m_resizeGap, 0);
             deltaWidth = globalPos.x() - newGeometry.right();
             newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
             deltaWidth = newWidth - mTarget->width();
@@ -161,14 +182,15 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     }
 
     {
-        const int maxHeight = mTarget->maximumHeight();
-        const int minHeight = mTarget->minimumHeight();
+        const int maxHeight = Layouting::Widget::widgetMaxSize(mTarget).height();
+        const int minHeight = Layouting::Widget::widgetMinSize(mTarget).height();
         int deltaHeight = 0;
         int newHeight = 0;
         switch (mCursorPos) {
         case CursorPosition_TopLeft:
         case CursorPosition_Top:
         case CursorPosition_TopRight: {
+            parentGeometry = parentGeometry.adjusted(0, m_resizeGap, 0, 0);
             deltaHeight = oldGeometry.top() - globalPos.y();
             newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
             deltaHeight = newHeight - mTarget->height();
@@ -182,6 +204,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         case CursorPosition_BottomLeft:
         case CursorPosition_Bottom:
         case CursorPosition_BottomRight: {
+            parentGeometry = parentGeometry.adjusted(0, 0, 0, -m_resizeGap);
             deltaHeight = globalPos.y() - newGeometry.bottom();
             newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
             deltaHeight = newHeight - mTarget->height();
@@ -195,8 +218,18 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         }
     }
 
-    if (newGeometry != mTarget->geometry())
+    if (newGeometry != mTarget->geometry()) {
+        if (!mTarget->isTopLevel()) {
+
+            // Clip to parent's geometry.
+            newGeometry = newGeometry.intersected(parentGeometry);
+
+            // Back to local.
+            newGeometry.moveTopLeft(mTarget->mapFromGlobal(newGeometry.topLeft()) + mTarget->pos());
+        }
+
         mTarget->setGeometry(newGeometry);
+    }
 
     return true;
 }
@@ -367,6 +400,9 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
     case CursorPosition_Undefined:
         restoreMouseCursor();
         break;
+    case CursorPosition_All:
+        // Doesn't happen
+        break;
     }
 }
 
@@ -395,7 +431,7 @@ WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint g
 
     const int x = pos.x();
     const int y = pos.y();
-    const int margin = widgetResizeHandlerMargin;
+    const int margin = widgetResizeHandlerMargin();
 
     int result = CursorPosition_Undefined;
     if (qAbs(x) <= margin)
@@ -407,6 +443,9 @@ WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint g
         result |= CursorPosition_Top;
     else if (qAbs(y - (mTarget->height() - margin)) <= margin)
         result |= CursorPosition_Bottom;
+
+    // Filter out sides we don't allow
+    result = result & mAllowedResizeSides;
 
     return static_cast<CursorPosition>(result);
 }

@@ -296,6 +296,16 @@ inline QQuickItem* mouseAreaForPos(QQuickItem *item, QPointF globalPos)
 
 #endif
 
+
+/// @brief Returns the widget's geometry, but always in global space.
+inline QRect globalGeometry(QWidgetOrQuick *w)
+{
+    QRect geo = w->geometry();
+    if (!w->isTopLevel())
+        geo.moveTopLeft(w->mapToGlobal(QPoint(0, 0)));
+    return geo;
+}
+
 };
 
 #endif
