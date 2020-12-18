@@ -25,6 +25,7 @@
 #include "SideBar_p.h"
 #include "Logging_p.h"
 #include "Item_p.h"
+#include "WidgetResizeHandler_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "DropAreaWithCentralFrame_p.h"
 
@@ -44,6 +45,8 @@ public:
     {
         return m_options & MainWindowOption_HasCentralFrame;
     }
+
+    WidgetResizeHandler::CursorPositions allowedResizeSides(SideBarLocation loc) const;
 
     QRect rectForOverlay(Frame *, SideBarLocation) const;
     SideBarLocation preferredSideBar(DockWidgetBase *) const;
@@ -156,6 +159,27 @@ void MainWindowBase::layoutEqually()
 void MainWindowBase::layoutParentContainerEqually(DockWidgetBase *dockWidget)
 {
     dropArea()->layoutParentContainerEqually(dockWidget);
+}
+
+WidgetResizeHandler::CursorPositions MainWindowBase::Private::allowedResizeSides(SideBarLocation loc) const
+{
+    // When a sidebar is on top, you can only resize its bottom.
+    // and so forth...
+
+    switch (loc) {
+    case SideBarLocation::North:
+        return WidgetResizeHandler::CursorPosition_Bottom;
+    case SideBarLocation::East:
+        return WidgetResizeHandler::CursorPosition_Left;
+    case SideBarLocation::West:
+        return WidgetResizeHandler::CursorPosition_Right;
+    case SideBarLocation::South:
+        return WidgetResizeHandler::CursorPosition_Top;
+    case SideBarLocation::None:
+        return WidgetResizeHandler::CursorPosition_Undefined;
+    }
+
+    return WidgetResizeHandler::CursorPosition_Undefined;
 }
 
 QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation location) const
@@ -403,6 +427,11 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
     d->updateOverlayGeometry();
+
+    // Uncomment once I'm happy with the resizing
+    //auto resizeHandler = new WidgetResizeHandler(true, frame);
+    //resizeHandler->setAllowedResizeSides(d->allowedResizeSides(sb->location()));
+
     frame->QWidgetAdapter::show();
 
     Q_EMIT dw->isOverlayedChanged(true);
