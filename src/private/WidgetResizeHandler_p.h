@@ -60,6 +60,19 @@ public:
      */
     void setAllowedResizeSides(CursorPositions);
 
+
+    /**
+     * Sets the resize gap. By default 10.
+     *
+     * This is only used for non-top-level (child) widgets.
+     * When resizing a child widget, it will be clipped by its parent, but we leave a little space so
+     * we can resize it again.
+     *
+     * Meaning, if you're resizing 'bottom' of the child widget, it can never be bigger than parent.geometry().bottom() - gap.
+     * The gap allows you to put your mouse there and resize again.
+     */
+    void setResizeGap(int);
+
     static int widgetResizeHandlerMargin();
 
 #ifdef Q_OS_WIN
@@ -81,6 +94,7 @@ private:
     QPoint mNewPosition;
     bool mResizeWidget = false;
     const bool mFilterIsGlobal;
+    int m_resizeGap = 10;
     CursorPositions mAllowedResizeSides = CursorPosition_All;
 };
 

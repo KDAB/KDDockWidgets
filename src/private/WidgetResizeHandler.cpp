@@ -52,6 +52,11 @@ void WidgetResizeHandler::setAllowedResizeSides(CursorPositions sides)
     mAllowedResizeSides = sides;
 }
 
+void WidgetResizeHandler::setResizeGap(int gap)
+{
+    m_resizeGap = gap;
+}
+
 int WidgetResizeHandler::widgetResizeHandlerMargin()
 {
     return 4; // pixels
@@ -133,6 +138,11 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     const QRect oldGeometry = KDDockWidgets::globalGeometry(mTarget);
     QRect newGeometry = oldGeometry;
 
+    auto targetsParent = KDDockWidgets::Private::parentWidget(mTarget);
+    QRect parentGeometry;
+    if (!mTarget->isTopLevel() && targetsParent)
+        parentGeometry = targetsParent->geometry();
+
     {
         int deltaWidth = 0;
         int newWidth = 0;
@@ -143,6 +153,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         case CursorPosition_TopLeft:
         case CursorPosition_Left:
         case CursorPosition_BottomLeft: {
+            parentGeometry = parentGeometry.adjusted(0, m_resizeGap, 0, 0);
             deltaWidth = oldGeometry.left() - globalPos.x();
             newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
             deltaWidth = newWidth - mTarget->width();
@@ -156,6 +167,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         case CursorPosition_TopRight:
         case CursorPosition_Right:
         case CursorPosition_BottomRight: {
+            parentGeometry = parentGeometry.adjusted(0, 0, -m_resizeGap, 0);
             deltaWidth = globalPos.x() - newGeometry.right();
             newWidth = qBound(minWidth, mTarget->width() + deltaWidth, maxWidth);
             deltaWidth = newWidth - mTarget->width();
@@ -178,6 +190,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         case CursorPosition_TopLeft:
         case CursorPosition_Top:
         case CursorPosition_TopRight: {
+            parentGeometry = parentGeometry.adjusted(0, m_resizeGap, 0, 0);
             deltaHeight = oldGeometry.top() - globalPos.y();
             newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
             deltaHeight = newHeight - mTarget->height();
@@ -191,6 +204,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         case CursorPosition_BottomLeft:
         case CursorPosition_Bottom:
         case CursorPosition_BottomRight: {
+            parentGeometry = parentGeometry.adjusted(0, 0, 0, -m_resizeGap);
             deltaHeight = globalPos.y() - newGeometry.bottom();
             newHeight = qBound(minHeight, mTarget->height() + deltaHeight, maxHeight);
             deltaHeight = newHeight - mTarget->height();
@@ -206,6 +220,10 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 
     if (newGeometry != mTarget->geometry()) {
         if (!mTarget->isTopLevel()) {
+
+            // Clip to parent's geometry.
+            newGeometry = newGeometry.intersected(parentGeometry);
+
             // Back to local.
             newGeometry.moveTopLeft(mTarget->mapFromGlobal(newGeometry.topLeft()) + mTarget->pos());
         }

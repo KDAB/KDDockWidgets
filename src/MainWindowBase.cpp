@@ -429,8 +429,8 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     d->updateOverlayGeometry();
 
     // Uncomment once I'm happy with the resizing
-    //auto resizeHandler = new WidgetResizeHandler(true, frame);
-    //resizeHandler->setAllowedResizeSides(d->allowedResizeSides(sb->location()));
+    auto resizeHandler = new WidgetResizeHandler(true, frame);
+    resizeHandler->setAllowedResizeSides(d->allowedResizeSides(sb->location()));
 
     frame->QWidgetAdapter::show();
 
