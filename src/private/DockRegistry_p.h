@@ -209,7 +209,7 @@ protected:
 private:
     friend class FocusScope;
     explicit DockRegistry(QObject *parent = nullptr);
-    void onDockWidgetPressed(DockWidgetBase *dw);
+    bool onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *);
     void onFocusObjectChanged(QObject *obj);
     void maybeDelete();
     void setFocusedDockWidget(DockWidgetBase *);
