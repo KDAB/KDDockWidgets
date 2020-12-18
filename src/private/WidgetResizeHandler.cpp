@@ -90,7 +90,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         return true;
     }
     case QEvent::MouseButtonRelease: {
-        if (mTarget->isMaximized())
+        if (mTarget->isMaximized() || !mResizeWidget)
             break;
         auto mouseEvent = static_cast<QMouseEvent *>(e);
         if (mouseEvent->button() == Qt::LeftButton) {
