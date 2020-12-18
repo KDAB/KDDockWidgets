@@ -40,8 +40,10 @@ public:
         CursorPosition_TopLeft = CursorPosition_Top | CursorPosition_Left,
         CursorPosition_TopRight = CursorPosition_Top | CursorPosition_Right,
         CursorPosition_BottomRight = CursorPosition_Bottom | CursorPosition_Right,
-        CursorPosition_BottomLeft = CursorPosition_Bottom | CursorPosition_Left
+        CursorPosition_BottomLeft = CursorPosition_Bottom | CursorPosition_Left,
+        CursorPosition_All = CursorPosition_Left | CursorPosition_Right | CursorPosition_Top | CursorPosition_Bottom
     };
+    Q_DECLARE_FLAGS(CursorPositions, CursorPosition)
 
     /**
      * @brief CTOR
@@ -49,6 +51,14 @@ public:
      */
     explicit WidgetResizeHandler(bool filterIsGlobal, QWidgetOrQuick *target);
     ~WidgetResizeHandler() override;
+
+    /**
+     * @brief Sets the sides the user is allowed to resize with mouse.
+     *
+     * By default the user can resize all 4 sides.
+     * However, when a dock widget is overlayed (popuped), only one side can be resized.
+     */
+    void setAllowedResizeSides(CursorPositions);
 
 #ifdef Q_OS_WIN
     static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result);
@@ -69,6 +79,7 @@ private:
     QPoint mNewPosition;
     bool mResizeWidget = false;
     const bool mFilterIsGlobal;
+    CursorPositions mAllowedResizeSides = CursorPosition_All;
 };
 
 }

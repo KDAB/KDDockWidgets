@@ -51,6 +51,11 @@ WidgetResizeHandler::~WidgetResizeHandler()
 {
 }
 
+void WidgetResizeHandler::setAllowedResizeSides(CursorPositions sides)
+{
+    mAllowedResizeSides = sides;
+}
+
 bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
 {
     if (s_disableAllHandlers)
@@ -367,6 +372,9 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
     case CursorPosition_Undefined:
         restoreMouseCursor();
         break;
+    case CursorPosition_All:
+        // Doesn't happen
+        break;
     }
 }
 
@@ -407,6 +415,9 @@ WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint g
         result |= CursorPosition_Top;
     else if (qAbs(y - (mTarget->height() - margin)) <= margin)
         result |= CursorPosition_Bottom;
+
+    // Filter out sides we don't allow
+    result = result & mAllowedResizeSides;
 
     return static_cast<CursorPosition>(result);
 }
