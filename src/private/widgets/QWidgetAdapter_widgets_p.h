@@ -46,6 +46,14 @@ inline QRect geometry(const QWidget *w)
     return w ? w->geometry() : QRect();
 }
 
+inline QRect parentGeometry(const QWidget *w)
+{
+    if (!w || !w->parentWidget())
+        return QRect();
+
+    return w->parentWidget()->geometry();
+}
+
 inline QWindow *windowForWidget(const QWidget *w)
 {
     return w ? w->window()->windowHandle() : nullptr;

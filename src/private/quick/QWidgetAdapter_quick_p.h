@@ -59,6 +59,15 @@ inline QRect geometry(const QQuickItem *item)
     return r;
 }
 
+inline QRect parentGeometry(const QQuickItem *item)
+{
+    if (!item || !item->parentItem())
+        return QRect();
+
+
+    return geometry(item->parentItem());
+}
+
 inline QWindow *windowForWidget(const QQuickItem *item)
 {
     return item ? item->window() : nullptr;

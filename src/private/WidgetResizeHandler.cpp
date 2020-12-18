@@ -138,10 +138,10 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     const QRect oldGeometry = KDDockWidgets::globalGeometry(mTarget);
     QRect newGeometry = oldGeometry;
 
-    auto targetsParent = KDDockWidgets::Private::parentWidget(mTarget);
     QRect parentGeometry;
-    if (!mTarget->isTopLevel() && targetsParent)
-        parentGeometry = targetsParent->geometry();
+    if (!mTarget->isTopLevel())
+        parentGeometry = KDDockWidgets::Private::parentGeometry(mTarget);
+
 
     {
         int deltaWidth = 0;
