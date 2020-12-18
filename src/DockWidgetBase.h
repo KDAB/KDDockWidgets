@@ -440,6 +440,10 @@ public:
     /// When you call dockWidget->setFloating(false) it will only dock if it knows where to.
     bool hasPreviousDockedLocation() const;
 
+    /// @brief returns the last size the widget has when overlayed
+    /// Empty otherwise
+    QSize lastOverlayedSize() const;
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();
@@ -491,6 +495,8 @@ protected:
     void onParentChanged();
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);
+    bool onResize(QSize newSize) override;
+
 #ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
     void onCloseEvent(QCloseEvent *e) override;
 #endif
