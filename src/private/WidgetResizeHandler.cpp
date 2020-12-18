@@ -79,26 +79,26 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
 
         const QRect widgetRect = mTarget->rect().marginsAdded(QMargins(widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin, widgetResizeHandlerMargin));
         const QPoint cursorPoint = mTarget->mapFromGlobal(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
-        if (!widgetRect.contains(cursorPoint))
+        if (!widgetRect.contains(cursorPoint) || mouseEvent->button() != Qt::LeftButton)
             return false;
-        if (mouseEvent->button() == Qt::LeftButton) {
-            mResizeWidget = true;
-        }
 
+        mResizeWidget = true;
         mNewPosition = Qt5Qt6Compat::eventGlobalPos(mouseEvent);
         mCursorPos = cursorPos;
+
         return true;
     }
     case QEvent::MouseButtonRelease: {
-        if (mTarget->isMaximized() || !mResizeWidget)
-            break;
+        mResizeWidget = false;
         auto mouseEvent = static_cast<QMouseEvent *>(e);
-        if (mouseEvent->button() == Qt::LeftButton) {
-            mResizeWidget = false;
-            mTarget->releaseMouse();
-            mTarget->releaseKeyboard();
-            return true;
-        }
+
+        if (mTarget->isMaximized() || !mResizeWidget || mouseEvent->button() != Qt::LeftButton)
+            break;
+
+        mTarget->releaseMouse();
+        mTarget->releaseKeyboard();
+        return true;
+
         break;
     }
     case QEvent::MouseMove: {
