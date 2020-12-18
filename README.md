@@ -100,6 +100,17 @@ The installation directory defaults to `c:\KDAB\KDDockWidgets-<version>` on Wind
 and `/usr/local/KDAB/KDDockWidgets-<version>` on non-Windows.  You can change this
 location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
 
+== Using ==
+From your CMake project, add
+
+    find_package(KDDockWidgets CONFIG)
+
+and link to the imported target KDAB::kddockwidgets.
+That's all you need to do (the imported target also brings in the include directories)
+
+You may also need to point the CMAKE_MODULE_PATH environment variable depending
+on where you installed KDDockWidgets.
+
 
 Python Bindings
 ================
@@ -178,3 +189,4 @@ Stay up-to-date with KDAB product announcements:
 
 * [KDAB Newsletter](https://news.kdab.com)
 * [KDAB Blogs](https://www.kdab.com/category/blogs)
+* [KDAB on Twitter](https://twitter.com/KDABQt)
