@@ -40,5 +40,6 @@
         </object-type>
 
         <object-type name="DockWidget" />
+        <object-type name="LayoutSaver" />
     </namespace-type>
 </typesystem>
