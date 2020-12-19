@@ -495,10 +495,10 @@ protected:
     void onParentChanged();
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);
-    bool onResize(QSize newSize) override;
 
 #ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
     void onCloseEvent(QCloseEvent *e) override;
+    bool onResize(QSize newSize) override;
 #endif
 
 #if defined(DOCKS_DEVELOPER_MODE)
