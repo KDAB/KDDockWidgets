@@ -22,6 +22,7 @@ import 'dart:io';
 import 'dart:convert';
 
 String s_sourceDirectory = "";
+bool s_testUnityVariations = false;
 
 class Preset {
   final String name;
@@ -59,7 +60,7 @@ class Preset {
   // Builds twice. One with unity build and one without.
   Future<bool> build() async {
     if (!await buildSingle(true)) return false;
-    if (!await buildSingle(false)) return false;
+    if (s_testUnityVariations) if (!await buildSingle(false)) return false;
     return true;
   }
 
@@ -108,12 +109,13 @@ Future<bool> runCMake(var cmd) async {
 }
 
 Future<int> main(List<String> arguments) async {
-  if (arguments.length != 1) {
-    print("Usage: build-all.dart <src-directory>");
+  if (arguments.length == 0) {
+    print("Usage: build-all.dart <src-directory> [--unity]");
     return 1;
   }
 
   s_sourceDirectory = arguments[0];
+  s_testUnityVariations = arguments.contains("--unity");
   final presetsFile = s_sourceDirectory + '/CMakePresets.json';
 
   if (FileSystemEntity.typeSync(presetsFile) == FileSystemEntityType.notFound) {
