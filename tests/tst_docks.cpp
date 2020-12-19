@@ -5585,7 +5585,7 @@ void TestDocks::tst_fixedSizePolicy()
     QCOMPARE(dock1->sizePolicy().verticalPolicy(), button->sizePolicy().verticalPolicy());
     QCOMPARE(dock1->sizePolicy().horizontalPolicy(), button->sizePolicy().horizontalPolicy());
 
-    QCOMPARE(frame->maxSizeHint().height(), qMax(buttonMaxHeight, KDDOCKWIDGETS_MIN_HEIGHT));
+    QCOMPARE(frame->maxSizeHint().height(), qMax(buttonMaxHeight, Layouting::Item::hardcodedMinimumSize.height()));
 
     delete dock1->window();
 }

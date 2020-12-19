@@ -100,7 +100,7 @@ Q_SIGNALS:
     void layoutInvalidated();
 private:
     QSize m_minSize = QSize(200, 200);
-    QSize m_maxSize = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT);
+    QSize m_maxSize = Layouting::Item::hardcodedMaximumSize;
 };
 
 static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)

@@ -34,13 +34,13 @@ QString Widget::id() const
 QSize Widget::boundedMaxSize(QSize min, QSize max)
 {
     // Max should be bigger than min, but not bigger than the hardcoded max
-    max = max.boundedTo(QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT));
+    max = max.boundedTo(Layouting::Item::hardcodedMaximumSize);
 
     // 0 interpreted as not having max
     if (max.width() <= 0)
-        max.setWidth(KDDOCKWIDGETS_MAX_WIDTH);
+        max.setWidth(Layouting::Item::hardcodedMaximumSize.width());
     if (max.height() <= 0)
-        max.setHeight(KDDOCKWIDGETS_MAX_HEIGHT);
+        max.setHeight(Layouting::Item::hardcodedMaximumSize.height());
 
     max = max.expandedTo(min);
 

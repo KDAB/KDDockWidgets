@@ -34,8 +34,10 @@
 using namespace Layouting;
 
 int Layouting::Item::separatorThickness = 5;
-const QSize Layouting::Item::hardcodedMinimumSize = QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
-const QSize Layouting::Item::hardcodedMaximumSize = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT);
+
+// There are the defaults. They can be changed by the user via Config.h API.
+QSize Layouting::Item::hardcodedMinimumSize = QSize(80, 90);
+QSize Layouting::Item::hardcodedMaximumSize = QSize(16777215, 16777215);
 
 bool Layouting::ItemContainer::s_inhibitSimplify = false;
 
@@ -446,7 +448,7 @@ QSize Item::minSize() const
 
 QSize Item::maxSizeHint() const
 {
-    return m_sizingInfo.maxSizeHint.boundedTo(QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT));
+    return m_sizingInfo.maxSizeHint.boundedTo(hardcodedMaximumSize);
 }
 
 void Item::setPos(QPoint pos)
@@ -731,7 +733,7 @@ void Item::dumpLayout(int level)
          << m_sizingInfo.geometry// << "r=" << m_geometry.right() << "b=" << m_geometry.bottom()
          << "; min=" << minSize();
 
-    if (maxSizeHint() != QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT))
+    if (maxSizeHint() != hardcodedMaximumSize)
         dbg << "; max=" << maxSizeHint();
 
     if (!isVisible())
@@ -1908,8 +1910,8 @@ QSize ItemContainer::minSize() const
 
 QSize ItemContainer::maxSizeHint() const
 {
-    int maxW = isVertical() ? KDDOCKWIDGETS_MAX_WIDTH : 0;
-    int maxH = isVertical() ? 0 : KDDOCKWIDGETS_MAX_HEIGHT;
+    int maxW = isVertical() ? hardcodedMaximumSize.width() : 0;
+    int maxH = isVertical() ? 0 : hardcodedMaximumSize.height();
 
     const Item::List visibleChildren = this->visibleChildren(/*includeBeingInserted=*/ false);
     if (!visibleChildren.isEmpty()) {
@@ -1921,26 +1923,26 @@ QSize ItemContainer::maxSizeHint() const
             const int itemMaxHeight = itemMaxSz.height();
             if (isVertical()) {
                 maxW = qMin(maxW, itemMaxWidth);
-                maxH = qMin(maxH + itemMaxHeight, KDDOCKWIDGETS_MAX_HEIGHT);
+                maxH = qMin(maxH + itemMaxHeight, hardcodedMaximumSize.height());
             } else {
                 maxH = qMin(maxH, itemMaxHeight);
-                maxW = qMin(maxW + itemMaxWidth, KDDOCKWIDGETS_MAX_WIDTH);
+                maxW = qMin(maxW + itemMaxWidth, hardcodedMaximumSize.width());
             }
         }
 
         const int separatorWaste = (visibleChildren.size() - 1) * separatorThickness;
         if (isVertical()) {
-            maxH = qMin(maxH + separatorWaste, KDDOCKWIDGETS_MAX_HEIGHT);
+            maxH = qMin(maxH + separatorWaste, hardcodedMaximumSize.height());
         } else {
-            maxW = qMin(maxW + separatorWaste, KDDOCKWIDGETS_MAX_WIDTH);
+            maxW = qMin(maxW + separatorWaste, hardcodedMaximumSize.width());
         }
     }
 
     if (maxW == 0)
-        maxW = KDDOCKWIDGETS_MAX_WIDTH;
+        maxW = hardcodedMaximumSize.width();
 
     if (maxH == 0)
-        maxH = KDDOCKWIDGETS_MAX_HEIGHT;
+        maxH = hardcodedMaximumSize.height();
 
     return QSize(maxW, maxH).expandedTo(d->minSize(visibleChildren));
 }
@@ -3566,6 +3568,13 @@ void ItemContainer::Private::updateWidgets_recursive()
             }
         }
     }
+}
+
+SizingInfo::SizingInfo()
+    : minSize(Layouting::Item::hardcodedMinimumSize)
+    , maxSizeHint(Layouting::Item::hardcodedMaximumSize)
+{
+
 }
 
 void SizingInfo::setOppositeLength(int l, Qt::Orientation o)

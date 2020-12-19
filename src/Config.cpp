@@ -172,6 +172,36 @@ TabbingAllowedFunc Config::tabbingAllowedFunc() const
     return d->m_tabbingAllowedFunc;
 }
 
+void Config::setAbsoluteWidgetMinSize(QSize size)
+{
+    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/ false)) {
+        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
+        return;
+    }
+
+    Layouting::Item::hardcodedMinimumSize = size;
+}
+
+QSize Config::absoluteWidgetMinSize() const
+{
+    return Layouting::Item::hardcodedMinimumSize;
+}
+
+void Config::setAbsoluteWidgetMaxSize(QSize size)
+{
+    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/ false)) {
+        qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
+        return;
+    }
+
+    Layouting::Item::hardcodedMaximumSize = size;
+}
+
+QSize Config::absoluteWidgetMaxSize() const
+{
+    return Layouting::Item::hardcodedMaximumSize;
+}
+
 #ifdef KDDOCKWIDGETS_QTQUICK
 void Config::setQmlEngine(QQmlEngine *qmlEngine)
 {

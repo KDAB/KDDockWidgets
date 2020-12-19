@@ -21,12 +21,6 @@
 
 #include <memory>
 
-#define KDDOCKWIDGETS_MIN_WIDTH 80
-#define KDDOCKWIDGETS_MIN_HEIGHT 90
-
-#define KDDOCKWIDGETS_MAX_WIDTH 16777215
-#define KDDOCKWIDGETS_MAX_HEIGHT 16777215
-
 class TestMultiSplitter;
 
 namespace Layouting {
@@ -114,6 +108,9 @@ inline QRect mapToRect(const QVariantMap &map)
 }
 
 struct SizingInfo {
+
+    SizingInfo();
+
     QSize size() const {
         return geometry.size();
     }
@@ -202,8 +199,8 @@ struct SizingInfo {
 
     typedef QVector<SizingInfo> List;
     QRect geometry;
-    QSize minSize = QSize(KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT);
-    QSize maxSizeHint = QSize(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT); // TODO: Not supported yet
+    QSize minSize;
+    QSize maxSizeHint;
     double percentageWithinParent = 0.0;
     bool isBeingInserted = false;
 };
@@ -274,8 +271,8 @@ public:
     /**
      * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.
      */
-    static const QSize hardcodedMinimumSize;
-    static const QSize hardcodedMaximumSize;
+    static QSize hardcodedMinimumSize;
+    static QSize hardcodedMaximumSize;
     static int separatorThickness;
 
     int x() const;

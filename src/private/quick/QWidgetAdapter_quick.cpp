@@ -145,14 +145,13 @@ void QWidgetAdapter::raise()
 QSize QWidgetAdapter::minimumSize() const
 {
     const QSize min = property("kddockwidgets_min_size").toSize();
-    return min.expandedTo({KDDOCKWIDGETS_MIN_WIDTH, KDDOCKWIDGETS_MIN_HEIGHT});
+    return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
 }
 
 QSize QWidgetAdapter::maximumSize() const
 {
     const QSize max = property("kddockwidgets_max_size").toSize();
-    const QSize defaultMax(KDDOCKWIDGETS_MAX_WIDTH, KDDOCKWIDGETS_MAX_HEIGHT);
-    return max.isEmpty() ? defaultMax
+    return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
                          : max.boundedTo(defaultMax);
 }
 

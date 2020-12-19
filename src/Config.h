@@ -23,6 +23,7 @@
 
 QT_BEGIN_NAMESPACE
 class QQmlEngine;
+class QSize;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets
@@ -186,6 +187,18 @@ public:
     ///By default it's nullptr.
     ///@sa setTabbingAllowedFunc().
     TabbingAllowedFunc tabbingAllowedFunc() const;
+
+    ///@brief Sets the minimum size a dock widget can have.
+    /// Widgets can still provide their own min-size and it will be respected, however it can never be
+    /// smaller than this one.
+    void setAbsoluteWidgetMinSize(QSize size);
+    QSize absoluteWidgetMinSize() const;
+
+    ///@brief Sets the maximum size a dock widget can have.
+    /// Widgets can still provide their own max-size and it will be respected, however it can never be
+    /// bigger than this one.
+    void setAbsoluteWidgetMaxSize(QSize size);
+    QSize absoluteWidgetMaxSize() const;
 
 #ifdef KDDOCKWIDGETS_QTQUICK
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
