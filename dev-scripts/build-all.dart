@@ -38,7 +38,7 @@ class Preset {
     return buildDir.replaceAll("\${sourceDir}", s_sourceDirectory);
   }
 
-  List<String> cmakeConfigArguments() {
+  List<String> cmakeConfigArguments(bool isUnityBuild) {
     return [
       "-G",
       "Ninja",
@@ -47,7 +47,8 @@ class Preset {
       buildDirectory(),
       "-S",
       s_sourceDirectory,
-      "--preset=" + name
+      "--preset=" + name,
+      '-DKDDockWidgets_UNITY_BUILD=${isUnityBuild ? "ON" : "OFF"}'
     ];
   }
 
@@ -55,8 +56,15 @@ class Preset {
     return ["--build", buildDirectory()];
   }
 
+  // Builds twice. One with unity build and one without.
   Future<bool> build() async {
-    if (!await runCMake(cmakeConfigArguments())) {
+    if (!await buildSingle(true)) return false;
+    if (!await buildSingle(false)) return false;
+    return true;
+  }
+
+  Future<bool> buildSingle(bool isUnityBuild) async {
+    if (!await runCMake(cmakeConfigArguments(isUnityBuild))) {
       return false;
     }
 
