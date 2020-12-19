@@ -364,19 +364,35 @@ void MainWindowBase::Private::updateOverlayGeometry(bool reusePreviousSize)
 
     Frame *frame = m_overlayedDockWidget->frame();
 
-    if (reusePreviousSize) {
+    if (reusePreviousSize) {        
         // Let's try to honour the previous overlay size
         switch (sb->location()) {
-        case SideBarLocation::North:
-        case SideBarLocation::South:
-            newGeometry.setHeight(frame->height());
+        case SideBarLocation::North: {
+            const int maxHeight = q->height() - frame->pos().y() - 10; // gap
+            newGeometry.setHeight(qMin(frame->height(), maxHeight));
             break;
-        case SideBarLocation::East:
-        case SideBarLocation::West:
-            newGeometry.setHeight(frame->width());
+        }
+        case SideBarLocation::South: {
+            const int maxHeight = sb->pos().y() - m_dropArea->pos().y() - 10; // gap
+            const int bottom = newGeometry.bottom();
+            newGeometry.setHeight(qMin(frame->height(), maxHeight));
+            newGeometry.moveBottom(bottom);
             break;
-
+        }
+        case SideBarLocation::East: {
+            const int maxWidth = sb->pos().x() - m_dropArea->pos().x() - 10; // gap
+            const int right = newGeometry.right();
+            newGeometry.setWidth(qMin(frame->width(), maxWidth));
+            newGeometry.moveRight(right);
+            break;
+        }
+        case SideBarLocation::West: {
+            const int maxWidth = q->width() - frame->pos().x() - 10; // gap
+            newGeometry.setWidth(qMin(frame->height(), maxWidth));
+            break;
+        }
         case SideBarLocation::None:
+            qWarning() << Q_FUNC_INFO << "Unexpected sidebar value";
             break;
         }
 
