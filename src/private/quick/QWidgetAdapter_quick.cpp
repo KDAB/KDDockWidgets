@@ -116,10 +116,10 @@ void QWidgetAdapter::itemChange(QQuickItem::ItemChange change, const QQuickItem:
     }
 }
 
-void QWidgetAdapter::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
+void QWidgetAdapter::QQUICKITEMgeometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     // Send a few events manually, since QQuickItem doesn't do it for us.
-    QQuickItem::geometryChanged(newGeometry, oldGeometry);
+    QQuickItem::QQUICKITEMgeometryChanged(newGeometry, oldGeometry);
 
     // Not calling event() directly, otherwise it would skip event filters
 
