@@ -653,7 +653,7 @@ static QWidgetOrQuick *qtTopLevelForHWND(HWND hwnd)
 template <typename T>
 static WidgetType* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow*> &windows, T windowBeingDragged)
 {
-    for (int i = windows.size() -1; i >= 0; --i) {
+    for (auto i = windows.size() -1; i >= 0; --i) {
         QWindow *window = windows.at(i);
         auto tl = KDDockWidgets::Private::widgetForWindow(window);
 
