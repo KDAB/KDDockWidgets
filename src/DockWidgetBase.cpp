@@ -132,6 +132,7 @@ public:
     bool m_updatingToggleAction = false;
     bool m_updatingFloatAction = false;
     bool m_isForceClosing = false;
+    QSize m_lastOverlayedSize = QSize(0, 0);
 };
 
 DockWidgetBase::DockWidgetBase(const QString &name, Options options)
@@ -516,6 +517,11 @@ bool DockWidgetBase::hasPreviousDockedLocation() const
     return d->m_lastPositions.isValid();
 }
 
+QSize DockWidgetBase::lastOverlayedSize() const
+{
+    return d->m_lastOverlayedSize;
+}
+
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
@@ -793,6 +799,19 @@ void DockWidgetBase::onHidden(bool spontaneous)
             f->onDockWidgetHidden(this);
         }
     }
+}
+
+bool DockWidgetBase::onResize(QSize newSize)
+{
+    if (isOverlayed()) {
+        if (auto frame = this->frame()) {
+            d->m_lastOverlayedSize = frame->QWidgetAdapter::size();
+        } else {
+            qWarning() << Q_FUNC_INFO << "Overlayed dock widget without frame shouldn't happen";
+        }
+    }
+
+    return QWidgetAdapter::onResize(newSize);
 }
 
 void DockWidgetBase::onCloseEvent(QCloseEvent *e)

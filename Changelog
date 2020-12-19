@@ -2,7 +2,7 @@
   - [TODO] QtQuick support
 
 * v1.2.1 (unreleased)
- - 
+  - Support for resizing dock widgets when they are in overlay/popup mode (autohide/sidebar feature)
 
 * v1.2.0 (17 December 2020)
   - Wayland support
