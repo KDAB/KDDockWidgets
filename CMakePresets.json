@@ -71,6 +71,33 @@
                 "KDDockWidgets_STATIC": "ON",
                 "KDDockWidgets_QTQUICK": "ON"
             }
+        },
+        {
+            "name": "qtwidgets6",
+            "displayName": "qtwidgets6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-qtwidgets6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QT6": "ON"
+            },
+            "environment": {
+                "PATH": "$env{HOME}/Qt/6.0.0/gcc_64/bin:$penv{PATH}"
+            }
+        },
+        {
+            "name": "qtquick6",
+            "displayName": "qtquick6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-qtquick6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QTQUICK": "ON",
+                 "KDDockWidgets_QT6": "ON"
+            },
+            "environment": {
+                "PATH": "$env{HOME}/Qt/6.0.0/gcc_64/bin:$penv{PATH}"
+            }
         }
     ]
 }

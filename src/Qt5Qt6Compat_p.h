@@ -20,6 +20,8 @@ namespace Qt5Qt6Compat {
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 
+#define QQUICKITEMgeometryChanged geometryChange
+
 using QEnterEvent = QEnterEvent;
 using qintptr = ::qintptr;
 using qhashtype = size_t;
@@ -34,8 +36,9 @@ inline QPoint eventGlobalPos(QMouseEvent *ev)
     return ev->globalPosition().toPoint();
 }
 
-#else
-// Qt 5:
+#else // Qt 5:
+
+#define QQUICKITEMgeometryChanged geometryChanged
 
 using QEnterEvent = QEvent;
 using qintptr = long;
