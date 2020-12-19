@@ -152,7 +152,7 @@ QSize QWidgetAdapter::maximumSize() const
 {
     const QSize max = property("kddockwidgets_max_size").toSize();
     return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
-                         : max.boundedTo(defaultMax);
+                         : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
 }
 
 WId QWidgetAdapter::winId() const
