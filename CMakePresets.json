@@ -1,0 +1,76 @@
+{
+    "version": 1,
+    "configurePresets": [
+        {
+            "name": "dev-qtwidgets",
+            "displayName": "dev-qtwidgets",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-qtwidgets",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON"
+            }
+        },
+        {
+            "name": "qtwidgets",
+            "displayName": "qtwidgets",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-qtwidgets",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "qtquick",
+            "displayName": "qtquick",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-qtquick",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_QTQUICK": "ON"
+            }
+        },
+        {
+            "name": "dev-qtquick",
+            "displayName": "dev-qtquick",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-qtquick",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_QTQUICK": "ON",
+                "KDDockWidgets_DEVELOPER_MODE": "ON"
+            }
+        },
+        {
+            "name": "python",
+            "displayName": "python",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-python",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_PYTHON_BINDINGS": "ON"
+            }
+        },
+        {
+            "name": "static-qtwidgets",
+            "displayName": "static-qtwidgets",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-static-qtwidgets",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_STATIC": "ON"
+            }
+        },
+        {
+            "name": "static-qtquick",
+            "displayName": "static-qtquick",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-static-qtquick",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "KDDockWidgets_STATIC": "ON",
+                "KDDockWidgets_QTQUICK": "ON"
+            }
+        }
+    ]
+}
