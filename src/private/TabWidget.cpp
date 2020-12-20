@@ -109,6 +109,11 @@ bool TabBar::hasSingleDockWidget() const
     return numDockWidgets() == 1;
 }
 
+int TabBar::numDockWidgets() const
+{
+    return m_tabWidget->numDockWidgets();
+}
+
 QWidgetOrQuick *TabBar::asWidget() const
 {
     return m_thisWidget;

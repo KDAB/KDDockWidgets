@@ -38,7 +38,6 @@ class DOCKS_EXPORT TabBarWidget : public QTabBar, public TabBar
     Q_OBJECT
 public:
     explicit TabBarWidget(TabWidget *parent = nullptr);
-    int numDockWidgets() const override;
     int tabAt(QPoint localPos) const override;
 
     DockWidgetBase *currentDockWidget() const;

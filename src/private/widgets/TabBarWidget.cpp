@@ -74,11 +74,6 @@ TabBarWidget::TabBarWidget(TabWidget *parent)
     setStyle(proxyStyle());
 }
 
-int TabBarWidget::numDockWidgets() const
-{
-    return count();
-}
-
 int TabBarWidget::tabAt(QPoint localPos) const
 {
     return QTabBar::tabAt(localPos);

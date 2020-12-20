@@ -63,7 +63,7 @@ public:
     ///@brief returns whether there's only 1 tab
     bool hasSingleDockWidget() const;
 
-    virtual int numDockWidgets() const = 0;
+    int numDockWidgets() const;
     virtual int tabAt(QPoint localPos) const = 0;
 
 

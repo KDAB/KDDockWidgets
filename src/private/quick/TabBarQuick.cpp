@@ -28,11 +28,6 @@ TabBarQuick::TabBarQuick(TabWidget *parent)
 {
 }
 
-int TabBarQuick::numDockWidgets() const
-{
-    return -1;
-}
-
 int TabBarQuick::tabAt(QPoint) const
 {
    return -1;

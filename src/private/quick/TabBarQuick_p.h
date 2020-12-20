@@ -28,12 +28,12 @@ namespace KDDockWidgets {
 class DockWidget;
 class TabWidget;
 
-class DOCKS_EXPORT TabBarQuick : public QWidgetAdapter, public TabBar
+class DOCKS_EXPORT TabBarQuick
+        : public QWidgetAdapter
+        , public TabBar
 {
-
 public:
     explicit TabBarQuick(TabWidget *parent = nullptr);
-    int numDockWidgets() const override;
     int tabAt(QPoint localPos) const override;
 protected:
     //void mousePressEvent(QMouseEvent *) override;
