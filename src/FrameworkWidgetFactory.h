@@ -43,6 +43,7 @@ class Frame;
 class DropArea;
 class SideBar;
 class TabBar;
+class TabWidgetQuick;
 
 /**
  * @brief A factory class for allowing the user to customize some internal widgets.
@@ -99,11 +100,6 @@ public:
     ///@param parent Just forward to TabBar's's constructor.
     virtual TabBar* createTabBar(TabWidget *parent = nullptr) const = 0;
 
-    ///@brief Called internally by the framework to create a TabWidget
-    ///       Override to provide your own TabWidget sub-class.
-    ///@param parent Just forward to TabWidget's constructor.
-    virtual TabWidget* createTabWidget(Frame *parent) const = 0;
-
     ///@brief Called internally by the framework to create a Separator
     ///       Override to provide your own Separator sub-class. The Separator allows
     ///       the user to resize nested dock widgets.
@@ -141,7 +137,18 @@ public:
     ///@brief Called internally by the framework to create a title bar button
     ///@p parent the button's parent
     virtual QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const = 0;
+
+    ///@brief Called internally by the framework to create a TabWidget
+    ///       Override to provide your own TabWidget sub-class.
+    ///@param parent Just forward to TabWidget's constructor.
+    virtual TabWidget* createTabWidget(Frame *parent) const = 0;
+
 #else
+    ///@brief Called internally by the framework to create a TabWidget
+    ///       Override to provide your own TabWidget sub-class.
+    ///@param parent Just forward to TabWidget's constructor.
+    virtual TabWidgetQuick* createTabWidget(Frame *parent) const = 0;
+
     virtual QUrl titleBarFilename() const = 0;
 #endif
 
@@ -163,7 +170,6 @@ public:
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
     TabBar *createTabBar(TabWidget *parent) const override;
-    TabWidget *createTabWidget(Frame *parent) const override;
     Layouting::Separator *createSeparator(Layouting::Widget *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const override;
@@ -173,8 +179,10 @@ public:
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const override;
+    TabWidget *createTabWidget(Frame *parent) const override;
 #else
     QUrl titleBarFilename() const override;
+    TabWidgetQuick *createTabWidget(Frame *parent) const override;
 #endif
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;

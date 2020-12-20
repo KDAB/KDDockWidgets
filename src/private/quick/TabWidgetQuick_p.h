@@ -49,9 +49,7 @@ public:
     int currentIndex() const override;
     bool insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) override;
     void setCurrentDockWidget(int index) override;
-    void setCurrentDockWidget(DockWidgetBase *);
-    bool containsDockWidget(DockWidgetBase *) const;
-    DockWidgetBase *currentDockWidget() const;
+
 protected:
     bool isPositionDraggable(QPoint p) const override;
     void setTabBarAutoHide(bool) override;

@@ -150,6 +150,11 @@ void TabWidget::setCurrentDockWidget(DockWidgetBase *dw)
     setCurrentDockWidget(indexOfDockWidget(dw));
 }
 
+DockWidgetBase *TabWidget::currentDockWidget() const
+{
+    return dockwidgetAt(currentIndex());
+}
+
 void TabWidget::addDockWidget(DockWidgetBase *dock)
 {
     insertDockWidget(dock, numDockWidgets());

@@ -111,6 +111,9 @@ public:
     virtual void setCurrentDockWidget(int index) = 0;
     void setCurrentDockWidget(DockWidgetBase *);
 
+    /// @brief Returns the current dock widget
+    DockWidgetBase *currentDockWidget() const;
+
     virtual bool insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) = 0;
 
     virtual void setTabBarAutoHide(bool) = 0;

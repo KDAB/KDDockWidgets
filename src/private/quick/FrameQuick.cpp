@@ -27,7 +27,7 @@ using namespace KDDockWidgets;
 
 FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     : Frame(parent, options)
-    , m_tabWidget(static_cast<TabWidgetQuick*>(Config::self().frameworkWidgetFactory()->createTabWidget(this)))
+    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
 {
     connect(m_tabWidget, &TabWidgetQuick::countChanged,
             this, &FrameQuick::onDockWidgetCountChanged);
@@ -108,7 +108,7 @@ void FrameQuick::setCurrentTabIndex_impl(int index)
 
 void FrameQuick::setCurrentDockWidget_impl(DockWidgetBase *dw)
 {
-    m_tabWidget->setCurrentDockWidget(dw);
+    m_tabWidget->TabWidget::setCurrentDockWidget(dw);
 }
 
 void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
@@ -183,115 +183,4 @@ QSize FrameQuick::maximumSize() const
 int FrameQuick::nonContentsHeight() const
 {
     return m_visualItem->property("nonContentsHeight").toInt();
-}
-
-DockWidgetModel::DockWidgetModel(QObject *parent)
-    : QAbstractListModel(parent)
-{
-}
-
-int DockWidgetModel::count() const
-{
-    return m_dockWidgets.size();
-}
-
-int DockWidgetModel::rowCount(const QModelIndex &parent) const
-{
-    return parent.isValid() ? 0 : m_dockWidgets.size();
-}
-
-QVariant DockWidgetModel::data(const QModelIndex &index, int role) const
-{
-    const int row = index.row();
-    if (row < 0 || row >= m_dockWidgets.size())
-        return {};
-
-    DockWidgetBase *dw = m_dockWidgets.at(row);
-
-    switch (role) {
-    case Role_Title:
-        return dw->title();
-    }
-
-    return {};
-}
-
-DockWidgetBase *DockWidgetModel::dockWidgetAt(int index) const
-{
-    if (index < 0 || index >= m_dockWidgets.size()) {
-        // Can happen. Benign.
-        return nullptr;
-    }
-
-    return m_dockWidgets[index];
-}
-
-bool DockWidgetModel::contains(DockWidgetBase *dw) const
-{
-    return m_dockWidgets.contains(dw);
-}
-
-QHash<int, QByteArray> DockWidgetModel::roleNames() const
-{
-    return { {Role_Title, "title"} };
-}
-
-void DockWidgetModel::emitDataChangedFor(DockWidgetBase *dw)
-{
-    const int row = indexOf(dw);
-    if (row == -1) {
-        qWarning() << Q_FUNC_INFO << "Couldn't find" << dw;
-    } else {
-        QModelIndex index = this->index(row, 0);
-        Q_EMIT dataChanged(index, index);
-    }
-}
-
-void DockWidgetModel::remove(DockWidgetBase *dw)
-{
-    const int row = indexOf(dw);
-    if (row == -1) {
-        qWarning() << Q_FUNC_INFO << "Nothing to remove"
-                   << static_cast<void*>(dw); // Print address only, as it might be deleted already
-    } else {
-        const auto connections = m_connections.take(dw);
-        for (QMetaObject::Connection conn : connections)
-            disconnect(conn);
-
-        beginRemoveRows(QModelIndex(), row, row);
-        m_dockWidgets.removeOne(dw);
-        endRemoveRows();
-
-        Q_EMIT countChanged();
-    }
-}
-
-int DockWidgetModel::indexOf(DockWidgetBase *dw)
-{
-    return m_dockWidgets.indexOf(dw);
-}
-
-bool DockWidgetModel::insert(DockWidgetBase *dw, int index)
-{
-    if (m_dockWidgets.contains(dw)) {
-        qWarning() << Q_FUNC_INFO << "Shouldn't happen";
-        return false;
-    }
-
-    QMetaObject::Connection conn = connect(dw, &DockWidgetBase::titleChanged, this, [dw, this] {
-        emitDataChangedFor(dw);
-    });
-
-    QMetaObject::Connection conn2 = connect(dw, &QObject::destroyed, this, [dw, this] {
-        remove(dw);
-    });
-
-    m_connections[dw] = { conn, conn2 };
-
-    beginInsertRows(QModelIndex(), index, index);
-    m_dockWidgets.insert(index, dw);
-    endInsertRows();
-
-    Q_EMIT countChanged();
-    return true;
 }
