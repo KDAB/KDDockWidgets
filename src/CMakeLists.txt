@@ -48,6 +48,8 @@ set(DOCKSLIBS_SRCS
     private/FloatingWindow_p.h
     private/Logging.cpp
     private/Logging_p.h
+    private/TabWidget.cpp
+    private/TabWidget_p.h
     private/TitleBar.cpp
     private/TitleBar_p.h
     private/SideBar.cpp
@@ -163,8 +165,6 @@ else()
       private/multisplitter/Widget_qwidget.h
       private/multisplitter/Separator_qwidget.cpp
       private/multisplitter/Separator_qwidget.h
-      private/widgets/TabWidget.cpp
-      private/TabWidget_p.h
       private/widgets/TabBarWidget.cpp
       private/widgets/TabBarWidget_p.h
       private/widgets/FloatingWindowWidget.cpp
