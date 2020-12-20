@@ -35,7 +35,6 @@ public:
     explicit FrameWidget(QWidget *parent = nullptr, FrameOptions = FrameOption_None);
     ~FrameWidget();
     QTabBar *tabBar() const;
-    TabWidget *tabWidget() const;
 
 protected:
     void paintEvent(QPaintEvent *) override;
@@ -48,13 +47,11 @@ protected:
     void setCurrentTabIndex_impl(int) override;
     DockWidgetBase *currentDockWidget_impl() const override;
     DockWidgetBase *dockWidgetAt_impl(int index) const override;
-    int dockWidgetCount_impl() const override;
     QRect dragRect() const override;
     void renameTab(int index, const QString &) override;
     int nonContentsHeight() const override;
 private:
     friend class TestDocks;
-    TabWidget *const m_tabWidget;
 };
 
 

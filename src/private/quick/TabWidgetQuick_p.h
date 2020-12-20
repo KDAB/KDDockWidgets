@@ -36,6 +36,7 @@ class DOCKS_EXPORT TabWidgetQuick
     , public TabWidget
 {
     Q_OBJECT
+    Q_PROPERTY(DockWidgetModel* dockWidgetModel READ dockWidgetModel CONSTANT)
 public:
     explicit TabWidgetQuick(Frame *parent);
 
@@ -50,14 +51,14 @@ public:
     bool insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) override;
     void setCurrentDockWidget(int index) override;
 
+Q_SIGNALS:
+    void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *dw);
+    void countChanged();
+
 protected:
     bool isPositionDraggable(QPoint p) const override;
     void setTabBarAutoHide(bool) override;
     void renameTab(int index, const QString &) override;
-
-Q_SIGNALS:
-    void currentDockWidgetChanged(DockWidgetBase *dw);
-    void countChanged();
 
 private:
     Q_DISABLE_COPY(TabWidgetQuick)

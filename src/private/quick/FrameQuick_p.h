@@ -29,18 +29,20 @@ class DockWidgetModel;
 class DOCKS_EXPORT FrameQuick : public Frame
 {
     Q_OBJECT
-    Q_PROPERTY(DockWidgetModel* dockWidgetModel READ dockWidgetModel CONSTANT)
-    //Q_PROPERTY(TabWidget* tabWidget READ tabWidget CONSTANT)
+    Q_PROPERTY(QObject* tabWidget READ tabWidgetObj CONSTANT)
 public:
     explicit FrameQuick(QWidgetAdapter *parent = nullptr, FrameOptions = FrameOption::FrameOption_None);
     ~FrameQuick() override;
-    DockWidgetModel *dockWidgetModel() const;
 
     /// @reimp
     QSize minimumSize() const override;
 
     /// @reimp
     QSize maximumSize() const override;
+
+    /// @brief returns the tab widget as QObject for usage in QML.
+    /// We can't return TabWidget directly as it's not a QObject
+    QObject *tabWidgetObj() const;
 
 protected:
     void removeWidget_impl(DockWidgetBase *) override;
@@ -51,7 +53,6 @@ protected:
     void insertDockWidget_impl(DockWidgetBase *, int index) override;
     DockWidgetBase *dockWidgetAt_impl(int index) const override;
     DockWidgetBase *currentDockWidget_impl() const override;
-    int dockWidgetCount_impl() const override;
     void renameTab(int index, const QString &) override;
     Q_INVOKABLE void setStackLayout(QQuickItem *);
 
@@ -59,11 +60,13 @@ protected:
 
 Q_SIGNALS:
     void tabTitlesChanged();
-private:
+
+private Q_SLOTS:
     void updateConstriants();
+
+private:
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;
-    TabWidgetQuick *const m_tabWidget;
     QHash<DockWidgetBase *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambdas
 };
 

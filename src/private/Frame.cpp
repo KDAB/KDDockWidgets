@@ -25,6 +25,7 @@
 #include "DockRegistry_p.h"
 #include "Config.h"
 #include "TitleBar_p.h"
+#include "TabWidget_p.h"
 #include "FrameworkWidgetFactory.h"
 
 #include <QCloseEvent>
@@ -49,6 +50,7 @@ static FrameOptions actualOptions(FrameOptions options)
 Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     : LayoutGuestWidget(parent)
     , FocusScope(this)
+    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_options(actualOptions(options))
 {
@@ -245,7 +247,7 @@ int Frame::dockWidgetCount() const
 {
     if (m_inCtor || m_inDtor) return 0;
 
-    return dockWidgetCount_impl();
+    return m_tabWidget->numDockWidgets();
 }
 
 void Frame::onDockWidgetCountChanged()
@@ -699,4 +701,9 @@ MainWindowBase *Frame::mainWindow() const
 {
     return m_dropArea ? m_dropArea->mainWindow()
                       : nullptr;
+}
+
+TabWidget *Frame::tabWidget() const
+{
+    return m_tabWidget;
 }

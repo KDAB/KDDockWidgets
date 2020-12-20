@@ -66,7 +66,6 @@ public:
     int numDockWidgets() const;
     virtual int tabAt(QPoint localPos) const = 0;
 
-
     /**
      * @brief Returns this class as a QWidget (if using QtWidgets) or QQuickItem
      */
@@ -163,6 +162,14 @@ public:
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     DockWidgetBase *singleDockWidget() const override;
+
+#if KDDOCKWIDGETS_QTQUICK
+    // TODO: Implement these for QWidgets too. Not used to for QtWidgets, so haven't done it yet.
+    // The only reason to implement them would be to remove the ifdef and this comment.
+//Q_SIGNALS: // Not a OQbject
+    virtual void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *) {};
+    virtual void countChanged() {};
+#endif
 
 protected:
     void onTabInserted();

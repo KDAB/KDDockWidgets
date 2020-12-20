@@ -77,7 +77,7 @@ Rectangle {
         width: parent.width
 
         Repeater {
-            model: root.frameCpp ? root.frameCpp.dockWidgetModel : 0
+            model: root.frameCpp ? root.frameCpp.tabWidget.dockWidgetModel : 0
             TabButton {
                 text: title
             }

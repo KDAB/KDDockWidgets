@@ -34,6 +34,7 @@ class TestDocks;
 namespace KDDockWidgets {
 
 class TitleBar;
+class TabWidget;
 class DropArea;
 class DockWidgetBase;
 class FloatingWindow;
@@ -104,6 +105,9 @@ public:
 
     /// @brief returns the number of dock widgets inside the frame
     int dockWidgetCount() const;
+
+    /// @brief returns the tab widget
+    TabWidget *tabWidget() const;
 
     void updateTitleAndIcon();
     void onDockWidgetTitleChanged();
@@ -243,6 +247,10 @@ Q_SIGNALS:
     void isInMainWindowChanged();
     void isFocusedChanged() override; // override from non-QObject
     void focusedWidgetChanged() override;
+
+protected Q_SLOTS:
+    void onDockWidgetCountChanged();
+
 protected:
 
     virtual void renameTab(int index, const QString &) = 0;
@@ -266,7 +274,6 @@ protected:
      * Any widget having 16777215x16777215 is ignored (represents not having a max-size, QWIDGETSIZE_MAX)
      */
     QSize biggestDockWidgetMaxSize() const;
-    void onDockWidgetCountChanged();
 
     virtual void removeWidget_impl(DockWidgetBase *) = 0;
     virtual int indexOfDockWidget_impl(DockWidgetBase *) = 0;
@@ -276,10 +283,13 @@ protected:
     virtual void insertDockWidget_impl(DockWidgetBase *, int index) = 0;
     virtual DockWidgetBase *dockWidgetAt_impl(int index) const = 0;
     virtual DockWidgetBase *currentDockWidget_impl() const = 0;
-    virtual int dockWidgetCount_impl() const = 0;
     virtual int nonContentsHeight() const = 0;
 
     bool m_inDtor = false;
+
+    TabWidget *const m_tabWidget;
+    TitleBar *const m_titleBar;
+
 private:
     Q_DISABLE_COPY(Frame)
     friend class ::TestDocks;
@@ -288,7 +298,6 @@ private:
     void scheduleDeleteLater();
     bool event(QEvent *) override;
     bool m_inCtor = true;
-    TitleBar *const m_titleBar;
     DropArea *m_dropArea = nullptr;
     const FrameOptions m_options;
     QPointer<Layouting::Item> m_layoutItem;

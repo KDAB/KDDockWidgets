@@ -27,16 +27,15 @@ using namespace KDDockWidgets;
 
 FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     : Frame(parent, options)
-    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
 {
-    connect(m_tabWidget, &TabWidgetQuick::countChanged,
-            this, &FrameQuick::onDockWidgetCountChanged);
+    connect(m_tabWidget->asWidget(), SIGNAL(countChanged()),
+            this, SLOT(onDockWidgetCountChanged()));
 
-    connect(m_tabWidget, &TabWidgetQuick::countChanged,
-            this, &FrameQuick::updateConstriants);
+    connect(m_tabWidget->asWidget(), SIGNAL(countChanged()),
+            this, SLOT(updateConstriants()));
 
-    connect(m_tabWidget, &TabWidgetQuick::currentDockWidgetChanged,
-            this, &FrameQuick::currentDockWidgetChanged);
+    connect(m_tabWidget->asWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase*)),
+            this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase*)));
 
     connect(this, &QWidgetAdapter::geometryUpdated, this, &Frame::layoutInvalidated);
 
@@ -78,11 +77,6 @@ void FrameQuick::updateConstriants()
     setProperty("kddockwidgets_max_size", maximumSize());
 
     Q_EMIT layoutInvalidated();
-}
-
-DockWidgetModel *FrameQuick::dockWidgetModel() const
-{
-    return m_tabWidget->dockWidgetModel();
 }
 
 void FrameQuick::removeWidget_impl(DockWidgetBase *dw)
@@ -149,11 +143,6 @@ DockWidgetBase *FrameQuick::currentDockWidget_impl() const
     return m_tabWidget->currentDockWidget();
 }
 
-int FrameQuick::dockWidgetCount_impl() const
-{
-    return m_tabWidget->numDockWidgets();
-}
-
 void FrameQuick::renameTab(int, const QString &)
 {
     // Not needed for QtQuick. Our model reacts to titleChanged()
@@ -178,6 +167,11 @@ QSize FrameQuick::minimumSize() const
 QSize FrameQuick::maximumSize() const
 {
     return Frame::maximumSize();
+}
+
+QObject *FrameQuick::tabWidgetObj() const
+{
+    return m_tabWidget->asWidget();
 }
 
 int FrameQuick::nonContentsHeight() const

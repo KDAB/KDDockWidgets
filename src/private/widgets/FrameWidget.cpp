@@ -51,7 +51,6 @@ VBoxLayout::~VBoxLayout() = default;
 
 FrameWidget::FrameWidget(QWidget *parent, FrameOptions options)
     : Frame(parent, options)
-    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
 {
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
@@ -146,16 +145,6 @@ QTabBar *FrameWidget::tabBar() const
 {
     auto tw = static_cast<QTabWidget*>(m_tabWidget->asWidget());
     return tw->tabBar();
-}
-
-TabWidget *FrameWidget::tabWidget() const
-{
-    return m_tabWidget;
-}
-
-int FrameWidget::dockWidgetCount_impl() const
-{
-    return m_tabWidget->numDockWidgets();
 }
 
 QRect FrameWidget::dragRect() const
