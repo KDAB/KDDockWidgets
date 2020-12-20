@@ -18,6 +18,7 @@
 
 #include "FrameQuick_p.h"
 #include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QDebug>
 
@@ -26,6 +27,7 @@ using namespace KDDockWidgets;
 FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     : Frame(parent, options)
     , m_dockWidgetModel(new DockWidgetModel(this))
+    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
 {
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged,
             this, &FrameQuick::onDockWidgetCountChanged);

@@ -65,6 +65,7 @@ private:
     QQuickItem *m_visualItem = nullptr;
     DockWidgetBase *m_currentDockWidget = nullptr;
     DockWidgetModel *const m_dockWidgetModel;
+    TabWidget *const m_tabWidget;
     QHash<DockWidgetBase *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambdas
 };
 

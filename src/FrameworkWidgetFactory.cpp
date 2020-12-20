@@ -36,6 +36,8 @@
 # include "DockWidgetQuick.h"
 # include "quick/FrameQuick_p.h"
 # include "quick/TitleBarQuick_p.h"
+# include "quick/TabWidgetQuick_p.h"
+# include "quick/TabBarQuick_p.h"
 # include "quick/FloatingWindowQuick_p.h"
 # include "quick/RubberBandQuick.h"
 # include "multisplitter/Separator_quick.h"
@@ -181,16 +183,12 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(
 
 TabBar *DefaultWidgetFactory::createTabBar(TabWidget *parent) const
 {
-    Q_UNUSED(parent)
-    Q_ASSERT(false);
-    return nullptr;
+    return new TabBarQuick(parent);
 }
 
 TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
 {
-    Q_UNUSED(parent)
-    Q_ASSERT(false);
-    return nullptr;
+    return new TabWidgetQuick(parent);
 }
 
 Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *parent) const

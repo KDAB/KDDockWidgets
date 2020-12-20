@@ -11,13 +11,15 @@
 
 #include "TabWidgetQuick_p.h"
 #include "Frame_p.h"
+#include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 using namespace KDDockWidgets;
 
 TabWidgetQuick::TabWidgetQuick(Frame *parent)
     : QWidgetAdapter(parent)
     , TabWidget(this, parent)
-    , m_tabBar(nullptr)
+    , m_tabBar(Config::self().frameworkWidgetFactory()->createTabBar(this))
 {
 }
 
