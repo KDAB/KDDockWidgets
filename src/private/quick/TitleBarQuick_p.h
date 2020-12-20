@@ -32,10 +32,6 @@ public:
     ~TitleBarQuick() override;
 
 protected:
-
-    Q_INVOKABLE void filterEvents(QObject *);
-    bool eventFilter(QObject *, QEvent *) override;
-
 #ifdef DOCKS_DEVELOPER_MODE
     // These 4 just for unit-tests
     bool isCloseButtonEnabled() const override;
@@ -58,7 +54,6 @@ private:
     QQuickItem *floatButton() const;
     QQuickItem *closeButton() const;
 
-    bool m_eventFilterInstalled = false;
     QPointer<QQuickItem> m_titleBarQmlItem;
 };
 

@@ -22,6 +22,7 @@
 #include "FloatingWindow_p.h"
 #include "MainWindowBase.h"
 #include "DockRegistry_p.h"
+#include "Utils_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>
@@ -31,6 +32,37 @@
 #include <QQuickView>
 
 using namespace KDDockWidgets;
+
+namespace KDDockWidgets {
+
+/**
+ * @brief Event filter which redirects mouse events from one QObject to another.
+ * Needed for QtQuick to redirect the events from MouseArea to our KDDW classes which derive from Draggable.
+ * For QtWidgets it's not needed, as the Draggables are QWidgets themselves.
+ */
+class MouseEventRedirector : public QObject
+{
+public:
+    explicit MouseEventRedirector(QObject *eventSource, QObject *eventTarget)
+        : QObject(eventTarget)
+        , m_eventTarget(eventTarget)
+    {
+        eventSource->installEventFilter(this);
+    }
+
+    bool eventFilter(QObject *, QEvent *ev) override
+    {
+        if (QMouseEvent *me = mouseEvent(ev))
+            qApp->sendEvent(m_eventTarget, me);
+
+        return false;
+    }
+
+    QObject *const m_eventTarget;
+};
+
+}
+
 
 static bool flagsAreTopLevelFlags(Qt::WindowFlags flags)
 {
@@ -613,5 +645,15 @@ QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 
     return window->property("kddockwidgets_qwidget").value<QQuickItem*>();
 }
+
+void QWidgetAdapter::redirectMouseEvents(QObject *source)
+{
+    if (m_mouseEventRedirector) {
+        qWarning() << Q_FUNC_INFO << "Redirector already installed";
+    } else {
+        m_mouseEventRedirector = new MouseEventRedirector(source, this);
+    }
+}
+
 
 LayoutGuestWidget::~LayoutGuestWidget() = default;

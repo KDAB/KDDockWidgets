@@ -35,22 +35,6 @@ TitleBarQuick::~TitleBarQuick()
 {
 }
 
-void TitleBarQuick::filterEvents(QObject *obj)
-{
-    if (!m_eventFilterInstalled) {
-        m_eventFilterInstalled = true;
-        obj->installEventFilter(this);
-    }
-}
-
-bool TitleBarQuick::eventFilter(QObject *, QEvent *ev)
-{
-    if (QMouseEvent *me = mouseEvent(ev))
-        qApp->sendEvent(this, me);
-
-    return false;
-}
-
 #ifdef DOCKS_DEVELOPER_MODE
 bool TitleBarQuick::isCloseButtonEnabled() const
 {

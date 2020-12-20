@@ -58,7 +58,7 @@ Rectangle {
 
     onTitleBarCppChanged: {
         if (titleBarCpp) {
-            titleBarCpp.filterEvents(dragMouseArea)
+            titleBarCpp.redirectMouseEvents(dragMouseArea)
 
             // Setting just so the unit-tests can access the buttons
             titleBarCpp.titleBarQmlItem = this;

@@ -37,6 +37,8 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+class MouseEventRedirector;
+
 namespace Private {
 
 DOCKS_EXPORT QQuickItem* widgetForWindow(QWindow *window);
@@ -134,6 +136,7 @@ public:
     Q_INVOKABLE void showMaximized();
     Q_INVOKABLE void showMinimized();
     Q_INVOKABLE void showNormal();
+    Q_INVOKABLE void redirectMouseEvents(QObject *from);
 
     QQuickView *quickView() const;
     QWindow *windowHandle() const;
@@ -196,6 +199,7 @@ private:
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;
     bool m_windowIsBeingDestroyed = false;
     bool m_mouseTrackingEnabled = false;
+    MouseEventRedirector *m_mouseEventRedirector = nullptr;
 };
 
 }
