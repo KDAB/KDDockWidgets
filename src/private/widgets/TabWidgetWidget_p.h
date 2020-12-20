@@ -28,7 +28,9 @@ namespace KDDockWidgets {
 class Frame;
 class TabBar;
 
-class DOCKS_EXPORT TabWidgetWidget : public QTabWidget, public TabWidget
+class DOCKS_EXPORT TabWidgetWidget
+        : public QTabWidget
+        , public TabWidget
 {
     Q_OBJECT
 public:
@@ -39,6 +41,10 @@ public:
     int numDockWidgets() const override;
     void removeDockWidget(DockWidgetBase *) override;
     int indexOfDockWidget(DockWidgetBase *) const override;
+
+Q_SIGNALS:
+    void currentTabChanged(int index) override;
+    void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *dw) override;
 protected:
     void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;

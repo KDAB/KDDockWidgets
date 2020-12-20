@@ -163,13 +163,10 @@ public:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     DockWidgetBase *singleDockWidget() const override;
 
-#if KDDOCKWIDGETS_QTQUICK
-    // TODO: Implement these for QWidgets too. Not used to for QtWidgets, so haven't done it yet.
-    // The only reason to implement them would be to remove the ifdef and this comment.
 //Q_SIGNALS: // Not a OQbject
-    virtual void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *) {};
+    virtual void currentTabChanged(int index) = 0;
+    virtual void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *) = 0;
     virtual void countChanged() {};
-#endif
 
 protected:
     void onTabInserted();

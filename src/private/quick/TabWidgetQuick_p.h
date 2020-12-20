@@ -52,8 +52,9 @@ public:
     void setCurrentDockWidget(int index) override;
 
 Q_SIGNALS:
-    void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *dw);
-    void countChanged();
+    void currentTabChanged(int index) override;
+    void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *dw) override;
+    void countChanged() override;
 
 protected:
     bool isPositionDraggable(QPoint p) const override;

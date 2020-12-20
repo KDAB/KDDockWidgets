@@ -29,9 +29,6 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     : Frame(parent, options)
 {
     connect(m_tabWidget->asWidget(), SIGNAL(countChanged()),
-            this, SLOT(onDockWidgetCountChanged()));
-
-    connect(m_tabWidget->asWidget(), SIGNAL(countChanged()),
             this, SLOT(updateConstriants()));
 
     connect(m_tabWidget->asWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase*)),
@@ -71,6 +68,8 @@ FrameQuick::~FrameQuick()
 
 void FrameQuick::updateConstriants()
 {
+    onDockWidgetCountChanged();
+
     // QtQuick doesn't have layouts, so we need to do constraint propagation manually
 
     setProperty("kddockwidgets_min_size", minimumSize());

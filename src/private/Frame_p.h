@@ -290,11 +290,14 @@ protected:
     TabWidget *const m_tabWidget;
     TitleBar *const m_titleBar;
 
+private Q_SLOTS:
+    void onCurrentTabChanged(int index);
+
 private:
     Q_DISABLE_COPY(Frame)
     friend class ::TestDocks;
     friend class TabWidget;
-    void onCurrentTabChanged(int index);
+
     void scheduleDeleteLater();
     bool event(QEvent *) override;
     bool m_inCtor = true;

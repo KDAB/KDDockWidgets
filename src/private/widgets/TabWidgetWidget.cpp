@@ -49,6 +49,8 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
 
     connect(this, &QTabWidget::currentChanged, this, [this] (int index) {
         onCurrentTabChanged(index);
+        Q_EMIT currentTabChanged(index);
+        Q_EMIT currentDockWidgetChanged(currentDockWidget());
     });
 }
 

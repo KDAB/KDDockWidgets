@@ -59,6 +59,10 @@ Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
 
     connect(this, &Frame::currentDockWidgetChanged, this, &Frame::updateTitleAndIcon);
+
+    connect(m_tabWidget->asWidget(), SIGNAL(currentTabChanged(int)),
+            this, SLOT(onCurrentTabChanged(int)));
+
     setDropArea(qobject_cast<DropArea *>(QWidgetAdapter::parentWidget()));
     m_inCtor = false;
 }

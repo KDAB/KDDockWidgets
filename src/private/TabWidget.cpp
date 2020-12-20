@@ -134,15 +134,6 @@ TabWidget::TabWidget(QWidgetOrQuick *thisWidget, Frame *frame)
     , m_frame(frame)
     , m_thisWidget(thisWidget)
 {
-
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    // Little ifdefery, as this is not so easy to abstract
-    QObject::connect(static_cast<QTabWidget*>(thisWidget), &QTabWidget::currentChanged,
-                     frame, &Frame::onCurrentTabChanged);
-#else
-    //qWarning() << Q_FUNC_INFO << "Implement me";
-#endif
-
 }
 
 void TabWidget::setCurrentDockWidget(DockWidgetBase *dw)
