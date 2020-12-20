@@ -25,7 +25,6 @@
 #include "Frame_p.h"
 #include "DockWidgetBase.h"
 
-#include <QTabBar>
 #include <QVector>
 
 #include <memory>

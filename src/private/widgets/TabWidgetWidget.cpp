@@ -22,6 +22,7 @@
 #include "FrameworkWidgetFactory.h"
 
 #include <QMouseEvent>
+#include <QTabBar>
 
 using namespace KDDockWidgets;
 

@@ -133,6 +133,8 @@ if(${PROJECT_NAME}_QTQUICK)
       private/quick/QWidgetAdapter_quick_p.h
       private/quick/FloatingWindowQuick.cpp
       private/quick/FloatingWindowQuick_p.h
+      private/quick/TabWidgetQuick.cpp
+      private/quick/TabWidgetQuick_p.h
       private/quick/TitleBarQuick.cpp
       private/quick/TitleBarQuick_p.h
       private/quick/QmlTypes.cpp
