@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../../private/widgets/TabWidget_p.h"
+#include "../../../private/TabWidget_p.h"

@@ -118,7 +118,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/FrameWidget_p.h
     private/widgets/TabBarWidget_p.h
     private/widgets/TabWidgetWidget_p.h
-    private/widgets/TabWidget_p.h
+    private/TabWidget_p.h
 )
 
 if(${PROJECT_NAME}_QTQUICK)
@@ -164,7 +164,7 @@ else()
       private/multisplitter/Separator_qwidget.cpp
       private/multisplitter/Separator_qwidget.h
       private/widgets/TabWidget.cpp
-      private/widgets/TabWidget_p.h
+      private/TabWidget_p.h
       private/widgets/TabBarWidget.cpp
       private/widgets/TabBarWidget_p.h
       private/widgets/FloatingWindowWidget.cpp

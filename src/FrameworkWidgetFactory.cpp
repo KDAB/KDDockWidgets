@@ -18,9 +18,9 @@
 #include "indicators/ClassicIndicators_p.h"
 #include "indicators/NullIndicators_p.h"
 #include "Utils_p.h"
+#include "TabWidget_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "widgets/TabWidget_p.h"
 # include "widgets/FrameWidget_p.h"
 # include "widgets/TitleBarWidget_p.h"
 # include "widgets/TabBarWidget_p.h"
