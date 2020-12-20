@@ -250,9 +250,9 @@ Q_SIGNALS:
 
 protected Q_SLOTS:
     void onDockWidgetCountChanged();
+    void onCurrentTabChanged(int index);
 
 protected:
-
     virtual void renameTab(int index, const QString &) = 0;
 
     /**
@@ -289,9 +289,6 @@ protected:
 
     TabWidget *const m_tabWidget;
     TitleBar *const m_titleBar;
-
-private Q_SLOTS:
-    void onCurrentTabChanged(int index);
 
 private:
     Q_DISABLE_COPY(Frame)

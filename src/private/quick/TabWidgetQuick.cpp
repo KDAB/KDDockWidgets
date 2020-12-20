@@ -61,6 +61,7 @@ void TabWidgetQuick::setCurrentDockWidget(int index)
     if (m_currentDockWidget != dw) {
         m_currentDockWidget = dw;
         Q_EMIT currentDockWidgetChanged(dw);
+        Q_EMIT currentTabChanged(index);
     }
 }
 

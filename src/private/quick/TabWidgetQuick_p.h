@@ -49,7 +49,7 @@ public:
     DockWidgetBase *dockwidgetAt(int index) const override;
     int currentIndex() const override;
     bool insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) override;
-    void setCurrentDockWidget(int index) override;
+    Q_INVOKABLE void setCurrentDockWidget(int index) override;
 
 Q_SIGNALS:
     void currentTabChanged(int index) override;

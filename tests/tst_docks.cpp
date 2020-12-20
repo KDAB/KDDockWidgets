@@ -18,6 +18,7 @@
 #include "multisplitter/Separator_p.h"
 #include "private/MultiSplitter_p.h"
 #include "TitleBar_p.h"
+#include "TabWidget_p.h"
 #include "Position_p.h"
 #include "DropAreaWithCentralFrame_p.h"
 #include "WindowBeingDragged_p.h"
@@ -136,6 +137,7 @@ private Q_SLOTS:
     void tst_restoreSimplest();
     void tst_invalidLayoutAfterRestore();
 
+    void tst_tabWidgetCurrentIndex();
     void tst_propagateResize2();
     void tst_negativeAnchorPosition();
     void tst_negativeAnchorPosition2();
@@ -5929,6 +5931,40 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QVERIFY(Testing::waitForDeleted(fw2));
     QCOMPARE(layout->width(), oldContentsWidth);
     layout->checkSanity();
+}
+
+void TestDocks::tst_tabWidgetCurrentIndex()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock3 = createDockWidget("3", new QPushButton("3"));
+    auto fw2 = dock2->window();
+    auto fw3 = dock3->window();
+
+    DockWidgetBase *currentDw = nullptr;
+    auto frame = dock1->frame();
+    connect(frame, &Frame::currentDockWidgetChanged, this, [&currentDw] (DockWidgetBase *dw){
+        currentDw = dw;
+    });
+
+    QCOMPARE(frame->tabWidget()->currentIndex(), 0);
+    dock1->addDockWidgetAsTab(dock2);
+
+    QCOMPARE(frame->tabWidget()->currentIndex(), 1);
+    QCOMPARE(frame->currentDockWidget(), currentDw);
+    QCOMPARE(dock2, currentDw);
+
+    dock2->close();
+
+    QCOMPARE(frame->tabWidget()->currentIndex(), 0);
+    QCOMPARE(dock1, currentDw);
+
+    delete fw2;
+    delete fw3;
+    delete dock2;
+    delete dock1->window();
 }
 
 void TestDocks::tst_addingOptionHiddenTabbed()

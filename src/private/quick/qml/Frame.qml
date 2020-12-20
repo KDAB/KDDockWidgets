@@ -76,6 +76,10 @@ Rectangle {
 
         width: parent.width
 
+        onCurrentIndexChanged: {
+            root.frameCpp.tabWidget.setCurrentDockWidget(currentIndex);
+        }
+
         Repeater {
             model: root.frameCpp ? root.frameCpp.tabWidget.dockWidgetModel : 0
             TabButton {
