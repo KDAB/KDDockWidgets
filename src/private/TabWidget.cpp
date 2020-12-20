@@ -150,7 +150,7 @@ void TabWidget::addDockWidget(DockWidgetBase *dock)
     insertDockWidget(dock, numDockWidgets());
 }
 
-void TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
+bool TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
 {
     Q_ASSERT(dock);
     qCDebug(addwidget) << Q_FUNC_INFO << dock << "; count before=" << numDockWidgets();
@@ -162,7 +162,7 @@ void TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
 
     if (contains(dock)) {
         qWarning() << Q_FUNC_INFO << "Refusing to add already existing widget";
-        return;
+        return false;
     }
 
     QPointer<Frame> oldFrame = dock->frame();
@@ -180,6 +180,8 @@ void TabWidget::insertDockWidget(DockWidgetBase *dock, int index)
 
         delete oldFrame;
     }
+
+    return true;
 }
 
 bool TabWidget::contains(DockWidgetBase *dw) const

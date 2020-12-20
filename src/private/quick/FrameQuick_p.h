@@ -15,8 +15,7 @@
 
 #include "Frame_p.h"
 #include "DockWidgetBase.h"
-
-#include <QAbstractListModel>
+#include "TabWidgetQuick_p.h"
 
 class QQuickItem;
 
@@ -63,37 +62,8 @@ private:
     void updateConstriants();
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;
-    DockWidgetBase *m_currentDockWidget = nullptr;
-    DockWidgetModel *const m_dockWidgetModel;
-    TabWidget *const m_tabWidget;
+    TabWidgetQuick *const m_tabWidget;
     QHash<DockWidgetBase *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambdas
-};
-
-class DockWidgetModel : public QAbstractListModel
-{
-    Q_OBJECT
-public:
-    enum Role {
-        Role_Title = Qt::UserRole
-    };
-
-    explicit DockWidgetModel(QObject *parent);
-    int count() const;
-    int rowCount(const QModelIndex &parent) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-    DockWidgetBase *dockWidgetAt(int index) const;
-    void remove(DockWidgetBase *);
-    int indexOf(DockWidgetBase *);
-    bool insert(DockWidgetBase *dw, int index);
-    bool contains(DockWidgetBase *dw) const;
-protected:
-    QHash<int, QByteArray> roleNames() const override;
-Q_SIGNALS:
-    void countChanged();
-private:
-    void emitDataChangedFor(DockWidgetBase *);
-    DockWidgetBase::List m_dockWidgets;
-    QHash<DockWidgetBase *, QVector<QMetaObject::Connection> > m_connections; // To make it easy to disconnect from lambdas
 };
 
 }

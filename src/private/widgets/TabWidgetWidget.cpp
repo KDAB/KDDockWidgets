@@ -124,10 +124,11 @@ void TabWidgetWidget::setCurrentDockWidget(int index)
     setCurrentIndex(index);
 }
 
-void TabWidgetWidget::insertDockWidget(int index, DockWidgetBase *dw,
+bool TabWidgetWidget::insertDockWidget(int index, DockWidgetBase *dw,
                                        const QIcon &icon, const QString &title)
 {
     insertTab(index, dw, icon, title);
+    return true;
 }
 
 void TabWidgetWidget::setTabBarAutoHide(bool b)

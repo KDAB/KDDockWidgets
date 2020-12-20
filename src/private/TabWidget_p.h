@@ -111,7 +111,7 @@ public:
     virtual void setCurrentDockWidget(int index) = 0;
     void setCurrentDockWidget(DockWidgetBase *);
 
-    virtual void insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) = 0;
+    virtual bool insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) = 0;
 
     virtual void setTabBarAutoHide(bool) = 0;
 
@@ -136,7 +136,7 @@ public:
      * @param dockwidget the dockwidget to insert
      * @param index The index to where to put it
      */
-    void insertDockWidget(DockWidgetBase *dockwidget, int index);
+    bool insertDockWidget(DockWidgetBase *dockwidget, int index);
 
     /**
      * @brief Returns whether dockwidget @p dw is contained in this tab widget

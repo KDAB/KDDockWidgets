@@ -23,11 +23,13 @@
 #include "QWidgetAdapter_quick_p.h"
 
 #include <QQuickItem>
+#include <QAbstractListModel>
 
 namespace KDDockWidgets {
 
 class Frame;
 class TabBar;
+class DockWidgetModel;
 
 class DOCKS_EXPORT TabWidgetQuick
     : public QWidgetAdapter
@@ -42,21 +44,57 @@ public:
     int numDockWidgets() const override;
     void removeDockWidget(DockWidgetBase *) override;
     int indexOfDockWidget(DockWidgetBase *) const override;
-protected:
-
-    bool isPositionDraggable(QPoint p) const override;
+    DockWidgetModel *dockWidgetModel() const;
+    DockWidgetBase *dockwidgetAt(int index) const override;
+    int currentIndex() const override;
+    bool insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) override;
     void setCurrentDockWidget(int index) override;
-    void insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) override;
+    void setCurrentDockWidget(DockWidgetBase *);
+    bool containsDockWidget(DockWidgetBase *) const;
+    DockWidgetBase *currentDockWidget() const;
+protected:
+    bool isPositionDraggable(QPoint p) const override;
     void setTabBarAutoHide(bool) override;
     void renameTab(int index, const QString &) override;
 
-    DockWidgetBase *dockwidgetAt(int index) const override;
-    int currentIndex() const override;
+Q_SIGNALS:
+    void currentDockWidgetChanged(DockWidgetBase *dw);
+    void countChanged();
 
 private:
     Q_DISABLE_COPY(TabWidgetQuick)
+    DockWidgetModel *const m_dockWidgetModel;
     TabBar *const m_tabBar;
+    DockWidgetBase *m_currentDockWidget = nullptr;
 };
+
+class DockWidgetModel : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    enum Role {
+        Role_Title = Qt::UserRole
+    };
+
+    explicit DockWidgetModel(QObject *parent);
+    int count() const;
+    int rowCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    DockWidgetBase *dockWidgetAt(int index) const;
+    void remove(DockWidgetBase *);
+    int indexOf(DockWidgetBase *);
+    bool insert(DockWidgetBase *dw, int index);
+    bool contains(DockWidgetBase *dw) const;
+protected:
+    QHash<int, QByteArray> roleNames() const override;
+Q_SIGNALS:
+    void countChanged();
+private:
+    void emitDataChangedFor(DockWidgetBase *);
+    DockWidgetBase::List m_dockWidgets;
+    QHash<DockWidgetBase *, QVector<QMetaObject::Connection> > m_connections; // To make it easy to disconnect from lambdas
+};
+
 
 }
 

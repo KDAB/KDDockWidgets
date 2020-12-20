@@ -19,6 +19,7 @@
 #include "FrameQuick_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+#include "TabWidgetQuick_p.h"
 
 #include <QDebug>
 
@@ -26,14 +27,16 @@ using namespace KDDockWidgets;
 
 FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     : Frame(parent, options)
-    , m_dockWidgetModel(new DockWidgetModel(this))
-    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
+    , m_tabWidget(static_cast<TabWidgetQuick*>(Config::self().frameworkWidgetFactory()->createTabWidget(this)))
 {
-    connect(m_dockWidgetModel, &DockWidgetModel::countChanged,
+    connect(m_tabWidget, &TabWidgetQuick::countChanged,
             this, &FrameQuick::onDockWidgetCountChanged);
 
-    connect(m_dockWidgetModel, &DockWidgetModel::countChanged,
+    connect(m_tabWidget, &TabWidgetQuick::countChanged,
             this, &FrameQuick::updateConstriants);
+
+    connect(m_tabWidget, &TabWidgetQuick::currentDockWidgetChanged,
+            this, &FrameQuick::currentDockWidgetChanged);
 
     connect(this, &QWidgetAdapter::geometryUpdated, this, &Frame::layoutInvalidated);
 
@@ -79,26 +82,23 @@ void FrameQuick::updateConstriants()
 
 DockWidgetModel *FrameQuick::dockWidgetModel() const
 {
-    return m_dockWidgetModel;
+    return m_tabWidget->dockWidgetModel();
 }
 
 void FrameQuick::removeWidget_impl(DockWidgetBase *dw)
 {
-    m_dockWidgetModel->remove(dw);
+    m_tabWidget->removeDockWidget(dw);
     disconnect(m_connections.take(dw));
 }
 
 int FrameQuick::indexOfDockWidget_impl(DockWidgetBase *dw)
 {
-    return m_dockWidgetModel->indexOf(dw);
+    return m_tabWidget->indexOfDockWidget(dw);
 }
 
 int FrameQuick::currentIndex_impl() const
 {
-    if (!m_currentDockWidget)
-        return -1;
-
-    return m_dockWidgetModel->indexOf(m_currentDockWidget);
+    return m_tabWidget->currentIndex();
 }
 
 void FrameQuick::setCurrentTabIndex_impl(int index)
@@ -108,21 +108,13 @@ void FrameQuick::setCurrentTabIndex_impl(int index)
 
 void FrameQuick::setCurrentDockWidget_impl(DockWidgetBase *dw)
 {
-    if (dw && !m_dockWidgetModel->contains(dw)) {
-        qWarning() << Q_FUNC_INFO << "Shouldn't happen";
-        return;
-    }
-
-    if (m_currentDockWidget != dw) {
-        m_currentDockWidget = dw;
-        Q_EMIT currentDockWidgetChanged(dw);
-    }
+    m_tabWidget->setCurrentDockWidget(dw);
 }
 
 void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
 {
     QPointer<Frame> oldFrame = dw->frame();
-    if (m_dockWidgetModel->insert(dw, index)) {
+    if (m_tabWidget->insertDockWidget(index, dw, {}, {})) {
         dw->setParent(m_stackLayout);
 
         QMetaObject::Connection conn = connect(dw, &DockWidgetBase::parentChanged, this, [dw, this] {
@@ -149,17 +141,17 @@ void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
 
 DockWidgetBase *FrameQuick::dockWidgetAt_impl(int index) const
 {
-    return m_dockWidgetModel->dockWidgetAt(index);
+    return m_tabWidget->dockwidgetAt(index);
 }
 
 DockWidgetBase *FrameQuick::currentDockWidget_impl() const
 {
-    return m_currentDockWidget;
+    return m_tabWidget->currentDockWidget();
 }
 
 int FrameQuick::dockWidgetCount_impl() const
 {
-    return m_dockWidgetModel->count();
+    return m_tabWidget->numDockWidgets();
 }
 
 void FrameQuick::renameTab(int, const QString &)
