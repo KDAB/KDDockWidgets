@@ -22,6 +22,8 @@ import 'dart:io';
 import 'dart:convert';
 
 String s_sourceDirectory = "";
+bool s_testUnityVariations = false;
+bool s_runTests = true;
 
 class Preset {
   final String name;
@@ -59,7 +61,11 @@ class Preset {
   // Builds twice. One with unity build and one without.
   Future<bool> build() async {
     if (!await buildSingle(true)) return false;
-    if (!await buildSingle(false)) return false;
+    if (s_testUnityVariations) if (!await buildSingle(false)) return false;
+    if (s_runTests && !await runTests()) {
+      return false;
+    }
+
     return true;
   }
 
@@ -69,6 +75,23 @@ class Preset {
     }
 
     if (!await runCMake(cmakeBuildArguments())) {
+      return false;
+    }
+
+    return true;
+  }
+
+  Future<bool> runTests() async {
+    print("Running: ctest");
+
+    final savedCwd = Directory.current;
+    Directory.current = buildDirectory();
+    ProcessResult result = await Process.run('ctest', ["-j8"]);
+    Directory.current = savedCwd;
+
+    if (result.exitCode != 0) {
+      print(result.stdout);
+      print(result.stderr);
       return false;
     }
 
@@ -108,12 +131,14 @@ Future<bool> runCMake(var cmd) async {
 }
 
 Future<int> main(List<String> arguments) async {
-  if (arguments.length != 1) {
-    print("Usage: build-all.dart <src-directory>");
+  if (arguments.length == 0) {
+    print("Usage: build-all.dart <src-directory> [--unity]");
     return 1;
   }
 
   s_sourceDirectory = arguments[0];
+  s_testUnityVariations = arguments.contains("--unity");
+  s_runTests = arguments.contains("--tests");
   final presetsFile = s_sourceDirectory + '/CMakePresets.json';
 
   if (FileSystemEntity.typeSync(presetsFile) == FileSystemEntityType.notFound) {
