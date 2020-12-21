@@ -19,6 +19,8 @@
 
 #include "TabBarQuick_p.h"
 
+#include <QMetaObject>
+#include <QMouseEvent>
 
 using namespace KDDockWidgets;
 
@@ -28,7 +30,70 @@ TabBarQuick::TabBarQuick(TabWidget *parent)
 {
 }
 
-int TabBarQuick::tabAt(QPoint) const
+int TabBarQuick::tabAt(QPoint p) const
 {
-   return -1;
+    // QtQuick's TabBar doesn't provide any API for this.
+    // So ask its *internal* ListView instead.
+
+    if (!m_tabBarQmlItem) {
+        qWarning() << Q_FUNC_INFO << "No visual tab bar item yet";
+        return -1;
+    }
+
+    if (QQuickItem *internalListView = listView()) {
+        int index = -1;
+        QMetaObject::invokeMethod(internalListView, "indexAt", Q_RETURN_ARG(int, index),
+                Q_ARG(double, p.x()), Q_ARG(double, p.y()));
+
+        return index;
+    } else {
+        qWarning() << Q_FUNC_INFO << "Couldn't find the internal ListView";
+    }
+
+    return -1;
+}
+
+QQuickItem *TabBarQuick::tabBarQmlItem() const
+{
+    return m_tabBarQmlItem;
+}
+
+void TabBarQuick::setTabBarQmlItem(QQuickItem *item)
+{
+    m_tabBarQmlItem = item;
+}
+
+bool TabBarQuick::event(QEvent *ev)
+{
+    switch (ev->type()) {
+    case QEvent::MouseButtonPress: {
+        if (m_tabBarQmlItem) {
+            auto me = static_cast<QMouseEvent*>(ev);
+            m_tabBarQmlItem->setProperty("currentIndex", tabAt(me->pos()));
+            TabBar::onMousePress(me->pos());
+        }
+
+        break;
+    }
+    default:
+        break;
+    }
+
+    return QWidgetAdapter::event(ev);
+}
+
+QQuickItem* TabBarQuick::listView() const
+{
+    // Returns the internal ListView of the TabBar
+
+    if (!m_tabBarQmlItem)
+        return nullptr;
+
+    const QList<QQuickItem*> children = m_tabBarQmlItem->childItems();
+    for (QQuickItem *child : children) {
+        if (qstrcmp(child->metaObject()->className(), "QQuickListView") == 0)
+            return child;
+    }
+
+    return nullptr;
 }

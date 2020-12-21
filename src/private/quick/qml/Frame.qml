@@ -61,8 +61,19 @@ Rectangle {
         }
     }
 
+    MouseArea {
+        id: dragMouseArea
+        hoverEnabled: true
+        anchors.fill: tabbar
+        z: 10
+    }
+
     TabBar {
         id: tabbar
+
+        readonly property QtObject tabBarCpp: root.frameCpp ? root.frameCpp.tabWidget.tabBar
+                                                            : null
+
         visible: count > 1
         anchors {
             left: parent ? parent.left : undefined
@@ -78,6 +89,15 @@ Rectangle {
 
         onCurrentIndexChanged: {
             root.frameCpp.tabWidget.setCurrentDockWidget(currentIndex);
+        }
+
+        onTabBarCppChanged: {
+            if (tabBarCpp) {
+                tabBarCpp.redirectMouseEvents(dragMouseArea)
+
+                // Setting just so the unit-tests can access the buttons
+                tabBarCpp.tabBarQmlItem = this;
+            }
         }
 
         Repeater {

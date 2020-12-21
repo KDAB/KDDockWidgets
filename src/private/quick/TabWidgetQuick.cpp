@@ -65,6 +65,11 @@ void TabWidgetQuick::setCurrentDockWidget(int index)
     }
 }
 
+QObject *TabWidgetQuick::tabBarObj() const
+{
+    return m_tabBar->asWidget();
+}
+
 bool TabWidgetQuick::insertDockWidget(int index, DockWidgetBase *dw, const QIcon &, const QString &title)
 {
     Q_UNUSED(title); // todo

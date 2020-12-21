@@ -37,6 +37,8 @@ class DOCKS_EXPORT TabWidgetQuick
 {
     Q_OBJECT
     Q_PROPERTY(DockWidgetModel* dockWidgetModel READ dockWidgetModel CONSTANT)
+    Q_PROPERTY(QObject* tabBar READ tabBarObj CONSTANT)
+
 public:
     explicit TabWidgetQuick(Frame *parent);
 
@@ -50,6 +52,10 @@ public:
     int currentIndex() const override;
     bool insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) override;
     Q_INVOKABLE void setCurrentDockWidget(int index) override;
+
+    /// @brief Returns the tab bar as a QObject for QML.
+    /// As the base class is not a QObject.
+    QObject* tabBarObj() const;
 
 Q_SIGNALS:
     void currentTabChanged(int index) override;

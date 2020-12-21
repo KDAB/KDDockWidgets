@@ -32,11 +32,23 @@ class DOCKS_EXPORT TabBarQuick
         : public QWidgetAdapter
         , public TabBar
 {
+    Q_OBJECT
+    Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY tabBarQmlItemChanged)
 public:
     explicit TabBarQuick(TabWidget *parent = nullptr);
     int tabAt(QPoint localPos) const override;
+
+    QQuickItem *tabBarQmlItem() const;
+    void setTabBarQmlItem(QQuickItem *);
+
+Q_SIGNALS:
+    void tabBarQmlItemChanged();
+
 protected:
-    //void mousePressEvent(QMouseEvent *) override;
+    bool event(QEvent *ev) override;
+private:
+    QQuickItem *listView() const;
+    QPointer<QQuickItem> m_tabBarQmlItem;
 
 };
 }
