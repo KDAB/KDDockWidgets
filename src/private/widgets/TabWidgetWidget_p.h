@@ -19,7 +19,7 @@
 #ifndef KDTABWIDGETWIDGET_P_H
 #define KDTABWIDGETWIDGET_P_H
 
-#include "TabWidget_p.h"
+#include "../TabWidget_p.h"
 
 #include <QTabWidget>
 
