@@ -8,7 +8,8 @@
             "binaryDir": "${sourceDir}/build-dev-qtwidgets",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "KDDockWidgets_DEVELOPER_MODE": "ON"
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
             }
         },
         {
@@ -38,7 +39,8 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QTQUICK": "ON",
-                "KDDockWidgets_DEVELOPER_MODE": "ON"
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
             }
         },
         {
