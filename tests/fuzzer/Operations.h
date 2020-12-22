@@ -50,8 +50,9 @@ Q_ENUM_NS(OperationType)
 
 
 ///@brief Describes a testable action.
-class OperationBase {
-
+class OperationBase
+{
+    Q_DISABLE_COPY(OperationBase)
 public:
     typedef std::shared_ptr<OperationBase> Ptr;
     typedef QVector<OperationBase::Ptr> List;
@@ -88,6 +89,7 @@ protected:
 
 class CloseViaDockWidgetAPI : public OperationBase
 {
+    Q_DISABLE_COPY(CloseViaDockWidgetAPI)
 public:
     explicit CloseViaDockWidgetAPI(Fuzzer *);
 
@@ -103,6 +105,7 @@ protected:
 
 class HideViaDockWidgetAPI : public OperationBase
 {
+    Q_DISABLE_COPY(HideViaDockWidgetAPI)
 public:
     explicit HideViaDockWidgetAPI(Fuzzer *);
 
@@ -118,6 +121,7 @@ protected:
 
 class ShowViaDockWidgetAPI : public OperationBase
 {
+    Q_DISABLE_COPY(ShowViaDockWidgetAPI)
 public:
     explicit ShowViaDockWidgetAPI(Fuzzer *);
 
@@ -133,6 +137,7 @@ protected:
 
 class AddDockWidget : public OperationBase
 {
+    Q_DISABLE_COPY(AddDockWidget)
 public:
     explicit AddDockWidget(Fuzzer *);
 
@@ -149,6 +154,7 @@ private:
 
 class AddDockWidgetAsTab : public OperationBase
 {
+    Q_DISABLE_COPY(AddDockWidgetAsTab)
 public:
     explicit AddDockWidgetAsTab(Fuzzer *);
 
@@ -166,6 +172,7 @@ private:
 
 class SaveLayout : public OperationBase
 {
+    Q_DISABLE_COPY(SaveLayout)
 public:
     explicit SaveLayout(Fuzzer *);
 
@@ -181,6 +188,7 @@ protected:
 
 class RestoreLayout : public OperationBase
 {
+    Q_DISABLE_COPY(RestoreLayout)
 public:
     explicit RestoreLayout(Fuzzer *);
 

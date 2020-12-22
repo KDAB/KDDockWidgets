@@ -37,7 +37,9 @@ namespace Testing {
 
     class WarningObserver
     {
+        Q_DISABLE_COPY(WarningObserver)
     public:
+        WarningObserver() = default;
         virtual ~WarningObserver();
         virtual void onFatal() = 0;
     };
