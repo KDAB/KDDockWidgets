@@ -13,6 +13,18 @@
             }
         },
         {
+            "name": "clazy-qtwidgets",
+            "displayName": "clazy-qtwidgets",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-clazy-qtwidgets",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {
+                "CXX": "clazy"
+            }
+        },
+        {
             "name": "qtwidgets",
             "displayName": "qtwidgets",
             "generator": "Ninja",
