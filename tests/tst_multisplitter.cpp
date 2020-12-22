@@ -1586,7 +1586,7 @@ void TestMultiSplitter::tst_separatorMoveCrash()
     root->insertItem(item6, Item::Location_OnRight);
 
     ItemContainer *c = item5->parentContainer();
-    auto separator = c->separators()[0];
+    auto separator = c->separators().constFirst();
 
     const int available5 = item5->availableLength(Qt::Horizontal);
 
