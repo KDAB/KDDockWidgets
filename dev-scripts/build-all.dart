@@ -28,12 +28,9 @@ bool s_runTests = true;
 class Preset {
   final String name;
   final String buildDir;
-  String cmakeVariables = "";
   Preset.fromJson(var jsonData)
       : name = jsonData['name'],
         buildDir = jsonData['binaryDir'] {
-    final varsData = jsonData['cacheVariables'];
-    varsData.forEach((k, v) => cmakeVariables += ' -D' + k + '=' + v);
   }
 
   String buildDirectory() {
@@ -44,7 +41,6 @@ class Preset {
     return [
       "-G",
       "Ninja",
-      cmakeVariables,
       "-B",
       buildDirectory(),
       "-S",
@@ -132,7 +128,7 @@ Future<bool> runCMake(var cmd) async {
 
 Future<int> main(List<String> arguments) async {
   if (arguments.length == 0) {
-    print("Usage: build-all.dart <src-directory> [--unity]");
+    print("Usage: build-all.dart <src-directory> [--unity] [--tests]");
     return 1;
   }
 
