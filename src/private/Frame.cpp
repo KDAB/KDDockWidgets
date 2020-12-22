@@ -370,9 +370,8 @@ const DockWidgetBase::List Frame::dockWidgets() const
     DockWidgetBase::List dockWidgets;
     const int count = dockWidgetCount();
     dockWidgets.reserve(count);
-    for (int i = 0, e = count; i != e; ++i) {
+    for (int i = 0; i < count; ++i)
         dockWidgets << dockWidgetAt(i);
-    }
 
     return dockWidgets;
 }
