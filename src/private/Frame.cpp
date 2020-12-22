@@ -279,6 +279,16 @@ void Frame::onCurrentTabChanged(int index)
     }
 }
 
+void Frame::isFocusedChangedCallback()
+{
+    Q_EMIT isFocusedChanged();
+}
+
+void Frame::focusedWidgetChangedCallback()
+{
+    Q_EMIT focusedWidgetChanged();
+}
+
 void Frame::updateTitleBarVisibility()
 {
     if (m_updatingTitleBar || m_beingDeleted) {

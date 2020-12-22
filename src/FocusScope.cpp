@@ -109,7 +109,7 @@ void FocusScope::Private::setIsFocused(bool is)
             emitDockWidgetFocusChanged();
 
         if (!m_inCtor) // Hack so we don't call pure-virtual
-            Q_EMIT q->isFocusedChanged();
+            /* Q_EMIT */ q->isFocusedChangedCallback();
     }
 }
 
@@ -125,7 +125,7 @@ void FocusScope::Private::onFocusObjectChanged(QObject *obj)
     if (is && m_lastFocusedInScope != widget && !qobject_cast<TitleBar*>(obj)) {
         m_lastFocusedInScope = widget;
         setIsFocused(is);
-        Q_EMIT q->focusedWidgetChanged();
+        /* Q_EMIT */ q->focusedWidgetChangedCallback();
     } else {
         setIsFocused(is);
     }

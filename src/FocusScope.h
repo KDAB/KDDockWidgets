@@ -48,9 +48,10 @@ public:
     void focus(Qt::FocusReason = Qt::OtherFocusReason);
 
 /*Q_SIGNALS:*/
+protected:
     ///@brief reimplement in the 1st QObject derived class
-    virtual void isFocusedChanged() = 0;
-    virtual void focusedWidgetChanged() = 0;
+    virtual void isFocusedChangedCallback() = 0;
+    virtual void focusedWidgetChangedCallback() = 0;
 
 private:
     class Private;
