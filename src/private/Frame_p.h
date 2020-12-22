@@ -245,8 +245,12 @@ Q_SIGNALS:
     void hasTabsVisibleChanged();
     void layoutInvalidated();
     void isInMainWindowChanged();
-    void isFocusedChanged() override; // override from non-QObject
-    void focusedWidgetChanged() override;
+    void isFocusedChanged();
+    void focusedWidgetChanged();
+
+protected:
+    void isFocusedChangedCallback() final;
+    void focusedWidgetChangedCallback() final;
 
 protected Q_SLOTS:
     void onDockWidgetCountChanged();
