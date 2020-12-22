@@ -2054,10 +2054,10 @@ void ItemContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
 
         if (neededToShrink > 0) {
             amountNeededToShrink += neededToShrink;
-            indexesOfShrinkers.push_back(i);
+            indexesOfShrinkers.push_back(i); // clazy:exclude=reserve-candidates
         } else if (availableToGrow > 0) {
             amountAvailableToGrow = qMin(amountAvailableToGrow + availableToGrow, q->length());
-            indexesOfGrowers.push_back(i);
+            indexesOfGrowers.push_back(i); // clazy:exclude=reserve-candidates
         }
     }
 

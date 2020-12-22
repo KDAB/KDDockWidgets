@@ -224,6 +224,7 @@ SideBar *DockRegistry::sideBarForDockWidget(const DockWidgetBase *dw) const
 MainWindowBase::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
 {
     MainWindowBase::List result;
+    result.reserve(m_mainWindows.size());
 
     for (auto mw : m_mainWindows) {
         const QStringList mwAffinities = mw->affinities();

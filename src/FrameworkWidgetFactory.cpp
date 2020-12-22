@@ -43,6 +43,8 @@
 # include "multisplitter/Separator_quick.h"
 #endif
 
+// clazy:excludeall=ctor-missing-parent-argument
+
 using namespace KDDockWidgets;
 
 DropIndicatorType DefaultWidgetFactory::s_dropIndicatorType = DropIndicatorType::Classic;

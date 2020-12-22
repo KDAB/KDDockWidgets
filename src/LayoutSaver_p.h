@@ -272,7 +272,9 @@ public:
         s_currentLayoutBeingRestored = this;
 
         const QList<QScreen*> screens = qApp->screens();
-        for (int i = 0; i < screens.size(); ++i) {
+        const int numScreens = screens.size();
+        screenInfo.reserve(numScreens);
+        for (int i = 0; i < numScreens; ++i) {
             ScreenInfo info;
             info.index = i;
             info.geometry = screens[i]->geometry();

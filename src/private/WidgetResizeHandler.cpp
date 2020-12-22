@@ -433,7 +433,7 @@ WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint g
     const int y = pos.y();
     const int margin = widgetResizeHandlerMargin();
 
-    int result = CursorPosition_Undefined;
+    unsigned int result = CursorPosition_Undefined;
     if (qAbs(x) <= margin)
         result |= CursorPosition_Left;
     else if (qAbs(x - (mTarget->width() - margin)) <= margin)

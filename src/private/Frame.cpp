@@ -60,7 +60,7 @@ Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
 
     connect(this, &Frame::currentDockWidgetChanged, this, &Frame::updateTitleAndIcon);
 
-    connect(m_tabWidget->asWidget(), SIGNAL(currentTabChanged(int)),
+    connect(m_tabWidget->asWidget(), SIGNAL(currentTabChanged(int)), // clazy:exclude=old-style-connect
             this, SLOT(onCurrentTabChanged(int)));
 
     setDropArea(qobject_cast<DropArea *>(QWidgetAdapter::parentWidget()));

@@ -28,6 +28,8 @@
 #include <QVBoxLayout>
 #include <QPainter>
 
+// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro
+
 using namespace KDDockWidgets;
 
 class MainWindow::Private

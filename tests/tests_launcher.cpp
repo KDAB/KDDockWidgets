@@ -106,20 +106,20 @@ int main(int argv, char**argc)
     }
 
     bool ok = false;
-    const int subsetNumber = app.arguments()[1].toInt(&ok);
+    const int subsetNumber = app.arguments().at(1).toInt(&ok);
     if (!ok) {
-        qWarning() << "Invalid number" << app.arguments()[1];
+        qWarning() << "Invalid number" << app.arguments().at(1);
         return -1;
     }
 
-    const int subsetPercentage = app.arguments()[2].toInt(&ok);
+    const int subsetPercentage = app.arguments().at(2).toInt(&ok);
     if (!ok) {
-        qWarning() << "Invalid number" << app.arguments()[2];
+        qWarning() << "Invalid number" << app.arguments().at(2);
         return -1;
     }
 
     if (subsetPercentage > 100 || subsetPercentage <= 0) {
-        qWarning() << "Invalid percentage" << app.arguments()[2];
+        qWarning() << "Invalid percentage" << app.arguments().at(2);
         return -1;
     }
 

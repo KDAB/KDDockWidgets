@@ -12,6 +12,8 @@
 #ifndef KDDOCKWIDGETS_TESTS_UTILS_H
 #define KDDOCKWIDGETS_TESTS_UTILS_H
 
+// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
+
 #include "KDDockWidgets.h"
 #include "DropIndicatorOverlayInterface_p.h"
 #include "DockWidgetBase.h"

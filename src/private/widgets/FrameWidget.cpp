@@ -29,8 +29,8 @@
 
 using namespace KDDockWidgets;
 
-///@brieg a QVBoxLayout that emits layoutInvalidated so that Item can detect minSize changes
-class VBoxLayout : public QVBoxLayout
+///@brief a QVBoxLayout that emits layoutInvalidated so that Item can detect minSize changes
+class VBoxLayout : public QVBoxLayout //clazy:exclude=missing-qobject-macro
 {
 public:
     explicit VBoxLayout(FrameWidget *parent)

@@ -26,6 +26,8 @@
 
 #include <QVector>
 
+// clazy:excludeall=ctor-missing-parent-argument
+
 QT_BEGIN_NAMESPACE
 class QAction;
 QT_END_NAMESPACE
@@ -477,7 +479,7 @@ Q_SIGNALS:
     void isOverlayedChanged(bool);
 
     ///@brief emitted when isFloating changes
-    bool isFloatingChanged(bool);
+    void isFloatingChanged(bool);
 
     ///@brief emitted when this dock widget is removed from a side-bar.
     ///Only relevant for the auto-hide/sidebar feature

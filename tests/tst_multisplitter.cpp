@@ -992,7 +992,8 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         QCOMPARE(root1->hostWidget()->asQWidget(), host1);
         QCOMPARE(item2->hostWidget()->asQWidget(), host1);
-        for (Item *item : root1->items_recursive()) {
+        const auto &items = root1->items_recursive();
+        for (Item *item : items) {
             QCOMPARE(item->hostWidget()->asQWidget(), host1);
             QVERIFY(item->isVisible());
         }
@@ -1586,7 +1587,7 @@ void TestMultiSplitter::tst_separatorMoveCrash()
     root->insertItem(item6, Item::Location_OnRight);
 
     ItemContainer *c = item5->parentContainer();
-    auto separator = c->separators()[0];
+    auto separator = c->separators().constFirst();
 
     const int available5 = item5->availableLength(Qt::Horizontal);
 

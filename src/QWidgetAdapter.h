@@ -73,6 +73,7 @@ namespace KDDockWidgets {
 class LayoutGuestWidget : public KDDockWidgets::QWidgetAdapter
                         , public LayoutGuestWidgetBase
 {
+    Q_OBJECT
 public:
     explicit LayoutGuestWidget(QWidgetOrQuick *parent)
         : QWidgetAdapter(parent)

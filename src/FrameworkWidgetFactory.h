@@ -16,6 +16,8 @@
 #include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
 
+// clazy:excludeall=ctor-missing-parent-argument
+
 /**
  * @file
  * @brief A factory class for allowing the user to customize some internal widgets.
@@ -158,6 +160,7 @@ private:
  */
 class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
 {
+    Q_OBJECT
 public:
     DefaultWidgetFactory() = default;
     Frame *createFrame(QWidgetOrQuick *parent, FrameOptions) const override;

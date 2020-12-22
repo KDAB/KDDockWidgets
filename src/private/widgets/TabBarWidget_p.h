@@ -28,6 +28,8 @@ QT_BEGIN_NAMESPACE
 class QMouseEvent;
 QT_END_NAMESPACE
 
+// clazy:excludeall=ctor-missing-parent-argument
+
 namespace KDDockWidgets {
 
 class DockWidget;
