@@ -32,6 +32,7 @@ class MinimalStateMachine;
 
 class State : public QObject
 {
+    Q_OBJECT
 public:
     explicit State(MinimalStateMachine *parent);
     ~State() override;

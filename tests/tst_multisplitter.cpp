@@ -992,7 +992,8 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         QCOMPARE(root1->hostWidget()->asQWidget(), host1);
         QCOMPARE(item2->hostWidget()->asQWidget(), host1);
-        for (Item *item : root1->items_recursive()) {
+        const auto &items = root1->items_recursive();
+        for (Item *item : items) {
             QCOMPARE(item->hostWidget()->asQWidget(), host1);
             QVERIFY(item->isVisible());
         }

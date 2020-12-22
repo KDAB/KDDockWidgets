@@ -17,6 +17,8 @@
 
 #include <QApplication>
 
+// clazy:excludeall=missing-qobject-macro
+
 class MyTitleBar : public KDDockWidgets::TitleBarWidget
 {
 public:

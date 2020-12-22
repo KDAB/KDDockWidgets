@@ -135,26 +135,26 @@ void MyMainWindow::createDockWidgets()
 
 
     // MainWindow::addDockWidget() attaches a dock widget to the main window:
-    addDockWidget(m_dockwidgets[0], KDDockWidgets::Location_OnTop);
+    addDockWidget(m_dockwidgets.at(0), KDDockWidgets::Location_OnTop);
 
     // Here, for finer granularity we specify right of dockwidgets[0]:
-    addDockWidget(m_dockwidgets[1], KDDockWidgets::Location_OnRight, m_dockwidgets[0]);
+    addDockWidget(m_dockwidgets.at(1), KDDockWidgets::Location_OnRight, m_dockwidgets.at(0));
 
-    addDockWidget(m_dockwidgets[2], KDDockWidgets::Location_OnLeft);
-    addDockWidget(m_dockwidgets[3], KDDockWidgets::Location_OnBottom);
-    addDockWidget(m_dockwidgets[4], KDDockWidgets::Location_OnBottom);
+    addDockWidget(m_dockwidgets.at(2), KDDockWidgets::Location_OnLeft);
+    addDockWidget(m_dockwidgets.at(3), KDDockWidgets::Location_OnBottom);
+    addDockWidget(m_dockwidgets.at(4), KDDockWidgets::Location_OnBottom);
 
     // Tab two dock widgets together
-    m_dockwidgets[3]->addDockWidgetAsTab(m_dockwidgets[5]);
+    m_dockwidgets[3]->addDockWidgetAsTab(m_dockwidgets.at(5));
 
     // 6 is floating, as it wasn't added to the main window via MainWindow::addDockWidget().
     // and we tab 7 with it.
-    m_dockwidgets[6]->addDockWidgetAsTab(m_dockwidgets[7]);
+    m_dockwidgets[6]->addDockWidgetAsTab(m_dockwidgets.at(7));
 
     // Floating windows also support nesting, here we add 8 to the bottom of the group
-    m_dockwidgets[6]->addDockWidgetToContainingWindow(m_dockwidgets[8], KDDockWidgets::Location_OnBottom);
+    m_dockwidgets[6]->addDockWidgetToContainingWindow(m_dockwidgets.at(8), KDDockWidgets::Location_OnBottom);
 
-    auto floatingWindow = m_dockwidgets[6]->window();
+    auto floatingWindow = m_dockwidgets.at(6)->window();
     floatingWindow->move(100, 100);
 }
 
