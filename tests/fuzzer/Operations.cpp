@@ -313,9 +313,9 @@ bool AddDockWidget::hasParams() const
 void AddDockWidget::updateDescription()
 {
     if (m_params.relativeToName.isEmpty())
-        m_description = QStringLiteral("AddDockWidget %1 to %2").arg(dockStr(m_params.dockWidgetName)).arg(KDDockWidgets::locationStr(m_params.location));
+        m_description = QStringLiteral("AddDockWidget %1 to %2").arg(dockStr(m_params.dockWidgetName), KDDockWidgets::locationStr(m_params.location));
     else
-        m_description = QStringLiteral("AddDockWidget %1 to %2, relative to %3").arg(dockStr(m_params.dockWidgetName)).arg(KDDockWidgets::locationStr(m_params.location)).arg(dockStr(m_params.relativeToName));
+        m_description = QStringLiteral("AddDockWidget %1 to %2, relative to %3").arg(dockStr(m_params.dockWidgetName), KDDockWidgets::locationStr(m_params.location), dockStr(m_params.relativeToName));
 }
 
 void AddDockWidget::execute_impl()
