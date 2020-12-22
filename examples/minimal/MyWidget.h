@@ -35,6 +35,7 @@ protected:
 
 class MyWidget1 : public MyWidget
 {
+    Q_OBJECT
 public:
     explicit MyWidget1(QWidget *parent = nullptr);
 protected:
@@ -43,6 +44,7 @@ protected:
 
 class MyWidget2 : public MyWidget
 {
+    Q_OBJECT
 public:
     explicit MyWidget2(QWidget *parent = nullptr);
 protected:
@@ -51,6 +53,7 @@ protected:
 
 class MyWidget3 : public MyWidget
 {
+    Q_OBJECT
 public:
     explicit MyWidget3(QWidget *parent = nullptr);
 protected:

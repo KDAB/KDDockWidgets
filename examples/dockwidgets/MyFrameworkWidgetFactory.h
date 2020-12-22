@@ -15,8 +15,11 @@
 
 #include <QPainter>
 
+// clazy:excludeall=ctor-missing-parent-argument
+
 class CustomWidgetFactory : public KDDockWidgets::DefaultWidgetFactory
 {
+    Q_OBJECT
 public:
     KDDockWidgets::TitleBar *createTitleBar(KDDockWidgets::Frame *frame) const override;
     KDDockWidgets::TitleBar *createTitleBar(KDDockWidgets::FloatingWindow *fw) const override;

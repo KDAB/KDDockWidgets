@@ -560,7 +560,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
         // On Windows, non-client mouse moves are only sent at the end, so we must fake it:
         qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o;
         activeState()->handleMouseMove(QCursor::pos());
-        return false;
+        return MinimalStateMachine::eventFilter(o, e);
     }
 
     if (isWayland()) {
@@ -589,11 +589,11 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
 
     QMouseEvent *me = mouseEvent(e);
     if (!me)
-        return false;
+        return MinimalStateMachine::eventFilter(o, e);
 
     auto w = qobject_cast<QWidgetOrQuick*>(o);
     if (!w)
-        return false;
+        return MinimalStateMachine::eventFilter(o, e);
 
     qCDebug(mouseevents) << "DragController::eventFilter e=" << e->type() << "; o=" << o
                          << "; m_nonClientDrag=" << m_nonClientDrag;
@@ -606,7 +606,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
                 return activeState()->handleMouseButtonPress(draggableForQObject(o), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
             }
         }
-        return false;
+        return MinimalStateMachine::eventFilter(o, e);
     }
     case QEvent::MouseButtonPress:
         // For top-level windows that support native dragging all goes through the NonClient* events.
@@ -628,7 +628,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
         break;
     }
 
-    return false;
+    return MinimalStateMachine::eventFilter(o, e);
 }
 
 StateBase *DragController::activeState() const

@@ -25,6 +25,8 @@ QT_BEGIN_NAMESPACE
 class QCloseEvent;
 QT_END_NAMESPACE
 
+// clazy:excludeall=ctor-missing-parent-argument
+
 namespace KDDockWidgets {
 
 /**

@@ -29,7 +29,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-// clazy:excludeall=qstring-allocations
+// clazy:excludeall=qstring-allocations,ctor-missing-parent-argument,detaching-member
 
 static MyWidget *newMyWidget()
 {

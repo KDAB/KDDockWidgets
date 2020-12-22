@@ -19,6 +19,8 @@
 
 #include <QRubberBand>
 
+// clazy:excludeall=ctor-missing-parent-argument
+
 namespace Layouting {
 
 class DOCKS_EXPORT SeparatorWidget

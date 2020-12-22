@@ -31,6 +31,7 @@ using namespace KDDockWidgets;
 // Our Private inherits from QObject since FocusScope can't (Since Frame is already QObject)
 class FocusScope::Private : public QObject
 {
+    Q_OBJECT
 public:
     Private(FocusScope *qq, QWidgetAdapter *thisWidget)
         : q(qq)
@@ -173,3 +174,5 @@ void FocusScope::Private::emitDockWidgetFocusChanged()
         p = KDDockWidgets::Private::parentWidget(p);
     }
 }
+
+#include <FocusScope.moc>

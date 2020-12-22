@@ -24,6 +24,8 @@
 #include <QApplication>
 #include <QProxyStyle>
 
+// clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro
+
 namespace KDDockWidgets {
 namespace { // anonymous namespace to silence -Wweak-vtables
 class MyProxy : public QProxyStyle
