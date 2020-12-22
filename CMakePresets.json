@@ -18,7 +18,8 @@
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-clazy-qtwidgets",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_WERROR": "ON"
             },
             "environment": {
                 "CXX": "clazy"

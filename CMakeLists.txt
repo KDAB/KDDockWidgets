@@ -104,10 +104,12 @@ endif()
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 option(${PROJECT_NAME}_DOCS "Build the API documentation" OFF)
+option(${PROJECT_NAME}_WERROR "Use -Werror (will be true for developer-mode unconditionally)" OFF)
 
 #Always build the test harness in developer-mode
 if(${PROJECT_NAME}_DEVELOPER_MODE)
   set(${PROJECT_NAME}_TESTS ON)
+  set(${PROJECT_NAME}_WERROR ON)
 endif()
 
 #option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
@@ -137,13 +139,21 @@ include(QtInstallPaths) #to set QT_INSTALL_FOO variables
 macro(set_compiler_flags targetName)
   if(${PROJECT_NAME}_DEVELOPER_MODE)
     target_compile_definitions(${targetName} PUBLIC DOCKS_DEVELOPER_MODE PRIVATE QT_FORCE_ASSERTS)
-    if(NOT MSVC AND NOT ${PROJECT_NAME}_QT6) # We're not warnings clean with Qt6 yet
-      target_compile_options(${targetName} PRIVATE -Wall -Wextra -Werror -Wno-error=deprecated-declarations)
-      if (APPLE)
-        target_compile_options(${targetName} PRIVATE -Wweak-vtables)
-      endif()
+
+    if(NOT MSVC)
+      target_compile_options(${targetName} PRIVATE -Wall -Wextra)
+    endif()
+
+    if(APPLE)
+      target_compile_options(${targetName} PRIVATE -Wweak-vtables)
     endif()
   endif()
+
+  # Enable -Werror
+  if(NOT MSVC AND NOT ${PROJECT_NAME}_QT6 AND ${PROJECT_NAME}_WERROR)
+    target_compile_options(${targetName} PRIVATE -Werror -Wno-error=deprecated-declarations)
+  endif()
+
 endmacro()
 
 if(${PROJECT_NAME}_QTQUICK)
