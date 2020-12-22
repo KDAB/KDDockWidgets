@@ -15,7 +15,7 @@
  * without having to wait for CI (or in case you don't have access to KDAB CI)
  * 
  * Usage:
- *     $ dart build-all.dart <kddw-source-directory>
+ *     $ dart build-all.dart <kddw-source-directory> [--unity] [--tests]
  */
 
 import 'dart:io';
