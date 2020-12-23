@@ -243,7 +243,6 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
         add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
     endif()
 
-    add_test(NAME tst_docks COMMAND tst_docks)
   endif()
 endif()
 
