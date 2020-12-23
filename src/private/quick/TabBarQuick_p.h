@@ -42,6 +42,7 @@ public:
     void setTabBarQmlItem(QQuickItem *);
 
     QString text(int index) const override;
+    QRect rectForTab(int index) const override;
 
 Q_SIGNALS:
     void tabBarQmlItemChanged();

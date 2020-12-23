@@ -150,3 +150,8 @@ QString TabBarWidget::text(int index) const
 {
     return tabText(index);
 }
+
+QRect TabBarWidget::rectForTab(int index) const
+{
+    return QTabBar::tabRect(index);
+}

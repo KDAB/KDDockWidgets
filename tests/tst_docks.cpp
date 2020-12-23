@@ -236,6 +236,7 @@ private Q_SLOTS:
     void tst_positionWhenShown();
     void tst_28NestedWidgets();
     void tst_28NestedWidgets_data();
+    void tst_dragBySingleTab();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
@@ -244,7 +245,6 @@ private Q_SLOTS:
     void tst_dock2FloatingWidgetsTabbed();
     void tst_dragByTabBar_data();
     void tst_dragByTabBar();
-    void tst_dragBySingleTab();
     void tst_mainWindowAlwaysHasCentralWidget();
     void tst_dockableMainWindows();
 
@@ -271,6 +271,17 @@ private Q_SLOTS:
     void tst_complex();
 #endif
 };
+
+static QPoint dragPointForWidget(Frame *frame, int index)
+{
+    if (frame->hasSingleDockWidget()) {
+        Q_ASSERT(index == 0);
+        return frame->titleBar()->mapToGlobal(QPoint(5, 5));
+    } else {
+        QRect rect = frame->tabWidget()->tabBar()->rectForTab(index);
+        return frame->tabWidget()->tabBar()->asWidget()->mapToGlobal(rect.center());
+    }
+}
 
 template <typename T>
 inline int widgetMinLength(const T *w, Qt::Orientation o)
@@ -2706,6 +2717,7 @@ void TestDocks::tst_tabTitleChanges()
 
     delete dw1->window();
 }
+
 void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
 {
     EnsureTopLevelsDeleted e;
@@ -4703,19 +4715,6 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 
-static QPoint dragPointForWidget(Frame *frame, int index)
-{
-    auto frameW = static_cast<FrameWidget*>(frame);
-
-    if (frameW->hasSingleDockWidget()) {
-        Q_ASSERT(index == 0);
-        return frameW->titleBar()->mapToGlobal(QPoint(5, 5));
-    } else {
-        QRect rect = frameW->tabBar()->tabRect(index);
-        return frameW->tabBar()->mapToGlobal(rect.center());
-    }
-}
-
 void TestDocks::tst_titleBarFocusedWhenTabsChange()
 {
      EnsureTopLevelsDeleted e;
@@ -4931,26 +4930,6 @@ void TestDocks::tst_dragByTabBar()
     QVERIFY(!fw->titleBar()->isVisible());
 
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
-}
-
-void TestDocks::tst_dragBySingleTab()
-{
-    // Tests dragging via a tab when there's only 1 tab, and we're using Flag_AlwaysShowTabs
-    EnsureTopLevelsDeleted e;
-    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AlwaysShowTabs);
-    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
-    dock1->show();
-
-    auto frame1 = dock1->frame();
-
-    QPoint globalPressPos = dragPointForWidget(frame1, 0);
-    QTabBar *tabBar = static_cast<FrameWidget*>(frame1)->tabBar();
-    QVERIFY(tabBar);
-    SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing in this case
-    drag(tabBar, globalPressPos, QPoint(0, 0));
-
-    delete dock1;
-    Testing::waitForDeleted(frame1);
 }
 
 void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
@@ -6461,6 +6440,26 @@ void TestDocks::tst_constraintsAfterPlaceholder()
 
     dock1->deleteLater();
     Testing::waitForDeleted(dock1);
+}
+
+void TestDocks::tst_dragBySingleTab()
+{
+    // Tests dragging via a tab when there's only 1 tab, and we're using Flag_AlwaysShowTabs
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AlwaysShowTabs);
+    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
+    dock1->show();
+
+    auto frame1 = dock1->frame();
+
+    QPoint globalPressPos = dragPointForWidget(frame1, 0);
+    TabBar *tabBar = frame1->tabWidget()->tabBar();
+    QVERIFY(tabBar);
+    SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing in this case
+    drag(tabBar->asWidget(), globalPressPos, QPoint(0, 0));
+
+    delete dock1;
+    Testing::waitForDeleted(frame1);
 }
 
 #include "tst_docks.moc"

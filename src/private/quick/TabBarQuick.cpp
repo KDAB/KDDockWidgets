@@ -71,6 +71,14 @@ QString TabBarQuick::text(int index) const
     return {};
 }
 
+QRect TabBarQuick::rectForTab(int index) const
+{
+    if (QQuickItem *item = tabAt(index))
+       return item->boundingRect().toRect();
+
+    return {};
+}
+
 bool TabBarQuick::event(QEvent *ev)
 {
     switch (ev->type()) {

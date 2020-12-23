@@ -75,6 +75,9 @@ public:
      */
     QWidgetOrQuick *asWidget() const;
 
+    /// @brief Returns the rect of the tab at the specified index
+    virtual QRect rectForTab(int index) const = 0;
+
     DockWidgetBase *singleDockWidget() const override;
 
     Frame *frame() const;
