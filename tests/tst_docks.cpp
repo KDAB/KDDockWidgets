@@ -138,6 +138,7 @@ private Q_SLOTS:
     void tst_invalidLayoutAfterRestore();
 
     void tst_tabWidgetCurrentIndex();
+    void tst_doubleClickTabToDetach();
     void tst_propagateResize2();
     void tst_negativeAnchorPosition();
     void tst_negativeAnchorPosition2();
@@ -5965,6 +5966,34 @@ void TestDocks::tst_tabWidgetCurrentIndex()
     delete fw3;
     delete dock2;
     delete dock1->window();
+}
+
+void TestDocks::tst_doubleClickTabToDetach()
+{
+    EnsureTopLevelsDeleted e;
+
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+
+    auto fw2 = dock2->window();
+
+    dock1->addDockWidgetAsTab(dock2);
+
+    auto frame = dock1->frame();
+    QCOMPARE(frame->currentIndex(), 1);
+
+    auto tb = frame->tabWidget()->asWidget();
+
+    Tests::doubleClickOn(tb->mapToGlobal({ 20, 20 }), frame->window()->windowHandle());
+
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+    QVERIFY(dock1->floatingWindow() != dock2->floatingWindow());
+
+
+    delete fw2;
+    delete dock1->window();
+    delete dock2->window();
 }
 
 void TestDocks::tst_addingOptionHiddenTabbed()

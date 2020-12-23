@@ -66,11 +66,15 @@ void TabBarQuick::setTabBarQmlItem(QQuickItem *item)
 bool TabBarQuick::event(QEvent *ev)
 {
     switch (ev->type()) {
+    case QEvent::MouseButtonDblClick:
     case QEvent::MouseButtonPress: {
         if (m_tabBarQmlItem) {
             auto me = static_cast<QMouseEvent*>(ev);
             m_tabBarQmlItem->setProperty("currentIndex", tabAt(me->pos()));
-            TabBar::onMousePress(me->pos());
+            if (ev->type() == QEvent::MouseButtonPress)
+                TabBar::onMousePress(me->pos());
+            else
+                TabBar::onMouseDoubleClick(me->pos());
         }
 
         break;

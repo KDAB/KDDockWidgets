@@ -44,6 +44,9 @@ public:
     /// We can't return TabWidget directly as it's not a QObject
     QObject *tabWidgetObj() const;
 
+    /// @brief returns the tab widget
+    TabWidget *tabWidget() const;
+
 protected:
     void removeWidget_impl(DockWidgetBase *) override;
     int indexOfDockWidget_impl(DockWidgetBase *) override;
