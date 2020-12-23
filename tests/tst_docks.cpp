@@ -2693,21 +2693,18 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 void TestDocks::tst_tabTitleChanges()
 {
     // Tests that the tab's title changes if the dock widget's title changes
-#ifdef KDDOCKWIDGETS_QTWIDGETS // TODO
     EnsureTopLevelsDeleted e;
     auto dw1 = new DockWidgetType(QStringLiteral("1"));
     auto dw2 = new DockWidgetType(QStringLiteral("2"));
 
     dw1->addDockWidgetAsTab(dw2);
 
-    auto frame = qobject_cast<FrameWidget*>(dw1->frame());
-    QTabBar *tb = frame->tabBar();
-    QCOMPARE(tb->tabText(0), QStringLiteral("1"));
+    TabBar *tb = dw1->frame()->tabWidget()->tabBar();
+    QCOMPARE(tb->text(0), QStringLiteral("1"));
     dw1->setTitle(QStringLiteral("other"));
-    QCOMPARE(tb->tabText(0), QStringLiteral("other"));
+    QCOMPARE(tb->text(0), QStringLiteral("other"));
 
     delete dw1->window();
-#endif
 }
 void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
 {
@@ -5989,7 +5986,6 @@ void TestDocks::tst_doubleClickTabToDetach()
     QVERIFY(dock1->isFloating());
     QVERIFY(dock2->isFloating());
     QVERIFY(dock1->floatingWindow() != dock2->floatingWindow());
-
 
     delete fw2;
     delete dock1->window();

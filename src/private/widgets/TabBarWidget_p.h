@@ -46,6 +46,8 @@ public:
 
     DockWidgetBase *currentDockWidget() const;
 
+    QString text(int index) const override;
+
 protected:
     bool dragCanStart(QPoint pressPos, QPoint pos) const override;
     void mousePressEvent(QMouseEvent *) override;

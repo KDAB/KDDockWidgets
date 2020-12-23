@@ -145,3 +145,8 @@ bool TabBarWidget::dragCanStart(QPoint pressPos, QPoint pos) const
 
     return false;
 }
+
+QString TabBarWidget::text(int index) const
+{
+    return tabText(index);
+}

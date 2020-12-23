@@ -63,6 +63,14 @@ void TabBarQuick::setTabBarQmlItem(QQuickItem *item)
     m_tabBarQmlItem = item;
 }
 
+QString TabBarQuick::text(int index) const
+{
+    if (QQuickItem *item = tabAt(index))
+        return item->property("text").toString();
+
+    return {};
+}
+
 bool TabBarQuick::event(QEvent *ev)
 {
     switch (ev->type()) {
@@ -84,6 +92,19 @@ bool TabBarQuick::event(QEvent *ev)
     }
 
     return QWidgetAdapter::event(ev);
+}
+
+QQuickItem *TabBarQuick::tabAt(int index) const
+{
+    QQuickItem *view = listView();
+    if (!view)
+        return nullptr;
+
+    QQuickItem *item = nullptr;
+    QMetaObject::invokeMethod(view, "itemAtIndex", Q_RETURN_ARG(QQuickItem*, item),
+            Q_ARG(int, index));
+
+    return item;
 }
 
 QQuickItem* TabBarQuick::listView() const

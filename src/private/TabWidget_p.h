@@ -67,6 +67,9 @@ public:
     int numDockWidgets() const;
     virtual int tabAt(QPoint localPos) const = 0;
 
+    /// @brief returns the tab text at the specified index
+    virtual QString text(int index) const = 0;
+
     /**
      * @brief Returns this class as a QWidget (if using QtWidgets) or QQuickItem
      */

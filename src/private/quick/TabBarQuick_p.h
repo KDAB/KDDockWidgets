@@ -41,12 +41,15 @@ public:
     QQuickItem *tabBarQmlItem() const;
     void setTabBarQmlItem(QQuickItem *);
 
+    QString text(int index) const override;
+
 Q_SIGNALS:
     void tabBarQmlItemChanged();
 
 protected:
     bool event(QEvent *ev) override;
 private:
+    QQuickItem *tabAt(int index) const;
     QQuickItem *listView() const;
     QPointer<QQuickItem> m_tabBarQmlItem;
 
