@@ -195,6 +195,8 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
 void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, WidgetType *receiver)
 {
     QCursor::setPos(globalPos);
+    pressOn(globalPos, receiver); // double-click involves an initial press
+
     QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
 
@@ -207,10 +209,28 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, WidgetType *receiver)
     }
 }
 
+void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, QWindow *receiver)
+{
+    QCursor::setPos(globalPos);
+    QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos), receiver->mapFromGlobal(globalPos), globalPos,
+                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+
+    pressOn(globalPos, receiver); // double-click involves an initial press
+    qApp->sendEvent(receiver, &ev);
+}
+
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, WidgetType *receiver)
 {
     QCursor::setPos(globalPos);
     QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
+                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    qApp->sendEvent(receiver, &ev);
+}
+
+void KDDockWidgets::Tests::pressOn(QPoint globalPos, QWindow *receiver)
+{
+    QCursor::setPos(globalPos);
+    QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos), receiver->mapFromGlobal(globalPos), globalPos,
                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     qApp->sendEvent(receiver, &ev);
 }
