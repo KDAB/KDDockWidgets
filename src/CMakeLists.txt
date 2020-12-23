@@ -308,7 +308,9 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
   # Under developer mode since kddw might be a sub-folder of a project setting a different value for QT_DISABLE_DEPRECATED_BEFORE
   target_compile_definitions(kddockwidgets PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
-  if (NOT ${PROJECT_NAME}_QTQUICK) # TODO: We can support it
+  option(KDDockWidgets_LINTER "Build the layout linter" ON)
+
+  if (NOT ${PROJECT_NAME}_QTQUICK AND KDDockWidgets_LINTER) # TODO: We can support it
     add_executable(kddockwidgets_linter layoutlinter_main.cpp)
     target_link_libraries(kddockwidgets_linter kddockwidgets Qt${QT_MAJOR_VERSION}::Widgets)
   endif()

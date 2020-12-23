@@ -28,6 +28,8 @@ include_directories(../src/private)
 
 set(TESTING_SRCS utils.cpp Testing.cpp)
 
+option(KDDockWidgets_FUZZER "Builds the fuzzer" ON)
+
 # tst_docks
 set(TESTING_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources.qrc)
 add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
@@ -38,8 +40,9 @@ if (NOT ${PROJECT_NAME}_QTQUICK)
   add_executable(tst_multisplitter tst_multisplitter.cpp)
   target_link_libraries(tst_multisplitter kddockwidgets Qt${QT_MAJOR_VERSION}::Test)
   set_compiler_flags(tst_multisplitter)
-
-  add_subdirectory(fuzzer)
+  if (KDDockWidgets_FUZZER)
+      add_subdirectory(fuzzer)
+  endif()
 endif()
 
 # tests_launcher
