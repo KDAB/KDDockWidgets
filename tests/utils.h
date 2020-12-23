@@ -36,6 +36,7 @@
 using FocusableWidget = QLineEdit;
 #else
 # include "quick/MainWindowQuick_p.h"
+# include "quick/TabWidgetQuick_p.h"
 
 # include <QQuickView>
 #endif
@@ -353,24 +354,22 @@ inline WidgetType *draggableFor(WidgetType *w)
                                             : nullptr;
 
         if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) {
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-            auto frameWidget = static_cast<FrameWidget*>(frame);
-            draggable = frameWidget->tabWidget()->asWidget();
-#else
-            qWarning() << Q_FUNC_INFO << "Implement me";
-#endif
+            draggable = frame->tabWidget()->asWidget();
         } else {
             draggable = fw->titleBar();
         }
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     } else if (qobject_cast<TabWidgetWidget *>(w)) {
         draggable = w;
+#else
+    } else if (qobject_cast<TabWidgetQuick *>(w)) {
+        draggable = w;
 #endif
     } else if (qobject_cast<TitleBar *>(w)) {
         draggable = w;
     }
 
-    qDebug() << "Draggable is" << draggable;
+    qDebug() << "Draggable is" << draggable << "for" << w;
     return draggable;
 }
 
@@ -424,6 +423,7 @@ inline void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest,
 inline void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation)
 {
     auto draggable = draggableFor(fw);
+    Q_ASSERT(draggable);
 
     // First we drag over it, so the drop indicators appear:
     drag(draggable, KDDockWidgets::mapToGlobal(draggable, QPoint(10, 10)), target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);

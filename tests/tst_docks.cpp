@@ -237,14 +237,14 @@ private Q_SLOTS:
     void tst_28NestedWidgets();
     void tst_28NestedWidgets_data();
     void tst_dragBySingleTab();
+    void tst_dragByTabBar();
+    void tst_dragByTabBar_data();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
     void tst_titleBarFocusedWhenTabsChange();
     void tst_tabsNotClickable();
     void tst_dock2FloatingWidgetsTabbed();
-    void tst_dragByTabBar_data();
-    void tst_dragByTabBar();
     void tst_mainWindowAlwaysHasCentralWidget();
     void tst_dockableMainWindows();
 
@@ -4886,52 +4886,6 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     }
 }
 
-void TestDocks::tst_dragByTabBar_data()
-{
-    QTest::addColumn<bool>("documentMode");
-    QTest::addColumn<bool>("tabsAlwaysVisible");
-
-    QTest::newRow("false-false") << false << false;
-    QTest::newRow("true-false") << true << false;
-    QTest::newRow("false-true") << false << true;
-    QTest::newRow("true-true") << true << true;
-}
-
-void TestDocks::tst_dragByTabBar()
-{
-    QFETCH(bool, documentMode);
-    QFETCH(bool, tabsAlwaysVisible);
-
-    EnsureTopLevelsDeleted e;
-    auto flags = KDDockWidgets::Config::self().flags() | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
-    if (tabsAlwaysVisible)
-        flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
-
-    KDDockWidgets::Config::self().setFlags(flags);
-
-    auto m = createMainWindow();
-    QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
-
-    auto dropArea = m->dropArea();
-    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
-
-    auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(400, 400)));
-    auto dock3 = createDockWidget("dock3", new MyWidget2(QSize(400, 400)));
-    m->addDockWidgetAsTab(dock1);
-    m->resize(osWindowMinWidth(), 200);
-
-    dock2->addDockWidgetAsTab(dock3);
-    if (documentMode)
-        static_cast<QTabWidget*>(static_cast<FrameWidget*>(dock2->frame())->tabWidget()->asWidget())->setDocumentMode(true);
-
-    auto fw = dock2->floatingWindow();
-    fw->move(m->pos() + QPoint(500, 500));
-    QVERIFY(fw->isVisible());
-    QVERIFY(!fw->titleBar()->isVisible());
-
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
-}
-
 void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
 {
     EnsureTopLevelsDeleted e;
@@ -6460,6 +6414,55 @@ void TestDocks::tst_dragBySingleTab()
 
     delete dock1;
     Testing::waitForDeleted(frame1);
+}
+
+void TestDocks::tst_dragByTabBar_data()
+{
+    QTest::addColumn<bool>("documentMode");
+    QTest::addColumn<bool>("tabsAlwaysVisible");
+
+    QTest::newRow("false-false") << false << false;
+    QTest::newRow("true-false") << true << false;
+    QTest::newRow("false-true") << false << true;
+    QTest::newRow("true-true") << true << true;
+}
+
+void TestDocks::tst_dragByTabBar()
+{
+    QFETCH(bool, documentMode);
+    QFETCH(bool, tabsAlwaysVisible);
+
+    EnsureTopLevelsDeleted e;
+    auto flags = KDDockWidgets::Config::self().flags() | KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
+    if (tabsAlwaysVisible)
+        flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
+
+    KDDockWidgets::Config::self().setFlags(flags);
+
+    auto m = createMainWindow();
+    QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
+
+    auto dropArea = m->dropArea();
+    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
+
+    auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(400, 400)));
+    auto dock3 = createDockWidget("dock3", new MyWidget2(QSize(400, 400)));
+    m->addDockWidgetAsTab(dock1);
+    m->resize(osWindowMinWidth(), 200);
+
+    dock2->addDockWidgetAsTab(dock3);
+#if KDDOCKWIDGETS_QTWIDGETS
+    if (documentMode)
+        static_cast<QTabWidget*>(static_cast<FrameWidget*>(dock2->frame())->tabWidget()->asWidget())->setDocumentMode(true);
+#else
+    Q_UNUSED(documentMode);
+#endif
+    auto fw = dock2->floatingWindow();
+    fw->move(m->pos() + QPoint(500, 500));
+    QVERIFY(fw->isVisible());
+    QVERIFY(!fw->titleBar()->isVisible());
+
+    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
 }
 
 #include "tst_docks.moc"

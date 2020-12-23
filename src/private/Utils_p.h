@@ -268,6 +268,7 @@ inline QSize screenSizeForWidget(const QQuickItem *w)
 
 inline QPoint mapToGlobal(QQuickItem *item, QPoint p)
 {
+    Q_ASSERT(item);
     return item->mapToGlobal(p).toPoint();
 }
 
