@@ -239,10 +239,10 @@ private Q_SLOTS:
     void tst_dragBySingleTab();
     void tst_dragByTabBar();
     void tst_dragByTabBar_data();
+    void tst_titleBarFocusedWhenTabsChange();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
-    void tst_titleBarFocusedWhenTabsChange();
     void tst_tabsNotClickable();
     void tst_dock2FloatingWidgetsTabbed();
     void tst_mainWindowAlwaysHasCentralWidget();
@@ -4713,40 +4713,45 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     delete dock1->window();
 }
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-
 void TestDocks::tst_titleBarFocusedWhenTabsChange()
 {
      EnsureTopLevelsDeleted e;
      KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
 
-     auto le1 = new QLineEdit();
+     auto le1 = new FocusableWidget();
      le1->setObjectName("le1");
      auto dock1 = createDockWidget(QStringLiteral("dock1"), le1);
-     auto dock2 = createDockWidget(QStringLiteral("dock2"), new QLineEdit());
-     auto dock3 = createDockWidget(QStringLiteral("dock3"), new QLineEdit());
+     auto dock2 = createDockWidget(QStringLiteral("dock2"), new FocusableWidget());
+     auto dock3 = createDockWidget(QStringLiteral("dock3"), new FocusableWidget());
+     auto oldFw1 = dock1->window();
+     auto oldFw2 = dock2->window();
+     auto oldFw3 = dock3->window();
 
      auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
 
      m1->addDockWidget(dock1, Location_OnLeft);
      m1->addDockWidget(dock2, Location_OnRight);
+     delete oldFw1;
+     delete oldFw2;
      dock2->addDockWidgetAsTab(dock3);
+     delete oldFw3;
 
      TitleBar *titleBar1 = dock1->titleBar();
      dock1->widget()->setFocus(Qt::MouseFocusReason);
 
-     QVERIFY(Testing::waitForEvent(dock1->widget(), QEvent::FocusIn));
+     QVERIFY(dock1->isFocused() || Testing::waitForEvent(dock1->widget(), QEvent::FocusIn));
      QVERIFY(titleBar1->isFocused());
 
-     auto frame2 = qobject_cast<FrameWidget*>(dock2->frame());
+     auto frame2 = dock2->frame();
 
-     TabWidget *tb = frame2->tabWidget();
-     QCOMPARE(tb->currentIndex(), 1); // Was the last to be added
+     TabWidget *tb2 = frame2->tabWidget();
+     QCOMPARE(tb2->currentIndex(), 1); // Was the last to be added
 
-     auto tabBar = dynamic_cast<QTabBar*>(tb->tabBar());
-     const QRect rect0 = tabBar->tabRect(0);
-     const QPoint globalPos = tabBar->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
-     Tests::clickOn(globalPos, tabBar);
+     auto tabBar2 = tb2->tabBar();
+     const QRect rect0 = tabBar2->rectForTab(0);
+     const QPoint globalPos = tabBar2->asWidget()->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
+     Tests::clickOn(globalPos, tabBar2->asWidget());
+
      QVERIFY(!titleBar1->isFocused());
      QVERIFY(dock2->titleBar()->isFocused());
 
@@ -4755,10 +4760,15 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
      QVERIFY(dock1->titleBar()->isFocused());
      QVERIFY(!dock2->titleBar()->isFocused());
 
-     Tests::clickOn(globalPos, tabBar);
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+     // TODO: Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++ TitleBar for focus
+     Tests::clickOn(globalPos, tabBar2->asWidget());
      QVERIFY(!dock1->titleBar()->isFocused());
      QVERIFY(dock2->titleBar()->isFocused());
+#endif
 }
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
 
 void TestDocks::tst_tabsNotClickable()
 {

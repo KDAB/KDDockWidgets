@@ -92,12 +92,6 @@ void TabBarWidget::mousePressEvent(QMouseEvent *e)
 {
     onMousePress(e->pos());
     QTabBar::mousePressEvent(e);
-
-    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !frame()->isFocused()) {
-        // User clicked on a tab which was already focused
-        // A tab changing also counts as a change of scope
-        frame()->FocusScope::focus(Qt::MouseFocusReason);
-    }
 }
 
 void TabBarWidget::mouseMoveEvent(QMouseEvent *e)
