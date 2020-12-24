@@ -240,15 +240,16 @@ private Q_SLOTS:
     void tst_dragByTabBar();
     void tst_dragByTabBar_data();
     void tst_titleBarFocusedWhenTabsChange();
+    void tst_dock2FloatingWidgetsTabbed();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
-    void tst_tabsNotClickable();
-    void tst_dock2FloatingWidgetsTabbed();
+
     void tst_mainWindowAlwaysHasCentralWidget();
     void tst_dockableMainWindows();
 
     // But these are fine to be widget only:
+    void tst_tabsNotClickable();
     void tst_embeddedMainWindow();
     void tst_restoreEmbeddedMainWindow();
     void tst_negativeAnchorPositionWhenEmbedded();
@@ -4799,103 +4800,6 @@ void TestDocks::tst_tabsNotClickable()
     delete frame->window();
 }
 
-void TestDocks::tst_dock2FloatingWidgetsTabbed()
-{
-    EnsureTopLevelsDeleted e;
-
-    if (KDDockWidgets::usesNativeTitleBar())
-        return; // Unit-tests can't drag via tab, yet
-
-    auto dock1 = createDockWidget("doc1", Qt::green);
-    auto fw1 = dock1->floatingWindow();
-    fw1->setGeometry(500, 500, 400, 400);
-    QVERIFY(dock1);
-    QPointer<Frame> frame1 = dock1->frame();
-
-    auto titlebar1 = fw1->titleBar();
-    auto dock2 = createDockWidget("doc2", Qt::red);
-
-    QVERIFY(dock1->isFloating());
-    QVERIFY(dock2->isFloating());
-
-    drag(titlebar1, titlebar1->mapToGlobal(QPoint(5, 5)), dock2->window()->geometry().center(), ButtonAction_Press);
-
-    // It morphed into a FloatingWindow
-    QPointer<Frame> frame2 = dock2->frame();
-    if (!dock2->floatingWindow()) {
-        qWarning() << "dock2->floatingWindow()=" << dock2->floatingWindow();
-        QVERIFY(false);
-    }
-    QVERIFY(frame2);
-    QCOMPARE(frame2->dockWidgetCount(), 1);
-
-    releaseOn(dock2->window()->geometry().center(), titlebar1);
-    QCOMPARE(frame2->dockWidgetCount(), 2); // 2.2 Frame has 2 widgets when one is dropped
-
-    QVERIFY(Testing::waitForDeleted(frame1));
-
-    // 2.3 Detach tab1 to empty space
-    QPoint globalPressPos = dragPointForWidget(frame2.data(), 0);
-    QTabBar *tabBar = static_cast<FrameWidget*>(frame2.data())->tabBar();
-    QVERIFY(tabBar);
-    drag(tabBar, globalPressPos, frame2->window()->geometry().bottomRight() + QPoint(10, 10));
-
-    QVERIFY(frame2->dockWidgetCount() == 1);
-    QVERIFY(dock1->floatingWindow());
-
-    // 2.4 Drag the first dock over the second
-    frame1 = dock1->frame();
-    frame2 = dock2->frame();
-    fw1 = dock1->floatingWindow();
-    globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100,5));
-    drag(fw1->titleBar(), globalPressPos, dock2->window()->geometry().center());
-
-    QCOMPARE(frame2->dockWidgetCount(), 2);
-
-    // 2.5 Detach and drop to the same place, should tab again
-    globalPressPos = dragPointForWidget(frame2.data(), 0);
-    tabBar = static_cast<FrameWidget*>(frame2.data())->tabBar();
-
-    drag(tabBar, globalPressPos, dock2->window()->geometry().center());
-    QCOMPARE(frame2->dockWidgetCount(), 2);
-
-    // 2.6 Drag the tabbed group over a 3rd floating window
-    auto dock3 = createDockWidget("doc3", Qt::black);
-    QTest::qWait(1000); // Test is flaky otherwise
-
-    auto fw2 = dock2->floatingWindow();
-    drag(fw2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
-
-    QVERIFY(Testing::waitForDeleted(frame1));
-    QVERIFY(Testing::waitForDeleted(frame2));
-    QVERIFY(dock3->frame());
-    QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
-
-    auto fw3 = dock3->floatingWindow();
-    QVERIFY(fw3);
-    QVERIFY(fw3->dropArea()->checkSanity());
-
-    // 2.7 Drop the window into a MainWindow
-    {
-        MainWindow m("MyMainWindow_tst_dock2FloatingWidgetsTabbed", MainWindowOption_HasCentralFrame);
-        m.show();
-        m.setGeometry(500, 300, 300, 300);
-        QVERIFY(!dock3->isFloating());
-        auto fw3 = dock3->floatingWindow();
-        drag(fw3->titleBar(), dock3->window()->mapToGlobal(QPoint(10, 10)), m.geometry().center());
-        QVERIFY(!dock3->isFloating());
-        QVERIFY(qobject_cast<MainWindow *>(dock3->window()) == &m);
-        QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
-        QVERIFY(m.dropArea()->checkSanity());
-
-        delete dock1;
-        delete dock2;
-        delete dock3;
-        QVERIFY(Testing::waitForDeleted(frame2));
-        QVERIFY(Testing::waitForDeleted(fw3));
-    }
-}
-
 void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
 {
     EnsureTopLevelsDeleted e;
@@ -6473,6 +6377,103 @@ void TestDocks::tst_dragByTabBar()
     QVERIFY(!fw->titleBar()->isVisible());
 
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
+}
+
+void TestDocks::tst_dock2FloatingWidgetsTabbed()
+{
+    EnsureTopLevelsDeleted e;
+
+    if (KDDockWidgets::usesNativeTitleBar())
+        return; // Unit-tests can't drag via tab, yet
+
+    auto dock1 = createDockWidget("doc1", Qt::green);
+    auto fw1 = dock1->floatingWindow();
+    fw1->setGeometry(QRect(500, 500, 400, 400));
+    QVERIFY(dock1);
+    QPointer<Frame> frame1 = dock1->frame();
+
+    auto titlebar1 = fw1->titleBar();
+    auto dock2 = createDockWidget("doc2", Qt::red);
+
+    QVERIFY(dock1->isFloating());
+    QVERIFY(dock2->isFloating());
+
+    drag(titlebar1, titlebar1->mapToGlobal(QPoint(5, 5)), dock2->window()->geometry().center(), ButtonAction_Press);
+
+    // It morphed into a FloatingWindow
+    QPointer<Frame> frame2 = dock2->frame();
+    if (!dock2->floatingWindow()) {
+        qWarning() << "dock2->floatingWindow()=" << dock2->floatingWindow();
+        QVERIFY(false);
+    }
+    QVERIFY(frame2);
+    QCOMPARE(frame2->dockWidgetCount(), 1);
+
+    releaseOn(dock2->window()->geometry().center(), titlebar1);
+    QCOMPARE(frame2->dockWidgetCount(), 2); // 2.2 Frame has 2 widgets when one is dropped
+
+    QVERIFY(Testing::waitForDeleted(frame1));
+
+    // 2.3 Detach tab1 to empty space
+    QPoint globalPressPos = dragPointForWidget(frame2.data(), 0);
+    TabBar *tabBar = frame2->tabWidget()->tabBar();
+    QVERIFY(tabBar);
+    drag(tabBar->asWidget(), globalPressPos, frame2->window()->geometry().bottomRight() + QPoint(10, 10));
+
+    QVERIFY(frame2->dockWidgetCount() == 1);
+    QVERIFY(dock1->floatingWindow());
+
+    // 2.4 Drag the first dock over the second
+    frame1 = dock1->frame();
+    frame2 = dock2->frame();
+    fw1 = dock1->floatingWindow();
+    globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100,5));
+    drag(fw1->titleBar(), globalPressPos, dock2->window()->geometry().center());
+
+    QCOMPARE(frame2->dockWidgetCount(), 2);
+
+    // 2.5 Detach and drop to the same place, should tab again
+    globalPressPos = dragPointForWidget(frame2.data(), 0);
+    tabBar = frame2->tabWidget()->tabBar();
+
+    drag(tabBar->asWidget(), globalPressPos, dock2->window()->geometry().center());
+    QCOMPARE(frame2->dockWidgetCount(), 2);
+
+    // 2.6 Drag the tabbed group over a 3rd floating window
+    auto dock3 = createDockWidget("doc3", Qt::black);
+    QTest::qWait(1000); // Test is flaky otherwise
+
+    auto fw2 = dock2->floatingWindow();
+    drag(fw2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
+
+    QVERIFY(Testing::waitForDeleted(frame1));
+    QVERIFY(Testing::waitForDeleted(frame2));
+    QVERIFY(dock3->frame());
+    QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
+
+    auto fw3 = dock3->floatingWindow();
+    QVERIFY(fw3);
+    QVERIFY(fw3->dropArea()->checkSanity());
+
+    // 2.7 Drop the window into a MainWindow
+    {
+        auto m = createMainWindow();
+        m->show();
+        m->setGeometry(QRect(500, 300, 300, 300));
+        QVERIFY(!dock3->isFloating());
+        auto fw3 = dock3->floatingWindow();
+        drag(fw3->titleBar(), dock3->window()->mapToGlobal(QPoint(10, 10)), m->geometry().center());
+        QVERIFY(!dock3->isFloating());
+        QVERIFY(dock3->window() == m.get());
+        QCOMPARE(dock3->frame()->dockWidgetCount(), 3);
+        QVERIFY(m->dropArea()->checkSanity());
+
+        delete dock1;
+        delete dock2;
+        delete dock3;
+        QVERIFY(Testing::waitForDeleted(frame2));
+        QVERIFY(Testing::waitForDeleted(fw3));
+    }
 }
 
 #include "tst_docks.moc"
