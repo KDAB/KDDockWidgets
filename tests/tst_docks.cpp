@@ -81,11 +81,6 @@ public Q_SLOTS:
         QQuickStyle::setStyle("Material"); // so we don't load KDE plugins
         KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
 #endif
-        {
-            // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
-            auto m = createMainWindow();
-            QTest::qWait(10);
-        }
     }
 
     void cleanupTestCase()
@@ -4805,7 +4800,6 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow();
-    QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
 
     QWidget *central = m->centralWidget();
     auto dropArea = m->dropArea();
@@ -4875,7 +4869,6 @@ void TestDocks::tst_dockableMainWindows()
      QVERIFY(dock21->titleBar() != fwTitleBar);
      QVERIFY(dock22->titleBar() != fwTitleBar);
 
-     QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
      const QPoint startPoint = fwTitleBar->mapToGlobal(QPoint(5, 5));
      const QPoint destination = startPoint + QPoint(20, 20);
 
@@ -6354,7 +6347,6 @@ void TestDocks::tst_dragByTabBar()
     KDDockWidgets::Config::self().setFlags(flags);
 
     auto m = createMainWindow();
-    QTest::qWait(10); // the DND state machine needs the event loop to start, otherwise activeState() is nullptr. (for offscreen QPA)
 
     auto dropArea = m->dropArea();
     auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
