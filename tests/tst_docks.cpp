@@ -1004,12 +1004,12 @@ void TestDocks::tst_complex()
                                                   Location_OnBottom, Location_OnBottom, Location_OnBottom, Location_OnBottom
                                                   };
 
-    QVector<KDDockWidgets::AddingOption> options = { AddingOption_None, AddingOption_None,
-                                                    AddingOption_StartHidden, AddingOption_StartHidden,
-                                                    AddingOption_None,
-                                                    AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,
-                                                    AddingOption_None, AddingOption_None,
-                                                    AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden,AddingOption_StartHidden, AddingOption_StartHidden
+    QVector<KDDockWidgets::InitialVisibilityOption> options = { InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
+                                                    InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
+                                                    InitialVisibilityOption::StartVisible,
+                                                    InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,
+                                                    InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
+                                                    InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden,InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartHidden
     };
 
     QVector<bool> floatings =  {true, false, true, false, false, false, false, false, false, false, false, false,
@@ -1068,44 +1068,44 @@ void TestDocks::tst_28NestedWidgets_data()
     QTest::addColumn<QVector<int>>("docksToHide");
 
     QVector<DockDescriptor> docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None }
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     QTest::newRow("28") << docks << QVector<int>{11, 0};
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
 
     };
 
@@ -1117,67 +1117,67 @@ void TestDocks::tst_28NestedWidgets_data()
     QTest::newRow("anchor_intersection") << docks << docksToHide;
 
     docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // 2. Produced valgrind invalid reads while adding
     QTest::newRow("valgrind") << docks << QVector<int>{};
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     QTest::newRow("bug_when_closing") << docks << QVector<int>{}; // Q_ASSERT(!isSquashed())
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     QTest::newRow("bug_when_closing2") << docks << QVector<int>{};    // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnBottom, 0, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None }
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
 
     docksToHide.clear();
@@ -1189,88 +1189,88 @@ void TestDocks::tst_28NestedWidgets_data()
     QTest::newRow("bug_with_holes") << docks << docksToHide;
 #endif
     docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnLeft, 17, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None } };
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnLeft, 17, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     docksToHide.clear();
     QTest::newRow("add_as_placeholder") << docks << docksToHide;
 
     docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden } };
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden } };
 
     QTest::newRow("add_as_placeholder_simple") << docks << docksToHide;
 
 
     docks = {
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden } };
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden } };
 
     docksToHide.clear();
     QTest::newRow("isSquashed_assert") << docks << docksToHide;
 
     docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden } };
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden } };
 
     docksToHide.clear();
     QTest::newRow("negative_pos_warning") << docks << docksToHide;
 
     docks = {
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_None } };
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     docksToHide.clear();
     QTest::newRow("bug") << docks << docksToHide;
 
     docks = {
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_None } };
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     docksToHide.clear();
     QTest::newRow("bug2") << docks << docksToHide;
 
     docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_None } };
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     docksToHide.clear();
     QTest::newRow("bug3") << docks << docksToHide;
@@ -1357,12 +1357,12 @@ void TestDocks::tst_closeReparentsToNull()
 
 void TestDocks::tst_startHidden()
 {
-    // A really simple test for AddingOption_StartHidden
+    // A really simple test for InitialVisibilityOption::StartHidden
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1", new QPushButton("1"), {}, /*show=*/false);
-    m->addDockWidget(dock1, Location_OnRight, nullptr, AddingOption_StartHidden);
+    m->addDockWidget(dock1, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
     delete dock1;
 }
 
@@ -1377,7 +1377,7 @@ void TestDocks::tst_startHidden2()
         auto dropArea = m->dropArea();
         MultiSplitter *layout = dropArea;
 
-        m->addDockWidget(dock1, Location_OnTop, nullptr, AddingOption_StartHidden);
+        m->addDockWidget(dock1, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
         QVERIFY(layout->checkSanity());
 
         QCOMPARE(layout->count(), 1);
@@ -1406,10 +1406,10 @@ void TestDocks::tst_startHidden2()
 
         auto dropArea = m->dropArea();
         MultiSplitter *layout = dropArea;
-        m->addDockWidget(dock1, Location_OnLeft, nullptr, AddingOption_StartHidden);
+        m->addDockWidget(dock1, Location_OnLeft, nullptr, InitialVisibilityOption::StartHidden);
 
-        m->addDockWidget(dock2, Location_OnBottom, nullptr, AddingOption_StartHidden);
-        m->addDockWidget(dock3, Location_OnRight, nullptr, AddingOption_StartHidden);
+        m->addDockWidget(dock2, Location_OnBottom, nullptr, InitialVisibilityOption::StartHidden);
+        m->addDockWidget(dock3, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
 
         dock1->show();
 
@@ -1489,7 +1489,7 @@ void TestDocks::tst_negativeAnchorPosition2()
     auto dock3 = createDockWidget("3", new QPushButton("3"), {}, /*show=*/false);
 
     m->addDockWidget(dock1, Location_OnLeft);
-    m->addDockWidget(dock2, Location_OnRight, nullptr, AddingOption_StartHidden);
+    m->addDockWidget(dock2, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
     m->addDockWidget(dock3, Location_OnRight);
     QCOMPARE(layout->placeholderCount(), 1);
     QCOMPARE(layout->count(), 3);
@@ -1505,11 +1505,11 @@ void TestDocks::tst_negativeAnchorPosition3()
 {
     // 1. Another case, when floating a dock:
     EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = { {Location_OnLeft, -1, nullptr, AddingOption_None },
-                                     {Location_OnRight, -1, nullptr, AddingOption_None },
-                                     {Location_OnLeft, -1, nullptr, AddingOption_None },
-                                     {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-                                     {Location_OnRight, -1, nullptr, AddingOption_None } };
+    QVector<DockDescriptor> docks = { {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+                                     {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+                                     {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+                                     {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+                                     {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
     MultiSplitter *layout = dropArea;
@@ -1530,11 +1530,11 @@ void TestDocks::tst_negativeAnchorPosition4()
     // 1. Tests that we don't get a warning
     // Out of bounds position= -5 ; oldPosition= 0 KDDockWidgets::Anchor(0x55e726be9090, name = "left") KDDockWidgets::MainWindow(0x55e726beb8d0)
     EnsureTopLevelsDeleted e;
-    QVector<DockDescriptor> docks = { { Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
-                                      { Location_OnTop, -1, nullptr, AddingOption_None },
-                                      { Location_OnRight, -1, nullptr, AddingOption_None },
-                                      { Location_OnLeft, -1, nullptr, AddingOption_None },
-                                      { Location_OnRight, -1, nullptr, AddingOption_None } };
+    QVector<DockDescriptor> docks = { { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+                                      { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+                                      { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+                                      { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+                                      { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
@@ -1561,9 +1561,9 @@ void TestDocks::tst_negativeAnchorPosition5()
 {
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = {
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
         };
 
     auto m = createMainWindow(docks);
@@ -1702,7 +1702,7 @@ void TestDocks::tst_addAsPlaceholder()
     auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, false);
 
     m->addDockWidget(dock1, Location_OnBottom);
-    m->addDockWidget(dock2, Location_OnTop, nullptr, AddingOption_StartHidden);
+    m->addDockWidget(dock2, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
 
     auto dropArea = m->dropArea();
     MultiSplitter *layout = dropArea;
@@ -1732,7 +1732,7 @@ void TestDocks::tst_removeItem()
     auto dock3 = createDockWidget("dock3", new QPushButton("three"));
 
     m->addDockWidget(dock1, Location_OnBottom);
-    m->addDockWidget(dock2, Location_OnTop, nullptr, AddingOption_StartHidden);
+    m->addDockWidget(dock2, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
     Item *item2 = dock2->lastPositions().lastItem();
 
     auto dropArea = m->dropArea();
@@ -2270,8 +2270,8 @@ void TestDocks::tst_crash2()
         QVector<KDDockWidgets::Location> locations = {Location_OnLeft,
                                                       Location_OnRight, Location_OnRight, Location_OnRight};
 
-        QVector<KDDockWidgets::AddingOption> options = { AddingOption_StartHidden,
-                                                        AddingOption_StartHidden, AddingOption_None, AddingOption_StartHidden};
+        QVector<KDDockWidgets::InitialVisibilityOption> options = { InitialVisibilityOption::StartHidden,
+                                                        InitialVisibilityOption::StartHidden, InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartHidden};
 
         QVector<bool> floatings =  {true, false, false, false};
 
@@ -2300,8 +2300,8 @@ void TestDocks::tst_crash2()
         QVector<KDDockWidgets::Location> locations = {Location_OnLeft, Location_OnLeft,
                                                       Location_OnRight};
 
-        QVector<KDDockWidgets::AddingOption> options = { AddingOption_None, AddingOption_None,
-                                                        AddingOption_StartHidden};
+        QVector<KDDockWidgets::InitialVisibilityOption> options = { InitialVisibilityOption::StartVisible, InitialVisibilityOption::StartVisible,
+                                                        InitialVisibilityOption::StartHidden};
 
         QVector<bool> floatings =  {true, false, false};
 
@@ -4208,15 +4208,15 @@ void TestDocks::tst_availableSizeWithPlaceholders()
 
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks1 = {
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnBottom, -1, nullptr, AddingOption_StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
         };
 
     QVector<DockDescriptor> docks2 = {
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
-        {Location_OnBottom, -1, nullptr, AddingOption_None },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
         };
 
     QVector<DockDescriptor> empty;
@@ -4277,12 +4277,12 @@ void TestDocks::tst_anchorFollowingItselfAssert()
     //  ASSERT: "this != m_followee" in file ../src/multisplitter/Anchor.cpp
     EnsureTopLevelsDeleted e;
     QVector<DockDescriptor> docks = {
-        {Location_OnLeft, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnTop, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_None },
-        {Location_OnLeft, -1, nullptr, AddingOption_None },
-        {Location_OnRight, -1, nullptr, AddingOption_StartHidden },
-        {Location_OnRight, -1, nullptr, AddingOption_None } };
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartHidden },
+        {Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible } };
 
     auto m = createMainWindow(docks);
     auto dropArea = m->dropArea();
@@ -4525,7 +4525,7 @@ void TestDocks::tst_sizeConstraintWarning()
     listDockWidget.at(2 - 1)->addDockWidgetAsTab(listDockWidget.at(2));
     dropArea->checkSanity();
 
-    window->addDockWidget(listDockWidget.at(3-1), static_cast<Location>(2), listDockWidget.at(3), static_cast<AddingOption>(1));
+    window->addDockWidget(listDockWidget.at(3-1), static_cast<Location>(2), listDockWidget.at(3), static_cast<InitialVisibilityOption>(1));
     dropArea->checkSanity();
 
     listDockWidget.at(4 - 1)->addDockWidgetAsTab(listDockWidget.at(4));
@@ -4540,13 +4540,13 @@ void TestDocks::tst_sizeConstraintWarning()
     window->addDockWidget(listDockWidget.at(7), static_cast<Location>(4));
     dropArea->checkSanity();
 
-    window->addDockWidget(listDockWidget.at(8-1), static_cast<Location>(1), listDockWidget.at(8), static_cast<AddingOption>(1));
+    window->addDockWidget(listDockWidget.at(8-1), static_cast<Location>(1), listDockWidget.at(8), static_cast<InitialVisibilityOption>(1));
     dropArea->checkSanity();
 
     window->addDockWidget(listDockWidget.at(9), static_cast<Location>(2));
     dropArea->checkSanity();
 
-    window->addDockWidget(listDockWidget.at(10-1), static_cast<Location>(2), listDockWidget.at(10), static_cast<AddingOption>(1));
+    window->addDockWidget(listDockWidget.at(10-1), static_cast<Location>(2), listDockWidget.at(10), static_cast<InitialVisibilityOption>(1));
     dropArea->checkSanity();
 
     listDockWidget.at(11 - 1)->addDockWidgetAsTab(listDockWidget.at(11));
@@ -5226,7 +5226,7 @@ void TestDocks::tst_minSizeChanges()
     d2->setWidget(w2);
 
     m->addDockWidget(d1, Location_OnTop);
-    m->addDockWidget(d2, Location_OnTop, nullptr, AddingOption_StartHidden);
+    m->addDockWidget(d2, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
     auto layout = m->multiSplitter();
 
     // 1. d2 is a placeholder, let's change its min size before showing it
@@ -5840,7 +5840,7 @@ void TestDocks::tst_addingOptionHiddenTabbed()
     m->addDockWidget(dock1, Location_OnTop);
 
     QCOMPARE(dock1->frame()->dockWidgetCount(), 1);
-    dock1->addDockWidgetAsTab(dock2, AddingOption_StartHidden);
+    dock1->addDockWidgetAsTab(dock2, InitialVisibilityOption::StartHidden);
     QCOMPARE(dock1->frame()->dockWidgetCount(), 1);
     dock2->show();
     QCOMPARE(dock1->frame()->dockWidgetCount(), 2);

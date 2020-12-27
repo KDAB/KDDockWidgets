@@ -472,12 +472,13 @@ int Item::pos(Qt::Orientation o) const
     return o == Qt::Vertical ? y() : x();
 }
 
-void Item::insertItem(Item *item, Location loc, DefaultSizeMode defaultSizeMode, AddingOption option)
+void Item::insertItem(Item *item, Location loc,
+                      DefaultSizeMode defaultSizeMode, KDDockWidgets::InitialOption option)
 {
     Q_ASSERT(item != this);
 
-    item->setIsVisible(!(option & AddingOption_StartHidden));
-    Q_ASSERT(!((option & AddingOption_StartHidden) && item->isContainer()));
+    item->setIsVisible(!option.startsHidden());
+    Q_ASSERT(!(option.startsHidden() && item->isContainer()));
 
     if (m_parent->hasOrientationFor(loc)) {
         const bool locIsSide1 = locationIsSide1(loc);
@@ -1317,7 +1318,7 @@ ItemContainer *ItemContainer::convertChildToContainer(Item *leaf)
 }
 
 void ItemContainer::insertItem(Item *item, Location loc, DefaultSizeMode defaultSizeMode,
-                               AddingOption addingOption)
+                               KDDockWidgets::InitialOption initialOption)
 {
     Q_ASSERT(item != this);
     if (contains(item)) {
@@ -1325,8 +1326,8 @@ void ItemContainer::insertItem(Item *item, Location loc, DefaultSizeMode default
         return;
     }
 
-    item->setIsVisible(!(addingOption & AddingOption_StartHidden));
-    Q_ASSERT(!((addingOption & AddingOption_StartHidden) && item->isContainer()));
+    item->setIsVisible(!initialOption.startsHidden());
+    Q_ASSERT(!(initialOption.startsHidden() && item->isContainer()));
 
     const Qt::Orientation locOrientation = orientationForLocation(loc);
 
@@ -1349,7 +1350,7 @@ void ItemContainer::insertItem(Item *item, Location loc, DefaultSizeMode default
         insertItem(container, 0, DefaultSizeMode::None);
 
         // Now we have the correct orientation, we can insert
-        insertItem(item, loc, defaultSizeMode, addingOption);
+        insertItem(item, loc, defaultSizeMode, initialOption);
 
         if (!container->hasVisibleChildren())
             container->setGeometry(QRect());

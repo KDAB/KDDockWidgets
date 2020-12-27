@@ -12,6 +12,7 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include <QObject>
 #include <QVector>
@@ -239,10 +240,6 @@ public:
     };
     Q_DECLARE_FLAGS(LayoutBorderLocations, LayoutBorderLocation)
 
-    enum AddingOption {
-        AddingOption_None = 0, ///> No option set
-        AddingOption_StartHidden ///< Don't show the dock widget when adding it
-    };
 
     ///@brief When an item is added we need to figure out what's a decent size for it
     ///This enum specifies the different ways to calculate it
@@ -266,7 +263,7 @@ public:
     virtual int visibleCount_recursive() const;
     virtual void insertItem(Item *item, Location,
                             DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
-                            AddingOption = AddingOption_None);
+                            KDDockWidgets::InitialOption = {});
 
     /**
      * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.
@@ -387,7 +384,7 @@ public:
     ~ItemContainer();
     void insertItem(Item *item, int index, DefaultSizeMode);
     void insertItem(Item *item, Location, DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
-                    AddingOption = AddingOption_None) override;
+                    KDDockWidgets::InitialOption = {}) override;
     void requestSeparatorMove(Separator *separator, int delta);
     int minPosForSeparator(Separator *, bool honourMax = true) const;
     int maxPosForSeparator(Separator *, bool honourMax = true) const;

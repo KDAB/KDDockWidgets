@@ -74,7 +74,7 @@ public:
     ///@brief DockWidget options to pass at construction time
     enum Option {
         Option_None = 0, ///< No option, the default
-        Option_NotClosable = 1, /// The DockWidget can't be closed on the [x], only programatically
+        Option_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programatically
         Option_NotDockable = 2 ///< The DockWidget can't be docked, it's always floating
     };
     Q_DECLARE_FLAGS(Options, Option)
@@ -103,12 +103,12 @@ public:
     /**
      * @brief docks @p other widget into this one. Tabs will be shown if not already.
      * @param other The other dock widget to dock into this one.
-     * @param addingOption Allows to specify an AddingOption. Which is useful to add the dock widget
+     * @param initialOption Allows to specify an InitialOption. Which is useful to add the dock widget
      * as hidden, recording only a placeholder in the tab. So it's restored to tabbed when eventually
      * shown.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
-    void addDockWidgetAsTab(DockWidgetBase *other, AddingOption addingOption = AddingOption_None);
+    void addDockWidgetAsTab(DockWidgetBase *other, InitialOption initialOption = {});
 
     /**
      * @brief docks @p other widget into the window that contains this one.

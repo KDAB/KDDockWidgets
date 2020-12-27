@@ -22,6 +22,7 @@
 #include "Qt5Qt6Compat_p.h"
 
 #include <QObject>
+#include <QDebug>
 
 #ifdef Q_OS_WIN
 // Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting. Untested on macOS.
@@ -44,9 +45,60 @@ namespace KDDockWidgets
     };
     Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 
-    enum AddingOption {
-        AddingOption_None = 0, ///> No option set
-        AddingOption_StartHidden ///< Don't show the dock widget when adding it
+    enum class InitialVisibilityOption {
+        StartVisible = 0, ///< The dock widget is made visible when docked
+        StartHidden ///< Don't show the dock widget when adding it
+    };
+
+    /**
+     * @brief Struct describing the preferred dock widget size and visibility when adding it to a layout
+     *
+     * You can pass this to MainWindowBase::addDockWidget() to give an hint of your preferred size
+     * and visibility.
+     *
+     * See bellow the documentation for InitialOption::visibility and InitialOption::preferredSize.
+     *
+     * @sa MainWindowBase::addDockWidget()
+     */
+    struct InitialOption
+    {
+        // Implicit ctors for convenience:
+
+        InitialOption() = default;
+
+        InitialOption(InitialVisibilityOption v)
+            : visibility(v) {}
+
+        /*InitialOption(QSize size)
+            : preferredSize(size) {}
+
+        InitialOption(InitialVisibilityOption v, QSize size)
+            : visibility(v)
+            , preferredSize(size)
+        {}*/
+
+        bool startsHidden() const {
+            return visibility == InitialVisibilityOption::StartHidden;
+        }
+
+        /**
+         * @brief Allows a dock widget to be docked as hidden.
+         *
+         * Next time you call DockWidget::show() it will be shown at that place. This avoids
+         * flickering, as no show()/hide() workarounds are needed.
+         */
+        const InitialVisibilityOption visibility = InitialVisibilityOption::StartVisible;
+
+        /**
+         * @brief Allows to control the size a dock widget should get when docked.
+         *
+         * If an invalid or empty size is passed then KDDW's default heuristics are applied.
+         *
+         * Note that usually only the width or the height will be honoured: For example, when adding a
+         * dock widget to the left then only the preferred width will be taken into account, as the
+         * height will simply fill the whole layout.
+         */
+        //const QSize preferredSize; not yet done.
     };
 
     ///@internal
@@ -117,6 +169,14 @@ namespace KDDockWidgets
     }
 }
 
+///@internal
+inline QDebug operator<<(QDebug d, KDDockWidgets::InitialOption o)
+{
+    d << o.startsHidden();
+    return d;
+}
+
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
+Q_DECLARE_METATYPE(KDDockWidgets::InitialVisibilityOption)
 
 #endif

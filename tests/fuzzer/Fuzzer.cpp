@@ -222,7 +222,7 @@ Testing::AddDockWidgetParams Fuzzer::getRandomAddDockWidgetParams()
     }
 
     params.location = getRandomLocation();
-    params.addingOption = AddingOption_None; // TODO: Test the other ones
+    params.addingOption = InitialVisibilityOption::StartVisible; // TODO: Test the other ones
 
     return params;
 }

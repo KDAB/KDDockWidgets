@@ -12,11 +12,12 @@
             otherwise shiboken will ignore the function and will fail to create a wrapper -->
         <primitive-type name="DropAreaWithCentralFrame"/>
         <primitive-type name="SideBar"/>
+        <primitive-type name="InitialOption"/>
 
         <!-- Some plublic enum and flags -->
         <enum-type name="Location"/>
         <enum-type name="MainWindowOption" flags="MainWindowOptions"/>
-        <enum-type name="AddingOption"/>
+        <enum-type name="InitialVisibilityOption"/>
         <enum-type name="RestoreOption" flags="RestoreOptions"/>
         <enum-type name="DefaultSizeMode"/>
         <enum-type name="FrameOption" flags="FrameOptions"/>

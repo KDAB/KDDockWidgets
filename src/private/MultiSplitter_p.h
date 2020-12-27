@@ -71,7 +71,7 @@ public:
     void addWidget(QWidgetOrQuick *widget, KDDockWidgets::Location location,
                    Frame *relativeTo = nullptr,
                    Layouting::Item::DefaultSizeMode = Layouting::Item::DefaultSizeMode::Fair,
-                   AddingOption option = {});
+                   InitialOption option = {});
 
     /**
      * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted
@@ -234,7 +234,7 @@ private:
 
     // For debug/hardening
     bool validateInputs(QWidgetOrQuick *widget, KDDockWidgets::Location location,
-                        const Frame *relativeToFrame, AddingOption option) const;
+                        const Frame *relativeToFrame, InitialOption option) const;
 
     /**
      * @brief Removes unneeded placeholder items when adding new frames.

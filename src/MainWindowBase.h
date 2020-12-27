@@ -74,11 +74,14 @@ public:
      * @param dockWidget The dock widget to add into this MainWindow
      * @param location the location where to dock
      * @param relativeTo In case we're docking in relation to another dock widget
-     * @param option AddingOptions
+     * @param initialOption Allows to specify an InitialOption. Which is useful to add the dock widget
+     * as hidden, recording only a placeholder in the tab. So it's restored to tabbed when eventually
+     * shown.
      */
     void addDockWidget(DockWidgetBase *dockWidget,
                        KDDockWidgets::Location location,
-                       DockWidgetBase *relativeTo = nullptr, AddingOption option = KDDockWidgets::AddingOption());
+                       DockWidgetBase *relativeTo = nullptr,
+                       InitialOption initialOption = {});
 
     /**
      * @brief Returns the unique name that was passed via constructor.

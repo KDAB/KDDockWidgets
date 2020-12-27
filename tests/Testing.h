@@ -49,7 +49,7 @@ namespace Testing {
         QString dockWidgetName;
         QString relativeToName;
         KDDockWidgets::Location location;
-        KDDockWidgets::AddingOption addingOption;
+        KDDockWidgets::InitialVisibilityOption addingOption;
 
         bool isNull() const
         {
@@ -65,7 +65,7 @@ namespace Testing {
             if (!relativeToName.isEmpty())
                 map["relativeToName"] = relativeToName;
             map["location"] = location;
-            map["addingOption"] = addingOption;
+            map["addingOption"] = QVariant::fromValue(addingOption);
 
             return map;
         }
@@ -78,7 +78,7 @@ namespace Testing {
             params.dockWidgetName = map["dockWidgetName"].toString();
             params.relativeToName = map["relativeToName"].toString();
             params.location = KDDockWidgets::Location(map["location"].toInt());
-            params.addingOption = KDDockWidgets::AddingOption(map["addingOption"].toInt());
+            params.addingOption = map["addingOption"].value<KDDockWidgets::InitialVisibilityOption>();
 
             return params;
         }

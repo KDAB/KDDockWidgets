@@ -77,7 +77,7 @@ struct DockDescriptor {
     Location loc;
     int relativeToIndex;
     QPointer<DockWidgetBase> createdDock;
-    KDDockWidgets::AddingOption option;
+    KDDockWidgets::InitialVisibilityOption option;
 };
 
 inline bool shouldSkipTests()

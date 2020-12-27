@@ -96,14 +96,15 @@ Layouting::Item *DropArea::centralFrame() const
     return nullptr;
 }
 
-void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBase *relativeTo, AddingOption option)
+void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
+                             DockWidgetBase *relativeTo, InitialOption option)
 {
     if (!dw || dw == relativeTo || location == Location_None) {
         qWarning() << Q_FUNC_INFO << "Invalid parameters" << dw << relativeTo << location;
         return;
     }
 
-    if ((option & AddingOption_StartHidden) && dw->frame() != nullptr) {
+    if ((option.visibility == InitialVisibilityOption::StartHidden) && dw->frame() != nullptr) {
         // StartHidden is just to be used at startup, not to moving stuff around
         qWarning() << Q_FUNC_INFO << "Dock widget already exists in the layout";
         return;
@@ -135,7 +136,7 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location, DockWidgetBa
         frame->addWidget(dw);
     }
 
-    if (option & AddingOption_StartHidden) {
+    if (option.startsHidden()) {
         addWidget(dw, location, relativeToFrame, Layouting::Item::DefaultSizeMode::Fair, option);
     } else {
         addWidget(frame, location, relativeToFrame, Layouting::Item::DefaultSizeMode::Fair, option);

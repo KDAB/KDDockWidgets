@@ -52,7 +52,8 @@ public:
 
     Layouting::Item *centralFrame() const;
     DropIndicatorOverlayInterface *dropIndicatorOverlay() const { return m_dropIndicatorOverlay; }
-    void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location, DockWidgetBase *relativeTo, AddingOption option = {});
+    void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location,
+                       DockWidgetBase *relativeTo, InitialOption = {});
 
     bool containsDockWidget(DockWidgetBase *) const;
 

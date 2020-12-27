@@ -110,12 +110,12 @@ void Frame::onDockWidgetTitleChanged()
     }
 }
 
-void Frame::addWidget(DockWidgetBase *dockWidget, AddingOption addingOption)
+void Frame::addWidget(DockWidgetBase *dockWidget, InitialOption addingOption)
 {
     insertWidget(dockWidget, dockWidgetCount(), addingOption); // append
 }
 
-void Frame::addWidget(Frame *frame, AddingOption addingOption)
+void Frame::addWidget(Frame *frame, InitialOption addingOption)
 {
     if (frame->isEmpty()) {
         qWarning() << "Frame::addWidget: frame is empty." << frame;
@@ -127,18 +127,18 @@ void Frame::addWidget(Frame *frame, AddingOption addingOption)
         addWidget(dockWidget, addingOption);
 }
 
-void Frame::addWidget(FloatingWindow *floatingWindow, AddingOption addingOption)
+void Frame::addWidget(FloatingWindow *floatingWindow, InitialOption addingOption)
 {
     Q_ASSERT(floatingWindow);
     for (Frame *f : floatingWindow->frames())
         addWidget(f, addingOption);
 }
 
-void Frame::insertWidget(DockWidgetBase *dockWidget, int index, AddingOption addingOption)
+void Frame::insertWidget(DockWidgetBase *dockWidget, int index, InitialOption addingOption)
 {
     qCDebug(addwidget()) << Q_FUNC_INFO << ((void*)this) <<  "; dockWidget="
                          << dockWidget << "; oldFrame=" << dockWidget->frame()
-                         << "; addingOption=" << addingOption;
+                         << "; initialOption=" << addingOption;
 
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
@@ -150,7 +150,7 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index, AddingOption add
 
     insertDockWidget(dockWidget, index);
 
-    if (addingOption == AddingOption_StartHidden) {
+    if (addingOption.startsHidden()) {
         dockWidget->close(); // Ensure closed
     } else {
         if (hasSingleDockWidget()) {

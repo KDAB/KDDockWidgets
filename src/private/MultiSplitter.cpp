@@ -108,7 +108,7 @@ FloatingWindow *MultiSplitter::floatingWindow() const
 
 bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
                                          Location location,
-                                         const Frame *relativeToFrame, AddingOption option) const
+                                         const Frame *relativeToFrame, InitialOption option) const
 {
     if (!widget) {
         qWarning() << Q_FUNC_INFO << "Widget is null";
@@ -116,7 +116,7 @@ bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
     }
 
     const bool isDockWidget = qobject_cast<DockWidgetBase*>(widget);
-    const bool isStartHidden = option & AddingOption_StartHidden;
+    const bool isStartHidden = option.startsHidden();
 
     if (!qobject_cast<Frame*>(widget) && !qobject_cast<MultiSplitter*>(widget) && !isDockWidget) {
         qWarning() << "Unknown widget type" << widget;
@@ -162,7 +162,7 @@ bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
 void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
                               Frame *relativeToWidget,
                               Layouting::Item::DefaultSizeMode defaultSizeMode,
-                              AddingOption option)
+                              InitialOption option)
 {
     auto frame = qobject_cast<Frame*>(w);
     qCDebug(addwidget) << Q_FUNC_INFO << w
@@ -171,7 +171,7 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
                        << "; size=" << size()
                        << "; w.size=" << w->size()
                        << "; frame=" << frame
-                       << "; option=" << option;
+                       << "; options=" << option;
 
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it.
@@ -220,9 +220,9 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
 
     Q_ASSERT(!newItem->geometry().isEmpty());
     relativeTo->insertItem(newItem, Layouting::Item::Location(location),
-                           Layouting::Item::DefaultSizeMode(defaultSizeMode), Layouting::Item::AddingOption(option));
+                           Layouting::Item::DefaultSizeMode(defaultSizeMode), option);
 
-    if (dw && option && AddingOption_StartHidden)
+    if (dw && option.startsHidden())
         delete frame;
 }
 
