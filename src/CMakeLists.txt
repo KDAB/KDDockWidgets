@@ -110,6 +110,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/TitleBar_p.h
     private/WindowBeingDragged_p.h
     private/DockRegistry_p.h
+    private/TabWidget_p.h
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
@@ -120,7 +121,6 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/FrameWidget_p.h
     private/widgets/TabBarWidget_p.h
     private/widgets/TabWidgetWidget_p.h
-    private/TabWidget_p.h
 )
 
 if(${PROJECT_NAME}_QTQUICK)
