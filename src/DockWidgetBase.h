@@ -170,17 +170,6 @@ public:
     ~DockWidgetBase() override;
 
     /**
-     * @brief Constructs a dock widget from its serialized form.
-     * @internal
-     */
-    static DockWidgetBase *deserialize(const LayoutSaver::DockWidget::Ptr &);
-
-    /**
-     * @brief Serializes this dock widget into an intermediate form
-     */
-    LayoutSaver::DockWidget::Ptr serialize() const;
-
-    /**
      * @brief docks @p other widget into this one. Tabs will be shown if not already.
      * @param other The other dock widget to dock into this one.
      * @param addingOption Allows to specify an AddingOption. Which is useful to add the dock widget
@@ -536,6 +525,17 @@ private:
     friend class KDDockWidgets::LayoutSaver;
     friend class KDDockWidgets::MainWindowBase;
     friend class KDDockWidgets::FrameQuick;
+
+    /**
+     * @brief Constructs a dock widget from its serialized form.
+     * @internal
+     */
+    static DockWidgetBase *deserialize(const LayoutSaver::DockWidget::Ptr &);
+
+    /**
+     * @brief Serializes this dock widget into an intermediate form
+     */
+    LayoutSaver::DockWidget::Ptr serialize() const;
 
     /**
      * @brief the Frame which contains this dock widgets.
