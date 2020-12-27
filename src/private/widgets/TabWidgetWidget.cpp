@@ -74,14 +74,6 @@ int TabWidgetWidget::indexOfDockWidget(DockWidgetBase *dw) const
     return indexOf(dw);
 }
 
-void TabWidgetWidget::paintEvent(QPaintEvent *p)
-{
-    // When count is 1 we want to use the same background as a regular QWidget
-    // Otherwise it looks weird because the colors change when transforming a QDockWidget into FloatingWindow
-    if (count() > 1)
-        QTabWidget::paintEvent(p);
-}
-
 void TabWidgetWidget::mouseDoubleClickEvent(QMouseEvent *ev)
 {
     if (onMouseDoubleClick(ev->pos())) {

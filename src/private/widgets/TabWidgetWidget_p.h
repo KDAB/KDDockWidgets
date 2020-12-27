@@ -46,7 +46,6 @@ Q_SIGNALS:
     void currentTabChanged(int index) override;
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *dw) override;
 protected:
-    void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void tabInserted(int index) override;
