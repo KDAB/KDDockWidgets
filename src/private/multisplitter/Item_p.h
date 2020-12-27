@@ -240,17 +240,6 @@ public:
     };
     Q_DECLARE_FLAGS(LayoutBorderLocations, LayoutBorderLocation)
 
-
-    ///@brief When an item is added we need to figure out what's a decent size for it
-    ///This enum specifies the different ways to calculate it
-    enum class DefaultSizeMode {
-        ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
-        Fair, ///< Gives an equal relative size as the items that are already in the layout
-        FairButFloor, ///< Equal to fair, but if the item we're adding is smaller than the fair suggestion, then that small size is used.
-        SizePolicy, ///< Uses the item's sizeHint() and sizePolicy()
-        None, ///< Don't do any sizing
-    };
-
     explicit Item(Widget *hostWidget, ItemContainer *parent = nullptr);
     ~Item() override;
 
@@ -262,8 +251,7 @@ public:
 
     virtual int visibleCount_recursive() const;
     virtual void insertItem(Item *item, Location,
-                            DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
-                            KDDockWidgets::InitialOption = {});
+                            KDDockWidgets::InitialOption = KDDockWidgets::DefaultSizeMode::Fair);
 
     /**
      * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.
@@ -382,9 +370,10 @@ public:
     explicit ItemContainer(Widget *hostWidget, ItemContainer *parent);
     explicit ItemContainer(Widget *hostWidget);
     ~ItemContainer();
-    void insertItem(Item *item, int index, DefaultSizeMode);
-    void insertItem(Item *item, Location, DefaultSizeMode defaultSizeMode = DefaultSizeMode::Fair,
+    void insertItem(Item *item, int index, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
+    void insertItem(Item *item, Location,
                     KDDockWidgets::InitialOption = {}) override;
+
     void requestSeparatorMove(Separator *separator, int delta);
     int minPosForSeparator(Separator *, bool honourMax = true) const;
     int maxPosForSeparator(Separator *, bool honourMax = true) const;

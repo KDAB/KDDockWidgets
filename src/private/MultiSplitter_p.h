@@ -70,8 +70,7 @@ public:
      */
     void addWidget(QWidgetOrQuick *widget, KDDockWidgets::Location location,
                    Frame *relativeTo = nullptr,
-                   Layouting::Item::DefaultSizeMode = Layouting::Item::DefaultSizeMode::Fair,
-                   InitialOption option = {});
+                   InitialOption option = DefaultSizeMode::Fair);
 
     /**
      * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted
@@ -81,7 +80,7 @@ public:
      */
     void addMultiSplitter(MultiSplitter *splitter, KDDockWidgets::Location location,
                           Frame *relativeTo = nullptr,
-                          Layouting::Item::DefaultSizeMode = Layouting::Item::DefaultSizeMode::Fair);
+                          InitialOption option = DefaultSizeMode::Fair);
 
     /**
      * @brief Removes an item from this MultiSplitter.

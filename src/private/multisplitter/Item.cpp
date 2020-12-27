@@ -32,6 +32,7 @@
 // clazy:excludeall=missing-typeinfo,old-style-connect
 
 using namespace Layouting;
+using namespace KDDockWidgets;
 
 int Layouting::Item::separatorThickness = 5;
 
@@ -472,8 +473,7 @@ int Item::pos(Qt::Orientation o) const
     return o == Qt::Vertical ? y() : x();
 }
 
-void Item::insertItem(Item *item, Location loc,
-                      DefaultSizeMode defaultSizeMode, KDDockWidgets::InitialOption option)
+void Item::insertItem(Item *item, Location loc, KDDockWidgets::InitialOption option)
 {
     Q_ASSERT(item != this);
 
@@ -494,10 +494,10 @@ void Item::insertItem(Item *item, Location loc,
             m_parent->setOrientation(orientation);
         }
 
-        m_parent->insertItem(item, indexInParent, defaultSizeMode);
+        m_parent->insertItem(item, indexInParent, option);
     } else {
         ItemContainer *container = m_parent->convertChildToContainer(this);
-        container->insertItem(item, loc, defaultSizeMode, option);
+        container->insertItem(item, loc, option);
     }
 }
 
@@ -937,7 +937,7 @@ struct ItemContainer::Private
         m_separators.clear();
     }
 
-    int defaultLengthFor(Item *item, DefaultSizeMode) const;
+    int defaultLengthFor(Item *item, InitialOption option) const;
     bool isOverflowing() const;
     void relayoutIfNeeded();
     const Item *itemFromPath(const QVector<int> &path) const;
@@ -1317,7 +1317,7 @@ ItemContainer *ItemContainer::convertChildToContainer(Item *leaf)
     return container;
 }
 
-void ItemContainer::insertItem(Item *item, Location loc, DefaultSizeMode defaultSizeMode,
+void ItemContainer::insertItem(Item *item, Location loc,
                                KDDockWidgets::InitialOption initialOption)
 {
     Q_ASSERT(item != this);
@@ -1338,7 +1338,7 @@ void ItemContainer::insertItem(Item *item, Location loc, DefaultSizeMode default
         }
 
         const auto index = locationIsSide1(loc) ? 0 : d->m_children.size();
-        insertItem(item, index, defaultSizeMode);
+        insertItem(item, index, initialOption);
     } else {
         // Inserting directly in a container ? Only if it's root.
         Q_ASSERT(isRoot());
@@ -1350,7 +1350,7 @@ void ItemContainer::insertItem(Item *item, Location loc, DefaultSizeMode default
         insertItem(container, 0, DefaultSizeMode::None);
 
         // Now we have the correct orientation, we can insert
-        insertItem(item, loc, defaultSizeMode, initialOption);
+        insertItem(item, loc, initialOption);
 
         if (!container->hasVisibleChildren())
             container->setGeometry(QRect());
@@ -1756,11 +1756,11 @@ void ItemContainer::setLength_recursive(int length, Qt::Orientation o)
     setSize_recursive(sz);
 }
 
-void ItemContainer::insertItem(Item *item, int index, DefaultSizeMode defaultSizeMode)
+void ItemContainer::insertItem(Item *item, int index, InitialOption option)
 {
-    if (defaultSizeMode != DefaultSizeMode::None) {
+    if (option.sizeMode != DefaultSizeMode::None) {
         /// Choose a nice size for the item we're adding
-        const int suggestedLength = d->defaultLengthFor(item, defaultSizeMode);
+        const int suggestedLength = d->defaultLengthFor(item, option);
         item->setLength_recursive(suggestedLength, d->m_orientation);
     }
 
@@ -3600,10 +3600,10 @@ void SizingInfo::fromVariantMap(const QVariantMap &map)
     maxSizeHint = mapToSize(map[QStringLiteral("maxSize")].toMap());
 }
 
-int ItemContainer::Private::defaultLengthFor(Item *item, DefaultSizeMode mode) const
+int ItemContainer::Private::defaultLengthFor(Item *item, InitialOption option) const
 {
     int result = 0;
-    switch (mode) {
+    switch (option.sizeMode) {
     case DefaultSizeMode::None:
         break;
     case DefaultSizeMode::Fair: {

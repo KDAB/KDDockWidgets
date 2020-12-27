@@ -137,9 +137,9 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
     }
 
     if (option.startsHidden()) {
-        addWidget(dw, location, relativeToFrame, Layouting::Item::DefaultSizeMode::Fair, option);
+        addWidget(dw, location, relativeToFrame, option);
     } else {
-        addWidget(frame, location, relativeToFrame, Layouting::Item::DefaultSizeMode::Fair, option);
+        addWidget(frame, location, relativeToFrame, option);
     }
 
     if (hadSingleFloatingFrame && !hasSingleFloatingFrame()) {
@@ -320,14 +320,14 @@ bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location locat
 
         auto frame = Config::self().frameworkWidgetFactory()->createFrame();
         frame->addWidget(dock);
-        addWidget(frame, location, relativeTo, Layouting::Item::DefaultSizeMode::FairButFloor);
+        addWidget(frame, location, relativeTo, DefaultSizeMode::FairButFloor);
     } else if (auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow)) {
         if (!validateAffinity(floatingWindow))
             return false;
 
         const bool hadSingleFloatingFrame = hasSingleFloatingFrame();
         addMultiSplitter(floatingWindow->dropArea(), location, relativeTo,
-                         Layouting::Item::DefaultSizeMode::FairButFloor);
+                         DefaultSizeMode::FairButFloor);
         if (hadSingleFloatingFrame != hasSingleFloatingFrame())
             updateFloatingActions();
 

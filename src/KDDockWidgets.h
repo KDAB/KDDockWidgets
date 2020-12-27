@@ -29,8 +29,16 @@
 # define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
 #endif
 
+namespace Layouting {
+class Item;
+class ItemContainer;
+}
+
 namespace KDDockWidgets
 {
+    class MultiSplitter;
+    class DropArea;
+
     enum Location {
         Location_None,
         Location_OnLeft, ///> Left docking location
@@ -44,6 +52,18 @@ namespace KDDockWidgets
         MainWindowOption_HasCentralFrame = 1 ///> Makes the MainWindow always have a central frame, for tabbing documents
     };
     Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
+
+    ///@internal
+    ///@brief Describes some sizing strategies for the layouting engine.
+    ///This is internal. The public API for dealing with sizing is InitialOption.
+    ///@sa InitialOption
+    enum class DefaultSizeMode {
+        ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
+        Fair, ///< Gives an equal relative size as the items that are already in the layout
+        FairButFloor, ///< Equal to fair, but if the item we're adding is smaller than the fair suggestion, then that small size is used.
+        SizePolicy, ///< Uses the item's sizeHint() and sizePolicy()
+        None, ///< Don't do any sizing
+    };
 
     enum class InitialVisibilityOption {
         StartVisible = 0, ///< The dock widget is made visible when docked
@@ -99,6 +119,17 @@ namespace KDDockWidgets
          * height will simply fill the whole layout.
          */
         //const QSize preferredSize; not yet done.
+
+    private:
+        friend class Layouting::Item;
+        friend class Layouting::ItemContainer;
+        friend class KDDockWidgets::MultiSplitter;
+        friend class KDDockWidgets::DropArea;
+
+        InitialOption(DefaultSizeMode mode)
+            : sizeMode(mode) {}
+
+        const DefaultSizeMode sizeMode = DefaultSizeMode::Fair;
     };
 
     ///@internal

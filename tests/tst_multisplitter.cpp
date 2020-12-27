@@ -1178,7 +1178,7 @@ void TestMultiSplitter::tst_numSeparators()
 
     root->insertItem(item5, Item::Location_OnLeft);
     QCOMPARE(root->separators_recursive().size(), 0);
-    root->insertItem(item6, Item::Location_OnLeft, Item::DefaultSizeMode::Fair, KDDockWidgets::InitialVisibilityOption::StartHidden);
+    root->insertItem(item6, Item::Location_OnLeft, KDDockWidgets::InitialVisibilityOption::StartHidden);
     QCOMPARE(root->separators_recursive().size(), 0);
     QVERIFY(serializeDeserializeTest(root));
 }
@@ -1250,7 +1250,7 @@ void TestMultiSplitter::tst_insertHiddenContainer()
     auto root1 = createRoot();
     auto root2 = createRoot();
     Item *item2 = createItem();
-    root2->insertItem(item2, Item::Location_OnLeft, Item::DefaultSizeMode::Fair, KDDockWidgets::InitialVisibilityOption::StartHidden);
+    root2->insertItem(item2, Item::Location_OnLeft, KDDockWidgets::InitialVisibilityOption::StartHidden);
 
     QVERIFY(root1->checkSanity());
     QVERIFY(root2->checkSanity());
