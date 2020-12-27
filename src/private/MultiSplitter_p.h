@@ -69,7 +69,9 @@ public:
      * @brief Adds a widget to this MultiSplitter.
      */
     void addWidget(QWidgetOrQuick *widget, KDDockWidgets::Location location,
-                   Frame *relativeTo = nullptr, DefaultSizeMode = DefaultSizeMode::Fair, AddingOption option = {});
+                   Frame *relativeTo = nullptr,
+                   Layouting::Item::DefaultSizeMode = Layouting::Item::DefaultSizeMode::Fair,
+                   AddingOption option = {});
 
     /**
      * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted
@@ -78,7 +80,8 @@ public:
      * of widgetBar when the whole splitter is dropped into this one.
      */
     void addMultiSplitter(MultiSplitter *splitter, KDDockWidgets::Location location,
-                          Frame *relativeTo = nullptr, DefaultSizeMode = DefaultSizeMode::Fair);
+                          Frame *relativeTo = nullptr,
+                          Layouting::Item::DefaultSizeMode = Layouting::Item::DefaultSizeMode::Fair);
 
     /**
      * @brief Removes an item from this MultiSplitter.

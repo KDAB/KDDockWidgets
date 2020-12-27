@@ -65,15 +65,6 @@ namespace KDDockWidgets
     };
     Q_DECLARE_FLAGS(RestoreOptions, RestoreOption)
 
-    ///@brief When a widget is added we need to figure out what's a decent size for it
-    ///This enum specifies the different ways to calculate it
-    enum class DefaultSizeMode {
-        ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
-        Fair, ///< Gives an equal relative size as the items that are already in the layout
-        FairButFloor, ///< Equal to fair, but if the item is smaller than the fair suggestion, then that small size is used.
-        SizePolicy, ///< Uses the item's sizeHint() and sizePolicy()
-    };
-
     enum class DropIndicatorType {
         Classic,   ///< The default
         Segmented, ///< Segmented indicators

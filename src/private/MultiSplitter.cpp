@@ -160,8 +160,9 @@ bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
 }
 
 void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
-                                    Frame *relativeToWidget, DefaultSizeMode defaultSizeMode,
-                                    AddingOption option)
+                              Frame *relativeToWidget,
+                              Layouting::Item::DefaultSizeMode defaultSizeMode,
+                              AddingOption option)
 {
     auto frame = qobject_cast<Frame*>(w);
     qCDebug(addwidget) << Q_FUNC_INFO << w
@@ -226,7 +227,8 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
 }
 
 void MultiSplitter::addMultiSplitter(MultiSplitter *sourceMultiSplitter, Location location,
-                                     Frame *relativeTo, DefaultSizeMode defaultSizeMode)
+                                     Frame *relativeTo,
+                                     Layouting::Item::DefaultSizeMode defaultSizeMode)
 {
     qCDebug(addwidget) << Q_FUNC_INFO << sourceMultiSplitter << location << relativeTo;
     addWidget(sourceMultiSplitter, location, relativeTo, defaultSizeMode);
