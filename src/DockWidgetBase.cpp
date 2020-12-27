@@ -522,6 +522,11 @@ QSize DockWidgetBase::lastOverlayedSize() const
     return d->m_lastOverlayedSize;
 }
 
+DockWidgetBase *DockWidgetBase::byName(const QString &uniqueName)
+{
+    return DockRegistry::self()->dockByName(uniqueName);
+}
+
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this

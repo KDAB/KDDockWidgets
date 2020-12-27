@@ -1,5 +1,6 @@
 * v1.3.0 (unreleased)
   - [TODO] QtQuick support
+  - Added static DockWidgetBase::byName() (#126)
 
 * v1.2.1 (unreleased)
   - Support for resizing dock widgets when they are in overlay/popup mode (autohide/sidebar feature)

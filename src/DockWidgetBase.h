@@ -366,6 +366,12 @@ public:
     /// Empty otherwise
     QSize lastOverlayedSize() const;
 
+
+    /// @brief Returns a dock widget by its name
+    /// This is the same name you passed to DockWidget CTOR.
+    /// nullptr is returned if the dock widget isn't found.
+    static DockWidgetBase* byName(const QString &uniqueName);
+
 Q_SIGNALS:
     ///@brief signal emitted when the parent changed
     void parentChanged();
