@@ -276,6 +276,12 @@ bool DockWidgetBase::setFloating(bool floats)
     if ((floats && alreadyFloating) || (!floats && !alreadyFloating))
         return true; // Nothing to do
 
+    if (!floats && (Config::self().internalFlags() & Config::InternalFlag_DontShowWhenUnfloatingHiddenWindow) && !isVisible()) {
+        // Mimics behaviour of QDockWidget, which you might need during porting.
+        // Not something we suggest though. For KDDW, setFloating(false) means dock, and that implies showing.
+        return false;
+    }
+
     if (floats) {
         d->saveTabIndex();
         if (isTabbed()) {

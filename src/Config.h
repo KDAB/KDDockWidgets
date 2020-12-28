@@ -91,7 +91,8 @@ public:
         InternalFlag_None = 0, ///< The default
         InternalFlag_NoAeroSnap = 1, ///< Only for development. Disables Aero-snap.
         InternalFlag_DontUseParentForFloatingWindows = 2,  ///< FloatingWindows won't have a parent top-level.
-        InternalFlag_DontUseQtToolWindowsForFloatingWindows = 4 ///< FloatingWindows will use Qt::Window instead of Qt::Tool.
+        InternalFlag_DontUseQtToolWindowsForFloatingWindows = 4, ///< FloatingWindows will use Qt::Window instead of Qt::Tool.
+        InternalFlag_DontShowWhenUnfloatingHiddenWindow = 8 ///< DockWidget::setFloating(false) won't do anything if the window is hidden.
     };
     Q_DECLARE_FLAGS(InternalFlags, InternalFlag)
 
