@@ -208,12 +208,14 @@ namespace KDDockWidgets
     }
 }
 
+QT_BEGIN_NAMESPACE
 ///@internal
 inline QDebug operator<<(QDebug d, KDDockWidgets::InitialOption o)
 {
     d << o.startsHidden();
     return d;
 }
+QT_END_NAMESPACE
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDDockWidgets::FrameOptions)
 Q_DECLARE_METATYPE(KDDockWidgets::InitialVisibilityOption)
