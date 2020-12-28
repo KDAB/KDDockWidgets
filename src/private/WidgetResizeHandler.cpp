@@ -26,8 +26,8 @@
 
 #if defined(Q_OS_WIN)
 # include <QtGui/private/qhighdpiscaling_p.h>
-# include <Windowsx.h>
-# include <Windows.h>
+# include <windowsx.h>
+# include <windows.h>
 # if defined(Q_CC_MSVC)
 #  pragma comment(lib,"User32.lib")
 # endif
