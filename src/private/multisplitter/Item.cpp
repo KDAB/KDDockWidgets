@@ -3620,9 +3620,6 @@ int ItemContainer::Private::defaultLengthFor(Item *item, InitialOption option) c
     case DefaultSizeMode::ItemSize:
         result = item->length(m_orientation);
         break;
-    case DefaultSizeMode::SizePolicy:
-        qWarning() << Q_FUNC_INFO << "Now implemented yet";
-        break;
     }
 
     result = qMax(item->minLength(m_orientation), result); // bound with max-size too

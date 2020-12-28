@@ -61,7 +61,6 @@ namespace KDDockWidgets
         ItemSize, ///< Simply uses the Item::size() of the item being added. Actual used size might be smaller if our window isn't big enough.
         Fair, ///< Gives an equal relative size as the items that are already in the layout
         FairButFloor, ///< Equal to fair, but if the item we're adding is smaller than the fair suggestion, then that small size is used.
-        SizePolicy, ///< Uses the item's sizeHint() and sizePolicy()
         None, ///< Don't do any sizing
     };
 
