@@ -27,7 +27,7 @@
 #include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN)
-# include <Windows.h>
+# include <windows.h>
 # include <dwmapi.h>
 #endif
 

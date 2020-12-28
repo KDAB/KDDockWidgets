@@ -247,7 +247,7 @@ else()
 endif()
 
 if (WIN32)
-    target_link_libraries(kddockwidgets PRIVATE Qt${QT_MAJOR_VERSION}::GuiPrivate Dwmapi)
+    target_link_libraries(kddockwidgets PRIVATE Qt${QT_MAJOR_VERSION}::GuiPrivate dwmapi)
 elseif(NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6)
     find_package(Qt${QT_MAJOR_VERSION}X11Extras)
     target_link_libraries(kddockwidgets PUBLIC Qt${QT_MAJOR_VERSION}::X11Extras)

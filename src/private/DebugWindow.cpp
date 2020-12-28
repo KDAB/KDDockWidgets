@@ -39,8 +39,8 @@
 #include <QTimer>
 
 #ifdef Q_OS_WIN
-# include <Windows.h>
-# include <WinUser.h>
+# include <windows.h>
+# include <winuser.h>
 #endif
 
 // clazy:excludeall=range-loop
