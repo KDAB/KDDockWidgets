@@ -19,6 +19,7 @@
 #include "SideBar_p.h"
 #include "WindowBeingDragged_p.h"
 #include "FloatingWindow_p.h"
+#include "Utils_p.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -181,7 +182,7 @@ bool DockRegistry::isProbablyObscured(QWindow *window, FloatingWindow *exclude) 
     }
 
     // Floating windows are Tool (keep above), unless we disabled it in Config
-    const bool targetIsToolWindow = !(Config::self().flags() & Config::Flag_DontUseUtilityFloatingWindows) && floatingWindowForHandle(window) != nullptr;
+    const bool targetIsToolWindow = KDDockWidgets::usesUtilityWindows() && floatingWindowForHandle(window) != nullptr;
 
     for (MainWindowBase *mw : m_mainWindows) {
         QWindow *mwWindow = mw->window()->windowHandle();

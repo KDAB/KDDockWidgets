@@ -74,12 +74,7 @@ public:
         Flag_TitleBarHasMaximizeButton = 256, ///< The title bar will have a maximize/restore button when floating. This is mutually-exclusive with the floating button (since many apps behave that way).
         Flag_TitleBarIsFocusable = 512, ///< You can click the title bar and it will focus the last focused widget in the focus scope. If no previously focused widget then it focuses the user's dock widget guest, which should accept focus or use a focus proxy.
         Flag_LazyResize = 1024, ///< The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
-
-        // These two are internal, for testing purposes across platforms. Use Flag_DontUseUtilityFloatingWindows instead.
-        Flag_internal_DontUseQtToolWindowsForFloatingWindows = 0x800, ///< FloatingWindows will use Qt::Window instead of Qt::Tool. Internal, use Flag_DontUseUtilityFloatingWindows instead.
-        Flag_internal_DontUseParentForFloatingWindows = 0x1000, ///< FloatingWindows won't have a parent top-level. Internal, use Flag_DontUseUtilityFloatingWindows instead.
-
-        Flag_DontUseUtilityFloatingWindows = Flag_internal_DontUseQtToolWindowsForFloatingWindows | Flag_internal_DontUseParentForFloatingWindows,
+        Flag_DontUseUtilityFloatingWindows = 0x1000,
         Flag_TitleBarHasMinimizeButton = 0x2000 | Flag_DontUseUtilityFloatingWindows, ///< The title bar will have a minimize button when floating. This implies Flag_DontUseUtilityFloatingWindows too, otherwise they wouldn't appear in the task bar.        
         Flag_TitleBarNoFloatButton = 0x4000, ///< The TitleBar won't show the float button
         Flag_AutoHideSupport = 0x8000 | Flag_TitleBarNoFloatButton, ///< Supports minimizing dock widgets to the side-bar.
@@ -94,7 +89,9 @@ public:
     ///@warning Not for public consumption, support will be limited.
     enum InternalFlag {
         InternalFlag_None = 0, ///< The default
-        InternalFlag_NoAeroSnap = 1 ///< Only for development. Disables Aero-snap.
+        InternalFlag_NoAeroSnap = 1, ///< Only for development. Disables Aero-snap.
+        InternalFlag_DontUseParentForFloatingWindows = 2,  ///< FloatingWindows won't have a parent top-level.
+        InternalFlag_DontUseQtToolWindowsForFloatingWindows = 4 ///< FloatingWindows will use Qt::Window instead of Qt::Tool.
     };
     Q_DECLARE_FLAGS(InternalFlags, InternalFlag)
 

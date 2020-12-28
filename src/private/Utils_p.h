@@ -99,6 +99,16 @@ inline bool usesNativeDraggingAndResizing()
     return usesNativeTitleBar() || usesAeroSnapWithCustomDecos();
 }
 
+inline bool usesUtilityWindows()
+{
+    const auto flags = Config::self().internalFlags();
+
+    const bool dontUse = (flags & Config::InternalFlag_DontUseParentForFloatingWindows) &&
+                         (flags & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows);
+
+    return !dontUse;
+}
+
 inline bool usesFallbackMouseGrabber()
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS

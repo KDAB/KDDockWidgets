@@ -285,6 +285,11 @@ void Config::Private::fixFlags()
         m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
     }
 #endif
+
+    if (m_flags & Flag_DontUseUtilityFloatingWindows) {
+        m_internalFlags |= InternalFlag_DontUseParentForFloatingWindows;
+        m_internalFlags |= InternalFlag_DontUseQtToolWindowsForFloatingWindows;
+    }
 }
 
 }

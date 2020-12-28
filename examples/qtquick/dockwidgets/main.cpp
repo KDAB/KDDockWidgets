@@ -50,13 +50,14 @@ int main(int argc, char *argv[])
     auto flags = KDDockWidgets::Config::self().flags();
 
 #if defined(DOCKS_DEVELOPER_MODE)
+    auto internalFlags = KDDockWidgets::Config::self().internalFlags();
     parser.process(app);
 
     if (parser.isSet(noQtTool))
-        flags |= KDDockWidgets::Config::Flag_internal_DontUseQtToolWindowsForFloatingWindows;
+        internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows;
 
     if (parser.isSet(noParentForFloating))
-        flags |= KDDockWidgets::Config::Flag_internal_DontUseParentForFloatingWindows;
+        internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseParentForFloatingWindows;
 
     if (parser.isSet(nativeTitleBar))
         flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
@@ -65,9 +66,10 @@ int main(int argc, char *argv[])
 
 # if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
-        flags |= KDDockWidgets::Config::Flag_internal_NoAeroSnap;
+        internalFlags |= KDDockWidgets::Config::InternalFlag_NoAeroSnap;
 # endif
 
+    KDDockWidgets::Config::self().setInternalFlags(internalFlags);
 #endif
 
     KDDockWidgets::Config::self().setFlags(flags);

@@ -86,7 +86,7 @@ static Qt::WindowFlags windowFlagsToUse()
     if (KDDockWidgets::usesNativeDraggingAndResizing())
         return Qt::Window;
 
-    if (Config::self().flags() & Config::Flag_internal_DontUseQtToolWindowsForFloatingWindows)
+    if (Config::self().internalFlags() & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows)
         return Qt::Window;
 
     return Qt::Tool;
@@ -94,7 +94,7 @@ static Qt::WindowFlags windowFlagsToUse()
 
 static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
 {
-    if (Config::self().flags() & Config::Flag_internal_DontUseParentForFloatingWindows) {
+    if (Config::self().flags() & Config::InternalFlag_DontUseParentForFloatingWindows) {
         return nullptr;
     }
 
@@ -128,7 +128,7 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
 
 MainWindowBase *actualParent(MainWindowBase *candidate)
 {
-    return (Config::self().flags() & Config::Flag_internal_DontUseParentForFloatingWindows)
+    return (Config::self().flags() & Config::InternalFlag_DontUseParentForFloatingWindows)
             ? nullptr
             : candidate;
 }
