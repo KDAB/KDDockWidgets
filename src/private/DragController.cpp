@@ -256,10 +256,6 @@ void StateDragging::onEntry()
 
             QWindow *window = fw->windowHandle();
             window->startSystemMove();
-
-            // Mouse press was done in another window, so we need to ungrab
-            ReleaseCapture();
-            PostMessage(hwnd, WM_SYSCOMMAND, 0xF012, 0); // SC_DRAGMOVE
         }
 # endif
 #endif
