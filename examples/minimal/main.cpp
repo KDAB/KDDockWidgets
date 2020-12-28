@@ -62,6 +62,10 @@ int main(int argc, char **argv)
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock4->setWidget(widget4);
 
+    auto dock5 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock5"));
+    auto widget5 = new MyWidget(QStringLiteral(":/assets/base.png"),
+                                QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
+    dock5->setWidget(widget5);
 
     // 3. Add them to the main window
     mainWindow.addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
@@ -70,8 +74,13 @@ int main(int argc, char **argv)
     // 4. Add dock3 to the right of dock2
     mainWindow.addDockWidget(dock3, KDDockWidgets::Location_OnRight, dock2);
 
-    // 5. dock4 will be its own top level (floating window)
-    dock4->show();
+    // 5. dock4 is docked at the bottom, with 200px height
+    const QSize preferredSize(QSize(/*ignored*/0, 200));
+    mainWindow.addDockWidget(dock4, KDDockWidgets::Location_OnBottom, nullptr, preferredSize);
+
+
+    // 5. dock5 will be its own top level (floating window)
+    dock5->show();
 
     return app.exec();
 }

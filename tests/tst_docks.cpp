@@ -161,6 +161,7 @@ private Q_SLOTS:
     void tst_placeholderDisappearsOnReadd();
     void tst_placeholdersAreRemovedProperly();
     void tst_floatMaintainsSize();
+    void tst_preferredInitialSize();
 
     void tst_crash2_data();
     void tst_crash2();
@@ -2243,6 +2244,19 @@ void TestDocks::tst_floatMaintainsSize()
 
     delete dw1->window();
     delete dw2->window();
+}
+
+void TestDocks::tst_preferredInitialSize()
+{
+    EnsureTopLevelsDeleted e;
+    auto dw1 = new DockWidgetType("1");
+    auto dw2 = new DockWidgetType("2");
+    auto m = createMainWindow(QSize(1200, 1200), MainWindowOption_None);
+
+    m->addDockWidget(dw1, Location_OnTop);
+    m->addDockWidget(dw2, Location_OnBottom, nullptr, QSize(0, 200));
+
+    QCOMPARE(dw2->frame()->height(), 200);
 }
 
 void TestDocks::tst_crash2_data()

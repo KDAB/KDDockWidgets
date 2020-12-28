@@ -3603,23 +3603,28 @@ void SizingInfo::fromVariantMap(const QVariantMap &map)
 int ItemContainer::Private::defaultLengthFor(Item *item, InitialOption option) const
 {
     int result = 0;
-    switch (option.sizeMode) {
-    case DefaultSizeMode::None:
-        break;
-    case DefaultSizeMode::Fair: {
-        const int numVisibleChildren = q->numVisibleChildren() + 1; // +1 so it counts with @p item too, which we're adding
-        const int usableLength = q->length() - (Item::separatorThickness*(numVisibleChildren - 1));
-        result = usableLength / numVisibleChildren;
-        break;
-    }
-    case DefaultSizeMode::FairButFloor: {
-        int length = defaultLengthFor(item, DefaultSizeMode::Fair);
-        result = qMin(length, item->length(m_orientation));
-        break;
-    }
-    case DefaultSizeMode::ItemSize:
-        result = item->length(m_orientation);
-        break;
+
+    if (option.hasPreferredLength(m_orientation) && option.sizeMode != DefaultSizeMode::None) {
+        result = option.preferredLength(m_orientation);
+    } else {
+        switch (option.sizeMode) {
+        case DefaultSizeMode::None:
+            break;
+        case DefaultSizeMode::Fair: {
+            const int numVisibleChildren = q->numVisibleChildren() + 1; // +1 so it counts with @p item too, which we're adding
+            const int usableLength = q->length() - (Item::separatorThickness*(numVisibleChildren - 1));
+            result = usableLength / numVisibleChildren;
+            break;
+        }
+        case DefaultSizeMode::FairButFloor: {
+            int length = defaultLengthFor(item, DefaultSizeMode::Fair);
+            result = qMin(length, item->length(m_orientation));
+            break;
+        }
+        case DefaultSizeMode::ItemSize:
+            result = item->length(m_orientation);
+            break;
+        }
     }
 
     result = qMax(item->minLength(m_orientation), result); // bound with max-size too

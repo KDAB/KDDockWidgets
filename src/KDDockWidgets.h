@@ -88,16 +88,25 @@ namespace KDDockWidgets
         InitialOption(InitialVisibilityOption v)
             : visibility(v) {}
 
-        /*InitialOption(QSize size)
+        InitialOption(QSize size)
             : preferredSize(size) {}
 
         InitialOption(InitialVisibilityOption v, QSize size)
             : visibility(v)
             , preferredSize(size)
-        {}*/
+        {}
 
         bool startsHidden() const {
             return visibility == InitialVisibilityOption::StartHidden;
+        }
+
+        int preferredLength(Qt::Orientation o) const {
+            return o == Qt::Horizontal ? preferredSize.width()
+                                       : preferredSize.height();
+        }
+
+        bool hasPreferredLength(Qt::Orientation o) const {
+            return preferredLength(o) > 0;
         }
 
         /**
@@ -117,7 +126,7 @@ namespace KDDockWidgets
          * dock widget to the left then only the preferred width will be taken into account, as the
          * height will simply fill the whole layout.
          */
-        //const QSize preferredSize; not yet done.
+        const QSize preferredSize;
 
     private:
         friend class Layouting::Item;
