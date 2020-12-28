@@ -55,6 +55,7 @@ public:
     TabbingAllowedFunc m_tabbingAllowedFunc = nullptr;
     FrameworkWidgetFactory *m_frameworkWidgetFactory = nullptr;
     Flags m_flags = Flag_Default;
+    InternalFlags m_internalFlags = InternalFlag_None;
     qreal m_draggedWindowOpacity = Q_QNAN;
 };
 
@@ -202,6 +203,16 @@ QSize Config::absoluteWidgetMaxSize() const
     return Layouting::Item::hardcodedMaximumSize;
 }
 
+Config::InternalFlags Config::internalFlags() const
+{
+    return d->m_internalFlags;
+}
+
+void Config::setInternalFlags(InternalFlags flags)
+{
+    d->m_internalFlags = flags;
+}
+
 #ifdef KDDOCKWIDGETS_QTQUICK
 void Config::setQmlEngine(QQmlEngine *qmlEngine)
 {
@@ -269,7 +280,7 @@ void Config::Private::fixFlags()
 
 #if defined(DOCKS_DEVELOPER_MODE)
     // We allow to disable aero-snap during development
-    if (m_flags & Flag_internal_NoAeroSnap) {
+    if (m_internalFlags & InternalFlag_NoAeroSnap) {
         // The only way to disable AeroSnap
         m_flags = m_flags & ~Flag_AeroSnapWithClientDecos;
     }

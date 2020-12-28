@@ -85,10 +85,18 @@ public:
         Flag_AutoHideSupport = 0x8000 | Flag_TitleBarNoFloatButton, ///< Supports minimizing dock widgets to the side-bar.
                                                                     ///< By default it also turns off the float button, but you can remove Flag_TitleBarNoFloatButton to have both.
         Flag_KeepAboveIfNotUtilityWindow = 0x10000, ///< Only meaningful if Flag_DontUseUtilityFloatingWindows is set. If floating windows are normal windows, you might still want them to keep above and not minimize when you focus the main window.
-        Flag_internal_NoAeroSnap = 0x20000, ///< Internal flag, only for development. Disables Aero-snap.
         Flag_Default = Flag_AeroSnapWithClientDecos ///< The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)
+
+    ///@internal
+    ///Internal flags for addtional tunning.
+    ///@warning Not for public consumption, support will be limited.
+    enum InternalFlag {
+        InternalFlag_None = 0, ///< The default
+        InternalFlag_NoAeroSnap = 1 ///< Only for development. Disables Aero-snap.
+    };
+    Q_DECLARE_FLAGS(InternalFlags, InternalFlag)
 
     ///@brief returns the chosen flags
     Flags flags() const;
@@ -199,6 +207,16 @@ public:
     /// bigger than this one.
     void setAbsoluteWidgetMaxSize(QSize size);
     QSize absoluteWidgetMaxSize() const;
+
+    ///@internal
+    ///@brief returns the internal flags.
+    ///@warning Not for public consumption, support will be limited.
+    InternalFlags internalFlags() const;
+
+    ///@internal
+    ///@brief setter for the internal flags
+    ///@warning Not for public consumption, support will be limited.
+    void setInternalFlags(InternalFlags flags);
 
 #ifdef KDDOCKWIDGETS_QTQUICK
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
