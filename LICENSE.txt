@@ -1,4 +1,4 @@
-KDDockWidgets is (C) 2018-2020, Klarälvdalens Datakonsult AB, and is licensed
+KDDockWidgets is (C) 2018-2021, Klarälvdalens Datakonsult AB, and is licensed
 according to the terms of the:
  GNU General Public License version 2.0 (see LICENSES/GPL-2.0-only.txt)
 or the

@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: 2016-2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# SPDX-FileCopyrightText: 2016-2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 # Author: Allen Winter <allen.winter@kdab.com>
 #
 # SPDX-License-Identifier: BSD-3-Clause

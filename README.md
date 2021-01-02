@@ -100,7 +100,8 @@ The installation directory defaults to `c:\KDAB\KDDockWidgets-<version>` on Wind
 and `/usr/local/KDAB/KDDockWidgets-<version>` on non-Windows.  You can change this
 location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
 
-== Using ==
+Using
+=====
 From your CMake project, add
 
     find_package(KDDockWidgets CONFIG)
@@ -159,7 +160,7 @@ compiler crashes.
 
 Licensing
 =========
-KDDockWidgets is (C) 2018-2020, Klarälvdalens Datakonsult AB, and is licensed according to
+KDDockWidgets is (C) 2018-2021, Klarälvdalens Datakonsult AB, and is licensed according to
 the terms of the [GPL 2.0](LICENSES/GPL-2.0-only.txt) or [GPL 3.0](LICENSES/GPL-3.0-only.txt).
 
 Contact KDAB at <info@kdab.com> to inquire about commercial licensing.
