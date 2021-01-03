@@ -251,7 +251,6 @@ void StateDragging::onEntry()
             FloatingWindow *fw = q->m_windowBeingDragged->floatingWindow();
             q->m_nonClientDrag = true;
             q->m_windowBeingDragged.reset();
-            const HWND hwnd = HWND(fw->windowHandle()->winId());
             q->m_windowBeingDragged = fw->makeWindow();
 
             QWindow *window = fw->windowHandle();
