@@ -101,6 +101,21 @@
             }
         },
         {
+            "name": "dev-qtwidgets6",
+            "displayName": "dev-qtwidgets6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-qtwidgets6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_QT6": "ON",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
+            },
+            "environment": {
+                "PATH": "$env{HOME}/Qt/6.0.0/gcc_64/bin:$penv{PATH}"
+            }
+        },
+        {
             "name": "qtquick6",
             "displayName": "qtquick6",
             "generator": "Ninja",

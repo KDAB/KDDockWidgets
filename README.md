@@ -153,9 +153,7 @@ The QtQuick support will require Qt >= 5.15.
 Qt 6 is supported.
 
 Regarding compilers, whatever toolchain is able to build Qt 5.9 should also be
-fine to build KDDW. Note however that MSVC 2013 isn't supported anymore due to
-compiler crashes.
-
+fine. Note however that MSVC 2013 isn't supported anymore due to compiler crashes.
 
 
 Licensing
