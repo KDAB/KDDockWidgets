@@ -18,7 +18,7 @@
 #include "Frame_p.h"
 #include "Draggable_p.h"
 #include "DropArea_p.h"
-#include "Qt5Qt6Compat_p.h"
+#include "kddockwidgets/Qt5Qt6Compat_p.h"
 
 QT_BEGIN_NAMESPACE
 class QAbstractNativeEventFilter;

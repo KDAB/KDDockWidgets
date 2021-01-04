@@ -12,10 +12,10 @@
 #ifndef KD_DROPINDICATOROVERLAYINTERFACE_P_H
 #define KD_DROPINDICATOROVERLAYINTERFACE_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
+#include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/QWidgetAdapter.h"
 #include "Frame_p.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 namespace KDDockWidgets {
 
