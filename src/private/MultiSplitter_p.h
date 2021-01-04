@@ -22,10 +22,10 @@
 #ifndef KDDOCKWIDGETS_MULTISPLITTER_P_H
 #define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
-#include "docks_export.h"
-#include "QWidgetAdapter.h"
-#include "KDDockWidgets.h"
-#include "LayoutSaver_p.h"
+#include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/QWidgetAdapter.h"
+#include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/private/LayoutSaver_p.h"
 
 
 namespace Layouting {
