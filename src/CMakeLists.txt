@@ -233,7 +233,12 @@ else()
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
-  target_compile_options(kddockwidgets PRIVATE -Wshadow -Wconversion -fvisibility=hidden)
+  target_compile_options(kddockwidgets PRIVATE -Wshadow -fvisibility=hidden)
+
+  # Disable -Wconversion for Qt6. The qsizetype to int conversions are harmless
+  if (NOT ${PROJECT_NAME}_QT6)
+    target_compile_options(kddockwidgets PRIVATE -Wconversion)
+  endif()
 
   if(IS_CLANG_BUILD)
     target_compile_options(kddockwidgets PRIVATE -Wweak-vtables)
