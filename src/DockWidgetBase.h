@@ -82,7 +82,8 @@ public:
     enum class IconPlace {
         TitleBar = 1,
         TabBar = 2,
-        All = TitleBar | TabBar
+        ToggleAction = 4,
+        All = ToggleAction | TitleBar | TabBar
     };
     Q_ENUM(IconPlace)
     Q_DECLARE_FLAGS(IconPlaces, IconPlace)
@@ -229,7 +230,7 @@ public:
 
     /**
      * @brief Sets an icon to show on title bars and tab bars.
-     * @param places Specifies where the icon will be shown (TitleBar, TabBar or both)
+     * @param places Specifies where the icon will be shown (TitleBar, TabBar, ToggleAction, or All)
      *
      * By default there's no icon set.
      *
@@ -238,7 +239,7 @@ public:
     void setIcon(const QIcon &icon, IconPlaces places = IconPlace::All);
 
     /**
-     * @brief Returns the dock widget's titlebar or tabbar icon (depending on the passed @p place)
+     * @brief Returns the dock widget's titlebar, tabbar, or toggle action icon (depending on the passed @p place)
      *
      * By default it's null.
      *
