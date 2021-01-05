@@ -1,8 +1,8 @@
 * v1.3.0 (unreleased)
   - [TODO] QtQuick support
   - Added static DockWidgetBase::byName() (#126)
-  - SOURCE-COMPAT-BREAK: The enum KDDockWidgets::AddingOption has been renamed to
-    KDDockWidgets::InitialVisibilityOption
+  - The enum KDDockWidgets::AddingOption has been deprecated, use
+    KDDockWidgets::InitialVisibilityOption instead
   - You can now pass a preferred initial size to MainWindow::addDockWidget() (#95)
 
 * v1.2.1 (unreleased)
