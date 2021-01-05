@@ -64,6 +64,13 @@ namespace KDDockWidgets
         None, ///< Don't do any sizing
     };
 
+    ///@brief Only here for source-compat with v1.2. Do not use.
+    ///Use InitialVisibilityOption instead.
+    enum AddingOption {
+        AddingOption_None = 0,
+        AddingOption_StartHidden
+    };
+
     enum class InitialVisibilityOption {
         StartVisible = 0, ///< The dock widget is made visible when docked
         StartHidden ///< Don't show the dock widget when adding it
@@ -95,6 +102,12 @@ namespace KDDockWidgets
             : visibility(v)
             , preferredSize(size)
         {}
+
+        InitialOption(AddingOption opt)
+            : visibility(opt == AddingOption_StartHidden ? InitialVisibilityOption::StartHidden
+                                                         : InitialVisibilityOption::StartVisible)
+        {
+        }
 
         bool startsHidden() const {
             return visibility == InitialVisibilityOption::StartHidden;
