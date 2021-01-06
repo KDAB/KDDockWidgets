@@ -6,9 +6,13 @@ KDDockWidgets works with WebAssembly with the following known limitations:
 - Classic drop indicators are not supported, only the segmented ones. This is because
 WASM doesn't support windows with translucency.
 
-- It's slow while dragging Windows and resizing.
+- Might be slow on Linux, depending on your browser, while dragging or resizing windows.
 Please file a bug with Qt, as it's out of scope for KDDW to fix.
 
+Demo:
+=====
+
+A demo is available at https://demos.kdab.com/wasm/kddockwidgets/dockwidgets.html
 
 Build tips for KDDW:
 ====================

@@ -24,6 +24,9 @@ You will find more information in these places:
  * [online detailed browsable API reference](https://docs.kdab.com/kddockwidgets)
  * [our example programs](examples/)
 
+We also have an [in browser demo](https://demos.kdab.com/wasm/kddockwidgets/dockwidgets.html). Note
+however that this demo isn't fully featured, as it's running on Qt for WebAssembly.
+
 Features
 ========
 - Provide advanced docking that QDockWidgets doesn't support
