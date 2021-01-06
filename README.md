@@ -64,6 +64,8 @@ Features
 - Optional minimize and maximize button on the title bar
 - FloatingWindows can be utility windows or full native
 
+Screen capture
+==============
 ![Screen capture](./screencap.gif?raw=true "The docking system in action")
 
 
@@ -109,10 +111,10 @@ From your CMake project, add
 
     find_package(KDDockWidgets CONFIG)
 
-and link to the imported target KDAB::kddockwidgets.
+and link to the imported target `KDAB::kddockwidgets`.
 That's all you need to do (the imported target also brings in the include directories)
 
-You may also need to point the CMAKE_MODULE_PATH environment variable depending
+You may also need to modify the `CMAKE_MODULE_PATH` environment variable depending
 on where you installed KDDockWidgets.
 
 
@@ -121,10 +123,13 @@ Python Bindings
 Make sure you have pyside2, shiboken2 and shiboken2-generator installed.
 As this time, you cannot get shiboken2-generator because the wheels are not on PyPi.
 To use the wheels do this:
-  % pip3 install \
-      --index-url=http://download.qt.io/official_releases/QtForPython/ \
-      --trusted-host download.qt.io \
-      shiboken2 pyside2 shiboken2_generator
+
+```
+% pip3 install \
+    --index-url=http://download.qt.io/official_releases/QtForPython/ \
+    --trusted-host download.qt.io \
+    shiboken2 pyside2 shiboken2_generator
+```
 
 For more info visit https://doc.qt.io/qtforpython/shiboken2/gettingstarted.html
 
