@@ -20,7 +20,7 @@ Build tips for KDDW:
 
 Builds tips for your own app:
 =============================
-- Link to KDDW (libkddockwidgets.so, or similar)
+- Link to KDDW (libkddockwidgets.a, or similar)
 - As the build is static, don't forget to initialize KDDW's resources:
 ```
 #ifdef QT_STATIC
