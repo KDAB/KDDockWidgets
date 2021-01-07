@@ -20,7 +20,7 @@
 namespace Layouting {
 
 class Config;
-class ItemContainer;
+class ItemBoxContainer;
 class Separator;
 class Widget;
 
@@ -39,9 +39,9 @@ public:
     int position() const;
     QObject *host() const;
 
-    void init(Layouting::ItemContainer*, Qt::Orientation orientation);
+    void init(Layouting::ItemBoxContainer*, Qt::Orientation orientation);
 
-    ItemContainer *parentContainer() const;
+    ItemBoxContainer *parentContainer() const;
 
     ///@brief Returns whether we're dragging a separator. Can be useful for the app to stop other work while we're not in the final size
     static bool isResizing();

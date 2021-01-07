@@ -31,7 +31,7 @@
 
 namespace Layouting {
 class Item;
-class ItemContainer;
+class ItemBoxContainer;
 }
 
 namespace KDDockWidgets
@@ -144,7 +144,7 @@ namespace KDDockWidgets
 
     private:
         friend class Layouting::Item;
-        friend class Layouting::ItemContainer;
+        friend class Layouting::ItemBoxContainer;
         friend class KDDockWidgets::MultiSplitter;
         friend class KDDockWidgets::DropArea;
 

@@ -40,7 +40,7 @@ int Layouting::Item::separatorThickness = 5;
 QSize Layouting::Item::hardcodedMinimumSize = QSize(80, 90);
 QSize Layouting::Item::hardcodedMaximumSize = QSize(16777215, 16777215);
 
-bool Layouting::ItemContainer::s_inhibitSimplify = false;
+bool Layouting::ItemBoxContainer::s_inhibitSimplify = false;
 
 inline bool locationIsVertical(Item::Location loc)
 {
@@ -98,12 +98,13 @@ struct LengthOnSide
         return qMax(0, minLength - length);
     }
 };
+
 }
 
-ItemContainer *Item::root() const
+ItemBoxContainer *Item::root() const
 {
     return m_parent ? m_parent->root()
-                    : const_cast<ItemContainer*>(qobject_cast<const ItemContainer*>(this));
+                    : const_cast<ItemBoxContainer*>(qobject_cast<const ItemBoxContainer*>(this));
 }
 
 QRect Item::mapToRoot(QRect r) const
@@ -292,7 +293,7 @@ void Item::restore(Widget *guest)
         qWarning() << Q_FUNC_INFO << "Containers can't be restored";
     } else {
         setGuestWidget(guest);
-        parentContainer()->restoreChild(this, NeighbourSqueezeStrategy::ImmediateNeighboursFirst);
+        parentContainer()->restore(this);
 
         // When we restore to previous positions, we only still from the immediate neighbours.
         // It's consistent with closing an item, it also only grows the immediate neighbours
@@ -415,6 +416,11 @@ ItemContainer *Item::parentContainer() const
     return m_parent;
 }
 
+ItemBoxContainer *Item::parentBoxContainer() const
+{
+    return qobject_cast<ItemBoxContainer*>(m_parent);
+}
+
 const ItemContainer *Item::asContainer() const
 {
     return qobject_cast<const ItemContainer*>(this);
@@ -423,6 +429,11 @@ const ItemContainer *Item::asContainer() const
 ItemContainer *Item::asContainer()
 {
     return qobject_cast<ItemContainer*>(this);
+}
+
+ItemBoxContainer *Item::asBoxContainer()
+{
+    return qobject_cast<ItemBoxContainer*>(this);
 }
 
 void Item::setMinSize(QSize sz)
@@ -480,23 +491,30 @@ void Item::insertItem(Item *item, Location loc, KDDockWidgets::InitialOption opt
     item->setIsVisible(!option.startsHidden());
     Q_ASSERT(!(option.startsHidden() && item->isContainer()));
 
-    if (m_parent->hasOrientationFor(loc)) {
+
+    ItemBoxContainer *parent = parentBoxContainer();
+    if (!parent) {
+        qWarning() << Q_FUNC_INFO << "This method should only be called for box containers";
+        return;
+    }
+
+    if (parent->hasOrientationFor(loc)) {
         const bool locIsSide1 = locationIsSide1(loc);
-        auto indexInParent = m_parent->childItems().indexOf(this);
+        auto indexInParent = parent->childItems().indexOf(this);
         if (!locIsSide1)
             indexInParent++;
 
         const Qt::Orientation orientation = orientationForLocation(loc);
-        if (orientation != m_parent->orientation()) {
-            Q_ASSERT(m_parent->visibleChildren().size() == 1);
+        if (orientation != parent->orientation()) {
+            Q_ASSERT(parent->visibleChildren().size() == 1);
             // This is the case where the container only has one item, so it's both vertical and horizontal
             // Now its orientation gets defined
-            m_parent->setOrientation(orientation);
+            parent->setOrientation(orientation);
         }
 
-        m_parent->insertItem(item, indexInParent, option);
+        parent->insertItem(item, indexInParent, option);
     } else {
-        ItemContainer *container = m_parent->convertChildToContainer(this);
+        ItemBoxContainer *container = parent->convertChildToContainer(this);
         container->insertItem(item, loc, option);
     }
 }
@@ -855,7 +873,7 @@ Item::LayoutBorderLocations Item::adjacentLayoutBorders() const
         return Item::LayoutBorderLocation_All;
     }
 
-    ItemContainer *c = parentContainer();
+    ItemBoxContainer *c = parentBoxContainer();
     if (!c)
         return Item::LayoutBorderLocation_None;
 
@@ -923,12 +941,11 @@ int Item::visibleCount_recursive() const
     return isVisible() ? 1 : 0;
 }
 
-struct ItemContainer::Private
+struct ItemBoxContainer::Private
 {
-    Private(ItemContainer *qq)
+    Private(ItemBoxContainer *qq)
         : q(qq)
     {
-        (void) Config::self(); // Ensure Config ctor runs, as it registers qml types
     }
 
     ~Private()
@@ -966,46 +983,33 @@ struct ItemContainer::Private
     bool m_isDeserializing = false;
     bool m_isSimplifying = false;
     Qt::Orientation m_orientation = Qt::Vertical;
-    Item::List m_children;
-    ItemContainer *const q;
+    ItemBoxContainer *const q;
 };
 
-ItemContainer::ItemContainer(Widget *hostWidget, ItemContainer *parent)
-    : Item(true, hostWidget, parent)
+ItemBoxContainer::ItemBoxContainer(Widget *hostWidget, ItemContainer *parent)
+    : ItemContainer(hostWidget, parent)
     , d(new Private(this))
 {
     Q_ASSERT(parent);
-
-    connect(this, &Item::xChanged, this, [this] {
-        for (Item *item : qAsConst(d->m_children)) {
-            Q_EMIT item->xChanged();
-        }
-    });
-
-    connect(this, &Item::yChanged, this, [this] {
-        for (Item *item : qAsConst(d->m_children)) {
-            Q_EMIT item->yChanged();
-        }
-    });
 }
 
-ItemContainer::ItemContainer(Widget *hostWidget)
-    : Item(true, hostWidget, /*parentContainer=*/ nullptr)
+ItemBoxContainer::ItemBoxContainer(Widget *hostWidget)
+    : ItemContainer(hostWidget, /*parentContainer=*/ nullptr)
     , d(new Private(this))
 {
 }
 
-ItemContainer::~ItemContainer()
+ItemBoxContainer::~ItemBoxContainer()
 {
     delete d;
 }
 
-bool ItemContainer::checkSanity()
+bool ItemBoxContainer::checkSanity()
 {
     d->m_checkSanityScheduled = false;
 
     if (!hostWidget()) {
-        /// This is a dummy ItemContainer, just return true
+        /// This is a dummy ItemBoxContainer, just return true
         return true;
     }
 
@@ -1024,7 +1028,8 @@ bool ItemContainer::checkSanity()
 
     // Check that the geometries don't overlap
     int expectedPos = 0;
-    for (Item *item : qAsConst(d->m_children)) {
+    const auto children = childItems();
+    for (Item *item : children) {
         if (!item->isVisible())
             continue;
         const int pos = Layouting::pos(item->pos(), d->m_orientation);
@@ -1040,7 +1045,7 @@ bool ItemContainer::checkSanity()
     }
 
     const int h1 = Layouting::length(size(), oppositeOrientation(d->m_orientation));
-    for (Item *item : qAsConst(d->m_children)) {
+    for (Item *item : children) {
         if (item->parentContainer() != this) {
             qWarning() << "Invalid parent container for" << item
                        << "; is=" << item->parentContainer() << "; expected=" << this;
@@ -1098,7 +1103,7 @@ bool ItemContainer::checkSanity()
             qWarning() << Q_FUNC_INFO << "Percentages don't add up"
                        << totalPercentage << percentages
                        << this;
-            const_cast<ItemContainer*>(this)->d->updateSeparators_recursive();
+            const_cast<ItemBoxContainer*>(this)->d->updateSeparators_recursive();
             qWarning() << Q_FUNC_INFO << d->childPercentages();
             return false;
         }
@@ -1183,7 +1188,7 @@ bool ItemContainer::checkSanity()
 #ifdef DOCKS_DEVELOPER_MODE
     // Can cause slowdown, so just use it in developer mode.
     if (isRoot()) {
-        if (!asContainer()->test_suggestedRect())
+        if (!asBoxContainer()->test_suggestedRect())
             return false;
     }
 #endif
@@ -1191,46 +1196,31 @@ bool ItemContainer::checkSanity()
     return true;
 }
 
-void ItemContainer::Private::scheduleCheckSanity() const
+void ItemBoxContainer::Private::scheduleCheckSanity() const
 {
     if (!m_checkSanityScheduled) {
         m_checkSanityScheduled = true;
-        QTimer::singleShot(0, q->root(), &ItemContainer::checkSanity);
+        QTimer::singleShot(0, q->root(), &ItemBoxContainer::checkSanity);
     }
 }
 
-bool ItemContainer::hasOrientation() const
+bool ItemBoxContainer::hasOrientation() const
 {
     return isVertical() || isHorizontal();
 }
 
-int ItemContainer::numChildren() const
-{
-    return d->m_children.size();
-}
-
-int ItemContainer::numVisibleChildren() const
-{
-    int num = 0;
-    for (Item *child : qAsConst(d->m_children)) {
-        if (child->isVisible())
-            num++;
-    }
-    return num;
-}
-
-int ItemContainer::indexOfVisibleChild(const Item *item) const
+int ItemBoxContainer::indexOfVisibleChild(const Item *item) const
 {
     const Item::List items = visibleChildren();
     return items.indexOf(const_cast<Item*>(item));
 }
 
-const Item::List ItemContainer::childItems() const
+void ItemBoxContainer::restore(Item *child)
 {
-    return d->m_children;
+    restoreChild(child, NeighbourSqueezeStrategy::ImmediateNeighboursFirst);
 }
 
-void ItemContainer::removeItem(Item *item, bool hardRemove)
+void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
 {
     Q_ASSERT(!item->isRoot());
 
@@ -1247,7 +1237,7 @@ void ItemContainer::removeItem(Item *item, bool hardRemove)
     const bool wasVisible = !isContainer && item->isVisible();
 
     if (hardRemove) {
-        d->m_children.removeOne(item);
+        m_children.removeOne(item);
         delete item;
         if (!isContainer)
             Q_EMIT root()->numItemsChanged();
@@ -1284,12 +1274,7 @@ void ItemContainer::removeItem(Item *item, bool hardRemove)
     }
 }
 
-bool ItemContainer::isEmpty() const
-{
-    return d->m_children.isEmpty();
-}
-
-void ItemContainer::setGeometry_recursive(QRect rect)
+void ItemBoxContainer::setGeometry_recursive(QRect rect)
 {
     setPos(rect.topLeft());
 
@@ -1297,18 +1282,18 @@ void ItemContainer::setGeometry_recursive(QRect rect)
     setSize_recursive(rect.size());
 }
 
-ItemContainer *ItemContainer::convertChildToContainer(Item *leaf)
+ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
 {
     QScopedValueRollback<bool> converting(d->m_convertingItemToContainer, true);
 
-    const auto index = d->m_children.indexOf(leaf);
+    const auto index = m_children.indexOf(leaf);
     Q_ASSERT(index != -1);
-    auto container = new ItemContainer(hostWidget(), this);
+    auto container = new ItemBoxContainer(hostWidget(), this);
     container->setParentContainer(nullptr);
     container->setParentContainer(this);
 
     insertItem(container, index, DefaultSizeMode::None);
-    d->m_children.removeOne(leaf);
+    m_children.removeOne(leaf);
     container->setGeometry(leaf->geometry());
     container->insertItem(leaf, Location_OnTop, DefaultSizeMode::None);
     Q_EMIT itemsChanged();
@@ -1317,7 +1302,7 @@ ItemContainer *ItemContainer::convertChildToContainer(Item *leaf)
     return container;
 }
 
-void ItemContainer::insertItem(Item *item, Location loc,
+void ItemBoxContainer::insertItem(Item *item, Location loc,
                                KDDockWidgets::InitialOption initialOption)
 {
     Q_ASSERT(item != this);
@@ -1332,20 +1317,20 @@ void ItemContainer::insertItem(Item *item, Location loc,
     const Qt::Orientation locOrientation = orientationForLocation(loc);
 
     if (hasOrientationFor(loc)) {
-        if (d->m_children.size() == 1) {
+        if (m_children.size() == 1) {
             // 2 items is the minimum to know which orientation we're layedout
             d->m_orientation = locOrientation;
         }
 
-        const auto index = locationIsSide1(loc) ? 0 : d->m_children.size();
+        const auto index = locationIsSide1(loc) ? 0 : m_children.size();
         insertItem(item, index, initialOption);
     } else {
         // Inserting directly in a container ? Only if it's root.
         Q_ASSERT(isRoot());
-        auto container = new ItemContainer(hostWidget(), this);
+        auto container = new ItemBoxContainer(hostWidget(), this);
         container->setGeometry(rect());
-        container->setChildren(d->m_children, d->m_orientation);
-        d->m_children.clear();
+        container->setChildren(m_children, d->m_orientation);
+        m_children.clear();
         setOrientation(oppositeOrientation(d->m_orientation));
         insertItem(container, 0, DefaultSizeMode::None);
 
@@ -1360,7 +1345,7 @@ void ItemContainer::insertItem(Item *item, Location loc,
     d->scheduleCheckSanity();
 }
 
-void ItemContainer::onChildMinSizeChanged(Item *child)
+void ItemBoxContainer::onChildMinSizeChanged(Item *child)
 {
     if (d->m_convertingItemToContainer || d->m_isDeserializing || !child->isVisible()) {
         // Don't bother our parents, we're converting
@@ -1388,7 +1373,7 @@ void ItemContainer::onChildMinSizeChanged(Item *child)
     updateChildPercentages();
 }
 
-void ItemContainer::updateSizeConstraints()
+void ItemBoxContainer::updateSizeConstraints()
 {
     const QSize missingSize = this->missingSize();
     if (!missingSize.isNull()) {
@@ -1402,7 +1387,7 @@ void ItemContainer::updateSizeConstraints()
     Q_EMIT minSizeChanged(this);
 }
 
-void ItemContainer::onChildVisibleChanged(Item *, bool visible)
+void ItemBoxContainer::onChildVisibleChanged(Item *, bool visible)
 {
     if (d->m_isDeserializing || isInSimplify())
         return;
@@ -1416,7 +1401,7 @@ void ItemContainer::onChildVisibleChanged(Item *, bool visible)
     }
 }
 
-QRect ItemContainer::suggestedDropRect(const Item *item, const Item *relativeTo, Location loc) const
+QRect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relativeTo, Location loc) const
 {
     // Returns the drop rect. This is the geometry used by the rubber band when you hover over an indicator.
     // It's calculated by copying the layout and inserting the item into the dummy/invisible copy
@@ -1458,7 +1443,7 @@ QRect ItemContainer::suggestedDropRect(const Item *item, const Item *relativeTo,
         return suggestedDropRectFallback(item, relativeTo, loc);
 
     const QVariantMap rootSerialized = root()->toVariantMap();
-    ItemContainer rootCopy(nullptr);
+    ItemBoxContainer rootCopy(nullptr);
     rootCopy.fillFromVariantMap(rootSerialized, {});
 
     if (relativeTo)
@@ -1485,7 +1470,7 @@ QRect ItemContainer::suggestedDropRect(const Item *item, const Item *relativeTo,
     return itemCopy->mapToRoot(itemCopy->rect());
 }
 
-QRect ItemContainer::suggestedDropRectFallback(const Item *item, const Item *relativeTo, Location loc) const
+QRect ItemBoxContainer::suggestedDropRectFallback(const Item *item, const Item *relativeTo, Location loc) const
 {
     const QSize minSize = item->minSize();
     const int itemMin = Layouting::length(minSize, d->m_orientation);
@@ -1553,7 +1538,7 @@ QRect ItemContainer::suggestedDropRectFallback(const Item *item, const Item *rel
     return {};
 }
 
-void ItemContainer::positionItems()
+void ItemBoxContainer::positionItems()
 {
     SizingInfo::List sizes = this->sizes();
     positionItems(/*by-ref=*/sizes);
@@ -1562,18 +1547,18 @@ void ItemContainer::positionItems()
     d->updateSeparators_recursive();
 }
 
-void ItemContainer::positionItems_recursive()
+void ItemBoxContainer::positionItems_recursive()
 {
     positionItems();
-    for (Item *item : qAsConst(d->m_children)) {
+    for (Item *item : qAsConst(m_children)) {
         if (item->isVisible()) {
-            if (auto c = item->asContainer())
+            if (auto c = item->asBoxContainer())
                 c->positionItems_recursive();
         }
     }
 }
 
-void ItemContainer::applyPositions(const SizingInfo::List &sizes)
+void ItemBoxContainer::applyPositions(const SizingInfo::List &sizes)
 {
     const Item::List items = visibleChildren();
     const auto count = items.size();
@@ -1593,12 +1578,12 @@ void ItemContainer::applyPositions(const SizingInfo::List &sizes)
     }
 }
 
-Qt::Orientation ItemContainer::orientation() const
+Qt::Orientation ItemBoxContainer::orientation() const
 {
     return d->m_orientation;
 }
 
-void ItemContainer::positionItems(SizingInfo::List &sizes)
+void ItemBoxContainer::positionItems(SizingInfo::List &sizes)
 {
     int nextPos = 0;
     const auto count = sizes.count();
@@ -1620,74 +1605,21 @@ void ItemContainer::positionItems(SizingInfo::List &sizes)
     }
 }
 
-void ItemContainer::clear()
+void ItemBoxContainer::clear()
 {
-    for (Item *item : qAsConst(d->m_children)) {
-        if (ItemContainer *container = item->asContainer())
+    for (Item *item : qAsConst(m_children)) {
+        if (ItemBoxContainer *container = item->asBoxContainer())
             container->clear();
 
         delete item;
     }
-    d->m_children.clear();
+    m_children.clear();
     d->deleteSeparators();
 }
 
-Item* ItemContainer::itemForObject(const QObject *o) const
+Item *ItemBoxContainer::itemAt(QPoint p) const
 {
-    for (Item *item : qAsConst(d->m_children)) {
-        if (item->isContainer()) {
-            if (Item *result = item->asContainer()->itemForObject(o))
-                return result;
-        } else if (auto guest = item->guestWidget()) {
-            if (guest && guest->asQObject() == o)
-                return item;
-        }
-    }
-
-    return nullptr;
-}
-
-Item *ItemContainer::itemForWidget(const Widget *w) const
-{
-    for (Item *item : qAsConst(d->m_children)) {
-        if (item->isContainer()) {
-            if (Item *result = item->asContainer()->itemForWidget(w))
-                return result;
-        } else if (item->guestWidget() == w) {
-            return item;
-        }
-    }
-
-    return nullptr;
-}
-
-int ItemContainer::visibleCount_recursive() const
-{
-    int count = 0;
-    for (Item *item : qAsConst(d->m_children)) {
-        count += item->visibleCount_recursive();
-    }
-
-    return count;
-}
-
-int ItemContainer::count_recursive() const
-{
-    int count = 0;
-    for (Item *item : qAsConst(d->m_children)) {
-        if (auto c = item->asContainer()) {
-            count += c->count_recursive();
-        } else {
-            count++;
-        }
-    }
-
-    return count;
-}
-
-Item *ItemContainer::itemAt(QPoint p) const
-{
-    for (Item *item : qAsConst(d->m_children)) {
+    for (Item *item : qAsConst(m_children)) {
         if (item->isVisible() && item->geometry().contains(p))
             return item;
     }
@@ -1695,10 +1627,10 @@ Item *ItemContainer::itemAt(QPoint p) const
     return nullptr;
 }
 
-Item *ItemContainer::itemAt_recursive(QPoint p) const
+Item *ItemBoxContainer::itemAt_recursive(QPoint p) const
 {
     if (Item *item = itemAt(p)) {
-        if (auto c = item->asContainer()) {
+        if (auto c = item->asBoxContainer()) {
             return c->itemAt_recursive(c->mapFromParent(p));
         } else {
             return item;
@@ -1708,43 +1640,28 @@ Item *ItemContainer::itemAt_recursive(QPoint p) const
     return nullptr;
 }
 
-Item::List ItemContainer::items_recursive() const
-{
-   Item::List items;
-   items.reserve(30); // sounds like a good upper number to minimize allocations
-   for (Item *item : qAsConst(d->m_children)) {
-       if (auto c  = item->asContainer()) {
-           items << c->items_recursive();
-       } else {
-           items << item;
-       }
-   }
-
-   return items;
-}
-
-void ItemContainer::setHostWidget(Widget *host)
+void ItemBoxContainer::setHostWidget(Widget *host)
 {
     Item::setHostWidget(host);
     d->deleteSeparators_recursive();
-    for (Item *item : qAsConst(d->m_children)) {
+    for (Item *item : qAsConst(m_children)) {
         item->setHostWidget(host);
     }
 
     d->updateSeparators_recursive();
 }
 
-void ItemContainer::setIsVisible(bool)
+void ItemBoxContainer::setIsVisible(bool)
 {
     // no-op for containers, visibility is calculated
 }
 
-bool ItemContainer::isVisible(bool excludeBeingInserted) const
+bool ItemBoxContainer::isVisible(bool excludeBeingInserted) const
 {
     return hasVisibleChildren(excludeBeingInserted);
 }
 
-void ItemContainer::setLength_recursive(int length, Qt::Orientation o)
+void ItemBoxContainer::setLength_recursive(int length, Qt::Orientation o)
 {
     QSize sz = size();
     if (o == Qt::Vertical) {
@@ -1756,7 +1673,7 @@ void ItemContainer::setLength_recursive(int length, Qt::Orientation o)
     setSize_recursive(sz);
 }
 
-void ItemContainer::insertItem(Item *item, int index, InitialOption option)
+void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
 {
     if (option.sizeMode != DefaultSizeMode::None) {
         /// Choose a nice size for the item we're adding
@@ -1764,7 +1681,7 @@ void ItemContainer::insertItem(Item *item, int index, InitialOption option)
         item->setLength_recursive(suggestedLength, d->m_orientation);
     }
 
-    d->m_children.insert(index, item);
+    m_children.insert(index, item);
     item->setParentContainer(this);
 
     Q_EMIT itemsChanged();
@@ -1782,47 +1699,15 @@ void ItemContainer::insertItem(Item *item, int index, InitialOption option)
     Q_EMIT root()->numItemsChanged();
 }
 
-bool ItemContainer::hasChildren() const
+bool ItemBoxContainer::hasOrientationFor(Location loc) const
 {
-    return !d->m_children.isEmpty();
-}
-
-bool ItemContainer::hasVisibleChildren(bool excludeBeingInserted) const
-{
-    for (Item *item : qAsConst(d->m_children)) {
-        if (item->isVisible(excludeBeingInserted))
-            return true;
-    }
-
-    return false;
-}
-
-bool ItemContainer::hasOrientationFor(Location loc) const
-{
-    if (d->m_children.size() <= 1)
+    if (m_children.size() <= 1)
         return true;
 
     return d->m_orientation == orientationForLocation(loc);
 }
 
-Item::List ItemContainer::visibleChildren(bool includeBeingInserted) const
-{
-    Item::List items;
-    items.reserve(d->m_children.size());
-    for (Item *item : qAsConst(d->m_children)) {
-        if (includeBeingInserted) {
-            if (item->isVisible() || item->isBeingInserted())
-                items << item;
-        } else {
-            if (item->isVisible() && !item->isBeingInserted())
-                items << item;
-        }
-    }
-
-    return items;
-}
-
-int ItemContainer::usableLength() const
+int ItemBoxContainer::usableLength() const
 {
     const Item::List children = visibleChildren();
     const auto numVisibleChildren = children.size();
@@ -1834,40 +1719,16 @@ int ItemContainer::usableLength() const
     return length() - separatorWaste;
 }
 
-bool ItemContainer::hasSingleVisibleItem() const
+void ItemBoxContainer::setChildren(const List &children, Qt::Orientation o)
 {
-    return numVisibleChildren() == 1;
-}
-
-bool ItemContainer::contains(const Item *item) const
-{
-    return d->m_children.contains(const_cast<Item *>(item));
-}
-
-bool ItemContainer::contains_recursive(const Item *item) const
-{
-    for (Item *it : qAsConst(d->m_children)) {
-        if (it == item) {
-            return true;
-        } else if (it->isContainer()) {
-            if (it->asContainer()->contains_recursive(item))
-                return true;
-        }
-    }
-
-    return false;
-}
-
-void ItemContainer::setChildren(const List &children, Qt::Orientation o)
-{
-    d->m_children = children;
+    m_children = children;
     for (Item *item : children)
         item->setParentContainer(this);
 
     setOrientation(o);
 }
 
-void ItemContainer::setOrientation(Qt::Orientation o)
+void ItemBoxContainer::setOrientation(Qt::Orientation o)
 {
     if (o != d->m_orientation) {
         d->m_orientation = o;
@@ -1875,12 +1736,12 @@ void ItemContainer::setOrientation(Qt::Orientation o)
     }
 }
 
-QSize ItemContainer::Private::minSize(const Item::List &items) const
+QSize ItemBoxContainer::Private::minSize(const Item::List &items) const
 {
     int minW = 0;
     int minH = 0;
     int numVisible = 0;
-    if (!m_children.isEmpty()) {
+    if (!q->m_children.isEmpty()) {
         for (Item *item : items) {
             if (!(item->isVisible() || item->isBeingInserted()))
                 continue;
@@ -1904,12 +1765,12 @@ QSize ItemContainer::Private::minSize(const Item::List &items) const
     return QSize(minW, minH);
 }
 
-QSize ItemContainer::minSize() const
+QSize ItemBoxContainer::minSize() const
 {
-    return d->minSize(d->m_children);
+    return d->minSize(m_children);
 }
 
-QSize ItemContainer::maxSizeHint() const
+QSize ItemBoxContainer::maxSizeHint() const
 {
     int maxW = isVertical() ? hardcodedMaximumSize.width() : 0;
     int maxH = isVertical() ? 0 : hardcodedMaximumSize.height();
@@ -1948,7 +1809,7 @@ QSize ItemContainer::maxSizeHint() const
     return QSize(maxW, maxH).expandedTo(d->minSize(visibleChildren));
 }
 
-void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &childSizes,
+void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &childSizes,
                                             ChildrenResizeStrategy strategy)
 {
     // This container is being resized to @p newSize, so we must resize our children too, based
@@ -2038,7 +1899,7 @@ void ItemContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Sizing
     honourMaxSizes(childSizes);
 }
 
-void ItemContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
+void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
 {
     // Reduces the size of all children that are bigger than max-size.
     // Assuming there's widgets that are willing to grow to occupy that space.
@@ -2127,7 +1988,7 @@ void ItemContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
     }
 }
 
-void ItemContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy)
+void ItemBoxContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy)
 {
     QScopedValueRollback<bool> block(d->m_blockUpdatePercentages, true);
 
@@ -2175,19 +2036,12 @@ void ItemContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy stra
     applyGeometries(childSizes, strategy);
 }
 
-int ItemContainer::length() const
+int ItemBoxContainer::length() const
 {
     return isVertical() ? height() : width();
 }
 
-QRect ItemContainer::rect() const
-{
-    QRect rect = m_sizingInfo.geometry;
-    rect.moveTo(QPoint(0, 0));
-    return rect;
-}
-
-void ItemContainer::dumpLayout(int level)
+void ItemBoxContainer::dumpLayout(int level)
 {
     if (level == 0 && hostWidget()) {
 
@@ -2223,7 +2077,7 @@ void ItemContainer::dumpLayout(int level)
     }
 
     int i = 0;
-    for (Item *item : qAsConst(d->m_children)) {
+    for (Item *item : qAsConst(m_children)) {
         item->dumpLayout(level + 1);
         if (item->isVisible()) {
             if (i < d->m_separators.size()) {
@@ -2237,13 +2091,13 @@ void ItemContainer::dumpLayout(int level)
     }
 }
 
-void ItemContainer::updateChildPercentages()
+void ItemBoxContainer::updateChildPercentages()
 {
     if (d->m_blockUpdatePercentages)
         return;
 
     const int usable = usableLength();
-    for (Item *item : qAsConst(d->m_children)) {
+    for (Item *item : qAsConst(m_children)) {
         if (item->isVisible() && !item->isBeingInserted()) {
             item->m_sizingInfo.percentageWithinParent = (1.0 * item->length(d->m_orientation)) / usable;
         } else {
@@ -2252,21 +2106,21 @@ void ItemContainer::updateChildPercentages()
     }
 }
 
-void ItemContainer::updateChildPercentages_recursive()
+void ItemBoxContainer::updateChildPercentages_recursive()
 {
     updateChildPercentages();
-    for (Item *item : qAsConst(d->m_children)) {
-        if (auto c = item->asContainer())
+    for (Item *item : qAsConst(m_children)) {
+        if (auto c = item->asBoxContainer())
             c->updateChildPercentages_recursive();
     }
 }
 
-QVector<double> ItemContainer::Private::childPercentages() const
+QVector<double> ItemBoxContainer::Private::childPercentages() const
 {
     QVector<double> percentages;
-    percentages.reserve(m_children.size());
+    percentages.reserve(q->m_children.size());
 
-    for (Item *item : m_children) {
+    for (Item *item : qAsConst(q->m_children)) {
         if (item->isVisible() && !item->isBeingInserted())
             percentages << item->m_sizingInfo.percentageWithinParent;
     }
@@ -2274,7 +2128,7 @@ QVector<double> ItemContainer::Private::childPercentages() const
     return percentages;
 }
 
-void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourSqueezeStrategy)
+void ItemBoxContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourSqueezeStrategy)
 {
     Q_ASSERT(contains(item));
 
@@ -2287,7 +2141,7 @@ void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourS
 
     if (!hadVisibleChildren) {
         // This container was hidden and will now be restored too, since a child was restored
-        if (auto c = parentContainer()) {
+        if (auto c = parentBoxContainer()) {
             setSize(item->size()); // give it a decent size. Same size as the item being restored makes sense
             c->restoreChild(this, neighbourSqueezeStrategy);
         }
@@ -2332,19 +2186,19 @@ void ItemContainer::restoreChild(Item *item, NeighbourSqueezeStrategy neighbourS
     d->updateSeparators_recursive();
 }
 
-void ItemContainer::updateWidgetGeometries()
+void ItemBoxContainer::updateWidgetGeometries()
 {
-    for (Item *item : qAsConst(d->m_children))
+    for (Item *item : qAsConst(m_children))
         item->updateWidgetGeometries();
 }
 
-int ItemContainer::oppositeLength() const
+int ItemBoxContainer::oppositeLength() const
 {
     return isVertical() ? width()
                         : height();
 }
 
-void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
+void ItemBoxContainer::requestSeparatorMove(Separator *separator, int delta)
 {
     const auto separatorIndex = d->m_separators.indexOf(separator);
     if (separatorIndex == -1) {
@@ -2435,7 +2289,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
             qWarning() << Q_FUNC_INFO << "Not enough space to move separator"
                        << this;
         } else {
-            Separator *nextSeparator = parentContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection, d->m_orientation);
+            Separator *nextSeparator = parentBoxContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection, d->m_orientation);
             if (!nextSeparator) {
                 // Doesn't happen
                 qWarning() << Q_FUNC_INFO << "nextSeparator is null, report a bug";
@@ -2449,7 +2303,7 @@ void ItemContainer::requestSeparatorMove(Separator *separator, int delta)
     }
 }
 
-void ItemContainer::requestEqualSize(Separator *separator)
+void ItemBoxContainer::requestEqualSize(Separator *separator)
 {
     const auto separatorIndex = d->m_separators.indexOf(separator);
     if (separatorIndex == -1) {
@@ -2499,7 +2353,7 @@ void ItemContainer::requestEqualSize(Separator *separator)
         requestSeparatorMove(separator, delta);
 }
 
-void ItemContainer::layoutEqually()
+void ItemBoxContainer::layoutEqually()
 {
     SizingInfo::List childSizes = sizes();
     if (!childSizes.isEmpty()) {
@@ -2508,7 +2362,7 @@ void ItemContainer::layoutEqually()
     }
 }
 
-void ItemContainer::layoutEqually(SizingInfo::List &sizes)
+void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
 {
     const auto numItems = sizes.count();
     QVector<int> satisfiedIndexes;
@@ -2562,31 +2416,31 @@ void ItemContainer::layoutEqually(SizingInfo::List &sizes)
     }
 }
 
-void ItemContainer::layoutEqually_recursive()
+void ItemBoxContainer::layoutEqually_recursive()
 {
     layoutEqually();
-    for (Item *item : qAsConst(d->m_children)) {
+    for (Item *item : qAsConst(m_children)) {
         if (item->isVisible()) {
-            if (auto c = item->asContainer())
+            if (auto c = item->asBoxContainer())
                 c->layoutEqually_recursive();
         }
     }
 }
 
-Item *ItemContainer::visibleNeighbourFor(const Item *item, Side side) const
+Item *ItemBoxContainer::visibleNeighbourFor(const Item *item, Side side) const
 {
     // Item might not be visible, so use m_children instead of visibleChildren()
-    const auto index = d->m_children.indexOf(const_cast<Item*>(item));
+    const auto index = m_children.indexOf(const_cast<Item*>(item));
 
     if (side == Side1) {
         for (auto i = index - 1; i >= 0; i--) {
-            Item *child = d->m_children.at(i);
+            Item *child = m_children.at(i);
             if (child->isVisible())
                 return child;
         }
     } else {
-        for (auto i = index + 1; i < d->m_children.size(); ++i) {
-            Item *child = d->m_children.at(i);
+        for (auto i = index + 1; i < m_children.size(); ++i) {
+            Item *child = m_children.at(i);
             if (child->isVisible())
                 return child;
         }
@@ -2595,18 +2449,18 @@ Item *ItemContainer::visibleNeighbourFor(const Item *item, Side side) const
     return nullptr;
 }
 
-QSize ItemContainer::availableSize() const
+QSize ItemBoxContainer::availableSize() const
 {
     return size() - this->minSize();
 }
 
-int ItemContainer::availableLength() const
+int ItemBoxContainer::availableLength() const
 {
     return isVertical() ? availableSize().height()
                         : availableSize().width();
 }
 
-LengthOnSide ItemContainer::lengthOnSide(const SizingInfo::List &sizes, int fromIndex,
+LengthOnSide ItemBoxContainer::lengthOnSide(const SizingInfo::List &sizes, int fromIndex,
                                          Side side, Qt::Orientation o) const
 {
     if (fromIndex < 0)
@@ -2637,7 +2491,7 @@ LengthOnSide ItemContainer::lengthOnSide(const SizingInfo::List &sizes, int from
     return result;
 }
 
-int ItemContainer::neighboursLengthFor(const Item *item, Side side, Qt::Orientation o) const
+int ItemBoxContainer::neighboursLengthFor(const Item *item, Side side, Qt::Orientation o) const
 {
     const Item::List children = visibleChildren();
     const auto index = children.indexOf(const_cast<Item*>(item));
@@ -2668,14 +2522,14 @@ int ItemContainer::neighboursLengthFor(const Item *item, Side side, Qt::Orientat
     }
 }
 
-int ItemContainer::neighboursLengthFor_recursive(const Item *item, Side side, Qt::Orientation o) const
+int ItemBoxContainer::neighboursLengthFor_recursive(const Item *item, Side side, Qt::Orientation o) const
 {
     return neighboursLengthFor(item, side, o) + (isRoot() ? 0
-                                                          : parentContainer()->neighboursLengthFor_recursive(this, side, o));
+                                                          : parentBoxContainer()->neighboursLengthFor_recursive(this, side, o));
 
 }
 
-int ItemContainer::neighboursMinLengthFor(const Item *item, Side side, Qt::Orientation o) const
+int ItemBoxContainer::neighboursMinLengthFor(const Item *item, Side side, Qt::Orientation o) const
 {
     const Item::List children = visibleChildren();
     const auto index = children.indexOf(const_cast<Item*>(item));
@@ -2706,7 +2560,7 @@ int ItemContainer::neighboursMinLengthFor(const Item *item, Side side, Qt::Orien
     }
 }
 
-int ItemContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Orientation o) const
+int ItemBoxContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Orientation o) const
 {
     const Item::List children = visibleChildren();
     const auto index = children.indexOf(const_cast<Item*>(item));
@@ -2737,7 +2591,7 @@ int ItemContainer::neighboursMaxLengthFor(const Item *item, Side side, Qt::Orien
     }
 }
 
-int ItemContainer::availableToSqueezeOnSide(const Item *child, Side side) const
+int ItemBoxContainer::availableToSqueezeOnSide(const Item *child, Side side) const
 {
     const int length = neighboursLengthFor(child, side, d->m_orientation);
     const int min = neighboursMinLengthFor(child, side, d->m_orientation);
@@ -2750,7 +2604,7 @@ int ItemContainer::availableToSqueezeOnSide(const Item *child, Side side) const
     return available;
 }
 
-int ItemContainer::availableToGrowOnSide(const Item *child, Side side) const
+int ItemBoxContainer::availableToGrowOnSide(const Item *child, Side side) const
 {
     const int length = neighboursLengthFor(child, side, d->m_orientation);
     const int max = neighboursMaxLengthFor(child, side, d->m_orientation);
@@ -2758,31 +2612,31 @@ int ItemContainer::availableToGrowOnSide(const Item *child, Side side) const
     return max - length;
 }
 
-int ItemContainer::availableToSqueezeOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
+int ItemBoxContainer::availableToSqueezeOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
 {
     if (orientation == d->m_orientation) {
         const int available = availableToSqueezeOnSide(child, side);
         return isRoot() ? available
-                        : (available + parentContainer()->availableToSqueezeOnSide_recursive(this, side, orientation));
+                        : (available + parentBoxContainer()->availableToSqueezeOnSide_recursive(this, side, orientation));
     } else {
         return isRoot() ? 0
-                        : parentContainer()->availableToSqueezeOnSide_recursive(this, side, orientation);
+                        : parentBoxContainer()->availableToSqueezeOnSide_recursive(this, side, orientation);
     }
 }
 
-int ItemContainer::availableToGrowOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
+int ItemBoxContainer::availableToGrowOnSide_recursive(const Item *child, Side side, Qt::Orientation orientation) const
 {
     if (orientation == d->m_orientation) {
         const int available = availableToGrowOnSide(child, side);
         return isRoot() ? available
-                        : (available + parentContainer()->availableToGrowOnSide_recursive(this, side, orientation));
+                        : (available + parentBoxContainer()->availableToGrowOnSide_recursive(this, side, orientation));
     } else {
         return isRoot() ? 0
-                        : parentContainer()->availableToGrowOnSide_recursive(this, side, orientation);
+                        : parentBoxContainer()->availableToGrowOnSide_recursive(this, side, orientation);
     }
 }
 
-void ItemContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)
+void ItemBoxContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)
 {
     if (!side1Neighbour && !side2Neighbour)
         return;
@@ -2850,7 +2704,7 @@ void ItemContainer::growNeighbours(Item *side1Neighbour, Item *side2Neighbour)
     applyGeometries(childSizes);
 }
 
-void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
+void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
                              GrowthStrategy growthStrategy,
                              NeighbourSqueezeStrategy neighbourSqueezeStrategy,
                              bool accountForNewSeparator)
@@ -2953,7 +2807,7 @@ void ItemContainer::growItem(int index, SizingInfo::List &sizes, int missing,
     }
 }
 
-void ItemContainer::growItem(Item *item, int amount, GrowthStrategy growthStrategy,
+void ItemBoxContainer::growItem(Item *item, int amount, GrowthStrategy growthStrategy,
                              NeighbourSqueezeStrategy neighbourSqueezeStrategy,
                              bool accountForNewSeparator,
                              ChildrenResizeStrategy childResizeStrategy)
@@ -2967,7 +2821,7 @@ void ItemContainer::growItem(Item *item, int amount, GrowthStrategy growthStrate
     applyGeometries(sizes, childResizeStrategy);
 }
 
-void ItemContainer::applyGeometries(const SizingInfo::List &sizes, ChildrenResizeStrategy strategy)
+void ItemBoxContainer::applyGeometries(const SizingInfo::List &sizes, ChildrenResizeStrategy strategy)
 {
     const Item::List items = visibleChildren();
     const auto count = items.size();
@@ -2981,7 +2835,7 @@ void ItemContainer::applyGeometries(const SizingInfo::List &sizes, ChildrenResiz
     positionItems();
 }
 
-SizingInfo::List ItemContainer::sizes(bool ignoreBeingInserted) const
+SizingInfo::List ItemBoxContainer::sizes(bool ignoreBeingInserted) const
 {
     const Item::List children = visibleChildren(ignoreBeingInserted);
     SizingInfo::List result;
@@ -2999,7 +2853,7 @@ SizingInfo::List ItemContainer::sizes(bool ignoreBeingInserted) const
     return result;
 }
 
-QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin,  //clazy:exclude=function-args-by-ref
+QVector<int> ItemBoxContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin,  //clazy:exclude=function-args-by-ref
                                               SizingInfo::List::ConstIterator end, int needed,  //clazy:exclude=function-args-by-ref
                                               NeighbourSqueezeStrategy strategy, bool reversed) const
 {
@@ -3066,7 +2920,7 @@ QVector<int> ItemContainer::calculateSqueezes(SizingInfo::List::ConstIterator be
     return squeezes;
 }
 
-void ItemContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount,
+void ItemBoxContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int side1Amount,
                                      int side2Amount, NeighbourSqueezeStrategy strategy)
 {
     Q_ASSERT(side1Amount > 0 || side2Amount > 0);
@@ -3098,13 +2952,13 @@ void ItemContainer::shrinkNeighbours(int index, SizingInfo::List &sizes, int sid
     }
 }
 
-QVector<int> ItemContainer::Private::requiredSeparatorPositions() const
+QVector<int> ItemBoxContainer::Private::requiredSeparatorPositions() const
 {
     const int numSeparators = qMax(0, q->numVisibleChildren() - 1);
     QVector<int> positions;
     positions.reserve(numSeparators);
 
-    for (Item *item : m_children) {
+    for (Item *item : qAsConst(q->m_children)) {
         if (positions.size() == numSeparators)
             break;
 
@@ -3117,7 +2971,7 @@ QVector<int> ItemContainer::Private::requiredSeparatorPositions() const
     return positions;
 }
 
-void ItemContainer::Private::updateSeparators()
+void ItemBoxContainer::Private::updateSeparators()
 {
     if (!q->hostWidget())
         return;
@@ -3164,42 +3018,42 @@ void ItemContainer::Private::updateSeparators()
     q->updateChildPercentages();
 }
 
-void ItemContainer::Private::deleteSeparators()
+void ItemBoxContainer::Private::deleteSeparators()
 {
     qDeleteAll(m_separators);
     m_separators.clear();
 }
 
-void ItemContainer::Private::deleteSeparators_recursive()
+void ItemBoxContainer::Private::deleteSeparators_recursive()
 {
     deleteSeparators();
 
     // recurse into the children:
-    for (Item *item : qAsConst(m_children)) {
-        if (auto c = item->asContainer())
+    for (Item *item : qAsConst(q->m_children)) {
+        if (auto c = item->asBoxContainer())
             c->d->deleteSeparators_recursive();
     }
 }
 
-void ItemContainer::Private::updateSeparators_recursive()
+void ItemBoxContainer::Private::updateSeparators_recursive()
 {
     updateSeparators();
 
     // recurse into the children:
     const Item::List items = q->visibleChildren();
     for (Item *item : items) {
-        if (auto c = item->asContainer())
+        if (auto c = item->asBoxContainer())
             c->d->updateSeparators_recursive();
     }
 }
 
-int ItemContainer::Private::excessLength() const
+int ItemBoxContainer::Private::excessLength() const
 {
     // Returns how much bigger this layout is than its max-size
     return qMax(0, Layouting::length(q->size(), m_orientation) - q->maxLengthHint(m_orientation));
 }
 
-void ItemContainer::simplify()
+void ItemBoxContainer::simplify()
 {
     // Removes unneeded nesting. For example, a vertical layout doesn't need to have vertical layouts
     // inside. It can simply have the contents of said sub-layouts
@@ -3207,13 +3061,13 @@ void ItemContainer::simplify()
     QScopedValueRollback<bool> isInSimplify(d->m_isSimplifying, true);
 
     Item::List newChildren;
-    newChildren.reserve(d->m_children.size() + 20); // over-reserve a bit
+    newChildren.reserve(m_children.size() + 20); // over-reserve a bit
 
-    for (Item *child : qAsConst(d->m_children)) {
-        if (ItemContainer *childContainer = child->asContainer()) {
+    for (Item *child : qAsConst(m_children)) {
+        if (ItemBoxContainer *childContainer = child->asBoxContainer()) {
             childContainer->simplify(); // recurse down the hierarchy
 
-            if (childContainer->orientation() == d->m_orientation || childContainer->d->m_children.size() == 1) {
+            if (childContainer->orientation() == d->m_orientation || childContainer->m_children.size() == 1) {
                 // This sub-container is redundant, as it has the same orientation as its parent
                 // Cannibalize it.
                 for (Item *child2 : childContainer->childItems()) {
@@ -3230,14 +3084,14 @@ void ItemContainer::simplify()
         }
     }
 
-    if (d->m_children != newChildren) {
-        d->m_children = newChildren;
+    if (m_children != newChildren) {
+        m_children = newChildren;
         positionItems();
         updateChildPercentages();
     }
 }
 
-Separator *ItemContainer::Private::separatorAt(int p) const
+Separator *ItemBoxContainer::Private::separatorAt(int p) const
 {
     for (Separator *separator : m_separators) {
         if (separator->position() == p)
@@ -3247,43 +3101,43 @@ Separator *ItemContainer::Private::separatorAt(int p) const
     return nullptr;
 }
 
-bool ItemContainer::isVertical() const
+bool ItemBoxContainer::isVertical() const
 {
     return d->m_orientation == Qt::Vertical;
 }
 
-bool ItemContainer::isHorizontal() const
+bool ItemBoxContainer::isHorizontal() const
 {
     return d->m_orientation == Qt::Horizontal;
 }
 
-int ItemContainer::indexOf(Separator *separator) const
+int ItemBoxContainer::indexOf(Separator *separator) const
 {
     return d->m_separators.indexOf(separator);
 }
 
-bool ItemContainer::isInSimplify() const
+bool ItemBoxContainer::isInSimplify() const
 {
     if (d->m_isSimplifying)
         return true;
 
-    auto p = parentContainer();
+    auto p = parentBoxContainer();
     return p && p->isInSimplify();
 }
 
-int ItemContainer::minPosForSeparator(Separator *separator, bool honourMax) const
+int ItemBoxContainer::minPosForSeparator(Separator *separator, bool honourMax) const
 {
     const int globalMin = minPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMin, d->m_orientation);
 }
 
-int ItemContainer::maxPosForSeparator(Separator *separator, bool honourMax) const
+int ItemBoxContainer::maxPosForSeparator(Separator *separator, bool honourMax) const
 {
     const int globalMax = maxPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMax, d->m_orientation);
 }
 
-int ItemContainer::minPosForSeparator_global(Separator *separator, bool honourMax) const
+int ItemBoxContainer::minPosForSeparator_global(Separator *separator, bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
@@ -3304,7 +3158,7 @@ int ItemContainer::minPosForSeparator_global(Separator *separator, bool honourMa
     return separator->position() - availableToSqueeze;
 }
 
-int ItemContainer::maxPosForSeparator_global(Separator *separator, bool honourMax) const
+int ItemBoxContainer::maxPosForSeparator_global(Separator *separator, bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
@@ -3324,13 +3178,13 @@ int ItemContainer::maxPosForSeparator_global(Separator *separator, bool honourMa
     return separator->position() + availableToSqueeze;
 }
 
-QVariantMap ItemContainer::toVariantMap() const
+QVariantMap ItemBoxContainer::toVariantMap() const
 {
     QVariantMap result = Item::toVariantMap();
 
     QVariantList childrenV;
-    childrenV.reserve(d->m_children.size());
-    for (Item *child : qAsConst(d->m_children)) {
+    childrenV.reserve(m_children.size());
+    for (Item *child : qAsConst(m_children)) {
         childrenV.push_back(child->toVariantMap());
     }
 
@@ -3340,7 +3194,7 @@ QVariantMap ItemContainer::toVariantMap() const
     return result;
 }
 
-void ItemContainer::fillFromVariantMap(const QVariantMap &map,
+void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
                                        const QHash<QString, Widget*> &widgets)
 {
     QScopedValueRollback<bool> deserializing(d->m_isDeserializing, true);
@@ -3352,10 +3206,10 @@ void ItemContainer::fillFromVariantMap(const QVariantMap &map,
     for (const QVariant &childV : childrenV) {
         const QVariantMap childMap = childV.toMap();
         const bool isContainer = childMap.value(QStringLiteral("isContainer")).toBool();
-        Item *child = isContainer ? new ItemContainer(hostWidget(), this)
+        Item *child = isContainer ? new ItemBoxContainer(hostWidget(), this)
                                   : new Item(hostWidget(), this);
         child->fillFromVariantMap(childMap, widgets);
-        d->m_children.push_back(child);
+        m_children.push_back(child);
     }
 
     if (isRoot()) {
@@ -3376,19 +3230,19 @@ void ItemContainer::fillFromVariantMap(const QVariantMap &map,
     }
 }
 
-bool ItemContainer::Private::isDummy() const
+bool ItemBoxContainer::Private::isDummy() const
 {
     return q->hostWidget() == nullptr;
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
-bool ItemContainer::test_suggestedRect()
+bool ItemBoxContainer::test_suggestedRect()
 {
     auto itemToDrop = new Item(hostWidget());
 
     const Item::List children = visibleChildren();
     for (Item *relativeTo : children) {
-        if (auto c = relativeTo->asContainer()) {
+        if (auto c = relativeTo->asBoxContainer()) {
             c->test_suggestedRect();
         } else {
             QHash<Location, QRect> rects;
@@ -3420,31 +3274,31 @@ bool ItemContainer::test_suggestedRect()
 }
 #endif
 
-QVector<Separator *> ItemContainer::separators_recursive() const
+QVector<Separator *> ItemBoxContainer::separators_recursive() const
 {
     Layouting::Separator::List separators = d->m_separators;
 
-    for (Item *item : qAsConst(d->m_children)) {
-        if (auto c = item->asContainer())
+    for (Item *item : qAsConst(m_children)) {
+        if (auto c = item->asBoxContainer())
             separators << c->separators_recursive();
     }
 
     return separators;
 }
 
-QVector<Separator *> ItemContainer::separators() const
+QVector<Separator *> ItemBoxContainer::separators() const
 {
     return d->m_separators;
 }
 
-bool ItemContainer::Private::isOverflowing() const
+bool ItemBoxContainer::Private::isOverflowing() const
 {
     // This never returns true, unless when loading a buggy layout
     // or if QWidgets now have bigger min-size
 
     int contentsLength = 0;
     int numVisible = 0;
-    for (Item *item : m_children) {
+    for (Item *item : qAsConst(q->m_children)) {
         if (item->isVisible()) {
             contentsLength += item->length(m_orientation);
             numVisible++;
@@ -3455,7 +3309,7 @@ bool ItemContainer::Private::isOverflowing() const
     return contentsLength > q->length();
 }
 
-void ItemContainer::Private::relayoutIfNeeded()
+void ItemBoxContainer::Private::relayoutIfNeeded()
 {
     // Checks all the child containers if they have the correct min-size, recursively.
     // When loading a layout from disk the min-sizes for the host QWidgets might have changed, so we
@@ -3472,23 +3326,23 @@ void ItemContainer::Private::relayoutIfNeeded()
     }
 
     // Let's see our children too:
-    for (Item *item : qAsConst(m_children)) {
+    for (Item *item : qAsConst(q->m_children)) {
         if (item->isVisible()) {
-            if (auto c = item->asContainer())
+            if (auto c = item->asBoxContainer())
                 c->d->relayoutIfNeeded();
         }
     }
 
 }
 
-const Item *ItemContainer::Private::itemFromPath(const QVector<int> &path) const
+const Item *ItemBoxContainer::Private::itemFromPath(const QVector<int> &path) const
 {
-    const ItemContainer *container = q;
+    const ItemBoxContainer *container = q;
 
     for (int i = 0; i < path.size() ; ++i) {
         const int index = path[i];
         const bool isLast = i == path.size() - 1;
-        if (index < 0 || index >= container->d->m_children.size()) {
+        if (index < 0 || index >= container->m_children.size()) {
             // Doesn't happen
             q->root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "Invalid index" << index
@@ -3497,9 +3351,9 @@ const Item *ItemContainer::Private::itemFromPath(const QVector<int> &path) const
         }
 
         if (isLast) {
-            return container->d->m_children.at(index);
+            return container->m_children.at(index);
         } else {
-            container = container->d->m_children.at(index)->asContainer();
+            container = container->m_children.at(index)->asBoxContainer();
             if (!container) {
                 qWarning() << Q_FUNC_INFO << "Invalid index" << path;
                 return nullptr;
@@ -3510,7 +3364,7 @@ const Item *ItemContainer::Private::itemFromPath(const QVector<int> &path) const
     return q;
 }
 
-Separator *ItemContainer::Private::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const
+Separator *ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const
 {
     Item::List children = q->visibleChildren();
     const auto itemIndex = children.indexOf(const_cast<Item *>(item));
@@ -3526,7 +3380,7 @@ Separator *ItemContainer::Private::neighbourSeparator(const Item *item, Side sid
         if (q->isRoot()) {
             return nullptr;
         } else {
-            return q->parentContainer()->d->neighbourSeparator(q, side, orientation);
+            return q->parentBoxContainer()->d->neighbourSeparator(q, side, orientation);
         }
     }
 
@@ -3539,7 +3393,7 @@ Separator *ItemContainer::Private::neighbourSeparator(const Item *item, Side sid
     return m_separators[separatorIndex];
 }
 
-Separator *ItemContainer::Private::neighbourSeparator_recursive(const Item *item, Side side,
+Separator *ItemBoxContainer::Private::neighbourSeparator_recursive(const Item *item, Side side,
                                                                 Qt::Orientation orientation) const
 {
     Separator *separator = neighbourSeparator(item, side, orientation);
@@ -3549,13 +3403,13 @@ Separator *ItemContainer::Private::neighbourSeparator_recursive(const Item *item
     if (!q->parentContainer())
         return nullptr;
 
-    return q->parentContainer()->d->neighbourSeparator_recursive(q, side, orientation);
+    return q->parentBoxContainer()->d->neighbourSeparator_recursive(q, side, orientation);
 }
 
-void ItemContainer::Private::updateWidgets_recursive()
+void ItemBoxContainer::Private::updateWidgets_recursive()
 {
-    for (Item *item : qAsConst(m_children)) {
-        if (auto c = item->asContainer()) {
+    for (Item *item : qAsConst(q->m_children)) {
+        if (auto c = item->asBoxContainer()) {
             c->d->updateWidgets_recursive();
         } else {
             if (item->isVisible()) {
@@ -3600,7 +3454,7 @@ void SizingInfo::fromVariantMap(const QVariantMap &map)
     maxSizeHint = mapToSize(map[QStringLiteral("maxSize")].toMap());
 }
 
-int ItemContainer::Private::defaultLengthFor(Item *item, InitialOption option) const
+int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option) const
 {
     int result = 0;
 
@@ -3629,6 +3483,198 @@ int ItemContainer::Private::defaultLengthFor(Item *item, InitialOption option) c
 
     result = qMax(item->minLength(m_orientation), result); // bound with max-size too
     return result;
+}
+
+struct ItemContainer::Private
+{
+    Private(ItemContainer *qq)
+        : q(qq)
+    {
+        (void) Config::self(); // Ensure Config ctor runs, as it registers qml types
+    }
+
+    ~Private()
+    {
+    }
+    ItemContainer *const q;
+};
+
+ItemContainer::ItemContainer(Widget *hostWidget, ItemContainer *parent)
+    : Item(true, hostWidget, parent)
+    , d(new Private(this))
+{
+    connect(this, &Item::xChanged, this, [this] {
+        for (Item *item : qAsConst(m_children)) {
+            Q_EMIT item->xChanged();
+        }
+    });
+
+    connect(this, &Item::yChanged, this, [this] {
+        for (Item *item : qAsConst(m_children)) {
+            Q_EMIT item->yChanged();
+        }
+    });
+}
+
+ItemContainer::ItemContainer(Widget *hostWidget)
+    : Item(true, hostWidget, nullptr)
+    , d(new Private(this))
+{
+}
+
+ItemContainer::~ItemContainer()
+{
+    delete d;
+}
+
+const Item::List ItemContainer::childItems() const
+{
+    return m_children;
+}
+
+bool ItemContainer::hasChildren() const
+{
+    return !m_children.isEmpty();
+}
+
+bool ItemContainer::hasVisibleChildren(bool excludeBeingInserted) const
+{
+    for (Item *item : qAsConst(m_children)) {
+        if (item->isVisible(excludeBeingInserted))
+            return true;
+    }
+
+    return false;
+}
+
+int ItemContainer::numChildren() const
+{
+    return m_children.size();
+}
+
+int ItemContainer::numVisibleChildren() const
+{
+    int num = 0;
+    for (Item *child : qAsConst(m_children)) {
+        if (child->isVisible())
+            num++;
+    }
+    return num;
+}
+
+bool ItemContainer::isEmpty() const
+{
+    return m_children.isEmpty();
+}
+
+bool ItemContainer::hasSingleVisibleItem() const
+{
+    return numVisibleChildren() == 1;
+}
+
+bool ItemContainer::contains(const Item *item) const
+{
+    return m_children.contains(const_cast<Item *>(item));
+}
+
+Item* ItemContainer::itemForObject(const QObject *o) const
+{
+    for (Item *item : qAsConst(m_children)) {
+        if (item->isContainer()) {
+            if (Item *result = item->asContainer()->itemForObject(o))
+                return result;
+        } else if (auto guest = item->guestWidget()) {
+            if (guest && guest->asQObject() == o)
+                return item;
+        }
+    }
+
+    return nullptr;
+}
+
+Item *ItemContainer::itemForWidget(const Widget *w) const
+{
+    for (Item *item : qAsConst(m_children)) {
+        if (item->isContainer()) {
+            if (Item *result = item->asContainer()->itemForWidget(w))
+                return result;
+        } else if (item->guestWidget() == w) {
+            return item;
+        }
+    }
+
+    return nullptr;
+}
+
+Item::List ItemContainer::visibleChildren(bool includeBeingInserted) const
+{
+    Item::List items;
+    items.reserve(m_children.size());
+    for (Item *item : qAsConst(m_children)) {
+        if (includeBeingInserted) {
+            if (item->isVisible() || item->isBeingInserted())
+                items << item;
+        } else {
+            if (item->isVisible() && !item->isBeingInserted())
+                items << item;
+        }
+    }
+
+    return items;
+}
+
+Item::List ItemContainer::items_recursive() const
+{
+   Item::List items;
+   items.reserve(30); // sounds like a good upper number to minimize allocations
+   for (Item *item : qAsConst(m_children)) {
+       if (auto c  = item->asContainer()) {
+           items << c->items_recursive();
+       } else {
+           items << item;
+       }
+   }
+
+   return items;
+}
+
+bool ItemContainer::contains_recursive(const Item *item) const
+{
+    for (Item *it : qAsConst(m_children)) {
+        if (it == item) {
+            return true;
+        } else if (it->isContainer()) {
+            if (it->asContainer()->contains_recursive(item))
+                return true;
+        }
+    }
+
+    return false;
+}
+
+
+int ItemContainer::visibleCount_recursive() const
+{
+    int count = 0;
+    for (Item *item : qAsConst(m_children)) {
+        count += item->visibleCount_recursive();
+    }
+
+    return count;
+}
+
+int ItemContainer::count_recursive() const
+{
+    int count = 0;
+    for (Item *item : qAsConst(m_children)) {
+        if (auto c = item->asContainer()) {
+            count += c->count_recursive();
+        } else {
+            count++;
+        }
+    }
+
+    return count;
 }
 
 #ifdef Q_CC_MSVC

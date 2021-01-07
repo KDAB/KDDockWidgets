@@ -4608,9 +4608,9 @@ void TestDocks::tst_stuckSeparator()
     QVERIFY(restorer.restoreFromFile(absoluteLayoutFileName));
 
     Frame *frame25 = dw25->frame();
-    ItemContainer *root = m1->multiSplitter()->rootItem();
+    ItemBoxContainer *root = m1->multiSplitter()->rootItem();
     Item *item25 = root->itemForWidget(frame25);
-    ItemContainer *container25 = item25->parentContainer();
+    ItemBoxContainer *container25 = item25->parentBoxContainer();
     Separator::List separators = container25->separators();
     QCOMPARE(separators.size(), 1);
 
@@ -5370,12 +5370,12 @@ void TestDocks::tst_maxSizePropagates2()
 
     Frame *frame1 = dock1->frame();
 
-    Layouting::ItemContainer *root = m1->multiSplitter()->rootItem();
+    Layouting::ItemBoxContainer *root = m1->multiSplitter()->rootItem();
     Item *item1 = root->itemForWidget(frame1);
     auto vertSep1 = root->separators().constFirst();
     const int min1 = root->minPosForSeparator_global(vertSep1);
 
-    ItemContainer *container1 = item1->parentContainer();
+    ItemBoxContainer *container1 = item1->parentBoxContainer();
     auto innerVertSep1 = container1->separators().constFirst();
     const int minInnerSep = container1->minPosForSeparator_global(innerVertSep1);
     const int maxInnerSep = container1->maxPosForSeparator_global(innerVertSep1);

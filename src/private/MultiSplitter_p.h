@@ -206,7 +206,7 @@ public:
     void layoutEqually();
 
     /// @brief overload that just resizes widgets within a sub-tree
-    void layoutEqually(Layouting::ItemContainer *);
+    void layoutEqually(Layouting::ItemBoxContainer *);
 
     /// @brief clears the layout
     void clearLayout();
@@ -229,7 +229,7 @@ private:
      */
     QList<Frame*> framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
 
-    Layouting::ItemContainer *rootItem() const;
+    Layouting::ItemBoxContainer *rootItem() const;
 
     // For debug/hardening
     bool validateInputs(QWidgetOrQuick *widget, KDDockWidgets::Location location,
@@ -251,7 +251,7 @@ private:
      */
     void setLayoutMinimumSize(QSize);
 
-    void setRootItem(Layouting::ItemContainer *);
+    void setRootItem(Layouting::ItemBoxContainer *);
 
     /**
      * @brief Like @ref availableLengthForDrop but just returns the total available width or height (depending on @p orientation)
@@ -266,7 +266,7 @@ private:
      */
     QSize availableSize() const;
 
-    Layouting::ItemContainer *m_rootItem = nullptr;
+    Layouting::ItemBoxContainer *m_rootItem = nullptr;
 };
 
 }

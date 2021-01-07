@@ -179,7 +179,7 @@ void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
         return;
     }
 
-    layoutEqually(item->parentContainer());
+    layoutEqually(item->parentBoxContainer());
 }
 
 DropIndicatorOverlayInterface::DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos)

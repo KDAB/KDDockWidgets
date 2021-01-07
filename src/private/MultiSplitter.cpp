@@ -41,7 +41,7 @@ MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
     : LayoutGuestWidget(parent)
 {
     Q_ASSERT(parent);
-    setRootItem(new Layouting::ItemContainer(this));
+    setRootItem(new Layouting::ItemBoxContainer(this));
     DockRegistry::self()->registerLayout(this);
 
     setLayoutSize(parent->size());
@@ -362,7 +362,7 @@ void MultiSplitter::layoutEqually()
     layoutEqually(m_rootItem);
 }
 
-void MultiSplitter::layoutEqually(Layouting::ItemContainer *container)
+void MultiSplitter::layoutEqually(Layouting::ItemBoxContainer *container)
 {
     if (container) {
         container->layoutEqually_recursive();
@@ -426,13 +426,13 @@ void MultiSplitter::setLayoutMinimumSize(QSize sz)
     qCDebug(sizing) << Q_FUNC_INFO << "minSize = " << m_rootItem->minSize();
 }
 
-void MultiSplitter::setRootItem(Layouting::ItemContainer *root)
+void MultiSplitter::setRootItem(Layouting::ItemBoxContainer *root)
 {
     delete m_rootItem;
     m_rootItem = root;
-    connect(m_rootItem, &Layouting::ItemContainer::numVisibleItemsChanged,
+    connect(m_rootItem, &Layouting::ItemBoxContainer::numVisibleItemsChanged,
             this, &MultiSplitter::visibleWidgetCountChanged);
-    connect(m_rootItem, &Layouting::ItemContainer::minSizeChanged, this, [this] {
+    connect(m_rootItem, &Layouting::ItemBoxContainer::minSizeChanged, this, [this] {
         setMinimumSize(layoutMinimumSize());
     });
 }
@@ -442,7 +442,7 @@ const Layouting::Item::List MultiSplitter::items() const
     return m_rootItem->items_recursive();
 }
 
-Layouting::ItemContainer *MultiSplitter::rootItem() const
+Layouting::ItemBoxContainer *MultiSplitter::rootItem() const
 {
     return m_rootItem;
 }
@@ -458,15 +458,15 @@ QRect MultiSplitter::rectForDrop(const WindowBeingDragged *wbd, Location locatio
     item.setMinSize(wbd->minSize());
     item.setMaxSizeHint(wbd->maxSize());
 
-    Layouting::ItemContainer *container = relativeTo ? relativeTo->parentContainer()
-                                                     : m_rootItem;
+    Layouting::ItemBoxContainer *container = relativeTo ? relativeTo->parentBoxContainer()
+                                                        : m_rootItem;
 
     return container->suggestedDropRect(&item, relativeTo, Layouting::Item::Location(location));
 }
 
 bool MultiSplitter::deserialize(const LayoutSaver::MultiSplitter &l)
 {
-    setRootItem(new Layouting::ItemContainer(this));
+    setRootItem(new Layouting::ItemBoxContainer(this));
 
     QHash<QString, Layouting::Widget*> frames;
     for (const LayoutSaver::Frame &frame : qAsConst(l.frames)) {

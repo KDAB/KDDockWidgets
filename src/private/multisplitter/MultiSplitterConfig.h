@@ -62,7 +62,7 @@ public:
 
 private:
     friend class Item;
-    friend class ItemContainer;
+    friend class ItemBoxContainer;
 
     Config();
     Separator* createSeparator(Layouting::Widget *) const;

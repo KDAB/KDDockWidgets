@@ -40,7 +40,7 @@ struct Separator::Private
     int lazyPosition = 0;
     // SeparatorOptions m_options; TODO: Have a Layouting::Config
     Widget *lazyResizeRubberBand = nullptr;
-    ItemContainer *parentContainer = nullptr;
+    ItemBoxContainer *parentContainer = nullptr;
     Layouting::Side lastMoveDirection = Side1;
     const bool usesLazyResize = Config::self().flags() & Config::Flag::LazyResize;
     Widget *const m_hostWidget;
@@ -181,7 +181,7 @@ QObject *Separator::host() const
     return d->m_hostWidget ? d->m_hostWidget->asQObject() : nullptr;
 }
 
-void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation)
+void Separator::init(ItemBoxContainer *parentContainer, Qt::Orientation orientation)
 {
     if (!parentContainer) {
         qWarning() << Q_FUNC_INFO << "null parentContainer";
@@ -195,7 +195,7 @@ void Separator::init(ItemContainer *parentContainer, Qt::Orientation orientation
     asWidget()->setVisible(true);
 }
 
-ItemContainer *Separator::parentContainer() const
+ItemBoxContainer *Separator::parentContainer() const
 {
     return d->parentContainer;
 }
