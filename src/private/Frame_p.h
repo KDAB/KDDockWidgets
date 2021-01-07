@@ -288,7 +288,9 @@ protected:
     virtual DockWidgetBase *dockWidgetAt_impl(int index) const = 0;
     virtual DockWidgetBase *currentDockWidget_impl() const = 0;
     virtual int nonContentsHeight() const = 0;
-
+private:
+    bool m_inCtor = true; // Needs to be initialized early, as pointed out by UBSAN
+protected:
     bool m_inDtor = false;
 
     TabWidget *const m_tabWidget;
@@ -301,7 +303,7 @@ private:
 
     void scheduleDeleteLater();
     bool event(QEvent *) override;
-    bool m_inCtor = true;
+
     DropArea *m_dropArea = nullptr;
     const FrameOptions m_options;
     QPointer<Layouting::Item> m_layoutItem;
