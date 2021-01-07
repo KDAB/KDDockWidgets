@@ -282,7 +282,9 @@ protected:
     virtual DockWidgetBase *currentDockWidget_impl() const = 0;
     virtual int dockWidgetCount_impl() const = 0;
     virtual int nonContentsHeight() const = 0;
-
+private:
+    bool m_inCtor = true; // Needs to be initialized early, as pointed out by UBSAN
+protected:
     bool m_inDtor = false;
 private:
     Q_DISABLE_COPY(Frame)
@@ -291,7 +293,6 @@ private:
     void onCurrentTabChanged(int index);
     void scheduleDeleteLater();
     bool event(QEvent *) override;
-    bool m_inCtor = true;
     TitleBar *const m_titleBar;
     DropArea *m_dropArea = nullptr;
     const FrameOptions m_options;
