@@ -393,6 +393,9 @@ void DockWidgetBase::setIcon(const QIcon &icon, IconPlaces places)
     if (places & IconPlace::TabBar)
         d->tabBarIcon = icon;
 
+    if (places & IconPlace::ToggleAction)
+        d->toggleAction->setIcon(icon);
+
     Q_EMIT iconChanged();
 }
 
@@ -403,6 +406,9 @@ QIcon DockWidgetBase::icon(IconPlace place) const
 
     if (place == IconPlace::TabBar)
         return d->tabBarIcon;
+
+    if (place == IconPlace::ToggleAction)
+        return d->toggleAction->icon();
 
     return {};
 }
