@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>main.qml</file>
-        <file>MyItem.qml</file>
-        <file>Indicator.qml</file>
-    </qresource>
-</RCC>
