@@ -397,12 +397,7 @@ void TestDocks::tst_restoreSimple()
     dock3->morphIntoFloatingWindow(); // as it would take 1 event loop. Do it now so we can compare already.
 
     QCOMPARE(dock3->window()->pos(), dock3FloatingPoint);
-
-    // Cleanup
-    dock3->deleteLater();
-    QVERIFY(Testing::waitForDeleted(dock3));
 }
-
 
 void TestDocks::tst_doesntHaveNativeTitleBar()
 {

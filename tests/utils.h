@@ -101,13 +101,16 @@ struct EnsureTopLevelsDeleted
 
     ~EnsureTopLevelsDeleted()
     {
-        auto dr = DockRegistry::self();
+        qDeleteAll(DockRegistry::self()->floatingWindows(/*includeBeingDeleted=*/ true));
+        qDeleteAll(DockRegistry::self()->dockwidgets());
 
-        if (!dr->isEmpty())
+        if (!DockRegistry::self()->isEmpty()) {
+            auto dr = DockRegistry::self();
             qWarning() << "There's still top-level widgets present!"
                        << "\nfloatings:" << dr->floatingWindows(/*includeBeingDeleted=*/ true)
                        << "\nmainwindows:" << dr->mainWindowsNames()
                        << "\ndocks:" << dr->dockWidgetNames();
+        }
 
         // Other cleanup, since we use this class everywhere
         Config::self().setDockWidgetFactoryFunc(nullptr);
