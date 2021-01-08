@@ -326,7 +326,6 @@ protected:
     Q_REQUIRED_RESULT virtual bool checkSanity();
     void setPos(QPoint);
     void setPos(int pos, Qt::Orientation);
-    int position(Qt::Orientation) const;
     const ItemContainer *asContainer() const;
     ItemContainer *asContainer();
     ItemBoxContainer *asBoxContainer();

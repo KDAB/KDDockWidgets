@@ -556,12 +556,6 @@ QPoint Item::pos() const
     return m_sizingInfo.geometry.topLeft();
 }
 
-int Item::position(Qt::Orientation o) const
-{
-    return o == Qt::Vertical ? y()
-                             : x();
-}
-
 QRect Item::geometry() const
 {
     return isBeingInserted() ? QRect()
