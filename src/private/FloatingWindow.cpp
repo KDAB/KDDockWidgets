@@ -94,7 +94,7 @@ static Qt::WindowFlags windowFlagsToUse()
 
 static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
 {
-    if (Config::self().flags() & Config::InternalFlag_DontUseParentForFloatingWindows) {
+    if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows) {
         return nullptr;
     }
 
@@ -128,7 +128,7 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
 
 MainWindowBase *actualParent(MainWindowBase *candidate)
 {
-    return (Config::self().flags() & Config::InternalFlag_DontUseParentForFloatingWindows)
+    return (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
             ? nullptr
             : candidate;
 }
