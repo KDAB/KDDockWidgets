@@ -867,69 +867,69 @@ bool Item::isRoot() const
     return m_parent == nullptr;
 }
 
-Item::LayoutBorderLocations Item::adjacentLayoutBorders() const
+LayoutBorderLocations Item::adjacentLayoutBorders() const
 {
     if (isRoot()) {
-        return Item::LayoutBorderLocation_All;
+        return LayoutBorderLocation_All;
     }
 
     ItemBoxContainer *c = parentBoxContainer();
     if (!c)
-        return Item::LayoutBorderLocation_None;
+        return LayoutBorderLocation_None;
 
     const int indexInParent = c->indexOfVisibleChild(this);
     const int numVisibleChildren = c->numVisibleChildren();
     const bool isFirst = indexInParent == 0;
     const bool isLast = indexInParent == numVisibleChildren - 1;
     if (indexInParent == -1)
-        return Item::LayoutBorderLocation_None;
+        return LayoutBorderLocation_None;
 
-    Item::LayoutBorderLocations locations = Item::LayoutBorderLocation_None;
+    LayoutBorderLocations locations = LayoutBorderLocation_None;
     if (c->isRoot()) {
         if (c->isVertical()) {
-            locations |= Item::LayoutBorderLocation_West;
-            locations |= Item::LayoutBorderLocation_East;
+            locations |= LayoutBorderLocation_West;
+            locations |= LayoutBorderLocation_East;
 
             if (isFirst)
-                locations |= Item::LayoutBorderLocation_North;
+                locations |= LayoutBorderLocation_North;
             if (isLast)
-                locations |= Item::LayoutBorderLocation_South;
+                locations |= LayoutBorderLocation_South;
         } else {
-            locations |= Item::LayoutBorderLocation_North;
-            locations |= Item::LayoutBorderLocation_South;
+            locations |= LayoutBorderLocation_North;
+            locations |= LayoutBorderLocation_South;
 
             if (isFirst)
-                locations |= Item::LayoutBorderLocation_West;
+                locations |= LayoutBorderLocation_West;
             if (isLast)
-                locations |= Item::LayoutBorderLocation_East;
+                locations |= LayoutBorderLocation_East;
         }
     } else {
-        const Item::LayoutBorderLocations parentBorders = c->adjacentLayoutBorders();
+        const LayoutBorderLocations parentBorders = c->adjacentLayoutBorders();
         if (c->isVertical()) {
-            if (parentBorders & Item::LayoutBorderLocation_West)
-                locations |= Item::LayoutBorderLocation_West;
+            if (parentBorders & LayoutBorderLocation_West)
+                locations |= LayoutBorderLocation_West;
 
-            if (parentBorders & Item::LayoutBorderLocation_East)
-                locations |= Item::LayoutBorderLocation_East;
+            if (parentBorders & LayoutBorderLocation_East)
+                locations |= LayoutBorderLocation_East;
 
-            if (isFirst && (parentBorders & Item::LayoutBorderLocation_North))
-                locations |= Item::LayoutBorderLocation_North;
+            if (isFirst && (parentBorders & LayoutBorderLocation_North))
+                locations |= LayoutBorderLocation_North;
 
-            if (isLast && (parentBorders & Item::LayoutBorderLocation_South))
-                locations |= Item::LayoutBorderLocation_South;
+            if (isLast && (parentBorders & LayoutBorderLocation_South))
+                locations |= LayoutBorderLocation_South;
 
         } else {
-            if (parentBorders & Item::LayoutBorderLocation_North)
-                locations |= Item::LayoutBorderLocation_North;
+            if (parentBorders & LayoutBorderLocation_North)
+                locations |= LayoutBorderLocation_North;
 
-            if (parentBorders & Item::LayoutBorderLocation_South)
-                locations |= Item::LayoutBorderLocation_South;
+            if (parentBorders & LayoutBorderLocation_South)
+                locations |= LayoutBorderLocation_South;
 
-            if (isFirst && (parentBorders & Item::LayoutBorderLocation_West))
-                locations |= Item::LayoutBorderLocation_West;
+            if (isFirst && (parentBorders & LayoutBorderLocation_West))
+                locations |= LayoutBorderLocation_West;
 
-            if (isLast && (parentBorders & Item::LayoutBorderLocation_East))
-                locations |= Item::LayoutBorderLocation_East;
+            if (isLast && (parentBorders & LayoutBorderLocation_East))
+                locations |= LayoutBorderLocation_East;
         }
     }
 

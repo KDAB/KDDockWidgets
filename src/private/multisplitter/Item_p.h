@@ -65,6 +65,19 @@ enum class NeighbourSqueezeStrategy {
 };
 Q_ENUM_NS(NeighbourSqueezeStrategy)
 
+enum LayoutBorderLocation {
+    LayoutBorderLocation_None = 0,
+    LayoutBorderLocation_North = 1,
+    LayoutBorderLocation_East = 2,
+    LayoutBorderLocation_West = 4,
+    LayoutBorderLocation_South = 8,
+    LayoutBorderLocation_All = LayoutBorderLocation_North | LayoutBorderLocation_East |
+                               LayoutBorderLocation_West | LayoutBorderLocation_South,
+    LayoutBorderLocation_Verticals = LayoutBorderLocation_West | LayoutBorderLocation_East,
+    LayoutBorderLocation_Horizontals = LayoutBorderLocation_North | LayoutBorderLocation_South,
+};
+Q_DECLARE_FLAGS(LayoutBorderLocations, LayoutBorderLocation)
+
 inline int pos(QPoint p, Qt::Orientation o) {
     return o == Qt::Vertical ? p.y()
                              : p.x();
@@ -219,22 +232,10 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject
 public:
     typedef QVector<Item*> List;
 
-    enum LayoutBorderLocation {
-        LayoutBorderLocation_None = 0,
-        LayoutBorderLocation_North = 1,
-        LayoutBorderLocation_East = 2,
-        LayoutBorderLocation_West = 4,
-        LayoutBorderLocation_South = 8,
-        LayoutBorderLocation_All = LayoutBorderLocation_North | LayoutBorderLocation_East |
-                                   LayoutBorderLocation_West | LayoutBorderLocation_South,
-        LayoutBorderLocation_Verticals = LayoutBorderLocation_West | LayoutBorderLocation_East,
-        LayoutBorderLocation_Horizontals = LayoutBorderLocation_North | LayoutBorderLocation_South,
-    };
-    Q_DECLARE_FLAGS(LayoutBorderLocations, LayoutBorderLocation)
-
     explicit Item(Widget *hostWidget, ItemContainer *parent = nullptr);
     ~Item() override;
 
+    /// @brief returns whether this item is a root container
     bool isRoot() const;
 
     ///@brief Returns whether the item is touching the layout's borders.

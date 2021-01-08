@@ -1855,36 +1855,36 @@ void TestMultiSplitter::tst_adjacentLayoutBorders()
     auto item5 = createItem();
 
     root->insertItem(item1, Location_OnTop);
-    const int allBorders = int(Item::LayoutBorderLocation_All);
+    const int allBorders = int(LayoutBorderLocation_All);
 
     auto borders1 = item1->adjacentLayoutBorders();
     QCOMPARE(borders1, allBorders);
     root->insertItem(item2, Location_OnBottom);
 
     borders1 = item1->adjacentLayoutBorders();
-    QCOMPARE(borders1, allBorders & ~Item::LayoutBorderLocation_South);
+    QCOMPARE(borders1, allBorders & ~LayoutBorderLocation_South);
 
     auto borders2 = item2->adjacentLayoutBorders();
-    QCOMPARE(borders2, allBorders & ~Item::LayoutBorderLocation_North);
+    QCOMPARE(borders2, allBorders & ~LayoutBorderLocation_North);
 
     root->insertItem(item3, Location_OnRight);
 
     borders1 = item1->adjacentLayoutBorders();
-    QCOMPARE(borders1, Item::LayoutBorderLocation_North | Item::LayoutBorderLocation_West);
+    QCOMPARE(borders1, LayoutBorderLocation_North | LayoutBorderLocation_West);
 
     borders2 = item2->adjacentLayoutBorders();
-    QCOMPARE(borders2, Item::LayoutBorderLocation_South | Item::LayoutBorderLocation_West);
+    QCOMPARE(borders2, LayoutBorderLocation_South | LayoutBorderLocation_West);
 
     auto borders3 = item3->adjacentLayoutBorders();
-    QCOMPARE(borders3, allBorders & ~(Item::LayoutBorderLocation_West));
+    QCOMPARE(borders3, allBorders & ~(LayoutBorderLocation_West));
 
     item3->insertItem(item4, Location_OnBottom);
     auto borders4 = item4->adjacentLayoutBorders();
-    QCOMPARE(borders4, Item::LayoutBorderLocation_East | Item::LayoutBorderLocation_South);
+    QCOMPARE(borders4, LayoutBorderLocation_East | LayoutBorderLocation_South);
 
     root->insertItem(item5, Location_OnRight);
     borders4 = item4->adjacentLayoutBorders();
-    QCOMPARE(borders4, Item::LayoutBorderLocation_South);
+    QCOMPARE(borders4, LayoutBorderLocation_South);
 }
 
 int main(int argc, char *argv[])
