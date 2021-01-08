@@ -3606,7 +3606,6 @@ void TestDocks::tst_restoreNestedAndTabbed()
         auto dock1 = createDockWidget("1", new QTextEdit());
         auto dock2 = createDockWidget("2", new QTextEdit());
         auto dock3 = createDockWidget("3", new QTextEdit());
-
         auto dock4 = createDockWidget("4", new QTextEdit());
         auto dock5 = createDockWidget("5", new QTextEdit());
         dock4->addDockWidgetAsTab(dock5);
@@ -3622,6 +3621,8 @@ void TestDocks::tst_restoreNestedAndTabbed()
         LayoutSaver saver;
         QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreNestedAndTabbed.json")));
         QVERIFY(layout->checkSanity());
+
+        delete dock4->window();
         // Let it be destroyed, we'll restore a new one
     }
 
