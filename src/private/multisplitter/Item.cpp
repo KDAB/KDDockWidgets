@@ -42,25 +42,25 @@ QSize Layouting::Item::hardcodedMaximumSize = QSize(16777215, 16777215);
 
 bool Layouting::ItemBoxContainer::s_inhibitSimplify = false;
 
-inline bool locationIsVertical(Item::Location loc)
+inline bool locationIsVertical(Location loc)
 {
-    return loc == Item::Location_OnTop || loc == Item::Location_OnBottom;
+    return loc == Location_OnTop || loc == Location_OnBottom;
 }
 
-inline bool locationIsSide1(Item::Location loc)
+inline bool locationIsSide1(Location loc)
 {
-    return loc == Item::Location_OnLeft || loc == Item::Location_OnTop;
+    return loc == Location_OnLeft || loc == Location_OnTop;
 }
 
-inline Qt::Orientation orientationForLocation(Item::Location loc)
+inline Qt::Orientation orientationForLocation(Location loc)
 {
     switch (loc) {
-    case Item::Location_OnLeft:
-    case Item::Location_OnRight:
+    case Location_OnLeft:
+    case Location_OnRight:
         return Qt::Horizontal;
-    case Item::Location_None:
-    case Item::Location_OnTop:
-    case Item::Location_OnBottom:
+    case Location_None:
+    case Location_OnTop:
+    case Location_OnBottom:
         return Qt::Vertical;
     }
 
