@@ -95,6 +95,7 @@ struct EnsureTopLevelsDeleted
 {
     EnsureTopLevelsDeleted()
         : m_originalFlags(Config::self().flags())
+        , m_originalInternalFlags(Config::self().internalFlags())
         , m_originalSeparatorThickness(Config::self().separatorThickness())
     {
     }
@@ -114,11 +115,13 @@ struct EnsureTopLevelsDeleted
 
         // Other cleanup, since we use this class everywhere
         Config::self().setDockWidgetFactoryFunc(nullptr);
+        Config::self().setInternalFlags(m_originalInternalFlags);
         Config::self().setFlags(m_originalFlags);
         Config::self().setSeparatorThickness(m_originalSeparatorThickness);
     }
 
     const Config::Flags m_originalFlags;
+    const Config::InternalFlags m_originalInternalFlags;
     const int m_originalSeparatorThickness;
 };
 
