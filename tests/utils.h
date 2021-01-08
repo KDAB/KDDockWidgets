@@ -101,13 +101,11 @@ struct EnsureTopLevelsDeleted
 
     ~EnsureTopLevelsDeleted()
     {
-        const QWindowList topLevels = qApp->topLevelWindows();
-
         auto dr = DockRegistry::self();
 
-        if (!topLevels.isEmpty())
-            qWarning() << "There's still top-level widgets present!" << topLevels
-                       << "\nfloatings:" << dr->floatingWindows()
+        if (!dr->isEmpty())
+            qWarning() << "There's still top-level widgets present!"
+                       << "\nfloatings:" << dr->floatingWindows(/*includeBeingDeleted=*/ true)
                        << "\nmainwindows:" << dr->mainWindowsNames()
                        << "\ndocks:" << dr->dockWidgetNames();
 
