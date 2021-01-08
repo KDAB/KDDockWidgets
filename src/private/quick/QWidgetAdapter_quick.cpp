@@ -50,6 +50,8 @@ public:
         eventSource->installEventFilter(this);
     }
 
+    ~MouseEventRedirector() override;
+
     bool eventFilter(QObject *, QEvent *ev) override
     {
         if (QMouseEvent *me = mouseEvent(ev))
@@ -60,6 +62,8 @@ public:
 
     QObject *const m_eventTarget;
 };
+
+MouseEventRedirector::~MouseEventRedirector() = default;
 
 }
 
