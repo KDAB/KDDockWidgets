@@ -176,7 +176,6 @@ public:
     static QQuickItem *createItem(QQmlEngine *, const QString &filename);
     static void makeItemFillParent(QQuickItem *item);
 Q_SIGNALS:
-    void parentChanged();
     void geometryUpdated(); // similar to QLayout stuff, when size constraints change
 protected:
     void create();

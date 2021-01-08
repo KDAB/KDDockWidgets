@@ -374,8 +374,10 @@ public:
     static DockWidgetBase* byName(const QString &uniqueName);
 
 Q_SIGNALS:
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     ///@brief signal emitted when the parent changed
     void parentChanged();
+#endif
 
     ///@brief signal emitted when the DockWidget is shown. As in QEvent::Show.
     void shown();

@@ -784,7 +784,12 @@ void DockWidgetBase::Private::show()
 
 void DockWidgetBase::onParentChanged()
 {
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    // TODO: In v1.4, remove this part and use the signal emitting the arg
     Q_EMIT parentChanged();
+#else
+    Q_EMIT parentChanged(this);
+#endif
     d->updateToggleAction();
     d->updateFloatAction();
 }
