@@ -204,11 +204,12 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, InitialOption opt
 
 void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other,
                                                      Location location,
-                                                     DockWidgetBase *relativeTo)
+                                                     DockWidgetBase *relativeTo,
+                                                     InitialOption initialOption)
 {
     if (auto mainWindow = qobject_cast<MainWindowBase*>(window())) {
         // It's inside a main window. Simply use the main window API.
-        mainWindow->addDockWidget(other, location, relativeTo);
+        mainWindow->addDockWidget(other, location, relativeTo, initialOption);
         return;
     }
 
@@ -228,7 +229,7 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other,
         morphIntoFloatingWindow();
 
     if (auto fw = floatingWindow()) {
-        fw->dropArea()->addDockWidget(other, location, relativeTo);
+        fw->dropArea()->addDockWidget(other, location, relativeTo, initialOption);
     } else {
         qWarning() << Q_FUNC_INFO << "Couldn't find floating nested window";
     }

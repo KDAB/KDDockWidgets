@@ -119,11 +119,13 @@ public:
      *
      * @param other The other dock widget to dock into the window.
      * @param location The location to dock.
-     * @param relativeTo The dock widget that the @p location is relative to. If null then the window is considered.
+     * @param relativeTo The dock widget that the @p location is relative to. If null then the window is considered
+     * @param initialOption Allows to specify some extra options that are used while docking.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetAsTab()
      */
     void addDockWidgetToContainingWindow(DockWidgetBase *other, KDDockWidgets::Location location,
-                                         DockWidgetBase *relativeTo = nullptr);
+                                         DockWidgetBase *relativeTo = nullptr,
+                                         InitialOption initialOption = {});
 
     /**
      * @brief sets the widget which this dock widget hosts.
