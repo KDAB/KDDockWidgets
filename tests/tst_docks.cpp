@@ -3922,27 +3922,37 @@ void TestDocks::tst_addDockWidgetToMainWindow()
 
 void TestDocks::tst_addDockWidgetToContainingWindow()
 {
-    EnsureTopLevelsDeleted e;
+    { // Test with a floating window
+        EnsureTopLevelsDeleted e;
 
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock3 = createDockWidget("dock3", new QPushButton("three"));
 
-    dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
-    dock1->addDockWidgetToContainingWindow(dock3, Location_OnTop, dock2);
+        dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
+        dock1->addDockWidgetToContainingWindow(dock3, Location_OnTop, dock2);
 
-    QCOMPARE(dock1->window(), dock2->window());
-    QCOMPARE(dock2->window(), dock3->window());
+        QCOMPARE(dock1->window(), dock2->window());
+        QCOMPARE(dock2->window(), dock3->window());
 
-    QVERIFY(dock3->frame()->QWidgetAdapter::y() < dock2->frame()->QWidgetAdapter::y());
-    QVERIFY(dock1->frame()->QWidgetAdapter::x() < dock2->frame()->QWidgetAdapter::x());
-    QCOMPARE(dock2->frame()->QWidgetAdapter::x(), dock3->frame()->QWidgetAdapter::x());
+        QVERIFY(dock3->frame()->QWidgetAdapter::y() < dock2->frame()->QWidgetAdapter::y());
+        QVERIFY(dock1->frame()->QWidgetAdapter::x() < dock2->frame()->QWidgetAdapter::x());
+        QCOMPARE(dock2->frame()->QWidgetAdapter::x(), dock3->frame()->QWidgetAdapter::x());
+    }
 
-    auto window = dock1->window();
-    delete dock1;
-    delete dock2;
-    delete dock3;
-    Testing::waitForDeleted(window);
+    { // Also test with a main window
+        EnsureTopLevelsDeleted e;
+
+        auto m = createMainWindow();
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+
+        m->addDockWidget(dock1, Location_OnRight, nullptr);
+        dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
+
+        QCOMPARE(dock1->window(), dock2->window());
+        QCOMPARE(m.get(), dock2->window());
+    }
 }
 
 void TestDocks::tst_notClosable()
