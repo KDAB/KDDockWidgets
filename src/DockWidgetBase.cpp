@@ -141,7 +141,6 @@ DockWidgetBase::DockWidgetBase(const QString &name, Options options)
 {
     d->init();
     DockRegistry::self()->registerDockWidget(this);
-    qCDebug(creation) << "DockWidget" << this;
 
     if (name.isEmpty())
         qWarning() << Q_FUNC_INFO << "Name can't be null";
@@ -153,13 +152,11 @@ DockWidgetBase::DockWidgetBase(const QString &name, Options options)
 DockWidgetBase::~DockWidgetBase()
 {
     DockRegistry::self()->unregisterDockWidget(this);
-    qCDebug(creation) << "~DockWidget" << this;
     delete d;
 }
 
 void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, InitialOption option)
 {
-    qCDebug(addwidget) << Q_FUNC_INFO << other;
     if (other == this) {
         qWarning() << Q_FUNC_INFO << "Refusing to add dock widget into itself" << other;
         return;
@@ -240,7 +237,6 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other,
 void DockWidgetBase::setWidget(QWidgetOrQuick *w)
 {
     Q_ASSERT(w);
-    qCDebug(addwidget) << Q_FUNC_INFO << w;
     if (w == d->widget)
         return;
 
@@ -543,9 +539,6 @@ DockWidgetBase *DockWidgetBase::byName(const QString &uniqueName)
 
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
-    qCDebug(creation) << "DockWidget::morphIntoFloatingWindow() this=" << this
-                      << "; visible=" << isVisible();
-
     if (auto fw = floatingWindow())
         return fw; // Nothing to do
 
@@ -597,7 +590,6 @@ FloatingWindow *DockWidgetBase::floatingWindow() const
 
 void DockWidgetBase::addPlaceholderItem(Layouting::Item *item)
 {
-    qCDebug(placeholder) << Q_FUNC_INFO << this << item;
     Q_ASSERT(item);
     d->m_lastPositions.addPosition(item);
 }
@@ -704,7 +696,6 @@ void DockWidgetBase::Private::close()
         m_lastPositions.setLastFloatingGeometry(q->window()->geometry());
     }
 
-    qCDebug(hiding) << "DockWidget::close" << this;
     saveTabIndex();
 
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.
@@ -739,7 +730,6 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
         return;
 
     Layouting::Item *layoutItem = m_lastPositions.lastItem();
-    qCDebug(placeholder) << Q_FUNC_INFO << layoutItem << m_lastPositions;
     if (!layoutItem)
         return; // nothing to do, no last position
 
@@ -751,7 +741,6 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
     if (frame && frame->QWidgetAdapter::parentWidget() == DockRegistry::self()->layoutForItem(layoutItem)) {
         // There's a frame already. Means the DockWidget was hidden instead of closed.
         // Nothing to do, the dock widget will simply be shown
-        qCDebug(placeholder) << Q_FUNC_INFO << "Already had frame.";
         return;
     }
 
@@ -759,7 +748,6 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 
     if (q->parentWidget()) {
         // The QEvent::Show is due to it being made floating. Nothing to restore.
-        qCDebug(placeholder) << Q_FUNC_INFO << "Already had parentWidget";
         return;
     }
 
