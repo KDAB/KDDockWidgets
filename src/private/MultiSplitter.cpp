@@ -218,7 +218,7 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
     }
 
     Q_ASSERT(!newItem->geometry().isEmpty());
-    relativeTo->insertItem(newItem, location, option);
+    Layouting::ItemBoxContainer::insertItemRelativeTo(newItem, relativeTo, location, option);
 
     if (dw && option.startsHidden())
         delete frame;

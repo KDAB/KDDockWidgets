@@ -484,41 +484,6 @@ int Item::pos(Qt::Orientation o) const
     return o == Qt::Vertical ? y() : x();
 }
 
-void Item::insertItem(Item *item, Location loc, KDDockWidgets::InitialOption option)
-{
-    Q_ASSERT(item != this);
-
-    item->setIsVisible(!option.startsHidden());
-    Q_ASSERT(!(option.startsHidden() && item->isContainer()));
-
-
-    ItemBoxContainer *parent = parentBoxContainer();
-    if (!parent) {
-        qWarning() << Q_FUNC_INFO << "This method should only be called for box containers";
-        return;
-    }
-
-    if (parent->hasOrientationFor(loc)) {
-        const bool locIsSide1 = locationIsSide1(loc);
-        auto indexInParent = parent->childItems().indexOf(this);
-        if (!locIsSide1)
-            indexInParent++;
-
-        const Qt::Orientation orientation = orientationForLocation(loc);
-        if (orientation != parent->orientation()) {
-            Q_ASSERT(parent->visibleChildren().size() == 1);
-            // This is the case where the container only has one item, so it's both vertical and horizontal
-            // Now its orientation gets defined
-            parent->setOrientation(orientation);
-        }
-
-        parent->insertItem(item, indexInParent, option);
-    } else {
-        ItemBoxContainer *container = parent->convertChildToContainer(this);
-        container->insertItem(item, loc, option);
-    }
-}
-
 int Item::x() const
 {
     return m_sizingInfo.geometry.x();
@@ -1296,8 +1261,50 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
     return container;
 }
 
+/** static */
+void ItemBoxContainer::insertItemRelativeTo(Item *item, Item *relativeTo,
+                                            Location loc, KDDockWidgets::InitialOption option)
+{
+    Q_ASSERT(item != relativeTo);
+
+    if (auto asContainer = relativeTo->asBoxContainer()) {
+        asContainer->insertItem(item, loc, option);
+        return;
+    }
+
+    item->setIsVisible(!option.startsHidden());
+    Q_ASSERT(!(option.startsHidden() && item->isContainer()));
+
+    ItemBoxContainer *parent = relativeTo->parentBoxContainer();
+    if (!parent) {
+        qWarning() << Q_FUNC_INFO << "This method should only be called for box containers"
+                   <<  item->parent();
+        return;
+    }
+
+    if (parent->hasOrientationFor(loc)) {
+        const bool locIsSide1 = locationIsSide1(loc);
+        auto indexInParent = parent->childItems().indexOf(relativeTo);
+        if (!locIsSide1)
+            indexInParent++;
+
+        const Qt::Orientation orientation = orientationForLocation(loc);
+        if (orientation != parent->orientation()) {
+            Q_ASSERT(parent->visibleChildren().size() == 1);
+            // This is the case where the container only has one item, so it's both vertical and horizontal
+            // Now its orientation gets defined
+            parent->setOrientation(orientation);
+        }
+
+        parent->insertItem(item, indexInParent, option);
+    } else {
+        ItemBoxContainer *container = parent->convertChildToContainer(relativeTo);
+        container->insertItem(item, loc, option);
+    }
+}
+
 void ItemBoxContainer::insertItem(Item *item, Location loc,
-                               KDDockWidgets::InitialOption initialOption)
+                                  KDDockWidgets::InitialOption initialOption)
 {
     Q_ASSERT(item != this);
     if (contains(item)) {
@@ -1449,7 +1456,7 @@ QRect ItemBoxContainer::suggestedDropRect(const Item *item, const Item *relative
 
     if (relativeTo) {
         auto r = const_cast<Item*>(relativeTo);
-        r->insertItem(itemCopy, loc, DefaultSizeMode::FairButFloor);
+        ItemBoxContainer::insertItemRelativeTo(itemCopy, r, loc, DefaultSizeMode::FairButFloor);
     } else {
         rootCopy.insertItem(itemCopy, loc, DefaultSizeMode::FairButFloor);
     }

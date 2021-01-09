@@ -243,8 +243,6 @@ public:
     LayoutBorderLocations adjacentLayoutBorders() const;
 
     virtual int visibleCount_recursive() const;
-    virtual void insertItem(Item *item, KDDockWidgets::Location,
-                            KDDockWidgets::InitialOption = KDDockWidgets::DefaultSizeMode::Fair);
 
     /**
      * @brief No widget can have a minimum size smaller than this, regardless of their minimum size.
@@ -406,8 +404,10 @@ public:
     explicit ItemBoxContainer(Widget *hostWidget);
     ~ItemBoxContainer();
     void insertItem(Item *item, int index, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
-    void insertItem(Item *item, KDDockWidgets::Location,
-                    KDDockWidgets::InitialOption = {}) override;
+    void insertItem(Item *item, KDDockWidgets::Location, KDDockWidgets::InitialOption = {});
+
+    static void insertItemRelativeTo(Item *item, Item *relativeTo, KDDockWidgets::Location,
+                                     KDDockWidgets::InitialOption = KDDockWidgets::DefaultSizeMode::Fair);
 
     void requestSeparatorMove(Separator *separator, int delta);
     int minPosForSeparator(Separator *, bool honourMax = true) const;
