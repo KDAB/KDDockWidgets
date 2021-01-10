@@ -161,6 +161,7 @@ void StateNone::onEntry()
     q->m_pressPos = QPoint();
     q->m_offset = QPoint();
     q->m_draggable = nullptr;
+    q->m_draggableGuard.clear();
     q->m_windowBeingDragged.reset();
     WidgetResizeHandler::s_disableAllHandlers = false; // Re-enable resize handlers
 
@@ -174,12 +175,13 @@ void StateNone::onEntry()
 bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
 {
     qCDebug(state) << "StateNone::handleMouseButtonPress: draggable"
-                   << draggable << "; globalPos" << globalPos;
+                   << draggable->asWidget() << "; globalPos" << globalPos;
 
     if (!draggable->isPositionDraggable(pos))
         return false;
 
     q->m_draggable = draggable;
+    q->m_draggableGuard = draggable->asWidget();
     q->m_pressPos = globalPos;
     q->m_offset = pos;
     Q_EMIT q->mousePressed();
@@ -198,12 +200,18 @@ StatePreDrag::~StatePreDrag() = default;
 
 void StatePreDrag::onEntry()
 {
-    qCDebug(state) << "StatePreDrag entered";
+    qCDebug(state) << "StatePreDrag entered" << q->m_draggableGuard.data();
     WidgetResizeHandler::s_disableAllHandlers = true; // Disable the resize handler during dragging
 }
 
 bool StatePreDrag::handleMouseMove(QPoint globalPos)
 {
+    if (!q->m_draggableGuard) {
+        qWarning() << Q_FUNC_INFO << "Draggable was destroyed, canceling the drag";
+        Q_EMIT q->dragCanceled();
+        return false;
+    }
+
     if (q->m_draggable->dragCanStart(q->m_pressPos, globalPos)) {
         Q_EMIT q->manhattanLengthMove();
         return true;
@@ -259,7 +267,8 @@ void StateDragging::onEntry()
 # endif
 #endif
 
-        qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
+        qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable->asWidget()
+                       << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
 
         auto fw = q->m_windowBeingDragged->floatingWindow();
         if (!fw->geometry().contains(q->m_pressPos)) {
