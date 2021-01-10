@@ -206,6 +206,12 @@ void StatePreDrag::onEntry()
 
 bool StatePreDrag::handleMouseMove(QPoint globalPos)
 {
+    if (!q->m_draggableGuard) {
+        qWarning() << Q_FUNC_INFO << "Draggable was destroyed, canceling the drag";
+        Q_EMIT q->dragCanceled();
+        return false;
+    }
+
     if (q->m_draggable->dragCanStart(q->m_pressPos, globalPos)) {
         Q_EMIT q->manhattanLengthMove();
         return true;
