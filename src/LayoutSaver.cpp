@@ -528,6 +528,19 @@ bool LayoutSaver::Frame::isValid() const
     return true;
 }
 
+bool LayoutSaver::Frame::hasSingleDockWidget() const
+{
+    return dockWidgets.size() == 1;
+}
+
+LayoutSaver::DockWidget::Ptr LayoutSaver::Frame::singleDockWidget() const
+{
+    if (!hasSingleDockWidget())
+        return {};
+
+   return dockWidgets.first();
+}
+
 void LayoutSaver::Frame::scaleSizes(const ScalingInfo &scalingInfo)
 {
     scalingInfo.applyFactorsTo(geometry);
@@ -619,6 +632,16 @@ bool LayoutSaver::FloatingWindow::isValid() const
     }
 
     return true;
+}
+
+bool LayoutSaver::FloatingWindow::hasSingleDockWidget() const
+{
+    return multiSplitterLayout.hasSingleDockWidget();
+}
+
+LayoutSaver::DockWidget::Ptr LayoutSaver::FloatingWindow::singleDockWidget() const
+{
+    return multiSplitterLayout.singleDockWidget();
 }
 
 void LayoutSaver::FloatingWindow::scaleSizes(const ScalingInfo &scalingInfo)
@@ -745,6 +768,19 @@ bool LayoutSaver::MultiSplitter::isValid() const
     }*/
 
     return true;
+}
+
+bool LayoutSaver::MultiSplitter::hasSingleDockWidget() const
+{
+    return frames.size() == 1 && frames.cbegin()->hasSingleDockWidget();
+}
+
+LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() const
+{
+    if (!hasSingleDockWidget())
+        return {};
+
+    return frames.cbegin()->singleDockWidget();
 }
 
 void LayoutSaver::MultiSplitter::scaleSizes(const ScalingInfo &)
