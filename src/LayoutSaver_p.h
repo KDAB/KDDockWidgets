@@ -139,6 +139,8 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
         return dw;
     }
 
+    bool skipsRestore() const;
+
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
@@ -319,10 +321,10 @@ public:
 
     LayoutSaver::MainWindow mainWindowForIndex(int index) const;
     LayoutSaver::FloatingWindow floatingWindowForIndex(int index) const;
-    KDDockWidgets::FloatingWindow* floatingWindowInstanceForIndex(int index) const;
 
     QStringList mainWindowNames() const;
     QStringList dockWidgetNames() const;
+    QStringList dockWidgetsToClose() const;
 
     int serializationVersion = KDDOCKWIDGETS_SERIALIZATION_VERSION;
     LayoutSaver::MainWindow::List mainWindows;

@@ -131,6 +131,7 @@ private Q_SLOTS:
     void tst_restoreSimple();
     void tst_restoreSimplest();
     void tst_invalidLayoutAfterRestore();
+    void tst_dontCloseDockWidgetBeforeRestore();
 
     void tst_tabWidgetCurrentIndex();
     void tst_doubleClickTabToDetach();
@@ -535,8 +536,8 @@ void TestDocks::tst_detachPos()
     // Tests a situation where detaching a dock widget would send it to a bogus position
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new MyWidget(QStringLiteral("1"), Qt::black), {}, /** show = */false); // we're creating the dock widgets without showing them as floating initially, so it doesn't record the previous floating position
-    auto dock2 = createDockWidget("2", new MyWidget(QStringLiteral("2"), Qt::black), {}, /** show = */false);
+    auto dock1 = createDockWidget("1", new MyWidget(QStringLiteral("1"), Qt::black), {}, {}, /** show = */false); // we're creating the dock widgets without showing them as floating initially, so it doesn't record the previous floating position
+    auto dock2 = createDockWidget("2", new MyWidget(QStringLiteral("2"), Qt::black), {}, {}, /** show = */false);
 
     QVERIFY(!dock1->isVisible());
     QVERIFY(!dock2->isVisible());
@@ -1285,7 +1286,7 @@ void TestDocks::tst_28NestedWidgets()
 
     int i = 0;
     for (DockDescriptor &desc : docksToCreate) {
-        desc.createdDock = createDockWidget(QString("%1").arg(i), new QPushButton(QString("%1").arg(i).toLatin1()), {}, false);
+        desc.createdDock = createDockWidget(QString("%1").arg(i), new QPushButton(QString("%1").arg(i).toLatin1()), {}, {}, false);
 
         DockWidgetBase *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
@@ -1357,7 +1358,7 @@ void TestDocks::tst_startHidden()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, /*show=*/false);
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, /*show=*/false);
     m->addDockWidget(dock1, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
     delete dock1;
 }
@@ -1367,8 +1368,8 @@ void TestDocks::tst_startHidden2()
     EnsureTopLevelsDeleted e;
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, false);
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, false);
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, {}, false);
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, {}, false);
 
         auto dropArea = m->dropArea();
         MultiSplitter *layout = dropArea;
@@ -1396,9 +1397,9 @@ void TestDocks::tst_startHidden2()
 
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, false);
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, false);
-        auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, false);
+        auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, {}, false);
+        auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, {}, false);
+        auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, {}, false);
 
         auto dropArea = m->dropArea();
         MultiSplitter *layout = dropArea;
@@ -1480,9 +1481,9 @@ void TestDocks::tst_negativeAnchorPosition2()
     auto dropArea = m->dropArea();
     MultiSplitter *layout = dropArea;
 
-    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, /*show=*/false);
-    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, /*show=*/false);
-    auto dock3 = createDockWidget("3", new QPushButton("3"), {}, /*show=*/false);
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, /*show=*/false);
+    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, /*show=*/false);
+    auto dock3 = createDockWidget("3", new QPushButton("3"), {}, {}, /*show=*/false);
 
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
@@ -1694,8 +1695,8 @@ void TestDocks::tst_addAsPlaceholder()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, false);
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, false);
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, {}, false);
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, {}, false);
 
     m->addDockWidget(dock1, Location_OnBottom);
     m->addDockWidget(dock2, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
@@ -1724,7 +1725,7 @@ void TestDocks::tst_removeItem()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, false);
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, {}, false);
     auto dock3 = createDockWidget("dock3", new QPushButton("three"));
 
     m->addDockWidget(dock1, Location_OnBottom);
@@ -3781,10 +3782,10 @@ void TestDocks::tst_restoreWithAffinity()
     auto m2 = createMainWindow(QSize(500, 500));
     m2->setAffinities({ "a2" });
 
-    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, true, "a1");
+    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, true, "a1");
     m1->addDockWidget(dock1, Location_OnLeft);
 
-    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, true, "a2");
+    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, true, "a2");
     dock2->setFloating(true);
     dock2->show();
 
@@ -3893,7 +3894,7 @@ void TestDocks::tst_restoreWithDockFactory()
 
     // Now try with a factory func
     DockWidgetFactoryFunc func = [] (const QString &) {
-        return createDockWidget("1", new QPushButton("1"), {}, /*show=*/ false);
+        return createDockWidget("1", new QPushButton("1"), {}, {}, /*show=*/ false);
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(func);
@@ -5788,6 +5789,47 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QVERIFY(Testing::waitForDeleted(fw2));
     QCOMPARE(layout->width(), oldContentsWidth);
     layout->checkSanity();
+}
+
+void TestDocks::tst_dontCloseDockWidgetBeforeRestore()
+{
+      EnsureTopLevelsDeleted e;
+      auto m = createMainWindow();
+      auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+      auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, DockWidgetBase::LayoutSaverOption::Skip);
+      auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, DockWidgetBase::LayoutSaverOption::Skip);
+      auto dock4 = createDockWidget("4", new QPushButton("4"), {}, {}, /*show=*/ false);
+
+      m->addDockWidget(dock1, Location_OnBottom);
+      m->addDockWidget(dock2, Location_OnBottom);
+
+      // Dock #3 floats, while #1 and #2 are docked.
+      dock3->setFloating(true);
+      QVERIFY(dock3->isOpen());
+      QVERIFY(dock3->isFloating());
+      QVERIFY(!dock3->isInMainWindow());
+
+      LayoutSaver saver;
+      const QByteArray saved = saver.serializeLayout();
+      dock3->close();
+
+      // Not open anymore
+      QVERIFY(!dock3->isOpen());
+
+      QVERIFY(saver.restoreLayout(saved));
+
+      // #3 is still closed, the restore will skip it
+      QVERIFY(!dock3->isOpen());
+      QVERIFY(!dock3->isInMainWindow());
+
+      auto dock5 = createDockWidget("5", new QPushButton("5"), {}, DockWidgetBase::LayoutSaverOption::Skip);
+
+      dock4->show();
+      dock5->show();
+
+      QVERIFY(saver.restoreLayout(saved));
+      QVERIFY(!dock4->isOpen());
+      QVERIFY(dock5->isOpen()); // #5 is still open, it ignored restore
 }
 
 void TestDocks::tst_tabWidgetCurrentIndex()

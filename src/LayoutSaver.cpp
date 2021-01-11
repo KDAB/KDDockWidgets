@@ -231,7 +231,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
     // We only close the stuff that the loaded JSON knows about. Unknown widgets might be newer.
-    d->m_dockRegistry->clear(d->m_dockRegistry->dockWidgets(layout.dockWidgetNames()),
+
+    d->m_dockRegistry->clear(d->m_dockRegistry->dockWidgets(layout.dockWidgetsToClose()),
                              d->m_dockRegistry->mainWindows(layout.mainWindowNames()),
                              d->m_affinityNames);
 
@@ -261,6 +262,14 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     for (LayoutSaver::FloatingWindow &fw : layout.floatingWindows) {
         if (!d->matchesAffinity(fw.affinities))
             continue;
+
+
+        if (LayoutSaver::DockWidget::Ptr dw = fw.singleDockWidget()) {
+            if (dw->skipsRestore()) {
+                // A floating dock widget can choose not to be affected by save/restore
+                continue;
+            }
+        }
 
         MainWindowBase *parent = fw.parentIndex == -1 ? nullptr
                                                       : DockRegistry::self()->mainwindows().at(fw.parentIndex);
@@ -480,11 +489,6 @@ LayoutSaver::FloatingWindow LayoutSaver::Layout::floatingWindowForIndex(int inde
     return floatingWindows.at(index);
 }
 
-FloatingWindow *LayoutSaver::Layout::floatingWindowInstanceForIndex(int index) const
-{
-    return floatingWindowForIndex(index).floatingWindowInstance;
-}
-
 QStringList LayoutSaver::Layout::mainWindowNames() const
 {
     QStringList names;
@@ -502,6 +506,24 @@ QStringList LayoutSaver::Layout::dockWidgetNames() const
     names.reserve(allDockWidgets.size());
     for (const auto &dw : allDockWidgets) {
         names << dw->uniqueName;
+    }
+
+    return names;
+}
+
+QStringList LayoutSaver::Layout::dockWidgetsToClose() const
+{
+    // Before restoring a layout we close all dock widgets, unless they're a floating window with the DontCloseBeforeRestore flag
+
+    QStringList names;
+    names.reserve(allDockWidgets.size());
+    auto registry = DockRegistry::self();
+    for (const auto &dw : allDockWidgets) {
+        if (DockWidgetBase *dockWidget = registry->dockByName(dw->uniqueName)) {
+            const bool doClose = !(dockWidget->layoutSaverOptions() & DockWidgetBase::LayoutSaverOption::Skip) || !dockWidget->isFloating();
+            if (doClose)
+                names << dw->uniqueName;
+        }
     }
 
     return names;
@@ -608,6 +630,14 @@ bool LayoutSaver::DockWidget::isValid() const
 void LayoutSaver::DockWidget::scaleSizes(const ScalingInfo &scalingInfo)
 {
     lastPosition.scaleSizes(scalingInfo);
+}
+
+bool LayoutSaver::DockWidget::skipsRestore() const
+{
+    if (DockWidgetBase *dw = DockRegistry::self()->dockByName(uniqueName))
+        return dw->layoutSaverOptions() & DockWidgetBase::LayoutSaverOption::Skip;
+
+    return false;
 }
 
 QVariantMap LayoutSaver::DockWidget::toVariantMap() const

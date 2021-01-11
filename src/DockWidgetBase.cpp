@@ -40,11 +40,13 @@ using namespace KDDockWidgets;
 class DockWidgetBase::Private
 {
 public:
-    Private(const QString &dockName, DockWidgetBase::Options options_, DockWidgetBase *qq)
+    Private(const QString &dockName, DockWidgetBase::Options options_,
+            LayoutSaverOptions layoutSaverOptions_, DockWidgetBase *qq)
         : name(dockName)
         , title(dockName)
         , q(qq)
         , options(options_)
+        , layoutSaverOptions(layoutSaverOptions_)
         , toggleAction(new QAction(q))
         , floatAction(new QAction(q))
     {
@@ -126,6 +128,7 @@ public:
     QWidgetOrQuick *widget = nullptr;
     DockWidgetBase *const q;
     DockWidgetBase::Options options;
+    const LayoutSaverOptions layoutSaverOptions;
     QAction *const toggleAction;
     QAction *const floatAction;
     LastPositions m_lastPositions;
@@ -135,9 +138,10 @@ public:
     QSize m_lastOverlayedSize = QSize(0, 0);
 };
 
-DockWidgetBase::DockWidgetBase(const QString &name, Options options)
+DockWidgetBase::DockWidgetBase(const QString &name, Options options,
+                               LayoutSaverOptions layoutSaverOptions)
     : QWidgetAdapter(nullptr, Qt::Tool)
-    , d(new Private(name, options, this))
+    , d(new Private(name, options, layoutSaverOptions, this))
 {
     d->init();
     DockRegistry::self()->registerDockWidget(this);
@@ -341,6 +345,11 @@ void DockWidgetBase::setTitle(const QString &title)
 DockWidgetBase::Options DockWidgetBase::options() const
 {
     return d->options;
+}
+
+DockWidgetBase::LayoutSaverOptions DockWidgetBase::layoutSaverOptions() const
+{
+    return d->layoutSaverOptions;
 }
 
 void DockWidgetBase::setOptions(Options options)

@@ -136,8 +136,8 @@ std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = {1000, 1000},
 std::unique_ptr<KDDockWidgets::MainWindowBase> createMainWindow(QVector<DockDescriptor> &docks);
 
 KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQuick *w,
-                                                DockWidgetBase::Options options = {}, bool show = true,
-                                                const QString &affinityName = {});
+                                                DockWidgetBase::Options options = {}, DockWidgetBase::LayoutSaverOptions layoutSaverOptions = {},
+                                                bool show = true, const QString &affinityName = {});
 KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QColor color = Qt::black);
 
 void nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo,

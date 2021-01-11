@@ -76,8 +76,16 @@ public:
         Option_None = 0, ///< No option, the default
         Option_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programatically
         Option_NotDockable = 2 ///< The DockWidget can't be docked, it's always floating
+
     };
     Q_DECLARE_FLAGS(Options, Option)
+
+    /// @brief Options which will affect LayoutSaver save/restore
+    enum class LayoutSaverOption {
+        None = 0, ///< Just use the defaults
+        Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for floating windows.
+    };
+    Q_DECLARE_FLAGS(LayoutSaverOptions, LayoutSaverOption)
 
     enum class IconPlace {
         TitleBar = 1,
@@ -91,12 +99,15 @@ public:
     /**
      * @brief constructs a new DockWidget
      * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
-     * @param options optional options controlling behaviour
+     * @param options options controlling certain behaviours
+     * @param layoutSaverOptions options to control save/restore
      *
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidgetBase(const QString &uniqueName, Options options = DockWidgetBase::Options());
+    explicit DockWidgetBase(const QString &uniqueName,
+                            Options options = DockWidgetBase::Options(),
+                            LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
 
     ///@brief destructor
     ~DockWidgetBase() override;
@@ -197,6 +208,10 @@ public:
      * @sa setOptions(), optionsChanged()
      */
     Options options() const;
+
+    /// @brief returns the per-dockwidget options which will affect LayoutSaver
+    /// These are the options which were passed to the constructor
+    KDDockWidgets::DockWidgetBase::LayoutSaverOptions layoutSaverOptions() const;
 
     /**
      * @brief Setter for the options.

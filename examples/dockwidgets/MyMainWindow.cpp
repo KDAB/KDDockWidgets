@@ -52,13 +52,14 @@ static MyWidget *newMyWidget()
 
 MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                            bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
-                           bool maxSizeForDockWidget8,
+                           bool maxSizeForDockWidget8, bool dockwidget5DoesntCloseBeforeRestore,
                            const QString &affinityName, QWidget *parent)
     : MainWindow(uniqueName, options, parent)
     , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
     , m_dockWidget9IsNonDockable(nonDockableDockWidget9)
     , m_restoreIsRelative(restoreIsRelative)
     , m_maxSizeForDockWidget8(maxSizeForDockWidget8)
+    , m_dockwidget5DoesntCloseBeforeRestore(dockwidget5DoesntCloseBeforeRestore)
 {
 #if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
     qsrand(time(nullptr));
@@ -164,13 +165,18 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
 
     // Passing options is optional, we just want to illustrate Option_NotClosable here
     KDDockWidgets::DockWidget::Options options = KDDockWidgets::DockWidget::Option_None;
+    KDDockWidgets::DockWidget::LayoutSaverOptions layoutSaverOptions = KDDockWidgets::DockWidget::LayoutSaverOption::None;
+
     if (count == 0 && m_dockWidget0IsNonClosable)
         options |= KDDockWidgets::DockWidget::Option_NotClosable;
 
     if (count == 9 && m_dockWidget9IsNonDockable)
         options |= KDDockWidgets::DockWidget::Option_NotDockable;
 
-    auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count), options);
+    if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
+        layoutSaverOptions |= KDDockWidgets::DockWidget::LayoutSaverOption::Skip;
+
+    auto dock = new KDDockWidgets::DockWidget(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
     dock->setAffinities(affinities()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
 
     if (count == 1)

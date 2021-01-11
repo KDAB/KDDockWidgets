@@ -126,9 +126,13 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             if (index == -1) {
                 continue; // Skip
             } else {
-                FloatingWindow *fw = LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowInstanceForIndex(index);
-                if (fw) {
-                    layout = fw->multiSplitter();
+                auto serializedFw = LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowForIndex(index);
+                if (serializedFw.isValid()) {
+                    if (FloatingWindow *fw = serializedFw.floatingWindowInstance) {
+                        layout = fw->multiSplitter();
+                    } else {
+                        continue;
+                    }
                 } else {
                     qWarning() << "Invalid floating window position to restore" << index;
                     continue;
