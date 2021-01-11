@@ -20,9 +20,6 @@ set(PyKDDockWidgets_SRC
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindowbase_wrapper.h
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindow_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindow_wrapper.h
-    # namespace wrapper
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_wrapper.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_wrapper.h
     # global module wrapper
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_module_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_python.h
@@ -47,9 +44,9 @@ set(PyKDDockWidgets_target_include_directories
 # Libraries that will be necessary to link the target, this will used in the command 'target_link_libraries'
 set(PyKDDockWidgets_target_link_libraries
     KDAB::kddockwidgets
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
+    Qt${QT_MAJOR_VERSION}::Core
+    Qt${QT_MAJOR_VERSION}::Gui
+    Qt${QT_MAJOR_VERSION}::Widgets
 )
 
 # changes on these files should trigger a new generation
@@ -75,7 +72,7 @@ create_python_bindings(
 )
 
 # Make module import from build dir work
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/__init__.py ${CMAKE_CURRENT_BINARY_DIR}/__init__.py)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/__init__.py.cmake ${CMAKE_CURRENT_BINARY_DIR}/__init__.py @ONLY)
 
 # install
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}/PyKDDockWidgets)

@@ -9,8 +9,9 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-from PySide2 import QtCore, QtWidgets, QtGui
 from PyKDDockWidgets import KDDockWidgets
+
+from PySide import QtCore, QtWidgets, QtGui
 
 from MyWidget1 import MyWidget1
 from MyWidget2 import MyWidget2
