@@ -36,6 +36,8 @@
 
 namespace KDDockWidgets {
 
+class FloatingWindow;
+
 template <typename T>
 typename T::List fromVariantList(const QVariantList &listV)
 {
@@ -233,6 +235,9 @@ struct LayoutSaver::FloatingWindow
     int screenIndex;
     QSize screenSize;  // for relative-size restoring
     bool isVisible = true;
+
+    // The instance that was created during a restore:
+    KDDockWidgets::FloatingWindow *floatingWindowInstance = nullptr;
 };
 
 struct LayoutSaver::MainWindow
@@ -313,6 +318,8 @@ public:
     static LayoutSaver::Layout* s_currentLayoutBeingRestored;
 
     LayoutSaver::MainWindow mainWindowForIndex(int index) const;
+    LayoutSaver::FloatingWindow floatingWindowForIndex(int index) const;
+    KDDockWidgets::FloatingWindow* floatingWindowInstanceForIndex(int index) const;
 
     QStringList mainWindowNames() const;
     QStringList dockWidgetNames() const;

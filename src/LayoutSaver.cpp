@@ -258,7 +258,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     }
 
     // 2. Restore FloatingWindows
-    for (const LayoutSaver::FloatingWindow &fw : qAsConst(layout.floatingWindows)) {
+    for (LayoutSaver::FloatingWindow &fw : layout.floatingWindows) {
         if (!d->matchesAffinity(fw.affinities))
             continue;
 
@@ -266,6 +266,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
                                                       : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
         auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(parent);
+        fw.floatingWindowInstance = floatingWindow;
         d->deserializeWindowGeometry(fw, floatingWindow);
         if (!floatingWindow->deserialize(fw)) {
             qWarning() << Q_FUNC_INFO << "Failed to deserialize floating window";
@@ -469,6 +470,19 @@ LayoutSaver::MainWindow LayoutSaver::Layout::mainWindowForIndex(int index) const
         return {};
 
     return mainWindows.at(index);
+}
+
+LayoutSaver::FloatingWindow LayoutSaver::Layout::floatingWindowForIndex(int index) const
+{
+    if (index < 0 || index >= floatingWindows.size())
+        return {};
+
+    return floatingWindows.at(index);
+}
+
+FloatingWindow *LayoutSaver::Layout::floatingWindowInstanceForIndex(int index) const
+{
+    return floatingWindowForIndex(index).floatingWindowInstance;
 }
 
 QStringList LayoutSaver::Layout::mainWindowNames() const

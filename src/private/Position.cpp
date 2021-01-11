@@ -126,9 +126,8 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             if (index == -1) {
                 continue; // Skip
             } else {
-                const auto floatingWindows = DockRegistry::self()->floatingWindows();
-                if (index >= 0 && index < floatingWindows.size()) {
-                    FloatingWindow *fw = floatingWindows.at(index);
+                FloatingWindow *fw = LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowInstanceForIndex(index);
+                if (fw) {
                     layout = fw->multiSplitter();
                 } else {
                     qWarning() << "Invalid floating window position to restore" << index;
