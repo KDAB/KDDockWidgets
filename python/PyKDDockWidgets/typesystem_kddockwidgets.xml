@@ -6,8 +6,12 @@
         typesystem because it already include gui and core typesystem -->
     <load-typesystem name="typesystem_widgets.xml" generate="no"/>
 
+    <rejection class="KDDockWidgets" function-name="qt_getEnumName"/>
+    <rejection class="KDDockWidgets" function-name="qt_getEnumMetaObject"/>
+
     <!-- Our classes are declared in a namespace, so we should define this -->
-    <namespace-type name="KDDockWidgets">
+
+    <namespace-type name="KDDockWidgets" visible="no">
         <!-- this is used in a public virtual pure function we need to declare it
             otherwise shiboken will ignore the function and will fail to create a wrapper -->
         <primitive-type name="DropAreaWithCentralFrame"/>
