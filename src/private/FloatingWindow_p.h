@@ -135,7 +135,7 @@ public:
     bool allDockWidgetsHave(DockWidgetBase::Option) const;
 
     ///@brief Returns whether at least one dock widget has the specified option set
-    bool anyDockWidgetsHave(DockWidgetBase::Option) const;
+    bool anyDockWidgetsHas(DockWidgetBase::Option) const;
 
 Q_SIGNALS:
     void activatedChanged();

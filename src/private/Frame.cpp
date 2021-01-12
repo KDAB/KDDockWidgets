@@ -731,7 +731,7 @@ bool Frame::allDockWidgetsHave(DockWidgetBase::Option option) const
 }
 
 ///@brief Returns whether at least one dock widget has the specified option set
-bool Frame::anyDockWidgetsHave(DockWidgetBase::Option option) const
+bool Frame::anyDockWidgetsHas(DockWidgetBase::Option option) const
 {
     const DockWidgetBase::List docks = dockWidgets();
     return std::any_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {

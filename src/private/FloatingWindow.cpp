@@ -510,10 +510,10 @@ bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::Option option) const
     });
 }
 
-bool FloatingWindow::anyDockWidgetsHave(DockWidgetBase::Option option) const
+bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::Option option) const
 {
     const Frame::List frames = this->frames();
     return std::any_of(frames.begin(), frames.end(), [option] (Frame *frame) {
-        return frame->anyDockWidgetsHave(option);
+        return frame->anyDockWidgetsHas(option);
     });
 }
