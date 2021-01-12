@@ -1,0 +1,47 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+            "qevent": "cpp",
+            "qvector": "cpp"
+        },
+        "C_Cpp.default.compileCommands" : "${workspaceFolder}/build-dev-qtwidgets/compile_commands.json",
+        "C_Cpp.default.cStandard": "c17",
+        "C_Cpp.default.intelliSenseMode": "gcc-x64"
+	},
+	"tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "type": "shell",
+                "label": "cmake",
+                "command": "cmake",
+                "args": ["--preset=dev-qtwidgets"],
+                "options": {
+                    "cwd": "${workspaceFolder}/",
+                },
+                "problemMatcher": [
+                    "$gcc"
+                ],
+                "group": "build"
+            },
+            {
+                "type": "shell",
+                "label": "make",
+                "command": "cmake",
+                "args": ["--build", "${workspaceFolder}/build-dev-qtwidgets"],
+                "options": {
+                    "cwd": "${workspaceFolder}/",
+                },
+                "problemMatcher": [
+                    "$gcc"
+                ],
+                "group": "build"
+			}
+		]
+    }
+}
