@@ -501,3 +501,19 @@ bool FloatingWindow::event(QEvent *ev)
 
     return QWidgetAdapter::event(ev);
 }
+
+bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::Option option) const
+{
+    const Frame::List frames = this->frames();
+    return std::all_of(frames.begin(), frames.end(), [option] (Frame *frame) {
+        return frame->allDockWidgetsHave(option);
+    });
+}
+
+bool FloatingWindow::anyDockWidgetsHave(DockWidgetBase::Option option) const
+{
+    const Frame::List frames = this->frames();
+    return std::any_of(frames.begin(), frames.end(), [option] (Frame *frame) {
+        return frame->anyDockWidgetsHave(option);
+    });
+}

@@ -11,7 +11,8 @@
         },
         "C_Cpp.default.compileCommands" : "${workspaceFolder}/build-dev-qtwidgets/compile_commands.json",
         "C_Cpp.default.cStandard": "c17",
-        "C_Cpp.default.intelliSenseMode": "gcc-x64"
+        "C_Cpp.default.intelliSenseMode": "gcc-x64",
+        "files.trimTrailingWhitespace": true
 	},
 	"tasks": {
         "version": "2.0.0",

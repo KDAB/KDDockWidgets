@@ -131,6 +131,12 @@ public:
      */
     QRect dragRect() const;
 
+    ///@brief Returns whether all dock widgets have the specified option set
+    bool allDockWidgetsHave(DockWidgetBase::Option) const;
+
+    ///@brief Returns whether at least one dock widget has the specified option set
+    bool anyDockWidgetsHave(DockWidgetBase::Option) const;
+
 Q_SIGNALS:
     void activatedChanged();
     void numFramesChanged();

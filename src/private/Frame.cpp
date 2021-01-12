@@ -720,3 +720,21 @@ TabWidget *Frame::tabWidget() const
 {
     return m_tabWidget;
 }
+
+///@brief Returns whether all dock widgets have the specified option set
+bool Frame::allDockWidgetsHave(DockWidgetBase::Option option) const
+{
+    const DockWidgetBase::List docks = dockWidgets();
+    return std::all_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {
+        return dw->options() & option;
+    });
+}
+
+///@brief Returns whether at least one dock widget has the specified option set
+bool Frame::anyDockWidgetsHave(DockWidgetBase::Option option) const
+{
+    const DockWidgetBase::List docks = dockWidgets();
+    return std::any_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {
+        return dw->options() & option;
+    });
+}
