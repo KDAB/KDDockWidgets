@@ -105,8 +105,11 @@ void Frame::onDockWidgetTitleChanged()
     updateTitleAndIcon();
 
     if (!m_inCtor) { // don't call pure virtual in ctor
-        if (auto dw = qobject_cast<DockWidgetBase*>(sender()))
-            renameTab(indexOfDockWidget(dw), dw->title());
+        if (auto dw = qobject_cast<DockWidgetBase*>(sender())) {
+            int index = indexOfDockWidget(dw);
+            renameTab(index, dw->title());
+            changeTabIcon(index, dw->icon(DockWidgetBase::IconPlace::TabBar));
+        }
     }
 }
 

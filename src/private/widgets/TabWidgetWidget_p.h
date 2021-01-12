@@ -55,6 +55,7 @@ protected:
     bool insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) override;
     void setTabBarAutoHide(bool) override;
     void renameTab(int index, const QString &) override;
+    void changeTabIcon(int index, const QIcon &) override;
 
     DockWidgetBase *dockwidgetAt(int index) const override;
     int currentIndex() const override;
