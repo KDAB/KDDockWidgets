@@ -9,7 +9,9 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
+                "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                "KDDockWidgets_UNITY_BUILD" : "OFF"
             }
         },
         {
@@ -53,7 +55,9 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QTQUICK": "ON",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
+                "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                "KDDockWidgets_UNITY_BUILD" : "OFF"
             }
         },
         {
