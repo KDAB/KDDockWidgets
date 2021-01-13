@@ -130,6 +130,7 @@ private Q_SLOTS:
     void tst_lastFloatingPositionIsRestored();
     void tst_restoreSimple();
     void tst_restoreSimplest();
+    void tst_restoreNonClosable();
     void tst_invalidLayoutAfterRestore();
     void tst_dontCloseDockWidgetBeforeRestore();
 
@@ -3451,6 +3452,58 @@ void TestDocks::tst_restoreSimplest()
    QVERIFY(layout->checkSanity());
    QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreSimplest.json")));
    QVERIFY(layout->checkSanity());
+}
+
+void TestDocks::tst_restoreNonClosable()
+{
+    // Tests that restoring state also restores the options
+
+    {
+        // Basic case:
+
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("one", new QTextEdit(), DockWidgetBase::Option_NotClosable);
+        QCOMPARE(dock1->options(), DockWidgetBase::Option_NotClosable);
+
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
+        QVERIFY(saver.restoreLayout(saved));
+        QCOMPARE(dock1->options(), DockWidgetBase::Option_NotClosable);
+    }
+
+    {
+        // Case from issue #137
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+
+        auto dock1 = createDockWidget("1", new QTextEdit());
+        auto dock2 = createDockWidget("2", new QTextEdit(), DockWidgetBase::Option_NotClosable);
+        auto dock3 = createDockWidget("3", new QTextEdit());
+
+        m->addDockWidget(dock1, Location_OnLeft);
+        m->addDockWidget(dock2, Location_OnLeft);
+        m->addDockWidget(dock3, Location_OnLeft);
+
+        QCOMPARE(dock2->options(), DockWidgetBase::Option_NotClosable);
+        dock2->setFloating(true);
+        QCOMPARE(dock2->options(), DockWidgetBase::Option_NotClosable);
+
+        TitleBar *tb = dock2->frame()->actualTitleBar();
+        QVERIFY(tb->isVisible());
+        QVERIFY(!tb->closeButtonEnabled());
+
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
+
+        QVERIFY(saver.restoreLayout(saved));
+        QCOMPARE(dock2->options(), DockWidgetBase::Option_NotClosable);
+
+        tb = dock2->frame()->actualTitleBar();
+        QVERIFY(tb->isVisible());
+
+        QEXPECT_FAIL("", "Bug #137", Continue);
+        QVERIFY(!tb->closeButtonEnabled());
+    }
 }
 
 void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
