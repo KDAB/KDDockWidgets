@@ -51,10 +51,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
     , m_floatingWindow(parent)
     , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
 {
-    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateCloseButton);
-    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateFloatButton);
-    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateMaximizeButton);
-    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateMinimizeButton);
+    connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, &TitleBar::updateMaximizeButton);
     connect(m_floatingWindow, &FloatingWindow::activatedChanged , this, &TitleBar::isFocusedChanged);
     init();
@@ -69,8 +66,8 @@ void TitleBar::init()
         // repaint
         update();
     });
-    updateCloseButton();
-    updateFloatButton();
+
+    updateButtons();
 }
 
 TitleBar::~TitleBar()
@@ -89,6 +86,14 @@ bool TitleBar::onDoubleClicked()
     }
 
     return false;
+}
+
+void TitleBar::updateButtons()
+{
+    updateCloseButton();
+    updateFloatButton();
+    updateMaximizeButton();
+    updateMinimizeButton();
 }
 
 void TitleBar::updateCloseButton()

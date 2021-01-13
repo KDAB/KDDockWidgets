@@ -363,7 +363,7 @@ void DockWidgetBase::setOptions(Options options)
         d->options = options;
         Q_EMIT optionsChanged(options);
         if (auto tb = titleBar())
-            tb->updateCloseButton();
+            tb->updateButtons();
     }
 }
 

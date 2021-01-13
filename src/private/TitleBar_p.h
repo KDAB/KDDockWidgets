@@ -99,7 +99,7 @@ public:
     FloatingWindow *floatingWindow() const { return m_floatingWindow; }
 
     /// @brief updates the close button enabled state
-    void updateCloseButton();
+    void updateButtons();
 
 Q_SIGNALS:
     void titleChanged();
@@ -140,6 +140,7 @@ protected:
 private:
     friend class ::TestDocks;
     void updateFloatButton();
+    void updateCloseButton();
     void setCloseButtonEnabled(bool);
     void setFloatButtonVisible(bool);
     void setFloatButtonToolTip(const QString &);
