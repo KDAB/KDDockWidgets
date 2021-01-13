@@ -717,6 +717,9 @@ void DockWidgetBase::Private::close()
             sb->removeDockWidget(q);
         }
     }
+
+    if (options & DockWidgetBase::Option_DeleteOnClose)
+        q->deleteLater();
 }
 
 bool DockWidgetBase::Private::restoreToPreviousPosition()

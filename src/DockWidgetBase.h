@@ -75,7 +75,8 @@ public:
     enum Option {
         Option_None = 0, ///< No option, the default
         Option_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programatically
-        Option_NotDockable = 2 ///< The DockWidget can't be docked, it's always floating
+        Option_NotDockable = 2, ///< The DockWidget can't be docked, it's always floating
+        Option_DeleteOnClose = 4 ///< Deletes the DockWidget when closed
 
     };
     Q_DECLARE_FLAGS(Options, Option)

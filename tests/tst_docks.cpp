@@ -238,6 +238,7 @@ private Q_SLOTS:
     void tst_dragByTabBar_data();
     void tst_titleBarFocusedWhenTabsChange();
     void tst_dock2FloatingWidgetsTabbed();
+    void tst_deleteOnClose();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
@@ -5122,7 +5123,7 @@ void TestDocks::tst_restoreEmbeddedMainWindow()
     QCOMPARE(window->size(), originalSize);
     window->mainWindow->multiSplitter()->checkSanity();
 
-    delete window;   
+    delete window;
 }
 
 void TestDocks::tst_negativeAnchorPositionWhenEmbedded_data()
@@ -6526,6 +6527,18 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         delete dock3;
         QVERIFY(Testing::waitForDeleted(frame2));
         QVERIFY(Testing::waitForDeleted(fw3));
+    }
+}
+
+void TestDocks::tst_deleteOnClose()
+{
+    {
+        // Tests that DockWidget::close() deletes itself if Option_DeleteOnClose is set
+        QPointer<DockWidgetBase> dock1 = createDockWidget("1", new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose);
+        dock1->show();
+        dock1->close();
+
+        QVERIFY(Testing::waitForDeleted(dock1));
     }
 }
 
