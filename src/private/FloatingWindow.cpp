@@ -395,6 +395,8 @@ void FloatingWindow::updateTitleBarVisibility()
 
         for (Frame *frame : frames())
             frame->updateTitleBarVisibility();
+
+        m_titleBar->updateCloseButton();
     } else {
         visible = false;
     }
