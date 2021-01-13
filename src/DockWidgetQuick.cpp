@@ -40,8 +40,8 @@ public:
     QQuickItem *const m_visualItem;
 };
 
-DockWidgetQuick::DockWidgetQuick(const QString &name, Options options)
-    : DockWidgetBase(name, options)
+DockWidgetQuick::DockWidgetQuick(const QString &name, Options options, LayoutSaverOptions layoutSaverOptions)
+    : DockWidgetBase(name, options, layoutSaverOptions)
     , d(new Private(this))
 {
     // To mimic what QtWidgets does when creating a new QWidget.
