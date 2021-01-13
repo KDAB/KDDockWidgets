@@ -5,6 +5,7 @@
     KDDockWidgets::InitialVisibilityOption instead
   - You can now pass a preferred initial size to MainWindow::addDockWidget() (#95)
   - Added DockWidgetBase::Option_DeleteOnClose
+  - PySide6 support
 
 * v1.2.1 (unreleased)
   - Support for resizing dock widgets when they are in overlay/popup mode (autohide/sidebar feature)
