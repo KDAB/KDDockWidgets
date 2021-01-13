@@ -3456,7 +3456,7 @@ void TestDocks::tst_restoreSimplest()
 
 void TestDocks::tst_restoreNonClosable()
 {
-    // Tests that restoring state also restores the options
+    // Tests that restoring state also restores the Option_NotClosable option
 
     {
         // Basic case:
@@ -3501,7 +3501,6 @@ void TestDocks::tst_restoreNonClosable()
         tb = dock2->frame()->actualTitleBar();
         QVERIFY(tb->isVisible());
 
-        QEXPECT_FAIL("", "Bug #137", Continue);
         QVERIFY(!tb->closeButtonEnabled());
     }
 }
