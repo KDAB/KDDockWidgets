@@ -133,6 +133,7 @@ private Q_SLOTS:
     void tst_restoreNonClosable();
     void tst_invalidLayoutAfterRestore();
     void tst_dontCloseDockWidgetBeforeRestore();
+    void tst_dontCloseDockWidgetBeforeRestore2();
 
     void tst_tabWidgetCurrentIndex();
     void tst_doubleClickTabToDetach();
@@ -5883,6 +5884,37 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore()
       QVERIFY(saver.restoreLayout(saved));
       QVERIFY(!dock4->isOpen());
       QVERIFY(dock5->isOpen()); // #5 is still open, it ignored restore
+}
+
+void TestDocks::tst_dontCloseDockWidgetBeforeRestore2()
+{
+    // In this case we have a floating window with two dock widgets tabbed, both having LayoutSaverOption::Skip
+    // Meaning the whole window should be skipped
+
+    EnsureTopLevelsDeleted e;
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, DockWidgetBase::LayoutSaverOption::Skip);
+    auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, DockWidgetBase::LayoutSaverOption::Skip);
+
+    dock2->close();
+    dock3->close();
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout(); // This layout has 0 docks visible
+
+    dock2->show();
+    dock3->show();
+    QVERIFY(saver.restoreLayout(saved));
+    QVERIFY(dock2->isVisible()); // They're still visible
+    QVERIFY(dock3->isVisible());
+
+    // Now tab and restore again
+    dock2->addDockWidgetAsTab(dock3);
+    QVERIFY(saver.restoreLayout(saved));
+    QEXPECT_FAIL("", "Will fix", Continue);
+    QVERIFY(dock2->isVisible());
+    QEXPECT_FAIL("", "Will fix", Continue);
+    QVERIFY(dock3->isVisible());
+    QCOMPARE(dock3->frame(), dock2->frame());
 }
 
 void TestDocks::tst_tabWidgetCurrentIndex()
