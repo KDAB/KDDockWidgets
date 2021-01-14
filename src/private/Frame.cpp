@@ -738,3 +738,19 @@ bool Frame::anyDockWidgetsHas(DockWidgetBase::Option option) const
         return dw->options() & option;
     });
 }
+
+bool Frame::allDockWidgetsHave(DockWidgetBase::LayoutSaverOption option) const
+{
+    const DockWidgetBase::List docks = dockWidgets();
+    return std::all_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {
+        return dw->layoutSaverOptions() & option;
+    });
+}
+
+bool Frame::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option) const
+{
+    const DockWidgetBase::List docks = dockWidgets();
+    return std::any_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {
+        return dw->layoutSaverOptions() & option;
+    });
+}

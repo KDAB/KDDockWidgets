@@ -137,6 +137,12 @@ public:
     ///@brief Returns whether at least one dock widget has the specified option set
     bool anyDockWidgetsHas(DockWidgetBase::Option) const;
 
+    ///@brief Returns whether all dock widgets have the specified  layout saver option set
+    bool allDockWidgetsHave(DockWidgetBase::LayoutSaverOption) const;
+
+    ///@brief Returns whether at least one dock widget has the specified layout saver option set
+    bool anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption) const;
+
 Q_SIGNALS:
     void activatedChanged();
     void numFramesChanged();

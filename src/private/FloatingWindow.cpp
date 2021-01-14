@@ -519,3 +519,19 @@ bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::Option option) const
         return frame->anyDockWidgetsHas(option);
     });
 }
+
+bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::LayoutSaverOption option) const
+{
+    const Frame::List frames = this->frames();
+    return std::all_of(frames.begin(), frames.end(), [option] (Frame *frame) {
+        return frame->allDockWidgetsHave(option);
+    });
+}
+
+bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option) const
+{
+    const Frame::List frames = this->frames();
+    return std::any_of(frames.begin(), frames.end(), [option] (Frame *frame) {
+        return frame->anyDockWidgetsHas(option);
+    });
+}
