@@ -94,6 +94,7 @@ void TitleBar::updateButtons()
     updateFloatButton();
     updateMaximizeButton();
     updateMinimizeButton();
+    updateAutoHideButton();
 }
 
 void TitleBar::updateCloseButton()
