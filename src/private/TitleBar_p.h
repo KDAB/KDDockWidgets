@@ -123,7 +123,6 @@ protected:
     QString floatButtonToolTip() const;
 
     virtual void updateMaximizeButton() {}
-
     virtual void updateMinimizeButton() {}
     virtual void updateAutoHideButton() {}
 

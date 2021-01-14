@@ -6592,6 +6592,27 @@ void TestDocks::tst_deleteOnClose()
 
         QVERIFY(Testing::waitForDeleted(dock1));
     }
+
+    {
+        // Tests that if it's closed via LayoutSaver it's also destroyed when having Option_DeleteOnClose
+
+        QPointer<DockWidgetBase> dock1 = createDockWidget("1", new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose, {}, /*show=*/ false);
+        QPointer<DockWidgetBase> dock2 = createDockWidget("2", new MyWidget2(QSize(400, 400)), {}, {}, /*show=*/ false);
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
+        dock1->show();
+        dock2->show();
+        QVERIFY(dock1->isVisible());
+        QVERIFY(dock2->isVisible());
+
+        QVERIFY(saver.restoreLayout(saved));
+        QVERIFY(!dock1->isVisible());
+        QVERIFY(!dock2->isVisible());
+
+        QVERIFY(Testing::waitForDeleted(dock1));
+        QVERIFY(dock2.data());
+        delete dock2;
+    }
 }
 
 #include "tst_docks.moc"
