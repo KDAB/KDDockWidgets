@@ -260,16 +260,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // 2. Restore FloatingWindows
     for (LayoutSaver::FloatingWindow &fw : layout.floatingWindows) {
-        if (!d->matchesAffinity(fw.affinities))
+        if (!d->matchesAffinity(fw.affinities) || fw.skipsRestore())
             continue;
-
-
-        if (LayoutSaver::DockWidget::Ptr dw = fw.singleDockWidget()) {
-            if (dw->skipsRestore()) {
-                // A floating dock widget can choose not to be affected by save/restore
-                continue;
-            }
-        }
 
         MainWindowBase *parent = fw.parentIndex == -1 ? nullptr
                                                       : DockRegistry::self()->mainwindows().at(fw.parentIndex);
@@ -520,7 +512,18 @@ QStringList LayoutSaver::Layout::dockWidgetsToClose() const
     auto registry = DockRegistry::self();
     for (const auto &dw : allDockWidgets) {
         if (DockWidgetBase *dockWidget = registry->dockByName(dw->uniqueName)) {
-            const bool doClose = !(dockWidget->layoutSaverOptions() & DockWidgetBase::LayoutSaverOption::Skip) || !dockWidget->isFloating();
+
+            bool doClose = true;
+
+            if (dockWidget->layoutSaverOptions() & DockWidgetBase::LayoutSaverOption::Skip) {
+                if (auto fw = dockWidget->floatingWindow()) {
+                    if (fw->allDockWidgetsHave(DockWidgetBase::LayoutSaverOption::Skip)) {
+                        // All dock widgets in this floating window skips float, so we can honour it for all.
+                        doClose = false;
+                    }
+                }
+            }
+
             if (doClose)
                 names << dw->uniqueName;
         }

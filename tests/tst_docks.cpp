@@ -5910,9 +5910,8 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore2()
     // Now tab and restore again
     dock2->addDockWidgetAsTab(dock3);
     QVERIFY(saver.restoreLayout(saved));
-    QEXPECT_FAIL("", "Will fix", Continue);
-    QVERIFY(dock2->isVisible());
-    QEXPECT_FAIL("", "Will fix", Continue);
+    QVERIFY(dock2->isOpen());
+    QVERIFY(dock3->isOpen());
     QVERIFY(dock3->isVisible());
     QCOMPARE(dock3->frame(), dock2->frame());
 }
