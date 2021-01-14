@@ -569,6 +569,13 @@ bool LayoutSaver::Frame::hasSingleDockWidget() const
     return dockWidgets.size() == 1;
 }
 
+bool LayoutSaver::Frame::skipsRestore() const
+{
+    return std::all_of(dockWidgets.cbegin(), dockWidgets.cend(), [] (LayoutSaver::DockWidget::Ptr dw) {
+        return dw->skipsRestore();
+    });
+}
+
 LayoutSaver::DockWidget::Ptr LayoutSaver::Frame::singleDockWidget() const
 {
     if (!hasSingleDockWidget())
@@ -686,6 +693,11 @@ bool LayoutSaver::FloatingWindow::hasSingleDockWidget() const
 LayoutSaver::DockWidget::Ptr LayoutSaver::FloatingWindow::singleDockWidget() const
 {
     return multiSplitterLayout.singleDockWidget();
+}
+
+bool LayoutSaver::FloatingWindow::skipsRestore() const
+{
+    return multiSplitterLayout.skipsRestore();
 }
 
 void LayoutSaver::FloatingWindow::scaleSizes(const ScalingInfo &scalingInfo)
@@ -825,6 +837,13 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() cons
         return {};
 
     return frames.cbegin()->singleDockWidget();
+}
+
+bool LayoutSaver::MultiSplitter::skipsRestore() const
+{
+    return std::all_of(frames.cbegin(), frames.cend(), [] (const LayoutSaver::Frame &frame) {
+        return frame.skipsRestore();
+    });
 }
 
 void LayoutSaver::MultiSplitter::scaleSizes(const ScalingInfo &)

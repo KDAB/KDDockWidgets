@@ -178,6 +178,7 @@ struct LayoutSaver::Frame
     bool isValid() const;
 
     bool hasSingleDockWidget() const;
+    bool skipsRestore() const;
 
     /// @brief in case this frame only has one frame, returns the name of that dock widget
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
@@ -204,6 +205,7 @@ struct LayoutSaver::MultiSplitter
 
     bool hasSingleDockWidget() const;
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
+    bool skipsRestore() const;
 
     /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &scalingInfo);
@@ -223,6 +225,7 @@ struct LayoutSaver::FloatingWindow
 
     bool hasSingleDockWidget() const;
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
+    bool skipsRestore() const;
 
     /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &);
