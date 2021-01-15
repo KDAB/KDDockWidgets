@@ -256,6 +256,7 @@ private Q_SLOTS:
     void tst_negativeAnchorPositionWhenEmbedded_data();
     void tst_closeRemovesFromSideBar();
     void tst_restoreSideBar();
+    void tst_toggleActionOnSideBar();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -5125,6 +5126,40 @@ void TestDocks::tst_restoreSideBar()
     QVERIFY(!m1->anySideBarIsVisible());
 
     delete fw1;
+}
+
+void TestDocks::tst_toggleActionOnSideBar()
+{
+    // When a dock widget is in the sidebar and we use DockWidget::toggleAction() then it should
+    // toggle visibility without removing it from the sidebar
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = new DockWidgetType("1");
+    m1->addDockWidget(dw1, Location_OnBottom);
+    dw1->moveToSideBar();
+
+    QVERIFY(!dw1->isVisible());
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
+
+
+
+    QAction *action = dw1->toggleAction();
+    action->trigger();
+
+    QVERIFY(dw1->isVisible());
+    QEXPECT_FAIL("", "to fix", Continue);
+    QVERIFY(dw1->isOverlayed());
+
+    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
+    action->trigger();
+
+    QVERIFY(!dw1->isOverlayed());
+
+    QEXPECT_FAIL("", "to fix", Continue);
+    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
 }
 
 void TestDocks::tst_embeddedMainWindow()
