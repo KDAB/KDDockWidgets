@@ -5044,7 +5044,7 @@ void TestDocks::tst_closeRemovesFromSideBar()
 
     QVERIFY(!dw1->isOverlayed());
     QVERIFY(!dw1->isVisible());
-    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
+    QVERIFY(dw1->isInSideBar());
 
     SideBar *sb = m1->sideBarForDockWidget(dw1);
     QVERIFY(sb);
@@ -5142,9 +5142,7 @@ void TestDocks::tst_toggleActionOnSideBar()
 
     QVERIFY(!dw1->isVisible());
     QVERIFY(!dw1->isOverlayed());
-    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
-
-
+    QVERIFY(dw1->isInSideBar());
 
     QAction *action = dw1->toggleAction();
     action->trigger();
@@ -5153,13 +5151,13 @@ void TestDocks::tst_toggleActionOnSideBar()
     QEXPECT_FAIL("", "to fix", Continue);
     QVERIFY(dw1->isOverlayed());
 
-    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
+    QVERIFY(dw1->isInSideBar());
     action->trigger();
 
     QVERIFY(!dw1->isOverlayed());
 
     QEXPECT_FAIL("", "to fix", Continue);
-    QVERIFY(dw1->sideBarLocation() != SideBarLocation::None);
+    QVERIFY(dw1->isInSideBar());
 }
 
 void TestDocks::tst_embeddedMainWindow()

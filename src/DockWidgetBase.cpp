@@ -532,6 +532,11 @@ SideBarLocation DockWidgetBase::sideBarLocation() const
     return DockRegistry::self()->sideBarLocationForDockWidget(this);
 }
 
+bool DockWidgetBase::isInSideBar() const
+{
+    return sideBarLocation() != SideBarLocation::None;
+}
+
 bool DockWidgetBase::hasPreviousDockedLocation() const
 {
     return d->m_lastPositions.isValid();

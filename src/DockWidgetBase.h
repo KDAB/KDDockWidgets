@@ -373,7 +373,12 @@ public:
     ///@brief Returns whether this dock widget is in a side bar, and which.
     /// SideBarLocation::None is returned if it's not in a sidebar.
     /// This is only relevant when using the auto-hide and side-bar feature.
+    /// @sa isInSideBar
     SideBarLocation sideBarLocation() const;
+
+    /// @brief Returns where this dockwidget is in a sidebar
+    /// Similar to sideBarLocation(), but returns a bool
+    bool isInSideBar() const;
 
     /// @brief Returns whether this floating dock widget knows its previous docked location
     /// Result only makes sense if it's floating.
