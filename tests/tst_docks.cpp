@@ -134,6 +134,7 @@ private Q_SLOTS:
     void tst_invalidLayoutAfterRestore();
     void tst_dontCloseDockWidgetBeforeRestore();
     void tst_dontCloseDockWidgetBeforeRestore2();
+    void tst_dontCloseDockWidgetBeforeRestore3();
 
     void tst_tabWidgetCurrentIndex();
     void tst_doubleClickTabToDetach();
@@ -5949,6 +5950,28 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore2()
     QVERIFY(dock3->isOpen());
     QVERIFY(dock3->isVisible());
     QCOMPARE(dock3->frame(), dock2->frame());
+}
+
+void TestDocks::tst_dontCloseDockWidgetBeforeRestore3()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, DockWidgetBase::LayoutSaverOption::Skip);
+    dock1->close();
+    dock2->close();
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout(); // This layout has 0 docks visible
+
+    m->addDockWidget(dock1, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnBottom);
+
+    QVERIFY(saver.restoreLayout(saved));
+
+    QVERIFY(!dock1->isOpen()); // Gets closed by the restore
+    QVERIFY(dock2->isOpen()); // Dock2 remains open, it ignores restore
+    QVERIFY(dock2->isFloating());
 }
 
 void TestDocks::tst_tabWidgetCurrentIndex()

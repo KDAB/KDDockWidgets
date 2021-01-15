@@ -69,6 +69,9 @@ public:
         return m_affinityNames.isEmpty() || affinities.isEmpty() || DockRegistry::self()->affinitiesMatch(m_affinityNames, affinities);
     }
 
+
+    void floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames);
+
     template <typename T>
     void deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel);
     void deleteEmptyFrames();
@@ -229,6 +232,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     if (d->m_restoreOptions & RestoreOption_RelativeToMainWindow)
         layout.scaleSizes();
 
+    d->floatWidgetsWhichSkipRestore(layout.mainWindowNames());
+
     // Hide all dockwidgets and unparent them from any layout before starting restore
     // We only close the stuff that the loaded JSON knows about. Unknown widgets might be newer.
 
@@ -332,6 +337,24 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, QWidgetOrQu
 {
     topLevel->setGeometry(saved.geometry);
     topLevel->setVisible(saved.isVisible);
+}
+
+void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames)
+{
+    // Widgets with the DockWidget::LayoutSaverOption::Skip flag skip restore completely.
+    // If they were visible before they need to remain visible now.
+    // If they were previously docked we need to float them, as the main window they were on will
+    // be loading a new layout.
+
+    for (MainWindowBase *mw : DockRegistry::self()->mainWindows(mainWindowNames)) {
+        const KDDockWidgets::DockWidgetBase::List docks = mw->multiSplitter()->dockWidgets();
+        for (auto dw : docks) {
+            if (dw->skipsRestore()) {
+                dw->setFloating(true);
+            }
+        }
+    }
+
 }
 
 void LayoutSaver::Private::deleteEmptyFrames()
