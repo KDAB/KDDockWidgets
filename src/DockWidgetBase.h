@@ -399,6 +399,9 @@ public:
     /// nullptr is returned if the dock widget isn't found.
     static DockWidgetBase* byName(const QString &uniqueName);
 
+    /// @brief Returns whether this widget has the LayoutSaverOption::Skip flag
+    bool skipsRestore() const;
+
 Q_SIGNALS:
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     ///@brief signal emitted when the parent changed

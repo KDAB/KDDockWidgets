@@ -515,7 +515,7 @@ QStringList LayoutSaver::Layout::dockWidgetsToClose() const
 
             bool doClose = true;
 
-            if (dockWidget->layoutSaverOptions() & DockWidgetBase::LayoutSaverOption::Skip) {
+            if (dockWidget->skipsRestore()) {
                 if (auto fw = dockWidget->floatingWindow()) {
                     if (fw->allDockWidgetsHave(DockWidgetBase::LayoutSaverOption::Skip)) {
                         // All dock widgets in this floating window skips float, so we can honour it for all.
@@ -645,7 +645,7 @@ void LayoutSaver::DockWidget::scaleSizes(const ScalingInfo &scalingInfo)
 bool LayoutSaver::DockWidget::skipsRestore() const
 {
     if (DockWidgetBase *dw = DockRegistry::self()->dockByName(uniqueName))
-        return dw->layoutSaverOptions() & DockWidgetBase::LayoutSaverOption::Skip;
+        return dw->skipsRestore();
 
     return false;
 }

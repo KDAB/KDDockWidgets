@@ -557,6 +557,11 @@ DockWidgetBase *DockWidgetBase::byName(const QString &uniqueName)
     return DockRegistry::self()->dockByName(uniqueName);
 }
 
+bool DockWidgetBase::skipsRestore() const
+{
+    return d->layoutSaverOptions & LayoutSaverOption::Skip;
+}
+
 FloatingWindow *DockWidgetBase::morphIntoFloatingWindow()
 {
     if (auto fw = floatingWindow())
