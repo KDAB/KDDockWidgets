@@ -100,6 +100,11 @@ public:
         return nullptr;
     }
 
+    SideBar* sideBar() const
+    {
+        return DockRegistry::self()->sideBarForDockWidget(q);
+    }
+
     QPoint defaultCenterPosForFloating();
 
     void updateTitle();
@@ -659,10 +664,16 @@ void DockWidgetBase::Private::updateTitle()
 
 void DockWidgetBase::Private::toggle(bool enabled)
 {
-    if (enabled) {
-        show();
+    if (SideBar *sb = sideBar()) {
+        // The widget is in the sidebar, let's toggle its overlayed state
+        sb->toggleOverlay(q);
     } else {
-        q->close();
+        // The most common case. The dock widget is not in the sidebar. just close or open it.
+        if (enabled) {
+            show();
+        } else {
+            q->close();
+        }
     }
 }
 

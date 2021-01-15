@@ -5149,10 +5149,8 @@ void TestDocks::tst_toggleActionOnSideBar()
     action->trigger();
 
     QVERIFY(dw1->isVisible());
-    QEXPECT_FAIL("", "to fix", Continue);
     QVERIFY(dw1->isOverlayed());
-    QEXPECT_FAIL("", "to fix", Continue);
-    QVERIFY(!dw1->isInMainWindow());
+    QVERIFY(dw1->isInMainWindow());
 
     QVERIFY(dw1->isInSideBar());
     action->trigger();
@@ -5160,7 +5158,6 @@ void TestDocks::tst_toggleActionOnSideBar()
     QVERIFY(!dw1->isOverlayed());
     QVERIFY(!dw1->isInMainWindow());
 
-    QEXPECT_FAIL("", "to fix", Continue);
     QVERIFY(dw1->isInSideBar());
     QVERIFY(!dw1->isInMainWindow());
 }
