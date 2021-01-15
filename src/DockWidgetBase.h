@@ -338,7 +338,7 @@ public:
     bool isMainWindow() const;
 
     /**
-     * @brief Returns whether this dock widget is docked into a main window.
+     * @brief Returns whether this dock widget is docked into a main window (as opposed to floating)
      *
      * Note that isFloating() returning false might either mean the dock widget is docked into a
      * main window or into a floating window (groupped/nested with other dock widgets. Use this function
@@ -347,6 +347,7 @@ public:
     bool isInMainWindow() const;
 
     /// @brief Returns the main window this dock widget is in. nullptr if it's not inside a main window
+    /// Also returns nullptr if it's minimized to a sidebar
     MainWindowBase *mainWindow() const;
 
     ///@brief Returns whether This or any child of this dock widget is focused
@@ -366,8 +367,10 @@ public:
      */
     void moveToSideBar();
 
-    /// @brief Returns whether this dock widget is overlayed on top of the main window, instead of
-    /// docked into the layout. This is only relevant when using the auto-hide and side-bar feature.
+    /// @brief Returns whether this dock widget is overlayed from the side-bar.
+    ///
+    /// This is only relevant when using the auto-hide and side-bar feature.
+    /// Not to be confused with "floating", which means top-level window.
     bool isOverlayed() const;
 
     ///@brief Returns whether this dock widget is in a side bar, and which.
