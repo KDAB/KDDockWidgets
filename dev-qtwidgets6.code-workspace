@@ -5,7 +5,7 @@
     }
   ],
   "settings": {
-    "C_Cpp.default.compileCommands": "${workspaceFolder}/build-dev-qtquick/compile_commands.json",
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/build-dev-qtwidgets6/compile_commands.json",
     "C_Cpp.default.cStandard": "c17",
     "files.trimTrailingWhitespace": true
   },
@@ -17,12 +17,15 @@
         "label": "cmake",
         "command": "cmake",
         "args": [
-          "--preset=dev-qtquick"
+          "--preset=dev-qtwidgets6"
         ],
         "options": {
           "cwd": "${workspaceFolder}/"
         },
-        "group": "build"
+        "group": "build",
+        "problemMatcher": [
+          "$gcc"
+        ]
       },
       {
         "type": "shell",
@@ -30,12 +33,15 @@
         "command": "cmake",
         "args": [
           "--build",
-          "${workspaceFolder}/build-dev-qtquick"
+          "${workspaceFolder}/build-dev-qtwidgets6"
         ],
         "options": {
           "cwd": "${workspaceFolder}/"
         },
-        "group": "build"
+        "group": "build",
+        "problemMatcher": [
+          "$gcc"
+        ]
       }
     ]
   }

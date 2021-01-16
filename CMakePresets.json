@@ -113,6 +113,8 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QT6": "ON",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                "KDDockWidgets_UNITY_BUILD" : "OFF",
                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
             },
             "environment": {
