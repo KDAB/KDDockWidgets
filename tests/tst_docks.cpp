@@ -844,7 +844,6 @@ void TestDocks::tst_restoreMaximizedState()
     QVERIFY(m->windowHandle()->windowState() != Qt::WindowMaximized);
 
     saver.restoreLayout(saved);
-    QEXPECT_FAIL("", "Will fix", Continue);
     QCOMPARE(m->windowHandle()->windowState(), Qt::WindowMaximized);
 }
 

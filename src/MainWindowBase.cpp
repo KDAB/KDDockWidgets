@@ -594,6 +594,12 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
         }
     }
 
+    if (mw.windowState != Qt::WindowNoState) {
+        if (auto w = windowHandle()) {
+            w->setWindowState(mw.windowState);
+        }
+    }
+
     // Commented-out for now, we dont' want to restore the popup/overlay. popups are perishable
     //if (!mw.overlayedDockWidget.isEmpty())
     //    overlayOnSideBar(DockRegistry::self()->dockByName(mw.overlayedDockWidget));
@@ -613,6 +619,8 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     m.screenSize = screenSizeForWidget(this);
     m.multiSplitterLayout = dropArea()->serialize();
     m.affinities = d->affinities;
+    m.windowState = windowHandle() ? windowHandle()->windowState()
+                                   : Qt::WindowNoState;
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
         if (SideBar *sb = sideBar(loc)) {

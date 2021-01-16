@@ -267,6 +267,7 @@ public:
     int screenIndex;
     QSize screenSize;  // for relative-size restoring
     bool isVisible;
+    Qt::WindowState windowState = Qt::WindowNoState;
 
     ScalingInfo scalingInfo;
 };

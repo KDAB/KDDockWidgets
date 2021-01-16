@@ -803,6 +803,7 @@ QVariantMap LayoutSaver::MainWindow::toVariantMap() const
     map.insert(QStringLiteral("screenSize"), Layouting::sizeToMap(screenSize));
     map.insert(QStringLiteral("isVisible"), isVisible);
     map.insert(QStringLiteral("affinities"), stringListToVariant(affinities));
+    map.insert(QStringLiteral("windowState"), windowState);
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
         const QStringList dockWidgets = dockWidgetsPerSideBar.value(loc);
@@ -823,6 +824,7 @@ void LayoutSaver::MainWindow::fromVariantMap(const QVariantMap &map)
     screenSize = Layouting::mapToSize(map.value(QStringLiteral("screenSize")).toMap());
     isVisible = map.value(QStringLiteral("isVisible")).toBool();
     affinities = variantToStringList(map.value(QStringLiteral("affinities")).toList());
+    windowState = Qt::WindowState(map.value(QStringLiteral("windowState"), Qt::WindowNoState).toInt());
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
     const QString affinityName = map.value(QStringLiteral("affinityName")).toString();
