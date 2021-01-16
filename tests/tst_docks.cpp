@@ -111,6 +111,7 @@ private Q_SLOTS:
     void tst_resizeWindow();
     void tst_restoreEmpty();
     void tst_restoreCentralFrame();
+    void tst_restoreMaximizedState();
     void tst_shutdown();
     void tst_doubleClose();
     void tst_dockInternal();
@@ -826,6 +827,25 @@ void TestDocks::tst_restoreCentralFrame()
     frame = static_cast<Frame *>(item->guestAsQObject());
     QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!frame->titleBar()->isVisible());
+}
+
+void TestDocks::tst_restoreMaximizedState()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow();
+
+    m->showMaximized();
+
+    QCOMPARE(m->windowHandle()->windowState(), Qt::WindowMaximized);
+    LayoutSaver saver;
+
+    const QByteArray saved = saver.serializeLayout();
+    m->showNormal();
+    QVERIFY(m->windowHandle()->windowState() != Qt::WindowMaximized);
+
+    saver.restoreLayout(saved);
+    QEXPECT_FAIL("", "Will fix", Continue);
+    QCOMPARE(m->windowHandle()->windowState(), Qt::WindowMaximized);
 }
 
 void TestDocks::tst_setFloatingSimple()
