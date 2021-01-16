@@ -97,6 +97,9 @@ public:
      */
     bool hasSingleDockWidget() const;
 
+    /// @brief If this floating window has only one Frame, it's returned, otherwise nullptr
+    Frame* singleFrame() const;
+
     /**
      * @brief Returns whether a deleteLater has already been issued
      */

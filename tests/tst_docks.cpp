@@ -136,6 +136,7 @@ private Q_SLOTS:
     void tst_dontCloseDockWidgetBeforeRestore2();
     void tst_dontCloseDockWidgetBeforeRestore3();
 
+    void tst_closeOnlyCurrentTab();
     void tst_tabWidgetCurrentIndex();
     void tst_doubleClickTabToDetach();
     void tst_propagateResize2();
@@ -5972,6 +5973,62 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore3()
     QVERIFY(!dock1->isOpen()); // Gets closed by the restore
     QVERIFY(dock2->isOpen()); // Dock2 remains open, it ignores restore
     QVERIFY(dock2->isFloating());
+}
+
+void TestDocks::tst_closeOnlyCurrentTab()
+{    
+    {
+        // Case of a floating window with tabs
+        EnsureTopLevelsDeleted e;
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_CloseOnlyCurrentTab);
+
+        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        auto dock2 = createDockWidget("2", new QPushButton("2"));
+        auto dock3 = createDockWidget("3", new QPushButton("3"));
+
+        /// Floating window with 3 tabs
+        dock1->addDockWidgetAsTab(dock2);
+        dock1->addDockWidgetAsTab(dock3);
+
+        TitleBar *tb = dock1->titleBar();
+        QVERIFY(tb->isVisible());
+        dock1->setAsCurrentTab();
+        Frame *frame = dock1->frame();
+        QCOMPARE(frame->currentIndex(), 0);
+
+        tb->onCloseClicked();
+
+        QVERIFY(!dock1->isOpen());
+        QVERIFY(dock2->isOpen());
+        QVERIFY(dock3->isOpen());
+    }
+
+    {
+        // Case of a floating window with tabs
+        EnsureTopLevelsDeleted e;
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_CloseOnlyCurrentTab);
+
+        auto m = createMainWindow();
+        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        auto dock2 = createDockWidget("2", new QPushButton("2"));
+        auto dock3 = createDockWidget("3", new QPushButton("3"));
+
+        m->addDockWidget(dock1, Location_OnLeft);
+        m->addDockWidget(dock2, Location_OnRight);
+
+        dock2->addDockWidgetAsTab(dock3);
+        Frame *frame = dock2->frame();
+        QCOMPARE(frame->currentIndex(), 1);
+        TitleBar *tb = frame->titleBar();
+        QVERIFY(tb->isVisible());
+        tb->onCloseClicked();
+
+        QVERIFY(!dock3->isOpen());
+        QVERIFY(dock2->isOpen());
+        QVERIFY(dock1->isOpen());
+        QCOMPARE(frame->dockWidgetCount(), 1);
+    }
+
 }
 
 void TestDocks::tst_tabWidgetCurrentIndex()

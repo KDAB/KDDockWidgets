@@ -341,6 +341,14 @@ bool FloatingWindow::hasSingleDockWidget() const
     return frame->dockWidgetCount() == 1;
 }
 
+Frame *FloatingWindow::singleFrame() const
+{
+    const Frame::List frames = this->frames();
+
+    return frames.isEmpty() ? nullptr
+                            : frames.first();
+}
+
 bool FloatingWindow::beingDeleted() const
 {
     if (m_deleteScheduled || m_inDtor)

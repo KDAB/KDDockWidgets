@@ -290,14 +290,39 @@ QIcon TitleBar::icon() const
 
 void TitleBar::onCloseClicked()
 {
+    const bool closeOnlyCurrentTab = Config::self().flags() & Config::Flag_CloseOnlyCurrentTab;
+
     if (m_frame) {
-        if (m_frame->isTheOnlyFrame() && !m_frame->isInMainWindow()) {
-            m_frame->window()->close();
+        if (closeOnlyCurrentTab) {
+            if (DockWidgetBase *dw = m_frame->currentDockWidget()) {
+                dw->close();
+            } else {
+                // Doesn't happen
+                qWarning() << Q_FUNC_INFO << "Frame with no dock widgets";
+            }
         } else {
-            m_frame->close();
+            if (m_frame->isTheOnlyFrame() && !m_frame->isInMainWindow()) {
+                m_frame->window()->close();
+            } else {
+                m_frame->close();
+            }
         }
     } else if (m_floatingWindow) {
-        m_floatingWindow->close();
+
+        if (closeOnlyCurrentTab) {
+            if (Frame *f = m_floatingWindow->singleFrame()) {
+                if (DockWidgetBase *dw = f->currentDockWidget()) {
+                    dw->close();
+                } else {
+                    // Doesn't happen
+                    qWarning() << Q_FUNC_INFO << "Frame with no dock widgets";
+                }
+            } else {
+                m_floatingWindow->close();
+            }
+        } else {
+            m_floatingWindow->close();
+        }
     }
 }
 

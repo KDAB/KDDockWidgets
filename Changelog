@@ -5,6 +5,7 @@
     KDDockWidgets::InitialVisibilityOption instead
   - You can now pass a preferred initial size to MainWindow::addDockWidget() (#95)
   - Added DockWidgetBase::Option_DeleteOnClose
+  - Added Config::Flag_CloseOnlyCurrentTab
   - PySide6 support
 
 * v1.2.1 (unreleased)
