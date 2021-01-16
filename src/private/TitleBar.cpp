@@ -296,10 +296,9 @@ void TitleBar::onCloseClicked()
         } else {
             m_frame->close();
         }
-    }
-
-    if (m_floatingWindow)
+    } else if (m_floatingWindow) {
         m_floatingWindow->close();
+    }
 }
 
 bool TitleBar::isFloating() const
