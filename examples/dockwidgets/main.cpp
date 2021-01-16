@@ -111,6 +111,10 @@ int main(int argc, char **argv)
     QCommandLineOption autoHideSupport("w", QCoreApplication::translate("main", "Enables auto-hide/minimization to side-bar support"));
     parser.addOption(autoHideSupport);
 
+    QCommandLineOption closeOnlyCurrentTab("close-only-current-tab",
+                                           QCoreApplication::translate("main", "The title bar's close button will only close the current tab instead of all. Illustrates using Config::Flag_CloseOnlyCurrentTab"));
+    parser.addOption(closeOnlyCurrentTab);
+
     QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore",
                                               QCoreApplication::translate("main", "DockWidget #5 wont be closed before a restore. Illustrates LayoutSaverOption::DontCloseBeforeRestore"));
     parser.addOption(dontCloseBeforeRestore);
@@ -180,6 +184,9 @@ int main(int argc, char **argv)
 
     if (parser.isSet(autoHideSupport))
         flags |= Config::Flag_AutoHideSupport;
+
+    if (parser.isSet(closeOnlyCurrentTab))
+        flags |= Config::Flag_CloseOnlyCurrentTab;
 
     if (parser.isSet(noTitleBars))
         flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
