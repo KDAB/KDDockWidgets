@@ -20,6 +20,7 @@
 #include "DockRegistry_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+#include "DragController_p.h"
 
 #include <QCloseEvent>
 #include <QAbstractNativeEventFilter>
@@ -222,6 +223,12 @@ bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, Qt5
         // To enable aero snap we need to tell Windows where's our custom title bar
         if (WidgetResizeHandler::handleWindowsNativeEvent(this, eventType, message, result))
             return true;
+    } else if (KDDockWidgets::usesNativeTitleBar()) {
+        auto msg = static_cast<MSG *>(message);
+        if (msg->message == WM_SIZING) {
+            // Cancel any drag if we're resizing
+            Q_EMIT DragController::instance()->dragCanceled();
+        }
     }
 
     return QWidget::nativeEvent(eventType, message, result);

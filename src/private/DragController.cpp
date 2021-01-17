@@ -605,7 +605,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     switch (e->type()) {
     case QEvent::NonClientAreaMouseButtonPress: {
         if (auto fw = qobject_cast<FloatingWindow*>(o)) {
-            if (fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
+            if (KDDockWidgets::usesNativeTitleBar() || fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
                 m_nonClientDrag = true;
                 return activeState()->handleMouseButtonPress(draggableForQObject(o), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
             }
