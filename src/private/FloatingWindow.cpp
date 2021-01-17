@@ -215,7 +215,10 @@ void FloatingWindow::setupWindow()
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result)
 {
-    if (!m_inDtor && !m_deleteScheduled && KDDockWidgets::usesAeroSnapWithCustomDecos()) {
+    if (m_inDtor || m_deleteScheduled)
+        return QWidget::nativeEvent(eventType, message, result);
+
+    if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         // To enable aero snap we need to tell Windows where's our custom title bar
         if (WidgetResizeHandler::handleWindowsNativeEvent(this, eventType, message, result))
             return true;
