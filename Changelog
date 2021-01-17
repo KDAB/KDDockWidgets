@@ -8,6 +8,7 @@
   - Added Config::Flag_CloseOnlyCurrentTab
   - PySide6 support
   - Layout restorer now restores maximzied/minimized state too (#81)
+  - Fixed dock indicators sometimes not appearing on Windows (#103)
 
 * v1.2.1 (unreleased)
   - Support for resizing dock widgets when they are in overlay/popup mode (autohide/sidebar feature)
