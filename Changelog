@@ -14,6 +14,7 @@
 * v1.2.1 (unreleased)
   - Support for resizing dock widgets when they are in overlay/popup mode (autohide/sidebar feature)
   - Fixed title bar close button enabled state not being restored with Layout saver (#137)
+  - Installs a version header (kddockwidgets_version.h) that defines a version string and other useful versioning macros (#138)
 
 * v1.2.0 (17 December 2020)
   - Wayland support
