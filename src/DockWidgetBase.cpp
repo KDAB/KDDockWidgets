@@ -723,6 +723,9 @@ void DockWidgetBase::Private::onDockWidgetHidden()
 
 void DockWidgetBase::Private::close()
 {
+    if (!q->isOpen())
+        return;
+
     if (!m_isForceClosing && q->isFloating() && q->isVisible()) { // only user-closing is interesting to save the geometry
         // We check for isVisible so we don't save geometry if you call close() on an already closed dock widget
         m_lastPositions.setLastFloatingGeometry(q->window()->geometry());

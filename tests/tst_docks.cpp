@@ -928,6 +928,19 @@ void TestDocks::tst_doubleClose()
         delete dock1;
         delete fw1;
     }
+    {
+        // Test for #141, double delete would ruin lastPositions()
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow();
+        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        m->addDockWidget(dock1, Location_OnBottom);
+
+        QVERIFY(!dock1->lastPositions().wasFloating());
+        dock1->close();
+        QVERIFY(!dock1->lastPositions().wasFloating());
+        dock1->close();
+        QVERIFY(!dock1->lastPositions().wasFloating());
+    }
 }
 
 void TestDocks::tst_dockInternal()
