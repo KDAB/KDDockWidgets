@@ -97,7 +97,6 @@ set(DOCKS_INSTALLABLE_INCLUDES
     FocusScope.h
     QWidgetAdapter.h
     LayoutSaver.h
-    LayoutSaver_p.h
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES

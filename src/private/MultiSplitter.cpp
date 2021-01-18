@@ -28,6 +28,7 @@
 #include "Position_p.h"
 #include "DockRegistry_p.h"
 #include "Config.h"
+#include "../LayoutSaver_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "multisplitter/Widget.h"
 #include "DropArea_p.h"

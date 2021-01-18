@@ -27,6 +27,7 @@
 #include "TitleBar_p.h"
 #include "TabWidget_p.h"
 #include "FrameworkWidgetFactory.h"
+#include "LayoutSaver_p.h"
 
 #include <QCloseEvent>
 #include <QTimer>

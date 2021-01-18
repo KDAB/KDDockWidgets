@@ -20,7 +20,7 @@
 
 #include "docks_export.h"
 #include "Logging_p.h"
-#include "LayoutSaver_p.h"
+#include "LayoutSaver.h"
 #include "QWidgetAdapter.h"
 
 #include <QScopedValueRollback>
@@ -143,18 +143,8 @@ struct LastPositions
         return m_lastFloatingGeometry;
     }
 
-    LayoutSaver::Position serialize()
-    {
-        LayoutSaver::Position result = lastPosition->serialize();
-        result.lastFloatingGeometry = lastFloatingGeometry();
-        return result;
-    }
-
-    void deserialize(const LayoutSaver::Position &p)
-    {
-        m_lastFloatingGeometry = p.lastFloatingGeometry;
-        lastPosition->deserialize(p);
-    }
+    LayoutSaver::Position serialize();
+    void deserialize(const LayoutSaver::Position &p);
 
     Layouting::Item* lastItem() const {
         return lastPosition->layoutItem();

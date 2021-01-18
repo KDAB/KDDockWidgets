@@ -22,6 +22,7 @@
 #include "private/Position_p.h"
 #include "WindowBeingDragged_p.h"
 #include "SideBar_p.h"
+#include "LayoutSaver_p.h"
 
 #include <QEvent>
 #include <QCloseEvent>

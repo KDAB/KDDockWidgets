@@ -25,8 +25,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/QWidgetAdapter.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/private/LayoutSaver_p.h"
-
+#include "kddockwidgets/LayoutSaver.h"
 
 namespace Layouting {
 class Item;

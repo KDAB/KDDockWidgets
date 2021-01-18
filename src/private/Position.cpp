@@ -19,6 +19,7 @@
 #include "DockRegistry_p.h"
 #include "MultiSplitter_p.h"
 #include "FloatingWindow_p.h"
+#include "LayoutSaver_p.h"
 
 #include <algorithm>
 
@@ -204,4 +205,17 @@ ItemRef::~ItemRef()
         QObject::disconnect(connection);
         item->unref();
     }
+}
+
+LayoutSaver::Position LastPositions::serialize()
+{
+    LayoutSaver::Position result = lastPosition->serialize();
+    result.lastFloatingGeometry = lastFloatingGeometry();
+    return result;
+}
+
+void LastPositions::deserialize(const LayoutSaver::Position &p)
+{
+    m_lastFloatingGeometry = p.lastFloatingGeometry;
+    lastPosition->deserialize(p);
 }

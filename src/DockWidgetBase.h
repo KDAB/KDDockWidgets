@@ -22,9 +22,10 @@
 #include "docks_export.h"
 #include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
-#include "LayoutSaver_p.h"
+#include "LayoutSaver.h"
 
 #include <QVector>
+#include <memory>
 
 // clazy:excludeall=ctor-missing-parent-argument
 
@@ -499,12 +500,12 @@ private:
      * @brief Constructs a dock widget from its serialized form.
      * @internal
      */
-    static DockWidgetBase *deserialize(const LayoutSaver::DockWidget::Ptr &);
+    static DockWidgetBase *deserialize(const std::shared_ptr<LayoutSaver::DockWidget> &);
 
     /**
      * @brief Serializes this dock widget into an intermediate form
      */
-    LayoutSaver::DockWidget::Ptr serialize() const;
+    std::shared_ptr<LayoutSaver::DockWidget> serialize() const;
 
     /**
      * @brief the Frame which contains this dock widgets.

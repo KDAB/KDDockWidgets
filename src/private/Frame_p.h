@@ -23,7 +23,7 @@
 #include "kddockwidgets/QWidgetAdapter.h"
 #include "kddockwidgets/FocusScope.h"
 #include "kddockwidgets/DockWidgetBase.h"
-#include "../LayoutSaver_p.h"
+#include "kddockwidgets/LayoutSaver.h"
 #include "multisplitter/Widget.h"
 
 #include <QVector>

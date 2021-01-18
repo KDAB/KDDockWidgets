@@ -21,6 +21,7 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "DragController_p.h"
+#include "../LayoutSaver_p.h"
 
 #include <QCloseEvent>
 #include <QAbstractNativeEventFilter>
