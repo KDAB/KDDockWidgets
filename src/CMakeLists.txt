@@ -304,7 +304,7 @@ ecm_setup_version(
   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfigVersion.cmake"
   SOVERSION ${${PROJECT_NAME}_SOVERSION}
   COMPATIBILITY AnyNewerVersion)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h" DESTINATION ${INSTALL_INCLUDE_DIR})
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h" DESTINATION include/kddockwidgets)
 
 install(EXPORT kddockwidgetsTargets
         FILE KDDockWidgetsTargets.cmake
