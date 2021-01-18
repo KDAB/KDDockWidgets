@@ -5995,7 +5995,7 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore3()
 }
 
 void TestDocks::tst_closeOnlyCurrentTab()
-{    
+{
     {
         // Case of a floating window with tabs
         EnsureTopLevelsDeleted e;
@@ -6750,6 +6750,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 void TestDocks::tst_deleteOnClose()
 {
     {
+        EnsureTopLevelsDeleted e;
         // Tests that DockWidget::close() deletes itself if Option_DeleteOnClose is set
         QPointer<DockWidgetBase> dock1 = createDockWidget("1", new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose);
         dock1->show();
@@ -6760,6 +6761,7 @@ void TestDocks::tst_deleteOnClose()
 
     {
         // Tests that if it's closed via LayoutSaver it's also destroyed when having Option_DeleteOnClose
+        EnsureTopLevelsDeleted e;
 
         QPointer<DockWidgetBase> dock1 = createDockWidget("1", new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose, {}, /*show=*/ false);
         QPointer<DockWidgetBase> dock2 = createDockWidget("2", new MyWidget2(QSize(400, 400)), {}, {}, /*show=*/ false);
