@@ -21,7 +21,7 @@
 #ifndef KDDOCKWIDGETS_QWIDGETADAPTERWIDGETS_P_H
 #define KDDOCKWIDGETS_QWIDGETADAPTERWIDGETS_P_H
 
-#include "../../docks_export.h"
+#include "kddockwidgets/docks_export.h"
 
 #include <QWindow>
 #include <QWidget>

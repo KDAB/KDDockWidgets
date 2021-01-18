@@ -12,6 +12,11 @@
 #include "MyFrameworkWidgetFactory.h"
 
 #include <kddockwidgets/FrameworkWidgetFactory.h>
+
+#include <kddockwidgets/private/widgets/FrameWidget_p.h>
+#include <kddockwidgets/private/widgets/TabWidget_p.h>
+#include <kddockwidgets/private/widgets/TabBarWidget_p.h>
+#include <kddockwidgets/private/widgets/TabWidgetWidget_p.h>
 #include <kddockwidgets/private/widgets/TitleBarWidget_p.h>
 #include <kddockwidgets/private/multisplitter/Separator_qwidget.h>
 

@@ -12,9 +12,9 @@
 #ifndef KD_FLOATING_WINDOW_P_H
 #define KD_FLOATING_WINDOW_P_H
 
-#include "../docks_export.h"
-#include "../QWidgetAdapter.h"
-#include "../LayoutSaver_p.h"
+#include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/QWidgetAdapter.h"
+#include "LayoutSaver_p.h"
 #include "Frame_p.h"
 #include "Draggable_p.h"
 #include "DropArea_p.h"
