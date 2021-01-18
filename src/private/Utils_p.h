@@ -24,6 +24,7 @@
 
 # include <QQuickItem>
 # include <QQuickView>
+# include <QGuiApplication>
 #else
 # include <QApplication>
 # include <QAbstractButton>

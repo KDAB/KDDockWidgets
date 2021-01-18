@@ -13,7 +13,7 @@
 #define KD_TITLEBARQUICK_P_H
 
 #include "kddockwidgets/docks_export.h"
-#include "kddockwidgets/TitleBar_p.h"
+#include "kddockwidgets/private/TitleBar_p.h"
 
 namespace KDDockWidgets {
 
