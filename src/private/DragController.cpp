@@ -254,7 +254,7 @@ void StateDragging::onEntry()
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(Q_OS_WIN)
         if (!q->m_nonClientDrag && KDDockWidgets::usesNativeDraggingAndResizing()) {
             // Started as a client move, as the dock widget was docked,
-            // but now that we're dragging it as a floating window, switch to native drag
+            // but now that we're dragging it as a floating window, switch to native drag, so we can still get aero-snap
             FloatingWindow *fw = q->m_windowBeingDragged->floatingWindow();
             q->m_nonClientDrag = true;
             q->m_windowBeingDragged.reset();
