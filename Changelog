@@ -10,6 +10,7 @@
   - Layout restorer now restores maximzied/minimized state too (#81)
   - Fixed dock indicators sometimes not appearing on Windows (#103)
   - Fixed Flag_NativeTitleBar not working
+  - Fixed drag offset when dragging too fast with mouse
 
 * v1.2.1 (unreleased)
   - Support for resizing dock widgets when they are in overlay/popup mode (autohide/sidebar feature)
