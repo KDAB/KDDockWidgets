@@ -156,12 +156,19 @@ macro(set_compiler_flags targetName)
 
 endmacro()
 
+set(${PROJECT_NAME}_DEPS "widgets")
+
 if(${PROJECT_NAME}_QTQUICK)
   find_package(Qt${QT_MAJOR_VERSION}Quick)
   find_package(Qt${QT_MAJOR_VERSION}QuickControls2)
   add_definitions(-DKDDOCKWIDGETS_QTQUICK)
+  set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} quick quickcontrols2")
 else()
   add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
+endif()
+
+if(NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6)
+  set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} x11extras")
 endif()
 
 if(${PROJECT_NAME}_STATIC)
@@ -178,22 +185,24 @@ if(USE_DEFAULT_INSTALL_LOCATION)
   endif()
 endif()
 
+add_subdirectory(src)
+if(${PROJECT_NAME}_PYTHON_BINDINGS)
+  add_subdirectory(python)
+endif()
+
 # Generate .pri file for qmake users
 include(ECMGeneratePriFile)
 set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
 ecm_generate_pri_file(BASE_NAME KDDockWidgets
   LIB_NAME kddockwidgets
+  DEPS ${${PROJECT_NAME}_DEPS}
   FILENAME_VAR pri_filename
+  INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}
 )
 install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
 install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
 install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
-
-add_subdirectory(src)
-if(${PROJECT_NAME}_PYTHON_BINDINGS)
-  add_subdirectory(python)
-endif()
 
 if(${PROJECT_NAME}_EXAMPLES)
   if (${PROJECT_NAME}_QTQUICK)
