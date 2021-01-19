@@ -261,6 +261,11 @@ void StateDragging::onEntry()
             q->m_windowBeingDragged = fw->makeWindow();
 
             QWindow *window = fw->windowHandle();
+
+            // Position the window before the drag start, otherwise if you move mouse too fast there will be an offset
+            window->setPosition(QCursor::pos() - q->m_offset);
+
+            // Start the native move
             window->startSystemMove();
         }
 #endif
