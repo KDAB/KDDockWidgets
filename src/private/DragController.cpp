@@ -251,8 +251,7 @@ void StateDragging::onEntry()
 
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (q->m_windowBeingDragged) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-# ifdef Q_OS_WIN
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(Q_OS_WIN)
         if (!q->m_nonClientDrag && KDDockWidgets::usesNativeDraggingAndResizing()) {
             // Started as a client move, as the dock widget was docked,
             // but now that we're dragging it as a floating window, switch to native drag
@@ -264,7 +263,6 @@ void StateDragging::onEntry()
             QWindow *window = fw->windowHandle();
             window->startSystemMove();
         }
-# endif
 #endif
 
         qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable->asWidget()
