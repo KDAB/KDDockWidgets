@@ -244,6 +244,7 @@ private Q_SLOTS:
     void tst_titleBarFocusedWhenTabsChange();
     void tst_dock2FloatingWidgetsTabbed();
     void tst_deleteOnClose();
+    void tst_toggleAction();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
@@ -6793,6 +6794,34 @@ void TestDocks::tst_deleteOnClose()
         QVERIFY(dock2.data());
         delete dock2;
     }
+}
+
+void TestDocks::tst_toggleAction()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
+    auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(400, 400)));
+    auto dock3 = createDockWidget("dock3", new MyWidget2(QSize(400, 400)));
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnRight);
+    m->addDockWidget(dock3, Location_OnRight);
+
+    auto root = m->multiSplitter()->rootItem();
+    QCOMPARE(root->visibleCount_recursive(), 3);
+    QVERIFY(dock2->toggleAction()->isChecked());
+    QPointer<Frame> frame2 = dock2->frame();
+    qDebug() << "TOGGLE START";
+    dock2->toggleAction()->toggle();
+    qDebug() << "TOGGLED";
+    QVERIFY(!dock2->toggleAction()->isChecked());
+
+    QVERIFY(!dock2->isVisible());
+    QVERIFY(!dock2->isOpen());
+    QVERIFY(Testing::waitForDeleted(frame2));
+
+    QCOMPARE(root->visibleCount_recursive(), 2);
 }
 
 #include "tst_docks.moc"

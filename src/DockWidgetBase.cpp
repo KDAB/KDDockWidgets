@@ -54,8 +54,10 @@ public:
         q->connect(toggleAction, &QAction::toggled, q, [this] (bool enabled) {
             if (!m_updatingToggleAction) { // guard against recursiveness
                 toggleAction->blockSignals(true); // and don't emit spurious toggle. Like when a dock widget is inserted into a tab widget it might get hide events, ignore those. The Dock Widget is open.
+                m_processingToggleAction = true;
                 toggle(enabled);
                 toggleAction->blockSignals(false);
+                m_processingToggleAction = false;
             }
         });
 
@@ -138,6 +140,7 @@ public:
     QAction *const toggleAction;
     QAction *const floatAction;
     LastPositions m_lastPositions;
+    bool m_processingToggleAction = false;
     bool m_updatingToggleAction = false;
     bool m_updatingFloatAction = false;
     bool m_isForceClosing = false;
@@ -723,8 +726,9 @@ void DockWidgetBase::Private::onDockWidgetHidden()
 
 void DockWidgetBase::Private::close()
 {
-    if (!q->isOpen())
+    if (!m_processingToggleAction && !q->isOpen()) {
         return;
+    }
 
     if (!m_isForceClosing && q->isFloating() && q->isVisible()) { // only user-closing is interesting to save the geometry
         // We check for isVisible so we don't save geometry if you call close() on an already closed dock widget
