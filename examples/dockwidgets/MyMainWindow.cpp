@@ -198,6 +198,7 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
 
     dock->resize(600, 600);
     m_toggleMenu->addAction(dock->toggleAction());
+    dock->toggleAction()->setShortcut(QStringLiteral("ctrl+%1").arg(count));
 
     count++;
     return dock;
