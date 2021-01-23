@@ -22,10 +22,7 @@
         "options": {
           "cwd": "${workspaceFolder}/"
         },
-        "group": "build",
-        "problemMatcher": [
-          "$gcc"
-        ]
+        "group": "build"
       },
       {
         "type": "shell",
@@ -38,10 +35,7 @@
         "options": {
           "cwd": "${workspaceFolder}/"
         },
-        "group": "build",
-        "problemMatcher": [
-          "$gcc"
-        ]
+        "group": "build"
       }
     ]
   }
