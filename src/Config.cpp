@@ -56,6 +56,7 @@ public:
     FrameworkWidgetFactory *m_frameworkWidgetFactory = nullptr;
     Flags m_flags = Flag_Default;
     InternalFlags m_internalFlags = InternalFlag_None;
+    CustomizableWidgets m_disabledPaintEvents = CustomizableWidget_None;
     qreal m_draggedWindowOpacity = Q_QNAN;
 };
 
@@ -290,6 +291,16 @@ void Config::Private::fixFlags()
         m_internalFlags |= InternalFlag_DontUseParentForFloatingWindows;
         m_internalFlags |= InternalFlag_DontUseQtToolWindowsForFloatingWindows;
     }
+}
+
+void Config::setDisabledPaintEvents(CustomizableWidgets widgets)
+{
+    d->m_disabledPaintEvents = widgets;
+}
+
+Config::CustomizableWidgets Config::disabledPaintEvents() const
+{
+    return d->m_disabledPaintEvents;
 }
 
 }

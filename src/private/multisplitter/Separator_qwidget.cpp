@@ -12,6 +12,7 @@
 #include "Separator_qwidget.h"
 #include "Widget_qwidget.h"
 #include "Logging_p.h"
+#include "Config.h"
 
 #include <QPainter>
 #include <QStyleOption>
@@ -28,8 +29,13 @@ SeparatorWidget::SeparatorWidget(Layouting::Widget *parent)
     setMouseTracking(true);
 }
 
-void SeparatorWidget::paintEvent(QPaintEvent *)
+void SeparatorWidget::paintEvent(QPaintEvent *ev)
 {
+    if (KDDockWidgets::Config::self().disabledPaintEvents() & KDDockWidgets::Config::CustomizableWidget_Separator) {
+        QWidget::paintEvent(ev);
+        return;
+    }
+
     QPainter p(this);
 
     QStyleOption opt;

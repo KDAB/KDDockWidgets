@@ -220,6 +220,13 @@ public:
     void setAbsoluteWidgetMaxSize(QSize size);
     QSize absoluteWidgetMaxSize() const;
 
+    ///@brief Disables our internal widget's paint events
+    /// By default, KDDockWidget's internal widgets reimplement paintEvent(). Disabling them
+    /// (which makes the base-class, QWidget::paintEvent() be called instead) can be useful if you want to style
+    // via CSS stylesheets.
+    void setDisabledPaintEvents(CustomizableWidgets);
+    Config::CustomizableWidgets disabledPaintEvents() const;
+
     ///@internal
     ///@brief returns the internal flags.
     ///@warning Not for public consumption, support will be limited.

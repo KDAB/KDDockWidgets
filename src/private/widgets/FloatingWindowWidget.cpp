@@ -36,8 +36,13 @@ FloatingWindowWidget::FloatingWindowWidget(Frame *frame, MainWindowBase *parent)
     init();
 }
 
-void FloatingWindowWidget::paintEvent(QPaintEvent *)
+void FloatingWindowWidget::paintEvent(QPaintEvent *ev)
 {
+    if (Config::self().disabledPaintEvents() & Config::CustomizableWidget_FloatingWindow) {
+        QWidget::paintEvent(ev);
+        return;
+    }
+
     QPainter p(this);
     QPen pen(0x666666);
     pen.setWidth(1);
