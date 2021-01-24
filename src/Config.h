@@ -85,6 +85,19 @@ public:
     };
     Q_DECLARE_FLAGS(Flags, Flag)
 
+    ///@brief List of customizable widgets
+    enum CustomizableWidget {
+        CustomizableWidget_None = 0, ///< None
+        CustomizableWidget_TitleBar, ///< The title bar
+        CustomizableWidget_DockWidget, ///< The dock widget
+        CustomizableWidget_Frame, ///< The container for a group of 1 or more dockwidgets which are tabbed together
+        CustomizableWidget_TabBar, ///< The tab bar, child of Frame, which contains 1 or more dock widgets
+        CustomizableWidget_TabWidget, ///< The tab widget which relates to the tab bar
+        CustomizableWidget_FloatingWindow, ///< A top-level window. The container for 1 or more Frame nested side by side
+        CustomizableWidget_Separator ///< The draggable separator between dock widgets in a layout
+    };
+     Q_DECLARE_FLAGS(CustomizableWidgets, CustomizableWidget)
+
     ///@internal
     ///Internal flags for addtional tunning.
     ///@warning Not for public consumption, support will be limited.
