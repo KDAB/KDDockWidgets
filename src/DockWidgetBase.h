@@ -498,6 +498,9 @@ protected:
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);
 
+    ///@reimp
+    bool eventFilter(QObject *, QEvent *) override;
+
 #ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
     void onCloseEvent(QCloseEvent *e) override;
     bool onResize(QSize newSize) override;
@@ -566,9 +569,6 @@ private:
 
     ///@brief Updates the floatAction state
     void updateFloatAction();
-
-    ///@reimp
-    bool eventFilter(QObject *, QEvent *) override;
 
     class Private;
     Private *const d;
