@@ -16,6 +16,8 @@
   - Support for resizing dock widgets when they are in overlay/popup mode (autohide/sidebar feature)
   - Fixed title bar close button enabled state not being restored with Layout saver (#137)
   - Installs a version header (kddockwidgets_version.h) that defines a version string and other useful versioning macros (#138)
+  - DockWidgetBase::eventFilter() is protected instead of private (regression vs v1.1) (#148)
+    It's recommended that you rebuild your application when updating KDDW, as MSVC encodes private/protected in the name mangling.
 
 * v1.2.0 (17 December 2020)
   - Wayland support
