@@ -61,14 +61,6 @@ public:
     }
 
     ~MyCentralWidget() override;
-
-    void paintEvent(QPaintEvent *) override
-    {
-        QPainter p(this);
-        QPen pen(QColor(184, 184, 184, 184));
-        p.setPen(pen);
-        p.drawLine(0, 0, width(), 0);
-    }
 };
 }
 
