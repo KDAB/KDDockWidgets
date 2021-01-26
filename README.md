@@ -153,6 +153,20 @@ $ rcc -g python -o rc_assets.py ../../examples/dockwidgets/resources_example.qrc
 $ python3 main.py
 ```
 
+Versioning
+==========
+
+New features go to master while the stable branch only accepts non-intrusive bug fixes.
+
+We'll try to remain source-compatible across versions. API will get a deprecation
+notice before being removed in the next version. Note that this source-compatibility
+effort is only for the public API. Private API (headers ending in _p.h) might change so you
+shouldn't depend on them. Private API is only exposed so more advanced users can
+override, for example `paintEvent()`, and not so they can change internal business logic.
+
+We don't promiss or test binary compatibility. It's advised that you recompile
+your application whenever updating KDDW.
+
 
 Supported Qt versions and toolchains
 =====================================
