@@ -25,3 +25,4 @@
 #include <kddockwidgets/MainWindow.h>
 #include <kddockwidgets/DockWidgetBase.h>
 #include <kddockwidgets/DockWidget.h>
+#include <kddockwidgets/LayoutSaver.h>

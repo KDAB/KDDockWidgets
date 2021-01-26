@@ -20,6 +20,8 @@ set(PyKDDockWidgets_SRC
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindowbase_wrapper.h
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindow_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindow_wrapper.h
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.h
     # namespace wrapper
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_wrapper.h
@@ -59,6 +61,7 @@ set(PyKDDockWidgets_DEPENDS
     ${CMAKE_SOURCE_DIR}/src/DockWidget.h
     ${CMAKE_SOURCE_DIR}/src/MainWindowBase.h
     ${CMAKE_SOURCE_DIR}/src/MainWindow.h
+    ${CMAKE_SOURCE_DIR}/src/LayoutSaver.h
 )
 
 create_python_bindings(
