@@ -102,9 +102,11 @@ set(DOCKS_INSTALLABLE_INCLUDES
 set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/DragController_p.h
     private/Draggable_p.h
+    private/DropArea_p.h
     private/DropIndicatorOverlayInterface_p.h
     private/FloatingWindow_p.h
     private/Frame_p.h
+    private/MultiSplitter_p.h
     private/SideBar_p.h
     private/TitleBar_p.h
     private/WindowBeingDragged_p.h
