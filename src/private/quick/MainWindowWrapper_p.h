@@ -12,7 +12,7 @@
 #ifndef KD_MAIN_WINDOW_WRAPPER_P_H
 #define KD_MAIN_WINDOW_WRAPPER_P_H
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
 #include "QWidgetAdapter.h"
 
 #include <QQuickItem>

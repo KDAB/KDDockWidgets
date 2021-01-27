@@ -12,7 +12,8 @@
 #ifndef KD_SIDEBAR_P_H
 #define KD_SIDEBAR_P_H
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
+
 #include "KDDockWidgets.h"
 #include "QWidgetAdapter.h"
 
