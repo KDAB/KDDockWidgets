@@ -7,7 +7,8 @@
   "settings": {
     "C_Cpp.default.compileCommands": "${workspaceFolder}/build-dev-qtwidgets6/compile_commands.json",
     "C_Cpp.default.cStandard": "c17",
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "editor.formatOnType": true
   },
   "tasks": {
     "version": "2.0.0",
