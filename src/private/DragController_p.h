@@ -12,7 +12,7 @@
 #ifndef KD_DRAGCONTROLLER_P_H
 #define KD_DRAGCONTROLLER_P_H
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
 
 #include "TitleBar_p.h"
 #include "WindowBeingDragged_p.h"

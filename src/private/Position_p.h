@@ -18,7 +18,8 @@
 #ifndef KDDOCKWIDGETS_POSITION_P_H
 #define KDDOCKWIDGETS_POSITION_P_H
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
+
 #include "Logging_p.h"
 #include "LayoutSaver.h"
 #include "QWidgetAdapter.h"
