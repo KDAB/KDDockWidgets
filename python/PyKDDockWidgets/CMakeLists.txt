@@ -56,6 +56,7 @@ set(PyKDDockWidgets_DEPENDS
     ${CMAKE_SOURCE_DIR}/src/DockWidget.h
     ${CMAKE_SOURCE_DIR}/src/MainWindowBase.h
     ${CMAKE_SOURCE_DIR}/src/MainWindow.h
+    ${CMAKE_SOURCE_DIR}/src/LayoutSaver.h
 )
 
 create_python_bindings(
