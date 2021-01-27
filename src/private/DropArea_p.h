@@ -20,8 +20,8 @@
 #define KD_DROP_AREA_P_H
 
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/KDDockWidgets.h"
 #include "Frame_p.h"
-#include "KDDockWidgets.h"
 #include "MultiSplitter_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 

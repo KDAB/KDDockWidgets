@@ -22,12 +22,11 @@
 #ifndef KDDOCKWIDGETS_MULTISPLITTER_P_H
 #define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
-#include "docks_export.h"
-#include "multisplitter/Separator_p.h"
-#include "QWidgetAdapter.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/QWidgetAdapter.h"
+#include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
-
+#include "multisplitter/Separator_p.h"
 
 namespace Layouting {
 class Item;
