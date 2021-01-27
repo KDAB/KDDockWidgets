@@ -26,6 +26,7 @@
 #include "Config.h"
 #include "TitleBar_p.h"
 #include "FrameworkWidgetFactory.h"
+#include "kddockwidgets/LayoutSaver.h"
 
 #include <QCloseEvent>
 #include <QTimer>

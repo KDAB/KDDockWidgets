@@ -26,7 +26,7 @@
 #include "multisplitter/Separator_p.h"
 #include "QWidgetAdapter.h"
 #include "KDDockWidgets.h"
-#include "LayoutSaver_p.h"
+#include "kddockwidgets/LayoutSaver.h"
 
 
 namespace Layouting {

@@ -14,7 +14,7 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/QWidgetAdapter.h"
-#include "LayoutSaver_p.h"
+#include "kddockwidgets/LayoutSaver.h"
 #include "Frame_p.h"
 #include "Draggable_p.h"
 #include "DropArea_p.h"

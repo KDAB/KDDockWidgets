@@ -22,7 +22,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/QWidgetAdapter.h"
 #include "kddockwidgets/FocusScope.h"
-#include "../LayoutSaver_p.h"
+#include "kddockwidgets/LayoutSaver.h"
 #include "multisplitter/Widget.h"
 #include "multisplitter/Item_p.h"
 

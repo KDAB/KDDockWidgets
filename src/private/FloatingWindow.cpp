@@ -20,6 +20,7 @@
 #include "DockRegistry_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+#include "../LayoutSaver_p.h"
 
 #include <QCloseEvent>
 #include <QAbstractNativeEventFilter>
