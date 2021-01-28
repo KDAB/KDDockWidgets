@@ -325,8 +325,7 @@ QIcon DockWidgetBase::icon(IconPlace place) const
 
 void DockWidgetBase::forceClose()
 {
-    QScopedValueRollback<bool> rollback(d->m_isForceClosing, true);
-    d->close();
+    d->forceClose();
 }
 
 TitleBar *DockWidgetBase::titleBar() const
@@ -805,4 +804,10 @@ LayoutSaver::DockWidget::Ptr DockWidgetBase::serialize() const
     ptr->affinities = affinities();
 
     return ptr;
+}
+
+void DockWidgetBase::Private::forceClose()
+{
+    QScopedValueRollback<bool> rollback(m_isForceClosing, true);
+    close();
 }

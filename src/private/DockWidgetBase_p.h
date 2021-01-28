@@ -15,6 +15,8 @@
 #include "DockWidgetBase.h"
 #include "SideBar_p.h"
 #include "DockRegistry_p.h"
+#include "Position_p.h"
+#include "FloatingWindow_p.h"
 
 #include <QString>
 #include <QSize>
@@ -91,6 +93,7 @@ public:
         return DockRegistry::self()->sideBarForDockWidget(q);
     }
 
+    void forceClose();
     QPoint defaultCenterPosForFloating();
 
     void updateTitle();
