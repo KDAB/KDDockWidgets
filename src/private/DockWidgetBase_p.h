@@ -130,6 +130,7 @@ public:
     bool m_updatingToggleAction = false;
     bool m_updatingFloatAction = false;
     bool m_isForceClosing = false;
+    bool m_isMovingToSideBar = false;
     QSize m_lastOverlayedSize = QSize(0, 0);
 };
 

@@ -261,6 +261,7 @@ private Q_SLOTS:
     void tst_closeRemovesFromSideBar();
     void tst_restoreSideBar();
     void tst_toggleActionOnSideBar();
+    void tst_deleteOnCloseWhenOnSideBar();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -6822,6 +6823,22 @@ void TestDocks::tst_toggleAction()
     QVERIFY(Testing::waitForDeleted(frame2));
 
     QCOMPARE(root->visibleCount_recursive(), 2);
+}
+
+void TestDocks::tst_deleteOnCloseWhenOnSideBar()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    QPointer<DockWidgetBase> dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose);
+    m->addDockWidget(dock1, Location_OnLeft);
+
+    dock1->moveToSideBar();
+    QVERIFY(dock1);
+    QVERIFY(dock1->isInSideBar());
+
+    QTest::qWait(500);
+    QVERIFY(dock1);
 }
 
 #include "tst_docks.moc"

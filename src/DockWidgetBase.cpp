@@ -639,7 +639,7 @@ void DockWidgetBase::Private::close()
         }
     }
 
-    if (options & DockWidgetBase::Option_DeleteOnClose)
+    if (!m_isMovingToSideBar && (options & DockWidgetBase::Option_DeleteOnClose))
         q->deleteLater();
 }
 

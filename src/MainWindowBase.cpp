@@ -29,6 +29,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "DropAreaWithCentralFrame_p.h"
 #include "LayoutSaver_p.h"
+#include "DockWidgetBase_p.h"
 
 using namespace KDDockWidgets;
 
@@ -420,6 +421,7 @@ void MainWindowBase::moveToSideBar(DockWidgetBase *dw)
 void MainWindowBase::moveToSideBar(DockWidgetBase *dw, SideBarLocation location)
 {
     if (SideBar *sb = sideBar(location)) {
+        QScopedValueRollback<bool> rollback(dw->d->m_isMovingToSideBar, true);
         dw->forceClose();
         sb->addDockWidget(dw);
     } else {
