@@ -12,6 +12,13 @@
 #ifndef KD_DOCKWIDGET_BASE_P_H
 #define KD_DOCKWIDGET_BASE_P_H
 
+#include "DockWidgetBase.h"
+#include "SideBar_p.h"
+#include "DockRegistry_p.h"
+
+#include <QString>
+#include <QSize>
+
 namespace KDDockWidgets {
 
 class DockWidgetBase::Private
