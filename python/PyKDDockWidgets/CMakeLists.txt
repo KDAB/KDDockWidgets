@@ -20,6 +20,8 @@ set(PyKDDockWidgets_SRC
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindowbase_wrapper.h
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindow_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_mainwindow_wrapper.h
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_layoutsaver_wrapper.h
     # global module wrapper
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_module_wrapper.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets/kddockwidgets_python.h
