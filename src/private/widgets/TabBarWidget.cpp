@@ -149,3 +149,8 @@ QRect TabBarWidget::rectForTab(int index) const
 {
     return QTabBar::tabRect(index);
 }
+
+void TabBarWidget::moveTabTo(int from, int to)
+{
+    moveTab(from, to);
+}

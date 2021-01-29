@@ -130,3 +130,10 @@ QQuickItem* TabBarQuick::listView() const
 
     return nullptr;
 }
+
+void TabBarQuick::moveTabTo(int from, int to)
+{
+    Q_UNUSED(from);
+    Q_UNUSED(to);
+    // Not implemented yet
+}

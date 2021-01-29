@@ -82,6 +82,9 @@ public:
 
     Frame *frame() const;
 
+    /// Like QTabBar::moveTab(from, to)
+    virtual void moveTabTo(int from, int to) = 0;
+
 private:
     TabWidget *const m_tabWidget;
     QPointer<DockWidgetBase> m_lastPressedDockWidget = nullptr;

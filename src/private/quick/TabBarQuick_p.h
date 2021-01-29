@@ -44,6 +44,8 @@ public:
     QString text(int index) const override;
     QRect rectForTab(int index) const override;
 
+    void moveTabTo(int from, int to) override;
+
 Q_SIGNALS:
     void tabBarQmlItemChanged();
 

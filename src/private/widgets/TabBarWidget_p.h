@@ -48,6 +48,7 @@ public:
 
     QString text(int index) const override;
     QRect rectForTab(int index) const override;
+    void moveTabTo(int from, int to) override;
 
 protected:
     bool dragCanStart(QPoint pressPos, QPoint pos) const override;

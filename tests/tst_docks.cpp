@@ -245,6 +245,7 @@ private Q_SLOTS:
     void tst_dock2FloatingWidgetsTabbed();
     void tst_deleteOnClose();
     void tst_toggleAction();
+    void tst_redocksToPreviousTabIndex();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
@@ -6837,6 +6838,53 @@ void TestDocks::tst_toggleAction()
     QVERIFY(Testing::waitForDeleted(frame2));
 
     QCOMPARE(root->visibleCount_recursive(), 2);
+}
+
+void TestDocks::tst_redocksToPreviousTabIndex()
+{
+    // Checks that when reordering tabs with mouse, floating and redocking, they go back to their previous index
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AllowReorderTabs);
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
+    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
+    m->addDockWidget(dock0, Location_OnLeft);
+    dock0->addDockWidgetAsTab(dock1);
+
+    QCOMPARE(dock0->tabIndex(), 0);
+    QCOMPARE(dock1->tabIndex(), 1);
+
+    dock0->setFloating(true);
+    QCOMPARE(dock1->tabIndex(), 0);
+
+    dock0->setFloating(false);
+    QCOMPARE(dock0->tabIndex(), 0);
+    QCOMPARE(dock1->tabIndex(), 1);
+
+    Frame *frame = dock0->frame();
+    auto tb = dock0->frame()->tabWidget()->tabBar();
+    tb->moveTabTo(0, 1);
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    QCOMPARE(dock0->tabIndex(), 1);
+    QCOMPARE(dock1->tabIndex(), 0);
+
+    // Also detach via detachTab(), which is what is called when the user detaches with mouse
+    frame->detachTab(dock0);
+    dock0->setFloating(false);
+
+    QEXPECT_FAIL("", "Will fix", Continue);
+    QCOMPARE(dock0->tabIndex(), 1);
+    QEXPECT_FAIL("", "Will fix", Continue);
+    QCOMPARE(dock1->tabIndex(), 0);
+#else
+    // An XFAIL so we remember to implement this
+    QEXPECT_FAIL("", "TabBar::moveTabTo not implemented for QtQuick yet", Continue);
+    QVERIFY(false);
+    Q_UNUSED(frame);
+#endif
 }
 
 #include "tst_docks.moc"
