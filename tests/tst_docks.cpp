@@ -6829,9 +6829,7 @@ void TestDocks::tst_toggleAction()
     QCOMPARE(root->visibleCount_recursive(), 3);
     QVERIFY(dock2->toggleAction()->isChecked());
     QPointer<Frame> frame2 = dock2->frame();
-    qDebug() << "TOGGLE START";
     dock2->toggleAction()->toggle();
-    qDebug() << "TOGGLED";
     QVERIFY(!dock2->toggleAction()->isChecked());
 
     QVERIFY(!dock2->isVisible());
