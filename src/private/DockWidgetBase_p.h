@@ -18,12 +18,13 @@
 #include "Position_p.h"
 #include "FloatingWindow_p.h"
 
+#include <QCoreApplication>
 #include <QString>
 #include <QSize>
 
 namespace KDDockWidgets {
 
-class DockWidgetBase::Private
+class DockWidgetBase::Private : public QObject
 {
 public:
     Private(const QString &dockName, DockWidgetBase::Options options_,
@@ -56,6 +57,8 @@ public:
 
         toggleAction->setCheckable(true);
         floatAction->setCheckable(true);
+
+        qApp->installEventFilter(this);
     }
 
     void init()
@@ -95,6 +98,8 @@ public:
 
     void forceClose();
     QPoint defaultCenterPosForFloating();
+
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
     void updateTitle();
     void toggle(bool enabled);

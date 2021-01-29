@@ -52,7 +52,6 @@ DockWidgetBase::DockWidgetBase(const QString &name, Options options,
         qWarning() << Q_FUNC_INFO << "Name can't be null";
 
     setAttribute(Qt::WA_PendingMoveEvent, false);
-    qApp->installEventFilter(this);
 }
 
 DockWidgetBase::~DockWidgetBase()
@@ -541,16 +540,6 @@ void DockWidgetBase::updateFloatAction()
     d->updateFloatAction();
 }
 
-bool DockWidgetBase::eventFilter(QObject *watched, QEvent *event)
-{
-    const bool isWindowActivate = event->type() == QEvent::WindowActivate;
-    const bool isWindowDeactivate = event->type() == QEvent::WindowDeactivate;
-    if ((isWindowActivate || isWindowDeactivate) && watched == window())
-        Q_EMIT windowActiveAboutToChange(isWindowActivate);
-
-    return QWidgetAdapter::eventFilter(watched, event);
-}
-
 QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
 {
     MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
@@ -560,6 +549,16 @@ QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
         return {};
 
     return mw->geometry().center();
+}
+
+bool DockWidgetBase::Private::eventFilter(QObject *watched, QEvent *event)
+{
+    const bool isWindowActivate = event->type() == QEvent::WindowActivate;
+    const bool isWindowDeactivate = event->type() == QEvent::WindowDeactivate;
+    if ((isWindowActivate || isWindowDeactivate) && watched == q->window())
+        Q_EMIT q->windowActiveAboutToChange(isWindowActivate);
+
+    return QObject::eventFilter(watched, event);
 }
 
 void DockWidgetBase::Private::updateTitle()
