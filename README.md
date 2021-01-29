@@ -188,13 +188,20 @@ Contact KDAB at <info@kdab.com> to inquire about commercial licensing.
 
 Get Involved
 ============
+Please submit your issue reports to our GitHub space at
+https://github.com/KDAB/KDDockWidgets
+
+
+When reporting bugs please make it easy for the maintainer to reproduce it. Use `examples/dockwidgets/`
+for reproducing the problem. If you did modifications to the example in order to repro then please
+attach the *patch* and not a picture of your changes.
+
+
 KDAB will happily accept external contributions; however, **all** contributions require a
 signed [Copyright Assignment Agreement](docs/KDDockWidgets-CopyrightAssignmentForm.docx).
+This is needed so we can continue to dual-license it.
 
 Contact info@kdab.com for more information.
-
-Please submit your contributions or issue reports from our GitHub space at
-https://github.com/KDAB/KDDockWidgets
 
 
 About KDAB
