@@ -247,6 +247,12 @@ public:
      */
     void setAsCurrentTab();
 
+
+    /**
+     * @brief Returns which tab index this dock widget occupies in the tab widget it's contained in
+     */
+    int tabIndex() const;
+
     /**
      * @brief Sets an icon to show on title bars and tab bars.
      * @param places Specifies where the icon will be shown (TitleBar, TabBar, ToggleAction, or All)
