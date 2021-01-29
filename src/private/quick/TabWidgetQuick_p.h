@@ -46,7 +46,7 @@ public:
 
     int numDockWidgets() const override;
     void removeDockWidget(DockWidgetBase *) override;
-    int indexOfDockWidget(DockWidgetBase *) const override;
+    int indexOfDockWidget(const DockWidgetBase *) const override;
     DockWidgetModel *dockWidgetModel() const;
     DockWidgetBase *dockwidgetAt(int index) const override;
     int currentIndex() const override;
@@ -88,7 +88,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
     DockWidgetBase *dockWidgetAt(int index) const;
     void remove(DockWidgetBase *);
-    int indexOf(DockWidgetBase *);
+    int indexOf(const DockWidgetBase *);
     bool insert(DockWidgetBase *dw, int index);
     bool contains(DockWidgetBase *dw) const;
 protected:

@@ -40,7 +40,7 @@ public:
 
     int numDockWidgets() const override;
     void removeDockWidget(DockWidgetBase *) override;
-    int indexOfDockWidget(DockWidgetBase *) const override;
+    int indexOfDockWidget(const DockWidgetBase *) const override;
 
 Q_SIGNALS:
     void currentTabChanged(int index) override;

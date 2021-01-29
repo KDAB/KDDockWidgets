@@ -43,7 +43,7 @@ void TabWidgetQuick::removeDockWidget(DockWidgetBase *dw)
     m_dockWidgetModel->remove(dw);
 }
 
-int TabWidgetQuick::indexOfDockWidget(DockWidgetBase *dw) const
+int TabWidgetQuick::indexOfDockWidget(const DockWidgetBase *dw) const
 {
     return m_dockWidgetModel->indexOf(dw);
 }
@@ -186,9 +186,9 @@ void DockWidgetModel::remove(DockWidgetBase *dw)
     }
 }
 
-int DockWidgetModel::indexOf(DockWidgetBase *dw)
+int DockWidgetModel::indexOf(const DockWidgetBase *dw)
 {
-    return m_dockWidgets.indexOf(dw);
+    return m_dockWidgets.indexOf(const_cast<DockWidgetBase*>(dw));
 }
 
 bool DockWidgetModel::insert(DockWidgetBase *dw, int index)

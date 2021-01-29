@@ -199,7 +199,7 @@ FloatingWindow* Frame::detachTab(DockWidgetBase *dockWidget)
     return floatingWindow;
 }
 
-int Frame::indexOfDockWidget(DockWidgetBase *dw)
+int Frame::indexOfDockWidget(const DockWidgetBase *dw)
 {
     if (m_inCtor || m_inDtor) return -1;
 

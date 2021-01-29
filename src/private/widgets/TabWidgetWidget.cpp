@@ -69,9 +69,9 @@ void TabWidgetWidget::removeDockWidget(DockWidgetBase *dw)
     removeTab(indexOf(dw));
 }
 
-int TabWidgetWidget::indexOfDockWidget(DockWidgetBase *dw) const
+int TabWidgetWidget::indexOfDockWidget(const DockWidgetBase *dw) const
 {
-    return indexOf(dw);
+    return indexOf(const_cast<DockWidgetBase*>(dw));
 }
 
 void TabWidgetWidget::mouseDoubleClickEvent(QMouseEvent *ev)

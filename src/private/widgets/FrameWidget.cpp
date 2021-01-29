@@ -101,7 +101,7 @@ QSize FrameWidget::maxSizeHint() const
     return waste + biggestDockWidgetMaxSize();
 }
 
-int FrameWidget::indexOfDockWidget_impl(DockWidgetBase *dw)
+int FrameWidget::indexOfDockWidget_impl(const DockWidgetBase *dw)
 {
     return m_tabWidget->indexOfDockWidget(dw);
 }

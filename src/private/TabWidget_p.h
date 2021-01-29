@@ -109,7 +109,7 @@ public:
     /**
      * @brief Returns the index of the dock widget, or -1 if it doesn't exist
      */
-    virtual int indexOfDockWidget(DockWidgetBase *) const = 0;
+    virtual int indexOfDockWidget(const DockWidgetBase *) const = 0;
 
     /**
      * @brief Sets the current dock widget index

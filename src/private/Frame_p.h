@@ -84,7 +84,7 @@ public:
     FloatingWindow *detachTab(DockWidgetBase *);
 
     ///@brief returns the index of the specified dock widget
-    int indexOfDockWidget(DockWidgetBase *);
+    int indexOfDockWidget(const DockWidgetBase *);
 
     ///@brief returns the index of the current tab
     int currentIndex() const;
@@ -293,7 +293,7 @@ protected:
     QSize biggestDockWidgetMaxSize() const;
 
     virtual void removeWidget_impl(DockWidgetBase *) = 0;
-    virtual int indexOfDockWidget_impl(DockWidgetBase *) = 0;
+    virtual int indexOfDockWidget_impl(const DockWidgetBase *) = 0;
     virtual int currentIndex_impl() const = 0;
     virtual void setCurrentTabIndex_impl(int index) = 0;
     virtual void setCurrentDockWidget_impl(DockWidgetBase *) = 0;

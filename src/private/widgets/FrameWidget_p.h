@@ -39,7 +39,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *) override;
     QSize maxSizeHint() const override;
-    int indexOfDockWidget_impl(DockWidgetBase *) override;
+    int indexOfDockWidget_impl(const DockWidgetBase *) override;
     void setCurrentDockWidget_impl(DockWidgetBase *) override;
     int currentIndex_impl() const override;
     void insertDockWidget_impl(DockWidgetBase *, int index) override;
