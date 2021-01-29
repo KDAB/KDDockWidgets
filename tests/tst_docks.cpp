@@ -6875,9 +6875,7 @@ void TestDocks::tst_redocksToPreviousTabIndex()
     frame->detachTab(dock0);
     dock0->setFloating(false);
 
-    QEXPECT_FAIL("", "Will fix", Continue);
     QCOMPARE(dock0->tabIndex(), 1);
-    QEXPECT_FAIL("", "Will fix", Continue);
     QCOMPARE(dock1->tabIndex(), 0);
 #else
     // An XFAIL so we remember to implement this

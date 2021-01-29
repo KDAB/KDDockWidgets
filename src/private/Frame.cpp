@@ -28,6 +28,7 @@
 #include "TabWidget_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "LayoutSaver_p.h"
+#include "DockWidgetBase_p.h"
 
 #include <QCloseEvent>
 #include <QTimer>
@@ -181,6 +182,8 @@ void Frame::removeWidget(DockWidgetBase *dw)
 FloatingWindow* Frame::detachTab(DockWidgetBase *dockWidget)
 {
     if (m_inCtor || m_inDtor) return nullptr;
+
+    dockWidget->d->saveTabIndex();
 
     QRect r = dockWidget->geometry();
     removeWidget(dockWidget);
