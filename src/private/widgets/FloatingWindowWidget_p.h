@@ -30,10 +30,12 @@ public:
 protected:
     void paintEvent(QPaintEvent *) override;
     bool event(QEvent *ev) override;
+
+    QVBoxLayout *const m_vlayout;
+
 private:
     void init();
     Q_DISABLE_COPY(FloatingWindowWidget)
-    QVBoxLayout *const m_vlayout;
 };
 
 }
