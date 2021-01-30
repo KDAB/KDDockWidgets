@@ -83,8 +83,16 @@ public:
 # endif
 #endif // Q_OS_WIN
 
+/** static */
+Qt::WindowFlags FloatingWindow::s_windowFlagsOverride = {};
+
 static Qt::WindowFlags windowFlagsToUse()
 {
+    if (FloatingWindow::s_windowFlagsOverride) {
+        // The user specifically set different flags.
+        return FloatingWindow::s_windowFlagsOverride;
+    }
+
     if (KDDockWidgets::usesNativeDraggingAndResizing())
         return Qt::Window;
 
