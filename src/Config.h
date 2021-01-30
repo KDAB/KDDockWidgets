@@ -63,7 +63,7 @@ public:
     ///@brief Flag enum to tune certain behaviours, the defaults are Flag_Default
     enum Flag {
         Flag_None = 0, ///< No option set
-        Flag_NativeTitleBar = 1, ///< Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise. This is mutually exclusive with Flag_AeroSnap
+        Flag_NativeTitleBar = 1, ///< Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise.
         Flag_AeroSnapWithClientDecos = 2, ///< Deprecated. This is now default and cannot be turned off. Moving a window on Windows 10 uses native moving, as that works well across screens with different HDPI settings. There's no reason to use manual client/Qt window moving.
         Flag_AlwaysTitleBarWhenFloating = 4, ///< Floating windows will have a title bar even if Flag_HideTitleBarWhenTabsVisible is specified. Unneeded if Flag_HideTitleBarWhenTabsVisible isn't specified, as that's the default already.
         Flag_HideTitleBarWhenTabsVisible = 8, ///< Hides the title bar if there's tabs visible. The empty space in the tab bar becomes draggable.
@@ -75,7 +75,7 @@ public:
         Flag_TitleBarIsFocusable = 512, ///< You can click the title bar and it will focus the last focused widget in the focus scope. If no previously focused widget then it focuses the user's dock widget guest, which should accept focus or use a focus proxy.
         Flag_LazyResize = 1024, ///< The dock widgets are resized in a lazy manner. The actual resize only happens when you release the mouse button.
         Flag_DontUseUtilityFloatingWindows = 0x1000,
-        Flag_TitleBarHasMinimizeButton = 0x2000 | Flag_DontUseUtilityFloatingWindows, ///< The title bar will have a minimize button when floating. This implies Flag_DontUseUtilityFloatingWindows too, otherwise they wouldn't appear in the task bar.        
+        Flag_TitleBarHasMinimizeButton = 0x2000 | Flag_DontUseUtilityFloatingWindows, ///< The title bar will have a minimize button when floating. This implies Flag_DontUseUtilityFloatingWindows too, otherwise they wouldn't appear in the task bar.
         Flag_TitleBarNoFloatButton = 0x4000, ///< The TitleBar won't show the float button
         Flag_AutoHideSupport = 0x8000 | Flag_TitleBarNoFloatButton, ///< Supports minimizing dock widgets to the side-bar.
                                                                     ///< By default it also turns off the float button, but you can remove Flag_TitleBarNoFloatButton to have both.
