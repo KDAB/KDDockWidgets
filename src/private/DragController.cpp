@@ -648,6 +648,10 @@ static QWidgetOrQuick *qtTopLevelForHWND(HWND hwnd)
 {
     const QList<QWindow*> windows = qApp->topLevelWindows();
     for (QWindow *window : windows) {
+        if (!window->isVisible()) {
+            continue;
+        }
+
         if (hwnd == (HWND)window->winId()) {
             return DockRegistry::self()->topLevelForHandle(window);
         }
