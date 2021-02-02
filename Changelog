@@ -14,6 +14,7 @@
   - Fixed bug where last tab index position wouldn't be remembered in case user
     had manually reordered tabs (#154)
   - Fixed crash when hosting a QQuickWidget (#150)
+  - Fixed CMake Visual Studio generator not working
 
 * v1.2.1 (unreleased)
   - Support for resizing dock widgets when they are in overlay/popup mode (autohide/sidebar feature)

@@ -191,15 +191,17 @@ if(${PROJECT_NAME}_PYTHON_BINDINGS)
 endif()
 
 # Generate .pri file for qmake users
-include(ECMGeneratePriFile)
-set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
-ecm_generate_pri_file(BASE_NAME KDDockWidgets
-  LIB_NAME kddockwidgets
-  DEPS ${${PROJECT_NAME}_DEPS}
-  FILENAME_VAR pri_filename
-  INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}
-)
-install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+if (NOT CMAKE_CONFIGURATION_TYPES) # Not working with VS generator
+  include(ECMGeneratePriFile)
+  set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
+  ecm_generate_pri_file(BASE_NAME KDDockWidgets
+    LIB_NAME kddockwidgets
+    DEPS ${${PROJECT_NAME}_DEPS}
+    FILENAME_VAR pri_filename
+    INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+  install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+endif()
 
 install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
 install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})

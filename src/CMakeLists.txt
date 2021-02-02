@@ -266,13 +266,18 @@ set_target_properties(kddockwidgets PROPERTIES
 
 #version libraries on Windows
 if(WIN32)
-  set(postfix ${${PROJECT_NAME}_VERSION_MAJOR})
-  string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
-  if(${UPPER_BUILD_TYPE} MATCHES "^DEBUG")
-    string(CONCAT postfix ${postfix} "d")
-    set_target_properties(kddockwidgets PROPERTIES DEBUG_POSTFIX ${postfix})
-  else()
-    set_target_properties(kddockwidgets PROPERTIES ${UPPER_BUILD_TYPE}_POSTFIX ${postfix})
+  if (CMAKE_BUILD_TYPE)
+    set(postfix ${${PROJECT_NAME}_VERSION_MAJOR})
+    string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
+    if(${UPPER_BUILD_TYPE} MATCHES "^DEBUG")
+      string(CONCAT postfix ${postfix} "d")
+      set_target_properties(kddockwidgets PROPERTIES DEBUG_POSTFIX ${postfix})
+    else()
+      set_target_properties(kddockwidgets PROPERTIES ${UPPER_BUILD_TYPE}_POSTFIX ${postfix})
+    endif()
+  elseif(CMAKE_CONFIGURATION_TYPES)
+    # Visual Studio generator
+    set_target_properties(kddockwidgets PROPERTIES DEBUG_POSTFIX d)
   endif()
 endif()
 

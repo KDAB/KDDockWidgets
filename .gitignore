@@ -58,3 +58,9 @@ kddockwidgets_minimal_example
 /CMakeDoxygenDefaults.cmake
 /Testing
 /layout_tst*
+/x64
+/src/kddockwidgets_version.h
+*.vcxproj*
+*.sln
+*.dir
+
