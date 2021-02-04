@@ -637,7 +637,16 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         auto p = watched;
         while (p) {
             if (auto dw = qobject_cast<DockWidgetBase*>(p))
-                return onDockWidgetPressed(dw, static_cast<QMouseEvent*>(event));
+                return onDockWidgetPressed(dw, static_cast<QMouseEvent *>(event));
+
+            if (auto dropArea = qobject_cast<DropArea *>(p)) {
+                if (auto mw = dropArea->mainWindow()) {
+                    // The user clicked somewhere in the main window's drop area, but outside of the
+                    // overlayed dock widget
+                    mw->clearSideBarOverlay();
+                    return false;
+                }
+            }
 
             p = p->parent();
         }

@@ -263,6 +263,7 @@ private Q_SLOTS:
     void tst_restoreSideBar();
     void tst_toggleActionOnSideBar();
     void tst_deleteOnCloseWhenOnSideBar();
+    void tst_sidebarOverlayGetsHiddenOnClick();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -5213,6 +5214,61 @@ void TestDocks::tst_deleteOnCloseWhenOnSideBar()
 
     QTest::qWait(500);
     QVERIFY(dock1);
+}
+
+void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+    {
+        // Case #1 click on another dockwidget should hide the overlay
+
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = new DockWidgetType(QStringLiteral("1"));
+        auto dw2 = new DockWidgetType(QStringLiteral("2"));
+
+        m1->addDockWidget(dw1, Location_OnBottom);
+        m1->addDockWidget(dw2, Location_OnBottom);
+
+        m1->moveToSideBar(dw1);
+        m1->overlayOnSideBar(dw1);
+
+        QVERIFY(dw1->isOverlayed());
+
+        Tests::clickOn(dw2->mapToGlobal(dw2->rect().bottomLeft() + QPoint(5, -5)), dw2);
+        QVERIFY(!dw1->isOverlayed());
+
+        auto widget2 = new MyWidget("foo");
+        dw2->setWidget(widget2);
+        m1->overlayOnSideBar(dw1);
+        QVERIFY(dw1->isOverlayed());
+
+        Tests::clickOn(widget2->mapToGlobal(widget2->rect().bottomLeft() + QPoint(5, -5)), widget2);
+        QVERIFY(!dw1->isOverlayed());
+
+        delete dw1;
+    }
+
+    {
+        // Case #1 click on empty main window space, should hide the overlay
+
+        auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+        auto dw1 = new DockWidgetType(QStringLiteral("1"));
+
+        m1->addDockWidget(dw1, Location_OnBottom);
+
+        m1->moveToSideBar(dw1);
+        m1->overlayOnSideBar(dw1);
+
+        QVERIFY(dw1->isOverlayed());
+
+        const QPoint localPt(100, 250);
+        Tests::clickOn(m1->mapToGlobal(m1->rect().topLeft() + localPt), m1->childAt(localPt));
+        QVERIFY(!dw1->isOverlayed());
+
+        delete dw1;
+    }
 }
 
 void TestDocks::tst_embeddedMainWindow()

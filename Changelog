@@ -23,6 +23,7 @@
   - DockWidgetBase::eventFilter() is protected instead of private (regression vs v1.1) (#148)
     It's recommended that you rebuild your application when updating KDDW, as MSVC encodes private/protected in the name mangling.
   - Fixed WASM build on Windows (#163)
+  - Fixed sidebar overlay not getting hidden when clicking on the main window docking area (#157)
 
 * v1.2.0 (17 December 2020)
   - Wayland support
