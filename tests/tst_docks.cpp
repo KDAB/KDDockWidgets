@@ -5261,7 +5261,8 @@ void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
 
         QVERIFY(dw1->isOverlayed());
 
-        Tests::clickOn(m1->mapToGlobal(m1->rect().bottomLeft() + QPoint(5, -5)), m1.get());
+        const QPoint localPt(100, 250);
+        Tests::clickOn(m1->mapToGlobal(m1->rect().topLeft() + localPt), m1->childAt(localPt));
         QEXPECT_FAIL("", "will fix", Continue);
         QVERIFY(!dw1->isOverlayed());
 
