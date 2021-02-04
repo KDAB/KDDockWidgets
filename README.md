@@ -164,7 +164,7 @@ effort is only for the public API. Private API (headers ending in _p.h) might ch
 shouldn't depend on them. Private API is only exposed so more advanced users can
 override, for example `paintEvent()`, and not so they can change internal business logic.
 
-We don't promiss or test binary compatibility. It's advised that you recompile
+We don't promise or test binary compatibility. It's advised that you recompile
 your application whenever updating KDDW.
 
 
@@ -201,7 +201,7 @@ Also state which KDDW sha1, branch or version you're using, and which operating 
 
 
 KDAB will happily accept external contributions; however, **all** contributions require a
-signed [Copyright Assignment Agreement](docs/KDDockWidgets-CopyrightAssignmentForm.docx).
+signed [Copyright Assignment Agreement](docs/KDDockWidgets-CopyrightAssignmentForm.pdf).
 This is needed so we can continue to dual-license it.
 
 Contact info@kdab.com for more information.
