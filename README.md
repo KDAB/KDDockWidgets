@@ -168,7 +168,7 @@ Contact KDAB at <info@kdab.com> to inquire about commercial licensing.
 Get Involved
 ============
 KDAB will happily accept external contributions; however, **all** contributions require a
-signed [Copyright Assignment Agreement](docs/KDDockWidgets-CopyrightAssignmentForm.docx).
+signed [Copyright Assignment Agreement](docs/KDDockWidgets-CopyrightAssignmentForm.pdf).
 
 Contact info@kdab.com for more information.
 
