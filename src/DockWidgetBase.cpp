@@ -64,6 +64,11 @@ public:
             }
 
             Q_EMIT q->isFloatingChanged(checked);
+            // When floating, we remove from the sidebar
+            if (checked && q->isOpen()) {
+                if (SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q))
+                    sb->removeDockWidget(q);
+            }
         });
 
         toggleAction->setCheckable(true);

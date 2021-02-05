@@ -5291,7 +5291,6 @@ void TestDocks::tst_floatRemovesFromSideBar()
     QVERIFY(dw1->isFloating());
     QVERIFY(!dw1->isInMainWindow());
 
-    QEXPECT_FAIL("", "Will fix", Continue);
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
 }
 
