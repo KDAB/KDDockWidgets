@@ -66,8 +66,10 @@ public:
             Q_EMIT q->isFloatingChanged(checked);
             // When floating, we remove from the sidebar
             if (checked && q->isOpen()) {
-                if (SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q))
+                if (SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
+                    sb->mainWindow()->clearSideBarOverlay(/* deleteFrame=*/false);
                     sb->removeDockWidget(q);
+                }
             }
         });
 

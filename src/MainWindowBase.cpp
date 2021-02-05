@@ -486,16 +486,25 @@ void MainWindowBase::toggleOverlayOnSideBar(DockWidgetBase *dw)
     }
 }
 
-void MainWindowBase::clearSideBarOverlay()
+void MainWindowBase::clearSideBarOverlay(bool deleteFrame)
 {
     if (!d->m_overlayedDockWidget)
         return;
 
     Frame *frame = d->m_overlayedDockWidget->frame();
-    d->m_overlayedDockWidget->setParent(nullptr);
-    Q_EMIT d->m_overlayedDockWidget->isOverlayedChanged(false);
-    d->m_overlayedDockWidget = nullptr;
-    delete frame;
+    frame->unoverlay();
+
+    if (deleteFrame) {
+        d->m_overlayedDockWidget->setParent(nullptr);
+        Q_EMIT d->m_overlayedDockWidget->isOverlayedChanged(false);
+        d->m_overlayedDockWidget = nullptr;
+        delete frame;
+    } else {
+        // No cleanup, just unset. When we drag the overlay it becomes a normal floating window
+        // meaning we reuse Frame. Don't delete it.
+        Q_EMIT d->m_overlayedDockWidget->isOverlayedChanged(false);
+        d->m_overlayedDockWidget = nullptr;
+    }
 }
 
 SideBar *MainWindowBase::sideBarForDockWidget(const DockWidgetBase *dw) const
