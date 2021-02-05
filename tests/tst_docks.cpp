@@ -264,6 +264,7 @@ private Q_SLOTS:
     void tst_toggleActionOnSideBar();
     void tst_deleteOnCloseWhenOnSideBar();
     void tst_sidebarOverlayGetsHiddenOnClick();
+    void tst_floatRemovesFromSideBar();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -5269,6 +5270,38 @@ void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
 
         delete dw1;
     }
+}
+
+void TestDocks::tst_floatRemovesFromSideBar()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    m1->addDockWidget(dw1, Location_OnBottom);
+
+    m1->moveToSideBar(dw1);
+    m1->overlayOnSideBar(dw1);
+
+    QVERIFY(dw1->isOverlayed());
+    QVERIFY(!dw1->isFloating());
+    QVERIFY(dw1->isInMainWindow());
+
+    dw1->setFloating(true);
+    QVERIFY(!dw1->isOverlayed());
+    QVERIFY(dw1->isFloating());
+    QVERIFY(!dw1->isInMainWindow());
+
+    QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
+
+    // Also test a crash I got
+    m1->addDockWidget(dw1, Location_OnBottom);
+
+    auto tb = dw1->titleBar();
+    QVERIFY(tb->isVisible());
+
+    tb->onFloatClicked();
 }
 
 void TestDocks::tst_embeddedMainWindow()

@@ -131,6 +131,10 @@ public:
     ///@brief Returns whether this frame is overlayed on top of the MainWindow (auto-hide feature);
     bool isOverlayed() const;
 
+    ///@brief clears the FrameOption_IsOverlayed flag.
+    /// For example, if you drag a side-bar overlay, then it becomes a normal floating window
+    void unoverlay();
+
     /**
      * @brief Returns whether this frame is floating. A floating frame isn't attached to any other MainWindow,
      * and if it's attached to a FloatingWindow then it's considered floating if it's the only frame in that Window.
@@ -318,7 +322,7 @@ private:
     bool event(QEvent *) override;
 
     DropArea *m_dropArea = nullptr;
-    const FrameOptions m_options;
+    FrameOptions m_options = FrameOption_None;
     QPointer<Layouting::Item> m_layoutItem;
     bool m_updatingTitleBar = false;
     bool m_beingDeleted = false;

@@ -202,6 +202,7 @@ Also state which KDDW sha1, branch or version you're using, and which operating 
 
 KDAB will happily accept external contributions; however, **all** contributions require a
 signed [Copyright Assignment Agreement](docs/KDDockWidgets-CopyrightAssignmentForm.pdf).
+
 This is needed so we can continue to dual-license it.
 
 Contact info@kdab.com for more information.

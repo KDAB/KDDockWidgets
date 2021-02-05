@@ -585,6 +585,11 @@ bool Frame::isOverlayed() const
     return m_options & FrameOption_IsOverlayed;
 }
 
+void Frame::unoverlay()
+{
+    m_options &= ~FrameOption_IsOverlayed;
+}
+
 bool Frame::isFloating() const
 {
     if (isInMainWindow())

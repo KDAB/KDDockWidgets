@@ -39,7 +39,6 @@
 
 using namespace KDDockWidgets;
 
-
 DockWidgetBase::DockWidgetBase(const QString &name, Options options,
                                LayoutSaverOptions layoutSaverOptions)
     : QWidgetAdapter(nullptr, Qt::Tool)

@@ -159,7 +159,7 @@ public:
     void toggleOverlayOnSideBar(DockWidgetBase *);
 
     /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
-    void clearSideBarOverlay();
+    void clearSideBarOverlay(bool deleteFrame = true);
 
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
     SideBar *sideBarForDockWidget(const DockWidgetBase *) const;
