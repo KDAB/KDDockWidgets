@@ -5292,6 +5292,14 @@ void TestDocks::tst_floatRemovesFromSideBar()
     QVERIFY(!dw1->isInMainWindow());
 
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
+
+    // Also test a crash I got
+    m1->addDockWidget(dw1, Location_OnBottom);
+
+    auto tb = dw1->titleBar();
+    QVERIFY(tb->isVisible());
+
+    tb->onFloatClicked();
 }
 
 void TestDocks::tst_embeddedMainWindow()
