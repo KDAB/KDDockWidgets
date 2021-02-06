@@ -35,28 +35,6 @@
             }
         },
         {
-            "name": "qtquick",
-            "displayName": "qtquick",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-qtquick",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_QTQUICK": "ON"
-            }
-        },
-        {
-            "name": "dev-qtquick",
-            "displayName": "dev-qtquick",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-dev-qtquick",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "KDDockWidgets_QTQUICK": "ON",
-                "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
-            }
-        },
-        {
             "name": "python",
             "displayName": "python",
             "generator": "Ninja",
@@ -74,17 +52,6 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_STATIC": "ON"
-            }
-        },
-        {
-            "name": "static-qtquick",
-            "displayName": "static-qtquick",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-static-qtquick",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_STATIC": "ON",
-                "KDDockWidgets_QTQUICK": "ON"
             }
         },
         {
@@ -110,20 +77,6 @@
                 "KDDockWidgets_QT6": "ON",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
-            },
-            "environment": {
-                "PATH": "$env{HOME}/Qt/6.0.0/gcc_64/bin:$penv{PATH}"
-            }
-        },
-        {
-            "name": "qtquick6",
-            "displayName": "qtquick6",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-qtquick6",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_QTQUICK": "ON",
-                 "KDDockWidgets_QT6": "ON"
             },
             "environment": {
                 "PATH": "$env{HOME}/Qt/6.0.0/gcc_64/bin:$penv{PATH}"
