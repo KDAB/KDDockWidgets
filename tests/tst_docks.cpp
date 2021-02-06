@@ -266,6 +266,7 @@ private Q_SLOTS:
     void tst_deleteOnCloseWhenOnSideBar();
     void tst_sidebarOverlayGetsHiddenOnClick();
     void tst_floatRemovesFromSideBar();
+    void tst_overlayedGeometryIsSaved();
 
     // And fix these
     void tst_floatingWindowDeleted();
@@ -5315,6 +5316,34 @@ void TestDocks::tst_floatRemovesFromSideBar()
     QVERIFY(tb->isVisible());
 
     tb->onFloatClicked();
+}
+
+void TestDocks::tst_overlayedGeometryIsSaved()
+{
+    // Tests that after resizing an overlayed widget, and then hide+show, its size is preserved
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    m1->addDockWidget(dw1, Location_OnBottom);
+
+    m1->moveToSideBar(dw1, SideBarLocation::North);
+    m1->overlayOnSideBar(dw1);
+
+    Frame *frame = dw1->dptr()->frame();
+    QVERIFY(frame->isOverlayed());
+    QCOMPARE(dw1->sideBarLocation(), SideBarLocation::North);
+
+    const int newHeight = frame->height() + 300;
+    frame->setHeight(newHeight);
+
+    m1->toggleOverlayOnSideBar(dw1);
+    m1->toggleOverlayOnSideBar(dw1);
+
+    frame = dw1->dptr()->frame();
+    QEXPECT_FAIL("", "Will fix", Continue);
+    QCOMPARE(frame->height(), newHeight);
 }
 
 void TestDocks::tst_embeddedMainWindow()
