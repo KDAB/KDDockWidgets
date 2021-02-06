@@ -1,6 +1,3 @@
-* v1.3.0 (unreleased)
-  - [TODO] QtQuick support
-
 * v1.2.1 (unreleased)
   - Support for resizing dock widgets when they are in overlay/popup mode (autohide/sidebar feature)
   - Fixed title bar close button enabled state not being restored with Layout saver (#137)
