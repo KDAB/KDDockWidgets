@@ -106,6 +106,7 @@ struct LayoutSaver::Position
     int tabIndex;
     bool wasFloating;
     LayoutSaver::Placeholder::List placeholders;
+    QHash<SideBarLocation, QRect> lastOverlayedGeometries;
 
     /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &scalingInfo);

@@ -211,11 +211,13 @@ LayoutSaver::Position LastPositions::serialize()
 {
     LayoutSaver::Position result = lastPosition->serialize();
     result.lastFloatingGeometry = lastFloatingGeometry();
+    result.lastOverlayedGeometries = m_lastOverlayedGeometries;
     return result;
 }
 
 void LastPositions::deserialize(const LayoutSaver::Position &p)
 {
     m_lastFloatingGeometry = p.lastFloatingGeometry;
+    m_lastOverlayedGeometries = p.lastOverlayedGeometries;
     lastPosition->deserialize(p);
 }

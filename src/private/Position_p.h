@@ -24,8 +24,9 @@
 #include "LayoutSaver.h"
 #include "QWidgetAdapter.h"
 
-#include <QScopedValueRollback>
+#include <QHash>
 #include <QPointer>
+#include <QScopedValueRollback>
 
 #include <memory>
 
@@ -144,6 +145,16 @@ struct LastPositions
         return m_lastFloatingGeometry;
     }
 
+    QRect lastOverlayedGeometry(SideBarLocation loc) const
+    {
+        return m_lastOverlayedGeometries.value(loc);
+    }
+
+    void setLastOverlayedGeometry(SideBarLocation loc, QRect rect)
+    {
+        m_lastOverlayedGeometries[loc] = rect;
+    }
+
     LayoutSaver::Position serialize();
     void deserialize(const LayoutSaver::Position &p);
 
@@ -175,6 +186,7 @@ struct LastPositions
 
 private:
     QRect m_lastFloatingGeometry;
+    QHash<SideBarLocation, QRect> m_lastOverlayedGeometries;
 
     friend inline QDebug operator<<(QDebug d, const KDDockWidgets::LastPositions &);
     Position::Ptr lastPosition = std::make_shared<Position>();

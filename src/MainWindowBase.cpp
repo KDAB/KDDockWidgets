@@ -495,6 +495,10 @@ void MainWindowBase::clearSideBarOverlay(bool deleteFrame)
         return;
 
     Frame *frame = d->m_overlayedDockWidget->d->frame();
+    const SideBarLocation loc = d->m_overlayedDockWidget->sideBarLocation();
+    d->m_overlayedDockWidget->d->lastPositions().setLastOverlayedGeometry(
+        loc, frame->QWidgetAdapter::geometry());
+
     frame->unoverlay();
 
     if (deleteFrame) {
