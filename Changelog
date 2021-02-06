@@ -1,5 +1,5 @@
 * v1.3.0 (unreleased)
-  - [TODO] QtQuick support
+  - Experimental QtQuick support (#49)
   - Added static DockWidgetBase::byName() (#126)
   - The enum KDDockWidgets::AddingOption has been deprecated, use
     KDDockWidgets::InitialVisibilityOption instead
