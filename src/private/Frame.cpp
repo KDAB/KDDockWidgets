@@ -138,17 +138,13 @@ void Frame::addWidget(FloatingWindow *floatingWindow, InitialOption addingOption
 
 void Frame::insertWidget(DockWidgetBase *dockWidget, int index, InitialOption addingOption)
 {
-    qCDebug(addwidget()) << Q_FUNC_INFO << ((void*)this) <<  "; dockWidget="
-                         << dockWidget << "; oldFrame=" << dockWidget->frame()
-                         << "; initialOption=" << addingOption;
-
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
         qWarning() << "Frame::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
         return;
     }
     if (m_layoutItem)
-        dockWidget->addPlaceholderItem(m_layoutItem);
+        dockWidget->d->addPlaceholderItem(m_layoutItem);
 
     insertDockWidget(dockWidget, index);
 
@@ -272,7 +268,7 @@ void Frame::onDockWidgetCountChanged()
 
         const DockWidgetBase::List docks = dockWidgets();
         for (DockWidgetBase *dock : docks)
-            dock->updateFloatAction();
+            dock->d->updateFloatAction();
     }
 
     Q_EMIT numDockWidgetsChanged();
@@ -332,7 +328,7 @@ void Frame::updateFloatingActions()
 {
     const QVector<DockWidgetBase *> widgets = dockWidgets();
     for (DockWidgetBase *dw : widgets)
-        dw->updateFloatAction();
+        dw->d->updateFloatAction();
 }
 
 bool Frame::containsMouse(QPoint globalPos) const
@@ -510,10 +506,10 @@ void Frame::setLayoutItem(Layouting::Item *item)
     m_layoutItem = item;
     if (item) {
         for (DockWidgetBase *dw : dockWidgets())
-            dw->addPlaceholderItem(item);
+            dw->d->addPlaceholderItem(item);
     } else {
         for (DockWidgetBase *dw : dockWidgets())
-            dw->lastPositions().removePlaceholders();
+            dw->d->lastPositions().removePlaceholders();
     }
 }
 
@@ -655,7 +651,7 @@ LayoutSaver::Frame Frame::serialize() const
     frame.id = id(); // for coorelation purposes
 
     for (DockWidgetBase *dock : docks)
-        frame.dockWidgets.push_back(dock->serialize());
+        frame.dockWidgets.push_back(dock->d->serialize());
 
     return frame;
 }

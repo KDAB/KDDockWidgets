@@ -9,17 +9,18 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DropArea_p.h"
-#include "Logging_p.h"
-#include "DockWidgetBase.h"
-#include "Draggable_p.h"
-#include "FloatingWindow_p.h"
 #include "Config.h"
-#include "DropIndicatorOverlayInterface_p.h"
-#include "FrameworkWidgetFactory.h"
-#include "MainWindowBase.h"
 #include "DockRegistry_p.h"
+#include "DockWidgetBase.h"
+#include "DockWidgetBase_p.h"
+#include "Draggable_p.h"
+#include "DropArea_p.h"
+#include "DropIndicatorOverlayInterface_p.h"
+#include "FloatingWindow_p.h"
 #include "Frame_p.h"
+#include "FrameworkWidgetFactory.h"
+#include "Logging_p.h"
+#include "MainWindowBase.h"
 #include "Utils_p.h"
 
 // #include "indicators/AnimatedIndicators_p.h"
@@ -104,7 +105,7 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
         return;
     }
 
-    if ((option.visibility == InitialVisibilityOption::StartHidden) && dw->frame() != nullptr) {
+    if ((option.visibility == InitialVisibilityOption::StartHidden) && dw->d->frame() != nullptr) {
         // StartHidden is just to be used at startup, not to moving stuff around
         qWarning() << Q_FUNC_INFO << "Dock widget already exists in the layout";
         return;
@@ -114,15 +115,15 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
         return;
 
     Frame *frame = nullptr;
-    Frame *relativeToFrame = relativeTo ? relativeTo->frame() : nullptr;
+    Frame *relativeToFrame = relativeTo ? relativeTo->d->frame() : nullptr;
 
-    dw->saveLastFloatingGeometry();
+    dw->d->saveLastFloatingGeometry();
 
     const bool hadSingleFloatingFrame = hasSingleFloatingFrame();
 
     // Check if the dock widget already exists in the layout
     if (containsDockWidget(dw)) {
-        Frame *oldFrame = dw->frame();
+        Frame *oldFrame = dw->d->frame();
         if (oldFrame->hasSingleDockWidget()) {
             Q_ASSERT(oldFrame->containsDockWidget(dw));
             // The frame only has this dock widget, and the frame is already in the layout. So move the frame instead
@@ -151,7 +152,7 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
 
 bool DropArea::containsDockWidget(DockWidgetBase *dw) const
 {
-    return dw->frame() && MultiSplitter::containsFrame(dw->frame());
+    return dw->d->frame() && MultiSplitter::containsFrame(dw->d->frame());
 }
 
 bool DropArea::hasSingleFloatingFrame() const
@@ -173,9 +174,9 @@ QStringList DropArea::affinities() const
 
 void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
 {
-    Layouting::Item *item = itemForFrame(dw->frame());
+    Layouting::Item *item = itemForFrame(dw->d->frame());
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "Item not found for" << dw << dw->frame();
+        qWarning() << Q_FUNC_INFO << "Item not found for" << dw << dw->d->frame();
         return;
     }
 
@@ -298,7 +299,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
             // Let's also focus the newly dropped dock widget
             if (!droppedDockWidgets.isEmpty()) {
                 // If more than 1 was dropped, we only focus the first one
-                Frame *frame = droppedDockWidgets.first()->frame();
+                Frame *frame = droppedDockWidgets.first()->d->frame();
                 frame->FocusScope::focus(Qt::MouseFocusReason);
             } else {
                 // Doesn't happen.

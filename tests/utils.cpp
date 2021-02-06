@@ -83,7 +83,7 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWid
     dock->setGeometry(QRect(0, 0, 400, 400));
     if (show) {
         dock->show();
-        dock->morphIntoFloatingWindow();
+        dock->dptr()->morphIntoFloatingWindow();
         dock->activateWindow();
         Q_ASSERT(dock->window());
         if (QTest::qWaitForWindowActive(dock->window()->windowHandle(), 200)) {
@@ -285,7 +285,7 @@ void KDDockWidgets::Tests::nestDockWidget(DockWidgetBase *dock, DropArea *dropAr
 {
     auto frame = Config::self().frameworkWidgetFactory()->createFrame();
     frame->addWidget(dock);
-    dock->frame()->setObjectName(dock->objectName());
+    dock->d->frame()->setObjectName(dock->objectName());
 
     dropArea->addWidget(frame, location, relativeTo);
     QVERIFY(dropArea->checkSanity());

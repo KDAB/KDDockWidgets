@@ -14,14 +14,15 @@
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
-#include "KDDockWidgets.h"
-#include "DropIndicatorOverlayInterface_p.h"
-#include "DockWidgetBase.h"
-#include "DockRegistry_p.h"
 #include "Config.h"
-#include "TitleBar_p.h"
-#include "FloatingWindow_p.h"
+#include "DockRegistry_p.h"
+#include "DockWidgetBase.h"
+#include "DockWidgetBase_p.h"
 #include "DropArea_p.h"
+#include "DropIndicatorOverlayInterface_p.h"
+#include "FloatingWindow_p.h"
+#include "KDDockWidgets.h"
+#include "TitleBar_p.h"
 #include "Utils_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
@@ -344,14 +345,14 @@ inline FloatingWindow *createFloatingWindow()
     static int count = 0;
     count++;
     auto dock = createDockWidget(QString("dock %1").arg(count), Qt::green);
-    return dock->morphIntoFloatingWindow();
+    return dock->d->morphIntoFloatingWindow();
 }
 
 inline WidgetType *draggableFor(WidgetType *w)
 {
     WidgetType *draggable = nullptr;
     if (auto dock = qobject_cast<DockWidgetBase *>(w)) {
-        if (auto frame = dock->frame())
+        if (auto frame = dock->d->frame())
             draggable = frame->titleBar();
     } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
         Frame *frame = fw->hasSingleFrame() ? static_cast<Frame*>(fw->frames().first())

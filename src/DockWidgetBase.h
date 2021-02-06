@@ -35,13 +35,8 @@ QT_END_NAMESPACE
 
 class TestDocks;
 
-namespace Layouting {
-class Item;
-}
-
 namespace KDDockWidgets {
 
-struct LastPositions;
 class Frame;
 class FloatingWindow;
 class DragController;
@@ -469,21 +464,6 @@ protected:
 #endif
 
 #if defined(DOCKS_DEVELOPER_MODE)
-public Q_SLOTS:
-#else
-private Q_SLOTS:
-#endif
-    /**
-     * @brief Creates a FloatingWindow and adds itself into it
-     * @return the created FloatingWindow
-     */
-    KDDockWidgets::FloatingWindow *morphIntoFloatingWindow();
-
-    /// @brief calls morphIntoFloatingWindow() if the dock widget is visible and is a top-level
-    /// This is called delayed whenever we show a floating dock widget, so we get a FloatingWindow
-    void maybeMorphIntoFloatingWindow();
-
-#if defined(DOCKS_DEVELOPER_MODE)
 public:
 #else
 private:
@@ -508,43 +488,11 @@ private:
      */
     static DockWidgetBase *deserialize(const std::shared_ptr<LayoutSaver::DockWidget> &);
 
-    /**
-     * @brief Serializes this dock widget into an intermediate form
-     */
-    std::shared_ptr<LayoutSaver::DockWidget> serialize() const;
-
-    /**
-     * @brief the Frame which contains this dock widgets.
-     *
-     * A frame wraps a docked DockWidget, giving it a TabWidget so it can accept other dock widgets.
-     * Frame is also the actual class that goes into a MultiSplitter.
-     *
-     * It's nullptr immediately after creation.
-     */
-    Frame *frame() const;
-
-    /**
-     * @brief returns the FloatingWindow this dock widget is in. If nullptr then it's in a MainWindow.
-     *
-     * Note: Being in a FloatingWindow doesn't necessarily mean @ref isFloating() returns true, as
-     * the dock widget might be in a floating window with other dock widgets side by side.
-     */
-    FloatingWindow *floatingWindow() const;
-
-    ///@brief adds the current layout item containing this dock widget
-    void addPlaceholderItem(Layouting::Item*);
-
-    ///@brief returns the last position, just for tests. TODO Make tests just use the d-pointer.
-    LastPositions &lastPositions() const;
-
-    ///@brief If this dock widget is floating, then it saves its geometry
-    void saveLastFloatingGeometry();
-
-    ///@brief Updates the floatAction state
-    void updateFloatAction();
 
     class Private;
     Private *const d;
+
+    Private *dptr() const;
 };
 
 }

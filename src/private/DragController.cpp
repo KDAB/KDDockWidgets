@@ -9,15 +9,16 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include "DockRegistry_p.h"
+#include "DockWidgetBase_p.h"
 #include "DragController_p.h"
-#include "Frame_p.h"
-#include "Logging_p.h"
 #include "DropArea_p.h"
 #include "FloatingWindow_p.h"
-#include "WidgetResizeHandler_p.h"
-#include "Utils_p.h"
-#include "DockRegistry_p.h"
+#include "Frame_p.h"
+#include "Logging_p.h"
 #include "Qt5Qt6Compat_p.h"
+#include "Utils_p.h"
+#include "WidgetResizeHandler_p.h"
 
 #include <QMouseEvent>
 #include <QGuiApplication>
@@ -246,7 +247,7 @@ void StateDragging::onEntry()
     if (DockWidgetBase *dw = q->m_draggable->singleDockWidget()) {
         // When we start to drag a floating window which has a single dock widget, we save the position
         if (dw->isFloating())
-            dw->saveLastFloatingGeometry();
+            dw->d->saveLastFloatingGeometry();
     }
 
     q->m_windowBeingDragged = q->m_draggable->makeWindow();

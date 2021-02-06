@@ -9,17 +9,18 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include "Config.h"
 #include "DockRegistry_p.h"
 #include "DockWidgetBase.h"
-#include "Logging_p.h"
-#include "Position_p.h"
-#include "MultiSplitter_p.h"
-#include "QWidgetAdapter.h"
-#include "Config.h"
-#include "SideBar_p.h"
-#include "WindowBeingDragged_p.h"
+#include "DockWidgetBase_p.h"
 #include "FloatingWindow_p.h"
+#include "Logging_p.h"
+#include "MultiSplitter_p.h"
+#include "Position_p.h"
+#include "QWidgetAdapter.h"
+#include "SideBar_p.h"
 #include "Utils_p.h"
+#include "WindowBeingDragged_p.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -591,7 +592,7 @@ void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
     for (auto dw : qAsConst(dockWidgets)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, dw->affinities())) {
             dw->forceClose();
-            dw->lastPositions().removePlaceholders();
+            dw->d->lastPositions().removePlaceholders();
         }
     }
 
@@ -606,7 +607,7 @@ void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
     for (DockWidgetBase *dw : qAsConst(m_dockWidgets)) {
         if (dw->window() == dw && dw->isVisible())
-            dw->morphIntoFloatingWindow();
+            dw->d->morphIntoFloatingWindow();
     }
 }
 
@@ -666,7 +667,7 @@ bool DockRegistry::onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *ev)
 
     if (DockWidgetBase *overlayedDockWidget = mainWindow->overlayedDockWidget()) {
         ev->ignore();
-        qApp->sendEvent(overlayedDockWidget->frame(), ev);
+        qApp->sendEvent(overlayedDockWidget->d->frame(), ev);
 
         if (ev->isAccepted()) {
             // The Frame accepted it. It means the user is resizing it. We allow for 4px outside for better resize.

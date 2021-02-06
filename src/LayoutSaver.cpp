@@ -17,17 +17,18 @@
  */
 
 #include "LayoutSaver.h"
-#include "LayoutSaver_p.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
 #include "DockWidgetBase.h"
+#include "DockWidgetBase_p.h"
 #include "DropArea_p.h"
-#include "Logging_p.h"
-#include "Frame_p.h"
-#include "Position_p.h"
-#include "FrameworkWidgetFactory.h"
-#include "MainWindowBase.h"
 #include "FloatingWindow_p.h"
+#include "Frame_p.h"
+#include "FrameworkWidgetFactory.h"
+#include "LayoutSaver_p.h"
+#include "Logging_p.h"
+#include "MainWindowBase.h"
+#include "Position_p.h"
 
 #include <qmath.h>
 #include <QDebug>
@@ -177,7 +178,7 @@ QByteArray LayoutSaver::serializeLayout() const
     layout.closedDockWidgets.reserve(closedDockWidgets.size());
     for (DockWidgetBase *dockWidget : closedDockWidgets) {
         if (d->matchesAffinity(dockWidget->affinities()))
-            layout.closedDockWidgets.push_back(dockWidget->serialize());
+            layout.closedDockWidgets.push_back(dockWidget->d->serialize());
     }
 
     // Save the placeholder info. We do it last, as we also restore it last, since we need all items to be created
@@ -187,8 +188,8 @@ QByteArray LayoutSaver::serializeLayout() const
     layout.allDockWidgets.reserve(dockWidgets.size());
     for (DockWidgetBase *dockWidget : dockWidgets) {
         if (d->matchesAffinity(dockWidget->affinities())) {
-            auto dw = dockWidget->serialize();
-            dw->lastPosition = dockWidget->lastPositions().serialize();
+            auto dw = dockWidget->d->serialize();
+            dw->lastPosition = dockWidget->d->lastPositions().serialize();
             layout.allDockWidgets.push_back(dw);
         }
     }
@@ -293,7 +294,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             continue;
 
         if (DockWidgetBase *dockWidget = d->m_dockRegistry->dockByName(dw->uniqueName)) {
-            dockWidget->lastPositions().deserialize(dw->lastPosition);
+            dockWidget->d->lastPositions().deserialize(dw->lastPosition);
         } else {
             qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << dw->uniqueName;
         }

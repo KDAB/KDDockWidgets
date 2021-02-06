@@ -18,21 +18,22 @@
  */
 
 
-#include "MultiSplitter_p.h"
-#include "MainWindowBase.h"
+#include "../LayoutSaver_p.h"
+#include "Config.h"
+#include "DockRegistry_p.h"
+#include "DockWidgetBase.h"
+#include "DockWidgetBase_p.h"
+#include "DropArea_p.h"
 #include "FloatingWindow_p.h"
+#include "Frame_p.h"
+#include "FrameworkWidgetFactory.h"
 #include "LayoutSaver.h"
 #include "Logging_p.h"
-#include "Frame_p.h"
-#include "DockWidgetBase.h"
+#include "MainWindowBase.h"
+#include "MultiSplitter_p.h"
 #include "Position_p.h"
-#include "DockRegistry_p.h"
-#include "Config.h"
-#include "../LayoutSaver_p.h"
-#include "FrameworkWidgetFactory.h"
-#include "multisplitter/Widget.h"
-#include "DropArea_p.h"
 #include "WindowBeingDragged_p.h"
+#include "multisplitter/Widget.h"
 
 #include <QScopedValueRollback>
 
@@ -386,7 +387,7 @@ void MultiSplitter::unrefOldPlaceholders(const Frame::List &framesBeingAdded) co
 {
     for (Frame *frame : framesBeingAdded) {
         for (DockWidgetBase *dw : frame->dockWidgets()) {
-            dw->lastPositions().removePlaceholders(this);
+            dw->d->lastPositions().removePlaceholders(this);
         }
     }
 }

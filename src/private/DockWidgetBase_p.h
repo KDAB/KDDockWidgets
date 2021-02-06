@@ -74,6 +74,13 @@ public:
         updateTitle();
     }
 
+    /**
+     * @brief returns the FloatingWindow this dock widget is in. If nullptr then it's in a
+     * MainWindow.
+     *
+     * Note: Being in a FloatingWindow doesn't necessarily mean @ref isFloating() returns true, as
+     * the dock widget might be in a floating window with other dock widgets side by side.
+     */
     FloatingWindow *floatingWindow() const
     {
         return qobject_cast<FloatingWindow*>(q->window());
@@ -104,6 +111,12 @@ public:
         return DockRegistry::self()->sideBarForDockWidget(q);
     }
 
+    ///@brief adds the current layout item containing this dock widget
+    void addPlaceholderItem(Layouting::Item *);
+
+    ///@brief returns the last position, just for tests.
+    LastPositions &lastPositions();
+
     void forceClose();
     QPoint defaultCenterPosForFloating();
 
@@ -122,10 +135,38 @@ public:
     int currentTabIndex() const;
 
     /**
+     * @brief Serializes this dock widget into an intermediate form
+     */
+    std::shared_ptr<LayoutSaver::DockWidget> serialize() const;
+
+    /**
+     * @brief the Frame which contains this dock widgets.
+     *
+     * A frame wraps a docked DockWidget, giving it a TabWidget so it can accept other dock widgets.
+     * Frame is also the actual class that goes into a MultiSplitter.
+     *
+     * It's nullptr immediately after creation.
+     */
+    Frame *frame() const;
+
+    ///@brief If this dock widget is floating, then it saves its geometry
+    void saveLastFloatingGeometry();
+
+    /**
      * Before floating a dock widget we save its position. So it can be restored when calling
      * DockWidget::setFloating(false)
      */
     void saveTabIndex();
+
+    /**
+     * @brief Creates a FloatingWindow and adds itself into it
+     * @return the created FloatingWindow
+     */
+    KDDockWidgets::FloatingWindow *morphIntoFloatingWindow();
+
+    /// @brief calls morphIntoFloatingWindow() if the dock widget is visible and is a top-level
+    /// This is called delayed whenever we show a floating dock widget, so we get a FloatingWindow
+    void maybeMorphIntoFloatingWindow();
 
     const QString name;
     QStringList affinities;

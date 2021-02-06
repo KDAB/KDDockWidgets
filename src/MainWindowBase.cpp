@@ -289,7 +289,7 @@ SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) co
 {
     // TODO: Algorithm can still be made smarter
 
-    Layouting::Item *item = q->multiSplitter()->itemForFrame(dw->frame());
+    Layouting::Item *item = q->multiSplitter()->itemForFrame(dw->d->frame());
     if (!item) {
         qWarning() << Q_FUNC_INFO << "No item for dock widget";
         return SideBarLocation::None;
@@ -362,10 +362,10 @@ void MainWindowBase::Private::updateOverlayGeometry(bool reusePreviousSize)
         return;
     }
 
-    const QRect defaultGeometry = rectForOverlay(m_overlayedDockWidget->frame(), sb->location());
+    const QRect defaultGeometry = rectForOverlay(m_overlayedDockWidget->d->frame(), sb->location());
     QRect newGeometry = defaultGeometry;
 
-    Frame *frame = m_overlayedDockWidget->frame();
+    Frame *frame = m_overlayedDockWidget->d->frame();
 
     if (reusePreviousSize) {        
         // Let's try to honour the previous overlay size
@@ -401,7 +401,7 @@ void MainWindowBase::Private::updateOverlayGeometry(bool reusePreviousSize)
 
     }
 
-    m_overlayedDockWidget->frame()->QWidgetAdapter::setGeometry(newGeometry);
+    m_overlayedDockWidget->d->frame()->QWidgetAdapter::setGeometry(newGeometry);
 }
 
 void MainWindowBase::Private::clearSideBars()
@@ -494,7 +494,7 @@ void MainWindowBase::clearSideBarOverlay(bool deleteFrame)
     if (!d->m_overlayedDockWidget)
         return;
 
-    Frame *frame = d->m_overlayedDockWidget->frame();
+    Frame *frame = d->m_overlayedDockWidget->d->frame();
     frame->unoverlay();
 
     if (deleteFrame) {

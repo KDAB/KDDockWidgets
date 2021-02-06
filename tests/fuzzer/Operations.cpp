@@ -13,12 +13,13 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
 #include "Operations.h"
-#include "DockWidgetBase.h"
-#include "DockRegistry_p.h"
-#include "Fuzzer.h"
 #include "../Testing.h"
-#include "Frame_p.h"
+#include "DockRegistry_p.h"
+#include "DockWidgetBase.h"
+#include "DockWidgetBase_p.h"
 #include "FloatingWindow_p.h"
+#include "Frame_p.h"
+#include "Fuzzer.h"
 
 #include <QTest>
 
@@ -351,7 +352,7 @@ void AddDockWidgetAsTab::generateRandomParams()
 
     DockWidgetBase *dw2 = nullptr;
 
-    if (auto frame = dw->frame()) {
+    if (auto frame = dw->d->frame()) {
         auto toExclude = frame->dockWidgets();
         for (auto dockWidget : DockRegistry::self()->dockwidgets()) {
             if (dockWidget->window() == dw->window())
