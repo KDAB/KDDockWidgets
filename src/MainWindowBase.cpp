@@ -52,7 +52,7 @@ public:
 
     QRect rectForOverlay(Frame *, SideBarLocation) const;
     SideBarLocation preferredSideBar(DockWidgetBase *) const;
-    void updateOverlayGeometry(bool reusePreviousSize = false);
+    void updateOverlayGeometry(QSize suggestedSize = {});
     void clearSideBars();
 
     QString name;
@@ -351,7 +351,7 @@ SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) co
                              : SideBarLocation::West;
 }
 
-void MainWindowBase::Private::updateOverlayGeometry(bool reusePreviousSize)
+void MainWindowBase::Private::updateOverlayGeometry(QSize suggestedSize)
 {
     if (!m_overlayedDockWidget)
         return;
@@ -367,38 +367,37 @@ void MainWindowBase::Private::updateOverlayGeometry(bool reusePreviousSize)
 
     Frame *frame = m_overlayedDockWidget->d->frame();
 
-    if (reusePreviousSize) {        
-        // Let's try to honour the previous overlay size
+    if (suggestedSize.isValid()) {
+        // Let's try to honour the suggested overlay size
         switch (sb->location()) {
         case SideBarLocation::North: {
             const int maxHeight = q->height() - frame->pos().y() - 10; // gap
-            newGeometry.setHeight(qMin(frame->height(), maxHeight));
+            newGeometry.setHeight(qMin(suggestedSize.height(), maxHeight));
             break;
         }
         case SideBarLocation::South: {
             const int maxHeight = sb->pos().y() - m_dropArea->pos().y() - 10; // gap
             const int bottom = newGeometry.bottom();
-            newGeometry.setHeight(qMin(frame->height(), maxHeight));
+            newGeometry.setHeight(qMin(suggestedSize.height(), maxHeight));
             newGeometry.moveBottom(bottom);
             break;
         }
         case SideBarLocation::East: {
             const int maxWidth = sb->pos().x() - m_dropArea->pos().x() - 10; // gap
             const int right = newGeometry.right();
-            newGeometry.setWidth(qMin(frame->width(), maxWidth));
+            newGeometry.setWidth(qMin(suggestedSize.width(), maxWidth));
             newGeometry.moveRight(right);
             break;
         }
         case SideBarLocation::West: {
             const int maxWidth = q->width() - frame->pos().x() - 10; // gap
-            newGeometry.setWidth(qMin(frame->height(), maxWidth));
+            newGeometry.setWidth(qMin(suggestedSize.width(), maxWidth));
             break;
         }
         case SideBarLocation::None:
             qWarning() << Q_FUNC_INFO << "Unexpected sidebar value";
             break;
         }
-
     }
 
     m_overlayedDockWidget->d->frame()->QWidgetAdapter::setGeometry(newGeometry);
@@ -469,7 +468,7 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     auto frame = Config::self().frameworkWidgetFactory()->createFrame(this, FrameOption_IsOverlayed);
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
-    d->updateOverlayGeometry(/*reusePreviousSize=*/ false);
+    d->updateOverlayGeometry();
 
     auto resizeHandler = new WidgetResizeHandler(true, frame);
     resizeHandler->setAllowedResizeSides(d->allowedResizeSides(sb->location()));
@@ -569,7 +568,7 @@ void MainWindowBase::setUniqueName(const QString &uniqueName)
 void MainWindowBase::onResized(QResizeEvent *)
 {
     if (d->m_overlayedDockWidget)
-        d->updateOverlayGeometry(/*reusePreviousSize=*/ true);
+        d->updateOverlayGeometry(d->m_overlayedDockWidget->d->frame()->QWidgetAdapter::size());
 }
 
 bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
