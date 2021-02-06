@@ -52,7 +52,7 @@ public:
 
     QRect rectForOverlay(Frame *, SideBarLocation) const;
     SideBarLocation preferredSideBar(DockWidgetBase *) const;
-    void updateOverlayGeometry(QSize suggestedSize = {});
+    void updateOverlayGeometry(QSize suggestedSize);
     void clearSideBars();
 
     QString name;
@@ -367,7 +367,7 @@ void MainWindowBase::Private::updateOverlayGeometry(QSize suggestedSize)
 
     Frame *frame = m_overlayedDockWidget->d->frame();
 
-    if (suggestedSize.isValid()) {
+    if (suggestedSize.isValid() && !suggestedSize.isEmpty()) {
         // Let's try to honour the suggested overlay size
         switch (sb->location()) {
         case SideBarLocation::North: {
@@ -468,7 +468,7 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     auto frame = Config::self().frameworkWidgetFactory()->createFrame(this, FrameOption_IsOverlayed);
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
-    d->updateOverlayGeometry();
+    d->updateOverlayGeometry(dw->d->lastPositions().lastOverlayedGeometry(sb->location()).size());
 
     auto resizeHandler = new WidgetResizeHandler(true, frame);
     resizeHandler->setAllowedResizeSides(d->allowedResizeSides(sb->location()));

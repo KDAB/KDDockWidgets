@@ -5334,6 +5334,7 @@ void TestDocks::tst_overlayedGeometryIsSaved()
     Frame *frame = dw1->dptr()->frame();
     QVERIFY(frame->isOverlayed());
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::North);
+    QVERIFY(frame->height() > 0);
 
     const int newHeight = frame->height() + 300;
     frame->setHeight(newHeight);
@@ -5342,7 +5343,6 @@ void TestDocks::tst_overlayedGeometryIsSaved()
     m1->toggleOverlayOnSideBar(dw1);
 
     frame = dw1->dptr()->frame();
-    QEXPECT_FAIL("", "Will fix", Continue);
     QCOMPARE(frame->height(), newHeight);
 }
 
