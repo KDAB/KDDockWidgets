@@ -784,6 +784,51 @@ void DockWidgetBase::Private::forceClose()
     close();
 }
 
+DockWidgetBase::Private::Private(const QString &dockName, DockWidgetBase::Options options_,
+                                 LayoutSaverOptions layoutSaverOptions_, DockWidgetBase *qq)
+
+    : name(dockName)
+    , title(dockName)
+    , q(qq)
+    , options(options_)
+    , layoutSaverOptions(layoutSaverOptions_)
+    , toggleAction(new QAction(q))
+    , floatAction(new QAction(q))
+{
+    q->connect(toggleAction, &QAction::toggled, q, [this](bool enabled) {
+        if (!m_updatingToggleAction) { // guard against recursiveness
+            toggleAction->blockSignals(true); // and don't emit spurious toggle. Like when a dock
+                                              // widget is inserted into a tab widget it might get
+                                              // hide events, ignore those. The Dock Widget is open.
+            m_processingToggleAction = true;
+            toggle(enabled);
+            toggleAction->blockSignals(false);
+            m_processingToggleAction = false;
+        }
+    });
+
+    q->connect(floatAction, &QAction::toggled, q, [this](bool checked) {
+        if (!m_updatingFloatAction) { // guard against recursiveness
+            q->setFloating(checked);
+        }
+
+        Q_EMIT q->isFloatingChanged(checked);
+
+        // When floating, we remove from the sidebar
+        if (checked && q->isOpen()) {
+            if (SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
+                sb->mainWindow()->clearSideBarOverlay(/* deleteFrame=*/false);
+                sb->removeDockWidget(q);
+            }
+        }
+    });
+
+    toggleAction->setCheckable(true);
+    floatAction->setCheckable(true);
+
+    qApp->installEventFilter(this);
+}
+
 void DockWidgetBase::Private::addPlaceholderItem(Layouting::Item *item)
 {
     Q_ASSERT(item);
