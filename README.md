@@ -193,7 +193,7 @@ https://github.com/KDAB/KDDockWidgets
 
 
 When reporting bugs please make it easy for the maintainer to reproduce it. Use `examples/minimal/` or
-`examples/dockwidgets/ for reproducing the problem. If you did modifications to the example in order to
+`examples/dockwidgets/` for reproducing the problem. If you did modifications to the example in order to
 repro then please attach the *patch* and not a picture of your changes. You can get a patch by doing
 `git diff > repro.diff` at the repo root.
 
