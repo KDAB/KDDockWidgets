@@ -9,12 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include "DropArea_p.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
 #include "DockWidgetBase.h"
 #include "DockWidgetBase_p.h"
 #include "Draggable_p.h"
-#include "DropArea_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 #include "FloatingWindow_p.h"
 #include "Frame_p.h"

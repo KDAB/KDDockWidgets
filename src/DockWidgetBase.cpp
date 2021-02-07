@@ -10,6 +10,7 @@
 */
 
 #include "DockWidgetBase.h"
+#include "DockWidgetBase_p.h"
 #include "Frame_p.h"
 #include "FloatingWindow_p.h"
 #include "Logging_p.h"
@@ -23,7 +24,6 @@
 #include "WindowBeingDragged_p.h"
 #include "SideBar_p.h"
 #include "LayoutSaver_p.h"
-#include "DockWidgetBase_p.h"
 
 #include <QEvent>
 #include <QCloseEvent>

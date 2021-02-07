@@ -17,6 +17,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+#include "TabWidget_p.h"
 #include "Config.h"
 #include "DockWidgetBase_p.h"
 #include "DragController_p.h"
@@ -24,7 +25,6 @@
 #include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "Logging_p.h"
-#include "TabWidget_p.h"
 #include "Utils_p.h"
 #include "WindowBeingDragged_p.h"
 
