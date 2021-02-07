@@ -92,8 +92,8 @@ public:
     /**
      * @brief constructs a new DockWidget
      * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
-     * @param options options controlling certain behaviours
-     * @param layoutSaverOptions options to control save/restore
+     * @param options the options controlling certain behaviours
+     * @param layoutSaverOptions the options to control save/restore
      *
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.

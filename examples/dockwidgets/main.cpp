@@ -115,7 +115,7 @@ int main(int argc, char **argv)
                                            QCoreApplication::translate("main", "The title bar's close button will only close the current tab instead of all. Illustrates using Config::Flag_CloseOnlyCurrentTab"));
     parser.addOption(closeOnlyCurrentTab);
 
-    QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore",
+    QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore", //krazy:exclude=spelling
                                               QCoreApplication::translate("main", "DockWidget #5 wont be closed before a restore. Illustrates LayoutSaverOption::DontCloseBeforeRestore"));
     parser.addOption(dontCloseBeforeRestore);
 
