@@ -107,6 +107,7 @@ private Q_SLOTS:
     void tst_floatingWindowTitleBug();
     void tst_setFloatingSimple();
     void tst_dragOverTitleBar();
+    void tst_setFloatingGeometry();
 
     void tst_resizeWindow_data();
     void tst_resizeWindow();
@@ -4142,6 +4143,26 @@ void TestDocks::tst_dragOverTitleBar()
 
     delete fw1;
     delete fw2;
+}
+
+void TestDocks::tst_setFloatingGeometry()
+{
+    EnsureTopLevelsDeleted e;
+    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+
+    QVERIFY(dock1->isVisible());
+    const QRect requestedGeo = QRect(70, 70, 400, 400);
+    dock1->setFloatingGeometry(requestedGeo);
+    QCOMPARE(dock1->window()->geometry(), requestedGeo);
+
+    dock1->close();
+    QVERIFY(!dock1->isVisible());
+
+    const QRect requestedGeo2 = QRect(80, 80, 400, 400);
+    dock1->setFloatingGeometry(requestedGeo2);
+    dock1->show();
+
+    QCOMPARE(dock1->window()->geometry(), requestedGeo2);
 }
 
 void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()

@@ -400,6 +400,15 @@ public:
     /// @brief Returns whether this widget has the LayoutSaverOption::Skip flag
     bool skipsRestore() const;
 
+    /// @brief If this dock widget is floating, then sets its geometry to @p geo.
+    ///
+    /// If this dock widget is hidden then it stores the geometry so it can be used the next
+    /// time it becomes floating.
+    ///
+    /// This is just convenience, equivalent to calling window()->setGeometry(rect), with the
+    /// added bonus of remembering the requested geometry in case it's still hidden.
+    void setFloatingGeometry(QRect geo);
+
 Q_SIGNALS:
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     ///@brief signal emitted when the parent changed

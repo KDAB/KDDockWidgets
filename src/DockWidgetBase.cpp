@@ -464,6 +464,15 @@ bool DockWidgetBase::skipsRestore() const
     return d->layoutSaverOptions & LayoutSaverOption::Skip;
 }
 
+void DockWidgetBase::setFloatingGeometry(QRect geometry)
+{
+    if (isOpen() && isFloating()) {
+        window()->setGeometry(geometry);
+    } else {
+        d->m_lastPositions.setLastFloatingGeometry(geometry);
+    }
+}
+
 FloatingWindow *DockWidgetBase::Private::morphIntoFloatingWindow()
 {
     if (auto fw = floatingWindow())
