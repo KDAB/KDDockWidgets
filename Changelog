@@ -1,3 +1,6 @@
+* v1.3.1 (unreleased)
+  -
+
 * v1.3.0 (8 February 2021)
   - Experimental QtQuick support (#49)
   - Added static DockWidgetBase::byName() (#126)
