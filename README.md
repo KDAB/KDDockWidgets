@@ -29,7 +29,7 @@ however that this demo isn't fully featured, as it's running on Qt for WebAssemb
 
 Features
 ========
-- Provide advanced docking that QDockWidgets doesn't support
+- Provide advanced docking that QDockWidget doesn't support
   - Native window resize on Windows (allowing for Aero-snap even with custom title bar decorations)
   - Arrow drop indicators for great drop precision
   - Allow for totally different, user provided, drop indicator types
@@ -46,13 +46,13 @@ Features
     - Customize title bars
     - Customize window frames
     - Custom widget separators
-- Crossplatform (macOS, Linux, Windows, WebAssembly, Wayland, X11/XCB, EGLFS are working)
+- Cross-platform (macOS, Linux, Windows, WebAssembly, Wayland, X11/XCB, EGLFS are working)
   See README-Wayland.md and README-WASM.md for platform specific information.
 - Layouting engine honouring min/max size constraints and some size policies
 - PySide2 bindings
 - Clean codebase
   - Not mixing GUI with state with logic with animations
-  - Great test coverage, even the gui and DnD operations are tested. 200 tests currently.
+  - Great test coverage, even the GUI and DnD operations are tested. 200 tests currently.
   - Fuzzer for doing random testing and finding bugs
 - Lazy separator resize
 - Reordering tabs with mouse
@@ -75,10 +75,10 @@ Roadmap
 
 Trying out the examples
 =======================
-A full demo lives in `examples/dockwidgets/`, it showcasts most of the features.
-A simpler example lives in `examples/minimal/`, which might be more indicated
-to learn the API, as it's less overwelming than the full demo.
+A full demo that showcases most of the features lives in [examples/dockwidgets](examples/dockwidgets).
 
+A simpler example can be found in [examples/minimal](examples/minimal),
+which might be more indicated to learn the API, as it's less overwhelming than the full demo.
 
 Open a terminal capable of building Qt5 applications.
 Make sure you have cmake, ninja, compiler, Qt, etc in PATH.
@@ -93,23 +93,26 @@ $ cmake --build . --target install
 ```
 
 Now build and run the example:
+
 ```
 $ cd path/to/kddockwidgets/examples/dockwidgets/
 $ cmake -G Ninja -DCMAKE_PREFIX_PATH=/path/where/to/install
 $ cmake --build .
 $ ./kddockwidgets_example
-
 ```
 
 The installation directory defaults to `c:\KDAB\KDDockWidgets-<version>` on Windows
-and `/usr/local/KDAB/KDDockWidgets-<version>` on non-Windows.  You can change this
-location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
+and `/usr/local/KDAB/KDDockWidgets-<version>` on non-Windows.
+
+You can change the installation location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
 
 Using
 =====
 From your CMake project, add
 
+```
     find_package(KDDockWidgets CONFIG)
+```
 
 and link to the imported target `KDAB::kddockwidgets`.
 That's all you need to do (the imported target also brings in the include directories)
@@ -120,7 +123,7 @@ on where you installed KDDockWidgets.
 
 Python Bindings
 ================
-Make sure you have pyside2, shiboken2 and shiboken2-generator installed.
+Make sure you have PySide2, shiboken2 and shiboken2-generator installed.
 As this time, you cannot get shiboken2-generator because the wheels are not on PyPi.
 To use the wheels do this:
 
@@ -133,8 +136,8 @@ To use the wheels do this:
 
 For more info visit https://doc.qt.io/qtforpython/shiboken2/gettingstarted.html
 
-Once QtForPython is installed you are ready to generate the PySide bindings
-for KDDockwWidgets.
+Once QtForPython is installed you are ready to generate the PySide2 bindings
+for KDDockWidgets.
 
 Next pass `-DKDDockWidgets_PYTHON_BINDINGS=ON` to CMake, followed by the
 make command.
@@ -146,6 +149,7 @@ by passing `-DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=/usr/lib/python3.8/si
 to CMake (adjust to the python path on your system).
 
 To run the KDDW python example
+
 ```
 $ export PYTHONPATH=/kddw/install/path # Only if needed
 $ cd python/examples/
@@ -194,7 +198,7 @@ https://github.com/KDAB/KDDockWidgets
 
 When reporting bugs please make it easy for the maintainer to reproduce it. Use `examples/minimal/` or
 `examples/dockwidgets/` for reproducing the problem. If you did modifications to the example in order to
-repro then please attach the *patch* and not a picture of your changes. You can get a patch by doing
+reproduce then please attach the *patch* and not a picture of your changes. You can get a patch by doing
 `git diff > repro.diff` at the repo root.
 
 Also state which KDDW sha1, branch or version you're using, and which operating system.
