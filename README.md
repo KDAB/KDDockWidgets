@@ -207,6 +207,7 @@ This is needed so we can continue to dual-license it.
 
 Contact info@kdab.com for more information.
 
+Thanks to our [contributors](CONTRIBUTORS.txt).
 
 About KDAB
 ==========
