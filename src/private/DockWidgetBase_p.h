@@ -28,7 +28,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class DockWidgetBase::Private : public QObject
+class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidgetBase::Private : public QObject
 {
 public:
     Private(const QString &dockName, DockWidgetBase::Options options_,
