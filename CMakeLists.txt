@@ -96,7 +96,6 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16.0")
   option(${PROJECT_NAME}_UNITY_BUILD "Build with CMake's UNITY_BUILD" ON)
 endif()
 
-
 if(${PROJECT_NAME}_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC))
   message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
 endif()
@@ -114,7 +113,7 @@ endif()
 
 #option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
-if (${PROJECT_NAME}_QT6)
+if(${PROJECT_NAME}_QT6)
   find_package(Qt6Widgets REQUIRED)
   find_package(Qt6Test REQUIRED)
   set(QT_MAJOR_VERSION 6)
@@ -191,7 +190,7 @@ if(${PROJECT_NAME}_PYTHON_BINDINGS)
 endif()
 
 # Generate .pri file for qmake users
-if (NOT CMAKE_CONFIGURATION_TYPES) # Not working with VS generator
+if(CMAKE_VERSION VERSION_GREATER "3.11.99" AND NOT CMAKE_CONFIGURATION_TYPES) # Not working with VS generator or older cmake versions
   include(ECMGeneratePriFile)
   set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
   ecm_generate_pri_file(BASE_NAME KDDockWidgets
@@ -201,19 +200,21 @@ if (NOT CMAKE_CONFIGURATION_TYPES) # Not working with VS generator
     INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}
   )
   install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+else()
+  message(WARNING "Unable to generate the pri file for qmake users. Try updating CMake.")
 endif()
 
 install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
 install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 
 if(${PROJECT_NAME}_EXAMPLES)
-  if (${PROJECT_NAME}_QTQUICK)
+  if(${PROJECT_NAME}_QTQUICK)
     add_subdirectory(examples/qtquick)
   else()
-      add_subdirectory(examples/dockwidgets)
-      add_subdirectory(examples/minimal)
-      set_compiler_flags(kddockwidgets_example)
-      set_compiler_flags(kddockwidgets_minimal_example)
+    add_subdirectory(examples/dockwidgets)
+    add_subdirectory(examples/minimal)
+    set_compiler_flags(kddockwidgets_example)
+    set_compiler_flags(kddockwidgets_minimal_example)
   endif()
 endif()
 
@@ -224,34 +225,34 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
     add_subdirectory(tests)
 
     # Require Qt5.15.1 or higher to run the tests_launcher tests on Mac
-    if (NOT APPLE OR Qt5Widgets_VERSION VERSION_GREATER 5.15.0)
-        # tst_docks.exe is pretty big (160 tests), so split it in more runs so we can use threads.
-        add_test(NAME tst_docks0 COMMAND tests_launcher 0 5)
-        add_test(NAME tst_docks1 COMMAND tests_launcher 1 5)
-        add_test(NAME tst_docks2 COMMAND tests_launcher 2 5)
-        add_test(NAME tst_docks3 COMMAND tests_launcher 3 5)
-        add_test(NAME tst_docks4 COMMAND tests_launcher 4 5)
-        add_test(NAME tst_docks5 COMMAND tests_launcher 5 5)
-        add_test(NAME tst_docks6 COMMAND tests_launcher 6 5)
-        add_test(NAME tst_docks7 COMMAND tests_launcher 7 5)
-        add_test(NAME tst_docks8 COMMAND tests_launcher 8 5)
-        add_test(NAME tst_docks9 COMMAND tests_launcher 9 5)
-        add_test(NAME tst_docks10 COMMAND tests_launcher 10 5)
-        add_test(NAME tst_docks11 COMMAND tests_launcher 10 5)
-        add_test(NAME tst_docks12 COMMAND tests_launcher 11 5)
-        add_test(NAME tst_docks13 COMMAND tests_launcher 12 5)
-        add_test(NAME tst_docks14 COMMAND tests_launcher 13 5)
-        add_test(NAME tst_docks15 COMMAND tests_launcher 14 5)
-        add_test(NAME tst_docks16 COMMAND tests_launcher 15 5)
-        add_test(NAME tst_docks17 COMMAND tests_launcher 16 5)
-        add_test(NAME tst_docks18 COMMAND tests_launcher 17 5)
-        add_test(NAME tst_docks19 COMMAND tests_launcher 18 5)
-        add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
-        add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
+    if(NOT APPLE OR Qt5Widgets_VERSION VERSION_GREATER 5.15.0)
+      # tst_docks.exe is pretty big (160 tests), so split it in more runs so we can use threads.
+      add_test(NAME tst_docks0 COMMAND tests_launcher 0 5)
+      add_test(NAME tst_docks1 COMMAND tests_launcher 1 5)
+      add_test(NAME tst_docks2 COMMAND tests_launcher 2 5)
+      add_test(NAME tst_docks3 COMMAND tests_launcher 3 5)
+      add_test(NAME tst_docks4 COMMAND tests_launcher 4 5)
+      add_test(NAME tst_docks5 COMMAND tests_launcher 5 5)
+      add_test(NAME tst_docks6 COMMAND tests_launcher 6 5)
+      add_test(NAME tst_docks7 COMMAND tests_launcher 7 5)
+      add_test(NAME tst_docks8 COMMAND tests_launcher 8 5)
+      add_test(NAME tst_docks9 COMMAND tests_launcher 9 5)
+      add_test(NAME tst_docks10 COMMAND tests_launcher 10 5)
+      add_test(NAME tst_docks11 COMMAND tests_launcher 10 5)
+      add_test(NAME tst_docks12 COMMAND tests_launcher 11 5)
+      add_test(NAME tst_docks13 COMMAND tests_launcher 12 5)
+      add_test(NAME tst_docks14 COMMAND tests_launcher 13 5)
+      add_test(NAME tst_docks15 COMMAND tests_launcher 14 5)
+      add_test(NAME tst_docks16 COMMAND tests_launcher 15 5)
+      add_test(NAME tst_docks17 COMMAND tests_launcher 16 5)
+      add_test(NAME tst_docks18 COMMAND tests_launcher 17 5)
+      add_test(NAME tst_docks19 COMMAND tests_launcher 18 5)
+      add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
+      add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
     endif()
-    if (NOT ${PROJECT_NAME}_QTQUICK)
-        # tst_multisplitter depends on QWidget
-        add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
+    if(NOT ${PROJECT_NAME}_QTQUICK)
+      # tst_multisplitter depends on QWidget
+      add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
     endif()
 
   endif()
@@ -261,6 +262,6 @@ if(${PROJECT_NAME}_DOCS)
   add_subdirectory(docs) # needs to go last, in case there are build source files
 endif()
 
-if (${PROJECT_NAME}_UNITY_BUILD)
+if(${PROJECT_NAME}_UNITY_BUILD)
   set_target_properties(kddockwidgets PROPERTIES UNITY_BUILD ON)
 endif()
