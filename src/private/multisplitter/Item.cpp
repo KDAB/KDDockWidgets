@@ -2434,7 +2434,7 @@ Item *ItemBoxContainer::visibleNeighbourFor(const Item *item, Side side) const
     const auto index = m_children.indexOf(const_cast<Item*>(item));
 
     if (side == Side1) {
-        for (auto i = index - 1; i >= 0; i--) {
+        for (auto i = index - 1; i >= 0; --i) {
             Item *child = m_children.at(i);
             if (child->isVisible())
                 return child;

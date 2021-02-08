@@ -16,8 +16,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "DockWidgetBase_p.h"
 #include "FrameQuick_p.h"
+#include "DockWidgetBase_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "TabWidgetQuick_p.h"
