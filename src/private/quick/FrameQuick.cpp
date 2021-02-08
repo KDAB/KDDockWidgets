@@ -16,6 +16,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+#include "DockWidgetBase_p.h"
 #include "FrameQuick_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
@@ -106,7 +107,7 @@ void FrameQuick::setCurrentDockWidget_impl(DockWidgetBase *dw)
 
 void FrameQuick::insertDockWidget_impl(DockWidgetBase *dw, int index)
 {
-    QPointer<Frame> oldFrame = dw->frame();
+    QPointer<Frame> oldFrame = dw->d->frame();
     if (m_tabWidget->insertDockWidget(index, dw, {}, {})) {
         dw->setParent(m_stackLayout);
 
