@@ -62,8 +62,7 @@ void ItemFreeContainer::removeItem(Item *, bool hardRemove)
 
 void ItemFreeContainer::restore(Item *child)
 {
-    Q_UNUSED(child);
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    child->setIsVisible(true);
 }
 
 void ItemFreeContainer::onChildMinSizeChanged(Item *)
