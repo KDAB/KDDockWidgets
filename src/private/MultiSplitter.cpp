@@ -327,10 +327,7 @@ void MultiSplitter::layoutEqually(Layouting::ItemBoxContainer *container)
 void MultiSplitter::setRootItem(Layouting::ItemBoxContainer *root)
 {
     LayoutWidget::setRootItem(root);
-
     m_rootItem = root;
-    connect(m_rootItem, &Layouting::ItemContainer::minSizeChanged, this,
-            [this] { setMinimumSize(layoutMinimumSize()); });
 }
 
 const Layouting::Item::List MultiSplitter::items() const
