@@ -152,6 +152,10 @@ public:
     ///@brief Returns whether at least one dock widget has the specified layout saver option set
     bool anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption) const;
 
+    /// @brief Adds the dock widget to the specified location
+    void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location,
+                       DockWidgetBase *relativeTo, InitialOption = {});
+
     ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
     ///Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
     ///be open ended

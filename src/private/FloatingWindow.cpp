@@ -570,3 +570,9 @@ bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option)
         return frame->anyDockWidgetsHas(option);
     });
 }
+
+void FloatingWindow::addDockWidget(DockWidgetBase *dw, Location location,
+                                   DockWidgetBase *relativeTo, InitialOption option)
+{
+    m_dropArea->addDockWidget(dw, location, relativeTo, option);
+}

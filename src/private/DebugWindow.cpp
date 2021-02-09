@@ -17,12 +17,12 @@
  */
 
 #include "DebugWindow_p.h"
-#include "ObjectViewer_p.h"
 #include "DockRegistry_p.h"
 #include "FloatingWindow_p.h"
-#include "DropArea_p.h"
-#include "MainWindow.h"
 #include "LayoutSaver.h"
+#include "LayoutWidget_p.h"
+#include "MainWindow.h"
+#include "ObjectViewer_p.h"
 #include "Qt5Qt6Compat_p.h"
 
 #include <QVBoxLayout>
@@ -314,7 +314,7 @@ void DebugWindow::dumpDockWidgetInfo()
 
     for (FloatingWindow *fw : floatingWindows) {
         qDebug() << fw << "; affinities=" << fw->affinities();
-        fw->dropArea()->dumpLayout();
+        fw->layoutWidget()->dumpLayout();
     }
 
     for (MainWindowBase *mw : mainWindows) {

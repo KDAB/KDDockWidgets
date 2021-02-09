@@ -16,7 +16,6 @@
 #include "Logging_p.h"
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
-#include "DropArea_p.h"
 #include "Config.h"
 #include "TitleBar_p.h"
 #include "FrameworkWidgetFactory.h"
@@ -133,7 +132,7 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other,
         d->morphIntoFloatingWindow();
 
     if (auto fw = floatingWindow()) {
-        fw->dropArea()->addDockWidget(other, location, relativeTo, initialOption);
+        fw->addDockWidget(other, location, relativeTo, initialOption);
     } else {
         qWarning() << Q_FUNC_INFO << "Couldn't find floating nested window";
     }
