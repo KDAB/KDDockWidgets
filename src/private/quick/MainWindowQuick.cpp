@@ -26,12 +26,11 @@ MainWindowQuick::MainWindowQuick(const QString &uniqueName, MainWindowOptions op
     QWidgetAdapter::makeItemFillParent(ms);
 
 
-    // MainWindowQuick has the same constraints as MultiSplitter, so just forward the signal
-    connect(ms, &MultiSplitter::geometryUpdated,
-            this, &MainWindowQuick::geometryUpdated);
+    // MainWindowQuick has the same constraints as LayoutWidget, so just forward the signal
+    connect(ms, &LayoutWidget::geometryUpdated, this, &MainWindowQuick::geometryUpdated);
 
-    connect(ms, &MultiSplitter::geometryUpdated,
-            this, &MainWindowQuick::onMultiSplitterGeometryUpdated);
+    connect(ms, &LayoutWidget::geometryUpdated, this,
+            &MainWindowQuick::onMultiSplitterGeometryUpdated);
 }
 
 MainWindowQuick::~MainWindowQuick()
@@ -46,12 +45,12 @@ MainWindowQuick::~MainWindowQuick()
 
 QSize MainWindowQuick::minimumSize() const
 {
-    return multiSplitter()->layoutMinimumSize();
+    return layoutWidget()->layoutMinimumSize();
 }
 
 QSize MainWindowQuick::maximumSize() const
 {
-    return multiSplitter()->layoutMaximumSizeHint();
+    return layoutWidget()->layoutMaximumSizeHint();
 }
 
 SideBar *MainWindowQuick::sideBar(SideBarLocation) const

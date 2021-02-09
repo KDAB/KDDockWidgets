@@ -166,9 +166,12 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     }
 
     updateTitleBarVisibility();
-    connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::onFrameCountChanged);
-    connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::numFramesChanged);
-    connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged, this, &FloatingWindow::onVisibleFrameCountChanged);
+    connect(m_dropArea, &LayoutWidget::visibleWidgetCountChanged, this,
+            &FloatingWindow::onFrameCountChanged);
+    connect(m_dropArea, &LayoutWidget::visibleWidgetCountChanged, this,
+            &FloatingWindow::numFramesChanged);
+    connect(m_dropArea, &LayoutWidget::visibleWidgetCountChanged, this,
+            &FloatingWindow::onVisibleFrameCountChanged);
     m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 

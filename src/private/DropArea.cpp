@@ -152,7 +152,7 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
 
 bool DropArea::containsDockWidget(DockWidgetBase *dw) const
 {
-    return dw->d->frame() && MultiSplitter::containsFrame(dw->d->frame());
+    return dw->d->frame() && LayoutWidget::containsFrame(dw->d->frame());
 }
 
 bool DropArea::hasSingleFloatingFrame() const
