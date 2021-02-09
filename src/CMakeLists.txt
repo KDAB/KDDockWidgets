@@ -38,6 +38,8 @@ set(DOCKSLIBS_SRCS
     LayoutSaver_p.h
     private/LayoutWidget.cpp
     private/LayoutWidget_p.h
+    private/MDILayoutWidget.cpp
+    private/MDILayoutWidget_p.h
     private/MultiSplitter.cpp
     private/MultiSplitter_p.h
     private/Position.cpp
@@ -79,6 +81,8 @@ set(DOCKSLIBS_SRCS
 
     private/multisplitter/Item.cpp
     private/multisplitter/Item_p.h
+    private/multisplitter/ItemFreeContainer.cpp
+    private/multisplitter/ItemFreeContainer_p.h
     private/multisplitter/Logging.cpp
     private/multisplitter/Logging_p.h
     private/multisplitter/MultiSplitterConfig.cpp
