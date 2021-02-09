@@ -54,10 +54,22 @@ void ItemFreeContainer::clear()
     m_children.clear();
 }
 
-void ItemFreeContainer::removeItem(Item *, bool hardRemove)
+void ItemFreeContainer::removeItem(Item *item, bool hardRemove)
 {
-    Q_UNUSED(hardRemove);
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    const bool wasVisible = item->isVisible();
+
+    if (hardRemove) {
+        m_children.removeOne(item);
+        delete item;
+    } else {
+        item->setIsVisible(false);
+        item->setGuestWidget(nullptr);
+    }
+
+    if (wasVisible)
+        Q_EMIT numVisibleItemsChanged(numVisibleChildren());
+
+    Q_EMIT itemsChanged();
 }
 
 void ItemFreeContainer::restore(Item *child)
