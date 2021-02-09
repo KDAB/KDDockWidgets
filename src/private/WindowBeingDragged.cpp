@@ -9,12 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "WindowBeingDragged_p.h"
 #include "DragController_p.h"
+#include "Frame_p.h"
+#include "LayoutWidget_p.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
-#include "DropArea_p.h"
-#include "Frame_p.h"
+#include "WindowBeingDragged_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "widgets/TabBarWidget_p.h"
@@ -140,7 +140,7 @@ QSize WindowBeingDragged::size() const
 QSize WindowBeingDragged::minSize() const
 {
     if (m_floatingWindow)
-        return m_floatingWindow->dropArea()->layoutMinimumSize();
+        return m_floatingWindow->layoutWidget()->layoutMinimumSize();
 
     return {};
 }
@@ -148,22 +148,22 @@ QSize WindowBeingDragged::minSize() const
 QSize WindowBeingDragged::maxSize() const
 {
     if (m_floatingWindow)
-        return m_floatingWindow->dropArea()->layoutMaximumSizeHint();
+        return m_floatingWindow->layoutWidget()->layoutMaximumSizeHint();
 
     return {};
 }
 
-bool WindowBeingDragged::contains(DropArea *dropArea) const
+bool WindowBeingDragged::contains(LayoutWidget *layoutWidget) const
 {
-    if (!dropArea)
+    if (!layoutWidget)
         return false;
 
     if (m_floatingWindow)
-        return m_floatingWindow->dropArea() == dropArea;
+        return m_floatingWindow->layoutWidget() == layoutWidget;
 
     if (auto fw = qobject_cast<FloatingWindow*>(m_draggableWidget->window())) {
         // We're not dragging via the floating window itself, but via the tab bar. Still might represent floating window though.
-        return fw->dropArea() == dropArea && fw->hasSingleFrame();
+        return fw->layoutWidget() == layoutWidget && fw->hasSingleFrame();
     }
 
     return false;

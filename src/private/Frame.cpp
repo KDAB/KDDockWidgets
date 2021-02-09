@@ -16,19 +16,19 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "Frame_p.h"
-#include "DropArea_p.h"
-#include "Logging_p.h"
-#include "FloatingWindow_p.h"
-#include "Utils_p.h"
-#include "Position_p.h"
-#include "DockRegistry_p.h"
 #include "Config.h"
-#include "TitleBar_p.h"
-#include "TabWidget_p.h"
+#include "DockRegistry_p.h"
+#include "DockWidgetBase_p.h"
+#include "FloatingWindow_p.h"
+#include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "LayoutSaver_p.h"
-#include "DockWidgetBase_p.h"
+#include "LayoutWidget_p.h"
+#include "Logging_p.h"
+#include "Position_p.h"
+#include "TabWidget_p.h"
+#include "TitleBar_p.h"
+#include "Utils_p.h"
 
 #include <QCloseEvent>
 #include <QTimer>

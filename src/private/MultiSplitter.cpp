@@ -24,7 +24,6 @@
 #include "DockRegistry_p.h"
 #include "DockWidgetBase.h"
 #include "DockWidgetBase_p.h"
-#include "DropArea_p.h"
 #include "FloatingWindow_p.h"
 #include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
