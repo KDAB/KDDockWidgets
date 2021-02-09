@@ -43,6 +43,7 @@ class TitleBar;
 class MainWindowBase;
 class StateDragging;
 class FrameQuick;
+class LayoutWidget;
 
 /**
  * @brief The DockWidget base-class. DockWidget and DockWidgetBase are only
@@ -475,6 +476,7 @@ private:
 #endif
     Q_DISABLE_COPY(DockWidgetBase)
     friend class MultiSplitter;
+    friend class LayoutWidget;
     friend class Frame;
     friend class DropArea;
     friend class ::TestDocks;
