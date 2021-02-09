@@ -355,7 +355,7 @@ bool FloatingWindow::anyNonDockable() const
 
 bool FloatingWindow::hasSingleFrame() const
 {
-    return m_dropArea->numFrames() == 1;
+    return m_dropArea->visibleCount() == 1;
 }
 
 bool FloatingWindow::hasSingleDockWidget() const

@@ -54,11 +54,6 @@ DropArea::~DropArea()
     qCDebug(creation) << "~DropArea";
 }
 
-int DropArea::numFrames() const
-{
-    return visibleCount();
-}
-
 Frame::List DropArea::frames() const
 {
     return findChildren<Frame *>(QString(), Qt::FindDirectChildrenOnly);

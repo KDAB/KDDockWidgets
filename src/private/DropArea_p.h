@@ -48,7 +48,6 @@ public:
     DropIndicatorOverlayInterface::DropLocation hover(WindowBeingDragged *draggedWindow, QPoint globalPos);
     ///@brief Called when a user drops a widget via DND
     bool drop(WindowBeingDragged *droppedWindow, QPoint globalPos);
-    int numFrames() const;
     Frame::List frames() const;
 
     Layouting::Item *centralFrame() const;
