@@ -56,31 +56,10 @@ MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
 
 MultiSplitter::~MultiSplitter()
 {
-    if (m_rootItem->hostWidget()->asQObject() == this)
-        delete m_rootItem;
-    DockRegistry::self()->unregisterLayout(this);
 }
 
-void MultiSplitter::onLayoutRequest()
-{
-    updateSizeConstraints();
-}
-
-bool MultiSplitter::onResize(QSize newSize)
-{
-    QScopedValueRollback<bool> resizeGuard(m_inResizeEvent, true); // to avoid re-entrancy
-
-    if (!LayoutSaver::restoreInProgress()) {
-        // don't resize anything while we're restoring the layout
-        setLayoutSize(newSize);
-    }
-
-    return false; // So QWidget::resizeEvent is called
-}
-
-bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
-                                         Location location,
-                                         const Frame *relativeToFrame, InitialOption option) const
+bool MultiSplitter::validateInputs(QWidgetOrQuick *widget, Location location,
+                                   const Frame *relativeToFrame, InitialOption option) const
 {
     if (!widget) {
         qWarning() << Q_FUNC_INFO << "Widget is null";

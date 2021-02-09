@@ -90,9 +90,6 @@ public:
     /// @brief overload that just resizes widgets within a sub-tree
     void layoutEqually(Layouting::ItemBoxContainer *);
 
-protected:
-    void onLayoutRequest() override;
-    bool onResize(QSize newSize) override;
 private:
     friend class ::TestDocks;
 

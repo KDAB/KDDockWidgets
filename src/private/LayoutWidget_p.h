@@ -180,14 +180,15 @@ public:
     void updateSizeConstraints();
 
 protected:
-    bool m_inResizeEvent = false;
-
     void setRootItem(Layouting::ItemContainer *root);
     /**
      * @brief setter for the minimum size
      * @ref minimumSize
      */
     void setLayoutMinimumSize(QSize);
+
+    void onLayoutRequest() override;
+    bool onResize(QSize newSize) override;
 
     /**
      * @brief Removes unneeded placeholder items when adding new frames.
@@ -211,6 +212,7 @@ Q_SIGNALS:
     void visibleWidgetCountChanged(int count);
 
 private:
+    bool m_inResizeEvent = false;
     Layouting::ItemContainer *m_rootItem = nullptr;
 };
 

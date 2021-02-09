@@ -27,6 +27,9 @@ LayoutWidget::LayoutWidget(QWidgetOrQuick *parent)
 
 LayoutWidget::~LayoutWidget()
 {
+    if (m_rootItem->hostWidget()->asQObject() == this)
+        delete m_rootItem;
+    DockRegistry::self()->unregisterLayout(this);
 }
 
 bool LayoutWidget::isInMainWindow() const
@@ -230,4 +233,21 @@ void LayoutWidget::updateSizeConstraints()
                     << newMinSize;
 
     setLayoutMinimumSize(newMinSize);
+}
+
+void LayoutWidget::onLayoutRequest()
+{
+    updateSizeConstraints();
+}
+
+bool LayoutWidget::onResize(QSize newSize)
+{
+    QScopedValueRollback<bool> resizeGuard(m_inResizeEvent, true); // to avoid re-entrancy
+
+    if (!LayoutSaver::restoreInProgress()) {
+        // don't resize anything while we're restoring the layout
+        setLayoutSize(newSize);
+    }
+
+    return false; // So QWidget::resizeEvent is called
 }
