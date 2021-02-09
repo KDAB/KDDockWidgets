@@ -10,7 +10,7 @@
 */
 
 #include "MainWindowQuick_p.h"
-#include "DropAreaWithCentralFrame_p.h"
+#include "LayoutWidget_p.h"
 
 #include <QDebug>
 
@@ -22,14 +22,14 @@ MainWindowQuick::MainWindowQuick(const QString &uniqueName, MainWindowOptions op
 {
     QWidgetAdapter::makeItemFillParent(this);
 
-    MultiSplitter *ms = dropArea();
-    QWidgetAdapter::makeItemFillParent(ms);
+    LayoutWidget *lw = layoutWidget();
+    QWidgetAdapter::makeItemFillParent(lw);
 
 
     // MainWindowQuick has the same constraints as LayoutWidget, so just forward the signal
-    connect(ms, &LayoutWidget::geometryUpdated, this, &MainWindowQuick::geometryUpdated);
+    connect(lw, &LayoutWidget::geometryUpdated, this, &MainWindowQuick::geometryUpdated);
 
-    connect(ms, &LayoutWidget::geometryUpdated, this,
+    connect(lw, &LayoutWidget::geometryUpdated, this,
             &MainWindowQuick::onMultiSplitterGeometryUpdated);
 }
 
