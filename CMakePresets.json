@@ -11,7 +11,8 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_UNITY_BUILD" : "OFF"
+                "KDDockWidgets_UNITY_BUILD" : "OFF",
+                "KDDockWidgets_FUZZER" : "OFF"
             }
         },
         {
@@ -57,7 +58,8 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_UNITY_BUILD" : "OFF"
+                "KDDockWidgets_UNITY_BUILD" : "OFF",
+                "KDDockWidgets_FUZZER" : "OFF"
             }
         },
         {
@@ -115,7 +117,8 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
                 "KDDockWidgets_UNITY_BUILD" : "OFF",
-                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
+                "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
+                "KDDockWidgets_FUZZER" : "OFF"
             },
             "environment": {
                 "PATH": "$env{HOME}/Qt/6.0.0/gcc_64/bin:$penv{PATH}"
