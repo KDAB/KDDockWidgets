@@ -120,6 +120,65 @@ public:
     /// @brief restores the dockwidget @p dw to its previous position
     void restorePlaceholder(DockWidgetBase *dw, Layouting::Item *, int tabIndex);
 
+    /**
+     * @brief The list of items in this layout.
+     */
+    const QVector<Layouting::Item *> items() const;
+
+    /**
+     * @brief Returns true if this layout contains the specified item.
+     */
+    bool containsItem(const Layouting::Item *) const;
+
+    /**
+     * @brief  Returns true if this layout contains the specified frame.
+     */
+    bool containsFrame(const Frame *) const;
+
+    /**
+     * @brief Returns the number of Item objects in this layout.
+     * This includes non-visible (placeholder) Items too.
+     * @sa visibleCount
+     */
+    int count() const;
+
+    /**
+     * @brief Returns the number of visible Items in this layout.
+     * Which is @ref count minus @ref placeholderCount
+     * @sa count
+     */
+    int visibleCount() const;
+
+    /**
+     * @brief Returns the number of placeholder items in this layout.
+     * This is the same as @ref count minus @ref visibleCount
+     * @sa count, visibleCount
+     */
+    int placeholderCount() const;
+
+    /**
+     * @brief returns the Item that holds @p frame in this layout
+     */
+    Layouting::Item *itemForFrame(const Frame *frame) const;
+
+    /**
+     * @brief Returns this list of Frame objects contained in this layout
+     */
+    QList<Frame *> frames() const;
+
+    /// @brief Returns the list of dock widgets contained in this layout
+    QVector<DockWidgetBase *> dockWidgets() const;
+
+    /**
+     * @brief Removes an item from this MultiSplitter.
+     */
+    void removeItem(Layouting::Item *item);
+
+    /**
+     * @brief Updates the min size of this layout.
+     */
+    void updateSizeConstraints();
+
 protected:
     bool m_inResizeEvent = false;
 
@@ -140,6 +199,13 @@ protected:
      * is making the unrefing happen a bit earlier.
      */
     void unrefOldPlaceholders(const QList<Frame *> &framesBeingAdded) const;
+
+    /**
+     * @brief returns the frames contained in @p frameOrMultiSplitter
+     * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
+     * If frameOrMultiSplitter is a MultiSplitter then it returns a list of all frames it contains
+     */
+    QList<Frame *> framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
 
 Q_SIGNALS:
     void visibleWidgetCountChanged(int count);

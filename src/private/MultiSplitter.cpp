@@ -204,53 +204,9 @@ void MultiSplitter::addMultiSplitter(MultiSplitter *sourceMultiSplitter, Locatio
     addWidget(sourceMultiSplitter, location, relativeTo, option);
 }
 
-void MultiSplitter::removeItem(Layouting::Item *item)
-{
-    if (!item) {
-        qWarning() << Q_FUNC_INFO << "nullptr item";
-        return;
-    }
-
-    item->parentContainer()->removeItem(item);
-}
-
-bool MultiSplitter::containsItem(const Layouting::Item *item) const
-{
-    return m_rootItem->contains_recursive(item);
-}
-
-bool MultiSplitter::containsFrame(const Frame *frame) const
-{
-    return itemForFrame(frame) != nullptr;
-}
-
-int MultiSplitter::count() const
-{
-    return m_rootItem->count_recursive();
-}
-
-int MultiSplitter::visibleCount() const
-{
-    return m_rootItem->visibleCount_recursive();
-}
-
-int MultiSplitter::placeholderCount() const
-{
-    return count() - visibleCount();
-}
-
 QVector<Layouting::Separator*> MultiSplitter::separators() const
 {
     return m_rootItem->separators_recursive();
-}
-
-void MultiSplitter::updateSizeConstraints()
-{
-    const QSize newMinSize = m_rootItem->minSize();
-    qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << minimumSize()
-                    << "to" << newMinSize;
-
-    setLayoutMinimumSize(newMinSize);
 }
 
 int MultiSplitter::availableLengthForOrientation(Qt::Orientation orientation) const
@@ -264,50 +220,6 @@ int MultiSplitter::availableLengthForOrientation(Qt::Orientation orientation) co
 QSize MultiSplitter::availableSize() const
 {
     return m_rootItem->availableSize();
-}
-
-Layouting::Item *MultiSplitter::itemForFrame(const Frame *frame) const
-{
-    if (!frame)
-        return nullptr;
-
-    return m_rootItem->itemForWidget(frame);
-}
-
-DockWidgetBase::List MultiSplitter::dockWidgets() const
-{
-    DockWidgetBase::List dockWidgets;
-    const Frame::List frames = this->frames();
-    for (Frame *frame : frames)
-        dockWidgets << frame->dockWidgets();
-
-    return dockWidgets;
-}
-
-Frame::List MultiSplitter::framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const
-{
-    if (auto frame = qobject_cast<Frame*>(frameOrMultiSplitter))
-        return { frame };
-
-    if (auto msw = qobject_cast<MultiSplitter*>(frameOrMultiSplitter))
-        return msw->frames();
-
-    return {};
-}
-
-Frame::List MultiSplitter::frames() const
-{
-    const Layouting::Item::List items = m_rootItem->items_recursive();
-
-    Frame::List result;
-    result.reserve(items.size());
-
-    for (Layouting::Item *item : items) {
-        if (auto f = static_cast<Frame*>(item->guestAsQObject()))
-            result.push_back(f);
-    }
-
-    return result;
 }
 
 void MultiSplitter::layoutEqually()
@@ -328,11 +240,6 @@ void MultiSplitter::setRootItem(Layouting::ItemBoxContainer *root)
 {
     LayoutWidget::setRootItem(root);
     m_rootItem = root;
-}
-
-const Layouting::Item::List MultiSplitter::items() const
-{
-    return m_rootItem->items_recursive();
 }
 
 Layouting::ItemBoxContainer *MultiSplitter::rootItem() const

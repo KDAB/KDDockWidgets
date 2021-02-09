@@ -138,3 +138,96 @@ void LayoutWidget::setLayoutSize(QSize size)
             resize(size);
     }
 }
+
+const Layouting::Item::List LayoutWidget::items() const
+{
+    return m_rootItem->items_recursive();
+}
+
+bool LayoutWidget::containsItem(const Layouting::Item *item) const
+{
+    return m_rootItem->contains_recursive(item);
+}
+
+bool LayoutWidget::containsFrame(const Frame *frame) const
+{
+    return itemForFrame(frame) != nullptr;
+}
+
+int LayoutWidget::count() const
+{
+    return m_rootItem->count_recursive();
+}
+
+int LayoutWidget::visibleCount() const
+{
+    return m_rootItem->visibleCount_recursive();
+}
+
+int LayoutWidget::placeholderCount() const
+{
+    return count() - visibleCount();
+}
+
+Layouting::Item *LayoutWidget::itemForFrame(const Frame *frame) const
+{
+    if (!frame)
+        return nullptr;
+
+    return m_rootItem->itemForWidget(frame);
+}
+
+DockWidgetBase::List LayoutWidget::dockWidgets() const
+{
+    DockWidgetBase::List dockWidgets;
+    const Frame::List frames = this->frames();
+    for (Frame *frame : frames)
+        dockWidgets << frame->dockWidgets();
+
+    return dockWidgets;
+}
+
+Frame::List LayoutWidget::framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const
+{
+    if (auto frame = qobject_cast<Frame *>(frameOrMultiSplitter))
+        return { frame };
+
+    if (auto msw = qobject_cast<MultiSplitter *>(frameOrMultiSplitter))
+        return msw->frames();
+
+    return {};
+}
+
+Frame::List LayoutWidget::frames() const
+{
+    const Layouting::Item::List items = m_rootItem->items_recursive();
+
+    Frame::List result;
+    result.reserve(items.size());
+
+    for (Layouting::Item *item : items) {
+        if (auto f = static_cast<Frame *>(item->guestAsQObject()))
+            result.push_back(f);
+    }
+
+    return result;
+}
+
+void LayoutWidget::removeItem(Layouting::Item *item)
+{
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "nullptr item";
+        return;
+    }
+
+    item->parentContainer()->removeItem(item);
+}
+
+void LayoutWidget::updateSizeConstraints()
+{
+    const QSize newMinSize = m_rootItem->minSize();
+    qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << minimumSize() << "to"
+                    << newMinSize;
+
+    setLayoutMinimumSize(newMinSize);
+}

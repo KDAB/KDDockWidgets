@@ -70,48 +70,6 @@ public:
                           InitialOption option = DefaultSizeMode::Fair);
 
     /**
-     * @brief Removes an item from this MultiSplitter.
-     */
-    void removeItem(Layouting::Item *item);
-
-    /**
-     * @brief Returns true if this layout contains the specified item.
-     */
-    bool containsItem(const Layouting::Item *) const;
-
-    /**
-     * @brief  Returns true if this layout contains the specified frame.
-     */
-    bool containsFrame(const Frame *) const;
-
-    /**
-     * @brief Returns the number of Item objects in this layout.
-     * This includes non-visible (placeholder) Items too.
-     * @sa visibleCount
-     */
-    int count() const;
-
-    /**
-     * @brief Returns the number of visible Items in this layout.
-     * Which is @ref count minus @ref placeholderCount
-     * @sa count
-     */
-    int visibleCount() const;
-
-    /**
-     * @brief Returns the number of placeholder items in this layout.
-     * This is the same as @ref count minus @ref visibleCount
-     * @sa count, visibleCount
-     */
-    int placeholderCount() const;
-
-    /**
-     * @brief The list of items in this layout.
-     */
-    const QVector<Layouting::Item *> items() const;
-
-
-    /**
      * Called by the indicators, so they draw the drop rubber band at the correct place.
      * The rect for the rubberband when dropping a widget at the specified location.
      * Excludes the Separator thickness, result is actually smaller than what needed. In other words,
@@ -126,24 +84,6 @@ public:
     ///@brief returns the list of separators
     QVector<Layouting::Separator*> separators() const;
 
-    /**
-     * @brief Updates the min size of this layout.
-     */
-    void updateSizeConstraints();
-
-    /**
-     * @brief returns the Item that holds @p frame in this layout
-     */
-    Layouting::Item *itemForFrame(const Frame *frame) const;
-
-    /**
-     * @brief Returns this list of Frame objects contained in this layout
-     */
-    QList<Frame*> frames() const;
-
-    /// @brief Returns the list of dock widgets contained in this layout
-    QVector<DockWidgetBase*> dockWidgets() const;
-
     /// @brief See docs for MainWindowBase::layoutEqually()
     void layoutEqually();
 
@@ -155,13 +95,6 @@ protected:
     bool onResize(QSize newSize) override;
 private:
     friend class ::TestDocks;
-
-    /**
-     * @brief returns the frames contained in @p frameOrMultiSplitter
-     * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
-     * If frameOrMultiSplitter is a MultiSplitter then it returns a list of all frames it contains
-     */
-    QList<Frame*> framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
 
     Layouting::ItemBoxContainer *rootItem() const;
 
