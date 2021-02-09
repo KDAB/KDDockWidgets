@@ -83,12 +83,12 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
         innerVLayout->setSpacing(0);
         innerVLayout->setContentsMargins(0, 0, 0, 0);
         innerVLayout->addWidget(sideBar(SideBarLocation::North));
-        innerVLayout->addWidget(dropArea());
+        innerVLayout->addWidget(layoutWidget());
         innerVLayout->addWidget(sideBar(SideBarLocation::South));
         layout->addLayout(innerVLayout);
         layout->addWidget(sideBar(SideBarLocation::East));
     } else {
-        layout->addWidget(dropArea());
+        layout->addWidget(layoutWidget());
     }
 
     setCentralWidget(centralWidget);

@@ -38,7 +38,7 @@ public:
     explicit Private(MainWindowBase *mainWindow, MainWindowOptions options)
         : m_options(options)
         , q(mainWindow)
-        , m_dropArea(new DropAreaWithCentralFrame(mainWindow, options))
+        , m_layoutWidget(new DropAreaWithCentralFrame(mainWindow, options))
     {
     }
 
@@ -59,7 +59,7 @@ public:
     const MainWindowOptions m_options;
     MainWindowBase *const q;
     QPointer<DockWidgetBase> m_overlayedDockWidget;
-    DropAreaWithCentralFrame *const m_dropArea;
+    LayoutWidget *const m_layoutWidget;
 };
 
 MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
@@ -122,7 +122,7 @@ MainWindowOptions MainWindowBase::options() const
 
 DropAreaWithCentralFrame *MainWindowBase::dropArea() const
 {
-    return d->m_dropArea;
+    return qobject_cast<DropAreaWithCentralFrame *>(d->m_layoutWidget);
 }
 
 MultiSplitter *MainWindowBase::multiSplitter() const
@@ -132,7 +132,7 @@ MultiSplitter *MainWindowBase::multiSplitter() const
 
 LayoutWidget *MainWindowBase::layoutWidget() const
 {
-    return dropArea();
+    return d->m_layoutWidget;
 }
 
 void MainWindowBase::setAffinities(const QStringList &affinityNames)
@@ -380,14 +380,14 @@ void MainWindowBase::Private::updateOverlayGeometry(QSize suggestedSize)
             break;
         }
         case SideBarLocation::South: {
-            const int maxHeight = sb->pos().y() - m_dropArea->pos().y() - 10; // gap
+            const int maxHeight = sb->pos().y() - m_layoutWidget->pos().y() - 10; // gap
             const int bottom = newGeometry.bottom();
             newGeometry.setHeight(qMin(suggestedSize.height(), maxHeight));
             newGeometry.moveBottom(bottom);
             break;
         }
         case SideBarLocation::East: {
-            const int maxWidth = sb->pos().x() - m_dropArea->pos().x() - 10; // gap
+            const int maxWidth = sb->pos().x() - m_layoutWidget->pos().x() - 10; // gap
             const int right = newGeometry.right();
             newGeometry.setWidth(qMin(suggestedSize.width(), maxWidth));
             newGeometry.moveRight(right);
