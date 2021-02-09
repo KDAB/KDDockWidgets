@@ -65,7 +65,7 @@ Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     connect(m_tabWidget->asWidget(), SIGNAL(currentTabChanged(int)), // clazy:exclude=old-style-connect
             this, SLOT(onCurrentTabChanged(int)));
 
-    setDropArea(qobject_cast<DropArea *>(QWidgetAdapter::parentWidget()));
+    setLayoutWidget(qobject_cast<DropArea *>(QWidgetAdapter::parentWidget()));
     m_inCtor = false;
 }
 
@@ -80,7 +80,7 @@ Frame::~Frame()
     DockRegistry::self()->unregisterFrame(this);
 
     // Run some disconnects() too, so we don't receive signals during destruction:
-    setDropArea(nullptr);
+    setLayoutWidget(nullptr);
 }
 
 void Frame::updateTitleAndIcon()
@@ -545,7 +545,7 @@ QStringList Frame::affinities() const
     }
 }
 
-void Frame::setDropArea(DropArea *dt)
+void Frame::setLayoutWidget(DropArea *dt)
 {
     if (dt == m_dropArea)
         return;
@@ -604,9 +604,9 @@ bool Frame::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
         if (auto dropArea = qobject_cast<DropArea *>(QWidgetAdapter::parentWidget())) {
-            setDropArea(dropArea);
+            setLayoutWidget(dropArea);
         } else {
-            setDropArea(nullptr);
+            setLayoutWidget(nullptr);
         }
     }
 

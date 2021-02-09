@@ -121,8 +121,6 @@ public:
     QIcon icon() const;
     const QVector<DockWidgetBase *> dockWidgets() const;
 
-    void setDropArea(DropArea *);
-
     bool isTheOnlyFrame() const;
 
     ///@brief Returns whether this frame is overlayed on top of the MainWindow (auto-hide feature);
@@ -317,6 +315,9 @@ private:
 
     void scheduleDeleteLater();
     bool event(QEvent *) override;
+
+    /// @brief Sets the LayoutWidget which this frame is in
+    void setLayoutWidget(DropArea *);
 
     DropArea *m_dropArea = nullptr;
     FrameOptions m_options = FrameOption_None;
