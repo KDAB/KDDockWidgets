@@ -550,8 +550,6 @@ void Frame::setDropArea(DropArea *dt)
     if (dt == m_dropArea)
         return;
 
-
-    qCDebug(docking) << "Frame::setDropArea dt=" << dt;
     const bool wasInMainWindow = dt && isInMainWindow();
     if (m_dropArea)
         disconnect(m_visibleWidgetCountChangedConnection);
@@ -571,8 +569,6 @@ void Frame::setDropArea(DropArea *dt)
 
 bool Frame::isTheOnlyFrame() const
 {
-    qCDebug(docking) << "Frame::isTheOnlyFrame() m_dropArea=" << m_dropArea << "; numFrames"
-                     << (m_dropArea ? m_dropArea->numFrames() : 0);
     return m_dropArea && m_dropArea->numFrames() == 1;
 }
 
