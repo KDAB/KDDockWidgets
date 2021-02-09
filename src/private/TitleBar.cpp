@@ -100,6 +100,14 @@ MainWindowBase *TitleBar::mainWindow() const
     return nullptr;
 }
 
+bool TitleBar::isMDI() const
+{
+    if (auto mw = mainWindow())
+        return mw->isMDI();
+
+    return false;
+}
+
 void TitleBar::updateButtons()
 {
     updateCloseButton();

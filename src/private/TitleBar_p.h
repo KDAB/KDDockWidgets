@@ -102,6 +102,11 @@ public:
     ///Returns nullptr otherwise
     MainWindowBase *mainWindow() const;
 
+    /// @brief Returns if this title bar is in a main window in MDI mode
+    /// By default false. Only relevant if your main window was constructed with the
+    /// MainWindowOption_MDI option
+    bool isMDI() const;
+
     /// @brief updates the close button enabled state
     void updateButtons();
 
