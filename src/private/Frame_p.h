@@ -123,9 +123,6 @@ public:
 
     void setDropArea(DropArea *);
 
-    ///@brief Returns the drop area this Frame is in.
-    DropArea *dropArea() const;
-
     bool isTheOnlyFrame() const;
 
     ///@brief Returns whether this frame is overlayed on top of the MainWindow (auto-hide feature);
