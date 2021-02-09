@@ -88,6 +88,18 @@ bool TitleBar::onDoubleClicked()
     return false;
 }
 
+MainWindowBase *TitleBar::mainWindow() const
+{
+    if (m_floatingWindow)
+        return nullptr;
+
+    if (m_frame)
+        return m_frame->mainWindow();
+
+    qWarning() << Q_FUNC_INFO << "null frame and null floating window";
+    return nullptr;
+}
+
 void TitleBar::updateButtons()
 {
     updateCloseButton();

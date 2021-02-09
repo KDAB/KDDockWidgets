@@ -98,6 +98,10 @@ public:
     ///@brief getter for m_floatingWindow
     FloatingWindow *floatingWindow() const { return m_floatingWindow; }
 
+    ///@brief If this title bar belongs to a dock widget docked into the main window, returns the main window
+    ///Returns nullptr otherwise
+    MainWindowBase *mainWindow() const;
+
     /// @brief updates the close button enabled state
     void updateButtons();
 
