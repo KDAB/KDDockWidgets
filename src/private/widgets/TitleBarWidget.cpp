@@ -151,6 +151,11 @@ void TitleBarWidget::paintEvent(QPaintEvent *)
     titleOpt.rect = iconRect().isEmpty() ? rect().adjusted(2, 0, -buttonAreaWidth(), 0)
                                          : rect().adjusted(iconRect().right(), 0, -buttonAreaWidth(), 0);
 
+    if (isMDI()) {
+        const QColor c = palette().color(QPalette::Base);
+        p.fillRect(rect(), c);
+    }
+
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
 }
 
