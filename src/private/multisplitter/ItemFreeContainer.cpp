@@ -46,12 +46,12 @@ void ItemFreeContainer::addDockWidget(Item *item, QPoint localPt)
         Q_EMIT numVisibleItemsChanged(numVisibleChildren());
 
     Q_EMIT numItemsChanged();
-
 }
 
 void ItemFreeContainer::clear()
 {
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    qDeleteAll(m_children);
+    m_children.clear();
 }
 
 void ItemFreeContainer::removeItem(Item *, bool hardRemove)
