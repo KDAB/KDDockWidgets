@@ -29,6 +29,7 @@ namespace KDDockWidgets
 
 class FloatingWindow;
 class Frame;
+class LayoutWidget;
 class SideBar;
 struct WindowBeingDragged;
 
@@ -47,8 +48,8 @@ public:
     void registerFloatingWindow(FloatingWindow *);
     void unregisterFloatingWindow(FloatingWindow *);
 
-    void registerLayout(MultiSplitter *);
-    void unregisterLayout(MultiSplitter *);
+    void registerLayout(LayoutWidget *);
+    void unregisterLayout(LayoutWidget *);
 
     void registerFrame(Frame *);
     void unregisterFrame(Frame *);
@@ -79,8 +80,8 @@ public:
     ///@brief overload returning only the ones with the specified names
     const MainWindowBase::List mainWindows(const QStringList &names);
 
-    ///@brief returns the list of MultiSplitter instances
-    const QVector<MultiSplitter*> layouts() const;
+    ///@brief returns the list of LayoutWidget instances
+    const QVector<LayoutWidget *> layouts() const;
 
     ///@brief returns a list of all Frame instances
     const QList<Frame*> frames() const;
@@ -219,7 +220,7 @@ private:
     MainWindowBase::List m_mainWindows;
     QList<Frame*> m_frames;
     QVector<FloatingWindow*> m_floatingWindows;
-    QVector<MultiSplitter*> m_layouts;
+    QVector<LayoutWidget *> m_layouts;
     QPointer<DockWidgetBase> m_focusedDockWidget;
 };
 

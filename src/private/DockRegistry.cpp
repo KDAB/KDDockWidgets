@@ -9,13 +9,13 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DockRegistry_p.h"
 #include "Config.h"
+#include "DockRegistry_p.h"
 #include "DockWidgetBase.h"
 #include "DockWidgetBase_p.h"
 #include "FloatingWindow_p.h"
+#include "LayoutWidget_p.h"
 #include "Logging_p.h"
-#include "MultiSplitter_p.h"
 #include "Position_p.h"
 #include "QWidgetAdapter.h"
 #include "SideBar_p.h"
@@ -315,12 +315,12 @@ void DockRegistry::unregisterFloatingWindow(FloatingWindow *window)
     maybeDelete();
 }
 
-void DockRegistry::registerLayout(MultiSplitter *layout)
+void DockRegistry::registerLayout(LayoutWidget *layout)
 {
     m_layouts << layout;
 }
 
-void DockRegistry::unregisterLayout(MultiSplitter *layout)
+void DockRegistry::unregisterLayout(LayoutWidget *layout)
 {
     m_layouts.removeOne(layout);
 }
@@ -458,7 +458,7 @@ const MainWindowBase::List DockRegistry::mainwindows() const
     return m_mainWindows;
 }
 
-const QVector<MultiSplitter *> DockRegistry::layouts() const
+const QVector<LayoutWidget *> DockRegistry::layouts() const
 {
     return m_layouts;
 }
