@@ -179,6 +179,10 @@ public:
     /// @brief Returns whether any side bar is visible
     bool anySideBarIsVisible() const;
 
+    /// @brief Returns whether this main window is using an MDI layout.
+    /// In other words, returns true if MainWindowOption_MDI was passed in the ctor.
+    bool isMDI() const;
+
 protected:
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()

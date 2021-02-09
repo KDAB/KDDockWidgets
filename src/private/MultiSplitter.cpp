@@ -113,14 +113,6 @@ void MultiSplitter::addWidget(QWidgetOrQuick *w, Location location,
                               InitialOption option)
 {
     auto frame = qobject_cast<Frame*>(w);
-    qCDebug(addwidget) << Q_FUNC_INFO << w
-                       << "; location=" << locationStr(location)
-                       << "; relativeTo=" << relativeToWidget
-                       << "; size=" << size()
-                       << "; w.size=" << w->size()
-                       << "; frame=" << frame
-                       << "; options=" << option;
-
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it.
         // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders

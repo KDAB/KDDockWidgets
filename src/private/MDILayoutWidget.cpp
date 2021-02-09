@@ -11,6 +11,9 @@
 
 #include "ItemFreeContainer_p.h"
 #include "MDILayoutWidget_p.h"
+#include "DockWidgetBase_p.h"
+#include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 using namespace KDDockWidgets;
 
@@ -23,4 +26,32 @@ MDILayoutWidget::MDILayoutWidget(QWidgetOrQuick *parent)
 
 MDILayoutWidget::~MDILayoutWidget()
 {
+}
+
+void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt)
+{
+    if (!dw) {
+        qWarning() << Q_FUNC_INFO << "Refusing to add null dock widget";
+        return;
+    }
+
+    auto frame = qobject_cast<Frame*>(dw->d->frame());
+    if (itemForFrame(frame) != nullptr) {
+        // Item already exists, remove it. See also comment in MultiSplitter::addWidget().
+        frame->QWidgetAdapter::setParent(nullptr);
+        frame->setLayoutItem(nullptr);
+    }
+
+    Layouting::Item *newItem = new Layouting::Item(this);
+    if (frame) {
+        newItem->setGuestWidget(frame);
+    } else {
+        frame = Config::self().frameworkWidgetFactory()->createFrame();
+        newItem->setGuestWidget(frame);
+        frame->addWidget(dw);
+    }
+
+    Q_ASSERT(!newItem->geometry().isEmpty());
+    m_rootItem->addDockWidget(newItem, localPt);
+
 }

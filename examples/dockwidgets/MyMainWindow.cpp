@@ -29,6 +29,11 @@
 #include <stdlib.h>
 #include <time.h>
 
+#if defined(DOCKS_DEVELOPER_MODE)
+// Block just here for my own debugging
+# include "../../src/private/MDILayoutWidget_p.h"
+#endif
+
 // clazy:excludeall=qstring-allocations,ctor-missing-parent-argument,detaching-member
 
 static MyWidget *newMyWidget()
@@ -134,6 +139,19 @@ void MyMainWindow::createDockWidgets()
     for (int i = 0; i < numDockWidgets; i++)
         m_dockwidgets << newDockWidget();
 
+#if defined(DOCKS_DEVELOPER_MODE)
+    // This block is just for my testing
+    if (isMDI()) {
+        auto mdiArea = qobject_cast<KDDockWidgets::MDILayoutWidget*>(layoutWidget());
+        QPoint pt(10, 10);
+        for (KDDockWidgets::DockWidgetBase *dw : qAsConst(m_dockwidgets)) {
+            mdiArea->addDockWidget(dw, pt);
+            pt += QPoint(40, 40);
+        }
+
+        return;
+    }
+#endif
 
     // MainWindow::addDockWidget() attaches a dock widget to the main window:
     addDockWidget(m_dockwidgets.at(0), KDDockWidgets::Location_OnTop);

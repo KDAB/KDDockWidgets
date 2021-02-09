@@ -27,6 +27,28 @@ ItemFreeContainer::~ItemFreeContainer()
 {
 }
 
+void ItemFreeContainer::addDockWidget(Item *item, QPoint localPt)
+{
+    Q_ASSERT(item != this);
+    if (contains(item)) {
+        qWarning() << Q_FUNC_INFO << "Item already exists";
+        return;
+    }
+    item->setIsVisible(true); // TODO: Use OptionStartHidden here too
+
+    m_children.append(item);
+    item->setParentContainer(this);
+    item->setPos(localPt);
+
+    Q_EMIT itemsChanged();
+
+    if (item->isVisible())
+        Q_EMIT numVisibleItemsChanged(numVisibleChildren());
+
+    Q_EMIT numItemsChanged();
+
+}
+
 void ItemFreeContainer::clear()
 {
     qWarning() << Q_FUNC_INFO << "Implement me";

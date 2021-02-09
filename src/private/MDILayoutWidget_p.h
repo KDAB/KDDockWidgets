@@ -35,6 +35,9 @@ public:
     explicit MDILayoutWidget(QWidgetOrQuick *parent = nullptr);
     ~MDILayoutWidget() override;
 
+    /// @brief docks the dock widgets into this MDI area, at the specified position
+    void addDockWidget(DockWidgetBase *dw, QPoint localPt);
+
 private:
     Layouting::ItemFreeContainer *const m_rootItem;
 };

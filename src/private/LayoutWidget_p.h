@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/QWidgetAdapter.h"

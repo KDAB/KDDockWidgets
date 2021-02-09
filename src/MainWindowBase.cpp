@@ -19,6 +19,7 @@
 
 #include "MainWindowBase.h"
 #include "DockRegistry_p.h"
+#include "MDILayoutWidget_p.h"
 #include "DropArea_p.h"
 #include "Frame_p.h"
 #include "Utils_p.h"
@@ -32,13 +33,21 @@
 
 using namespace KDDockWidgets;
 
+static LayoutWidget* createLayoutWidget(MainWindowBase *mainWindow, MainWindowOptions options)
+{
+    if (options & MainWindowOption_MDI)
+        return new MDILayoutWidget(mainWindow);
+
+    return new DropAreaWithCentralFrame(mainWindow, options);
+}
+
 class MainWindowBase::Private
 {
 public:
     explicit Private(MainWindowBase *mainWindow, MainWindowOptions options)
         : m_options(options)
         , q(mainWindow)
-        , m_layoutWidget(new DropAreaWithCentralFrame(mainWindow, options))
+        , m_layoutWidget(createLayoutWidget(mainWindow, options))
     {
     }
 
@@ -553,6 +562,11 @@ bool MainWindowBase::anySideBarIsVisible() const
     }
 
     return false;
+}
+
+bool MainWindowBase::isMDI() const
+{
+    return d->m_options & MainWindowOption_MDI;
 }
 
 void MainWindowBase::setUniqueName(const QString &uniqueName)

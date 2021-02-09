@@ -347,6 +347,7 @@ private Q_SLOTS:
 private:
     friend class ItemContainer;
     friend class ItemBoxContainer;
+    friend class ItemFreeContainer;
     void turnIntoPlaceholder();
     bool eventFilter(QObject *o, QEvent *event) override;
     int m_refCount = 0;
