@@ -166,7 +166,7 @@ LayoutSaver::Position Position::serialize() const
         LayoutSaver::Placeholder p;
 
         Layouting::Item *item = itemRef->item;
-        MultiSplitter *layout = DockRegistry::self()->layoutForItem(item);
+        LayoutWidget *layout = DockRegistry::self()->layoutForItem(item);
         const auto itemIndex = layout->items().indexOf(item);
 
         auto fw = layout->floatingWindow();

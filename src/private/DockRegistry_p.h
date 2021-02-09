@@ -151,12 +151,12 @@ public:
     bool isEmpty(bool excludeBeingDeleted = false) const;
 
     /**
-     * @brief Calls MultiSplitter::checkSanity() on all layouts.
+     * @brief Calls LayoutWidget::checkSanity() on all layouts.
      *
      * @param dumpDebug If true then each layout is dumped too
      *
-     * This is called by the unit-tests or the fuzzer. If during this the framework spits a qWarning()
-     * then the app will qFatal()
+     * This is called by the unit-tests or the fuzzer. If during this the framework spits a
+     * qWarning() then the app will qFatal()
      */
     void checkSanityAll(bool dumpDebug = false);
 
@@ -173,7 +173,7 @@ public:
     MainWindowBase::List mainWindowsWithAffinity(const QStringList &affinities) const;
 
     // TODO: docs
-    MultiSplitter* layoutForItem(const Layouting::Item *) const;
+    LayoutWidget *layoutForItem(const Layouting::Item *) const;
 
     // TODO: docs
     bool itemIsInMainWindow(const Layouting::Item *) const;

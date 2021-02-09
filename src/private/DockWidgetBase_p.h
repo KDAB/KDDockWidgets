@@ -108,7 +108,7 @@ public:
      * @brief the Frame which contains this dock widgets.
      *
      * A frame wraps a docked DockWidget, giving it a TabWidget so it can accept other dock widgets.
-     * Frame is also the actual class that goes into a MultiSplitter.
+     * Frame is also the actual class that goes into a LayoutWidget.
      *
      * It's nullptr immediately after creation.
      */

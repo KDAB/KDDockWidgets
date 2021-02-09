@@ -631,7 +631,7 @@ bool DockWidgetBase::Private::restoreToPreviousPosition()
 
     Layouting::Item *item = m_lastPositions.lastItem();
 
-    MultiSplitter *layout = DockRegistry::self()->layoutForItem(item);
+    LayoutWidget *layout = DockRegistry::self()->layoutForItem(item);
     Q_ASSERT(layout);
     layout->restorePlaceholder(q, item, m_lastPositions.lastTabIndex());
     return true;

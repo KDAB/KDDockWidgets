@@ -237,12 +237,12 @@ MainWindowBase::List DockRegistry::mainWindowsWithAffinity(const QStringList &af
     return result;
 }
 
-MultiSplitter *DockRegistry::layoutForItem(const Layouting::Item *item) const
+LayoutWidget *DockRegistry::layoutForItem(const Layouting::Item *item) const
 {
     if (!item->hostWidget())
         return nullptr;
 
-    if (auto ms = qobject_cast<MultiSplitter*>(item->hostWidget()->asQObject()))
+    if (auto ms = qobject_cast<LayoutWidget *>(item->hostWidget()->asQObject()))
         return ms;
 
     return nullptr;
