@@ -545,21 +545,21 @@ QStringList Frame::affinities() const
     }
 }
 
-void Frame::setLayoutWidget(DropArea *dt)
+void Frame::setLayoutWidget(LayoutWidget *dt)
 {
-    if (dt == m_dropArea)
+    if (dt == m_layoutWidget)
         return;
 
     const bool wasInMainWindow = dt && isInMainWindow();
-    if (m_dropArea)
+    if (m_layoutWidget)
         disconnect(m_visibleWidgetCountChangedConnection);
 
-    m_dropArea = dt;
+    m_layoutWidget = dt;
 
-    if (m_dropArea) {
-        // We keep the connect result so we don't dereference m_dropArea at shutdown
+    if (m_layoutWidget) {
+        // We keep the connect result so we don't dereference m_layoutWidget at shutdown
         m_visibleWidgetCountChangedConnection =
-            connect(m_dropArea, &LayoutWidget::visibleWidgetCountChanged, this,
+            connect(m_layoutWidget, &LayoutWidget::visibleWidgetCountChanged, this,
                     &Frame::updateTitleBarVisibility);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
@@ -569,7 +569,7 @@ void Frame::setLayoutWidget(DropArea *dt)
 
 bool Frame::isTheOnlyFrame() const
 {
-    return m_dropArea && m_dropArea->numFrames() == 1;
+    return m_layoutWidget && m_layoutWidget->visibleCount() == 1;
 }
 
 bool Frame::isOverlayed() const
@@ -708,8 +708,7 @@ QRect Frame::dragRect() const
 
 MainWindowBase *Frame::mainWindow() const
 {
-    return m_dropArea ? m_dropArea->mainWindow()
-                      : nullptr;
+    return m_layoutWidget ? m_layoutWidget->mainWindow() : nullptr;
 }
 
 TabWidget *Frame::tabWidget() const

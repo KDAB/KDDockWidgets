@@ -317,9 +317,9 @@ private:
     bool event(QEvent *) override;
 
     /// @brief Sets the LayoutWidget which this frame is in
-    void setLayoutWidget(DropArea *);
+    void setLayoutWidget(LayoutWidget *);
 
-    DropArea *m_dropArea = nullptr;
+    LayoutWidget *m_layoutWidget = nullptr;
     FrameOptions m_options = FrameOption_None;
     QPointer<Layouting::Item> m_layoutItem;
     bool m_updatingTitleBar = false;
