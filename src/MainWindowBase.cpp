@@ -590,7 +590,7 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
         d->affinities = mw.affinities;
     }
 
-    const bool success = dropArea()->deserialize(mw.multiSplitterLayout);
+    const bool success = layoutWidget()->deserialize(mw.multiSplitterLayout);
 
     // Restore the SideBars
     d->clearSideBars();
@@ -636,7 +636,7 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     m.uniqueName = uniqueName();
     m.screenIndex = screenNumberForWidget(this);
     m.screenSize = screenSizeForWidget(this);
-    m.multiSplitterLayout = dropArea()->serialize();
+    m.multiSplitterLayout = layoutWidget()->serialize();
     m.affinities = d->affinities;
     m.windowState = windowHandle() ? windowHandle()->windowState()
                                    : Qt::WindowNoState;
