@@ -88,7 +88,7 @@ void Position::removePlaceholders()
     m_placeholders.clear();
 }
 
-void Position::removePlaceholders(const MultiSplitter *ms)
+void Position::removePlaceholders(const LayoutWidget *ms)
 {
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [ms] (const std::unique_ptr<ItemRef> &itemref) {
                              return itemref->item->hostWidget() == *ms;

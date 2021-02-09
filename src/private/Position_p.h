@@ -36,7 +36,7 @@ class Item;
 
 namespace KDDockWidgets {
 
-class MultiSplitter;
+class LayoutWidget;
 
 // Just a RAII class so we don't forget to unref
 struct ItemRef
@@ -105,7 +105,7 @@ public:
     const std::vector<std::unique_ptr<ItemRef>>& placeholders() const { return m_placeholders; }
 
     ///@brief Removes the placeholders that belong to this multisplitter
-    void removePlaceholders(const MultiSplitter *);
+    void removePlaceholders(const LayoutWidget *);
 
     ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();
@@ -176,7 +176,8 @@ struct LastPositions
         lastPosition->removePlaceholders();
     }
 
-    void removePlaceholders(const MultiSplitter *hostWidget) const {
+    void removePlaceholders(const LayoutWidget *hostWidget) const
+    {
         lastPosition->removePlaceholders(hostWidget);
     }
 
