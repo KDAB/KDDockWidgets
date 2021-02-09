@@ -65,7 +65,7 @@ Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
     connect(m_tabWidget->asWidget(), SIGNAL(currentTabChanged(int)), // clazy:exclude=old-style-connect
             this, SLOT(onCurrentTabChanged(int)));
 
-    setLayoutWidget(qobject_cast<DropArea *>(QWidgetAdapter::parentWidget()));
+    setLayoutWidget(qobject_cast<LayoutWidget *>(QWidgetAdapter::parentWidget()));
     m_inCtor = false;
 }
 
@@ -603,8 +603,8 @@ bool Frame::isInMainWindow() const
 bool Frame::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
-        if (auto dropArea = qobject_cast<DropArea *>(QWidgetAdapter::parentWidget())) {
-            setLayoutWidget(dropArea);
+        if (auto layoutWidget = qobject_cast<LayoutWidget *>(QWidgetAdapter::parentWidget())) {
+            setLayoutWidget(layoutWidget);
         } else {
             setLayoutWidget(nullptr);
         }

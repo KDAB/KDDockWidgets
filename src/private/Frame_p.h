@@ -36,7 +36,6 @@ namespace KDDockWidgets {
 
 class TitleBar;
 class TabWidget;
-class DropArea;
 class DockWidgetBase;
 class FloatingWindow;
 class MainWindowBase;
@@ -47,9 +46,9 @@ class MainWindowBase;
  * Frame is the actual widget that goes into the MultiSplitter. It provides a TitleBar which you
  * can use to detach, and also a QTabWidget so you can tab dock widgets together.
  *
- * This class doesn't actually add window frames and it's never a top-level widget. A Frame is always
- * inside a MultiSplitter (DropArea). Be it a MultiSplitter belonging to a MainWindow or belonging
- * to a FloatingWindow.
+ * This class doesn't actually add window frames and it's never a top-level widget. A Frame is
+ * always inside a LayoutWidget. Be it a MultiSplitter belonging to a MainWindow or belonging to a
+ * FloatingWindow.
  */
 class DOCKS_EXPORT Frame
         : public LayoutGuestWidget

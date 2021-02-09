@@ -640,8 +640,8 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
             if (auto dw = qobject_cast<DockWidgetBase*>(p))
                 return onDockWidgetPressed(dw, static_cast<QMouseEvent *>(event));
 
-            if (auto dropArea = qobject_cast<DropArea *>(p)) {
-                if (auto mw = dropArea->mainWindow()) {
+            if (auto layoutWidget = qobject_cast<LayoutWidget *>(p)) {
+                if (auto mw = layoutWidget->mainWindow()) {
                     // The user clicked somewhere in the main window's drop area, but outside of the
                     // overlayed dock widget
                     mw->clearSideBarOverlay();
