@@ -28,19 +28,10 @@
 #include "kddockwidgets/QWidgetAdapter.h"
 #include "kddockwidgets/docks_export.h"
 
-namespace Layouting {
-class Item;
-class Separator;
-class Widget_qwidget;
-}
-
 class TestDocks;
 
 namespace KDDockWidgets {
 
-class MainWindowBase;
-class FloatingWindow;
-class Frame;
 struct WindowBeingDragged;
 
 /**
@@ -60,9 +51,6 @@ class DOCKS_EXPORT MultiSplitter : public LayoutWidget
 public:
     explicit MultiSplitter(QWidgetOrQuick *parent = nullptr);
     ~MultiSplitter() override;
-    bool isInMainWindow() const;
-    MainWindowBase* mainWindow() const;
-    FloatingWindow* floatingWindow() const;
 
     /**
      * @brief Adds a widget to this MultiSplitter.
@@ -120,7 +108,7 @@ public:
     /**
      * @brief The list of items in this layout.
      */
-    const QVector<Layouting::Item*> items() const;
+    const QVector<Layouting::Item *> items() const;
 
 
     /**
@@ -144,48 +132,6 @@ public:
     void updateSizeConstraints();
 
     /**
-     * @brief setter for the contents size
-     * The "contents size" is just the size() of this layout. However, since resizing
-     * QWidgets is async and we need it to be sync. As sometimes adding widgets will increase
-     * the MultiSplitter size (due to widget's min-size constraints).
-     */
-    void setLayoutSize(QSize);
-
-    /**
-     * @brief returns the contents width.
-     * Usually it's the same width as the respective parent MultiSplitter.
-     */
-    int width() const { return size().width(); }
-
-    /**
-     * @brief returns the contents height.
-     * Usually it's the same height as the respective parent MultiSplitter.
-     */
-    int height() const { return size().height(); }
-
-    /**
-     * @brief returns the layout's minimum size
-     * @ref setLayoutMinimumSize
-     */
-    QSize layoutMinimumSize() const;
-
-    /**
-     * @brief returns the layout's maximum size hint
-     */
-    QSize layoutMaximumSizeHint() const;
-
-    /**
-     * @brief getter for the size
-     */
-    QSize size() const;
-
-    /// @brief Runs some sanity checks. Returns true if everything is OK
-    bool checkSanity() const;
-
-    /// @brief dumps the layout to stderr
-    void dumpLayout() const;
-
-    /**
      * @brief returns the Item that holds @p frame in this layout
      */
     Layouting::Item *itemForFrame(const Frame *frame) const;
@@ -198,27 +144,16 @@ public:
     /// @brief Returns the list of dock widgets contained in this layout
     QVector<DockWidgetBase*> dockWidgets() const;
 
-    /// @brief restores the dockwidget @p dw to its previous position
-    void restorePlaceholder(DockWidgetBase *dw, Layouting::Item *, int tabIndex);
-
     /// @brief See docs for MainWindowBase::layoutEqually()
     void layoutEqually();
 
     /// @brief overload that just resizes widgets within a sub-tree
     void layoutEqually(Layouting::ItemBoxContainer *);
 
-    /// @brief clears the layout
-    void clearLayout();
-
-Q_SIGNALS:
-    void visibleWidgetCountChanged(int count);
-
 protected:
     void onLayoutRequest() override;
     bool onResize(QSize newSize) override;
 private:
-    bool m_inResizeEvent = false;
-
     friend class ::TestDocks;
 
     /**
@@ -234,21 +169,6 @@ private:
     bool validateInputs(QWidgetOrQuick *widget, KDDockWidgets::Location location,
                         const Frame *relativeToFrame, InitialOption option) const;
 
-    /**
-     * @brief Removes unneeded placeholder items when adding new frames.
-     *
-     * A floating frame A might have a placeholder in the main window (for example to remember its position on the Left),
-     * but then the user might attach it to the right, so the left placeholder is no longer need.
-     * Right before adding the frame to the right we remove the left placeholder, otherwise it's unrefed while we're adding
-     * causing a segfault. So what this does is making the unrefing happen a bit earlier.
-     */
-    void unrefOldPlaceholders(const QList<Frame*> &framesBeingAdded) const;
-
-    /**
-     * @brief setter for the minimum size
-     * @ref minimumSize
-     */
-    void setLayoutMinimumSize(QSize);
 
     void setRootItem(Layouting::ItemBoxContainer *);
 

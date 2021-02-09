@@ -294,6 +294,8 @@ public:
 
     QVector<int> pathFromRoot() const;
 
+    Q_REQUIRED_RESULT virtual bool checkSanity();
+
     virtual QSize minSize() const;
     virtual QSize maxSizeHint() const;
     virtual void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage);
@@ -321,7 +323,6 @@ protected:
     explicit Item(bool isContainer, Widget *hostWidget, ItemContainer *parent);
     void setParentContainer(ItemContainer *parent);
     void connectParent(ItemContainer *parent);
-    Q_REQUIRED_RESULT virtual bool checkSanity();
     void setPos(QPoint);
     void setPos(int pos, Qt::Orientation);
     const ItemContainer *asContainer() const;
@@ -384,10 +385,18 @@ public:
     bool contains_recursive(const Item *item) const;
     int visibleCount_recursive() const override;
     int count_recursive() const;
+    virtual void clear() = 0;
+
 protected:
     bool hasSingleVisibleItem() const;
 
     Item::List m_children;
+
+Q_SIGNALS:
+    void itemsChanged();
+    void numVisibleItemsChanged(int);
+    void numItemsChanged();
+
 private:
     struct Private;
     Private *const d;
@@ -427,7 +436,7 @@ public:
     QRect suggestedDropRect(const Item *item, const Item *relativeTo, KDDockWidgets::Location) const;
     QVariantMap toVariantMap() const override;
     void fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widget *> &widgets) override;
-    void clear();
+    void clear() override;
     Qt::Orientation orientation() const;
     bool isVertical() const;
     bool isHorizontal() const;
@@ -516,10 +525,6 @@ private:
     bool test_suggestedRect();
 #endif
 
-Q_SIGNALS:
-    void itemsChanged();
-    void numVisibleItemsChanged(int);
-    void numItemsChanged();
 public:
     QVector<Layouting::Separator*> separators_recursive() const;
     QVector<Layouting::Separator*> separators() const;

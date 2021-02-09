@@ -78,30 +78,6 @@ bool MultiSplitter::onResize(QSize newSize)
     return false; // So QWidget::resizeEvent is called
 }
 
-bool MultiSplitter::isInMainWindow() const
-{
-    return mainWindow() != nullptr;
-}
-
-MainWindowBase *MultiSplitter::mainWindow() const
-{
-    if (auto pw = QWidgetAdapter::parentWidget()) {
-        // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as it's parented
-        if (pw->objectName() == QLatin1String("MyCentralWidget"))
-            return qobject_cast<MainWindowBase*>(pw->parentWidget());
-
-        if (auto mw = qobject_cast<MainWindowBase*>(pw))
-            return mw;
-    }
-
-    return nullptr;
-}
-
-FloatingWindow *MultiSplitter::floatingWindow() const
-{
-    return qobject_cast<FloatingWindow*>(QWidgetAdapter::parentWidget());
-}
-
 bool MultiSplitter::validateInputs(QWidgetOrQuick *widget,
                                          Location location,
                                          const Frame *relativeToFrame, InitialOption option) const
@@ -334,25 +310,6 @@ Frame::List MultiSplitter::frames() const
     return result;
 }
 
-void MultiSplitter::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item, int tabIndex)
-{
-    if (item->isPlaceholder()) {
-        Frame *newFrame = Config::self().frameworkWidgetFactory()->createFrame(this);
-        item->restore(newFrame);
-    }
-
-    auto frame = qobject_cast<Frame*>(item->guestAsQObject());
-    Q_ASSERT(frame);
-
-    if (tabIndex != -1 && frame->dockWidgetCount() >= tabIndex) {
-        frame->insertWidget(dw, tabIndex);
-    } else {
-        frame->addWidget(dw);
-    }
-
-    frame->QWidgetAdapter::setVisible(true);
-}
-
 void MultiSplitter::layoutEqually()
 {
     layoutEqually(m_rootItem);
@@ -367,70 +324,13 @@ void MultiSplitter::layoutEqually(Layouting::ItemBoxContainer *container)
     }
 }
 
-void MultiSplitter::clearLayout()
-{
-    m_rootItem->clear();
-}
-
-bool MultiSplitter::checkSanity() const
-{
-    return m_rootItem->checkSanity();
-}
-
-void MultiSplitter::unrefOldPlaceholders(const Frame::List &framesBeingAdded) const
-{
-    for (Frame *frame : framesBeingAdded) {
-        for (DockWidgetBase *dw : frame->dockWidgets()) {
-            dw->d->lastPositions().removePlaceholders(this);
-        }
-    }
-}
-
-void MultiSplitter::dumpLayout() const
-{
-    m_rootItem->dumpLayout();
-}
-
-void MultiSplitter::setLayoutSize(QSize size)
-{
-    if (size != this->size()) {
-        m_rootItem->setSize_recursive(size);
-        if (!m_inResizeEvent && !LayoutSaver::restoreInProgress())
-            resize(size);
-    }
-}
-
-QSize MultiSplitter::layoutMinimumSize() const
-{
-    return m_rootItem->minSize();
-}
-
-QSize MultiSplitter::layoutMaximumSizeHint() const
-{
-    return m_rootItem->maxSizeHint();
-}
-
-QSize MultiSplitter::size() const { return m_rootItem->size(); }
-
-void MultiSplitter::setLayoutMinimumSize(QSize sz)
-{
-    if (sz != m_rootItem->minSize()) {
-        setLayoutSize(size().expandedTo(m_rootItem->minSize())); // Increase size in case we need to
-        m_rootItem->setMinSize(sz);
-    }
-
-    qCDebug(sizing) << Q_FUNC_INFO << "minSize = " << m_rootItem->minSize();
-}
-
 void MultiSplitter::setRootItem(Layouting::ItemBoxContainer *root)
 {
-    delete m_rootItem;
+    LayoutWidget::setRootItem(root);
+
     m_rootItem = root;
-    connect(m_rootItem, &Layouting::ItemBoxContainer::numVisibleItemsChanged,
-            this, &MultiSplitter::visibleWidgetCountChanged);
-    connect(m_rootItem, &Layouting::ItemBoxContainer::minSizeChanged, this, [this] {
-        setMinimumSize(layoutMinimumSize());
-    });
+    connect(m_rootItem, &Layouting::ItemContainer::minSizeChanged, this,
+            [this] { setMinimumSize(layoutMinimumSize()); });
 }
 
 const Layouting::Item::List MultiSplitter::items() const
