@@ -26,6 +26,7 @@
 
 #include "docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/QWidgetAdapter.h"
 
 #include <QList>
@@ -178,6 +179,9 @@ public:
      * @brief Updates the min size of this layout.
      */
     void updateSizeConstraints();
+
+    virtual bool deserialize(const LayoutSaver::MultiSplitter &);
+    LayoutSaver::MultiSplitter serialize() const;
 
 protected:
     void setRootItem(Layouting::ItemContainer *root);

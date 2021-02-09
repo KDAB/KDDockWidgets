@@ -24,7 +24,6 @@
 
 #include "LayoutWidget_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/QWidgetAdapter.h"
 #include "kddockwidgets/docks_export.h"
 
@@ -78,8 +77,7 @@ public:
     QRect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
                       const Layouting::Item *relativeTo) const;
 
-    bool deserialize(const LayoutSaver::MultiSplitter &);
-    LayoutSaver::MultiSplitter serialize() const;
+    bool deserialize(const LayoutSaver::MultiSplitter &) override;
 
     ///@brief returns the list of separators
     QVector<Layouting::Separator*> separators() const;

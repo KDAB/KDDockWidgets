@@ -9,11 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include "../LayoutSaver_p.h"
 #include "Config.h"
 #include "DockWidgetBase_p.h"
 #include "FloatingWindow_p.h"
+#include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "LayoutWidget_p.h"
 #include "MainWindowBase.h"
 #include "Position_p.h"
 
@@ -235,6 +236,23 @@ void LayoutWidget::updateSizeConstraints()
     setLayoutMinimumSize(newMinSize);
 }
 
+bool LayoutWidget::deserialize(const LayoutSaver::MultiSplitter &l)
+{
+    QHash<QString, Layouting::Widget *> frames;
+    for (const LayoutSaver::Frame &frame : qAsConst(l.frames)) {
+        Frame *f = Frame::deserialize(frame);
+        Q_ASSERT(!frame.id.isEmpty());
+        frames.insert(frame.id, f);
+    }
+
+    m_rootItem->fillFromVariantMap(l.layout, frames);
+
+    updateSizeConstraints();
+    m_rootItem->setSize_recursive(QWidgetAdapter::size());
+
+    return true;
+}
+
 void LayoutWidget::onLayoutRequest()
 {
     updateSizeConstraints();
@@ -250,4 +268,20 @@ bool LayoutWidget::onResize(QSize newSize)
     }
 
     return false; // So QWidget::resizeEvent is called
+}
+
+LayoutSaver::MultiSplitter LayoutWidget::serialize() const
+{
+    LayoutSaver::MultiSplitter l;
+    l.layout = m_rootItem->toVariantMap();
+    const Layouting::Item::List items = m_rootItem->items_recursive();
+    l.frames.reserve(items.size());
+    for (Layouting::Item *item : items) {
+        if (!item->isContainer()) {
+            if (auto frame = qobject_cast<Frame *>(item->guestAsQObject()))
+                l.frames.insert(frame->id(), frame->serialize());
+        }
+    }
+
+    return l;
 }

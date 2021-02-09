@@ -17,8 +17,6 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-
-#include "MultiSplitter_p.h"
 #include "../LayoutSaver_p.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
@@ -30,6 +28,7 @@
 #include "LayoutSaver.h"
 #include "Logging_p.h"
 #include "MainWindowBase.h"
+#include "MultiSplitter_p.h"
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
 #include "multisplitter/Widget.h"
@@ -245,34 +244,5 @@ QRect MultiSplitter::rectForDrop(const WindowBeingDragged *wbd, Location locatio
 bool MultiSplitter::deserialize(const LayoutSaver::MultiSplitter &l)
 {
     setRootItem(new Layouting::ItemBoxContainer(this));
-
-    QHash<QString, Layouting::Widget*> frames;
-    for (const LayoutSaver::Frame &frame : qAsConst(l.frames)) {
-        Frame *f = Frame::deserialize(frame);
-        Q_ASSERT(!frame.id.isEmpty());
-        frames.insert(frame.id, f);
-    }
-
-    m_rootItem->fillFromVariantMap(l.layout, frames);
-
-    updateSizeConstraints();
-    m_rootItem->setSize_recursive(QWidgetAdapter::size());
-
-    return true;
-}
-
-LayoutSaver::MultiSplitter MultiSplitter::serialize() const
-{
-    LayoutSaver::MultiSplitter l;
-    l.layout = m_rootItem->toVariantMap();
-    const Layouting::Item::List items = m_rootItem->items_recursive();
-    l.frames.reserve(items.size());
-    for (Layouting::Item *item : items) {
-        if (!item->isContainer()) {
-            if (auto frame = qobject_cast<Frame*>(item->guestAsQObject()))
-                l.frames.insert(frame->id(), frame->serialize());
-        }
-    }
-
-    return l;
+    return LayoutWidget::deserialize(l);
 }
