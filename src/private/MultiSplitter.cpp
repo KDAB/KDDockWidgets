@@ -40,15 +40,13 @@
 using namespace KDDockWidgets;
 
 MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
-    : LayoutGuestWidget(parent)
+    : LayoutWidget(parent)
 {
     Q_ASSERT(parent);
     setRootItem(new Layouting::ItemBoxContainer(this));
     DockRegistry::self()->registerLayout(this);
 
     setLayoutSize(parent->size());
-
-    qCDebug(creation) << "MultiSplitter";
 
     // Initialize min size
     updateSizeConstraints();
@@ -58,7 +56,6 @@ MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
 
 MultiSplitter::~MultiSplitter()
 {
-    qCDebug(creation) << "~MultiSplitter" << this;
     if (m_rootItem->hostWidget()->asQObject() == this)
         delete m_rootItem;
     DockRegistry::self()->unregisterLayout(this);
@@ -71,9 +68,6 @@ void MultiSplitter::onLayoutRequest()
 
 bool MultiSplitter::onResize(QSize newSize)
 {
-    qCDebug(sizing) << Q_FUNC_INFO << "; new=" << newSize
-                    << "; window=" << window();
-
     QScopedValueRollback<bool> resizeGuard(m_inResizeEvent, true); // to avoid re-entrancy
 
     if (!LayoutSaver::restoreInProgress()) {

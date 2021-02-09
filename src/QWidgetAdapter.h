@@ -70,6 +70,10 @@ inline bool isMinimized(QWindow *window)
 #endif
 
 namespace KDDockWidgets {
+/// @brief LayoutGuestWidget is is the type that Item will host.
+///
+/// The layouting deals in items, represented by Item. Each item wraps a QWidget (or QQuickItem),
+/// such widgets derive from LayoutGuestWidget.
 class LayoutGuestWidget : public KDDockWidgets::QWidgetAdapter
                         , public LayoutGuestWidgetBase
 {

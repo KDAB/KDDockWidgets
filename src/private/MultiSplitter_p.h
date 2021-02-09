@@ -22,10 +22,11 @@
 #ifndef KDDOCKWIDGETS_MULTISPLITTER_P_H
 #define KDDOCKWIDGETS_MULTISPLITTER_P_H
 
-#include "kddockwidgets/docks_export.h"
-#include "kddockwidgets/QWidgetAdapter.h"
+#include "LayoutWidget_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
+#include "kddockwidgets/QWidgetAdapter.h"
+#include "kddockwidgets/docks_export.h"
 
 namespace Layouting {
 class Item;
@@ -53,8 +54,7 @@ struct WindowBeingDragged;
  * It supports adding a widget to the left/top/bottom/right of the whole MultiSplitter or adding
  * relative to a single widget.
  */
-class DOCKS_EXPORT MultiSplitter
-        : public LayoutGuestWidget
+class DOCKS_EXPORT MultiSplitter : public LayoutWidget
 {
     Q_OBJECT
 public:

@@ -36,6 +36,8 @@ set(DOCKSLIBS_SRCS
     LayoutSaver.cpp
     LayoutSaver.h
     LayoutSaver_p.h
+    private/LayoutWidget.cpp
+    private/LayoutWidget_p.h
     private/MultiSplitter.cpp
     private/MultiSplitter_p.h
     private/Position.cpp
@@ -107,6 +109,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/FloatingWindow_p.h
     private/Frame_p.h
     private/MultiSplitter_p.h
+    private/LayoutWidget_p.h
     private/SideBar_p.h
     private/TitleBar_p.h
     private/WindowBeingDragged_p.h
