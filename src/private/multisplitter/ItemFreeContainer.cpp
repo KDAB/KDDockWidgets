@@ -66,15 +66,12 @@ void ItemFreeContainer::restore(Item *child)
     qWarning() << Q_FUNC_INFO << "Implement me";
 }
 
-void ItemFreeContainer::onChildMinSizeChanged(Item *child)
+void ItemFreeContainer::onChildMinSizeChanged(Item *)
 {
-    Q_UNUSED(child);
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    // Nothing here either, although we could update the size constraints
 }
 
-void ItemFreeContainer::onChildVisibleChanged(Item *child, bool visible)
+void ItemFreeContainer::onChildVisibleChanged(Item *, bool)
 {
-    Q_UNUSED(child);
-    Q_UNUSED(visible);
-    qWarning() << Q_FUNC_INFO << "Implement me";
+    // Nothing needed to do in this layout type
 }

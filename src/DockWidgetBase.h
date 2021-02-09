@@ -477,6 +477,7 @@ private:
     Q_DISABLE_COPY(DockWidgetBase)
     friend class MultiSplitter;
     friend class LayoutWidget;
+    friend class MDILayoutWidget;
     friend class Frame;
     friend class DropArea;
     friend class ::TestDocks;
