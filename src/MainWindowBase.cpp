@@ -130,6 +130,11 @@ MultiSplitter *MainWindowBase::multiSplitter() const
     return dropArea();
 }
 
+LayoutWidget *MainWindowBase::layoutWidget() const
+{
+    return dropArea();
+}
+
 void MainWindowBase::setAffinities(const QStringList &affinityNames)
 {
     QStringList affinities = affinityNames;
@@ -288,7 +293,7 @@ SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) co
 {
     // TODO: Algorithm can still be made smarter
 
-    Layouting::Item *item = q->multiSplitter()->itemForFrame(dw->d->frame());
+    Layouting::Item *item = q->layoutWidget()->itemForFrame(dw->d->frame());
     if (!item) {
         qWarning() << Q_FUNC_INFO << "No item for dock widget";
         return SideBarLocation::None;

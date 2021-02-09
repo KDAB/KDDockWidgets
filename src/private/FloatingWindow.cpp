@@ -314,6 +314,11 @@ MultiSplitter *FloatingWindow::multiSplitter() const
     return m_dropArea;
 }
 
+LayoutWidget *FloatingWindow::layoutWidget() const
+{
+    return m_dropArea;
+}
+
 bool FloatingWindow::isInDragArea(QPoint globalPoint) const
 {
 #ifdef Q_OS_WIN

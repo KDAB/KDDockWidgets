@@ -262,8 +262,10 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
 
     bool result = true;
     const bool needToFocusNewlyDroppedWidgets = Config::self().flags() & Config::Flag_TitleBarIsFocusable;
-    const DockWidgetBase::List droppedDockWidgets = needToFocusNewlyDroppedWidgets ? droppedWindow->multiSplitter()->dockWidgets()
-                                                                                   : DockWidgetBase::List(); // just so save some memory allocations for the case where this variable isn't used
+    const DockWidgetBase::List droppedDockWidgets = needToFocusNewlyDroppedWidgets
+        ? droppedWindow->layoutWidget()->dockWidgets()
+        : DockWidgetBase::List(); // just so save some memory allocations for the case where this
+                                  // variable isn't used
 
     switch (droploc) {
     case DropIndicatorOverlayInterface::DropLocation_Left:

@@ -15,11 +15,11 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "Position_p.h"
 #include "DockRegistry_p.h"
-#include "MultiSplitter_p.h"
 #include "FloatingWindow_p.h"
 #include "LayoutSaver_p.h"
+#include "LayoutWidget_p.h"
+#include "Position_p.h"
 
 #include <algorithm>
 
@@ -120,7 +120,7 @@ void Position::removePlaceholder(Layouting::Item *placeholder)
 void Position::deserialize(const LayoutSaver::Position &lp)
 {
     for (const auto &placeholder : qAsConst(lp.placeholders)) {
-        MultiSplitter *layout;
+        LayoutWidget *layout;
         int itemIndex = placeholder.itemIndex;
         if (placeholder.isFloatingWindow) {
             const int index = placeholder.indexOfFloatingWindow;
@@ -130,7 +130,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
                 auto serializedFw = LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowForIndex(index);
                 if (serializedFw.isValid()) {
                     if (FloatingWindow *fw = serializedFw.floatingWindowInstance) {
-                        layout = fw->multiSplitter();
+                        layout = fw->layoutWidget();
                     } else {
                         continue;
                     }
@@ -141,7 +141,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             }
         } else {
             MainWindowBase *mainWindow = DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
-            layout = mainWindow->multiSplitter();
+            layout = mainWindow->layoutWidget();
         }
 
         const Layouting::Item::List &items = layout->items();

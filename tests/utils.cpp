@@ -128,7 +128,7 @@ std::unique_ptr<MainWindowBase> KDDockWidgets::Tests::createMainWindow(QVector<D
 #endif
 
     auto m = std::unique_ptr<MainWindowType>(new MainWindowType(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
-    auto layout = m->multiSplitter();
+    auto layout = m->layoutWidget();
     m->show();
     m->resize(QSize(700, 700));
 

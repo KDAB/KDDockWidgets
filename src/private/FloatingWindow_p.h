@@ -31,6 +31,7 @@ class MainWindowBase;
 class DropArea;
 class Frame;
 class MultiSplitter;
+class LayoutWidget;
 
 class DOCKS_EXPORT FloatingWindow
         : public QWidgetAdapter
@@ -114,6 +115,11 @@ public:
      * @brief Returns the MultiSplitter
      */
     MultiSplitter *multiSplitter() const;
+
+    /**
+     * @brief Returns the LayoutWidget
+     */
+    LayoutWidget *layoutWidget() const;
 
     /**
      * @brief Returns whether @p globalPoint is inside the title bar (or, when there's no title-bar, the draggable empty

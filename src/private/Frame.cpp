@@ -560,13 +560,13 @@ void Frame::setDropArea(DropArea *dt)
 
     if (m_dropArea) {
         // We keep the connect result so we don't dereference m_dropArea at shutdown
-        m_visibleWidgetCountChangedConnection = connect(m_dropArea, &MultiSplitter::visibleWidgetCountChanged,
-                                                        this, &Frame::updateTitleBarVisibility);
+        m_visibleWidgetCountChangedConnection =
+            connect(m_dropArea, &LayoutWidget::visibleWidgetCountChanged, this,
+                    &Frame::updateTitleBarVisibility);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();
     }
-
 }
 
 bool Frame::isTheOnlyFrame() const

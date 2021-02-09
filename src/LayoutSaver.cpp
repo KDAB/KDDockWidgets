@@ -348,7 +348,7 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainW
     // be loading a new layout.
 
     for (MainWindowBase *mw : DockRegistry::self()->mainWindows(mainWindowNames)) {
-        const KDDockWidgets::DockWidgetBase::List docks = mw->multiSplitter()->dockWidgets();
+        const KDDockWidgets::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
         for (auto dw : docks) {
             if (dw->skipsRestore()) {
                 dw->setFloating(true);

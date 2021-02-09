@@ -36,6 +36,7 @@ class DockWidgetBase;
 class Frame;
 class DropArea;
 class MultiSplitter;
+class LayoutWidget;
 class DropAreaWithCentralFrame;
 class SideBar;
 
@@ -100,7 +101,11 @@ public:
 
     ///@internal
     ///@brief returns the MultiSplitter.
-    MultiSplitter* multiSplitter() const;
+    MultiSplitter *multiSplitter() const;
+
+    ///@internal
+    ///@brief returns the MultiSplitter.
+    LayoutWidget *layoutWidget() const;
 
     /**
      * @brief Sets the affinities names. Dock widgets can only dock into main windows of the same affinity.

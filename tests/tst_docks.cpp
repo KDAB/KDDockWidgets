@@ -335,7 +335,7 @@ void TestDocks::tst_simple1()
     // Simply create a MainWindow
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 }
 
 void TestDocks::tst_simple2()
@@ -346,7 +346,7 @@ void TestDocks::tst_simple2()
     auto dw = createDockWidget("dw", new MyWidget("dw", Qt::blue));
     auto fw = dw->floatingWindow();
     m->addDockWidget(dw, KDDockWidgets::Location_OnTop);
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
     delete fw;
 }
 
@@ -469,10 +469,10 @@ void TestDocks::tst_hasLastDockedLocation()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1");
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
     m->multiSplitter()->setObjectName("mainWindow-dropArea");
-    dock1->floatingWindow()->multiSplitter()->setObjectName("first-dropArea1");
-    dock1->floatingWindow()->multiSplitter()->checkSanity();
+    dock1->floatingWindow()->layoutWidget()->setObjectName("first-dropArea1");
+    dock1->floatingWindow()->layoutWidget()->checkSanity();
     auto window1 = dock1->window();
     QVERIFY(dock1->isFloating());
     QVERIFY(!dock1->hasPreviousDockedLocation());
@@ -482,12 +482,12 @@ void TestDocks::tst_hasLastDockedLocation()
     QVERIFY(!dock1->hasPreviousDockedLocation());
 
     m->addDockWidget(dock1, Location_OnBottom);
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 
     QVERIFY(!dock1->isFloating());
     QVERIFY(dock1->setFloating(true));
 
-    auto ms1 = dock1->floatingWindow()->multiSplitter();
+    auto ms1 = dock1->floatingWindow()->layoutWidget();
     ms1->setObjectName("dropArea1");
     ms1->checkSanity();
     QVERIFY(dock1->hasPreviousDockedLocation());
@@ -1692,7 +1692,7 @@ void TestDocks::tst_negativeAnchorPosition7()
 
     // Stack: 1, 3, 2
     m->addDockWidget(d3, Location_OnTop, d2);
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 }
 
 void TestDocks::tst_invalidAnchorGroup()
@@ -1917,7 +1917,7 @@ void TestDocks::tst_samePositionAfterHideRestore()
     dock2->setFloating(false);
     QVERIFY(Testing::waitForDeleted(fw2));
     QCOMPARE(geo2, dock2->dptr()->frame()->QWidgetAdapter::geometry());
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 }
 
 void TestDocks::tst_startClosed()
@@ -2061,7 +2061,7 @@ void TestDocks::tst_refUnrefItem()
 
     auto m2 = createMainWindow();
     m2->addDockWidget(dock4, KDDockWidgets::Location_OnLeft);
-    m2->multiSplitter()->checkSanity();
+    m2->layoutWidget()->checkSanity();
     QVERIFY(!item4.data());
 }
 
@@ -2148,7 +2148,7 @@ void TestDocks::tst_availableLengthForOrientation()
     availableHeight = layout->availableLengthForOrientation(Qt::Vertical);
     QCOMPARE(availableWidth, layout->width() - dock1MinWidth);
     QCOMPARE(availableHeight, layout->height() - dock1MinHeight);
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 }
 
 void TestDocks::tst_closeShowWhenNoCentralFrame()
@@ -2160,13 +2160,13 @@ void TestDocks::tst_closeShowWhenNoCentralFrame()
     QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
     m->addDockWidget(dock1, Location_OnLeft);
     dock1->close();
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 
     QVERIFY(!dock1->dptr()->frame());
     QVERIFY(!Testing::waitForDeleted(dock1)); // It was being deleted due to a bug
     QVERIFY(dock1);
     dock1->show();
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 }
 
 void TestDocks::tst_setAsCurrentTab()
@@ -2192,7 +2192,7 @@ void TestDocks::tst_setAsCurrentTab()
 
     auto fw = dock1->floatingWindow();
     QVERIFY(fw);
-    fw->multiSplitter()->checkSanity();
+    fw->layoutWidget()->checkSanity();
 
     delete dock1;
     delete dock2;
@@ -3132,13 +3132,13 @@ void TestDocks::tst_addAndReadd()
     auto dock1 = createDockWidget("dock1", new QPushButton("1"));
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     dock1->setFloating(true);
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     dock1->dptr()->frame()->titleBar()->makeWindow();
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     dock1->dptr()->frame()->titleBar()->makeWindow();
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 
     auto fw = dock1->floatingWindow();
     QVERIFY(fw);
@@ -3146,7 +3146,7 @@ void TestDocks::tst_addAndReadd()
     dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
     QVERIFY(dock1->dptr()->frame()->titleBar()->isVisible());
     fw->titleBar()->makeWindow();
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 
     //Cleanup
     delete dock1;
@@ -3798,7 +3798,7 @@ void TestDocks::tst_restoreSideBySide()
         auto dock3 = createDockWidget("3", new QPushButton("3"));
         dock2->addDockWidgetToContainingWindow(dock3, Location_OnRight);
         auto fw2 = dock2->floatingWindow();
-        item2MinSize = fw2->multiSplitter()->itemForFrame(dock2->dptr()->frame())->minSize();
+        item2MinSize = fw2->layoutWidget()->itemForFrame(dock2->dptr()->frame())->minSize();
         LayoutSaver saver;
         QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreSideBySide.json")));
         QVERIFY(layout->checkSanity());
@@ -4321,7 +4321,7 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
     QVERIFY(d2->dptr()->frame()->titleBar()->isVisible() ^ hiddenTitleBar);
 
     d2->close();
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
     delete d2;
     if (tabsAlwaysVisible) {
         if (hiddenTitleBar)
@@ -4468,7 +4468,7 @@ void TestDocks::tst_positionWhenShown()
     QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), QPoint(100, 100));
 
     // Cleanup
-    window->multiSplitter()->checkSanity();
+    window->layoutWidget()->checkSanity();
     dock1->deleteLater();
     QVERIFY(Testing::waitForDeleted(dock1));
 }
@@ -5414,7 +5414,7 @@ void TestDocks::tst_restoreEmbeddedMainWindow()
 
     QCOMPARE(window->pos(), originalPos);
     QCOMPARE(window->size(), originalSize);
-    window->mainWindow->multiSplitter()->checkSanity();
+    window->mainWindow->layoutWidget()->checkSanity();
 
     delete window;
 }
@@ -5651,7 +5651,7 @@ void TestDocks::tst_addToHiddenMainWindow()
     QVERIFY(!m->isVisible());
     d1->setFloating(true);
     d2->setFloating(false);
-    m->multiSplitter()->checkSanity();
+    m->layoutWidget()->checkSanity();
 }
 
 void TestDocks::tst_maxSizePropagates2()
