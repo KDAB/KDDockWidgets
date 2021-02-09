@@ -537,7 +537,7 @@ void TestDocks::tst_detachFromMainWindow()
     auto fw1 = dock1->window();
     m->addDockWidget(dock1, Location_OnTop);
 
-    QVERIFY(m->multiSplitter()->mainWindow() != nullptr);
+    QVERIFY(m->layoutWidget()->mainWindow() != nullptr);
     QVERIFY(!dock1->isFloating());
     TitleBar *tb = dock1->titleBar();
     QVERIFY(tb == dock1->dptr()->frame()->titleBar());
@@ -807,7 +807,7 @@ void TestDocks::tst_restoreEmpty()
     const QSize oldSize = m->size();
     QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreEmpty.json")));
     saver.restoreFromFile(QStringLiteral("layout_tst_restoreEmpty.json"));
-    QVERIFY(m->multiSplitter()->checkSanity());
+    QVERIFY(m->layoutWidget()->checkSanity());
     QCOMPARE(layout->separators().size(), 0);
     QCOMPARE(layout->count(), 0);
     QCOMPARE(m->size(), oldSize);
