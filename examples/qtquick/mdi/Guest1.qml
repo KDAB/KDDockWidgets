@@ -39,9 +39,6 @@ Guest {
             } else {
                 another.dockWidget.show();
             }
-
-
         }
     }
-
 }

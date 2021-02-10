@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     QQuickView view;
     view.setObjectName("MainWindow QQuickView");
     KDDockWidgets::Config::self().setQmlEngine(view.engine());
-    view.resize(1000, 800);
+    view.resize(1000, 1000);
     view.show();
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
@@ -43,11 +43,11 @@ int main(int argc, char *argv[])
     view.setSource(QUrl("qrc:/main.qml"));
 
     dw1->setWidget(QStringLiteral("qrc:/Guest1.qml"));
-    dw1->resize(QSize(800, 800));
+    dw1->resize(QSize(400, 400));
 
     auto dw2 = new KDDockWidgets::DockWidgetQuick("Dock #2");
     dw2->setWidget(QStringLiteral("qrc:/Guest2.qml"));
-    dw2->resize(QSize(800, 800));
+    dw2->resize(QSize(400, 400));
 
     auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #3");
     dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
