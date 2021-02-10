@@ -24,11 +24,13 @@ using namespace KDDockWidgets;
 TitleBarQuick::TitleBarQuick(Frame *parent)
     : TitleBar(parent)
 {
+    setFixedHeight(30);
 }
 
 TitleBarQuick::TitleBarQuick(FloatingWindow *parent)
     : TitleBar(parent)
 {
+    setFixedHeight(30);
 }
 
 TitleBarQuick::~TitleBarQuick()

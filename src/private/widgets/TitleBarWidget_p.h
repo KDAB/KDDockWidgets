@@ -49,6 +49,7 @@ protected:
     void updateMaximizeButton() override;
     void updateMinimizeButton() override;
     void updateAutoHideButton() override;
+    QSize sizeHint() const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
      // The following are needed for the unit-tests

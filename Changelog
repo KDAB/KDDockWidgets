@@ -1,5 +1,8 @@
 * v1.4.0 (unreleased)
-  -
+  - TitleBar's height is now controlled by sizeHint() instead of hardcoded.
+    If you haven't overridden TitleBar or just inheriting from TitleBarWidget then there's nothing to do,
+    as TitleBarWidget already reimplements sizeHint. If you're inheriting directly from TitleBar then make
+    sure to provide a sizeHint.
 
 * v1.3.1 (unreleased)
   -

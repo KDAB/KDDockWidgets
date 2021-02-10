@@ -21,6 +21,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>
+#include <QStyleOption>
 
 using namespace KDDockWidgets;
 
@@ -99,6 +100,18 @@ void TitleBarWidget::init()
     connect(this, &TitleBar::floatButtonVisibleChanged, m_floatButton, &QWidget::setVisible);
     m_floatButton->setVisible(floatButtonVisible());
     m_floatButton->setToolTip(floatButtonToolTip());
+}
+
+QSize TitleBarWidget::sizeHint() const
+{
+    // Pass an opt so it scales against the logical dpi of the correct screen (cince Qt 5.14) even if the HDPI Qt::AA_ attributes are off.
+    QStyleOption opt;
+    opt.initFrom(this);
+
+    const int height =
+        style()->pixelMetric(QStyle::PM_HeaderDefaultSectionSizeVertical, &opt, this);
+
+    return QSize(0, height);
 }
 
 QRect TitleBarWidget::iconRect() const
