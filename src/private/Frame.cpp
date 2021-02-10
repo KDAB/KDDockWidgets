@@ -58,7 +58,6 @@ Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
 {
     s_dbg_numFrames++;
     DockRegistry::self()->registerFrame(this);
-    qCDebug(creation) << "Frame" << ((void*)this) << s_dbg_numFrames;
 
     connect(this, &Frame::currentDockWidgetChanged, this, &Frame::updateTitleAndIcon);
 
@@ -76,7 +75,6 @@ Frame::~Frame()
     if (m_layoutItem)
         m_layoutItem->unref();
 
-    qCDebug(creation) << "~Frame" << static_cast<void*>(this);
     DockRegistry::self()->unregisterFrame(this);
 
     // Run some disconnects() too, so we don't receive signals during destruction:
