@@ -101,6 +101,11 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
         return;
     }
 
+    if (isMDI()) {
+        // Not applicable to MDI
+        return;
+    }
+
     if (d->supportsCentralFrame()) {
         dropArea()->m_centralFrame->addWidget(widget);
     } else {
@@ -113,6 +118,11 @@ void MainWindowBase::addDockWidget(DockWidgetBase *dw, Location location,
 {
     if (dw->options() & DockWidgetBase::Option_NotDockable) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << dw;
+        return;
+    }
+
+    if (isMDI()) {
+        // Not applicable to MDI
         return;
     }
 
