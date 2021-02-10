@@ -19,7 +19,7 @@ MainWindowWrapper::MainWindowWrapper()
 {
 }
 
-void MainWindowWrapper::init(const QString &uniqueName)
+void MainWindowWrapper::init(const QString &uniqueName, int options)
 {
     if (uniqueName.isEmpty()) {
         qWarning() << Q_FUNC_INFO << "Name can't be empty";
@@ -31,5 +31,5 @@ void MainWindowWrapper::init(const QString &uniqueName)
         return;
     }
 
-    m_mainWindow = new MainWindowQuick(uniqueName, MainWindowOption_None, this);
+    m_mainWindow = new MainWindowQuick(uniqueName, MainWindowOptions(options), this);
 }

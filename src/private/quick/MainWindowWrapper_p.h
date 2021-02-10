@@ -31,7 +31,7 @@ public:
     MainWindowWrapper();
 
     ///@brief called by the user, typically in main.qml or so, in Component.onCompleted{}
-    Q_INVOKABLE void init(const QString &uniqueName);
+    Q_INVOKABLE void init(const QString &uniqueName, int options = 0);
 
 private:
     MainWindowQuick *m_mainWindow = nullptr;

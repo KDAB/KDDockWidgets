@@ -19,11 +19,6 @@
 #include <QGuiApplication>
 #include <QCommandLineParser>
 
-#if defined(DOCKS_DEVELOPER_MODE)
-// Block just here for my own debugging
-# include "../../src/private/MDILayoutWidget_p.h"
-#endif
-
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_WIN
@@ -40,13 +35,11 @@ int main(int argc, char *argv[])
     QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
     QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
     QCommandLineOption noDropIndicators("no-drop-indicators", QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
-    QCommandLineOption mdiLayout("mdi-layout", QCoreApplication::translate("main", "Main Window will use an MDI layout instead")); // TODO: Expose once stable
 
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
     parser.addOption(nativeTitleBar);
     parser.addOption(noDropIndicators);
-    parser.addOption(mdiLayout);
 
 # if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
@@ -55,7 +48,6 @@ int main(int argc, char *argv[])
 #endif
 
     auto flags = KDDockWidgets::Config::self().flags();
-    KDDockWidgets::MainWindowOptions mainWindowsOptions = {};
 
 #if defined(DOCKS_DEVELOPER_MODE)
     auto internalFlags = KDDockWidgets::Config::self().internalFlags();
@@ -71,9 +63,6 @@ int main(int argc, char *argv[])
         flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
     else if (parser.isSet(noDropIndicators))
         KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
-
-    if (parser.isSet(mdiLayout))
-        mainWindowsOptions |= KDDockWidgets::MainWindowOption_MDI; // TODO: Move outside of developer mode once stable
 
 # if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
@@ -111,16 +100,6 @@ int main(int argc, char *argv[])
 
     KDDockWidgets::MainWindowBase *mainWindow = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst();
     mainWindow->addDockWidget(dw2, KDDockWidgets::Location_OnTop);
-
-#if defined(DOCKS_DEVELOPER_MODE)
-    // MDI just for my internal tests
-    if (mainWindow->isMDI()) {
-        auto layout = qobject_cast<KDDockWidgets::MDILayoutWidget*>(mainWindow->layoutWidget());
-        layout->addDockWidget(dw1, QPoint(10, 10));
-        layout->addDockWidget(dw2, QPoint(50, 50));
-        layout->addDockWidget(dw3, QPoint(90, 90));
-    }
-#endif
 
     return app.exec();
 }
