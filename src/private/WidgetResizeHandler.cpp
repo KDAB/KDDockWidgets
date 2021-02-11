@@ -218,19 +218,21 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         }
     }
 
-    if (newGeometry != mTarget->geometry()) {
-        if (!mTarget->isTopLevel()) {
-
-            // Clip to parent's geometry.
-            newGeometry = newGeometry.intersected(parentGeometry);
-
-            // Back to local.
-            newGeometry.moveTopLeft(mTarget->mapFromGlobal(newGeometry.topLeft()) + mTarget->pos());
-        }
-
-        mTarget->setGeometry(newGeometry);
+    if (newGeometry == mTarget->geometry()) {
+        // Nothing to do.
+        return true;
     }
 
+    if (!mTarget->isTopLevel()) {
+
+        // Clip to parent's geometry.
+        newGeometry = newGeometry.intersected(parentGeometry);
+
+        // Back to local.
+        newGeometry.moveTopLeft(mTarget->mapFromGlobal(newGeometry.topLeft()) + mTarget->pos());
+    }
+
+    mTarget->setGeometry(newGeometry);
     return true;
 }
 
