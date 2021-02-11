@@ -30,6 +30,7 @@
 #include "TitleBar_p.h"
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
+#include "MDILayoutWidget_p.h"
 
 #include <QCloseEvent>
 #include <QTimer>
@@ -762,4 +763,9 @@ void Frame::setAllowedResizeSides(CursorPositions sides)
         delete m_resizeHandler;
         m_resizeHandler = nullptr;
     }
+}
+
+bool Frame::isMDI() const
+{
+    return qobject_cast<const MDILayoutWidget*>(this) != nullptr;
 }

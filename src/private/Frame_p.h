@@ -255,6 +255,10 @@ public:
     /// in MDI mode, or in overlayed mode then we allow the user to resize with mouse
     void setAllowedResizeSides(CursorPositions sides);
 
+    /// @brief Returns whether this frame is in a MDI layout
+    /// Usually no, unless you're using an MDI main window
+    bool isMDI() const;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();
