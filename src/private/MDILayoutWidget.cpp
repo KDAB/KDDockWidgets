@@ -47,8 +47,10 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt)
         newItem->setGuestWidget(frame);
     } else {
         frame = Config::self().frameworkWidgetFactory()->createFrame();
-        newItem->setGuestWidget(frame);
+        frame->setAllowedResizeSides(CursorPosition_All);
         frame->addWidget(dw);
+
+        newItem->setGuestWidget(frame);
     }
 
     Q_ASSERT(!newItem->geometry().isEmpty());
