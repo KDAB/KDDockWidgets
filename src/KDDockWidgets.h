@@ -155,15 +155,6 @@ namespace KDDockWidgets
         const DefaultSizeMode sizeMode = DefaultSizeMode::Fair;
     };
 
-    ///@internal
-    enum FrameOption {
-        FrameOption_None = 0,
-        FrameOption_AlwaysShowsTabs = 1,
-        FrameOption_IsCentralFrame = 2,
-        FrameOption_IsOverlayed = 4
-    };
-    Q_DECLARE_FLAGS(FrameOptions, FrameOption)
-
     enum RestoreOption {
         RestoreOption_None = 0,
         RestoreOption_RelativeToMainWindow = 1, ///< Skips restoring the main window geometry and the restored dock widgets will use relative sizing.
@@ -177,24 +168,6 @@ namespace KDDockWidgets
         None ///< Don't show any drop indicators while dragging
     };
 
-    ///@internal
-    inline QString locationStr(Location loc)
-    {
-        switch (loc) {
-        case KDDockWidgets::Location_None:
-            return QStringLiteral("none");
-        case KDDockWidgets::Location_OnLeft:
-            return QStringLiteral("left");
-        case KDDockWidgets::Location_OnTop:
-            return QStringLiteral("top");
-        case KDDockWidgets::Location_OnRight:
-            return QStringLiteral("right");
-        case KDDockWidgets::Location_OnBottom:
-            return QStringLiteral("bottom");
-        }
-
-        return QString();
-    }
 
     /// @brief Each main window supports 4 sidebars
     enum class SideBarLocation {
@@ -220,6 +193,49 @@ namespace KDDockWidgets
     inline Qt5Qt6Compat::qhashtype qHash(SideBarLocation loc, Qt5Qt6Compat::qhashtype seed)
     {
         return ::qHash(static_cast<uint>(loc), seed);
+    }
+
+    ///@internal
+    enum CursorPosition {
+        CursorPosition_Undefined = 0,
+        CursorPosition_Left = 1,
+        CursorPosition_Right = 2,
+        CursorPosition_Top = 4,
+        CursorPosition_Bottom = 8,
+        CursorPosition_TopLeft = CursorPosition_Top | CursorPosition_Left,
+        CursorPosition_TopRight = CursorPosition_Top | CursorPosition_Right,
+        CursorPosition_BottomRight = CursorPosition_Bottom | CursorPosition_Right,
+        CursorPosition_BottomLeft = CursorPosition_Bottom | CursorPosition_Left,
+        CursorPosition_All = CursorPosition_Left | CursorPosition_Right | CursorPosition_Top | CursorPosition_Bottom
+    };
+    Q_DECLARE_FLAGS(CursorPositions, CursorPosition)
+
+    ///@internal
+    enum FrameOption {
+        FrameOption_None = 0,
+        FrameOption_AlwaysShowsTabs = 1,
+        FrameOption_IsCentralFrame = 2,
+        FrameOption_IsOverlayed = 4
+    };
+    Q_DECLARE_FLAGS(FrameOptions, FrameOption)
+
+    ///@internal
+    inline QString locationStr(Location loc)
+    {
+        switch (loc) {
+        case KDDockWidgets::Location_None:
+            return QStringLiteral("none");
+        case KDDockWidgets::Location_OnLeft:
+            return QStringLiteral("left");
+        case KDDockWidgets::Location_OnTop:
+            return QStringLiteral("top");
+        case KDDockWidgets::Location_OnRight:
+            return QStringLiteral("right");
+        case KDDockWidgets::Location_OnBottom:
+            return QStringLiteral("bottom");
+        }
+
+        return QString();
     }
 }
 

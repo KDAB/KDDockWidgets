@@ -422,7 +422,7 @@ void WidgetResizeHandler::restoreMouseCursor()
         mTarget->setCursor(Qt::ArrowCursor);
 }
 
-WidgetResizeHandler::CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
+CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
 {
     if (!mTarget)
         return CursorPosition_Undefined;

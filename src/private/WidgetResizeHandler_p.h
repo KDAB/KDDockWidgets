@@ -14,6 +14,7 @@
 
 #include "QWidgetAdapter.h"
 #include "Qt5Qt6Compat_p.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include <QPoint>
 #include <QDebug>
@@ -30,20 +31,6 @@ class WidgetResizeHandler : public QObject
 {
     Q_OBJECT
 public:
-
-    enum CursorPosition {
-        CursorPosition_Undefined = 0,
-        CursorPosition_Left = 1,
-        CursorPosition_Right = 2,
-        CursorPosition_Top = 4,
-        CursorPosition_Bottom = 8,
-        CursorPosition_TopLeft = CursorPosition_Top | CursorPosition_Left,
-        CursorPosition_TopRight = CursorPosition_Top | CursorPosition_Right,
-        CursorPosition_BottomRight = CursorPosition_Bottom | CursorPosition_Right,
-        CursorPosition_BottomLeft = CursorPosition_Bottom | CursorPosition_Left,
-        CursorPosition_All = CursorPosition_Left | CursorPosition_Right | CursorPosition_Top | CursorPosition_Bottom
-    };
-    Q_DECLARE_FLAGS(CursorPositions, CursorPosition)
 
     /**
      * @brief CTOR

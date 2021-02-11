@@ -56,7 +56,7 @@ public:
         return m_options & MainWindowOption_HasCentralFrame;
     }
 
-    WidgetResizeHandler::CursorPositions allowedResizeSides(SideBarLocation loc) const;
+    CursorPositions allowedResizeSides(SideBarLocation loc) const;
 
     QRect rectForOverlay(Frame *, SideBarLocation) const;
     SideBarLocation preferredSideBar(DockWidgetBase *) const;
@@ -187,25 +187,25 @@ void MainWindowBase::layoutParentContainerEqually(DockWidgetBase *dockWidget)
     dropArea()->layoutParentContainerEqually(dockWidget);
 }
 
-WidgetResizeHandler::CursorPositions MainWindowBase::Private::allowedResizeSides(SideBarLocation loc) const
+CursorPositions MainWindowBase::Private::allowedResizeSides(SideBarLocation loc) const
 {
     // When a sidebar is on top, you can only resize its bottom.
     // and so forth...
 
     switch (loc) {
     case SideBarLocation::North:
-        return WidgetResizeHandler::CursorPosition_Bottom;
+        return CursorPosition_Bottom;
     case SideBarLocation::East:
-        return WidgetResizeHandler::CursorPosition_Left;
+        return CursorPosition_Left;
     case SideBarLocation::West:
-        return WidgetResizeHandler::CursorPosition_Right;
+        return CursorPosition_Right;
     case SideBarLocation::South:
-        return WidgetResizeHandler::CursorPosition_Top;
+        return CursorPosition_Top;
     case SideBarLocation::None:
-        return WidgetResizeHandler::CursorPosition_Undefined;
+        return CursorPosition_Undefined;
     }
 
-    return WidgetResizeHandler::CursorPosition_Undefined;
+    return CursorPosition_Undefined;
 }
 
 QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation location) const
