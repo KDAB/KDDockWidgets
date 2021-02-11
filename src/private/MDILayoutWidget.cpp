@@ -47,7 +47,6 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt)
         newItem->setGuestWidget(frame);
     } else {
         frame = Config::self().frameworkWidgetFactory()->createFrame();
-        frame->setAllowedResizeSides(CursorPosition_All);
         frame->addWidget(dw);
 
         newItem->setGuestWidget(frame);

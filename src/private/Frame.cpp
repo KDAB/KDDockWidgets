@@ -558,8 +558,13 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
         disconnect(m_visibleWidgetCountChangedConnection);
 
     m_layoutWidget = dt;
+    delete m_resizeHandler;
+    m_resizeHandler = nullptr;
 
     if (m_layoutWidget) {
+        if (isMDI())
+            m_resizeHandler = new WidgetResizeHandler(true, this);
+
         // We keep the connect result so we don't dereference m_layoutWidget at shutdown
         m_visibleWidgetCountChangedConnection =
             connect(m_layoutWidget, &LayoutWidget::visibleWidgetCountChanged, this,
@@ -767,5 +772,5 @@ void Frame::setAllowedResizeSides(CursorPositions sides)
 
 bool Frame::isMDI() const
 {
-    return qobject_cast<const MDILayoutWidget*>(this) != nullptr;
+    return qobject_cast<const MDILayoutWidget*>(m_layoutWidget) != nullptr;
 }
