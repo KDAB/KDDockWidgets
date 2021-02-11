@@ -29,6 +29,7 @@
 #include "TabWidget_p.h"
 #include "TitleBar_p.h"
 #include "Utils_p.h"
+#include "WidgetResizeHandler_p.h"
 
 #include <QCloseEvent>
 #include <QTimer>
@@ -74,6 +75,9 @@ Frame::~Frame()
     s_dbg_numFrames--;
     if (m_layoutItem)
         m_layoutItem->unref();
+
+    delete m_resizeHandler;
+    m_resizeHandler = nullptr;
 
     DockRegistry::self()->unregisterFrame(this);
 
@@ -746,4 +750,16 @@ bool Frame::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option) const
     return std::any_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {
         return dw->layoutSaverOptions() & option;
     });
+}
+
+void Frame::setAllowedResizeSides(CursorPositions sides)
+{
+    if (sides) {
+        delete m_resizeHandler;
+        m_resizeHandler = new WidgetResizeHandler(true, this);
+        m_resizeHandler->setAllowedResizeSides(sides);
+    } else {
+        delete m_resizeHandler;
+        m_resizeHandler = nullptr;
+    }
 }

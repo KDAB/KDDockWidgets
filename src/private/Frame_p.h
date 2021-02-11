@@ -39,6 +39,7 @@ class TabWidget;
 class DockWidgetBase;
 class FloatingWindow;
 class MainWindowBase;
+class WidgetResizeHandler;
 
 /**
  * @brief A DockWidget wrapper that adds a QTabWidget and a TitleBar
@@ -250,6 +251,10 @@ public:
     ///@brief Returns whether at least one dock widget has the specified layout saver option set
     bool anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption) const;
 
+    /// @brief Usually we do resize via the native window manager, but if a widget is docked like
+    /// in MDI mode, or in overlayed mode then we allow the user to resize with mouse
+    void setAllowedResizeSides(CursorPositions sides);
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();
@@ -319,6 +324,7 @@ private:
     void setLayoutWidget(LayoutWidget *);
 
     LayoutWidget *m_layoutWidget = nullptr;
+    WidgetResizeHandler *m_resizeHandler = nullptr;
     FrameOptions m_options = FrameOption_None;
     QPointer<Layouting::Item> m_layoutItem;
     bool m_updatingTitleBar = false;
