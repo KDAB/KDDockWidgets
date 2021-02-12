@@ -265,3 +265,6 @@ endif()
 if(${PROJECT_NAME}_UNITY_BUILD)
   set_target_properties(kddockwidgets PROPERTIES UNITY_BUILD ON)
 endif()
+
+# Add uninstall target
+include(ECMUninstallTarget)
