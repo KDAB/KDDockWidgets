@@ -166,7 +166,7 @@ void TitleBarWidget::paintEvent(QPaintEvent *)
 
     if (isMDI()) {
         const QColor c = palette().color(QPalette::Base);
-        p.fillRect(rect(), c);
+        p.fillRect(rect().adjusted(1, 1, -1, 0), c);
     }
 
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
