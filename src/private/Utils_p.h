@@ -306,6 +306,13 @@ inline QQuickItem* mouseAreaForPos(QQuickItem *item, QPointF globalPos)
     return nullptr;
 }
 
+inline QRect globalGeometry(QQuickItem *item)
+{
+    QRect geo(QPoint(0, 0), item->size().toSize());
+    geo.moveTopLeft(item->mapToGlobal(QPointF(0, 0)).toPoint());
+    return geo;
+}
+
 #endif
 
 
