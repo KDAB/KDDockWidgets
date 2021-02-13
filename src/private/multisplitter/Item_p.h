@@ -296,6 +296,8 @@ public:
 
     Q_REQUIRED_RESULT virtual bool checkSanity();
 
+    bool isMDI() const;
+
     virtual QSize minSize() const;
     virtual QSize maxSizeHint() const;
     virtual void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage);

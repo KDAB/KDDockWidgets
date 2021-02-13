@@ -13,6 +13,7 @@
 #include "Separator_p.h"
 #include "MultiSplitterConfig.h"
 #include "Widget.h"
+#include "ItemFreeContainer_p.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -654,6 +655,11 @@ bool Item::checkSanity()
     return true;
 }
 
+bool Item::isMDI() const
+{
+    return qobject_cast<ItemFreeContainer*>(parentContainer()) != nullptr;
+}
+
 void Item::setGeometry(QRect rect)
 {
     QRect &m_geometry = m_sizingInfo.geometry;
@@ -805,7 +811,7 @@ void Item::onWidgetDestroyed()
 void Item::onWidgetLayoutRequested()
 {
     if (Widget *w = guestWidget()) {
-        if (w->size() != size()) {
+        if (w->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with mouse
             qDebug() << Q_FUNC_INFO << "TODO: Not implemented yet. Widget can't just decide to resize yet"
                        << w->size()
                        << size()
