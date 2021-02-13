@@ -32,6 +32,8 @@
 # include <windows.h>
 #endif
 
+#define MDI_POPOUT_THRESHOLD 250
+
 using namespace KDDockWidgets;
 
 namespace KDDockWidgets {
@@ -424,17 +426,21 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
     const QSize parentSize = frame->QWidgetAdapter::parentWidget()->size();
     const QPoint oldPos = frame->mapToGlobal(QPoint(0, 0));
     const QPoint delta = globalPos - oldPos;
-    QPoint newLocalPos = frame->pos() + delta - q->m_offset;
+    const QPoint newLocalPos = frame->pos() + delta - q->m_offset;
 
     // Let's not allow the MDI window to go outside of its parent
-    newLocalPos.setX(qMax(0, newLocalPos.x()));
-    newLocalPos.setY(qMax(0, newLocalPos.y()));
 
-    newLocalPos.setX(qMin(newLocalPos.x(), parentSize.width() - frame->width()));
-    newLocalPos.setY(qMin(newLocalPos.y(), parentSize.height() - frame->height()));
+    QPoint newLocalPosBounded = {qMax(0, newLocalPos.x()), qMax(0, newLocalPos.y())};
+    newLocalPosBounded.setX(qMin(newLocalPosBounded.x(), parentSize.width() - frame->width()));
+    newLocalPosBounded.setY(qMin(newLocalPosBounded.y(), parentSize.height() - frame->height()));
 
-    frame->QWidgetAdapter::move(newLocalPos);
+    frame->QWidgetAdapter::move(newLocalPosBounded);
 
+    // Check if we need to pop out the MDI window (make it float)
+    // If we drag the window against an edge, and move behind the edge some threshold, we float it
+    const QPoint overflow = newLocalPosBounded - newLocalPos;
+    if (qAbs(overflow.x()) > MDI_POPOUT_THRESHOLD || qAbs(overflow.y()) > MDI_POPOUT_THRESHOLD)
+        Q_EMIT q->mdiPopOut();
 
     return false;
 }
@@ -557,6 +563,7 @@ DragController::DragController(QObject *parent)
     stateDragging->addTransition(this, &DragController::dropped, stateNone);
 
     stateDraggingMDI->addTransition(this, &DragController::dragCanceled, stateNone);
+    stateDraggingMDI->addTransition(this, &DragController::mdiPopOut, stateDragging);
 
     if (usesFallbackMouseGrabber())
         enableFallbackMouseGrabber();

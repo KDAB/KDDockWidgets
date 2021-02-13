@@ -95,6 +95,7 @@ Q_SIGNALS:
     void mousePressed();
     void manhattanLengthMove();
     void manhattanLengthMoveMDI();
+    void mdiPopOut();
     void dragCanceled();
     void dropped();
 
