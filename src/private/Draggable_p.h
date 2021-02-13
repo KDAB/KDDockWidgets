@@ -74,7 +74,9 @@ public:
      * Example: This draggable is a floating window with only 1 dock widget
      * Example:  This draggable is a title bar with two dock widgets -> nullptr
      */
-    virtual DockWidgetBase* singleDockWidget() const = 0;
+    virtual DockWidgetBase *singleDockWidget() const = 0;
+
+    virtual bool isMDI() const = 0;
 
 private:
     class Private;

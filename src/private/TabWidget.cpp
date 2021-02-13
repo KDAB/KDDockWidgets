@@ -131,6 +131,12 @@ DockWidgetBase *TabBar::singleDockWidget() const
     return m_tabWidget->singleDockWidget();
 }
 
+bool TabBar::isMDI() const
+{
+    Frame *f = frame();
+    return f && f->isMDI();
+}
+
 Frame *TabBar::frame() const
 {
     return m_tabWidget->frame();
@@ -237,6 +243,11 @@ DockWidgetBase *TabWidget::singleDockWidget() const
         return m_frame->dockWidgets().first();
 
     return nullptr;
+}
+
+bool TabWidget::isMDI() const
+{
+    return m_frame && m_frame->isMDI();
 }
 
 void TabWidget::onTabInserted()

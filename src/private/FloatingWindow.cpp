@@ -576,3 +576,8 @@ void FloatingWindow::addDockWidget(DockWidgetBase *dw, Location location,
 {
     m_dropArea->addDockWidget(dw, location, relativeTo, option);
 }
+
+bool FloatingWindow::isMDI() const
+{
+    return false;
+}

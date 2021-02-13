@@ -80,6 +80,9 @@ public:
 
     DockWidgetBase *singleDockWidget() const override;
 
+    /// @reimp
+    bool isMDI() const override;
+
     Frame *frame() const;
 
     /// Like QTabBar::moveTab(from, to)
@@ -172,6 +175,9 @@ public:
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     DockWidgetBase *singleDockWidget() const override;
+
+    /// @reimp
+    bool isMDI() const override;
 
 //Q_SIGNALS: // Not a OQbject
     virtual void currentTabChanged(int index) = 0;

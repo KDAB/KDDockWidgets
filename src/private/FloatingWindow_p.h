@@ -127,6 +127,8 @@ public:
      */
     bool isInDragArea(QPoint globalPoint) const;
 
+    bool isMDI() const override;
+
     ///@brief updates the title and the icon
     void updateTitleAndIcon();
     void updateTitleBarVisibility();
