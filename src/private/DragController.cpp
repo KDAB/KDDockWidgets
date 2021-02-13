@@ -373,6 +373,36 @@ bool StateDragging::handleMouseDoubleClick()
     return false;
 }
 
+StateInternalMDIDragging::StateInternalMDIDragging(DragController *parent)
+    : StateBase(parent)
+{
+}
+
+StateInternalMDIDragging::~StateInternalMDIDragging()
+{
+}
+
+void StateInternalMDIDragging::onEntry()
+{
+}
+
+bool StateInternalMDIDragging::handleMouseButtonRelease(QPoint globalPos)
+{
+    Q_UNUSED(globalPos);
+    return false;
+}
+
+bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
+{
+    Q_UNUSED(globalPos);
+    return false;
+}
+
+bool StateInternalMDIDragging::handleMouseDoubleClick()
+{
+    return false;
+}
+
 StateDraggingWayland::StateDraggingWayland(DragController *parent)
     : StateDragging(parent)
 {

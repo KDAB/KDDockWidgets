@@ -126,13 +126,11 @@ int main(int argc, char **argv)
     QCommandLineOption noParentForFloating("no-parent-for-floating", QCoreApplication::translate("main", "(internal) FloatingWindows won't have a parent"));
     QCommandLineOption nativeTitleBar("native-title-bar", QCoreApplication::translate("main", "(internal) FloatingWindows a native title bar"));
     QCommandLineOption noDropIndicators("no-drop-indicators", QCoreApplication::translate("main", "(internal) Don't use any drop indicators"));
-    QCommandLineOption mdiLayout("mdi-layout", QCoreApplication::translate("main", "Main Window will use an MDI layout instead")); // TODO: Expose once stable
 
     parser.addOption(noQtTool);
     parser.addOption(noParentForFloating);
     parser.addOption(nativeTitleBar);
     parser.addOption(noDropIndicators);
-    parser.addOption(mdiLayout);
 
 # if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
@@ -161,9 +159,6 @@ int main(int argc, char **argv)
 
     options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralFrame
                                          : MainWindowOption_None;
-
-    if (parser.isSet(mdiLayout))
-        options |= MainWindowOption_MDI; // TODO: Move outside of developer mode once stable
 
     if (parser.isSet(noQtTool))
         internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows;

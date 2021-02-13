@@ -185,6 +185,21 @@ public:
     bool handleMouseDoubleClick() override;
 };
 
+
+/// @brief State when we're moving an MDI dock widget around the main window
+/// without it becoming floating
+class StateInternalMDIDragging : public StateBase
+{
+    Q_OBJECT
+public:
+    explicit StateInternalMDIDragging(DragController *parent);
+    ~StateInternalMDIDragging() override;
+    void onEntry() override;
+    bool handleMouseButtonRelease(QPoint globalPos) override;
+    bool handleMouseMove(QPoint globalPos) override;
+    bool handleMouseDoubleClick() override;
+};
+
 // Used on wayland only to use QDrag instead of setting geometry on mouse-move.
 class StateDraggingWayland : public StateDragging
 {
