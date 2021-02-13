@@ -105,7 +105,7 @@ public:
     /// @brief Returns if this title bar is in a main window in MDI mode
     /// By default false. Only relevant if your main window was constructed with the
     /// MainWindowOption_MDI option
-    bool isMDI() const;
+    bool isMDI() const override;
 
     /// @brief updates the close button enabled state
     void updateButtons();

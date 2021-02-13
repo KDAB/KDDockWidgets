@@ -214,7 +214,10 @@ bool StatePreDrag::handleMouseMove(QPoint globalPos)
     }
 
     if (q->m_draggable->dragCanStart(q->m_pressPos, globalPos)) {
-        Q_EMIT q->manhattanLengthMove();
+        if (q->m_draggable->isMDI())
+            Q_EMIT q->manhattanLengthMoveMDI();
+        else
+            Q_EMIT q->manhattanLengthMove();
         return true;
     }
     return false;
@@ -384,22 +387,45 @@ StateInternalMDIDragging::~StateInternalMDIDragging()
 
 void StateInternalMDIDragging::onEntry()
 {
+    qCDebug(state) << "StateInternalMDIDragging entered. draggable="
+                   << q->m_draggable->asWidget();
 }
 
-bool StateInternalMDIDragging::handleMouseButtonRelease(QPoint globalPos)
+bool StateInternalMDIDragging::handleMouseButtonRelease(QPoint)
 {
-    Q_UNUSED(globalPos);
+    Q_EMIT q->dragCanceled();
     return false;
 }
 
 bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
 {
-    Q_UNUSED(globalPos);
+    // for MDI we only support dragging via the title bar, other cases don't make sense conceptually
+    auto tb = qobject_cast<TitleBar *>(q->m_draggable->asWidget());
+    if (!tb) {
+        qWarning() << Q_FUNC_INFO << "expected a title bar, not" << q->m_draggable->asWidget();
+        Q_EMIT q->dragCanceled();
+        return false;
+    }
+
+    Frame *frame = tb->frame();
+    if (!frame) {
+        // Doesn't happen.
+        qWarning() << Q_FUNC_INFO << "null frame.";
+        Q_EMIT q->dragCanceled();
+        return false;
+    }
+
+    const QPoint oldPos = frame->mapToGlobal(QPoint(0, 0));
+    const QPoint delta = globalPos - oldPos;
+    frame->QWidgetAdapter::move(frame->pos() + delta - q->m_offset);
+
+
     return false;
 }
 
 bool StateInternalMDIDragging::handleMouseDoubleClick()
 {
+    Q_EMIT q->dragCanceled();
     return false;
 }
 
@@ -505,12 +531,16 @@ DragController::DragController(QObject *parent)
     auto statepreDrag = new StatePreDrag(this);
     auto stateDragging = isWayland() ? new StateDraggingWayland(this)
                                      : new StateDragging(this);
+    auto stateDraggingMDI = new StateInternalMDIDragging(this);
 
     stateNone->addTransition(this, &DragController::mousePressed, statepreDrag);
     statepreDrag->addTransition(this, &DragController::dragCanceled, stateNone);
     statepreDrag->addTransition(this, &DragController::manhattanLengthMove, stateDragging);
+    statepreDrag->addTransition(this, &DragController::manhattanLengthMoveMDI, stateDraggingMDI);
     stateDragging->addTransition(this, &DragController::dragCanceled, stateNone);
     stateDragging->addTransition(this, &DragController::dropped, stateNone);
+
+    stateDraggingMDI->addTransition(this, &DragController::dragCanceled, stateNone);
 
     if (usesFallbackMouseGrabber())
         enableFallbackMouseGrabber();

@@ -94,6 +94,7 @@ public:
 Q_SIGNALS:
     void mousePressed();
     void manhattanLengthMove();
+    void manhattanLengthMoveMDI();
     void dragCanceled();
     void dropped();
 
@@ -105,6 +106,7 @@ private:
     friend class StateNone;
     friend class StatePreDrag;
     friend class StateDragging;
+    friend class StateInternalMDIDragging;
     friend class StateDropped;
     friend class StateDraggingWayland;
 

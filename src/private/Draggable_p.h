@@ -76,6 +76,7 @@ public:
      */
     virtual DockWidgetBase *singleDockWidget() const = 0;
 
+    ///@brief Returns whether this draggable is a MDI window, being dragged internally within a main window
     virtual bool isMDI() const = 0;
 
 private:
