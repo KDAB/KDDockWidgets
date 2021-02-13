@@ -415,9 +415,19 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
         return false;
     }
 
+    const QSize parentSize = frame->QWidgetAdapter::parentWidget()->size();
     const QPoint oldPos = frame->mapToGlobal(QPoint(0, 0));
     const QPoint delta = globalPos - oldPos;
-    frame->QWidgetAdapter::move(frame->pos() + delta - q->m_offset);
+    QPoint newLocalPos = frame->pos() + delta - q->m_offset;
+
+    // Let's not allow the MDI window to go outside of its parent
+    newLocalPos.setX(qMax(0, newLocalPos.x()));
+    newLocalPos.setY(qMax(0, newLocalPos.y()));
+
+    newLocalPos.setX(qMin(newLocalPos.x(), parentSize.width() - frame->width()));
+    newLocalPos.setY(qMin(newLocalPos.y(), parentSize.height() - frame->height()));
+
+    frame->QWidgetAdapter::move(newLocalPos);
 
 
     return false;
