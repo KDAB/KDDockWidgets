@@ -389,6 +389,12 @@ void StateInternalMDIDragging::onEntry()
 {
     qCDebug(state) << "StateInternalMDIDragging entered. draggable="
                    << q->m_draggable->asWidget();
+
+    // Raise the dock widget being dragged
+    if (auto tb = qobject_cast<TitleBar *>(q->m_draggable->asWidget())) {
+        if (Frame *f = tb->frame())
+            f->raise();
+    }
 }
 
 bool StateInternalMDIDragging::handleMouseButtonRelease(QPoint)
