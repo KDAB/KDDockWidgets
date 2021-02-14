@@ -103,7 +103,7 @@
                 "KDDockWidgets_QT6": "ON"
             },
             "environment": {
-                "PATH": "$env{HOME}/Qt/6.0.0/gcc_64/bin:$penv{PATH}"
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
         },
         {
@@ -121,7 +121,7 @@
                 "KDDockWidgets_FUZZER" : "OFF"
             },
             "environment": {
-                "PATH": "$env{HOME}/Qt/6.0.0/gcc_64/bin:$penv{PATH}"
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
         },
         {
@@ -135,7 +135,7 @@
                  "KDDockWidgets_QT6": "ON"
             },
             "environment": {
-                "PATH": "$env{HOME}/Qt/6.0.0/gcc_64/bin:$penv{PATH}"
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
         }
     ]
