@@ -57,6 +57,12 @@ void WidgetResizeHandler::setResizeGap(int gap)
     m_resizeGap = gap;
 }
 
+bool WidgetResizeHandler::isMDI() const
+{
+    auto frame = qobject_cast<Frame*>(mTarget);
+    return frame && frame->isMDI();
+}
+
 int WidgetResizeHandler::widgetResizeHandlerMargin()
 {
     return 4; // pixels
@@ -68,11 +74,41 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         return false;
 
     auto widget = qobject_cast<QWidgetOrQuick*>(o);
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     if (!widget)
         return false;
 
     if (!mFilterIsGlobal && (!widget->isTopLevel() || o != mTarget))
         return false;
+#else
+
+    // The QtQuick case is a bit different, as the Frame QQuickItem doesn't receive the MouseMove
+    // events, the QWindow does. (The frame instead receives HoverMove).
+    // So, if widget is nullptr we still allow for the case of it being a mouse move event
+    // to the QWindow
+
+    if (mFilterIsGlobal) {
+        if (!isMDI()) {
+            // For QtQuick we only support the MDI case
+            return false;
+        }
+
+        if (!widget) {
+            auto qquickWindow = qobject_cast<QQuickWindow*>(o);
+            if (!(qquickWindow && e->type() == QEvent::MouseMove))
+                return false;
+        }
+
+    } else {
+        if (!widget)
+            return false;
+
+        if (!widget->isTopLevel() || o != mTarget)
+            return false;
+    }
+
+#endif
 
     switch (e->type()) {
     case QEvent::MouseButtonPress: {

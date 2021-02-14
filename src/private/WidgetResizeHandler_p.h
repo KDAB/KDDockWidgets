@@ -60,6 +60,8 @@ public:
      */
     void setResizeGap(int);
 
+    bool isMDI() const;
+
     static int widgetResizeHandlerMargin();
 
 #ifdef Q_OS_WIN
