@@ -554,6 +554,7 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
         return;
 
     const bool wasInMainWindow = dt && isInMainWindow();
+    const bool wasMDI = isMDI();
     if (m_layoutWidget)
         disconnect(m_visibleWidgetCountChangedConnection);
 
@@ -573,6 +574,9 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();
     }
+
+    if (wasMDI != isMDI())
+        Q_EMIT isMDIChanged();
 }
 
 bool Frame::isTheOnlyFrame() const
