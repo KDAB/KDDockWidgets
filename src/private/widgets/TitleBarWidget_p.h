@@ -88,10 +88,7 @@ public:
     }
 
     ~Button() override;
-
-    QSize sizeHint() const override {
-        return QSize(16, 16);
-    }
+    QSize sizeHint() const override;
 
     void paintEvent(QPaintEvent *) override;
 };

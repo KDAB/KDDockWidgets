@@ -49,8 +49,30 @@ void Button::paintEvent(QPaintEvent *)
     // The first icon size is for scaling 1x, and is what QStyle expects. QStyle will pick ones
     // with higher resolution automatically when needed.
     const QList<QSize> iconSizes = opt.icon.availableSizes();
-    opt.iconSize = iconSizes.isEmpty() ? QSize() : iconSizes.constFirst();
+    if (!iconSizes.isEmpty()) {
+        opt.iconSize = iconSizes.constFirst();
+#ifdef Q_OS_LINUX
+        // On Linux there's dozens of window managers and ways of setting the scaling.
+        // Some window managers will just change the font dpi (which affects logical dpi), while
+        // others will only change the device pixel ratio. Take care of both cases.
+        // macOS is easier, as it never changes logical DPI.
+
+        const qreal logicalFactor = logicalDpiX() / 96.0;
+        const qreal dpr = devicePixelRatioF();
+        const qreal combinedFactor = logicalFactor * dpr;
+
+        if (scalingFactorIsSupported(combinedFactor)) // Older Qt has rendering bugs with fractional factors
+            opt.iconSize = opt.iconSize * combinedFactor;
+#endif
+    }
+
     style()->drawComplexControl(QStyle::CC_ToolButton, &opt, &p, this);
+}
+
+QSize Button::sizeHint() const
+{
+    const int m = style()->pixelMetric(QStyle::PM_SmallIconSize);
+    return QSize(m, m);
 }
 
 TitleBarWidget::TitleBarWidget(Frame *parent)
