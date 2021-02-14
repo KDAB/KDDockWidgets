@@ -11,7 +11,7 @@
 
 import QtQuick 2.9
 import QtQuick.Controls 2.9
-import QtQuick.Layouts 1.9 
+import QtQuick.Layouts 1.9
 
 Rectangle {
     id: root
@@ -30,8 +30,12 @@ Rectangle {
     }
 
     onFrameCppChanged: {
-        if (frameCpp)
+        if (frameCpp) {
             frameCpp.setStackLayout(stackLayout);
+
+            // When Frame is in MDI mode, we need to detect when the mouse over the edges
+            frameCpp.redirectMouseEvents(mouseArea)
+        }
     }
 
     onNonContentsHeightChanged: {
@@ -39,89 +43,94 @@ Rectangle {
             frameCpp.geometryUpdated();
     }
 
-    Loader {
-        id: titleBar
-        readonly property QtObject titleBarCpp: root.titleBarCpp
-        source: _kddw_widgetFactory.titleBarFilename
-
-        anchors {
-            top:  parent ? parent.top : undefined
-            left: parent ? parent.left : undefined
-            right: parent ? parent.right : undefined
-            topMargin: 1
-            leftMargin: 1
-            rightMargin: 1
-        }
-    }
-
-    Connections {
-        target: frameCpp
-        function onCurrentIndexChanged() {
-            tabbar.currentIndex = frameCpp.currentIndex;
-        }
-    }
-
     MouseArea {
-        id: dragMouseArea
-        hoverEnabled: true
-        anchors.fill: tabbar
-        z: 10
-    }
+        id: mouseArea
+        anchors.fill: parent
 
-    TabBar {
-        id: tabbar
+        Loader {
+            id: titleBar
+            readonly property QtObject titleBarCpp: root.titleBarCpp
+            source: _kddw_widgetFactory.titleBarFilename
 
-        readonly property QtObject tabBarCpp: root.frameCpp ? root.frameCpp.tabWidget.tabBar
-                                                            : null
-
-        visible: count > 1
-        anchors {
-            left: parent ? parent.left : undefined
-            right: parent ? parent.right : undefined
-            top: (titleBar && titleBar.visible) ? titleBar.bottom
-                                                : (parent ? parent.top : undefined)
-            topMargin: 1
-            leftMargin: 1
-            rightMargin: 1
-        }
-
-        width: parent.width
-
-        onCurrentIndexChanged: {
-            root.frameCpp.tabWidget.setCurrentDockWidget(currentIndex);
-        }
-
-        onTabBarCppChanged: {
-            if (tabBarCpp) {
-                tabBarCpp.redirectMouseEvents(dragMouseArea)
-
-                // Setting just so the unit-tests can access the buttons
-                tabBarCpp.tabBarQmlItem = this;
+            anchors {
+                top:  parent ? parent.top : undefined
+                left: parent ? parent.left : undefined
+                right: parent ? parent.right : undefined
+                topMargin: 1
+                leftMargin: 1
+                rightMargin: 1
             }
         }
 
-        Repeater {
-            model: root.frameCpp ? root.frameCpp.tabWidget.dockWidgetModel : 0
-            TabButton {
-                text: title
+        Connections {
+            target: frameCpp
+            function onCurrentIndexChanged() {
+                tabbar.currentIndex = frameCpp.currentIndex;
             }
         }
-    }
 
-    StackLayout {
-        id: stackLayout
-        anchors {
-            left: parent ? parent.left : undefined
-            right: parent ? parent.right : undefined
-            top: (parent && tabbar.visible) ? tabbar.bottom : ((titleBar && titleBar.visible) ? titleBar.bottom
-                                                                                              : parent ? parent.top : undefined)
-            bottom: parent ? parent.bottom : undefined
-
-            leftMargin: 2
-            rightMargin: 2
-            bottomMargin: 2
+        MouseArea {
+            id: dragMouseArea
+            hoverEnabled: true
+            anchors.fill: tabbar
+            z: 10
         }
 
-        currentIndex: tabbar.currentIndex
+        TabBar {
+            id: tabbar
+
+            readonly property QtObject tabBarCpp: root.frameCpp ? root.frameCpp.tabWidget.tabBar
+                                                                : null
+
+            visible: count > 1
+            anchors {
+                left: parent ? parent.left : undefined
+                right: parent ? parent.right : undefined
+                top: (titleBar && titleBar.visible) ? titleBar.bottom
+                                                    : (parent ? parent.top : undefined)
+                topMargin: 1
+                leftMargin: 1
+                rightMargin: 1
+            }
+
+            width: parent.width
+
+            onCurrentIndexChanged: {
+                root.frameCpp.tabWidget.setCurrentDockWidget(currentIndex);
+            }
+
+            onTabBarCppChanged: {
+                if (tabBarCpp) {
+                    tabBarCpp.redirectMouseEvents(dragMouseArea)
+
+                    // Setting just so the unit-tests can access the buttons
+                    tabBarCpp.tabBarQmlItem = this;
+                }
+            }
+
+            Repeater {
+                model: root.frameCpp ? root.frameCpp.tabWidget.dockWidgetModel : 0
+                TabButton {
+                    text: title
+                }
+            }
+        }
+
+        StackLayout {
+            id: stackLayout
+            anchors {
+                left: parent ? parent.left : undefined
+                right: parent ? parent.right : undefined
+                top: (parent && tabbar.visible) ? tabbar.bottom : ((titleBar && titleBar.visible) ? titleBar.bottom
+                                                                                                  : parent ? parent.top : undefined)
+                bottom: parent ? parent.bottom : undefined
+
+                leftMargin: 2
+                rightMargin: 2
+                bottomMargin: 2
+            }
+
+            currentIndex: tabbar.currentIndex
+        }
     }
 }
