@@ -51,7 +51,9 @@ void Button::paintEvent(QPaintEvent *)
     const QList<QSize> iconSizes = opt.icon.availableSizes();
     if (!iconSizes.isEmpty()) {
         opt.iconSize = iconSizes.constFirst();
-#ifdef Q_OS_LINUX
+
+    const qreal logicalFactor = logicalDpiX() / 96.0;
+#if defined(Q_OS_LINUX)
         // On Linux there's dozens of window managers and ways of setting the scaling.
         // Some window managers will just change the font dpi (which affects logical dpi), while
         // others will only change the device pixel ratio. Take care of both cases.
@@ -59,12 +61,20 @@ void Button::paintEvent(QPaintEvent *)
         // I might uncomment this for Windows too, as you can disable any device pixel ratio manipulation
         // and use only the logical dpi
 
-        const qreal logicalFactor = logicalDpiX() / 96.0;
         const qreal dpr = devicePixelRatioF();
         const qreal combinedFactor = logicalFactor * dpr;
 
+        qDebug() << dpr << logicalFactor << combinedFactor << sizeHint()
+                 << "; logicaldpi=" << logicalDpiX() << iconSizes;
+
         if (scalingFactorIsSupported(combinedFactor)) // Older Qt has rendering bugs with fractional factors
             opt.iconSize = opt.iconSize * combinedFactor;
+#elif defined(Q_OS_WIN)
+        if (!QGuiApplication::testAttribute(Qt::AA_EnableHighDpiScaling) &&
+             scalingFactorIsSupported(logicalFactor)) // Older Qt has rendering bugs with fractional factors
+            opt.iconSize = opt.iconSize * logicalFactor;
+#else
+    Q_UNUSED(logicalFactor);
 #endif
     }
 
