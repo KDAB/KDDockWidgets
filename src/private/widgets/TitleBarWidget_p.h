@@ -84,10 +84,14 @@ public:
     explicit Button(QWidget *parent)
         : QToolButton(parent)
     {
-        setFixedSize(QSize(16, 16));
+        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
     }
 
     ~Button() override;
+
+    QSize sizeHint() const override {
+        return QSize(16, 16);
+    }
 
     void paintEvent(QPaintEvent *) override
     {
