@@ -34,9 +34,11 @@ public:
 
     /**
      * @brief CTOR
+     * @param isTopLevelResizer If true, then this resize handler is for top-level widgets (aka windows)
+     *        if false, they are docked (like for example resizing docked MDI widgets, or the sidebar overlay)
      * @param target The target widget that will be resized. Also acts as parent QObject.
      */
-    explicit WidgetResizeHandler(bool filterIsGlobal, QWidgetOrQuick *target);
+    explicit WidgetResizeHandler(bool isTopLevelResizer, QWidgetOrQuick *target);
     ~WidgetResizeHandler() override;
 
     /**
@@ -82,7 +84,7 @@ private:
     CursorPosition mCursorPos = CursorPosition_Undefined;
     QPoint mNewPosition;
     bool m_resizingInProgress = false;
-    const bool mFilterIsGlobal;
+    const bool m_isTopLevelWindowResizer;
     int m_resizeGap = 10;
     CursorPositions mAllowedResizeSides = CursorPosition_All;
 };
