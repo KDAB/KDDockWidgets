@@ -252,25 +252,15 @@ QIcon DefaultWidgetFactory::iconForButtonType(TitleBarButtonType type, qreal dpr
         return {};
 
     QIcon icon(QStringLiteral(":/img/%1.png").arg(iconName));
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 2)
-    const bool isFractional = int(dpr) != dpr;
-    if (isFractional) {
-        // We don't support 1.5x yet.
-        // Problem with Linux is that rendering is off due to a rounding bug only fixed in 5.15.2
-        // Will enable for fractional later.
-        // QTBUG-86170
-        // Mostly affects Linux. Unless you're using Qt::HighDpiScaleFactorRoundingPolicy::PassThrough, in which case it will
-        // affect other OSes too.
+    if (!scalingFactorIsSupported(dpr))
         return icon;
-    }
-#else
+
     // Not using Qt's sugar syntax, which doesn't support 1.5x anyway when we need it.
     // Simply add the high-res files and Qt will pick them when needed
 
-    icon.addFile(QStringLiteral(":/img/%1-1.5x.png").arg(iconName));
-    Q_UNUSED(dpr);
-#endif
+    if (scalingFactorIsSupported(1.5))
+        icon.addFile(QStringLiteral(":/img/%1-1.5x.png").arg(iconName));
+
     icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
 
     return icon;

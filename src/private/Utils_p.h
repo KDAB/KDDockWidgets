@@ -325,6 +325,21 @@ inline QRect globalGeometry(QWidgetOrQuick *w)
     return geo;
 }
 
+/// @brief Returns whether we support the specified scalling factor
+/// This is a workaround against a bug in older Qt (QTBUG-86170).
+/// Mostly affects Linux. Unless you're using Qt::HighDpiScaleFactorRoundingPolicy::PassThrough, in which case it will affect other OSes too.
+inline bool scalingFactorIsSupported(qreal factor)
+{
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 2)
+    // We don't support fractional factors in older Qt.
+    const bool isInteger = int(factor) == factor;
+    return isInteger;
+#else
+    Q_UNUSED(factor);
+    return true;
+#endif
+}
+
 };
 
 #endif
