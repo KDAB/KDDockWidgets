@@ -125,17 +125,17 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         if (!widgetRect.contains(cursorPoint) || mouseEvent->button() != Qt::LeftButton)
             return false;
 
-        mResizeWidget = true;
+        m_resizingInProgress = true;
         mNewPosition = Qt5Qt6Compat::eventGlobalPos(mouseEvent);
         mCursorPos = cursorPos;
 
         return true;
     }
     case QEvent::MouseButtonRelease: {
-        mResizeWidget = false;
+        m_resizingInProgress = false;
         auto mouseEvent = static_cast<QMouseEvent *>(e);
 
-        if (mTarget->isMaximized() || !mResizeWidget || mouseEvent->button() != Qt::LeftButton)
+        if (mTarget->isMaximized() || !m_resizingInProgress || mouseEvent->button() != Qt::LeftButton)
             break;
 
         mTarget->releaseMouse();
@@ -148,12 +148,12 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         if (mTarget->isMaximized())
             break;
         auto mouseEvent = static_cast<QMouseEvent *>(e);
-        mResizeWidget = mResizeWidget && (mouseEvent->buttons() & Qt::LeftButton);
-        const bool state = mResizeWidget;
+        m_resizingInProgress = m_resizingInProgress && (mouseEvent->buttons() & Qt::LeftButton);
+        const bool state = m_resizingInProgress;
         if (!mFilterIsGlobal)
-            mResizeWidget = ((o == mTarget) && mResizeWidget);
+            m_resizingInProgress = ((o == mTarget) && m_resizingInProgress);
         const bool consumed = mouseMoveEvent(mouseEvent);
-        mResizeWidget = state;
+        m_resizingInProgress = state;
         return consumed;
     }
     default:
@@ -165,7 +165,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
 bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 {
     const QPoint globalPos = Qt5Qt6Compat::eventGlobalPos(e);
-    if (!mResizeWidget) {
+    if (!m_resizingInProgress) {
         const CursorPosition pos = cursorPosition(globalPos);
         updateCursor(pos);
         return pos != CursorPosition_Undefined;

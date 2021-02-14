@@ -81,7 +81,7 @@ private:
     QWidgetOrQuick *mTarget = nullptr;
     CursorPosition mCursorPos = CursorPosition_Undefined;
     QPoint mNewPosition;
-    bool mResizeWidget = false;
+    bool m_resizingInProgress = false;
     const bool mFilterIsGlobal;
     int m_resizeGap = 10;
     CursorPositions mAllowedResizeSides = CursorPosition_All;
