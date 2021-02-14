@@ -11,7 +11,6 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_UNITY_BUILD" : "OFF",
                 "KDDockWidgets_FUZZER" : "OFF"
             }
         },
@@ -34,7 +33,8 @@
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-qtwidgets",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
             }
         },
         {
@@ -44,7 +44,8 @@
             "binaryDir": "${sourceDir}/build-qtquick",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_QTQUICK": "ON"
+                "KDDockWidgets_QTQUICK": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
             }
         },
         {
@@ -58,7 +59,6 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_UNITY_BUILD" : "OFF",
                 "KDDockWidgets_FUZZER" : "OFF"
             }
         },
@@ -69,7 +69,8 @@
             "binaryDir": "${sourceDir}/build-python",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_PYTHON_BINDINGS": "ON"
+                "KDDockWidgets_PYTHON_BINDINGS": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
             }
         },
         {
@@ -79,7 +80,8 @@
             "binaryDir": "${sourceDir}/build-static-qtwidgets",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_STATIC": "ON"
+                "KDDockWidgets_STATIC": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
             }
         },
         {
@@ -90,7 +92,8 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_STATIC": "ON",
-                "KDDockWidgets_QTQUICK": "ON"
+                "KDDockWidgets_QTQUICK": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
             }
         },
         {
@@ -100,7 +103,8 @@
             "binaryDir": "${sourceDir}/build-qtwidgets6",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "KDDockWidgets_QT6": "ON"
+                "KDDockWidgets_QT6": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
@@ -116,7 +120,6 @@
                 "KDDockWidgets_QT6": "ON",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_UNITY_BUILD" : "OFF",
                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
                 "KDDockWidgets_FUZZER" : "OFF"
             },
@@ -132,7 +135,8 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_QTQUICK": "ON",
-                 "KDDockWidgets_QT6": "ON"
+                 "KDDockWidgets_QT6": "ON",
+                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
             },
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
