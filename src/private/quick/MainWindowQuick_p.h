@@ -12,7 +12,7 @@
 #ifndef KD_MAIN_WINDOW_QUICK_P_H
 #define KD_MAIN_WINDOW_QUICK_P_H
 
-#include "MainWindowBase.h"
+#include "kddockwidgets/MainWindowBase.h"
 
 namespace KDDockWidgets {
 

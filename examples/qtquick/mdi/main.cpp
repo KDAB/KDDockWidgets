@@ -14,6 +14,7 @@
 #include <kddockwidgets/DockWidgetQuick.h>
 #include <kddockwidgets/private/DockRegistry_p.h>
 #include <kddockwidgets/FrameworkWidgetFactory.h>
+#include <kddockwidgets/MainWindowMDI.h>
 
 #include <QQuickView>
 #include <QGuiApplication>
@@ -52,15 +53,12 @@ int main(int argc, char *argv[])
     auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #3");
     dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
 
-    KDDockWidgets::MainWindowBase *mainWindow = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst();
+    auto mainWindow = static_cast<KDDockWidgets::MainWindowMDI*>(KDDockWidgets::DockRegistry::self()->mainwindows().constFirst());
 
-    // MDI just for my internal tests
-    if (mainWindow->isMDI()) {
-        auto layout = qobject_cast<KDDockWidgets::MDILayoutWidget*>(mainWindow->layoutWidget());
-        layout->addDockWidget(dw1, QPoint(10, 10));
-        layout->addDockWidget(dw2, QPoint(50, 50));
-        layout->addDockWidget(dw3, QPoint(90, 90));
-    }
+    mainWindow->addDockWidget(dw1, QPoint(10, 10));
+    mainWindow->addDockWidget(dw2, QPoint(50, 50));
+    mainWindow->addDockWidget(dw3, QPoint(90, 90));
+
 
     return app.exec();
 }

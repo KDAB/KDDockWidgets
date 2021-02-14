@@ -11,6 +11,7 @@
 
 #include "MainWindowWrapper_p.h"
 #include "MainWindowQuick_p.h"
+#include "MainWindowMDI.h"
 
 using namespace KDDockWidgets;
 
@@ -31,5 +32,10 @@ void MainWindowWrapper::init(const QString &uniqueName, int options)
         return;
     }
 
-    m_mainWindow = new MainWindowQuick(uniqueName, MainWindowOptions(options), this);
+    const auto mainWindowOptions = MainWindowOptions(options);
+
+    if (mainWindowOptions & MainWindowOption_MDI)
+        m_mainWindow = new MainWindowMDI(uniqueName, this);
+    else
+        m_mainWindow = new MainWindowQuick(uniqueName, mainWindowOptions, this);
 }
