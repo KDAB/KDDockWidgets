@@ -33,6 +33,8 @@ set(DOCKSLIBS_SRCS
     DockWidgetBase.h
     MainWindowBase.cpp
     MainWindowBase.h
+    MainWindowMDI.cpp
+    MainWindowMDI.h
     LayoutSaver.cpp
     LayoutSaver.h
     LayoutSaver_p.h
@@ -200,6 +202,7 @@ else()
   set(DOCKS_INSTALLABLE_INCLUDES
       ${DOCKS_INSTALLABLE_INCLUDES}
       MainWindow.h
+      MainWindowMDI.h
       MainWindowBase.h
       DockWidget.h
   )

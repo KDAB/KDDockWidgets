@@ -12,13 +12,10 @@
 #include "MyWidget.h"
 
 #include <kddockwidgets/DockWidget.h>
-#include <kddockwidgets/MainWindow.h>
+#include <kddockwidgets/MainWindowMDI.h>
 
 #include <QStyleFactory>
 #include <QApplication>
-
-// TODO: Get better API
-#include "../../src/private/MDILayoutWidget_p.h"
 
 // clazy:excludeall=qstring-allocations
 
@@ -38,8 +35,7 @@ int main(int argc, char **argv)
 
     // # 1. Create our main window
 
-    KDDockWidgets::MainWindow mainWindow(QStringLiteral("MyMainWindow"),
-                                         KDDockWidgets::MainWindowOption_MDI);
+    KDDockWidgets::MainWindowMDI mainWindow(QStringLiteral("MyMainWindow"));
     mainWindow.setWindowTitle("Main Window");
     mainWindow.resize(1200, 1200);
     mainWindow.show();
@@ -57,11 +53,10 @@ int main(int argc, char **argv)
     auto widget3 = new MyWidget3();
     dock3->setWidget(widget3);
 
-    // TODO: Get better API
-    auto layout = qobject_cast<KDDockWidgets::MDILayoutWidget *>(mainWindow.layoutWidget());
-    layout->addDockWidget(dock1, QPoint(10, 10));
-    layout->addDockWidget(dock2, QPoint(50, 50));
-    layout->addDockWidget(dock3, QPoint(90, 90));
+    // # 3. Dock them
+    mainWindow.addDockWidget(dock1, QPoint(10, 10));
+    mainWindow.addDockWidget(dock2, QPoint(50, 50));
+    mainWindow.addDockWidget(dock3, QPoint(90, 90));
 
     return app.exec();
 }

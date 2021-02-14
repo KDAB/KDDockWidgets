@@ -51,6 +51,7 @@ inline bool isMinimized(QWindow *window)
     typedef QMainWindow QMainWindowOrQuick;
     typedef Layouting::Widget_qwidget LayoutGuestWidgetBase;
     typedef KDDockWidgets::MainWindow MainWindowType;
+    typedef KDDockWidgets::MainWindow MDIMainWindowBase;
     typedef KDDockWidgets::DockWidget DockWidgetType;
     typedef QWidget WidgetType;
   }
@@ -64,6 +65,7 @@ inline bool isMinimized(QWindow *window)
     typedef QWidgetOrQuick QMainWindowOrQuick;
     typedef Layouting::Widget_quick LayoutGuestWidgetBase;
     typedef KDDockWidgets::MainWindowQuick MainWindowType;
+    typedef KDDockWidgets::MainWindowQuick MDIMainWindowBase;
     typedef KDDockWidgets::DockWidgetQuick DockWidgetType;
     typedef QQuickItem WidgetType;
   }
