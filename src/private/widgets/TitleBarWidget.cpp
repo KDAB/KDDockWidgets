@@ -53,26 +53,23 @@ void Button::paintEvent(QPaintEvent *)
         opt.iconSize = iconSizes.constFirst();
 
     const qreal logicalFactor = logicalDpiX() / 96.0;
-#if defined(Q_OS_LINUX)
-        // On Linux there's dozens of window managers and ways of setting the scaling.
-        // Some window managers will just change the font dpi (which affects logical dpi), while
-        // others will only change the device pixel ratio. Take care of both cases.
-        // macOS is easier, as it never changes logical DPI.
-        // I might uncomment this for Windows too, as you can disable any device pixel ratio manipulation
-        // and use only the logical dpi
 
+    // On Linux there's dozens of window managers and ways of setting the scaling.
+    // Some window managers will just change the font dpi (which affects logical dpi), while
+    // others will only change the device pixel ratio. Take care of both cases.
+    // macOS is easier, as it never changes logical DPI.
+    // On Windows, with AA_EnableHighDpiScaling, logical DPI is always 96 and physical is manipulated instead.
+#if defined(Q_OS_LINUX)
         const qreal dpr = devicePixelRatioF();
         const qreal combinedFactor = logicalFactor * dpr;
-
-        qDebug() << dpr << logicalFactor << combinedFactor << sizeHint()
-                 << "; logicaldpi=" << logicalDpiX() << iconSizes;
 
         if (scalingFactorIsSupported(combinedFactor)) // Older Qt has rendering bugs with fractional factors
             opt.iconSize = opt.iconSize * combinedFactor;
 #elif defined(Q_OS_WIN)
-        if (!QGuiApplication::testAttribute(Qt::AA_EnableHighDpiScaling) &&
-             scalingFactorIsSupported(logicalFactor)) // Older Qt has rendering bugs with fractional factors
-            opt.iconSize = opt.iconSize * logicalFactor;
+    // Probably Windows could use the same code path as Linux, but I'm seeing too thick icons on Windows...
+    if (!QGuiApplication::testAttribute(Qt::AA_EnableHighDpiScaling)
+        && scalingFactorIsSupported(logicalFactor)) // Older Qt has rendering bugs with fractional factors
+        opt.iconSize = opt.iconSize * logicalFactor;
 #else
     Q_UNUSED(logicalFactor);
 #endif
