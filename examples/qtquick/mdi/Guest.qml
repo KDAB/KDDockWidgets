@@ -11,7 +11,8 @@
 
 import QtQuick 2.9
 
-Item {
+Rectangle {
+    color: "white"
     anchors.fill: parent
 
     property alias background: background.source
