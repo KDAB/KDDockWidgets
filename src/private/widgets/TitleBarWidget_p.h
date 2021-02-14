@@ -93,31 +93,7 @@ public:
         return QSize(16, 16);
     }
 
-    void paintEvent(QPaintEvent *) override
-    {
-        QPainter p(this);
-        QStyleOptionToolButton opt;
-        opt.initFrom(this);
-
-        if (isEnabled() && underMouse()) {
-            if (isDown()) {
-                opt.state |= QStyle::State_Sunken;
-            } else {
-                opt.state |= QStyle::State_Raised;
-            }
-            style()->drawPrimitive(QStyle::PE_PanelButtonTool, &opt, &p, this);
-        }
-
-        opt.subControls = QStyle::SC_None;
-        opt.features = QStyleOptionToolButton::None;
-        opt.icon = icon();
-
-        // The first icon size is for scaling 1x, and is what QStyle expects. QStyle will pick ones
-        // with higher resolution automatically when needed.
-        const QList<QSize> iconSizes = opt.icon.availableSizes();
-        opt.iconSize = iconSizes.isEmpty() ? QSize() : iconSizes.constFirst();
-        style()->drawComplexControl(QStyle::CC_ToolButton, &opt, &p, this);
-    }
+    void paintEvent(QPaintEvent *) override;
 };
 
 }
