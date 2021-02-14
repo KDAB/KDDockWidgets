@@ -26,7 +26,7 @@ class DOCKS_EXPORT MainWindowQuick : public MainWindowBase
 public:
     explicit MainWindowQuick(const QString &uniqueName,
                              MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                             QQuickItem *parent = nullptr);
+                             QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
 
     ~MainWindowQuick() override;
 
