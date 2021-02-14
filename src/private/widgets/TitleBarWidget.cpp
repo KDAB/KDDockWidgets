@@ -56,6 +56,8 @@ void Button::paintEvent(QPaintEvent *)
         // Some window managers will just change the font dpi (which affects logical dpi), while
         // others will only change the device pixel ratio. Take care of both cases.
         // macOS is easier, as it never changes logical DPI.
+        // I might uncomment this for Windows too, as you can disable any device pixel ratio manipulation
+        // and use only the logical dpi
 
         const qreal logicalFactor = logicalDpiX() / 96.0;
         const qreal dpr = devicePixelRatioF();
