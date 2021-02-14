@@ -80,7 +80,11 @@ void Button::paintEvent(QPaintEvent *)
 
 QSize Button::sizeHint() const
 {
-    const int m = style()->pixelMetric(QStyle::PM_SmallIconSize);
+    // Pass an opt so it scales against the logical dpi of the correct screen (since Qt 5.14) even if the HDPI Qt::AA_ attributes are off.
+    QStyleOption opt;
+    opt.initFrom(this);
+
+    const int m = style()->pixelMetric(QStyle::PM_SmallIconSize, &opt, this);
     return QSize(m, m);
 }
 
@@ -161,7 +165,7 @@ void TitleBarWidget::init()
 
 QSize TitleBarWidget::sizeHint() const
 {
-    // Pass an opt so it scales against the logical dpi of the correct screen (cince Qt 5.14) even if the HDPI Qt::AA_ attributes are off.
+    // Pass an opt so it scales against the logical dpi of the correct screen (since Qt 5.14) even if the HDPI Qt::AA_ attributes are off.
     QStyleOption opt;
     opt.initFrom(this);
 
