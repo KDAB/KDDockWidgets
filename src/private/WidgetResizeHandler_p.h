@@ -12,9 +12,10 @@
 #ifndef KD_WIDGET_RESIZE_HANDLER_P_H
 #define KD_WIDGET_RESIZE_HANDLER_P_H
 
-#include "QWidgetAdapter.h"
-#include "Qt5Qt6Compat_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/QWidgetAdapter.h"
+#include "kddockwidgets/Qt5Qt6Compat_p.h"
+#include "kddockwidgets/docks_export.h"
 
 #include <QPoint>
 #include <QDebug>
@@ -27,7 +28,7 @@ namespace KDDockWidgets {
 
 class FloatingWindow;
 
-class WidgetResizeHandler : public QObject
+class DOCKS_EXPORT WidgetResizeHandler : public QObject
 {
     Q_OBJECT
 public:

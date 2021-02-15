@@ -119,6 +119,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/SideBar_p.h
     private/TitleBar_p.h
     private/WindowBeingDragged_p.h
+    private/WidgetResizeHandler_p.h
     private/DockRegistry_p.h
     private/TabWidget_p.h
 )
