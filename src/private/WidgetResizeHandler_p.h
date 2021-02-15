@@ -18,7 +18,9 @@
 #include "kddockwidgets/docks_export.h"
 
 #include <QPoint>
+#include <QPointer>
 #include <QDebug>
+#include <QAbstractNativeEventFilter>
 
 QT_BEGIN_NAMESPACE
 class QMouseEvent;
@@ -92,8 +94,6 @@ private:
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 
-namespace KDDockWidgets {
-
 /**
  * @brief Helper to rediriect WM_NCHITTEST from child widgets to the top-level widget
  *
@@ -116,7 +116,6 @@ public:
 
     QPointer<FloatingWindow> m_floatingWindow;
 };
-}
 
 #endif // Q_OS_WIN
 }
