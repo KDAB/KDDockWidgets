@@ -21,7 +21,7 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "TabWidgetQuick_p.h"
-
+#include "WidgetResizeHandler_p.h"
 #include <QDebug>
 
 using namespace KDDockWidgets;
