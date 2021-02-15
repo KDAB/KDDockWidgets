@@ -35,8 +35,8 @@
 
 using namespace KDDockWidgets;
 
-#if defined(Q_OS_WIN)
-# ifdef KDDOCKWIDGETS_QTWIDGETS
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+
 namespace KDDockWidgets {
 
 /**
@@ -80,7 +80,6 @@ public:
 };
 }
 
-# endif
 #endif // Q_OS_WIN
 
 /** static */
