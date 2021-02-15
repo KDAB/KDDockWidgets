@@ -102,8 +102,10 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
 {
     if (kddwUsesQtWidgets()) {
         // For QtQuick we do it a bit later, once we have the QQuickWindow
+#ifdef Q_OS_WIN
         m_nchittestFilter = new NCHITTESTEventFilter(this);
         qApp->installNativeEventFilter(m_nchittestFilter);
+#endif
         create();
         WidgetResizeHandler::setupWindow(windowHandle());
     }
