@@ -35,53 +35,6 @@
 
 using namespace KDDockWidgets;
 
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
-
-namespace KDDockWidgets {
-
-/**
- * @brief Helper to rediriect WM_NCHITTEST from child widgets to the top-level widget
- *
- * To implement aero-snap the top-level window must respond to WM_NCHITTEST, we do that
- * in FloatingWindow::nativeEvent(). But if the child widgets have a native handle, then
- * the WM_NCHITTEST will go to them. They have to respond HTTRANSPARENT so the event
- * is redirected.
- *
- * This only affects QtWidgets, since QQuickItems never have native WId.
- */
-class NCHITTESTEventFilter : public QAbstractNativeEventFilter
-{
-public:
-    explicit NCHITTESTEventFilter(FloatingWindow *fw) : m_floatingWindow(fw) {}
-    bool nativeEventFilter(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override
-    {
-        if (eventType != "windows_generic_MSG" || !m_floatingWindow)
-            return false;
-
-        auto msg = static_cast<MSG *>(message);
-        if (msg->message != WM_NCHITTEST)
-            return false;
-        const WId wid = WId(msg->hwnd);
-
-        QWidget *child = QWidget::find(wid);
-        if (!child || child->window() != m_floatingWindow)
-            return false;
-        const bool isThisWindow = child == m_floatingWindow;
-
-        if (!isThisWindow) {
-            *result = HTTRANSPARENT;
-            return true;
-        }
-
-        return false;
-    }
-
-    QPointer<FloatingWindow> m_floatingWindow;
-};
-}
-
-#endif // Q_OS_WIN
-
 /** static */
 Qt::WindowFlags FloatingWindow::s_windowFlagsOverride = {};
 

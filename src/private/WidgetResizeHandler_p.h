@@ -90,6 +90,35 @@ private:
     CursorPositions mAllowedResizeSides = CursorPosition_All;
 };
 
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+
+namespace KDDockWidgets {
+
+/**
+ * @brief Helper to rediriect WM_NCHITTEST from child widgets to the top-level widget
+ *
+ * To implement aero-snap the top-level window must respond to WM_NCHITTEST, we do that
+ * in FloatingWindow::nativeEvent(). But if the child widgets have a native handle, then
+ * the WM_NCHITTEST will go to them. They have to respond HTTRANSPARENT so the event
+ * is redirected.
+ *
+ * This only affects QtWidgets, since QQuickItems never have native WId.
+ */
+class NCHITTESTEventFilter : public QAbstractNativeEventFilter
+{
+public:
+    explicit NCHITTESTEventFilter(FloatingWindow *fw)
+        : m_floatingWindow(fw)
+    {
+    }
+    bool nativeEventFilter(const QByteArray &eventType, void *message,
+                           Qt5Qt6Compat::qintptr *result) override;
+
+    QPointer<FloatingWindow> m_floatingWindow;
+};
+}
+
+#endif // Q_OS_WIN
 }
 
 #endif

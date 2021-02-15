@@ -487,3 +487,30 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
 
     return static_cast<CursorPosition>(result);
 }
+
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *message,
+                                             Qt5Qt6Compat::qintptr *result)
+
+{
+    if (eventType != "windows_generic_MSG" || !m_floatingWindow)
+        return false;
+
+    auto msg = static_cast<MSG *>(message);
+    if (msg->message != WM_NCHITTEST)
+        return false;
+    const WId wid = WId(msg->hwnd);
+
+    QWidget *child = QWidget::find(wid);
+    if (!child || child->window() != m_floatingWindow)
+        return false;
+    const bool isThisWindow = child == m_floatingWindow;
+
+    if (!isThisWindow) {
+        *result = HTTRANSPARENT;
+        return true;
+    }
+
+    return false;
+}
+#endif
