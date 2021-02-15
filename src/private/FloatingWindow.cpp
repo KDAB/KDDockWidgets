@@ -24,7 +24,6 @@
 #include "../LayoutSaver_p.h"
 
 #include <QCloseEvent>
-#include <QAbstractNativeEventFilter>
 #include <QWindow>
 #include <QScopedValueRollback>
 
