@@ -488,6 +488,37 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
     return static_cast<CursorPosition>(result);
 }
 
+/** static */
+void WidgetResizeHandler::setupWindow(QWindow *window)
+{
+    // Does some minor setup on our QWindow.
+    // Like adding the drop shadow on Windows and two other workarounds.
+
+#if defined(Q_OS_WIN)
+    if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+        m_nchittestFilter = new NCHITTESTEventFilter(this);
+        qApp->installNativeEventFilter(m_nchittestFilter);
+#endif
+        const auto wid = HWND(window->winId());
+        connect(window, &QWindow::screenChanged, this, [this] {
+            // Qt honors our frame hijacking usually... but when screen changes we must give it a
+            // nudge. Otherwise what Qt thinks is the client area is not what Windows knows it is.
+            // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take
+            // note of the margins we're using.
+            SetWindowPos(wid, 0, 0, 0, 0, 0,
+                         SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+        });
+
+        // Show drop-shadow:
+        MARGINS margins = { 0, 0, 0, 1 }; // arbitrary, just needs to be > 0 it seems
+        DwmExtendFrameIntoClientArea(wid, &margins);
+    }
+#else
+    Q_UNUSED(window);
+#endif // Q_OS_WIN
+}
+
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *message,
                                              Qt5Qt6Compat::qintptr *result)

@@ -168,7 +168,6 @@ Q_SIGNALS:
     void numFramesChanged();
     void windowStateChanged(QWindowStateChangeEvent *);
 protected:
-    void setupWindow();
     void maybeCreateResizeHandler();
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
