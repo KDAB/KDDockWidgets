@@ -187,7 +187,7 @@ void FloatingWindowQuick::init()
     }
 
     QWidgetAdapter::setParent(m_quickWindow->contentItem());
-    WidgetResizeHandler::setupWindow(m_quickWindow);
+    setupWindow();
     m_quickWindow->installEventFilter(this); // for window resizing
     maybeCreateResizeHandler();
 

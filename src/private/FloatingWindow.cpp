@@ -102,7 +102,7 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
 {
     if (kddwUsesQtWidgets()) {
         // For QtQuick we do it a bit later, once we have the QQuickWindow
-        WidgetResizeHandler::setupWindow(windowHandle());
+        setupWindow();
     }
 
     DockRegistry::self()->registerFloatingWindow(this);
@@ -143,6 +143,35 @@ FloatingWindow::~FloatingWindow()
     delete m_nchittestFilter;
 
     DockRegistry::self()->unregisterFloatingWindow(this);
+}
+
+void FloatingWindow::setupWindow()
+{
+    // Does some minor setup on our QWindow.
+    // Like adding the drop shadow on Windows and two other workarounds.
+
+#if defined(Q_OS_WIN)
+    // On Windows with Qt 5.9 (and maybe earlier), the WM_NCALCSIZE isn't being processed unless we explicitly create the window.
+    // So create it now, otherwise floating dock widgets will show a native title bar until resized.
+    create();
+
+    if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
+# ifdef KDDOCKWIDGETS_QTWIDGETS
+        m_nchittestFilter = new NCHITTESTEventFilter(this);
+        qApp->installNativeEventFilter(m_nchittestFilter);
+#endif
+        connect(windowHandle(), &QWindow::screenChanged, this, [this] {
+            // Qt honors our frame hijacking usually... but when screen changes we must give it a nudge.
+            // Otherwise what Qt thinks is the client area is not what Windows knows it is.
+            // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take note of the margins we're using.
+            SetWindowPos(HWND(winId()), 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+        });
+
+        // Show drop-shadow:
+        MARGINS margins = {0, 0, 0, 1}; // arbitrary, just needs to be > 0 it seems
+        DwmExtendFrameIntoClientArea(HWND(winId()), &margins);
+    }
+#endif // Q_OS_WIN
 }
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
