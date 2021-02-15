@@ -155,7 +155,6 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     }
 
     DockRegistry::self()->registerFloatingWindow(this);
-    qCDebug(creation) << "FloatingWindow()" << this;
 
     if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
         setWindowFlag(Qt::WindowStaysOnTopHint, true);
@@ -193,7 +192,6 @@ FloatingWindow::~FloatingWindow()
     delete m_nchittestFilter;
 
     DockRegistry::self()->unregisterFloatingWindow(this);
-    qCDebug(creation) << "~FloatingWindow";
 }
 
 void FloatingWindow::setupWindow()
@@ -392,7 +390,6 @@ bool FloatingWindow::beingDeleted() const
 
 void FloatingWindow::onFrameCountChanged(int count)
 {
-    qCDebug(docking) << "FloatingWindow::onFrameCountChanged" << count;
     if (count == 0) {
         scheduleDeleteLater();
     } else {
@@ -405,7 +402,6 @@ void FloatingWindow::onFrameCountChanged(int count)
 void FloatingWindow::onVisibleFrameCountChanged(int count)
 {
     if (!m_disableSetVisible) {
-        qCDebug(hiding) << "FloatingWindow::onVisibleFrameCountChanged count=" << count;
         setVisible(count > 0);
     }
 }
@@ -467,8 +463,6 @@ void FloatingWindow::updateTitleAndIcon()
 
 void FloatingWindow::onCloseEvent(QCloseEvent *e)
 {
-    qCDebug(closing) << "Frame::closeEvent";
-
     if (e->spontaneous() && anyNonClosable()) {
         // Event from the window system won't close us
         e->ignore();
