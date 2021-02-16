@@ -16,6 +16,7 @@
 #include "kddockwidgets/QWidgetAdapter.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/private/FloatingWindow_p.h"
 
 #include <QPoint>
 #include <QPointer>
