@@ -276,23 +276,54 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
 #ifdef Q_OS_WIN
 
 /// Handler to enable Aero-snap
-bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result)
+bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *fw, const QByteArray &eventType,
+                                                   void *message, Qt5Qt6Compat::qintptr *result)
 {
     if (eventType != "windows_generic_MSG")
         return false;
 
     auto msg = static_cast<MSG *>(message);
-    if (msg->message == WM_NCCALCSIZE) {
-        *result = 0;
-        return true;
-    } else if (msg->message == WM_NCHITTEST) {
-
+    if (msg->message == WM_NCHITTEST) {
         if (DragController::instance()->isInClientDrag()) {
             // There's a non-native drag going on.
             *result = 0;
             return false;
         }
 
+        const QRect htCaptionRect = fw->dragRect();
+        const bool ret = handleWindowsNativeEvent(fw->windowHandle(), msg, result, htCaptionRect);
+
+        fw->setLastHitTest(*result);
+        return ret;
+    } else if (msg->message == WM_NCLBUTTONDBLCLK) {
+        if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes)) {
+            return handleWindowsNativeEvent(fw->windowHandle(), msg, result);
+        } else {
+            // Let the title bar handle it. It will re-dock the window.
+            if (TitleBar *titleBar = fw->titleBar()) {
+                if (titleBar->isVisible()) { // can't be invisible afaik
+                    titleBar->onDoubleClicked();
+                }
+            }
+
+            return true;
+        }
+
+        const bool ret = handleWindowsNativeEvent(fw->windowHandle(), msg, result);
+        return ret;
+    }
+
+    return handleWindowsNativeEvent(fw->windowHandle(), msg, result);
+}
+
+bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
+                                                   Qt5Qt6Compat::qintptr *result,
+                                                   QRect htCaptionRect)
+{
+    if (msg->message == WM_NCCALCSIZE) {
+        *result = 0;
+        return true;
+    } else if (msg->message == WM_NCHITTEST) {
         const int borderWidth = 8;
         const bool hasFixedWidth = w->minimumWidth() == w->maximumWidth();
         const bool hasFixedHeight = w->minimumHeight() == w->maximumHeight();
@@ -324,8 +355,8 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
         } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth) {
             *result = HTRIGHT;
         } else {
-            const QPoint globalPosQt = QHighDpi::fromNativePixels(QPoint(xPos, yPos), w->windowHandle());
-            const QRect htCaptionRect = w->dragRect(); // The rect on which we allow for Windows to do a native drag
+            const QPoint globalPosQt = QHighDpi::fromNativePixels(QPoint(xPos, yPos), w);
+            // htCaptionRect is the rect on which we allow for Windows to do a native drag
             if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
                 if (!KDDockWidgets::inDisallowDragWidget(globalPosQt)) { // Just makes sure the mouse isn't over the close button, we don't allow drag in that case.
                    *result = HTCAPTION;
@@ -333,26 +364,13 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
             }
         }
 
-        w->setLastHitTest(*result);
         return *result != 0;
     } else if (msg->message == WM_NCLBUTTONDBLCLK) {
-        if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes)) {
-            // By returning false we accept Windows native action, a maximize.
-            // We could also call titleBar->onDoubleClicked(); here which will maximize if Flag_DoubleClickMaximizes is set,
-            // but there's a bug in QWidget::showMaximized() on Windows when we're covering the native title bar, the window is maximized with an offset.
-            // So instead, use a native maximize which works well
-            return false;
-        } else {
-            // Let the title bar handle it. It will re-dock the window.
-
-            if (TitleBar *titleBar = w->titleBar()) {
-                if (titleBar->isVisible()) { // can't be invisible afaik
-                    titleBar->onDoubleClicked();
-                }
-            }
-
-            return true;
-        }
+        // By returning false we accept Windows native action, a maximize.
+        // We could also call titleBar->onDoubleClicked(); here which will maximize if Flag_DoubleClickMaximizes is set,
+        // but there's a bug in QWidget::showMaximized() on Windows when we're covering the native title bar, the window is maximized with an offset.
+        // So instead, use a native maximize which works well
+        return false;
     } else if (msg->message == WM_GETMINMAXINFO) {
         // Qt doesn't work well with windows that don't have title bar but have native frames.
         // When maximized they go out of bounds and the title bar is clipped, so catch WM_GETMINMAXINFO
@@ -360,7 +378,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
 
         // According to microsoft docs it only works for the primary screen, but extrapolates for the others
         QScreen *screen = QGuiApplication::primaryScreen();
-        if (!screen || w->windowHandle()->screen() != screen) {
+        if (!screen || w->screen() != screen) {
             return false;
         }
 
@@ -376,9 +394,8 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *w, const QByt
         mmi->ptMaxPosition.x = availableGeometry.x();
         mmi->ptMaxPosition.y = availableGeometry.y();
 
-        QWindow *window = w->windowHandle();
-        mmi->ptMinTrackSize.x = int(window->minimumWidth() * dpr);
-        mmi->ptMinTrackSize.y = int(window->minimumHeight() * dpr);
+        mmi->ptMinTrackSize.x = int(w->minimumWidth() * dpr);
+        mmi->ptMinTrackSize.y = int(w->minimumHeight() * dpr);
 
         *result = 0;
         return true;

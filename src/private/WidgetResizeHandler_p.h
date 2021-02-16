@@ -73,7 +73,9 @@ public:
     static void setupWindow(QWindow *window);
 
 #ifdef Q_OS_WIN
-    static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result);
+    static bool handleWindowsNativeEvent(QWindow *w, MSG *msg, Qt5Qt6Compat::qintptr *result, QRect htCaptionRect = {});
+    static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType,
+                                         void *message, Qt5Qt6Compat::qintptr *result);
 #endif
     static bool s_disableAllHandlers;
 protected:
