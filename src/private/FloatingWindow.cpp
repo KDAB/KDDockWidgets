@@ -457,6 +457,9 @@ bool FloatingWindow::event(QEvent *ev)
     if (ev->type() == QEvent::ActivationChange) {
         // Since QWidget is missing a signal for window activation
         Q_EMIT activatedChanged();
+    } else if (ev->type() == QEvent::StatusTip && parent()) {
+        // show status tips in the main window
+        return parent()->event(ev);
     }
 
     return QWidgetAdapter::event(ev);
