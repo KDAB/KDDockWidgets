@@ -79,6 +79,12 @@ public:
     ///@brief Returns whether this draggable is a MDI window, being dragged internally within a main window
     virtual bool isMDI() const = 0;
 
+    /**
+     * @brief Returns whether this draggable is already a window.
+     *
+     * If true, means the drag will simply move the existing window, and no undocking/untabbing is involved.
+     */
+    virtual bool isWindow() const = 0;
 private:
     class Private;
     Private *const d;

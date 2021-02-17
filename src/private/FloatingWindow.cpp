@@ -502,3 +502,8 @@ bool FloatingWindow::isMDI() const
 {
     return false;
 }
+
+bool FloatingWindow::isWindow() const
+{
+    return true;
+}

@@ -469,3 +469,8 @@ void TitleBar::updateFloatButton()
     setFloatButtonToolTip(floatingWindow() ? tr("Dock window") : tr("Undock window"));
     setFloatButtonVisible(supportsFloatingButton());
 }
+
+bool TitleBar::isWindow() const
+{
+    return m_floatingWindow != nullptr;
+}

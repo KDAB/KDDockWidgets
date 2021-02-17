@@ -57,6 +57,7 @@ public:
 
     // Draggable
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
+    bool isWindow() const override;
 
     void onMousePress(QPoint localPos);
     void onMouseDoubleClick(QPoint localPos);
@@ -175,6 +176,7 @@ public:
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     DockWidgetBase *singleDockWidget() const override;
+    bool isWindow() const override;
 
     /// @reimp
     bool isMDI() const override;

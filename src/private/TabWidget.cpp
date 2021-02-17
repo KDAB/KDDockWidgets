@@ -94,6 +94,12 @@ std::unique_ptr<WindowBeingDragged> TabBar::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
 }
 
+bool TabBar::isWindow() const
+{
+    // Same semantics as tab widget, no need to duplicate logic
+    return m_tabWidget->isWindow();
+}
+
 void TabBar::onMousePress(QPoint localPos)
 {
     m_lastPressedDockWidget = dockWidgetAt(localPos);
@@ -235,6 +241,16 @@ std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
     floatingWindow->show();
 
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
+}
+
+bool TabWidget::isWindow() const
+{
+    if (auto floatingWindow = qobject_cast<FloatingWindow*>(asWidget()->window())) {
+        // Case of dragging via the tab widget when the title bar is hidden
+        return floatingWindow->hasSingleFrame();
+    }
+
+    return false;
 }
 
 DockWidgetBase *TabWidget::singleDockWidget() const
