@@ -250,6 +250,7 @@ void StateDragging::onEntry()
             dw->d->saveLastFloatingGeometry();
     }
 
+    const bool needsUndocking = !q->m_draggable->isWindow();
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (q->m_windowBeingDragged) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(Q_OS_WIN)
@@ -263,8 +264,11 @@ void StateDragging::onEntry()
 
             QWindow *window = fw->windowHandle();
 
-            // Position the window before the drag start, otherwise if you move mouse too fast there will be an offset
-            window->setPosition(QCursor::pos() - q->m_offset);
+            if (needsUndocking) {
+                // Position the window before the drag start, otherwise if you move mouse too fast there will be an offset
+                // Only required when we've undocked/detached a window.
+                window->setPosition(QCursor::pos() - q->m_offset);
+            }
 
             // Start the native move
             window->startSystemMove();
