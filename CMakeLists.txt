@@ -19,6 +19,11 @@
 #  Build static versions of the libraries
 #  Default=false
 #
+# -DKDDockWidgets_UNINSTALL=[true|false]
+#  Setup the uninstall target.
+#  You may want to disable the uninstall target that's added by default when you are including
+#  KDDockWidgets as a submodule directly and have a custom uninstall target of your own.
+#
 # -DKDDockWidgets_TESTS=[true|false]
 #  Build the test harness.
 #  Currently does nothing unless you also set KDDockWidgets_DEVELOPER_MODE=True
@@ -91,6 +96,7 @@ if(${PROJECT_NAME}_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${
   message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
 endif()
 
+option(${PROJECT_NAME}_UNINSTALL "Enable the uninstall target" ON)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 option(${PROJECT_NAME}_DOCS "Build the API documentation" OFF)
@@ -254,5 +260,7 @@ if(${PROJECT_NAME}_DOCS)
   add_subdirectory(docs) # needs to go last, in case there are build source files
 endif()
 
-# Add uninstall target
-include(ECMUninstallTarget)
+if(${PROJECT_NAME}_UNINSTALL)
+    # Add uninstall target
+    include(ECMUninstallTarget)
+endif()
