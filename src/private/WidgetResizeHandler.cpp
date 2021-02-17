@@ -600,6 +600,14 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
     if (!window)
         return false;
 
+    const char *propertyName = "kddw_customframe_setup_ran";
+    const bool setupRan = window->property(propertyName).toBool();
+    if (!setupRan) {
+        // Add drop shadow
+        WidgetResizeHandler::setupWindow(window);
+        window->setProperty(propertyName, true);
+    }
+
     return WidgetResizeHandler::handleWindowsNativeEvent(window, msg, result);
 #else
     return false;
