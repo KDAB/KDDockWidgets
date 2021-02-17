@@ -123,6 +123,26 @@ public:
 };
 
 #endif // Q_OS_WIN
+
+class DOCKS_EXPORT CustomFrameHelper
+    : public QObject
+    , public QAbstractNativeEventFilter
+{
+    Q_OBJECT
+public:
+    explicit CustomFrameHelper(QObject *parent = nullptr);
+    ~CustomFrameHelper() override;
+
+public Q_SLOTS:
+    void applyCustomFrame(QWindow *);
+
+protected:
+    bool nativeEventFilter(const QByteArray &eventType, void *message,
+                           Qt5Qt6Compat::qintptr *result) override;
+
+private:
+    bool m_inDtor = false;
+};
 }
 
 #endif

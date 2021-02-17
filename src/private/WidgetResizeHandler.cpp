@@ -354,7 +354,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
             *result = HTBOTTOM;
         } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth) {
             *result = HTRIGHT;
-        } else {
+        } else if (!htCaptionRect.isNull()) {
             const QPoint globalPosQt = QHighDpi::fromNativePixels(QPoint(xPos, yPos), w);
             // htCaptionRect is the rect on which we allow for Windows to do a native drag
             if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
@@ -362,6 +362,8 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
                    *result = HTCAPTION;
                 }
             }
+        } else {
+            *result = HTCAPTION;
         }
 
         return *result != 0;
@@ -559,3 +561,45 @@ bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *
     return false;
 }
 #endif
+
+
+CustomFrameHelper::CustomFrameHelper(QObject *parent)
+    : QObject(parent)
+    , QAbstractNativeEventFilter()
+{
+#ifdef Q_OS_WIN
+    qApp->installNativeEventFilter(this);
+#endif
+}
+
+CustomFrameHelper::~CustomFrameHelper()
+{
+    m_inDtor = true;
+}
+
+void CustomFrameHelper::applyCustomFrame(QWindow *window)
+{
+#ifdef Q_OS_WIN
+    WidgetResizeHandler::setupWindow(window);
+#else
+    qWarning() << Q_FUNC_INFO << "Not implemented on this platform";
+#endif
+}
+
+bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *message,
+                                          Qt5Qt6Compat::qintptr *result)
+{
+    if (m_inDtor || !KDDockWidgets::usesAeroSnapWithCustomDecos())
+        return false;
+
+    if (eventType != "windows_generic_MSG")
+        return false;
+
+    auto msg = static_cast<MSG *>(message);
+
+    QWindow *window = QWindow::fromWinId(WId(msg->hwnd));
+    if (!window)
+        return false;
+
+    return WidgetResizeHandler::handleWindowsNativeEvent(window, msg, result);
+}
