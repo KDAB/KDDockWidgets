@@ -587,6 +587,7 @@ void CustomFrameHelper::applyCustomFrame(QWindow *window)
 bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *message,
                                           Qt5Qt6Compat::qintptr *result)
 {
+#ifdef Q_OS_WIN
     if (m_inDtor || !KDDockWidgets::usesAeroSnapWithCustomDecos())
         return false;
 
@@ -600,4 +601,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
         return false;
 
     return WidgetResizeHandler::handleWindowsNativeEvent(window, msg, result);
+#else
+    return false;
+#endif
 }
