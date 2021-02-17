@@ -56,6 +56,7 @@ public:
 
     void setIcon(const QIcon &icon);
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
+    bool isWindow() const override;
 
     DockWidgetBase *singleDockWidget() const override;
 

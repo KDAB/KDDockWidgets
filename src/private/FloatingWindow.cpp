@@ -562,3 +562,8 @@ bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option)
         return frame->anyDockWidgetsHas(option);
     });
 }
+
+bool FloatingWindow::isWindow() const
+{
+    return true;
+}
