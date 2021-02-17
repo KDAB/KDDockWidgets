@@ -159,6 +159,11 @@ public:
     void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location,
                        DockWidgetBase *relativeTo, InitialOption = {});
 
+    /// @brief Returns the MainWindow which is the transient parent of this FloatingWindow
+    /// Can be nullptr if you create dock widgets before the main window. Can also be some
+    /// arbitrary value if you have more than one main window.
+    MainWindowBase *mainWindow() const;
+
     ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
     ///Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
     ///be open ended

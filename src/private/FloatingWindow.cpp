@@ -509,3 +509,8 @@ bool FloatingWindow::isWindow() const
 {
     return true;
 }
+
+MainWindowBase *FloatingWindow::mainWindow() const
+{
+    return qobject_cast<MainWindowBase*>(parent());
+}
