@@ -273,6 +273,8 @@ void StateDragging::onEntry()
             // Start the native move
             window->startSystemMove();
         }
+#else
+    Q_UNUSED(needsUndocking);
 #endif
 
         qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable->asWidget()
