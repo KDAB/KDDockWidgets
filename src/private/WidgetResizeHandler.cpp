@@ -362,8 +362,6 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
                    *result = HTCAPTION;
                 }
             }
-        } else {
-            *result = HTCAPTION;
         }
 
         return *result != 0;
