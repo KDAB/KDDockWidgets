@@ -55,6 +55,11 @@ public:
             : htCaptionRect(r) {
         }
 
+        NativeFeatures(Feature f)
+            : features(f)
+        {
+        }
+
         NativeFeatures(Features f)
             : features(f) {
         }
