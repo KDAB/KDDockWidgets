@@ -23,6 +23,7 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QWindow>
+#include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN)
 # include <QtGui/private/qhighdpiscaling_p.h>
@@ -606,8 +607,10 @@ void CustomFrameHelper::applyCustomFrame(QWindow *window)
 bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *message,
                                           Qt5Qt6Compat::qintptr *result)
 {
-    if (m_shouldUseCustomFrameFunc == nullptr)
+    if (m_shouldUseCustomFrameFunc == nullptr || m_recursionGuard)
         return false;
+
+    QScopedValueRollback<bool> guard(m_recursionGuard, true);
 
 #ifdef Q_OS_WIN
     if (m_inDtor || !KDDockWidgets::usesAeroSnapWithCustomDecos())

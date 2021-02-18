@@ -196,6 +196,7 @@ protected:
 private:
     bool m_inDtor = false;
     ShouldUseCustomFrame m_shouldUseCustomFrameFunc = nullptr;
+    bool m_recursionGuard = false;
 };
 }
 
