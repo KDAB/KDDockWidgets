@@ -124,13 +124,16 @@ public:
 
 #endif // Q_OS_WIN
 
+typedef bool (*ShouldUseCustomFrame)(QWindow *);
+
 class DOCKS_EXPORT CustomFrameHelper
     : public QObject
     , public QAbstractNativeEventFilter
 {
     Q_OBJECT
 public:
-    explicit CustomFrameHelper(QObject *parent = nullptr);
+    explicit CustomFrameHelper(ShouldUseCustomFrame shouldUseCustomFrameFunc,
+                               QObject *parent = nullptr);
     ~CustomFrameHelper() override;
 
 public Q_SLOTS:
@@ -142,6 +145,7 @@ protected:
 
 private:
     bool m_inDtor = false;
+    ShouldUseCustomFrame m_shouldUseCustomFrameFunc = nullptr;
 };
 }
 

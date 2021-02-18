@@ -561,9 +561,10 @@ bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *
 #endif
 
 
-CustomFrameHelper::CustomFrameHelper(QObject *parent)
+CustomFrameHelper::CustomFrameHelper(ShouldUseCustomFrame func, QObject *parent)
     : QObject(parent)
     , QAbstractNativeEventFilter()
+    , m_shouldUseCustomFrameFunc(func)
 {
 #ifdef Q_OS_WIN
     qApp->installNativeEventFilter(this);
@@ -588,6 +589,9 @@ void CustomFrameHelper::applyCustomFrame(QWindow *window)
 bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *message,
                                           Qt5Qt6Compat::qintptr *result)
 {
+    if (m_shouldUseCustomFrameFunc == nullptr)
+        return false;
+
 #ifdef Q_OS_WIN
     if (m_inDtor || !KDDockWidgets::usesAeroSnapWithCustomDecos())
         return false;
@@ -598,7 +602,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
     auto msg = static_cast<MSG *>(message);
 
     QWindow *window = QWindow::fromWinId(WId(msg->hwnd));
-    if (!window)
+    if (!window || !m_shouldUseCustomFrameFunc(window))
         return false;
 
     const char *propertyName = "kddw_customframe_setup_ran";
