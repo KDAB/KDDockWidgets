@@ -64,6 +64,22 @@ public:
         bool hasFeatures() const {
             return features != Feature_None;
         }
+
+        bool hasShadow() const {
+            return features & Feature_NativeShadow;
+        }
+
+        bool hasMaximize() const {
+            return features & Feature_NativeMaximize;
+        }
+
+        bool hasResize() const {
+            return features & Feature_NativeResize;
+        }
+
+        bool hasDrag() const {
+            return (features & Feature_NativeDrag) && !htCaptionRect.isNull();
+        }
     };
 
     /**

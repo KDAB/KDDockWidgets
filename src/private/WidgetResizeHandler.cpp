@@ -320,10 +320,10 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
                                                    Qt5Qt6Compat::qintptr *result,
                                                    const NativeFeatures &features)
 {
-    if (msg->message == WM_NCCALCSIZE) {
+    if (msg->message == WM_NCCALCSIZE && features.hasShadow()) {
         *result = 0;
         return true;
-    } else if (msg->message == WM_NCHITTEST) {
+    } else if (msg->message == WM_NCHITTEST && (features.hasResize() || features.hasDrag())) {
         const int borderWidth = 8;
         const bool hasFixedWidth = w->minimumWidth() == w->maximumWidth();
         const bool hasFixedHeight = w->minimumHeight() == w->maximumHeight();
@@ -335,26 +335,26 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
         GetWindowRect(reinterpret_cast<HWND>(w->winId()), &rect);
 
         if (xPos >= rect.left && xPos <= rect.left + borderWidth &&
-                yPos <= rect.bottom && yPos >= rect.bottom - borderWidth) {
+                yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMLEFT;
         } else if (xPos < rect.right && xPos >= rect.right - borderWidth &&
-                   yPos <= rect.bottom && yPos >= rect.bottom - borderWidth) {
+                   yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMRIGHT;
         } else if (xPos >= rect.left && xPos <= rect.left + borderWidth &&
-                   yPos >= rect.top && yPos <= rect.top + borderWidth) {
+                   yPos >= rect.top && yPos <= rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPLEFT;
         } else if (xPos <= rect.right && xPos >= rect.right - borderWidth &&
-                   yPos >= rect.top && yPos < rect.top + borderWidth) {
+                   yPos >= rect.top && yPos < rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPRIGHT;
-        } else if (!hasFixedWidth && xPos >= rect.left && xPos <= rect.left + borderWidth) {
+        } else if (!hasFixedWidth && xPos >= rect.left && xPos <= rect.left + borderWidth && features.hasResize()) {
             *result = HTLEFT;
-        } else if (!hasFixedHeight && yPos >= rect.top && yPos <= rect.top + borderWidth) {
+        } else if (!hasFixedHeight && yPos >= rect.top && yPos <= rect.top + borderWidth && features.hasResize()) {
             *result = HTTOP;
-        } else if (!hasFixedHeight && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth) {
+        } else if (!hasFixedHeight && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOM;
-        } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth) {
+        } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth && features.hasResize()) {
             *result = HTRIGHT;
-        } else if (!features.htCaptionRect.isNull()) {
+        } else if (features.hasDrag()) {
             const QPoint globalPosQt = QHighDpi::fromNativePixels(QPoint(xPos, yPos), w);
             // htCaptionRect is the rect on which we allow for Windows to do a native drag
             const QRect htCaptionRect = features.htCaptionRect;
@@ -366,7 +366,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
         }
 
         return *result != 0;
-    } else if (msg->message == WM_NCLBUTTONDBLCLK) {
+    } else if (msg->message == WM_NCLBUTTONDBLCLK && features.hasMaximize()) {
         // By returning false we accept Windows native action, a maximize.
         // We could also call titleBar->onDoubleClicked(); here which will maximize if Flag_DoubleClickMaximizes is set,
         // but there's a bug in QWidget::showMaximized() on Windows when we're covering the native title bar, the window is maximized with an offset.
