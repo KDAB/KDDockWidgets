@@ -16,6 +16,7 @@
 #include "Config.h"
 #include "Qt5Qt6Compat_p.h"
 #include "Utils_p.h"
+#include "DockRegistry_p.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -625,7 +626,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
         return false;
     }
 
-    QWindow *window = QWindow::fromWinId(WId(msg->hwnd));
+    QWindow *window = DockRegistry::self()->windowForHandle(WId(msg->hwnd));
     if (!window)
         return false;
 
