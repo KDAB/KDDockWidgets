@@ -31,10 +31,20 @@ namespace KDDockWidgets {
 
 class FloatingWindow;
 
+
 class DOCKS_EXPORT WidgetResizeHandler : public QObject
 {
     Q_OBJECT
 public:
+
+    enum Feature {
+        Feature_None = 0,
+        Feature_NativeShadow = 1,
+        Feature_NativeResize = 2,
+        Feature_NativeDrag = 4,
+        Feature_NativeMaximize = 8
+    };
+    Q_DECLARE_FLAGS(Features, Feature);
 
     /**
      * @brief CTOR
@@ -130,17 +140,7 @@ class DOCKS_EXPORT CustomFrameHelper
 {
     Q_OBJECT
 public:
-
-    enum Feature {
-        Feature_None = 0,
-        Feature_NativeShadow = 1,
-        Feature_NativeResize = 2,
-        Feature_NativeDrag = 4,
-        Feature_NativeMaximize = 8
-    };
-    Q_DECLARE_FLAGS(Features, Feature);
-    typedef Features (*ShouldUseCustomFrame)(QWindow *);
-
+    typedef WidgetResizeHandler::Features (*ShouldUseCustomFrame)(QWindow *);
     explicit CustomFrameHelper(ShouldUseCustomFrame shouldUseCustomFrameFunc,
                                QObject *parent = nullptr);
     ~CustomFrameHelper() override;

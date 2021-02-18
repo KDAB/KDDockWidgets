@@ -605,8 +605,8 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
     if (!window)
         return false;
 
-    const Features features = m_shouldUseCustomFrameFunc(window);
-    if (features == Feature_None) {
+    const WidgetResizeHandler::Features features = m_shouldUseCustomFrameFunc(window);
+    if (!features) {
         // No native support for is desired for this window
         return false;
     }
