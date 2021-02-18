@@ -96,6 +96,9 @@ public:
     ///@brief returns whether if there's at least one floating window
     bool hasFloatingWindows() const;
 
+    ///@brief Returns the window with the specified id
+    QWindow *windowForHandle(WId id) const;
+
     ///@brief returns the FloatingWindow with handle @p windowHandle
     FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
 

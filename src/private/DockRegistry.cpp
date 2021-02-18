@@ -506,6 +506,18 @@ bool DockRegistry::hasFloatingWindows() const
     });
 }
 
+QWindow *DockRegistry::windowForHandle(WId id) const
+{
+    const QWindowList windows = qApp->topLevelWindows();
+    for (QWindow *w : windows) {
+        if (w->isVisible() && w->handle()) {
+            if (w->winId() == id)
+                return w;
+        }
+    }
+    return nullptr;
+}
+
 FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) const
 {
     for (FloatingWindow *fw : m_floatingWindows) {
