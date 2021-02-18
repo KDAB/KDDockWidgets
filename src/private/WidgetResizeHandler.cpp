@@ -318,7 +318,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *fw, const QBy
 
 bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
                                                    Qt5Qt6Compat::qintptr *result,
-                                                   QRect htCaptionRect)
+                                                   const NativeFeatures &features)
 {
     if (msg->message == WM_NCCALCSIZE) {
         *result = 0;
@@ -354,9 +354,10 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
             *result = HTBOTTOM;
         } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth) {
             *result = HTRIGHT;
-        } else if (!htCaptionRect.isNull()) {
+        } else if (!features.htCaptionRect.isNull()) {
             const QPoint globalPosQt = QHighDpi::fromNativePixels(QPoint(xPos, yPos), w);
             // htCaptionRect is the rect on which we allow for Windows to do a native drag
+            const QRect htCaptionRect = features.htCaptionRect;
             if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
                 if (!KDDockWidgets::inDisallowDragWidget(globalPosQt)) { // Just makes sure the mouse isn't over the close button, we don't allow drag in that case.
                    *result = HTCAPTION;
@@ -605,8 +606,8 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
     if (!window)
         return false;
 
-    const WidgetResizeHandler::Features features = m_shouldUseCustomFrameFunc(window);
-    if (!features) {
+    const WidgetResizeHandler::NativeFeatures features = m_shouldUseCustomFrameFunc(window);
+    if (!features.hasFeatures()) {
         // No native support for is desired for this window
         return false;
     }
@@ -619,7 +620,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
         window->setProperty(propertyName, true);
     }
 
-    return WidgetResizeHandler::handleWindowsNativeEvent(window, msg, result);
+    return WidgetResizeHandler::handleWindowsNativeEvent(window, msg, result, features);
 #else
     Q_UNUSED(eventType);
     Q_UNUSED(message);

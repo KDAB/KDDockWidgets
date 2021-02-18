@@ -42,9 +42,29 @@ public:
         Feature_NativeShadow = 1,
         Feature_NativeResize = 2,
         Feature_NativeDrag = 4,
-        Feature_NativeMaximize = 8
+        Feature_NativeMaximize = 8,
+        Feature_All = Feature_NativeShadow | Feature_NativeResize | Feature_NativeDrag
+            | Feature_NativeMaximize
     };
     Q_DECLARE_FLAGS(Features, Feature);
+
+    struct NativeFeatures {
+        NativeFeatures() = default;
+
+        NativeFeatures(QRect r)
+            : htCaptionRect(r) {
+        }
+
+        NativeFeatures(Features f)
+            : features(f) {
+        }
+
+        QRect htCaptionRect; // in global coordinates
+        Features features = Feature_All;
+        bool hasFeatures() const {
+            return features != Feature_None;
+        }
+    };
 
     /**
      * @brief CTOR
@@ -83,7 +103,7 @@ public:
     static void setupWindow(QWindow *window);
 
 #ifdef Q_OS_WIN
-    static bool handleWindowsNativeEvent(QWindow *w, MSG *msg, Qt5Qt6Compat::qintptr *result, QRect htCaptionRect = {});
+    static bool handleWindowsNativeEvent(QWindow *w, MSG *msg, Qt5Qt6Compat::qintptr *result, const NativeFeatures & = {});
     static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType,
                                          void *message, Qt5Qt6Compat::qintptr *result);
 #endif
@@ -140,7 +160,7 @@ class DOCKS_EXPORT CustomFrameHelper
 {
     Q_OBJECT
 public:
-    typedef WidgetResizeHandler::Features (*ShouldUseCustomFrame)(QWindow *);
+    typedef WidgetResizeHandler::NativeFeatures (*ShouldUseCustomFrame)(QWindow *);
     explicit CustomFrameHelper(ShouldUseCustomFrame shouldUseCustomFrameFunc,
                                QObject *parent = nullptr);
     ~CustomFrameHelper() override;
