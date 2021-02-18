@@ -534,6 +534,22 @@ void WidgetResizeHandler::setupWindow(QWindow *window)
 #endif // Q_OS_WIN
 }
 
+bool WidgetResizeHandler::isInterestingNativeEvent(int nativeEvent)
+{
+#ifdef Q_OS_WIN
+     switch(nativeEvent) {
+     case WM_NCHITTEST:
+     case WM_NCCALCSIZE:
+     case WM_NCLBUTTONDBLCLK:
+     case WM_GETMINMAXINFO:
+         return true;
+     default:
+         return false;
+     }
+#endif
+     return false;
+}
+
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *message,
                                              Qt5Qt6Compat::qintptr *result)
@@ -601,6 +617,10 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
         return false;
 
     auto msg = static_cast<MSG *>(message);
+    if (!WidgetResizeHandler::isInterestingNativeEvent(msg->message)) {
+        // Save some CPU cycles
+        return false;
+    }
 
     QWindow *window = QWindow::fromWinId(WId(msg->hwnd));
     if (!window)

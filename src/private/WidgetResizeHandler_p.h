@@ -122,7 +122,7 @@ public:
     static int widgetResizeHandlerMargin();
 
     static void setupWindow(QWindow *window);
-
+    static bool isInterestingNativeEvent(int);
 #ifdef Q_OS_WIN
     static bool handleWindowsNativeEvent(QWindow *w, MSG *msg, Qt5Qt6Compat::qintptr *result, const NativeFeatures & = {});
     static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType,
