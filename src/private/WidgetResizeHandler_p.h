@@ -124,14 +124,23 @@ public:
 
 #endif // Q_OS_WIN
 
-typedef bool (*ShouldUseCustomFrame)(QWindow *);
-
 class DOCKS_EXPORT CustomFrameHelper
     : public QObject
     , public QAbstractNativeEventFilter
 {
     Q_OBJECT
 public:
+
+    enum Feature {
+        Feature_None = 0,
+        Feature_NativeShadow = 1,
+        Feature_NativeResize = 2,
+        Feature_NativeDrag = 4,
+        Feature_NativeMaximize = 8
+    };
+    Q_DECLARE_FLAGS(Features, Feature);
+    typedef Features (*ShouldUseCustomFrame)(QWindow *);
+
     explicit CustomFrameHelper(ShouldUseCustomFrame shouldUseCustomFrameFunc,
                                QObject *parent = nullptr);
     ~CustomFrameHelper() override;

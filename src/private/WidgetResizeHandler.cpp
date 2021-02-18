@@ -602,8 +602,14 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
     auto msg = static_cast<MSG *>(message);
 
     QWindow *window = QWindow::fromWinId(WId(msg->hwnd));
-    if (!window || !m_shouldUseCustomFrameFunc(window))
+    if (!window)
         return false;
+
+    const Features features = m_shouldUseCustomFrameFunc(window);
+    if (features == Feature_None) {
+        // No native support for is desired for this window
+        return false;
+    }
 
     const char *propertyName = "kddw_customframe_setup_ran";
     const bool setupRan = window->property(propertyName).toBool();
