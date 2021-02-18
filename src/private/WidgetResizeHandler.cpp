@@ -580,6 +580,7 @@ void CustomFrameHelper::applyCustomFrame(QWindow *window)
 #ifdef Q_OS_WIN
     WidgetResizeHandler::setupWindow(window);
 #else
+    Q_UNUSED(window);
     qWarning() << Q_FUNC_INFO << "Not implemented on this platform";
 #endif
 }
@@ -610,6 +611,9 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
 
     return WidgetResizeHandler::handleWindowsNativeEvent(window, msg, result);
 #else
+    Q_UNUSED(eventType);
+    Q_UNUSED(message);
+    Q_UNUSED(result);
     return false;
 #endif
 }
