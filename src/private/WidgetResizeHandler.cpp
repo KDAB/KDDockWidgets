@@ -548,6 +548,8 @@ bool WidgetResizeHandler::isInterestingNativeEvent(int nativeEvent)
      default:
          return false;
      }
+#else
+    Q_UNUSED(nativeEvent);
 #endif
      return false;
 }
