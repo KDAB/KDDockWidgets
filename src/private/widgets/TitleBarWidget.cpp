@@ -65,7 +65,7 @@ void Button::paintEvent(QPaintEvent *)
 
         if (scalingFactorIsSupported(combinedFactor)) // Older Qt has rendering bugs with fractional factors
             opt.iconSize = opt.iconSize * combinedFactor;
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN) && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // Probably Windows could use the same code path as Linux, but I'm seeing too thick icons on Windows...
     if (!QGuiApplication::testAttribute(Qt::AA_EnableHighDpiScaling)
         && scalingFactorIsSupported(logicalFactor)) // Older Qt has rendering bugs with fractional factors
