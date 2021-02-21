@@ -94,6 +94,16 @@ protected:
     virtual void onCloseEvent(QCloseEvent *);
 };
 
+inline qreal logicalDpiFactor(QWidget *w)
+{
+#ifdef Q_OS_MACOS
+    // It's always 72 on mac
+    return 1;
+#else
+    return w->logicalDpiX() / 96.0;
+#endif
+}
+
 }
 
 #endif

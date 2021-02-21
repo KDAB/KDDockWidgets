@@ -28,6 +28,7 @@
 #include <QObject>
 #include <QCloseEvent>
 #include <QQuickWindow>
+#include <QScreen>
 
 QT_BEGIN_NAMESPACE
 class QWindow;
@@ -200,6 +201,20 @@ private:
     bool m_mouseTrackingEnabled = false;
     MouseEventRedirector *m_mouseEventRedirector = nullptr;
 };
+
+inline qreal logicalDpiFactor(QQuickItem *item)
+{
+#ifndef Q_OS_MACOS
+    if (QQuickWindow *window = item->window()) {
+        if (QScreen *s = window->screen()) {
+            return s->logicalDotsPerInch() / 96.0;
+        }
+    }
+#endif
+
+    // It's always 72 on mac
+    return 1;
+}
 
 }
 
