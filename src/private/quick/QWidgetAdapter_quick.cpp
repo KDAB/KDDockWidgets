@@ -175,6 +175,10 @@ void QWidgetAdapter::raise()
     if (isTopLevel()) {
         if (QWindow *w = windowHandle())
             w->raise();
+    } else if (auto p = QQuickItem::parentItem()) {
+        // It's not a top-level, so just increase its Z-order
+        const auto siblings = p->childItems();
+        stackAfter(siblings.last());
     }
 }
 
