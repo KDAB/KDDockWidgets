@@ -18,15 +18,18 @@
 
 #include "MainWindow.h"
 #include "Config.h"
+#include "DockRegistry_p.h"
+#include "DropAreaWithCentralFrame_p.h"
 #include "DropArea_p.h"
 #include "Frame_p.h"
+#include "FrameworkWidgetFactory.h"
 #include "Logging_p.h"
 #include "SideBar_p.h"
-#include "DropAreaWithCentralFrame_p.h"
-#include "FrameworkWidgetFactory.h"
 
-#include <QVBoxLayout>
 #include <QPainter>
+#include <QScreen>
+#include <QVBoxLayout>
+#include <QWindow>
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro
 
@@ -92,6 +95,10 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
     }
 
     setCentralWidget(centralWidget);
+
+    create();
+    connect(windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
+            [this] { Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle()); });
 }
 
 MainWindow::~MainWindow()

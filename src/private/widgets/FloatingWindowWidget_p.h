@@ -32,6 +32,7 @@ protected:
     bool event(QEvent *ev) override;
 
     QVBoxLayout *const m_vlayout;
+    QMetaObject::Connection m_screenChangedConnection;
 
 private:
     void init();

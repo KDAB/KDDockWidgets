@@ -9,15 +9,17 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include "DockRegistry_p.h"
+#include "DropArea_p.h"
 #include "FloatingWindowWidget_p.h"
 #include "Logging_p.h"
-#include "Utils_p.h"
-#include "DropArea_p.h"
 #include "TitleBar_p.h"
+#include "Utils_p.h"
 
 #include <QApplication>
 #include <QPainter>
 #include <QVBoxLayout>
+#include <QWindow>
 #include <QWindowStateChangeEvent>
 
 using namespace KDDockWidgets;
@@ -56,7 +58,15 @@ void FloatingWindowWidget::paintEvent(QPaintEvent *ev)
 bool FloatingWindowWidget::event(QEvent *ev)
 {
     if (ev->type() == QEvent::WindowStateChange)
-        Q_EMIT windowStateChanged(static_cast<QWindowStateChangeEvent*>(ev));
+        Q_EMIT windowStateChanged(static_cast<QWindowStateChangeEvent *>(ev));
+
+    if (ev->type() == QEvent::Show && !m_screenChangedConnection) {
+        // We connect after QEvent::Show, so we have a QWindow. Qt doesn't offer much API to
+        // intercept screen events
+        m_screenChangedConnection =
+            connect(windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
+                    [this] { Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle()); });
+    }
 
     return FloatingWindow::event(ev);
 }

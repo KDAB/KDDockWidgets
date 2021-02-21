@@ -206,7 +206,11 @@ public:
     SideBarLocation sideBarLocationForDockWidget(const DockWidgetBase *) const;
 
     ///@brief Overload that returns the SideBar itself
-    SideBar* sideBarForDockWidget(const DockWidgetBase *) const;
+    SideBar *sideBarForDockWidget(const DockWidgetBase *) const;
+
+Q_SIGNALS:
+    /// @brief emitted when a main window or a floating window change screen
+    void windowChangedScreen(QWindow *);
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
