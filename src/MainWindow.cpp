@@ -35,30 +35,12 @@
 
 using namespace KDDockWidgets;
 
-class MainWindow::Private
-{
-public:
-
-    explicit Private(MainWindowOptions, MainWindowBase *mainWindow)
-        : m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
-    {
-        if (m_supportsAutoHide) {
-            for (auto location : { SideBarLocation::North, SideBarLocation::East,
-                                   SideBarLocation::West, SideBarLocation::South}) {
-                m_sideBars.insert(location, Config::self().frameworkWidgetFactory()->createSideBar(location, mainWindow) );
-            }
-        }
-    }
-
-    const bool m_supportsAutoHide;
-    QHash<SideBarLocation, SideBar*> m_sideBars;
-};
-
 namespace KDDockWidgets {
 class MyCentralWidget : public QWidget
 {
 public:
-    explicit MyCentralWidget(QWidget *parent = nullptr) : QWidget(parent)
+    explicit MyCentralWidget(QWidget *parent = nullptr)
+        : QWidget(parent)
     {
         setObjectName(QStringLiteral("MyCentralWidget"));
     }
@@ -66,6 +48,38 @@ public:
     ~MyCentralWidget() override;
 };
 }
+
+class MainWindow::Private
+{
+public:
+    explicit Private(MainWindowOptions, MainWindow *mainWindow)
+        : q(mainWindow)
+        , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
+        , m_centralWidget(new MyCentralWidget(mainWindow))
+        , m_layout(new QHBoxLayout(m_centralWidget)) // 1 level of indirection so we can add some margins
+    {
+        if (m_supportsAutoHide) {
+            for (auto location : { SideBarLocation::North, SideBarLocation::East,
+                                   SideBarLocation::West, SideBarLocation::South}) {
+                m_sideBars.insert(location, Config::self().frameworkWidgetFactory()->createSideBar(location, mainWindow) );
+            }
+        }
+
+        m_layout->setSpacing(0);
+        updateMargins();
+    }
+
+    void updateMargins()
+    {
+        m_layout->setContentsMargins(q->centerWidgetMargins());
+    }
+
+    MainWindow *const q;
+    const bool m_supportsAutoHide;
+    QHash<SideBarLocation, SideBar*> m_sideBars;
+    MyCentralWidget *const m_centralWidget;
+    QHBoxLayout *const m_layout;
+};
 
 MyCentralWidget::~MyCentralWidget() {}
 
@@ -75,30 +89,28 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
     : MainWindowBase(name, options, parent, flags)
     , d(new Private(options, this))
 {
-    auto centralWidget = new MyCentralWidget(this);
-    auto layout = new QHBoxLayout(centralWidget);  // 1 level of indirection so we can add some margins
-    layout->setSpacing(0);
-    layout->setContentsMargins(centerWidgetMargins());
-
     if (d->m_supportsAutoHide) {
-        layout->addWidget(sideBar(SideBarLocation::West));
+        d->m_layout->addWidget(sideBar(SideBarLocation::West));
         auto innerVLayout = new QVBoxLayout();
         innerVLayout->setSpacing(0);
         innerVLayout->setContentsMargins(0, 0, 0, 0);
         innerVLayout->addWidget(sideBar(SideBarLocation::North));
         innerVLayout->addWidget(layoutWidget());
         innerVLayout->addWidget(sideBar(SideBarLocation::South));
-        layout->addLayout(innerVLayout);
-        layout->addWidget(sideBar(SideBarLocation::East));
+        d->m_layout->addLayout(innerVLayout);
+        d->m_layout->addWidget(sideBar(SideBarLocation::East));
     } else {
-        layout->addWidget(layoutWidget());
+        d->m_layout->addWidget(layoutWidget());
     }
 
-    setCentralWidget(centralWidget);
+    setCentralWidget(d->m_centralWidget);
 
     create();
     connect(windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
-            [this] { Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle()); });
+            [this] {
+                d->updateMargins(); // logical dpi might have changed
+                Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle());
+            });
 }
 
 MainWindow::~MainWindow()
@@ -124,7 +136,8 @@ void MainWindow::resizeEvent(QResizeEvent *ev)
 
 QMargins MainWindow::centerWidgetMargins() const
 {
-    return { 1, 5, 1, 1};
+    const QMargins margins = { 1, 5, 1, 1 };
+    return margins * logicalDpiFactor(this);
 }
 
 QRect MainWindow::centralAreaGeometry() const
