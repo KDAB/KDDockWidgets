@@ -48,8 +48,9 @@ static void initKDDockWidgetResources()
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
-#ifdef KDDOCKWIDGETS_QTWIDGETS
     qApp->installEventFilter(this);
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
 
 # ifdef DOCKS_DEVELOPER_MODE
     if (qEnvironmentVariableIntValue("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW") == 1) {
@@ -639,6 +640,13 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
             }
         }
     } else if (event->type() == QEvent::MouseButtonPress) {
+        // When clicking on a MDI Frame we raise the window
+        if (Frame *f = parentFrame(watched)) {
+            if (f->isMDI())
+                f->raise();
+        }
+
+        // The following code is for hididng the overlay
         if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
             return false;
 

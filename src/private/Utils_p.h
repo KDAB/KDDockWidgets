@@ -13,6 +13,7 @@
 #define KD_UTILS_P_H
 
 #include "Config.h"
+#include "Frame_p.h"
 #include "QWidgetAdapter.h"
 
 #include <QScreen>
@@ -338,6 +339,20 @@ inline bool scalingFactorIsSupported(qreal factor)
     Q_UNUSED(factor);
     return true;
 #endif
+}
+
+/// @brief Returns the parent frame which the specified object is in, if any
+inline Frame *parentFrame(QObject *from)
+{
+    auto p = from;
+    while (p) {
+        if (auto frame = qobject_cast<Frame *>(p))
+            return frame;
+
+        p = p->parent();
+    }
+
+    return nullptr;
 }
 
 };
