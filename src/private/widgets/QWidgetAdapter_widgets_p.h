@@ -98,6 +98,7 @@ inline qreal logicalDpiFactor(const QWidget *w)
 {
 #ifdef Q_OS_MACOS
     // It's always 72 on mac
+    Q_UNUSED(w);
     return 1;
 #else
     return w->logicalDpiX() / 96.0;

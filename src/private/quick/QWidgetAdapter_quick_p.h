@@ -213,6 +213,7 @@ inline qreal logicalDpiFactor(QQuickItem *item)
 #endif
 
     // It's always 72 on mac
+    Q_UNUSED(item);
     return 1;
 }
 
