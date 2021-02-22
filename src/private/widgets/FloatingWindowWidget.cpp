@@ -74,7 +74,17 @@ bool FloatingWindowWidget::event(QEvent *ev)
 void FloatingWindowWidget::init()
 {
     m_vlayout->setSpacing(0);
-    m_vlayout->setContentsMargins(4, 4, 4, 4);
+    updateMargins();
     m_vlayout->addWidget(m_titleBar);
     m_vlayout->addWidget(m_dropArea);
+
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this] (QWindow *w) {
+        if (w == window()->windowHandle())
+            updateMargins();
+    });
+}
+
+void FloatingWindowWidget::updateMargins()
+{
+    m_vlayout->setContentsMargins(QMargins(4, 4, 4, 4) * logicalDpiFactor(this));
 }

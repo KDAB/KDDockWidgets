@@ -17,6 +17,7 @@
 #include "WindowBeingDragged_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "Utils_p.h"
+#include "DockRegistry_p.h"
 
 #include <QHBoxLayout>
 #include <QLabel>
@@ -109,8 +110,7 @@ void TitleBarWidget::init()
     m_layout->addWidget(m_dockWidgetIcon);
 
     m_layout->addStretch();
-    m_layout->setContentsMargins(2, 2, 2, 2);
-    m_layout->setSpacing(2);
+    updateMargins();
 
     auto factory = Config::self().frameworkWidgetFactory();
 
@@ -161,6 +161,18 @@ void TitleBarWidget::init()
     connect(this, &TitleBar::floatButtonVisibleChanged, m_floatButton, &QWidget::setVisible);
     m_floatButton->setVisible(floatButtonVisible());
     m_floatButton->setToolTip(floatButtonToolTip());
+
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this] (QWindow *w) {
+        if (w == window()->windowHandle())
+            updateMargins();
+    });
+}
+
+void TitleBarWidget::updateMargins()
+{
+    const qreal factor = logicalDpiFactor(this);
+    m_layout->setContentsMargins(QMargins(2, 2, 2, 2) * factor);
+    m_layout->setSpacing(int(2 * factor));
 }
 
 QSize TitleBarWidget::sizeHint() const

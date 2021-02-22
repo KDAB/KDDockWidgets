@@ -36,6 +36,7 @@ protected:
 
 private:
     void init();
+    void updateMargins();
     Q_DISABLE_COPY(FloatingWindowWidget)
 };
 

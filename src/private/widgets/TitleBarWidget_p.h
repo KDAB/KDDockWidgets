@@ -62,7 +62,7 @@ protected:
 private:
     void init();
     int buttonAreaWidth() const;
-
+    void updateMargins();
     QRect iconRect() const;
 
     QHBoxLayout *const m_layout;
