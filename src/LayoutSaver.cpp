@@ -995,8 +995,7 @@ void LayoutSaver::ScalingInfo::translatePos(QPoint &pt) const
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QPoint &pt) const
 {
-    pt.setX(qCeil(pt.x() * widthFactor));
-    pt.setY(qCeil(pt.y() * heightFactor));
+    translatePos(pt);
 }
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QSize &sz) const
