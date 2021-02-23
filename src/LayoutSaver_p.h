@@ -184,9 +184,6 @@ struct LayoutSaver::Frame
     /// @brief in case this frame only has one frame, returns the name of that dock widget
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
 
-    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
-    void scaleSizes(const ScalingInfo &scalingInfo);
-
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 

@@ -611,11 +611,6 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::Frame::singleDockWidget() const
    return dockWidgets.first();
 }
 
-void LayoutSaver::Frame::scaleSizes(const ScalingInfo &scalingInfo)
-{
-    scalingInfo.applyFactorsTo(geometry);
-}
-
 QVariantMap LayoutSaver::Frame::toVariantMap() const
 {
     QVariantMap map;
