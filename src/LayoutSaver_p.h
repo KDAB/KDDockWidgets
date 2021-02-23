@@ -208,9 +208,6 @@ struct LayoutSaver::MultiSplitter
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
     bool skipsRestore() const;
 
-    /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
-    void scaleSizes(const ScalingInfo &scalingInfo);
-
     QVariantMap toVariantMap() const;
     void fromVariantMap(const QVariantMap &map);
 
