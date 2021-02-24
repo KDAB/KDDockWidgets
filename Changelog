@@ -1,6 +1,7 @@
 * v1.3.1 (unreleased)
   - Improve restoring layout when RestoreOption_RelativeToMainWindow is used (#171)
   - Improved dragging windows across screens in mixed hdpi setups
+  - Fixed Flag_NativeTitleBar not hidding the client title bars when restoring (#170)
 
 * v1.3.0 (8 February 2021)
   - Experimental QtQuick support (#49)

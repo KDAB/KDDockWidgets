@@ -412,6 +412,9 @@ void FloatingWindow::updateTitleBarVisibility()
 
     bool visible = true;
 
+    for (Frame *frame : frames())
+        frame->updateTitleBarVisibility();
+
     if (KDDockWidgets::usesClientTitleBar()) {
         const auto flags = Config::self().flags();
         if ((flags & Config::Flag_HideTitleBarWhenTabsVisible) && !(flags & Config::Flag_AlwaysTitleBarWhenFloating)) {
@@ -419,9 +422,6 @@ void FloatingWindow::updateTitleBarVisibility()
                 visible = !frames().first()->hasTabsVisible();
             }
         }
-
-        for (Frame *frame : frames())
-            frame->updateTitleBarVisibility();
 
         m_titleBar->updateButtons();
     } else {
