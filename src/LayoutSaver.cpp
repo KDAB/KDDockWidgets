@@ -611,11 +611,6 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::Frame::singleDockWidget() const
    return dockWidgets.first();
 }
 
-void LayoutSaver::Frame::scaleSizes(const ScalingInfo &scalingInfo)
-{
-    scalingInfo.applyFactorsTo(geometry);
-}
-
 QVariantMap LayoutSaver::Frame::toVariantMap() const
 {
     QVariantMap map;
@@ -730,7 +725,6 @@ bool LayoutSaver::FloatingWindow::skipsRestore() const
 void LayoutSaver::FloatingWindow::scaleSizes(const ScalingInfo &scalingInfo)
 {
     scalingInfo.applyFactorsTo(/*by-ref*/geometry);
-    multiSplitterLayout.scaleSizes(scalingInfo);
 }
 
 QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
@@ -788,9 +782,6 @@ void LayoutSaver::MainWindow::scaleSizes()
     }
 
     scalingInfo = ScalingInfo(uniqueName, geometry);
-
-    if (scalingInfo.isValid())
-        multiSplitterLayout.scaleSizes(scalingInfo);
 }
 
 QVariantMap LayoutSaver::MainWindow::toVariantMap() const
@@ -873,13 +864,6 @@ bool LayoutSaver::MultiSplitter::skipsRestore() const
     return std::all_of(frames.cbegin(), frames.cend(), [] (const LayoutSaver::Frame &frame) {
         return frame.skipsRestore();
     });
-}
-
-void LayoutSaver::MultiSplitter::scaleSizes(const ScalingInfo &)
-{
-    // scalingInfo.applyFactorsTo(/*by-ref*/size);
-    //for (LayoutSaver::Item &item : items) TODO
-    //    item.scaleSizes(scalingInfo);
 }
 
 QVariantMap LayoutSaver::MultiSplitter::toVariantMap() const
@@ -1011,8 +995,7 @@ void LayoutSaver::ScalingInfo::translatePos(QPoint &pt) const
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QPoint &pt) const
 {
-    pt.setX(qCeil(pt.x() * widthFactor));
-    pt.setY(qCeil(pt.y() * heightFactor));
+    translatePos(pt);
 }
 
 void LayoutSaver::ScalingInfo::applyFactorsTo(QSize &sz) const

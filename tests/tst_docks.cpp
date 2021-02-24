@@ -138,6 +138,7 @@ private Q_SLOTS:
     void tst_dontCloseDockWidgetBeforeRestore();
     void tst_dontCloseDockWidgetBeforeRestore2();
     void tst_dontCloseDockWidgetBeforeRestore3();
+    void tst_restoreWithNativeTitleBar();
 
     void tst_closeOnlyCurrentTab();
     void tst_tabWidgetCurrentIndex();
@@ -7046,6 +7047,26 @@ void TestDocks::tst_redocksToPreviousTabIndex()
     QVERIFY(false);
     Q_UNUSED(frame);
 #endif
+}
+
+void TestDocks::tst_restoreWithNativeTitleBar()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_NativeTitleBar);
+
+    auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
+    dock0->window()->move(100, 100);
+
+    QVERIFY(!dock0->titleBar()->isVisible());
+    QVERIFY(!dock0->floatingWindow()->titleBar()->isVisible());
+    QVERIFY(!dock0->d->frame()->titleBar()->isVisible());
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+    saver.restoreLayout(saved);
+    QVERIFY(!dock0->titleBar()->isVisible());
+    QVERIFY(!dock0->floatingWindow()->titleBar()->isVisible());
+    QVERIFY(!dock0->d->frame()->titleBar()->isVisible());
 }
 
 #include "tst_docks.moc"
