@@ -2,6 +2,7 @@
   - Improve restoring layout when RestoreOption_RelativeToMainWindow is used (#171)
   - Improved dragging windows across screens in mixed hdpi setups
   - Fixed Flag_NativeTitleBar not hidding the client title bars when restoring (#170)
+  - Double clicking a native title bar of a Qt::Tool window will now redock the window (#173)
 
 * v1.3.0 (8 February 2021)
   - Experimental QtQuick support (#49)
