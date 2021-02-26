@@ -11,7 +11,7 @@
 
 import QtQuick 2.9
 
-Item {
+Rectangle {
     id: root
 
     readonly property QtObject dockWidgetCpp: parent
