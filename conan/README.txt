@@ -13,6 +13,9 @@ Configuration options:
  * build_examples
    Build the examples. Default=True
 
- * builde_python_bindings
+ * build_python_bindings
    Build/Generate python bindings (always false for Debug or static builds). Default=False
 
+ * build_for_qt6
+   Build against Qt6 rather than Qt5. Default=false (Qt5 will be used even if Qt6 is available)
+   (Make sure the Qt6 bin directory is found in your execute PATH)

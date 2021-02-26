@@ -219,6 +219,7 @@ set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES} ${RESOURCES_QUICK})
 add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
+set_target_properties(kddockwidgets PROPERTIES OUTPUT_NAME "kddockwidgets${KDDockWidgets_LIBRARY_QTID}")
 set_compiler_flags(kddockwidgets)
 
 target_include_directories(kddockwidgets
