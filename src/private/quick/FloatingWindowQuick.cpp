@@ -17,6 +17,7 @@
 #include "TitleBarQuick_p.h"
 #include "Config.h"
 #include "WidgetResizeHandler_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QQuickView>
 #include <QDebug>
@@ -191,7 +192,8 @@ void FloatingWindowQuick::init()
     m_quickWindow->installEventFilter(this); // for window resizing
     maybeCreateResizeHandler();
 
-    m_visualItem = createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/FloatingWindow.qml"));
+    m_visualItem = createItem(Config::self().qmlEngine(),
+                              Config::self().frameworkWidgetFactory()->floatingWindowFilename().toString());
     Q_ASSERT(m_visualItem);
 
     // Ensure our window size is never smaller than our min-size

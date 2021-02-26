@@ -148,6 +148,7 @@ public:
     virtual QUrl titleBarFilename() const = 0;
     virtual QUrl dockwidgetFilename() const = 0;
     virtual QUrl frameFilename() const = 0;
+    virtual QUrl floatingWindowFilename() const = 0;
 #endif
 
     /// @brief Returns the icon to be used with the specified @p type
@@ -183,6 +184,7 @@ public:
     QUrl titleBarFilename() const override;
     QUrl dockwidgetFilename() const override;
     QUrl frameFilename() const override;
+    QUrl floatingWindowFilename() const override;
 #endif
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
