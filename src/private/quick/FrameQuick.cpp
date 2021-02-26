@@ -38,7 +38,7 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
     connect(this, &QWidgetAdapter::geometryUpdated, this, &Frame::layoutInvalidated);
 
     QQmlComponent component(Config::self().qmlEngine(),
-                            QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/Frame.qml")));
+                            Config::self().frameworkWidgetFactory()->frameFilename());
 
     m_visualItem = static_cast<QQuickItem*>(component.create());
 
