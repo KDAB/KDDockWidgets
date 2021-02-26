@@ -661,6 +661,12 @@ bool DockRegistry::onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *ev)
     // Here we implement "auto-hide". If there's a overlayed dock widget, we hide it if some other
     // dock widget is clicked.
 
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+    // Don't be sending mouse events around if a popup is open, they are sensitive
+    if (qApp->activePopupWidget())
+        return false;
+#endif
+
     MainWindowBase *mainWindow = dw->mainWindow();
     if (!mainWindow) // Only docked widgets are interesting
         return false;
