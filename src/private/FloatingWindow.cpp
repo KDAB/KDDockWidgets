@@ -295,6 +295,12 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometry
         // Resize to new size but preserve center
         const QPoint originalCenter = suggestedRect.center();
         suggestedRect.setSize(size);
+
+        if ((hint & SuggestedGeometryHint_GeometryIsFromDocked) && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
+            const QMargins margins = contentMargins();
+            suggestedRect.setHeight(suggestedRect.height() - m_titleBar->height() + margins.top() + margins.bottom());
+        }
+
         if (hint & SuggestedGeometryHint_PreserveCenter)
             suggestedRect.moveCenter(originalCenter);
     }
@@ -566,4 +572,9 @@ bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option)
 bool FloatingWindow::isWindow() const
 {
     return true;
+}
+
+QMargins FloatingWindow::contentMargins() const
+{
+    return { 4, 4, 4, 4 };
 }

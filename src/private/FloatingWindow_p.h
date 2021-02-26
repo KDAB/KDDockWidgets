@@ -147,6 +147,9 @@ public:
     ///@brief Returns whether at least one dock widget has the specified layout saver option set
     bool anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption) const;
 
+    ///@brief Returns the contents margins
+    QMargins contentMargins() const;
+
     ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
     ///Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
     ///be open ended

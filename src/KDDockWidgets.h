@@ -179,7 +179,8 @@ namespace KDDockWidgets
     ///@internal
     enum SuggestedGeometryHint {
         SuggestedGeometryHint_None,
-        SuggestedGeometryHint_PreserveCenter = 1
+        SuggestedGeometryHint_PreserveCenter = 1,
+        SuggestedGeometryHint_GeometryIsFromDocked = 2
     };
     Q_DECLARE_FLAGS(SuggestedGeometryHints, SuggestedGeometryHint)
 

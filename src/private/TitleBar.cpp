@@ -206,9 +206,8 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     r.moveTopLeft(m_frame->mapToGlobal(QPoint(0, 0)));
 
     auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(m_frame);
-    floatingWindow->setSuggestedGeometry(r);
+    floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->show();
-    qCDebug(hovering) << "TitleBar::makeWindow setting geometry" << r << "actual=" << floatingWindow->geometry();
 
     auto draggable = KDDockWidgets::usesNativeTitleBar() ? static_cast<Draggable*>(floatingWindow)
                                                          : static_cast<Draggable*>(this);
