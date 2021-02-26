@@ -280,7 +280,7 @@ const Frame::List FloatingWindow::frames() const
     return m_dropArea->frames();
 }
 
-void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHint hint)
+void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints hint)
 {
     const Frame::List frames = this->frames();
     if (frames.size() == 1) {

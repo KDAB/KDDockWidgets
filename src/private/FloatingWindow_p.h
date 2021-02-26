@@ -76,7 +76,7 @@ public:
      * @param preserveCenter, if true, then the center is preserved
      *
      */
-    void setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHint = SuggestedGeometryHint_None);
+    void setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints = SuggestedGeometryHint_None);
 
     bool anyNonClosable() const;
     bool anyNonDockable() const;
