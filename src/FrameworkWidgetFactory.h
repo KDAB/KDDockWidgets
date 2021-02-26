@@ -146,6 +146,7 @@ public:
     virtual QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const = 0;
 #else
     virtual QUrl titleBarFilename() const = 0;
+    virtual QUrl dockwidgetFilename() const = 0;
 #endif
 
     /// @brief Returns the icon to be used with the specified @p type
@@ -179,6 +180,7 @@ public:
     QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const override;
 #else
     QUrl titleBarFilename() const override;
+    QUrl dockwidgetFilename() const override;
 #endif
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;

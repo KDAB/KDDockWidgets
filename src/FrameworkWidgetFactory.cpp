@@ -217,6 +217,11 @@ QUrl DefaultWidgetFactory::titleBarFilename() const
     return QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/TitleBar.qml"));
 }
 
+QUrl DefaultWidgetFactory::dockwidgetFilename() const
+{
+    return QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/DockWidget.qml"));
+}
+
 #endif // QtQuick
 
 // iconForButtonType impl is the same for QtQuick and QtWidgets

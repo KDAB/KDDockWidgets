@@ -10,6 +10,7 @@
 */
 
 #include "DockWidgetQuick.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <Config.h>
 #include <QQuickItem>
@@ -29,7 +30,8 @@ class DockWidgetQuick::Private
 public:
     Private(DockWidgetQuick *dw)
         : q(dw)
-        , m_visualItem(q->createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/DockWidget.qml")))
+        , m_visualItem(q->createItem(Config::self().qmlEngine(),
+                                     Config::self().frameworkWidgetFactory()->dockwidgetFilename().toString()))
     {
         Q_ASSERT(m_visualItem);
         m_visualItem->setParent(q);
