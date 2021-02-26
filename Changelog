@@ -13,6 +13,7 @@
   - Double clicking a native title bar of a Qt::Tool window will now redock the window (#173)
   - Size of FloatingWindow now accounts for the fact that it's using Flag_NativeTitleBar and
     resizes its content accordingly (#174)
+  - Fixed popups on overlayed dock widgets not working
 
 * v1.3.0 (8 February 2021)
   - Experimental QtQuick support (#49)
