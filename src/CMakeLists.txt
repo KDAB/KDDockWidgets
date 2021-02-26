@@ -244,6 +244,10 @@ else()
   target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY)
 endif()
 
+if (KDDockWidgets_QTQUICK)
+  target_compile_definitions(kddockwidgets PUBLIC KDDOCKWIDGETS_QTQUICK)
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   target_compile_options(kddockwidgets PRIVATE -Wshadow -fvisibility=hidden)
 
