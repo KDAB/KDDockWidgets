@@ -262,10 +262,11 @@ endif()
 
 if(${PROJECT_NAME}_DOCS)
   add_subdirectory(docs) # needs to go last, in case there are build source files
-else()
-  add_custom_target(docs
-    COMMAND ${CMAKE_COMMAND} -E echo "Sorry, there is no docs target since KDDockWidgets_DOCS=OFF."
-    "Re-run cmake with the -DKDDockWidgets_DOCS=True option if you want to generate the documentation.")
+#don't create the dummy docs target as it can conflict when used as a submodule
+#else()
+#  add_custom_target(docs
+#    COMMAND ${CMAKE_COMMAND} -E echo "Sorry, there is no docs target since KDDockWidgets_DOCS=OFF."
+#    "Re-run cmake with the -DKDDockWidgets_DOCS=True option if you want to generate the documentation.")
 endif()
 
 if(${PROJECT_NAME}_UNITY_BUILD)
