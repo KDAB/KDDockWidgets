@@ -43,5 +43,6 @@ add_custom_command(
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 add_custom_target(kddockwidgets-api.qch ALL DEPENDS ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch)
+add_custom_target(docs DEPENDS kddockwidgets-api.qch)
 
 install(FILES ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch DESTINATION ${INSTALL_DOC_DIR})
