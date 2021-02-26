@@ -177,6 +177,13 @@ namespace KDDockWidgets
     };
 
     ///@internal
+    enum SuggestedGeometryHint {
+        SuggestedGeometryHint_None,
+        SuggestedGeometryHint_PreserveCenter = 1
+    };
+    Q_DECLARE_FLAGS(SuggestedGeometryHints, SuggestedGeometryHint)
+
+    ///@internal
     inline QString locationStr(Location loc)
     {
         switch (loc) {

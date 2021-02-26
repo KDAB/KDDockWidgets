@@ -280,7 +280,7 @@ const Frame::List FloatingWindow::frames() const
     return m_dropArea->frames();
 }
 
-void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, bool preserveCenter)
+void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHint hint)
 {
     const Frame::List frames = this->frames();
     if (frames.size() == 1) {
@@ -295,7 +295,7 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, bool preserveCent
         // Resize to new size but preserve center
         const QPoint originalCenter = suggestedRect.center();
         suggestedRect.setSize(size);
-        if (preserveCenter)
+        if (hint & SuggestedGeometryHint_PreserveCenter)
             suggestedRect.moveCenter(originalCenter);
     }
 
