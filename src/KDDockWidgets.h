@@ -168,6 +168,13 @@ namespace KDDockWidgets
         None ///< Don't show any drop indicators while dragging
     };
 
+    ///@internal
+    enum SuggestedGeometryHint {
+        SuggestedGeometryHint_None,
+        SuggestedGeometryHint_PreserveCenter = 1,
+        SuggestedGeometryHint_GeometryIsFromDocked = 2
+    };
+    Q_DECLARE_FLAGS(SuggestedGeometryHints, SuggestedGeometryHint)
 
     /// @brief Each main window supports 4 sidebars
     enum class SideBarLocation {

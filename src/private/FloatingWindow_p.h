@@ -77,7 +77,7 @@ public:
      * @param preserveCenter, if true, then the center is preserved
      *
      */
-    void setSuggestedGeometry(QRect suggestedRect, bool preserveCenter = false);
+    void setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints = SuggestedGeometryHint_None);
 
     bool anyNonClosable() const;
     bool anyNonDockable() const;
@@ -163,6 +163,9 @@ public:
     /// Can be nullptr if you create dock widgets before the main window. Can also be some
     /// arbitrary value if you have more than one main window.
     MainWindowBase *mainWindow() const;
+
+    ///@brief Returns the contents margins
+    QMargins contentMargins() const;
 
     ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
     ///Bugs caused by this won't be supported, as the amount of combinations that could go wrong can

@@ -203,7 +203,7 @@ bool DockWidgetBase::setFloating(bool floats)
         auto lastGeo = d->lastPositions().lastFloatingGeometry();
         if (lastGeo.isValid()) {
             if (auto fw = floatingWindow())
-                fw->setSuggestedGeometry(lastGeo, /*preserveCenter=*/true);
+                fw->setSuggestedGeometry(lastGeo, SuggestedGeometryHint_PreserveCenter);
         }
         return true;
     } else {

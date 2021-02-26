@@ -148,6 +148,7 @@ protected:
     bool isOverlayed() const;
 private:
     friend class ::TestDocks;
+    friend class FloatingWindowWidget;
     void updateFloatButton();
     void updateCloseButton();
     void setCloseButtonEnabled(bool);

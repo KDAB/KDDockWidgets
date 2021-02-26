@@ -720,6 +720,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     case QEvent::MouseMove:
         return activeState()->handleMouseMove(Qt5Qt6Compat::eventGlobalPos(me));
     case QEvent::MouseButtonDblClick:
+    case QEvent::NonClientAreaMouseButtonDblClick:
         return activeState()->handleMouseDoubleClick();
     default:
         break;

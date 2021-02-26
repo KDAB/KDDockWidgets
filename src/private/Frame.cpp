@@ -195,7 +195,7 @@ FloatingWindow* Frame::detachTab(DockWidgetBase *dockWidget)
 
     auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(newFrame);
     r.moveTopLeft(globalPoint);
-    floatingWindow->setSuggestedGeometry(r);
+    floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->show();
 
     return floatingWindow;

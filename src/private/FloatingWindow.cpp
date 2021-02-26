@@ -210,7 +210,7 @@ const Frame::List FloatingWindow::frames() const
     return m_dropArea->frames();
 }
 
-void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, bool preserveCenter)
+void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints hint)
 {
     const Frame::List frames = this->frames();
     if (frames.size() == 1) {
@@ -225,7 +225,13 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, bool preserveCent
         // Resize to new size but preserve center
         const QPoint originalCenter = suggestedRect.center();
         suggestedRect.setSize(size);
-        if (preserveCenter)
+
+        if ((hint & SuggestedGeometryHint_GeometryIsFromDocked) && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
+            const QMargins margins = contentMargins();
+            suggestedRect.setHeight(suggestedRect.height() - m_titleBar->height() + margins.top() + margins.bottom());
+        }
+
+        if (hint & SuggestedGeometryHint_PreserveCenter)
             suggestedRect.moveCenter(originalCenter);
     }
 
@@ -516,4 +522,9 @@ bool FloatingWindow::isWindow() const
 MainWindowBase *FloatingWindow::mainWindow() const
 {
     return qobject_cast<MainWindowBase*>(parent());
+}
+
+QMargins FloatingWindow::contentMargins() const
+{
+    return { 4, 4, 4, 4 };
 }

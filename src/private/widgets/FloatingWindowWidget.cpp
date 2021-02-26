@@ -57,10 +57,26 @@ void FloatingWindowWidget::paintEvent(QPaintEvent *ev)
 
 bool FloatingWindowWidget::event(QEvent *ev)
 {
-    if (ev->type() == QEvent::WindowStateChange)
+    if (ev->type() == QEvent::WindowStateChange) {
         Q_EMIT windowStateChanged(static_cast<QWindowStateChangeEvent *>(ev));
-
-    if (ev->type() == QEvent::Show && !m_screenChangedConnection) {
+    } else if (ev->type() == QEvent::NonClientAreaMouseButtonDblClick &&
+               (Config::self().flags() & Config::Flag_NativeTitleBar)) {
+        if ((windowFlags() & Qt::Tool) == Qt::Tool) {
+            if (Config::self().flags() & Config::Flag_DoubleClickMaximizes) {
+                // Let's refuse to maximize Qt::Tool. It's not natural.
+                // Just avoid this combination: Flag_NativeTitleBar + Qt::Tool + Flag_DoubleClickMaximizes
+            } else {
+                // Double clicking a Qt::Tool title-bar. Triggers a redocking.
+                if (m_titleBar->isFloating()) { // redocking nested floating windows aren't supported
+                    m_titleBar->onFloatClicked();
+                    return true;
+                }
+            }
+        } else {
+            // A normal Qt::Window window. The OS handles the double click.
+            // In general this will maximize the window, that's the native behaviour.
+        }
+    } else if (ev->type() == QEvent::Show && !m_screenChangedConnection) {
         // We connect after QEvent::Show, so we have a QWindow. Qt doesn't offer much API to
         // intercept screen events
         m_screenChangedConnection =

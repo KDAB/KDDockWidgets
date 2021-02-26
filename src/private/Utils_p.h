@@ -172,6 +172,7 @@ inline QMouseEvent *mouseEvent(QEvent *e)
     case QEvent::NonClientAreaMouseButtonPress:
     case QEvent::NonClientAreaMouseButtonRelease:
     case QEvent::NonClientAreaMouseMove:
+    case QEvent::NonClientAreaMouseButtonDblClick:
         return static_cast<QMouseEvent *>(e);
     default:
         break;

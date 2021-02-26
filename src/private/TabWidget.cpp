@@ -237,7 +237,7 @@ std::unique_ptr<WindowBeingDragged> TabWidget::makeWindow()
 
     auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(m_frame);
     r.moveTopLeft(globalPoint);
-    floatingWindow->setSuggestedGeometry(r);
+    floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->show();
 
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, this));
