@@ -34,7 +34,7 @@
 #  Default=true
 #
 # -DKDDockWidgets_DOCS=[true|false]
-#  Build the API documentation.
+#  Build the API documentation. Enables the 'docs' build target.
 #  Default=false
 #
 # -DKDDockWidgets_DEVELOPER_MODE=[true|false]
@@ -260,6 +260,10 @@ endif()
 
 if(${PROJECT_NAME}_DOCS)
   add_subdirectory(docs) # needs to go last, in case there are build source files
+else()
+  add_custom_target(docs
+    COMMAND ${CMAKE_COMMAND} -E echo "Sorry, there is no docs target since KDDockWidgets_DOCS=OFF."
+    "Re-run cmake with the -DKDDockWidgets_DOCS=True option if you want to generate the documentation.")
 endif()
 
 if(${PROJECT_NAME}_UNINSTALL)
