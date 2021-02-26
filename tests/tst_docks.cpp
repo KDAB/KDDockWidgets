@@ -7051,6 +7051,7 @@ void TestDocks::tst_redocksToPreviousTabIndex()
 
 void TestDocks::tst_restoreWithNativeTitleBar()
 {
+#ifdef Q_OS_WIN // Other OS don't support this
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_NativeTitleBar);
 
@@ -7067,6 +7068,7 @@ void TestDocks::tst_restoreWithNativeTitleBar()
     QVERIFY(!dock0->titleBar()->isVisible());
     QVERIFY(!dock0->floatingWindow()->titleBar()->isVisible());
     QVERIFY(!dock0->d->frame()->titleBar()->isVisible());
+#endif
 }
 
 #include "tst_docks.moc"
