@@ -11,7 +11,7 @@ from conans import ConanFile, CMake, tools
 
 class KDDockWidgetsConan(ConanFile):
     name = "kddockwidgets"
-    version = "1.3.0"
+    version = "1.3.1"
     default_user = "kdab"
     default_channel = "stable"
     license = ("https://raw.githubusercontent.com/KDAB/KDDockWidgets/master/LICENSES/GPL-2.0-only.txt",
@@ -28,6 +28,7 @@ class KDDockWidgetsConan(ConanFile):
         "build_examples": [True, False],
         "build_tests": [True, False],
         "build_python_bindings": [True, False],
+        "build_for_qt6": [True, False],
     }
 
     default_options = {
@@ -36,6 +37,7 @@ class KDDockWidgetsConan(ConanFile):
         "build_examples": True,
         "build_tests": False,
         "build_python_bindings": False,
+        "build_for_qt6": False,
     }
 
     def requirements(self):
@@ -52,6 +54,7 @@ class KDDockWidgetsConan(ConanFile):
         self.cmake.definitions["KDDockWidgets_EXAMPLES"] = self.options.build_examples
         self.cmake.definitions["KDDockWidgets_TESTS"] = self.options.build_tests
         self.cmake.definitions["KDDockWidgets_PYTHON_BINDINGS"] = self.options.build_python_bindings
+        self.cmake.definitions["KDDockWidgets_QT6"] = self.options.build_for_qt6
         self.cmake.configure()
         self.cmake.build()
 
