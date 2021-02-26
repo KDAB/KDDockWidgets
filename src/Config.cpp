@@ -235,9 +235,8 @@ void Config::setQmlEngine(QQmlEngine *qmlEngine)
 
 QQmlEngine *Config::qmlEngine() const
 {
-    if (!d->m_qmlEngine) {
-        qWarning() << "Please call KDDockWidgets::Config::setQmlEngine(engine)";
-    }
+    if (!d->m_qmlEngine)
+        qWarning() << "Please call KDDockWidgets::Config::self()->setQmlEngine(engine)";
 
     return d->m_qmlEngine;
 }
