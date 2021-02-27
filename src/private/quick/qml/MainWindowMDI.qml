@@ -11,9 +11,13 @@
 
 import QtQuick 2.6
 import com.kdab.dockwidgets 1.0 as KDDW
-import "qrc:/kddockwidgets/private/quick/qml/" // TODO: Improve the public API
 
-MainWindowMDI {
+KDDW.MainWindow {
     id: root
-    uniqueName: "MyWindow1"
+    property string uniqueName: ""
+
+    Component.onCompleted: {
+        console.log("uniqueName " + uniqueName);
+        root.init(uniqueName, 2); // TODO use Q_ENUM_NS
+    }
 }
