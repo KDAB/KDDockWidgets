@@ -227,6 +227,7 @@ void Config::setQmlEngine(QQmlEngine *qmlEngine)
         return;
     }
 
+    DockRegistry::self(); // make sure our QML types are registered
     d->m_qmlEngine = qmlEngine;
 
     QQmlContext *context = qmlEngine->rootContext();
