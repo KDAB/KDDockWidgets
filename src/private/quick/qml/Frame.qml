@@ -19,6 +19,7 @@ Rectangle {
     property QtObject frameCpp
     readonly property QtObject titleBarCpp: frameCpp ? frameCpp.titleBar : null
     readonly property int nonContentsHeight: titleBar.heightWhenVisible + tabbar.height
+    property int contentsMargin: 2
 
     anchors.fill: parent
 
@@ -125,9 +126,9 @@ Rectangle {
                                                                                                   : parent ? parent.top : undefined)
                 bottom: parent ? parent.bottom : undefined
 
-                leftMargin: 2
-                rightMargin: 2
-                bottomMargin: 2
+                leftMargin: root.contentsMargin
+                rightMargin: root.contentsMargin
+                bottomMargin: root.contentsMargin
             }
 
             currentIndex: tabbar.currentIndex
