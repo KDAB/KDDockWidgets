@@ -17,7 +17,6 @@ KDDW.MainWindow {
     property string uniqueName: ""
 
     Component.onCompleted: {
-        console.log("uniqueName " + uniqueName);
         root.init(uniqueName, 2); // TODO use Q_ENUM_NS
     }
 }
