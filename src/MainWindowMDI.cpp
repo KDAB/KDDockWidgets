@@ -28,3 +28,8 @@ void MainWindowMDI::addDockWidget(DockWidgetBase *dockWidget, QPoint localPos)
     auto layout = static_cast<MDILayoutWidget *>(this->layoutWidget());
     layout->addDockWidget(dockWidget, localPos);
 }
+
+void MainWindowMDI::addDockWidget(DockWidgetBase *dockWidget, QPointF localPos)
+{
+    MainWindowMDI::addDockWidget(dockWidget, localPos.toPoint());
+}
