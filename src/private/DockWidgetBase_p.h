@@ -28,7 +28,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidgetBase::Private : public QObject
+class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidgetBase::Private : public QObject /// clazy:exclude=missing-qobject-macro
 {
 public:
     Private(const QString &dockName, DockWidgetBase::Options options_,
