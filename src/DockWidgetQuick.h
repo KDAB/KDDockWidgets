@@ -58,6 +58,9 @@ public:
     void setWidget(QWidgetAdapter *widget) override;
 
     /// @reimp
+    Q_INVOKABLE void setWidget(QQuickItem *widget);
+
+    /// @reimp
     QSize minimumSize() const override;
 
     /// @reimp
