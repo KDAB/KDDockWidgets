@@ -23,13 +23,13 @@ MainWindowMDI::~MainWindowMDI()
 {
 }
 
-void MainWindowMDI::addDockWidget(DockWidgetBase *dockWidget, QPoint localPos)
+void MainWindowMDI::addDockWidget(DockWidgetBase *dockWidget, QPoint localPos, InitialOption addingOption)
 {
     auto layout = static_cast<MDILayoutWidget *>(this->layoutWidget());
-    layout->addDockWidget(dockWidget, localPos);
+    layout->addDockWidget(dockWidget, localPos, addingOption);
 }
 
-void MainWindowMDI::addDockWidget(DockWidgetBase *dockWidget, QPointF localPos)
+void MainWindowMDI::addDockWidget(DockWidgetBase *dockWidget, QPointF localPos, InitialOption addingOption)
 {
-    MainWindowMDI::addDockWidget(dockWidget, localPos.toPoint());
+    MainWindowMDI::addDockWidget(dockWidget, localPos.toPoint(), addingOption);
 }

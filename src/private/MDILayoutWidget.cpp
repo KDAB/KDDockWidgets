@@ -28,7 +28,7 @@ MDILayoutWidget::~MDILayoutWidget()
 {
 }
 
-void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt)
+void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption addingOption)
 {
     if (!dw) {
         qWarning() << Q_FUNC_INFO << "Refusing to add null dock widget";
@@ -47,7 +47,7 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt)
         newItem->setGuestWidget(frame);
     } else {
         frame = Config::self().frameworkWidgetFactory()->createFrame();
-        frame->addWidget(dw);
+        frame->addWidget(dw, addingOption);
 
         newItem->setGuestWidget(frame);
     }
@@ -55,4 +55,7 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt)
     Q_ASSERT(!newItem->geometry().isEmpty());
     m_rootItem->addDockWidget(newItem, localPt);
 
+    if (addingOption.startsHidden()) {
+        delete frame;
+    }
 }
