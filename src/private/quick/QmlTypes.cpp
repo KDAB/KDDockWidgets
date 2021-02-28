@@ -16,6 +16,7 @@
 #include "DropIndicatorOverlayInterface_p.h"
 #include "TitleBar_p.h"
 #include "indicators/ClassicIndicators_p.h"
+#include "DockWidgetBase.h"
 
 #include <QQmlEngine>
 #include <QDebug>
@@ -30,5 +31,6 @@ void KDDockWidgets::registerQmlTypes()
     qmlRegisterUncreatableType<DropIndicatorOverlayInterface>("com.kdab.dockwidgets", 1, 0, "DropIndicatorOverlayInterface", QStringLiteral("Enum access only"));
 
     qRegisterMetaType<DropArea*>();
-    qRegisterMetaType<KDDockWidgets::ClassicIndicators*>();
+    qRegisterMetaType<DockWidgetBase*>();
+    qRegisterMetaType<ClassicIndicators*>();
 }

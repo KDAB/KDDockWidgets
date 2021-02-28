@@ -58,7 +58,7 @@ public:
     DockWidgetBase *focusedDockWidget() const;
 
     bool containsDockWidget(const QString &uniqueName) const;
-    Q_INVOKABLE DockWidgetBase *dockByName(const QString &) const;
+    Q_INVOKABLE KDDockWidgets::DockWidgetBase *dockByName(const QString &) const;
     MainWindowBase *mainWindowByName(const QString &) const;
     MainWindowMDI *mdiMainWindowByName(const QString &) const;
 
