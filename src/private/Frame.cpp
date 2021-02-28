@@ -51,12 +51,13 @@ static FrameOptions actualOptions(FrameOptions options)
 }
 }
 
-Frame::Frame(QWidgetOrQuick *parent, FrameOptions options)
+Frame::Frame(QWidgetOrQuick *parent, FrameOptions options, int userType)
     : LayoutGuestWidget(parent)
     , FocusScope(this)
     , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_options(actualOptions(options))
+    , m_userType(userType)
 {
     s_dbg_numFrames++;
     DockRegistry::self()->registerFrame(this);
@@ -777,4 +778,9 @@ void Frame::setAllowedResizeSides(CursorPositions sides)
 bool Frame::isMDI() const
 {
     return qobject_cast<const MDILayoutWidget*>(m_layoutWidget) != nullptr;
+}
+
+int Frame::userType() const
+{
+    return m_userType;
 }

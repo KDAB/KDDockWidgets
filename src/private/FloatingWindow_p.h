@@ -57,6 +57,8 @@ public:
     const Frame::List frames() const;
     DropArea *dropArea() const { return m_dropArea; }
 
+    int userType() const;
+
 #ifdef Q_OS_WIN
     void setLastHitTest(int hitTest) {
         m_lastHitTest = hitTest;

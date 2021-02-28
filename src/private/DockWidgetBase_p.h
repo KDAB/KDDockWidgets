@@ -151,8 +151,8 @@ public:
     bool m_isForceClosing = false;
     bool m_isMovingToSideBar = false;
     QSize m_lastOverlayedSize = QSize(0, 0);
+    int m_userType = 0;
 };
-
 }
 
 #if defined(QT_WIDGETS_LIB)

@@ -410,6 +410,13 @@ public:
     /// added bonus of remembering the requested geometry in case it's still hidden.
     void setFloatingGeometry(QRect geo);
 
+    ///@brief Allows the user to set a type on this dock widget
+    ///The type is opaque and will not be interpreted by KDDockWidgets.
+    ///This type is passed to FrameWorkWidgetFactory::createTitleBar(), which the user can override
+    ///and return different TitleBar subclasses, depending on the type.
+    void setUserType(int userType);
+    int userType() const;
+
 Q_SIGNALS:
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     ///@brief signal emitted when the parent changed

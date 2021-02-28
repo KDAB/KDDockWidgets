@@ -778,6 +778,16 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
     return dw;
 }
 
+void DockWidgetBase::setUserType(int userType)
+{
+    d->m_userType = userType;
+}
+
+int DockWidgetBase::userType() const
+{
+    return d->m_userType;
+}
+
 LayoutSaver::DockWidget::Ptr DockWidgetBase::Private::serialize() const
 {
     auto ptr = LayoutSaver::DockWidget::dockWidgetForName(q->uniqueName());
@@ -858,7 +868,6 @@ Frame *DockWidgetBase::Private::frame() const
     }
     return nullptr;
 }
-
 
 void DockWidgetBase::Private::saveLastFloatingGeometry()
 {

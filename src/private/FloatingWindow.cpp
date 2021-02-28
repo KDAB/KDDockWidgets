@@ -528,3 +528,10 @@ QMargins FloatingWindow::contentMargins() const
 {
     return { 4, 4, 4, 4 };
 }
+
+int FloatingWindow::userType() const
+{
+    if (Frame *f = singleFrame())
+        return f->userType();
+    return 0;
+}

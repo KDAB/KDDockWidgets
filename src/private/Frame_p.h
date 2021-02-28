@@ -58,11 +58,13 @@ class DOCKS_EXPORT Frame
     Q_OBJECT
     Q_PROPERTY(KDDockWidgets::TitleBar* titleBar READ titleBar CONSTANT)
     Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentDockWidgetChanged)
+    Q_PROPERTY(int userType READ userType CONSTANT)
     Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
 public:
     typedef QList<Frame *> List;
 
-    explicit Frame(QWidgetOrQuick *parent = nullptr, FrameOptions = FrameOption_None);
+    explicit Frame(QWidgetOrQuick *parent = nullptr, FrameOptions = FrameOption_None,
+                   int userType = 0);
     ~Frame() override;
 
     static Frame *deserialize(const LayoutSaver::Frame &);
@@ -260,6 +262,9 @@ public:
     /// Usually no, unless you're using an MDI main window
     bool isMDI() const;
 
+    /// @brief See DockWidgetBase::userType()
+    int userType() const;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();
@@ -310,6 +315,7 @@ protected:
     virtual DockWidgetBase *dockWidgetAt_impl(int index) const = 0;
     virtual DockWidgetBase *currentDockWidget_impl() const = 0;
     virtual int nonContentsHeight() const = 0;
+
 private:
     bool m_inCtor = true; // Needs to be initialized early, as pointed out by UBSAN
 protected:
@@ -335,6 +341,7 @@ private:
     QPointer<Layouting::Item> m_layoutItem;
     bool m_updatingTitleBar = false;
     bool m_beingDeleted = false;
+    int m_userType = 0;
     QMetaObject::Connection m_visibleWidgetCountChangedConnection;
 };
 

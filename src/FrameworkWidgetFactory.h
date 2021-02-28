@@ -83,7 +83,9 @@ public:
     ///       DockWidgets.
     ///@param parent just forward to Frame's constructor
     ///@param options just forward to Frame's constructor
-    virtual Frame* createFrame(QWidgetOrQuick *parent = nullptr, FrameOptions options = FrameOption_None) const = 0;
+    ///@param userType corresponds to DockWidgetBase::userType()
+    virtual Frame* createFrame(QWidgetOrQuick *parent = nullptr, FrameOptions options = FrameOption_None,
+                               int userType = 0) const = 0;
 
     ///@brief Called internally by the framework to create a TitleBar
     ///       Override to provide your own TitleBar sub-class. If overridden then
@@ -166,7 +168,7 @@ class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
     Q_OBJECT
 public:
     DefaultWidgetFactory() = default;
-    Frame *createFrame(QWidgetOrQuick *parent, FrameOptions) const override;
+    Frame *createFrame(QWidgetOrQuick *parent, FrameOptions, int userType) const override;
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
     TabWidget *createTabWidget(Frame *parent) const override;

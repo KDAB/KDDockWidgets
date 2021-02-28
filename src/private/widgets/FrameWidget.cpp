@@ -49,8 +49,8 @@ public:
 
 VBoxLayout::~VBoxLayout() = default;
 
-FrameWidget::FrameWidget(QWidget *parent, FrameOptions options)
-    : Frame(parent, options)
+FrameWidget::FrameWidget(QWidget *parent, FrameOptions options, int userType)
+    : Frame(parent, options, userType)
 {
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);

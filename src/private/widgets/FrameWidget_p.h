@@ -32,7 +32,8 @@ class DOCKS_EXPORT FrameWidget : public Frame
 {
     Q_OBJECT
 public:
-    explicit FrameWidget(QWidget *parent = nullptr, FrameOptions = FrameOption_None);
+    explicit FrameWidget(QWidget *parent = nullptr, FrameOptions = FrameOption_None,
+                         int userType = 0);
     ~FrameWidget();
     QTabBar *tabBar() const;
 

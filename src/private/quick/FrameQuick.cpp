@@ -26,8 +26,8 @@
 
 using namespace KDDockWidgets;
 
-FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options)
-    : Frame(parent, options)
+FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options, int userType)
+    : Frame(parent, options, userType)
 {
     connect(m_tabWidget->asWidget(), SIGNAL(countChanged()),
             this, SLOT(updateConstriants()));

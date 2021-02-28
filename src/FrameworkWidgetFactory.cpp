@@ -54,9 +54,9 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options) const
+Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options, int userType) const
 {
-    return new FrameWidget(parent, options);
+    return new FrameWidget(parent, options, userType);
 }
 
 TitleBar *DefaultWidgetFactory::createTitleBar(Frame *frame) const
@@ -138,9 +138,9 @@ QAbstractButton* DefaultWidgetFactory::createTitleBarButton(QWidget *parent, Tit
 
 #else
 
-Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options) const
+Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options, int userType) const
 {
-    return new FrameQuick(parent, options);
+    return new FrameQuick(parent, options, userType);
 }
 
 TitleBar *DefaultWidgetFactory::createTitleBar(Frame *frame) const
