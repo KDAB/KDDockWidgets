@@ -18,7 +18,7 @@ Rectangle {
     readonly property QtObject titleBarCpp: floatingWindowCpp ? floatingWindowCpp.titleBar : null
     readonly property QtObject dropAreaCpp: floatingWindowCpp ? floatingWindowCpp.dropArea : null
     readonly property int titleBarHeight: titleBar.heightWhenVisible
-    readonly property int margins: 4
+    property int margins: 4
 
     anchors.fill: parent
 
