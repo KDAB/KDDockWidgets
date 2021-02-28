@@ -51,7 +51,9 @@ Rectangle {
         Loader {
             id: titleBar
             readonly property QtObject titleBarCpp: root.titleBarCpp
-            source: _kddw_widgetFactory.titleBarFilename()
+            source: frameCpp ? _kddw_widgetFactory.titleBarFilename(frameCpp.userType)
+                             : ""
+
 
             anchors {
                 top:  parent ? parent.top : undefined
