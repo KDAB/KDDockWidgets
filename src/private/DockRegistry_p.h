@@ -30,6 +30,7 @@ namespace KDDockWidgets
 class FloatingWindow;
 class Frame;
 class LayoutWidget;
+class MainWindowMDI;
 class SideBar;
 struct WindowBeingDragged;
 
@@ -59,6 +60,7 @@ public:
     bool containsDockWidget(const QString &uniqueName) const;
     DockWidgetBase *dockByName(const QString &) const;
     MainWindowBase *mainWindowByName(const QString &) const;
+    MainWindowMDI *mdiMainWindowByName(const QString &) const;
 
     /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
     DockWidgetBase *dockWidgetForGuest(QWidgetOrQuick *guest) const;

@@ -21,6 +21,7 @@
 #include "SideBar_p.h"
 #include "Utils_p.h"
 #include "WindowBeingDragged_p.h"
+#include "MainWindowMDI.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -359,6 +360,11 @@ MainWindowBase *DockRegistry::mainWindowByName(const QString &name) const
     }
 
     return nullptr;
+}
+
+MainWindowMDI *DockRegistry::mdiMainWindowByName(const QString &name) const
+{
+    return qobject_cast<MainWindowMDI *>(mainWindowByName(name));
 }
 
 DockWidgetBase *DockRegistry::dockWidgetForGuest(QWidgetOrQuick *guest) const
