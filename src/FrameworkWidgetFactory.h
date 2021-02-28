@@ -66,9 +66,6 @@ class TabWidgetQuick;
  */
 class DOCKS_EXPORT FrameworkWidgetFactory : public QObject
 {
-#ifdef KDDOCKWIDGETS_QTQUICK
-    Q_PROPERTY(QUrl titleBarFilename READ titleBarFilename CONSTANT)
-#endif
     Q_OBJECT
 public:
     FrameworkWidgetFactory() = default;
@@ -147,7 +144,7 @@ public:
     ///@p parent the button's parent
     virtual QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const = 0;
 #else
-    virtual QUrl titleBarFilename() const = 0;
+    virtual QUrl titleBarFilename(int userType = 0) const = 0;
     virtual QUrl dockwidgetFilename() const = 0;
     virtual QUrl frameFilename() const = 0;
     virtual QUrl floatingWindowFilename() const = 0;
@@ -183,7 +180,7 @@ public:
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const override;
 #else
-    QUrl titleBarFilename() const override;
+    Q_INVOKABLE QUrl titleBarFilename(int userType = 0) const override;
     QUrl dockwidgetFilename() const override;
     QUrl frameFilename() const override;
     QUrl floatingWindowFilename() const override;

@@ -212,8 +212,9 @@ SideBar *DefaultWidgetFactory::createSideBar(SideBarLocation loc, MainWindowBase
     return nullptr;
 }
 
-QUrl DefaultWidgetFactory::titleBarFilename() const
+QUrl DefaultWidgetFactory::titleBarFilename(int userType) const
 {
+    Q_UNUSED(userType);
     return QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/TitleBar.qml"));
 }
 

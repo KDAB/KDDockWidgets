@@ -37,7 +37,7 @@ Rectangle {
         id: titleBar
         readonly property QtObject titleBarCpp: root.titleBarCpp
         readonly property int heightWhenVisible: item.heightWhenVisible
-        source: _kddw_widgetFactory.titleBarFilename
+        source: _kddw_widgetFactory.titleBarFilename()
 
         anchors {
             top:  parent.top
