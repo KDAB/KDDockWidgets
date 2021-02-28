@@ -76,6 +76,7 @@ void DockWidgetQuick::setWidget(QQuickItem *guest)
     auto adapter = new QWidgetAdapter(this);
     guest->setParentItem(adapter);
     guest->setParent(adapter);
+    QWidgetAdapter::makeItemFillParent(guest);
 
     setWidget(adapter);
 }
