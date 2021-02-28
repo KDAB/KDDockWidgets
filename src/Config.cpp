@@ -227,7 +227,8 @@ void Config::setQmlEngine(QQmlEngine *qmlEngine)
         return;
     }
 
-    DockRegistry::self(); // make sure our QML types are registered
+    auto dr = DockRegistry::self(); // make sure our QML types are registered
+    qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
     d->m_qmlEngine = qmlEngine;
 
     QQmlContext *context = qmlEngine->rootContext();
