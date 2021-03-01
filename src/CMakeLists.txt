@@ -134,6 +134,20 @@ set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
     private/widgets/TabWidgetWidget_p.h
 )
 
+set(DOCKS_INSTALLABLE_PRIVATE_QUICK_INCLUDES
+  private/quick/DockWidgetInstantiator_p.h
+  private/quick/QWidgetAdapter_quick_p.h
+  private/quick/FloatingWindowQuick_p.h
+  private/quick/TabWidgetQuick_p.h
+  private/quick/TabBarQuick_p.h
+  private/quick/TitleBarQuick_p.h
+  private/quick/QmlTypes.h
+  private/quick/FrameQuick_p.h
+  private/quick/RubberBandQuick.h
+  private/quick/MainWindowQuick_p.h
+  private/quick/MainWindowWrapper_p.h
+)
+
 if(${PROJECT_NAME}_QTQUICK)
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       DockWidgetQuick.cpp
@@ -166,7 +180,15 @@ if(${PROJECT_NAME}_QTQUICK)
       private/multisplitter/Separator_quick.h
       private/multisplitter/Rubberband_quick.cpp
       private/multisplitter/Rubberband_quick.h
-      kddockwidgets_qtquick.qrc)
+      kddockwidgets_qtquick.qrc
+  )
+  
+  set(DOCKS_INSTALLABLE_INCLUDES
+      ${DOCKS_INSTALLABLE_INCLUDES}
+      MainWindowMDI.h
+      MainWindowBase.h
+      DockWidgetQuick.h
+  )
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       private/DebugWindow.cpp
@@ -317,6 +339,13 @@ install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/k
 
 install(FILES private/indicators/ClassicIndicators_p.h DESTINATION include/kddockwidgets/private/indicators)
 install(FILES private/indicators/SegmentedIndicators_p.h DESTINATION include/kddockwidgets/private/indicators)
+
+if(${PROJECT_NAME}_QTQUICK)
+    install(FILES ${DOCKS_INSTALLABLE_PRIVATE_QUICK_INCLUDES} DESTINATION include/kddockwidgets/private/quick)
+    install(FILES private/multisplitter/Widget_quick.h DESTINATION include/kddockwidgets/private/multisplitter)
+    install(FILES private/multisplitter/Separator_quick.h DESTINATION include/kddockwidgets/private/multisplitter)
+    install(FILES private/multisplitter/Rubberband_quick.h DESTINATION include/kddockwidgets/private/multisplitter)
+endif()
 
 # Generate library version files
 include(ECMSetupVersion)
