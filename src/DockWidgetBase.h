@@ -43,6 +43,7 @@ class TitleBar;
 class MainWindowBase;
 class StateDragging;
 class FrameQuick;
+class DockWidgetQuick;
 class LayoutWidget;
 
 /**
@@ -496,6 +497,7 @@ private:
     friend class KDDockWidgets::LayoutSaver;
     friend class KDDockWidgets::MainWindowBase;
     friend class KDDockWidgets::FrameQuick;
+    friend class KDDockWidgets::DockWidgetQuick;
 
     /**
      * @brief Constructs a dock widget from its serialized form.

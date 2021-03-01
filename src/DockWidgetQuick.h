@@ -35,6 +35,7 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT DockWidgetQuick : public DockWidgetBase
 {
     Q_OBJECT
+    Q_PROPERTY(KDDockWidgets::TitleBar* actualTitleBar READ actualTitleBar NOTIFY actualTitleBarChanged)
 public:
     /**
      * @brief constructs a new DockWidget
@@ -66,8 +67,14 @@ public:
     /// @reimp
     QSize maximumSize() const override;
 
+    /// @brief Returns the title bar
+    TitleBar *actualTitleBar() const;
+
 protected:
     bool event(QEvent *e) override;
+
+Q_SIGNALS:
+    void actualTitleBarChanged();
 
 private:
     class Private;

@@ -10,6 +10,7 @@
 */
 
 #include "DockWidgetQuick.h"
+#include "DockWidgetBase_p.h"
 #include "FrameworkWidgetFactory.h"
 
 #include <Config.h>
@@ -85,6 +86,7 @@ bool DockWidgetQuick::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
         onParentChanged();
+        Q_EMIT actualTitleBarChanged();
     } else if (e->type() == QEvent::Show) {
         onShown(e->spontaneous());
     } else if (e->type() == QEvent::Hide) {
@@ -114,4 +116,11 @@ QSize DockWidgetQuick::maximumSize() const
     }
 
     return DockWidgetBase::maximumSize();
+}
+
+TitleBar *DockWidgetQuick::actualTitleBar() const
+{
+    if (Frame *frame = DockWidgetBase::d->frame())
+        return frame->actualTitleBar();
+    return nullptr;
 }
