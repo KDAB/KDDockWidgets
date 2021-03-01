@@ -80,9 +80,7 @@ public:
     ///       DockWidgets.
     ///@param parent just forward to Frame's constructor
     ///@param options just forward to Frame's constructor
-    ///@param userType corresponds to DockWidgetBase::userType()
-    virtual Frame* createFrame(QWidgetOrQuick *parent = nullptr, FrameOptions options = FrameOption_None,
-                               int userType = 0) const = 0;
+    virtual Frame* createFrame(QWidgetOrQuick *parent = nullptr, FrameOptions options = FrameOption_None) const = 0;
 
     ///@brief Called internally by the framework to create a TitleBar
     ///       Override to provide your own TitleBar sub-class. If overridden then
@@ -144,7 +142,7 @@ public:
     ///@p parent the button's parent
     virtual QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const = 0;
 #else
-    virtual QUrl titleBarFilename(int userType = 0) const = 0;
+    virtual QUrl titleBarFilename() const = 0;
     virtual QUrl dockwidgetFilename() const = 0;
     virtual QUrl frameFilename() const = 0;
     virtual QUrl floatingWindowFilename() const = 0;
@@ -165,7 +163,7 @@ class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
     Q_OBJECT
 public:
     DefaultWidgetFactory() = default;
-    Frame *createFrame(QWidgetOrQuick *parent, FrameOptions, int userType) const override;
+    Frame *createFrame(QWidgetOrQuick *parent, FrameOptions) const override;
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
     TabWidget *createTabWidget(Frame *parent) const override;
@@ -180,7 +178,7 @@ public:
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     QAbstractButton* createTitleBarButton(QWidget *parent, TitleBarButtonType) const override;
 #else
-    Q_INVOKABLE QUrl titleBarFilename(int userType = 0) const override;
+    Q_INVOKABLE QUrl titleBarFilename() const override;
     QUrl dockwidgetFilename() const override;
     QUrl frameFilename() const override;
     QUrl floatingWindowFilename() const override;

@@ -24,9 +24,8 @@ public:
 
     ~CustomFrameworkWidgetFactory() override;
 
-    QUrl titleBarFilename(int userType) const override
+    QUrl titleBarFilename() const override
     {
-        Q_UNUSED(userType);
         return QUrl("qrc:/MyTitleBar.qml");
     }
 };

@@ -46,8 +46,7 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialO
     if (frame) {
         newItem->setGuestWidget(frame);
     } else {
-        frame = Config::self().frameworkWidgetFactory()->createFrame(nullptr, FrameOption_None,
-                                                                     dw->userType());
+        frame = Config::self().frameworkWidgetFactory()->createFrame(nullptr, FrameOption_None);
         frame->addWidget(dw, addingOption);
 
         newItem->setGuestWidget(frame);

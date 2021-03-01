@@ -54,9 +54,9 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options, int userType) const
+Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options) const
 {
-    return new FrameWidget(parent, options, userType);
+    return new FrameWidget(parent, options);
 }
 
 TitleBar *DefaultWidgetFactory::createTitleBar(Frame *frame) const
@@ -138,9 +138,9 @@ QAbstractButton* DefaultWidgetFactory::createTitleBarButton(QWidget *parent, Tit
 
 #else
 
-Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options, int userType) const
+Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options) const
 {
-    return new FrameQuick(parent, options, userType);
+    return new FrameQuick(parent, options);
 }
 
 TitleBar *DefaultWidgetFactory::createTitleBar(Frame *frame) const
@@ -212,9 +212,8 @@ SideBar *DefaultWidgetFactory::createSideBar(SideBarLocation loc, MainWindowBase
     return nullptr;
 }
 
-QUrl DefaultWidgetFactory::titleBarFilename(int userType) const
+QUrl DefaultWidgetFactory::titleBarFilename() const
 {
-    Q_UNUSED(userType);
     return QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/TitleBar.qml"));
 }
 
