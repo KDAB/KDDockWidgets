@@ -97,9 +97,10 @@ void SideBarButton::paintEvent(QPaintEvent *)
         const QRect r = isVertical() ? rect().transposed() : rect();
         const QRect textRect = r.adjusted(3, 0, 5, 0);
         // p.drawRect(r.adjusted(0, 0, -1, -1));
+        p.setPen(palette().color(QPalette::Text));
         p.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
 
-        QPen pen(isHovered ? 0x2ca7ff : 0xc8c8c8);
+        QPen pen(isHovered ? palette().color(QPalette::Highlight) : palette().color(QPalette::Highlight).darker());
         pen.setWidth(isHovered ? 2 : 1);
         p.setPen(pen);
         p.drawLine(3, r.bottom() - 1, r.width() - 3*2, r.bottom() - 1);
