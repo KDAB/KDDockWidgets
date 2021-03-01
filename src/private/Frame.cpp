@@ -320,7 +320,12 @@ void Frame::updateTitleBarVisibility()
         visible = true;
     }
 
+    const bool wasVisible = m_titleBar->isVisible();
     m_titleBar->setVisible(visible);
+
+    if (wasVisible != visible)
+        Q_EMIT actualTitleBarChanged();
+
     if (auto fw = floatingWindow()) {
         // Update the floating window which might be using Flag_HideTitleBarWhenTabsVisible
         // In that case it might not show title bar depending on the number of tabs that the frame has

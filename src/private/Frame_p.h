@@ -57,6 +57,7 @@ class DOCKS_EXPORT Frame
 {
     Q_OBJECT
     Q_PROPERTY(KDDockWidgets::TitleBar* titleBar READ titleBar CONSTANT)
+    Q_PROPERTY(KDDockWidgets::TitleBar* actualTitleBar READ actualTitleBar NOTIFY actualTitleBarChanged)
     Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentDockWidgetChanged)
     Q_PROPERTY(int userType READ userType CONSTANT)
     Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
@@ -274,6 +275,7 @@ Q_SIGNALS:
     void isFocusedChanged();
     void focusedWidgetChanged();
     void isMDIChanged();
+    void actualTitleBarChanged();
 
 protected:
     void isFocusedChangedCallback() final;
