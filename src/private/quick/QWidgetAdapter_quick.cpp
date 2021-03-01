@@ -52,8 +52,16 @@ public:
 
     ~MouseEventRedirector() override;
 
-    bool eventFilter(QObject *, QEvent *ev) override
+    bool eventFilter(QObject *source, QEvent *ev) override
     {
+        {
+            // MouseArea.enable is different from Item.enabled. The former still lets the events
+            // go through event loops. So query MouseArea.enable here and bail out if false.
+            const QVariant v = source->property("enabled");
+            if (v.isValid() && !v.toBool())
+                return false;
+        }
+
         if (QMouseEvent *me = mouseEvent(ev))
             qApp->sendEvent(m_eventTarget, me);
 
