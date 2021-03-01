@@ -36,6 +36,9 @@ Rectangle {
     /// Don't set 'hight' directly in the overridden component
     property int heightWhenVisible: 30
 
+    /// Set to true if you're using a custom MouseEventRedirector in your code
+    property bool hasCustomMouseEventRedirector: false
+
     /// @brief Signal emitted by a TitleBar.qml component when the close button is clicked
     signal closeButtonClicked();
 
@@ -58,7 +61,8 @@ Rectangle {
 
     onTitleBarCppChanged: {
         if (titleBarCpp) {
-            titleBarCpp.redirectMouseEvents(dragMouseArea)
+            if (!root.hasCustomMouseEventRedirector)
+                titleBarCpp.redirectMouseEvents(dragMouseArea)
 
             // Setting just so the unit-tests can access the buttons
             titleBarCpp.titleBarQmlItem = this;

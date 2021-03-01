@@ -21,6 +21,7 @@ Rectangle {
     readonly property int nonContentsHeight: titleBar.heightWhenVisible + tabbar.height
     property int contentsMargin: 2
     property int titleBarContentsMargin: 1
+    properby bool hasCustomMouseEventRedirector: false
 
     anchors.fill: parent
 
@@ -108,7 +109,8 @@ Rectangle {
 
             onTabBarCppChanged: {
                 if (tabBarCpp) {
-                    tabBarCpp.redirectMouseEvents(dragMouseArea)
+                    if (!root.hasCustomMouseEventRedirector)
+                        tabBarCpp.redirectMouseEvents(dragMouseArea)
 
                     // Setting just so the unit-tests can access the buttons
                     tabBarCpp.tabBarQmlItem = this;
