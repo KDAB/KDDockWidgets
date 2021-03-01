@@ -21,7 +21,7 @@ Rectangle {
     readonly property int nonContentsHeight: titleBar.heightWhenVisible + tabbar.height
     property int contentsMargin: 2
     property int titleBarContentsMargin: 1
-    properby bool hasCustomMouseEventRedirector: false
+    property bool hasCustomMouseEventRedirector: false
 
     anchors.fill: parent
 
