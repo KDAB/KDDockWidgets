@@ -46,6 +46,7 @@ Rectangle {
 
     MouseArea {
         id: mouseArea
+        objectName: "frameMouseArea"
         anchors.fill: parent
 
         Loader {
