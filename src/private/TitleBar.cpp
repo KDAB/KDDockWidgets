@@ -214,7 +214,6 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
         return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(m_floatingWindow, this));
     }
 
-    qCDebug(hovering) << "TitleBar::makeWindow: isFloating=" << floatingWindow() << "; isTheOnlyFrame=" << m_frame->isTheOnlyFrame() << "; frame=" << m_frame;
     if (FloatingWindow *fw = QWidgetAdapter::floatingWindow()) { // Already floating
         if (m_frame->isTheOnlyFrame()) { // We dont' detach. This one drags the entire window instead.
             qCDebug(hovering) << "TitleBar::makeWindow no detach needed";
@@ -223,7 +222,6 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     }
 
     QRect r = m_frame->QWidgetAdapter::geometry();
-    qCDebug(hovering) << "TitleBar::makeWindow original geometry" << r;
     r.moveTopLeft(m_frame->mapToGlobal(QPoint(0, 0)));
 
     auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(m_frame);
