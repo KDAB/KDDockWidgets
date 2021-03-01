@@ -49,6 +49,17 @@ public:
         , m_eventTarget(eventTarget)
     {
         eventSource->installEventFilter(this);
+
+
+        // Each source can only have one MouseEventRedirector
+        delete s_mouseEventRedirectors.value(eventSource);
+
+        s_mouseEventRedirectors.insert(eventSource, this);
+    }
+
+    static MouseEventRedirector* redirectorForSource(QObject *eventSource)
+    {
+        return s_mouseEventRedirectors.value(eventSource);
     }
 
     ~MouseEventRedirector() override;
@@ -73,12 +84,17 @@ public:
 
     QObject *const m_eventSource;
     QObject *const m_eventTarget;
+    static QHash<QObject *, MouseEventRedirector *> s_mouseEventRedirectors;
 };
 
-MouseEventRedirector::~MouseEventRedirector() = default;
+QHash<QObject *, MouseEventRedirector *> MouseEventRedirector::s_mouseEventRedirectors = {};
 
+MouseEventRedirector::~MouseEventRedirector()
+{
+    s_mouseEventRedirectors.remove(m_eventSource);
 }
 
+}
 
 static bool flagsAreTopLevelFlags(Qt::WindowFlags flags)
 {
@@ -670,6 +686,13 @@ QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 
 void QWidgetAdapter::redirectMouseEvents(QObject *source)
 {
+    if (auto existingRedirector = MouseEventRedirector::redirectorForSource(source)) {
+        if (existingRedirector->m_eventTarget == this) {
+            // Nothing to do. The specified event source is already redirecting to this instance
+            return;
+        }
+    }
+
     delete m_mouseEventRedirector;
     m_mouseEventRedirector = new MouseEventRedirector(source, this);
 }
