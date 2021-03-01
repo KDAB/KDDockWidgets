@@ -666,12 +666,8 @@ QQuickItem* KDDockWidgets::Private::widgetForWindow(QWindow *window)
 
 void QWidgetAdapter::redirectMouseEvents(QObject *source)
 {
-    if (m_mouseEventRedirector) {
-        qWarning() << Q_FUNC_INFO << "Redirector already installed";
-    } else {
-        m_mouseEventRedirector = new MouseEventRedirector(source, this);
-    }
+    delete m_mouseEventRedirector;
+    m_mouseEventRedirector = new MouseEventRedirector(source, this);
 }
-
 
 LayoutGuestWidget::~LayoutGuestWidget() = default;
