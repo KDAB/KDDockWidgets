@@ -789,6 +789,16 @@ int DockWidgetBase::userType() const
     return d->m_userType;
 }
 
+void DockWidgetBase::setMDIPosition(QPoint pos)
+{
+    if (Frame *frame = d->frame()) {
+        if (!frame->isMDI())
+            return;
+
+        frame->QWidgetAdapter::move(pos);
+    }
+}
+
 LayoutSaver::DockWidget::Ptr DockWidgetBase::Private::serialize() const
 {
     auto ptr = LayoutSaver::DockWidget::dockWidgetForName(q->uniqueName());

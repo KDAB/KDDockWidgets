@@ -418,6 +418,10 @@ public:
     void setUserType(int userType);
     int userType() const;
 
+    /// @brief Sets this dock widgets position to pos within the MDI layout
+    /// This only applies if the main window is in MDI mode, which it is not by default
+    void setMDIPosition(QPoint pos);
+
 Q_SIGNALS:
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     ///@brief signal emitted when the parent changed
