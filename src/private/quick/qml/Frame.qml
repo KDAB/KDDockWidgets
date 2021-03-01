@@ -76,6 +76,7 @@ Rectangle {
             id: dragMouseArea
             hoverEnabled: true
             anchors.fill: tabbar
+            enabled: tabbar.visible
             z: 10
         }
 
