@@ -45,6 +45,7 @@ class MouseEventRedirector : public QObject
 public:
     explicit MouseEventRedirector(QObject *eventSource, QObject *eventTarget)
         : QObject(eventTarget)
+        , m_eventSource(eventSource)
         , m_eventTarget(eventTarget)
     {
         eventSource->installEventFilter(this);
@@ -70,6 +71,7 @@ public:
         return false;
     }
 
+    QObject *const m_eventSource;
     QObject *const m_eventTarget;
 };
 
