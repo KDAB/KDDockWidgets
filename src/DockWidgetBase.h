@@ -467,6 +467,9 @@ Q_SIGNALS:
     /// have it's 'activeWindow' property updated yet at this point.
     void windowActiveAboutToChange(bool activated);
 
+    ///@brief Emitted when the title bar that serves this dock widget changes
+    void actualTitleBarChanged();
+
 protected:
     void onParentChanged();
     void onShown(bool spontaneous);

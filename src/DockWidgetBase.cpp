@@ -695,6 +695,8 @@ void DockWidgetBase::onParentChanged()
 #endif
     d->updateToggleAction();
     d->updateFloatAction();
+
+    Q_EMIT actualTitleBarChanged();
 }
 
 void DockWidgetBase::onShown(bool spontaneous)

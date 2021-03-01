@@ -323,8 +323,11 @@ void Frame::updateTitleBarVisibility()
     const bool wasVisible = m_titleBar->isVisible();
     m_titleBar->setVisible(visible);
 
-    if (wasVisible != visible)
+    if (wasVisible != visible) {
         Q_EMIT actualTitleBarChanged();
+        for (auto dw : dockWidgets())
+            Q_EMIT dw->actualTitleBarChanged();
+    }
 
     if (auto fw = floatingWindow()) {
         // Update the floating window which might be using Flag_HideTitleBarWhenTabsVisible

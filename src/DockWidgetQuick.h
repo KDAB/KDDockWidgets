@@ -73,9 +73,6 @@ public:
 protected:
     bool event(QEvent *e) override;
 
-Q_SIGNALS:
-    void actualTitleBarChanged();
-
 private:
     class Private;
     Private *const d;
