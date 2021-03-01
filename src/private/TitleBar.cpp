@@ -198,8 +198,9 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     if (!isVisible() && window()->isVisible()) {
         qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar"
                    << this << window()->isVisible();
-
-        if (m_floatingWindow) {
+        if (m_frame) {
+            qWarning() << "this=" << this << "; actual=" << m_frame->actualTitleBar();
+        } else if (m_floatingWindow) {
             qWarning() << "Has floating window with titlebar=" << m_floatingWindow->titleBar()
                        << "; fw->isVisible=" << m_floatingWindow->isVisible();
         }
