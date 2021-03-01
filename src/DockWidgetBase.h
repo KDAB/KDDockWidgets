@@ -164,7 +164,7 @@ public:
      *
      * Returns true if the request was accomplished
      */
-    bool setFloating(bool floats);
+    Q_INVOKABLE bool setFloating(bool floats);
 
     /**
      * @brief Returns the QAction that allows to hide/show the dock widget
