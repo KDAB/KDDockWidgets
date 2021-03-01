@@ -20,6 +20,7 @@ Rectangle {
     readonly property QtObject titleBarCpp: frameCpp ? frameCpp.titleBar : null
     readonly property int nonContentsHeight: titleBar.heightWhenVisible + tabbar.height
     property int contentsMargin: 2
+    property int titleBarContentsMargin: 1
 
     anchors.fill: parent
 
@@ -60,9 +61,9 @@ Rectangle {
                 top:  parent ? parent.top : undefined
                 left: parent ? parent.left : undefined
                 right: parent ? parent.right : undefined
-                topMargin: 1
-                leftMargin: 1
-                rightMargin: 1
+                topMargin: root.titleBarContentsMargin
+                leftMargin: root.titleBarContentsMargin
+                rightMargin: root.titleBarContentsMargin
             }
         }
 
