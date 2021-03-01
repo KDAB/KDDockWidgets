@@ -140,7 +140,6 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other,
 
 void DockWidgetBase::setWidget(QWidgetOrQuick *w)
 {
-    Q_ASSERT(w);
     if (w == d->widget)
         return;
 
