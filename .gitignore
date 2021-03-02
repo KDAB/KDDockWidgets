@@ -63,4 +63,4 @@ kddockwidgets_minimal_example
 *.vcxproj*
 *.sln
 *.dir
-
+.vscode
