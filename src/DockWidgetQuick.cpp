@@ -75,6 +75,7 @@ void DockWidgetQuick::setWidget(QWidgetAdapter *widget)
 void DockWidgetQuick::setWidget(QQuickItem *guest)
 {
     auto adapter = new QWidgetAdapter(this);
+    adapter->setIsWrapper();
 
     // In case the user app needs to use them:
     adapter->setProperty("originalParent", QVariant::fromValue(guest->parent()));

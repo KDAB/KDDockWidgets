@@ -214,12 +214,30 @@ void QWidgetAdapter::raise()
 
 QSize QWidgetAdapter::minimumSize() const
 {
+    if (m_isWrapper) {
+        const auto children = childItems();
+        if (!children.isEmpty()) {
+            const QSize min = children.constFirst()->property("kddockwidgets_min_size").toSize();
+            return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
+        }
+    }
+
     const QSize min = property("kddockwidgets_min_size").toSize();
     return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
 }
 
 QSize QWidgetAdapter::maximumSize() const
 {
+
+    if (m_isWrapper) {
+        const auto children = childItems();
+        if (!children.isEmpty()) {
+            const QSize max = children.constFirst()->property("kddockwidgets_max_size").toSize();
+            return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
+                                 : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
+        }
+    }
+
     const QSize max = property("kddockwidgets_max_size").toSize();
     return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
                          : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
@@ -700,6 +718,16 @@ void QWidgetAdapter::redirectMouseEvents(QObject *source)
 
     delete m_mouseEventRedirector;
     m_mouseEventRedirector = new MouseEventRedirector(source, this);
+}
+
+void QWidgetAdapter::setIsWrapper()
+{
+    m_isWrapper = true;
+}
+
+bool QWidgetAdapter::isWrapper() const
+{
+    return m_isWrapper;
 }
 
 LayoutGuestWidget::~LayoutGuestWidget() = default;

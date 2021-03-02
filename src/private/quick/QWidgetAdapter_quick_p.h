@@ -174,6 +174,8 @@ public:
     void render(QPainter *);
     void setMouseTracking(bool);
     void setWindowIsBeingDestroyed(bool);
+    void setIsWrapper();
+    bool isWrapper() const;
 
     static QQuickItem *createItem(QQmlEngine *, const QString &filename);
     static void makeItemFillParent(QQuickItem *item);
@@ -200,6 +202,7 @@ private:
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;
     bool m_windowIsBeingDestroyed = false;
     bool m_mouseTrackingEnabled = false;
+    bool m_isWrapper = false;
     MouseEventRedirector *m_mouseEventRedirector = nullptr;
 };
 
