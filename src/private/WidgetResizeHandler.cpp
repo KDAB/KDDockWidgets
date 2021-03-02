@@ -158,6 +158,12 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     case QEvent::MouseMove: {
         if (mTarget->isMaximized())
             break;
+
+        if (isMDI() && DockRegistry::self()->frameInMDIResize() != mTarget) {
+            // Some other frame is being resized.
+            return false;
+        }
+
         auto mouseEvent = static_cast<QMouseEvent *>(e);
         m_resizingInProgress = m_resizingInProgress && (mouseEvent->buttons() & Qt::LeftButton);
         const bool state = m_resizingInProgress;
