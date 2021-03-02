@@ -423,6 +423,9 @@ public:
     void setMDIPosition(QPoint pos);
     /// @brief like setMDIPosition(), but for the size.
     void setMDISize(QSize size);
+    /// @brief like setMDIPosition(), but for the Z
+    /// only implemented for QtQuick
+    void setMDIZ(int z);
 
 Q_SIGNALS:
 #ifdef KDDOCKWIDGETS_QTWIDGETS

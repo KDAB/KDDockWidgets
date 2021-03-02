@@ -809,6 +809,20 @@ void DockWidgetBase::setMDISize(QSize size)
     }
 }
 
+void DockWidgetBase::setMDIZ(int z)
+{
+#ifdef KDDOCKWIDGETS_QTQUICK
+    if (Frame *frame = d->frame()) {
+        if (!frame->isMDI())
+            return;
+        frame->setZ(z);
+    }
+#else
+    Q_UNUSED(z);
+    qWarning() << Q_FUNC_INFO << "Not implemented for QtQuick";
+#endif
+}
+
 LayoutSaver::DockWidget::Ptr DockWidgetBase::Private::serialize() const
 {
     auto ptr = LayoutSaver::DockWidget::dockWidgetForName(q->uniqueName());
