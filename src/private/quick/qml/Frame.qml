@@ -104,7 +104,8 @@ Rectangle {
             width: parent.width
 
             onCurrentIndexChanged: {
-                root.frameCpp.tabWidget.setCurrentDockWidget(currentIndex);
+                if (root && root.frameCpp)
+                    root.frameCpp.tabWidget.setCurrentDockWidget(currentIndex);
             }
 
             onTabBarCppChanged: {
