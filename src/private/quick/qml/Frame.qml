@@ -22,6 +22,8 @@ Rectangle {
     property int contentsMargin: 2
     property int titleBarContentsMargin: 1
     property bool hasCustomMouseEventRedirector: false
+    property int mouseResizeMargin: contentsMargin
+    property bool isMDI: frameCpp && frameCpp.isMDI
 
     anchors.fill: parent
 
@@ -45,6 +47,139 @@ Rectangle {
         if (frameCpp)
             frameCpp.geometryUpdated();
     }
+
+    MouseArea {
+        anchors {
+            left: parent.left
+            top: parent.top
+            bottom: parent.bottom
+        }
+
+        hoverEnabled: true
+        width: root.mouseResizeMargin
+        cursorShape: Qt.SizeHorCursor
+        z: mouseArea.z + 1
+        enabled: root.isMDI
+        onPressed: { mouse.accepted = false; }
+        onReleased: { mouse.accepted = false; }
+    }
+
+    MouseArea {
+        anchors {
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+
+        hoverEnabled: true
+        width: root.mouseResizeMargin
+        cursorShape: Qt.SizeHorCursor
+        z: mouseArea.z + 1
+        enabled: root.isMDI
+        onPressed: { mouse.accepted = false; }
+        onReleased: { mouse.accepted = false; }
+    }
+
+    MouseArea {
+        anchors {
+            right: parent.right
+            top: parent.top
+            left: parent.left
+        }
+
+        hoverEnabled: true
+        height: root.mouseResizeMargin
+        cursorShape: Qt.SizeVerCursor
+        z: mouseArea.z + 1
+        enabled: root.isMDI
+        onPressed: { mouse.accepted = false; }
+        onReleased: { mouse.accepted = false; }
+    }
+
+    MouseArea {
+        anchors {
+            right: parent.right
+            left: parent.left
+            bottom: parent.bottom
+        }
+
+        hoverEnabled: true
+        height: root.mouseResizeMargin
+        cursorShape: Qt.SizeVerCursor
+        z: mouseArea.z + 1
+        enabled: root.isMDI
+        onPressed: { mouse.accepted = false; }
+        onReleased: { mouse.accepted = false; }
+    }
+
+    MouseArea {
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+        }
+
+        hoverEnabled: true
+        height: root.mouseResizeMargin
+        width: height
+
+        cursorShape: Qt.SizeFDiagCursor
+        z: mouseArea.z + 2
+        enabled: root.isMDI
+        onPressed: { mouse.accepted = false; }
+        onReleased: { mouse.accepted = false; }
+    }
+
+    MouseArea {
+        anchors {
+            left: parent.left
+            top: parent.top
+        }
+
+        hoverEnabled: true
+        height: root.mouseResizeMargin
+        width: height
+
+        cursorShape: Qt.SizeFDiagCursor
+        z: mouseArea.z + 2
+        enabled: root.isMDI
+        onPressed: { mouse.accepted = false; }
+        onReleased: { mouse.accepted = false; }
+    }
+
+    MouseArea {
+        anchors {
+            right: parent.right
+            top: parent.top
+        }
+
+        hoverEnabled: true
+        height: root.mouseResizeMargin
+        width: height
+
+        cursorShape: Qt.SizeBDiagCursor
+        z: mouseArea.z + 2
+        enabled: root.isMDI
+        onPressed: { mouse.accepted = false; }
+        onReleased: { mouse.accepted = false; }
+    }
+
+    MouseArea {
+        anchors {
+            left: parent.left
+            bottom: parent.bottom
+        }
+
+        hoverEnabled: true
+        height: root.mouseResizeMargin
+        width: height
+
+        cursorShape: Qt.SizeBDiagCursor
+        z: mouseArea.z + 2
+        enabled: root.isMDI
+        onPressed: { mouse.accepted = false; }
+        onReleased: { mouse.accepted = false; }
+    }
+
 
     MouseArea {
         id: mouseArea

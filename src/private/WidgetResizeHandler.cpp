@@ -104,9 +104,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         }
 
         if (!widget) {
-            auto qquickWindow = qobject_cast<QQuickWindow*>(o);
-            if (!(qquickWindow && e->type() == QEvent::MouseMove))
-                return false;
+            return false;
         }
     }
 
@@ -118,6 +116,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             break;
         auto mouseEvent = static_cast<QMouseEvent *>(e);
         auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
+        updateCursor(cursorPos);
         if (cursorPos == CursorPosition_Undefined)
             return false;
 
@@ -135,6 +134,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     }
     case QEvent::MouseButtonRelease: {
         m_resizingInProgress = false;
+        updateCursor(CursorPosition_Undefined);
         auto mouseEvent = static_cast<QMouseEvent *>(e);
 
         if (mTarget->isMaximized() || !m_resizingInProgress || mouseEvent->button() != Qt::LeftButton)
