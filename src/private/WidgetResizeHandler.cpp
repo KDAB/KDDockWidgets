@@ -66,6 +66,11 @@ bool WidgetResizeHandler::isMDI() const
     return frame && frame->isMDI();
 }
 
+bool WidgetResizeHandler::isResizing() const
+{
+    return m_resizingInProgress;
+}
+
 int WidgetResizeHandler::widgetResizeHandlerMargin()
 {
     return 4; // pixels
@@ -127,6 +132,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             return false;
 
         m_resizingInProgress = true;
+        if (isMDI())
+            Q_EMIT DockRegistry::self()->frameInMDIResizeChanged();
         mNewPosition = Qt5Qt6Compat::eventGlobalPos(mouseEvent);
         mCursorPos = cursorPos;
 
@@ -134,6 +141,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     }
     case QEvent::MouseButtonRelease: {
         m_resizingInProgress = false;
+        if (isMDI())
+            Q_EMIT DockRegistry::self()->frameInMDIResizeChanged();
         updateCursor(CursorPosition_Undefined);
         auto mouseEvent = static_cast<QMouseEvent *>(e);
 

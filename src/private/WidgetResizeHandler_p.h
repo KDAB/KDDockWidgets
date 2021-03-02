@@ -119,6 +119,8 @@ public:
 
     bool isMDI() const;
 
+    bool isResizing() const;
+
     static int widgetResizeHandlerMargin();
 
     static void setupWindow(QWindow *window);

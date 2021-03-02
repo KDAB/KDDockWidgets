@@ -16,12 +16,13 @@
 #include "FloatingWindow_p.h"
 #include "LayoutWidget_p.h"
 #include "Logging_p.h"
+#include "MainWindowMDI.h"
 #include "Position_p.h"
 #include "QWidgetAdapter.h"
 #include "SideBar_p.h"
 #include "Utils_p.h"
+#include "WidgetResizeHandler_p.h"
 #include "WindowBeingDragged_p.h"
-#include "MainWindowMDI.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -220,6 +221,25 @@ SideBar *DockRegistry::sideBarForDockWidget(const DockWidgetBase *dw) const
     for (auto mw : m_mainWindows) {
         if (SideBar *sb = mw->sideBarForDockWidget(dw))
             return sb;
+    }
+
+    return nullptr;
+}
+
+Frame *DockRegistry::frameInMDIResize() const
+{
+    for (auto mw : m_mainWindows) {
+        if (!mw->isMDI())
+            continue;
+
+        LayoutWidget *layout = mw->layoutWidget();
+        const QList<Frame *> frames = layout->frames();
+        for (Frame *frame : frames) {
+            if (WidgetResizeHandler *wrh = frame->resizeHandler()) {
+                if (wrh->isResizing())
+                    return frame;
+            }
+        }
     }
 
     return nullptr;

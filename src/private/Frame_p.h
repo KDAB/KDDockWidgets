@@ -266,6 +266,9 @@ public:
     /// @brief See DockWidgetBase::userType()
     int userType() const;
 
+    /// @brief Returns the resize handler. Used mostly in MDI mode.
+    WidgetResizeHandler *resizeHandler() const;
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *);
     void numDockWidgetsChanged();

@@ -792,3 +792,8 @@ int Frame::userType() const
 {
     return m_userType;
 }
+
+WidgetResizeHandler *Frame::resizeHandler() const
+{
+    return m_resizeHandler;
+}

@@ -37,6 +37,8 @@ struct WindowBeingDragged;
 class DOCKS_EXPORT DockRegistry : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(
+        KDDockWidgets::Frame *frameInMDIResize READ frameInMDIResize NOTIFY frameInMDIResizeChanged)
 public:
     static DockRegistry *self();
     ~DockRegistry();
@@ -210,9 +212,15 @@ public:
     ///@brief Overload that returns the SideBar itself
     SideBar *sideBarForDockWidget(const DockWidgetBase *) const;
 
+    ///@brief Returns the Frame which is being resized in a MDI layout. nullptr if none
+    Frame *frameInMDIResize() const;
+
 Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen
     void windowChangedScreen(QWindow *);
+
+    /// @brief emitted when the MDI frame that's being resized changed
+    void frameInMDIResizeChanged();
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
