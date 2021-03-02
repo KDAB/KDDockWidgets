@@ -173,6 +173,8 @@ void StateNone::onEntry()
         q->m_currentDropArea->removeHover();
         q->m_currentDropArea = nullptr;
     }
+
+    Q_EMIT q->isDraggingChanged();
 }
 
 bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
@@ -299,6 +301,8 @@ void StateDragging::onEntry()
         qWarning() << Q_FUNC_INFO << "No window being dragged for " << q->m_draggable->asWidget();
         Q_EMIT q->dragCanceled();
     }
+
+    Q_EMIT q->isDraggingChanged();
 }
 
 bool StateDragging::handleMouseButtonRelease(QPoint globalPos)
@@ -403,6 +407,8 @@ void StateInternalMDIDragging::onEntry()
         if (Frame *f = tb->frame())
             f->raise();
     }
+
+    Q_EMIT q->isDraggingChanged();
 }
 
 bool StateInternalMDIDragging::handleMouseButtonRelease(QPoint)
@@ -559,17 +565,17 @@ DragController::DragController(QObject *parent)
     auto statepreDrag = new StatePreDrag(this);
     auto stateDragging = isWayland() ? new StateDraggingWayland(this)
                                      : new StateDragging(this);
-    auto stateDraggingMDI = new StateInternalMDIDragging(this);
+    m_stateDraggingMDI = new StateInternalMDIDragging(this);
 
     stateNone->addTransition(this, &DragController::mousePressed, statepreDrag);
     statepreDrag->addTransition(this, &DragController::dragCanceled, stateNone);
     statepreDrag->addTransition(this, &DragController::manhattanLengthMove, stateDragging);
-    statepreDrag->addTransition(this, &DragController::manhattanLengthMoveMDI, stateDraggingMDI);
+    statepreDrag->addTransition(this, &DragController::manhattanLengthMoveMDI, m_stateDraggingMDI);
     stateDragging->addTransition(this, &DragController::dragCanceled, stateNone);
     stateDragging->addTransition(this, &DragController::dropped, stateNone);
 
-    stateDraggingMDI->addTransition(this, &DragController::dragCanceled, stateNone);
-    stateDraggingMDI->addTransition(this, &DragController::mdiPopOut, stateDragging);
+    m_stateDraggingMDI->addTransition(this, &DragController::dragCanceled, stateNone);
+    m_stateDraggingMDI->addTransition(this, &DragController::mdiPopOut, stateDragging);
 
     if (usesFallbackMouseGrabber())
         enableFallbackMouseGrabber();
@@ -597,7 +603,7 @@ void DragController::unregisterDraggable(Draggable *drg)
 
 bool DragController::isDragging() const
 {
-    return m_windowBeingDragged != nullptr;
+    return m_windowBeingDragged != nullptr || activeState() == m_stateDraggingMDI;
 }
 
 bool DragController::isInNonClientDrag() const

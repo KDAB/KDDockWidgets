@@ -62,6 +62,7 @@ private:
 class DOCKS_EXPORT DragController : public MinimalStateMachine
 {
     Q_OBJECT
+    Q_PROPERTY(bool isDragging READ isDragging NOTIFY isDraggingChanged)
 public:
     enum State {
         State_None = 0,
@@ -98,6 +99,7 @@ Q_SIGNALS:
     void mdiPopOut();
     void dragCanceled();
     void dropped();
+    void isDraggingChanged();
 
 protected:
     bool eventFilter(QObject *, QEvent *) override;
@@ -126,6 +128,7 @@ private:
     DropArea *m_currentDropArea = nullptr;
     bool m_nonClientDrag = false;
     FallbackMouseGrabber *m_fallbackMouseGrabber = nullptr;
+    StateInternalMDIDragging *m_stateDraggingMDI = nullptr;
 };
 
 class StateBase : public State

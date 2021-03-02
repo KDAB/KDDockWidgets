@@ -22,6 +22,7 @@
 #include "DockRegistry_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "Utils_p.h"
+#include "DragController_p.h"
 
 #include <QDebug>
 #include <QOperatingSystemVersion>
@@ -229,6 +230,7 @@ void Config::setQmlEngine(QQmlEngine *qmlEngine)
 
     auto dr = DockRegistry::self(); // make sure our QML types are registered
     qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
+    qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
     d->m_qmlEngine = qmlEngine;
 
     QQmlContext *context = qmlEngine->rootContext();

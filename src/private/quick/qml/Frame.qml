@@ -57,9 +57,9 @@ Rectangle {
 
         hoverEnabled: true
         width: root.mouseResizeMargin
-        cursorShape: Qt.SizeHorCursor
+        cursorShape: enabled ? Qt.SizeHorCursor : Qt.ArrowCursor // Even if disabled the MouseArea changes cursor, as it's different than Item.enabled, so explicitly change cursor if disabled
         z: mouseArea.z + 1
-        enabled: root.isMDI
+        enabled: root.isMDI && !_kddwDragController.isDragging
         onPressed: { mouse.accepted = false; }
         onReleased: { mouse.accepted = false; }
     }
@@ -73,9 +73,9 @@ Rectangle {
 
         hoverEnabled: true
         width: root.mouseResizeMargin
-        cursorShape: Qt.SizeHorCursor
+        cursorShape: enabled ? Qt.SizeHorCursor : Qt.ArrowCursor
         z: mouseArea.z + 1
-        enabled: root.isMDI
+        enabled: root.isMDI && !_kddwDragController.isDragging
         onPressed: { mouse.accepted = false; }
         onReleased: { mouse.accepted = false; }
     }
@@ -89,9 +89,9 @@ Rectangle {
 
         hoverEnabled: true
         height: root.mouseResizeMargin
-        cursorShape: Qt.SizeVerCursor
+        cursorShape: enabled ? Qt.SizeVerCursor : Qt.ArrowCursor
         z: mouseArea.z + 1
-        enabled: root.isMDI
+        enabled: root.isMDI && !_kddwDragController.isDragging
         onPressed: { mouse.accepted = false; }
         onReleased: { mouse.accepted = false; }
     }
@@ -105,9 +105,9 @@ Rectangle {
 
         hoverEnabled: true
         height: root.mouseResizeMargin
-        cursorShape: Qt.SizeVerCursor
+        cursorShape: enabled ? Qt.SizeVerCursor : Qt.ArrowCursor
         z: mouseArea.z + 1
-        enabled: root.isMDI
+        enabled: root.isMDI && !_kddwDragController.isDragging
         onPressed: { mouse.accepted = false; }
         onReleased: { mouse.accepted = false; }
     }
@@ -122,9 +122,9 @@ Rectangle {
         height: root.mouseResizeMargin
         width: height
 
-        cursorShape: Qt.SizeFDiagCursor
+        cursorShape: enabled ? Qt.SizeFDiagCursor : Qt.ArrowCursor
         z: mouseArea.z + 2
-        enabled: root.isMDI
+        enabled: root.isMDI && !_kddwDragController.isDragging
         onPressed: { mouse.accepted = false; }
         onReleased: { mouse.accepted = false; }
     }
@@ -139,9 +139,9 @@ Rectangle {
         height: root.mouseResizeMargin
         width: height
 
-        cursorShape: Qt.SizeFDiagCursor
+        cursorShape: enabled ? Qt.SizeFDiagCursor : Qt.ArrowCursor
         z: mouseArea.z + 2
-        enabled: root.isMDI
+        enabled: root.isMDI && !_kddwDragController.isDragging
         onPressed: { mouse.accepted = false; }
         onReleased: { mouse.accepted = false; }
     }
@@ -156,9 +156,9 @@ Rectangle {
         height: root.mouseResizeMargin
         width: height
 
-        cursorShape: Qt.SizeBDiagCursor
+        cursorShape: enabled ? Qt.SizeBDiagCursor : Qt.ArrowCursor
         z: mouseArea.z + 2
-        enabled: root.isMDI
+        enabled: root.isMDI && !_kddwDragController.isDragging
         onPressed: { mouse.accepted = false; }
         onReleased: { mouse.accepted = false; }
     }
@@ -173,9 +173,9 @@ Rectangle {
         height: root.mouseResizeMargin
         width: height
 
-        cursorShape: Qt.SizeBDiagCursor
+        cursorShape: enabled ? Qt.SizeBDiagCursor : Qt.ArrowCursor
         z: mouseArea.z + 2
-        enabled: root.isMDI
+        enabled: root.isMDI && !_kddwDragController.isDragging
         onPressed: { mouse.accepted = false; }
         onReleased: { mouse.accepted = false; }
     }
@@ -191,7 +191,6 @@ Rectangle {
             readonly property QtObject titleBarCpp: root.titleBarCpp
             source: frameCpp ? _kddw_widgetFactory.titleBarFilename(frameCpp.userType)
                              : ""
-
 
             anchors {
                 top:  parent ? parent.top : undefined
