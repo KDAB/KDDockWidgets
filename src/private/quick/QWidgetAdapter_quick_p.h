@@ -155,6 +155,7 @@ public:
     QQuickItem *childAt(QPoint) const;
     void move(int x, int y);
     void move(QPoint);
+    void setSize(QSize);
 
     void setParent(QQuickItem*);
     void activateWindow();

@@ -520,6 +520,11 @@ void QWidgetAdapter::move(int x, int y)
     setAttribute(Qt::WA_Moved);
 }
 
+void QWidgetAdapter::setSize(QSize size)
+{
+    QQuickItem::setSize(QSizeF(size));
+}
+
 void QWidgetAdapter::setParent(QQuickItem *p)
 {
     QQuickItem::setParent(p);

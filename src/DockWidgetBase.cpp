@@ -799,6 +799,16 @@ void DockWidgetBase::setMDIPosition(QPoint pos)
     }
 }
 
+void DockWidgetBase::setMDISize(QSize size)
+{
+    if (Frame *frame = d->frame()) {
+        if (!frame->isMDI())
+            return;
+
+        frame->QWidgetAdapter::setSize(size);
+    }
+}
+
 LayoutSaver::DockWidget::Ptr DockWidgetBase::Private::serialize() const
 {
     auto ptr = LayoutSaver::DockWidget::dockWidgetForName(q->uniqueName());

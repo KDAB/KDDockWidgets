@@ -421,6 +421,8 @@ public:
     /// @brief Sets this dock widgets position to pos within the MDI layout
     /// This only applies if the main window is in MDI mode, which it is not by default
     void setMDIPosition(QPoint pos);
+    /// @brief like setMDIPosition(), but for the size.
+    void setMDISize(QSize size);
 
 Q_SIGNALS:
 #ifdef KDDOCKWIDGETS_QTWIDGETS

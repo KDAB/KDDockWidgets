@@ -92,6 +92,13 @@ void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
     QWidget::setWindowFlag(f, on);
 }
 
+void QWidgetAdapter::setSize(QSize size)
+{
+    QRect geo = geometry();
+    geo.setSize(size);
+    setGeometry(geo);
+}
+
 bool QWidgetAdapter::onResize(QSize) { return false; }
 void QWidgetAdapter::onLayoutRequest() {}
 

@@ -76,6 +76,7 @@ public:
     FloatingWindow *floatingWindow() const;
 
     void setFlag(Qt::WindowType, bool on = true);
+    void setSize(QSize);
 
 protected:
     void raiseAndActivate();
