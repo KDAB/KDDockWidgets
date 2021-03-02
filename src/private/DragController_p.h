@@ -25,6 +25,7 @@
 namespace KDDockWidgets {
 
 class StateBase;
+class StateInternalMDIDragging;
 class DropArea;
 class Draggable;
 class FallbackMouseGrabber;
