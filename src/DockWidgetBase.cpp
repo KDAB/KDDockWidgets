@@ -805,7 +805,7 @@ void DockWidgetBase::setMDISize(QSize size)
         if (!frame->isMDI())
             return;
 
-        frame->QWidgetAdapter::setSize(size);
+        frame->QWidgetAdapter::setSize(size.expandedTo(frame->minimumSize()));
     }
 }
 
