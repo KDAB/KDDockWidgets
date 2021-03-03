@@ -16,15 +16,21 @@ import QtQuick.Layouts 1.9
 
 MouseArea {
     id: root
-    property int resizeMargin: 2
-    property int shape
-    property bool resizeAllowed: true
+    required property int resizeMargin
+    required property int shape
+    required property bool resizeAllowed
+    required property QtObject frameCpp
 
     hoverEnabled: true
     width: resizeMargin
     cursorShape: enabled ? shape : Qt.ArrowCursor // Even if disabled the MouseArea changes cursor, as it's different than Item.enabled, so explicitly change cursor if disabled
     z: mouseArea.z + 1
     enabled: resizeAllowed
-    onPressed: { mouse.accepted = false; }
-    onReleased: { mouse.accepted = false; }
+
+    onFrameCppChanged: {
+        if (frameCpp) {
+            // When Frame is in MDI mode, we need to detect when the mouse over the edges
+            frameCpp.redirectMouseEvents(this)
+        }
+    }
 }

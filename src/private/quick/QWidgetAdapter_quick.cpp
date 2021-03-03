@@ -716,8 +716,7 @@ void QWidgetAdapter::redirectMouseEvents(QObject *source)
         }
     }
 
-    delete m_mouseEventRedirector;
-    m_mouseEventRedirector = new MouseEventRedirector(source, this);
+    new MouseEventRedirector(source, this);
 }
 
 void QWidgetAdapter::setIsWrapper()
