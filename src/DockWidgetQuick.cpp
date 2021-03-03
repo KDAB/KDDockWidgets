@@ -147,3 +147,8 @@ void DockWidgetQuick::onGeometryUpdated()
         frame->updateGeometry();
     }
 }
+
+Frame *DockWidgetQuick::frame() const
+{
+    return qobject_cast<FrameQuick *>(DockWidgetBase::d->frame());
+}

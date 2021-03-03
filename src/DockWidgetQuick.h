@@ -27,6 +27,8 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+class Frame;
+
 /**
  * @brief Represents a dock widget.
  *
@@ -73,6 +75,9 @@ public:
     /// @brief Returns the visual item which represents Frame in the screen
     /// Equivalent to Frame::visualItem().
     QQuickItem *frameVisualItem() const;
+
+    ///@internal
+    Frame *frame() const;
 
     /// @brief Called by QtQuick when min-size changes
     Q_INVOKABLE void onGeometryUpdated();
