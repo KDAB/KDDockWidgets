@@ -77,7 +77,9 @@ public:
             return false;
 
         // Finally send the event
+        m_eventTarget->setProperty("cursorPosition", m_eventSource->property("cursorPosition"));
         qApp->sendEvent(m_eventTarget, me);
+        m_eventTarget->setProperty("cursorPosition", CursorPosition_Undefined);
 
         return false;
     }

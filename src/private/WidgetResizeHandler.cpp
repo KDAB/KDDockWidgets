@@ -119,6 +119,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     case QEvent::MouseButtonPress: {
         if (mTarget->isMaximized())
             break;
+
         auto mouseEvent = static_cast<QMouseEvent *>(e);
         auto cursorPos = cursorPosition(Qt5Qt6Compat::eventGlobalPos(mouseEvent));
         updateCursor(cursorPos);
@@ -502,6 +503,14 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
 {
     if (!mTarget)
         return CursorPosition_Undefined;
+
+#ifdef KDDOCKWIDGETS_QTQUICK
+    if (isMDI()) {
+        // Special case for QtQuick. The MouseAreas are driving it and know better what's the
+        // cursor position
+        return CursorPosition(mTarget->property("cursorPosition").toInt());
+    }
+#endif
 
     QPoint pos = mTarget->mapFromGlobal(globalPos);
 
