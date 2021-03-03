@@ -18,7 +18,7 @@ Rectangle {
 
     property QtObject frameCpp
     readonly property QtObject titleBarCpp: frameCpp ? frameCpp.titleBar : null
-    readonly property int nonContentsHeight: titleBar.heightWhenVisible + tabbar.height
+    readonly property int nonContentsHeight: (titleBar.item ? titleBar.item.heightWhenVisible : 0) + tabbar.height + (2 * contentsMargin) + titleBarContentsMargin
     property int contentsMargin: 2
     property int titleBarContentsMargin: 1
     property bool hasCustomMouseEventRedirector: false
