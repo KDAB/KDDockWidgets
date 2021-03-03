@@ -237,6 +237,12 @@ public:
     ///@warning Not for public consumption, support will be limited.
     void setInternalFlags(InternalFlags flags);
 
+    /// @brief Sets the MDI popup threshold. When the layout is MDI and you drag a dock widget
+    /// X pixels behond the window's edge, it will float the dock widget.
+    /// by default this value is 250px. Use -1 to disable
+    void setMDIPopupThreshold(int);
+    int mdiPopupThreshold() const;
+
 #ifdef KDDOCKWIDGETS_QTQUICK
     ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
     void setQmlEngine(QQmlEngine *);

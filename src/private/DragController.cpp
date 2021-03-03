@@ -19,6 +19,7 @@
 #include "Qt5Qt6Compat_p.h"
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
+#include "Config.h"
 
 #include <QMouseEvent>
 #include <QGuiApplication>
@@ -31,8 +32,6 @@
 # include <QWindow>
 # include <windows.h>
 #endif
-
-#define MDI_POPOUT_THRESHOLD 250
 
 using namespace KDDockWidgets;
 
@@ -450,9 +449,12 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
 
     // Check if we need to pop out the MDI window (make it float)
     // If we drag the window against an edge, and move behind the edge some threshold, we float it
-    const QPoint overflow = newLocalPosBounded - newLocalPos;
-    if (qAbs(overflow.x()) > MDI_POPOUT_THRESHOLD || qAbs(overflow.y()) > MDI_POPOUT_THRESHOLD)
-        Q_EMIT q->mdiPopOut();
+    const int threshold = Config::self().mdiPopupThreshold();
+    if (threshold != -1) {
+        const QPoint overflow = newLocalPosBounded - newLocalPos;
+        if (qAbs(overflow.x()) > threshold || qAbs(overflow.y()) > threshold)
+            Q_EMIT q->mdiPopOut();
+    }
 
     return false;
 }

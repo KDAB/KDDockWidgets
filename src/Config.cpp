@@ -59,6 +59,7 @@ public:
     InternalFlags m_internalFlags = InternalFlag_None;
     CustomizableWidgets m_disabledPaintEvents = CustomizableWidget_None;
     qreal m_draggedWindowOpacity = Q_QNAN;
+    int m_mdiPopupThreshold = 250;
 };
 
 Config::Config()
@@ -310,4 +311,13 @@ Config::CustomizableWidgets Config::disabledPaintEvents() const
     return d->m_disabledPaintEvents;
 }
 
+void Config::setMDIPopupThreshold(int threshold)
+{
+    d->m_mdiPopupThreshold = threshold;
+}
+
+int Config::mdiPopupThreshold() const
+{
+    return d->m_mdiPopupThreshold;
+}
 }
