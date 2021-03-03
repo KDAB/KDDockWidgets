@@ -19,10 +19,10 @@ Rectangle {
     property QtObject frameCpp
     readonly property QtObject titleBarCpp: frameCpp ? frameCpp.titleBar : null
     readonly property int nonContentsHeight: (titleBar.item ? titleBar.item.heightWhenVisible : 0) + tabbar.height + (2 * contentsMargin) + titleBarContentsMargin
-    property int contentsMargin: 2
+    property int contentsMargin: isMDI ? 2 : 1
     property int titleBarContentsMargin: 1
     property bool hasCustomMouseEventRedirector: false
-    property int mouseResizeMargin: contentsMargin
+    property int mouseResizeMargin: 8
     readonly property bool isMDI: frameCpp && frameCpp.isMDI
     readonly property bool resizeAllowed: root.isMDI && !_kddwDragController.isDragging && _kddwDockRegistry && (!_kddwDockRegistry.frameInMDIResize || _kddwDockRegistry.frameInMDIResize === frameCpp)
 
@@ -53,6 +53,7 @@ Rectangle {
             bottom: parent.bottom
         }
 
+        width: resizeMargin
         shape:  Qt.SizeHorCursor
         z: 100
         frameCpp: root.frameCpp
@@ -67,6 +68,7 @@ Rectangle {
             bottom: parent.bottom
         }
 
+        width: resizeMargin
         shape:  Qt.SizeHorCursor
         z: 100
         frameCpp: root.frameCpp
@@ -83,6 +85,7 @@ Rectangle {
         }
 
         shape:  Qt.SizeVerCursor
+        height: resizeMargin
         z: 100
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
@@ -96,7 +99,8 @@ Rectangle {
             bottom: parent.bottom
         }
 
-        shape:  Qt.SizeVerCursor
+        height: resizeMargin
+        shape: Qt.SizeVerCursor
         z: 100
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
@@ -109,6 +113,8 @@ Rectangle {
             bottom: parent.bottom
         }
 
+        height: width
+        width: resizeMargin
         shape:  Qt.SizeFDiagCursor
         z: 101
         frameCpp: root.frameCpp
@@ -122,6 +128,8 @@ Rectangle {
             top: parent.top
         }
 
+        height: width
+        width: resizeMargin
         shape:  Qt.SizeFDiagCursor
         z: 101
         frameCpp: root.frameCpp
@@ -135,6 +143,8 @@ Rectangle {
             top: parent.top
         }
 
+        height: width
+        width: resizeMargin
         shape:  Qt.SizeBDiagCursor
         z: 101
         frameCpp: root.frameCpp
@@ -148,6 +158,8 @@ Rectangle {
             bottom: parent.bottom
         }
 
+        height: width
+        width: resizeMargin
         shape:  Qt.SizeBDiagCursor
         z: 101
         frameCpp: root.frameCpp
