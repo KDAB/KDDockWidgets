@@ -36,6 +36,7 @@ class ItemBoxContainer;
 
 namespace KDDockWidgets
 {
+Q_NAMESPACE
     class MultiSplitter;
     class DropArea;
 
@@ -216,6 +217,7 @@ namespace KDDockWidgets
         CursorPosition_All = CursorPosition_Left | CursorPosition_Right | CursorPosition_Top | CursorPosition_Bottom
     };
     Q_DECLARE_FLAGS(CursorPositions, CursorPosition)
+    Q_ENUM_NS(CursorPosition)
 
     ///@internal
     enum FrameOption {

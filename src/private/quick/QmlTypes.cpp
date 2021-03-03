@@ -30,6 +30,7 @@ void KDDockWidgets::registerQmlTypes()
 
     qmlRegisterUncreatableType<TitleBar>("com.kdab.dockwidgets", 1, 0, "TitleBar", QStringLiteral("Enum access only"));
     qmlRegisterUncreatableType<DropIndicatorOverlayInterface>("com.kdab.dockwidgets", 1, 0, "DropIndicatorOverlayInterface", QStringLiteral("Enum access only"));
+    qmlRegisterUncreatableMetaObject(KDDockWidgets::staticMetaObject, "com.kdab.dockwidgets", 1, 0, "KDDockWidgets", QStringLiteral("Enum access only") );
 
     qRegisterMetaType<Frame *>();
     qRegisterMetaType<DropArea*>();
