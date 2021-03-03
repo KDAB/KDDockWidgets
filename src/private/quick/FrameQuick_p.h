@@ -68,7 +68,7 @@ protected:
 Q_SIGNALS:
     void tabTitlesChanged();
 
-private Q_SLOTS:
+public Q_SLOTS:
     void updateConstriants();
 
 private:

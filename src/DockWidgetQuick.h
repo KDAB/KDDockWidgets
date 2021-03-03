@@ -74,6 +74,9 @@ public:
     /// Equivalent to Frame::visualItem().
     QQuickItem *frameVisualItem() const;
 
+    /// @brief Called by QtQuick when min-size changes
+    Q_INVOKABLE void onGeometryUpdated();
+
 protected:
     bool event(QEvent *e) override;
 

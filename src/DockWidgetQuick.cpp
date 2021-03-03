@@ -139,3 +139,11 @@ QQuickItem *DockWidgetQuick::frameVisualItem() const
 
     return nullptr;
 }
+
+void DockWidgetQuick::onGeometryUpdated()
+{
+    if (auto frame = qobject_cast<FrameQuick *>(DockWidgetBase::d->frame())) {
+        frame->updateConstriants();
+        frame->updateGeometry();
+    }
+}
