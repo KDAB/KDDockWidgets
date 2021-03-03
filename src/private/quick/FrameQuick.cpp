@@ -179,6 +179,11 @@ TabWidget *FrameQuick::tabWidget() const
     return m_tabWidget;
 }
 
+QQuickItem *FrameQuick::visualItem() const
+{
+    return m_visualItem;
+}
+
 int FrameQuick::nonContentsHeight() const
 {
     return m_visualItem->property("nonContentsHeight").toInt();

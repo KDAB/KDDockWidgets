@@ -12,6 +12,7 @@
 #include "DockWidgetQuick.h"
 #include "DockWidgetBase_p.h"
 #include "FrameworkWidgetFactory.h"
+#include "private/quick/FrameQuick_p.h"
 
 #include <Config.h>
 #include <QQuickItem>
@@ -128,5 +129,13 @@ TitleBar *DockWidgetQuick::actualTitleBar() const
 {
     if (Frame *frame = DockWidgetBase::d->frame())
         return frame->actualTitleBar();
+    return nullptr;
+}
+
+QQuickItem *DockWidgetQuick::frameVisualItem() const
+{
+    if (auto frame = qobject_cast<FrameQuick *>(DockWidgetBase::d->frame()))
+        return frame->visualItem();
+
     return nullptr;
 }

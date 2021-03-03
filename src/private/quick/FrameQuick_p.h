@@ -48,6 +48,9 @@ public:
     /// @brief returns the tab widget
     TabWidget *tabWidget() const;
 
+    /// @brief Returns the QQuickItem which represents this frame on the screen
+    QQuickItem *visualItem() const;
+
 protected:
     void removeWidget_impl(DockWidgetBase *) override;
     int indexOfDockWidget_impl(const DockWidgetBase *) override;

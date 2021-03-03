@@ -70,6 +70,10 @@ public:
     /// @brief Returns the title bar
     TitleBar *actualTitleBar() const;
 
+    /// @brief Returns the visual item which represents Frame in the screen
+    /// Equivalent to Frame::visualItem().
+    QQuickItem *frameVisualItem() const;
+
 protected:
     bool event(QEvent *e) override;
 
