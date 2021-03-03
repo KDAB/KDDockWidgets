@@ -214,6 +214,8 @@ Q_NAMESPACE
         CursorPosition_TopRight = CursorPosition_Top | CursorPosition_Right,
         CursorPosition_BottomRight = CursorPosition_Bottom | CursorPosition_Right,
         CursorPosition_BottomLeft = CursorPosition_Bottom | CursorPosition_Left,
+        CursorPosition_Horizontal =  CursorPosition_Right | CursorPosition_Left,
+        CursorPosition_Vertical =  CursorPosition_Top | CursorPosition_Bottom,
         CursorPosition_All = CursorPosition_Left | CursorPosition_Right | CursorPosition_Top | CursorPosition_Bottom
     };
     Q_DECLARE_FLAGS(CursorPositions, CursorPosition)

@@ -475,6 +475,8 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
         restoreMouseCursor();
         break;
     case CursorPosition_All:
+    case CursorPosition_Horizontal:
+    case CursorPosition_Vertical:
         // Doesn't happen
         break;
     }

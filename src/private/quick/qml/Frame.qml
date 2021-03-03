@@ -13,6 +13,8 @@ import QtQuick 2.9
 import QtQuick.Controls 2.9
 import QtQuick.Layouts 1.9
 
+import com.kdab.dockwidgets 1.0
+
 Rectangle {
     id: root
 
@@ -54,11 +56,11 @@ Rectangle {
         }
 
         width: resizeMargin
-        shape:  Qt.SizeHorCursor
         z: 100
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
+        cursorPosition: KDDockWidgets.CursorPosition_Left
     }
 
     ResizeHandlerHelper {
@@ -69,13 +71,12 @@ Rectangle {
         }
 
         width: resizeMargin
-        shape:  Qt.SizeHorCursor
         z: 100
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
+        cursorPosition: KDDockWidgets.CursorPosition_Right
     }
-
 
     ResizeHandlerHelper {
         anchors {
@@ -84,12 +85,12 @@ Rectangle {
             left: parent.left
         }
 
-        shape:  Qt.SizeVerCursor
         height: resizeMargin
         z: 100
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
+        cursorPosition: KDDockWidgets.CursorPosition_Top
     }
 
     ResizeHandlerHelper {
@@ -100,11 +101,11 @@ Rectangle {
         }
 
         height: resizeMargin
-        shape: Qt.SizeVerCursor
         z: 100
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
+        cursorPosition: KDDockWidgets.CursorPosition_Bottom
     }
 
     ResizeHandlerHelper {
@@ -115,11 +116,11 @@ Rectangle {
 
         height: width
         width: resizeMargin
-        shape:  Qt.SizeFDiagCursor
         z: 101
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
+        cursorPosition: KDDockWidgets.CursorPosition_Bottom | KDDockWidgets.CursorPosition_Right
     }
 
     ResizeHandlerHelper {
@@ -130,11 +131,11 @@ Rectangle {
 
         height: width
         width: resizeMargin
-        shape:  Qt.SizeFDiagCursor
         z: 101
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
+        cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Left
     }
 
     ResizeHandlerHelper {
@@ -145,11 +146,11 @@ Rectangle {
 
         height: width
         width: resizeMargin
-        shape:  Qt.SizeBDiagCursor
         z: 101
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
+        cursorPosition: KDDockWidgets.CursorPosition_Top | KDDockWidgets.CursorPosition_Right
     }
 
     ResizeHandlerHelper {
@@ -160,11 +161,11 @@ Rectangle {
 
         height: width
         width: resizeMargin
-        shape:  Qt.SizeBDiagCursor
         z: 101
         frameCpp: root.frameCpp
         resizeAllowed: root.resizeAllowed
         resizeMargin: root.mouseResizeMargin
+        cursorPosition: KDDockWidgets.CursorPosition_Left | KDDockWidgets.CursorPosition_Bottom
     }
 
     Loader {
