@@ -49,138 +49,90 @@ Rectangle {
             frameCpp.geometryUpdated();
     }
 
-    MouseArea {
+    ResizeHandlerHelper {
         anchors {
             left: parent.left
             top: parent.top
             bottom: parent.bottom
         }
 
-        hoverEnabled: true
-        width: root.mouseResizeMargin
-        cursorShape: enabled ? Qt.SizeHorCursor : Qt.ArrowCursor // Even if disabled the MouseArea changes cursor, as it's different than Item.enabled, so explicitly change cursor if disabled
+        shape:  Qt.SizeHorCursor
         z: mouseArea.z + 1
-        enabled: root.resizeAllowed
-        onPressed: { mouse.accepted = false; }
-        onReleased: { mouse.accepted = false; }
     }
 
-    MouseArea {
+    ResizeHandlerHelper {
         anchors {
             right: parent.right
             top: parent.top
             bottom: parent.bottom
         }
 
-        hoverEnabled: true
-        width: root.mouseResizeMargin
-        cursorShape: enabled ? Qt.SizeHorCursor : Qt.ArrowCursor
+        shape:  Qt.SizeHorCursor
         z: mouseArea.z + 1
-        enabled: root.resizeAllowed
-        onPressed: { mouse.accepted = false; }
-        onReleased: { mouse.accepted = false; }
     }
 
-    MouseArea {
+
+    ResizeHandlerHelper {
         anchors {
             right: parent.right
             top: parent.top
             left: parent.left
         }
 
-        hoverEnabled: true
-        height: root.mouseResizeMargin
-        cursorShape: enabled ? Qt.SizeVerCursor : Qt.ArrowCursor
+        shape:  Qt.SizeVerCursor
         z: mouseArea.z + 1
-        enabled: root.resizeAllowed
-        onPressed: { mouse.accepted = false; }
-        onReleased: { mouse.accepted = false; }
     }
 
-    MouseArea {
+    ResizeHandlerHelper {
         anchors {
             right: parent.right
             left: parent.left
             bottom: parent.bottom
         }
 
-        hoverEnabled: true
-        height: root.mouseResizeMargin
-        cursorShape: enabled ? Qt.SizeVerCursor : Qt.ArrowCursor
+        shape:  Qt.SizeVerCursor
         z: mouseArea.z + 1
-        enabled: root.resizeAllowed
-        onPressed: { mouse.accepted = false; }
-        onReleased: { mouse.accepted = false; }
     }
 
-    MouseArea {
+    ResizeHandlerHelper {
         anchors {
             right: parent.right
             bottom: parent.bottom
         }
 
-        hoverEnabled: true
-        height: root.mouseResizeMargin
-        width: height
-
-        cursorShape: enabled ? Qt.SizeFDiagCursor : Qt.ArrowCursor
+        shape:  Qt.SizeFDiagCursor
         z: mouseArea.z + 2
-        enabled: root.resizeAllowed
-        onPressed: { mouse.accepted = false; }
-        onReleased: { mouse.accepted = false; }
     }
 
-    MouseArea {
+    ResizeHandlerHelper {
         anchors {
             left: parent.left
             top: parent.top
         }
 
-        hoverEnabled: true
-        height: root.mouseResizeMargin
-        width: height
-
-        cursorShape: enabled ? Qt.SizeFDiagCursor : Qt.ArrowCursor
+        shape:  Qt.SizeFDiagCursor
         z: mouseArea.z + 2
-        enabled: root.resizeAllowed
-        onPressed: { mouse.accepted = false; }
-        onReleased: { mouse.accepted = false; }
     }
 
-    MouseArea {
+    ResizeHandlerHelper {
         anchors {
             right: parent.right
             top: parent.top
         }
 
-        hoverEnabled: true
-        height: root.mouseResizeMargin
-        width: height
-
-        cursorShape: enabled ? Qt.SizeBDiagCursor : Qt.ArrowCursor
+        shape:  Qt.SizeBDiagCursor
         z: mouseArea.z + 2
-        enabled: root.resizeAllowed
-        onPressed: { mouse.accepted = false; }
-        onReleased: { mouse.accepted = false; }
     }
 
-    MouseArea {
+    ResizeHandlerHelper {
         anchors {
             left: parent.left
             bottom: parent.bottom
         }
 
-        hoverEnabled: true
-        height: root.mouseResizeMargin
-        width: height
-
-        cursorShape: enabled ? Qt.SizeBDiagCursor : Qt.ArrowCursor
+        shape:  Qt.SizeBDiagCursor
         z: mouseArea.z + 2
-        enabled: root.resizeAllowed
-        onPressed: { mouse.accepted = false; }
-        onReleased: { mouse.accepted = false; }
     }
-
 
     MouseArea {
         id: mouseArea

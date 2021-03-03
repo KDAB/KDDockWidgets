@@ -5,6 +5,7 @@
         <file>private/quick/qml/FloatingWindow.qml</file>
         <file>private/quick/qml/Frame.qml</file>
         <file>private/quick/qml/MainWindowMDI.qml</file>
+        <file>private/quick/qml/ResizeHandlerHelper.qml</file>
         <file>private/quick/qml/RubberBand.qml</file>
         <file>private/quick/qml/TitleBarBase.qml</file>
         <file>private/quick/qml/TitleBar.qml</file>
