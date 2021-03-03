@@ -185,8 +185,12 @@ void Item::setGuestWidget(Widget *guest)
         m_guest->setParent(m_hostWidget);
         m_guest->setLayoutItem(this);
         newWidget->installEventFilter(this);
-        setMinSize(guest->minSize());
-        setMaxSizeHint(guest->maxSizeHint());
+
+        {
+            QScopedValueRollback<bool> guard(m_isSettingGuest, true);
+            setMinSize(guest->minSize());
+            setMaxSizeHint(guest->maxSizeHint());
+        }
 
         connect(newWidget, &QObject::objectNameChanged, this, &Item::updateObjectName);
         connect(newWidget, &QObject::destroyed, this, &Item::onWidgetDestroyed);
@@ -195,7 +199,8 @@ void Item::setGuestWidget(Widget *guest)
         if (m_sizingInfo.geometry.isEmpty()) {
             // Use the widgets geometry, but ensure it's at least hardcodedMinimumSize
             QRect widgetGeo = m_guest->geometry();
-            widgetGeo.setSize(widgetGeo.size().expandedTo(Item::hardcodedMinimumSize));
+            widgetGeo.setSize(
+                widgetGeo.size().expandedTo(minSize()).expandedTo(Item::hardcodedMinimumSize));
             setGeometry(mapFromRoot(widgetGeo));
         } else {
             updateWidgetGeometries();
@@ -442,7 +447,8 @@ void Item::setMinSize(QSize sz)
     if (sz != m_sizingInfo.minSize) {
         m_sizingInfo.minSize = sz;
         Q_EMIT minSizeChanged(this);
-        setSize_recursive(size().expandedTo(sz));
+        if (!m_isSettingGuest)
+            setSize_recursive(size().expandedTo(sz));
     }
 }
 

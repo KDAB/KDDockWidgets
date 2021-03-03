@@ -16,6 +16,8 @@
 #include "DockWidgetBase.h"
 #include "DockWidgetBase_p.h"
 #include "DropAreaWithCentralFrame_p.h"
+#include "MDILayoutWidget_p.h"
+#include "MainWindowMDI.h"
 #include "Position_p.h"
 #include "SideBar_p.h"
 #include "TabWidget_p.h"
@@ -249,6 +251,8 @@ private Q_SLOTS:
     void tst_deleteOnClose();
     void tst_toggleAction();
     void tst_redocksToPreviousTabIndex();
+
+    void tst_addMDIDockWidget();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
@@ -7047,6 +7051,16 @@ void TestDocks::tst_redocksToPreviousTabIndex()
     QVERIFY(false);
     Q_UNUSED(frame);
 #endif
+}
+
+void TestDocks::tst_addMDIDockWidget()
+{
+    EnsureTopLevelsDeleted e;
+
+    // Test that adding a MDI dock widget doesn't produce any warning
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_MDI);
+    auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
+    qobject_cast<MDILayoutWidget *>(m->layoutWidget())->addDockWidget(dock0, QPoint(0, 0), {});
 }
 
 void TestDocks::tst_restoreWithNativeTitleBar()

@@ -343,6 +343,7 @@ protected:
     SizingInfo m_sizingInfo;
     const bool m_isContainer;
     ItemContainer *m_parent = nullptr;
+    bool m_isSettingGuest = false;
 private Q_SLOTS:
     void onWidgetLayoutRequested();
 
