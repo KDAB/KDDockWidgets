@@ -15,6 +15,8 @@
 #include "kddockwidgets/DockWidgetBase.h"
 #include "kddockwidgets/MainWindowBase.h"
 
+#include "kddockwidgets/private/Frame_p.h"
+
 #include <QVector>
 #include <QObject>
 #include <QPointer>
