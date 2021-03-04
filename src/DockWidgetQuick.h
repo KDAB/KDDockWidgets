@@ -20,6 +20,7 @@
 #define KD_DOCKWIDGET_QUICK_H
 
 #include "DockWidgetBase.h"
+#include "private/TitleBar_p.h"
 
 QT_BEGIN_NAMESPACE
 class QCloseEvent;
