@@ -133,9 +133,13 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         if (mTarget->isMaximized())
             break;
 
-        if (isMDI() && DockRegistry::self()->frameInMDIResize() != mTarget) {
-            // Some other frame is being resized.
-            return false;
+        if (isMDI()) {
+            const Frame *frameBeingResized = DockRegistry::self()->frameInMDIResize();
+            const bool otherFrameBeingResized = frameBeingResized && frameBeingResized != mTarget;
+            if (otherFrameBeingResized) {
+                // only one at a time!
+                return false;
+            }
         }
 
         auto mouseEvent = static_cast<QMouseEvent *>(e);
