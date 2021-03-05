@@ -82,38 +82,11 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         return false;
 
     auto widget = qobject_cast<QWidgetOrQuick*>(o);
-
-#ifdef KDDOCKWIDGETS_QTWIDGETS
     if (!widget)
         return false;
 
     if (m_isTopLevelWindowResizer && (!widget->isTopLevel() || o != mTarget))
         return false;
-#else
-
-    // The QtQuick case is a bit different, as the Frame QQuickItem doesn't receive the MouseMove
-    // events, the QWindow does. (The frame instead receives HoverMove).
-    // So, if widget is nullptr we still allow for the case of it being a mouse move event
-    // to the QWindow
-
-    if (m_isTopLevelWindowResizer) {
-        if (!widget)
-            return false;
-
-        if (!widget->isTopLevel() || o != mTarget)
-            return false;
-    } else {
-        if (!isMDI()) {
-            // For QtQuick we only support the MDI case
-            return false;
-        }
-
-        if (!widget) {
-            return false;
-        }
-    }
-
-#endif
 
     switch (e->type()) {
     case QEvent::MouseButtonPress: {
