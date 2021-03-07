@@ -133,6 +133,9 @@ public:
     /// This is called delayed whenever we show a floating dock widget, so we get a FloatingWindow
     void maybeMorphIntoFloatingWindow();
 
+    /// @brief Returns the mdi layout this dock widget is in, if any.
+    MDILayoutWidget *mdiLayout() const;
+
     const QString name;
     QStringList affinities;
     QString title;

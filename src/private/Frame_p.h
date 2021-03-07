@@ -39,6 +39,7 @@ class TabWidget;
 class DockWidgetBase;
 class FloatingWindow;
 class MainWindowBase;
+class MDILayoutWidget;
 class WidgetResizeHandler;
 
 /**
@@ -262,6 +263,9 @@ public:
     /// @brief Returns whether this frame is in a MDI layout
     /// Usually no, unless you're using an MDI main window
     bool isMDI() const;
+
+    /// @brief Returns the MDI layout. Or nullptr if this frame isn't in a MDI layout
+    MDILayoutWidget *mdiLayoutWidget() const;
 
     /// @brief See DockWidgetBase::userType()
     int userType() const;

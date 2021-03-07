@@ -253,6 +253,7 @@ private Q_SLOTS:
     void tst_redocksToPreviousTabIndex();
 
     void tst_addMDIDockWidget();
+    void tst_redockToMDIRestoresPosition();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
@@ -7061,6 +7062,49 @@ void TestDocks::tst_addMDIDockWidget()
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_MDI);
     auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
     qobject_cast<MDILayoutWidget *>(m->layoutWidget())->addDockWidget(dock0, QPoint(0, 0), {});
+}
+
+void TestDocks::tst_redockToMDIRestoresPosition()
+{
+    // Tests that setFloating(false) puts the dock widget where it was before floating
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_MDI);
+    auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
+
+    auto layoutWidget = qobject_cast<MDILayoutWidget *>(m->layoutWidget());
+    const QPoint initialPoint = QPoint(500, 500);
+    layoutWidget->addDockWidget(dock0, initialPoint, {});
+
+    Frame *frame = dock0->DockWidgetBase::d->frame();
+    QCOMPARE(frame->QWidgetAdapter::pos(), initialPoint);
+
+    const QSize initialSize = frame->QWidgetAdapter::size();
+
+    dock0->setFloating(true);
+    dock0->setFloating(false);
+    frame = dock0->DockWidgetBase::d->frame();
+    QCOMPARE(frame->QWidgetAdapter::pos(), initialPoint);
+
+    const QPoint anotherPos = QPoint(250, 250);
+    dock0->setMDIPosition(anotherPos);
+
+    dock0->setFloating(true);
+    dock0->setFloating(false);
+    frame = dock0->DockWidgetBase::d->frame();
+
+    Item *item = layoutWidget->itemForFrame(frame);
+    QCOMPARE(item->pos(), anotherPos);
+    QCOMPARE(item->geometry(), frame->QWidgetAdapter::geometry());
+    QCOMPARE(frame->QWidgetAdapter::pos(), anotherPos);
+    QCOMPARE(frame->QWidgetAdapter::size(), initialSize);
+
+    const QSize anotherSize = QSize(500, 500);
+    dock0->setMDISize(anotherSize);
+    QCOMPARE(frame->QWidgetAdapter::size(), anotherSize);
+    item = layoutWidget->itemForFrame(frame);
+    QCOMPARE(item->geometry(), frame->QWidgetAdapter::geometry());
+
 }
 
 void TestDocks::tst_restoreWithNativeTitleBar()

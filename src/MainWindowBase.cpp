@@ -154,6 +154,11 @@ LayoutWidget *MainWindowBase::layoutWidget() const
     return d->m_layoutWidget;
 }
 
+MDILayoutWidget *MainWindowBase::mdiLayoutWidget() const
+{
+    return qobject_cast<MDILayoutWidget *>(layoutWidget());
+}
+
 void MainWindowBase::setAffinities(const QStringList &affinityNames)
 {
     QStringList affinities = affinityNames;

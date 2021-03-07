@@ -38,6 +38,20 @@ public:
     /// @brief docks the dock widgets into this MDI area, at the specified position
     void addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption addingOption);
 
+    /// @brief Moves a dock widget @p dw to point @p pos
+    void move(DockWidgetBase *dw, QPoint pos);
+
+    /// @brief Moves a dock widget @p f to point @p pos
+    /// Convenience overload.
+    void move(Frame *f, QPoint pos);
+
+    /// @brief Sets the size of dock widget @p dw to @p size
+    void resize(DockWidgetBase *dw, QSize size);
+
+    /// @brief Sets the size of dock widget @p f to @p size
+    /// Convenience overload.
+    void resize(Frame *f, QSize size);
+
 private:
     Layouting::ItemFreeContainer *const m_rootItem;
 };

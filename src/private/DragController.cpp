@@ -20,6 +20,7 @@
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "Config.h"
+#include "MDILayoutWidget_p.h"
 
 #include <QMouseEvent>
 #include <QGuiApplication>
@@ -445,7 +446,9 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
     newLocalPosBounded.setX(qMin(newLocalPosBounded.x(), parentSize.width() - frame->width()));
     newLocalPosBounded.setY(qMin(newLocalPosBounded.y(), parentSize.height() - frame->height()));
 
-    frame->QWidgetAdapter::move(newLocalPosBounded);
+    auto layout = frame->mdiLayoutWidget();
+    Q_ASSERT(layout);
+    layout->move(frame, newLocalPosBounded);
 
     // Check if we need to pop out the MDI window (make it float)
     // If we drag the window against an edge, and move behind the edge some threshold, we float it

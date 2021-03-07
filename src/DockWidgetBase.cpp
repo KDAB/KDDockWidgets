@@ -10,19 +10,20 @@
 */
 
 #include "DockWidgetBase.h"
-#include "DockWidgetBase_p.h"
-#include "Frame_p.h"
-#include "FloatingWindow_p.h"
-#include "Logging_p.h"
-#include "Utils_p.h"
-#include "DockRegistry_p.h"
 #include "Config.h"
-#include "TitleBar_p.h"
+#include "DockRegistry_p.h"
+#include "DockWidgetBase_p.h"
+#include "FloatingWindow_p.h"
+#include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "private/Position_p.h"
-#include "WindowBeingDragged_p.h"
-#include "SideBar_p.h"
 #include "LayoutSaver_p.h"
+#include "Logging_p.h"
+#include "MDILayoutWidget_p.h"
+#include "SideBar_p.h"
+#include "TitleBar_p.h"
+#include "Utils_p.h"
+#include "WindowBeingDragged_p.h"
+#include "private/Position_p.h"
 
 #include <QEvent>
 #include <QCloseEvent>
@@ -507,6 +508,14 @@ void DockWidgetBase::Private::maybeMorphIntoFloatingWindow()
         morphIntoFloatingWindow();
 }
 
+MDILayoutWidget *DockWidgetBase::Private::mdiLayout() const
+{
+    if (auto mw = mainWindow())
+        return mw->mdiLayoutWidget();
+
+    return nullptr;
+}
+
 DockWidgetBase::Private *DockWidgetBase::dptr() const
 {
     return d;
@@ -791,22 +800,14 @@ int DockWidgetBase::userType() const
 
 void DockWidgetBase::setMDIPosition(QPoint pos)
 {
-    if (Frame *frame = d->frame()) {
-        if (!frame->isMDI())
-            return;
-
-        frame->QWidgetAdapter::move(pos);
-    }
+    if (MDILayoutWidget *layout = d->mdiLayout())
+        layout->move(this, pos);
 }
 
 void DockWidgetBase::setMDISize(QSize size)
 {
-    if (Frame *frame = d->frame()) {
-        if (!frame->isMDI())
-            return;
-
-        frame->QWidgetAdapter::setSize(size.expandedTo(frame->minimumSize()));
-    }
+    if (MDILayoutWidget *layout = d->mdiLayout())
+        layout->resize(this, size);
 }
 
 void DockWidgetBase::setMDIZ(int z)

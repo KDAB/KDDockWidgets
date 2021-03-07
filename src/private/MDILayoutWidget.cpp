@@ -59,3 +59,43 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialO
         delete frame;
     }
 }
+
+void MDILayoutWidget::move(DockWidgetBase *dw, QPoint pos)
+{
+    move(dw->d->frame(), pos);
+}
+
+void MDILayoutWidget::move(Frame *frame, QPoint pos)
+{
+    if (!frame)
+        return;
+
+    Layouting::Item *item = itemForFrame(frame);
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << frame;
+        return;
+    }
+
+    QRect geo = item->geometry();
+    geo.moveTopLeft(pos);
+    item->setGeometry(geo);
+}
+
+void MDILayoutWidget::resize(DockWidgetBase *dw, QSize size)
+{
+    resize(dw->d->frame(), size);
+}
+
+void MDILayoutWidget::resize(Frame *frame, QSize size)
+{
+    if (!frame)
+        return;
+
+    Layouting::Item *item = itemForFrame(frame);
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << frame;
+        return;
+    }
+
+    item->setSize(size.expandedTo(frame->minimumSize()));
+}

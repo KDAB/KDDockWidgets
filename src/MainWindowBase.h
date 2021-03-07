@@ -35,6 +35,7 @@ namespace KDDockWidgets {
 class DockWidgetBase;
 class Frame;
 class DropArea;
+class MDILayoutWidget;
 class MultiSplitter;
 class LayoutWidget;
 class DropAreaWithCentralFrame;
@@ -106,6 +107,10 @@ public:
     ///@internal
     ///@brief returns the MultiSplitter.
     LayoutWidget *layoutWidget() const;
+
+    ///@internal
+    ///@brief Returns the MDI layout. Or nullptr if this isn't a MDI main window
+    MDILayoutWidget *mdiLayoutWidget() const;
 
     /**
      * @brief Sets the affinities names. Dock widgets can only dock into main windows of the same affinity.

@@ -785,7 +785,12 @@ void Frame::setAllowedResizeSides(CursorPositions sides)
 
 bool Frame::isMDI() const
 {
-    return qobject_cast<const MDILayoutWidget*>(m_layoutWidget) != nullptr;
+    return mdiLayoutWidget() != nullptr;
+}
+
+MDILayoutWidget *Frame::mdiLayoutWidget() const
+{
+    return qobject_cast<MDILayoutWidget *>(m_layoutWidget);
 }
 
 int Frame::userType() const
