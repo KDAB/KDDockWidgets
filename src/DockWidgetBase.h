@@ -199,6 +199,18 @@ public:
     void setTitle(const QString &title);
 
     /**
+     * @brief Returns the size of the dock widget's parent frame.
+     *
+     * This will always be bigger than the DockWidget's size, as there's margins and a title bar.
+     * Also, a frame can contain more than 1 dock widget (tabbed), meaning the geometry will account
+     * for the tab bar and title bar.
+     *
+     * The position of the rect is in layout coordinates. 0,0 is the top-left of the layout
+     * holding the widgets.
+     */
+    QRect frameGeometry() const;
+
+    /**
      * @brief Returns the dock widget's options which control behaviour.
      * @sa setOptions(), optionsChanged()
      */

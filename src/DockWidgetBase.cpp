@@ -241,6 +241,15 @@ void DockWidgetBase::setTitle(const QString &title)
     }
 }
 
+QRect DockWidgetBase::frameGeometry() const
+{
+    if (Frame *f = d->frame())
+        return f->QWidgetAdapter::geometry();
+
+    // Means the dock widget isn't visible. Just fallback to its own geometry
+    return QWidgetAdapter::geometry();
+}
+
 DockWidgetBase::Options DockWidgetBase::options() const
 {
     return d->options;
