@@ -17,6 +17,7 @@
 #include "Qt5Qt6Compat_p.h"
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
+#include "MDILayoutWidget_p.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -115,8 +116,14 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     }
     case QEvent::MouseButtonRelease: {
         m_resizingInProgress = false;
-        if (isMDI())
+        if (isMDI()) {
             Q_EMIT DockRegistry::self()->frameInMDIResizeChanged();
+            auto frame = static_cast<Frame*>(mTarget);
+            // Usually in KDDW all geometry changes are done in the layout items, which propagate to the widgets
+            // When resizing a MDI howver, we're resizing the widget directly. So update the corresponding layout
+            // item when we're finished.
+            frame->mdiLayoutWidget()->setDockWidgetGeometry(frame, frame->QWidgetAdapter::geometry());
+        }
         updateCursor(CursorPosition_Undefined);
         auto mouseEvent = static_cast<QMouseEvent *>(e);
 

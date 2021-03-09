@@ -52,6 +52,9 @@ public:
     /// Convenience overload.
     void resizeDockWidget(Frame *f, QSize size);
 
+    /// @brief sets the size and position of the dock widget @p f
+    void setDockWidgetGeometry(Frame *f, QRect);
+
 private:
     Layouting::ItemFreeContainer *const m_rootItem;
 };

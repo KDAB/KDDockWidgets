@@ -60,6 +60,20 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialO
     }
 }
 
+void MDILayoutWidget::setDockWidgetGeometry(Frame *frame, QRect geometry)
+{
+    if (!frame)
+        return;
+
+    Layouting::Item *item = itemForFrame(frame);
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << frame;
+        return;
+    }
+
+    item->setGeometry(geometry);
+}
+
 void MDILayoutWidget::moveDockWidget(DockWidgetBase *dw, QPoint pos)
 {
     moveDockWidget(dw->d->frame(), pos);
