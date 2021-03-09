@@ -801,13 +801,13 @@ int DockWidgetBase::userType() const
 void DockWidgetBase::setMDIPosition(QPoint pos)
 {
     if (MDILayoutWidget *layout = d->mdiLayout())
-        layout->move(this, pos);
+        layout->moveDockWidget(this, pos);
 }
 
 void DockWidgetBase::setMDISize(QSize size)
 {
     if (MDILayoutWidget *layout = d->mdiLayout())
-        layout->resize(this, size);
+        layout->resizeDockWidget(this, size);
 }
 
 void DockWidgetBase::setMDIZ(int z)

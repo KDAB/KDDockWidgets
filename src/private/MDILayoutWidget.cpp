@@ -60,12 +60,12 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialO
     }
 }
 
-void MDILayoutWidget::move(DockWidgetBase *dw, QPoint pos)
+void MDILayoutWidget::moveDockWidget(DockWidgetBase *dw, QPoint pos)
 {
-    move(dw->d->frame(), pos);
+    moveDockWidget(dw->d->frame(), pos);
 }
 
-void MDILayoutWidget::move(Frame *frame, QPoint pos)
+void MDILayoutWidget::moveDockWidget(Frame *frame, QPoint pos)
 {
     if (!frame)
         return;
@@ -81,12 +81,12 @@ void MDILayoutWidget::move(Frame *frame, QPoint pos)
     item->setGeometry(geo);
 }
 
-void MDILayoutWidget::resize(DockWidgetBase *dw, QSize size)
+void MDILayoutWidget::resizeDockWidget(DockWidgetBase *dw, QSize size)
 {
-    resize(dw->d->frame(), size);
+    resizeDockWidget(dw->d->frame(), size);
 }
 
-void MDILayoutWidget::resize(Frame *frame, QSize size)
+void MDILayoutWidget::resizeDockWidget(Frame *frame, QSize size)
 {
     if (!frame)
         return;

@@ -448,7 +448,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
 
     auto layout = frame->mdiLayoutWidget();
     Q_ASSERT(layout);
-    layout->move(frame, newLocalPosBounded);
+    layout->moveDockWidget(frame, newLocalPosBounded);
 
     // Check if we need to pop out the MDI window (make it float)
     // If we drag the window against an edge, and move behind the edge some threshold, we float it

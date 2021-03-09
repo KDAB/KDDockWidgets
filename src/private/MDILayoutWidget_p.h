@@ -39,18 +39,18 @@ public:
     void addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption addingOption);
 
     /// @brief Moves a dock widget @p dw to point @p pos
-    void move(DockWidgetBase *dw, QPoint pos);
+    void moveDockWidget(DockWidgetBase *dw, QPoint pos);
 
     /// @brief Moves a dock widget @p f to point @p pos
     /// Convenience overload.
-    void move(Frame *f, QPoint pos);
+    void moveDockWidget(Frame *f, QPoint pos);
 
     /// @brief Sets the size of dock widget @p dw to @p size
-    void resize(DockWidgetBase *dw, QSize size);
+    void resizeDockWidget(DockWidgetBase *dw, QSize size);
 
     /// @brief Sets the size of dock widget @p f to @p size
     /// Convenience overload.
-    void resize(Frame *f, QSize size);
+    void resizeDockWidget(Frame *f, QSize size);
 
 private:
     Layouting::ItemFreeContainer *const m_rootItem;
