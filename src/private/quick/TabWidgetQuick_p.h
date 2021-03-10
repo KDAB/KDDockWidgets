@@ -99,8 +99,8 @@ private:
     void emitDataChangedFor(DockWidgetBase *);
     DockWidgetBase::List m_dockWidgets;
     QHash<DockWidgetBase *, QVector<QMetaObject::Connection> > m_connections; // To make it easy to disconnect from lambdas
+    bool m_removeGuard = false;
 };
-
 
 }
 

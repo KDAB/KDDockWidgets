@@ -15,6 +15,7 @@
 #include "FrameworkWidgetFactory.h"
 
 #include <QDebug>
+#include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
 
@@ -169,10 +170,15 @@ void DockWidgetModel::emitDataChangedFor(DockWidgetBase *dw)
 
 void DockWidgetModel::remove(DockWidgetBase *dw)
 {
+    QScopedValueRollback<bool> guard(m_removeGuard, true);
     const int row = indexOf(dw);
     if (row == -1) {
-        qWarning() << Q_FUNC_INFO << "Nothing to remove"
-                   << static_cast<void*>(dw); // Print address only, as it might be deleted already
+        if (!m_removeGuard) {
+            // can happen if there's reentrancy. Some user code reacting
+            // to the signals and call remove for whatever reason.
+            qWarning() << Q_FUNC_INFO << "Nothing to remove"
+                       << static_cast<void*>(dw); // Print address only, as it might be deleted already
+        }
     } else {
         const auto connections = m_connections.take(dw);
         for (QMetaObject::Connection conn : connections)
