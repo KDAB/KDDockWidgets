@@ -22,6 +22,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "TabWidgetQuick_p.h"
 #include "WidgetResizeHandler_p.h"
+#include "DockWidgetQuick.h"
 #include <QDebug>
 
 using namespace KDDockWidgets;
@@ -36,6 +37,12 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options, int userTyp
             this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase*)));
 
     connect(this, &QWidgetAdapter::geometryUpdated, this, &Frame::layoutInvalidated);
+
+    connect(this, &FrameQuick::geometryChanged, this, [this] {
+        for (auto dw : dockWidgets()) {
+            Q_EMIT static_cast<DockWidgetQuick*>(dw)->frameGeometryChanged(QWidgetAdapter::geometry());
+        }
+    });
 
     QQmlComponent component(Config::self().qmlEngine(),
                             Config::self().frameworkWidgetFactory()->frameFilename());

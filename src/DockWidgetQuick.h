@@ -83,6 +83,11 @@ public:
     /// @brief Called by QtQuick when min-size changes
     Q_INVOKABLE void onGeometryUpdated();
 
+Q_SIGNALS:
+    /// @brief The geometry of the frame container this dock widget is in changed
+    /// For example, when dragging a dockwidget
+    void frameGeometryChanged(QRect);
+
 protected:
     bool event(QEvent *e) override;
 
