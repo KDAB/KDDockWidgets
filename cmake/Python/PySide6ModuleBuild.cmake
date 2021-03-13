@@ -137,7 +137,6 @@ macro(CREATE_PYTHON_BINDINGS
 
         target_include_directories(${TARGET_NAME} PUBLIC
             ${TARGET_INCLUDE_DIRS}
-            ${PYSIDE_EXTRA_INCLUDES}
         )
 
         target_link_libraries(${TARGET_NAME}

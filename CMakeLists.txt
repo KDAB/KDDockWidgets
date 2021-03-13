@@ -50,6 +50,8 @@
 #
 # -DKDDockWidgets_PYTHON_BINDINGS=[true|false]
 #  Build/Generate python bindings.  Always false for Debug builds
+#  (If your shiboken or pyside is installed in a non-standard locations
+#  try passing the SHIBOKEN_CUSTOM_PREFIX and PYSIDE2_CUSTOM_PREFIX variables.)
 #  Default=false
 #
 # -DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=[path]
@@ -64,18 +66,22 @@ if(POLICY CMP0042)
   cmake_policy(SET CMP0042 NEW)
 endif()
 
-set(KDAB_INSTALL True)
-
-if (NOT DEFINED USE_DEFAULT_INSTALL_LOCATION)
-  # Just to fix warnings with --warn-uninitialized. I don't think we want an option() for this one.
+# Just to fix warnings with --warn-uninitialized
+if(NOT DEFINED USE_DEFAULT_INSTALL_LOCATION)
   set(USE_DEFAULT_INSTALL_LOCATION FALSE)
 endif()
-
-if (NOT DEFINED CMAKE_INSTALL_PREFIX)
-  # Just to fix warnings with --warn-uninitialized
-  SET(CMAKE_INSTALL_PREFIX "")
+if(NOT DEFINED CMAKE_INSTALL_PREFIX)
+  set(CMAKE_INSTALL_PREFIX "")
+endif()
+if(NOT DEFINED SHIBOKEN_CUSTOM_PREFIX) #look for shiboken in a custom location
+  set(SHIBOKEN_CUSTOM_PREFIX "")
+endif()
+if(NOT DEFINED PYSIDE2_CUSTOM_PREFIX) #look for pyside in a custom location
+  set(PYSIDE2_CUSTOM_PREFIX "")
 endif()
 
+# Allow using a non-KDAB install location
+set(KDAB_INSTALL True)
 if(NOT ${USE_DEFAULT_INSTALL_LOCATION})
   if(NOT "${CMAKE_INSTALL_PREFIX}" STREQUAL "")
     set(KDAB_INSTALL False)
@@ -96,6 +102,7 @@ set(${PROJECT_NAME}_VERSION_MAJOR 1)
 set(${PROJECT_NAME}_VERSION_MINOR 4)
 set(${PROJECT_NAME}_VERSION_PATCH 0)
 set(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
+set(PROJECT_VERSION ${${PROJECT_NAME}_VERSION}) #PROJECT_VERSION is needed by some ECM modules
 set(${PROJECT_NAME}_SOVERSION "1.4")
 
 include(FeatureSummary)

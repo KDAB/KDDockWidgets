@@ -58,12 +58,12 @@ string(REPLACE ";" "." SHIBOKEN_VERSION "${SHIBOKEN_VERSION}")
 
 message(STATUS "ShibokenGenerator base dir: ${SHIBOKEN_GENERATOR_BASEDIR}")
 message(STATUS "Shiboken base dir:          ${SHIBOKEN_BASEDIR}")
-message(STATUS "Shiboken custom path:       ${SHIBOKEN_CUSTOM_PATH}")
+message(STATUS "Shiboken custom path:       ${SHIBOKEN_CUSTOM_PREFIX}")
 
 if(SHIBOKEN_BASEDIR)
     find_path(SHIBOKEN_INCLUDE_DIR
           shiboken.h
-          PATHS ${SHIBOKEN_CUSTOM_PATH} ${SHIBOKEN_GENERATOR_BASEDIR}/include
+          PATHS ${SHIBOKEN_CUSTOM_PREFIX} ${SHIBOKEN_GENERATOR_BASEDIR}/include
           NO_DEFAULT_PATH)
     if(MSVC)
         SET(SHIBOKEN_LIBRARY_BASENAMES "shiboken6.abi3.lib")
@@ -90,7 +90,7 @@ if(SHIBOKEN_BASEDIR)
     if (NOT SHIBOKEN_INCLUDE_DIR)
         return()
     endif()
-    set(SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_CUSTOM_PATH})
+    set(SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_CUSTOM_PREFIX})
     list(APPEND SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_BASEDIR})
     list(APPEND SHIBOKEN_SEARCH_PATHS ${SHIBOKEN_GENERATOR_BASEDIR})
     find_file(SHIBOKEN_LIBRARY
