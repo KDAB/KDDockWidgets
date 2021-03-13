@@ -21,8 +21,9 @@
 #
 # -DKDDockWidgets_UNINSTALL=[true|false]
 #  Setup the uninstall target.
-#  You may want to disable the uninstall target that's added by default when you are including
-#  KDDockWidgets as a submodule directly and have a custom uninstall target of your own.
+#  You may want to disable the uninstall target when you are using KDDockWidgets
+#  as a submodule directly and have a custom uninstall target of your own.
+#  Default=true
 #
 # -DKDDockWidgets_TESTS=[true|false]
 #  Build the test harness.
