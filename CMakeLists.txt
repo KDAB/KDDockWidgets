@@ -108,7 +108,7 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
   set(${PROJECT_NAME}_WERROR ON)
 endif()
 
-#option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
+option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
 if(${PROJECT_NAME}_QT6)
   find_package(Qt6Widgets REQUIRED)
