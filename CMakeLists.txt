@@ -64,7 +64,18 @@ if(POLICY CMP0042)
 endif()
 
 set(KDAB_INSTALL True)
-if((NOT DEFINED ${USE_DEFAULT_INSTALL_LOCATION}) OR (NOT ${USE_DEFAULT_INSTALL_LOCATION}))
+
+if (NOT DEFINED USE_DEFAULT_INSTALL_LOCATION)
+  # Just to fix warnings with --warn-uninitialized. I don't think we want an option() for this one.
+  set(USE_DEFAULT_INSTALL_LOCATION FALSE)
+endif()
+
+if (NOT DEFINED CMAKE_INSTALL_PREFIX)
+  # Just to fix warnings with --warn-uninitialized
+  SET(CMAKE_INSTALL_PREFIX "")
+endif()
+
+if(NOT ${USE_DEFAULT_INSTALL_LOCATION})
   if(NOT "${CMAKE_INSTALL_PREFIX}" STREQUAL "")
     set(KDAB_INSTALL False)
   endif()
