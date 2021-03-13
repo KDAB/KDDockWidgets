@@ -43,8 +43,8 @@
 #  Forces the test harness to be built.
 #  Default=false
 #
-# -DKDDockWidgets_QTQUICK == IN DEVELOPMENT. DO NOT USE! ==
-#  Build for QtQuick instead of QtWidgets
+# -DKDDockWidgets_QTQUICK=[true|false]
+#  Build for QtQuick instead of QtWidgets. Experimental!
 #  Default=false
 #
 # -DKDDockWidgets_PYTHON_BINDINGS=[true|false]
