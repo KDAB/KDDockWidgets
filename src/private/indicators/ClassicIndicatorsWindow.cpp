@@ -129,6 +129,12 @@ IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
     , m_outterTop(new Indicator(classicIndicators, this, DropIndicatorOverlayInterface::DropLocation_OutterTop))
 {
     setWindowFlag(Qt::FramelessWindowHint, true);
+
+    if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow) {
+        // Ensure the overlay window is on top
+        setWindowFlag(Qt::WindowStaysOnTopHint, true);
+    }
+
     setAttribute(Qt::WA_TranslucentBackground);
 
     connect(classicIndicators, &ClassicIndicators::innerIndicatorsVisibleChanged,
