@@ -381,6 +381,9 @@ void DockWidgetBase::raise()
     if (auto fw = floatingWindow()) {
         fw->raise();
         fw->activateWindow();
+    } else if (Frame *frame = d->frame()) {
+        if (frame->isMDI())
+            frame->raise();
     }
 }
 
