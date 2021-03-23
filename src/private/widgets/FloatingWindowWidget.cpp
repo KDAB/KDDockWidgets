@@ -9,9 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include "FloatingWindowWidget_p.h"
 #include "DockRegistry_p.h"
 #include "DropArea_p.h"
-#include "FloatingWindowWidget_p.h"
 #include "Logging_p.h"
 #include "TitleBar_p.h"
 #include "Utils_p.h"

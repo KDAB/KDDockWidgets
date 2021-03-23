@@ -15,11 +15,11 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+#include "Position_p.h"
 #include "DockRegistry_p.h"
 #include "FloatingWindow_p.h"
 #include "LayoutSaver_p.h"
 #include "LayoutWidget_p.h"
-#include "Position_p.h"
 
 #include <algorithm>
 

@@ -16,11 +16,11 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+#include "Frame_p.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
 #include "DockWidgetBase_p.h"
 #include "FloatingWindow_p.h"
-#include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "LayoutSaver_p.h"
 #include "LayoutWidget_p.h"

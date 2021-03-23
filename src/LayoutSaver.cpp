@@ -17,6 +17,7 @@
  */
 
 #include "LayoutSaver.h"
+#include "LayoutSaver_p.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
 #include "DockWidgetBase.h"
@@ -24,7 +25,6 @@
 #include "FloatingWindow_p.h"
 #include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "LayoutSaver_p.h"
 #include "LayoutWidget_p.h"
 #include "Logging_p.h"
 #include "MainWindowBase.h"

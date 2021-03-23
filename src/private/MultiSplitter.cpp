@@ -17,6 +17,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
+#include "MultiSplitter_p.h"
 #include "../LayoutSaver_p.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
@@ -28,7 +29,6 @@
 #include "LayoutSaver.h"
 #include "Logging_p.h"
 #include "MainWindowBase.h"
-#include "MultiSplitter_p.h"
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
 #include "multisplitter/Widget.h"

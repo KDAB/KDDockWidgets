@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Config.h"
 #include "DockRegistry_p.h"
+#include "Config.h"
 #include "DockWidgetBase.h"
 #include "DockWidgetBase_p.h"
 #include "FloatingWindow_p.h"

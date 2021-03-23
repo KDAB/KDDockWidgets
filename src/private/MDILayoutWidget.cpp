@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "ItemFreeContainer_p.h"
 #include "MDILayoutWidget_p.h"
+#include "ItemFreeContainer_p.h"
 #include "DockWidgetBase_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"

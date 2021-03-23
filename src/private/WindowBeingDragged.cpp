@@ -9,12 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include "WindowBeingDragged_p.h"
 #include "DragController_p.h"
 #include "Frame_p.h"
 #include "LayoutWidget_p.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
-#include "WindowBeingDragged_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 # include "widgets/TabBarWidget_p.h"
