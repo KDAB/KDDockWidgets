@@ -34,7 +34,7 @@ public:
     explicit ItemFreeContainer(Widget *hostWidget);
     ~ItemFreeContainer();
 
-    /// @brief adds the item to the specifed position
+    /// @brief adds the item to the specified position
     void addDockWidget(Item *item, QPoint localPt);
 
     void clear() override;
