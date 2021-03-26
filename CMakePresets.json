@@ -12,6 +12,9 @@
                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
                 "KDDockWidgets_FUZZER" : "OFF"
+            },
+            "warnings" : {
+                "uninitialized" : true
             }
         },
         {
