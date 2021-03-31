@@ -2407,6 +2407,11 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
                 }
                 if (lengthToGive == 0)
                     return;
+
+                if (lengthToGive < 0) {
+                    qWarning() << Q_FUNC_INFO << "Breaking infinit loop";
+                    return;
+                }
             }
         }
 

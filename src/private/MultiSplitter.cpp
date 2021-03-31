@@ -361,6 +361,9 @@ void MultiSplitter::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item
 
 void MultiSplitter::layoutEqually()
 {
+    if (!checkSanity())
+        return;
+
     layoutEqually(m_rootItem);
 }
 
