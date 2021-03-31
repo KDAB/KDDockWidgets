@@ -2384,8 +2384,9 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
     auto lengthToGive = length() - (d->m_separators.size() * Item::separatorThickness);
 
     // clear the sizes before we start distributing
-    for (SizingInfo &size : sizes)
-         size.setLength(0, d->m_orientation);
+    for (SizingInfo &size : sizes) {
+        size.setLength(0, d->m_orientation);
+    }
 
     while (satisfiedIndexes.count() < sizes.count()) {
         const auto remainingItems = sizes.count() - satisfiedIndexes.count();
@@ -2403,9 +2404,25 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
                 continue;
             }
 
-            const auto newItemLenght = qBound(size.minLength(d->m_orientation),
-                                              size.length(d->m_orientation) + suggestedToGive,
-                                              size.maxLengthHint(d->m_orientation));
+            // Bound the max length. Our max can't be bigger than the remaining space.
+            // The layout's min length minus our own min length is the amount of space that we
+            // need to guarantee. We can't go larger and overwrite that
+
+            const auto othersMissing = // The size that the others are missing to satisfy their
+                                       // minimum length
+                std::accumulate(sizes.constBegin(), sizes.constEnd(), 0,
+                                [this](size_t sum, const SizingInfo &sz) {
+                                    return sum + sz.missingLength(d->m_orientation);
+                                })
+                - size.missingLength(d->m_orientation);
+
+            const auto maxLength =
+                qMin(size.length(d->m_orientation) + lengthToGive - othersMissing,
+                     size.maxLengthHint(d->m_orientation));
+
+            const auto newItemLenght =
+                qBound(size.minLength(d->m_orientation),
+                       size.length(d->m_orientation) + suggestedToGive, maxLength);
             const auto toGive = newItemLenght - size.length(d->m_orientation);
 
             if (toGive == 0) {

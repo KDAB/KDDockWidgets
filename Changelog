@@ -6,6 +6,7 @@
     as TitleBarWidget already reimplements sizeHint. If you're inheriting directly from TitleBar then make
     sure to provide a sizeHint.
   - Added MainWindow::closeDockWidgets()
+  - Fixed crash in MainWindow::layoutEqually()
 
 * v1.3.1 (unreleased)
   - Improve restoring layout when RestoreOption_RelativeToMainWindow is used (#171)

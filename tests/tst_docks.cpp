@@ -118,6 +118,7 @@ private Q_SLOTS:
     void tst_restoreMaximizedState();
     void tst_shutdown();
     void tst_closeDockWidgets();
+    void tst_layoutEqually();
     void tst_doubleClose();
     void tst_dockInternal();
     void tst_maximizeAndRestore();
@@ -934,6 +935,30 @@ void TestDocks::tst_closeDockWidgets()
 
     QVERIFY(m->closeDockWidgets(true));
     QCOMPARE(m->layoutWidget()->visibleCount(), 0);
+}
+
+void TestDocks::tst_layoutEqually()
+{
+    EnsureTopLevelsDeleted e;
+
+    const QString mainWindowId = "{7829427d-88e3-402e-9120-50c628dfd0bc}";
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, mainWindowId);
+    m->setAffinities({ mainWindowId });
+
+    auto dock1 = createDockWidget("Favorite-481", new MyWidget2(QSize(536, 438)));
+    auto dock2 = createDockWidget("Favorite-482", new MyWidget2(QSize(229, 118)));
+    auto dock3 = createDockWidget("Favorite-483", new MyWidget2(QSize(356, 90)));
+
+    m->setContentsMargins(10, 0, 10, 0);
+
+    dock1->setAffinities({ mainWindowId });
+    dock2->setAffinities({ mainWindowId });
+    dock3->setAffinities({ mainWindowId });
+
+    LayoutSaver restorer;
+    restorer.restoreFromFile(":/layouts/layoutEquallyCrash.json");
+
+    m->layoutEqually();
 }
 
 void TestDocks::tst_doubleClose()
