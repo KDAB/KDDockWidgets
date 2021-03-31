@@ -193,6 +193,9 @@ QSize MultiSplitter::availableSize() const
 
 void MultiSplitter::layoutEqually()
 {
+    if (!checkSanity())
+        return;
+
     layoutEqually(m_rootItem);
 }
 
