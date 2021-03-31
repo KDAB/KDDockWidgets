@@ -188,6 +188,13 @@ public:
     /// In other words, returns true if MainWindowOption_MDI was passed in the ctor.
     bool isMDI() const;
 
+    /// @brief Closes all dock widgets which are docked into this main window
+    /// This is convenience to calling DockWidget::close() individually
+    /// If force is true, then the individual dock widgets can't stop the process
+    /// Returns false if there's at least one dock widget which rejected closing. Returns true
+    /// if all dock widgets were closed (0 or more)
+    bool closeDockWidgets(bool force = false);
+
 protected:
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()

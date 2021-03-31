@@ -117,6 +117,7 @@ private Q_SLOTS:
     void tst_restoreCentralFrame();
     void tst_restoreMaximizedState();
     void tst_shutdown();
+    void tst_closeDockWidgets();
     void tst_doubleClose();
     void tst_dockInternal();
     void tst_maximizeAndRestore();
@@ -919,6 +920,20 @@ int main(int argc, char *argv[])
 
     TestDocks test;
     return QTest::qExec(&test, argc, argv);
+}
+
+void TestDocks::tst_closeDockWidgets()
+{
+    EnsureTopLevelsDeleted e;
+    auto dock1 = createDockWidget("hello1", Qt::green);
+    auto dock2 = createDockWidget("hello2", Qt::green);
+
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    m->addDockWidget(dock1, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnBottom);
+
+    QVERIFY(m->closeDockWidgets(true));
+    QCOMPARE(m->layoutWidget()->visibleCount(), 0);
 }
 
 void TestDocks::tst_doubleClose()

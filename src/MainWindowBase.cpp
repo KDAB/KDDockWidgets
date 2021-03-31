@@ -582,6 +582,36 @@ bool MainWindowBase::isMDI() const
     return d->m_options & MainWindowOption_MDI;
 }
 
+bool MainWindowBase::closeDockWidgets(bool force)
+{
+    bool allClosed = true;
+
+    const auto dockWidgets = d->m_layoutWidget->dockWidgets();
+    for (DockWidgetBase *dw : dockWidgets) {
+        Frame *frame = dw->d->frame();
+
+        if (force) {
+            dw->forceClose();
+        } else {
+            const bool closed = dw->close();
+            allClosed = allClosed && closed;
+        }
+
+        if (frame->beingDeletedLater()) {
+            // The dock widget was closed and this frame is empty, delete immediately instead of
+            // waiting. I'm not a big fan of deleting stuff later, as state becomes inconsistent
+
+            // Empty frames are historically deleted later since they are triggered by mouse click
+            // on the title bar, and the title bar is inside the frame.
+            // When doing it programatically we can delete immediately.
+
+            delete frame;
+        }
+    }
+
+    return allClosed;
+}
+
 void MainWindowBase::setUniqueName(const QString &uniqueName)
 {
     if (uniqueName.isEmpty())
