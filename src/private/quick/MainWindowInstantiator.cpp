@@ -61,10 +61,10 @@ void MainWindowInstantiator::componentComplete()
         return;
     }
 
-    // if (DockRegistry::self()->contains(m_uniqueName)) {
-    // Dock widget already exists. all good.
-    //  return;
-    //}
+     if (DockRegistry::self()->containsMainWindow(m_uniqueName)) {
+         // MainWindow already exists
+         return;
+    }
 
     if (m_uniqueName.isEmpty()) {
         qWarning() << Q_FUNC_INFO << "Name can't be empty";
