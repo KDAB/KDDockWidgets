@@ -42,6 +42,11 @@ DockWidgetQuick *DockWidgetInstantiator::dockWidget() const
     return m_dockWidget;
 }
 
+void DockWidgetInstantiator::classBegin()
+{
+    // Nothing interesting to do here.
+}
+
 void DockWidgetInstantiator::componentComplete()
 {
     if (m_uniqueName.isEmpty()) {

@@ -48,6 +48,7 @@ public:
     DockWidgetQuick *dockWidget() const;
 
 protected:
+    void classBegin() override;
     void componentComplete() override;
 
 Q_SIGNALS:

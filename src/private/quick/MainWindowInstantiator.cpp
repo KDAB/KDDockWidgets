@@ -48,6 +48,11 @@ void MainWindowInstantiator::setOptions(int options)
     }
 }
 
+void MainWindowInstantiator::classBegin()
+{
+    // Nothing interesting to do here.
+}
+
 void MainWindowInstantiator::componentComplete()
 {
     if (m_uniqueName.isEmpty()) {
