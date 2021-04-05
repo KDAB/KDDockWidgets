@@ -199,7 +199,7 @@ void QWidgetAdapter::QQUICKITEMgeometryChanged(const QRectF &newGeometry, const 
         qApp->sendEvent(this, &ev);
     }
 
-    Q_EMIT geometryChanged();
+    Q_EMIT itemGeometryChanged();
 }
 
 void QWidgetAdapter::raise()

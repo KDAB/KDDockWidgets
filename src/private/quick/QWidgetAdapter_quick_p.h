@@ -181,7 +181,8 @@ public:
     static void makeItemFillParent(QQuickItem *item);
 Q_SIGNALS:
     void geometryUpdated(); // similar to QLayout stuff, when size constraints change
-    void geometryChanged(); // emitted when the geometry changes
+    void itemGeometryChanged(); // emitted when the geometry changes. QQuickItem::geometryChanged()
+                                // isn't a signal, so prefixed item
 
 protected:
     void create();
