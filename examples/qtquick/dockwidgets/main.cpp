@@ -69,14 +69,20 @@ int main(int argc, char *argv[])
         internalFlags |= KDDockWidgets::Config::InternalFlag_NoAeroSnap;
 # endif
 
+    // These are debug-only/development flags, which you can ignore.
     KDDockWidgets::Config::self().setInternalFlags(internalFlags);
 #endif
 
+    // Set any required flags. The defaults are usually fine.
     KDDockWidgets::Config::self().setFlags(flags);
 
+    // Create your engine which loads main.qml. A simple QQuickView would work too.
     QQmlApplicationEngine appEngine;
     KDDockWidgets::Config::self().setQmlEngine(&appEngine);
     appEngine.load((QUrl("qrc:/main.qml")));
+
+    // Bellow we illustrate usage of our C++ API. Alternative you can use declarative API.
+    // See main.qml for examples of dockwidgets created directly in QML
 
     auto dw1 = new KDDockWidgets::DockWidgetQuick("Dock #1");
 
