@@ -40,10 +40,10 @@ KDDW.MainWindow {
         z: 10
 
         onClicked: {
-            if (another.dockWidget.visible) {
-                another.dockWidget.close();
+            if (dock4.dockWidget.visible) {
+                dock4.dockWidget.close();
             } else {
-                another.dockWidget.show();
+                dock4.dockWidget.show();
             }
         }
     }
