@@ -12,9 +12,8 @@
 import QtQuick 2.6
 import com.kdab.dockwidgets 1.0 as KDDW
 
-KDDW.MainWindow {
+KDDW.MainWindowLayout {
     id: root
 
     uniqueName: "MyWindowName-1"
 }
-

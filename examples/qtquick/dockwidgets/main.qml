@@ -13,7 +13,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import com.kdab.dockwidgets 1.0 as KDDW
 
-KDDW.MainWindow {
+KDDW.MainWindowLayout {
     id: root
 
     // Each main layout needs a unique id

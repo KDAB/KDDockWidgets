@@ -25,7 +25,7 @@
 void KDDockWidgets::registerQmlTypes()
 {
     qmlRegisterType<DropAreaWithCentralFrame>("com.kdab.dockwidgets", 1, 0, "DropAreaWithCentralFrame");
-    qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 1, 0, "MainWindow");
+    qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 1, 0, "MainWindowLayout");
     qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 1, 0, "DockWidget");
 
     qmlRegisterUncreatableType<TitleBar>("com.kdab.dockwidgets", 1, 0, "TitleBar", QStringLiteral("Enum access only"));
