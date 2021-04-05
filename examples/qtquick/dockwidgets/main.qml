@@ -18,6 +18,33 @@ ApplicationWindow {
     width: 1000
     height: 800
 
+    menuBar: MenuBar {
+        Menu {
+            title: qsTr("&File")
+
+            Action {
+                text: qsTr("Toggle widget #4")
+                onTriggered: {
+                    toggleDockWidget(dock4);
+                }
+            }
+
+            Action {
+                text: qsTr("Toggle widget #5")
+                onTriggered: {
+                    toggleDockWidget(dock5);
+                }
+            }
+
+            MenuSeparator { }
+            Action { text: qsTr("&Quit")
+                onTriggered: {
+                    Qt.quit();
+                }
+            }
+        }
+    }
+
     KDDW.MainWindowLayout {
         anchors.fill: parent
 
@@ -46,23 +73,14 @@ ApplicationWindow {
                 color: "pink"
             }
         }
+    }
 
-        Button {
-            text: "Toggle Another"
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                margins: 5
-            }
-            z: 10
-
-            onClicked: {
-                if (dock5.dockWidget.visible) {
-                    dock5.dockWidget.close();
-                } else {
-                    dock5.dockWidget.show();
-                }
-            }
+    function toggleDockWidget(dw) {
+        if (dw.dockWidget.visible) {
+            dw.dockWidget.close();
+        } else {
+            dw.dockWidget.show();
         }
     }
+
 }
