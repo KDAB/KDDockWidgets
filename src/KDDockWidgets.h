@@ -47,6 +47,7 @@ Q_NAMESPACE
         Location_OnRight, ///> Right docking location
         Location_OnBottom ///> Bottom docking location
     };
+    Q_ENUM_NS(Location)
 
     enum MainWindowOption {
         MainWindowOption_None = 0, ///> No option set
@@ -66,6 +67,7 @@ Q_NAMESPACE
         FairButFloor, ///< Equal to fair, but if the item we're adding is smaller than the fair suggestion, then that small size is used.
         None, ///< Don't do any sizing
     };
+    Q_ENUM_NS(DefaultSizeMode)
 
     ///@brief Only here for source-compat with v1.2. Do not use.
     ///Use InitialVisibilityOption instead.
@@ -73,11 +75,13 @@ Q_NAMESPACE
         AddingOption_None = 0,
         AddingOption_StartHidden
     };
+    Q_ENUM_NS(AddingOption)
 
     enum class InitialVisibilityOption {
         StartVisible = 0, ///< The dock widget is made visible when docked
         StartHidden ///< Don't show the dock widget when adding it
     };
+    Q_ENUM_NS(InitialVisibilityOption)
 
     /**
      * @brief Struct describing the preferred dock widget size and visibility when adding it to a layout
@@ -163,12 +167,14 @@ Q_NAMESPACE
                                                 ///< Loading layouts won't change the main window geometry and just use whatever the user has at the moment.
     };
     Q_DECLARE_FLAGS(RestoreOptions, RestoreOption)
+    Q_ENUM_NS(RestoreOptions)
 
     enum class DropIndicatorType {
         Classic,   ///< The default
         Segmented, ///< Segmented indicators
         None ///< Don't show any drop indicators while dragging
     };
+    Q_ENUM_NS(DropIndicatorType)
 
     ///@internal
     enum SuggestedGeometryHint {
@@ -177,6 +183,7 @@ Q_NAMESPACE
         SuggestedGeometryHint_GeometryIsFromDocked = 2
     };
     Q_DECLARE_FLAGS(SuggestedGeometryHints, SuggestedGeometryHint)
+    Q_ENUM_NS(SuggestedGeometryHint)
 
     /// @brief Each main window supports 4 sidebars
     enum class SideBarLocation {
@@ -197,6 +204,7 @@ Q_NAMESPACE
         AutoHide,
         UnautoHide
     };
+    Q_ENUM_NS(TitleBarButtonType)
 
     ///@internal
     inline Qt5Qt6Compat::qhashtype qHash(SideBarLocation loc, Qt5Qt6Compat::qhashtype seed)
@@ -230,6 +238,7 @@ Q_NAMESPACE
         FrameOption_IsOverlayed = 4
     };
     Q_DECLARE_FLAGS(FrameOptions, FrameOption)
+    Q_ENUM_NS(FrameOptions)
 
     ///@internal
     inline QString locationStr(Location loc)
