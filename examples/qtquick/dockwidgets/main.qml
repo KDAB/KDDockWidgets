@@ -16,6 +16,9 @@ import com.kdab.dockwidgets 1.0 as KDDW
 KDDW.MainWindow {
     id: root
 
+    // Each main layout needs a unique id
+    uniqueName: "MyWindowName-1"
+
     Repeater {
         model: 3
         KDDW.DockWidget {
@@ -26,7 +29,7 @@ KDDW.MainWindow {
 
     KDDW.DockWidget {
         id: dock4
-        uniqueName: "dock4"
+        uniqueName: "dock4" // Each dock widget needs a unique id
         source: ":/Another.qml"
     }
 
@@ -46,9 +49,5 @@ KDDW.MainWindow {
                 dock4.dockWidget.show();
             }
         }
-    }
-
-    Component.onCompleted: {
-        root.init("MyWindowName-1");
     }
 }

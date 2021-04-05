@@ -12,8 +12,8 @@
 #ifndef KD_MAIN_WINDOW_WRAPPER_P_H
 #define KD_MAIN_WINDOW_WRAPPER_P_H
 
-#include "kddockwidgets/docks_export.h"
 #include "QWidgetAdapter.h"
+#include "kddockwidgets/docks_export.h"
 
 #include <QQuickItem>
 
@@ -23,18 +23,34 @@ class MainWindowQuick;
 
 /// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through MainWindowQuick's ctor
 /// So instead, user instantiates a MainWindowWrapper in QML and calls init.
-class DOCKS_EXPORT MainWindowWrapper : public QWidgetAdapter
+class DOCKS_EXPORT MainWindowInstantiator
+    : public QWidgetAdapter
 {
     Q_OBJECT
+    Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
+    Q_PROPERTY(int options READ options WRITE setOptions NOTIFY optionsChanged) // TODO: Use num
 public:
     ///@brief ctor, called by QML engine
-    MainWindowWrapper();
+    MainWindowInstantiator();
 
-    ///@brief called by the user, typically in main.qml or so, in Component.onCompleted{}
-    Q_INVOKABLE void init(const QString &uniqueName, int options = 0);
+    QString uniqueName() const;
+    void setUniqueName(const QString &);
+
+    int options() const;
+    void setOptions(int);
+
+protected:
+    void classBegin() override;
+    void componentComplete() override;
+
+Q_SIGNALS:
+    void uniqueNameChanged();
+    void optionsChanged();
 
 private:
+    QString m_uniqueName;
     MainWindowQuick *m_mainWindow = nullptr;
+    int m_options = 0;
 };
 
 }

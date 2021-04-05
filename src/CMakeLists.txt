@@ -158,8 +158,8 @@ if(${PROJECT_NAME}_QTQUICK)
       private/quick/RubberBandQuick.h
       private/quick/MainWindowQuick.cpp
       private/quick/MainWindowQuick_p.h
-      private/quick/MainWindowWrapper.cpp
-      private/quick/MainWindowWrapper_p.h
+      private/quick/MainWindowInstantiator.cpp
+      private/quick/MainWindowInstantiator_p.h
       private/multisplitter/Widget_quick.cpp
       private/multisplitter/Widget_quick.h
       private/multisplitter/Separator_quick.cpp
