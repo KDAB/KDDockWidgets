@@ -14,8 +14,8 @@
 
 #include "DockWidgetQuick.h"
 
-#include <QObject>
 #include <QQmlParserStatus>
+#include <QQuickItem>
 #include <QString>
 
 namespace KDDockWidgets {
@@ -31,9 +31,7 @@ class DockWidgetQuick;
  *
  * This allows to pass the correct uniqueName to DockWidget's ctor.
  */
-class DockWidgetInstantiator
-        : public QObject
-        , public QQmlParserStatus
+class DockWidgetInstantiator : public QQuickItem
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)

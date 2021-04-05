@@ -15,6 +15,14 @@ import com.kdab.dockwidgets 1.0 as KDDW
 KDDW.MainWindow {
     id: root
 
+    Repeater {
+        model: 3
+        KDDW.DockWidget {
+            id: another
+            uniqueName: "fromRepeater-" + index
+            source: ":/Another.qml"
+        }
+    }
 
     Component.onCompleted: {
         root.init("MyWindowName-1");
