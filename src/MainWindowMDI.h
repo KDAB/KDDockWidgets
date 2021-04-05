@@ -34,7 +34,7 @@ class DOCKS_EXPORT MainWindowMDI : public KDDockWidgets::MDIMainWindowBase
 public:
 
     ///@brief Constructor. See base class documentation
-    explicit MainWindowMDI(const QString &uniqueName, QQuickItem *parent = nullptr,
+    explicit MainWindowMDI(const QString &uniqueName, WidgetType *parent = nullptr,
                            Qt::WindowFlags flags = Qt::WindowFlags());
 
     ///@brief Destructor

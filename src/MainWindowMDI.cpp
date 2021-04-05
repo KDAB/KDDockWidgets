@@ -14,7 +14,7 @@
 
 using namespace KDDockWidgets;
 
-MainWindowMDI::MainWindowMDI(const QString &uniqueName, QQuickItem *parent, Qt::WindowFlags flags)
+MainWindowMDI::MainWindowMDI(const QString &uniqueName, WidgetType *parent, Qt::WindowFlags flags)
     : MDIMainWindowBase(uniqueName, MainWindowOption_MDI, parent, flags)
 {
 }
