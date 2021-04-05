@@ -15,7 +15,7 @@
 #include <kddockwidgets/private/DockRegistry_p.h>
 #include <kddockwidgets/FrameworkWidgetFactory.h>
 
-#include <QQuickView>
+#include <QQmlApplicationEngine>
 #include <QGuiApplication>
 #include <QCommandLineParser>
 
@@ -74,15 +74,11 @@ int main(int argc, char *argv[])
 
     KDDockWidgets::Config::self().setFlags(flags);
 
-    QQuickView view;
-    view.setObjectName("MainWindow QQuickView");
-    KDDockWidgets::Config::self().setQmlEngine(view.engine());
-    view.resize(1000, 800);
-    view.show();
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    QQmlApplicationEngine appEngine;
+    KDDockWidgets::Config::self().setQmlEngine(&appEngine);
+    appEngine.load((QUrl("qrc:/main.qml")));
 
     auto dw1 = new KDDockWidgets::DockWidgetQuick("Dock #1");
-    view.setSource(QUrl("qrc:/main.qml"));
 
     dw1->setWidget(QStringLiteral("qrc:/Guest1.qml"));
     dw1->resize(QSize(800, 800));

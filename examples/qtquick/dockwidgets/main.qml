@@ -13,49 +13,55 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import com.kdab.dockwidgets 1.0 as KDDW
 
-KDDW.MainWindowLayout {
-    id: root
+ApplicationWindow {
+    visible: true
+    width: 1000
+    height: 800
 
-    // Each main layout needs a unique id
-    uniqueName: "MyWindowName-1"
+    KDDW.MainWindowLayout {
+        anchors.fill: parent
 
-    Repeater {
-        model: 3
+        // Each main layout needs a unique id
+        uniqueName: "MyWindowName-1"
+
+        Repeater {
+            model: 3
+            KDDW.DockWidget {
+                uniqueName: "fromRepeater-" + index
+                source: ":/Another.qml"
+            }
+        }
+
         KDDW.DockWidget {
-            uniqueName: "fromRepeater-" + index
+            id: dock4
+            uniqueName: "dock4" // Each dock widget needs a unique id
             source: ":/Another.qml"
         }
-    }
 
-    KDDW.DockWidget {
-        id: dock4
-        uniqueName: "dock4" // Each dock widget needs a unique id
-        source: ":/Another.qml"
-    }
-
-    KDDW.DockWidget {
-        id: dock5
-        uniqueName: "dock5"
-        Rectangle {
-            id: guest
-            color: "pink"
+        KDDW.DockWidget {
+            id: dock5
+            uniqueName: "dock5"
+            Rectangle {
+                id: guest
+                color: "pink"
+            }
         }
-    }
 
-    Button {
-        text: "Toggle Another"
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            margins: 5
-        }
-        z: 10
+        Button {
+            text: "Toggle Another"
+            anchors {
+                bottom: parent.bottom
+                left: parent.left
+                margins: 5
+            }
+            z: 10
 
-        onClicked: {
-            if (dock5.dockWidget.visible) {
-                dock5.dockWidget.close();
-            } else {
-                dock5.dockWidget.show();
+            onClicked: {
+                if (dock5.dockWidget.visible) {
+                    dock5.dockWidget.close();
+                } else {
+                    dock5.dockWidget.show();
+                }
             }
         }
     }

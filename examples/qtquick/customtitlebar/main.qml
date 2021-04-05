@@ -10,10 +10,18 @@
 */
 
 import QtQuick 2.6
+import QtQuick.Controls 2.12
 import com.kdab.dockwidgets 1.0 as KDDW
 
-KDDW.MainWindowLayout {
-    id: root
+ApplicationWindow {
+    visible: true
+    width: 1000
+    height: 800
 
-    uniqueName: "MyWindowName-1"
+    KDDW.MainWindowLayout {
+        id: dockWidgetArea
+        anchors.fill: parent
+
+        uniqueName: "MyWindowName-1"
+    }
 }

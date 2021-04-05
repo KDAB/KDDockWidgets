@@ -10,9 +10,16 @@
 */
 
 import QtQuick 2.6
+import QtQuick.Controls 2.12
 import com.kdab.dockwidgets 1.0 as KDDW
 
-KDDW.MainWindowLayout {
-    id: root
-    uniqueName: "MyWindow1"
+ApplicationWindow {
+    visible: true
+    width: 1000
+    height: 800
+
+    KDDW.MainWindowLayout {
+        anchors.fill: parent
+        uniqueName: "MyWindow1"
+    }
 }
