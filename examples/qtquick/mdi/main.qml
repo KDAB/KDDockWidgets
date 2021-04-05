@@ -11,9 +11,8 @@
 
 import QtQuick 2.6
 import com.kdab.dockwidgets 1.0 as KDDW
-import "qrc:/kddockwidgets/private/quick/qml/" // TODO: Improve the public API
 
-MainWindowLayout {
+KDDW.MainWindowLayout {
     id: root
     uniqueName: "MyWindow1"
 }
