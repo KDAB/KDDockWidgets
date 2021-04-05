@@ -10,6 +10,7 @@
 */
 
 import QtQuick 2.6
+import QtQuick.Controls 2.12
 import com.kdab.dockwidgets 1.0 as KDDW
 
 KDDW.MainWindow {
@@ -18,9 +19,32 @@ KDDW.MainWindow {
     Repeater {
         model: 3
         KDDW.DockWidget {
-            id: another
             uniqueName: "fromRepeater-" + index
             source: ":/Another.qml"
+        }
+    }
+
+    KDDW.DockWidget {
+        id: dock4
+        uniqueName: "dock4"
+        source: ":/Another.qml"
+    }
+
+    Button {
+        text: "Toggle Another"
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            margins: 5
+        }
+        z: 10
+
+        onClicked: {
+            if (another.dockWidget.visible) {
+                another.dockWidget.close();
+            } else {
+                another.dockWidget.show();
+            }
         }
     }
 
@@ -28,4 +52,3 @@ KDDW.MainWindow {
         root.init("MyWindowName-1");
     }
 }
-
