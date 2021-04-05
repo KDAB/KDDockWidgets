@@ -294,6 +294,7 @@ protected Q_SLOTS:
 
 protected:
     virtual void renameTab(int index, const QString &) = 0;
+    virtual void changeTabIcon(int index, const QIcon &) = 0;
 
     /**
      * @brief Returns the minimum size of the dock widgets.

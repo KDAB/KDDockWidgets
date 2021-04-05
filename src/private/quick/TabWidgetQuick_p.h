@@ -66,6 +66,7 @@ protected:
     bool isPositionDraggable(QPoint p) const override;
     void setTabBarAutoHide(bool) override;
     void renameTab(int index, const QString &) override;
+    void changeTabIcon(int index, const QIcon &) override;
 
 private:
     Q_DISABLE_COPY(TabWidgetQuick)
