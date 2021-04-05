@@ -54,7 +54,7 @@ Q_NAMESPACE
         MainWindowOption_MDI = 2 ///> EXPERIMENTAL!!1 The layout will be MDI. DockWidgets can have arbitrary positions, not restricted by any layout
     };
     Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
-    Q_ENUM_NS(MainWindowOption)
+    Q_ENUM_NS(MainWindowOptions)
 
     ///@internal
     ///@brief Describes some sizing strategies for the layouting engine.

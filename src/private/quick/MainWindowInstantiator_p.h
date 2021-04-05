@@ -13,6 +13,7 @@
 #define KD_MAIN_WINDOW_WRAPPER_P_H
 
 #include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include <QQuickItem>
 
@@ -27,7 +28,7 @@ class DOCKS_EXPORT MainWindowInstantiator
 {
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
-    Q_PROPERTY(int options READ options WRITE setOptions NOTIFY optionsChanged) // TODO: Use num
+    Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options WRITE setOptions NOTIFY optionsChanged)
 public:
     ///@brief ctor, called by QML engine
     MainWindowInstantiator();
@@ -35,8 +36,8 @@ public:
     QString uniqueName() const;
     void setUniqueName(const QString &);
 
-    int options() const;
-    void setOptions(int);
+    KDDockWidgets::MainWindowOptions options() const;
+    void setOptions(KDDockWidgets::MainWindowOptions);
 
 protected:
     void classBegin() override;
@@ -49,7 +50,7 @@ Q_SIGNALS:
 private:
     QString m_uniqueName;
     MainWindowQuick *m_mainWindow = nullptr;
-    int m_options = 0;
+    KDDockWidgets::MainWindowOptions m_options = KDDockWidgets::MainWindowOption_None;
 };
 
 }

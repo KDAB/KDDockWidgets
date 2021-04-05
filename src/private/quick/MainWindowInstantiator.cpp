@@ -35,12 +35,12 @@ void MainWindowInstantiator::setUniqueName(const QString &name)
     }
 }
 
-int MainWindowInstantiator::options() const
+MainWindowOptions MainWindowInstantiator::options() const
 {
     return m_options;
 }
 
-void MainWindowInstantiator::setOptions(int options)
+void MainWindowInstantiator::setOptions(MainWindowOptions options)
 {
     if (m_options != options) {
         m_options = options;
