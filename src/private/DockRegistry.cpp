@@ -362,6 +362,11 @@ bool DockRegistry::containsDockWidget(const QString &uniqueName) const
     return dockByName(uniqueName) != nullptr;
 }
 
+bool DockRegistry::containsMainWindow(const QString &uniqueName) const
+{
+    return mainWindowByName(uniqueName) != nullptr;
+}
+
 DockWidgetBase *DockRegistry::dockByName(const QString &name) const
 {
     for (auto dock : qAsConst(m_dockWidgets)) {
