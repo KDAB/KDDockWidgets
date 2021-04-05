@@ -36,6 +36,13 @@ ApplicationWindow {
                 }
             }
 
+            Action {
+                text: qsTr("Close All")
+                onTriggered: {
+                   _kddwDockRegistry.clear();
+                }
+            }
+
             MenuSeparator { }
             Action { text: qsTr("&Quit")
                 onTriggered: {

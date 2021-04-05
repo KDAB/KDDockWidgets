@@ -137,7 +137,7 @@ public:
      * This is called before restoring a layout.
      * @param affinities if specified only closes dock widgets and main windows with the specified affinities
      */
-    void clear(const QStringList &affinities = {});
+    Q_INVOKABLE void clear(const QStringList &affinities = {});
 
     /**
      * @brief clear Overload that only clears the specified dockWidgets and main windows.
