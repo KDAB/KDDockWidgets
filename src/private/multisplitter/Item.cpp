@@ -1263,10 +1263,10 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
     container->setParentContainer(nullptr);
     container->setParentContainer(this);
 
-    insertItem(container, index, DefaultSizeMode::None);
+    insertItem(container, index, DefaultSizeMode::NoDefaultSizeMode);
     m_children.removeOne(leaf);
     container->setGeometry(leaf->geometry());
-    container->insertItem(leaf, Location_OnTop, DefaultSizeMode::None);
+    container->insertItem(leaf, Location_OnTop, DefaultSizeMode::NoDefaultSizeMode);
     Q_EMIT itemsChanged();
     d->updateSeparators_recursive();
 
@@ -1345,7 +1345,7 @@ void ItemBoxContainer::insertItem(Item *item, Location loc,
         container->setChildren(m_children, d->m_orientation);
         m_children.clear();
         setOrientation(oppositeOrientation(d->m_orientation));
-        insertItem(container, 0, DefaultSizeMode::None);
+        insertItem(container, 0, DefaultSizeMode::NoDefaultSizeMode);
 
         // Now we have the correct orientation, we can insert
         insertItem(item, loc, initialOption);
@@ -1688,7 +1688,7 @@ void ItemBoxContainer::setLength_recursive(int length, Qt::Orientation o)
 
 void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
 {
-    if (option.sizeMode != DefaultSizeMode::None) {
+    if (option.sizeMode != DefaultSizeMode::NoDefaultSizeMode) {
         /// Choose a nice size for the item we're adding
         const int suggestedLength = d->defaultLengthFor(item, option);
         item->setLength_recursive(suggestedLength, d->m_orientation);
@@ -3493,11 +3493,11 @@ int ItemBoxContainer::Private::defaultLengthFor(Item *item, InitialOption option
 {
     int result = 0;
 
-    if (option.hasPreferredLength(m_orientation) && option.sizeMode != DefaultSizeMode::None) {
+    if (option.hasPreferredLength(m_orientation) && option.sizeMode != DefaultSizeMode::NoDefaultSizeMode) {
         result = option.preferredLength(m_orientation);
     } else {
         switch (option.sizeMode) {
-        case DefaultSizeMode::None:
+        case DefaultSizeMode::NoDefaultSizeMode:
             break;
         case DefaultSizeMode::Fair: {
             const int numVisibleChildren = q->numVisibleChildren() + 1; // +1 so it counts with @p item too, which we're adding
