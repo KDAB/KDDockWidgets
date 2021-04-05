@@ -7,6 +7,7 @@
     sure to provide a sizeHint.
   - Added MainWindow::closeDockWidgets()
   - Fixed crash in MainWindow::layoutEqually()
+  - QtQuick: Added more declarative API
 
 * v1.3.1 (unreleased)
   - Improve restoring layout when RestoreOption_RelativeToMainWindow is used (#171)

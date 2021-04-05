@@ -82,5 +82,4 @@ ApplicationWindow {
             dw.dockWidget.show();
         }
     }
-
 }
