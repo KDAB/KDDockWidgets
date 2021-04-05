@@ -115,7 +115,7 @@ public:
      * shown.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
-    void addDockWidgetAsTab(DockWidgetBase *other, InitialOption initialOption = {});
+    Q_INVOKABLE void addDockWidgetAsTab(DockWidgetBase *other, InitialOption initialOption = {});
 
     /**
      * @brief docks @p other widget into the window that contains this one.
@@ -129,9 +129,9 @@ public:
      * @param initialOption Allows to specify some extra options that are used while docking.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetAsTab()
      */
-    void addDockWidgetToContainingWindow(DockWidgetBase *other, KDDockWidgets::Location location,
-                                         DockWidgetBase *relativeTo = nullptr,
-                                         InitialOption initialOption = {});
+    Q_INVOKABLE void addDockWidgetToContainingWindow(DockWidgetBase *other, KDDockWidgets::Location location,
+                                                     DockWidgetBase *relativeTo = nullptr,
+                                                     InitialOption initialOption = {});
 
     /**
      * @brief sets the widget which this dock widget hosts.
@@ -170,13 +170,13 @@ public:
      * @brief Returns the QAction that allows to hide/show the dock widget
      * Useful to put in menus.
      */
-    QAction *toggleAction() const;
+    Q_INVOKABLE QAction *toggleAction() const;
 
     /**
      * @brief Returns the QAction that allows to dock/undock the dock widget
      * Useful to put in menus.
      */
-    QAction *floatAction() const;
+    Q_INVOKABLE QAction *floatAction() const;
 
     /**
      * @brief the dock widget's unique name.
@@ -250,7 +250,7 @@ public:
     /**
      * @brief Makes this dock widget current in its tab group.
      */
-    void setAsCurrentTab();
+    Q_INVOKABLE void setAsCurrentTab();
 
 
     /**
@@ -314,7 +314,7 @@ public:
      *
      * @p names the affinity names
      */
-    void setAffinities(const QStringList &);
+     void setAffinities(const QStringList &);
 
     /// @deprecated @overload
     /// @param name the affinity name
@@ -377,7 +377,7 @@ public:
      * The dockwidget will initially be visible and overlayed on top of the current layout (this is
      * the auto-hide feature).
      */
-    void moveToSideBar();
+    Q_INVOKABLE void moveToSideBar();
 
     /// @brief Returns whether this dock widget is overlayed from the side-bar.
     ///
