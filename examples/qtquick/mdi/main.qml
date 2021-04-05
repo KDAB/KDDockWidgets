@@ -16,10 +16,11 @@ import com.kdab.dockwidgets 1.0 as KDDW
 ApplicationWindow {
     visible: true
     width: 1000
-    height: 800
+    height: 1200
 
     KDDW.MainWindowLayout {
         anchors.fill: parent
         uniqueName: "MyWindow1"
+        options: KDDW.KDDockWidgets.MainWindowOption_MDI
     }
 }
