@@ -63,14 +63,21 @@ void DockWidgetInstantiator::componentComplete()
         qWarning() << Q_FUNC_INFO << "Unexpected bug.";
         return;
     }
-
-    if (m_sourceFilename.isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "the 'source' property must be set.";
+    const auto childItems = this->childItems();
+    if (m_sourceFilename.isEmpty() && childItems.size() != 1) {
+        qWarning() << Q_FUNC_INFO << "Either 'source' property must be set or add exactly one child"
+                   << "; source=" << m_sourceFilename << "; num children=" << childItems.size();
         return;
     }
 
     m_dockWidget = new DockWidgetQuick(m_uniqueName);
-    m_dockWidget->setWidget(m_sourceFilename);
+
+    if (m_sourceFilename.isEmpty()) {
+        m_dockWidget->setWidget(childItems.constFirst());
+    } else {
+        m_dockWidget->setWidget(m_sourceFilename);
+    }
+
 
     Q_EMIT dockWidgetChanged();
 }

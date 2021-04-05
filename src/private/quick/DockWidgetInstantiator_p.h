@@ -34,7 +34,6 @@ class DockWidgetQuick;
 class DockWidgetInstantiator : public QQuickItem
 {
     Q_OBJECT
-    Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
     Q_PROPERTY(KDDockWidgets::DockWidgetQuick *dockWidget READ dockWidget NOTIFY dockWidgetChanged)

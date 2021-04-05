@@ -33,6 +33,15 @@ KDDW.MainWindowLayout {
         source: ":/Another.qml"
     }
 
+    KDDW.DockWidget {
+        id: dock5
+        uniqueName: "dock5"
+        Rectangle {
+            id: guest
+            color: "pink"
+        }
+    }
+
     Button {
         text: "Toggle Another"
         anchors {
@@ -43,10 +52,10 @@ KDDW.MainWindowLayout {
         z: 10
 
         onClicked: {
-            if (dock4.dockWidget.visible) {
-                dock4.dockWidget.close();
+            if (dock5.dockWidget.visible) {
+                dock5.dockWidget.close();
             } else {
-                dock4.dockWidget.show();
+                dock5.dockWidget.show();
             }
         }
     }
