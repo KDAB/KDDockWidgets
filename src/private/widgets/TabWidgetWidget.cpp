@@ -135,6 +135,11 @@ void TabWidgetWidget::renameTab(int index, const QString &text)
     setTabText(index, text);
 }
 
+void TabWidgetWidget::changeTabIcon(int index, const QIcon &icon)
+{
+    setTabIcon(index, icon);
+}
+
 DockWidgetBase *TabWidgetWidget::dockwidgetAt(int index) const
 {
     return qobject_cast<DockWidgetBase *>(widget(index));

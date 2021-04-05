@@ -148,6 +148,13 @@ void FrameQuick::renameTab(int, const QString &)
     // Not needed for QtQuick. Our model reacts to titleChanged()
 }
 
+
+void FrameQuick::changeTabIcon(int index, const QIcon &)
+{
+    Q_UNUSED(index);
+    qDebug() << Q_FUNC_INFO << "Not implemented";
+}
+
 void FrameQuick::setStackLayout(QQuickItem *stackLayout)
 {
     if (m_stackLayout || !stackLayout) {

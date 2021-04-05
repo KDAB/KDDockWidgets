@@ -169,6 +169,10 @@ void FrameWidget::renameTab(int index, const QString &text)
     m_tabWidget->renameTab(index, text);
 }
 
+void FrameWidget::changeTabIcon(int index, const QIcon &icon)
+{
+    m_tabWidget->changeTabIcon(index, icon);
+}
 
 int KDDockWidgets::FrameWidget::nonContentsHeight() const
 {

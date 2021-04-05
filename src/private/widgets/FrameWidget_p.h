@@ -49,6 +49,7 @@ protected:
     DockWidgetBase *dockWidgetAt_impl(int index) const override;
     QRect dragRect() const override;
     void renameTab(int index, const QString &) override;
+    void changeTabIcon(int index, const QIcon &) override;
     int nonContentsHeight() const override;
 private:
     friend class ::TestDocks;

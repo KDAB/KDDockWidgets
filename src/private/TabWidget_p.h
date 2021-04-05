@@ -131,6 +131,9 @@ public:
     ///@brief rename's the tab's text
     virtual void renameTab(int index, const QString &) = 0;
 
+    ///@brief change the tab's icon
+    virtual void changeTabIcon(int index, const QIcon &) = 0;
+
     /**
      * @brief Returns the current index
      */

@@ -87,6 +87,12 @@ void TabWidgetQuick::renameTab(int index, const QString &)
     qWarning() << Q_FUNC_INFO << "Not implemented";
 }
 
+void TabWidgetQuick::changeTabIcon(int index, const QIcon &)
+{
+    Q_UNUSED(index);
+    qWarning() << Q_FUNC_INFO << "Not implemented";
+}
+
 DockWidgetBase *TabWidgetQuick::dockwidgetAt(int index) const
 {
     return m_dockWidgetModel->dockWidgetAt(index);
