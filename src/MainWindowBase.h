@@ -69,7 +69,7 @@ public:
      *
      * @sa DockWidgetBase::addDockWidgetAsTab()
      */
-    void addDockWidgetAsTab(DockWidgetBase *dockwidget);
+    Q_INVOKABLE void addDockWidgetAsTab(DockWidgetBase *dockwidget);
 
     /**
      * @brief Docks a DockWidget into this main window.
@@ -80,10 +80,10 @@ public:
      * as hidden, recording only a placeholder in the tab. So it's restored to tabbed when eventually
      * shown.
      */
-    void addDockWidget(DockWidgetBase *dockWidget,
-                       KDDockWidgets::Location location,
-                       DockWidgetBase *relativeTo = nullptr,
-                       InitialOption initialOption = {});
+    Q_INVOKABLE void addDockWidget(DockWidgetBase *dockWidget,
+                                   KDDockWidgets::Location location,
+                                   DockWidgetBase *relativeTo = nullptr,
+                                   InitialOption initialOption = {});
 
     /**
      * @brief Returns the unique name that was passed via constructor.
@@ -141,12 +141,12 @@ public:
     /// nodes closer to the root will have more space.
     ///
     /// min/max constraints will still be honoured.
-    void layoutEqually();
+    Q_INVOKABLE void layoutEqually();
 
     /// @brief like layoutEqually() but starts with the container that has @p dockWidget.
     /// While layoutEqually() starts from the root of the layout tree this function starts on a
     /// sub-tree.
-    void layoutParentContainerEqually(DockWidgetBase *dockWidget);
+    Q_INVOKABLE void layoutParentContainerEqually(DockWidgetBase *dockWidget);
 
     ///@brief Moves the dock widget into one of the MainWindow's sidebar.
     /// Means the dock widget is removed from the layout, and the sidebar shows a button that if pressed
@@ -154,25 +154,25 @@ public:
     /// functionality.
     ///
     /// The chosen side bar will depend on some heuristics, mostly proximity.
-    void moveToSideBar(DockWidgetBase *);
+    Q_INVOKABLE void moveToSideBar(DockWidgetBase *);
 
     /// @brief overload that allows to specify which sidebar to use, instead of using heuristics.
-    void moveToSideBar(DockWidgetBase *, SideBarLocation);
+    Q_INVOKABLE void moveToSideBar(DockWidgetBase *, SideBarLocation);
 
     /// @brief Removes the dock widget from the sidebar and docks it into the main window again
-    void restoreFromSideBar(DockWidgetBase *);
+    Q_INVOKABLE void restoreFromSideBar(DockWidgetBase *);
 
     ///@brief Shows the dock widget overlayed on top of the main window, placed next to the sidebar
-    void overlayOnSideBar(DockWidgetBase *);
+    Q_INVOKABLE void overlayOnSideBar(DockWidgetBase *);
 
     ///@brief Shows or hides an overlay. It's assumed the dock widget is already in a side-bar.
-    void toggleOverlayOnSideBar(DockWidgetBase *);
+    Q_INVOKABLE void toggleOverlayOnSideBar(DockWidgetBase *);
 
     /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
-    void clearSideBarOverlay(bool deleteFrame = true);
+    Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
 
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
-    SideBar *sideBarForDockWidget(const DockWidgetBase *) const;
+    Q_INVOKABLE SideBar *sideBarForDockWidget(const DockWidgetBase *) const;
 
     /// @brief returns the dock widget which is currently overlayed. nullptr if none.
     /// This is only relevant when using the auto-hide and side-bar feature.
