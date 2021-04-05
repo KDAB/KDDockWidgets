@@ -40,7 +40,6 @@ public:
     void setOptions(int);
 
 protected:
-    void classBegin() override;
     void componentComplete() override;
 
 Q_SIGNALS:
