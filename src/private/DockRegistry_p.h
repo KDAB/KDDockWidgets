@@ -59,14 +59,14 @@ public:
     void registerFrame(Frame *);
     void unregisterFrame(Frame *);
 
-    DockWidgetBase *focusedDockWidget() const;
+    Q_INVOKABLE DockWidgetBase *focusedDockWidget() const;
 
-    bool containsDockWidget(const QString &uniqueName) const;
-    bool containsMainWindow(const QString &uniqueName) const;
+    Q_INVOKABLE bool containsDockWidget(const QString &uniqueName) const;
+    Q_INVOKABLE bool containsMainWindow(const QString &uniqueName) const;
 
     Q_INVOKABLE KDDockWidgets::DockWidgetBase *dockByName(const QString &) const;
-    MainWindowBase *mainWindowByName(const QString &) const;
-    MainWindowMDI *mdiMainWindowByName(const QString &) const;
+    Q_INVOKABLE MainWindowBase *mainWindowByName(const QString &) const;
+    Q_INVOKABLE MainWindowMDI *mdiMainWindowByName(const QString &) const;
 
     /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
     DockWidgetBase *dockWidgetForGuest(QWidgetOrQuick *guest) const;
@@ -102,7 +102,7 @@ public:
     const QVector<QWindow*> floatingQWindows() const;
 
     ///@brief returns whether if there's at least one floating window
-    bool hasFloatingWindows() const;
+    Q_INVOKABLE bool hasFloatingWindows() const;
 
     ///@brief Returns the window with the specified id
     QWindow *windowForHandle(WId id) const;
