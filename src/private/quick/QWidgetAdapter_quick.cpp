@@ -198,6 +198,8 @@ void QWidgetAdapter::QQUICKITEMgeometryChanged(const QRectF &newGeometry, const 
         QEvent ev(QEvent::Move);
         qApp->sendEvent(this, &ev);
     }
+
+    Q_EMIT geometryChanged();
 }
 
 void QWidgetAdapter::raise()
