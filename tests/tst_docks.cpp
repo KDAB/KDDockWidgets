@@ -948,9 +948,9 @@ void TestDocks::tst_layoutEqually()
     auto dock1 = createDockWidget("Favorite-481", new MyWidget2(QSize(536, 438)));
     auto dock2 = createDockWidget("Favorite-482", new MyWidget2(QSize(229, 118)));
     auto dock3 = createDockWidget("Favorite-483", new MyWidget2(QSize(356, 90)));
-
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     m->setContentsMargins(10, 0, 10, 0);
-
+#endif
     dock1->setAffinities({ mainWindowId });
     dock2->setAffinities({ mainWindowId });
     dock3->setAffinities({ mainWindowId });
