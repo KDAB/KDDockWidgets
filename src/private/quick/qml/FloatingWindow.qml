@@ -40,9 +40,9 @@ Rectangle {
         source: _kddw_widgetFactory.titleBarFilename()
 
         anchors {
-            top:  parent.top
-            left: parent.left
-            right: parent.right
+            top:  parent ? parent.top : undefined
+            left: parent ? parent.left : undefined
+            right: parent ? parent.right : undefined
             margins: root.margins
         }
     }
@@ -51,10 +51,10 @@ Rectangle {
         id: dropArea
         dropAreaCpp: root.dropAreaCpp
         anchors {
-            left: parent.left
-            right: parent.right
+            left: parent ? parent.left : undefined
+            right: parent ? parent.right : undefined
             top: titleBar.bottom
-            bottom: parent.bottom
+            bottom: parent ? parent.bottom : undefined
 
             leftMargin: root.margins
             rightMargin: root.margins
