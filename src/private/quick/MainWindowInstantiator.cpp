@@ -14,6 +14,7 @@
 #include "MainWindowMDI.h"
 
 #include "DockRegistry_p.h"
+#include "DockWidgetInstantiator_p.h"
 
 using namespace KDDockWidgets;
 
@@ -46,6 +47,26 @@ void MainWindowInstantiator::setOptions(MainWindowOptions options)
         m_options = options;
         Q_EMIT optionsChanged();
     }
+}
+
+void MainWindowInstantiator::addDockWidget(DockWidgetBase *dockWidget,
+                                           Location location,
+                                           DockWidgetBase *relativeTo,
+                                           QSize initialSize)
+{
+    if (!m_mainWindow) {
+        qWarning() << Q_FUNC_INFO << "No MainWindow created yet";
+        return;
+    }
+
+    m_mainWindow->addDockWidget(dockWidget, location, relativeTo, initialSize);
+}
+
+void MainWindowInstantiator::addDockWidget(DockWidgetInstantiator *dockWidget, Location location,
+                                           DockWidgetInstantiator *relativeTo, QSize initialSize)
+{
+    addDockWidget(dockWidget ? dockWidget->dockWidget() : nullptr, location,
+                  relativeTo ? relativeTo->dockWidget() : nullptr, initialSize);
 }
 
 void MainWindowInstantiator::classBegin()

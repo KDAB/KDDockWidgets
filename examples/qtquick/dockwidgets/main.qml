@@ -80,6 +80,14 @@ ApplicationWindow {
                 color: "pink"
             }
         }
+
+        Component.onCompleted: {
+            // Add dock4 to the Bottom location
+            addDockWidget(dock4, KDDW.KDDockWidgets.Location_OnBottom);
+
+            // Add dock5 to the left of dock4
+            addDockWidget(dock5, KDDW.KDDockWidgets.Location_OnRight, dock4);
+        }
     }
 
     function toggleDockWidget(dw) {

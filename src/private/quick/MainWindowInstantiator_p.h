@@ -20,6 +20,8 @@
 namespace KDDockWidgets {
 
 class MainWindowQuick;
+class DockWidgetBase;
+class DockWidgetInstantiator;
 
 /// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through MainWindowQuick's ctor
 /// So instead, user instantiates a MainWindowWrapper in QML and calls init.
@@ -38,6 +40,17 @@ public:
 
     KDDockWidgets::MainWindowOptions options() const;
     void setOptions(KDDockWidgets::MainWindowOptions);
+
+    /// @brief See KDDockWidgets::MainWindowBase::addDockWidget()
+    Q_INVOKABLE void addDockWidget(KDDockWidgets::DockWidgetBase *dockWidget,
+                                   KDDockWidgets::Location location,
+                                   KDDockWidgets::DockWidgetBase *relativeTo = nullptr,
+                                   QSize initialSize = {});
+
+    Q_INVOKABLE void addDockWidget(KDDockWidgets::DockWidgetInstantiator *dockWidget,
+                                   KDDockWidgets::Location location,
+                                   KDDockWidgets::DockWidgetInstantiator *relativeTo = nullptr,
+                                   QSize initialSize = {});
 
 protected:
     void classBegin() override;
