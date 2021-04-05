@@ -18,7 +18,7 @@
 using namespace KDDockWidgets;
 
 MainWindowInstantiator::MainWindowInstantiator()
-    : QWidgetAdapter()
+    : QQuickItem()
 {
 }
 

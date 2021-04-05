@@ -12,7 +12,6 @@
 #ifndef KD_MAIN_WINDOW_WRAPPER_P_H
 #define KD_MAIN_WINDOW_WRAPPER_P_H
 
-#include "QWidgetAdapter.h"
 #include "kddockwidgets/docks_export.h"
 
 #include <QQuickItem>
@@ -24,7 +23,7 @@ class MainWindowQuick;
 /// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through MainWindowQuick's ctor
 /// So instead, user instantiates a MainWindowWrapper in QML and calls init.
 class DOCKS_EXPORT MainWindowInstantiator
-    : public QWidgetAdapter
+    : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
