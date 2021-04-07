@@ -77,17 +77,6 @@
         "externalConsole": false
       },
       {
-        "name": "gdb-tests_launcher",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev-qtquick/bin/tests_launcher",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "gdb",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
         "name": "gdb-tst_docks",
         "type": "cppdbg",
         "request": "launch",
@@ -132,17 +121,6 @@
         "externalConsole": false
       },
       {
-        "name": "lldb-tests_launcher",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev-qtquick/bin/tests_launcher",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "lldb",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
         "name": "lldb-tst_docks",
         "type": "cppdbg",
         "request": "launch",
@@ -180,17 +158,6 @@
         "type": "cppvsdbg",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_example_quick",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
-        "name": "msvc-tests_launcher",
-        "type": "cppvsdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev-qtquick/bin/tests_launcher",
         "args": [],
         "cwd": "${workspaceFolder}",
         "MIMode": "",
