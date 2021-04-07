@@ -39,5 +39,175 @@
         "group": "build"
       }
     ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "gdb-kddockwidgets_customtitlebar_quick",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_customtitlebar_quick",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "gdb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "gdb-kddockwidgets_example_mdi_quick",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_example_mdi_quick",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "gdb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "gdb-kddockwidgets_example_quick",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_example_quick",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "gdb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "gdb-tests_launcher",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/tests_launcher",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "gdb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "gdb-tst_docks",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/tst_docks",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "gdb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "lldb-kddockwidgets_customtitlebar_quick",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_customtitlebar_quick",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "lldb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "lldb-kddockwidgets_example_mdi_quick",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_example_mdi_quick",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "lldb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "lldb-kddockwidgets_example_quick",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_example_quick",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "lldb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "lldb-tests_launcher",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/tests_launcher",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "lldb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "lldb-tst_docks",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/tst_docks",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "lldb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "msvc-kddockwidgets_customtitlebar_quick",
+        "type": "cppvsdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_customtitlebar_quick",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "msvc-kddockwidgets_example_mdi_quick",
+        "type": "cppvsdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_example_mdi_quick",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "msvc-kddockwidgets_example_quick",
+        "type": "cppvsdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/kddockwidgets_example_quick",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "msvc-tests_launcher",
+        "type": "cppvsdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/tests_launcher",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "msvc-tst_docks",
+        "type": "cppvsdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev-qtquick/bin/tst_docks",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "",
+        "stopAtEntry": false,
+        "externalConsole": false
+      }
+    ]
   }
 }
