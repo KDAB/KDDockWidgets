@@ -58,6 +58,7 @@ class DOCKS_EXPORT MainWindowBase : public QMainWindow
     Q_PROPERTY(QStringList affinities READ affinities CONSTANT)
     Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options CONSTANT)
+    Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
 public:
     typedef QVector<MainWindowBase*> List;
     explicit MainWindowBase(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
@@ -182,7 +183,7 @@ public:
     DockWidgetBase *overlayedDockWidget() const;
 
     /// @brief Returns whether the specified sidebar is visible
-    bool sideBarIsVisible(SideBarLocation) const;
+    Q_INVOKABLE bool sideBarIsVisible(SideBarLocation) const;
 
     /// @brief Returns whether any side bar is visible
     bool anySideBarIsVisible() const;
@@ -196,7 +197,7 @@ public:
     /// If force is true, then the individual dock widgets can't stop the process
     /// Returns false if there's at least one dock widget which rejected closing. Returns true
     /// if all dock widgets were closed (0 or more)
-    bool closeDockWidgets(bool force = false);
+    Q_INVOKABLE bool closeDockWidgets(bool force = false);
 
 protected:
     void setUniqueName(const QString &uniqueName);
