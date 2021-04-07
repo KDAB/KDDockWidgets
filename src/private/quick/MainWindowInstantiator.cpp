@@ -49,6 +49,16 @@ void MainWindowInstantiator::setOptions(MainWindowOptions options)
     }
 }
 
+QStringList MainWindowInstantiator::affinities() const
+{
+    return m_mainWindow ? m_mainWindow->affinities() : QStringList();
+}
+
+bool MainWindowInstantiator::isMDI() const
+{
+    return m_mainWindow && m_mainWindow->isMDI();
+}
+
 void MainWindowInstantiator::addDockWidget(DockWidgetBase *dockWidget,
                                            Location location,
                                            DockWidgetBase *relativeTo,
@@ -67,6 +77,69 @@ void MainWindowInstantiator::addDockWidget(DockWidgetInstantiator *dockWidget, L
 {
     addDockWidget(dockWidget ? dockWidget->dockWidget() : nullptr, location,
                   relativeTo ? relativeTo->dockWidget() : nullptr, initialSize);
+}
+
+void MainWindowInstantiator::layoutEqually()
+{
+    if (m_mainWindow)
+        m_mainWindow->layoutEqually();
+}
+
+void MainWindowInstantiator::layoutParentContainerEqually(DockWidgetBase *dw)
+{
+    if (m_mainWindow)
+        m_mainWindow->layoutParentContainerEqually(dw);
+}
+
+void MainWindowInstantiator::moveToSideBar(DockWidgetBase *dw)
+{
+    if (m_mainWindow)
+        m_mainWindow->moveToSideBar(dw);
+}
+
+void MainWindowInstantiator::moveToSideBar(DockWidgetBase *dw, SideBarLocation loc)
+{
+    if (m_mainWindow)
+        m_mainWindow->moveToSideBar(dw, loc);
+}
+
+void MainWindowInstantiator::restoreFromSideBar(DockWidgetBase *dw)
+{
+    if (m_mainWindow)
+        m_mainWindow->restoreFromSideBar(dw);
+}
+
+void MainWindowInstantiator::overlayOnSideBar(DockWidgetBase *dw)
+{
+    if (m_mainWindow)
+        m_mainWindow->overlayOnSideBar(dw);
+}
+
+void MainWindowInstantiator::toggleOverlayOnSideBar(DockWidgetBase *dw)
+{
+    if (m_mainWindow)
+        m_mainWindow->toggleOverlayOnSideBar(dw);
+}
+
+void MainWindowInstantiator::clearSideBarOverlay(bool deleteFrame)
+{
+    if (m_mainWindow)
+        m_mainWindow->clearSideBarOverlay(deleteFrame);
+}
+
+SideBar *MainWindowInstantiator::sideBarForDockWidget(const DockWidgetBase *dw) const
+{
+    return m_mainWindow ? m_mainWindow->sideBarForDockWidget(dw) : nullptr;
+}
+
+bool MainWindowInstantiator::sideBarIsVisible(SideBarLocation loc) const
+{
+    return m_mainWindow && m_mainWindow->sideBarIsVisible(loc);
+}
+
+bool MainWindowInstantiator::closeDockWidgets(bool force)
+{
+    return m_mainWindow && m_mainWindow->closeDockWidgets(force);
 }
 
 void MainWindowInstantiator::classBegin()

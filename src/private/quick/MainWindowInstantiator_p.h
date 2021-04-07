@@ -22,6 +22,7 @@ namespace KDDockWidgets {
 class MainWindowQuick;
 class DockWidgetBase;
 class DockWidgetInstantiator;
+class SideBar;
 
 /// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through MainWindowQuick's ctor
 /// So instead, user instantiates a MainWindowWrapper in QML and calls init.
@@ -31,6 +32,8 @@ class DOCKS_EXPORT MainWindowInstantiator
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options WRITE setOptions NOTIFY optionsChanged)
+    Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
+    Q_PROPERTY(QStringList affinities READ affinities CONSTANT)
 public:
     ///@brief ctor, called by QML engine
     MainWindowInstantiator();
@@ -40,6 +43,9 @@ public:
 
     KDDockWidgets::MainWindowOptions options() const;
     void setOptions(KDDockWidgets::MainWindowOptions);
+
+    QStringList affinities() const;
+    bool isMDI() const;
 
     /// @brief See KDDockWidgets::MainWindowBase::addDockWidget()
     Q_INVOKABLE void addDockWidget(KDDockWidgets::DockWidgetBase *dockWidget,
@@ -51,6 +57,18 @@ public:
                                    KDDockWidgets::Location location,
                                    KDDockWidgets::DockWidgetInstantiator *relativeTo = nullptr,
                                    QSize initialSize = {});
+
+    Q_INVOKABLE void layoutEqually();
+    Q_INVOKABLE void layoutParentContainerEqually(DockWidgetBase *dockWidget);
+    Q_INVOKABLE void moveToSideBar(DockWidgetBase *);
+    Q_INVOKABLE void moveToSideBar(DockWidgetBase *, SideBarLocation);
+    Q_INVOKABLE void restoreFromSideBar(DockWidgetBase *);
+    Q_INVOKABLE void overlayOnSideBar(DockWidgetBase *);
+    Q_INVOKABLE void toggleOverlayOnSideBar(DockWidgetBase *);
+    Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
+    Q_INVOKABLE SideBar *sideBarForDockWidget(const DockWidgetBase *) const;
+    Q_INVOKABLE bool sideBarIsVisible(SideBarLocation) const;
+    Q_INVOKABLE bool closeDockWidgets(bool force = false);
 
 protected:
     void classBegin() override;

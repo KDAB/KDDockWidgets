@@ -178,12 +178,12 @@ public:
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
     Q_INVOKABLE SideBar *sideBarForDockWidget(const DockWidgetBase *) const;
 
+    /// @brief Returns whether the specified sidebar is visible
+    Q_INVOKABLE bool sideBarIsVisible(SideBarLocation) const;
+
     /// @brief returns the dock widget which is currently overlayed. nullptr if none.
     /// This is only relevant when using the auto-hide and side-bar feature.
     DockWidgetBase *overlayedDockWidget() const;
-
-    /// @brief Returns whether the specified sidebar is visible
-    Q_INVOKABLE bool sideBarIsVisible(SideBarLocation) const;
 
     /// @brief Returns whether any side bar is visible
     bool anySideBarIsVisible() const;
