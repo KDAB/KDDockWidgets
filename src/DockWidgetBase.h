@@ -74,6 +74,7 @@ public:
 
     };
     Q_DECLARE_FLAGS(Options, Option)
+    Q_ENUM(Options);
 
     /// @brief Options which will affect LayoutSaver save/restore
     enum class LayoutSaverOption {
