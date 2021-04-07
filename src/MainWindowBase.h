@@ -55,6 +55,9 @@ class DOCKS_EXPORT MainWindowBase : public QMainWindow
 #endif
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList affinities READ affinities CONSTANT)
+    Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
+    Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options CONSTANT)
 public:
     typedef QVector<MainWindowBase*> List;
     explicit MainWindowBase(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
