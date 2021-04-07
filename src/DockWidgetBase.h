@@ -62,6 +62,11 @@ class DOCKS_EXPORT DockWidgetBase : public QWidget
     Q_OBJECT
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
+    Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
+    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+    Q_PROPERTY(QObject *widget READ widget NOTIFY widgetChanged)
+    Q_PROPERTY(KDDockWidgets::DockWidgetBase::Options options READ options WRITE setOptions NOTIFY
+                   optionsChanged)
 public:
     typedef QVector<DockWidgetBase *> List;
 
