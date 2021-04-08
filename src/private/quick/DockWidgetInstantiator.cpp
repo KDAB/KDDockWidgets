@@ -74,6 +74,73 @@ void DockWidgetInstantiator::setFloating(bool is)
         m_dockWidget->setFloating(is);
 }
 
+void DockWidgetInstantiator::addDockWidgetAsTab(DockWidgetInstantiator *other,
+                                                InitialVisibilityOption option)
+{
+    if (m_dockWidget)
+        m_dockWidget->addDockWidgetAsTab(other ? other->dockWidget() : nullptr, option);
+}
+
+void DockWidgetInstantiator::addDockWidgetAsTab(DockWidgetBase *other,
+                                                InitialVisibilityOption option)
+{
+    if (m_dockWidget)
+        m_dockWidget->addDockWidgetAsTab(other, option);
+}
+
+void DockWidgetInstantiator::addDockWidgetToContainingWindow(DockWidgetBase *other,
+                                                             Location location,
+                                                             DockWidgetBase *relativeTo,
+                                                             QSize initialSize,
+                                                             InitialVisibilityOption option)
+{
+    if (m_dockWidget)
+        m_dockWidget->addDockWidgetToContainingWindow(other, location, relativeTo,
+                                                      InitialOption(option, initialSize));
+}
+
+void DockWidgetInstantiator::addDockWidgetToContainingWindow(DockWidgetInstantiator *other,
+                                                             Location location,
+                                                             DockWidgetInstantiator *relativeTo,
+                                                             QSize initialSize,
+                                                             InitialVisibilityOption option)
+{
+    if (m_dockWidget)
+        m_dockWidget->addDockWidgetToContainingWindow(
+            other ? other->dockWidget() : nullptr, location,
+            relativeTo ? relativeTo->dockWidget() : nullptr, InitialOption(option, initialSize));
+}
+
+void DockWidgetInstantiator::setAsCurrentTab()
+{
+    if (m_dockWidget)
+        m_dockWidget->setAsCurrentTab();
+}
+
+void DockWidgetInstantiator::forceClose()
+{
+    if (m_dockWidget)
+        m_dockWidget->forceClose();
+}
+
+void DockWidgetInstantiator::show()
+{
+    if (m_dockWidget)
+        m_dockWidget->show();
+}
+
+void DockWidgetInstantiator::raise()
+{
+    if (m_dockWidget)
+        m_dockWidget->raise();
+}
+
+void DockWidgetInstantiator::moveToSideBar()
+{
+    if (m_dockWidget)
+        m_dockWidget->moveToSideBar();
+}
+
 void DockWidgetInstantiator::classBegin()
 {
     // Nothing interesting to do here.

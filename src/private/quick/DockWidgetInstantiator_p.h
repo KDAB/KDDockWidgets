@@ -59,6 +59,29 @@ public:
     bool isFloating() const;
     void setFloating(bool);
 
+    Q_INVOKABLE void addDockWidgetAsTab(DockWidgetInstantiator *other,
+                                        InitialVisibilityOption = {});
+    Q_INVOKABLE void addDockWidgetAsTab(DockWidgetBase *other, InitialVisibilityOption = {});
+
+    Q_INVOKABLE void addDockWidgetToContainingWindow(DockWidgetBase *other,
+                                                     KDDockWidgets::Location location,
+                                                     DockWidgetBase *relativeTo = nullptr,
+                                                     QSize initialSize = {},
+                                                     InitialVisibilityOption = {});
+
+    Q_INVOKABLE void addDockWidgetToContainingWindow(DockWidgetInstantiator *other,
+                                                     KDDockWidgets::Location location,
+                                                     DockWidgetInstantiator *relativeTo = nullptr,
+                                                     QSize initialSize = {},
+                                                     InitialVisibilityOption = {});
+
+    Q_INVOKABLE void setAsCurrentTab();
+    Q_INVOKABLE void forceClose();
+    Q_INVOKABLE void show();
+    Q_INVOKABLE void raise();
+    Q_INVOKABLE void moveToSideBar();
+
+
 protected:
     void classBegin() override;
     void componentComplete() override;
@@ -84,9 +107,7 @@ private:
     QString m_uniqueName;
     QString m_sourceFilename;
     DockWidgetQuick *m_dockWidget = nullptr;
-
 };
-
 }
 
 #endif

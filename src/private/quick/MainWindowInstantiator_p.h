@@ -51,12 +51,12 @@ public:
     Q_INVOKABLE void addDockWidget(KDDockWidgets::DockWidgetBase *dockWidget,
                                    KDDockWidgets::Location location,
                                    KDDockWidgets::DockWidgetBase *relativeTo = nullptr,
-                                   QSize initialSize = {});
+                                   QSize initialSize = {}, InitialVisibilityOption = {});
 
     Q_INVOKABLE void addDockWidget(KDDockWidgets::DockWidgetInstantiator *dockWidget,
                                    KDDockWidgets::Location location,
                                    KDDockWidgets::DockWidgetInstantiator *relativeTo = nullptr,
-                                   QSize initialSize = {});
+                                   QSize initialSize = {}, InitialVisibilityOption = {});
 
     Q_INVOKABLE void layoutEqually();
     Q_INVOKABLE void layoutParentContainerEqually(DockWidgetBase *dockWidget);
