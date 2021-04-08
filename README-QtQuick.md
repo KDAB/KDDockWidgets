@@ -9,6 +9,7 @@ TODO
 TROUBLESHOOTING
 ===============
 
-- Very rarely, in X11 some setups, floating/docking a window has noticeable lag (like 1 second)
-  Measure with a simple (non-kddw) main.qml under qmlscene, report to TQC, as this is not
-  caused by KDDW
+- Very rarely, in some Nvidia/X11 setups, floating/docking has noticeable lag (like 1 second)
+  This could be solved by going to Nvidia's settings and making sure all monitors have
+  the same refresh rate and disabling "Allow Flipping". It's not known why this solves it. Might also
+  be a bug in Qt.
