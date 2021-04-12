@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_MAIN_WINDOW_WRAPPER_P_H
-#define KD_MAIN_WINDOW_WRAPPER_P_H
+#ifndef KD_MAIN_WINDOW_INSTANTIATOR_P_H
+#define KD_MAIN_WINDOW_INSTANTIATOR_P_H
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
