@@ -140,9 +140,12 @@ void SegmentedIndicators::updateSegments()
 {
     m_segments.clear();
 
-    const bool hasMultipleFrames = m_dropArea->count() > 1;
-    const bool needsInnerIndicators = hoveredFrameRect().isValid();
-    const bool needsOutterIndicators = hasMultipleFrames || !needsInnerIndicators;
+    const bool hasMultipleFrames = m_dropArea->visibleCount() > 1;
+    const bool needsOutterIndicators = true; // Can't think of a reason not to show them
+    const bool needsInnerIndicators = needsOutterIndicators &&
+                                      hasMultipleFrames &&
+                                      hoveredFrameRect().isValid();
+
     QPolygon center;
 
     if (needsInnerIndicators) {
