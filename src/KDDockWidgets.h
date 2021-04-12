@@ -35,8 +35,9 @@ class Item;
 class ItemBoxContainer;
 }
 
-namespace DOCKS_EXPORT KDDockWidgets
+namespace KDDockWidgets
 {
+DOCKS_EXPORT
 Q_NAMESPACE
     class MultiSplitter;
     class DropArea;
