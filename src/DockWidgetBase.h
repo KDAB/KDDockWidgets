@@ -497,6 +497,9 @@ Q_SIGNALS:
     ///@brief Emitted when the title bar that serves this dock widget changes
     void actualTitleBarChanged();
 
+    /// @brief Emitted when this dock widget is about to be deleted due to Option_DeleteOnClose
+    void aboutToDeleteOnClose();
+
 protected:
     void onParentChanged();
     void onShown(bool spontaneous);

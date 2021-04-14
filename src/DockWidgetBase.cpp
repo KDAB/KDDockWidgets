@@ -639,8 +639,10 @@ void DockWidgetBase::Private::close()
         }
     }
 
-    if (!m_isMovingToSideBar && (options & DockWidgetBase::Option_DeleteOnClose))
+    if (!m_isMovingToSideBar && (options & DockWidgetBase::Option_DeleteOnClose)) {
+        Q_EMIT q->aboutToDeleteOnClose();
         q->deleteLater();
+    }
 }
 
 bool DockWidgetBase::Private::restoreToPreviousPosition()
