@@ -43,6 +43,22 @@ public:
         m_inCtor = false;
     }
 
+    /// @brief Returns whether the last focused widget is the tab widget itself
+    bool lastFocusedIsTabWidget() const
+    {
+        if (!m_lastFocusedInScope)
+            return false;
+
+        if (auto metaObj = m_lastFocusedInScope->metaObject()) {
+            const auto className = QLatin1String(metaObj->className());
+
+            return className == QLatin1String("KDDockWidgets::TabBarWidget")
+                || className == QLatin1String("KDDockWidgets::TabBarQuick");
+        }
+
+        return false;
+    }
+
     ~Private() override;
 
     void setIsFocused(bool);
@@ -83,7 +99,10 @@ WidgetType *FocusScope::focusedWidget() const
 
 void FocusScope::focus(Qt::FocusReason reason)
 {
-    if (d->m_lastFocusedInScope) {
+    if (d->m_lastFocusedInScope && !d->lastFocusedIsTabWidget()) {
+        // When we focus the FocusScope, we give focus to the last focused widget, but let's
+        // do better than focusing a tab widget. The tab widget itself being focused isn't
+        // very useful.
         d->m_lastFocusedInScope->setFocus(reason);
     } else {
         if (auto frame = qobject_cast<Frame*>(d->m_thisWidget)) {
