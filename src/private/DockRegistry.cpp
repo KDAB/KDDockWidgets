@@ -84,12 +84,23 @@ void DockRegistry::maybeDelete()
 
 void DockRegistry::onFocusObjectChanged(QObject *obj)
 {
-    // In this function we reset the focused dock widget.
-
     auto p = qobject_cast<WidgetType*>(obj);
     while (p) {
-        if (qobject_cast<DockWidgetBase*>(p) || qobject_cast<Frame*>(p))
+        if (auto frame = qobject_cast<Frame *>(p)) {
+            // Special case: The focused widget is inside the frame but not inside the dockwidget.
+            // For example, it's a line edit in the QTabBar. We still need to send the signal for
+            // the current dw in the tab group
+            if (auto dw = frame->currentDockWidget()) {
+                setFocusedDockWidget(dw);
+            }
+
             return;
+        }
+
+        if (auto dw = qobject_cast<DockWidgetBase *>(p)) {
+            DockRegistry::self()->setFocusedDockWidget(dw);
+            return;
+        }
         p = KDDockWidgets::Private::parentWidget(p);
     }
 
