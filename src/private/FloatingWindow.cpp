@@ -210,25 +210,37 @@ const Frame::List FloatingWindow::frames() const
     return m_dropArea->frames();
 }
 
-void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints hint)
+QSize FloatingWindow::maxSizeHint() const
 {
     const Frame::List frames = this->frames();
     if (frames.size() == 1) {
-        // Let's honour max-size when we have a single-frame.
-        // multi-frame cases are more complicated and we're not sure if we want the window to bounce around.
-        // single-frame is the most common case, like floating a dock widget, so let's do that first, it's also
-        // easy.
         Frame *frame = frames[0];
         const QSize waste = (minimumSize() - frame->minSize()).expandedTo(QSize(0, 0));
-        const QSize size = (frame->maxSizeHint() + waste).boundedTo(suggestedRect.size());
+        return frame->maxSizeHint() + waste;
+    } else {
+        return QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+    }
+}
+
+void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints hint)
+{
+    const QSize maxSize = maxSizeHint();
+    const bool hasMaxSize = maxSize != QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+    if (hasMaxSize) {
+        // Let's honour max-size when we have a single-frame.
+        // multi-frame cases are more complicated and we're not sure if we want the window to
+        // bounce around. single-frame is the most common case, like floating a dock widget, so
+        // let's do that first, it's also easy.
 
         // Resize to new size but preserve center
         const QPoint originalCenter = suggestedRect.center();
-        suggestedRect.setSize(size);
+        suggestedRect.setSize(maxSize.boundedTo(suggestedRect.size()));
 
-        if ((hint & SuggestedGeometryHint_GeometryIsFromDocked) && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
+        if ((hint & SuggestedGeometryHint_GeometryIsFromDocked)
+            && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
             const QMargins margins = contentMargins();
-            suggestedRect.setHeight(suggestedRect.height() - m_titleBar->height() + margins.top() + margins.bottom());
+            suggestedRect.setHeight(suggestedRect.height() - m_titleBar->height() + margins.top()
+                                    + margins.bottom());
         }
 
         if (hint & SuggestedGeometryHint_PreserveCenter)
