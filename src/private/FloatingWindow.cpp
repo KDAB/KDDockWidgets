@@ -336,9 +336,10 @@ void FloatingWindow::onFrameCountChanged(int count)
 
 void FloatingWindow::onVisibleFrameCountChanged(int count)
 {
-    if (!m_disableSetVisible) {
-        setVisible(count > 0);
-    }
+    if (m_disableSetVisible)
+        return;
+
+    setVisible(count > 0);
 }
 
 void FloatingWindow::updateTitleBarVisibility()
