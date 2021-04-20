@@ -8,6 +8,9 @@
   - Added MainWindow::closeDockWidgets()
   - Fixed crash in MainWindow::layoutEqually()
   - QtQuick: Added more declarative API
+  - FloatingWindow now honours the dockwidget's max-size, if there's a single
+    dock widget docked. Tabbed cases are more difficult since QStackedLayout doesn't
+    propagate size constraints.
 
 * v1.3.1 (unreleased)
   - Improve restoring layout when RestoreOption_RelativeToMainWindow is used (#171)
