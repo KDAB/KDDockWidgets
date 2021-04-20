@@ -353,14 +353,7 @@ void FloatingWindow::onVisibleFrameCountChanged(int count)
     if (m_disableSetVisible)
         return;
 
-    if (count == 1) {
-        // When we have a single frame we honour maxSizeHint.
-        // Doing a delayed call to make sure the layout has completled any ongoing operation.
-        QMetaObject::invokeMethod(this, [this] {
-            setMaximumSize(maxSizeHint());
-        }, Qt::QueuedConnection);
-    }
-
+    updateSizeConstraints();
     setVisible(count > 0);
 }
 
@@ -557,4 +550,12 @@ int FloatingWindow::userType() const
     if (Frame *f = singleFrame())
         return f->userType();
     return 0;
+}
+
+void FloatingWindow::updateSizeConstraints()
+{
+    // Doing a delayed call to make sure the layout has completled any ongoing operation.
+    QMetaObject::invokeMethod(this, [this] {
+        setMaximumSize(maxSizeHint());
+    }, Qt::QueuedConnection);
 }

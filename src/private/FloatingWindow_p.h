@@ -193,6 +193,7 @@ protected:
 private:
     Q_DISABLE_COPY(FloatingWindow)
     QSize maxSizeHint() const;
+    void updateSizeConstraints();
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
     bool m_disableSetVisible = false;
