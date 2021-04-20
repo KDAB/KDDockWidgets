@@ -212,6 +212,7 @@ const Frame::List FloatingWindow::frames() const
 
 QSize FloatingWindow::maxSizeHint() const
 {
+    QSize result = Layouting::Item::hardcodedMaximumSize;
     const Frame::List frames = this->frames();
     if (frames.size() == 1) {
         // Let's honour max-size when we have a single-frame.
@@ -220,10 +221,12 @@ QSize FloatingWindow::maxSizeHint() const
         // let's do that first, it's also easy.
         Frame *frame = frames[0];
         const QSize waste = (minimumSize() - frame->minSize()).expandedTo(QSize(0, 0));
-        return frame->maxSizeHint() + waste;
-    } else {
-        return Layouting::Item::hardcodedMaximumSize;
+        result = frame->maxSizeHint() + waste;
     }
+
+    // Semantically the result is fine, but bound it so we don't get:
+    // QWidget::setMaximumSize: (/KDDockWidgets::FloatingWindowWidget) The largest allowed size is (16777215,16777215)
+    return result.boundedTo(Layouting::Item::hardcodedMaximumSize);
 }
 
 void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints hint)
