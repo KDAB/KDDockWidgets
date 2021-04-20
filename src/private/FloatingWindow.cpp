@@ -214,6 +214,10 @@ QSize FloatingWindow::maxSizeHint() const
 {
     const Frame::List frames = this->frames();
     if (frames.size() == 1) {
+        // Let's honour max-size when we have a single-frame.
+        // multi-frame cases are more complicated and we're not sure if we want the window to
+        // bounce around. single-frame is the most common case, like floating a dock widget, so
+        // let's do that first, it's also easy.
         Frame *frame = frames[0];
         const QSize waste = (minimumSize() - frame->minSize()).expandedTo(QSize(0, 0));
         return frame->maxSizeHint() + waste;
@@ -227,11 +231,6 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometry
     const QSize maxSize = maxSizeHint();
     const bool hasMaxSize = maxSize != QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
     if (hasMaxSize) {
-        // Let's honour max-size when we have a single-frame.
-        // multi-frame cases are more complicated and we're not sure if we want the window to
-        // bounce around. single-frame is the most common case, like floating a dock widget, so
-        // let's do that first, it's also easy.
-
         // Resize to new size but preserve center
         const QPoint originalCenter = suggestedRect.center();
         suggestedRect.setSize(maxSize.boundedTo(suggestedRect.size()));
