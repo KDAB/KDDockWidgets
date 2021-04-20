@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "version": 2,
     "configurePresets": [
         {
             "name": "dev-qtwidgets",
@@ -144,6 +144,28 @@
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "dev-qtwidgets",
+            "configurePreset": "dev-qtwidgets"
+        },
+        {
+            "name": "dev-qtwidgets6",
+            "configurePreset": "dev-qtwidgets6"
+        },
+        {
+            "name": "dev-qtquick",
+            "configurePreset": "dev-qtquick"
+        },
+        {
+            "name": "dev-qtquick6",
+            "configurePreset": "dev-qtquick6"
+        },
+        {
+            "name": "clazy-qtwidgets",
+            "configurePreset": "clazy-qtwidgets"
         }
     ]
 }
