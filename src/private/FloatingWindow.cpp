@@ -488,6 +488,8 @@ bool FloatingWindow::event(QEvent *ev)
     } else if (ev->type() == QEvent::StatusTip && parent()) {
         // show status tips in the main window
         return parent()->event(ev);
+    } else if (ev->type() == QEvent::LayoutRequest) {
+        updateSizeConstraints();
     }
 
     return QWidgetAdapter::event(ev);
@@ -562,6 +564,10 @@ void FloatingWindow::updateSizeConstraints()
 {
     // Doing a delayed call to make sure the layout has completled any ongoing operation.
     QMetaObject::invokeMethod(this, [this] {
+        // Not simply using layout's max-size support because
+        // 1) that's not portable to QtQuick
+        // 2) QStackedLayout (from tab-widget) doesn't propagate size constraints up
+        // Doing it manually instead.
         setMaximumSize(maxSizeHint());
     }, Qt::QueuedConnection);
 }
