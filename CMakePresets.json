@@ -160,8 +160,8 @@
             "configurePreset": "dev-qtquick"
         },
         {
-            "name": "dev-qtquick6",
-            "configurePreset": "dev-qtquick6"
+            "name": "qtquick6",
+            "configurePreset": "qtquick6"
         },
         {
             "name": "clazy-qtwidgets",
