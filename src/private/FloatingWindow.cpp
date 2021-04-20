@@ -226,8 +226,10 @@ QSize FloatingWindow::maxSizeHint() const
         // bounce around. single-frame is the most common case, like floating a dock widget, so
         // let's do that first, it's also easy.
         Frame *frame = frames[0];
-        const QSize waste = (minimumSize() - frame->minSize()).expandedTo(QSize(0, 0));
-        result = frame->maxSizeHint() + waste;
+        if (frame->dockWidgetCount() == 1) { // We don't support if there's tabbing
+            const QSize waste = (minimumSize() - frame->minSize()).expandedTo(QSize(0, 0));
+            result = frame->maxSizeHint() + waste;
+        }
     }
 
     // Semantically the result is fine, but bound it so we don't get:

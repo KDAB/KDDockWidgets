@@ -6442,6 +6442,16 @@ void TestDocks::tst_maxSizedFloatingWindow()
     Testing::waitForEvent(window1, QEvent::LayoutRequest);
     QVERIFY(window1->maximumSize().width() < 500);
     QVERIFY(window1->maximumSize().height() < 500);
+
+    dock1->addDockWidgetAsTab(dock2);
+    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    QVERIFY(window1->maximumSize().width() > 500);
+    QVERIFY(window1->maximumSize().height() > 500);
+
+    dock2->close();
+    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    QVERIFY(window1->maximumSize().width() < 500);
+    QVERIFY(window1->maximumSize().height() < 500);
 }
 
 void TestDocks::tst_maxSizedHonouredAfterRemoved()
