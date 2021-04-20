@@ -222,14 +222,14 @@ QSize FloatingWindow::maxSizeHint() const
         const QSize waste = (minimumSize() - frame->minSize()).expandedTo(QSize(0, 0));
         return frame->maxSizeHint() + waste;
     } else {
-        return QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+        return Layouting::Item::hardcodedMaximumSize;
     }
 }
 
 void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometryHints hint)
 {
     const QSize maxSize = maxSizeHint();
-    const bool hasMaxSize = maxSize != QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+    const bool hasMaxSize = maxSize != Layouting::Item::hardcodedMaximumSize;
     if (hasMaxSize) {
         // Resize to new size but preserve center
         const QPoint originalCenter = suggestedRect.center();
