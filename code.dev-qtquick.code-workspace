@@ -10,36 +10,6 @@
     "files.trimTrailingWhitespace": true,
     "editor.formatOnType": true
   },
-  "tasks": {
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "type": "shell",
-        "label": "cmake",
-        "command": "cmake",
-        "args": [
-          "--preset=dev-qtquick"
-        ],
-        "options": {
-          "cwd": "${workspaceFolder}/"
-        },
-        "group": "build"
-      },
-      {
-        "type": "shell",
-        "label": "make",
-        "command": "cmake",
-        "args": [
-          "--build",
-          "${workspaceFolder}/build-dev-qtquick"
-        ],
-        "options": {
-          "cwd": "${workspaceFolder}/"
-        },
-        "group": "build"
-      }
-    ]
-  },
   "launch": {
     "version": "0.2.0",
     "configurations": [
