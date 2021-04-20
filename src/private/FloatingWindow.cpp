@@ -213,6 +213,12 @@ const Frame::List FloatingWindow::frames() const
 QSize FloatingWindow::maxSizeHint() const
 {
     QSize result = Layouting::Item::hardcodedMaximumSize;
+
+    if (!m_dropArea) {
+        // Still early, no layout set
+        return result;
+    }
+
     const Frame::List frames = this->frames();
     if (frames.size() == 1) {
         // Let's honour max-size when we have a single-frame.
