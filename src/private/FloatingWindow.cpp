@@ -24,8 +24,9 @@
 #include "../LayoutSaver_p.h"
 
 #include <QCloseEvent>
-#include <QWindow>
 #include <QScopedValueRollback>
+#include <QTimer>
+#include <QWindow>
 
 #if defined(Q_OS_WIN)
 # include <windows.h>
@@ -565,11 +566,11 @@ int FloatingWindow::userType() const
 void FloatingWindow::updateSizeConstraints()
 {
     // Doing a delayed call to make sure the layout has completled any ongoing operation.
-    QMetaObject::invokeMethod(this, [this] {
+    QTimer::singleShot(0, this, [this] {
         // Not simply using layout's max-size support because
         // 1) that's not portable to QtQuick
         // 2) QStackedLayout (from tab-widget) doesn't propagate size constraints up
         // Doing it manually instead.
         setMaximumSize(maxSizeHint());
-    }, Qt::QueuedConnection);
+    });
 }
