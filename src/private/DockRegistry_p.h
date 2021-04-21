@@ -59,14 +59,14 @@ public:
     void registerFrame(Frame *);
     void unregisterFrame(Frame *);
 
-    Q_INVOKABLE DockWidgetBase *focusedDockWidget() const;
+    Q_INVOKABLE KDDockWidgets::DockWidgetBase *focusedDockWidget() const;
 
     Q_INVOKABLE bool containsDockWidget(const QString &uniqueName) const;
     Q_INVOKABLE bool containsMainWindow(const QString &uniqueName) const;
 
     Q_INVOKABLE KDDockWidgets::DockWidgetBase *dockByName(const QString &) const;
-    Q_INVOKABLE MainWindowBase *mainWindowByName(const QString &) const;
-    Q_INVOKABLE MainWindowMDI *mdiMainWindowByName(const QString &) const;
+    Q_INVOKABLE KDDockWidgets::MainWindowBase *mainWindowByName(const QString &) const;
+    Q_INVOKABLE KDDockWidgets::MainWindowMDI *mdiMainWindowByName(const QString &) const;
 
     /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
     DockWidgetBase *dockWidgetForGuest(QWidgetOrQuick *guest) const;
