@@ -165,7 +165,10 @@
         },
         {
             "name": "clazy-qtwidgets",
-            "configurePreset": "clazy-qtwidgets"
+            "configurePreset": "clazy-qtwidgets",
+            "environment": {
+                "CLAZY_CHECKS" : "level2,detaching-member,heap-allocated-small-trivial-type,isempty-vs-count,qstring-varargs,qvariant-template-instantiation,raw-environment-function,reserve-candidates,signal-with-return-value,thread-with-slots,no-ctor-missing-parent-argument,no-missing-typeinfo"
+            }
         }
     ]
 }
