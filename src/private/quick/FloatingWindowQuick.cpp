@@ -33,7 +33,8 @@ public:
         : QQuickView(Config::self().qmlEngine(), nullptr)
         , m_floatingWindow(floatingWindow)
     {
-        setColor(QColor(Qt::transparent));
+        if (Config::self().internalFlags() & Config::InternalFlag_UseTransparentFloatingWindow)
+            setColor(QColor(Qt::transparent));
 
         updateSize();
 
