@@ -6003,6 +6003,41 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore3()
     QVERIFY(dock2->isFloating());
 }
 
+void TestDocks::tst_dontCloseDockWidgetBeforeRestore4()
+{
+    // Tests a case where the dock widget would get an invalid size.
+    // Widgets which skip layout restore were be skipping LayoutSaver::onResize()
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow({1000, 1000}, {});
+    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {},
+                                  DockWidgetBase::LayoutSaverOption::Skip);
+
+    m->addDockWidget(dock1, Location_OnBottom);
+    m->addDockWidget(dock2, Location_OnBottom);
+
+    QTest::qWait(100);
+    dock1->close();
+    dock2->close();
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    QTest::qWait(100);
+    dock2->show();
+
+    QVERIFY(saver.restoreLayout(saved));
+    QVERIFY(dock2->isOpen());
+
+    QTest::qWait(100);
+    FloatingWindow *fw = dock2->floatingWindow();
+    DropArea *da = fw->dropArea();
+    QVERIFY(da->checkSanity());
+    QCOMPARE(da->size(), da->rootItem()->size());
+    QVERIFY(qAbs(fw->width() - da->width()) < 30);
+}
+
 void TestDocks::tst_closeOnlyCurrentTab()
 {
     {

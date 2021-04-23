@@ -223,8 +223,6 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     if (data.isEmpty())
         return true;
 
-    Private::RAIIIsRestoring isRestoring;
-
     struct FrameCleanup {
         FrameCleanup(LayoutSaver *saver)
             : m_saver(saver)
@@ -254,6 +252,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         layout.scaleSizes();
 
     d->floatWidgetsWhichSkipRestore(layout.mainWindowNames());
+
+    Private::RAIIIsRestoring isRestoring;
 
     // Hide all dockwidgets and unparent them from any layout before starting restore
     // We only close the stuff that the loaded JSON knows about. Unknown widgets might be newer.

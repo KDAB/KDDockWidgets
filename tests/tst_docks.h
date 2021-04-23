@@ -117,6 +117,7 @@ private Q_SLOTS:
     void tst_dontCloseDockWidgetBeforeRestore();
     void tst_dontCloseDockWidgetBeforeRestore2();
     void tst_dontCloseDockWidgetBeforeRestore3();
+    void tst_dontCloseDockWidgetBeforeRestore4();
     void tst_restoreWithNativeTitleBar();
 
     void tst_closeOnlyCurrentTab();
