@@ -23,8 +23,6 @@
 
 #include <memory>
 
-#define MULTISPLITTER_LAYOUT_MAGIC_MARKER "bac9948e-5f1b-4271-acc5-07f1708e2611"
-
 /**
   * Bump whenever the format changes, so we can still load old layouts.
   * version 1: Initial version
