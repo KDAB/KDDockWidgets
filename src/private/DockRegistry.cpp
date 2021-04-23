@@ -256,6 +256,11 @@ Frame *DockRegistry::frameInMDIResize() const
     return nullptr;
 }
 
+QHash<QString, QString> &DockRegistry::dockWidgetIdRemapping()
+{
+    return m_dockWidgetIdRemapping;
+}
+
 MainWindowBase::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
 {
     MainWindowBase::List result;
@@ -383,11 +388,18 @@ bool DockRegistry::containsMainWindow(const QString &uniqueName) const
     return mainWindowByName(uniqueName) != nullptr;
 }
 
-DockWidgetBase *DockRegistry::dockByName(const QString &name) const
+DockWidgetBase *DockRegistry::dockByName(const QString &name, bool consultRemapping) const
 {
     for (auto dock : qAsConst(m_dockWidgets)) {
         if (dock->uniqueName() == name)
             return dock;
+    }
+
+    if (consultRemapping) {
+        // Name doesn't exist, let's check if it was remapped during a layout restore.
+        const QString newName = m_dockWidgetIdRemapping.value(name);
+        if (!newName.isEmpty())
+            return dockByName(newName);
     }
 
     return nullptr;

@@ -776,11 +776,18 @@ void DockWidgetBase::onCloseEvent(QCloseEvent *e)
 
 DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
 {
-    DockWidgetBase *dw = DockRegistry::self()->dockByName(saved->uniqueName);
+    auto dr = DockRegistry::self();
+    DockWidgetBase *dw = dr->dockByName(saved->uniqueName);
     if (!dw) {
+        // DockWidget doesn't exist, ask to create it
         if (auto factoryFunc = Config::self().dockWidgetFactoryFunc()) {
-            // DockWidget doesn't exist, ask to create it
             dw = factoryFunc(saved->uniqueName);
+            if (dw && dw->uniqueName() != saved->uniqueName) {
+                // Very special case
+                // The user's factory function returned a dock widget with a different ID.
+                // We support it. Save the mapping though.
+                dr->dockWidgetIdRemapping().insert(saved->uniqueName, dw->uniqueName());
+            }
         }
     }
 

@@ -313,7 +313,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(dw->affinities))
             continue;
 
-        if (DockWidgetBase *dockWidget = d->m_dockRegistry->dockByName(dw->uniqueName)) {
+        if (DockWidgetBase *dockWidget =
+                d->m_dockRegistry->dockByName(dw->uniqueName, /*consultRemapping=*/true)) {
             dockWidget->d->lastPositions().deserialize(dw->lastPosition);
         } else {
             qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << dw->uniqueName;

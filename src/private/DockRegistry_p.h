@@ -64,7 +64,8 @@ public:
     Q_INVOKABLE bool containsDockWidget(const QString &uniqueName) const;
     Q_INVOKABLE bool containsMainWindow(const QString &uniqueName) const;
 
-    Q_INVOKABLE KDDockWidgets::DockWidgetBase *dockByName(const QString &) const;
+    Q_INVOKABLE KDDockWidgets::DockWidgetBase *dockByName(const QString &,
+                                                          bool consultRemapping = false) const;
     Q_INVOKABLE KDDockWidgets::MainWindowBase *mainWindowByName(const QString &) const;
     Q_INVOKABLE KDDockWidgets::MainWindowMDI *mdiMainWindowByName(const QString &) const;
 
@@ -219,6 +220,14 @@ public:
     ///@brief Returns the Frame which is being resized in a MDI layout. nullptr if none
     Frame *frameInMDIResize() const;
 
+    ///@brief Returns the dock widget id remapping, used by LayoutSaver
+    ///
+    /// When LayoutSaver is trying to restore dock widget "foo", but it doesn't exist, it will
+    /// attempt to call a user provided factory function. That function can however return a dock
+    /// widget with another ID, such as "bar". When that happens this QHash gets a "foo" : "bar"
+    /// entry
+    QHash<QString, QString> &dockWidgetIdRemapping();
+
 Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen
     void windowChangedScreen(QWindow *);
@@ -243,6 +252,7 @@ private:
     QVector<FloatingWindow*> m_floatingWindows;
     QVector<LayoutWidget *> m_layouts;
     QPointer<DockWidgetBase> m_focusedDockWidget;
+    QHash<QString, QString> m_dockWidgetIdRemapping;
 };
 
 }

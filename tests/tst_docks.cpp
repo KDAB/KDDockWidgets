@@ -134,6 +134,7 @@ private Q_SLOTS:
     void tst_marginsAfterRestore();
     void tst_restoreWithNewDockWidgets();
     void tst_restoreWithDockFactory();
+    void tst_restoreWithDockFactory2();
     void tst_lastFloatingPositionIsRestored();
     void tst_restoreSimple();
     void tst_restoreSimplest();
@@ -4053,6 +4054,31 @@ void TestDocks::tst_restoreWithDockFactory()
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->visibleCount(), 1);
     layout->checkSanity();
+}
+
+void TestDocks::tst_restoreWithDockFactory2()
+{
+    // Teste that the factory function can do id remapping.
+    // For example, if id "foo" is missing, the factory can return a
+    // dock widget with id "bar" if it feels like it
+
+    auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
+
+    auto dock1 = createDockWidget("dw1", new QPushButton("1"));
+    m->addDockWidget(dock1, Location_OnLeft);
+    dock1->setFloating(true);
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+    delete dock1;
+
+    DockWidgetFactoryFunc func = [] (const QString &) {
+        // A factory func which does id remapping
+        return createDockWidget("dw2", new QPushButton("w"), {}, {}, /*show=*/ false);
+    };
+
+    KDDockWidgets::Config::self().setDockWidgetFactoryFunc(func);
+    saver.restoreLayout(saved);
 }
 
 void TestDocks::tst_addDockWidgetToMainWindow()
