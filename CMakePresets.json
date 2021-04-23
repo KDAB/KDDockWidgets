@@ -18,6 +18,22 @@
             }
         },
         {
+            "name": "dev-qtwidgets-gammaray",
+            "displayName": "dev-qtwidgets-gammaray",
+            "description": "A Gammaray friendly build. (No ASAN)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-qtwidgets-gammaray",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                "KDDockWidgets_FUZZER" : "OFF"
+            },
+            "warnings" : {
+                "uninitialized" : true
+            }
+        },
+        {
             "name": "clazy-qtwidgets",
             "displayName": "clazy-qtwidgets",
             "generator": "Ninja",
