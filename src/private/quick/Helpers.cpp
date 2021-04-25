@@ -10,3 +10,13 @@
 */
 
 #include "Helpers_p.h"
+#include "QWidgetAdapter.h"
+
+#include <QQuickItem>
+
+using namespace KDDockWidgets;
+
+qreal QtQuickHelpers::logicalDpiFactor(const QQuickItem *item) const
+{
+  return KDDockWidgets::logicalDpiFactor(item);
+}
