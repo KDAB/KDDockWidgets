@@ -28,6 +28,7 @@
 #include <QOperatingSystemVersion>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
+# include "quick/Helpers_p.h"
 # include <QQmlEngine>
 # include <QQmlContext>
 #endif
@@ -230,6 +231,7 @@ void Config::setQmlEngine(QQmlEngine *qmlEngine)
     }
 
     auto dr = DockRegistry::self(); // make sure our QML types are registered
+    qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddwHelpers"), new QtQuickHelpers());
     qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
     qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
     d->m_qmlEngine = qmlEngine;

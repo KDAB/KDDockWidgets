@@ -152,6 +152,8 @@ if(${PROJECT_NAME}_QTQUICK)
       private/quick/TitleBarQuick_p.h
       private/quick/QmlTypes.cpp
       private/quick/QmlTypes.h
+      private/quick/Helpers.cpp
+      private/quick/Helpers_p.h
       private/quick/FrameQuick.cpp
       private/quick/FrameQuick_p.h
       private/quick/LayoutSaverInstantiator.cpp
