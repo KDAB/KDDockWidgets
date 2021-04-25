@@ -231,13 +231,13 @@ void Config::setQmlEngine(QQmlEngine *qmlEngine)
     }
 
     auto dr = DockRegistry::self(); // make sure our QML types are registered
-    qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddwHelpers"), new QtQuickHelpers());
-    qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
-    qmlEngine->rootContext()->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
-    d->m_qmlEngine = qmlEngine;
-
     QQmlContext *context = qmlEngine->rootContext();
+    context->setContextProperty(QStringLiteral("_kddwHelpers"), new QtQuickHelpers());
+    context->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
+    context->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
     context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), d->m_frameworkWidgetFactory);
+
+    d->m_qmlEngine = qmlEngine;
 }
 
 QQmlEngine *Config::qmlEngine() const
