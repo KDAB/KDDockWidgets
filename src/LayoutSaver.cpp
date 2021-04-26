@@ -277,8 +277,14 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(mainWindow->affinities()))
             continue;
 
-        if (!(d->m_restoreOptions & RestoreOption_RelativeToMainWindow))
+        if (!(d->m_restoreOptions & RestoreOption_RelativeToMainWindow)) {
             d->deserializeWindowGeometry(mw, mainWindow->window()); // window(), as the MainWindow can be embedded
+            if (mw.windowState != Qt::WindowNoState) {
+                if (auto w = mainWindow->windowHandle()) {
+                    w->setWindowState(mw.windowState);
+                }
+            }
+        }
 
         if (!mainWindow->deserialize(mw))
             return false;

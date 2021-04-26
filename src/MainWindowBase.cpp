@@ -670,12 +670,6 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
         }
     }
 
-    if (mw.windowState != Qt::WindowNoState) {
-        if (auto w = windowHandle()) {
-            w->setWindowState(mw.windowState);
-        }
-    }
-
     // Commented-out for now, we dont' want to restore the popup/overlay. popups are perishable
     //if (!mw.overlayedDockWidget.isEmpty())
     //    overlayOnSideBar(DockRegistry::self()->dockByName(mw.overlayedDockWidget));
