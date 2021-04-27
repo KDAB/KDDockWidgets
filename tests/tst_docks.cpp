@@ -5191,6 +5191,29 @@ void TestDocks::tst_overlayedGeometryIsSaved()
     QCOMPARE(frame->height(), newHeight);
 }
 
+void TestDocks::tst_overlayCrash()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+    m1->addDockWidget(dw1, Location_OnBottom);
+
+    auto dw2 = new DockWidgetType(QStringLiteral("2"));
+    m1->addDockWidget(dw2, Location_OnBottom);
+
+    m1->moveToSideBar(dw1);
+    m1->toggleOverlayOnSideBar(dw1);
+
+    dw1->close();
+
+    auto tb = dw2->titleBar();
+    QVERIFY(tb->isVisible());
+
+    pressOn(tb->mapToGlobal(QPoint(5, 5)), tb);
+}
+
 void TestDocks::tst_embeddedMainWindow()
 {
     EnsureTopLevelsDeleted e;
