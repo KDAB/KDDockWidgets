@@ -253,6 +253,7 @@ private Q_SLOTS:
     void tst_sidebarOverlayGetsHiddenOnClick();
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();
+    void tst_overlayCrash();
 
     // And fix these
     void tst_floatingWindowDeleted();
