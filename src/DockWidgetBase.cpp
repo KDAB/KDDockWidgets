@@ -603,8 +603,18 @@ void DockWidgetBase::Private::close()
         return;
     }
 
-    if (!m_isForceClosing && q->isFloating() && q->isVisible()) { // only user-closing is interesting to save the geometry
-        // We check for isVisible so we don't save geometry if you call close() on an already closed dock widget
+    // If it's overlayed and we're closing, we need to close the overlay
+    if (SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
+        auto mainWindow = sb->mainWindow();
+        if (mainWindow->overlayedDockWidget() == q) {
+            mainWindow->clearSideBarOverlay(/* deleteFrame=*/false);
+        }
+    }
+
+    if (!m_isForceClosing && q->isFloating()
+        && q->isVisible()) { // only user-closing is interesting to save the geometry
+        // We check for isVisible so we don't save geometry if you call close() on an already closed
+        // dock widget
         m_lastPositions.setLastFloatingGeometry(q->window()->geometry());
     }
 
