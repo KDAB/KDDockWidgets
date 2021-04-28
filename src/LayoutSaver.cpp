@@ -114,7 +114,7 @@ public:
 
     std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
-    const InternalRestoreOptions m_restoreOptions;
+    InternalRestoreOptions m_restoreOptions = {};
     QStringList m_affinityNames;
 
     static bool s_restoreInProgress;
@@ -350,6 +350,11 @@ void LayoutSaver::setAffinityNames(const QStringList &affinityNames)
         // Any window with empty affinity will also be subject to save/restore
         d->m_affinityNames << QString();
     }
+}
+
+LayoutSaver::Private *LayoutSaver::dptr() const
+{
+    return d;
 }
 
 DockWidgetBase::List LayoutSaver::restoredDockWidgets() const
