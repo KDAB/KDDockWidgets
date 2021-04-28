@@ -12,9 +12,9 @@
 #ifndef KD_LAYOUTSAVER_P_H
 #define KD_LAYOUTSAVER_P_H
 
-#include "KDDockWidgets.h"
-#include "LayoutSaver.h"
-#include "QWidgetAdapter.h"
+#include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/LayoutSaver.h"
+#include "kddockwidgets/QWidgetAdapter.h"
 
 #include <QDebug>
 #include <QGuiApplication>

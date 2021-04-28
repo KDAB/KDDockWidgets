@@ -14,6 +14,7 @@
 #include "MyFrameworkWidgetFactory.h"
 
 #include <kddockwidgets/Config.h>
+#include <kddockwidgets/private/LayoutSaver_p.h>
 
 #include <QStyleFactory>
 #include <QApplication>
