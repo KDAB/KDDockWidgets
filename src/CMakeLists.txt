@@ -37,7 +37,7 @@ set(DOCKSLIBS_SRCS
     MainWindowMDI.h
     LayoutSaver.cpp
     LayoutSaver.h
-    LayoutSaver_p.h
+    private/LayoutSaver_p.h
     private/LayoutWidget.cpp
     private/LayoutWidget_p.h
     private/MDILayoutWidget.cpp
@@ -114,6 +114,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/DropIndicatorOverlayInterface_p.h
     private/FloatingWindow_p.h
     private/Frame_p.h
+    private/LayoutSaver_p.h
     private/MultiSplitter_p.h
     private/LayoutWidget_p.h
     private/SideBar_p.h
