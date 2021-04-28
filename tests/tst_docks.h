@@ -262,6 +262,7 @@ private Q_SLOTS:
     void tst_maxSizePropagates();
     void tst_maxSizePropagates2();
     void tst_restoreResizesLayout();
+    void tst_restoreNonRelativeFloatingWindowGeometry();
     void tst_maxSizeHonouredWhenDropped();
     void tst_fixedSizePolicy();
     void tst_maxSizeHonouredWhenAnotherDropped();

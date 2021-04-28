@@ -17,6 +17,7 @@
 #include "DockWidgetBase.h"
 #include "DockWidgetBase_p.h"
 #include "DropAreaWithCentralFrame_p.h"
+#include "LayoutSaver_p.h"
 #include "MDILayoutWidget_p.h"
 #include "MainWindowMDI.h"
 #include "Position_p.h"
@@ -5327,6 +5328,29 @@ void TestDocks::tst_restoreResizesLayout()
 
     QCOMPARE(m->dropArea()->QWidgetAdapter::size(), layout->size());
     QVERIFY(layout->checkSanity());
+}
+
+void TestDocks::tst_restoreNonRelativeFloatingWindowGeometry()
+{
+    // Tests that disabling RelativeFloatingWindowGeometry works
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    dock1->show();
+
+    LayoutSaver saver(RestoreOption_RelativeToMainWindow);
+    saver.dptr()->m_restoreOptions.setFlag(InternalRestoreOption::RelativeFloatingWindowGeometry,
+                                           false);
+
+    const QByteArray saved = saver.serializeLayout();
+
+    const QSize floatingWindowSize = dock1->window()->size();
+
+    m->resize(m->width() * 2, m->height());
+    saver.restoreLayout(saved);
+
+    QCOMPARE(dock1->window()->size(), floatingWindowSize);
 }
 
 void TestDocks::tst_maximumSizePolicy()
