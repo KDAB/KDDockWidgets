@@ -62,6 +62,20 @@ using namespace KDDockWidgets;
 QHash<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout* LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
 
+
+inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
+{
+    if (options == RestoreOption_None) {
+        return InternalRestoreOption::None;
+    } else if (options == RestoreOption_RelativeToMainWindow) {
+        return InternalRestoreOptions(InternalRestoreOption::SkipMainWindowGeometry)
+            | InternalRestoreOption::RelativeFloatingWindowGeometry;
+    } else {
+        qWarning() << Q_FUNC_INFO << "Unknown options" << options;
+        return {};
+    }
+}
+
 class KDDockWidgets::LayoutSaver::Private
 {
 public:
@@ -82,7 +96,7 @@ public:
 
     Private(RestoreOptions options)
         : m_dockRegistry(DockRegistry::self())
-        , m_restoreOptions(options)
+        , m_restoreOptions(internalRestoreOptions(options))
     {
     }
 
@@ -100,7 +114,7 @@ public:
 
     std::unique_ptr<QSettings> settings() const;
     DockRegistry *const m_dockRegistry;
-    const RestoreOptions m_restoreOptions;
+    const InternalRestoreOptions m_restoreOptions;
     QStringList m_affinityNames;
 
     static bool s_restoreInProgress;
@@ -248,8 +262,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         return false;
     }
 
-    if (d->m_restoreOptions & RestoreOption_RelativeToMainWindow)
-        layout.scaleSizes();
+    layout.scaleSizes(d->m_restoreOptions);
 
     d->floatWidgetsWhichSkipRestore(layout.mainWindowNames());
 
@@ -277,7 +290,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(mainWindow->affinities()))
             continue;
 
-        if (!(d->m_restoreOptions & RestoreOption_RelativeToMainWindow)) {
+        if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry)) {
             d->deserializeWindowGeometry(mw, mainWindow->window()); // window(), as the MainWindow can be embedded
             if (mw.windowState != Qt::WindowNoState) {
                 if (auto w = mainWindow->windowHandle()) {
@@ -492,25 +505,44 @@ void LayoutSaver::Layout::fromVariantMap(const QVariantMap &map)
     screenInfo = fromVariantList<LayoutSaver::ScreenInfo>(map.value(QStringLiteral("screenInfo")).toList());
 }
 
-void LayoutSaver::Layout::scaleSizes()
+void LayoutSaver::Layout::scaleSizes(InternalRestoreOptions options)
 {
     if (mainWindows.isEmpty())
         return;
 
+    const bool skipsMainWindowGeometry = options & InternalRestoreOption::SkipMainWindowGeometry;
+    if (!skipsMainWindowGeometry) {
+        // No scaling to do. All windows will be restored with the exact size specified in the
+        // saved JSON layouts.
+        return;
+    }
+
+    // We won't restore MainWindow's geometry, we use whatever the user has now, meaning
+    // we need to scale all dock widgets inside the layout, as the layout might not have
+    // the same size as specified in the saved JSON layout
     for (auto &mw : mainWindows)
         mw.scaleSizes();
 
-    for (auto &fw : floatingWindows) {
-        LayoutSaver::MainWindow mw = mainWindowForIndex(fw.parentIndex);
-        if (mw.scalingInfo.isValid())
-            fw.scaleSizes(mw.scalingInfo);
+
+    // MainWindow has a different size than the one in JSON, so we also restore FloatingWindows
+    // relatively to the user set new MainWindow size
+    const bool useRelativeSizesForFloatingWidgets =
+        options & InternalRestoreOption::RelativeFloatingWindowGeometry;
+
+    if (useRelativeSizesForFloatingWidgets) {
+        for (auto &fw : floatingWindows) {
+            LayoutSaver::MainWindow mw = mainWindowForIndex(fw.parentIndex);
+            if (mw.scalingInfo.isValid())
+                fw.scaleSizes(mw.scalingInfo);
+        }
     }
 
     const ScalingInfo firstScalingInfo = mainWindows.constFirst().scalingInfo;
     if (firstScalingInfo.isValid()) {
         for (auto &dw : allDockWidgets) {
-            // TODO: Determine the best main window. This only interesting for closed dock widget geometry
-            // which was previously floating. But they still have some other main window as parent.
+            // TODO: Determine the best main window. This only interesting for closed dock
+            // widget geometry which was previously floating. But they still have some other
+            // main window as parent.
             dw->scaleSizes(firstScalingInfo);
         }
     }

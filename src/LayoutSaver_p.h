@@ -36,6 +36,21 @@ namespace KDDockWidgets {
 
 class FloatingWindow;
 
+
+/// @brief A more granular version of KDDockWidgets::RestoreOption
+/// There's some granularity that we don't want to expose to all users but want to allow some users
+/// to use. We might make more options public once they've proven themselves, so for now they are
+/// internal
+enum class InternalRestoreOption
+{
+    None = 0,
+    SkipMainWindowGeometry = 1, ///< Don't reposition the main window's geometry when restoring.
+    RelativeFloatingWindowGeometry =
+        2 ///< FloatingWindow's are repositioned relatively to the new MainWindow's size
+};
+Q_DECLARE_FLAGS(InternalRestoreOptions, InternalRestoreOption)
+
+
 template <typename T>
 typename T::List fromVariantList(const QVariantList &listV)
 {
@@ -312,7 +327,7 @@ public:
     void fromVariantMap(const QVariantMap &map);
 
     /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
-    void scaleSizes();
+    void scaleSizes(KDDockWidgets::InternalRestoreOptions);
 
     static LayoutSaver::Layout* s_currentLayoutBeingRestored;
 
