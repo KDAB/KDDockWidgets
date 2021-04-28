@@ -171,14 +171,10 @@ void TitleBarWidget::updateAutoHideButton()
                 m_autoHideButton->setIcon(factory->iconForButtonType(TitleBarButtonType::UnautoHide, devicePixelRatioF()));
                 m_autoHideButton->setToolTip(tr("Disable auto-hide"));
             }
-
-            m_autoHideButton->setVisible(true);
-        } else {
-            m_autoHideButton->setVisible(false);
         }
-    } else {
-        m_autoHideButton->setVisible(false);
     }
+
+    m_autoHideButton->setVisible(supportsAutoHideButton());
 }
 
 void TitleBarWidget::updateMaximizeButton()
