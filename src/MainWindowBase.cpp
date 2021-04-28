@@ -77,6 +77,9 @@ MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWin
     , d(new Private(this, options))
 {
     setUniqueName(uniqueName);
+
+    connect(d->m_layoutWidget, &LayoutWidget::visibleWidgetCountChanged, this,
+            &MainWindowBase::frameCountChanged);
 }
 
 MainWindowBase::~MainWindowBase()

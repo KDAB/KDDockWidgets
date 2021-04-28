@@ -210,6 +210,11 @@ protected:
 Q_SIGNALS:
     void uniqueNameChanged();
 
+    /// @brief emitted when the number of docked frames changes
+    /// Note that we're using the "Frame" nomenculature instead of "DockWidget" here, as DockWidgets
+    /// can be tabbed together, in which case this signal isn't emitted.
+    void frameCountChanged(int);
+
 private:
     class Private;
     Private *const d;
