@@ -12,14 +12,16 @@
 #ifndef KD_LAYOUTSAVER_P_H
 #define KD_LAYOUTSAVER_P_H
 
-#include "LayoutSaver.h"
 #include "KDDockWidgets.h"
+#include "LayoutSaver.h"
+#include "QWidgetAdapter.h"
 
-#include <QRect>
 #include <QDebug>
-#include <QScreen>
 #include <QGuiApplication>
 #include <QJsonDocument>
+#include <QRect>
+#include <QScreen>
+#include <QSettings>
 
 #include <memory>
 
@@ -35,7 +37,7 @@
 namespace KDDockWidgets {
 
 class FloatingWindow;
-
+class DockRegistry;
 
 /// @brief A more granular version of KDDockWidgets::RestoreOption
 /// There's some granularity that we don't want to expose to all users but want to allow some users
@@ -348,6 +350,33 @@ private:
     Q_DISABLE_COPY(Layout)
 };
 
+class LayoutSaver::Private
+{
+public:
+    struct RAIIIsRestoring
+    {
+        RAIIIsRestoring();
+        ~RAIIIsRestoring();
+        Q_DISABLE_COPY(RAIIIsRestoring)
+    };
+
+    explicit Private(RestoreOptions options);
+
+    bool matchesAffinity(const QStringList &affinities) const;
+    void floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames);
+
+    template<typename T>
+    void deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel);
+    void deleteEmptyFrames();
+    void clearRestoredProperty();
+
+    std::unique_ptr<QSettings> settings() const;
+    DockRegistry *const m_dockRegistry;
+    InternalRestoreOptions m_restoreOptions = {};
+    QStringList m_affinityNames;
+
+    static bool s_restoreInProgress;
+};
 }
 
 #endif

@@ -32,10 +32,7 @@
 
 #include <qmath.h>
 #include <QDebug>
-#include <QSettings>
 #include <QFile>
-
-#include <memory>
 
 /**
  * Some implementation details:
@@ -76,37 +73,7 @@ inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
     }
 }
 
-class KDDockWidgets::LayoutSaver::Private
-{
-public:
-
-    struct RAIIIsRestoring
-    {
-        RAIIIsRestoring();
-        ~RAIIIsRestoring();
-        Q_DISABLE_COPY(RAIIIsRestoring)
-    };
-
-    explicit Private(RestoreOptions options);
-
-    bool matchesAffinity(const QStringList &affinities) const;
-    void floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames);
-
-    template <typename T>
-    void deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel);
-    void deleteEmptyFrames();
-    void clearRestoredProperty();
-
-    std::unique_ptr<QSettings> settings() const;
-    DockRegistry *const m_dockRegistry;
-    InternalRestoreOptions m_restoreOptions = {};
-    QStringList m_affinityNames;
-
-    static bool s_restoreInProgress;
-};
-
 bool LayoutSaver::Private::s_restoreInProgress = false;
-
 
 static QVariantList stringListToVariant(const QStringList &strs)
 {
