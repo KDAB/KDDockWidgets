@@ -82,29 +82,14 @@ public:
 
     struct RAIIIsRestoring
     {
-        RAIIIsRestoring()
-        {
-            LayoutSaver::Private::s_restoreInProgress = true;
-        }
-
-        ~RAIIIsRestoring()
-        {
-            LayoutSaver::Private::s_restoreInProgress = false;
-        }
+        RAIIIsRestoring();
+        ~RAIIIsRestoring();
         Q_DISABLE_COPY(RAIIIsRestoring)
     };
 
-    Private(RestoreOptions options)
-        : m_dockRegistry(DockRegistry::self())
-        , m_restoreOptions(internalRestoreOptions(options))
-    {
-    }
+    explicit Private(RestoreOptions options);
 
-    bool matchesAffinity(const QStringList &affinities) const {
-        return m_affinityNames.isEmpty() || affinities.isEmpty() || DockRegistry::self()->affinitiesMatch(m_affinityNames, affinities);
-    }
-
-
+    bool matchesAffinity(const QStringList &affinities) const;
     void floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames);
 
     template <typename T>
@@ -383,6 +368,18 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, QWidgetOrQu
 {
     topLevel->setGeometry(saved.geometry);
     topLevel->setVisible(saved.isVisible);
+}
+
+LayoutSaver::Private::Private(RestoreOptions options)
+    : m_dockRegistry(DockRegistry::self())
+    , m_restoreOptions(internalRestoreOptions(options))
+{
+}
+
+bool LayoutSaver::Private::matchesAffinity(const QStringList &affinities) const
+{
+    return m_affinityNames.isEmpty() || affinities.isEmpty()
+        || DockRegistry::self()->affinitiesMatch(m_affinityNames, affinities);
 }
 
 void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames)
@@ -1081,4 +1078,14 @@ void LayoutSaver::ScalingInfo::applyFactorsTo(QRect &rect) const
 
     rect.moveTopLeft(pos);
     rect.setSize(size);
+}
+
+LayoutSaver::Private::RAIIIsRestoring::RAIIIsRestoring()
+{
+    LayoutSaver::Private::s_restoreInProgress = true;
+}
+
+LayoutSaver::Private::RAIIIsRestoring::~RAIIIsRestoring()
+{
+    LayoutSaver::Private::s_restoreInProgress = false;
 }
