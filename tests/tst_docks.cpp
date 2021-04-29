@@ -6929,6 +6929,32 @@ void TestDocks::tst_deleteOnClose()
         QVERIFY(dock2.data());
         delete dock2;
     }
+#ifdef KDDOCKWIDGETS_QTWIDGETS // QtQuick doesn't support autohide/pin/sidebar yet
+    {
+        // Tests that restoring the side-bar-overlay will call the users dock widget factory in case
+        // the dock widget was deleted already
+        EnsureTopLevelsDeleted e;
+        KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+        KDDockWidgets::Config::self().setDockWidgetFactoryFunc([](const QString &name) {
+            return createDockWidget(name, new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose);
+        });
+
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        QPointer<DockWidgetBase> dock1 = createDockWidget("1", new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose);
+        m->addDockWidget(dock1, Location_OnLeft);
+        m->moveToSideBar(dock1);
+        m->overlayOnSideBar(dock1);
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
+
+        QVERIFY(dock1->isVisible());
+        dock1->close();
+        QVERIFY(Testing::waitForDeleted(dock1));
+        QVERIFY(!dock1.data());
+
+        //saver.restoreLayout(saved);
+    }
+#endif
 }
 
 void TestDocks::tst_toggleAction()
