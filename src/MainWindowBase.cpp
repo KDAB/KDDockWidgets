@@ -667,7 +667,7 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
         const QStringList dockWidgets = mw.dockWidgetsPerSideBar.value(loc);
         for (const QString &uniqueName : dockWidgets) {
 
-            DockWidgetBase *dw = DockRegistry::self()->dockByName(uniqueName);
+            DockWidgetBase *dw = DockRegistry::self()->dockByName(uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
             if (!dw) {
                 qWarning() << Q_FUNC_INFO << "Could not find dock widget" << uniqueName
                            << ". Won't restore it to sidebar";

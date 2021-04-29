@@ -6952,7 +6952,7 @@ void TestDocks::tst_deleteOnClose()
         QVERIFY(Testing::waitForDeleted(dock1));
         QVERIFY(!dock1.data());
 
-        //saver.restoreLayout(saved);
+        saver.restoreLayout(saved);
     }
 #endif
 }
