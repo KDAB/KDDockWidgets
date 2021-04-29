@@ -63,7 +63,7 @@ public Q_SLOTS:
     void cleanupTestCase()
     {
 #ifdef KDDOCKWIDGETS_QTQUICK
-        delete KDDockWidgets::Config::Config::self().qmlEngine();
+        delete KDDockWidgets::Config::self().qmlEngine();
 #endif
     }
 
