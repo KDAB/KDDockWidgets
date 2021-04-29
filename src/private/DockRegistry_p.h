@@ -42,6 +42,13 @@ class DOCKS_EXPORT DockRegistry : public QObject
     Q_PROPERTY(
         KDDockWidgets::Frame *frameInMDIResize READ frameInMDIResize NOTIFY frameInMDIResizeChanged)
 public:
+
+    enum class DockByNameFlag {
+        None = 0,
+        ConsultRemapping = 1
+    };
+    Q_DECLARE_FLAGS(DockByNameFlags, DockByNameFlag)
+
     static DockRegistry *self();
     ~DockRegistry();
     void registerDockWidget(DockWidgetBase *);
@@ -65,7 +72,7 @@ public:
     Q_INVOKABLE bool containsMainWindow(const QString &uniqueName) const;
 
     Q_INVOKABLE KDDockWidgets::DockWidgetBase *dockByName(const QString &,
-                                                          bool consultRemapping = false) const;
+                                                          DockByNameFlags = {}) const;
     Q_INVOKABLE KDDockWidgets::MainWindowBase *mainWindowByName(const QString &) const;
     Q_INVOKABLE KDDockWidgets::MainWindowMDI *mdiMainWindowByName(const QString &) const;
 

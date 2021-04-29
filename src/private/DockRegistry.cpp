@@ -388,14 +388,14 @@ bool DockRegistry::containsMainWindow(const QString &uniqueName) const
     return mainWindowByName(uniqueName) != nullptr;
 }
 
-DockWidgetBase *DockRegistry::dockByName(const QString &name, bool consultRemapping) const
+DockWidgetBase *DockRegistry::dockByName(const QString &name, DockByNameFlags flags) const
 {
     for (auto dock : qAsConst(m_dockWidgets)) {
         if (dock->uniqueName() == name)
             return dock;
     }
 
-    if (consultRemapping) {
+    if (flags.testFlag(DockByNameFlag::ConsultRemapping)) {
         // Name doesn't exist, let's check if it was remapped during a layout restore.
         const QString newName = m_dockWidgetIdRemapping.value(name);
         if (!newName.isEmpty())
