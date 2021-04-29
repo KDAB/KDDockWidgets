@@ -154,7 +154,6 @@ void DockWidgetBase::setWidget(QWidgetOrQuick *w)
         setSizePolicy(w->sizePolicy());
 
     Q_EMIT widgetChanged(w);
-    setWindowTitle(uniqueName());
 }
 
 QWidgetOrQuick *DockWidgetBase::widget() const
@@ -558,7 +557,6 @@ void DockWidgetBase::Private::updateTitle()
 {
     if (q->isFloating())
         q->window()->setWindowTitle(title);
-
 
     toggleAction->setText(title);
 }
