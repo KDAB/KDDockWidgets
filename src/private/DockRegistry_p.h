@@ -45,7 +45,8 @@ public:
 
     enum class DockByNameFlag {
         None = 0,
-        ConsultRemapping = 1
+        ConsultRemapping = 1,
+        CreateIfNotFound = 2 ///< Creates the dock widget via the user's widget factory in case it doesn't exist
     };
     Q_DECLARE_FLAGS(DockByNameFlags, DockByNameFlag)
 
@@ -227,14 +228,6 @@ public:
     ///@brief Returns the Frame which is being resized in a MDI layout. nullptr if none
     Frame *frameInMDIResize() const;
 
-    ///@brief Returns the dock widget id remapping, used by LayoutSaver
-    ///
-    /// When LayoutSaver is trying to restore dock widget "foo", but it doesn't exist, it will
-    /// attempt to call a user provided factory function. That function can however return a dock
-    /// widget with another ID, such as "bar". When that happens this QHash gets a "foo" : "bar"
-    /// entry
-    QHash<QString, QString> &dockWidgetIdRemapping();
-
 Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen
     void windowChangedScreen(QWindow *);
@@ -259,7 +252,14 @@ private:
     QVector<FloatingWindow*> m_floatingWindows;
     QVector<LayoutWidget *> m_layouts;
     QPointer<DockWidgetBase> m_focusedDockWidget;
-    QHash<QString, QString> m_dockWidgetIdRemapping;
+
+    ///@brief Dock widget id remapping, used by LayoutSaver
+    ///
+    /// When LayoutSaver is trying to restore dock widget "foo", but it doesn't exist, it will
+    /// attempt to call a user provided factory function. That function can however return a dock
+    /// widget with another ID, such as "bar". When that happens this QHash gets a "foo" : "bar"
+    /// entry
+    mutable QHash<QString, QString> m_dockWidgetIdRemapping;
 };
 
 }

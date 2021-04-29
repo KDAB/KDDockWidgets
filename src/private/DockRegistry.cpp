@@ -256,11 +256,6 @@ Frame *DockRegistry::frameInMDIResize() const
     return nullptr;
 }
 
-QHash<QString, QString> &DockRegistry::dockWidgetIdRemapping()
-{
-    return m_dockWidgetIdRemapping;
-}
-
 MainWindowBase::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
 {
     MainWindowBase::List result;
@@ -400,6 +395,20 @@ DockWidgetBase *DockRegistry::dockByName(const QString &name, DockByNameFlags fl
         const QString newName = m_dockWidgetIdRemapping.value(name);
         if (!newName.isEmpty())
             return dockByName(newName);
+    }
+
+    if (flags.testFlag(DockByNameFlag::CreateIfNotFound)) {
+        // DockWidget doesn't exist, ask to create it
+        if (auto factoryFunc = Config::self().dockWidgetFactoryFunc()) {
+            auto dw = factoryFunc(name);
+            if (dw && dw->uniqueName() != name) {
+                // Very special case
+                // The user's factory function returned a dock widget with a different ID.
+                // We support it. Save the mapping though.
+                m_dockWidgetIdRemapping.insert(name, dw->uniqueName());
+            }
+            return dw;
+        }
     }
 
     return nullptr;
