@@ -311,17 +311,23 @@ install(TARGETS kddockwidgets
 if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
   install(FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>" DESTINATION ${INSTALL_LIBRARY_DIR} CONFIGURATIONS Debug RelWithDebInfo)
 endif()
+
 install(FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
 install(FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION include/kddockwidgets/private)
 install(FILES private/multisplitter/Item_p.h DESTINATION include/kddockwidgets/private/multisplitter)
 install(FILES private/multisplitter/Widget.h DESTINATION include/kddockwidgets/private/multisplitter)
-install(FILES private/multisplitter/Widget_qwidget.h DESTINATION include/kddockwidgets/private/multisplitter)
 install(FILES private/multisplitter/Separator_p.h DESTINATION include/kddockwidgets/private/multisplitter)
-install(FILES private/multisplitter/Separator_qwidget.h DESTINATION include/kddockwidgets/private/multisplitter)
-install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
-
 install(FILES private/indicators/ClassicIndicators_p.h DESTINATION include/kddockwidgets/private/indicators)
 install(FILES private/indicators/SegmentedIndicators_p.h DESTINATION include/kddockwidgets/private/indicators)
+
+if (KDDockWidgets_QTQUICK)
+  install(FILES private/multisplitter/Separator_quick.h DESTINATION include/kddockwidgets/private/multisplitter)
+  install(FILES private/multisplitter/Widget_quick.h DESTINATION include/kddockwidgets/private/multisplitter)
+else()
+  install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION include/kddockwidgets/private/widgets)
+  install(FILES private/multisplitter/Separator_qwidget.h DESTINATION include/kddockwidgets/private/multisplitter)
+  install(FILES private/multisplitter/Widget_qwidget.h DESTINATION include/kddockwidgets/private/multisplitter)
+endif()
 
 # Generate library version files
 include(ECMSetupVersion)
