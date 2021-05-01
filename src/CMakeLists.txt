@@ -105,6 +105,8 @@ set(DOCKS_INSTALLABLE_INCLUDES
     FocusScope.h
     QWidgetAdapter.h
     LayoutSaver.h
+    MainWindowMDI.h
+    MainWindowBase.h
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
@@ -172,6 +174,9 @@ if(${PROJECT_NAME}_QTQUICK)
       private/multisplitter/Rubberband_quick.cpp
       private/multisplitter/Rubberband_quick.h
       kddockwidgets_qtquick.qrc)
+
+  set(DOCKS_INSTALLABLE_INCLUDES ${DOCKS_INSTALLABLE_INCLUDES} DockWidgetQuick.h)
+
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       private/DebugWindow.cpp
@@ -203,13 +208,11 @@ else()
       private/indicators/SegmentedIndicators.cpp
       private/indicators/SegmentedIndicators_p.h
       # private/indicators/AnimatedIndicators.cpp
-      )
+  )
 
   set(DOCKS_INSTALLABLE_INCLUDES
       ${DOCKS_INSTALLABLE_INCLUDES}
       MainWindow.h
-      MainWindowMDI.h
-      MainWindowBase.h
       DockWidget.h
   )
 endif()
