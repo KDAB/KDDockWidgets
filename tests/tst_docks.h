@@ -204,7 +204,6 @@ private Q_SLOTS:
     void tst_titlebar_getter();
     void tst_raise();
     void tst_addingOptionHiddenTabbed();
-    void tst_maxSizedFloatingWindow();
     void tst_maxSizedHonouredAfterRemoved();
     void tst_addDockWidgetAsTabToDockWidget();
     void tst_close();
@@ -262,6 +261,7 @@ private Q_SLOTS:
     void tst_minSizeChanges();
     void tst_maxSizePropagates();
     void tst_maxSizePropagates2();
+    void tst_maxSizedFloatingWindow();
     void tst_restoreResizesLayout();
     void tst_restoreNonRelativeFloatingWindowGeometry();
     void tst_maxSizeHonouredWhenDropped();

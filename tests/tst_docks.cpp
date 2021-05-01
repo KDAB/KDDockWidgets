@@ -5474,6 +5474,54 @@ void TestDocks::tst_maxSizePropagates()
     delete dock1->window();
 }
 
+void TestDocks::tst_maxSizedFloatingWindow()
+{
+    // Tests that FloatingWindows get a proper max-size, if its dock widget has one
+    EnsureTopLevelsDeleted e;
+    auto dock1 = new DockWidgetType("dock1");
+    auto dock2 = new DockWidgetType("dock2");
+    auto w = new MyWidget("foo");
+    w->setMinimumSize(120, 100);
+    w->setMaximumSize(300, 300);
+    dock1->setWidget(w);
+
+    dock1->show();
+    dock2->show();
+
+    auto window1 = dock1->window();
+    auto window2 = dock2->window();
+    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+
+    QVERIFY(window1->maximumSize().width() < 500);
+    QVERIFY(window1->maximumSize().height() < 500);
+    QVERIFY(window2->maximumSize().width() > 500);
+    QVERIFY(window2->maximumSize().height() > 500);
+
+    auto hasMax = [window1] {
+        const QSize max = window1->maximumSize();
+        return max.width() < 500 && max.height() < 500;
+    };
+
+    // Adding side-by-side, we don't honour max size (yet)
+    dock1->addDockWidgetToContainingWindow(dock2, Location_OnBottom);
+    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    QVERIFY(window1->maximumSize().width() > 500);
+    QVERIFY(window1->maximumSize().height() > 500);
+
+    // Close dw2, we have a single dock widget again, we honour max-size
+    dock2->close();
+    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    QVERIFY(hasMax());
+
+    dock1->addDockWidgetAsTab(dock2);
+    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    QVERIFY(!hasMax());
+
+    dock2->close();
+    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    QVERIFY(hasMax());
+}
+
 void TestDocks::tst_maxSizeHonouredWhenAnotherDropped()
 {
     // dock1 is docked, and has small max-height.
@@ -6265,54 +6313,6 @@ void TestDocks::tst_flagDoubleClick()
         Tests::doubleClickOn(pos, t1);
         QVERIFY(!dock1->isFloating());
     }
-}
-
-void TestDocks::tst_maxSizedFloatingWindow()
-{
-    // Tests that FloatingWindows get a proper max-size, if its dock widget has one
-    EnsureTopLevelsDeleted e;
-    auto dock1 = new DockWidgetType("dock1");
-    auto dock2 = new DockWidgetType("dock2");
-    auto w = new MyWidget("foo");
-    w->setMinimumSize(120, 100);
-    w->setMaximumSize(300, 300);
-    dock1->setWidget(w);
-
-    dock1->show();
-    dock2->show();
-
-    auto window1 = dock1->window();
-    auto window2 = dock2->window();
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
-
-    QVERIFY(window1->maximumSize().width() < 500);
-    QVERIFY(window1->maximumSize().height() < 500);
-    QVERIFY(window2->maximumSize().width() > 500);
-    QVERIFY(window2->maximumSize().height() > 500);
-
-    auto hasMax = [window1] {
-        const QSize max = window1->maximumSize();
-        return max.width() < 500 && max.height() < 500;
-    };
-
-    // Adding side-by-side, we don't honour max size (yet)
-    dock1->addDockWidgetToContainingWindow(dock2, Location_OnBottom);
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
-    QVERIFY(window1->maximumSize().width() > 500);
-    QVERIFY(window1->maximumSize().height() > 500);
-
-    // Close dw2, we have a single dock widget again, we honour max-size
-    dock2->close();
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
-    QVERIFY(hasMax());
-
-    dock1->addDockWidgetAsTab(dock2);
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
-    QVERIFY(!hasMax());
-
-    dock2->close();
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
-    QVERIFY(hasMax());
 }
 
 void TestDocks::tst_maxSizedHonouredAfterRemoved()
