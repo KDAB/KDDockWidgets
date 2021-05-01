@@ -551,6 +551,10 @@ void QWidgetAdapter::setParent(QQuickItem *p)
 {
     QQuickItem::setParent(p);
     QQuickItem::setParentItem(p);
+
+    // Mimic QWidget::setParent(), hide widget when setting parent
+    if (!p)
+        setVisible(false);
 }
 
 void QWidgetAdapter::activateWindow()

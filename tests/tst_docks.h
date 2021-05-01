@@ -208,6 +208,7 @@ private Q_SLOTS:
     void tst_maxSizedHonouredAfterRemoved();
     void tst_addDockWidgetAsTabToDockWidget();
     void tst_close();
+    void tst_closeTabHidesDockWidget();
     void tst_propagateSizeHonoursMinSize();
     void tst_nonDockable();
     void tst_floatingAction();

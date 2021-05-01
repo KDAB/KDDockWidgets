@@ -6434,6 +6434,32 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
     }
 }
 
+void TestDocks::tst_closeTabHidesDockWidget()
+{
+    // Tests that closing some tabbed dock widgets will hide them
+    // QtQuick had a bug where they would still be visible
+    EnsureTopLevelsDeleted e;
+
+    auto dock1 = createDockWidget("doc1", Qt::green);
+    auto dock2 = createDockWidget("doc2", Qt::green);
+    auto dock3 = createDockWidget("doc3", Qt::green);
+
+    dock1->addDockWidgetAsTab(dock2);
+    dock1->addDockWidgetAsTab(dock3);
+
+    dock1->forceClose();
+    QVERIFY(!dock1->isOpen());
+    QVERIFY(!dock1->isVisible());
+
+    dock2->forceClose();
+    QVERIFY(!dock2->isOpen());
+    QVERIFY(!dock2->isVisible());
+
+    dock3->forceClose();
+    QVERIFY(!dock3->isOpen());
+    QVERIFY(!dock3->isVisible());
+}
+
 void TestDocks::tst_close()
 {
     EnsureTopLevelsDeleted e;
