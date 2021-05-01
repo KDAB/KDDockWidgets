@@ -165,22 +165,6 @@
     ],
     "buildPresets": [
         {
-            "name": "dev-qtwidgets",
-            "configurePreset": "dev-qtwidgets"
-        },
-        {
-            "name": "dev-qtwidgets6",
-            "configurePreset": "dev-qtwidgets6"
-        },
-        {
-            "name": "dev-qtquick",
-            "configurePreset": "dev-qtquick"
-        },
-        {
-            "name": "qtquick6",
-            "configurePreset": "qtquick6"
-        },
-        {
             "name": "clazy-qtwidgets",
             "configurePreset": "clazy-qtwidgets",
             "environment": {
