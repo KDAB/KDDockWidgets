@@ -90,6 +90,10 @@ public:
      * @brief Maps the given point in draggable mouse area's coordinate system to
      * the equivalent point in window's coordinate system,
      * and returns the mapped coordinate.
+     *
+     * TODO: Probably a good idea to to override this for TitleBar too. Since titlebar's 0,0
+     * is approx equal to the floating window's 0,0 the discrepancy isn't noticeable, but it can
+     * be if there's more window margins
      */
     virtual QPoint mapToWindow(QPoint pos) const { return pos; }
 
