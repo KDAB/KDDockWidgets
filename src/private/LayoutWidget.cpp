@@ -248,7 +248,10 @@ bool LayoutWidget::deserialize(const LayoutSaver::MultiSplitter &l)
     m_rootItem->fillFromVariantMap(l.layout, frames);
 
     updateSizeConstraints();
-    m_rootItem->setSize_recursive(QWidgetAdapter::size());
+
+    const QSize newLayoutSize = QWidgetAdapter::size().expandedTo(m_rootItem->minSize());
+
+    m_rootItem->setSize_recursive(newLayoutSize);
 
     return true;
 }
