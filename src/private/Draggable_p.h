@@ -87,11 +87,11 @@ public:
     virtual bool isWindow() const = 0;
 
     /**
-     * @brief Maps the given point in draggable mouse area`s coordinate system to
+     * @brief Maps the given point in draggable mouse area's coordinate system to
      * the equivalent point in window's coordinate system,
      * and returns the mapped coordinate.
      */
-    virtual QPoint mapToWindow(const QPoint& pos) const { return pos; }
+    virtual QPoint mapToWindow(QPoint pos) const { return pos; }
 
 private:
     class Private;
