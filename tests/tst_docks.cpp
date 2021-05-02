@@ -6438,26 +6438,57 @@ void TestDocks::tst_closeTabHidesDockWidget()
 {
     // Tests that closing some tabbed dock widgets will hide them
     // QtQuick had a bug where they would still be visible
-    EnsureTopLevelsDeleted e;
+    {
+        EnsureTopLevelsDeleted e;
+        auto dock1 = createDockWidget("doc1", Qt::green);
+        auto dock2 = createDockWidget("doc2", Qt::green);
+        auto dock3 = createDockWidget("doc3", Qt::green);
 
-    auto dock1 = createDockWidget("doc1", Qt::green);
-    auto dock2 = createDockWidget("doc2", Qt::green);
-    auto dock3 = createDockWidget("doc3", Qt::green);
+        dock1->addDockWidgetAsTab(dock2);
+        dock1->addDockWidgetAsTab(dock3);
 
-    dock1->addDockWidgetAsTab(dock2);
-    dock1->addDockWidgetAsTab(dock3);
+        dock1->forceClose();
+        QVERIFY(!dock1->isOpen());
+        QVERIFY(!dock1->isVisible());
 
-    dock1->forceClose();
-    QVERIFY(!dock1->isOpen());
-    QVERIFY(!dock1->isVisible());
+        dock2->forceClose();
+        QVERIFY(!dock2->isOpen());
+        QVERIFY(!dock2->isVisible());
 
-    dock2->forceClose();
-    QVERIFY(!dock2->isOpen());
-    QVERIFY(!dock2->isVisible());
+        dock3->forceClose();
+        QVERIFY(!dock3->isOpen());
+        QVERIFY(!dock3->isVisible());
+    }
 
-    dock3->forceClose();
-    QVERIFY(!dock3->isOpen());
-    QVERIFY(!dock3->isVisible());
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        auto dock1 = createDockWidget("doc1", Qt::green);
+        auto dock2 = createDockWidget("doc2", Qt::green);
+        auto dock3 = createDockWidget("doc3", Qt::green);
+        m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+        m->addDockWidget(dock2, KDDockWidgets::Location_OnLeft);
+        m->addDockWidget(dock3, KDDockWidgets::Location_OnLeft);
+
+        dock2->addDockWidgetAsTab(dock1);
+        dock2->addDockWidgetAsTab(dock3);
+
+        dock1->close();
+        QVERIFY(!dock1->isOpen());
+        QVERIFY(!dock1->isVisible());
+        QCOMPARE(dock1->parent(), nullptr);
+
+        dock2->close();
+        QVERIFY(!dock2->isOpen());
+        QCOMPARE(dock2->parent(), nullptr);
+        QVERIFY(!dock2->isVisible());
+
+        dock3->close();
+        QVERIFY(!dock3->isOpen());
+        QVERIFY(!dock3->isVisible());
+        QCOMPARE(dock3->parent(), nullptr);
+        QVERIFY(!dock2->isVisible());
+    }
 }
 
 void TestDocks::tst_close()

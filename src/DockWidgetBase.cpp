@@ -776,7 +776,7 @@ void DockWidgetBase::onCloseEvent(QCloseEvent *e)
 {
     e->accept(); // By default we accept, means DockWidget closes
     if (d->widget)
-        qApp->sendEvent(d->widget, e); // Give a chancefor the widget to ignore
+        qApp->sendEvent(d->widget, e); // Give a chance for the widget to ignore
 
     if (e->isAccepted())
         d->close();

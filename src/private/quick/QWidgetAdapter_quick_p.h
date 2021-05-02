@@ -206,6 +206,7 @@ private:
     bool m_windowIsBeingDestroyed = false;
     bool m_mouseTrackingEnabled = false;
     bool m_isWrapper = false;
+    bool m_inSetParent = false;
     MouseEventRedirector *m_mouseEventRedirector = nullptr;
 };
 
