@@ -308,6 +308,13 @@ void QWidgetAdapter::setFixedWidth(int width)
 
 void QWidgetAdapter::setGeometry(QRect rect)
 {
+    if (isTopLevel()) {
+        if (QWindow *w = windowHandle()) {
+            w->setGeometry(rect.x(), rect.y(), rect.width(), rect.height());
+            return;
+        }
+    }
+
     setWidth(rect.width());
     setHeight(rect.height());
     move(rect.topLeft());
@@ -380,16 +387,7 @@ void QWidgetAdapter::resize(int w, int h)
 
 bool QWidgetAdapter::isWindow() const
 {
-    QQuickItem *parent = parentItem();
-    if (!parent)
-        return true;
-
-    if (QQuickView *w = quickView()) {
-        if (parent == w->contentItem() || parent == w->rootObject())
-            return true;
-    }
-
-    return false;
+    return parentWidget(false) == nullptr;
 }
 
 bool QWidgetAdapter::isMaximized() const
