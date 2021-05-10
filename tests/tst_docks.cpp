@@ -3356,6 +3356,24 @@ void TestDocks::tst_restoreNonClosable()
     }
 }
 
+void TestDocks::tst_restoreRestoresMainWindowPosition()
+{
+    // Tests that MainWindow position is restored by LayoutSaver
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+        const QPoint originalPos = m->pos();
+
+        LayoutSaver saver;
+        const QByteArray saved = saver.serializeLayout();
+
+        m->move(originalPos + QPoint(100, 100));
+
+        saver.restoreLayout(saved);
+        QCOMPARE(originalPos, m->pos());
+    }
+}
+
 void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
 {
     EnsureTopLevelsDeleted e;
