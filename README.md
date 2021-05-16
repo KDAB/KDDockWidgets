@@ -152,7 +152,7 @@ fine. Note however that MSVC 2013 isn't supported anymore due to compiler crashe
 
 Licensing
 =========
-KDDockWidgets is (C) 2018-2021, Klarälvdalens Datakonsult AB, and is licensed according to
+KDDockWidgets is (C) 2019-2021, Klarälvdalens Datakonsult AB, and is licensed according to
 the terms of the [GPL 2.0](LICENSES/GPL-2.0-only.txt) or [GPL 3.0](LICENSES/GPL-3.0-only.txt).
 
 Contact KDAB at <info@kdab.com> to inquire about commercial licensing.
