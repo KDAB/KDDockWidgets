@@ -28,6 +28,7 @@
 
 # include <QQmlEngine>
 # include <QQuickStyle>
+# include <QQmlApplicationEngine>
 #else
 # include "DockWidget.h"
 # include "MainWindow.h"
