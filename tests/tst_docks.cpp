@@ -3395,7 +3395,6 @@ void TestDocks::tst_restoreRestoresMainWindowPosition()
 
         QVERIFY(saver.restoreLayout(saved));
 
-        QEXPECT_FAIL("", "To be fixed", Continue);
         QCOMPARE(window->position(), originalPos);
 
         delete mainWindow;
