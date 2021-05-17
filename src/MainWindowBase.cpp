@@ -690,7 +690,7 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     LayoutSaver::MainWindow m;
 
     m.options = options();
-    m.geometry = window()->geometry(); // window() as the MainWindow can be embedded
+    m.geometry = windowGeometry();
     m.isVisible = isVisible();
     m.uniqueName = uniqueName();
     m.screenIndex = screenNumberForWidget(this);
@@ -709,4 +709,10 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     }
 
     return m;
+}
+
+QRect MainWindowBase::windowGeometry() const
+{
+    // Usually the same as geometry(), unless the this main window is embedded
+    return window()->geometry();
 }
