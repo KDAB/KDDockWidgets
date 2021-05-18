@@ -130,3 +130,9 @@ void DropIndicatorOverlayInterface::setHoveredFrameRect(QRect rect)
         Q_EMIT hoveredFrameRectChanged();
     }
 }
+
+void DropIndicatorOverlayInterface::removeHover()
+{
+    setWindowBeingDragged(false);
+    setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
+}
