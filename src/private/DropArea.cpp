@@ -180,7 +180,7 @@ void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
 
 DropIndicatorOverlayInterface::DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos)
 {
-    if (!validateAffinity(draggedWindow))
+    if (Config::self().dropIndicatorsInhibited() || !validateAffinity(draggedWindow))
         return DropIndicatorOverlayInterface::DropLocation_None;
 
     if (!m_dropIndicatorOverlay) {
