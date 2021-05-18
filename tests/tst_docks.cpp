@@ -4690,8 +4690,10 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     auto dock1 = createDockWidget("dock1");
     dock1->show();
     QPoint targetPos = QPoint(340, 340);
-    dock1->window()->move(targetPos);
+    dock1->window()->windowHandle()->setFramePosition(targetPos);
+    QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), targetPos);
     auto oldFw = dock1->window();
+    Testing::waitForEvent(dock1->window(), QEvent::Move);
 
     LayoutSaver saver;
     QByteArray saved = saver.serializeLayout();
@@ -4701,8 +4703,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     delete oldFw;
 
     saver.restoreLayout(saved);
-    QCOMPARE(dock1->window()->pos(), targetPos);
-    QCOMPARE(dock1->window()->frameGeometry().topLeft(), targetPos);
+    QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), targetPos);
 
     // Adjsut to what we got without the frame
     targetPos = dock1->window()->geometry().topLeft();
