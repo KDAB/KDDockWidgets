@@ -241,6 +241,10 @@ endif()
 
 if(${PROJECT_NAME}_DEVELOPER_MODE)
   include(ECMEnableSanitizers)
+  if (ECM_ENABLE_SANITIZERS AND MSVC)
+    add_compile_options(-fsanitize=address)
+  endif()
+
   if(${PROJECT_NAME}_TESTS)
     enable_testing()
     add_subdirectory(tests)
