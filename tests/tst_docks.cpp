@@ -2428,7 +2428,6 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     m->addDockWidgetAsTab(dock1);
     m->addDockWidgetAsTab(dock2);
 
-    qDebug() << "6.";
     dock2->setFloating(true);
     QVERIFY(dock1->isTabbed());
     QVERIFY(!dock2->isTabbed());
@@ -2537,6 +2536,8 @@ void TestDocks::tst_setFloatingWhenSideBySide()
 void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 {
     EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setInternalFlags(KDDockWidgets::Config::InternalFlag_NoAeroSnap);
+    KDDockWidgets::Config::self().setFlags({});
 
     auto m = createMainWindow();
     auto fw = createFloatingWindow();
@@ -2548,7 +2549,10 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     auto fw2 = createFloatingWindow();
     fw2->move(fw->x() + fw->width() + 100, fw->y());
 
-    dragFloatingWindowTo(fw, fw2->geometry().center());
+    auto da2 = fw2->dropArea();
+    const QPoint dragDestPos = da2->mapToGlobal(da2->QWidgetAdapter::rect().center());
+
+    dragFloatingWindowTo(fw, dragDestPos);
     QVERIFY(fw2->dropArea()->checkSanity());
 
     QCOMPARE(fw2->frames().size(), 1);
