@@ -2549,6 +2549,9 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     auto fw2 = createFloatingWindow();
     fw2->move(fw->x() + fw->width() + 100, fw->y());
 
+    // QtQuick is a bit more async than QWidgets. Wait for the move.
+    Testing::waitForEvent(fw2->windowHandle(), QEvent::Move);
+
     auto da2 = fw2->dropArea();
     const QPoint dragDestPos = da2->mapToGlobal(da2->QWidgetAdapter::rect().center());
 
