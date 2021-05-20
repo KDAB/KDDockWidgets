@@ -164,6 +164,24 @@
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
+        },
+        {
+            "name": "dev-qtquick6",
+            "displayName": "dev-qtquick6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-qtquick6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_QTQUICK": "ON",
+                 "KDDockWidgets_QT6": "ON",
+                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                 "KDDockWidgets_DEVELOPER_MODE": "ON",
+                 "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
+                 "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+            },
+            "environment": {
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
+            }
         }
     ],
     "buildPresets": [
