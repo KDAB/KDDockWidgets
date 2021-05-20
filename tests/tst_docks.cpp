@@ -4335,12 +4335,13 @@ void TestDocks::tst_positionWhenShown()
     auto window = createMainWindow();
     auto dock1 = new DockWidgetType("1");
     dock1->show();
-    dock1->window()->move(100, 100);
-    QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), QPoint(100, 100));
+    dock1->window()->windowHandle()->setPosition(100, 100);
+    QTest::qWait(1000);
+    QCOMPARE(dock1->window()->windowHandle()->geometry().topLeft(), QPoint(100, 100));
 
     dock1->close();
     dock1->show();
-    QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), QPoint(100, 100));
+    QCOMPARE(dock1->window()->windowHandle()->geometry().topLeft(), QPoint(100, 100));
 
     // Cleanup
     window->layoutWidget()->checkSanity();
