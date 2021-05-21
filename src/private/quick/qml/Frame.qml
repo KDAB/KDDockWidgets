@@ -172,7 +172,7 @@ Rectangle {
     Loader {
         id: titleBar
         readonly property QtObject titleBarCpp: root.titleBarCpp
-        source: frameCpp ? _kddw_widgetFactory.titleBarFilename(frameCpp.userType)
+        source: frameCpp ? _kddw_widgetFactory.titleBarFilename()
                          : ""
 
         anchors {
