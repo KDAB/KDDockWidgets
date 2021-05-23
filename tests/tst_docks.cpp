@@ -922,21 +922,23 @@ void TestDocks::tst_hoverShowsDropIndicators()
 
     auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
 
+    auto floatingDockWidget = createDockWidget("floatingDockWidget", new MyWidget2(QSize(400, 400)));
+
     m->addDockWidget(dock0, Location_OnLeft);
 
-    auto dropIndicatorOverlay = m->dropArea()->dropIndicatorOverlay();
     const QPoint mainWindowCenterPos = m->mapToGlobal(m->geometry().center());
 
-    const DropIndicatorOverlayInterface::DropLocation loc =
-        dropIndicatorOverlay->hover(mainWindowCenterPos);
+    QTest::qWait(100);
+
+    dragFloatingWindowTo(floatingDockWidget->floatingWindow(), mainWindowCenterPos);
+
+    QCOMPARE(dock0->dptr()->frame()->dockWidgetCount(), 2);
 
     delete m;
 
 #if defined(Q_OS_WIN32)
     QEXPECT_FAIL("", "to be fixed", Continue);
 #endif
-
-    QCOMPARE(loc, DropIndicatorOverlayInterface::DropLocation_Center);
 }
 #endif
 
