@@ -98,7 +98,7 @@ Rectangle {
         anchors {
             right: parent ? parent.right : undefined
             left: parent ? parent.left : undefined
-            bottom:parent ?  parent.bottom : undefined
+            bottom: parent ?  parent.bottom : undefined
         }
 
         height: resizeMargin
@@ -218,7 +218,7 @@ Rectangle {
             rightMargin: 1
         }
 
-        width: parent.width
+        width: parent ? parent.width : 0
 
         onCurrentIndexChanged: {
             if (root && root.frameCpp)
