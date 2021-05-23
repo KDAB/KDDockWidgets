@@ -905,6 +905,39 @@ void TestDocks::tst_complex()
     qDeleteAll(docks);
     qDeleteAll(DockRegistry::self()->frames());
 }
+#else
+void TestDocks::tst_hoverShowsDropIndicators()
+{
+    // For QtQuick on Windows, there was a bug where drop indicators wouldn't be shown if MainWindowBase
+    // wan't the root item.
+
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main2.qml");
+
+    const MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
+    QCOMPARE(mainWindows.size(), 1);
+    MainWindowBase *m = mainWindows.first();
+
+    m->window()->windowHandle()->setPosition(500, 800);
+
+    auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
+
+    m->addDockWidget(dock0, Location_OnLeft);
+
+    auto dropIndicatorOverlay = m->dropArea()->dropIndicatorOverlay();
+    const QPoint mainWindowCenterPos = m->mapToGlobal(m->geometry().center());
+
+    const DropIndicatorOverlayInterface::DropLocation loc =
+        dropIndicatorOverlay->hover(mainWindowCenterPos);
+
+    delete m;
+
+#if defined(Q_OS_WIN32)
+    QEXPECT_FAIL("", "to be fixed", Continue);
+#endif
+
+    QCOMPARE(loc, DropIndicatorOverlayInterface::DropLocation_Center);
+}
 #endif
 
 void TestDocks::tst_28NestedWidgets_data()
