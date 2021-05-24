@@ -787,6 +787,15 @@ static QWidgetOrQuick *qtTopLevelForHWND(HWND hwnd)
     return nullptr;
 }
 #endif
+
+static QRect topLevelGeometry(const QWidgetOrQuick* topLevel)
+{
+    if (auto mainWindow = qobject_cast<const MainWindowBase*>(topLevel))
+        return mainWindow->windowGeometry();
+
+    return topLevel->geometry();
+}
+
 template <typename T>
 static WidgetType* qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow*> &windows, T windowBeingDragged)
 {
@@ -832,7 +841,9 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
                 continue;
 
             if (auto tl = qtTopLevelForHWND(hwnd)) {
-                if (tl->geometry().contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
+                const QRect windowGeometry = topLevelGeometry(tl);
+
+                if (windowGeometry.contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
                     qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
                     return tl;
                 }

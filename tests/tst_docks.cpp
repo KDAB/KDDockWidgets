@@ -933,10 +933,6 @@ void TestDocks::tst_hoverShowsDropIndicators()
     auto fw = floatingDockWidget->floatingWindow();
     dragFloatingWindowTo(fw, mainWindowCenterPos);
 
-#if defined(Q_OS_WIN32)
-    if (!isOffscreen())
-        QEXPECT_FAIL("", "to be fixed", Continue);
-#endif
     QCOMPARE(dock0->dptr()->frame()->dockWidgetCount(), 2);
 }
 #endif
