@@ -44,6 +44,7 @@ addons:
     - libqt5xmlpatterns5-dev
     - libqt5xmlpatterns5
     - qtxmlpatterns5-dev-tools
+    - libqt5x11extras5-dev
   homebrew:
     update: true
     packages:
