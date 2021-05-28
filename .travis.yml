@@ -28,6 +28,14 @@ script:
   - make
   - make test
 
+notifications:
+  email:
+    recipients:
+    - allen.winter@kdab.com
+    - sergio.martins@kdab.com
+    on_success:  never
+    on_failure: always
+
 dist: bionic
 addons:
   apt:
