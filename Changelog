@@ -1,4 +1,4 @@
-* v1.3.1 (unreleased)
+* v1.3.1 (7 June 2021)
   - Improve restoring layout when RestoreOption_RelativeToMainWindow is used (#171)
   - Improved dragging windows across screens in mixed hdpi setups
   - Fixed Flag_NativeTitleBar not hidding the client title bars when restoring (#170)
