@@ -1,3 +1,5 @@
+People who have signed the CLA:
+
 Christian Riggenbach <criggenbach@magahugu.ch>
 Jacob Young <amazingjacob@gmail.com>
 Matthew Waltz <matthewwaltzis@gmail.com>
