@@ -117,7 +117,7 @@ From your CMake project, add
 and link to the imported target `KDAB::kddockwidgets`.
 That's all you need to do (the imported target also brings in the include directories)
 
-You may also need to modify the `CMAKE_MODULE_PATH` environment variable depending
+You may also need to modify the `CMAKE_PREFIX_PATH` environment variable depending
 on where you installed KDDockWidgets.
 
 
