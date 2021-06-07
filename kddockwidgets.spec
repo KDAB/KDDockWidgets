@@ -88,6 +88,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 %if 0%{?fedora} > 28
 %{_libdir}/qt5/mkspecs/modules/*
 %endif
+%if %{defined rhel}
+%{_libdir}/qt5/mkspecs/modules/*
+%endif
 %dir %{_includedir}/kddockwidgets
 %{_includedir}/kddockwidgets/*
 %dir %{_libdir}/cmake/KDDockWidgets
