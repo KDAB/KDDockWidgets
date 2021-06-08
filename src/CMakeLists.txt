@@ -187,7 +187,6 @@ else()
       private/widgets/QWidgetAdapter_widgets_p.h
       private/indicators/SegmentedIndicators.cpp
       private/indicators/SegmentedIndicators_p.h
-      # private/indicators/AnimatedIndicators.cpp
       )
 
   set(DOCKS_INSTALLABLE_INCLUDES
