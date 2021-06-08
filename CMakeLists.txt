@@ -79,6 +79,9 @@ endif()
 if(NOT DEFINED PYSIDE2_CUSTOM_PREFIX) #look for pyside in a custom location
   set(PYSIDE2_CUSTOM_PREFIX "")
 endif()
+if(NOT DEFINED PYSIDE6_CUSTOM_PREFIX) #look for pyside in a custom location
+  set(PYSIDE6_CUSTOM_PREFIX "")
+endif()
 
 # Allow using a non-KDAB install location
 set(KDAB_INSTALL True)

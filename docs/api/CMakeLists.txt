@@ -13,6 +13,7 @@ find_file(QDOC_QTCORE_TAG qtcore.tags
   HINTS ${QT_INSTALL_DOCS}/qtcore
   HINTS ${QT_INSTALL_DATA}/doc/qtcore
 )
+set(QDOC_TAG_DIR "<QDOC_TAG_DIR_not_found>")
 if(QDOC_QTCORE_TAG)
   get_filename_component(QDOC_TAG_DIR ${QDOC_QTCORE_TAG} DIRECTORY)
   get_filename_component(QDOC_TAG_DIR ${QDOC_TAG_DIR} DIRECTORY)
