@@ -14,7 +14,7 @@ find_package(Python3 ${PYTHON_VERSION} REQUIRED COMPONENTS Interpreter Developme
 
 if (${PROJECT_NAME}_QT6)
     find_package(Shiboken6 REQUIRED)
-    find_package(PySide6 ${Qt5Widgets_VERSION} EXACT REQUIRED)
+    find_package(PySide6 ${Qt6Widgets_VERSION} EXACT REQUIRED)
     include(PySide6ModuleBuild)
     set(PYSIDE_MAJOR_VERSION "6")
 else()
