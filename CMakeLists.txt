@@ -215,15 +215,18 @@ endif()
 
 # Generate .pri file for qmake users
 if(CMAKE_VERSION VERSION_GREATER "3.11.99" AND NOT CMAKE_CONFIGURATION_TYPES) # Not working with VS generator or older cmake versions
-  include(ECMGeneratePriFile)
-  set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
-  ecm_generate_pri_file(BASE_NAME KDDockWidgets
-    LIB_NAME kddockwidgets
-    DEPS ${${PROJECT_NAME}_DEPS}
-    FILENAME_VAR pri_filename
-    INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}
-  )
-  install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+  #TODO: ECM does not support Qt6 yet
+  if(QT_MAJOR_VERSION EQUAL 5)
+    include(ECMGeneratePriFile)
+    set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
+    ecm_generate_pri_file(BASE_NAME KDDockWidgets
+      LIB_NAME kddockwidgets
+      DEPS ${${PROJECT_NAME}_DEPS}
+      FILENAME_VAR pri_filename
+      INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}
+    )
+    install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+  endif()
 else()
   message(WARNING "Unable to generate the pri file for qmake users. Try updating CMake.")
 endif()
