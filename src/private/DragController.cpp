@@ -774,12 +774,23 @@ static QWidgetOrQuick *qtTopLevelForHWND(HWND hwnd)
 {
     const QList<QWindow*> windows = qApp->topLevelWindows();
     for (QWindow *window : windows) {
-        if (!window->isVisible()) {
+        if (!window->isVisible())
             continue;
-        }
 
         if (hwnd == (HWND)window->winId()) {
-            return DockRegistry::self()->topLevelForHandle(window);
+            if (auto result = DockRegistry::self()->topLevelForHandle(window))
+                return result;
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+            // It's not a KDDW window, but we still return something, as the KDDW main window
+            // might be embedded into another non-kddw QMainWindow
+            // Case not supported for QtQuick.
+            const QWidgetList widgets = qApp->topLevelWidgets();
+            for (QWidget *widget : widgets) {
+                if (hwnd == (HWND)widget->winId()) {
+                    return widget;
+                }
+            }
+#endif
         }
     }
 

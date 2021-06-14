@@ -14,6 +14,7 @@
   - Added MainWindowBase::frameCountChanged()
   - Introduced Config::setDropIndicatorsInhibited(), which allows you to disable support
   for drop indicators while dragging.
+  - Fixed embedding the main window into a non-kddw main window (#204, #168)
 
 * v1.3.2 (unreleased)
   -
