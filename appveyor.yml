@@ -76,4 +76,5 @@ notifications:
     to:
       - allen.winter@kdab.com
       - sergio.martins@kdab.com
+    on_build_success: false
     on_build_failure: true
