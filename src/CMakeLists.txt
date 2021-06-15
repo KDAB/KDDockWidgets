@@ -236,7 +236,6 @@ target_include_directories(kddockwidgets
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/private
 )
 
 target_compile_definitions(kddockwidgets

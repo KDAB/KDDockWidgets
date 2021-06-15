@@ -19,7 +19,7 @@
 #ifndef KDTABWIDGETQUICK_P_H
 #define KDTABWIDGETQUICK_P_H
 
-#include "TabWidget_p.h"
+#include "../TabWidget_p.h"
 #include "QWidgetAdapter_quick_p.h"
 
 #include <QQuickItem>

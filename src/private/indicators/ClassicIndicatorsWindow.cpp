@@ -11,7 +11,7 @@
 
 #include "ClassicIndicatorsWindow_p.h"
 #include "ClassicIndicators_p.h"
-#include "Utils_p.h"
+#include "../Utils_p.h"
 
 using namespace KDDockWidgets;
 

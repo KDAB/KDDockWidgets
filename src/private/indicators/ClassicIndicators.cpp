@@ -10,15 +10,16 @@
 */
 
 #include "ClassicIndicators_p.h"
-#include "DropArea_p.h"
-#include "DragController_p.h"
-#include "Frame_p.h"
-#include "Logging_p.h"
 #include "Config.h"
-#include "DockRegistry_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "ClassicIndicatorsWindow_p.h"
-#include "Utils_p.h"
+
+#include "private/DropArea_p.h"
+#include "private/DragController_p.h"
+#include "private/Frame_p.h"
+#include "private/Logging_p.h"
+#include "private/DockRegistry_p.h"
+#include "private/Utils_p.h"
 
 using namespace KDDockWidgets;
 

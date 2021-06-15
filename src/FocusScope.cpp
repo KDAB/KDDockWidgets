@@ -17,10 +17,11 @@
  */
 
 #include "FocusScope.h"
-#include "TitleBar_p.h"
-#include "Frame_p.h"
 #include "DockWidgetBase.h"
-#include "DockRegistry_p.h"
+
+#include "private/TitleBar_p.h"
+#include "private/Frame_p.h"
+#include "private/DockRegistry_p.h"
 
 #include <QObject>
 #include <QGuiApplication>

@@ -17,18 +17,19 @@
  */
 
 #include "LayoutSaver.h"
-#include "LayoutSaver_p.h"
 #include "Config.h"
-#include "DockRegistry_p.h"
-#include "DockWidgetBase.h"
-#include "DockWidgetBase_p.h"
-#include "FloatingWindow_p.h"
-#include "Frame_p.h"
-#include "FrameworkWidgetFactory.h"
-#include "LayoutWidget_p.h"
-#include "Logging_p.h"
 #include "MainWindowBase.h"
-#include "Position_p.h"
+#include "DockWidgetBase.h"
+#include "FrameworkWidgetFactory.h"
+
+#include "private/LayoutSaver_p.h"
+#include "private/DockRegistry_p.h"
+#include "private/DockWidgetBase_p.h"
+#include "private/FloatingWindow_p.h"
+#include "private/Frame_p.h"
+#include "private/LayoutWidget_p.h"
+#include "private/Logging_p.h"
+#include "private/Position_p.h"
 
 #include <qmath.h>
 #include <QDebug>

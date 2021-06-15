@@ -10,10 +10,11 @@
 */
 
 #include "DockWidgetQuick.h"
-#include "DockWidgetBase_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "private/quick/FrameQuick_p.h"
+
 #include "private/TitleBar_p.h"
+#include "private/DockWidgetBase_p.h"
+#include "private/quick/FrameQuick_p.h"
 
 #include <Config.h>
 #include <QQuickItem>

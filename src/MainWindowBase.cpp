@@ -18,18 +18,18 @@
  */
 
 #include "MainWindowBase.h"
-#include "DockRegistry_p.h"
-#include "MDILayoutWidget_p.h"
-#include "DropArea_p.h"
-#include "Frame_p.h"
-#include "Utils_p.h"
-#include "SideBar_p.h"
-#include "Logging_p.h"
-#include "WidgetResizeHandler_p.h"
+#include "private/DockRegistry_p.h"
+#include "private/MDILayoutWidget_p.h"
+#include "private/DropArea_p.h"
+#include "private/Frame_p.h"
+#include "private/Utils_p.h"
+#include "private/SideBar_p.h"
+#include "private/Logging_p.h"
+#include "private/WidgetResizeHandler_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "DropAreaWithCentralFrame_p.h"
-#include "LayoutSaver_p.h"
-#include "DockWidgetBase_p.h"
+#include "private/DropAreaWithCentralFrame_p.h"
+#include "private/LayoutSaver_p.h"
+#include "private/DockWidgetBase_p.h"
 
 using namespace KDDockWidgets;
 

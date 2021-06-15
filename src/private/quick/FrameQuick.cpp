@@ -17,12 +17,13 @@
  */
 
 #include "FrameQuick_p.h"
-#include "DockWidgetBase_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "TabWidgetQuick_p.h"
-#include "WidgetResizeHandler_p.h"
 #include "DockWidgetQuick.h"
+#include "../DockWidgetBase_p.h"
+#include "../WidgetResizeHandler_p.h"
+
 #include <QDebug>
 
 using namespace KDDockWidgets;

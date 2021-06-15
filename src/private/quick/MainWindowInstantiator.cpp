@@ -13,8 +13,9 @@
 #include "MainWindowQuick_p.h"
 #include "MainWindowMDI.h"
 
-#include "DockRegistry_p.h"
 #include "DockWidgetInstantiator_p.h"
+
+#include "../DockRegistry_p.h"
 
 using namespace KDDockWidgets;
 

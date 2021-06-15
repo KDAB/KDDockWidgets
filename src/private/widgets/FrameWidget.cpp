@@ -17,8 +17,8 @@
  */
 
 #include "FrameWidget_p.h"
-#include "TitleBar_p.h"
-#include "TabWidget_p.h"
+#include "../TitleBar_p.h"
+#include "../TabWidget_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 

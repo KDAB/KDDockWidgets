@@ -11,13 +11,15 @@
 
 #include "FloatingWindowQuick_p.h"
 #include "MainWindowBase.h"
-#include "Logging_p.h"
-#include "Utils_p.h"
-#include "DropArea_p.h"
-#include "TitleBarQuick_p.h"
 #include "Config.h"
-#include "WidgetResizeHandler_p.h"
 #include "FrameworkWidgetFactory.h"
+
+#include "TitleBarQuick_p.h"
+
+#include "../Logging_p.h"
+#include "../Utils_p.h"
+#include "../DropArea_p.h"
+#include "../WidgetResizeHandler_p.h"
 
 #include <QQuickView>
 #include <QDebug>

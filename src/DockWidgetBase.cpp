@@ -10,20 +10,21 @@
 */
 
 #include "DockWidgetBase.h"
-#include "DockWidgetBase_p.h"
-#include "Config.h"
-#include "DockRegistry_p.h"
-#include "FloatingWindow_p.h"
-#include "Frame_p.h"
-#include "FrameworkWidgetFactory.h"
-#include "LayoutSaver_p.h"
-#include "Logging_p.h"
-#include "MDILayoutWidget_p.h"
-#include "SideBar_p.h"
-#include "TitleBar_p.h"
-#include "Utils_p.h"
-#include "WindowBeingDragged_p.h"
+#include "private/DockWidgetBase_p.h"
+#include "private/DockRegistry_p.h"
+#include "private/FloatingWindow_p.h"
+#include "private/Frame_p.h"
+#include "private/LayoutSaver_p.h"
+#include "private/Logging_p.h"
+#include "private/MDILayoutWidget_p.h"
+#include "private/SideBar_p.h"
+#include "private/TitleBar_p.h"
+#include "private/Utils_p.h"
+#include "private/WindowBeingDragged_p.h"
 #include "private/Position_p.h"
+
+#include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QEvent>
 #include <QCloseEvent>

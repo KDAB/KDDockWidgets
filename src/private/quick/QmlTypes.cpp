@@ -11,14 +11,14 @@
 
 #include "QmlTypes.h"
 #include "DockWidgetBase.h"
-#include "DropAreaWithCentralFrame_p.h"
-#include "DropIndicatorOverlayInterface_p.h"
-#include "Frame_p.h"
-#include "TitleBar_p.h"
-#include "indicators/ClassicIndicators_p.h"
-#include "quick/DockWidgetInstantiator_p.h"
-#include "quick/MainWindowInstantiator_p.h"
-#include "quick/LayoutSaverInstantiator_p.h"
+#include "../DropAreaWithCentralFrame_p.h"
+#include "../DropIndicatorOverlayInterface_p.h"
+#include "../Frame_p.h"
+#include "../TitleBar_p.h"
+#include "../indicators/ClassicIndicators_p.h"
+#include "DockWidgetInstantiator_p.h"
+#include "MainWindowInstantiator_p.h"
+#include "LayoutSaverInstantiator_p.h"
 
 #include <QQmlEngine>
 #include <QDebug>

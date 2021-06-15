@@ -10,9 +10,10 @@
 */
 
 #include "TabWidgetQuick_p.h"
-#include "Frame_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+
+#include "../Frame_p.h"
 
 #include <QDebug>
 #include <QScopedValueRollback>

@@ -17,18 +17,18 @@
  */
 
 #include "Config.h"
-#include "multisplitter/MultiSplitterConfig.h"
-#include "multisplitter/Widget.h"
-#include "DockRegistry_p.h"
+#include "private/multisplitter/MultiSplitterConfig.h"
+#include "private/multisplitter/Widget.h"
+#include "private/DockRegistry_p.h"
+#include "private/Utils_p.h"
+#include "private/DragController_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "Utils_p.h"
-#include "DragController_p.h"
 
 #include <QDebug>
 #include <QOperatingSystemVersion>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-# include "quick/Helpers_p.h"
+# include "private/quick/Helpers_p.h"
 # include <QQmlEngine>
 # include <QQmlContext>
 #endif

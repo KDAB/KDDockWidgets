@@ -18,13 +18,14 @@
 
 #include "MainWindow.h"
 #include "Config.h"
-#include "DockRegistry_p.h"
-#include "DropAreaWithCentralFrame_p.h"
-#include "DropArea_p.h"
-#include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "Logging_p.h"
-#include "SideBar_p.h"
+
+#include "private/DockRegistry_p.h"
+#include "private/DropAreaWithCentralFrame_p.h"
+#include "private/DropArea_p.h"
+#include "private/Frame_p.h"
+#include "private/Logging_p.h"
+#include "private/SideBar_p.h"
 
 #include <QPainter>
 #include <QScreen>

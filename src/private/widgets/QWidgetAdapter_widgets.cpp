@@ -19,9 +19,9 @@
  */
 
 #include "QWidgetAdapter.h"
-#include "FloatingWindow_p.h"
+#include "../FloatingWindow_p.h"
+#include "../Utils_p.h"
 #include "Qt5Qt6Compat_p.h"
-#include "Utils_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>
