@@ -237,7 +237,6 @@ target_include_directories(kddockwidgets
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/private
-    ${CMAKE_CURRENT_SOURCE_DIR}/private/multisplitter/
 )
 
 target_compile_definitions(kddockwidgets

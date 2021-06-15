@@ -18,7 +18,7 @@
  */
 
 #include "MultiSplitter_p.h"
-#include "../LayoutSaver_p.h"
+#include "LayoutSaver_p.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
 #include "DockWidgetBase.h"

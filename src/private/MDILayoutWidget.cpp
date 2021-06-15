@@ -10,7 +10,7 @@
 */
 
 #include "MDILayoutWidget_p.h"
-#include "ItemFreeContainer_p.h"
+#include "multisplitter/ItemFreeContainer_p.h"
 #include "DockWidgetBase_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
