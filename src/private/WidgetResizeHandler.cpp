@@ -566,8 +566,8 @@ bool WidgetResizeHandler::isInterestingNativeEvent(int nativeEvent)
      }
 #else
     Q_UNUSED(nativeEvent);
+    return false;
 #endif
-     return false;
 }
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
