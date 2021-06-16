@@ -33,6 +33,7 @@
 # include <windows.h>
 # include <dwmapi.h>
 # if defined(Q_CC_MSVC)
+#  pragma comment(lib,"Dwmapi.lib")
 #  pragma comment(lib,"User32.lib")
 # endif
 #endif
