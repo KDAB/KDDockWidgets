@@ -21,6 +21,8 @@
 
 #include "docks_export.h"
 
+#include <qglobal.h>
+
 QT_BEGIN_NAMESPACE
 class QQmlEngine;
 class QSize;
