@@ -311,9 +311,6 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *fw, const QBy
 
             return true;
         }
-
-        const bool ret = handleWindowsNativeEvent(fw->windowHandle(), msg, result, {});
-        return ret;
     }
 
     return handleWindowsNativeEvent(fw->windowHandle(), msg, result, {});
