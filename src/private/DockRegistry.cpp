@@ -202,7 +202,7 @@ bool DockRegistry::isProbablyObscured(QWindow *window, FloatingWindow *exclude) 
     for (MainWindowBase *mw : m_mainWindows) {
         QWindow *mwWindow = mw->window()->windowHandle();
 
-        if (mwWindow != window && !targetIsToolWindow && mwWindow->geometry().intersects(geo)) {
+        if (mwWindow && mwWindow != window && !targetIsToolWindow && mwWindow->geometry().intersects(geo)) {
             // Two main windows that intersect. Return true. If the target is a tool window it will be above, so we don't care.
             return true;
         }
