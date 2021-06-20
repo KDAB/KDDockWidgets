@@ -21,6 +21,8 @@
 #include "private/DockRegistry_p.h"
 #include "private/Utils_p.h"
 
+// #define KDDOCKWIDGETS_RUBBERBAND_IS_TOPLEVEL 1
+
 using namespace KDDockWidgets;
 
 static IndicatorWindow* createIndicatorWindow(ClassicIndicators *classicIndicators)
@@ -33,9 +35,11 @@ static IndicatorWindow* createIndicatorWindow(ClassicIndicators *classicIndicato
 
 ClassicIndicators::ClassicIndicators(DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea) // Is parented on the drop-area, not a toplevel.
-    , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(dropArea))
+    , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : dropArea))
     , m_indicatorWindow(createIndicatorWindow(this))
 {
+    if (rubberBandIsTopLevel())
+        m_rubberBand->setWindowOpacity(0.5);
 }
 
 ClassicIndicators::~ClassicIndicators()
@@ -157,8 +161,13 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     }
 
     if (location == DropLocation_Center) {
-        m_rubberBand->setGeometry(m_hoveredFrame ? m_hoveredFrame->QWidgetAdapter::geometry() : rect());
+        m_rubberBand->setGeometry(geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->QWidgetAdapter::geometry() : rect()));
         m_rubberBand->setVisible(true);
+        if (rubberBandIsTopLevel()) {
+            m_rubberBand->raise();
+            raiseIndicators();
+        }
+
         return;
     }
 
@@ -193,8 +202,12 @@ void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location
     QRect rect = m_dropArea->rectForDrop(windowBeingDragged, multisplitterLocation,
                                          m_dropArea->itemForFrame(relativeToFrame));
 
-    m_rubberBand->setGeometry(rect);
+    m_rubberBand->setGeometry(geometryForRubberband(rect));
     m_rubberBand->setVisible(true);
+    if (rubberBandIsTopLevel()) {
+        m_rubberBand->raise();
+        raiseIndicators();
+    }
 }
 
 void ClassicIndicators::updateWindowPosition()
@@ -207,3 +220,26 @@ void ClassicIndicators::updateWindowPosition()
     }
     m_indicatorWindow->setGeometry(rect);
 }
+
+bool ClassicIndicators::rubberBandIsTopLevel() const
+{
+#ifdef KDDOCKWIDGETS_RUBBERBAND_IS_TOPLEVEL
+    return true;
+#else
+    return false;
+#endif
+}
+
+QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
+{
+    if (!rubberBandIsTopLevel())
+        return localRect;
+
+    QPoint topLeftLocal = localRect.topLeft();
+    QPoint topLeftGlobal = m_dropArea->QWidget::mapToGlobal(topLeftLocal);
+
+    localRect.moveTopLeft(topLeftGlobal);
+
+    return localRect;
+}
+
