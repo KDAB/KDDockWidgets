@@ -236,7 +236,7 @@ QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
         return localRect;
 
     QPoint topLeftLocal = localRect.topLeft();
-    QPoint topLeftGlobal = m_dropArea->QWidget::mapToGlobal(topLeftLocal);
+    QPoint topLeftGlobal = m_dropArea->QWidgetAdapter::mapToGlobal(topLeftLocal);
 
     localRect.moveTopLeft(topLeftGlobal);
 
