@@ -104,14 +104,14 @@ QuickView::~QuickView() = default;
 
 
 FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
-    : FloatingWindow(parent)
+    : FloatingWindow(QRect(), parent)
     , m_quickWindow(new QuickView(this))
 {
     init();
 }
 
-FloatingWindowQuick::FloatingWindowQuick(Frame *frame, MainWindowBase *parent)
-    : FloatingWindow(frame, parent)
+FloatingWindowQuick::FloatingWindowQuick(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
+    : FloatingWindow(frame, suggestedGeometry, parent)
     , m_quickWindow(new QuickView(this))
 {
     init();

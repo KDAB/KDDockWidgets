@@ -164,9 +164,9 @@ FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *paren
     return new FloatingWindowQuick(parent);
 }
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWindowBase *parent) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWindowBase *parent, QRect suggestedGeometry) const
 {
-    return new FloatingWindowQuick(frame, parent);
+    return new FloatingWindowQuick(frame, suggestedGeometry, parent);
 }
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const
