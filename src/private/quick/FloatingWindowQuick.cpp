@@ -111,10 +111,12 @@ FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
 }
 
 FloatingWindowQuick::FloatingWindowQuick(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
-    : FloatingWindow(frame, suggestedGeometry, parent)
+    : FloatingWindow(frame, QRect(), parent)
     , m_quickWindow(new QuickView(this))
 {
     init();
+    // For QtQuick we need to set the suggested geometry only after we have the QWindow
+    setGeometry(suggestedGeometry);
 }
 
 FloatingWindowQuick::~FloatingWindowQuick()
