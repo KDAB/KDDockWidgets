@@ -121,7 +121,7 @@ public:
     ///       you also need to override the overloads above.
     ///@param frame Just forward to FloatingWindow's constructor.
     ///@param parent Just forward to FloatingWindow's constructor.
-    virtual FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const = 0;
+    virtual FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr, QRect suggestedGeometry = {}) const = 0;
 
     ///@brief Called internally by the framework to create a DropIndicatorOverlayInterface
     ///       Override to provide your own DropIndicatorOverlayInterface sub-class.
@@ -170,7 +170,7 @@ public:
     TabBar *createTabBar(TabWidget *parent) const override;
     Layouting::Separator *createSeparator(Layouting::Widget *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const override;
-    FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr) const override;
+    FloatingWindow *createFloatingWindow(Frame *frame, MainWindowBase *parent = nullptr, QRect suggestedGeometry = {}) const override;
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea*) const override;
     QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const override;
     SideBar *createSideBar(SideBarLocation loc, MainWindowBase *parent) const override;

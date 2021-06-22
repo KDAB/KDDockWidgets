@@ -95,12 +95,15 @@ MainWindowBase *actualParent(MainWindowBase *candidate)
             : candidate;
 }
 
-FloatingWindow::FloatingWindow(MainWindowBase *parent)
+FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent)
     : QWidgetAdapter(actualParent(parent), windowFlagsToUse())
     , Draggable(this, KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_dropArea(new DropArea(this))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
 {
+    if (!suggestedGeometry.isNull())
+        setGeometry(suggestedGeometry);
+
     if (kddwUsesQtWidgets()) {
         // For QtQuick we do it a bit later, once we have the QQuickWindow
 #ifdef Q_OS_WIN
@@ -133,8 +136,8 @@ FloatingWindow::FloatingWindow(MainWindowBase *parent)
     m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
-FloatingWindow::FloatingWindow(Frame *frame, MainWindowBase *parent)
-    : FloatingWindow(hackFindParentHarder(frame, parent))
+FloatingWindow::FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
+    : FloatingWindow(suggestedGeometry, hackFindParentHarder(frame, parent))
 {
     m_disableSetVisible = true;
     // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).

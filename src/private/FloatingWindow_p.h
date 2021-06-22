@@ -41,8 +41,8 @@ class DOCKS_EXPORT FloatingWindow
     Q_PROPERTY(KDDockWidgets::TitleBar* titleBar READ titleBar CONSTANT)
     Q_PROPERTY(KDDockWidgets::DropArea* dropArea READ dropArea CONSTANT)
 public:
-    explicit FloatingWindow(MainWindowBase *parent = nullptr);
-    explicit FloatingWindow(Frame *frame, MainWindowBase *parent = nullptr);
+    explicit FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent = nullptr);
+    explicit FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent = nullptr);
     ~FloatingWindow() override;
 
     bool deserialize(const LayoutSaver::FloatingWindow &);

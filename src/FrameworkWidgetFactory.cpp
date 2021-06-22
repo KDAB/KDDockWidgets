@@ -87,12 +87,12 @@ Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *p
 
 FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent) const
 {
-    return new FloatingWindowWidget(parent);
+    return new FloatingWindowWidget(QRect(), parent);
 }
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWindowBase *parent) const
+FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWindowBase *parent, QRect suggestedGeometry) const
 {
-    return new FloatingWindowWidget(frame, parent);
+    return new FloatingWindowWidget(frame, suggestedGeometry, parent);
 }
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const

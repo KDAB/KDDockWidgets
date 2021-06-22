@@ -24,15 +24,15 @@
 
 using namespace KDDockWidgets;
 
-FloatingWindowWidget::FloatingWindowWidget(MainWindowBase *parent)
-    : FloatingWindow(parent)
+FloatingWindowWidget::FloatingWindowWidget(QRect suggestedGeometry, MainWindowBase *parent)
+    : FloatingWindow(suggestedGeometry, parent)
     , m_vlayout(new QVBoxLayout(this))
 {
     init();
 }
 
-FloatingWindowWidget::FloatingWindowWidget(Frame *frame, MainWindowBase *parent)
-    : FloatingWindow(frame, parent)
+FloatingWindowWidget::FloatingWindowWidget(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
+    : FloatingWindow(frame, suggestedGeometry, parent)
     , m_vlayout(new QVBoxLayout(this))
 {
     init();
