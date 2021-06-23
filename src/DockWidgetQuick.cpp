@@ -36,6 +36,7 @@ public:
         : q(dw)
         , m_visualItem(q->createItem(qmlengine,
                                      Config::self().frameworkWidgetFactory()->dockwidgetFilename().toString()))
+        , m_qmlEngine(qmlengine)
     {
         Q_ASSERT(m_visualItem);
         m_visualItem->setParent(q);
@@ -44,6 +45,7 @@ public:
 
     DockWidgetBase *const q;
     QQuickItem *const m_visualItem;
+    QQmlEngine *const m_qmlEngine;
 };
 
 DockWidgetQuick::DockWidgetQuick(const QString &name, Options options, LayoutSaverOptions layoutSaverOptions)
@@ -61,7 +63,7 @@ DockWidgetQuick::~DockWidgetQuick()
 
 void DockWidgetQuick::setWidget(const QString &qmlFilename)
 {
-    QQuickItem *guest = createItem(Config::self().qmlEngine(), qmlFilename);
+    QQuickItem *guest = createItem(d->m_qmlEngine, qmlFilename);
     if (!guest)
         return;
 
