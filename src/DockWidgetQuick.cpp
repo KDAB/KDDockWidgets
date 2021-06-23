@@ -32,9 +32,9 @@ using namespace KDDockWidgets;
 class DockWidgetQuick::Private
 {
 public:
-    Private(DockWidgetQuick *dw)
+    Private(DockWidgetQuick *dw, QQmlEngine *qmlengine)
         : q(dw)
-        , m_visualItem(q->createItem(Config::self().qmlEngine(),
+        , m_visualItem(q->createItem(qmlengine,
                                      Config::self().frameworkWidgetFactory()->dockwidgetFilename().toString()))
     {
         Q_ASSERT(m_visualItem);
@@ -48,7 +48,7 @@ public:
 
 DockWidgetQuick::DockWidgetQuick(const QString &name, Options options, LayoutSaverOptions layoutSaverOptions)
     : DockWidgetBase(name, options, layoutSaverOptions)
-    , d(new Private(this))
+    , d(new Private(this, Config::self().qmlEngine()))
 {
     // To mimic what QtWidgets does when creating a new QWidget.
     setVisible(false);
