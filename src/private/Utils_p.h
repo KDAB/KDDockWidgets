@@ -131,7 +131,8 @@ inline void activateWindow(QWindow *window)
 
 inline bool windowManagerHasTranslucency()
 {
-    if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY"))
+    if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY") ||
+        (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))
         return false;
 
 #ifdef QT_X11EXTRAS_LIB

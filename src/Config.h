@@ -109,7 +109,9 @@ public:
         InternalFlag_DontUseParentForFloatingWindows = 2,  ///< FloatingWindows won't have a parent top-level.
         InternalFlag_DontUseQtToolWindowsForFloatingWindows = 4, ///< FloatingWindows will use Qt::Window instead of Qt::Tool.
         InternalFlag_DontShowWhenUnfloatingHiddenWindow = 8, ///< DockWidget::setFloating(false) won't do anything if the window is hidden.
-        InternalFlag_UseTransparentFloatingWindow = 16 ///< For QtQuick only. Allows to have round-corners. It's flaky when used with native Windows drop-shadow.
+        InternalFlag_UseTransparentFloatingWindow = 16, ///< For QtQuick only. Allows to have round-corners. It's flaky when used with native Windows drop-shadow.
+        InternalFlag_DisableTranslucency = 32 ///< KDDW tries to detect if your Window Manager doesn't support transparent windows, but the detection might fail
+                                              /// with more exotic setups. This flag can be used to override.
     };
     Q_DECLARE_FLAGS(InternalFlags, InternalFlag)
 
