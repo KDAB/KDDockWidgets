@@ -16,6 +16,8 @@
   for drop indicators while dragging.
   - Fixed embedding the main window into a non-kddw main window (#204, #168)
   - Fixed crash with an MFC application
+  - Allows to disable translucency via the KDDW_NO_TRANSLUCENCY env var, useful
+    in case running on weird Window Managers.
 
 * v1.3.2 (unreleased)
   -

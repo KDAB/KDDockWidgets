@@ -131,6 +131,9 @@ inline void activateWindow(QWindow *window)
 
 inline bool windowManagerHasTranslucency()
 {
+    if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY"))
+        return false;
+
 #ifdef QT_X11EXTRAS_LIB
     if (qApp->platformName() == QLatin1String("xcb"))
         return QX11Info::isCompositingManagerRunning();
