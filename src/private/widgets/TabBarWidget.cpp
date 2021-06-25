@@ -143,7 +143,7 @@ bool TabBarWidget::dragCanStart(QPoint pressPos, QPoint pos) const
 bool TabBarWidget::event(QEvent *ev)
 {
     // Qt has a bug in QWidgetPrivate::deepestFocusProxy(), it doesn't honour visibility
-    // of the focus scope. Once an hidden widget is focused the the chain is broken and tab
+    // of the focus scope. Once an hidden widget is focused the chain is broken and tab
     // stops working (#180)
 
     auto parent = parentWidget();
