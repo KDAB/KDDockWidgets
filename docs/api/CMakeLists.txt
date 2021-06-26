@@ -33,6 +33,7 @@ add_custom_command(
   #handle a bug in doxygen where image files referred to in markdown are not copied the output
   COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/../../screencap.gif ${DOXYGEN_OUTPUT_DIR}/html
   #copy some files by-hand that are referred to by the markdown README
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/README-bindings.md ${DOXYGEN_OUTPUT_DIR}/html
   COMMAND ${CMAKE_COMMAND} -E make_directory ${DOXYGEN_OUTPUT_DIR}/html/LICENSES
   COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/LICENSES/GPL-2.0-only.txt ${DOXYGEN_OUTPUT_DIR}/html/LICENSES
   COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/LICENSES/GPL-3.0-only.txt ${DOXYGEN_OUTPUT_DIR}/html/LICENSES
