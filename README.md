@@ -144,7 +144,7 @@ your application whenever updating KDDW.
 
 Supported Qt versions and toolchains
 =====================================
-KDDockWidgets requires Qt5 >= 5.9 (or >=5.12 if Python bindings are enabled) or Qt6 >= 6.1.
+KDDockWidgets requires Qt5 >= 5.12 or Qt6 >= 6.1.
 The QtQuick support requires Qt5 >= 5.15 or Qt6 >= 6.1.
 
 
