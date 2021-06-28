@@ -2862,6 +2862,7 @@ void TestDocks::tst_posAfterLeftDetach()
         const QPoint globalSrc = dock2->mapToGlobal(QPoint(0, 0));
         const int offset = 10;
         const QPoint globalDest = globalSrc + QPoint(offset, 0);
+        QVERIFY(dock2->isVisible());
         drag(dock2, globalDest);
         QVERIFY(fw->dropArea()->checkSanity());
         const QPoint actualEndPos = dock2->mapToGlobal(QPoint(0, 0));
