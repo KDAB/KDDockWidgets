@@ -7193,10 +7193,14 @@ void TestDocks::tst_toggleTabbed()
     QVERIFY(!dock0->isOpen());
     QVERIFY(dock1->isOpen());
     QVERIFY(dock1->toggleAction()->isChecked());
-
-#ifndef KDDOCKWIDGETS_QTWIDGETS
-    QEXPECT_FAIL("", "To be fixed", Continue);
-#endif
+    QVERIFY(dock1->isCurrentTab());
+    Frame *frame = dock1->dptr()->frame();
+    TabWidget *tw = frame->tabWidget();
+    QCOMPARE(tw->currentIndex(), 0);
+    QCOMPARE(tw->numDockWidgets(), 1);
+    QCOMPARE(tw->currentDockWidget(), dock1);
+    QVERIFY(!dock0->isVisible());
+    QVERIFY(frame->QWidgetAdapter::isVisible());
 
     QVERIFY(dock1->isVisible());
 }

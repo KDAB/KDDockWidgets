@@ -232,10 +232,10 @@ private Q_SLOTS:
     void tst_deleteOnClose();
     void tst_toggleAction();
     void tst_redocksToPreviousTabIndex();
+    void tst_toggleTabbed();
 
     void tst_addMDIDockWidget();
     void tst_redockToMDIRestoresPosition();
-    void tst_toggleTabbed();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick
