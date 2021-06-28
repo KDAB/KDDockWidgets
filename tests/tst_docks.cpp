@@ -7170,6 +7170,36 @@ void TestDocks::tst_redocksToPreviousTabIndex()
 #endif
 }
 
+void TestDocks::tst_toggleTabbed()
+{
+    // Testing the weird bugs reported in #211
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
+    auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
+    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
+
+    m->addDockWidget(dock0, Location_OnBottom);
+    dock0->addDockWidgetAsTab(dock1);
+
+    QVERIFY(dock1->isCurrentTab());
+    QVERIFY(dock0->toggleAction()->isChecked());
+    QVERIFY(dock1->toggleAction()->isChecked());
+    QVERIFY(dock0->isOpen());
+    QVERIFY(dock1->isOpen());
+
+    dock0->close();
+    QVERIFY(!dock0->isOpen());
+    QVERIFY(dock1->isOpen());
+    QVERIFY(dock1->toggleAction()->isChecked());
+
+#ifndef KDDOCKWIDGETS_QTWIDGETS
+    QEXPECT_FAIL("", "To be fixed", Continue);
+#endif
+
+    QVERIFY(dock1->isVisible());
+}
+
 void TestDocks::tst_addMDIDockWidget()
 {
     EnsureTopLevelsDeleted e;
