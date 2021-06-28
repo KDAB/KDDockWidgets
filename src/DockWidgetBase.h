@@ -304,7 +304,7 @@ public:
      * @brief Returns whether this dock widget is open.
      * Equivalent to calling toggleAction().isChecked() or isVisible()
      */
-    bool isOpen() const;
+    Q_INVOKABLE bool isOpen() const;
 
     /**
      * @brief Sets the affinity names. Dock widgets can only dock into dock widgets of the same affinity.
