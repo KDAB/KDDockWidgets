@@ -193,5 +193,16 @@
                 "CCACHE_DISABLE" : "ON"
             }
         }
-    ]
+    ],
+    "vendor": {
+        "kdab.com/sergio": {
+            "description": "Config specific to my build scripts",
+            "remotes" : [
+                {
+                    "type" : "ssh",
+                    "host" : "mac"
+                }
+            ]
+        }
+    }
 }
