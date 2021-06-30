@@ -1,7 +1,7 @@
-Name:           kddockwidgets
+Name:           qt6-kddockwidgets
 Version:        1.3.1
 Release:        1
-Summary:        KDAB's Dock Widget Framework for Qt
+Summary:        KDAB's Dock Widget Framework for Qt6
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-%{version}.tar.gz.asc
 Source2:        %{name}-rpmlintrc
@@ -14,15 +14,15 @@ Packager:       Klaralvdalens Datakonsult AB (KDAB) <info@kdab.com>
 
 BuildRequires: cmake
 %if %{defined suse_version}
-BuildRequires:  libqt5-qtbase-devel libqt5-qtx11extras-devel
+BuildRequires:  libqt6-qtbase-devel libqt6-qtx11extras-devel
 %endif
 
 %if %{defined fedora}
-BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtx11extras-devel desktop-file-utils
+BuildRequires:  gcc-c++ qt6-qtbase-devel desktop-file-utils
 %endif
 
 %if %{defined rhel}
-BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtx11extras-devel desktop-file-utils
+BuildRequires:  gcc-c++ qt6-qtbase-devel qt6-qtx11extras-devel desktop-file-utils
 %endif
 
 %description
@@ -60,7 +60,7 @@ develop programs using kddockwidgets.
 %autosetup
 
 %build
-cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDDockWidgets_QT6=True -DCMAKE_BUILD_TYPE=Release
 %__make %{?_smp_mflags}
 
 %post -p /sbin/ldconfig
@@ -75,27 +75,16 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 %files
 %defattr(-,root,root)
 %{_prefix}/share/doc/KDDockWidgets
-%{_libdir}/libkddockwidgets.so.*
+%{_libdir}/libkddockwidgets-qt6.so.*
 
 %files devel
 %defattr(-,root,root,-)
-%if 0%{?sle_version} >= 150200 && 0%{?is_opensuse}
-%{_libdir}/qt5/mkspecs/modules/*
-%endif
-%if 0%{?suse_version} > 1500
-%{_libdir}/qt5/mkspecs/modules/*
-%endif
-%if 0%{?fedora} > 28
-%{_libdir}/qt5/mkspecs/modules/*
-%endif
-%if %{defined rhel}
-%{_libdir}/qt5/mkspecs/modules/*
-%endif
 %dir %{_includedir}/kddockwidgets
 %{_includedir}/kddockwidgets/*
 %dir %{_libdir}/cmake/KDDockWidgets
 %{_libdir}/cmake/KDDockWidgets/*
-%{_libdir}/libkddockwidgets.so
+%{_libdir}/libkddockwidgets-qt6.so
+%{_prefix}/mkspecs/modules/*
 
 %changelog
 * Mon Jun 07 2021 Allen Winter <allen.winter@kdab.com> 1.3.1
