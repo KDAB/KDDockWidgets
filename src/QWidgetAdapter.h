@@ -30,12 +30,7 @@ namespace Private {
 
 inline bool isMinimized(QWindow *window)
 {
-    // QWindow::windowStates() was introduced in 5.10
-#if QT_VERSION < 0x051000
-    return window && window->windowState() == Qt::WindowMinimized;
-#else
-    return window && window->windowStates() & Qt::WindowMinimized;
-#endif
+    return window && (window->windowStates() & Qt::WindowMinimized);
 }
 
 }}
