@@ -149,6 +149,7 @@ protected:
 private:
     friend class ::TestDocks;
     friend class FloatingWindowWidget;
+    friend class TabWidgetWidget;
     void updateFloatButton();
     void updateCloseButton();
     void setCloseButtonEnabled(bool);

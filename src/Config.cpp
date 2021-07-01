@@ -305,6 +305,11 @@ void Config::Private::fixFlags()
         m_internalFlags |= InternalFlag_DontUseParentForFloatingWindows;
         m_internalFlags |= InternalFlag_DontUseQtToolWindowsForFloatingWindows;
     }
+
+    if (m_flags & Flag_ShowButtonsOnTabBarIfTitleBarHidden) {
+        // Flag_ShowButtonsOnTabBarIfTitleBarHidden doesn't make sense if used alone
+        m_flags |= Flag_HideTitleBarWhenTabsVisible;
+    }
 }
 
 void Config::setDisabledPaintEvents(CustomizableWidgets widgets)

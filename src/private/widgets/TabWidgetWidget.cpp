@@ -18,11 +18,14 @@
 
 #include "TabWidgetWidget_p.h"
 #include "../Frame_p.h"
+#include "../TitleBar_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
 #include <QMouseEvent>
 #include <QTabBar>
+#include <QHBoxLayout>
+#include <QAbstractButton>
 
 using namespace KDDockWidgets;
 
@@ -55,6 +58,8 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
 
     if (!QTabWidget::tabBar()->isVisible())
         setFocusProxy(nullptr);
+
+    setupTabBarButtons();
 }
 
 TabBar *TabWidgetWidget::tabBar() const
@@ -151,4 +156,38 @@ DockWidgetBase *TabWidgetWidget::dockwidgetAt(int index) const
 int TabWidgetWidget::currentIndex() const
 {
     return QTabWidget::currentIndex();
+}
+
+void TabWidgetWidget::setupTabBarButtons()
+{
+    if (!(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden))
+        return;
+
+    auto factory = Config::self().frameworkWidgetFactory();
+    m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
+    m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
+
+    auto cornerWidget = new QWidget(this);
+    cornerWidget->setObjectName(QStringLiteral("Corner Widget"));
+
+    setCornerWidget(cornerWidget, Qt::TopRightCorner);
+
+    auto hlay = new QHBoxLayout(cornerWidget);
+
+    hlay->setContentsMargins(QMargins(0, 0, 2, 0));
+    hlay->setSpacing(2);
+
+    hlay->addWidget(m_floatButton);
+    hlay->addWidget(m_closeButton);
+
+    connect(m_floatButton, &QAbstractButton::clicked, this, [this] {
+        TitleBar *tb = frame()->titleBar();
+        tb->onFloatClicked();
+    });
+
+    connect(m_closeButton, &QAbstractButton::clicked, this, [this] {
+        TitleBar *tb = frame()->titleBar();
+        tb->onCloseClicked();
+    });
+
 }

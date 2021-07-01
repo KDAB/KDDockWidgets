@@ -23,6 +23,10 @@
 
 #include <QTabWidget>
 
+QT_BEGIN_NAMESPACE
+class QAbstractButton;
+QT_END_NAMESPACE
+
 namespace KDDockWidgets {
 
 class Frame;
@@ -41,7 +45,6 @@ public:
     int numDockWidgets() const override;
     void removeDockWidget(DockWidgetBase *) override;
     int indexOfDockWidget(const DockWidgetBase *) const override;
-
 Q_SIGNALS:
     void currentTabChanged(int index) override;
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *dw) override;
@@ -61,8 +64,11 @@ protected:
     int currentIndex() const override;
 
 private:
+    void setupTabBarButtons();
     Q_DISABLE_COPY(TabWidgetWidget)
     TabBar *const m_tabBar;
+    QAbstractButton *m_floatButton = nullptr;
+    QAbstractButton *m_closeButton = nullptr;
 };
 }
 

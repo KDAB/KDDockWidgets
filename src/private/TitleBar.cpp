@@ -193,7 +193,12 @@ void TitleBar::setIcon(const QIcon &icon)
 
 std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 {
-    if (!isVisible() && window()->isVisible()) {
+    if (!isVisible() && window()->isVisible() &&
+        !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
+
+        // When using Flag_ShowButtonsOnTabBarIfTitleBarHidden we forward the call from the tab bar's
+        // buttons to the title bar's buttons, just ot reuse logic
+
         qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar"
                    << this << window()->isVisible();
         if (m_frame) {
