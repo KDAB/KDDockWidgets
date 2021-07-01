@@ -25,6 +25,7 @@
 
 QT_BEGIN_NAMESPACE
 class QAbstractButton;
+class QHBoxLayout;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
@@ -64,9 +65,11 @@ protected:
     int currentIndex() const override;
 
 private:
+    void updateMargins();
     void setupTabBarButtons();
     Q_DISABLE_COPY(TabWidgetWidget)
     TabBar *const m_tabBar;
+    QHBoxLayout *m_cornerWidgetLayout = nullptr;
     QAbstractButton *m_floatButton = nullptr;
     QAbstractButton *m_closeButton = nullptr;
 };

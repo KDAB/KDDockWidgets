@@ -17,10 +17,11 @@
  */
 
 #include "TabWidgetWidget_p.h"
-#include "../Frame_p.h"
-#include "../TitleBar_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+#include "../Frame_p.h"
+#include "../TitleBar_p.h"
+#include "../DockRegistry_p.h"
 
 #include <QMouseEvent>
 #include <QTabBar>
@@ -172,13 +173,10 @@ void TabWidgetWidget::setupTabBarButtons()
 
     setCornerWidget(cornerWidget, Qt::TopRightCorner);
 
-    auto hlay = new QHBoxLayout(cornerWidget);
+    m_cornerWidgetLayout = new QHBoxLayout(cornerWidget);
 
-    hlay->setContentsMargins(QMargins(0, 0, 2, 0));
-    hlay->setSpacing(2);
-
-    hlay->addWidget(m_floatButton);
-    hlay->addWidget(m_closeButton);
+    m_cornerWidgetLayout->addWidget(m_floatButton);
+    m_cornerWidgetLayout->addWidget(m_closeButton);
 
     connect(m_floatButton, &QAbstractButton::clicked, this, [this] {
         TitleBar *tb = frame()->titleBar();
@@ -190,4 +188,16 @@ void TabWidgetWidget::setupTabBarButtons()
         tb->onCloseClicked();
     });
 
+    updateMargins();
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this] (QWindow *w) {
+        if (w == window()->windowHandle())
+            updateMargins();
+    });
+}
+
+void TabWidgetWidget::updateMargins()
+{
+    const qreal factor = logicalDpiFactor(this);
+    m_cornerWidgetLayout->setContentsMargins(QMargins(0, 0, 2, 0) * factor);
+    m_cornerWidgetLayout->setSpacing(int(2 * factor));
 }
