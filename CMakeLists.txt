@@ -150,6 +150,11 @@ else()
   set(KDDockWidgets_LIBRARY_QTID "")
 endif()
 
+if (${PROJECT_NAME}_QTQUICK)
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif()
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
