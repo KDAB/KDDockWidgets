@@ -105,7 +105,12 @@ int TabWidgetQuick::currentIndex() const
     if (!m_currentDockWidget)
         return -1;
 
-    return indexOfDockWidget(m_currentDockWidget);
+    const int index = indexOfDockWidget(m_currentDockWidget);
+
+    if (index == -1)
+        qWarning() << Q_FUNC_INFO << "Unexpected null index for" << m_currentDockWidget;
+
+    return index;
 }
 
 DockWidgetModel *TabWidgetQuick::dockWidgetModel() const
