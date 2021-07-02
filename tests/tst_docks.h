@@ -233,6 +233,7 @@ private Q_SLOTS:
     void tst_toggleAction();
     void tst_redocksToPreviousTabIndex();
     void tst_toggleTabbed();
+    void tst_toggleTabbed2();
 
     void tst_addMDIDockWidget();
     void tst_redockToMDIRestoresPosition();

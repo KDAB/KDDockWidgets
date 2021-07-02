@@ -7198,6 +7198,27 @@ void TestDocks::tst_toggleTabbed()
     QVERIFY(dock1->isVisible());
 }
 
+void TestDocks::tst_toggleTabbed2()
+{
+    // Testing the weird bugs reported in #215
+    EnsureTopLevelsDeleted e;
+    auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
+    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)));
+    dock0->addDockWidgetAsTab(dock1);
+
+    dock0->setAsCurrentTab();
+
+    Frame *frame = dock0->dptr()->frame();
+    QCOMPARE(frame->currentDockWidget(), dock0);
+    dock0->setFloating(true);
+
+    QCOMPARE(dock0->dptr()->frame()->title(), "dock0");
+#ifndef KDDOCKWIDGETS_QTWIDGETS
+    QEXPECT_FAIL("", "Will fix", Continue);
+#endif
+    QCOMPARE(dock1->dptr()->frame()->title(), "dock1");
+}
+
 void TestDocks::tst_addMDIDockWidget()
 {
     EnsureTopLevelsDeleted e;
