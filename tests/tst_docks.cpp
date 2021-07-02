@@ -7208,15 +7208,18 @@ void TestDocks::tst_toggleTabbed2()
 
     dock0->setAsCurrentTab();
 
-    Frame *frame = dock0->dptr()->frame();
-    QCOMPARE(frame->currentDockWidget(), dock0);
-    dock0->setFloating(true);
+    Frame *frame1 = dock1->dptr()->frame();
+    QCOMPARE(frame1->currentDockWidget(), dock0);
+    QCOMPARE(frame1->currentIndex(), 0);
 
-    QCOMPARE(dock0->dptr()->frame()->title(), "dock0");
-#ifndef KDDOCKWIDGETS_QTWIDGETS
-    QEXPECT_FAIL("", "Will fix", Continue);
-#endif
-    QCOMPARE(dock1->dptr()->frame()->title(), "dock1");
+    dock0->setFloating(true);
+    Frame *frame0 = dock0->dptr()->frame();
+
+    QCOMPARE(frame0->currentIndex(), 0);
+    QCOMPARE(frame1->currentIndex(), 0);
+
+    QCOMPARE(frame0->title(), "dock0");
+    QCOMPARE(frame1->title(), "dock1");
 }
 
 void TestDocks::tst_addMDIDockWidget()

@@ -26,8 +26,15 @@ TabWidgetQuick::TabWidgetQuick(Frame *parent)
     , m_dockWidgetModel(new DockWidgetModel(this))
     , m_tabBar(Config::self().frameworkWidgetFactory()->createTabBar(this))
 {
-    connect(m_dockWidgetModel, &DockWidgetModel::countChanged,
-            this, &TabWidgetQuick::countChanged);
+    connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
+            [this] {
+                if (m_currentDockWidget && indexOfDockWidget(m_currentDockWidget) == -1) {
+                    // The current dock widget was removed, set the first one as current
+                    if (numDockWidgets() > 0)
+                        setCurrentDockWidget(0);
+                }
+
+                return countChanged(); });
 }
 
 TabBar *TabWidgetQuick::tabBar() const
@@ -108,7 +115,8 @@ int TabWidgetQuick::currentIndex() const
     const int index = indexOfDockWidget(m_currentDockWidget);
 
     if (index == -1)
-        qWarning() << Q_FUNC_INFO << "Unexpected null index for" << m_currentDockWidget;
+        qWarning() << Q_FUNC_INFO << "Unexpected null index for" << m_currentDockWidget << this
+                   << "; count=" << m_dockWidgetModel->count();
 
     return index;
 }
