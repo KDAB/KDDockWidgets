@@ -18,6 +18,8 @@
 #include <QQuickItem>
 #include <QString>
 
+#include <optional>
+
 namespace KDDockWidgets {
 
 class DockWidgetQuick;
@@ -105,8 +107,10 @@ Q_SIGNALS:
     void windowActiveAboutToChange(bool activated);
 
 private:
+    std::optional<bool> m_isFloating;
     QString m_uniqueName;
     QString m_sourceFilename;
+    QString m_title;
     DockWidgetQuick *m_dockWidget = nullptr;
 };
 }
