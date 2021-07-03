@@ -155,7 +155,7 @@ public:
     QWidgetAdapter *parentWidget(bool includeTransient = true) const;
     QPoint mapToGlobal(QPoint pt) const;
     QPoint mapFromGlobal(QPoint) const;
-    QPoint mapTo(const QQuickItem *parent, const QPoint &pos) const;
+    QPoint mapTo(const QQuickItem *parent, QPoint pos) const;
     bool testAttribute(Qt::WidgetAttribute) const;
     void setAttribute(Qt::WidgetAttribute, bool enabled = true);
 

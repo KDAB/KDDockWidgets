@@ -484,7 +484,7 @@ QPoint QWidgetAdapter::mapFromGlobal(QPoint pt) const
     return QQuickItem::mapFromGlobal(pt).toPoint();
 }
 
-QPoint QWidgetAdapter::mapTo(const QQuickItem *parent, const QPoint &pos) const
+QPoint QWidgetAdapter::mapTo(const QQuickItem *parent, QPoint pos) const
 {
     if (!parent)
         return {};
