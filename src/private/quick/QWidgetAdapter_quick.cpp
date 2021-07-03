@@ -44,6 +44,7 @@ namespace KDDockWidgets {
  */
 class MouseEventRedirector : public QObject
 {
+    Q_OBJECT
 public:
     explicit MouseEventRedirector(QObject *eventSource, QObject *eventTarget)
         : QObject(eventTarget)
@@ -753,3 +754,5 @@ bool QWidgetAdapter::isWrapper() const
 }
 
 LayoutGuestWidget::~LayoutGuestWidget() = default;
+
+#include "QWidgetAdapter_quick.moc"

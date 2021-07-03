@@ -30,6 +30,7 @@ namespace KDDockWidgets {
 
 class QuickView : public QQuickView
 {
+    Q_OBJECT
 public:
     explicit QuickView(FloatingWindow *floatingWindow)
         : QQuickView(Config::self().qmlEngine(), nullptr)
@@ -214,3 +215,5 @@ void FloatingWindowQuick::init()
 
     m_quickWindow->show();
 }
+
+#include "FloatingWindowQuick.moc"
