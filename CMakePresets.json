@@ -48,6 +48,21 @@
             }
         },
         {
+            "name": "clazy-qtquick",
+            "displayName": "clazy-qtquick",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-clazy-qtquick",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_WERROR": "ON",
+                "KDDockWidgets_QTQUICK": "ON"
+            },
+            "environment": {
+                "CXX": "clazy",
+                "CCACHE_DISABLE" : "ON"
+            }
+        },
+        {
             "name": "qtwidgets",
             "displayName": "qtwidgets",
             "generator": "Ninja",
@@ -188,6 +203,14 @@
         {
             "name": "clazy-qtwidgets",
             "configurePreset": "clazy-qtwidgets",
+            "environment": {
+                "CLAZY_CHECKS" : "level2,detaching-member,heap-allocated-small-trivial-type,isempty-vs-count,qstring-varargs,qvariant-template-instantiation,raw-environment-function,reserve-candidates,signal-with-return-value,thread-with-slots,no-ctor-missing-parent-argument,no-missing-typeinfo",
+                "CCACHE_DISABLE" : "ON"
+            }
+        },
+        {
+            "name": "clazy-qtquick",
+            "configurePreset": "clazy-qtquick",
             "environment": {
                 "CLAZY_CHECKS" : "level2,detaching-member,heap-allocated-small-trivial-type,isempty-vs-count,qstring-varargs,qvariant-template-instantiation,raw-environment-function,reserve-candidates,signal-with-return-value,thread-with-slots,no-ctor-missing-parent-argument,no-missing-typeinfo",
                 "CCACHE_DISABLE" : "ON"
