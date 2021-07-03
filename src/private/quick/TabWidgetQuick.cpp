@@ -201,7 +201,7 @@ void DockWidgetModel::remove(DockWidgetBase *dw)
         }
     } else {
         const auto connections = m_connections.take(dw);
-        for (QMetaObject::Connection conn : connections)
+        for (const QMetaObject::Connection &conn : connections)
             disconnect(conn);
 
         beginRemoveRows(QModelIndex(), row, row);
