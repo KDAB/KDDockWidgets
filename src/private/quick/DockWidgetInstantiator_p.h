@@ -61,21 +61,22 @@ public:
     bool isFloating() const;
     void setFloating(bool);
 
-    Q_INVOKABLE void addDockWidgetAsTab(DockWidgetInstantiator *other,
-                                        InitialVisibilityOption = {});
-    Q_INVOKABLE void addDockWidgetAsTab(DockWidgetBase *other, InitialVisibilityOption = {});
+    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::DockWidgetInstantiator *other,
+                                        KDDockWidgets::InitialVisibilityOption = {});
+    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::DockWidgetBase *other,
+                                        KDDockWidgets::InitialVisibilityOption = {});
 
-    Q_INVOKABLE void addDockWidgetToContainingWindow(DockWidgetBase *other,
+    Q_INVOKABLE void addDockWidgetToContainingWindow(KDDockWidgets::DockWidgetBase *other,
                                                      KDDockWidgets::Location location,
-                                                     DockWidgetBase *relativeTo = nullptr,
+                                                     KDDockWidgets::DockWidgetBase *relativeTo = nullptr,
                                                      QSize initialSize = {},
-                                                     InitialVisibilityOption = {});
+                                                     KDDockWidgets::InitialVisibilityOption = {});
 
-    Q_INVOKABLE void addDockWidgetToContainingWindow(DockWidgetInstantiator *other,
+    Q_INVOKABLE void addDockWidgetToContainingWindow(KDDockWidgets::DockWidgetInstantiator *other,
                                                      KDDockWidgets::Location location,
-                                                     DockWidgetInstantiator *relativeTo = nullptr,
+                                                     KDDockWidgets::DockWidgetInstantiator *relativeTo = nullptr,
                                                      QSize initialSize = {},
-                                                     InitialVisibilityOption = {});
+                                                     KDDockWidgets::InitialVisibilityOption = {});
 
     Q_INVOKABLE void setAsCurrentTab();
     Q_INVOKABLE void forceClose();
@@ -83,7 +84,6 @@ public:
     Q_INVOKABLE void show();
     Q_INVOKABLE void raise();
     Q_INVOKABLE void moveToSideBar();
-
 
 protected:
     void classBegin() override;
