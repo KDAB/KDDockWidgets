@@ -6954,7 +6954,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QVERIFY(dock1->isFloating());
     QVERIFY(dock2->isFloating());
 
-    drag(titlebar1, titlebar1->mapToGlobal(QPoint(5, 5)), dock2->window()->geometry().center(), ButtonAction_Press);
+    QPoint finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
+    drag(titlebar1, titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
 
     // It morphed into a FloatingWindow
     QPointer<Frame> frame2 = dock2->dptr()->frame();
@@ -6965,9 +6966,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QVERIFY(frame2);
     QCOMPARE(frame2->dockWidgetCount(), 1);
 
-    releaseOn(dock2->window()->geometry().center(), titlebar1);
+    releaseOn(finalPoint, titlebar1);
     QCOMPARE(frame2->dockWidgetCount(), 2); // 2.2 Frame has 2 widgets when one is dropped
-
     QVERIFY(Testing::waitForDeleted(frame1));
 
     // 2.3 Detach tab1 to empty space
@@ -6984,7 +6984,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     frame2 = dock2->dptr()->frame();
     fw1 = dock1->floatingWindow();
     globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100,5));
-    drag(fw1->titleBar(), globalPressPos, dock2->window()->geometry().center());
+    finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
+    drag(fw1->titleBar(), globalPressPos, finalPoint);
 
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
@@ -6992,7 +6993,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     globalPressPos = dragPointForWidget(frame2.data(), 0);
     tabBar = frame2->tabWidget()->tabBar();
 
-    drag(tabBar->asWidget(), globalPressPos, dock2->window()->geometry().center());
+    finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
+    drag(tabBar->asWidget(), globalPressPos, finalPoint);
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
     // 2.6 Drag the tabbed group over a 3rd floating window
@@ -7000,7 +7002,8 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QTest::qWait(1000); // Test is flaky otherwise
 
     auto fw2 = dock2->floatingWindow();
-    drag(fw2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), dock3->window()->geometry().center());
+    finalPoint = dock3->window()->geometry().center() + QPoint(7, 7);
+    drag(fw2->titleBar(), frame2->mapToGlobal(QPoint(10, 10)), finalPoint);
 
     QVERIFY(Testing::waitForDeleted(frame1));
     QVERIFY(Testing::waitForDeleted(frame2));
