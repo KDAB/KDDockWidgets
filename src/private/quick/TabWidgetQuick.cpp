@@ -34,7 +34,7 @@ TabWidgetQuick::TabWidgetQuick(Frame *parent)
                         setCurrentDockWidget(0);
                 }
 
-                return countChanged(); });
+                Q_EMIT countChanged(); });
 }
 
 TabBar *TabWidgetQuick::tabBar() const
