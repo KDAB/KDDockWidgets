@@ -40,7 +40,8 @@
             "binaryDir": "${sourceDir}/build-clazy-qtwidgets",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "KDDockWidgets_WERROR": "ON"
+                "KDDockWidgets_WERROR": "ON",
+                "KDDockWidgets_EXAMPLES" : "OFF"
             },
             "environment": {
                 "CXX": "clazy",
@@ -54,6 +55,7 @@
             "binaryDir": "${sourceDir}/build-clazy-qtquick",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_EXAMPLES" : "OFF",
                 "KDDockWidgets_WERROR": "ON",
                 "KDDockWidgets_QTQUICK": "ON"
             },
