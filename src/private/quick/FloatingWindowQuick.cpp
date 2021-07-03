@@ -32,8 +32,8 @@ class QuickView : public QQuickView
 {
     Q_OBJECT
 public:
-    explicit QuickView(FloatingWindow *floatingWindow)
-        : QQuickView(Config::self().qmlEngine(), nullptr)
+    explicit QuickView(QQmlEngine *qmlEngine, FloatingWindow *floatingWindow)
+        : QQuickView(qmlEngine, nullptr)
         , m_floatingWindow(floatingWindow)
     {
         if (Config::self().internalFlags() & Config::InternalFlag_UseTransparentFloatingWindow)
@@ -106,14 +106,14 @@ QuickView::~QuickView() = default;
 
 FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
     : FloatingWindow(QRect(), parent)
-    , m_quickWindow(new QuickView(this))
+    , m_quickWindow(new QuickView(Config::self().qmlEngine(), this))
 {
     init();
 }
 
 FloatingWindowQuick::FloatingWindowQuick(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
     : FloatingWindow(frame, QRect(), parent)
-    , m_quickWindow(new QuickView(this))
+    , m_quickWindow(new QuickView(Config::self().qmlEngine(), this))
 {
     init();
     // For QtQuick we need to set the suggested geometry only after we have the QWindow
@@ -199,7 +199,7 @@ void FloatingWindowQuick::init()
     m_quickWindow->installEventFilter(this); // for window resizing
     maybeCreateResizeHandler();
 
-    m_visualItem = createItem(Config::self().qmlEngine(),
+    m_visualItem = createItem(m_quickWindow->engine(),
                               Config::self().frameworkWidgetFactory()->floatingWindowFilename().toString());
     Q_ASSERT(m_visualItem);
 
