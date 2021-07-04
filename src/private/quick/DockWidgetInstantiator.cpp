@@ -179,7 +179,7 @@ void DockWidgetInstantiator::componentComplete()
         return;
     }
 
-    m_dockWidget = new DockWidgetQuick(m_uniqueName);
+    m_dockWidget = new DockWidgetQuick(m_uniqueName, {}, {}, qmlEngine(this));
 
     connect(m_dockWidget, &DockWidgetQuick::titleChanged, this,
             &DockWidgetInstantiator::titleChanged);

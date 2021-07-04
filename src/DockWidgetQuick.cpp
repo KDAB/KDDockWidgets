@@ -48,9 +48,10 @@ public:
     QQmlEngine *const m_qmlEngine;
 };
 
-DockWidgetQuick::DockWidgetQuick(const QString &name, Options options, LayoutSaverOptions layoutSaverOptions)
+DockWidgetQuick::DockWidgetQuick(const QString &name, Options options,
+                                 LayoutSaverOptions layoutSaverOptions, QQmlEngine *engine)
     : DockWidgetBase(name, options, layoutSaverOptions)
-    , d(new Private(this, Config::self().qmlEngine()))
+    , d(new Private(this, engine ? engine : Config::self().qmlEngine()))
 {
     // To mimic what QtWidgets does when creating a new QWidget.
     setVisible(false);

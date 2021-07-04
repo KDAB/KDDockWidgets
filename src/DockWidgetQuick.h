@@ -23,6 +23,7 @@
 
 QT_BEGIN_NAMESPACE
 class QCloseEvent;
+class QQmlEngine;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
@@ -44,12 +45,16 @@ public:
      * @brief constructs a new DockWidget
      * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
      * @param options optional options controlling behaviour
+     * @param layoutSaverOptions options regarding LayoutSaver behaviour
+     * @param engine the QML engine this dock widget will be created on. If not specified then
+     * Config::self().qmlEngine() will be used
      *
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
     explicit DockWidgetQuick(const QString &uniqueName, Options options = {},
-                             LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
+                             LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions(),
+                             QQmlEngine *engine = nullptr);
 
     ///@brief destructor
     ~DockWidgetQuick() override;
