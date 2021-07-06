@@ -798,9 +798,6 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
                        << "; to" << saved->affinities;
             dw->d->affinities = saved->affinities;
         }
-
-    } else {
-        qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << saved->uniqueName;
     }
 
     return dw;

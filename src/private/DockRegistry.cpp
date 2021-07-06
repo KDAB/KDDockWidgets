@@ -408,6 +408,8 @@ DockWidgetBase *DockRegistry::dockByName(const QString &name, DockByNameFlags fl
                 m_dockWidgetIdRemapping.insert(name, dw->uniqueName());
             }
             return dw;
+        } else {
+            qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << name;
         }
     }
 
