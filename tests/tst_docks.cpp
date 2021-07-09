@@ -6919,7 +6919,7 @@ void TestDocks::tst_dragByTabBar()
     m->resize(osWindowMinWidth(), 200);
 
     dock2->addDockWidgetAsTab(dock3);
-#if KDDOCKWIDGETS_QTWIDGETS
+#if defined(KDDOCKWIDGETS_QTWIDGETS)
     if (documentMode)
         static_cast<QTabWidget *>(
             static_cast<FrameWidget *>(dock2->dptr()->frame())->tabWidget()->asWidget())

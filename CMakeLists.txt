@@ -179,7 +179,7 @@ macro(set_compiler_flags targetName)
 
   # Enable -Werror
   if(NOT MSVC AND ${PROJECT_NAME}_WERROR)
-    target_compile_options(${targetName} PRIVATE -Werror -Wno-error=deprecated-declarations)
+    target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
   endif()
 
 endmacro()
