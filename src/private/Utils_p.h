@@ -326,7 +326,7 @@ inline QRect globalGeometry(QQuickItem *item)
 inline QRect globalGeometry(QWidgetOrQuick *w)
 {
     QRect geo = w->geometry();
-    if (!w->isTopLevel())
+    if (!w->isWindow())
         geo.moveTopLeft(w->mapToGlobal(QPoint(0, 0)));
     return geo;
 }

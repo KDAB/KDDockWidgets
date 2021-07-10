@@ -90,6 +90,8 @@ public:
     void setFlag(Qt::WindowType, bool on = true);
     void setSize(QSize);
 
+    bool isTopLevel() const { return isWindow(); }
+
 protected:
     void raiseAndActivate();
     bool event(QEvent *e) override;
