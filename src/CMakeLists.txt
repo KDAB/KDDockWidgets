@@ -217,12 +217,6 @@ else()
   )
 endif()
 
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(IS_CLANG_BUILD TRUE)
-else()
-  set(IS_CLANG_BUILD FALSE)
-endif()
-
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
@@ -255,8 +249,12 @@ if (KDDockWidgets_QTQUICK)
   target_compile_definitions(kddockwidgets PUBLIC KDDOCKWIDGETS_QTQUICK)
 endif()
 
+
 if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
-  target_compile_options(kddockwidgets PRIVATE -Wshadow -fvisibility=hidden)
+  target_compile_options(kddockwidgets PRIVATE -Wshadow)
+  if (NOT MSVC)
+    target_compile_options(kddockwidgets PRIVATE -fvisibility=hidden)
+  endif()
 
   # Disable -Wconversion for Qt6. The qsizetype to int conversions are harmless
   if (NOT ${PROJECT_NAME}_QT6)

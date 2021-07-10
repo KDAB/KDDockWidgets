@@ -138,6 +138,12 @@ endif()
 
 option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(IS_CLANG_BUILD TRUE)
+else()
+  set(IS_CLANG_BUILD FALSE)
+endif()
+
 if(${PROJECT_NAME}_QT6)
   find_package(Qt6Widgets REQUIRED)
   find_package(Qt6Test REQUIRED)
