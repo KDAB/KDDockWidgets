@@ -550,9 +550,9 @@ void WidgetResizeHandler::setupWindow(QWindow *window)
 #endif // Q_OS_WIN
 }
 
+#ifdef Q_OS_WIN
 bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
 {
-#ifdef Q_OS_WIN
      switch(nativeEvent) {
      case WM_NCHITTEST:
      case WM_NCCALCSIZE:
@@ -562,11 +562,8 @@ bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
      default:
          return false;
      }
-#else
-    Q_UNUSED(nativeEvent);
-    return false;
-#endif
 }
+#endif
 
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *message,
