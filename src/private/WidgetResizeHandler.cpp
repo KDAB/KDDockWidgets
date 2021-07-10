@@ -500,7 +500,7 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
     const int y = pos.y();
     const int margin = widgetResizeHandlerMargin();
 
-    unsigned int result = CursorPosition_Undefined;
+    QFlags<CursorPosition>::Int result = CursorPosition_Undefined;
     if (qAbs(x) <= margin)
         result |= CursorPosition_Left;
     else if (qAbs(x - (mTarget->width() - margin)) <= margin)
@@ -550,7 +550,7 @@ void WidgetResizeHandler::setupWindow(QWindow *window)
 #endif // Q_OS_WIN
 }
 
-bool WidgetResizeHandler::isInterestingNativeEvent(int nativeEvent)
+bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
 {
 #ifdef Q_OS_WIN
      switch(nativeEvent) {

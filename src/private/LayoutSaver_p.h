@@ -205,7 +205,7 @@ struct LayoutSaver::Frame
     bool isNull = true;
     QString objectName;
     QRect geometry;
-    unsigned int options;
+    QFlags<FrameOption>::Int options;
     int currentTabIndex;
     QString id; // for coorelation purposes
 
