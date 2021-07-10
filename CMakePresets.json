@@ -199,6 +199,25 @@
             "environment": {
                 "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
+        },
+        {
+            "name": "dev-clangcl",
+            "displayName": "dev-clangcl",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-clangcl",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                "KDDockWidgets_FUZZER" : "ON"
+            },
+            "warnings" : {
+                "uninitialized" : true
+            },
+            "environment": {
+                "CC": "clang-cl",
+                "CXX": "clang-cl"
+            }
         }
     ],
     "buildPresets": [
