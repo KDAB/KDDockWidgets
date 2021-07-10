@@ -71,7 +71,7 @@
             "binaryDir": "${sourceDir}/build-release",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
+                "CMAKE_UNITY_BUILD" : "ON"
             }
         },
         {
@@ -82,7 +82,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_QTQUICK": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
+                "CMAKE_UNITY_BUILD" : "ON"
             }
         },
         {
@@ -107,7 +107,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_PYTHON_BINDINGS": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
+                "CMAKE_UNITY_BUILD" : "ON"
             }
         },
         {
@@ -118,7 +118,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_STATIC": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
+                "CMAKE_UNITY_BUILD" : "ON"
             }
         },
         {
@@ -130,7 +130,7 @@
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_STATIC": "ON",
                 "KDDockWidgets_QTQUICK": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON"
+                "CMAKE_UNITY_BUILD" : "ON"
             }
         },
         {
@@ -141,7 +141,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_QT6": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                "CMAKE_UNITY_BUILD" : "ON",
                 "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
             },
             "environment": {
@@ -175,7 +175,7 @@
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_QTQUICK": "ON",
                  "KDDockWidgets_QT6": "ON",
-                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                 "CMAKE_UNITY_BUILD" : "ON",
                  "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
             },
             "environment": {
