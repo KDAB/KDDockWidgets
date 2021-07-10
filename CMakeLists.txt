@@ -184,7 +184,7 @@ macro(set_compiler_flags targetName)
   endif()
 
   # Enable -Werror
-  if(NOT MSVC AND ${PROJECT_NAME}_WERROR)
+  if(${PROJECT_NAME}_WERROR AND (NOT MSVC OR IS_CLANG_BUILD)) # clang-cl accepts these too
     target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
   endif()
 
