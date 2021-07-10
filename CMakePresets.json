@@ -218,6 +218,25 @@
                 "CC": "clang-cl",
                 "CXX": "clang-cl"
             }
+        },
+        {
+            "name": "dev-qtquick-clangcl",
+            "displayName": "dev-qtquick-clangcl",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-qtquick-clangcl",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "KDDockWidgets_FUZZER" : "OFF",
+                "KDDockWidgets_QTQUICK": "ON"
+            },
+            "warnings" : {
+                "uninitialized" : true
+            },
+            "environment": {
+                "CC": "clang-cl",
+                "CXX": "clang-cl"
+            }
         }
     ],
     "buildPresets": [
