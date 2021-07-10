@@ -526,7 +526,7 @@ void WidgetResizeHandler::setupWindow(QWindow *window)
 #if defined(Q_OS_WIN)
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         const auto wid = HWND(window->winId());
-        connect(window, &QWindow::screenChanged, window, [window, wid] {
+        connect(window, &QWindow::screenChanged, window, [wid] {
             // Qt honors our frame hijacking usually... but when screen changes we must give it a
             // nudge. Otherwise what Qt thinks is the client area is not what Windows knows it is.
             // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take
