@@ -190,10 +190,10 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QTQUICK": "ON",
-                 "KDDockWidgets_QT6": "ON",
                  "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
                  "KDDockWidgets_DEVELOPER_MODE": "ON",
                  "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
+                 "KDDockWidgets_QT6": "ON",
                  "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
             },
             "environment": {
@@ -229,6 +229,47 @@
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "KDDockWidgets_FUZZER" : "OFF",
                 "KDDockWidgets_QTQUICK": "ON"
+            },
+            "warnings" : {
+                "uninitialized" : true
+            },
+            "environment": {
+                "CC": "clang-cl",
+                "CXX": "clang-cl"
+            }
+        },
+        {
+            "name": "dev-clangcl6",
+            "displayName": "dev-clangcl6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-clangcl6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "KDDockWidgets_FUZZER" : "ON",
+                "KDDockWidgets_QT6": "ON",
+                "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+            },
+            "warnings" : {
+                "uninitialized" : true
+            },
+            "environment": {
+                "CC": "clang-cl",
+                "CXX": "clang-cl"
+            }
+        },
+        {
+            "name": "dev-qtquick-clangcl6",
+            "displayName": "dev-qtquick-clangcl6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-qtquick-clangcl6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "KDDockWidgets_FUZZER" : "OFF",
+                "KDDockWidgets_QTQUICK": "ON",
+                "KDDockWidgets_QT6": "ON",
+                "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
             },
             "warnings" : {
                 "uninitialized" : true
