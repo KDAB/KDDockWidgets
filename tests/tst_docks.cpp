@@ -3014,8 +3014,13 @@ void TestDocks::tst_addToSmallMainWindow1()
 
     QCOMPARE(m->height(), mainWindowLength);
 
-    QTest::qWait(100);
-    QVERIFY(dock1->height() <= mainWindowLength);
+    QTest::qWait(300);
+    if (dock1->height() > mainWindowLength) {
+        qDebug() << "dock1->height=" << dock1->height()
+                 << "; mainWindowLength=" << mainWindowLength;
+        QVERIFY(false);
+    }
+
     QVERIFY(dock1->width() <= mainWindowLength);
 
     //Add in area:
