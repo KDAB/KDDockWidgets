@@ -46,7 +46,7 @@ AlignAfterOpenBracket: true
 AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: true
 BinPackParameters: true
-ColumnLimit: 100
+ColumnLimit: 150
 Cpp11BracedListStyle: false
 DerivePointerBinding: false
 ExperimentalAutoDetectBinPacking: false
