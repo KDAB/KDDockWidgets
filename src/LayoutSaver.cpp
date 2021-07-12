@@ -58,7 +58,7 @@
 using namespace KDDockWidgets;
 
 QHash<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
-LayoutSaver::Layout* LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
+LayoutSaver::Layout *LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
 
 
 inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
@@ -153,7 +153,7 @@ QByteArray LayoutSaver::serializeLayout() const
             layout.mainWindows.push_back(mainWindow->serialize());
     }
 
-    const QVector<KDDockWidgets::FloatingWindow*> floatingWindows = d->m_dockRegistry->floatingWindows();
+    const QVector<KDDockWidgets::FloatingWindow *> floatingWindows = d->m_dockRegistry->floatingWindows();
     layout.floatingWindows.reserve(floatingWindows.size());
     for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
         if (d->matchesAffinity(floatingWindow->affinities()))
@@ -190,7 +190,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     if (data.isEmpty())
         return true;
 
-    struct FrameCleanup {
+    struct FrameCleanup
+    {
         FrameCleanup(LayoutSaver *saver)
             : m_saver(saver)
         {
@@ -231,7 +232,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     // 1. Restore main windows
     for (const LayoutSaver::MainWindow &mw : qAsConst(layout.mainWindows)) {
         MainWindowBase *mainWindow = d->m_dockRegistry->mainWindowByName(mw.uniqueName);
-        if (!mainWindow ) {
+        if (!mainWindow) {
             if (auto mwFunc = Config::self().mainWindowFactoryFunc()) {
                 mainWindow = mwFunc(mw.uniqueName);
             } else {
@@ -331,7 +332,7 @@ void LayoutSaver::Private::clearRestoredProperty()
     }
 }
 
-template <typename T>
+template<typename T>
 void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel)
 {
     // Not simply calling QWidget::setGeometry() here.
@@ -373,7 +374,6 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainW
             }
         }
     }
-
 }
 
 void LayoutSaver::Private::deleteEmptyFrames()
@@ -437,7 +437,7 @@ bool LayoutSaver::Layout::fromJson(const QByteArray &jsonData)
 {
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(jsonData, &error);
-    if (error.error == QJsonParseError::NoError)  {
+    if (error.error == QJsonParseError::NoError) {
         fromVariantMap(doc.toVariant().toMap());
         return true;
     }
@@ -635,7 +635,7 @@ bool LayoutSaver::Frame::hasSingleDockWidget() const
 
 bool LayoutSaver::Frame::skipsRestore() const
 {
-    return std::all_of(dockWidgets.cbegin(), dockWidgets.cend(), [] (LayoutSaver::DockWidget::Ptr dw) {
+    return std::all_of(dockWidgets.cbegin(), dockWidgets.cend(), [](LayoutSaver::DockWidget::Ptr dw) {
         return dw->skipsRestore();
     });
 }
@@ -645,7 +645,7 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::Frame::singleDockWidget() const
     if (!hasSingleDockWidget())
         return {};
 
-   return dockWidgets.first();
+    return dockWidgets.first();
 }
 
 QVariantMap LayoutSaver::Frame::toVariantMap() const
@@ -761,7 +761,7 @@ bool LayoutSaver::FloatingWindow::skipsRestore() const
 
 void LayoutSaver::FloatingWindow::scaleSizes(const ScalingInfo &scalingInfo)
 {
-    scalingInfo.applyFactorsTo(/*by-ref*/geometry);
+    scalingInfo.applyFactorsTo(/*by-ref*/ geometry);
 }
 
 QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
@@ -898,7 +898,7 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::MultiSplitter::singleDockWidget() cons
 
 bool LayoutSaver::MultiSplitter::skipsRestore() const
 {
-    return std::all_of(frames.cbegin(), frames.cend(), [] (const LayoutSaver::Frame &frame) {
+    return std::all_of(frames.cbegin(), frames.cend(), [](const LayoutSaver::Frame &frame) {
         return frame.skipsRestore();
     });
 }
@@ -930,7 +930,7 @@ void LayoutSaver::MultiSplitter::fromVariantMap(const QVariantMap &map)
 
 void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)
 {
-    scalingInfo.applyFactorsTo(/*by-ref*/lastFloatingGeometry);
+    scalingInfo.applyFactorsTo(/*by-ref*/ lastFloatingGeometry);
 }
 
 QVariantMap LayoutSaver::Position::toVariantMap() const
@@ -1049,8 +1049,8 @@ void LayoutSaver::ScalingInfo::applyFactorsTo(QRect &rect) const
     QPoint pos = rect.topLeft();
     QSize size = rect.size();
 
-    applyFactorsTo(/*by-ref*/size);
-    applyFactorsTo(/*by-ref*/pos);
+    applyFactorsTo(/*by-ref*/ size);
+    applyFactorsTo(/*by-ref*/ pos);
 
     rect.moveTopLeft(pos);
     rect.setSize(size);

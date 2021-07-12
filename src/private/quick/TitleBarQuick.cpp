@@ -94,12 +94,12 @@ void TitleBarQuick::setTitleBarQmlItem(QQuickItem *item)
 
 QQuickItem *TitleBarQuick::floatButton() const
 {
-    return m_titleBarQmlItem ? m_titleBarQmlItem->property("floatButton").value<QQuickItem*>()
+    return m_titleBarQmlItem ? m_titleBarQmlItem->property("floatButton").value<QQuickItem *>()
                              : nullptr;
 }
 
 QQuickItem *TitleBarQuick::closeButton() const
 {
-    return m_titleBarQmlItem ? m_titleBarQmlItem->property("closeButton").value<QQuickItem*>()
+    return m_titleBarQmlItem ? m_titleBarQmlItem->property("closeButton").value<QQuickItem *>()
                              : nullptr;
 }

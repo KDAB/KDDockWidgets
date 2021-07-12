@@ -71,24 +71,26 @@ public:
     typedef QVector<DockWidgetBase *> List;
 
     ///@brief DockWidget options to pass at construction time
-    enum Option {
+    enum Option
+    {
         Option_None = 0, ///< No option, the default
         Option_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programatically
         Option_NotDockable = 2, ///< The DockWidget can't be docked, it's always floating
         Option_DeleteOnClose = 4 ///< Deletes the DockWidget when closed
-
     };
     Q_DECLARE_FLAGS(Options, Option)
     Q_ENUM(Options);
 
     /// @brief Options which will affect LayoutSaver save/restore
-    enum class LayoutSaverOption {
+    enum class LayoutSaverOption
+    {
         None = 0, ///< Just use the defaults
         Skip = 1, ///< The dock widget won't participate in save/restore. Currently only available for floating windows.
     };
     Q_DECLARE_FLAGS(LayoutSaverOptions, LayoutSaverOption)
 
-    enum class IconPlace {
+    enum class IconPlace
+    {
         TitleBar = 1,
         TabBar = 2,
         ToggleAction = 4,
@@ -323,7 +325,7 @@ public:
      *
      * @p names the affinity names
      */
-     void setAffinities(const QStringList &);
+    void setAffinities(const QStringList &);
 
     /// @deprecated @overload
     /// @param name the affinity name
@@ -418,7 +420,7 @@ public:
     /// @brief Returns a dock widget by its name
     /// This is the same name you passed to DockWidget CTOR.
     /// nullptr is returned if the dock widget isn't found.
-    static DockWidgetBase* byName(const QString &uniqueName);
+    static DockWidgetBase *byName(const QString &uniqueName);
 
     /// @brief Returns whether this widget has the LayoutSaverOption::Skip flag
     bool skipsRestore() const;

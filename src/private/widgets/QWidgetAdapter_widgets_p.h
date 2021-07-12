@@ -35,7 +35,7 @@ inline QWidget *parentWidget(QWidget *widget)
     return widget ? widget->parentWidget() : nullptr;
 }
 
-bool isMinimized(QWindow* widget);
+bool isMinimized(QWindow *widget);
 
 inline bool isMinimized(const QWidget *widget)
 {
@@ -90,7 +90,10 @@ public:
     void setFlag(Qt::WindowType, bool on = true);
     void setSize(QSize);
 
-    bool isTopLevel() const { return isWindow(); }
+    bool isTopLevel() const
+    {
+        return isWindow();
+    }
 
 protected:
     void raiseAndActivate();

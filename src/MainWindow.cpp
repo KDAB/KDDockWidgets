@@ -61,8 +61,8 @@ public:
     {
         if (m_supportsAutoHide) {
             for (auto location : { SideBarLocation::North, SideBarLocation::East,
-                                   SideBarLocation::West, SideBarLocation::South}) {
-                m_sideBars.insert(location, Config::self().frameworkWidgetFactory()->createSideBar(location, mainWindow) );
+                                   SideBarLocation::West, SideBarLocation::South }) {
+                m_sideBars.insert(location, Config::self().frameworkWidgetFactory()->createSideBar(location, mainWindow));
             }
         }
 
@@ -77,12 +77,14 @@ public:
 
     MainWindow *const q;
     const bool m_supportsAutoHide;
-    QHash<SideBarLocation, SideBar*> m_sideBars;
+    QHash<SideBarLocation, SideBar *> m_sideBars;
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
 };
 
-MyCentralWidget::~MyCentralWidget() {}
+MyCentralWidget::~MyCentralWidget()
+{
+}
 
 
 MainWindow::MainWindow(const QString &name, MainWindowOptions options,

@@ -34,21 +34,21 @@ FrameQuick::FrameQuick(QWidgetAdapter *parent, FrameOptions options, int userTyp
     connect(m_tabWidget->asWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
-    connect(m_tabWidget->asWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase*)), /// clazy:exclude=old-style-connect
-            this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase*)));
+    connect(m_tabWidget->asWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)), /// clazy:exclude=old-style-connect
+            this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)));
 
     connect(this, &QWidgetAdapter::geometryUpdated, this, &Frame::layoutInvalidated);
 
     connect(this, &QWidgetAdapter::itemGeometryChanged, this, [this] {
         for (auto dw : dockWidgets()) {
-            Q_EMIT static_cast<DockWidgetQuick*>(dw)->frameGeometryChanged(QWidgetAdapter::geometry());
+            Q_EMIT static_cast<DockWidgetQuick *>(dw)->frameGeometryChanged(QWidgetAdapter::geometry());
         }
     });
 
     QQmlComponent component(Config::self().qmlEngine(),
                             Config::self().frameworkWidgetFactory()->frameFilename());
 
-    m_visualItem = static_cast<QQuickItem*>(component.create());
+    m_visualItem = static_cast<QQuickItem *>(component.create());
 
     if (!m_visualItem) {
         qWarning() << Q_FUNC_INFO << "Failed to create item" << component.errorString();

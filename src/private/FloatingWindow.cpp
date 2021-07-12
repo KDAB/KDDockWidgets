@@ -29,8 +29,8 @@
 #include <QWindow>
 
 #if defined(Q_OS_WIN)
-# include <windows.h>
-# include <dwmapi.h>
+#include <windows.h>
+#include <dwmapi.h>
 #endif
 
 using namespace KDDockWidgets;
@@ -54,7 +54,7 @@ static Qt::WindowFlags windowFlagsToUse()
     return Qt::Tool;
 }
 
-static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
+static MainWindowBase *hackFindParentHarder(Frame *frame, MainWindowBase *candidateParent)
 {
     if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows) {
         return nullptr;
@@ -91,8 +91,8 @@ static MainWindowBase* hackFindParentHarder(Frame *frame, MainWindowBase *candid
 MainWindowBase *actualParent(MainWindowBase *candidate)
 {
     return (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
-            ? nullptr
-            : candidate;
+        ? nullptr
+        : candidate;
 }
 
 FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent)
@@ -182,7 +182,7 @@ void FloatingWindow::maybeCreateResizeHandler()
 {
     if (!KDDockWidgets::usesNativeDraggingAndResizing()) {
         setFlag(Qt::FramelessWindowHint, true);
-        setWidgetResizeHandler(new WidgetResizeHandler(/*topLevel=*/ true, this));
+        setWidgetResizeHandler(new WidgetResizeHandler(/*topLevel=*/true, this));
     }
 }
 
@@ -464,7 +464,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.screenSize = screenSizeForWidget(this);
     fw.affinities = affinities();
 
-    auto mainWindow = qobject_cast<MainWindowBase*>(parentWidget());
+    auto mainWindow = qobject_cast<MainWindowBase *>(parentWidget());
     fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
                                 : -1;
 
@@ -504,7 +504,7 @@ bool FloatingWindow::event(QEvent *ev)
 bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::Option option) const
 {
     const Frame::List frames = this->frames();
-    return std::all_of(frames.begin(), frames.end(), [option] (Frame *frame) {
+    return std::all_of(frames.begin(), frames.end(), [option](Frame *frame) {
         return frame->allDockWidgetsHave(option);
     });
 }
@@ -512,7 +512,7 @@ bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::Option option) const
 bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::Option option) const
 {
     const Frame::List frames = this->frames();
-    return std::any_of(frames.begin(), frames.end(), [option] (Frame *frame) {
+    return std::any_of(frames.begin(), frames.end(), [option](Frame *frame) {
         return frame->anyDockWidgetsHas(option);
     });
 }
@@ -520,7 +520,7 @@ bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::Option option) const
 bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::LayoutSaverOption option) const
 {
     const Frame::List frames = this->frames();
-    return std::all_of(frames.begin(), frames.end(), [option] (Frame *frame) {
+    return std::all_of(frames.begin(), frames.end(), [option](Frame *frame) {
         return frame->allDockWidgetsHave(option);
     });
 }
@@ -528,7 +528,7 @@ bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::LayoutSaverOption option
 bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option) const
 {
     const Frame::List frames = this->frames();
-    return std::any_of(frames.begin(), frames.end(), [option] (Frame *frame) {
+    return std::any_of(frames.begin(), frames.end(), [option](Frame *frame) {
         return frame->anyDockWidgetsHas(option);
     });
 }
@@ -551,7 +551,7 @@ bool FloatingWindow::isWindow() const
 
 MainWindowBase *FloatingWindow::mainWindow() const
 {
-    return qobject_cast<MainWindowBase*>(parent());
+    return qobject_cast<MainWindowBase *>(parent());
 }
 
 QMargins FloatingWindow::contentMargins() const

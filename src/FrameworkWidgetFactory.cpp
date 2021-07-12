@@ -22,26 +22,26 @@
 #include "private/TabWidget_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "private/widgets/FrameWidget_p.h"
-# include "private/widgets/TitleBarWidget_p.h"
-# include "private/widgets/TabBarWidget_p.h"
-# include "private/widgets/SideBarWidget_p.h"
-# include "private/widgets/TabWidgetWidget_p.h"
-# include "private/multisplitter/Separator_qwidget.h"
-# include "private/widgets/FloatingWindowWidget_p.h"
-# include "private/indicators/SegmentedIndicators_p.h"
+#include "private/widgets/FrameWidget_p.h"
+#include "private/widgets/TitleBarWidget_p.h"
+#include "private/widgets/TabBarWidget_p.h"
+#include "private/widgets/SideBarWidget_p.h"
+#include "private/widgets/TabWidgetWidget_p.h"
+#include "private/multisplitter/Separator_qwidget.h"
+#include "private/widgets/FloatingWindowWidget_p.h"
+#include "private/indicators/SegmentedIndicators_p.h"
 
-# include <QRubberBand>
-# include <QToolButton>
+#include <QRubberBand>
+#include <QToolButton>
 #else
-# include "DockWidgetQuick.h"
-# include "private/quick/FrameQuick_p.h"
-# include "private/quick/TitleBarQuick_p.h"
-# include "private/quick/TabWidgetQuick_p.h"
-# include "private/quick/TabBarQuick_p.h"
-# include "private/quick/FloatingWindowQuick_p.h"
-# include "private/quick/RubberBandQuick.h"
-# include "private/multisplitter/Separator_quick.h"
+#include "DockWidgetQuick.h"
+#include "private/quick/FrameQuick_p.h"
+#include "private/quick/TitleBarQuick_p.h"
+#include "private/quick/TabWidgetQuick_p.h"
+#include "private/quick/TabBarQuick_p.h"
+#include "private/quick/FloatingWindowQuick_p.h"
+#include "private/quick/RubberBandQuick.h"
+#include "private/multisplitter/Separator_quick.h"
 #endif
 
 // clazy:excludeall=ctor-missing-parent-argument
@@ -124,7 +124,7 @@ SideBar *DefaultWidgetFactory::createSideBar(SideBarLocation loc, MainWindowBase
     return new SideBarWidget(loc, parent);
 }
 
-QAbstractButton* DefaultWidgetFactory::createTitleBarButton(QWidget *parent, TitleBarButtonType type) const
+QAbstractButton *DefaultWidgetFactory::createTitleBarButton(QWidget *parent, TitleBarButtonType type) const
 {
     if (!parent) {
         qWarning() << Q_FUNC_INFO << "Parent not provided";

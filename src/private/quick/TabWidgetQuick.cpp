@@ -174,7 +174,7 @@ bool DockWidgetModel::contains(DockWidgetBase *dw) const
 
 QHash<int, QByteArray> DockWidgetModel::roleNames() const
 {
-    return { {Role_Title, "title"} };
+    return { { Role_Title, "title" } };
 }
 
 void DockWidgetModel::emitDataChangedFor(DockWidgetBase *dw)
@@ -197,7 +197,7 @@ void DockWidgetModel::remove(DockWidgetBase *dw)
             // can happen if there's reentrancy. Some user code reacting
             // to the signals and call remove for whatever reason.
             qWarning() << Q_FUNC_INFO << "Nothing to remove"
-                       << static_cast<void*>(dw); // Print address only, as it might be deleted already
+                       << static_cast<void *>(dw); // Print address only, as it might be deleted already
         }
     } else {
         const auto connections = m_connections.take(dw);
@@ -214,7 +214,7 @@ void DockWidgetModel::remove(DockWidgetBase *dw)
 
 int DockWidgetModel::indexOf(const DockWidgetBase *dw)
 {
-    return m_dockWidgets.indexOf(const_cast<DockWidgetBase*>(dw));
+    return m_dockWidgets.indexOf(const_cast<DockWidgetBase *>(dw));
 }
 
 bool DockWidgetModel::insert(DockWidgetBase *dw, int index)

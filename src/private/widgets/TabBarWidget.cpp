@@ -31,7 +31,8 @@ namespace { // anonymous namespace to silence -Wweak-vtables
 class MyProxy : public QProxyStyle
 {
 public:
-    MyProxy() : QProxyStyle(qApp->style())
+    MyProxy()
+        : QProxyStyle(qApp->style())
     {
         setParent(qApp);
     }

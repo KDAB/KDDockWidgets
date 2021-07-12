@@ -156,9 +156,9 @@ void MainWindowInstantiator::componentComplete()
         return;
     }
 
-     if (DockRegistry::self()->containsMainWindow(m_uniqueName)) {
-         // MainWindow already exists
-         return;
+    if (DockRegistry::self()->containsMainWindow(m_uniqueName)) {
+        // MainWindow already exists
+        return;
     }
 
     if (m_uniqueName.isEmpty()) {

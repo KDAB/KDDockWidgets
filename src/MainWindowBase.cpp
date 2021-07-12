@@ -33,7 +33,7 @@
 
 using namespace KDDockWidgets;
 
-static LayoutWidget* createLayoutWidget(MainWindowBase *mainWindow, MainWindowOptions options)
+static LayoutWidget *createLayoutWidget(MainWindowBase *mainWindow, MainWindowOptions options)
 {
     if (options & MainWindowOption_MDI)
         return new MDILayoutWidget(mainWindow);

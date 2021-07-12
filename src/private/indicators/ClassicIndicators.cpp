@@ -25,7 +25,7 @@
 
 using namespace KDDockWidgets;
 
-static IndicatorWindow* createIndicatorWindow(ClassicIndicators *classicIndicators)
+static IndicatorWindow *createIndicatorWindow(ClassicIndicators *classicIndicators)
 {
     auto window = new IndicatorWindow(classicIndicators);
     window->setObjectName(QStringLiteral("_docks_IndicatorWindow_Overlay"));
@@ -74,8 +74,8 @@ bool ClassicIndicators::tabIndicatorVisible() const
 
 bool ClassicIndicators::onResize(QSize)
 {
-     m_indicatorWindow->resize(window()->size());
-     return false;
+    m_indicatorWindow->resize(window()->size());
+    return false;
 }
 
 void ClassicIndicators::updateVisibility()
@@ -103,14 +103,12 @@ void ClassicIndicators::updateIndicatorsVisibility(bool visible)
 
     // If there's only 1 frame in the layout, the outter indicators are redundant, as they do the same thing as the internal ones.
     // But there might be another window obscuring our target, so it's useful to show the outter indicators in this case
-    m_outterIndicatorsVisible = visible && (!isTheOnlyFrame ||
-                                            DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), windowBeingDragged));
+    m_outterIndicatorsVisible = visible && (!isTheOnlyFrame || DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), windowBeingDragged));
 
 
     // Only allow to dock to center if the affinities match
     auto tabbingAllowedFunc = Config::self().tabbingAllowedFunc();
-    m_tabIndicatorVisible = m_innerIndicatorsVisible && windowBeingDragged &&
-                            DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities());
+    m_tabIndicatorVisible = m_innerIndicatorsVisible && windowBeingDragged && DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities());
     if (m_tabIndicatorVisible && tabbingAllowedFunc) {
         const DockWidgetBase::List source = windowBeingDragged->dockWidgets();
         const DockWidgetBase::List target = m_hoveredFrame->dockWidgets();
@@ -242,4 +240,3 @@ QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
 
     return localRect;
 }
-

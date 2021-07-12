@@ -40,7 +40,7 @@ QWidgetAdapter::~QWidgetAdapter()
 
 FloatingWindow *QWidgetAdapter::floatingWindow() const
 {
-    if (auto fw = qobject_cast<FloatingWindow*>(window()))
+    if (auto fw = qobject_cast<FloatingWindow *>(window()))
         return fw;
 
     return nullptr;
@@ -99,21 +99,34 @@ void QWidgetAdapter::setSize(QSize size)
     setGeometry(geo);
 }
 
-bool QWidgetAdapter::onResize(QSize) { return false; }
-void QWidgetAdapter::onLayoutRequest() {}
+bool QWidgetAdapter::onResize(QSize)
+{
+    return false;
+}
+void QWidgetAdapter::onLayoutRequest()
+{
+}
 
-void QWidgetAdapter::onMousePress() {}
-void QWidgetAdapter::onMouseMove(QPoint) {}
-void QWidgetAdapter::onMouseRelease() {}
+void QWidgetAdapter::onMousePress()
+{
+}
+void QWidgetAdapter::onMouseMove(QPoint)
+{
+}
+void QWidgetAdapter::onMouseRelease()
+{
+}
 
-void QWidgetAdapter::onCloseEvent(QCloseEvent *) {}
+void QWidgetAdapter::onCloseEvent(QCloseEvent *)
+{
+}
 
 QWidget *KDDockWidgets::Private::widgetForWindow(QWindow *window)
 {
     if (!window)
         return nullptr;
 
-    return window->property("kddockwidgets_qwidget").value<QWidget*>();
+    return window->property("kddockwidgets_qwidget").value<QWidget *>();
 }
 
 LayoutGuestWidget::~LayoutGuestWidget() = default;

@@ -128,7 +128,7 @@ FloatingWindowQuick::~FloatingWindowQuick()
         m_dropArea->setWindowIsBeingDestroyed(true);
 
     QWidgetAdapter::setParent(nullptr);
-    if (qobject_cast<QQuickView*>(m_quickWindow)) // QObject cast just to make sure the QWindow is not in ~QObject already
+    if (qobject_cast<QQuickView *>(m_quickWindow)) // QObject cast just to make sure the QWindow is not in ~QObject already
         delete m_quickWindow;
 }
 
@@ -137,9 +137,7 @@ QSize FloatingWindowQuick::minimumSize() const
     // Doesn't matter if it's not visible. We don't want the min-size to jump around. Also not so
     // easy to track as we don't have layouts
     const int margins = contentsMargins();
-    return multiSplitter()->minimumSize() +
-            QSize(0, titleBarHeight()) +
-            QSize(margins * 2, margins * 2);
+    return multiSplitter()->minimumSize() + QSize(0, titleBarHeight()) + QSize(margins * 2, margins * 2);
 }
 
 void FloatingWindowQuick::setGeometry(QRect geo)
@@ -163,7 +161,7 @@ int FloatingWindowQuick::titleBarHeight() const
 
 QWindow *FloatingWindowQuick::candidateParentWindow() const
 {
-    if (auto mainWindow = qobject_cast<MainWindowBase*>(QObject::parent())) {
+    if (auto mainWindow = qobject_cast<MainWindowBase *>(QObject::parent())) {
         return mainWindow->QQuickItem::window();
     }
 

@@ -39,7 +39,7 @@ class TitleBar;
 class DOCKS_EXPORT DockWidgetQuick : public DockWidgetBase
 {
     Q_OBJECT
-    Q_PROPERTY(QObject* actualTitleBar READ actualTitleBarObj NOTIFY actualTitleBarChanged)
+    Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarObj NOTIFY actualTitleBarChanged)
 public:
     /**
      * @brief constructs a new DockWidget

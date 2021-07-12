@@ -21,19 +21,19 @@
 #include <QMouseEvent>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-# include "private/quick/TitleBarQuick_p.h"
+#include "private/quick/TitleBarQuick_p.h"
 
-# include <QQuickItem>
-# include <QQuickView>
-# include <QGuiApplication>
+#include <QQuickItem>
+#include <QQuickView>
+#include <QGuiApplication>
 #else
-# include <QApplication>
-# include <QAbstractButton>
-# include <QLineEdit>
+#include <QApplication>
+#include <QAbstractButton>
+#include <QLineEdit>
 #endif
 
 #ifdef QT_X11EXTRAS_LIB
-# include <QtX11Extras/QX11Info>
+#include <QtX11Extras/QX11Info>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -44,7 +44,7 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-inline QQuickItem* mouseAreaForPos(QQuickItem *item, QPointF globalPos);
+inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos);
 #endif
 
 inline bool isWayland()
@@ -105,8 +105,7 @@ inline bool usesUtilityWindows()
 {
     const auto flags = Config::self().internalFlags();
 
-    const bool dontUse = (flags & Config::InternalFlag_DontUseParentForFloatingWindows) &&
-                         (flags & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows);
+    const bool dontUse = (flags & Config::InternalFlag_DontUseParentForFloatingWindows) && (flags & Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows);
 
     return !dontUse;
 }
@@ -131,8 +130,7 @@ inline void activateWindow(QWindow *window)
 
 inline bool windowManagerHasTranslucency()
 {
-    if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY") ||
-        (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))
+    if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY") || (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))
         return false;
 
 #ifdef QT_X11EXTRAS_LIB
@@ -215,12 +213,12 @@ inline int startDragDistance()
 
 /// @brief Returns the QWidget or QtQuickItem at the specified position
 /// Basically QApplication::widgetAt() but with support for QtQuick
-inline WidgetType* mouseReceiverAt(QPoint globalPos)
+inline WidgetType *mouseReceiverAt(QPoint globalPos)
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     return qApp->widgetAt(globalPos);
 #else
-    auto window = qobject_cast<QQuickWindow*>(qApp->topLevelAt(globalPos));
+    auto window = qobject_cast<QQuickWindow *>(qApp->topLevelAt(globalPos));
     if (!window)
         return nullptr;
 
@@ -238,8 +236,7 @@ inline bool inDisallowDragWidget(QPoint globalPos)
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // User might have a line edit on the toolbar. TODO: Not so elegant fix, we should make the user's tabbar implement some virtual method...
-    return qobject_cast<QAbstractButton*>(widget) ||
-           qobject_cast<QLineEdit*>(widget);
+    return qobject_cast<QAbstractButton *>(widget) || qobject_cast<QLineEdit *>(widget);
 #else
     return widget->objectName() != QLatin1String("draggableMouseArea");
 #endif
@@ -289,7 +286,7 @@ inline QPoint mapToGlobal(QQuickItem *item, QPoint p)
     return item->mapToGlobal(p).toPoint();
 }
 
-inline QQuickItem* mouseAreaForPos(QQuickItem *item, QPointF globalPos)
+inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
 {
     QRectF rect = item->boundingRect();
     rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)));
@@ -299,7 +296,7 @@ inline QQuickItem* mouseAreaForPos(QQuickItem *item, QPointF globalPos)
         return nullptr;
     }
 
-    const QList<QQuickItem*> children = item->childItems();
+    const QList<QQuickItem *> children = item->childItems();
 
     for (auto it = children.rbegin(), end = children.rend(); it != end; ++it) {
         if (QQuickItem *receiver = mouseAreaForPos(*it, globalPos))

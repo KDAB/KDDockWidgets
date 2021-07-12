@@ -34,8 +34,8 @@ class Frame;
 class TabBar;
 
 class DOCKS_EXPORT TabWidgetWidget
-        : public QTabWidget
-        , public TabWidget
+    : public QTabWidget,
+      public TabWidget
 {
     Q_OBJECT
 public:
@@ -49,6 +49,7 @@ public:
 Q_SIGNALS:
     void currentTabChanged(int index) override;
     void currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *dw) override;
+
 protected:
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
@@ -56,7 +57,7 @@ protected:
     void tabRemoved(int index) override;
     bool isPositionDraggable(QPoint p) const override;
     void setCurrentDockWidget(int index) override;
-    bool insertDockWidget(int index, DockWidgetBase *, const QIcon&, const QString &title) override;
+    bool insertDockWidget(int index, DockWidgetBase *, const QIcon &, const QString &title) override;
     void setTabBarAutoHide(bool) override;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &) override;

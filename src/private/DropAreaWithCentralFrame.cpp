@@ -27,7 +27,7 @@ DropAreaWithCentralFrame::~DropAreaWithCentralFrame()
 {
 }
 
-Frame* DropAreaWithCentralFrame::createCentralFrame(MainWindowOptions options)
+Frame *DropAreaWithCentralFrame::createCentralFrame(MainWindowOptions options)
 {
     Frame *frame = nullptr;
     if (options & MainWindowOption_HasCentralFrame) {

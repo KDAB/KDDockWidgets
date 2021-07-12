@@ -48,7 +48,7 @@ public:
      */
     FloatingWindow *floatingWindow() const
     {
-        return qobject_cast<FloatingWindow*>(q->window());
+        return qobject_cast<FloatingWindow *>(q->window());
     }
 
     MainWindowBase *mainWindow() const
@@ -59,7 +59,7 @@ public:
         // Note: Don't simply use window(), as the MainWindow might be embedded into something else
         QWidgetOrQuick *p = q->parentWidget();
         while (p) {
-            if (auto window = qobject_cast<MainWindowBase*>(p))
+            if (auto window = qobject_cast<MainWindowBase *>(p))
                 return window;
 
             if (p->isWindow())
@@ -71,7 +71,7 @@ public:
         return nullptr;
     }
 
-    SideBar* sideBar() const
+    SideBar *sideBar() const
     {
         return DockRegistry::self()->sideBarForDockWidget(q);
     }

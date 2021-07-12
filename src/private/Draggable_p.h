@@ -53,7 +53,11 @@ public:
      * Because simply inheriting from Draggable doesn't mean you can click anywhere to drag.
      * @param p is the point where the mouse press occurred
      */
-    virtual bool isPositionDraggable(QPoint p) const { Q_UNUSED(p) return true; }
+    virtual bool isPositionDraggable(QPoint p) const
+    {
+        Q_UNUSED(p)
+        return true;
+    }
 
     /**
      * @brief Returns whether a mouse move can start a drag or not.
@@ -95,7 +99,10 @@ public:
      * is approx equal to the floating window's 0,0 the discrepancy isn't noticeable, but it can
      * be if there's more window margins
      */
-    virtual QPoint mapToWindow(QPoint pos) const { return pos; }
+    virtual QPoint mapToWindow(QPoint pos) const
+    {
+        return pos;
+    }
 
 private:
     class Private;

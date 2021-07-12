@@ -60,7 +60,7 @@ class DOCKS_EXPORT MainWindowBase : public QMainWindow
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options CONSTANT)
     Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
 public:
-    typedef QVector<MainWindowBase*> List;
+    typedef QVector<MainWindowBase *> List;
     explicit MainWindowBase(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
                             WidgetType *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 
@@ -211,8 +211,11 @@ protected:
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()
     virtual QMargins centerWidgetMargins() const = 0;
-    virtual SideBar* sideBar(SideBarLocation) const = 0;
-    virtual QRect centralAreaGeometry() const { return {}; }
+    virtual SideBar *sideBar(SideBarLocation) const = 0;
+    virtual QRect centralAreaGeometry() const
+    {
+        return {};
+    }
 
 Q_SIGNALS:
     void uniqueNameChanged();

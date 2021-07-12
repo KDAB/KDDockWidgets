@@ -53,7 +53,7 @@ enum class InternalRestoreOption
 Q_DECLARE_FLAGS(InternalRestoreOptions, InternalRestoreOption)
 
 
-template <typename T>
+template<typename T>
 typename T::List fromVariantList(const QVariantList &listV)
 {
     typename T::List result;
@@ -68,7 +68,7 @@ typename T::List fromVariantList(const QVariantList &listV)
     return result;
 }
 
-template <typename T>
+template<typename T>
 QVariantList toVariantList(const typename T::List &list)
 {
     QVariantList result;
@@ -99,7 +99,8 @@ struct LayoutSaver::ScalingInfo
     ScalingInfo() = default;
     explicit ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo);
 
-    bool isValid() const {
+    bool isValid() const
+    {
         return heightFactor > 0 && widthFactor > 0 && !((qFuzzyCompare(widthFactor, 1) && qFuzzyCompare(heightFactor, 1)));
     }
 
@@ -165,7 +166,9 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
     LayoutSaver::Position lastPosition;
 
 private:
-    DockWidget() {}
+    DockWidget()
+    {
+    }
 };
 
 
@@ -248,7 +251,7 @@ struct LayoutSaver::FloatingWindow
     int parentIndex = -1;
     QRect geometry;
     int screenIndex;
-    QSize screenSize;  // for relative-size restoring
+    QSize screenSize; // for relative-size restoring
     bool isVisible = true;
 
     // The instance that was created during a restore:
@@ -275,7 +278,7 @@ public:
     QStringList affinities;
     QRect geometry;
     int screenIndex;
-    QSize screenSize;  // for relative-size restoring
+    QSize screenSize; // for relative-size restoring
     bool isVisible;
     Qt::WindowState windowState = Qt::WindowNoState;
 
@@ -300,11 +303,11 @@ struct LayoutSaver::ScreenInfo
 struct LayoutSaver::Layout
 {
 public:
-
-    Layout() {
+    Layout()
+    {
         s_currentLayoutBeingRestored = this;
 
-        const QList<QScreen*> screens = qApp->screens();
+        const QList<QScreen *> screens = qApp->screens();
         const int numScreens = screens.size();
         screenInfo.reserve(numScreens);
         for (int i = 0; i < numScreens; ++i) {
@@ -317,7 +320,8 @@ public:
         }
     }
 
-    ~Layout() {
+    ~Layout()
+    {
         s_currentLayoutBeingRestored = nullptr;
     }
 
@@ -331,7 +335,7 @@ public:
     /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(KDDockWidgets::InternalRestoreOptions);
 
-    static LayoutSaver::Layout* s_currentLayoutBeingRestored;
+    static LayoutSaver::Layout *s_currentLayoutBeingRestored;
 
     LayoutSaver::MainWindow mainWindowForIndex(int index) const;
     LayoutSaver::FloatingWindow floatingWindowForIndex(int index) const;
@@ -346,6 +350,7 @@ public:
     LayoutSaver::DockWidget::List closedDockWidgets;
     LayoutSaver::DockWidget::List allDockWidgets;
     ScreenInfo::List screenInfo;
+
 private:
     Q_DISABLE_COPY(Layout)
 };

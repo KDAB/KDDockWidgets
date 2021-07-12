@@ -59,8 +59,7 @@ bool FloatingWindowWidget::event(QEvent *ev)
 {
     if (ev->type() == QEvent::WindowStateChange) {
         Q_EMIT windowStateChanged(static_cast<QWindowStateChangeEvent *>(ev));
-    } else if (ev->type() == QEvent::NonClientAreaMouseButtonDblClick &&
-               (Config::self().flags() & Config::Flag_NativeTitleBar)) {
+    } else if (ev->type() == QEvent::NonClientAreaMouseButtonDblClick && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
         if ((windowFlags() & Qt::Tool) == Qt::Tool) {
             if (Config::self().flags() & Config::Flag_DoubleClickMaximizes) {
                 // Let's refuse to maximize Qt::Tool. It's not natural.
@@ -94,7 +93,7 @@ void FloatingWindowWidget::init()
     m_vlayout->addWidget(m_titleBar);
     m_vlayout->addWidget(m_dropArea);
 
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this] (QWindow *w) {
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](QWindow *w) {
         if (w == window()->windowHandle())
             updateMargins();
     });

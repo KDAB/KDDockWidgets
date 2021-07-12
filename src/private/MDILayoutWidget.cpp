@@ -35,7 +35,7 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialO
         return;
     }
 
-    auto frame = qobject_cast<Frame*>(dw->d->frame());
+    auto frame = qobject_cast<Frame *>(dw->d->frame());
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it. See also comment in MultiSplitter::addWidget().
         frame->QWidgetAdapter::setParent(nullptr);

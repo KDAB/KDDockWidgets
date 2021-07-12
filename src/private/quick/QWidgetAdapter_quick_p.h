@@ -42,7 +42,7 @@ class MouseEventRedirector;
 
 namespace Private {
 
-DOCKS_EXPORT QQuickItem* widgetForWindow(QWindow *window);
+DOCKS_EXPORT QQuickItem *widgetForWindow(QWindow *window);
 
 /// @brief Helper since QQuickItem::parentItem() has a different name than QWidget::parentWidget()
 inline QQuickItem *parentWidget(QQuickItem *item)
@@ -58,7 +58,7 @@ inline bool isMinimized(const QQuickItem *item)
 
 inline QRect geometry(const QQuickItem *item)
 {
-    QRect r(QPoint(0 , 0), item->size().toSize());
+    QRect r(QPoint(0, 0), item->size().toSize());
     r.moveTopLeft(QPointF(item->x(), item->y()).toPoint());
     return r;
 }
@@ -102,10 +102,22 @@ public:
 
     void setFlag(Qt::WindowType, bool on = true);
 
-    int x() const { return int(QQuickItem::x()); }
-    int y() const { return int(QQuickItem::y()); }
-    int width() const { return int(QQuickItem::width()); }
-    int height() const { return int(QQuickItem::height()); }
+    int x() const
+    {
+        return int(QQuickItem::x());
+    }
+    int y() const
+    {
+        return int(QQuickItem::y());
+    }
+    int width() const
+    {
+        return int(QQuickItem::width());
+    }
+    int height() const
+    {
+        return int(QQuickItem::height());
+    }
 
     virtual void setGeometry(QRect);
     QRect frameGeometry() const;
@@ -116,18 +128,44 @@ public:
     void setFixedHeight(int);
     void setFixedWidth(int);
     void raise();
-    void update() {}
+    void update()
+    {
+    }
 
-    QSize size() const { return QQuickItem::size().toSize(); }
-    virtual QSize minimumSizeHint() const { return minimumSize(); }
+    QSize size() const
+    {
+        return QQuickItem::size().toSize();
+    }
+    virtual QSize minimumSizeHint() const
+    {
+        return minimumSize();
+    }
     virtual QSize minimumSize() const;
     virtual QSize maximumSize() const;
-    int minimumHeight() const { return minimumSize().height(); }
-    int minimumWidth() const { return minimumSize().width(); }
-    bool hasFixedWidth() const { return false; }
-    bool hasFixedHeight() const { return false; }
-    int maximumWidth() const { return maximumSize().width(); }
-    int maximumHeight() const { return maximumSize().height(); }
+    int minimumHeight() const
+    {
+        return minimumSize().height();
+    }
+    int minimumWidth() const
+    {
+        return minimumSize().width();
+    }
+    bool hasFixedWidth() const
+    {
+        return false;
+    }
+    bool hasFixedHeight() const
+    {
+        return false;
+    }
+    int maximumWidth() const
+    {
+        return maximumSize().width();
+    }
+    int maximumHeight() const
+    {
+        return maximumSize().height();
+    }
     WId winId() const;
 
     void grabMouse();
@@ -141,7 +179,10 @@ public:
     void resize(QSize);
     void resize(int w, int h);
     bool isWindow() const;
-    bool isTopLevel() const { return isWindow(); }
+    bool isTopLevel() const
+    {
+        return isWindow();
+    }
     bool isMaximized() const;
     bool isActiveWindow() const;
     Q_INVOKABLE void showMaximized();
@@ -167,7 +208,7 @@ public:
     void move(QPoint);
     void setSize(QSize);
 
-    void setParent(QQuickItem*);
+    void setParent(QQuickItem *);
     void activateWindow();
     void setSizePolicy(QSizePolicy);
     QSizePolicy sizePolicy() const;
@@ -192,7 +233,7 @@ public:
 Q_SIGNALS:
     void geometryUpdated(); // similar to QLayout stuff, when size constraints change
     void itemGeometryChanged(); // emitted when the geometry changes. QQuickItem::geometryChanged()
-                                // isn't a signal, so prefixed item
+        // isn't a signal, so prefixed item
 
 protected:
     void create();
@@ -207,9 +248,11 @@ protected:
     virtual void onMouseRelease();
     virtual void onCloseEvent(QCloseEvent *);
     void itemChange(QQuickItem::ItemChange, const QQuickItem::ItemChangeData &) override;
+
 private:
     QSize m_sizeHint;
-    QSizePolicy m_sizePolicy = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);;
+    QSizePolicy m_sizePolicy = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ;
     Qt::WindowFlags m_windowFlags;
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;

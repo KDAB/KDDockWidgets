@@ -50,7 +50,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
 {
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
     connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, &TitleBar::updateMaximizeButton);
-    connect(m_floatingWindow, &FloatingWindow::activatedChanged , this, &TitleBar::isFocusedChanged);
+    connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, &TitleBar::isFocusedChanged);
     init();
 }
 
@@ -65,7 +65,7 @@ void TitleBar::init()
 
     updateButtons();
     QTimer::singleShot(0, this, &TitleBar::updateAutoHideButton); // have to wait after the frame is
-                                                                  // constructed
+        // constructed
 }
 
 TitleBar::~TitleBar()
@@ -193,8 +193,7 @@ void TitleBar::setIcon(const QIcon &icon)
 
 std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
 {
-    if (!isVisible() && window()->isVisible() &&
-        !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
+    if (!isVisible() && window()->isVisible() && !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
 
         // When using Flag_ShowButtonsOnTabBarIfTitleBarHidden we forward the call from the tab bar's
         // buttons to the title bar's buttons, just ot reuse logic
@@ -231,8 +230,8 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     floatingWindow->setSuggestedGeometry(r, SuggestedGeometryHint_GeometryIsFromDocked);
     floatingWindow->show();
 
-    auto draggable = KDDockWidgets::usesNativeTitleBar() ? static_cast<Draggable*>(floatingWindow)
-                                                         : static_cast<Draggable*>(this);
+    auto draggable = KDDockWidgets::usesNativeTitleBar() ? static_cast<Draggable *>(floatingWindow)
+                                                         : static_cast<Draggable *>(this);
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(floatingWindow, draggable));
 }
 
@@ -372,8 +371,8 @@ DockWidgetBase::List TitleBar::dockWidgets() const
     if (m_frame)
         return m_frame->dockWidgets();
 
-     qWarning() << "TitleBar::dockWidget: shouldn't happen";
-     return {};
+    qWarning() << "TitleBar::dockWidget: shouldn't happen";
+    return {};
 }
 
 void TitleBar::onFloatClicked()

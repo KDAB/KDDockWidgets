@@ -111,7 +111,7 @@ void Frame::onDockWidgetTitleChanged()
     updateTitleAndIcon();
 
     if (!m_inCtor) { // don't call pure virtual in ctor
-        if (auto dw = qobject_cast<DockWidgetBase*>(sender())) {
+        if (auto dw = qobject_cast<DockWidgetBase *>(sender())) {
             int index = indexOfDockWidget(dw);
             renameTab(index, dw->title());
             changeTabIcon(index, dw->icon(DockWidgetBase::IconPlace::TabBar));
@@ -182,9 +182,10 @@ void Frame::removeWidget(DockWidgetBase *dw)
     removeWidget_impl(dw);
 }
 
-FloatingWindow* Frame::detachTab(DockWidgetBase *dockWidget)
+FloatingWindow *Frame::detachTab(DockWidgetBase *dockWidget)
 {
-    if (m_inCtor || m_inDtor) return nullptr;
+    if (m_inCtor || m_inDtor)
+        return nullptr;
 
     dockWidget->d->saveTabIndex();
 
@@ -207,56 +208,64 @@ FloatingWindow* Frame::detachTab(DockWidgetBase *dockWidget)
 
 int Frame::indexOfDockWidget(const DockWidgetBase *dw)
 {
-    if (m_inCtor || m_inDtor) return -1;
+    if (m_inCtor || m_inDtor)
+        return -1;
 
     return indexOfDockWidget_impl(dw);
 }
 
 int Frame::currentIndex() const
 {
-    if (m_inCtor || m_inDtor) return -1;
+    if (m_inCtor || m_inDtor)
+        return -1;
 
     return currentIndex_impl();
 }
 
 void Frame::setCurrentTabIndex(int index)
 {
-    if (m_inCtor || m_inDtor) return;
+    if (m_inCtor || m_inDtor)
+        return;
 
     setCurrentTabIndex_impl(index);
 }
 
 void Frame::setCurrentDockWidget(DockWidgetBase *dw)
 {
-    if (m_inCtor || m_inDtor) return;
+    if (m_inCtor || m_inDtor)
+        return;
 
     setCurrentDockWidget_impl(dw);
 }
 
 void Frame::insertDockWidget(DockWidgetBase *dw, int index)
 {
-    if (m_inCtor || m_inDtor) return;
+    if (m_inCtor || m_inDtor)
+        return;
 
     insertDockWidget_impl(dw, index);
 }
 
 DockWidgetBase *Frame::dockWidgetAt(int index) const
 {
-    if (m_inCtor || m_inDtor) return nullptr;
+    if (m_inCtor || m_inDtor)
+        return nullptr;
 
     return dockWidgetAt_impl(index);
 }
 
 DockWidgetBase *Frame::currentDockWidget() const
 {
-    if (m_inCtor || m_inDtor) return nullptr;
+    if (m_inCtor || m_inDtor)
+        return nullptr;
 
     return currentDockWidget_impl();
 }
 
 int Frame::dockWidgetCount() const
 {
-    if (m_inCtor || m_inDtor) return 0;
+    if (m_inCtor || m_inDtor)
+        return 0;
 
     return m_tabWidget->numDockWidgets();
 }
@@ -409,10 +418,10 @@ FloatingWindow *Frame::floatingWindow() const
 
     auto p = QWidgetAdapter::parentWidget();
     while (p) {
-        if (qobject_cast<KDDockWidgets::MainWindowBase*>(p))
+        if (qobject_cast<KDDockWidgets::MainWindowBase *>(p))
             return nullptr;
 
-        if (auto fw = qobject_cast<FloatingWindow*>(p))
+        if (auto fw = qobject_cast<FloatingWindow *>(p))
             return fw;
 
         if (p == window()) {
@@ -488,7 +497,8 @@ void Frame::onDockWidgetShown(DockWidgetBase *w)
 {
     if (hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
         if (!QWidgetAdapter::isVisible()) {
-            qCDebug(hiding) << "Widget" << w << " was shown, we're=" << "; visible="
+            qCDebug(hiding) << "Widget" << w << " was shown, we're="
+                            << "; visible="
                             << QWidgetAdapter::isVisible();
             QWidgetAdapter::setVisible(true);
         }
@@ -576,7 +586,7 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
 
     if (m_layoutWidget) {
         if (isMDI())
-            m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/ false, this);
+            m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, this);
 
         // We keep the connect result so we don't dereference m_layoutWidget at shutdown
         m_visibleWidgetCountChangedConnection =
@@ -744,7 +754,7 @@ TabWidget *Frame::tabWidget() const
 bool Frame::allDockWidgetsHave(DockWidgetBase::Option option) const
 {
     const DockWidgetBase::List docks = dockWidgets();
-    return std::all_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {
+    return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidgetBase *dw) {
         return dw->options() & option;
     });
 }
@@ -753,7 +763,7 @@ bool Frame::allDockWidgetsHave(DockWidgetBase::Option option) const
 bool Frame::anyDockWidgetsHas(DockWidgetBase::Option option) const
 {
     const DockWidgetBase::List docks = dockWidgets();
-    return std::any_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {
+    return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidgetBase *dw) {
         return dw->options() & option;
     });
 }
@@ -761,7 +771,7 @@ bool Frame::anyDockWidgetsHas(DockWidgetBase::Option option) const
 bool Frame::allDockWidgetsHave(DockWidgetBase::LayoutSaverOption option) const
 {
     const DockWidgetBase::List docks = dockWidgets();
-    return std::all_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {
+    return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidgetBase *dw) {
         return dw->layoutSaverOptions() & option;
     });
 }
@@ -769,7 +779,7 @@ bool Frame::allDockWidgetsHave(DockWidgetBase::LayoutSaverOption option) const
 bool Frame::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option) const
 {
     const DockWidgetBase::List docks = dockWidgets();
-    return std::any_of(docks.cbegin(), docks.cend(), [option] (DockWidgetBase *dw) {
+    return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidgetBase *dw) {
         return dw->layoutSaverOptions() & option;
     });
 }
@@ -778,7 +788,7 @@ void Frame::setAllowedResizeSides(CursorPositions sides)
 {
     if (sides) {
         delete m_resizeHandler;
-        m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/ false, this);
+        m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, this);
         m_resizeHandler->setAllowedResizeSides(sides);
     } else {
         delete m_resizeHandler;

@@ -28,13 +28,12 @@
 #include <QOperatingSystemVersion>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-# include "private/quick/Helpers_p.h"
-# include <QQmlEngine>
-# include <QQmlContext>
+#include "private/quick/Helpers_p.h"
+#include <QQmlEngine>
+#include <QQmlContext>
 #endif
 
-namespace KDDockWidgets
-{
+namespace KDDockWidgets {
 
 class Config::Private
 {
@@ -80,7 +79,7 @@ Config::Config()
     Layouting::Config::self().setSeparatorFactoryFunc(separatorCreator);
 }
 
-Config& Config::self()
+Config &Config::self()
 {
     static Config config;
     return config;
@@ -99,7 +98,7 @@ Config::Flags Config::flags() const
 void Config::setFlags(Flags f)
 {
     auto dr = DockRegistry::self();
-    if (!dr->isEmpty(/*excludeBeingDeleted=*/ true)) {
+    if (!dr->isEmpty(/*excludeBeingDeleted=*/true)) {
         qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow"
                    << "; These are already created: " << dr->mainWindowsNames()
                    << dr->dockWidgetNames() << dr->floatingWindows();
@@ -153,7 +152,7 @@ int Config::separatorThickness() const
 
 void Config::setSeparatorThickness(int value)
 {
-    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/ true)) {
+    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/true)) {
         qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
         return;
     }
@@ -183,7 +182,7 @@ TabbingAllowedFunc Config::tabbingAllowedFunc() const
 
 void Config::setAbsoluteWidgetMinSize(QSize size)
 {
-    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/ false)) {
+    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
         qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
         return;
     }
@@ -198,7 +197,7 @@ QSize Config::absoluteWidgetMinSize() const
 
 void Config::setAbsoluteWidgetMaxSize(QSize size)
 {
-    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/ false)) {
+    if (!DockRegistry::self()->isEmpty(/*excludeBeingDeleted=*/false)) {
         qWarning() << Q_FUNC_INFO << "Only use this function at startup before creating any DockWidget or MainWindow";
         return;
     }

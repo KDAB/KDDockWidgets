@@ -24,7 +24,8 @@ public:
     explicit DropAreaWithCentralFrame(QWidgetOrQuick *parent = {}, MainWindowOptions options = MainWindowOption_HasCentralFrame);
     ~DropAreaWithCentralFrame();
 
-    static Frame* createCentralFrame(MainWindowOptions options);
+    static Frame *createCentralFrame(MainWindowOptions options);
+
 private:
     friend class MainWindowBase;
     Frame *const m_centralFrame = nullptr;

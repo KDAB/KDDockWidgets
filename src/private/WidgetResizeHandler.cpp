@@ -28,14 +28,14 @@
 #include <QScopedValueRollback>
 
 #if defined(Q_OS_WIN)
-# include <QtGui/private/qhighdpiscaling_p.h>
-# include <windowsx.h>
-# include <windows.h>
-# include <dwmapi.h>
-# if defined(Q_CC_MSVC)
-#  pragma comment(lib,"Dwmapi.lib")
-#  pragma comment(lib,"User32.lib")
-# endif
+#include <QtGui/private/qhighdpiscaling_p.h>
+#include <windowsx.h>
+#include <windows.h>
+#include <dwmapi.h>
+#if defined(Q_CC_MSVC)
+#pragma comment(lib, "Dwmapi.lib")
+#pragma comment(lib, "User32.lib")
+#endif
 #endif
 
 using namespace KDDockWidgets;
@@ -64,7 +64,7 @@ void WidgetResizeHandler::setResizeGap(int gap)
 
 bool WidgetResizeHandler::isMDI() const
 {
-    auto frame = qobject_cast<Frame*>(mTarget);
+    auto frame = qobject_cast<Frame *>(mTarget);
     return frame && frame->isMDI();
 }
 
@@ -83,7 +83,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     if (s_disableAllHandlers)
         return false;
 
-    auto widget = qobject_cast<QWidgetOrQuick*>(o);
+    auto widget = qobject_cast<QWidgetOrQuick *>(o);
     if (!widget)
         return false;
 
@@ -119,7 +119,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         m_resizingInProgress = false;
         if (isMDI()) {
             Q_EMIT DockRegistry::self()->frameInMDIResizeChanged();
-            auto frame = static_cast<Frame*>(mTarget);
+            auto frame = static_cast<Frame *>(mTarget);
             // Usually in KDDW all geometry changes are done in the layout items, which propagate to the widgets
             // When resizing a MDI howver, we're resizing the widget directly. So update the corresponding layout
             // item when we're finished.
@@ -334,17 +334,13 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
         RECT rect;
         GetWindowRect(reinterpret_cast<HWND>(w->winId()), &rect);
 
-        if (xPos >= rect.left && xPos <= rect.left + borderWidth &&
-                yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
+        if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMLEFT;
-        } else if (xPos < rect.right && xPos >= rect.right - borderWidth &&
-                   yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
+        } else if (xPos < rect.right && xPos >= rect.right - borderWidth && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMRIGHT;
-        } else if (xPos >= rect.left && xPos <= rect.left + borderWidth &&
-                   yPos >= rect.top && yPos <= rect.top + borderWidth && features.hasResize()) {
+        } else if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos >= rect.top && yPos <= rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPLEFT;
-        } else if (xPos <= rect.right && xPos >= rect.right - borderWidth &&
-                   yPos >= rect.top && yPos < rect.top + borderWidth && features.hasResize()) {
+        } else if (xPos <= rect.right && xPos >= rect.right - borderWidth && yPos >= rect.top && yPos < rect.top + borderWidth && features.hasResize()) {
             *result = HTTOPRIGHT;
         } else if (!hasFixedWidth && xPos >= rect.left && xPos <= rect.left + borderWidth && features.hasResize()) {
             *result = HTLEFT;
@@ -360,7 +356,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
             const QRect htCaptionRect = features.htCaptionRect;
             if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
                 if (!KDDockWidgets::inDisallowDragWidget(globalPosQt)) { // Just makes sure the mouse isn't over the close button, we don't allow drag in that case.
-                   *result = HTCAPTION;
+                    *result = HTCAPTION;
                 }
             }
         }
@@ -428,7 +424,7 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
     //Need for updating cursor when we change child widget
     const QObjectList children = mTarget->children();
     for (int i = 0, total = children.size(); i < total; ++i) {
-        if (auto child = qobject_cast<WidgetType*>(children.at(i))) {
+        if (auto child = qobject_cast<WidgetType *>(children.at(i))) {
 
             if (!child->testAttribute(Qt::WA_SetCursor)) {
                 child->setCursor(Qt::ArrowCursor);
@@ -553,15 +549,15 @@ void WidgetResizeHandler::setupWindow(QWindow *window)
 #ifdef Q_OS_WIN
 bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
 {
-     switch(nativeEvent) {
-     case WM_NCHITTEST:
-     case WM_NCCALCSIZE:
-     case WM_NCLBUTTONDBLCLK:
-     case WM_GETMINMAXINFO:
-         return true;
-     default:
-         return false;
-     }
+    switch (nativeEvent) {
+    case WM_NCHITTEST:
+    case WM_NCCALCSIZE:
+    case WM_NCLBUTTONDBLCLK:
+    case WM_GETMINMAXINFO:
+        return true;
+    default:
+        return false;
+    }
 }
 #endif
 

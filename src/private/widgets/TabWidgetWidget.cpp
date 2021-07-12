@@ -35,11 +35,11 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
     , TabWidget(this, parent)
     , m_tabBar(Config::self().frameworkWidgetFactory()->createTabBar(this))
 {
-    setTabBar(static_cast<QTabBar*>(m_tabBar->asWidget()));
+    setTabBar(static_cast<QTabBar *>(m_tabBar->asWidget()));
     setTabsClosable(Config::self().flags() & Config::Flag_TabsHaveCloseButton);
 
     // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user presses [x]
-    connect(this, &QTabWidget::tabCloseRequested, this, [this] (int index) {
+    connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
         if (DockWidgetBase *dw = dockwidgetAt(index)) {
             if (dw->options() & DockWidgetBase::Option_NotClosable) {
                 qWarning() << "QTabWidget::tabCloseRequested: Refusing to close dock widget with Option_NotClosable option. name=" << dw->uniqueName();
@@ -51,7 +51,7 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
         }
     });
 
-    connect(this, &QTabWidget::currentChanged, this, [this] (int index) {
+    connect(this, &QTabWidget::currentChanged, this, [this](int index) {
         onCurrentTabChanged(index);
         Q_EMIT currentTabChanged(index);
         Q_EMIT currentDockWidgetChanged(currentDockWidget());
@@ -80,7 +80,7 @@ void TabWidgetWidget::removeDockWidget(DockWidgetBase *dw)
 
 int TabWidgetWidget::indexOfDockWidget(const DockWidgetBase *dw) const
 {
-    return indexOf(const_cast<DockWidgetBase*>(dw));
+    return indexOf(const_cast<DockWidgetBase *>(dw));
 }
 
 void TabWidgetWidget::mouseDoubleClickEvent(QMouseEvent *ev)
@@ -189,7 +189,7 @@ void TabWidgetWidget::setupTabBarButtons()
     });
 
     updateMargins();
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this] (QWindow *w) {
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](QWindow *w) {
         if (w == window()->windowHandle())
             updateMargins();
     });
