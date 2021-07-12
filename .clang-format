@@ -7,6 +7,7 @@ IndentWidth: 4
 SpacesBeforeTrailingComments: 1
 TabWidth: 8
 UseTab: Never
+SortIncludes: false
 ContinuationIndentWidth: 4
 MaxEmptyLinesToKeep: 3
 BreakBeforeBinaryOperators: NonAssignment
