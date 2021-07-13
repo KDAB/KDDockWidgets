@@ -109,8 +109,8 @@ public:
      * when visible, or stays without a parent when hidden.
      */
     explicit DockWidgetBase(const QString &uniqueName,
-                            Options options = DockWidgetBase::Options(),
-                            LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
+                            Options options = KDDockWidgets::DockWidgetBase::Options(),
+                            LayoutSaverOptions layoutSaverOptions = KDDockWidgets::DockWidgetBase::LayoutSaverOptions());
 
     ///@brief destructor
     ~DockWidgetBase() override;
