@@ -217,6 +217,23 @@ else()
   )
 endif()
 
+#Generate C/C++ CamelCase forwarding headers (only public includes)
+include(ECMGenerateHeaders)
+ecm_generate_headers(camelcase_HEADERS
+  ORIGINAL
+    CAMELCASE
+  HEADER_NAMES
+    Config
+    DockWidget
+    DockWidgetBase
+    FocusScope
+    FrameworkWidgetFactory,DefaultWidgetFactory
+    LayoutSaver
+    MainWindow
+    MainWindowBase
+    MainWindowMDI
+)
+
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
@@ -248,7 +265,6 @@ endif()
 if (KDDockWidgets_QTQUICK)
   target_compile_definitions(kddockwidgets PUBLIC KDDOCKWIDGETS_QTQUICK)
 endif()
-
 
 if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   target_compile_options(kddockwidgets PRIVATE -Wshadow)
@@ -311,6 +327,7 @@ if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
   install(FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>" DESTINATION ${INSTALL_LIBRARY_DIR} CONFIGURATIONS Debug RelWithDebInfo)
 endif()
 
+install(FILES ${camelcase_HEADERS} DESTINATION include/kddockwidgets)
 install(FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION include/kddockwidgets)
 install(FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION include/kddockwidgets/private)
 install(FILES private/multisplitter/Item_p.h DESTINATION include/kddockwidgets/private/multisplitter)

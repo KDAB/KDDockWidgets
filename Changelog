@@ -23,6 +23,7 @@
     The close and float buttons will be shown directly in the tab-bar.
   - Fixes persistent central frame being invisible after closing all tabs (#220)
   - Added python bindings for the InitialOption struct (#198)
+  - Generate and install camelcase forwarding headers (public, exported classes)
 
 * v1.3.1 (7 June 2021)
   - Improve restoring layout when RestoreOption_RelativeToMainWindow is used (#171)
