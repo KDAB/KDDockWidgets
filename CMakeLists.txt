@@ -45,7 +45,7 @@
 #  Default=false
 #
 # -DKDDockWidgets_QTQUICK=[true|false]
-#  Build for QtQuick instead of QtWidgets. Experimental!
+#  Build for QtQuick instead of QtWidgets.
 #  Default=false
 #
 # -DKDDockWidgets_PYTHON_BINDINGS=[true|false]

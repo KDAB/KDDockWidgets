@@ -71,10 +71,6 @@ Screen capture
 ![Screen capture](./screencap.gif?raw=true "The docking system in action")
 
 
-Roadmap
-========
-  - QtQuick support
-
 Trying out the examples
 =======================
 A full demo that showcases most of the features lives in [examples/dockwidgets](examples/dockwidgets).
