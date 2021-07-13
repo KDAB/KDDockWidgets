@@ -22,6 +22,7 @@
   - Added Flag_ShowButtonsOnTabBarIfTitleBarHidden, which can be used when using Flag_HideTitleBarWhenTabsVisible.
     The close and float buttons will be shown directly in the tab-bar.
   - Fixes persistent central frame being invisible after closing all tabs (#220)
+  - Added python bindings for the InitialOption struct (#198)
 
 * v1.3.1 (7 June 2021)
   - Improve restoring layout when RestoreOption_RelativeToMainWindow is used (#171)
