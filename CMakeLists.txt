@@ -44,6 +44,10 @@
 #  Forces the test harness to be built.
 #  Default=false
 #
+# -DKDDockWidgets_WERROR=[true|false]
+#  Compile with the -Werror gcc/clang option (always true for developer-mode)
+#  Default=false
+#
 # -DKDDockWidgets_QTQUICK=[true|false]
 #  Build for QtQuick instead of QtWidgets.
 #  Default=false
@@ -119,6 +123,7 @@ if(${PROJECT_NAME}_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${
 endif()
 
 option(${PROJECT_NAME}_UNINSTALL "Enable the uninstall target" ON)
+option(${PROJECT_NAME}_STATIC "Build statically" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 option(${PROJECT_NAME}_DOCS "Build the API documentation" OFF)
@@ -156,9 +161,9 @@ else()
   set(KDDockWidgets_LIBRARY_QTID "")
 endif()
 
-if (${PROJECT_NAME}_QTQUICK)
-    set(CMAKE_CXX_STANDARD 17)
-    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(${PROJECT_NAME}_QTQUICK)
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 
 set(CMAKE_AUTOMOC ON)
@@ -307,6 +312,8 @@ if(${PROJECT_NAME}_DOCS)
 endif()
 
 if(${PROJECT_NAME}_UNINSTALL)
-    # Add uninstall target
-    include(ECMUninstallTarget)
+  # Add uninstall target
+  include(ECMUninstallTarget)
 endif()
+
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
