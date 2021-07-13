@@ -150,7 +150,7 @@ struct InitialOption
          * Next time you call DockWidget::show() it will be shown at that place. This avoids
          * flickering, as no show()/hide() workarounds are needed.
          */
-    const InitialVisibilityOption visibility = InitialVisibilityOption::StartVisible;
+    InitialVisibilityOption visibility = InitialVisibilityOption::StartVisible;
 
     /**
          * @brief Allows to control the size a dock widget should get when docked.
@@ -161,7 +161,7 @@ struct InitialOption
          * dock widget to the left then only the preferred width will be taken into account, as the
          * height will simply fill the whole layout.
          */
-    const QSize preferredSize;
+    QSize preferredSize;
 
 private:
     friend class Layouting::Item;
@@ -174,7 +174,7 @@ private:
     {
     }
 
-    const DefaultSizeMode sizeMode = DefaultSizeMode::Fair;
+    DefaultSizeMode sizeMode = DefaultSizeMode::Fair;
 };
 
 enum RestoreOption

@@ -106,7 +106,8 @@ class MyMainWindow(KDDockWidgets.MainWindow):
             self.m_dockwidgets.append(self.newDockWidget())
 
         # MainWindow::addDockWidget() attaches a dock widget to the main window:
-        self.addDockWidget(self.m_dockwidgets[0], KDDockWidgets.Location_OnTop)
+        initialOpts = KDDockWidgets.InitialOption(KDDockWidgets.InitialVisibilityOption.StartHidden, QtCore.QSize(500, 500))
+        self.addDockWidget(self.m_dockwidgets[0], KDDockWidgets.Location_OnBottom, None, initialOpts)
 
         # Here, for finer granularity we specify right of dockwidgets[0]:
         self.addDockWidget(self.m_dockwidgets[1], KDDockWidgets.Location_OnRight, self.m_dockwidgets[0])
