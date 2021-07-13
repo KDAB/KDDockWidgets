@@ -176,7 +176,7 @@ void FrameWidget::changeTabIcon(int index, const QIcon &icon)
     m_tabWidget->changeTabIcon(index, icon);
 }
 
-int KDDockWidgets::FrameWidget::nonContentsHeight() const
+int FrameWidget::nonContentsHeight() const
 {
     TitleBar *tb = titleBar();
     QWidget *tabBar = this->tabBar();

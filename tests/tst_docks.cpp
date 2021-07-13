@@ -7303,3 +7303,16 @@ void TestDocks::tst_restoreWithNativeTitleBar()
     QVERIFY(!dock0->d->frame()->titleBar()->isVisible());
 #endif
 }
+
+void TestDocks::tst_closeTabOfCentralFrame()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_closeTabOfCentralFrame");
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    m->addDockWidgetAsTab(dock1);
+    Frame *frame = dock1->dptr()->frame();
+    QVERIFY(frame->options() & FrameOption_IsCentralFrame);
+    QVERIFY(frame->QWidgetAdapter::isVisible());
+    dock1->close();
+    QVERIFY(frame->QWidgetAdapter::isVisible());
+}

@@ -507,7 +507,7 @@ void Frame::onDockWidgetShown(DockWidgetBase *w)
 
 void Frame::onDockWidgetHidden(DockWidgetBase *w)
 {
-    if (hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
+    if (!isCentralFrame() && hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
         if (QWidgetAdapter::isVisible()) {
             qCDebug(hiding) << "Widget" << w << " was hidden, we're="
                             << "; visible=" << QWidgetAdapter::isVisible()

@@ -148,6 +148,7 @@ private Q_SLOTS:
     void tst_placeholderCount();
     void tst_availableLengthForOrientation();
     void tst_closeShowWhenNoCentralFrame();
+    void tst_closeTabOfCentralFrame();
     void tst_setAsCurrentTab();
     void tst_placeholderDisappearsOnReadd();
     void tst_placeholdersAreRemovedProperly();
