@@ -217,7 +217,7 @@ function(ECM_GENERATE_HEADERS camelcase_forwarding_headers_var)
     endif()
 
     set(${camelcase_forwarding_headers_var} ${${camelcase_forwarding_headers_var}} PARENT_SCOPE)
-    if (NOT EGH_REQUIRED_HEADERS STREQUAL "")
+    if (EGH_REQUIRED_HEADERS)
         set(${EGH_REQUIRED_HEADERS} ${${EGH_REQUIRED_HEADERS}} ${_REQUIRED_HEADERS} PARENT_SCOPE)
     endif ()
 endfunction()
