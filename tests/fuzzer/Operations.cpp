@@ -225,7 +225,7 @@ bool HideViaDockWidgetAPI::hasParams() const
 
 void HideViaDockWidgetAPI::updateDescription()
 {
-    m_description = QStringLiteral("Hidding %1").arg(dockStr(m_dockWidgetName));
+    m_description = QStringLiteral("Hiding %1").arg(dockStr(m_dockWidgetName));
 }
 
 void HideViaDockWidgetAPI::execute_impl()

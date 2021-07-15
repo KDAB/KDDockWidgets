@@ -640,7 +640,7 @@ bool Item::checkSanity()
         }
 
         if (false && !m_guest->isVisible() && (!m_guest->parent() || m_guest->parentWidget()->isVisible())) {
-            // TODO: if guest is explicitly hidden we're not hidding the item yet
+            // TODO: if guest is explicitly hidden we're not hiding the item yet
             qWarning() << Q_FUNC_INFO << "Guest widget isn't visible" << this
                        << m_guest->asQObject();
             return false;

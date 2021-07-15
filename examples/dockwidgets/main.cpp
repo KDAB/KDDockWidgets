@@ -116,7 +116,7 @@ int main(int argc, char **argv)
     parser.addOption(closeOnlyCurrentTab);
 
     QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore", //krazy:exclude=spelling
-                                              QCoreApplication::translate("main", "DockWidget #5 wont be closed before a restore. Illustrates LayoutSaverOption::DontCloseBeforeRestore"));
+                                              QCoreApplication::translate("main", "DockWidget #5 won't be closed before a restore. Illustrates LayoutSaverOption::DontCloseBeforeRestore"));
     parser.addOption(dontCloseBeforeRestore);
 
     QCommandLineOption showButtonsInTabBarIfTitleBarHidden("show-buttons-in-tabbar-if-titlebar-hidden",

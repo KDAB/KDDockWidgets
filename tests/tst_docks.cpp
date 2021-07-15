@@ -909,7 +909,7 @@ void TestDocks::tst_complex()
 void TestDocks::tst_hoverShowsDropIndicators()
 {
     // For QtQuick on Windows, there was a bug where drop indicators wouldn't be shown if MainWindowBase
-    // wan't the root item.
+    // wasn't the root item.
 
     EnsureTopLevelsDeleted e;
     QQmlApplicationEngine engine(":/main2.qml");
@@ -1984,7 +1984,7 @@ void TestDocks::tst_availableLengthForOrientation()
 void TestDocks::tst_closeShowWhenNoCentralFrame()
 {
     EnsureTopLevelsDeleted e;
-    // Tests a crash I got when hidding and showing and no central frame
+    // Tests a crash I got when hiding and showing and no central frame
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     QPointer<DockWidgetBase> dock1 = createDockWidget("1", new QPushButton("1"));
@@ -2816,7 +2816,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
     auto fw2 = createFloatingWindow();
     fw2->move(fw->x() + fw->width() + 100, fw->y());
 
-    dragFloatingWindowTo(fw, fw2->dropArea(), DropIndicatorOverlayInterface::DropLocation_Right); // Outter right instead of Left
+    dragFloatingWindowTo(fw, fw2->dropArea(), DropIndicatorOverlayInterface::DropLocation_Right); // Outer right instead of Left
     QCOMPARE(fw2->frames().size(), 3);
     QVERIFY(fw2->dropArea()->checkSanity());
 
@@ -4974,7 +4974,7 @@ void TestDocks::tst_floatingWindowDeleted()
 {
     // Tests a case where the empty floating dock widget wouldn't be deleted
     // Doesn't repro QTBUG-83030 unfortunately, as we already have an event loop running
-    // but let's leave this here nontheless
+    // but let's leave this here nonetheless
     class MyMainWindow : public KDDockWidgets::MainWindow {
     public:
 
@@ -5463,8 +5463,8 @@ void TestDocks::tst_maximumSizePolicy()
     auto oldFw2 = dock1->window();
 
 
-    const int tollerance = 50;
-    QVERIFY(dock1->window()->height() <= maxHeight + tollerance); // +tollerance as the floating window is a bit bigger, due to margins etc.
+    const int tolerance = 50;
+    QVERIFY(dock1->window()->height() <= maxHeight + tolerance); // +tolerance as the floating window is a bit bigger, due to margins etc.
     QVERIFY(dock1->height() <= maxHeight);
 
     auto m1 = createMainWindow();
@@ -5478,7 +5478,7 @@ void TestDocks::tst_maximumSizePolicy()
     {
         WindowBeingDragged wbd1(dock1->floatingWindow());
         const QRect highlightRect = m1->multiSplitter()->rectForDrop(&wbd1, Location_OnBottom, nullptr);
-        QVERIFY(highlightRect.height() <= maxHeight + tollerance);
+        QVERIFY(highlightRect.height() <= maxHeight + tolerance);
     }
 
     // Now drop it, and check too
