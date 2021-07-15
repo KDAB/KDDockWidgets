@@ -1,0 +1,4 @@
+[codespell]
+skip = ./build-*,.git
+interactive = 3
+ignore-words-list = overlay,overlayed
