@@ -83,7 +83,7 @@ public:
 
     virtual void setLayoutItem(Item *) = 0;
 
-    // Not strickly necessary, but it's nice conveniance for kddw which is widget based.
+    // Not strickly necessary, but it's nice convenience for kddw which is widget based.
     virtual QWidget *asQWidget() const
     {
         Q_ASSERT(false); // Only wanted for QtWidgets. All other should not call this.

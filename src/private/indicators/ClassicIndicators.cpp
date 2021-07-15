@@ -101,8 +101,8 @@ void ClassicIndicators::updateIndicatorsVisibility(bool visible)
 
     WindowBeingDragged *windowBeingDragged = DragController::instance()->windowBeingDragged();
 
-    // If there's only 1 frame in the layout, the outter indicators are redundant, as they do the same thing as the internal ones.
-    // But there might be another window obscuring our target, so it's useful to show the outter indicators in this case
+    // If there's only 1 frame in the layout, the outer indicators are redundant, as they do the same thing as the internal ones.
+    // But there might be another window obscuring our target, so it's useful to show the outer indicators in this case
     m_outterIndicatorsVisible = visible && (!isTheOnlyFrame || DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), windowBeingDragged));
 
 

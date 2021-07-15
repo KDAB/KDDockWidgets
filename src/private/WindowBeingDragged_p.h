@@ -49,7 +49,7 @@ public:
     void grabMouse(bool grab);
 
     /// @brief returns whether this window being dragged contains the specified drop area
-    /// useful since we don't want to drop onto outselves.
+    /// useful since we don't want to drop onto ourselves.
     bool contains(LayoutWidget *) const;
 
     ///@brief returns the affinities of the window being dragged

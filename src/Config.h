@@ -102,7 +102,7 @@ public:
     Q_DECLARE_FLAGS(CustomizableWidgets, CustomizableWidget)
 
     ///@internal
-    ///Internal flags for addtional tunning.
+    ///Internal flags for additional tuning.
     ///@warning Not for public consumption, support will be limited.
     enum InternalFlag
     {

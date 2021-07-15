@@ -611,7 +611,7 @@ bool MainWindowBase::closeDockWidgets(bool force)
 
             // Empty frames are historically deleted later since they are triggered by mouse click
             // on the title bar, and the title bar is inside the frame.
-            // When doing it programatically we can delete immediately.
+            // When doing it programmatically we can delete immediately.
 
             delete frame;
         }
