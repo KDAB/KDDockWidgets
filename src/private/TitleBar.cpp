@@ -196,7 +196,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     if (!isVisible() && window()->isVisible() && !(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden)) {
 
         // When using Flag_ShowButtonsOnTabBarIfTitleBarHidden we forward the call from the tab bar's
-        // buttons to the title bar's buttons, just ot reuse logic
+        // buttons to the title bar's buttons, just to reuse logic
 
         qWarning() << "TitleBar::makeWindow shouldn't be called on invisible title bar"
                    << this << window()->isVisible();
@@ -217,7 +217,7 @@ std::unique_ptr<WindowBeingDragged> TitleBar::makeWindow()
     }
 
     if (FloatingWindow *fw = QWidgetAdapter::floatingWindow()) { // Already floating
-        if (m_frame->isTheOnlyFrame()) { // We dont' detach. This one drags the entire window instead.
+        if (m_frame->isTheOnlyFrame()) { // We don't detach. This one drags the entire window instead.
             qCDebug(hovering) << "TitleBar::makeWindow no detach needed";
             return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
         }

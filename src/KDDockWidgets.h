@@ -95,7 +95,7 @@ Q_ENUM_NS(InitialVisibilityOption)
      * You can pass this to MainWindowBase::addDockWidget() to give an hint of your preferred size
      * and visibility.
      *
-     * See bellow the documentation for InitialOption::visibility and InitialOption::preferredSize.
+     * See below the documentation for InitialOption::visibility and InitialOption::preferredSize.
      *
      * @sa MainWindowBase::addDockWidget()
      */

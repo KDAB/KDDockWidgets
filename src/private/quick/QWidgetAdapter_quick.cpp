@@ -476,7 +476,7 @@ QWidgetAdapter *QWidgetAdapter::parentWidget(bool includeTransient) const
 
     if (includeTransient) {
         if (QQuickView *w = quickView()) {
-            // Here we're mimicing QWidget::parentWidget(), which can return the transient parent of the QWindow.
+            // Here we're mimicking QWidget::parentWidget(), which can return the transient parent of the QWindow.
             MainWindowBase *mw = DockRegistry::self()->mainWindowForHandle(w->transientParent());
             if (mw)
                 return mw;

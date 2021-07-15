@@ -640,7 +640,7 @@ bool Item::checkSanity()
         }
 
         if (false && !m_guest->isVisible() && (!m_guest->parent() || m_guest->parentWidget()->isVisible())) {
-            // TODO: if guest is explicitly hidden we're not hidding the item yet
+            // TODO: if guest is explicitly hidden we're not hiding the item yet
             qWarning() << Q_FUNC_INFO << "Guest widget isn't visible" << this
                        << m_guest->asQObject();
             return false;
@@ -784,9 +784,9 @@ void Item::turnIntoPlaceholder()
 {
     Q_ASSERT(!isContainer());
 
-    // Turning into placeholder just means hidding it. So we can show it again in its original position.
+    // Turning into placeholder just means hiding it. So we can show it again in its original position.
     // Call removeItem() so we share the code for making the neighbours grow into the space that becomes available
-    // after hidding this one
+    // after hiding this one
     parentContainer()->removeItem(this, /*hardDelete=*/false);
 }
 
@@ -1144,7 +1144,7 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        // Check that the seprator bounds are correct. We can't always honour widget's max-size constraints, so only honour min-size
+        // Check that the separator bounds are correct. We can't always honour widget's max-size constraints, so only honour min-size
         const int separatorMinPos = minPosForSeparator_global(separator, /*honourMax=*/false);
         const int separatorMaxPos = maxPosForSeparator_global(separator, /*honourMax=*/false);
         const int separatorPos = separator->position();
@@ -2438,7 +2438,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
                     return;
 
                 if (lengthToGive < 0) {
-                    qWarning() << Q_FUNC_INFO << "Breaking infinit loop";
+                    qWarning() << Q_FUNC_INFO << "Breaking infinite loop";
                     return;
                 }
             }
@@ -2767,7 +2767,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
             return;
         }
 
-        // #2. Now shrink the neigbours by the same amount. Calculate how much to shrink from each side
+        // #2. Now shrink the neighbors by the same amount. Calculate how much to shrink from each side
         const LengthOnSide side1Length = lengthOnSide(sizes, index - 1, Side1, d->m_orientation);
         const LengthOnSide side2Length = lengthOnSide(sizes, index + 1, Side2, d->m_orientation);
 

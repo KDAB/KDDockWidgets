@@ -190,7 +190,7 @@ public:
 
     QString toolTip() const
     {
-        returm m_toolTip;
+        return m_toolTip;
     }
 
     bool enabled() const

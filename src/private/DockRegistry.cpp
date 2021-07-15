@@ -191,7 +191,7 @@ bool DockRegistry::isProbablyObscured(QWindow *window, FloatingWindow *exclude) 
             continue;
 
         if (fwWindow->geometry().intersects(geo)) {
-            // fw might be bellow, but we don't have a way to check. So be conservative and return true.
+            // fw might be below, but we don't have a way to check. So be conservative and return true.
             return true;
         }
     }

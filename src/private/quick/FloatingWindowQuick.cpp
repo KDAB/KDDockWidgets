@@ -122,7 +122,7 @@ FloatingWindowQuick::FloatingWindowQuick(Frame *frame, QRect suggestedGeometry, 
 
 FloatingWindowQuick::~FloatingWindowQuick()
 {
-    // Avoid a bunch of QML warnings and constriants being violated at destruction.
+    // Avoid a bunch of QML warnings and constraints being violated at destruction.
     // Also simply avoiding unneeded work, as QML is destroying stuff 1 by 1
     if (m_dropArea)
         m_dropArea->setWindowIsBeingDestroyed(true);
@@ -184,7 +184,7 @@ void FloatingWindowQuick::init()
 
     if (QWindow *transientParent = candidateParentWindow()) {
         m_quickWindow->setTransientParent(candidateParentWindow());
-        // This mimics the QWidget beaviour, where we not only have a transient parent but also
+        // This mimics the QWidget behaviour, where we not only have a transient parent but also
         // a parent for cleanup. Calling QWindow::setParent() here would clip it to the parent
         m_quickWindow->QObject::setParent(transientParent);
         m_quickWindow->setObjectName(QStringLiteral("Floating QWindow with parent")); // for debug

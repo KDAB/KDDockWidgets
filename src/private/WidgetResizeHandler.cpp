@@ -121,7 +121,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             Q_EMIT DockRegistry::self()->frameInMDIResizeChanged();
             auto frame = static_cast<Frame *>(mTarget);
             // Usually in KDDW all geometry changes are done in the layout items, which propagate to the widgets
-            // When resizing a MDI howver, we're resizing the widget directly. So update the corresponding layout
+            // When resizing a MDI however, we're resizing the widget directly. So update the corresponding layout
             // item when we're finished.
             frame->mdiLayoutWidget()->setDockWidgetGeometry(frame, frame->QWidgetAdapter::geometry());
         }

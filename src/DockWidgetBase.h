@@ -74,7 +74,7 @@ public:
     enum Option
     {
         Option_None = 0, ///< No option, the default
-        Option_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programatically
+        Option_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programmatically
         Option_NotDockable = 2, ///< The DockWidget can't be docked, it's always floating
         Option_DeleteOnClose = 4 ///< Deletes the DockWidget when closed
     };
@@ -243,7 +243,7 @@ public:
     /**
      * @brief returns if this dock widget is tabbed into another
      *
-     * Technically a docked DockWidget always lives in a tab widget, but from the user's prespective
+     * Technically a docked DockWidget always lives in a tab widget, but from the user's perspective
      * it's not tabbed when there's only 1 dock widget, as there are no tabs displayed. Unless
      * the frame is using Option_AlwaysShowsTabs, in which case this method will return true regardless
      * if being the single one.

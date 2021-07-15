@@ -38,7 +38,7 @@
 /**
  * Some implementation details:
  *
- * Restoring is done in two fases. From the JSON, we construct an intermediate representation,
+ * Restoring is done in two phases. From the JSON, we construct an intermediate representation,
  * which doesn't have any GUI types. Finally we then construct the GUI from the intermediate
  * representation.
  *
