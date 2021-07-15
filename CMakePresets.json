@@ -257,7 +257,8 @@
             },
             "environment": {
                 "CC": "clang-cl",
-                "CXX": "clang-cl"
+                "CXX": "clang-cl",
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
         },
         {
@@ -278,7 +279,8 @@
             },
             "environment": {
                 "CC": "clang-cl",
-                "CXX": "clang-cl"
+                "CXX": "clang-cl",
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
         }
     ],
