@@ -280,7 +280,9 @@
             "environment": {
                 "CC": "clang-cl",
                 "CXX": "clang-cl",
-                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}",
+                "QML2_IMPORT_PATH" : "$env{QT6_DIR}/imports:$env{QT6_DIR}/qml",
+                "LD_LIBRARY_PATH" : "$env{QT6_DIR}/lib"
             }
         }
     ],
