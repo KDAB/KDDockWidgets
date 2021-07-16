@@ -32,7 +32,7 @@ class KDDockWidgetsConan(ConanFile):
     }
 
     default_options = {
-        "qt_version": "qt/[>5.9.0]@kdab/stable",
+        "qt_version": "qt/[>5.12.0]@kdab/stable",
         "build_static": False,
         "build_examples": True,
         "build_tests": False,
