@@ -1,4 +1,4 @@
-* v1.4.0 (unreleased)
+* v1.4.0 (16 July 2021)
   - No longer supports Qt versions less than 5.12
   - Experimental MDI support. By using MainWindowMDI you can now have "docked" dock widgets
     which are free to be arbitrarily positioned and even overlapped inside the main window.
