@@ -179,6 +179,18 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+# Set a default build type if none was specified
+set(default_build_type "Release")
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git" OR ${PROJECT_NAME}_DEVELOPER_MODE)
+  set(default_build_type "Debug")
+endif()
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to ${default_build_type} as none was specified.")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
 # setup default install locations
 include(InstallLocation)
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
@@ -237,7 +249,7 @@ if(${PROJECT_NAME}_PYTHON_BINDINGS)
   if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC)
     message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
   endif()
- add_subdirectory(python)
+  add_subdirectory(python)
 endif()
 
 # Generate .pri file for qmake users
