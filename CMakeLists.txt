@@ -27,7 +27,7 @@
 #
 # -DKDDockWidgets_TESTS=[true|false]
 #  Build the test harness.
-#  Currently does nothing unless you also set KDDockWidgets_DEVELOPER_MODE=True
+#  Currently ignored unless you also set KDDockWidgets_DEVELOPER_MODE=True
 #  Default=false
 #
 # -DKDDockWidgets_EXAMPLES=[true|false]
@@ -36,16 +36,6 @@
 #
 # -DKDDockWidgets_DOCS=[true|false]
 #  Build the API documentation. Enables the 'docs' build target.
-#  Default=false
-#
-# -DKDDockWidgets_DEVELOPER_MODE=[true|false]
-#  Configure the build for a developer setup.
-#  Enables some features that are not geared towards end-users.
-#  Forces the test harness to be built.
-#  Default=false
-#
-# -DKDDockWidgets_WERROR=[true|false]
-#  Compile with the -Werror gcc/clang option (always true for developer-mode)
 #  Default=false
 #
 # -DKDDockWidgets_QTQUICK=[true|false]
@@ -61,6 +51,29 @@
 # -DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=[path]
 #  Set an alternative install path for Python bindings
 #  Default=CMAKE_INSTALL_PREFIX
+
+# ## DO NOT USE IF YOU ARE AN END-USER.  FOR THE DEVELOPERS ONLY!!
+## Special CMake Options for Developers
+#
+# -DKDDockWidgets_DEVELOPER_MODE=[true|false]
+#  Configure the build for a developer setup.
+#  Enables some features that are not geared towards end-users.
+#  Forces the test harness to be built.
+#  Default=false
+#
+# -DKDDockWidgets_WERROR=[true|false]
+#  Compile with the -Werror gcc/clang option (always true for developer-mode)
+#  Default=false
+#
+# -DKDDockWidgets_LINTER=[true|false]
+#  Build the layout linter.
+#  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
+#  Default=true
+#
+# -DKDDockWidgets_FUZZER=[true|false]
+#  Build the fuzzer.
+#  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
+#  Default=true
 
 cmake_minimum_required(VERSION 3.7)
 if(POLICY CMP0020)
@@ -107,7 +120,7 @@ endif()
 
 set(${PROJECT_NAME}_VERSION_MAJOR 1)
 set(${PROJECT_NAME}_VERSION_MINOR 4)
-set(${PROJECT_NAME}_VERSION_PATCH 0)
+set(${PROJECT_NAME}_VERSION_PATCH 1)
 set(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
 set(PROJECT_VERSION ${${PROJECT_NAME}_VERSION}) #PROJECT_VERSION is needed by some ECM modules
 set(${PROJECT_NAME}_SOVERSION "1.4")
@@ -117,11 +130,6 @@ include(FeatureSummary)
 option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
 option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_PYTHON_BINDINGS "Build python bindings" OFF)
-
-if(${PROJECT_NAME}_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC))
-  message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
-endif()
-
 option(${PROJECT_NAME}_UNINSTALL "Enable the uninstall target" ON)
 option(${PROJECT_NAME}_STATIC "Build statically" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
@@ -170,6 +178,18 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# Set a default build type if none was specified
+set(default_build_type "Release")
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git" OR ${PROJECT_NAME}_DEVELOPER_MODE)
+  set(default_build_type "Debug")
+endif()
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to ${default_build_type} as none was specified.")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
 
 # setup default install locations
 include(InstallLocation)
@@ -226,6 +246,9 @@ endif()
 
 add_subdirectory(src)
 if(${PROJECT_NAME}_PYTHON_BINDINGS)
+  if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC)
+    message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
+  endif()
   add_subdirectory(python)
 endif()
 

@@ -206,7 +206,7 @@
             "name": "dev-clangcl",
             "displayName": "dev-clangcl",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-clangcl",
+            "binaryDir": "${sourceDir}/build-dev-clangcl",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
@@ -225,7 +225,7 @@
             "name": "dev-qtquick-clangcl",
             "displayName": "dev-qtquick-clangcl",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-qtquick-clangcl",
+            "binaryDir": "${sourceDir}/build-dev-qtquick-clangcl",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
@@ -244,7 +244,7 @@
             "name": "dev-clangcl6",
             "displayName": "dev-clangcl6",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-clangcl6",
+            "binaryDir": "${sourceDir}/build-dev-clangcl6",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
@@ -257,14 +257,15 @@
             },
             "environment": {
                 "CC": "clang-cl",
-                "CXX": "clang-cl"
+                "CXX": "clang-cl",
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
             }
         },
         {
             "name": "dev-qtquick-clangcl6",
             "displayName": "dev-qtquick-clangcl6",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-qtquick-clangcl6",
+            "binaryDir": "${sourceDir}/build-dev-qtquick-clangcl6",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
@@ -278,7 +279,10 @@
             },
             "environment": {
                 "CC": "clang-cl",
-                "CXX": "clang-cl"
+                "CXX": "clang-cl",
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}",
+                "QML2_IMPORT_PATH" : "$env{QT6_DIR}/imports:$env{QT6_DIR}/qml",
+                "LD_LIBRARY_PATH" : "$env{QT6_DIR}/lib"
             }
         }
     ],
