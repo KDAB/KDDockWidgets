@@ -27,7 +27,7 @@
 #
 # -DKDDockWidgets_TESTS=[true|false]
 #  Build the test harness.
-#  Currently does nothing unless you also set KDDockWidgets_DEVELOPER_MODE=True
+#  Currently ignored unless you also set KDDockWidgets_DEVELOPER_MODE=True
 #  Default=false
 #
 # -DKDDockWidgets_EXAMPLES=[true|false]
@@ -36,16 +36,6 @@
 #
 # -DKDDockWidgets_DOCS=[true|false]
 #  Build the API documentation. Enables the 'docs' build target.
-#  Default=false
-#
-# -DKDDockWidgets_DEVELOPER_MODE=[true|false]
-#  Configure the build for a developer setup.
-#  Enables some features that are not geared towards end-users.
-#  Forces the test harness to be built.
-#  Default=false
-#
-# -DKDDockWidgets_WERROR=[true|false]
-#  Compile with the -Werror gcc/clang option (always true for developer-mode)
 #  Default=false
 #
 # -DKDDockWidgets_QTQUICK=[true|false]
@@ -61,6 +51,29 @@
 # -DKDDockWidgets_PYTHON_BINDINGS_INSTALL_PREFIX=[path]
 #  Set an alternative install path for Python bindings
 #  Default=CMAKE_INSTALL_PREFIX
+
+# ## DO NOT USE IF YOU ARE AN END-USER.  FOR THE DEVELOPERS ONLY!!
+## Special CMake Options for Developers
+#
+# -DKDDockWidgets_DEVELOPER_MODE=[true|false]
+#  Configure the build for a developer setup.
+#  Enables some features that are not geared towards end-users.
+#  Forces the test harness to be built.
+#  Default=false
+#
+# -DKDDockWidgets_WERROR=[true|false]
+#  Compile with the -Werror gcc/clang option (always true for developer-mode)
+#  Default=false
+#
+# -DKDDockWidgets_LINTER=[true|false]
+#  Build the layout linter.
+#  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
+#  Default=true
+#
+# -DKDDockWidgets_FUZZER=[true|false]
+#  Build the fuzzer.
+#  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
+#  Default=true
 
 cmake_minimum_required(VERSION 3.7)
 if(POLICY CMP0020)
