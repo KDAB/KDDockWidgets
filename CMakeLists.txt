@@ -130,11 +130,6 @@ include(FeatureSummary)
 option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
 option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_PYTHON_BINDINGS "Build python bindings" OFF)
-
-if(${PROJECT_NAME}_PYTHON_BINDINGS AND (CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC))
-  message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
-endif()
-
 option(${PROJECT_NAME}_UNINSTALL "Enable the uninstall target" ON)
 option(${PROJECT_NAME}_STATIC "Build statically" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
@@ -239,7 +234,10 @@ endif()
 
 add_subdirectory(src)
 if(${PROJECT_NAME}_PYTHON_BINDINGS)
-  add_subdirectory(python)
+  if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC)
+    message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
+  endif()
+ add_subdirectory(python)
 endif()
 
 # Generate .pri file for qmake users
