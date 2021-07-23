@@ -8,20 +8,25 @@
 #
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
-
-set(PYTHON_VERSION "3.7" CACHE STRING  "Use specific python version to build the project.")
-find_package(Python3 ${PYTHON_VERSION} REQUIRED COMPONENTS Interpreter Development)
+set(PYTHON_BINDING_NAMESPACE "PyKDDockWidgets")
 
 if(${PROJECT_NAME}_QT6)
-  find_package(Shiboken6 REQUIRED)
-  find_package(PySide6 ${Qt6Widgets_VERSION} EXACT REQUIRED)
-  include(PySide6ModuleBuild)
   set(PYSIDE_MAJOR_VERSION "6")
+  set(QtWidgets_VERSION ${Qt6Widgets_VERSION})
 else()
-  find_package(Shiboken2 REQUIRED)
-  find_package(PySide2 ${Qt5Widgets_VERSION} EXACT REQUIRED)
-  include(PySide2ModuleBuild)
   set(PYSIDE_MAJOR_VERSION "2")
+  set(QtWidgets_VERSION ${Qt5Widgets_VERSION})
 endif()
 
+find_package(Python3 3.7 REQUIRED COMPONENTS Interpreter Development)
+find_package(Shiboken${PYSIDE_MAJOR_VERSION} REQUIRED)
+find_package(PySide${PYSIDE_MAJOR_VERSION} ${QtWidgets_VERSION} EXACT REQUIRED)
+
+if(NOT ${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX)
+  set(${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
+endif()
+set(BINDINGS_DIR "${INSTALL_LIBRARY_DIR}/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/site-packages/${PYTHON_BINDING_NAMESPACE}")
+set(${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX "${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}/${BINDINGS_DIR}")
+
+include(PySide${PYSIDE_MAJOR_VERSION}ModuleBuild)
 add_subdirectory(PyKDDockWidgets)

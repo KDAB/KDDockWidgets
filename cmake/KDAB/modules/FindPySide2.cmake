@@ -1,10 +1,8 @@
 #
-# SPDX-FileCopyrightText: 2020-2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# SPDX-FileCopyrightText: 2019-2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 # Author: Renato Araujo Oliveira Filho <renato.araujo@kdab.com>
 #
-# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
-#
-# Contact KDAB at <info@kdab.com> for commercial licensing options.
+# SPDX-License-Identifier: BSD-3-Clause
 #
 
 #  PYSIDE_BASEDIR       - Top of the PySide2 installation
@@ -17,7 +15,7 @@
 
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
-  pkg_check_modules(PYSIDE2_PRIV QUIET pyside2)
+    pkg_check_modules(PYSIDE2_PRIV QUIET pyside2)
 endif()
 
 set(PYSIDE2_FOUND FALSE)
@@ -48,13 +46,13 @@ else()
 
     execute_process(
         COMMAND ${Python3_EXECUTABLE} -c "if True:
-           import os, sys
-           try:
-            import PySide2.QtCore as QtCore
-            print(os.path.dirname(QtCore.__file__))
-           except Exception as error:
-            print(error, file=sys.stderr)
-            exit()
+            import os, sys
+            try:
+              import PySide2.QtCore as QtCore
+              print(os.path.dirname(QtCore.__file__))
+            except Exception as error:
+              print(error, file=sys.stderr)
+              exit()
         "
         OUTPUT_VARIABLE PYSIDE2_BASEDIR
         OUTPUT_STRIP_TRAILING_WHITESPACE
@@ -64,9 +62,9 @@ else()
         set(PYSIDE_BASEDIR ${PYSIDE2_BASEDIR} CACHE PATH "Top level install of PySide2" FORCE)
         execute_process(
             COMMAND ${Python3_EXECUTABLE} -c "if True:
-               import os
-               import PySide2.QtCore as QtCore
-               print(os.path.basename(QtCore.__file__).split('.', 1)[1])
+                import os
+                import PySide2.QtCore as QtCore
+                print(os.path.basename(QtCore.__file__).split('.', 1)[1])
             "
             OUTPUT_VARIABLE PYSIDE2_SUFFIX
             OUTPUT_STRIP_TRAILING_WHITESPACE
@@ -74,9 +72,9 @@ else()
 
         execute_process(
             COMMAND ${Python3_EXECUTABLE} -c "if True:
-               import os
-               import PySide2.QtCore as QtCore
-               print(';'.join(map(str, QtCore.__version_info__)))
+                import os
+                import PySide2.QtCore as QtCore
+                print(';'.join(map(str, QtCore.__version_info__)))
             "
             OUTPUT_VARIABLE PYSIDE2_SO_VERSION
             OUTPUT_STRIP_TRAILING_WHITESPACE
@@ -88,17 +86,17 @@ else()
 
         if(NOT APPLE)
             set(PYSIDE2_SUFFIX "${PYSIDE2_SUFFIX}.${PYSIDE2_SO_MACRO_VERSION}.${PYSIDE2_SO_MICRO_VERSION}")
-          else()
+        else()
             string(REPLACE ".so" "" PYSIDE2_SUFFIX ${PYSIDE2_SUFFIX})
             set(PYSIDE2_SUFFIX "${PYSIDE2_SUFFIX}.${PYSIDE2_SO_MACRO_VERSION}.${PYSIDE2_SO_MICRO_VERSION}.dylib")
         endif()
 
         set(PYSIDE2_FOUND TRUE)
-        message(STATUS "PySide2 base dir:           ${PYSIDE2_BASEDIR}" )
+        message(STATUS "PySide2 base dir:           ${PYSIDE2_BASEDIR}")
         message(STATUS "PySide2 suffix:             ${PYSIDE2_SUFFIX}")
     endif()
 
-    if (PYSIDE2_FOUND)
+    if(PYSIDE2_FOUND)
         #PySide
         #===============================================================================
         find_path(PYSIDE_INCLUDE_DIR
@@ -108,13 +106,13 @@ else()
 
         # Platform specific library names
         if(MSVC)
-            SET(PYSIDE_LIBRARY_BASENAMES "pyside2.abi3.lib")
+            set(PYSIDE_LIBRARY_BASENAMES "pyside2.abi3.lib")
         elseif(CYGWIN)
-            SET(PYSIDE_LIBRARY_BASENAMES "")
+            set(PYSIDE_LIBRARY_BASENAMES "")
         elseif(WIN32)
-            SET(PYSIDE_LIBRARY_BASENAMES "libpyside2.${PYSIDE2_SUFFIX}")
+            set(PYSIDE_LIBRARY_BASENAMES "libpyside2.${PYSIDE2_SUFFIX}")
         else()
-            SET(PYSIDE_LIBRARY_BASENAMES "libpyside2.${PYSIDE2_SUFFIX}")
+            set(PYSIDE_LIBRARY_BASENAMES "libpyside2.${PYSIDE2_SUFFIX}")
         endif()
 
         find_file(PYSIDE_LIBRARY
@@ -138,11 +136,9 @@ if(PYSIDE2_FOUND)
     # Create PySide2 target
     add_library(PySide2::pyside2 SHARED IMPORTED GLOBAL)
     if(MSVC)
-        set_property(TARGET PySide2::pyside2 PROPERTY
-            IMPORTED_IMPLIB ${PYSIDE_LIBRARY})
+        set_property(TARGET PySide2::pyside2 PROPERTY IMPORTED_IMPLIB ${PYSIDE_LIBRARY})
     endif()
-    set_property(TARGET PySide2::pyside2 PROPERTY
-        IMPORTED_LOCATION ${PYSIDE_LIBRARY})
+    set_property(TARGET PySide2::pyside2 PROPERTY IMPORTED_LOCATION ${PYSIDE_LIBRARY})
     set_property(TARGET PySide2::pyside2 APPEND PROPERTY
         INTERFACE_INCLUDE_DIRECTORIES
         ${PYSIDE_INCLUDE_DIR}
@@ -152,7 +148,6 @@ if(PYSIDE2_FOUND)
         ${Python3_INCLUDE_DIRS}
     )
 endif()
-
 
 find_package_handle_standard_args(PySide2
     REQUIRED_VARS PYSIDE2_BASEDIR PYSIDE_INCLUDE_DIR PYSIDE_LIBRARY PYSIDE_TYPESYSTEMS

@@ -140,7 +140,6 @@ option(${PROJECT_NAME}_WERROR "Use -Werror (will be true for developer-mode unco
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/Python")
 
 #Always build the test harness in developer-mode
 if(${PROJECT_NAME}_DEVELOPER_MODE)
