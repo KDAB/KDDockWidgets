@@ -10,6 +10,17 @@
 #
 set(PYTHON_BINDING_NAMESPACE "PyKDDockWidgets")
 
+# Just to fix warnings with --warn-uninitialized
+if(NOT DEFINED SHIBOKEN_CUSTOM_PREFIX) #look for shiboken in a custom location
+  set(SHIBOKEN_CUSTOM_PREFIX "")
+endif()
+if(NOT DEFINED PYSIDE2_CUSTOM_PREFIX) #look for pyside in a custom location
+  set(PYSIDE2_CUSTOM_PREFIX "")
+endif()
+if(NOT DEFINED PYSIDE6_CUSTOM_PREFIX) #look for pyside in a custom location
+  set(PYSIDE6_CUSTOM_PREFIX "")
+endif()
+
 if(${PROJECT_NAME}_QT6)
   set(PYSIDE_MAJOR_VERSION "6")
   set(QtWidgets_VERSION ${Qt6Widgets_VERSION})
