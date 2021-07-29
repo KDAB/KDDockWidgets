@@ -14,11 +14,8 @@ set(PYTHON_BINDING_NAMESPACE "PyKDDockWidgets")
 if(NOT DEFINED SHIBOKEN_CUSTOM_PREFIX) #look for shiboken in a custom location
   set(SHIBOKEN_CUSTOM_PREFIX "")
 endif()
-if(NOT DEFINED PYSIDE2_CUSTOM_PREFIX) #look for pyside in a custom location
-  set(PYSIDE2_CUSTOM_PREFIX "")
-endif()
-if(NOT DEFINED PYSIDE6_CUSTOM_PREFIX) #look for pyside in a custom location
-  set(PYSIDE6_CUSTOM_PREFIX "")
+if(NOT DEFINED PYSIDE_CUSTOM_PREFIX) #look for pyside in a custom location
+  set(PYSIDE_CUSTOM_PREFIX "")
 endif()
 
 if(${PROJECT_NAME}_QT6)

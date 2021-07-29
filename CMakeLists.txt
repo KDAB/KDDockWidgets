@@ -106,6 +106,7 @@ include(FeatureSummary)
 option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
 option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_PYTHON_BINDINGS "Build python bindings" OFF)
+option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 option(${PROJECT_NAME}_STATIC "Build statically" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
@@ -115,21 +116,6 @@ option(${PROJECT_NAME}_WERROR "Use -Werror (will be true for developer-mode unco
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
-
-#Always build the test harness in developer-mode
-if(${PROJECT_NAME}_DEVELOPER_MODE)
-  set(${PROJECT_NAME}_TESTS ON)
-  set(${PROJECT_NAME}_WERROR ON)
-  include(ECMEnableSanitizers)
-endif()
-
-option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
-
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(IS_CLANG_BUILD TRUE)
-else()
-  set(IS_CLANG_BUILD FALSE)
-endif()
 
 if(${PROJECT_NAME}_QT6)
   find_package(Qt6Widgets REQUIRED)
@@ -144,6 +130,33 @@ else()
 endif()
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
+set(${PROJECT_NAME}_DEPS "widgets")
+if(${PROJECT_NAME}_QTQUICK)
+  find_package(Qt${QT_MAJOR_VERSION}Quick)
+  find_package(Qt${QT_MAJOR_VERSION}QuickControls2)
+  add_definitions(-DKDDOCKWIDGETS_QTQUICK)
+  set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} quick quickcontrols2")
+else()
+  add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
+endif()
+
+if(NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6)
+  set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} x11extras")
+endif()
+
+#Always build the test harness in developer-mode
+if(${PROJECT_NAME}_DEVELOPER_MODE)
+  set(${PROJECT_NAME}_TESTS ON)
+  set(${PROJECT_NAME}_WERROR ON)
+  include(ECMEnableSanitizers)
+endif()
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(IS_CLANG_BUILD TRUE)
+else()
+  set(IS_CLANG_BUILD FALSE)
+endif()
+
 if(${PROJECT_NAME}_QTQUICK)
   set(CMAKE_CXX_STANDARD 17)
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -151,18 +164,6 @@ endif()
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-
-# Set a default build type if none was specified
-set(default_build_type "Release")
-if(EXISTS "${CMAKE_SOURCE_DIR}/.git" OR ${PROJECT_NAME}_DEVELOPER_MODE)
-  set(default_build_type "Debug")
-endif()
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message(STATUS "Setting build type to ${default_build_type} as none was specified.")
-  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE STRING "Choose the type of build." FORCE)
-  # Set the possible values of build type for cmake-gui
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
-endif()
 
 macro(set_compiler_flags targetName)
   if(${PROJECT_NAME}_DEVELOPER_MODE)
@@ -181,28 +182,24 @@ macro(set_compiler_flags targetName)
   if(${PROJECT_NAME}_WERROR AND (NOT MSVC OR IS_CLANG_BUILD)) # clang-cl accepts these too
     target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
   endif()
-
 endmacro()
-
-set(${PROJECT_NAME}_DEPS "widgets")
-
-if(${PROJECT_NAME}_QTQUICK)
-  find_package(Qt${QT_MAJOR_VERSION}Quick)
-  find_package(Qt${QT_MAJOR_VERSION}QuickControls2)
-  add_definitions(-DKDDOCKWIDGETS_QTQUICK)
-  set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} quick quickcontrols2")
-else()
-  add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
-endif()
-
-if(NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6)
-  set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} x11extras")
-endif()
 
 if(${PROJECT_NAME}_STATIC)
   set(${PROJECT_NAME}_LIBRARY_MODE "STATIC")
 else()
   set(${PROJECT_NAME}_LIBRARY_MODE "SHARED")
+endif()
+
+# Set a default build type if none was specified
+set(default_build_type "Release")
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git" OR ${PROJECT_NAME}_DEVELOPER_MODE)
+  set(d efault_build_type "Debug")
+endif()
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to ${default_build_type} as none was specified.")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
 if(KDAB_INSTALL)
@@ -216,18 +213,14 @@ endif()
 # setup default install locations
 include(InstallLocation)
 
-add_subdirectory(src)
-if(${PROJECT_NAME}_PYTHON_BINDINGS)
-  if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC)
-    message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
-  endif()
+if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+  set(${PROJECT_NAME}_IS_ROOT_PROJECT TRUE)
 
   message(STATUS "Building ${PROJECT_NAME} ${${PROJECT_NAME}_VERSION} in ${CMAKE_BUILD_TYPE} mode. Installing to ${CMAKE_INSTALL_PREFIX}")
 
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
-
 
   install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
   install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
@@ -249,6 +242,7 @@ if(${PROJECT_NAME}_PYTHON_BINDINGS)
 endif()
 
 add_subdirectory(src)
+
 if(${PROJECT_NAME}_PYTHON_BINDINGS)
   if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC)
     message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
