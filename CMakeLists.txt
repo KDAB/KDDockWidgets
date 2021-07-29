@@ -83,30 +83,12 @@ if(POLICY CMP0042)
   cmake_policy(SET CMP0042 NEW)
 endif()
 
-# Just to fix warnings with --warn-uninitialized
-if(NOT DEFINED USE_DEFAULT_INSTALL_LOCATION)
-  set(USE_DEFAULT_INSTALL_LOCATION FALSE)
-endif()
-if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "")
-endif()
-if(NOT DEFINED SHIBOKEN_CUSTOM_PREFIX) #look for shiboken in a custom location
-  set(SHIBOKEN_CUSTOM_PREFIX "")
-endif()
-if(NOT DEFINED PYSIDE2_CUSTOM_PREFIX) #look for pyside in a custom location
-  set(PYSIDE2_CUSTOM_PREFIX "")
-endif()
-if(NOT DEFINED PYSIDE6_CUSTOM_PREFIX) #look for pyside in a custom location
-  set(PYSIDE6_CUSTOM_PREFIX "")
-endif()
-
-# Allow using a non-KDAB install location
-set(KDAB_INSTALL True)
-if(NOT ${USE_DEFAULT_INSTALL_LOCATION})
+# Allow using a non-KDAB install location.
+set(KDAB_INSTALL True CACHE INTERNAL "Install to default KDAB Location")
+if(DEFINED CMAKE_INSTALL_PREFIX)
   if(NOT "${CMAKE_INSTALL_PREFIX}" STREQUAL "")
-    set(KDAB_INSTALL False)
+    set(KDAB_INSTALL False CACHE INTERNAL "Install to non-KDAB Location")
   endif()
-  set(USE_DEFAULT_INSTALL_LOCATION ${KDAB_INSTALL} CACHE INTERNAL "Install to default KDAB Location" FORCE)
 endif()
 
 if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
@@ -168,6 +150,7 @@ else()
   set(QT_MAJOR_VERSION 5)
   set(KDDockWidgets_LIBRARY_QTID "")
 endif()
+include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 if(${PROJECT_NAME}_QTQUICK)
   set(CMAKE_CXX_STANDARD 17)
@@ -190,10 +173,6 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   # Set the possible values of build type for cmake-gui
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
-
-# setup default install locations
-include(InstallLocation)
-include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 macro(set_compiler_flags targetName)
   if(${PROJECT_NAME}_DEVELOPER_MODE)
@@ -236,13 +215,16 @@ else()
   set(${PROJECT_NAME}_LIBRARY_MODE "SHARED")
 endif()
 
-if(USE_DEFAULT_INSTALL_LOCATION)
+if(KDAB_INSTALL)
   if(UNIX)
-    set(CMAKE_INSTALL_PREFIX "/usr/local/KDAB/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}")
+    set(CMAKE_INSTALL_PREFIX "/usr/local/KDAB/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}" CACHE INTERNAL "Install to default KDAB Location")
   elseif(WIN32)
-    set(CMAKE_INSTALL_PREFIX "C:\\KDAB\\${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}")
+    set(CMAKE_INSTALL_PREFIX "C:\\KDAB\\${PROJECT_NAME}-$$VERSION" CACHE INTERNAL "Install to default KDAB Location")
   endif()
 endif()
+
+# setup default install locations
+include(InstallLocation)
 
 add_subdirectory(src)
 if(${PROJECT_NAME}_PYTHON_BINDINGS)
