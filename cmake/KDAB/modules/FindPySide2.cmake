@@ -101,7 +101,7 @@ else()
         #===============================================================================
         find_path(PYSIDE_INCLUDE_DIR
             pyside.h
-            PATHS ${PYSIDE2_BASEDIR}/include ${PYSIDE2_CUSTOM_PREFIX}/include/PySide2
+            PATHS ${PYSIDE2_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include/PySide2
             NO_DEFAULT_PATH)
 
         # Platform specific library names
@@ -117,12 +117,12 @@ else()
 
         find_file(PYSIDE_LIBRARY
             ${PYSIDE_LIBRARY_BASENAMES}
-            PATHS ${PYSIDE2_BASEDIR} ${PYSIDE2_CUSTOM_PREFIX}/lib
+            PATHS ${PYSIDE2_BASEDIR} ${PYSIDE_CUSTOM_PREFIX}/lib
             NO_DEFAULT_PATH)
 
         find_path(PYSIDE_TYPESYSTEMS
             typesystem_core.xml
-            PATHS ${PYSIDE2_BASEDIR}/typesystems ${PYSIDE2_CUSTOM_PREFIX}/share/PySide2/typesystems
+            PATHS ${PYSIDE2_BASEDIR}/typesystems ${PYSIDE_CUSTOM_PREFIX}/share/PySide2/typesystems
             NO_DEFAULT_PATH)
     endif()
 endif()
