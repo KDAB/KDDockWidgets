@@ -19,12 +19,6 @@
 #  Build static versions of the libraries
 #  Default=false
 #
-# -DKDDockWidgets_UNINSTALL=[true|false]
-#  Setup the uninstall target.
-#  You may want to disable the uninstall target when you are using KDDockWidgets
-#  as a submodule directly and have a custom uninstall target of your own.
-#  Default=true
-#
 # -DKDDockWidgets_TESTS=[true|false]
 #  Build the test harness.
 #  Currently ignored unless you also set KDDockWidgets_DEVELOPER_MODE=True
@@ -127,7 +121,6 @@ include(FeatureSummary)
 option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
 option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_PYTHON_BINDINGS "Build python bindings" OFF)
-option(${PROJECT_NAME}_UNINSTALL "Enable the uninstall target" ON)
 option(${PROJECT_NAME}_STATIC "Build statically" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
@@ -336,10 +329,8 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
       "Re-run cmake with the -DKDDockWidgets_DOCS=True option if you want to generate the documentation.")
   endif()
 
-  if(${PROJECT_NAME}_UNINSTALL)
-    # Add uninstall target
-    include(ECMUninstallTarget)
-  endif()
+  # Add uninstall target
+  include(ECMUninstallTarget)
 endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
