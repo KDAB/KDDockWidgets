@@ -1,30 +1,28 @@
 #
-# SPDX-FileCopyrightText: 2020-2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# SPDX-FileCopyrightText: 2019-2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 # Author: Renato Araujo Oliveira Filho <renato.araujo@kdab.com>
 #
-# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
-#
-# Contact KDAB at <info@kdab.com> for commercial licensing options.
+# SPDX-License-Identifier: BSD-3-Clause
 #
 
-if (NOT ${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX)
-    SET(${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} CACHE FILEPATH "Custom path to install python bindings.")
+if(NOT ${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX)
+    set(${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} CACHE FILEPATH "Custom path to install python bindings.")
 endif()
 
 message(STATUS "PYTHON INSTALL PREFIX ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}")
 
-if (WIN32)
+if(WIN32)
     set(PATH_SEP "\;")
 else()
     set(PATH_SEP ":")
 endif()
-if (NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 17)
-endif()
+#Qt5 requires C++14
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # On macOS, check if Qt is a framework build. This affects how include paths should be handled.
 get_target_property(QtCore_is_framework Qt5::Core FRAMEWORK)
-if (QtCore_is_framework)
+if(QtCore_is_framework)
     # Get the path to the framework dir.
     list(GET Qt5Core_INCLUDE_DIRS 0 QT_INCLUDE_DIR)
     get_filename_component(QT_FRAMEWORK_INCLUDE_DIR "${QT_INCLUDE_DIR}/../" ABSOLUTE)
@@ -46,12 +44,14 @@ endif()
 # --use-isnull-as-nb_nonzero: If a class have an isNull() const method, it will be used to compute
 #                           the value of boolean casts.
 #                           Example, QImage::isNull() will be used when on python side you do `if (myQImage)`
-set(GENERATOR_EXTRA_FLAGS --generator-set=shiboken
-                          --enable-parent-ctor-heuristic
-                          --enable-pyside-extensions
-                          --enable-return-value-heuristic
-                          --use-isnull-as-nb_nonzero
-                          -std=c++${CMAKE_CXX_STANDARD})
+set(GENERATOR_EXTRA_FLAGS
+    --generator-set=shiboken
+    --enable-parent-ctor-heuristic
+    --enable-pyside-extensions
+    --enable-return-value-heuristic
+    --use-isnull-as-nb_nonzero
+    -std=c++${CMAKE_CXX_STANDARD}
+)
 
 # 2017-04-24 The protected hack can unfortunately not be disabled, because
 # Clang does produce linker errors when we disable the hack.
@@ -62,8 +62,8 @@ if(WIN32 OR DEFINED AVOID_PROTECTED_HACK)
 endif()
 
 macro(make_path varname)
-   # accepts any number of path variables
-   string(REPLACE ";" "${PATH_SEP}" ${varname} "${ARGN}")
+    # accepts any number of path variables
+    string(REPLACE ";" "${PATH_SEP}" ${varname} "${ARGN}")
 endmacro()
 
 # Creates a PySide module target based on the arguments
@@ -84,16 +84,16 @@ endmacro()
 #             trigger if one of these files changes
 #   MODULE_OUTPUT_DIR - Where the library file should be stored
 macro(CREATE_PYTHON_BINDINGS
-        LIBRARY_NAME
-        TYPESYSTEM_PATHS
-        INCLUDE_PATHS
-        OUTPUT_SOURCES
-        TARGET_INCLUDE_DIRS
-        TARGET_LINK_LIBRARIES
-        GLOBAL_INCLUDE
-        TYPESYSTEM_XML
-        DEPENDS
-        MODULE_OUTPUT_DIR)
+    LIBRARY_NAME
+    TYPESYSTEM_PATHS
+    INCLUDE_PATHS
+    OUTPUT_SOURCES
+    TARGET_INCLUDE_DIRS
+    TARGET_LINK_LIBRARIES
+    GLOBAL_INCLUDE
+    TYPESYSTEM_XML
+    DEPENDS
+    MODULE_OUTPUT_DIR)
 
     # Transform the path separators into something shiboken understands.
     make_path(shiboken_include_dirs ${INCLUDE_PATHS})
@@ -152,5 +152,5 @@ macro(CREATE_PYTHON_BINDINGS
                 LINK_FLAGS "-undefined dynamic_lookup")
         endif()
         install(TARGETS ${TARGET_NAME}
-            LIBRARY DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}/${TARGET_NAME})
+            LIBRARY DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX})
 endmacro()
