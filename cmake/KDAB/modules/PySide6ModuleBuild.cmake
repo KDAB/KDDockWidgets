@@ -16,9 +16,9 @@ if(WIN32)
 else()
     set(PATH_SEP ":")
 endif()
-if(NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 17)
-endif()
+#Qt6 requires C++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # On macOS, check if Qt is a framework build. This affects how include paths should be handled.
 get_target_property(QtCore_is_framework Qt6::Core FRAMEWORK)

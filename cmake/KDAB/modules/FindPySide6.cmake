@@ -32,6 +32,9 @@ execute_process(
     OUTPUT_VARIABLE PYSIDE6_BASEDIR
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
+if(NOT PYSIDE6_BASEDIR)
+    message(FATAL_ERROR "The PySide6 module could not be imported. Make sure you have it installed by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\"")
+endif()
 
 if(PYSIDE6_BASEDIR)
     set(PYSIDE_BASEDIR ${PYSIDE6_BASEDIR} CACHE PATH "Top level install of PySide6" FORCE)

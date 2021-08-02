@@ -57,74 +57,73 @@ else()
         OUTPUT_VARIABLE PYSIDE2_BASEDIR
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-
-    if(PYSIDE2_BASEDIR)
-        set(PYSIDE_BASEDIR ${PYSIDE2_BASEDIR} CACHE PATH "Top level install of PySide2" FORCE)
-        execute_process(
-            COMMAND ${Python3_EXECUTABLE} -c "if True:
-                import os
-                import PySide2.QtCore as QtCore
-                print(os.path.basename(QtCore.__file__).split('.', 1)[1])
-            "
-            OUTPUT_VARIABLE PYSIDE2_SUFFIX
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-
-        execute_process(
-            COMMAND ${Python3_EXECUTABLE} -c "if True:
-                import os
-                import PySide2.QtCore as QtCore
-                print(';'.join(map(str, QtCore.__version_info__)))
-            "
-            OUTPUT_VARIABLE PYSIDE2_SO_VERSION
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-        list(GET PYSIDE2_SO_VERSION 0 PYSIDE2_SO_MACRO_VERSION)
-        list(GET PYSIDE2_SO_VERSION 1 PYSIDE2_SO_MICRO_VERSION)
-        list(GET PYSIDE2_SO_VERSION 2 PYSIDE2_SO_MINOR_VERSION)
-        string(REPLACE ";" "." PYSIDE2_SO_VERSION "${PYSIDE2_SO_VERSION}")
-
-        if(NOT APPLE)
-            set(PYSIDE2_SUFFIX "${PYSIDE2_SUFFIX}.${PYSIDE2_SO_MACRO_VERSION}.${PYSIDE2_SO_MICRO_VERSION}")
-        else()
-            string(REPLACE ".so" "" PYSIDE2_SUFFIX ${PYSIDE2_SUFFIX})
-            set(PYSIDE2_SUFFIX "${PYSIDE2_SUFFIX}.${PYSIDE2_SO_MACRO_VERSION}.${PYSIDE2_SO_MICRO_VERSION}.dylib")
-        endif()
-
-        set(PYSIDE2_FOUND TRUE)
-        message(STATUS "PySide2 base dir:           ${PYSIDE2_BASEDIR}")
-        message(STATUS "PySide2 suffix:             ${PYSIDE2_SUFFIX}")
+    if(NOT PYSIDE2_BASEDIR)
+        message(FATAL_ERROR "The PySide2 module could not be imported. Make sure you have it installed by checking the output of \"pip${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR} list\"")
     endif()
 
-    if(PYSIDE2_FOUND)
-        #PySide
-        #===============================================================================
-        find_path(PYSIDE_INCLUDE_DIR
-            pyside.h
-            PATHS ${PYSIDE2_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include/PySide2
-            NO_DEFAULT_PATH)
+    set(PYSIDE_BASEDIR ${PYSIDE2_BASEDIR} CACHE PATH "Top level install of PySide2" FORCE)
+    execute_process(
+        COMMAND ${Python3_EXECUTABLE} -c "if True:
+            import os
+            import PySide2.QtCore as QtCore
+            print(os.path.basename(QtCore.__file__).split('.', 1)[1])
+        "
+        OUTPUT_VARIABLE PYSIDE2_SUFFIX
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
 
-        # Platform specific library names
-        if(MSVC)
-            set(PYSIDE_LIBRARY_BASENAMES "pyside2.abi3.lib")
-        elseif(CYGWIN)
-            set(PYSIDE_LIBRARY_BASENAMES "")
-        elseif(WIN32)
-            set(PYSIDE_LIBRARY_BASENAMES "libpyside2.${PYSIDE2_SUFFIX}")
-        else()
-            set(PYSIDE_LIBRARY_BASENAMES "libpyside2.${PYSIDE2_SUFFIX}")
-        endif()
+    execute_process(
+        COMMAND ${Python3_EXECUTABLE} -c "if True:
+            import os
+            import PySide2.QtCore as QtCore
+            print(';'.join(map(str, QtCore.__version_info__)))
+        "
+        OUTPUT_VARIABLE PYSIDE2_SO_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    list(GET PYSIDE2_SO_VERSION 0 PYSIDE2_SO_MACRO_VERSION)
+    list(GET PYSIDE2_SO_VERSION 1 PYSIDE2_SO_MICRO_VERSION)
+    list(GET PYSIDE2_SO_VERSION 2 PYSIDE2_SO_MINOR_VERSION)
+    string(REPLACE ";" "." PYSIDE2_SO_VERSION "${PYSIDE2_SO_VERSION}")
 
-        find_file(PYSIDE_LIBRARY
-            ${PYSIDE_LIBRARY_BASENAMES}
-            PATHS ${PYSIDE2_BASEDIR} ${PYSIDE_CUSTOM_PREFIX}/lib
-            NO_DEFAULT_PATH)
-
-        find_path(PYSIDE_TYPESYSTEMS
-            typesystem_core.xml
-            PATHS ${PYSIDE2_BASEDIR}/typesystems ${PYSIDE_CUSTOM_PREFIX}/share/PySide2/typesystems
-            NO_DEFAULT_PATH)
+    if(NOT APPLE)
+        set(PYSIDE2_SUFFIX "${PYSIDE2_SUFFIX}.${PYSIDE2_SO_MACRO_VERSION}.${PYSIDE2_SO_MICRO_VERSION}")
+    else()
+        string(REPLACE ".so" "" PYSIDE2_SUFFIX ${PYSIDE2_SUFFIX})
+        set(PYSIDE2_SUFFIX "${PYSIDE2_SUFFIX}.${PYSIDE2_SO_MACRO_VERSION}.${PYSIDE2_SO_MICRO_VERSION}.dylib")
     endif()
+
+    set(PYSIDE2_FOUND TRUE)
+    message(STATUS "PySide2 base dir:           ${PYSIDE2_BASEDIR}")
+    message(STATUS "PySide2 suffix:             ${PYSIDE2_SUFFIX}")
+
+    #PySide
+    #===============================================================================
+    find_path(PYSIDE_INCLUDE_DIR
+        pyside.h
+        PATHS ${PYSIDE2_BASEDIR}/include ${PYSIDE_CUSTOM_PREFIX}/include/PySide2
+        NO_DEFAULT_PATH)
+
+    # Platform specific library names
+    if(MSVC)
+        set(PYSIDE_LIBRARY_BASENAMES "pyside2.abi3.lib")
+    elseif(CYGWIN)
+        set(PYSIDE_LIBRARY_BASENAMES "")
+    elseif(WIN32)
+        set(PYSIDE_LIBRARY_BASENAMES "libpyside2.${PYSIDE2_SUFFIX}")
+    else()
+        set(PYSIDE_LIBRARY_BASENAMES "libpyside2.${PYSIDE2_SUFFIX}")
+    endif()
+
+    find_file(PYSIDE_LIBRARY
+        ${PYSIDE_LIBRARY_BASENAMES}
+        PATHS ${PYSIDE2_BASEDIR} ${PYSIDE_CUSTOM_PREFIX}/lib
+        NO_DEFAULT_PATH)
+
+    find_path(PYSIDE_TYPESYSTEMS
+        typesystem_core.xml
+        PATHS ${PYSIDE2_BASEDIR}/typesystems ${PYSIDE_CUSTOM_PREFIX}/share/PySide2/typesystems
+        NO_DEFAULT_PATH)
 endif()
 
 if(PYSIDE2_FOUND)
