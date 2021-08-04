@@ -114,20 +114,20 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
 if(${PROJECT_NAME}_QT6)
   find_package(Qt6Widgets REQUIRED)
   find_package(Qt6Test REQUIRED)
-  set(QT_MAJOR_VERSION 6)
+  set(Qt_VERSION_MAJOR 6)
   set(KDDockWidgets_LIBRARY_QTID "-qt6")
 else()
   find_package(Qt5Widgets 5.12 REQUIRED)
   find_package(Qt5Test 5.12 REQUIRED)
-  set(QT_MAJOR_VERSION 5)
+  set(Qt_VERSION_MAJOR 5)
   set(KDDockWidgets_LIBRARY_QTID "")
 endif()
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 set(${PROJECT_NAME}_DEPS "widgets")
 if(${PROJECT_NAME}_QTQUICK)
-  find_package(Qt${QT_MAJOR_VERSION}Quick)
-  find_package(Qt${QT_MAJOR_VERSION}QuickControls2)
+  find_package(Qt${Qt_VERSION_MAJOR}Quick)
+  find_package(Qt${Qt_VERSION_MAJOR}QuickControls2)
   add_definitions(-DKDDOCKWIDGETS_QTQUICK)
   set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} quick quickcontrols2")
 else()
@@ -221,7 +221,7 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
 
   # Generate .pri file for qmake users
   #TODO: ECM does not support Qt6 yet
-  if(QT_MAJOR_VERSION EQUAL 5 AND
+  if(Qt_VERSION_MAJOR EQUAL 5 AND
     CMAKE_VERSION VERSION_GREATER "3.11.99" AND NOT CMAKE_CONFIGURATION_TYPES) # Not working with VS generator or older cmake versions
     include(ECMGeneratePriFile)
     set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})

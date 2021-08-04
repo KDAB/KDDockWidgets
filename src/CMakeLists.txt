@@ -283,16 +283,16 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
 endif()
 
 if(${PROJECT_NAME}_QTQUICK)
-  target_link_libraries(kddockwidgets PUBLIC Qt${QT_MAJOR_VERSION}::Widgets Qt${QT_MAJOR_VERSION}::Quick Qt${QT_MAJOR_VERSION}::QuickControls2)
+  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
 else()
-  target_link_libraries(kddockwidgets PUBLIC Qt${QT_MAJOR_VERSION}::Widgets)
+  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets)
 endif()
 
 if(WIN32)
-  target_link_libraries(kddockwidgets PRIVATE Qt${QT_MAJOR_VERSION}::GuiPrivate dwmapi)
+  target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate dwmapi)
 elseif(NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6)
-  find_package(Qt${QT_MAJOR_VERSION}X11Extras)
-  target_link_libraries(kddockwidgets PUBLIC Qt${QT_MAJOR_VERSION}::X11Extras)
+  find_package(Qt${Qt_VERSION_MAJOR}X11Extras)
+  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::X11Extras)
 endif()
 
 set_target_properties(kddockwidgets PROPERTIES
@@ -376,7 +376,7 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
 
   if(NOT ${PROJECT_NAME}_QTQUICK AND KDDockWidgets_LINTER) # TODO: We can support it
     add_executable(kddockwidgets_linter layoutlinter_main.cpp)
-    target_link_libraries(kddockwidgets_linter kddockwidgets Qt${QT_MAJOR_VERSION}::Widgets)
+    target_link_libraries(kddockwidgets_linter kddockwidgets Qt${Qt_VERSION_MAJOR}::Widgets)
   endif()
 
 endif()
