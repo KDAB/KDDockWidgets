@@ -20,7 +20,7 @@ endif()
 
 if(${PROJECT_NAME}_QT6)
   set(PYSIDE_MAJOR_VERSION "6")
-  set(QtWidgets_VERSION ${Qt6Widgets_VERSION})
+  set(PYTHON_BINDING_NAMESPACE "${PYTHON_BINDING_NAMESPACE}Qt${PYSIDE_MAJOR_VERSION}")  set(QtWidgets_VERSION ${Qt6Widgets_VERSION})
 else()
   set(PYSIDE_MAJOR_VERSION "2")
   set(QtWidgets_VERSION ${Qt5Widgets_VERSION})
