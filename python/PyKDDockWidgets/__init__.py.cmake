@@ -13,7 +13,7 @@ import sys
 
 __all__ = ['KDDockWidgets']
 
-# Preload PySide2 libraries to avoid missing libraries while loading KDDockWidgets
+# Preload PySide libraries to avoid missing libraries while loading KDDockWidgets
 try:
     from PySide@PYSIDE_MAJOR_VERSION@ import QtCore
     # Create a alias for PySide module so we can use a single import in source files
