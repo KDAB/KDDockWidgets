@@ -152,5 +152,5 @@ macro(CREATE_PYTHON_BINDINGS
                 LINK_FLAGS "-undefined dynamic_lookup")
         endif()
         install(TARGETS ${TARGET_NAME}
-            LIBRARY DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}/${TARGET_NAME})
+            LIBRARY DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX})
 endmacro()
