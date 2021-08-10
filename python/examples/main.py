@@ -12,7 +12,7 @@
 from PyKDDockWidgets import KDDockWidgets
 from MyMainWindow import MyMainWindow
 
-from PySide import QtWidgets, QtCore
+from PySide2 import QtWidgets, QtCore
 
 import sys
 #import rc_assets
