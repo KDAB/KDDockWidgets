@@ -363,21 +363,21 @@ ecm_setup_version(
   ${${PROJECT_NAME}_VERSION}
   VARIABLE_PREFIX KDDOCKWIDGETS
   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h"
-  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfigVersion.cmake"
+  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}ConfigVersion.cmake"
   SOVERSION ${${PROJECT_NAME}_SOVERSION}
   COMPATIBILITY AnyNewerVersion
 )
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h" DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 
 install(EXPORT kddockwidgetsTargets
-        FILE KDDockWidgetsTargets.cmake
+        FILE KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Targets.cmake
         NAMESPACE KDAB::
-        DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets
+        DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}
 )
-configure_file(KDDockWidgetsConfig.cmake.in KDDockWidgetsConfig.cmake @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfig.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgetsConfigVersion.cmake"
-        DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets
+configure_file(KDDockWidgetsConfig.cmake.in KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Config.cmake @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}Config.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}ConfigVersion.cmake"
+        DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}
 )
 
 if(${PROJECT_NAME}_DEVELOPER_MODE)
