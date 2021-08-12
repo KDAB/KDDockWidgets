@@ -74,15 +74,15 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDDockWidgets_QT6=True -DCMAKE_BUILD_TYPE=
 
 %files
 %defattr(-,root,root)
-%{_prefix}/share/doc/KDDockWidgets
+%{_prefix}/share/doc/KDDockWidgets-qt6
 %{_libdir}/libkddockwidgets-qt6.so.*
 
 %files devel
 %defattr(-,root,root,-)
-%dir %{_includedir}/kddockwidgets
-%{_includedir}/kddockwidgets/*
-%dir %{_libdir}/cmake/KDDockWidgets
-%{_libdir}/cmake/KDDockWidgets/*
+%dir %{_includedir}/kddockwidgets-qt6
+%{_includedir}/kddockwidgets-qt6/kddockwidgets/*
+%dir %{_libdir}/cmake/KDDockWidgets-qt6
+%{_libdir}/cmake/KDDockWidgets-qt6/*
 %{_libdir}/libkddockwidgets-qt6.so
 #%{_prefix}/mkspecs/modules/* ECMGeneratePriFile isn't ported to Qt6 yet
 
