@@ -173,6 +173,11 @@ endif()
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+# Default to hidden visibility for symbols
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+
 macro(set_compiler_flags targetName)
   if(${PROJECT_NAME}_DEVELOPER_MODE)
     target_compile_definitions(${targetName} PUBLIC DOCKS_DEVELOPER_MODE PRIVATE QT_FORCE_ASSERTS)
