@@ -1,6 +1,7 @@
 * v1.5.0 (unreleased)
  - Install the Python bindings to "site-packages"
  - The Python bindings for Qt6 use the "PyKDDockWidgetsQt6" namespace
+ - Co-installable with Qt6
 
 * v1.4.1 (unreleased)
  -
