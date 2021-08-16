@@ -67,3 +67,4 @@ add_custom_target(kddockwidgets-api.qch ALL DEPENDS ${DOXYGEN_OUTPUT_DIR}/qch/kd
 add_custom_target(docs DEPENDS kddockwidgets-api.qch)
 
 install(FILES ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch DESTINATION ${INSTALL_DOC_DIR})
+install(FILES ${DOXYGEN_OUTPUT_DIR}/kddockwidgets.tags DESTINATION ${CMAKE_INSTALL_DOCDIR})
