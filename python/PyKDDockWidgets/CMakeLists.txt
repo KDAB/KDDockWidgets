@@ -51,6 +51,7 @@ set(PyKDDockWidgets_target_link_libraries
     Qt${Qt_VERSION_MAJOR}::Core
     Qt${Qt_VERSION_MAJOR}::Gui
     Qt${Qt_VERSION_MAJOR}::Widgets
+    ${Python3_LIBRARIES}
 )
 
 # changes on these files should trigger a new generation
