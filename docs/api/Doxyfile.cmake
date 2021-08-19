@@ -1770,7 +1770,7 @@ LATEX_CMD_NAME         = @LATEX_COMPILER@
 # The default file is: makeindex.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-MAKEINDEX_CMD_NAME     = @MAKEINDEX_COMPILER@
+MAKEINDEX_CMD_NAME     = makeindex
 
 # The LATEX_MAKEINDEX_CMD tag can be used to specify the command name to
 # generate index for LaTeX. In case there is no backslash (\) as first character
@@ -1780,7 +1780,7 @@ MAKEINDEX_CMD_NAME     = @MAKEINDEX_COMPILER@
 # The default value is: makeindex.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-LATEX_MAKEINDEX_CMD    = @MAKEINDEX_COMPILER@
+LATEX_MAKEINDEX_CMD    = makeindex
 
 # If the COMPACT_LATEX tag is set to YES, doxygen generates more compact LaTeX
 # documents. This may be useful for small projects and may help to save some
