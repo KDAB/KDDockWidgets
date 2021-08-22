@@ -291,6 +291,10 @@ bool TabWidget::onMouseDoubleClick(QPoint localPos)
 
     Frame *frame = this->frame();
 
+    // When using MainWindowOption_HasCentralFrame. The central frame is never detachable.
+    if (frame->isCentralFrame())
+        return false;
+
     if (FloatingWindow *fw = frame->floatingWindow()) {
         if (!fw->hasSingleFrame()) {
             makeWindow();
