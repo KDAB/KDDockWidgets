@@ -56,6 +56,13 @@ public:
         return m_options & MainWindowOption_HasCentralFrame;
     }
 
+
+    void updateOverlayedDockWidgetGeometries()
+    {
+        if (m_overlayedDockWidget)
+            updateOverlayGeometry(m_overlayedDockWidget->d->frame()->QWidgetAdapter::size());
+    }
+
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
 
     QRect rectForOverlay(Frame *, SideBarLocation) const;
@@ -636,8 +643,7 @@ void MainWindowBase::setUniqueName(const QString &uniqueName)
 
 void MainWindowBase::onResized(QResizeEvent *)
 {
-    if (d->m_overlayedDockWidget)
-        d->updateOverlayGeometry(d->m_overlayedDockWidget->d->frame()->QWidgetAdapter::size());
+    d->updateOverlayedDockWidgetGeometries();
 }
 
 bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
