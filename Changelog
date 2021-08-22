@@ -1,5 +1,5 @@
 * v1.4.1 (unreleased)
- - 
+ - Fixed overlayed dock widgets being misplaced when removing a toolbar (#227)
 
 * v1.4.0 (16 July 2021)
   - No longer supports Qt versions less than 5.12

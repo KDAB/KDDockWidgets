@@ -87,6 +87,10 @@ MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWin
 
     connect(d->m_layoutWidget, &LayoutWidget::visibleWidgetCountChanged, this,
             &MainWindowBase::frameCountChanged);
+
+    connect(this, &MainWindowBase::centralWidgetResized, this, [this] {
+        d->updateOverlayedDockWidgetGeometries();
+    });
 }
 
 MainWindowBase::~MainWindowBase()
