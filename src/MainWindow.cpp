@@ -39,6 +39,7 @@ using namespace KDDockWidgets;
 namespace KDDockWidgets {
 class MyCentralWidget : public QWidget
 {
+    Q_OBJECT
 public:
     explicit MyCentralWidget(QWidget *parent = nullptr)
         : QWidget(parent)
@@ -47,6 +48,14 @@ public:
     }
 
     ~MyCentralWidget() override;
+
+    void resizeEvent(QResizeEvent *ev) override
+    {
+        QWidget::resizeEvent(ev);
+        Q_EMIT resized(ev->oldSize(), ev->size());
+    }
+Q_SIGNALS:
+    void resized(QSize oldSize, QSize newSize);
 };
 }
 
@@ -114,6 +123,8 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
                 d->updateMargins(); // logical dpi might have changed
                 Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle());
             });
+
+    connect(d->m_centralWidget, &MyCentralWidget::resized, this, &MainWindowBase::centralWidgetResized);
 }
 
 MainWindow::~MainWindow()
@@ -147,3 +158,5 @@ QRect MainWindow::centralAreaGeometry() const
 {
     return centralWidget()->geometry();
 }
+
+#include "MainWindow.moc"

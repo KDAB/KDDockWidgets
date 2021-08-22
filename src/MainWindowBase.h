@@ -225,6 +225,9 @@ Q_SIGNALS:
     /// can be tabbed together, in which case this signal isn't emitted.
     void frameCountChanged(int);
 
+    /// @brief emitted when the MainWindow::centralWidget() changes size
+    void centralWidgetResized(QSize oldSize, QSize newSize);
+
 private:
     class Private;
     Private *const d;
