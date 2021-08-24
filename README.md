@@ -106,10 +106,16 @@ You can change the installation location by passing the option `-DCMAKE_INSTALL_
 
 Using
 =====
-From your CMake project, add
+From your CMake Qt5 project, add
 
 ```
     find_package(KDDockWidgets CONFIG)
+```
+
+or for Qt6
+
+```
+    find_package(KDDockWidgets-qt6 CONFIG)
 ```
 
 and link to the imported target `KDAB::kddockwidgets`.
