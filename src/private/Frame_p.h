@@ -166,6 +166,12 @@ public:
         return m_options & FrameOption_IsCentralFrame;
     }
 
+    /// @brief Returns whether you can DND dock widgets over this frame and tab into it
+    bool isDockable() const
+    {
+        return !(m_options & FrameOption_NonDockable);
+    }
+
     /**
      * @brief whether the tab widget will always show tabs, even if there's only 1 dock widget
      *

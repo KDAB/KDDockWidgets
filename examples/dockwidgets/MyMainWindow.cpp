@@ -115,6 +115,10 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
 
     setAffinities({ affinityName });
     createDockWidgets();
+
+    if (options & KDDockWidgets::MainWindowOption_HasCentralWidget) {
+        setPersistentCentralWidget(new MyWidget1());
+    }
 }
 
 MyMainWindow::~MyMainWindow()

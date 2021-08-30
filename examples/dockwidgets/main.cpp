@@ -123,6 +123,10 @@ int main(int argc, char **argv)
                                               QCoreApplication::translate("main", "If we're not using title bars we'll still show the close and float button in the tab bar"));
     parser.addOption(showButtonsInTabBarIfTitleBarHidden);
 
+    QCommandLineOption centralWidget("central-widget",
+                                     QCoreApplication::translate("main", "The main window will have a non-detachable central widget"));
+    parser.addOption(centralWidget);
+
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
 
@@ -163,6 +167,9 @@ int main(int argc, char **argv)
 
     options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralFrame
                                          : MainWindowOption_None;
+
+    if (parser.isSet(centralWidget))
+        options |= MainWindowOption_HasCentralWidget;
 
     if (parser.isSet(noQtTool))
         internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows;

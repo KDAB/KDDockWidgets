@@ -31,6 +31,13 @@
 #include "private/LayoutSaver_p.h"
 #include "private/DockWidgetBase_p.h"
 
+// Or we can have a createDockWidget() in the factory
+#ifdef KDDOCKWIDGETS_QTQUICK
+# include "DockWidgetQuick.h"
+#else
+# include "DockWidget.h"
+#endif
+
 using namespace KDDockWidgets;
 
 static LayoutWidget *createLayoutWidget(MainWindowBase *mainWindow, MainWindowOptions options)
@@ -44,16 +51,48 @@ static LayoutWidget *createLayoutWidget(MainWindowBase *mainWindow, MainWindowOp
 class MainWindowBase::Private
 {
 public:
-    explicit Private(MainWindowBase *mainWindow, MainWindowOptions options)
+    explicit Private(MainWindowBase *mainWindow, const QString &uniqueName, MainWindowOptions options)
         : m_options(options)
         , q(mainWindow)
         , m_layoutWidget(createLayoutWidget(mainWindow, options))
+        , m_persistentCentralDockWidget(createPersistentCentralDockWidget(uniqueName))
     {
     }
 
     bool supportsCentralFrame() const
     {
         return m_options & MainWindowOption_HasCentralFrame;
+    }
+
+    bool supportsPersistentCentralWidget() const
+    {
+        if (!dropArea()) {
+            // This is the MDI case
+            return false;
+        }
+
+        return (m_options & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget;
+    }
+
+    DockWidgetBase* createPersistentCentralDockWidget(const QString &uniqueName) const
+    {
+        if (!supportsPersistentCentralWidget())
+            return nullptr;
+
+        auto dw = new DockWidgetType(QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
+        Frame *frame = dropArea()->m_centralFrame;
+        if (!frame) {
+            qWarning() << Q_FUNC_INFO << "Expected central frame";
+            return nullptr;
+        }
+
+        frame->addWidget(dw);
+        return dw;
+    }
+
+    DropAreaWithCentralFrame *dropArea() const
+    {
+        return qobject_cast<DropAreaWithCentralFrame *>(m_layoutWidget);
     }
 
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
@@ -69,12 +108,13 @@ public:
     MainWindowBase *const q;
     QPointer<DockWidgetBase> m_overlayedDockWidget;
     LayoutWidget *const m_layoutWidget;
+    DockWidgetBase *const m_persistentCentralDockWidget;
 };
 
 MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                                WidgetType *parent, Qt::WindowFlags flags)
     : QMainWindowOrQuick(parent, flags)
-    , d(new Private(this, options))
+    , d(new Private(this, uniqueName, options))
 {
     setUniqueName(uniqueName);
 
@@ -717,4 +757,27 @@ QRect MainWindowBase::windowGeometry() const
         return window->geometry();
 
     return window()->geometry();
+}
+
+void MainWindowBase::setPersistentCentralWidget(QWidgetOrQuick *widget)
+{
+    if (!d->supportsPersistentCentralWidget()) {
+        qWarning() << "MainWindow::setPersistentCentralWidget() requires MainWindowOption_HasCentralWidget";
+        return;
+    }
+
+    auto dw = d->m_persistentCentralDockWidget;
+    if (dw) {
+        dw->setWidget(widget);
+    } else {
+        qWarning() << Q_FUNC_INFO << "Unexpected null central dock widget";
+    }
+}
+
+QWidgetOrQuick *MainWindowBase::persistentCentralWidget() const
+{
+    if (auto dw = d->m_persistentCentralDockWidget)
+        return dw->widget();
+
+    return nullptr;
 }

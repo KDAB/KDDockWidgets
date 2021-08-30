@@ -2,6 +2,7 @@
  - Install the Python bindings to "site-packages"
  - The Python bindings for Qt6 use the "PyKDDockWidgetsQt6" namespace
  - Co-installable with Qt6
+ - Adds support for non-detachable central widget, MainWindowOption_HasCentralWidget. (#225)
 
 * v1.4.1 (unreleased)
  -

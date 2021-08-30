@@ -90,6 +90,21 @@ public:
                                    KDDockWidgets::InitialOption initialOption = {});
 
     /**
+     * @brief Sets a persistent central widget. It can't be detached.
+     *
+     * Requires passing MainWindowOption_HasCentralWidget in the CTOR.
+     * This is similar to the central frame concept of MainWindowOption_HasCentralFrame,
+     * with the difference that it won't show a tabs.
+     *
+     * @param widget The QWidget (or QQuickItem if built with QtQuick support) that you
+     * want to set.
+     *
+     * Example: kddockwidgets_example --central-widget
+     */
+    Q_INVOKABLE void setPersistentCentralWidget(QWidgetOrQuick *widget);
+    QWidgetOrQuick *persistentCentralWidget() const;
+
+    /**
      * @brief Returns the unique name that was passed via constructor.
      *        Used internally by the save/restore mechanism.
      * @internal
