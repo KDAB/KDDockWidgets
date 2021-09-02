@@ -275,12 +275,12 @@ void TitleBarWidget::updateMaximizeButton()
 {
     if (auto fw = floatingWindow()) {
         auto factory = Config::self().frameworkWidgetFactory();
-        const TitleBarButtonType iconType = fw->isMaximized() ? TitleBarButtonType::Normal
-                                                              : TitleBarButtonType::Maximize;
+        const TitleBarButtonType iconType = fw->isMaximizedOverride() ? TitleBarButtonType::Normal
+                                                                      : TitleBarButtonType::Maximize;
         m_maximizeButton->setIcon(factory->iconForButtonType(iconType, devicePixelRatioF()));
 
         m_maximizeButton->setVisible(supportsMaximizeButton());
-        m_maximizeButton->setToolTip(fw->isMaximized() ? tr("Restore") : tr("Maximize"));
+        m_maximizeButton->setToolTip(fw->isMaximizedOverride() ? tr("Restore") : tr("Maximize"));
     } else {
         m_maximizeButton->setVisible(false);
     }

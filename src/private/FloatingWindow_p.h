@@ -176,6 +176,33 @@ public:
     ///@brief Returns the contents margins
     QMargins contentMargins() const;
 
+    ///@brief Allows the user to override QWindow::isMaximized()
+    /// Needed to workaround window managers that don't support maximizing/minimizing Qt::Tool windows.
+    /// By default this just calls QWindow::isMaximized()
+    /// @sa QTBUG-95478
+    virtual bool isMaximizedOverride() const;
+
+    ///@brief Allows the user to override QWindow::isMinimized()
+    /// Needed to workaround window managers that don't support maximizing/minimizing Qt::Tool windows.
+    /// By default this just calls QWindow::isMinimized()
+    /// @sa QTBUG-95478
+    virtual bool isMinimizedOverride() const;
+
+    ///@brief By default equivalent to QWindow::showMaximized()
+    /// But allows the user to override it and workaround exotic window manager bugs
+    /// @sa QTBUG-95478
+    virtual void showMaximized();
+
+    ///@brief By default equivalent to QWindow::showNormal()
+    /// But allows the user to override it and workaround exotic window manager bugs
+    /// @sa QTBUG-95478
+    virtual void showNormal();
+
+    ///@brief By default equivalent to QWindow::showMinimized()
+    /// But allows the user to override it and workaround exotic window manager bugs
+    /// @sa QTBUG-95478
+    virtual void showMinimized();
+
     ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
     ///Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
     ///be open ended

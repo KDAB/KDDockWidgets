@@ -559,6 +559,31 @@ QMargins FloatingWindow::contentMargins() const
     return { 4, 4, 4, 4 };
 }
 
+bool FloatingWindow::isMaximizedOverride() const
+{
+    return QWidgetAdapter::isMaximized();
+}
+
+bool FloatingWindow::isMinimizedOverride() const
+{
+    return QWidgetAdapter::isMinimized();
+}
+
+void FloatingWindow::showMaximized()
+{
+    QWidgetAdapter::showMaximized();
+}
+
+void FloatingWindow::showNormal()
+{
+    QWidgetAdapter::showNormal();
+}
+
+void FloatingWindow::showMinimized()
+{
+    QWidgetAdapter::showMinimized();
+}
+
 int FloatingWindow::userType() const
 {
     if (Frame *f = singleFrame())

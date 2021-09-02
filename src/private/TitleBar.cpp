@@ -130,7 +130,7 @@ void TitleBar::toggleMaximized()
     if (!m_floatingWindow)
         return;
 
-    if (m_floatingWindow->isMaximized())
+    if (m_floatingWindow->isMaximizedOverride())
         m_floatingWindow->showNormal();
     else
         m_floatingWindow->showMaximized();
