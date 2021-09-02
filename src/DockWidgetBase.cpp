@@ -83,6 +83,13 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, InitialOption opt
         return;
     }
 
+    if (isPersistentCentralDockWidget()) {
+        qWarning() << Q_FUNC_INFO << "Not supported with MainWindowOption_HasCentralWidget."
+                   << "MainWindowOption_HasCentralWidget can only have 1 widget in the center."
+                   << "Use MainWindowOption_HasCentralFrame instead, which is similar but supports tabbing.";
+        return;
+    }
+
     Frame *frame = d->frame();
 
     if (frame) {
@@ -181,6 +188,9 @@ bool DockWidgetBase::setFloating(bool floats)
         // Not something we suggest though. For KDDW, setFloating(false) means dock, and that implies showing.
         return false;
     }
+
+    if (floats && isPersistentCentralDockWidget())
+        return false;
 
     if (floats) {
         d->saveTabIndex();
@@ -619,6 +629,9 @@ void DockWidgetBase::Private::close()
     if (!m_processingToggleAction && !q->isOpen()) {
         return;
     }
+
+    if (m_isPersistentCentralDockWidget)
+        return;
 
     // If it's overlayed and we're closing, we need to close the overlay
     if (SideBar *sb = DockRegistry::self()->sideBarForDockWidget(q)) {
