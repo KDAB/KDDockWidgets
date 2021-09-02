@@ -495,6 +495,9 @@ void MainWindowBase::moveToSideBar(DockWidgetBase *dw)
 
 void MainWindowBase::moveToSideBar(DockWidgetBase *dw, SideBarLocation location)
 {
+    if (dw->isPersistentCentralDockWidget())
+        return;
+
     if (SideBar *sb = sideBar(location)) {
         QScopedValueRollback<bool> rollback(dw->d->m_isMovingToSideBar, true);
         dw->forceClose();
@@ -524,7 +527,7 @@ void MainWindowBase::restoreFromSideBar(DockWidgetBase *dw)
 
 void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
 {
-    if (!dw)
+    if (!dw || dw->isPersistentCentralDockWidget())
         return;
 
     const SideBar *sb = sideBarForDockWidget(dw);
