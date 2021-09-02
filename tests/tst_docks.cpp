@@ -7336,4 +7336,11 @@ void TestDocks::tst_persistentCentralWidget()
     QVERIFY(dw->isPersistentCentralDockWidget());
     dw->setFloating(true);
     QVERIFY(!dw->isFloating());
+
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(!saved.isEmpty());
+
+    QVERIFY(saver.restoreLayout(saved));
 }

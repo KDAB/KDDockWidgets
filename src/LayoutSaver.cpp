@@ -608,11 +608,6 @@ bool LayoutSaver::Frame::isValid() const
         return false;
     }
 
-    if (options > 3) {
-        qWarning() << Q_FUNC_INFO << "Invalid options" << options;
-        return false;
-    }
-
     if (!dockWidgets.isEmpty()) {
         if (currentTabIndex >= dockWidgets.size() || currentTabIndex < 0) {
             qWarning() << Q_FUNC_INFO << "Invalid tab index" << currentTabIndex << dockWidgets.size();
@@ -801,11 +796,6 @@ bool LayoutSaver::MainWindow::isValid() const
 {
     if (!multiSplitterLayout.isValid())
         return false;
-
-    if (options != MainWindowOption_None && options != MainWindowOption_HasCentralFrame) {
-        qWarning() << Q_FUNC_INFO << "Invalid option" << options;
-        return false;
-    }
 
     return true;
 }
