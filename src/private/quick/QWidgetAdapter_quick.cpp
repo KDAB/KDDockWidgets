@@ -299,6 +299,12 @@ QRect QWidgetAdapter::geometry() const
     return KDDockWidgets::Private::geometry(this);
 }
 
+QRect QWidgetAdapter::normalGeometry() const
+{
+    // TODO: There's no such concept in QWindow, do we need to workaround for QtQuick ?
+    return QWidgetAdapter::geometry();
+}
+
 QRect QWidgetAdapter::rect() const
 {
     return QRectF(0, 0, width(), height()).toRect();

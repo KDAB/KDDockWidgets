@@ -122,6 +122,7 @@ public:
     virtual void setGeometry(QRect);
     QRect frameGeometry() const;
     QRect geometry() const;
+    QRect normalGeometry() const;
     QRect rect() const;
     QPoint pos() const;
     void show();
