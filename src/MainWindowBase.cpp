@@ -149,7 +149,11 @@ void MainWindowBase::addDockWidgetAsTab(DockWidgetBase *widget)
         return;
     }
 
-    if (d->supportsCentralFrame()) {
+    if (d->supportsPersistentCentralWidget()) {
+        qWarning() << Q_FUNC_INFO << "Not supported with MainWindowOption_HasCentralWidget."
+                   << "MainWindowOption_HasCentralWidget can only have 1 widget in the center."
+                   << "Use MainWindowOption_HasCentralFrame instead, which is similar but supports tabbing";
+    } else if (d->supportsCentralFrame()) {
         dropArea()->m_centralFrame->addWidget(widget);
     } else {
         qWarning() << Q_FUNC_INFO << "Not supported without MainWindowOption_HasCentralFrame";
