@@ -148,6 +148,7 @@ public:
     QAction *const toggleAction;
     QAction *const floatAction;
     LastPositions m_lastPositions;
+    bool m_isPersistentCentralDockWidget = false;
     bool m_processingToggleAction = false;
     bool m_updatingToggleAction = false;
     bool m_updatingFloatAction = false;

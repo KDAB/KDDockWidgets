@@ -450,6 +450,10 @@ public:
     /// only implemented for QtQuick
     void setMDIZ(int z);
 
+    ///@brief Returns whether this dock widget is the main window persistent central widget
+    ///This only applies when using MainWindowOption_HasCentralWidget
+    bool isPersistentCentralDockWidget() const;
+
 Q_SIGNALS:
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     ///@brief signal emitted when the parent changed

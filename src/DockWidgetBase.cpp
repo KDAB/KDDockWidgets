@@ -837,6 +837,11 @@ void DockWidgetBase::setMDIZ(int z)
 #endif
 }
 
+bool DockWidgetBase::isPersistentCentralDockWidget() const
+{
+    return d->m_isPersistentCentralDockWidget;
+}
+
 LayoutSaver::DockWidget::Ptr DockWidgetBase::Private::serialize() const
 {
     auto ptr = LayoutSaver::DockWidget::dockWidgetForName(q->uniqueName());

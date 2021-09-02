@@ -80,6 +80,7 @@ public:
             return nullptr;
 
         auto dw = new DockWidgetType(QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
+        dw->dptr()->m_isPersistentCentralDockWidget = true;
         Frame *frame = dropArea()->m_centralFrame;
         if (!frame) {
             qWarning() << Q_FUNC_INFO << "Expected central frame";
