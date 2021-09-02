@@ -619,6 +619,34 @@ void TestDocks::tst_restoreMaximizedState()
     QCOMPARE(m->windowHandle()->windowState(), Qt::WindowMaximized);
 }
 
+void TestDocks::tst_restoreFloatingMaximizedState()
+{
+    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+    dock1->floatingWindow()->showMaximized();
+
+    QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMaximized);
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    saver.restoreLayout(saved);
+    QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMaximized);
+}
+
+void TestDocks::tst_restoreFloatingMinimizedState()
+{
+    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+    dock1->floatingWindow()->showMinimized();
+
+    QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMinimized);
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    saver.restoreLayout(saved);
+    QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMinimized);
+}
+
 void TestDocks::tst_setFloatingSimple()
 {
     EnsureTopLevelsDeleted e;

@@ -369,6 +369,18 @@ void FloatingWindow::onVisibleFrameCountChanged(int count)
     setVisible(count > 0);
 }
 
+Qt::WindowState FloatingWindow::windowStateOverride() const
+{
+    Qt::WindowState state = Qt::WindowNoState;
+
+    if (isMaximizedOverride())
+        state = Qt::WindowMaximized;
+    else if (isMinimizedOverride())
+        state = Qt::WindowMinimized;
+
+    return state;
+}
+
 void FloatingWindow::updateTitleBarVisibility()
 {
     if (m_updatingTitleBarVisibility)
@@ -446,7 +458,15 @@ bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
 {
     if (dropArea()->deserialize(fw.multiSplitterLayout)) {
         updateTitleBarVisibility();
-        show();
+
+        if (fw.windowState & Qt::WindowMaximized) {
+            showMaximized();
+        } else if (fw.windowState & Qt::WindowMinimized) {
+            showMinimized();
+        } else {
+            showNormal();
+        }
+
         return true;
     } else {
         return false;
@@ -458,11 +478,13 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     LayoutSaver::FloatingWindow fw;
 
     fw.geometry = geometry();
+    fw.normalGeometry = normalGeometry();
     fw.isVisible = isVisible();
     fw.multiSplitterLayout = dropArea()->serialize();
     fw.screenIndex = screenNumberForWidget(this);
     fw.screenSize = screenSizeForWidget(this);
     fw.affinities = affinities();
+    fw.windowState = windowStateOverride();
 
     auto mainWindow = qobject_cast<MainWindowBase *>(parentWidget());
     fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)

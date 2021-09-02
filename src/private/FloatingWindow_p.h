@@ -238,6 +238,7 @@ private:
     bool m_updatingTitleBarVisibility = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
+    Qt::WindowState windowStateOverride() const;
 #ifdef Q_OS_WIN
     int m_lastHitTest = 0;
 #endif

@@ -250,12 +250,14 @@ struct LayoutSaver::FloatingWindow
     QStringList affinities;
     int parentIndex = -1;
     QRect geometry;
+    QRect normalGeometry;
     int screenIndex;
     QSize screenSize; // for relative-size restoring
     bool isVisible = true;
 
     // The instance that was created during a restore:
     KDDockWidgets::FloatingWindow *floatingWindowInstance = nullptr;
+    Qt::WindowState windowState = Qt::WindowNoState;
 };
 
 struct LayoutSaver::MainWindow
