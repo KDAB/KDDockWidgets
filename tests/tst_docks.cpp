@@ -7322,3 +7322,18 @@ void TestDocks::tst_closeTabOfCentralFrame()
     dock1->close();
     QVERIFY(frame->QWidgetAdapter::isVisible());
 }
+
+void TestDocks::tst_persistentCentralWidget()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
+    auto dockwidgets = m->dropArea()->dockWidgets();
+    QCOMPARE(dockwidgets.size(), 1);
+
+    auto dw = dockwidgets.constFirst();
+    dw->close();
+    QVERIFY(dw->isOpen());
+    QVERIFY(dw->isPersistentCentralDockWidget());
+    dw->setFloating(true);
+    QVERIFY(!dw->isFloating());
+}
