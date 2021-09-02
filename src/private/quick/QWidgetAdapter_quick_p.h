@@ -184,6 +184,7 @@ public:
         return isWindow();
     }
     bool isMaximized() const;
+    bool isMinimized() const;
     bool isActiveWindow() const;
     Q_INVOKABLE void showMaximized();
     Q_INVOKABLE void showMinimized();

@@ -418,6 +418,14 @@ bool QWidgetAdapter::isMaximized() const
     return false;
 }
 
+bool QWidgetAdapter::isMinimized() const
+{
+    if (QWindow *w = windowHandle())
+        return w->windowStates() & Qt::WindowMinimized;
+
+    return false;
+}
+
 bool KDDockWidgets::QWidgetAdapter::isActiveWindow() const
 {
     if (QWindow *w = windowHandle())
