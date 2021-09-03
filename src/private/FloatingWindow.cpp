@@ -606,6 +606,11 @@ void FloatingWindow::showMinimized()
     QWidgetAdapter::showMinimized();
 }
 
+QRect FloatingWindow::normalGeometry() const
+{
+    return QWidgetAdapter::normalGeometry();
+}
+
 int FloatingWindow::userType() const
 {
     if (Frame *f = singleFrame())

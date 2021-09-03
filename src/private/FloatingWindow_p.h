@@ -203,6 +203,13 @@ public:
     /// @sa QTBUG-95478
     virtual void showMinimized();
 
+    ///@brief By default equivalent to QWidget::normalGeometry()
+    /// Derived classes can implement something different here, to workaround window manager issues with Qt::Tool
+    /// Also useful for QtQuick to eventually perserve normal geometry uppon save/restore of a maximized window. As
+    /// QWindow has no notion of normal geometry, so we need to implement it here.
+    /// @sa QTBUG-95478
+    virtual QRect normalGeometry() const;
+
     ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
     ///Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
     ///be open ended
