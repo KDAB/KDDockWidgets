@@ -103,6 +103,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *) override;
     void mouseReleaseEvent(QMouseEvent *) override;
     void closeEvent(QCloseEvent *) override;
+    virtual void setNormalGeometry(QRect);
 
     virtual bool onResize(QSize newSize);
     virtual void onLayoutRequest();

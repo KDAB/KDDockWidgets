@@ -27,6 +27,8 @@
 #include <QMouseEvent>
 #include <QWindow>
 
+#include <QtWidgets/private/qwidget_p.h>
+
 using namespace KDDockWidgets;
 
 QWidgetAdapter::QWidgetAdapter(QWidget *parent, Qt::WindowFlags f)
@@ -127,6 +129,20 @@ QWidget *KDDockWidgets::Private::widgetForWindow(QWindow *window)
         return nullptr;
 
     return window->property("kddockwidgets_qwidget").value<QWidget *>();
+}
+
+void QWidgetAdapter::setNormalGeometry(QRect geo)
+{
+    if (isNormalWindowState(windowState())) {
+        setGeometry(geo);
+    } else {
+        QWidgetPrivate *priv = QWidgetPrivate::get(this);
+        if (priv->extra && priv->extra->topextra) {
+            priv->topData()->normalGeometry = geo;
+        } else {
+            qWarning() << Q_FUNC_INFO << "Failing to set normal geometry";
+        }
+    }
 }
 
 LayoutGuestWidget::~LayoutGuestWidget() = default;

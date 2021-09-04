@@ -296,7 +296,7 @@ endif()
 if(${PROJECT_NAME}_QTQUICK)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
 else()
-  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets)
+  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
 endif()
 
 if(WIN32)

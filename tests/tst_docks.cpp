@@ -621,8 +621,12 @@ void TestDocks::tst_restoreMaximizedState()
 
 void TestDocks::tst_restoreFloatingMaximizedState()
 {
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton);
     auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+    const QRect originalNormalGeometry = dock1->floatingWindow()->normalGeometry();
     dock1->floatingWindow()->showMaximized();
+    qDebug() << originalNormalGeometry;
 
     QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMaximized);
 
@@ -631,10 +635,15 @@ void TestDocks::tst_restoreFloatingMaximizedState()
 
     saver.restoreLayout(saved);
     QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMaximized);
+    QCOMPARE(dock1->floatingWindow()->normalGeometry(), originalNormalGeometry);
+
+    dock1->floatingWindow()->showNormal();
+    QCOMPARE(dock1->floatingWindow()->normalGeometry(), originalNormalGeometry);
 }
 
 void TestDocks::tst_restoreFloatingMinimizedState()
 {
+    EnsureTopLevelsDeleted e;
     auto dock1 = createDockWidget("dock1", new MyWidget("one"));
     dock1->floatingWindow()->showMinimized();
 
