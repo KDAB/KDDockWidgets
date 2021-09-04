@@ -110,6 +110,11 @@ inline bool usesUtilityWindows()
     return !dontUse;
 }
 
+inline bool isNormalWindowState(Qt::WindowStates states)
+{
+    return !(states & Qt::WindowMaximized) && !(states & Qt::WindowFullScreen);
+}
+
 inline bool usesFallbackMouseGrabber()
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
