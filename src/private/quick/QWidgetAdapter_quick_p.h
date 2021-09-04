@@ -123,6 +123,7 @@ public:
     QRect frameGeometry() const;
     QRect geometry() const;
     QRect normalGeometry() const;
+    void setNormalGeometry(QRect);
     QRect rect() const;
     QPoint pos() const;
     void show();
