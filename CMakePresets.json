@@ -75,6 +75,17 @@
             }
         },
         {
+            "name": "release-no-x11extras",
+            "displayName": "release-no-x11extras",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-release-no-x11extras",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_UNITY_BUILD" : "ON",
+                "KDDockWidgets_X11EXTRAS" : "OFF"
+            }
+        },
+        {
             "name": "release-qtquick",
             "displayName": "release-qtquick",
             "generator": "Ninja",
