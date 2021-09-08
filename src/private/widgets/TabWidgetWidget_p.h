@@ -65,6 +65,8 @@ protected:
     DockWidgetBase *dockwidgetAt(int index) const override;
     int currentIndex() const override;
 
+    virtual void contextMenuRequested(QPoint pos);
+
 private:
     void updateMargins();
     void setupTabBarButtons();

@@ -27,6 +27,7 @@
 #include <QTabBar>
 #include <QHBoxLayout>
 #include <QAbstractButton>
+#include <QMenu>
 
 using namespace KDDockWidgets;
 
@@ -37,6 +38,9 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
 {
     setTabBar(static_cast<QTabBar *>(m_tabBar->asWidget()));
     setTabsClosable(Config::self().flags() & Config::Flag_TabsHaveCloseButton);
+
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, &QTabWidget::customContextMenuRequested, this, &TabWidgetWidget::contextMenuRequested);
 
     // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user presses [x]
     connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
@@ -200,4 +204,35 @@ void TabWidgetWidget::updateMargins()
     const qreal factor = logicalDpiFactor(this);
     m_cornerWidgetLayout->setContentsMargins(QMargins(0, 0, 2, 0) * factor);
     m_cornerWidgetLayout->setSpacing(int(2 * factor));
+}
+
+void TabWidgetWidget::contextMenuRequested(QPoint pos)
+{
+    if (!(Config::self().flags() & Config::Flag_AllowSwitchingTabsViaMenu))
+        return;
+
+    QTabBar *tabBar = QTabWidget::tabBar();
+    // We dont want context menu if there is only one tab
+    if (tabBar->count() <= 1)
+        return;
+
+    // Click on a tab => No menu
+    if (tabBar->tabAt(pos) >= 0)
+        return;
+
+    // Right click is allowed only on the tabs area
+    QRect tabAreaRect = tabBar->rect();
+    tabAreaRect.setWidth(this->width());
+    if (!tabAreaRect.contains(pos))
+        return;
+
+    QMenu menu(this);
+    for (int i = 0; i < tabBar->count(); ++i) {
+        QAction *action = menu.addAction(tabText(i), this, [this, i] {
+            setCurrentIndex(i);
+        });
+        if (i == currentIndex())
+            action->setDisabled(true);
+    }
+    menu.exec(mapToGlobal(pos));
 }

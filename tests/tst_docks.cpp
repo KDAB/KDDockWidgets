@@ -5120,6 +5120,7 @@ void TestDocks::tst_restoreSideBar()
 
         serialized = saver.serializeLayout();
 
+        m1.reset();
         delete fw1;
     }
 
@@ -5236,6 +5237,7 @@ void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
         Tests::clickOn(widget2->mapToGlobal(widget2->rect().bottomLeft() + QPoint(5, -5)), widget2);
         QVERIFY(!dw1->isOverlayed());
 
+        m1.reset();
         delete dw1;
     }
 
@@ -5255,8 +5257,6 @@ void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
         const QPoint localPt(100, 250);
         Tests::clickOn(m1->mapToGlobal(m1->rect().topLeft() + localPt), m1->childAt(localPt));
         QVERIFY(!dw1->isOverlayed());
-
-        delete dw1;
     }
 }
 

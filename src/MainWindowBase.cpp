@@ -372,7 +372,7 @@ SideBarLocation MainWindowBase::Private::preferredSideBar(DockWidgetBase *dw) co
     }
 
     const Layouting::LayoutBorderLocations borders = item->adjacentLayoutBorders();
-    const qreal aspectRatio = dw->width() / (dw->height() * 1.0);
+    const qreal aspectRatio = dw->width() / (std::max(1, dw->height()) * 1.0);
 
     /// 1. It's touching all borders
     if (borders == Layouting::LayoutBorderLocation_All) {
