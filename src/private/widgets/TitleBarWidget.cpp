@@ -236,6 +236,8 @@ void TitleBarWidget::paintEvent(QPaintEvent *)
     QPainter p(this);
 
     QStyleOptionDockWidget titleOpt;
+    titleOpt.init(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &titleOpt, &p, this);
     titleOpt.title = title();
     titleOpt.rect = iconRect().isEmpty() ? rect().adjusted(2, 0, -buttonAreaWidth(), 0)
                                          : rect().adjusted(iconRect().right(), 0, -buttonAreaWidth(), 0);
