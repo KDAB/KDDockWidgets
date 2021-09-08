@@ -43,6 +43,7 @@ class DOCKS_EXPORT TitleBar : public QWidgetAdapter, public Draggable
     Q_PROPERTY(bool closeButtonEnabled READ closeButtonEnabled WRITE setCloseButtonEnabled NOTIFY closeButtonEnabledChanged)
     Q_PROPERTY(bool floatButtonVisible READ floatButtonVisible WRITE setFloatButtonVisible NOTIFY floatButtonVisibleChanged)
     Q_PROPERTY(QString floatButtonToolTip READ floatButtonToolTip NOTIFY floatButtonToolTipChanged)
+    Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
 public:
     typedef QVector<TitleBar *> List;
 
