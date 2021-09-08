@@ -215,8 +215,8 @@ if((CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND NOT APPLE) OR
   # cannot enable this for clang + sanitizers
   if (NOT sanitizers_enabled OR NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
       # Do not allow undefined symbols, even in non-symbolic shared libraries
-      set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined ${CMAKE_SHARED_LINKER_FLAGS}" PARENT_SCOPE)
-      set(CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined ${CMAKE_MODULE_LINKER_FLAGS}" PARENT_SCOPE)
+      set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined ${CMAKE_SHARED_LINKER_FLAGS}")
+      set(CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined ${CMAKE_MODULE_LINKER_FLAGS}")
   endif()
 endif()
 
