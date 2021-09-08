@@ -120,12 +120,16 @@ int main(int argc, char **argv)
     parser.addOption(dontCloseBeforeRestore);
 
     QCommandLineOption showButtonsInTabBarIfTitleBarHidden("show-buttons-in-tabbar-if-titlebar-hidden",
-                                              QCoreApplication::translate("main", "If we're not using title bars we'll still show the close and float button in the tab bar"));
+                                                           QCoreApplication::translate("main", "If we're not using title bars we'll still show the close and float button in the tab bar"));
     parser.addOption(showButtonsInTabBarIfTitleBarHidden);
 
     QCommandLineOption centralWidget("central-widget",
                                      QCoreApplication::translate("main", "The main window will have a non-detachable central widget"));
     parser.addOption(centralWidget);
+
+    QCommandLineOption ctxtMenuOnTabs("allow-switch-tabs-via-menu",
+                                      QCoreApplication::translate("main", "Allow switching tabs via context menu in tabs area"));
+    parser.addOption(ctxtMenuOnTabs);
 
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
@@ -236,6 +240,9 @@ int main(int argc, char **argv)
 
     if (parser.isSet(tabsHaveCloseButton))
         flags |= KDDockWidgets::Config::Flag_TabsHaveCloseButton;
+
+    if (parser.isSet(ctxtMenuOnTabs))
+        flags |= KDDockWidgets::Config::Flag_AllowSwitchingTabsViaMenu;
 
 
     if (parser.isSet(doubleClickMaximize))

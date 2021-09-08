@@ -65,6 +65,10 @@ protected:
     DockWidgetBase *dockwidgetAt(int index) const override;
     int currentIndex() const override;
 
+    /// @brief Shows the context menu. Override to implement your own context menu.
+    /// By default it's used to honour Config::Flag_AllowSwitchingTabsViaMenu
+    virtual void showContextMenu(QPoint pos);
+
 private:
     void updateMargins();
     void setupTabBarButtons();

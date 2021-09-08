@@ -83,6 +83,7 @@ public:
         Flag_KeepAboveIfNotUtilityWindow = 0x10000, ///< Only meaningful if Flag_DontUseUtilityFloatingWindows is set. If floating windows are normal windows, you might still want them to keep above and not minimize when you focus the main window.
         Flag_CloseOnlyCurrentTab = 0x20000, ///< The TitleBar's close button will only close the current tab, instead of all of them
         Flag_ShowButtonsOnTabBarIfTitleBarHidden = 0x40000, ///< When using Flag_HideTitleBarWhenTabsVisible the close/float buttons disappear with the title bar. With Flag_ShowButtonsOnTabBarIfHidden they'll be shown in the tab bar.
+        Flag_AllowSwitchingTabsViaMenu = 0x80000, ///< Allow switching tabs via a context menu when right clicking on the tab area
         Flag_Default = Flag_AeroSnapWithClientDecos ///< The defaults
     };
     Q_DECLARE_FLAGS(Flags, Flag)
