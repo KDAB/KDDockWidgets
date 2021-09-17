@@ -56,9 +56,9 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     , m_dockwidget5DoesntCloseBeforeRestore(dockwidget5DoesntCloseBeforeRestore)
 {
     auto menubar = menuBar();
-    auto fileMenu = new QMenu(QStringLiteral("File"));
-    m_toggleMenu = new QMenu(QStringLiteral("Toggle"));
-    auto miscMenu = new QMenu(QStringLiteral("Misc"));
+    auto fileMenu = new QMenu(QStringLiteral("File"), this);
+    m_toggleMenu = new QMenu(QStringLiteral("Toggle"), this);
+    auto miscMenu = new QMenu(QStringLiteral("Misc"), this);
 
     menubar->addMenu(fileMenu);
     menubar->addMenu(m_toggleMenu);
