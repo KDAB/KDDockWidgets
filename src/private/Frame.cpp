@@ -31,6 +31,7 @@
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "MDILayoutWidget_p.h"
+#include "DropAreaWithCentralFrame_p.h"
 
 #include <QCloseEvent>
 #include <QTimer>
@@ -147,7 +148,8 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index, InitialOption ad
 {
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
-        qWarning() << "Frame::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
+        if (!dockWidget->isPersistentCentralDockWidget())
+            qWarning() << "Frame::addWidget dockWidget already exists. this=" << this << "; dockWidget=" << dockWidget;
         return;
     }
     if (m_layoutItem)
@@ -652,7 +654,37 @@ Frame *Frame::deserialize(const LayoutSaver::Frame &f)
     if (!f.isValid())
         return nullptr;
 
-    auto frame = Config::self().frameworkWidgetFactory()->createFrame(/*parent=*/nullptr, FrameOptions(f.options));
+    const FrameOptions options = FrameOptions(f.options);
+    Frame *frame = nullptr;
+    const bool isPersistentCentralFrame = options & FrameOption::FrameOption_IsCentralFrame;
+    auto widgetFactory = Config::self().frameworkWidgetFactory();
+
+    if (isPersistentCentralFrame) {
+        // Don't create a new Frame if we're restoring the Persistent Central frame (the one created
+        // by MainWindowOption_HasCentralFrame). It already exists.
+
+        if (f.mainWindowUniqueName.isEmpty()) {
+            // Can happen with older serialization formats
+            qWarning() << Q_FUNC_INFO << "Frame is the persistent central frame but doesn't have"
+                       << "an associated window name";
+        } else {
+            if (MainWindowBase *mw = DockRegistry::self()->mainWindowByName(f.mainWindowUniqueName)) {
+                frame = mw->dropArea()->m_centralFrame;
+                if (!frame) {
+                    // Doesn't happen...
+                    qWarning() << "Main window" << f.mainWindowUniqueName << "doesn't have central frame";
+                }
+            } else {
+                // Doesn't happen...
+                qWarning() << Q_FUNC_INFO << "Couldn't find main window"
+                           << f.mainWindowUniqueName;
+            }
+        }
+    }
+
+    if (!frame)
+        frame = widgetFactory->createFrame(/*parent=*/nullptr, options);
+
     frame->setObjectName(f.objectName);
 
     for (const auto &savedDock : qAsConst(f.dockWidgets)) {
@@ -679,6 +711,9 @@ LayoutSaver::Frame Frame::serialize() const
     frame.options = options();
     frame.currentTabIndex = currentTabIndex();
     frame.id = id(); // for coorelation purposes
+
+    if (MainWindowBase *mw = mainWindow())
+        frame.mainWindowUniqueName = mw->uniqueName();
 
     for (DockWidgetBase *dock : docks)
         frame.dockWidgets.push_back(dock->d->serialize());

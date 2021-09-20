@@ -212,6 +212,10 @@ struct LayoutSaver::Frame
     int currentTabIndex;
     QString id; // for coorelation purposes
 
+    /// Might be empty if not in a main window. Used so we don't create a frame when restoring
+    /// the persistent central frame, that's never deleted when restoring
+    QString mainWindowUniqueName;
+
     LayoutSaver::DockWidget::List dockWidgets;
 };
 

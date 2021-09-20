@@ -28,6 +28,7 @@ public:
 
 private:
     friend class MainWindowBase;
+    friend class Frame;
     Frame *const m_centralFrame = nullptr;
 };
 

@@ -3746,6 +3746,23 @@ void TestDocks::tst_restoreSideBySide()
     }
 }
 
+void TestDocks::tst_restoreWithCentralFrameWithTabs()
+{
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    m->addDockWidgetAsTab(dock1);
+    m->addDockWidgetAsTab(dock2);
+
+    QCOMPARE(DockRegistry::self()->frames().size(), 1);
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+    QVERIFY(saver.restoreLayout(saved));
+
+    QCOMPARE(DockRegistry::self()->frames().size(), 1);
+}
+
 void TestDocks::tst_restoreWithPlaceholder()
 {
     // Float dock1, save and restore, then unfloat and see if dock2 goes back to where it was

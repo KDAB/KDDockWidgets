@@ -106,6 +106,7 @@ private Q_SLOTS:
     void tst_restoreNestedAndTabbed();
     void tst_restoreCrash();
     void tst_restoreSideBySide();
+    void tst_restoreWithCentralFrameWithTabs();
     void tst_restoreWithPlaceholder();
     void tst_restoreWithAffinity();
     void tst_marginsAfterRestore();
