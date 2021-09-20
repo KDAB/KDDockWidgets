@@ -66,6 +66,6 @@ add_custom_command(
 add_custom_target(kddockwidgets-api.qch ALL DEPENDS ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch)
 add_custom_target(docs DEPENDS kddockwidgets-api.qch)
 
-set(QCH_INSTALL_DIR ${CMAKE_INSTALL_DOCDIR} CACHE STRING "Install location of Qt Assistant help files.")
+set(QCH_INSTALL_DIR ${INSTALL_DOC_DIR} CACHE STRING "Install location of Qt Assistant help files.")
 install(FILES ${DOXYGEN_OUTPUT_DIR}/qch/kddockwidgets-api.qch DESTINATION ${QCH_INSTALL_DIR})
-install(FILES ${DOXYGEN_OUTPUT_DIR}/kddockwidgets.tags DESTINATION ${CMAKE_INSTALL_DOCDIR})
+install(FILES ${DOXYGEN_OUTPUT_DIR}/kddockwidgets.tags DESTINATION ${INSTALL_DOC_DIR})
