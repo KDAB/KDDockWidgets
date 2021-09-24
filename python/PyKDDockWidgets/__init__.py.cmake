@@ -10,8 +10,14 @@
 #
 
 import sys
+import os
 
 __all__ = ['KDDockWidgets']
+
+def setupLibraryPath():
+    package_dir = os.path.abspath(os.path.dirname(__file__))
+    if sys.platform == 'win32':
+        os.add_dll_directory(package_dir)
 
 # Preload PySide libraries to avoid missing libraries while loading KDDockWidgets
 try:
@@ -22,3 +28,5 @@ try:
 except Exception:
     print("Failed to load PySide")
     raise
+
+setupLibraryPath()
