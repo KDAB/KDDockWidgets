@@ -15,7 +15,7 @@ from MyMainWindow import MyMainWindow
 from PySide6 import QtWidgets, QtCore
 
 import sys
-import rc_assets
+#import rc_assets
 
 if __name__ == "__main__":
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
