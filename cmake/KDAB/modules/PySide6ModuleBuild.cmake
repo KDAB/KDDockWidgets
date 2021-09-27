@@ -129,6 +129,7 @@ macro(CREATE_PYTHON_BINDINGS
             PREFIX ""
             OUTPUT_NAME ${MODULE_NAME}
             LIBRARY_OUTPUT_DIRECTORY ${MODULE_OUTPUT_DIR}
+            INSTALL_RPATH "$ORIGIN"
         )
 
         if(WIN32)
