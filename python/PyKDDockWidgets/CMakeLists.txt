@@ -82,10 +82,16 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/__init__.py.cmake ${CMAKE_CURRENT_BIN
 
 # install
 install(
-    FILES
-        ${CMAKE_CURRENT_BINARY_DIR}/__init__.py
-        $<TARGET_LINKER_FILE:KDAB::kddockwidgets>
-        $<TARGET_SONAME_FILE:KDAB::kddockwidgets>
-        $<TARGET_FILE:KDAB::kddockwidgets>
-    DESTINATION
-        ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX})
+  FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/__init__.py
+    $<TARGET_LINKER_FILE:KDAB::kddockwidgets>
+    $<TARGET_FILE:KDAB::kddockwidgets>
+  DESTINATION
+    ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}
+)
+if(NOT WIN32)
+  install(
+    FILES $<TARGET_SONAME_FILE:KDAB::kddockwidgets>
+    DESTINATION ${${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX}
+  )
+endif()
