@@ -267,13 +267,6 @@ endif()
 
 add_subdirectory(src)
 
-if(${PROJECT_NAME}_PYTHON_BINDINGS)
-  if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC)
-    message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
-  endif()
-  add_subdirectory(python)
-endif()
-
 if(${PROJECT_NAME}_IS_ROOT_PROJECT)
   if(${PROJECT_NAME}_EXAMPLES)
     if(${PROJECT_NAME}_QTQUICK)
@@ -337,6 +330,13 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
 
   # Add uninstall target
   include(ECMUninstallTarget)
+endif()
+
+if(${PROJECT_NAME}_PYTHON_BINDINGS)
+  if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC)
+    message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
+  endif()
+  add_subdirectory(python)
 endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

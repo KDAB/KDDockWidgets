@@ -39,3 +39,4 @@ set(${PROJECT_NAME}_PYTHON_BINDINGS_INSTALL_PREFIX "${${PROJECT_NAME}_PYTHON_BIN
 
 include(PySide${PYSIDE_MAJOR_VERSION}ModuleBuild)
 add_subdirectory(PyKDDockWidgets)
+add_subdirectory(tests)
