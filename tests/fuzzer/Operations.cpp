@@ -27,9 +27,9 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Testing;
 using namespace KDDockWidgets::Testing::Operations;
 
-static QString operationTypeStr(OperationType ot)
+static QString operationTypeStr(OperationType optype)
 {
-    return QMetaEnum::fromType<OperationType>().valueToKey(ot);
+    return QMetaEnum::fromType<OperationType>().valueToKey(optype);
 }
 
 OperationBase::OperationBase(KDDockWidgets::Testing::Operations::OperationType type, Fuzzer *fuzzer)

@@ -205,7 +205,7 @@ public:
 
     ///@brief By default equivalent to QWidget::normalGeometry()
     /// Derived classes can implement something different here, to workaround window manager issues with Qt::Tool
-    /// Also useful for QtQuick to eventually perserve normal geometry uppon save/restore of a maximized window. As
+    /// Also useful for QtQuick to eventually preserve normal geometry upon save/restore of a maximized window. As
     /// QWindow has no notion of normal geometry, so we need to implement it here.
     /// @sa QTBUG-95478
     virtual QRect normalGeometry() const;

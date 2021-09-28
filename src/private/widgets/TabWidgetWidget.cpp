@@ -212,7 +212,7 @@ void TabWidgetWidget::showContextMenu(QPoint pos)
         return;
 
     QTabBar *tabBar = QTabWidget::tabBar();
-    // We dont want context menu if there is only one tab
+    // We don't want context menu if there is only one tab
     if (tabBar->count() <= 1)
         return;
 
