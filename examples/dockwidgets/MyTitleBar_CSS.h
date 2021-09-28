@@ -9,13 +9,18 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef EXAMPLETITLEBAR_CSS_H
+#define EXAMPLETITLEBAR_CSS_H
+
+#pragma once
+
 #include <kddockwidgets/private/widgets/TitleBarWidget_p.h>
 
 /**
  * @brief Shows how to implement a custom titlebar which uses "Qt StyleSheets".
- * 
+ *
  * Derive from KDDockWidgets::DefaultWidgetFactory and override the two createTitleBar() methods.
- * 
+ *
  * To try it out, modify examples/dockwidgets/MyFrameworkWidgetFactory.cpp to return a MyTitleBar_CSS instance.
  * Run the example with: ./bin/kddockwidgets_example -p
  *
@@ -77,3 +82,5 @@ public:
 MyTitleBar_CSS::~MyTitleBar_CSS()
 {
 }
+
+#endif
