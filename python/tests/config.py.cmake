@@ -8,5 +8,12 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
+import os
+import sys
+
 class TstConfig(object):
     bindingsNamespace = "@PYTHON_BINDING_NAMESPACE@"
+
+    def initLibraryPath():
+        if sys.platform == 'win32' and sys.version_info[0] == 3 and sys.version_info[1] >= 8:
+            os.add_dll_directory("@CMAKE_RUNTIME_OUTPUT_DIRECTORY@")

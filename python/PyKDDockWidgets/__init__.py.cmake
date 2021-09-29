@@ -15,15 +15,22 @@ import os
 __all__ = ['KDDockWidgets']
 
 def setupLibraryPath():
-    package_dir = os.path.abspath(os.path.dirname(__file__))
     if sys.platform != 'win32':
         return
 
-    if sys.version_info[0] == 3 and sys.version_info[1] >= 8:
-        os.add_dll_directory(package_dir)
-        return
+    from shiboken2 import shiboken2
+    from PySide@PYSIDE_MAJOR_VERSION@ import QtCore
 
-    os.environ['PATH'] = os.fspath(package_dir) + os.pathsep + os.environ['PATH']
+    extra_dll_dirs = [ os.path.abspath(os.path.dirname(shiboken2.__file__)),
+                       os.path.abspath(os.path.dirname(QtCore.__file__)),
+                       os.path.abspath(os.path.dirname(__file__)) ]
+
+    if sys.version_info[0] == 3 and sys.version_info[1] >= 8:
+        for dll_dir in extra_dll_dirs:
+            os.add_dll_directory(dll_dir)
+
+    for dll_dir in extra_dll_dirs:
+        os.environ['PATH'] = os.fspath(dll_dir) + os.pathsep + os.environ['PATH']
 
 # Preload PySide libraries to avoid missing libraries while loading KDDockWidgets
 try:

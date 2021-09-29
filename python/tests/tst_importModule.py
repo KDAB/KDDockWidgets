@@ -26,4 +26,5 @@ class TestImportModules(unittest.TestCase):
             self.assertIn(symbol, moduleSymbols)
 
 if __name__ == '__main__':
+    TstConfig.initLibraryPath()
     unittest.main()
