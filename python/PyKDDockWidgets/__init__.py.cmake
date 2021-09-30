@@ -18,10 +18,13 @@ def setupLibraryPath():
     if sys.platform != 'win32':
         return
 
-    from shiboken2 import shiboken2
-    from PySide@PYSIDE_MAJOR_VERSION@ import QtCore
+    if "@PYSIDE_MAJOR_VERSION@" == "6":
+        from shiboken@PYSIDE_MAJOR_VERSION@ import Shiboken
+    else:
+        from shiboken@PYSIDE_MAJOR_VERSION@ import shiboken@PYSIDE_MAJOR_VERSION@ as Shiboken
 
-    extra_dll_dirs = [ os.path.abspath(os.path.dirname(shiboken2.__file__)),
+    from PySide@PYSIDE_MAJOR_VERSION@ import QtCore
+    extra_dll_dirs = [ os.path.abspath(os.path.dirname(Shiboken.__file__)),
                        os.path.abspath(os.path.dirname(QtCore.__file__)),
                        os.path.abspath(os.path.dirname(__file__)) ]
 

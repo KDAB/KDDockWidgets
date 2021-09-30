@@ -12,7 +12,7 @@ import os
 import sys
 
 class TstConfig(object):
-    bindingsNamespace = "@PYTHON_BINDING_NAMESPACE@"
+    bindingsNamespace = "PyKDDockWidgets"
 
     def initLibraryPath():
         if sys.platform == 'win32' and sys.version_info[0] == 3 and sys.version_info[1] >= 8:
