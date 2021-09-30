@@ -15,7 +15,10 @@ from MyMainWindow import MyMainWindow
 from PySide6 import QtWidgets, QtCore
 
 import sys
-import rc_assets
+try:
+    import rc_assets
+except:
+    exit("Oops.. rc_assets needs to be generated first.\nPlease run:\n rcc -g python -o rc_assets.py ../../examples/dockwidgets/resources_example.qrc\n(Make sure to use the rcc from the Qt6 version used to generate the bindings!)")
 
 if __name__ == "__main__":
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
