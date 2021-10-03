@@ -19,6 +19,10 @@ endif()
 #Qt5 requires C++14
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#remove noisy compiler warnings (as the generated code is not necessarily super-warning-free)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-all -Wno-extra")
+endif()
 
 # On macOS, check if Qt is a framework build. This affects how include paths should be handled.
 get_target_property(QtCore_is_framework Qt5::Core FRAMEWORK)
