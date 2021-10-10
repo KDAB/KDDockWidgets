@@ -7377,6 +7377,25 @@ void TestDocks::tst_closeTabOfCentralFrame()
     QVERIFY(frame->QWidgetAdapter::isVisible());
 }
 
+void TestDocks::tst_centralFrame245()
+{
+    /*
+
+    Build: -DKDDockWidgets_DEVELOPER_MODE=ON
+    Run: ./bin/tst_docks tst_centralFrame245 -platform xcb
+
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_centralFrame245");
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock2 = createDockWidget("2", new QPushButton("2"));
+
+    m->addDockWidgetAsTab(dock1);
+    m->addDockWidgetAsTab(dock2);
+
+    QTest::qWait(100000);
+
+*/
+}
+
 void TestDocks::tst_persistentCentralWidget()
 {
     EnsureTopLevelsDeleted e;
