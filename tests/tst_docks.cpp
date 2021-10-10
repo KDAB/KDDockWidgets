@@ -656,7 +656,7 @@ void TestDocks::tst_restoreFloatingMinimizedState()
     QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMinimized);
 }
 
-void TestDocks::tst_restoreNonExistantDockWidget()
+void TestDocks::tst_restoreNonExistingDockWidget()
 {
     QByteArray saved;
     const QSize defaultMainWindowSize = { 500, 500 };
@@ -664,8 +664,6 @@ void TestDocks::tst_restoreNonExistantDockWidget()
     {
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(defaultMainWindowSize, MainWindowOption_None, "mainwindow1");
-        auto dock1 = createDockWidget("dock1", new MyWidget("dock1"));
-        m->addDockWidget(dock1, Location_OnBottom);
         LayoutSaver saver;
         saved = saver.serializeLayout();
     }
@@ -681,8 +679,13 @@ void TestDocks::tst_restoreNonExistantDockWidget()
     QVERIFY(m->dropArea()->checkSanity());
     QCOMPARE(da->frames().size(), 1);
 
+    const QSize dock2Size = dock2->size();
+    QVERIFY(dock2->isOpen());
+
+    m->resize(defaultMainWindowSize + QSize(500, 500));
+
     QEXPECT_FAIL("", "To be fixed", Continue);
-    QVERIFY(!dock2->isOpen());
+    QVERIFY(dock2->size() != dock2Size);
 }
 
 void TestDocks::tst_setFloatingSimple()
