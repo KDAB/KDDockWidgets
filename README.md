@@ -154,6 +154,18 @@ Regarding compilers, whatever toolchain is able to build Qt 5.9 should also be
 fine. Note however that MSVC 2013 isn't supported anymore due to compiler crashes.
 
 
+Styling
+========
+
+Almost all private widgets used by KDDW can be derived by the user to give them
+a custom look. That's done by providing your own FrameworkWidgetFactory. Run
+"kddockwidgets_example -p" to see that in action.
+
+Qt StyleSheets are not, and will not, be supported. See the comments in
+examples/dockwidgets/MyTitleBar_CSS.h for why. You can however use some minimal
+CSS, as shown in that example, just don't report bugs about it.
+
+
 Licensing
 =========
 KDDockWidgets is (C) 2019-2021, Klarälvdalens Datakonsult AB, and is licensed according to
