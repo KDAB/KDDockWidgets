@@ -656,6 +656,35 @@ void TestDocks::tst_restoreFloatingMinimizedState()
     QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMinimized);
 }
 
+void TestDocks::tst_restoreNonExistantDockWidget()
+{
+    QByteArray saved;
+    const QSize defaultMainWindowSize = { 500, 500 };
+
+    {
+        EnsureTopLevelsDeleted e;
+        auto m = createMainWindow(defaultMainWindowSize, MainWindowOption_None, "mainwindow1");
+        auto dock1 = createDockWidget("dock1", new MyWidget("dock1"));
+        m->addDockWidget(dock1, Location_OnBottom);
+        LayoutSaver saver;
+        saved = saver.serializeLayout();
+    }
+
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(defaultMainWindowSize, MainWindowOption_None, "mainwindow1");
+    auto dock2 = createDockWidget("dock2", new MyWidget("dock2"));
+    m->addDockWidget(dock2, Location_OnBottom);
+    LayoutSaver restorer;
+    SetExpectedWarning sew("Couldn't find dock widget");
+    QVERIFY(restorer.restoreLayout(saved));
+    auto da = m->dropArea();
+    QVERIFY(m->dropArea()->checkSanity());
+    QCOMPARE(da->frames().size(), 1);
+
+    QEXPECT_FAIL("", "To be fixed", Continue);
+    QVERIFY(!dock2->isOpen());
+}
+
 void TestDocks::tst_setFloatingSimple()
 {
     EnsureTopLevelsDeleted e;

@@ -93,6 +93,7 @@ private Q_SLOTS:
     void tst_restoreMaximizedState();
     void tst_restoreFloatingMaximizedState();
     void tst_restoreFloatingMinimizedState();
+    void tst_restoreNonExistantDockWidget();
     void tst_shutdown();
     void tst_closeDockWidgets();
     void tst_layoutEqually();
