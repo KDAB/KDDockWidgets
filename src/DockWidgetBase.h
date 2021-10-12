@@ -457,6 +457,7 @@ public:
 Q_SIGNALS:
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     ///@brief signal emitted when the parent changed
+    /// QtQuick already has QQuickItem::parentChanged(), so add it only for QtWidgets here.
     void parentChanged();
 #endif
 
