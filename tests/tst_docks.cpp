@@ -5512,7 +5512,9 @@ void TestDocks::tst_restoreNonRelativeFloatingWindowGeometry()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
     auto dock1 = createDockWidget("1", new QPushButton("1"));
-    dock1->show();
+
+    // Also test that invisible dock doesn't change size
+    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, /*show=*/false);
 
     LayoutSaver saver(RestoreOption_RelativeToMainWindow);
     saver.dptr()->m_restoreOptions.setFlag(InternalRestoreOption::RelativeFloatingWindowGeometry,
@@ -5521,11 +5523,16 @@ void TestDocks::tst_restoreNonRelativeFloatingWindowGeometry()
     const QByteArray saved = saver.serializeLayout();
 
     const QSize floatingWindowSize = dock1->window()->size();
+    const QSize floatingWindowSize2 = dock2->window()->size();
 
     m->resize(m->width() * 2, m->height());
     saver.restoreLayout(saved);
 
+    QVERIFY(dock2->isFloating());
+    QVERIFY(!dock2->isOpen());
+
     QCOMPARE(dock1->window()->size(), floatingWindowSize);
+    QCOMPARE(dock2->window()->size(), floatingWindowSize2);
 }
 
 void TestDocks::tst_maximumSizePolicy()
