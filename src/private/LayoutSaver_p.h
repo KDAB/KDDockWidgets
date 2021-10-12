@@ -349,6 +349,7 @@ public:
     QStringList mainWindowNames() const;
     QStringList dockWidgetNames() const;
     QStringList dockWidgetsToClose() const;
+    bool containsDockWidget(const QString &uniqueName) const;
 
     int serializationVersion = KDDOCKWIDGETS_SERIALIZATION_VERSION;
     LayoutSaver::MainWindow::List mainWindows;
@@ -375,6 +376,7 @@ public:
 
     bool matchesAffinity(const QStringList &affinities) const;
     void floatWidgetsWhichSkipRestore(const QStringList &mainWindowNames);
+    void floatUnknownWidgets(const LayoutSaver::Layout &layout);
 
     template<typename T>
     void deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel);

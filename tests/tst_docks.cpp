@@ -658,6 +658,9 @@ void TestDocks::tst_restoreFloatingMinimizedState()
 
 void TestDocks::tst_restoreNonExistingDockWidget()
 {
+    // If the layout is old and doesn't know about some dock widget, then we need to float it
+    // before restoring the MainWindow's layout
+
     QByteArray saved;
     const QSize defaultMainWindowSize = { 500, 500 };
 
@@ -677,15 +680,10 @@ void TestDocks::tst_restoreNonExistingDockWidget()
     QVERIFY(restorer.restoreLayout(saved));
     auto da = m->dropArea();
     QVERIFY(m->dropArea()->checkSanity());
-    QCOMPARE(da->frames().size(), 1);
+    QCOMPARE(da->frames().size(), 0);
 
-    const QSize dock2Size = dock2->size();
     QVERIFY(dock2->isOpen());
-
-    m->resize(defaultMainWindowSize + QSize(500, 500));
-
-    QEXPECT_FAIL("", "To be fixed", Continue);
-    QVERIFY(dock2->size() != dock2Size);
+    QVERIFY(dock2->isFloating());
 }
 
 void TestDocks::tst_setFloatingSimple()

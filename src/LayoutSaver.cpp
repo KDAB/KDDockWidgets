@@ -219,6 +219,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
     layout.scaleSizes(d->m_restoreOptions);
 
     d->floatWidgetsWhichSkipRestore(layout.mainWindowNames());
+    d->floatUnknownWidgets(layout);
 
     Private::RAIIIsRestoring isRestoring;
 
@@ -370,6 +371,22 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainW
         const KDDockWidgets::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
         for (auto dw : docks) {
             if (dw->skipsRestore()) {
+                dw->setFloating(true);
+            }
+        }
+    }
+}
+
+void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout)
+{
+    // An old *.json layout file might have not know about existing dock widgets
+    // When restoring such a file, we need to float any visible dock widgets which it doesn't know about
+    // so we can restore the MainWindow layout properly
+
+    for (MainWindowBase *mw : DockRegistry::self()->mainWindows(layout.mainWindowNames())) {
+        const KDDockWidgets::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
+        for (DockWidgetBase *dw : docks) {
+            if (!layout.containsDockWidget(dw->uniqueName())) {
                 dw->setFloating(true);
             }
         }
@@ -591,6 +608,14 @@ QStringList LayoutSaver::Layout::dockWidgetsToClose() const
     }
 
     return names;
+}
+
+bool LayoutSaver::Layout::containsDockWidget(const QString &uniqueName) const
+{
+    return std::find_if(allDockWidgets.cbegin(), allDockWidgets.cend(), [uniqueName](const auto &dock) {
+               return dock->uniqueName == uniqueName;
+           })
+        != allDockWidgets.cend();
 }
 
 bool LayoutSaver::Frame::isValid() const
