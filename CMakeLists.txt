@@ -21,7 +21,7 @@
 #
 # -DKDDockWidgets_TESTS=[true|false]
 #  Build the test harness.
-#  Currently ignored unless you also set KDDockWidgets_DEVELOPER_MODE=True
+#  Currently ignored (except for Python bindings) unless KDDockWidgets_DEVELOPER_MODE=True.
 #  Default=false
 #
 # -DKDDockWidgets_EXAMPLES=[true|false]
@@ -263,80 +263,90 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     )
     install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
   endif()
+else()
+  #Always disable tests, examples, docs when used as a submodule
+  set(${PROJECT_NAME}_IS_ROOT_PROJECT FALSE)
+  set(${PROJECT_NAME}_TESTS FALSE)
+  set(${PROJECT_NAME}_EXAMPLES FALSE)
+  set(${PROJECT_NAME}_DOCS FALSE)
+endif()
+
+if(${PROJECT_NAME}_TESTS)
+  enable_testing()
 endif()
 
 add_subdirectory(src)
-
-if(${PROJECT_NAME}_IS_ROOT_PROJECT)
-  if(${PROJECT_NAME}_EXAMPLES)
-    if(${PROJECT_NAME}_QTQUICK)
-      add_subdirectory(examples/qtquick)
-    else()
-      add_subdirectory(examples/dockwidgets)
-      add_subdirectory(examples/minimal)
-      add_subdirectory(examples/minimal-mdi)
-      set_compiler_flags(kddockwidgets_example)
-      set_compiler_flags(kddockwidgets_minimal_example)
-    endif()
-  endif()
-
-  if(${PROJECT_NAME}_DEVELOPER_MODE)
-
-    if(${PROJECT_NAME}_TESTS)
-      enable_testing()
-      add_subdirectory(tests)
-
-      # Require Qt5.15.1 or higher to run the tests_launcher tests on Mac
-      if(NOT APPLE OR Qt5Widgets_VERSION VERSION_GREATER 5.15.0)
-        # tst_docks.exe is pretty big (160 tests), so split it in more runs so we can use threads.
-        add_test(NAME tst_docks0 COMMAND tests_launcher 0 5)
-        add_test(NAME tst_docks1 COMMAND tests_launcher 1 5)
-        add_test(NAME tst_docks2 COMMAND tests_launcher 2 5)
-        add_test(NAME tst_docks3 COMMAND tests_launcher 3 5)
-        add_test(NAME tst_docks4 COMMAND tests_launcher 4 5)
-        add_test(NAME tst_docks5 COMMAND tests_launcher 5 5)
-        add_test(NAME tst_docks6 COMMAND tests_launcher 6 5)
-        add_test(NAME tst_docks7 COMMAND tests_launcher 7 5)
-        add_test(NAME tst_docks8 COMMAND tests_launcher 8 5)
-        add_test(NAME tst_docks9 COMMAND tests_launcher 9 5)
-        add_test(NAME tst_docks10 COMMAND tests_launcher 10 5)
-        add_test(NAME tst_docks11 COMMAND tests_launcher 10 5)
-        add_test(NAME tst_docks12 COMMAND tests_launcher 11 5)
-        add_test(NAME tst_docks13 COMMAND tests_launcher 12 5)
-        add_test(NAME tst_docks14 COMMAND tests_launcher 13 5)
-        add_test(NAME tst_docks15 COMMAND tests_launcher 14 5)
-        add_test(NAME tst_docks16 COMMAND tests_launcher 15 5)
-        add_test(NAME tst_docks17 COMMAND tests_launcher 16 5)
-        add_test(NAME tst_docks18 COMMAND tests_launcher 17 5)
-        add_test(NAME tst_docks19 COMMAND tests_launcher 18 5)
-        add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
-        add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
-      endif()
-      if(NOT ${PROJECT_NAME}_QTQUICK)
-        # tst_multisplitter depends on QWidget
-        add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
-      endif()
-
-    endif()
-  endif()
-
-  if(${PROJECT_NAME}_DOCS)
-    add_subdirectory(docs) # needs to go last, in case there are build source files
-  else()
-    add_custom_target(docs
-      COMMAND ${CMAKE_COMMAND} -E echo "Sorry, there is no docs target since KDDockWidgets_DOCS=OFF."
-      "Re-run cmake with the -DKDDockWidgets_DOCS=True option if you want to generate the documentation.")
-  endif()
-
-  # Add uninstall target
-  include(ECMUninstallTarget)
-endif()
 
 if(${PROJECT_NAME}_PYTHON_BINDINGS)
   if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC)
     message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
   endif()
+endif()
+if(${PROJECT_NAME}_PYTHON_BINDINGS)
   add_subdirectory(python)
+endif()
+
+if(${PROJECT_NAME}_EXAMPLES)
+  if(${PROJECT_NAME}_QTQUICK)
+    add_subdirectory(examples/qtquick)
+  else()
+    add_subdirectory(examples/dockwidgets)
+    add_subdirectory(examples/minimal)
+    add_subdirectory(examples/minimal-mdi)
+    set_compiler_flags(kddockwidgets_example)
+    set_compiler_flags(kddockwidgets_minimal_example)
+  endif()
+endif()
+
+if(${PROJECT_NAME}_TESTS)
+  if(${PROJECT_NAME}_DEVELOPER_MODE)
+    add_subdirectory(tests)
+
+    # Require Qt5.15.1 or higher to run the tests_launcher tests on Mac
+    if(NOT APPLE OR Qt5Widgets_VERSION VERSION_GREATER 5.15.0)
+      # tst_docks.exe is pretty big (160 tests), so split it in more runs so we can use threads.
+      add_test(NAME tst_docks0 COMMAND tests_launcher 0 5)
+      add_test(NAME tst_docks1 COMMAND tests_launcher 1 5)
+      add_test(NAME tst_docks2 COMMAND tests_launcher 2 5)
+      add_test(NAME tst_docks3 COMMAND tests_launcher 3 5)
+      add_test(NAME tst_docks4 COMMAND tests_launcher 4 5)
+      add_test(NAME tst_docks5 COMMAND tests_launcher 5 5)
+      add_test(NAME tst_docks6 COMMAND tests_launcher 6 5)
+      add_test(NAME tst_docks7 COMMAND tests_launcher 7 5)
+      add_test(NAME tst_docks8 COMMAND tests_launcher 8 5)
+      add_test(NAME tst_docks9 COMMAND tests_launcher 9 5)
+      add_test(NAME tst_docks10 COMMAND tests_launcher 10 5)
+      add_test(NAME tst_docks11 COMMAND tests_launcher 10 5)
+      add_test(NAME tst_docks12 COMMAND tests_launcher 11 5)
+      add_test(NAME tst_docks13 COMMAND tests_launcher 12 5)
+      add_test(NAME tst_docks14 COMMAND tests_launcher 13 5)
+      add_test(NAME tst_docks15 COMMAND tests_launcher 14 5)
+      add_test(NAME tst_docks16 COMMAND tests_launcher 15 5)
+      add_test(NAME tst_docks17 COMMAND tests_launcher 16 5)
+      add_test(NAME tst_docks18 COMMAND tests_launcher 17 5)
+      add_test(NAME tst_docks19 COMMAND tests_launcher 18 5)
+      add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
+      add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
+    endif()
+    if(NOT ${PROJECT_NAME}_QTQUICK)
+      # tst_multisplitter depends on QWidget
+      add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
+    endif()
+
+  endif()
+endif()
+
+if(${PROJECT_NAME}_DOCS)
+  add_subdirectory(docs) # needs to go last, in case there are build source files
+else()
+  add_custom_target(docs
+    COMMAND ${CMAKE_COMMAND} -E echo "Sorry, there is no docs target since KDDockWidgets_DOCS=OFF."
+    "Re-run cmake with the -DKDDockWidgets_DOCS=True option if you want to generate the documentation.")
+endif()
+
+if(${PROJECT_NAME}_IS_ROOT_PROJECT)
+   # Add uninstall target (not for submodules since parent projects typically have uninstall too)
+  include(ECMUninstallTarget)
 endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
