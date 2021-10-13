@@ -7327,6 +7327,32 @@ void TestDocks::tst_toggleTabbed2()
     QCOMPARE(frame1->title(), "dock1");
 }
 
+void TestDocks::tst_resizePropagatesEvenly()
+{
+    // For github issue #186
+    // Usually resizing main window will resize dock widgets evenly, but if you resize multiple
+    // times then one dock widget is getting too small. Not repro with all layouts, but the following
+    // one reproduced it:
+
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock0 = createDockWidget("dock0", new MyWidget2());
+    auto dock1 = createDockWidget("dock1", new MyWidget2());
+    auto dock2 = createDockWidget("dock2", new MyWidget2());
+
+    m->addDockWidget(dock1, Location_OnLeft);
+    m->addDockWidget(dock2, Location_OnTop, dock1);
+    m->addDockWidget(dock0, Location_OnRight);
+
+    QVERIFY(qAbs(dock2->height() - dock1->height()) < 2);
+
+    m->resize(m->size() + QSize(0, 500));
+    for (int i = 1; i < 10; ++i)
+        m->resize(m->size() - QSize(0, i));
+
+    QEXPECT_FAIL("", "Will fix", Continue);
+    QVERIFY(qAbs(dock2->height() - dock1->height()) < 2);
+}
+
 void TestDocks::tst_addMDIDockWidget()
 {
     EnsureTopLevelsDeleted e;
