@@ -7349,8 +7349,7 @@ void TestDocks::tst_resizePropagatesEvenly()
     for (int i = 1; i < 10; ++i)
         m->resize(m->size() - QSize(0, i));
 
-    QEXPECT_FAIL("", "Will fix", Continue);
-    QVERIFY(qAbs(dock2->height() - dock1->height()) < 2);
+    QVERIFY(qAbs(dock2->height() - dock1->height()) < 3);
 }
 
 void TestDocks::tst_addMDIDockWidget()

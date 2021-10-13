@@ -2107,7 +2107,7 @@ void ItemBoxContainer::dumpLayout(int level)
 
 void ItemBoxContainer::updateChildPercentages()
 {
-    if (d->m_blockUpdatePercentages)
+    if (root()->d->m_blockUpdatePercentages)
         return;
 
     const int usable = usableLength();
