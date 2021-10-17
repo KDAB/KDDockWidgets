@@ -21,8 +21,6 @@
 #include "private/DockRegistry_p.h"
 #include "private/Utils_p.h"
 
-// #define KDDOCKWIDGETS_RUBBERBAND_IS_TOPLEVEL 1
-
 using namespace KDDockWidgets;
 
 static IndicatorWindow *createIndicatorWindow(ClassicIndicators *classicIndicators)
@@ -221,11 +219,7 @@ void ClassicIndicators::updateWindowPosition()
 
 bool ClassicIndicators::rubberBandIsTopLevel() const
 {
-#ifdef KDDOCKWIDGETS_RUBBERBAND_IS_TOPLEVEL
-    return true;
-#else
-    return false;
-#endif
+    return Config::self().internalFlags() & Config::InternalFlag_TopLevelIndicatorRubberBand;
 }
 
 QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
