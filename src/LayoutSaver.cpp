@@ -612,7 +612,7 @@ QStringList LayoutSaver::Layout::dockWidgetsToClose() const
 
 bool LayoutSaver::Layout::containsDockWidget(const QString &uniqueName) const
 {
-    return std::find_if(allDockWidgets.cbegin(), allDockWidgets.cend(), [uniqueName](const auto &dock) {
+    return std::find_if(allDockWidgets.cbegin(), allDockWidgets.cend(), [uniqueName](const std::shared_ptr<LayoutSaver::DockWidget> &dock) {
                return dock->uniqueName == uniqueName;
            })
         != allDockWidgets.cend();
