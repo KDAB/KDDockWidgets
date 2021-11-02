@@ -838,7 +838,7 @@ void LayoutSaver::MainWindow::scaleSizes()
         return;
     }
 
-    scalingInfo = ScalingInfo(uniqueName, geometry);
+    scalingInfo = ScalingInfo(uniqueName, geometry, screenIndex);
 }
 
 QVariantMap LayoutSaver::MainWindow::toVariantMap() const
@@ -1013,7 +1013,7 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
     mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
 }
 
-LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo)
+LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo, int screenIndex)
 {
     auto mainWindow = DockRegistry::self()->mainWindowByName(mainWindowId);
     if (!mainWindow) {
@@ -1031,11 +1031,14 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMa
         return;
     }
 
+    const int currentScreenIndex = qApp->screens().indexOf(mainWindow->screen());
+
     this->mainWindowName = mainWindowId;
     this->savedMainWindowGeometry = savedMainWindowGeo;
     realMainWindowGeometry = mainWindow->window()->geometry(); // window() as our main window might be embedded
     widthFactor = double(realMainWindowGeometry.width()) / savedMainWindowGeo.width();
     heightFactor = double(realMainWindowGeometry.height()) / savedMainWindowGeo.height();
+    mainWindowChangedScreen = currentScreenIndex != screenIndex;
 }
 
 void LayoutSaver::ScalingInfo::translatePos(QPoint &pt) const
@@ -1070,7 +1073,15 @@ void LayoutSaver::ScalingInfo::applyFactorsTo(QRect &rect) const
     QSize size = rect.size();
 
     applyFactorsTo(/*by-ref*/ size);
-    applyFactorsTo(/*by-ref*/ pos);
+
+
+    if (!mainWindowChangedScreen) {
+        // Don't play with floating window position if the main window changed screen.
+        // There's too many corner cases that push the floating windows out of bounds, and
+        // we're not even considering monitors with different HDPI. We can support only the simple case.
+        // For complex cases we'll try to guarantee the window is placed somewhere reasonable.
+        applyFactorsTo(/*by-ref*/ pos);
+    }
 
     rect.moveTopLeft(pos);
     rect.setSize(size);

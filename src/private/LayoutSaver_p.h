@@ -97,7 +97,7 @@ struct LayoutSaver::Placeholder
 struct LayoutSaver::ScalingInfo
 {
     ScalingInfo() = default;
-    explicit ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo);
+    explicit ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo, int screenIndex);
 
     bool isValid() const
     {
@@ -114,6 +114,7 @@ struct LayoutSaver::ScalingInfo
     QRect realMainWindowGeometry;
     double heightFactor = -1;
     double widthFactor = -1;
+    bool mainWindowChangedScreen = false;
 };
 
 struct LayoutSaver::Position
