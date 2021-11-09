@@ -193,6 +193,7 @@ public:
     Q_INVOKABLE void showNormal();
     Q_INVOKABLE void redirectMouseEvents(QObject *from);
 
+    QScreen *screen() const;
     QQuickView *quickView() const;
     QWindow *windowHandle() const;
     QWidgetAdapter *window() const;

@@ -754,6 +754,15 @@ bool QWidgetAdapter::eventFilter(QObject *watched, QEvent *ev)
     return QQuickItem::eventFilter(watched, ev);
 }
 
+QScreen *QWidgetAdapter::screen() const
+{
+    if (QQuickView *w = quickView()) {
+        return w->screen();
+    }
+
+    return nullptr;
+}
+
 void QWidgetAdapter::setWindowIsBeingDestroyed(bool is)
 {
     m_windowIsBeingDestroyed = is;
