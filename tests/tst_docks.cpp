@@ -4132,12 +4132,14 @@ void TestDocks::tst_dragOverTitleBar()
     DropArea *da = dock1->floatingWindow()->dropArea();
     FloatingWindow *fw1 = dock1->floatingWindow();
     FloatingWindow *fw2 = dock2->floatingWindow();
-    WindowBeingDragged wbd(fw2, fw2);
+    {
+        WindowBeingDragged wbd(fw2, fw2);
 
-    const QPoint titleBarPoint = fw1->titleBar()->mapToGlobal(QPoint(5, 5));
+        const QPoint titleBarPoint = fw1->titleBar()->mapToGlobal(QPoint(5, 5));
 
-    auto loc = da->hover(&wbd, titleBarPoint);
-    QCOMPARE(loc, DropIndicatorOverlayInterface::DropLocation_None);
+        auto loc = da->hover(&wbd, titleBarPoint);
+        QCOMPARE(loc, DropIndicatorOverlayInterface::DropLocation_None);
+    }
 
     delete fw1;
     delete fw2;
