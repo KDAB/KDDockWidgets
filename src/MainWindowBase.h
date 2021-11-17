@@ -101,7 +101,7 @@ public:
      *
      * Example: kddockwidgets_example --central-widget
      */
-    Q_INVOKABLE void setPersistentCentralWidget(QWidgetOrQuick *widget);
+    Q_INVOKABLE void setPersistentCentralWidget(KDDockWidgets::QWidgetOrQuick *widget);
     QWidgetOrQuick *persistentCentralWidget() const;
 
     /**
