@@ -69,7 +69,10 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
 #ifdef KDDOCKWIDGETS_QTQUICK
     // TODO: Fix later, not important right now
     || msg.contains(QLatin1String("Binding loop detected for property"))
-        || msg.contains(QLatin1String("Implement me"))
+    || msg.contains(QLatin1String("Implement me"))
+
+    // Ignore benign warning in Material style when deleting a dock widget. Should be fixed in Qt.
+    || (msg.contains(QLatin1String("TypeError: Cannot read property")) && msg.contains(QLatin1String("Material")))
 #endif
         ;
 }

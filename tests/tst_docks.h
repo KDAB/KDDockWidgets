@@ -91,7 +91,6 @@ private Q_SLOTS:
     void tst_restoreEmpty();
     void tst_restoreCentralFrame();
     void tst_restoreMaximizedState();
-    void tst_restoreFloatingMaximizedState();
     void tst_restoreFloatingMinimizedState();
     void tst_restoreNonExistingDockWidget();
     void tst_shutdown();
@@ -262,6 +261,7 @@ private Q_SLOTS:
     void tst_restoreSideBar();
     void tst_toggleActionOnSideBar();
     void tst_deleteOnCloseWhenOnSideBar();
+    void tst_sidebarOverlayShowsAutohide();
     void tst_sidebarOverlayGetsHiddenOnClick();
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();
@@ -282,6 +282,7 @@ private Q_SLOTS:
     void tst_addToHiddenMainWindow();
     void tst_maximumSizePolicy();
     void tst_complex();
+    void tst_restoreFloatingMaximizedState();
 #else
     void tst_hoverShowsDropIndicators();
 #endif

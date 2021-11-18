@@ -7,9 +7,8 @@
  - Co-installable with Qt6
  - Adds support for non-detachable central widget, MainWindowOption_HasCentralWidget. (#225)
  - Fix corrupt layout when restoring old JSON
-
-* v1.4.1 (unreleased)
- -
+ - Fix "Unpin" button not showing up in overlayed widgets
+ - Minimum Qt version is now 5.15
 
 * v1.4.0 (16 July 2021)
   - No longer supports Qt versions less than 5.12

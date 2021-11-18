@@ -285,7 +285,7 @@ bool TitleBar::supportsMinimizeButton() const
 bool TitleBar::supportsAutoHideButton() const
 {
     // Only dock widgets docked into the MainWindow can minimize
-    return m_supportsAutoHide && m_frame && m_frame->isInMainWindow();
+    return m_supportsAutoHide && m_frame && (m_frame->isInMainWindow() || m_frame->isOverlayed());
 }
 
 bool TitleBar::hasIcon() const

@@ -619,28 +619,6 @@ void TestDocks::tst_restoreMaximizedState()
     QCOMPARE(m->windowHandle()->windowState(), Qt::WindowMaximized);
 }
 
-void TestDocks::tst_restoreFloatingMaximizedState()
-{
-    EnsureTopLevelsDeleted e;
-    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton);
-    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
-    const QRect originalNormalGeometry = dock1->floatingWindow()->normalGeometry();
-    dock1->floatingWindow()->showMaximized();
-    qDebug() << originalNormalGeometry;
-
-    QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMaximized);
-
-    LayoutSaver saver;
-    const QByteArray saved = saver.serializeLayout();
-
-    saver.restoreLayout(saved);
-    QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMaximized);
-    QCOMPARE(dock1->floatingWindow()->normalGeometry(), originalNormalGeometry);
-
-    dock1->floatingWindow()->showNormal();
-    QCOMPARE(dock1->floatingWindow()->normalGeometry(), originalNormalGeometry);
-}
-
 void TestDocks::tst_restoreFloatingMinimizedState()
 {
     EnsureTopLevelsDeleted e;
@@ -896,6 +874,31 @@ void TestDocks::tst_shutdown()
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
+
+void TestDocks::tst_restoreFloatingMaximizedState()
+{
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton);
+    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+    const QRect originalNormalGeometry = dock1->floatingWindow()->normalGeometry();
+    dock1->floatingWindow()->showMaximized();
+    qDebug() << originalNormalGeometry;
+
+    QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMaximized);
+
+    LayoutSaver saver;
+    const QByteArray saved = saver.serializeLayout();
+
+    saver.restoreLayout(saved);
+    QCOMPARE(dock1->floatingWindow()->windowHandle()->windowState(), Qt::WindowMaximized);
+
+
+
+    QCOMPARE(dock1->floatingWindow()->normalGeometry(), originalNormalGeometry);
+
+    dock1->floatingWindow()->showNormal();
+    QCOMPARE(dock1->floatingWindow()->normalGeometry(), originalNormalGeometry);
+}
 
 void TestDocks::tst_complex()
 {
@@ -4132,12 +4135,14 @@ void TestDocks::tst_dragOverTitleBar()
     DropArea *da = dock1->floatingWindow()->dropArea();
     FloatingWindow *fw1 = dock1->floatingWindow();
     FloatingWindow *fw2 = dock2->floatingWindow();
-    WindowBeingDragged wbd(fw2, fw2);
+    {
+        WindowBeingDragged wbd(fw2, fw2);
 
-    const QPoint titleBarPoint = fw1->titleBar()->mapToGlobal(QPoint(5, 5));
+        const QPoint titleBarPoint = fw1->titleBar()->mapToGlobal(QPoint(5, 5));
 
-    auto loc = da->hover(&wbd, titleBarPoint);
-    QCOMPARE(loc, DropIndicatorOverlayInterface::DropLocation_None);
+        auto loc = da->hover(&wbd, titleBarPoint);
+        QCOMPARE(loc, DropIndicatorOverlayInterface::DropLocation_None);
+    }
 
     delete fw1;
     delete fw2;
@@ -5251,6 +5256,31 @@ void TestDocks::tst_deleteOnCloseWhenOnSideBar()
 
     QTest::qWait(500);
     QVERIFY(dock1);
+}
+
+void TestDocks::tst_sidebarOverlayShowsAutohide()
+{
+    // Tests that overlayed widgets show the "Disable auto-hide" button
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+
+    m1->addDockWidget(dw1, Location_OnBottom);
+    QVERIFY(dw1->titleBar()->supportsAutoHideButton());
+
+    m1->moveToSideBar(dw1);
+    m1->overlayOnSideBar(dw1);
+
+    QVERIFY(dw1->isOverlayed());
+
+    auto titleBar = dw1->titleBar();
+    QVERIFY(titleBar->isVisible());
+    QVERIFY(titleBar->supportsAutoHideButton());
+
+    delete dw1;
 }
 
 void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
