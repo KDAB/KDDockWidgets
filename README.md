@@ -146,12 +146,7 @@ your application whenever updating KDDW.
 
 Supported Qt versions and toolchains
 =====================================
-KDDockWidgets requires Qt5 >= 5.12 or Qt6 >= 6.1.
-The QtQuick support requires Qt5 >= 5.15 or Qt6 >= 6.1.
-
-
-Regarding compilers, whatever toolchain is able to build Qt 5.9 should also be
-fine. Note however that MSVC 2013 isn't supported anymore due to compiler crashes.
+KDDockWidgets requires Qt 5.15.x or Qt6 >= 6.2.
 
 
 Styling
