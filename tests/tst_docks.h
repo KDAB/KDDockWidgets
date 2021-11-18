@@ -261,6 +261,7 @@ private Q_SLOTS:
     void tst_restoreSideBar();
     void tst_toggleActionOnSideBar();
     void tst_deleteOnCloseWhenOnSideBar();
+    void tst_sidebarOverlayShowsAutohide();
     void tst_sidebarOverlayGetsHiddenOnClick();
     void tst_floatRemovesFromSideBar();
     void tst_overlayedGeometryIsSaved();

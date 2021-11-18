@@ -5258,6 +5258,31 @@ void TestDocks::tst_deleteOnCloseWhenOnSideBar()
     QVERIFY(dock1);
 }
 
+void TestDocks::tst_sidebarOverlayShowsAutohide()
+{
+    // Tests that overlayed widgets show the "Disable auto-hide" button
+
+    EnsureTopLevelsDeleted e;
+    KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
+
+    auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None, "MW1");
+    auto dw1 = new DockWidgetType(QStringLiteral("1"));
+
+    m1->addDockWidget(dw1, Location_OnBottom);
+    QVERIFY(dw1->titleBar()->supportsAutoHideButton());
+
+    m1->moveToSideBar(dw1);
+    m1->overlayOnSideBar(dw1);
+
+    QVERIFY(dw1->isOverlayed());
+
+    auto titleBar = dw1->titleBar();
+    QVERIFY(titleBar->isVisible());
+    QVERIFY(titleBar->supportsAutoHideButton());
+
+    delete dw1;
+}
+
 void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
 {
     EnsureTopLevelsDeleted e;
