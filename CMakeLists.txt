@@ -230,7 +230,7 @@ if(KDAB_INSTALL)
   if(UNIX)
     set(CMAKE_INSTALL_PREFIX "/usr/local/KDAB/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}" CACHE INTERNAL "Install to default KDAB Location")
   elseif(WIN32)
-    set(CMAKE_INSTALL_PREFIX "C:\\KDAB\\${PROJECT_NAME}-$$VERSION" CACHE INTERNAL "Install to default KDAB Location")
+    set(CMAKE_INSTALL_PREFIX "C:\\KDAB\\${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}" CACHE INTERNAL "Install to default KDAB Location")
   endif()
 endif()
 
