@@ -14,15 +14,15 @@ Packager:       Klaralvdalens Datakonsult AB (KDAB) <info@kdab.com>
 
 BuildRequires: cmake
 %if %{defined suse_version}
-BuildRequires:  libqt6-qtbase-devel libqt6-qtx11extras-devel
+BuildRequires:  libqt6-qtbase-devel libqt6-qtbase-private-headers-devel libqt6-qtx11extras-devel
 %endif
 
 %if %{defined fedora}
-BuildRequires:  gcc-c++ qt6-qtbase-devel desktop-file-utils
+BuildRequires:  gcc-c++ qt6-qtbase-devel qt6-qtbase-private-devel desktop-file-utils libxkbcommon-devel
 %endif
 
 %if %{defined rhel}
-BuildRequires:  gcc-c++ qt6-qtbase-devel qt6-qtx11extras-devel desktop-file-utils
+BuildRequires:  gcc-c++ qt6-qtbase-devel qt6-qtbase-private-devel qt6-qtx11extras-devel desktop-file-utils libxkbcommon-devel
 %endif
 
 %description
