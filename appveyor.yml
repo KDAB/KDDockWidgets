@@ -51,11 +51,12 @@ before_build:
 build_script:
   - mkdir build
   - cd build
-  - cmd: cmake -G Ninja -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DKDDockWidgets_TESTS=True -DKDDockWidgets_EXAMPLES=True  -DKDDockWidgets_DEVELOPER_MODE=True ..
-  - sh: cmake -G Ninja -DCMAKE_BUILD_TYPE=$CONFIGURATION -DKDDockWidgets_TESTS=True -DKDDockWidgets_EXAMPLES=True  -DKDDockWidgets_DEVELOPER_MODE=True ..
+  - cmd: cmake -G Ninja -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DKDDockWidgets_TESTS=True -DKDDockWidgets_EXAMPLES=True -DKDDockWidgets_DEVELOPER_MODE=True ..
+  - sh: cmake -G Ninja -DCMAKE_BUILD_TYPE=$CONFIGURATION -DKDDockWidgets_TESTS=True -DKDDockWidgets_EXAMPLES=True -DKDDockWidgets_DEVELOPER_MODE=True ..
   - cmake --build .
   - cmd: cmake --build . --target install
   - sh: sudo cmake --build . --target install
+  - cmd: set PATH=.\bin;%PATH%
   - ctest --test-dir .
 
 # to disable automatic builds
