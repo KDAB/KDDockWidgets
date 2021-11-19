@@ -41,7 +41,7 @@ configuration:
   - Debug
 
 install:
-  - sh: if [ "`uname -s`" = "Darwin" ]; then brew install ninja; else sudo get-apt -y install mesa-common-dev libglu1-mesa-dev; fi
+  - sh: if [ "`uname -s`" = "Darwin" ]; then brew install ninja; else sudo apt-get -y install mesa-common-dev libglu1-mesa-dev; fi
 
 before_build:
   - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
