@@ -1,5 +1,5 @@
 Name:           qt5-kddockwidgets
-Version:        1.4.0
+Version:        1.5.0
 Release:        1
 Summary:        KDAB's Dock Widget Framework for Qt5
 Source0:        %{name}-%{version}.tar.gz
@@ -98,6 +98,8 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 %{_libdir}/libkddockwidgets.so
 
 %changelog
+* Fri Nov 19 2021 Allen Winter <allen.winter@kdab.com> 1.5.0
+  1.5.0 final
 * Fri Jul 16 2021 Allen Winter <allen.winter@kdab.com> 1.4.0
   1.4.0 final
 * Mon Jun 07 2021 Allen Winter <allen.winter@kdab.com> 1.3.1
