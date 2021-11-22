@@ -98,7 +98,7 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 %{_libdir}/libkddockwidgets.so
 
 %changelog
-* Fri Nov 19 2021 Allen Winter <allen.winter@kdab.com> 1.5.0
+* Mon Nov 22 2021 Allen Winter <allen.winter@kdab.com> 1.5.0
   1.5.0 final
 * Fri Jul 16 2021 Allen Winter <allen.winter@kdab.com> 1.4.0
   1.4.0 final
