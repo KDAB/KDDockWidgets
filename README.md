@@ -160,6 +160,10 @@ Qt StyleSheets are not, and will not, be supported. See the comments in
 `examples/dockwidgets/MyTitleBar_CSS.h` for why. You can however use some minimal
 CSS, as shown in that example, just don't report bugs about it.
 
+Warning: When using private headers, be sure to rebuild your application whenever you
+update to a new KDDW version. Binary compatibility is only kept when using public
+headers.
+
 
 Licensing
 =========
