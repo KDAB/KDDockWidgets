@@ -1,5 +1,5 @@
 Name:           qt5-kddockwidgets
-Version:        1.4.0
+Version:        1.5.0
 Release:        1
 Summary:        KDAB's Dock Widget Framework for Qt5
 Source0:        %{name}-%{version}.tar.gz
@@ -14,15 +14,15 @@ Packager:       Klaralvdalens Datakonsult AB (KDAB) <info@kdab.com>
 
 BuildRequires: cmake
 %if %{defined suse_version}
-BuildRequires:  libqt5-qtbase-devel libqt5-qtx11extras-devel
+BuildRequires:  libqt5-qtbase-devel libqt5-qtbase-private-headers-devel libqt5-qtx11extras-devel
 %endif
 
 %if %{defined fedora}
-BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtx11extras-devel desktop-file-utils
+BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtbase-private-devel qt5-qtx11extras-devel desktop-file-utils
 %endif
 
 %if %{defined rhel}
-BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtx11extras-devel desktop-file-utils
+BuildRequires:  gcc-c++ qt5-qtbase-devel qt5-qtbase-private-devel qt5-qtx11extras-devel desktop-file-utils
 %endif
 
 %description
@@ -98,6 +98,8 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 %{_libdir}/libkddockwidgets.so
 
 %changelog
+* Mon Nov 24 2021 Allen Winter <allen.winter@kdab.com> 1.5.0
+  1.5.0 final
 * Fri Jul 16 2021 Allen Winter <allen.winter@kdab.com> 1.4.0
   1.4.0 final
 * Mon Jun 07 2021 Allen Winter <allen.winter@kdab.com> 1.3.1

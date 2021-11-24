@@ -19,6 +19,8 @@ skip_tags: false
 
 # Build worker image
 image:
+  - Ubuntu
+  - macos
   - Visual Studio 2019
 
 # scripts that are called at very beginning, before repo cloning
@@ -36,16 +38,28 @@ platform:
 # build Configuration, i.e. Debug, Release, etc.
 configuration:
   - Release
+  - Debug
 
 install:
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-  - set QTDIR=C:\Qt\5.15\msvc2019_64
-  - set PATH=%QTDIR%\bin;%PATH%
+  - sh: if [ "`uname -s`" = "Darwin" ]; then brew install ninja; else sudo apt-get -y install mesa-common-dev libglu1-mesa-dev; fi
+
+before_build:
+  - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - cmd: set PATH=C:\Qt\5.15\msvc2019_64;%PATH%
+  - sh: if [ "`uname -s`" = "Darwin" ]; then export PATH=$HOME/Qt/5.15/clang_64/bin:$PATH; else export PATH=$HOME/Qt/5.15/gcc_64/bin:$PATH; fi
+
 build_script:
   - mkdir build
   - cd build
-  - cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DKDDockWidgets_TESTS=True -DKDDockWidgets_EXAMPLES=True  -DKDDockWidgets_DEVELOPER_MODE=True ..
-  - nmake
+  - cmd: cmake -G Ninja -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DKDDockWidgets_TESTS=True -DKDDockWidgets_EXAMPLES=True -DKDDockWidgets_DEVELOPER_MODE=True ..
+  - sh: cmake -G Ninja -DCMAKE_BUILD_TYPE=$CONFIGURATION -DKDDockWidgets_TESTS=True -DKDDockWidgets_EXAMPLES=True -DKDDockWidgets_DEVELOPER_MODE=True ..
+  - cmake --build .
+  - cmd: cmake --build . --target install
+  - sh: sudo cmake --build . --target install
+  - cmd: set PATH=.\bin;%PATH%
+  #temporarily disable testing on Windows
+  #- ctest --test-dir .
+  - sh: ctest --test-dir .
 
 # to disable automatic builds
 #build: off
@@ -54,11 +68,8 @@ build_script:
 #       tests configuration       #
 #---------------------------------#
 
-test_script:
-  - nmake test
-
 # to disable automatic tests
-#test: off
+test: off
 
 
 #---------------------------------#

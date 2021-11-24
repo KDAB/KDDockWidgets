@@ -61,6 +61,9 @@ public:
     ~Config();
 
     ///@brief Flag enum to tune certain behaviours, the defaults are Flag_Default
+    ///@warning Only the default is supported on all platforms. Not all options work with all window managers,
+    ///         Qt does its best to abstract the differences however that's only a best effort. This is true specially
+    ///         for any option that changes window flags.
     enum Flag
     {
         Flag_None = 0, ///< No option set
