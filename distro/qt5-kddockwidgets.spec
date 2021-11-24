@@ -14,7 +14,7 @@ Packager:       Klaralvdalens Datakonsult AB (KDAB) <info@kdab.com>
 
 BuildRequires: cmake
 %if %{defined suse_version}
-BuildRequires:  libqt5-qtbase-devel libqt5-qtx11extras-devel
+BuildRequires:  libqt5-qtbase-devel libqt5-qtbase-private-headers-devel libqt5-qtx11extras-devel
 %endif
 
 %if %{defined fedora}
