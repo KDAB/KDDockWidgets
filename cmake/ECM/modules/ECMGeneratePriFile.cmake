@@ -203,7 +203,6 @@ function(ECM_GENERATE_PRI_FILE)
   else()
       set(PRI_TARGET_LIBS "${BASEPATH}/${EGPF_LIB_INSTALL_DIR}")
   endif()
-  set(PRI_TARGET_DEFINES "")
 
   set(PRI_FILENAME ${CMAKE_CURRENT_BINARY_DIR}/qt_${PRI_TARGET_BASENAME}.pri)
   if (EGPF_FILENAME_VAR)
@@ -211,6 +210,8 @@ function(ECM_GENERATE_PRI_FILE)
   endif()
 
   set(PRI_TARGET_MODULE_CONFIG "")
+  set(PRI_TARGET_DEFINES "")
+  set(PRI_TARGET_POSTFIX "")
   # backward compat: it was not obvious LIB_NAME needs to be a target name,
   # and some projects where the target name was not the actual library output name
   # passed the output name for LIB_NAME, so .name & .module prperties are correctly set.
@@ -220,6 +221,10 @@ function(ECM_GENERATE_PRI_FILE)
     if (target_type STREQUAL "STATIC_LIBRARY")
         set(PRI_TARGET_MODULE_CONFIG "staticlib")
     endif()
+    get_target_property(target_defs ${EGPF_LIB_NAME} INTERFACE_COMPILE_DEFINITIONS)
+    list(FILTER target_defs EXCLUDE REGEX ^QT_)
+    string(JOIN " " PRI_TARGET_DEFINES "${target_defs}")
+    set(PRI_TARGET_POSTFIX "$<TARGET_PROPERTY:${EGPF_LIB_NAME},$<UPPER_CASE:$<CONFIG>$<$<CONFIG:>:Debug>>_POSTFIX>")
   endif()
 
   file(GENERATE
@@ -230,8 +235,8 @@ QT.${PRI_TARGET_BASENAME}.MAJOR_VERSION = ${PRI_VERSION_MAJOR}
 QT.${PRI_TARGET_BASENAME}.MINOR_VERSION = ${PRI_VERSION_MINOR}
 QT.${PRI_TARGET_BASENAME}.PATCH_VERSION = ${PRI_VERSION_PATCH}
 QT.${PRI_TARGET_BASENAME}.name = ${PRI_TARGET_LIBNAME}
-QT.${PRI_TARGET_BASENAME}.module = ${PRI_TARGET_LIBNAME}
-QT.${PRI_TARGET_BASENAME}.defines = ${PRI_TARGET_DEFINES}
+QT.${PRI_TARGET_BASENAME}.module = ${PRI_TARGET_LIBNAME}${PRI_TARGET_POSTFIX}
+QT.${PRI_TARGET_BASENAME}.DEFINES = ${PRI_TARGET_DEFINES}
 QT.${PRI_TARGET_BASENAME}.includes = ${PRI_TARGET_INCLUDES}
 QT.${PRI_TARGET_BASENAME}.private_includes =
 QT.${PRI_TARGET_BASENAME}.libs = ${PRI_TARGET_LIBS}
