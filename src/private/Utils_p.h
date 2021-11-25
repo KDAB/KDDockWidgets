@@ -57,6 +57,11 @@ inline bool isOffscreen()
     return qApp->platformName() == QLatin1String("offscreen");
 }
 
+inline bool isXCB()
+{
+    return qApp->platformName() == QLatin1String("xcb");
+}
+
 inline bool kddwUsesQtWidgets()
 {
     // Returns whether KDDW is built for QtWidgets or QtQuick
@@ -139,7 +144,7 @@ inline bool windowManagerHasTranslucency()
         return false;
 
 #ifdef QT_X11EXTRAS_LIB
-    if (qApp->platformName() == QLatin1String("xcb"))
+    if (isXCB())
         return QX11Info::isCompositingManagerRunning();
 #endif
 
