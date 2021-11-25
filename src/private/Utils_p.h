@@ -106,6 +106,15 @@ inline bool usesNativeDraggingAndResizing()
     return usesNativeTitleBar() || usesAeroSnapWithCustomDecos();
 }
 
+inline bool linksToXLib()
+{
+#ifdef KDDockWidgets_XLIB
+    return true;
+#else
+    return false;
+#endif
+}
+
 inline bool usesUtilityWindows()
 {
     const auto flags = Config::self().internalFlags();
