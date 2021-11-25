@@ -21,6 +21,7 @@
 #include "WidgetResizeHandler_p.h"
 #include "Config.h"
 #include "MDILayoutWidget_p.h"
+#include "WindowZOrder_x11_p.h"
 
 #include <QMouseEvent>
 #include <QGuiApplication>
@@ -879,6 +880,17 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
             }
         }
 #endif // Q_OS_WIN
+    } else if (linksToXLib() && isXCB()) {
+        bool ok = false;
+        const QVector<QWindow*> orderedWindows = KDDockWidgets::orderedWindows(ok);
+        FloatingWindow *tlwBeingDragged = m_windowBeingDragged->floatingWindow();
+        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, orderedWindows, tlwBeingDragged))
+            return tl;
+
+        if (!ok) {
+            qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found. Some windows weren't seen by XLib";
+        }
+
     } else {
         // !Windows: Linux, macOS, offscreen (offscreen on Windows too), etc.
 

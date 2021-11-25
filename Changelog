@@ -1,5 +1,5 @@
 * v1.5.1 (unreleased)
- -
+ - X11: Improved detecting which window is under the cursor, by using native X11 API
 
 * v1.5.0 (24 November 2021)
  - Install the Python bindings to "site-packages"

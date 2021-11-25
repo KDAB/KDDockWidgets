@@ -74,6 +74,7 @@ set(DOCKSLIBS_SRCS
     private/DropAreaWithCentralFrame_p.h
     private/WidgetResizeHandler.cpp
     private/WidgetResizeHandler_p.h
+    private/WindowZOrder_x11_p.h
     private/indicators/NullIndicators.cpp
     private/indicators/NullIndicators_p.h
     private/indicators/ClassicIndicators.cpp
@@ -304,6 +305,10 @@ if(WIN32)
 elseif(NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6 AND ${PROJECT_NAME}_X11EXTRAS)
   find_package(Qt${Qt_VERSION_MAJOR}X11Extras)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::X11Extras)
+endif()
+
+if(${PROJECT_NAME}_XLib)
+  target_link_libraries(kddockwidgets PRIVATE X11)
 endif()
 
 set_target_properties(kddockwidgets PROPERTIES
