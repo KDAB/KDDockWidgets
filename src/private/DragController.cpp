@@ -431,7 +431,7 @@ void StateInternalMDIDragging::onEntry()
     // Raise the dock widget being dragged
     if (auto tb = qobject_cast<TitleBar *>(q->m_draggable->asWidget())) {
         if (Frame *f = tb->frame())
-            f->raise();
+            f->QWidgetAdapter::raise();
     }
 
     Q_EMIT q->isDraggingChanged();
@@ -462,7 +462,7 @@ bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
     }
 
     const QSize parentSize = frame->QWidgetAdapter::parentWidget()->size();
-    const QPoint oldPos = frame->mapToGlobal(QPoint(0, 0));
+    const QPoint oldPos = frame->QWidgetAdapter::mapToGlobal(QPoint(0, 0));
     const QPoint delta = globalPos - oldPos;
     const QPoint newLocalPos = frame->pos() + delta - q->m_offset;
 
@@ -546,7 +546,7 @@ bool StateDraggingWayland::handleDragEnter(QDragEnterEvent *ev, DropArea *dropAr
         return true;
     }
 
-    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
+    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->QWidgetAdapter::mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
 
     ev->accept();
     return true;
@@ -564,7 +564,7 @@ bool StateDraggingWayland::handleDrop(QDropEvent *ev, DropArea *dropArea)
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
-    if (dropArea->drop(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)))) {
+    if (dropArea->drop(q->m_windowBeingDragged.get(), dropArea->QWidgetAdapter::mapToGlobal(Qt5Qt6Compat::eventPos(ev)))) {
         ev->setDropAction(Qt::MoveAction);
         ev->accept();
         Q_EMIT q->dropped();
@@ -582,7 +582,7 @@ bool StateDraggingWayland::handleDragMove(QDragMoveEvent *ev, DropArea *dropArea
     if (!mimeData || !q->m_windowBeingDragged)
         return false; // Not for us, some other user drag.
 
-    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
+    dropArea->hover(q->m_windowBeingDragged.get(), dropArea->QWidgetAdapter::mapToGlobal(Qt5Qt6Compat::eventPos(ev)));
 
     return true;
 }

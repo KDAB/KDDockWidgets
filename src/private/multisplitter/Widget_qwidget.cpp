@@ -128,3 +128,13 @@ void Widget_qwidget::update()
 {
     m_thisWidget->update();
 }
+
+void Widget_qwidget::raise()
+{
+    m_thisWidget->raise();
+}
+
+QPoint Widget_qwidget::mapToGlobal(const QPoint &pos) const
+{
+    return m_thisWidget->mapToGlobal(pos);
+}

@@ -195,7 +195,7 @@ FloatingWindow *Frame::detachTab(DockWidgetBase *dockWidget)
     removeWidget(dockWidget);
 
     auto newFrame = Config::self().frameworkWidgetFactory()->createFrame();
-    const QPoint globalPoint = mapToGlobal(QPoint(0, 0));
+    const QPoint globalPoint = QWidgetAdapter::mapToGlobal(QPoint(0, 0));
     newFrame->addWidget(dockWidget);
 
     // We're potentially already dead at this point, as frames with 0 tabs auto-destruct. Don't access members from this point.

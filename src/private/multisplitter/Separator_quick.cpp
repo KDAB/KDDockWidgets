@@ -37,11 +37,6 @@ bool SeparatorQuick::isVertical() const
 
 Layouting::Widget *SeparatorQuick::createRubberBand(Layouting::Widget *parent)
 {
-    if (!parent) {
-        qWarning() << Q_FUNC_INFO << "Parent is required";
-        return nullptr;
-    }
-
     return new Layouting::Widget_quick(new Layouting::RubberBand(parent));
 }
 

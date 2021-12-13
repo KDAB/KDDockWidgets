@@ -14,6 +14,7 @@
 #include "Logging_p.h"
 #include "Item_p.h"
 #include "MultiSplitterConfig.h"
+#include "Config.h"
 
 #include <QGuiApplication>
 
@@ -45,6 +46,7 @@ struct Separator::Private
     ItemBoxContainer *parentContainer = nullptr;
     Layouting::Side lastMoveDirection = Side1;
     const bool usesLazyResize = Config::self().flags() & Config::Flag::LazyResize;
+    const bool rubberBandIsTopLevel = KDDockWidgets::Config::self().internalFlags() & KDDockWidgets::Config::InternalFlag_TopLevelIndicatorRubberBand;
     Widget *const m_hostWidget;
 };
 
@@ -92,8 +94,10 @@ void Separator::onMousePress()
     qCDebug(separators) << "Drag started";
 
     if (d->lazyResizeRubberBand) {
-        setLazyPosition(position());
+        setLazyPosition(position(), d->rubberBandIsTopLevel);
         d->lazyResizeRubberBand->show();
+        if (d->rubberBandIsTopLevel)
+            d->lazyResizeRubberBand->raise();
     }
 }
 
@@ -191,7 +195,7 @@ void Separator::init(ItemBoxContainer *parentContainer, Qt::Orientation orientat
 
     d->parentContainer = parentContainer;
     d->orientation = orientation;
-    d->lazyResizeRubberBand = d->usesLazyResize ? createRubberBand(d->m_hostWidget)
+    d->lazyResizeRubberBand = d->usesLazyResize ? createRubberBand(d->rubberBandIsTopLevel ? nullptr : d->m_hostWidget)
                                                 : nullptr;
     asWidget()->setVisible(true);
 }
@@ -227,9 +231,9 @@ int Separator::numSeparators()
     return s_numSeparators;
 }
 
-void Separator::setLazyPosition(int pos)
+void Separator::setLazyPosition(int pos, bool force)
 {
-    if (d->lazyPosition != pos) {
+    if (d->lazyPosition != pos || force) {
         d->lazyPosition = pos;
 
         QRect geo = asWidget()->geometry();
@@ -238,6 +242,9 @@ void Separator::setLazyPosition(int pos)
         } else {
             geo.moveLeft(pos);
         }
+
+        if (d->rubberBandIsTopLevel)
+            geo.translate(d->m_hostWidget->mapToGlobal(QPoint(0, 0)));
 
         d->lazyResizeRubberBand->setGeometry(geo);
     }

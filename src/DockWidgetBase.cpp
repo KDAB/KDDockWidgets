@@ -391,7 +391,7 @@ void DockWidgetBase::raise()
         fw->activateWindow();
     } else if (Frame *frame = d->frame()) {
         if (frame->isMDI())
-            frame->raise();
+            frame->QWidgetAdapter::raise();
     }
 }
 

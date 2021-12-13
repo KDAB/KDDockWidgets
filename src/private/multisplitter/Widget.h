@@ -110,6 +110,8 @@ public:
     virtual void show() = 0;
     virtual void hide() = 0;
     virtual void update() = 0;
+    virtual void raise() = 0;
+    virtual QPoint mapToGlobal(const QPoint &pos) const = 0;
 
     QSize size() const
     {

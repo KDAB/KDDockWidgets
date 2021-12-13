@@ -713,7 +713,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         // When clicking on a MDI Frame we raise the window
         if (Frame *f = parentFrame(watched)) {
             if (f->isMDI())
-                f->raise();
+                f->QWidgetAdapter::raise();
         }
 
         // The following code is for hididng the overlay

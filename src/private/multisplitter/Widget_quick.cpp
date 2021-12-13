@@ -150,3 +150,13 @@ QQuickItem *Widget_quick::createQQuickItem(const QString &filename, QQuickItem *
 
     return qquickitem;
 }
+
+void Widget_quick::raise()
+{
+    // TODO
+}
+
+QPoint Widget_quick::mapToGlobal(const QPoint &pos) const
+{
+    return m_thisWidget->mapToGlobal(pos).toPoint();
+}
