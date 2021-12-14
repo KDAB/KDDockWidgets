@@ -87,11 +87,6 @@ void SeparatorWidget::mouseDoubleClickEvent(QMouseEvent *)
 
 Layouting::Widget *SeparatorWidget::createRubberBand(Layouting::Widget *parent)
 {
-    if (!parent) {
-        qWarning() << Q_FUNC_INFO << "Parent is required";
-        return nullptr;
-    }
-
     return new Layouting::Widget_qwidget(new RubberBand(parent));
 }
 

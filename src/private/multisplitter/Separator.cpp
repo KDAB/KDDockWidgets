@@ -14,8 +14,13 @@
 #include "Logging_p.h"
 #include "Item_p.h"
 #include "MultiSplitterConfig.h"
+#include "Config.h"
 
 #include <QGuiApplication>
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+# include <QWidget>
+#endif
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -24,6 +29,15 @@
 using namespace Layouting;
 
 Separator *Separator::s_separatorBeingDragged = nullptr;
+
+namespace {
+
+bool rubberBandIsTopLevel()
+{
+    return KDDockWidgets::Config::self().internalFlags() & KDDockWidgets::Config::InternalFlag_TopLevelIndicatorRubberBand;
+}
+
+}
 
 /// @brief internal counter just for unit-tests
 static int s_numSeparators = 0;
@@ -94,6 +108,10 @@ void Separator::onMousePress()
     if (d->lazyResizeRubberBand) {
         setLazyPosition(position());
         d->lazyResizeRubberBand->show();
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+        if (rubberBandIsTopLevel())
+            d->lazyResizeRubberBand->asQWidget()->raise();
+#endif
     }
 }
 
@@ -191,8 +209,8 @@ void Separator::init(ItemBoxContainer *parentContainer, Qt::Orientation orientat
 
     d->parentContainer = parentContainer;
     d->orientation = orientation;
-    d->lazyResizeRubberBand = d->usesLazyResize ? createRubberBand(d->m_hostWidget)
-                                                : nullptr;
+    d->lazyResizeRubberBand = d->usesLazyResize ? createRubberBand(rubberBandIsTopLevel() ? nullptr : d->m_hostWidget)
+                                                                                          : nullptr;
     asWidget()->setVisible(true);
 }
 
@@ -238,7 +256,10 @@ void Separator::setLazyPosition(int pos)
         } else {
             geo.moveLeft(pos);
         }
-
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+        if (rubberBandIsTopLevel())
+            geo.translate(d->m_hostWidget->asQWidget()->mapToGlobal(QPoint(0, 0)));
+#endif
         d->lazyResizeRubberBand->setGeometry(geo);
     }
 }
