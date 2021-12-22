@@ -1,8 +1,11 @@
 Supported Qt versions and toolchains
 =====================================
 
-KDDockWidgets for QtQuick requires a C++17 capable compiler and either
-Qt >= 5.15.2 or Qt >= 6.2.1
+KDDockWidgets for QtQuick requires a C++17 capable compiler and Qt >= 6.2.1.
+
+Qt 5.15.2 will probably also work, but it's not built and tested by KDAB CI, we
+advise users to move to Qt6 as soon as possible.
+
 
 
 TROUBLESHOOTING
