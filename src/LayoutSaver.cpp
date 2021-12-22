@@ -339,10 +339,13 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, QWidgetOrQu
     // Not simply calling QWidget::setGeometry() here.
     // For QtQuick we need to modify the QWindow's geometry.
 
+    auto windowGeometry = saved.geometry;
+    ::FloatingWindow::ensureRectIsOnScreen(windowGeometry);
+
     if (topLevel->isWindow()) {
-        topLevel->setGeometry(saved.geometry);
+        topLevel->setGeometry(windowGeometry);
     } else {
-        KDDockWidgets::Private::setTopLevelGeometry(saved.geometry, topLevel);
+        KDDockWidgets::Private::setTopLevelGeometry(windowGeometry, topLevel);
     }
 
     topLevel->setVisible(saved.isVisible);
