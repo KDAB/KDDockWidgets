@@ -82,7 +82,8 @@ Open a terminal capable of building Qt5 applications.
 Make sure you have cmake, ninja, compiler, Qt, etc in PATH.
 
 Adapt the instructions to suit your cmake generator and operating system.
-Build and install the KDDockWidgets framework:
+Build and install the KDDockWidgets framework (see the "Building" section
+below for more info):
 
 ```
 $ cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/path/where/to/install ../path/to/kddockwidgets
@@ -103,6 +104,15 @@ The installation directory defaults to `c:\KDAB\KDDockWidgets-<version>` on Wind
 and `/usr/local/KDAB/KDDockWidgets-<version>` on non-Windows.
 
 You can change the installation location by passing the option `-DCMAKE_INSTALL_PREFIX=/install/path` to cmake.
+
+Building
+========
+On Linux distributions make sure to install the qt5 private development packages:
+
+- SUSE: libqt5-qtbase-private-headers-devel
+- Ubuntu, debian-based: qtbase5-private-dev
+- Fedora, redhat-based: qt5-qtbase-private-devel
+- others: consult your distro
 
 Using
 =====
@@ -134,11 +144,12 @@ Versioning
 
 New features go to master while the stable branch only accepts non-intrusive bug fixes.
 
-We'll try to remain source-compatible across versions. API will get a deprecation
-notice before being removed in the next version. Note that this source-compatibility
-effort is only for the public API. Private API (headers ending in _p.h) might change so you
-shouldn't depend on them. Private API is only exposed so more advanced users can
-override, for example `paintEvent()`, and not so they can change internal business logic.
+We'll try to remain source and binary compatible across versions. API will get
+a deprecation notice before being removed in the next version. Note that this
+compatibility effort is only for the public API. Private API (headers ending
+in _p.h) might change so you shouldn't depend on them. Private API is only
+exposed so more advanced users can override, for example `paintEvent()`, and
+not so they can change internal business logic.
 
 We don't promise or test binary compatibility. It's advised that you recompile
 your application whenever updating KDDW.
