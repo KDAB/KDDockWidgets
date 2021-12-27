@@ -29,6 +29,9 @@
 #include <QWindow>
 
 #if defined(Q_OS_WIN)
+//NOMINMAX tells windows.h not to define the max and min macros
+//which will interfere with the max() from std::numeric_limits
+#define NOMINMAX
 #include <windows.h>
 #include <dwmapi.h>
 #endif
