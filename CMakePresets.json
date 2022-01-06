@@ -295,6 +295,51 @@
                 "QML2_IMPORT_PATH" : "$env{QT6_DIR}/imports:$env{QT6_DIR}/qml",
                 "LD_LIBRARY_PATH" : "$env{QT6_DIR}/lib"
             }
+        },
+        {
+            "name": "dev-time-trace",
+            "displayName": "dev-time-trace",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-time-trace",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                "KDDockWidgets_FUZZER" : "OFF",
+                "CMAKE_C_FLAGS_INIT" : "-ftime-trace",
+                "CMAKE_CXX_FLAGS_INIT": "-ftime-trace"
+            },
+            "warnings" : {
+                "uninitialized" : true
+            },
+            "environment": {
+                "CC": "clang",
+                "CXX": "clang++",
+                "CCACHE_DISABLE" : "ON"
+            }
+        },
+        {
+            "name": "dev6-time-trace",
+            "displayName": "dev6-time-trace",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev6-time-trace",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                "KDDockWidgets_FUZZER" : "OFF",
+                "KDDockWidgets_QT6" : "ON",
+                "CMAKE_C_FLAGS_INIT" : "-ftime-trace",
+                "CMAKE_CXX_FLAGS_INIT": "-ftime-trace"
+            },
+            "warnings" : {
+                "uninitialized" : true
+            },
+            "environment": {
+                "CC": "clang",
+                "CXX": "clang++",
+                "CCACHE_DISABLE" : "ON"
+            }
         }
     ],
     "buildPresets": [
