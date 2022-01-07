@@ -112,9 +112,8 @@ public:
     ///Returns nullptr otherwise
     MainWindowBase *mainWindow() const;
 
-    /// @brief Returns if this title bar is in a main window in MDI mode
-    /// By default false. Only relevant if your main window was constructed with the
-    /// MainWindowOption_MDI option
+    /// @brief Returns if this title bar belongs to a dock widget which is in MDI mode (inside a MDI area)
+    /// For example in a main window created with MainWindowOption_MDI option
     bool isMDI() const override;
 
     /// @brief updates the close button enabled state

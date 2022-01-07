@@ -711,7 +711,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         }
     } else if (event->type() == QEvent::MouseButtonPress) {
         // When clicking on a MDI Frame we raise the window
-        if (Frame *f = parentFrame(watched)) {
+        if (Frame *f = firstParentOfType<Frame>(watched)) {
             if (f->isMDI())
                 f->raise();
         }

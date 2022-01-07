@@ -362,13 +362,18 @@ inline bool scalingFactorIsSupported(qreal factor)
 #endif
 }
 
-/// @brief Returns the parent frame which the specified object is in, if any
-inline Frame *parentFrame(QObject *from)
+template <typename T>
+inline T* firstParentOfType(const QObject *child)
 {
-    auto p = from;
+    auto p = const_cast<QObject *>(child);
     while (p) {
-        if (auto frame = qobject_cast<Frame *>(p))
-            return frame;
+        if (qobject_cast<const QWindow*>(p)) {
+            // Ignore QObject hierarchies spanning though multiple windows
+            return nullptr;
+        }
+
+        if (auto candidate = qobject_cast<T *>(p))
+            return candidate;
 
         p = p->parent();
     }

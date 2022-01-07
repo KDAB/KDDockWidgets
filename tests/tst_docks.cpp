@@ -7526,4 +7526,14 @@ void TestDocks::tst_mdi_mixed_with_docking()
 
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
+
+    Frame *frameMDI1 = mdiWidget1->d->frame();
+    Frame *frame1 = dock1->d->frame();
+    QVERIFY(!frame1->isMDI());
+    QVERIFY(frameMDI1->isMDI());
+    QVERIFY(!frame1->mdiLayoutWidget());
+    QVERIFY(frameMDI1->mdiLayoutWidget());
+
+    QVERIFY(!dock1->titleBar()->isMDI());
+    QVERIFY(mdiWidget1->titleBar()->isMDI());
 }

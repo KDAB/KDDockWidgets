@@ -18,6 +18,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "Config.h"
 #include "MainWindowBase.h"
+#include "MDILayoutWidget_p.h"
 
 #include <QTimer>
 #include <QWindowStateChangeEvent>
@@ -100,10 +101,7 @@ MainWindowBase *TitleBar::mainWindow() const
 
 bool TitleBar::isMDI() const
 {
-    if (auto mw = mainWindow())
-        return mw->isMDI();
-
-    return false;
+    return firstParentOfType<MDILayoutWidget>(this) != nullptr;
 }
 
 void TitleBar::updateButtons()
