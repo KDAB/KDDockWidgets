@@ -126,6 +126,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/WidgetResizeHandler_p.h
     private/DockRegistry_p.h
     private/TabWidget_p.h
+    private/MDILayoutWidget_p.h
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
