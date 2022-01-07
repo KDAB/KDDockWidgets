@@ -244,6 +244,7 @@ private Q_SLOTS:
     void tst_addMDIDockWidget();
     void tst_redockToMDIRestoresPosition();
     void tst_persistentCentralWidget();
+    void tst_mdi_mixed_with_docking();
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Port these to QtQuick

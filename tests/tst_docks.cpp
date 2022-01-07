@@ -7509,3 +7509,21 @@ void TestDocks::tst_persistentCentralWidget()
 
     QVERIFY(saver.restoreLayout(saved));
 }
+
+void TestDocks::tst_mdi_mixed_with_docking()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+
+    m->addDockWidget(dock1, Location_OnBottom);
+
+    auto mdiArea = new MDILayoutWidget();
+    m->setPersistentCentralWidget(mdiArea);
+
+    auto mdiWidget1 = createDockWidget("mdi1", new QPushButton("mdi1"));
+    auto mdiWidget2 = createDockWidget("mdi2", new QPushButton("mdi12"));
+
+    mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
+    mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
+}
