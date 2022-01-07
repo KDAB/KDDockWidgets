@@ -36,7 +36,7 @@ public:
 
 MDIArea::MDIArea(QWidgetOrQuick *parent)
     : QWidgetOrQuick(parent)
-    , d(new Private(parent))
+    , d(new Private(this))
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     auto vlay = new QVBoxLayout(this);
