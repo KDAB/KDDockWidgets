@@ -25,6 +25,7 @@
 #include "TabWidget_p.h"
 #include "TitleBar_p.h"
 #include "WindowBeingDragged_p.h"
+#include "MDIArea.h"
 #include "multisplitter/Separator_p.h"
 #include "private/MultiSplitter_p.h"
 
@@ -7518,7 +7519,7 @@ void TestDocks::tst_mdi_mixed_with_docking()
 
     m->addDockWidget(dock1, Location_OnBottom);
 
-    auto mdiArea = new MDILayoutWidget();
+    auto mdiArea = new MDIArea();
     m->setPersistentCentralWidget(mdiArea);
 
     auto mdiWidget1 = createDockWidget("mdi1", new QPushButton("mdi1"));
