@@ -1025,6 +1025,23 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
     mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
 }
 
+static QScreen *screenForMainWindow(MainWindowBase *mw)
+{
+    // Workaround for 5.12 which doesn't have QWidget::screen().
+
+#ifdef KDDOCKWIDGETS_QTQUICK
+    return mw->screen();
+#endif
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+    if (QWindow *window = mw->window()->windowHandle())
+        return window->screen();
+    return nullptr;
+#else
+    return mw->screen();
+#endif
+}
+
 LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo, int screenIndex)
 {
     auto mainWindow = DockRegistry::self()->mainWindowByName(mainWindowId);
@@ -1043,7 +1060,7 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMa
         return;
     }
 
-    const int currentScreenIndex = qApp->screens().indexOf(mainWindow->screen());
+    const int currentScreenIndex = qApp->screens().indexOf(screenForMainWindow(mainWindow));
 
     this->mainWindowName = mainWindowId;
     this->savedMainWindowGeometry = savedMainWindowGeo;
