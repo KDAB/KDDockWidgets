@@ -10,7 +10,7 @@
 #
 
 cmake_minimum_required(VERSION 3.7)
-project(kddockwidgets_example)
+project(kddockwidgets_mdi_with_docking_example)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -22,19 +22,16 @@ if(NOT TARGET kddockwidgets)
   find_package(KDDockWidgets REQUIRED)
 endif()
 
-set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_example.qrc)
+set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../dockwidgets/resources_example.qrc)
 
-add_executable(kddockwidgets_example
+add_executable(kddockwidgets_mdi_with_docking_example
     main.cpp
-    MyFrameworkWidgetFactory.cpp
-    MyMainWindow.cpp
-    MyWidget.cpp
+    ../dockwidgets/MyWidget.cpp
     ${RESOURCES_EXAMPLE_SRC}
 )
 
-target_link_libraries(kddockwidgets_example
+target_link_libraries(kddockwidgets_mdi_with_docking_example
   PRIVATE
     KDAB::kddockwidgets
-    X11
 )
 
