@@ -46,7 +46,7 @@ environment:
     - useqt6: True
 
 install:
-  - sh: if [ "`uname -s`" = "Darwin" ]; then brew install ninja; else sudo apt-get -y update; sudo apt-get -y install mesa-common-dev libglu1-mesa-dev; fi
+  - sh: if [ "`uname -s`" = "Darwin" ]; then brew install ninja; else sudo apt-get -y update; sudo apt-get -y install mesa-common-dev libglu1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev; fi
 
 before_build:
   - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
