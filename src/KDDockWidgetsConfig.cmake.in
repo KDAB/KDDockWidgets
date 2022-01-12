@@ -16,7 +16,7 @@ if (@KDDockWidgets_QTQUICK@)
     find_dependency(Qt@Qt_VERSION_MAJOR@Quick REQUIRED)
 endif()
 
-if (NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT @KDDockWidgets_QT6@)
+if (NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT @KDDockWidgets_QT6@ AND @KDDockWidgets_X11EXTRAS@)
     find_dependency(Qt5X11Extras REQUIRED)
 endif()
 
