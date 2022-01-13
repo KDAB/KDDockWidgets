@@ -64,6 +64,10 @@ public:
     /// Implies it's in a FloatingWindow and that it has only one dock widget
     bool hasSingleFloatingFrame() const;
 
+    /// Returns whether this drop area has only 1 frame.
+    /// See further explanation in FloatingWindow::hasSingleFrame()
+    bool hasSingleFrame() const;
+
     QStringList affinities() const;
     void layoutParentContainerEqually(DockWidgetBase *);
 

@@ -156,6 +156,11 @@ bool DropArea::hasSingleFloatingFrame() const
     return frames.size() == 1 && frames.first()->isFloating();
 }
 
+bool DropArea::hasSingleFrame() const
+{
+    return visibleCount() == 1;
+}
+
 QStringList DropArea::affinities() const
 {
     if (auto mw = mainWindow()) {
