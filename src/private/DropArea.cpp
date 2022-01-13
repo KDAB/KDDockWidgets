@@ -361,3 +361,13 @@ bool DropArea::validateAffinity(T *window, Frame *acceptingFrame) const
 
     return true;
 }
+
+bool DropArea::isMDIWrapper() const
+{
+    return m_isMDIWrapper;
+}
+
+void DropArea::setIsMDIWrapper(bool is)
+{
+    m_isMDIWrapper = is;
+}

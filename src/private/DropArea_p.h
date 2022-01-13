@@ -67,6 +67,11 @@ public:
     QStringList affinities() const;
     void layoutParentContainerEqually(DockWidgetBase *);
 
+    /// When DockWidget::Option_MDINestable is used, docked MDI dock widgets will be wrapped inside a DropArea, so they accept drops
+    /// This DropArea is created implicitly while docking, and this function will return true
+    bool isMDIWrapper() const;
+    void setIsMDIWrapper(bool);
+
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;
@@ -83,6 +88,7 @@ private:
     void updateFloatingActions();
 
     bool m_inDestructor = false;
+    bool m_isMDIWrapper = false;
     QString m_affinityName;
     DropIndicatorOverlayInterface *m_dropIndicatorOverlay = nullptr;
 };

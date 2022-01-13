@@ -285,6 +285,20 @@ public:
     /// Usually no, unless you're using an MDI main window
     bool isMDI() const;
 
+    /// @brief Returns whether this frame was created automatically just for the purpose of supporting DockWidget::Option_MDINestable
+    bool isMDIWrapper() const;
+
+    /// @brief If this is an MDI wrapper frame, return the DockWidget MDI wrapper
+    /// @sa isMDIWrapper
+    DockWidgetBase *mdiDockWidgetWrapper() const;
+
+    /// @brief If this is an MDI wrapper frame, return the DropArea MDI wrapper
+    /// @sa isMDIWrapper
+    DropArea *mdiDropAreaWrapper() const;
+
+    /// @brief If this frame is an MDI wrapper, returns the MDI frame. That is the frame you actually drag inside the MDI area
+    Frame *mdiFrame() const;
+
     /// @brief Returns the MDI layout. Or nullptr if this frame isn't in a MDI layout
     MDILayoutWidget *mdiLayoutWidget() const;
 

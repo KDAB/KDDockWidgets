@@ -846,6 +846,34 @@ bool Frame::isMDI() const
     return mdiLayoutWidget() != nullptr;
 }
 
+bool Frame::isMDIWrapper() const
+{
+    return mdiDropAreaWrapper() != nullptr;
+}
+
+Frame *Frame::mdiFrame() const
+{
+    if (auto dwWrapper = mdiDockWidgetWrapper()) {
+        return dwWrapper->d->frame();
+    }
+
+   return nullptr;
+}
+
+DockWidgetBase *Frame::mdiDockWidgetWrapper() const
+{
+    if (auto dropArea = mdiDropAreaWrapper()) {
+        return qobject_cast<DockWidgetBase *>(dropArea->QWidgetAdapter::parent());
+    }
+
+    return nullptr;
+}
+
+DropArea *Frame::mdiDropAreaWrapper() const
+{
+    return qobject_cast<DropArea *>(QWidgetAdapter::parent());
+}
+
 MDILayoutWidget *Frame::mdiLayoutWidget() const
 {
     return qobject_cast<MDILayoutWidget *>(m_layoutWidget);
