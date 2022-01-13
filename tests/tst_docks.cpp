@@ -5096,14 +5096,34 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     Frame *mdiFrame1 = frame1->mdiFrame();
     DropArea *dropArea1 = frame1->mdiDropAreaWrapper();
 
+    Frame *frame2 = mdiWidget2->d->frame();
+    Frame *mdiFrame2 = frame2->mdiFrame();
+    DropArea *dropArea2 = frame2->mdiDropAreaWrapper();
+
     dropArea1->addDockWidget(mdiWidget3, Location_OnLeft, nullptr);
 
     QVERIFY(!frame1->isMDI());
     QVERIFY(frame1->isMDIWrapper());
     QVERIFY(frame1->mdiDockWidgetWrapper());
     QVERIFY(dropArea1->isMDIWrapper());
+    QVERIFY(dropArea2->isMDIWrapper());
     QVERIFY(!mdiFrame1->isMDIWrapper());
     QVERIFY(mdiFrame1->isMDI());
+
+    auto tb1 = mdiWidget1->titleBar();
+    auto mdiTb1 = mdiFrame1->titleBar();
+    auto mdiTb2 = mdiFrame2->titleBar();
+
+    Testing::waitForEvent(mdiTb1, QEvent::Show);
+
+    QVERIFY(mdiTb1->isVisible());
+    QVERIFY(mdiTb2->isVisible());
+    QVERIFY(tb1->isVisible());
+
+    QVERIFY(tb1 != mdiTb1);
+    QCOMPARE(mdiWidget2->titleBar(), mdiTb2);
+
+    //QTest::qWait(100000);
 }
 
 // No need to port to QtQuick
