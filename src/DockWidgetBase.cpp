@@ -180,7 +180,7 @@ bool DockWidgetBase::setFloating(bool floats)
 {
     const bool alreadyFloating = isFloating();
 
-    if ((floats && alreadyFloating) || (!floats && !alreadyFloating))
+    if (floats == alreadyFloating)
         return true; // Nothing to do
 
     if (!floats && (Config::self().internalFlags() & Config::InternalFlag_DontShowWhenUnfloatingHiddenWindow) && !isVisible()) {
