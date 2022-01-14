@@ -34,8 +34,9 @@ using namespace KDDockWidgets;
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
-DropArea::DropArea(QWidgetOrQuick *parent)
+DropArea::DropArea(QWidgetOrQuick *parent, bool isMDIWrapper)
     : MultiSplitter(parent)
+    , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
 {
     qCDebug(creation) << "DropArea";
@@ -370,9 +371,4 @@ bool DropArea::validateAffinity(T *window, Frame *acceptingFrame) const
 bool DropArea::isMDIWrapper() const
 {
     return m_isMDIWrapper;
-}
-
-void DropArea::setIsMDIWrapper(bool is)
-{
-    m_isMDIWrapper = is;
 }

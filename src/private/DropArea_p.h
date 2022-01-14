@@ -41,7 +41,7 @@ class DOCKS_EXPORT DropArea : public MultiSplitter
 {
     Q_OBJECT
 public:
-    explicit DropArea(QWidgetOrQuick *parent);
+    explicit DropArea(QWidgetOrQuick *parent, bool isMDIWrapper = false);
     ~DropArea();
 
     void removeHover();
@@ -74,8 +74,6 @@ public:
     /// When DockWidget::Option_MDINestable is used, docked MDI dock widgets will be wrapped inside a DropArea, so they accept drops
     /// This DropArea is created implicitly while docking, and this function will return true
     bool isMDIWrapper() const;
-    void setIsMDIWrapper(bool);
-
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;
@@ -92,7 +90,7 @@ private:
     void updateFloatingActions();
 
     bool m_inDestructor = false;
-    bool m_isMDIWrapper = false;
+    const bool m_isMDIWrapper;
     QString m_affinityName;
     DropIndicatorOverlayInterface *m_dropIndicatorOverlay = nullptr;
 };
