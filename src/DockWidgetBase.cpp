@@ -205,7 +205,7 @@ bool DockWidgetBase::setFloating(bool floats)
 
             frame->detachTab(this);
         } else {
-            d->frame()->titleBar()->makeWindow();
+            titleBar()->makeWindow();
         }
 
         auto lastGeo = d->lastPositions().lastFloatingGeometry();
