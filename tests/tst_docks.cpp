@@ -5189,6 +5189,8 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(mdiFrame1->titleBar()->isVisible());
     mdiTitleBar1->makeWindow();
 
+    QVERIFY(Testing::waitForDeleted(mdiFrame1));
+    QCOMPARE(mdiArea->frames().size(), 0);
     // QTest::qWait(100000);
 }
 
