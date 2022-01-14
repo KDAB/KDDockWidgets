@@ -237,6 +237,17 @@ QString DockWidgetBase::uniqueName() const
 
 QString DockWidgetBase::title() const
 {
+    if (d->isMDIWrapper()) {
+        // It's just a wrapper to help implementing Option_MDINestable. Return the title of the real dock widget we're hosting.
+        auto dropAreaGuest = qobject_cast<DropArea*>(widget());
+        Q_ASSERT(dropAreaGuest);
+        if (dropAreaGuest->hasSingleFrame()) {
+            return dropAreaGuest->frames().constFirst()->title();
+        } else {
+            return qApp->applicationName();
+        }
+    }
+
     return d->title;
 }
 

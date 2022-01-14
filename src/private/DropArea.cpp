@@ -47,6 +47,17 @@ DropArea::DropArea(QWidgetOrQuick *parent, bool isMDIWrapper)
         qWarning() << "Dropping not implement for QtQuick on Wayland yet!";
 #endif
     }
+
+    if (m_isMDIWrapper) {
+        connect(this, &MultiSplitter::visibleWidgetCountChanged, this, [this] {
+            if (auto dw = mdiDockWidgetWrapper()) {
+                // The title of our MDI frame will need to change to the app name if we have more than 1 dock widget nested
+                Q_EMIT dw->titleChanged(dw->title());
+            } else {
+                qWarning() << Q_FUNC_INFO << "Unexpected null wrapper dock widget";
+            }
+        });
+    }
 }
 
 DropArea::~DropArea()

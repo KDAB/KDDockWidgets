@@ -5077,6 +5077,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     auto createSheet = [](int id) -> DockWidgetBase* {
         auto dock = new DockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetBase::Option_MDINestable);
         dock->setWidget(new QPushButton(QStringLiteral("Sheet %1").arg(id)));
+        dock->setTitle(QStringLiteral("Sheet %1").arg(id));
 
         return dock;
     };
@@ -5109,6 +5110,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(dropArea2->isMDIWrapper());
     QVERIFY(!mdiFrame1->isMDIWrapper());
     QVERIFY(mdiFrame1->isMDI());
+    QVERIFY(!mdiWidget1->d->isMDIWrapper());
 
     auto tb1 = mdiWidget1->titleBar();
     auto mdiTb1 = mdiFrame1->titleBar();
@@ -5119,6 +5121,9 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(mdiTb1->isVisible());
     QVERIFY(mdiTb2->isVisible());
     QVERIFY(tb1->isVisible());
+    QCOMPARE(tb1->title(), QString("Sheet 1"));
+    QCOMPARE(mdiTb1->title(), QString("dockwidgets-unit-tests"));
+    QCOMPARE(mdiTb2->title(), QString("Sheet 2"));
 
     QVERIFY(tb1 != mdiTb1);
     QCOMPARE(mdiWidget2->titleBar(), mdiTb2);
