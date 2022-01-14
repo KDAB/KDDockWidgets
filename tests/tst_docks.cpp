@@ -5098,7 +5098,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     DropArea *dropArea1 = frame1->mdiDropAreaWrapper();
 
     Frame *frame2 = mdiWidget2->d->frame();
-    Frame *mdiFrame2 = frame2->mdiFrame();
+    QPointer<Frame> mdiFrame2 = frame2->mdiFrame();
     QPointer<DropArea> dropArea2 = frame2->mdiDropAreaWrapper();
 
     dropArea1->addDockWidget(mdiWidget3, Location_OnLeft, nullptr);
@@ -5136,7 +5136,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
 
     Testing::waitForDeleted(dropArea2);
     QVERIFY(dropArea2.isNull());
-
+    QVERIFY(!mdiFrame2);
 
     // QTest::qWait(100000);
 }
