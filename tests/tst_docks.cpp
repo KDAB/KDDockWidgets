@@ -5095,12 +5095,12 @@ void TestDocks::tst_mdi_mixed_with_docking2()
 
     Frame *frame1 = mdiWidget1->d->frame();
     Frame *mdiFrame1 = frame1->mdiFrame();
-    QPointer<DropArea> dropArea1 = frame1->mdiDropAreaWrapper();
 
     QPointer<Frame> frame2 = mdiWidget2->d->frame();
     QPointer<Frame> mdiFrame2 = frame2->mdiFrame();
     QPointer<DropArea> dropArea2 = frame2->mdiDropAreaWrapper();
 
+    QPointer<DropArea> dropArea1 = frame1->mdiDropAreaWrapper();
     dropArea1->addDockWidget(mdiWidget3, Location_OnLeft, nullptr);
 
     QVERIFY(!frame1->isMDI());
@@ -5191,6 +5191,21 @@ void TestDocks::tst_mdi_mixed_with_docking2()
 
     QVERIFY(Testing::waitForDeleted(mdiFrame1));
     QCOMPARE(mdiArea->frames().size(), 0);
+
+    // Dock again:
+    mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
+    mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
+
+    frame1 = mdiWidget1->d->frame();
+    dropArea1 = frame1->mdiDropAreaWrapper();
+    dropArea1->addDockWidget(mdiWidget3, Location_OnLeft, nullptr);
+
+
+    // Detach an internal dock widget by dragging
+    const QPoint globalSrc = mdiWidget1->mapToGlobal(QPoint(5, 5));
+    const QPoint globalDest = globalSrc + QPoint(10, 0);
+    drag(mdiWidget1, globalDest);
+
     // QTest::qWait(100000);
 }
 

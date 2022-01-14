@@ -101,7 +101,26 @@ MainWindowBase *TitleBar::mainWindow() const
 
 bool TitleBar::isMDI() const
 {
-    return firstParentOfType<MDILayoutWidget>(this) != nullptr;
+    QObject *p = const_cast<TitleBar *>(this);
+    while (p) {
+        if (qobject_cast<const QWindow*>(p)) {
+            // Ignore QObject hierarchies spanning though multiple windows
+            return false;
+        }
+
+        if (qobject_cast<MDILayoutWidget *>(p))
+            return true;
+
+        if (qobject_cast<DropArea *>(p)) {
+            // Note that the TitleBar can be inside a DropArea that's inside a MDIArea
+            // so we need this additional check
+            return false;
+        }
+
+        p = p->parent();
+    }
+
+    return false;
 }
 
 void TitleBar::updateButtons()
