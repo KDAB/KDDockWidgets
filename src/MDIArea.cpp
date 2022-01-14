@@ -81,3 +81,8 @@ void MDIArea::resizeDockWidget(DockWidgetBase *dw, QSize size)
 {
     d->layoutWidget->resizeDockWidget(dw, size);
 }
+
+QList<Frame *> MDIArea::frames() const
+{
+    return d->layoutWidget->frames();
+}
