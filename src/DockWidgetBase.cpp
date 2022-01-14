@@ -538,6 +538,14 @@ MDILayoutWidget *DockWidgetBase::Private::mdiLayout() const
     return nullptr;
 }
 
+bool DockWidgetBase::Private::isMDIWrapper() const
+{
+    if (auto dropAreaGuest = qobject_cast<DropArea *>(q->widget()))
+        return dropAreaGuest->isMDIWrapper();
+
+    return false;
+}
+
 DockWidgetBase::Private *DockWidgetBase::dptr() const
 {
     return d;
