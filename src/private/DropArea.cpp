@@ -50,11 +50,18 @@ DropArea::DropArea(QWidgetOrQuick *parent, bool isMDIWrapper)
 
     if (m_isMDIWrapper) {
         connect(this, &MultiSplitter::visibleWidgetCountChanged, this, [this] {
-            if (auto dw = mdiDockWidgetWrapper()) {
-                // The title of our MDI frame will need to change to the app name if we have more than 1 dock widget nested
+            auto dw = mdiDockWidgetWrapper();
+            if (!dw) {
+                qWarning() << Q_FUNC_INFO << "Unexpected null wrapper dock widget";
+                return;
+            }
+
+            if (visibleCount() > 0) {
+               // The title of our MDI frame will need to change to the app name if we have more than 1 dock widget nested
                 Q_EMIT dw->titleChanged(dw->title());
             } else {
-                qWarning() << Q_FUNC_INFO << "Unexpected null wrapper dock widget";
+                // Our wrapeper isn't needed anymore
+                dw->deleteLater();
             }
         });
     }

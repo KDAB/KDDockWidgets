@@ -5099,7 +5099,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
 
     Frame *frame2 = mdiWidget2->d->frame();
     Frame *mdiFrame2 = frame2->mdiFrame();
-    DropArea *dropArea2 = frame2->mdiDropAreaWrapper();
+    QPointer<DropArea> dropArea2 = frame2->mdiDropAreaWrapper();
 
     dropArea1->addDockWidget(mdiWidget3, Location_OnLeft, nullptr);
 
@@ -5111,6 +5111,8 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(!mdiFrame1->isMDIWrapper());
     QVERIFY(mdiFrame1->isMDI());
     QVERIFY(!mdiWidget1->d->isMDIWrapper());
+
+    // Test title bars:
 
     auto tb1 = mdiWidget1->titleBar();
     auto mdiTb1 = mdiFrame1->titleBar();
@@ -5128,7 +5130,15 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(tb1 != mdiTb1);
     QCOMPARE(mdiWidget2->titleBar(), mdiTb2);
 
-    //QTest::qWait(100000);
+    // Test that closing will delete the wrappers:
+    mdiWidget2->close();
+    QVERIFY(!mdiWidget2->isOpen());
+
+    Testing::waitForDeleted(dropArea2);
+    QVERIFY(dropArea2.isNull());
+
+
+    // QTest::qWait(100000);
 }
 
 // No need to port to QtQuick
