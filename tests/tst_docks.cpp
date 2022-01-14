@@ -5097,7 +5097,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     Frame *mdiFrame1 = frame1->mdiFrame();
     QPointer<DropArea> dropArea1 = frame1->mdiDropAreaWrapper();
 
-    Frame *frame2 = mdiWidget2->d->frame();
+    QPointer<Frame> frame2 = mdiWidget2->d->frame();
     QPointer<Frame> mdiFrame2 = frame2->mdiFrame();
     QPointer<DropArea> dropArea2 = frame2->mdiDropAreaWrapper();
 
@@ -5169,12 +5169,14 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(mdiWidget2->isVisible());
     QVERIFY(frame2->isMDIWrapper());
     QVERIFY(dwWrapper2->d->isMDIWrapper());
+    mdiFrame2 = frame2->mdiFrame();
     mdiWidget2->setFloating(true);
     QVERIFY(mdiWidget2->isFloating());
 
     QVERIFY(!mdiWidget2->d->frame()->isMDI());
     QVERIFY(!mdiWidget2->d->frame()->isMDIWrapper());
-    QTest::qWait(500); // remove
+    QVERIFY(Testing::waitForDeleted(mdiFrame2));
+
     QVERIFY(dropArea2.isNull());
     QVERIFY(dwWrapper2.isNull());
 
@@ -5186,7 +5188,6 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     auto mdiTitleBar1 = mdiFrame1->titleBar();
     QVERIFY(mdiFrame1->titleBar()->isVisible());
     mdiTitleBar1->makeWindow();
-
 
     // QTest::qWait(100000);
 }
