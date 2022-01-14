@@ -889,6 +889,19 @@ MDILayoutWidget *Frame::mdiLayoutWidget() const
     return qobject_cast<MDILayoutWidget *>(m_layoutWidget);
 }
 
+bool Frame::hasNestedMDIDockWidgets() const
+{
+    if (!isMDI() || dockWidgetCount() == 0)
+        return false;
+
+    if (dockWidgetCount() != 1) {
+        qWarning() << Q_FUNC_INFO << "Expected a single dock widget wrapper as frame child";
+        return false;
+    }
+
+    return dockWidgetAt(0)->d->isMDIWrapper();
+}
+
 int Frame::userType() const
 {
     return m_userType;

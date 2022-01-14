@@ -5153,7 +5153,32 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(!mdiWidget3->isOpen());
     QVERIFY(dropArea1.isNull());
 
-    // QTest::qWait(10000);
+    // Reopen everything again:
+
+    mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
+    mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
+    frame1 = mdiWidget1->d->frame();
+    mdiFrame1 = frame1->mdiFrame();
+    dropArea1 = frame1->mdiDropAreaWrapper();
+    dropArea1->addDockWidget(mdiWidget3, Location_OnLeft, nullptr);
+
+    // Test floating:
+    frame2 = mdiWidget2->d->frame();
+    QPointer<DockWidgetBase> dwWrapper2 = frame2->mdiDockWidgetWrapper();
+    dropArea2 = frame2->mdiDropAreaWrapper();
+    QVERIFY(mdiWidget2->isVisible());
+    QVERIFY(frame2->isMDIWrapper());
+    QVERIFY(dwWrapper2->d->isMDIWrapper());
+    mdiWidget2->setFloating(true);
+    QVERIFY(mdiWidget2->isFloating());
+
+    QVERIFY(!mdiWidget2->d->frame()->isMDI());
+    QVERIFY(!mdiWidget2->d->frame()->isMDIWrapper());
+    QTest::qWait(500); // remove
+    QVERIFY(dropArea2.isNull());
+    QVERIFY(dwWrapper2.isNull());
+
+    // QTest::qWait(100000);
 }
 
 // No need to port to QtQuick

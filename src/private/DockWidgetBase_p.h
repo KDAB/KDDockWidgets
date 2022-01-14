@@ -140,6 +140,9 @@ public:
     /// This is only used by the DockWidget::Option_MDINestable feature
     bool isMDIWrapper() const;
 
+    /// @brief If this dock widget is an MDI wrapper (isMDIWrapper()), then returns the wrapper drop area
+    DropArea *mdiDropAreaWrapper() const;
+
     const QString name;
     QStringList affinities;
     QString title;

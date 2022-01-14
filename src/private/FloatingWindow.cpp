@@ -22,6 +22,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "DragController_p.h"
 #include "LayoutSaver_p.h"
+#include "DockWidgetBase_p.h"
 
 #include <QCloseEvent>
 #include <QScopedValueRollback>
@@ -146,10 +147,26 @@ FloatingWindow::FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindow
 {
     QScopedValueRollback<bool> guard(m_disableSetVisible, true);
 
-    // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
-    // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
-    // So disable the setVisible(true) call while in the ctor.
-    m_dropArea->addWidget(frame, KDDockWidgets::Location_OnTop, {});
+    if (frame->hasNestedMDIDockWidgets()) {
+        // When using DockWidget::MDINestable, the docked MDI widget is wrapped by a drop area so we can drop things into it.
+        // When floating it, we can delete that helper drop area, as FloatingWindow already has one
+
+        if (frame->dockWidgetCount() == 0) {
+            // doesn't happen
+            qWarning() << Q_FUNC_INFO << "Unexpected empty frame";
+            return;
+        }
+
+        auto dwMDIWrapper = frame->dockWidgetAt(0);
+        auto dropAreaMDIWrapper = dwMDIWrapper->d->mdiDropAreaWrapper();
+        m_dropArea->addMultiSplitter(dropAreaMDIWrapper, Location_OnTop);
+        delete dwMDIWrapper;
+    } else {
+        // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
+        // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
+        // So disable the setVisible(true) call while in the ctor.
+        m_dropArea->addWidget(frame, KDDockWidgets::Location_OnTop, {});
+    }
 }
 
 FloatingWindow::~FloatingWindow()

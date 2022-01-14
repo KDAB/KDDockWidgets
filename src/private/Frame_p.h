@@ -302,6 +302,10 @@ public:
     /// @brief Returns the MDI layout. Or nullptr if this frame isn't in a MDI layout
     MDILayoutWidget *mdiLayoutWidget() const;
 
+    /// @brief If this frame is a MDI frame (isMDI() == true), returns whether it contains nested dock widgets (DockWidget::Option_MDINestable)
+    /// @sa isMDI()
+    bool hasNestedMDIDockWidgets() const;
+
     /// @brief See DockWidgetBase::userType()
     int userType() const;
 
