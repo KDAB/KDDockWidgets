@@ -144,12 +144,12 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent)
 FloatingWindow::FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
     : FloatingWindow(suggestedGeometry, hackFindParentHarder(frame, parent))
 {
-    m_disableSetVisible = true;
+    QScopedValueRollback<bool> guard(m_disableSetVisible, true);
+
     // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
     // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
     // So disable the setVisible(true) call while in the ctor.
     m_dropArea->addWidget(frame, KDDockWidgets::Location_OnTop, {});
-    m_disableSetVisible = false;
 }
 
 FloatingWindow::~FloatingWindow()
