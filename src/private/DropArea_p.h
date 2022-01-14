@@ -88,6 +88,7 @@ private:
     bool drop(QWidgetOrQuick *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     Frame *frameContainingPos(QPoint globalPos) const;
     void updateFloatingActions();
+    DockWidgetBase *mdiDockWidgetWrapper() const;
 
     bool m_inDestructor = false;
     const bool m_isMDIWrapper;

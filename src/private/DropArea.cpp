@@ -372,3 +372,11 @@ bool DropArea::isMDIWrapper() const
 {
     return m_isMDIWrapper;
 }
+
+DockWidgetBase *DropArea::mdiDockWidgetWrapper() const
+{
+    if (m_isMDIWrapper)
+        return qobject_cast<DockWidgetBase *>(QWidgetAdapter::parent());
+
+    return nullptr;
+}
