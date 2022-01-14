@@ -5095,7 +5095,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
 
     Frame *frame1 = mdiWidget1->d->frame();
     Frame *mdiFrame1 = frame1->mdiFrame();
-    DropArea *dropArea1 = frame1->mdiDropAreaWrapper();
+    QPointer<DropArea> dropArea1 = frame1->mdiDropAreaWrapper();
 
     Frame *frame2 = mdiWidget2->d->frame();
     QPointer<Frame> mdiFrame2 = frame2->mdiFrame();
@@ -5138,7 +5138,22 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(dropArea2.isNull());
     QVERIFY(!mdiFrame2);
 
-    // QTest::qWait(100000);
+    mdiWidget1->close();
+    QVERIFY(!mdiWidget1->isOpen());
+    QTest::qWait(500); // wait some event loops to make sure there's no delete later. (There isn't, but a bug could introduce them)
+    QVERIFY(!dropArea1.isNull()); // Not deleted, as sheet3 is still there
+    QCOMPARE(dropArea1->visibleCount(), 1);
+    QVERIFY(mdiTb1->isVisible());
+    QCOMPARE(mdiWidget3->titleBar(), mdiTb1);
+    Frame *frame3 = mdiWidget3->d->frame();
+    QVERIFY(!frame3->titleBar()->isVisible());
+
+    mdiWidget3->close();
+    QVERIFY(Testing::waitForDeleted(dropArea1));
+    QVERIFY(!mdiWidget3->isOpen());
+    QVERIFY(dropArea1.isNull());
+
+    // QTest::qWait(10000);
 }
 
 // No need to port to QtQuick
