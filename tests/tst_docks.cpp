@@ -5178,6 +5178,16 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(dropArea2.isNull());
     QVERIFY(dwWrapper2.isNull());
 
+    auto mdiFrames = mdiArea->frames();
+    QCOMPARE(mdiFrames.count(), 1);
+    mdiFrame1 = mdiFrames.first();
+    QVERIFY(mdiFrame1->isMDI());
+    QVERIFY(mdiFrame1->hasNestedMDIDockWidgets());
+    auto mdiTitleBar1 = mdiFrame1->titleBar();
+    QVERIFY(mdiFrame1->titleBar()->isVisible());
+    mdiTitleBar1->makeWindow();
+
+
     // QTest::qWait(100000);
 }
 
