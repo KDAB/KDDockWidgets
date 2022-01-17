@@ -75,9 +75,9 @@ TabBar *DefaultWidgetFactory::createTabBar(TabWidget *parent) const
     return new TabBarWidget(parent);
 }
 
-TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
+TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent, TabWidgetOptions options) const
 {
-    return new TabWidgetWidget(parent);
+    return new TabWidgetWidget(parent, options);
 }
 
 Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *parent) const

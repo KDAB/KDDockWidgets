@@ -97,7 +97,7 @@ public:
     ///@brief Called internally by the framework to create a TabWidget
     ///       Override to provide your own TabWidget sub-class.
     ///@param parent Just forward to TabWidget's constructor.
-    virtual TabWidget *createTabWidget(Frame *parent) const = 0;
+    virtual TabWidget *createTabWidget(Frame *parent, TabWidgetOptions options = TabWidgetOption_None) const = 0;
 
     ///@brief Called internally by the framework to create a TabBar
     ///       Override to provide your own TabBar sub-class.
@@ -167,7 +167,7 @@ public:
     Frame *createFrame(QWidgetOrQuick *parent, FrameOptions) const override;
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
-    TabWidget *createTabWidget(Frame *parent) const override;
+    TabWidget *createTabWidget(Frame *parent, TabWidgetOptions) const override;
     TabBar *createTabBar(TabWidget *parent) const override;
     Layouting::Separator *createSeparator(Layouting::Widget *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const override;

@@ -267,6 +267,15 @@ Q_DECLARE_FLAGS(FrameOptions, FrameOption)
 Q_ENUM_NS(FrameOptions)
 
 ///@internal
+enum TabWidgetOption
+{
+    TabWidgetOption_None = 0,
+    TabWidgetOption_DocumentMode = 1 ///> Enables QTabWidget::documentMode()
+};
+Q_DECLARE_FLAGS(TabWidgetOptions, TabWidgetOption)
+Q_ENUM_NS(TabWidgetOptions)
+
+///@internal
 inline QString locationStr(Location loc)
 {
     switch (loc) {
