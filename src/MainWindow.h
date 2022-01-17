@@ -50,9 +50,14 @@ public:
     ///@brief returns the sidebar for the specified location
     SideBar *sideBar(SideBarLocation) const override;
 
+    //@brief returns the margins for the contents widget
+    QMargins centerWidgetMargins() const override;
+
+    //@brief sets the margins for the contents widgets
+    void setCenterWidgetMargins(const QMargins &margins);
+
 protected:
     void resizeEvent(QResizeEvent *) override;
-    QMargins centerWidgetMargins() const override;
     QRect centralAreaGeometry() const override;
 
 private:

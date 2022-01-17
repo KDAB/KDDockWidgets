@@ -72,7 +72,8 @@ public:
 
     void updateMargins()
     {
-        m_layout->setContentsMargins(q->centerWidgetMargins());
+        const qreal factor = logicalDpiFactor(q);
+        m_layout->setContentsMargins(m_centerWidgetMargins * factor);
     }
 
     MainWindow *const q;
@@ -80,6 +81,7 @@ public:
     QHash<SideBarLocation, SideBar *> m_sideBars;
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
+    QMargins m_centerWidgetMargins = { 1, 5, 1, 1 };
 };
 
 MyCentralWidget::~MyCentralWidget()
@@ -139,8 +141,15 @@ void MainWindow::resizeEvent(QResizeEvent *ev)
 
 QMargins MainWindow::centerWidgetMargins() const
 {
-    const QMargins margins = { 1, 5, 1, 1 };
-    return margins * logicalDpiFactor(this);
+    return d->m_centerWidgetMargins;
+}
+
+void MainWindow::setCenterWidgetMargins(const QMargins &margins)
+{
+    if (d->m_centerWidgetMargins == margins)
+        return;
+    d->m_centerWidgetMargins = margins;
+    d->updateMargins();
 }
 
 QRect MainWindow::centralAreaGeometry() const
