@@ -31,7 +31,7 @@
 
 using namespace KDDockWidgets;
 
-TabWidgetWidget::TabWidgetWidget(Frame *parent)
+TabWidgetWidget::TabWidgetWidget(Frame *parent, TabWidgetOptions options)
     : QTabWidget(parent)
     , TabWidget(this, parent)
     , m_tabBar(Config::self().frameworkWidgetFactory()->createTabBar(this))
@@ -65,6 +65,8 @@ TabWidgetWidget::TabWidgetWidget(Frame *parent)
         setFocusProxy(nullptr);
 
     setupTabBarButtons();
+
+    setDocumentMode(options & TabWidgetOption_NoFrame);
 }
 
 TabBar *TabWidgetWidget::tabBar() const

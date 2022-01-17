@@ -50,12 +50,19 @@ static FrameOptions actualOptions(FrameOptions options)
 
     return options;
 }
+
+static TabWidgetOptions tabWidgetOptions(FrameOptions options)
+{
+    if (options & FrameOption_NonDockable)
+        return TabWidgetOption_NoFrame;
+    return TabWidgetOption_None;
+}
 }
 
 Frame::Frame(QWidgetOrQuick *parent, FrameOptions options, int userType)
     : LayoutGuestWidget(parent)
     , FocusScope(this)
-    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this))
+    , m_tabWidget(Config::self().frameworkWidgetFactory()->createTabWidget(this, tabWidgetOptions(options)))
     , m_titleBar(Config::self().frameworkWidgetFactory()->createTitleBar(this))
     , m_options(actualOptions(options))
     , m_userType(userType)
