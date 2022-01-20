@@ -189,7 +189,7 @@ TabBar *DefaultWidgetFactory::createTabBar(TabWidget *parent) const
     return new TabBarQuick(parent);
 }
 
-TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent) const
+TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent, TabWidgetOptions) const
 {
     return new TabWidgetQuick(parent);
 }
