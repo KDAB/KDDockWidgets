@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2021 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -29,9 +29,11 @@
 #include <QWindow>
 
 #if defined(Q_OS_WIN)
+#if defined(Q_CC_MSVC)
 //NOMINMAX tells windows.h not to define the max and min macros
 //which will interfere with the max() from std::numeric_limits
 #define NOMINMAX
+#endif
 #include <windows.h>
 #include <dwmapi.h>
 #endif
