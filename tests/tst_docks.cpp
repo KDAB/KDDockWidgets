@@ -5200,13 +5200,11 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     dropArea1 = frame1->mdiDropAreaWrapper();
     dropArea1->addDockWidget(mdiWidget3, Location_OnLeft, nullptr);
 
-
     // Detach an internal dock widget by dragging
     const QPoint globalSrc = mdiWidget1->mapToGlobal(QPoint(5, 5));
-    const QPoint globalDest = globalSrc + QPoint(10, 0);
-    drag(mdiWidget1, globalDest);
+    const QPoint globalDest = globalSrc + QPoint(100, 100);
 
-    // QTest::qWait(100000);
+    drag(mdiWidget1, globalDest);
 }
 
 // No need to port to QtQuick
