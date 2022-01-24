@@ -39,7 +39,7 @@ class DOCKS_EXPORT TabWidgetWidget
 {
     Q_OBJECT
 public:
-    explicit TabWidgetWidget(Frame *parent, TabWidgetOptions options);
+    explicit TabWidgetWidget(Frame *parent, TabWidgetOptions = TabWidgetOption_None);
 
     TabBar *tabBar() const override;
 
