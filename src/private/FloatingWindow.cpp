@@ -160,7 +160,7 @@ FloatingWindow::FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindow
         auto dwMDIWrapper = frame->dockWidgetAt(0);
         auto dropAreaMDIWrapper = dwMDIWrapper->d->mdiDropAreaWrapper();
         m_dropArea->addMultiSplitter(dropAreaMDIWrapper, Location_OnTop);
-        delete dwMDIWrapper;
+        dwMDIWrapper->deleteLater();
     } else {
         // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
         // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0

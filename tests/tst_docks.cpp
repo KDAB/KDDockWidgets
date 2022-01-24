@@ -5205,6 +5205,12 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     const QPoint globalDest = globalSrc + QPoint(100, 100);
 
     drag(mdiWidget1, globalDest);
+
+    QCOMPARE(mdiArea->frames().count(), 2);
+    auto mdiTitleBar = mdiArea->frames().first()->titleBar();
+    QVERIFY(mdiTitleBar->isVisible());
+
+    mdiTitleBar->onFloatClicked();
 }
 
 // No need to port to QtQuick
