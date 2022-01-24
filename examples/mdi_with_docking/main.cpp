@@ -17,6 +17,7 @@
 
 #include <QStyleFactory>
 #include <QApplication>
+#include <QCommandLineParser>
 
 // clazy:excludeall=qstring-allocations
 
@@ -30,6 +31,15 @@ int main(int argc, char **argv)
 
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("App supporting both docking and a MDI area"));
+
+    QCommandLineParser parser;
+    parser.setApplicationDescription("KDDockWidgets MDI mixed with normal docking");
+    parser.addHelpOption();
+
+    QCommandLineOption nestedDocking("n", QCoreApplication::translate("main", "The MDI dock widgets will serve as drop areas, allowing for further nesting"));
+    parser.addOption(nestedDocking);
+
+    parser.process(app);
 
     // Fusion looks better in general, but feel free to change
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
@@ -54,15 +64,19 @@ int main(int argc, char **argv)
     mainWindow.addDockWidget(dock1, KDDockWidgets::Location_OnLeft, nullptr, KDDockWidgets::InitialOption(QSize(300, 0)));
     mainWindow.addDockWidget(dock2, KDDockWidgets::Location_OnBottom, nullptr, KDDockWidgets::InitialOption(QSize(0, 300)));
 
+    KDDockWidgets::DockWidgetBase::Options options = {};
+    if (parser.isSet(nestedDocking)) {
+        options |= KDDockWidgets::DockWidgetBase::Option_MDINestable;
+    }
 
     // 4. Create our MDI widgets, which will go into the MDI area
-    auto mdiWidget1 = new KDDockWidgets::DockWidget(QStringLiteral("MDI widget1"));
+    auto mdiWidget1 = new KDDockWidgets::DockWidget(QStringLiteral("MDI widget1"), options);
     mdiWidget1->setWidget(new MyWidget1());
 
-    auto mdiWidget2 = new KDDockWidgets::DockWidget(QStringLiteral("MDI widget2"));
+    auto mdiWidget2 = new KDDockWidgets::DockWidget(QStringLiteral("MDI widget2"), options);
     mdiWidget2->setWidget(new MyWidget2());
 
-    auto mdiWidget3 = new KDDockWidgets::DockWidget(QStringLiteral("MDI widget3"));
+    auto mdiWidget3 = new KDDockWidgets::DockWidget(QStringLiteral("MDI widget3"), options);
     mdiWidget3->setWidget(new MyWidget3());
 
     auto mdiArea = new KDDockWidgets::MDIArea();
