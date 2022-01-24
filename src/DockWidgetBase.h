@@ -77,7 +77,7 @@ public:
         Option_NotClosable = 1, ///< The DockWidget can't be closed on the [x], only programmatically
         Option_NotDockable = 2, ///< The DockWidget can't be docked, it's always floating
         Option_DeleteOnClose = 4, ///< Deletes the DockWidget when closed
-        Option_MDINestable = 8 ///< When this dock widget is being shown in a MDI area it will also allow other dock widgets to be dropped to its sides and tabbed
+        Option_MDINestable = 8 ///< EXPERIMENTAL. When this dock widget is being shown in a MDI area it will also allow other dock widgets to be dropped to its sides and tabbed
                                /// Usually Each MDI "window" corresponds to one DockWidget, with this option each "window" will have a layout with 1 or more dock widgets
                                /// Run "kddockwidgets_mdi_with_docking_example -n" to see it in action
     };

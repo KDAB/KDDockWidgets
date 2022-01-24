@@ -1,5 +1,6 @@
 * v1.6.0 (unreleased)
  - Fixed restoring of normal geometry when closing a maximized window (#259)
+ - Experimental support for docking into dock widgets which are in a MDI area.
 
 * v1.5.1 (unreleased)
  - X11: Improved detecting which window is under the cursor, by using native X11 API
