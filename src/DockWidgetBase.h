@@ -531,6 +531,7 @@ private:
     friend class MultiSplitter;
     friend class LayoutWidget;
     friend class MDILayoutWidget;
+    friend class FloatingWindow;
     friend class Frame;
     friend class DropArea;
     friend class ::TestDocks;
