@@ -167,7 +167,7 @@ public:
     Frame *createFrame(QWidgetOrQuick *parent, FrameOptions) const override;
     TitleBar *createTitleBar(Frame *) const override;
     TitleBar *createTitleBar(FloatingWindow *) const override;
-    TabWidget *createTabWidget(Frame *parent, TabWidgetOptions) const override;
+    TabWidget *createTabWidget(Frame *parent, TabWidgetOptions = TabWidgetOption_None) const override;
     TabBar *createTabBar(TabWidget *parent) const override;
     Layouting::Separator *createSeparator(Layouting::Widget *parent = nullptr) const override;
     FloatingWindow *createFloatingWindow(MainWindowBase *parent = nullptr) const override;
