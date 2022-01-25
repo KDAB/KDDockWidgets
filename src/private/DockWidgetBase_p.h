@@ -143,6 +143,10 @@ public:
     /// @brief If this dock widget is an MDI wrapper (isMDIWrapper()), then returns the wrapper drop area
     DropArea *mdiDropAreaWrapper() const;
 
+    /// @brief If this dock widget is inside a drop area nested in MDI then returns the wrapper dock widget
+    /// This goes up the hierarchy, while mdiDropAreaWrapper goes down.
+    DockWidgetBase *mdiDockWidgetWrapper() const;
+
     const QString name;
     QStringList affinities;
     QString title;

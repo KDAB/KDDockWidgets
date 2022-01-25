@@ -74,6 +74,9 @@ public:
     /// When DockWidget::Option_MDINestable is used, docked MDI dock widgets will be wrapped inside a DropArea, so they accept drops
     /// This DropArea is created implicitly while docking, and this function will return true
     bool isMDIWrapper() const;
+
+    /// Returns the helper dock widget for implementing DockWidget::Option_MDINestable.
+    DockWidgetBase *mdiDockWidgetWrapper() const;
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Frame;
@@ -88,7 +91,6 @@ private:
     bool drop(QWidgetOrQuick *droppedwindow, KDDockWidgets::Location location, Frame *relativeTo);
     Frame *frameContainingPos(QPoint globalPos) const;
     void updateFloatingActions();
-    DockWidgetBase *mdiDockWidgetWrapper() const;
 
     bool m_inDestructor = false;
     const bool m_isMDIWrapper;

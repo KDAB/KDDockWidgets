@@ -543,8 +543,30 @@ void DockWidgetBase::Private::maybeMorphIntoFloatingWindow()
 
 MDILayoutWidget *DockWidgetBase::Private::mdiLayout() const
 {
-    if (auto mw = mainWindow())
-        return mw->mdiLayoutWidget();
+    auto p = const_cast<QObject *>(q->parent());
+    while (p) {
+        if (qobject_cast<const QWindow*>(p)) {
+            // Ignore QObject hierarchies spanning though multiple windows
+            return nullptr;
+        }
+
+        if (auto layout = qobject_cast<LayoutWidget*>(p)) {
+            // We found a layout
+            if (auto mdiLayout = qobject_cast<MDILayoutWidget*>(p)) {
+                // And it's MDI
+                return mdiLayout;
+            } else if (auto dropArea = qobject_cast<DropArea*>(p)) {
+                // It's a DropArea. But maybe it's a drop area that's just helping
+                // making the MDI windows accept drops (Option_MDINestable)
+                if (!dropArea->isMDIWrapper())
+                    return nullptr;
+
+                // It's a MDI wrapper, keep looking up.
+            }
+        }
+
+        p = p->parent();
+    }
 
     return nullptr;
 }
@@ -559,6 +581,36 @@ DropArea *DockWidgetBase::Private::mdiDropAreaWrapper() const
     if (auto dropAreaGuest = qobject_cast<DropArea *>(q->widget())) {
         if (dropAreaGuest->isMDIWrapper())
             return dropAreaGuest;
+    }
+
+    return nullptr;
+}
+
+DockWidgetBase *DockWidgetBase::Private::mdiDockWidgetWrapper() const
+{
+    if (isMDIWrapper()) {
+        // We are the wrapper
+        return q;
+    }
+
+    auto p = const_cast<QObject *>(q->parent());
+    while (p) {
+        if (qobject_cast<const QWindow*>(p)) {
+            // Ignore QObject hierarchies spanning though multiple windows
+            return nullptr;
+        }
+
+        if (auto layout = qobject_cast<LayoutWidget*>(p)) {
+            if (auto dropArea = qobject_cast<DropArea*>(p)) {
+                if (dropArea->isMDIWrapper())
+                    return dropArea->mdiDockWidgetWrapper();
+
+            }
+
+            return nullptr;
+        }
+
+        p = p->parent();
     }
 
     return nullptr;
@@ -852,14 +904,26 @@ int DockWidgetBase::userType() const
 
 void DockWidgetBase::setMDIPosition(QPoint pos)
 {
-    if (MDILayoutWidget *layout = d->mdiLayout())
-        layout->moveDockWidget(this, pos);
+    if (MDILayoutWidget *layout = d->mdiLayout()) {
+        if (auto wrapperDW = d->mdiDockWidgetWrapper()) {
+            // Case of using Option_MDINestable. We need to layout the actual top level DW
+            layout->moveDockWidget(wrapperDW, pos);
+        } else {
+            layout->moveDockWidget(this, pos);
+        }
+    }
 }
 
 void DockWidgetBase::setMDISize(QSize size)
 {
-    if (MDILayoutWidget *layout = d->mdiLayout())
-        layout->resizeDockWidget(this, size);
+    if (MDILayoutWidget *layout = d->mdiLayout()) {
+        if (auto wrapperDW = d->mdiDockWidgetWrapper()) {
+            // Case of using Option_MDINestable. We need to layout the actual top level DW
+            layout->resizeDockWidget(wrapperDW, size);
+        } else {
+            layout->resizeDockWidget(this, size);
+        }
+    }
 }
 
 void DockWidgetBase::setMDIZ(int z)

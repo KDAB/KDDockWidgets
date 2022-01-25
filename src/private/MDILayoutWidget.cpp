@@ -107,7 +107,8 @@ void MDILayoutWidget::resizeDockWidget(Frame *frame, QSize size)
 
     Layouting::Item *item = itemForFrame(frame);
     if (!item) {
-        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << frame;
+        qWarning() << Q_FUNC_INFO << "Frame not found in the layout" << frame << frame->isMDI()
+                   << frame->isMDIWrapper();
         return;
     }
 

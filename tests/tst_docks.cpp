@@ -5213,6 +5213,42 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     mdiTitleBar->onFloatClicked();
 }
 
+void TestDocks::tst_mdi_mixed_with_docking_setMDISize()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+
+    m->addDockWidget(dock1, Location_OnBottom);
+
+    auto mdiArea = new MDIArea();
+    m->setPersistentCentralWidget(mdiArea);
+
+    auto createSheet = [](int id) -> DockWidgetBase* {
+        auto dock = new DockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidgetBase::Option_MDINestable);
+        dock->setWidget(new QPushButton(QStringLiteral("Sheet %1").arg(id)));
+        dock->setTitle(QStringLiteral("Sheet %1").arg(id));
+
+        return dock;
+    };
+
+    auto mdiWidget1 = createSheet(1);
+    auto mdiWidget2 = createSheet(2);
+
+    mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
+    mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
+
+    Frame *frame1 = mdiArea->frames().at(0);
+
+    const QSize sz1 = frame1->QWidgetAdapter::size();
+    const QSize increment(200, 200);
+
+    QVERIFY(mdiWidget1->d->mdiLayout());
+    mdiWidget1->setMDISize(sz1 + increment);
+
+    QCOMPARE(frame1->QWidgetAdapter::size(), sz1 + increment);
+}
+
 // No need to port to QtQuick
 void TestDocks::tst_floatingWindowDeleted()
 {

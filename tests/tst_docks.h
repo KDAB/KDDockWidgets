@@ -252,6 +252,7 @@ private Q_SLOTS:
     void tst_mainWindowAlwaysHasCentralWidget();
     void tst_dockableMainWindows();
     void tst_mdi_mixed_with_docking2();
+    void tst_mdi_mixed_with_docking_setMDISize();
 
     // But these are fine to be widget only:
     void tst_tabsNotClickable();
