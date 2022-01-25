@@ -550,7 +550,7 @@ MDILayoutWidget *DockWidgetBase::Private::mdiLayout() const
             return nullptr;
         }
 
-        if (auto layout = qobject_cast<LayoutWidget*>(p)) {
+        if (qobject_cast<LayoutWidget*>(p)) {
             // We found a layout
             if (auto mdiLayout = qobject_cast<MDILayoutWidget*>(p)) {
                 // And it's MDI
