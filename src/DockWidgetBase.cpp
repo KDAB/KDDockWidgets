@@ -600,7 +600,7 @@ DockWidgetBase *DockWidgetBase::Private::mdiDockWidgetWrapper() const
             return nullptr;
         }
 
-        if (auto layout = qobject_cast<LayoutWidget*>(p)) {
+        if (qobject_cast<LayoutWidget*>(p)) {
             if (auto dropArea = qobject_cast<DropArea*>(p)) {
                 if (dropArea->isMDIWrapper())
                     return dropArea->mdiDockWidgetWrapper();
