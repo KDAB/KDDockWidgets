@@ -41,7 +41,7 @@ class LayoutWidget;
 // Just a RAII class so we don't forget to unref
 struct ItemRef
 {
-    ItemRef(const QMetaObject::Connection &conn, Layouting::Item *it);
+    explicit ItemRef(const QMetaObject::Connection &, Layouting::Item *);
     ~ItemRef();
 
     Layouting::Item *const item;
