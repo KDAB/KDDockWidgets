@@ -675,7 +675,7 @@ void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
     for (auto dw : qAsConst(dockWidgets)) {
         if (affinities.isEmpty() || affinitiesMatch(affinities, dw->affinities())) {
             dw->forceClose();
-            dw->d->lastPositions().removePlaceholders();
+            dw->d->lastPosition()->removePlaceholders();
         }
     }
 

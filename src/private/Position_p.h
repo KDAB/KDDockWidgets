@@ -106,6 +106,7 @@ public:
     bool containsPlaceholder(Layouting::Item *) const;
     void removePlaceholders();
 
+    /// @brief Returns the last places where the dock widget was or is
     const std::vector<std::unique_ptr<ItemRef>> &placeholders() const
     {
         return m_placeholders;
@@ -120,26 +121,10 @@ public:
     ///@brief removes the Item @p placeholder
     void removePlaceholder(Layouting::Item *placeholder);
 
-private:
-    friend inline QDebug operator<<(QDebug, const KDDockWidgets::Position::Ptr &);
-
-    // The last places where this dock widget was (or is), so it can be restored when setFloating(false) or show() is called.
-    std::vector<std::unique_ptr<ItemRef>> m_placeholders;
-    bool m_clearing = false; // to prevent re-entrancy
-};
-
-struct LastPositions
-{
-    // TODO: Support multiple old positions, one per main window
-
-    bool isValid() const
+    void saveTabIndex(int tabIndex, bool isFloating)
     {
-        return lastPosition->isValid();
-    }
-
-    void addPosition(Layouting::Item *item)
-    {
-        lastPosition->addPlaceholderItem(item);
+        m_tabIndex = tabIndex;
+        m_wasFloating = isFloating;
     }
 
     void setLastFloatingGeometry(QRect geo)
@@ -149,12 +134,22 @@ struct LastPositions
 
     bool wasFloating() const
     {
-        return lastPosition->m_wasFloating;
+        return m_wasFloating;
     }
 
     QRect lastFloatingGeometry() const
     {
         return m_lastFloatingGeometry;
+    }
+
+    Layouting::Item *lastItem() const
+    {
+        return layoutItem();
+    }
+
+    int lastTabIndex() const
+    {
+        return m_tabIndex;
     }
 
     QRect lastOverlayedGeometry(SideBarLocation loc) const
@@ -167,47 +162,14 @@ struct LastPositions
         m_lastOverlayedGeometries[loc] = rect;
     }
 
-    LayoutSaver::Position serialize();
-    void deserialize(const LayoutSaver::Position &p);
-
-    Layouting::Item *lastItem() const
-    {
-        return lastPosition->layoutItem();
-    }
-
-    Layouting::Item::List layoutItems() const
-    {
-        Layouting::Item::List items;
-        return items;
-    }
-
-    void saveTabIndex(int tabIndex, bool isFloating)
-    {
-        lastPosition->m_tabIndex = tabIndex;
-        lastPosition->m_wasFloating = isFloating;
-    }
-
-    void removePlaceholders() const
-    {
-        lastPosition->removePlaceholders();
-    }
-
-    void removePlaceholders(const LayoutWidget *hostWidget) const
-    {
-        lastPosition->removePlaceholders(hostWidget);
-    }
-
-    int lastTabIndex() const
-    {
-        return lastPosition->m_tabIndex;
-    }
-
 private:
+    friend inline QDebug operator<<(QDebug, const KDDockWidgets::Position::Ptr &);
+
+    // The last places where this dock widget was (or is), so it can be restored when setFloating(false) or show() is called.
+    std::vector<std::unique_ptr<ItemRef>> m_placeholders;
     QRect m_lastFloatingGeometry;
     QHash<SideBarLocation, QRect> m_lastOverlayedGeometries;
-
-    friend inline QDebug operator<<(QDebug d, const KDDockWidgets::LastPositions &);
-    Position::Ptr lastPosition = std::make_shared<Position>();
+    bool m_clearing = false; // to prevent re-entrancy
 };
 
 inline QDebug operator<<(QDebug d, const KDDockWidgets::Position::Ptr &p)
@@ -216,12 +178,6 @@ inline QDebug operator<<(QDebug d, const KDDockWidgets::Position::Ptr &p)
         return d;
 
     d << "; placeholdersSize=" << p->m_placeholders.size();
-    return d;
-}
-
-inline QDebug operator<<(QDebug d, const KDDockWidgets::LastPositions &p)
-{
-    d << p.lastPosition << "; lastFloatingGeometry=" << p.m_lastFloatingGeometry;
     return d;
 }
 

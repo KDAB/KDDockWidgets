@@ -80,7 +80,7 @@ public:
     void addPlaceholderItem(Layouting::Item *);
 
     ///@brief returns the last position, just for tests.
-    LastPositions &lastPositions();
+    Position::Ptr &lastPosition();
 
     void forceClose();
     QPoint defaultCenterPosForFloating();
@@ -158,7 +158,7 @@ public:
     const LayoutSaverOptions layoutSaverOptions;
     QAction *const toggleAction;
     QAction *const floatAction;
-    LastPositions m_lastPositions;
+    Position::Ptr m_lastPosition = std::make_shared<Position>();
     bool m_isPersistentCentralDockWidget = false;
     bool m_processingToggleAction = false;
     bool m_updatingToggleAction = false;

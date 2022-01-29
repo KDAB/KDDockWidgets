@@ -553,7 +553,7 @@ void Frame::setLayoutItem(Layouting::Item *item)
             dw->d->addPlaceholderItem(item);
     } else {
         for (DockWidgetBase *dw : dockWidgets())
-            dw->d->lastPositions().removePlaceholders();
+            dw->d->lastPosition()->removePlaceholders();
     }
 }
 

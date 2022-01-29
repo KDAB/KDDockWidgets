@@ -324,8 +324,8 @@ void TestDocks::tst_detachPos()
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
 
-    QVERIFY(!dock1->dptr()->lastPositions().lastFloatingGeometry().isValid());
-    QVERIFY(!dock2->dptr()->lastPositions().lastFloatingGeometry().isValid());
+    QVERIFY(!dock1->dptr()->lastPosition()->lastFloatingGeometry().isValid());
+    QVERIFY(!dock2->dptr()->lastPosition()->lastFloatingGeometry().isValid());
 
     const int previousWidth = dock1->width();
     dock1->setFloating(true);
@@ -791,11 +791,11 @@ void TestDocks::tst_doubleClose()
         auto dock1 = createDockWidget("1", new QPushButton("1"));
         m->addDockWidget(dock1, Location_OnBottom);
 
-        QVERIFY(!dock1->dptr()->lastPositions().wasFloating());
+        QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
         dock1->close();
-        QVERIFY(!dock1->dptr()->lastPositions().wasFloating());
+        QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
         dock1->close();
-        QVERIFY(!dock1->dptr()->lastPositions().wasFloating());
+        QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
     }
 }
 
@@ -1679,7 +1679,7 @@ void TestDocks::tst_removeItem()
 
     m->addDockWidget(dock1, Location_OnBottom);
     m->addDockWidget(dock2, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
-    Item *item2 = dock2->dptr()->lastPositions().lastItem();
+    Item *item2 = dock2->dptr()->lastPosition()->lastItem();
 
     auto dropArea = m->dropArea();
     MultiSplitter *layout = dropArea;
@@ -1695,7 +1695,7 @@ void TestDocks::tst_removeItem()
     QCOMPARE(layout->placeholderCount(), 0);
 
     // 2. Remove an item that has an actual widget
-    Item *item1 = dock1->dptr()->lastPositions().lastItem();
+    Item *item1 = dock1->dptr()->lastPosition()->lastItem();
     layout->removeItem(item1);
     QCOMPARE(layout->count(), 0);
     QCOMPARE(layout->placeholderCount(), 0);
@@ -1717,11 +1717,11 @@ void TestDocks::tst_removeItem()
     QCOMPARE(layout->placeholderCount(), 2);
 
     // Now remove the items
-    layout->removeItem(dock2->dptr()->lastPositions().lastItem());
+    layout->removeItem(dock2->dptr()->lastPosition()->lastItem());
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 1);
     layout->checkSanity();
-    layout->removeItem(dock1->dptr()->lastPositions().lastItem());
+    layout->removeItem(dock1->dptr()->lastPosition()->lastItem());
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
 
@@ -1734,11 +1734,11 @@ void TestDocks::tst_removeItem()
     QVERIFY(Testing::waitForDeleted(frame1));
 
     // Now remove the items, but first dock1
-    layout->removeItem(dock1->dptr()->lastPositions().lastItem());
+    layout->removeItem(dock1->dptr()->lastPosition()->lastItem());
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 1);
     layout->checkSanity();
-    layout->removeItem(dock2->dptr()->lastPositions().lastItem());
+    layout->removeItem(dock2->dptr()->lastPosition()->lastItem());
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
     layout->checkSanity();
@@ -1756,7 +1756,7 @@ void TestDocks::tst_removeItem()
     Testing::waitForDeleted(frame3);
 
     // The second anchor is now following the 3rd, while the 3rd is following 'bottom'
-    layout->removeItem(dock3->dptr()->lastPositions().lastItem()); // will trigger the 3rd anchor to
+    layout->removeItem(dock3->dptr()->lastPosition()->lastItem()); // will trigger the 3rd anchor to
                                                                    // be removed
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 1);
@@ -1884,7 +1884,7 @@ void TestDocks::tst_crash()
     QVERIFY(dock1->isFloating());
     QVERIFY(!dock1->isInMainWindow());
 
-    Item *layoutItem = dock1->dptr()->lastPositions().lastItem();
+    Item *layoutItem = dock1->dptr()->lastPosition()->lastItem();
     QVERIFY(layoutItem && DockRegistry::self()->itemIsInMainWindow(layoutItem));
     QCOMPARE(layoutItem, item1);
 
@@ -1941,7 +1941,7 @@ void TestDocks::tst_refUnrefItem()
     QVERIFY(dock2);
     QVERIFY(item2.data());
     QCOMPARE(item2->refCount(), 1);
-    QCOMPARE(dock2->dptr()->lastPositions().lastItem(), item2.data());
+    QCOMPARE(dock2->dptr()->lastPosition()->lastItem(), item2.data());
     delete dock2;
 
     QVERIFY(!item2.data());
@@ -2535,8 +2535,8 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     QVERIFY(!dock1->isFloating());
     QVERIFY(dock2->isFloating());
 
-    QCOMPARE(dock2->dptr()->lastPositions().lastTabIndex(), 1);
-    QVERIFY(dock2->dptr()->lastPositions().isValid());
+    QCOMPARE(dock2->dptr()->lastPosition()->lastTabIndex(), 1);
+    QVERIFY(dock2->dptr()->lastPosition()->isValid());
     dock2->setFloating(false);
 
     QVERIFY(dock1->isTabbed());
@@ -2807,10 +2807,10 @@ void TestDocks::tst_floatingLastPosAfterDoubleClose()
 {
     EnsureTopLevelsDeleted e;
     auto d1 = new DockWidgetType(QStringLiteral("a"));
-    QVERIFY(d1->dptr()->lastPositions().lastFloatingGeometry().isNull());
+    QVERIFY(d1->dptr()->lastPosition()->lastFloatingGeometry().isNull());
     QVERIFY(!d1->isVisible());
     d1->close();
-    QVERIFY(d1->dptr()->lastPositions().lastFloatingGeometry().isNull());
+    QVERIFY(d1->dptr()->lastPosition()->lastFloatingGeometry().isNull());
     delete d1;
 }
 
@@ -4206,7 +4206,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
 
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         dock1->addDockWidgetAsTab(dock2);
-        Item *oldItem2 = dock2->dptr()->lastPositions().lastItem();
+        Item *oldItem2 = dock2->dptr()->lastPosition()->lastItem();
         QCOMPARE(oldItem2, layout->itemForFrame(dock2->dptr()->frame()));
 
 
@@ -4215,7 +4215,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         QVERIFY(layout->checkSanity());
         auto fw2 = dock2->floatingWindow();
         QVERIFY(fw2);
-        QCOMPARE(dock2->dptr()->lastPositions().lastItem(), oldItem2);
+        QCOMPARE(dock2->dptr()->lastPosition()->lastItem(), oldItem2);
         Item *item2 = fw2->dropArea()->itemForFrame(dock2->dptr()->frame());
         QVERIFY(item2);
         QCOMPARE(item2->hostWidget()->asQObject(), fw2->dropArea());
@@ -4224,7 +4224,7 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         // Move from tab to bottom
         layout->addWidget(fw2->dropArea(), KDDockWidgets::Location_OnRight, nullptr);
         QVERIFY(layout->checkSanity());
-        QVERIFY(dock2->dptr()->lastPositions().lastItem());
+        QVERIFY(dock2->dptr()->lastPosition()->lastItem());
         QCOMPARE(layout->count(), 2);
         QCOMPARE(layout->placeholderCount(), 0);
 
@@ -4844,7 +4844,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
 
     // Now dock it:
     m1->addDockWidget(dock1, Location_OnTop);
-    QCOMPARE(dock1->dptr()->lastPositions().lastFloatingGeometry().topLeft(), targetPos);
+    QCOMPARE(dock1->dptr()->lastPosition()->lastFloatingGeometry().topLeft(), targetPos);
 
     dock1->setFloating(true);
     QCOMPARE(dock1->window()->geometry().topLeft(), targetPos);

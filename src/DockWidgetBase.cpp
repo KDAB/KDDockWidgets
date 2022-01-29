@@ -208,7 +208,7 @@ bool DockWidgetBase::setFloating(bool floats)
             titleBar()->makeWindow();
         }
 
-        auto lastGeo = d->lastPositions().lastFloatingGeometry();
+        auto lastGeo = d->lastPosition()->lastFloatingGeometry();
         if (lastGeo.isValid()) {
             if (auto fw = floatingWindow())
                 fw->setSuggestedGeometry(lastGeo, SuggestedGeometryHint_PreserveCenter);
@@ -381,7 +381,7 @@ QStringList DockWidgetBase::affinities() const
 
 void DockWidgetBase::show()
 {
-    if (isWindow() && (d->m_lastPositions.wasFloating() || !d->m_lastPositions.isValid())) {
+    if (isWindow() && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
         // Create the FloatingWindow already, instead of waiting for the show event.
         // This reduces flickering on some platforms
         d->morphIntoFloatingWindow();
@@ -476,7 +476,7 @@ bool DockWidgetBase::isInSideBar() const
 
 bool DockWidgetBase::hasPreviousDockedLocation() const
 {
-    return d->m_lastPositions.isValid();
+    return d->m_lastPosition->isValid();
 }
 
 QSize DockWidgetBase::lastOverlayedSize() const
@@ -499,7 +499,7 @@ void DockWidgetBase::setFloatingGeometry(QRect geometry)
     if (isOpen() && isFloating()) {
         window()->setGeometry(geometry);
     } else {
-        d->m_lastPositions.setLastFloatingGeometry(geometry);
+        d->m_lastPosition->setLastFloatingGeometry(geometry);
     }
 }
 
@@ -509,7 +509,7 @@ FloatingWindow *DockWidgetBase::Private::morphIntoFloatingWindow()
         return fw; // Nothing to do
 
     if (q->isWindow()) {
-        QRect geo = m_lastPositions.lastFloatingGeometry();
+        QRect geo = m_lastPosition->lastFloatingGeometry();
         if (geo.isNull()) {
             geo = q->geometry();
 
@@ -681,7 +681,7 @@ void DockWidgetBase::Private::updateFloatAction()
     QScopedValueRollback<bool> recursionGuard(m_updatingFloatAction, true); // Guard against recursiveness
 
     if (q->isFloating()) {
-        floatAction->setEnabled(m_lastPositions.isValid());
+        floatAction->setEnabled(m_lastPosition->isValid());
         floatAction->setChecked(true);
         floatAction->setToolTip(tr("Dock"));
     } else {
@@ -724,7 +724,7 @@ void DockWidgetBase::Private::close()
         && q->isVisible()) { // only user-closing is interesting to save the geometry
         // We check for isVisible so we don't save geometry if you call close() on an already closed
         // dock widget
-        m_lastPositions.setLastFloatingGeometry(q->window()->geometry());
+        m_lastPosition->setLastFloatingGeometry(q->window()->geometry());
     }
 
     saveTabIndex();
@@ -747,14 +747,14 @@ void DockWidgetBase::Private::close()
 
 bool DockWidgetBase::Private::restoreToPreviousPosition()
 {
-    if (!m_lastPositions.isValid())
+    if (!m_lastPosition->isValid())
         return false;
 
-    Layouting::Item *item = m_lastPositions.lastItem();
+    Layouting::Item *item = m_lastPosition->lastItem();
 
     LayoutWidget *layout = DockRegistry::self()->layoutForItem(item);
     Q_ASSERT(layout);
-    layout->restorePlaceholder(q, item, m_lastPositions.lastTabIndex());
+    layout->restorePlaceholder(q, item, m_lastPosition->lastTabIndex());
     return true;
 }
 
@@ -762,14 +762,14 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
 {
     // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous position.
 
-    if (!m_lastPositions.isValid())
+    if (!m_lastPosition->isValid())
         return;
 
-    Layouting::Item *layoutItem = m_lastPositions.lastItem();
+    Layouting::Item *layoutItem = m_lastPosition->lastItem();
     if (!layoutItem)
         return; // nothing to do, no last position
 
-    if (m_lastPositions.wasFloating())
+    if (m_lastPosition->wasFloating())
         return; // Nothing to do, it was floating before, now it'll just get visible
 
     Frame *frame = this->frame();
@@ -799,7 +799,7 @@ int DockWidgetBase::Private::currentTabIndex() const
 
 void DockWidgetBase::Private::saveTabIndex()
 {
-    m_lastPositions.saveTabIndex(currentTabIndex(), q->isFloating());
+    m_lastPosition->saveTabIndex(currentTabIndex(), q->isFloating());
 }
 
 void DockWidgetBase::Private::show()
@@ -1007,12 +1007,12 @@ DockWidgetBase::Private::Private(const QString &dockName, DockWidgetBase::Option
 void DockWidgetBase::Private::addPlaceholderItem(Layouting::Item *item)
 {
     Q_ASSERT(item);
-    m_lastPositions.addPosition(item);
+    m_lastPosition->addPlaceholderItem(item);
 }
 
-LastPositions &DockWidgetBase::Private::lastPositions()
+Position::Ptr &DockWidgetBase::Private::lastPosition()
 {
-    return m_lastPositions;
+    return m_lastPosition;
 }
 
 Frame *DockWidgetBase::Private::frame() const
@@ -1030,6 +1030,6 @@ void DockWidgetBase::Private::saveLastFloatingGeometry()
 {
     if (q->isFloating() && q->isVisible()) {
         // It's getting docked, save last floating position
-        lastPositions().setLastFloatingGeometry(q->window()->geometry());
+        lastPosition()->setLastFloatingGeometry(q->window()->geometry());
     }
 }

@@ -47,7 +47,7 @@ void Position::addPlaceholderItem(Layouting::Item *placeholder)
         removeNonMainWindowPlaceholders();
     }
 
-    // Make sure our list only contains valid placeholders. We save the result so we can disconnect from the lambda, since the Item might outlive LastPosition
+    // Make sure our list only contains valid placeholders. We save the result so we can disconnect from the lambda, since the Item might outlive Position
     QMetaObject::Connection connection = QObject::connect(placeholder, &QObject::destroyed, placeholder, [this, placeholder] {
         removePlaceholder(placeholder);
     });
@@ -121,6 +121,9 @@ void Position::removePlaceholder(Layouting::Item *placeholder)
 
 void Position::deserialize(const LayoutSaver::Position &lp)
 {
+    m_lastFloatingGeometry = lp.lastFloatingGeometry;
+    m_lastOverlayedGeometries = lp.lastOverlayedGeometries;
+
     for (const auto &placeholder : qAsConst(lp.placeholders)) {
         LayoutWidget *layout;
         int itemIndex = placeholder.itemIndex;
@@ -190,6 +193,9 @@ LayoutSaver::Position Position::serialize() const
     l.tabIndex = m_tabIndex;
     l.wasFloating = m_wasFloating;
 
+    l.lastFloatingGeometry = lastFloatingGeometry();
+    l.lastOverlayedGeometries = m_lastOverlayedGeometries;
+
     return l;
 }
 
@@ -207,19 +213,4 @@ ItemRef::~ItemRef()
         QObject::disconnect(connection);
         item->unref();
     }
-}
-
-LayoutSaver::Position LastPositions::serialize()
-{
-    LayoutSaver::Position result = lastPosition->serialize();
-    result.lastFloatingGeometry = lastFloatingGeometry();
-    result.lastOverlayedGeometries = m_lastOverlayedGeometries;
-    return result;
-}
-
-void LastPositions::deserialize(const LayoutSaver::Position &p)
-{
-    m_lastFloatingGeometry = p.lastFloatingGeometry;
-    m_lastOverlayedGeometries = p.lastOverlayedGeometries;
-    lastPosition->deserialize(p);
 }

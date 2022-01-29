@@ -177,7 +177,7 @@ QByteArray LayoutSaver::serializeLayout() const
     for (DockWidgetBase *dockWidget : dockWidgets) {
         if (d->matchesAffinity(dockWidget->affinities())) {
             auto dw = dockWidget->d->serialize();
-            dw->lastPosition = dockWidget->d->lastPositions().serialize();
+            dw->lastPosition = dockWidget->d->lastPosition()->serialize();
             layout.allDockWidgets.push_back(dw);
         }
     }
@@ -290,7 +290,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         if (DockWidgetBase *dockWidget =
                 d->m_dockRegistry->dockByName(dw->uniqueName, DockRegistry::DockByNameFlag::ConsultRemapping)) {
-            dockWidget->d->lastPositions().deserialize(dw->lastPosition);
+            dockWidget->d->lastPosition()->deserialize(dw->lastPosition);
         } else {
             qWarning() << Q_FUNC_INFO << "Couldn't find dock widget" << dw->uniqueName;
         }

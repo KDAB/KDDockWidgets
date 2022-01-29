@@ -547,7 +547,7 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     auto frame = Config::self().frameworkWidgetFactory()->createFrame(this, FrameOption_IsOverlayed);
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
-    d->updateOverlayGeometry(dw->d->lastPositions().lastOverlayedGeometry(sb->location()).size());
+    d->updateOverlayGeometry(dw->d->lastPosition()->lastOverlayedGeometry(sb->location()).size());
 
     frame->setAllowedResizeSides(d->allowedResizeSides(sb->location()));
     frame->QWidgetAdapter::show();
@@ -576,7 +576,7 @@ void MainWindowBase::clearSideBarOverlay(bool deleteFrame)
     }
 
     const SideBarLocation loc = d->m_overlayedDockWidget->sideBarLocation();
-    d->m_overlayedDockWidget->d->lastPositions().setLastOverlayedGeometry(
+    d->m_overlayedDockWidget->d->lastPosition()->setLastOverlayedGeometry(
         loc, frame->QWidgetAdapter::geometry());
 
     frame->unoverlay();

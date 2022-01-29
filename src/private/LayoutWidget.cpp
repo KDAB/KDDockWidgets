@@ -129,7 +129,7 @@ void LayoutWidget::unrefOldPlaceholders(const Frame::List &framesBeingAdded) con
 {
     for (Frame *frame : framesBeingAdded) {
         for (DockWidgetBase *dw : frame->dockWidgets()) {
-            dw->d->lastPositions().removePlaceholders(this);
+            dw->d->lastPosition()->removePlaceholders(this);
         }
     }
 }
