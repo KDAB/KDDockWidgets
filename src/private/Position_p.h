@@ -44,6 +44,8 @@ struct ItemRef
     explicit ItemRef(const QMetaObject::Connection &, Layouting::Item *);
     ~ItemRef();
 
+    bool isInMainWindow() const;
+
     Layouting::Item *const item;
     const QPointer<Layouting::Item> guard;
     const QMetaObject::Connection connection;

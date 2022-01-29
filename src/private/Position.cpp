@@ -66,7 +66,7 @@ Layouting::Item *Position::layoutItem() const
     // In the future we might want to restore it to FloatingWindows.
 
     for (const auto &itemref : m_placeholders) {
-        if (DockRegistry::self()->itemIsInMainWindow(itemref->item))
+        if (itemref->isInMainWindow())
             return itemref->item;
     }
 
@@ -101,7 +101,7 @@ void Position::removeNonMainWindowPlaceholders()
     auto it = m_placeholders.begin();
     while (it != m_placeholders.end()) {
         ItemRef *itemref = it->get();
-        if (!DockRegistry::self()->itemIsInMainWindow(itemref->item))
+        if (!itemref->isInMainWindow())
             it = m_placeholders.erase(it);
         else
             ++it;
@@ -213,4 +213,9 @@ ItemRef::~ItemRef()
         QObject::disconnect(connection);
         item->unref();
     }
+}
+
+bool ItemRef::isInMainWindow() const
+{
+    return DockRegistry::self()->itemIsInMainWindow(item);
 }
