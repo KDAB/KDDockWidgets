@@ -199,9 +199,9 @@ LayoutSaver::Position Position::serialize() const
     return l;
 }
 
-ItemRef::ItemRef(const QMetaObject::Connection &conn, Layouting::Item *item)
-    : item(item)
-    , guard(item)
+ItemRef::ItemRef(const QMetaObject::Connection &conn, Layouting::Item *it)
+    : item(it)
+    , guard(it)
     , connection(conn)
 {
     item->ref();
