@@ -48,6 +48,17 @@
         "externalConsole": false
       },
       {
+        "name": "gdb-kddockwidgets_mdi_with_docking_example",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev/bin/kddockwidgets_mdi_with_docking_example",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "gdb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
         "name": "gdb-tst_docks",
         "type": "cppdbg",
         "request": "launch",
