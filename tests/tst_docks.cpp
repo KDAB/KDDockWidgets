@@ -5059,6 +5059,49 @@ void TestDocks::tst_dockableMainWindows()
      fw->dropArea()->addDockWidget(dock1, Location::Location_OnLeft, nullptr);
 }
 
+void TestDocks::tst_mdi_mixed_with_docking()
+{
+    EnsureTopLevelsDeleted e;
+    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
+    auto dock1 = createDockWidget("1", new QPushButton("1"));
+
+    m->addDockWidget(dock1, Location_OnBottom);
+
+    auto mdiArea = new MDIArea();
+    m->setPersistentCentralWidget(mdiArea);
+
+    auto mdiWidget1 = createDockWidget("mdi1", new QPushButton("mdi1"));
+    auto mdiWidget2 = createDockWidget("mdi2", new QPushButton("mdi12"));
+
+    mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
+    mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
+
+    Frame *frameMDI1 = mdiWidget1->d->frame();
+    Frame *frame1 = dock1->d->frame();
+    QVERIFY(!frame1->isMDI());
+    QVERIFY(frameMDI1->isMDI());
+    QVERIFY(!frame1->mdiLayoutWidget());
+    QVERIFY(frameMDI1->mdiLayoutWidget());
+
+    QVERIFY(!dock1->titleBar()->isMDI());
+
+    auto tb1 = mdiWidget1->titleBar();
+    QVERIFY(tb1->isMDI());
+    QVERIFY(Testing::waitForEvent(tb1, QEvent::Show));
+    QVERIFY(tb1->isVisible());
+
+    // Press the float button
+    tb1->onFloatClicked();
+
+    QVERIFY(mdiWidget1->d->lastPosition()->isValid());
+    QVERIFY(mdiWidget1->titleBar()->isVisible());
+    QVERIFY(mdiWidget1->isFloating());
+
+    // Dock again, and check it went back
+    mdiWidget1->titleBar()->onFloatClicked();
+    QVERIFY(!mdiWidget1->isFloating());
+}
+
 void TestDocks::tst_mdi_mixed_with_docking2()
 {
     // Here, the MDI dock widgets are themselves main windows which will show drop-indicators.
@@ -7699,32 +7742,4 @@ void TestDocks::tst_persistentCentralWidget()
     QVERIFY(!saved.isEmpty());
 
     QVERIFY(saver.restoreLayout(saved));
-}
-
-void TestDocks::tst_mdi_mixed_with_docking()
-{
-    EnsureTopLevelsDeleted e;
-    auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralWidget);
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-
-    m->addDockWidget(dock1, Location_OnBottom);
-
-    auto mdiArea = new MDIArea();
-    m->setPersistentCentralWidget(mdiArea);
-
-    auto mdiWidget1 = createDockWidget("mdi1", new QPushButton("mdi1"));
-    auto mdiWidget2 = createDockWidget("mdi2", new QPushButton("mdi12"));
-
-    mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
-    mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
-
-    Frame *frameMDI1 = mdiWidget1->d->frame();
-    Frame *frame1 = dock1->d->frame();
-    QVERIFY(!frame1->isMDI());
-    QVERIFY(frameMDI1->isMDI());
-    QVERIFY(!frame1->mdiLayoutWidget());
-    QVERIFY(frameMDI1->mdiLayoutWidget());
-
-    QVERIFY(!dock1->titleBar()->isMDI());
-    QVERIFY(mdiWidget1->titleBar()->isMDI());
 }

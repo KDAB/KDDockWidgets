@@ -62,8 +62,13 @@ public:
     explicit LayoutWidget(QWidgetOrQuick *parent = nullptr);
     ~LayoutWidget() override;
 
-    bool isInMainWindow() const;
-    MainWindowBase *mainWindow() const;
+    /// @brief Returns whether this layout is in a MainWindow
+    /// @param honourNesting If true, then we'll count DropAreas/MDIAreas which are nested into DropAreas/MDIAreas as inside the main window.
+    /// otherwise, only direct parenting is considered
+    bool isInMainWindow(bool honourNesting = false) const;
+
+    MainWindowBase *mainWindow(bool honourNesting = false) const;
+
     FloatingWindow *floatingWindow() const;
 
     /**

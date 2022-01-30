@@ -17,6 +17,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "MainWindowBase.h"
 #include "Position_p.h"
+#include "Utils_p.h"
 
 using namespace KDDockWidgets;
 
@@ -33,21 +34,30 @@ LayoutWidget::~LayoutWidget()
     DockRegistry::self()->unregisterLayout(this);
 }
 
-bool LayoutWidget::isInMainWindow() const
+bool LayoutWidget::isInMainWindow(bool honourNesting) const
 {
-    return mainWindow() != nullptr;
+    return mainWindow(honourNesting) != nullptr;
 }
 
-MainWindowBase *LayoutWidget::mainWindow() const
+MainWindowBase *LayoutWidget::mainWindow(bool honourNesting) const
 {
-    if (auto pw = QWidgetAdapter::parentWidget()) {
-        // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as
-        // it's parented
-        if (pw->objectName() == QLatin1String("MyCentralWidget"))
-            return qobject_cast<MainWindowBase *>(pw->parentWidget());
+    // QtQuick doesn't support nesting yet
+    honourNesting = honourNesting && kddwUsesQtWidgets();
 
-        if (auto mw = qobject_cast<MainWindowBase *>(pw))
-            return mw;
+    if (honourNesting) {
+        // This layout might be a MDIArea, nested in DropArea, which is main window.
+        return firstParentOfType<MainWindowBase>(this);
+    } else {
+
+        if (auto pw = QWidgetAdapter::parentWidget()) {
+            // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as
+            // it's parented
+            if (pw->objectName() == QLatin1String("MyCentralWidget"))
+                return qobject_cast<MainWindowBase *>(pw->parentWidget());
+
+            if (auto mw = qobject_cast<MainWindowBase *>(pw))
+                return mw;
+        }
     }
 
     return nullptr;
