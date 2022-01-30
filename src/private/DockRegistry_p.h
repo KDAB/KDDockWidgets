@@ -191,12 +191,12 @@ public:
      */
     MainWindowBase::List mainWindowsWithAffinity(const QStringList &affinities) const;
 
-    // TODO: docs
+    /// @brief Returns the LayoutWidget where the specified item is in
     LayoutWidget *layoutForItem(const Layouting::Item *) const;
 
-    // TODO: docs
+    /// @brief Returns whether the item is in a main window.
+    /// Nesting is honoured. (MDIArea inside DropArea inside MainWindow, for example)
     bool itemIsInMainWindow(const Layouting::Item *) const;
-
 
     bool affinitiesMatch(const QStringList &affinities1, const QStringList &affinities2) const;
 
