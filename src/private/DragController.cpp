@@ -592,26 +592,26 @@ DragController::DragController(QObject *parent)
 {
     qCDebug(creation) << "DragController()";
 
-    auto stateNone = new StateNone(this);
+    m_stateNone = new StateNone(this);
     auto statepreDrag = new StatePreDrag(this);
     auto stateDragging = isWayland() ? new StateDraggingWayland(this)
                                      : new StateDragging(this);
     m_stateDraggingMDI = new StateInternalMDIDragging(this);
 
-    stateNone->addTransition(this, &DragController::mousePressed, statepreDrag);
-    statepreDrag->addTransition(this, &DragController::dragCanceled, stateNone);
+    m_stateNone->addTransition(this, &DragController::mousePressed, statepreDrag);
+    statepreDrag->addTransition(this, &DragController::dragCanceled, m_stateNone);
     statepreDrag->addTransition(this, &DragController::manhattanLengthMove, stateDragging);
     statepreDrag->addTransition(this, &DragController::manhattanLengthMoveMDI, m_stateDraggingMDI);
-    stateDragging->addTransition(this, &DragController::dragCanceled, stateNone);
-    stateDragging->addTransition(this, &DragController::dropped, stateNone);
+    stateDragging->addTransition(this, &DragController::dragCanceled, m_stateNone);
+    stateDragging->addTransition(this, &DragController::dropped, m_stateNone);
 
-    m_stateDraggingMDI->addTransition(this, &DragController::dragCanceled, stateNone);
+    m_stateDraggingMDI->addTransition(this, &DragController::dragCanceled, m_stateNone);
     m_stateDraggingMDI->addTransition(this, &DragController::mdiPopOut, stateDragging);
 
     if (usesFallbackMouseGrabber())
         enableFallbackMouseGrabber();
 
-    setCurrentState(stateNone);
+    setCurrentState(m_stateNone);
 }
 
 DragController *DragController::instance()
@@ -645,6 +645,11 @@ bool DragController::isInNonClientDrag() const
 bool DragController::isInClientDrag() const
 {
     return isDragging() && !m_nonClientDrag;
+}
+
+bool DragController::isIdle() const
+{
+    return activeState() == m_stateNone;
 }
 
 void DragController::grabMouseFor(QWidgetOrQuick *target)

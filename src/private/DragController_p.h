@@ -26,6 +26,7 @@
 namespace KDDockWidgets {
 
 class StateBase;
+class StateNone;
 class StateInternalMDIDragging;
 class DropArea;
 class Draggable;
@@ -85,6 +86,7 @@ public:
     bool isDragging() const;
     bool isInNonClientDrag() const;
     bool isInClientDrag() const;
+    bool isIdle() const;
 
     void grabMouseFor(QWidgetOrQuick *);
     void releaseMouse(QWidgetOrQuick *);
@@ -133,6 +135,7 @@ private:
     DropArea *m_currentDropArea = nullptr;
     bool m_nonClientDrag = false;
     FallbackMouseGrabber *m_fallbackMouseGrabber = nullptr;
+    StateNone *m_stateNone = nullptr;
     StateInternalMDIDragging *m_stateDraggingMDI = nullptr;
 };
 
