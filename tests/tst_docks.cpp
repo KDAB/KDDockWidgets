@@ -5256,7 +5256,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(!mdiWidget3->isFloating());
     QVERIFY(mdiWidget3->d->lastPosition()->isValid());
     mdiTitleBar->onFloatClicked();
-    // QVERIFY(mdiWidget3->isFloating());
+    QVERIFY(mdiWidget3->isFloating());
 
     QVERIFY(Testing::waitForDeleted(mdiArea->frames().constFirst()));
     QCOMPARE(mdiArea->frames().size(), 1);

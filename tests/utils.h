@@ -415,7 +415,7 @@ inline void drag(WidgetType *sourceWidget, QPoint globalDest,
     WidgetType *draggable = draggableFor(sourceWidget);
 
     Q_ASSERT(draggable && draggable->isVisible());
-    const QPoint pressGlobalPos = KDDockWidgets::mapToGlobal(draggable, QPoint(6, 6));
+    const QPoint pressGlobalPos = KDDockWidgets::mapToGlobal(draggable, QPoint(15, 15));
 
     drag(draggable, pressGlobalPos, globalDest, buttonActions);
 }
