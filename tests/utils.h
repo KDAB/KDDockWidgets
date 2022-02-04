@@ -393,9 +393,13 @@ inline void drag(WidgetType *sourceWidget, QPoint pressGlobalPos, QPoint globalD
     if (s_pauseBeforeMove)
         QTest::qWait(DEBUGGING_PAUSE_DURATION);
 
-    qDebug() << "Moving sourceWidget to" << globalDest
+    qDebug() << "Moving sourceWidget=" << sourceWidget << "to" << globalDest
              << "; sourceWidget->size=" << sourceWidget->size()
-             << "; from=" << QCursor::pos();
+             << "; pressPosGlobal=" << pressGlobalPos
+             << "; pressPosLocal=" << sourceWidget->mapFromGlobal(pressGlobalPos)
+             << "; from=" << QCursor::pos()
+             << "; actions=" << buttonActions
+             << "; visible=" << sourceWidget->isVisible();
     moveMouseTo(globalDest, sourceWidget);
     qDebug() << "Arrived at" << QCursor::pos();
     pressGlobalPos = KDDockWidgets::mapToGlobal(sourceWidget, QPoint(10, 10));
