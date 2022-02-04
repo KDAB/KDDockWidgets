@@ -173,7 +173,18 @@ FloatingWindow::FloatingWindow(Frame *frame, QRect suggestedGeometry, MainWindow
         }
 
         m_dropArea->addMultiSplitter(dropAreaMDIWrapper, Location_OnTop);
-        dwMDIWrapper->deleteLater();
+        dwMDIWrapper->setVisible(false);
+        if (!DragController::instance()->isIdle()) {
+            // We're dragging a MDI window and we reached the border, detaching it, and making it float. We can't delete the wrapper frame just yet,
+            // as that would delete the title bar which is currently being dragged. Delete it once the drag finishes
+            connect(DragController::instance(), &DragController::currentStateChanged, dwMDIWrapper, [dwMDIWrapper] {
+                if (DragController::instance()->isIdle())
+                    delete dwMDIWrapper;
+            });
+        } else {
+            dwMDIWrapper->deleteLater();
+        }
+
     } else {
         // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
         // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
