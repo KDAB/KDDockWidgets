@@ -60,6 +60,9 @@ public:
     State *currentState() const;
     void setCurrentState(State *);
 
+Q_SIGNALS:
+    void currentStateChanged();
+
 private:
     State *m_currentState = nullptr;
 };

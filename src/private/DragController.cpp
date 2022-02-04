@@ -143,6 +143,8 @@ void MinimalStateMachine::setCurrentState(State *state)
 
         if (state)
             state->onEntry();
+
+        Q_EMIT currentStateChanged();
     }
 }
 
