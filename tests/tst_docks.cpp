@@ -5267,6 +5267,10 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(!lastMdiFrame->titleBar()->isFloating());
     lastMdiFrame->titleBar()->onFloatClicked();
     QVERIFY(mdiWidget2->isFloating());
+
+    // put it in the MDI area again
+    mdiWidget2->titleBar()->onFloatClicked();
+    QVERIFY(!mdiWidget2->isFloating());
 }
 
 void TestDocks::tst_mdi_mixed_with_docking_setMDISize()
