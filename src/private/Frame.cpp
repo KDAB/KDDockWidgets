@@ -637,7 +637,7 @@ void Frame::unoverlay()
 
 bool Frame::isFloating() const
 {
-    if (isInMainWindow())
+    if (isInMainWindow() || isMDI())
         return false;
 
     return isTheOnlyFrame();

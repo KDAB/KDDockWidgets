@@ -5253,7 +5253,20 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     auto mdiTitleBar = mdiArea->frames().first()->titleBar();
     QVERIFY(mdiTitleBar->isVisible());
 
+    QVERIFY(!mdiWidget3->isFloating());
+    QVERIFY(mdiWidget3->d->lastPosition()->isValid());
     mdiTitleBar->onFloatClicked();
+    // QVERIFY(mdiWidget3->isFloating());
+
+    QVERIFY(Testing::waitForDeleted(mdiArea->frames().constFirst()));
+    QCOMPARE(mdiArea->frames().size(), 1);
+
+    QVERIFY(!mdiWidget2->isFloating());
+    Frame *lastMdiFrame = mdiArea->frames().constFirst();
+    QVERIFY(lastMdiFrame->titleBar()->isVisible());
+    QVERIFY(!lastMdiFrame->titleBar()->isFloating());
+    lastMdiFrame->titleBar()->onFloatClicked();
+    QVERIFY(mdiWidget2->isFloating());
 }
 
 void TestDocks::tst_mdi_mixed_with_docking_setMDISize()
