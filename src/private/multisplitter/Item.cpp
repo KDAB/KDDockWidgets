@@ -21,6 +21,7 @@
 #include <QTimer>
 #include <QGuiApplication>
 #include <QScreen>
+#include <algorithm>
 
 #ifdef Q_CC_MSVC
 #pragma warning(push)
@@ -2896,7 +2897,10 @@ QVector<int> ItemBoxContainer::calculateSqueezes(SizingInfo::List::ConstIterator
 
     const auto count = availabilities.count();
 
-    QVector<int> squeezes(count, 0);
+    QVector<int> squeezes;
+    squeezes.resize(count);
+    std::fill(squeezes.begin(), squeezes.end(), 0);
+
     int missing = needed;
 
     if (strategy == NeighbourSqueezeStrategy::AllNeighbours) {
