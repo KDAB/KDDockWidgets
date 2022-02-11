@@ -64,3 +64,5 @@ kddockwidgets_minimal_example
 *.sln
 *.dir
 .vscode
+/.cache
+/compile_commands.json
