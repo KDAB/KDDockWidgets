@@ -128,33 +128,39 @@ bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) c
     if (!windowBeingDragged)
         return false;
 
+    const DockWidgetBase::List source = windowBeingDragged->dockWidgets();
+    const DockWidgetBase::List target = m_hoveredFrame ? m_hoveredFrame->dockWidgets()
+                                                       : DockWidgetBase::List();
+
     const bool isInner = dropLoc & DropLocation_Inner;
     const bool isOutter = dropLoc & DropLocation_Outter;
     if (isInner) {
-        return m_hoveredFrame != nullptr;
+        if (!m_hoveredFrame)
+            return false;
     } else if (isOutter) {
         // If there's only 1 frame in the layout, the outer indicators are redundant, as they do the same thing as the internal ones.
         // But there might be another window obscuring our target, so it's useful to show the outer indicators in this case
         const bool isTheOnlyFrame = m_hoveredFrame && m_hoveredFrame->isTheOnlyFrame();
-        return !isTheOnlyFrame || DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), windowBeingDragged);
+        if (isTheOnlyFrame && !DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), windowBeingDragged))
+            return false;
     } else if (dropLoc == DropLocation_Center) {
         if (!m_hoveredFrame)
             return false;
 
         if (auto tabbingAllowedFunc = Config::self().tabbingAllowedFunc()) {
-            const DockWidgetBase::List source = windowBeingDragged->dockWidgets();
-            const DockWidgetBase::List target = m_hoveredFrame->dockWidgets();
             if (!tabbingAllowedFunc(source, target))
                 return false;
         }
 
         // Only allow to dock to center if the affinities match
-        return windowBeingDragged && DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities()) && m_hoveredFrame->isDockable();
+        if (!DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities()) && m_hoveredFrame->isDockable())
+            return false;
     } else {
         qWarning() << Q_FUNC_INFO << "Unknown drop indicator location" << dropLoc;
+        return false;
     }
 
-    return false;
+    return true;
 }
 
 void DropIndicatorOverlayInterface::onFrameDestroyed()
