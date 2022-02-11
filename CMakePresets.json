@@ -9,7 +9,6 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
                 "KDDockWidgets_FUZZER" : "OFF"
             },
@@ -18,16 +17,17 @@
             }
         },
         {
-            "name": "dev-gammaray",
-            "displayName": "dev-gammaray",
-            "description": "A Gammaray friendly build. (No ASAN)",
+            "name": "dev-asan",
+            "displayName": "dev-asan",
+            "description": "An ASAN/UBSAN build",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-dev-gammaray",
+            "binaryDir": "${sourceDir}/build-dev-asan",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_FUZZER" : "OFF"
+                "KDDockWidgets_FUZZER" : "OFF",
+                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
             },
             "warnings" : {
                 "uninitialized" : true
@@ -164,6 +164,23 @@
             "displayName": "dev6",
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-dev6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "KDDockWidgets_QT6": "ON",
+                "KDDockWidgets_DEVELOPER_MODE": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
+                "KDDockWidgets_FUZZER" : "OFF",
+                "CMAKE_PREFIX_PATH" : "$env{QT6_DIR}"
+            },
+            "environment": {
+                "PATH": "$env{QT6_DIR}/bin:$penv{PATH}"
+            }
+        },
+        {
+            "name": "dev-asan6",
+            "displayName": "dev-asan6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-dev-asan6",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_QT6": "ON",
