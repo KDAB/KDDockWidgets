@@ -138,6 +138,9 @@ bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) c
         const bool isTheOnlyFrame = m_hoveredFrame && m_hoveredFrame->isTheOnlyFrame();
         return !isTheOnlyFrame || DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), windowBeingDragged);
     } else if (dropLoc == DropLocation_Center) {
+        if (!m_hoveredFrame)
+            return false;
+
         if (auto tabbingAllowedFunc = Config::self().tabbingAllowedFunc()) {
             const DockWidgetBase::List source = windowBeingDragged->dockWidgets();
             const DockWidgetBase::List target = m_hoveredFrame->dockWidgets();
@@ -146,7 +149,7 @@ bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) c
         }
 
         // Only allow to dock to center if the affinities match
-        return m_hoveredFrame && windowBeingDragged && DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities()) && m_hoveredFrame->isDockable();
+        return windowBeingDragged && DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities()) && m_hoveredFrame->isDockable();
     } else {
         qWarning() << Q_FUNC_INFO << "Unknown drop indicator location" << dropLoc;
     }
