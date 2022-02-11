@@ -136,25 +136,32 @@ void SegmentedIndicators::updateSegments()
 {
     m_segments.clear();
 
-    const bool hasMultipleFrames = m_dropArea->visibleCount() > 1;
-    const bool needsOutterIndicators = true; // Can't think of a reason not to show them
-    const bool needsInnerIndicators = needsOutterIndicators && hasMultipleFrames && hoveredFrameRect().isValid();
+    const bool needsOutterIndicators = dropIndicatorVisible(DropLocation_Outter);
+    const bool needsInnerIndicators = dropIndicatorVisible(DropLocation_Inner);
 
     QPolygon center;
 
     if (needsInnerIndicators) {
         const bool useOffset = needsOutterIndicators;
         auto segments = segmentsForRect(hoveredFrameRect(), /*by-ref*/ center, useOffset);
-        for (int i = 0; i < 4; ++i)
-            m_segments.insert(DropLocation(DropLocation_Left + i), segments[i]);
+        int i = 0;
+        for (DropLocation loc : { DropLocation_OutterLeft, DropLocation_OutterTop,
+                                  DropLocation_OutterRight, DropLocation_OutterBottom}) {
+            m_segments.insert(loc, segments[i]);
+            ++i;
+        }
 
         m_segments.insert(DropLocation_Center, center);
     }
 
     if (needsOutterIndicators) {
         auto segments = segmentsForRect(rect(), /*unused*/ center);
-        for (int i = 0; i < 4; ++i)
-            m_segments.insert(DropLocation(DropLocation_OutterLeft + i), segments[i]);
+        int i = 0;
+        for (DropLocation loc : { DropLocation_OutterLeft, DropLocation_OutterTop,
+                                  DropLocation_OutterRight, DropLocation_OutterBottom}) {
+            m_segments.insert(loc, segments[i]);
+            ++i;
+        }
     }
 
     update();
