@@ -162,8 +162,16 @@ void SegmentedIndicators::updateSegments()
 
 void SegmentedIndicators::drawSegments(QPainter *p)
 {
-    for (int i = DropLocation_First; i <= DropLocation_Last; ++i)
-        drawSegment(p, m_segments.value(DropLocation(i)));
+    for (DropLocation loc : { DropLocation_Left,
+                              DropLocation_Top,
+                              DropLocation_Right,
+                              DropLocation_Bottom,
+                              DropLocation_Center,
+                              DropLocation_OutterLeft,
+                              DropLocation_OutterTop,
+                              DropLocation_OutterRight,
+                              DropLocation_OutterBottom })
+        drawSegment(p, m_segments.value(loc));
 }
 
 void SegmentedIndicators::drawSegment(QPainter *p, const QPolygon &segment)

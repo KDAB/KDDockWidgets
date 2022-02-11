@@ -52,6 +52,8 @@ static QString iconName(DropIndicatorOverlayInterface::DropLocation loc, bool ac
         name = QStringLiteral("outter_top");
         break;
     case DropIndicatorOverlayInterface::DropLocation_None:
+    case DropIndicatorOverlayInterface::DropLocation_Inner:
+    case DropIndicatorOverlayInterface::DropLocation_Outter:
         return QString();
     }
 
@@ -167,6 +169,8 @@ Indicator *IndicatorWindow::indicatorForLocation(DropIndicatorOverlayInterface::
     case DropIndicatorOverlayInterface::DropLocation_OutterTop:
         return m_outterTop;
     case DropIndicatorOverlayInterface::DropLocation_None:
+    case DropIndicatorOverlayInterface::DropLocation_Outter:
+    case DropIndicatorOverlayInterface::DropLocation_Inner:
         return nullptr;
     }
 

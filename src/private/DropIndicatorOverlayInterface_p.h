@@ -30,18 +30,17 @@ public:
     enum DropLocation
     {
         DropLocation_None = 0,
-        DropLocation_Left,
-        DropLocation_Top,
-        DropLocation_Right,
-        DropLocation_Bottom,
-        DropLocation_Center,
-        DropLocation_OutterLeft,
-        DropLocation_OutterTop,
-        DropLocation_OutterRight,
-        DropLocation_OutterBottom,
-
-        DropLocation_First = DropLocation_Left,
-        DropLocation_Last = DropLocation_OutterBottom,
+        DropLocation_Left = 1,
+        DropLocation_Top = 2,
+        DropLocation_Right = 4,
+        DropLocation_Bottom = 8,
+        DropLocation_Center = 16,
+        DropLocation_OutterLeft = 32,
+        DropLocation_OutterTop = 64,
+        DropLocation_OutterRight = 128,
+        DropLocation_OutterBottom = 256,
+        DropLocation_Inner = DropLocation_Left | DropLocation_Right | DropLocation_Top | DropLocation_Bottom,
+        DropLocation_Outter = DropLocation_OutterLeft | DropLocation_OutterRight | DropLocation_OutterTop | DropLocation_OutterBottom
     };
     Q_ENUM(DropLocation)
 
@@ -65,6 +64,9 @@ public:
     /// @brief returns the position of the specified drop location
     /// The return is in global coordinates
     virtual QPoint posForIndicator(DropLocation) const = 0;
+
+    /// @brief Returns whether the specified drop indicator should be visible
+    virtual bool dropIndicatorVisible(DropLocation) const;
 
     static KDDockWidgets::Location multisplitterLocationFor(DropLocation);
 

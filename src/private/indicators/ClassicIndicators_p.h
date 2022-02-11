@@ -51,15 +51,11 @@ private:
     friend class KDDockWidgets::Indicator;
     friend class KDDockWidgets::IndicatorWindow;
     bool rubberBandIsTopLevel() const;
-    void updateIndicatorsVisibility(bool visible);
     void raiseIndicators();
     QRect geometryForRubberband(QRect localRect) const;
     void setDropLocation(DropLocation);
     void updateWindowPosition();
 
-    bool m_innerIndicatorsVisible = false;
-    bool m_outterIndicatorsVisible = false;
-    bool m_tabIndicatorVisible = false;
     QWidgetOrQuick *const m_rubberBand;
     IndicatorWindow *const m_indicatorWindow;
 };

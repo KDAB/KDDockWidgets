@@ -57,17 +57,17 @@ QPoint ClassicIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLoc
 
 bool ClassicIndicators::innerIndicatorsVisible() const
 {
-    return m_innerIndicatorsVisible;
+    return dropIndicatorVisible(DropLocation_Inner);
 }
 
 bool ClassicIndicators::outterIndicatorsVisible() const
 {
-    return m_outterIndicatorsVisible;
+    return dropIndicatorVisible(DropLocation_Outter);
 }
 
 bool ClassicIndicators::tabIndicatorVisible() const
 {
-    return m_tabIndicatorVisible;
+    return dropIndicatorVisible(DropLocation_Center);
 }
 
 bool ClassicIndicators::onResize(QSize)
@@ -82,35 +82,10 @@ void ClassicIndicators::updateVisibility()
         m_indicatorWindow->updatePositions();
         m_indicatorWindow->setVisible(true);
         updateWindowPosition();
-        updateIndicatorsVisibility(true);
         raiseIndicators();
     } else {
         m_rubberBand->setVisible(false);
         m_indicatorWindow->setVisible(false);
-        updateIndicatorsVisibility(false);
-    }
-}
-
-void ClassicIndicators::updateIndicatorsVisibility(bool visible)
-{
-    const bool isTheOnlyFrame = m_hoveredFrame && m_hoveredFrame->isTheOnlyFrame();
-
-    m_innerIndicatorsVisible = visible && m_hoveredFrame;
-
-    WindowBeingDragged *windowBeingDragged = DragController::instance()->windowBeingDragged();
-
-    // If there's only 1 frame in the layout, the outer indicators are redundant, as they do the same thing as the internal ones.
-    // But there might be another window obscuring our target, so it's useful to show the outer indicators in this case
-    m_outterIndicatorsVisible = visible && (!isTheOnlyFrame || DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), windowBeingDragged));
-
-
-    // Only allow to dock to center if the affinities match
-    auto tabbingAllowedFunc = Config::self().tabbingAllowedFunc();
-    m_tabIndicatorVisible = m_innerIndicatorsVisible && windowBeingDragged && DockRegistry::self()->affinitiesMatch(m_hoveredFrame->affinities(), windowBeingDragged->affinities()) && m_hoveredFrame->isDockable();
-    if (m_tabIndicatorVisible && tabbingAllowedFunc) {
-        const DockWidgetBase::List source = windowBeingDragged->dockWidgets();
-        const DockWidgetBase::List target = m_hoveredFrame->dockWidgets();
-        m_tabIndicatorVisible = tabbingAllowedFunc(source, target);
     }
 
     Q_EMIT innerIndicatorsVisibleChanged();
