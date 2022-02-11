@@ -23,9 +23,18 @@ class DOCKS_EXPORT ClassicIndicators : public DropIndicatorOverlayInterface
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool innerIndicatorsVisible READ innerIndicatorsVisible NOTIFY innerIndicatorsVisibleChanged)
-    Q_PROPERTY(bool outterIndicatorsVisible READ outterIndicatorsVisible NOTIFY outterIndicatorsVisibleChanged)
-    Q_PROPERTY(bool tabIndicatorVisible READ tabIndicatorVisible NOTIFY tabIndicatorVisibleChanged)
+    // Properties for QML
+    Q_PROPERTY(bool innerLeftIndicatorVisible READ innerLeftIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool innerRightIndicatorVisible READ innerRightIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool innerTopIndicatorVisible READ innerTopIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool innerBottomIndicatorVisible READ innerBottomIndicatorVisible NOTIFY indicatorsVisibleChanged)
+
+    Q_PROPERTY(bool outterLeftIndicatorVisible READ outterLeftIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool outterRightIndicatorVisible READ outterRightIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool outterTopIndicatorVisible READ outterTopIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool outterBottomIndicatorVisible READ outterBottomIndicatorVisible NOTIFY indicatorsVisibleChanged)
+
+    Q_PROPERTY(bool tabIndicatorVisible READ tabIndicatorVisible NOTIFY indicatorsVisibleChanged)
 
 public:
     explicit ClassicIndicators(DropArea *dropArea);
@@ -33,19 +42,22 @@ public:
     DropLocation hover_impl(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;
 
-    bool innerIndicatorsVisible() const;
-    bool outterIndicatorsVisible() const;
-
-    // The tab/center indicator
+    // Lots of getters needed because of QML:
+    bool innerLeftIndicatorVisible() const;
+    bool innerRightIndicatorVisible() const;
+    bool innerTopIndicatorVisible() const;
+    bool innerBottomIndicatorVisible() const;
+    bool outterLeftIndicatorVisible() const;
+    bool outterRightIndicatorVisible() const;
+    bool outterTopIndicatorVisible() const;
+    bool outterBottomIndicatorVisible() const;
     bool tabIndicatorVisible() const;
 
 protected:
     bool onResize(QSize newSize) override;
     void updateVisibility() override;
 Q_SIGNALS:
-    void innerIndicatorsVisibleChanged();
-    void outterIndicatorsVisibleChanged();
-    void tabIndicatorVisibleChanged();
+    void indicatorsVisibleChanged();
 
 private:
     friend class KDDockWidgets::Indicator;

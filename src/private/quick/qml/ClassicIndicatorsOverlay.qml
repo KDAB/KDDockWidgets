@@ -21,7 +21,7 @@ Item {
     visible: width > 50 && height > 50 // don't show if window is too small'
 
     ClassicIndicator {
-        visible: _window.classicIndicators.outterIndicatorsVisible
+        visible: _window.classicIndicators.outterLeftIndicatorVisible
         indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterLeft
         anchors {
             left: parent.left
@@ -31,7 +31,7 @@ Item {
     }
 
     ClassicIndicator {
-        visible: _window.classicIndicators.outterIndicatorsVisible
+        visible: _window.classicIndicators.outterRightIndicatorVisible
         indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterRight
         anchors {
             right: parent.right
@@ -41,7 +41,7 @@ Item {
     }
 
     ClassicIndicator {
-        visible: _window.classicIndicators.outterIndicatorsVisible
+        visible: _window.classicIndicators.outterTopIndicatorVisible
         indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterTop
         anchors {
             top: parent.top
@@ -51,7 +51,7 @@ Item {
     }
 
     ClassicIndicator {
-        visible: _window.classicIndicators.outterIndicatorsVisible
+        visible: _window.classicIndicators.outterBottomIndicatorVisible
         indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterBottom
         anchors {
             bottom: parent.bottom
@@ -69,9 +69,12 @@ Item {
 
         width: (centerIndicator * 3) + (2 * innerMargin)
         height: width
-        visible: _window.classicIndicators.innerIndicatorsVisible
+        visible: _window.classicIndicators.innerLeftIndicatorVisible || _window.classicIndicators.innerRightIndicatorVisible ||
+                 _window.classicIndicators.innerTopIndicatorVisible || _window.classicIndicators.innerBottomIndicatorVisible || _window.classicIndicators.tabIndicatorVisible
 
         ClassicIndicator {
+            id: innerLeft
+            visible: _window.classicIndicators.innerLeftIndicatorVisible
             indicatorType: DropIndicatorOverlayInterface.DropLocation_Left
             anchors {
                 right: centerIndicator.left
@@ -88,6 +91,8 @@ Item {
         }
 
         ClassicIndicator {
+            id: innerRight
+            visible: _window.classicIndicators.innerRightIndicatorVisible
             indicatorType: DropIndicatorOverlayInterface.DropLocation_Right
             anchors {
                 left: centerIndicator.right
@@ -97,6 +102,8 @@ Item {
         }
 
         ClassicIndicator {
+            id: innerTop
+            visible: _window.classicIndicators.innerTopIndicatorVisible
             indicatorType: DropIndicatorOverlayInterface.DropLocation_Top
             anchors {
                 bottom: centerIndicator.top
@@ -106,6 +113,8 @@ Item {
         }
 
         ClassicIndicator {
+            id: innerBottom
+            visible: _window.classicIndicators.innerBottomIndicatorVisible
             indicatorType: DropIndicatorOverlayInterface.DropLocation_Bottom
             anchors {
                 top: centerIndicator.bottom

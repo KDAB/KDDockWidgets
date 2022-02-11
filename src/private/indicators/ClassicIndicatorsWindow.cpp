@@ -138,9 +138,9 @@ IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
 
     setAttribute(Qt::WA_TranslucentBackground);
 
-    connect(classicIndicators, &ClassicIndicators::innerIndicatorsVisibleChanged,
+    connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged,
             this, &IndicatorWindow::updateIndicatorVisibility);
-    connect(classicIndicators, &ClassicIndicators::outterIndicatorsVisibleChanged,
+    connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged,
             this, &IndicatorWindow::updateIndicatorVisibility);
 
     m_indicators << m_center << m_left << m_right << m_top << m_bottom
@@ -199,13 +199,10 @@ void IndicatorWindow::resizeEvent(QResizeEvent *ev)
 
 void IndicatorWindow::updateIndicatorVisibility()
 {
-    for (Indicator *indicator : { m_left, m_right, m_bottom, m_top })
-        indicator->setVisible(classicIndicators->innerIndicatorsVisible());
-
-    for (Indicator *indicator : { m_outterTop, m_outterLeft, m_outterRight, m_outterBottom })
-        indicator->setVisible(classicIndicators->outterIndicatorsVisible());
-
-    m_center->setVisible(classicIndicators->tabIndicatorVisible());
+    for (Indicator *indicator : { m_left, m_right, m_bottom, m_top,
+                                  m_outterTop, m_outterLeft, m_outterRight, m_outterBottom,
+                                  m_center })
+        indicator->setVisible(classicIndicators->dropIndicatorVisible(indicator->m_dropLocation));
 
     updateMask();
 }

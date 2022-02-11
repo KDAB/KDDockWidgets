@@ -55,14 +55,44 @@ QPoint ClassicIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLoc
     return m_indicatorWindow->posForIndicator(loc);
 }
 
-bool ClassicIndicators::innerIndicatorsVisible() const
+bool ClassicIndicators::innerLeftIndicatorVisible() const
 {
-    return dropIndicatorVisible(DropLocation_Inner);
+    return dropIndicatorVisible(DropLocation_Left);
 }
 
-bool ClassicIndicators::outterIndicatorsVisible() const
+bool ClassicIndicators::innerRightIndicatorVisible() const
 {
-    return dropIndicatorVisible(DropLocation_Outter);
+    return dropIndicatorVisible(DropLocation_Right);
+}
+
+bool ClassicIndicators::innerTopIndicatorVisible() const
+{
+    return dropIndicatorVisible(DropLocation_Top);
+}
+
+bool ClassicIndicators::innerBottomIndicatorVisible() const
+{
+    return dropIndicatorVisible(DropLocation_Bottom);
+}
+
+bool ClassicIndicators::outterLeftIndicatorVisible() const
+{
+    return dropIndicatorVisible(DropLocation_OutterLeft);
+}
+
+bool ClassicIndicators::outterRightIndicatorVisible() const
+{
+    return dropIndicatorVisible(DropLocation_OutterRight);
+}
+
+bool ClassicIndicators::outterTopIndicatorVisible() const
+{
+    return dropIndicatorVisible(DropLocation_OutterTop);
+}
+
+bool ClassicIndicators::outterBottomIndicatorVisible() const
+{
+    return dropIndicatorVisible(DropLocation_OutterBottom);
 }
 
 bool ClassicIndicators::tabIndicatorVisible() const
@@ -88,9 +118,7 @@ void ClassicIndicators::updateVisibility()
         m_indicatorWindow->setVisible(false);
     }
 
-    Q_EMIT innerIndicatorsVisibleChanged();
-    Q_EMIT outterIndicatorsVisibleChanged();
-    Q_EMIT tabIndicatorVisibleChanged();
+    Q_EMIT indicatorsVisibleChanged();
 }
 
 void ClassicIndicators::raiseIndicators()
