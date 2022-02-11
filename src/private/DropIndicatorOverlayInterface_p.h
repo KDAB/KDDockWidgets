@@ -25,24 +25,8 @@ class DOCKS_EXPORT DropIndicatorOverlayInterface : public QWidgetAdapter
 {
     Q_OBJECT
     Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)
-    Q_PROPERTY(KDDockWidgets::DropIndicatorOverlayInterface::DropLocation currentDropLocation READ currentDropLocation NOTIFY currentDropLocationChanged)
+    Q_PROPERTY(KDDockWidgets::DropLocation currentDropLocation READ currentDropLocation NOTIFY currentDropLocationChanged)
 public:
-    enum DropLocation
-    {
-        DropLocation_None = 0,
-        DropLocation_Left = 1,
-        DropLocation_Top = 2,
-        DropLocation_Right = 4,
-        DropLocation_Bottom = 8,
-        DropLocation_Center = 16,
-        DropLocation_OutterLeft = 32,
-        DropLocation_OutterTop = 64,
-        DropLocation_OutterRight = 128,
-        DropLocation_OutterBottom = 256,
-        DropLocation_Inner = DropLocation_Left | DropLocation_Right | DropLocation_Top | DropLocation_Bottom,
-        DropLocation_Outter = DropLocation_OutterLeft | DropLocation_OutterRight | DropLocation_OutterTop | DropLocation_OutterBottom
-    };
-    Q_ENUM(DropLocation)
 
     explicit DropIndicatorOverlayInterface(DropArea *dropArea);
     void setHoveredFrame(Frame *);
@@ -54,9 +38,9 @@ public:
     {
         return m_hoveredFrame;
     }
-    void setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation location);
+    void setCurrentDropLocation(DropLocation location);
 
-    KDDockWidgets::DropIndicatorOverlayInterface::DropLocation hover(QPoint globalPos);
+    KDDockWidgets::DropLocation hover(QPoint globalPos);
 
     /// Clears and hides drop indicators
     void removeHover();
@@ -82,7 +66,7 @@ private:
     DropLocation m_currentDropLocation = DropLocation_None;
 
 protected:
-    virtual DropIndicatorOverlayInterface::DropLocation hover_impl(QPoint globalPos) = 0;
+    virtual DropLocation hover_impl(QPoint globalPos) = 0;
     virtual void onHoveredFrameChanged(Frame *);
     virtual void updateVisibility() {};
 

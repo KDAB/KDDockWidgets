@@ -86,29 +86,29 @@ bool DropIndicatorOverlayInterface::isHovered() const
     return m_draggedWindowIsHovering;
 }
 
-DropIndicatorOverlayInterface::DropLocation DropIndicatorOverlayInterface::currentDropLocation() const
+DropLocation DropIndicatorOverlayInterface::currentDropLocation() const
 {
     return m_currentDropLocation;
 }
 
-KDDockWidgets::Location DropIndicatorOverlayInterface::multisplitterLocationFor(DropIndicatorOverlayInterface::DropLocation dropLoc)
+KDDockWidgets::Location DropIndicatorOverlayInterface::multisplitterLocationFor(DropLocation dropLoc)
 {
     switch (dropLoc) {
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_None:
+    case DropLocation_None:
         return KDDockWidgets::Location_None;
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_Left:
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_OutterLeft:
+    case DropLocation_Left:
+    case DropLocation_OutterLeft:
         return KDDockWidgets::Location_OnLeft;
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_OutterTop:
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_Top:
+    case DropLocation_OutterTop:
+    case DropLocation_Top:
         return KDDockWidgets::Location_OnTop;
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_OutterRight:
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_Right:
+    case DropLocation_OutterRight:
+    case DropLocation_Right:
         return KDDockWidgets::Location_OnRight;
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_OutterBottom:
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_Bottom:
+    case DropLocation_OutterBottom:
+    case DropLocation_Bottom:
         return KDDockWidgets::Location_OnBottom;
-    case KDDockWidgets::DropIndicatorOverlayInterface::DropLocation_Center:
+    case DropLocation_Center:
         return KDDockWidgets::Location_None;
     case DropLocation_Inner:
     case DropLocation_Outter:
@@ -166,7 +166,7 @@ void DropIndicatorOverlayInterface::onHoveredFrameChanged(Frame *)
 {
 }
 
-void DropIndicatorOverlayInterface::setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation location)
+void DropIndicatorOverlayInterface::setCurrentDropLocation(DropLocation location)
 {
     if (m_currentDropLocation != location) {
         m_currentDropLocation = location;
@@ -174,7 +174,7 @@ void DropIndicatorOverlayInterface::setCurrentDropLocation(DropIndicatorOverlayI
     }
 }
 
-DropIndicatorOverlayInterface::DropLocation DropIndicatorOverlayInterface::hover(QPoint globalPos)
+DropLocation DropIndicatorOverlayInterface::hover(QPoint globalPos)
 {
     return hover_impl(globalPos);
 }
@@ -190,5 +190,5 @@ void DropIndicatorOverlayInterface::setHoveredFrameRect(QRect rect)
 void DropIndicatorOverlayInterface::removeHover()
 {
     setWindowBeingDragged(false);
-    setCurrentDropLocation(DropIndicatorOverlayInterface::DropLocation_None);
+    setCurrentDropLocation(DropLocation_None);
 }

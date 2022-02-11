@@ -429,7 +429,7 @@ inline void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest,
     drag(draggable, KDDockWidgets::mapToGlobal(draggable, QPoint(10, 10)), globalDest, buttonActions);
 }
 
-inline void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropIndicatorOverlayInterface::DropLocation dropLocation)
+inline void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropLocation dropLocation)
 {
     auto draggable = draggableFor(fw);
     Q_ASSERT(draggable);

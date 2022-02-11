@@ -202,14 +202,14 @@ void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
     layoutEqually(item->parentBoxContainer());
 }
 
-DropIndicatorOverlayInterface::DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos)
+DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos)
 {
     if (Config::self().dropIndicatorsInhibited() || !validateAffinity(draggedWindow))
-        return DropIndicatorOverlayInterface::DropLocation_None;
+        return DropLocation_None;
 
     if (!m_dropIndicatorOverlay) {
         qWarning() << Q_FUNC_INFO << "The frontend is missing a drop indicator overlay";
-        return DropIndicatorOverlayInterface::DropLocation_None;
+        return DropLocation_None;
     }
 
     Frame *frame = frameContainingPos(globalPos); // Frame is nullptr if MainWindowOption_HasCentralFrame isn't set
@@ -218,13 +218,13 @@ DropIndicatorOverlayInterface::DropLocation DropArea::hover(WindowBeingDragged *
     return m_dropIndicatorOverlay->hover(globalPos);
 }
 
-static bool isOutterLocation(DropIndicatorOverlayInterface::DropLocation location)
+static bool isOutterLocation(DropLocation location)
 {
     switch (location) {
-    case DropIndicatorOverlayInterface::DropLocation_OutterLeft:
-    case DropIndicatorOverlayInterface::DropLocation_OutterTop:
-    case DropIndicatorOverlayInterface::DropLocation_OutterRight:
-    case DropIndicatorOverlayInterface::DropLocation_OutterBottom:
+    case DropLocation_OutterLeft:
+    case DropLocation_OutterTop:
+    case DropLocation_OutterRight:
+    case DropLocation_OutterBottom:
         return true;
     default:
         return false;
@@ -240,7 +240,7 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
         return false;
     }
 
-    if (m_dropIndicatorOverlay->currentDropLocation() == DropIndicatorOverlayInterface::DropLocation_None) {
+    if (m_dropIndicatorOverlay->currentDropLocation() == DropLocation_None) {
         qCDebug(hovering) << "DropArea::drop: bailing out, drop location = none";
         return false;
     }
@@ -260,7 +260,7 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 }
 
 bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
-                    DropIndicatorOverlayInterface::DropLocation droploc)
+                    DropLocation droploc)
 {
     FloatingWindow *droppedWindow = draggedWindow ? draggedWindow->floatingWindow()
                                                   : nullptr;
@@ -287,19 +287,19 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
         // variable isn't used
 
     switch (droploc) {
-    case DropIndicatorOverlayInterface::DropLocation_Left:
-    case DropIndicatorOverlayInterface::DropLocation_Top:
-    case DropIndicatorOverlayInterface::DropLocation_Bottom:
-    case DropIndicatorOverlayInterface::DropLocation_Right:
+    case DropLocation_Left:
+    case DropLocation_Top:
+    case DropLocation_Bottom:
+    case DropLocation_Right:
         result = drop(droppedWindow, DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), acceptingFrame);
         break;
-    case DropIndicatorOverlayInterface::DropLocation_OutterLeft:
-    case DropIndicatorOverlayInterface::DropLocation_OutterTop:
-    case DropIndicatorOverlayInterface::DropLocation_OutterRight:
-    case DropIndicatorOverlayInterface::DropLocation_OutterBottom:
+    case DropLocation_OutterLeft:
+    case DropLocation_OutterTop:
+    case DropLocation_OutterRight:
+    case DropLocation_OutterBottom:
         result = drop(droppedWindow, DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), nullptr);
         break;
-    case DropIndicatorOverlayInterface::DropLocation_Center:
+    case DropLocation_Center:
         qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingFrame;
         if (!validateAffinity(droppedWindow, acceptingFrame))
             return false;

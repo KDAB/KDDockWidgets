@@ -22,7 +22,7 @@ Item {
 
     ClassicIndicator {
         visible: _window.classicIndicators.outterLeftIndicatorVisible
-        indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterLeft
+        indicatorType: KDDockWidgets.DropLocation_OutterLeft
         anchors {
             left: parent.left
             leftMargin: outterMargin
@@ -32,7 +32,7 @@ Item {
 
     ClassicIndicator {
         visible: _window.classicIndicators.outterRightIndicatorVisible
-        indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterRight
+        indicatorType: KDDockWidgets.DropLocation_OutterRight
         anchors {
             right: parent.right
             rightMargin: outterMargin
@@ -42,7 +42,7 @@ Item {
 
     ClassicIndicator {
         visible: _window.classicIndicators.outterTopIndicatorVisible
-        indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterTop
+        indicatorType: KDDockWidgets.DropLocation_OutterTop
         anchors {
             top: parent.top
             topMargin: outterMargin
@@ -52,7 +52,7 @@ Item {
 
     ClassicIndicator {
         visible: _window.classicIndicators.outterBottomIndicatorVisible
-        indicatorType: DropIndicatorOverlayInterface.DropLocation_OutterBottom
+        indicatorType: KDDockWidgets.DropLocation_OutterBottom
         anchors {
             bottom: parent.bottom
             bottomMargin: outterMargin
@@ -75,7 +75,7 @@ Item {
         ClassicIndicator {
             id: innerLeft
             visible: _window.classicIndicators.innerLeftIndicatorVisible
-            indicatorType: DropIndicatorOverlayInterface.DropLocation_Left
+            indicatorType: KDDockWidgets.DropLocation_Left
             anchors {
                 right: centerIndicator.left
                 rightMargin: innerMargin
@@ -86,14 +86,14 @@ Item {
         ClassicIndicator {
             id: centerIndicator
             visible: _window.classicIndicators.tabIndicatorVisible
-            indicatorType: DropIndicatorOverlayInterface.DropLocation_Center
+            indicatorType: KDDockWidgets.DropLocation_Center
             anchors.centerIn: parent
         }
 
         ClassicIndicator {
             id: innerRight
             visible: _window.classicIndicators.innerRightIndicatorVisible
-            indicatorType: DropIndicatorOverlayInterface.DropLocation_Right
+            indicatorType: KDDockWidgets.DropLocation_Right
             anchors {
                 left: centerIndicator.right
                 leftMargin: innerMargin
@@ -104,7 +104,7 @@ Item {
         ClassicIndicator {
             id: innerTop
             visible: _window.classicIndicators.innerTopIndicatorVisible
-            indicatorType: DropIndicatorOverlayInterface.DropLocation_Top
+            indicatorType: KDDockWidgets.DropLocation_Top
             anchors {
                 bottom: centerIndicator.top
                 bottomMargin: innerMargin
@@ -115,7 +115,7 @@ Item {
         ClassicIndicator {
             id: innerBottom
             visible: _window.classicIndicators.innerBottomIndicatorVisible
-            indicatorType: DropIndicatorOverlayInterface.DropLocation_Bottom
+            indicatorType: KDDockWidgets.DropLocation_Bottom
             anchors {
                 top: centerIndicator.bottom
                 topMargin: innerMargin

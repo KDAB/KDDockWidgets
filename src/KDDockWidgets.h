@@ -229,6 +229,24 @@ enum class TitleBarButtonType
 };
 Q_ENUM_NS(TitleBarButtonType)
 
+///@brief Enum describing the different drop indicator types
+enum DropLocation
+{
+    DropLocation_None = 0,
+    DropLocation_Left = 1,
+    DropLocation_Top = 2,
+    DropLocation_Right = 4,
+    DropLocation_Bottom = 8,
+    DropLocation_Center = 16,
+    DropLocation_OutterLeft = 32,
+    DropLocation_OutterTop = 64,
+    DropLocation_OutterRight = 128,
+    DropLocation_OutterBottom = 256,
+    DropLocation_Inner = DropLocation_Left | DropLocation_Right | DropLocation_Top | DropLocation_Bottom,
+    DropLocation_Outter = DropLocation_OutterLeft | DropLocation_OutterRight | DropLocation_OutterTop | DropLocation_OutterBottom
+};
+Q_ENUM_NS(DropLocation)
+
 ///@internal
 inline Qt5Qt6Compat::qhashtype qHash(SideBarLocation loc, Qt5Qt6Compat::qhashtype seed)
 {
@@ -253,6 +271,7 @@ enum CursorPosition
 };
 Q_DECLARE_FLAGS(CursorPositions, CursorPosition)
 Q_ENUM_NS(CursorPosition)
+
 
 ///@internal
 enum FrameOption

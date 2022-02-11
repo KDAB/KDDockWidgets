@@ -31,9 +31,9 @@ class IndicatorWindow : public QWidget
     Q_OBJECT
 public:
     explicit IndicatorWindow(ClassicIndicators *classicIndicators);
-    DropIndicatorOverlayInterface::DropLocation hover(QPoint globalPos);
+    DropLocation hover(QPoint globalPos);
     void updatePositions();
-    QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const;
+    QPoint posForIndicator(DropLocation) const;
 
 private:
     void updateIndicatorVisibility();
@@ -43,7 +43,7 @@ private:
     // Only happens on Linux
     void updateMask();
 
-    Indicator *indicatorForLocation(DropIndicatorOverlayInterface::DropLocation loc) const;
+    Indicator *indicatorForLocation(DropLocation loc) const;
 
     ClassicIndicators *const classicIndicators;
     Indicator *const m_center;
@@ -64,7 +64,7 @@ class Indicator : public QWidget
 public:
     typedef QList<Indicator *> List;
     explicit Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *parent,
-                       DropIndicatorOverlayInterface::DropLocation location);
+                       DropLocation location);
     void paintEvent(QPaintEvent *) override;
 
     void setHovered(bool hovered);
@@ -75,7 +75,7 @@ public:
     QImage m_imageActive;
     ClassicIndicators *const q;
     bool m_hovered = false;
-    const DropIndicatorOverlayInterface::DropLocation m_dropLocation;
+    const DropLocation m_dropLocation;
 };
 }
 
@@ -92,15 +92,15 @@ class IndicatorWindow : public QQuickView
     Q_PROPERTY(KDDockWidgets::ClassicIndicators *classicIndicators READ classicIndicators CONSTANT)
 public:
     explicit IndicatorWindow(ClassicIndicators *);
-    DropIndicatorOverlayInterface::DropLocation hover(QPoint);
+    DropLocation hover(QPoint);
     void updatePositions();
-    QPoint posForIndicator(DropIndicatorOverlayInterface::DropLocation) const;
+    QPoint posForIndicator(DropLocation) const;
     Q_INVOKABLE QString iconName(int loc, bool active) const;
     KDDockWidgets::ClassicIndicators *classicIndicators() const;
-    QQuickItem *indicatorForLocation(DropIndicatorOverlayInterface::DropLocation loc) const;
+    QQuickItem *indicatorForLocation(DropLocation loc) const;
 
 private:
-    DropIndicatorOverlayInterface::DropLocation locationForIndicator(const QQuickItem *) const;
+    DropLocation locationForIndicator(const QQuickItem *) const;
     QQuickItem *indicatorForPos(QPoint) const;
     QVector<QQuickItem *> indicatorItems() const;
     ClassicIndicators *const m_classicIndicators;

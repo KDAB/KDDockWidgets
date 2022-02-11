@@ -2,6 +2,7 @@
  - Fixed restoring of normal geometry when closing a maximized window (#259)
  - Experimental support for docking into dock widgets which are in a MDI area.
  - Fixed potential crash involving infinite loop between QWidget::create() and QWidget::createWinId()
+ - Moved DropIndicatorOverlayInterface::DropLocation enum to KDDockWidgets namespace scope
 
 * v1.5.1 (unreleased)
  - X11: Improved detecting which window is under the cursor, by using native X11 API

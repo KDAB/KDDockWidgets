@@ -45,12 +45,12 @@ ClassicIndicators::~ClassicIndicators()
     delete m_indicatorWindow;
 }
 
-DropIndicatorOverlayInterface::DropLocation ClassicIndicators::hover_impl(QPoint globalPos)
+DropLocation ClassicIndicators::hover_impl(QPoint globalPos)
 {
     return m_indicatorWindow->hover(globalPos);
 }
 
-QPoint ClassicIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLocation loc) const
+QPoint ClassicIndicators::posForIndicator(DropLocation loc) const
 {
     return m_indicatorWindow->posForIndicator(loc);
 }
@@ -126,31 +126,31 @@ void ClassicIndicators::raiseIndicators()
     m_indicatorWindow->raise();
 }
 
-KDDockWidgets::Location locationToMultisplitterLocation(ClassicIndicators::DropLocation location)
+KDDockWidgets::Location locationToMultisplitterLocation(DropLocation location)
 {
     switch (location) {
-    case DropIndicatorOverlayInterface::DropLocation_Left:
+    case DropLocation_Left:
         return KDDockWidgets::Location_OnLeft;
-    case DropIndicatorOverlayInterface::DropLocation_Top:
+    case DropLocation_Top:
         return KDDockWidgets::Location_OnTop;
-    case DropIndicatorOverlayInterface::DropLocation_Right:
+    case DropLocation_Right:
         return KDDockWidgets::Location_OnRight;
-    case DropIndicatorOverlayInterface::DropLocation_Bottom:
+    case DropLocation_Bottom:
         return KDDockWidgets::Location_OnBottom;
-    case DropIndicatorOverlayInterface::DropLocation_OutterLeft:
+    case DropLocation_OutterLeft:
         return KDDockWidgets::Location_OnLeft;
-    case DropIndicatorOverlayInterface::DropLocation_OutterTop:
+    case DropLocation_OutterTop:
         return KDDockWidgets::Location_OnTop;
-    case DropIndicatorOverlayInterface::DropLocation_OutterRight:
+    case DropLocation_OutterRight:
         return KDDockWidgets::Location_OnRight;
-    case DropIndicatorOverlayInterface::DropLocation_OutterBottom:
+    case DropLocation_OutterBottom:
         return KDDockWidgets::Location_OnBottom;
     default:
         return KDDockWidgets::Location_None;
     }
 }
 
-void ClassicIndicators::setDropLocation(ClassicIndicators::DropLocation location)
+void ClassicIndicators::setDropLocation(DropLocation location)
 {
     setCurrentDropLocation(location);
 

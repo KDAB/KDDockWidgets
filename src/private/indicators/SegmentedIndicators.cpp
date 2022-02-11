@@ -42,7 +42,7 @@ SegmentedIndicators::~SegmentedIndicators()
 {
 }
 
-DropIndicatorOverlayInterface::DropLocation SegmentedIndicators::hover_impl(QPoint pt)
+DropLocation SegmentedIndicators::hover_impl(QPoint pt)
 {
     m_hoveredPt = mapFromGlobal(pt);
     updateSegments();
@@ -51,7 +51,7 @@ DropIndicatorOverlayInterface::DropLocation SegmentedIndicators::hover_impl(QPoi
     return currentDropLocation();
 }
 
-DropIndicatorOverlayInterface::DropLocation SegmentedIndicators::dropLocationForPos(QPoint pos) const
+DropLocation SegmentedIndicators::dropLocationForPos(QPoint pos) const
 {
     for (auto it = m_segments.cbegin(), end = m_segments.cend(); it != end; ++it) {
         if (it.value().containsPoint(pos, Qt::OddEvenFill)) {
@@ -69,7 +69,7 @@ void SegmentedIndicators::paintEvent(QPaintEvent *)
     drawSegments(&p);
 }
 
-QHash<DropIndicatorOverlayInterface::DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool inner, bool useOffset) const
+QHash<DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool inner, bool useOffset) const
 {
     const int halfPenWidth = s_segmentPenWidth / 2;
 
@@ -195,7 +195,7 @@ void SegmentedIndicators::drawSegment(QPainter *p, const QPolygon &segment)
     p->drawPolygon(segment);
 }
 
-QPoint KDDockWidgets::SegmentedIndicators::posForIndicator(DropIndicatorOverlayInterface::DropLocation) const
+QPoint KDDockWidgets::SegmentedIndicators::posForIndicator(DropLocation) const
 {
     /// Doesn't apply to segmented indicators, completely different concept
     return {};

@@ -383,7 +383,7 @@ void TestDocks::tst_tabbingWithAffinities()
         auto dropArea = m1->dropArea();
         WindowBeingDragged wbd(fw2, fw2);
         QVERIFY(!dropArea->drop(&wbd, dw1->dptr()->frame(),
-                                DropIndicatorOverlayInterface::DropLocation_Center));
+                                DropLocation_Center));
         QVERIFY(dw1->window() != dw2->window());
     }
 
@@ -2711,7 +2711,7 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
     QVERIFY(dw1->isFocused());
 
     QVERIFY(fw1->isActiveWindow());
-    dragFloatingWindowTo(fw2, fw1->dropArea(), DropIndicatorOverlayInterface::DropLocation_Left);
+    dragFloatingWindowTo(fw2, fw1->dropArea(), DropLocation_Left);
     Testing::waitForEvent(fw1, QEvent::WindowActivate);
 
     /// We dropped into floating window 1, it should still be active
@@ -2887,7 +2887,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
     auto fw2 = createFloatingWindow();
     fw2->move(fw->x() + fw->width() + 100, fw->y());
 
-    dragFloatingWindowTo(fw, fw2->dropArea(), DropIndicatorOverlayInterface::DropLocation_Right); // Outer right instead of Left
+    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Right); // Outer right instead of Left
     QCOMPARE(fw2->frames().size(), 3);
     QVERIFY(fw2->dropArea()->checkSanity());
 
@@ -2911,7 +2911,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     fw2->move(fw->x() + fw->width() + 100, fw->y());
 
     QVERIFY(fw2->dropArea()->checkSanity());
-    dragFloatingWindowTo(fw, fw2->dropArea(), DropIndicatorOverlayInterface::DropLocation_Left);
+    dragFloatingWindowTo(fw, fw2->dropArea(), DropLocation_Left);
     QCOMPARE(fw2->frames().size(), 3);
 
     QVERIFY(fw2->dropArea()->checkSanity());
@@ -3052,7 +3052,7 @@ void TestDocks::tst_addAndReadd()
     auto fw = dock1->floatingWindow();
     QVERIFY(fw);
     auto dropArea = m->dropArea();
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
+    dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
     QVERIFY(dock1->dptr()->frame()->titleBar()->isVisible());
     fw->titleBar()->makeWindow();
     m->layoutWidget()->checkSanity();
@@ -3148,7 +3148,7 @@ void TestDocks::tst_addToSmallMainWindow3()
     auto fw = dock2->dptr()->morphIntoFloatingWindow();
     QVERIFY(fw->isVisible());
     QVERIFY(dropArea->checkSanity());
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
+    dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
     QVERIFY(m->dropArea()->checkSanity());
     delete fw;
 }
@@ -4142,7 +4142,7 @@ void TestDocks::tst_dragOverTitleBar()
         const QPoint titleBarPoint = fw1->titleBar()->mapToGlobal(QPoint(5, 5));
 
         auto loc = da->hover(&wbd, titleBarPoint);
-        QCOMPARE(loc, DropIndicatorOverlayInterface::DropLocation_None);
+        QCOMPARE(loc, DropLocation_None);
     }
 
     delete fw1;
@@ -5683,7 +5683,7 @@ void TestDocks::tst_embeddedMainWindow()
     auto dropArea = window->mainWindow->dropArea();
     auto fw = dock1->floatingWindow();
 
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Left);
+    dragFloatingWindowTo(fw, dropArea, DropLocation_Left);
 
     auto layout = dropArea;
     QVERIFY(Testing::waitForDeleted(fw));
@@ -7315,7 +7315,7 @@ void TestDocks::tst_dragByTabBar()
     QVERIFY(fw->isVisible());
     QVERIFY(!fw->titleBar()->isVisible());
 
-    dragFloatingWindowTo(fw, dropArea, DropIndicatorOverlayInterface::DropLocation_Right);
+    dragFloatingWindowTo(fw, dropArea, DropLocation_Right);
 }
 
 void TestDocks::tst_dock2FloatingWidgetsTabbed()
