@@ -160,6 +160,11 @@ bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) c
         return false;
     }
 
+    if (auto dropIndicatorAllowedFunc = Config::self().dropIndicatorAllowedFunc()) {
+        if (!dropIndicatorAllowedFunc(dropLoc, source, target))
+            return false;
+    }
+
     return true;
 }
 

@@ -54,6 +54,7 @@ public:
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
     TabbingAllowedFunc m_tabbingAllowedFunc = nullptr;
+    DropIndicatorAllowedFunc m_dropIndicatorAllowedFunc = nullptr;
     FrameworkWidgetFactory *m_frameworkWidgetFactory = nullptr;
     Flags m_flags = Flag_Default;
     InternalFlags m_internalFlags = InternalFlag_None;
@@ -178,6 +179,16 @@ void Config::setTabbingAllowedFunc(TabbingAllowedFunc func)
 TabbingAllowedFunc Config::tabbingAllowedFunc() const
 {
     return d->m_tabbingAllowedFunc;
+}
+
+void Config::setDropIndicatorAllowedFunc(DropIndicatorAllowedFunc func)
+{
+    d->m_dropIndicatorAllowedFunc = func;
+}
+
+DropIndicatorAllowedFunc Config::dropIndicatorAllowedFunc() const
+{
+    return d->m_dropIndicatorAllowedFunc;
 }
 
 void Config::setAbsoluteWidgetMinSize(QSize size)

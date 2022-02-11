@@ -13,6 +13,7 @@
 #include "MyMainWindow.h"
 #include "MyFrameworkWidgetFactory.h"
 
+#include <algorithm>
 #include <kddockwidgets/Config.h>
 
 #include <QStyleFactory>
@@ -130,6 +131,10 @@ int main(int argc, char **argv)
     QCommandLineOption ctxtMenuOnTabs("allow-switch-tabs-via-menu",
                                       QCoreApplication::translate("main", "Allow switching tabs via context menu in tabs area"));
     parser.addOption(ctxtMenuOnTabs);
+
+    QCommandLineOption hideCertainDockingIndicators("hide-certain-docking-indicators",
+                                                     QCoreApplication::translate("main", "Illustrates usage of Config::setDropIndicatorAllowedFunc()"));
+    parser.addOption(hideCertainDockingIndicators);
 
 #if defined(DOCKS_DEVELOPER_MODE)
     parser.addOption(centralFrame);
@@ -251,6 +256,24 @@ int main(int argc, char **argv)
     if (parser.isSet(incompatibleMainWindows) && !parser.isSet(multipleMainWindows)) {
         qWarning() << "Error: Argument -i requires -m";
         return 1;
+    }
+
+    if (parser.isSet(hideCertainDockingIndicators)) {
+        // Here we exemplify adding a restriction to "Dock Widget 8"
+        // Dock widget 8 will only be allowed to dock to the outter areasa
+        auto func = [](KDDockWidgets::DropLocation location,
+                       const KDDockWidgets::DockWidgetBase::List &source,
+                       const KDDockWidgets::DockWidgetBase::List &target) {
+            Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already tabbed dock widgets
+
+            const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [] (KDDockWidgets::DockWidgetBase *dw) {
+                return dw->uniqueName() == QLatin1String("DockWidget #8");
+            }) != source.cend();
+
+            return (location & KDDockWidgets::DropLocation_Outter) || !isDraggingDW8;
+        };
+
+        KDDockWidgets::Config::self().setDropIndicatorAllowedFunc(func);
     }
 
     KDDockWidgets::Config::self().setFlags(flags);

@@ -20,6 +20,7 @@
 #define KD_DOCKWIDGETS_CONFIG_H
 
 #include "docks_export.h"
+#include "KDDockWidgets.h"
 
 #include <qglobal.h>
 
@@ -37,6 +38,22 @@ class FrameworkWidgetFactory;
 typedef KDDockWidgets::DockWidgetBase *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::MainWindowBase *(*MainWindowFactoryFunc)(const QString &name);
 
+/// @brief Function to allow more granularity to disallow where widgets are dropped
+///
+/// By default, widgets can be dropped to the outter and inner left/right/top/bottom
+/// and center. The client app can however provide a lambda via setDropIndicatorAllowedFunc
+/// to block (by returning false) any specific locations they desire.
+///
+/// @param location The drop indicator location to allow or disallow
+/// @param source The dock widgets being dragged
+/// @param target The dock widgets within an existing docked tab group
+/// @return true if the docking is allowed.
+/// @sa setDropIndicatorAllowedFunc
+typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
+                                         const QVector<DockWidgetBase *> &source,
+                                         const QVector<DockWidgetBase *> &target);
+
+/// @deprecated Use DropIndicatorAllowedFunc instead.
 /// @brief Function to allow the user more granularity to disallow dock widgets to tab together
 /// @param source The dock widgets being dragged
 /// @param target The dock widgets within an existing docked tab group
@@ -203,6 +220,8 @@ public:
     bool dropIndicatorsInhibited() const;
 
     /**
+     * @deprecated Use setDropIndicatorAllowedFunc() instead, and catch the DropLocation_Center case.
+     *
      * @brief Allows the user to intercept a docking attempt to center (tabbed) and disallow it.
      *
      * Whenever the user tries to tab two widgets together, the framework will call @p func. If
@@ -219,8 +238,10 @@ public:
      *    // disallows dockFoo to be tabbed with dockBar.
      *    return !(source.contains(dockFoo) && target.contains(dockBar));
      * }
-     * @endcode
+     *
      * KDDockWidgets::Config::self()->setTabbingAllowedFunc(func);
+     *
+     * @endcode
      */
     void setTabbingAllowedFunc(TabbingAllowedFunc func);
 
@@ -228,6 +249,37 @@ public:
     ///By default it's nullptr.
     ///@sa setTabbingAllowedFunc().
     TabbingAllowedFunc tabbingAllowedFunc() const;
+
+    /**
+     * @brief Allows the client app to disallow certain docking indicators.
+     *
+     * For example, let's assume the app doesn't want to show outter indicators for a certain
+     * dock widget.
+     *
+     * @code
+     * #include <kddockwidgets/Config.h>
+     * (...)
+     *
+     * auto func = [] (KDDockWidgets::DropLocation loc,
+     *                 const KDDockWidgets::DockWidgetBase::List &source,
+     *                 const KDDockWidgets::DockWidgetBase::List &target)
+     * {
+     *    // disallows dockFoo to be docked to outter areas
+     *    return !((loc & KDDockWidgets::DropLocation_Outter) && source.contains(dockFoo));
+     * }
+     *
+     * KDDockWidgets::Config::self()->setDropIndicatorAllowedFunc(func);
+     *
+     * @endcode
+     *
+     * Run "kddockwidgets_example --hide-certain-docking-indicators" to see this in action.
+     */
+    void setDropIndicatorAllowedFunc(DropIndicatorAllowedFunc func);
+
+    ///@brief Used internally by the framework. Returns the function which was passed to setDropIndicatorAllowedFunc()
+    ///By default it's nullptr.
+    ///@sa setDropIndicatorAllowedFunc().
+    DropIndicatorAllowedFunc dropIndicatorAllowedFunc() const;
 
     ///@brief Sets the minimum size a dock widget can have.
     /// Widgets can still provide their own min-size and it will be respected, however it can never be
