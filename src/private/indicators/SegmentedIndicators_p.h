@@ -42,7 +42,7 @@ protected:
     QPoint posForIndicator(DropLocation) const override;
 
 private:
-    QVector<QPolygon> segmentsForRect(QRect, QPolygon &center, bool useOffset = false) const;
+    QHash<DropLocation, QPolygon> segmentsForRect(QRect, bool inner, bool useOffset = false) const;
     void updateSegments();
     void drawSegments(QPainter *p);
     void drawSegment(QPainter *p, const QPolygon &segment);

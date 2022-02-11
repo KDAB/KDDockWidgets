@@ -69,7 +69,7 @@ void SegmentedIndicators::paintEvent(QPaintEvent *)
     drawSegments(&p);
 }
 
-QVector<QPolygon> SegmentedIndicators::segmentsForRect(QRect r, QPolygon &center, bool useOffset) const
+QHash<DropIndicatorOverlayInterface::DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool inner, bool useOffset) const
 {
     const int halfPenWidth = s_segmentPenWidth / 2;
 
@@ -99,8 +99,7 @@ QVector<QPolygon> SegmentedIndicators::segmentsForRect(QRect r, QPolygon &center
                                            bottomRight + QPoint(-l, -l),
                                            bottomLeft + QPoint(l, -l) };
 
-    {
-
+    if (inner) {
         QPolygon bounds = QVector<QPoint> { topLeft + QPoint(l, l),
                                             topRight + QPoint(-l, l),
                                             bottomRight + QPoint(-l, -l),
@@ -119,7 +118,7 @@ QVector<QPolygon> SegmentedIndicators::segmentsForRect(QRect r, QPolygon &center
         const int centerRectTop = centerPos.y() - indicatorHeight / 2;
 
 
-        center = QVector<QPoint> {
+        const auto center = QVector<QPoint> {
             { centerRectLeft, centerRectTop },
             { centerRectLeft + tabWidth, centerRectTop },
             { centerRectLeft + tabWidth, centerRectTop + tabHeight },
@@ -127,9 +126,22 @@ QVector<QPolygon> SegmentedIndicators::segmentsForRect(QRect r, QPolygon &center
             { centerRectRight, centerRectBottom },
             { centerRectLeft, centerRectBottom },
         };
-    }
 
-    return { leftPoints, topPoints, rightPoints, bottomPoints };
+        return {
+            { DropLocation_Left, leftPoints },
+            { DropLocation_Top, topPoints },
+            { DropLocation_Right, rightPoints },
+            { DropLocation_Bottom, bottomPoints },
+            { DropLocation_Center, center }
+        };
+    } else {
+        return {
+            { DropLocation_OutterLeft, leftPoints },
+            { DropLocation_OutterTop, topPoints },
+            { DropLocation_OutterRight, rightPoints },
+            { DropLocation_OutterBottom, bottomPoints }
+        };
+    }
 }
 
 void SegmentedIndicators::updateSegments()
@@ -139,29 +151,14 @@ void SegmentedIndicators::updateSegments()
     const bool needsOutterIndicators = dropIndicatorVisible(DropLocation_Outter);
     const bool needsInnerIndicators = dropIndicatorVisible(DropLocation_Inner);
 
-    QPolygon center;
-
     if (needsInnerIndicators) {
         const bool useOffset = needsOutterIndicators;
-        auto segments = segmentsForRect(hoveredFrameRect(), /*by-ref*/ center, useOffset);
-        int i = 0;
-        for (DropLocation loc : { DropLocation_OutterLeft, DropLocation_OutterTop,
-                                  DropLocation_OutterRight, DropLocation_OutterBottom}) {
-            m_segments.insert(loc, segments[i]);
-            ++i;
-        }
-
-        m_segments.insert(DropLocation_Center, center);
+        m_segments = segmentsForRect(hoveredFrameRect(), /*inner=*/true, useOffset);
     }
 
     if (needsOutterIndicators) {
-        auto segments = segmentsForRect(rect(), /*unused*/ center);
-        int i = 0;
-        for (DropLocation loc : { DropLocation_OutterLeft, DropLocation_OutterTop,
-                                  DropLocation_OutterRight, DropLocation_OutterBottom}) {
-            m_segments.insert(loc, segments[i]);
-            ++i;
-        }
+        auto segments = segmentsForRect(rect(), /*inner=*/false);
+        m_segments.insert(segments);
     }
 
     update();
