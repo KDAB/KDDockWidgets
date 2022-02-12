@@ -22,8 +22,7 @@
 #include "Logging_p.h"
 #include "MainWindowBase.h"
 #include "Utils_p.h"
-
-// #include "indicators/AnimatedIndicators_p.h"
+#include "multisplitter/Item_p.h"
 #include "WindowBeingDragged_p.h"
 
 using namespace KDDockWidgets;

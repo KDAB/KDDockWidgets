@@ -27,6 +27,7 @@
 #include "WindowBeingDragged_p.h"
 #include "MDIArea.h"
 #include "multisplitter/Separator_p.h"
+#include "multisplitter/Item_p.h"
 #include "private/MultiSplitter_p.h"
 
 #include <QAction>

@@ -32,6 +32,7 @@
 #include "WidgetResizeHandler_p.h"
 #include "MDILayoutWidget_p.h"
 #include "DropAreaWithCentralFrame_p.h"
+#include "multisplitter/Item_p.h"
 
 #include <QCloseEvent>
 #include <QTimer>

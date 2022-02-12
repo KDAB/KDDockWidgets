@@ -22,6 +22,7 @@
 #include "DockWidgetBase.h"
 #include "FrameworkWidgetFactory.h"
 
+#include "private/multisplitter/Item_p.h"
 #include "private/LayoutSaver_p.h"
 #include "private/DockRegistry_p.h"
 #include "private/DockWidgetBase_p.h"

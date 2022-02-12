@@ -10,6 +10,7 @@
 */
 
 #include "Widget_quick.h"
+#include "Item_p.h"
 
 #include <QDebug>
 #include <QQmlEngine>

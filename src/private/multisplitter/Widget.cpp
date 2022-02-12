@@ -46,3 +46,9 @@ QSize Widget::boundedMaxSize(QSize min, QSize max)
 
     return max;
 }
+
+/** static */
+QSize Widget::hardcodedMinimumSize()
+{
+    return Item::hardcodedMinimumSize;
+}

@@ -24,6 +24,8 @@
 #include "LayoutSaver_p.h"
 #include "DockWidgetBase_p.h"
 
+#include "multisplitter/Item_p.h"
+
 #include <QCloseEvent>
 #include <QScopedValueRollback>
 #include <QTimer>

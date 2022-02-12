@@ -32,6 +32,7 @@
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
 #include "multisplitter/Widget.h"
+#include "multisplitter/Item_p.h"
 
 #include <QScopedValueRollback>
 

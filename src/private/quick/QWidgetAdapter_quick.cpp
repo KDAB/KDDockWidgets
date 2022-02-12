@@ -24,6 +24,7 @@
 #include "../DockRegistry_p.h"
 #include "../Utils_p.h"
 #include "../FloatingWindow_p.h"
+#include "../multisplitter/Item_p.h"
 
 #include <QResizeEvent>
 #include <QMouseEvent>

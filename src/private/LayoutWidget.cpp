@@ -19,6 +19,8 @@
 #include "Position_p.h"
 #include "Utils_p.h"
 
+#include "multisplitter/Item_p.h"
+
 using namespace KDDockWidgets;
 
 

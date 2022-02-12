@@ -15,7 +15,6 @@
 #pragma once
 
 #include "kddockwidgets/docks_export.h"
-#include "Item_p.h"
 
 #include <QRect>
 #include <QSize>
@@ -148,6 +147,8 @@ public:
     ///@brief returns an id for corelation purposes for saving layouts
     QString id() const;
 
+    static QSize hardcodedMinimumSize();
+
     template<typename T>
     static QSize widgetMinSize(const T *w)
     {
@@ -157,7 +158,7 @@ public:
         const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
                                                 : w->minimumSizeHint().height();
 
-        return QSize(minW, minH).expandedTo(Item::hardcodedMinimumSize);
+        return QSize(minW, minH).expandedTo(hardcodedMinimumSize());
     }
 
     template<typename T>

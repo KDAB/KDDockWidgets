@@ -19,6 +19,7 @@
 #include "Config.h"
 #include "private/multisplitter/MultiSplitterConfig.h"
 #include "private/multisplitter/Widget.h"
+#include "private/multisplitter/Item_p.h"
 #include "private/DockRegistry_p.h"
 #include "private/Utils_p.h"
 #include "private/DragController_p.h"

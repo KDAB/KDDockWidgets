@@ -23,6 +23,7 @@
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "WindowBeingDragged_p.h"
+#include "multisplitter/Item_p.h"
 
 #include <QPointer>
 #include <QDebug>

@@ -33,6 +33,7 @@
 
 namespace Layouting {
 class Item;
+class ItemContainer;
 class Separator;
 class Widget_qwidget;
 }

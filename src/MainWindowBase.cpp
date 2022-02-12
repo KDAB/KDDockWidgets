@@ -30,6 +30,7 @@
 #include "private/DropAreaWithCentralFrame_p.h"
 #include "private/LayoutSaver_p.h"
 #include "private/DockWidgetBase_p.h"
+#include "private/multisplitter/Item_p.h"
 
 // Or we can have a createDockWidget() in the factory
 #ifdef KDDOCKWIDGETS_QTQUICK
