@@ -98,6 +98,34 @@ set(DOCKSLIBS_SRCS
     private/multisplitter/Widget.h
 )
 
+#--------------------------------
+# Temporary just to make sure the backend builds without Qt
+
+set(KDDW_BACKEND_SRCS
+  private/multisplitter/Item.cpp
+  private/multisplitter/Item_p.h
+  private/multisplitter/ItemFreeContainer.cpp
+  private/multisplitter/ItemFreeContainer_p.h
+  private/multisplitter/Logging.cpp
+  private/multisplitter/Logging_p.h
+  private/multisplitter/MultiSplitterConfig.cpp
+  private/multisplitter/MultiSplitterConfig.h
+  private/multisplitter/Separator.cpp
+  private/multisplitter/Separator_p.h
+  private/multisplitter/Widget.cpp
+  private/multisplitter/Widget.h
+)
+
+add_library(kddockwidgets_backend STATIC ${KDDW_BACKEND_SRCS})
+target_link_libraries(kddockwidgets_backend Qt5::Widgets)
+target_include_directories(kddockwidgets_backend
+  PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes> # TODO remove
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes/kddockwidgets>
+  )
+
+#--------------------------------
+
 set(DOCKS_INSTALLABLE_INCLUDES
     docks_export.h
     Config.h
