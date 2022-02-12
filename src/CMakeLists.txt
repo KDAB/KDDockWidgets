@@ -122,7 +122,7 @@ target_include_directories(kddockwidgets_backend
   PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes> # TODO remove
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes/kddockwidgets>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty> # TODO: Link to KDBindings instead
   )
 
 #--------------------------------
@@ -290,6 +290,7 @@ target_include_directories(kddockwidgets
   PUBLIC
     $<INSTALL_INTERFACE:${DOCKS_INCLUDES_INSTALL_PATH}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty> # TODO: Link to KDBindings instead
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
