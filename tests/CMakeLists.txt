@@ -25,6 +25,7 @@ set(TESTING_SRCS utils.cpp Testing.cpp)
 include_directories(..)
 include_directories(../src)
 include_directories(../src/private)
+add_definitions(-DQT_NO_KEYWORDS)
 
 set(TESTING_SRCS utils.cpp Testing.cpp)
 
