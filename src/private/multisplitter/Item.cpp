@@ -14,6 +14,7 @@
 #include "MultiSplitterConfig.h"
 #include "Widget.h"
 #include "ItemFreeContainer_p.h"
+#include "kdbindings/signal.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -387,9 +388,9 @@ void Item::setParentContainer(ItemContainer *parent)
         return;
 
     if (m_parent) {
-        disconnect(this, &Item::minSizeChanged, m_parent, &ItemContainer::onChildMinSizeChanged);
-        disconnect(this, &Item::visibleChanged, m_parent, &ItemContainer::onChildVisibleChanged);
-        Q_EMIT visibleChanged(this, false);
+        m_minSizeChangedHandle.disconnect();
+        m_visibleChangedHandle.disconnect();
+        visibleChanged.emit(this, false);
     }
 
     if (auto c = asContainer()) {
@@ -410,13 +411,13 @@ void Item::setParentContainer(ItemContainer *parent)
 void Item::connectParent(ItemContainer *parent)
 {
     if (parent) {
-        connect(this, &Item::minSizeChanged, parent, &ItemContainer::onChildMinSizeChanged);
-        connect(this, &Item::visibleChanged, parent, &ItemContainer::onChildVisibleChanged);
+        m_minSizeChangedHandle = minSizeChanged.connect(&ItemContainer::onChildMinSizeChanged, parent);
+        m_visibleChangedHandle = visibleChanged.connect(&ItemContainer::onChildVisibleChanged, parent);
 
         setHostWidget(parent->hostWidget());
         updateWidgetGeometries();
 
-        Q_EMIT visibleChanged(this, isVisible());
+        visibleChanged.emit(this, isVisible());
     }
 }
 
@@ -449,7 +450,7 @@ void Item::setMinSize(QSize sz)
 {
     if (sz != m_sizingInfo.minSize) {
         m_sizingInfo.minSize = sz;
-        Q_EMIT minSizeChanged(this);
+        minSizeChanged.emit(this);
         if (!m_isSettingGuest)
             setSize_recursive(size().expandedTo(sz));
     }
@@ -459,7 +460,7 @@ void Item::setMaxSizeHint(QSize sz)
 {
     if (sz != m_sizingInfo.maxSizeHint) {
         m_sizingInfo.maxSizeHint = sz;
-        Q_EMIT maxSizeChanged(this);
+        maxSizeChanged.emit(this);
     }
 }
 
@@ -598,7 +599,7 @@ void Item::setIsVisible(bool is)
 {
     if (is != m_isVisible) {
         m_isVisible = is;
-        Q_EMIT visibleChanged(this, is);
+        visibleChanged.emit(this, is);
     }
 
     if (is && m_guest) {
@@ -701,16 +702,16 @@ void Item::setGeometry(QRect rect)
                        << ": parent=" << parentContainer();
         }
 
-        Q_EMIT geometryChanged();
+        geometryChanged.emit();
 
         if (oldGeo.x() != x())
-            Q_EMIT xChanged();
+            xChanged.emit();
         if (oldGeo.y() != y())
-            Q_EMIT yChanged();
+            yChanged.emit();
         if (oldGeo.width() != width())
-            Q_EMIT widthChanged();
+            widthChanged.emit();
         if (oldGeo.height() != height())
-            Q_EMIT heightChanged();
+            heightChanged.emit();
 
         updateWidgetGeometries();
     }
@@ -763,6 +764,8 @@ Item::Item(bool isContainer, Widget *hostWidget, ItemContainer *parent)
 
 Item::~Item()
 {
+    m_minSizeChangedHandle.disconnect();
+    m_visibleChangedHandle.disconnect();
 }
 
 bool Item::eventFilter(QObject *widget, QEvent *e)
@@ -1214,7 +1217,7 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
         m_children.removeOne(item);
         delete item;
         if (!isContainer)
-            Q_EMIT root()->numItemsChanged();
+            root()->numItemsChanged.emit();
     } else {
         item->setIsVisible(false);
         item->setGuestWidget(nullptr);
@@ -1226,7 +1229,7 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
     }
 
     if (wasVisible) {
-        Q_EMIT root()->numVisibleItemsChanged(root()->numVisibleChildren());
+        root()->numVisibleItemsChanged.emit(root()->numVisibleChildren());
     }
 
     if (isEmpty()) {
@@ -1241,7 +1244,7 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
     } else {
         // Neighbours will occupy the space of the deleted item
         growNeighbours(side1Item, side2Item);
-        Q_EMIT itemsChanged();
+        itemsChanged.emit();
 
         updateSizeConstraints();
         d->updateSeparators_recursive();
@@ -1270,7 +1273,7 @@ ItemBoxContainer *ItemBoxContainer::convertChildToContainer(Item *leaf)
     m_children.removeOne(leaf);
     container->setGeometry(leaf->geometry());
     container->insertItem(leaf, Location_OnTop, DefaultSizeMode::NoDefaultSizeMode);
-    Q_EMIT itemsChanged();
+    itemsChanged.emit();
     d->updateSeparators_recursive();
 
     return container;
@@ -1400,7 +1403,7 @@ void ItemBoxContainer::updateSizeConstraints()
     }
 
     // Our min-size changed, notify our parent, and so on until it reaches root()
-    Q_EMIT minSizeChanged(this);
+    minSizeChanged.emit(this);
 }
 
 void ItemBoxContainer::onChildVisibleChanged(Item *, bool visible)
@@ -1411,9 +1414,9 @@ void ItemBoxContainer::onChildVisibleChanged(Item *, bool visible)
     const int numVisible = numVisibleChildren();
     if (visible && numVisible == 1) {
         // Child became visible and there's only 1 visible child. Meaning there were 0 visible before.
-        Q_EMIT visibleChanged(this, true);
+        visibleChanged.emit(this, true);
     } else if (!visible && numVisible == 0) {
-        Q_EMIT visibleChanged(this, false);
+        visibleChanged.emit(this, false);
     }
 }
 
@@ -1699,7 +1702,7 @@ void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
     m_children.insert(index, item);
     item->setParentContainer(this);
 
-    Q_EMIT itemsChanged();
+    itemsChanged.emit();
 
     if (!d->m_convertingItemToContainer && item->isVisible())
         restoreChild(item);
@@ -1710,8 +1713,8 @@ void ItemBoxContainer::insertItem(Item *item, int index, InitialOption option)
         simplify();
 
     if (shouldEmitVisibleChanged)
-        Q_EMIT root()->numVisibleItemsChanged(root()->numVisibleChildren());
-    Q_EMIT root()->numItemsChanged();
+        root()->numVisibleItemsChanged.emit(root()->numVisibleChildren());
+    root()->numItemsChanged.emit();
 }
 
 bool ItemBoxContainer::hasOrientationFor(Location loc) const
@@ -3258,7 +3261,7 @@ void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
         d->relayoutIfNeeded();
         positionItems_recursive();
 
-        Q_EMIT minSizeChanged(this);
+        minSizeChanged.emit(this);
 #ifdef DOCKS_DEVELOPER_MODE
         if (!checkSanity())
             qWarning() << Q_FUNC_INFO << "Resulting layout is invalid";
@@ -3536,15 +3539,15 @@ ItemContainer::ItemContainer(Widget *hostWidget, ItemContainer *parent)
     : Item(true, hostWidget, parent)
     , d(new Private(this))
 {
-    connect(this, &Item::xChanged, this, [this] {
+    xChanged.connect([this] {
         for (Item *item : qAsConst(m_children)) {
-            Q_EMIT item->xChanged();
+            item->xChanged.emit();
         }
     });
 
-    connect(this, &Item::yChanged, this, [this] {
+    yChanged.connect([this] {
         for (Item *item : qAsConst(m_children)) {
-            Q_EMIT item->yChanged();
+            item->yChanged.emit();
         }
     });
 }

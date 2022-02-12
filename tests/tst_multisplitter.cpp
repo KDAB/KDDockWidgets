@@ -812,7 +812,7 @@ void TestMultiSplitter::tst_turnIntoPlaceholder()
     auto root = createRoot();
 
     int numVisibleItems = 0;
-    QObject::connect(root.get(), &ItemBoxContainer::numVisibleItemsChanged, this, [&numVisibleItems] (int count) {
+    root->numVisibleItemsChanged.connect([&numVisibleItems] (int count) {
         numVisibleItems = count;
     });
 

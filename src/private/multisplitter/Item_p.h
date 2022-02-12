@@ -20,6 +20,8 @@
 #include <QVariant>
 #include <QDebug>
 
+#include "kdbindings/signal.h"
+
 #include <memory>
 
 class TestMultiSplitter;
@@ -248,12 +250,6 @@ struct SizingInfo
 class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int x READ x NOTIFY xChanged)
-    Q_PROPERTY(int y READ y NOTIFY yChanged)
-    Q_PROPERTY(int width READ width NOTIFY widthChanged)
-    Q_PROPERTY(int height READ height NOTIFY heightChanged)
-    Q_PROPERTY(QRect geometry READ geometry NOTIFY geometryChanged)
-    Q_PROPERTY(bool isContainer READ isContainer CONSTANT)
 public:
     typedef QVector<Item *> List;
 
@@ -339,15 +335,14 @@ public:
     static Item *createFromVariantMap(Widget *hostWidget, ItemContainer *parent,
                                       const QVariantMap &map, const QHash<QString, Widget *> &widgets);
 
-Q_SIGNALS:
-    void geometryChanged();
-    void xChanged();
-    void yChanged();
-    void widthChanged();
-    void heightChanged();
-    void visibleChanged(Layouting::Item *thisItem, bool visible);
-    void minSizeChanged(Layouting::Item *thisItem);
-    void maxSizeChanged(Layouting::Item *thisItem);
+    KDBindings::Signal<> geometryChanged;
+    KDBindings::Signal<> xChanged;
+    KDBindings::Signal<> yChanged;
+    KDBindings::Signal<> widthChanged;
+    KDBindings::Signal<> heightChanged;
+    KDBindings::Signal<Layouting::Item *, bool> visibleChanged;
+    KDBindings::Signal<Layouting::Item *> minSizeChanged;
+    KDBindings::Signal<Layouting::Item *> maxSizeChanged;
 
 protected:
     friend class ::TestMultiSplitter;
@@ -388,6 +383,9 @@ private:
     bool m_isVisible = false;
     Widget *m_hostWidget = nullptr;
     Widget *m_guest = nullptr;
+
+    KDBindings::ConnectionHandle m_minSizeChangedHandle;
+    KDBindings::ConnectionHandle m_visibleChangedHandle;
 };
 
 /// @brief And Item which can contain other Items
@@ -420,15 +418,14 @@ public:
     int count_recursive() const;
     virtual void clear() = 0;
 
+public:
+    KDBindings::Signal<> itemsChanged;
+    KDBindings::Signal<> numItemsChanged;
+    KDBindings::Signal<int> numVisibleItemsChanged;
+
 protected:
     bool hasSingleVisibleItem() const;
-
     Item::List m_children;
-
-Q_SIGNALS:
-    void itemsChanged();
-    void numVisibleItemsChanged(int);
-    void numItemsChanged();
 
 private:
     struct Private;

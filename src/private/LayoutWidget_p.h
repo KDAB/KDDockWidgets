@@ -28,6 +28,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
 #include "kddockwidgets/QWidgetAdapter.h"
+#include "kdbindings/signal.h"
 
 #include <QList>
 
@@ -224,6 +225,7 @@ Q_SIGNALS:
 private:
     bool m_inResizeEvent = false;
     Layouting::ItemContainer *m_rootItem = nullptr;
+    KDBindings::ConnectionHandle m_minSizeChangedHandler;
 };
 
 }

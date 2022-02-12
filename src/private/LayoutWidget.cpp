@@ -31,6 +31,8 @@ LayoutWidget::LayoutWidget(QWidgetOrQuick *parent)
 
 LayoutWidget::~LayoutWidget()
 {
+    m_minSizeChangedHandler.disconnect();
+
     if (m_rootItem->hostWidget()->asQObject() == this)
         delete m_rootItem;
     DockRegistry::self()->unregisterLayout(this);
@@ -74,10 +76,11 @@ void LayoutWidget::setRootItem(Layouting::ItemContainer *root)
 {
     delete m_rootItem;
     m_rootItem = root;
-    connect(m_rootItem, &Layouting::ItemContainer::numVisibleItemsChanged, this,
-            &MultiSplitter::visibleWidgetCountChanged);
-    connect(m_rootItem, &Layouting::ItemContainer::minSizeChanged, this,
-            [this] { setMinimumSize(layoutMinimumSize()); });
+    m_rootItem->numVisibleItemsChanged.connect([this] (int count) {
+        Q_EMIT visibleWidgetCountChanged(count);
+    });
+
+    m_minSizeChangedHandler = m_rootItem->minSizeChanged.connect([this] { setMinimumSize(layoutMinimumSize()); });
 }
 
 QSize LayoutWidget::layoutMinimumSize() const

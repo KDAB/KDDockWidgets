@@ -40,12 +40,12 @@ void ItemFreeContainer::addDockWidget(Item *item, QPoint localPt)
     item->setParentContainer(this);
     item->setPos(localPt);
 
-    Q_EMIT itemsChanged();
+    itemsChanged.emit();
 
     if (item->isVisible())
-        Q_EMIT numVisibleItemsChanged(numVisibleChildren());
+        numVisibleItemsChanged.emit(numVisibleChildren());
 
-    Q_EMIT numItemsChanged();
+    numItemsChanged.emit();
 }
 
 void ItemFreeContainer::clear()
@@ -67,9 +67,9 @@ void ItemFreeContainer::removeItem(Item *item, bool hardRemove)
     }
 
     if (wasVisible)
-        Q_EMIT numVisibleItemsChanged(numVisibleChildren());
+        numVisibleItemsChanged.emit(numVisibleChildren());
 
-    Q_EMIT itemsChanged();
+    itemsChanged.emit();
 }
 
 void ItemFreeContainer::restore(Item *child)
