@@ -21,8 +21,7 @@
 #include "kddockwidgets/docks_export.h"
 
 #include "Logging_p.h"
-#include "LayoutSaver.h"
-#include "QWidgetAdapter.h"
+#include "kddockwidgets/LayoutSaver.h"
 
 #include <QHash>
 #include <QPointer>
@@ -35,6 +34,11 @@ class Item;
 }
 
 namespace KDDockWidgets {
+
+namespace Controllers {
+class DockWidgetBase;
+class Frame;
+}
 
 class LayoutWidget;
 
@@ -54,9 +58,6 @@ private:
     Q_DISABLE_COPY(ItemRef)
 };
 
-
-class DockWidgetBase;
-class Frame;
 
 /**
  * @internal

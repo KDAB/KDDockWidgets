@@ -20,16 +20,16 @@ DropAreaWithCentralFrame::DropAreaWithCentralFrame(QWidgetOrQuick *parent, MainW
     , m_centralFrame(createCentralFrame(options))
 {
     if (m_centralFrame)
-        addWidget(m_centralFrame, KDDockWidgets::Location_OnTop, {});
+        addWidget(m_centralFrame->view()->asQWidget(), KDDockWidgets::Location_OnTop, {});
 }
 
 DropAreaWithCentralFrame::~DropAreaWithCentralFrame()
 {
 }
 
-Frame *DropAreaWithCentralFrame::createCentralFrame(MainWindowOptions options)
+Controllers::Frame *DropAreaWithCentralFrame::createCentralFrame(MainWindowOptions options)
 {
-    Frame *frame = nullptr;
+    Controllers::Frame *frame = nullptr;
     if (options & MainWindowOption_HasCentralFrame) {
         FrameOptions frameOptions = FrameOption_IsCentralFrame;
         const bool hasPersistentCentralWidget = (options & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget;
@@ -40,7 +40,7 @@ Frame *DropAreaWithCentralFrame::createCentralFrame(MainWindowOptions options)
             frameOptions |= FrameOption_AlwaysShowsTabs;
         }
 
-        frame = Config::self().frameworkWidgetFactory()->createFrame(nullptr, frameOptions);
+        frame = new Controllers::Frame(nullptr, frameOptions);
         frame->setObjectName(QStringLiteral("central frame"));
     }
 

@@ -12,16 +12,20 @@
 #ifndef KD_DRAGGABLE_P_H
 #define KD_DRAGGABLE_P_H
 
-#include "kddockwidgets/QWidgetAdapter.h"
-
+#include "kddockwidgets/docks_export.h"
 #include <QVector>
 
 #include <memory>
 
+#include <QWidget> // TODO
+
 namespace KDDockWidgets {
 
-class DockWidgetBase;
+namespace Controllers {
 class FloatingWindow;
+class DockWidgetBase;
+}
+
 class WidgetResizeHandler;
 struct WindowBeingDragged;
 
@@ -37,9 +41,9 @@ class DOCKS_EXPORT Draggable
 public:
     typedef QVector<Draggable *> List;
 
-    explicit Draggable(QWidgetOrQuick *thisObject, bool enabled = true);
+    explicit Draggable(QWidget *thisObject, bool enabled = true);
     virtual ~Draggable();
-    QWidgetOrQuick *asWidget() const;
+    QWidget *asWidget() const;
 
     /**
      * If this draggable is already a window, do nothing.
@@ -78,7 +82,7 @@ public:
      * Example: This draggable is a floating window with only 1 dock widget
      * Example:  This draggable is a title bar with two dock widgets -> nullptr
      */
-    virtual DockWidgetBase *singleDockWidget() const = 0;
+    virtual Controllers::DockWidgetBase *singleDockWidget() const = 0;
 
     ///@brief Returns whether this draggable is a MDI window, being dragged internally within a main window
     virtual bool isMDI() const = 0;

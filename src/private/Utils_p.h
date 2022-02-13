@@ -12,9 +12,7 @@
 #ifndef KD_UTILS_P_H
 #define KD_UTILS_P_H
 
-#include "Config.h"
-#include "Frame_p.h"
-#include "QWidgetAdapter.h"
+#include "kddockwidgets/Config.h"
 
 #include <QScreen>
 #include <QWindow>
@@ -232,7 +230,7 @@ inline int startDragDistance()
 
 /// @brief Returns the QWidget or QtQuickItem at the specified position
 /// Basically QApplication::widgetAt() but with support for QtQuick
-inline WidgetType *mouseReceiverAt(QPoint globalPos)
+inline QWidget *mouseReceiverAt(QPoint globalPos)
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     return qApp->widgetAt(globalPos);
@@ -249,7 +247,7 @@ inline WidgetType *mouseReceiverAt(QPoint globalPos)
 /// Returns true if we're over such controls where we shouldn't drag.
 inline bool inDisallowDragWidget(QPoint globalPos)
 {
-    WidgetType *widget = mouseReceiverAt(globalPos);
+    QWidget *widget = mouseReceiverAt(globalPos);
     if (!widget)
         return false;
 
@@ -339,7 +337,7 @@ inline QRect globalGeometry(QQuickItem *item)
 
 
 /// @brief Returns the widget's geometry, but always in global space.
-inline QRect globalGeometry(QWidgetOrQuick *w)
+inline QRect globalGeometry(QWidget *w)
 {
     QRect geo = w->geometry();
     if (!w->isWindow())
@@ -362,15 +360,15 @@ inline bool scalingFactorIsSupported(qreal factor)
 #endif
 }
 
-template <typename T>
-inline T* firstParentOfType(const QObject *child)
+template<typename T>
+inline T *firstParentOfType(const QObject *child)
 {
     auto p = const_cast<QObject *>(child);
     while (p) {
         if (auto candidate = qobject_cast<T *>(p))
             return candidate;
 
-        if (qobject_cast<const QWindow*>(p)) {
+        if (qobject_cast<const QWindow *>(p)) {
             // Ignore QObject hierarchies spanning though multiple windows
             return nullptr;
         }

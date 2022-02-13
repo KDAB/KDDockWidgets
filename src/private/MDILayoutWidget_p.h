@@ -32,28 +32,28 @@ class DOCKS_EXPORT MDILayoutWidget : public LayoutWidget
 {
     Q_OBJECT
 public:
-    explicit MDILayoutWidget(QWidgetOrQuick *parent = nullptr);
+    explicit MDILayoutWidget(QWidget *parent = nullptr);
     ~MDILayoutWidget() override;
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
-    void addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption addingOption = {});
+    void addDockWidget(Controllers::DockWidgetBase *dw, QPoint localPt, InitialOption addingOption = {});
 
     /// @brief Moves a dock widget @p dw to point @p pos
-    void moveDockWidget(DockWidgetBase *dw, QPoint pos);
+    void moveDockWidget(Controllers::DockWidgetBase *dw, QPoint pos);
 
     /// @brief Moves a dock widget @p f to point @p pos
     /// Convenience overload.
-    void moveDockWidget(Frame *f, QPoint pos);
+    void moveDockWidget(Controllers::Frame *f, QPoint pos);
 
     /// @brief Sets the size of dock widget @p dw to @p size
-    void resizeDockWidget(DockWidgetBase *dw, QSize size);
+    void resizeDockWidget(Controllers::DockWidgetBase *dw, QSize size);
 
     /// @brief Sets the size of dock widget @p f to @p size
     /// Convenience overload.
-    void resizeDockWidget(Frame *f, QSize size);
+    void resizeDockWidget(Controllers::Frame *f, QSize size);
 
     /// @brief sets the size and position of the dock widget @p f
-    void setDockWidgetGeometry(Frame *f, QRect);
+    void setDockWidgetGeometry(Controllers::Frame *f, QRect);
 
 private:
     Layouting::ItemFreeContainer *const m_rootItem;

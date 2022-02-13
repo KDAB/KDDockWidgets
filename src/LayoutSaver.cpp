@@ -19,19 +19,19 @@
 #include "LayoutSaver.h"
 #include "Config.h"
 #include "MainWindowBase.h"
-#include "DockWidgetBase.h"
 #include "FrameworkWidgetFactory.h"
 
 #include "private/multisplitter/Item_p.h"
 #include "private/LayoutSaver_p.h"
 #include "private/DockRegistry_p.h"
-#include "private/DockWidgetBase_p.h"
-#include "private/FloatingWindow_p.h"
-#include "private/Frame_p.h"
 #include "private/LayoutWidget_p.h"
 #include "private/Logging_p.h"
 #include "private/Position_p.h"
 #include "private/Utils_p.h"
+#include "controllers/Frame.h"
+#include "controllers/FloatingWindow.h"
+#include "controllers/DockWidget.h"
+#include "controllers/DockWidget_p.h"
 
 #include <qmath.h>
 #include <QDebug>
@@ -58,6 +58,7 @@
  * FloatingWindow::serialize()/deserialize()
  */
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 QHash<QString, LayoutSaver::DockWidget::Ptr> LayoutSaver::DockWidget::s_dockWidgets;
 LayoutSaver::Layout *LayoutSaver::Layout::s_currentLayoutBeingRestored = nullptr;
@@ -155,9 +156,9 @@ QByteArray LayoutSaver::serializeLayout() const
             layout.mainWindows.push_back(mainWindow->serialize());
     }
 
-    const QVector<KDDockWidgets::FloatingWindow *> floatingWindows = d->m_dockRegistry->floatingWindows();
+    const QVector<Controllers::FloatingWindow *> floatingWindows = d->m_dockRegistry->floatingWindows();
     layout.floatingWindows.reserve(floatingWindows.size());
-    for (KDDockWidgets::FloatingWindow *floatingWindow : floatingWindows) {
+    for (Controllers::FloatingWindow *floatingWindow : floatingWindows) {
         if (d->matchesAffinity(floatingWindow->affinities()))
             layout.floatingWindows.push_back(floatingWindow->serialize());
     }
@@ -268,9 +269,9 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         MainWindowBase *parent = fw.parentIndex == -1 ? nullptr
                                                       : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
-        auto floatingWindow = Config::self().frameworkWidgetFactory()->createFloatingWindow(parent);
+        auto floatingWindow = new Controllers::FloatingWindow({}, parent);
         fw.floatingWindowInstance = floatingWindow;
-        d->deserializeWindowGeometry(fw, floatingWindow);
+        d->deserializeWindowGeometry(fw, floatingWindow->view()->asQWidget());
         if (!floatingWindow->deserialize(fw)) {
             qWarning() << Q_FUNC_INFO << "Failed to deserialize floating window";
             return false;
@@ -348,12 +349,12 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, QWidgetOrQu
         geometry = saved.normalGeometry;
     }
 
-    ::FloatingWindow::ensureRectIsOnScreen(geometry);
+    Controllers::FloatingWindow::ensureRectIsOnScreen(geometry);
 
     if (topLevel->isWindow()) {
         topLevel->setGeometry(geometry);
     } else {
-        KDDockWidgets::Private::setTopLevelGeometry(geometry, topLevel);
+        Views::setTopLevelGeometry(geometry, topLevel);
     }
 
     topLevel->setVisible(saved.isVisible);
@@ -379,7 +380,7 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainW
     // be loading a new layout.
 
     for (MainWindowBase *mw : DockRegistry::self()->mainWindows(mainWindowNames)) {
-        const KDDockWidgets::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
+        const Controllers::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
         for (auto dw : docks) {
             if (dw->skipsRestore()) {
                 dw->setFloating(true);
@@ -395,7 +396,7 @@ void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout
     // so we can restore the MainWindow layout properly
 
     for (MainWindowBase *mw : DockRegistry::self()->mainWindows(layout.mainWindowNames())) {
-        const KDDockWidgets::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
+        const Controllers::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
         for (DockWidgetBase *dw : docks) {
             if (!layout.containsDockWidget(dw->uniqueName())) {
                 dw->setFloating(true);

@@ -12,24 +12,25 @@
 #include "FrameworkWidgetFactory.h"
 #include "Config.h"
 
-#include "private/Frame_p.h"
-#include "private/TitleBar_p.h"
-#include "private/multisplitter/Separator_p.h"
-#include "private/FloatingWindow_p.h"
 #include "private/indicators/ClassicIndicators_p.h"
 #include "private/indicators/NullIndicators_p.h"
 #include "private/Utils_p.h"
-#include "private/TabWidget_p.h"
+
+#include "controllers/TabBar.h"
+#include "controllers/Stack.h"
+#include "controllers/FloatingWindow.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "private/widgets/FrameWidget_p.h"
-#include "private/widgets/TitleBarWidget_p.h"
-#include "private/widgets/TabBarWidget_p.h"
-#include "private/widgets/SideBarWidget_p.h"
-#include "private/widgets/TabWidgetWidget_p.h"
-#include "private/multisplitter/Separator_qwidget.h"
-#include "private/widgets/FloatingWindowWidget_p.h"
 #include "private/indicators/SegmentedIndicators_p.h"
+
+#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
+#include "views_qtwidgets/Frame_qtwidgets.h"
+#include "views_qtwidgets/View_qtwidgets.h"
+#include "views_qtwidgets/Separator_qtwidgets.h"
+#include "views_qtwidgets/TitleBar_qtwidgets.h"
+#include "views_qtwidgets/TabBar_qtwidgets.h"
+#include "views_qtwidgets/SideBar_qtwidgets.h"
+#include "views_qtwidgets/Stack_qtwidgets.h"
 
 #include <QRubberBand>
 #include <QToolButton>
@@ -55,44 +56,41 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-Frame *DefaultWidgetFactory::createFrame(QWidgetOrQuick *parent, FrameOptions options) const
+View *DefaultWidgetFactory::createFrame(Controllers::Frame *controller, View *parent = nullptr,
+                                        FrameOptions options) const
 {
-    return new FrameWidget(parent, options);
+    Q_UNUSED(options); // TODO
+    return new Views::Frame_qtwidgets(controller, parent->asQWidget());
 }
 
-TitleBar *DefaultWidgetFactory::createTitleBar(Frame *frame) const
+View *DefaultWidgetFactory::createTitleBar(Controllers::TitleBar *titleBar, Controllers::Frame *frame) const
 {
-    return new TitleBarWidget(frame);
+    return new Views::TitleBar_qtwidgets(titleBar, frame->view()->asQWidget());
 }
 
-TitleBar *DefaultWidgetFactory::createTitleBar(FloatingWindow *fw) const
+View *DefaultWidgetFactory::createTitleBar(Controllers::TitleBar *titleBar, Controllers::FloatingWindow *fw) const
 {
-    return new TitleBarWidget(fw);
+    return new Views::TitleBar_qtwidgets(titleBar, fw ? fw->view()->asQWidget() : nullptr);
 }
 
-TabBar *DefaultWidgetFactory::createTabBar(TabWidget *parent) const
+View *DefaultWidgetFactory::createTabBar(Controllers::TabBar *tabBar, View *parent) const
 {
-    return new TabBarWidget(parent);
+    return new Views::TabBar_qtwidgets(tabBar, parent->asQWidget());
 }
 
-TabWidget *DefaultWidgetFactory::createTabWidget(Frame *parent, TabWidgetOptions options) const
+View *DefaultWidgetFactory::createTabWidget(Controllers::Stack *controller, Controllers::Frame *parent) const
 {
-    return new TabWidgetWidget(parent, options);
+    return new Views::Stack_qtwidgets(controller, parent);
 }
 
-Layouting::Separator *DefaultWidgetFactory::createSeparator(Layouting::Widget *parent) const
+View *DefaultWidgetFactory::createSeparator(Controllers::Separator *controller, View *parent) const
 {
-    return new Layouting::SeparatorWidget(parent);
+    return new Views::Separator_qtwidgets(controller, parent ? static_cast<Views::View_qtwidgets<QWidget> *>(parent) : nullptr);
 }
 
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(MainWindowBase *parent) const
+View *DefaultWidgetFactory::createFloatingWindow(Controllers::FloatingWindow *controller, MainWindowBase *parent, Qt::WindowFlags windowFlags) const
 {
-    return new FloatingWindowWidget(QRect(), parent);
-}
-
-FloatingWindow *DefaultWidgetFactory::createFloatingWindow(Frame *frame, MainWindowBase *parent, QRect suggestedGeometry) const
-{
-    return new FloatingWindowWidget(frame, suggestedGeometry, parent);
+    return new Views::FloatingWindow_qtwidgets(controller, parent, windowFlags);
 }
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const
@@ -119,9 +117,9 @@ QWidgetOrQuick *DefaultWidgetFactory::createRubberBand(QWidgetOrQuick *parent) c
     return new QRubberBand(QRubberBand::Rectangle, parent);
 }
 
-SideBar *DefaultWidgetFactory::createSideBar(SideBarLocation loc, MainWindowBase *parent) const
+View *DefaultWidgetFactory::createSideBar(Controllers::SideBar *controller, MainWindowBase *parent) const
 {
-    return new SideBarWidget(loc, parent);
+    return new Views::SideBar_qtwidgets(controller, parent);
 }
 
 QAbstractButton *DefaultWidgetFactory::createTitleBarButton(QWidget *parent, TitleBarButtonType type) const
@@ -131,7 +129,7 @@ QAbstractButton *DefaultWidgetFactory::createTitleBarButton(QWidget *parent, Tit
         return nullptr;
     }
 
-    auto button = new Button(parent);
+    auto button = new Views::Button(parent);
     button->setIcon(iconForButtonType(type, parent->devicePixelRatioF()));
 
     return button;

@@ -24,12 +24,16 @@
 
 #include "LayoutWidget_p.h"
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/QWidgetAdapter.h"
 #include "kddockwidgets/docks_export.h"
 
 class TestDocks;
 
 namespace KDDockWidgets {
+
+namespace Controllers {
+class Separator;
+class Frame;
+}
 
 struct WindowBeingDragged;
 
@@ -48,14 +52,14 @@ class DOCKS_EXPORT MultiSplitter : public LayoutWidget
 {
     Q_OBJECT
 public:
-    explicit MultiSplitter(QWidgetOrQuick *parent = nullptr);
+    explicit MultiSplitter(QWidget *parent = nullptr);
     ~MultiSplitter() override;
 
     /**
      * @brief Adds a widget to this MultiSplitter.
      */
-    void addWidget(QWidgetOrQuick *widget, KDDockWidgets::Location location,
-                   Frame *relativeTo = nullptr,
+    void addWidget(QWidget *widget, KDDockWidgets::Location location,
+                   Controllers::Frame *relativeTo = nullptr,
                    InitialOption option = DefaultSizeMode::Fair);
 
     /**
@@ -65,7 +69,7 @@ public:
      * of widgetBar when the whole splitter is dropped into this one.
      */
     void addMultiSplitter(MultiSplitter *splitter, KDDockWidgets::Location location,
-                          Frame *relativeTo = nullptr,
+                          Controllers::Frame *relativeTo = nullptr,
                           InitialOption option = DefaultSizeMode::Fair);
 
     /**
@@ -80,7 +84,7 @@ public:
     bool deserialize(const LayoutSaver::MultiSplitter &) override;
 
     ///@brief returns the list of separators
-    QVector<Layouting::Separator *> separators() const;
+    QVector<Controllers::Separator *> separators() const;
 
     /// @brief See docs for MainWindowBase::layoutEqually()
     void layoutEqually();
@@ -94,8 +98,8 @@ private:
     Layouting::ItemBoxContainer *rootItem() const;
 
     // For debug/hardening
-    bool validateInputs(QWidgetOrQuick *widget, KDDockWidgets::Location location,
-                        const Frame *relativeToFrame, InitialOption option) const;
+    bool validateInputs(QWidget *widget, KDDockWidgets::Location location,
+                        const Controllers::Frame *relativeToFrame, InitialOption option) const;
 
 
     void setRootItem(Layouting::ItemBoxContainer *);

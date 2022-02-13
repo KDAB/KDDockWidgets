@@ -15,7 +15,7 @@
 #include "private/quick/DockWidgetQuick.h"
 #include "private/quick/MainWindowQuick_p.h"
 #else
-#include "DockWidget.h"
+#include "views_qtwidgets/DockWidget_qtwidgets.h"
 #include "MainWindow.h"
 #endif
 
@@ -24,15 +24,16 @@
 #include <QString>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 static bool lint(const QString &filename)
 {
     DockWidgetFactoryFunc dwFunc = [](const QString &dwName) {
-        return static_cast<DockWidgetBase *>(new DockWidgetType(dwName));
+        return new DockWidgetBase(dwName);
     };
 
     MainWindowFactoryFunc mwFunc = [](const QString &dwName) {
-        return static_cast<MainWindowBase *>(new MainWindowType(dwName));
+        return static_cast<MainWindowBase *>(new MainWindow(dwName));
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);

@@ -11,10 +11,11 @@
 
 #include "MyWidget.h"
 #include "MyMainWindow.h"
-#include "MyFrameworkWidgetFactory.h"
+// #include "MyFrameworkWidgetFactory.h"
 
 #include <algorithm>
 #include <kddockwidgets/Config.h>
+#include <kddockwidgets/FrameworkWidgetFactory.h>
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -116,7 +117,7 @@ int main(int argc, char **argv)
                                            QCoreApplication::translate("main", "The title bar's close button will only close the current tab instead of all. Illustrates using Config::Flag_CloseOnlyCurrentTab"));
     parser.addOption(closeOnlyCurrentTab);
 
-    QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore", //krazy:exclude=spelling
+    QCommandLineOption dontCloseBeforeRestore("dont-close-widget-before-restore", // krazy:exclude=spelling
                                               QCoreApplication::translate("main", "DockWidget #5 won't be closed before a restore. Illustrates LayoutSaverOption::DontCloseBeforeRestore"));
     parser.addOption(dontCloseBeforeRestore);
 
@@ -133,7 +134,7 @@ int main(int argc, char **argv)
     parser.addOption(ctxtMenuOnTabs);
 
     QCommandLineOption hideCertainDockingIndicators("hide-certain-docking-indicators",
-                                                     QCoreApplication::translate("main", "Illustrates usage of Config::setDropIndicatorAllowedFunc()"));
+                                                    QCoreApplication::translate("main", "Illustrates usage of Config::setDropIndicatorAllowedFunc()"));
     parser.addOption(hideCertainDockingIndicators);
 
 #if defined(DOCKS_DEVELOPER_MODE)
@@ -149,22 +150,22 @@ int main(int argc, char **argv)
     parser.addOption(nativeTitleBar);
     parser.addOption(noDropIndicators);
 
-# if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
     parser.addOption(noAeroSnap);
-# endif
+#endif
 #else
     Q_UNUSED(centralFrame)
 #endif
 
     parser.process(app);
 
-    if (parser.isSet(customStyle)) {
-        Config::self().setFrameworkWidgetFactory(new CustomWidgetFactory()); // Sets our custom factory
+    // if (parser.isSet(customStyle)) {
+    //     Config::self().setFrameworkWidgetFactory(new CustomWidgetFactory()); // Sets our custom factory
 
-        // Increase the separator size, just for demo
-        Config::self().setSeparatorThickness(10);
-    }
+    //     // Increase the separator size, just for demo
+    //     Config::self().setSeparatorThickness(10);
+    // }
 
     if (parser.isSet(segmentedIndicators))
         KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
@@ -195,10 +196,10 @@ int main(int argc, char **argv)
     if (parser.isSet(noDropIndicators))
         KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
-# if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
         internalFlags |= KDDockWidgets::Config::InternalFlag_NoAeroSnap;
-# endif
+#endif
     Config::self().setInternalFlags(internalFlags);
 #endif
 
@@ -266,9 +267,10 @@ int main(int argc, char **argv)
                        const KDDockWidgets::DockWidgetBase::List &target) {
             Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already tabbed dock widgets
 
-            const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [] (KDDockWidgets::DockWidgetBase *dw) {
-                return dw->uniqueName() == QLatin1String("DockWidget #8");
-            }) != source.cend();
+            const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [](KDDockWidgets::DockWidgetBase *dw) {
+                                           return dw->uniqueName() == QLatin1String("DockWidget #8");
+                                       })
+                != source.cend();
 
             return (location & KDDockWidgets::DropLocation_Outter) || !isDraggingDW8;
         };
@@ -321,7 +323,7 @@ int main(int argc, char **argv)
         mainWindow2->resize(1200, 1200);
         mainWindow2->show();
     } else if (usesDockableMainWindows) {
-        auto mainWindowDockWidget = new DockWidget(QStringLiteral("MyMainWindow-2-DW"));
+        auto mainWindowDockWidget = new DockWidgetBase(QStringLiteral("MyMainWindow-2-DW"));
 
         const QString affinity = QStringLiteral("Inner-DockWidgets-2");
         auto dockableMainWindow = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
@@ -336,7 +338,7 @@ int main(int argc, char **argv)
         dockableMainWindow->show();
         mainWindowDockWidget->setWidget(dockableMainWindow);
         mainWindowDockWidget->show();
-        mainWindowDockWidget->resize(800, 800);
+        mainWindowDockWidget->view()->resize(QSize(800, 800));
     }
 
     const QStringList args = parser.positionalArguments();

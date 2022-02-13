@@ -31,8 +31,9 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
+namespace Controllers {
 class DockWidgetBase;
-
+}
 
 /**
  * @brief LayoutSaver allows to save or restore layouts.
@@ -102,7 +103,7 @@ public:
      *
      * Useful since some dock widgets can be new, and hence not be included in the last saved layout.
      */
-    QVector<DockWidgetBase *> restoredDockWidgets() const;
+    QVector<Controllers::DockWidgetBase *> restoredDockWidgets() const;
 
     /**
      * @brief Sets the list of affinity names for which restore and save will be applied on.

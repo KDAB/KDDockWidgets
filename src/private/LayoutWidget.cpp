@@ -11,21 +11,25 @@
 
 #include "LayoutSaver_p.h"
 #include "Config.h"
-#include "DockWidgetBase_p.h"
-#include "FloatingWindow_p.h"
-#include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "MainWindowBase.h"
 #include "Position_p.h"
 #include "Utils_p.h"
 
+#include "controllers/DockWidget_p.h"
+#include "controllers/Frame.h"
+#include "controllers/FloatingWindow.h"
+
+#include "views_qtwidgets/Frame_qtwidgets.h"
+#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
 #include "multisplitter/Item_p.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 
 LayoutWidget::LayoutWidget(QWidgetOrQuick *parent)
-    : LayoutGuestWidget(parent)
+    : Views::View_qtwidgets<QWidget>(nullptr, View::Type::Layout, parent)
 {
 }
 
@@ -33,7 +37,7 @@ LayoutWidget::~LayoutWidget()
 {
     m_minSizeChangedHandler.disconnect();
 
-    if (m_rootItem->hostWidget()->asQObject() == this)
+    if (m_rootItem->hostWidget() == this)
         delete m_rootItem;
     DockRegistry::self()->unregisterLayout(this);
 }
@@ -53,7 +57,7 @@ MainWindowBase *LayoutWidget::mainWindow(bool honourNesting) const
         return firstParentOfType<MainWindowBase>(this);
     } else {
 
-        if (auto pw = QWidgetAdapter::parentWidget()) {
+        if (auto pw = QWidget::parentWidget()) {
             // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as
             // it's parented
             if (pw->objectName() == QLatin1String("MyCentralWidget"))
@@ -67,16 +71,17 @@ MainWindowBase *LayoutWidget::mainWindow(bool honourNesting) const
     return nullptr;
 }
 
-FloatingWindow *LayoutWidget::floatingWindow() const
+Controllers::FloatingWindow *LayoutWidget::floatingWindow() const
 {
-    return qobject_cast<FloatingWindow *>(QWidgetAdapter::parentWidget());
+    auto view = qobject_cast<Views::FloatingWindow_qtwidgets *>(QWidget::parentWidget());
+    return view ? view->floatingWindow() : nullptr;
 }
 
 void LayoutWidget::setRootItem(Layouting::ItemContainer *root)
 {
     delete m_rootItem;
     m_rootItem = root;
-    m_rootItem->numVisibleItemsChanged.connect([this] (int count) {
+    m_rootItem->numVisibleItemsChanged.connect([this](int count) {
         Q_EMIT visibleWidgetCountChanged(count);
     });
 
@@ -96,12 +101,12 @@ QSize LayoutWidget::layoutMaximumSizeHint() const
 void LayoutWidget::setLayoutMinimumSize(QSize sz)
 {
     if (sz != m_rootItem->minSize()) {
-        setLayoutSize(size().expandedTo(m_rootItem->minSize())); // Increase size in case we need to
+        setLayoutSize(layoutSize().expandedTo(m_rootItem->minSize())); // Increase size in case we need to
         m_rootItem->setMinSize(sz);
     }
 }
 
-QSize LayoutWidget::size() const
+QSize LayoutWidget::layoutSize() const
 {
     return m_rootItem->size();
 }
@@ -124,11 +129,12 @@ void LayoutWidget::dumpLayout() const
 void LayoutWidget::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item, int tabIndex)
 {
     if (item->isPlaceholder()) {
-        Frame *newFrame = Config::self().frameworkWidgetFactory()->createFrame(this);
-        item->restore(newFrame);
+        auto newFrame = new Controllers::Frame(this);
+        item->restore(newFrame->view());
     }
 
-    auto frame = qobject_cast<Frame *>(item->guestAsQObject());
+    auto frameView = qobject_cast<Views::Frame_qtwidgets *>(item->guestAsQObject());
+    auto frame = frameView->frame();
     Q_ASSERT(frame);
 
     if (tabIndex != -1 && frame->dockWidgetCount() >= tabIndex) {
@@ -137,12 +143,12 @@ void LayoutWidget::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item,
         frame->addWidget(dw);
     }
 
-    frame->QWidgetAdapter::setVisible(true);
+    frame->setVisible(true);
 }
 
-void LayoutWidget::unrefOldPlaceholders(const Frame::List &framesBeingAdded) const
+void LayoutWidget::unrefOldPlaceholders(const Controllers::Frame::List &framesBeingAdded) const
 {
-    for (Frame *frame : framesBeingAdded) {
+    for (Controllers::Frame *frame : framesBeingAdded) {
         for (DockWidgetBase *dw : frame->dockWidgets()) {
             dw->d->lastPosition()->removePlaceholders(this);
         }
@@ -151,10 +157,10 @@ void LayoutWidget::unrefOldPlaceholders(const Frame::List &framesBeingAdded) con
 
 void LayoutWidget::setLayoutSize(QSize size)
 {
-    if (size != this->size()) {
+    if (size != layoutSize()) {
         m_rootItem->setSize_recursive(size);
         if (!m_inResizeEvent && !LayoutSaver::restoreInProgress())
-            resize(size);
+            QWidget::resize(size); // TODO: Remove widget references
     }
 }
 
@@ -168,7 +174,7 @@ bool LayoutWidget::containsItem(const Layouting::Item *item) const
     return m_rootItem->contains_recursive(item);
 }
 
-bool LayoutWidget::containsFrame(const Frame *frame) const
+bool LayoutWidget::containsFrame(const Controllers::Frame *frame) const
 {
     return itemForFrame(frame) != nullptr;
 }
@@ -188,27 +194,27 @@ int LayoutWidget::placeholderCount() const
     return count() - visibleCount();
 }
 
-Layouting::Item *LayoutWidget::itemForFrame(const Frame *frame) const
+Layouting::Item *LayoutWidget::itemForFrame(const Controllers::Frame *frame) const
 {
     if (!frame)
         return nullptr;
 
-    return m_rootItem->itemForWidget(frame);
+    return m_rootItem->itemForWidget(frame->view()); // TODO: layout could have just the controller
 }
 
 DockWidgetBase::List LayoutWidget::dockWidgets() const
 {
     DockWidgetBase::List dockWidgets;
-    const Frame::List frames = this->frames();
-    for (Frame *frame : frames)
+    const Controllers::Frame::List frames = this->frames();
+    for (Controllers::Frame *frame : frames)
         dockWidgets << frame->dockWidgets();
 
     return dockWidgets;
 }
 
-Frame::List LayoutWidget::framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const
+Controllers::Frame::List LayoutWidget::framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const
 {
-    if (auto frame = qobject_cast<Frame *>(frameOrMultiSplitter))
+    if (auto frame = qobject_cast<Controllers::Frame *>(frameOrMultiSplitter))
         return { frame };
 
     if (auto msw = qobject_cast<MultiSplitter *>(frameOrMultiSplitter))
@@ -217,16 +223,17 @@ Frame::List LayoutWidget::framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const
     return {};
 }
 
-Frame::List LayoutWidget::frames() const
+Controllers::Frame::List LayoutWidget::frames() const
 {
     const Layouting::Item::List items = m_rootItem->items_recursive();
 
-    Frame::List result;
+    Controllers::Frame::List result;
     result.reserve(items.size());
 
     for (Layouting::Item *item : items) {
-        if (auto f = static_cast<Frame *>(item->guestAsQObject()))
-            result.push_back(f);
+        if (auto frameView = static_cast<Views::Frame_qtwidgets *>(item->guestAsQObject())) // TODO: Store Frame in the layout, not the view
+            if (!frameView->freed())
+                result.push_back(frameView->frame());
     }
 
     return result;
@@ -245,7 +252,7 @@ void LayoutWidget::removeItem(Layouting::Item *item)
 void LayoutWidget::updateSizeConstraints()
 {
     const QSize newMinSize = m_rootItem->minSize();
-    qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << minimumSize() << "to"
+    qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << minSize() << "to"
                     << newMinSize;
 
     setLayoutMinimumSize(newMinSize);
@@ -253,11 +260,11 @@ void LayoutWidget::updateSizeConstraints()
 
 bool LayoutWidget::deserialize(const LayoutSaver::MultiSplitter &l)
 {
-    QHash<QString, Layouting::Widget *> frames;
+    QHash<QString, View *> frames;
     for (const LayoutSaver::Frame &frame : qAsConst(l.frames)) {
-        Frame *f = Frame::deserialize(frame);
+        Controllers::Frame *f = Controllers::Frame::deserialize(frame);
         Q_ASSERT(!frame.id.isEmpty());
-        frames.insert(frame.id, f);
+        frames.insert(frame.id, f->view());
     }
 
     m_rootItem->fillFromVariantMap(l.layout, frames);
@@ -266,7 +273,7 @@ bool LayoutWidget::deserialize(const LayoutSaver::MultiSplitter &l)
 
     // This qMin() isn't needed for QtWidgets (but harmless), but it's required for QtQuick
     // as some sizing is async
-    const QSize newLayoutSize = QWidgetAdapter::size().expandedTo(m_rootItem->minSize());
+    const QSize newLayoutSize = View::size().expandedTo(m_rootItem->minSize());
 
     m_rootItem->setSize_recursive(newLayoutSize);
 
@@ -298,8 +305,8 @@ LayoutSaver::MultiSplitter LayoutWidget::serialize() const
     l.frames.reserve(items.size());
     for (Layouting::Item *item : items) {
         if (!item->isContainer()) {
-            if (auto frame = qobject_cast<Frame *>(item->guestAsQObject()))
-                l.frames.insert(frame->id(), frame->serialize());
+            if (auto frameView = qobject_cast<Views::Frame_qtwidgets *>(item->guestAsQObject()))
+                l.frames.insert(frameView->id(), frameView->frame()->serialize());
         }
     }
 

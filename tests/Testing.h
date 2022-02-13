@@ -17,7 +17,7 @@
 
 #include "KDDockWidgets.h"
 #include "MainWindowBase.h"
-#include "DockWidgetBase.h"
+#include "controllers/DockWidget.h"
 #include "DockRegistry_p.h"
 
 #include <QSize>
@@ -35,108 +35,108 @@ namespace KDDockWidgets {
 
 namespace Testing {
 
-    class WarningObserver
+class WarningObserver
+{
+    Q_DISABLE_COPY(WarningObserver)
+public:
+    WarningObserver() = default;
+    virtual ~WarningObserver();
+    virtual void onFatal() = 0;
+};
+
+struct AddDockWidgetParams
+{
+    QString mainWindowName;
+    QString dockWidgetName;
+    QString relativeToName;
+    KDDockWidgets::Location location;
+    KDDockWidgets::InitialVisibilityOption addingOption;
+
+    bool isNull() const
     {
-        Q_DISABLE_COPY(WarningObserver)
-    public:
-        WarningObserver() = default;
-        virtual ~WarningObserver();
-        virtual void onFatal() = 0;
-    };
+        return mainWindowName.isEmpty();
+    }
 
-    struct AddDockWidgetParams {
-        QString mainWindowName;
-        QString dockWidgetName;
-        QString relativeToName;
-        KDDockWidgets::Location location;
-        KDDockWidgets::InitialVisibilityOption addingOption;
-
-        bool isNull() const
-        {
-            return mainWindowName.isEmpty();
-        }
-
-        QVariantMap toVariantMap() const
-        {
-            QVariantMap map;
-
-            map["mainWindowName"] = mainWindowName;
-            map["dockWidgetName"] = dockWidgetName;
-            if (!relativeToName.isEmpty())
-                map["relativeToName"] = relativeToName;
-            map["location"] = location;
-            map["addingOption"] = QVariant::fromValue(addingOption);
-
-            return map;
-        }
-
-        static AddDockWidgetParams fillFromVariantMap(const QVariantMap &map)
-        {
-            AddDockWidgetParams params;
-
-            params.mainWindowName = map["mainWindowName"].toString();
-            params.dockWidgetName = map["dockWidgetName"].toString();
-            params.relativeToName = map["relativeToName"].toString();
-            params.location = KDDockWidgets::Location(map["location"].toInt());
-            params.addingOption = map["addingOption"].value<KDDockWidgets::InitialVisibilityOption>();
-
-            return params;
-        }
-
-        KDDockWidgets::MainWindowBase *mainWindow() const
-        {
-            return KDDockWidgets::DockRegistry::self()->mainWindowByName(mainWindowName);
-        }
-
-        KDDockWidgets::DockWidgetBase *dockWidget() const
-        {
-            return KDDockWidgets::DockRegistry::self()->dockByName(dockWidgetName);
-        }
-
-        KDDockWidgets::DockWidgetBase *relativeTo() const
-        {
-            return KDDockWidgets::DockRegistry::self()->dockByName(relativeToName);
-        }
-    };
-
-    void setWarningObserver(WarningObserver *);
-
-    void installFatalMessageHandler();
-    void setExpectedWarning(const QString &);
-
-    bool waitForEvent(QObject *w, QEvent::Type type, int timeout = 2000);
-    bool waitForDeleted(QObject *o, int timeout = 2000);
-    bool waitForResize(QWidgetOrQuick *w, int timeout = 2000);
-
-    class HostedWidget : public QWidgetOrQuick
+    QVariantMap toVariantMap() const
     {
-    public:
+        QVariantMap map;
 
-        explicit HostedWidget(QSize minSz = QSize(1,1))
-            : m_minSz(minSz)
-        {
-        }
+        map["mainWindowName"] = mainWindowName;
+        map["dockWidgetName"] = dockWidgetName;
+        if (!relativeToName.isEmpty())
+            map["relativeToName"] = relativeToName;
+        map["location"] = location;
+        map["addingOption"] = QVariant::fromValue(addingOption);
 
-        ~HostedWidget() override;
+        return map;
+    }
 
-        QSize sizeHint() const override
-        {
-            return m_minSz;
-        }
+    static AddDockWidgetParams fillFromVariantMap(const QVariantMap &map)
+    {
+        AddDockWidgetParams params;
 
-        QSize minimumSizeHint() const override
-        {
-            return m_minSz;
-        }
+        params.mainWindowName = map["mainWindowName"].toString();
+        params.dockWidgetName = map["dockWidgetName"].toString();
+        params.relativeToName = map["relativeToName"].toString();
+        params.location = KDDockWidgets::Location(map["location"].toInt());
+        params.addingOption = map["addingOption"].value<KDDockWidgets::InitialVisibilityOption>();
 
-        void setMinSize(QSize s)
-        {
-            m_minSz = s;
-            updateGeometry();
-        }
+        return params;
+    }
 
-        QSize m_minSz;
-    };
+    KDDockWidgets::MainWindowBase *mainWindow() const
+    {
+        return KDDockWidgets::DockRegistry::self()->mainWindowByName(mainWindowName);
+    }
+
+    Controllers::DockWidgetBase *dockWidget() const
+    {
+        return KDDockWidgets::DockRegistry::self()->dockByName(dockWidgetName);
+    }
+
+    Controllers::DockWidgetBase *relativeTo() const
+    {
+        return KDDockWidgets::DockRegistry::self()->dockByName(relativeToName);
+    }
+};
+
+void setWarningObserver(WarningObserver *);
+
+void installFatalMessageHandler();
+void setExpectedWarning(const QString &);
+
+bool waitForEvent(QObject *w, QEvent::Type type, int timeout = 2000);
+bool waitForDeleted(QObject *o, int timeout = 2000);
+bool waitForResize(QWidgetOrQuick *w, int timeout = 2000);
+
+class HostedWidget : public QWidgetOrQuick
+{
+public:
+    explicit HostedWidget(QSize minSz = QSize(1, 1))
+        : m_minSz(minSz)
+    {
+    }
+
+    ~HostedWidget() override;
+
+    QSize sizeHint() const override
+    {
+        return m_minSz;
+    }
+
+    QSize minimumSizeHint() const override
+    {
+        return m_minSz;
+    }
+
+    void setMinSize(QSize s)
+    {
+        m_minSz = s;
+        updateGeometry();
+    }
+
+    QSize m_minSz;
+};
 }
 
 struct SetExpectedWarning

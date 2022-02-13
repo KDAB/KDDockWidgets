@@ -14,7 +14,6 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
-#include "kddockwidgets/QWidgetAdapter.h"
 
 #include <QDebug>
 #include <QGuiApplication>
@@ -26,17 +25,20 @@
 #include <memory>
 
 /**
-  * Bump whenever the format changes, so we can still load old layouts.
-  * version 1: Initial version
-  * version 2: Introduced MainWindow::screenSize and FloatingWindow::screenSize
-  * version 3: New layouting engine
-  */
+ * Bump whenever the format changes, so we can still load old layouts.
+ * version 1: Initial version
+ * version 2: Introduced MainWindow::screenSize and FloatingWindow::screenSize
+ * version 3: New layouting engine
+ */
 #define KDDOCKWIDGETS_SERIALIZATION_VERSION 3
 
 
 namespace KDDockWidgets {
 
+namespace Controllers {
 class FloatingWindow;
+}
+
 class DockRegistry;
 
 /// @brief A more granular version of KDDockWidgets::RestoreOption
@@ -93,7 +95,7 @@ struct LayoutSaver::Placeholder
 };
 
 ///@brief contains info about how a main window is scaled.
-///Used for RestoreOption_RelativeToMainWindow
+/// Used for RestoreOption_RelativeToMainWindow
 struct LayoutSaver::ScalingInfo
 {
     ScalingInfo() = default;
@@ -261,7 +263,7 @@ struct LayoutSaver::FloatingWindow
     bool isVisible = true;
 
     // The instance that was created during a restore:
-    KDDockWidgets::FloatingWindow *floatingWindowInstance = nullptr;
+    Controllers::FloatingWindow *floatingWindowInstance = nullptr;
     Qt::WindowState windowState = Qt::WindowNoState;
 };
 
@@ -294,7 +296,7 @@ public:
 };
 
 ///@brief we serialize some info about screens, so eventually we can make restore smarter when switching screens
-///Not used currently, but nice to have in the json already
+/// Not used currently, but nice to have in the json already
 struct LayoutSaver::ScreenInfo
 {
     typedef QVector<LayoutSaver::ScreenInfo> List;
@@ -381,7 +383,7 @@ public:
     void floatUnknownWidgets(const LayoutSaver::Layout &layout);
 
     template<typename T>
-    void deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel);
+    void deserializeWindowGeometry(const T &saved, QWidget *topLevel);
     void deleteEmptyFrames();
     void clearRestoredProperty();
 

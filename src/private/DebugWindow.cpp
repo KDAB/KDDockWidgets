@@ -18,12 +18,13 @@
 
 #include "DebugWindow_p.h"
 #include "DockRegistry_p.h"
-#include "FloatingWindow_p.h"
 #include "LayoutSaver.h"
 #include "LayoutWidget_p.h"
 #include "MainWindow.h"
 #include "ObjectViewer_p.h"
 #include "Qt5Qt6Compat_p.h"
+
+#include "controllers/FloatingWindow.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -46,6 +47,7 @@
 // clazy:excludeall=range-loop
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 using namespace KDDockWidgets::Debug;
 
 class DebugAppEventFilter : public QAbstractNativeEventFilter
@@ -204,7 +206,7 @@ DebugWindow::DebugWindow(QWidget *parent)
         }
 
         const auto floatingWindows = DockRegistry::self()->floatingWindows();
-        for (FloatingWindow *floatingWindow : floatingWindows) {
+        for (auto floatingWindow : floatingWindows) {
             floatingWindow->layoutWidget()->checkSanity();
         }
     });
@@ -239,7 +241,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     connect(button, &QPushButton::clicked, this, [] {
         const auto layouts = DockRegistry::self()->layouts();
         for (auto l : layouts) {
-            QWidget *tlw = l->window();
+            QWidget *tlw = l->QWidget::window();
             tlw->resize(tlw->size() + QSize(1, 1));
         }
     });
@@ -313,11 +315,11 @@ void DebugWindow::repaintWidgetRecursive(QWidget *w)
 
 void DebugWindow::dumpDockWidgetInfo()
 {
-    const QVector<FloatingWindow *> floatingWindows = DockRegistry::self()->floatingWindows();
+    const QVector<Controllers::FloatingWindow *> floatingWindows = DockRegistry::self()->floatingWindows();
     const MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
     const DockWidgetBase::List dockWidgets = DockRegistry::self()->dockwidgets();
 
-    for (FloatingWindow *fw : floatingWindows) {
+    for (Controllers::FloatingWindow *fw : floatingWindows) {
         qDebug() << fw << "; affinities=" << fw->affinities();
         fw->layoutWidget()->dumpLayout();
     }

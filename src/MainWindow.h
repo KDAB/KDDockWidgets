@@ -23,7 +23,9 @@
 
 namespace KDDockWidgets {
 
+namespace Controllers {
 class SideBar;
+}
 
 /**
  * @brief The QMainwindow sub-class that the application should use to be able
@@ -48,7 +50,7 @@ public:
     ~MainWindow() override;
 
     ///@brief returns the sidebar for the specified location
-    SideBar *sideBar(SideBarLocation) const override;
+    Controllers::SideBar *sideBar(SideBarLocation) const override;
 
     //@brief returns the margins for the contents widget
     QMargins centerWidgetMargins() const override;

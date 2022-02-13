@@ -12,20 +12,29 @@
 #include "DropArea_p.h"
 #include "Config.h"
 #include "DockRegistry_p.h"
-#include "DockWidgetBase.h"
-#include "DockWidgetBase_p.h"
 #include "Draggable_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
-#include "FloatingWindow_p.h"
-#include "Frame_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "Logging_p.h"
 #include "MainWindowBase.h"
 #include "Utils_p.h"
 #include "multisplitter/Item_p.h"
 #include "WindowBeingDragged_p.h"
+#include "views_qtwidgets/DockWidget_qtwidgets.h"
+
+#include "controllers/Frame.h"
+#include "controllers/FloatingWindow.h"
+#include "controllers/DockWidget.h"
+#include "controllers/DockWidget_p.h"
+
+#include "views_qtwidgets/Frame_qtwidgets.h"
+#include "views_qtwidgets/View_qtwidgets.h"
+#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
+
+#include <algorithm>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 /**
  * @file
@@ -56,7 +65,7 @@ DropArea::DropArea(QWidgetOrQuick *parent, bool isMDIWrapper)
             }
 
             if (visibleCount() > 0) {
-               // The title of our MDI frame will need to change to the app name if we have more than 1 dock widget nested
+                // The title of our MDI frame will need to change to the app name if we have more than 1 dock widget nested
                 Q_EMIT dw->titleChanged(dw->title());
             } else {
                 // Our wrapeper isn't needed anymore
@@ -72,20 +81,28 @@ DropArea::~DropArea()
     qCDebug(creation) << "~DropArea";
 }
 
-Frame::List DropArea::frames() const
+Controllers::Frame::List DropArea::frames() const
 {
-    return findChildren<Frame *>(QString(), Qt::FindDirectChildrenOnly);
+    const auto views = findChildren<Views::Frame_qtwidgets *>(QString(), Qt::FindDirectChildrenOnly);
+    Controllers::Frame::List frames;
+
+    for (auto view : views) {
+        if (!view->freed())
+            frames << view->frame();
+    }
+
+    return frames;
 }
 
-Frame *DropArea::frameContainingPos(QPoint globalPos) const
+Controllers::Frame *DropArea::frameContainingPos(QPoint globalPos) const
 {
     const Layouting::Item::List &items = this->items();
     for (Layouting::Item *item : items) {
-        auto frame = static_cast<Frame *>(item->guestAsQObject());
-        if (!frame || !frame->QWidgetAdapter::isVisible()) {
+        auto frameView = static_cast<Views::Frame_qtwidgets *>(item->guestAsQObject());
+        if (!frameView || !frameView->isVisible()) {
             continue;
         }
-
+        Controllers::Frame *frame = frameView->frame();
         if (frame->containsMouse(globalPos))
             return frame;
     }
@@ -94,16 +111,16 @@ Frame *DropArea::frameContainingPos(QPoint globalPos) const
 
 void DropArea::updateFloatingActions()
 {
-    const Frame::List frames = this->frames();
-    for (Frame *frame : frames)
+    const Controllers::Frame::List frames = this->frames();
+    for (Controllers::Frame *frame : frames)
         frame->updateFloatingActions();
 }
 
 Layouting::Item *DropArea::centralFrame() const
 {
     for (Layouting::Item *item : this->items()) {
-        if (auto f = static_cast<Frame *>(item->guestAsQObject())) {
-            if (f->isCentralFrame())
+        if (auto frameView = static_cast<Views::Frame_qtwidgets *>(item->guestAsQObject())) {
+            if (frameView->frame()->isCentralFrame())
                 return item;
         }
     }
@@ -127,8 +144,8 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
     if (!validateAffinity(dw))
         return;
 
-    Frame *frame = nullptr;
-    Frame *relativeToFrame = relativeTo ? relativeTo->d->frame() : nullptr;
+    Controllers::Frame *frame = nullptr;
+    Controllers::Frame *relativeToFrame = relativeTo ? relativeTo->d->frame() : nullptr;
 
     dw->d->saveLastFloatingGeometry();
 
@@ -136,24 +153,24 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
 
     // Check if the dock widget already exists in the layout
     if (containsDockWidget(dw)) {
-        Frame *oldFrame = dw->d->frame();
+        Controllers::Frame *oldFrame = dw->d->frame();
         if (oldFrame->hasSingleDockWidget()) {
             Q_ASSERT(oldFrame->containsDockWidget(dw));
             // The frame only has this dock widget, and the frame is already in the layout. So move the frame instead
             frame = oldFrame;
         } else {
-            frame = Config::self().frameworkWidgetFactory()->createFrame();
+            frame = new Controllers::Frame();
             frame->addWidget(dw);
         }
     } else {
-        frame = Config::self().frameworkWidgetFactory()->createFrame();
+        frame = new Controllers::Frame();
         frame->addWidget(dw);
     }
 
     if (option.startsHidden()) {
-        addWidget(dw, location, relativeToFrame, option);
+        addWidget(dw->view()->asQWidget(), location, relativeToFrame, option);
     } else {
-        addWidget(frame, location, relativeToFrame, option);
+        addWidget(frame->view()->asQWidget(), location, relativeToFrame, option);
     }
 
     if (hadSingleFloatingFrame && !hasSingleFloatingFrame()) {
@@ -170,7 +187,7 @@ bool DropArea::containsDockWidget(DockWidgetBase *dw) const
 
 bool DropArea::hasSingleFloatingFrame() const
 {
-    const Frame::List frames = this->frames();
+    const Controllers::Frame::List frames = this->frames();
     return frames.size() == 1 && frames.first()->isFloating();
 }
 
@@ -211,7 +228,7 @@ DropLocation DropArea::hover(WindowBeingDragged *draggedWindow, QPoint globalPos
         return DropLocation_None;
     }
 
-    Frame *frame = frameContainingPos(globalPos); // Frame is nullptr if MainWindowOption_HasCentralFrame isn't set
+    Controllers::Frame *frame = frameContainingPos(globalPos); // Frame is nullptr if MainWindowOption_HasCentralFrame isn't set
     m_dropIndicatorOverlay->setWindowBeingDragged(true);
     m_dropIndicatorOverlay->setHoveredFrame(frame);
     return m_dropIndicatorOverlay->hover(globalPos);
@@ -232,9 +249,9 @@ static bool isOutterLocation(DropLocation location)
 
 bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 {
-    FloatingWindow *floatingWindow = droppedWindow->floatingWindow();
+    Controllers::FloatingWindow *floatingWindow = droppedWindow->floatingWindow();
 
-    if (floatingWindow == window()) {
+    if (floatingWindow->view()->asQWidget() == QWidget::window()) {
         qWarning() << "Refusing to drop onto itself"; // Doesn't happen
         return false;
     }
@@ -248,7 +265,7 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 
     hover(droppedWindow, globalPos);
     auto droploc = m_dropIndicatorOverlay->currentDropLocation();
-    Frame *acceptingFrame = m_dropIndicatorOverlay->hoveredFrame();
+    Controllers::Frame *acceptingFrame = m_dropIndicatorOverlay->hoveredFrame();
     if (!(acceptingFrame || isOutterLocation(droploc))) {
         qWarning() << "DropArea::drop: asserted with frame=" << acceptingFrame
                    << "; Location=" << droploc;
@@ -258,11 +275,11 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
     return drop(droppedWindow, acceptingFrame, droploc);
 }
 
-bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
+bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Frame *acceptingFrame,
                     DropLocation droploc)
 {
-    FloatingWindow *droppedWindow = draggedWindow ? draggedWindow->floatingWindow()
-                                                  : nullptr;
+    Controllers::FloatingWindow *droppedWindow = draggedWindow ? draggedWindow->floatingWindow()
+                                                               : nullptr;
 
     if (isWayland() && !droppedWindow) {
         // This is the Wayland special case.
@@ -283,20 +300,20 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
     const DockWidgetBase::List droppedDockWidgets = needToFocusNewlyDroppedWidgets
         ? droppedWindow->layoutWidget()->dockWidgets()
         : DockWidgetBase::List(); // just so save some memory allocations for the case where this
-        // variable isn't used
+    // variable isn't used
 
     switch (droploc) {
     case DropLocation_Left:
     case DropLocation_Top:
     case DropLocation_Bottom:
     case DropLocation_Right:
-        result = drop(droppedWindow, DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), acceptingFrame);
+        result = drop(droppedWindow->view()->asQWidget(), DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), acceptingFrame);
         break;
     case DropLocation_OutterLeft:
     case DropLocation_OutterTop:
     case DropLocation_OutterRight:
     case DropLocation_OutterBottom:
-        result = drop(droppedWindow, DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), nullptr);
+        result = drop(droppedWindow->view()->asQWidget(), DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), nullptr);
         break;
     case DropLocation_Center:
         qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingFrame;
@@ -319,7 +336,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
             // Let's also focus the newly dropped dock widget
             if (!droppedDockWidgets.isEmpty()) {
                 // If more than 1 was dropped, we only focus the first one
-                Frame *frame = droppedDockWidgets.first()->d->frame();
+                Controllers::Frame *frame = droppedDockWidgets.first()->d->frame();
                 frame->FocusScope::focus(Qt::MouseFocusReason);
             } else {
                 // Doesn't happen.
@@ -331,18 +348,20 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
     return result;
 }
 
-bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location location, Frame *relativeTo)
+bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location location, Controllers::Frame *relativeTo)
 {
     qCDebug(docking) << "DropArea::addFrame";
 
-    if (auto dock = qobject_cast<DockWidgetBase *>(droppedWindow)) {
+    if (auto dockView = qobject_cast<Views::DockWidget_qtwidgets *>(droppedWindow)) {
+        auto dock = dockView->dockWidget();
         if (!validateAffinity(dock))
             return false;
 
-        auto frame = Config::self().frameworkWidgetFactory()->createFrame();
+        auto frame = new Controllers::Frame();
         frame->addWidget(dock);
-        addWidget(frame, location, relativeTo, DefaultSizeMode::FairButFloor);
-    } else if (auto floatingWindow = qobject_cast<FloatingWindow *>(droppedWindow)) {
+        addWidget(frame->view()->asQWidget(), location, relativeTo, DefaultSizeMode::FairButFloor);
+    } else if (auto floatingWindowView = qobject_cast<Views::FloatingWindow_qtwidgets *>(droppedWindow)) {
+        Controllers::FloatingWindow *floatingWindow = floatingWindowView->floatingWindow();
         if (!validateAffinity(floatingWindow))
             return false;
 
@@ -368,7 +387,7 @@ void DropArea::removeHover()
 }
 
 template<typename T>
-bool DropArea::validateAffinity(T *window, Frame *acceptingFrame) const
+bool DropArea::validateAffinity(T *window, Controllers::Frame *acceptingFrame) const
 {
     if (!DockRegistry::self()->affinitiesMatch(window->affinities(), affinities())) {
         return false;
@@ -392,8 +411,10 @@ bool DropArea::isMDIWrapper() const
 
 DockWidgetBase *DropArea::mdiDockWidgetWrapper() const
 {
-    if (m_isMDIWrapper)
-        return qobject_cast<DockWidgetBase *>(QWidgetAdapter::parent());
+    if (m_isMDIWrapper) {
+        auto dwView = qobject_cast<Views::DockWidget_qtwidgets *>(QWidget::parent());
+        return dwView ? dwView->dockWidget() : nullptr;
+    }
 
     return nullptr;
 }

@@ -9,22 +9,29 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#include "KDDockWidgets.h"
 #include "WindowBeingDragged_p.h"
 #include "DragController_p.h"
-#include "Frame_p.h"
 #include "LayoutWidget_p.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
 
+#include "controllers/TitleBar.h"
+#include "controllers/Stack.h"
+#include "controllers/Frame.h"
+
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "widgets/TabBarWidget_p.h"
-#include "widgets/TabWidgetWidget_p.h"
+#include "views_qtwidgets/TitleBar_qtwidgets.h"
+#include "views_qtwidgets/TabBar_qtwidgets.h"
+#include "views_qtwidgets/Stack_qtwidgets.h"
+#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
 #endif
 
 #include <QPixmap>
 #include <QPainter>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 static Draggable *bestDraggable(Draggable *draggable)
 {
@@ -34,14 +41,16 @@ static Draggable *bestDraggable(Draggable *draggable)
     // When de detach a title bar it will get hidden and we only the title bar of the FloatingWindow is visible
     /// Apparently that causes problems with grabbing the mouse, so instead use a visible draggable.
     // grabbing mouse on an hidden window works usually, it's some edge case on Windows with MFC.
-    if (auto titleBar = qobject_cast<TitleBar *>(draggable->asWidget())) {
+    if (auto tbView = qobject_cast<Views::TitleBar_qtwidgets *>(draggable->asWidget())) {
+        auto titleBar = tbView->titleBar();
         if (titleBar->isVisible())
             return draggable;
 
-        auto fw = qobject_cast<FloatingWindow *>(titleBar->window());
-        if (!fw) // defensive, doesn't happen
+        auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(tbView->QWidget::window());
+        if (!fwView) // defensive, doesn't happen
             return draggable;
 
+        auto fw = fwView->floatingWindow();
         if (fw->titleBar() == titleBar) {
             // Defensive, doesn't happen
             return draggable;
@@ -55,7 +64,7 @@ static Draggable *bestDraggable(Draggable *draggable)
     }
 }
 
-WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
+WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw, Draggable *draggable)
     : m_floatingWindow(fw)
     , m_draggable(bestDraggable(draggable))
     , m_draggableWidget(m_draggable ? m_draggable->asWidget() : nullptr)
@@ -66,7 +75,7 @@ WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw, Draggable *draggable)
         // Set opacity while dragging, if needed
         const qreal opacity = Config::self().draggedWindowOpacity();
         if (!qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity))
-            fw->setWindowOpacity(opacity);
+            fw->view()->asQWidget()->setWindowOpacity(opacity);
     }
 }
 
@@ -84,7 +93,7 @@ WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
 #ifdef DOCKS_DEVELOPER_MODE
 
 // Just used by tests
-WindowBeingDragged::WindowBeingDragged(FloatingWindow *fw)
+WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw)
     : m_floatingWindow(fw)
     , m_draggable(nullptr)
 {
@@ -100,7 +109,7 @@ WindowBeingDragged::~WindowBeingDragged()
         // Restore opacity to fully opaque if needed
         const qreal opacity = Config::self().draggedWindowOpacity();
         if (!qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity))
-            m_floatingWindow->setWindowOpacity(1);
+            m_floatingWindow->view()->asQWidget()->setWindowOpacity(1);
     }
 }
 
@@ -108,7 +117,7 @@ void WindowBeingDragged::init()
 {
     Q_ASSERT(m_floatingWindow);
     grabMouse(true);
-    m_floatingWindow->raise();
+    m_floatingWindow->view()->raise();
 }
 
 void WindowBeingDragged::grabMouse(bool grab)
@@ -161,7 +170,8 @@ bool WindowBeingDragged::contains(LayoutWidget *layoutWidget) const
     if (m_floatingWindow)
         return m_floatingWindow->layoutWidget() == layoutWidget;
 
-    if (auto fw = qobject_cast<FloatingWindow *>(m_draggableWidget->window())) {
+    if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(m_draggableWidget->window())) {
+        auto fw = fwView->floatingWindow();
         // We're not dragging via the floating window itself, but via the tab bar. Still might represent floating window though.
         return fw->layoutWidget() == layoutWidget && fw->hasSingleFrame();
     }
@@ -192,24 +202,25 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         return;
     }
 
-    if (auto tb = qobject_cast<TitleBar *>(draggable->asWidget())) {
+    if (auto tbView = qobject_cast<Views::TitleBar_qtwidgets *>(draggable->asWidget())) {
+        auto tb = tbView->titleBar();
         if (auto fw = tb->floatingWindow()) {
             // case #1: we're dragging the whole floating window by its titlebar
             m_floatingWindow = fw;
-        } else if (Frame *frame = tb->frame()) {
+        } else if (Controllers::Frame *frame = tb->frame()) {
             m_frame = frame;
         } else {
             qWarning() << Q_FUNC_INFO << "Shouldn't happen. TitleBar of what ?";
         }
-    } else if (auto fw = qobject_cast<FloatingWindow *>(draggable->asWidget())) {
+    } else if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(draggable->asWidget())) {
         // case #2: the floating window itself is the draggable, happens on platforms that support
         // native dragging. Not the case for Wayland. But adding this case for completeness.
-        m_floatingWindow = fw;
+        m_floatingWindow = fwView->floatingWindow();
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-    } else if (auto tbw = qobject_cast<TabBarWidget *>(draggable->asWidget())) {
+    } else if (auto tbw = qobject_cast<Views::TabBar_qtwidgets *>(draggable->asWidget())) {
         m_dockWidget = tbw->currentDockWidget();
-    } else if (auto tw = qobject_cast<TabWidgetWidget *>(draggable->asWidget())) {
-        m_frame = tw->frame();
+    } else if (auto tw = qobject_cast<Views::Stack_qtwidgets *>(draggable->asWidget())) {
+        m_frame = tw->stack()->frame();
 #endif
     } else {
         qWarning() << "Unknown draggable" << draggable->asWidget()
@@ -228,11 +239,11 @@ QPixmap WindowBeingDraggedWayland::pixmap() const
     p.setOpacity(0.7);
 
     if (m_floatingWindow) {
-        m_floatingWindow->render(&p);
+        m_floatingWindow->view()->asQWidget()->render(&p);
     } else if (m_frame) {
-        m_frame->render(&p);
+        m_frame->view()->asQWidget()->render(&p);
     } else if (m_dockWidget) {
-        m_dockWidget->render(&p);
+        m_dockWidget->view()->asQWidget()->render(&p);
     }
 
     return pixmap;
@@ -267,7 +278,7 @@ QSize WindowBeingDraggedWayland::size() const
     if (m_floatingWindow)
         return WindowBeingDragged::size();
     else if (m_frame)
-        return m_frame->QWidgetAdapter::size();
+        return m_frame->size();
     else if (m_dockWidget)
         return m_dockWidget->size();
 
@@ -280,9 +291,9 @@ QSize WindowBeingDraggedWayland::minSize() const
     if (m_floatingWindow) {
         return WindowBeingDragged::minSize();
     } else if (m_frame) {
-        return m_frame->minSize();
+        return m_frame->view()->minSize();
     } else if (m_dockWidget) {
-        return Layouting::Widget::widgetMinSize(m_dockWidget.data());
+        return m_dockWidget->view()->minSize();
     }
 
     qWarning() << Q_FUNC_INFO << "Unknown minSize, shouldn't happen";
@@ -294,9 +305,9 @@ QSize WindowBeingDraggedWayland::maxSize() const
     if (m_floatingWindow) {
         return WindowBeingDragged::maxSize();
     } else if (m_frame) {
-        return m_frame->maxSizeHint();
+        return m_frame->view()->maxSizeHint();
     } else if (m_dockWidget) {
-        return Layouting::Widget::widgetMaxSize(m_dockWidget.data());
+        return m_dockWidget->view()->maximumSize();
     }
 
     qWarning() << Q_FUNC_INFO << "Unknown maxSize, shouldn't happen";

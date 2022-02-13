@@ -23,9 +23,10 @@
 #include "private/DockRegistry_p.h"
 #include "private/DropAreaWithCentralFrame_p.h"
 #include "private/DropArea_p.h"
-#include "private/Frame_p.h"
 #include "private/Logging_p.h"
-#include "private/SideBar_p.h"
+
+#include "controllers/Frame.h"
+#include "controllers/SideBar.h"
 
 #include <QPainter>
 #include <QScreen>
@@ -62,7 +63,7 @@ public:
         if (m_supportsAutoHide) {
             for (auto location : { SideBarLocation::North, SideBarLocation::East,
                                    SideBarLocation::West, SideBarLocation::South }) {
-                m_sideBars.insert(location, Config::self().frameworkWidgetFactory()->createSideBar(location, mainWindow));
+                m_sideBars.insert(location, new Controllers::SideBar(location, mainWindow));
             }
         }
 
@@ -72,13 +73,13 @@ public:
 
     void updateMargins()
     {
-        const qreal factor = logicalDpiFactor(q);
+        const qreal factor = Views::logicalDpiFactor(q);
         m_layout->setContentsMargins(m_centerWidgetMargins * factor);
     }
 
     MainWindow *const q;
     const bool m_supportsAutoHide;
-    QHash<SideBarLocation, SideBar *> m_sideBars;
+    QHash<SideBarLocation, Controllers::SideBar *> m_sideBars;
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
     QMargins m_centerWidgetMargins = { 1, 5, 1, 1 };
@@ -95,15 +96,15 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
     , d(new Private(options, this))
 {
     if (d->m_supportsAutoHide) {
-        d->m_layout->addWidget(sideBar(SideBarLocation::West));
+        d->m_layout->addWidget(sideBar(SideBarLocation::West)->view()->asQWidget());
         auto innerVLayout = new QVBoxLayout();
         innerVLayout->setSpacing(0);
         innerVLayout->setContentsMargins(0, 0, 0, 0);
-        innerVLayout->addWidget(sideBar(SideBarLocation::North));
+        innerVLayout->addWidget(sideBar(SideBarLocation::North)->view()->asQWidget());
         innerVLayout->addWidget(layoutWidget());
-        innerVLayout->addWidget(sideBar(SideBarLocation::South));
+        innerVLayout->addWidget(sideBar(SideBarLocation::South)->view()->asQWidget());
         d->m_layout->addLayout(innerVLayout);
-        d->m_layout->addWidget(sideBar(SideBarLocation::East));
+        d->m_layout->addWidget(sideBar(SideBarLocation::East)->view()->asQWidget());
     } else {
         d->m_layout->addWidget(layoutWidget());
     }
@@ -128,7 +129,7 @@ void MainWindow::setCentralWidget(QWidget *w)
     QMainWindow::setCentralWidget(w);
 }
 
-SideBar *MainWindow::sideBar(SideBarLocation location) const
+Controllers::SideBar *MainWindow::sideBar(SideBarLocation location) const
 {
     return d->m_sideBars.value(location);
 }

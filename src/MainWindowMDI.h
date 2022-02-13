@@ -28,12 +28,12 @@
 namespace KDDockWidgets {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI : public KDDockWidgets::MDIMainWindowBase
+class DOCKS_EXPORT MainWindowMDI : public KDDockWidgets::MainWindow
 {
     Q_OBJECT
 public:
     ///@brief Constructor. See base class documentation
-    explicit MainWindowMDI(const QString &uniqueName, WidgetType *parent = nullptr,
+    explicit MainWindowMDI(const QString &uniqueName, QWidget *parent = nullptr,
                            Qt::WindowFlags flags = Qt::WindowFlags());
 
     ///@brief Destructor
@@ -41,10 +41,12 @@ public:
 
     ///@brief Docks @p dockWidget
     /// The widget will be placed at the specified position
-    void addDockWidget(DockWidgetBase *dockWidget, QPoint localPos, InitialOption addingOption = {});
+    void addDockWidget(Controllers::DockWidgetBase *dockWidget,
+                       QPoint localPos, InitialOption addingOption = {});
 
     ///@brief Convenience overload
-    void addDockWidget(DockWidgetBase *dockWidget, QPointF localPos, InitialOption addingOption = {});
+    void addDockWidget(Controllers::DockWidgetBase *dockWidget,
+                       QPointF localPos, InitialOption addingOption = {});
 };
 
 }

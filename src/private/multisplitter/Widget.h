@@ -34,8 +34,7 @@ QT_END_NAMESPACE
 class QSizePolicy
 {
 public:
-    enum Policy
-    {
+    enum Policy {
         Fixed,
         Preferred,
         Maximum
@@ -193,8 +192,8 @@ private:
 
 inline bool operator==(const Widget *w, const QObject &obj)
 {
-    //if (!w && !obj)
-    //return true;
+    // if (!w && !obj)
+    // return true;
 
     return w && w->operator==(&obj);
 }

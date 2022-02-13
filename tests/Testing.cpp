@@ -20,6 +20,7 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates,qstring-allocations
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 using namespace KDDockWidgets::Testing;
 
 extern quintptr Q_CORE_EXPORT qtHookData[];
@@ -30,7 +31,10 @@ static QtMessageHandler s_original = nullptr;
 class EventFilter : public QObject
 {
 public:
-    EventFilter(QEvent::Type type) : m_type(type) {}
+    EventFilter(QEvent::Type type)
+        : m_type(type)
+    {
+    }
     ~EventFilter() override;
     bool eventFilter(QObject *, QEvent *e) override
     {
@@ -67,12 +71,12 @@ static bool shouldBlacklistWarning(const QString &msg, const QString &category)
         || msg.contains(QLatin1String("outside any known screen, using primary screen"))
         || msg.contains(QLatin1String("Populating font family aliases took"))
 #ifdef KDDOCKWIDGETS_QTQUICK
-    // TODO: Fix later, not important right now
-    || msg.contains(QLatin1String("Binding loop detected for property"))
-    || msg.contains(QLatin1String("Implement me"))
+        // TODO: Fix later, not important right now
+        || msg.contains(QLatin1String("Binding loop detected for property"))
+        || msg.contains(QLatin1String("Implement me"))
 
-    // Ignore benign warning in Material style when deleting a dock widget. Should be fixed in Qt.
-    || (msg.contains(QLatin1String("TypeError: Cannot read property")) && msg.contains(QLatin1String("Material")))
+        // Ignore benign warning in Material style when deleting a dock widget. Should be fixed in Qt.
+        || (msg.contains(QLatin1String("TypeError: Cannot read property")) && msg.contains(QLatin1String("Material")))
 #endif
         ;
 }
@@ -136,7 +140,9 @@ bool Testing::waitForResize(QWidgetOrQuick *w, int timeout)
     return waitForEvent(w, QEvent::Resize, timeout);
 }
 
-HostedWidget::~HostedWidget() {}
+HostedWidget::~HostedWidget()
+{
+}
 
 void Testing::installFatalMessageHandler()
 {

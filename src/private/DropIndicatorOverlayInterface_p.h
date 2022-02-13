@@ -13,28 +13,28 @@
 #define KD_DROPINDICATOROVERLAYINTERFACE_P_H
 
 #include "kddockwidgets/docks_export.h"
-#include "kddockwidgets/QWidgetAdapter.h"
-#include "Frame_p.h"
+#include "controllers/Frame.h"
 #include "kddockwidgets/KDDockWidgets.h"
+
+#include "views_qtwidgets/View_qtwidgets.h"
 
 namespace KDDockWidgets {
 
 class DropArea;
 
-class DOCKS_EXPORT DropIndicatorOverlayInterface : public QWidgetAdapter
+class DOCKS_EXPORT DropIndicatorOverlayInterface : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
     Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)
     Q_PROPERTY(KDDockWidgets::DropLocation currentDropLocation READ currentDropLocation NOTIFY currentDropLocationChanged)
 public:
-
     explicit DropIndicatorOverlayInterface(DropArea *dropArea);
-    void setHoveredFrame(Frame *);
+    void setHoveredFrame(Controllers::Frame *);
     void setWindowBeingDragged(bool);
     QRect hoveredFrameRect() const;
     bool isHovered() const;
     DropLocation currentDropLocation() const;
-    Frame *hoveredFrame() const
+    Controllers::Frame *hoveredFrame() const
     {
         return m_hoveredFrame;
     }
@@ -55,7 +55,7 @@ public:
     static KDDockWidgets::Location multisplitterLocationFor(DropLocation);
 
 Q_SIGNALS:
-    void hoveredFrameChanged(KDDockWidgets::Frame *);
+    void hoveredFrameChanged(Controllers::Frame *);
     void hoveredFrameRectChanged();
     void currentDropLocationChanged();
 
@@ -67,10 +67,10 @@ private:
 
 protected:
     virtual DropLocation hover_impl(QPoint globalPos) = 0;
-    virtual void onHoveredFrameChanged(Frame *);
+    virtual void onHoveredFrameChanged(Controllers::Frame *);
     virtual void updateVisibility() {};
 
-    Frame *m_hoveredFrame = nullptr;
+    Controllers::Frame *m_hoveredFrame = nullptr;
     DropArea *const m_dropArea;
     bool m_draggedWindowIsHovering = false;
 };

@@ -57,7 +57,7 @@ set(PyKDDockWidgets_target_link_libraries
 # changes on these files should trigger a new generation
 set(PyKDDockWidgets_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
-    ${CMAKE_SOURCE_DIR}/src/DockWidgetBase.h
+    ${CMAKE_SOURCE_DIR}/src/DockWidget.h
     ${CMAKE_SOURCE_DIR}/src/DockWidget.h
     ${CMAKE_SOURCE_DIR}/src/MainWindowBase.h
     ${CMAKE_SOURCE_DIR}/src/MainWindow.h

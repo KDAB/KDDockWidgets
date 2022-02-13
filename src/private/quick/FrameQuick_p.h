@@ -14,7 +14,7 @@
 #define KD_FRAME_QUICK_P_H
 
 #include "../Frame_p.h"
-#include "DockWidgetBase.h"
+#include "DockWidget.h"
 #include "TabWidgetQuick_p.h"
 
 class QQuickItem;

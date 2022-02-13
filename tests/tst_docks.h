@@ -23,21 +23,21 @@
 #include <QtTest/QtTest>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-# include "DockWidgetQuick.h"
-# include "quick/MainWindowQuick_p.h"
+#include "DockWidgetQuick.h"
+#include "quick/MainWindowQuick_p.h"
 
-# include <QQmlEngine>
-# include <QQuickStyle>
-# include <QQmlApplicationEngine>
+#include <QQmlEngine>
+#include <QQuickStyle>
+#include <QQmlApplicationEngine>
 #else
-# include "DockWidget.h"
-# include "MainWindow.h"
 
-# include <QLineEdit>
-# include <QMenuBar>
-# include <QPushButton>
-# include <QTabBar>
-# include <QTextEdit>
+#include "MainWindow.h"
+
+#include <QLineEdit>
+#include <QMenuBar>
+#include <QPushButton>
+#include <QTabBar>
+#include <QTextEdit>
 #endif
 
 using namespace KDDockWidgets::Tests;

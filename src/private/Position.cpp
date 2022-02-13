@@ -17,10 +17,10 @@
 
 #include "Position_p.h"
 #include "DockRegistry_p.h"
-#include "FloatingWindow_p.h"
 #include "LayoutSaver_p.h"
 #include "LayoutWidget_p.h"
 #include "multisplitter/Item_p.h"
+#include "controllers/FloatingWindow.h"
 
 #include <algorithm>
 
@@ -92,7 +92,7 @@ void Position::removePlaceholders()
 void Position::removePlaceholders(const LayoutWidget *ms)
 {
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [ms](const std::unique_ptr<ItemRef> &itemref) {
-                             return itemref->item->hostWidget() == *ms;
+                             return itemref->item->hostWidget()->asQObject() == ms;
                          }),
                          m_placeholders.end());
 }
@@ -135,7 +135,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             } else {
                 auto serializedFw = LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowForIndex(index);
                 if (serializedFw.isValid()) {
-                    if (FloatingWindow *fw = serializedFw.floatingWindowInstance) {
+                    if (auto fw = serializedFw.floatingWindowInstance) {
                         layout = fw->layoutWidget();
                     } else {
                         continue;

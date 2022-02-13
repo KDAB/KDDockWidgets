@@ -26,18 +26,24 @@
 
 class TestMultiSplitter;
 
+namespace KDDockWidgets {
+class View;
+
+namespace Controllers {
+class Separator;
+}
+
+}
+
 namespace Layouting {
 Q_NAMESPACE
 
 class ItemContainer;
 class ItemBoxContainer;
 class Item;
-class Separator;
-class Widget;
 struct LengthOnSide;
 
-enum Side
-{
+enum Side {
     Side1,
     Side2
 };
@@ -72,8 +78,7 @@ enum class NeighbourSqueezeStrategy
 };
 Q_ENUM_NS(NeighbourSqueezeStrategy)
 
-enum LayoutBorderLocation
-{
+enum LayoutBorderLocation {
     LayoutBorderLocation_None = 0,
     LayoutBorderLocation_North = 1,
     LayoutBorderLocation_East = 2,
@@ -253,14 +258,14 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS Item : public QObject
 public:
     typedef QVector<Item *> List;
 
-    explicit Item(Widget *hostWidget, ItemContainer *parent = nullptr);
+    explicit Item(KDDockWidgets::View *hostWidget, ItemContainer *parent = nullptr);
     ~Item() override;
 
     /// @brief returns whether this item is a root container
     bool isRoot() const;
 
     ///@brief Returns whether the item is touching the layout's borders.
-    ///Returns Location_None if it's not touching a border.
+    /// Returns Location_None if it's not touching a border.
     LayoutBorderLocations adjacentLayoutBorders() const;
 
     virtual int visibleCount_recursive() const;
@@ -299,11 +304,11 @@ public:
     int mapFromRoot(int p, Qt::Orientation) const;
 
     QObject *guestAsQObject() const;
-    Widget *guestWidget() const
+    KDDockWidgets::View *guestWidget() const
     {
         return m_guest;
     }
-    void setGuestWidget(Widget *);
+    void setGuestWidget(KDDockWidgets::View *);
 
     void ref();
     void unref();
@@ -313,8 +318,8 @@ public:
     int maxLengthHint(Qt::Orientation) const;
 
     QObject *host() const;
-    Widget *hostWidget() const;
-    void restore(Widget *guestWidget);
+    KDDockWidgets::View *hostWidget() const;
+    void restore(KDDockWidgets::View *guestWidget);
 
     QVector<int> pathFromRoot() const;
 
@@ -328,12 +333,12 @@ public:
     virtual bool isVisible(bool excludeBeingInserted = false) const;
     virtual void setGeometry_recursive(QRect rect);
     virtual void dumpLayout(int level = 0);
-    virtual void setHostWidget(Widget *);
+    virtual void setHostWidget(KDDockWidgets::View *);
     virtual QVariantMap toVariantMap() const;
-    virtual void fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widget *> &widgets);
+    virtual void fillFromVariantMap(const QVariantMap &map, const QHash<QString, KDDockWidgets::View *> &widgets);
 
-    static Item *createFromVariantMap(Widget *hostWidget, ItemContainer *parent,
-                                      const QVariantMap &map, const QHash<QString, Widget *> &widgets);
+    static Item *createFromVariantMap(KDDockWidgets::View *hostWidget, ItemContainer *parent,
+                                      const QVariantMap &map, const QHash<QString, KDDockWidgets::View *> &widgets);
 
     KDBindings::Signal<> geometryChanged;
     KDBindings::Signal<> xChanged;
@@ -346,7 +351,7 @@ public:
 
 protected:
     friend class ::TestMultiSplitter;
-    explicit Item(bool isContainer, Widget *hostWidget, ItemContainer *parent);
+    explicit Item(bool isContainer, KDDockWidgets::View *hostWidget, ItemContainer *parent);
     void setParentContainer(ItemContainer *parent);
     void connectParent(ItemContainer *parent);
     void setPos(QPoint);
@@ -381,8 +386,8 @@ private:
     void updateObjectName();
     void onWidgetDestroyed();
     bool m_isVisible = false;
-    Widget *m_hostWidget = nullptr;
-    Widget *m_guest = nullptr;
+    KDDockWidgets::View *m_hostWidget = nullptr;
+    KDDockWidgets::View *m_guest = nullptr;
 
     KDBindings::ConnectionHandle m_minSizeChangedHandle;
     KDBindings::ConnectionHandle m_visibleChangedHandle;
@@ -393,8 +398,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS ItemContainer : public Item
 {
     Q_OBJECT
 public:
-    explicit ItemContainer(Widget *hostWidget, ItemContainer *parent);
-    explicit ItemContainer(Widget *hostWidget);
+    explicit ItemContainer(KDDockWidgets::View *hostWidget, ItemContainer *parent);
+    explicit ItemContainer(KDDockWidgets::View *hostWidget);
     ~ItemContainer();
 
     virtual void removeItem(Item *, bool hardRemove = true) = 0;
@@ -410,7 +415,7 @@ public:
     bool isEmpty() const;
     bool contains(const Item *item) const;
     Item *itemForObject(const QObject *) const;
-    Item *itemForWidget(const Widget *w) const;
+    Item *itemForWidget(const KDDockWidgets::View *w) const;
     Item::List visibleChildren(bool includeBeingInserted = false) const;
     Item::List items_recursive() const;
     bool contains_recursive(const Item *item) const;
@@ -439,8 +444,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS ItemBoxContainer : public ItemContainer
 {
     Q_OBJECT
 public:
-    explicit ItemBoxContainer(Widget *hostWidget, ItemContainer *parent);
-    explicit ItemBoxContainer(Widget *hostWidget);
+    explicit ItemBoxContainer(KDDockWidgets::View *hostWidget, ItemContainer *parent);
+    explicit ItemBoxContainer(KDDockWidgets::View *hostWidget);
     ~ItemBoxContainer();
     void insertItem(Item *item, int index, KDDockWidgets::InitialOption option = KDDockWidgets::DefaultSizeMode::Fair);
     void insertItem(Item *item, KDDockWidgets::Location, KDDockWidgets::InitialOption = {});
@@ -448,12 +453,12 @@ public:
     static void insertItemRelativeTo(Item *item, Item *relativeTo, KDDockWidgets::Location,
                                      KDDockWidgets::InitialOption = KDDockWidgets::DefaultSizeMode::Fair);
 
-    void requestSeparatorMove(Separator *separator, int delta);
-    int minPosForSeparator(Separator *, bool honourMax = true) const;
-    int maxPosForSeparator(Separator *, bool honourMax = true) const;
-    int minPosForSeparator_global(Separator *, bool honourMax = true) const;
-    int maxPosForSeparator_global(Separator *, bool honourMax = true) const;
-    void requestEqualSize(Separator *separator);
+    void requestSeparatorMove(KDDockWidgets::Controllers::Separator *separator, int delta);
+    int minPosForSeparator(KDDockWidgets::Controllers::Separator *, bool honourMax = true) const;
+    int maxPosForSeparator(KDDockWidgets::Controllers::Separator *, bool honourMax = true) const;
+    int minPosForSeparator_global(KDDockWidgets::Controllers::Separator *, bool honourMax = true) const;
+    int maxPosForSeparator_global(KDDockWidgets::Controllers::Separator *, bool honourMax = true) const;
+    void requestEqualSize(KDDockWidgets::Controllers::Separator *separator);
     void layoutEqually();
     void layoutEqually_recursive();
     void removeItem(Item *, bool hardRemove = true) override;
@@ -465,7 +470,7 @@ public:
     void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage) override;
     QRect suggestedDropRect(const Item *item, const Item *relativeTo, KDDockWidgets::Location) const;
     QVariantMap toVariantMap() const override;
-    void fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widget *> &widgets) override;
+    void fillFromVariantMap(const QVariantMap &map, const QHash<QString, KDDockWidgets::View *> &widgets) override;
     void clear() override;
     Qt::Orientation orientation() const;
     bool isVertical() const;
@@ -493,15 +498,15 @@ private:
     void layoutEqually(SizingInfo::List &sizes);
 
     ///@brief Grows the side1Neighbour to the right and the side2Neighbour to the left
-    ///So they occupy the empty space that's between them (or bottom/top if Qt::Vertical).
-    ///This is useful when an Item is removed. Its neighbours will occupy its space.
-    ///side1Neighbour or side2Neighbour are allowed to be null, in which case the non-null one
-    ///will occupy the entire space.
+    /// So they occupy the empty space that's between them (or bottom/top if Qt::Vertical).
+    /// This is useful when an Item is removed. Its neighbours will occupy its space.
+    /// side1Neighbour or side2Neighbour are allowed to be null, in which case the non-null one
+    /// will occupy the entire space.
     void growNeighbours(Item *side1Neighbour, Item *side2Neighbour);
 
     ///@brief grows an item by @p amount. It calculates how much to grow on side1 and on side2
-    ///Then calls growItem(item, side1Growth, side2Growth) which will effectively grow it,
-    ///and shrink the neighbours which are donating the size.
+    /// Then calls growItem(item, side1Growth, side2Growth) which will effectively grow it,
+    /// and shrink the neighbours which are donating the size.
     void growItem(Item *, int amount, GrowthStrategy,
                   NeighbourSqueezeStrategy neighbourSqueezeStrategy,
                   bool accountForNewSeparator = false,
@@ -542,14 +547,14 @@ private:
     void positionItems(SizingInfo::List &sizes);
     Item *itemAt(QPoint p) const;
     Item *itemAt_recursive(QPoint p) const;
-    void setHostWidget(Widget *) override;
+    void setHostWidget(KDDockWidgets::View *) override;
     void setIsVisible(bool) override;
     bool isVisible(bool excludeBeingInserted = false) const override;
     void setLength_recursive(int length, Qt::Orientation) override;
     void applyGeometries(const SizingInfo::List &sizes, ChildrenResizeStrategy = ChildrenResizeStrategy::Percentage);
     void applyPositions(const SizingInfo::List &sizes);
 
-    int indexOf(Separator *) const;
+    int indexOf(KDDockWidgets::Controllers::Separator *) const;
     bool isInSimplify() const;
 
 #ifdef DOCKS_DEVELOPER_MODE
@@ -557,8 +562,8 @@ private:
 #endif
 
 public:
-    QVector<Layouting::Separator *> separators_recursive() const;
-    QVector<Layouting::Separator *> separators() const;
+    QVector<KDDockWidgets::Controllers::Separator *> separators_recursive() const;
+    QVector<KDDockWidgets::Controllers::Separator *> separators() const;
 
 private:
     void simplify();

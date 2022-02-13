@@ -27,7 +27,9 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
-#include "kddockwidgets/QWidgetAdapter.h"
+
+#include "views_qtwidgets/View_qtwidgets.h"
+
 #include "kdbindings/signal.h"
 
 #include <QList>
@@ -41,10 +43,13 @@ class Widget_qwidget;
 
 namespace KDDockWidgets {
 
-class MainWindowBase;
-class FloatingWindow;
+namespace Controllers {
 class Frame;
+class FloatingWindow;
 class DockWidgetBase;
+}
+
+class MainWindowBase;
 
 /**
  * @brief The widget (QWidget or QQuickItem) which holds a layout of dock widgets.
@@ -57,11 +62,11 @@ class DockWidgetBase;
  * It's suitable to be set as a main window central widget for instance. The actual layouting is
  * then done by the root Item.
  */
-class DOCKS_EXPORT LayoutWidget : public LayoutGuestWidget
+class DOCKS_EXPORT LayoutWidget : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit LayoutWidget(QWidgetOrQuick *parent = nullptr);
+    explicit LayoutWidget(QWidget *parent = nullptr);
     ~LayoutWidget() override;
 
     /// @brief Returns whether this layout is in a MainWindow
@@ -71,7 +76,7 @@ public:
 
     MainWindowBase *mainWindow(bool honourNesting = false) const;
 
-    FloatingWindow *floatingWindow() const;
+    Controllers::FloatingWindow *floatingWindow() const;
 
     /**
      * @brief returns the layout's minimum size
@@ -88,24 +93,24 @@ public:
      * @brief returns the contents width.
      * Usually it's the same width as the respective parent MultiSplitter.
      */
-    int width() const
+    int layoutWidth() const
     {
-        return size().width();
+        return layoutSize().width();
     }
 
     /**
      * @brief returns the contents height.
      * Usually it's the same height as the respective parent MultiSplitter.
      */
-    int height() const
+    int layoutHeight() const
     {
-        return size().height();
+        return layoutSize().height();
     }
 
     /**
-     * @brief getter for the size
+     * @brief Returns the size of the contents
      */
-    QSize size() const;
+    QSize layoutSize() const;
 
     /// @brief Runs some sanity checks. Returns true if everything is OK
     bool checkSanity() const;
@@ -126,7 +131,7 @@ public:
 
 
     /// @brief restores the dockwidget @p dw to its previous position
-    void restorePlaceholder(DockWidgetBase *dw, Layouting::Item *, int tabIndex);
+    void restorePlaceholder(Controllers::DockWidgetBase *dw, Layouting::Item *, int tabIndex);
 
     /**
      * @brief The list of items in this layout.
@@ -141,7 +146,7 @@ public:
     /**
      * @brief  Returns true if this layout contains the specified frame.
      */
-    bool containsFrame(const Frame *) const;
+    bool containsFrame(const Controllers::Frame *) const;
 
     /**
      * @brief Returns the number of Item objects in this layout.
@@ -167,15 +172,15 @@ public:
     /**
      * @brief returns the Item that holds @p frame in this layout
      */
-    Layouting::Item *itemForFrame(const Frame *frame) const;
+    Layouting::Item *itemForFrame(const Controllers::Frame *frame) const;
 
     /**
      * @brief Returns this list of Frame objects contained in this layout
      */
-    QList<Frame *> frames() const;
+    QList<Controllers::Frame *> frames() const;
 
     /// @brief Returns the list of dock widgets contained in this layout
-    QVector<DockWidgetBase *> dockWidgets() const;
+    QVector<Controllers::DockWidgetBase *> dockWidgets() const;
 
     /**
      * @brief Removes an item from this MultiSplitter.
@@ -210,14 +215,14 @@ protected:
      * placeholder, otherwise it's unrefed while we're adding causing a segfault. So what this does
      * is making the unrefing happen a bit earlier.
      */
-    void unrefOldPlaceholders(const QList<Frame *> &framesBeingAdded) const;
+    void unrefOldPlaceholders(const QList<Controllers::Frame *> &framesBeingAdded) const;
 
     /**
      * @brief returns the frames contained in @p frameOrMultiSplitter
      * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
      * If frameOrMultiSplitter is a MultiSplitter then it returns a list of all frames it contains
      */
-    QList<Frame *> framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const;
+    QList<Controllers::Frame *> framesFrom(QWidget *frameOrMultiSplitter) const;
 
 Q_SIGNALS:
     void visibleWidgetCountChanged(int count);

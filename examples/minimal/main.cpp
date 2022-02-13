@@ -43,26 +43,26 @@ int main(int argc, char **argv)
     mainWindow.show();
 
     // # 2. Create a dock widget, it needs a unique name
-    auto dock1 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock1"));
+    auto dock1 = new KDDockWidgets::DockWidgetBase(QStringLiteral("MyDock1"));
     auto widget1 = new MyWidget();
     dock1->setWidget(widget1);
 
-    auto dock2 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock2"));
+    auto dock2 = new KDDockWidgets::DockWidgetBase(QStringLiteral("MyDock2"));
     auto widget2 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock2->setWidget(widget2);
 
-    auto dock3 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock3"));
+    auto dock3 = new KDDockWidgets::DockWidgetBase(QStringLiteral("MyDock3"));
     auto widget3 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock3->setWidget(widget3);
 
-    auto dock4 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock4"));
+    auto dock4 = new KDDockWidgets::DockWidgetBase(QStringLiteral("MyDock4"));
     auto widget4 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock4->setWidget(widget4);
 
-    auto dock5 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock5"));
+    auto dock5 = new KDDockWidgets::DockWidgetBase(QStringLiteral("MyDock5"));
     auto widget5 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock5->setWidget(widget5);
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     mainWindow.addDockWidget(dock3, KDDockWidgets::Location_OnRight, dock2);
 
     // 5. dock4 is docked at the bottom, with 200px height
-    const QSize preferredSize(QSize(/*ignored*/0, 200));
+    const QSize preferredSize(QSize(/*ignored*/ 0, 200));
     mainWindow.addDockWidget(dock4, KDDockWidgets::Location_OnBottom, nullptr, preferredSize);
 
 

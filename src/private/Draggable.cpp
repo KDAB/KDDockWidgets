@@ -11,10 +11,10 @@
 
 #include "Draggable_p.h"
 #include "DragController_p.h"
-#include "FloatingWindow_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "Utils_p.h"
 
+#include "controllers/FloatingWindow.h"
 
 using namespace KDDockWidgets;
 

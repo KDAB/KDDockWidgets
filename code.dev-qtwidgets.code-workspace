@@ -8,22 +8,35 @@
     "C_Cpp.default.compileCommands": "${workspaceFolder}/build-dev/compile_commands.json",
     "C_Cpp.default.cStandard": "c17",
     "files.trimTrailingWhitespace": true,
-    "editor.formatOnType": true,
-    "C_Cpp.autocompleteAddParentheses": true
+    "editor.formatOnSave": true,
+    "C_Cpp.autocompleteAddParentheses": true,
+    "clangd.arguments": [
+      "-header-insertion=never"
+    ],
+    "todo-tree.tree.scanMode": "workspace only",
+    "todo-tree.tree.disableCompactFolders": false,
+    "todo-tree.tree.showBadges": true,
+    "todo-tree.general.tags": [
+      "BUG",
+      "HACK",
+      "FIXME",
+      "TODO",
+      "XXX",
+      "[ ]",
+      "[x]",
+      "TODOv2"
+    ]
   },
   "launch": {
     "version": "0.2.0",
     "configurations": [
       {
         "name": "gdb-kddockwidgets_example",
-        "type": "cppdbg",
+        "type": "lldb",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/kddockwidgets_example",
         "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "gdb",
-        "stopAtEntry": false,
-        "externalConsole": false
+        "cwd": "${workspaceFolder}"
       },
       {
         "name": "gdb-kddockwidgets_minimal_example",
@@ -60,10 +73,12 @@
       },
       {
         "name": "gdb-tst_docks",
-        "type": "cppdbg",
+        "type": "lldb",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/tst_docks",
-        "args": [],
+        "args": [
+          "tst_simple2"
+        ],
         "cwd": "${workspaceFolder}",
         "MIMode": "gdb",
         "stopAtEntry": false,

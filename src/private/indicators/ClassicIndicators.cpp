@@ -16,10 +16,11 @@
 
 #include "private/DropArea_p.h"
 #include "private/DragController_p.h"
-#include "private/Frame_p.h"
 #include "private/Logging_p.h"
 #include "private/DockRegistry_p.h"
 #include "private/Utils_p.h"
+
+#include "controllers/Frame.h"
 
 using namespace KDDockWidgets;
 
@@ -160,7 +161,7 @@ void ClassicIndicators::setDropLocation(DropLocation location)
     }
 
     if (location == DropLocation_Center) {
-        m_rubberBand->setGeometry(geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->QWidgetAdapter::geometry() : rect()));
+        m_rubberBand->setGeometry(geometryForRubberband(m_hoveredFrame ? m_hoveredFrame->view()->geometry() : rect()));
         m_rubberBand->setVisible(true);
         if (rubberBandIsTopLevel()) {
             m_rubberBand->raise();
@@ -171,7 +172,7 @@ void ClassicIndicators::setDropLocation(DropLocation location)
     }
 
     KDDockWidgets::Location multisplitterLocation = locationToMultisplitterLocation(location);
-    Frame *relativeToFrame = nullptr;
+    Controllers::Frame *relativeToFrame = nullptr;
 
     switch (location) {
     case DropLocation_Left:
@@ -231,7 +232,7 @@ QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
         return localRect;
 
     QPoint topLeftLocal = localRect.topLeft();
-    QPoint topLeftGlobal = m_dropArea->QWidgetAdapter::mapToGlobal(topLeftLocal);
+    QPoint topLeftGlobal = m_dropArea->QWidget::mapToGlobal(topLeftLocal);
 
     localRect.moveTopLeft(topLeftGlobal);
 

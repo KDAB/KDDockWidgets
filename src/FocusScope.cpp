@@ -17,11 +17,12 @@
  */
 
 #include "FocusScope.h"
-#include "DockWidgetBase.h"
+#include "controllers/DockWidget.h"
 
-#include "private/TitleBar_p.h"
-#include "private/Frame_p.h"
 #include "private/DockRegistry_p.h"
+#include "controllers/Frame.h"
+#include "views_qtwidgets/View_qtwidgets.h"
+#include "views_qtwidgets/TitleBar_qtwidgets.h"
 
 #include <QObject>
 #include <QGuiApplication>
@@ -30,10 +31,10 @@
 using namespace KDDockWidgets;
 
 // Our Private inherits from QObject since FocusScope can't (Since Frame is already QObject)
-class FocusScope::Private : public QObject //clazy:exclude=missing-qobject-macro (breaks unity build with earlier cmake due to including .moc here.)
+class FocusScope::Private : public QObject // clazy:exclude=missing-qobject-macro (breaks unity build with earlier cmake due to including .moc here.)
 {
 public:
-    Private(FocusScope *qq, QWidgetAdapter *thisWidget)
+    Private(FocusScope *qq, Views::View_qtwidgets<QWidget> *thisWidget)
         : q(qq)
         , m_thisWidget(thisWidget)
     {
@@ -67,7 +68,7 @@ public:
     bool isInFocusScope(WidgetType *) const;
 
     FocusScope *const q;
-    QWidgetAdapter *const m_thisWidget;
+    Views::View_qtwidgets<QWidget> *const m_thisWidget;
     bool m_isFocused = false;
     bool m_inCtor = true;
     QPointer<WidgetType> m_lastFocusedInScope;
@@ -77,7 +78,7 @@ FocusScope::Private::~Private()
 {
 }
 
-FocusScope::FocusScope(QWidgetAdapter *thisWidget)
+FocusScope::FocusScope(Views::View_qtwidgets<QWidget> *thisWidget)
     : d(new Private(this, thisWidget))
 {
 }
@@ -105,8 +106,8 @@ void FocusScope::focus(Qt::FocusReason reason)
         // very useful.
         d->m_lastFocusedInScope->setFocus(reason);
     } else {
-        if (auto frame = qobject_cast<Frame *>(d->m_thisWidget)) {
-            if (DockWidgetBase *dw = frame->currentDockWidget()) {
+        if (auto frame = qobject_cast<Controllers::Frame *>(d->m_thisWidget)) {
+            if (auto dw = frame->currentDockWidget()) {
                 if (auto guest = dw->widget()) {
                     if (guest->focusPolicy() != Qt::NoFocus)
                         guest->setFocus(reason);
@@ -138,7 +139,7 @@ void FocusScope::Private::onFocusObjectChanged(QObject *obj)
     }
 
     const bool is = isInFocusScope(widget);
-    if (is && m_lastFocusedInScope != widget && !qobject_cast<TitleBar *>(obj)) {
+    if (is && m_lastFocusedInScope != widget && !qobject_cast<Views::TitleBar_qtwidgets *>(obj)) { // TODO
         m_lastFocusedInScope = widget;
         setIsFocused(is);
         /* Q_EMIT */ q->focusedWidgetChangedCallback();
@@ -154,7 +155,7 @@ bool FocusScope::Private::isInFocusScope(WidgetType *widget) const
         if (p == m_thisWidget)
             return true;
 
-        p = KDDockWidgets::Private::parentWidget(p);
+        p = p->parentWidget();
     }
 
     return false;

@@ -13,10 +13,9 @@
 #define KD_WIDGET_RESIZE_HANDLER_P_H
 
 #include "kddockwidgets/KDDockWidgets.h"
-#include "kddockwidgets/QWidgetAdapter.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "kddockwidgets/docks_export.h"
-#include "kddockwidgets/private/FloatingWindow_p.h"
+#include "controllers/FloatingWindow.h"
 
 #include <QPoint>
 #include <QPointer>
@@ -29,15 +28,11 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class FloatingWindow;
-
-
 class DOCKS_EXPORT WidgetResizeHandler : public QObject
 {
     Q_OBJECT
 public:
-    enum Feature
-    {
+    enum Feature {
         Feature_None = 0,
         Feature_NativeShadow = 1,
         Feature_NativeResize = 2,
@@ -101,7 +96,7 @@ public:
      *        if false, they are docked (like for example resizing docked MDI widgets, or the sidebar overlay)
      * @param target The target widget that will be resized. Also acts as parent QObject.
      */
-    explicit WidgetResizeHandler(bool isTopLevelResizer, QWidgetOrQuick *target);
+    explicit WidgetResizeHandler(bool isTopLevelResizer, View *target);
     ~WidgetResizeHandler() override;
 
     /**
@@ -144,13 +139,13 @@ protected:
     bool eventFilter(QObject *o, QEvent *e) override;
 
 private:
-    void setTarget(QWidgetOrQuick *w);
+    void setTarget(View *w);
     bool mouseMoveEvent(QMouseEvent *e);
     void updateCursor(CursorPosition m);
     void setMouseCursor(Qt::CursorShape cursor);
     void restoreMouseCursor();
     CursorPosition cursorPosition(QPoint) const;
-    QWidgetOrQuick *mTarget = nullptr;
+    View *mTarget = nullptr;
     CursorPosition mCursorPos = CursorPosition_Undefined;
     QPoint mNewPosition;
     bool m_resizingInProgress = false;

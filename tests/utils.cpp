@@ -12,8 +12,6 @@
 #include "utils.h"
 #include "DropArea_p.h"
 #include "Config.h"
-#include "TitleBar_p.h"
-#include "FloatingWindow_p.h"
 #include "FrameworkWidgetFactory.h"
 
 #include <QCloseEvent>
@@ -22,16 +20,17 @@
 #include <QtTest/QtTest>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-# include "DockWidgetQuick.h"
-# include "private/quick/MainWindowQuick_p.h"
-# include <QQuickView>
+#include "DockWidgetQuick.h"
+#include "private/quick/MainWindowQuick_p.h"
+#include <QQuickView>
 #else
-# include "DockWidget.h"
-# include "MainWindow.h"
-# include <QPushButton>
+#include "views_qtwidgets/DockWidget_qtwidgets.h"
+#include "MainWindow.h"
+#include <QPushButton>
 #endif
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 using namespace KDDockWidgets::Tests;
 
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
@@ -50,7 +49,7 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
                                                   : name;
 
-    WidgetType *parent = nullptr;
+    QWidget *parent = nullptr;
 #ifdef KDDOCKWIDGETS_QTQUICK
     auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
     view->resize(sz);
@@ -62,7 +61,7 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     QTest::qWait(100); // the root object gets sized delayed
 #endif
 
-    auto ptr = std::unique_ptr<MainWindowType>(new MainWindowType(mainWindowName, options, parent));
+    auto ptr = std::unique_ptr<MainWindow>(new MainWindow(mainWindowName, options, parent));
     if (show)
         ptr->show();
     ptr->resize(sz);
@@ -76,15 +75,15 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWid
                                                        const QString &affinityName)
 {
     w->setFocusPolicy(Qt::StrongFocus);
-    auto dock = new DockWidgetType(name, options, layoutSaverOptions);
+    auto dock = new DockWidgetBase(name, options, layoutSaverOptions);
     dock->setAffinityName(affinityName);
     dock->setWidget(w);
     dock->setObjectName(name);
-    dock->setGeometry(QRect(0, 0, 400, 400));
+    dock->view()->setGeometry(QRect(0, 0, 400, 400));
     if (show) {
         dock->show();
         dock->dptr()->morphIntoFloatingWindow();
-        dock->activateWindow();
+        dock->view()->activateWindow();
         Q_ASSERT(dock->window());
         if (QTest::qWaitForWindowActive(dock->window()->windowHandle(), 1000)) {
             return dock;
@@ -116,7 +115,7 @@ std::unique_ptr<MainWindowBase> KDDockWidgets::Tests::createMainWindow(QVector<D
     static int count = 0;
     count++;
 
-    WidgetType *parent = nullptr;
+    QWidget *parent = nullptr;
 #ifdef KDDOCKWIDGETS_QTQUICK
     auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
     const QSize initialSize(1000, 1000);
@@ -128,7 +127,7 @@ std::unique_ptr<MainWindowBase> KDDockWidgets::Tests::createMainWindow(QVector<D
     QTest::qWait(100); // the root object gets sized delayed
 #endif
 
-    auto m = std::unique_ptr<MainWindowType>(new MainWindowType(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
+    auto m = std::unique_ptr<MainWindow>(new MainWindow(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
     auto layout = m->layoutWidget();
     m->show();
     m->resize(QSize(700, 700));
@@ -187,12 +186,7 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
     if (category == QLatin1String("qt.qpa.xcb"))
         return true;
 
-    return msg.contains(QLatin1String("QSocketNotifier: Invalid socket")) ||
-           msg.contains(QLatin1String("QWindowsWindow::setGeometry")) ||
-           msg.contains(QLatin1String("This plugin does not support")) ||
-           msg.contains(QLatin1String("Note that Qt no longer ships fonts")) ||
-           msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")) ||
-           msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
+    return msg.contains(QLatin1String("QSocketNotifier: Invalid socket")) || msg.contains(QLatin1String("QWindowsWindow::setGeometry")) || msg.contains(QLatin1String("This plugin does not support")) || msg.contains(QLatin1String("Note that Qt no longer ships fonts")) || msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")) || msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
 }
 
 void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, WidgetType *receiver)
@@ -203,7 +197,7 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, WidgetType *receiver)
     QMouseEvent ev(QEvent::MouseButtonDblClick, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
 
-    if (auto actualReceiver = receiver->property("titleBarMouseArea").value<QObject*>()) {
+    if (auto actualReceiver = receiver->property("titleBarMouseArea").value<QObject *>()) {
         // QtQuick case, we need to send the event to the mouse area
         qApp->sendEvent(actualReceiver, &ev);
     } else {
@@ -282,22 +276,22 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, WidgetType *receiver)
     }
 }
 
-void KDDockWidgets::Tests::nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo, Location location)
+void KDDockWidgets::Tests::nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Controllers::Frame *relativeTo, Location location)
 {
-    auto frame = Config::self().frameworkWidgetFactory()->createFrame();
+    auto frame = new Controllers::Frame();
     frame->addWidget(dock);
     dock->d->frame()->setObjectName(dock->objectName());
 
-    dropArea->addWidget(frame, location, relativeTo);
+    dropArea->addWidget(frame->view()->asQWidget(), location, relativeTo);
     QVERIFY(dropArea->checkSanity());
 }
 
 EmbeddedWindow::~EmbeddedWindow() = default;
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-    MyWidget2::~MyWidget2() = default;
-    NonClosableWidget::~NonClosableWidget() = default;
-    QTextEdit::~QTextEdit() = default;
-    FocusableWidget::~FocusableWidget() = default;
-    QPushButton::~QPushButton() = default;
+MyWidget2::~MyWidget2() = default;
+NonClosableWidget::~NonClosableWidget() = default;
+QTextEdit::~QTextEdit() = default;
+FocusableWidget::~FocusableWidget() = default;
+QPushButton::~QPushButton() = default;
 #endif

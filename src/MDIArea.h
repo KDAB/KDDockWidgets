@@ -14,15 +14,19 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "KDDockWidgets.h"
-#include "QWidgetAdapter.h"
 
 #include <QWidget>
 
 namespace KDDockWidgets {
 
 class MDILayoutWidget;
-class DockWidgetBase;
+
+namespace Controllers {
 class Frame;
+class DockWidgetBase;
+}
+
+#include <QWidget>
 
 /**
  * @brief MDIArea allows to host dock widget in MDI mode.
@@ -33,25 +37,25 @@ class Frame;
  *
  * See examples/mdi_with_docking/.
  */
-class DOCKS_EXPORT MDIArea : public QWidgetOrQuick
+class DOCKS_EXPORT MDIArea : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MDIArea(QWidgetOrQuick *parent = nullptr);
+    explicit MDIArea(QWidget *parent = nullptr);
     ~MDIArea();
 
     /// @brief docks the dock widgets into this MDI area, at the specified position
-    void addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption addingOption = {});
+    void addDockWidget(Controllers::DockWidgetBase *dw, QPoint localPt, InitialOption addingOption = {});
 
     /// @brief Moves a dock widget @p dw to point @p pos
-    void moveDockWidget(DockWidgetBase *dw, QPoint pos);
+    void moveDockWidget(Controllers::DockWidgetBase *dw, QPoint pos);
 
     /// @brief Sets the size of dock widget @p dw to @p size
-    void resizeDockWidget(DockWidgetBase *dw, QSize size);
+    void resizeDockWidget(Controllers::DockWidgetBase *dw, QSize size);
 
     /// @brief Returns the list of frames in this MDI Area
     /// Each Frame object represents a 'window' emebedded in the MDI Area
-    QList<Frame *> frames() const;
+    QList<Controllers::Frame *> frames() const;
 
 private:
     class Private;

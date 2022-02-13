@@ -13,7 +13,7 @@
 #include "FrameworkWidgetFactory.h"
 
 #include "private/TitleBar_p.h"
-#include "private/DockWidgetBase_p.h"
+#include "private/DockWidget_p.h"
 #include "private/quick/FrameQuick_p.h"
 
 #include <Config.h>

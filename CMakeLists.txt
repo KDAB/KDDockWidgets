@@ -129,6 +129,8 @@ if (${PROJECT_NAME}_XLib)
   add_definitions(-DKDDockWidgets_XLIB)
 endif()
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src) # TODOv2 Replace with target_include_directories (PRIVATE)
+
 if(${PROJECT_NAME}_QT6)
   set(Qt_VERSION_MAJOR 6)
   set(QT_MIN_VERSION "6.0.0")
@@ -193,9 +195,10 @@ macro(set_compiler_flags targetName)
       target_compile_options(${targetName} PRIVATE -Wall -Wextra)
     endif()
 
-    if(APPLE)
-      target_compile_options(${targetName} PRIVATE -Wweak-vtables)
-    endif()
+    # // TODOv2: KDBindings is failing due to weak-vtables
+    # if(APPLE)
+    #   target_compile_options(${targetName} PRIVATE -Wweak-vtables)
+    # endif()
   endif()
 
   # Enable -Werror

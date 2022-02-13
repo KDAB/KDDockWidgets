@@ -31,11 +31,14 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
+namespace Controllers {
 class DockWidgetBase;
+}
+
 class MainWindowBase;
 class FrameworkWidgetFactory;
 
-typedef KDDockWidgets::DockWidgetBase *(*DockWidgetFactoryFunc)(const QString &name);
+typedef KDDockWidgets::Controllers::DockWidgetBase *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::MainWindowBase *(*MainWindowFactoryFunc)(const QString &name);
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
@@ -50,8 +53,8 @@ typedef KDDockWidgets::MainWindowBase *(*MainWindowFactoryFunc)(const QString &n
 /// @return true if the docking is allowed.
 /// @sa setDropIndicatorAllowedFunc
 typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
-                                         const QVector<DockWidgetBase *> &source,
-                                         const QVector<DockWidgetBase *> &target);
+                                         const QVector<Controllers::DockWidgetBase *> &source,
+                                         const QVector<Controllers::DockWidgetBase *> &target);
 
 /// @deprecated Use DropIndicatorAllowedFunc instead.
 /// @brief Function to allow the user more granularity to disallow dock widgets to tab together
@@ -59,8 +62,8 @@ typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
 /// @param target The dock widgets within an existing docked tab group
 /// @return true if the docking is allowed.
 /// @sa setTabbingAllowedFunc
-typedef bool (*TabbingAllowedFunc)(const QVector<DockWidgetBase *> &source,
-                                   const QVector<DockWidgetBase *> &target);
+typedef bool (*TabbingAllowedFunc)(const QVector<Controllers::DockWidgetBase *> &source,
+                                   const QVector<Controllers::DockWidgetBase *> &target);
 
 /**
  * @brief Singleton to allow to choose certain behaviours of the framework.
@@ -81,8 +84,7 @@ public:
     ///@warning Only the default is supported on all platforms. Not all options work with all window managers,
     ///         Qt does its best to abstract the differences however that's only a best effort. This is true specially
     ///         for any option that changes window flags.
-    enum Flag
-    {
+    enum Flag {
         Flag_None = 0, ///< No option set
         Flag_NativeTitleBar = 1, ///< Enables the Native OS title bar on OSes that support it (Windows 10, macOS), ignored otherwise.
         Flag_AeroSnapWithClientDecos = 2, ///< Deprecated. This is now default and cannot be turned off. Moving a window on Windows 10 uses native moving, as that works well across screens with different HDPI settings. There's no reason to use manual client/Qt window moving.
@@ -99,7 +101,7 @@ public:
         Flag_TitleBarHasMinimizeButton = 0x2000 | Flag_DontUseUtilityFloatingWindows, ///< The title bar will have a minimize button when floating. This implies Flag_DontUseUtilityFloatingWindows too, otherwise they wouldn't appear in the task bar.
         Flag_TitleBarNoFloatButton = 0x4000, ///< The TitleBar won't show the float button
         Flag_AutoHideSupport = 0x8000 | Flag_TitleBarNoFloatButton, ///< Supports minimizing dock widgets to the side-bar.
-            ///< By default it also turns off the float button, but you can remove Flag_TitleBarNoFloatButton to have both.
+                                                                    ///< By default it also turns off the float button, but you can remove Flag_TitleBarNoFloatButton to have both.
         Flag_KeepAboveIfNotUtilityWindow = 0x10000, ///< Only meaningful if Flag_DontUseUtilityFloatingWindows is set. If floating windows are normal windows, you might still want them to keep above and not minimize when you focus the main window.
         Flag_CloseOnlyCurrentTab = 0x20000, ///< The TitleBar's close button will only close the current tab, instead of all of them
         Flag_ShowButtonsOnTabBarIfTitleBarHidden = 0x40000, ///< When using Flag_HideTitleBarWhenTabsVisible the close/float buttons disappear with the title bar. With Flag_ShowButtonsOnTabBarIfHidden they'll be shown in the tab bar.
@@ -109,8 +111,7 @@ public:
     Q_DECLARE_FLAGS(Flags, Flag)
 
     ///@brief List of customizable widgets
-    enum CustomizableWidget
-    {
+    enum CustomizableWidget {
         CustomizableWidget_None = 0, ///< None
         CustomizableWidget_TitleBar, ///< The title bar
         CustomizableWidget_DockWidget, ///< The dock widget
@@ -123,10 +124,9 @@ public:
     Q_DECLARE_FLAGS(CustomizableWidgets, CustomizableWidget)
 
     ///@internal
-    ///Internal flags for additional tuning.
+    /// Internal flags for additional tuning.
     ///@warning Not for public consumption, support will be limited.
-    enum InternalFlag
-    {
+    enum InternalFlag {
         InternalFlag_None = 0, ///< The default
         InternalFlag_NoAeroSnap = 1, ///< Only for development. Disables Aero-snap.
         InternalFlag_DontUseParentForFloatingWindows = 2, ///< FloatingWindows won't have a parent top-level.
@@ -144,8 +144,8 @@ public:
 
     ///@brief setter for the flags
     ///@param flags the flags to set
-    ///Not all flags are guaranteed to be set, as the OS might not supported them
-    ///Call @ref flags() after the setter if you need to know what was really set
+    /// Not all flags are guaranteed to be set, as the OS might not supported them
+    /// Call @ref flags() after the setter if you need to know what was really set
     void setFlags(Flags flags);
 
     /**
@@ -164,7 +164,7 @@ public:
     void setDockWidgetFactoryFunc(DockWidgetFactoryFunc);
 
     ///@brief Returns the DockWidgetFactoryFunc.
-    ///nullptr by default
+    /// nullptr by default
     DockWidgetFactoryFunc dockWidgetFactoryFunc() const;
 
     ///@brief counter-part of DockWidgetFactoryFunc but for the main window.
@@ -173,7 +173,7 @@ public:
     void setMainWindowFactoryFunc(MainWindowFactoryFunc);
 
     ///@brief Returns the MainWindowFactoryFunc.
-    ///nullptr by default
+    /// nullptr by default
     MainWindowFactoryFunc mainWindowFactoryFunc() const;
 
     /**
@@ -199,15 +199,15 @@ public:
     int separatorThickness() const;
 
     ///@brief setter for @ref separatorThickness
-    ///Note: Only use this function at startup before creating any DockWidget or MainWindow.
+    /// Note: Only use this function at startup before creating any DockWidget or MainWindow.
     void setSeparatorThickness(int value);
 
     ///@brief sets the dragged window opacity
-    ///1.0 is fully opaque while 0.0 is fully transparent
+    /// 1.0 is fully opaque while 0.0 is fully transparent
     void setDraggedWindowOpacity(qreal opacity);
 
     ///@brief returns the opacity to use when dragging dock widgets
-    ///By default it's 1.0, fully opaque
+    /// By default it's 1.0, fully opaque
     qreal draggedWindowOpacity() const;
 
     /// @brief Allows to disable support for drop indicators while dragging
@@ -246,7 +246,7 @@ public:
     void setTabbingAllowedFunc(TabbingAllowedFunc func);
 
     ///@brief Used internally by the framework. Returns the function which was passed to setTabbingAllowedFunc()
-    ///By default it's nullptr.
+    /// By default it's nullptr.
     ///@sa setTabbingAllowedFunc().
     TabbingAllowedFunc tabbingAllowedFunc() const;
 
@@ -277,7 +277,7 @@ public:
     void setDropIndicatorAllowedFunc(DropIndicatorAllowedFunc func);
 
     ///@brief Used internally by the framework. Returns the function which was passed to setDropIndicatorAllowedFunc()
-    ///By default it's nullptr.
+    /// By default it's nullptr.
     ///@sa setDropIndicatorAllowedFunc().
     DropIndicatorAllowedFunc dropIndicatorAllowedFunc() const;
 

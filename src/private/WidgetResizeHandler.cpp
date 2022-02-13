@@ -10,14 +10,17 @@
 */
 
 #include "WidgetResizeHandler_p.h"
-#include "FloatingWindow_p.h"
-#include "TitleBar_p.h"
 #include "DragController_p.h"
 #include "Config.h"
 #include "Qt5Qt6Compat_p.h"
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
 #include "MDILayoutWidget_p.h"
+
+#include "controllers/TitleBar.h"
+#include "controllers/FloatingWindow.h"
+
+#include "views_qtwidgets/Frame_qtwidgets.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -41,8 +44,8 @@
 using namespace KDDockWidgets;
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
-WidgetResizeHandler::WidgetResizeHandler(bool isTopLevelResizer, QWidgetOrQuick *target)
-    : QObject(target)
+WidgetResizeHandler::WidgetResizeHandler(bool isTopLevelResizer, View *target)
+    : QObject(target->asQWidget())
     , m_isTopLevelWindowResizer(isTopLevelResizer)
 {
     setTarget(target);
@@ -64,8 +67,8 @@ void WidgetResizeHandler::setResizeGap(int gap)
 
 bool WidgetResizeHandler::isMDI() const
 {
-    auto frame = qobject_cast<Frame *>(mTarget);
-    return frame && frame->isMDI();
+    auto frameView = qobject_cast<Views::Frame_qtwidgets *>(mTarget->asQWidget());
+    return frameView && frameView->frame()->isMDI();
 }
 
 bool WidgetResizeHandler::isResizing() const
@@ -87,7 +90,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     if (!widget)
         return false;
 
-    if (m_isTopLevelWindowResizer && (!widget->isTopLevel() || o != mTarget))
+    if (m_isTopLevelWindowResizer && (!widget->isTopLevel() || o != mTarget->asQWidget()))
         return false;
 
     switch (e->type()) {
@@ -119,11 +122,12 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         m_resizingInProgress = false;
         if (isMDI()) {
             Q_EMIT DockRegistry::self()->frameInMDIResizeChanged();
-            auto frame = static_cast<Frame *>(mTarget);
+            auto frameView = static_cast<Views::Frame_qtwidgets *>(mTarget);
             // Usually in KDDW all geometry changes are done in the layout items, which propagate to the widgets
             // When resizing a MDI however, we're resizing the widget directly. So update the corresponding layout
             // item when we're finished.
-            frame->mdiLayoutWidget()->setDockWidgetGeometry(frame, frame->QWidgetAdapter::geometry());
+            auto frame = frameView->frame();
+            frame->mdiLayoutWidget()->setDockWidgetGeometry(frame, frame->geometry());
         }
         updateCursor(CursorPosition_Undefined);
         auto mouseEvent = static_cast<QMouseEvent *>(e);
@@ -131,8 +135,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         if (mTarget->isMaximized() || !m_resizingInProgress || mouseEvent->button() != Qt::LeftButton)
             break;
 
-        mTarget->releaseMouse();
-        mTarget->releaseKeyboard();
+        mTarget->asQWidget()->releaseMouse();
+        mTarget->asQWidget()->releaseKeyboard();
         return true;
 
         break;
@@ -142,8 +146,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
             break;
 
         if (isMDI()) {
-            const Frame *frameBeingResized = DockRegistry::self()->frameInMDIResize();
-            const bool otherFrameBeingResized = frameBeingResized && frameBeingResized != mTarget;
+            const Controllers::Frame *frameBeingResized = DockRegistry::self()->frameInMDIResize();
+            const bool otherFrameBeingResized = frameBeingResized && frameBeingResized->view() != mTarget;
             if (otherFrameBeingResized) {
                 // only one at a time!
                 return false;
@@ -154,7 +158,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         m_resizingInProgress = m_resizingInProgress && (mouseEvent->buttons() & Qt::LeftButton);
         const bool state = m_resizingInProgress;
         if (m_isTopLevelWindowResizer)
-            m_resizingInProgress = ((o == mTarget) && m_resizingInProgress);
+            m_resizingInProgress = ((o == mTarget->asQWidget()) && m_resizingInProgress);
         const bool consumed = mouseMoveEvent(mouseEvent);
         m_resizingInProgress = state;
         return consumed;
@@ -174,20 +178,20 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         return pos != CursorPosition_Undefined;
     }
 
-    const QRect oldGeometry = KDDockWidgets::globalGeometry(mTarget);
+    const QRect oldGeometry = KDDockWidgets::globalGeometry(mTarget->asQWidget());
     QRect newGeometry = oldGeometry;
 
     QRect parentGeometry;
     if (!mTarget->isTopLevel()) {
-        auto parent = KDDockWidgets::Private::parentWidget(mTarget);
+        auto parent = mTarget->asQWidget()->parentWidget();
         parentGeometry = KDDockWidgets::globalGeometry(parent);
     }
 
     {
         int deltaWidth = 0;
         int newWidth = 0;
-        const int maxWidth = Layouting::Widget::widgetMaxSize(mTarget).width();
-        const int minWidth = Layouting::Widget::widgetMinSize(mTarget).width();
+        const int maxWidth = View::widgetMaxSize(mTarget).width();
+        const int minWidth = View::widgetMinSize(mTarget).width();
 
         switch (mCursorPos) {
         case CursorPosition_TopLeft:
@@ -222,8 +226,8 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     }
 
     {
-        const int maxHeight = Layouting::Widget::widgetMaxSize(mTarget).height();
-        const int minHeight = Layouting::Widget::widgetMinSize(mTarget).height();
+        const int maxHeight = View::widgetMaxSize(mTarget).height();
+        const int minHeight = View::widgetMinSize(mTarget).height();
         int deltaHeight = 0;
         int newHeight = 0;
         switch (mCursorPos) {
@@ -403,13 +407,13 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
 
 #endif
 
-void WidgetResizeHandler::setTarget(QWidgetOrQuick *w)
+void WidgetResizeHandler::setTarget(View *w)
 {
     if (w) {
         mTarget = w;
-        mTarget->setMouseTracking(true);
+        mTarget->asQWidget()->setMouseTracking(true);
         if (m_isTopLevelWindowResizer) {
-            mTarget->installEventFilter(this);
+            mTarget->asQWidget()->installEventFilter(this);
         } else {
             qApp->installEventFilter(this);
         }
@@ -421,8 +425,8 @@ void WidgetResizeHandler::setTarget(QWidgetOrQuick *w)
 void WidgetResizeHandler::updateCursor(CursorPosition m)
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-    //Need for updating cursor when we change child widget
-    const QObjectList children = mTarget->children();
+    // Need for updating cursor when we change child widget
+    const QObjectList children = mTarget->asQWidget()->children();
     for (int i = 0, total = children.size(); i < total; ++i) {
         if (auto child = qobject_cast<WidgetType *>(children.at(i))) {
 
@@ -464,7 +468,7 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
 {
     if (m_isTopLevelWindowResizer)
-        mTarget->setCursor(cursor);
+        mTarget->asQWidget()->setCursor(cursor);
     else
         qApp->setOverrideCursor(cursor);
 }
@@ -472,7 +476,7 @@ void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
 void WidgetResizeHandler::restoreMouseCursor()
 {
     if (m_isTopLevelWindowResizer)
-        mTarget->setCursor(Qt::ArrowCursor);
+        mTarget->asQWidget()->setCursor(Qt::ArrowCursor);
     else
         qApp->restoreOverrideCursor();
 }

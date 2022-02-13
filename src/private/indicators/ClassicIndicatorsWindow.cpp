@@ -102,7 +102,7 @@ QString Indicator::iconFileName(bool active) const
                                                          : QStringLiteral(":/img/classic_indicators/opaque/%1.png").arg(name);
 }
 
-static QWidgetAdapter *parentForIndicatorWindow(ClassicIndicators *classicIndicators_)
+static QWidget *parentForIndicatorWindow(ClassicIndicators *classicIndicators_)
 {
     // On Wayland it can't be a top-level, as we have no way of positioning it
 
@@ -239,9 +239,9 @@ void IndicatorWindow::updatePositions()
     m_outterBottom->move(r.center().x() - halfIndicatorWidth, r.y() + height() - indicatorWidth - OUTTER_INDICATOR_MARGIN);
     m_outterTop->move(r.center().x() - halfIndicatorWidth, r.y() + OUTTER_INDICATOR_MARGIN);
     m_outterRight->move(r.x() + width() - indicatorWidth - OUTTER_INDICATOR_MARGIN, r.center().y() - halfIndicatorWidth);
-    Frame *hoveredFrame = classicIndicators->m_hoveredFrame;
+    Controllers::Frame *hoveredFrame = classicIndicators->m_hoveredFrame;
     if (hoveredFrame) {
-        QRect hoveredRect = hoveredFrame->QWidget::geometry();
+        QRect hoveredRect = hoveredFrame->view()->geometry();
         m_center->move(r.topLeft() + hoveredRect.center() - QPoint(halfIndicatorWidth, halfIndicatorWidth));
         m_top->move(m_center->pos() - QPoint(0, indicatorWidth + OUTTER_INDICATOR_MARGIN));
         m_right->move(m_center->pos() + QPoint(indicatorWidth + OUTTER_INDICATOR_MARGIN, 0));

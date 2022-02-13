@@ -19,7 +19,7 @@
 #ifndef KD_DOCKWIDGET_QUICK_H
 #define KD_DOCKWIDGET_QUICK_H
 
-#include "DockWidgetBase.h"
+#include "DockWidget.h"
 
 QT_BEGIN_NAMESPACE
 class QCloseEvent;

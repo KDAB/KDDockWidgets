@@ -22,24 +22,27 @@
 
 #include "docks_export.h"
 #include "KDDockWidgets.h"
-#include "QWidgetAdapter.h"
 #include "LayoutSaver.h"
 
 #include <QVector>
 #include <QMargins>
+#include <QMainWindow> // TODO
 
 class TestDocks;
 
 namespace KDDockWidgets {
 
-class DockWidgetBase;
+namespace Controllers {
 class Frame;
+class SideBar;
+class DockWidgetBase;
+}
+
 class DropArea;
 class MDILayoutWidget;
 class MultiSplitter;
 class LayoutWidget;
 class DropAreaWithCentralFrame;
-class SideBar;
 
 /**
  * @brief The MainWindow base-class. MainWindow and MainWindowBase are only
@@ -48,8 +51,8 @@ class SideBar;
  *
  * Do not use instantiate directly in user code. Use MainWindow instead.
  */
-#ifndef PYTHON_BINDINGS //Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
-class DOCKS_EXPORT MainWindowBase : public QMainWindowOrQuick
+#ifndef PYTHON_BINDINGS // Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
+class DOCKS_EXPORT MainWindowBase : public QMainWindow
 #else
 class DOCKS_EXPORT MainWindowBase : public QMainWindow
 #endif
@@ -62,7 +65,7 @@ class DOCKS_EXPORT MainWindowBase : public QMainWindow
 public:
     typedef QVector<MainWindowBase *> List;
     explicit MainWindowBase(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                            WidgetType *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
+                            QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 
     ~MainWindowBase() override;
 
@@ -73,7 +76,7 @@ public:
      *
      * @sa DockWidgetBase::addDockWidgetAsTab()
      */
-    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::DockWidgetBase *dockwidget);
+    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidgetBase *dockwidget);
 
     /**
      * @brief Docks a DockWidget into this main window.
@@ -84,9 +87,9 @@ public:
      * as hidden, recording only a placeholder in the tab. So it's restored to tabbed when eventually
      * shown.
      */
-    Q_INVOKABLE void addDockWidget(KDDockWidgets::DockWidgetBase *dockWidget,
+    Q_INVOKABLE void addDockWidget(KDDockWidgets::Controllers::DockWidgetBase *dockWidget,
                                    KDDockWidgets::Location location,
-                                   KDDockWidgets::DockWidgetBase *relativeTo = nullptr,
+                                   KDDockWidgets::Controllers::DockWidgetBase *relativeTo = nullptr,
                                    KDDockWidgets::InitialOption initialOption = {});
 
     /**
@@ -101,8 +104,8 @@ public:
      *
      * Example: kddockwidgets_example --central-widget
      */
-    Q_INVOKABLE void setPersistentCentralWidget(KDDockWidgets::QWidgetOrQuick *widget);
-    QWidgetOrQuick *persistentCentralWidget() const;
+    Q_INVOKABLE void setPersistentCentralWidget(QWidget *widget);
+    QWidget *persistentCentralWidget() const;
 
     /**
      * @brief Returns the unique name that was passed via constructor.
@@ -165,7 +168,7 @@ public:
     /// @brief like layoutEqually() but starts with the container that has @p dockWidget.
     /// While layoutEqually() starts from the root of the layout tree this function starts on a
     /// sub-tree.
-    Q_INVOKABLE void layoutParentContainerEqually(KDDockWidgets::DockWidgetBase *dockWidget);
+    Q_INVOKABLE void layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidgetBase *dockWidget);
 
     ///@brief Moves the dock widget into one of the MainWindow's sidebar.
     /// Means the dock widget is removed from the layout, and the sidebar shows a button that if pressed
@@ -173,33 +176,33 @@ public:
     /// functionality.
     ///
     /// The chosen side bar will depend on some heuristics, mostly proximity.
-    Q_INVOKABLE void moveToSideBar(KDDockWidgets::DockWidgetBase *);
+    Q_INVOKABLE void moveToSideBar(KDDockWidgets::Controllers::DockWidgetBase *);
 
     /// @brief overload that allows to specify which sidebar to use, instead of using heuristics.
-    Q_INVOKABLE void moveToSideBar(KDDockWidgets::DockWidgetBase *, KDDockWidgets::SideBarLocation);
+    Q_INVOKABLE void moveToSideBar(KDDockWidgets::Controllers::DockWidgetBase *, KDDockWidgets::SideBarLocation);
 
     /// @brief Removes the dock widget from the sidebar and docks it into the main window again
-    Q_INVOKABLE void restoreFromSideBar(KDDockWidgets::DockWidgetBase *);
+    Q_INVOKABLE void restoreFromSideBar(KDDockWidgets::Controllers::DockWidgetBase *);
 
     ///@brief Shows the dock widget overlayed on top of the main window, placed next to the sidebar
-    Q_INVOKABLE void overlayOnSideBar(KDDockWidgets::DockWidgetBase *);
+    Q_INVOKABLE void overlayOnSideBar(KDDockWidgets::Controllers::DockWidgetBase *);
 
     ///@brief Shows or hides an overlay. It's assumed the dock widget is already in a side-bar.
-    Q_INVOKABLE void toggleOverlayOnSideBar(KDDockWidgets::DockWidgetBase *);
+    Q_INVOKABLE void toggleOverlayOnSideBar(KDDockWidgets::Controllers::DockWidgetBase *);
 
     /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
     Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
 
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
-    Q_INVOKABLE KDDockWidgets::SideBar *
-    sideBarForDockWidget(const KDDockWidgets::DockWidgetBase *) const;
+    Q_INVOKABLE KDDockWidgets::Controllers::SideBar *
+    sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidgetBase *) const;
 
     /// @brief Returns whether the specified sidebar is visible
     Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
 
     /// @brief returns the dock widget which is currently overlayed. nullptr if none.
     /// This is only relevant when using the auto-hide and side-bar feature.
-    DockWidgetBase *overlayedDockWidget() const;
+    Controllers::DockWidgetBase *overlayedDockWidget() const;
 
     /// @brief Returns whether any side bar is visible
     bool anySideBarIsVisible() const;
@@ -226,7 +229,7 @@ protected:
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()
     virtual QMargins centerWidgetMargins() const = 0;
-    virtual SideBar *sideBar(SideBarLocation) const = 0;
+    virtual Controllers::SideBar *sideBar(SideBarLocation) const = 0;
     virtual QRect centralAreaGeometry() const
     {
         return {};

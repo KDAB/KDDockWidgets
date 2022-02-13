@@ -20,27 +20,28 @@
 #define KD_DOCKWIDGETS_FOCUSSCOPE_H
 
 #include "docks_export.h"
-#include "QWidgetAdapter.h"
+#include "views_qtwidgets/View_qtwidgets.h"
 
 namespace KDDockWidgets {
+
 ///@brief Allows to implement a similar functionality to QtQuick's FocusScope item, in QtWidgets
 class DOCKS_EXPORT FocusScope
 {
     Q_DISABLE_COPY(FocusScope)
 public:
     ///@brief constructor
-    explicit FocusScope(QWidgetAdapter *thisWidget);
+    explicit FocusScope(Views::View_qtwidgets<QWidget> *thisWidget);
     virtual ~FocusScope();
 
     ///@brief Returns true if this FocusScope is focused.
-    ///This is similar to the QWidget::hasFocus(), except that it counts with the children being focused too.
-    ///i.e: If any child is focused then this FocusScope has focus too.
+    /// This is similar to the QWidget::hasFocus(), except that it counts with the children being focused too.
+    /// i.e: If any child is focused then this FocusScope has focus too.
     bool isFocused() const;
 
     ///@brief Returns the widget that's focused in this scope
-    ///The widget itself might not have focus as in QWidget::hasFocus(), but will get actual focus
-    ///as soon as this scope is focused.
-    WidgetType *focusedWidget() const;
+    /// The widget itself might not have focus as in QWidget::hasFocus(), but will get actual focus
+    /// as soon as this scope is focused.
+    QWidget *focusedWidget() const;
 
     ///@brief Sets focus on this scope.
     ///

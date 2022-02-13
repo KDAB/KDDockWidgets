@@ -10,9 +10,9 @@
 */
 
 #include "Item_p.h"
-#include "Separator_p.h"
 #include "MultiSplitterConfig.h"
-#include "Widget.h"
+#include "View.h"
+#include "controllers/Separator.h"
 #include "ItemFreeContainer_p.h"
 #include "kdbindings/signal.h"
 
@@ -172,7 +172,7 @@ QObject *Item::guestAsQObject() const
     return m_guest ? m_guest->asQObject() : nullptr;
 }
 
-void Item::setGuestWidget(Widget *guest)
+void Item::setGuestWidget(View *guest)
 {
     Q_ASSERT(!guest || !m_guest);
     QObject *newWidget = guest ? guest->asQObject() : nullptr;
@@ -235,7 +235,7 @@ QVariantMap Item::toVariantMap() const
     return result;
 }
 
-void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widget *> &widgets)
+void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View *> &widgets)
 {
     m_sizingInfo.fromVariantMap(map[QStringLiteral("sizingInfo")].toMap());
     m_isVisible = map[QStringLiteral("isVisible")].toBool();
@@ -243,7 +243,7 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widge
 
     const QString guestId = map.value(QStringLiteral("guestId")).toString();
     if (!guestId.isEmpty()) {
-        if (Widget *guest = widgets.value(guestId)) {
+        if (View *guest = widgets.value(guestId)) {
             setGuestWidget(guest);
             m_guest->setParent(hostWidget());
         } else if (hostWidget()) {
@@ -252,8 +252,8 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, Widge
     }
 }
 
-Item *Item::createFromVariantMap(Widget *hostWidget, ItemContainer *parent,
-                                 const QVariantMap &map, const QHash<QString, Widget *> &widgets)
+Item *Item::createFromVariantMap(View *hostWidget, ItemContainer *parent,
+                                 const QVariantMap &map, const QHash<QString, View *> &widgets)
 {
     auto item = new Item(hostWidget, parent);
     item->fillFromVariantMap(map, widgets);
@@ -280,7 +280,7 @@ int Item::refCount() const
     return m_refCount;
 }
 
-Widget *Item::hostWidget() const
+View *Item::hostWidget() const
 {
     return m_hostWidget;
 }
@@ -291,7 +291,7 @@ QObject *Item::host() const
                         : nullptr;
 }
 
-void Item::restore(Widget *guest)
+void Item::restore(View *guest)
 {
     if (isVisible() || guestAsQObject()) {
         qWarning() << Q_FUNC_INFO << "Hitting assert. visible="
@@ -336,7 +336,7 @@ QVector<int> Item::pathFromRoot() const
     return path;
 }
 
-void Item::setHostWidget(Widget *host)
+void Item::setHostWidget(View *host)
 {
     if (m_hostWidget != host) {
         m_hostWidget = host;
@@ -641,13 +641,14 @@ bool Item::checkSanity()
             return false;
         }
 
-        if (false && !m_guest->isVisible() && (!m_guest->parent() || m_guest->parentWidget()->isVisible())) {
+#if 0
+        if (!m_guest->isVisible() && (!m_guest->parent() || m_guest->parentWidget()->isVisible())) {
             // TODO: if guest is explicitly hidden we're not hiding the item yet
             qWarning() << Q_FUNC_INFO << "Guest widget isn't visible" << this
                        << m_guest->asQObject();
             return false;
         }
-
+#endif
         if (m_guest->geometry() != mapToRoot(rect())) {
             root()->dumpLayout();
             auto d = qWarning();
@@ -656,7 +657,6 @@ bool Item::checkSanity()
               << "; item.local=" << geometry()
               << "; item.global=" << mapToRoot(rect())
               << this;
-            m_guest->dumpDebug(d);
 
             return false;
         }
@@ -744,7 +744,7 @@ void Item::dumpLayout(int level)
     dbg << this << "; guest=" << guestAsQObject();
 }
 
-Item::Item(Widget *hostWidget, ItemContainer *parent)
+Item::Item(View *hostWidget, ItemContainer *parent)
     : QObject(parent)
     , m_isContainer(false)
     , m_parent(parent)
@@ -753,7 +753,7 @@ Item::Item(Widget *hostWidget, ItemContainer *parent)
     connectParent(parent);
 }
 
-Item::Item(bool isContainer, Widget *hostWidget, ItemContainer *parent)
+Item::Item(bool isContainer, View *hostWidget, ItemContainer *parent)
     : QObject(parent)
     , m_isContainer(isContainer)
     , m_parent(parent)
@@ -823,7 +823,7 @@ void Item::onWidgetDestroyed()
 
 void Item::onWidgetLayoutRequested()
 {
-    if (Widget *w = guestWidget()) {
+    if (View *w = guestWidget()) {
         if (w->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with mouse
             qDebug() << Q_FUNC_INFO << "TODO: Not implemented yet. Widget can't just decide to resize yet"
                      << w->size()
@@ -939,14 +939,14 @@ struct ItemBoxContainer::Private
     void resizeChildren(QSize oldSize, QSize newSize, SizingInfo::List &sizes, ChildrenResizeStrategy);
     void honourMaxSizes(SizingInfo::List &sizes);
     void scheduleCheckSanity() const;
-    Separator *neighbourSeparator(const Item *item, Side, Qt::Orientation) const;
-    Separator *neighbourSeparator_recursive(const Item *item, Side, Qt::Orientation) const;
+    KDDockWidgets::Controllers::Separator *neighbourSeparator(const Item *item, Side, Qt::Orientation) const;
+    KDDockWidgets::Controllers::Separator *neighbourSeparator_recursive(const Item *item, Side, Qt::Orientation) const;
     void updateWidgets_recursive();
     /// Returns the positions that each separator should have (x position if Qt::Horizontal, y otherwise)
     QVector<int> requiredSeparatorPositions() const;
     void updateSeparators();
     void deleteSeparators();
-    Separator *separatorAt(int p) const;
+    KDDockWidgets::Controllers::Separator *separatorAt(int p) const;
     QVector<double> childPercentages() const;
     bool isDummy() const;
     void deleteSeparators_recursive();
@@ -955,7 +955,7 @@ struct ItemBoxContainer::Private
     int excessLength() const;
 
     mutable bool m_checkSanityScheduled = false;
-    QVector<Layouting::Separator *> m_separators;
+    QVector<KDDockWidgets::Controllers::Separator *> m_separators;
     bool m_convertingItemToContainer = false;
     bool m_blockUpdatePercentages = false;
     bool m_isDeserializing = false;
@@ -964,14 +964,14 @@ struct ItemBoxContainer::Private
     ItemBoxContainer *const q;
 };
 
-ItemBoxContainer::ItemBoxContainer(Widget *hostWidget, ItemContainer *parent)
+ItemBoxContainer::ItemBoxContainer(View *hostWidget, ItemContainer *parent)
     : ItemContainer(hostWidget, parent)
     , d(new Private(this))
 {
     Q_ASSERT(parent);
 }
 
-ItemBoxContainer::ItemBoxContainer(Widget *hostWidget)
+ItemBoxContainer::ItemBoxContainer(View *hostWidget)
     : ItemContainer(hostWidget, /*parentContainer=*/nullptr)
     , d(new Private(this))
 {
@@ -1101,13 +1101,13 @@ bool ItemBoxContainer::checkSanity()
     const int pos2 = Layouting::pos(mapToRoot(QPoint(0, 0)), oppositeOrientation(d->m_orientation));
 
     for (int i = 0; i < d->m_separators.size(); ++i) {
-        Separator *separator = d->m_separators.at(i);
+        KDDockWidgets::Controllers::Separator *separator = d->m_separators.at(i);
         Item *item = visibleChildren.at(i);
         const int expectedSeparatorPos = mapToRoot(item->m_sizingInfo.edge(d->m_orientation) + 1, d->m_orientation);
 
-        if (separator->host() != host()) {
+        if (separator->view()->parent() != host()) {
             qWarning() << Q_FUNC_INFO << "Invalid host widget for separator"
-                       << separator->host() << host() << this;
+                       << separator->view()->parent() << host() << this;
             return false;
         }
 
@@ -1125,7 +1125,7 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        Widget *separatorWidget = separator->asWidget();
+        View *separatorWidget = separator->view();
         if (separatorWidget->geometry().size() != expectedSeparatorSize) {
             qWarning() << Q_FUNC_INFO << "Unexpected separator size" << separatorWidget->geometry().size()
                        << "; expected=" << expectedSeparatorSize
@@ -1142,9 +1142,9 @@ bool ItemBoxContainer::checkSanity()
             return false;
         }
 
-        if (separator->host() != host()) {
+        if (separator->view()->parent() != host()) {
             qWarning() << Q_FUNC_INFO << "Unexpected host widget in separator"
-                       << separator->host() << "; expected=" << host();
+                       << separator->view()->parent() << "; expected=" << host();
             return false;
         }
 
@@ -1658,7 +1658,7 @@ Item *ItemBoxContainer::itemAt_recursive(QPoint p) const
     return nullptr;
 }
 
-void ItemBoxContainer::setHostWidget(Widget *host)
+void ItemBoxContainer::setHostWidget(View *host)
 {
     Item::setHostWidget(host);
     d->deleteSeparators_recursive();
@@ -1831,7 +1831,7 @@ void ItemBoxContainer::Private::resizeChildren(QSize oldSize, QSize newSize, Siz
                                                ChildrenResizeStrategy strategy)
 {
     // This container is being resized to @p newSize, so we must resize our children too, based
-    //on @p strategy.
+    // on @p strategy.
     // The new sizes are applied to @p childSizes, which will be applied to the widgets when we're done
 
     const QVector<double> childPercentages = this->childPercentages();
@@ -2067,8 +2067,6 @@ void ItemBoxContainer::dumpLayout(int level)
             qDebug().noquote() << "Screen" << screen->geometry() << screen->availableGeometry()
                                << "; drp=" << screen->devicePixelRatio();
         }
-
-        hostWidget()->dumpDebug(qDebug().noquote());
     }
 
     QString indent;
@@ -2100,8 +2098,8 @@ void ItemBoxContainer::dumpLayout(int level)
             if (i < d->m_separators.size()) {
                 auto separator = d->m_separators.at(i);
                 qDebug().noquote() << indent << " - Separator: "
-                                   << "local.geo=" << mapFromRoot(separator->asWidget()->geometry())
-                                   << "global.geo=" << separator->asWidget()->geometry()
+                                   << "local.geo=" << mapFromRoot(separator->view()->geometry())
+                                   << "global.geo=" << separator->view()->geometry()
                                    << separator;
             }
             ++i;
@@ -2216,7 +2214,7 @@ int ItemBoxContainer::oppositeLength() const
                         : height();
 }
 
-void ItemBoxContainer::requestSeparatorMove(Separator *separator, int delta)
+void ItemBoxContainer::requestSeparatorMove(KDDockWidgets::Controllers::Separator *separator, int delta)
 {
     const auto separatorIndex = d->m_separators.indexOf(separator);
     if (separatorIndex == -1) {
@@ -2307,7 +2305,7 @@ void ItemBoxContainer::requestSeparatorMove(Separator *separator, int delta)
             qWarning() << Q_FUNC_INFO << "Not enough space to move separator"
                        << this;
         } else {
-            Separator *nextSeparator = parentBoxContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection, d->m_orientation);
+            KDDockWidgets::Controllers::Separator *nextSeparator = parentBoxContainer()->d->neighbourSeparator_recursive(this, nextSeparatorDirection, d->m_orientation);
             if (!nextSeparator) {
                 // Doesn't happen
                 qWarning() << Q_FUNC_INFO << "nextSeparator is null, report a bug";
@@ -2321,7 +2319,7 @@ void ItemBoxContainer::requestSeparatorMove(Separator *separator, int delta)
     }
 }
 
-void ItemBoxContainer::requestEqualSize(Separator *separator)
+void ItemBoxContainer::requestEqualSize(KDDockWidgets::Controllers::Separator *separator)
 {
     const auto separatorIndex = d->m_separators.indexOf(separator);
     if (separatorIndex == -1) {
@@ -2413,7 +2411,7 @@ void ItemBoxContainer::layoutEqually(SizingInfo::List &sizes)
             // need to guarantee. We can't go larger and overwrite that
 
             const auto othersMissing = // The size that the others are missing to satisfy their
-                // minimum length
+                                       // minimum length
                 std::accumulate(sizes.constBegin(), sizes.constEnd(), 0,
                                 [this](size_t sum, const SizingInfo &sz) {
                                     return int(sum) + sz.missingLength(d->m_orientation);
@@ -2766,7 +2764,7 @@ void ItemBoxContainer::growItem(int index, SizingInfo::List &sizes, int missing,
         sizingInfo.setLength(sizingInfo.length(d->m_orientation) + missing, d->m_orientation);
         const auto count = sizes.count();
         if (count == 1) {
-            //There's no neighbours to push, we're alone. Occupy the full container
+            // There's no neighbours to push, we're alone. Occupy the full container
             sizingInfo.incrementLength(missing, d->m_orientation);
             return;
         }
@@ -2889,8 +2887,8 @@ SizingInfo::List ItemBoxContainer::sizes(bool ignoreBeingInserted) const
     return result;
 }
 
-QVector<int> ItemBoxContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin, //clazy:exclude=function-args-by-ref
-                                                 SizingInfo::List::ConstIterator end, int needed, //clazy:exclude=function-args-by-ref
+QVector<int> ItemBoxContainer::calculateSqueezes(SizingInfo::List::ConstIterator begin, // clazy:exclude=function-args-by-ref
+                                                 SizingInfo::List::ConstIterator end, int needed, // clazy:exclude=function-args-by-ref
                                                  NeighbourSqueezeStrategy strategy, bool reversed) const
 {
     QVector<int> availabilities;
@@ -3022,17 +3020,17 @@ void ItemBoxContainer::Private::updateSeparators()
     if (numSeparatorsChanged) {
         // Instead of just creating N missing ones at the end of the list, let's minimize separators
         // having their position changed, to minimize flicker
-        Separator::List newSeparators;
+        KDDockWidgets::Controllers::Separator::List newSeparators;
         newSeparators.reserve(requiredNumSeparators);
 
         for (int position : positions) {
-            Separator *separator = separatorAt(position);
+            KDDockWidgets::Controllers::Separator *separator = separatorAt(position);
             if (separator) {
                 // Already existing, reuse
                 newSeparators.push_back(separator);
                 m_separators.removeOne(separator);
             } else {
-                separator = Config::self().createSeparator(q->hostWidget());
+                separator = new Controllers::Separator(q->hostWidget());
                 separator->init(q, m_orientation);
                 newSeparators.push_back(separator);
             }
@@ -3130,9 +3128,9 @@ void ItemBoxContainer::simplify()
     }
 }
 
-Separator *ItemBoxContainer::Private::separatorAt(int p) const
+KDDockWidgets::Controllers::Separator *ItemBoxContainer::Private::separatorAt(int p) const
 {
-    for (Separator *separator : m_separators) {
+    for (auto separator : m_separators) {
         if (separator->position() == p)
             return separator;
     }
@@ -3150,7 +3148,7 @@ bool ItemBoxContainer::isHorizontal() const
     return d->m_orientation == Qt::Horizontal;
 }
 
-int ItemBoxContainer::indexOf(Separator *separator) const
+int ItemBoxContainer::indexOf(KDDockWidgets::Controllers::Separator *separator) const
 {
     return d->m_separators.indexOf(separator);
 }
@@ -3164,19 +3162,19 @@ bool ItemBoxContainer::isInSimplify() const
     return p && p->isInSimplify();
 }
 
-int ItemBoxContainer::minPosForSeparator(Separator *separator, bool honourMax) const
+int ItemBoxContainer::minPosForSeparator(KDDockWidgets::Controllers::Separator *separator, bool honourMax) const
 {
     const int globalMin = minPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMin, d->m_orientation);
 }
 
-int ItemBoxContainer::maxPosForSeparator(Separator *separator, bool honourMax) const
+int ItemBoxContainer::maxPosForSeparator(KDDockWidgets::Controllers::Separator *separator, bool honourMax) const
 {
     const int globalMax = maxPosForSeparator_global(separator, honourMax);
     return mapFromRoot(globalMax, d->m_orientation);
 }
 
-int ItemBoxContainer::minPosForSeparator_global(Separator *separator, bool honourMax) const
+int ItemBoxContainer::minPosForSeparator_global(KDDockWidgets::Controllers::Separator *separator, bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
@@ -3197,7 +3195,7 @@ int ItemBoxContainer::minPosForSeparator_global(Separator *separator, bool honou
     return separator->position() - availableToSqueeze;
 }
 
-int ItemBoxContainer::maxPosForSeparator_global(Separator *separator, bool honourMax) const
+int ItemBoxContainer::maxPosForSeparator_global(KDDockWidgets::Controllers::Separator *separator, bool honourMax) const
 {
     const int separatorIndex = indexOf(separator);
     Q_ASSERT(separatorIndex != -1);
@@ -3234,7 +3232,7 @@ QVariantMap ItemBoxContainer::toVariantMap() const
 }
 
 void ItemBoxContainer::fillFromVariantMap(const QVariantMap &map,
-                                          const QHash<QString, Widget *> &widgets)
+                                          const QHash<QString, View *> &widgets)
 {
     QScopedValueRollback<bool> deserializing(d->m_isDeserializing, true);
 
@@ -3312,9 +3310,9 @@ bool ItemBoxContainer::test_suggestedRect()
 }
 #endif
 
-QVector<Separator *> ItemBoxContainer::separators_recursive() const
+QVector<KDDockWidgets::Controllers::Separator *> ItemBoxContainer::separators_recursive() const
 {
-    Layouting::Separator::List separators = d->m_separators;
+    KDDockWidgets::Controllers::Separator::List separators = d->m_separators;
 
     for (Item *item : qAsConst(m_children)) {
         if (auto c = item->asBoxContainer())
@@ -3324,7 +3322,7 @@ QVector<Separator *> ItemBoxContainer::separators_recursive() const
     return separators;
 }
 
-QVector<Separator *> ItemBoxContainer::separators() const
+QVector<KDDockWidgets::Controllers::Separator *> ItemBoxContainer::separators() const
 {
     return d->m_separators;
 }
@@ -3401,7 +3399,8 @@ const Item *ItemBoxContainer::Private::itemFromPath(const QVector<int> &path) co
     return q;
 }
 
-Separator *ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const
+// TODO: Better namespacing
+KDDockWidgets::Controllers::Separator *ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const
 {
     Item::List children = q->visibleChildren();
     const auto itemIndex = children.indexOf(const_cast<Item *>(item));
@@ -3430,10 +3429,10 @@ Separator *ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side 
     return m_separators[separatorIndex];
 }
 
-Separator *ItemBoxContainer::Private::neighbourSeparator_recursive(const Item *item, Side side,
-                                                                   Qt::Orientation orientation) const
+KDDockWidgets::Controllers::Separator *ItemBoxContainer::Private::neighbourSeparator_recursive(const Item *item, Side side,
+                                                                                               Qt::Orientation orientation) const
 {
-    Separator *separator = neighbourSeparator(item, side, orientation);
+    KDDockWidgets::Controllers::Separator *separator = neighbourSeparator(item, side, orientation);
     if (separator)
         return separator;
 
@@ -3450,7 +3449,7 @@ void ItemBoxContainer::Private::updateWidgets_recursive()
             c->d->updateWidgets_recursive();
         } else {
             if (item->isVisible()) {
-                if (Widget *widget = item->guestWidget()) {
+                if (View *widget = item->guestWidget()) {
                     widget->setGeometry(q->mapToRoot(item->geometry()));
                     widget->setVisible(true);
                 } else {
@@ -3535,7 +3534,7 @@ struct ItemContainer::Private
     ItemContainer *const q;
 };
 
-ItemContainer::ItemContainer(Widget *hostWidget, ItemContainer *parent)
+ItemContainer::ItemContainer(View *hostWidget, ItemContainer *parent)
     : Item(true, hostWidget, parent)
     , d(new Private(this))
 {
@@ -3552,7 +3551,7 @@ ItemContainer::ItemContainer(Widget *hostWidget, ItemContainer *parent)
     });
 }
 
-ItemContainer::ItemContainer(Widget *hostWidget)
+ItemContainer::ItemContainer(View *hostWidget)
     : Item(true, hostWidget, nullptr)
     , d(new Private(this))
 {
@@ -3628,7 +3627,7 @@ Item *ItemContainer::itemForObject(const QObject *o) const
     return nullptr;
 }
 
-Item *ItemContainer::itemForWidget(const Widget *w) const
+Item *ItemContainer::itemForWidget(const View *w) const
 {
     for (Item *item : qAsConst(m_children)) {
         if (item->isContainer()) {

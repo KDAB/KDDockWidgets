@@ -11,16 +11,18 @@
 
 #include "DropIndicatorOverlayInterface_p.h"
 
-#include "Frame_p.h"
 #include "DropArea_p.h"
 #include "DockRegistry_p.h"
 #include "DragController_p.h"
 #include "Config.h"
 
+#include "controllers/Frame.h"
+
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 DropIndicatorOverlayInterface::DropIndicatorOverlayInterface(DropArea *dropArea)
-    : QWidgetAdapter(dropArea)
+    : Views::View_qtwidgets<QWidget>(nullptr, View::Type::DropIndicatorOverlayInterface, dropArea)
     , m_dropArea(dropArea)
 {
     setVisible(false);
@@ -45,7 +47,7 @@ void DropIndicatorOverlayInterface::setWindowBeingDragged(bool is)
 
     m_draggedWindowIsHovering = is;
     if (is) {
-        setGeometry(m_dropArea->QWidgetAdapter::rect());
+        setGeometry(m_dropArea->QWidget::rect());
         raise();
     } else {
         setHoveredFrame(nullptr);
@@ -60,7 +62,7 @@ QRect DropIndicatorOverlayInterface::hoveredFrameRect() const
     return m_hoveredFrameRect;
 }
 
-void DropIndicatorOverlayInterface::setHoveredFrame(Frame *frame)
+void DropIndicatorOverlayInterface::setHoveredFrame(Controllers::Frame *frame)
 {
     if (frame == m_hoveredFrame)
         return;
@@ -71,7 +73,7 @@ void DropIndicatorOverlayInterface::setHoveredFrame(Frame *frame)
     m_hoveredFrame = frame;
     if (m_hoveredFrame) {
         connect(frame, &QObject::destroyed, this, &DropIndicatorOverlayInterface::onFrameDestroyed);
-        setHoveredFrameRect(m_hoveredFrame->QWidgetAdapter::geometry());
+        setHoveredFrameRect(m_hoveredFrame->view()->geometry());
     } else {
         setHoveredFrameRect(QRect());
     }
@@ -141,7 +143,7 @@ bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) c
         // If there's only 1 frame in the layout, the outer indicators are redundant, as they do the same thing as the internal ones.
         // But there might be another window obscuring our target, so it's useful to show the outer indicators in this case
         const bool isTheOnlyFrame = m_hoveredFrame && m_hoveredFrame->isTheOnlyFrame();
-        if (isTheOnlyFrame && !DockRegistry::self()->isProbablyObscured(m_hoveredFrame->window()->windowHandle(), windowBeingDragged))
+        if (isTheOnlyFrame && !DockRegistry::self()->isProbablyObscured(m_hoveredFrame->view()->asQWidget()->window()->windowHandle(), windowBeingDragged))
             return false;
     } else if (dropLoc == DropLocation_Center) {
         if (!m_hoveredFrame)
@@ -173,7 +175,7 @@ void DropIndicatorOverlayInterface::onFrameDestroyed()
     setHoveredFrame(nullptr);
 }
 
-void DropIndicatorOverlayInterface::onHoveredFrameChanged(Frame *)
+void DropIndicatorOverlayInterface::onHoveredFrameChanged(Controllers::Frame *)
 {
 }
 

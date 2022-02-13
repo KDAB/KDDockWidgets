@@ -16,30 +16,35 @@
 
 #include "Config.h"
 #include "DockRegistry_p.h"
-#include "DockWidgetBase.h"
-#include "DockWidgetBase_p.h"
 #include "DropArea_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
-#include "FloatingWindow_p.h"
 #include "KDDockWidgets.h"
-#include "TitleBar_p.h"
+
+#include "controllers/TitleBar.h"
+#include "controllers/Stack.h"
+#include "controllers/FloatingWindow.h"
+#include "controllers/DockWidget.h"
+#include "controllers/DockWidget_p.h"
+
 #include "Utils_p.h"
+#include "views_qtwidgets/DockWidget_qtwidgets.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-# include "widgets/TabWidgetWidget_p.h"
-# include "widgets/FrameWidget_p.h"
-# include "MainWindow.h"
+#include "views_qtwidgets/Stack_qtwidgets.h"
+#include "views_qtwidgets/Frame_qtwidgets.h"
+#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
+#include "MainWindow.h"
 
-# include <QVBoxLayout>
-# include <QWidget>
-# include <QToolButton>
-# include <QLineEdit>
+#include <QVBoxLayout>
+#include <QWidget>
+#include <QToolButton>
+#include <QLineEdit>
 using FocusableWidget = QLineEdit;
 #else
-# include "quick/MainWindowQuick_p.h"
-# include "quick/TabWidgetQuick_p.h"
+#include "quick/MainWindowQuick_p.h"
+#include "quick/TabWidgetQuick_p.h"
 
-# include <QQuickView>
+#include <QQuickView>
 #endif
 
 #include <QPointer>
@@ -56,11 +61,9 @@ static bool s_pauseBeforeMove = false; // for debugging
 
 namespace KDDockWidgets {
 
-class FrameWidget;
-
 namespace Tests {
 
-template <typename T>
+template<typename T>
 inline QPointer<T> make_qpointer(T *t)
 {
     // To support both QWidget and QtQuick we need QPointer<auto>, so use a function instead.
@@ -74,10 +77,11 @@ enum ButtonAction {
 };
 Q_DECLARE_FLAGS(ButtonActions, ButtonAction)
 
-struct DockDescriptor {
+struct DockDescriptor
+{
     Location loc;
     int relativeToIndex;
-    QPointer<DockWidgetBase> createdDock;
+    QPointer<Controllers::DockWidgetBase> createdDock;
     KDDockWidgets::InitialVisibilityOption option;
 };
 
@@ -103,13 +107,13 @@ struct EnsureTopLevelsDeleted
 
     ~EnsureTopLevelsDeleted()
     {
-        qDeleteAll(DockRegistry::self()->floatingWindows(/*includeBeingDeleted=*/ true));
+        qDeleteAll(DockRegistry::self()->floatingWindows(/*includeBeingDeleted=*/true));
         qDeleteAll(DockRegistry::self()->dockwidgets());
 
         if (!DockRegistry::self()->isEmpty()) {
             auto dr = DockRegistry::self();
             qWarning() << "There's still top-level widgets present!"
-                       << "\nfloatings:" << dr->floatingWindows(/*includeBeingDeleted=*/ true)
+                       << "\nfloatings:" << dr->floatingWindows(/*includeBeingDeleted=*/true)
                        << "\nmainwindows:" << dr->mainWindowsNames()
                        << "\ndocks:" << dr->dockWidgetNames();
         }
@@ -128,7 +132,7 @@ struct EnsureTopLevelsDeleted
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
-std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = {1000, 1000},
+std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = { 1000, 1000 },
                                                  KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame,
                                                  const QString &name = {}, bool show = true);
 
@@ -136,12 +140,13 @@ std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = {1000, 1000},
 
 std::unique_ptr<KDDockWidgets::MainWindowBase> createMainWindow(QVector<DockDescriptor> &docks);
 
-KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQuick *w,
-                                                DockWidgetBase::Options options = {}, DockWidgetBase::LayoutSaverOptions layoutSaverOptions = {},
-                                                bool show = true, const QString &affinityName = {});
-KDDockWidgets::DockWidgetBase *createDockWidget(const QString &name, QColor color = Qt::black);
+Controllers::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQuick *w,
+                                              Controllers::DockWidgetBase::Options options = {},
+                                              Controllers::DockWidgetBase::LayoutSaverOptions layoutSaverOptions = {},
+                                              bool show = true, const QString &affinityName = {});
+Controllers::DockWidgetBase *createDockWidget(const QString &name, QColor color = Qt::black);
 
-void nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Frame *relativeTo,
+void nestDockWidget(Controllers::DockWidgetBase *dock, DropArea *dropArea, Controllers::Frame *relativeTo,
                     KDDockWidgets::Location location);
 
 class MyWidget : public QWidgetOrQuick
@@ -153,7 +158,7 @@ public:
 
     QSize minimumSizeHint() const override
     {
-        return {100, 100};
+        return { 100, 100 };
     }
 
 protected:
@@ -229,7 +234,6 @@ protected:
 class MyWidget2 : public QWidgetAdapter
 {
 public:
-
     explicit MyWidget2(QSize minSz = QSize(1, 1))
     {
         setMinimumSize(minSz);
@@ -296,12 +300,10 @@ namespace {
 class MyWidget2 : public QWidget
 {
 public:
-
-    explicit MyWidget2(QSize minSz = QSize(1,1))
+    explicit MyWidget2(QSize minSz = QSize(1, 1))
         : m_minSz(minSz)
         , m_sizeHint(minSz)
     {
-
     }
 
     QSize sizeHint() const override
@@ -340,7 +342,7 @@ void releaseOn(QPoint globalPos, WidgetType *receiver);
 void clickOn(QPoint globalPos, WidgetType *receiver);
 void moveMouseTo(QPoint globalDest, WidgetType *receiver);
 
-inline FloatingWindow *createFloatingWindow()
+inline Controllers::FloatingWindow *createFloatingWindow()
 {
     static int count = 0;
     count++;
@@ -351,26 +353,27 @@ inline FloatingWindow *createFloatingWindow()
 inline WidgetType *draggableFor(WidgetType *w)
 {
     WidgetType *draggable = nullptr;
-    if (auto dock = qobject_cast<DockWidgetBase *>(w)) {
-        if (auto frame = dock->d->frame())
-            draggable = frame->titleBar();
-    } else if (auto fw = qobject_cast<FloatingWindow *>(w)) {
-        Frame *frame = fw->hasSingleFrame() ? static_cast<Frame*>(fw->frames().first())
-                                            : nullptr;
+    if (auto dockView = qobject_cast<Views::DockWidget_qtwidgets *>(w)) {
+        if (auto frame = dockView->dockWidget()->d->frame())
+            draggable = frame->titleBar()->view()->asQWidget();
+    } else if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(w)) {
+        auto fw = fwView->floatingWindow();
+        Controllers::Frame *frame = fw->hasSingleFrame() ? static_cast<Controllers::Frame *>(fw->frames().first())
+                                                         : nullptr;
 
         if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) {
             draggable = frame->tabWidget()->asWidget();
         } else {
-            draggable = fw->titleBar();
+            draggable = fw->titleBar()->view()->asQWidget();
         }
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-    } else if (qobject_cast<TabWidgetWidget *>(w)) {
+    } else if (qobject_cast<Views::Stack_qtwidgets *>(w)) {
         draggable = w;
 #else
     } else if (qobject_cast<TabWidgetQuick *>(w)) {
         draggable = w;
 #endif
-    } else if (qobject_cast<TitleBar *>(w)) {
+    } else if (qobject_cast<Controllers::TitleBar *>(w)) {
         draggable = w;
     }
 
@@ -420,18 +423,18 @@ inline void drag(WidgetType *sourceWidget, QPoint globalDest,
     drag(draggable, pressGlobalPos, globalDest, buttonActions);
 }
 
-inline void dragFloatingWindowTo(FloatingWindow *fw, QPoint globalDest,
+inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, QPoint globalDest,
                                  ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
 {
-    auto draggable = draggableFor(fw);
+    auto draggable = draggableFor(fw->view()->asQWidget());
     Q_ASSERT(draggable);
     Q_ASSERT(draggable->isVisible());
     drag(draggable, KDDockWidgets::mapToGlobal(draggable, QPoint(10, 10)), globalDest, buttonActions);
 }
 
-inline void dragFloatingWindowTo(FloatingWindow *fw, DropArea *target, DropLocation dropLocation)
+inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, DropArea *target, DropLocation dropLocation)
 {
-    auto draggable = draggableFor(fw);
+    auto draggable = draggableFor(fw->view()->asQWidget());
     Q_ASSERT(draggable);
 
     // First we drag over it, so the drop indicators appear:
@@ -484,4 +487,3 @@ Q_DECLARE_METATYPE(KDDockWidgets::Tests::DockDescriptor)
 
 
 #endif
-

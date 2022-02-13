@@ -10,7 +10,7 @@
 */
 
 #include "QmlTypes.h"
-#include "DockWidgetBase.h"
+#include "DockWidget.h"
 #include "../DropAreaWithCentralFrame_p.h"
 #include "../DropIndicatorOverlayInterface_p.h"
 #include "../Frame_p.h"

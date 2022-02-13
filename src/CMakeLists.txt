@@ -1,4 +1,4 @@
-#
+
 # This file is part of KDDockWidgets.
 #
 # SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
@@ -29,8 +29,6 @@ set(DOCKSLIBS_SRCS
     FocusScope.h
     FrameworkWidgetFactory.cpp
     FrameworkWidgetFactory.h
-    DockWidgetBase.cpp
-    DockWidgetBase.h
     MainWindowBase.cpp
     MainWindowBase.h
     MainWindowMDI.cpp
@@ -52,16 +50,8 @@ set(DOCKSLIBS_SRCS
     private/DropIndicatorOverlayInterface_p.h
     private/DropArea.cpp
     private/DropArea_p.h
-    private/FloatingWindow.cpp
-    private/FloatingWindow_p.h
     private/Logging.cpp
     private/Logging_p.h
-    private/TabWidget.cpp
-    private/TabWidget_p.h
-    private/TitleBar.cpp
-    private/TitleBar_p.h
-    private/SideBar.cpp
-    private/SideBar_p.h
     private/DockRegistry.cpp
     private/DockRegistry_p.h
     private/Draggable.cpp
@@ -70,8 +60,7 @@ set(DOCKSLIBS_SRCS
     private/WindowBeingDragged_p.h
     private/DragController.cpp
     private/DragController_p.h
-    private/Frame.cpp
-    private/Frame_p.h
+
     private/DropAreaWithCentralFrame.cpp
     private/DropAreaWithCentralFrame_p.h
     private/WidgetResizeHandler.cpp
@@ -92,38 +81,59 @@ set(DOCKSLIBS_SRCS
     private/multisplitter/Logging_p.h
     private/multisplitter/MultiSplitterConfig.cpp
     private/multisplitter/MultiSplitterConfig.h
-    private/multisplitter/Separator.cpp
-    private/multisplitter/Separator_p.h
-    private/multisplitter/Widget.cpp
-    private/multisplitter/Widget.h
+
+    controllers/DockWidget.cpp
+    controllers/DockWidget.h
+    controllers/FloatingWindow.cpp
+    controllers/FloatingWindow.h
+    controllers/Frame.cpp
+    controllers/Frame.h
+    controllers/Separator.cpp
+    controllers/Separator.h
+    controllers/SideBar.cpp
+    controllers/SideBar.h
+    controllers/Stack.cpp
+    controllers/Stack.h
+    controllers/TitleBar.cpp
+    controllers/TitleBar.h
+    controllers/TabBar.cpp
+    controllers/TabBar.h
+    View.cpp
+    View.h
+    Controller.cpp
+    Controller.h
+
+    views/FrameView.cpp
+    views/FrameView.h
+
+    views_qtwidgets/View_qtwidgets.cpp
+    views_qtwidgets/View_qtwidgets.h
+    views_qtwidgets/FloatingWindow_qtwidgets.cpp
+    views_qtwidgets/FloatingWindow_qtwidgets.h
+    views_qtwidgets/DockWidget_qtwidgets.cpp
+    views_qtwidgets/DockWidget_qtwidgets.h
+    views_qtwidgets/Frame_qtwidgets.cpp
+    views_qtwidgets/Frame_qtwidgets.h
+    views_qtwidgets/Separator_qtwidgets.cpp
+    views_qtwidgets/Separator_qtwidgets.h
+    views_qtwidgets/TitleBar_qtwidgets.cpp
+    views_qtwidgets/TitleBar_qtwidgets.h
+    views_qtwidgets/TabBar_qtwidgets.cpp
+    views_qtwidgets/TabBar_qtwidgets.h
+    views_qtwidgets/Stack_qtwidgets.cpp
+    views_qtwidgets/Stack_qtwidgets.h
+    views_qtwidgets/SideBar_qtwidgets.cpp
+    views_qtwidgets/SideBar_qtwidgets.h
 )
 
-#--------------------------------
-# Temporary just to make sure the backend builds without Qt
-
-set(KDDW_BACKEND_SRCS
-  private/multisplitter/Item.cpp
-  private/multisplitter/Item_p.h
-  private/multisplitter/ItemFreeContainer.cpp
-  private/multisplitter/ItemFreeContainer_p.h
-  private/multisplitter/Logging.cpp
-  private/multisplitter/Logging_p.h
-  private/multisplitter/MultiSplitterConfig.cpp
-  private/multisplitter/MultiSplitterConfig.h
-  private/multisplitter/Separator.cpp
-  private/multisplitter/Separator_p.h
-  private/multisplitter/Widget.cpp
-  private/multisplitter/Widget.h
-)
-
-add_library(kddockwidgets_backend STATIC ${KDDW_BACKEND_SRCS})
-target_link_libraries(kddockwidgets_backend Qt5::Widgets)
-target_include_directories(kddockwidgets_backend
-  PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes> # TODO remove
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes/kddockwidgets>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty> # TODO: Link to KDBindings instead
-  )
+# add_library(kddockwidgets_backend STATIC ${KDDW_BACKEND_SRCS})
+# target_link_libraries(kddockwidgets_backend Qt5::Widgets)
+# target_include_directories(kddockwidgets_backend
+#   PUBLIC
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes> # TODO remove
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes/kddockwidgets>
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty> # TODO: Link to KDBindings instead
+#   )
 
 #--------------------------------
 
@@ -131,11 +141,11 @@ set(DOCKS_INSTALLABLE_INCLUDES
     docks_export.h
     Config.h
     FrameworkWidgetFactory.h
-    DockWidgetBase.h
+    # DockWidget.h
     KDDockWidgets.h
     Qt5Qt6Compat_p.h
     FocusScope.h
-    QWidgetAdapter.h
+    # QWidgetAdapter.h
     LayoutSaver.h
     MainWindowMDI.h
     MainWindowBase.h
@@ -146,32 +156,31 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/Draggable_p.h
     private/DropArea_p.h
     private/DropIndicatorOverlayInterface_p.h
-    private/FloatingWindow_p.h
-    private/Frame_p.h
+    # private/FloatingWindow_p.h
+    # private/Frame_p.h
     private/LayoutSaver_p.h
     private/MultiSplitter_p.h
     private/LayoutWidget_p.h
-    private/SideBar_p.h
+    # private/SideBar_p.h
     private/TitleBar_p.h
     private/WindowBeingDragged_p.h
     private/WidgetResizeHandler_p.h
     private/DockRegistry_p.h
-    private/TabWidget_p.h
+    # private/TabWidget_p.h
     private/MDILayoutWidget_p.h
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
-    private/widgets/QWidgetAdapter_widgets_p.h
-    private/widgets/TitleBarWidget_p.h
-    private/widgets/SideBarWidget_p.h
-    private/widgets/FloatingWindowWidget_p.h
-    private/widgets/FrameWidget_p.h
-    private/widgets/TabBarWidget_p.h
-    private/widgets/TabWidgetWidget_p.h
+    # private/widgets/QWidgetAdapter_widgets_p.h
+    # private/widgets/SideBarWidget_p.h
+    # private/widgets/FloatingWindowWidget_p.h
+    # private/widgets/FrameWidget_p.h
+    # private/widgets/TabBarWidget_p.h
+    # private/widgets/TabWidgetWidget_p.h
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_QUICK_INCLUDES
-    private/quick/QWidgetAdapter_quick_p.h
+    # private/quick/QWidgetAdapter_quick_p.h
 )
 
 if(${PROJECT_NAME}_QTQUICK)
@@ -180,12 +189,12 @@ if(${PROJECT_NAME}_QTQUICK)
       DockWidgetQuick.h
       private/quick/DockWidgetInstantiator.cpp
       private/quick/DockWidgetInstantiator_p.h
-      private/quick/QWidgetAdapter_quick.cpp
-      private/quick/QWidgetAdapter_quick_p.h
+      # private/quick/QWidgetAdapter_quick.cpp
+      # private/quick/QWidgetAdapter_quick_p.h
       private/quick/FloatingWindowQuick.cpp
       private/quick/FloatingWindowQuick_p.h
-      private/quick/TabWidgetQuick.cpp
-      private/quick/TabWidgetQuick_p.h
+      # private/quick/TabWidgetQuick.cpp
+      # private/quick/TabWidgetQuick_p.h
       private/quick/TabBarQuick.cpp
       private/quick/TabBarQuick_p.h
       private/quick/TitleBarQuick.cpp
@@ -222,26 +231,22 @@ else()
       private/ObjectViewer_p.h
       MainWindow.cpp
       MainWindow.h
-      DockWidget.h
-      private/multisplitter/Widget_qwidget.cpp
-      private/multisplitter/Widget_qwidget.h
-      private/multisplitter/Separator_qwidget.cpp
-      private/multisplitter/Separator_qwidget.h
-      private/widgets/TabBarWidget.cpp
-      private/widgets/TabBarWidget_p.h
-      private/widgets/FloatingWindowWidget.cpp
-      private/widgets/FloatingWindowWidget_p.h
-      private/widgets/FrameWidget.cpp
-      private/widgets/FrameWidget_p.h
-      private/widgets/SideBarWidget.cpp
-      private/widgets/SideBarWidget_p.h
-      private/widgets/TabWidgetWidget.cpp
-      private/widgets/TabWidgetWidget_p.h
-      private/widgets/TitleBarWidget.cpp
-      private/widgets/TitleBarWidget_p.h
-      private/widgets/DockWidget.cpp
-      private/widgets/QWidgetAdapter_widgets.cpp
-      private/widgets/QWidgetAdapter_widgets_p.h
+      # DockWidget.h
+      # private/multisplitter/Widget_qwidget.cpp
+      # private/multisplitter/Widget_qwidget.h
+      # private/widgets/TabBarWidget.cpp
+      # private/widgets/TabBarWidget_p.h
+      # private/widgets/FloatingWindowWidget.cpp
+      # private/widgets/FloatingWindowWidget_p.h
+      # private/widgets/FrameWidget.cpp
+      # private/widgets/FrameWidget_p.h
+      # private/widgets/SideBarWidget.cpp
+      # private/widgets/SideBarWidget_p.h
+      # private/widgets/TabWidgetWidget.cpp
+      # private/widgets/TabWidgetWidget_p.h
+      # private/widgets/DockWidget.cpp
+      # private/widgets/QWidgetAdapter_widgets.cpp
+      # private/widgets/QWidgetAdapter_widgets_p.h
       private/indicators/SegmentedIndicators.cpp
       private/indicators/SegmentedIndicators_p.h
       # private/indicators/AnimatedIndicators.cpp
@@ -250,7 +255,7 @@ else()
   set(DOCKS_INSTALLABLE_INCLUDES
       ${DOCKS_INSTALLABLE_INCLUDES}
       MainWindow.h
-      DockWidget.h
+      # DockWidget.h
       MDIArea.h
   )
 endif()
@@ -262,8 +267,8 @@ ecm_generate_headers(camelcase_HEADERS
     CAMELCASE
   HEADER_NAMES
     Config
-    DockWidget
-    DockWidgetBase
+    # DockWidget
+    # DockWidgetBase
     FocusScope
     FrameworkWidgetFactory,DefaultWidgetFactory
     LayoutSaver
@@ -381,8 +386,7 @@ install(FILES ${camelcase_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kd
 install(FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 install(FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
 install(FILES private/multisplitter/Item_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
-install(FILES private/multisplitter/Widget.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
-install(FILES private/multisplitter/Separator_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
+# install(FILES private/multisplitter/Widget.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
 install(FILES private/indicators/ClassicIndicators_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators)
 install(FILES private/indicators/SegmentedIndicators_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators)
 
@@ -392,8 +396,7 @@ if(KDDockWidgets_QTQUICK)
   install(FILES private/multisplitter/Widget_quick.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
 else()
   install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/widgets)
-  install(FILES private/multisplitter/Separator_qwidget.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
-  install(FILES private/multisplitter/Widget_qwidget.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
+  # install(FILES private/multisplitter/Widget_qwidget.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
 endif()
 
 # Generate library version files

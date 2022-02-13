@@ -15,12 +15,18 @@
 
 #include <qglobal.h>
 
+namespace KDDockWidgets {
+class View;
+
+namespace Controllers {
+class Separator;
+}
+
+}
+
 namespace Layouting {
 
-class Separator;
-class Widget;
-
-typedef Separator *(*SeparatorFactoryFunc)(Layouting::Widget *parent);
+typedef KDDockWidgets::View *(*SeparatorFactoryFunc)(KDDockWidgets::Controllers::Separator *controller, KDDockWidgets::View *parent);
 
 class DOCKS_EXPORT_FOR_UNIT_TESTS Config
 {
@@ -46,7 +52,7 @@ public:
     int separatorThickness() const;
 
     ///@brief setter for @ref separatorThickness
-    ///Note: Only use this function at startup before creating any Item
+    /// Note: Only use this function at startup before creating any Item
     void setSeparatorThickness(int value);
 
     ///@brief sets the function used internally to create the separators
@@ -59,14 +65,14 @@ public:
     Config::Flags flags() const;
 
     ///@brief sets the flags. Set only before creating any Item
-    void setFlags(Flags);
+    void setFlags(Layouting::Config::Flags);
+
+    Config();
+    KDDockWidgets::View *createSeparator(KDDockWidgets::Controllers::Separator *, KDDockWidgets::View *) const;
 
 private:
     friend class Item;
     friend class ItemBoxContainer;
-
-    Config();
-    Separator *createSeparator(Layouting::Widget *) const;
 
     void registerQmlTypes();
 

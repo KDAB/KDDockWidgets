@@ -21,7 +21,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "TabWidgetQuick_p.h"
 #include "DockWidgetQuick.h"
-#include "../DockWidgetBase_p.h"
+#include "../DockWidget_p.h"
 #include "../WidgetResizeHandler_p.h"
 
 #include <QDebug>

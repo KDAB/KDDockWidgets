@@ -16,6 +16,10 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "Item_p.h"
 
+namespace KDDockWidgets {
+class View;
+}
+
 namespace Layouting {
 
 
@@ -30,8 +34,8 @@ class DOCKS_EXPORT_FOR_UNIT_TESTS ItemFreeContainer : public ItemContainer
 public:
     Q_OBJECT
 public:
-    explicit ItemFreeContainer(Widget *hostWidget, ItemContainer *parent);
-    explicit ItemFreeContainer(Widget *hostWidget);
+    explicit ItemFreeContainer(KDDockWidgets::View *hostWidget, ItemContainer *parent);
+    explicit ItemFreeContainer(KDDockWidgets::View *hostWidget);
     ~ItemFreeContainer();
 
     /// @brief adds the item to the specified position

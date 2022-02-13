@@ -11,19 +11,23 @@
 
 #include "DockRegistry_p.h"
 #include "Config.h"
-#include "DockWidgetBase.h"
-#include "DockWidgetBase_p.h"
-#include "FloatingWindow_p.h"
 #include "LayoutWidget_p.h"
 #include "Logging_p.h"
 #include "MainWindowMDI.h"
 #include "Position_p.h"
-#include "QWidgetAdapter.h"
-#include "SideBar_p.h"
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "WindowBeingDragged_p.h"
 #include "multisplitter/Item_p.h"
+
+#include "controllers/FloatingWindow.h"
+#include "controllers/SideBar.h"
+#include "controllers/DockWidget.h"
+#include "controllers/DockWidget_p.h"
+
+#include "views_qtwidgets/Frame_qtwidgets.h"
+#include "views_qtwidgets/DockWidget_qtwidgets.h"
+#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -37,6 +41,7 @@
 #endif
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 static void initKDDockWidgetResources()
 {
@@ -87,22 +92,22 @@ void DockRegistry::onFocusObjectChanged(QObject *obj)
 {
     auto p = qobject_cast<WidgetType *>(obj);
     while (p) {
-        if (auto frame = qobject_cast<Frame *>(p)) {
+        if (auto frameView = qobject_cast<Views::Frame_qtwidgets *>(p)) {
             // Special case: The focused widget is inside the frame but not inside the dockwidget.
             // For example, it's a line edit in the QTabBar. We still need to send the signal for
             // the current dw in the tab group
-            if (auto dw = frame->currentDockWidget()) {
+            if (auto dw = frameView->frame()->currentDockWidget()) {
                 setFocusedDockWidget(dw);
             }
 
             return;
         }
 
-        if (auto dw = qobject_cast<DockWidgetBase *>(p)) {
-            DockRegistry::self()->setFocusedDockWidget(dw);
+        if (auto dwView = qobject_cast<Views::DockWidget_qtwidgets *>(p)) {
+            DockRegistry::self()->setFocusedDockWidget(dwView->dockWidget());
             return;
         }
-        p = KDDockWidgets::Private::parentWidget(p);
+        p = p->parentWidget();
     }
 
     setFocusedDockWidget(nullptr);
@@ -180,14 +185,14 @@ QStringList DockRegistry::dockWidgetNames() const
     return names;
 }
 
-bool DockRegistry::isProbablyObscured(QWindow *window, FloatingWindow *exclude) const
+bool DockRegistry::isProbablyObscured(QWindow *window, Controllers::FloatingWindow *exclude) const
 {
     if (!window)
         return false;
 
     const QRect geo = window->geometry();
-    for (FloatingWindow *fw : m_floatingWindows) {
-        QWindow *fwWindow = fw->QWidgetAdapter::windowHandle();
+    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
+        QWindow *fwWindow = fw->view()->asQWidget()->windowHandle();
         if (fw == exclude || fwWindow == window)
             continue;
 
@@ -214,39 +219,39 @@ bool DockRegistry::isProbablyObscured(QWindow *window, FloatingWindow *exclude) 
 
 bool DockRegistry::isProbablyObscured(QWindow *target, WindowBeingDragged *exclude) const
 {
-    FloatingWindow *fw = exclude ? exclude->floatingWindow()
-                                 : nullptr; // It's null on Wayland. On wayland obscuring never happens anyway, so not a problem.
+    Controllers::FloatingWindow *fw = exclude ? exclude->floatingWindow()
+                                              : nullptr; // It's null on Wayland. On wayland obscuring never happens anyway, so not a problem.
 
     return isProbablyObscured(target, fw);
 }
 
 SideBarLocation DockRegistry::sideBarLocationForDockWidget(const DockWidgetBase *dw) const
 {
-    if (SideBar *sb = sideBarForDockWidget(dw))
+    if (Controllers::SideBar *sb = sideBarForDockWidget(dw))
         return sb->location();
 
     return SideBarLocation::None;
 }
 
-SideBar *DockRegistry::sideBarForDockWidget(const DockWidgetBase *dw) const
+Controllers::SideBar *DockRegistry::sideBarForDockWidget(const DockWidgetBase *dw) const
 {
     for (auto mw : m_mainWindows) {
-        if (SideBar *sb = mw->sideBarForDockWidget(dw))
+        if (Controllers::SideBar *sb = mw->sideBarForDockWidget(dw))
             return sb;
     }
 
     return nullptr;
 }
 
-Frame *DockRegistry::frameInMDIResize() const
+Controllers::Frame *DockRegistry::frameInMDIResize() const
 {
     for (auto mw : m_mainWindows) {
         if (!mw->isMDI())
             continue;
 
         LayoutWidget *layout = mw->layoutWidget();
-        const QList<Frame *> frames = layout->frames();
-        for (Frame *frame : frames) {
+        const QList<Controllers::Frame *> frames = layout->frames();
+        for (Controllers::Frame *frame : frames) {
             if (WidgetResizeHandler *wrh = frame->resizeHandler()) {
                 if (wrh->isResizing())
                     return frame;
@@ -285,7 +290,7 @@ LayoutWidget *DockRegistry::layoutForItem(const Layouting::Item *item) const
 bool DockRegistry::itemIsInMainWindow(const Layouting::Item *item) const
 {
     if (LayoutWidget *layout = layoutForItem(item)) {
-        return layout->isInMainWindow(/*honoursNesting=*/ true);
+        return layout->isInMainWindow(/*honoursNesting=*/true);
     }
 
     return false;
@@ -339,12 +344,12 @@ void DockRegistry::unregisterMainWindow(MainWindowBase *mainWindow)
     maybeDelete();
 }
 
-void DockRegistry::registerFloatingWindow(FloatingWindow *window)
+void DockRegistry::registerFloatingWindow(Controllers::FloatingWindow *window)
 {
     m_floatingWindows << window;
 }
 
-void DockRegistry::unregisterFloatingWindow(FloatingWindow *window)
+void DockRegistry::unregisterFloatingWindow(Controllers::FloatingWindow *window)
 {
     m_floatingWindows.removeOne(window);
     maybeDelete();
@@ -360,12 +365,12 @@ void DockRegistry::unregisterLayout(LayoutWidget *layout)
     m_layouts.removeOne(layout);
 }
 
-void DockRegistry::registerFrame(Frame *frame)
+void DockRegistry::registerFrame(Controllers::Frame *frame)
 {
     m_frames << frame;
 }
 
-void DockRegistry::unregisterFrame(Frame *frame)
+void DockRegistry::unregisterFrame(Controllers::Frame *frame)
 {
     m_frames.removeOne(frame);
 }
@@ -536,17 +541,17 @@ const QVector<LayoutWidget *> DockRegistry::layouts() const
     return m_layouts;
 }
 
-const Frame::List DockRegistry::frames() const
+const Controllers::Frame::List DockRegistry::frames() const
 {
     return m_frames;
 }
 
-const QVector<FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted) const
+const QVector<Controllers::FloatingWindow *> DockRegistry::floatingWindows(bool includeBeingDeleted) const
 {
     // Returns all the FloatingWindow which aren't being deleted
-    QVector<FloatingWindow *> result;
+    QVector<Controllers::FloatingWindow *> result;
     result.reserve(m_floatingWindows.size());
-    for (FloatingWindow *fw : m_floatingWindows) {
+    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
         if (includeBeingDeleted || !fw->beingDeleted())
             result.push_back(fw);
     }
@@ -558,10 +563,10 @@ const QVector<QWindow *> DockRegistry::floatingQWindows() const
 {
     QVector<QWindow *> windows;
     windows.reserve(m_floatingWindows.size());
-    for (FloatingWindow *fw : m_floatingWindows) {
+    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
         if (!fw->beingDeleted()) {
-            if (QWindow *window = fw->windowHandle()) {
-                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(fw)); // Since QWidgetWindow is private API
+            if (QWindow *window = fw->view()->asQWidget()->windowHandle()) {
+                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(fw->view()->asQWidget())); // Since QWidgetWindow is private API
                 windows.push_back(window);
             } else {
                 qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
@@ -574,7 +579,7 @@ const QVector<QWindow *> DockRegistry::floatingQWindows() const
 
 bool DockRegistry::hasFloatingWindows() const
 {
-    return std::any_of(m_floatingWindows.begin(), m_floatingWindows.end(), [](FloatingWindow *fw) {
+    return std::any_of(m_floatingWindows.begin(), m_floatingWindows.end(), [](Controllers::FloatingWindow *fw) {
         return !fw->beingDeleted();
     });
 }
@@ -591,20 +596,20 @@ QWindow *DockRegistry::windowForHandle(WId id) const
     return nullptr;
 }
 
-FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) const
+Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) const
 {
-    for (FloatingWindow *fw : m_floatingWindows) {
-        if (fw->windowHandle() == windowHandle)
+    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
+        if (fw->view()->asQWidget()->windowHandle() == windowHandle)
             return fw;
     }
 
     return nullptr;
 }
 
-FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) const
+Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) const
 {
-    for (FloatingWindow *fw : m_floatingWindows) {
-        if (fw->windowHandle() && fw->windowHandle()->winId() == hwnd)
+    for (Controllers::FloatingWindow *fw : m_floatingWindows) {
+        if (fw->view()->asQWidget()->windowHandle() && fw->view()->asQWidget()->windowHandle()->winId() == hwnd)
             return fw;
     }
 
@@ -624,7 +629,7 @@ MainWindowBase *DockRegistry::mainWindowForHandle(QWindow *windowHandle) const
 QWidgetOrQuick *DockRegistry::topLevelForHandle(QWindow *windowHandle) const
 {
     if (auto fw = floatingWindowForHandle(windowHandle))
-        return fw;
+        return fw->view()->asQWidget();
 
     if (auto mw = mainWindowForHandle(windowHandle))
         return mw;
@@ -638,10 +643,10 @@ QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
     windows.reserve(m_floatingWindows.size() + m_mainWindows.size());
 
     if (!excludeFloatingDocks) {
-        for (FloatingWindow *fw : m_floatingWindows) {
+        for (Controllers::FloatingWindow *fw : m_floatingWindows) {
             if (fw->isVisible()) {
-                if (QWindow *window = fw->windowHandle()) {
-                    window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(fw)); // Since QWidgetWindow is private API
+                if (QWindow *window = fw->view()->asQWidget()->windowHandle()) {
+                    window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(fw->view()->asQWidget())); // Since QWidgetWindow is private API
                     windows << window;
                 } else {
                     qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
@@ -691,7 +696,7 @@ void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
 void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
     for (DockWidgetBase *dw : qAsConst(m_dockWidgets)) {
-        if (dw->window() == dw && dw->isVisible())
+        if (dw->view()->asQWidget()->window() == dw->view()->asQWidget() && dw->isVisible())
             dw->d->morphIntoFloatingWindow();
     }
 }
@@ -705,7 +710,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         return true;
     } else if (event->type() == QEvent::Expose) {
         if (auto windowHandle = qobject_cast<QWindow *>(watched)) {
-            if (FloatingWindow *fw = floatingWindowForHandle(windowHandle)) {
+            if (Controllers::FloatingWindow *fw = floatingWindowForHandle(windowHandle)) {
                 // This floating window was exposed
                 m_floatingWindows.removeOne(fw);
                 m_floatingWindows.append(fw);
@@ -713,24 +718,24 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         }
     } else if (event->type() == QEvent::MouseButtonPress) {
         // When clicking on a MDI Frame we raise the window
-        if (Frame *f = firstParentOfType<Frame>(watched)) {
-            if (f->isMDI())
-                f->raise();
+        if (auto frameView = firstParentOfType<Views::Frame_qtwidgets>(watched)) {
+            if (frameView->frame()->isMDI())
+                frameView->raise();
         }
 
         // The following code is for hididng the overlay
         if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
             return false;
 
-        if (qobject_cast<Frame *>(watched)) {
+        if (qobject_cast<Views::Frame_qtwidgets *>(watched)) {
             // break recursion
             return false;
         }
 
         auto p = watched;
         while (p) {
-            if (auto dw = qobject_cast<DockWidgetBase *>(p))
-                return onDockWidgetPressed(dw, static_cast<QMouseEvent *>(event));
+            if (auto dwView = qobject_cast<Views::DockWidget_qtwidgets *>(p))
+                return onDockWidgetPressed(dwView->dockWidget(), static_cast<QMouseEvent *>(event));
 
             if (auto layoutWidget = qobject_cast<LayoutWidget *>(p)) {
                 if (auto mw = layoutWidget->mainWindow()) {

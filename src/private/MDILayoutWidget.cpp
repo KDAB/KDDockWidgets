@@ -11,13 +11,15 @@
 
 #include "MDILayoutWidget_p.h"
 #include "multisplitter/ItemFreeContainer_p.h"
-#include "DockWidgetBase_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+#include "controllers/Frame.h"
+#include "controllers/DockWidget_p.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
-MDILayoutWidget::MDILayoutWidget(QWidgetOrQuick *parent)
+MDILayoutWidget::MDILayoutWidget(QWidget *parent)
     : LayoutWidget(parent)
     , m_rootItem(new Layouting::ItemFreeContainer(this))
 {
@@ -35,21 +37,21 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialO
         return;
     }
 
-    auto frame = qobject_cast<Frame *>(dw->d->frame());
+    auto frame = qobject_cast<Controllers::Frame *>(dw->d->frame());
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it. See also comment in MultiSplitter::addWidget().
-        frame->QWidgetAdapter::setParent(nullptr);
+        frame->view()->setParent(nullptr);
         frame->setLayoutItem(nullptr);
     }
 
     Layouting::Item *newItem = new Layouting::Item(this);
     if (frame) {
-        newItem->setGuestWidget(frame);
+        newItem->setGuestWidget(frame->view());
     } else {
-        frame = Config::self().frameworkWidgetFactory()->createFrame(nullptr, FrameOption_None);
+        frame = new Controllers::Frame();
         frame->addWidget(dw, addingOption);
 
-        newItem->setGuestWidget(frame);
+        newItem->setGuestWidget(frame->view());
     }
 
     Q_ASSERT(!newItem->geometry().isEmpty());
@@ -60,7 +62,7 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialO
     }
 }
 
-void MDILayoutWidget::setDockWidgetGeometry(Frame *frame, QRect geometry)
+void MDILayoutWidget::setDockWidgetGeometry(Controllers::Frame *frame, QRect geometry)
 {
     if (!frame)
         return;
@@ -79,7 +81,7 @@ void MDILayoutWidget::moveDockWidget(DockWidgetBase *dw, QPoint pos)
     moveDockWidget(dw->d->frame(), pos);
 }
 
-void MDILayoutWidget::moveDockWidget(Frame *frame, QPoint pos)
+void MDILayoutWidget::moveDockWidget(Controllers::Frame *frame, QPoint pos)
 {
     if (!frame)
         return;
@@ -100,7 +102,7 @@ void MDILayoutWidget::resizeDockWidget(DockWidgetBase *dw, QSize size)
     resizeDockWidget(dw->d->frame(), size);
 }
 
-void MDILayoutWidget::resizeDockWidget(Frame *frame, QSize size)
+void MDILayoutWidget::resizeDockWidget(Controllers::Frame *frame, QSize size)
 {
     if (!frame)
         return;
@@ -112,5 +114,5 @@ void MDILayoutWidget::resizeDockWidget(Frame *frame, QSize size)
         return;
     }
 
-    item->setSize(size.expandedTo(frame->minimumSize()));
+    item->setSize(size.expandedTo(frame->view()->asQWidget()->minimumSize()));
 }
