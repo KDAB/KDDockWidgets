@@ -5274,6 +5274,27 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     QVERIFY(!mdiWidget2->isFloating());
 }
 
+void TestDocks::tstCloseNestedMdi()
+{
+    // Tests a bug where closing a mdi dock widget would close its main window too
+    EnsureTopLevelsDeleted e;
+
+    auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
+    QPointer<MainWindowBase> p = m.get();
+
+    auto mdi = new KDDockWidgets::MDIArea();
+    m->setPersistentCentralWidget(mdi);
+
+    auto dock1 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock1"));
+    dock1->setWidget( new QPushButton("1"));
+
+    mdi->addDockWidget(dock1, {});
+
+    dock1->titleBar()->onCloseClicked();
+    QVERIFY(p);
+    QVERIFY(m->isVisible());
+}
+
 void TestDocks::tst_mdi_mixed_with_docking_setMDISize()
 {
     EnsureTopLevelsDeleted e;

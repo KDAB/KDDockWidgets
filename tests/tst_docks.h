@@ -253,6 +253,7 @@ private Q_SLOTS:
     void tst_mdi_mixed_with_docking();
     void tst_mdi_mixed_with_docking2();
     void tst_mdi_mixed_with_docking_setMDISize();
+    void tstCloseNestedMdi();
 
     // But these are fine to be widget only:
     void tst_tabsNotClickable();
