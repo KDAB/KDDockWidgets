@@ -87,8 +87,26 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     if (!widget)
         return false;
 
-    if (m_isTopLevelWindowResizer && (!widget->isTopLevel() || o != mTarget))
-        return false;
+    if (m_isTopLevelWindowResizer) {
+        if (!widget->isTopLevel() || o != mTarget)
+            return false;
+    } else if (isMDI()) {
+        // Each Frame has a WidgetResizeHandler instance.
+        // mTarget is the Frame we want to resize.
+        // but 'o' might not be mTarget, because we're using a global event filter.
+        // The global event filter is required because we allow the cursor to be outside the frame, a few pixels
+        // so we have a nice resize margin.
+        // Here we deal with the case where our mTarget, let's say "Frame 1" is on top of "Frame 2" but cursor
+        // is near "Frame 2"'s margins, and would show resize cursor.
+        // We only want to continue if the cursor is near the margins of our own frame (mTarget)
+
+        auto frame = firstParentOfType<Frame>(widget);
+        if (frame && frame != mTarget) {
+            const bool areSiblings = frame->QWidgetAdapter::parentWidget() == mTarget->parentWidget();
+            if (areSiblings)
+                return false;
+        }
+    }
 
     switch (e->type()) {
     case QEvent::MouseButtonPress: {
