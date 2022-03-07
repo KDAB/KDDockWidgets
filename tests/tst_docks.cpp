@@ -7657,6 +7657,10 @@ void TestDocks::tst_resizePropagatesEvenly()
 
 void TestDocks::tst_unfloatTabbedFloatingWidgets()
 {
+    /// A main window with 2 tabbed dock widgets.
+    /// Tests that we're able to float the entire tab group and
+    /// put it back into the main window when float button is pressed again.
+
     auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
     auto dock0 = createDockWidget("dock0", new MyWidget2());
     auto dock1 = createDockWidget("dock1", new MyWidget2());
@@ -7670,9 +7674,37 @@ void TestDocks::tst_unfloatTabbedFloatingWidgets()
     dock0->titleBar()->onFloatClicked();
     QVERIFY(!dock0->titleBar()->isFloating());
     QVERIFY(dock0->mainWindow());
+}
 
+void TestDocks::tst_unfloatTabbedFloatingWidgets2()
+{
+    EnsureTopLevelsDeleted e;
 
+    // Like tst_unfloatTabbedFloatingWidgets, but now there's no main window, just a FloatingWindow
+    // with nesting.
 
+    auto dock0 = createDockWidget("dock0", new MyWidget2());
+    auto dock1 = createDockWidget("dock1", new MyWidget2());
+    auto dock2 = createDockWidget("dock2", new MyWidget2());
+
+    dock0->show();
+    dock1->show();
+    dock2->show();
+
+    dock0->addDockWidgetAsTab(dock1);
+    dock0->addDockWidgetToContainingWindow(dock2, KDDockWidgets::Location_OnBottom);
+
+    // Float:
+    dock0->titleBar()->onFloatClicked();
+    QVERIFY(dock0->titleBar()->isFloating());
+    QCOMPARE(dock0->floatingWindow(), dock1->floatingWindow());
+    QVERIFY(dock0->floatingWindow() != dock2->floatingWindow());
+
+    // redock, nothing happens as we don't have a previous docked position in main window
+    dock0->titleBar()->onFloatClicked();
+    QVERIFY(dock0->titleBar()->isFloating());
+    QCOMPARE(dock0->floatingWindow(), dock1->floatingWindow());
+    QVERIFY(dock0->floatingWindow() != dock2->floatingWindow());
 }
 
 void TestDocks::tst_addMDIDockWidget()

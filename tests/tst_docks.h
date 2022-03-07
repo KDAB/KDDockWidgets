@@ -241,6 +241,7 @@ private Q_SLOTS:
     void tst_toggleTabbed2();
     void tst_resizePropagatesEvenly();
     void tst_unfloatTabbedFloatingWidgets();
+    void tst_unfloatTabbedFloatingWidgets2();
 
     void tst_addMDIDockWidget();
     void tst_redockToMDIRestoresPosition();
