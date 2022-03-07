@@ -5,6 +5,7 @@
  - Moved DropIndicatorOverlayInterface::DropLocation enum to KDDockWidgets namespace scope
  - Added Config::setDropIndicatorAllowedFunc() and corresponding example
    (kddockwidgets_example --hide-certain-docking-indicators)
+ - Fixed case where unfloating wouldn't restore to the main window (#44 and #96)
 
 * v1.5.1 (unreleased)
  - X11: Improved detecting which window is under the cursor, by using native X11 API
