@@ -7655,6 +7655,26 @@ void TestDocks::tst_resizePropagatesEvenly()
     QVERIFY(qAbs(dock2->height() - dock1->height()) < 3);
 }
 
+void TestDocks::tst_unfloatTabbedFloatingWidgets()
+{
+    auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
+    auto dock0 = createDockWidget("dock0", new MyWidget2());
+    auto dock1 = createDockWidget("dock1", new MyWidget2());
+    m->addDockWidget(dock0, Location_OnLeft);
+    dock0->addDockWidgetAsTab(dock1);
+
+    dock0->titleBar()->onFloatClicked();
+    QVERIFY(dock0->titleBar()->isFloating());
+    QVERIFY(!dock0->mainWindow());
+
+    dock0->titleBar()->onFloatClicked();
+    QVERIFY(!dock0->titleBar()->isFloating());
+    QVERIFY(dock0->mainWindow());
+
+
+
+}
+
 void TestDocks::tst_addMDIDockWidget()
 {
     EnsureTopLevelsDeleted e;
