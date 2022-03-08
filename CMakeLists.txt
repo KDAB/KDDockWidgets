@@ -141,13 +141,13 @@ endif()
 find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Widgets Test)
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
+set(${PROJECT_NAME}_DEPS "widgets")
 if(${PROJECT_NAME}_QTQUICK)
   find_package(Qt${Qt_VERSION_MAJOR} NO_MODULE REQUIRED COMPONENTS Quick QuickControls2)
   add_definitions(-DKDDOCKWIDGETS_QTQUICK)
   set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} quick quickcontrols2")
 else()
   add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
-  set(${PROJECT_NAME}_DEPS "widgets")
 endif()
 
 if(NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6 AND ${PROJECT_NAME}_X11EXTRAS)
