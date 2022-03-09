@@ -388,6 +388,33 @@ inline T* firstParentOfType(const QObject *child)
     return nullptr;
 }
 
+template <typename T>
+inline T* lastParentOfType(const QObject *child)
+{
+    auto p = const_cast<QObject *>(child);
+    T* result = nullptr;
+    while (p) {
+        if (auto candidate = qobject_cast<T *>(p))
+            result = candidate;
+
+        if (qobject_cast<const QWindow*>(p)) {
+            // Ignore QObject hierarchies spanning though multiple windows
+            return result;
+        }
+
+#ifdef KDDOCKWIDGETS_QTWIDGETS
+        // Ignore QObject hierarchies spanning though multiple windows
+        if (auto w = qobject_cast<QWidget *>(p))
+            if (w->isWindow())
+                return result;
+#endif
+
+        p = p->parent();
+    }
+
+    return result;
+}
+
 };
 
 #endif

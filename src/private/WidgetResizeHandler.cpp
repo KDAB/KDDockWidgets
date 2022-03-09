@@ -101,6 +101,11 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         // We only want to continue if the cursor is near the margins of our own frame (mTarget)
 
         auto frame = firstParentOfType<Frame>(widget);
+        if (frame && frame->isMDIWrapper()) {
+            // We don't care about the inner Option_MDINestable helper frame
+            frame = frame->mdiFrame();
+        }
+
         if (frame && frame != mTarget) {
             const bool areSiblings = frame->QWidgetAdapter::parentWidget() == mTarget->parentWidget();
             if (areSiblings)
