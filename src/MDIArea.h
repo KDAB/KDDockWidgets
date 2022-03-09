@@ -33,7 +33,7 @@ class Frame;
  *
  * See examples/mdi_with_docking/.
  */
-class DOCKS_EXPORT MDIArea : public QWidgetOrQuick
+class DOCKS_EXPORT MDIArea : public QWidgetAdapter
 {
     Q_OBJECT
 public:
@@ -52,6 +52,10 @@ public:
     /// @brief Returns the list of frames in this MDI Area
     /// Each Frame object represents a 'window' emebedded in the MDI Area
     QList<Frame *> frames() const;
+
+    /// @brief Forwards the close event to the MDI dock widgets, aborts closing if at least one
+    /// dock widget doesn't allow it
+    void onCloseEvent(QCloseEvent *) override;
 
 private:
     class Private;

@@ -21,6 +21,9 @@
 # include "DockWidgetQuick.h"
 #endif
 
+#include <QGuiApplication>
+#include <QCloseEvent>
+
 using namespace KDDockWidgets;
 
 class MDIArea::Private
@@ -40,7 +43,7 @@ public:
 };
 
 MDIArea::MDIArea(QWidgetOrQuick *parent)
-    : QWidgetOrQuick(parent)
+    : QWidgetAdapter(parent)
     , d(new Private(this))
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
@@ -85,4 +88,16 @@ void MDIArea::resizeDockWidget(DockWidgetBase *dw, QSize size)
 QList<Frame *> MDIArea::frames() const
 {
     return d->layoutWidget->frames();
+}
+
+void MDIArea::onCloseEvent(QCloseEvent *e)
+{
+    e->accept(); // Accepted by default (will close unless ignored)
+
+    const Frame::List frames = this->frames();
+    for (Frame *frame : frames) {
+        qApp->sendEvent(frame, e);
+        if (!e->isAccepted())
+            break; // Stop when the first frame prevents closing
+    }
 }

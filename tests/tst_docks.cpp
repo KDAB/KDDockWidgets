@@ -5298,6 +5298,32 @@ void TestDocks::tstCloseNestedMdi()
     QVERIFY(m->isVisible());
 }
 
+void TestDocks::tstCloseNestedMDIPropagates()
+{
+    auto m = createMainWindow(QSize(1000, 500), MainWindowOption_HasCentralWidget);
+    QPointer<MainWindowBase> p = m.get();
+
+    auto mdi = new KDDockWidgets::MDIArea();
+    m->setPersistentCentralWidget(mdi);
+
+    auto dock1 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock1"));
+    dock1->setWidget(new NonClosableWidget());
+    mdi->addDockWidget(dock1, {});
+
+    auto dock2 = new KDDockWidgets::DockWidget(QStringLiteral("MyDock2"));
+    dock2->setWidget(new NonClosableWidget());
+    dock2->show();
+
+    QVERIFY(Testing::waitForEvent(dock1, QEvent::Show));
+    QVERIFY(dock1->isVisible());
+    QVERIFY(dock2->isVisible());
+
+    m->close();
+
+    QVERIFY(dock2->isVisible());
+    QVERIFY(dock1->isVisible());
+}
+
 void TestDocks::tst_mdi_mixed_with_docking_setMDISize()
 {
     EnsureTopLevelsDeleted e;
