@@ -302,3 +302,15 @@ LayoutSaver::MultiSplitter LayoutWidget::serialize() const
 
     return l;
 }
+
+void LayoutWidget::onCloseEvent(QCloseEvent *e)
+{
+    e->accept(); // Accepted by default (will close unless ignored)
+
+    const Frame::List frames = this->frames();
+    for (Frame *frame : frames) {
+        qApp->sendEvent(frame, e);
+        if (!e->isAccepted())
+            break; // Stop when the first frame prevents closing
+    }
+}

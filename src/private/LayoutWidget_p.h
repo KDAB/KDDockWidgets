@@ -189,6 +189,8 @@ public:
     virtual bool deserialize(const LayoutSaver::MultiSplitter &);
     LayoutSaver::MultiSplitter serialize() const;
 
+    void onCloseEvent(QCloseEvent *) override;
+
 protected:
     void setRootItem(Layouting::ItemContainer *root);
     /**
