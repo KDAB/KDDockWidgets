@@ -53,6 +53,9 @@ int main(int argc, char **argv)
     auto widget3 = new MyWidget3();
     dock3->setWidget(widget3);
 
+    // Just for my personal testing: Overkill to add an option
+    // widget3->blockCloseEvent();
+
     // # 3. Dock them
     mainWindow.addDockWidget(dock1, QPoint(10, 10));
     mainWindow.addDockWidget(dock2, QPoint(50, 50));
