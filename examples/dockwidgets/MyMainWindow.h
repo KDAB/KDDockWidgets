@@ -20,7 +20,7 @@ class MyMainWindow : public KDDockWidgets::MainWindow
 public:
     explicit MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                           bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
-                          bool maxSizeForDockWidget8, bool dockwidget5DoesntCloseBeforeRestore,
+                          bool maxSizeForDockWidget8, bool dockwidget5DoesntCloseBeforeRestore, bool dock0BlocksCloseEvent,
                           const QString &affinityName = {}, // Usually not needed. Just here to show the feature.
                           QWidget *parent = nullptr);
     ~MyMainWindow() override;
@@ -34,5 +34,6 @@ private:
     const bool m_restoreIsRelative;
     const bool m_maxSizeForDockWidget8;
     const bool m_dockwidget5DoesntCloseBeforeRestore;
+    const bool m_dock0BlocksCloseEvent;
     KDDockWidgets::DockWidget::List m_dockwidgets;
 };

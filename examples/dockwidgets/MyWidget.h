@@ -26,10 +26,16 @@ class MyWidget : public QWidget
 public:
     explicit MyWidget(const QString &backgroundFile, const QString &logoFile, QWidget *parent = nullptr);
     ~MyWidget();
+
+    // These two are just for demonstrating how to block the close event, if desired
+    void blockCloseEvent();
+    void closeEvent(QCloseEvent *) override;
+
 protected:
     void drawLogo(QPainter &);
     QImage m_background;
     QImage m_logo;
+    bool m_blocksCloseEvent = false;
 };
 
 class MyWidget1 : public MyWidget

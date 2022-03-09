@@ -47,6 +47,7 @@ static MyWidget *newMyWidget()
 MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                            bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
                            bool maxSizeForDockWidget8, bool dockwidget5DoesntCloseBeforeRestore,
+                           bool dock0BlocksCloseEvent,
                            const QString &affinityName, QWidget *parent)
     : MainWindow(uniqueName, options, parent)
     , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
@@ -54,6 +55,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     , m_restoreIsRelative(restoreIsRelative)
     , m_maxSizeForDockWidget8(maxSizeForDockWidget8)
     , m_dockwidget5DoesntCloseBeforeRestore(dockwidget5DoesntCloseBeforeRestore)
+    , m_dock0BlocksCloseEvent(dock0BlocksCloseEvent)
 {
     auto menubar = menuBar();
     auto fileMenu = new QMenu(QStringLiteral("File"), this);
@@ -189,6 +191,9 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
         // Set a maximum size on dock #8
         myWidget->setMaximumSize(200, 200);
     }
+
+    if (count == 0 && m_dock0BlocksCloseEvent)
+        myWidget->blockCloseEvent();
 
     dock->setWidget(myWidget);
 
