@@ -494,14 +494,7 @@ void FloatingWindow::onCloseEvent(QCloseEvent *e)
         return;
     }
 
-    e->accept(); // Accepted by default (will close unless ignored)
-
-    const Frame::List frames = this->frames();
-    for (Frame *frame : frames) {
-        qApp->sendEvent(frame, e);
-        if (!e->isAccepted())
-            break; // Stop when the first frame prevents closing
-    }
+    m_dropArea->onCloseEvent(e);
 }
 
 bool FloatingWindow::deserialize(const LayoutSaver::FloatingWindow &fw)
