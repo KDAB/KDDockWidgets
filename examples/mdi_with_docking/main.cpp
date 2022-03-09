@@ -77,7 +77,11 @@ int main(int argc, char **argv)
     mdiWidget2->setWidget(new MyWidget2());
 
     auto mdiWidget3 = new KDDockWidgets::DockWidget(QStringLiteral("MDI widget3"), options);
-    mdiWidget3->setWidget(new MyWidget3());
+    auto widget3 = new MyWidget3();
+    mdiWidget3->setWidget(widget3);
+
+    // Just for my personal testing: Overkill to add an option
+    // widget3->blockCloseEvent();
 
     auto mdiArea = new KDDockWidgets::MDIArea();
     mainWindow.setPersistentCentralWidget(mdiArea);
