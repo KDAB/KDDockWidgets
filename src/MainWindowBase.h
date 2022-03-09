@@ -223,6 +223,7 @@ public:
     QRect windowGeometry() const;
 
 protected:
+    void onCloseEvent(QCloseEvent *);
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()
     virtual QMargins centerWidgetMargins() const = 0;

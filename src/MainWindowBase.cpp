@@ -39,6 +39,8 @@
 # include "DockWidget.h"
 #endif
 
+#include <QCloseEvent>
+
 using namespace KDDockWidgets;
 
 static LayoutWidget *createLayoutWidget(MainWindowBase *mainWindow, MainWindowOptions options)
@@ -790,4 +792,9 @@ QWidgetOrQuick *MainWindowBase::persistentCentralWidget() const
         return dw->widget();
 
     return nullptr;
+}
+
+void MainWindowBase::onCloseEvent(QCloseEvent *e)
+{
+    d->m_layoutWidget->onCloseEvent(e);
 }

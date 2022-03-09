@@ -156,3 +156,8 @@ QRect MainWindow::centralAreaGeometry() const
 {
     return centralWidget()->geometry();
 }
+
+void MainWindow::closeEvent(QCloseEvent *ev)
+{
+    onCloseEvent(ev);
+}

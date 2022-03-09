@@ -57,6 +57,7 @@ public:
     void setCenterWidgetMargins(const QMargins &margins);
 
 protected:
+    void closeEvent(QCloseEvent *) override;
     void resizeEvent(QResizeEvent *) override;
     QRect centralAreaGeometry() const override;
 
