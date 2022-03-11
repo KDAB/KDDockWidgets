@@ -19,6 +19,7 @@
 #include "Config.h"
 #include "MainWindowBase.h"
 #include "MDILayoutWidget_p.h"
+#include "TabWidget_p.h"
 
 #include <QTimer>
 #include <QWindowStateChangeEvent>
@@ -497,4 +498,21 @@ void TitleBar::updateFloatButton()
 bool TitleBar::isWindow() const
 {
     return m_floatingWindow != nullptr;
+}
+
+TabBar *TitleBar::tabBar() const
+{
+    if (m_floatingWindow && m_floatingWindow->hasSingleFrame()) {
+        if (Frame *frame = m_floatingWindow->singleFrame()) {
+            return frame->tabWidget()->tabBar();
+        } else {
+            // Shouldn't happen
+            qWarning() << Q_FUNC_INFO << "Expected a frame";
+        }
+
+    } else if (m_frame) {
+        return m_frame->tabWidget()->tabBar();
+    }
+
+    return nullptr;
 }

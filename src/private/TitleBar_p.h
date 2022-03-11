@@ -34,6 +34,7 @@ namespace KDDockWidgets {
 class DockWidgetBase;
 class Frame;
 class Button;
+class TabBar;
 
 class DOCKS_EXPORT TitleBar : public QWidgetAdapter, public Draggable
 {
@@ -95,6 +96,11 @@ public:
 
     ///@brief toggle floating
     Q_INVOKABLE bool onDoubleClicked();
+
+
+    ///@brief Returns the tab bar which is under this title bar.
+    ///It's only nullptr for the case of having a Floating Window with more than one nested Frame
+    TabBar* tabBar() const;
 
     ///@brief getter for m_frame
     Frame *frame() const
