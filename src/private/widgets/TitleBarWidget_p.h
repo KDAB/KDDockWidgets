@@ -59,7 +59,7 @@ protected:
     bool isFloatButtonEnabled() const override;
 #endif
 
-private:
+protected:
     void init();
     int buttonAreaWidth() const;
     void updateMargins();
