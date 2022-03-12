@@ -169,3 +169,15 @@ void TabBarWidget::moveTabTo(int from, int to)
 {
     moveTab(from, to);
 }
+
+void TabBarWidget::tabInserted(int index)
+{
+    QTabBar::tabInserted(index);
+    Q_EMIT dockWidgetInserted(index);
+}
+
+void TabBarWidget::tabRemoved(int index)
+{
+    QTabBar::tabRemoved(index);
+    Q_EMIT dockWidgetRemoved(index);
+}

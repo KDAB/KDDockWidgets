@@ -50,12 +50,18 @@ public:
     QRect rectForTab(int index) const override;
     void moveTabTo(int from, int to) override;
 
+Q_SIGNALS:
+    void dockWidgetInserted(int index);
+    void dockWidgetRemoved(int index);
+
 protected:
     bool dragCanStart(QPoint pressPos, QPoint pos) const override;
     void mousePressEvent(QMouseEvent *) override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mouseDoubleClickEvent(QMouseEvent *e) override;
     bool event(QEvent *) override;
+    void tabInserted(int index) override;
+    void tabRemoved(int index) override;
 
 private:
     TabWidget *const m_tabWidget;
