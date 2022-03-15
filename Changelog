@@ -1,3 +1,6 @@
+* v1.7.0 (unreleased)
+ -
+
 * v1.6.0 (unreleased)
  - Fixed restoring of normal geometry when closing a maximized window (#259)
  - Experimental support for docking into dock widgets which are in a MDI area.
