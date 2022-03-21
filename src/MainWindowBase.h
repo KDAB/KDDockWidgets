@@ -223,7 +223,13 @@ public:
     QRect windowGeometry() const;
 
 protected:
+#ifdef KDDOCKWIDGETS_QTWIDGETS
     void onCloseEvent(QCloseEvent *);
+#else
+    // QtQuick uses a different base class. This will be fixed in the wip/2.0 branch.
+    void onCloseEvent(QCloseEvent *) override;
+#endif
+
     void setUniqueName(const QString &uniqueName);
     void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()
     virtual QMargins centerWidgetMargins() const = 0;
