@@ -14,6 +14,7 @@
 #include "private/Utils_p.h"
 #include "Controller.h"
 #include "View.h"
+#include "ViewWrapper_qtwidgets.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -307,6 +308,12 @@ public:
     QWindow *windowHandle() const override
     {
         return QWidget::windowHandle();
+    }
+
+    std::unique_ptr<ViewWrapper> window() const
+    {
+        ViewWrapper *wrapper = new ViewWrapper_qtwidgets(QWidget::window());
+        return std::unique_ptr<ViewWrapper>(wrapper);
     }
 
 protected:

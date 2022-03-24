@@ -98,6 +98,8 @@ set(DOCKSLIBS_SRCS
     controllers/TabBar.h
     View.cpp
     View.h
+    ViewWrapper.cpp
+    ViewWrapper.h
     Controller.cpp
     Controller.h
 
@@ -106,6 +108,8 @@ set(DOCKSLIBS_SRCS
 
     views_qtwidgets/View_qtwidgets.cpp
     views_qtwidgets/View_qtwidgets.h
+    views_qtwidgets/ViewWrapper_qtwidgets.cpp
+    views_qtwidgets/ViewWrapper_qtwidgets.h
     views_qtwidgets/FloatingWindow_qtwidgets.cpp
     views_qtwidgets/FloatingWindow_qtwidgets.h
     views_qtwidgets/DockWidget_qtwidgets.cpp

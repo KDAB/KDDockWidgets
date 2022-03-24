@@ -31,6 +31,7 @@ class QWindow;
 
 namespace KDDockWidgets {
 
+class ViewWrapper;
 class Controller;
 
 class DOCKS_EXPORT View
@@ -48,7 +49,8 @@ public:
         Layout = 128,
         LayoutItem = 256,
         SideBar = 512,
-        DropIndicatorOverlayInterface = 1024
+        DropIndicatorOverlayInterface = 1024,
+        ViewWrapper = 2048
     };
 
     explicit View(Controller *controller, Type, QObject *thisObj);
@@ -147,7 +149,7 @@ public:
     virtual void setFixedWidth(int) = 0;
     virtual void setFixedHeight(int) = 0;
 
-    // TODO: Check if these two should be in the controller or on view
+    // TODOv2: Check if these two should be in the controller or on view
     virtual void onLayoutRequest()
     {
     }
@@ -174,6 +176,10 @@ public:
     static QSize hardcodedMinimumSize();
     static QSize boundedMaxSize(QSize min, QSize max);
 
+
+    /// @brief Returns the top-level gui element which this one is on
+    /// Like QWidget::window()
+    virtual std::unique_ptr<ViewWrapper> window() const = 0;
 
     template<typename T>
     static QSize widgetMinSize(const T *w)
