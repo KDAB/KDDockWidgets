@@ -77,8 +77,6 @@ set(DOCKSLIBS_SRCS
     private/multisplitter/Item_p.h
     private/multisplitter/ItemFreeContainer.cpp
     private/multisplitter/ItemFreeContainer_p.h
-    private/multisplitter/Logging.cpp
-    private/multisplitter/Logging_p.h
     private/multisplitter/MultiSplitterConfig.cpp
     private/multisplitter/MultiSplitterConfig.h
 

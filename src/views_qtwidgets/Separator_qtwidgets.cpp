@@ -13,7 +13,7 @@
 #include "View_qtwidgets.h"
 
 #include "Config.h"
-#include "private/multisplitter/Logging_p.h" // TODOv2: Normalize Logging_p.h
+#include "private/Logging_p.h"
 #include "controllers/Separator.h"
 
 #include <QMouseEvent>

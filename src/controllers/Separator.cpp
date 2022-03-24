@@ -11,7 +11,6 @@
 
 #include "Separator.h"
 #include "private/multisplitter/MultiSplitterConfig.h"
-#include "private/multisplitter/Logging_p.h"
 #include "private/multisplitter/Item_p.h"
 #include "View.h"
 #include "private/Logging_p.h"
