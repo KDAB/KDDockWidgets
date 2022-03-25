@@ -49,12 +49,6 @@ QSize ViewWrapper::maximumSize() const
     return {};
 }
 
-QRect ViewWrapper::geometry() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 QRect ViewWrapper::normalGeometry() const
 {
     qFatal("Not implemented");

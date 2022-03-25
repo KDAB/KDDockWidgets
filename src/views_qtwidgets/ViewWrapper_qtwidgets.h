@@ -25,6 +25,8 @@ class DOCKS_EXPORT ViewWrapper_qtwidgets : public ViewWrapper
 public:
     explicit ViewWrapper_qtwidgets(QWidget *widget);
 
+    QRect geometry() const override;
+
 private:
     QWidget *const m_widget;
 };

@@ -20,3 +20,8 @@ ViewWrapper_qtwidgets::ViewWrapper_qtwidgets(QWidget *widget)
     , m_widget(widget)
 {
 }
+
+QRect ViewWrapper_qtwidgets::geometry() const
+{
+    return m_widget->geometry();
+}

@@ -30,7 +30,6 @@ public:
     QSize maxSizeHint() const override;
     QSize minimumSizeHint() const override;
     QSize maximumSize() const override;
-    QRect geometry() const override;
     QRect normalGeometry() const override;
     void setGeometry(QRect) override;
     bool isVisible() const override;
