@@ -116,8 +116,8 @@ set(DOCKSLIBS_SRCS
     views_qtwidgets/DockWidget_qtwidgets.h
     views_qtwidgets/Frame_qtwidgets.cpp
     views_qtwidgets/Frame_qtwidgets.h
-    views_qtwidgets/MainWindow.cpp
-    views_qtwidgets/MainWindow.h
+    views_qtwidgets/MainWindow_qtwidgets.cpp
+    views_qtwidgets/MainWindow_qtwidgets.h
     views_qtwidgets/Separator_qtwidgets.cpp
     views_qtwidgets/Separator_qtwidgets.h
     views_qtwidgets/TitleBar_qtwidgets.cpp

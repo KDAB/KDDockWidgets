@@ -25,7 +25,7 @@
 #include <QQuickView>
 #else
 #include "views_qtwidgets/DockWidget_qtwidgets.h"
-#include "views_qtwidgets/MainWindow.h"
+#include "views_qtwidgets/MainWindow_qtwidgets.h"
 #include <QPushButton>
 #endif
 

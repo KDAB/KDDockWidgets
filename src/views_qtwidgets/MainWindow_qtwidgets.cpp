@@ -16,7 +16,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "MainWindow.h"
+#include "MainWindow_qtwidgets.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 

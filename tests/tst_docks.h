@@ -31,7 +31,7 @@
 #include <QQmlApplicationEngine>
 #else
 
-#include "views_qtwidgets/MainWindow.h"
+#include "views_qtwidgets/MainWindow_qtwidgets.h"
 
 #include <QLineEdit>
 #include <QMenuBar>
