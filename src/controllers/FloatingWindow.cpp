@@ -54,7 +54,7 @@ static Qt::WindowFlags windowFlagsToUse()
     return Qt::Tool;
 }
 
-static MainWindowBase *hackFindParentHarder(Controllers::Frame *frame, MainWindowBase *candidateParent)
+static MainWindow *hackFindParentHarder(Controllers::Frame *frame, MainWindow *candidateParent)
 {
     if (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows) {
         return nullptr;
@@ -68,7 +68,7 @@ static MainWindowBase *hackFindParentHarder(Controllers::Frame *frame, MainWindo
     if (candidateParent)
         return candidateParent;
 
-    const MainWindowBase::List windows = DockRegistry::self()->mainwindows();
+    const MainWindow::List windows = DockRegistry::self()->mainwindows();
 
     if (windows.isEmpty())
         return nullptr;
@@ -77,7 +77,7 @@ static MainWindowBase *hackFindParentHarder(Controllers::Frame *frame, MainWindo
         return windows.first();
     } else {
         const QStringList affinities = frame ? frame->affinities() : QStringList();
-        const MainWindowBase::List mainWindows = DockRegistry::self()->mainWindowsWithAffinity(affinities);
+        const MainWindow::List mainWindows = DockRegistry::self()->mainWindowsWithAffinity(affinities);
 
         if (mainWindows.isEmpty()) {
             qWarning() << Q_FUNC_INFO << "No window with affinity" << affinities << "found";
@@ -88,14 +88,14 @@ static MainWindowBase *hackFindParentHarder(Controllers::Frame *frame, MainWindo
     }
 }
 
-MainWindowBase *actualParent(MainWindowBase *candidate)
+MainWindow *actualParent(MainWindow *candidate)
 {
     return (Config::self().internalFlags() & Config::InternalFlag_DontUseParentForFloatingWindows)
         ? nullptr
         : candidate;
 }
 
-FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent)
+FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     : Controller(Config::self().frameworkWidgetFactory()->createFloatingWindow(this, actualParent(parent), windowFlagsToUse()))
     , Draggable(view()->asQWidget(), KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_dropArea(new DropArea(view()->asQWidget()))
@@ -137,7 +137,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent)
     m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 
-FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
+FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometry, MainWindow *parent)
     : FloatingWindow(suggestedGeometry, hackFindParentHarder(frame, parent))
 {
     QScopedValueRollback<bool> guard(m_disableSetVisible, true);
@@ -530,7 +530,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.affinities = affinities();
     fw.windowState = windowStateOverride();
 
-    auto mainWindow = qobject_cast<MainWindowBase *>(view()->asQWidget()->parentWidget());
+    auto mainWindow = qobject_cast<MainWindow *>(view()->asQWidget()->parentWidget());
     fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
                                 : -1;
 
@@ -600,9 +600,9 @@ bool FloatingWindow::isWindow() const
     return true;
 }
 
-MainWindowBase *FloatingWindow::mainWindow() const
+MainWindow *FloatingWindow::mainWindow() const
 {
-    return qobject_cast<MainWindowBase *>(parent());
+    return qobject_cast<MainWindow *>(parent());
 }
 
 QMargins FloatingWindow::contentMargins() const

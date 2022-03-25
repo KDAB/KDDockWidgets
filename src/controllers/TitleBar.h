@@ -90,7 +90,7 @@ public:
 
     ///@brief If this title bar belongs to a dock widget docked into the main window, returns the main window
     /// Returns nullptr otherwise
-    MainWindowBase *mainWindow() const;
+    MainWindow *mainWindow() const;
 
     // slots:
     bool onDoubleClicked();

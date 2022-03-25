@@ -38,7 +38,7 @@ using DockWidgetBase = KDDockWidgets::Controllers::DockWidgetBase;
 class DragController;
 class DockRegistry;
 class LayoutSaver;
-class MainWindowBase;
+class MainWindow;
 class StateDragging;
 class FrameQuick;
 class DockWidgetQuick;
@@ -375,7 +375,7 @@ public:
 
     /// @brief Returns the main window this dock widget is in. nullptr if it's not inside a main window
     /// Also returns nullptr if it's minimized to a sidebar
-    MainWindowBase *mainWindow() const;
+    MainWindow *mainWindow() const;
 
     ///@brief Returns whether This or any child of this dock widget is focused
     /// Not to be confused with QWidget::hasFocus(), which just refers to 1 widget. This includes
@@ -540,7 +540,7 @@ private:
     friend class KDDockWidgets::DragController;
     friend class KDDockWidgets::DockRegistry;
     friend class KDDockWidgets::LayoutSaver;
-    friend class KDDockWidgets::MainWindowBase;
+    friend class KDDockWidgets::MainWindow;
     friend class KDDockWidgets::FrameQuick;
     friend class KDDockWidgets::DockWidgetQuick;
 

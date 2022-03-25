@@ -49,7 +49,7 @@ class FloatingWindow;
 class DockWidgetBase;
 }
 
-class MainWindowBase;
+class MainWindow;
 
 /**
  * @brief The widget (QWidget or QQuickItem) which holds a layout of dock widgets.
@@ -74,7 +74,7 @@ public:
     /// otherwise, only direct parenting is considered
     bool isInMainWindow(bool honourNesting = false) const;
 
-    MainWindowBase *mainWindow(bool honourNesting = false) const;
+    MainWindow *mainWindow(bool honourNesting = false) const;
 
     Controllers::FloatingWindow *floatingWindow() const;
 

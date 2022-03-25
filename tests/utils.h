@@ -132,13 +132,13 @@ struct EnsureTopLevelsDeleted
 
 bool shouldBlacklistWarning(const QString &msg, const QString &category = {});
 
-std::unique_ptr<MainWindowBase> createMainWindow(QSize sz = { 1000, 1000 },
-                                                 KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                                                 const QString &name = {}, bool show = true);
+std::unique_ptr<MainWindow> createMainWindow(QSize sz = { 1000, 1000 },
+                                             KDDockWidgets::MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                                             const QString &name = {}, bool show = true);
 
 
 
-std::unique_ptr<KDDockWidgets::MainWindowBase> createMainWindow(QVector<DockDescriptor> &docks);
+std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
 
 Controllers::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQuick *w,
                                               Controllers::DockWidgetBase::Options options = {},
@@ -273,14 +273,14 @@ public:
 class EmbeddedWindow : public QWidget
 {
 public:
-    explicit EmbeddedWindow(MainWindowBase *m)
+    explicit EmbeddedWindow(MainWindow *m)
         : mainWindow(m)
     {
     }
 
     ~EmbeddedWindow() override;
 
-    MainWindowBase *const mainWindow;
+    MainWindow *const mainWindow;
 };
 
 class NonClosableWidget : public QWidget

@@ -36,7 +36,7 @@ using namespace KDDockWidgets::Tests;
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
 
 
-std::unique_ptr<KDDockWidgets::MainWindowBase>
+std::unique_ptr<KDDockWidgets::MainWindow>
 KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options,
                                        const QString &name, bool show)
 {
@@ -110,7 +110,7 @@ static QWidgetOrQuick *createGuestWidget(int i)
 #endif
 }
 
-std::unique_ptr<MainWindowBase> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
+std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
 {
     static int count = 0;
     count++;

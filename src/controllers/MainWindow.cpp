@@ -45,7 +45,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-static LayoutWidget *createLayoutWidget(MainWindowBase *mainWindow, MainWindowOptions options)
+static LayoutWidget *createLayoutWidget(MainWindow *mainWindow, MainWindowOptions options)
 {
     if (options & MainWindowOption_MDI)
         return new MDILayoutWidget(mainWindow);
@@ -53,10 +53,10 @@ static LayoutWidget *createLayoutWidget(MainWindowBase *mainWindow, MainWindowOp
     return new DropAreaWithCentralFrame(mainWindow, options);
 }
 
-class MainWindowBase::Private
+class MainWindow::Private
 {
 public:
-    explicit Private(MainWindowBase *mainWindow, const QString &uniqueName, MainWindowOptions options)
+    explicit Private(MainWindow *mainWindow, const QString &uniqueName, MainWindowOptions options)
         : m_options(options)
         , q(mainWindow)
         , m_layoutWidget(createLayoutWidget(mainWindow, options))
@@ -111,30 +111,30 @@ public:
     QString name;
     QStringList affinities;
     const MainWindowOptions m_options;
-    MainWindowBase *const q;
+    MainWindow *const q;
     QPointer<Controllers::DockWidgetBase> m_overlayedDockWidget;
     LayoutWidget *const m_layoutWidget;
     Controllers::DockWidgetBase *const m_persistentCentralDockWidget;
 };
 
-MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                               WidgetType *parent, Qt::WindowFlags flags)
+MainWindow::MainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
+                       WidgetType *parent, Qt::WindowFlags flags)
     : QMainWindow(parent, flags)
     , d(new Private(this, uniqueName, options))
 {
     setUniqueName(uniqueName);
 
     connect(d->m_layoutWidget, &LayoutWidget::visibleWidgetCountChanged, this,
-            &MainWindowBase::frameCountChanged);
+            &MainWindow::frameCountChanged);
 }
 
-MainWindowBase::~MainWindowBase()
+MainWindow::~MainWindow()
 {
     DockRegistry::self()->unregisterMainWindow(this);
     delete d;
 }
 
-void MainWindowBase::addDockWidgetAsTab(Controllers::DockWidgetBase *widget)
+void MainWindow::addDockWidgetAsTab(Controllers::DockWidgetBase *widget)
 {
     Q_ASSERT(widget);
     qCDebug(addwidget) << Q_FUNC_INFO << widget;
@@ -166,8 +166,8 @@ void MainWindowBase::addDockWidgetAsTab(Controllers::DockWidgetBase *widget)
     }
 }
 
-void MainWindowBase::addDockWidget(Controllers::DockWidgetBase *dw, Location location,
-                                   Controllers::DockWidgetBase *relativeTo, InitialOption option)
+void MainWindow::addDockWidget(Controllers::DockWidgetBase *dw, Location location,
+                               Controllers::DockWidgetBase *relativeTo, InitialOption option)
 {
     if (dw->options() & Controllers::DockWidgetBase::Option_NotDockable) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << dw;
@@ -182,37 +182,37 @@ void MainWindowBase::addDockWidget(Controllers::DockWidgetBase *dw, Location loc
     dropArea()->addDockWidget(dw, location, relativeTo, option);
 }
 
-QString MainWindowBase::uniqueName() const
+QString MainWindow::uniqueName() const
 {
     return d->name;
 }
 
-MainWindowOptions MainWindowBase::options() const
+MainWindowOptions MainWindow::options() const
 {
     return d->m_options;
 }
 
-DropAreaWithCentralFrame *MainWindowBase::dropArea() const
+DropAreaWithCentralFrame *MainWindow::dropArea() const
 {
     return qobject_cast<DropAreaWithCentralFrame *>(d->m_layoutWidget);
 }
 
-MultiSplitter *MainWindowBase::multiSplitter() const
+MultiSplitter *MainWindow::multiSplitter() const
 {
     return dropArea();
 }
 
-LayoutWidget *MainWindowBase::layoutWidget() const
+LayoutWidget *MainWindow::layoutWidget() const
 {
     return d->m_layoutWidget;
 }
 
-MDILayoutWidget *MainWindowBase::mdiLayoutWidget() const
+MDILayoutWidget *MainWindow::mdiLayoutWidget() const
 {
     return qobject_cast<MDILayoutWidget *>(layoutWidget());
 }
 
-void MainWindowBase::setAffinities(const QStringList &affinityNames)
+void MainWindow::setAffinities(const QStringList &affinityNames)
 {
     QStringList affinities = affinityNames;
     affinities.removeAll(QString());
@@ -230,22 +230,22 @@ void MainWindowBase::setAffinities(const QStringList &affinityNames)
     d->affinities = affinities;
 }
 
-QStringList MainWindowBase::affinities() const
+QStringList MainWindow::affinities() const
 {
     return d->affinities;
 }
 
-void MainWindowBase::layoutEqually()
+void MainWindow::layoutEqually()
 {
     dropArea()->layoutEqually();
 }
 
-void MainWindowBase::layoutParentContainerEqually(Controllers::DockWidgetBase *dockWidget)
+void MainWindow::layoutParentContainerEqually(Controllers::DockWidgetBase *dockWidget)
 {
     dropArea()->layoutParentContainerEqually(dockWidget);
 }
 
-CursorPositions MainWindowBase::Private::allowedResizeSides(SideBarLocation loc) const
+CursorPositions MainWindow::Private::allowedResizeSides(SideBarLocation loc) const
 {
     // When a sidebar is on top, you can only resize its bottom.
     // and so forth...
@@ -266,7 +266,7 @@ CursorPositions MainWindowBase::Private::allowedResizeSides(SideBarLocation loc)
     return CursorPosition_Undefined;
 }
 
-QRect MainWindowBase::Private::rectForOverlay(Controllers::Frame *frame, SideBarLocation location) const
+QRect MainWindow::Private::rectForOverlay(Controllers::Frame *frame, SideBarLocation location) const
 {
     Controllers::SideBar *sb = q->sideBar(location);
     if (!sb)
@@ -366,7 +366,7 @@ static SideBarLocation sideBarLocationForBorder(Layouting::LayoutBorderLocations
     return SideBarLocation::None;
 }
 
-SideBarLocation MainWindowBase::Private::preferredSideBar(Controllers::DockWidgetBase *dw) const
+SideBarLocation MainWindow::Private::preferredSideBar(Controllers::DockWidgetBase *dw) const
 {
     // TODO: Algorithm can still be made smarter
 
@@ -432,7 +432,7 @@ SideBarLocation MainWindowBase::Private::preferredSideBar(Controllers::DockWidge
                              : SideBarLocation::West;
 }
 
-void MainWindowBase::Private::updateOverlayGeometry(QSize suggestedSize)
+void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
 {
     if (!m_overlayedDockWidget)
         return;
@@ -484,7 +484,7 @@ void MainWindowBase::Private::updateOverlayGeometry(QSize suggestedSize)
     m_overlayedDockWidget->d->frame()->view()->setGeometry(newGeometry);
 }
 
-void MainWindowBase::Private::clearSideBars()
+void MainWindow::Private::clearSideBars()
 {
     for (auto loc : { SideBarLocation::North, SideBarLocation::South,
                       SideBarLocation::East, SideBarLocation::West }) {
@@ -493,12 +493,12 @@ void MainWindowBase::Private::clearSideBars()
     }
 }
 
-void MainWindowBase::moveToSideBar(Controllers::DockWidgetBase *dw)
+void MainWindow::moveToSideBar(Controllers::DockWidgetBase *dw)
 {
     moveToSideBar(dw, d->preferredSideBar(dw));
 }
 
-void MainWindowBase::moveToSideBar(Controllers::DockWidgetBase *dw, SideBarLocation location)
+void MainWindow::moveToSideBar(Controllers::DockWidgetBase *dw, SideBarLocation location)
 {
     if (dw->isPersistentCentralDockWidget())
         return;
@@ -513,7 +513,7 @@ void MainWindowBase::moveToSideBar(Controllers::DockWidgetBase *dw, SideBarLocat
     }
 }
 
-void MainWindowBase::restoreFromSideBar(DockWidgetBase *dw)
+void MainWindow::restoreFromSideBar(DockWidgetBase *dw)
 {
     // First un-overlay it, if it's overlayed
     if (dw == d->m_overlayedDockWidget)
@@ -530,7 +530,7 @@ void MainWindowBase::restoreFromSideBar(DockWidgetBase *dw)
     dw->setFloating(false); // dock it
 }
 
-void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
+void MainWindow::overlayOnSideBar(DockWidgetBase *dw)
 {
     if (!dw || dw->isPersistentCentralDockWidget())
         return;
@@ -561,7 +561,7 @@ void MainWindowBase::overlayOnSideBar(DockWidgetBase *dw)
     Q_EMIT dw->isOverlayedChanged(true);
 }
 
-void MainWindowBase::toggleOverlayOnSideBar(DockWidgetBase *dw)
+void MainWindow::toggleOverlayOnSideBar(DockWidgetBase *dw)
 {
     const bool wasOverlayed = d->m_overlayedDockWidget == dw;
     clearSideBarOverlay(); // Because only 1 dock widget can be overlayed each time
@@ -570,7 +570,7 @@ void MainWindowBase::toggleOverlayOnSideBar(DockWidgetBase *dw)
     }
 }
 
-void MainWindowBase::clearSideBarOverlay(bool deleteFrame)
+void MainWindow::clearSideBarOverlay(bool deleteFrame)
 {
     if (!d->m_overlayedDockWidget)
         return;
@@ -601,7 +601,7 @@ void MainWindowBase::clearSideBarOverlay(bool deleteFrame)
     }
 }
 
-Controllers::SideBar *MainWindowBase::sideBarForDockWidget(const DockWidgetBase *dw) const
+Controllers::SideBar *MainWindow::sideBarForDockWidget(const DockWidgetBase *dw) const
 {
     for (auto loc : { SideBarLocation::North, SideBarLocation::South,
                       SideBarLocation::East, SideBarLocation::West }) {
@@ -615,12 +615,12 @@ Controllers::SideBar *MainWindowBase::sideBarForDockWidget(const DockWidgetBase 
     return nullptr;
 }
 
-DockWidgetBase *MainWindowBase::overlayedDockWidget() const
+DockWidgetBase *MainWindow::overlayedDockWidget() const
 {
     return d->m_overlayedDockWidget;
 }
 
-bool MainWindowBase::sideBarIsVisible(SideBarLocation loc) const
+bool MainWindow::sideBarIsVisible(SideBarLocation loc) const
 {
     if (Controllers::SideBar *sb = sideBar(loc)) {
         return !sb->isEmpty(); // isVisible() is always true, but its height is 0 when empty.
@@ -629,7 +629,7 @@ bool MainWindowBase::sideBarIsVisible(SideBarLocation loc) const
     return false;
 }
 
-bool MainWindowBase::anySideBarIsVisible() const
+bool MainWindow::anySideBarIsVisible() const
 {
     for (auto loc : { SideBarLocation::North, SideBarLocation::South,
                       SideBarLocation::East, SideBarLocation::West }) {
@@ -640,12 +640,12 @@ bool MainWindowBase::anySideBarIsVisible() const
     return false;
 }
 
-bool MainWindowBase::isMDI() const
+bool MainWindow::isMDI() const
 {
     return d->m_options & MainWindowOption_MDI;
 }
 
-bool MainWindowBase::closeDockWidgets(bool force)
+bool MainWindow::closeDockWidgets(bool force)
 {
     bool allClosed = true;
 
@@ -675,7 +675,7 @@ bool MainWindowBase::closeDockWidgets(bool force)
     return allClosed;
 }
 
-void MainWindowBase::setUniqueName(const QString &uniqueName)
+void MainWindow::setUniqueName(const QString &uniqueName)
 {
     if (uniqueName.isEmpty())
         return;
@@ -689,13 +689,13 @@ void MainWindowBase::setUniqueName(const QString &uniqueName)
     }
 }
 
-void MainWindowBase::onResized(QResizeEvent *)
+void MainWindow::onResized(QResizeEvent *)
 {
     if (d->m_overlayedDockWidget)
         d->updateOverlayGeometry(d->m_overlayedDockWidget->d->frame()->size());
 }
 
-bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
+bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
 {
     if (mw.options != options()) {
         qWarning() << Q_FUNC_INFO << "Refusing to restore MainWindow with different options"
@@ -740,7 +740,7 @@ bool MainWindowBase::deserialize(const LayoutSaver::MainWindow &mw)
     return success;
 }
 
-LayoutSaver::MainWindow MainWindowBase::serialize() const
+LayoutSaver::MainWindow MainWindow::serialize() const
 {
     LayoutSaver::MainWindow m;
 
@@ -767,7 +767,7 @@ LayoutSaver::MainWindow MainWindowBase::serialize() const
     return m;
 }
 
-QRect MainWindowBase::windowGeometry() const
+QRect MainWindow::windowGeometry() const
 {
     if (QWindow *window = windowHandle())
         return window->geometry();
@@ -775,7 +775,7 @@ QRect MainWindowBase::windowGeometry() const
     return window()->geometry();
 }
 
-void MainWindowBase::setPersistentCentralWidget(QWidgetOrQuick *widget)
+void MainWindow::setPersistentCentralWidget(QWidgetOrQuick *widget)
 {
     if (!d->supportsPersistentCentralWidget()) {
         qWarning() << "MainWindow::setPersistentCentralWidget() requires MainWindowOption_HasCentralWidget";
@@ -790,7 +790,7 @@ void MainWindowBase::setPersistentCentralWidget(QWidgetOrQuick *widget)
     }
 }
 
-QWidgetOrQuick *MainWindowBase::persistentCentralWidget() const
+QWidgetOrQuick *MainWindow::persistentCentralWidget() const
 {
     if (auto dw = d->m_persistentCentralDockWidget)
         return dw->widget();

@@ -560,7 +560,7 @@ FloatingWindow *Frame::floatingWindow() const
 
     auto p = view()->asQWidget()->parentWidget();
     while (p) {
-        if (qobject_cast<KDDockWidgets::MainWindowBase *>(p))
+        if (qobject_cast<KDDockWidgets::MainWindow *>(p))
             return nullptr;
 
         if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(p))
@@ -751,7 +751,7 @@ Frame *Frame::deserialize(const LayoutSaver::Frame &f)
             qWarning() << Q_FUNC_INFO << "Frame is the persistent central frame but doesn't have"
                        << "an associated window name";
         } else {
-            if (MainWindowBase *mw = DockRegistry::self()->mainWindowByName(f.mainWindowUniqueName)) {
+            if (MainWindow *mw = DockRegistry::self()->mainWindowByName(f.mainWindowUniqueName)) {
                 frame = mw->dropArea()->m_centralFrame;
                 if (!frame) {
                     // Doesn't happen...
@@ -795,7 +795,7 @@ LayoutSaver::Frame Frame::serialize() const
     frame.currentTabIndex = currentTabIndex();
     frame.id = view()->id(); // for coorelation purposes
 
-    if (MainWindowBase *mw = mainWindow())
+    if (MainWindow *mw = mainWindow())
         frame.mainWindowUniqueName = mw->uniqueName();
 
     for (DockWidgetBase *dock : docks)
@@ -861,7 +861,7 @@ QRect Frame::dragRect() const
     return qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->dragRect();
 }
 
-MainWindowBase *Frame::mainWindow() const
+MainWindow *Frame::mainWindow() const
 {
     return m_layoutWidget ? m_layoutWidget->mainWindow() : nullptr;
 }

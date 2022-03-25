@@ -21,7 +21,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-SideBar::SideBar(SideBarLocation location, MainWindowBase *parent)
+SideBar::SideBar(SideBarLocation location, MainWindow *parent)
     : Controller(Config::self().frameworkWidgetFactory()->createSideBar(this, parent))
     , m_mainWindow(parent)
     , m_location(location)
@@ -102,7 +102,7 @@ SideBarLocation SideBar::location() const
     return m_location;
 }
 
-MainWindowBase *SideBar::mainWindow() const
+MainWindow *SideBar::mainWindow() const
 {
     return m_mainWindow;
 }

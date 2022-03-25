@@ -202,7 +202,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [] {
         const auto mainWindows = DockRegistry::self()->mainwindows();
-        for (MainWindowBase *mainWindow : mainWindows) {
+        for (MainWindow *mainWindow : mainWindows) {
             mainWindow->layoutWidget()->checkSanity();
         }
 
@@ -317,7 +317,7 @@ void DebugWindow::repaintWidgetRecursive(QWidget *w)
 void DebugWindow::dumpDockWidgetInfo()
 {
     const QVector<Controllers::FloatingWindow *> floatingWindows = DockRegistry::self()->floatingWindows();
-    const MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
+    const MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
     const DockWidgetBase::List dockWidgets = DockRegistry::self()->dockwidgets();
 
     for (Controllers::FloatingWindow *fw : floatingWindows) {
@@ -325,7 +325,7 @@ void DebugWindow::dumpDockWidgetInfo()
         fw->layoutWidget()->dumpLayout();
     }
 
-    for (MainWindowBase *mw : mainWindows) {
+    for (MainWindow *mw : mainWindows) {
         qDebug() << mw << "; affinities=" << mw->affinities();
         mw->layoutWidget()->dumpLayout();
     }

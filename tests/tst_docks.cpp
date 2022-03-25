@@ -99,9 +99,9 @@ static DockWidgetBase *createAndNestDockWidget(DropArea *dropArea, Controllers::
     return dock;
 }
 
-static std::unique_ptr<MainWindowBase> createSimpleNestedMainWindow(DockWidgetBase **centralDock,
-                                                                    DockWidgetBase **leftDock,
-                                                                    DockWidgetBase **rightDock)
+static std::unique_ptr<MainWindow> createSimpleNestedMainWindow(DockWidgetBase **centralDock,
+                                                                DockWidgetBase **leftDock,
+                                                                DockWidgetBase **rightDock)
 {
     auto window = createMainWindow({ 900, 500 });
     *centralDock = createDockWidget("centralDock", Qt::green);
@@ -5751,7 +5751,7 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
     QFETCH(bool, embedded);
     EnsureTopLevelsDeleted e;
 
-    MainWindowBase *m = nullptr;
+    MainWindow *m = nullptr;
     if (embedded) {
         auto em = createEmbeddedMainWindow(QSize(500, 500));
         m = em->mainWindow;
@@ -7103,7 +7103,7 @@ void TestDocks::tst_close()
     // 2. Test that closing the single frame of a main window doesn't close the main window itself
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
-        QPointer<MainWindowBase> mainWindowPtr = m.get();
+        QPointer<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello", Qt::green);
         m->addDockWidget(dock1, Location_OnLeft);
 
@@ -7116,7 +7116,7 @@ void TestDocks::tst_close()
     // 2.1 Test closing the frame instead
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
-        QPointer<MainWindowBase> mainWindowPtr = m.get();
+        QPointer<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello", Qt::green);
         m->addDockWidget(dock1, Location_OnLeft);
 
@@ -7130,7 +7130,7 @@ void TestDocks::tst_close()
     // 2.2 Repeat, but with a central frame
     {
         auto m = createMainWindow(QSize(800, 500));
-        QPointer<MainWindowBase> mainWindowPtr = m.get();
+        QPointer<MainWindow> mainWindowPtr = m.get();
         dock1 = createDockWidget("hello", Qt::green);
         m->addDockWidget(dock1, Location_OnLeft);
 

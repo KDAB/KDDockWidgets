@@ -21,7 +21,7 @@
 
 namespace KDDockWidgets {
 
-class MainWindowBase;
+class MainWindow;
 
 namespace Controllers {
 
@@ -31,7 +31,7 @@ class DOCKS_EXPORT SideBar : public Controller
 {
     Q_OBJECT
 public:
-    explicit SideBar(SideBarLocation, MainWindowBase *parent = nullptr);
+    explicit SideBar(SideBarLocation, MainWindow *parent = nullptr);
 
     void addDockWidget(DockWidgetBase *dw);
     void removeDockWidget(DockWidgetBase *dw);
@@ -53,7 +53,7 @@ public:
     SideBarLocation location() const;
 
     /// @brief Returns the main window this side bar belongs to
-    MainWindowBase *mainWindow() const;
+    MainWindow *mainWindow() const;
 
     /// @brief Toggles the dock widget overlay. Equivalent to the user clicking on the button.
     void toggleOverlay(DockWidgetBase *);
@@ -71,7 +71,7 @@ private:
     void onDockWidgetDestroyed(QObject *dw);
     void updateSize();
 
-    MainWindowBase *const m_mainWindow;
+    MainWindow *const m_mainWindow;
     QVector<DockWidgetBase *> m_dockWidgets;
     const SideBarLocation m_location;
     const Qt::Orientation m_orientation;

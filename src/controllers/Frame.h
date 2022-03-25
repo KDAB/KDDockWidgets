@@ -27,7 +27,7 @@
 class TestDocks;
 
 namespace KDDockWidgets {
-class MainWindowBase;
+class MainWindow;
 class MDILayoutWidget;
 class WidgetResizeHandler;
 }
@@ -177,7 +177,7 @@ public:
      * @brief Returns the main window this frame is in.
      * nullptr if not inside a main window.
      */
-    MainWindowBase *mainWindow() const;
+    MainWindow *mainWindow() const;
 
     /**
      * @brief Puts the Frame back in its previous main window position

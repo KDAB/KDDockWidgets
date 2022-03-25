@@ -93,7 +93,7 @@ MyCentralWidget::~MyCentralWidget()
 
 MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &name, MainWindowOptions options,
                                            QWidget *parent, Qt::WindowFlags flags)
-    : MainWindowBase(name, options, parent, flags)
+    : MainWindow(name, options, parent, flags)
     , d(new Private(options, this))
 {
     if (d->m_supportsAutoHide) {
@@ -137,7 +137,7 @@ Controllers::SideBar *MainWindow_qtwidgets::sideBar(SideBarLocation location) co
 
 void MainWindow_qtwidgets::resizeEvent(QResizeEvent *ev)
 {
-    MainWindowBase::resizeEvent(ev);
+    MainWindow::resizeEvent(ev);
     onResized(ev); // Also call our own handler, since QtQuick doesn't have resizeEvent()
 }
 

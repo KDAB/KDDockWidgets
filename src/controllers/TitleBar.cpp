@@ -83,7 +83,7 @@ bool TitleBar::titleBarIsFocusable() const
 }
 
 
-KDDockWidgets::MainWindowBase *TitleBar::mainWindow() const
+KDDockWidgets::MainWindow *TitleBar::mainWindow() const
 {
     if (m_floatingWindow)
         return nullptr;
@@ -397,7 +397,7 @@ void TitleBar::onAutoHideClicked()
     for (DockWidgetBase *dw : dockwidgets) {
         if (dw->isOverlayed()) {
             // restore
-            MainWindowBase *mainWindow = dw->mainWindow();
+            MainWindow *mainWindow = dw->mainWindow();
             mainWindow->restoreFromSideBar(dw);
         } else {
             dw->moveToSideBar();

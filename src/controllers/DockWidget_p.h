@@ -56,7 +56,7 @@ public:
         return view ? view->floatingWindow() : nullptr;
     }
 
-    MainWindowBase *mainWindow() const
+    MainWindow *mainWindow() const
     {
         if (q->view()->isWindow())
             return nullptr;
@@ -64,7 +64,7 @@ public:
         // Note: Don't simply use window(), as the MainWindow might be embedded into something else
         QWidgetOrQuick *p = q->view()->asQWidget()->parentWidget();
         while (p) {
-            if (auto window = qobject_cast<MainWindowBase *>(p))
+            if (auto window = qobject_cast<MainWindow *>(p))
                 return window;
 
             if (p->isWindow())

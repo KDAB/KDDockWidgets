@@ -52,7 +52,7 @@ class DropAreaWithCentralFrame;
  * Do not use instantiate directly in user code. Use MainWindow instead.
  */
 #ifndef PYTHON_BINDINGS // Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
-class DOCKS_EXPORT MainWindowBase : public QMainWindow
+class DOCKS_EXPORT MainWindow : public QMainWindow
 #else
 class DOCKS_EXPORT MainWindowBase : public QMainWindow
 #endif
@@ -63,11 +63,11 @@ class DOCKS_EXPORT MainWindowBase : public QMainWindow
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options CONSTANT)
     Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
 public:
-    typedef QVector<MainWindowBase *> List;
-    explicit MainWindowBase(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                            QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
+    typedef QVector<MainWindow *> List;
+    explicit MainWindow(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                        QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 
-    ~MainWindowBase() override;
+    ~MainWindow() override;
 
     /**
      * @brief Docks a DockWidget into the central frame, tabbed.

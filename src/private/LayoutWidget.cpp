@@ -47,23 +47,23 @@ bool LayoutWidget::isInMainWindow(bool honourNesting) const
     return mainWindow(honourNesting) != nullptr;
 }
 
-MainWindowBase *LayoutWidget::mainWindow(bool honourNesting) const
+MainWindow *LayoutWidget::mainWindow(bool honourNesting) const
 {
     // QtQuick doesn't support nesting yet
     honourNesting = honourNesting && kddwUsesQtWidgets();
 
     if (honourNesting) {
         // This layout might be a MDIArea, nested in DropArea, which is main window.
-        return firstParentOfType<MainWindowBase>(this);
+        return firstParentOfType<MainWindow>(this);
     } else {
 
         if (auto pw = QWidget::parentWidget()) {
             // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as
             // it's parented
             if (pw->objectName() == QLatin1String("MyCentralWidget"))
-                return qobject_cast<MainWindowBase *>(pw->parentWidget());
+                return qobject_cast<MainWindow *>(pw->parentWidget());
 
-            if (auto mw = qobject_cast<MainWindowBase *>(pw))
+            if (auto mw = qobject_cast<MainWindow *>(pw))
                 return mw;
         }
     }

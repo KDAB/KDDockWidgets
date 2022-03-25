@@ -122,7 +122,7 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other,
                                                      DockWidgetBase *relativeTo,
                                                      InitialOption initialOption)
 {
-    if (auto mainWindow = qobject_cast<MainWindowBase *>(view()->asQWidget()->window())) {
+    if (auto mainWindow = qobject_cast<MainWindow *>(view()->asQWidget()->window())) {
         // It's inside a main window. Simply use the main window API.
         mainWindow->addDockWidget(other, location, relativeTo, initialOption);
         return;
@@ -412,7 +412,7 @@ void DockWidgetBase::raise()
 
 bool DockWidgetBase::isMainWindow() const
 {
-    return qobject_cast<MainWindowBase *>(widget());
+    return qobject_cast<MainWindow *>(widget());
 }
 
 bool DockWidgetBase::isInMainWindow() const
@@ -420,7 +420,7 @@ bool DockWidgetBase::isInMainWindow() const
     return d->mainWindow() != nullptr;
 }
 
-MainWindowBase *DockWidgetBase::mainWindow() const
+MainWindow *DockWidgetBase::mainWindow() const
 {
     return d->mainWindow();
 }
@@ -456,13 +456,13 @@ void DockWidgetBase::setAffinities(const QStringList &affinityNames)
 
 void DockWidgetBase::moveToSideBar()
 {
-    if (MainWindowBase *m = mainWindow())
+    if (MainWindow *m = mainWindow())
         m->moveToSideBar(this);
 }
 
 bool DockWidgetBase::isOverlayed() const
 {
-    if (MainWindowBase *m = mainWindow())
+    if (MainWindow *m = mainWindow())
         return m->overlayedDockWidget() == this;
 
     return false;
@@ -633,9 +633,9 @@ DockWidgetBase::Private *DockWidgetBase::dptr() const
 
 QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
 {
-    MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
+    MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
     // We don't care about multiple mainwindows yet. Or, let's just say that the first one is more main than the others
-    MainWindowBase *mw = mainWindows.isEmpty() ? nullptr : mainWindows.constFirst();
+    MainWindow *mw = mainWindows.isEmpty() ? nullptr : mainWindows.constFirst();
     if (!mw || !q->isFloating())
         return {};
 

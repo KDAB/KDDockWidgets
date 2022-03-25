@@ -150,9 +150,9 @@ QByteArray LayoutSaver::serializeLayout() const
     // Just a simplification. One less type of windows to handle.
     d->m_dockRegistry->ensureAllFloatingWidgetsAreMorphed();
 
-    const MainWindowBase::List mainWindows = d->m_dockRegistry->mainwindows();
+    const auto mainWindows = d->m_dockRegistry->mainwindows();
     layout.mainWindows.reserve(mainWindows.size());
-    for (MainWindowBase *mainWindow : mainWindows) {
+    for (auto mainWindow : mainWindows) {
         if (d->matchesAffinity(mainWindow->affinities()))
             layout.mainWindows.push_back(mainWindow->serialize());
     }
@@ -236,7 +236,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
     // 1. Restore main windows
     for (const LayoutSaver::MainWindow &mw : qAsConst(layout.mainWindows)) {
-        MainWindowBase *mainWindow = d->m_dockRegistry->mainWindowByName(mw.uniqueName);
+        auto mainWindow = d->m_dockRegistry->mainWindowByName(mw.uniqueName);
         if (!mainWindow) {
             if (auto mwFunc = Config::self().mainWindowFactoryFunc()) {
                 mainWindow = mwFunc(mw.uniqueName);
@@ -267,8 +267,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!d->matchesAffinity(fw.affinities) || fw.skipsRestore())
             continue;
 
-        MainWindowBase *parent = fw.parentIndex == -1 ? nullptr
-                                                      : DockRegistry::self()->mainwindows().at(fw.parentIndex);
+        auto parent = fw.parentIndex == -1 ? nullptr
+                                           : DockRegistry::self()->mainwindows().at(fw.parentIndex);
 
         auto floatingWindow = new Controllers::FloatingWindow({}, parent);
         fw.floatingWindowInstance = floatingWindow;
@@ -380,7 +380,7 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainW
     // If they were previously docked we need to float them, as the main window they were on will
     // be loading a new layout.
 
-    for (MainWindowBase *mw : DockRegistry::self()->mainWindows(mainWindowNames)) {
+    for (auto mw : DockRegistry::self()->mainWindows(mainWindowNames)) {
         const Controllers::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
         for (auto dw : docks) {
             if (dw->skipsRestore()) {
@@ -396,7 +396,7 @@ void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout
     // When restoring such a file, we need to float any visible dock widgets which it doesn't know about
     // so we can restore the MainWindow layout properly
 
-    for (MainWindowBase *mw : DockRegistry::self()->mainWindows(layout.mainWindowNames())) {
+    for (auto mw : DockRegistry::self()->mainWindows(layout.mainWindowNames())) {
         const Controllers::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
         for (DockWidgetBase *dw : docks) {
             if (!layout.containsDockWidget(dw->uniqueName())) {
@@ -1028,7 +1028,7 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
     mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
 }
 
-static QScreen *screenForMainWindow(MainWindowBase *mw)
+static QScreen *screenForMainWindow(MainWindow *mw)
 {
     // Workaround for 5.12 which doesn't have QWidget::screen().
 

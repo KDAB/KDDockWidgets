@@ -55,8 +55,8 @@ public:
     void registerDockWidget(Controllers::DockWidgetBase *);
     void unregisterDockWidget(Controllers::DockWidgetBase *);
 
-    void registerMainWindow(MainWindowBase *);
-    void unregisterMainWindow(MainWindowBase *);
+    void registerMainWindow(MainWindow *);
+    void unregisterMainWindow(MainWindow *);
 
     void registerFloatingWindow(Controllers::FloatingWindow *);
     void unregisterFloatingWindow(Controllers::FloatingWindow *);
@@ -74,7 +74,7 @@ public:
 
     Q_INVOKABLE KDDockWidgets::Controllers::DockWidgetBase *dockByName(const QString &,
                                                                        KDDockWidgets::DockRegistry::DockByNameFlags = {}) const;
-    Q_INVOKABLE KDDockWidgets::MainWindowBase *mainWindowByName(const QString &) const;
+    Q_INVOKABLE KDDockWidgets::MainWindow *mainWindowByName(const QString &) const;
     Q_INVOKABLE KDDockWidgets::MainWindowMDI *mdiMainWindowByName(const QString &) const;
 
     /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
@@ -92,10 +92,10 @@ public:
     const Controllers::DockWidgetBase::List closedDockwidgets() const;
 
     ///@brief returns all MainWindow instances
-    const MainWindowBase::List mainwindows() const;
+    const MainWindow::List mainwindows() const;
 
     ///@brief overload returning only the ones with the specified names
-    const MainWindowBase::List mainWindows(const QStringList &names);
+    const MainWindow::List mainWindows(const QStringList &names);
 
     ///@brief returns the list of LayoutWidget instances
     const QVector<LayoutWidget *> layouts() const;
@@ -123,7 +123,7 @@ public:
     Controllers::FloatingWindow *floatingWindowForHandle(WId hwnd) const;
 
     ///@brief returns the MainWindow with handle @p windowHandle
-    MainWindowBase *mainWindowForHandle(QWindow *windowHandle) const;
+    MainWindow *mainWindowForHandle(QWindow *windowHandle) const;
 
     ///@brief returns the top level widget associated with the specified QWindow.
     /// For QtWidgets, it returns a QWidget which is either a KDDockWidgets::MainWindow or a FloatingWindow.
@@ -152,7 +152,7 @@ public:
      * @brief clear Overload that only clears the specified dockWidgets and main windows.
      */
     void clear(const Controllers::DockWidgetBase::List &dockWidgets,
-               const MainWindowBase::List &mainWindows,
+               const MainWindow::List &mainWindows,
                const QStringList &affinities);
 
     /**
@@ -190,7 +190,7 @@ public:
     /**
      * @brief Returns all main windows which match at least one of the @p affinities
      */
-    MainWindowBase::List mainWindowsWithAffinity(const QStringList &affinities) const;
+    MainWindow::List mainWindowsWithAffinity(const QStringList &affinities) const;
 
     /// @brief Returns the LayoutWidget where the specified item is in
     LayoutWidget *layoutForItem(const Layouting::Item *) const;
@@ -251,7 +251,7 @@ private:
 
     bool m_isProcessingAppQuitEvent = false;
     Controllers::DockWidgetBase::List m_dockWidgets;
-    MainWindowBase::List m_mainWindows;
+    MainWindow::List m_mainWindows;
     QList<Controllers::Frame *> m_frames;
     QVector<Controllers::FloatingWindow *> m_floatingWindows;
     QVector<LayoutWidget *> m_layouts;

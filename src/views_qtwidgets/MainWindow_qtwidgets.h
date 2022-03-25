@@ -33,7 +33,7 @@ namespace Views {
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget::DockWidget instances.
  */
-class DOCKS_EXPORT MainWindow_qtwidgets : public MainWindowBase
+class DOCKS_EXPORT MainWindow_qtwidgets : public MainWindow
 {
     Q_OBJECT
 public:

@@ -22,7 +22,7 @@
 #include "kddockwidgets/docks_export.h"
 
 namespace KDDockWidgets {
-class MainWindowBase;
+class MainWindow;
 class DropArea;
 class MultiSplitter;
 class LayoutWidget;
@@ -37,8 +37,8 @@ class DOCKS_EXPORT FloatingWindow : public Controller, public Draggable
 {
     Q_OBJECT
 public:
-    explicit FloatingWindow(QRect suggestedGeometry, MainWindowBase *parent = nullptr);
-    explicit FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometry, MainWindowBase *parent = nullptr);
+    explicit FloatingWindow(QRect suggestedGeometry, MainWindow *parent = nullptr);
+    explicit FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometry, MainWindow *parent = nullptr);
     virtual ~FloatingWindow() override;
 
     bool deserialize(const LayoutSaver::FloatingWindow &);
@@ -169,7 +169,7 @@ public:
     /// @brief Returns the MainWindow which is the transient parent of this FloatingWindow
     /// Can be nullptr if you create dock widgets before the main window. Can also be some
     /// arbitrary value if you have more than one main window.
-    MainWindowBase *mainWindow() const;
+    MainWindow *mainWindow() const;
 
     ///@brief Returns the contents margins
     QMargins contentMargins() const;
