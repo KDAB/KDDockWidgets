@@ -34,6 +34,8 @@
 #include "controllers/DockWidget_p.h"
 #include "controllers/MainWindow.h"
 
+#include "nlohmann/nlohmann_qt_helpers.h"
+
 #include <qmath.h>
 #include <QDebug>
 #include <QFile>
@@ -459,20 +461,18 @@ bool LayoutSaver::Layout::isValid() const
 
 QByteArray LayoutSaver::Layout::toJson() const
 {
-    QJsonDocument doc = QJsonDocument::fromVariant(toVariantMap());
-    return doc.toJson();
+    nlohmann::json json = toVariantMap();
+    return QByteArray::fromStdString(json.dump(4));
 }
 
 bool LayoutSaver::Layout::fromJson(const QByteArray &jsonData)
 {
-    QJsonParseError error;
-    QJsonDocument doc = QJsonDocument::fromJson(jsonData, &error);
-    if (error.error == QJsonParseError::NoError) {
-        fromVariantMap(doc.toVariant().toMap());
-        return true;
+    nlohmann::json json = nlohmann::json::parse(jsonData, nullptr, /*DisableExceptions=*/true);
+    if (json.is_discarded()) {
+        return false;
     }
-
-    return false;
+    fromVariantMap(json);
+    return true;
 }
 
 QVariantMap LayoutSaver::Layout::toVariantMap() const
