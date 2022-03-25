@@ -29,8 +29,6 @@ set(DOCKSLIBS_SRCS
     FocusScope.h
     FrameworkWidgetFactory.cpp
     FrameworkWidgetFactory.h
-    MainWindowBase.cpp
-    MainWindowBase.h
     MainWindowMDI.cpp
     MainWindowMDI.h
     MDIArea.cpp
@@ -86,6 +84,8 @@ set(DOCKSLIBS_SRCS
     controllers/FloatingWindow.h
     controllers/Frame.cpp
     controllers/Frame.h
+    controllers/MainWindowBase.cpp
+    controllers/MainWindowBase.h
     controllers/Separator.cpp
     controllers/Separator.h
     controllers/SideBar.cpp
@@ -116,6 +116,8 @@ set(DOCKSLIBS_SRCS
     views_qtwidgets/DockWidget_qtwidgets.h
     views_qtwidgets/Frame_qtwidgets.cpp
     views_qtwidgets/Frame_qtwidgets.h
+    views_qtwidgets/MainWindow.cpp
+    views_qtwidgets/MainWindow.h
     views_qtwidgets/Separator_qtwidgets.cpp
     views_qtwidgets/Separator_qtwidgets.h
     views_qtwidgets/TitleBar_qtwidgets.cpp
@@ -150,7 +152,7 @@ set(DOCKS_INSTALLABLE_INCLUDES
     # QWidgetAdapter.h
     LayoutSaver.h
     MainWindowMDI.h
-    MainWindowBase.h
+    # MainWindowBase.h
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
@@ -231,8 +233,8 @@ else()
       private/DebugWindow_p.h
       private/ObjectViewer.cpp
       private/ObjectViewer_p.h
-      MainWindow.cpp
-      MainWindow.h
+      # MainWindow.cpp
+      # MainWindow.h
       # DockWidget.h
       # private/multisplitter/Widget_qwidget.cpp
       # private/multisplitter/Widget_qwidget.h
@@ -256,7 +258,7 @@ else()
 
   set(DOCKS_INSTALLABLE_INCLUDES
       ${DOCKS_INSTALLABLE_INCLUDES}
-      MainWindow.h
+      # MainWindow.h
       # DockWidget.h
       MDIArea.h
   )
@@ -274,8 +276,8 @@ ecm_generate_headers(camelcase_HEADERS
     FocusScope
     FrameworkWidgetFactory,DefaultWidgetFactory
     LayoutSaver
-    MainWindow
-    MainWindowBase
+    # MainWindow
+    # MainWindowBase
     MainWindowMDI
 )
 

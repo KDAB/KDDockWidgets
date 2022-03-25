@@ -17,7 +17,6 @@
 
 namespace KDDockWidgets::Views {
 
-
 /// @brief A View that doesn't own its QWidget
 /// Implements a View API around an existing QWidget
 /// Useful for widgets that are not created by KDDW.

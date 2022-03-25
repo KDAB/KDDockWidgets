@@ -11,7 +11,7 @@
 
 #include "SideBar.h"
 #include "DockWidget.h"
-#include "kddockwidgets/MainWindowBase.h"
+#include "MainWindowBase.h"
 #include "kddockwidgets/FrameworkWidgetFactory.h"
 
 #include "../views_qtwidgets/SideBar_qtwidgets.h" // TODO removes

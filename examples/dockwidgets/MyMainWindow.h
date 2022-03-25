@@ -12,7 +12,7 @@
 #pragma once
 
 #include <kddockwidgets/DockWidget.h>
-#include <kddockwidgets/MainWindow.h>
+#include <views_qtwidgets/MainWindow.h>
 
 class MyMainWindow : public KDDockWidgets::MainWindow
 {

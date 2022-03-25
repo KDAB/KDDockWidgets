@@ -20,11 +20,12 @@
 #include "DockRegistry_p.h"
 #include "LayoutSaver.h"
 #include "LayoutWidget_p.h"
-#include "MainWindow.h"
 #include "ObjectViewer_p.h"
 #include "Qt5Qt6Compat_p.h"
 
 #include "controllers/FloatingWindow.h"
+
+#include "views_qtwidgets/MainWindow.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>

@@ -19,7 +19,7 @@
 #ifndef KD_MAINWINDOW_H
 #define KD_MAINWINDOW_H
 
-#include "MainWindowBase.h"
+#include "controllers/MainWindowBase.h"
 
 namespace KDDockWidgets {
 

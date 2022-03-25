@@ -20,7 +20,7 @@
 #define KD_MAINWINDOW_MDI_H
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "MainWindow.h"
+#include "views_qtwidgets/MainWindow.h"
 #else
 #include "private/quick/MainWindowQuick_p.h"
 #endif

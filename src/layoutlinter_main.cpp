@@ -16,7 +16,7 @@
 #include "private/quick/MainWindowQuick_p.h"
 #else
 #include "views_qtwidgets/DockWidget_qtwidgets.h"
-#include "MainWindow.h"
+#include "views_qtwidgets/MainWindow.h"
 #endif
 
 #include <QApplication>

@@ -16,7 +16,6 @@
 #include "DropIndicatorOverlayInterface_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "Logging_p.h"
-#include "MainWindowBase.h"
 #include "Utils_p.h"
 #include "multisplitter/Item_p.h"
 #include "WindowBeingDragged_p.h"
@@ -26,6 +25,7 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"
+#include "controllers/MainWindowBase.h"
 
 #include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/View_qtwidgets.h"

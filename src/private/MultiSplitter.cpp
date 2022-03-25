@@ -24,7 +24,6 @@
 #include "FrameworkWidgetFactory.h"
 #include "LayoutSaver.h"
 #include "Logging_p.h"
-#include "MainWindowBase.h"
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
 #include "multisplitter/Item_p.h"
@@ -33,6 +32,7 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/DockWidget_p.h"
 #include "controllers/DockWidget.h"
+#include "controllers/MainWindowBase.h"
 
 #include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/DockWidget_qtwidgets.h"

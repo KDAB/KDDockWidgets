@@ -14,7 +14,7 @@
 
 #include "controllers/DockWidget.h"
 #include "controllers/Frame.h"
-#include "kddockwidgets/MainWindowBase.h"
+#include "controllers/MainWindowBase.h"
 
 #include <QVector>
 #include <QObject>
