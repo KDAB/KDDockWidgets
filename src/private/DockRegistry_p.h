@@ -14,7 +14,7 @@
 
 #include "controllers/DockWidget.h"
 #include "controllers/Frame.h"
-#include "controllers/MainWindowBase.h"
+#include "controllers/MainWindow.h"
 
 #include <QVector>
 #include <QObject>

@@ -17,7 +17,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "MainWindowBase.h"
+#include "MainWindow.h"
 #include "KDDockWidgets.h"
 #include "private/DockRegistry_p.h"
 #include "private/MDILayoutWidget_p.h"

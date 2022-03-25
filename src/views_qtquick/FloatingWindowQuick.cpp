@@ -10,7 +10,7 @@
 */
 
 #include "FloatingWindowQuick_p.h"
-#include "MainWindowBase.h"
+#include "MainWindow.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 

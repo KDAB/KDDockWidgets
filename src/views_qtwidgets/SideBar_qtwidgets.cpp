@@ -13,7 +13,7 @@
 
 #include "controllers/DockWidget.h"
 #include "controllers/SideBar.h"
-#include "controllers/MainWindowBase.h"
+#include "controllers/MainWindow.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>

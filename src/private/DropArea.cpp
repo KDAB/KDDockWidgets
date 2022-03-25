@@ -25,7 +25,7 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"
-#include "controllers/MainWindowBase.h"
+#include "controllers/MainWindow.h"
 
 #include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/View_qtwidgets.h"

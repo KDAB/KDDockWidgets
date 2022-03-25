@@ -16,7 +16,7 @@
 #define KDDOCKWIDGETS_TESTING_H
 
 #include "KDDockWidgets.h"
-#include "controllers/MainWindowBase.h"
+#include "controllers/MainWindow.h"
 #include "controllers/DockWidget.h"
 #include "DockRegistry_p.h"
 

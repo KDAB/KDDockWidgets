@@ -13,7 +13,7 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/Frame.h"
 #include "controllers/TitleBar.h"
-#include "controllers/MainWindowBase.h"
+#include "controllers/MainWindow.h"
 
 #include "private/DockRegistry_p.h"
 #include "private/DropArea_p.h"

@@ -84,8 +84,8 @@ set(DOCKSLIBS_SRCS
     controllers/FloatingWindow.h
     controllers/Frame.cpp
     controllers/Frame.h
-    controllers/MainWindowBase.cpp
-    controllers/MainWindowBase.h
+    controllers/MainWindow.cpp
+    controllers/MainWindow.h
     controllers/Separator.cpp
     controllers/Separator.h
     controllers/SideBar.cpp
@@ -152,7 +152,7 @@ set(DOCKS_INSTALLABLE_INCLUDES
     # QWidgetAdapter.h
     LayoutSaver.h
     MainWindowMDI.h
-    # MainWindowBase.h
+    # MainWindow.h
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES

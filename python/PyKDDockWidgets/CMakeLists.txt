@@ -59,7 +59,7 @@ set(PyKDDockWidgets_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_global.h
     ${CMAKE_SOURCE_DIR}/src/DockWidget.h
     ${CMAKE_SOURCE_DIR}/src/DockWidget.h
-    ${CMAKE_SOURCE_DIR}/src/MainWindowBase.h
+    ${CMAKE_SOURCE_DIR}/src/MainWindow.h
     ${CMAKE_SOURCE_DIR}/src/MainWindow.h
     ${CMAKE_SOURCE_DIR}/src/LayoutSaver.h
 )

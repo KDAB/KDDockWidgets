@@ -32,7 +32,7 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"
-#include "controllers/MainWindowBase.h"
+#include "controllers/MainWindow.h"
 
 #include <qmath.h>
 #include <QDebug>

@@ -10,7 +10,7 @@
 */
 
 #include "FloatingWindow.h"
-#include "MainWindowBase.h"
+#include "MainWindow.h"
 #include "private/Logging_p.h"
 #include "TitleBar.h"
 #include "Frame.h"

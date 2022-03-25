@@ -18,10 +18,10 @@
 #define PYTHON_BINDINGS
 
 #ifndef QT_WIDGETS_LIB
-# define QT_WIDGETS_LIB
+#define QT_WIDGETS_LIB
 #endif
 
-#include <kddockwidgets/MainWindowBase.h>
+#include <kddockwidgets/MainWindow.h>
 #include <kddockwidgets/MainWindow.h>
 #include <kddockwidgets/DockWidget.h>
 #include <kddockwidgets/DockWidget.h>

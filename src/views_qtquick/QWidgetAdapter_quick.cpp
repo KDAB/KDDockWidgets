@@ -19,7 +19,7 @@
  */
 
 #include "QWidgetAdapter.h"
-#include "MainWindowBase.h"
+#include "MainWindow.h"
 
 #include "../DockRegistry_p.h"
 #include "../Utils_p.h"
@@ -183,7 +183,7 @@ void QWidgetAdapter::onCloseEvent(QCloseEvent *)
 }
 void QWidgetAdapter::onResizeEvent(QResizeEvent *event)
 {
-    QWindow* window = windowHandle();
+    QWindow *window = windowHandle();
     if (!window) {
         return;
     }
@@ -203,7 +203,7 @@ void QWidgetAdapter::onResizeEvent(QResizeEvent *event)
 }
 void QWidgetAdapter::onMoveEvent(QMoveEvent *event)
 {
-    QWindow* window = windowHandle();
+    QWindow *window = windowHandle();
     if (!window) {
         return;
     }
@@ -223,7 +223,7 @@ void QWidgetAdapter::onMoveEvent(QMoveEvent *event)
 }
 void QWidgetAdapter::onWindowStateChangeEvent(QWindowStateChangeEvent *)
 {
-    QWindow* window = windowHandle();
+    QWindow *window = windowHandle();
     if (!window) {
         return;
     }
@@ -782,7 +782,7 @@ bool QWidgetAdapter::eventFilter(QObject *watched, QEvent *ev)
             case QEvent::MouseButtonRelease:
                 ev->ignore();
                 qApp->sendEvent(this, ev);
-                //qDebug() << "Mouse event" << ev;
+                // qDebug() << "Mouse event" << ev;
                 if (ev->isAccepted())
                     return true;
                 break;
