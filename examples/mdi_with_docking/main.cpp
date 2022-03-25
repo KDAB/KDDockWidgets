@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 
     // # 1. Create our main window
 
-    KDDockWidgets::Views::MainWindow mainWindow(QStringLiteral("MyMainWindow"), KDDockWidgets::MainWindowOption_HasCentralWidget);
+    KDDockWidgets::Views::MainWindow_qtwidgets mainWindow(QStringLiteral("MyMainWindow"), KDDockWidgets::MainWindowOption_HasCentralWidget);
     mainWindow.setWindowTitle("Main Window");
     mainWindow.resize(1600, 1200);
     mainWindow.show();

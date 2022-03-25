@@ -33,11 +33,11 @@ namespace Views {
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget::DockWidget instances.
  */
-class DOCKS_EXPORT MainWindow : public MainWindowBase
+class DOCKS_EXPORT MainWindow_qtwidgets : public MainWindowBase
 {
     Q_OBJECT
 public:
-    typedef QVector<MainWindow *> List;
+    typedef QVector<MainWindow_qtwidgets *> List;
 
     ///@brief Constructor. Use it as you would use QMainWindow.
     ///@param uniqueName Mandatory name that should be unique between all MainWindow instances.
@@ -45,11 +45,11 @@ public:
     ///@param options optional MainWindowOptions to use
     ///@param parent QObject *parent to pass to QMainWindow constructor.
     ///@param flags Window flags to  pass to QMainWindow constructor.
-    explicit MainWindow(const QString &uniqueName, MainWindowOptions options = MainWindowOption_None,
-                        QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
+    explicit MainWindow_qtwidgets(const QString &uniqueName, MainWindowOptions options = MainWindowOption_None,
+                                  QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 
     ///@brief Destructor
-    ~MainWindow() override;
+    ~MainWindow_qtwidgets() override;
 
     ///@brief returns the sidebar for the specified location
     Controllers::SideBar *sideBar(SideBarLocation) const override;

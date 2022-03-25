@@ -52,10 +52,10 @@ public:
 };
 }
 
-class MainWindow::Private
+class MainWindow_qtwidgets::Private
 {
 public:
-    explicit Private(MainWindowOptions, MainWindow *mainWindow)
+    explicit Private(MainWindowOptions, MainWindow_qtwidgets *mainWindow)
         : q(mainWindow)
         , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
         , m_centralWidget(new MyCentralWidget(mainWindow))
@@ -78,7 +78,7 @@ public:
         m_layout->setContentsMargins(m_centerWidgetMargins * factor);
     }
 
-    MainWindow *const q;
+    MainWindow_qtwidgets *const q;
     const bool m_supportsAutoHide;
     QHash<SideBarLocation, Controllers::SideBar *> m_sideBars;
     MyCentralWidget *const m_centralWidget;
@@ -91,8 +91,8 @@ MyCentralWidget::~MyCentralWidget()
 }
 
 
-MainWindow::MainWindow(const QString &name, MainWindowOptions options,
-                       QWidget *parent, Qt::WindowFlags flags)
+MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &name, MainWindowOptions options,
+                                           QWidget *parent, Qt::WindowFlags flags)
     : MainWindowBase(name, options, parent, flags)
     , d(new Private(options, this))
 {
@@ -120,33 +120,33 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
             });
 }
 
-MainWindow::~MainWindow()
+MainWindow_qtwidgets::~MainWindow_qtwidgets()
 {
     delete d;
 }
 
-void MainWindow::setCentralWidget(QWidget *w)
+void MainWindow_qtwidgets::setCentralWidget(QWidget *w)
 {
     QMainWindow::setCentralWidget(w);
 }
 
-Controllers::SideBar *MainWindow::sideBar(SideBarLocation location) const
+Controllers::SideBar *MainWindow_qtwidgets::sideBar(SideBarLocation location) const
 {
     return d->m_sideBars.value(location);
 }
 
-void MainWindow::resizeEvent(QResizeEvent *ev)
+void MainWindow_qtwidgets::resizeEvent(QResizeEvent *ev)
 {
     MainWindowBase::resizeEvent(ev);
     onResized(ev); // Also call our own handler, since QtQuick doesn't have resizeEvent()
 }
 
-QMargins MainWindow::centerWidgetMargins() const
+QMargins MainWindow_qtwidgets::centerWidgetMargins() const
 {
     return d->m_centerWidgetMargins;
 }
 
-void MainWindow::setCenterWidgetMargins(const QMargins &margins)
+void MainWindow_qtwidgets::setCenterWidgetMargins(const QMargins &margins)
 {
     if (d->m_centerWidgetMargins == margins)
         return;
@@ -154,7 +154,7 @@ void MainWindow::setCenterWidgetMargins(const QMargins &margins)
     d->updateMargins();
 }
 
-QRect MainWindow::centralAreaGeometry() const
+QRect MainWindow_qtwidgets::centralAreaGeometry() const
 {
     return centralWidget()->geometry();
 }

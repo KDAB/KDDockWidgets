@@ -33,7 +33,7 @@ static bool lint(const QString &filename)
     };
 
     MainWindowFactoryFunc mwFunc = [](const QString &dwName) {
-        return static_cast<MainWindowBase *>(new Views::MainWindow(dwName));
+        return static_cast<MainWindowBase *>(new Views::MainWindow_qtwidgets(dwName));
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);

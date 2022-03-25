@@ -14,7 +14,7 @@
 #include <kddockwidgets/DockWidget.h>
 #include <views_qtwidgets/MainWindow_qtwidgets.h>
 
-class MyMainWindow : public KDDockWidgets::Views::MainWindow
+class MyMainWindow : public KDDockWidgets::Views::MainWindow_qtwidgets
 {
     Q_OBJECT
 public:

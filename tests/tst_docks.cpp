@@ -5014,7 +5014,7 @@ void TestDocks::tst_dockableMainWindows()
     auto dock1 = createDockWidget("dock1", new QPushButton("foo"));
     m1->addDockWidget(dock1, Location_OnTop);
 
-    auto m2 = new KDDockWidgets::Views::MainWindow("mainwindow-dockable");
+    auto m2 = new KDDockWidgets::Views::MainWindow_qtwidgets("mainwindow-dockable");
     auto m2Container = createDockWidget("mainwindow-dw", m2);
     auto menubar = m2->menuBar();
     menubar->addMenu("File");
@@ -5330,11 +5330,11 @@ void TestDocks::tst_floatingWindowDeleted()
     // Tests a case where the empty floating dock widget wouldn't be deleted
     // Doesn't repro QTBUG-83030 unfortunately, as we already have an event loop running
     // but let's leave this here nonetheless
-    class MyMainWindow : public KDDockWidgets::Views::MainWindow
+    class MyMainWindow : public KDDockWidgets::Views::MainWindow_qtwidgets
     {
     public:
         MyMainWindow()
-            : KDDockWidgets::Views::MainWindow("tst_floatingWindowDeleted", MainWindowOption_None)
+            : KDDockWidgets::Views::MainWindow_qtwidgets("tst_floatingWindowDeleted", MainWindowOption_None)
         {
             auto dock1 = new Controllers::DockWidgetBase(QStringLiteral("DockWidget #1"));
             auto myWidget = new QWidget();
@@ -5362,7 +5362,7 @@ void TestDocks::tst_addToSmallMainWindow6()
 
     QWidget container;
     auto lay = new QVBoxLayout(&container);
-    Views::MainWindow m("MyMainWindow_tst_addToSmallMainWindow8", MainWindowOption_None);
+    Views::MainWindow_qtwidgets m("MyMainWindow_tst_addToSmallMainWindow8", MainWindowOption_None);
     lay->addWidget(&m);
     container.resize(100, 100);
     Testing::waitForResize(&container);

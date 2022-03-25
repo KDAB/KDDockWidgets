@@ -48,7 +48,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
                            bool dockWidget0IsNonClosable, bool nonDockableDockWidget9, bool restoreIsRelative,
                            bool maxSizeForDockWidget8, bool dockwidget5DoesntCloseBeforeRestore,
                            const QString &affinityName, QWidget *parent)
-    : KDDockWidgets::Views::MainWindow(uniqueName, options, parent)
+    : KDDockWidgets::Views::MainWindow_qtwidgets(uniqueName, options, parent)
     , m_dockWidget0IsNonClosable(dockWidget0IsNonClosable)
     , m_dockWidget9IsNonDockable(nonDockableDockWidget9)
     , m_restoreIsRelative(restoreIsRelative)
@@ -101,7 +101,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     });
 
     auto layoutEqually = fileMenu->addAction(QStringLiteral("Layout Equally"));
-    connect(layoutEqually, &QAction::triggered, this, &MainWindow::layoutEqually);
+    connect(layoutEqually, &QAction::triggered, this, &MainWindow_qtwidgets::layoutEqually);
 
     auto quitAction = fileMenu->addAction(QStringLiteral("Quit"));
     connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
