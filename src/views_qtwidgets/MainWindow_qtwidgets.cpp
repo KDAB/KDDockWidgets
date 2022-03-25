@@ -36,6 +36,7 @@
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Views;
 
 namespace KDDockWidgets {
 class MyCentralWidget : public QWidget

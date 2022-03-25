@@ -27,6 +27,8 @@ namespace Controllers {
 class SideBar;
 }
 
+namespace Views {
+
 /**
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget::DockWidget instances.
@@ -68,7 +70,7 @@ private:
     class Private;
     Private *const d;
 };
-
+}
 }
 
 #endif

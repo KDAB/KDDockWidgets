@@ -27,8 +27,9 @@
 
 namespace KDDockWidgets {
 
+
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI : public KDDockWidgets::MainWindow
+class DOCKS_EXPORT MainWindowMDI : public Views::MainWindow
 {
     Q_OBJECT
 public:
