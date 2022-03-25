@@ -49,7 +49,7 @@ TabWidgetOptions Stack::options() const
     return m_options;
 }
 
-void Stack::setCurrentDockWidget(DockWidgetBase *dw)
+void Stack::setCurrentDockWidget(DockWidget *dw)
 {
     setCurrentDockWidget(indexOfDockWidget(dw));
 }
@@ -70,12 +70,12 @@ DockWidgetBase *Stack::currentDockWidget() const
     return dockwidgetAt(currentIndex());
 }
 
-void Stack::addDockWidget(DockWidgetBase *dock)
+void Stack::addDockWidget(DockWidget *dock)
 {
     insertDockWidget(dock, numDockWidgets());
 }
 
-bool Stack::insertDockWidget(DockWidgetBase *dock, int index)
+bool Stack::insertDockWidget(DockWidget *dock, int index)
 {
     Q_ASSERT(dock);
     qCDebug(addwidget) << Q_FUNC_INFO << dock << "; count before=" << numDockWidgets();
@@ -91,7 +91,7 @@ bool Stack::insertDockWidget(DockWidgetBase *dock, int index)
     }
 
     QPointer<Frame> oldFrame = dock->d->frame();
-    insertDockWidget(index, dock, dock->icon(DockWidgetBase::IconPlace::TabBar), dock->title());
+    insertDockWidget(index, dock, dock->icon(DockWidget::IconPlace::TabBar), dock->title());
     setCurrentDockWidget(index);
 
     if (oldFrame && oldFrame->beingDeletedLater()) {
@@ -109,7 +109,7 @@ bool Stack::insertDockWidget(DockWidgetBase *dock, int index)
     return true;
 }
 
-bool Stack::contains(DockWidgetBase *dw) const
+bool Stack::contains(DockWidget *dw) const
 {
     return indexOfDockWidget(dw) != -1;
 }
@@ -249,18 +249,18 @@ DockWidgetBase *Stack::dockwidgetAt(int index) const
     return qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->dockwidgetAt(index);
 }
 
-int Stack::indexOfDockWidget(const DockWidgetBase *dw) const
+int Stack::indexOfDockWidget(const DockWidget *dw) const
 {
     // TODO
     return qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->indexOfDockWidget(dw);
 }
 
-void Stack::removeDockWidget(DockWidgetBase *dw)
+void Stack::removeDockWidget(DockWidget *dw)
 {
     qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->removeDockWidget(dw);
 }
 
-bool Stack::insertDockWidget(int index, DockWidgetBase *dw, const QIcon &icon, const QString &title)
+bool Stack::insertDockWidget(int index, DockWidget *dw, const QIcon &icon, const QString &title)
 {
     return qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->insertDockWidget(index, dw, icon, title);
 }

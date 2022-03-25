@@ -33,7 +33,7 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-using DockWidgetBase = KDDockWidgets::Controllers::DockWidgetBase;
+using DockWidgetBase = KDDockWidgets::Controllers::DockWidget;
 
 class DragController;
 class DockRegistry;
@@ -57,7 +57,7 @@ class FloatingWindow;
  *
  * Do not use instantiate directly in user code. Use DockWidget instead.
  */
-class DOCKS_EXPORT DockWidgetBase : public Controller
+class DOCKS_EXPORT DockWidget : public Controller
 {
     Q_OBJECT
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
@@ -65,10 +65,10 @@ class DOCKS_EXPORT DockWidgetBase : public Controller
     Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(QObject *widget READ widget NOTIFY widgetChanged)
-    Q_PROPERTY(KDDockWidgets::Controllers::DockWidgetBase::Options options READ options WRITE setOptions NOTIFY
+    Q_PROPERTY(KDDockWidgets::Controllers::DockWidget::Options options READ options WRITE setOptions NOTIFY
                    optionsChanged)
 public:
-    typedef QVector<DockWidgetBase *> List;
+    typedef QVector<DockWidget *> List;
 
     ///@brief DockWidget options to pass at construction time
     enum Option {
@@ -110,11 +110,11 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidgetBase(const QString &uniqueName,
-                            Options options = Options(), LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
+    explicit DockWidget(const QString &uniqueName,
+                        Options options = Options(), LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
 
     ///@brief destructor
-    ~DockWidgetBase() override;
+    ~DockWidget() override;
 
     /**
      * @brief docks @p other widget into this one. Tabs will be shown if not already.
@@ -124,7 +124,7 @@ public:
      * shown.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
-    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidgetBase *other,
+    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other,
                                         KDDockWidgets::InitialOption initialOption = {});
 
     /**
@@ -140,9 +140,9 @@ public:
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetAsTab()
      */
     Q_INVOKABLE void
-    addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidgetBase *other,
+    addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget *other,
                                     KDDockWidgets::Location location,
-                                    KDDockWidgets::Controllers::DockWidgetBase *relativeTo = nullptr,
+                                    KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,
                                     KDDockWidgets::InitialOption initialOption = {});
 
     /**
@@ -233,7 +233,7 @@ public:
 
     /// @brief returns the per-dockwidget options which will affect LayoutSaver
     /// These are the options which were passed to the constructor
-    KDDockWidgets::Controllers::DockWidgetBase::LayoutSaverOptions layoutSaverOptions() const;
+    KDDockWidgets::Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions() const;
 
     /**
      * @brief Setter for the options.
@@ -424,7 +424,7 @@ public:
     /// @brief Returns a dock widget by its name
     /// This is the same name you passed to DockWidget CTOR.
     /// nullptr is returned if the dock widget isn't found.
-    static DockWidgetBase *byName(const QString &uniqueName);
+    static DockWidget *byName(const QString &uniqueName);
 
     /// @brief Returns whether this widget has the LayoutSaverOption::Skip flag
     bool skipsRestore() const;
@@ -486,7 +486,7 @@ Q_SIGNALS:
 
     ///@brief emitted when the options change
     ///@sa setOptions(), options()
-    void optionsChanged(KDDockWidgets::Controllers::DockWidgetBase::Options);
+    void optionsChanged(KDDockWidgets::Controllers::DockWidget::Options);
 
     ///@brief emitted when isFocused changes
     ///@sa isFocused
@@ -527,7 +527,7 @@ public:
 #else
 private:
 #endif
-    Q_DISABLE_COPY(DockWidgetBase)
+    Q_DISABLE_COPY(DockWidget)
     friend class MultiSplitter;
     friend class LayoutWidget;
     friend class MDILayoutWidget;
@@ -548,7 +548,7 @@ private:
      * @brief Constructs a dock widget from its serialized form.
      * @internal
      */
-    static DockWidgetBase *deserialize(const std::shared_ptr<LayoutSaver::DockWidget> &);
+    static DockWidget *deserialize(const std::shared_ptr<LayoutSaver::DockWidget> &);
 
 
     class Private;

@@ -63,7 +63,7 @@ int TabBar_qtwidgets::tabAt(QPoint localPos) const
     return QTabBar::tabAt(localPos);
 }
 
-Controllers::DockWidgetBase *TabBar_qtwidgets::currentDockWidget() const
+Controllers::DockWidget *TabBar_qtwidgets::currentDockWidget() const
 {
     const int index = currentIndex();
     return index == -1 ? nullptr

@@ -89,12 +89,12 @@ struct AddDockWidgetParams
         return KDDockWidgets::DockRegistry::self()->mainWindowByName(mainWindowName);
     }
 
-    Controllers::DockWidgetBase *dockWidget() const
+    Controllers::DockWidget *dockWidget() const
     {
         return KDDockWidgets::DockRegistry::self()->dockByName(dockWidgetName);
     }
 
-    Controllers::DockWidgetBase *relativeTo() const
+    Controllers::DockWidget *relativeTo() const
     {
         return KDDockWidgets::DockRegistry::self()->dockByName(relativeToName);
     }

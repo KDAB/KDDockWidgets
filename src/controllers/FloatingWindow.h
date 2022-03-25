@@ -46,10 +46,10 @@ public:
 
     // Draggable:
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
-    Controllers::DockWidgetBase *singleDockWidget() const override;
+    Controllers::DockWidget *singleDockWidget() const override;
     bool isWindow() const override;
 
-    const QVector<DockWidgetBase *> dockWidgets() const;
+    const QVector<DockWidget *> dockWidgets() const;
     const Controllers::Frame::List frames() const;
     DropArea *dropArea() const
     {
@@ -151,20 +151,20 @@ public:
     QRect dragRect() const;
 
     ///@brief Returns whether all dock widgets have the specified option set
-    bool allDockWidgetsHave(Controllers::DockWidgetBase::Option) const;
+    bool allDockWidgetsHave(Controllers::DockWidget::Option) const;
 
     ///@brief Returns whether at least one dock widget has the specified option set
-    bool anyDockWidgetsHas(DockWidgetBase::Option) const;
+    bool anyDockWidgetsHas(DockWidget::Option) const;
 
     ///@brief Returns whether all dock widgets have the specified  layout saver option set
-    bool allDockWidgetsHave(DockWidgetBase::LayoutSaverOption) const;
+    bool allDockWidgetsHave(DockWidget::LayoutSaverOption) const;
 
     ///@brief Returns whether at least one dock widget has the specified layout saver option set
-    bool anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption) const;
+    bool anyDockWidgetsHas(DockWidget::LayoutSaverOption) const;
 
     /// @brief Adds the dock widget to the specified location
-    void addDockWidget(DockWidgetBase *, KDDockWidgets::Location location,
-                       DockWidgetBase *relativeTo, InitialOption = {});
+    void addDockWidget(DockWidget *, KDDockWidgets::Location location,
+                       DockWidget *relativeTo, InitialOption = {});
 
     /// @brief Returns the MainWindow which is the transient parent of this FloatingWindow
     /// Can be nullptr if you create dock widgets before the main window. Can also be some

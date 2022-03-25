@@ -111,8 +111,8 @@ void Frame::onCloseEvent(QCloseEvent *e)
 {
     qCDebug(closing) << "Frame::closeEvent";
     e->accept(); // Accepted by default (will close unless ignored)
-    const DockWidgetBase::List docks = dockWidgets();
-    for (DockWidgetBase *dock : docks) {
+    const DockWidget::List docks = dockWidgets();
+    for (DockWidget *dock : docks) {
         qApp->sendEvent(dock->view()->asQWidget(), e);
         if (!e->isAccepted())
             break; // Stop when the first dockwidget prevents closing
@@ -162,13 +162,13 @@ void Frame::changeTabIcon(int index, const QIcon &icon)
     qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->changeTabIcon(index, icon);
 }
 
-void Frame::removeWidget_impl(DockWidgetBase *dw)
+void Frame::removeWidget_impl(DockWidget *dw)
 {
     // TODO
     qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->removeWidget_impl(dw);
 }
 
-int Frame::indexOfDockWidget_impl(const DockWidgetBase *dw)
+int Frame::indexOfDockWidget_impl(const DockWidget *dw)
 {
     // TODO
     return qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->indexOfDockWidget_impl(dw);
@@ -186,12 +186,12 @@ void Frame::setCurrentTabIndex_impl(int index)
     qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->setCurrentTabIndex_impl(index);
 }
 
-void Frame::setCurrentDockWidget_impl(DockWidgetBase *dw)
+void Frame::setCurrentDockWidget_impl(DockWidget *dw)
 {
     qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->setCurrentDockWidget_impl(dw);
 }
 
-void Frame::insertDockWidget_impl(DockWidgetBase *dw, int index)
+void Frame::insertDockWidget_impl(DockWidget *dw, int index)
 {
     qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->insertDockWidget_impl(dw, index);
 }
@@ -223,7 +223,7 @@ Controllers::TabBar *Frame::tabBar() const
 
 void Frame::updateTitleAndIcon()
 {
-    if (DockWidgetBase *dw = currentDockWidget()) {
+    if (DockWidget *dw = currentDockWidget()) {
         m_titleBar->setTitle(dw->title());
         m_titleBar->setIcon(dw->icon());
 
@@ -245,15 +245,15 @@ void Frame::onDockWidgetTitleChanged()
     updateTitleAndIcon();
 
     if (!m_inCtor) { // don't call pure virtual in ctor
-        if (auto dw = qobject_cast<DockWidgetBase *>(sender())) {
+        if (auto dw = qobject_cast<DockWidget *>(sender())) {
             int index = indexOfDockWidget(dw);
             renameTab(index, dw->title());
-            changeTabIcon(index, dw->icon(DockWidgetBase::IconPlace::TabBar));
+            changeTabIcon(index, dw->icon(DockWidget::IconPlace::TabBar));
         }
     }
 }
 
-void Frame::addWidget(DockWidgetBase *dockWidget, InitialOption addingOption)
+void Frame::addWidget(DockWidget *dockWidget, InitialOption addingOption)
 {
     insertWidget(dockWidget, dockWidgetCount(), addingOption); // append
 }
@@ -266,7 +266,7 @@ void Frame::addWidget(Frame *frame, InitialOption addingOption)
     }
 
     const auto &docks = frame->dockWidgets();
-    for (DockWidgetBase *dockWidget : docks)
+    for (DockWidget *dockWidget : docks)
         addWidget(dockWidget, addingOption);
 }
 
@@ -277,7 +277,7 @@ void Frame::addWidget(FloatingWindow *floatingWindow, InitialOption addingOption
         addWidget(f, addingOption);
 }
 
-void Frame::insertWidget(DockWidgetBase *dockWidget, int index, InitialOption addingOption)
+void Frame::insertWidget(DockWidget *dockWidget, int index, InitialOption addingOption)
 {
     Q_ASSERT(dockWidget);
     if (containsDockWidget(dockWidget)) {
@@ -306,18 +306,18 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index, InitialOption ad
         }
     }
 
-    connect(dockWidget, &DockWidgetBase::titleChanged, this, &Frame::onDockWidgetTitleChanged);
-    connect(dockWidget, &DockWidgetBase::iconChanged, this, &Frame::onDockWidgetTitleChanged);
+    connect(dockWidget, &DockWidget::titleChanged, this, &Frame::onDockWidgetTitleChanged);
+    connect(dockWidget, &DockWidget::iconChanged, this, &Frame::onDockWidgetTitleChanged);
 }
 
-void Frame::removeWidget(DockWidgetBase *dw)
+void Frame::removeWidget(DockWidget *dw)
 {
-    disconnect(dw, &DockWidgetBase::titleChanged, this, &Frame::onDockWidgetTitleChanged);
-    disconnect(dw, &DockWidgetBase::iconChanged, this, &Frame::onDockWidgetTitleChanged);
+    disconnect(dw, &DockWidget::titleChanged, this, &Frame::onDockWidgetTitleChanged);
+    disconnect(dw, &DockWidget::iconChanged, this, &Frame::onDockWidgetTitleChanged);
     removeWidget_impl(dw);
 }
 
-FloatingWindow *Frame::detachTab(DockWidgetBase *dockWidget)
+FloatingWindow *Frame::detachTab(DockWidget *dockWidget)
 {
     if (m_inCtor || m_inDtor)
         return nullptr;
@@ -341,7 +341,7 @@ FloatingWindow *Frame::detachTab(DockWidgetBase *dockWidget)
     return floatingWindow;
 }
 
-int Frame::indexOfDockWidget(const DockWidgetBase *dw)
+int Frame::indexOfDockWidget(const DockWidget *dw)
 {
     if (m_inCtor || m_inDtor)
         return -1;
@@ -365,7 +365,7 @@ void Frame::setCurrentTabIndex(int index)
     setCurrentTabIndex_impl(index);
 }
 
-void Frame::setCurrentDockWidget(DockWidgetBase *dw)
+void Frame::setCurrentDockWidget(DockWidget *dw)
 {
     if (m_inCtor || m_inDtor)
         return;
@@ -373,7 +373,7 @@ void Frame::setCurrentDockWidget(DockWidgetBase *dw)
     setCurrentDockWidget_impl(dw);
 }
 
-void Frame::insertDockWidget(DockWidgetBase *dw, int index)
+void Frame::insertDockWidget(DockWidget *dw, int index)
 {
     if (m_inCtor || m_inDtor)
         return;
@@ -417,8 +417,8 @@ void Frame::onDockWidgetCountChanged()
         if (!(m_options & FrameOption_AlwaysShowsTabs))
             Q_EMIT hasTabsVisibleChanged();
 
-        const DockWidgetBase::List docks = dockWidgets();
-        for (DockWidgetBase *dock : docks)
+        const DockWidget::List docks = dockWidgets();
+        for (DockWidget *dock : docks)
             dock->d->updateFloatAction();
     }
 
@@ -488,8 +488,8 @@ void Frame::updateTitleBarVisibility()
 
 void Frame::updateFloatingActions()
 {
-    const QVector<DockWidgetBase *> widgets = dockWidgets();
-    for (DockWidgetBase *dw : widgets)
+    const QVector<DockWidget *> widgets = dockWidgets();
+    for (DockWidget *dw : widgets)
         dw->d->updateFloatAction();
 }
 
@@ -533,7 +533,7 @@ const DockWidgetBase::List Frame::dockWidgets() const
     if (m_inCtor || m_inDtor)
         return {};
 
-    DockWidgetBase::List dockWidgets;
+    DockWidget::List dockWidgets;
     const int count = dockWidgetCount();
     dockWidgets.reserve(count);
     for (int i = 0; i < count; ++i)
@@ -542,7 +542,7 @@ const DockWidgetBase::List Frame::dockWidgets() const
     return dockWidgets;
 }
 
-bool Frame::containsDockWidget(DockWidgetBase *dockWidget) const
+bool Frame::containsDockWidget(DockWidget *dockWidget) const
 {
     const int count = dockWidgetCount();
     for (int i = 0, e = count; i != e; ++i) {
@@ -606,7 +606,7 @@ int Frame::currentTabIndex() const
 bool Frame::anyNonClosable() const
 {
     for (auto dw : dockWidgets()) {
-        if ((dw->options() & DockWidgetBase::Option_NotClosable) && !DockRegistry::self()->isProcessingAppQuitEvent())
+        if ((dw->options() & DockWidget::Option_NotClosable) && !DockRegistry::self()->isProcessingAppQuitEvent())
             return true;
     }
 
@@ -616,14 +616,14 @@ bool Frame::anyNonClosable() const
 bool Frame::anyNonDockable() const
 {
     for (auto dw : dockWidgets()) {
-        if (dw->options() & DockWidgetBase::Option_NotDockable)
+        if (dw->options() & DockWidget::Option_NotDockable)
             return true;
     }
 
     return false;
 }
 
-void Frame::onDockWidgetShown(DockWidgetBase *w)
+void Frame::onDockWidgetShown(DockWidget *w)
 {
     if (hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
         if (!isVisible()) {
@@ -635,7 +635,7 @@ void Frame::onDockWidgetShown(DockWidgetBase *w)
     }
 }
 
-void Frame::onDockWidgetHidden(DockWidgetBase *w)
+void Frame::onDockWidgetHidden(DockWidget *w)
 {
     if (!isCentralFrame() && hasSingleDockWidget() && containsDockWidget(w)) { // We have to call contains because it might be being in process of being reparented
         if (isVisible()) {
@@ -660,10 +660,10 @@ void Frame::setLayoutItem(Layouting::Item *item)
 
     m_layoutItem = item;
     if (item) {
-        for (DockWidgetBase *dw : dockWidgets())
+        for (DockWidget *dw : dockWidgets())
             dw->d->addPlaceholderItem(item);
     } else {
-        for (DockWidgetBase *dw : dockWidgets())
+        for (DockWidget *dw : dockWidgets())
             dw->d->lastPosition()->removePlaceholders();
     }
 }
@@ -771,7 +771,7 @@ Frame *Frame::deserialize(const LayoutSaver::Frame &f)
     frame->setObjectName(f.objectName);
 
     for (const auto &savedDock : qAsConst(f.dockWidgets)) {
-        if (DockWidgetBase *dw = DockWidgetBase::deserialize(savedDock)) {
+        if (DockWidget *dw = DockWidget::deserialize(savedDock)) {
             frame->addWidget(dw);
         }
     }
@@ -787,7 +787,7 @@ LayoutSaver::Frame Frame::serialize() const
     LayoutSaver::Frame frame;
     frame.isNull = false;
 
-    const DockWidgetBase::List docks = dockWidgets();
+    const DockWidget::List docks = dockWidgets();
 
     frame.objectName = objectName();
     frame.geometry = geometry();
@@ -798,7 +798,7 @@ LayoutSaver::Frame Frame::serialize() const
     if (MainWindow *mw = mainWindow())
         frame.mainWindowUniqueName = mw->uniqueName();
 
-    for (DockWidgetBase *dock : docks)
+    for (DockWidget *dock : docks)
         frame.dockWidgets.push_back(dock->d->serialize());
 
     return frame;
@@ -817,7 +817,7 @@ void Frame::scheduleDeleteLater()
 QSize Frame::dockWidgetsMinSize() const
 {
     QSize size = Layouting::Item::hardcodedMinimumSize;
-    for (DockWidgetBase *dw : dockWidgets())
+    for (DockWidget *dw : dockWidgets())
         size = size.expandedTo(dw->view()->minSize());
 
     return size;
@@ -826,7 +826,7 @@ QSize Frame::dockWidgetsMinSize() const
 QSize Frame::biggestDockWidgetMaxSize() const
 {
     QSize size = Layouting::Item::hardcodedMaximumSize;
-    for (DockWidgetBase *dw : dockWidgets()) {
+    for (DockWidget *dw : dockWidgets()) {
         const QSize dwMax = dw->view()->maxSizeHint();
         if (size == Layouting::Item::hardcodedMaximumSize) {
             size = dwMax;
@@ -867,35 +867,35 @@ MainWindow *Frame::mainWindow() const
 }
 
 ///@brief Returns whether all dock widgets have the specified option set
-bool Frame::allDockWidgetsHave(DockWidgetBase::Option option) const
+bool Frame::allDockWidgetsHave(DockWidget::Option option) const
 {
-    const DockWidgetBase::List docks = dockWidgets();
-    return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidgetBase *dw) {
+    const DockWidget::List docks = dockWidgets();
+    return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
         return dw->options() & option;
     });
 }
 
 ///@brief Returns whether at least one dock widget has the specified option set
-bool Frame::anyDockWidgetsHas(DockWidgetBase::Option option) const
+bool Frame::anyDockWidgetsHas(DockWidget::Option option) const
 {
-    const DockWidgetBase::List docks = dockWidgets();
-    return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidgetBase *dw) {
+    const DockWidget::List docks = dockWidgets();
+    return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
         return dw->options() & option;
     });
 }
 
-bool Frame::allDockWidgetsHave(DockWidgetBase::LayoutSaverOption option) const
+bool Frame::allDockWidgetsHave(DockWidget::LayoutSaverOption option) const
 {
-    const DockWidgetBase::List docks = dockWidgets();
-    return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidgetBase *dw) {
+    const DockWidget::List docks = dockWidgets();
+    return std::all_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
         return dw->layoutSaverOptions() & option;
     });
 }
 
-bool Frame::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option) const
+bool Frame::anyDockWidgetsHas(DockWidget::LayoutSaverOption option) const
 {
-    const DockWidgetBase::List docks = dockWidgets();
-    return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidgetBase *dw) {
+    const DockWidget::List docks = dockWidgets();
+    return std::any_of(docks.cbegin(), docks.cend(), [option](DockWidget *dw) {
         return dw->layoutSaverOptions() & option;
     });
 }

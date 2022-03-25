@@ -46,7 +46,7 @@ namespace KDDockWidgets {
 namespace Controllers {
 class Frame;
 class FloatingWindow;
-class DockWidgetBase;
+class DockWidget;
 }
 
 class MainWindow;
@@ -131,7 +131,7 @@ public:
 
 
     /// @brief restores the dockwidget @p dw to its previous position
-    void restorePlaceholder(Controllers::DockWidgetBase *dw, Layouting::Item *, int tabIndex);
+    void restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *, int tabIndex);
 
     /**
      * @brief The list of items in this layout.
@@ -180,7 +180,7 @@ public:
     QList<Controllers::Frame *> frames() const;
 
     /// @brief Returns the list of dock widgets contained in this layout
-    QVector<Controllers::DockWidgetBase *> dockWidgets() const;
+    QVector<Controllers::DockWidget *> dockWidgets() const;
 
     /**
      * @brief Removes an item from this MultiSplitter.

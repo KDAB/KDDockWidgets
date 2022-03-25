@@ -34,10 +34,10 @@ public:
      * @param index the tab number from which we want the dock widget
      * @return the dock widget at tab number @p index
      */
-    DockWidgetBase *dockWidgetAt(int index) const;
+    DockWidget *dockWidgetAt(int index) const;
 
     ///@overload
-    DockWidgetBase *dockWidgetAt(QPoint localPos) const;
+    DockWidget *dockWidgetAt(QPoint localPos) const;
 
     // Draggable
     bool dragCanStart(QPoint pressPos, QPoint pos) const override;
@@ -57,7 +57,7 @@ public:
      */
     // QWidgetOrQuick *asWidget() const;
 
-    DockWidgetBase *singleDockWidget() const override;
+    DockWidget *singleDockWidget() const override;
 
     /// @reimp
     bool isMDI() const override;
@@ -70,7 +70,7 @@ public:
 
 private:
     Controllers::Stack *const m_tabWidget;
-    QPointer<DockWidgetBase> m_lastPressedDockWidget = nullptr;
+    QPointer<DockWidget> m_lastPressedDockWidget = nullptr;
 };
 
 }

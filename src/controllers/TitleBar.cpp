@@ -162,9 +162,9 @@ bool TitleBar::supportsFloatingButton() const
         return false;
     }
 
-    if (DockWidgetBase *dw = singleDockWidget()) {
+    if (DockWidget *dw = singleDockWidget()) {
         // Don't show the dock/undock button if the window is not dockable
-        if (dw->options() & DockWidgetBase::Option_NotDockable)
+        if (dw->options() & DockWidget::Option_NotDockable)
             return false;
     }
 
@@ -316,7 +316,7 @@ void TitleBar::onCloseClicked()
 
         if (closeOnlyCurrentTab) {
             if (Frame *f = m_floatingWindow->singleFrame()) {
-                if (DockWidgetBase *dw = f->currentDockWidget()) {
+                if (DockWidget *dw = f->currentDockWidget()) {
                     dw->view()->close();
                 } else {
                     // Doesn't happen
@@ -333,7 +333,7 @@ void TitleBar::onCloseClicked()
 
 void TitleBar::onFloatClicked()
 {
-    const DockWidgetBase::List dockWidgets = this->dockWidgets();
+    const DockWidget::List dockWidgets = this->dockWidgets();
     if (isFloating()) {
         // Let's dock it
 
@@ -394,7 +394,7 @@ void TitleBar::onAutoHideClicked()
     }
 
     const auto &dockwidgets = m_frame->dockWidgets();
-    for (DockWidgetBase *dw : dockwidgets) {
+    for (DockWidget *dw : dockwidgets) {
         if (dw->isOverlayed()) {
             // restore
             MainWindow *mainWindow = dw->mainWindow();
@@ -459,10 +459,10 @@ bool TitleBar::isWindow() const
     return m_floatingWindow != nullptr;
 }
 
-Controllers::DockWidgetBase::List TitleBar::dockWidgets() const
+Controllers::DockWidget::List TitleBar::dockWidgets() const
 {
     if (m_floatingWindow) {
-        DockWidgetBase::List result;
+        DockWidget::List result;
         for (Frame *f : m_floatingWindow->frames()) {
             result << f->dockWidgets();
         }
@@ -476,9 +476,9 @@ Controllers::DockWidgetBase::List TitleBar::dockWidgets() const
     return {};
 }
 
-Controllers::DockWidgetBase *TitleBar::singleDockWidget() const
+Controllers::DockWidget *TitleBar::singleDockWidget() const
 {
-    const DockWidgetBase::List dockWidgets = this->dockWidgets();
+    const DockWidget::List dockWidgets = this->dockWidgets();
     return dockWidgets.isEmpty() ? nullptr : dockWidgets.first();
 }
 

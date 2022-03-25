@@ -43,7 +43,7 @@ void Stack_qtwidgets::init()
     // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user presses [x]
     connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
         if (auto dw = dockwidgetAt(index)) {
-            if (dw->options() & Controllers::DockWidgetBase::Option_NotClosable) {
+            if (dw->options() & Controllers::DockWidget::Option_NotClosable) {
                 qWarning() << "QTabWidget::tabCloseRequested: Refusing to close dock widget with Option_NotClosable option. name=" << dw->uniqueName();
             } else {
                 dw->view()->close();
@@ -72,12 +72,12 @@ int Stack_qtwidgets::numDockWidgets() const
     return count();
 }
 
-void Stack_qtwidgets::removeDockWidget(Controllers::DockWidgetBase *dw)
+void Stack_qtwidgets::removeDockWidget(Controllers::DockWidget *dw)
 {
     removeTab(indexOf(dw->view()->asQWidget()));
 }
 
-int Stack_qtwidgets::indexOfDockWidget(const Controllers::DockWidgetBase *dw) const
+int Stack_qtwidgets::indexOfDockWidget(const Controllers::DockWidget *dw) const
 {
     return indexOf(dw->view()->asQWidget());
 }
@@ -116,7 +116,7 @@ void Stack_qtwidgets::setCurrentDockWidget(int index)
     setCurrentIndex(index);
 }
 
-bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidgetBase *dw,
+bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw,
                                        const QIcon &icon, const QString &title)
 {
     insertTab(index, dw->view()->asQWidget(), icon, title);
@@ -138,7 +138,7 @@ void Stack_qtwidgets::changeTabIcon(int index, const QIcon &icon)
     setTabIcon(index, icon);
 }
 
-Controllers::DockWidgetBase *Stack_qtwidgets::dockwidgetAt(int index) const
+Controllers::DockWidget *Stack_qtwidgets::dockwidgetAt(int index) const
 {
     auto view = qobject_cast<DockWidget_qtwidgets *>(widget(index));
     return view ? view->dockWidget() : nullptr;

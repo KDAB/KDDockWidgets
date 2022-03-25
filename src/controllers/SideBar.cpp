@@ -31,7 +31,7 @@ SideBar::SideBar(SideBarLocation location, MainWindow *parent)
     updateSize();
 }
 
-void SideBar::addDockWidget(DockWidgetBase *dw)
+void SideBar::addDockWidget(DockWidget *dw)
 {
     if (!dw)
         return;
@@ -48,7 +48,7 @@ void SideBar::addDockWidget(DockWidgetBase *dw)
     updateSize();
 }
 
-void SideBar::removeDockWidget(DockWidgetBase *dw)
+void SideBar::removeDockWidget(DockWidget *dw)
 {
     if (!m_dockWidgets.contains(dw)) {
         qWarning() << Q_FUNC_INFO << "Doesn't contain dock widget" << dw->title();
@@ -62,19 +62,19 @@ void SideBar::removeDockWidget(DockWidgetBase *dw)
     updateSize();
 }
 
-bool SideBar::containsDockWidget(DockWidgetBase *dw) const
+bool SideBar::containsDockWidget(DockWidget *dw) const
 {
     return m_dockWidgets.contains(dw);
 }
 
-void SideBar::onButtonClicked(DockWidgetBase *dw)
+void SideBar::onButtonClicked(DockWidget *dw)
 {
     toggleOverlay(dw);
 }
 
 void SideBar::onDockWidgetDestroyed(QObject *dw)
 {
-    removeDockWidget(static_cast<DockWidgetBase *>(dw));
+    removeDockWidget(static_cast<DockWidget *>(dw));
 }
 
 void SideBar::updateSize()
@@ -107,7 +107,7 @@ MainWindow *SideBar::mainWindow() const
     return m_mainWindow;
 }
 
-void SideBar::toggleOverlay(DockWidgetBase *dw)
+void SideBar::toggleOverlay(DockWidget *dw)
 {
     m_mainWindow->toggleOverlayOnSideBar(dw);
 }
@@ -116,7 +116,7 @@ QStringList SideBar::serialize() const
 {
     QStringList ids;
     ids.reserve(m_dockWidgets.size());
-    for (DockWidgetBase *dw : m_dockWidgets)
+    for (DockWidget *dw : m_dockWidgets)
         ids << dw->uniqueName();
 
     return ids;
@@ -124,6 +124,6 @@ QStringList SideBar::serialize() const
 
 void SideBar::clear()
 {
-    for (DockWidgetBase *dw : qAsConst(m_dockWidgets))
+    for (DockWidget *dw : qAsConst(m_dockWidgets))
         removeDockWidget(dw);
 }

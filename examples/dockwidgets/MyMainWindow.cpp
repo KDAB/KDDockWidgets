@@ -71,7 +71,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         count++;
         auto w = newMyWidget();
         w->setGeometry(100, 100, 400, 400);
-        auto dock = new KDDockWidgets::Controllers::DockWidgetBase(QStringLiteral("new dock %1").arg(count));
+        auto dock = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("new dock %1").arg(count));
         dock->setWidget(w);
         dock->view()->resize(QSize(600, 600));
         dock->show();
@@ -166,19 +166,19 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
     static int count = 0;
 
     // Passing options is optional, we just want to illustrate Option_NotClosable here
-    KDDockWidgets::Controllers::DockWidgetBase::Options options = KDDockWidgets::DockWidgetBase::Option_None;
-    KDDockWidgets::Controllers::DockWidgetBase::LayoutSaverOptions layoutSaverOptions = KDDockWidgets::Controllers::DockWidgetBase::LayoutSaverOption::None;
+    KDDockWidgets::Controllers::DockWidget::Options options = KDDockWidgets::DockWidgetBase::Option_None;
+    KDDockWidgets::Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = KDDockWidgets::Controllers::DockWidget::LayoutSaverOption::None;
 
     if (count == 0 && m_dockWidget0IsNonClosable)
-        options |= KDDockWidgets::Controllers::DockWidgetBase::Option_NotClosable;
+        options |= KDDockWidgets::Controllers::DockWidget::Option_NotClosable;
 
     if (count == 9 && m_dockWidget9IsNonDockable)
-        options |= KDDockWidgets::Controllers::DockWidgetBase::Option_NotDockable;
+        options |= KDDockWidgets::Controllers::DockWidget::Option_NotDockable;
 
     if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
-        layoutSaverOptions |= KDDockWidgets::Controllers::DockWidgetBase::LayoutSaverOption::Skip;
+        layoutSaverOptions |= KDDockWidgets::Controllers::DockWidget::LayoutSaverOption::Skip;
 
-    auto dock = new KDDockWidgets::Controllers::DockWidgetBase(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
+    auto dock = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
     dock->setAffinities(affinities()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
 
     if (count == 1)
@@ -192,7 +192,7 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
 
     dock->setWidget(myWidget);
 
-    if (dock->options() & KDDockWidgets::Controllers::DockWidgetBase::Option_NotDockable) {
+    if (dock->options() & KDDockWidgets::Controllers::DockWidget::Option_NotDockable) {
         dock->setTitle(QStringLiteral("DockWidget #%1 (%2)").arg(count).arg("non dockable"));
     } else {
         dock->setTitle(QStringLiteral("DockWidget #%1").arg(count));

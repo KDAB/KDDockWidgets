@@ -44,7 +44,7 @@ public:
     bool isMDI() const override;
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
     bool isWindow() const override;
-    Controllers::DockWidgetBase *singleDockWidget() const override;
+    Controllers::DockWidget *singleDockWidget() const override;
 
     void setTitle(const QString &title);
     QString title() const;
@@ -54,7 +54,7 @@ public:
 
     ///@brief the list of dockwidgets under this TitleBar.
     /// There should always be at least 1. If more than 1 then they are tabbed.
-    DockWidgetBase::List dockWidgets() const;
+    DockWidget::List dockWidgets() const;
 
     ///@brief the icon
     QIcon icon() const;

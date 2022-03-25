@@ -136,7 +136,7 @@ void Controllers::TabBar::onMousePress(QPoint localPos)
 
 void Controllers::TabBar::onMouseDoubleClick(QPoint localPos)
 {
-    if (DockWidgetBase *dw = dockWidgetAt(localPos))
+    if (DockWidget *dw = dockWidgetAt(localPos))
         dw->setFloating(true);
 }
 

@@ -62,7 +62,7 @@ void MDIArea::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption ad
 {
     if (dw->options() & DockWidgetBase::Option_MDINestable) {
         // We' wrap it with a drop area, so we can drag other dock widgets over this one and dock
-        auto wrapperDW = new Controllers::DockWidgetBase(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()));
+        auto wrapperDW = new Controllers::DockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()));
         auto dropAreaWrapper = new DropArea(wrapperDW->view()->asQWidget(), /*isMDIWrapper= */ true);
         dropAreaWrapper->addDockWidget(dw, Location_OnBottom, nullptr);
         wrapperDW->setWidget(dropAreaWrapper);

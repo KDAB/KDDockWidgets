@@ -26,7 +26,6 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class DockWidget;
 class Frame;
 
 namespace Controllers {
@@ -41,14 +40,14 @@ class SideBarButton : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit SideBarButton(Controllers::DockWidgetBase *dw, Views::SideBar_qtwidgets *parent);
+    explicit SideBarButton(Controllers::DockWidget *dw, Views::SideBar_qtwidgets *parent);
     bool isVertical() const;
     void paintEvent(QPaintEvent *) override;
     QSize sizeHint() const override;
 
 private:
     Views::SideBar_qtwidgets *const m_sideBar;
-    const QPointer<Controllers::DockWidgetBase> m_dockWidget;
+    const QPointer<Controllers::DockWidget> m_dockWidget;
 };
 
 namespace Views {
@@ -62,11 +61,11 @@ public:
 
     bool isVertical() const; // TODO: Move to a potential base class
 
-    void addDockWidget_Impl(Controllers::DockWidgetBase *dock); // TODO: Either override or remove Impl
-    void removeDockWidget_Impl(Controllers::DockWidgetBase *dock);
+    void addDockWidget_Impl(Controllers::DockWidget *dock); // TODO: Either override or remove Impl
+    void removeDockWidget_Impl(Controllers::DockWidget *dock);
 
     // virtual so users can provide their own buttons
-    virtual SideBarButton *createButton(Controllers::DockWidgetBase *dw, SideBar_qtwidgets *parent) const;
+    virtual SideBarButton *createButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent) const;
 
 private:
     Controllers::SideBar *const m_controller;

@@ -21,7 +21,7 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets::Controllers {
 class TabBar;
-class DockWidgetBase;
+class DockWidget;
 }
 
 namespace KDDockWidgets::Views {
@@ -35,7 +35,7 @@ public:
     Controllers::TabBar *tabBar() const;
     int tabAt(QPoint localPos) const;
 
-    Controllers::DockWidgetBase *currentDockWidget() const;
+    Controllers::DockWidget *currentDockWidget() const;
 
     QString text(int index) const;
     QRect rectForTab(int index) const;

@@ -152,7 +152,7 @@ FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometr
             return;
         }
 
-        DockWidgetBase *dwMDIWrapper = frame->dockWidgetAt(0);
+        DockWidget *dwMDIWrapper = frame->dockWidgetAt(0);
         DropArea *dropAreaMDIWrapper = dwMDIWrapper->d->mdiDropAreaWrapper();
 
         if (dropAreaMDIWrapper->hasSingleFrame()) {
@@ -162,7 +162,7 @@ FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometr
                 // position it was at. DockWidgetBase::Private::m_lastPosition stores that location,
                 // however, when having nested MDI, we have an extra Dock Widget, the wrapper, and it
                 // contains the last position. So, when floating, we need to transfer that and not lose it.
-                DockWidgetBase *dw = innerFrame->dockWidgetAt(0);
+                DockWidget *dw = innerFrame->dockWidgetAt(0);
                 dw->d->lastPosition() = dwMDIWrapper->d->lastPosition();
             }
         }
@@ -233,7 +233,7 @@ std::unique_ptr<WindowBeingDragged> FloatingWindow::makeWindow()
     return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(this, this));
 }
 
-Controllers::DockWidgetBase *FloatingWindow::singleDockWidget() const
+Controllers::DockWidget *FloatingWindow::singleDockWidget() const
 {
     const Controllers::Frame::List frames = this->frames();
     if (frames.size() == 1) {
@@ -245,7 +245,7 @@ Controllers::DockWidgetBase *FloatingWindow::singleDockWidget() const
     return nullptr;
 }
 
-const Controllers::DockWidgetBase::List FloatingWindow::dockWidgets() const
+const Controllers::DockWidget::List FloatingWindow::dockWidgets() const
 {
     return m_dropArea->dockWidgets();
 }
@@ -552,7 +552,7 @@ QRect FloatingWindow::dragRect() const
     return rect;
 }
 
-bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::Option option) const
+bool FloatingWindow::allDockWidgetsHave(DockWidget::Option option) const
 {
     const Controllers::Frame::List frames = this->frames();
     return std::all_of(frames.begin(), frames.end(), [option](Controllers::Frame *frame) {
@@ -560,7 +560,7 @@ bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::Option option) const
     });
 }
 
-bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::Option option) const
+bool FloatingWindow::anyDockWidgetsHas(DockWidget::Option option) const
 {
     const Controllers::Frame::List frames = this->frames();
     return std::any_of(frames.begin(), frames.end(), [option](Controllers::Frame *frame) {
@@ -568,7 +568,7 @@ bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::Option option) const
     });
 }
 
-bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::LayoutSaverOption option) const
+bool FloatingWindow::allDockWidgetsHave(DockWidget::LayoutSaverOption option) const
 {
     const Controllers::Frame::List frames = this->frames();
     return std::all_of(frames.begin(), frames.end(), [option](Controllers::Frame *frame) {
@@ -576,7 +576,7 @@ bool FloatingWindow::allDockWidgetsHave(DockWidgetBase::LayoutSaverOption option
     });
 }
 
-bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option) const
+bool FloatingWindow::anyDockWidgetsHas(DockWidget::LayoutSaverOption option) const
 {
     const Controllers::Frame::List frames = this->frames();
     return std::any_of(frames.begin(), frames.end(), [option](Controllers::Frame *frame) {
@@ -584,8 +584,8 @@ bool FloatingWindow::anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption option)
     });
 }
 
-void FloatingWindow::addDockWidget(Controllers::DockWidgetBase *dw, Location location,
-                                   Controllers::DockWidgetBase *relativeTo, InitialOption option)
+void FloatingWindow::addDockWidget(Controllers::DockWidget *dw, Location location,
+                                   Controllers::DockWidget *relativeTo, InitialOption option)
 {
     m_dropArea->addDockWidget(dw, location, relativeTo, option);
 }

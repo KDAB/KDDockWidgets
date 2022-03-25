@@ -43,8 +43,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-DockWidgetBase::DockWidgetBase(const QString &name, Options options,
-                               LayoutSaverOptions layoutSaverOptions)
+DockWidget::DockWidget(const QString &name, Options options,
+                       LayoutSaverOptions layoutSaverOptions)
     : Controller(new Views::DockWidget_qtwidgets(this, Qt::Tool))
     , d(new Private(name, options, layoutSaverOptions, this))
 {
@@ -58,13 +58,13 @@ DockWidgetBase::DockWidgetBase(const QString &name, Options options,
     view()->setAttribute(Qt::WA_PendingMoveEvent, false);
 }
 
-DockWidgetBase::~DockWidgetBase()
+DockWidget::~DockWidget()
 {
     DockRegistry::self()->unregisterDockWidget(this);
     delete d;
 }
 
-void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, InitialOption option)
+void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
 {
     if (other == this) {
         qWarning() << Q_FUNC_INFO << "Refusing to add dock widget into itself" << other;
@@ -82,7 +82,7 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, InitialOption opt
         return;
     }
 
-    if ((other->options() & DockWidgetBase::Option_NotDockable) || (options() & DockWidgetBase::Option_NotDockable)) {
+    if ((other->options() & DockWidget::Option_NotDockable) || (options() & DockWidget::Option_NotDockable)) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
         return;
     }
@@ -117,10 +117,10 @@ void DockWidgetBase::addDockWidgetAsTab(DockWidgetBase *other, InitialOption opt
     frame->addWidget(other, option);
 }
 
-void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other,
-                                                     Location location,
-                                                     DockWidgetBase *relativeTo,
-                                                     InitialOption initialOption)
+void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
+                                                 Location location,
+                                                 DockWidget *relativeTo,
+                                                 InitialOption initialOption)
 {
     if (auto mainWindow = qobject_cast<MainWindow *>(view()->asQWidget()->window())) {
         // It's inside a main window. Simply use the main window API.
@@ -134,7 +134,7 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other,
         return;
     }
 
-    if ((other->options() & DockWidgetBase::Option_NotDockable) || (options() & DockWidgetBase::Option_NotDockable)) {
+    if ((other->options() & DockWidget::Option_NotDockable) || (options() & DockWidget::Option_NotDockable)) {
         qWarning() << Q_FUNC_INFO << "Refusing to dock non-dockable widget" << other;
         return;
     }
@@ -149,7 +149,7 @@ void DockWidgetBase::addDockWidgetToContainingWindow(DockWidgetBase *other,
     }
 }
 
-void DockWidgetBase::setWidget(QWidgetOrQuick *w)
+void DockWidget::setWidget(QWidgetOrQuick *w)
 {
     if (w == d->widget)
         return;
@@ -166,12 +166,12 @@ void DockWidgetBase::setWidget(QWidgetOrQuick *w)
     Q_EMIT widgetChanged(w);
 }
 
-QWidgetOrQuick *DockWidgetBase::widget() const
+QWidgetOrQuick *DockWidget::widget() const
 {
     return d->widget;
 }
 
-bool DockWidgetBase::isFloating() const
+bool DockWidget::isFloating() const
 {
     if (view()->isTopLevel())
         return true;
@@ -180,7 +180,7 @@ bool DockWidgetBase::isFloating() const
     return fw && fw->hasSingleDockWidget();
 }
 
-bool DockWidgetBase::setFloating(bool floats)
+bool DockWidget::setFloating(bool floats)
 {
     const bool alreadyFloating = isFloating();
 
@@ -224,22 +224,22 @@ bool DockWidgetBase::setFloating(bool floats)
     }
 }
 
-QAction *DockWidgetBase::toggleAction() const
+QAction *DockWidget::toggleAction() const
 {
     return d->toggleAction;
 }
 
-QAction *DockWidgetBase::floatAction() const
+QAction *DockWidget::floatAction() const
 {
     return d->floatAction;
 }
 
-QString DockWidgetBase::uniqueName() const
+QString DockWidget::uniqueName() const
 {
     return d->name;
 }
 
-QString DockWidgetBase::title() const
+QString DockWidget::title() const
 {
     if (d->isMDIWrapper()) {
         // It's just a wrapper to help implementing Option_MDINestable. Return the title of the real dock widget we're hosting.
@@ -255,7 +255,7 @@ QString DockWidgetBase::title() const
     return d->title;
 }
 
-void DockWidgetBase::setTitle(const QString &title)
+void DockWidget::setTitle(const QString &title)
 {
     if (title != d->title) {
         d->title = title;
@@ -264,7 +264,7 @@ void DockWidgetBase::setTitle(const QString &title)
     }
 }
 
-QRect DockWidgetBase::frameGeometry() const
+QRect DockWidget::frameGeometry() const
 {
     if (Controllers::Frame *f = d->frame())
         return f->view()->geometry();
@@ -273,17 +273,17 @@ QRect DockWidgetBase::frameGeometry() const
     return geometry();
 }
 
-DockWidgetBase::Options DockWidgetBase::options() const
+DockWidget::Options DockWidget::options() const
 {
     return d->options;
 }
 
-DockWidgetBase::LayoutSaverOptions DockWidgetBase::layoutSaverOptions() const
+DockWidget::LayoutSaverOptions DockWidget::layoutSaverOptions() const
 {
     return d->layoutSaverOptions;
 }
 
-void DockWidgetBase::setOptions(Options options)
+void DockWidget::setOptions(Options options)
 {
     if ((d->options & Option_NotDockable) != (options & Option_NotDockable)) {
         qWarning() << Q_FUNC_INFO << "Option_NotDockable not allowed to change. Pass via ctor only.";
@@ -298,7 +298,7 @@ void DockWidgetBase::setOptions(Options options)
     }
 }
 
-bool DockWidgetBase::isTabbed() const
+bool DockWidget::isTabbed() const
 {
     if (Controllers::Frame *frame = d->frame()) {
         return frame->alwaysShowsTabs() || frame->dockWidgetCount() > 1;
@@ -309,22 +309,22 @@ bool DockWidgetBase::isTabbed() const
     }
 }
 
-bool DockWidgetBase::isCurrentTab() const
+bool DockWidget::isCurrentTab() const
 {
     if (Controllers::Frame *frame = d->frame()) {
-        return frame->currentIndex() == frame->indexOfDockWidget(const_cast<DockWidgetBase *>(this));
+        return frame->currentIndex() == frame->indexOfDockWidget(const_cast<DockWidget *>(this));
     } else {
         return true;
     }
 }
 
-void DockWidgetBase::setAsCurrentTab()
+void DockWidget::setAsCurrentTab()
 {
     if (Controllers::Frame *frame = d->frame())
         frame->setCurrentDockWidget(this);
 }
 
-int DockWidgetBase::tabIndex() const
+int DockWidget::tabIndex() const
 {
     if (Controllers::Frame *frame = d->frame())
         return frame->indexOfDockWidget(this);
@@ -332,7 +332,7 @@ int DockWidgetBase::tabIndex() const
     return 0;
 }
 
-void DockWidgetBase::setIcon(const QIcon &icon, IconPlaces places)
+void DockWidget::setIcon(const QIcon &icon, IconPlaces places)
 {
     if (places & IconPlace::TitleBar)
         d->titleBarIcon = icon;
@@ -346,7 +346,7 @@ void DockWidgetBase::setIcon(const QIcon &icon, IconPlaces places)
     Q_EMIT iconChanged();
 }
 
-QIcon DockWidgetBase::icon(IconPlace place) const
+QIcon DockWidget::icon(IconPlace place) const
 {
     if (place == IconPlace::TitleBar)
         return d->titleBarIcon;
@@ -360,12 +360,12 @@ QIcon DockWidgetBase::icon(IconPlace place) const
     return {};
 }
 
-void DockWidgetBase::forceClose()
+void DockWidget::forceClose()
 {
     d->forceClose();
 }
 
-Controllers::TitleBar *DockWidgetBase::titleBar() const
+Controllers::TitleBar *DockWidget::titleBar() const
 {
     if (Controllers::Frame *f = d->frame())
         return f->actualTitleBar();
@@ -373,17 +373,17 @@ Controllers::TitleBar *DockWidgetBase::titleBar() const
     return nullptr;
 }
 
-bool DockWidgetBase::isOpen() const
+bool DockWidget::isOpen() const
 {
     return d->toggleAction->isChecked();
 }
 
-QStringList DockWidgetBase::affinities() const
+QStringList DockWidget::affinities() const
 {
     return d->affinities;
 }
 
-void DockWidgetBase::show()
+void DockWidget::show()
 {
     if (view()->isTopLevel() && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
         // Create the FloatingWindow already, instead of waiting for the show event.
@@ -394,7 +394,7 @@ void DockWidgetBase::show()
     }
 }
 
-void DockWidgetBase::raise()
+void DockWidget::raise()
 {
     if (!isOpen())
         return;
@@ -410,33 +410,33 @@ void DockWidgetBase::raise()
     }
 }
 
-bool DockWidgetBase::isMainWindow() const
+bool DockWidget::isMainWindow() const
 {
     return qobject_cast<MainWindow *>(widget());
 }
 
-bool DockWidgetBase::isInMainWindow() const
+bool DockWidget::isInMainWindow() const
 {
     return d->mainWindow() != nullptr;
 }
 
-MainWindow *DockWidgetBase::mainWindow() const
+MainWindow *DockWidget::mainWindow() const
 {
     return d->mainWindow();
 }
 
-bool DockWidgetBase::isFocused() const
+bool DockWidget::isFocused() const
 {
     auto f = d->frame();
     return f && f->isFocused() && isCurrentTab();
 }
 
-void DockWidgetBase::setAffinityName(const QString &affinity)
+void DockWidget::setAffinityName(const QString &affinity)
 {
     setAffinities({ affinity });
 }
 
-void DockWidgetBase::setAffinities(const QStringList &affinityNames)
+void DockWidget::setAffinities(const QStringList &affinityNames)
 {
     QStringList affinities = affinityNames;
     affinities.removeAll(QString());
@@ -454,13 +454,13 @@ void DockWidgetBase::setAffinities(const QStringList &affinityNames)
     d->affinities = affinities;
 }
 
-void DockWidgetBase::moveToSideBar()
+void DockWidget::moveToSideBar()
 {
     if (MainWindow *m = mainWindow())
         m->moveToSideBar(this);
 }
 
-bool DockWidgetBase::isOverlayed() const
+bool DockWidget::isOverlayed() const
 {
     if (MainWindow *m = mainWindow())
         return m->overlayedDockWidget() == this;
@@ -468,37 +468,37 @@ bool DockWidgetBase::isOverlayed() const
     return false;
 }
 
-SideBarLocation DockWidgetBase::sideBarLocation() const
+SideBarLocation DockWidget::sideBarLocation() const
 {
     return DockRegistry::self()->sideBarLocationForDockWidget(this);
 }
 
-bool DockWidgetBase::isInSideBar() const
+bool DockWidget::isInSideBar() const
 {
     return sideBarLocation() != SideBarLocation::None;
 }
 
-bool DockWidgetBase::hasPreviousDockedLocation() const
+bool DockWidget::hasPreviousDockedLocation() const
 {
     return d->m_lastPosition->isValid();
 }
 
-QSize DockWidgetBase::lastOverlayedSize() const
+QSize DockWidget::lastOverlayedSize() const
 {
     return d->m_lastOverlayedSize;
 }
 
-DockWidgetBase *DockWidgetBase::byName(const QString &uniqueName)
+DockWidgetBase *DockWidget::byName(const QString &uniqueName)
 {
     return DockRegistry::self()->dockByName(uniqueName);
 }
 
-bool DockWidgetBase::skipsRestore() const
+bool DockWidget::skipsRestore() const
 {
     return d->layoutSaverOptions & LayoutSaverOption::Skip;
 }
 
-void DockWidgetBase::setFloatingGeometry(QRect geometry)
+void DockWidget::setFloatingGeometry(QRect geometry)
 {
     if (isOpen() && isFloating()) {
         view()->asQWidget()->window()->setGeometry(geometry);
@@ -507,7 +507,7 @@ void DockWidgetBase::setFloatingGeometry(QRect geometry)
     }
 }
 
-Controllers::FloatingWindow *DockWidgetBase::floatingWindow() const
+Controllers::FloatingWindow *DockWidget::floatingWindow() const
 {
     if (auto view = qobject_cast<Views::FloatingWindow_qtwidgets *>(this->view()->asQWidget()->window()))
         return view->floatingWindow();
@@ -515,7 +515,7 @@ Controllers::FloatingWindow *DockWidgetBase::floatingWindow() const
     return nullptr;
 }
 
-Controllers::FloatingWindow *DockWidgetBase::Private::morphIntoFloatingWindow()
+Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
 {
     if (auto fw = floatingWindow())
         return fw; // Nothing to do
@@ -546,13 +546,13 @@ Controllers::FloatingWindow *DockWidgetBase::Private::morphIntoFloatingWindow()
     }
 }
 
-void DockWidgetBase::Private::maybeMorphIntoFloatingWindow()
+void DockWidget::Private::maybeMorphIntoFloatingWindow()
 {
     if (q->view()->isWindow() && q->isVisible())
         morphIntoFloatingWindow();
 }
 
-MDILayoutWidget *DockWidgetBase::Private::mdiLayout() const
+MDILayoutWidget *DockWidget::Private::mdiLayout() const
 {
     auto p = const_cast<QObject *>(q->view()->parent());
     while (p) {
@@ -582,12 +582,12 @@ MDILayoutWidget *DockWidgetBase::Private::mdiLayout() const
     return nullptr;
 }
 
-bool DockWidgetBase::Private::isMDIWrapper() const
+bool DockWidget::Private::isMDIWrapper() const
 {
     return mdiDropAreaWrapper() != nullptr;
 }
 
-DropArea *DockWidgetBase::Private::mdiDropAreaWrapper() const
+DropArea *DockWidget::Private::mdiDropAreaWrapper() const
 {
     if (auto dropAreaGuest = qobject_cast<DropArea *>(q->widget())) {
         if (dropAreaGuest->isMDIWrapper())
@@ -597,7 +597,7 @@ DropArea *DockWidgetBase::Private::mdiDropAreaWrapper() const
     return nullptr;
 }
 
-DockWidgetBase *DockWidgetBase::Private::mdiDockWidgetWrapper() const
+DockWidgetBase *DockWidget::Private::mdiDockWidgetWrapper() const
 {
     if (isMDIWrapper()) {
         // We are the wrapper
@@ -626,12 +626,12 @@ DockWidgetBase *DockWidgetBase::Private::mdiDockWidgetWrapper() const
     return nullptr;
 }
 
-DockWidgetBase::Private *DockWidgetBase::dptr() const
+DockWidget::Private *DockWidget::dptr() const
 {
     return d;
 }
 
-QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
+QPoint DockWidget::Private::defaultCenterPosForFloating()
 {
     MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
     // We don't care about multiple mainwindows yet. Or, let's just say that the first one is more main than the others
@@ -642,7 +642,7 @@ QPoint DockWidgetBase::Private::defaultCenterPosForFloating()
     return mw->geometry().center();
 }
 
-bool DockWidgetBase::Private::eventFilter(QObject *watched, QEvent *event)
+bool DockWidget::Private::eventFilter(QObject *watched, QEvent *event)
 {
     const bool isWindowActivate = event->type() == QEvent::WindowActivate;
     const bool isWindowDeactivate = event->type() == QEvent::WindowDeactivate;
@@ -652,7 +652,7 @@ bool DockWidgetBase::Private::eventFilter(QObject *watched, QEvent *event)
     return QObject::eventFilter(watched, event);
 }
 
-void DockWidgetBase::Private::updateTitle()
+void DockWidget::Private::updateTitle()
 {
     if (q->isFloating())
         q->view()->asQWidget()->window()->setWindowTitle(title);
@@ -660,7 +660,7 @@ void DockWidgetBase::Private::updateTitle()
     toggleAction->setText(title);
 }
 
-void DockWidgetBase::Private::toggle(bool enabled)
+void DockWidget::Private::toggle(bool enabled)
 {
     if (Controllers::SideBar *sb = sideBar()) {
         // The widget is in the sidebar, let's toggle its overlayed state
@@ -675,7 +675,7 @@ void DockWidgetBase::Private::toggle(bool enabled)
     }
 }
 
-void DockWidgetBase::Private::updateToggleAction()
+void DockWidget::Private::updateToggleAction()
 {
     QScopedValueRollback<bool> recursionGuard(m_updatingToggleAction, true); // Guard against recursiveness
     m_updatingToggleAction = true;
@@ -686,7 +686,7 @@ void DockWidgetBase::Private::updateToggleAction()
     }
 }
 
-void DockWidgetBase::Private::updateFloatAction()
+void DockWidget::Private::updateFloatAction()
 {
     QScopedValueRollback<bool> recursionGuard(m_updatingFloatAction, true); // Guard against recursiveness
 
@@ -701,19 +701,19 @@ void DockWidgetBase::Private::updateFloatAction()
     }
 }
 
-void DockWidgetBase::Private::onDockWidgetShown()
+void DockWidget::Private::onDockWidgetShown()
 {
     updateToggleAction();
     updateFloatAction();
 }
 
-void DockWidgetBase::Private::onDockWidgetHidden()
+void DockWidget::Private::onDockWidgetHidden()
 {
     updateToggleAction();
     updateFloatAction();
 }
 
-void DockWidgetBase::Private::close()
+void DockWidget::Private::close()
 {
     if (!m_processingToggleAction && !q->isOpen()) {
         return;
@@ -750,13 +750,13 @@ void DockWidgetBase::Private::close()
         }
     }
 
-    if (!m_isMovingToSideBar && (options & DockWidgetBase::Option_DeleteOnClose)) {
+    if (!m_isMovingToSideBar && (options & DockWidget::Option_DeleteOnClose)) {
         Q_EMIT q->aboutToDeleteOnClose();
         q->deleteLater();
     }
 }
 
-bool DockWidgetBase::Private::restoreToPreviousPosition()
+bool DockWidget::Private::restoreToPreviousPosition()
 {
     if (!m_lastPosition->isValid())
         return false;
@@ -769,7 +769,7 @@ bool DockWidgetBase::Private::restoreToPreviousPosition()
     return true;
 }
 
-void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
+void DockWidget::Private::maybeRestoreToPreviousPosition()
 {
     // This is called when we get a QEvent::Show. Let's see if we have to restore it to a previous position.
 
@@ -802,24 +802,24 @@ void DockWidgetBase::Private::maybeRestoreToPreviousPosition()
     restoreToPreviousPosition();
 }
 
-int DockWidgetBase::Private::currentTabIndex() const
+int DockWidget::Private::currentTabIndex() const
 {
     Controllers::Frame *frame = this->frame();
     return frame ? frame->indexOfDockWidget(q) : 0;
 }
 
-void DockWidgetBase::Private::saveTabIndex()
+void DockWidget::Private::saveTabIndex()
 {
     m_lastPosition->saveTabIndex(currentTabIndex(), q->isFloating());
 }
 
-void DockWidgetBase::Private::show()
+void DockWidget::Private::show()
 {
     // Only show for now
     q->show();
 }
 
-void DockWidgetBase::onParentChanged()
+void DockWidget::onParentChanged()
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     Q_EMIT parentChanged();
@@ -832,7 +832,7 @@ void DockWidgetBase::onParentChanged()
     Q_EMIT actualTitleBarChanged();
 }
 
-void DockWidgetBase::onShown(bool spontaneous)
+void DockWidget::onShown(bool spontaneous)
 {
     d->onDockWidgetShown();
     Q_EMIT shown();
@@ -846,10 +846,10 @@ void DockWidgetBase::onShown(bool spontaneous)
     d->maybeRestoreToPreviousPosition();
 
     // Transform into a FloatingWindow if this will be a regular floating dock widget.
-    QTimer::singleShot(0, d, &DockWidgetBase::Private::maybeMorphIntoFloatingWindow);
+    QTimer::singleShot(0, d, &DockWidget::Private::maybeMorphIntoFloatingWindow);
 }
 
-void DockWidgetBase::onHidden(bool spontaneous)
+void DockWidget::onHidden(bool spontaneous)
 {
     d->onDockWidgetHidden();
     Q_EMIT hidden();
@@ -861,7 +861,7 @@ void DockWidgetBase::onHidden(bool spontaneous)
     }
 }
 
-void DockWidgetBase::onResize(QSize)
+void DockWidget::onResize(QSize)
 {
     if (isOverlayed()) {
         if (auto frame = d->frame()) {
@@ -872,7 +872,7 @@ void DockWidgetBase::onResize(QSize)
     }
 }
 
-void DockWidgetBase::onCloseEvent(QCloseEvent *e)
+void DockWidget::onCloseEvent(QCloseEvent *e)
 {
     e->accept(); // By default we accept, means DockWidget closes
     if (d->widget)
@@ -882,10 +882,10 @@ void DockWidgetBase::onCloseEvent(QCloseEvent *e)
         d->close();
 }
 
-DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
+DockWidgetBase *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
 {
     auto dr = DockRegistry::self();
-    DockWidgetBase *dw = dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
+    DockWidget *dw = dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
     if (dw) {
         if (QWidgetOrQuick *w = dw->widget())
             w->setVisible(true);
@@ -901,17 +901,17 @@ DockWidgetBase *DockWidgetBase::deserialize(const LayoutSaver::DockWidget::Ptr &
     return dw;
 }
 
-void DockWidgetBase::setUserType(int userType)
+void DockWidget::setUserType(int userType)
 {
     d->m_userType = userType;
 }
 
-int DockWidgetBase::userType() const
+int DockWidget::userType() const
 {
     return d->m_userType;
 }
 
-void DockWidgetBase::setMDIPosition(QPoint pos)
+void DockWidget::setMDIPosition(QPoint pos)
 {
     if (MDILayoutWidget *layout = d->mdiLayout()) {
         if (auto wrapperDW = d->mdiDockWidgetWrapper()) {
@@ -923,7 +923,7 @@ void DockWidgetBase::setMDIPosition(QPoint pos)
     }
 }
 
-void DockWidgetBase::setMDISize(QSize size)
+void DockWidget::setMDISize(QSize size)
 {
     if (MDILayoutWidget *layout = d->mdiLayout()) {
         if (auto wrapperDW = d->mdiDockWidgetWrapper()) {
@@ -935,7 +935,7 @@ void DockWidgetBase::setMDISize(QSize size)
     }
 }
 
-void DockWidgetBase::setMDIZ(int z)
+void DockWidget::setMDIZ(int z)
 {
 #ifdef KDDOCKWIDGETS_QTQUICK
     if (Frame *frame = d->frame()) {
@@ -949,12 +949,12 @@ void DockWidgetBase::setMDIZ(int z)
 #endif
 }
 
-bool DockWidgetBase::isPersistentCentralDockWidget() const
+bool DockWidget::isPersistentCentralDockWidget() const
 {
     return d->m_isPersistentCentralDockWidget;
 }
 
-LayoutSaver::DockWidget::Ptr DockWidgetBase::Private::serialize() const
+LayoutSaver::DockWidget::Ptr DockWidget::Private::serialize() const
 {
     auto ptr = LayoutSaver::DockWidget::dockWidgetForName(q->uniqueName());
     ptr->affinities = q->affinities();
@@ -962,14 +962,14 @@ LayoutSaver::DockWidget::Ptr DockWidgetBase::Private::serialize() const
     return ptr;
 }
 
-void DockWidgetBase::Private::forceClose()
+void DockWidget::Private::forceClose()
 {
     QScopedValueRollback<bool> rollback(m_isForceClosing, true);
     close();
 }
 
-DockWidgetBase::Private::Private(const QString &dockName, DockWidgetBase::Options options_,
-                                 LayoutSaverOptions layoutSaverOptions_, DockWidgetBase *qq)
+DockWidget::Private::Private(const QString &dockName, DockWidget::Options options_,
+                             LayoutSaverOptions layoutSaverOptions_, DockWidget *qq)
 
     : name(dockName)
     , title(dockName)
@@ -1013,18 +1013,18 @@ DockWidgetBase::Private::Private(const QString &dockName, DockWidgetBase::Option
     qApp->installEventFilter(this);
 }
 
-void DockWidgetBase::Private::addPlaceholderItem(Layouting::Item *item)
+void DockWidget::Private::addPlaceholderItem(Layouting::Item *item)
 {
     Q_ASSERT(item);
     m_lastPosition->addPlaceholderItem(item);
 }
 
-Position::Ptr &DockWidgetBase::Private::lastPosition()
+Position::Ptr &DockWidget::Private::lastPosition()
 {
     return m_lastPosition;
 }
 
-Controllers::Frame *DockWidgetBase::Private::frame() const
+Controllers::Frame *DockWidget::Private::frame() const
 {
     QWidgetOrQuick *p = q->view()->asQWidget()->parentWidget();
     while (p) {
@@ -1035,7 +1035,7 @@ Controllers::Frame *DockWidgetBase::Private::frame() const
     return nullptr;
 }
 
-void DockWidgetBase::Private::saveLastFloatingGeometry()
+void DockWidget::Private::saveLastFloatingGeometry()
 {
     if (q->isFloating() && q->isVisible()) {
         // It's getting docked, save last floating position

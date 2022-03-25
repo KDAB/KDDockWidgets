@@ -38,23 +38,23 @@ public:
     /**
      * @brief Removes a dock widget from the TabWidget
      */
-    void removeDockWidget(DockWidgetBase *);
+    void removeDockWidget(DockWidget *);
 
     /**
      * @brief Returns the index of the dock widget, or -1 if it doesn't exist
      */
-    int indexOfDockWidget(const DockWidgetBase *) const;
+    int indexOfDockWidget(const DockWidget *) const;
 
     /**
      * @brief Sets the current dock widget index
      */
     void setCurrentDockWidget(int index);
-    void setCurrentDockWidget(DockWidgetBase *);
+    void setCurrentDockWidget(DockWidget *);
 
     /// @brief Returns the current dock widget
-    DockWidgetBase *currentDockWidget() const;
+    DockWidget *currentDockWidget() const;
 
-    bool insertDockWidget(int index, DockWidgetBase *, const QIcon &, const QString &title);
+    bool insertDockWidget(int index, DockWidget *, const QIcon &, const QString &title);
 
     void setTabBarAutoHide(bool);
 
@@ -70,25 +70,25 @@ public:
     int currentIndex() const;
 
     ///@brief appends a dock widget into this TabWidget
-    void addDockWidget(DockWidgetBase *);
+    void addDockWidget(DockWidget *);
 
     /**
      * @brief Returns the dock widget tabbed at index @p index
      */
-    DockWidgetBase *dockwidgetAt(int index) const;
+    DockWidget *dockwidgetAt(int index) const;
 
     /**
      * @brief inserts @p dockwidget into the TabWidget, at @p index
      * @param dockwidget the dockwidget to insert
      * @param index The index to where to put it
      */
-    bool insertDockWidget(DockWidgetBase *dockwidget, int index);
+    bool insertDockWidget(DockWidget *dockwidget, int index);
 
     /**
      * @brief Returns whether dockwidget @p dw is contained in this tab widget
      * Equivalent to indexOf(dw) != -1
      */
-    bool contains(DockWidgetBase *dw) const;
+    bool contains(DockWidget *dw) const;
 
     /**
      * @brief Returns the tab bar
@@ -100,7 +100,7 @@ public:
 
     // Draggable interface
     std::unique_ptr<WindowBeingDragged> makeWindow() override;
-    DockWidgetBase *singleDockWidget() const override;
+    DockWidget *singleDockWidget() const override;
     bool isWindow() const override;
     bool isMDI() const override;
     bool isPositionDraggable(QPoint p) const override;
@@ -109,7 +109,7 @@ public:
 
 Q_SIGNALS:
     void currentTabChanged(int index);
-    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidgetBase *);
+    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
     void countChanged();
 
 public: // TODO

@@ -28,7 +28,7 @@ using namespace KDDockWidgets::Views;
 class DockWidget_qtwidgets::Private
 {
 public:
-    Private(DockWidget_qtwidgets *q, Controllers::DockWidgetBase *controller)
+    Private(DockWidget_qtwidgets *q, Controllers::DockWidget *controller)
         : layout(new QVBoxLayout(q))
         , m_controller(controller)
     {
@@ -40,10 +40,10 @@ public:
     }
 
     QVBoxLayout *const layout;
-    Controllers::DockWidgetBase *const m_controller;
+    Controllers::DockWidget *const m_controller;
 };
 
-DockWidget_qtwidgets::DockWidget_qtwidgets(Controllers::DockWidgetBase *controller,
+DockWidget_qtwidgets::DockWidget_qtwidgets(Controllers::DockWidget *controller,
                                            Qt::WindowFlags windowFlags)
     : View_qtwidgets<QWidget>(controller, Type::DockWidget, nullptr, windowFlags)
     , d(new Private(this, controller))
@@ -62,7 +62,7 @@ void DockWidget_qtwidgets::init()
     });
 }
 
-Controllers::DockWidgetBase *DockWidget_qtwidgets::dockWidget() const
+Controllers::DockWidget *DockWidget_qtwidgets::dockWidget() const
 {
     return d->m_controller;
 }

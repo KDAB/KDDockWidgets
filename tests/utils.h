@@ -81,7 +81,7 @@ struct DockDescriptor
 {
     Location loc;
     int relativeToIndex;
-    QPointer<Controllers::DockWidgetBase> createdDock;
+    QPointer<Controllers::DockWidget> createdDock;
     KDDockWidgets::InitialVisibilityOption option;
 };
 
@@ -140,13 +140,13 @@ std::unique_ptr<MainWindow> createMainWindow(QSize sz = { 1000, 1000 },
 
 std::unique_ptr<KDDockWidgets::MainWindow> createMainWindow(QVector<DockDescriptor> &docks);
 
-Controllers::DockWidgetBase *createDockWidget(const QString &name, QWidgetOrQuick *w,
-                                              Controllers::DockWidgetBase::Options options = {},
-                                              Controllers::DockWidgetBase::LayoutSaverOptions layoutSaverOptions = {},
-                                              bool show = true, const QString &affinityName = {});
-Controllers::DockWidgetBase *createDockWidget(const QString &name, QColor color = Qt::black);
+Controllers::DockWidget *createDockWidget(const QString &name, QWidgetOrQuick *w,
+                                          Controllers::DockWidget::Options options = {},
+                                          Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                                          bool show = true, const QString &affinityName = {});
+Controllers::DockWidget *createDockWidget(const QString &name, QColor color = Qt::black);
 
-void nestDockWidget(Controllers::DockWidgetBase *dock, DropArea *dropArea, Controllers::Frame *relativeTo,
+void nestDockWidget(Controllers::DockWidget *dock, DropArea *dropArea, Controllers::Frame *relativeTo,
                     KDDockWidgets::Location location);
 
 class MyWidget : public QWidgetOrQuick

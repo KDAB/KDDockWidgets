@@ -32,11 +32,11 @@ namespace KDDockWidgets {
 namespace Controllers {
 class SideBar;
 
-class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidgetBase::Private : public QObject /// clazy:exclude=missing-qobject-macro
+class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidget::Private : public QObject /// clazy:exclude=missing-qobject-macro
 {
 public:
-    Private(const QString &dockName, DockWidgetBase::Options options_,
-            LayoutSaverOptions layoutSaverOptions_, DockWidgetBase *qq);
+    Private(const QString &dockName, DockWidget::Options options_,
+            LayoutSaverOptions layoutSaverOptions_, DockWidget *qq);
 
     void init()
     {
@@ -150,7 +150,7 @@ public:
 
     /// @brief If this dock widget is inside a drop area nested in MDI then returns the wrapper dock widget
     /// This goes up the hierarchy, while mdiDropAreaWrapper goes down.
-    DockWidgetBase *mdiDockWidgetWrapper() const;
+    DockWidget *mdiDockWidgetWrapper() const;
 
     const QString name;
     QStringList affinities;
@@ -158,8 +158,8 @@ public:
     QIcon titleBarIcon;
     QIcon tabBarIcon;
     QWidgetOrQuick *widget = nullptr;
-    DockWidgetBase *const q;
-    DockWidgetBase::Options options;
+    DockWidget *const q;
+    DockWidget::Options options;
     const LayoutSaverOptions layoutSaverOptions;
     QAction *const toggleAction;
     QAction *const floatAction;

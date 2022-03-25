@@ -36,7 +36,7 @@ class Item;
 namespace KDDockWidgets {
 
 namespace Controllers {
-class DockWidgetBase;
+class DockWidget;
 class Frame;
 }
 

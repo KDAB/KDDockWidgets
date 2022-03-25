@@ -25,7 +25,7 @@ class MainWindow;
 
 namespace Controllers {
 
-class DockWidgetBase;
+class DockWidget;
 
 class DOCKS_EXPORT SideBar : public Controller
 {
@@ -33,9 +33,9 @@ class DOCKS_EXPORT SideBar : public Controller
 public:
     explicit SideBar(SideBarLocation, MainWindow *parent = nullptr);
 
-    void addDockWidget(DockWidgetBase *dw);
-    void removeDockWidget(DockWidgetBase *dw);
-    bool containsDockWidget(DockWidgetBase *) const;
+    void addDockWidget(DockWidget *dw);
+    void removeDockWidget(DockWidget *dw);
+    bool containsDockWidget(DockWidget *) const;
 
     /// @brief Returns this side bar's orientation
     Qt::Orientation orientation() const;
@@ -56,7 +56,7 @@ public:
     MainWindow *mainWindow() const;
 
     /// @brief Toggles the dock widget overlay. Equivalent to the user clicking on the button.
-    void toggleOverlay(DockWidgetBase *);
+    void toggleOverlay(DockWidget *);
 
     /// @brief returns a serialization of this sidebar's state
     /// Currently it's just a list of dock widget ids
@@ -65,14 +65,14 @@ public:
     /// @brief clears the sidebar (removes all dock widgets from it)
     void clear();
 
-    void onButtonClicked(DockWidgetBase *dw);
+    void onButtonClicked(DockWidget *dw);
 
 private:
     void onDockWidgetDestroyed(QObject *dw);
     void updateSize();
 
     MainWindow *const m_mainWindow;
-    QVector<DockWidgetBase *> m_dockWidgets;
+    QVector<DockWidget *> m_dockWidgets;
     const SideBarLocation m_location;
     const Qt::Orientation m_orientation;
 };

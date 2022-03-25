@@ -34,5 +34,5 @@ private:
     const bool m_restoreIsRelative;
     const bool m_maxSizeForDockWidget8;
     const bool m_dockwidget5DoesntCloseBeforeRestore;
-    KDDockWidgets::Controllers::DockWidgetBase::List m_dockwidgets;
+    KDDockWidgets::Controllers::DockWidget::List m_dockwidgets;
 };

@@ -40,8 +40,8 @@ public:
     QTabBar *tabBar() const;
 
     int numDockWidgets() const;
-    void removeDockWidget(Controllers::DockWidgetBase *);
-    int indexOfDockWidget(const Controllers::DockWidgetBase *) const;
+    void removeDockWidget(Controllers::DockWidget *);
+    int indexOfDockWidget(const Controllers::DockWidget *) const;
 
 public: // TODO: make protected
     void mouseDoubleClickEvent(QMouseEvent *) override;
@@ -49,13 +49,13 @@ public: // TODO: make protected
     void tabInserted(int index) override;
     void tabRemoved(int index) override;
     void setCurrentDockWidget(int index);
-    bool insertDockWidget(int index, Controllers::DockWidgetBase *, const QIcon &, const QString &title);
+    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &, const QString &title);
     void setTabBarAutoHide(bool);
     void renameTab(int index, const QString &);
     void changeTabIcon(int index, const QIcon &);
     void init() override;
 
-    Controllers::DockWidgetBase *dockwidgetAt(int index) const;
+    Controllers::DockWidget *dockwidgetAt(int index) const;
     int currentIndex() const;
 
     /// @brief Shows the context menu. Override to implement your own context menu.

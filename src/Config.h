@@ -32,13 +32,13 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 
 namespace Controllers {
-class DockWidgetBase;
+class DockWidget;
 }
 
 class MainWindow;
 class FrameworkWidgetFactory;
 
-typedef KDDockWidgets::Controllers::DockWidgetBase *(*DockWidgetFactoryFunc)(const QString &name);
+typedef KDDockWidgets::Controllers::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::MainWindow *(*MainWindowFactoryFunc)(const QString &name);
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
@@ -53,8 +53,8 @@ typedef KDDockWidgets::MainWindow *(*MainWindowFactoryFunc)(const QString &name)
 /// @return true if the docking is allowed.
 /// @sa setDropIndicatorAllowedFunc
 typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
-                                         const QVector<Controllers::DockWidgetBase *> &source,
-                                         const QVector<Controllers::DockWidgetBase *> &target);
+                                         const QVector<Controllers::DockWidget *> &source,
+                                         const QVector<Controllers::DockWidget *> &target);
 
 /// @deprecated Use DropIndicatorAllowedFunc instead.
 /// @brief Function to allow the user more granularity to disallow dock widgets to tab together
@@ -62,8 +62,8 @@ typedef bool (*DropIndicatorAllowedFunc)(DropLocation location,
 /// @param target The dock widgets within an existing docked tab group
 /// @return true if the docking is allowed.
 /// @sa setTabbingAllowedFunc
-typedef bool (*TabbingAllowedFunc)(const QVector<Controllers::DockWidgetBase *> &source,
-                                   const QVector<Controllers::DockWidgetBase *> &target);
+typedef bool (*TabbingAllowedFunc)(const QVector<Controllers::DockWidget *> &source,
+                                   const QVector<Controllers::DockWidget *> &target);
 
 /**
  * @brief Singleton to allow to choose certain behaviours of the framework.

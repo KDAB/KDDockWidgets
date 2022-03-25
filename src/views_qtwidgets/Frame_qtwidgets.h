@@ -30,14 +30,14 @@ public:
 
     void renameTab(int index, const QString &);
     void changeTabIcon(int index, const QIcon &);
-    void removeWidget_impl(Controllers::DockWidgetBase *);
-    int indexOfDockWidget_impl(const Controllers::DockWidgetBase *);
+    void removeWidget_impl(Controllers::DockWidget *);
+    int indexOfDockWidget_impl(const Controllers::DockWidget *);
     int currentIndex_impl() const;
     void setCurrentTabIndex_impl(int index);
-    void setCurrentDockWidget_impl(Controllers::DockWidgetBase *);
-    void insertDockWidget_impl(Controllers::DockWidgetBase *, int index);
-    Controllers::DockWidgetBase *dockWidgetAt_impl(int index) const;
-    Controllers::DockWidgetBase *currentDockWidget_impl() const;
+    void setCurrentDockWidget_impl(Controllers::DockWidget *);
+    void insertDockWidget_impl(Controllers::DockWidget *, int index);
+    Controllers::DockWidget *dockWidgetAt_impl(int index) const;
+    Controllers::DockWidget *currentDockWidget_impl() const;
     int nonContentsHeight() const;
 
     Controllers::Frame *frame() const;

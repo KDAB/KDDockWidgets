@@ -34,7 +34,7 @@ class WidgetResizeHandler;
 
 namespace KDDockWidgets::Controllers {
 
-class DockWidgetBase;
+class DockWidget;
 class FloatingWindow;
 class TabBar;
 class TitleBar;
@@ -53,23 +53,23 @@ public:
     LayoutSaver::Frame serialize() const;
 
     ///@brief Adds a widget into the Frame's TabWidget
-    void addWidget(DockWidgetBase *, InitialOption = {});
+    void addWidget(DockWidget *, InitialOption = {});
     ///@overload
     void addWidget(Frame *, InitialOption = {});
     ///@overload
     void addWidget(FloatingWindow *floatingWindow, InitialOption = {});
 
     ///@brief Inserts a widget into the Frame's TabWidget at @p index
-    void insertWidget(DockWidgetBase *, int index, InitialOption = {});
+    void insertWidget(DockWidget *, int index, InitialOption = {});
 
     ///@brief removes a dockwidget from the frame
-    void removeWidget(DockWidgetBase *);
+    void removeWidget(DockWidget *);
 
     ///@brief detaches this dock widget
-    FloatingWindow *detachTab(DockWidgetBase *);
+    FloatingWindow *detachTab(DockWidget *);
 
     ///@brief returns the index of the specified dock widget
-    int indexOfDockWidget(const DockWidgetBase *);
+    int indexOfDockWidget(const DockWidget *);
 
     ///@brief returns the index of the current tab
     int currentIndex() const;
@@ -78,16 +78,16 @@ public:
     void setCurrentTabIndex(int index);
 
     ///@brief Sets the specified dock widget to be the current tab
-    void setCurrentDockWidget(DockWidgetBase *);
+    void setCurrentDockWidget(DockWidget *);
 
     ///@brief Inserts a dock widget into the specified index
-    void insertDockWidget(DockWidgetBase *, int index);
+    void insertDockWidget(DockWidget *, int index);
 
     /// @brief Returns the dock widget at @p index
-    DockWidgetBase *dockWidgetAt(int index) const;
+    DockWidget *dockWidgetAt(int index) const;
 
     ///@brief Returns the current dock widget
-    DockWidgetBase *currentDockWidget() const;
+    DockWidget *currentDockWidget() const;
 
     /// @brief returns the number of dock widgets inside the frame
     int dockWidgetCount() const;
@@ -105,7 +105,7 @@ public:
     Controllers::TitleBar *actualTitleBar() const;
     QString title() const;
     QIcon icon() const;
-    const QVector<DockWidgetBase *> dockWidgets() const;
+    const QVector<DockWidget *> dockWidgets() const;
 
     bool isTheOnlyFrame() const;
 
@@ -168,7 +168,7 @@ public:
     }
 
     /// @brief returns whether the dockwidget @p w is inside this frame
-    bool containsDockWidget(DockWidgetBase *w) const;
+    bool containsDockWidget(DockWidget *w) const;
 
     ///@brief returns the FloatingWindow this frame is in, if any
     FloatingWindow *floatingWindow() const;
@@ -211,10 +211,10 @@ public:
     }
 
     ///@brief Called when a dock widget child @p w is shown
-    void onDockWidgetShown(DockWidgetBase *w);
+    void onDockWidgetShown(DockWidget *w);
 
     ///@brief Called when a dock widget child @p w is hidden
-    void onDockWidgetHidden(DockWidgetBase *w);
+    void onDockWidgetHidden(DockWidget *w);
 
     ///@brief returns the layout item that either contains this Frame in the layout or is a placeholder
     Layouting::Item *layoutItem() const;
@@ -247,16 +247,16 @@ public:
     virtual QRect dragRect() const;
 
     ///@brief Returns whether all dock widgets have the specified option set
-    bool allDockWidgetsHave(DockWidgetBase::Option) const;
+    bool allDockWidgetsHave(DockWidget::Option) const;
 
     ///@brief Returns whether at least one dock widget has the specified option set
-    bool anyDockWidgetsHas(DockWidgetBase::Option) const;
+    bool anyDockWidgetsHas(DockWidget::Option) const;
 
     ///@brief Returns whether all dock widgets have the specified  layout saver option set
-    bool allDockWidgetsHave(DockWidgetBase::LayoutSaverOption) const;
+    bool allDockWidgetsHave(DockWidget::LayoutSaverOption) const;
 
     ///@brief Returns whether at least one dock widget has the specified layout saver option set
-    bool anyDockWidgetsHas(DockWidgetBase::LayoutSaverOption) const;
+    bool anyDockWidgetsHas(DockWidget::LayoutSaverOption) const;
 
     /// @brief Usually we do resize via the native window manager, but if a widget is docked like
     /// in MDI mode, or in overlayed mode then we allow the user to resize with mouse
@@ -271,7 +271,7 @@ public:
 
     /// @brief If this is an MDI wrapper frame, return the DockWidget MDI wrapper
     /// @sa isMDIWrapper
-    DockWidgetBase *mdiDockWidgetWrapper() const;
+    DockWidget *mdiDockWidgetWrapper() const;
 
     /// @brief If this is an MDI wrapper frame, return the DropArea MDI wrapper
     /// @sa isMDIWrapper
@@ -299,7 +299,7 @@ public:
     /// @brief Sets the LayoutWidget which this frame is in
     void setLayoutWidget(LayoutWidget *);
 Q_SIGNALS:
-    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidgetBase *);
+    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
     void numDockWidgetsChanged();
     void hasTabsVisibleChanged();
     void isInMainWindowChanged();
@@ -337,14 +337,14 @@ public:
      */
     QSize biggestDockWidgetMaxSize() const;
 
-    virtual void removeWidget_impl(DockWidgetBase *);
-    virtual int indexOfDockWidget_impl(const DockWidgetBase *);
+    virtual void removeWidget_impl(DockWidget *);
+    virtual int indexOfDockWidget_impl(const DockWidget *);
     virtual int currentIndex_impl() const;
     virtual void setCurrentTabIndex_impl(int index);
-    virtual void setCurrentDockWidget_impl(DockWidgetBase *);
-    virtual void insertDockWidget_impl(DockWidgetBase *, int index);
-    virtual DockWidgetBase *dockWidgetAt_impl(int index) const;
-    virtual DockWidgetBase *currentDockWidget_impl() const;
+    virtual void setCurrentDockWidget_impl(DockWidget *);
+    virtual void insertDockWidget_impl(DockWidget *, int index);
+    virtual DockWidget *dockWidgetAt_impl(int index) const;
+    virtual DockWidget *currentDockWidget_impl() const;
     virtual int nonContentsHeight() const;
 
 private:

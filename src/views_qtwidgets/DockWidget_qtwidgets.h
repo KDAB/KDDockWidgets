@@ -52,13 +52,13 @@ public:
      * when visible, or stays without a parent when hidden. This allows to support docking
      * to different main windows.
      */
-    explicit DockWidget_qtwidgets(Controllers::DockWidgetBase *controller,
+    explicit DockWidget_qtwidgets(Controllers::DockWidget *controller,
                                   Qt::WindowFlags windowFlags = {});
 
     ///@brief destructor
     ~DockWidget_qtwidgets() override;
 
-    Controllers::DockWidgetBase *dockWidget() const;
+    Controllers::DockWidget *dockWidget() const;
 
 protected:
     void init() override;

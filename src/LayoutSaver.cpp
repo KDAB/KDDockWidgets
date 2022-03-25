@@ -381,7 +381,7 @@ void LayoutSaver::Private::floatWidgetsWhichSkipRestore(const QStringList &mainW
     // be loading a new layout.
 
     for (auto mw : DockRegistry::self()->mainWindows(mainWindowNames)) {
-        const Controllers::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
+        const Controllers::DockWidget::List docks = mw->layoutWidget()->dockWidgets();
         for (auto dw : docks) {
             if (dw->skipsRestore()) {
                 dw->setFloating(true);
@@ -397,7 +397,7 @@ void LayoutSaver::Private::floatUnknownWidgets(const LayoutSaver::Layout &layout
     // so we can restore the MainWindow layout properly
 
     for (auto mw : DockRegistry::self()->mainWindows(layout.mainWindowNames())) {
-        const Controllers::DockWidgetBase::List docks = mw->layoutWidget()->dockWidgets();
+        const Controllers::DockWidget::List docks = mw->layoutWidget()->dockWidgets();
         for (DockWidgetBase *dw : docks) {
             if (!layout.containsDockWidget(dw->uniqueName())) {
                 dw->setFloating(true);
