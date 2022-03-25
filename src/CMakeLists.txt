@@ -333,7 +333,8 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   endif()
 
   if(IS_CLANG_BUILD)
-    target_compile_options(kddockwidgets PRIVATE -Wweak-vtables)
+    # // TODOv2: KDBindings is failing due to weak-vtables
+    # target_compile_options(kddockwidgets PRIVATE -Wweak-vtables)
   endif()
 endif()
 
