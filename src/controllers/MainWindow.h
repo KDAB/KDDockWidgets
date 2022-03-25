@@ -32,17 +32,16 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-namespace Controllers {
-class Frame;
-class SideBar;
-class DockWidget;
-}
-
 class DropArea;
 class MDILayoutWidget;
 class MultiSplitter;
 class LayoutWidget;
 class DropAreaWithCentralFrame;
+
+namespace Controllers {
+class Frame;
+class SideBar;
+class DockWidget;
 
 /**
  * @brief The MainWindow base-class. MainWindow and MainWindowBase are only
@@ -54,7 +53,7 @@ class DropAreaWithCentralFrame;
 #ifndef PYTHON_BINDINGS // Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
 class DOCKS_EXPORT MainWindow : public QMainWindow
 #else
-class DOCKS_EXPORT MainWindowBase : public QMainWindow
+class DOCKS_EXPORT MainWindow : public QMainWindow
 #endif
 {
     Q_OBJECT
@@ -248,10 +247,11 @@ private:
     Private *const d;
 
     friend class ::TestDocks;
-    friend class LayoutSaver;
+    friend class KDDockWidgets::LayoutSaver;
     bool deserialize(const LayoutSaver::MainWindow &);
     LayoutSaver::MainWindow serialize() const;
 };
+}
 }
 
 #endif

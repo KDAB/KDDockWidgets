@@ -30,7 +30,7 @@ class DOCKS_EXPORT FloatingWindow_qtwidgets : public View_qtwidgets<QWidget>
     Q_OBJECT
 public:
     explicit FloatingWindow_qtwidgets(Controllers::FloatingWindow *controller,
-                                      MainWindow *parent = nullptr,
+                                      Controllers::MainWindow *parent = nullptr,
                                       Qt::WindowFlags windowFlags = {});
 
     Controllers::FloatingWindow *floatingWindow() const;

@@ -56,8 +56,8 @@ class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit SideBar_qtwidgets(KDDockWidgets::Controllers::SideBar *,
-                               KDDockWidgets::MainWindow *parent);
+    explicit SideBar_qtwidgets(Controllers::SideBar *,
+                               Controllers::MainWindow *parent);
 
     bool isVertical() const; // TODO: Move to a potential base class
 

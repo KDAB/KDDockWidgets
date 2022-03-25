@@ -33,13 +33,13 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 class DockWidget;
+class MainWindow;
 }
 
-class MainWindow;
 class FrameworkWidgetFactory;
 
 typedef KDDockWidgets::Controllers::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
-typedef KDDockWidgets::MainWindow *(*MainWindowFactoryFunc)(const QString &name);
+typedef KDDockWidgets::Controllers::MainWindow *(*MainWindowFactoryFunc)(const QString &name);
 
 /// @brief Function to allow more granularity to disallow where widgets are dropped
 ///

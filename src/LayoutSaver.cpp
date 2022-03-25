@@ -1028,7 +1028,7 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
     mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
 }
 
-static QScreen *screenForMainWindow(MainWindow *mw)
+static QScreen *screenForMainWindow(Controllers::MainWindow *mw)
 {
     // Workaround for 5.12 which doesn't have QWidget::screen().
 

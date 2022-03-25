@@ -205,7 +205,7 @@ bool DockRegistry::isProbablyObscured(QWindow *window, Controllers::FloatingWind
     // Floating windows are Tool (keep above), unless we disabled it in Config
     const bool targetIsToolWindow = KDDockWidgets::usesUtilityWindows() && floatingWindowForHandle(window) != nullptr;
 
-    for (MainWindow *mw : m_mainWindows) {
+    for (Controllers::MainWindow *mw : m_mainWindows) {
         QWindow *mwWindow = mw->window()->windowHandle();
 
         if (mwWindow && mwWindow != window && !targetIsToolWindow && mwWindow->geometry().intersects(geo)) {
@@ -262,9 +262,9 @@ Controllers::Frame *DockRegistry::frameInMDIResize() const
     return nullptr;
 }
 
-MainWindow::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
+Controllers::MainWindow::List DockRegistry::mainWindowsWithAffinity(const QStringList &affinities) const
 {
-    MainWindow::List result;
+    Controllers::MainWindow::List result;
     result.reserve(m_mainWindows.size());
 
     for (auto mw : m_mainWindows) {
@@ -327,7 +327,7 @@ void DockRegistry::unregisterDockWidget(DockWidgetBase *dock)
     maybeDelete();
 }
 
-void DockRegistry::registerMainWindow(MainWindow *mainWindow)
+void DockRegistry::registerMainWindow(Controllers::MainWindow *mainWindow)
 {
     if (mainWindow->uniqueName().isEmpty()) {
         qWarning() << Q_FUNC_INFO << "MainWindow" << mainWindow << " doesn't have an ID";
@@ -338,7 +338,7 @@ void DockRegistry::registerMainWindow(MainWindow *mainWindow)
     m_mainWindows << mainWindow;
 }
 
-void DockRegistry::unregisterMainWindow(MainWindow *mainWindow)
+void DockRegistry::unregisterMainWindow(Controllers::MainWindow *mainWindow)
 {
     m_mainWindows.removeOne(mainWindow);
     maybeDelete();
@@ -423,7 +423,7 @@ DockWidgetBase *DockRegistry::dockByName(const QString &name, DockByNameFlags fl
     return nullptr;
 }
 
-MainWindow *DockRegistry::mainWindowByName(const QString &name) const
+Controllers::MainWindow *DockRegistry::mainWindowByName(const QString &name) const
 {
     for (auto mainWindow : qAsConst(m_mainWindows)) {
         if (mainWindow->uniqueName() == name)
@@ -505,9 +505,9 @@ const DockWidgetBase::List DockRegistry::dockWidgets(const QStringList &names)
     return result;
 }
 
-const MainWindow::List DockRegistry::mainWindows(const QStringList &names)
+const Controllers::MainWindow::List DockRegistry::mainWindows(const QStringList &names)
 {
-    MainWindow::List result;
+    Controllers::MainWindow::List result;
     result.reserve(names.size());
 
     for (auto mw : qAsConst(m_mainWindows)) {
@@ -531,7 +531,7 @@ const DockWidgetBase::List DockRegistry::closedDockwidgets() const
     return result;
 }
 
-const MainWindow::List DockRegistry::mainwindows() const
+const Controllers::MainWindow::List DockRegistry::mainwindows() const
 {
     return m_mainWindows;
 }
@@ -616,9 +616,9 @@ Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) con
     return nullptr;
 }
 
-MainWindow *DockRegistry::mainWindowForHandle(QWindow *windowHandle) const
+Controllers::MainWindow *DockRegistry::mainWindowForHandle(QWindow *windowHandle) const
 {
-    for (MainWindow *mw : m_mainWindows) {
+    for (Controllers::MainWindow *mw : m_mainWindows) {
         if (mw->windowHandle() == windowHandle)
             return mw;
     }
@@ -655,7 +655,7 @@ QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
         }
     }
 
-    for (MainWindow *m : m_mainWindows) {
+    for (Controllers::MainWindow *m : m_mainWindows) {
         if (m->isVisible()) {
             if (QWindow *window = m->window()->windowHandle()) {
                 window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(m));
@@ -676,7 +676,7 @@ void DockRegistry::clear(const QStringList &affinities)
 }
 
 void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
-                         const MainWindow::List &mainWindows,
+                         const Controllers::MainWindow::List &mainWindows,
                          const QStringList &affinities)
 {
     for (auto dw : qAsConst(dockWidgets)) {
@@ -764,7 +764,7 @@ bool DockRegistry::onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *ev)
         return false;
 #endif
 
-    MainWindow *mainWindow = dw->mainWindow();
+    Controllers::MainWindow *mainWindow = dw->mainWindow();
     if (!mainWindow) // Only docked widgets are interesting
         return false;
 

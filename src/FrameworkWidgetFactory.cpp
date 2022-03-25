@@ -88,7 +88,8 @@ View *DefaultWidgetFactory::createSeparator(Controllers::Separator *controller, 
     return new Views::Separator_qtwidgets(controller, parent ? static_cast<Views::View_qtwidgets<QWidget> *>(parent) : nullptr);
 }
 
-View *DefaultWidgetFactory::createFloatingWindow(Controllers::FloatingWindow *controller, MainWindow *parent, Qt::WindowFlags windowFlags) const
+View *DefaultWidgetFactory::createFloatingWindow(Controllers::FloatingWindow *controller,
+                                                 Controllers::MainWindow *parent, Qt::WindowFlags windowFlags) const
 {
     return new Views::FloatingWindow_qtwidgets(controller, parent, windowFlags);
 }
@@ -117,7 +118,8 @@ QWidgetOrQuick *DefaultWidgetFactory::createRubberBand(QWidgetOrQuick *parent) c
     return new QRubberBand(QRubberBand::Rectangle, parent);
 }
 
-View *DefaultWidgetFactory::createSideBar(Controllers::SideBar *controller, MainWindow *parent) const
+View *DefaultWidgetFactory::createSideBar(Controllers::SideBar *controller,
+                                          Controllers::MainWindow *parent) const
 {
     return new Views::SideBar_qtwidgets(controller, parent);
 }

@@ -26,7 +26,7 @@ public:
     static Controllers::Frame *createCentralFrame(MainWindowOptions options);
 
 private:
-    friend class MainWindow;
+    friend class Controllers::MainWindow;
     friend class Controllers::Frame;
     Controllers::Frame *const m_centralFrame = nullptr;
 };

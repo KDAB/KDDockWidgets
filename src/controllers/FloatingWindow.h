@@ -22,7 +22,6 @@
 #include "kddockwidgets/docks_export.h"
 
 namespace KDDockWidgets {
-class MainWindow;
 class DropArea;
 class MultiSplitter;
 class LayoutWidget;
@@ -30,8 +29,9 @@ class LayoutWidget;
 
 namespace KDDockWidgets::Controllers {
 
-class TitleBar;
 class Frame;
+class MainWindow;
+class TitleBar;
 
 class DOCKS_EXPORT FloatingWindow : public Controller, public Draggable
 {

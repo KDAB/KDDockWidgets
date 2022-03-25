@@ -146,7 +146,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
                 }
             }
         } else {
-            MainWindow *mainWindow = DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
+            Controllers::MainWindow *mainWindow = DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
             layout = mainWindow->layoutWidget();
         }
 

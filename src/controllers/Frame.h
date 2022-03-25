@@ -27,7 +27,6 @@
 class TestDocks;
 
 namespace KDDockWidgets {
-class MainWindow;
 class MDILayoutWidget;
 class WidgetResizeHandler;
 }
@@ -36,9 +35,10 @@ namespace KDDockWidgets::Controllers {
 
 class DockWidget;
 class FloatingWindow;
+class MainWindow;
+class Stack;
 class TabBar;
 class TitleBar;
-class Stack;
 
 class DOCKS_EXPORT Frame : public Controller, public FocusScope
 {

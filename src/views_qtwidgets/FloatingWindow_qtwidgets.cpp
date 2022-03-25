@@ -32,7 +32,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-FloatingWindow_qtwidgets::FloatingWindow_qtwidgets(Controllers::FloatingWindow *controller, MainWindow *parent, Qt::WindowFlags windowFlags)
+FloatingWindow_qtwidgets::FloatingWindow_qtwidgets(Controllers::FloatingWindow *controller,
+                                                   Controllers::MainWindow *parent, Qt::WindowFlags windowFlags)
     : View_qtwidgets<QWidget>(controller, Type::FloatingWindow, parent, windowFlags)
     , m_controller(controller)
     , m_vlayout(new QVBoxLayout(this))

@@ -310,7 +310,7 @@ public:
         return QWidget::windowHandle();
     }
 
-    std::unique_ptr<ViewWrapper> window() const
+    std::unique_ptr<ViewWrapper> window() const override
     {
         ViewWrapper *wrapper = new ViewWrapper_qtwidgets(QWidget::window());
         return std::unique_ptr<ViewWrapper>(wrapper);

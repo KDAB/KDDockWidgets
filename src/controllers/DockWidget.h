@@ -38,7 +38,6 @@ using DockWidgetBase = KDDockWidgets::Controllers::DockWidget;
 class DragController;
 class DockRegistry;
 class LayoutSaver;
-class MainWindow;
 class StateDragging;
 class FrameQuick;
 class DockWidgetQuick;
@@ -46,9 +45,10 @@ class LayoutWidget;
 
 namespace Controllers {
 
-class TitleBar;
-class Frame;
+class MainWindow;
 class FloatingWindow;
+class Frame;
+class TitleBar;
 
 /**
  * @brief The DockWidget base-class. DockWidget and DockWidgetBase are only
@@ -534,13 +534,13 @@ private:
     friend class Controllers::FloatingWindow;
     friend class Frame;
     friend class DropArea;
+    friend class MainWindow;
     friend class ::TestDocks;
     friend class StateDragging;
     friend class KDDockWidgets::Controllers::TitleBar;
     friend class KDDockWidgets::DragController;
     friend class KDDockWidgets::DockRegistry;
     friend class KDDockWidgets::LayoutSaver;
-    friend class KDDockWidgets::MainWindow;
     friend class KDDockWidgets::FrameQuick;
     friend class KDDockWidgets::DockWidgetQuick;
 

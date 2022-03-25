@@ -36,7 +36,7 @@ using namespace KDDockWidgets::Tests;
 // clazy:excludeall=ctor-missing-parent-argument,missing-qobject-macro,range-loop,missing-typeinfo,detaching-member,function-args-by-ref,non-pod-global-static,reserve-candidates
 
 
-std::unique_ptr<KDDockWidgets::MainWindow>
+std::unique_ptr<Controllers::MainWindow>
 KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOptions options,
                                        const QString &name, bool show)
 {

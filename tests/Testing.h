@@ -84,7 +84,7 @@ struct AddDockWidgetParams
         return params;
     }
 
-    KDDockWidgets::MainWindow *mainWindow() const
+    KDDockWidgets::Controllers::MainWindow *mainWindow() const
     {
         return KDDockWidgets::DockRegistry::self()->mainWindowByName(mainWindowName);
     }

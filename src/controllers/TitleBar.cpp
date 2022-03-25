@@ -83,7 +83,7 @@ bool TitleBar::titleBarIsFocusable() const
 }
 
 
-KDDockWidgets::MainWindow *TitleBar::mainWindow() const
+MainWindow *TitleBar::mainWindow() const
 {
     if (m_floatingWindow)
         return nullptr;
