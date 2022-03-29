@@ -61,8 +61,10 @@ int main(int argc, char **argv)
     dock2->setWidget(widget2);
 
     // # 3. Dock them
-    mainWindow.addDockWidget(dock1, KDDockWidgets::Location_OnLeft, nullptr, KDDockWidgets::InitialOption(QSize(300, 0)));
-    mainWindow.addDockWidget(dock2, KDDockWidgets::Location_OnBottom, nullptr, KDDockWidgets::InitialOption(QSize(0, 300)));
+    mainWindow.mainWindow()->addDockWidget(dock1, KDDockWidgets::Location_OnLeft,
+                                           nullptr, KDDockWidgets::InitialOption(QSize(300, 0)));
+    mainWindow.mainWindow()->addDockWidget(dock2, KDDockWidgets::Location_OnBottom,
+                                           nullptr, KDDockWidgets::InitialOption(QSize(0, 300)));
 
     KDDockWidgets::DockWidgetBase::Options options = {};
     if (parser.isSet(nestedDocking)) {
@@ -80,7 +82,7 @@ int main(int argc, char **argv)
     mdiWidget3->setWidget(new MyWidget3());
 
     auto mdiArea = new KDDockWidgets::MDIArea();
-    mainWindow.setPersistentCentralWidget(mdiArea);
+    mainWindow.mainWindow()->setPersistentCentralWidget(mdiArea);
 
     mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));

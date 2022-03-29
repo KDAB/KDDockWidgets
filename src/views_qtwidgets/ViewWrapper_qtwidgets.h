@@ -26,6 +26,8 @@ public:
     explicit ViewWrapper_qtwidgets(QWidget *widget);
 
     QRect geometry() const override;
+    QPoint mapToGlobal(QPoint) const override;
+    QPoint mapFromGlobal(QPoint) const override;
 
 private:
     QWidget *const m_widget;

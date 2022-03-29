@@ -68,15 +68,15 @@ int main(int argc, char **argv)
     dock5->setWidget(widget5);
 
     // 3. Add them to the main window
-    mainWindow.addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-    mainWindow.addDockWidget(dock2, KDDockWidgets::Location_OnTop);
+    mainWindow.mainWindow()->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    mainWindow.mainWindow()->addDockWidget(dock2, KDDockWidgets::Location_OnTop);
 
     // 4. Add dock3 to the right of dock2
-    mainWindow.addDockWidget(dock3, KDDockWidgets::Location_OnRight, dock2);
+    mainWindow.mainWindow()->addDockWidget(dock3, KDDockWidgets::Location_OnRight, dock2);
 
     // 5. dock4 is docked at the bottom, with 200px height
     const QSize preferredSize(QSize(/*ignored*/ 0, 200));
-    mainWindow.addDockWidget(dock4, KDDockWidgets::Location_OnBottom, nullptr, preferredSize);
+    mainWindow.mainWindow()->addDockWidget(dock4, KDDockWidgets::Location_OnBottom, nullptr, preferredSize);
 
 
     // 5. dock5 will be its own top level (floating window)

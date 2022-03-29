@@ -619,7 +619,7 @@ Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) con
 Controllers::MainWindow *DockRegistry::mainWindowForHandle(QWindow *windowHandle) const
 {
     for (Controllers::MainWindow *mw : m_mainWindows) {
-        if (mw->windowHandle() == windowHandle)
+        if (mw->view()->windowHandle() == windowHandle)
             return mw;
     }
 
@@ -632,7 +632,7 @@ QWidgetOrQuick *DockRegistry::topLevelForHandle(QWindow *windowHandle) const
         return fw->view()->asQWidget();
 
     if (auto mw = mainWindowForHandle(windowHandle))
-        return mw;
+        return mw->view()->asQWidget();
 
     return nullptr;
 }
@@ -658,7 +658,7 @@ QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
     for (Controllers::MainWindow *m : m_mainWindows) {
         if (m->isVisible()) {
             if (QWindow *window = m->window()->windowHandle()) {
-                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(m));
+                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(m->view()->asQWidget()));
                 windows << window;
             } else {
                 qWarning() << Q_FUNC_INFO << "MainWindow doesn't have QWindow";

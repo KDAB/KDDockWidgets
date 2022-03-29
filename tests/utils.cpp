@@ -61,10 +61,10 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     QTest::qWait(100); // the root object gets sized delayed
 #endif
 
-    auto ptr = std::unique_ptr<Views::MainWindow_qtwidgets>(new Views::MainWindow_qtwidgets(mainWindowName, options, parent));
+    auto ptr = std::unique_ptr<Controllers::MainWindow>(new Controllers::MainWindow(mainWindowName, options, parent));
     if (show)
         ptr->show();
-    ptr->resize(sz);
+    ptr->view()->resize(sz);
     return ptr;
 }
 
@@ -127,10 +127,10 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     QTest::qWait(100); // the root object gets sized delayed
 #endif
 
-    auto m = std::unique_ptr<Views::MainWindow_qtwidgets>(new Views::MainWindow_qtwidgets(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
+    auto m = std::unique_ptr<Controllers::MainWindow>(new Controllers::MainWindow(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
     auto layout = m->layoutWidget();
     m->show();
-    m->resize(QSize(700, 700));
+    m->view()->resize(QSize(700, 700));
 
     int i = 0;
     for (DockDescriptor &desc : docks) {

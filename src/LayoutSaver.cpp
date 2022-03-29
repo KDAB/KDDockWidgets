@@ -254,7 +254,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
         if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry)) {
             d->deserializeWindowGeometry(mw, mainWindow->window()); // window(), as the MainWindow can be embedded
             if (mw.windowState != Qt::WindowNoState) {
-                if (auto w = mainWindow->windowHandle()) {
+                if (auto w = mainWindow->view()->windowHandle()) {
                     w->setWindowState(mw.windowState);
                 }
             }
@@ -1041,7 +1041,7 @@ static QScreen *screenForMainWindow(Controllers::MainWindow *mw)
         return window->screen();
     return nullptr;
 #else
-    return mw->screen();
+    return mw->view()->asQWidget()->screen();
 #endif
 }
 

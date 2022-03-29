@@ -23,10 +23,10 @@
 #include "docks_export.h"
 #include "KDDockWidgets.h"
 #include "LayoutSaver.h"
+#include "Controller.h"
 
 #include <QVector>
 #include <QMargins>
-#include <QMainWindow> // TODO
 
 class TestDocks;
 
@@ -50,11 +50,7 @@ class DockWidget;
  *
  * Do not use instantiate directly in user code. Use MainWindow instead.
  */
-#ifndef PYTHON_BINDINGS // Pyside bug: https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1327
-class DOCKS_EXPORT MainWindow : public QMainWindow
-#else
-class DOCKS_EXPORT MainWindow : public QMainWindow
-#endif
+class DOCKS_EXPORT MainWindow : public Controller
 {
     Q_OBJECT
     Q_PROPERTY(QStringList affinities READ affinities CONSTANT)
@@ -66,7 +62,10 @@ public:
     explicit MainWindow(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
                         QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 
+    explicit MainWindow(View *view, const QString &uniqueName, MainWindowOptions options);
+
     ~MainWindow() override;
+    void init(const QString &name, bool initView);
 
     /**
      * @brief Docks a DockWidget into the central frame, tabbed.
@@ -224,15 +223,15 @@ public:
     /// - QtQuick: Our MainWindow is QQuickItem
     QRect windowGeometry() const;
 
+    void setContentsMargins(int, int, int, int);
+
+    void onResized(QResizeEvent *);
+
 protected:
     void setUniqueName(const QString &uniqueName);
-    void onResized(QResizeEvent *); // Because QtQuick doesn't have resizeEvent()
-    virtual QMargins centerWidgetMargins() const = 0;
-    virtual Controllers::SideBar *sideBar(SideBarLocation) const = 0;
-    virtual QRect centralAreaGeometry() const
-    {
-        return {};
-    }
+    QMargins centerWidgetMargins() const;
+    Controllers::SideBar *sideBar(SideBarLocation) const;
+    QRect centralAreaGeometry() const;
 
 Q_SIGNALS:
     void uniqueNameChanged();

@@ -26,7 +26,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::Controllers;
 
-SideBar_qtwidgets::SideBar_qtwidgets(Controllers::SideBar *controller, MainWindow *parent)
+SideBar_qtwidgets::SideBar_qtwidgets(Controllers::SideBar *controller, QWidget *parent)
     : View_qtwidgets(controller, Type::SideBar, parent)
     , m_controller(controller)
     , m_layout(controller->isVertical() ? static_cast<QBoxLayout *>(new QVBoxLayout(this))

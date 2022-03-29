@@ -101,7 +101,8 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     });
 
     auto layoutEqually = fileMenu->addAction(QStringLiteral("Layout Equally"));
-    connect(layoutEqually, &QAction::triggered, this, &MainWindow_qtwidgets::layoutEqually);
+    connect(layoutEqually, &QAction::triggered,
+            mainWindow(), &KDDockWidgets::Controllers::MainWindow::layoutEqually);
 
     auto quitAction = fileMenu->addAction(QStringLiteral("Quit"));
     connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
@@ -113,11 +114,11 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         KDDockWidgets::Config::self().setDropIndicatorsInhibited(!checked);
     });
 
-    setAffinities({ affinityName });
+    mainWindow()->setAffinities({ affinityName });
     createDockWidgets();
 
     if (options & KDDockWidgets::MainWindowOption_HasCentralWidget) {
-        setPersistentCentralWidget(new MyWidget1());
+        mainWindow()->setPersistentCentralWidget(new MyWidget1());
     }
 }
 
@@ -137,15 +138,16 @@ void MyMainWindow::createDockWidgets()
     for (int i = 0; i < numDockWidgets; i++)
         m_dockwidgets << newDockWidget();
 
+    auto controller = mainWindow();
     // MainWindow::addDockWidget() attaches a dock widget to the main window:
-    addDockWidget(m_dockwidgets.at(0), KDDockWidgets::Location_OnTop);
+    controller->addDockWidget(m_dockwidgets.at(0), KDDockWidgets::Location_OnTop);
 
     // Here, for finer granularity we specify right of dockwidgets[0]:
-    addDockWidget(m_dockwidgets.at(1), KDDockWidgets::Location_OnRight, m_dockwidgets.at(0));
+    controller->addDockWidget(m_dockwidgets.at(1), KDDockWidgets::Location_OnRight, m_dockwidgets.at(0));
 
-    addDockWidget(m_dockwidgets.at(2), KDDockWidgets::Location_OnLeft);
-    addDockWidget(m_dockwidgets.at(3), KDDockWidgets::Location_OnBottom);
-    addDockWidget(m_dockwidgets.at(4), KDDockWidgets::Location_OnBottom);
+    controller->addDockWidget(m_dockwidgets.at(2), KDDockWidgets::Location_OnLeft);
+    controller->addDockWidget(m_dockwidgets.at(3), KDDockWidgets::Location_OnBottom);
+    controller->addDockWidget(m_dockwidgets.at(4), KDDockWidgets::Location_OnBottom);
 
     // Tab two dock widgets together
     m_dockwidgets[3]->addDockWidgetAsTab(m_dockwidgets.at(5));
@@ -179,7 +181,7 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
         layoutSaverOptions |= KDDockWidgets::Controllers::DockWidget::LayoutSaverOption::Skip;
 
     auto dock = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
-    dock->setAffinities(affinities()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
+    dock->setAffinities(mainWindow()->affinities()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
 
     if (count == 1)
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));

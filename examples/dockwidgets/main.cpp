@@ -330,7 +330,7 @@ int main(int argc, char **argv)
                                                    false, false, restoreIsRelative, false,
                                                    false, affinity);
 
-        dockableMainWindow->setAffinities({ affinity });
+        dockableMainWindow->mainWindow()->setAffinities({ affinity }); // TODOv2: Add the MainWindow API to the views too
 
         dockableMainWindow->setStyleSheet(QStringLiteral("background: yellow"));
 

@@ -19,11 +19,15 @@
 #ifndef KD_MAINWINDOW_H
 #define KD_MAINWINDOW_H
 
+#include "View_qtwidgets.h"
 #include "controllers/MainWindow.h"
+
+#include <QMainWindow>
 
 namespace KDDockWidgets {
 
 namespace Controllers {
+class MainWindow;
 class SideBar;
 }
 
@@ -33,7 +37,7 @@ namespace Views {
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget::DockWidget instances.
  */
-class DOCKS_EXPORT MainWindow_qtwidgets : public Controllers::MainWindow
+class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>
 {
     Q_OBJECT
 public:
@@ -45,26 +49,40 @@ public:
     ///@param options optional MainWindowOptions to use
     ///@param parent QObject *parent to pass to QMainWindow constructor.
     ///@param flags Window flags to  pass to QMainWindow constructor.
-    explicit MainWindow_qtwidgets(const QString &uniqueName, MainWindowOptions options = MainWindowOption_None,
-                                  QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
+    explicit MainWindow_qtwidgets(Controllers::MainWindow *,
+                                  QWidget *parent = nullptr,
+                                  Qt::WindowFlags flags = Qt::WindowFlags());
+
+
+    explicit MainWindow_qtwidgets(const QString &uniqueName,
+                                  MainWindowOptions options = {},
+                                  QWidget *parent = nullptr,
+                                  Qt::WindowFlags flags = Qt::WindowFlags());
 
     ///@brief Destructor
     ~MainWindow_qtwidgets() override;
 
     ///@brief returns the sidebar for the specified location
-    Controllers::SideBar *sideBar(SideBarLocation) const override;
+    Controllers::SideBar *sideBar(SideBarLocation) const;
 
     //@brief returns the margins for the contents widget
-    QMargins centerWidgetMargins() const override;
+    QMargins centerWidgetMargins() const;
 
     //@brief sets the margins for the contents widgets
     void setCenterWidgetMargins(const QMargins &margins);
 
+    /// @brief Returns the main window controller
+    Controllers::MainWindow *mainWindow() const;
+
+
+    void init() override;
+
 protected:
     void resizeEvent(QResizeEvent *) override;
-    QRect centralAreaGeometry() const override;
+    QRect centralAreaGeometry() const;
 
 private:
+    friend class Controllers::MainWindow;
     using QMainWindow::setCentralWidget;
     void setCentralWidget(QWidget *); // overridden just to make it private
     class Private;

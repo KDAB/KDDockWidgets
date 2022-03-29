@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View.h"
-
+#include "docks_export.h"
 
 namespace KDDockWidgets {
 
@@ -20,7 +20,7 @@ namespace KDDockWidgets {
 /// A view wrapper is a view that doesn't own the native GUI element(QWidget, QQuickItem etc.)
 /// It just adds View API to an existing GUI element
 /// Useful for GUI elements that are not created by KDDW.
-class ViewWrapper : public View
+class DOCKS_EXPORT ViewWrapper : public View
 {
 public:
     ViewWrapper();
@@ -46,8 +46,6 @@ public:
     void raise() override;
     void activateWindow() override;
     bool isTopLevel() const override;
-    QPoint mapToGlobal(QPoint) const override;
-    QPoint mapFromGlobal(QPoint) const override;
     void setSizePolicy(QSizePolicy) override;
     QSizePolicy sizePolicy() const override;
     void closeWindow() override;

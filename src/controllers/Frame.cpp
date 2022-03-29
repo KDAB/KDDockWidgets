@@ -560,7 +560,7 @@ FloatingWindow *Frame::floatingWindow() const
 
     auto p = view()->asQWidget()->parentWidget();
     while (p) {
-        if (qobject_cast<Controllers::MainWindow *>(p))
+        if (qobject_cast<Views::MainWindow_qtwidgets *>(p))
             return nullptr;
 
         if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(p))

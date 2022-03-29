@@ -530,8 +530,8 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.affinities = affinities();
     fw.windowState = windowStateOverride();
 
-    auto mainWindow = qobject_cast<MainWindow *>(view()->asQWidget()->parentWidget());
-    fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow)
+    auto mainWindow = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget()->parentWidget());
+    fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow->mainWindow())
                                 : -1;
 
     return fw;
@@ -602,7 +602,8 @@ bool FloatingWindow::isWindow() const
 
 MainWindow *FloatingWindow::mainWindow() const
 {
-    return qobject_cast<MainWindow *>(parent());
+    auto view = qobject_cast<Views::MainWindow_qtwidgets *>(parent());
+    return view ? view->mainWindow() : nullptr;
 }
 
 QMargins FloatingWindow::contentMargins() const

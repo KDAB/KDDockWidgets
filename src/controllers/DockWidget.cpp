@@ -25,8 +25,10 @@
 
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+
 #include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/DockWidget_qtwidgets.h"
+#include "views_qtwidgets/MainWindow_qtwidgets.h"
 
 #include <QEvent>
 #include <QCloseEvent>
@@ -122,8 +124,9 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
                                                  DockWidget *relativeTo,
                                                  InitialOption initialOption)
 {
-    if (auto mainWindow = qobject_cast<MainWindow *>(view()->asQWidget()->window())) {
+    if (auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget()->window())) {
         // It's inside a main window. Simply use the main window API.
+        auto mainWindow = v->mainWindow();
         mainWindow->addDockWidget(other, location, relativeTo, initialOption);
         return;
     }
@@ -412,7 +415,7 @@ void DockWidget::raise()
 
 bool DockWidget::isMainWindow() const
 {
-    return qobject_cast<MainWindow *>(widget());
+    return qobject_cast<Views::MainWindow_qtwidgets *>(widget());
 }
 
 bool DockWidget::isInMainWindow() const

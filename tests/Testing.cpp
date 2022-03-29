@@ -140,6 +140,11 @@ bool Testing::waitForResize(QWidgetOrQuick *w, int timeout)
     return waitForEvent(w, QEvent::Resize, timeout);
 }
 
+bool Testing::waitForResize(Controller *c, int timeout)
+{
+    return waitForResize(c->view()->asQWidget(), timeout);
+}
+
 HostedWidget::~HostedWidget()
 {
 }

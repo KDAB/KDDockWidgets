@@ -138,6 +138,11 @@ void View::resize(QSize sz)
     setSize(sz.width(), sz.height());
 }
 
+void View::resize(int w, int h)
+{
+    setSize(w, h);
+}
+
 QSize View::boundedMaxSize(QSize min, QSize max)
 {
     // Max should be bigger than min, but not bigger than the hardcoded max
@@ -152,6 +157,11 @@ QSize View::boundedMaxSize(QSize min, QSize max)
     max = max.expandedTo(min);
 
     return max;
+}
+
+Controller *View::controller() const
+{
+    return m_controller;
 }
 
 /** static */

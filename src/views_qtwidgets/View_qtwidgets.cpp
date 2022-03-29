@@ -13,6 +13,7 @@
 
 #include <QTabBar>
 #include <QTabWidget>
+#include <QMainWindow>
 
 using namespace KDDockWidgets::Views;
 
@@ -33,6 +34,13 @@ View_qtwidgets<QTabBar>::View_qtwidgets(KDDockWidgets::Controller *controller, T
 template<>
 View_qtwidgets<QTabWidget>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
     : QTabWidget(parent)
+    , View(controller, type, this)
+{
+}
+
+template<>
+View_qtwidgets<QMainWindow>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
+    : QMainWindow(parent)
     , View(controller, type, this)
 {
 }

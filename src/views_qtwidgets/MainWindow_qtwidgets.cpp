@@ -55,21 +55,49 @@ public:
 class MainWindow_qtwidgets::Private
 {
 public:
-    explicit Private(MainWindowOptions, MainWindow_qtwidgets *mainWindow)
-        : q(mainWindow)
+    explicit Private(Controllers::MainWindow *controller, MainWindow_qtwidgets *qq)
+        : q(qq)
+        , m_controller(controller)
         , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
-        , m_centralWidget(new MyCentralWidget(mainWindow))
+        , m_centralWidget(new MyCentralWidget(qq))
         , m_layout(new QHBoxLayout(m_centralWidget)) // 1 level of indirection so we can add some margins
+    {
+    }
+
+    void init()
     {
         if (m_supportsAutoHide) {
             for (auto location : { SideBarLocation::North, SideBarLocation::East,
                                    SideBarLocation::West, SideBarLocation::South }) {
-                m_sideBars.insert(location, new Controllers::SideBar(location, mainWindow));
+                m_sideBars.insert(location, new Controllers::SideBar(location, m_controller));
             }
         }
 
         m_layout->setSpacing(0);
         updateMargins();
+
+        if (m_supportsAutoHide) {
+            m_layout->addWidget(q->sideBar(SideBarLocation::West)->view()->asQWidget());
+            auto innerVLayout = new QVBoxLayout();
+            innerVLayout->setSpacing(0);
+            innerVLayout->setContentsMargins(0, 0, 0, 0);
+            innerVLayout->addWidget(q->sideBar(SideBarLocation::North)->view()->asQWidget());
+            innerVLayout->addWidget(m_controller->layoutWidget());
+            innerVLayout->addWidget(q->sideBar(SideBarLocation::South)->view()->asQWidget());
+            m_layout->addLayout(innerVLayout);
+            m_layout->addWidget(q->sideBar(SideBarLocation::East)->view()->asQWidget());
+        } else {
+            m_layout->addWidget(m_controller->layoutWidget());
+        }
+
+        q->setCentralWidget(m_centralWidget);
+
+        q->create();
+        connect(q->windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
+                [this] {
+                    updateMargins(); // logical dpi might have changed
+                    Q_EMIT DockRegistry::self()->windowChangedScreen(q->windowHandle());
+                });
     }
 
     void updateMargins()
@@ -79,8 +107,9 @@ public:
     }
 
     MainWindow_qtwidgets *const q;
+    Controllers::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
-    QHash<SideBarLocation, Controllers::SideBar *> m_sideBars;
+    QHash<SideBarLocation, Controllers::SideBar *> m_sideBars; // TODOv2: Move to controller
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
     QMargins m_centerWidgetMargins = { 1, 5, 1, 1 };
@@ -90,39 +119,34 @@ MyCentralWidget::~MyCentralWidget()
 {
 }
 
-
-MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &name, MainWindowOptions options,
+MainWindow_qtwidgets::MainWindow_qtwidgets(Controllers::MainWindow *controller,
                                            QWidget *parent, Qt::WindowFlags flags)
-    : MainWindow(name, options, parent, flags)
-    , d(new Private(options, this))
+    : View_qtwidgets<QMainWindow>(controller, Type::MainWindow, parent, flags)
+    , d(new Private(controller, this))
 {
-    if (d->m_supportsAutoHide) {
-        d->m_layout->addWidget(sideBar(SideBarLocation::West)->view()->asQWidget());
-        auto innerVLayout = new QVBoxLayout();
-        innerVLayout->setSpacing(0);
-        innerVLayout->setContentsMargins(0, 0, 0, 0);
-        innerVLayout->addWidget(sideBar(SideBarLocation::North)->view()->asQWidget());
-        innerVLayout->addWidget(layoutWidget());
-        innerVLayout->addWidget(sideBar(SideBarLocation::South)->view()->asQWidget());
-        d->m_layout->addLayout(innerVLayout);
-        d->m_layout->addWidget(sideBar(SideBarLocation::East)->view()->asQWidget());
-    } else {
-        d->m_layout->addWidget(layoutWidget());
-    }
+}
 
-    setCentralWidget(d->m_centralWidget);
-
-    create();
-    connect(windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
-            [this] {
-                d->updateMargins(); // logical dpi might have changed
-                Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle());
-            });
+MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
+                                           MainWindowOptions options,
+                                           QWidget *parent,
+                                           Qt::WindowFlags flags)
+    : View_qtwidgets<QMainWindow>(new Controllers::MainWindow(this, uniqueName, options),
+                                  Type::MainWindow, parent, flags)
+    , d(new Private(static_cast<Controllers::MainWindow *>(controller()), this))
+{
+    auto controller = mainWindow();
+    controller->init(uniqueName, false);
+    init();
 }
 
 MainWindow_qtwidgets::~MainWindow_qtwidgets()
 {
     delete d;
+}
+
+void MainWindow_qtwidgets::init()
+{
+    d->init();
 }
 
 void MainWindow_qtwidgets::setCentralWidget(QWidget *w)
@@ -137,8 +161,7 @@ Controllers::SideBar *MainWindow_qtwidgets::sideBar(SideBarLocation location) co
 
 void MainWindow_qtwidgets::resizeEvent(QResizeEvent *ev)
 {
-    MainWindow::resizeEvent(ev);
-    onResized(ev); // Also call our own handler, since QtQuick doesn't have resizeEvent()
+    d->m_controller->onResized(ev);
 }
 
 QMargins MainWindow_qtwidgets::centerWidgetMargins() const
@@ -157,4 +180,9 @@ void MainWindow_qtwidgets::setCenterWidgetMargins(const QMargins &margins)
 QRect MainWindow_qtwidgets::centralAreaGeometry() const
 {
     return centralWidget()->geometry();
+}
+
+Controllers::MainWindow *MainWindow_qtwidgets::mainWindow() const
+{
+    return d->m_controller;
 }

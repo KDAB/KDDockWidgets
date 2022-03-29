@@ -108,6 +108,7 @@ void setExpectedWarning(const QString &);
 bool waitForEvent(QObject *w, QEvent::Type type, int timeout = 2000);
 bool waitForDeleted(QObject *o, int timeout = 2000);
 bool waitForResize(QWidgetOrQuick *w, int timeout = 2000);
+bool waitForResize(Controller *c, int timeout = 2000);
 
 class HostedWidget : public QWidgetOrQuick
 {

@@ -49,8 +49,9 @@ public:
         Layout = 128,
         LayoutItem = 256,
         SideBar = 512,
-        DropIndicatorOverlayInterface = 1024,
-        ViewWrapper = 2048
+        MainWindow = 1024,
+        DropIndicatorOverlayInterface = 2048,
+        ViewWrapper = 4096
     };
 
     explicit View(Controller *controller, Type, QObject *thisObj);
@@ -58,7 +59,7 @@ public:
 
     virtual void init() {};
     QObject *asQObject() const;
-    QWidget *asQWidget() const; // TODO: Remove
+    QWidget *asQWidget() const; // TODOv2: Remove
     QObject *parent() const;
 
     /// @brief Returns this view's controller
@@ -172,6 +173,7 @@ public:
     int height() const;
     int width() const;
     void resize(QSize);
+    void resize(int w, int h);
 
     static QSize hardcodedMinimumSize();
     static QSize boundedMaxSize(QSize min, QSize max);

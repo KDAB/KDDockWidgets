@@ -25,6 +25,7 @@
 
 #include "views_qtwidgets/FloatingWindow_qtwidgets.h"
 #include "views_qtwidgets/Frame_qtwidgets.h"
+#include "views_qtwidgets/MainWindow_qtwidgets.h"
 #include "views_qtwidgets/View_qtwidgets.h"
 #include "views_qtwidgets/Separator_qtwidgets.h"
 #include "views_qtwidgets/TitleBar_qtwidgets.h"
@@ -91,7 +92,8 @@ View *DefaultWidgetFactory::createSeparator(Controllers::Separator *controller, 
 View *DefaultWidgetFactory::createFloatingWindow(Controllers::FloatingWindow *controller,
                                                  Controllers::MainWindow *parent, Qt::WindowFlags windowFlags) const
 {
-    return new Views::FloatingWindow_qtwidgets(controller, parent, windowFlags);
+    auto mainwindow = qobject_cast<QMainWindow *>(parent ? parent->view()->asQWidget() : nullptr);
+    return new Views::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
 }
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory::createDropIndicatorOverlay(DropArea *dropArea) const
@@ -121,7 +123,7 @@ QWidgetOrQuick *DefaultWidgetFactory::createRubberBand(QWidgetOrQuick *parent) c
 View *DefaultWidgetFactory::createSideBar(Controllers::SideBar *controller,
                                           Controllers::MainWindow *parent) const
 {
-    return new Views::SideBar_qtwidgets(controller, parent);
+    return new Views::SideBar_qtwidgets(controller, parent->view()->asQWidget());
 }
 
 QAbstractButton *DefaultWidgetFactory::createTitleBarButton(QWidget *parent, TitleBarButtonType type) const

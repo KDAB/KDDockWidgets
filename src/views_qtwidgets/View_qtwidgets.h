@@ -36,6 +36,7 @@ public:
     using View::minimumSizeHint;
     using View::minimumWidth;
     using View::rect;
+    using View::resize;
     using View::width;
 
     explicit View_qtwidgets(KDDockWidgets::Controller *controller, Type type,

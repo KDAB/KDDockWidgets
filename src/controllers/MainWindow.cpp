@@ -40,6 +40,7 @@
 #else
 // TODO: Use framework factory instead
 #include "views_qtwidgets/DockWidget_qtwidgets.h"
+#include "views_qtwidgets/MainWindow_qtwidgets.h"
 #endif
 
 using namespace KDDockWidgets;
@@ -48,19 +49,17 @@ using namespace KDDockWidgets::Controllers;
 static LayoutWidget *createLayoutWidget(MainWindow *mainWindow, MainWindowOptions options)
 {
     if (options & MainWindowOption_MDI)
-        return new MDILayoutWidget(mainWindow);
+        return new MDILayoutWidget(mainWindow->view()->asQWidget());
 
-    return new DropAreaWithCentralFrame(mainWindow, options);
+    return new DropAreaWithCentralFrame(mainWindow->view()->asQWidget(), options);
 }
 
 class MainWindow::Private
 {
 public:
-    explicit Private(MainWindow *mainWindow, const QString &uniqueName, MainWindowOptions options)
+    explicit Private(MainWindow *mainWindow, const QString &, MainWindowOptions options)
         : m_options(options)
         , q(mainWindow)
-        , m_layoutWidget(createLayoutWidget(mainWindow, options))
-        , m_persistentCentralDockWidget(createPersistentCentralDockWidget(uniqueName))
     {
     }
 
@@ -113,16 +112,35 @@ public:
     const MainWindowOptions m_options;
     MainWindow *const q;
     QPointer<Controllers::DockWidget> m_overlayedDockWidget;
-    LayoutWidget *const m_layoutWidget;
-    Controllers::DockWidget *const m_persistentCentralDockWidget;
+    LayoutWidget *m_layoutWidget = nullptr;
+    Controllers::DockWidget *m_persistentCentralDockWidget = nullptr;
 };
 
 MainWindow::MainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                        WidgetType *parent, Qt::WindowFlags flags)
-    : QMainWindow(parent, flags)
+    : Controller(new Views::MainWindow_qtwidgets(this, parent, flags))
     , d(new Private(this, uniqueName, options))
 {
-    setUniqueName(uniqueName);
+    init(uniqueName, true);
+}
+
+MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions options)
+    : Controller(view)
+    , d(new Private(this, uniqueName, options))
+{
+    // Convenience CTOR called by Views
+}
+
+void MainWindow::init(const QString &name, bool initView)
+{
+    d->m_layoutWidget = createLayoutWidget(this, d->m_options);
+
+    if (initView)
+        view()->init();
+
+    d->m_persistentCentralDockWidget = d->createPersistentCentralDockWidget(d->name);
+
+    setUniqueName(name);
 
     connect(d->m_layoutWidget, &LayoutWidget::visibleWidgetCountChanged, this,
             &MainWindow::frameCountChanged);
@@ -307,7 +325,7 @@ QRect MainWindow::Private::rectForOverlay(Controllers::Frame *frame, SideBarLoca
                                                                                       : 0;
         rect.setWidth(qMax(300, frame->view()->minSize().width()));
         rect.setHeight(centralAreaGeo.height() - topSideBarHeight - bottomSideBarHeight - centerWidgetMargins.top() - centerWidgetMargins.bottom());
-        rect.moveTop(sb->view()->asQWidget()->mapTo(q, QPoint(0, 0)).y() + topSideBarHeight - 1);
+        rect.moveTop(sb->view()->asQWidget()->mapTo(q->view()->asQWidget(), QPoint(0, 0)).y() + topSideBarHeight - 1);
         if (location == SideBarLocation::East) {
             rect.moveLeft(centralAreaGeo.width() - rect.width() - sb->width() - centerWidgetMargins.right() - margin);
         } else {
@@ -550,7 +568,7 @@ void MainWindow::overlayOnSideBar(DockWidgetBase *dw)
     clearSideBarOverlay();
 
     auto frame = new Controllers::Frame(nullptr, FrameOption_IsOverlayed);
-    frame->view()->asQWidget()->setParent(this); // TODO
+    frame->view()->asQWidget()->setParent(view()->asQWidget()); // TODOv2
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
     d->updateOverlayGeometry(dw->d->lastPosition()->lastOverlayedGeometry(sb->location()).size());
@@ -744,17 +762,19 @@ LayoutSaver::MainWindow MainWindow::serialize() const
 {
     LayoutSaver::MainWindow m;
 
+    QWindow *whandle = view()->asQWidget()->windowHandle();
+
     m.options = options();
     m.geometry = windowGeometry();
-    m.normalGeometry = normalGeometry();
+    m.normalGeometry = view()->normalGeometry();
     m.isVisible = isVisible();
     m.uniqueName = uniqueName();
-    m.screenIndex = screenNumberForWidget(this);
-    m.screenSize = screenSizeForWidget(this);
+    m.screenIndex = screenNumberForWidget(view()->asQWidget());
+    m.screenSize = screenSizeForWidget(view()->asQWidget());
     m.multiSplitterLayout = layoutWidget()->serialize();
     m.affinities = d->affinities;
-    m.windowState = windowHandle() ? windowHandle()->windowState()
-                                   : Qt::WindowNoState;
+    m.windowState = whandle ? whandle->windowState()
+                            : Qt::WindowNoState;
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
         if (Controllers::SideBar *sb = sideBar(loc)) {
@@ -769,7 +789,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
 
 QRect MainWindow::windowGeometry() const
 {
-    if (QWindow *window = windowHandle())
+    if (QWindow *window = view()->asQWidget()->windowHandle())
         return window->geometry();
 
     return window()->geometry();
@@ -796,4 +816,28 @@ QWidgetOrQuick *MainWindow::persistentCentralWidget() const
         return dw->widget();
 
     return nullptr;
+}
+
+void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
+{
+    auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget());
+    v->setContentsMargins(left, top, right, bottom);
+}
+
+QMargins MainWindow::centerWidgetMargins() const
+{
+    auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget());
+    return v->centerWidgetMargins();
+}
+
+Controllers::SideBar *MainWindow::sideBar(SideBarLocation loc) const
+{
+    auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget());
+    return v->sideBar(loc);
+}
+
+QRect MainWindow::centralAreaGeometry() const
+{
+    auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget());
+    return v->centralAreaGeometry();
 }

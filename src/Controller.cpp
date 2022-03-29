@@ -109,3 +109,13 @@ QWidget *Controller::window() const
 {
     return view()->asQWidget()->window();
 }
+
+QWindow *Controller::windowHandle() const
+{
+    return view()->windowHandle();
+}
+
+void Controller::show() const
+{
+    return view()->show();
+}

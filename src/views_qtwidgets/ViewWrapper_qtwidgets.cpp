@@ -25,3 +25,13 @@ QRect ViewWrapper_qtwidgets::geometry() const
 {
     return m_widget->geometry();
 }
+
+QPoint ViewWrapper_qtwidgets::mapToGlobal(QPoint localPt) const
+{
+    return m_widget->mapToGlobal(localPt);
+}
+
+QPoint ViewWrapper_qtwidgets::mapFromGlobal(QPoint globalPt) const
+{
+    return m_widget->mapFromGlobal(globalPt);
+}

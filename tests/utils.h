@@ -458,7 +458,7 @@ inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     auto lay = new QVBoxLayout(window);
     lay->setContentsMargins(100, 100, 100, 100);
-    lay->addWidget(mainwindow);
+    lay->addWidget(mainwindow->view()->asQWidget());
 #else
     // TODO: For QtQuick we need some QML
     qWarning() << "Parent me!";

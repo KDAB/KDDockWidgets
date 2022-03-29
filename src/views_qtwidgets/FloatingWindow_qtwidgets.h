@@ -15,6 +15,7 @@
 
 QT_BEGIN_NAMESPACE
 class QVBoxLayout;
+class QMainWindow;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets::Controllers {
@@ -30,7 +31,7 @@ class DOCKS_EXPORT FloatingWindow_qtwidgets : public View_qtwidgets<QWidget>
     Q_OBJECT
 public:
     explicit FloatingWindow_qtwidgets(Controllers::FloatingWindow *controller,
-                                      Controllers::MainWindow *parent = nullptr,
+                                      QMainWindow *parent = nullptr,
                                       Qt::WindowFlags windowFlags = {});
 
     Controllers::FloatingWindow *floatingWindow() const;

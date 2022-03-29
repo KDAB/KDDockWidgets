@@ -17,7 +17,9 @@
 #include "private/Position_p.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/SideBar.h"
+
 #include "views_qtwidgets/FloatingWindow_qtwidgets.h"
+#include "views_qtwidgets/MainWindow_qtwidgets.h"
 
 #include <QCoreApplication>
 #include <QString>
@@ -64,8 +66,8 @@ public:
         // Note: Don't simply use window(), as the MainWindow might be embedded into something else
         QWidgetOrQuick *p = q->view()->asQWidget()->parentWidget();
         while (p) {
-            if (auto window = qobject_cast<MainWindow *>(p))
-                return window;
+            if (auto view = qobject_cast<Views::MainWindow_qtwidgets *>(p))
+                return view->mainWindow();
 
             if (p->isWindow())
                 return nullptr;

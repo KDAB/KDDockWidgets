@@ -132,18 +132,6 @@ bool ViewWrapper::isTopLevel() const
     return {};
 }
 
-QPoint ViewWrapper::mapToGlobal(QPoint) const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
-QPoint ViewWrapper::mapFromGlobal(QPoint) const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 void ViewWrapper::setSizePolicy(QSizePolicy)
 {
     qFatal("Not implemented");
