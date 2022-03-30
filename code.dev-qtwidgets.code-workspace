@@ -15,103 +15,44 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "gdb-kddockwidgets_example",
-        "type": "cppdbg",
+        "name": "kddockwidgets_example",
+        "type": "lldb",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/kddockwidgets_example",
         "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "gdb",
-        "stopAtEntry": false,
-        "externalConsole": false
+        "cwd": "${workspaceFolder}"
       },
       {
-        "name": "gdb-kddockwidgets_minimal_example",
-        "type": "cppdbg",
+        "name": "kddockwidgets_minimal_example",
+        "type": "lldb",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/kddockwidgets_minimal_example",
         "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "gdb",
-        "stopAtEntry": false,
-        "externalConsole": false
+        "cwd": "${workspaceFolder}"
       },
       {
-        "name": "gdb-kddockwidgets_minimal_mdi_example",
-        "type": "cppdbg",
+        "name": "kddockwidgets_minimal_mdi_example",
+        "type": "lldb",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/kddockwidgets_minimal_mdi_example",
         "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "gdb",
-        "stopAtEntry": false,
-        "externalConsole": false
+        "cwd": "${workspaceFolder}"
       },
       {
-        "name": "gdb-kddockwidgets_mdi_with_docking_example",
-        "type": "cppdbg",
+        "name": "kddockwidgets_mdi_with_docking_example",
+        "type": "lldb",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/kddockwidgets_mdi_with_docking_example",
         "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "gdb",
-        "stopAtEntry": false,
-        "externalConsole": false
+        "cwd": "${workspaceFolder}"
       },
       {
-        "name": "gdb-tst_docks",
-        "type": "cppdbg",
+        "name": "tst_docks",
+        "type": "lldb",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/tst_docks",
         "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "gdb",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
-        "name": "lldb-kddockwidgets_example",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/kddockwidgets_example",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "lldb",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
-        "name": "lldb-kddockwidgets_minimal_example",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/kddockwidgets_minimal_example",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "lldb",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
-        "name": "lldb-kddockwidgets_minimal_mdi_example",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/kddockwidgets_minimal_mdi_example",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "lldb",
-        "stopAtEntry": false,
-        "externalConsole": false
-      },
-      {
-        "name": "lldb-tst_docks",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/tst_docks",
-        "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "lldb",
-        "stopAtEntry": false,
-        "externalConsole": false
+        "cwd": "${workspaceFolder}"
       },
       {
         "name": "msvc-kddockwidgets_example",
