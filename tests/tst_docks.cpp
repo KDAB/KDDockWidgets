@@ -2748,7 +2748,6 @@ void TestDocks::tst_isFocused()
     // 4. Tab dock1, it's current tab now
     auto oldFw1 = dock1->window();
     dock2->addDockWidgetAsTab(dock1);
-    // delete oldFw1;
     QVERIFY(dock1->isFocused());
     QVERIFY(!dock2->isFocused());
 
@@ -2769,14 +2768,12 @@ void TestDocks::tst_isFocused()
 
     // 4. Add dock3 to the 1st window, nested, focus 2 again
     dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
-    // delete oldFw3;
     dock2->raise();
     dock2->widget()->setFocus(Qt::OtherFocusReason);
     Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
     QVERIFY(!dock1->isFocused());
     QVERIFY(dock2->isFocused());
     QVERIFY(!dock3->isFocused());
-    // delete dock2->window();
 }
 
 void TestDocks::tst_setWidget()
@@ -4789,7 +4786,6 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
 
     dock1->window()->move(0, 0);
     dock1->close();
-    // delete oldFw;
 
     saver.restoreLayout(saved);
     QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), targetPos);
@@ -4836,10 +4832,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
 
     m1->addDockWidget(dock1, Location_OnLeft);
     m1->addDockWidget(dock2, Location_OnRight);
-    // delete oldFw1;
-    // delete oldFw2;
     dock2->addDockWidgetAsTab(dock3);
-    // delete oldFw3;
 
     Controllers::TitleBar *titleBar1 = dock1->titleBar();
     dock1->widget()->setFocus(Qt::MouseFocusReason);
@@ -4900,8 +4893,6 @@ void TestDocks::tst_tabsNotClickable()
     // WAIT // Uncomment for MANUAL test. Also test by adding Flag_AlwaysShowTabs
 
     QCOMPARE(frame->currentIndex(), 0);
-
-    // delete frame->QWidget::window(); TODO
 }
 
 void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
