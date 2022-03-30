@@ -169,3 +169,8 @@ QSize View::hardcodedMinimumSize()
 {
     return Layouting::Item::hardcodedMinimumSize;
 }
+
+bool View::is(Type t) const
+{
+    return m_type == t;
+}

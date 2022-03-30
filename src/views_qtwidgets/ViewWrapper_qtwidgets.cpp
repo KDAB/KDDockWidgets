@@ -10,6 +10,15 @@
 */
 
 #include "ViewWrapper_qtwidgets.h"
+#include "views_qtwidgets/DockWidget_qtwidgets.h"
+#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
+#include "views_qtwidgets/Frame_qtwidgets.h"
+#include "views_qtwidgets/MainWindow_qtwidgets.h"
+#include "views_qtwidgets/Separator_qtwidgets.h"
+#include "views_qtwidgets/SideBar_qtwidgets.h"
+#include "views_qtwidgets/Stack_qtwidgets.h"
+#include "views_qtwidgets/TabBar_qtwidgets.h"
+#include "views_qtwidgets/TitleBar_qtwidgets.h"
 
 #include <QDebug>
 
@@ -94,4 +103,43 @@ QSize ViewWrapper_qtwidgets::maximumSize() const
 void ViewWrapper_qtwidgets::setSize(int x, int y)
 {
     m_widget->resize(x, y);
+}
+
+bool ViewWrapper_qtwidgets::is(Type t) const
+{
+    if (t == Type::ViewWrapper)
+        return true;
+
+    switch (t) {
+
+    case Type::Frame:
+        return qobject_cast<Views::Frame_qtwidgets *>(m_widget);
+    case Type::TitleBar:
+        return qobject_cast<Views::TitleBar_qtwidgets *>(m_widget);
+    case Type::TabBar:
+        return qobject_cast<Views::TabBar_qtwidgets *>(m_widget);
+    case Type::Stack:
+        return qobject_cast<Views::Stack_qtwidgets *>(m_widget);
+    case Type::FloatingWindow:
+        return qobject_cast<Views::FloatingWindow_qtwidgets *>(m_widget);
+    case Type::Separator:
+        return qobject_cast<Views::Separator_qtwidgets *>(m_widget);
+    case Type::DockWidget:
+        return qobject_cast<Views::DockWidget_qtwidgets *>(m_widget);
+    case Type::SideBar:
+        return qobject_cast<Views::SideBar_qtwidgets *>(m_widget);
+    case Type::MainWindow:
+        return qobject_cast<Views::MainWindow_qtwidgets *>(m_widget);
+    case Type::Layout:
+        return qobject_cast<LayoutWidget *>(m_widget);
+    case Type::LayoutItem:
+    case Type::DropIndicatorOverlayInterface:
+        qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";
+        return false;
+    case Type::ViewWrapper:
+        return true;
+    }
+
+    qWarning() << Q_FUNC_INFO << "Unknown type" << static_cast<int>(t);
+    return false;
 }

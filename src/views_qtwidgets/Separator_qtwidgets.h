@@ -24,6 +24,7 @@ namespace KDDockWidgets::Views {
 
 class DOCKS_EXPORT Separator_qtwidgets : public View_qtwidgets<QWidget>
 {
+    Q_OBJECT
 public:
     explicit Separator_qtwidgets(Controllers::Separator *controller, QWidget *parent = nullptr);
 

@@ -218,6 +218,11 @@ public:
         return max;
     }
 
+    /// @brief Returns whether the view is of the specified type
+    /// Virtual so it can be overridden by ViewWrapper. When we're wrapping an existing GUI element
+    /// only the specific frontend can know what's the actual type
+    virtual bool is(Type) const;
+
 protected:
     virtual void free_impl();
 

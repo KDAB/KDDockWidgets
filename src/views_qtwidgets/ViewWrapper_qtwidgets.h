@@ -40,6 +40,7 @@ public:
     bool isMaximized() const override;
     QSize maximumSize() const override;
     void setSize(int width, int height) override;
+    bool is(Type) const override;
 
 private:
     QWidget *const m_widget;
