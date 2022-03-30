@@ -20,6 +20,7 @@
 #include "MainWindowBase.h"
 #include "MDILayoutWidget_p.h"
 #include "TabWidget_p.h"
+#include "DockWidgetBase_p.h"
 
 #include <QTimer>
 #include <QWindowStateChangeEvent>
@@ -417,10 +418,22 @@ void TitleBar::onFloatClicked()
                     return;
                 }
 
+                int i = 0;
+                DockWidgetBase *current = nullptr;
                 for (auto dock : qAsConst(dockWidgets)) {
+
+                    if (!current && dock->isCurrentTab())
+                        current = dock;
+
                     dock->setFloating(true);
+                    dock->dptr()->m_lastPosition->m_tabIndex = i;
                     dock->setFloating(false);
+                    ++i;
                 }
+
+                // Restore the current tab
+                if (current)
+                    current->setAsCurrentTab();
             }
         }
     } else {
