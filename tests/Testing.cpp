@@ -104,6 +104,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
 
 bool Testing::waitForEvent(QObject *w, QEvent::Type type, int timeout)
 {
+    Q_ASSERT(w);
     EventFilter filter(type);
     w->installEventFilter(&filter);
     QElapsedTimer time;

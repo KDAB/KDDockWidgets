@@ -39,6 +39,7 @@ namespace Controllers {
 class FloatingWindow;
 }
 
+class View;
 class DockRegistry;
 
 /// @brief A more granular version of KDDockWidgets::RestoreOption
@@ -383,7 +384,7 @@ public:
     void floatUnknownWidgets(const LayoutSaver::Layout &layout);
 
     template<typename T>
-    void deserializeWindowGeometry(const T &saved, QWidget *topLevel);
+    void deserializeWindowGeometry(const T &saved, View *topLevel);
     void deleteEmptyFrames();
     void clearRestoredProperty();
 

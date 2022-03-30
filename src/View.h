@@ -165,6 +165,8 @@ public:
         return false;
     }
 
+    virtual void setObjectName(const QString &) = 0;
+
     QPoint pos() const;
     QSize size() const;
     QRect rect() const;

@@ -25,9 +25,21 @@ class DOCKS_EXPORT ViewWrapper_qtwidgets : public ViewWrapper
 public:
     explicit ViewWrapper_qtwidgets(QWidget *widget);
 
+    void setObjectName(const QString &name) override;
     QRect geometry() const override;
+    void setGeometry(QRect) override;
+    void move(int x, int y) override;
+    void move(QPoint) override;
     QPoint mapToGlobal(QPoint) const override;
     QPoint mapFromGlobal(QPoint) const override;
+    QWindow *windowHandle() const override;
+    bool isTopLevel() const override;
+    bool isVisible() const override;
+    void setVisible(bool) override;
+    void activateWindow() override;
+    bool isMaximized() const override;
+    QSize maximumSize() const override;
+    void setSize(int width, int height) override;
 
 private:
     QWidget *const m_widget;

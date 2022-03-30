@@ -23,20 +23,13 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT ViewWrapper : public View
 {
 public:
-    ViewWrapper();
+    explicit ViewWrapper(QObject *thisObj); // TODOv2: Remove argument once all calls to asQWidget() are removed
 
     void setParent(View *) override;
     QSize minSize() const override;
     QSize maxSizeHint() const override;
     QSize minimumSizeHint() const override;
-    QSize maximumSize() const override;
     QRect normalGeometry() const override;
-    void setGeometry(QRect) override;
-    bool isVisible() const override;
-    void setVisible(bool) override;
-    void move(int x, int y) override;
-    void move(QPoint) override;
-    void setSize(int width, int height) override;
     void setWidth(int width) override;
     void setHeight(int height) override;
     void show() override;
@@ -44,8 +37,6 @@ public:
     void update() override;
     void raiseAndActivate() override;
     void raise() override;
-    void activateWindow() override;
-    bool isTopLevel() const override;
     void setSizePolicy(QSizePolicy) override;
     QSizePolicy sizePolicy() const override;
     void closeWindow() override;
@@ -62,10 +53,8 @@ public:
     void showMinimized() override;
     void showMaximized() override;
     bool isMinimized() const override;
-    bool isMaximized() const override;
     void setMaximumSize(QSize sz) override;
     bool isActiveWindow() const override;
-    QWindow *windowHandle() const override;
     void setFixedWidth(int) override;
     void setFixedHeight(int) override;
     std::unique_ptr<ViewWrapper> window() const override;

@@ -11,6 +11,7 @@
 
 #include "Controller.h"
 #include "View.h"
+#include "ViewWrapper.h"
 
 #include <QDebug>
 #include <QWidget>
@@ -105,9 +106,9 @@ bool Controller::close()
     return view() && view()->close();
 }
 
-QWidget *Controller::window() const
+std::unique_ptr<ViewWrapper> Controller::window() const
 {
-    return view()->asQWidget()->window();
+    return view()->window();
 }
 
 QWindow *Controller::windowHandle() const

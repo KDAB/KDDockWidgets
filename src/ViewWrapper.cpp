@@ -15,8 +15,8 @@
 
 using namespace KDDockWidgets;
 
-ViewWrapper::ViewWrapper()
-    : View(nullptr, Type::ViewWrapper, nullptr)
+ViewWrapper::ViewWrapper(QObject *thisObj)
+    : View(nullptr, Type::ViewWrapper, thisObj)
 {
 }
 
@@ -43,47 +43,10 @@ QSize ViewWrapper::minimumSizeHint() const
     return {};
 }
 
-QSize ViewWrapper::maximumSize() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 QRect ViewWrapper::normalGeometry() const
 {
     qFatal("Not implemented");
     return {};
-}
-
-void ViewWrapper::setGeometry(QRect)
-{
-    qFatal("Not implemented");
-}
-
-bool ViewWrapper::isVisible() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
-void ViewWrapper::setVisible(bool)
-{
-    qFatal("Not implemented");
-}
-
-void ViewWrapper::move(int, int)
-{
-    qFatal("Not implemented");
-}
-
-void ViewWrapper::move(QPoint)
-{
-    qFatal("Not implemented");
-}
-
-void ViewWrapper::setSize(int, int)
-{
-    qFatal("Not implemented");
 }
 
 void ViewWrapper::setWidth(int)
@@ -119,17 +82,6 @@ void ViewWrapper::raiseAndActivate()
 void ViewWrapper::raise()
 {
     qFatal("Not implemented");
-}
-
-void ViewWrapper::activateWindow()
-{
-    qFatal("Not implemented");
-}
-
-bool ViewWrapper::isTopLevel() const
-{
-    qFatal("Not implemented");
-    return {};
 }
 
 void ViewWrapper::setSizePolicy(QSizePolicy)
@@ -219,24 +171,12 @@ bool ViewWrapper::isMinimized() const
     return {};
 }
 
-bool ViewWrapper::isMaximized() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 void ViewWrapper::setMaximumSize(QSize)
 {
     qFatal("Not implemented");
 }
 
 bool ViewWrapper::isActiveWindow() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
-QWindow *ViewWrapper::windowHandle() const
 {
     qFatal("Not implemented");
     return {};

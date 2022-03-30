@@ -252,7 +252,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             continue;
 
         if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry)) {
-            d->deserializeWindowGeometry(mw, mainWindow->window()); // window(), as the MainWindow can be embedded
+            auto window = mainWindow->window();
+            d->deserializeWindowGeometry(mw, window.get()); // window(), as the MainWindow can be embedded
             if (mw.windowState != Qt::WindowNoState) {
                 if (auto w = mainWindow->view()->windowHandle()) {
                     w->setWindowState(mw.windowState);
@@ -274,7 +275,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         auto floatingWindow = new Controllers::FloatingWindow({}, parent);
         fw.floatingWindowInstance = floatingWindow;
-        d->deserializeWindowGeometry(fw, floatingWindow->view()->asQWidget());
+        d->deserializeWindowGeometry(fw, floatingWindow->view());
         if (!floatingWindow->deserialize(fw)) {
             qWarning() << Q_FUNC_INFO << "Failed to deserialize floating window";
             return false;
@@ -340,7 +341,7 @@ void LayoutSaver::Private::clearRestoredProperty()
 }
 
 template<typename T>
-void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, QWidgetOrQuick *topLevel)
+void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, View *topLevel)
 {
     // Not simply calling QWidget::setGeometry() here.
     // For QtQuick we need to modify the QWindow's geometry.
@@ -357,7 +358,9 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, QWidgetOrQu
     if (topLevel->isWindow()) {
         topLevel->setGeometry(geometry);
     } else {
-        Views::setTopLevelGeometry(geometry, topLevel);
+        // TODOv2: Have a WindowView abstraction, that will represent QWindow for Qt.
+        // Then we can ensure we receive WindowView instead of View. Probably even WindowViewWrapper.
+        topLevel->setGeometry(geometry);
     }
 
     topLevel->setVisible(saved.isVisible);

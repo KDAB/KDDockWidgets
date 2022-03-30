@@ -216,8 +216,6 @@ void TestDocks::tst_doesntHaveNativeTitleBar()
 #elif defined(Q_OS_WIN)
     QVERIFY(!(fw->windowFlags() & Qt::FramelessWindowHint));
 #endif
-
-    delete dw1->window();
 }
 
 void TestDocks::tst_resizeWindow2()
@@ -276,9 +274,6 @@ void TestDocks::tst_hasLastDockedLocation()
     QVERIFY(dock1->hasPreviousDockedLocation());
     auto window11 = dock1->window();
     QVERIFY(dock1->setFloating(false));
-
-    delete window1;
-    delete window11;
 }
 
 void TestDocks::tst_ghostSeparator()
@@ -326,8 +321,6 @@ void TestDocks::tst_detachFromMainWindow()
     QVERIFY(tb == dock1->dptr()->frame()->titleBar());
     QVERIFY(tb->isVisible());
     QVERIFY(!tb->isFloating());
-
-    delete fw1;
 }
 
 void TestDocks::tst_detachPos()
@@ -352,7 +345,6 @@ void TestDocks::tst_detachPos()
     QTest::qWait(400); // Needed for QtQuick
 
     QVERIFY(qAbs(previousWidth - dock1->width()) < 15); // 15px of difference when floating is fine, due to margins and what not.
-    delete dock1->window();
 }
 
 void TestDocks::tst_floatingWindowSize()
@@ -366,8 +358,6 @@ void TestDocks::tst_floatingWindowSize()
 
     QVERIFY(!fw1->geometry().isNull());
     QCOMPARE(fw1->size(), fw1->windowHandle()->size());
-
-    delete fw1;
 }
 
 void TestDocks::tst_tabbingWithAffinities()
@@ -442,7 +432,6 @@ void TestDocks::tst_sizeAfterRedock()
 
     QCOMPARE(dw2->dptr()->frame()->height(), height2);
 
-    delete dw1->window();
     delete oldFw2;
 }
 
@@ -458,8 +447,6 @@ void TestDocks::tst_honourUserGeometry()
     dw1->show();
     Controllers::FloatingWindow *fw1 = dw1->floatingWindow();
     QCOMPARE(fw1->view()->windowHandle()->geometry().topLeft(), pt);
-
-    delete dw1->window();
 }
 
 void TestDocks::tst_floatingWindowTitleBug()
@@ -481,9 +468,6 @@ void TestDocks::tst_floatingWindowTitleBug()
     dw1->titleBar()->onFloatClicked();
 
     QCOMPARE(dw3->titleBar()->title(), QLatin1String("3"));
-
-    delete dw1->window();
-    delete dw3->window();
 }
 
 void TestDocks::tst_resizeWindow_data()
@@ -705,17 +689,17 @@ void TestDocks::tst_setFloatingSimple()
 void TestDocks::tst_nonDockable()
 {
     { // First test without Option_NotDockable
+        EnsureTopLevelsDeleted e;
         auto dock = new Controllers::DockWidget("1");
         dock->show();
 
         Controllers::TitleBar *tb = dock->titleBar();
         QVERIFY(tb->isVisible());
         QVERIFY(static_cast<Views::TitleBar_qtwidgets *>(tb->view())->isFloatButtonVisible());
-
-        delete dock->window();
     }
 
     {
+        EnsureTopLevelsDeleted e;
         // Test that when using Option_NotDockable we don't get a dock/undock icon
         auto dock = new Controllers::DockWidget("1", DockWidgetBase::Option_NotDockable);
         dock->show();
@@ -723,8 +707,6 @@ void TestDocks::tst_nonDockable()
         Controllers::TitleBar *tb = dock->titleBar();
         QVERIFY(tb->isVisible());
         QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(tb->view())->isFloatButtonVisible());
-
-        delete dock->window();
     }
 }
 
@@ -781,17 +763,16 @@ void TestDocks::tst_layoutEqually()
 
 void TestDocks::tst_doubleClose()
 {
-    EnsureTopLevelsDeleted e;
     {
         // Via close()
+        EnsureTopLevelsDeleted e;
         auto dock1 = createDockWidget("hello", Qt::green);
         dock1->close();
         dock1->close();
-
-        delete dock1->window();
     }
     {
         // Via the button
+        EnsureTopLevelsDeleted e;
         auto dock1 = createDockWidget("hello", Qt::green);
         auto fw1 = dock1->floatingWindow();
 
@@ -884,12 +865,11 @@ void TestDocks::tst_propagateResize2()
 void TestDocks::tst_shutdown()
 {
     EnsureTopLevelsDeleted e;
-    auto dock = createDockWidget("doc1", Qt::green);
+    createDockWidget("doc1", Qt::green);
 
     auto m = createMainWindow();
     m->show();
     QVERIFY(QTest::qWaitForWindowActive(m->windowHandle()));
-    delete dock->window();
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
@@ -1320,7 +1300,6 @@ void TestDocks::tst_closeReparentsToNull()
     QVERIFY(dock1->view()->parent() != nullptr);
     dock1->close();
     QVERIFY(dock1->view()->parent() == nullptr);
-    delete fw1;
     delete dock1;
 }
 
@@ -1488,9 +1467,6 @@ void TestDocks::tst_negativeAnchorPosition3()
     auto dock3 = docks.at(3).createdDock;
 
     dock1->setFloating(true);
-    delete dock1->window();
-    delete dock3->window();
-
     layout->checkSanity();
 }
 
@@ -1919,8 +1895,6 @@ void TestDocks::tst_crash()
 
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 1);
-
-    delete dock1->window();
 }
 
 void TestDocks::tst_refUnrefItem()
@@ -2185,14 +2159,11 @@ void TestDocks::tst_placeholdersAreRemovedProperly()
     // 2. Recreate the placeholder. This time delete the dock widget to see if placeholder is deleted too.
     m->addDockWidget(dock1, Location_OnLeft);
     dock1->setFloating(true);
-    auto window1 = Tests::make_qpointer(dock1->window());
     delete dock1;
     QCOMPARE(layout->separators().size(), 0);
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
     layout->checkSanity();
-
-    delete window1;
 }
 
 void TestDocks::tst_floatMaintainsSize()
@@ -2212,9 +2183,6 @@ void TestDocks::tst_floatMaintainsSize()
     QTest::qWait(100);
 
     QVERIFY(qAbs(dw2->width() - oldWidth2) < 16); // 15px for margins
-
-    delete dw1->window();
-    delete dw2->window();
 }
 
 void TestDocks::tst_preferredInitialSize()
@@ -2331,10 +2299,10 @@ void TestDocks::tst_closeAllDockWidgets()
     QVERIFY(oldFWHeight <= fw->height());
     QCOMPARE(fw->frames().size(), 2);
 
-    QCOMPARE(dock3->window(), fw->view()->asQWidget());
-    QCOMPARE(dock4->window(), m->view()->asQWidget());
-    QCOMPARE(dock5->window(), m->view()->asQWidget());
-    QCOMPARE(dock6->window(), fw->view()->asQWidget());
+    QCOMPARE(dock3->window()->asQWidget(), fw->view()->asQWidget());
+    QCOMPARE(dock4->window()->asQWidget(), m->view()->asQWidget());
+    QCOMPARE(dock5->window()->asQWidget(), m->view()->asQWidget());
+    QCOMPARE(dock6->window()->asQWidget(), fw->view()->asQWidget());
     auto layout = m->multiSplitter();
     layout->checkSanity();
     DockRegistry::self()->clear();
@@ -2343,12 +2311,12 @@ void TestDocks::tst_closeAllDockWidgets()
     Testing::waitForDeleted(fw);
     QVERIFY(!fw);
 
-    QCOMPARE(dock1->window(), dock1->view()->asQWidget());
-    QCOMPARE(dock2->window(), dock2->view()->asQWidget());
-    QCOMPARE(dock3->window(), dock3->view()->asQWidget());
-    QCOMPARE(dock4->window(), dock4->view()->asQWidget());
-    QCOMPARE(dock5->window(), dock5->view()->asQWidget());
-    QCOMPARE(dock6->window(), dock6->view()->asQWidget());
+    QCOMPARE(dock1->window()->asQWidget(), dock1->view()->asQWidget());
+    QCOMPARE(dock2->window()->asQWidget(), dock2->view()->asQWidget());
+    QCOMPARE(dock3->window()->asQWidget(), dock3->view()->asQWidget());
+    QCOMPARE(dock4->window()->asQWidget(), dock4->view()->asQWidget());
+    QCOMPARE(dock5->window()->asQWidget(), dock5->view()->asQWidget());
+    QCOMPARE(dock6->window()->asQWidget(), dock6->view()->asQWidget());
 
     QVERIFY(!dock1->isVisible());
     QVERIFY(!dock2->isVisible());
@@ -2701,8 +2669,6 @@ void TestDocks::tst_tabTitleChanges()
     QCOMPARE(tb->text(0), QStringLiteral("1"));
     dw1->setTitle(QStringLiteral("other"));
     QCOMPARE(tb->text(0), QStringLiteral("other"));
-
-    delete dw1->window();
 }
 
 void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
@@ -2782,7 +2748,7 @@ void TestDocks::tst_isFocused()
     // 4. Tab dock1, it's current tab now
     auto oldFw1 = dock1->window();
     dock2->addDockWidgetAsTab(dock1);
-    delete oldFw1;
+    // delete oldFw1;
     QVERIFY(dock1->isFocused());
     QVERIFY(!dock2->isFocused());
 
@@ -2803,14 +2769,14 @@ void TestDocks::tst_isFocused()
 
     // 4. Add dock3 to the 1st window, nested, focus 2 again
     dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
-    delete oldFw3;
+    // delete oldFw3;
     dock2->raise();
     dock2->widget()->setFocus(Qt::OtherFocusReason);
     Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
     QVERIFY(!dock1->isFocused());
     QVERIFY(dock2->isFocused());
     QVERIFY(!dock3->isFocused());
-    delete dock2->window();
+    // delete dock2->window();
 }
 
 void TestDocks::tst_setWidget()
@@ -2880,7 +2846,6 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
     Testing::waitForEvent(d1, QEvent::Show);
 
     QCOMPARE(d1->window()->windowHandle()->geometry(), suggestedGeo);
-    delete d1->window();
 }
 
 void TestDocks::tst_registry()
@@ -3258,8 +3223,6 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
     QVERIFY(delta1 > 0);
     QVERIFY(delta3 > 0);
     QVERIFY(qAbs(delta3 - delta1) <= 1); // Both dock1 and dock3 should have increased by the same amount
-
-    delete dock1->window();
 }
 
 void TestDocks::tst_invalidJSON_data()
@@ -3669,10 +3632,10 @@ void TestDocks::tst_restoreNestedAndTabbed()
 {
     // Just a more involved test
 
-    EnsureTopLevelsDeleted e;
     QPoint oldFW4Pos;
     QRect oldGeo;
     {
+        EnsureTopLevelsDeleted e;
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, "tst_restoreNestedAndTabbed");
         m->view()->move(500, 500);
         oldGeo = m->geometry();
@@ -3696,10 +3659,10 @@ void TestDocks::tst_restoreNestedAndTabbed()
         QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreNestedAndTabbed.json")));
         QVERIFY(layout->checkSanity());
 
-        delete dock4->window();
         // Let it be destroyed, we'll restore a new one
     }
 
+    EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, "tst_restoreNestedAndTabbed");
     auto layout = m->multiSplitter();
     auto dock1 = createDockWidget("1", new QTextEdit());
@@ -3714,12 +3677,12 @@ void TestDocks::tst_restoreNestedAndTabbed()
 
     auto fw4 = dock4->floatingWindow();
     QVERIFY(fw4);
-    QCOMPARE(dock4->window(), dock5->window());
+    QCOMPARE(dock4->window()->windowHandle(), dock5->window()->windowHandle());
     QCOMPARE(fw4->pos(), oldFW4Pos);
 
-    QCOMPARE(dock1->window(), m->view()->asQWidget());
-    QCOMPARE(dock2->window(), m->view()->asQWidget());
-    QCOMPARE(dock3->window(), m->view()->asQWidget());
+    QCOMPARE(dock1->window()->asQWidget(), m->view()->asQWidget());
+    QCOMPARE(dock2->window()->asQWidget(), m->view()->asQWidget());
+    QCOMPARE(dock3->window()->asQWidget(), m->view()->asQWidget());
 
     QCOMPARE(dock2->dptr()->frame()->currentTabIndex(), 0);
     QCOMPARE(dock4->dptr()->frame()->currentTabIndex(), 1);
@@ -3789,8 +3752,8 @@ void TestDocks::tst_restoreSideBySide()
 
         DockRegistry::self()->checkSanityAll();
 
-        QCOMPARE(dock1->window(), m->view()->asQWidget());
-        QCOMPARE(dock2->window(), dock3->window());
+        QCOMPARE(dock1->window()->asQWidget(), m->view()->asQWidget());
+        QCOMPARE(dock2->window()->asQWidget(), dock3->window()->asQWidget());
     }
 }
 
@@ -3904,9 +3867,7 @@ void TestDocks::tst_restoreWithAffinity()
     // dock1 was restored
     QVERIFY(dock1->isVisible());
     QVERIFY(!dock1->isFloating());
-    QCOMPARE(dock1->window(), m1->view()->asQWidget());
-
-    delete dock2->window();
+    QCOMPARE(dock1->window()->asQWidget(), m1->view()->asQWidget());
 }
 
 void TestDocks::tst_marginsAfterRestore()
@@ -3950,8 +3911,6 @@ void TestDocks::tst_restoreWithNewDockWidgets()
 
     QVERIFY(saver.restoreLayout(saved));
     QVERIFY(dock1->isVisible());
-
-    delete dock1->window();
 }
 
 void TestDocks::tst_restoreWithDockFactory()
@@ -4034,8 +3993,8 @@ void TestDocks::tst_addDockWidgetToMainWindow()
     m->addDockWidget(dock2, Location_OnTop, dock1);
     QVERIFY(m->dropArea()->checkSanity());
 
-    QCOMPARE(dock1->window(), m->view()->asQWidget());
-    QCOMPARE(dock2->window(), m->view()->asQWidget());
+    QCOMPARE(dock1->window()->asQWidget(), m->view()->asQWidget());
+    QCOMPARE(dock2->window()->asQWidget(), m->view()->asQWidget());
     QVERIFY(dock1->dptr()->frame()->view()->y()
             > dock2->dptr()->frame()->view()->y());
     QCOMPARE(dock1->dptr()->frame()->view()->x(),
@@ -4054,8 +4013,8 @@ void TestDocks::tst_addDockWidgetToContainingWindow()
         dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
         dock1->addDockWidgetToContainingWindow(dock3, Location_OnTop, dock2);
 
-        QCOMPARE(dock1->window(), dock2->window());
-        QCOMPARE(dock2->window(), dock3->window());
+        QCOMPARE(dock1->window()->asQWidget(), dock2->window()->asQWidget());
+        QCOMPARE(dock2->window()->asQWidget(), dock3->window()->asQWidget());
 
         QVERIFY(dock3->dptr()->frame()->view()->y()
                 < dock2->dptr()->frame()->view()->y());
@@ -4075,15 +4034,15 @@ void TestDocks::tst_addDockWidgetToContainingWindow()
         m->addDockWidget(dock1, Location_OnRight, nullptr);
         dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
 
-        QCOMPARE(dock1->window(), dock2->window());
-        QCOMPARE(m->view()->asQWidget(), dock2->window());
+        QCOMPARE(dock1->window()->windowHandle(), dock2->window()->windowHandle());
+        QCOMPARE(m->view()->asQWidget(), dock2->window()->asQWidget());
     }
 }
 
 void TestDocks::tst_notClosable()
 {
-    EnsureTopLevelsDeleted e;
     {
+        EnsureTopLevelsDeleted e;
         auto dock1 = createDockWidget("dock1", new QPushButton("one"), DockWidgetBase::Option_NotClosable);
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
         dock1->addDockWidgetAsTab(dock2);
@@ -4108,15 +4067,11 @@ void TestDocks::tst_notClosable()
         QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titlebarFW->view())->isCloseButtonEnabled());
         QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonVisible());
         QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonEnabled());
-
-        auto window = dock1->window();
-        window->deleteLater();
-        Testing::waitForDeleted(window);
     }
 
     {
         // Now dock dock1 into dock1 instead
-
+        EnsureTopLevelsDeleted e;
         auto dock1 = createDockWidget("dock1", new QPushButton("one"), DockWidgetBase::Option_NotClosable);
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
 
@@ -4131,10 +4086,6 @@ void TestDocks::tst_notClosable()
         QVERIFY(static_cast<Views::TitleBar_qtwidgets *>(titlebarFW->view())->isCloseButtonVisible());
         QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonVisible());
         QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonEnabled());
-
-        auto window = dock2->window();
-        window->deleteLater();
-        Testing::waitForDeleted(window);
     }
 }
 
@@ -4282,7 +4233,7 @@ void TestDocks::tst_setFloatingAFrameWithTabs()
 
     QCOMPARE(layout->count(), 2);
     QCOMPARE(layout->placeholderCount(), 0);
-    QCOMPARE(dock1->window(), m->view()->asQWidget());
+    QCOMPARE(dock1->window()->asQWidget(), m->view()->asQWidget());
 
     Testing::waitForDeleted(fw);
 }
@@ -4508,8 +4459,6 @@ void TestDocks::tst_moreTitleBarCornerCases()
         QVERIFY(fw->titleBar()->isVisible());
         QVERIFY(fw->titleBar() != dock1->dptr()->frame()->titleBar());
         QVERIFY(fw->titleBar() != dock2->dptr()->frame()->titleBar());
-        delete fw;
-        delete fw2;
     }
 
     {
@@ -4527,8 +4476,6 @@ void TestDocks::tst_moreTitleBarCornerCases()
         QVERIFY(dock1->dptr()->frame()->titleBar() != dock2->dptr()->frame()->titleBar());
         QVERIFY(fw1->titleBar() != dock1->dptr()->frame()->titleBar());
         QVERIFY(fw1->titleBar() != dock2->dptr()->frame()->titleBar());
-        delete fw1;
-        delete fw2;
     }
 
     {
@@ -4553,11 +4500,8 @@ void TestDocks::tst_moreTitleBarCornerCases()
         QVERIFY(dock1->isVisible());
         QVERIFY(!dock1->dptr()->frame()->titleBar()->isVisible());
         QVERIFY(fw1->titleBar()->isVisible());
-        delete dock1->window();
     }
 }
-
-
 
 void TestDocks::tst_isInMainWindow()
 {
@@ -4569,13 +4513,11 @@ void TestDocks::tst_isInMainWindow()
     auto m1 = createMainWindow(QSize(2560, 809), MainWindowOption_None, "MainWindow1");
     m1->addDockWidget(dw, KDDockWidgets::Location_OnLeft);
     QVERIFY(dw->isInMainWindow());
-    delete fw;
 
     // Also test after creating the MainWindow, as the FloatingWindow will get parented to it
     auto dw2 = new Controllers::DockWidget(QStringLiteral("2"));
     dw2->show();
     QVERIFY(!dw2->isInMainWindow());
-    delete dw2->window();
 }
 
 void TestDocks::tst_sizeConstraintWarning()
@@ -4840,14 +4782,14 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     dock1->window()->windowHandle()->setFramePosition(targetPos);
     QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), targetPos);
     auto oldFw = dock1->window();
-    Testing::waitForEvent(dock1->window(), QEvent::Move);
+    Testing::waitForEvent(dock1->window()->asQWidget(), QEvent::Move);
 
     LayoutSaver saver;
     QByteArray saved = saver.serializeLayout();
 
     dock1->window()->move(0, 0);
     dock1->close();
-    delete oldFw;
+    // delete oldFw;
 
     saver.restoreLayout(saved);
     QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), targetPos);
@@ -4874,7 +4816,6 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     QVERIFY(!dock1->isFloating());
     dock1->setFloating(true);
     QCOMPARE(dock1->window()->geometry().topLeft(), targetPos);
-    delete dock1->window();
 }
 
 void TestDocks::tst_titleBarFocusedWhenTabsChange()
@@ -4895,10 +4836,10 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
 
     m1->addDockWidget(dock1, Location_OnLeft);
     m1->addDockWidget(dock2, Location_OnRight);
-    delete oldFw1;
-    delete oldFw2;
+    // delete oldFw1;
+    // delete oldFw2;
     dock2->addDockWidgetAsTab(dock3);
-    delete oldFw3;
+    // delete oldFw3;
 
     Controllers::TitleBar *titleBar1 = dock1->titleBar();
     dock1->widget()->setFocus(Qt::MouseFocusReason);
@@ -5000,8 +4941,6 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     QCOMPARE(dropArea->count(), 1);
     QCOMPARE(centralFrame->dockWidgetCount(), 0);
     QVERIFY(dropArea->checkSanity());
-
-    delete dock->window();
 }
 
 void TestDocks::tst_dockableMainWindows()
@@ -5406,8 +5345,6 @@ void TestDocks::tst_closeRemovesFromSideBar()
     QVERIFY(!dw1->isOverlayed());
     QVERIFY(!dw1->isVisible());
     QCOMPARE(dw1->sideBarLocation(), SideBarLocation::None);
-
-    delete fw1;
 }
 
 void TestDocks::tst_restoreSideBar()
@@ -5437,7 +5374,6 @@ void TestDocks::tst_restoreSideBar()
         serialized = saver.serializeLayout();
 
         m1.reset();
-        delete fw1;
     }
 
     EnsureTopLevelsDeleted e;
@@ -5468,8 +5404,6 @@ void TestDocks::tst_restoreSideBar()
     QVERIFY(!dw1->isFloating());
     QVERIFY(dw1->isInMainWindow());
     QVERIFY(!m1->anySideBarIsVisible());
-
-    delete fw1;
 }
 
 void TestDocks::tst_toggleActionOnSideBar()
@@ -5772,7 +5706,7 @@ void TestDocks::tst_negativeAnchorPositionWhenEmbedded()
 
     layout->checkSanity();
 
-    delete m->window();
+    delete m->window()->asQWidget();
 }
 
 void TestDocks::tst_restoreResizesLayout()
@@ -5842,7 +5776,7 @@ void TestDocks::tst_maximumSizePolicy()
     auto dock1 = createDockWidget("dock1", widget);
     dock1->show();
     dock1->window()->resize(QSize(500, 500));
-    auto oldFw = Tests::make_qpointer(dock1->window());
+    auto oldFw = Tests::make_qpointer(dock1->window()->asQWidget());
     dock1->close();
     dock1->show();
     auto oldFw2 = dock1->window();
@@ -5871,7 +5805,6 @@ void TestDocks::tst_maximumSizePolicy()
     QVERIFY(dock1->height() <= maxHeight);
 
     delete oldFw.data();
-    delete oldFw2;
 }
 
 void TestDocks::tst_minSizeChanges()
@@ -5946,8 +5879,6 @@ void TestDocks::tst_maxSizePropagates()
     // Now let's see if our Frame also has proper size-constraints
     Controllers::Frame *frame = dock1->dptr()->frame();
     QCOMPARE(frame->view()->maxSizeHint().expandedTo(w->maximumSize()), frame->view()->maxSizeHint());
-
-    delete dock1->window();
 }
 
 void TestDocks::tst_maxSizedFloatingWindow()
@@ -5966,35 +5897,35 @@ void TestDocks::tst_maxSizedFloatingWindow()
 
     auto window1 = dock1->window();
     auto window2 = dock2->window();
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    Testing::waitForEvent(window1->asQWidget(), QEvent::LayoutRequest);
 
     QVERIFY(window1->maximumSize().width() < 500);
     QVERIFY(window1->maximumSize().height() < 500);
     QVERIFY(window2->maximumSize().width() > 500);
     QVERIFY(window2->maximumSize().height() > 500);
 
-    auto hasMax = [window1] {
+    auto hasMax = [&window1] {
         const QSize max = window1->maximumSize();
         return max.width() < 500 && max.height() < 500;
     };
 
     // Adding side-by-side, we don't honour max size (yet)
     dock1->addDockWidgetToContainingWindow(dock2, Location_OnBottom);
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    Testing::waitForEvent(window1->asQWidget(), QEvent::LayoutRequest);
     QVERIFY(window1->maximumSize().width() > 500);
     QVERIFY(window1->maximumSize().height() > 500);
 
     // Close dw2, we have a single dock widget again, we honour max-size
     dock2->close();
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    Testing::waitForEvent(window1->asQWidget(), QEvent::LayoutRequest);
     QVERIFY(hasMax());
 
     dock1->addDockWidgetAsTab(dock2);
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    Testing::waitForEvent(window1->asQWidget(), QEvent::LayoutRequest);
     QVERIFY(!hasMax());
 
     dock2->close();
-    Testing::waitForEvent(window1, QEvent::LayoutRequest);
+    Testing::waitForEvent(window1->asQWidget(), QEvent::LayoutRequest);
     QVERIFY(hasMax());
 }
 
@@ -6136,8 +6067,6 @@ void TestDocks::tst_fixedSizePolicy()
     QCOMPARE(dock1->view()->sizePolicy().horizontalPolicy(), button->sizePolicy().horizontalPolicy());
 
     QCOMPARE(frame->view()->maxSizeHint().height(), qMax(buttonMaxHeight, Layouting::Item::hardcodedMinimumSize.height()));
-
-    delete dock1->window();
 }
 
 #endif
@@ -6145,9 +6074,9 @@ void TestDocks::tst_fixedSizePolicy()
 void TestDocks::tst_floatingAction()
 {
     // Tests DockWidget::floatAction()
-    EnsureTopLevelsDeleted e;
 
     {
+        EnsureTopLevelsDeleted e;
         // 1. Create a MainWindow with two docked dock-widgets, then float the first one.
         auto m = createMainWindow();
         auto dock1 = createDockWidget("dock1", new QPushButton("one"));
@@ -6179,12 +6108,12 @@ void TestDocks::tst_floatingAction()
         QVERIFY(action->isEnabled());
         QVERIFY(!dock1->isTabbed());
         QCOMPARE(action->toolTip(), tr("Detach"));
-        ;
 
         Testing::waitForDeleted(fw);
     }
 
     {
+        EnsureTopLevelsDeleted e;
         // 1. Create a MainWindow with one docked dock-widgets, and one floating.
         auto m = createMainWindow();
         auto dock1 = createDockWidget("dock1", new QPushButton("one"));
@@ -6226,6 +6155,7 @@ void TestDocks::tst_floatingAction()
         Testing::waitForDeleted(fw);
     }
     {
+        EnsureTopLevelsDeleted e;
         // 3. A floating window with two tabs
         auto dock1 = createDockWidget("dock1", new QPushButton("one"));
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
@@ -6266,11 +6196,10 @@ void TestDocks::tst_floatingAction()
         QVERIFY(dock2IsFloating);
 
         delete fw2;
-        delete dock1->window();
-        delete dock2->window();
     }
 
     {
+        EnsureTopLevelsDeleted e;
         // If the dock widget is alone then it's floating, but we suddenly dock a widget side-by-side
         // to it, then both aren't floating anymore. This test tests if the signal was emitted
 
@@ -6301,12 +6230,10 @@ void TestDocks::tst_floatingAction()
 
         QVERIFY(!dock2->floatAction()->isChecked());
         QVERIFY(!dock1->floatAction()->isChecked());
-
-        delete dock1->window();
-        delete oldFw2->window();
     }
 
     {
+        EnsureTopLevelsDeleted e;
         // Like before, but now we use addMultiSplitter()
 
         auto dock1 = createDockWidget("one", new QPushButton("one"));
@@ -6343,13 +6270,10 @@ void TestDocks::tst_floatingAction()
         QVERIFY(dock2->isFloating());
         QVERIFY(dock2->floatAction()->isChecked());
         QVERIFY(dock1->floatAction()->isChecked());
-
-        delete dock1->window();
-        delete dock2->window();
-        delete oldFw2->view()->asQWidget()->window();
     }
 
     {
+        EnsureTopLevelsDeleted e;
         // Same test as before, but now tab instead of side-by-side
         auto dock1 = createDockWidget("one", new QPushButton("one"));
         auto dock2 = createDockWidget("two", new QPushButton("two"));
@@ -6379,9 +6303,6 @@ void TestDocks::tst_floatingAction()
 
         QVERIFY(!dock2->floatAction()->isChecked());
         QVERIFY(!dock1->floatAction()->isChecked());
-
-        delete dock1->window();
-        delete oldFw2->window();
     }
 }
 
@@ -6392,7 +6313,7 @@ void TestDocks::tst_raise()
 
     auto dock1 = createDockWidget("1");
     auto dock2 = createDockWidget("2");
-    auto fw2 = Tests::make_qpointer(dock2->window());
+    auto fw2 = Tests::make_qpointer(dock2->window()->asQWidget());
     dock1->addDockWidgetAsTab(dock2);
     dock1->setAsCurrentTab();
     QVERIFY(dock1->isCurrentTab());
@@ -6410,7 +6331,7 @@ void TestDocks::tst_raise()
         QTest::qWait(200);
 
         if (qApp->QGuiApplication::topLevelAt(dock3->window()->geometry().topLeft() + QPoint(50, 50)) != dock3->view()->asQWidget()->windowHandle()) {
-            qDebug() << "Failing before raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window()
+            qDebug() << "Failing before raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window()->asQWidget()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             QVERIFY(false);
         }
@@ -6420,16 +6341,11 @@ void TestDocks::tst_raise()
         QVERIFY(dock1->isCurrentTab());
 
         if (qApp->QGuiApplication::topLevelAt(dock3->window()->geometry().topLeft() + QPoint(50, 50)) != dock1->view()->asQWidget()->windowHandle()) {
-            qDebug() << "Failing after raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock1->window()
+            qDebug() << "Failing after raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock1->window()->asQWidget()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             QVERIFY(false);
         }
-
-        delete dock3->window();
     }
-
-    delete fw2;
-    delete dock1->window();
 }
 
 void TestDocks::tst_invalidLayoutAfterRestore()
@@ -6692,11 +6608,6 @@ void TestDocks::tst_tabWidgetCurrentIndex()
 
     QCOMPARE(frame->tabWidget()->currentIndex(), 0);
     QCOMPARE(dock1, currentDw);
-
-    delete fw2;
-    delete fw3;
-    delete dock2;
-    delete dock1->window();
 }
 
 void TestDocks::tst_doubleClickTabToDetach()
@@ -6727,10 +6638,6 @@ void TestDocks::tst_doubleClickTabToDetach()
     QVERIFY(dock1->isFloating());
     QVERIFY(dock2->isFloating());
     QVERIFY(dock1->floatingWindow() != dock2->floatingWindow());
-
-    delete fw2;
-    delete dock1->window();
-    delete dock2->window();
 }
 
 void TestDocks::tst_addingOptionHiddenTabbed()
@@ -6774,7 +6681,6 @@ void TestDocks::tst_flagDoubleClick()
         Tests::doubleClickOn(pos, t1->view()->asQWidget());
         QVERIFY(t1->isFloating());
         QVERIFY(!dock1->window()->isMaximized());
-        delete dock1->window();
     }
 
     {
@@ -6856,7 +6762,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
 
         auto window1 = dock1->window();
         auto window2 = dock2->window();
-        QCOMPARE(window1, window2);
+        QCOMPARE(window1->windowHandle(), window2->windowHandle());
         QCOMPARE(dock1->dptr()->frame(), dock2->dptr()->frame());
         QCOMPARE(dock1->dptr()->frame()->dockWidgetCount(), 2);
         dock1->deleteLater();
@@ -6873,7 +6779,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
 
         auto window1 = dock1->window();
         auto window2 = dock2->window();
-        QCOMPARE(window1, window2);
+        QCOMPARE(window1->windowHandle(), window2->windowHandle());
         QCOMPARE(dock1->dptr()->frame(), dock2->dptr()->frame());
         QCOMPARE(dock1->dptr()->frame()->dockWidgetCount(), 2);
         dock1->deleteLater();
@@ -6886,13 +6792,13 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         dock1->dptr()->morphIntoFloatingWindow();
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
         dock2->dptr()->morphIntoFloatingWindow();
-        auto originalWindow2 = Tests::make_qpointer(dock2->window());
+        auto originalWindow2 = Tests::make_qpointer(dock2->window()->asQWidget());
 
         dock1->addDockWidgetAsTab(dock2);
 
         auto window1 = dock1->window();
         auto window2 = dock2->window();
-        QCOMPARE(window1, window2);
+        QCOMPARE(window1->windowHandle(), window2->windowHandle());
         QCOMPARE(dock1->dptr()->frame(), dock2->dptr()->frame());
         QCOMPARE(dock1->dptr()->frame()->dockWidgetCount(), 2);
         Testing::waitForDeleted(originalWindow2);
@@ -6910,8 +6816,8 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
 
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
         dock1->addDockWidgetAsTab(dock2);
-        QCOMPARE(dock1->window(), m->view()->asQWidget());
-        QCOMPARE(dock2->window(), m->view()->asQWidget());
+        QCOMPARE(dock1->window()->asQWidget(), m->view()->asQWidget());
+        QCOMPARE(dock2->window()->asQWidget(), m->view()->asQWidget());
         QCOMPARE(dock1->dptr()->frame(), dock2->dptr()->frame());
         QCOMPARE(dock1->dptr()->frame()->dockWidgetCount(), 2);
     }
@@ -6987,7 +6893,7 @@ void TestDocks::tst_close()
 
     QVERIFY(!dock1->isVisible());
     QVERIFY(!dock1->window()->isVisible());
-    QCOMPARE(dock1->window(), dock1->view()->asQWidget());
+    QCOMPARE(dock1->window()->asQWidget(), dock1->view()->asQWidget());
     QVERIFY(!toggleAction->isChecked());
 
     // 1.1 Reshow with show()
@@ -6996,7 +6902,7 @@ void TestDocks::tst_close()
     QVERIFY(fw);
     QVERIFY(toggleAction->isChecked());
     QVERIFY(dock1->isVisible());
-    QCOMPARE(dock1->window(), fw->view()->asQWidget());
+    QCOMPARE(dock1->window()->asQWidget(), fw->view()->asQWidget());
     QVERIFY(toggleAction->isChecked());
 
     // 1.2 Reshow with toggleAction instead
@@ -7015,7 +6921,7 @@ void TestDocks::tst_close()
     QVERIFY(Testing::waitForDeleted(fw1));
     QVERIFY(!dock1->isVisible());
     QVERIFY(!dock1->window()->isVisible());
-    QCOMPARE(dock1->window(), dock1->view()->asQWidget());
+    QCOMPARE(dock1->window()->asQWidget(), dock1->view()->asQWidget());
     QVERIFY(!toggleAction->isChecked());
 
     // 1.4 close a FloatingWindow, via DockWidget::close
@@ -7024,7 +6930,7 @@ void TestDocks::tst_close()
     QVERIFY(dock1->isVisible());
     QVERIFY(dock1->window()->isVisible());
     QVERIFY(frame1->isVisible());
-    QCOMPARE(dock1->window(), window->view()->asQWidget());
+    QCOMPARE(dock1->window()->asQWidget(), window->view()->asQWidget());
 
     QVERIFY(dock1->close());
     QVERIFY(!dock1->dptr()->frame());
@@ -7039,7 +6945,7 @@ void TestDocks::tst_close()
     QVERIFY(dock1->isVisible());
     QVERIFY(dock1->window()->isVisible());
     QVERIFY(frame1->isVisible());
-    QCOMPARE(dock1->window(), window->view()->asQWidget());
+    QCOMPARE(dock1->window()->asQWidget(), window->view()->asQWidget());
 
     QVERIFY(window->view()->close());
 
@@ -7221,8 +7127,6 @@ void TestDocks::tst_constraintsPropagateUp()
     Controllers::TitleBar *tb = dock1->titleBar();
     QVERIFY(tb->isVisible());
     QVERIFY(qAbs(widgetMinLength(frame1, Qt::Vertical) - (minHeight + frame1->nonContentsHeight())) < 10);
-    delete dock1->window();
-    delete oldFw2;
 }
 
 void TestDocks::tst_constraintsAfterPlaceholder()
@@ -7421,7 +7325,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         auto fw3 = dock3->floatingWindow();
         drag(fw3->titleBar()->view()->asQWidget(), dock3->window()->mapToGlobal(QPoint(10, 10)), m->geometry().center());
         QVERIFY(!dock3->isFloating());
-        QVERIFY(dock3->window() == m->view()->asQWidget());
+        QVERIFY(dock3->window()->asQWidget() == m->view()->asQWidget());
         QCOMPARE(dock3->dptr()->frame()->dockWidgetCount(), 3);
         QVERIFY(m->dropArea()->checkSanity());
 

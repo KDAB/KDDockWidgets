@@ -33,7 +33,7 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-using DockWidgetBase = KDDockWidgets::Controllers::DockWidget;
+using DockWidgetBase = KDDockWidgets::Controllers::DockWidget; // TODOv2: Remove
 
 class DragController;
 class DockRegistry;

@@ -15,11 +15,14 @@
 
 #include <QObject>
 
+#include <memory>
+
 class QWindow;
 
 namespace KDDockWidgets {
 
 class View;
+class ViewWrapper;
 
 class DOCKS_EXPORT Controller : public QObject // TODOv2 remove QObject
 {
@@ -43,7 +46,7 @@ public:
     int x() const;
     int y() const;
     bool close();
-    QWidget *window() const; // TODOv2
+    std::unique_ptr<ViewWrapper> window() const;
     QWindow *windowHandle() const; // TODOv2
     void show() const;
     bool inDtor() const;

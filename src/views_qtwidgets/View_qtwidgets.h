@@ -317,6 +317,11 @@ public:
         return std::unique_ptr<ViewWrapper>(wrapper);
     }
 
+    void setObjectName(const QString &name) override
+    {
+        QWidget::setObjectName(name);
+    }
+
 protected:
     bool event(QEvent *e) override
     {
