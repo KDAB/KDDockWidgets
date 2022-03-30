@@ -58,6 +58,7 @@ class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>
 public:
     explicit SideBar_qtwidgets(Controllers::SideBar *, QWidget *parent);
 
+    void init() override;
     bool isVertical() const; // TODO: Move to a potential base class
 
     void addDockWidget_Impl(Controllers::DockWidget *dock); // TODO: Either override or remove Impl
@@ -68,7 +69,7 @@ public:
 
 private:
     Controllers::SideBar *const m_controller;
-    QBoxLayout *const m_layout;
+    QBoxLayout *m_layout = nullptr;
 };
 }
 

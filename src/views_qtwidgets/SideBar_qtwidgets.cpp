@@ -29,9 +29,16 @@ using namespace KDDockWidgets::Controllers;
 SideBar_qtwidgets::SideBar_qtwidgets(Controllers::SideBar *controller, QWidget *parent)
     : View_qtwidgets(controller, Type::SideBar, parent)
     , m_controller(controller)
-    , m_layout(controller->isVertical() ? static_cast<QBoxLayout *>(new QVBoxLayout(this))
-                                        : static_cast<QBoxLayout *>(new QHBoxLayout(this))) // ternary operator requires static_cast
 {
+}
+
+void SideBar_qtwidgets::init()
+{
+    if (m_controller->isVertical())
+        m_layout = new QVBoxLayout(this);
+    else
+        m_layout = new QHBoxLayout(this);
+
     m_layout->setSpacing(1);
     m_layout->setContentsMargins(0, 0, 0, 0);
     m_layout->addStretch();

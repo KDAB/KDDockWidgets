@@ -29,6 +29,7 @@ SideBar::SideBar(SideBarLocation location, MainWindow *parent)
                                                                                                : Qt::Vertical)
 {
     updateSize();
+    view()->init();
 }
 
 void SideBar::addDockWidget(DockWidget *dw)
