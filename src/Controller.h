@@ -54,6 +54,10 @@ public:
     /// @brief Returns the type of this controller
     Type type() const;
 
+    /// @brief Returns whether this controller is of the specified type
+    bool is(Type) const;
+
+    // View convienence methods to save 1 indirection
     bool isVisible() const;
     void setVisible(bool);
     QRect rect() const;

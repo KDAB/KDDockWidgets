@@ -24,16 +24,21 @@ Controller::Controller(Type type, View *view)
 {
 }
 
-Type Controller::type() const
-{
-    return m_type;
-}
-
 Controller::~Controller()
 {
     m_inDtor = true;
     if (m_view && !m_view->inDtor())
         m_view->free();
+}
+
+Type Controller::type() const
+{
+    return m_type;
+}
+
+bool Controller::is(Type t) const
+{
+    return m_type == t;
 }
 
 bool Controller::inDtor() const
