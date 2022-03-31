@@ -91,11 +91,11 @@ void DockRegistry::onFocusObjectChanged(QObject *obj)
 {
     auto p = qobject_cast<WidgetType *>(obj);
     while (p) {
-        if (auto frameView = qobject_cast<Views::Frame_qtwidgets *>(p)) {
+        if (auto frame = Views::ViewWrapper_qtwidgets(qobject_cast<QWidget *>(p)).asFrameController()) {
             // Special case: The focused widget is inside the frame but not inside the dockwidget.
             // For example, it's a line edit in the QTabBar. We still need to send the signal for
             // the current dw in the tab group
-            if (auto dw = frameView->frame()->currentDockWidget()) {
+            if (auto dw = frame->currentDockWidget()) {
                 setFocusedDockWidget(dw);
             }
 
@@ -726,7 +726,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
             return false;
 
-        if (qobject_cast<Views::Frame_qtwidgets *>(watched)) {
+        if (Views::ViewWrapper_qtwidgets(qobject_cast<QWidget *>(watched)).is(Type::Frame)) {
             // break recursion
             return false;
         }

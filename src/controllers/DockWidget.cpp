@@ -26,7 +26,6 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
-#include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/DockWidget_qtwidgets.h"
 #include "views_qtwidgets/MainWindow_qtwidgets.h"
 
@@ -1029,11 +1028,11 @@ Position::Ptr &DockWidget::Private::lastPosition()
 
 Controllers::Frame *DockWidget::Private::frame() const
 {
-    QWidgetOrQuick *p = q->view()->asQWidget()->parentWidget();
+    auto p = q->view()->parentView();
     while (p) {
-        if (auto frameView = qobject_cast<Views::Frame_qtwidgets *>(p))
-            return frameView->frame();
-        p = p->parentWidget();
+        if (auto frame = p->asFrameController())
+            return frame;
+        p = p->parentView();
     }
     return nullptr;
 }

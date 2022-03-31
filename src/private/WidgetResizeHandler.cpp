@@ -20,8 +20,6 @@
 #include "controllers/TitleBar.h"
 #include "controllers/FloatingWindow.h"
 
-#include "views_qtwidgets/Frame_qtwidgets.h"
-
 #include <QEvent>
 #include <QMouseEvent>
 #include <QDebug>
@@ -67,8 +65,8 @@ void WidgetResizeHandler::setResizeGap(int gap)
 
 bool WidgetResizeHandler::isMDI() const
 {
-    auto frameView = qobject_cast<Views::Frame_qtwidgets *>(mTarget->asQWidget());
-    return frameView && frameView->frame()->isMDI();
+    Controllers::Frame *frame = mTarget->asFrameController();
+    return frame && frame->isMDI();
 }
 
 bool WidgetResizeHandler::isResizing() const
@@ -122,11 +120,10 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         m_resizingInProgress = false;
         if (isMDI()) {
             Q_EMIT DockRegistry::self()->frameInMDIResizeChanged();
-            auto frameView = static_cast<Views::Frame_qtwidgets *>(mTarget);
             // Usually in KDDW all geometry changes are done in the layout items, which propagate to the widgets
             // When resizing a MDI however, we're resizing the widget directly. So update the corresponding layout
             // item when we're finished.
-            auto frame = frameView->frame();
+            auto frame = mTarget->asFrameController();
             frame->mdiLayoutWidget()->setDockWidgetGeometry(frame, frame->geometry());
         }
         updateCursor(CursorPosition_Undefined);

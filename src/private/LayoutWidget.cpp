@@ -135,8 +135,7 @@ void LayoutWidget::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item,
         item->restore(newFrame->view());
     }
 
-    auto frameView = qobject_cast<Views::Frame_qtwidgets *>(item->guestAsQObject());
-    auto frame = frameView->frame();
+    auto frame = Views::ViewWrapper_qtwidgets(item->guestAsQObject()).asFrameController();
     Q_ASSERT(frame);
 
     if (tabIndex != -1 && frame->dockWidgetCount() >= tabIndex) {
@@ -233,9 +232,9 @@ Controllers::Frame::List LayoutWidget::frames() const
     result.reserve(items.size());
 
     for (Layouting::Item *item : items) {
-        if (auto frameView = static_cast<Views::Frame_qtwidgets *>(item->guestAsQObject())) // TODO: Store Frame in the layout, not the view
-            if (!frameView->freed())
-                result.push_back(frameView->frame());
+        if (auto frame = Views::ViewWrapper_qtwidgets(item->guestAsQObject()).asFrameController()) {
+            result.push_back(frame); // TODOv2: Store Frame in layout, not FrameView
+        }
     }
 
     return result;
@@ -307,8 +306,9 @@ LayoutSaver::MultiSplitter LayoutWidget::serialize() const
     l.frames.reserve(items.size());
     for (Layouting::Item *item : items) {
         if (!item->isContainer()) {
-            if (auto frameView = qobject_cast<Views::Frame_qtwidgets *>(item->guestAsQObject()))
-                l.frames.insert(frameView->id(), frameView->frame()->serialize());
+            if (auto frame = Views::ViewWrapper_qtwidgets(item->guestAsQObject()).asFrameController()) {
+                l.frames.insert(frame->view()->id(), frame->serialize());
+            }
         }
     }
 

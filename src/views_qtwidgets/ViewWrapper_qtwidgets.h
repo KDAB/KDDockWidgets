@@ -23,6 +23,7 @@ namespace KDDockWidgets::Views {
 class DOCKS_EXPORT ViewWrapper_qtwidgets : public ViewWrapper
 {
 public:
+    explicit ViewWrapper_qtwidgets(QObject *widget);
     explicit ViewWrapper_qtwidgets(QWidget *widget);
 
     void setObjectName(const QString &name) override;

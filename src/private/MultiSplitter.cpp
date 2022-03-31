@@ -34,7 +34,6 @@
 #include "controllers/DockWidget.h"
 #include "controllers/MainWindow.h"
 
-#include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/DockWidget_qtwidgets.h"
 
 #include <QScopedValueRollback>
@@ -72,7 +71,9 @@ bool MultiSplitter::validateInputs(QWidgetOrQuick *widget, Location location,
     const bool isDockWidget = qobject_cast<Views::DockWidget_qtwidgets *>(widget);
     const bool isStartHidden = option.startsHidden();
 
-    if (!qobject_cast<Views::Frame_qtwidgets *>(widget) && !qobject_cast<MultiSplitter *>(widget) && !isDockWidget) {
+    Views::ViewWrapper_qtwidgets wrapper(widget);
+
+    if (!wrapper.is(Type::Frame) && !wrapper.is(Type::Layout) && !isDockWidget) {
         qWarning() << "Unknown widget type" << widget;
         return false;
     }
@@ -117,12 +118,13 @@ void MultiSplitter::addWidget(QWidget *w, Location location,
                               Controllers::Frame *relativeToWidget,
                               InitialOption option)
 {
-    auto frameView = qobject_cast<Views::Frame_qtwidgets *>(w);
-    auto frame = frameView ? frameView->frame() : nullptr;
+
+    Views::ViewWrapper_qtwidgets wrapper(w);
+    auto frame = wrapper.asFrameController();
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it.
         // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
-        frameView->setParent(nullptr); // so ~Item doesn't delete it
+        frame->view()->setParent(nullptr); // so ~Item doesn't delete it
         frame->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
     }
 
