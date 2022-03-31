@@ -97,11 +97,11 @@ Controllers::Frame *DropArea::frameContainingPos(QPoint globalPos) const
 {
     const Layouting::Item::List &items = this->items();
     for (Layouting::Item *item : items) {
-        auto frameView = static_cast<Views::Frame_qtwidgets *>(item->guestAsQObject());
-        if (!frameView || !frameView->isVisible()) {
+        auto frame = Views::ViewWrapper_qtwidgets(item->guestAsQObject()).asFrameController();
+        if (!frame || !frame->isVisible()) {
             continue;
         }
-        Controllers::Frame *frame = frameView->frame();
+
         if (frame->containsMouse(globalPos))
             return frame;
     }
@@ -118,8 +118,8 @@ void DropArea::updateFloatingActions()
 Layouting::Item *DropArea::centralFrame() const
 {
     for (Layouting::Item *item : this->items()) {
-        if (auto frameView = static_cast<Views::Frame_qtwidgets *>(item->guestAsQObject())) {
-            if (frameView->frame()->isCentralFrame())
+        if (auto frame = Views::ViewWrapper_qtwidgets(item->guestAsQObject()).asFrameController()) {
+            if (frame->isCentralFrame())
                 return item;
         }
     }
