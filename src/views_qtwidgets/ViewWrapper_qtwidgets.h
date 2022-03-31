@@ -43,6 +43,7 @@ public:
     bool is(Type) const override;
     std::unique_ptr<ViewWrapper> window() const override;
     std::unique_ptr<ViewWrapper> parentView() const override;
+    HANDLE handle() const override;
 
 private:
     QWidget *const m_widget;

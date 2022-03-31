@@ -311,6 +311,11 @@ public:
         return QWidget::windowHandle();
     }
 
+    HANDLE handle() const override
+    {
+        return reinterpret_cast<HANDLE>(this);
+    }
+
     std::unique_ptr<ViewWrapper> window() const override
     {
         ViewWrapper *wrapper = new ViewWrapper_qtwidgets(QWidget::window());

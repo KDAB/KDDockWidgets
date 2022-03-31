@@ -213,3 +213,8 @@ std::unique_ptr<ViewWrapper> ViewWrapper_qtwidgets::parentView() const
 {
     return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->parentWidget()));
 }
+
+HANDLE ViewWrapper_qtwidgets::handle() const
+{
+    return reinterpret_cast<HANDLE>(m_widget);
+}

@@ -38,6 +38,8 @@ namespace Controllers {
 class FloatingWindow;
 }
 
+using HANDLE = const void *;
+
 class DOCKS_EXPORT View
 {
 public:
@@ -70,6 +72,16 @@ public:
     /// @brief Returns whether the DTOR is currently running. freed() might be true while inDtor false,
     /// as the implementation of free() is free to delay it (with deleteLater() for example)
     bool inDtor() const;
+
+    /// @brief Returns whether this view represents the same GUI element as the other
+    bool equals(const View *other) const;
+    bool equals(const std::unique_ptr<ViewWrapper> &) const;
+
+    /// @brief Returns a handle for the GUI element
+    /// This value only makes sense to the frontend. For example, for QtQuick it might be a
+    /// QtQuickItem, while for QtWidgets it's a QWidget *. Can be whatever the frontend developer wants,
+    /// as long as it uniquely identifies the GUI element. KDDW backend only uses it for comparison purposes
+    virtual HANDLE handle() const = 0;
 
     /// @brief Called by the layouting engine
     /// Override it in case your widget needs to know where it is in the layout. Usually only needed by Frame.s
