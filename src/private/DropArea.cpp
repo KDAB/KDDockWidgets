@@ -29,7 +29,6 @@
 
 #include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/View_qtwidgets.h"
-#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
 
 #include <algorithm>
 
@@ -360,8 +359,7 @@ bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location locat
         auto frame = new Controllers::Frame();
         frame->addWidget(dock);
         addWidget(frame->view()->asQWidget(), location, relativeTo, DefaultSizeMode::FairButFloor);
-    } else if (auto floatingWindowView = qobject_cast<Views::FloatingWindow_qtwidgets *>(droppedWindow)) {
-        Controllers::FloatingWindow *floatingWindow = floatingWindowView->floatingWindow();
+    } else if (auto floatingWindow = Views::ViewWrapper_qtwidgets(droppedWindow).asFloatingWindowController()) {
         if (!validateAffinity(floatingWindow))
             return false;
 

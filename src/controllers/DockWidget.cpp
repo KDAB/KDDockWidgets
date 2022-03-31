@@ -512,8 +512,8 @@ void DockWidget::setFloatingGeometry(QRect geometry)
 
 Controllers::FloatingWindow *DockWidget::floatingWindow() const
 {
-    if (auto view = qobject_cast<Views::FloatingWindow_qtwidgets *>(this->view()->asQWidget()->window()))
-        return view->floatingWindow();
+    if (auto fw = view()->window()->asFloatingWindowController())
+        return fw;
 
     return nullptr;
 }

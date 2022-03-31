@@ -746,8 +746,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
 
     switch (e->type()) {
     case QEvent::NonClientAreaMouseButtonPress: {
-        if (auto view = qobject_cast<Views::FloatingWindow_qtwidgets *>(o)) {
-            auto fw = view->floatingWindow();
+        if (auto fw = Views::ViewWrapper_qtwidgets(qobject_cast<QWidget *>(o)).asFloatingWindowController()) {
             if (KDDockWidgets::usesNativeTitleBar() || fw->isInDragArea(Qt5Qt6Compat::eventGlobalPos(me))) {
                 m_nonClientDrag = true;
                 return activeState()->handleMouseButtonPress(draggableForQObject(o), Qt5Qt6Compat::eventGlobalPos(me), me->pos());
@@ -954,8 +953,8 @@ DropArea *DragController::dropAreaUnderCursor() const
 
     const QStringList affinities = m_windowBeingDragged->floatingWindow()->affinities();
 
-    if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(topLevel)) {
-        auto fw = fwView->floatingWindow();
+    /// TODOv2: Remove WidgetType
+    if (auto fw = Views::ViewWrapper_qtwidgets(topLevel).asFloatingWindowController()) {
         if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
             return fw->dropArea();
     }

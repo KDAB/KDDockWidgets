@@ -21,7 +21,6 @@
 #include "controllers/MainWindow.h"
 
 #include "views_qtwidgets/Frame_qtwidgets.h"
-#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
 #include "views_qtwidgets/MainWindow_qtwidgets.h"
 
 #include "multisplitter/Item_p.h"
@@ -76,8 +75,8 @@ Controllers::MainWindow *LayoutWidget::mainWindow(bool honourNesting) const
 
 Controllers::FloatingWindow *LayoutWidget::floatingWindow() const
 {
-    auto view = qobject_cast<Views::FloatingWindow_qtwidgets *>(QWidget::parentWidget());
-    return view ? view->floatingWindow() : nullptr;
+    auto parent = parentView();
+    return parent ? parent->asFloatingWindowController() : nullptr;
 }
 
 void LayoutWidget::setRootItem(Layouting::ItemContainer *root)

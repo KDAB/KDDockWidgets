@@ -123,11 +123,12 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
 {
     // This is called when using Flag_HideTitleBarWhenTabsVisible
     // For detaching individual tabs, TabBar::makeWindow() is called.
-    if (auto view = qobject_cast<Views::FloatingWindow_qtwidgets *>(asWidget()->window())) {
-        if (view->floatingWindow()->hasSingleFrame()) {
+
+    if (auto fw = view()->window()->asFloatingWindowController()) {
+        if (fw->hasSingleFrame()) {
             // We're already in a floating window, and it only has 1 dock widget.
             // So there's no detachment to be made, we just move the window.
-            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(view->floatingWindow(), this));
+            return std::unique_ptr<WindowBeingDragged>(new WindowBeingDragged(fw, this));
         }
     }
 
@@ -145,9 +146,9 @@ std::unique_ptr<WindowBeingDragged> Stack::makeWindow()
 
 bool Stack::isWindow() const
 {
-    if (auto view = qobject_cast<Views::FloatingWindow_qtwidgets *>(asWidget()->window())) {
+    if (auto fw = view()->window()->asFloatingWindowController()) {
         // Case of dragging via the tab widget when the title bar is hidden
-        return view->floatingWindow()->hasSingleFrame();
+        return fw->hasSingleFrame();
     }
 
     return false;

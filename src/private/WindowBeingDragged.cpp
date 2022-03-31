@@ -24,7 +24,6 @@
 #include "views_qtwidgets/TitleBar_qtwidgets.h"
 #include "views_qtwidgets/TabBar_qtwidgets.h"
 #include "views_qtwidgets/Stack_qtwidgets.h"
-#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
 #endif
 
 #include <QPixmap>
@@ -46,11 +45,10 @@ static Draggable *bestDraggable(Draggable *draggable)
         if (titleBar->isVisible())
             return draggable;
 
-        auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(tbView->QWidget::window());
-        if (!fwView) // defensive, doesn't happen
+        auto fw = tbView->window()->asFloatingWindowController();
+        if (!fw) // defensive, doesn't happen
             return draggable;
 
-        auto fw = fwView->floatingWindow();
         if (fw->titleBar() == titleBar) {
             // Defensive, doesn't happen
             return draggable;
@@ -170,8 +168,7 @@ bool WindowBeingDragged::contains(LayoutWidget *layoutWidget) const
     if (m_floatingWindow)
         return m_floatingWindow->layoutWidget() == layoutWidget;
 
-    if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(m_draggableWidget->window())) {
-        auto fw = fwView->floatingWindow();
+    if (auto fw = Views::ViewWrapper_qtwidgets(m_draggableWidget->window()).asFloatingWindowController()) {
         // We're not dragging via the floating window itself, but via the tab bar. Still might represent floating window though.
         return fw->layoutWidget() == layoutWidget && fw->hasSingleFrame();
     }
@@ -212,10 +209,10 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         } else {
             qWarning() << Q_FUNC_INFO << "Shouldn't happen. TitleBar of what ?";
         }
-    } else if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(draggable->asWidget())) {
+    } else if (auto fw = Views::ViewWrapper_qtwidgets(draggable->asWidget()).asFloatingWindowController()) {
         // case #2: the floating window itself is the draggable, happens on platforms that support
         // native dragging. Not the case for Wayland. But adding this case for completeness.
-        m_floatingWindow = fwView->floatingWindow();
+        m_floatingWindow = fw;
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     } else if (auto tbw = qobject_cast<Views::TabBar_qtwidgets *>(draggable->asWidget())) {
         m_dockWidget = tbw->currentDockWidget();

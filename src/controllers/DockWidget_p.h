@@ -18,7 +18,6 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/SideBar.h"
 
-#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
 #include "views_qtwidgets/MainWindow_qtwidgets.h"
 
 #include <QCoreApplication>
@@ -54,8 +53,10 @@ public:
      */
     Controllers::FloatingWindow *floatingWindow() const
     {
-        auto view = qobject_cast<Views::FloatingWindow_qtwidgets *>(q->view()->asQWidget()->window());
-        return view ? view->floatingWindow() : nullptr;
+        if (auto fw = q->view()->window()->asFloatingWindowController())
+            return fw;
+
+        return nullptr;
     }
 
     MainWindow *mainWindow() const

@@ -27,7 +27,6 @@
 
 #include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/DockWidget_qtwidgets.h"
-#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
 
 #include <QPointer>
 #include <QDebug>
