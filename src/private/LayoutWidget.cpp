@@ -31,7 +31,7 @@ using namespace KDDockWidgets::Controllers;
 
 
 LayoutWidget::LayoutWidget(QWidgetOrQuick *parent)
-    : Views::View_qtwidgets<QWidget>(nullptr, View::Type::Layout, parent)
+    : Views::View_qtwidgets<QWidget>(nullptr, Type::Layout, parent)
 {
 }
 

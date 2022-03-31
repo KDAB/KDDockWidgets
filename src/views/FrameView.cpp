@@ -17,6 +17,6 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 FrameView::FrameView(Controllers::Frame *controller, QObject *thisObj)
-    : View(controller, View::Type::Frame, thisObj)
+    : View(controller, Type::Frame, thisObj)
 {
 }

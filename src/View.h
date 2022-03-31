@@ -37,23 +37,6 @@ class Controller;
 class DOCKS_EXPORT View
 {
 public:
-    enum class Type
-    {
-        Frame = 1,
-        TitleBar = 2,
-        TabBar = 4,
-        Stack = 8,
-        FloatingWindow = 16,
-        Separator = 32,
-        DockWidget = 64,
-        Layout = 128,
-        LayoutItem = 256,
-        SideBar = 512,
-        MainWindow = 1024,
-        DropIndicatorOverlayInterface = 2048,
-        ViewWrapper = 4096
-    };
-
     explicit View(Controller *controller, Type, QObject *thisObj);
     virtual ~View();
 

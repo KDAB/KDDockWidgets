@@ -53,7 +53,7 @@ public:
 
 
 TabBar_qtwidgets::TabBar_qtwidgets(Controllers::TabBar *controller, QWidget *parent)
-    : View_qtwidgets(controller, View::Type::TabBar, parent)
+    : View_qtwidgets(controller, Type::TabBar, parent)
     , m_controller(controller)
 {
 }

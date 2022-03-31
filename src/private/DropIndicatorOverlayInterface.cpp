@@ -22,7 +22,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 DropIndicatorOverlayInterface::DropIndicatorOverlayInterface(DropArea *dropArea)
-    : Views::View_qtwidgets<QWidget>(nullptr, View::Type::DropIndicatorOverlayInterface, dropArea)
+    : Views::View_qtwidgets<QWidget>(nullptr, Type::DropIndicatorOverlayInterface, dropArea)
     , m_dropArea(dropArea)
 {
     setVisible(false);

@@ -18,7 +18,7 @@
 using namespace KDDockWidgets::Views;
 
 template<>
-View_qtwidgets<QWidget>::View_qtwidgets(KDDockWidgets::Controller *controller, View::Type type, QWidget *parent, Qt::WindowFlags windowFlags)
+View_qtwidgets<QWidget>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags windowFlags)
     : QWidget(parent, windowFlags)
     , View(controller, type, this)
 {

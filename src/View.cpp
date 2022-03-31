@@ -47,7 +47,7 @@ QString View::id() const
     return m_id;
 }
 
-View::Type View::type() const
+Type View::type() const
 {
     return m_type;
 }

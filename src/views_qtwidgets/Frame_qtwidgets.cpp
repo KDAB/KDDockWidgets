@@ -52,7 +52,7 @@ public:
 VBoxLayout::~VBoxLayout() = default;
 
 Frame_qtwidgets::Frame_qtwidgets(Controllers::Frame *controller, QWidget *parent)
-    : View_qtwidgets<QWidget>(controller, View::Type::Frame, parent)
+    : View_qtwidgets<QWidget>(controller, Type::Frame, parent)
     , m_controller(controller)
 {
 }
