@@ -558,20 +558,20 @@ FloatingWindow *Frame::floatingWindow() const
     // However, if there's a MainWindow in the hierarchy it stops, which can
     // happen with nested main windows.
 
-    auto p = view()->asQWidget()->parentWidget();
+    auto p = view()->parentView();
     while (p) {
-        if (qobject_cast<Views::MainWindow_qtwidgets *>(p))
+        if (p->is(Type::MainWindow))
             return nullptr;
 
-        if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(p))
-            return fwView->floatingWindow();
+        if (auto fw = p->asFloatingWindowController())
+            return fw;
 
-        if (p == view()->asQWidget()->window()) {
+        if (p->asQWidget() == view()->window()->asQWidget()) {
             // We stop at the window. (top-levels can have parent, but we're not interested)
             return nullptr;
         }
 
-        p = p->parentWidget();
+        p = p->parentView();
     }
 
     return nullptr;

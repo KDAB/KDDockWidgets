@@ -57,7 +57,6 @@ public:
     bool isActiveWindow() const override;
     void setFixedWidth(int) override;
     void setFixedHeight(int) override;
-    std::unique_ptr<ViewWrapper> window() const override;
 };
 
 }

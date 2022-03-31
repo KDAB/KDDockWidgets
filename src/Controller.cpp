@@ -14,7 +14,6 @@
 #include "ViewWrapper.h"
 
 #include <QDebug>
-#include <QWidget>
 
 using namespace KDDockWidgets;
 

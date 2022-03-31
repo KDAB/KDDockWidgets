@@ -192,9 +192,3 @@ void ViewWrapper::setFixedHeight(int)
 {
     qFatal("Not implemented");
 }
-
-std::unique_ptr<ViewWrapper> ViewWrapper::window() const
-{
-    qFatal("Not implemented");
-    return {};
-}

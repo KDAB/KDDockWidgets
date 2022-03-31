@@ -317,6 +317,16 @@ public:
         return std::unique_ptr<ViewWrapper>(wrapper);
     }
 
+    std::unique_ptr<ViewWrapper> parentView() const override
+    {
+        if (QWidget *p = QWidget::parentWidget()) {
+            ViewWrapper *wrapper = new ViewWrapper_qtwidgets(p);
+            return std::unique_ptr<ViewWrapper>(wrapper);
+        }
+
+        return {};
+    }
+
     void setObjectName(const QString &name) override
     {
         QWidget::setObjectName(name);

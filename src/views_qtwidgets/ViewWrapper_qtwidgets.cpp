@@ -203,3 +203,13 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     qWarning() << Q_FUNC_INFO << "Unknown type" << static_cast<int>(t);
     return false;
 }
+
+std::unique_ptr<ViewWrapper> ViewWrapper_qtwidgets::window() const
+{
+    return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->window()));
+}
+
+std::unique_ptr<ViewWrapper> ViewWrapper_qtwidgets::parentView() const
+{
+    return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->parentWidget()));
+}

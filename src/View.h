@@ -172,6 +172,9 @@ public:
     /// Like QWidget::window()
     virtual std::unique_ptr<ViewWrapper> window() const = 0;
 
+    /// @brief Returns the gui element's parent. Like QWidget::parentWidget()
+    virtual std::unique_ptr<ViewWrapper> parentView() const = 0;
+
     template<typename T>
     static QSize widgetMinSize(const T *w)
     {
