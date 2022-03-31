@@ -11,7 +11,9 @@
 
 #include "View.h"
 #include "private/multisplitter/Item_p.h"
+
 #include "controllers/FloatingWindow.h"
+#include "controllers/Frame.h"
 
 #include <QWidget> // TODOv2 remove
 
@@ -180,6 +182,14 @@ Controllers::FloatingWindow *View::asFloatingWindowController() const
 {
     if (m_controller && m_controller->is(Type::FloatingWindow))
         return qobject_cast<Controllers::FloatingWindow *>(m_controller);
+
+    return nullptr;
+}
+
+Controllers::Frame *View::asFrameController() const
+{
+    if (m_controller && m_controller->is(Type::Frame))
+        return qobject_cast<Controllers::Frame *>(m_controller);
 
     return nullptr;
 }

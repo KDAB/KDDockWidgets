@@ -36,6 +36,7 @@ class Controller;
 
 namespace Controllers {
 class FloatingWindow;
+class Frame;
 }
 
 using HANDLE = const void *;
@@ -229,6 +230,7 @@ public:
     /// @brief if this view is a FloatingWindow, then returns its controller
     /// Mostly to save the call sites from having too many casts
     Controllers::FloatingWindow *asFloatingWindowController() const;
+    Controllers::Frame *asFrameController() const;
 
 protected:
     virtual void free_impl();
