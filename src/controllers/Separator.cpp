@@ -63,7 +63,7 @@ struct Separator::Private
 };
 
 Separator::Separator(View *host)
-    : Controller(Layouting::Config::self().createSeparator(this, host))
+    : Controller(Type::Separator, Layouting::Config::self().createSeparator(this, host))
     , d(new Private())
 {
     view()->show();

@@ -118,14 +118,14 @@ public:
 
 MainWindow::MainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
                        WidgetType *parent, Qt::WindowFlags flags)
-    : Controller(new Views::MainWindow_qtwidgets(this, parent, flags))
+    : Controller(Type::MainWindow, new Views::MainWindow_qtwidgets(this, parent, flags))
     , d(new Private(this, uniqueName, options))
 {
     init(uniqueName, true);
 }
 
 MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions options)
-    : Controller(view)
+    : Controller(Type::MainWindow, view)
     , d(new Private(this, uniqueName, options))
 {
     // Convenience CTOR called by Views

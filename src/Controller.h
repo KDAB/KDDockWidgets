@@ -45,13 +45,14 @@ class DOCKS_EXPORT Controller : public QObject // TODOv2 remove QObject
 {
     Q_OBJECT
 public:
-    explicit Controller(View *);
+    explicit Controller(Type type, View *);
     virtual ~Controller();
 
     /// @brief Returns the view associated with this controller, if any.
     View *view() const;
 
-
+    /// @brief Returns the type of this controller
+    Type type() const;
 
     bool isVisible() const;
     void setVisible(bool);
@@ -73,6 +74,7 @@ public:
 private:
     View *m_view = nullptr;
     bool m_inDtor = false;
+    const Type m_type;
 };
 
 }

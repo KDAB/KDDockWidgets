@@ -22,7 +22,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 Controllers::TabBar::TabBar(Stack *tabWidget)
-    : Controller(new Views::TabBar_qtwidgets(this, tabWidget->asWidget())) // TODO: Config::self().frameworkWidgetFactory()->createTabBar(this)
+    : Controller(Type::TabBar, new Views::TabBar_qtwidgets(this, tabWidget->asWidget())) // TODO: Config::self().frameworkWidgetFactory()->createTabBar(this)
     , Draggable(view()->asQWidget())
     , m_tabWidget(tabWidget)
 {

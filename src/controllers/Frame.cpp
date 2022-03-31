@@ -68,7 +68,7 @@ static TabWidgetOptions tabWidgetOptions(FrameOptions options)
 }
 
 Frame::Frame(View *parent, FrameOptions options, int userType)
-    : Controller(new Views::Frame_qtwidgets(this, parent ? parent->asQWidget() : nullptr))
+    : Controller(Type::Frame, new Views::Frame_qtwidgets(this, parent ? parent->asQWidget() : nullptr))
     , FocusScope(static_cast<Views::View_qtwidgets<QWidget> *>(view()->asQWidget())) // TODO
     , m_tabWidget(new Controllers::Stack(this, tabWidgetOptions(options)))
     , m_titleBar(new Controllers::TitleBar(this))

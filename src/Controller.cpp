@@ -18,9 +18,15 @@
 
 using namespace KDDockWidgets;
 
-Controller::Controller(View *view)
+Controller::Controller(Type type, View *view)
     : m_view(view)
+    , m_type(type)
 {
+}
+
+Type Controller::type() const
+{
+    return m_type;
 }
 
 Controller::~Controller()
