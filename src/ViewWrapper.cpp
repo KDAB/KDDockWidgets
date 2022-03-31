@@ -15,8 +15,9 @@
 
 using namespace KDDockWidgets;
 
-ViewWrapper::ViewWrapper(QObject *thisObj)
-    : View(nullptr, Type::ViewWrapper, thisObj)
+
+ViewWrapper::ViewWrapper(Controller *controller, QObject *thisObj)
+    : View(controller, Type::ViewWrapper, thisObj)
 {
 }
 

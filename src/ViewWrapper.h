@@ -23,7 +23,7 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT ViewWrapper : public View
 {
 public:
-    explicit ViewWrapper(QObject *thisObj); // TODOv2: Remove argument once all calls to asQWidget() are removed
+    explicit ViewWrapper(Controller *controller, QObject *thisObj); // TODOv2: Remove thisObj argument once all calls to asQWidget() are removed
 
     void setParent(View *) override;
     QSize minSize() const override;

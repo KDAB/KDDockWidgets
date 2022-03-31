@@ -26,6 +26,7 @@ class ViewWrapper;
 
 enum class Type
 {
+    FIRST = 1, // Keep first
     Frame = 1,
     TitleBar = 2,
     TabBar = 4,
@@ -38,7 +39,8 @@ enum class Type
     SideBar = 512,
     MainWindow = 1024,
     DropIndicatorOverlayInterface = 2048,
-    ViewWrapper = 4096
+    ViewWrapper = 4096,
+    LAST = ViewWrapper // Keep last
 };
 
 class DOCKS_EXPORT Controller : public QObject // TODOv2 remove QObject

@@ -11,6 +11,7 @@
 
 #include "View.h"
 #include "private/multisplitter/Item_p.h"
+#include "controllers/FloatingWindow.h"
 
 #include <QWidget> // TODOv2 remove
 
@@ -32,7 +33,7 @@ View::~View()
 {
     m_inDtor = true;
 
-    if (!freed()) {
+    if (!freed() && !is(Type::ViewWrapper)) {
         // TODOv2
         // Views should be deleted via View::free()!
         // However some of our deletes are coming from widgets parent destroying their children
@@ -173,4 +174,12 @@ QSize View::hardcodedMinimumSize()
 bool View::is(Type t) const
 {
     return m_type == t;
+}
+
+Controllers::FloatingWindow *View::asFloatingWindowController() const
+{
+    if (m_controller && m_controller->is(Type::FloatingWindow))
+        return qobject_cast<Controllers::FloatingWindow *>(m_controller);
+
+    return nullptr;
 }

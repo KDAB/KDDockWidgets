@@ -34,6 +34,10 @@ namespace KDDockWidgets {
 class ViewWrapper;
 class Controller;
 
+namespace Controllers {
+class FloatingWindow;
+}
+
 class DOCKS_EXPORT View
 {
 public:
@@ -205,6 +209,11 @@ public:
     /// Virtual so it can be overridden by ViewWrapper. When we're wrapping an existing GUI element
     /// only the specific frontend can know what's the actual type
     virtual bool is(Type) const;
+
+
+    /// @brief if this view is a FloatingWindow, then returns its controller
+    /// Mostly to save the call sites from having too many casts
+    Controllers::FloatingWindow *asFloatingWindowController() const;
 
 protected:
     virtual void free_impl();
