@@ -13,6 +13,8 @@
 
 #include <QVariantMap>
 #include <QDebug>
+#include <QRect>
+#include <QSize>
 
 #include <iostream>
 
@@ -26,6 +28,27 @@ inline void from_json(const nlohmann::json &j, QString &string)
 inline void to_json(nlohmann::json &j, const QString &s)
 {
     j = s.toStdString();
+}
+
+inline void from_json(const nlohmann::json &j, QStringList &stringList)
+{
+    if (!j.is_array()) {
+        qWarning() << Q_FUNC_INFO << "This is not an array, fix the code";
+        stringList.clear();
+        return;
+    }
+    stringList.reserve((int)j.size());
+    for (const auto &v : j) {
+        QString s = v;
+        stringList.push_back(std::move(s));
+    }
+}
+
+inline void to_json(nlohmann::json &j, const QStringList &stringList)
+{
+    for (const auto &s : stringList) {
+        j.push_back(s);
+    }
 }
 
 inline void to_json(nlohmann::json& j, const QVariantList& list);
@@ -164,6 +187,20 @@ inline void from_json(const nlohmann::json& j, QVariantMap& map)
         const QString key = QString::fromStdString(v.key());
         map[key] = var;
     }
+}
+
+inline void to_json(nlohmann::json& j, const QSize& size)
+{
+    j["width"] = size.width();
+    j["height"] = size.height();
+}
+
+inline void to_json(nlohmann::json& j, const QRect& rect)
+{
+    j["x"] = rect.x();
+    j["y"] = rect.y();
+    j["width"] = rect.width();
+    j["height"] = rect.height();
 }
 
 QT_END_NAMESPACE
