@@ -102,6 +102,38 @@ static QStringList variantToStringList(const QVariantList &variantList)
     return stringList;
 }
 
+namespace KDDockWidgets {
+void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
+{
+    json["options"] = int(mw.options);
+    json["multiSplitterLayout"] = mw.multiSplitterLayout.toVariantMap();
+    json["uniqueName"] = mw.uniqueName;
+    json["geometry"] = mw.geometry;
+    json["normalGeometry"] = mw.normalGeometry;
+    json["screenIndex"] = mw.screenIndex;
+    json["screenSize"] = mw.screenSize;
+    json["isVisible"] = mw.isVisible;
+    json["affinities"] = stringListToVariant(mw.affinities);
+    json["windowState"] = mw.windowState;
+
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+        const QStringList dockWidgets = mw.dockWidgetsPerSideBar.value(loc);
+        if (!dockWidgets.isEmpty()) {
+            std::string key = std::string("sidebar-") + std::to_string((int)loc);
+            json[key] = dockWidgets;
+        }
+    }
+
+}
+
+void to_json(nlohmann::json &json, const LayoutSaver::MainWindow::List &mwList)
+{
+    for (const auto &mw : mwList) {
+        json.push_back(mw);
+    }
+}
+}
+
 LayoutSaver::LayoutSaver(RestoreOptions options)
     : d(new Private(options))
 {
@@ -462,9 +494,21 @@ bool LayoutSaver::Layout::isValid() const
     return true;
 }
 
+namespace KDDockWidgets {
+    void to_json(nlohmann::json& j, const LayoutSaver::Layout& layout)
+    {
+        j["serializationVersion"] = layout.serializationVersion;
+        j["mainWindows"] = layout.mainWindows;
+        j["floatingWindows"] = toVariantList<LayoutSaver::FloatingWindow>(layout.floatingWindows);
+        j["closedDockWidgets"] = ::dockWidgetNames(layout.closedDockWidgets);
+        j["allDockWidgets"] = toVariantList(layout.allDockWidgets);
+        j["screenInfo"] = toVariantList<LayoutSaver::ScreenInfo>(layout.screenInfo);
+    }
+}
+
 QByteArray LayoutSaver::Layout::toJson() const
 {
-    nlohmann::json json = toVariantMap();
+    nlohmann::json json = *this;
     return QByteArray::fromStdString(json.dump(4));
 }
 
