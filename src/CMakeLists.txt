@@ -355,6 +355,14 @@ if(${PROJECT_NAME}_XLib)
   target_link_libraries(kddockwidgets PRIVATE X11)
 endif()
 
+find_package(nlohmann_json)
+if (nlohmann_json_FOUND)
+  target_link_libraries(kddockwidgets PRIVATE nlohmann_json::nlohmann_json)
+else()
+  message("nlohmann_json not found in system. Using our own bundled one")
+  target_include_directories(kddockwidgets PRIVATE 3rdparty/nlohmann)
+endif()
+
 set_target_properties(kddockwidgets PROPERTIES
   SOVERSION ${${PROJECT_NAME}_SOVERSION}
   VERSION ${${PROJECT_NAME}_VERSION}

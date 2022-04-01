@@ -19,6 +19,7 @@
 #include "LayoutSaver.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+#include "nlohmann_qt_helpers.h"
 
 #include "private/multisplitter/Item_p.h"
 #include "private/LayoutSaver_p.h"
@@ -34,7 +35,6 @@
 #include "controllers/DockWidget_p.h"
 #include "controllers/MainWindow.h"
 
-#include "nlohmann/nlohmann_qt_helpers.h"
 
 #include <qmath.h>
 #include <QDebug>
