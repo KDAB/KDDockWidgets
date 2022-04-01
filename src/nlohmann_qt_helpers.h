@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 
 #include <QVariantMap>
 #include <QDebug>
