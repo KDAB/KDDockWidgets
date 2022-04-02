@@ -56,6 +56,8 @@ public:
 
     int numDockWidgets() const;
 
+    bool tabsAreMovable() const;
+
     /**
      * @brief Returns this class as a QWidget (if using QtWidgets) or QQuickItem
      */

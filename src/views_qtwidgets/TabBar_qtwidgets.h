@@ -12,6 +12,7 @@
 #pragma once
 
 #include "View_qtwidgets.h"
+#include "views/TabBar.h"
 
 #include <QTabBar>
 
@@ -26,20 +27,22 @@ class DockWidget;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT TabBar_qtwidgets : public View_qtwidgets<QTabBar>
+class DOCKS_EXPORT TabBar_qtwidgets : public View_qtwidgets<QTabBar>, public TabBar
 {
     Q_OBJECT
 public:
     explicit TabBar_qtwidgets(Controllers::TabBar *controller, QWidget *parent = nullptr);
 
     Controllers::TabBar *tabBar() const;
-    int tabAt(QPoint localPos) const;
 
-    Controllers::DockWidget *currentDockWidget() const;
+    Controllers::DockWidget *currentDockWidget() const override;
 
-    QString text(int index) const;
-    QRect rectForTab(int index) const;
-    void moveTabTo(int from, int to);
+    QString text(int index) const override;
+    QRect rectForTab(int index) const override;
+    void moveTabTo(int from, int to) override;
+
+    bool tabsAreMovable() const override;
+    int tabAt(QPoint localPos) const override;
 
 protected:
     void mousePressEvent(QMouseEvent *) override;

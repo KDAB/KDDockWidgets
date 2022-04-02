@@ -124,3 +124,8 @@ void TabBar_qtwidgets::moveTabTo(int from, int to)
 {
     moveTab(from, to);
 }
+
+bool TabBar_qtwidgets::tabsAreMovable() const
+{
+    return isMovable();
+}

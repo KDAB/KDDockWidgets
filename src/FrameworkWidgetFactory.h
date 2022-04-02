@@ -43,12 +43,6 @@ class DropArea;
 class TabBar;
 class TabWidgetQuick;
 
-namespace Views {
-class Separator;
-class TitleBar;
-class TabBar;
-}
-
 namespace Controllers {
 class Separator;
 class TabBar;

@@ -14,15 +14,18 @@
 #include "Controller.h"
 #include "controllers/Stack.h"
 #include "controllers/FloatingWindow.h"
-#include "views_qtwidgets/TabBar_qtwidgets.h"
+#include "views/TabBar.h"
+
 #include "private/DragController_p.h"
 #include "private/Utils_p.h"
+#include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 Controllers::TabBar::TabBar(Stack *tabWidget)
-    : Controller(Type::TabBar, new Views::TabBar_qtwidgets(this, tabWidget->view()->asQWidget())) // TODO: Config::self().frameworkWidgetFactory()->createTabBar(this)
+    : Controller(Type::TabBar, Config::self().frameworkWidgetFactory()->createTabBar(this, tabWidget->view()))
     , Draggable(view())
     , m_tabWidget(tabWidget)
 {
@@ -32,22 +35,26 @@ Controllers::TabBar::~TabBar()
 {
 }
 
+bool Controllers::TabBar::tabsAreMovable() const
+{
+    return dynamic_cast<Views::TabBar *>(view())->tabsAreMovable();
+}
+
 bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
 {
     // Here we allow the user to re-order tabs instead of dragging them off.
     // To do that we just return false here, and QTabBar will handle the mouse event, assuming QTabBar::isMovable.
 
     const bool defaultResult = Draggable::dragCanStart(pressPos, pos);
-    auto view = static_cast<Views::TabBar_qtwidgets *>(this->view()); // TODO
 
-    if (!defaultResult || !view->isMovable()) {
+    if (!defaultResult || !tabsAreMovable()) {
         // Nothing more to do. If the drag wouldn't start anyway, return false.
         // And if the tabs aren't movable, just return the default result, which just considers
         // QApplication::startDragDistances
         return defaultResult;
     }
 
-    const int index = view->tabAt(view->mapFromGlobal(pos));
+    const int index = dynamic_cast<Views::TabBar *>(view())->tabAt(view()->mapFromGlobal(pos));
     if (index == -1)
         return defaultResult;
 
@@ -76,7 +83,7 @@ DockWidgetBase *Controllers::TabBar::dockWidgetAt(int index) const
 
 DockWidgetBase *Controllers::TabBar::dockWidgetAt(QPoint localPos) const
 {
-    return dockWidgetAt(static_cast<Views::TabBar_qtwidgets *>(view())->tabAt(localPos));
+    return dockWidgetAt(dynamic_cast<Views::TabBar *>(view())->tabAt(localPos));
 }
 
 std::unique_ptr<WindowBeingDragged> Controllers::TabBar::makeWindow()
@@ -169,27 +176,20 @@ Frame *Controllers::TabBar::frame() const
 
 void Controllers::TabBar::moveTabTo(int from, int to)
 {
-    auto view = static_cast<Views::TabBar_qtwidgets *>(this->view()); // TODO
-    view->moveTabTo(from, to);
+    dynamic_cast<Views::TabBar *>(view())->moveTabTo(from, to);
 }
 
 QString Controllers::TabBar::text(int index) const
 {
-    // TODO: We can store the text in the controller
-
-    auto view = static_cast<Views::TabBar_qtwidgets *>(this->view()); // TODO
-    return view->text(index);
+    return dynamic_cast<Views::TabBar *>(view())->text(index);
 }
 
 QRect Controllers::TabBar::rectForTab(int index) const
 {
-    auto view = static_cast<Views::TabBar_qtwidgets *>(this->view()); // TODO
-    return view->rectForTab(index);
+    return dynamic_cast<Views::TabBar *>(view())->rectForTab(index);
 }
-
 
 DockWidget *Controllers::TabBar::currentDockWidget() const
 {
-    auto view = static_cast<Views::TabBar_qtwidgets *>(this->view()); // TODO
-    return view->currentDockWidget();
+    return dynamic_cast<Views::TabBar *>(view())->currentDockWidget();
 }
