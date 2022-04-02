@@ -13,6 +13,7 @@
 
 #include "View_qtwidgets.h"
 #include "controllers/FloatingWindow.h"
+#include "views/TitleBar.h"
 
 #include <QToolButton>
 
@@ -25,14 +26,14 @@ class TitleBar;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>, public Views::TitleBar
 {
     Q_OBJECT
 public:
     explicit TitleBar_qtwidgets(Controllers::TitleBar *controller, QWidget *parent = nullptr);
 
     // TODO:
-    void updateMaximizeButton();
+    void updateMaximizeButton() override;
     void updateMinimizeButton();
     void updateAutoHideButton();
 

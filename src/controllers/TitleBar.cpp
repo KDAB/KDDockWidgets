@@ -13,12 +13,11 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "View.h"
-#include "views_qtwidgets/View_qtwidgets.h"
-#include "views_qtwidgets/TitleBar_qtwidgets.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 
+#include "views/TitleBar.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/TabBar.h"
 #include "controllers/MainWindow.h"
@@ -54,7 +53,9 @@ TitleBar::TitleBar(FloatingWindow *parent)
 {
     init();
     connect(m_floatingWindow, &FloatingWindow::numFramesChanged, this, &TitleBar::updateButtons);
-    connect(m_floatingWindow, &FloatingWindow::windowStateChanged, static_cast<Views::TitleBar_qtwidgets *>(view()), &Views::TitleBar_qtwidgets::updateMaximizeButton); // TODO
+    connect(m_floatingWindow, &FloatingWindow::windowStateChanged, this, [this] {
+        dynamic_cast<Views::TitleBar *>(view())->updateMaximizeButton();
+    });
     connect(m_floatingWindow, &FloatingWindow::activatedChanged, this, &TitleBar::isFocusedChanged);
 }
 

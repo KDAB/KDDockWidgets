@@ -39,7 +39,6 @@
 #include "DockWidgetQuick.h"
 #else
 // TODO: Use framework factory instead
-#include "views_qtwidgets/DockWidget_qtwidgets.h"
 #include "views_qtwidgets/MainWindow_qtwidgets.h"
 #endif
 
