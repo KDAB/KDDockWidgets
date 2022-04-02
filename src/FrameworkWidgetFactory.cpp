@@ -58,10 +58,10 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 View *DefaultWidgetFactory::createFrame(Controllers::Frame *controller, View *parent = nullptr,
-                                        FrameOptions options) const
+                                        FrameOptions) const
 {
-    Q_UNUSED(options); // TODO
-    return new Views::Frame_qtwidgets(controller, parent->asQWidget());
+    // TODOv2: Remove options
+    return new Views::Frame_qtwidgets(controller, parent ? parent->asQWidget() : nullptr);
 }
 
 View *DefaultWidgetFactory::createTitleBar(Controllers::TitleBar *titleBar, Controllers::Frame *frame) const

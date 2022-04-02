@@ -102,10 +102,6 @@ set(DOCKSLIBS_SRCS
     ViewWrapper.h
     Controller.cpp
     Controller.h
-
-    views/FrameView.cpp
-    views/FrameView.h
-
     views_qtwidgets/View_qtwidgets.cpp
     views_qtwidgets/View_qtwidgets.h
     views_qtwidgets/ViewWrapper_qtwidgets.cpp

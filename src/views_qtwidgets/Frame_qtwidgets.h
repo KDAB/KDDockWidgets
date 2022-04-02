@@ -12,6 +12,7 @@
 #pragma once
 
 #include "View_qtwidgets.h"
+#include "views/Frame.h"
 
 namespace KDDockWidgets::Controllers {
 class Frame;
@@ -19,7 +20,7 @@ class Frame;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT Frame_qtwidgets : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT Frame_qtwidgets : public View_qtwidgets<QWidget>, public Frame
 {
     Q_OBJECT
 public:
@@ -28,20 +29,20 @@ public:
 
     void setLayoutItem(Layouting::Item *item) override;
 
-    void renameTab(int index, const QString &);
-    void changeTabIcon(int index, const QIcon &);
-    void removeWidget_impl(Controllers::DockWidget *);
-    int indexOfDockWidget_impl(const Controllers::DockWidget *);
-    int currentIndex_impl() const;
-    void setCurrentTabIndex_impl(int index);
-    void setCurrentDockWidget_impl(Controllers::DockWidget *);
-    void insertDockWidget_impl(Controllers::DockWidget *, int index);
-    Controllers::DockWidget *dockWidgetAt_impl(int index) const;
-    Controllers::DockWidget *currentDockWidget_impl() const;
-    int nonContentsHeight() const;
+    void renameTab(int index, const QString &) override;
+    void changeTabIcon(int index, const QIcon &) override;
+    void removeWidget_impl(Controllers::DockWidget *) override;
+    int indexOfDockWidget_impl(const Controllers::DockWidget *) override;
+    int currentIndex_impl() const override;
+    void setCurrentTabIndex_impl(int index) override;
+    void setCurrentDockWidget_impl(Controllers::DockWidget *) override;
+    void insertDockWidget_impl(Controllers::DockWidget *, int index) override;
+    Controllers::DockWidget *dockWidgetAt_impl(int index) const override;
+    Controllers::DockWidget *currentDockWidget_impl() const override;
+    int nonContentsHeight() const override;
 
     Controllers::Frame *frame() const;
-    QRect dragRect() const;
+    QRect dragRect() const override;
 
 Q_SIGNALS:
     void layoutInvalidated();

@@ -16,6 +16,7 @@
 
 #include "Controller.h"
 #include "View.h"
+#include "views/Frame.h"
 #include "controllers/TitleBar.h"
 #include "controllers/Stack.h"
 #include "controllers/FloatingWindow.h"
@@ -31,7 +32,6 @@
 #include "private/DropAreaWithCentralFrame_p.h"
 #include "private/multisplitter/Item_p.h"
 
-#include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/DockWidget_qtwidgets.h"
 
 #include <QCloseEvent>
@@ -68,7 +68,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 }
 
 Frame::Frame(View *parent, FrameOptions options, int userType)
-    : Controller(Type::Frame, new Views::Frame_qtwidgets(this, parent ? parent->asQWidget() : nullptr))
+    : Controller(Type::Frame, Config::self().frameworkWidgetFactory()->createFrame(this, parent))
     , FocusScope(static_cast<Views::View_qtwidgets<QWidget> *>(view()->asQWidget())) // TODO
     , m_tabWidget(new Controllers::Stack(this, tabWidgetOptions(options)))
     , m_titleBar(new Controllers::TitleBar(this))
@@ -152,63 +152,57 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
 
 void Frame::renameTab(int index, const QString &title)
 {
-    // TODO
-    qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->renameTab(index, title);
+    dynamic_cast<Views::Frame *>(view())->renameTab(index, title);
 }
 
 void Frame::changeTabIcon(int index, const QIcon &icon)
 {
-    // TODO
-    qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->changeTabIcon(index, icon);
+    dynamic_cast<Views::Frame *>(view())->changeTabIcon(index, icon);
 }
 
 void Frame::removeWidget_impl(DockWidget *dw)
 {
-    // TODO
-    qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->removeWidget_impl(dw);
+    dynamic_cast<Views::Frame *>(view())->removeWidget_impl(dw);
 }
 
 int Frame::indexOfDockWidget_impl(const DockWidget *dw)
 {
-    // TODO
-    return qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->indexOfDockWidget_impl(dw);
+    return dynamic_cast<Views::Frame *>(view())->indexOfDockWidget_impl(dw);
 }
 
 int Frame::currentIndex_impl() const
 {
-    // TODO
-    return qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->currentIndex_impl();
+    return dynamic_cast<Views::Frame *>(view())->currentIndex_impl();
 }
 
 void Frame::setCurrentTabIndex_impl(int index)
 {
-    // TODO
-    qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->setCurrentTabIndex_impl(index);
+    dynamic_cast<Views::Frame *>(view())->setCurrentTabIndex_impl(index);
 }
 
 void Frame::setCurrentDockWidget_impl(DockWidget *dw)
 {
-    qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->setCurrentDockWidget_impl(dw);
+    dynamic_cast<Views::Frame *>(view())->setCurrentDockWidget_impl(dw);
 }
 
 void Frame::insertDockWidget_impl(DockWidget *dw, int index)
 {
-    qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->insertDockWidget_impl(dw, index);
+    dynamic_cast<Views::Frame *>(view())->insertDockWidget_impl(dw, index);
 }
 
 DockWidgetBase *Frame::dockWidgetAt_impl(int index) const
 {
-    return qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->dockWidgetAt_impl(index);
+    return dynamic_cast<Views::Frame *>(view())->dockWidgetAt_impl(index);
 }
 
 DockWidgetBase *Frame::currentDockWidget_impl() const
 {
-    return qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->currentDockWidget_impl();
+    return dynamic_cast<Views::Frame *>(view())->currentDockWidget_impl();
 }
 
 int Frame::nonContentsHeight() const
 {
-    return qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->nonContentsHeight();
+    return dynamic_cast<Views::Frame *>(view())->nonContentsHeight();
 }
 
 Controllers::Stack *Frame::tabWidget() const
@@ -858,7 +852,7 @@ QRect Frame::dragRect() const
     if (rect.isValid())
         return rect;
 
-    return qobject_cast<Views::Frame_qtwidgets *>(view()->asQWidget())->dragRect();
+    return dynamic_cast<Views::Frame *>(view())->dragRect();
 }
 
 MainWindow *Frame::mainWindow() const
