@@ -20,12 +20,6 @@
 #include "controllers/Stack.h"
 #include "controllers/Frame.h"
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "views_qtwidgets/TitleBar_qtwidgets.h"
-#include "views_qtwidgets/TabBar_qtwidgets.h"
-#include "views_qtwidgets/Stack_qtwidgets.h"
-#endif
-
 #include <QPixmap>
 #include <QPainter>
 
