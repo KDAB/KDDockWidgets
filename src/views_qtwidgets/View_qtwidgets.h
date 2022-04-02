@@ -347,6 +347,11 @@ public:
         QWidget::releaseMouse();
     }
 
+    QScreen *screen() const override
+    {
+        return QWidget::screen();
+    }
+
 protected:
     bool event(QEvent *e) override
     {

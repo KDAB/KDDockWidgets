@@ -1077,19 +1077,7 @@ void LayoutSaver::Placeholder::fromVariantMap(const QVariantMap &map)
 
 static QScreen *screenForMainWindow(Controllers::MainWindow *mw)
 {
-    // Workaround for 5.12 which doesn't have QWidget::screen().
-
-#ifdef KDDOCKWIDGETS_QTQUICK
-    return mw->screen();
-#endif
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-    if (QWindow *window = mw->window()->windowHandle())
-        return window->screen();
-    return nullptr;
-#else
-    return mw->view()->asQWidget()->screen();
-#endif
+    return mw->view()->screen();
 }
 
 LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMainWindowGeo, int screenIndex)

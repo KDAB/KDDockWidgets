@@ -233,3 +233,8 @@ void ViewWrapper_qtwidgets::releaseMouse()
 {
     m_widget->releaseMouse();
 }
+
+QScreen *ViewWrapper_qtwidgets::screen() const
+{
+    return m_widget->screen();
+}

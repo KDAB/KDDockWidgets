@@ -28,6 +28,7 @@ class Item;
 class QFocusEvent;
 class QSizePolicy;
 class QWindow;
+class QScreen;
 
 namespace KDDockWidgets {
 
@@ -154,6 +155,7 @@ public:
     virtual void setFixedHeight(int) = 0;
     virtual void grabMouse() = 0;
     virtual void releaseMouse() = 0;
+    virtual QScreen *screen() const = 0;
 
     // TODOv2: Check if these two should be in the controller or on view
     virtual void onLayoutRequest()

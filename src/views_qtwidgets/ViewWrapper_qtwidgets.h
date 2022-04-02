@@ -47,6 +47,7 @@ public:
     HANDLE handle() const override;
     void grabMouse() override;
     void releaseMouse() override;
+    QScreen *screen() const override;
 
 private:
     QWidget *const m_widget;
