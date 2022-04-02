@@ -64,7 +64,7 @@ void Stack_qtwidgets::init()
 
     setupTabBarButtons();
 
-    setDocumentMode(m_stack->options() & TabWidgetOption_DocumentMode);
+    setDocumentMode(m_stack->options() & StackOption_DocumentMode);
 }
 
 int Stack_qtwidgets::numDockWidgets() const
@@ -231,4 +231,14 @@ QTabBar *Stack_qtwidgets::tabBar() const
 Controllers::Stack *Stack_qtwidgets::stack() const
 {
     return m_stack;
+}
+
+bool Stack_qtwidgets::isPositionDraggable(QPoint p) const
+{
+    if (tabPosition() != QTabWidget::North) {
+        qWarning() << Q_FUNC_INFO << "Not implemented yet. Only North is supported";
+        return false;
+    }
+
+    return p.y() >= 0 && p.y() <= tabBar()->height();
 }

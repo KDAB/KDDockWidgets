@@ -27,7 +27,7 @@ class DOCKS_EXPORT Stack : public Controller, public Draggable
 {
     Q_OBJECT
 public:
-    explicit Stack(Frame *frame, TabWidgetOptions); // TODO: Rename TabWidgetOptions
+    explicit Stack(Frame *frame, StackOptions);
     virtual ~Stack() override;
 
     /**
@@ -105,7 +105,7 @@ public:
     bool isMDI() const override;
     bool isPositionDraggable(QPoint p) const override;
 
-    TabWidgetOptions options() const;
+    StackOptions options() const;
 
 Q_SIGNALS:
     void currentTabChanged(int index);
@@ -121,7 +121,7 @@ public: // TODO
 private:
     TabBar *const m_tabBar;
     Frame *const m_frame;
-    const TabWidgetOptions m_options;
+    const StackOptions m_options;
 
     Q_DISABLE_COPY(Stack)
 };

@@ -17,7 +17,7 @@ namespace KDDockWidgets {
 namespace Views {
 
 
-/// Brief The interface that title bar views should implement
+/// @brief The interface that TitleBar views should implement
 class TitleBar
 {
 public:

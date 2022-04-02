@@ -13,6 +13,7 @@
 #pragma once
 
 #include "View_qtwidgets.h"
+#include "views/Stack.h"
 
 #include <QTabWidget>
 
@@ -29,7 +30,7 @@ class Frame;
 namespace KDDockWidgets {
 namespace Views {
 
-class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>
+class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public Stack
 {
     Q_OBJECT
 public:
@@ -39,24 +40,25 @@ public:
     Controllers::Stack *stack() const;
     QTabBar *tabBar() const;
 
-    int numDockWidgets() const;
-    void removeDockWidget(Controllers::DockWidget *);
-    int indexOfDockWidget(const Controllers::DockWidget *) const;
+    int numDockWidgets() const override;
+    void removeDockWidget(Controllers::DockWidget *) override;
+    int indexOfDockWidget(const Controllers::DockWidget *) const override;
+
+    bool isPositionDraggable(QPoint p) const override;
+    void init() override;
 
 public: // TODO: make protected
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void tabInserted(int index) override;
     void tabRemoved(int index) override;
-    void setCurrentDockWidget(int index);
-    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &, const QString &title);
-    void setTabBarAutoHide(bool);
-    void renameTab(int index, const QString &);
-    void changeTabIcon(int index, const QIcon &);
-    void init() override;
-
-    Controllers::DockWidget *dockwidgetAt(int index) const;
-    int currentIndex() const;
+    void setCurrentDockWidget(int index) override;
+    bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &, const QString &title) override;
+    void setTabBarAutoHide(bool) override;
+    void renameTab(int index, const QString &) override;
+    void changeTabIcon(int index, const QIcon &) override;
+    Controllers::DockWidget *dockwidgetAt(int index) const override;
+    int currentIndex() const override;
 
     /// @brief Shows the context menu. Override to implement your own context menu.
     /// By default it's used to honour Config::Flag_AllowSwitchingTabsViaMenu

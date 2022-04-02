@@ -11,26 +11,24 @@
 
 #include "Stack.h"
 #include "Config.h"
-#include "views_qtwidgets/Stack_qtwidgets.h"
 #include "kddockwidgets/FrameworkWidgetFactory.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 #include "private/WindowBeingDragged_p.h"
 #include "DockWidget_p.h"
 
+#include "views/Stack.h"
 #include "controllers/TabBar.h"
 #include "controllers/Frame.h"
 #include "controllers/FloatingWindow.h"
 
 #include <QDebug>
-#include <QTabBar> // TODO Remove
-#include <qobject.h>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-Stack::Stack(Frame *frame, TabWidgetOptions options)
-    : Controller(Type::Frame, Config::self().frameworkWidgetFactory()->createTabWidget(this, frame))
+Stack::Stack(Frame *frame, StackOptions options)
+    : Controller(Type::Stack, Config::self().frameworkWidgetFactory()->createTabWidget(this, frame))
     , Draggable(view(), Config::self().flags() & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
     , m_tabBar(new TabBar(this))
     , m_frame(frame)
@@ -44,7 +42,7 @@ Stack::~Stack()
     delete m_tabBar;
 }
 
-TabWidgetOptions Stack::options() const
+StackOptions Stack::options() const
 {
     return m_options;
 }
@@ -54,15 +52,9 @@ void Stack::setCurrentDockWidget(DockWidget *dw)
     setCurrentDockWidget(indexOfDockWidget(dw));
 }
 
-bool Stack::isPositionDraggable(QPoint p) const // TODO: Move to view
+bool Stack::isPositionDraggable(QPoint p) const
 {
-    auto view = qobject_cast<Views::Stack_qtwidgets *>(this->view()->asQWidget()); // TODO
-    if (view->tabPosition() != QTabWidget::North) { // TODO
-        qWarning() << Q_FUNC_INFO << "Not implemented yet. Only North is supported";
-        return false;
-    }
-
-    return p.y() >= 0 && p.y() <= view->tabBar()->height();
+    return dynamic_cast<Views::Stack *>(view())->isPositionDraggable(p);
 }
 
 DockWidgetBase *Stack::currentDockWidget() const
@@ -211,14 +203,12 @@ bool Stack::onMouseDoubleClick(QPoint localPos)
 
 void Stack::setTabBarAutoHide(bool is)
 {
-    // TODO
-    qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->setTabBarAutoHide(is);
+    dynamic_cast<Views::Stack *>(view())->setTabBarAutoHide(is);
 }
 
 void Stack::renameTab(int index, const QString &text)
 {
-    // TODO
-    qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->renameTab(index, text);
+    dynamic_cast<Views::Stack *>(view())->renameTab(index, text);
 }
 
 Controllers::TabBar *Stack::tabBar() const
@@ -228,45 +218,40 @@ Controllers::TabBar *Stack::tabBar() const
 
 int Stack::currentIndex() const
 {
-    // TODO
-    return qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->currentIndex();
+    return dynamic_cast<Views::Stack *>(view())->currentIndex();
 }
 
 int Stack::numDockWidgets() const
 {
-    // TODO
-    return qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->numDockWidgets();
+    return dynamic_cast<Views::Stack *>(view())->numDockWidgets();
 }
 
 void Stack::changeTabIcon(int index, const QIcon &icon)
 {
-    // TODO
-    qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->changeTabIcon(index, icon);
+    dynamic_cast<Views::Stack *>(view())->changeTabIcon(index, icon);
 }
 
 DockWidgetBase *Stack::dockwidgetAt(int index) const
 {
-    // TODO
-    return qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->dockwidgetAt(index);
+    return dynamic_cast<Views::Stack *>(view())->dockwidgetAt(index);
 }
 
 int Stack::indexOfDockWidget(const DockWidget *dw) const
 {
-    // TODO
-    return qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->indexOfDockWidget(dw);
+    return dynamic_cast<Views::Stack *>(view())->indexOfDockWidget(dw);
 }
 
 void Stack::removeDockWidget(DockWidget *dw)
 {
-    qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->removeDockWidget(dw);
+    dynamic_cast<Views::Stack *>(view())->removeDockWidget(dw);
 }
 
 bool Stack::insertDockWidget(int index, DockWidget *dw, const QIcon &icon, const QString &title)
 {
-    return qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->insertDockWidget(index, dw, icon, title);
+    return dynamic_cast<Views::Stack *>(view())->insertDockWidget(index, dw, icon, title);
 }
 
 void Stack::setCurrentDockWidget(int index)
 {
-    return qobject_cast<Views::Stack_qtwidgets *>(view()->asQWidget())->setCurrentDockWidget(index);
+    dynamic_cast<Views::Stack *>(view())->setCurrentDockWidget(index);
 }

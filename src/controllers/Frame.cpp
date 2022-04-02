@@ -55,14 +55,14 @@ static FrameOptions actualOptions(FrameOptions options)
     return options;
 }
 
-static TabWidgetOptions tabWidgetOptions(FrameOptions options)
+static StackOptions tabWidgetOptions(FrameOptions options)
 {
     if (options & FrameOption_NonDockable) {
         /// If we can't tab things into this Frame then let's not draw the QTabWidget frame either
-        return TabWidgetOption_DocumentMode;
+        return StackOption_DocumentMode;
     }
 
-    return TabWidgetOption_None;
+    return StackOption_None;
 }
 
 }
