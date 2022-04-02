@@ -13,8 +13,7 @@
 #include "DockWidget.h"
 #include "MainWindow.h"
 #include "kddockwidgets/FrameworkWidgetFactory.h"
-
-#include "../views_qtwidgets/SideBar_qtwidgets.h" // TODO removes
+#include "views/SideBar.h"
 
 #include <QDebug>
 
@@ -45,7 +44,7 @@ void SideBar::addDockWidget(DockWidget *dw)
     connect(dw, &QObject::destroyed, this, &SideBar::onDockWidgetDestroyed);
 
     m_dockWidgets << dw;
-    qobject_cast<Views::SideBar_qtwidgets *>(view()->asQWidget())->addDockWidget_Impl(dw);
+    dynamic_cast<Views::SideBar *>(view())->addDockWidget_Impl(dw);
     updateSize();
 }
 
@@ -58,7 +57,7 @@ void SideBar::removeDockWidget(DockWidget *dw)
 
     disconnect(dw, &QObject::destroyed, this, &SideBar::onDockWidgetDestroyed);
     m_dockWidgets.removeOne(dw);
-    qobject_cast<Views::SideBar_qtwidgets *>(view()->asQWidget())->removeDockWidget_Impl(dw);
+    dynamic_cast<Views::SideBar *>(view())->removeDockWidget_Impl(dw);
     Q_EMIT dw->removedFromSideBar();
     updateSize();
 }

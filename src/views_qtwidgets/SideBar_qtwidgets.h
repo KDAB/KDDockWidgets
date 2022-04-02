@@ -14,7 +14,8 @@
 
 #include "View_qtwidgets.h"
 #include "kddockwidgets/docks_export.h"
-#include "../controllers/SideBar.h"
+#include "controllers/SideBar.h"
+#include "views/SideBar.h"
 
 #include <QToolButton>
 #include <QPointer>
@@ -52,7 +53,7 @@ private:
 
 namespace Views {
 
-class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT SideBar_qtwidgets : public View_qtwidgets<QWidget>, public SideBar
 {
     Q_OBJECT
 public:
@@ -61,8 +62,8 @@ public:
     void init() override;
     bool isVertical() const; // TODO: Move to a potential base class
 
-    void addDockWidget_Impl(Controllers::DockWidget *dock); // TODO: Either override or remove Impl
-    void removeDockWidget_Impl(Controllers::DockWidget *dock);
+    void addDockWidget_Impl(Controllers::DockWidget *dock) override;
+    void removeDockWidget_Impl(Controllers::DockWidget *dock) override;
 
     // virtual so users can provide their own buttons
     virtual SideBarButton *createButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent) const;
