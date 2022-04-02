@@ -89,8 +89,8 @@ public:
     bool isInClientDrag() const;
     bool isIdle() const;
 
-    void grabMouseFor(QWidgetOrQuick *);
-    void releaseMouse(QWidgetOrQuick *);
+    void grabMouseFor(View *);
+    void releaseMouse(View *);
 
     Controllers::FloatingWindow *floatingWindowBeingDragged() const;
 
@@ -131,7 +131,7 @@ private:
 
     Draggable::List m_draggables;
     Draggable *m_draggable = nullptr;
-    QPointer<WidgetType> m_draggableGuard; // Just so we know if the draggable was destroyed for some reason
+    QPointer<QObject> m_draggableGuard; // Just so we know if the draggable was destroyed for some reason
     std::unique_ptr<WindowBeingDragged> m_windowBeingDragged;
     DropArea *m_currentDropArea = nullptr;
     bool m_nonClientDrag = false;

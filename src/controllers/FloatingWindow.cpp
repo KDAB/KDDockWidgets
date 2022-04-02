@@ -97,7 +97,7 @@ MainWindow *actualParent(MainWindow *candidate)
 
 FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     : Controller(Type::FloatingWindow, Config::self().frameworkWidgetFactory()->createFloatingWindow(this, actualParent(parent), windowFlagsToUse()))
-    , Draggable(view()->asQWidget(), KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
+    , Draggable(view(), KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
     , m_dropArea(new DropArea(view()->asQWidget()))
     , m_titleBar(new Controllers::TitleBar(this))
 {

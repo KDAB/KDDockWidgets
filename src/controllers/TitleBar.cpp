@@ -34,7 +34,7 @@ using namespace KDDockWidgets::Controllers;
 
 TitleBar::TitleBar(Frame *parent)
     : Controller(Type::TitleBar, Config::self().frameworkWidgetFactory()->createTitleBar(this, parent))
-    , Draggable(view()->asQWidget()) // TODO
+    , Draggable(view())
     , m_frame(parent)
     , m_floatingWindow(nullptr)
     , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
@@ -47,7 +47,7 @@ TitleBar::TitleBar(Frame *parent)
 
 TitleBar::TitleBar(FloatingWindow *parent)
     : Controller(Type::TitleBar, Config::self().frameworkWidgetFactory()->createTitleBar(this, parent))
-    , Draggable(view()->asQWidget()) // TODO
+    , Draggable(view())
     , m_frame(nullptr)
     , m_floatingWindow(parent)
     , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
@@ -60,7 +60,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
 
 void TitleBar::init()
 {
-    qobject_cast<Views::TitleBar_qtwidgets *>(view()->asQWidget())->init(); // TODO
+    view()->init();
     view()->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
 
     connect(this, &TitleBar::isFocusedChanged, this, [this] {

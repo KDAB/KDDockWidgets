@@ -45,6 +45,8 @@ public:
     std::unique_ptr<ViewWrapper> window() const override;
     std::unique_ptr<ViewWrapper> parentView() const override;
     HANDLE handle() const override;
+    void grabMouse() override;
+    void releaseMouse() override;
 
 private:
     QWidget *const m_widget;

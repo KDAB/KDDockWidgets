@@ -22,8 +22,8 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 Controllers::TabBar::TabBar(Stack *tabWidget)
-    : Controller(Type::TabBar, new Views::TabBar_qtwidgets(this, tabWidget->asWidget())) // TODO: Config::self().frameworkWidgetFactory()->createTabBar(this)
-    , Draggable(view()->asQWidget())
+    : Controller(Type::TabBar, new Views::TabBar_qtwidgets(this, tabWidget->view()->asQWidget())) // TODO: Config::self().frameworkWidgetFactory()->createTabBar(this)
+    , Draggable(view())
     , m_tabWidget(tabWidget)
 {
 }
@@ -185,4 +185,11 @@ QRect Controllers::TabBar::rectForTab(int index) const
 {
     auto view = static_cast<Views::TabBar_qtwidgets *>(this->view()); // TODO
     return view->rectForTab(index);
+}
+
+
+DockWidget *Controllers::TabBar::currentDockWidget() const
+{
+    auto view = static_cast<Views::TabBar_qtwidgets *>(this->view()); // TODO
+    return view->currentDockWidget();
 }

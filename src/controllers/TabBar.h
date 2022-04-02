@@ -25,6 +25,7 @@ class Frame;
 
 class DOCKS_EXPORT TabBar : public Controller, public Draggable
 {
+    Q_OBJECT
 public:
     explicit TabBar(Stack *tabWidget = nullptr);
     virtual ~TabBar() override;
@@ -38,6 +39,9 @@ public:
 
     ///@overload
     DockWidget *dockWidgetAt(QPoint localPos) const;
+
+    /// @brief Returns the current dock widget
+    DockWidget *currentDockWidget() const;
 
     // Draggable
     bool dragCanStart(QPoint pressPos, QPoint pos) const override;

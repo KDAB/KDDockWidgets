@@ -40,12 +40,11 @@ static Draggable *bestDraggable(Draggable *draggable)
     // When de detach a title bar it will get hidden and we only the title bar of the FloatingWindow is visible
     /// Apparently that causes problems with grabbing the mouse, so instead use a visible draggable.
     // grabbing mouse on an hidden window works usually, it's some edge case on Windows with MFC.
-    if (auto tbView = qobject_cast<Views::TitleBar_qtwidgets *>(draggable->asWidget())) {
-        auto titleBar = tbView->titleBar();
+    if (auto titleBar = draggable->asView()->asTitleBarController()) {
         if (titleBar->isVisible())
             return draggable;
 
-        auto fw = tbView->window()->asFloatingWindowController();
+        auto fw = titleBar->window()->asFloatingWindowController();
         if (!fw) // defensive, doesn't happen
             return draggable;
 
@@ -65,7 +64,8 @@ static Draggable *bestDraggable(Draggable *draggable)
 WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw, Draggable *draggable)
     : m_floatingWindow(fw)
     , m_draggable(bestDraggable(draggable))
-    , m_draggableWidget(m_draggable ? m_draggable->asWidget() : nullptr)
+    , m_draggableWidget(m_draggable ? m_draggable->asView() : nullptr)
+    , m_guard(m_draggableWidget ? m_draggableWidget->asQObject() : nullptr)
 {
     init();
 
@@ -79,7 +79,8 @@ WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw, Draggabl
 
 WindowBeingDragged::WindowBeingDragged(Draggable *draggable)
     : m_draggable(draggable)
-    , m_draggableWidget(m_draggable->asWidget())
+    , m_draggableWidget(m_draggable->asView())
+    , m_guard(m_draggableWidget ? m_draggableWidget->asQObject() : nullptr)
 {
     if (!isWayland()) {
         qWarning() << Q_FUNC_INFO << "Wrong ctor called."; // Doesn't happen
@@ -120,7 +121,7 @@ void WindowBeingDragged::init()
 
 void WindowBeingDragged::grabMouse(bool grab)
 {
-    if (!m_draggableWidget)
+    if (!m_guard)
         return;
 
     qCDebug(hovering) << "WindowBeingDragged: grab " << m_floatingWindow << grab << m_draggableWidget;
@@ -168,7 +169,7 @@ bool WindowBeingDragged::contains(LayoutWidget *layoutWidget) const
     if (m_floatingWindow)
         return m_floatingWindow->layoutWidget() == layoutWidget;
 
-    if (auto fw = Views::ViewWrapper_qtwidgets(m_draggableWidget->window()).asFloatingWindowController()) {
+    if (auto fw = m_draggableWidget->window()->asFloatingWindowController()) {
         // We're not dragging via the floating window itself, but via the tab bar. Still might represent floating window though.
         return fw->layoutWidget() == layoutWidget && fw->hasSingleFrame();
     }
@@ -199,8 +200,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         return;
     }
 
-    if (auto tbView = qobject_cast<Views::TitleBar_qtwidgets *>(draggable->asWidget())) {
-        auto tb = tbView->titleBar();
+    if (auto tb = draggable->asView()->asTitleBarController()) {
         if (auto fw = tb->floatingWindow()) {
             // case #1: we're dragging the whole floating window by its titlebar
             m_floatingWindow = fw;
@@ -209,19 +209,18 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         } else {
             qWarning() << Q_FUNC_INFO << "Shouldn't happen. TitleBar of what ?";
         }
-    } else if (auto fw = Views::ViewWrapper_qtwidgets(draggable->asWidget()).asFloatingWindowController()) {
+    } else if (auto fw = draggable->asView()->asFloatingWindowController()) {
         // case #2: the floating window itself is the draggable, happens on platforms that support
         // native dragging. Not the case for Wayland. But adding this case for completeness.
         m_floatingWindow = fw;
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-    } else if (auto tbw = qobject_cast<Views::TabBar_qtwidgets *>(draggable->asWidget())) {
-        m_dockWidget = tbw->currentDockWidget();
-    } else if (auto tw = qobject_cast<Views::Stack_qtwidgets *>(draggable->asWidget())) {
-        m_frame = tw->stack()->frame();
+    } else if (auto tabBar = draggable->asView()->asTabBarController()) {
+        m_dockWidget = tabBar->currentDockWidget();
+    } else if (auto stack = draggable->asView()->asStackController()) {
+        m_frame = stack->frame();
 #endif
     } else {
-        qWarning() << "Unknown draggable" << draggable->asWidget()
-                   << "please fix";
+        qWarning() << "Unknown draggable" << draggable << "please fix";
     }
 }
 

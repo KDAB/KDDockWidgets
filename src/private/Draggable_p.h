@@ -21,6 +21,8 @@
 
 namespace KDDockWidgets {
 
+class View;
+
 namespace Controllers {
 class FloatingWindow;
 class DockWidget;
@@ -41,9 +43,9 @@ class DOCKS_EXPORT Draggable
 public:
     typedef QVector<Draggable *> List;
 
-    explicit Draggable(QWidget *thisObject, bool enabled = true);
+    explicit Draggable(View *thisView, bool enabled = true);
     virtual ~Draggable();
-    QWidget *asWidget() const;
+    View *asView() const;
 
     /**
      * If this draggable is already a window, do nothing.

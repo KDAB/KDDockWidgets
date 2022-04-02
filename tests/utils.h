@@ -362,7 +362,7 @@ inline WidgetType *draggableFor(WidgetType *w)
                                                          : nullptr;
 
         if ((KDDockWidgets::Config::self().flags() & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible) && frame && frame->hasTabsVisible()) {
-            draggable = frame->tabWidget()->asWidget();
+            draggable = frame->tabWidget()->view()->asQWidget();
         } else {
             draggable = fw->titleBar()->view()->asQWidget();
         }

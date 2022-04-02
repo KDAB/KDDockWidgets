@@ -337,6 +337,16 @@ public:
         QWidget::setObjectName(name);
     }
 
+    void grabMouse() override
+    {
+        QWidget::grabMouse();
+    }
+
+    void releaseMouse() override
+    {
+        QWidget::releaseMouse();
+    }
+
 protected:
     bool event(QEvent *e) override
     {

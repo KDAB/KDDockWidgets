@@ -223,3 +223,13 @@ HANDLE ViewWrapper_qtwidgets::handle() const
 {
     return reinterpret_cast<HANDLE>(m_widget);
 }
+
+void ViewWrapper_qtwidgets::grabMouse()
+{
+    m_widget->grabMouse();
+}
+
+void ViewWrapper_qtwidgets::releaseMouse()
+{
+    m_widget->releaseMouse();
+}

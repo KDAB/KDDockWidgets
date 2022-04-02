@@ -14,6 +14,9 @@
 
 #include "controllers/FloatingWindow.h"
 #include "controllers/Frame.h"
+#include "controllers/Stack.h"
+#include "controllers/TitleBar.h"
+#include "controllers/TabBar.h"
 
 #include <QWidget> // TODOv2 remove
 
@@ -190,6 +193,30 @@ Controllers::Frame *View::asFrameController() const
 {
     if (m_controller && m_controller->is(Type::Frame))
         return qobject_cast<Controllers::Frame *>(m_controller);
+
+    return nullptr;
+}
+
+Controllers::TitleBar *View::asTitleBarController() const
+{
+    if (m_controller && m_controller->is(Type::TitleBar))
+        return qobject_cast<Controllers::TitleBar *>(m_controller);
+
+    return nullptr;
+}
+
+Controllers::TabBar *View::asTabBarController() const
+{
+    if (m_controller && m_controller->is(Type::TabBar))
+        return qobject_cast<Controllers::TabBar *>(m_controller);
+
+    return nullptr;
+}
+
+Controllers::Stack *View::asStackController() const
+{
+    if (m_controller && m_controller->is(Type::Stack))
+        return qobject_cast<Controllers::Stack *>(m_controller);
 
     return nullptr;
 }

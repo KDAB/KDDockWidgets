@@ -37,6 +37,9 @@ class Controller;
 namespace Controllers {
 class FloatingWindow;
 class Frame;
+class Stack;
+class TabBar;
+class TitleBar;
 }
 
 using HANDLE = const void *;
@@ -149,6 +152,8 @@ public:
     virtual QWindow *windowHandle() const = 0;
     virtual void setFixedWidth(int) = 0;
     virtual void setFixedHeight(int) = 0;
+    virtual void grabMouse() = 0;
+    virtual void releaseMouse() = 0;
 
     // TODOv2: Check if these two should be in the controller or on view
     virtual void onLayoutRequest()
@@ -231,6 +236,9 @@ public:
     /// Mostly to save the call sites from having too many casts
     Controllers::FloatingWindow *asFloatingWindowController() const;
     Controllers::Frame *asFrameController() const;
+    Controllers::TitleBar *asTitleBarController() const;
+    Controllers::TabBar *asTabBarController() const;
+    Controllers::Stack *asStackController() const;
 
 protected:
     virtual void free_impl();

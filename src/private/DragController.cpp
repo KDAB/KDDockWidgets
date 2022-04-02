@@ -53,9 +53,10 @@ public:
 
     ~FallbackMouseGrabber() override;
 
-    void grabMouse(QWidgetOrQuick *target)
+    void grabMouse(View *target)
     {
         m_target = target;
+        m_guard = target->asQObject();
         qApp->installEventFilter(this);
     }
 
@@ -76,17 +77,18 @@ public:
 #endif
 
         m_target = nullptr;
+        m_guard.clear();
         qApp->removeEventFilter(this);
     }
 
     bool eventFilter(QObject *, QEvent *ev) override
     {
-        if (m_reentrancyGuard || !m_target)
+        if (m_reentrancyGuard || !m_guard)
             return false;
 
         if (QMouseEvent *me = mouseEvent(ev)) {
             m_reentrancyGuard = true;
-            qApp->sendEvent(m_target, me);
+            qApp->sendEvent(m_target->asQObject(), me);
             m_reentrancyGuard = false;
             return true;
         }
@@ -95,7 +97,8 @@ public:
     }
 
     bool m_reentrancyGuard = false;
-    QPointer<QWidgetOrQuick> m_target;
+    View *m_target = nullptr;
+    QPointer<QObject> m_guard;
 };
 
 FallbackMouseGrabber::~FallbackMouseGrabber()
@@ -193,13 +196,13 @@ void StateNone::onEntry()
 bool StateNone::handleMouseButtonPress(Draggable *draggable, QPoint globalPos, QPoint pos)
 {
     qCDebug(state) << "StateNone::handleMouseButtonPress: draggable"
-                   << draggable->asWidget() << "; globalPos" << globalPos;
+                   << draggable << "; globalPos" << globalPos;
 
     if (!draggable->isPositionDraggable(pos))
         return false;
 
     q->m_draggable = draggable;
-    q->m_draggableGuard = draggable->asWidget();
+    q->m_draggableGuard = draggable->asView()->asQObject();
     q->m_pressPos = globalPos;
     q->m_offset = draggable->mapToWindow(pos);
     Q_EMIT q->mousePressed();
@@ -313,7 +316,7 @@ void StateDragging::onEntry()
         Q_UNUSED(needsUndocking);
 #endif
 
-        qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable->asWidget()
+        qCDebug(state) << "StateDragging entered. m_draggable=" << q->m_draggable
                        << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
 
         auto fw = q->m_windowBeingDragged->floatingWindow();
@@ -327,7 +330,7 @@ void StateDragging::onEntry()
         }
     } else {
         // Shouldn't happen
-        qWarning() << Q_FUNC_INFO << "No window being dragged for " << q->m_draggable->asWidget();
+        qWarning() << Q_FUNC_INFO << "No window being dragged for " << q->m_draggable;
         Q_EMIT q->dragCanceled();
     }
 
@@ -433,11 +436,11 @@ StateInternalMDIDragging::~StateInternalMDIDragging()
 void StateInternalMDIDragging::onEntry()
 {
     qCDebug(state) << "StateInternalMDIDragging entered. draggable="
-                   << q->m_draggable->asWidget();
+                   << q->m_draggable;
 
     // Raise the dock widget being dragged
-    if (auto tb = qobject_cast<Views::TitleBar_qtwidgets *>(q->m_draggable->asWidget())) { // TODO
-        if (Controllers::Frame *f = tb->titleBar()->frame())
+    if (auto tb = q->m_draggable->asView()->asTitleBarController()) {
+        if (Controllers::Frame *f = tb->frame())
             f->view()->raise();
     }
 
@@ -453,9 +456,9 @@ bool StateInternalMDIDragging::handleMouseButtonRelease(QPoint)
 bool StateInternalMDIDragging::handleMouseMove(QPoint globalPos)
 {
     // for MDI we only support dragging via the title bar, other cases don't make sense conceptually
-    auto tb = qobject_cast<Controllers::TitleBar *>(q->m_draggable->asWidget()); // TODO
+    auto tb = q->m_draggable->asView()->asTitleBarController();
     if (!tb) {
-        qWarning() << Q_FUNC_INFO << "expected a title bar, not" << q->m_draggable->asWidget();
+        qWarning() << Q_FUNC_INFO << "expected a title bar, not" << q->m_draggable;
         Q_EMIT q->dragCanceled();
         return false;
     }
@@ -630,13 +633,13 @@ DragController *DragController::instance()
 void DragController::registerDraggable(Draggable *drg)
 {
     m_draggables << drg;
-    drg->asWidget()->installEventFilter(this);
+    drg->asView()->asQObject()->installEventFilter(this);
 }
 
 void DragController::unregisterDraggable(Draggable *drg)
 {
     m_draggables.removeOne(drg);
-    drg->asWidget()->removeEventFilter(this);
+    drg->asView()->asQObject()->removeEventFilter(this);
 }
 
 bool DragController::isDragging() const
@@ -659,7 +662,7 @@ bool DragController::isIdle() const
     return activeState() == m_stateNone;
 }
 
-void DragController::grabMouseFor(QWidgetOrQuick *target)
+void DragController::grabMouseFor(View *target)
 {
     if (isWayland())
         return; // No grabbing supported on wayland
@@ -671,7 +674,7 @@ void DragController::grabMouseFor(QWidgetOrQuick *target)
     }
 }
 
-void DragController::releaseMouse(QWidgetOrQuick *target)
+void DragController::releaseMouse(View *target)
 {
     if (isWayland())
         return; // No grabbing supported on wayland
@@ -975,7 +978,7 @@ DropArea *DragController::dropAreaUnderCursor() const
 Draggable *DragController::draggableForQObject(QObject *o) const
 {
     for (auto draggable : m_draggables)
-        if (draggable->asWidget() == o) {
+        if (draggable->asView()->asQObject() == o) {
             return draggable;
         }
 

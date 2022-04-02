@@ -14,6 +14,7 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "controllers/FloatingWindow.h"
+#include "View.h"
 
 #include <QPointer>
 
@@ -85,7 +86,8 @@ protected:
     Q_DISABLE_COPY(WindowBeingDragged)
     QPointer<Controllers::FloatingWindow> m_floatingWindow;
     Draggable *const m_draggable;
-    QPointer<QWidget> m_draggableWidget; // Just to have a QPointer on it
+    View *m_draggableWidget;
+    QPointer<QObject> m_guard;
 };
 
 struct WindowBeingDraggedWayland : public WindowBeingDragged

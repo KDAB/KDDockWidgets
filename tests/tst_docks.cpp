@@ -64,7 +64,7 @@ static QPoint dragPointForWidget(Controllers::Frame *frame, int index)
         return frame->titleBar()->mapToGlobal(QPoint(5, 5));
     } else {
         QRect rect = frame->tabWidget()->tabBar()->rectForTab(index);
-        return frame->tabWidget()->tabBar()->asWidget()->mapToGlobal(rect.center());
+        return frame->tabWidget()->tabBar()->view()->mapToGlobal(rect.center());
     }
 }
 
@@ -4847,8 +4847,8 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
 
     auto tabBar2 = tb2->tabBar();
     const QRect rect0 = tabBar2->rectForTab(0);
-    const QPoint globalPos = tabBar2->asWidget()->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
-    Tests::clickOn(globalPos, tabBar2->asWidget());
+    const QPoint globalPos = tabBar2->view()->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
+    Tests::clickOn(globalPos, tabBar2->view()->asQWidget());
 
     QVERIFY(!titleBar1->isFocused());
     QVERIFY(dock2->titleBar()->isFocused());
@@ -4860,7 +4860,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++ TitleBar for focus
-    Tests::clickOn(globalPos, tabBar2->asWidget());
+    Tests::clickOn(globalPos, tabBar2->view()->asQWidget());
     QVERIFY(!dock1->titleBar()->isFocused());
     QVERIFY(dock2->titleBar()->isFocused());
 #endif
@@ -6621,7 +6621,7 @@ void TestDocks::tst_doubleClickTabToDetach()
     auto frame = dock1->dptr()->frame();
     QCOMPARE(frame->currentIndex(), 1);
 
-    auto tb = frame->tabWidget()->asWidget();
+    auto tb = frame->tabWidget()->view()->asQWidget();
 
     // TODO
     Tests::doubleClickOn(tb->mapToGlobal(QPoint(20, 20)), frame->view()->asQWidget()->window()->windowHandle());
@@ -7173,7 +7173,7 @@ void TestDocks::tst_dragBySingleTab()
     Controllers::TabBar *tabBar = frame1->tabWidget()->tabBar();
     QVERIFY(tabBar);
     SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing in this case
-    drag(tabBar->asWidget(), globalPressPos, QPoint(0, 0));
+    drag(tabBar->view()->asQWidget(), globalPressPos, QPoint(0, 0));
 
     delete dock1;
     Testing::waitForDeleted(frame1);
@@ -7215,7 +7215,7 @@ void TestDocks::tst_dragByTabBar()
     dock2->addDockWidgetAsTab(dock3);
 #if defined(KDDOCKWIDGETS_QTWIDGETS)
     if (documentMode)
-        static_cast<QTabWidget *>(dock2->dptr()->frame()->tabWidget()->asWidget())
+        static_cast<QTabWidget *>(dock2->dptr()->frame()->tabWidget()->view()->asQWidget())
             ->setDocumentMode(true);
 #else
     Q_UNUSED(documentMode);
@@ -7267,7 +7267,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QPoint globalPressPos = dragPointForWidget(frame2.data(), 0);
     Controllers::TabBar *tabBar = frame2->tabWidget()->tabBar();
     QVERIFY(tabBar);
-    drag(tabBar->asWidget(), globalPressPos, frame2->view()->windowGeometry().bottomRight() + QPoint(10, 10));
+    drag(tabBar->view()->asQWidget(), globalPressPos, frame2->view()->windowGeometry().bottomRight() + QPoint(10, 10));
 
     QVERIFY(frame2->dockWidgetCount() == 1);
     QVERIFY(dock1->floatingWindow());
@@ -7287,7 +7287,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     tabBar = frame2->tabWidget()->tabBar();
 
     finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
-    drag(tabBar->asWidget(), globalPressPos, finalPoint);
+    drag(tabBar->view()->asQWidget(), globalPressPos, finalPoint);
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
     // 2.6 Drag the tabbed group over a 3rd floating window
