@@ -221,6 +221,14 @@ Controllers::Stack *View::asStackController() const
     return nullptr;
 }
 
+Controllers::DockWidget *View::asDockWidgetController() const
+{
+    if (m_controller && m_controller->is(Type::DockWidget))
+        return qobject_cast<Controllers::DockWidget *>(m_controller);
+
+    return nullptr;
+}
+
 bool View::equals(const View *other) const
 {
     return other && handle() == other->handle();

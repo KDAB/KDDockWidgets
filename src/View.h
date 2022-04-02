@@ -36,6 +36,7 @@ class ViewWrapper;
 class Controller;
 
 namespace Controllers {
+class DockWidget;
 class FloatingWindow;
 class Frame;
 class Stack;
@@ -241,6 +242,7 @@ public:
     Controllers::TitleBar *asTitleBarController() const;
     Controllers::TabBar *asTabBarController() const;
     Controllers::Stack *asStackController() const;
+    Controllers::DockWidget *asDockWidgetController() const;
 
 protected:
     virtual void free_impl();

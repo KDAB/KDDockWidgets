@@ -32,8 +32,6 @@
 #include "private/DropAreaWithCentralFrame_p.h"
 #include "private/multisplitter/Item_p.h"
 
-#include "views_qtwidgets/DockWidget_qtwidgets.h"
-
 #include <QCloseEvent>
 #include <QTimer>
 #include <qobject.h>
@@ -927,10 +925,8 @@ Frame *Frame::mdiFrame() const
 
 DockWidgetBase *Frame::mdiDockWidgetWrapper() const
 {
-    if (auto dropArea = mdiDropAreaWrapper()) {
-        auto dwView = qobject_cast<Views::DockWidget_qtwidgets *>(dropArea->QWidget::parent());
-        return dwView->dockWidget();
-    }
+    if (auto dropArea = mdiDropAreaWrapper())
+        return dropArea->parentView()->asDockWidgetController();
 
     return nullptr;
 }
