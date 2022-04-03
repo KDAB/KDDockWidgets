@@ -42,6 +42,7 @@ class Frame;
 class Stack;
 class TabBar;
 class TitleBar;
+class MainWindow;
 }
 
 using HANDLE = const void *;
@@ -243,6 +244,7 @@ public:
     Controllers::TabBar *asTabBarController() const;
     Controllers::Stack *asStackController() const;
     Controllers::DockWidget *asDockWidgetController() const;
+    Controllers::MainWindow *asMainWindowController() const;
 
 protected:
     virtual void free_impl();

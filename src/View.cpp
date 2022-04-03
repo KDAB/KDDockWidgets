@@ -17,6 +17,7 @@
 #include "controllers/Stack.h"
 #include "controllers/TitleBar.h"
 #include "controllers/TabBar.h"
+#include "controllers/MainWindow.h"
 
 #include <QWidget> // TODOv2 remove
 
@@ -225,6 +226,14 @@ Controllers::DockWidget *View::asDockWidgetController() const
 {
     if (m_controller && m_controller->is(Type::DockWidget))
         return qobject_cast<Controllers::DockWidget *>(m_controller);
+
+    return nullptr;
+}
+
+Controllers::MainWindow *View::asMainWindowController() const
+{
+    if (m_controller && m_controller->is(Type::MainWindow))
+        return qobject_cast<Controllers::MainWindow *>(m_controller);
 
     return nullptr;
 }

@@ -24,6 +24,7 @@
 #include "private/indicators/SegmentedIndicators_p.h"
 
 #include "views_qtwidgets/FloatingWindow_qtwidgets.h"
+#include "views_qtwidgets/DockWidget_qtwidgets.h"
 #include "views_qtwidgets/Frame_qtwidgets.h"
 #include "views_qtwidgets/MainWindow_qtwidgets.h"
 #include "views_qtwidgets/View_qtwidgets.h"
@@ -57,6 +58,12 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
+
+View *DefaultWidgetFactory::createDockWidget(Controllers::DockWidget *dw, Qt::WindowFlags flags) const
+{
+    return new Views::DockWidget_qtwidgets(dw, flags);
+}
+
 View *DefaultWidgetFactory::createFrame(Controllers::Frame *controller, View *parent = nullptr,
                                         FrameOptions) const
 {

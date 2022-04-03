@@ -78,6 +78,8 @@ public:
     /// by the framework.
     virtual ~FrameworkWidgetFactory();
 
+    virtual View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const = 0;
+
     ///@brief Called internally by the framework to create a Frame class
     ///       Override to provide your own Frame sub-class. A frame is the
     ///       widget that holds the titlebar and tab-widget which holds the
@@ -164,6 +166,7 @@ class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
     Q_OBJECT
 public:
     DefaultWidgetFactory() = default;
+    View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const override;
     View *createFrame(Controllers::Frame *, View *parent, FrameOptions options = FrameOption_None) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::Frame *) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::FloatingWindow *) const override;

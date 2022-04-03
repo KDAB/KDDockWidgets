@@ -26,9 +26,6 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
-#include "views_qtwidgets/DockWidget_qtwidgets.h"
-#include "views_qtwidgets/MainWindow_qtwidgets.h"
-
 #include <QEvent>
 #include <QCloseEvent>
 #include <QTimer>
@@ -46,7 +43,7 @@ using namespace KDDockWidgets::Controllers;
 
 DockWidget::DockWidget(const QString &name, Options options,
                        LayoutSaverOptions layoutSaverOptions)
-    : Controller(Type::DockWidget, new Views::DockWidget_qtwidgets(this, Qt::Tool))
+    : Controller(Type::DockWidget, Config::self().frameworkWidgetFactory()->createDockWidget(this, Qt::Tool))
     , d(new Private(name, options, layoutSaverOptions, this))
 {
     d->init();
@@ -123,9 +120,8 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
                                                  DockWidget *relativeTo,
                                                  InitialOption initialOption)
 {
-    if (auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget()->window())) {
+    if (auto mainWindow = view()->window()->asMainWindowController()) {
         // It's inside a main window. Simply use the main window API.
-        auto mainWindow = v->mainWindow();
         mainWindow->addDockWidget(other, location, relativeTo, initialOption);
         return;
     }
