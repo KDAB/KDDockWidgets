@@ -33,6 +33,7 @@
 #include "views_qtwidgets/TabBar_qtwidgets.h"
 #include "views_qtwidgets/SideBar_qtwidgets.h"
 #include "views_qtwidgets/Stack_qtwidgets.h"
+#include "views_qtwidgets/MainWindow_qtwidgets.h"
 
 #include <QRubberBand>
 #include <QToolButton>
@@ -58,6 +59,11 @@ FrameworkWidgetFactory::~FrameworkWidgetFactory()
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
+
+View *DefaultWidgetFactory::createMainWindow(Controllers::MainWindow *mainWindow, View *parent, Qt::WindowFlags flags) const
+{
+    return new Views::MainWindow_qtwidgets(mainWindow, parent ? static_cast<Views::View_qtwidgets<QMainWindow> *>(parent) : nullptr, flags);
+}
 
 View *DefaultWidgetFactory::createDockWidget(Controllers::DockWidget *dw, Qt::WindowFlags flags) const
 {

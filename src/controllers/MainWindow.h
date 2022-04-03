@@ -60,7 +60,7 @@ class DOCKS_EXPORT MainWindow : public Controller
 public:
     typedef QVector<MainWindow *> List;
     explicit MainWindow(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                        QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
+                        View *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 
     explicit MainWindow(View *view, const QString &uniqueName, MainWindowOptions options);
 

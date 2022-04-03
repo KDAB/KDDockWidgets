@@ -49,7 +49,7 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
                                                   : name;
 
-    QWidget *parent = nullptr;
+    View *parent = nullptr;
 #ifdef KDDOCKWIDGETS_QTQUICK
     auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
     view->resize(sz);
@@ -115,7 +115,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     static int count = 0;
     count++;
 
-    QWidget *parent = nullptr;
+    View *parent = nullptr;
 #ifdef KDDOCKWIDGETS_QTQUICK
     auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
     const QSize initialSize(1000, 1000);
