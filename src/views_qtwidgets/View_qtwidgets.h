@@ -352,6 +352,11 @@ public:
         return QWidget::screen();
     }
 
+    void setFocus(Qt::FocusReason reason) override
+    {
+        return QWidget::setFocus(reason);
+    }
+
 protected:
     bool event(QEvent *e) override
     {

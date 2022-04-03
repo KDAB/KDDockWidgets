@@ -34,9 +34,9 @@ using namespace KDDockWidgets;
 class FocusScope::Private : public QObject // clazy:exclude=missing-qobject-macro (breaks unity build with earlier cmake due to including .moc here.)
 {
 public:
-    Private(FocusScope *qq, Views::View_qtwidgets<QWidget> *thisWidget)
+    Private(FocusScope *qq, View *thisView)
         : q(qq)
-        , m_thisWidget(thisWidget)
+        , m_thisView(thisView)
     {
         connect(qApp, &QGuiApplication::focusObjectChanged,
                 this, &Private::onFocusObjectChanged);
@@ -68,7 +68,7 @@ public:
     bool isInFocusScope(WidgetType *) const;
 
     FocusScope *const q;
-    Views::View_qtwidgets<QWidget> *const m_thisWidget;
+    View *const m_thisView = nullptr;
     bool m_isFocused = false;
     bool m_inCtor = true;
     QPointer<WidgetType> m_lastFocusedInScope;
@@ -78,8 +78,8 @@ FocusScope::Private::~Private()
 {
 }
 
-FocusScope::FocusScope(Views::View_qtwidgets<QWidget> *thisWidget)
-    : d(new Private(this, thisWidget))
+FocusScope::FocusScope(View *thisView)
+    : d(new Private(this, thisView))
 {
 }
 
@@ -106,7 +106,7 @@ void FocusScope::focus(Qt::FocusReason reason)
         // very useful.
         d->m_lastFocusedInScope->setFocus(reason);
     } else {
-        if (auto frame = qobject_cast<Controllers::Frame *>(d->m_thisWidget)) {
+        if (auto frame = d->m_thisView->asFrameController()) {
             if (auto dw = frame->currentDockWidget()) {
                 if (auto guest = dw->widget()) {
                     if (guest->focusPolicy() != Qt::NoFocus)
@@ -115,7 +115,7 @@ void FocusScope::focus(Qt::FocusReason reason)
             }
         } else {
             // Not a use case right now
-            d->m_thisWidget->setFocus(reason);
+            d->m_thisView->setFocus(reason);
         }
     }
 }
@@ -132,7 +132,7 @@ void FocusScope::Private::setIsFocused(bool is)
 
 void FocusScope::Private::onFocusObjectChanged(QObject *obj)
 {
-    auto widget = qobject_cast<WidgetType *>(obj);
+    auto widget = qobject_cast<QWidget *>(obj);
     if (!widget) {
         setIsFocused(false);
         return;
@@ -152,7 +152,7 @@ bool FocusScope::Private::isInFocusScope(WidgetType *widget) const
 {
     WidgetType *p = widget;
     while (p) {
-        if (p == m_thisWidget)
+        if (p == m_thisView->handle())
             return true;
 
         p = p->parentWidget();

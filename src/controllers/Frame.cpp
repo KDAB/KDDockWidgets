@@ -34,7 +34,6 @@
 
 #include <QCloseEvent>
 #include <QTimer>
-#include <qobject.h>
 
 #define MARGIN_THRESHOLD 100
 
@@ -67,7 +66,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 
 Frame::Frame(View *parent, FrameOptions options, int userType)
     : Controller(Type::Frame, Config::self().frameworkWidgetFactory()->createFrame(this, parent))
-    , FocusScope(static_cast<Views::View_qtwidgets<QWidget> *>(view()->asQWidget())) // TODO
+    , FocusScope(view())
     , m_tabWidget(new Controllers::Stack(this, tabWidgetOptions(options)))
     , m_titleBar(new Controllers::TitleBar(this))
     , m_options(actualOptions(options))
@@ -80,7 +79,7 @@ Frame::Frame(View *parent, FrameOptions options, int userType)
     connect(m_tabWidget, &Controllers::Stack::currentTabChanged,
             this, &Frame::onCurrentTabChanged);
 
-    setLayoutWidget(qobject_cast<LayoutWidget *>(parent ? parent->asQWidget() : nullptr)); // TODO
+    setLayoutWidget(qobject_cast<LayoutWidget *>(parent ? parent->asQObject() : nullptr)); // TODO
 
     view()->init();
 

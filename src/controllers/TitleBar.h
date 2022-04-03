@@ -19,14 +19,6 @@
 #include <QString>
 #include <QIcon>
 
-namespace KDDockWidgets {
-
-namespace Views {
-class FloatingWindow_qtwidgets;
-}
-
-}
-
 namespace KDDockWidgets::Controllers {
 
 class Frame;
@@ -133,7 +125,6 @@ protected:
 
 private:
     friend class ::TestDocks;
-    friend class Views::FloatingWindow_qtwidgets;
 
     void updateFloatButton();
     void updateCloseButton();

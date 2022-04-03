@@ -18,8 +18,6 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/SideBar.h"
 
-#include "views_qtwidgets/MainWindow_qtwidgets.h"
-
 #include <QCoreApplication>
 #include <QString>
 #include <QSize>
@@ -65,15 +63,15 @@ public:
             return nullptr;
 
         // Note: Don't simply use window(), as the MainWindow might be embedded into something else
-        QWidgetOrQuick *p = q->view()->asQWidget()->parentWidget();
+        auto p = q->view()->parentView();
         while (p) {
-            if (auto view = qobject_cast<Views::MainWindow_qtwidgets *>(p))
-                return view->mainWindow();
+            if (auto mw = p->asMainWindowController())
+                return mw;
 
             if (p->isWindow())
                 return nullptr;
 
-            p = p->parentWidget();
+            p = p->parentView();
         }
 
         return nullptr;
