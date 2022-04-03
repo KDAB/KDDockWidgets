@@ -11,8 +11,8 @@
 
 #include "Frame_qtwidgets.h"
 
-#include "views_qtwidgets/View_qtwidgets.h"
-#include "views_qtwidgets/DockWidget_qtwidgets.h"
+#include "qtwidgets/views/View_qtwidgets.h"
+#include "qtwidgets/views/DockWidget_qtwidgets.h"
 
 #include "private/LayoutWidget_p.h"
 #include "controllers/Frame.h"

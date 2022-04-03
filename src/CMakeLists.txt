@@ -102,28 +102,28 @@ set(DOCKSLIBS_SRCS
     ViewWrapper.h
     Controller.cpp
     Controller.h
-    views_qtwidgets/View_qtwidgets.cpp
-    views_qtwidgets/View_qtwidgets.h
-    views_qtwidgets/ViewWrapper_qtwidgets.cpp
-    views_qtwidgets/ViewWrapper_qtwidgets.h
-    views_qtwidgets/FloatingWindow_qtwidgets.cpp
-    views_qtwidgets/FloatingWindow_qtwidgets.h
-    views_qtwidgets/DockWidget_qtwidgets.cpp
-    views_qtwidgets/DockWidget_qtwidgets.h
-    views_qtwidgets/Frame_qtwidgets.cpp
-    views_qtwidgets/Frame_qtwidgets.h
-    views_qtwidgets/MainWindow_qtwidgets.cpp
-    views_qtwidgets/MainWindow_qtwidgets.h
-    views_qtwidgets/Separator_qtwidgets.cpp
-    views_qtwidgets/Separator_qtwidgets.h
-    views_qtwidgets/TitleBar_qtwidgets.cpp
-    views_qtwidgets/TitleBar_qtwidgets.h
-    views_qtwidgets/TabBar_qtwidgets.cpp
-    views_qtwidgets/TabBar_qtwidgets.h
-    views_qtwidgets/Stack_qtwidgets.cpp
-    views_qtwidgets/Stack_qtwidgets.h
-    views_qtwidgets/SideBar_qtwidgets.cpp
-    views_qtwidgets/SideBar_qtwidgets.h
+    qtwidgets/views/View_qtwidgets.cpp
+    qtwidgets/views/View_qtwidgets.h
+    qtwidgets/views/ViewWrapper_qtwidgets.cpp
+    qtwidgets/views/ViewWrapper_qtwidgets.h
+    qtwidgets/views/FloatingWindow_qtwidgets.cpp
+    qtwidgets/views/FloatingWindow_qtwidgets.h
+    qtwidgets/views/DockWidget_qtwidgets.cpp
+    qtwidgets/views/DockWidget_qtwidgets.h
+    qtwidgets/views/Frame_qtwidgets.cpp
+    qtwidgets/views/Frame_qtwidgets.h
+    qtwidgets/views/MainWindow_qtwidgets.cpp
+    qtwidgets/views/MainWindow_qtwidgets.h
+    qtwidgets/views/Separator_qtwidgets.cpp
+    qtwidgets/views/Separator_qtwidgets.h
+    qtwidgets/views/TitleBar_qtwidgets.cpp
+    qtwidgets/views/TitleBar_qtwidgets.h
+    qtwidgets/views/TabBar_qtwidgets.cpp
+    qtwidgets/views/TabBar_qtwidgets.h
+    qtwidgets/views/Stack_qtwidgets.cpp
+    qtwidgets/views/Stack_qtwidgets.h
+    qtwidgets/views/SideBar_qtwidgets.cpp
+    qtwidgets/views/SideBar_qtwidgets.h
 )
 
 # add_library(kddockwidgets_backend STATIC ${KDDW_BACKEND_SRCS})

@@ -28,7 +28,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
 
-#include "views_qtwidgets/View_qtwidgets.h"
+#include "qtwidgets/views/View_qtwidgets.h"
 
 #include "kdbindings/signal.h"
 

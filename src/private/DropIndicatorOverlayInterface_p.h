@@ -16,7 +16,7 @@
 #include "controllers/Frame.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "views_qtwidgets/View_qtwidgets.h"
+#include "qtwidgets/views/View_qtwidgets.h"
 
 namespace KDDockWidgets {
 

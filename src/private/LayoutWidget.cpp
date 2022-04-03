@@ -20,7 +20,7 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/MainWindow.h"
 
-#include "views_qtwidgets/MainWindow_qtwidgets.h"
+#include "qtwidgets/views/MainWindow_qtwidgets.h"
 
 #include "multisplitter/Item_p.h"
 

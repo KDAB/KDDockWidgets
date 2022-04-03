@@ -27,13 +27,13 @@
 #include "controllers/DockWidget_p.h"
 
 #include "Utils_p.h"
-#include "views_qtwidgets/DockWidget_qtwidgets.h"
+#include "qtwidgets/views/DockWidget_qtwidgets.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "views_qtwidgets/Stack_qtwidgets.h"
-#include "views_qtwidgets/Frame_qtwidgets.h"
-#include "views_qtwidgets/FloatingWindow_qtwidgets.h"
-#include "views_qtwidgets/MainWindow_qtwidgets.h"
+#include "qtwidgets/views/Stack_qtwidgets.h"
+#include "qtwidgets/views/Frame_qtwidgets.h"
+#include "qtwidgets/views/FloatingWindow_qtwidgets.h"
+#include "qtwidgets/views/MainWindow_qtwidgets.h"
 
 #include <QVBoxLayout>
 #include <QWidget>

@@ -19,7 +19,7 @@
 #include "controllers/MainWindow.h"
 #include "controllers/DockWidget.h"
 #include "DockRegistry_p.h"
-#include "views_qtwidgets/View_qtwidgets.h"
+#include "qtwidgets/views/View_qtwidgets.h"
 
 #include <QSize>
 #include <QRect>
