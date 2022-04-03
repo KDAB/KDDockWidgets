@@ -21,6 +21,7 @@
 
 #include "View_qtwidgets.h"
 #include "controllers/MainWindow.h"
+#include "views/MainWindow.h"
 
 #include <QMainWindow>
 
@@ -37,7 +38,7 @@ namespace Views {
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget::DockWidget instances.
  */
-class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>
+class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>, public MainWindow
 {
     Q_OBJECT
 public:
@@ -63,10 +64,10 @@ public:
     ~MainWindow_qtwidgets() override;
 
     ///@brief returns the sidebar for the specified location
-    Controllers::SideBar *sideBar(SideBarLocation) const;
+    Controllers::SideBar *sideBar(SideBarLocation) const override;
 
     //@brief returns the margins for the contents widget
-    QMargins centerWidgetMargins() const;
+    QMargins centerWidgetMargins() const override;
 
     //@brief sets the margins for the contents widgets
     void setCenterWidgetMargins(const QMargins &margins);
@@ -74,12 +75,13 @@ public:
     /// @brief Returns the main window controller
     Controllers::MainWindow *mainWindow() const;
 
+    void setContentsMargins(int left, int top, int right, int bottom) override;
 
     void init() override;
 
 protected:
     void resizeEvent(QResizeEvent *) override;
-    QRect centralAreaGeometry() const;
+    QRect centralAreaGeometry() const override;
 
 private:
     friend class Controllers::MainWindow;

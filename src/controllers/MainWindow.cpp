@@ -33,14 +33,8 @@
 #include "controllers/DockWidget_p.h"
 #include "controllers/Frame.h"
 #include "controllers/SideBar.h"
+#include "views/MainWindow.h"
 
-// Or we can have a createDockWidget() in the factory
-#ifdef KDDOCKWIDGETS_QTQUICK
-#include "DockWidgetQuick.h"
-#else
-// TODO: Use framework factory instead
-#include "views_qtwidgets/MainWindow_qtwidgets.h"
-#endif
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
@@ -819,24 +813,24 @@ QWidgetOrQuick *MainWindow::persistentCentralWidget() const
 
 void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
 {
-    auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget());
+    auto v = dynamic_cast<Views::MainWindow *>(view());
     v->setContentsMargins(left, top, right, bottom);
 }
 
 QMargins MainWindow::centerWidgetMargins() const
 {
-    auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget());
+    auto v = dynamic_cast<Views::MainWindow *>(view());
     return v->centerWidgetMargins();
 }
 
 Controllers::SideBar *MainWindow::sideBar(SideBarLocation loc) const
 {
-    auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget());
+    auto v = dynamic_cast<Views::MainWindow *>(view());
     return v->sideBar(loc);
 }
 
 QRect MainWindow::centralAreaGeometry() const
 {
-    auto v = qobject_cast<Views::MainWindow_qtwidgets *>(view()->asQWidget());
+    auto v = dynamic_cast<Views::MainWindow *>(view());
     return v->centralAreaGeometry();
 }

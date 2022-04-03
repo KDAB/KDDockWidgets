@@ -186,3 +186,8 @@ Controllers::MainWindow *MainWindow_qtwidgets::mainWindow() const
 {
     return d->m_controller;
 }
+
+void MainWindow_qtwidgets::setContentsMargins(int left, int top, int right, int bottom)
+{
+    QMainWindow::setContentsMargins(left, top, right, bottom);
+}
