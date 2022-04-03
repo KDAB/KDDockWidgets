@@ -357,6 +357,11 @@ public:
         return QWidget::setFocus(reason);
     }
 
+    QString objectName() const override
+    {
+        return QWidget::objectName();
+    }
+
 protected:
     bool event(QEvent *e) override
     {

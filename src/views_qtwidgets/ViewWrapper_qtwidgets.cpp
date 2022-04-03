@@ -258,3 +258,8 @@ void ViewWrapper_qtwidgets::setFocus(Qt::FocusReason reason)
 {
     m_widget->setFocus(reason);
 }
+
+QString ViewWrapper_qtwidgets::objectName() const
+{
+    return m_widget->QWidget::objectName();
+}

@@ -57,15 +57,14 @@ Controllers::MainWindow *LayoutWidget::mainWindow(bool honourNesting) const
         auto v = firstParentOfType<Views::MainWindow_qtwidgets>(this);
         return v ? v->mainWindow() : nullptr;
     } else {
-
-        if (auto pw = QWidget::parentWidget()) {
+        if (auto pw = parentView()) {
             // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as
             // it's parented
             if (pw->objectName() == QLatin1String("MyCentralWidget"))
-                return qobject_cast<Views::MainWindow_qtwidgets *>(pw->parentWidget())->mainWindow();
+                return pw->parentView()->asMainWindowController();
 
-            if (auto mw = qobject_cast<Views::MainWindow_qtwidgets *>(pw))
-                return mw->mainWindow();
+            if (auto mw = pw->asMainWindowController())
+                return mw;
         }
     }
 

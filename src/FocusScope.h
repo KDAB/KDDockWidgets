@@ -20,7 +20,7 @@
 #define KD_DOCKWIDGETS_FOCUSSCOPE_H
 
 #include "docks_export.h"
-#include "views_qtwidgets/View_qtwidgets.h"
+#include "View.h"
 
 namespace KDDockWidgets {
 

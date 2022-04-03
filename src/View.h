@@ -177,6 +177,7 @@ public:
     }
 
     virtual void setObjectName(const QString &) = 0;
+    virtual QString objectName() const = 0;
 
     QPoint pos() const;
     QSize size() const;

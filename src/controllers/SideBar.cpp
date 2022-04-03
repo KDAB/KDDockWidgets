@@ -14,6 +14,7 @@
 #include "MainWindow.h"
 #include "kddockwidgets/FrameworkWidgetFactory.h"
 #include "views/SideBar.h"
+#include "Config.h"
 
 #include <QDebug>
 

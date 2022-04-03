@@ -49,6 +49,7 @@ public:
     void releaseMouse() override;
     QScreen *screen() const override;
     void setFocus(Qt::FocusReason) override;
+    QString objectName() const override;
 
 private:
     QWidget *const m_widget;

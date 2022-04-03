@@ -21,7 +21,6 @@
 
 #include "private/DockRegistry_p.h"
 #include "controllers/Frame.h"
-#include "views_qtwidgets/View_qtwidgets.h"
 #include "views_qtwidgets/TitleBar_qtwidgets.h"
 
 #include <QObject>

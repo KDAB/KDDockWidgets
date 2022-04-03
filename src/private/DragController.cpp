@@ -25,8 +25,6 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/DockWidget_p.h"
 
-#include "views_qtwidgets/TitleBar_qtwidgets.h"
-
 #include <QMouseEvent>
 #include <QGuiApplication>
 #include <QCursor>
