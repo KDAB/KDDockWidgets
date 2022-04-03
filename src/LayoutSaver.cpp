@@ -103,17 +103,46 @@ static QStringList variantToStringList(const QVariantList &variantList)
 }
 
 namespace KDDockWidgets {
+template<typename Type>
+void to_json(nlohmann::json &json, const typename Type::List &list)
+{
+    for (const auto &l : list) {
+        json.push_back(l);
+    }
+}
+
+void to_json(nlohmann::json &json, const LayoutSaver::Frame &f)
+{
+    json["id"] = f.id;
+    json["isNull"] = f.isNull;
+    json["objectName"] = f.objectName;
+    json["geometry"] = f.geometry;
+    json["options"] = f.options;
+    json["currentTabIndex"] = f.currentTabIndex;
+    json["mainWindowUniqueName"] = f.mainWindowUniqueName;
+    json["dockWidgets"] = dockWidgetNames(f.dockWidgets);
+}
+
+void to_json(nlohmann::json &json, const LayoutSaver::MultiSplitter &s)
+{
+    json["layout"] = s.layout;
+    auto &frames = json["frames"];
+    for (const auto &frame : qAsConst(s.frames)) {
+        frames[frame.id.toStdString()] = frame;
+    }
+}
+
 void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
 {
     json["options"] = int(mw.options);
-    json["multiSplitterLayout"] = mw.multiSplitterLayout.toVariantMap();
+    json["multiSplitterLayout"] = mw.multiSplitterLayout;
     json["uniqueName"] = mw.uniqueName;
     json["geometry"] = mw.geometry;
     json["normalGeometry"] = mw.normalGeometry;
     json["screenIndex"] = mw.screenIndex;
     json["screenSize"] = mw.screenSize;
     json["isVisible"] = mw.isVisible;
-    json["affinities"] = stringListToVariant(mw.affinities);
+    json["affinities"] = mw.affinities;
     json["windowState"] = mw.windowState;
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
@@ -123,15 +152,65 @@ void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
             json[key] = dockWidgets;
         }
     }
-
 }
 
-void to_json(nlohmann::json &json, const LayoutSaver::MainWindow::List &mwList)
+void to_json(nlohmann::json &json, const LayoutSaver::FloatingWindow &window)
 {
-    for (const auto &mw : mwList) {
-        json.push_back(mw);
+    json["multiSplitterLayout"] = window.multiSplitterLayout.toVariantMap();
+    json["parentIndex"] = window.parentIndex;
+    json["geometry"] = window.geometry;
+    json["normalGeometry"] = window.normalGeometry;
+    json["screenIndex"] = window.screenIndex;
+    json["screenSize"] = window.screenSize;
+    json["isVisible"] = window.isVisible;
+    json["windowState"] = window.windowState;
+
+    if (!window.affinities.isEmpty()) {
+        json["affinities"] = window.affinities;
     }
 }
+
+void to_json(nlohmann::json &json, const LayoutSaver::ScreenInfo &screenInfo)
+{
+    json["index"] = screenInfo.index;
+    json["geometry"] = screenInfo.geometry;
+    json["name"] = screenInfo.name;
+    json["devicePixelRatio"] = screenInfo.devicePixelRatio;
+}
+
+void to_json(nlohmann::json &json, const LayoutSaver::Placeholder &placeHolder)
+{
+    json["isFloatingWindow"] = placeHolder.isFloatingWindow;
+    json["itemIndex"] = placeHolder.itemIndex;
+    if (placeHolder.isFloatingWindow)
+        json["indexOfFloatingWindow"] = placeHolder.indexOfFloatingWindow;
+    else
+        json["mainWindowUniqueName"] = placeHolder.mainWindowUniqueName;
+}
+
+void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
+{
+    json["lastFloatingGeometry"] = pos.lastFloatingGeometry;
+    json["tabIndex"] = pos.tabIndex;
+    json["wasFloating"] = pos.wasFloating;
+    json["placeholders"] = pos.placeholders;
+}
+
+void to_json(nlohmann::json &json, const LayoutSaver::DockWidget &dw)
+{
+    if (!dw.affinities.isEmpty())
+        json["affinities"] = dw.affinities;
+    json["uniqueName"] = dw.uniqueName;
+    json["lastPosition"] = dw.lastPosition;
+}
+
+void to_json(nlohmann::json &json, const typename LayoutSaver::DockWidget::List &mwList)
+{
+    for (const auto &mw : mwList) {
+        json.push_back(*mw);
+    }
+}
+
 }
 
 LayoutSaver::LayoutSaver(RestoreOptions options)
@@ -495,15 +574,15 @@ bool LayoutSaver::Layout::isValid() const
 }
 
 namespace KDDockWidgets {
-    void to_json(nlohmann::json& j, const LayoutSaver::Layout& layout)
-    {
-        j["serializationVersion"] = layout.serializationVersion;
-        j["mainWindows"] = layout.mainWindows;
-        j["floatingWindows"] = toVariantList<LayoutSaver::FloatingWindow>(layout.floatingWindows);
-        j["closedDockWidgets"] = ::dockWidgetNames(layout.closedDockWidgets);
-        j["allDockWidgets"] = toVariantList(layout.allDockWidgets);
-        j["screenInfo"] = toVariantList<LayoutSaver::ScreenInfo>(layout.screenInfo);
-    }
+void to_json(nlohmann::json& j, const LayoutSaver::Layout& layout)
+{
+    j["serializationVersion"] = layout.serializationVersion;
+    j["mainWindows"] = layout.mainWindows;
+    j["floatingWindows"] = layout.floatingWindows;
+    j["closedDockWidgets"] = ::dockWidgetNames(layout.closedDockWidgets);
+    j["allDockWidgets"] = layout.allDockWidgets;
+    j["screenInfo"] = layout.screenInfo;
+}
 }
 
 QByteArray LayoutSaver::Layout::toJson() const
