@@ -28,8 +28,8 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 
-LayoutWidget::LayoutWidget(QWidgetOrQuick *parent)
-    : Views::View_qtwidgets<QWidget>(nullptr, Type::Layout, parent)
+LayoutWidget::LayoutWidget(Type type, View *parent)
+    : Views::View_qtwidgets<QWidget>(nullptr, type, parent ? static_cast<Views::View_qtwidgets<QWidget> *>(parent) : nullptr)
 {
 }
 
@@ -212,12 +212,12 @@ DockWidgetBase::List LayoutWidget::dockWidgets() const
     return dockWidgets;
 }
 
-Controllers::Frame::List LayoutWidget::framesFrom(QWidgetOrQuick *frameOrMultiSplitter) const
+Controllers::Frame::List LayoutWidget::framesFrom(View *frameOrMultiSplitter) const
 {
-    if (auto frame = qobject_cast<Controllers::Frame *>(frameOrMultiSplitter))
+    if (auto frame = frameOrMultiSplitter->asFrameController())
         return { frame };
 
-    if (auto msw = qobject_cast<MultiSplitter *>(frameOrMultiSplitter))
+    if (auto msw = frameOrMultiSplitter->asMultiSplitterView())
         return msw->frames();
 
     return {};

@@ -15,12 +15,12 @@
 
 using namespace KDDockWidgets;
 
-DropAreaWithCentralFrame::DropAreaWithCentralFrame(QWidgetOrQuick *parent, MainWindowOptions options)
+DropAreaWithCentralFrame::DropAreaWithCentralFrame(View *parent, MainWindowOptions options)
     : DropArea(parent)
     , m_centralFrame(createCentralFrame(options))
 {
     if (m_centralFrame)
-        addWidget(m_centralFrame->view()->asQWidget(), KDDockWidgets::Location_OnTop, {});
+        addWidget(m_centralFrame->view(), KDDockWidgets::Location_OnTop, {});
 }
 
 DropAreaWithCentralFrame::~DropAreaWithCentralFrame()

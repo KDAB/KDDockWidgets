@@ -19,7 +19,6 @@
 #include "Utils_p.h"
 #include "multisplitter/Item_p.h"
 #include "WindowBeingDragged_p.h"
-#include "views_qtwidgets/DockWidget_qtwidgets.h"
 
 #include "controllers/Frame.h"
 #include "controllers/FloatingWindow.h"
@@ -28,7 +27,6 @@
 #include "controllers/MainWindow.h"
 
 #include "views_qtwidgets/Frame_qtwidgets.h"
-#include "views_qtwidgets/View_qtwidgets.h"
 
 #include <algorithm>
 
@@ -41,7 +39,7 @@ using namespace KDDockWidgets::Controllers;
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
-DropArea::DropArea(QWidgetOrQuick *parent, bool isMDIWrapper)
+DropArea::DropArea(View *parent, bool isMDIWrapper)
     : MultiSplitter(parent)
     , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
@@ -167,9 +165,9 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
     }
 
     if (option.startsHidden()) {
-        addWidget(dw->view()->asQWidget(), location, relativeToFrame, option);
+        addWidget(dw->view(), location, relativeToFrame, option);
     } else {
-        addWidget(frame->view()->asQWidget(), location, relativeToFrame, option);
+        addWidget(frame->view(), location, relativeToFrame, option);
     }
 
     if (hadSingleFloatingFrame && !hasSingleFloatingFrame()) {
@@ -306,13 +304,13 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Frame *accep
     case DropLocation_Top:
     case DropLocation_Bottom:
     case DropLocation_Right:
-        result = drop(droppedWindow->view()->asQWidget(), DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), acceptingFrame);
+        result = drop(droppedWindow->view(), DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), acceptingFrame);
         break;
     case DropLocation_OutterLeft:
     case DropLocation_OutterTop:
     case DropLocation_OutterRight:
     case DropLocation_OutterBottom:
-        result = drop(droppedWindow->view()->asQWidget(), DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), nullptr);
+        result = drop(droppedWindow->view(), DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), nullptr);
         break;
     case DropLocation_Center:
         qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingFrame;
@@ -347,19 +345,18 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Frame *accep
     return result;
 }
 
-bool DropArea::drop(QWidgetOrQuick *droppedWindow, KDDockWidgets::Location location, Controllers::Frame *relativeTo)
+bool DropArea::drop(View *droppedWindow, KDDockWidgets::Location location, Controllers::Frame *relativeTo)
 {
     qCDebug(docking) << "DropArea::addFrame";
 
-    if (auto dockView = qobject_cast<Views::DockWidget_qtwidgets *>(droppedWindow)) {
-        auto dock = dockView->dockWidget();
+    if (auto dock = droppedWindow->asDockWidgetController()) {
         if (!validateAffinity(dock))
             return false;
 
         auto frame = new Controllers::Frame();
         frame->addWidget(dock);
-        addWidget(frame->view()->asQWidget(), location, relativeTo, DefaultSizeMode::FairButFloor);
-    } else if (auto floatingWindow = Views::ViewWrapper_qtwidgets(droppedWindow).asFloatingWindowController()) {
+        addWidget(frame->view(), location, relativeTo, DefaultSizeMode::FairButFloor);
+    } else if (auto floatingWindow = droppedWindow->asFloatingWindowController()) {
         if (!validateAffinity(floatingWindow))
             return false;
 
@@ -410,8 +407,7 @@ bool DropArea::isMDIWrapper() const
 DockWidgetBase *DropArea::mdiDockWidgetWrapper() const
 {
     if (m_isMDIWrapper) {
-        auto dwView = qobject_cast<Views::DockWidget_qtwidgets *>(QWidget::parent());
-        return dwView ? dwView->dockWidget() : nullptr;
+        return parentView()->asDockWidgetController();
     }
 
     return nullptr;

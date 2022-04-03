@@ -34,6 +34,7 @@ namespace KDDockWidgets {
 
 class ViewWrapper;
 class Controller;
+class MultiSplitter;
 
 namespace Controllers {
 class DockWidget;
@@ -246,6 +247,7 @@ public:
     Controllers::Stack *asStackController() const;
     Controllers::DockWidget *asDockWidgetController() const;
     Controllers::MainWindow *asMainWindowController() const;
+    MultiSplitter *asMultiSplitterView();
 
 protected:
     virtual void free_impl();

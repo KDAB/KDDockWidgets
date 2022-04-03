@@ -19,8 +19,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-MDILayoutWidget::MDILayoutWidget(QWidget *parent)
-    : LayoutWidget(parent)
+MDILayoutWidget::MDILayoutWidget(View *parent)
+    : LayoutWidget(Type::MDILayout, parent)
     , m_rootItem(new Layouting::ItemFreeContainer(this))
 {
     setRootItem(m_rootItem);

@@ -14,8 +14,7 @@
 
 #include "kddockwidgets/docks_export.h"
 #include "KDDockWidgets.h"
-
-#include <QWidget>
+#include "views_qtwidgets/View_qtwidgets.h"
 
 namespace KDDockWidgets {
 
@@ -26,8 +25,6 @@ class Frame;
 class DockWidget;
 }
 
-#include <QWidget>
-
 /**
  * @brief MDIArea allows to host dock widget in MDI mode.
  * This is an alternative to using a full blown MainWindowMDI.
@@ -37,7 +34,7 @@ class DockWidget;
  *
  * See examples/mdi_with_docking/.
  */
-class DOCKS_EXPORT MDIArea : public QWidget
+class DOCKS_EXPORT MDIArea : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:

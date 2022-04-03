@@ -37,7 +37,7 @@ Type Controller::type() const
 
 bool Controller::is(Type t) const
 {
-    return m_type == t;
+    return int(m_type) & int(t);
 }
 
 bool Controller::inDtor() const

@@ -52,13 +52,13 @@ class DOCKS_EXPORT MultiSplitter : public LayoutWidget
 {
     Q_OBJECT
 public:
-    explicit MultiSplitter(QWidget *parent = nullptr);
+    explicit MultiSplitter(View *parent = nullptr);
     ~MultiSplitter() override;
 
     /**
      * @brief Adds a widget to this MultiSplitter.
      */
-    void addWidget(QWidget *widget, KDDockWidgets::Location location,
+    void addWidget(View *widget, KDDockWidgets::Location location,
                    Controllers::Frame *relativeTo = nullptr,
                    InitialOption option = DefaultSizeMode::Fair);
 
@@ -98,7 +98,7 @@ private:
     Layouting::ItemBoxContainer *rootItem() const;
 
     // For debug/hardening
-    bool validateInputs(QWidget *widget, KDDockWidgets::Location location,
+    bool validateInputs(View *widget, KDDockWidgets::Location location,
                         const Controllers::Frame *relativeToFrame, InitialOption option) const;
 
 

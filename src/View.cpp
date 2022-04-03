@@ -19,6 +19,8 @@
 #include "controllers/TabBar.h"
 #include "controllers/MainWindow.h"
 
+#include "private/MultiSplitter_p.h"
+
 #include <QWidget> // TODOv2 remove
 
 using namespace KDDockWidgets;
@@ -179,7 +181,7 @@ QSize View::hardcodedMinimumSize()
 
 bool View::is(Type t) const
 {
-    return m_type == t;
+    return int(m_type) & int(t);
 }
 
 Controllers::FloatingWindow *View::asFloatingWindowController() const
@@ -235,6 +237,13 @@ Controllers::MainWindow *View::asMainWindowController() const
     if (m_controller && m_controller->is(Type::MainWindow))
         return qobject_cast<Controllers::MainWindow *>(m_controller);
 
+    return nullptr;
+}
+
+MultiSplitter *View::asMultiSplitterView()
+{
+    if (is(Type::MultiSplitter))
+        return static_cast<MultiSplitter *>(this);
     return nullptr;
 }
 

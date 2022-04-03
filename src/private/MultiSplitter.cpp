@@ -34,15 +34,13 @@
 #include "controllers/DockWidget.h"
 #include "controllers/MainWindow.h"
 
-#include "views_qtwidgets/DockWidget_qtwidgets.h"
-
 #include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-MultiSplitter::MultiSplitter(QWidgetOrQuick *parent)
-    : LayoutWidget(parent)
+MultiSplitter::MultiSplitter(View *parent)
+    : LayoutWidget(Type::MultiSplitter, parent)
 {
     Q_ASSERT(parent);
     setRootItem(new Layouting::ItemBoxContainer(this));
@@ -60,7 +58,7 @@ MultiSplitter::~MultiSplitter()
 {
 }
 
-bool MultiSplitter::validateInputs(QWidgetOrQuick *widget, Location location,
+bool MultiSplitter::validateInputs(View *widget, Location location,
                                    const Controllers::Frame *relativeToFrame, InitialOption option) const
 {
     if (!widget) {
@@ -68,12 +66,10 @@ bool MultiSplitter::validateInputs(QWidgetOrQuick *widget, Location location,
         return false;
     }
 
-    const bool isDockWidget = qobject_cast<Views::DockWidget_qtwidgets *>(widget);
+    const bool isDockWidget = widget->is(Type::DockWidget);
     const bool isStartHidden = option.startsHidden();
 
-    Views::ViewWrapper_qtwidgets wrapper(widget);
-
-    if (!wrapper.is(Type::Frame) && !wrapper.is(Type::Layout) && !isDockWidget) {
+    if (!widget->is(Type::Frame) && !widget->is(Type::Layout) && !isDockWidget) {
         qWarning() << "Unknown widget type" << widget;
         return false;
     }
@@ -83,12 +79,12 @@ bool MultiSplitter::validateInputs(QWidgetOrQuick *widget, Location location,
         return false;
     }
 
-    if (relativeToFrame && relativeToFrame->view()->asQWidget() == widget) {
+    if (relativeToFrame && relativeToFrame->view()->equals(widget)) {
         qWarning() << "widget can't be relative to itself";
         return false;
     }
 
-    Layouting::Item *item = itemForFrame(qobject_cast<Controllers::Frame *>(widget));
+    Layouting::Item *item = itemForFrame(widget->asFrameController());
 
     if (containsItem(item)) {
         qWarning() << "MultiSplitter::addWidget: Already contains" << widget;
@@ -114,13 +110,12 @@ bool MultiSplitter::validateInputs(QWidgetOrQuick *widget, Location location,
     return true;
 }
 
-void MultiSplitter::addWidget(QWidget *w, Location location,
+void MultiSplitter::addWidget(View *w, Location location,
                               Controllers::Frame *relativeToWidget,
                               InitialOption option)
 {
 
-    Views::ViewWrapper_qtwidgets wrapper(w);
-    auto frame = wrapper.asFrameController();
+    auto frame = w->asFrameController();
     if (itemForFrame(frame) != nullptr) {
         // Item already exists, remove it.
         // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
@@ -140,8 +135,7 @@ void MultiSplitter::addWidget(QWidget *w, Location location,
 
     Controllers::Frame::List frames = framesFrom(w);
     unrefOldPlaceholders(frames);
-    auto dwView = qobject_cast<Views::DockWidget_qtwidgets *>(w);
-    auto dw = dwView ? dwView->dockWidget() : nullptr;
+    auto dw = w->asDockWidgetController();
 
     if (frame) {
         newItem = new Layouting::Item(this);
@@ -151,7 +145,7 @@ void MultiSplitter::addWidget(QWidget *w, Location location,
         frame = new Controllers::Frame();
         newItem->setGuestWidget(frame->view());
         frame->addWidget(dw, option);
-    } else if (auto ms = qobject_cast<MultiSplitter *>(w)) {
+    } else if (auto ms = w->asMultiSplitterView()) {
         newItem = ms->m_rootItem;
         newItem->setHostWidget(this);
 

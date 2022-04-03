@@ -428,7 +428,7 @@ void TestDocks::tst_sizeAfterRedock()
         QCOMPARE(suggestedDropRect.height(), height2);
     }
 
-    dropArea->drop(dw2->floatingWindow()->view()->asQWidget(), Location_OnBottom, nullptr);
+    dropArea->drop(dw2->floatingWindow()->view(), Location_OnBottom, nullptr);
 
     QCOMPARE(dw2->dptr()->frame()->height(), height2);
 
@@ -4466,7 +4466,7 @@ void TestDocks::tst_moreTitleBarCornerCases()
         dock2->show();
         auto fw1 = dock1->floatingWindow();
         auto fw2 = dock2->floatingWindow();
-        fw1->dropArea()->drop(fw2->view()->asQWidget(), Location_OnRight, nullptr);
+        fw1->dropArea()->drop(fw2->view(), Location_OnRight, nullptr);
         QVERIFY(fw1->titleBar()->isVisible());
         QVERIFY(dock1->dptr()->frame()->titleBar()->isVisible());
         QVERIFY(dock2->dptr()->frame()->titleBar()->isVisible());
@@ -6034,7 +6034,7 @@ void TestDocks::tst_maxSizeHonouredWhenDropped()
     dock2->setFloating(true);
     auto fw = dock2->floatingWindow();
 
-    m1->dropArea()->drop(fw->view()->asQWidget(), Location_OnLeft, nullptr);
+    m1->dropArea()->drop(fw->view(), Location_OnLeft, nullptr);
     QCOMPARE(dock2->dptr()->frame()->width(), droppedWidth);
 }
 
@@ -6243,7 +6243,7 @@ void TestDocks::tst_floatingAction()
         QSignalSpy spy21(dock2, &DockWidgetBase::isFloatingChanged);
 
         auto dropArea1 = dock1->floatingWindow()->dropArea();
-        dropArea1->drop(oldFw2->view()->asQWidget(), Location_OnRight, nullptr);
+        dropArea1->drop(oldFw2->view(), Location_OnRight, nullptr);
 
         QCOMPARE(spy1.count(), 1);
         QCOMPARE(spy2.count(), 1);

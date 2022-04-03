@@ -42,9 +42,9 @@ using namespace KDDockWidgets::Controllers;
 static LayoutWidget *createLayoutWidget(MainWindow *mainWindow, MainWindowOptions options)
 {
     if (options & MainWindowOption_MDI)
-        return new MDILayoutWidget(mainWindow->view()->asQWidget());
+        return new MDILayoutWidget(mainWindow->view());
 
-    return new DropAreaWithCentralFrame(mainWindow->view()->asQWidget(), options);
+    return new DropAreaWithCentralFrame(mainWindow->view(), options);
 }
 
 class MainWindow::Private

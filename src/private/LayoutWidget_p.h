@@ -65,7 +65,7 @@ class DOCKS_EXPORT LayoutWidget : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit LayoutWidget(QWidget *parent = nullptr);
+    explicit LayoutWidget(Type, View *parent = nullptr);
     ~LayoutWidget() override;
 
     /// @brief Returns whether this layout is in a MainWindow
@@ -221,7 +221,7 @@ protected:
      * If frameOrMultiSplitter is a Frame, it returns a list of 1 element, with that frame
      * If frameOrMultiSplitter is a MultiSplitter then it returns a list of all frames it contains
      */
-    QList<Controllers::Frame *> framesFrom(QWidget *frameOrMultiSplitter) const;
+    QList<Controllers::Frame *> framesFrom(View *frameOrMultiSplitter) const;
 
 Q_SIGNALS:
     void visibleWidgetCountChanged(int count);

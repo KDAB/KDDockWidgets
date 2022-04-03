@@ -20,6 +20,10 @@
 #include "views_qtwidgets/TabBar_qtwidgets.h"
 #include "views_qtwidgets/TitleBar_qtwidgets.h"
 
+#include "private/MultiSplitter_p.h"
+#include "private/MDILayoutWidget_p.h"
+#include "MDIArea.h"
+
 #include <QDebug>
 
 using namespace KDDockWidgets;
@@ -61,8 +65,13 @@ static Controller *controllerForWidget(QWidget *widget)
             if (auto view = qobject_cast<DockWidget_qtwidgets *>(widget))
                 return view->controller();
             break;
+        case Type::MultiSplitter:
+        case Type::MDILayout:
         case Type::Layout:
             if (auto view = qobject_cast<LayoutWidget *>(widget))
+                return view->controller();
+        case Type::MDIArea:
+            if (auto view = qobject_cast<MDIArea *>(widget))
                 return view->controller();
             break;
         case Type::SideBar:
@@ -197,6 +206,12 @@ bool ViewWrapper_qtwidgets::is(Type t) const
         return qobject_cast<Views::MainWindow_qtwidgets *>(m_widget);
     case Type::Layout:
         return qobject_cast<LayoutWidget *>(m_widget);
+    case Type::MultiSplitter:
+        return qobject_cast<MultiSplitter *>(m_widget);
+    case Type::MDILayout:
+        return qobject_cast<MDILayoutWidget *>(m_widget);
+    case Type::MDIArea:
+        return qobject_cast<MDIArea *>(m_widget);
     case Type::LayoutItem:
     case Type::DropIndicatorOverlayInterface:
         qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";

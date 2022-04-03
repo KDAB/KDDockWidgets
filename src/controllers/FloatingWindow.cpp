@@ -98,7 +98,7 @@ MainWindow *actualParent(MainWindow *candidate)
 FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     : Controller(Type::FloatingWindow, Config::self().frameworkWidgetFactory()->createFloatingWindow(this, actualParent(parent), windowFlagsToUse()))
     , Draggable(view(), KDDockWidgets::usesNativeDraggingAndResizing()) // FloatingWindow is only draggable when using a native title bar. Otherwise the KDDockWidgets::TitleBar is the draggable
-    , m_dropArea(new DropArea(view()->asQWidget()))
+    , m_dropArea(new DropArea(view()))
     , m_titleBar(new Controllers::TitleBar(this))
 {
     view()->init();
@@ -184,7 +184,7 @@ FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometr
         // Adding a widget will trigger onFrameCountChanged, which triggers a setVisible(true).
         // The problem with setVisible(true) will forget about or requested geometry and place the window at 0,0
         // So disable the setVisible(true) call while in the ctor.
-        m_dropArea->addWidget(frame->view()->asQWidget(), KDDockWidgets::Location_OnTop, {});
+        m_dropArea->addWidget(frame->view(), KDDockWidgets::Location_OnTop, {});
     }
 }
 

@@ -45,7 +45,7 @@ class DOCKS_EXPORT DropArea : public MultiSplitter
 {
     Q_OBJECT
 public:
-    explicit DropArea(QWidget *parent, bool isMDIWrapper = false);
+    explicit DropArea(View *parent, bool isMDIWrapper = false);
     ~DropArea();
 
     void removeHover();
@@ -93,7 +93,7 @@ private:
     template<typename T>
     bool validateAffinity(T *, Controllers::Frame *acceptingFrame = nullptr) const;
     bool drop(WindowBeingDragged *draggedWindow, Controllers::Frame *acceptingFrame, DropLocation);
-    bool drop(QWidget *droppedwindow, KDDockWidgets::Location location, Controllers::Frame *relativeTo);
+    bool drop(View *droppedwindow, KDDockWidgets::Location location, Controllers::Frame *relativeTo);
     Controllers::Frame *frameContainingPos(QPoint globalPos) const;
     void updateFloatingActions();
 

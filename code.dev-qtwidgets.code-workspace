@@ -77,7 +77,7 @@
         "request": "launch",
         "program": "${workspaceFolder}/build-dev/bin/tst_docks",
         "args": [
-          "tst_simple2"
+          "tst_restoreFloatingMinimizedState"
         ],
         "cwd": "${workspaceFolder}",
         "MIMode": "gdb",

@@ -15,7 +15,6 @@
 #include "private/DropAreaWithCentralFrame_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "views_qtwidgets/DockWidget_qtwidgets.h"
 #include <QVBoxLayout>
 #else
 #include "DockWidgetQuick.h"
@@ -27,7 +26,7 @@ using namespace KDDockWidgets::Controllers;
 class MDIArea::Private
 {
 public:
-    Private(QWidgetOrQuick *parent)
+    Private(View *parent)
         : layoutWidget(new MDILayoutWidget(parent))
     {
     }
@@ -40,8 +39,8 @@ public:
     MDILayoutWidget *const layoutWidget;
 };
 
-MDIArea::MDIArea(QWidgetOrQuick *parent)
-    : QWidgetOrQuick(parent)
+MDIArea::MDIArea(QWidget *parent)
+    : Views::View_qtwidgets<QWidget>(nullptr, Type::MDIArea, parent)
     , d(new Private(this))
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
@@ -63,7 +62,7 @@ void MDIArea::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption ad
     if (dw->options() & DockWidgetBase::Option_MDINestable) {
         // We' wrap it with a drop area, so we can drag other dock widgets over this one and dock
         auto wrapperDW = new Controllers::DockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()));
-        auto dropAreaWrapper = new DropArea(wrapperDW->view()->asQWidget(), /*isMDIWrapper= */ true);
+        auto dropAreaWrapper = new DropArea(wrapperDW->view(), /*isMDIWrapper= */ true);
         dropAreaWrapper->addDockWidget(dw, Location_OnBottom, nullptr);
         wrapperDW->setWidget(dropAreaWrapper);
 
