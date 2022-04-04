@@ -39,6 +39,8 @@ View::View(Controller *controller, Type type, QObject *thisObj)
 
 View::~View()
 {
+    beingDestroyed.emit();
+
     m_inDtor = true;
 
     if (!freed() && !is(Type::ViewWrapper)) {

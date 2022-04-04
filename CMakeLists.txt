@@ -150,6 +150,7 @@ include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 find_package(Qt${Qt_VERSION_MAJOR}Quick)
 find_package(Qt${Qt_VERSION_MAJOR}QuickControls2)
 
+add_definitions(-DQT_NO_KEYWORDS)
 set(${PROJECT_NAME}_DEPS "widgets")
 if(${PROJECT_NAME}_QTQUICK)
   find_package(Qt${Qt_VERSION_MAJOR}Quick)

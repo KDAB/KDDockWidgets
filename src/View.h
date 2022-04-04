@@ -19,6 +19,8 @@
 #include <QObject>
 #include <QSizePolicy>
 
+#include "kdbindings/signal.h"
+
 #include <memory>
 
 namespace Layouting {
@@ -249,6 +251,10 @@ public:
     Controllers::DockWidget *asDockWidgetController() const;
     Controllers::MainWindow *asMainWindowController() const;
     MultiSplitter *asMultiSplitterView();
+
+public:
+    /// @brief signal emitted once ~View starts
+    KDBindings::Signal<> beingDestroyed;
 
 protected:
     virtual void free_impl();
