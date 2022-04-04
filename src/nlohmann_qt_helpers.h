@@ -16,8 +16,6 @@
 #include <QRect>
 #include <QSize>
 
-#include <iostream>
-
 QT_BEGIN_NAMESPACE
 
 inline void from_json(const nlohmann::json &j, QString &string)
@@ -215,3 +213,10 @@ inline void from_json(const nlohmann::json& j, QRect& rect)
 }
 
 QT_END_NAMESPACE
+
+inline QDebug operator<<(QDebug debug, const nlohmann::json &j)
+{
+    QDebugStateSaver s(debug);
+    debug.nospace() << '\n' << j.dump(4).data() << '\n';
+    return debug;
+}
