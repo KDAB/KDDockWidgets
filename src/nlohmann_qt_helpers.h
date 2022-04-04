@@ -89,8 +89,7 @@ inline void from_json(const nlohmann::json &j, QVariant& variant)
     }
     else if (j.is_object())
     {
-        QVariantMap map;
-        from_json(j, map);
+        QVariantMap map = j.get<QVariantMap>();
         variant = map;
     }
 }
@@ -144,9 +143,7 @@ inline void to_json(nlohmann::json& j, const QVariantList& list)
     j = nlohmann::json::array();
 
     for (auto it = list.cbegin(), end = list.cend(); it != end; ++it) {
-        nlohmann::json serialized;
-        to_json(serialized, *it);
-        j.push_back(serialized);
+        j.push_back(*it);
     }
 }
 
@@ -161,9 +158,7 @@ inline void from_json(const nlohmann::json& j, QVariantList& list)
 
     list.reserve((int)j.size());
     for (const auto &v : j) {
-        QVariant var;
-        from_json(v, var);
-        list.push_back(var);
+        list.push_back(v.get<QVariant>());
     }
 }
 
@@ -172,19 +167,15 @@ inline void to_json(nlohmann::json& j, const QVariantMap& map)
     j = nlohmann::json::object();
 
     for (auto it = std::cbegin(map); it != std::cend(map); ++it) {
-        nlohmann::json serialized;
-        to_json(serialized, it.value());
-        j[it.key().toStdString()] = serialized;
+        nlohmann::json json = it.value();
+        j[it.key().toStdString()] = json;
     }
 }
 
 inline void from_json(const nlohmann::json& j, QVariantMap& map)
 {
     for (const auto &v : j.items()) {
-        QVariant var;
-        from_json(v.value(), var);
-        const QString key = QString::fromStdString(v.key());
-        map[key] = var;
+        map[QString::fromStdString(v.key())] = v.value().get<QVariant>();
     }
 }
 
@@ -195,8 +186,9 @@ inline void to_json(nlohmann::json& j, const QSize& size)
 }
 inline void from_json(const nlohmann::json& j, QSize& size)
 {
-    size.setWidth(j["width"]);
-    size.setHeight(j["height"]);
+    QSize s;
+    size.setWidth(j.value("width", s.width()));
+    size.setHeight(j.value("height", s.height()));
 }
 
 inline void to_json(nlohmann::json& j, const QRect& rect)
@@ -208,10 +200,11 @@ inline void to_json(nlohmann::json& j, const QRect& rect)
 }
 inline void from_json(const nlohmann::json& j, QRect& rect)
 {
-    rect.setX(j["x"]);
-    rect.setY(j["y"]);
-    rect.setWidth(j["width"]);
-    rect.setHeight(j["height"]);
+    QRect r;
+    rect.setX(j.value("x", r.x()));
+    rect.setY(j.value("y", r.y()));
+    rect.setWidth(j.value("width", r.width()));
+    rect.setHeight(j.value("height", r.height()));
 }
 
 QT_END_NAMESPACE
