@@ -11,13 +11,20 @@
 
 #include "Platform_qtquick.h"
 #include "KDDockWidgets.h"
+// #include "QmlTypes.h" // TODOv2
+
+#include <QQuickWindow>
 
 static KDDockWidgets::Platform_qtquick s_platformQtQuick;
 
 using namespace KDDockWidgets;
 
+
+
 Platform_qtquick::Platform_qtquick()
 {
+    // KDDockWidgets::registerQmlTypes(); // TODOv2
+    QQuickWindow::setDefaultAlphaBuffer(true);
 }
 
 Platform_qtquick::~Platform_qtquick()

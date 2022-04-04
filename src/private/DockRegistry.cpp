@@ -33,10 +33,6 @@
 #include <QGuiApplication>
 #include <QWindow>
 
-#ifndef KDDOCKWIDGETS_QTWIDGETS
-#include "quick/QmlTypes.h"
-#endif
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
