@@ -32,15 +32,14 @@ inline void to_json(nlohmann::json &j, const QString &s)
 
 inline void from_json(const nlohmann::json &j, QStringList &stringList)
 {
-    if (!j.is_array()) {
+    if (!j.is_null() && !j.is_array()) {
         qWarning() << Q_FUNC_INFO << "This is not an array, fix the code";
         stringList.clear();
         return;
     }
     stringList.reserve((int)j.size());
     for (const auto &v : j) {
-        QString s = v;
-        stringList.push_back(std::move(s));
+        stringList.push_back(v.get<QString>());
     }
 }
 
@@ -194,6 +193,11 @@ inline void to_json(nlohmann::json& j, const QSize& size)
     j["width"] = size.width();
     j["height"] = size.height();
 }
+inline void from_json(const nlohmann::json& j, QSize& size)
+{
+    size.setWidth(j["width"]);
+    size.setHeight(j["height"]);
+}
 
 inline void to_json(nlohmann::json& j, const QRect& rect)
 {
@@ -201,6 +205,13 @@ inline void to_json(nlohmann::json& j, const QRect& rect)
     j["y"] = rect.y();
     j["width"] = rect.width();
     j["height"] = rect.height();
+}
+inline void from_json(const nlohmann::json& j, QRect& rect)
+{
+    rect.setX(j["x"]);
+    rect.setY(j["y"]);
+    rect.setWidth(j["width"]);
+    rect.setHeight(j["height"]);
 }
 
 QT_END_NAMESPACE

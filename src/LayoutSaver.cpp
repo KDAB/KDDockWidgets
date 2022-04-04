@@ -122,6 +122,27 @@ void to_json(nlohmann::json &json, const LayoutSaver::Frame &f)
     json["mainWindowUniqueName"] = f.mainWindowUniqueName;
     json["dockWidgets"] = dockWidgetNames(f.dockWidgets);
 }
+void from_json(const nlohmann::json &json, LayoutSaver::Frame &f)
+{
+    f.id = json.value("id", QString());
+    f.isNull = json.value("isNull", true);
+    f.objectName = json.value("objectName", QString());
+    f.geometry = json.value("geometry", QRect());
+    f.options = json.value("options", QFlags<FrameOption>::Int{});
+    f.currentTabIndex = json.value("currentTabIndex", 0);
+    f.mainWindowUniqueName = json.value("mainWindowUniqueName", QString());
+
+    auto it = json.find("dockWidgets");
+    if (it == json.end())
+        return;
+
+    auto &dockWidgets = *it;
+    f.dockWidgets.reserve((int) dockWidgets.size());
+    for (const auto &d : dockWidgets) {
+        LayoutSaver::DockWidget::Ptr dw = LayoutSaver::DockWidget::dockWidgetForName(d.get<QString>());
+        f.dockWidgets.push_back(dw);
+    }
+}
 
 void to_json(nlohmann::json &json, const LayoutSaver::MultiSplitter &s)
 {
@@ -129,6 +150,26 @@ void to_json(nlohmann::json &json, const LayoutSaver::MultiSplitter &s)
     auto &frames = json["frames"];
     for (const auto &frame : qAsConst(s.frames)) {
         frames[frame.id.toStdString()] = frame;
+    }
+}
+void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
+{
+    s.frames.clear();
+    s.layout = json.value("layout", QVariantMap());
+    auto it = json.find("frames");
+    if (it == json.end())
+        return;
+    if (it->is_null())
+        return;
+
+    auto &frms = *it;
+    if (!frms.is_object())
+        qWarning() << Q_FUNC_INFO << "Unexpected not object";;
+
+    for (const auto &kv : frms.items()) {
+        QString key = QString::fromStdString(kv.key());
+        auto frame = kv.value().get<LayoutSaver::Frame>();
+        s.frames.insert(key, frame);
     }
 }
 
@@ -154,9 +195,42 @@ void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
     }
 }
 
+void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
+{
+    mw.options = static_cast<decltype(mw.options)>(json.value("options", 0));
+    mw.multiSplitterLayout = json.value("multiSplitterLayout", LayoutSaver::MultiSplitter());
+    mw.uniqueName = json.value("uniqueName", QString());
+    mw.geometry = json.value("geometry", QRect());
+    mw.normalGeometry = json.value("normalGeometry", QRect());
+    mw.screenIndex = json.value("screenIndex", 0);
+    mw.screenSize = json.value("screenSize", QSize(800, 600));
+    mw.isVisible = json.value("isVisible", false);
+    mw.affinities = json.value("affinities", QStringList());
+    mw.windowState = (Qt::WindowState) json.value("windowState", 0);
+
+    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
+    if (json.find("affinityName") != json.end()) {
+        QString affinityName = json["affinityName"].get<QString>();
+        if (!mw.affinities.contains(affinityName)) {
+            mw.affinities.push_back(affinityName);
+        }
+    }
+
+    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
+        std::string key = std::string("sidebar-") + std::to_string((int)loc);
+        auto it = json.find(key);
+        if (it == json.end())
+            continue;
+        auto &val = *it;
+        if (val.is_array() && !val.empty()) {
+            mw.dockWidgetsPerSideBar[loc] = val.get<QStringList>();
+        }
+    }
+}
+
 void to_json(nlohmann::json &json, const LayoutSaver::FloatingWindow &window)
 {
-    json["multiSplitterLayout"] = window.multiSplitterLayout.toVariantMap();
+    json["multiSplitterLayout"] = window.multiSplitterLayout;
     json["parentIndex"] = window.parentIndex;
     json["geometry"] = window.geometry;
     json["normalGeometry"] = window.normalGeometry;
@@ -170,12 +244,38 @@ void to_json(nlohmann::json &json, const LayoutSaver::FloatingWindow &window)
     }
 }
 
+void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
+{
+    window.multiSplitterLayout = json.value("multiSplitterLayout", LayoutSaver::MultiSplitter());
+    window.parentIndex = json.value("parentIndex", -1);
+    window.geometry = json.value("normalGeometry", QRect());
+    window.normalGeometry = json.value("normalGeometry", QRect());
+    window.screenIndex = json.value("screenIndex", 0);
+    window.screenSize = json.value("screenSize", QSize(800, 600));
+    window.isVisible = json.value("isVisible", false);
+    window.windowState = (Qt::WindowState) json.value("windowState", 0);
+    window.affinities = json.value("affinities", QStringList());
+
+    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
+    const QString affinityName = json.value("affinityName", QString());
+    if (!affinityName.isEmpty() && !window.affinities.contains(affinityName)) {
+        window.affinities.push_back(affinityName);
+    }
+}
+
 void to_json(nlohmann::json &json, const LayoutSaver::ScreenInfo &screenInfo)
 {
     json["index"] = screenInfo.index;
     json["geometry"] = screenInfo.geometry;
     json["name"] = screenInfo.name;
     json["devicePixelRatio"] = screenInfo.devicePixelRatio;
+}
+void from_json(const nlohmann::json& j, LayoutSaver::ScreenInfo& screenInfo)
+{
+    screenInfo.index = j.value("index", 0);
+    screenInfo.geometry = j.value("geometry", QRect());
+    screenInfo.name = j.value("name", QString());
+    screenInfo.devicePixelRatio = j.value("devicePixelRatio", 1.0);
 }
 
 void to_json(nlohmann::json &json, const LayoutSaver::Placeholder &placeHolder)
@@ -188,12 +288,28 @@ void to_json(nlohmann::json &json, const LayoutSaver::Placeholder &placeHolder)
         json["mainWindowUniqueName"] = placeHolder.mainWindowUniqueName;
 }
 
+void from_json(const nlohmann::json &json, LayoutSaver::Placeholder &placeHolder)
+{
+    placeHolder.isFloatingWindow = json.value("isFloatingWindow", false);
+    placeHolder.itemIndex = json.value("itemIndex", 0);
+    placeHolder.indexOfFloatingWindow = json.value("indexOfFloatingWindow", -1);
+    placeHolder.mainWindowUniqueName = json.value("mainWindowUniqueName", QString());
+}
+
 void to_json(nlohmann::json &json, const LayoutSaver::Position &pos)
 {
     json["lastFloatingGeometry"] = pos.lastFloatingGeometry;
     json["tabIndex"] = pos.tabIndex;
     json["wasFloating"] = pos.wasFloating;
     json["placeholders"] = pos.placeholders;
+}
+
+void from_json(const nlohmann::json &json, LayoutSaver::Position &pos)
+{
+    pos.lastFloatingGeometry = json.value("lastFloatingGeometry", QRect());
+    pos.tabIndex = json.value("tabIndex", 0);
+    pos.wasFloating = json.value("wasFloating", false);
+    pos.placeholders = json.value("placeholders", LayoutSaver::Placeholder::List());
 }
 
 void to_json(nlohmann::json &json, const LayoutSaver::DockWidget &dw)
@@ -203,11 +319,38 @@ void to_json(nlohmann::json &json, const LayoutSaver::DockWidget &dw)
     json["uniqueName"] = dw.uniqueName;
     json["lastPosition"] = dw.lastPosition;
 }
-
-void to_json(nlohmann::json &json, const typename LayoutSaver::DockWidget::List &mwList)
+void from_json(const nlohmann::json &json, LayoutSaver::DockWidget &dw)
 {
-    for (const auto &mw : mwList) {
+    auto it = json.find("affinities");
+    if (it != json.end())
+        dw.affinities = it->get<QStringList>();
+
+    dw.uniqueName = json.value("uniqueName", QString());
+    if (dw.uniqueName.isEmpty())
+        qWarning() << Q_FUNC_INFO << "Unexpected no uniqueName for dockWidget";
+
+    dw.lastPosition = json.value("lastPosition", LayoutSaver::Position());
+}
+
+void to_json(nlohmann::json &json, const typename LayoutSaver::DockWidget::List &list)
+{
+    for (const auto &mw : list) {
         json.push_back(*mw);
+    }
+}
+void from_json(const nlohmann::json &json, typename LayoutSaver::DockWidget::List &list)
+{
+    list.clear();
+    for (const auto &v : json) {
+        auto it = v.find("uniqueName");
+        if (it == v.end()) {
+            qWarning() << Q_FUNC_INFO << "Unexpected no uniqueName";
+            continue;
+        }
+        QString uniqueName = it->get<QString>();
+        auto dw = LayoutSaver::DockWidget::dockWidgetForName(uniqueName);
+        from_json(v, *dw);
+        list.push_back(dw);
     }
 }
 
@@ -583,6 +726,23 @@ void to_json(nlohmann::json& j, const LayoutSaver::Layout& layout)
     j["allDockWidgets"] = layout.allDockWidgets;
     j["screenInfo"] = layout.screenInfo;
 }
+
+void from_json(const nlohmann::json& j, LayoutSaver::Layout& layout)
+{
+    layout.serializationVersion = j["serializationVersion"].get<int>();
+    layout.mainWindows = j["mainWindows"].get<LayoutSaver::MainWindow::List>();
+
+    layout.allDockWidgets = j["allDockWidgets"].get<LayoutSaver::DockWidget::List>();
+
+    layout.closedDockWidgets.clear();
+    const QVariantList closedDockWidgetsV = j["closedDockWidgets"].get<QVariantList>();
+    for (const QVariant &v : closedDockWidgetsV) {
+        layout.closedDockWidgets.push_back(LayoutSaver::DockWidget::dockWidgetForName(v.toString()));
+    }
+
+    layout.floatingWindows = j["floatingWindows"].get<LayoutSaver::FloatingWindow::List>();
+    layout.screenInfo = j["screenInfo"].get<LayoutSaver::ScreenInfo::List>();
+}
 }
 
 QByteArray LayoutSaver::Layout::toJson() const
@@ -597,7 +757,8 @@ bool LayoutSaver::Layout::fromJson(const QByteArray &jsonData)
     if (json.is_discarded()) {
         return false;
     }
-    fromVariantMap(json);
+    from_json(json, *this);
+//     fromVariantMap(json);
     return true;
 }
 
