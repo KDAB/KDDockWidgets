@@ -146,6 +146,10 @@ else()
 endif()
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
+# // TODOv2
+find_package(Qt${Qt_VERSION_MAJOR}Quick)
+find_package(Qt${Qt_VERSION_MAJOR}QuickControls2)
+
 set(${PROJECT_NAME}_DEPS "widgets")
 if(${PROJECT_NAME}_QTQUICK)
   find_package(Qt${Qt_VERSION_MAJOR}Quick)

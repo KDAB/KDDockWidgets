@@ -191,6 +191,12 @@ set(DOCKS_INSTALLABLE_PRIVATE_QUICK_INCLUDES
     # private/quick/QWidgetAdapter_quick_p.h
 )
 
+set(KDDW_QTQUICK_FRONTEND_SRCS
+  qtquick/Platform_qtquick.cpp
+  qtquick/Platform_qtquick.h
+)
+
+
 if(${PROJECT_NAME}_QTQUICK)
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
       DockWidgetQuick.cpp
@@ -285,6 +291,9 @@ ecm_generate_headers(camelcase_HEADERS
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
+
+add_library(kddockwidgets_qtquick ${KDDW_QTQUICK_FRONTEND_SRCS})
+
 add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
 set_target_properties(kddockwidgets PROPERTIES OUTPUT_NAME "kddockwidgets${KDDockWidgets_LIBRARY_QTID}")
 set_compiler_flags(kddockwidgets)
@@ -344,6 +353,8 @@ if(${PROJECT_NAME}_QTQUICK)
 else()
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
 endif()
+
+target_link_libraries(kddockwidgets_qtquick PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
 
 if(WIN32)
   target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate dwmapi)
