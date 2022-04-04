@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "SideBar_qtwidgets.h"
+#include "SideBar_qtquick.h"
 
 #include "controllers/DockWidget.h"
 #include "controllers/SideBar.h"
@@ -26,13 +26,13 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::Controllers;
 
-SideBar_qtwidgets::SideBar_qtwidgets(Controllers::SideBar *controller, QWidget *parent)
-    : View_qtwidgets(controller, Type::SideBar, parent)
+SideBar_qtquick::SideBar_qtquick(Controllers::SideBar *controller, QWidget *parent)
+    : View_qtquick(controller, Type::SideBar, parent)
     , m_controller(controller)
 {
 }
 
-void SideBar_qtwidgets::init()
+void SideBar_qtquick::init()
 {
     if (m_controller->isVertical())
         m_layout = new QVBoxLayout(this);
@@ -44,7 +44,7 @@ void SideBar_qtwidgets::init()
     m_layout->addStretch();
 }
 
-void SideBar_qtwidgets::addDockWidget_Impl(DockWidgetBase *dw)
+void SideBar_qtquick::addDockWidget_Impl(DockWidgetBase *dw)
 {
     auto button = createButton(dw, this);
     button->setText(dw->title());
@@ -62,22 +62,22 @@ void SideBar_qtwidgets::addDockWidget_Impl(DockWidgetBase *dw)
     m_layout->insertWidget(count - 1, button);
 }
 
-void SideBar_qtwidgets::removeDockWidget_Impl(DockWidgetBase *)
+void SideBar_qtquick::removeDockWidget_Impl(DockWidgetBase *)
 {
     // Nothing is needed. Button is removed automatically.
 }
 
-bool SideBar_qtwidgets::isVertical() const
+bool SideBar_qtquick::isVertical() const
 {
     return m_controller->isVertical();
 }
 
-SideBarButton *SideBar_qtwidgets::createButton(DockWidgetBase *dw, SideBar_qtwidgets *parent) const
+SideBarButton *SideBar_qtquick::createButton(DockWidgetBase *dw, SideBar_qtquick *parent) const
 {
     return new SideBarButton(dw, parent);
 }
 
-SideBarButton::SideBarButton(DockWidgetBase *dw, SideBar_qtwidgets *parent)
+SideBarButton::SideBarButton(DockWidgetBase *dw, SideBar_qtquick *parent)
     : QToolButton(parent)
     , m_sideBar(parent)
     , m_dockWidget(dw)

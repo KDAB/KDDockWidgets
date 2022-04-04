@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include "View_qtwidgets.h"
+#include "View_qtquick.h"
 #include "views/TabBar.h"
 
-#include <QTabBar>
 
 QT_BEGIN_NAMESPACE
 class QMouseEvent;
@@ -27,11 +26,11 @@ class DockWidget;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT TabBar_qtwidgets : public View_qtwidgets<QTabBar>, public TabBar
+class DOCKS_EXPORT TabBar_qtquick : public View_qtquick<QQuickItem>, public TabBar
 {
     Q_OBJECT
 public:
-    explicit TabBar_qtwidgets(Controllers::TabBar *controller, QWidget *parent = nullptr);
+    explicit TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent = nullptr);
 
     Controllers::TabBar *tabBar() const;
 

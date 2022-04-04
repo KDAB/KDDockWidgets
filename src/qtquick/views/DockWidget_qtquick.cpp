@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DockWidget_qtwidgets.h"
+#include "DockWidget_qtquick.h"
 
 #include <QCloseEvent>
 #include <QVBoxLayout>
@@ -25,10 +25,10 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 using namespace KDDockWidgets::Views;
 
-class DockWidget_qtwidgets::Private
+class DockWidget_qtquick::Private
 {
 public:
-    Private(DockWidget_qtwidgets *q, Controllers::DockWidget *controller)
+    Private(DockWidget_qtquick *q, Controllers::DockWidget *controller)
         : layout(new QVBoxLayout(q))
         , m_controller(controller)
     {
@@ -43,31 +43,31 @@ public:
     Controllers::DockWidget *const m_controller;
 };
 
-DockWidget_qtwidgets::DockWidget_qtwidgets(Controllers::DockWidget *controller,
+DockWidget_qtquick::DockWidget_qtquick(Controllers::DockWidget *controller,
                                            Qt::WindowFlags windowFlags)
-    : View_qtwidgets<QWidget>(controller, Type::DockWidget, nullptr, windowFlags)
+    : View_qtquick<QWidget>(controller, Type::DockWidget, nullptr, windowFlags)
     , d(new Private(this, controller))
 {
 }
 
-DockWidget_qtwidgets::~DockWidget_qtwidgets()
+DockWidget_qtquick::~DockWidget_qtquick()
 {
     delete d;
 }
 
-void DockWidget_qtwidgets::init()
+void DockWidget_qtquick::init()
 {
     connect(d->m_controller, &DockWidgetBase::widgetChanged, this, [this](QWidget *w) {
         d->layout->addWidget(w);
     });
 }
 
-Controllers::DockWidget *DockWidget_qtwidgets::dockWidget() const
+Controllers::DockWidget *DockWidget_qtquick::dockWidget() const
 {
     return d->m_controller;
 }
 
-bool DockWidget_qtwidgets::event(QEvent *e)
+bool DockWidget_qtquick::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
         d->m_controller->onParentChanged();
@@ -80,12 +80,12 @@ bool DockWidget_qtwidgets::event(QEvent *e)
     return QWidget::event(e);
 }
 
-void DockWidget_qtwidgets::closeEvent(QCloseEvent *e)
+void DockWidget_qtquick::closeEvent(QCloseEvent *e)
 {
     d->m_controller->onCloseEvent(e);
 }
 
-void DockWidget_qtwidgets::resizeEvent(QResizeEvent *e)
+void DockWidget_qtquick::resizeEvent(QResizeEvent *e)
 {
     d->m_controller->onResize(e->size());
     return QWidget::resizeEvent(e);

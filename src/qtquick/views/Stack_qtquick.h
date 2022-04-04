@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "View_qtwidgets.h"
+#include "View_qtquick.h"
 #include "views/Stack.h"
 
 #include <QTabWidget>
@@ -30,11 +30,11 @@ class Frame;
 namespace KDDockWidgets {
 namespace Views {
 
-class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public Stack
+class DOCKS_EXPORT Stack_qtquick : public View_qtquick<QQuickItem>, public Stack
 {
     Q_OBJECT
 public:
-    explicit Stack_qtwidgets(Controllers::Stack *controller,
+    explicit Stack_qtquick(Controllers::Stack *controller,
                              Controllers::Frame *parent = nullptr);
 
     Controllers::Stack *stack() const;
@@ -73,7 +73,7 @@ private:
     QAbstractButton *m_closeButton = nullptr;
     Controllers::Stack *const m_stack;
 
-    Q_DISABLE_COPY(Stack_qtwidgets)
+    Q_DISABLE_COPY(Stack_qtquick)
 };
 
 }

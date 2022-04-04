@@ -1,4 +1,4 @@
-#include "Separator_qtwidgets.h"
+#include "Separator_qtquick.h"
 /*
   This file is part of KDDockWidgets.
 
@@ -10,7 +10,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "View_qtwidgets.h"
+#include "View_qtquick.h"
 
 #include "Config.h"
 #include "private/Logging_p.h"
@@ -22,14 +22,14 @@
 
 using namespace KDDockWidgets::Views;
 
-Separator_qtwidgets::Separator_qtwidgets(Controllers::Separator *controller, QWidget *parent)
-    : View_qtwidgets(controller, Type::Separator, parent)
+Separator_qtquick::Separator_qtquick(Controllers::Separator *controller, QWidget *parent)
+    : View_qtquick(controller, Type::Separator, parent)
     , m_controller(controller)
 {
     setMouseTracking(true);
 }
 
-void Separator_qtwidgets::paintEvent(QPaintEvent *ev)
+void Separator_qtquick::paintEvent(QPaintEvent *ev)
 {
     if (freed())
         return;
@@ -54,7 +54,7 @@ void Separator_qtwidgets::paintEvent(QPaintEvent *ev)
     QWidget::parentWidget()->style()->drawControl(QStyle::CE_Splitter, &opt, &p, this);
 }
 
-void Separator_qtwidgets::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
+void Separator_qtquick::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
 {
     if (freed())
         return;
@@ -66,12 +66,12 @@ void Separator_qtwidgets::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
         setCursor(Qt::SizeHorCursor);
 }
 
-void Separator_qtwidgets::leaveEvent(QEvent *)
+void Separator_qtquick::leaveEvent(QEvent *)
 {
     setCursor(Qt::ArrowCursor);
 }
 
-void Separator_qtwidgets::mousePressEvent(QMouseEvent *)
+void Separator_qtquick::mousePressEvent(QMouseEvent *)
 {
     if (freed())
         return;
@@ -79,7 +79,7 @@ void Separator_qtwidgets::mousePressEvent(QMouseEvent *)
     m_controller->onMousePress();
 }
 
-void Separator_qtwidgets::mouseMoveEvent(QMouseEvent *ev)
+void Separator_qtquick::mouseMoveEvent(QMouseEvent *ev)
 {
     if (freed())
         return;
@@ -87,7 +87,7 @@ void Separator_qtwidgets::mouseMoveEvent(QMouseEvent *ev)
     m_controller->onMouseMove(mapToParent(ev->pos()));
 }
 
-void Separator_qtwidgets::mouseReleaseEvent(QMouseEvent *)
+void Separator_qtquick::mouseReleaseEvent(QMouseEvent *)
 {
     if (freed())
         return;
@@ -95,7 +95,7 @@ void Separator_qtwidgets::mouseReleaseEvent(QMouseEvent *)
     m_controller->onMouseReleased();
 }
 
-void Separator_qtwidgets::mouseDoubleClickEvent(QMouseEvent *)
+void Separator_qtquick::mouseDoubleClickEvent(QMouseEvent *)
 {
     if (freed())
         return;

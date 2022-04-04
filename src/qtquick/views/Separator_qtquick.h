@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "View_qtwidgets.h"
+#include "View_qtquick.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include <qwidget.h>
 
@@ -22,11 +22,11 @@ class Separator;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT Separator_qtwidgets : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT Separator_qtquick : public View_qtquick<QQuickItem>
 {
     Q_OBJECT
 public:
-    explicit Separator_qtwidgets(Controllers::Separator *controller, QWidget *parent = nullptr);
+    explicit Separator_qtquick(Controllers::Separator *controller, QQuickItem *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *) override;

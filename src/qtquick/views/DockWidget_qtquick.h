@@ -16,17 +16,14 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#ifndef KD_DOCKWIDGET_H
-#define KD_DOCKWIDGET_H
+#pragma once
 
 #include "controllers/DockWidget.h"
-#include "View_qtwidgets.h"
+#include "View_qtquick.h"
 
 QT_BEGIN_NAMESPACE
 class QCloseEvent;
 QT_END_NAMESPACE
-
-// clazy:excludeall=ctor-missing-parent-argument
 
 namespace KDDockWidgets {
 
@@ -37,7 +34,7 @@ namespace Views {
  *
  * Most of the interface lives in DockWidgetBase, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT DockWidget_qtquick : public View_qtquick<QQuickItem>
 {
     Q_OBJECT
 public:
@@ -52,27 +49,18 @@ public:
      * when visible, or stays without a parent when hidden. This allows to support docking
      * to different main windows.
      */
-    explicit DockWidget_qtwidgets(Controllers::DockWidget *controller,
-                                  Qt::WindowFlags windowFlags = {});
+    explicit DockWidget_qtquick(Controllers::DockWidget *controller,
+                                Qt::WindowFlags windowFlags = {});
 
     ///@brief destructor
-    ~DockWidget_qtwidgets() override;
+    ~DockWidget_qtquick() override;
 
     Controllers::DockWidget *dockWidget() const;
 
-protected:
-    void init() override;
-    bool event(QEvent *) override;
-    void closeEvent(QCloseEvent *) override;
-    void resizeEvent(QResizeEvent *) override;
-
 private:
-    class Private;
-    Private *const d;
+
 };
 
 }
 
 }
-
-#endif

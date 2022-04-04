@@ -9,10 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Frame_qtwidgets.h"
+#include "Frame_qtquick.h"
 
-#include "qtwidgets/views/View_qtwidgets.h"
-#include "qtwidgets/views/DockWidget_qtwidgets.h"
+#include "qtwidgets/views/View_qtquick.h"
+#include "qtwidgets/views/DockWidget_qtquick.h"
 
 #include "private/LayoutWidget_p.h"
 #include "controllers/Frame.h"
@@ -31,7 +31,7 @@ using namespace KDDockWidgets::Views;
 class VBoxLayout : public QVBoxLayout // clazy:exclude=missing-qobject-macro
 {
 public:
-    explicit VBoxLayout(Frame_qtwidgets *parent)
+    explicit VBoxLayout(Frame_qtquick *parent)
         : QVBoxLayout(parent)
         , m_frameWidget(parent)
     {
@@ -46,18 +46,18 @@ public:
         Q_EMIT m_frameWidget->layoutInvalidated();
     }
 
-    Frame_qtwidgets *const m_frameWidget;
+    Frame_qtquick *const m_frameWidget;
 };
 
 VBoxLayout::~VBoxLayout() = default;
 
-Frame_qtwidgets::Frame_qtwidgets(Controllers::Frame *controller, QWidget *parent)
-    : View_qtwidgets<QWidget>(controller, Type::Frame, parent)
+Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QWidget *parent)
+    : View_qtquick<QWidget>(controller, Type::Frame, parent)
     , m_controller(controller)
 {
 }
 
-void Frame_qtwidgets::init()
+void Frame_qtquick::init()
 {
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
@@ -72,30 +72,30 @@ void Frame_qtwidgets::init()
         setAutoFillBackground(true);
 }
 
-void Frame_qtwidgets::free_impl()
+void Frame_qtquick::free_impl()
 {
     // TODO: just use the base class impl, which uses deleteLater()
     // do it once there's no state here
     delete this;
 }
 
-void Frame_qtwidgets::setLayoutItem(Layouting::Item *item)
+void Frame_qtquick::setLayoutItem(Layouting::Item *item)
 {
     // TODO: Remove from View, maybe
     m_controller->setLayoutItem(item);
 }
 
-void Frame_qtwidgets::renameTab(int index, const QString &text)
+void Frame_qtquick::renameTab(int index, const QString &text)
 {
     m_controller->tabWidget()->renameTab(index, text);
 }
 
-void Frame_qtwidgets::changeTabIcon(int index, const QIcon &icon)
+void Frame_qtquick::changeTabIcon(int index, const QIcon &icon)
 {
     m_controller->tabWidget()->changeTabIcon(index, icon);
 }
 
-int Frame_qtwidgets::nonContentsHeight() const
+int Frame_qtquick::nonContentsHeight() const
 {
     Controllers::TitleBar *tb = m_controller->titleBar();
     QWidget *tabBar = m_controller->tabBar()->view()->asQWidget();
@@ -103,52 +103,52 @@ int Frame_qtwidgets::nonContentsHeight() const
     return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);
 }
 
-int Frame_qtwidgets::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
+int Frame_qtquick::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
 {
     return m_controller->tabWidget()->indexOfDockWidget(dw);
 }
 
-void Frame_qtwidgets::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
+void Frame_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
     m_controller->tabWidget()->setCurrentDockWidget(dw);
 }
 
-int Frame_qtwidgets::currentIndex_impl() const
+int Frame_qtquick::currentIndex_impl() const
 {
     return m_controller->tabWidget()->currentIndex();
 }
 
-void Frame_qtwidgets::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
+void Frame_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
 {
     m_controller->tabWidget()->insertDockWidget(dw, index);
 }
 
-void Frame_qtwidgets::removeWidget_impl(Controllers::DockWidget *dw)
+void Frame_qtquick::removeWidget_impl(Controllers::DockWidget *dw)
 {
     m_controller->tabWidget()->removeDockWidget(dw);
 }
 
-void Frame_qtwidgets::setCurrentTabIndex_impl(int index)
+void Frame_qtquick::setCurrentTabIndex_impl(int index)
 {
     m_controller->tabWidget()->setCurrentDockWidget(index);
 }
 
-KDDockWidgets::Controllers::DockWidget *Frame_qtwidgets::currentDockWidget_impl() const
+KDDockWidgets::Controllers::DockWidget *Frame_qtquick::currentDockWidget_impl() const
 {
     return m_controller->tabWidget()->dockwidgetAt(m_controller->tabWidget()->currentIndex());
 }
 
-KDDockWidgets::Controllers::DockWidget *Frame_qtwidgets::dockWidgetAt_impl(int index) const
+KDDockWidgets::Controllers::DockWidget *Frame_qtquick::dockWidgetAt_impl(int index) const
 {
     return m_controller->tabWidget()->dockwidgetAt(index);
 }
 
-Controllers::Frame *Frame_qtwidgets::frame() const
+Controllers::Frame *Frame_qtquick::frame() const
 {
     return m_controller;
 }
 
-bool Frame_qtwidgets::event(QEvent *e)
+bool Frame_qtquick::event(QEvent *e)
 {
     if (freed())
         return QWidget::event(e);
@@ -164,13 +164,13 @@ bool Frame_qtwidgets::event(QEvent *e)
     return QWidget::event(e);
 }
 
-void Frame_qtwidgets::closeEvent(QCloseEvent *e)
+void Frame_qtquick::closeEvent(QCloseEvent *e)
 {
     if (!freed())
         m_controller->onCloseEvent(e);
 }
 
-void Frame_qtwidgets::paintEvent(QPaintEvent *)
+void Frame_qtquick::paintEvent(QPaintEvent *)
 {
     if (freed())
         return;
@@ -199,7 +199,7 @@ void Frame_qtwidgets::paintEvent(QPaintEvent *)
     }
 }
 
-QSize Frame_qtwidgets::maxSizeHint() const
+QSize Frame_qtquick::maxSizeHint() const
 {
     if (freed())
         return {};
@@ -209,7 +209,7 @@ QSize Frame_qtwidgets::maxSizeHint() const
     return waste + m_controller->biggestDockWidgetMaxSize();
 }
 
-QRect Frame_qtwidgets::dragRect() const
+QRect Frame_qtquick::dragRect() const
 {
     QRect rect = m_controller->dragRect();
     if (rect.isValid())

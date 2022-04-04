@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "View_qtwidgets.h"
+#include "View_qtquick.h"
 #include "views/Frame.h"
 
 namespace KDDockWidgets::Controllers {
@@ -20,11 +20,11 @@ class Frame;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT Frame_qtwidgets : public View_qtwidgets<QWidget>, public Frame
+class DOCKS_EXPORT Frame_qtquick : public View_qtquick<QQuickItem>, public Frame
 {
     Q_OBJECT
 public:
-    explicit Frame_qtwidgets(Controllers::Frame *controller, QWidget *parent = nullptr);
+    explicit Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent = nullptr);
     void init() override;
 
     void setLayoutItem(Layouting::Item *item) override;

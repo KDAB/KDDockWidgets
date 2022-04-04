@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "FloatingWindow_qtwidgets.h"
+#include "FloatingWindow_qtquick.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/Frame.h"
 #include "controllers/TitleBar.h"
@@ -20,7 +20,7 @@
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 
-#include "TitleBar_qtwidgets.h"
+#include "TitleBar_qtquick.h"
 
 #include <QApplication>
 #include <QMainWindow>
@@ -33,15 +33,15 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-FloatingWindow_qtwidgets::FloatingWindow_qtwidgets(Controllers::FloatingWindow *controller,
+FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
                                                    QMainWindow *parent, Qt::WindowFlags windowFlags)
-    : View_qtwidgets<QWidget>(controller, Type::FloatingWindow, parent, windowFlags)
+    : View_qtquick<QWidget>(controller, Type::FloatingWindow, parent, windowFlags)
     , m_controller(controller)
     , m_vlayout(new QVBoxLayout(this))
 {
 }
 
-void FloatingWindow_qtwidgets::paintEvent(QPaintEvent *ev)
+void FloatingWindow_qtquick::paintEvent(QPaintEvent *ev)
 {
     if (Config::self().disabledPaintEvents() & Config::CustomizableWidget_FloatingWindow) {
         QWidget::paintEvent(ev);
@@ -58,7 +58,7 @@ void FloatingWindow_qtwidgets::paintEvent(QPaintEvent *ev)
     p.drawRect(rectf.adjusted(halfPenWidth, halfPenWidth, -halfPenWidth, -halfPenWidth));
 }
 
-bool FloatingWindow_qtwidgets::event(QEvent *ev)
+bool FloatingWindow_qtquick::event(QEvent *ev)
 {
     if (ev->type() == QEvent::WindowStateChange) {
         Q_EMIT m_controller->windowStateChanged(static_cast<QWindowStateChangeEvent *>(ev));
@@ -94,10 +94,10 @@ bool FloatingWindow_qtwidgets::event(QEvent *ev)
         m_controller->updateSizeConstraints(); // TODO: Move to base class
     }
 
-    return View_qtwidgets<QWidget>::event(ev);
+    return View_qtquick<QWidget>::event(ev);
 }
 
-void FloatingWindow_qtwidgets::init()
+void FloatingWindow_qtquick::init()
 {
     m_vlayout->setSpacing(0);
     updateMargins();
@@ -110,17 +110,17 @@ void FloatingWindow_qtwidgets::init()
     });
 }
 
-void FloatingWindow_qtwidgets::updateMargins()
+void FloatingWindow_qtquick::updateMargins()
 {
     m_vlayout->setContentsMargins(QMargins(4, 4, 4, 4) * logicalDpiFactor(this));
 }
 
-Controllers::FloatingWindow *FloatingWindow_qtwidgets::floatingWindow() const
+Controllers::FloatingWindow *FloatingWindow_qtquick::floatingWindow() const
 {
     return m_controller;
 }
 
-void FloatingWindow_qtwidgets::closeEvent(QCloseEvent *ev)
+void FloatingWindow_qtquick::closeEvent(QCloseEvent *ev)
 {
     m_controller->onCloseEvent(ev);
 }

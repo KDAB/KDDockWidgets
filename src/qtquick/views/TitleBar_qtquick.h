@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "View_qtwidgets.h"
+#include "View_qtquick.h"
 #include "controllers/FloatingWindow.h"
 #include "views/TitleBar.h"
 
@@ -26,11 +26,11 @@ class TitleBar;
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>, public Views::TitleBar
+class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick<QQuickItem>, public Views::TitleBar
 {
     Q_OBJECT
 public:
-    explicit TitleBar_qtwidgets(Controllers::TitleBar *controller, QWidget *parent = nullptr);
+    explicit TitleBar_qtquick(Controllers::TitleBar *controller, QQuickItem *parent = nullptr);
 
     // TODO:
     void updateMaximizeButton() override;
@@ -77,7 +77,7 @@ class Button : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit Button(QWidget *parent)
+    explicit Button(QQuickItem *parent)
         : QToolButton(parent)
     {
         setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));

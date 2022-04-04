@@ -16,7 +16,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "MainWindow_qtwidgets.h"
+#include "MainWindow_qtquick.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
@@ -52,10 +52,10 @@ public:
 };
 }
 
-class MainWindow_qtwidgets::Private
+class MainWindow_qtquick::Private
 {
 public:
-    explicit Private(Controllers::MainWindow *controller, MainWindow_qtwidgets *qq)
+    explicit Private(Controllers::MainWindow *controller, MainWindow_qtquick *qq)
         : q(qq)
         , m_controller(controller)
         , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
@@ -106,7 +106,7 @@ public:
         m_layout->setContentsMargins(m_centerWidgetMargins * factor);
     }
 
-    MainWindow_qtwidgets *const q;
+    MainWindow_qtquick *const q;
     Controllers::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
     QHash<SideBarLocation, Controllers::SideBar *> m_sideBars; // TODOv2: Move to controller
@@ -119,18 +119,18 @@ MyCentralWidget::~MyCentralWidget()
 {
 }
 
-MainWindow_qtwidgets::MainWindow_qtwidgets(Controllers::MainWindow *controller,
+MainWindow_qtquick::MainWindow_qtquick(Controllers::MainWindow *controller,
                                            QWidget *parent, Qt::WindowFlags flags)
-    : View_qtwidgets<QMainWindow>(controller, Type::MainWindow, parent, flags)
+    : View_qtquick<QMainWindow>(controller, Type::MainWindow, parent, flags)
     , d(new Private(controller, this))
 {
 }
 
-MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
+MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName,
                                            MainWindowOptions options,
                                            QWidget *parent,
                                            Qt::WindowFlags flags)
-    : View_qtwidgets<QMainWindow>(new Controllers::MainWindow(this, uniqueName, options),
+    : View_qtquick<QMainWindow>(new Controllers::MainWindow(this, uniqueName, options),
                                   Type::MainWindow, parent, flags)
     , d(new Private(static_cast<Controllers::MainWindow *>(controller()), this))
 {
@@ -139,37 +139,37 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
     init();
 }
 
-MainWindow_qtwidgets::~MainWindow_qtwidgets()
+MainWindow_qtquick::~MainWindow_qtquick()
 {
     delete d;
 }
 
-void MainWindow_qtwidgets::init()
+void MainWindow_qtquick::init()
 {
     d->init();
 }
 
-void MainWindow_qtwidgets::setCentralWidget(QWidget *w)
+void MainWindow_qtquick::setCentralWidget(QWidget *w)
 {
     QMainWindow::setCentralWidget(w);
 }
 
-Controllers::SideBar *MainWindow_qtwidgets::sideBar(SideBarLocation location) const
+Controllers::SideBar *MainWindow_qtquick::sideBar(SideBarLocation location) const
 {
     return d->m_sideBars.value(location);
 }
 
-void MainWindow_qtwidgets::resizeEvent(QResizeEvent *ev)
+void MainWindow_qtquick::resizeEvent(QResizeEvent *ev)
 {
     d->m_controller->onResized(ev);
 }
 
-QMargins MainWindow_qtwidgets::centerWidgetMargins() const
+QMargins MainWindow_qtquick::centerWidgetMargins() const
 {
     return d->m_centerWidgetMargins;
 }
 
-void MainWindow_qtwidgets::setCenterWidgetMargins(const QMargins &margins)
+void MainWindow_qtquick::setCenterWidgetMargins(const QMargins &margins)
 {
     if (d->m_centerWidgetMargins == margins)
         return;
@@ -177,17 +177,17 @@ void MainWindow_qtwidgets::setCenterWidgetMargins(const QMargins &margins)
     d->updateMargins();
 }
 
-QRect MainWindow_qtwidgets::centralAreaGeometry() const
+QRect MainWindow_qtquick::centralAreaGeometry() const
 {
     return centralWidget()->geometry();
 }
 
-Controllers::MainWindow *MainWindow_qtwidgets::mainWindow() const
+Controllers::MainWindow *MainWindow_qtquick::mainWindow() const
 {
     return d->m_controller;
 }
 
-void MainWindow_qtwidgets::setContentsMargins(int left, int top, int right, int bottom)
+void MainWindow_qtquick::setContentsMargins(int left, int top, int right, int bottom)
 {
     QMainWindow::setContentsMargins(left, top, right, bottom);
 }

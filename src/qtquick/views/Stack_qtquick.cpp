@@ -9,11 +9,11 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Stack_qtwidgets.h"
+#include "Stack_qtquick.h"
 #include "Controller.h"
 #include "controllers/Stack.h"
 #include "controllers/TitleBar.h"
-#include "qtwidgets/views/DockWidget_qtwidgets.h"
+#include "qtwidgets/views/DockWidget_qtquick.h"
 #include "private/DockRegistry_p.h"
 #include "kddockwidgets/FrameworkWidgetFactory.h"
 
@@ -26,19 +26,19 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Stack_qtwidgets::Stack_qtwidgets(Controllers::Stack *controller, Controllers::Frame *parent)
-    : View_qtwidgets<QTabWidget>(controller, Type::Separator, parent ? parent->view()->asQWidget() : nullptr)
+Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, Controllers::Frame *parent)
+    : View_qtquick<QTabWidget>(controller, Type::Separator, parent ? parent->view()->asQWidget() : nullptr)
     , m_stack(controller)
 {
 }
 
-void Stack_qtwidgets::init()
+void Stack_qtquick::init()
 {
     setTabBar(tabBar());
     setTabsClosable(Config::self().flags() & Config::Flag_TabsHaveCloseButton);
 
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &QTabWidget::customContextMenuRequested, this, &Stack_qtwidgets::showContextMenu);
+    connect(this, &QTabWidget::customContextMenuRequested, this, &Stack_qtquick::showContextMenu);
 
     // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user presses [x]
     connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
@@ -67,22 +67,22 @@ void Stack_qtwidgets::init()
     setDocumentMode(m_stack->options() & StackOption_DocumentMode);
 }
 
-int Stack_qtwidgets::numDockWidgets() const
+int Stack_qtquick::numDockWidgets() const
 {
     return count();
 }
 
-void Stack_qtwidgets::removeDockWidget(Controllers::DockWidget *dw)
+void Stack_qtquick::removeDockWidget(Controllers::DockWidget *dw)
 {
     removeTab(indexOf(dw->view()->asQWidget()));
 }
 
-int Stack_qtwidgets::indexOfDockWidget(const Controllers::DockWidget *dw) const
+int Stack_qtquick::indexOfDockWidget(const Controllers::DockWidget *dw) const
 {
     return indexOf(dw->view()->asQWidget());
 }
 
-void Stack_qtwidgets::mouseDoubleClickEvent(QMouseEvent *ev)
+void Stack_qtquick::mouseDoubleClickEvent(QMouseEvent *ev)
 {
     if (m_stack->onMouseDoubleClick(ev->pos())) {
         ev->accept();
@@ -91,7 +91,7 @@ void Stack_qtwidgets::mouseDoubleClickEvent(QMouseEvent *ev)
     }
 }
 
-void Stack_qtwidgets::mousePressEvent(QMouseEvent *ev)
+void Stack_qtquick::mousePressEvent(QMouseEvent *ev)
 {
     QTabWidget::mousePressEvent(ev);
 
@@ -101,55 +101,55 @@ void Stack_qtwidgets::mousePressEvent(QMouseEvent *ev)
     }
 }
 
-void Stack_qtwidgets::tabInserted(int)
+void Stack_qtquick::tabInserted(int)
 {
     m_stack->onTabInserted();
 }
 
-void Stack_qtwidgets::tabRemoved(int)
+void Stack_qtquick::tabRemoved(int)
 {
     m_stack->onTabRemoved();
 }
 
-void Stack_qtwidgets::setCurrentDockWidget(int index)
+void Stack_qtquick::setCurrentDockWidget(int index)
 {
     setCurrentIndex(index);
 }
 
-bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw,
+bool Stack_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw,
                                        const QIcon &icon, const QString &title)
 {
     insertTab(index, dw->view()->asQWidget(), icon, title);
     return true;
 }
 
-void Stack_qtwidgets::setTabBarAutoHide(bool b)
+void Stack_qtquick::setTabBarAutoHide(bool b)
 {
     QTabWidget::setTabBarAutoHide(b);
 }
 
-void Stack_qtwidgets::renameTab(int index, const QString &text)
+void Stack_qtquick::renameTab(int index, const QString &text)
 {
     setTabText(index, text);
 }
 
-void Stack_qtwidgets::changeTabIcon(int index, const QIcon &icon)
+void Stack_qtquick::changeTabIcon(int index, const QIcon &icon)
 {
     setTabIcon(index, icon);
 }
 
-Controllers::DockWidget *Stack_qtwidgets::dockwidgetAt(int index) const
+Controllers::DockWidget *Stack_qtquick::dockwidgetAt(int index) const
 {
-    auto view = qobject_cast<DockWidget_qtwidgets *>(widget(index));
+    auto view = qobject_cast<DockWidget_qtquick *>(widget(index));
     return view ? view->dockWidget() : nullptr;
 }
 
-int Stack_qtwidgets::currentIndex() const
+int Stack_qtquick::currentIndex() const
 {
     return QTabWidget::currentIndex();
 }
 
-void Stack_qtwidgets::setupTabBarButtons()
+void Stack_qtquick::setupTabBarButtons()
 {
     if (!(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden))
         return;
@@ -185,14 +185,14 @@ void Stack_qtwidgets::setupTabBarButtons()
     });
 }
 
-void Stack_qtwidgets::updateMargins()
+void Stack_qtquick::updateMargins()
 {
     const qreal factor = logicalDpiFactor(this);
     m_cornerWidgetLayout->setContentsMargins(QMargins(0, 0, 2, 0) * factor);
     m_cornerWidgetLayout->setSpacing(int(2 * factor));
 }
 
-void Stack_qtwidgets::showContextMenu(QPoint pos)
+void Stack_qtquick::showContextMenu(QPoint pos)
 {
     if (!(Config::self().flags() & Config::Flag_AllowSwitchingTabsViaMenu))
         return;
@@ -223,17 +223,17 @@ void Stack_qtwidgets::showContextMenu(QPoint pos)
     menu.exec(mapToGlobal(pos));
 }
 
-QTabBar *Stack_qtwidgets::tabBar() const
+QTabBar *Stack_qtquick::tabBar() const
 {
     return static_cast<QTabBar *>(m_stack->tabBar()->view()->asQWidget());
 }
 
-Controllers::Stack *Stack_qtwidgets::stack() const
+Controllers::Stack *Stack_qtquick::stack() const
 {
     return m_stack;
 }
 
-bool Stack_qtwidgets::isPositionDraggable(QPoint p) const
+bool Stack_qtquick::isPositionDraggable(QPoint p) const
 {
     if (tabPosition() != QTabWidget::North) {
         qWarning() << Q_FUNC_INFO << "Not implemented yet. Only North is supported";

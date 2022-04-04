@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "TabBar_qtwidgets.h"
+#include "TabBar_qtquick.h"
 #include "../controllers/TabBar.h"
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
@@ -52,31 +52,31 @@ public:
 }
 
 
-TabBar_qtwidgets::TabBar_qtwidgets(Controllers::TabBar *controller, QWidget *parent)
-    : View_qtwidgets(controller, Type::TabBar, parent)
+TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QWidget *parent)
+    : View_qtquick(controller, Type::TabBar, parent)
     , m_controller(controller)
 {
 }
 
-int TabBar_qtwidgets::tabAt(QPoint localPos) const
+int TabBar_qtquick::tabAt(QPoint localPos) const
 {
     return QTabBar::tabAt(localPos);
 }
 
-Controllers::DockWidget *TabBar_qtwidgets::currentDockWidget() const
+Controllers::DockWidget *TabBar_qtquick::currentDockWidget() const
 {
     const int index = currentIndex();
     return index == -1 ? nullptr
                        : m_controller->dockWidgetAt(index);
 }
 
-void TabBar_qtwidgets::mousePressEvent(QMouseEvent *e)
+void TabBar_qtquick::mousePressEvent(QMouseEvent *e)
 {
     m_controller->onMousePress(e->pos());
     QTabBar::mousePressEvent(e);
 }
 
-void TabBar_qtwidgets::mouseMoveEvent(QMouseEvent *e)
+void TabBar_qtquick::mouseMoveEvent(QMouseEvent *e)
 {
     if (count() > 1) {
         // Only allow to re-order tabs if we have more than 1 tab, otherwise it's just weird.
@@ -84,12 +84,12 @@ void TabBar_qtwidgets::mouseMoveEvent(QMouseEvent *e)
     }
 }
 
-void TabBar_qtwidgets::mouseDoubleClickEvent(QMouseEvent *e)
+void TabBar_qtquick::mouseDoubleClickEvent(QMouseEvent *e)
 {
     m_controller->onMouseDoubleClick(e->pos());
 }
 
-bool TabBar_qtwidgets::event(QEvent *ev)
+bool TabBar_qtquick::event(QEvent *ev)
 {
     // Qt has a bug in QWidgetPrivate::deepestFocusProxy(), it doesn't honour visibility
     // of the focus scope. Once an hidden widget is focused the chain is broken and tab
@@ -110,22 +110,22 @@ bool TabBar_qtwidgets::event(QEvent *ev)
     return result;
 }
 
-QString TabBar_qtwidgets::text(int index) const
+QString TabBar_qtquick::text(int index) const
 {
     return tabText(index);
 }
 
-QRect TabBar_qtwidgets::rectForTab(int index) const
+QRect TabBar_qtquick::rectForTab(int index) const
 {
     return QTabBar::tabRect(index);
 }
 
-void TabBar_qtwidgets::moveTabTo(int from, int to)
+void TabBar_qtquick::moveTabTo(int from, int to)
 {
     moveTab(from, to);
 }
 
-bool TabBar_qtwidgets::tabsAreMovable() const
+bool TabBar_qtquick::tabsAreMovable() const
 {
     return isMovable();
 }

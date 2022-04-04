@@ -19,7 +19,7 @@
 #ifndef KD_MAINWINDOW_H
 #define KD_MAINWINDOW_H
 
-#include "View_qtwidgets.h"
+#include "View_qtquick.h"
 #include "controllers/MainWindow.h"
 #include "views/MainWindow.h"
 
@@ -38,11 +38,11 @@ namespace Views {
  * @brief The QMainwindow sub-class that the application should use to be able
  * to dock KDDockWidget::DockWidget instances.
  */
-class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>, public MainWindow
+class DOCKS_EXPORT MainWindow_qtquick : public View_qtquick<QQuickItem>, public MainWindow
 {
     Q_OBJECT
 public:
-    typedef QVector<MainWindow_qtwidgets *> List;
+    typedef QVector<MainWindow_qtquick *> List;
 
     ///@brief Constructor. Use it as you would use QMainWindow.
     ///@param uniqueName Mandatory name that should be unique between all MainWindow instances.
@@ -50,18 +50,18 @@ public:
     ///@param options optional MainWindowOptions to use
     ///@param parent QObject *parent to pass to QMainWindow constructor.
     ///@param flags Window flags to  pass to QMainWindow constructor.
-    explicit MainWindow_qtwidgets(Controllers::MainWindow *,
-                                  QWidget *parent = nullptr,
+    explicit MainWindow_qtquick(Controllers::MainWindow *,
+                                  QQuickItem *parent = nullptr,
                                   Qt::WindowFlags flags = Qt::WindowFlags());
 
 
-    explicit MainWindow_qtwidgets(const QString &uniqueName,
+    explicit MainWindow_qtquick(const QString &uniqueName,
                                   MainWindowOptions options = {},
-                                  QWidget *parent = nullptr,
+                                  QQuickItem *parent = nullptr,
                                   Qt::WindowFlags flags = Qt::WindowFlags());
 
     ///@brief Destructor
-    ~MainWindow_qtwidgets() override;
+    ~MainWindow_qtquick() override;
 
     ///@brief returns the sidebar for the specified location
     Controllers::SideBar *sideBar(SideBarLocation) const override;

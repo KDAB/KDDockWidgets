@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "TitleBar_qtwidgets.h"
+#include "TitleBar_qtquick.h"
 #include "../controllers/TitleBar.h"
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
@@ -90,14 +90,14 @@ QSize Button::sizeHint() const
     return QSize(m, m);
 }
 
-TitleBar_qtwidgets::TitleBar_qtwidgets(Controllers::TitleBar *controller, QWidget *parent)
-    : View_qtwidgets(controller, Type::TitleBar, parent)
+TitleBar_qtquick::TitleBar_qtquick(Controllers::TitleBar *controller, QWidget *parent)
+    : View_qtquick(controller, Type::TitleBar, parent)
     , m_controller(controller)
     , m_layout(new QHBoxLayout(this))
 {
 }
 
-void TitleBar_qtwidgets::init()
+void TitleBar_qtquick::init()
 {
     qCDebug(creation) << "TitleBarWidget" << this;
     if (m_controller->titleBarIsFocusable())
@@ -165,7 +165,7 @@ void TitleBar_qtwidgets::init()
     });
 }
 
-void TitleBar_qtwidgets::paintEvent(QPaintEvent *)
+void TitleBar_qtquick::paintEvent(QPaintEvent *)
 {
     if (freed())
         return;
@@ -187,12 +187,12 @@ void TitleBar_qtwidgets::paintEvent(QPaintEvent *)
     style()->drawControl(QStyle::CE_DockWidgetTitle, &titleOpt, &p, this);
 }
 
-void TitleBar_qtwidgets::updateMinimizeButton()
+void TitleBar_qtquick::updateMinimizeButton()
 {
     m_minimizeButton->setVisible(m_controller->supportsMinimizeButton());
 }
 
-void TitleBar_qtwidgets::updateAutoHideButton()
+void TitleBar_qtquick::updateAutoHideButton()
 {
     if (Config::self().flags() & Config::Flag_AutoHideSupport) {
         auto factory = Config::self().frameworkWidgetFactory();
@@ -210,7 +210,7 @@ void TitleBar_qtwidgets::updateAutoHideButton()
     m_autoHideButton->setVisible(m_controller->supportsAutoHideButton());
 }
 
-void TitleBar_qtwidgets::updateMaximizeButton()
+void TitleBar_qtquick::updateMaximizeButton()
 {
     if (auto fw = m_controller->floatingWindow()) {
         auto factory = Config::self().frameworkWidgetFactory();
@@ -225,7 +225,7 @@ void TitleBar_qtwidgets::updateMaximizeButton()
     }
 }
 
-QRect TitleBar_qtwidgets::iconRect() const
+QRect TitleBar_qtquick::iconRect() const
 {
     if (m_controller->icon().isNull()) {
         return QRect(0, 0, 0, 0);
@@ -234,7 +234,7 @@ QRect TitleBar_qtwidgets::iconRect() const
     }
 }
 
-int TitleBar_qtwidgets::buttonAreaWidth() const
+int TitleBar_qtquick::buttonAreaWidth() const
 {
     int smallestX = width();
 
@@ -246,14 +246,14 @@ int TitleBar_qtwidgets::buttonAreaWidth() const
     return width() - smallestX;
 }
 
-void TitleBar_qtwidgets::updateMargins()
+void TitleBar_qtquick::updateMargins()
 {
     const qreal factor = logicalDpiFactor(this);
     m_layout->setContentsMargins(QMargins(2, 2, 2, 2) * factor);
     m_layout->setSpacing(int(2 * factor));
 }
 
-void TitleBar_qtwidgets::mouseDoubleClickEvent(QMouseEvent *e)
+void TitleBar_qtquick::mouseDoubleClickEvent(QMouseEvent *e)
 {
     if (!m_controller)
         return;
@@ -262,7 +262,7 @@ void TitleBar_qtwidgets::mouseDoubleClickEvent(QMouseEvent *e)
         m_controller->onDoubleClicked();
 }
 
-QSize TitleBar_qtwidgets::sizeHint() const
+QSize TitleBar_qtquick::sizeHint() const
 {
     // Pass an opt so it scales against the logical dpi of the correct screen (since Qt 5.14) even if the HDPI Qt::AA_ attributes are off.
     QStyleOption opt;
@@ -274,7 +274,7 @@ QSize TitleBar_qtwidgets::sizeHint() const
     return QSize(0, height);
 }
 
-void TitleBar_qtwidgets::focusInEvent(QFocusEvent *ev)
+void TitleBar_qtquick::focusInEvent(QFocusEvent *ev)
 {
     if (!freed())
         return;
@@ -283,29 +283,29 @@ void TitleBar_qtwidgets::focusInEvent(QFocusEvent *ev)
     m_controller->focusInEvent(ev);
 }
 
-Controllers::TitleBar *TitleBar_qtwidgets::titleBar() const
+Controllers::TitleBar *TitleBar_qtquick::titleBar() const
 {
     return m_controller;
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-bool TitleBar_qtwidgets::isCloseButtonVisible() const
+bool TitleBar_qtquick::isCloseButtonVisible() const
 {
     return m_closeButton->isVisible();
 }
 
-bool TitleBar_qtwidgets::isCloseButtonEnabled() const
+bool TitleBar_qtquick::isCloseButtonEnabled() const
 {
     return m_closeButton->isEnabled();
 }
 
-bool TitleBar_qtwidgets::isFloatButtonVisible() const
+bool TitleBar_qtquick::isFloatButtonVisible() const
 {
     return m_floatButton->isVisible();
 }
 
-bool TitleBar_qtwidgets::isFloatButtonEnabled() const
+bool TitleBar_qtquick::isFloatButtonEnabled() const
 {
     return m_floatButton->isEnabled();
 }

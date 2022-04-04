@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "View_qtwidgets.h"
+#include "View_qtquick.h"
 
 QT_BEGIN_NAMESPACE
 class QVBoxLayout;
@@ -26,13 +26,13 @@ class Frame;
 namespace KDDockWidgets::Views {
 
 
-class DOCKS_EXPORT FloatingWindow_qtwidgets : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT FloatingWindow_qtquick : public View_qtquick<QQuickItem>
 {
     Q_OBJECT
 public:
-    explicit FloatingWindow_qtwidgets(Controllers::FloatingWindow *controller,
-                                      QMainWindow *parent = nullptr,
-                                      Qt::WindowFlags windowFlags = {});
+    explicit FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
+                                    QQuickItem *parent = nullptr,
+                                    Qt::WindowFlags windowFlags = {});
 
     Controllers::FloatingWindow *floatingWindow() const;
 
@@ -48,6 +48,6 @@ private:
     QMetaObject::Connection m_screenChangedConnection;
 
     void updateMargins();
-    Q_DISABLE_COPY(FloatingWindow_qtwidgets)
+    Q_DISABLE_COPY(FloatingWindow_qtquick)
 };
 }
