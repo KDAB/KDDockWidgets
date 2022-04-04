@@ -226,12 +226,18 @@ bool ViewWrapper_qtwidgets::is(Type t) const
 
 std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::window() const
 {
-    return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->window()));
+    if (auto w = m_widget->window())
+        return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(w));
+
+    return {};
 }
 
 std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::parentView() const
 {
-    return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->parentWidget()));
+    if (auto p = m_widget->parentWidget())
+        return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(p));
+
+    return {};
 }
 
 HANDLE ViewWrapper_qtwidgets::handle() const

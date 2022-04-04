@@ -318,8 +318,12 @@ public:
 
     std::shared_ptr<ViewWrapper> window() const override
     {
-        ViewWrapper *wrapper = new ViewWrapper_qtwidgets(QWidget::window());
-        return std::shared_ptr<ViewWrapper>(wrapper);
+        if (auto w = QWidget::window()) {
+            ViewWrapper *wrapper = new ViewWrapper_qtwidgets(w);
+            return std::shared_ptr<ViewWrapper>(wrapper);
+        }
+
+        return {};
     }
 
     std::shared_ptr<ViewWrapper> parentView() const override
