@@ -11,6 +11,7 @@
 
 #include "Platform_qtwidgets.h"
 #include "KDDockWidgets.h"
+#include "qtwidgets/DebugWindow_p.h"
 
 static KDDockWidgets::Platform_qtwidgets s_platformQtWidgets;
 
