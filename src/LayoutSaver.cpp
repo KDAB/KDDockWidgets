@@ -82,26 +82,6 @@ inline InternalRestoreOptions internalRestoreOptions(RestoreOptions options)
 
 bool LayoutSaver::Private::s_restoreInProgress = false;
 
-static QVariantList stringListToVariant(const QStringList &strs)
-{
-    QVariantList variantList;
-    variantList.reserve(strs.size());
-    for (const QString &str : strs)
-        variantList.push_back(str);
-
-    return variantList;
-}
-
-static QStringList variantToStringList(const QVariantList &variantList)
-{
-    QStringList stringList;
-    stringList.reserve(variantList.size());
-    for (const QVariant &variant : variantList)
-        stringList.push_back(variant.toString());
-
-    return stringList;
-}
-
 namespace KDDockWidgets {
 template<typename Type>
 void to_json(nlohmann::json &json, const typename Type::List &list)
@@ -758,46 +738,7 @@ bool LayoutSaver::Layout::fromJson(const QByteArray &jsonData)
         return false;
     }
     from_json(json, *this);
-//     fromVariantMap(json);
     return true;
-}
-
-QVariantMap LayoutSaver::Layout::toVariantMap() const
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("serializationVersion"), serializationVersion);
-    map.insert(QStringLiteral("mainWindows"), toVariantList<LayoutSaver::MainWindow>(mainWindows));
-    map.insert(QStringLiteral("floatingWindows"), toVariantList<LayoutSaver::FloatingWindow>(floatingWindows));
-    map.insert(QStringLiteral("closedDockWidgets"), ::dockWidgetNames(closedDockWidgets));
-    map.insert(QStringLiteral("allDockWidgets"), toVariantList(allDockWidgets));
-    map.insert(QStringLiteral("screenInfo"), toVariantList<LayoutSaver::ScreenInfo>(screenInfo));
-
-    return map;
-}
-
-void LayoutSaver::Layout::fromVariantMap(const QVariantMap &map)
-{
-    allDockWidgets.clear();
-    const QVariantList dockWidgetsV = map.value(QStringLiteral("allDockWidgets")).toList();
-    for (const QVariant &v : dockWidgetsV) {
-        const QVariantMap dwV = v.toMap();
-        const QString name = dwV.value(QStringLiteral("uniqueName")).toString();
-        auto dw = LayoutSaver::DockWidget::dockWidgetForName(name);
-        dw->fromVariantMap(dwV);
-        allDockWidgets.push_back(dw);
-    }
-
-    closedDockWidgets.clear();
-    const QVariantList closedDockWidgetsV = map.value(QStringLiteral("closedDockWidgets")).toList();
-    closedDockWidgets.reserve(closedDockWidgetsV.size());
-    for (const QVariant &v : closedDockWidgetsV) {
-        closedDockWidgets.push_back(LayoutSaver::DockWidget::dockWidgetForName(v.toString()));
-    }
-
-    serializationVersion = map.value(QStringLiteral("serializationVersion")).toInt();
-    mainWindows = fromVariantList<LayoutSaver::MainWindow>(map.value(QStringLiteral("mainWindows")).toList());
-    floatingWindows = fromVariantList<LayoutSaver::FloatingWindow>(map.value(QStringLiteral("floatingWindows")).toList());
-    screenInfo = fromVariantList<LayoutSaver::ScreenInfo>(map.value(QStringLiteral("screenInfo")).toList());
 }
 
 void LayoutSaver::Layout::scaleSizes(InternalRestoreOptions options)
@@ -968,47 +909,6 @@ LayoutSaver::DockWidget::Ptr LayoutSaver::Frame::singleDockWidget() const
     return dockWidgets.first();
 }
 
-QVariantMap LayoutSaver::Frame::toVariantMap() const
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("id"), id);
-    map.insert(QStringLiteral("isNull"), isNull);
-    map.insert(QStringLiteral("objectName"), objectName);
-    map.insert(QStringLiteral("geometry"), Layouting::rectToMap(geometry));
-    map.insert(QStringLiteral("options"), options);
-    map.insert(QStringLiteral("currentTabIndex"), currentTabIndex);
-    map.insert(QStringLiteral("mainWindowUniqueName"), mainWindowUniqueName);
-    map.insert(QStringLiteral("dockWidgets"), dockWidgetNames(dockWidgets));
-
-    return map;
-}
-
-void LayoutSaver::Frame::fromVariantMap(const QVariantMap &map)
-{
-    if (map.isEmpty()) {
-        isNull = true;
-        dockWidgets.clear();
-        return;
-    }
-
-    id = map.value(QStringLiteral("id")).toString();
-    isNull = map.value(QStringLiteral("isNull")).toBool();
-    objectName = map.value(QStringLiteral("objectName")).toString();
-    mainWindowUniqueName = map.value(QStringLiteral("mainWindowUniqueName")).toString();
-    geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
-    options = static_cast<QFlags<FrameOption>::Int>(map.value(QStringLiteral("options")).toUInt());
-    currentTabIndex = map.value(QStringLiteral("currentTabIndex")).toInt();
-
-    const QVariantList dockWidgetsV = map.value(QStringLiteral("dockWidgets")).toList();
-
-    dockWidgets.clear();
-    dockWidgets.reserve(dockWidgetsV.size());
-    for (const auto &variant : dockWidgetsV) {
-        DockWidget::Ptr dw = DockWidget::dockWidgetForName(variant.toString());
-        dockWidgets.push_back(dw);
-    }
-}
-
 bool LayoutSaver::DockWidget::isValid() const
 {
     return !uniqueName.isEmpty();
@@ -1025,31 +925,6 @@ bool LayoutSaver::DockWidget::skipsRestore() const
         return dw->skipsRestore();
 
     return false;
-}
-
-QVariantMap LayoutSaver::DockWidget::toVariantMap() const
-{
-    QVariantMap map;
-    if (!affinities.isEmpty())
-        map.insert(QStringLiteral("affinities"), stringListToVariant(affinities));
-    map.insert(QStringLiteral("uniqueName"), uniqueName);
-    map.insert(QStringLiteral("lastPosition"), lastPosition.toVariantMap());
-
-    return map;
-}
-
-void LayoutSaver::DockWidget::fromVariantMap(const QVariantMap &map)
-{
-    affinities = variantToStringList(map.value(QStringLiteral("affinities")).toList());
-
-    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
-    const QString affinityName = map.value(QStringLiteral("affinityName")).toString();
-    if (!affinityName.isEmpty() && !affinities.contains(affinityName)) {
-        affinities.push_back(affinityName);
-    }
-
-    uniqueName = map.value(QStringLiteral("uniqueName")).toString();
-    lastPosition.fromVariantMap(map.value(QStringLiteral("lastPosition")).toMap());
 }
 
 bool LayoutSaver::FloatingWindow::isValid() const
@@ -1085,43 +960,6 @@ void LayoutSaver::FloatingWindow::scaleSizes(const ScalingInfo &scalingInfo)
     scalingInfo.applyFactorsTo(/*by-ref*/ geometry);
 }
 
-QVariantMap LayoutSaver::FloatingWindow::toVariantMap() const
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("multiSplitterLayout"), multiSplitterLayout.toVariantMap());
-    map.insert(QStringLiteral("parentIndex"), parentIndex);
-    map.insert(QStringLiteral("geometry"), Layouting::rectToMap(geometry));
-    map.insert(QStringLiteral("normalGeometry"), Layouting::rectToMap(normalGeometry));
-    map.insert(QStringLiteral("screenIndex"), screenIndex);
-    map.insert(QStringLiteral("screenSize"), Layouting::sizeToMap(screenSize));
-    map.insert(QStringLiteral("isVisible"), isVisible);
-    map.insert(QStringLiteral("windowState"), windowState);
-
-    if (!affinities.isEmpty())
-        map.insert(QStringLiteral("affinities"), stringListToVariant(affinities));
-
-    return map;
-}
-
-void LayoutSaver::FloatingWindow::fromVariantMap(const QVariantMap &map)
-{
-    multiSplitterLayout.fromVariantMap(map.value(QStringLiteral("multiSplitterLayout")).toMap());
-    parentIndex = map.value(QStringLiteral("parentIndex")).toInt();
-    geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
-    normalGeometry = Layouting::mapToRect(map.value(QStringLiteral("normalGeometry")).toMap());
-    screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
-    screenSize = Layouting::mapToSize(map.value(QStringLiteral("screenSize")).toMap());
-    isVisible = map.value(QStringLiteral("isVisible")).toBool();
-    affinities = variantToStringList(map.value(QStringLiteral("affinities")).toList());
-    windowState = Qt::WindowState(map.value(QStringLiteral("windowState"), Qt::WindowNoState).toInt());
-
-    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
-    const QString affinityName = map.value(QStringLiteral("affinityName")).toString();
-    if (!affinityName.isEmpty() && !affinities.contains(affinityName)) {
-        affinities.push_back(affinityName);
-    }
-}
-
 bool LayoutSaver::MainWindow::isValid() const
 {
     if (!multiSplitterLayout.isValid())
@@ -1139,57 +977,6 @@ void LayoutSaver::MainWindow::scaleSizes()
     }
 
     scalingInfo = ScalingInfo(uniqueName, geometry, screenIndex);
-}
-
-QVariantMap LayoutSaver::MainWindow::toVariantMap() const
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("options"), int(options));
-    map.insert(QStringLiteral("multiSplitterLayout"), multiSplitterLayout.toVariantMap());
-    map.insert(QStringLiteral("uniqueName"), uniqueName);
-    map.insert(QStringLiteral("geometry"), Layouting::rectToMap(geometry));
-    map.insert(QStringLiteral("normalGeometry"), Layouting::rectToMap(normalGeometry));
-    map.insert(QStringLiteral("screenIndex"), screenIndex);
-    map.insert(QStringLiteral("screenSize"), Layouting::sizeToMap(screenSize));
-    map.insert(QStringLiteral("isVisible"), isVisible);
-    map.insert(QStringLiteral("affinities"), stringListToVariant(affinities));
-    map.insert(QStringLiteral("windowState"), windowState);
-
-    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
-        const QStringList dockWidgets = dockWidgetsPerSideBar.value(loc);
-        if (!dockWidgets.isEmpty())
-            map.insert(QStringLiteral("sidebar-%1").arg(int(loc)), stringListToVariant(dockWidgets));
-    }
-
-    return map;
-}
-
-void LayoutSaver::MainWindow::fromVariantMap(const QVariantMap &map)
-{
-    options = KDDockWidgets::MainWindowOptions(map.value(QStringLiteral("options")).toInt());
-    multiSplitterLayout.fromVariantMap(map.value(QStringLiteral("multiSplitterLayout")).toMap());
-    uniqueName = map.value(QStringLiteral("uniqueName")).toString();
-    geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
-    normalGeometry = Layouting::mapToRect(map.value(QStringLiteral("normalGeometry")).toMap());
-    screenIndex = map.value(QStringLiteral("screenIndex")).toInt();
-    screenSize = Layouting::mapToSize(map.value(QStringLiteral("screenSize")).toMap());
-    isVisible = map.value(QStringLiteral("isVisible")).toBool();
-    affinities = variantToStringList(map.value(QStringLiteral("affinities")).toList());
-    windowState = Qt::WindowState(map.value(QStringLiteral("windowState"), Qt::WindowNoState).toInt());
-
-    // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
-    const QString affinityName = map.value(QStringLiteral("affinityName")).toString();
-    if (!affinityName.isEmpty() && !affinities.contains(affinityName)) {
-        affinities.push_back(affinityName);
-    }
-
-    // Load the SideBars:
-    dockWidgetsPerSideBar.clear();
-    for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
-        const QVariantList dockWidgets = map.value(QStringLiteral("sidebar-%1").arg(int(loc))).toList();
-        if (!dockWidgets.isEmpty())
-            dockWidgetsPerSideBar.insert(loc, variantToStringList(dockWidgets));
-    }
 }
 
 bool LayoutSaver::MultiSplitter::isValid() const
@@ -1225,72 +1012,9 @@ bool LayoutSaver::MultiSplitter::skipsRestore() const
     });
 }
 
-QVariantMap LayoutSaver::MultiSplitter::toVariantMap() const
-{
-    QVariantMap result;
-    result.insert(QStringLiteral("layout"), layout);
-
-    QVariantMap framesV;
-    for (auto &frame : frames)
-        framesV.insert(frame.id, frame.toVariantMap());
-
-    result.insert(QStringLiteral("frames"), framesV);
-    return result;
-}
-
-void LayoutSaver::MultiSplitter::fromVariantMap(const QVariantMap &map)
-{
-    layout = map.value(QStringLiteral("layout")).toMap();
-    const QVariantMap framesV = map.value(QStringLiteral("frames")).toMap();
-    frames.clear();
-    for (const QVariant &frameV : framesV) {
-        LayoutSaver::Frame frame;
-        frame.fromVariantMap(frameV.toMap());
-        frames.insert(frame.id, frame);
-    }
-}
-
 void LayoutSaver::Position::scaleSizes(const ScalingInfo &scalingInfo)
 {
     scalingInfo.applyFactorsTo(/*by-ref*/ lastFloatingGeometry);
-}
-
-QVariantMap LayoutSaver::Position::toVariantMap() const
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("lastFloatingGeometry"), Layouting::rectToMap(lastFloatingGeometry));
-    map.insert(QStringLiteral("tabIndex"), tabIndex);
-    map.insert(QStringLiteral("wasFloating"), wasFloating);
-    map.insert(QStringLiteral("placeholders"), toVariantList<LayoutSaver::Placeholder>(placeholders));
-
-    return map;
-}
-
-void LayoutSaver::Position::fromVariantMap(const QVariantMap &map)
-{
-    lastFloatingGeometry = Layouting::mapToRect(map.value(QStringLiteral("lastFloatingGeometry")).toMap());
-    tabIndex = map.value(QStringLiteral("tabIndex")).toInt();
-    wasFloating = map.value(QStringLiteral("wasFloating")).toBool();
-    placeholders = fromVariantList<LayoutSaver::Placeholder>(map.value(QStringLiteral("placeholders")).toList());
-}
-
-QVariantMap LayoutSaver::ScreenInfo::toVariantMap() const
-{
-    QVariantMap map;
-    map.insert(QStringLiteral("index"), index);
-    map.insert(QStringLiteral("geometry"), Layouting::rectToMap(geometry));
-    map.insert(QStringLiteral("name"), name);
-    map.insert(QStringLiteral("devicePixelRatio"), devicePixelRatio);
-
-    return map;
-}
-
-void LayoutSaver::ScreenInfo::fromVariantMap(const QVariantMap &map)
-{
-    index = map.value(QStringLiteral("index")).toInt();
-    geometry = Layouting::mapToRect(map.value(QStringLiteral("geometry")).toMap());
-    name = map.value(QStringLiteral("name")).toString();
-    devicePixelRatio = map.value(QStringLiteral("devicePixelRatio")).toDouble();
 }
 
 QVariantMap LayoutSaver::Placeholder::toVariantMap() const

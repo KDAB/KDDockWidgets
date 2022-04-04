@@ -56,32 +56,6 @@ enum class InternalRestoreOption
 Q_DECLARE_FLAGS(InternalRestoreOptions, InternalRestoreOption)
 
 
-template<typename T>
-typename T::List fromVariantList(const QVariantList &listV)
-{
-    typename T::List result;
-
-    result.reserve(listV.size());
-    for (const QVariant &v : listV) {
-        T t;
-        t.fromVariantMap(v.toMap());
-        result.push_back(t);
-    }
-
-    return result;
-}
-
-template<typename T>
-QVariantList toVariantList(const typename T::List &list)
-{
-    QVariantList result;
-    result.reserve(list.size());
-    for (const T &v : list)
-        result.push_back(v.toVariantMap());
-
-    return result;
-}
-
 struct LayoutSaver::Placeholder
 {
     typedef QVector<LayoutSaver::Placeholder> List;
@@ -130,9 +104,6 @@ struct LayoutSaver::Position
 
     /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &scalingInfo);
-
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
 };
 
 struct DOCKS_EXPORT LayoutSaver::DockWidget
@@ -162,9 +133,6 @@ struct DOCKS_EXPORT LayoutSaver::DockWidget
 
     bool skipsRestore() const;
 
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
-
     QString uniqueName;
     QStringList affinities;
     LayoutSaver::Position lastPosition;
@@ -174,17 +142,6 @@ private:
     {
     }
 };
-
-
-inline QVariantList toVariantList(const LayoutSaver::DockWidget::List &list)
-{
-    QVariantList result;
-    result.reserve(list.size());
-    for (const auto &dw : list)
-        result.push_back(dw->toVariantMap());
-
-    return result;
-}
 
 inline QVariantList dockWidgetNames(const LayoutSaver::DockWidget::List &list)
 {
@@ -205,9 +162,6 @@ struct LayoutSaver::Frame
 
     /// @brief in case this frame only has one frame, returns the name of that dock widget
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
-
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
 
     bool isNull = true;
     QString objectName;
@@ -231,9 +185,6 @@ struct LayoutSaver::MultiSplitter
     LayoutSaver::DockWidget::Ptr singleDockWidget() const;
     bool skipsRestore() const;
 
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
-
     QVariantMap layout;
     QHash<QString, LayoutSaver::Frame> frames;
 };
@@ -250,9 +201,6 @@ struct LayoutSaver::FloatingWindow
 
     /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(const ScalingInfo &);
-
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
 
     LayoutSaver::MultiSplitter multiSplitterLayout;
     QStringList affinities;
@@ -278,9 +226,6 @@ public:
     /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes();
 
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
-
     QHash<SideBarLocation, QStringList> dockWidgetsPerSideBar;
     KDDockWidgets::MainWindowOptions options;
     LayoutSaver::MultiSplitter multiSplitterLayout;
@@ -301,9 +246,6 @@ public:
 struct LayoutSaver::ScreenInfo
 {
     typedef QVector<LayoutSaver::ScreenInfo> List;
-
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
 
     int index;
     QRect geometry;
@@ -340,8 +282,6 @@ public:
 
     QByteArray toJson() const;
     bool fromJson(const QByteArray &jsonData);
-    QVariantMap toVariantMap() const;
-    void fromVariantMap(const QVariantMap &map);
 
     /// Iterates through the layout and patches all absolute sizes. See RestoreOption_RelativeToMainWindow.
     void scaleSizes(KDDockWidgets::InternalRestoreOptions);
