@@ -13,6 +13,8 @@
 #include "KDDockWidgets.h"
 #include "qtwidgets/DebugWindow_p.h"
 
+#include <QApplication>
+
 static KDDockWidgets::Platform_qtwidgets s_platformQtWidgets;
 
 using namespace KDDockWidgets;
@@ -34,4 +36,9 @@ Platform_qtwidgets::~Platform_qtwidgets()
 const char *Platform_qtwidgets::name() const
 {
     return "qtwidgets";
+}
+
+bool Platform_qtwidgets::hasActivePopup() const
+{
+    return qApp->activePopupWidget() != nullptr;
 }

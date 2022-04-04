@@ -27,6 +27,10 @@ public:
     /// @brief Returns the platform singleton
     static Platform *instance();
 
+    /// @brief Returns whether a popup is open
+    /// Usually not needed to override. Investigate further in case side bars aren't auto hidding
+    virtual bool hasActivePopup() const;
+
 protected:
     Platform();
 };

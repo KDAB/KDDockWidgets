@@ -20,6 +20,7 @@
 #include "WindowBeingDragged_p.h"
 #include "multisplitter/Item_p.h"
 
+#include "Platform.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/SideBar.h"
 #include "controllers/DockWidget.h"
@@ -50,11 +51,6 @@ DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
     qApp->installEventFilter(this);
-
-#ifndef KDDOCKWIDGETS_QTWIDGETS
-    KDDockWidgets::registerQmlTypes();
-    QQuickWindow::setDefaultAlphaBuffer(true);
-#endif
 
     connect(qApp, &QGuiApplication::focusObjectChanged,
             this, &DockRegistry::onFocusObjectChanged);
@@ -742,11 +738,9 @@ bool DockRegistry::onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *ev)
     // Here we implement "auto-hide". If there's a overlayed dock widget, we hide it if some other
     // dock widget is clicked.
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
     // Don't be sending mouse events around if a popup is open, they are sensitive
-    if (qApp->activePopupWidget())
+    if (Platform::instance()->hasActivePopup())
         return false;
-#endif
 
     Controllers::MainWindow *mainWindow = dw->mainWindow();
     if (!mainWindow) // Only docked widgets are interesting

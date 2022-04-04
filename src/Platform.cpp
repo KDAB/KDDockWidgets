@@ -31,3 +31,8 @@ Platform *Platform::instance()
 {
     return s_platform;
 }
+
+bool Platform::hasActivePopup() const
+{
+    return false;
+}

@@ -24,6 +24,7 @@ public:
     Platform_qtwidgets();
     ~Platform_qtwidgets() override;
     const char *name() const override;
+    bool hasActivePopup() const override;
 };
 
 }
