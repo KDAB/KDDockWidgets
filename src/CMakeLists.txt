@@ -102,6 +102,10 @@ set(DOCKSLIBS_SRCS
     ViewWrapper.h
     Controller.cpp
     Controller.h
+    Platform.cpp
+    Platform.h
+    qtwidgets/Platform_qtwidgets.cpp
+    qtwidgets/Platform_qtwidgets.h
     qtwidgets/views/View_qtwidgets.cpp
     qtwidgets/views/View_qtwidgets.h
     qtwidgets/views/ViewWrapper_qtwidgets.cpp

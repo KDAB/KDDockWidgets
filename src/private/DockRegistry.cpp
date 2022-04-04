@@ -33,9 +33,7 @@
 #include <QGuiApplication>
 #include <QWindow>
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "qtwidgets/DebugWindow_p.h"
-#else
+#ifndef KDDOCKWIDGETS_QTWIDGETS
 #include "quick/QmlTypes.h"
 #endif
 
@@ -57,16 +55,7 @@ DockRegistry::DockRegistry(QObject *parent)
 {
     qApp->installEventFilter(this);
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-
-#ifdef DOCKS_DEVELOPER_MODE
-    if (qEnvironmentVariableIntValue("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW") == 1) {
-        auto dv = new Debug::DebugWindow();
-        dv->show();
-    }
-#endif
-
-#else
+#ifndef KDDOCKWIDGETS_QTWIDGETS
     KDDockWidgets::registerQmlTypes();
     QQuickWindow::setDefaultAlphaBuffer(true);
 #endif
