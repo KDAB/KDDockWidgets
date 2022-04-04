@@ -316,17 +316,17 @@ public:
         return reinterpret_cast<HANDLE>(this);
     }
 
-    std::unique_ptr<ViewWrapper> window() const override
+    std::shared_ptr<ViewWrapper> window() const override
     {
         ViewWrapper *wrapper = new ViewWrapper_qtwidgets(QWidget::window());
-        return std::unique_ptr<ViewWrapper>(wrapper);
+        return std::shared_ptr<ViewWrapper>(wrapper);
     }
 
-    std::unique_ptr<ViewWrapper> parentView() const override
+    std::shared_ptr<ViewWrapper> parentView() const override
     {
         if (QWidget *p = QWidget::parentWidget()) {
             ViewWrapper *wrapper = new ViewWrapper_qtwidgets(p);
-            return std::unique_ptr<ViewWrapper>(wrapper);
+            return std::shared_ptr<ViewWrapper>(wrapper);
         }
 
         return {};

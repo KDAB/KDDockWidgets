@@ -75,7 +75,7 @@ public:
     int x() const;
     int y() const;
     bool close();
-    std::unique_ptr<ViewWrapper> window() const;
+    std::shared_ptr<ViewWrapper> window() const;
     QWindow *windowHandle() const; // TODOv2
     void show() const;
     bool inDtor() const;

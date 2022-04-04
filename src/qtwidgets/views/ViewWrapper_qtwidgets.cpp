@@ -224,14 +224,14 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     return false;
 }
 
-std::unique_ptr<ViewWrapper> ViewWrapper_qtwidgets::window() const
+std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::window() const
 {
-    return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->window()));
+    return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->window()));
 }
 
-std::unique_ptr<ViewWrapper> ViewWrapper_qtwidgets::parentView() const
+std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::parentView() const
 {
-    return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->parentWidget()));
+    return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->parentWidget()));
 }
 
 HANDLE ViewWrapper_qtwidgets::handle() const

@@ -83,7 +83,7 @@ public:
 
     /// @brief Returns whether this view represents the same GUI element as the other
     bool equals(const View *other) const;
-    bool equals(const std::unique_ptr<ViewWrapper> &) const;
+    bool equals(const std::shared_ptr<ViewWrapper> &) const;
 
     /// @brief Returns a handle for the GUI element
     /// This value only makes sense to the frontend. For example, for QtQuick it might be a
@@ -195,10 +195,10 @@ public:
 
     /// @brief Returns the top-level gui element which this one is on
     /// Like QWidget::window()
-    virtual std::unique_ptr<ViewWrapper> window() const = 0;
+    virtual std::shared_ptr<ViewWrapper> window() const = 0;
 
     /// @brief Returns the gui element's parent. Like QWidget::parentWidget()
-    virtual std::unique_ptr<ViewWrapper> parentView() const = 0;
+    virtual std::shared_ptr<ViewWrapper> parentView() const = 0;
 
     template<typename T>
     static QSize widgetMinSize(const T *w)

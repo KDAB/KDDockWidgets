@@ -265,12 +265,12 @@ public:
         return reinterpret_cast<HANDLE>(this);
     }
 
-    std::unique_ptr<ViewWrapper> window() const override
+    std::shared_ptr<ViewWrapper> window() const override
     {
         return {};
     }
 
-    std::unique_ptr<ViewWrapper> parentView() const override
+    std::shared_ptr<ViewWrapper> parentView() const override
     {
         return {};
     }

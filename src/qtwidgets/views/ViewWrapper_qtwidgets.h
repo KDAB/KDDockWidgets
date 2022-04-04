@@ -42,8 +42,8 @@ public:
     QSize maximumSize() const override;
     void setSize(int width, int height) override;
     bool is(Type) const override;
-    std::unique_ptr<ViewWrapper> window() const override;
-    std::unique_ptr<ViewWrapper> parentView() const override;
+    std::shared_ptr<ViewWrapper> window() const override;
+    std::shared_ptr<ViewWrapper> parentView() const override;
     HANDLE handle() const override;
     void grabMouse() override;
     void releaseMouse() override;

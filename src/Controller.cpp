@@ -116,7 +116,7 @@ bool Controller::close()
     return view() && view()->close();
 }
 
-std::unique_ptr<ViewWrapper> Controller::window() const
+std::shared_ptr<ViewWrapper> Controller::window() const
 {
     return view()->window();
 }

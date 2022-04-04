@@ -154,15 +154,15 @@ bool ViewWrapper_qtquick::is(Type t) const
     return false;
 }
 
-std::unique_ptr<ViewWrapper> ViewWrapper_qtquick::window() const
+std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::window() const
 {
-    // return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtquick(m_item->window()));
+    // return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtquick(m_item->window()));
     return {};
 }
 
-std::unique_ptr<ViewWrapper> ViewWrapper_qtquick::parentView() const
+std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::parentView() const
 {
-    // return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtquick(m_item->parentWidget()));
+    // return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtquick(m_item->parentWidget()));
     return {};
 }
 
