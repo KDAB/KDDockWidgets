@@ -8,6 +8,8 @@
 
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
+#ifndef KDAB_NLOHMANN_JSON_QT_HELPERS_H
+#define KDAB_NLOHMANN_JSON_QT_HELPERS_H
 
 #include <nlohmann/json.hpp>
 
@@ -220,3 +222,5 @@ inline QDebug operator<<(QDebug debug, const nlohmann::json &j)
     debug.nospace() << '\n' << j.dump(4).data() << '\n';
     return debug;
 }
+
+#endif
