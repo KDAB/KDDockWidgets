@@ -194,8 +194,9 @@ set(DOCKS_INSTALLABLE_PRIVATE_QUICK_INCLUDES
 set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/Platform_qtquick.cpp
   qtquick/Platform_qtquick.h
+  qtquick/views/View_qtquick.cpp
+  qtquick/views/View_qtquick.h
 )
-
 
 if(${PROJECT_NAME}_QTQUICK)
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}

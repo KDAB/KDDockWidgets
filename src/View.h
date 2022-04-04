@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "kddockwidgets/docks_export.h"
+#include "docks_export.h"
 #include "Controller.h"
 
 #include <QSize> // TODO Remove Qt headers, introduce Size and Rect structs
