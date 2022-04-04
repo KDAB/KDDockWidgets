@@ -124,6 +124,10 @@ set(DOCKSLIBS_SRCS
     qtwidgets/views/Stack_qtwidgets.h
     qtwidgets/views/SideBar_qtwidgets.cpp
     qtwidgets/views/SideBar_qtwidgets.h
+    qtwidgets/DebugWindow.cpp
+    qtwidgets/DebugWindow_p.h
+    qtwidgets/ObjectViewer.cpp
+    qtwidgets/ObjectViewer_p.h
 )
 
 # add_library(kddockwidgets_backend STATIC ${KDDW_BACKEND_SRCS})
@@ -225,10 +229,7 @@ if(${PROJECT_NAME}_QTQUICK)
 
 else()
   set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
-      private/DebugWindow.cpp
-      private/DebugWindow_p.h
-      private/ObjectViewer.cpp
-      private/ObjectViewer_p.h
+
       # MainWindow.cpp
       # MainWindow.h
       # DockWidget.h

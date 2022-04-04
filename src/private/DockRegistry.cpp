@@ -34,7 +34,7 @@
 #include <QWindow>
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "DebugWindow_p.h"
+#include "qtwidgets/DebugWindow_p.h"
 #else
 #include "quick/QmlTypes.h"
 #endif
