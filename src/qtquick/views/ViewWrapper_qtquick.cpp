@@ -9,16 +9,16 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "ViewWrapper_qtwidgets.h"
-#include "qtwidgets/views/DockWidget_qtwidgets.h"
-#include "qtwidgets/views/FloatingWindow_qtwidgets.h"
-#include "qtwidgets/views/Frame_qtwidgets.h"
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
-#include "qtwidgets/views/Separator_qtwidgets.h"
-#include "qtwidgets/views/SideBar_qtwidgets.h"
-#include "qtwidgets/views/Stack_qtwidgets.h"
-#include "qtwidgets/views/TabBar_qtwidgets.h"
-#include "qtwidgets/views/TitleBar_qtwidgets.h"
+#include "ViewWrapper_qtquick.h"
+// #include "qtwidgets/views/DockWidget_qtquick.h"
+// #include "qtwidgets/views/FloatingWindow_qtquick.h"
+// #include "qtwidgets/views/Frame_qtquick.h"
+// #include "qtwidgets/views/MainWindow_qtquick.h"
+// #include "qtwidgets/views/Separator_qtquick.h"
+// #include "qtwidgets/views/SideBar_qtquick.h"
+// #include "qtwidgets/views/Stack_qtquick.h"
+// #include "qtwidgets/views/TabBar_qtquick.h"
+// #include "qtwidgets/views/TitleBar_qtquick.h"
 
 #include "private/MultiSplitter_p.h"
 #include "private/MDILayoutWidget_p.h"
@@ -29,237 +29,166 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-static Controller *controllerForWidget(QWidget *widget)
-{
-    // KDDW deals in views, but sometimes we might get a native type like QWidget, for example if you call
-    // someview->window(). This function let's us retrieve the actual controller of the stray QWidget.
-
-    for (int i = int(Type::FIRST); i <= int(::Type::LAST); i *= 2) {
-        // Using a for+switch pattern so that compiler reminds us if new enumerators are added to enum
-        switch (Type(i)) {
-        case Type::Frame:
-            if (auto view = qobject_cast<Frame_qtwidgets *>(widget))
-                return view->controller();
-            break;
-        case Type::TitleBar:
-            if (auto view = qobject_cast<TitleBar_qtwidgets *>(widget))
-                return view->controller();
-            break;
-        case Type::TabBar:
-            if (auto view = qobject_cast<TabBar_qtwidgets *>(widget))
-                return view->controller();
-            break;
-        case Type::Stack:
-            if (auto view = qobject_cast<Stack_qtwidgets *>(widget))
-                return view->controller();
-            break;
-        case Type::FloatingWindow:
-            if (auto view = qobject_cast<FloatingWindow_qtwidgets *>(widget))
-                return view->controller();
-            break;
-        case Type::Separator:
-            if (auto view = qobject_cast<Separator_qtwidgets *>(widget))
-                return view->controller();
-            break;
-        case Type::DockWidget:
-            if (auto view = qobject_cast<DockWidget_qtwidgets *>(widget))
-                return view->controller();
-            break;
-        case Type::MultiSplitter:
-        case Type::MDILayout:
-        case Type::Layout:
-            if (auto view = qobject_cast<LayoutWidget *>(widget))
-                return view->controller();
-        case Type::MDIArea:
-            if (auto view = qobject_cast<MDIArea *>(widget))
-                return view->controller();
-            break;
-        case Type::SideBar:
-            if (auto view = qobject_cast<SideBar_qtwidgets *>(widget))
-                return view->controller();
-            break;
-        case Type::MainWindow:
-            if (auto view = qobject_cast<MainWindow_qtwidgets *>(widget))
-                return view->controller();
-            break;
-        case Type::LayoutItem:
-        case Type::DropIndicatorOverlayInterface:
-        case Type::ViewWrapper:
-            // skip internal types
-            continue;
-        }
-    }
-
-    return nullptr;
-}
-
-ViewWrapper_qtwidgets::ViewWrapper_qtwidgets(QObject *widget)
-    : ViewWrapper_qtwidgets(qobject_cast<QWidget *>(widget))
+ViewWrapper_qtquick::ViewWrapper_qtquick(QObject *item)
+    : ViewWrapper_qtquick(qobject_cast<QQuickItem *>(item))
 {
 }
 
-ViewWrapper_qtwidgets::ViewWrapper_qtwidgets(QWidget *widget)
-    : ViewWrapper(controllerForWidget(widget), widget)
-    , m_widget(widget)
+ViewWrapper_qtquick::ViewWrapper_qtquick(QQuickItem *item)
+    : ViewWrapper(nullptr /*controllerForWidget(widget)*/, item)
+    , m_item(item)
 {
 }
 
-void ViewWrapper_qtwidgets::setObjectName(const QString &name)
+void ViewWrapper_qtquick::setObjectName(const QString &name)
 {
-    m_widget->setObjectName(name);
+    m_item->setObjectName(name);
 }
 
-QRect ViewWrapper_qtwidgets::geometry() const
+QRect ViewWrapper_qtquick::geometry() const
 {
-    return m_widget->geometry();
+    return {};
 }
 
-QPoint ViewWrapper_qtwidgets::mapToGlobal(QPoint localPt) const
+QPoint ViewWrapper_qtquick::mapToGlobal(QPoint localPt) const
 {
-    return m_widget->mapToGlobal(localPt);
+    return {};
 }
 
-QPoint ViewWrapper_qtwidgets::mapFromGlobal(QPoint globalPt) const
+QPoint ViewWrapper_qtquick::mapFromGlobal(QPoint globalPt) const
 {
-    return m_widget->mapFromGlobal(globalPt);
+    return {};
 }
 
-void ViewWrapper_qtwidgets::setGeometry(QRect rect)
+void ViewWrapper_qtquick::setGeometry(QRect)
 {
-    m_widget->setGeometry(rect);
 }
 
-QWindow *ViewWrapper_qtwidgets::windowHandle() const
+QWindow *ViewWrapper_qtquick::windowHandle() const
 {
-    return m_widget->windowHandle();
+    return {};
 }
 
-bool ViewWrapper_qtwidgets::isTopLevel() const
+bool ViewWrapper_qtquick::isTopLevel() const
 {
-    return m_widget->isTopLevel();
+    return {};
 }
 
-void ViewWrapper_qtwidgets::setVisible(bool is)
+void ViewWrapper_qtquick::setVisible(bool)
 {
-    m_widget->setVisible(is);
 }
 
-bool ViewWrapper_qtwidgets::isVisible() const
+bool ViewWrapper_qtquick::isVisible() const
 {
-    return m_widget->isVisible();
+    return {};
 }
 
-void ViewWrapper_qtwidgets::move(int x, int y)
+void ViewWrapper_qtquick::move(int, int)
 {
-    m_widget->move(x, y);
 }
 
-void ViewWrapper_qtwidgets::move(QPoint pt)
+void ViewWrapper_qtquick::move(QPoint)
 {
-    m_widget->move(pt);
 }
 
-void ViewWrapper_qtwidgets::activateWindow()
+void ViewWrapper_qtquick::activateWindow()
 {
-    m_widget->activateWindow();
 }
 
-bool ViewWrapper_qtwidgets::isMaximized() const
+bool ViewWrapper_qtquick::isMaximized() const
 {
-    return m_widget->isMaximized();
+    return {};
 }
 
-QSize ViewWrapper_qtwidgets::maximumSize() const
+QSize ViewWrapper_qtquick::maximumSize() const
 {
-    return m_widget->maximumSize();
+    return {};
 }
 
-void ViewWrapper_qtwidgets::setSize(int x, int y)
+void ViewWrapper_qtquick::setSize(int, int)
 {
-    m_widget->resize(x, y);
 }
 
-bool ViewWrapper_qtwidgets::is(Type t) const
+bool ViewWrapper_qtquick::is(Type t) const
 {
     if (t == Type::ViewWrapper)
         return true;
 
-    switch (t) {
+    // switch (t) {
 
-    case Type::Frame:
-        return qobject_cast<Views::Frame_qtwidgets *>(m_widget);
-    case Type::TitleBar:
-        return qobject_cast<Views::TitleBar_qtwidgets *>(m_widget);
-    case Type::TabBar:
-        return qobject_cast<Views::TabBar_qtwidgets *>(m_widget);
-    case Type::Stack:
-        return qobject_cast<Views::Stack_qtwidgets *>(m_widget);
-    case Type::FloatingWindow:
-        return qobject_cast<Views::FloatingWindow_qtwidgets *>(m_widget);
-    case Type::Separator:
-        return qobject_cast<Views::Separator_qtwidgets *>(m_widget);
-    case Type::DockWidget:
-        return qobject_cast<Views::DockWidget_qtwidgets *>(m_widget);
-    case Type::SideBar:
-        return qobject_cast<Views::SideBar_qtwidgets *>(m_widget);
-    case Type::MainWindow:
-        return qobject_cast<Views::MainWindow_qtwidgets *>(m_widget);
-    case Type::Layout:
-        return qobject_cast<LayoutWidget *>(m_widget);
-    case Type::MultiSplitter:
-        return qobject_cast<MultiSplitter *>(m_widget);
-    case Type::MDILayout:
-        return qobject_cast<MDILayoutWidget *>(m_widget);
-    case Type::MDIArea:
-        return qobject_cast<MDIArea *>(m_widget);
-    case Type::LayoutItem:
-    case Type::DropIndicatorOverlayInterface:
-        qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";
-        return false;
-    case Type::ViewWrapper:
-        return true;
-    }
+    // case Type::Frame:
+    //     return qobject_cast<Views::Frame_qtquick *>(m_item);
+    // case Type::TitleBar:
+    //     return qobject_cast<Views::TitleBar_qtquick *>(m_item);
+    // case Type::TabBar:
+    //     return qobject_cast<Views::TabBar_qtquick *>(m_item);
+    // case Type::Stack:
+    //     return qobject_cast<Views::Stack_qtquick *>(m_item);
+    // case Type::FloatingWindow:
+    //     return qobject_cast<Views::FloatingWindow_qtquick *>(m_item);
+    // case Type::Separator:
+    //     return qobject_cast<Views::Separator_qtquick *>(m_item);
+    // case Type::DockWidget:
+    //     return qobject_cast<Views::DockWidget_qtquick *>(m_item);
+    // case Type::SideBar:
+    //     return qobject_cast<Views::SideBar_qtquick *>(m_item);
+    // case Type::MainWindow:
+    //     return qobject_cast<Views::MainWindow_qtquick *>(m_item);
+    // case Type::Layout:
+    //     return qobject_cast<LayoutWidget *>(m_item);
+    // case Type::MultiSplitter:
+    //     return qobject_cast<MultiSplitter *>(m_item);
+    // case Type::MDILayout:
+    //     return qobject_cast<MDILayoutWidget *>(m_item);
+    // case Type::MDIArea:
+    //     return qobject_cast<MDIArea *>(m_item);
+    // case Type::LayoutItem:
+    // case Type::DropIndicatorOverlayInterface:
+    //     qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";
+    //     return false;
+    // case Type::ViewWrapper:
+    //     return true;
+    // }
 
     qWarning() << Q_FUNC_INFO << "Unknown type" << static_cast<int>(t);
     return false;
 }
 
-std::unique_ptr<ViewWrapper> ViewWrapper_qtwidgets::window() const
+std::unique_ptr<ViewWrapper> ViewWrapper_qtquick::window() const
 {
-    return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->window()));
+    // return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtquick(m_item->window()));
+    return {};
 }
 
-std::unique_ptr<ViewWrapper> ViewWrapper_qtwidgets::parentView() const
+std::unique_ptr<ViewWrapper> ViewWrapper_qtquick::parentView() const
 {
-    return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(m_widget->parentWidget()));
+    // return std::unique_ptr<ViewWrapper>(new ViewWrapper_qtquick(m_item->parentWidget()));
+    return {};
 }
 
-HANDLE ViewWrapper_qtwidgets::handle() const
+HANDLE ViewWrapper_qtquick::handle() const
 {
-    return reinterpret_cast<HANDLE>(m_widget);
+    return reinterpret_cast<HANDLE>(m_item);
 }
 
-void ViewWrapper_qtwidgets::grabMouse()
+void ViewWrapper_qtquick::grabMouse()
 {
-    m_widget->grabMouse();
 }
 
-void ViewWrapper_qtwidgets::releaseMouse()
+void ViewWrapper_qtquick::releaseMouse()
 {
-    m_widget->releaseMouse();
 }
 
-QScreen *ViewWrapper_qtwidgets::screen() const
+QScreen *ViewWrapper_qtquick::screen() const
 {
-    return m_widget->screen();
+    return {};
 }
 
-void ViewWrapper_qtwidgets::setFocus(Qt::FocusReason reason)
+void ViewWrapper_qtquick::setFocus(Qt::FocusReason)
 {
-    m_widget->setFocus(reason);
 }
 
-QString ViewWrapper_qtwidgets::objectName() const
+QString ViewWrapper_qtquick::objectName() const
 {
-    return m_widget->QWidget::objectName();
+    return {};
 }

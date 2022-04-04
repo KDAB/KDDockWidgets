@@ -196,6 +196,8 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/Platform_qtquick.h
   qtquick/views/View_qtquick.cpp
   qtquick/views/View_qtquick.h
+  qtquick/views/ViewWrapper_qtquick.cpp
+  qtquick/views/ViewWrapper_qtquick.h
 )
 
 if(${PROJECT_NAME}_QTQUICK)
@@ -293,7 +295,7 @@ set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
 
-add_library(kddockwidgets_qtquick ${KDDW_QTQUICK_FRONTEND_SRCS})
+add_library(kddockwidgets_qtquick STATIC ${KDDW_QTQUICK_FRONTEND_SRCS})
 
 add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
 set_target_properties(kddockwidgets PROPERTIES OUTPUT_NAME "kddockwidgets${KDDockWidgets_LIBRARY_QTID}")
@@ -307,6 +309,15 @@ endif()
 
 
 target_include_directories(kddockwidgets
+  PUBLIC
+    $<INSTALL_INTERFACE:${DOCKS_INCLUDES_INSTALL_PATH}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty> # TODO: Link to KDBindings instead
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_include_directories(kddockwidgets_qtquick
   PUBLIC
     $<INSTALL_INTERFACE:${DOCKS_INCLUDES_INSTALL_PATH}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers>

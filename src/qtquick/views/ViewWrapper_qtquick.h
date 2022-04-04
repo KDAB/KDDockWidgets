@@ -13,18 +13,18 @@
 
 #include "ViewWrapper.h"
 
-#include <QWidget>
+#include <QQuickItem>
 
 namespace KDDockWidgets::Views {
 
-/// @brief A View that doesn't own its QWidget
-/// Implements a View API around an existing QWidget
-/// Useful for widgets that are not created by KDDW.
-class DOCKS_EXPORT ViewWrapper_qtwidgets : public ViewWrapper
+/// @brief A View that doesn't own its QQuickItem
+/// Implements a View API around an existing QQuickItem
+/// Useful for items that are not created by KDDW.
+class DOCKS_EXPORT ViewWrapper_qtquick : public ViewWrapper
 {
 public:
-    explicit ViewWrapper_qtwidgets(QObject *widget);
-    explicit ViewWrapper_qtwidgets(QWidget *widget);
+    explicit ViewWrapper_qtquick(QObject *widget);
+    explicit ViewWrapper_qtquick(QQuickItem *widget);
 
     void setObjectName(const QString &name) override;
     QRect geometry() const override;
@@ -52,7 +52,7 @@ public:
     QString objectName() const override;
 
 private:
-    QWidget *const m_widget;
+    QQuickItem *const m_item;
 };
 
 }
