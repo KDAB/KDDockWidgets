@@ -55,7 +55,7 @@ ViewGuard &ViewGuard::operator=(View *view)
         return *this;
     }
 
-    // Remove the pervious connection
+    // Remove the previous connection
     if (m_onDestroy.isActive())
         m_onDestroy.disconnect();
 
