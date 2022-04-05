@@ -26,4 +26,12 @@ int main()
     }
 
     TEST(g.isNull());
+
+    // Test when ViewGuard is destroyed before view
+    // May not crash without ASAN
+    Views::ViewWrapper_qtwidgets wv(static_cast<QWidget*>(nullptr));
+    {
+        ViewGuard gg(&wv);
+        TEST(!gg.isNull());
+    }
 }
