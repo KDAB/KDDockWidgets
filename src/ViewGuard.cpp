@@ -42,6 +42,8 @@ View *ViewGuard::operator->()
 void ViewGuard::clear()
 {
     v = nullptr;
+    if (m_onDestroy.isActive())
+        m_onDestroy.disconnect();
 }
 
 View *ViewGuard::view() const
@@ -51,14 +53,11 @@ View *ViewGuard::view() const
 
 ViewGuard &ViewGuard::operator=(View *view)
 {
-    if (view == v) {
+    if (view == v)
         return *this;
-    }
 
     // Remove the previous connection
-    if (m_onDestroy.isActive())
-        m_onDestroy.disconnect();
-
+    clear();
     v = view;
 
     m_onDestroy = v->beingDestroyed.connect([this] {
