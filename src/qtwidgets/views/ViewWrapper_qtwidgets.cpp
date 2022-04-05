@@ -243,7 +243,7 @@ std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::parentView() const
 
 HANDLE ViewWrapper_qtwidgets::handle() const
 {
-    return reinterpret_cast<HANDLE>(m_widget);
+    return reinterpret_cast<HANDLE>(m_widget.data());
 }
 
 void ViewWrapper_qtwidgets::grabMouse()
@@ -269,4 +269,9 @@ void ViewWrapper_qtwidgets::setFocus(Qt::FocusReason reason)
 QString ViewWrapper_qtwidgets::objectName() const
 {
     return m_widget->QWidget::objectName();
+}
+
+bool ViewWrapper_qtwidgets::isNull() const
+{
+    return m_widget.data() == nullptr;
 }

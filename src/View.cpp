@@ -258,3 +258,8 @@ bool View::equals(const std::shared_ptr<ViewWrapper> &other) const
 {
     return other && handle() == other->handle();
 }
+
+bool View::isNull() const
+{
+    return false;
+}

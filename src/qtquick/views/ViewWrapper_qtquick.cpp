@@ -168,7 +168,7 @@ std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::parentView() const
 
 HANDLE ViewWrapper_qtquick::handle() const
 {
-    return reinterpret_cast<HANDLE>(m_item);
+    return reinterpret_cast<HANDLE>(m_item.data());
 }
 
 void ViewWrapper_qtquick::grabMouse()
@@ -191,4 +191,9 @@ void ViewWrapper_qtquick::setFocus(Qt::FocusReason)
 QString ViewWrapper_qtquick::objectName() const
 {
     return {};
+}
+
+bool ViewWrapper_qtquick::isNull() const
+{
+    return m_item.data() == nullptr;
 }

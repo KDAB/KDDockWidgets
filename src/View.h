@@ -93,6 +93,12 @@ public:
     /// as long as it uniquely identifies the GUI element. KDDW backend only uses it for comparison purposes
     virtual HANDLE handle() const = 0;
 
+    /// @brief Returns whether the gui item represented by this view was already deleted
+    /// Usually false, as KDDW internal gui elements inherit View, and nobody will access them after destruction.
+    /// However, ViewWrapper derived classes, wrap an existing gui element, which might get deleted.
+    /// Override isNull() in our ViewWrapper subclasses and return true if the wrapped gui element was already deleted
+    virtual bool isNull() const;
+
     /// @brief Called by the layouting engine
     /// Override it in case your widget needs to know where it is in the layout. Usually only needed by Frame.s
     virtual void setLayoutItem(Layouting::Item *) {};

@@ -14,6 +14,7 @@
 #include "ViewWrapper.h"
 
 #include <QQuickItem>
+#include <QPointer>
 
 namespace KDDockWidgets::Views {
 
@@ -50,9 +51,10 @@ public:
     QScreen *screen() const override;
     void setFocus(Qt::FocusReason) override;
     QString objectName() const override;
+    bool isNull() const override;
 
 private:
-    QQuickItem *const m_item;
+    QPointer<QQuickItem> m_item;
 };
 
 }

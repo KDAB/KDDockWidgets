@@ -14,6 +14,7 @@
 #include "ViewWrapper.h"
 
 #include <QWidget>
+#include <QPointer>
 
 namespace KDDockWidgets::Views {
 
@@ -50,9 +51,10 @@ public:
     QScreen *screen() const override;
     void setFocus(Qt::FocusReason) override;
     QString objectName() const override;
+    bool isNull() const override;
 
 private:
-    QWidget *const m_widget;
+    QPointer<QWidget> m_widget;
 };
 
 }
