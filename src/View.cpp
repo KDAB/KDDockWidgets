@@ -256,7 +256,12 @@ bool View::equals(const View *other) const
 
 bool View::equals(const std::shared_ptr<ViewWrapper> &other) const
 {
-    return other && handle() == other->handle();
+    if (isNull() || !other || other->isNull()) {
+        // We don't care about nullity for identity
+        return false;
+    }
+
+    return handle() == other->handle();
 }
 
 bool View::isNull() const

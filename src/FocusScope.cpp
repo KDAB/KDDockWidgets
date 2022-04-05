@@ -17,14 +17,13 @@
  */
 
 #include "FocusScope.h"
+#include "Platform.h"
+#include "ViewGuard.h"
 #include "controllers/DockWidget.h"
-
-#include "private/DockRegistry_p.h"
 #include "controllers/Frame.h"
-#include "qtwidgets/views/TitleBar_qtwidgets.h"
+#include "private/DockRegistry_p.h"
 
-#include <QObject>
-#include <QGuiApplication>
+#include <QWidget>
 #include <QPointer>
 
 using namespace KDDockWidgets;
@@ -37,44 +36,36 @@ public:
         : q(qq)
         , m_thisView(thisView)
     {
-        connect(qApp, &QGuiApplication::focusObjectChanged,
-                this, &Private::onFocusObjectChanged);
+        auto plat = Platform::instance();
+        m_connection = plat->focusedViewChanged.connect(&Private::onFocusedViewChanged, this);
 
-        onFocusObjectChanged(qApp->focusObject());
+        onFocusedViewChanged(plat->focusedView());
         m_inCtor = false;
     }
 
     /// @brief Returns whether the last focused widget is the tab widget itself
     bool lastFocusedIsTabWidget() const
     {
-        if (!m_lastFocusedInScope)
-            return false;
-
-        if (auto metaObj = m_lastFocusedInScope->metaObject()) {
-            const auto className = QLatin1String(metaObj->className());
-
-            return className == QLatin1String("KDDockWidgets::TabBarWidget")
-                || className == QLatin1String("KDDockWidgets::TabBarQuick");
-        }
-
-        return false;
+        return m_lastFocusedInScope && !m_lastFocusedInScope->isNull() && m_lastFocusedInScope->is(Type::Stack);
     }
 
     ~Private() override;
 
     void setIsFocused(bool);
-    void onFocusObjectChanged(QObject *);
-    bool isInFocusScope(WidgetType *) const;
+    void onFocusedViewChanged(std::shared_ptr<ViewWrapper> view);
+    bool isInFocusScope(std::shared_ptr<ViewWrapper> view) const;
 
     FocusScope *const q;
-    View *const m_thisView = nullptr;
+    View *const m_thisView;
     bool m_isFocused = false;
     bool m_inCtor = true;
-    QPointer<WidgetType> m_lastFocusedInScope;
+    std::shared_ptr<ViewWrapper> m_lastFocusedInScope;
+    KDBindings::ConnectionHandle m_connection;
 };
 
 FocusScope::Private::~Private()
 {
+    m_connection.disconnect();
 }
 
 FocusScope::FocusScope(View *thisView)
@@ -92,14 +83,9 @@ bool FocusScope::isFocused() const
     return d->m_isFocused;
 }
 
-WidgetType *FocusScope::focusedWidget() const
-{
-    return d->m_lastFocusedInScope;
-}
-
 void FocusScope::focus(Qt::FocusReason reason)
 {
-    if (d->m_lastFocusedInScope && !d->lastFocusedIsTabWidget()) {
+    if (d->m_lastFocusedInScope && !d->m_lastFocusedInScope->isNull() && !d->lastFocusedIsTabWidget()) {
         // When we focus the FocusScope, we give focus to the last focused widget, but let's
         // do better than focusing a tab widget. The tab widget itself being focused isn't
         // very useful.
@@ -129,17 +115,17 @@ void FocusScope::Private::setIsFocused(bool is)
     }
 }
 
-void FocusScope::Private::onFocusObjectChanged(QObject *obj)
+void FocusScope::Private::onFocusedViewChanged(std::shared_ptr<ViewWrapper> view)
 {
-    auto widget = qobject_cast<QWidget *>(obj);
-    if (!widget) {
+    if (!view || view->isNull()) {
         setIsFocused(false);
         return;
     }
 
-    const bool is = isInFocusScope(widget);
-    if (is && m_lastFocusedInScope != widget && !qobject_cast<Views::TitleBar_qtwidgets *>(obj)) { // TODO
-        m_lastFocusedInScope = widget;
+    const bool is = isInFocusScope(view);
+    const bool focusViewChanged = !m_lastFocusedInScope || m_lastFocusedInScope->isNull() || !m_lastFocusedInScope->equals(view);
+    if (is && focusViewChanged && !view->is(Type::TitleBar)) {
+        m_lastFocusedInScope = view;
         setIsFocused(is);
         /* Q_EMIT */ q->focusedWidgetChangedCallback();
     } else {
@@ -147,14 +133,14 @@ void FocusScope::Private::onFocusObjectChanged(QObject *obj)
     }
 }
 
-bool FocusScope::Private::isInFocusScope(WidgetType *widget) const
+bool FocusScope::Private::isInFocusScope(std::shared_ptr<ViewWrapper> view) const
 {
-    WidgetType *p = widget;
+    auto p = (view && !view->isNull()) ? view : std::shared_ptr<ViewWrapper>();
     while (p) {
-        if (p == m_thisView->handle())
+        if (p->handle() == m_thisView->handle())
             return true;
 
-        p = p->parentWidget();
+        p = p->parentView();
     }
 
     return false;
