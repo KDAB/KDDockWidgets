@@ -312,6 +312,37 @@ void StateDragging::onEntry()
                        << "; m_windowBeingDragged=" << q->m_windowBeingDragged->floatingWindow();
 
         auto fw = q->m_windowBeingDragged->floatingWindow();
+#ifdef Q_OS_LINUX
+        if (fw->isMaximized()) {
+            // When dragging a maximized window on linux we need to restore its normal size
+            // On Windows this works already. On macOS I don't see this feature at all
+
+            const QRect normalGeometry = fw->normalGeometry();
+
+            // distance to the left edge of the window:
+            const int leftOffset = q->m_offset.x();
+
+            // distance to the right edge of the window:
+            const int rightOffset = fw->width() - q->m_offset.x();
+
+            const bool leftEdgeIsNearest = leftOffset <= rightOffset;
+
+            fw->showNormal();
+
+            if (!normalGeometry.contains(q->m_pressPos)) {
+                if ((leftEdgeIsNearest && leftOffset > normalGeometry.width()) ||
+                    (!leftEdgeIsNearest && rightOffset > normalGeometry.width())) {
+                    // Case #1: The window isn't under the cursor anymore
+                    // Let's just put its middle under the cursor
+                    q->m_offset.setX(normalGeometry.width() / 2);
+                } else if (!leftEdgeIsNearest) {
+                    // Case #2: The new geometry is still under the cursor, but instead of moving its right edge left
+                    // we'll move the left edge right, since initially the press position was closer to the right edge
+                    q->m_offset.setX(normalGeometry.width() - rightOffset);
+                }
+            }
+        } else
+#endif
         if (!fw->geometry().contains(q->m_pressPos)) {
             // The window shrunk when the drag started, this can happen if it has max-size constraints
             // we make the floating window smaller. Has the downside that it might not be under the mouse
