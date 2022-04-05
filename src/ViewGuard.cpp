@@ -19,6 +19,11 @@ ViewGuard::ViewGuard(View *view)
     setView(view);
 }
 
+ViewGuard::~ViewGuard()
+{
+    clear();
+}
+
 ViewGuard::operator bool() const
 {
     return !isNull();
@@ -37,8 +42,7 @@ View *ViewGuard::operator->()
 void ViewGuard::clear()
 {
     v = nullptr;
-    if (m_onDestroy.isActive())
-        m_onDestroy.disconnect();
+    m_onDestroy.disconnect();
 }
 
 View *ViewGuard::view() const
