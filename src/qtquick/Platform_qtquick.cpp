@@ -16,6 +16,7 @@
 #include "views/View_qtquick.h"
 #include <QQuickWindow>
 #include <QGuiApplication>
+#include <QTimer>
 
 static KDDockWidgets::Platform_qtquick s_platformQtQuick;
 
@@ -28,14 +29,22 @@ Platform_qtquick::Platform_qtquick()
     // KDDockWidgets::registerQmlTypes(); // TODOv2
     QQuickWindow::setDefaultAlphaBuffer(true);
 
-    qApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
-        ViewWrapper *wrapper = new Views::ViewWrapper_qtquick(obj);
-        focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
+    // Delay call to init(), so we have a QApplication
+    QTimer::singleShot(0, [this] {
+        init();
     });
 }
 
 Platform_qtquick::~Platform_qtquick()
 {
+}
+
+void Platform_qtquick::init()
+{
+    qApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
+        ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtquick(obj) : nullptr;
+        focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
+    });
 }
 
 const char *Platform_qtquick::name() const
