@@ -11,9 +11,13 @@
 
 #include "Platform_qtwidgets.h"
 #include "KDDockWidgets.h"
+
 #include "qtwidgets/DebugWindow_p.h"
+#include "qtwidgets/views/ViewWrapper_qtwidgets.h"
 
 #include <QApplication>
+
+#include <memory.h>
 
 static KDDockWidgets::Platform_qtwidgets s_platformQtWidgets;
 
@@ -27,6 +31,11 @@ Platform_qtwidgets::Platform_qtwidgets()
         dv->show();
     }
 #endif
+
+    qApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
+        ViewWrapper *wrapper = new Views::ViewWrapper_qtwidgets(obj);
+        focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
+    });
 }
 
 Platform_qtwidgets::~Platform_qtwidgets()
@@ -41,4 +50,14 @@ const char *Platform_qtwidgets::name() const
 bool Platform_qtwidgets::hasActivePopup() const
 {
     return qApp->activePopupWidget() != nullptr;
+}
+
+std::shared_ptr<ViewWrapper> Platform_qtwidgets::focusedView() const
+{
+    if (auto w = qobject_cast<QWidget *>(qApp->focusObject())) {
+        ViewWrapper *wrapper = new Views::ViewWrapper_qtwidgets(w);
+        return std::shared_ptr<ViewWrapper>(wrapper);
+    }
+
+    return {};
 }

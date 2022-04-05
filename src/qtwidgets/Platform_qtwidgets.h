@@ -25,6 +25,7 @@ public:
     ~Platform_qtwidgets() override;
     const char *name() const override;
     bool hasActivePopup() const override;
+    std::shared_ptr<ViewWrapper> focusedView() const override;
 };
 
 }

@@ -12,6 +12,10 @@
 #pragma once
 
 #include "docks_export.h"
+#include "ViewWrapper.h"
+
+#include "kdbindings/signal.h"
+#include <memory.h>
 
 namespace KDDockWidgets {
 
@@ -30,6 +34,13 @@ public:
     /// @brief Returns whether a popup is open
     /// Usually not needed to override. Investigate further in case side bars aren't auto hidding
     virtual bool hasActivePopup() const;
+
+    /// @brief Returns the focused view, if any
+    virtual std::shared_ptr<ViewWrapper> focusedView() const = 0;
+
+public:
+    /// @brief This signal is emitted when the currently focused view changes
+    KDBindings::Signal<std::shared_ptr<ViewWrapper>> focusedViewChanged;
 
 protected:
     Platform();
