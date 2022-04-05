@@ -44,6 +44,11 @@ View *ViewGuard::operator->()
     return v;
 }
 
+const View *ViewGuard::operator->() const
+{
+    return v;
+}
+
 void ViewGuard::clear()
 {
     v = nullptr;

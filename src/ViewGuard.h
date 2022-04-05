@@ -30,6 +30,7 @@ public:
 
     operator bool() const;
     View *operator->();
+    const View *operator->() const;
     void clear();
     bool isNull() const;
     View *view() const;
