@@ -15,13 +15,8 @@
 using namespace KDDockWidgets;
 
 ViewGuard::ViewGuard(View *view)
-    : v(view && view->inDtor() ? nullptr : view)
 {
-    if (v) {
-        m_onDestroy = v->beingDestroyed.connect([this] {
-            v = nullptr;
-        });
-    }
+    setView(view);
 }
 
 ViewGuard::operator bool() const
@@ -53,15 +48,27 @@ View *ViewGuard::view() const
 
 ViewGuard &ViewGuard::operator=(View *view)
 {
-    if (view == v)
-        return *this;
+    setView(view);
+    return *this;
+}
 
-    // Remove the previous connection
+void ViewGuard::setView(View *view)
+{
+    if (view == v)
+        return;
+
+    if (view && view->inDtor()) {
+        // We don't care about views that are already being in DTOR. They count as already deleted for what's ViewGuard concerned.
+        // This is rare anway, would need to require some reentrancy.
+        view = nullptr;
+    }
+
     clear();
     v = view;
 
-    m_onDestroy = v->beingDestroyed.connect([this] {
-        v = nullptr;
-    });
-    return *this;
+    if (v) {
+        m_onDestroy = v->beingDestroyed.connect([this] {
+            v = nullptr;
+        });
+    }
 }

@@ -35,6 +35,7 @@ public:
     ViewGuard &operator=(View *);
 
 private:
+    void setView(View *);
     View *v = nullptr;
     KDBindings::ConnectionHandle m_onDestroy;
 };
