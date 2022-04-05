@@ -19,7 +19,6 @@ static Platform *s_platform = nullptr;
 
 Platform::Platform()
 {
-    qDebug() << "Created!";
     s_platform = this;
 }
 
