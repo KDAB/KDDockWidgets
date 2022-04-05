@@ -1,7 +1,18 @@
-#include <cstdio>
+/*
+  This file is part of KDDockWidgets.
+
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  Author: Waqar Ahmed <waqar.ahmed@kdab.com>
+
+  SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+
+  Contact KDAB at <info@kdab.com> for commercial licensing options.
+*/
 
 #include <ViewGuard.h>
 #include <qtwidgets/views/ViewWrapper_qtwidgets.h>
+
+#include <cstdio>
 
 using namespace KDDockWidgets;
 
@@ -20,7 +31,7 @@ int main()
     TEST(g.isNull());
 
     {
-        Views::ViewWrapper_qtwidgets wv(static_cast<QWidget*>(nullptr));
+        Views::ViewWrapper_qtwidgets wv(static_cast<QWidget *>(nullptr));
         g = &wv;
         TEST(!g.isNull());
     }
