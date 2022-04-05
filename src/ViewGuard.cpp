@@ -19,6 +19,11 @@ ViewGuard::ViewGuard(View *view)
     setView(view);
 }
 
+ViewGuard::ViewGuard(const ViewGuard &other)
+{
+    setView(other.view());
+}
+
 ViewGuard::~ViewGuard()
 {
     clear();

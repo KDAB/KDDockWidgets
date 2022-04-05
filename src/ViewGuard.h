@@ -25,6 +25,7 @@ class DOCKS_EXPORT ViewGuard
 {
 public:
     ViewGuard(View *v);
+    ViewGuard(const ViewGuard &);
     ~ViewGuard();
 
     operator bool() const;
