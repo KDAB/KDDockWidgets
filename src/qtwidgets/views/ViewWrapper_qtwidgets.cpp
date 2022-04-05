@@ -70,6 +70,7 @@ static Controller *controllerForWidget(QWidget *widget)
         case Type::Layout:
             if (auto view = qobject_cast<LayoutWidget *>(widget))
                 return view->controller();
+            break;
         case Type::MDIArea:
             if (auto view = qobject_cast<MDIArea *>(widget))
                 return view->controller();
