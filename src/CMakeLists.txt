@@ -98,6 +98,8 @@ set(DOCKSLIBS_SRCS
     controllers/TabBar.h
     View.cpp
     View.h
+    ViewGuard.cpp
+    ViewGuard.h
     ViewWrapper.cpp
     ViewWrapper.h
     Controller.cpp
