@@ -24,9 +24,6 @@
 #include "multisplitter/Item_p.h"
 #include "qtwidgets/views/Frame_qtwidgets.h"
 #include "qtwidgets/views/TitleBar_qtwidgets.h"
-#include "qtwidgets/views/TabBar_qtwidgets.h"
-#include "qtwidgets/views/Stack_qtwidgets.h"
-#include "qtwidgets/views/SideBar_qtwidgets.h"
 #include "private/MultiSplitter_p.h"
 
 #include "controllers/DockWidget.h"
@@ -4884,7 +4881,7 @@ void TestDocks::tst_tabsNotClickable()
 
     QTest::qWait(500); // wait for window to get proper geometry
 
-    const QPoint clickPoint = frame->tabBar()->mapToGlobal(qobject_cast<Views::TabBar_qtwidgets *>(frame->tabBar()->view()->asQWidget())->rectForTab(0).center()); // TODO
+    const QPoint clickPoint = frame->tabBar()->mapToGlobal(frame->tabBar()->rectForTab(0).center());
     QCursor::setPos(clickPoint); // Just for visual debug when needed
 
     pressOn(clickPoint, frame->tabBar()->view()->asQWidget());

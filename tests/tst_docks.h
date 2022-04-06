@@ -31,8 +31,6 @@
 #include <QQmlApplicationEngine>
 #else
 
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
-
 #include <QLineEdit>
 #include <QMenuBar>
 #include <QPushButton>
