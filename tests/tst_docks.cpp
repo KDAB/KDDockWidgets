@@ -2918,7 +2918,7 @@ void TestDocks::tst_posAfterLeftDetach()
         const int offset = 10;
         const QPoint globalDest = globalSrc + QPoint(offset, 0);
         QVERIFY(dock2->isVisible());
-        drag(dock2->view()->asQWidget(), globalDest);
+        drag(dock2->view(), globalDest);
         QVERIFY(fw->dropArea()->checkSanity());
         const QPoint actualEndPos = dock2->mapToGlobal(QPoint(0, 0));
         QVERIFY(actualEndPos.x() - globalSrc.x() < offset + 5); // 5px so we have margin for window system fluctuations. The actual bug was a very big jump like 50px, so a 5 margin is fine to test that the bug doesn't happen
@@ -5190,7 +5190,7 @@ void TestDocks::tst_mdi_mixed_with_docking2()
     const QPoint globalSrc = mdiWidget1->mapToGlobal(QPoint(5, 5));
     const QPoint globalDest = globalSrc + QPoint(100, 100);
 
-    drag(mdiWidget1->view()->asQWidget(), globalDest);
+    drag(mdiWidget1->view(), globalDest);
 
     QCOMPARE(mdiArea->frames().count(), 2);
     auto mdiTitleBar = mdiArea->frames().first()->titleBar();

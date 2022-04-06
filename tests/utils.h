@@ -27,13 +27,8 @@
 #include "controllers/DockWidget_p.h"
 
 #include "Utils_p.h"
-#include "qtwidgets/views/DockWidget_qtwidgets.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-#include "qtwidgets/views/Stack_qtwidgets.h"
-#include "qtwidgets/views/Frame_qtwidgets.h"
-#include "qtwidgets/views/FloatingWindow_qtwidgets.h"
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
 
 #include <QVBoxLayout>
 #include <QWidget>
@@ -350,14 +345,13 @@ inline Controllers::FloatingWindow *createFloatingWindow()
     return dock->d->morphIntoFloatingWindow();
 }
 
-inline WidgetType *draggableFor(WidgetType *w)
+inline WidgetType *draggableFor(View *view)
 {
     WidgetType *draggable = nullptr;
-    if (auto dockView = qobject_cast<Views::DockWidget_qtwidgets *>(w)) {
-        if (auto frame = dockView->dockWidget()->d->frame())
+    if (auto dw = view->asDockWidgetController()) {
+        if (auto frame = dw->d->frame())
             draggable = frame->titleBar()->view()->asQWidget();
-    } else if (auto fwView = qobject_cast<Views::FloatingWindow_qtwidgets *>(w)) {
-        auto fw = fwView->floatingWindow();
+    } else if (auto fw = view->asFloatingWindowController()) {
         Controllers::Frame *frame = fw->hasSingleFrame() ? static_cast<Controllers::Frame *>(fw->frames().first())
                                                          : nullptr;
 
@@ -366,18 +360,11 @@ inline WidgetType *draggableFor(WidgetType *w)
         } else {
             draggable = fw->titleBar()->view()->asQWidget();
         }
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    } else if (qobject_cast<Views::Stack_qtwidgets *>(w)) {
-        draggable = w;
-#else
-    } else if (qobject_cast<TabWidgetQuick *>(w)) {
-        draggable = w;
-#endif
-    } else if (qobject_cast<Controllers::TitleBar *>(w)) {
-        draggable = w;
+    } else if (view->is(Type::Stack) || view->is(Type::TitleBar)) {
+        draggable = view->asQWidget();
     }
 
-    qDebug() << "Draggable is" << draggable << "for" << w;
+    qDebug() << "Draggable is" << draggable << "for" << view;
     return draggable;
 }
 
@@ -410,12 +397,12 @@ inline void drag(WidgetType *sourceWidget, QPoint pressGlobalPos, QPoint globalD
         releaseOn(globalDest, sourceWidget);
 }
 
-inline void drag(WidgetType *sourceWidget, QPoint globalDest,
+inline void drag(View *sourceView, QPoint globalDest,
                  ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
 {
-    Q_ASSERT(sourceWidget && sourceWidget->isVisible());
+    Q_ASSERT(sourceView && sourceView->isVisible());
 
-    WidgetType *draggable = draggableFor(sourceWidget);
+    WidgetType *draggable = draggableFor(sourceView);
 
     Q_ASSERT(draggable && draggable->isVisible());
     const QPoint pressGlobalPos = KDDockWidgets::mapToGlobal(draggable, QPoint(15, 15));
@@ -426,7 +413,7 @@ inline void drag(WidgetType *sourceWidget, QPoint globalDest,
 inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, QPoint globalDest,
                                  ButtonActions buttonActions = ButtonActions(ButtonAction_Press) | ButtonAction_Release)
 {
-    auto draggable = draggableFor(fw->view()->asQWidget());
+    auto draggable = draggableFor(fw->view());
     Q_ASSERT(draggable);
     Q_ASSERT(draggable->isVisible());
     drag(draggable, KDDockWidgets::mapToGlobal(draggable, QPoint(10, 10)), globalDest, buttonActions);
@@ -434,7 +421,7 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, QPoint globalD
 
 inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, DropArea *target, DropLocation dropLocation)
 {
-    auto draggable = draggableFor(fw->view()->asQWidget());
+    auto draggable = draggableFor(fw->view());
     Q_ASSERT(draggable);
 
     // First we drag over it, so the drop indicators appear:
