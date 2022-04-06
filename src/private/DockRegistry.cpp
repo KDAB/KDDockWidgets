@@ -51,15 +51,14 @@ DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
     qApp->installEventFilter(this);
-
-    connect(qApp, &QGuiApplication::focusObjectChanged,
-            this, &DockRegistry::onFocusObjectChanged);
+    m_connection = Platform::instance()->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
 
     initKDDockWidgetResources();
 }
 
 DockRegistry::~DockRegistry()
 {
+    m_connection.disconnect();
 }
 
 void DockRegistry::maybeDelete()
@@ -68,11 +67,11 @@ void DockRegistry::maybeDelete()
         delete this;
 }
 
-void DockRegistry::onFocusObjectChanged(QObject *obj)
+void DockRegistry::onFocusedViewChanged(std::shared_ptr<ViewWrapper> view)
 {
-    auto p = qobject_cast<WidgetType *>(obj);
-    while (p) {
-        if (auto frame = Views::ViewWrapper_qtwidgets(qobject_cast<QWidget *>(p)).asFrameController()) {
+    auto p = view;
+    while (p && !p->isNull()) {
+        if (auto frame = p->asFrameController()) {
             // Special case: The focused widget is inside the frame but not inside the dockwidget.
             // For example, it's a line edit in the QTabBar. We still need to send the signal for
             // the current dw in the tab group
@@ -83,11 +82,11 @@ void DockRegistry::onFocusObjectChanged(QObject *obj)
             return;
         }
 
-        if (auto dwView = qobject_cast<Views::DockWidget_qtwidgets *>(p)) {
-            DockRegistry::self()->setFocusedDockWidget(dwView->dockWidget());
+        if (auto dw = p->asDockWidgetController()) {
+            DockRegistry::self()->setFocusedDockWidget(dw);
             return;
         }
-        p = p->parentWidget();
+        p = p->parentView();
     }
 
     setFocusedDockWidget(nullptr);
