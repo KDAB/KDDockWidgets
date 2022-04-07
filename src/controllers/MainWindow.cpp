@@ -561,7 +561,7 @@ void MainWindow::overlayOnSideBar(DockWidgetBase *dw)
     clearSideBarOverlay();
 
     auto frame = new Controllers::Frame(nullptr, FrameOption_IsOverlayed);
-    frame->view()->asQWidget()->setParent(view()->asQWidget()); // TODOv2
+    frame->view()->setParent(view());
     d->m_overlayedDockWidget = dw;
     frame->addWidget(dw);
     d->updateOverlayGeometry(dw->d->lastPosition()->lastOverlayedGeometry(sb->location()).size());
