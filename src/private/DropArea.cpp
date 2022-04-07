@@ -95,7 +95,7 @@ Controllers::Frame *DropArea::frameContainingPos(QPoint globalPos) const
 {
     const Layouting::Item::List &items = this->items();
     for (Layouting::Item *item : items) {
-        auto frame = Views::ViewWrapper_qtwidgets(item->guestAsQObject()).asFrameController();
+        auto frame = item->asFrameController();
         if (!frame || !frame->isVisible()) {
             continue;
         }
@@ -116,7 +116,7 @@ void DropArea::updateFloatingActions()
 Layouting::Item *DropArea::centralFrame() const
 {
     for (Layouting::Item *item : this->items()) {
-        if (auto frame = Views::ViewWrapper_qtwidgets(item->guestAsQObject()).asFrameController()) {
+        if (auto frame = item->asFrameController()) {
             if (frame->isCentralFrame())
                 return item;
         }

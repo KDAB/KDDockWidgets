@@ -17,13 +17,11 @@
 #include "qtwidgets/views/Separator_qtwidgets.h"
 
 #include <QPainter>
+#include <QWidget>
 #include <QtTest/QtTest>
 
 #include <memory.h>
-#include <qwidget.h>
 
-
-// TODO: namespace
 
 using namespace Layouting;
 using namespace KDDockWidgets;
@@ -234,8 +232,8 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
     QHash<QString, View *> widgets;
     const Item::List originalItems = root->items_recursive();
     for (Item *item : originalItems)
-        if (auto w = static_cast<MyGuestWidget *>(item->guestAsQObject()))
-            widgets.insert(w->id(), w);
+        if (auto view = item->guestView())
+            widgets.insert(view->id(), view);
 
     root2.fillFromVariantMap(serialized, widgets);
 
@@ -1131,7 +1129,7 @@ void TestMultiSplitter::tst_minSizeChanges()
     root->setSize_recursive(QSize(200, 200));
     QVERIFY(root->checkSanity());
 
-    auto w1 = static_cast<MyGuestWidget *>(item1->guestAsQObject()); // TODO: Static cast not required ?
+    auto w1 = item1;
     w1->setMinSize(QSize(300, 300));
     QVERIFY(root->checkSanity());
     QCOMPARE(root->size(), QSize(300, 300));

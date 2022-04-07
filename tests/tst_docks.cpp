@@ -587,7 +587,7 @@ void TestDocks::tst_restoreCentralFrame()
     QCOMPARE(layout->count(), 1);
     Item *item = m->dropArea()->centralFrame();
     QVERIFY(item);
-    auto frame = static_cast<Views::Frame_qtwidgets *>(item->guestAsQObject())->frame();
+    auto frame = item->asFrameController();
     QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!frame->titleBar()->isVisible());
 
@@ -598,7 +598,7 @@ void TestDocks::tst_restoreCentralFrame()
     QCOMPARE(layout->count(), 1);
     item = m->dropArea()->centralFrame();
     QVERIFY(item);
-    frame = static_cast<Views::Frame_qtwidgets *>(item->guestAsQObject())->frame();
+    frame = item->asFrameController();
     QCOMPARE(frame->options(), FrameOption_IsCentralFrame | FrameOption_AlwaysShowsTabs);
     QVERIFY(!frame->titleBar()->isVisible());
 }
@@ -805,10 +805,10 @@ void TestDocks::tst_dockInternal()
     auto dock1 = createDockWidget("dock1", new QPushButton("one"));
     auto dropArea = m->dropArea();
 
-    auto centralWidget = static_cast<Views::Frame_qtwidgets *>(dropArea->items()[0]->guestAsQObject());
-    nestDockWidget(dock1, dropArea, centralWidget->frame(), KDDockWidgets::Location_OnRight);
+    auto centralFrame = dropArea->items()[0]->asFrameController();
+    nestDockWidget(dock1, dropArea, centralFrame, KDDockWidgets::Location_OnRight);
 
-    QVERIFY(dock1->width() < dropArea->layoutWidth() - centralWidget->width());
+    QVERIFY(dock1->width() < dropArea->layoutWidth() - centralFrame->width());
 }
 
 void TestDocks::tst_maximizeAndRestore()
@@ -4902,7 +4902,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
-    QPointer<Controllers::Frame> centralFrame = static_cast<Views::Frame_qtwidgets *>(dropArea->centralFrame()->guestAsQObject())->frame();
+    QPointer<Controllers::Frame> centralFrame = dropArea->centralFrame()->asFrameController();
     QVERIFY(central);
     QVERIFY(dropArea);
     QCOMPARE(dropArea->count(), 1);

@@ -13,6 +13,7 @@
 #include "MultiSplitterConfig.h"
 #include "View.h"
 #include "controllers/Separator.h"
+#include "controllers/Frame.h"
 #include "ItemFreeContainer_p.h"
 #include "kdbindings/signal.h"
 
@@ -167,16 +168,12 @@ int Item::mapFromRoot(int p, Qt::Orientation o) const
     return mapFromRoot(QPoint(p, 0)).x();
 }
 
-QObject *Item::guestAsQObject() const
-{
-    return m_guest ? m_guest->asQObject() : nullptr;
-}
 
 void Item::setGuestView(View *guest)
 {
     Q_ASSERT(!guest || !m_guest);
     QObject *newWidget = guest ? guest->asQObject() : nullptr;
-    QObject *oldWidget = guestAsQObject();
+    QObject *oldWidget = m_guest ? m_guest->asQObject() : nullptr;
 
     if (oldWidget) {
         oldWidget->removeEventFilter(this);
@@ -212,6 +209,11 @@ void Item::setGuestView(View *guest)
     }
 
     updateObjectName();
+}
+
+KDDockWidgets::Controllers::Frame *Item::asFrameController() const
+{
+    return m_guest ? m_guest->asFrameController() : nullptr;
 }
 
 void Item::updateWidgetGeometries()
@@ -293,9 +295,9 @@ QObject *Item::host() const
 
 void Item::restore(View *guest)
 {
-    if (isVisible() || guestAsQObject()) {
+    if (isVisible() || m_guest) {
         qWarning() << Q_FUNC_INFO << "Hitting assert. visible="
-                   << isVisible() << "; guest=" << guestAsQObject();
+                   << isVisible() << "; guest=" << this;
         Q_ASSERT(false);
     }
 
@@ -741,7 +743,7 @@ void Item::dumpLayout(int level)
     if (m_sizingInfo.isBeingInserted)
         dbg << QStringLiteral(";beingInserted;");
 
-    dbg << this << "; guest=" << guestAsQObject();
+    dbg << this << "; guest=" << this;
 }
 
 Item::Item(View *hostWidget, ItemContainer *parent)
@@ -799,7 +801,7 @@ void Item::updateObjectName()
     if (isContainer())
         return;
 
-    if (auto w = guestAsQObject()) {
+    if (auto w = guestView()) {
         setObjectName(w->objectName().isEmpty() ? QStringLiteral("widget") : w->objectName());
     } else if (!isVisible()) {
         setObjectName(QStringLiteral("hidden"));
