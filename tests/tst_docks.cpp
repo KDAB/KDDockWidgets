@@ -701,7 +701,7 @@ void TestDocks::tst_nonDockable()
 
         Controllers::TitleBar *tb = dock->titleBar();
         QVERIFY(tb->isVisible());
-        QVERIFY(tb->isFloatButtonVisible());
+        QVERIFY(!tb->isFloatButtonVisible());
     }
 }
 
