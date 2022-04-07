@@ -172,7 +172,7 @@ QObject *Item::guestAsQObject() const
     return m_guest ? m_guest->asQObject() : nullptr;
 }
 
-void Item::setGuestWidget(View *guest)
+void Item::setGuestView(View *guest)
 {
     Q_ASSERT(!guest || !m_guest);
     QObject *newWidget = guest ? guest->asQObject() : nullptr;
@@ -244,7 +244,7 @@ void Item::fillFromVariantMap(const QVariantMap &map, const QHash<QString, View 
     const QString guestId = map.value(QStringLiteral("guestId")).toString();
     if (!guestId.isEmpty()) {
         if (View *guest = widgets.value(guestId)) {
-            setGuestWidget(guest);
+            setGuestView(guest);
             m_guest->setParent(hostWidget());
         } else if (hostWidget()) {
             qWarning() << Q_FUNC_INFO << "Couldn't find frame to restore for" << this;
@@ -302,7 +302,7 @@ void Item::restore(View *guest)
     if (isContainer()) {
         qWarning() << Q_FUNC_INFO << "Containers can't be restored";
     } else {
-        setGuestWidget(guest);
+        setGuestView(guest);
         parentContainer()->restore(this);
 
         // When we restore to previous positions, we only still from the immediate neighbours.
@@ -823,7 +823,7 @@ void Item::onWidgetDestroyed()
 
 void Item::onWidgetLayoutRequested()
 {
-    if (View *w = guestWidget()) {
+    if (View *w = guestView()) {
         if (w->size() != size() && !isMDI()) { // for MDI we allow user/manual arbitrary resize with mouse
             qDebug() << Q_FUNC_INFO << "TODO: Not implemented yet. Widget can't just decide to resize yet"
                      << w->size()
@@ -1220,7 +1220,7 @@ void ItemBoxContainer::removeItem(Item *item, bool hardRemove)
             root()->numItemsChanged.emit();
     } else {
         item->setIsVisible(false);
-        item->setGuestWidget(nullptr);
+        item->setGuestView(nullptr);
 
         if (!wasVisible && !isContainer) {
             // Was already hidden
@@ -3449,7 +3449,7 @@ void ItemBoxContainer::Private::updateWidgets_recursive()
             c->d->updateWidgets_recursive();
         } else {
             if (item->isVisible()) {
-                if (View *widget = item->guestWidget()) {
+                if (View *widget = item->guestView()) {
                     widget->setGeometry(q->mapToRoot(item->geometry()));
                     widget->setVisible(true);
                 } else {
@@ -3618,7 +3618,7 @@ Item *ItemContainer::itemForObject(const QObject *o) const
         if (item->isContainer()) {
             if (Item *result = item->asContainer()->itemForObject(o))
                 return result;
-        } else if (auto guest = item->guestWidget()) {
+        } else if (auto guest = item->guestView()) {
             if (guest && guest->asQObject() == o)
                 return item;
         }
@@ -3633,7 +3633,7 @@ Item *ItemContainer::itemForWidget(const View *w) const
         if (item->isContainer()) {
             if (Item *result = item->asContainer()->itemForWidget(w))
                 return result;
-        } else if (item->guestWidget() == w) {
+        } else if (item->guestView() == w) {
             return item;
         }
     }

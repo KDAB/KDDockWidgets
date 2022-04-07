@@ -4364,7 +4364,7 @@ void TestDocks::tst_availableSizeWithPlaceholders()
     Item *item30 = layout3->itemForFrame(docks2.at(0).createdDock->dptr()->frame());
 
     QCOMPARE(item10->geometry(), item30->geometry());
-    QCOMPARE(item10->guestWidget()->minSize(), item10->guestWidget()->minSize());
+    QCOMPARE(item10->guestView()->minSize(), item10->guestView()->minSize());
     QCOMPARE(item10->minSize(), item30->minSize());
     QCOMPARE(layout1->availableSize(), layout3->availableSize());
 

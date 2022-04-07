@@ -64,7 +64,7 @@ void ItemFreeContainer::removeItem(Item *item, bool hardRemove)
         delete item;
     } else {
         item->setIsVisible(false);
-        item->setGuestWidget(nullptr);
+        item->setGuestView(nullptr);
     }
 
     if (wasVisible)

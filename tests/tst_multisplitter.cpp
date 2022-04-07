@@ -269,7 +269,7 @@ static Item *createItem(QSize minSz = {}, QSize maxSz = {})
         guest->setMaxSize(maxSz);
 
     guest->setObjectName(item->objectName());
-    item->setGuestWidget(guest);
+    item->setGuestView(guest);
     return item;
 }
 
@@ -1536,7 +1536,7 @@ void TestMultiSplitter::tst_closeAndRestorePreservesPosition()
     const int oldW3 = item3->width();
     const int oldW4 = item4->width();
 
-    auto guest3 = item3->guestWidget();
+    auto guest3 = item3->guestView();
     item3->turnIntoPlaceholder();
 
     // Test that both sides reclaimed the space equally
@@ -1562,7 +1562,7 @@ void TestMultiSplitter::tst_minSizeChangedBeforeRestore()
     root->insertItem(item2, Location_OnBottom);
     const QSize originalSize2 = item2->size();
 
-    auto guest2 = qobject_cast<MyGuestWidget *>(item2->guestWidget()->asQWidget());
+    auto guest2 = qobject_cast<MyGuestWidget *>(item2->guestView()->asQWidget());
     const QSize newMinSize = originalSize2 + QSize(10, 10);
 
     item2->turnIntoPlaceholder();
@@ -1607,7 +1607,7 @@ void TestMultiSplitter::tst_separatorMoveHonoursMax()
     root->insertItem(item2, Location_OnRight);
     root->insertItem(item3, Location_OnRight);
 
-    auto guest2 = static_cast<MyGuestWidget *>(item2->guestWidget());
+    auto guest2 = static_cast<MyGuestWidget *>(item2->guestView());
     const int maxWidth = 250;
     guest2->setMaxSize(QSize(maxWidth, 250));
     auto separator1 = root->separators()[0];
@@ -1645,7 +1645,7 @@ void TestMultiSplitter::tst_maxSizeHonoured1()
     root->insertItem(item1, Location_OnTop);
     root->setSize_recursive(QSize(3000, 3000));
 
-    auto guest2 = static_cast<MyGuestWidget *>(item2->guestWidget());
+    auto guest2 = static_cast<MyGuestWidget *>(item2->guestView());
     const int maxHeight = 250;
     guest2->setMaxSize(QSize(250, maxHeight));
 

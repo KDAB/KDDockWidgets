@@ -304,11 +304,11 @@ public:
     int mapFromRoot(int p, Qt::Orientation) const;
 
     QObject *guestAsQObject() const;
-    KDDockWidgets::View *guestWidget() const
+    KDDockWidgets::View *guestView() const
     {
         return m_guest;
     }
-    void setGuestWidget(KDDockWidgets::View *);
+    void setGuestView(KDDockWidgets::View *);
 
     void ref();
     void unref();
@@ -319,7 +319,7 @@ public:
 
     QObject *host() const;
     KDDockWidgets::View *hostWidget() const;
-    void restore(KDDockWidgets::View *guestWidget);
+    void restore(KDDockWidgets::View *guestView);
 
     QVector<int> pathFromRoot() const;
 

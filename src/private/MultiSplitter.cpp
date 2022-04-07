@@ -139,11 +139,11 @@ void MultiSplitter::addWidget(View *w, Location location,
 
     if (frame) {
         newItem = new Layouting::Item(this);
-        newItem->setGuestWidget(frame->view());
+        newItem->setGuestView(frame->view());
     } else if (dw) {
         newItem = new Layouting::Item(this);
         frame = new Controllers::Frame();
-        newItem->setGuestWidget(frame->view());
+        newItem->setGuestView(frame->view());
         frame->addWidget(dw, option);
     } else if (auto ms = w->asMultiSplitterView()) {
         newItem = ms->m_rootItem;

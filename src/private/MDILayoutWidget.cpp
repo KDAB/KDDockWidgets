@@ -46,12 +46,12 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialO
 
     Layouting::Item *newItem = new Layouting::Item(this);
     if (frame) {
-        newItem->setGuestWidget(frame->view());
+        newItem->setGuestView(frame->view());
     } else {
         frame = new Controllers::Frame();
         frame->addWidget(dw, addingOption);
 
-        newItem->setGuestWidget(frame->view());
+        newItem->setGuestView(frame->view());
     }
 
     Q_ASSERT(!newItem->geometry().isEmpty());
