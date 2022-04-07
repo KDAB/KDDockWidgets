@@ -27,7 +27,6 @@
 #include "controllers/DockWidget_p.h"
 
 #include "qtwidgets/views/Frame_qtwidgets.h"
-#include "qtwidgets/views/DockWidget_qtwidgets.h"
 
 #include <QPointer>
 #include <QDebug>
@@ -682,6 +681,10 @@ void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 
 bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
 {
+    auto view = Platform::instance()->qobjectAsView(watched);
+    if (!view)
+        return false;
+
     if (event->type() == QEvent::Quit && !m_isProcessingAppQuitEvent) {
         m_isProcessingAppQuitEvent = true;
         qApp->sendEvent(qApp, event);
@@ -706,17 +709,17 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         if (!(Config::self().flags() & Config::Flag_AutoHideSupport))
             return false;
 
-        if (Views::ViewWrapper_qtwidgets(qobject_cast<QWidget *>(watched)).is(Type::Frame)) {
+        if (view->is(Type::Frame)) {
             // break recursion
             return false;
         }
 
-        auto p = watched;
+        auto p = view;
         while (p) {
-            if (auto dwView = qobject_cast<Views::DockWidget_qtwidgets *>(p))
-                return onDockWidgetPressed(dwView->dockWidget(), static_cast<QMouseEvent *>(event));
+            if (auto dw = p->asDockWidgetController())
+                return onDockWidgetPressed(dw, static_cast<QMouseEvent *>(event));
 
-            if (auto layoutWidget = qobject_cast<LayoutWidget *>(p)) {
+            if (auto layoutWidget = qobject_cast<LayoutWidget *>(p->asQObject())) {
                 if (auto mw = layoutWidget->mainWindow()) {
                     // The user clicked somewhere in the main window's drop area, but outside of the
                     // overlayed dock widget
@@ -725,7 +728,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
                 }
             }
 
-            p = p->parent();
+            p = p->parentView();
         }
     }
 
