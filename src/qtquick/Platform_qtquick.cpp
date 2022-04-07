@@ -54,10 +54,15 @@ const char *Platform_qtquick::name() const
 
 std::shared_ptr<ViewWrapper> Platform_qtquick::focusedView() const
 {
-    if (auto item = qobject_cast<QQuickItem *>(qApp->focusObject())) {
-        ViewWrapper *wrapper = new Views::ViewWrapper_qtquick(item);
+    return qobjectAsView(qApp->focusObject());
+}
+
+std::shared_ptr<ViewWrapper> Platform_qtquick::qobjectAsView(QObject *obj) const
+{
+    if (auto w = qobject_cast<QQuickItem *>(obj)) {
+        ViewWrapper *wrapper = new Views::ViewWrapper_qtquick(w);
         return std::shared_ptr<ViewWrapper>(wrapper);
     }
 
-    return {};
+    return nullptr;
 }

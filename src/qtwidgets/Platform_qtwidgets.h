@@ -26,6 +26,7 @@ public:
     const char *name() const override;
     bool hasActivePopup() const override;
     std::shared_ptr<ViewWrapper> focusedView() const override;
+    std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const override;
 
 private:
     void init();

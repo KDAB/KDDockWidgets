@@ -38,6 +38,11 @@ public:
     /// @brief Returns the focused view, if any
     virtual std::shared_ptr<ViewWrapper> focusedView() const = 0;
 
+    /// @brief Returns the specified QObject casted to View
+    /// Nullptr if it's not a view. TODOv2: This is shared between the
+    /// QtQuick and QWidgets impl, but will be remove once we started removing Qt from backend
+    virtual std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const = 0;
+
 public:
     /// @brief This signal is emitted when the currently focused view changes
     KDBindings::Signal<std::shared_ptr<ViewWrapper>> focusedViewChanged;

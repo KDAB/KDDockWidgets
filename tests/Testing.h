@@ -19,13 +19,14 @@
 #include "controllers/MainWindow.h"
 #include "controllers/DockWidget.h"
 #include "DockRegistry_p.h"
-#include "qtwidgets/views/View_qtwidgets.h"
 
 #include <QSize>
 #include <QRect>
 #include <QVector>
 #include <QEvent>
 #include <QVariant>
+
+#include <QWidget> // TODOv2
 
 /**
  * @file
