@@ -61,11 +61,6 @@ bool Platform_qtwidgets::hasActivePopup() const
     return qApp->activePopupWidget() != nullptr;
 }
 
-std::shared_ptr<ViewWrapper> Platform_qtwidgets::focusedView() const
-{
-    return qobjectAsView(qApp->focusObject());
-}
-
 std::shared_ptr<ViewWrapper> Platform_qtwidgets::qobjectAsView(QObject *obj) const
 {
     if (auto w = qobject_cast<QWidget *>(obj)) {

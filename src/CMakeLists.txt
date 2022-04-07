@@ -106,6 +106,8 @@ set(DOCKSLIBS_SRCS
     Controller.h
     Platform.cpp
     Platform.h
+    qtcommon/Platform_qt.cpp
+    qtcommon/Platform_qt.h
     qtwidgets/Platform_qtwidgets.cpp
     qtwidgets/Platform_qtwidgets.h
     qtwidgets/views/View_qtwidgets.cpp

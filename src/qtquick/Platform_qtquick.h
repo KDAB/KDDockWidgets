@@ -11,19 +11,18 @@
 
 #pragma once
 
-#include "Platform.h"
+#include "qtcommon/Platform_qt.h"
 
 namespace KDDockWidgets {
 
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
-class DOCKS_EXPORT Platform_qtquick : public Platform
+class DOCKS_EXPORT Platform_qtquick : public Platform_qt
 {
 public:
     Platform_qtquick();
     ~Platform_qtquick() override;
     const char *name() const override;
-    std::shared_ptr<ViewWrapper> focusedView() const override;
     std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const override;
 
 private:
