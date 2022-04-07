@@ -64,6 +64,11 @@ public:
     ///@brief returns whether this title bar supports the auto-hide button
     bool supportsAutoHideButton() const;
 
+    /// @brief returns whether the float button is visible
+    bool isFloatButtonVisible() const;
+    bool isCloseButtonVisible() const;
+    bool isCloseButtonEnabled() const;
+
     ///@brief returns whether this title bar has an icon
     bool hasIcon() const;
 

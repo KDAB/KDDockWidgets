@@ -22,8 +22,6 @@
 #include "WindowBeingDragged_p.h"
 #include "MDIArea.h"
 #include "multisplitter/Item_p.h"
-#include "qtwidgets/views/Frame_qtwidgets.h"
-#include "qtwidgets/views/TitleBar_qtwidgets.h"
 #include "private/MultiSplitter_p.h"
 
 #include "controllers/DockWidget.h"
@@ -692,7 +690,7 @@ void TestDocks::tst_nonDockable()
 
         Controllers::TitleBar *tb = dock->titleBar();
         QVERIFY(tb->isVisible());
-        QVERIFY(static_cast<Views::TitleBar_qtwidgets *>(tb->view())->isFloatButtonVisible());
+        QVERIFY(tb->isFloatButtonVisible());
     }
 
     {
@@ -703,7 +701,7 @@ void TestDocks::tst_nonDockable()
 
         Controllers::TitleBar *tb = dock->titleBar();
         QVERIFY(tb->isVisible());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(tb->view())->isFloatButtonVisible());
+        QVERIFY(tb->isFloatButtonVisible());
     }
 }
 
@@ -4045,22 +4043,22 @@ void TestDocks::tst_notClosable()
         QVERIFY(fw);
         Controllers::TitleBar *titlebarFW = fw->titleBar();
         Controllers::TitleBar *titleBarFrame = fw->frames().at(0)->titleBar();
-        QVERIFY(static_cast<Views::TitleBar_qtwidgets *>(titlebarFW->view())->isCloseButtonVisible());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titlebarFW->view())->isCloseButtonEnabled());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonVisible());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonEnabled());
+        QVERIFY(titlebarFW->isCloseButtonVisible());
+        QVERIFY(!titlebarFW->isCloseButtonEnabled());
+        QVERIFY(!titleBarFrame->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
 
         dock1->setOptions(DockWidgetBase::Option_None);
-        QVERIFY(static_cast<Views::TitleBar_qtwidgets *>(titlebarFW->view())->isCloseButtonVisible());
-        QVERIFY(static_cast<Views::TitleBar_qtwidgets *>(titlebarFW->view())->isCloseButtonEnabled());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonVisible());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonEnabled());
+        QVERIFY(titlebarFW->isCloseButtonVisible());
+        QVERIFY(titlebarFW->isCloseButtonEnabled());
+        QVERIFY(!titleBarFrame->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
 
         dock1->setOptions(DockWidgetBase::Option_NotClosable);
-        QVERIFY(static_cast<Views::TitleBar_qtwidgets *>(titlebarFW->view())->isCloseButtonVisible());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titlebarFW->view())->isCloseButtonEnabled());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonVisible());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonEnabled());
+        QVERIFY(titlebarFW->isCloseButtonVisible());
+        QVERIFY(!titlebarFW->isCloseButtonEnabled());
+        QVERIFY(!titleBarFrame->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
     }
 
     {
@@ -4077,9 +4075,9 @@ void TestDocks::tst_notClosable()
         Controllers::TitleBar *titlebarFW = fw->titleBar();
         Controllers::TitleBar *titleBarFrame = fw->frames().at(0)->titleBar();
 
-        QVERIFY(static_cast<Views::TitleBar_qtwidgets *>(titlebarFW->view())->isCloseButtonVisible());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonVisible());
-        QVERIFY(!static_cast<Views::TitleBar_qtwidgets *>(titleBarFrame->view())->isCloseButtonEnabled());
+        QVERIFY(titlebarFW->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonVisible());
+        QVERIFY(!titleBarFrame->isCloseButtonEnabled());
     }
 }
 

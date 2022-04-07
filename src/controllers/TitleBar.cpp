@@ -196,6 +196,21 @@ bool TitleBar::supportsAutoHideButton() const
     return m_supportsAutoHide && m_frame && (m_frame->isInMainWindow() || m_frame->isOverlayed());
 }
 
+bool TitleBar::isFloatButtonVisible() const
+{
+    return dynamic_cast<Views::TitleBar *>(view())->isFloatButtonVisible();
+}
+
+bool TitleBar::isCloseButtonVisible() const
+{
+    return dynamic_cast<Views::TitleBar *>(view())->isCloseButtonVisible();
+}
+
+bool TitleBar::isCloseButtonEnabled() const
+{
+    return dynamic_cast<Views::TitleBar *>(view())->isCloseButtonEnabled();
+}
+
 bool TitleBar::hasIcon() const
 {
     return !m_icon.isNull();

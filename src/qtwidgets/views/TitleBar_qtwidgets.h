@@ -39,9 +39,9 @@ public:
 
 #ifdef DOCKS_DEVELOPER_MODE
     // The following are needed for the unit-tests
-    bool isCloseButtonVisible() const;
-    bool isCloseButtonEnabled() const;
-    bool isFloatButtonVisible() const;
+    bool isCloseButtonVisible() const override;
+    bool isCloseButtonEnabled() const override;
+    bool isFloatButtonVisible() const override;
     bool isFloatButtonEnabled() const;
 #endif
 
