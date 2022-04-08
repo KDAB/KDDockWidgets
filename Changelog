@@ -8,6 +8,7 @@
  - Fixed case where unfloating wouldn't restore to the main window (#44 and #96)
  - Fixed MainWindow not propagating close events to docked widgets
  - X11: Improved detecting which window is under the cursor, by using native X11 API
+ - X11: Fixed dragging a maximized floating window. Its size is now restored to normal size when the drag starts.
 
 * v1.5.0 (24 November 2021)
  - Install the Python bindings to "site-packages"
