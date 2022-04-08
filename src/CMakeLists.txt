@@ -96,6 +96,8 @@ set(DOCKSLIBS_SRCS
     controllers/TitleBar.h
     controllers/TabBar.cpp
     controllers/TabBar.h
+    Window.cpp
+    Window.h
     View.cpp
     View.h
     ViewGuard.cpp
@@ -108,6 +110,8 @@ set(DOCKSLIBS_SRCS
     Platform.h
     qtcommon/Platform_qt.cpp
     qtcommon/Platform_qt.h
+    qtcommon/Window_qt.cpp
+    qtcommon/Window_qt.h
     qtwidgets/Platform_qtwidgets.cpp
     qtwidgets/Platform_qtwidgets.h
     qtwidgets/views/View_qtwidgets.cpp
