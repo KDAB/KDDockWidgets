@@ -313,7 +313,7 @@ void StateDragging::onEntry()
 
         auto fw = q->m_windowBeingDragged->floatingWindow();
 #ifdef Q_OS_LINUX
-        if (fw->isMaximized()) {
+        if (fw->isMaximizedOverride()) {
             // When dragging a maximized window on linux we need to restore its normal size
             // On Windows this works already. On macOS I don't see this feature at all
 
