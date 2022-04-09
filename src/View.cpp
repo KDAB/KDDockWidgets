@@ -268,3 +268,14 @@ bool View::isNull() const
 {
     return false;
 }
+
+bool View::isInWindow(std::shared_ptr<Window> window) const
+{
+    if (!window)
+        return false;
+
+    if (auto ourWindow = windowHandle())
+        return ourWindow->equals(window);
+
+    return false;
+}

@@ -64,6 +64,11 @@ public:
     {
     }
 
+    ~Private()
+    {
+        m_connection.disconnect();
+    }
+
     void init()
     {
         if (m_supportsAutoHide) {
@@ -93,11 +98,10 @@ public:
         q->setCentralWidget(m_centralWidget);
 
         q->create();
-        connect(q->windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
-                [this] {
-                    updateMargins(); // logical dpi might have changed
-                    Q_EMIT DockRegistry::self()->windowChangedScreen(q->windowHandle());
-                });
+        m_connection = q->windowHandle()->screenChanged.connect([this] {
+            updateMargins(); // logical dpi might have changed
+            Q_EMIT DockRegistry::self()->windowChangedScreen(q->windowHandle());
+        });
     }
 
     void updateMargins()
@@ -112,6 +116,7 @@ public:
     QHash<SideBarLocation, Controllers::SideBar *> m_sideBars; // TODOv2: Move to controller
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
+    KDBindings::ConnectionHandle m_connection;
     QMargins m_centerWidgetMargins = { 1, 5, 1, 1 };
 };
 

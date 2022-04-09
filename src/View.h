@@ -29,7 +29,6 @@ class Item;
 
 class QFocusEvent;
 class QSizePolicy;
-class QWindow;
 class QScreen;
 
 namespace KDDockWidgets {
@@ -37,6 +36,7 @@ namespace KDDockWidgets {
 class ViewWrapper;
 class Controller;
 class MultiSplitter;
+class Window;
 
 namespace Controllers {
 class DockWidget;
@@ -49,6 +49,7 @@ class MainWindow;
 }
 
 using HANDLE = const void *;
+using WId = quintptr;
 
 class DOCKS_EXPORT View
 {
@@ -161,7 +162,6 @@ public:
     virtual bool isMaximized() const = 0;
     virtual void setMaximumSize(QSize sz) = 0;
     virtual bool isActiveWindow() const = 0;
-    virtual QWindow *windowHandle() const = 0;
     virtual void setFixedWidth(int) = 0;
     virtual void setFixedHeight(int) = 0;
     virtual void grabMouse() = 0;
@@ -200,10 +200,17 @@ public:
     static QSize hardcodedMinimumSize();
     static QSize boundedMaxSize(QSize min, QSize max);
 
+    virtual std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const = 0;
 
-    /// @brief Returns the top-level gui element which this one is on
-    /// Like QWidget::window()
+    /// @brief Returns the top-level gui element which this view is inside
+    /// It's the root view of the window.
+    /// Like QWidget::window() // TODOv2 rename window() to rootView()
     virtual std::shared_ptr<ViewWrapper> window() const = 0;
+
+    /// @brief Returns the window this view is inside
+    /// For the Qt frontend, this wraps a QWindow.
+    /// Like QWidget::windowHandle()
+    virtual std::shared_ptr<Window> windowHandle() const = 0;
 
     /// @brief Returns the gui element's parent. Like QWidget::parentWidget()
     virtual std::shared_ptr<ViewWrapper> parentView() const = 0;
@@ -257,6 +264,9 @@ public:
     Controllers::DockWidget *asDockWidgetController() const;
     Controllers::MainWindow *asMainWindowController() const;
     MultiSplitter *asMultiSplitterView();
+
+    /// @brief returns whether this view is inside the specified window
+    bool isInWindow(std::shared_ptr<Window> window) const;
 
 public:
     /// @brief signal emitted once ~View starts

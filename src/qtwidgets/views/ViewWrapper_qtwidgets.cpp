@@ -19,11 +19,14 @@
 #include "qtwidgets/views/Stack_qtwidgets.h"
 #include "qtwidgets/views/TabBar_qtwidgets.h"
 #include "qtwidgets/views/TitleBar_qtwidgets.h"
+#include "qtwidgets/Window_qtwidgets.h"
 
 #include "private/MultiSplitter_p.h"
 #include "private/MDILayoutWidget_p.h"
 #include "MDIArea.h"
+#include "private/DropArea_p.h"
 
+#include <QWindow>
 #include <QDebug>
 
 using namespace KDDockWidgets;
@@ -130,9 +133,12 @@ void ViewWrapper_qtwidgets::setGeometry(QRect rect)
     m_widget->setGeometry(rect);
 }
 
-QWindow *ViewWrapper_qtwidgets::windowHandle() const
+std::shared_ptr<Window> ViewWrapper_qtwidgets::windowHandle() const
 {
-    return m_widget->windowHandle();
+    if (QWindow *w = m_widget->window()->windowHandle())
+        return std::shared_ptr<Window>(new Window_qtwidgets(w));
+
+    return nullptr;
 }
 
 bool ViewWrapper_qtwidgets::isTopLevel() const
@@ -168,6 +174,11 @@ void ViewWrapper_qtwidgets::activateWindow()
 bool ViewWrapper_qtwidgets::isMaximized() const
 {
     return m_widget->isMaximized();
+}
+
+bool ViewWrapper_qtwidgets::isMinimized() const
+{
+    return m_widget->isMinimized();
 }
 
 QSize ViewWrapper_qtwidgets::maximumSize() const
@@ -241,6 +252,14 @@ std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::parentView() const
     return {};
 }
 
+std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::childViewAt(QPoint localPos) const
+{
+    if (QWidget *child = m_widget->childAt(localPos))
+        return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(child));
+
+    return {};
+}
+
 HANDLE ViewWrapper_qtwidgets::handle() const
 {
     return reinterpret_cast<HANDLE>(m_widget.data());
@@ -274,4 +293,9 @@ QString ViewWrapper_qtwidgets::objectName() const
 bool ViewWrapper_qtwidgets::isNull() const
 {
     return m_widget.data() == nullptr;
+}
+
+DropArea *ViewWrapper_qtwidgets::asDropArea() const
+{
+    return qobject_cast<DropArea *>(m_widget);
 }

@@ -179,8 +179,8 @@ void Stack_qtwidgets::setupTabBarButtons()
     });
 
     updateMargins();
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](QWindow *w) {
-        if (w == window()->windowHandle())
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Window::Ptr w) {
+        if (isInWindow(w))
             updateMargins();
     });
 }

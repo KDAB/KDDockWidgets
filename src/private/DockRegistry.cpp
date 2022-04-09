@@ -31,7 +31,6 @@
 #include <QPointer>
 #include <QDebug>
 #include <QGuiApplication>
-#include <QWindow>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
@@ -163,15 +162,15 @@ QStringList DockRegistry::dockWidgetNames() const
     return names;
 }
 
-bool DockRegistry::isProbablyObscured(QWindow *window, Controllers::FloatingWindow *exclude) const
+bool DockRegistry::isProbablyObscured(Window::Ptr window, Controllers::FloatingWindow *exclude) const
 {
     if (!window)
         return false;
 
     const QRect geo = window->geometry();
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {
-        QWindow *fwWindow = fw->view()->asQWidget()->windowHandle();
-        if (fw == exclude || fwWindow == window)
+        Window::Ptr fwWindow = fw->view()->windowHandle();
+        if (fw == exclude || fwWindow->equals(window))
             continue;
 
         if (fwWindow->geometry().intersects(geo)) {
@@ -184,9 +183,9 @@ bool DockRegistry::isProbablyObscured(QWindow *window, Controllers::FloatingWind
     const bool targetIsToolWindow = KDDockWidgets::usesUtilityWindows() && floatingWindowForHandle(window) != nullptr;
 
     for (Controllers::MainWindow *mw : m_mainWindows) {
-        QWindow *mwWindow = mw->window()->windowHandle();
+        Window::Ptr mwWindow = mw->view()->windowHandle();
 
-        if (mwWindow && mwWindow != window && !targetIsToolWindow && mwWindow->geometry().intersects(geo)) {
+        if (mwWindow && !mwWindow->equals(window) && !targetIsToolWindow && mwWindow->geometry().intersects(geo)) {
             // Two main windows that intersect. Return true. If the target is a tool window it will be above, so we don't care.
             return true;
         }
@@ -195,7 +194,7 @@ bool DockRegistry::isProbablyObscured(QWindow *window, Controllers::FloatingWind
     return false;
 }
 
-bool DockRegistry::isProbablyObscured(QWindow *target, WindowBeingDragged *exclude) const
+bool DockRegistry::isProbablyObscured(Window::Ptr target, WindowBeingDragged *exclude) const
 {
     Controllers::FloatingWindow *fw = exclude ? exclude->floatingWindow()
                                               : nullptr; // It's null on Wayland. On wayland obscuring never happens anyway, so not a problem.
@@ -537,13 +536,13 @@ const QVector<Controllers::FloatingWindow *> DockRegistry::floatingWindows(bool 
     return result;
 }
 
-const QVector<QWindow *> DockRegistry::floatingQWindows() const
+const Window::List DockRegistry::floatingQWindows() const
 {
-    QVector<QWindow *> windows;
+    Window::List windows;
     windows.reserve(m_floatingWindows.size());
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {
         if (!fw->beingDeleted()) {
-            if (QWindow *window = fw->view()->asQWidget()->windowHandle()) {
+            if (Window::Ptr window = fw->view()->windowHandle()) {
                 window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(fw->view()->asQWidget())); // Since QWidgetWindow is private API
                 windows.push_back(window);
             } else {
@@ -562,22 +561,21 @@ bool DockRegistry::hasFloatingWindows() const
     });
 }
 
-QWindow *DockRegistry::windowForHandle(WId id) const
+Window::Ptr DockRegistry::windowForHandle(WId id) const
 {
-    const QWindowList windows = qApp->topLevelWindows();
-    for (QWindow *w : windows) {
-        if (w->isVisible() && w->handle()) {
-            if (w->winId() == id)
-                return w;
+    const Window::List windows = Platform::instance()->windows();
+    for (Window::Ptr w : windows) {
+        if (w->isVisible() && w->handle() == id) {
+            return w;
         }
     }
     return nullptr;
 }
 
-Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(QWindow *windowHandle) const
+Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr windowHandle) const
 {
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {
-        if (fw->view()->asQWidget()->windowHandle() == windowHandle)
+        if (fw->view()->windowHandle()->equals(windowHandle))
             return fw;
     }
 
@@ -594,17 +592,17 @@ Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) con
     return nullptr;
 }
 
-Controllers::MainWindow *DockRegistry::mainWindowForHandle(QWindow *windowHandle) const
+Controllers::MainWindow *DockRegistry::mainWindowForHandle(Window::Ptr window) const
 {
     for (Controllers::MainWindow *mw : m_mainWindows) {
-        if (mw->view()->windowHandle() == windowHandle)
+        if (mw->view()->isInWindow(window))
             return mw;
     }
 
     return nullptr;
 }
 
-QWidgetOrQuick *DockRegistry::topLevelForHandle(QWindow *windowHandle) const
+QWidgetOrQuick *DockRegistry::topLevelForHandle(Window::Ptr windowHandle) const
 {
     if (auto fw = floatingWindowForHandle(windowHandle))
         return fw->view()->asQWidget();
@@ -615,15 +613,15 @@ QWidgetOrQuick *DockRegistry::topLevelForHandle(QWindow *windowHandle) const
     return nullptr;
 }
 
-QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
+Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
 {
-    QVector<QWindow *> windows;
+    Window::List windows;
     windows.reserve(m_floatingWindows.size() + m_mainWindows.size());
 
     if (!excludeFloatingDocks) {
         for (Controllers::FloatingWindow *fw : m_floatingWindows) {
             if (fw->isVisible()) {
-                if (QWindow *window = fw->view()->asQWidget()->windowHandle()) {
+                if (auto window = fw->view()->windowHandle()) {
                     window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(fw->view()->asQWidget())); // Since QWidgetWindow is private API
                     windows << window;
                 } else {
@@ -635,7 +633,7 @@ QVector<QWindow *> DockRegistry::topLevels(bool excludeFloatingDocks) const
 
     for (Controllers::MainWindow *m : m_mainWindows) {
         if (m->isVisible()) {
-            if (QWindow *window = m->window()->windowHandle()) {
+            if (Window::Ptr window = m->view()->windowHandle()) {
                 window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(m->view()->asQWidget()));
                 windows << window;
             } else {
@@ -691,8 +689,8 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         m_isProcessingAppQuitEvent = false;
         return true;
     } else if (event->type() == QEvent::Expose) {
-        if (auto windowHandle = qobject_cast<QWindow *>(watched)) {
-            if (Controllers::FloatingWindow *fw = floatingWindowForHandle(windowHandle)) {
+        if (auto window = Platform::instance()->qobjectAsWindow(watched)) {
+            if (Controllers::FloatingWindow *fw = floatingWindowForHandle(window)) {
                 // This floating window was exposed
                 m_floatingWindows.removeOne(fw);
                 m_floatingWindows.append(fw);

@@ -180,7 +180,7 @@ void TestDocks::tst_restoreSimple()
     QVERIFY(fw2->isVisible());
     QVERIFY(fw2->view()->isTopLevel());
     QCOMPARE(fw2->pos(), dock2FloatingPoint);
-    QCOMPARE(fw2->view()->windowHandle()->transientParent(), m->windowHandle());
+    QVERIFY(m->view()->windowHandle()->equals(fw2->view()->windowHandle()->transientParent()));
     QVERIFY(dock2->isFloating());
     QVERIFY(dock2->isVisible());
 
@@ -608,15 +608,15 @@ void TestDocks::tst_restoreMaximizedState()
 
     m->view()->showMaximized();
 
-    QCOMPARE(m->windowHandle()->windowState(), Qt::WindowMaximized);
+    QCOMPARE(m->view()->windowHandle()->windowState(), Qt::WindowMaximized);
     LayoutSaver saver;
 
     const QByteArray saved = saver.serializeLayout();
     m->view()->showNormal();
-    QVERIFY(m->windowHandle()->windowState() != Qt::WindowMaximized);
+    QVERIFY(m->view()->windowHandle()->windowState() != Qt::WindowMaximized);
 
     saver.restoreLayout(saved);
-    QCOMPARE(m->windowHandle()->windowState(), Qt::WindowMaximized);
+    QCOMPARE(m->view()->windowHandle()->windowState(), Qt::WindowMaximized);
 }
 
 void TestDocks::tst_restoreFloatingMinimizedState()
@@ -864,7 +864,7 @@ void TestDocks::tst_shutdown()
 
     auto m = createMainWindow();
     m->show();
-    QVERIFY(QTest::qWaitForWindowActive(m->windowHandle()));
+    QVERIFY(QTest::qWaitForWindowActive(m->view()->asQWidget()->windowHandle()));
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
@@ -2636,7 +2636,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     // QtQuick is a bit more async than QWidgets. Wait for the move.
-    Testing::waitForEvent(fw2->view()->windowHandle(), QEvent::Move);
+    Testing::waitForEvent(fw2->view()->asQWidget()->windowHandle(), QEvent::Move);
 
     auto da2 = fw2->dropArea();
     const QPoint dragDestPos = da2->mapToGlobal(da2->QWidget::rect().center());
@@ -2731,7 +2731,7 @@ void TestDocks::tst_isFocused()
     // 3. Raise dock2 and focus its line edit
     dock2->view()->raiseAndActivate();
     if (!dock2->window()->windowHandle()->isActive())
-        Testing::waitForEvent(dock2->window()->windowHandle(), QEvent::WindowActivate);
+        Testing::waitForEvent(dock2->window()->asQWidget()->windowHandle(), QEvent::WindowActivate);
 
     dock2->widget()->setFocus(Qt::OtherFocusReason);
     Testing::waitForEvent(dock2->widget(), QEvent::FocusIn);
@@ -3051,7 +3051,7 @@ void TestDocks::tst_addToSmallMainWindow1()
 
     const int mainWindowLength = 400;
 
-    m->windowHandle()->resize(mainWindowLength, mainWindowLength);
+    m->view()->windowHandle()->resize(mainWindowLength, mainWindowLength);
     QTest::qWait(100);
 
     dock1->view()->resize(QSize(800, 800));
@@ -3093,7 +3093,7 @@ void TestDocks::tst_addToSmallMainWindow2()
     auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(100, 100)));
     auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(100, 100)));
     m->addDockWidgetAsTab(dock1);
-    m->windowHandle()->resize(osWindowMinWidth(), 200);
+    m->view()->windowHandle()->resize(osWindowMinWidth(), 200);
 
     Testing::waitForResize(m.get());
 
@@ -3119,7 +3119,7 @@ void TestDocks::tst_addToSmallMainWindow3()
     auto dock1 = createDockWidget("dock1", new MyWidget2());
     auto dock2 = createDockWidget("dock2", new MyWidget2());
     m->addDockWidgetAsTab(dock1);
-    m->windowHandle()->resize(osWindowMinWidth(), 200);
+    m->view()->windowHandle()->resize(osWindowMinWidth(), 200);
     QTest::qWait(200);
     QVERIFY(qAbs(m->width() - osWindowMinWidth()) < 15); // Not very important verification. Anyway, using 15 to account for margins and what not.
 
@@ -4420,7 +4420,7 @@ void TestDocks::tst_positionWhenShown()
     auto window = createMainWindow();
     auto dock1 = new Controllers::DockWidget("1");
     dock1->show();
-    dock1->window()->windowHandle()->setPosition(100, 100);
+    dock1->window()->windowHandle()->setPosition(QPoint(100, 100));
     QTest::qWait(1000);
     QCOMPARE(dock1->window()->windowHandle()->geometry().topLeft(), QPoint(100, 100));
 

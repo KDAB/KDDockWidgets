@@ -166,12 +166,6 @@ void ViewWrapper::showMaximized()
     qFatal("Not implemented");
 }
 
-bool ViewWrapper::isMinimized() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 void ViewWrapper::setMaximumSize(QSize)
 {
     qFatal("Not implemented");

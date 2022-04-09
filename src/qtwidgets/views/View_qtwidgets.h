@@ -15,6 +15,7 @@
 #include "Controller.h"
 #include "View.h"
 #include "ViewWrapper_qtwidgets.h"
+#include "qtwidgets/Window_qtwidgets.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -306,9 +307,23 @@ public:
         return QWidget::isMaximized();
     }
 
-    QWindow *windowHandle() const override
+    std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const override
     {
-        return QWidget::windowHandle();
+        if (QWidget *child = QWidget::childAt(localPos))
+            return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(child));
+
+        return {};
+    }
+
+    std::shared_ptr<Window> windowHandle() const override
+    {
+        if (QWidget *root = QWidget::window()) {
+            if (QWindow *window = root->windowHandle()) {
+                return std::shared_ptr<Window>(new Window_qtwidgets(window));
+            }
+        }
+
+        return {};
     }
 
     HANDLE handle() const override
@@ -401,13 +416,6 @@ inline QWindow *windowForWidget(const QWidget *w)
     return w ? w->window()->windowHandle() : nullptr;
 }
 
-inline QWidget *widgetForWindow(QWindow *window)
-{
-    if (!window)
-        return nullptr;
-
-    return window->property("kddockwidgets_qwidget").value<QWidget *>();
-}
 
 /// @brief sets the geometry on the QWindow containing the specified item
 inline void setTopLevelGeometry(QRect geometry, const QWidget *widget)

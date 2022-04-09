@@ -12,6 +12,7 @@
 #include "Platform_qtwidgets.h"
 #include "KDDockWidgets.h"
 
+#include "qtwidgets/Window_qtwidgets.h"
 #include "qtwidgets/DebugWindow_p.h"
 #include "qtwidgets/views/ViewWrapper_qtwidgets.h"
 
@@ -69,4 +70,9 @@ std::shared_ptr<ViewWrapper> Platform_qtwidgets::qobjectAsView(QObject *obj) con
     }
 
     return nullptr;
+}
+
+std::shared_ptr<Window> Platform_qtwidgets::windowFromQWindow(QWindow *qwindow) const
+{
+    return std::shared_ptr<Window>(new Window_qtwidgets(qwindow));
 }

@@ -83,7 +83,7 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWid
         dock->dptr()->morphIntoFloatingWindow();
         dock->view()->activateWindow();
         Q_ASSERT(dock->window());
-        if (QTest::qWaitForWindowActive(dock->window()->windowHandle(), 1000)) {
+        if (QTest::qWaitForWindowActive(dock->view()->asQWidget()->window()->windowHandle(), 1000)) {
             return dock;
         }
         qWarning() << Q_FUNC_INFO << "Couldn't activate window";

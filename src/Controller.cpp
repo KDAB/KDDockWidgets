@@ -121,11 +121,6 @@ std::shared_ptr<ViewWrapper> Controller::window() const
     return view()->window();
 }
 
-QWindow *Controller::windowHandle() const
-{
-    return view()->windowHandle();
-}
-
 void Controller::show() const
 {
     return view()->show();

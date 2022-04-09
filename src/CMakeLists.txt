@@ -112,6 +112,8 @@ set(DOCKSLIBS_SRCS
     qtcommon/Platform_qt.h
     qtcommon/Window_qt.cpp
     qtcommon/Window_qt.h
+    qtwidgets/Window_qtwidgets.cpp
+    qtwidgets/Window_qtwidgets.h
     qtwidgets/Platform_qtwidgets.cpp
     qtwidgets/Platform_qtwidgets.h
     qtwidgets/views/View_qtwidgets.cpp
@@ -200,6 +202,8 @@ set(DOCKS_INSTALLABLE_PRIVATE_QUICK_INCLUDES
 )
 
 set(KDDW_QTQUICK_FRONTEND_SRCS
+  qtquick/Window_qtquick.cpp
+  qtquick/Window_qtquick.h
   qtquick/Platform_qtquick.cpp
   qtquick/Platform_qtquick.h
   qtquick/views/View_qtquick.cpp

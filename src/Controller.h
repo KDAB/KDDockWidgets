@@ -76,7 +76,6 @@ public:
     int y() const;
     bool close();
     std::shared_ptr<ViewWrapper> window() const;
-    QWindow *windowHandle() const; // TODOv2
     void show() const;
     bool inDtor() const;
 

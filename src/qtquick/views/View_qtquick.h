@@ -255,7 +255,7 @@ public:
         return {};
     }
 
-    QWindow *windowHandle() const override
+    std::shared_ptr<Window> windowHandle() const override
     {
         return {};
     }
@@ -263,6 +263,11 @@ public:
     HANDLE handle() const override
     {
         return reinterpret_cast<HANDLE>(this);
+    }
+
+    std::shared_ptr<ViewWrapper> childViewAt(QPoint) const override
+    {
+        return {};
     }
 
     std::shared_ptr<ViewWrapper> window() const override

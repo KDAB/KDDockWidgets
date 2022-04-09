@@ -13,15 +13,18 @@
 #include "KDDockWidgets.h"
 // #include "QmlTypes.h" // TODOv2
 
+#include "Window_qtquick.h"
 #include "views/View_qtquick.h"
+#include "qtquick/Window_qtquick.h"
+
 #include <QQuickWindow>
 #include <QGuiApplication>
 #include <QTimer>
+#include <QWindow>
 
 static KDDockWidgets::Platform_qtquick s_platformQtQuick;
 
 using namespace KDDockWidgets;
-
 
 
 Platform_qtquick::Platform_qtquick()
@@ -60,4 +63,9 @@ std::shared_ptr<ViewWrapper> Platform_qtquick::qobjectAsView(QObject *obj) const
     }
 
     return nullptr;
+}
+
+std::shared_ptr<Window> Platform_qtquick::windowFromQWindow(QWindow *qwindow) const
+{
+    return std::shared_ptr<Window>(new Window_qtquick(qwindow));
 }

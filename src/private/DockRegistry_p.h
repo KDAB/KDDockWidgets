@@ -15,6 +15,7 @@
 #include "controllers/DockWidget.h"
 #include "controllers/Frame.h"
 #include "controllers/MainWindow.h"
+#include "Window.h"
 
 #include <QVector>
 #include <QObject>
@@ -110,27 +111,27 @@ public:
     const QVector<Controllers::FloatingWindow *> floatingWindows(bool includeBeingDeleted = false) const;
 
     ///@brief overload that returns list of QWindow. This is more friendly for supporting both QtWidgets and QtQuick
-    const QVector<QWindow *> floatingQWindows() const;
+    const Window::List floatingQWindows() const;
 
     ///@brief returns whether if there's at least one floating window
     Q_INVOKABLE bool hasFloatingWindows() const;
 
     ///@brief Returns the window with the specified id
-    QWindow *windowForHandle(WId id) const;
+    Window::Ptr windowForHandle(WId id) const;
 
     ///@brief returns the FloatingWindow with handle @p windowHandle
-    Controllers::FloatingWindow *floatingWindowForHandle(QWindow *windowHandle) const;
+    Controllers::FloatingWindow *floatingWindowForHandle(Window::Ptr windowHandle) const;
 
     ///@brief returns the FloatingWindow with handle @p hwnd
     Controllers::FloatingWindow *floatingWindowForHandle(WId hwnd) const;
 
     ///@brief returns the MainWindow with handle @p windowHandle
-    Controllers::MainWindow *mainWindowForHandle(QWindow *windowHandle) const;
+    Controllers::MainWindow *mainWindowForHandle(Window::Ptr windowHandle) const;
 
     ///@brief returns the top level widget associated with the specified QWindow.
     /// For QtWidgets, it returns a QWidget which is either a KDDockWidgets::MainWindow or a FloatingWindow.
     /// For QtQuick ir returns the same, but the type is a QWidgetAdapter (a QQuickItem), not QWidget obviously.
-    QWidgetOrQuick *topLevelForHandle(QWindow *windowHandle) const;
+    QWidgetOrQuick *topLevelForHandle(Window::Ptr windowHandle) const;
 
     ///@brief Returns the list with all visiblye top-level parents of our FloatingWindow and MainWindow instances.
     ///
@@ -141,7 +142,7 @@ public:
     /// Every returned widget is either a FloatingWindow, MainWindow, or something that contains a MainWindow.
     ///
     /// If @p excludeFloatingDocks is true then FloatingWindow won't be returned
-    QVector<QWindow *> topLevels(bool excludeFloatingDocks = false) const;
+    Window::List topLevels(bool excludeFloatingDocks = false) const;
 
     /**
      * @brief Closes all dock widgets, and destroys all FloatingWindows
@@ -214,10 +215,10 @@ public:
     /// geometries.
     /// @param target The window which we want to know if it's probably obscured
     /// @param exclude This window should not be counted as an obscurer. (It's being dragged).
-    bool isProbablyObscured(QWindow *target, Controllers::FloatingWindow *exclude) const;
+    bool isProbablyObscured(Window::Ptr target, Controllers::FloatingWindow *exclude) const;
 
     /// @overload
-    bool isProbablyObscured(QWindow *target, WindowBeingDragged *exclude) const;
+    bool isProbablyObscured(Window::Ptr target, WindowBeingDragged *exclude) const;
 
     ///@brief Returns whether the specified dock widget is in a side bar, and which.
     /// SideBarLocation::None is returned if it's not in a sidebar.
@@ -232,7 +233,7 @@ public:
 
 Q_SIGNALS:
     /// @brief emitted when a main window or a floating window change screen
-    void windowChangedScreen(QWindow *);
+    void windowChangedScreen(Window::Ptr);
 
     /// @brief emitted when the MDI frame that's being resized changed
     void frameInMDIResizeChanged();

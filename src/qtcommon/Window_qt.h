@@ -19,14 +19,34 @@ class QWindow;
 
 namespace KDDockWidgets {
 
-class Window_qt : public Window
+class DOCKS_EXPORT Window_qt : public Window
 {
 public:
     explicit Window_qt(QWindow *);
-    ~Window_qt();
+    ~Window_qt() override;
+    void setWindowState(Qt::WindowState) override;
+    QRect geometry() const override;
+    bool isVisible() const override;
+    WId handle() const override;
+
+    // TODOv2: Remoove
+    void setProperty(const char *name, const QVariant &value) override;
+    bool equals(std::shared_ptr<Window> other) const override;
+    void setFramePosition(QPoint targetPos) override;
+    void setPosition(QPoint targetPos) override;
+    void resize(int width, int height) override;
+    bool isActive() const override;
+    Qt::WindowState windowState() const override;
+
+    QSize size() const override;
+    QRect frameGeometry() const override;
+    QWindow *qtWindow() const;
+
+protected:
+    QPointer<QWindow> m_window;
 
 private:
-    QPointer<QWindow> m_window;
+    QMetaObject::Connection m_connection;
 };
 
 }

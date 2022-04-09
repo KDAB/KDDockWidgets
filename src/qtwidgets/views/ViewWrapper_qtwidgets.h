@@ -34,17 +34,19 @@ public:
     void move(QPoint) override;
     QPoint mapToGlobal(QPoint) const override;
     QPoint mapFromGlobal(QPoint) const override;
-    QWindow *windowHandle() const override;
     bool isTopLevel() const override;
     bool isVisible() const override;
     void setVisible(bool) override;
     void activateWindow() override;
     bool isMaximized() const override;
+    bool isMinimized() const override;
     QSize maximumSize() const override;
     void setSize(int width, int height) override;
     bool is(Type) const override;
+    std::shared_ptr<Window> windowHandle() const override;
     std::shared_ptr<ViewWrapper> window() const override;
     std::shared_ptr<ViewWrapper> parentView() const override;
+    std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const override;
     HANDLE handle() const override;
     void grabMouse() override;
     void releaseMouse() override;
@@ -52,6 +54,8 @@ public:
     void setFocus(Qt::FocusReason) override;
     QString objectName() const override;
     bool isNull() const override;
+
+    DropArea *asDropArea() const override;
 
 private:
     QPointer<QWidget> m_widget;

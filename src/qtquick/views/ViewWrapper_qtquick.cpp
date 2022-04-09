@@ -64,7 +64,12 @@ void ViewWrapper_qtquick::setGeometry(QRect)
 {
 }
 
-QWindow *ViewWrapper_qtquick::windowHandle() const
+std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::childViewAt(QPoint) const
+{
+    return {};
+}
+
+std::shared_ptr<Window> ViewWrapper_qtquick::windowHandle() const
 {
     return {};
 }
@@ -96,6 +101,11 @@ void ViewWrapper_qtquick::activateWindow()
 }
 
 bool ViewWrapper_qtquick::isMaximized() const
+{
+    return {};
+}
+
+bool ViewWrapper_qtquick::isMinimized() const
 {
     return {};
 }

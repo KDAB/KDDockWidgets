@@ -16,6 +16,8 @@
 
 namespace KDDockWidgets {
 
+class DropArea;
+
 /// @brief The base class for view wrappers
 /// A view wrapper is a view that doesn't own the native GUI element(QWidget, QQuickItem etc.)
 /// It just adds View API to an existing GUI element
@@ -23,6 +25,8 @@ namespace KDDockWidgets {
 class DOCKS_EXPORT ViewWrapper : public View
 {
 public:
+    using Ptr = std::shared_ptr<ViewWrapper>;
+
     explicit ViewWrapper(Controller *controller, QObject *thisObj); // TODOv2: Remove thisObj argument once all calls to asQWidget() are removed
 
     void setParent(View *) override;
@@ -52,11 +56,16 @@ public:
     void showNormal() override;
     void showMinimized() override;
     void showMaximized() override;
-    bool isMinimized() const override;
     void setMaximumSize(QSize sz) override;
     bool isActiveWindow() const override;
     void setFixedWidth(int) override;
     void setFixedHeight(int) override;
+
+    /// TODOv2: Remove
+    virtual DropArea *asDropArea() const
+    {
+        return {};
+    };
 };
 
 }

@@ -159,8 +159,8 @@ void TitleBar_qtwidgets::init()
     m_floatButton->setVisible(m_controller->floatButtonVisible());
     m_floatButton->setToolTip(m_controller->floatButtonToolTip());
 
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](QWindow *w) {
-        if (w == window()->windowHandle())
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Window::Ptr w) {
+        if (isInWindow(w))
             updateMargins();
     });
 }

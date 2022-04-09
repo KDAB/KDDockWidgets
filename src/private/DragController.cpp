@@ -20,6 +20,7 @@
 #include "MDILayoutWidget_p.h"
 #include "WindowZOrder_x11_p.h"
 
+#include "Window.h"
 #include "controllers/TitleBar.h"
 #include "controllers/Frame.h"
 #include "controllers/FloatingWindow.h"
@@ -829,21 +830,21 @@ static QRect topLevelGeometry(const QWidgetOrQuick *topLevel)
 
 #endif
 
-template<typename T>
-static WidgetType *qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QWindow *> &windows, T windowBeingDragged)
+static ViewWrapper::Ptr qtTopLevelUnderCursor_impl(QPoint globalPos, const Window::List &windows,
+                                                   View *windowBeingDragged) // TODOv2: Rename to viewBeingDragged
 {
     for (auto i = windows.size() - 1; i >= 0; --i) {
-        QWindow *window = windows.at(i);
-        auto tl = Views::widgetForWindow(window);
+        Window::Ptr window = windows.at(i);
+        auto tl = window->rootView();
 
-        if (!tl->isVisible() || tl == windowBeingDragged || tl->isMinimized())
+        if (!tl->isVisible() || tl->equals(windowBeingDragged) || tl->isMinimized())
             continue;
 
-        if (windowBeingDragged && Views::windowForWidget(windowBeingDragged) == Views::windowForWidget(tl))
+        if (windowBeingDragged && windowBeingDragged->windowHandle()->equals(window))
             continue;
 
         if (window->geometry().contains(globalPos)) {
-            qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
+            qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl.get();
             return tl;
         }
     }
@@ -851,7 +852,7 @@ static WidgetType *qtTopLevelUnderCursor_impl(QPoint globalPos, const QVector<QW
     return nullptr;
 }
 
-WidgetType *DragController::qtTopLevelUnderCursor() const
+ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
 {
     QPoint globalPos = QCursor::pos();
 
@@ -901,9 +902,9 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
 #endif // Q_OS_WIN
     } else if (linksToXLib() && isXCB()) {
         bool ok = false;
-        const QVector<QWindow *> orderedWindows = KDDockWidgets::orderedWindows(ok);
+        const Window::List orderedWindows = KDDockWidgets::orderedWindows(ok);
         FloatingWindow *tlwBeingDragged = m_windowBeingDragged->floatingWindow();
-        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, orderedWindows, tlwBeingDragged->view()->asQWidget()))
+        if (auto tl = qtTopLevelUnderCursor_impl(globalPos, orderedWindows, tlwBeingDragged->view()))
             return tl;
 
         if (!ok) {
@@ -917,30 +918,30 @@ WidgetType *DragController::qtTopLevelUnderCursor() const
         // and check the MainWindow last, as the MainWindow will have lower z-order as it's a parent (TODO: How will it work with multiple MainWindows ?)
         // The floating window list is sorted by z-order, as we catch QEvent::Expose and move it to last of the list
 
-        QWidget *tlwBeingDragged = m_windowBeingDragged->floatingWindow()->view()->asQWidget();
+        View *tlwBeingDragged = m_windowBeingDragged->floatingWindow()->view();
         if (auto tl = qtTopLevelUnderCursor_impl(globalPos, DockRegistry::self()->floatingQWindows(), tlwBeingDragged))
             return tl;
 
-        return qtTopLevelUnderCursor_impl<WidgetType *>(globalPos,
-                                                        DockRegistry::self()->topLevels(/*excludeFloating=*/true),
-                                                        tlwBeingDragged);
+        return qtTopLevelUnderCursor_impl(globalPos,
+                                          DockRegistry::self()->topLevels(/*excludeFloating=*/true),
+                                          tlwBeingDragged);
     }
 
     qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found";
     return nullptr;
 }
 
-static DropArea *deepestDropAreaInTopLevel(WidgetType *topLevel, QPoint globalPos,
+static DropArea *deepestDropAreaInTopLevel(ViewWrapper::Ptr topLevel, QPoint globalPos,
                                            const QStringList &affinities)
 {
     const auto localPos = topLevel->mapFromGlobal(globalPos);
-    auto w = topLevel->childAt(localPos.x(), localPos.y());
-    while (w) {
-        if (auto dt = qobject_cast<DropArea *>(w)) {
+    ViewWrapper::Ptr view = topLevel->childViewAt(localPos);
+    while (view) {
+        if (auto dt = view->asDropArea()) {
             if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
                 return dt;
         }
-        w = w->parentWidget();
+        view = view->parentView();
     }
 
     return nullptr;
@@ -948,20 +949,19 @@ static DropArea *deepestDropAreaInTopLevel(WidgetType *topLevel, QPoint globalPo
 
 DropArea *DragController::dropAreaUnderCursor() const
 {
-    WidgetType *topLevel = qtTopLevelUnderCursor();
+    ViewWrapper::Ptr topLevel = qtTopLevelUnderCursor();
     if (!topLevel)
         return nullptr;
 
     const QStringList affinities = m_windowBeingDragged->floatingWindow()->affinities();
 
-    /// TODOv2: Remove WidgetType
-    if (auto fw = Views::ViewWrapper_qtwidgets(topLevel).asFloatingWindowController()) {
+    if (auto fw = topLevel->asFloatingWindowController()) {
         if (DockRegistry::self()->affinitiesMatch(fw->affinities(), affinities))
             return fw->dropArea();
     }
 
     if (topLevel->objectName() == QStringLiteral("_docks_IndicatorWindow")) {
-        qWarning() << "Indicator window should be hidden " << topLevel << topLevel->isVisible();
+        qWarning() << "Indicator window should be hidden " << topLevel.get() << topLevel->isVisible();
         Q_ASSERT(false);
     }
 

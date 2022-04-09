@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "Window.h"
 #include <QWindow>
 
 #ifdef KDDockWidgets_XLIB
@@ -24,16 +25,16 @@
 
 namespace KDDockWidgets {
 
-static void travelTree(WId current, Display *disp, QVector<QWindow*> &remaining, QVector<QWindow*> &result)
+static void travelTree(WId current, Display *disp, Window::List &remaining, Window::List &result)
 {
     if (remaining.isEmpty())
         return;
 
-    Window parent, root, *children;
+    ::Window parent, root, *children;
     unsigned int nchildren;
 
     if (!XQueryTree(disp, current, &root, &parent,
-                   &children, &nchildren)) {
+                    &children, &nchildren)) {
         return;
     }
 
@@ -42,8 +43,8 @@ static void travelTree(WId current, Display *disp, QVector<QWindow*> &remaining,
 
     for (int i = 0; i < int(nchildren); ++i) {
         /// XQueryTree returns a lot more stuff than our top-level stuff, let's search for it:
-        auto it = std::find_if(remaining.begin(), remaining.end(), [i, children](QWindow *window) {
-            return window->winId() == children[i];
+        auto it = std::find_if(remaining.begin(), remaining.end(), [i, children](Window::Ptr window) {
+            return window->handle() == children[i];
         });
 
         if (it != remaining.end()) {
@@ -65,14 +66,14 @@ static Display *x11Display()
 
 /// @brief returns the KDDW top-level windows (MainWindow and floating widgets) ordered by z-order
 /// The front of the vector has stuff with lower Z
-static QVector<QWindow*> orderedWindows(bool &ok)
+static Window::List orderedWindows(bool &ok)
 {
     ok = true;
-    QVector<QWindow*> windows = DockRegistry::self()->topLevels();
+    Window::List windows = DockRegistry::self()->topLevels();
     if (windows.isEmpty())
         return {};
 
-    QVector<QWindow *> orderedResult;
+    Window::List orderedResult;
     Display *disp = reinterpret_cast<Display *>(x11Display());
     travelTree(DefaultRootWindow(disp), disp, /**by-ref*/ windows, /**by-ref*/ orderedResult);
 
@@ -86,7 +87,7 @@ static QVector<QWindow*> orderedWindows(bool &ok)
 namespace KDDockWidgets {
 /// Dummy which is never called, just so code compiles on Windows without
 /// adding more #ifdefery
-static QVector<QWindow*> orderedWindows(bool &ok)
+static Window::List orderedWindows(bool &ok)
 {
     Q_UNUSED(ok);
     Q_UNREACHABLE();

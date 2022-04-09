@@ -13,6 +13,8 @@
 
 #include "View_qtwidgets.h"
 
+#include "kdbindings/signal.h"
+
 QT_BEGIN_NAMESPACE
 class QVBoxLayout;
 class QMainWindow;
@@ -34,6 +36,8 @@ public:
                                       QMainWindow *parent = nullptr,
                                       Qt::WindowFlags windowFlags = {});
 
+    ~FloatingWindow_qtwidgets() override;
+
     Controllers::FloatingWindow *floatingWindow() const;
 
 protected:
@@ -45,7 +49,7 @@ protected:
 private:
     Controllers::FloatingWindow *const m_controller;
     QVBoxLayout *const m_vlayout;
-    QMetaObject::Connection m_screenChangedConnection;
+    KDBindings::ConnectionHandle m_screenChangedConnection;
 
     void updateMargins();
     Q_DISABLE_COPY(FloatingWindow_qtwidgets)

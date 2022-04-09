@@ -41,6 +41,11 @@ FloatingWindow_qtwidgets::FloatingWindow_qtwidgets(Controllers::FloatingWindow *
 {
 }
 
+FloatingWindow_qtwidgets::~FloatingWindow_qtwidgets()
+{
+    m_screenChangedConnection.disconnect();
+}
+
 void FloatingWindow_qtwidgets::paintEvent(QPaintEvent *ev)
 {
     if (Config::self().disabledPaintEvents() & Config::CustomizableWidget_FloatingWindow) {
@@ -78,12 +83,12 @@ bool FloatingWindow_qtwidgets::event(QEvent *ev)
             // A normal Qt::Window window. The OS handles the double click.
             // In general this will maximize the window, that's the native behaviour.
         }
-    } else if (ev->type() == QEvent::Show && !m_screenChangedConnection) {
+    } else if (ev->type() == QEvent::Show && !m_screenChangedConnection.isActive()) {
         // We connect after QEvent::Show, so we have a QWindow. Qt doesn't offer much API to
         // intercept screen events
-        m_screenChangedConnection =
-            connect(windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
-                    [this] { Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle()); });
+        m_screenChangedConnection = windowHandle()->screenChanged.connect([this] {
+            Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle());
+        });
     } else if (ev->type() == QEvent::ActivationChange) {
         // Since QWidget is missing a signal for window activation
         Q_EMIT m_controller->activatedChanged();
@@ -104,8 +109,8 @@ void FloatingWindow_qtwidgets::init()
     m_vlayout->addWidget(m_controller->titleBar()->view()->asQWidget());
     m_vlayout->addWidget(m_controller->dropArea());
 
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](QWindow *w) {
-        if (w == window()->windowHandle())
+    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Window::Ptr w) {
+        if (isInWindow(w))
             updateMargins();
     });
 }
