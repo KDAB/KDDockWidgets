@@ -14,34 +14,19 @@
 
 #include "docks_export.h"
 #include "KDDockWidgets.h"
-#include "View.h" // TODO
+#include "View.h"
 #include "controllers/Stack.h"
 #include "controllers/TitleBar.h"
 
-// clazy:excludeall=ctor-missing-parent-argument
-
-/**
- * @file
- * @brief A factory class for allowing the user to customize some internal widgets.
- *
- * @author Sérgio Martins \<sergio.martins@kdab.com\>
- */
 
 QT_BEGIN_NAMESPACE
 class QAbstractButton;
 QT_END_NAMESPACE
 
-namespace Layouting {
-class Widget;
-}
-
 namespace KDDockWidgets {
 
 class DropIndicatorOverlayInterface;
-class TabWidget;
 class DropArea;
-class TabBar;
-class TabWidgetQuick;
 
 namespace Controllers {
 class Separator;
@@ -155,48 +140,11 @@ public:
     /// @param dpr the device pixel ratio of the button
     virtual QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const = 0;
 
-private:
-    Q_DISABLE_COPY(FrameworkWidgetFactory)
-};
-
-/**
- * @brief The FrameworkWidgetFactory that's used if none is specified.
- */
-class DOCKS_EXPORT DefaultWidgetFactory : public FrameworkWidgetFactory
-{
-    Q_OBJECT
-public:
-    DefaultWidgetFactory() = default;
-    View *createMainWindow(Controllers::MainWindow *, View *, Qt::WindowFlags) const override;
-    View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const override;
-    View *createFrame(Controllers::Frame *, View *parent, FrameOptions options = FrameOption_None) const override;
-    View *createTitleBar(Controllers::TitleBar *, Controllers::Frame *) const override;
-    View *createTitleBar(Controllers::TitleBar *, Controllers::FloatingWindow *) const override;
-    View *createTabWidget(Controllers::Stack *, Controllers::Frame *parent) const override;
-    View *createTabBar(Controllers::TabBar *tabBar, View *parent) const override;
-    View *createSeparator(Controllers::Separator *, View *parent = nullptr) const override;
-    View *createFloatingWindow(Controllers::FloatingWindow *,
-                               Controllers::MainWindow *parent = nullptr,
-                               Qt::WindowFlags windowFlags = {}) const override;
-    DropIndicatorOverlayInterface *createDropIndicatorOverlay(DropArea *) const override;
-    QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const override;
-    View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
-
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const override;
-#else
-    Q_INVOKABLE QUrl titleBarFilename() const override;
-    QUrl dockwidgetFilename() const override;
-    QUrl frameFilename() const override;
-    QUrl floatingWindowFilename() const override;
-#endif
-
-    QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
-
+    /// @ The drop indicator type
     static DropIndicatorType s_dropIndicatorType;
 
 private:
-    Q_DISABLE_COPY(DefaultWidgetFactory)
+    Q_DISABLE_COPY(FrameworkWidgetFactory)
 };
 
 }

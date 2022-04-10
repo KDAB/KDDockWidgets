@@ -168,7 +168,7 @@ int main(int argc, char **argv)
     // }
 
     if (parser.isSet(segmentedIndicators))
-        KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
+        KDDockWidgets::FrameworkWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
 
     MainWindowOptions options = MainWindowOption_None;
     auto flags = KDDockWidgets::Config::self().flags();
@@ -194,7 +194,7 @@ int main(int argc, char **argv)
         flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
 
     if (parser.isSet(noDropIndicators))
-        KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
+        KDDockWidgets::FrameworkWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
 #if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))

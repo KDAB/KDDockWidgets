@@ -26,6 +26,8 @@
 #include "FrameworkWidgetFactory.h"
 #include "controllers/Separator.h"
 
+#include "qtwidgets/FrameworkWidgetFactory_qtwidgets.h"
+
 #include <QDebug>
 #include <QOperatingSystemVersion>
 
@@ -41,7 +43,7 @@ class Config::Private
 {
 public:
     Private()
-        : m_frameworkWidgetFactory(new DefaultWidgetFactory())
+        : m_frameworkWidgetFactory(new DefaultWidgetFactory_qtwidgets())
     {
     }
 

@@ -138,6 +138,8 @@ set(DOCKSLIBS_SRCS
     qtwidgets/views/Stack_qtwidgets.h
     qtwidgets/views/SideBar_qtwidgets.cpp
     qtwidgets/views/SideBar_qtwidgets.h
+    qtwidgets/FrameworkWidgetFactory_qtwidgets.cpp
+    qtwidgets/FrameworkWidgetFactory_qtwidgets.h
     qtwidgets/DebugWindow.cpp
     qtwidgets/DebugWindow_p.h
     qtwidgets/ObjectViewer.cpp
