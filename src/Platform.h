@@ -19,6 +19,7 @@
 
 namespace KDDockWidgets {
 
+class FrameworkWidgetFactory;
 class Window;
 
 /// @brief implements functions specific to a particular platform
@@ -48,6 +49,9 @@ public:
 
     /// @brief Returns all windows
     virtual QVector<std::shared_ptr<Window>> windows() const = 0;
+
+    /// @brief Creates and returns the default FrameworkWidgetFactory
+    virtual FrameworkWidgetFactory *createDefaultFrameworkWidgetFactory() = 0;
 
 public:
     /// @brief This signal is emitted when the currently focused view changes

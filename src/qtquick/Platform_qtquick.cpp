@@ -69,3 +69,8 @@ std::shared_ptr<Window> Platform_qtquick::windowFromQWindow(QWindow *qwindow) co
 {
     return std::shared_ptr<Window>(new Window_qtquick(qwindow));
 }
+
+FrameworkWidgetFactory *Platform_qtquick::createDefaultFrameworkWidgetFactory()
+{
+    return {};
+}

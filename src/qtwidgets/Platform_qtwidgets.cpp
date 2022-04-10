@@ -12,9 +12,10 @@
 #include "Platform_qtwidgets.h"
 #include "KDDockWidgets.h"
 
-#include "qtwidgets/Window_qtwidgets.h"
-#include "qtwidgets/DebugWindow_p.h"
-#include "qtwidgets/views/ViewWrapper_qtwidgets.h"
+#include "Window_qtwidgets.h"
+#include "DebugWindow_p.h"
+#include "views/ViewWrapper_qtwidgets.h"
+#include "FrameworkWidgetFactory_qtwidgets.h"
 
 #include <QApplication>
 #include <QTimer>
@@ -75,4 +76,9 @@ std::shared_ptr<ViewWrapper> Platform_qtwidgets::qobjectAsView(QObject *obj) con
 std::shared_ptr<Window> Platform_qtwidgets::windowFromQWindow(QWindow *qwindow) const
 {
     return std::shared_ptr<Window>(new Window_qtwidgets(qwindow));
+}
+
+FrameworkWidgetFactory *Platform_qtwidgets::createDefaultFrameworkWidgetFactory()
+{
+    return new DefaultWidgetFactory_qtwidgets();
 }

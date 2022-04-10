@@ -27,6 +27,7 @@ public:
     bool hasActivePopup() const override;
     std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const override;
     std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
+    FrameworkWidgetFactory *createDefaultFrameworkWidgetFactory() override;
 
 private:
     void init();
