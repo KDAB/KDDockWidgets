@@ -377,7 +377,7 @@ void TestDocks::tst_tabbingWithAffinities()
     {
         SetExpectedWarning ignoreWarning("Refusing to dock widget with incompatible affinity");
         dw1->addDockWidgetAsTab(dw2);
-        QVERIFY(dw1->window() != dw2->window());
+        QVERIFY(!dw1->window()->equals(dw2->window()));
     }
 
     m1->addDockWidget(dw1, Location_OnBottom);
@@ -389,7 +389,7 @@ void TestDocks::tst_tabbingWithAffinities()
         WindowBeingDragged wbd(fw2, fw2);
         QVERIFY(!dropArea->drop(&wbd, dw1->dptr()->frame(),
                                 DropLocation_Center));
-        QVERIFY(dw1->window() != dw2->window());
+        QVERIFY(!dw1->window()->equals(dw2->window()));
     }
 
     delete fw1;

@@ -68,4 +68,7 @@ public:
     };
 };
 
+bool operator==(ViewWrapper::Ptr, ViewWrapper::Ptr) = delete;
+bool operator!=(ViewWrapper::Ptr, ViewWrapper::Ptr) = delete;
+
 }

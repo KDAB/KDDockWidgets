@@ -60,6 +60,13 @@ enum MainWindowOption {
 Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 Q_ENUM_NS(MainWindowOptions)
 
+enum class FrontEndType
+{
+    QtWidgets = 1,
+    QtQuick
+};
+Q_ENUM_NS(FrontEndType)
+
 ///@internal
 ///@brief Describes some sizing strategies for the layouting engine.
 /// This is internal. The public API for dealing with sizing is InitialOption.
