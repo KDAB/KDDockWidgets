@@ -13,6 +13,7 @@
 #include "Window_qt.h"
 
 #include <QWindow>
+#include <QDebug>
 #include <QGuiApplication>
 
 using namespace KDDockWidgets;
@@ -20,6 +21,8 @@ using namespace KDDockWidgets;
 
 Platform_qt::Platform_qt()
 {
+    if (!qApp)
+        qWarning() << "Please call KDDockWidgets::initPlatform() after QGuiApplication";
 }
 
 Platform_qt::~Platform_qt()

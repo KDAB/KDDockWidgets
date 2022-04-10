@@ -22,6 +22,7 @@ add_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS
 )
 
 set(DOCKSLIBS_SRCS
+    KDDockWidgets.cpp
     Config.cpp
     Config.h
     Qt5Qt6Compat_p.h

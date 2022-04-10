@@ -60,12 +60,12 @@ enum MainWindowOption {
 Q_DECLARE_FLAGS(MainWindowOptions, MainWindowOption)
 Q_ENUM_NS(MainWindowOptions)
 
-enum class FrontEndType
+enum class FrontendType
 {
     QtWidgets = 1,
     QtQuick
 };
-Q_ENUM_NS(FrontEndType)
+Q_ENUM_NS(FrontendType)
 
 ///@internal
 ///@brief Describes some sizing strategies for the layouting engine.
@@ -310,7 +310,11 @@ inline QString locationStr(Location loc)
 
     return QString();
 }
-}
+
+/// @brief Initializes the desired frontend
+void DOCKS_EXPORT initFrontend(FrontendType);
+
+} // end namespace
 
 QT_BEGIN_NAMESPACE
 ///@internal

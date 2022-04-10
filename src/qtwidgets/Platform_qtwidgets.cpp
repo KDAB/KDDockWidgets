@@ -22,7 +22,6 @@
 
 #include <memory.h>
 
-static KDDockWidgets::Platform_qtwidgets s_platformQtWidgets;
 
 using namespace KDDockWidgets;
 

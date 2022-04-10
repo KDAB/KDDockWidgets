@@ -46,6 +46,9 @@ class TestDocks : public QObject
 public Q_SLOTS:
     void initTestCase()
     {
+        // TODOv2
+        KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
+
         qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
         qApp->setOrganizationName("KDAB");
         qApp->setApplicationName("dockwidgets-unit-tests");

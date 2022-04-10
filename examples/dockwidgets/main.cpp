@@ -33,9 +33,10 @@ int main(int argc, char **argv)
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
     QApplication app(argc, argv);
-
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("Test app"));
+
+    KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
 
     QCommandLineParser parser;
     parser.setApplicationDescription("KDDockWidgets example application");

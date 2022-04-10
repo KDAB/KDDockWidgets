@@ -22,8 +22,6 @@
 #include <QTimer>
 #include <QWindow>
 
-static KDDockWidgets::Platform_qtquick s_platformQtQuick;
-
 using namespace KDDockWidgets;
 
 

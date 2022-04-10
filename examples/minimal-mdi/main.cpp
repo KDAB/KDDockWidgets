@@ -30,6 +30,8 @@ int main(int argc, char **argv)
     app.setOrganizationName(QStringLiteral("KDAB"));
     app.setApplicationName(QStringLiteral("Test app"));
 
+    KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
+
     // Fusion looks better in general, but feel free to change
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 

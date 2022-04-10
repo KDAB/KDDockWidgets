@@ -10,6 +10,7 @@
 */
 
 #include "Platform.h"
+
 #include <qglobal.h>
 #include <QDebug>
 
@@ -19,6 +20,7 @@ static Platform *s_platform = nullptr;
 
 Platform::Platform()
 {
+    Q_ASSERT(!s_platform);
     s_platform = this;
 }
 
