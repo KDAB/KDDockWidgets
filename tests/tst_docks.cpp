@@ -21,6 +21,7 @@
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
 #include "MDIArea.h"
+#include "Platform.h"
 #include "multisplitter/Item_p.h"
 #include "private/MultiSplitter_p.h"
 
@@ -864,7 +865,7 @@ void TestDocks::tst_shutdown()
 
     auto m = createMainWindow();
     m->show();
-    QVERIFY(QTest::qWaitForWindowActive(m->view()->asQWidget()->windowHandle()));
+    QVERIFY(Platform::instance()->tests_waitForWindowActive(m->view()->windowHandle()));
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS

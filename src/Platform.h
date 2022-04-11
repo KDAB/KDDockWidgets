@@ -53,6 +53,13 @@ public:
     /// @brief Creates and returns the default FrameworkWidgetFactory
     virtual FrameworkWidgetFactory *createDefaultFrameworkWidgetFactory() = 0;
 
+#ifdef DOCKS_DEVELOPER_MODE
+    /// @brief Waits for the specified window to be active (have the keyboard focus)
+    /// Window::isActive() should return true
+    /// @sa Window::isActive()
+    virtual bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const = 0;
+#endif
+
 public:
     /// @brief This signal is emitted when the currently focused view changes
     KDBindings::Signal<std::shared_ptr<ViewWrapper>> focusedViewChanged;

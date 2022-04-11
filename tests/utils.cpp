@@ -13,6 +13,7 @@
 #include "DropArea_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
+#include "Platform.h"
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -83,7 +84,7 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWid
         dock->dptr()->morphIntoFloatingWindow();
         dock->view()->activateWindow();
         Q_ASSERT(dock->window());
-        if (QTest::qWaitForWindowActive(dock->view()->asQWidget()->window()->windowHandle(), 1000)) {
+        if (Platform::instance()->tests_waitForWindowActive(dock->view()->windowHandle(), 1000)) {
             return dock;
         }
         qWarning() << Q_FUNC_INFO << "Couldn't activate window";

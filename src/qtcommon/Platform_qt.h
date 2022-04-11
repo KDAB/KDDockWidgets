@@ -13,6 +13,7 @@
 
 #include "docks_export.h"
 #include "Platform.h"
+#include "Window_qt.h"
 
 namespace KDDockWidgets {
 
@@ -28,6 +29,10 @@ public:
     QVector<std::shared_ptr<Window>> windows() const override;
     std::shared_ptr<Window> qobjectAsWindow(QObject *) const override;
     virtual std::shared_ptr<Window> windowFromQWindow(QWindow *) const = 0;
+
+#ifdef DOCKS_DEVELOPER_MODE
+    bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const override;
+#endif
 };
 
 }

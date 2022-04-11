@@ -59,7 +59,9 @@ public:
     virtual void resize(int width, int height) = 0;
 
     /// @brief Returns whether a window is active
-    /// An active window has keyboard focus
+    /// An active window has keyboard focus, and might have its window decos
+    /// highlighted. Windows are usually become active after you click on their
+    /// title bar, but can also be done programatically.
     virtual bool isActive() const = 0;
 
     /// @brief Returns the window state

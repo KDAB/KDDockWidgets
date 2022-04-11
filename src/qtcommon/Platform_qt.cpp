@@ -15,6 +15,7 @@
 #include <QWindow>
 #include <QDebug>
 #include <QGuiApplication>
+#include <QtTest/QTest>
 
 using namespace KDDockWidgets;
 
@@ -52,3 +53,13 @@ std::shared_ptr<Window> Platform_qt::qobjectAsWindow(QObject *obj) const
         return windowFromQWindow(window);
     return nullptr;
 }
+
+#ifdef DOCKS_DEVELOPER_MODE
+
+bool Platform_qt::tests_waitForWindowActive(Window::Ptr window, int timeout) const
+{
+    auto windowqt = static_cast<Window_qt *>(window.get());
+    return QTest::qWaitForWindowActive(windowqt->qtWindow(), timeout);
+}
+
+#endif
