@@ -220,7 +220,7 @@ public:
 Q_SIGNALS:
     void activatedChanged();
     void numFramesChanged();
-    void windowStateChanged(QWindowStateChangeEvent *);
+    void windowStateChanged();
 
 protected:
     void maybeCreateResizeHandler();

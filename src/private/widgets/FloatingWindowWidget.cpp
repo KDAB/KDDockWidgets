@@ -57,9 +57,7 @@ void FloatingWindowWidget::paintEvent(QPaintEvent *ev)
 
 bool FloatingWindowWidget::event(QEvent *ev)
 {
-    if (ev->type() == QEvent::WindowStateChange) {
-        Q_EMIT windowStateChanged(static_cast<QWindowStateChangeEvent *>(ev));
-    } else if (ev->type() == QEvent::NonClientAreaMouseButtonDblClick && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
+    if (ev->type() == QEvent::NonClientAreaMouseButtonDblClick && (Config::self().flags() & Config::Flag_NativeTitleBar)) {
         if ((windowFlags() & Qt::Tool) == Qt::Tool) {
             if (Config::self().flags() & Config::Flag_DoubleClickMaximizes) {
                 // Let's refuse to maximize Qt::Tool. It's not natural.
@@ -81,10 +79,27 @@ bool FloatingWindowWidget::event(QEvent *ev)
         m_screenChangedConnection =
             connect(windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
                     [this] { Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle()); });
+
+        windowHandle()->installEventFilter(this);
     }
 
     return FloatingWindow::event(ev);
 }
+
+bool FloatingWindowWidget::eventFilter(QObject *, QEvent *ev)
+{
+    if (ev->type() == QEvent::WindowStateChange) {
+
+        // QWidget::windowState() is not reliable as it's emitted both for the spontaneous (async) event and non-spontaneous (sync)
+        // The sync one being useless, as the window manager can still have the old state.
+        // Only emit windowStateChanged once the window manager tells us the state has actually changed
+        if (ev->spontaneous())
+            Q_EMIT windowStateChanged();
+    }
+
+    return false;
+}
+
 
 void FloatingWindowWidget::init()
 {

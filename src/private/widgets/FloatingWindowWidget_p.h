@@ -37,6 +37,8 @@ protected:
 private:
     void init();
     void updateMargins();
+    bool eventFilter(QObject *o, QEvent *ev) override;
+
     Q_DISABLE_COPY(FloatingWindowWidget)
 };
 
