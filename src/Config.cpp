@@ -17,6 +17,7 @@
  */
 
 #include "Config.h"
+#include "Platform.h"
 #include "private/multisplitter/MultiSplitterConfig.h"
 #include "View.h"
 #include "private/multisplitter/Item_p.h"
@@ -25,8 +26,6 @@
 #include "private/DragController_p.h"
 #include "FrameworkWidgetFactory.h"
 #include "controllers/Separator.h"
-
-#include "qtwidgets/FrameworkWidgetFactory_qtwidgets.h"
 
 #include <QDebug>
 #include <QOperatingSystemVersion>
@@ -43,7 +42,7 @@ class Config::Private
 {
 public:
     Private()
-        : m_frameworkWidgetFactory(new DefaultWidgetFactory_qtwidgets())
+        : m_frameworkWidgetFactory(Platform::instance()->createDefaultFrameworkWidgetFactory())
     {
     }
 
