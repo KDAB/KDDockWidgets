@@ -18,7 +18,6 @@
 #include "FrameworkWidgetFactory_qtwidgets.h"
 
 #include <QApplication>
-#include <QTimer>
 
 #include <memory.h>
 
@@ -34,22 +33,14 @@ Platform_qtwidgets::Platform_qtwidgets()
     }
 #endif
 
-    // Delay call to init(), so we have a QApplication
-    QTimer::singleShot(0, [this] {
-        init();
+    qApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
+        ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtwidgets(obj) : nullptr;
+        focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
     });
 }
 
 Platform_qtwidgets::~Platform_qtwidgets()
 {
-}
-
-void Platform_qtwidgets::init()
-{
-    qApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
-        ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtwidgets(obj) : nullptr;
-        focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
-    });
 }
 
 const char *Platform_qtwidgets::name() const
