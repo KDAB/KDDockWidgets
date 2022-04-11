@@ -28,28 +28,6 @@ static QString s_expectedWarning;
 static WarningObserver *s_warningObserver = nullptr;
 static QtMessageHandler s_original = nullptr;
 
-class EventFilter : public QObject
-{
-public:
-    EventFilter(QEvent::Type type)
-        : m_type(type)
-    {
-    }
-    ~EventFilter() override;
-    bool eventFilter(QObject *, QEvent *e) override
-    {
-        if (e->type() == m_type)
-            m_got = true;
-
-        return false;
-    }
-
-    const QEvent::Type m_type;
-    bool m_got = false;
-};
-
-EventFilter::~EventFilter() = default;
-
 static bool isGammaray()
 {
     static bool is = qtHookData[3] != 0;
@@ -102,22 +80,6 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
     }
 }
 
-bool Testing::waitForEvent(QObject *w, QEvent::Type type, int timeout)
-{
-    Q_ASSERT(w);
-    EventFilter filter(type);
-    w->installEventFilter(&filter);
-    QElapsedTimer time;
-    time.start();
-
-    while (!filter.m_got && time.elapsed() < timeout) {
-        qApp->processEvents();
-        QTest::qWait(50);
-    }
-
-    return filter.m_got;
-}
-
 bool Testing::waitForDeleted(QObject *o, int timeout)
 {
     if (!o)
@@ -134,16 +96,6 @@ bool Testing::waitForDeleted(QObject *o, int timeout)
 
     const bool wasDeleted = !ptr;
     return wasDeleted;
-}
-
-bool Testing::waitForResize(QWidgetOrQuick *w, int timeout)
-{
-    return waitForEvent(w, QEvent::Resize, timeout);
-}
-
-bool Testing::waitForResize(Controller *c, int timeout)
-{
-    return waitForResize(c->view()->asQWidget(), timeout);
 }
 
 HostedWidget::~HostedWidget()

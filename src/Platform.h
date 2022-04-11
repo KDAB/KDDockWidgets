@@ -15,6 +15,8 @@
 #include "ViewWrapper.h"
 
 #include "kdbindings/signal.h"
+
+#include <QEvent>
 #include <memory.h>
 
 namespace KDDockWidgets {
@@ -58,6 +60,17 @@ public:
     /// Window::isActive() should return true
     /// @sa Window::isActive()
     virtual bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const = 0;
+
+    /// @brief Waits for the specified view to receive a resize event
+    /// Returns true if the view was resized until timeout was reached
+    virtual bool tests_waitForResize(View *, int timeout = 2000) const = 0;
+    virtual bool tests_waitForResize(Controller *, int timeout = 2000) const = 0;
+
+    /// @brief Waits for the specified view to receive the specified event
+    /// Returns true if the view received said event until timeout was reached
+    virtual bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const = 0;
+    virtual bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const = 0;
+
 #endif
 
 public:
