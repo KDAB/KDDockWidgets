@@ -411,6 +411,18 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
         return true;
     }
 
+#ifdef Q_OS_LINUX
+    if (fw->lastWindowManagerState() == Qt::WindowMaximized) {
+        // The window was maximized, we dragged it, which triggers a show normal.
+        // But we can only start moving the window *after* the (async) window manager acknowledges.
+        // See QTBUG-102430.
+        // Since #286 was only implemented and needed on Linux, then this counter-part is also ifdefed for Linux,
+        // Probably the ifdef could be removed, but don't want to be testing N platforms, who's undocumented behaviour
+        // can change between releases, so narrow the scope and workaround for linux only.
+        return true;
+    }
+#endif
+
     if (!q->m_nonClientDrag)
         fw->windowHandle()->setPosition(globalPos - q->m_offset);
 

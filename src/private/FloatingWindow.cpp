@@ -654,6 +654,11 @@ QRect FloatingWindow::normalGeometry() const
     return QWidgetAdapter::normalGeometry();
 }
 
+Qt::WindowState FloatingWindow::lastWindowManagerState() const
+{
+    return m_lastWindowManagerState;
+}
+
 int FloatingWindow::userType() const
 {
     if (Frame *f = singleFrame())
