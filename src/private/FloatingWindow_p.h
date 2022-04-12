@@ -212,6 +212,11 @@ public:
     /// @sa QTBUG-95478
     virtual QRect normalGeometry() const;
 
+    // The state reported by QWidget is not always the same as what the
+    // window manager thinks, due to the async nature. This method
+    // returns the last state reported by the window manager itself.
+    Qt::WindowState lastWindowManagerState() const;
+
     ///@brief Allows the user app to specify which window flags to use, instead of KDDWs default ones
     ///Bugs caused by this won't be supported, as the amount of combinations that could go wrong can
     ///be open ended
@@ -234,6 +239,7 @@ protected:
 
     QPointer<DropArea> m_dropArea;
     TitleBar *const m_titleBar;
+    Qt::WindowState m_lastWindowManagerState = Qt::WindowNoState;
 
 private:
     Q_DISABLE_COPY(FloatingWindow)
