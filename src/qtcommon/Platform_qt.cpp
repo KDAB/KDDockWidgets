@@ -127,4 +127,14 @@ bool Platform_qt::tests_waitForEvent(std::shared_ptr<Window> window, QEvent::Typ
     return tests_waitForEvent(windowqt->qtWindow(), type, timeout);
 }
 
+void Platform_qt::tests_sendEvent(View *view, QEvent *ev) const
+{
+    qApp->sendEvent(view->asQObject(), ev);
+}
+
+void Platform_qt::tests_sendEvent(Window::Ptr window, QEvent *ev) const
+{
+    qApp->sendEvent(static_cast<Window_qt *>(window.get())->qtWindow(), ev);
+}
+
 #endif

@@ -330,9 +330,9 @@ public:
 #endif
 
 void doubleClickOn(QPoint globalPos, WidgetType *receiver);
-void doubleClickOn(QPoint globalPos, QWindow *receiver);
+void doubleClickOn(QPoint globalPos, Window::Ptr receiver);
 void pressOn(QPoint globalPos, WidgetType *receiver);
-void pressOn(QPoint globalPos, QWindow *receiver);
+void pressOn(QPoint globalPos, Window::Ptr receiver);
 void releaseOn(QPoint globalPos, WidgetType *receiver);
 void clickOn(QPoint globalPos, WidgetType *receiver);
 void moveMouseTo(QPoint globalDest, WidgetType *receiver);

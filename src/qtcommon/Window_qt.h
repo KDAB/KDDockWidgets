@@ -42,6 +42,9 @@ public:
     QRect frameGeometry() const override;
     QWindow *qtWindow() const;
 
+    QPoint mapFromGlobal(QPoint globalPos) const override;
+    QPoint mapToGlobal(QPoint localPos) const override;
+
 protected:
     QPointer<QWindow> m_window;
 

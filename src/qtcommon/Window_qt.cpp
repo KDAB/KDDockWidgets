@@ -102,3 +102,13 @@ QSize Window_qt::size() const
 {
     return m_window->size();
 }
+
+QPoint Window_qt::mapFromGlobal(QPoint globalPos) const
+{
+    return m_window->mapFromGlobal(globalPos);
+}
+
+QPoint Window_qt::mapToGlobal(QPoint localPos) const
+{
+    return m_window->mapToGlobal(localPos);
+}

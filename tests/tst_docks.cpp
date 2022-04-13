@@ -6619,8 +6619,7 @@ void TestDocks::tst_doubleClickTabToDetach()
 
     auto tb = frame->tabWidget()->view()->asQWidget();
 
-    // TODO
-    Tests::doubleClickOn(tb->mapToGlobal(QPoint(20, 20)), frame->view()->asQWidget()->window()->windowHandle());
+    Tests::doubleClickOn(tb->mapToGlobal(QPoint(20, 20)), frame->view()->windowHandle());
 
     QVERIFY(dock1->isFloating());
     QVERIFY(dock2->isFloating());

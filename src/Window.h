@@ -71,6 +71,9 @@ public:
     /// Popups and utility windows usually have a parent window
     virtual Window::Ptr transientParent() const = 0;
 
+    virtual QPoint mapFromGlobal(QPoint globalPos) const = 0;
+    virtual QPoint mapToGlobal(QPoint localPos) const = 0;
+
     /// @brief Signal emitted when a window changes screen
     /// Like for example QWindow::screenChanged() for Qt.
     /// Needs to be emitted by the derived classes.
