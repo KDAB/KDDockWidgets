@@ -186,7 +186,7 @@ void TestDocks::tst_restoreSimple()
     QVERIFY(dock2->isVisible());
 
     QVERIFY(!dock3->isVisible()); // Remains closed
-    QVERIFY(dock3->view()->asQWidget()->parentWidget() == nullptr);
+    QVERIFY(dock3->view()->parentView() == nullptr);
 
     dock3->show();
     dock3->dptr()->morphIntoFloatingWindow(); // as it would take 1 event loop. Do it now so we can
@@ -2295,10 +2295,10 @@ void TestDocks::tst_closeAllDockWidgets()
     QVERIFY(oldFWHeight <= fw->height());
     QCOMPARE(fw->frames().size(), 2);
 
-    QCOMPARE(dock3->window()->asQWidget(), fw->view()->asQWidget());
-    QCOMPARE(dock4->window()->asQWidget(), m->view()->asQWidget());
-    QCOMPARE(dock5->window()->asQWidget(), m->view()->asQWidget());
-    QCOMPARE(dock6->window()->asQWidget(), fw->view()->asQWidget());
+    QVERIFY(dock3->window()->equals(fw->view()));
+    QVERIFY(dock4->window()->equals(m->view()));
+    QVERIFY(dock5->window()->equals(m->view()));
+    QVERIFY(dock6->window()->equals(fw->view()));
     auto layout = m->multiSplitter();
     layout->checkSanity();
     DockRegistry::self()->clear();
@@ -2307,12 +2307,12 @@ void TestDocks::tst_closeAllDockWidgets()
     Testing::waitForDeleted(fw);
     QVERIFY(!fw);
 
-    QCOMPARE(dock1->window()->asQWidget(), dock1->view()->asQWidget());
-    QCOMPARE(dock2->window()->asQWidget(), dock2->view()->asQWidget());
-    QCOMPARE(dock3->window()->asQWidget(), dock3->view()->asQWidget());
-    QCOMPARE(dock4->window()->asQWidget(), dock4->view()->asQWidget());
-    QCOMPARE(dock5->window()->asQWidget(), dock5->view()->asQWidget());
-    QCOMPARE(dock6->window()->asQWidget(), dock6->view()->asQWidget());
+    QVERIFY(dock1->window()->equals(dock1->view()));
+    QVERIFY(dock2->window()->equals(dock2->view()));
+    QVERIFY(dock3->window()->equals(dock3->view()));
+    QVERIFY(dock4->window()->equals(dock4->view()));
+    QVERIFY(dock5->window()->equals(dock5->view()));
+    QVERIFY(dock6->window()->equals(dock6->view()));
 
     QVERIFY(!dock1->isVisible());
     QVERIFY(!dock2->isVisible());
@@ -2637,7 +2637,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     // QtQuick is a bit more async than QWidgets. Wait for the move.
-    Platform::instance()->tests_waitForEvent(fw2->view()->asQWidget()->windowHandle(), QEvent::Move);
+    Platform::instance()->tests_waitForEvent(fw2->view()->windowHandle(), QEvent::Move);
 
     auto da2 = fw2->dropArea();
     const QPoint dragDestPos = da2->mapToGlobal(da2->QWidget::rect().center());
@@ -2732,7 +2732,7 @@ void TestDocks::tst_isFocused()
     // 3. Raise dock2 and focus its line edit
     dock2->view()->raiseAndActivate();
     if (!dock2->window()->windowHandle()->isActive())
-        Platform::instance()->tests_waitForEvent(dock2->window()->asQWidget()->windowHandle(), QEvent::WindowActivate);
+        Platform::instance()->tests_waitForEvent(dock2->view()->windowHandle(), QEvent::WindowActivate);
 
     dock2->widget()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock2->widget(), QEvent::FocusIn);
@@ -4775,7 +4775,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     dock1->window()->windowHandle()->setFramePosition(targetPos);
     QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), targetPos);
     auto oldFw = dock1->window();
-    Platform::instance()->tests_waitForEvent(dock1->window()->asQWidget(), QEvent::Move);
+    Platform::instance()->tests_waitForEvent(dock1->window().get(), QEvent::Move);
 
     LayoutSaver saver;
     QByteArray saved = saver.serializeLayout();
@@ -5026,7 +5026,7 @@ void TestDocks::tst_mdi_mixed_with_docking()
 
     auto tb1 = mdiWidget1->titleBar();
     QVERIFY(tb1->isMDI());
-    QVERIFY(Platform::instance()->tests_waitForEvent(tb1->view()->asQWidget(), QEvent::Show));
+    QVERIFY(Platform::instance()->tests_waitForEvent(tb1->view(), QEvent::Show));
     QVERIFY(tb1->isVisible());
 
     // Press the float button

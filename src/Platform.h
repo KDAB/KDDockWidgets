@@ -70,6 +70,7 @@ public:
     /// Returns true if the view received said event until timeout was reached
     virtual bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const = 0;
     virtual bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const = 0;
+    virtual bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type, int timeout = 5000) const = 0;
 
 #endif
 

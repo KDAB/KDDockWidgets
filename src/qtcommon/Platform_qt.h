@@ -34,6 +34,7 @@ public:
     bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const override;
     bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const override;
+    bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForResize(View *, int timeout = 2000) const override;
     bool tests_waitForResize(Controller *, int timeout = 2000) const override;
 #endif

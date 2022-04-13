@@ -121,4 +121,10 @@ bool Platform_qt::tests_waitForResize(Controller *c, int timeout) const
     return tests_waitForResize(c->view(), timeout);
 }
 
+bool Platform_qt::tests_waitForEvent(std::shared_ptr<Window> window, QEvent::Type type, int timeout) const
+{
+    auto windowqt = static_cast<Window_qt *>(window.get());
+    return tests_waitForEvent(windowqt->qtWindow(), type, timeout);
+}
+
 #endif
