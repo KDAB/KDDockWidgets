@@ -107,6 +107,9 @@ public:
 
     StackOptions options() const;
 
+    /// @brief Enables document mode. Default is false.
+    void setDocumentMode(bool);
+
 Q_SIGNALS:
     void currentTabChanged(int index);
     void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);

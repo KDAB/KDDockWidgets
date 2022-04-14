@@ -33,7 +33,6 @@
 #include "controllers/SideBar.h"
 
 #include <QAction>
-#include <qtabbar.h>
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -7205,13 +7204,9 @@ void TestDocks::tst_dragByTabBar()
     m->view()->resize(QSize(osWindowMinWidth(), 200));
 
     dock2->addDockWidgetAsTab(dock3);
-#if defined(KDDOCKWIDGETS_QTWIDGETS)
     if (documentMode)
-        static_cast<QTabWidget *>(dock2->dptr()->frame()->tabWidget()->view()->asQWidget())
-            ->setDocumentMode(true);
-#else
-    Q_UNUSED(documentMode);
-#endif
+        dock2->dptr()->frame()->tabWidget()->setDocumentMode(true);
+
     auto fw = dock2->floatingWindow();
     fw->view()->move(m->pos() + QPoint(500, 500));
     QVERIFY(fw->isVisible());

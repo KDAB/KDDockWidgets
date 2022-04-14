@@ -255,3 +255,8 @@ void Stack::setCurrentDockWidget(int index)
 {
     dynamic_cast<Views::Stack *>(view())->setCurrentDockWidget(index);
 }
+
+void Stack::setDocumentMode(bool is)
+{
+    dynamic_cast<Views::Stack *>(view())->setDocumentMode(is);
+}

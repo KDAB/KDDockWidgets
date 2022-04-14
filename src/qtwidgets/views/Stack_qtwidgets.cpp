@@ -228,6 +228,11 @@ QTabBar *Stack_qtwidgets::tabBar() const
     return static_cast<QTabBar *>(m_stack->tabBar()->view()->asQWidget());
 }
 
+void Stack_qtwidgets::setDocumentMode(bool is)
+{
+    QTabWidget::setDocumentMode(is);
+}
+
 Controllers::Stack *Stack_qtwidgets::stack() const
 {
     return m_stack;

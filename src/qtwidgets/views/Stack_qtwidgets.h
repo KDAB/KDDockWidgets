@@ -46,6 +46,7 @@ public:
 
     bool isPositionDraggable(QPoint p) const override;
     void init() override;
+    void setDocumentMode(bool) override;
 
 public: // TODO: make protected
     void mouseDoubleClickEvent(QMouseEvent *) override;
