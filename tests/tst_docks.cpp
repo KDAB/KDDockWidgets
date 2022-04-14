@@ -4844,7 +4844,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
     auto tabBar2 = tb2->tabBar();
     const QRect rect0 = tabBar2->rectForTab(0);
     const QPoint globalPos = tabBar2->view()->mapToGlobal(rect0.topLeft()) + QPoint(5, 5);
-    Tests::clickOn(globalPos, tabBar2->view()->asQWidget());
+    Tests::clickOn(globalPos, tabBar2->view());
 
     QVERIFY(!titleBar1->isFocused());
     QVERIFY(dock2->titleBar()->isFocused());
@@ -4856,7 +4856,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // TODO: Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++ TitleBar for focus
-    Tests::clickOn(globalPos, tabBar2->view()->asQWidget());
+    Tests::clickOn(globalPos, tabBar2->view());
     QVERIFY(!dock1->titleBar()->isFocused());
     QVERIFY(dock2->titleBar()->isFocused());
 #endif
@@ -4883,8 +4883,8 @@ void TestDocks::tst_tabsNotClickable()
     const QPoint clickPoint = frame->tabBar()->mapToGlobal(frame->tabBar()->rectForTab(0).center());
     QCursor::setPos(clickPoint); // Just for visual debug when needed
 
-    pressOn(clickPoint, frame->tabBar()->view()->asQWidget());
-    releaseOn(clickPoint, frame->tabBar()->view()->asQWidget());
+    pressOn(clickPoint, frame->tabBar()->view());
+    releaseOn(clickPoint, frame->tabBar()->view());
 
     // WAIT // Uncomment for MANUAL test. Also test by adding Flag_AlwaysShowTabs
 
@@ -4919,7 +4919,7 @@ void TestDocks::tst_mainWindowAlwaysHasCentralWidget()
 
     // Detach tab
     QPoint globalPressPos = dragPointForWidget(centralFrame.data(), 0);
-    auto tabBar = qobject_cast<QTabBar *>(centralFrame->tabBar()->view()->asQWidget());
+    auto tabBar = centralFrame->tabBar()->view();
     QVERIFY(tabBar);
     qDebug() << "Detaching tab from dropArea->size=" << dropArea->QWidget::size() << "; dropArea=" << dropArea;
     drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));
@@ -4967,7 +4967,7 @@ void TestDocks::tst_dockableMainWindows()
     const QPoint destination = startPoint + QPoint(20, 20);
 
     // Check that we don't get the "Refusing to itself" warning. not actually dropping anywhere
-    drag(fwTitleBar->view()->asQWidget(), startPoint, destination);
+    drag(fwTitleBar->view(), startPoint, destination);
 
     // The FloatingWindow has a single DockWidget, so it shows the title bar, while the Frame doesn't
     QVERIFY(fwTitleBar->isVisible());
@@ -5488,15 +5488,15 @@ void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
 
         QVERIFY(dw1->isOverlayed());
 
-        Tests::clickOn(dw2->mapToGlobal(dw2->rect().bottomLeft() + QPoint(5, -5)), dw2->view()->asQWidget());
+        Tests::clickOn(dw2->mapToGlobal(dw2->rect().bottomLeft() + QPoint(5, -5)), dw2->view());
         QVERIFY(!dw1->isOverlayed());
 
         auto widget2 = new MyWidget("foo");
         dw2->setWidget(widget2);
         m1->overlayOnSideBar(dw1);
         QVERIFY(dw1->isOverlayed());
-
-        Tests::clickOn(widget2->mapToGlobal(widget2->rect().bottomLeft() + QPoint(5, -5)), widget2);
+        auto wrapper = ViewWrapper::Ptr(new Views::ViewWrapper_qtwidgets(widget2));
+        Tests::clickOn(widget2->mapToGlobal(widget2->rect().bottomLeft() + QPoint(5, -5)), wrapper.get());
         QVERIFY(!dw1->isOverlayed());
 
         m1.reset();
@@ -5517,7 +5517,7 @@ void TestDocks::tst_sidebarOverlayGetsHiddenOnClick()
         QVERIFY(dw1->isOverlayed());
 
         const QPoint localPt(100, 250);
-        Tests::clickOn(m1->mapToGlobal(m1->rect().topLeft() + localPt), m1->view()->asQWidget()->childAt(localPt));
+        Tests::clickOn(m1->mapToGlobal(m1->rect().topLeft() + localPt), m1->view()->childViewAt(localPt).get());
         QVERIFY(!dw1->isOverlayed());
     }
 }
@@ -5602,7 +5602,7 @@ void TestDocks::tst_overlayCrash()
     auto tb = dw2->titleBar();
     QVERIFY(tb->isVisible());
 
-    pressOn(tb->mapToGlobal(QPoint(5, 5)), tb->view()->asQWidget());
+    pressOn(tb->mapToGlobal(QPoint(5, 5)), tb->view());
 }
 
 void TestDocks::tst_embeddedMainWindow()
@@ -6657,14 +6657,14 @@ void TestDocks::tst_flagDoubleClick()
         QVERIFY(!fw2->view()->isMaximized());
         Controllers::TitleBar *t2 = dock2->titleBar();
         QPoint pos = t2->mapToGlobal(QPoint(5, 5));
-        Tests::doubleClickOn(pos, t2->view()->asQWidget());
+        Tests::doubleClickOn(pos, t2->view());
         QVERIFY(fw2->view()->isMaximized());
         delete fw2;
 
         Controllers::TitleBar *t1 = dock1->titleBar();
         QVERIFY(!t1->isFloating());
         pos = t1->mapToGlobal(QPoint(5, 5));
-        Tests::doubleClickOn(pos, t1->view()->asQWidget());
+        Tests::doubleClickOn(pos, t1->view());
         QVERIFY(t1->isFloating());
         QVERIFY(!dock1->window()->isMaximized());
     }
@@ -6679,13 +6679,13 @@ void TestDocks::tst_flagDoubleClick()
         Controllers::TitleBar *t1 = dock1->titleBar();
         QVERIFY(!t1->isFloating());
         QPoint pos = t1->mapToGlobal(QPoint(5, 5));
-        Tests::doubleClickOn(pos, t1->view()->asQWidget());
+        Tests::doubleClickOn(pos, t1->view());
         QVERIFY(t1->isFloating());
         QVERIFY(dock1->isFloating());
         QVERIFY(!dock1->window()->isMaximized());
 
         pos = t1->mapToGlobal(QPoint(5, 5));
-        Tests::doubleClickOn(pos, t1->view()->asQWidget());
+        Tests::doubleClickOn(pos, t1->view());
         QVERIFY(!dock1->isFloating());
     }
 }
@@ -7168,7 +7168,7 @@ void TestDocks::tst_dragBySingleTab()
     Controllers::TabBar *tabBar = frame1->tabWidget()->tabBar();
     QVERIFY(tabBar);
     SetExpectedWarning sew("No window being dragged for"); // because dragging by tab does nothing in this case
-    drag(tabBar->view()->asQWidget(), globalPressPos, QPoint(0, 0));
+    drag(tabBar->view(), globalPressPos, QPoint(0, 0));
 
     delete dock1;
     Testing::waitForDeleted(frame1);
@@ -7243,7 +7243,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QVERIFY(dock2->isFloating());
 
     QPoint finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
-    drag(titlebar1->view()->asQWidget(), titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
+    drag(titlebar1->view(), titlebar1->mapToGlobal(QPoint(5, 5)), finalPoint, ButtonAction_Press);
 
     // It morphed into a FloatingWindow
     QPointer<Controllers::Frame> frame2 = dock2->dptr()->frame();
@@ -7254,7 +7254,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QVERIFY(frame2);
     QCOMPARE(frame2->dockWidgetCount(), 1);
 
-    releaseOn(finalPoint, titlebar1->view()->asQWidget());
+    releaseOn(finalPoint, titlebar1->view());
     QCOMPARE(frame2->dockWidgetCount(), 2); // 2.2 Frame has 2 widgets when one is dropped
     QVERIFY(Testing::waitForDeleted(frame1));
 
@@ -7262,7 +7262,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QPoint globalPressPos = dragPointForWidget(frame2.data(), 0);
     Controllers::TabBar *tabBar = frame2->tabWidget()->tabBar();
     QVERIFY(tabBar);
-    drag(tabBar->view()->asQWidget(), globalPressPos, frame2->view()->windowGeometry().bottomRight() + QPoint(10, 10));
+    drag(tabBar->view(), globalPressPos, frame2->view()->windowGeometry().bottomRight() + QPoint(10, 10));
 
     QVERIFY(frame2->dockWidgetCount() == 1);
     QVERIFY(dock1->floatingWindow());
@@ -7273,7 +7273,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     fw1 = dock1->floatingWindow();
     globalPressPos = fw1->titleBar()->mapToGlobal(QPoint(100, 5));
     finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
-    drag(fw1->titleBar()->view()->asQWidget(), globalPressPos, finalPoint);
+    drag(fw1->titleBar()->view(), globalPressPos, finalPoint);
 
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
@@ -7282,7 +7282,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     tabBar = frame2->tabWidget()->tabBar();
 
     finalPoint = dock2->window()->geometry().center() + QPoint(7, 7);
-    drag(tabBar->view()->asQWidget(), globalPressPos, finalPoint);
+    drag(tabBar->view(), globalPressPos, finalPoint);
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
     // 2.6 Drag the tabbed group over a 3rd floating window
@@ -7291,7 +7291,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
 
     auto fw2 = dock2->floatingWindow();
     finalPoint = dock3->window()->geometry().center() + QPoint(7, 7);
-    drag(fw2->titleBar()->view()->asQWidget(), frame2->mapToGlobal(QPoint(10, 10)), finalPoint);
+    drag(fw2->titleBar()->view(), frame2->mapToGlobal(QPoint(10, 10)), finalPoint);
 
     QVERIFY(Testing::waitForDeleted(frame1));
     QVERIFY(Testing::waitForDeleted(frame2));
@@ -7309,7 +7309,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
         m->view()->setGeometry(QRect(500, 300, 300, 300));
         QVERIFY(!dock3->isFloating());
         auto fw3 = dock3->floatingWindow();
-        drag(fw3->titleBar()->view()->asQWidget(), dock3->window()->mapToGlobal(QPoint(10, 10)), m->geometry().center());
+        drag(fw3->titleBar()->view(), dock3->window()->mapToGlobal(QPoint(10, 10)), m->geometry().center());
         QVERIFY(!dock3->isFloating());
         QVERIFY(dock3->window()->asQWidget() == m->view()->asQWidget());
         QCOMPARE(dock3->dptr()->frame()->dockWidgetCount(), 3);

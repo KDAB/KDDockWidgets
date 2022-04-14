@@ -14,6 +14,7 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "Platform.h"
+#include "ViewGuard.h"
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -188,7 +189,7 @@ bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QStr
     return msg.contains(QLatin1String("QSocketNotifier: Invalid socket")) || msg.contains(QLatin1String("QWindowsWindow::setGeometry")) || msg.contains(QLatin1String("This plugin does not support")) || msg.contains(QLatin1String("Note that Qt no longer ships fonts")) || msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget")) || msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting"));
 }
 
-void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, WidgetType *receiver)
+void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, View *receiver)
 {
     QCursor::setPos(globalPos);
     pressOn(globalPos, receiver); // double-click involves an initial press
@@ -201,7 +202,7 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, WidgetType *receiver)
         qApp->sendEvent(actualReceiver, &ev);
     } else {
         // QtWidgets case
-        qApp->sendEvent(receiver, &ev);
+        Platform::instance()->tests_sendEvent(receiver, &ev);
     }
 }
 
@@ -215,12 +216,12 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, Window::Ptr receiver)
     Platform::instance()->tests_sendEvent(receiver, &ev);
 }
 
-void KDDockWidgets::Tests::pressOn(QPoint globalPos, WidgetType *receiver)
+void KDDockWidgets::Tests::pressOn(QPoint globalPos, View *receiver)
 {
     QCursor::setPos(globalPos);
     QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-    qApp->sendEvent(receiver, &ev);
+    Platform::instance()->tests_sendEvent(receiver, &ev);
 }
 
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, Window::Ptr receiver)
@@ -231,23 +232,23 @@ void KDDockWidgets::Tests::pressOn(QPoint globalPos, Window::Ptr receiver)
     Platform::instance()->tests_sendEvent(receiver, &ev);
 }
 
-void KDDockWidgets::Tests::releaseOn(QPoint globalPos, WidgetType *receiver)
+void KDDockWidgets::Tests::releaseOn(QPoint globalPos, View *receiver)
 {
     QMouseEvent ev(QEvent::MouseButtonRelease, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-    qApp->sendEvent(receiver, &ev);
+    Platform::instance()->tests_sendEvent(receiver, &ev);
 }
 
-void KDDockWidgets::Tests::clickOn(QPoint globalPos, WidgetType *receiver)
+void KDDockWidgets::Tests::clickOn(QPoint globalPos, View *receiver)
 {
     pressOn(globalPos, receiver);
     releaseOn(globalPos, receiver);
 }
 
-void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, WidgetType *receiver)
+void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
 {
-    QPoint globalSrc = KDDockWidgets::mapToGlobal(receiver, QPoint(5, 5));
-    auto receiverP = Tests::make_qpointer(receiver);
+    QPoint globalSrc = receiver->mapToGlobal(QPoint(5, 5));
+    ViewGuard receiverP = receiver;
 
     while (globalSrc != globalDest) {
         if (globalSrc.x() < globalDest.x()) {
@@ -270,7 +271,7 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, WidgetType *receiver)
             return;
         }
 
-        qApp->sendEvent(receiver, &ev);
+        Platform::instance()->tests_sendEvent(receiver, &ev);
         QTest::qWait(2);
     }
 }

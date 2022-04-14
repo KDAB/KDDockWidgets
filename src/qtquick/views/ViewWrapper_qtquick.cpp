@@ -203,6 +203,11 @@ QString ViewWrapper_qtquick::objectName() const
     return {};
 }
 
+QVariant ViewWrapper_qtquick::property(const char *) const
+{
+    return {};
+}
+
 bool ViewWrapper_qtquick::isNull() const
 {
     return m_item.data() == nullptr;

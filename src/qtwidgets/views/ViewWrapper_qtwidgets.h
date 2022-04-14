@@ -53,6 +53,7 @@ public:
     QScreen *screen() const override;
     void setFocus(Qt::FocusReason) override;
     QString objectName() const override;
+    QVariant property(const char *) const override;
     bool isNull() const override;
 
     DropArea *asDropArea() const override;

@@ -184,6 +184,7 @@ public:
         return false;
     }
 
+    virtual QVariant property(const char *) const = 0;
     virtual void setObjectName(const QString &) = 0;
     virtual QString objectName() const = 0;
 

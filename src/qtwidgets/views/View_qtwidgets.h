@@ -381,6 +381,11 @@ public:
         return QWidget::objectName();
     }
 
+    QVariant property(const char *name) const override
+    {
+        return QWidget::property(name);
+    }
+
 protected:
     bool event(QEvent *e) override
     {
@@ -426,6 +431,5 @@ inline void setTopLevelGeometry(QRect geometry, const QWidget *widget)
     if (QWidget *topLevel = widget->window())
         topLevel->setGeometry(geometry);
 }
-
 
 } // namespace KDDockWidgets::Views

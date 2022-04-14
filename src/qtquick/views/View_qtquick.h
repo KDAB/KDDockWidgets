@@ -159,6 +159,11 @@ public:
     {
     }
 
+    QVariant property(const char *) const override
+    {
+        return {};
+    }
+
     bool isTopLevel() const override
     {
         return {};

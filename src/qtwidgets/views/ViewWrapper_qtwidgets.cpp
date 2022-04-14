@@ -290,6 +290,11 @@ QString ViewWrapper_qtwidgets::objectName() const
     return m_widget->QWidget::objectName();
 }
 
+QVariant ViewWrapper_qtwidgets::property(const char *name) const
+{
+    return m_widget->property(name);
+}
+
 bool ViewWrapper_qtwidgets::isNull() const
 {
     return m_widget.data() == nullptr;
