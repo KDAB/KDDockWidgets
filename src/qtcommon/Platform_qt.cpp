@@ -127,6 +127,25 @@ bool Platform_qt::tests_waitForEvent(std::shared_ptr<Window> window, QEvent::Typ
     return tests_waitForEvent(windowqt->qtWindow(), type, timeout);
 }
 
+bool Platform_qt::tests_waitForDeleted(View *view, int timeout) const
+{
+    QObject *o = view ? view->asQObject() : nullptr;
+    if (!o)
+        return true;
+
+    QPointer<QObject> ptr = o;
+    QElapsedTimer time;
+    time.start();
+
+    while (ptr && time.elapsed() < timeout) {
+        qApp->processEvents();
+        QTest::qWait(50);
+    }
+
+    const bool wasDeleted = !ptr;
+    return wasDeleted;
+}
+
 void Platform_qt::tests_sendEvent(View *view, QEvent *ev) const
 {
     qApp->sendEvent(view->asQObject(), ev);

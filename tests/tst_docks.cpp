@@ -5763,11 +5763,10 @@ void TestDocks::tst_maximumSizePolicy()
     auto dock1 = createDockWidget("dock1", widget);
     dock1->show();
     dock1->window()->resize(QSize(500, 500));
-    auto oldFw = Tests::make_qpointer(dock1->window()->asQWidget());
+    auto window1 = dock1->window();
     dock1->close();
     dock1->show();
     auto oldFw2 = dock1->window();
-
 
     const int tolerance = 50;
     QVERIFY(dock1->window()->height() <= maxHeight + tolerance); // +tolerance as the floating window is a bit bigger, due to margins etc.
@@ -5790,8 +5789,6 @@ void TestDocks::tst_maximumSizePolicy()
     // Now drop it, and check too
     m1->addDockWidget(dock1, Location_OnBottom);
     QVERIFY(dock1->height() <= maxHeight);
-
-    delete oldFw.data();
 }
 
 void TestDocks::tst_minSizeChanges()
@@ -6300,7 +6297,7 @@ void TestDocks::tst_raise()
 
     auto dock1 = createDockWidget("1");
     auto dock2 = createDockWidget("2");
-    auto fw2 = Tests::make_qpointer(dock2->window()->asQWidget());
+
     dock1->addDockWidgetAsTab(dock2);
     dock1->setAsCurrentTab();
     QVERIFY(dock1->isCurrentTab());
@@ -6778,7 +6775,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         dock1->dptr()->morphIntoFloatingWindow();
         auto dock2 = createDockWidget("dock2", new QPushButton("two"));
         dock2->dptr()->morphIntoFloatingWindow();
-        auto originalWindow2 = Tests::make_qpointer(dock2->window()->asQWidget());
+        auto originalWindow2 = dock2->window();
 
         dock1->addDockWidgetAsTab(dock2);
 
@@ -6787,8 +6784,8 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         QCOMPARE(window1->windowHandle(), window2->windowHandle());
         QCOMPARE(dock1->dptr()->frame(), dock2->dptr()->frame());
         QCOMPARE(dock1->dptr()->frame()->dockWidgetCount(), 2);
-        Testing::waitForDeleted(originalWindow2);
-        QVERIFY(!originalWindow2);
+        Platform::instance()->tests_waitForDeleted(originalWindow2.get());
+
         dock1->deleteLater();
         dock2->deleteLater();
         Testing::waitForDeleted(dock2);

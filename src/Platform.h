@@ -72,6 +72,9 @@ public:
     virtual bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const = 0;
     virtual bool tests_waitForEvent(std::shared_ptr<Window>, QEvent::Type type, int timeout = 5000) const = 0;
 
+    /// @brief Waits for the specified view to be deleted
+    virtual bool tests_waitForDeleted(View *, int timeout = 2000) const = 0;
+
     virtual void tests_sendEvent(View *, QEvent *) const = 0;
     virtual void tests_sendEvent(std::shared_ptr<Window> window, QEvent *ev) const = 0;
 
