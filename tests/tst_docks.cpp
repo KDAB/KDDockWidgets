@@ -6314,7 +6314,7 @@ void TestDocks::tst_raise()
         dock3->raise();
         QTest::qWait(200);
 
-        if (qApp->QGuiApplication::topLevelAt(dock3->window()->geometry().topLeft() + QPoint(50, 50)) != dock3->view()->asQWidget()->windowHandle()) {
+        if (!Platform::instance()->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->equals(dock3->view()->windowHandle())) {
             qDebug() << "Failing before raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window().get()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             QVERIFY(false);
@@ -6324,7 +6324,7 @@ void TestDocks::tst_raise()
         QTest::qWait(200);
         QVERIFY(dock1->isCurrentTab());
 
-        if (qApp->QGuiApplication::topLevelAt(dock3->window()->geometry().topLeft() + QPoint(50, 50)) != dock1->view()->asQWidget()->windowHandle()) {
+        if (Platform::instance()->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->equals(dock1->view()->windowHandle())) {
             qDebug() << "Failing after raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock1->window().get()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             QVERIFY(false);

@@ -55,6 +55,9 @@ public:
     /// @brief Creates and returns the default FrameworkWidgetFactory
     virtual FrameworkWidgetFactory *createDefaultFrameworkWidgetFactory() = 0;
 
+    /// @brief Returns the window at the specified global coordinates
+    virtual std::shared_ptr<Window> windowAt(QPoint globalPos) const = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
     /// @brief Waits for the specified window to be active (have the keyboard focus)
     /// Window::isActive() should return true

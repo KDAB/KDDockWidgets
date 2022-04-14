@@ -26,6 +26,7 @@ public:
     std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const override;
     std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
     FrameworkWidgetFactory *createDefaultFrameworkWidgetFactory() override;
+    Window::Ptr windowAt(QPoint globalPos) const override;
 };
 
 }

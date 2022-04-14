@@ -72,3 +72,13 @@ FrameworkWidgetFactory *Platform_qtwidgets::createDefaultFrameworkWidgetFactory(
 {
     return new DefaultWidgetFactory_qtwidgets();
 }
+
+Window::Ptr Platform_qtwidgets::windowAt(QPoint globalPos) const
+{
+    if (auto qwindow = qApp->QGuiApplication::topLevelAt(globalPos)) {
+        auto window = new Window_qtwidgets(qwindow);
+        return Window::Ptr(window);
+    }
+
+    return {};
+}
