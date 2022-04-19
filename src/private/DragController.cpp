@@ -20,6 +20,7 @@
 #include "MDILayoutWidget_p.h"
 #include "WindowZOrder_x11_p.h"
 
+#include "Platform.h"
 #include "Window.h"
 #include "controllers/TitleBar.h"
 #include "controllers/Frame.h"
@@ -87,7 +88,7 @@ public:
 
         if (QMouseEvent *me = mouseEvent(ev)) {
             m_reentrancyGuard = true;
-            qApp->sendEvent(m_target->asQObject(), me);
+            Platform::instance()->sendEvent(m_target, me);
             m_reentrancyGuard = false;
             return true;
         }

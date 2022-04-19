@@ -14,6 +14,7 @@
 #include "private/Logging_p.h"
 #include "TitleBar.h"
 #include "Frame.h"
+#include "Platform.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/Utils_p.h"
 #include "private/WidgetResizeHandler_p.h"
@@ -492,7 +493,7 @@ void FloatingWindow::onCloseEvent(QCloseEvent *e)
 
     const Controllers::Frame::List frames = this->frames();
     for (Controllers::Frame *frame : frames) {
-        qApp->sendEvent(frame->view()->asQWidget(), e); // TODO
+        Platform::instance()->sendEvent(frame->view(), e);
         if (!e->isAccepted())
             break; // Stop when the first frame prevents closing
     }

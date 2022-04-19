@@ -16,6 +16,7 @@
 
 #include "Controller.h"
 #include "View.h"
+#include "Platform.h"
 #include "views/Frame.h"
 #include "controllers/TitleBar.h"
 #include "controllers/Stack.h"
@@ -110,7 +111,7 @@ void Frame::onCloseEvent(QCloseEvent *e)
     e->accept(); // Accepted by default (will close unless ignored)
     const DockWidget::List docks = dockWidgets();
     for (DockWidget *dock : docks) {
-        qApp->sendEvent(dock->view()->asQWidget(), e);
+        Platform::instance()->sendEvent(dock->view(), e);
         if (!e->isAccepted())
             break; // Stop when the first dockwidget prevents closing
     }

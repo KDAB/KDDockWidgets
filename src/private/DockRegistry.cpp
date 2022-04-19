@@ -748,7 +748,7 @@ bool DockRegistry::onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *ev)
 
     if (DockWidgetBase *overlayedDockWidget = mainWindow->overlayedDockWidget()) {
         ev->ignore();
-        qApp->sendEvent(overlayedDockWidget->d->frame(), ev);
+        Platform::instance()->sendEvent(overlayedDockWidget->d->frame()->view(), ev);
 
         if (ev->isAccepted()) {
             // The Frame accepted it. It means the user is resizing it. We allow for 4px outside for better resize.
