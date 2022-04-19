@@ -202,7 +202,7 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, View *receiver)
         qApp->sendEvent(actualReceiver, &ev);
     } else {
         // QtWidgets case
-        Platform::instance()->tests_sendEvent(receiver, &ev);
+        Platform::instance()->sendEvent(receiver, &ev);
     }
 }
 
@@ -221,7 +221,7 @@ void KDDockWidgets::Tests::pressOn(QPoint globalPos, View *receiver)
     QCursor::setPos(globalPos);
     QMouseEvent ev(QEvent::MouseButtonPress, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-    Platform::instance()->tests_sendEvent(receiver, &ev);
+    Platform::instance()->sendEvent(receiver, &ev);
 }
 
 void KDDockWidgets::Tests::pressOn(QPoint globalPos, Window::Ptr receiver)
@@ -236,7 +236,7 @@ void KDDockWidgets::Tests::releaseOn(QPoint globalPos, View *receiver)
 {
     QMouseEvent ev(QEvent::MouseButtonRelease, receiver->mapFromGlobal(globalPos), receiver->window()->mapFromGlobal(globalPos), globalPos,
                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-    Platform::instance()->tests_sendEvent(receiver, &ev);
+    Platform::instance()->sendEvent(receiver, &ev);
 }
 
 void KDDockWidgets::Tests::clickOn(QPoint globalPos, View *receiver)
@@ -271,7 +271,7 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
             return;
         }
 
-        Platform::instance()->tests_sendEvent(receiver, &ev);
+        Platform::instance()->sendEvent(receiver, &ev);
         QTest::qWait(2);
     }
 }

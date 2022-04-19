@@ -30,6 +30,8 @@ public:
     std::shared_ptr<Window> qobjectAsWindow(QObject *) const override;
     virtual std::shared_ptr<Window> windowFromQWindow(QWindow *) const = 0;
 
+    void sendEvent(View *, QEvent *) const override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const override;
     bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const override;
@@ -39,7 +41,6 @@ public:
     bool tests_waitForResize(Controller *, int timeout = 2000) const override;
     bool tests_waitForDeleted(View *, int timeout = 2000) const override;
     void tests_sendEvent(std::shared_ptr<Window>, QEvent *) const override;
-    void tests_sendEvent(View *, QEvent *) const override;
     void tests_initTests() const override;
 #endif
 };

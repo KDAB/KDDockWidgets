@@ -58,6 +58,9 @@ public:
     /// @brief Returns the window at the specified global coordinates
     virtual std::shared_ptr<Window> windowAt(QPoint globalPos) const = 0;
 
+    /// @brief Sends the specified event to the specified view
+    virtual void sendEvent(View *, QEvent *) const = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
     /// @brief Waits for the specified window to be active (have the keyboard focus)
     /// Window::isActive() should return true
@@ -78,7 +81,6 @@ public:
     /// @brief Waits for the specified view to be deleted
     virtual bool tests_waitForDeleted(View *, int timeout = 2000) const = 0;
 
-    virtual void tests_sendEvent(View *, QEvent *) const = 0;
     virtual void tests_sendEvent(std::shared_ptr<Window> window, QEvent *ev) const = 0;
 
     /// @brief Implement any needed initializations before tests starting to run, if any

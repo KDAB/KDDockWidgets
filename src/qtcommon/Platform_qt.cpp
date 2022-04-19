@@ -147,7 +147,7 @@ bool Platform_qt::tests_waitForDeleted(View *view, int timeout) const
     return wasDeleted;
 }
 
-void Platform_qt::tests_sendEvent(View *view, QEvent *ev) const
+void Platform_qt::sendEvent(View *view, QEvent *ev) const
 {
     qApp->sendEvent(view->asQObject(), ev);
 }
