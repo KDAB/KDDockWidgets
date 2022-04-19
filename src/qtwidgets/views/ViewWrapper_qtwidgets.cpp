@@ -304,3 +304,8 @@ DropArea *ViewWrapper_qtwidgets::asDropArea() const
 {
     return qobject_cast<DropArea *>(m_widget);
 }
+
+QWidget *ViewWrapper_qtwidgets::widget() const
+{
+    return m_widget;
+}

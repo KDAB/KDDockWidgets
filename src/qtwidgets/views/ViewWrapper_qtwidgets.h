@@ -58,6 +58,8 @@ public:
 
     DropArea *asDropArea() const override;
 
+    QWidget *widget() const;
+
 private:
     QPointer<QWidget> m_widget;
 };

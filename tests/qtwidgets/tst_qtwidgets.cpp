@@ -27,6 +27,7 @@
 #include "controllers/DockWidget.h"
 #include "controllers/MainWindow.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
+#include "qtwidgets/views/ViewWrapper_qtwidgets.h"
 
 #include <QObject>
 #include <QPushButton>
@@ -929,7 +930,8 @@ void TestQtWidgets::tst_negativeAnchorPositionWhenEmbedded()
 
     layout->checkSanity();
 
-    delete m->window()->asQWidget();
+    auto wrapper = static_cast<Views::ViewWrapper_qtwidgets *>(m->window().get());
+    delete wrapper->widget();
 }
 
 void TestQtWidgets::tst_restoreResizesLayout()
