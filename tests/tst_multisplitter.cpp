@@ -9,11 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "qtwidgets/views/View_qtwidgets.h"
 #include "private/multisplitter/Item_p.h"
 #include "private/multisplitter/MultiSplitterConfig.h"
 #include "View.h"
 #include "controllers/Separator.h"
+
+#include "qtwidgets/views/View_qtwidgets.h"
 #include "qtwidgets/views/Separator_qtwidgets.h"
 
 #include <QPainter>
@@ -33,6 +34,11 @@ static QString s_expectedWarning;
 
 class TestMultiSplitter;
 static TestMultiSplitter *s_testObject = nullptr;
+
+inline QWidget *qwidgetFromView(View *view)
+{
+    return dynamic_cast<QWidget *>(view);
+}
 
 class MyGuestWidget : public Views::View_qtwidgets<QWidget>
 {
@@ -133,7 +139,7 @@ public Q_SLOTS:
         s_testObject = this;
 
         Layouting::Config::self().setSeparatorFactoryFunc([](Controllers::Separator *controller, View *parent) -> View * {
-            return new Views::Separator_qtwidgets(controller, parent ? parent->asQWidget() : nullptr);
+            return new Views::Separator_qtwidgets(controller, qwidgetFromView(parent));
         });
     }
 
@@ -982,7 +988,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         auto root1 = createRoot();
         Item *item1 = createItem();
         root1->insertItem(item1, Location_OnRight);
-        QWidget *host1 = root1->hostWidget()->asQWidget();
+        QWidget *host1 = qwidgetFromView(root1->hostWidget());
 
         auto root2 = createRoot();
         Item *item2 = createItem();
@@ -990,11 +996,11 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnBottom);
 
-        QCOMPARE(root1->hostWidget()->asQWidget(), host1);
-        QCOMPARE(item2->hostWidget()->asQWidget(), host1);
+        QCOMPARE(qwidgetFromView(root1->hostWidget()), host1);
+        QCOMPARE(qwidgetFromView(item2->hostWidget()), host1);
         const auto &items = root1->items_recursive();
         for (Item *item : items) {
-            QCOMPARE(item->hostWidget()->asQWidget(), host1);
+            QCOMPARE(qwidgetFromView(item->hostWidget()), host1);
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());
@@ -1007,7 +1013,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         Item *item2 = createItem();
         root1->insertItem(item1, Location_OnLeft);
         root1->insertItem(item2, Location_OnRight);
-        QWidget *host1 = root1->hostWidget()->asQWidget();
+        QWidget *host1 = qwidgetFromView(root1->hostWidget());
 
         auto root2 = createRoot();
         Item *item12 = createItem();
@@ -1015,10 +1021,10 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnTop);
 
-        QCOMPARE(root1->hostWidget()->asQWidget(), host1);
-        QCOMPARE(item2->hostWidget()->asQWidget(), host1);
+        QCOMPARE(qwidgetFromView(root1->hostWidget()), host1);
+        QCOMPARE(qwidgetFromView(item2->hostWidget()), host1);
         for (Item *item : root1->items_recursive()) {
-            QCOMPARE(item->hostWidget()->asQWidget(), host1);
+            QCOMPARE(qwidgetFromView(item->hostWidget()), host1);
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());
@@ -1560,7 +1566,7 @@ void TestMultiSplitter::tst_minSizeChangedBeforeRestore()
     root->insertItem(item2, Location_OnBottom);
     const QSize originalSize2 = item2->size();
 
-    auto guest2 = qobject_cast<MyGuestWidget *>(item2->guestView()->asQWidget());
+    auto guest2 = qobject_cast<MyGuestWidget *>(qwidgetFromView(item2->guestView()));
     const QSize newMinSize = originalSize2 + QSize(10, 10);
 
     item2->turnIntoPlaceholder();
