@@ -9,6 +9,11 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+/// @file
+/// @brief Here lives the tests that only apply to QtWidgets
+/// either because they haven't been ported to QtQuick yet or because they are really
+/// QtWidgets specific.
+
 #include "Platform.h"
 #include "KDDockWidgets.h"
 #include "../utils.h"
@@ -39,9 +44,24 @@ using namespace KDDockWidgets::Controllers;
 using namespace KDDockWidgets::Tests;
 using namespace Layouting;
 
-/// @brief Here lives the tests that only apply to QtWidgets
-/// either because they haven't been ported to QtQuick yet or because they are really
-/// QtWidgets specific.
+inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
+{
+    static int count = 0;
+    count++;
+    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
+    auto mainwindow = createMainWindow(QSize(600, 600), MainWindowOption_HasCentralFrame).release();
+
+    auto window = new EmbeddedWindow(mainwindow);
+
+    auto lay = new QVBoxLayout(window);
+    lay->setContentsMargins(100, 100, 100, 100);
+    lay->addWidget(qobject_cast<QWidget *>(mainwindow->view()->asQObject()));
+
+    window->show();
+    window->resize(sz);
+    return window;
+}
+
 class TestQtWidgets : public QObject
 {
     Q_OBJECT

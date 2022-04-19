@@ -437,27 +437,6 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, DropArea *targ
     drag(draggable, QPoint(), dropPoint, ButtonAction_Release);
 }
 
-inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
-{
-    static int count = 0;
-    count++;
-    // Tests a MainWindow which isn't a top-level window, but is embedded in another window
-    auto mainwindow = createMainWindow(QSize(600, 600), MainWindowOption_HasCentralFrame).release();
-
-    auto window = new EmbeddedWindow(mainwindow);
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    auto lay = new QVBoxLayout(window);
-    lay->setContentsMargins(100, 100, 100, 100);
-    lay->addWidget(mainwindow->view()->asQWidget());
-#else
-    // TODO: For QtQuick we need some QML
-    qWarning() << "Parent me!";
-#endif
-    window->show();
-    window->resize(sz);
-    return window;
-}
-
 }
 
 inline bool qpaPassedAsArgument(int argc, char *argv[])
