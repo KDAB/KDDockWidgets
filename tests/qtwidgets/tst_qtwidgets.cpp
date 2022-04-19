@@ -134,7 +134,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
 
     auto m = createMainWindow();
 
-    QWidget *central = qobject_cast<Views::MainWindow_qtwidgets *>(m->view()->asQWidget())->centralWidget();
+    QWidget *central = qobject_cast<Views::MainWindow_qtwidgets *>(m->view()->asQObject())->centralWidget();
     auto dropArea = m->dropArea();
     QVERIFY(dropArea);
 
@@ -524,7 +524,8 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
     QWidget container;
     auto lay = new QVBoxLayout(&container);
     Controllers::MainWindow m("MyMainWindow_tst_addToSmallMainWindow8", MainWindowOption_None);
-    lay->addWidget(m.view()->asQWidget());
+    auto qmainwindow = qobject_cast<Views::MainWindow_qtwidgets *>(m.view()->asQObject());
+    lay->addWidget(qmainwindow);
     container.resize(100, 100);
     Platform::instance()->tests_waitForEvent(&container, QEvent::Resize);
     container.show();
@@ -536,7 +537,6 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
     Platform::instance()->tests_waitForResize(&m);
     QVERIFY(m.dropArea()->checkSanity());
 }
-
 
 void TestQtWidgets::tst_closeRemovesFromSideBar()
 {
