@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "KDDockWidgets.h"
 #include "qtcommon/Platform_qt.h"
 
 namespace KDDockWidgets {
@@ -27,6 +28,11 @@ public:
     std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
     FrameworkWidgetFactory *createDefaultFrameworkWidgetFactory() override;
     Window::Ptr windowAt(QPoint globalPos) const override;
+
+#ifdef DOCKS_DEVELOPER_MODE
+    void tests_initTests() const override;
+    void tests_cleanupTests() const override;
+#endif
 };
 
 }

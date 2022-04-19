@@ -16,19 +16,15 @@
 
 #include "Testing.h"
 #include "utils.h"
+#include "Platform.h"
 
 #include <QGuiApplication>
 #include <QObject>
-#include <QStyleFactory>
 #include <QtTest/QtTest>
 
 #ifdef KDDOCKWIDGETS_QTQUICK
 #include "DockWidgetQuick.h"
 #include "quick/MainWindowQuick_p.h"
-
-#include <QQmlEngine>
-#include <QQuickStyle>
-#include <QQmlApplicationEngine>
 #else
 
 #include <QLineEdit>
@@ -49,24 +45,13 @@ public Q_SLOTS:
         // TODOv2
         KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
 
-        qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
-        qApp->setOrganizationName("KDAB");
-        qApp->setApplicationName("dockwidgets-unit-tests");
-
-        qApp->setStyle(QStyleFactory::create("fusion"));
+        KDDockWidgets::Platform::instance()->tests_initTests();
         KDDockWidgets::Testing::installFatalMessageHandler();
-
-#ifdef KDDOCKWIDGETS_QTQUICK
-        QQuickStyle::setStyle("Material"); // so we don't load KDE plugins
-        KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
-#endif
     }
 
     void cleanupTestCase()
     {
-#ifdef KDDOCKWIDGETS_QTQUICK
-        delete KDDockWidgets::Config::self().qmlEngine();
-#endif
+        KDDockWidgets::Platform::instance()->tests_cleanupTests();
     }
 
 private Q_SLOTS:

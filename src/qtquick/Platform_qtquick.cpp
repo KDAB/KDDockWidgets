@@ -17,6 +17,8 @@
 #include "views/View_qtquick.h"
 #include "qtquick/Window_qtquick.h"
 
+#include <QQmlEngine>
+#include <QQuickStyle>
 #include <QQuickWindow>
 #include <QGuiApplication>
 #include <QWindow>
@@ -63,3 +65,30 @@ FrameworkWidgetFactory *Platform_qtquick::createDefaultFrameworkWidgetFactory()
 {
     return {};
 }
+
+Window::Ptr Platform_qtquick::windowAt(QPoint globalPos) const
+{
+    if (auto qwindow = qApp->QGuiApplication::topLevelAt(globalPos)) {
+        auto window = new Window_qtquick(qwindow);
+        return Window::Ptr(window);
+    }
+
+    return {};
+}
+
+#ifdef DOCKS_DEVELOPER_MODE
+
+void Platform_qtquick::tests_initTests() const
+{
+    Platform_qt::tests_initTests();
+
+    QQuickStyle::setStyle("Material"); // so we don't load KDE plugins
+    KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
+}
+
+void Platform_qtquick::tests_cleanupTests() const
+{
+    delete KDDockWidgets::Config::self().qmlEngine();
+}
+
+#endif

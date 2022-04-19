@@ -10,6 +10,7 @@
 */
 
 #include "Platform_qt.h"
+#include "KDDockWidgets.h"
 #include "Window_qt.h"
 
 #include <QWindow>
@@ -154,6 +155,12 @@ void Platform_qt::tests_sendEvent(View *view, QEvent *ev) const
 void Platform_qt::tests_sendEvent(Window::Ptr window, QEvent *ev) const
 {
     qApp->sendEvent(static_cast<Window_qt *>(window.get())->qtWindow(), ev);
+}
+
+void Platform_qt::tests_initTests() const
+{
+    qApp->setOrganizationName(QStringLiteral("KDAB"));
+    qApp->setApplicationName(QStringLiteral("dockwidgets-unit-tests"));
 }
 
 #endif

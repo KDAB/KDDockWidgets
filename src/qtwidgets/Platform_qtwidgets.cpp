@@ -17,6 +17,7 @@
 #include "views/ViewWrapper_qtwidgets.h"
 #include "FrameworkWidgetFactory_qtwidgets.h"
 
+#include <QStyleFactory>
 #include <QApplication>
 
 #include <memory.h>
@@ -82,3 +83,14 @@ Window::Ptr Platform_qtwidgets::windowAt(QPoint globalPos) const
 
     return {};
 }
+
+#ifdef DOCKS_DEVELOPER_MODE
+
+void Platform_qtwidgets::tests_initTests() const
+{
+    qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
+    Platform_qt::tests_initTests();
+    qApp->setStyle(QStyleFactory::create(QStringLiteral("fusion")));
+}
+
+#endif
