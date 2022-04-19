@@ -5813,7 +5813,7 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     QVERIFY(Platform::instance()->tests_waitForResize(m.get()));
 #endif
 
-    QVERIFY(widgetMinLength(m->view()->asQWidget(), Qt::Vertical) > minHeight * 3); // > since some vertical space is occupied by the separators
+    QVERIFY(m->view()->minimumHeight() > minHeight * 3); // > since some vertical space is occupied by the separators
 
     // Now close dock1 and check again
     dock1->close();
