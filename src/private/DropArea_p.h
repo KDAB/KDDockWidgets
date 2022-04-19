@@ -87,6 +87,7 @@ private:
     friend class Controllers::Frame;
     friend class Controllers::FloatingWindow;
     friend class ::TestDocks;
+    friend class ::TestQtWidgets;
     friend class DropIndicatorOverlayInterface;
     friend class AnimatedIndicators;
 

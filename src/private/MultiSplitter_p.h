@@ -27,6 +27,7 @@
 #include "kddockwidgets/docks_export.h"
 
 class TestDocks;
+class TestQtWidgets;
 
 namespace KDDockWidgets {
 
@@ -94,6 +95,7 @@ public:
 
 private:
     friend class ::TestDocks;
+    friend class ::TestQtWidgets;
 
     Layouting::ItemBoxContainer *rootItem() const;
 

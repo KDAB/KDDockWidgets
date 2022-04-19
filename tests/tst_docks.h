@@ -231,48 +231,7 @@ private Q_SLOTS:
     void tst_redockToMDIRestoresPosition();
     void tst_persistentCentralWidget();
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    // TODO: Port these to QtQuick
-
-    void tst_mainWindowAlwaysHasCentralWidget();
-    void tst_dockableMainWindows();
-    void tst_mdi_mixed_with_docking();
-    void tst_mdi_mixed_with_docking2();
-    void tst_mdi_mixed_with_docking_setMDISize();
-
-    // But these are fine to be widget only:
-    void tst_tabsNotClickable();
-    void tst_embeddedMainWindow();
-    void tst_restoreEmbeddedMainWindow();
-    void tst_negativeAnchorPositionWhenEmbedded();
-    void tst_negativeAnchorPositionWhenEmbedded_data();
-    void tst_closeRemovesFromSideBar();
-    void tst_restoreSideBar();
-    void tst_toggleActionOnSideBar();
-    void tst_deleteOnCloseWhenOnSideBar();
-    void tst_sidebarOverlayShowsAutohide();
-    void tst_sidebarOverlayGetsHiddenOnClick();
-    void tst_floatRemovesFromSideBar();
-    void tst_overlayedGeometryIsSaved();
-    void tst_overlayCrash();
-
-    // And fix these
-    void tst_floatingWindowDeleted();
-    void tst_addToSmallMainWindow6();
-    void tst_minSizeChanges();
-    void tst_maxSizePropagates();
-    void tst_maxSizePropagates2();
-    void tst_maxSizedFloatingWindow();
-    void tst_restoreResizesLayout();
-    void tst_restoreNonRelativeFloatingWindowGeometry();
-    void tst_maxSizeHonouredWhenDropped();
-    void tst_fixedSizePolicy();
-    void tst_maxSizeHonouredWhenAnotherDropped();
-    void tst_addToHiddenMainWindow();
-    void tst_maximumSizePolicy();
-    void tst_complex();
-    void tst_restoreFloatingMaximizedState();
-#else
+#ifndef KDDOCKWIDGETS_QTWIDGETS // TODOv2: Move to tst_qtquick.cpp
     void tst_hoverShowsDropIndicators();
 #endif
 };

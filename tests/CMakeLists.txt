@@ -37,6 +37,11 @@ add_executable(tst_docks tst_docks.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
 target_link_libraries(tst_docks kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_docks)
 
+# tst_qtwidgets
+add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
+target_link_libraries(tst_qtwidgets kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+set_compiler_flags(tst_qtwidgets)
+
 if(NOT ${PROJECT_NAME}_QTQUICK)
   add_executable(tst_multisplitter tst_multisplitter.cpp)
   target_link_libraries(tst_multisplitter kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)

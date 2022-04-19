@@ -31,7 +31,6 @@
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 
 #include <QVBoxLayout>
-#include <QWidget>
 #include <QToolButton>
 #include <QLineEdit>
 using FocusableWidget = QLineEdit;
@@ -72,6 +71,17 @@ struct DockDescriptor
     QPointer<Controllers::DockWidget> createdDock;
     KDDockWidgets::InitialVisibilityOption option;
 };
+
+inline QPoint dragPointForWidget(Controllers::Frame *frame, int index)
+{
+    if (frame->hasSingleDockWidget()) {
+        Q_ASSERT(index == 0);
+        return frame->titleBar()->mapToGlobal(QPoint(5, 5));
+    } else {
+        QRect rect = frame->tabWidget()->tabBar()->rectForTab(index);
+        return frame->tabWidget()->tabBar()->view()->mapToGlobal(rect.center());
+    }
+}
 
 inline bool shouldSkipTests()
 {
