@@ -179,6 +179,11 @@ public:
         return {};
     }
 
+    QPoint mapTo(View *, QPoint) const override
+    {
+        return {};
+    }
+
     void setSizePolicy(QSizePolicy) override
     {
     }

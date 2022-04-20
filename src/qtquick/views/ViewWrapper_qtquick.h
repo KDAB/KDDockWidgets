@@ -56,6 +56,7 @@ public:
     QVariant property(const char *) const override;
     bool isNull() const override;
     void setWindowTitle(const QString &title) override;
+    QPoint mapTo(View *someAncestor, QPoint pos) const override;
 
 private:
     QPointer<QQuickItem> m_item;

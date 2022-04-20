@@ -143,6 +143,7 @@ public:
     };
     virtual QPoint mapToGlobal(QPoint) const = 0;
     virtual QPoint mapFromGlobal(QPoint) const = 0;
+    virtual QPoint mapTo(View *, QPoint) const = 0;
     virtual void setSizePolicy(QSizePolicy) = 0;
     virtual QSizePolicy sizePolicy() const = 0;
     virtual void closeWindow() = 0;

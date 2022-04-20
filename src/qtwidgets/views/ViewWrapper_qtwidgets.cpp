@@ -314,3 +314,8 @@ void ViewWrapper_qtwidgets::setWindowTitle(const QString &title)
 {
     m_widget->setWindowTitle(title);
 }
+
+QPoint ViewWrapper_qtwidgets::mapTo(View *someAncestor, QPoint pos) const
+{
+    return m_widget->mapTo(qobject_cast<QWidget *>(someAncestor->asQObject()), pos);
+}

@@ -211,6 +211,11 @@ public:
         return Base::mapFromGlobal(globalPt);
     }
 
+    QPoint mapTo(View *someAncestor, QPoint pos) const override
+    {
+        return QWidget::mapTo(qobject_cast<QWidget *>(someAncestor->asQObject()), pos);
+    }
+
     void setSizePolicy(QSizePolicy policy) override
     {
         Base::setSizePolicy(policy);
