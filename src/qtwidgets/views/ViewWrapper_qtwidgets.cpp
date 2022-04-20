@@ -309,3 +309,8 @@ QWidget *ViewWrapper_qtwidgets::widget() const
 {
     return m_widget;
 }
+
+void ViewWrapper_qtwidgets::setWindowTitle(const QString &title)
+{
+    m_widget->setWindowTitle(title);
+}

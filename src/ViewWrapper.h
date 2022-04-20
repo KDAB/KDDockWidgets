@@ -51,7 +51,6 @@ public:
     void setAttribute(Qt::WidgetAttribute, bool enable = true) override;
     bool testAttribute(Qt::WidgetAttribute) const override;
     Qt::WindowFlags flags() const override;
-    void setWindowTitle(const QString &title) override;
     void setWindowIcon(const QIcon &) override;
     void showNormal() override;
     void showMinimized() override;

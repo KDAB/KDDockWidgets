@@ -501,7 +501,7 @@ bool DockWidget::skipsRestore() const
 void DockWidget::setFloatingGeometry(QRect geometry)
 {
     if (isOpen() && isFloating()) {
-        view()->asQWidget()->window()->setGeometry(geometry);
+        view()->window()->setGeometry(geometry);
     } else {
         d->m_lastPosition->setLastFloatingGeometry(geometry);
     }
@@ -655,7 +655,7 @@ bool DockWidget::Private::eventFilter(QObject *watched, QEvent *event)
 void DockWidget::Private::updateTitle()
 {
     if (q->isFloating())
-        q->view()->asQWidget()->window()->setWindowTitle(title);
+        q->view()->window()->setWindowTitle(title);
 
     toggleAction->setText(title);
 }
@@ -793,7 +793,7 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
 
     // Now we deal with the case where the DockWidget was close()ed. In this case it doesn't have a parent.
 
-    if (q->view()->asQWidget()->parentWidget()) {
+    if (q->view()->parentView()) {
         // The QEvent::Show is due to it being made floating. Nothing to restore.
         return;
     }

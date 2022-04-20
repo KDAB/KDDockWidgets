@@ -212,3 +212,8 @@ bool ViewWrapper_qtquick::isNull() const
 {
     return m_item.data() == nullptr;
 }
+
+
+void ViewWrapper_qtquick::setWindowTitle(const QString &)
+{
+}

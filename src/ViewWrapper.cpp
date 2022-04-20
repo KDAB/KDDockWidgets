@@ -141,11 +141,6 @@ Qt::WindowFlags ViewWrapper::flags() const
     return {};
 }
 
-void ViewWrapper::setWindowTitle(const QString &)
-{
-    qFatal("Not implemented");
-}
-
 void ViewWrapper::setWindowIcon(const QIcon &)
 {
     qFatal("Not implemented");

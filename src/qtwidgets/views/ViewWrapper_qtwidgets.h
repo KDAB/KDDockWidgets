@@ -55,6 +55,7 @@ public:
     QString objectName() const override;
     QVariant property(const char *) const override;
     bool isNull() const override;
+    void setWindowTitle(const QString &title) override;
 
     DropArea *asDropArea() const override;
 
