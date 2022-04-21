@@ -755,7 +755,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
 {
     LayoutSaver::MainWindow m;
 
-    QWindow *whandle = view()->asQWidget()->windowHandle();
+    Window::Ptr window = view()->windowHandle();
 
     m.options = options();
     m.geometry = windowGeometry();
@@ -766,8 +766,8 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     m.screenSize = screenSizeForWidget(view()->asQWidget());
     m.multiSplitterLayout = layoutWidget()->serialize();
     m.affinities = d->affinities;
-    m.windowState = whandle ? whandle->windowState()
-                            : Qt::WindowNoState;
+    m.windowState = window ? window->windowState()
+                           : Qt::WindowNoState;
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
         if (Controllers::SideBar *sb = sideBar(loc)) {
@@ -782,7 +782,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
 
 QRect MainWindow::windowGeometry() const
 {
-    if (QWindow *window = view()->asQWidget()->windowHandle())
+    if (Window::Ptr window = view()->windowHandle())
         return window->geometry();
 
     return window()->geometry();
