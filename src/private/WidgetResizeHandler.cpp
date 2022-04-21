@@ -132,8 +132,8 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         if (mTarget->isMaximized() || !m_resizingInProgress || mouseEvent->button() != Qt::LeftButton)
             break;
 
-        mTarget->asQWidget()->releaseMouse();
-        mTarget->asQWidget()->releaseKeyboard();
+        mTarget->releaseMouse();
+        mTarget->releaseKeyboard();
         return true;
 
         break;

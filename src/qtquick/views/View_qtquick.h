@@ -302,6 +302,10 @@ public:
     {
     }
 
+    void releaseKeyboard() override
+    {
+    }
+
     QScreen *screen() const override
     {
         return {};

@@ -167,6 +167,7 @@ public:
     virtual void setFixedHeight(int) = 0;
     virtual void grabMouse() = 0;
     virtual void releaseMouse() = 0;
+    virtual void releaseKeyboard() = 0;
     virtual QScreen *screen() const = 0;
     virtual void setFocus(Qt::FocusReason) = 0;
 

@@ -59,6 +59,9 @@ public:
     bool isActiveWindow() const override;
     void setFixedWidth(int) override;
     void setFixedHeight(int) override;
+    void releaseKeyboard() override
+    {
+    }
 
     /// TODOv2: Remove
     virtual DropArea *asDropArea() const

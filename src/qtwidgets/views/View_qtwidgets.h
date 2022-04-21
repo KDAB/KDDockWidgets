@@ -371,6 +371,11 @@ public:
         QWidget::releaseMouse();
     }
 
+    void releaseKeyboard() override
+    {
+        QWidget::releaseKeyboard();
+    }
+
     QScreen *screen() const override
     {
         return QWidget::screen();
