@@ -43,7 +43,7 @@ using namespace KDDockWidgets;
 
 bool WidgetResizeHandler::s_disableAllHandlers = false;
 WidgetResizeHandler::WidgetResizeHandler(bool isTopLevelResizer, View *target)
-    : QObject(target->asQWidget())
+    : QObject(target->asQObject())
     , m_isTopLevelWindowResizer(isTopLevelResizer)
 {
     setTarget(target);
@@ -88,7 +88,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     if (!widget)
         return false;
 
-    if (m_isTopLevelWindowResizer && (!widget->isTopLevel() || o != mTarget->asQWidget()))
+    if (m_isTopLevelWindowResizer && (!widget->isTopLevel() || o != mTarget->asQObject()))
         return false;
 
     switch (e->type()) {
@@ -155,7 +155,7 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
         m_resizingInProgress = m_resizingInProgress && (mouseEvent->buttons() & Qt::LeftButton);
         const bool state = m_resizingInProgress;
         if (m_isTopLevelWindowResizer)
-            m_resizingInProgress = ((o == mTarget->asQWidget()) && m_resizingInProgress);
+            m_resizingInProgress = ((o == mTarget->asQObject()) && m_resizingInProgress);
         const bool consumed = mouseMoveEvent(mouseEvent);
         m_resizingInProgress = state;
         return consumed;
@@ -423,7 +423,7 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // Need for updating cursor when we change child widget
-    const QObjectList children = mTarget->asQWidget()->children();
+    const QObjectList children = mTarget->asQObject()->children();
     for (int i = 0, total = children.size(); i < total; ++i) {
         if (auto child = qobject_cast<WidgetType *>(children.at(i))) {
 
