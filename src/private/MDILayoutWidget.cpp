@@ -114,5 +114,5 @@ void MDILayoutWidget::resizeDockWidget(Controllers::Frame *frame, QSize size)
         return;
     }
 
-    item->setSize(size.expandedTo(frame->view()->asQWidget()->minimumSize()));
+    item->setSize(size.expandedTo(frame->view()->minSize()));
 }

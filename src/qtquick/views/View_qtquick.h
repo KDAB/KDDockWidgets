@@ -20,6 +20,7 @@
 #include <QResizeEvent>
 #include <QSizePolicy>
 #include <QQuickItem>
+#include <QQuickWindow>
 
 #include <memory>
 
@@ -182,6 +183,12 @@ public:
     QPoint mapTo(View *, QPoint) const override
     {
         return {};
+    }
+
+    void setWindowOpacity(double v) override
+    {
+        if (QWindow *w = QQuickItem::window())
+            w->setOpacity(v);
     }
 
     void setSizePolicy(QSizePolicy) override

@@ -67,7 +67,7 @@ WindowBeingDragged::WindowBeingDragged(Controllers::FloatingWindow *fw, Draggabl
         // Set opacity while dragging, if needed
         const qreal opacity = Config::self().draggedWindowOpacity();
         if (!qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity))
-            fw->view()->asQWidget()->setWindowOpacity(opacity);
+            fw->view()->setWindowOpacity(opacity);
     }
 }
 
@@ -102,7 +102,7 @@ WindowBeingDragged::~WindowBeingDragged()
         // Restore opacity to fully opaque if needed
         const qreal opacity = Config::self().draggedWindowOpacity();
         if (!qIsNaN(opacity) && !qFuzzyCompare(1.0, opacity))
-            m_floatingWindow->view()->asQWidget()->setWindowOpacity(1);
+            m_floatingWindow->view()->setWindowOpacity(1);
     }
 }
 

@@ -240,6 +240,11 @@ public:
         return {};
     }
 
+    void setWindowOpacity(double v) override
+    {
+        QWidget::setWindowOpacity(v);
+    }
+
     virtual QSize parentSize() const override
     {
         if (auto p = QWidget::parentWidget())

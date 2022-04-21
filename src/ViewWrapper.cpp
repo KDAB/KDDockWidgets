@@ -181,3 +181,13 @@ void ViewWrapper::setFixedHeight(int)
 {
     qFatal("Not implemented");
 }
+
+void ViewWrapper::setWindowOpacity(double)
+{
+    qFatal("Not implemented");
+}
+
+void ViewWrapper::releaseKeyboard()
+{
+    qFatal("Not implemented");
+}
