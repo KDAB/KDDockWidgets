@@ -245,6 +245,11 @@ public:
         QWidget::setWindowOpacity(v);
     }
 
+    void render(QPainter *p) override
+    {
+        Base::render(p);
+    }
+
     virtual QSize parentSize() const override
     {
         if (auto p = QWidget::parentWidget())

@@ -191,3 +191,8 @@ void ViewWrapper::releaseKeyboard()
 {
     qFatal("Not implemented");
 }
+
+void ViewWrapper::render(QPainter *)
+{
+    qFatal("Not implemented");
+}

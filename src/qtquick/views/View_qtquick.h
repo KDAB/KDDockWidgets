@@ -327,6 +327,11 @@ public:
         return {};
     }
 
+    void render(QPainter *p) override
+    {
+        qWarning() << Q_FUNC_INFO << "Implement me";
+    }
+
 protected:
     bool event(QEvent *e) override
     {

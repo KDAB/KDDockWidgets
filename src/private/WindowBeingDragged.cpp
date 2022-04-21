@@ -229,11 +229,11 @@ QPixmap WindowBeingDraggedWayland::pixmap() const
     p.setOpacity(0.7);
 
     if (m_floatingWindow) {
-        m_floatingWindow->view()->asQWidget()->render(&p);
+        m_floatingWindow->view()->render(&p);
     } else if (m_frame) {
-        m_frame->view()->asQWidget()->render(&p);
+        m_frame->view()->render(&p);
     } else if (m_dockWidget) {
-        m_dockWidget->view()->asQWidget()->render(&p);
+        m_dockWidget->view()->render(&p);
     }
 
     return pixmap;

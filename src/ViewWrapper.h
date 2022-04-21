@@ -61,6 +61,7 @@ public:
     void setFixedHeight(int) override;
     void setWindowOpacity(double) override;
     void releaseKeyboard() override;
+    void render(QPainter *p) override;
 
     /// TODOv2: Remove
     virtual DropArea *asDropArea() const

@@ -30,6 +30,7 @@ class Item;
 class QFocusEvent;
 class QSizePolicy;
 class QScreen;
+class QPainter;
 
 namespace KDDockWidgets {
 
@@ -190,6 +191,7 @@ public:
     virtual QVariant property(const char *) const = 0;
     virtual void setObjectName(const QString &) = 0;
     virtual QString objectName() const = 0;
+    virtual void render(QPainter *) = 0;
 
     QPoint pos() const;
     QSize size() const;
