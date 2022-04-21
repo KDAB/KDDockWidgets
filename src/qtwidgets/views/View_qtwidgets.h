@@ -250,6 +250,11 @@ public:
         Base::render(p);
     }
 
+    void setCursor(Qt::CursorShape shape) override
+    {
+        QWidget::setCursor(shape);
+    }
+
     virtual QSize parentSize() const override
     {
         if (auto p = QWidget::parentWidget())

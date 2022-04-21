@@ -332,6 +332,11 @@ public:
         qWarning() << Q_FUNC_INFO << "Implement me";
     }
 
+    void setCursor(Qt::CursorShape shape) override
+    {
+        QQuickItem::setCursor(shape);
+    }
+
 protected:
     bool event(QEvent *e) override
     {

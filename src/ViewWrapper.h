@@ -62,6 +62,7 @@ public:
     void setWindowOpacity(double) override;
     void releaseKeyboard() override;
     void render(QPainter *p) override;
+    void setCursor(Qt::CursorShape) override;
 
     /// TODOv2: Remove
     virtual DropArea *asDropArea() const
