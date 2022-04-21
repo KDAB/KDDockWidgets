@@ -140,11 +140,6 @@ inline bool usesFallbackMouseGrabber()
 #endif
 }
 
-inline void activateWindow(QWindow *window)
-{
-    window->requestActivate();
-}
-
 inline bool windowManagerHasTranslucency()
 {
     if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY") || (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))
@@ -214,11 +209,6 @@ inline bool isNonClientMouseEvent(const QEvent *e)
     return false;
 }
 
-inline bool isWindow(const QWindow *w)
-{
-    return w != nullptr;
-}
-
 inline int startDragDistance()
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
@@ -268,16 +258,6 @@ inline int screenNumberForWidget(const QWidget *widget)
 inline QSize screenSizeForWidget(const QWidget *widget)
 {
     return screenSizeForWindow(widget->window()->windowHandle());
-}
-
-inline QPoint mapToGlobal(QWidget *w, QPoint p)
-{
-    return w->mapToGlobal(p);
-}
-
-inline void activateWindow(QWidget *widget)
-{
-    widget->activateWindow();
 }
 
 inline bool isWindow(const QWidget *w)
