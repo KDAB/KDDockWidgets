@@ -175,13 +175,13 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         return pos != CursorPosition_Undefined;
     }
 
-    const QRect oldGeometry = KDDockWidgets::globalGeometry(mTarget->asQWidget());
+    const QRect oldGeometry = KDDockWidgets::globalGeometry(mTarget);
     QRect newGeometry = oldGeometry;
 
     QRect parentGeometry;
     if (!mTarget->isTopLevel()) {
-        auto parent = mTarget->asQWidget()->parentWidget();
-        parentGeometry = KDDockWidgets::globalGeometry(parent);
+        auto parent = mTarget->parentView();
+        parentGeometry = KDDockWidgets::globalGeometry(parent.get());
     }
 
     {
@@ -410,7 +410,7 @@ void WidgetResizeHandler::setTarget(View *w)
         mTarget = w;
         mTarget->setMouseTracking(true);
         if (m_isTopLevelWindowResizer) {
-            mTarget->asQWidget()->installEventFilter(this);
+            mTarget->asQObject()->installEventFilter(this);
         } else {
             qApp->installEventFilter(this);
         }

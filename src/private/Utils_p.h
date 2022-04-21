@@ -13,6 +13,7 @@
 #define KD_UTILS_P_H
 
 #include "kddockwidgets/Config.h"
+#include "View.h"
 
 #include <QScreen>
 #include <QWindow>
@@ -276,7 +277,7 @@ inline QRect globalGeometry(QQuickItem *item)
 
 
 /// @brief Returns the widget's geometry, but always in global space.
-inline QRect globalGeometry(QWidget *w)
+inline QRect globalGeometry(View *w)
 {
     QRect geo = w->geometry();
     if (!w->isWindow())
