@@ -255,6 +255,11 @@ public:
         QWidget::setCursor(shape);
     }
 
+    void setMouseTracking(bool enable) override
+    {
+        QWidget::setMouseTracking(enable);
+    }
+
     virtual QSize parentSize() const override
     {
         if (auto p = QWidget::parentWidget())

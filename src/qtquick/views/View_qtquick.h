@@ -337,6 +337,11 @@ public:
         QQuickItem::setCursor(shape);
     }
 
+    void setMouseTracking(bool enable) override
+    {
+        qWarning() << Q_FUNC_INFO << "Implement me";
+    }
+
 protected:
     bool event(QEvent *e) override
     {

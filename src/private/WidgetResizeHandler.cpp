@@ -408,7 +408,7 @@ void WidgetResizeHandler::setTarget(View *w)
 {
     if (w) {
         mTarget = w;
-        mTarget->asQWidget()->setMouseTracking(true);
+        mTarget->setMouseTracking(true);
         if (m_isTopLevelWindowResizer) {
             mTarget->asQWidget()->installEventFilter(this);
         } else {

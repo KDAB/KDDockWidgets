@@ -201,3 +201,8 @@ void ViewWrapper::setCursor(Qt::CursorShape)
 {
     qFatal("Not implemented");
 }
+
+void ViewWrapper::setMouseTracking(bool)
+{
+    qFatal("Not implemented");
+}

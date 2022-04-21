@@ -173,6 +173,7 @@ public:
     virtual void setFocus(Qt::FocusReason) = 0;
     virtual void setWindowOpacity(double) = 0;
     virtual void setCursor(Qt::CursorShape) = 0;
+    virtual void setMouseTracking(bool) = 0;
 
     // TODOv2: Check if these two should be in the controller or on view
     virtual void onLayoutRequest()
