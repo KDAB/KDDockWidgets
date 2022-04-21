@@ -17,6 +17,7 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QElapsedTimer>
+#include <QScreen>
 
 #include <QtTest/QTest>
 
@@ -82,6 +83,23 @@ std::shared_ptr<Window> Platform_qt::qobjectAsWindow(QObject *obj) const
     if (auto window = qobject_cast<QWindow *>(obj))
         return windowFromQWindow(window);
     return nullptr;
+}
+
+int Platform_qt::screenNumberFor(std::shared_ptr<Window> window) const
+{
+    if (!window)
+        return -1;
+
+    return screenNumberForQWindow(static_cast<Window_qt *>(window.get())->qtWindow());
+}
+
+int Platform_qt::screenNumberForQWindow(QWindow *window) const
+{
+    if (QScreen *screen = window->screen()) {
+        return qApp->screens().indexOf(screen);
+    }
+
+    return -1;
 }
 
 #ifdef DOCKS_DEVELOPER_MODE

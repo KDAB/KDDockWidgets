@@ -84,6 +84,16 @@ Window::Ptr Platform_qtwidgets::windowAt(QPoint globalPos) const
     return {};
 }
 
+int Platform_qtwidgets::screenNumberFor(View *view) const
+{
+    if (auto widget = qobject_cast<QWidget *>(view->asQObject())) {
+        if (QWindow *qtwindow = widget->window()->windowHandle())
+            return screenNumberForQWindow(qtwindow);
+    }
+
+    return -1;
+}
+
 #ifdef DOCKS_DEVELOPER_MODE
 
 void Platform_qtwidgets::tests_initTests() const

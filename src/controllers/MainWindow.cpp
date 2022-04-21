@@ -29,7 +29,7 @@
 #include "private/DropAreaWithCentralFrame_p.h"
 #include "private/LayoutSaver_p.h"
 #include "private/multisplitter/Item_p.h"
-
+#include "Platform.h"
 #include "controllers/DockWidget_p.h"
 #include "controllers/Frame.h"
 #include "controllers/SideBar.h"
@@ -762,7 +762,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     m.normalGeometry = view()->normalGeometry();
     m.isVisible = isVisible();
     m.uniqueName = uniqueName();
-    m.screenIndex = screenNumberForWidget(view()->asQWidget());
+    m.screenIndex = Platform::instance()->screenNumberFor(view());
     m.screenSize = screenSizeForWidget(view()->asQWidget());
     m.multiSplitterLayout = layoutWidget()->serialize();
     m.affinities = d->affinities;

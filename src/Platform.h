@@ -61,6 +61,11 @@ public:
     /// @brief Sends the specified event to the specified view
     virtual void sendEvent(View *, QEvent *) const = 0;
 
+    /// @brief Returns the screen index for the specified view or window.
+    /// It's up to the platform to decide how screens are ordered, kddw won't care.
+    virtual int screenNumberFor(View *) const = 0;
+    virtual int screenNumberFor(std::shared_ptr<Window>) const = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
     /// @brief Waits for the specified window to be active (have the keyboard focus)
     /// Window::isActive() should return true

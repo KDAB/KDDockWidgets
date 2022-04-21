@@ -526,7 +526,7 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.normalGeometry = normalGeometry();
     fw.isVisible = isVisible();
     fw.multiSplitterLayout = dropArea()->serialize();
-    fw.screenIndex = screenNumberForWidget(view()->asQWidget());
+    fw.screenIndex = Platform::instance()->screenNumberFor(view());
     fw.screenSize = screenSizeForWidget(view()->asQWidget());
     fw.affinities = affinities();
     fw.windowState = windowStateOverride();

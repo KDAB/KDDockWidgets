@@ -29,6 +29,10 @@ public:
     std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
     FrameworkWidgetFactory *createDefaultFrameworkWidgetFactory() override;
     std::shared_ptr<Window> windowAt(QPoint globalPos) const override;
+
+    using Platform_qt::screenNumberFor;
+    int screenNumberFor(View *) const override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     void tests_initTests() const override;
 #endif

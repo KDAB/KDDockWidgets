@@ -165,17 +165,6 @@ inline QSize screenSizeForWindow(const QWindow *window)
     return {};
 }
 
-inline int screenNumberForWindow(const QWindow *window)
-{
-    if (window) {
-        if (QScreen *screen = window->screen()) {
-            return qApp->screens().indexOf(screen);
-        }
-    }
-
-    return -1;
-}
-
 inline QMouseEvent *mouseEvent(QEvent *e)
 {
     switch (e->type()) {
@@ -250,10 +239,6 @@ inline bool inDisallowDragWidget(QPoint globalPos)
 }
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-inline int screenNumberForWidget(const QWidget *widget)
-{
-    return screenNumberForWindow(widget->window()->windowHandle());
-}
 
 inline QSize screenSizeForWidget(const QWidget *widget)
 {
@@ -266,11 +251,6 @@ inline bool isWindow(const QWidget *w)
 }
 
 #else
-
-inline int screenNumberForWidget(const QQuickItem *w)
-{
-    return screenNumberForWindow(w->window());
-}
 
 inline QSize screenSizeForWidget(const QQuickItem *w)
 {
