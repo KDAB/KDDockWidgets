@@ -22,6 +22,7 @@
 #include <QQuickWindow>
 #include <QGuiApplication>
 #include <QWindow>
+#include <QScreen>
 
 using namespace KDDockWidgets;
 
@@ -84,6 +85,18 @@ int Platform_qtquick::screenNumberFor(View *view) const
     }
 
     return -1;
+}
+
+QSize Platform_qtquick::screenSizeFor(View *view) const
+{
+    if (auto item = qobject_cast<QQuickItem *>(view->asQObject())) {
+        if (QWindow *qtwindow = item->window())
+            if (QScreen *screen = qtwindow->screen())
+                return screen->size();
+    }
+
+
+    return {};
 }
 
 #ifdef DOCKS_DEVELOPER_MODE

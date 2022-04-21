@@ -154,17 +154,6 @@ inline bool windowManagerHasTranslucency()
     return true;
 }
 
-inline QSize screenSizeForWindow(const QWindow *window)
-{
-    if (window) {
-        if (QScreen *screen = window->screen()) {
-            return screen->size();
-        }
-    }
-
-    return {};
-}
-
 inline QMouseEvent *mouseEvent(QEvent *e)
 {
     switch (e->type()) {
@@ -240,22 +229,12 @@ inline bool inDisallowDragWidget(QPoint globalPos)
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 
-inline QSize screenSizeForWidget(const QWidget *widget)
-{
-    return screenSizeForWindow(widget->window()->windowHandle());
-}
-
 inline bool isWindow(const QWidget *w)
 {
     return w && w->isWindow();
 }
 
 #else
-
-inline QSize screenSizeForWidget(const QQuickItem *w)
-{
-    return screenSizeForWindow(w->window());
-}
 
 inline QPoint mapToGlobal(QQuickItem *item, QPoint p)
 {

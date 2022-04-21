@@ -17,6 +17,7 @@
 #include "views/ViewWrapper_qtwidgets.h"
 #include "FrameworkWidgetFactory_qtwidgets.h"
 
+#include <QScreen>
 #include <QStyleFactory>
 #include <QApplication>
 
@@ -92,6 +93,17 @@ int Platform_qtwidgets::screenNumberFor(View *view) const
     }
 
     return -1;
+}
+
+QSize Platform_qtwidgets::screenSizeFor(View *view) const
+{
+    if (auto widget = qobject_cast<QWidget *>(view->asQObject())) {
+        if (QScreen *screen = widget->screen()) {
+            return screen->size();
+        }
+    }
+
+    return {};
 }
 
 #ifdef DOCKS_DEVELOPER_MODE

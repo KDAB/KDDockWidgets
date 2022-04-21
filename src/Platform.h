@@ -66,6 +66,9 @@ public:
     virtual int screenNumberFor(View *) const = 0;
     virtual int screenNumberFor(std::shared_ptr<Window>) const = 0;
 
+    /// @brief Returns the size of the screen where this view is in
+    virtual QSize screenSizeFor(View *) const = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
     /// @brief Waits for the specified window to be active (have the keyboard focus)
     /// Window::isActive() should return true

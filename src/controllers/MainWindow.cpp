@@ -763,7 +763,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     m.isVisible = isVisible();
     m.uniqueName = uniqueName();
     m.screenIndex = Platform::instance()->screenNumberFor(view());
-    m.screenSize = screenSizeForWidget(view()->asQWidget());
+    m.screenSize = Platform::instance()->screenSizeFor(view());
     m.multiSplitterLayout = layoutWidget()->serialize();
     m.affinities = d->affinities;
     m.windowState = window ? window->windowState()

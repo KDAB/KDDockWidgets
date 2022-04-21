@@ -32,6 +32,7 @@ public:
 
     using Platform_qt::screenNumberFor;
     int screenNumberFor(View *) const override;
+    QSize screenSizeFor(View *) const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     void tests_initTests() const override;
