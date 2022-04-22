@@ -12,7 +12,7 @@
 #include "MDIArea.h"
 #include "controllers/DockWidget.h"
 #include "private/MDILayoutWidget_p.h"
-#include "private/DropAreaWithCentralFrame_p.h"
+#include "private/DropArea_p.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 #include <QVBoxLayout>
@@ -62,7 +62,7 @@ void MDIArea::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption ad
     if (dw->options() & DockWidgetBase::Option_MDINestable) {
         // We' wrap it with a drop area, so we can drag other dock widgets over this one and dock
         auto wrapperDW = new Controllers::DockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()));
-        auto dropAreaWrapper = new DropArea(wrapperDW->view(), /*isMDIWrapper= */ true);
+        auto dropAreaWrapper = new DropArea(wrapperDW->view(), {}, /*isMDIWrapper= */ true);
         dropAreaWrapper->addDockWidget(dw, Location_OnBottom, nullptr);
         wrapperDW->setWidget(dropAreaWrapper);
 

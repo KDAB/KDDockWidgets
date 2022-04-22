@@ -21,7 +21,7 @@
 #include "FrameworkWidgetFactory.h"
 
 #include "private/DockRegistry_p.h"
-#include "private/DropAreaWithCentralFrame_p.h"
+#include "private/DropArea_p.h"
 #include "private/DropArea_p.h"
 #include "private/Logging_p.h"
 
@@ -120,18 +120,18 @@ MyCentralWidget::~MyCentralWidget()
 }
 
 MainWindow_qtquick::MainWindow_qtquick(Controllers::MainWindow *controller,
-                                           QWidget *parent, Qt::WindowFlags flags)
+                                       QWidget *parent, Qt::WindowFlags flags)
     : View_qtquick<QMainWindow>(controller, Type::MainWindow, parent, flags)
     , d(new Private(controller, this))
 {
 }
 
 MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName,
-                                           MainWindowOptions options,
-                                           QWidget *parent,
-                                           Qt::WindowFlags flags)
+                                       MainWindowOptions options,
+                                       QWidget *parent,
+                                       Qt::WindowFlags flags)
     : View_qtquick<QMainWindow>(new Controllers::MainWindow(this, uniqueName, options),
-                                  Type::MainWindow, parent, flags)
+                                Type::MainWindow, parent, flags)
     , d(new Private(static_cast<Controllers::MainWindow *>(controller()), this))
 {
     auto controller = mainWindow();

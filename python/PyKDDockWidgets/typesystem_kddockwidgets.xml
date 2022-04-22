@@ -14,7 +14,7 @@
     <namespace-type name="KDDockWidgets" visible="no">
         <!-- this is used in a public virtual pure function we need to declare it
             otherwise shiboken will ignore the function and will fail to create a wrapper -->
-        <primitive-type name="DropAreaWithCentralFrame"/>
+        <primitive-type name="DropArea"/>
         <primitive-type name="SideBar"/>
 
         <!-- Some plublic enum and flags -->

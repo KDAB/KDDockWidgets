@@ -19,7 +19,7 @@
 #include "../utils.h"
 #include "../Testing.h"
 #include "Config.h"
-#include "DropAreaWithCentralFrame_p.h"
+#include "DropArea_p.h"
 #include "MDIArea.h"
 #include "LayoutSaver.h"
 #include "LayoutSaver_p.h"

@@ -21,7 +21,7 @@
 #include "FrameworkWidgetFactory.h"
 
 #include "private/DockRegistry_p.h"
-#include "private/DropAreaWithCentralFrame_p.h"
+#include "private/DropArea_p.h"
 #include "private/DropArea_p.h"
 #include "private/Logging_p.h"
 

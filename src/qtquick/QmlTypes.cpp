@@ -11,7 +11,7 @@
 
 #include "QmlTypes.h"
 #include "DockWidget.h"
-#include "../DropAreaWithCentralFrame_p.h"
+#include "../DropArea_p.h"
 #include "../DropIndicatorOverlayInterface_p.h"
 #include "../Frame_p.h"
 #include "../TitleBar_p.h"
@@ -25,7 +25,7 @@
 
 void KDDockWidgets::registerQmlTypes()
 {
-    qmlRegisterType<DropAreaWithCentralFrame>("com.kdab.dockwidgets", 1, 0, "DropAreaWithCentralFrame");
+    qmlRegisterType<DropArea>("com.kdab.dockwidgets", 1, 0, "DropArea");
     qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 1, 0, "MainWindowLayout");
     qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 1, 0, "DockWidget");
     qmlRegisterType<LayoutSaverInstantiator>("com.kdab.dockwidgets", 1, 0, "LayoutSaver");

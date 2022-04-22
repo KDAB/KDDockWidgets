@@ -60,8 +60,6 @@ set(DOCKSLIBS_SRCS
     private/DragController.cpp
     private/DragController_p.h
 
-    private/DropAreaWithCentralFrame.cpp
-    private/DropAreaWithCentralFrame_p.h
     private/WidgetResizeHandler.cpp
     private/WidgetResizeHandler_p.h
     private/WindowZOrder_x11_p.h

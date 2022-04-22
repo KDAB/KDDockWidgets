@@ -14,7 +14,7 @@
 
 #include "tst_docks.h"
 #include "Config.h"
-#include "DropAreaWithCentralFrame_p.h"
+#include "DropArea_p.h"
 #include "LayoutSaver_p.h"
 #include "MDILayoutWidget_p.h"
 #include "MainWindowMDI.h"

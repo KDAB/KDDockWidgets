@@ -26,7 +26,7 @@
 #include "private/Logging_p.h"
 #include "private/WidgetResizeHandler_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "private/DropAreaWithCentralFrame_p.h"
+#include "private/DropArea_p.h"
 #include "private/LayoutSaver_p.h"
 #include "private/multisplitter/Item_p.h"
 #include "Platform.h"
@@ -44,7 +44,7 @@ static LayoutWidget *createLayoutWidget(MainWindow *mainWindow, MainWindowOption
     if (options & MainWindowOption_MDI)
         return new MDILayoutWidget(mainWindow->view());
 
-    return new DropAreaWithCentralFrame(mainWindow->view(), options);
+    return new DropArea(mainWindow->view(), options);
 }
 
 class MainWindow::Private
@@ -88,9 +88,9 @@ public:
         return dw;
     }
 
-    DropAreaWithCentralFrame *dropArea() const
+    DropArea *dropArea() const
     {
-        return qobject_cast<DropAreaWithCentralFrame *>(m_layoutWidget);
+        return qobject_cast<DropArea *>(m_layoutWidget);
     }
 
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
@@ -203,9 +203,9 @@ MainWindowOptions MainWindow::options() const
     return d->m_options;
 }
 
-DropAreaWithCentralFrame *MainWindow::dropArea() const
+DropArea *MainWindow::dropArea() const
 {
-    return qobject_cast<DropAreaWithCentralFrame *>(d->m_layoutWidget);
+    return qobject_cast<DropArea *>(d->m_layoutWidget);
 }
 
 MultiSplitter *MainWindow::multiSplitter() const

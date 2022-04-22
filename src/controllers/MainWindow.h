@@ -36,7 +36,7 @@ class DropArea;
 class MDILayoutWidget;
 class MultiSplitter;
 class LayoutWidget;
-class DropAreaWithCentralFrame;
+class DropArea;
 
 namespace Controllers {
 class Frame;
@@ -118,7 +118,7 @@ public:
 
     ///@internal
     ///@brief returns the drop area.
-    DropAreaWithCentralFrame *dropArea() const;
+    DropArea *dropArea() const;
 
     ///@internal
     ///@brief returns the MultiSplitter.

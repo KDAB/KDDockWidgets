@@ -39,10 +39,11 @@ using namespace KDDockWidgets::Controllers;
  *
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
-DropArea::DropArea(View *parent, bool isMDIWrapper)
+DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     : MultiSplitter(parent)
     , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
+    , m_centralFrame(createCentralFrame(options))
 {
     qCDebug(creation) << "DropArea";
     if (isWayland()) {
@@ -70,6 +71,9 @@ DropArea::DropArea(View *parent, bool isMDIWrapper)
             }
         });
     }
+
+    if (m_centralFrame)
+        addWidget(m_centralFrame->view(), KDDockWidgets::Location_OnTop, {});
 }
 
 DropArea::~DropArea()
@@ -411,4 +415,24 @@ DockWidgetBase *DropArea::mdiDockWidgetWrapper() const
     }
 
     return nullptr;
+}
+
+Controllers::Frame *DropArea::createCentralFrame(MainWindowOptions options)
+{
+    Controllers::Frame *frame = nullptr;
+    if (options & MainWindowOption_HasCentralFrame) {
+        FrameOptions frameOptions = FrameOption_IsCentralFrame;
+        const bool hasPersistentCentralWidget = (options & MainWindowOption_HasCentralWidget) == MainWindowOption_HasCentralWidget;
+        if (hasPersistentCentralWidget) {
+            frameOptions |= FrameOption_NonDockable;
+        } else {
+            // With a persistent central widget we don't allow detaching it
+            frameOptions |= FrameOption_AlwaysShowsTabs;
+        }
+
+        frame = new Controllers::Frame(nullptr, frameOptions);
+        frame->setObjectName(QStringLiteral("central frame"));
+    }
+
+    return frame;
 }
