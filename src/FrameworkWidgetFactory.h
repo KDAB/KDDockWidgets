@@ -116,6 +116,9 @@ public:
     ///@param dropArea Just forward to DropIndicatorOverlayInterface's constructor.
     virtual DropIndicatorOverlayInterface *createDropIndicatorOverlay(Controllers::DropArea *dropArea) const = 0;
 
+    /// @brief Called internally by the framework to create a DropArea
+    virtual View *createDropArea(Controllers::DropArea *, View *parent) const = 0;
+
     ///@brief Called internally by the framework to create a RubberBand to show as drop zone
     /// Returns a rubber band
     virtual QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const = 0;

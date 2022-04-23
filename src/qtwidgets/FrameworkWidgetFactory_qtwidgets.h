@@ -67,6 +67,7 @@ public:
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(Controllers::DropArea *) const override;
     QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const override;
     View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
+    View *createDropArea(Controllers::DropArea *, View *parent) const override;
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const override;

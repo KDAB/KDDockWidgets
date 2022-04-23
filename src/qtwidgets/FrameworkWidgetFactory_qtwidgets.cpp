@@ -24,6 +24,7 @@
 
 #include "qtwidgets/views/FloatingWindow_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
+#include "qtwidgets/views/DropArea_qtwidgets.h"
 #include "qtwidgets/views/Frame_qtwidgets.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/View_qtwidgets.h"
@@ -184,4 +185,9 @@ QIcon DefaultWidgetFactory_qtwidgets::iconForButtonType(TitleBarButtonType type,
     icon.addFile(QStringLiteral(":/img/%1-2x.png").arg(iconName));
 
     return icon;
+}
+
+View *DefaultWidgetFactory_qtwidgets::createDropArea(Controllers::DropArea *controller, View *parent) const
+{
+    return new Views::DropArea_qtwidgets(controller, parent);
 }
