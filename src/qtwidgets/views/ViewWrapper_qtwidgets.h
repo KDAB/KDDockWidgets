@@ -57,7 +57,7 @@ public:
     bool isNull() const override;
     void setWindowTitle(const QString &title) override;
     QPoint mapTo(View *, QPoint) const override;
-    DropArea *asDropArea() const override;
+    Controllers::DropArea *asDropArea() const override;
 
     QWidget *widget() const;
 

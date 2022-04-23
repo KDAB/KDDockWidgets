@@ -26,7 +26,7 @@ QColor SegmentedIndicators::s_segmentBrushColor = QColor(0xbb, 0xd5, 0xee, /*alp
 QColor SegmentedIndicators::s_hoveredSegmentBrushColor = QColor(0x3574c5);
 
 
-SegmentedIndicators::SegmentedIndicators(DropArea *dropArea)
+SegmentedIndicators::SegmentedIndicators(Controllers::DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea)
 {
     // If the app didn't choose opacity then we choose a suitable default value.

@@ -27,10 +27,13 @@ namespace KDDockWidgets {
 class StateBase;
 class StateNone;
 class StateInternalMDIDragging;
-class DropArea;
 class Draggable;
 class FallbackMouseGrabber;
 class MinimalStateMachine;
+
+namespace Controllers {
+class DropArea;
+}
 
 class State : public QObject
 {
@@ -124,7 +127,7 @@ private:
     DragController(QObject * = nullptr);
     StateBase *activeState() const;
     ViewWrapper::Ptr qtTopLevelUnderCursor() const;
-    DropArea *dropAreaUnderCursor() const;
+    Controllers::DropArea *dropAreaUnderCursor() const;
     Draggable *draggableForQObject(QObject *o) const;
     QPoint m_pressPos;
     QPoint m_offset;
@@ -133,7 +136,7 @@ private:
     Draggable *m_draggable = nullptr;
     QPointer<QObject> m_draggableGuard; // Just so we know if the draggable was destroyed for some reason
     std::unique_ptr<WindowBeingDragged> m_windowBeingDragged;
-    DropArea *m_currentDropArea = nullptr;
+    Controllers::DropArea *m_currentDropArea = nullptr;
     bool m_nonClientDrag = false;
     FallbackMouseGrabber *m_fallbackMouseGrabber = nullptr;
     StateNone *m_stateNone = nullptr;
@@ -166,19 +169,19 @@ public:
     }
 
     // Only interesting for Wayland
-    virtual bool handleDragEnter(QDragEnterEvent *, DropArea *)
+    virtual bool handleDragEnter(QDragEnterEvent *, Controllers::DropArea *)
     {
         return false;
     }
-    virtual bool handleDragLeave(DropArea *)
+    virtual bool handleDragLeave(Controllers::DropArea *)
     {
         return false;
     }
-    virtual bool handleDragMove(QDragMoveEvent *, DropArea *)
+    virtual bool handleDragMove(QDragMoveEvent *, Controllers::DropArea *)
     {
         return false;
     }
-    virtual bool handleDrop(QDropEvent *, DropArea *)
+    virtual bool handleDrop(QDropEvent *, Controllers::DropArea *)
     {
         return false;
     }
@@ -252,10 +255,10 @@ public:
     ~StateDraggingWayland() override;
     void onEntry() override;
     bool handleMouseButtonRelease(QPoint globalPos) override;
-    bool handleDragEnter(QDragEnterEvent *, DropArea *) override;
-    bool handleDragMove(QDragMoveEvent *, DropArea *) override;
-    bool handleDragLeave(DropArea *) override;
-    bool handleDrop(QDropEvent *, DropArea *) override;
+    bool handleDragEnter(QDragEnterEvent *, Controllers::DropArea *) override;
+    bool handleDragMove(QDragMoveEvent *, Controllers::DropArea *) override;
+    bool handleDragLeave(Controllers::DropArea *) override;
+    bool handleDrop(QDropEvent *, Controllers::DropArea *) override;
     bool m_inQDrag = false;
 };
 

@@ -23,7 +23,7 @@ class DOCKS_EXPORT SegmentedIndicators : public DropIndicatorOverlayInterface
 {
     Q_OBJECT
 public:
-    explicit SegmentedIndicators(DropArea *dropArea);
+    explicit SegmentedIndicators(Controllers::DropArea *dropArea);
     ~SegmentedIndicators() override;
     DropLocation hover_impl(QPoint globalPos) override;
 

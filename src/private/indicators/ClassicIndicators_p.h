@@ -37,7 +37,7 @@ class DOCKS_EXPORT ClassicIndicators : public DropIndicatorOverlayInterface
     Q_PROPERTY(bool tabIndicatorVisible READ tabIndicatorVisible NOTIFY indicatorsVisibleChanged)
 
 public:
-    explicit ClassicIndicators(DropArea *dropArea);
+    explicit ClassicIndicators(Controllers::DropArea *dropArea);
     ~ClassicIndicators() override;
     DropLocation hover_impl(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;

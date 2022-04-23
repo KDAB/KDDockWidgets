@@ -18,6 +18,7 @@
 
 #ifndef KD_DROP_AREA_P_H
 #define KD_DROP_AREA_P_H
+#pragma once
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
@@ -30,13 +31,12 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
+class Draggable;
+struct WindowBeingDragged;
+
 namespace Controllers {
 class Frame;
 class DockWidget;
-}
-
-class Draggable;
-struct WindowBeingDragged;
 
 /**
  * @brief A MultiSplitter with support for drop indicators when hovering over.
@@ -59,10 +59,10 @@ public:
     {
         return m_dropIndicatorOverlay;
     }
-    void addDockWidget(Controllers::DockWidget *, KDDockWidgets::Location location,
-                       Controllers::DockWidget *relativeTo, InitialOption = {});
+    void addDockWidget(DockWidget *, KDDockWidgets::Location location,
+                       DockWidget *relativeTo, InitialOption = {});
 
-    bool containsDockWidget(Controllers::DockWidget *) const;
+    bool containsDockWidget(DockWidget *) const;
 
     /// Returns whether this layout has a single dock widget which is floating
     /// Implies it's in a FloatingWindow and that it has only one dock widget
@@ -73,7 +73,7 @@ public:
     bool hasSingleFrame() const;
 
     QStringList affinities() const;
-    void layoutParentContainerEqually(Controllers::DockWidget *);
+    void layoutParentContainerEqually(DockWidget *);
 
     /// When DockWidget::Option_MDINestable is used, docked MDI dock widgets will be wrapped inside a DropArea, so they accept drops
     /// This DropArea is created implicitly while docking, and this function will return true
@@ -107,6 +107,7 @@ private:
     DropIndicatorOverlayInterface *m_dropIndicatorOverlay = nullptr;
     Controllers::Frame *const m_centralFrame = nullptr;
 };
+}
 }
 
 #endif

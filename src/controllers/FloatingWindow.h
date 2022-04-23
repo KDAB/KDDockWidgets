@@ -22,13 +22,13 @@
 #include "kddockwidgets/docks_export.h"
 
 namespace KDDockWidgets {
-class DropArea;
 class MultiSplitter;
 class LayoutWidget;
 }
 
 namespace KDDockWidgets::Controllers {
 
+class DropArea;
 class Frame;
 class MainWindow;
 class TitleBar;

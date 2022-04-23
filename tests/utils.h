@@ -144,7 +144,7 @@ Controllers::DockWidget *createDockWidget(const QString &name, QWidgetOrQuick *w
                                           bool show = true, const QString &affinityName = {});
 Controllers::DockWidget *createDockWidget(const QString &name, QColor color = Qt::black);
 
-void nestDockWidget(Controllers::DockWidget *dock, DropArea *dropArea, Controllers::Frame *relativeTo,
+void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea, Controllers::Frame *relativeTo,
                     KDDockWidgets::Location location);
 
 class MyWidget : public QWidgetOrQuick
@@ -422,7 +422,7 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, QPoint globalD
     drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), globalDest, buttonActions);
 }
 
-inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, DropArea *target, DropLocation dropLocation)
+inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, Controllers::DropArea *target, DropLocation dropLocation)
 {
     auto draggable = draggableFor(fw->view());
     Q_ASSERT(draggable);

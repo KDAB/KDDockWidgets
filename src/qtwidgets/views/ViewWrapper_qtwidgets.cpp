@@ -300,9 +300,9 @@ bool ViewWrapper_qtwidgets::isNull() const
     return m_widget.data() == nullptr;
 }
 
-DropArea *ViewWrapper_qtwidgets::asDropArea() const
+Controllers::DropArea *ViewWrapper_qtwidgets::asDropArea() const
 {
-    return qobject_cast<DropArea *>(m_widget);
+    return qobject_cast<Controllers::DropArea *>(m_widget);
 }
 
 QWidget *ViewWrapper_qtwidgets::widget() const

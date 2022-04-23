@@ -32,7 +32,7 @@ static IndicatorWindow *createIndicatorWindow(ClassicIndicators *classicIndicato
     return window;
 }
 
-ClassicIndicators::ClassicIndicators(DropArea *dropArea)
+ClassicIndicators::ClassicIndicators(Controllers::DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea) // Is parented on the drop-area, not a toplevel.
     , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : dropArea))
     , m_indicatorWindow(createIndicatorWindow(this))

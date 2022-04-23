@@ -13,7 +13,7 @@
 
 namespace KDDockWidgets {
 
-NullIndicators::NullIndicators(DropArea *dropArea)
+NullIndicators::NullIndicators(Controllers::DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea)
 {
 }

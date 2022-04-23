@@ -16,7 +16,10 @@
 
 namespace KDDockWidgets {
 
+namespace Controllers {
 class DropArea;
+}
+
 
 /// @brief The base class for view wrappers
 /// A view wrapper is a view that doesn't own the native GUI element(QWidget, QQuickItem etc.)
@@ -66,7 +69,7 @@ public:
     void setMouseTracking(bool) override;
 
     /// TODOv2: Remove
-    virtual DropArea *asDropArea() const
+    virtual Controllers::DropArea *asDropArea() const
     {
         return {};
     };
