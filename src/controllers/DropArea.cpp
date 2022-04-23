@@ -41,7 +41,7 @@ using namespace KDDockWidgets::Controllers;
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
-    : LayoutWidget(Type::MultiSplitter, parent)
+    : LayoutWidget(Type::DropArea, parent)
     , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))

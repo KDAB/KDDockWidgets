@@ -68,7 +68,7 @@ static Controller *controllerForWidget(QWidget *widget)
             if (auto view = qobject_cast<DockWidget_qtwidgets *>(widget))
                 return view->controller();
             break;
-        case Type::MultiSplitter:
+        case Type::DropArea:
         case Type::MDILayout:
         case Type::Layout:
             if (auto view = qobject_cast<LayoutWidget *>(widget))
@@ -218,7 +218,7 @@ bool ViewWrapper_qtwidgets::is(Type t) const
         return qobject_cast<Views::MainWindow_qtwidgets *>(m_widget);
     case Type::Layout:
         return qobject_cast<LayoutWidget *>(m_widget);
-    case Type::MultiSplitter:
+    case Type::DropArea:
         return qobject_cast<Controllers::DropArea *>(m_widget); // TODOv2
     case Type::MDILayout:
         return qobject_cast<MDILayoutWidget *>(m_widget);

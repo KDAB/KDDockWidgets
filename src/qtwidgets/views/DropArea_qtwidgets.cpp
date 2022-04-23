@@ -16,7 +16,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 DropArea_qtwidgets::DropArea_qtwidgets(Controllers::DropArea *dropArea, View *parent)
-    : LayoutWidget(Type::MultiSplitter, parent)
+    : LayoutWidget(Type::DropArea, parent)
     , m_dropArea(dropArea)
 {
     if (isWayland()) {

@@ -243,7 +243,7 @@ Controllers::MainWindow *View::asMainWindowController() const
 
 Controllers::DropArea *View::asMultiSplitterView()
 {
-    if (is(Type::MultiSplitter))
+    if (is(Type::DropArea))
         return static_cast<Controllers::DropArea *>(this);
     return nullptr;
 }

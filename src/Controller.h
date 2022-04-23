@@ -40,7 +40,7 @@ enum class Type
     MainWindow = 1024,
     DropIndicatorOverlayInterface = 2048,
     ViewWrapper = 4096,
-    MultiSplitter = 8192 + Layout,
+    DropArea = 8192 + Layout,
     MDILayout = 0x4000 + Layout,
     MDIArea = 0X8000,
     LAST = ViewWrapper // Keep last
