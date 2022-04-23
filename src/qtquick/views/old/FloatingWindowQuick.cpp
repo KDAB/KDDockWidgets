@@ -18,7 +18,7 @@
 
 #include "../Logging_p.h"
 #include "../Utils_p.h"
-#include "../DropArea_p.h"
+#include "controllers/DropArea.h"
 #include "../WidgetResizeHandler_p.h"
 
 #include <QQuickView>

@@ -24,7 +24,7 @@
 #include "private/MultiSplitter_p.h"
 #include "private/MDILayoutWidget_p.h"
 #include "MDIArea.h"
-#include "private/DropArea_p.h"
+#include "controllers/DropArea.h"
 
 #include <QWindow>
 #include <QDebug>

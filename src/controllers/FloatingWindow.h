@@ -18,7 +18,7 @@
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "Frame.h"
 #include "private/Draggable_p.h"
-#include "private/DropArea_p.h"
+#include "controllers/DropArea.h"
 #include "kddockwidgets/docks_export.h"
 
 namespace KDDockWidgets {

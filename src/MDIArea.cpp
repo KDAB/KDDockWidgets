@@ -12,7 +12,7 @@
 #include "MDIArea.h"
 #include "controllers/DockWidget.h"
 #include "private/MDILayoutWidget_p.h"
-#include "private/DropArea_p.h"
+#include "controllers/DropArea.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 #include <QVBoxLayout>

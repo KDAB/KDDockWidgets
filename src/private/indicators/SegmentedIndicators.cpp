@@ -10,7 +10,7 @@
 */
 
 #include "SegmentedIndicators_p.h"
-#include "../DropArea_p.h"
+#include "controllers/DropArea.h"
 #include "Config.h"
 
 #include <QPainter>

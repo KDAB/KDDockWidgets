@@ -14,7 +14,6 @@
 
 #include "tst_docks.h"
 #include "Config.h"
-#include "DropArea_p.h"
 #include "LayoutSaver_p.h"
 #include "MDILayoutWidget_p.h"
 #include "MainWindowMDI.h"
@@ -25,6 +24,7 @@
 #include "multisplitter/Item_p.h"
 #include "private/MultiSplitter_p.h"
 
+#include "controllers/DropArea.h"
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"
 #include "controllers/Separator.h"

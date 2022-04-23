@@ -16,7 +16,7 @@
 #include "controllers/MainWindow.h"
 
 #include "private/DockRegistry_p.h"
-#include "private/DropArea_p.h"
+#include "controllers/DropArea.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 
@@ -34,7 +34,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
-                                                   QMainWindow *parent, Qt::WindowFlags windowFlags)
+                                               QMainWindow *parent, Qt::WindowFlags windowFlags)
     : View_qtquick<QWidget>(controller, Type::FloatingWindow, parent, windowFlags)
     , m_controller(controller)
     , m_vlayout(new QVBoxLayout(this))

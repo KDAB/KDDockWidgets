@@ -19,7 +19,6 @@
 #include "../utils.h"
 #include "../Testing.h"
 #include "Config.h"
-#include "DropArea_p.h"
 #include "MDIArea.h"
 #include "LayoutSaver.h"
 #include "LayoutSaver_p.h"
@@ -27,6 +26,7 @@
 
 #include "multisplitter/Item_p.h"
 
+#include "controllers/DropArea.h"
 #include "controllers/Separator.h"
 #include "controllers/Frame.h"
 #include "controllers/DockWidget.h"

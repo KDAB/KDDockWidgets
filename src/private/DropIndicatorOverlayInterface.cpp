@@ -11,7 +11,7 @@
 
 #include "DropIndicatorOverlayInterface_p.h"
 
-#include "DropArea_p.h"
+#include "controllers/DropArea.h"
 #include "DockRegistry_p.h"
 #include "DragController_p.h"
 #include "Config.h"

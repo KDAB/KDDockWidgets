@@ -10,11 +10,11 @@
 */
 
 #include "utils.h"
-#include "DropArea_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "Platform.h"
 #include "ViewGuard.h"
+#include "controllers/DropArea.h"
 
 #include <QCloseEvent>
 #include <QDebug>

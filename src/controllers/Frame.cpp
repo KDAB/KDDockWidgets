@@ -30,7 +30,7 @@
 #include "private/Position_p.h"
 #include "private/WidgetResizeHandler_p.h"
 #include "private/MDILayoutWidget_p.h"
-#include "private/DropArea_p.h"
+#include "controllers/DropArea.h"
 #include "private/multisplitter/Item_p.h"
 
 #include <QCloseEvent>

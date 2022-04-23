@@ -23,8 +23,8 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include "controllers/Frame.h"
-#include "MultiSplitter_p.h"
-#include "DropIndicatorOverlayInterface_p.h"
+#include "private/MultiSplitter_p.h"
+#include "private/DropIndicatorOverlayInterface_p.h"
 
 class TestDocks;
 

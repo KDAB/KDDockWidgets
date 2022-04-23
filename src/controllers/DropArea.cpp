@@ -9,16 +9,16 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DropArea_p.h"
+#include "DropArea.h"
 #include "Config.h"
-#include "DockRegistry_p.h"
-#include "Draggable_p.h"
-#include "DropIndicatorOverlayInterface_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "Logging_p.h"
-#include "Utils_p.h"
-#include "multisplitter/Item_p.h"
-#include "WindowBeingDragged_p.h"
+#include "private/DockRegistry_p.h"
+#include "private/Draggable_p.h"
+#include "private/DropIndicatorOverlayInterface_p.h"
+#include "private/Logging_p.h"
+#include "private/Utils_p.h"
+#include "private/multisplitter/Item_p.h"
+#include "private/WindowBeingDragged_p.h"
 
 #include "controllers/Frame.h"
 #include "controllers/FloatingWindow.h"

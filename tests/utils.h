@@ -16,10 +16,10 @@
 
 #include "Config.h"
 #include "DockRegistry_p.h"
-#include "DropArea_p.h"
 #include "DropIndicatorOverlayInterface_p.h"
 #include "KDDockWidgets.h"
 
+#include "controllers/DropArea.h"
 #include "controllers/TitleBar.h"
 #include "controllers/Stack.h"
 #include "controllers/FloatingWindow.h"

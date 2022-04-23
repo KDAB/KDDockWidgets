@@ -16,7 +16,7 @@
 #include "controllers/MainWindow.h"
 
 #include "private/DockRegistry_p.h"
-#include "private/DropArea_p.h"
+#include "controllers/DropArea.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 
