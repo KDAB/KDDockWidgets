@@ -18,8 +18,7 @@
 #include "controllers/TitleBar.h"
 #include "controllers/TabBar.h"
 #include "controllers/MainWindow.h"
-
-#include "private/MultiSplitter_p.h"
+#include "controllers/DropArea.h"
 
 #include <QWidget> // TODOv2 remove
 
@@ -242,10 +241,10 @@ Controllers::MainWindow *View::asMainWindowController() const
     return nullptr;
 }
 
-MultiSplitter *View::asMultiSplitterView()
+Controllers::DropArea *View::asMultiSplitterView()
 {
     if (is(Type::MultiSplitter))
-        return static_cast<MultiSplitter *>(this);
+        return static_cast<Controllers::DropArea *>(this);
     return nullptr;
 }
 

@@ -316,7 +316,7 @@ void FloatingWindow::scheduleDeleteLater()
     deleteLater();
 }
 
-MultiSplitter *FloatingWindow::multiSplitter() const
+Controllers::DropArea *FloatingWindow::multiSplitter() const
 {
     return m_dropArea;
 }

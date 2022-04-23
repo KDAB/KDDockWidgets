@@ -41,8 +41,6 @@ set(DOCKSLIBS_SRCS
     private/LayoutWidget_p.h
     private/MDILayoutWidget.cpp
     private/MDILayoutWidget_p.h
-    private/MultiSplitter.cpp
-    private/MultiSplitter_p.h
     private/Position.cpp
     private/Position_p.h
     private/DropIndicatorOverlayInterface.cpp
@@ -179,7 +177,6 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     # private/FloatingWindow_p.h
     # private/Frame_p.h
     private/LayoutSaver_p.h
-    private/MultiSplitter_p.h
     private/LayoutWidget_p.h
     # private/SideBar_p.h
     private/TitleBar_p.h

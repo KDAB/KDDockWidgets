@@ -21,9 +21,9 @@
 #include "qtwidgets/views/TitleBar_qtwidgets.h"
 #include "qtwidgets/Window_qtwidgets.h"
 
-#include "private/MultiSplitter_p.h"
 #include "private/MDILayoutWidget_p.h"
 #include "MDIArea.h"
+#include "controllers/DropArea.h"
 #include "controllers/DropArea.h"
 
 #include <QWindow>
@@ -219,7 +219,7 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     case Type::Layout:
         return qobject_cast<LayoutWidget *>(m_widget);
     case Type::MultiSplitter:
-        return qobject_cast<MultiSplitter *>(m_widget);
+        return qobject_cast<Controllers::DropArea *>(m_widget); // TODOv2
     case Type::MDILayout:
         return qobject_cast<MDILayoutWidget *>(m_widget);
     case Type::MDIArea:

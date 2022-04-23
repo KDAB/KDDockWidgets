@@ -36,10 +36,10 @@ namespace KDDockWidgets {
 
 class ViewWrapper;
 class Controller;
-class MultiSplitter;
 class Window;
 
 namespace Controllers {
+class DropArea;
 class DockWidget;
 class FloatingWindow;
 class Frame;
@@ -271,7 +271,7 @@ public:
     Controllers::Stack *asStackController() const;
     Controllers::DockWidget *asDockWidgetController() const;
     Controllers::MainWindow *asMainWindowController() const;
-    MultiSplitter *asMultiSplitterView();
+    Controllers::DropArea *asMultiSplitterView();
 
     /// @brief returns whether this view is inside the specified window
     bool isInWindow(std::shared_ptr<Window> window) const;

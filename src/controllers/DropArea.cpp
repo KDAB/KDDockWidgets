@@ -28,6 +28,7 @@
 
 #include "qtwidgets/views/Frame_qtwidgets.h"
 
+#include <QScopedValueRollback>
 #include <algorithm>
 
 using namespace KDDockWidgets;
@@ -40,11 +41,22 @@ using namespace KDDockWidgets::Controllers;
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
-    : MultiSplitter(parent)
+    : LayoutWidget(Type::MultiSplitter, parent)
     , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))
 {
+    Q_ASSERT(parent);
+    setRootItem(new Layouting::ItemBoxContainer(this));
+    DockRegistry::self()->registerLayout(this);
+
+    setLayoutSize(parent->size());
+
+    // Initialize min size
+    updateSizeConstraints();
+
+    setMinimumSize(minimumSize());
+
     qCDebug(creation) << "DropArea";
     if (isWayland()) {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
@@ -55,7 +67,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     }
 
     if (m_isMDIWrapper) {
-        connect(this, &MultiSplitter::visibleWidgetCountChanged, this, [this] {
+        connect(this, &DropArea::visibleWidgetCountChanged, this, [this] {
             auto dw = mdiDockWidgetWrapper();
             if (!dw) {
                 qWarning() << Q_FUNC_INFO << "Unexpected null wrapper dock widget";
@@ -435,4 +447,192 @@ Controllers::Frame *DropArea::createCentralFrame(MainWindowOptions options)
     }
 
     return frame;
+}
+
+
+bool DropArea::validateInputs(View *widget, Location location,
+                              const Controllers::Frame *relativeToFrame, InitialOption option) const
+{
+    if (!widget) {
+        qWarning() << Q_FUNC_INFO << "Widget is null";
+        return false;
+    }
+
+    const bool isDockWidget = widget->is(Type::DockWidget);
+    const bool isStartHidden = option.startsHidden();
+
+    if (!widget->is(Type::Frame) && !widget->is(Type::Layout) && !isDockWidget) {
+        qWarning() << "Unknown widget type" << widget;
+        return false;
+    }
+
+    if (isDockWidget != isStartHidden) {
+        qWarning() << "Wrong parameters" << isDockWidget << isStartHidden;
+        return false;
+    }
+
+    if (relativeToFrame && relativeToFrame->view()->equals(widget)) {
+        qWarning() << "widget can't be relative to itself";
+        return false;
+    }
+
+    Layouting::Item *item = itemForFrame(widget->asFrameController());
+
+    if (containsItem(item)) {
+        qWarning() << "DropArea::addWidget: Already contains" << widget;
+        return false;
+    }
+
+    if (location == Location_None) {
+        qWarning() << "DropArea::addWidget: not adding to location None";
+        return false;
+    }
+
+    const bool relativeToThis = relativeToFrame == nullptr;
+
+    Layouting::Item *relativeToItem = itemForFrame(relativeToFrame);
+    if (!relativeToThis && !containsItem(relativeToItem)) {
+        qWarning() << "DropArea::addWidget: Doesn't contain relativeTo:"
+                   << "; relativeToFrame=" << relativeToFrame
+                   << "; relativeToItem=" << relativeToItem
+                   << "; options=" << option;
+        return false;
+    }
+
+    return true;
+}
+
+void DropArea::addWidget(View *w, Location location,
+                         Controllers::Frame *relativeToWidget,
+                         InitialOption option)
+{
+
+    auto frame = w->asFrameController();
+    if (itemForFrame(frame) != nullptr) {
+        // Item already exists, remove it.
+        // Changing the frame parent will make the item clean itself up. It turns into a placeholder and is removed by unrefOldPlaceholders
+        frame->view()->setParent(nullptr); // so ~Item doesn't delete it
+        frame->setLayoutItem(nullptr); // so Item is destroyed, as there's no refs to it
+    }
+
+    // Make some sanity checks:
+    if (!validateInputs(w, location, relativeToWidget, option))
+        return;
+
+    Layouting::Item *relativeTo = itemForFrame(relativeToWidget);
+    if (!relativeTo)
+        relativeTo = m_rootItem;
+
+    Layouting::Item *newItem = nullptr;
+
+    Controllers::Frame::List frames = framesFrom(w);
+    unrefOldPlaceholders(frames);
+    auto dw = w->asDockWidgetController();
+
+    if (frame) {
+        newItem = new Layouting::Item(this);
+        newItem->setGuestView(frame->view());
+    } else if (dw) {
+        newItem = new Layouting::Item(this);
+        frame = new Controllers::Frame();
+        newItem->setGuestView(frame->view());
+        frame->addWidget(dw, option);
+    } else if (auto ms = w->asMultiSplitterView()) {
+        newItem = ms->m_rootItem;
+        newItem->setHostWidget(this);
+
+        if (auto fw = ms->floatingWindow()) {
+            newItem->setSize_recursive(fw->size());
+        }
+
+        delete ms;
+    } else {
+        // This doesn't happen but let's make coverity happy.
+        // Tests will fail if this is ever printed.
+        qWarning() << Q_FUNC_INFO << "Unknown widget added" << w;
+        return;
+    }
+
+    Q_ASSERT(!newItem->geometry().isEmpty());
+    Layouting::ItemBoxContainer::insertItemRelativeTo(newItem, relativeTo, location, option);
+
+    if (dw && option.startsHidden())
+        delete frame;
+}
+
+void DropArea::addMultiSplitter(Controllers::DropArea *sourceMultiSplitter, Location location,
+                                Controllers::Frame *relativeTo,
+                                InitialOption option)
+{
+    qCDebug(addwidget) << Q_FUNC_INFO << sourceMultiSplitter << location << relativeTo;
+    addWidget(sourceMultiSplitter, location, relativeTo, option);
+}
+
+QVector<Controllers::Separator *> DropArea::separators() const
+{
+    return m_rootItem->separators_recursive();
+}
+
+int DropArea::availableLengthForOrientation(Qt::Orientation orientation) const
+{
+    if (orientation == Qt::Vertical)
+        return availableSize().height();
+    else
+        return availableSize().width();
+}
+
+QSize DropArea::availableSize() const
+{
+    return m_rootItem->availableSize();
+}
+
+void DropArea::layoutEqually()
+{
+    if (!checkSanity())
+        return;
+
+    layoutEqually(m_rootItem);
+}
+
+void DropArea::layoutEqually(Layouting::ItemBoxContainer *container)
+{
+    if (container) {
+        container->layoutEqually_recursive();
+    } else {
+        qWarning() << Q_FUNC_INFO << "null container";
+    }
+}
+
+void DropArea::setRootItem(Layouting::ItemBoxContainer *root)
+{
+    LayoutWidget::setRootItem(root);
+    m_rootItem = root;
+}
+
+Layouting::ItemBoxContainer *DropArea::rootItem() const
+{
+    return m_rootItem;
+}
+
+QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
+                            const Layouting::Item *relativeTo) const
+{
+    Layouting::Item item(nullptr);
+    if (!wbd)
+        return {};
+
+    item.setSize(wbd->size().boundedTo(wbd->maxSize()));
+    item.setMinSize(wbd->minSize());
+    item.setMaxSizeHint(wbd->maxSize());
+
+    Layouting::ItemBoxContainer *container = relativeTo ? relativeTo->parentBoxContainer()
+                                                        : m_rootItem;
+
+    return container->suggestedDropRect(&item, relativeTo, location);
+}
+
+bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
+{
+    setRootItem(new Layouting::ItemBoxContainer(this));
+    return LayoutWidget::deserialize(l);
 }

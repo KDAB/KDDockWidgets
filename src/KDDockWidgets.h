@@ -38,7 +38,6 @@ class ItemBoxContainer;
 namespace KDDockWidgets {
 DOCKS_EXPORT
 Q_NAMESPACE
-class MultiSplitter;
 
 namespace Controllers {
 class DropArea;
@@ -175,7 +174,6 @@ struct InitialOption
 private:
     friend class Layouting::Item;
     friend class Layouting::ItemBoxContainer;
-    friend class KDDockWidgets::MultiSplitter;
     friend class KDDockWidgets::Controllers::DropArea;
 
     InitialOption(DefaultSizeMode mode)

@@ -208,7 +208,7 @@ DropArea *MainWindow::dropArea() const
     return qobject_cast<DropArea *>(d->m_layoutWidget);
 }
 
-MultiSplitter *MainWindow::multiSplitter() const
+DropArea *MainWindow::multiSplitter() const
 {
     return dropArea();
 }

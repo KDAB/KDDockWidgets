@@ -24,9 +24,10 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include "controllers/Frame.h"
-#include "private/MultiSplitter_p.h"
+#include "private/LayoutWidget_p.h"
 #include "private/DropIndicatorOverlayInterface_p.h"
 
+class TestQtWidgets;
 class TestDocks;
 
 namespace KDDockWidgets {
@@ -37,11 +38,21 @@ struct WindowBeingDragged;
 namespace Controllers {
 class Frame;
 class DockWidget;
+class Separator;
 
 /**
- * @brief A MultiSplitter with support for drop indicators when hovering over.
+ * MultiSplitter is simply a wrapper around Layouting::Item in which the hosted widgets are
+ * of class KDDockWidgets::Frame. The stuff in Layouting:: being agnostic and generic, not specific
+ * to KDDW.
+ *
+ * A MultiSplitter is like a QSplitter but supports mixing vertical and horizontal splitters in
+ * any combination.
+ *
+ * It supports adding a widget to the left/top/bottom/right of the whole MultiSplitter or adding
+ * relative to a single widget.
  */
-class DOCKS_EXPORT DropArea : public MultiSplitter
+
+class DOCKS_EXPORT DropArea : public LayoutWidget
 {
     Q_OBJECT
 public:
@@ -84,6 +95,43 @@ public:
 
     static Controllers::Frame *createCentralFrame(MainWindowOptions options);
 
+    /**
+     * @brief Adds a widget to this MultiSplitter.
+     */
+    void addWidget(View *widget, KDDockWidgets::Location location,
+                   Controllers::Frame *relativeTo = nullptr,
+                   InitialOption option = DefaultSizeMode::Fair);
+
+    /**
+     * Adds an entire MultiSplitter into this layout. The donor MultiSplitter will be deleted
+     * after all its Frames are stolen. All added Frames will preserve their original layout, so,
+     * if widgetFoo was at the left of widgetBar when in the donor splitter, then it will still be at left
+     * of widgetBar when the whole splitter is dropped into this one.
+     */
+    void addMultiSplitter(Controllers::DropArea *splitter, KDDockWidgets::Location location,
+                          Controllers::Frame *relativeTo = nullptr,
+                          InitialOption option = DefaultSizeMode::Fair);
+
+    /**
+     * Called by the indicators, so they draw the drop rubber band at the correct place.
+     * The rect for the rubberband when dropping a widget at the specified location.
+     * Excludes the Separator thickness, result is actually smaller than what needed. In other words,
+     * the result will be exactly the same as the geometry the widget will get.
+     */
+    QRect rectForDrop(const WindowBeingDragged *wbd, KDDockWidgets::Location location,
+                      const Layouting::Item *relativeTo) const;
+
+    bool deserialize(const LayoutSaver::MultiSplitter &) override;
+
+    ///@brief returns the list of separators
+    QVector<Controllers::Separator *> separators() const;
+
+    /// @brief See docs for MainWindowBase::layoutEqually()
+    void layoutEqually();
+
+    /// @brief overload that just resizes widgets within a sub-tree
+    void layoutEqually(Layouting::ItemBoxContainer *);
+
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Controllers::MainWindow;
@@ -93,6 +141,28 @@ private:
     friend class ::TestQtWidgets;
     friend class DropIndicatorOverlayInterface;
     friend class AnimatedIndicators;
+
+    Layouting::ItemBoxContainer *rootItem() const;
+
+    // For debug/hardening
+    bool validateInputs(View *widget, KDDockWidgets::Location location,
+                        const Controllers::Frame *relativeToFrame, InitialOption option) const;
+
+
+    void setRootItem(Layouting::ItemBoxContainer *);
+
+    /**
+     * @brief Like @ref availableLengthForDrop but just returns the total available width or height (depending on @p orientation)
+     * So no need to receive any location.
+     * @param orientation If Qt::Vertical then returns the available height. Width otherwise.
+     */
+    int availableLengthForOrientation(Qt::Orientation orientation) const;
+
+    /**
+     * @brief Equivalent to @ref availableLengthForOrientation but returns for both orientations.
+     * width is for Qt::Vertical.
+     */
+    QSize availableSize() const;
 
     template<typename T>
     bool validateAffinity(T *, Controllers::Frame *acceptingFrame = nullptr) const;
@@ -106,6 +176,7 @@ private:
     QString m_affinityName;
     DropIndicatorOverlayInterface *m_dropIndicatorOverlay = nullptr;
     Controllers::Frame *const m_centralFrame = nullptr;
+    Layouting::ItemBoxContainer *m_rootItem = nullptr;
 };
 }
 }

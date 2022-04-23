@@ -21,7 +21,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "private/MultiSplitter_p.h"
+#include "private/LayoutWidget_p.h"
 
 namespace KDDockWidgets {
 
@@ -31,7 +31,7 @@ class DropArea;
 
 namespace Views {
 
-class DOCKS_EXPORT DropArea_qtwidgets : public MultiSplitter
+class DOCKS_EXPORT DropArea_qtwidgets : public LayoutWidget
 {
     Q_OBJECT
 public:

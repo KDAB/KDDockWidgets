@@ -33,7 +33,6 @@ class TestDocks;
 namespace KDDockWidgets {
 
 class MDILayoutWidget;
-class MultiSplitter;
 class LayoutWidget;
 
 namespace Controllers {
@@ -121,7 +120,7 @@ public:
 
     ///@internal
     ///@brief returns the MultiSplitter.
-    MultiSplitter *multiSplitter() const;
+    DropArea *multiSplitter() const;
 
     ///@internal
     ///@brief returns the MultiSplitter.

@@ -22,7 +22,6 @@
 #include "kddockwidgets/docks_export.h"
 
 namespace KDDockWidgets {
-class MultiSplitter;
 class LayoutWidget;
 }
 
@@ -122,7 +121,7 @@ public:
     /**
      * @brief Returns the MultiSplitter
      */
-    MultiSplitter *multiSplitter() const;
+    Controllers::DropArea *multiSplitter() const;
 
     /**
      * @brief Returns the LayoutWidget

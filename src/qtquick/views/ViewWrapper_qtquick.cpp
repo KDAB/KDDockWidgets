@@ -20,7 +20,7 @@
 // #include "qtwidgets/views/TabBar_qtquick.h"
 // #include "qtwidgets/views/TitleBar_qtquick.h"
 
-#include "private/MultiSplitter_p.h"
+#include "controllers/DropArea.h"
 #include "private/MDILayoutWidget_p.h"
 #include "MDIArea.h"
 
@@ -147,7 +147,7 @@ bool ViewWrapper_qtquick::is(Type t) const
     // case Type::Layout:
     //     return qobject_cast<LayoutWidget *>(m_item);
     // case Type::MultiSplitter:
-    //     return qobject_cast<MultiSplitter *>(m_item);
+    //     return qobject_cast<Views::DropArea *>(m_item);
     // case Type::MDILayout:
     //     return qobject_cast<MDILayoutWidget *>(m_item);
     // case Type::MDIArea:

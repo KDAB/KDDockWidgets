@@ -528,7 +528,6 @@ public:
 private:
 #endif
     Q_DISABLE_COPY(DockWidget)
-    friend class MultiSplitter;
     friend class LayoutWidget;
     friend class MDILayoutWidget;
     friend class Controllers::FloatingWindow;
