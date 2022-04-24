@@ -26,7 +26,6 @@
 #include "private/Logging_p.h"
 #include "private/WidgetResizeHandler_p.h"
 #include "FrameworkWidgetFactory.h"
-#include "controllers/DropArea.h"
 #include "private/LayoutSaver_p.h"
 #include "private/multisplitter/Item_p.h"
 #include "Platform.h"
@@ -90,7 +89,7 @@ public:
 
     DropArea *dropArea() const
     {
-        return qobject_cast<DropArea *>(m_layoutWidget);
+        return m_layoutWidget->asDropArea();
     }
 
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
@@ -107,6 +106,7 @@ public:
     QPointer<Controllers::DockWidget> m_overlayedDockWidget;
     LayoutWidget *m_layoutWidget = nullptr;
     Controllers::DockWidget *m_persistentCentralDockWidget = nullptr;
+    KDBindings::ScopedConnection m_visibleWidgetCountConnection;
 };
 
 MainWindow::MainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
@@ -135,8 +135,7 @@ void MainWindow::init(const QString &name, bool initView)
 
     setUniqueName(name);
 
-    connect(d->m_layoutWidget, &LayoutWidget::visibleWidgetCountChanged, this,
-            &MainWindow::frameCountChanged);
+    d->m_visibleWidgetCountConnection = d->m_layoutWidget->visibleWidgetCountChanged.connect(&MainWindow::frameCountChanged, this);
 }
 
 MainWindow::~MainWindow()
@@ -205,7 +204,7 @@ MainWindowOptions MainWindow::options() const
 
 DropArea *MainWindow::dropArea() const
 {
-    return qobject_cast<DropArea *>(d->m_layoutWidget);
+    return d->m_layoutWidget->asDropArea();
 }
 
 DropArea *MainWindow::multiSplitter() const
@@ -220,7 +219,7 @@ LayoutWidget *MainWindow::layoutWidget() const
 
 MDILayoutWidget *MainWindow::mdiLayoutWidget() const
 {
-    return qobject_cast<MDILayoutWidget *>(layoutWidget());
+    return d->m_layoutWidget->asMDILayout();
 }
 
 void MainWindow::setAffinities(const QStringList &affinityNames)
@@ -468,14 +467,14 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
             break;
         }
         case SideBarLocation::South: {
-            const int maxHeight = sb->pos().y() - m_layoutWidget->View::pos().y() - 10; // gap
+            const int maxHeight = sb->pos().y() - m_layoutWidget->view()->pos().y() - 10; // gap
             const int bottom = newGeometry.bottom();
             newGeometry.setHeight(qMin(suggestedSize.height(), maxHeight));
             newGeometry.moveBottom(bottom);
             break;
         }
         case SideBarLocation::East: {
-            const int maxWidth = sb->pos().x() - m_layoutWidget->View::pos().x() - 10; // gap
+            const int maxWidth = sb->pos().x() - m_layoutWidget->view()->pos().x() - 10; // gap
             const int right = newGeometry.right();
             newGeometry.setWidth(qMin(suggestedSize.width(), maxWidth));
             newGeometry.moveRight(right);

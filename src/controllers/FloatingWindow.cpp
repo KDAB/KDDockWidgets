@@ -129,12 +129,13 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     }
 
     updateTitleBarVisibility();
-    connect(m_dropArea, &LayoutWidget::visibleWidgetCountChanged, this,
-            &FloatingWindow::onFrameCountChanged);
-    connect(m_dropArea, &LayoutWidget::visibleWidgetCountChanged, this,
-            &FloatingWindow::numFramesChanged);
-    connect(m_dropArea, &LayoutWidget::visibleWidgetCountChanged, this,
-            &FloatingWindow::onVisibleFrameCountChanged);
+
+    m_visibleWidgetCountConnection = m_dropArea->visibleWidgetCountChanged.connect([this](int count) {
+        onFrameCountChanged(count);
+        numFramesChanged();
+        onVisibleFrameCountChanged(count);
+    });
+
     m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 

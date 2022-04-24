@@ -154,11 +154,8 @@ bool Frame_qtwidgets::event(QEvent *e)
         return QWidget::event(e);
 
     if (e->type() == QEvent::ParentChange) {
-        if (auto layoutWidget = qobject_cast<LayoutWidget *>(QWidget::parentWidget())) {
-            m_controller->setLayoutWidget(layoutWidget);
-        } else {
-            m_controller->setLayoutWidget(nullptr);
-        }
+        auto p = parentView();
+        m_controller->setLayoutWidget(p ? p->asLayoutWidget() : nullptr);
     }
 
     return QWidget::event(e);

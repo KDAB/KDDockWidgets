@@ -69,11 +69,14 @@ static Controller *controllerForWidget(QWidget *widget)
                 return view->controller();
             break;
         case Type::DropArea:
-        case Type::MDILayout:
-        case Type::Layout:
-            if (auto view = qobject_cast<LayoutWidget *>(widget))
+            if (auto view = qobject_cast<Controllers::DropArea *>(widget))
                 return view->controller();
             break;
+        case Type::MDILayout:
+            if (auto view = qobject_cast<MDILayoutWidget *>(widget))
+                return view->controller();
+            break;
+
         case Type::MDIArea:
             if (auto view = qobject_cast<MDIArea *>(widget))
                 return view->controller();
@@ -89,6 +92,7 @@ static Controller *controllerForWidget(QWidget *widget)
         case Type::LayoutItem:
         case Type::DropIndicatorOverlayInterface:
         case Type::ViewWrapper:
+        case Type::Layout:
             // skip internal types
             continue;
         }
@@ -217,7 +221,7 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     case Type::MainWindow:
         return qobject_cast<Views::MainWindow_qtwidgets *>(m_widget);
     case Type::Layout:
-        return qobject_cast<LayoutWidget *>(m_widget);
+        return is(Type::DropArea) || is(Type::MDILayout);
     case Type::DropArea:
         return qobject_cast<Controllers::DropArea *>(m_widget); // TODOv2
     case Type::MDILayout:

@@ -554,29 +554,22 @@ void DockWidget::Private::maybeMorphIntoFloatingWindow()
 
 MDILayoutWidget *DockWidget::Private::mdiLayout() const
 {
-    auto p = const_cast<QObject *>(q->view()->parent());
+    auto p = q->view()->parentView();
     while (p) {
-        if (qobject_cast<const QWindow *>(p)) {
-            // Ignore QObject hierarchies spanning though multiple windows
-            return nullptr;
+        // We found a layout
+        if (auto mdiLayout = p->asMDILayoutView()) {
+            // And it's MDI
+            return mdiLayout;
+        } else if (auto dropArea = p->asDropArea()) {
+            // It's a DropArea. But maybe it's a drop area that's just helping
+            // making the MDI windows accept drops (Option_MDINestable)
+            if (!dropArea->isMDIWrapper())
+                return nullptr;
+
+            // It's a MDI wrapper, keep looking up.
         }
 
-        if (qobject_cast<LayoutWidget *>(p)) {
-            // We found a layout
-            if (auto mdiLayout = qobject_cast<MDILayoutWidget *>(p)) {
-                // And it's MDI
-                return mdiLayout;
-            } else if (auto dropArea = qobject_cast<DropArea *>(p)) {
-                // It's a DropArea. But maybe it's a drop area that's just helping
-                // making the MDI windows accept drops (Option_MDINestable)
-                if (!dropArea->isMDIWrapper())
-                    return nullptr;
-
-                // It's a MDI wrapper, keep looking up.
-            }
-        }
-
-        p = p->parent();
+        p = p->parentView();
     }
 
     return nullptr;
@@ -604,15 +597,11 @@ DockWidgetBase *DockWidget::Private::mdiDockWidgetWrapper() const
         return q;
     }
 
-    auto p = const_cast<QObject *>(q->view()->parent());
+    auto p = q->view()->parentView();
     while (p) {
-        if (qobject_cast<const QWindow *>(p)) {
-            // Ignore QObject hierarchies spanning though multiple windows
-            return nullptr;
-        }
 
-        if (qobject_cast<LayoutWidget *>(p)) {
-            if (auto dropArea = qobject_cast<DropArea *>(p)) {
+        if (p->is(Type::Layout)) {
+            if (auto dropArea = p->asDropArea()) {
                 if (dropArea->isMDIWrapper())
                     return dropArea->mdiDockWidgetWrapper();
             }
@@ -620,7 +609,7 @@ DockWidgetBase *DockWidget::Private::mdiDockWidgetWrapper() const
             return nullptr;
         }
 
-        p = p->parent();
+        p = p->parentView();
     }
 
     return nullptr;
@@ -785,7 +774,7 @@ void DockWidget::Private::maybeRestoreToPreviousPosition()
 
     Controllers::Frame *frame = this->frame();
 
-    if (frame && frame->view()->asQWidget()->parentWidget() == DockRegistry::self()->layoutForItem(layoutItem)) {
+    if (frame && frame->view()->equals(DockRegistry::self()->layoutForItem(layoutItem)->view())) {
         // There's a frame already. Means the DockWidget was hidden instead of closed.
         // Nothing to do, the dock widget will simply be shown
         return;

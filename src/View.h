@@ -37,6 +37,8 @@ namespace KDDockWidgets {
 class ViewWrapper;
 class Controller;
 class Window;
+class MDILayoutWidget;
+class LayoutWidget;
 
 namespace Controllers {
 class DropArea;
@@ -108,6 +110,7 @@ public:
     virtual void setParent(View *) = 0;
     virtual QSize sizeHint() const;
     virtual QSize minSize() const = 0;
+    virtual void setMinimumSize(QSize) = 0;
     virtual int minimumWidth() const
     {
         return minSize().width();
@@ -272,6 +275,8 @@ public:
     Controllers::DockWidget *asDockWidgetController() const;
     Controllers::MainWindow *asMainWindowController() const;
     Controllers::DropArea *asMultiSplitterView();
+    MDILayoutWidget *asMDILayoutView();
+    LayoutWidget *asLayoutWidget();
 
     /// @brief returns whether this view is inside the specified window
     bool isInWindow(std::shared_ptr<Window> window) const;

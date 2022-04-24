@@ -327,6 +327,10 @@ public:
         return {};
     }
 
+    void setMinimumSize(QSize) override
+    {
+    }
+
     void render(QPainter *p) override
     {
         qWarning() << Q_FUNC_INFO << "Implement me";

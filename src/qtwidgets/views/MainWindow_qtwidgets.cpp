@@ -87,12 +87,12 @@ public:
             innerVLayout->setSpacing(0);
             innerVLayout->setContentsMargins(0, 0, 0, 0);
             innerVLayout->addWidget(q->sideBar(SideBarLocation::North)->view()->asQWidget());
-            innerVLayout->addWidget(m_controller->layoutWidget());
+            innerVLayout->addWidget(qobject_cast<QWidget *>(m_controller->layoutWidget()->view()->asQObject()));
             innerVLayout->addWidget(q->sideBar(SideBarLocation::South)->view()->asQWidget());
             m_layout->addLayout(innerVLayout);
             m_layout->addWidget(q->sideBar(SideBarLocation::East)->view()->asQWidget());
         } else {
-            m_layout->addWidget(m_controller->layoutWidget());
+            m_layout->addWidget(qobject_cast<QWidget *>(m_controller->layoutWidget()->view()->asQObject()));
         }
 
         q->setCentralWidget(m_centralWidget);

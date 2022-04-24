@@ -34,6 +34,7 @@ public:
 
     void setParent(View *) override;
     QSize minSize() const override;
+    void setMinimumSize(QSize) override;
     QSize maxSizeHint() const override;
     QSize minimumSizeHint() const override;
     QRect normalGeometry() const override;

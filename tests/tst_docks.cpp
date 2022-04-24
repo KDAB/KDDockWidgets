@@ -235,7 +235,7 @@ void TestDocks::tst_hasLastDockedLocation()
     auto dock1 = createDockWidget("1");
     m->layoutWidget()->checkSanity();
     m->multiSplitter()->setObjectName("mainWindow-dropArea");
-    dock1->floatingWindow()->layoutWidget()->setObjectName("first-dropArea1");
+    dock1->floatingWindow()->layoutWidget()->view()->setObjectName("first-dropArea1");
     dock1->floatingWindow()->layoutWidget()->checkSanity();
     auto window1 = dock1->window();
     QVERIFY(dock1->isFloating());
@@ -252,7 +252,7 @@ void TestDocks::tst_hasLastDockedLocation()
     QVERIFY(dock1->setFloating(true));
 
     auto ms1 = dock1->floatingWindow()->layoutWidget();
-    ms1->setObjectName("dropArea1");
+    ms1->view()->setObjectName("dropArea1");
     ms1->checkSanity();
     QVERIFY(dock1->hasPreviousDockedLocation());
     auto window11 = dock1->window();
@@ -6218,7 +6218,7 @@ void TestDocks::tst_addMDIDockWidget()
     // Test that adding a MDI dock widget doesn't produce any warning
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_MDI);
     auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
-    qobject_cast<MDILayoutWidget *>(m->layoutWidget())->addDockWidget(dock0, QPoint(0, 0), {});
+    m->layoutWidget()->asMDILayout()->addDockWidget(dock0, QPoint(0, 0), {});
 }
 
 void TestDocks::tst_redockToMDIRestoresPosition()
@@ -6229,7 +6229,7 @@ void TestDocks::tst_redockToMDIRestoresPosition()
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_MDI);
     auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
 
-    auto layoutWidget = qobject_cast<MDILayoutWidget *>(m->layoutWidget());
+    auto layoutWidget = m->layoutWidget()->asMDILayout();
     const QPoint initialPoint = QPoint(500, 500);
     layoutWidget->addDockWidget(dock0, initialPoint, {});
 

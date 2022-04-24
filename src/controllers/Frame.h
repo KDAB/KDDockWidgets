@@ -369,7 +369,7 @@ private:
     bool m_updatingTitleBar = false;
     bool m_beingDeleted = false;
     int m_userType = 0;
-    QMetaObject::Connection m_visibleWidgetCountChangedConnection;
+    KDBindings::ScopedConnection m_visibleWidgetCountChangedConnection;
 };
 
 }

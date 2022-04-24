@@ -10,6 +10,8 @@
 */
 
 #include "View.h"
+
+#include "private/MDILayoutWidget_p.h"
 #include "private/multisplitter/Item_p.h"
 
 #include "controllers/FloatingWindow.h"
@@ -38,9 +40,8 @@ View::View(Controller *controller, Type type, QObject *thisObj)
 
 View::~View()
 {
-    beingDestroyed.emit();
-
     m_inDtor = true;
+    beingDestroyed.emit();
 
     if (!freed() && !is(Type::ViewWrapper)) {
         // TODOv2
@@ -243,8 +244,28 @@ Controllers::MainWindow *View::asMainWindowController() const
 
 Controllers::DropArea *View::asMultiSplitterView()
 {
-    if (is(Type::DropArea))
-        return static_cast<Controllers::DropArea *>(this);
+    if (!m_inDtor && is(Type::DropArea)) {
+        return qobject_cast<Controllers::DropArea *>(asQObject());
+    }
+    return nullptr;
+}
+
+MDILayoutWidget *View::asMDILayoutView()
+{
+    if (!m_inDtor && is(Type::MDILayout))
+        return qobject_cast<MDILayoutWidget *>(asQObject());
+
+    return nullptr;
+}
+
+LayoutWidget *View::asLayoutWidget()
+{
+    if (Controllers::DropArea *da = asMultiSplitterView()) {
+        return da;
+    } else if (MDILayoutWidget *mdi = asMDILayoutView()) {
+        return mdi;
+    }
+
     return nullptr;
 }
 

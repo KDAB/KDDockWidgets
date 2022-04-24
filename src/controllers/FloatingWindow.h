@@ -241,6 +241,7 @@ private:
     bool m_inDtor = false;
     bool m_updatingTitleBarVisibility = false;
     QMetaObject::Connection m_layoutDestroyedConnection;
+    KDBindings::ScopedConnection m_visibleWidgetCountConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
     Qt::WindowState windowStateOverride() const;
 #ifdef Q_OS_WIN

@@ -80,8 +80,7 @@ Frame::Frame(View *parent, FrameOptions options, int userType)
     connect(m_tabWidget, &Controllers::Stack::currentTabChanged,
             this, &Frame::onCurrentTabChanged);
 
-    setLayoutWidget(qobject_cast<LayoutWidget *>(parent ? parent->asQObject() : nullptr)); // TODO
-
+    setLayoutWidget(parent ? parent->asLayoutWidget() : nullptr);
     view()->init();
 
     m_inCtor = false;
@@ -125,7 +124,7 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
     const bool wasInMainWindow = dt && isInMainWindow();
     const bool wasMDI = isMDI();
     if (m_layoutWidget)
-        disconnect(m_visibleWidgetCountChangedConnection);
+        m_visibleWidgetCountChangedConnection->disconnect(); // TODOv2: Can be removed, since RAII ?
 
     m_layoutWidget = dt;
     delete m_resizeHandler;
@@ -136,9 +135,7 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
             m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, view());
 
         // We keep the connect result so we don't dereference m_layoutWidget at shutdown
-        m_visibleWidgetCountChangedConnection =
-            connect(m_layoutWidget, &LayoutWidget::visibleWidgetCountChanged, this,
-                    &Frame::updateTitleBarVisibility);
+        m_visibleWidgetCountChangedConnection = m_layoutWidget->visibleWidgetCountChanged.connect(&Frame::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();
@@ -941,7 +938,7 @@ DropArea *Frame::mdiDropAreaWrapper() const
 
 MDILayoutWidget *Frame::mdiLayoutWidget() const
 {
-    return qobject_cast<MDILayoutWidget *>(m_layoutWidget);
+    return m_layoutWidget ? m_layoutWidget->asMDILayout() : nullptr;
 }
 
 bool Frame::hasNestedMDIDockWidgets() const

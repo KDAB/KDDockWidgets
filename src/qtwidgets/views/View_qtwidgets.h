@@ -68,6 +68,11 @@ public:
         return QSize(minW, minH).expandedTo(View::hardcodedMinimumSize());
     }
 
+    void setMinimumSize(QSize sz) override
+    {
+        QWidget::setMinimumSize(sz);
+    }
+
     QSize minimumSizeHint() const override
     {
         return Base::minimumSizeHint();

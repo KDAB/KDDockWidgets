@@ -26,6 +26,11 @@ void ViewWrapper::setParent(View *)
     qFatal("Not implemented");
 }
 
+void ViewWrapper::setMinimumSize(QSize)
+{
+    qFatal("Not implemented");
+}
+
 QSize ViewWrapper::minSize() const
 {
     qFatal("Not implemented");

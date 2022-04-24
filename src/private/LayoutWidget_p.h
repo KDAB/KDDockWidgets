@@ -24,12 +24,10 @@
 
 #pragma once
 
+#include "View.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
-
-#include "qtwidgets/views/View_qtwidgets.h"
-
 #include "kdbindings/signal.h"
 
 #include <QList>
@@ -61,12 +59,11 @@ class MainWindow;
  * It's suitable to be set as a main window central widget for instance. The actual layouting is
  * then done by the root Item.
  */
-class DOCKS_EXPORT LayoutWidget : public Views::View_qtwidgets<QWidget>
+class DOCKS_EXPORT LayoutWidget
 {
-    Q_OBJECT
 public:
-    explicit LayoutWidget(Type, View *parent = nullptr);
-    ~LayoutWidget() override;
+    explicit LayoutWidget(View *thisView);
+    ~LayoutWidget();
 
     /// @brief Returns whether this layout is in a MainWindow
     /// @param honourNesting If true, then we'll count DropAreas/MDIAreas which are nested into DropAreas/MDIAreas as inside the main window.
@@ -194,6 +191,13 @@ public:
     virtual bool deserialize(const LayoutSaver::MultiSplitter &);
     LayoutSaver::MultiSplitter serialize() const;
 
+    Controllers::DropArea *asDropArea() const;
+    MDILayoutWidget *asMDILayout() const;
+    View *view() const;
+
+    /// @brief Emitted when the count of visible widgets changes
+    KDBindings::Signal<int> visibleWidgetCountChanged;
+
 protected:
     void setRootItem(Layouting::ItemContainer *root);
     /**
@@ -201,9 +205,6 @@ protected:
      * @ref minimumSize
      */
     void setLayoutMinimumSize(QSize);
-
-    void onLayoutRequest() override;
-    bool onResize(QSize newSize) override;
 
     /**
      * @brief Removes unneeded placeholder items when adding new frames.
@@ -223,13 +224,15 @@ protected:
      */
     QList<Controllers::Frame *> framesFrom(View *frameOrMultiSplitter) const;
 
-Q_SIGNALS:
-    void visibleWidgetCountChanged(int count);
+protected:
+    /// TODOv2: Better a signal, so that derived classes don't have to remember to call these
+    bool onResize(QSize newSize);
 
 private:
     bool m_inResizeEvent = false;
     Layouting::ItemContainer *m_rootItem = nullptr;
     KDBindings::ConnectionHandle m_minSizeChangedHandler;
+    View *const m_thisView;
 };
 
 }

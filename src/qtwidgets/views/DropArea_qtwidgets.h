@@ -21,7 +21,7 @@
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "private/LayoutWidget_p.h"
+#include "qtwidgets/views/View_qtwidgets.h"
 
 namespace KDDockWidgets {
 
@@ -31,7 +31,7 @@ class DropArea;
 
 namespace Views {
 
-class DOCKS_EXPORT DropArea_qtwidgets : public LayoutWidget
+class DOCKS_EXPORT DropArea_qtwidgets : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:

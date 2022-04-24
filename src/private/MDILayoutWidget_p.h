@@ -18,6 +18,8 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/docks_export.h"
 
+#include "qtwidgets/views/View_qtwidgets.h"
+
 namespace Layouting {
 class ItemFreeContainer;
 }
@@ -28,7 +30,7 @@ namespace KDDockWidgets {
  * @brief The MDILayoutWidget class implements a layout suitable for MDI style docking.
  * Where dock widgets are free to be positioned in arbitrary positions, not restricted by layouting.
  */
-class DOCKS_EXPORT MDILayoutWidget : public LayoutWidget
+class DOCKS_EXPORT MDILayoutWidget : public Views::View_qtwidgets<QWidget>, public LayoutWidget
 {
     Q_OBJECT
 public:
@@ -54,6 +56,10 @@ public:
 
     /// @brief sets the size and position of the dock widget @p f
     void setDockWidgetGeometry(Controllers::Frame *f, QRect);
+
+    /// TODOv2
+    void onLayoutRequest() override;
+    bool onResize(QSize newSize) override;
 
 private:
     Layouting::ItemFreeContainer *const m_rootItem;

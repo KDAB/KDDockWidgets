@@ -41,7 +41,8 @@ using namespace KDDockWidgets::Controllers;
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
-    : LayoutWidget(Type::DropArea, parent)
+    : Views::View_qtwidgets<QWidget>(nullptr, Type::DropArea, parent ? dynamic_cast<QWidget *>(parent) : nullptr)
+    , LayoutWidget(this)
     , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))
@@ -67,7 +68,7 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     }
 
     if (m_isMDIWrapper) {
-        connect(this, &DropArea::visibleWidgetCountChanged, this, [this] {
+        m_visibleWidgetCountConnection = visibleWidgetCountChanged.connect([this] {
             auto dw = mdiDockWidgetWrapper();
             if (!dw) {
                 qWarning() << Q_FUNC_INFO << "Unexpected null wrapper dock widget";
@@ -635,4 +636,14 @@ bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
 {
     setRootItem(new Layouting::ItemBoxContainer(this));
     return LayoutWidget::deserialize(l);
+}
+
+void DropArea::onLayoutRequest()
+{
+    updateSizeConstraints();
+}
+
+bool DropArea::onResize(QSize newSize)
+{
+    return LayoutWidget::onResize(newSize);
 }

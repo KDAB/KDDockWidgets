@@ -28,8 +28,8 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 
-LayoutWidget::LayoutWidget(Type type, View *parent)
-    : Views::View_qtwidgets<QWidget>(nullptr, type, parent ? static_cast<Views::View_qtwidgets<QWidget> *>(parent) : nullptr)
+LayoutWidget::LayoutWidget(View *thisView)
+    : m_thisView(thisView)
 {
 }
 
@@ -37,7 +37,7 @@ LayoutWidget::~LayoutWidget()
 {
     m_minSizeChangedHandler.disconnect();
 
-    if (m_rootItem->hostWidget() == this)
+    if (m_thisView->equals(m_rootItem->hostWidget()))
         delete m_rootItem;
     DockRegistry::self()->unregisterLayout(this);
 }
@@ -54,10 +54,10 @@ Controllers::MainWindow *LayoutWidget::mainWindow(bool honourNesting) const
 
     if (honourNesting) {
         // This layout might be a MDIArea, nested in DropArea, which is main window.
-        auto v = firstParentOfType<Views::MainWindow_qtwidgets>(this);
+        auto v = firstParentOfType<Views::MainWindow_qtwidgets>(m_thisView->asQObject());
         return v ? v->mainWindow() : nullptr;
     } else {
-        if (auto pw = parentView()) {
+        if (auto pw = m_thisView->parentView()) {
             // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as
             // it's parented
             if (pw->objectName() == QLatin1String("MyCentralWidget"))
@@ -73,7 +73,7 @@ Controllers::MainWindow *LayoutWidget::mainWindow(bool honourNesting) const
 
 Controllers::FloatingWindow *LayoutWidget::floatingWindow() const
 {
-    auto parent = parentView();
+    auto parent = m_thisView->parentView();
     return parent ? parent->asFloatingWindowController() : nullptr;
 }
 
@@ -82,10 +82,10 @@ void LayoutWidget::setRootItem(Layouting::ItemContainer *root)
     delete m_rootItem;
     m_rootItem = root;
     m_rootItem->numVisibleItemsChanged.connect([this](int count) {
-        Q_EMIT visibleWidgetCountChanged(count);
+        visibleWidgetCountChanged.emit(count);
     });
 
-    m_minSizeChangedHandler = m_rootItem->minSizeChanged.connect([this] { setMinimumSize(layoutMinimumSize()); });
+    m_minSizeChangedHandler = m_rootItem->minSizeChanged.connect([this] { m_thisView->setMinimumSize(layoutMinimumSize()); });
 }
 
 QSize LayoutWidget::layoutMinimumSize() const
@@ -129,7 +129,7 @@ void LayoutWidget::dumpLayout() const
 void LayoutWidget::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item, int tabIndex)
 {
     if (item->isPlaceholder()) {
-        auto newFrame = new Controllers::Frame(this);
+        auto newFrame = new Controllers::Frame(m_thisView);
         item->restore(newFrame->view());
     }
 
@@ -159,7 +159,7 @@ void LayoutWidget::setLayoutSize(QSize size)
     if (size != layoutSize()) {
         m_rootItem->setSize_recursive(size);
         if (!m_inResizeEvent && !LayoutSaver::restoreInProgress())
-            QWidget::resize(size); // TODO: Remove widget references
+            m_thisView->resize(size);
     }
 }
 
@@ -251,7 +251,7 @@ void LayoutWidget::removeItem(Layouting::Item *item)
 void LayoutWidget::updateSizeConstraints()
 {
     const QSize newMinSize = m_rootItem->minSize();
-    qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << minSize() << "to"
+    qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << m_thisView->minSize() << "to"
                     << newMinSize;
 
     setLayoutMinimumSize(newMinSize);
@@ -272,16 +272,11 @@ bool LayoutWidget::deserialize(const LayoutSaver::MultiSplitter &l)
 
     // This qMin() isn't needed for QtWidgets (but harmless), but it's required for QtQuick
     // as some sizing is async
-    const QSize newLayoutSize = View::size().expandedTo(m_rootItem->minSize());
+    const QSize newLayoutSize = m_thisView->size().expandedTo(m_rootItem->minSize());
 
     m_rootItem->setSize_recursive(newLayoutSize);
 
     return true;
-}
-
-void LayoutWidget::onLayoutRequest()
-{
-    updateSizeConstraints();
 }
 
 bool LayoutWidget::onResize(QSize newSize)
@@ -311,4 +306,19 @@ LayoutSaver::MultiSplitter LayoutWidget::serialize() const
     }
 
     return l;
+}
+
+Controllers::DropArea *LayoutWidget::asDropArea() const
+{
+    return m_thisView->asMultiSplitterView();
+}
+
+MDILayoutWidget *LayoutWidget::asMDILayout() const
+{
+    return m_thisView->asMDILayoutView();
+}
+
+View *LayoutWidget::view() const
+{
+    return m_thisView;
 }

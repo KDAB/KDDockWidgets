@@ -16,7 +16,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 DropArea_qtwidgets::DropArea_qtwidgets(Controllers::DropArea *dropArea, View *parent)
-    : LayoutWidget(Type::DropArea, parent)
+    : Views::View_qtwidgets<QWidget>(nullptr, Type::DropArea, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr)
     , m_dropArea(dropArea)
 {
     if (isWayland()) {
