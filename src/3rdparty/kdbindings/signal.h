@@ -60,6 +60,9 @@ public:
  *
  * It is returned from a Signal when a connection is created and used to
  * manage the connection by disconnecting, (un)blocking it and checking its state.
+ *
+ * To make sure a Connection to an object is disconnected correctly, consider
+ * storing a ScopedConnection to its ConnectionHandle inside the object.
  **/
 class ConnectionHandle
 {
@@ -519,12 +522,105 @@ private:
 };
 
 /**
+ * @brief A ScopedConnection is a RAII-style way to make sure a Connection is disconnected.
+ *
+ * When the ScopedConnections scope ends, the connection this ScopedConnection guards will be disconnected.
+ *
+ * Example:
+ * - @ref 08-managing-connections/main.cpp
+ */
+class ScopedConnection
+{
+public:
+    /**
+     * @brief A ScopedConnection can be default constructed
+     *
+     * A default constructed ScopedConnection has no connection to guard.
+     * Therefore it does nothing when it is destructed, unless a ConnectionHandle is assigned to it.
+     */
+    ScopedConnection() = default;
+
+    /** A ScopedConnection can be move constructed */
+    ScopedConnection(ScopedConnection &&) = default;
+    /** A ScopedConnection can be move assigned */
+    ScopedConnection &operator=(ScopedConnection &&) = default;
+
+    /** A ScopedConnection cannot be copied */
+    ScopedConnection(const ScopedConnection &) = delete;
+    /** A ScopedConnection cannot be copied */
+    ScopedConnection &operator=(const ScopedConnection &) = delete;
+
+    /**
+     * A ScopedConnection can be constructed from a ConnectionHandle
+     */
+    ScopedConnection(ConnectionHandle &&h)
+        : m_connection(std::move(h))
+    {
+    }
+
+    /**
+     * A ScopedConnection can be assigned from a ConnectionHandle
+     */
+    ScopedConnection &operator=(ConnectionHandle &&h)
+    {
+        m_connection = std::move(h);
+        return *this;
+    }
+
+    /**
+     * @return the handle to the connection this instance is managing
+     */
+    ConnectionHandle &handle()
+    {
+        return m_connection;
+    }
+
+    /**
+     * @overload
+     */
+    const ConnectionHandle &handle() const
+    {
+        return m_connection;
+    }
+
+    /**
+     * Convenience access to the underlying ConnectionHandle using the `->` operator.
+     */
+    ConnectionHandle *operator->()
+    {
+        return &m_connection;
+    }
+
+    /**
+     * @overload
+     */
+    const ConnectionHandle *operator->() const
+    {
+        return &m_connection;
+    }
+
+    /**
+     * When a ConnectionHandle is destructed it disconnects the connection it guards.
+     */
+    ~ScopedConnection()
+    {
+        m_connection.disconnect();
+    }
+
+private:
+    ConnectionHandle m_connection;
+};
+
+/**
  * @brief A ConnectionBlocker is a convenient RAII-style mechanism for temporarily blocking a connection.
  *
  * When a ConnectionBlocker is constructed, it will block the connection.
  *
  * When it is destructed, it will return the connection to the blocked state it was in
  * before the ConnectionBlocker was constructed.
+ *
+ * Example:
+ * - @ref 08-managing-connections/main.cpp
  */
 class ConnectionBlocker
 {
@@ -599,6 +695,20 @@ private:
  * Hello World!
  * Emitted value: 5
  * true
+ * ```
+ */
+
+/**
+ * @example 08-managing-connections/main.cpp
+ *
+ * An example of how to use a ScopedConnection and ConnectionBlocker to manage
+ * when a Connection is disconnected or blocked.
+ *
+ * Expected output:
+ * ```
+ * Guard is connected: 1
+ * Connection is not blocked: 3
+ * Connection is not blocked: 5
  * ```
  */
 
