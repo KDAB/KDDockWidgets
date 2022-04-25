@@ -18,6 +18,8 @@ class DOCKS_EXPORT Window_qtwidgets : public Window_qt
 {
 public:
     using Window_qt::Window_qt;
+
+    explicit Window_qtwidgets(QWidget *topLevel);
     ~Window_qtwidgets() override;
     std::shared_ptr<ViewWrapper> rootView() const override;
     Window::Ptr transientParent() const override;

@@ -540,7 +540,6 @@ const Window::List DockRegistry::floatingQWindows() const
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {
         if (!fw->beingDeleted()) {
             if (Window::Ptr window = fw->view()->windowHandle()) {
-                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(fw->view()->asQWidget())); // Since QWidgetWindow is private API
                 windows.push_back(window);
             } else {
                 qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
@@ -608,8 +607,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
     if (!excludeFloatingDocks) {
         for (Controllers::FloatingWindow *fw : m_floatingWindows) {
             if (fw->isVisible()) {
-                if (auto window = fw->view()->windowHandle()) {
-                    window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(fw->view()->asQWidget())); // Since QWidgetWindow is private API
+                if (Window::Ptr window = fw->view()->windowHandle()) {
                     windows << window;
                 } else {
                     qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
@@ -621,7 +619,6 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
     for (Controllers::MainWindow *m : m_mainWindows) {
         if (m->isVisible()) {
             if (Window::Ptr window = m->view()->windowHandle()) {
-                window->setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidgetOrQuick *>(m->view()->asQWidget()));
                 windows << window;
             } else {
                 qWarning() << Q_FUNC_INFO << "MainWindow doesn't have QWindow";

@@ -21,6 +21,14 @@ using namespace KDDockWidgets;
 
 Window_qtwidgets::~Window_qtwidgets() = default;
 
+Window_qtwidgets::Window_qtwidgets(QWidget *topLevel)
+    : Window_qt(topLevel->windowHandle())
+{
+    // QWidgetWindow is private API, we have no way for going from QWindow to the top-level QWidget
+    // So set it as a property
+    setProperty("kddockwidgets_qwidget", QVariant::fromValue<QWidget *>(topLevel));
+}
+
 std::shared_ptr<ViewWrapper> Window_qtwidgets::rootView() const
 {
     if (!m_window)
