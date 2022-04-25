@@ -644,7 +644,7 @@ bool DockWidget::Private::eventFilter(QObject *watched, QEvent *event)
 {
     const bool isWindowActivate = event->type() == QEvent::WindowActivate;
     const bool isWindowDeactivate = event->type() == QEvent::WindowDeactivate;
-    if ((isWindowActivate || isWindowDeactivate) && watched == q->view()->asQWidget()->window())
+    if ((isWindowActivate || isWindowDeactivate) && watched == q->view()->window()->asQObject())
         Q_EMIT q->windowActiveAboutToChange(isWindowActivate);
 
     return QObject::eventFilter(watched, event);

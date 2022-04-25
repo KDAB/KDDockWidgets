@@ -582,7 +582,8 @@ Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr w
 Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) const
 {
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {
-        if (fw->view()->asQWidget()->windowHandle() && fw->view()->asQWidget()->windowHandle()->winId() == hwnd)
+        Window::Ptr window = fw->view()->windowHandle();
+        if (window && window->handle() == hwnd)
             return fw;
     }
 
@@ -595,17 +596,6 @@ Controllers::MainWindow *DockRegistry::mainWindowForHandle(Window::Ptr window) c
         if (mw->view()->isInWindow(window))
             return mw;
     }
-
-    return nullptr;
-}
-
-QWidgetOrQuick *DockRegistry::topLevelForHandle(Window::Ptr windowHandle) const
-{
-    if (auto fw = floatingWindowForHandle(windowHandle))
-        return fw->view()->asQWidget();
-
-    if (auto mw = mainWindowForHandle(windowHandle))
-        return mw->view()->asQWidget();
 
     return nullptr;
 }
@@ -669,7 +659,7 @@ void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
 void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
     for (DockWidgetBase *dw : qAsConst(m_dockWidgets)) {
-        if (dw->view()->asQWidget()->window() == dw->view()->asQWidget() && dw->isVisible())
+        if (dw->view()->window()->equals(dw->view()) && dw->isVisible())
             dw->d->morphIntoFloatingWindow();
     }
 }
