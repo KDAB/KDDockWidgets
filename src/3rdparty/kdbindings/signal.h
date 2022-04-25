@@ -178,7 +178,8 @@ private:
 
     // private, so it is only available from Signal
     ConnectionHandle(std::weak_ptr<Private::SignalImplBase> signalImpl, Private::GenerationalIndex id)
-        : m_signalImpl{ std::move(signalImpl) }, m_id{ std::move(id) }
+        : m_signalImpl { std::move(signalImpl) }
+        , m_id { std::move(id) }
     {
     }
 
@@ -217,8 +218,8 @@ template<typename... Args>
 class Signal
 {
     static_assert(
-            std::conjunction<std::negation<std::is_rvalue_reference<Args>>...>::value,
-            "R-value references are not allowed as Signal parameters!");
+        std::conjunction<std::negation<std::is_rvalue_reference<Args>>...>::value,
+        "R-value references are not allowed as Signal parameters!");
 
     // The Signal::Impl class exists, so Signals can be implemented in a PIMPL-like way.
     // This allows us to easily move Signals without losing their ConnectionHandles, as well as
@@ -226,9 +227,13 @@ class Signal
     class Impl : public Private::SignalImplBase
     {
     public:
-        Impl() noexcept { }
+        Impl() noexcept
+        {
+        }
 
-        ~Impl() noexcept { }
+        ~Impl() noexcept
+        {
+        }
 
         // Signal::Impls are not copyable
         Impl(Impl const &other) = delete;
@@ -291,7 +296,7 @@ class Signal
 
             // This loop can tolerate signal handles being disconnected inside a slot,
             // but adding new connections to a signal inside a slot will still be undefined behaviour
-            for (auto i = decltype(numEntries){ 0 }; i < numEntries; ++i) {
+            for (auto i = decltype(numEntries) { 0 }; i < numEntries; ++i) {
                 const auto index = m_connections.indexAtEntry(i);
 
                 if (index) {
@@ -304,9 +309,10 @@ class Signal
         }
 
     private:
-        struct Connection {
+        struct Connection
+        {
             std::function<void(Args...)> slot;
-            bool blocked{ false };
+            bool blocked { false };
         };
         mutable Private::GenerationalIndexArray<Connection> m_connections;
     };
@@ -349,7 +355,7 @@ public:
     {
         ensureImpl();
 
-        return ConnectionHandle{ m_impl, m_impl->connect(slot) };
+        return ConnectionHandle { m_impl, m_impl->connect(slot) };
     }
 
     /**
@@ -563,6 +569,7 @@ public:
      */
     ScopedConnection &operator=(ConnectionHandle &&h)
     {
+        m_connection.disconnect();
         m_connection = std::move(h);
         return *this;
     }
@@ -632,7 +639,7 @@ public:
      * @throw std::out_of_range If the connection is not active (i.e. ConnectionHandle::isActive() returns false).
      */
     explicit ConnectionBlocker(const ConnectionHandle &handle)
-        : m_handle{ handle }
+        : m_handle { handle }
     {
         m_wasBlocked = m_handle.block(true);
     }
@@ -648,7 +655,7 @@ public:
 
 private:
     ConnectionHandle m_handle;
-    bool m_wasBlocked{ false };
+    bool m_wasBlocked { false };
 };
 
 /**

@@ -305,7 +305,6 @@ Q_SIGNALS:
     void isInMainWindowChanged();
     void isFocusedChanged();
     void focusedWidgetChanged();
-    void isMDIChanged();
     void actualTitleBarChanged();
 
 protected:

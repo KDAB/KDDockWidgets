@@ -381,6 +381,12 @@ public:
         return {};
     }
 
+    std::shared_ptr<ViewWrapper> asWrapper() override
+    {
+        ViewWrapper *wrapper = new ViewWrapper_qtwidgets(this);
+        return std::shared_ptr<ViewWrapper>(wrapper);
+    }
+
     void setObjectName(const QString &name) override
     {
         QWidget::setObjectName(name);
@@ -419,6 +425,16 @@ public:
     QVariant property(const char *name) const override
     {
         return QWidget::property(name);
+    }
+
+    static QWidget *asQWidget(View *view)
+    {
+        return qobject_cast<QWidget *>(view->asQObject());
+    }
+
+    static QWidget *asQWidget(Controller *controller)
+    {
+        return asQWidget(controller->view());
     }
 
 protected:

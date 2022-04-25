@@ -1278,7 +1278,7 @@ void TestDocks::tst_negativeAnchorPosition()
     layout->checkSanity();
 
     // Now resize the Window, after removing middle one
-    const int availableToShrink = layout->layoutSize().height() - layout->minimumSize().height();
+    const int availableToShrink = layout->layoutSize().height() - layout->view()->minSize().height();
     const QSize newSize = { layout->layoutWidth(), layout->layoutHeight() - availableToShrink };
     if (layout->layoutMinimumSize().expandedTo(newSize) != newSize) {
         qDebug() << "Size to set is too small=" << newSize
@@ -1359,11 +1359,11 @@ void TestDocks::tst_negativeAnchorPosition4()
     auto dock2 = docks.at(2).createdDock;
     dock2->setFloating(true);
     auto fw2 = dock2->floatingWindow();
-    dropArea->addWidget(fw2->dropArea(), Location_OnLeft, dock1->dptr()->frame());
+    dropArea->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock1->dptr()->frame());
     dock2->setFloating(true);
     fw2 = dock2->floatingWindow();
 
-    dropArea->addWidget(fw2->dropArea(), Location_OnRight, dock1->dptr()->frame());
+    dropArea->addWidget(fw2->dropArea()->view(), Location_OnRight, dock1->dptr()->frame());
 
     layout->checkSanity();
     docks.at(0).createdDock->deleteLater();
@@ -2513,7 +2513,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     Platform::instance()->tests_waitForEvent(fw2->view()->windowHandle(), QEvent::Move);
 
     auto da2 = fw2->dropArea();
-    const QPoint dragDestPos = da2->mapToGlobal(da2->QWidget::rect().center());
+    const QPoint dragDestPos = da2->mapToGlobal(da2->rect().center());
 
     dragFloatingWindowTo(fw, dragDestPos);
     QVERIFY(fw2->dropArea()->checkSanity());
@@ -3756,7 +3756,7 @@ void TestDocks::tst_marginsAfterRestore()
 
         auto fw = dock1->floatingWindow();
         QVERIFY(fw);
-        layout->addWidget(fw->dropArea(), Location_OnRight);
+        layout->addWidget(fw->dropArea()->view(), Location_OnRight);
 
         layout->checkSanity();
     }
@@ -4049,11 +4049,11 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         QCOMPARE(dock2->dptr()->lastPosition()->lastItem(), oldItem2);
         Item *item2 = fw2->dropArea()->itemForFrame(dock2->dptr()->frame());
         QVERIFY(item2);
-        QCOMPARE(item2->hostWidget()->asQObject(), fw2->dropArea());
+        QVERIFY(item2->hostWidget()->equals(fw2->dropArea()->view()));
         QVERIFY(!layout->itemForFrame(dock2->dptr()->frame()));
 
         // Move from tab to bottom
-        layout->addWidget(fw2->dropArea(), KDDockWidgets::Location_OnRight, nullptr);
+        layout->addWidget(fw2->dropArea()->view(), KDDockWidgets::Location_OnRight, nullptr);
         QVERIFY(layout->checkSanity());
         QVERIFY(dock2->dptr()->lastPosition()->lastItem());
         QCOMPARE(layout->count(), 2);
@@ -4278,10 +4278,10 @@ void TestDocks::tst_anchorFollowingItselfAssert()
     auto dock2 = docks.at(2).createdDock;
     dock2->setFloating(true);
     auto fw2 = dock2->floatingWindow();
-    dropArea->addWidget(fw2->dropArea(), Location_OnLeft, dock1->dptr()->frame());
+    dropArea->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock1->dptr()->frame());
     dock2->setFloating(true);
     fw2 = dock2->floatingWindow();
-    dropArea->addWidget(fw2->dropArea(), Location_OnRight, dock1->dptr()->frame());
+    dropArea->addWidget(fw2->dropArea()->view(), Location_OnRight, dock1->dptr()->frame());
 
     docks.at(0).createdDock->deleteLater();
     docks.at(4).createdDock->deleteLater();
@@ -4828,12 +4828,12 @@ void TestDocks::tst_floatingAction()
         bool dock1IsFloating = dock1->floatAction()->isChecked();
         bool dock2IsFloating = dock2->floatAction()->isChecked();
 
-        connect(dock1->floatAction(), &QAction::toggled, [&dock1IsFloating](bool t) {
+        auto conn1 = connect(dock1->floatAction(), &QAction::toggled, [&dock1IsFloating](bool t) {
             Q_ASSERT(dock1IsFloating != t);
             dock1IsFloating = t;
         });
 
-        connect(dock2->floatAction(), &QAction::toggled, [&dock2IsFloating](bool t) {
+        auto conn2 = connect(dock2->floatAction(), &QAction::toggled, [&dock2IsFloating](bool t) {
             Q_ASSERT(dock2IsFloating != t);
             dock2IsFloating = t;
         });
@@ -4860,6 +4860,8 @@ void TestDocks::tst_floatingAction()
         QVERIFY(dock1IsFloating);
         QVERIFY(dock2IsFloating);
 
+        disconnect(conn1);
+        disconnect(conn2);
         delete fw2;
     }
 
@@ -5053,10 +5055,10 @@ void TestDocks::tst_invalidLayoutAfterRestore()
     QVERIFY(!f2.data());
     QTest::qWait(200); // Not sure why. Some event we're waiting for. TODO: Investigate
     auto fw2 = dock2->floatingWindow();
-    QCOMPARE(layout->minimumSize().width(), 2 * Item::separatorThickness + item1->minSize().width() + item3->minSize().width() + item4->minSize().width());
+    QCOMPARE(layout->view()->minSize().width(), 2 * Item::separatorThickness + item1->minSize().width() + item3->minSize().width() + item4->minSize().width());
 
     // Drop left of dock3
-    layout->addWidget(fw2->dropArea(), Location_OnLeft, dock3->dptr()->frame());
+    layout->addWidget(fw2->dropArea()->view(), Location_OnLeft, dock3->dptr()->frame());
 
     QVERIFY(Testing::waitForDeleted(fw2));
     QCOMPARE(layout->layoutWidth(), oldContentsWidth);

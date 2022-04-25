@@ -20,9 +20,8 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 MDILayoutWidget::MDILayoutWidget(View *parent)
-    : Views::View_qtwidgets<QWidget>(nullptr, Type::MDILayout, parent ? static_cast<Views::View_qtwidgets<QWidget> *>(parent) : nullptr)
-    , LayoutWidget(this)
-    , m_rootItem(new Layouting::ItemFreeContainer(this))
+    : LayoutWidget(Type::MDILayout, Config::self().frameworkWidgetFactory()->createMDILayout(this, parent))
+    , m_rootItem(new Layouting::ItemFreeContainer(view()))
 {
     setRootItem(m_rootItem);
 }
@@ -45,7 +44,7 @@ void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialO
         frame->setLayoutItem(nullptr);
     }
 
-    Layouting::Item *newItem = new Layouting::Item(this);
+    Layouting::Item *newItem = new Layouting::Item(view());
     if (frame) {
         newItem->setGuestView(frame->view());
     } else {
@@ -116,14 +115,4 @@ void MDILayoutWidget::resizeDockWidget(Controllers::Frame *frame, QSize size)
     }
 
     item->setSize(size.expandedTo(frame->view()->minSize()));
-}
-
-void MDILayoutWidget::onLayoutRequest()
-{
-    updateSizeConstraints();
-}
-
-bool MDILayoutWidget::onResize(QSize newSize)
-{
-    return LayoutWidget::onResize(newSize);
 }

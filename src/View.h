@@ -226,6 +226,9 @@ public:
     /// @brief Returns the gui element's parent. Like QWidget::parentWidget()
     virtual std::shared_ptr<ViewWrapper> parentView() const = 0;
 
+    /// @brief Returns this view, but as a wrapper
+    virtual std::shared_ptr<ViewWrapper> asWrapper() = 0;
+
     template<typename T>
     static QSize widgetMinSize(const T *w)
     {

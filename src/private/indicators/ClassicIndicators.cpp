@@ -34,7 +34,7 @@ static IndicatorWindow *createIndicatorWindow(ClassicIndicators *classicIndicato
 
 ClassicIndicators::ClassicIndicators(Controllers::DropArea *dropArea)
     : DropIndicatorOverlayInterface(dropArea) // Is parented on the drop-area, not a toplevel.
-    , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : dropArea))
+    , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : dropArea->view()))
     , m_indicatorWindow(createIndicatorWindow(this))
 {
     if (rubberBandIsTopLevel())
@@ -232,7 +232,7 @@ QRect ClassicIndicators::geometryForRubberband(QRect localRect) const
         return localRect;
 
     QPoint topLeftLocal = localRect.topLeft();
-    QPoint topLeftGlobal = m_dropArea->QWidget::mapToGlobal(topLeftLocal);
+    QPoint topLeftGlobal = m_dropArea->mapToGlobal(topLeftLocal);
 
     localRect.moveTopLeft(topLeftGlobal);
 

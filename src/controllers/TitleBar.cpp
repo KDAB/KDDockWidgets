@@ -98,23 +98,18 @@ MainWindow *TitleBar::mainWindow() const
 
 bool TitleBar::isMDI() const
 {
-    QObject *p = view()->asQWidget();
+    ViewWrapper::Ptr p = view()->asWrapper();
     while (p) {
-        if (qobject_cast<const QWindow *>(p)) {
-            // Ignore QObject hierarchies spanning though multiple windows
-            return false;
-        }
-
-        if (qobject_cast<MDILayoutWidget *>(p))
+        if (p->is(Type::MDILayout))
             return true;
 
-        if (qobject_cast<DropArea *>(p)) {
+        if (p->is(Type::DropArea)) {
             // Note that the TitleBar can be inside a DropArea that's inside a MDIArea
             // so we need this additional check
             return false;
         }
 
-        p = p->parent();
+        p = p->parentView();
     }
 
     return false;

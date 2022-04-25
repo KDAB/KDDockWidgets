@@ -22,7 +22,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 DropIndicatorOverlayInterface::DropIndicatorOverlayInterface(Controllers::DropArea *dropArea)
-    : Views::View_qtwidgets<QWidget>(nullptr, Type::DropIndicatorOverlayInterface, dropArea)
+    : Views::View_qtwidgets<QWidget>(nullptr, Type::DropIndicatorOverlayInterface, qobject_cast<QWidget *>(dropArea->view()->asQObject()))
     , m_dropArea(dropArea)
 {
     setVisible(false);
@@ -47,7 +47,7 @@ void DropIndicatorOverlayInterface::setWindowBeingDragged(bool is)
 
     m_draggedWindowIsHovering = is;
     if (is) {
-        setGeometry(m_dropArea->QWidget::rect());
+        setGeometry(m_dropArea->rect());
         raise();
     } else {
         setHoveredFrame(nullptr);

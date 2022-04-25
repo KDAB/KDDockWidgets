@@ -714,26 +714,27 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
 
     if (isWayland()) {
         // Wayland is very different. It uses QDrag for the dragging of a window.
-        if (auto dropArea = qobject_cast<DropArea *>(o)) {
-            switch (int(e->type())) {
-            case QEvent::DragEnter:
-                if (activeState()->handleDragEnter(static_cast<QDragEnterEvent *>(e), dropArea))
-                    return true;
-                break;
-            case QEvent::DragLeave:
-                if (activeState()->handleDragLeave(dropArea))
-                    return true;
-                break;
-            case QEvent::DragMove:
-                if (activeState()->handleDragMove(static_cast<QDragMoveEvent *>(e), dropArea))
-                    return true;
-                break;
-            case QEvent::Drop:
-                if (activeState()->handleDrop(static_cast<QDropEvent *>(e), dropArea))
-                    return true;
-                break;
-            }
-        }
+        // TODOv2: Uncomment and fix the qobject_cast, which should cast to the view, not the controller
+        // if (auto dropArea = qobject_cast<DropArea *>(o)) {
+        //     switch (int(e->type())) {
+        //     case QEvent::DragEnter:
+        //         if (activeState()->handleDragEnter(static_cast<QDragEnterEvent *>(e), dropArea))
+        //             return true;
+        //         break;
+        //     case QEvent::DragLeave:
+        //         if (activeState()->handleDragLeave(dropArea))
+        //             return true;
+        //         break;
+        //     case QEvent::DragMove:
+        //         if (activeState()->handleDragMove(static_cast<QDragMoveEvent *>(e), dropArea))
+        //             return true;
+        //         break;
+        //     case QEvent::Drop:
+        //         if (activeState()->handleDrop(static_cast<QDropEvent *>(e), dropArea))
+        //             return true;
+        //         break;
+        //     }
+        // }
     }
 
     QMouseEvent *me = mouseEvent(e);

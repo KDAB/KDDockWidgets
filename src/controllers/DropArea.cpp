@@ -41,14 +41,13 @@ using namespace KDDockWidgets::Controllers;
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
-    : Views::View_qtwidgets<QWidget>(nullptr, Type::DropArea, parent ? dynamic_cast<QWidget *>(parent) : nullptr)
-    , LayoutWidget(this)
+    : LayoutWidget(Type::DropArea, Config::self().frameworkWidgetFactory()->createDropArea(this, parent))
     , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))
 {
     Q_ASSERT(parent);
-    setRootItem(new Layouting::ItemBoxContainer(this));
+    setRootItem(new Layouting::ItemBoxContainer(view()));
     DockRegistry::self()->registerLayout(this);
 
     setLayoutSize(parent->size());
@@ -56,16 +55,10 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     // Initialize min size
     updateSizeConstraints();
 
-    setMinimumSize(minimumSize());
+    // TODOv2: Doesn't make much sense ?
+    view()->setMinimumSize(view()->minSize());
 
     qCDebug(creation) << "DropArea";
-    if (isWayland()) {
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-        setAcceptDrops(true);
-#else
-        qWarning() << "Dropping not implement for QtQuick on Wayland yet!";
-#endif
-    }
 
     if (m_isMDIWrapper) {
         m_visibleWidgetCountConnection = visibleWidgetCountChanged.connect([this] {
@@ -97,7 +90,7 @@ DropArea::~DropArea()
 
 Controllers::Frame::List DropArea::frames() const
 {
-    const auto views = findChildren<Views::Frame_qtwidgets *>(QString(), Qt::FindDirectChildrenOnly);
+    const auto views = view()->asQObject()->findChildren<Views::Frame_qtwidgets *>(QString(), Qt::FindDirectChildrenOnly);
     Controllers::Frame::List frames;
 
     for (auto view : views) {
@@ -265,7 +258,7 @@ bool DropArea::drop(WindowBeingDragged *droppedWindow, QPoint globalPos)
 {
     Controllers::FloatingWindow *floatingWindow = droppedWindow->floatingWindow();
 
-    if (floatingWindow->view()->asQWidget() == QWidget::window()) {
+    if (floatingWindow->view()->equals(window())) {
         qWarning() << "Refusing to drop onto itself"; // Doesn't happen
         return false;
     }
@@ -344,7 +337,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Frame *accep
 
     if (result) {
         // Window receiving the drop gets raised:
-        raiseAndActivate();
+        view()->raiseAndActivate();
 
         if (needToFocusNewlyDroppedWidgets) {
             // Let's also focus the newly dropped dock widget
@@ -424,7 +417,7 @@ bool DropArea::isMDIWrapper() const
 DockWidgetBase *DropArea::mdiDockWidgetWrapper() const
 {
     if (m_isMDIWrapper) {
-        return parentView()->asDockWidgetController();
+        return view()->parentView()->asDockWidgetController();
     }
 
     return nullptr;
@@ -462,7 +455,8 @@ bool DropArea::validateInputs(View *widget, Location location,
     const bool isDockWidget = widget->is(Type::DockWidget);
     const bool isStartHidden = option.startsHidden();
 
-    if (!widget->is(Type::Frame) && !widget->is(Type::Layout) && !isDockWidget) {
+    const bool isLayout = widget->is(Type::DropArea) || widget->is(Type::MDILayout);
+    if (!widget->is(Type::Frame) && !isLayout && !isDockWidget) {
         qWarning() << "Unknown widget type" << widget;
         return false;
     }
@@ -529,18 +523,19 @@ void DropArea::addWidget(View *w, Location location,
     Controllers::Frame::List frames = framesFrom(w);
     unrefOldPlaceholders(frames);
     auto dw = w->asDockWidgetController();
+    auto thisView = view();
 
     if (frame) {
-        newItem = new Layouting::Item(this);
+        newItem = new Layouting::Item(thisView);
         newItem->setGuestView(frame->view());
     } else if (dw) {
-        newItem = new Layouting::Item(this);
+        newItem = new Layouting::Item(thisView);
         frame = new Controllers::Frame();
         newItem->setGuestView(frame->view());
         frame->addWidget(dw, option);
     } else if (auto ms = w->asMultiSplitterView()) {
         newItem = ms->m_rootItem;
-        newItem->setHostWidget(this);
+        newItem->setHostWidget(thisView);
 
         if (auto fw = ms->floatingWindow()) {
             newItem->setSize_recursive(fw->size());
@@ -566,7 +561,7 @@ void DropArea::addMultiSplitter(Controllers::DropArea *sourceMultiSplitter, Loca
                                 InitialOption option)
 {
     qCDebug(addwidget) << Q_FUNC_INFO << sourceMultiSplitter << location << relativeTo;
-    addWidget(sourceMultiSplitter, location, relativeTo, option);
+    addWidget(sourceMultiSplitter->view(), location, relativeTo, option);
 }
 
 QVector<Controllers::Separator *> DropArea::separators() const
@@ -634,16 +629,6 @@ QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
 
 bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
 {
-    setRootItem(new Layouting::ItemBoxContainer(this));
+    setRootItem(new Layouting::ItemBoxContainer(view()));
     return LayoutWidget::deserialize(l);
-}
-
-void DropArea::onLayoutRequest()
-{
-    updateSizeConstraints();
-}
-
-bool DropArea::onResize(QSize newSize)
-{
-    return LayoutWidget::onResize(newSize);
 }

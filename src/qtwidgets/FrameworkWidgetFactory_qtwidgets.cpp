@@ -26,7 +26,6 @@
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "qtwidgets/views/DropArea_qtwidgets.h"
 #include "qtwidgets/views/Frame_qtwidgets.h"
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/View_qtwidgets.h"
 #include "qtwidgets/views/Separator_qtwidgets.h"
 #include "qtwidgets/views/TitleBar_qtwidgets.h"
@@ -34,6 +33,7 @@
 #include "qtwidgets/views/SideBar_qtwidgets.h"
 #include "qtwidgets/views/Stack_qtwidgets.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
+#include "qtwidgets/views/MDILayout_qtwidgets.h"
 
 #include <QRubberBand>
 #include <QToolButton>
@@ -116,9 +116,9 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory_qtwidgets::createDropIndicat
     return new ClassicIndicators(dropArea);
 }
 
-QWidgetOrQuick *DefaultWidgetFactory_qtwidgets::createRubberBand(QWidgetOrQuick *parent) const
+QWidgetOrQuick *DefaultWidgetFactory_qtwidgets::createRubberBand(View *parent) const
 {
-    return new QRubberBand(QRubberBand::Rectangle, parent);
+    return new QRubberBand(QRubberBand::Rectangle, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr);
 }
 
 View *DefaultWidgetFactory_qtwidgets::createSideBar(Controllers::SideBar *controller,
@@ -190,4 +190,9 @@ QIcon DefaultWidgetFactory_qtwidgets::iconForButtonType(TitleBarButtonType type,
 View *DefaultWidgetFactory_qtwidgets::createDropArea(Controllers::DropArea *controller, View *parent) const
 {
     return new Views::DropArea_qtwidgets(controller, parent);
+}
+
+View *DefaultWidgetFactory_qtwidgets::createMDILayout(MDILayoutWidget *controller, View *parent) const
+{
+    return new Views::MDILayout_qtwidgets(controller, parent);
 }

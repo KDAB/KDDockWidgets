@@ -297,6 +297,12 @@ public:
         return {};
     }
 
+    std::shared_ptr<ViewWrapper> asWrapper() override
+    {
+        ViewWrapper *wrapper = new ViewWrapper_qtquick(this);
+        return std::shared_ptr<ViewWrapper>(wrapper);
+    }
+
     void setObjectName(const QString &) override
     {
     }

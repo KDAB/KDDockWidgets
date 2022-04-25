@@ -123,6 +123,8 @@ set(DOCKSLIBS_SRCS
     qtwidgets/views/DockWidget_qtwidgets.h
     qtwidgets/views/DropArea_qtwidgets.cpp
     qtwidgets/views/DropArea_qtwidgets.h
+    qtwidgets/views/MDILayout_qtwidgets.cpp
+    qtwidgets/views/MDILayout_qtwidgets.h
     qtwidgets/views/Frame_qtwidgets.cpp
     qtwidgets/views/Frame_qtwidgets.h
     qtwidgets/views/MainWindow_qtwidgets.cpp

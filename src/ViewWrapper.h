@@ -68,6 +68,7 @@ public:
     void render(QPainter *p) override;
     void setCursor(Qt::CursorShape) override;
     void setMouseTracking(bool) override;
+    std::shared_ptr<ViewWrapper> asWrapper() override;
 
     /// TODOv2: Remove
     virtual Controllers::DropArea *asDropArea() const

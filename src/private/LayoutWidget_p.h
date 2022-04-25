@@ -59,10 +59,10 @@ class MainWindow;
  * It's suitable to be set as a main window central widget for instance. The actual layouting is
  * then done by the root Item.
  */
-class DOCKS_EXPORT LayoutWidget
+class DOCKS_EXPORT LayoutWidget : public Controller
 {
 public:
-    explicit LayoutWidget(View *thisView);
+    explicit LayoutWidget(Type, View *);
     ~LayoutWidget();
 
     /// @brief Returns whether this layout is in a MainWindow
@@ -193,10 +193,15 @@ public:
 
     Controllers::DropArea *asDropArea() const;
     MDILayoutWidget *asMDILayout() const;
-    View *view() const;
 
     /// @brief Emitted when the count of visible widgets changes
     KDBindings::Signal<int> visibleWidgetCountChanged;
+
+    /// TODOv2: Better a signal, so that derived classes don't have to remember to call these
+    bool onResize(QSize newSize);
+
+    /// TODOv2: Remove
+    void viewAboutToBeDeleted();
 
 protected:
     void setRootItem(Layouting::ItemContainer *root);
@@ -224,15 +229,11 @@ protected:
      */
     QList<Controllers::Frame *> framesFrom(View *frameOrMultiSplitter) const;
 
-protected:
-    /// TODOv2: Better a signal, so that derived classes don't have to remember to call these
-    bool onResize(QSize newSize);
-
 private:
     bool m_inResizeEvent = false;
     Layouting::ItemContainer *m_rootItem = nullptr;
     KDBindings::ConnectionHandle m_minSizeChangedHandler;
-    View *const m_thisView;
+    bool m_viewDeleted = false;
 };
 
 }

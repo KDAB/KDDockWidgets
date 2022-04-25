@@ -36,6 +36,7 @@ namespace KDDockWidgets {
 class DropIndicatorOverlayInterface;
 
 namespace Controllers {
+class MDILayoutWidget;
 class DropArea;
 class Separator;
 class TabBar;
@@ -65,9 +66,10 @@ public:
                                Controllers::MainWindow *parent = nullptr,
                                Qt::WindowFlags windowFlags = {}) const override;
     DropIndicatorOverlayInterface *createDropIndicatorOverlay(Controllers::DropArea *) const override;
-    QWidgetOrQuick *createRubberBand(QWidgetOrQuick *parent) const override;
+    QWidgetOrQuick *createRubberBand(View *parent) const override;
     View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
+    View *createMDILayout(MDILayoutWidget *, View *parent) const override;
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const override;

@@ -171,6 +171,15 @@ QWidgetOrQuick *DockWidget::widget() const
     return d->widget;
 }
 
+std::shared_ptr<ViewWrapper> DockWidget::guestView() const
+{
+    if (!d->widget)
+        return {};
+
+    auto wrapper = new Views::ViewWrapper_qtwidgets(d->widget);
+    return std::shared_ptr<ViewWrapper>(wrapper);
+}
+
 bool DockWidget::isFloating() const
 {
     if (view()->isTopLevel())
@@ -243,7 +252,7 @@ QString DockWidget::title() const
 {
     if (d->isMDIWrapper()) {
         // It's just a wrapper to help implementing Option_MDINestable. Return the title of the real dock widget we're hosting.
-        auto dropAreaGuest = qobject_cast<DropArea *>(widget());
+        auto dropAreaGuest = d->widget ? guestView()->asDropArea() : nullptr;
         Q_ASSERT(dropAreaGuest);
         if (dropAreaGuest->hasSingleFrame()) {
             return dropAreaGuest->frames().constFirst()->title();
@@ -582,7 +591,7 @@ bool DockWidget::Private::isMDIWrapper() const
 
 DropArea *DockWidget::Private::mdiDropAreaWrapper() const
 {
-    if (auto dropAreaGuest = qobject_cast<DropArea *>(q->widget())) {
+    if (auto dropAreaGuest = widget ? q->guestView()->asDropArea() : nullptr) {
         if (dropAreaGuest->isMDIWrapper())
             return dropAreaGuest;
     }
@@ -600,7 +609,7 @@ DockWidgetBase *DockWidget::Private::mdiDockWidgetWrapper() const
     auto p = q->view()->parentView();
     while (p) {
 
-        if (p->is(Type::Layout)) {
+        if (p->is(Type::DropArea) || p->is(Type::MDILayout)) {
             if (auto dropArea = p->asDropArea()) {
                 if (dropArea->isMDIWrapper())
                     return dropArea->mdiDockWidgetWrapper();

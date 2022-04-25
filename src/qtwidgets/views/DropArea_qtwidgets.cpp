@@ -11,14 +11,16 @@
 
 #include "DropArea_qtwidgets.h"
 #include "private/Utils_p.h"
+#include "controllers/DropArea.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 DropArea_qtwidgets::DropArea_qtwidgets(Controllers::DropArea *dropArea, View *parent)
-    : Views::View_qtwidgets<QWidget>(nullptr, Type::DropArea, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr)
+    : Views::View_qtwidgets<QWidget>(dropArea, Type::DropArea, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr)
     , m_dropArea(dropArea)
 {
+    Q_ASSERT(dropArea);
     if (isWayland()) {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
         setAcceptDrops(true);
@@ -30,4 +32,16 @@ DropArea_qtwidgets::DropArea_qtwidgets(Controllers::DropArea *dropArea, View *pa
 
 DropArea_qtwidgets::~DropArea_qtwidgets()
 {
+    if (!freed())
+        m_dropArea->viewAboutToBeDeleted();
+}
+
+void DropArea_qtwidgets::onLayoutRequest()
+{
+    m_dropArea->updateSizeConstraints();
+}
+
+bool DropArea_qtwidgets::onResize(QSize newSize)
+{
+    return m_dropArea->onResize(newSize);
 }

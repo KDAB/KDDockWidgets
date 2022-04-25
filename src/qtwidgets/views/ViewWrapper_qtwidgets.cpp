@@ -11,9 +11,11 @@
 
 #include "ViewWrapper_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
+#include "qtwidgets/views/DropArea_qtwidgets.h"
 #include "qtwidgets/views/FloatingWindow_qtwidgets.h"
 #include "qtwidgets/views/Frame_qtwidgets.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
+#include "qtwidgets/views/MDILayout_qtwidgets.h"
 #include "qtwidgets/views/Separator_qtwidgets.h"
 #include "qtwidgets/views/SideBar_qtwidgets.h"
 #include "qtwidgets/views/Stack_qtwidgets.h"
@@ -69,11 +71,11 @@ static Controller *controllerForWidget(QWidget *widget)
                 return view->controller();
             break;
         case Type::DropArea:
-            if (auto view = qobject_cast<Controllers::DropArea *>(widget))
+            if (auto view = qobject_cast<DropArea_qtwidgets *>(widget))
                 return view->controller();
             break;
         case Type::MDILayout:
-            if (auto view = qobject_cast<MDILayoutWidget *>(widget))
+            if (auto view = qobject_cast<MDILayout_qtwidgets *>(widget))
                 return view->controller();
             break;
 
@@ -92,7 +94,6 @@ static Controller *controllerForWidget(QWidget *widget)
         case Type::LayoutItem:
         case Type::DropIndicatorOverlayInterface:
         case Type::ViewWrapper:
-        case Type::Layout:
             // skip internal types
             continue;
         }
@@ -220,12 +221,10 @@ bool ViewWrapper_qtwidgets::is(Type t) const
         return qobject_cast<Views::SideBar_qtwidgets *>(m_widget);
     case Type::MainWindow:
         return qobject_cast<Views::MainWindow_qtwidgets *>(m_widget);
-    case Type::Layout:
-        return is(Type::DropArea) || is(Type::MDILayout);
     case Type::DropArea:
-        return qobject_cast<Controllers::DropArea *>(m_widget); // TODOv2
+        return qobject_cast<Views::DropArea_qtwidgets *>(m_widget);
     case Type::MDILayout:
-        return qobject_cast<MDILayoutWidget *>(m_widget);
+        return qobject_cast<MDILayout_qtwidgets *>(m_widget);
     case Type::MDIArea:
         return qobject_cast<MDIArea *>(m_widget);
     case Type::LayoutItem:
@@ -306,7 +305,9 @@ bool ViewWrapper_qtwidgets::isNull() const
 
 Controllers::DropArea *ViewWrapper_qtwidgets::asDropArea() const
 {
-    return qobject_cast<Controllers::DropArea *>(m_widget);
+    if (auto view = qobject_cast<DropArea_qtwidgets *>(m_widget))
+        return view->asMultiSplitterView();
+    return nullptr;
 }
 
 QWidget *ViewWrapper_qtwidgets::widget() const

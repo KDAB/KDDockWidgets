@@ -9,41 +9,29 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-/**
- * @file
- * @brief A MultiSplitter with support for drop indicators when hovering over.
- *
- * @author Sérgio Martins \<sergio.martins@kdab.com\>
- */
-
-#pragma once
-
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include "qtwidgets/views/View_qtwidgets.h"
 
 namespace KDDockWidgets {
-
-namespace Controllers {
-class DropArea;
-}
+class MDILayoutWidget;
 
 namespace Views {
 
-class DOCKS_EXPORT DropArea_qtwidgets : public Views::View_qtwidgets<QWidget>
+class DOCKS_EXPORT MDILayout_qtwidgets : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit DropArea_qtwidgets(Controllers::DropArea *, View *parent);
-    ~DropArea_qtwidgets();
+    explicit MDILayout_qtwidgets(MDILayoutWidget *controller, View *parent);
+    ~MDILayout_qtwidgets();
 
     /// TODOv2
     void onLayoutRequest() override;
     bool onResize(QSize newSize) override;
 
 private:
-    Controllers::DropArea *const m_dropArea;
+    MDILayoutWidget *const m_controller;
 };
 
 }

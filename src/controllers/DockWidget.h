@@ -161,6 +161,9 @@ public:
      */
     QWidget *widget() const;
 
+    /// @brief Like widget() but returns a view
+    std::shared_ptr<ViewWrapper> guestView() const;
+
     /**
      * @brief Returns whether the dock widget is floating.
      * Floating means it's not docked and has a window of its own.

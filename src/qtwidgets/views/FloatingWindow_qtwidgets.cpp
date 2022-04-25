@@ -106,8 +106,8 @@ void FloatingWindow_qtwidgets::init()
 {
     m_vlayout->setSpacing(0);
     updateMargins();
-    m_vlayout->addWidget(m_controller->titleBar()->view()->asQWidget());
-    m_vlayout->addWidget(m_controller->dropArea());
+    m_vlayout->addWidget(View_qtwidgets::asQWidget(m_controller->titleBar()));
+    m_vlayout->addWidget(View_qtwidgets::asQWidget(m_controller->dropArea()));
 
     connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](Window::Ptr w) {
         if (isInWindow(w))

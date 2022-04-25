@@ -122,9 +122,6 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
         return;
 
     const bool wasInMainWindow = dt && isInMainWindow();
-    const bool wasMDI = isMDI();
-    if (m_layoutWidget)
-        m_visibleWidgetCountChangedConnection->disconnect(); // TODOv2: Can be removed, since RAII ?
 
     m_layoutWidget = dt;
     delete m_resizeHandler;
@@ -135,14 +132,12 @@ void Frame::setLayoutWidget(LayoutWidget *dt)
             m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, view());
 
         // We keep the connect result so we don't dereference m_layoutWidget at shutdown
+        m_visibleWidgetCountChangedConnection->disconnect(); // TODOv2: Remove if tests pass. It's a KDBindings bug.
         m_visibleWidgetCountChangedConnection = m_layoutWidget->visibleWidgetCountChanged.connect(&Frame::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();
     }
-
-    if (wasMDI != isMDI())
-        Q_EMIT isMDIChanged();
 }
 
 void Frame::renameTab(int index, const QString &title)
@@ -784,8 +779,9 @@ LayoutSaver::Frame Frame::serialize() const
     frame.currentTabIndex = currentTabIndex();
     frame.id = view()->id(); // for coorelation purposes
 
-    if (MainWindow *mw = mainWindow())
+    if (MainWindow *mw = mainWindow()) {
         frame.mainWindowUniqueName = mw->uniqueName();
+    }
 
     for (DockWidget *dock : docks)
         frame.dockWidgets.push_back(dock->d->serialize());
@@ -923,14 +919,15 @@ Frame *Frame::mdiFrame() const
 DockWidgetBase *Frame::mdiDockWidgetWrapper() const
 {
     if (auto dropArea = mdiDropAreaWrapper())
-        return dropArea->parentView()->asDockWidgetController();
+        return dropArea->view()->parentView()->asDockWidgetController();
 
     return nullptr;
 }
 
 DropArea *Frame::mdiDropAreaWrapper() const
 {
-    auto dropArea = qobject_cast<DropArea *>(view()->asQWidget()->parentWidget());
+    auto p = view()->parentView();
+    auto dropArea = p ? p->asDropArea() : nullptr;
     if (dropArea && dropArea->isMDIWrapper())
         return dropArea;
     return nullptr;

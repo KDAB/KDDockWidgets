@@ -178,7 +178,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
     QPoint globalPressPos = dragPointForWidget(centralFrame.data(), 0);
     auto tabBar = centralFrame->tabBar()->view();
     QVERIFY(tabBar);
-    qDebug() << "Detaching tab from dropArea->size=" << dropArea->QWidget::size() << "; dropArea=" << dropArea;
+    qDebug() << "Detaching tab from dropArea->size=" << dropArea->size() << "; dropArea=" << dropArea;
     drag(tabBar, globalPressPos, m->geometry().bottomRight() + QPoint(30, 30));
 
     QVERIFY(centralFrame);
@@ -950,8 +950,7 @@ void TestQtWidgets::tst_negativeAnchorPositionWhenEmbedded()
 
     layout->checkSanity();
 
-    auto wrapper = static_cast<Views::ViewWrapper_qtwidgets *>(m->window().get());
-    delete wrapper->widget();
+    delete static_cast<Views::ViewWrapper_qtwidgets *>(m->window().get())->widget();
 }
 
 void TestQtWidgets::tst_restoreResizesLayout()
@@ -974,7 +973,7 @@ void TestQtWidgets::tst_restoreResizesLayout()
     QVERIFY(restorer.restoreFromFile("layout_tst_restoreResizesLayout.json"));
     QVERIFY(layout->checkSanity());
 
-    QCOMPARE(m->dropArea()->QWidget::size(), layout->layoutSize());
+    QCOMPARE(m->dropArea()->size(), layout->layoutSize());
     QVERIFY(layout->checkSanity());
 }
 

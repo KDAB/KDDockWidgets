@@ -26,7 +26,6 @@
 #include "controllers/Frame.h"
 #include "private/LayoutWidget_p.h"
 #include "private/DropIndicatorOverlayInterface_p.h"
-#include "qtwidgets/views/View_qtwidgets.h"
 
 class TestQtWidgets;
 class TestDocks;
@@ -53,7 +52,7 @@ class Separator;
  * relative to a single widget.
  */
 
-class DOCKS_EXPORT DropArea : public Views::View_qtwidgets<QWidget>, public LayoutWidget
+class DOCKS_EXPORT DropArea : public LayoutWidget
 {
     Q_OBJECT
 public:
@@ -132,11 +131,6 @@ public:
 
     /// @brief overload that just resizes widgets within a sub-tree
     void layoutEqually(Layouting::ItemBoxContainer *);
-
-
-    /// TODOv2
-    void onLayoutRequest() override;
-    bool onResize(QSize newSize) override;
 
 private:
     Q_DISABLE_COPY(DropArea)

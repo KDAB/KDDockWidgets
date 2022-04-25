@@ -242,18 +242,19 @@ Controllers::MainWindow *View::asMainWindowController() const
     return nullptr;
 }
 
+// TODOv2: Rename to asDropArea()
 Controllers::DropArea *View::asMultiSplitterView()
 {
-    if (!m_inDtor && is(Type::DropArea)) {
-        return qobject_cast<Controllers::DropArea *>(asQObject());
+    if (!m_inDtor && m_controller && m_controller->is(Type::DropArea)) {
+        return qobject_cast<Controllers::DropArea *>(m_controller);
     }
     return nullptr;
 }
 
 MDILayoutWidget *View::asMDILayoutView()
 {
-    if (!m_inDtor && is(Type::MDILayout))
-        return qobject_cast<MDILayoutWidget *>(asQObject());
+    if (!m_inDtor && m_controller && m_controller->is(Type::MDILayout))
+        return qobject_cast<MDILayoutWidget *>(m_controller);
 
     return nullptr;
 }

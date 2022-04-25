@@ -13,6 +13,7 @@
 #include "controllers/DockWidget.h"
 #include "private/MDILayoutWidget_p.h"
 #include "controllers/DropArea.h"
+#include "qtwidgets/views/View_qtwidgets.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 #include <QVBoxLayout>
@@ -45,8 +46,7 @@ MDIArea::MDIArea(QWidget *parent)
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     auto vlay = new QVBoxLayout(this);
-    vlay->setContentsMargins({});
-    vlay->addWidget(d->layoutWidget);
+    vlay->addWidget(View_qtwidgets::asQWidget(d->layoutWidget));
 #else
     QWidgetAdapter::makeItemFillParent(d->layoutWidget);
 #endif
@@ -64,7 +64,7 @@ void MDIArea::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption ad
         auto wrapperDW = new Controllers::DockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()));
         auto dropAreaWrapper = new DropArea(wrapperDW->view(), {}, /*isMDIWrapper= */ true);
         dropAreaWrapper->addDockWidget(dw, Location_OnBottom, nullptr);
-        wrapperDW->setWidget(dropAreaWrapper);
+        wrapperDW->setWidget(qobject_cast<QWidget *>(dropAreaWrapper->view()->asQObject()));
 
         dw = wrapperDW;
     }
