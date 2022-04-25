@@ -218,3 +218,9 @@ std::shared_ptr<ViewWrapper> ViewWrapper::asWrapper()
     qFatal("Don't call on wrappers");
     return {};
 }
+
+QVector<std::shared_ptr<View>> ViewWrapper::childViews() const
+{
+    qFatal("Not implemented");
+    return {};
+}

@@ -352,6 +352,11 @@ public:
         qWarning() << Q_FUNC_INFO << "Implement me";
     }
 
+    QVector<std::shared_ptr<View>> childViews() const override
+    {
+        return {};
+    }
+
 protected:
     bool event(QEvent *e) override
     {

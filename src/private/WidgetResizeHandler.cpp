@@ -423,13 +423,11 @@ void WidgetResizeHandler::updateCursor(CursorPosition m)
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     // Need for updating cursor when we change child widget
-    const QObjectList children = mTarget->asQObject()->children();
-    for (int i = 0, total = children.size(); i < total; ++i) {
-        if (auto child = qobject_cast<WidgetType *>(children.at(i))) {
-
-            if (!child->testAttribute(Qt::WA_SetCursor)) {
-                child->setCursor(Qt::ArrowCursor);
-            }
+    const auto childViews = mTarget->childViews();
+    for (int i = 0, total = childViews.size(); i < total; ++i) {
+        auto child = childViews.at(i);
+        if (!child->testAttribute(Qt::WA_SetCursor)) {
+            child->setCursor(Qt::ArrowCursor);
         }
     }
 #endif

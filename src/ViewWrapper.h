@@ -69,6 +69,7 @@ public:
     void setCursor(Qt::CursorShape) override;
     void setMouseTracking(bool) override;
     std::shared_ptr<ViewWrapper> asWrapper() override;
+    QVector<std::shared_ptr<View>> childViews() const override;
 
     /// TODOv2: Remove
     virtual Controllers::DropArea *asDropArea() const

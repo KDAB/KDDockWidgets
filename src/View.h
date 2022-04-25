@@ -283,6 +283,9 @@ public:
     /// @brief returns whether this view is inside the specified window
     bool isInWindow(std::shared_ptr<Window> window) const;
 
+    /// @Returns a list of child views
+    virtual QVector<std::shared_ptr<View>> childViews() const = 0;
+
 public:
     /// @brief signal emitted once ~View starts
     KDBindings::Signal<> beingDestroyed;

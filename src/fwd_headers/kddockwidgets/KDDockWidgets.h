@@ -16,5 +16,4 @@ class QWidget;
 namespace KDDockWidgets {
 // TODO remove
 using QWidgetOrQuick = QWidget;
-using WidgetType = QWidget;
 }

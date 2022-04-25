@@ -442,6 +442,21 @@ public:
         return asQWidget(controller->view());
     }
 
+    QVector<std::shared_ptr<View>> childViews() const override
+    {
+        QVector<std::shared_ptr<View>> result;
+        const QObjectList children = QObject::children();
+        result.reserve(children.size());
+        for (QObject *child : children) {
+            if (auto widget = qobject_cast<QWidget *>(child)) {
+                ViewWrapper *wrapper = new ViewWrapper_qtwidgets(widget);
+                result.push_back(ViewWrapper::Ptr(wrapper));
+            }
+        }
+
+        return result;
+    }
+
 protected:
     bool event(QEvent *e) override
     {
