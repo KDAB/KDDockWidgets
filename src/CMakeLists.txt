@@ -32,8 +32,6 @@ set(DOCKSLIBS_SRCS
     FrameworkWidgetFactory.h
     MainWindowMDI.cpp
     MainWindowMDI.h
-    MDIArea.cpp
-    MDIArea.h
     LayoutSaver.cpp
     LayoutSaver.h
     private/LayoutSaver_p.h
@@ -138,7 +136,8 @@ set(DOCKSLIBS_SRCS
     qtwidgets/views/Stack_qtwidgets.cpp
     qtwidgets/views/Stack_qtwidgets.h
     qtwidgets/views/SideBar_qtwidgets.cpp
-    qtwidgets/views/SideBar_qtwidgets.h
+    qtwidgets/MDIArea.cpp
+    qtwidgets/MDIArea.h
     qtwidgets/FrameworkWidgetFactory_qtwidgets.cpp
     qtwidgets/FrameworkWidgetFactory_qtwidgets.h
     qtwidgets/DebugWindow.cpp
@@ -283,7 +282,7 @@ else()
       ${DOCKS_INSTALLABLE_INCLUDES}
       # MainWindow.h
       # DockWidget.h
-      MDIArea.h
+      # MDIArea.h
   )
 endif()
 

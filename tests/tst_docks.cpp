@@ -19,7 +19,6 @@
 #include "MainWindowMDI.h"
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
-#include "MDIArea.h"
 #include "Platform.h"
 #include "multisplitter/Item_p.h"
 

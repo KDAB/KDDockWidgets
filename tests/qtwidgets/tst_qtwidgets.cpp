@@ -19,7 +19,6 @@
 #include "../utils.h"
 #include "../Testing.h"
 #include "Config.h"
-#include "MDIArea.h"
 #include "LayoutSaver.h"
 #include "LayoutSaver_p.h"
 #include "WindowBeingDragged_p.h"
@@ -31,6 +30,8 @@
 #include "controllers/Frame.h"
 #include "controllers/DockWidget.h"
 #include "controllers/MainWindow.h"
+
+#include "qtwidgets/MDIArea.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/ViewWrapper_qtwidgets.h"
 

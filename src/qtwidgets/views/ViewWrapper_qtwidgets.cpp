@@ -24,8 +24,7 @@
 #include "qtwidgets/Window_qtwidgets.h"
 
 #include "private/MDILayoutWidget_p.h"
-#include "MDIArea.h"
-#include "controllers/DropArea.h"
+#include "qtwidgets/MDIArea.h"
 #include "controllers/DropArea.h"
 
 #include <QWindow>
