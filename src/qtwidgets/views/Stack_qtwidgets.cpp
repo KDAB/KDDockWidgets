@@ -27,7 +27,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 Stack_qtwidgets::Stack_qtwidgets(Controllers::Stack *controller, Controllers::Frame *parent)
-    : View_qtwidgets<QTabWidget>(controller, Type::Separator, parent ? parent->view()->asQWidget() : nullptr)
+    : View_qtwidgets<QTabWidget>(controller, Type::Separator, View_qtwidgets::asQWidget(parent))
     , m_stack(controller)
 {
 }
@@ -74,12 +74,12 @@ int Stack_qtwidgets::numDockWidgets() const
 
 void Stack_qtwidgets::removeDockWidget(Controllers::DockWidget *dw)
 {
-    removeTab(indexOf(dw->view()->asQWidget()));
+    removeTab(indexOf(View_qtwidgets::asQWidget(dw)));
 }
 
 int Stack_qtwidgets::indexOfDockWidget(const Controllers::DockWidget *dw) const
 {
-    return indexOf(dw->view()->asQWidget());
+    return indexOf(View_qtwidgets::asQWidget(dw->view()));
 }
 
 void Stack_qtwidgets::mouseDoubleClickEvent(QMouseEvent *ev)
@@ -119,7 +119,7 @@ void Stack_qtwidgets::setCurrentDockWidget(int index)
 bool Stack_qtwidgets::insertDockWidget(int index, Controllers::DockWidget *dw,
                                        const QIcon &icon, const QString &title)
 {
-    insertTab(index, dw->view()->asQWidget(), icon, title);
+    insertTab(index, View_qtwidgets::asQWidget(dw), icon, title);
     return true;
 }
 
@@ -225,7 +225,7 @@ void Stack_qtwidgets::showContextMenu(QPoint pos)
 
 QTabBar *Stack_qtwidgets::tabBar() const
 {
-    return static_cast<QTabBar *>(m_stack->tabBar()->view()->asQWidget());
+    return static_cast<QTabBar *>(View_qtwidgets::asQWidget((m_stack->tabBar())));
 }
 
 void Stack_qtwidgets::setDocumentMode(bool is)

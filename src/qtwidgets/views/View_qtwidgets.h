@@ -429,11 +429,16 @@ public:
 
     static QWidget *asQWidget(View *view)
     {
+        if (!view)
+            return nullptr;
+
         return qobject_cast<QWidget *>(view->asQObject());
     }
 
     static QWidget *asQWidget(Controller *controller)
     {
+        if (!controller)
+            return nullptr;
         return asQWidget(controller->view());
     }
 

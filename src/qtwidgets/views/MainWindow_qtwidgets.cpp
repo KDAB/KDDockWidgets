@@ -82,15 +82,15 @@ public:
         updateMargins();
 
         if (m_supportsAutoHide) {
-            m_layout->addWidget(q->sideBar(SideBarLocation::West)->view()->asQWidget());
+            m_layout->addWidget(View_qtwidgets::asQWidget(q->sideBar(SideBarLocation::West)->view()));
             auto innerVLayout = new QVBoxLayout();
             innerVLayout->setSpacing(0);
             innerVLayout->setContentsMargins(0, 0, 0, 0);
-            innerVLayout->addWidget(q->sideBar(SideBarLocation::North)->view()->asQWidget());
-            innerVLayout->addWidget(qobject_cast<QWidget *>(m_controller->layoutWidget()->view()->asQObject()));
-            innerVLayout->addWidget(q->sideBar(SideBarLocation::South)->view()->asQWidget());
+            innerVLayout->addWidget(View_qtwidgets::asQWidget(q->sideBar(SideBarLocation::North)));
+            innerVLayout->addWidget(View_qtwidgets::asQWidget(m_controller->layoutWidget()));
+            innerVLayout->addWidget(View_qtwidgets::asQWidget(q->sideBar(SideBarLocation::South)));
             m_layout->addLayout(innerVLayout);
-            m_layout->addWidget(q->sideBar(SideBarLocation::East)->view()->asQWidget());
+            m_layout->addWidget(View_qtwidgets::asQWidget(q->sideBar(SideBarLocation::East)));
         } else {
             m_layout->addWidget(qobject_cast<QWidget *>(m_controller->layoutWidget()->view()->asQObject()));
         }

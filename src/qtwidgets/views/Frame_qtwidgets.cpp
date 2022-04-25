@@ -62,9 +62,9 @@ void Frame_qtwidgets::init()
     auto vlayout = new VBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
-    vlayout->addWidget(m_controller->titleBar()->view()->asQWidget());
+    vlayout->addWidget(asQWidget(m_controller->titleBar()));
     auto tabWidget = m_controller->tabWidget();
-    vlayout->addWidget(tabWidget->view()->asQWidget());
+    vlayout->addWidget(asQWidget(m_controller->tabWidget()));
 
     tabWidget->setTabBarAutoHide(!m_controller->alwaysShowsTabs());
 
@@ -98,7 +98,7 @@ void Frame_qtwidgets::changeTabIcon(int index, const QIcon &icon)
 int Frame_qtwidgets::nonContentsHeight() const
 {
     Controllers::TitleBar *tb = m_controller->titleBar();
-    QWidget *tabBar = m_controller->tabBar()->view()->asQWidget();
+    QWidget *tabBar = asQWidget(m_controller->tabBar());
 
     return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);
 }
@@ -214,7 +214,7 @@ QRect Frame_qtwidgets::dragRect() const
         return rect;
 
     if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) {
-        auto tabBar = qobject_cast<QTabBar *>(m_controller->tabBar()->view()->asQWidget());
+        auto tabBar = qobject_cast<QTabBar *>(asQWidget(m_controller->tabBar()));
         rect.setHeight(tabBar->height());
         rect.setWidth(QWidget::width() - tabBar->width());
         rect.moveTopLeft(QPoint(tabBar->width(), tabBar->y()));

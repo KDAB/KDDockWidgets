@@ -62,7 +62,6 @@ public:
 
     virtual void init() {};
     QObject *asQObject() const;
-    QWidget *asQWidget() const; // TODOv2: Remove
     QObject *parent() const;
 
     /// @brief Returns this view's controller

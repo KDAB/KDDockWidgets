@@ -68,11 +68,6 @@ QObject *View::asQObject() const
     return m_thisObj;
 }
 
-QWidget *View::asQWidget() const
-{
-    return qobject_cast<QWidget *>(m_thisObj);
-}
-
 QObject *View::parent() const
 {
     return m_thisObj->parent();

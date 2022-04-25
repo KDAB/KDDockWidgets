@@ -62,22 +62,22 @@ View *DefaultWidgetFactory_qtwidgets::createFrame(Controllers::Frame *controller
                                                   FrameOptions) const
 {
     // TODOv2: Remove options
-    return new Views::Frame_qtwidgets(controller, parent ? parent->asQWidget() : nullptr);
+    return new Views::Frame_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
 View *DefaultWidgetFactory_qtwidgets::createTitleBar(Controllers::TitleBar *titleBar, Controllers::Frame *frame) const
 {
-    return new Views::TitleBar_qtwidgets(titleBar, frame->view()->asQWidget());
+    return new Views::TitleBar_qtwidgets(titleBar, Views::View_qtwidgets<QWidget>::asQWidget(frame));
 }
 
 View *DefaultWidgetFactory_qtwidgets::createTitleBar(Controllers::TitleBar *titleBar, Controllers::FloatingWindow *fw) const
 {
-    return new Views::TitleBar_qtwidgets(titleBar, fw ? fw->view()->asQWidget() : nullptr);
+    return new Views::TitleBar_qtwidgets(titleBar, Views::View_qtwidgets<QWidget>::asQWidget(fw));
 }
 
 View *DefaultWidgetFactory_qtwidgets::createTabBar(Controllers::TabBar *tabBar, View *parent) const
 {
-    return new Views::TabBar_qtwidgets(tabBar, parent->asQWidget());
+    return new Views::TabBar_qtwidgets(tabBar, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
 View *DefaultWidgetFactory_qtwidgets::createTabWidget(Controllers::Stack *controller, Controllers::Frame *parent) const
@@ -93,7 +93,7 @@ View *DefaultWidgetFactory_qtwidgets::createSeparator(Controllers::Separator *co
 View *DefaultWidgetFactory_qtwidgets::createFloatingWindow(Controllers::FloatingWindow *controller,
                                                            Controllers::MainWindow *parent, Qt::WindowFlags windowFlags) const
 {
-    auto mainwindow = qobject_cast<QMainWindow *>(parent ? parent->view()->asQWidget() : nullptr);
+    auto mainwindow = qobject_cast<QMainWindow *>(Views::View_qtwidgets<QWidget>::asQWidget(parent));
     return new Views::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
 }
 
@@ -124,7 +124,7 @@ QWidgetOrQuick *DefaultWidgetFactory_qtwidgets::createRubberBand(View *parent) c
 View *DefaultWidgetFactory_qtwidgets::createSideBar(Controllers::SideBar *controller,
                                                     Controllers::MainWindow *parent) const
 {
-    return new Views::SideBar_qtwidgets(controller, parent->view()->asQWidget());
+    return new Views::SideBar_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
 QAbstractButton *DefaultWidgetFactory_qtwidgets::createTitleBarButton(QWidget *parent, TitleBarButtonType type) const
