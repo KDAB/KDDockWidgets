@@ -9,40 +9,32 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include <ViewGuard.h>
-#include <qtwidgets/views/ViewWrapper_qtwidgets.h>
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "ViewGuard.h"
+#include "qtwidgets/views/ViewWrapper_qtwidgets.h"
 
-#include <cstdio>
+#include <doctest/doctest.h>
 
 using namespace KDDockWidgets;
 
-void test(bool cond, const char *stmt, int line)
-{
-    if (!cond) {
-        printf("[FAILED] %s line; %d\n", stmt, line);
-        exit(1);
-    }
-}
-#define TEST(cond) test(cond, #cond, __LINE__)
-
-int main()
+TEST_CASE("ViewGuard test")
 {
     ViewGuard g(nullptr);
-    TEST(g.isNull());
+    CHECK(g.isNull());
 
     {
         Views::ViewWrapper_qtwidgets wv(static_cast<QWidget *>(nullptr));
         g = &wv;
-        TEST(!g.isNull());
+        CHECK(!g.isNull());
     }
 
-    TEST(g.isNull());
+    CHECK(g.isNull());
 
     // Test when ViewGuard is destroyed before view
     // May not crash without ASAN
-    Views::ViewWrapper_qtwidgets wv(static_cast<QWidget*>(nullptr));
+    Views::ViewWrapper_qtwidgets wv(static_cast<QWidget *>(nullptr));
     {
         ViewGuard gg(&wv);
-        TEST(!gg.isNull());
+        CHECK(!gg.isNull());
     }
 }

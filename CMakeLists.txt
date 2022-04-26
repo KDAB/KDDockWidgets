@@ -170,6 +170,7 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
   set(${PROJECT_NAME}_TESTS ON)
   set(${PROJECT_NAME}_WERROR ON)
   include(ECMEnableSanitizers)
+  find_package(doctest REQUIRED)
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
