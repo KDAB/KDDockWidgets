@@ -25,7 +25,8 @@
       "[ ]",
       "[x]",
       "TODOv2"
-    ]
+    ],
+    "testMate.cpp.test.executables": "{build-dev,build-dev6}/**/*{tst}*"
   },
   "launch": {
     "version": "0.2.0",
