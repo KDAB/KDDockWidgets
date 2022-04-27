@@ -13,10 +13,13 @@
 
 #include "docks_export.h"
 #include "ViewWrapper.h"
+#include "KDDockWidgets.h"
 
 #include "kdbindings/signal.h"
 
 #include <QEvent>
+
+#include <vector>
 #include <memory.h>
 
 namespace KDDockWidgets {
@@ -70,6 +73,10 @@ public:
     virtual QSize screenSizeFor(View *) const = 0;
 
 #ifdef DOCKS_DEVELOPER_MODE
+
+    /// @brief list the list of frontend types supported by this build
+    static std::vector<KDDockWidgets::FrontendType> frontendTypes();
+
     /// @brief Waits for the specified window to be active (have the keyboard focus)
     /// Window::isActive() should return true
     /// @sa Window::isActive()

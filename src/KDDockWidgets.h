@@ -65,7 +65,9 @@ Q_ENUM_NS(MainWindowOptions)
 enum class FrontendType
 {
     QtWidgets = 1,
-    QtQuick
+    QtQuick,
+    FIRST = QtWidgets,
+    LAST = QtQuick // keep pointing to last
 };
 Q_ENUM_NS(FrontendType)
 

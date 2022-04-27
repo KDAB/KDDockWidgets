@@ -37,3 +37,15 @@ bool Platform::hasActivePopup() const
 {
     return false;
 }
+
+/**static*/
+std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
+{
+    std::vector<KDDockWidgets::FrontendType> types;
+    types.reserve(int(FrontendType::LAST));
+    for (int i = int(FrontendType::FIRST); i <= int(FrontendType::LAST); ++i) {
+        types.push_back(FrontendType(i));
+    }
+
+    return types;
+}
