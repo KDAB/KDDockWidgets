@@ -33,10 +33,8 @@ public:
     explicit ViewWrapper(Controller *controller, QObject *thisObj); // TODOv2: Remove thisObj argument once all calls to asQWidget() are removed
 
     void setParent(View *) override;
-    QSize minSize() const override;
     void setMinimumSize(QSize) override;
     QSize maxSizeHint() const override;
-    QSize minimumSizeHint() const override;
     QRect normalGeometry() const override;
     void setWidth(int width) override;
     void setHeight(int height) override;

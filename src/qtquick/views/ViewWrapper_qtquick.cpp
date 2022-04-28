@@ -230,3 +230,8 @@ bool ViewWrapper_qtquick::testAttribute(Qt::WidgetAttribute) const
 void ViewWrapper_qtquick::setCursor(Qt::CursorShape)
 {
 }
+
+QSize ViewWrapper_qtquick::minSize() const
+{
+    return {};
+}

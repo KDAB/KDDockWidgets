@@ -55,10 +55,9 @@ inline int lengthForSize(QSize sz, Qt::Orientation o)
     return o == Qt::Vertical ? sz.height() : sz.width();
 }
 
-template<typename T>
-inline int widgetMinLength(const T *w, Qt::Orientation o)
+inline int widgetMinLength(View *view, Qt::Orientation o)
 {
-    const QSize sz = View::widgetMinSize(w);
+    const QSize sz = view->minSize();
     return lengthForSize(sz, o);
 }
 
@@ -5739,7 +5738,7 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
 
     if (dock1->width() < min1) {
         qDebug() << "\ndock1->width()=" << dock1->width() << "\nmin1=" << min1
-                 << "\ndock min sizes=" << dock1->view()->minimumWidth() << dock1->view()->minimumSizeHint().width()
+                 << "\ndock min sizes=" << dock1->view()->minimumWidth()
                  << "\nframe1->width()=" << dock1->dptr()->frame()->view()->width()
                  << "\nframe1->min=" << lengthForSize(dock1->dptr()->frame()->view()->minSize(), Qt::Horizontal);
         l->dumpLayout();
@@ -5774,8 +5773,11 @@ void TestDocks::tst_constraintsPropagateUp()
     auto dock1 = createDockWidget("dock1", guestWidget);
     auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(minWidth, minHeight)));
 
-    QCOMPARE(widgetMinLength(guestWidget, Qt::Vertical), minHeight);
-    QCOMPARE(widgetMinLength(guestWidget, Qt::Horizontal), minWidth);
+    // TODOv2: Remove
+    Views::ViewWrapper_qtwidgets guestWrapper(guestWidget);
+
+    QCOMPARE(widgetMinLength(&guestWrapper, Qt::Vertical), minHeight);
+    QCOMPARE(widgetMinLength(&guestWrapper, Qt::Horizontal), minWidth);
     QCOMPARE(dock1->view()->minimumWidth(), minWidth);
     QCOMPARE(dock1->view()->minimumHeight(), minHeight);
     QCOMPARE(dock1->view()->minSize(), minSz);
@@ -5826,7 +5828,7 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     const int expectedMinHeight = item2->minLength(Qt::Vertical) + item3->minLength(Qt::Vertical) + 1 * Item::separatorThickness
         + margins.top() + margins.bottom();
 
-    QCOMPARE(m->view()->minimumSizeHint().height(), expectedMinHeight);
+    QCOMPARE(m->view()->minSize().height(), expectedMinHeight);
 
     dock1->deleteLater();
     Testing::waitForDeleted(dock1);

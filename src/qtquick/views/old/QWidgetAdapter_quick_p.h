@@ -138,10 +138,7 @@ public:
     {
         return QQuickItem::size().toSize();
     }
-    virtual QSize minimumSizeHint() const
-    {
-        return minimumSize();
-    }
+
     virtual QSize minimumSize() const;
     virtual QSize maximumSize() const;
     int minimumHeight() const

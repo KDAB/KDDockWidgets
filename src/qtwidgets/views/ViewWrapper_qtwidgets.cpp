@@ -333,3 +333,15 @@ void ViewWrapper_qtwidgets::setCursor(Qt::CursorShape cursor)
 {
     m_widget->setCursor(cursor);
 }
+
+QSize ViewWrapper_qtwidgets::minSize() const
+{
+    // TODOv2: Remove duplication
+    const int minW = m_widget->minimumWidth() > 0 ? m_widget->minimumWidth()
+                                                  : m_widget->minimumSizeHint().width();
+
+    const int minH = m_widget->minimumHeight() > 0 ? m_widget->minimumHeight()
+                                                   : m_widget->minimumSizeHint().height();
+
+    return QSize(minW, minH).expandedTo(View::hardcodedMinimumSize());
+}

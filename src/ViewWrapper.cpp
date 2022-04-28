@@ -31,19 +31,7 @@ void ViewWrapper::setMinimumSize(QSize)
     qFatal("Not implemented");
 }
 
-QSize ViewWrapper::minSize() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 QSize ViewWrapper::maxSizeHint() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
-QSize ViewWrapper::minimumSizeHint() const
 {
     qFatal("Not implemented");
     return {};

@@ -59,6 +59,7 @@ public:
     QPoint mapTo(View *someAncestor, QPoint pos) const override;
     bool testAttribute(Qt::WidgetAttribute) const override;
     void setCursor(Qt::CursorShape) override;
+    QSize minSize() const override;
 
 private:
     QPointer<QQuickItem> m_item;

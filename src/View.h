@@ -121,7 +121,6 @@ public:
     }
 
     virtual QSize maxSizeHint() const = 0;
-    virtual QSize minimumSizeHint() const = 0;
     virtual QSize maximumSize() const = 0;
     virtual QRect geometry() const = 0;
     virtual QRect normalGeometry() const = 0;
@@ -227,39 +226,6 @@ public:
 
     /// @brief Returns this view, but as a wrapper
     virtual std::shared_ptr<ViewWrapper> asWrapper() = 0;
-
-    template<typename T>
-    static QSize widgetMinSize(const T *w)
-    {
-        const int minW = w->minimumWidth() > 0 ? w->minimumWidth()
-                                               : w->minimumSizeHint().width();
-
-        const int minH = w->minimumHeight() > 0 ? w->minimumHeight()
-                                                : w->minimumSizeHint().height();
-
-        return QSize(minW, minH).expandedTo(View::hardcodedMinimumSize());
-    }
-
-    template<typename T>
-    static QSize widgetMaxSize(const T *w)
-    {
-        // The max size is usually QWidget::maximumSize(), but we also honour the QSizePolicy::Fixed+sizeHint() case
-        // as widgets don't need to have QWidget::maximumSize() to have a max size honoured
-
-        const QSize min = widgetMinSize(w);
-        QSize max = w->maximumSize();
-        max = View::boundedMaxSize(min, max); // for safety against weird values
-
-        const QSizePolicy policy = w->sizePolicy();
-
-        if (policy.verticalPolicy() == QSizePolicy::Fixed || policy.verticalPolicy() == QSizePolicy::Maximum)
-            max.setHeight(qMin(max.height(), w->sizeHint().height()));
-        if (policy.horizontalPolicy() == QSizePolicy::Fixed || policy.horizontalPolicy() == QSizePolicy::Maximum)
-            max.setWidth(qMin(max.width(), w->sizeHint().width()));
-
-        max = View::boundedMaxSize(min, max); // for safety against weird values
-        return max;
-    }
 
     /// @brief Returns whether the view is of the specified type
     /// Virtual so it can be overridden by ViewWrapper. When we're wrapping an existing GUI element

@@ -60,6 +60,7 @@ public:
     Controllers::DropArea *asDropArea() const override;
     bool testAttribute(Qt::WidgetAttribute) const override;
     void setCursor(Qt::CursorShape) override;
+    QSize minSize() const override;
 
     QWidget *widget() const;
 

@@ -1107,7 +1107,9 @@ void TestQtWidgets::tst_maxSizePropagates()
     dock1->setWidget(w);
     dock1->show();
 
-    QCOMPARE(dock1->view()->minSize(), View::widgetMinSize(w));
+    Views::ViewWrapper_qtwidgets guestWrapper(w);
+
+    QCOMPARE(dock1->view()->minSize(), guestWrapper.minSize());
     QCOMPARE(dock1->view()->maximumSize(), w->maximumSize());
 
     w->setMinimumSize(121, 121);
@@ -1115,7 +1117,7 @@ void TestQtWidgets::tst_maxSizePropagates()
 
     Platform::instance()->tests_waitForEvent(w, QEvent::LayoutRequest);
 
-    QCOMPARE(dock1->view()->minSize(), View::widgetMinSize(w));
+    QCOMPARE(dock1->view()->minSize(), guestWrapper.minSize());
     QCOMPARE(dock1->view()->maximumSize(), w->maximumSize());
 
     // Now let's see if our Frame also has proper size-constraints

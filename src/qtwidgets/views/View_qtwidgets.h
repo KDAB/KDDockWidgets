@@ -34,7 +34,6 @@ public:
     using View::close;
     using View::height;
     using View::minimumHeight;
-    using View::minimumSizeHint;
     using View::minimumWidth;
     using View::rect;
     using View::resize;
@@ -60,17 +59,12 @@ public:
     QSize minSize() const override
     {
         const int minW = Base::minimumWidth() > 0 ? Base::minimumWidth()
-                                                  : Base::minimumSizeHint().width();
+                                                  : minimumSizeHint().width();
 
         const int minH = Base::minimumHeight() > 0 ? Base::minimumHeight()
-                                                   : Base::minimumSizeHint().height();
+                                                   : minimumSizeHint().height();
 
         return QSize(minW, minH).expandedTo(View::hardcodedMinimumSize());
-    }
-
-    void setMinimumSize(QSize sz) override
-    {
-        QWidget::setMinimumSize(sz);
     }
 
     QSize minimumSizeHint() const override
@@ -78,9 +72,29 @@ public:
         return Base::minimumSizeHint();
     }
 
+    void setMinimumSize(QSize sz) override
+    {
+        QWidget::setMinimumSize(sz);
+    }
+
     QSize maxSizeHint() const override
     {
-        return widgetMaxSize(this);
+        // The max size is usually QWidget::maximumSize(), but we also honour the QSizePolicy::Fixed+sizeHint() case
+        // as widgets don't need to have QWidget::maximumSize() to have a max size honoured
+
+        const QSize min = minSize();
+        QSize max = maximumSize();
+        max = boundedMaxSize(min, max); // for safety against weird values
+
+        const QSizePolicy policy = sizePolicy();
+
+        if (policy.verticalPolicy() == QSizePolicy::Fixed || policy.verticalPolicy() == QSizePolicy::Maximum)
+            max.setHeight(qMin(max.height(), sizeHint().height()));
+        if (policy.horizontalPolicy() == QSizePolicy::Fixed || policy.horizontalPolicy() == QSizePolicy::Maximum)
+            max.setWidth(qMin(max.width(), sizeHint().width()));
+
+        max = View::boundedMaxSize(min, max); // for safety against weird values
+        return max;
     }
 
     QSize maximumSize() const override

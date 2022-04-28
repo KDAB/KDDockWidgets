@@ -32,7 +32,7 @@ public:
     using View::close;
     using View::height;
     using View::minimumHeight;
-    using View::minimumSizeHint;
+
     using View::minimumWidth;
     using View::rect;
     using View::resize;
@@ -56,11 +56,6 @@ public:
     }
 
     QSize minSize() const override
-    {
-        return {};
-    }
-
-    QSize minimumSizeHint() const override
     {
         return {};
     }
