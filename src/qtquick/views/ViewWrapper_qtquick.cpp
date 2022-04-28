@@ -221,3 +221,12 @@ QPoint ViewWrapper_qtquick::mapTo(View *, QPoint) const
 {
     return {};
 }
+
+bool ViewWrapper_qtquick::testAttribute(Qt::WidgetAttribute) const
+{
+    return {};
+}
+
+void ViewWrapper_qtquick::setCursor(Qt::CursorShape)
+{
+}

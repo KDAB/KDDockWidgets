@@ -134,12 +134,6 @@ void ViewWrapper::setAttribute(Qt::WidgetAttribute, bool)
     qFatal("Not implemented");
 }
 
-bool ViewWrapper::testAttribute(Qt::WidgetAttribute) const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 Qt::WindowFlags ViewWrapper::flags() const
 {
     qFatal("Not implemented");
@@ -198,11 +192,6 @@ void ViewWrapper::releaseKeyboard()
 }
 
 void ViewWrapper::render(QPainter *)
-{
-    qFatal("Not implemented");
-}
-
-void ViewWrapper::setCursor(Qt::CursorShape)
 {
     qFatal("Not implemented");
 }

@@ -53,7 +53,6 @@ public:
     bool close() override;
     void setFlag(Qt::WindowType, bool = true) override;
     void setAttribute(Qt::WidgetAttribute, bool enable = true) override;
-    bool testAttribute(Qt::WidgetAttribute) const override;
     Qt::WindowFlags flags() const override;
     void setWindowIcon(const QIcon &) override;
     void showNormal() override;
@@ -66,7 +65,6 @@ public:
     void setWindowOpacity(double) override;
     void releaseKeyboard() override;
     void render(QPainter *p) override;
-    void setCursor(Qt::CursorShape) override;
     void setMouseTracking(bool) override;
     std::shared_ptr<ViewWrapper> asWrapper() override;
     QVector<std::shared_ptr<View>> childViews() const override;

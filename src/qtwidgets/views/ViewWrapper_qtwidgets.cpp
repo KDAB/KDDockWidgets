@@ -323,3 +323,13 @@ QPoint ViewWrapper_qtwidgets::mapTo(View *someAncestor, QPoint pos) const
 {
     return m_widget->mapTo(qobject_cast<QWidget *>(someAncestor->asQObject()), pos);
 }
+
+bool ViewWrapper_qtwidgets::testAttribute(Qt::WidgetAttribute attr) const
+{
+    return m_widget->testAttribute(attr);
+}
+
+void ViewWrapper_qtwidgets::setCursor(Qt::CursorShape cursor)
+{
+    m_widget->setCursor(cursor);
+}

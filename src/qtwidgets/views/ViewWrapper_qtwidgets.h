@@ -58,6 +58,8 @@ public:
     void setWindowTitle(const QString &title) override;
     QPoint mapTo(View *, QPoint) const override;
     Controllers::DropArea *asDropArea() const override;
+    bool testAttribute(Qt::WidgetAttribute) const override;
+    void setCursor(Qt::CursorShape) override;
 
     QWidget *widget() const;
 
