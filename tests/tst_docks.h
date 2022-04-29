@@ -45,11 +45,6 @@ public Q_SLOTS:
         KDDockWidgets::Testing::installFatalMessageHandler();
     }
 
-    void cleanupTestCase()
-    {
-        KDDockWidgets::Platform::tests_deinitPlatform();
-    }
-
 private Q_SLOTS:
     void tst_simple1();
     void tst_simple2();

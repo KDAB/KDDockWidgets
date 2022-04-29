@@ -6354,5 +6354,9 @@ int main(int argc, char *argv[])
         return 0;
 
     TestDocks test;
-    return QTest::qExec(&test, argc, argv);
+
+    const int exitCode = QTest::qExec(&test, argc, argv);
+    KDDockWidgets::Platform::tests_deinitPlatform();
+
+    return exitCode;
 }

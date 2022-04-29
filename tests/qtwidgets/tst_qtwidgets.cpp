@@ -72,11 +72,6 @@ public Q_SLOTS:
         KDDockWidgets::Testing::installFatalMessageHandler();
     }
 
-    void cleanupTestCase()
-    {
-        KDDockWidgets::Platform::tests_deinitPlatform();
-    }
-
 private Q_SLOTS:
     // TODO: Port these to QtQuick
     void tst_mainWindowAlwaysHasCentralWidget();
@@ -1422,7 +1417,10 @@ int main(int argc, char *argv[])
         return 0;
 
     TestQtWidgets test;
-    return QTest::qExec(&test, argc, argv);
+    const int exitCode = QTest::qExec(&test, argc, argv);
+    KDDockWidgets::Platform::tests_deinitPlatform();
+
+    return exitCode;
 }
 
 #include "tst_qtwidgets.moc"

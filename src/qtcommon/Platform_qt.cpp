@@ -183,6 +183,7 @@ void Platform_qt::tests_initPlatform_impl()
 
 void Platform_qt::tests_deinitPlatform_impl()
 {
+    delete qApp;
 }
 
 #endif
