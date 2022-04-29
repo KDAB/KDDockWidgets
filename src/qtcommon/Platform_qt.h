@@ -42,7 +42,8 @@ public:
     bool tests_waitForResize(Controller *, int timeout = 2000) const override;
     bool tests_waitForDeleted(View *, int timeout = 2000) const override;
     void tests_sendEvent(std::shared_ptr<Window>, QEvent *) const override;
-    void tests_initTests() const override;
+    void tests_initTests() override;
+    void tests_cleanupTests() override;
 #endif
 protected:
     int screenNumberForQWindow(QWindow *) const;

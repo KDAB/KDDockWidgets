@@ -101,7 +101,7 @@ QSize Platform_qtquick::screenSizeFor(View *view) const
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-void Platform_qtquick::tests_initTests() const
+void Platform_qtquick::tests_initTests()
 {
     Platform_qt::tests_initTests();
 
@@ -109,9 +109,11 @@ void Platform_qtquick::tests_initTests() const
     KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
 }
 
-void Platform_qtquick::tests_cleanupTests() const
+void Platform_qtquick::tests_cleanupTests()
 {
     delete KDDockWidgets::Config::self().qmlEngine();
+
+    Platform_qt::tests_cleanupTests();
 }
 
 #endif

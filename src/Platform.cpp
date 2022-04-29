@@ -39,6 +39,14 @@ bool Platform::hasActivePopup() const
     return false;
 }
 
+
+#ifdef DOCKS_DEVELOPER_MODE
+
+void Platform::tests_cleanupTests()
+{
+    delete this;
+}
+
 /**static*/
 std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 {
@@ -50,3 +58,5 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 
     return types;
 }
+
+#endif

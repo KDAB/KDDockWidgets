@@ -175,10 +175,15 @@ void Platform_qt::tests_sendEvent(Window::Ptr window, QEvent *ev) const
     qApp->sendEvent(static_cast<Window_qt *>(window.get())->qtWindow(), ev);
 }
 
-void Platform_qt::tests_initTests() const
+void Platform_qt::tests_initTests()
 {
     qApp->setOrganizationName(QStringLiteral("KDAB"));
     qApp->setApplicationName(QStringLiteral("dockwidgets-unit-tests"));
+}
+
+void Platform_qt::tests_cleanupTests()
+{
+    Platform::tests_cleanupTests();
 }
 
 #endif

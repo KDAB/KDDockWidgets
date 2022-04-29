@@ -100,15 +100,13 @@ public:
 
     /// @brief Implement any needed initializations before tests starting to run, if any
     /// Override in derived classes for custom behavior.
-    virtual void tests_initTests() const
+    virtual void tests_initTests()
     {
     }
 
-    /// @brief Implement any needed cleanup after the tests rans, if any
+    /// @brief Implement any needed cleanup after the tests runs, if any
     /// Override in derived classes for custom behavior.
-    virtual void tests_cleanupTests() const
-    {
-    }
+    virtual void tests_cleanupTests();
 
 #endif
 

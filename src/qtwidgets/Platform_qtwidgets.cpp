@@ -108,11 +108,16 @@ QSize Platform_qtwidgets::screenSizeFor(View *view) const
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-void Platform_qtwidgets::tests_initTests() const
+void Platform_qtwidgets::tests_initTests()
 {
     qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
     Platform_qt::tests_initTests();
     qApp->setStyle(QStyleFactory::create(QStringLiteral("fusion")));
+}
+
+void Platform_qtwidgets::tests_cleanupTests()
+{
+    Platform_qt::tests_cleanupTests();
 }
 
 #endif
