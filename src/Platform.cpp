@@ -26,6 +26,7 @@ Platform::Platform()
 
 Platform::~Platform()
 {
+    s_platform = nullptr;
 }
 
 Platform *Platform::instance()
