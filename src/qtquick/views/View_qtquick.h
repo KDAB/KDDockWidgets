@@ -21,10 +21,19 @@
 #include <QSizePolicy>
 #include <QQuickItem>
 #include <QQuickWindow>
+#include <QScopedValueRollback>
 
 #include <memory>
 
 namespace KDDockWidgets::Views {
+
+inline QQuickItem *asQQuickItem(View *view)
+{
+    if (!view)
+        return nullptr;
+
+    return qobject_cast<QQuickItem *>(view->asQObject());
+}
 
 class DOCKS_EXPORT View_qtquick : public QQuickItem, public View
 {
@@ -139,8 +148,19 @@ public:
     {
     }
 
-    void setParent(View *) override
+    void setParent(View *parent) override
     {
+        auto parentItem = Views::asQQuickItem(parent);
+
+        {
+            QScopedValueRollback<bool> guard(m_inSetParent, true);
+            QQuickItem::setParent(parentItem);
+            QQuickItem::setParentItem(parentItem);
+        }
+
+        // Mimic QWidget::setParent(), hide widget when setting parent
+        if (!parentItem)
+            setVisible(false);
     }
 
     void raiseAndActivate() override
@@ -298,8 +318,9 @@ public:
         return std::shared_ptr<ViewWrapper>(wrapper);
     }
 
-    void setObjectName(const QString &) override
+    void setObjectName(const QString &name) override
     {
+        QQuickItem::setObjectName(name);
     }
 
     void grabMouse() override
@@ -325,7 +346,7 @@ public:
 
     QString objectName() const override
     {
-        return {};
+        return QQuickItem::objectName();
     }
 
     void setMinimumSize(QSize) override
@@ -360,14 +381,7 @@ protected:
 
 private:
     Q_DISABLE_COPY(View_qtquick)
+    bool m_inSetParent = false;
 };
-
-inline QQuickItem *asQQuickItem(View *view)
-{
-    if (!view)
-        return nullptr;
-
-    return qobject_cast<QQuickItem *>(view->asQObject());
-}
 
 } // namespace KDDockWidgets::Views

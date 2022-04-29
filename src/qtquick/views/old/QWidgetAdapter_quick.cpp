@@ -641,20 +641,6 @@ void QWidgetAdapter::setSize(QSize size)
     QQuickItem::setSize(QSizeF(size));
 }
 
-void QWidgetAdapter::setParent(QQuickItem *p)
-{
-    {
-        QScopedValueRollback<bool> guard(m_inSetParent, true);
-
-        QQuickItem::setParent(p);
-        QQuickItem::setParentItem(p);
-    }
-
-    // Mimic QWidget::setParent(), hide widget when setting parent
-    if (!p)
-        setVisible(false);
-}
-
 void QWidgetAdapter::activateWindow()
 {
     if (QWindow *w = windowHandle())

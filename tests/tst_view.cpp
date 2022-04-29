@@ -20,10 +20,13 @@ using namespace KDDockWidgets;
 TEST_CASE("View::setParent()")
 {
     auto rootView = Platform::instance()->tests_createView();
+    REQUIRE(rootView);
+    REQUIRE(!rootView->isNull());
     CHECK(rootView->childViews().isEmpty());
 
     auto childView = Platform::instance()->tests_createView(rootView);
 
+    REQUIRE(childView->parentView());
     CHECK(childView->parentView()->equals(rootView));
     const auto children = rootView->childViews();
 
