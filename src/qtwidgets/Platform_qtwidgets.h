@@ -38,6 +38,8 @@ public:
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
 #endif
+protected:
+    void init();
 };
 
 }

@@ -28,6 +28,11 @@ using namespace KDDockWidgets;
 
 Platform_qtwidgets::Platform_qtwidgets()
 {
+    init();
+}
+
+void Platform_qtwidgets::init()
+{
 #ifdef DOCKS_DEVELOPER_MODE
     if (qEnvironmentVariableIntValue("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW") == 1) {
         auto dv = new Debug::DebugWindow();
