@@ -114,6 +114,7 @@ QSize Platform_qtwidgets::screenSizeFor(View *view) const
 #ifdef DOCKS_DEVELOPER_MODE
 
 Platform_qtwidgets::Platform_qtwidgets(int argc, char *argv[])
+    : Platform_qt(argc, argv)
 {
     qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
     new QApplication(argc, argv);

@@ -194,4 +194,10 @@ bool Platform_qt::isGammaray()
     return is;
 }
 
+Platform_qt::Platform_qt(int argc, char *argv[])
+{
+    Q_UNUSED(argc)
+    Q_UNUSED(argv)
+}
+
 #endif
