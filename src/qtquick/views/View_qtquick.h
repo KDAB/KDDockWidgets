@@ -362,4 +362,12 @@ private:
     Q_DISABLE_COPY(View_qtquick)
 };
 
+inline QQuickItem *asQQuickItem(View *view)
+{
+    if (!view)
+        return nullptr;
+
+    return qobject_cast<QQuickItem *>(view->asQObject());
+}
+
 } // namespace KDDockWidgets::Views

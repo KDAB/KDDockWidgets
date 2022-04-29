@@ -24,6 +24,7 @@
 #include <QApplication> // TODO: Make it QGuiApplication
 #include <QWindow>
 #include <QScreen>
+#include <QQuickItem>
 
 using namespace KDDockWidgets;
 
@@ -129,9 +130,13 @@ void Platform_qtquick::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-std::shared_ptr<ViewWrapper> Platform_qtquick::tests_createView(std::shared_ptr<ViewWrapper>)
+std::shared_ptr<ViewWrapper> Platform_qtquick::tests_createView(std::shared_ptr<ViewWrapper> parent)
 {
-    return {};
+    auto parentItem = parent ? Views::asQQuickItem(parent.get()) : nullptr;
+    auto newItem = new QQuickItem(parentItem);
+
+    auto wrapper = new Views::ViewWrapper_qtquick(newItem);
+    return std::shared_ptr<ViewWrapper>(wrapper);
 }
 
 #endif
