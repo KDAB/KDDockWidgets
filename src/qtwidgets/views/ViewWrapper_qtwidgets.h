@@ -46,7 +46,10 @@ public:
     std::shared_ptr<Window> windowHandle() const override;
     std::shared_ptr<ViewWrapper> window() const override;
     std::shared_ptr<ViewWrapper> parentView() const override;
+    void setParent(View *) override;
+
     std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const override;
+    QVector<std::shared_ptr<View>> childViews() const override;
     HANDLE handle() const override;
     void grabMouse() override;
     void releaseMouse() override;

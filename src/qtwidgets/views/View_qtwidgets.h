@@ -182,20 +182,25 @@ public:
         Base::update();
     }
 
-    void setParent(View *parent) override
+    static void setParentFor(QWidget *widget, View *parent)
     {
         if (!parent) {
-            Base::setParent(nullptr);
+            widget->QWidget::setParent(nullptr);
             return;
         }
 
         if (auto qwidget = qobject_cast<QWidget *>(parent->asQObject())) {
-            Base::setParent(qwidget);
+            widget->QWidget::setParent(qwidget);
         } else {
             qWarning() << Q_FUNC_INFO << "parent is not a widget, you have a bug"
                        << parent->asQObject();
             Q_ASSERT(false);
         }
+    }
+
+    void setParent(View *parent) override
+    {
+        setParentFor(this, parent);
     }
 
     void raiseAndActivate() override
@@ -456,10 +461,10 @@ public:
         return asQWidget(controller->view());
     }
 
-    QVector<std::shared_ptr<View>> childViews() const override
+    static QVector<std::shared_ptr<View>> childViewsFor(const QWidget *parent)
     {
         QVector<std::shared_ptr<View>> result;
-        const QObjectList children = QObject::children();
+        const QObjectList children = parent->children();
         result.reserve(children.size());
         for (QObject *child : children) {
             if (auto widget = qobject_cast<QWidget *>(child)) {
@@ -469,6 +474,11 @@ public:
         }
 
         return result;
+    }
+
+    QVector<std::shared_ptr<View>> childViews() const override
+    {
+        return childViewsFor(this);
     }
 
 protected:

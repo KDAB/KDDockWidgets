@@ -15,6 +15,7 @@
 #include "Window_qtwidgets.h"
 #include "DebugWindow_p.h"
 #include "views/ViewWrapper_qtwidgets.h"
+#include "views/View_qtwidgets.h"
 #include "FrameworkWidgetFactory_qtwidgets.h"
 
 #include <QScreen>
@@ -130,6 +131,16 @@ void Platform_qtwidgets::tests_initPlatform_impl()
 void Platform_qtwidgets::tests_deinitPlatform_impl()
 {
     Platform_qt::tests_deinitPlatform_impl();
+}
+
+std::shared_ptr<ViewWrapper> Platform_qtwidgets::tests_createView(std::shared_ptr<ViewWrapper> parent)
+{
+    QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent.get());
+
+    auto newWidget = new QWidget(parentWidget);
+    auto wrapper = new Views::ViewWrapper_qtwidgets(newWidget);
+
+    return std::shared_ptr<ViewWrapper>(wrapper);
 }
 
 #endif

@@ -116,4 +116,9 @@ void Platform_qtquick::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
+std::shared_ptr<ViewWrapper> Platform_qtquick::tests_createView(std::shared_ptr<ViewWrapper>)
+{
+    return {};
+}
+
 #endif

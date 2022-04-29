@@ -32,7 +32,6 @@ public:
 
     explicit ViewWrapper(Controller *controller, QObject *thisObj); // TODOv2: Remove thisObj argument once all calls to asQWidget() are removed
 
-    void setParent(View *) override;
     void setMinimumSize(QSize) override;
     QSize maxSizeHint() const override;
     QRect normalGeometry() const override;
@@ -65,7 +64,6 @@ public:
     void render(QPainter *p) override;
     void setMouseTracking(bool) override;
     std::shared_ptr<ViewWrapper> asWrapper() override;
-    QVector<std::shared_ptr<View>> childViews() const override;
 
     /// TODOv2: Remove
     virtual Controllers::DropArea *asDropArea() const

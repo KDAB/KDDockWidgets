@@ -345,3 +345,13 @@ QSize ViewWrapper_qtwidgets::minSize() const
 
     return QSize(minW, minH).expandedTo(View::hardcodedMinimumSize());
 }
+
+QVector<std::shared_ptr<View>> ViewWrapper_qtwidgets::childViews() const
+{
+    return Views::View_qtwidgets<QWidget>::childViewsFor(m_widget);
+}
+
+void ViewWrapper_qtwidgets::setParent(View *parent)
+{
+    Views::View_qtwidgets<QWidget>::setParentFor(m_widget, parent);
+}

@@ -347,6 +347,7 @@ if(${PROJECT_NAME}_TESTS)
       add_test(NAME tst_docks20 COMMAND tests_launcher 19 5)
       add_test(NAME tst_docks21 COMMAND tests_launcher 20 5) # one more for rounding leftovers
     endif()
+    add_test(NAME tst_view COMMAND tst_view)
     add_test(NAME tst_viewguard COMMAND tst_viewguard)
     if(NOT ${PROJECT_NAME}_QTQUICK)
       # tst_multisplitter depends on QWidget

@@ -21,11 +21,6 @@ ViewWrapper::ViewWrapper(Controller *controller, QObject *thisObj)
 {
 }
 
-void ViewWrapper::setParent(View *)
-{
-    qFatal("Not implemented");
-}
-
 void ViewWrapper::setMinimumSize(QSize)
 {
     qFatal("Not implemented");
@@ -193,11 +188,5 @@ std::shared_ptr<ViewWrapper> ViewWrapper::asWrapper()
 {
     // could be implemented with a weak pointer, but we have no use case
     qFatal("Don't call on wrappers");
-    return {};
-}
-
-QVector<std::shared_ptr<View>> ViewWrapper::childViews() const
-{
-    qFatal("Not implemented");
     return {};
 }

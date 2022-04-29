@@ -106,6 +106,10 @@ public:
     /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
     static void tests_deinitPlatform();
 
+    /// @brief Creates a view with the specified parent
+    /// If the parent is null then a new window is created and the returned view will be the root view
+    virtual std::shared_ptr<ViewWrapper> tests_createView(std::shared_ptr<ViewWrapper> parent = {}) = 0;
+
 protected:
     /// @brief Implement any needed initializations before tests starting to run, if any
     /// Override in derived classes for custom behavior.

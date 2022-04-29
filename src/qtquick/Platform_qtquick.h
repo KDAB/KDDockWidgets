@@ -35,6 +35,7 @@ public:
 #ifdef DOCKS_DEVELOPER_MODE
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
+    std::shared_ptr<ViewWrapper> tests_createView(std::shared_ptr<ViewWrapper> parent = {}) override;
 #endif
 };
 

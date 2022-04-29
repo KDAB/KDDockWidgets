@@ -38,6 +38,7 @@ public:
     explicit Platform_qtwidgets(int argc, char *argv[]);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
+    std::shared_ptr<ViewWrapper> tests_createView(std::shared_ptr<ViewWrapper> parent = {}) override;
 #endif
 protected:
     void init();

@@ -235,3 +235,12 @@ QSize ViewWrapper_qtquick::minSize() const
 {
     return {};
 }
+
+QVector<std::shared_ptr<View>> ViewWrapper_qtquick::childViews() const
+{
+    return {};
+}
+
+void ViewWrapper_qtquick::setParent(View *)
+{
+}
