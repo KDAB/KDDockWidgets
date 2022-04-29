@@ -42,9 +42,20 @@ bool Platform::hasActivePopup() const
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-void Platform::tests_cleanupTests()
+/*static*/
+void Platform::tests_initPlatform(KDDockWidgets::FrontendType type)
 {
-    delete this;
+    KDDockWidgets::initFrontend(type);
+    Platform::instance()->tests_initPlatform_impl();
+}
+
+/*static */
+void Platform::tests_deinitPlatform()
+{
+    auto plat = Platform::instance();
+
+    plat->tests_deinitPlatform_impl();
+    delete plat;
 }
 
 /**static*/

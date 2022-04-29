@@ -101,19 +101,19 @@ QSize Platform_qtquick::screenSizeFor(View *view) const
 
 #ifdef DOCKS_DEVELOPER_MODE
 
-void Platform_qtquick::tests_initTests()
+void Platform_qtquick::tests_initPlatform_impl()
 {
-    Platform_qt::tests_initTests();
+    Platform_qt::tests_initPlatform_impl();
 
     QQuickStyle::setStyle("Material"); // so we don't load KDE plugins
     KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
 }
 
-void Platform_qtquick::tests_cleanupTests()
+void Platform_qtquick::tests_deinitPlatform_impl()
 {
     delete KDDockWidgets::Config::self().qmlEngine();
 
-    Platform_qt::tests_cleanupTests();
+    Platform_qt::tests_deinitPlatform_impl();
 }
 
 #endif

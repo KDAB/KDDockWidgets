@@ -98,15 +98,26 @@ public:
 
     virtual void tests_sendEvent(std::shared_ptr<Window> window, QEvent *ev) const = 0;
 
+    /// @brief Creates the platform. Called by the tests at startup.
+    /// For any custom behaviour in your derived Platform override tests_initPlatform_impl()
+    static void tests_initPlatform(KDDockWidgets::FrontendType);
+
+    /// @brief Deletes the platform. Called at end of tests.
+    /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
+    static void tests_deinitPlatform();
+
+protected:
     /// @brief Implement any needed initializations before tests starting to run, if any
     /// Override in derived classes for custom behavior.
-    virtual void tests_initTests()
+    virtual void tests_initPlatform_impl()
     {
     }
 
     /// @brief Implement any needed cleanup after the tests runs, if any
     /// Override in derived classes for custom behavior.
-    virtual void tests_cleanupTests();
+    virtual void tests_deinitPlatform_impl()
+    {
+    }
 
 #endif
 

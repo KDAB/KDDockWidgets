@@ -42,16 +42,13 @@ class TestDocks : public QObject
 public Q_SLOTS:
     void initTestCase()
     {
-        // TODOv2
-        KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtWidgets);
-
-        KDDockWidgets::Platform::instance()->tests_initTests();
+        KDDockWidgets::Platform::tests_initPlatform(KDDockWidgets::FrontendType::QtWidgets);
         KDDockWidgets::Testing::installFatalMessageHandler();
     }
 
     void cleanupTestCase()
     {
-        KDDockWidgets::Platform::instance()->tests_cleanupTests();
+        KDDockWidgets::Platform::tests_deinitPlatform();
     }
 
 private Q_SLOTS:
