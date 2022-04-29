@@ -34,6 +34,7 @@ public:
     void sendEvent(View *, QEvent *) const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
+    static bool isGammaray();
     bool tests_waitForWindowActive(std::shared_ptr<Window>, int timeout = 5000) const override;
     bool tests_waitForEvent(QObject *w, QEvent::Type type, int timeout = 5000) const override;
     bool tests_waitForEvent(View *, QEvent::Type type, int timeout = 5000) const override;

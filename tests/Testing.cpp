@@ -11,6 +11,7 @@
 
 #include "Testing.h"
 #include "DockRegistry_p.h"
+#include "qtcommon/Platform_qt.h"
 
 #include <QGuiApplication>
 #include <QTest>
@@ -23,16 +24,9 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 using namespace KDDockWidgets::Testing;
 
-extern quintptr Q_CORE_EXPORT qtHookData[];
 static QString s_expectedWarning;
 static WarningObserver *s_warningObserver = nullptr;
 static QtMessageHandler s_original = nullptr;
-
-static bool isGammaray()
-{
-    static bool is = qtHookData[3] != 0;
-    return is;
-}
 
 static bool shouldBlacklistWarning(const QString &msg, const QString &category)
 {
@@ -70,7 +64,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
         if (!s_expectedWarning.isEmpty() && msg.contains(s_expectedWarning))
             return;
 
-        if (!isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {
+        if (!Platform_qt::isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {
 
             if (s_warningObserver)
                 s_warningObserver->onFatal();

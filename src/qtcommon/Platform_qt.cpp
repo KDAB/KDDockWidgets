@@ -186,4 +186,12 @@ void Platform_qt::tests_deinitPlatform_impl()
     delete qApp;
 }
 
+/*static*/
+extern quintptr Q_CORE_EXPORT qtHookData[];
+bool Platform_qt::isGammaray()
+{
+    static bool is = qtHookData[3] != 0;
+    return is;
+}
+
 #endif
