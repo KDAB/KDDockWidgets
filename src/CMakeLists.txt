@@ -305,9 +305,7 @@ ecm_generate_headers(camelcase_HEADERS
 
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
 
-add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
-
-add_library(kddockwidgets_qtquick STATIC ${KDDW_QTQUICK_FRONTEND_SRCS})
+add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${KDDW_QTQUICK_FRONTEND_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
 
 add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
 set_target_properties(kddockwidgets PROPERTIES OUTPUT_NAME "kddockwidgets${KDDockWidgets_LIBRARY_QTID}")
@@ -329,15 +327,6 @@ target_include_directories(kddockwidgets
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_include_directories(kddockwidgets_qtquick
-  PUBLIC
-    $<INSTALL_INTERFACE:${DOCKS_INCLUDES_INSTALL_PATH}>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty> # TODO: Link to KDBindings instead
-  PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
 target_compile_definitions(kddockwidgets
   PRIVATE
   QT_NO_CAST_TO_ASCII
@@ -349,10 +338,6 @@ if(${PROJECT_NAME}_STATIC)
   target_compile_definitions(kddockwidgets PUBLIC KDDOCKWIDGETS_STATICLIB)
 else()
   target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY)
-endif()
-
-if(KDDockWidgets_QTQUICK)
-  target_compile_definitions(kddockwidgets PUBLIC KDDOCKWIDGETS_QTQUICK)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
@@ -372,13 +357,9 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   endif()
 endif()
 
-if(${PROJECT_NAME}_QTQUICK)
-  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
-else()
-  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
-endif()
+target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
+target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
 
-target_link_libraries(kddockwidgets_qtquick PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
 
 if(WIN32)
   target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate dwmapi)

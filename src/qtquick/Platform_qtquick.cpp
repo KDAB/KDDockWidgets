@@ -11,6 +11,7 @@
 
 #include "Platform_qtquick.h"
 #include "KDDockWidgets.h"
+#include "Config.h"
 // #include "QmlTypes.h" // TODOv2
 
 #include "Window_qtquick.h"
@@ -20,7 +21,7 @@
 #include <QQmlEngine>
 #include <QQuickStyle>
 #include <QQuickWindow>
-#include <QGuiApplication>
+#include <QApplication> // TODO: Make it QGuiApplication
 #include <QWindow>
 #include <QScreen>
 
@@ -28,6 +29,11 @@ using namespace KDDockWidgets;
 
 
 Platform_qtquick::Platform_qtquick()
+{
+    init();
+}
+
+void Platform_qtquick::init()
 {
     // KDDockWidgets::registerQmlTypes(); // TODOv2
     QQuickWindow::setDefaultAlphaBuffer(true);
@@ -101,17 +107,24 @@ QSize Platform_qtquick::screenSizeFor(View *view) const
 
 #ifdef DOCKS_DEVELOPER_MODE
 
+Platform_qtquick::Platform_qtquick(int argc, char *argv[])
+    : Platform_qt(argc, argv)
+{
+    new QApplication(argc, argv);
+    init();
+}
+
 void Platform_qtquick::tests_initPlatform_impl()
 {
     Platform_qt::tests_initPlatform_impl();
 
-    QQuickStyle::setStyle("Material"); // so we don't load KDE plugins
-    KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
+    QQuickStyle::setStyle(QStringLiteral("Material")); // so we don't load KDE plugins
+    // KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
 }
 
 void Platform_qtquick::tests_deinitPlatform_impl()
 {
-    delete KDDockWidgets::Config::self().qmlEngine();
+    // delete KDDockWidgets::Config::self().qmlEngine();
 
     Platform_qt::tests_deinitPlatform_impl();
 }

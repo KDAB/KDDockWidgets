@@ -80,7 +80,7 @@ public:
         return {};
     }
 
-    void setGeometry(QRect geo) override
+    void setGeometry(QRect) override
     {
     }
 
@@ -165,12 +165,12 @@ public:
         return {};
     }
 
-    QPoint mapToGlobal(QPoint localPt) const override
+    QPoint mapToGlobal(QPoint /*localPt*/) const override
     {
         return {};
     }
 
-    QPoint mapFromGlobal(QPoint globalPt) const override
+    QPoint mapFromGlobal(QPoint /*globalPt*/) const override
     {
         return {};
     }
@@ -332,7 +332,7 @@ public:
     {
     }
 
-    void render(QPainter *p) override
+    void render(QPainter *) override
     {
         qWarning() << Q_FUNC_INFO << "Implement me";
     }
@@ -344,7 +344,7 @@ public:
 
     void setMouseTracking(bool enable) override
     {
-        qWarning() << Q_FUNC_INFO << "Implement me";
+        qWarning() << Q_FUNC_INFO << "Implement me" << enable;
     }
 
     QVector<std::shared_ptr<View>> childViews() const override

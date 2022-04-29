@@ -56,7 +56,7 @@ void Platform::tests_initPlatform(int argc, char *argv[], KDDockWidgets::Fronten
         new Platform_qtwidgets(argc, argv);
         break;
     case FrontendType::QtQuick:
-        // new Platform_qtquick(); // TODOv2
+        new Platform_qtquick(argc, argv);
         break;
     }
 

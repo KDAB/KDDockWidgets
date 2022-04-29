@@ -50,12 +50,12 @@ QRect ViewWrapper_qtquick::geometry() const
     return {};
 }
 
-QPoint ViewWrapper_qtquick::mapToGlobal(QPoint localPt) const
+QPoint ViewWrapper_qtquick::mapToGlobal(QPoint /*localPt*/) const
 {
     return {};
 }
 
-QPoint ViewWrapper_qtquick::mapFromGlobal(QPoint globalPt) const
+QPoint ViewWrapper_qtquick::mapFromGlobal(QPoint /*globalPt*/) const
 {
     return {};
 }
