@@ -35,6 +35,7 @@ public:
     QSize screenSizeFor(View *) const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
+    explicit Platform_qtwidgets(int argc, char *argv[]);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
 #endif

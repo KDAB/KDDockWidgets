@@ -69,7 +69,6 @@ class TestQtWidgets : public QObject
 public Q_SLOTS:
     void initTestCase()
     {
-        KDDockWidgets::Platform::tests_initPlatform(KDDockWidgets::FrontendType::QtWidgets);
         KDDockWidgets::Testing::installFatalMessageHandler();
     }
 
@@ -1417,7 +1416,8 @@ int main(int argc, char *argv[])
         qputenv("QT_QPA_PLATFORM", "offscreen");
     }
 
-    QApplication app(argc, argv);
+    KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
+
     if (shouldSkipTests())
         return 0;
 

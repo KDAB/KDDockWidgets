@@ -42,7 +42,6 @@ class TestDocks : public QObject
 public Q_SLOTS:
     void initTestCase()
     {
-        KDDockWidgets::Platform::tests_initPlatform(KDDockWidgets::FrontendType::QtWidgets);
         KDDockWidgets::Testing::installFatalMessageHandler();
     }
 

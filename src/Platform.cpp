@@ -11,6 +11,9 @@
 
 #include "Platform.h"
 
+#include "qtwidgets/Platform_qtwidgets.h"
+#include "qtquick/Platform_qtquick.h"
+
 #include <qglobal.h>
 #include <QDebug>
 
@@ -43,9 +46,21 @@ bool Platform::hasActivePopup() const
 #ifdef DOCKS_DEVELOPER_MODE
 
 /*static*/
-void Platform::tests_initPlatform(KDDockWidgets::FrontendType type)
+void Platform::tests_initPlatform(int argc, char *argv[], KDDockWidgets::FrontendType type)
 {
-    KDDockWidgets::initFrontend(type);
+    if (Platform::instance())
+        return;
+
+    switch (type) {
+    case FrontendType::QtWidgets:
+        new Platform_qtwidgets(argc, argv);
+        break;
+    case FrontendType::QtQuick:
+        // new Platform_qtquick(); // TODOv2
+        break;
+    }
+
+    /// Any additional setup
     Platform::instance()->tests_initPlatform_impl();
 }
 
