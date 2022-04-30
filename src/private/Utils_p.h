@@ -280,7 +280,7 @@ inline QRect globalGeometry(QQuickItem *item)
 inline QRect globalGeometry(View *w)
 {
     QRect geo = w->geometry();
-    if (!w->isWindow())
+    if (!w->isRootView())
         geo.moveTopLeft(w->mapToGlobal(QPoint(0, 0)));
     return geo;
 }

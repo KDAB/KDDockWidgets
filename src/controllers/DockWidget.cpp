@@ -102,7 +102,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
             return;
         }
     } else {
-        if (view()->isWindow()) {
+        if (view()->isRootView()) {
             // Doesn't have a frame yet
             d->morphIntoFloatingWindow();
             frame = d->frame();
@@ -139,7 +139,7 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
         return;
     }
 
-    if (view()->isWindow())
+    if (view()->isRootView())
         d->morphIntoFloatingWindow();
 
     if (auto fw = floatingWindow()) {
@@ -529,7 +529,7 @@ Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
     if (auto fw = floatingWindow())
         return fw; // Nothing to do
 
-    if (q->view()->isWindow()) {
+    if (q->view()->isRootView()) {
         QRect geo = m_lastPosition->lastFloatingGeometry();
         if (geo.isNull()) {
             geo = q->geometry();
@@ -557,7 +557,7 @@ Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
 
 void DockWidget::Private::maybeMorphIntoFloatingWindow()
 {
-    if (q->view()->isWindow() && q->isVisible())
+    if (q->view()->isRootView() && q->isVisible())
         morphIntoFloatingWindow();
 }
 

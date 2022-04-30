@@ -59,7 +59,7 @@ public:
 
     MainWindow *mainWindow() const
     {
-        if (q->view()->isWindow())
+        if (q->view()->isRootView())
             return nullptr;
 
         // Note: Don't simply use window(), as the MainWindow might be embedded into something else
@@ -68,7 +68,7 @@ public:
             if (auto mw = p->asMainWindowController())
                 return mw;
 
-            if (p->isWindow())
+            if (p->isRootView())
                 return nullptr;
 
             p = p->parentView();

@@ -589,7 +589,7 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, View *topLe
 
     Controllers::FloatingWindow::ensureRectIsOnScreen(geometry);
 
-    if (topLevel->isWindow()) {
+    if (topLevel->isRootView()) {
         topLevel->setGeometry(geometry);
     } else {
         // TODOv2: Have a WindowView abstraction, that will represent QWindow for Qt.

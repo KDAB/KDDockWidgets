@@ -139,10 +139,6 @@ public:
     virtual void raise() = 0;
     virtual void activateWindow() = 0;
     virtual bool isRootView() const = 0;
-    bool isWindow() const
-    {
-        return isRootView();
-    };
     virtual QPoint mapToGlobal(QPoint) const = 0;
     virtual QPoint mapFromGlobal(QPoint) const = 0;
     virtual QPoint mapTo(View *, QPoint) const = 0;
