@@ -105,11 +105,12 @@ public:
 
     bool isVisible() const override
     {
-        return {};
+        return QQuickItem::isVisible();
     }
 
-    void setVisible(bool) override
+    void setVisible(bool is) override
     {
+        QQuickItem::setVisible(is);
     }
 
     void move(int x, int y) override
@@ -165,8 +166,8 @@ public:
         }
 
         // Mimic QWidget::setParent(), hide widget when setting parent
-        if (!parentItem)
-            setVisible(false);
+        // if (!parentItem) // TODOv2: Why was this if needed, QWidget hides unconditionally
+        setVisible(false);
     }
 
     void raiseAndActivate() override

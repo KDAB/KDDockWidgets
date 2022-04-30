@@ -22,6 +22,7 @@ View_qtquick::View_qtquick(KDDockWidgets::Controller *controller, Type type,
     , View(controller, type, this)
 {
     qApp->installEventFilter(this);
+    setVisible(false);
 
     // setSize(800, 800);
 }

@@ -50,6 +50,33 @@ TEST_CASE("View::setParent()")
     delete rootView2;
 }
 
+TEST_CASE("View::isVisible")
+{
+    auto rootView = Platform::instance()->tests_createView();
+    CHECK(!rootView->isVisible());
+
+    rootView->setVisible(true);
+    CHECK(rootView->isVisible());
+
+    // Changing parent will make it hide
+    auto view2 = Platform::instance()->tests_createView();
+    view2->setVisible(true);
+    CHECK(view2->isVisible());
+    view2->setParent(rootView);
+    CHECK(!view2->isVisible());
+
+    view2->setVisible(true);
+
+    // Hiding the parent should hide the children
+    CHECK(view2->isVisible());
+    CHECK(rootView->isVisible());
+    rootView->setVisible(false);
+    CHECK(!view2->isVisible());
+    CHECK(!rootView->isVisible());
+
+    delete rootView;
+}
+
 int main(int argc, char **argv)
 {
     int exitCode = 0;
