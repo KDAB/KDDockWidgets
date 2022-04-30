@@ -14,6 +14,8 @@
 #include "KDDockWidgets.h"
 #include "qtcommon/Platform_qt.h"
 
+class QQmlEngine;
+
 namespace KDDockWidgets {
 
 /// @brief implements functions specific to a particular platform
@@ -37,6 +39,8 @@ public:
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     std::shared_ptr<ViewWrapper> tests_createView(std::shared_ptr<ViewWrapper> parent = {}) override;
+
+    static QQmlEngine *m_qmlEngine;
 #endif
 private:
     void init();

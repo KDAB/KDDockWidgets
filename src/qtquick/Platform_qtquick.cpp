@@ -28,6 +28,7 @@
 
 using namespace KDDockWidgets;
 
+QQmlEngine* Platform_qtquick::m_qmlEngine = nullptr;
 
 Platform_qtquick::Platform_qtquick()
 {
@@ -120,13 +121,12 @@ void Platform_qtquick::tests_initPlatform_impl()
     Platform_qt::tests_initPlatform_impl();
 
     QQuickStyle::setStyle(QStringLiteral("Material")); // so we don't load KDE plugins
-    // KDDockWidgets::Config::self().setQmlEngine(new QQmlEngine(this));
+    m_qmlEngine = new QQmlEngine();
 }
 
 void Platform_qtquick::tests_deinitPlatform_impl()
 {
-    // delete KDDockWidgets::Config::self().qmlEngine();
-
+    delete m_qmlEngine;
     Platform_qt::tests_deinitPlatform_impl();
 }
 
