@@ -101,7 +101,7 @@ inline void to_json(nlohmann::json& j, const QVariant& variant)
         return;
     }
 
-    auto type = static_cast<QMetaType::Type>(variant.type());
+    auto type = static_cast<QMetaType::Type>(variant.userType());
 
     if (type == QMetaType::QVariantList)
     {
@@ -133,7 +133,7 @@ inline void to_json(nlohmann::json& j, const QVariant& variant)
     }
     else
     {
-        qWarning() << Q_FUNC_INFO << "Unexpected type << " << type;
+        qWarning() << Q_FUNC_INFO << "Unexpected type << " << type << variant.typeName();
         j.clear();
     }
 }
