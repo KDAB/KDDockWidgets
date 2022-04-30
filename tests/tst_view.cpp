@@ -12,7 +12,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 
 #include "Platform.h"
+
 #include <doctest/doctest.h>
+#include <QDebug>
 
 using namespace KDDockWidgets;
 
@@ -60,6 +62,8 @@ int main(int argc, char **argv)
     for (FrontendType type : Platform::frontendTypes()) {
 
         Platform::tests_initPlatform(argc, argv, type);
+
+        qDebug() << "\nStarting tests for Platform" << Platform::instance()->name();
 
         const int code = ctx.run();
         if (code != 0)
