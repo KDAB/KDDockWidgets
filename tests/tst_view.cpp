@@ -37,6 +37,14 @@ TEST_CASE("View::setParent()")
     childView->setParent(rootView2);
     CHECK(childView->parentView()->equals(rootView2));
     CHECK(rootView->childViews().isEmpty());
+    CHECK_EQ(rootView2->childViews().size(), 1);
+
+    // Deleting a view will remove it from its parent
+    delete childView;
+    CHECK(rootView2->childViews().isEmpty());
+
+    delete rootView;
+    delete rootView2;
 }
 
 int main(int argc, char **argv)
