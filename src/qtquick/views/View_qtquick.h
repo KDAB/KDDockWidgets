@@ -180,7 +180,7 @@ public:
         return {};
     }
 
-    bool isTopLevel() const override
+    bool isRootView() const override
     {
         return {};
     }

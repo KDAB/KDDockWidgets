@@ -34,7 +34,7 @@ public:
     void move(QPoint) override;
     QPoint mapToGlobal(QPoint) const override;
     QPoint mapFromGlobal(QPoint) const override;
-    bool isTopLevel() const override;
+    bool isRootView() const override;
     bool isVisible() const override;
     void setVisible(bool) override;
     void activateWindow() override;

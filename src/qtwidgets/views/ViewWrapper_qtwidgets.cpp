@@ -145,7 +145,7 @@ std::shared_ptr<Window> ViewWrapper_qtwidgets::windowHandle() const
     return nullptr;
 }
 
-bool ViewWrapper_qtwidgets::isTopLevel() const
+bool ViewWrapper_qtwidgets::isRootView() const
 {
     return m_widget->isTopLevel();
 }

@@ -74,7 +74,7 @@ std::shared_ptr<Window> ViewWrapper_qtquick::windowHandle() const
     return {};
 }
 
-bool ViewWrapper_qtquick::isTopLevel() const
+bool ViewWrapper_qtquick::isRootView() const
 {
     return {};
 }

@@ -179,7 +179,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     QRect newGeometry = oldGeometry;
 
     QRect parentGeometry;
-    if (!mTarget->isTopLevel()) {
+    if (!mTarget->isRootView()) {
         auto parent = mTarget->parentView();
         parentGeometry = KDDockWidgets::globalGeometry(parent.get());
     }
@@ -264,7 +264,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         return true;
     }
 
-    if (!mTarget->isTopLevel()) {
+    if (!mTarget->isRootView()) {
 
         // Clip to parent's geometry.
         newGeometry = newGeometry.intersected(parentGeometry);

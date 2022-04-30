@@ -220,9 +220,9 @@ public:
         Base::window()->raise();
     }
 
-    bool isTopLevel() const override
+    bool isRootView() const override
     {
-        return QWidget::isTopLevel();
+        return QWidget::isWindow();
     }
 
     QPoint mapToGlobal(QPoint localPt) const override

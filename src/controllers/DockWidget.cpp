@@ -182,7 +182,7 @@ std::shared_ptr<ViewWrapper> DockWidget::guestView() const
 
 bool DockWidget::isFloating() const
 {
-    if (view()->isTopLevel())
+    if (view()->isRootView())
         return true;
 
     auto fw = floatingWindow();
@@ -394,7 +394,7 @@ QStringList DockWidget::affinities() const
 
 void DockWidget::show()
 {
-    if (view()->isTopLevel() && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
+    if (view()->isRootView() && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
         // Create the FloatingWindow already, instead of waiting for the show event.
         // This reduces flickering on some platforms
         d->morphIntoFloatingWindow();

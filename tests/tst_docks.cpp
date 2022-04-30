@@ -164,7 +164,7 @@ void TestDocks::tst_restoreSimple()
     auto fw2 = dock2->floatingWindow();
     QVERIFY(fw2);
     QVERIFY(fw2->isVisible());
-    QVERIFY(fw2->view()->isTopLevel());
+    QVERIFY(fw2->view()->isRootView());
     QCOMPARE(fw2->pos(), dock2FloatingPoint);
     QVERIFY(m->view()->windowHandle()->equals(fw2->view()->windowHandle()->transientParent()));
     QVERIFY(dock2->isFloating());

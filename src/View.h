@@ -138,10 +138,10 @@ public:
     virtual void raiseAndActivate() = 0;
     virtual void raise() = 0;
     virtual void activateWindow() = 0;
-    virtual bool isTopLevel() const = 0;
+    virtual bool isRootView() const = 0;
     bool isWindow() const
     {
-        return isTopLevel();
+        return isRootView();
     };
     virtual QPoint mapToGlobal(QPoint) const = 0;
     virtual QPoint mapFromGlobal(QPoint) const = 0;
