@@ -93,6 +93,7 @@ static Controller *controllerForWidget(QWidget *widget)
         case Type::LayoutItem:
         case Type::DropIndicatorOverlayInterface:
         case Type::ViewWrapper:
+        case Type::None:
             // skip internal types
             continue;
         }
@@ -227,6 +228,7 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     case Type::MDIArea:
         return qobject_cast<MDIArea *>(m_widget);
     case Type::LayoutItem:
+    case Type::None:
     case Type::DropIndicatorOverlayInterface:
         qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";
         return false;

@@ -18,7 +18,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "QWidgetAdapter.h"
+
 #include "MainWindow.h"
 
 #include "../DockRegistry_p.h"

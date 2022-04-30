@@ -38,7 +38,7 @@ public:
     explicit Platform_qtquick(int argc, char *argv[]);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
-    std::shared_ptr<ViewWrapper> tests_createView(std::shared_ptr<ViewWrapper> parent = {}) override;
+    View *tests_createView(View *parent = nullptr) override;
 
     static QQmlEngine *m_qmlEngine;
 #endif

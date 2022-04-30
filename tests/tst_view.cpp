@@ -34,7 +34,7 @@ TEST_CASE("View::setParent()")
     CHECK(children[0]->equals(childView));
 
     auto rootView2 = Platform::instance()->tests_createView();
-    childView->setParent(rootView2.get());
+    childView->setParent(rootView2);
     CHECK(childView->parentView()->equals(rootView2));
     CHECK(rootView->childViews().isEmpty());
 }

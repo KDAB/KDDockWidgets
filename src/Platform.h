@@ -108,7 +108,7 @@ public:
 
     /// @brief Creates a view with the specified parent
     /// If the parent is null then a new window is created and the returned view will be the root view
-    virtual std::shared_ptr<ViewWrapper> tests_createView(std::shared_ptr<ViewWrapper> parent = {}) = 0;
+    virtual View *tests_createView(View *parent = nullptr) = 0;
 
 protected:
     /// @brief Implement any needed initializations before tests starting to run, if any

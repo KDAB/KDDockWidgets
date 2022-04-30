@@ -11,5 +11,17 @@
 
 #include "View_qtquick.h"
 
+#include <QGuiApplication>
 
 using namespace KDDockWidgets::Views;
+
+View_qtquick::View_qtquick(KDDockWidgets::Controller *controller, Type type,
+                           QQuickItem *parent,
+                           Qt::WindowFlags)
+    : QQuickItem(parent)
+    , View(controller, type, this)
+{
+    qApp->installEventFilter(this);
+
+    // setSize(800, 800);
+}

@@ -11,8 +11,8 @@
 
 #include "KDDockWidgets.h"
 #include "Platform_qtquick.h"
-
 #include "views/View_qtquick.h"
+
 #include <QApplication> // TODO: Make it QGuiApplication
 #include <QQmlEngine>
 #include <QQuickStyle>
@@ -21,6 +21,14 @@
 using namespace KDDockWidgets;
 
 #ifdef DOCKS_DEVELOPER_MODE
+
+namespace KDDockWidgets {
+class TestView_qtquick : public Views::View_qtquick
+{
+public:
+    using Views::View_qtquick::View_qtquick;
+};
+}
 
 Platform_qtquick::Platform_qtquick(int argc, char *argv[])
     : Platform_qt(argc, argv)
@@ -43,13 +51,12 @@ void Platform_qtquick::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-std::shared_ptr<ViewWrapper> Platform_qtquick::tests_createView(std::shared_ptr<ViewWrapper> parent)
+View *Platform_qtquick::tests_createView(View *parent)
 {
-    auto parentItem = parent ? Views::asQQuickItem(parent.get()) : nullptr;
-    auto newItem = new QQuickItem(parentItem);
+    auto parentItem = parent ? Views::asQQuickItem(parent) : nullptr;
+    auto newItem = new TestView_qtquick(nullptr, Type::None, parentItem);
 
-    auto wrapper = new Views::ViewWrapper_qtquick(newItem);
-    return std::shared_ptr<ViewWrapper>(wrapper);
+    return newItem;
 }
 
 #endif

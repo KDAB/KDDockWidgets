@@ -27,6 +27,7 @@ class ViewWrapper;
 enum class Type
 {
     FIRST = 1, // Keep first
+    None = 0,
     Frame = 1,
     TitleBar = 2,
     TabBar = 4,

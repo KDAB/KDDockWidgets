@@ -22,6 +22,15 @@ using namespace KDDockWidgets;
 
 #ifdef DOCKS_DEVELOPER_MODE
 
+namespace KDDockWidgets {
+class TestView_qtwidgets : public Views::View_qtwidgets<QWidget>
+{
+public:
+    using Views::View_qtwidgets<QWidget>::View_qtwidgets;
+};
+}
+
+
 Platform_qtwidgets::Platform_qtwidgets(int argc, char *argv[])
     : Platform_qt(argc, argv)
 {
@@ -41,14 +50,12 @@ void Platform_qtwidgets::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-std::shared_ptr<ViewWrapper> Platform_qtwidgets::tests_createView(std::shared_ptr<ViewWrapper> parent)
+View *Platform_qtwidgets::tests_createView(View *parent)
 {
-    QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent.get());
+    QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
 
-    auto newWidget = new QWidget(parentWidget);
-    auto wrapper = new Views::ViewWrapper_qtwidgets(newWidget);
-
-    return std::shared_ptr<ViewWrapper>(wrapper);
+    auto newWidget = new TestView_qtwidgets(nullptr, Type::None, parentWidget);
+    return newWidget;
 }
 
 #endif
