@@ -26,6 +26,7 @@ TEST_CASE("View::setParent()")
 
     auto childView = Platform::instance()->tests_createView(rootView);
 
+    CHECK(!rootView->parentView());
     REQUIRE(childView->parentView());
     CHECK(childView->parentView()->equals(rootView));
     const auto children = rootView->childViews();
@@ -58,7 +59,7 @@ int main(int argc, char **argv)
 
     for (FrontendType type : Platform::frontendTypes()) {
 
-        Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
+        Platform::tests_initPlatform(argc, argv, type);
 
         const int code = ctx.run();
         if (code != 0)

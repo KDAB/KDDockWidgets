@@ -35,6 +35,12 @@ inline QQuickItem *asQQuickItem(View *view)
     return qobject_cast<QQuickItem *>(view->asQObject());
 }
 
+inline std::shared_ptr<ViewWrapper> asQQuickWrapper(QQuickItem *item)
+{
+    auto wrapper = new ViewWrapper_qtquick(item);
+    return std::shared_ptr<ViewWrapper>(wrapper);
+}
+
 class DOCKS_EXPORT View_qtquick : public QQuickItem, public View
 {
 public:
@@ -309,7 +315,8 @@ public:
 
     std::shared_ptr<ViewWrapper> parentView() const override
     {
-        return {};
+        auto p = QQuickItem::parentItem();
+        return p ? asQQuickWrapper(p) : nullptr;
     }
 
     std::shared_ptr<ViewWrapper> asWrapper() override
@@ -370,7 +377,13 @@ public:
 
     QVector<std::shared_ptr<View>> childViews() const override
     {
-        return {};
+        QVector<std::shared_ptr<View>> result;
+        const auto childItems = QQuickItem::childItems();
+        for (QQuickItem *child : childItems) {
+            result << asQQuickWrapper(child);
+        }
+
+        return result;
     }
 
 protected:
