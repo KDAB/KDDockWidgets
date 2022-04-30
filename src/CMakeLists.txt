@@ -136,6 +136,7 @@ set(DOCKSLIBS_SRCS
     qtwidgets/views/Stack_qtwidgets.cpp
     qtwidgets/views/Stack_qtwidgets.h
     qtwidgets/views/SideBar_qtwidgets.cpp
+    qtwidgets/TestHelpers_qtwidgets.cpp
     qtwidgets/MDIArea.cpp
     qtwidgets/MDIArea.h
     qtwidgets/FrameworkWidgetFactory_qtwidgets.cpp
@@ -206,6 +207,7 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/Window_qtquick.h
   qtquick/Platform_qtquick.cpp
   qtquick/Platform_qtquick.h
+  qtquick/TestHelpers_qtquick.cpp
   qtquick/views/View_qtquick.cpp
   qtquick/views/View_qtquick.h
   qtquick/views/ViewWrapper_qtquick.cpp

@@ -21,14 +21,14 @@
 #include <QQmlEngine>
 #include <QQuickStyle>
 #include <QQuickWindow>
-#include <QApplication> // TODO: Make it QGuiApplication
 #include <QWindow>
 #include <QScreen>
 #include <QQuickItem>
+#include <QGuiApplication>
 
 using namespace KDDockWidgets;
 
-QQmlEngine* Platform_qtquick::m_qmlEngine = nullptr;
+QQmlEngine *Platform_qtquick::m_qmlEngine = nullptr;
 
 Platform_qtquick::Platform_qtquick()
 {
@@ -106,37 +106,3 @@ QSize Platform_qtquick::screenSizeFor(View *view) const
 
     return {};
 }
-
-#ifdef DOCKS_DEVELOPER_MODE
-
-Platform_qtquick::Platform_qtquick(int argc, char *argv[])
-    : Platform_qt(argc, argv)
-{
-    new QApplication(argc, argv);
-    init();
-}
-
-void Platform_qtquick::tests_initPlatform_impl()
-{
-    Platform_qt::tests_initPlatform_impl();
-
-    QQuickStyle::setStyle(QStringLiteral("Material")); // so we don't load KDE plugins
-    m_qmlEngine = new QQmlEngine();
-}
-
-void Platform_qtquick::tests_deinitPlatform_impl()
-{
-    delete m_qmlEngine;
-    Platform_qt::tests_deinitPlatform_impl();
-}
-
-std::shared_ptr<ViewWrapper> Platform_qtquick::tests_createView(std::shared_ptr<ViewWrapper> parent)
-{
-    auto parentItem = parent ? Views::asQQuickItem(parent.get()) : nullptr;
-    auto newItem = new QQuickItem(parentItem);
-
-    auto wrapper = new Views::ViewWrapper_qtquick(newItem);
-    return std::shared_ptr<ViewWrapper>(wrapper);
-}
-
-#endif

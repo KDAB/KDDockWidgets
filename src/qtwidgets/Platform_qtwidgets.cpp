@@ -19,8 +19,6 @@
 #include "FrameworkWidgetFactory_qtwidgets.h"
 
 #include <QScreen>
-#include <QStyleFactory>
-#include <QApplication>
 
 #include <memory.h>
 
@@ -111,36 +109,3 @@ QSize Platform_qtwidgets::screenSizeFor(View *view) const
 
     return {};
 }
-
-#ifdef DOCKS_DEVELOPER_MODE
-
-Platform_qtwidgets::Platform_qtwidgets(int argc, char *argv[])
-    : Platform_qt(argc, argv)
-{
-    qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");
-    new QApplication(argc, argv);
-    qApp->setStyle(QStyleFactory::create(QStringLiteral("fusion")));
-    init();
-}
-
-void Platform_qtwidgets::tests_initPlatform_impl()
-{
-    Platform_qt::tests_initPlatform_impl();
-}
-
-void Platform_qtwidgets::tests_deinitPlatform_impl()
-{
-    Platform_qt::tests_deinitPlatform_impl();
-}
-
-std::shared_ptr<ViewWrapper> Platform_qtwidgets::tests_createView(std::shared_ptr<ViewWrapper> parent)
-{
-    QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent.get());
-
-    auto newWidget = new QWidget(parentWidget);
-    auto wrapper = new Views::ViewWrapper_qtwidgets(newWidget);
-
-    return std::shared_ptr<ViewWrapper>(wrapper);
-}
-
-#endif
