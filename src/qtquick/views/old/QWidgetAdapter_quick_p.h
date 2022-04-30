@@ -126,7 +126,6 @@ public:
     void setNormalGeometry(QRect);
     QRect rect() const;
     QPoint pos() const;
-    void show();
     void setFixedHeight(int);
     void setFixedWidth(int);
     void raise();
@@ -177,11 +176,7 @@ public:
     void updateGeometry();
     void resize(QSize);
     void resize(int w, int h);
-    bool isWindow() const;
-    bool isTopLevel() const
-    {
-        return isWindow();
-    }
+
     bool isMaximized() const;
     bool isMinimized() const;
     bool isActiveWindow() const;
@@ -234,7 +229,7 @@ public:
 Q_SIGNALS:
     void geometryUpdated(); // similar to QLayout stuff, when size constraints change
     void itemGeometryChanged(); // emitted when the geometry changes. QQuickItem::geometryChanged()
-        // isn't a signal, so prefixed item
+                                // isn't a signal, so prefixed item
 
 protected:
     void create();

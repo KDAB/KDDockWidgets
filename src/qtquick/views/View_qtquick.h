@@ -145,10 +145,12 @@ public:
 
     void show() override
     {
+        setVisible(true);
     }
 
     void hide() override
     {
+        setVisible(false);
     }
 
     void update() override

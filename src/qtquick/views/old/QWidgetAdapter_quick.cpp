@@ -144,10 +144,6 @@ QWidgetAdapter::QWidgetAdapter(QQuickItem *parent, Qt::WindowFlags flags)
     setSize(QSize(800, 800));
 }
 
-QWidgetAdapter::~QWidgetAdapter()
-{
-}
-
 void QWidgetAdapter::raiseAndActivate()
 {
     if (QWindow *w = windowHandle()) {
@@ -370,10 +366,6 @@ QPoint QWidgetAdapter::pos() const
     return geometry().topLeft();
 }
 
-void QWidgetAdapter::show()
-{
-    setVisible(true);
-}
 
 void QWidgetAdapter::setFixedHeight(int height)
 {

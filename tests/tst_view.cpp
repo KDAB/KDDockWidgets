@@ -50,7 +50,7 @@ TEST_CASE("View::setParent()")
     delete rootView2;
 }
 
-TEST_CASE("View::isVisible")
+TEST_CASE("View::isVisible(),show(),hide()")
 {
     auto rootView = Platform::instance()->tests_createView();
     CHECK(!rootView->isVisible());
@@ -73,6 +73,16 @@ TEST_CASE("View::isVisible")
     rootView->setVisible(false);
     CHECK(!view2->isVisible());
     CHECK(!rootView->isVisible());
+
+    // test show()
+    rootView->show();
+    CHECK(rootView->isVisible());
+    CHECK(view2->isVisible());
+
+    // test hide()
+    rootView->hide();
+    CHECK(!rootView->isVisible());
+    CHECK(!view2->isVisible());
 
     delete rootView;
 }
