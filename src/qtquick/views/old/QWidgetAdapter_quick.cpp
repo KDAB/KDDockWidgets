@@ -357,7 +357,6 @@ QPoint QWidgetAdapter::pos() const
 }
 
 
-
 QRect QWidgetAdapter::frameGeometry() const
 {
     if (QWindow *w = windowHandle())

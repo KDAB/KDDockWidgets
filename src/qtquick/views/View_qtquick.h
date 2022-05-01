@@ -14,6 +14,7 @@
 #include "Controller.h"
 #include "View.h"
 #include "ViewWrapper_qtquick.h"
+#include "qtquick/Window_qtquick.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -328,6 +329,11 @@ public:
 
     std::shared_ptr<Window> windowHandle() const override
     {
+        if (QWindow *w = QQuickItem::window()) {
+            auto windowqtquick = new Window_qtquick(w);
+            return std::shared_ptr<Window>(windowqtquick);
+        }
+
         return {};
     }
 
@@ -350,6 +356,13 @@ public:
     std::shared_ptr<ViewWrapper> parentView() const override
     {
         auto p = QQuickItem::parentItem();
+        if (QQuickWindow *window = QQuickItem::window()) {
+            if (p == window->contentItem()) {
+                // For our purposes, the root view is the one directly bellow QQuickWindow::contentItem
+                return nullptr;
+            }
+        }
+
         return p ? asQQuickWrapper(p) : nullptr;
     }
 

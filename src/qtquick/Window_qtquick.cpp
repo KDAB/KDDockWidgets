@@ -10,8 +10,11 @@
 */
 
 #include "Window_qtquick.h"
+#include "views/View_qtquick.h"
 
 #include <QWindow>
+#include <QQuickWindow>
+#include <QDebug>
 
 using namespace KDDockWidgets;
 
@@ -21,6 +24,14 @@ Window_qtquick::~Window_qtquick()
 
 std::shared_ptr<ViewWrapper> Window_qtquick::rootView() const
 {
+    if (auto quickwindow = qobject_cast<QQuickWindow *>(m_window)) {
+        auto contentItem = quickwindow->contentItem();
+        Q_ASSERT(contentItem->childItems().size() == 1);
+        return Views::asQQuickWrapper(contentItem->childItems().first());
+    } else {
+        qWarning() << Q_FUNC_INFO << "Expected QQuickView";
+    }
+
     return {};
 }
 

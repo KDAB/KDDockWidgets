@@ -26,10 +26,13 @@ namespace KDDockWidgets {
 class TestView_qtwidgets : public Views::View_qtwidgets<QWidget>
 {
 public:
-    using Views::View_qtwidgets<QWidget>::View_qtwidgets;
+    explicit TestView_qtwidgets(QWidget *parent)
+        : Views::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
+    {
+        create();
+    }
 };
 }
-
 
 Platform_qtwidgets::Platform_qtwidgets(int argc, char *argv[])
     : Platform_qt(argc, argv)
@@ -54,7 +57,7 @@ View *Platform_qtwidgets::tests_createView(View *parent)
 {
     QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
 
-    auto newWidget = new TestView_qtwidgets(nullptr, Type::None, parentWidget);
+    auto newWidget = new TestView_qtwidgets(parentWidget);
     return newWidget;
 }
 

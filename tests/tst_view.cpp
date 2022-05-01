@@ -12,6 +12,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 
 #include "Platform.h"
+#include "Window.h"
 
 #include <doctest/doctest.h>
 #include <QDebug>
@@ -48,6 +49,19 @@ TEST_CASE("View::setParent()")
 
     delete rootView;
     delete rootView2;
+}
+
+TEST_CASE("View::windowHandle(),Window::rootView()")
+{
+    auto rootView = Platform::instance()->tests_createView();
+    auto childView = Platform::instance()->tests_createView(rootView);
+
+    auto window = rootView->windowHandle();
+    REQUIRE(window);
+    CHECK_EQ(window->handle(), childView->windowHandle()->handle());
+
+    REQUIRE(window->rootView());
+    CHECK(window->rootView()->equals(rootView));
 }
 
 TEST_CASE("View::isVisible(),show(),hide()")

@@ -17,6 +17,8 @@
 #include <QQmlEngine>
 #include <QQuickStyle>
 #include <QQuickItem>
+#include <QQuickView>
+#include <QtTest/QTest>
 
 using namespace KDDockWidgets;
 
@@ -55,6 +57,17 @@ View *Platform_qtquick::tests_createView(View *parent)
 {
     auto parentItem = parent ? Views::asQQuickItem(parent) : nullptr;
     auto newItem = new TestView_qtquick(nullptr, Type::None, parentItem);
+
+    if (!parentItem) {
+        auto view = new QQuickView(m_qmlEngine, nullptr);
+        view->resize(QSize(800, 800));
+
+        newItem->QQuickItem::setParentItem(view->contentItem());
+        newItem->QQuickItem::setParent(view->contentItem());
+
+        view->show();
+        QTest::qWait(100); // the root object gets sized delayed
+    }
 
     return newItem;
 }
