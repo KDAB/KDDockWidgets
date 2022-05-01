@@ -200,4 +200,9 @@ Platform_qt::Platform_qt(int argc, char *argv[])
     Q_UNUSED(argv)
 }
 
+void Platform_qt::tests_wait(int ms)
+{
+    QTest::qWait(ms);
+}
+
 #endif

@@ -128,8 +128,7 @@ View_qtquick::View_qtquick(KDDockWidgets::Controller *controller, Type type,
 
 void View_qtquick::setGeometry(QRect rect)
 {
-    setWidth(rect.width());
-    setHeight(rect.height());
+    setSize(rect.width(), rect.height());
     View::move(rect.topLeft());
 }
 
@@ -334,5 +333,19 @@ void View_qtquick::setVisible(bool is)
 
     QQuickItem::setVisible(is);
 }
+
+void View_qtquick::setSize(int w, int h)
+{
+    if (isRootView()) {
+        if (QWindow *window = QQuickItem::window()) {
+            QRect windowGeo = window->geometry();
+            windowGeo.setSize(QSize(w, h));
+            window->setGeometry(windowGeo);
+        }
+    }
+
+    QQuickItem::setSize(QSizeF(w, h));
+}
+
 
 #include "View_qtquick.moc"

@@ -110,6 +110,11 @@ public:
     /// If the parent is null then a new window is created and the returned view will be the root view
     virtual View *tests_createView(View *parent = nullptr) = 0;
 
+    /// @brief halts the test during the specified number of milliseconds
+    /// The event loop keeps running. Use this for debugging purposes so you can interact with your test
+    /// and see what's goign on
+    virtual void tests_wait(int ms) = 0;
+
 protected:
     /// @brief Implement any needed initializations before tests starting to run, if any
     /// Override in derived classes for custom behavior.

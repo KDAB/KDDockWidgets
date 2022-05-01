@@ -149,11 +149,7 @@ public:
     void setVisible(bool is) override;
 
     void move(int x, int y) override;
-
-    void setSize(int w, int h) override
-    {
-        QQuickItem::setSize(QSizeF(w, h));
-    }
+    void setSize(int w, int h) override;
 
     void setWidth(int w) override
     {

@@ -46,6 +46,7 @@ public:
     void tests_sendEvent(std::shared_ptr<Window>, QEvent *) const override;
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
+    void tests_wait(int ms) override;
 #endif
 protected:
     int screenNumberForQWindow(QWindow *) const;

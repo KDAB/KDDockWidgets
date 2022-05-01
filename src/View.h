@@ -154,11 +154,14 @@ public:
     virtual Qt::WindowFlags flags() const = 0;
     virtual void setWindowTitle(const QString &title) = 0;
     virtual void setWindowIcon(const QIcon &) = 0;
+
+    // TODOv2: Move these to Window instead
     virtual void showNormal() = 0;
     virtual void showMinimized() = 0;
     virtual void showMaximized() = 0;
     virtual bool isMinimized() const = 0;
     virtual bool isMaximized() const = 0;
+
     virtual void setMaximumSize(QSize sz) = 0;
     virtual bool isActiveWindow() const = 0;
     virtual void setFixedWidth(int) = 0;

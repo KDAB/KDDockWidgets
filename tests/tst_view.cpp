@@ -101,12 +101,32 @@ TEST_CASE("View::isVisible(),show(),hide()")
     delete rootView;
 }
 
+TEST_CASE("View::geometry,pos,x,y,width,height,rect")
+{
+    auto rootView = Platform::instance()->tests_createView();
+    rootView->show();
+
+    const QRect initialGeo = QRect(200, 201, 500, 501);
+    rootView->setGeometry(initialGeo);
+    CHECK_EQ(rootView->pos(), initialGeo.topLeft());
+
+    Window::Ptr window = rootView->windowHandle();
+    CHECK_EQ(window->geometry(), initialGeo);
+
+    CHECK_EQ(rootView->size(), initialGeo.size());
+    CHECK_EQ(rootView->x(), initialGeo.x());
+    CHECK_EQ(rootView->y(), initialGeo.y());
+    CHECK_EQ(rootView->width(), initialGeo.width());
+    CHECK_EQ(rootView->height(), initialGeo.height());
+    CHECK_EQ(rootView->rect(), QRect(QPoint(0, 0), initialGeo.size()));
+}
+
 int main(int argc, char **argv)
 {
     int exitCode = 0;
 
     doctest::Context ctx;
-    ctx.setOption("abort-after", 1);
+    ctx.setOption("abort-after", 4);
     ctx.applyCommandLine(argc, argv);
     ctx.setOption("no-breaks", true);
 
