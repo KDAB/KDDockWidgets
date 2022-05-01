@@ -143,7 +143,7 @@ bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) c
         // If there's only 1 frame in the layout, the outer indicators are redundant, as they do the same thing as the internal ones.
         // But there might be another window obscuring our target, so it's useful to show the outer indicators in this case
         const bool isTheOnlyFrame = m_hoveredFrame && m_hoveredFrame->isTheOnlyFrame();
-        if (isTheOnlyFrame && !DockRegistry::self()->isProbablyObscured(m_hoveredFrame->view()->windowHandle(), windowBeingDragged))
+        if (isTheOnlyFrame && !DockRegistry::self()->isProbablyObscured(m_hoveredFrame->view()->window(), windowBeingDragged))
             return false;
     } else if (dropLoc == DropLocation_Center) {
         if (!m_hoveredFrame)

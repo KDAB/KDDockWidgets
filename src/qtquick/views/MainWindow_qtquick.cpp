@@ -93,10 +93,10 @@ public:
         q->setCentralWidget(m_centralWidget);
 
         q->create();
-        connect(q->windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
+        connect(q->window(), &QWindow::screenChanged, DockRegistry::self(),
                 [this] {
                     updateMargins(); // logical dpi might have changed
-                    Q_EMIT DockRegistry::self()->windowChangedScreen(q->windowHandle());
+                    Q_EMIT DockRegistry::self()->windowChangedScreen(q->window());
                 });
     }
 

@@ -117,7 +117,7 @@ void Stack_qtquick::setCurrentDockWidget(int index)
 }
 
 bool Stack_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw,
-                                       const QIcon &icon, const QString &title)
+                                     const QIcon &icon, const QString &title)
 {
     insertTab(index, dw->view()->asQWidget(), icon, title);
     return true;
@@ -180,7 +180,7 @@ void Stack_qtquick::setupTabBarButtons()
 
     updateMargins();
     connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](QWindow *w) {
-        if (w == window()->windowHandle())
+        if (w == window()->window())
             updateMargins();
     });
 }

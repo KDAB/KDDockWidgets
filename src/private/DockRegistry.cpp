@@ -169,7 +169,7 @@ bool DockRegistry::isProbablyObscured(Window::Ptr window, Controllers::FloatingW
 
     const QRect geo = window->geometry();
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {
-        Window::Ptr fwWindow = fw->view()->windowHandle();
+        Window::Ptr fwWindow = fw->view()->window();
         if (fw == exclude || fwWindow->equals(window))
             continue;
 
@@ -183,7 +183,7 @@ bool DockRegistry::isProbablyObscured(Window::Ptr window, Controllers::FloatingW
     const bool targetIsToolWindow = KDDockWidgets::usesUtilityWindows() && floatingWindowForHandle(window) != nullptr;
 
     for (Controllers::MainWindow *mw : m_mainWindows) {
-        Window::Ptr mwWindow = mw->view()->windowHandle();
+        Window::Ptr mwWindow = mw->view()->window();
 
         if (mwWindow && !mwWindow->equals(window) && !targetIsToolWindow && mwWindow->geometry().intersects(geo)) {
             // Two main windows that intersect. Return true. If the target is a tool window it will be above, so we don't care.
@@ -539,7 +539,7 @@ const Window::List DockRegistry::floatingQWindows() const
     windows.reserve(m_floatingWindows.size());
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {
         if (!fw->beingDeleted()) {
-            if (Window::Ptr window = fw->view()->windowHandle()) {
+            if (Window::Ptr window = fw->view()->window()) {
                 windows.push_back(window);
             } else {
                 qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
@@ -571,7 +571,7 @@ Window::Ptr DockRegistry::windowForHandle(WId id) const
 Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr windowHandle) const
 {
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {
-        if (fw->view()->windowHandle()->equals(windowHandle))
+        if (fw->view()->window()->equals(windowHandle))
             return fw;
     }
 
@@ -581,7 +581,7 @@ Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(Window::Ptr w
 Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) const
 {
     for (Controllers::FloatingWindow *fw : m_floatingWindows) {
-        Window::Ptr window = fw->view()->windowHandle();
+        Window::Ptr window = fw->view()->window();
         if (window && window->handle() == hwnd)
             return fw;
     }
@@ -607,7 +607,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
     if (!excludeFloatingDocks) {
         for (Controllers::FloatingWindow *fw : m_floatingWindows) {
             if (fw->isVisible()) {
-                if (Window::Ptr window = fw->view()->windowHandle()) {
+                if (Window::Ptr window = fw->view()->window()) {
                     windows << window;
                 } else {
                     qWarning() << Q_FUNC_INFO << "FloatingWindow doesn't have QWindow";
@@ -618,7 +618,7 @@ Window::List DockRegistry::topLevels(bool excludeFloatingDocks) const
 
     for (Controllers::MainWindow *m : m_mainWindows) {
         if (m->isVisible()) {
-            if (Window::Ptr window = m->view()->windowHandle()) {
+            if (Window::Ptr window = m->view()->window()) {
                 windows << window;
             } else {
                 qWarning() << Q_FUNC_INFO << "MainWindow doesn't have QWindow";

@@ -392,7 +392,7 @@ public:
         return false;
     }
 
-    std::shared_ptr<Window> windowHandle() const override
+    std::shared_ptr<Window> window() const override
     {
         if (QWindow *w = QQuickItem::window()) {
             auto windowqtquick = new Window_qtquick(w);

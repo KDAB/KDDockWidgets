@@ -216,8 +216,8 @@ public:
 
     /// @brief Returns the window this view is inside
     /// For the Qt frontend, this wraps a QWindow.
-    /// Like QWidget::windowHandle()
-    virtual std::shared_ptr<Window> windowHandle() const = 0;
+    /// Like QWidget::window()
+    virtual std::shared_ptr<Window> window() const = 0;
 
     /// @brief Returns the gui element's parent. Like QWidget::parentWidget()
     virtual std::shared_ptr<ViewWrapper> parentView() const = 0;

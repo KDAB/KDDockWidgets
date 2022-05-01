@@ -160,7 +160,7 @@ void TitleBar_qtquick::init()
     m_floatButton->setToolTip(m_controller->floatButtonToolTip());
 
     connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](QWindow *w) {
-        if (w == window()->windowHandle())
+        if (w == window()->window())
             updateMargins();
     });
 }

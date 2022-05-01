@@ -108,7 +108,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::Frame &f)
     f.isNull = json.value("isNull", true);
     f.objectName = json.value("objectName", QString());
     f.geometry = json.value("geometry", QRect());
-    f.options = json.value("options", QFlags<FrameOption>::Int{});
+    f.options = json.value("options", QFlags<FrameOption>::Int {});
     f.currentTabIndex = json.value("currentTabIndex", 0);
     f.mainWindowUniqueName = json.value("mainWindowUniqueName", QString());
 
@@ -117,7 +117,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::Frame &f)
         return;
 
     auto &dockWidgets = *it;
-    f.dockWidgets.reserve((int) dockWidgets.size());
+    f.dockWidgets.reserve(( int )dockWidgets.size());
     for (const auto &d : dockWidgets) {
         LayoutSaver::DockWidget::Ptr dw = LayoutSaver::DockWidget::dockWidgetForName(d.get<QString>());
         f.dockWidgets.push_back(dw);
@@ -144,7 +144,8 @@ void from_json(const nlohmann::json &json, LayoutSaver::MultiSplitter &s)
 
     auto &frms = *it;
     if (!frms.is_object())
-        qWarning() << Q_FUNC_INFO << "Unexpected not object";;
+        qWarning() << Q_FUNC_INFO << "Unexpected not object";
+    ;
 
     for (const auto &kv : frms.items()) {
         QString key = QString::fromStdString(kv.key());
@@ -169,7 +170,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::MainWindow &mw)
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
         const QStringList dockWidgets = mw.dockWidgetsPerSideBar.value(loc);
         if (!dockWidgets.isEmpty()) {
-            std::string key = std::string("sidebar-") + std::to_string((int)loc);
+            std::string key = std::string("sidebar-") + std::to_string(( int )loc);
             json[key] = dockWidgets;
         }
     }
@@ -186,7 +187,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
     mw.screenSize = json.value("screenSize", QSize(800, 600));
     mw.isVisible = json.value("isVisible", false);
     mw.affinities = json.value("affinities", QStringList());
-    mw.windowState = (Qt::WindowState) json.value("windowState", 0);
+    mw.windowState = ( Qt::WindowState )json.value("windowState", 0);
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
     if (json.find("affinityName") != json.end()) {
@@ -197,7 +198,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::MainWindow &mw)
     }
 
     for (SideBarLocation loc : { SideBarLocation::North, SideBarLocation::East, SideBarLocation::West, SideBarLocation::South }) {
-        std::string key = std::string("sidebar-") + std::to_string((int)loc);
+        std::string key = std::string("sidebar-") + std::to_string(( int )loc);
         auto it = json.find(key);
         if (it == json.end())
             continue;
@@ -233,7 +234,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
     window.screenIndex = json.value("screenIndex", 0);
     window.screenSize = json.value("screenSize", QSize(800, 600));
     window.isVisible = json.value("isVisible", false);
-    window.windowState = (Qt::WindowState) json.value("windowState", 0);
+    window.windowState = ( Qt::WindowState )json.value("windowState", 0);
     window.affinities = json.value("affinities", QStringList());
 
     // Compatibility hack. Old json format had a single "affinityName" instead of an "affinities" list:
@@ -250,7 +251,7 @@ void to_json(nlohmann::json &json, const LayoutSaver::ScreenInfo &screenInfo)
     json["name"] = screenInfo.name;
     json["devicePixelRatio"] = screenInfo.devicePixelRatio;
 }
-void from_json(const nlohmann::json& j, LayoutSaver::ScreenInfo& screenInfo)
+void from_json(const nlohmann::json &j, LayoutSaver::ScreenInfo &screenInfo)
 {
     screenInfo.index = j.value("index", 0);
     screenInfo.geometry = j.value("geometry", QRect());
@@ -489,7 +490,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             auto window = mainWindow->window();
             d->deserializeWindowGeometry(mw, window.get()); // window(), as the MainWindow can be embedded
             if (mw.windowState != Qt::WindowNoState) {
-                if (auto w = mainWindow->view()->windowHandle()) {
+                if (auto w = mainWindow->view()->window()) {
                     w->setWindowState(mw.windowState);
                 }
             }
@@ -697,7 +698,7 @@ bool LayoutSaver::Layout::isValid() const
 }
 
 namespace KDDockWidgets {
-void to_json(nlohmann::json& j, const LayoutSaver::Layout& layout)
+void to_json(nlohmann::json &j, const LayoutSaver::Layout &layout)
 {
     j["serializationVersion"] = layout.serializationVersion;
     j["mainWindows"] = layout.mainWindows;
@@ -707,7 +708,7 @@ void to_json(nlohmann::json& j, const LayoutSaver::Layout& layout)
     j["screenInfo"] = layout.screenInfo;
 }
 
-void from_json(const nlohmann::json& j, LayoutSaver::Layout& layout)
+void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
 {
     layout.serializationVersion = j["serializationVersion"].get<int>();
     layout.mainWindows = j["mainWindows"].get<LayoutSaver::MainWindow::List>();

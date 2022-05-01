@@ -1314,13 +1314,13 @@ void TestQtWidgets::tst_restoreFloatingMaximizedState()
     dock1->floatingWindow()->showMaximized();
     qDebug() << originalNormalGeometry;
 
-    QCOMPARE(dock1->floatingWindow()->view()->windowHandle()->windowState(), Qt::WindowMaximized);
+    QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), Qt::WindowMaximized);
 
     LayoutSaver saver;
     const QByteArray saved = saver.serializeLayout();
 
     saver.restoreLayout(saved);
-    QCOMPARE(dock1->floatingWindow()->view()->windowHandle()->windowState(), Qt::WindowMaximized);
+    QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), Qt::WindowMaximized);
 
 
 

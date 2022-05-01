@@ -38,8 +38,7 @@
 
 using namespace KDDockWidgets::Debug;
 
-enum Role
-{
+enum Role {
     ObjRole = Qt::UserRole
 };
 
@@ -153,7 +152,7 @@ QString ObjectViewer::nameForObj(QObject *o) const
 
         if (w->isWindow())
             name += QStringLiteral(" ;W");
-        if (w->windowHandle() != nullptr)
+        if (w->window() != nullptr)
             name += QStringLiteral(" ;N");
     }
 
@@ -232,7 +231,7 @@ void ObjectViewer::printProperties(QObject *obj) const
         qDebug() << "Is a widget!";
         qDebug() << "Window=" << w->window();
         qDebug() << "flags=" << w->windowFlags();
-        qDebug() << "is native?" << (w->windowHandle() != nullptr);
+        qDebug() << "is native?" << (w->window() != nullptr);
     }
 }
 

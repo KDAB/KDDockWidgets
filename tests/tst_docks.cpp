@@ -166,7 +166,7 @@ void TestDocks::tst_restoreSimple()
     QVERIFY(fw2->isVisible());
     QVERIFY(fw2->view()->isRootView());
     QCOMPARE(fw2->pos(), dock2FloatingPoint);
-    QVERIFY(m->view()->windowHandle()->equals(fw2->view()->windowHandle()->transientParent()));
+    QVERIFY(m->view()->window()->equals(fw2->view()->window()->transientParent()));
     QVERIFY(dock2->isFloating());
     QVERIFY(dock2->isVisible());
 
@@ -338,7 +338,7 @@ void TestDocks::tst_floatingWindowSize()
     QTest::qWait(100);
 
     QVERIFY(!fw1->geometry().isNull());
-    QCOMPARE(fw1->size(), fw1->windowHandle()->size());
+    QCOMPARE(fw1->size(), fw1->window()->size());
 }
 
 void TestDocks::tst_tabbingWithAffinities()
@@ -427,7 +427,7 @@ void TestDocks::tst_honourUserGeometry()
     dw1->view()->move(pt);
     dw1->show();
     Controllers::FloatingWindow *fw1 = dw1->floatingWindow();
-    QCOMPARE(fw1->view()->windowHandle()->geometry().topLeft(), pt);
+    QCOMPARE(fw1->view()->window()->geometry().topLeft(), pt);
 }
 
 void TestDocks::tst_floatingWindowTitleBug()
@@ -594,15 +594,15 @@ void TestDocks::tst_restoreMaximizedState()
 
     m->view()->showMaximized();
 
-    QCOMPARE(m->view()->windowHandle()->windowState(), Qt::WindowMaximized);
+    QCOMPARE(m->view()->window()->windowState(), Qt::WindowMaximized);
     LayoutSaver saver;
 
     const QByteArray saved = saver.serializeLayout();
     m->view()->showNormal();
-    QVERIFY(m->view()->windowHandle()->windowState() != Qt::WindowMaximized);
+    QVERIFY(m->view()->window()->windowState() != Qt::WindowMaximized);
 
     saver.restoreLayout(saved);
-    QCOMPARE(m->view()->windowHandle()->windowState(), Qt::WindowMaximized);
+    QCOMPARE(m->view()->window()->windowState(), Qt::WindowMaximized);
 }
 
 void TestDocks::tst_restoreFloatingMinimizedState()
@@ -611,13 +611,13 @@ void TestDocks::tst_restoreFloatingMinimizedState()
     auto dock1 = createDockWidget("dock1", new MyWidget("one"));
     dock1->floatingWindow()->showMinimized();
 
-    QCOMPARE(dock1->floatingWindow()->view()->windowHandle()->windowState(), Qt::WindowMinimized);
+    QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), Qt::WindowMinimized);
 
     LayoutSaver saver;
     const QByteArray saved = saver.serializeLayout();
 
     saver.restoreLayout(saved);
-    QCOMPARE(dock1->floatingWindow()->view()->windowHandle()->windowState(), Qt::WindowMinimized);
+    QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), Qt::WindowMinimized);
 }
 
 void TestDocks::tst_restoreNonExistingDockWidget()
@@ -835,7 +835,7 @@ void TestDocks::tst_shutdown()
 
     auto m = createMainWindow();
     m->show();
-    QVERIFY(Platform::instance()->tests_waitForWindowActive(m->view()->windowHandle()));
+    QVERIFY(Platform::instance()->tests_waitForWindowActive(m->view()->window()));
 }
 
 #ifndef KDDOCKWIDGETS_QTWIDGETS
@@ -852,7 +852,7 @@ void TestDocks::tst_hoverShowsDropIndicators()
     QCOMPARE(mainWindows.size(), 1);
     MainWindowBase *m = mainWindows.first();
 
-    m->window()->windowHandle()->setPosition(500, 800);
+    m->window()->window()->setPosition(500, 800);
 
     auto dock0 = createDockWidget("dock0", new MyWidget2(QSize(400, 400)));
 
@@ -2508,7 +2508,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
     fw2->view()->move(fw->x() + fw->width() + 100, fw->y());
 
     // QtQuick is a bit more async than QWidgets. Wait for the move.
-    Platform::instance()->tests_waitForEvent(fw2->view()->windowHandle(), QEvent::Move);
+    Platform::instance()->tests_waitForEvent(fw2->view()->window(), QEvent::Move);
 
     auto da2 = fw2->dropArea();
     const QPoint dragDestPos = da2->mapToGlobal(da2->rect().center());
@@ -2602,8 +2602,8 @@ void TestDocks::tst_isFocused()
 
     // 3. Raise dock2 and focus its line edit
     dock2->view()->raiseAndActivate();
-    if (!dock2->window()->windowHandle()->isActive())
-        Platform::instance()->tests_waitForEvent(dock2->view()->windowHandle(), QEvent::WindowActivate);
+    if (!dock2->window()->window()->isActive())
+        Platform::instance()->tests_waitForEvent(dock2->view()->window(), QEvent::WindowActivate);
 
     dock2->widget()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock2->widget(), QEvent::FocusIn);
@@ -2709,7 +2709,7 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
     d1->show();
     Platform::instance()->tests_waitForEvent(d1, QEvent::Show);
 
-    QCOMPARE(d1->window()->windowHandle()->geometry(), suggestedGeo);
+    QCOMPARE(d1->window()->window()->geometry(), suggestedGeo);
 }
 
 void TestDocks::tst_registry()
@@ -2923,7 +2923,7 @@ void TestDocks::tst_addToSmallMainWindow1()
 
     const int mainWindowLength = 400;
 
-    m->view()->windowHandle()->resize(mainWindowLength, mainWindowLength);
+    m->view()->window()->resize(mainWindowLength, mainWindowLength);
     QTest::qWait(100);
 
     dock1->view()->resize(QSize(800, 800));
@@ -2965,7 +2965,7 @@ void TestDocks::tst_addToSmallMainWindow2()
     auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(100, 100)));
     auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(100, 100)));
     m->addDockWidgetAsTab(dock1);
-    m->view()->windowHandle()->resize(osWindowMinWidth(), 200);
+    m->view()->window()->resize(osWindowMinWidth(), 200);
 
     Platform::instance()->tests_waitForResize(m->view());
 
@@ -2991,7 +2991,7 @@ void TestDocks::tst_addToSmallMainWindow3()
     auto dock1 = createDockWidget("dock1", new MyWidget2());
     auto dock2 = createDockWidget("dock2", new MyWidget2());
     m->addDockWidgetAsTab(dock1);
-    m->view()->windowHandle()->resize(osWindowMinWidth(), 200);
+    m->view()->window()->resize(osWindowMinWidth(), 200);
     QTest::qWait(200);
     QVERIFY(qAbs(m->width() - osWindowMinWidth()) < 15); // Not very important verification. Anyway, using 15 to account for margins and what not.
 
@@ -3346,7 +3346,7 @@ void TestDocks::tst_restoreRestoresMainWindowPosition()
 
         QCOMPARE(mainWindow->pos(), QPoint(0, 0));
 
-        QWindow *window = mainWindow->windowHandle();
+        QWindow *window = mainWindow->window();
 
         LayoutSaver saver;
         const QByteArray saved = saver.serializeLayout();
@@ -3541,7 +3541,7 @@ void TestDocks::tst_restoreNestedAndTabbed()
 
     auto fw4 = dock4->floatingWindow();
     QVERIFY(fw4);
-    QCOMPARE(dock4->window()->windowHandle(), dock5->window()->windowHandle());
+    QCOMPARE(dock4->window()->window(), dock5->window()->window());
     QCOMPARE(fw4->pos(), oldFW4Pos);
 
     QVERIFY(dock1->window()->equals(m->view()));
@@ -3899,7 +3899,7 @@ void TestDocks::tst_addDockWidgetToContainingWindow()
         m->addDockWidget(dock1, Location_OnRight, nullptr);
         dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
 
-        QCOMPARE(dock1->window()->windowHandle(), dock2->window()->windowHandle());
+        QCOMPARE(dock1->window()->window(), dock2->window()->window());
         QVERIFY(m->view()->equals(dock2->window()));
     }
 }
@@ -4293,13 +4293,13 @@ void TestDocks::tst_positionWhenShown()
     auto window = createMainWindow();
     auto dock1 = new Controllers::DockWidget("1");
     dock1->show();
-    dock1->window()->windowHandle()->setPosition(QPoint(100, 100));
+    dock1->window()->window()->setPosition(QPoint(100, 100));
     QTest::qWait(1000);
-    QCOMPARE(dock1->window()->windowHandle()->geometry().topLeft(), QPoint(100, 100));
+    QCOMPARE(dock1->window()->window()->geometry().topLeft(), QPoint(100, 100));
 
     dock1->close();
     dock1->show();
-    QCOMPARE(dock1->window()->windowHandle()->geometry().topLeft(), QPoint(100, 100));
+    QCOMPARE(dock1->window()->window()->geometry().topLeft(), QPoint(100, 100));
 
     // Cleanup
     window->layoutWidget()->checkSanity();
@@ -4644,8 +4644,8 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     auto dock1 = createDockWidget("dock1");
     dock1->show();
     QPoint targetPos = QPoint(340, 340);
-    dock1->window()->windowHandle()->setFramePosition(targetPos);
-    QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), targetPos);
+    dock1->window()->window()->setFramePosition(targetPos);
+    QCOMPARE(dock1->window()->window()->frameGeometry().topLeft(), targetPos);
     auto oldFw = dock1->window();
     Platform::instance()->tests_waitForEvent(dock1->window().get(), QEvent::Move);
 
@@ -4656,7 +4656,7 @@ void TestDocks::tst_lastFloatingPositionIsRestored()
     dock1->close();
 
     saver.restoreLayout(saved);
-    QCOMPARE(dock1->window()->windowHandle()->frameGeometry().topLeft(), targetPos);
+    QCOMPARE(dock1->window()->window()->frameGeometry().topLeft(), targetPos);
 
     // Adjsut to what we got without the frame
     targetPos = dock1->window()->geometry().topLeft();
@@ -4995,7 +4995,7 @@ void TestDocks::tst_raise()
         dock3->raise();
         QTest::qWait(200);
 
-        if (!Platform::instance()->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->equals(dock3->view()->windowHandle())) {
+        if (!Platform::instance()->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->equals(dock3->view()->window())) {
             qDebug() << "Failing before raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window().get()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             QVERIFY(false);
@@ -5005,7 +5005,7 @@ void TestDocks::tst_raise()
         QTest::qWait(200);
         QVERIFY(dock1->isCurrentTab());
 
-        if (Platform::instance()->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->equals(dock1->view()->windowHandle())) {
+        if (Platform::instance()->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->equals(dock1->view()->window())) {
             qDebug() << "Failing after raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock1->window().get()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             QVERIFY(false);
@@ -5296,7 +5296,7 @@ void TestDocks::tst_doubleClickTabToDetach()
     QCOMPARE(frame->currentIndex(), 1);
 
     auto tb = frame->tabWidget()->view();
-    Tests::doubleClickOn(tb->mapToGlobal(QPoint(20, 20)), frame->view()->windowHandle());
+    Tests::doubleClickOn(tb->mapToGlobal(QPoint(20, 20)), frame->view()->window());
 
     QVERIFY(dock1->isFloating());
     QVERIFY(dock2->isFloating());
@@ -5425,7 +5425,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
 
         auto window1 = dock1->window();
         auto window2 = dock2->window();
-        QCOMPARE(window1->windowHandle(), window2->windowHandle());
+        QCOMPARE(window1->window(), window2->window());
         QCOMPARE(dock1->dptr()->frame(), dock2->dptr()->frame());
         QCOMPARE(dock1->dptr()->frame()->dockWidgetCount(), 2);
         dock1->deleteLater();
@@ -5442,7 +5442,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
 
         auto window1 = dock1->window();
         auto window2 = dock2->window();
-        QCOMPARE(window1->windowHandle(), window2->windowHandle());
+        QCOMPARE(window1->window(), window2->window());
         QCOMPARE(dock1->dptr()->frame(), dock2->dptr()->frame());
         QCOMPARE(dock1->dptr()->frame()->dockWidgetCount(), 2);
         dock1->deleteLater();
@@ -5461,7 +5461,7 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
 
         auto window1 = dock1->window();
         auto window2 = dock2->window();
-        QCOMPARE(window1->windowHandle(), window2->windowHandle());
+        QCOMPARE(window1->window(), window2->window());
         QCOMPARE(dock1->dptr()->frame(), dock2->dptr()->frame());
         QCOMPARE(dock1->dptr()->frame()->dockWidgetCount(), 2);
         Platform::instance()->tests_waitForDeleted(originalWindow2.get());

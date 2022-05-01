@@ -754,7 +754,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
 {
     LayoutSaver::MainWindow m;
 
-    Window::Ptr window = view()->windowHandle();
+    Window::Ptr window = view()->window();
 
     m.options = options();
     m.geometry = windowGeometry();
@@ -781,7 +781,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
 
 QRect MainWindow::windowGeometry() const
 {
-    if (Window::Ptr window = view()->windowHandle())
+    if (Window::Ptr window = view()->window())
         return window->geometry();
 
     return window()->geometry();

@@ -301,7 +301,7 @@ void StateDragging::onEntry()
             q->m_windowBeingDragged.reset();
             q->m_windowBeingDragged = fw->makeWindow();
 
-            QWindow *window = fw->windowHandle();
+            QWindow *window = fw->window();
 
             if (needsUndocking) {
                 // Position the window before the drag start, otherwise if you move mouse too fast there will be an offset
@@ -389,7 +389,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
     }
 
     if (!q->m_nonClientDrag)
-        fw->view()->windowHandle()->setPosition(globalPos - q->m_offset);
+        fw->view()->window()->setPosition(globalPos - q->m_offset);
 
     if (fw->anyNonDockable()) {
         qCDebug(state) << "StateDragging: Ignoring non dockable floating window";
@@ -804,7 +804,7 @@ static QWidgetOrQuick *qtTopLevelForHWND(HWND hwnd)
             // Case not supported for QtQuick.
             const QWidgetList widgets = qApp->topLevelWidgets();
             for (QWidget *widget : widgets) {
-                if (!widget->windowHandle()) {
+                if (!widget->window()) {
                     // Don't call winId on windows that don't have it, as that will force all its childrens to have it,
                     // and that's not very stable. a top level might not have one because it's being destroyed, or because
                     // it's a top-level just because it has't been reparented I guess.
@@ -842,7 +842,7 @@ static ViewWrapper::Ptr qtTopLevelUnderCursor_impl(QPoint globalPos, const Windo
         if (!tl->isVisible() || tl->equals(windowBeingDragged) || tl->isMinimized())
             continue;
 
-        if (windowBeingDragged && windowBeingDragged->windowHandle()->equals(window))
+        if (windowBeingDragged && windowBeingDragged->window()->equals(window))
             continue;
 
         if (window->geometry().contains(globalPos)) {
@@ -888,7 +888,7 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
                 auto topLevels = qApp->topLevelWidgets();
                 for (auto topLevel : topLevels) {
                     if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
-                        if (hwnd == GetParent(HWND(topLevel->windowHandle()->winId()))) {
+                        if (hwnd == GetParent(HWND(topLevel->window()->winId()))) {
                             if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos)) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
                                 qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
                                 return topLevel;

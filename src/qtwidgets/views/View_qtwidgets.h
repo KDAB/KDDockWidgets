@@ -359,10 +359,10 @@ public:
         return {};
     }
 
-    std::shared_ptr<Window> windowHandle() const override
+    std::shared_ptr<Window> window() const override
     {
         if (QWidget *root = QWidget::window()) {
-            if (root->windowHandle()) {
+            if (root->window()) {
                 return std::shared_ptr<Window>(new Window_qtwidgets(root));
             }
         }

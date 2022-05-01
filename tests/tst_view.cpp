@@ -73,9 +73,9 @@ TEST_CASE("View::windowHandle,rootView,Window::rootView")
     auto rootView = Platform::instance()->tests_createView();
     auto childView = Platform::instance()->tests_createView(true, rootView);
 
-    auto window = rootView->windowHandle();
+    auto window = rootView->window();
     REQUIRE(window);
-    CHECK_EQ(window->handle(), childView->windowHandle()->handle());
+    CHECK_EQ(window->handle(), childView->window()->handle());
     CHECK(rootView->rootView()->equals(rootView));
     CHECK(childView->rootView()->equals(rootView));
 
@@ -130,7 +130,7 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
     rootView->setGeometry(initialGeo);
     CHECK_EQ(rootView->pos(), initialGeo.topLeft());
 
-    Window::Ptr window = rootView->windowHandle();
+    Window::Ptr window = rootView->window();
     CHECK_EQ(window->geometry(), initialGeo);
 
     CHECK_EQ(rootView->size(), initialGeo.size());

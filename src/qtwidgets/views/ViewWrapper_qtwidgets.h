@@ -42,7 +42,7 @@ public:
     QSize maximumSize() const override;
     void setSize(int width, int height) override;
     bool is(Type) const override;
-    std::shared_ptr<Window> windowHandle() const override;
+    std::shared_ptr<Window> window() const override;
     std::shared_ptr<ViewWrapper> rootView() const override;
     std::shared_ptr<ViewWrapper> parentView() const override;
     void setParent(View *) override;

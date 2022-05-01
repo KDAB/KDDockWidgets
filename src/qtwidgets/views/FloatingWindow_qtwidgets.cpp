@@ -86,8 +86,8 @@ bool FloatingWindow_qtwidgets::event(QEvent *ev)
     } else if (ev->type() == QEvent::Show && !m_screenChangedConnection.isActive()) {
         // We connect after QEvent::Show, so we have a QWindow. Qt doesn't offer much API to
         // intercept screen events
-        m_screenChangedConnection = windowHandle()->screenChanged.connect([this] {
-            Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle());
+        m_screenChangedConnection = window()->screenChanged.connect([this] {
+            Q_EMIT DockRegistry::self()->windowChangedScreen(window());
         });
     } else if (ev->type() == QEvent::ActivationChange) {
         // Since QWidget is missing a signal for window activation

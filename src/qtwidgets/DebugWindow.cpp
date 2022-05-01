@@ -271,7 +271,7 @@ DebugWindow::DebugWindow(QWidget *parent)
 #ifdef Q_OS_WIN
 void DebugWindow::dumpWindow(QWidget *w)
 {
-    if (w->windowHandle()) {
+    if (w->window()) {
         HWND hwnd = HWND(w->winId());
 
         RECT clientRect;

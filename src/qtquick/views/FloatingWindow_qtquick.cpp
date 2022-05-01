@@ -82,8 +82,8 @@ bool FloatingWindow_qtquick::event(QEvent *ev)
         // We connect after QEvent::Show, so we have a QWindow. Qt doesn't offer much API to
         // intercept screen events
         m_screenChangedConnection =
-            connect(windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
-                    [this] { Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle()); });
+            connect(window(), &QWindow::screenChanged, DockRegistry::self(),
+                    [this] { Q_EMIT DockRegistry::self()->windowChangedScreen(window()); });
     } else if (ev->type() == QEvent::ActivationChange) {
         // Since QWidget is missing a signal for window activation
         Q_EMIT m_controller->activatedChanged();
@@ -105,7 +105,7 @@ void FloatingWindow_qtquick::init()
     m_vlayout->addWidget(m_controller->dropArea());
 
     connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](QWindow *w) {
-        if (w == window()->windowHandle())
+        if (w == window()->window())
             updateMargins();
     });
 }

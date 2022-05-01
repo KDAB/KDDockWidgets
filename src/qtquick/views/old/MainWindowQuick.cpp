@@ -36,7 +36,7 @@ MainWindowQuick::MainWindowQuick(const QString &uniqueName, MainWindowOptions op
 MainWindowQuick::~MainWindowQuick()
 {
     if (isTopLevel()) {
-        if (QWindow *window = windowHandle()) {
+        if (QWindow *window = window()) {
             QObject::setParent(nullptr);
             delete window;
         }
@@ -72,7 +72,7 @@ void MainWindowQuick::onMultiSplitterGeometryUpdated()
         if (isTopLevel()) {
             // If we're a top-level, let's go ahead and resize the QWindow
             // any other case is too complex for QtQuick as there's no layout propagation.
-            windowHandle()->resize(minSz);
+            window()->resize(minSz);
         }
     }
 }

@@ -114,7 +114,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
         m_nchittestFilter = new NCHITTESTEventFilter(this);
         qApp->installNativeEventFilter(m_nchittestFilter);
 #endif
-        WidgetResizeHandler::setupWindow(windowHandle());
+        WidgetResizeHandler::setupWindow(window());
 #endif
     }
 

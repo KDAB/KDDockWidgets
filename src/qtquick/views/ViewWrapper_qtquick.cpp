@@ -69,7 +69,7 @@ std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::childViewAt(QPoint) const
     return {};
 }
 
-std::shared_ptr<Window> ViewWrapper_qtquick::windowHandle() const
+std::shared_ptr<Window> ViewWrapper_qtquick::window() const
 {
     return {};
 }

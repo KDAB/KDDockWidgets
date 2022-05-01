@@ -351,7 +351,7 @@ void View_qtquick::setSize(int w, int h)
 
 std::shared_ptr<ViewWrapper> View_qtquick::rootView() const
 {
-    if (Window::Ptr window = windowHandle())
+    if (Window::Ptr window = View_qtquick::window())
         return window->rootView();
 
     qWarning() << Q_FUNC_INFO << "No window present";

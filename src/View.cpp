@@ -295,7 +295,7 @@ bool View::isInWindow(std::shared_ptr<Window> window) const
     if (!window)
         return false;
 
-    if (auto ourWindow = windowHandle())
+    if (auto ourWindow = this->window())
         return ourWindow->equals(window);
 
     return false;

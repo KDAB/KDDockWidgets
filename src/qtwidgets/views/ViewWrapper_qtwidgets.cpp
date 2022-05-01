@@ -138,7 +138,7 @@ void ViewWrapper_qtwidgets::setGeometry(QRect rect)
     m_widget->setGeometry(rect);
 }
 
-std::shared_ptr<Window> ViewWrapper_qtwidgets::windowHandle() const
+std::shared_ptr<Window> ViewWrapper_qtwidgets::window() const
 {
     if (QWindow *w = m_widget->window()->windowHandle())
         return std::shared_ptr<Window>(new Window_qtwidgets(w));
