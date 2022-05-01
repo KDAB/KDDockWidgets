@@ -302,7 +302,7 @@ bool ViewWrapper_qtwidgets::isNull() const
 Controllers::DropArea *ViewWrapper_qtwidgets::asDropArea() const
 {
     if (auto view = qobject_cast<DropArea_qtwidgets *>(m_widget))
-        return view->asMultiSplitterView();
+        return view->asDropArea();
     return nullptr;
 }
 

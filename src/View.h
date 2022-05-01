@@ -240,7 +240,7 @@ public:
     Controllers::Stack *asStackController() const;
     Controllers::DockWidget *asDockWidgetController() const;
     Controllers::MainWindow *asMainWindowController() const;
-    Controllers::DropArea *asMultiSplitterView();
+    Controllers::DropArea *asDropArea() const;
     MDILayoutWidget *asMDILayoutView();
     LayoutWidget *asLayoutWidget();
 

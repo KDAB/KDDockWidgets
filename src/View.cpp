@@ -242,8 +242,7 @@ Controllers::MainWindow *View::asMainWindowController() const
     return nullptr;
 }
 
-// TODOv2: Rename to asDropArea()
-Controllers::DropArea *View::asMultiSplitterView()
+Controllers::DropArea *View::asDropArea() const
 {
     if (!m_inDtor && m_controller && m_controller->is(Type::DropArea)) {
         return qobject_cast<Controllers::DropArea *>(m_controller);
@@ -261,7 +260,7 @@ MDILayoutWidget *View::asMDILayoutView()
 
 LayoutWidget *View::asLayoutWidget()
 {
-    if (Controllers::DropArea *da = asMultiSplitterView()) {
+    if (Controllers::DropArea *da = asDropArea()) {
         return da;
     } else if (MDILayoutWidget *mdi = asMDILayoutView()) {
         return mdi;

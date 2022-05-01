@@ -228,7 +228,7 @@ Controllers::Frame::List LayoutWidget::framesFrom(View *frameOrMultiSplitter) co
     if (auto frame = frameOrMultiSplitter->asFrameController())
         return { frame };
 
-    if (auto msw = frameOrMultiSplitter->asMultiSplitterView())
+    if (auto msw = frameOrMultiSplitter->asDropArea())
         return msw->frames();
 
     return {};
@@ -322,7 +322,7 @@ LayoutSaver::MultiSplitter LayoutWidget::serialize() const
 
 Controllers::DropArea *LayoutWidget::asDropArea() const
 {
-    return view()->asMultiSplitterView();
+    return view()->asDropArea();
 }
 
 MDILayoutWidget *LayoutWidget::asMDILayout() const
