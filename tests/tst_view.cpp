@@ -15,7 +15,7 @@
 #include "Window.h"
 
 #include <doctest/doctest.h>
-#include <QDebug>
+#include <iostream>
 
 using namespace KDDockWidgets;
 
@@ -114,7 +114,7 @@ int main(int argc, char **argv)
 
         Platform::tests_initPlatform(argc, argv, type);
 
-        qDebug() << "\nStarting tests for Platform" << Platform::instance()->name();
+        std::cout << "\nStarting tests for Platform" << Platform::instance()->name() << "\n";
 
         const int code = ctx.run();
         if (code != 0)
