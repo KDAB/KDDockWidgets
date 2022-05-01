@@ -14,6 +14,7 @@
 #include "Controller.h"
 #include "View.h"
 #include "ViewWrapper_qtquick.h"
+#include "private/multisplitter/Item_p.h"
 #include "qtquick/Window_qtquick.h"
 
 #include <QDebug>
@@ -24,10 +25,13 @@
 #include <QQuickWindow>
 #include <QScopedValueRollback>
 #include <QQuickView>
+#include <QScreen>
 
 #include <memory>
 
 namespace KDDockWidgets::Views {
+
+class MouseEventRedirector;
 
 inline QQuickItem *asQQuickItem(View *view)
 {
@@ -45,6 +49,7 @@ inline std::shared_ptr<ViewWrapper> asQQuickWrapper(QQuickItem *item)
 
 class DOCKS_EXPORT View_qtquick : public QQuickItem, public View
 {
+    Q_OBJECT
 public:
     using View::close;
     using View::height;
@@ -74,12 +79,32 @@ public:
 
     QSize minSize() const override
     {
-        return {};
+        if (m_isWrapper) {
+            const auto children = childItems();
+            if (!children.isEmpty()) {
+                const QSize min = children.constFirst()->property("kddockwidgets_min_size").toSize();
+                return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
+            }
+        }
+
+        const QSize min = property("kddockwidgets_min_size").toSize();
+        return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
     }
 
     QSize maxSizeHint() const override
     {
-        return {};
+        if (m_isWrapper) {
+            const auto children = childItems();
+            if (!children.isEmpty()) {
+                const QSize max = children.constFirst()->property("kddockwidgets_max_size").toSize();
+                return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
+                                     : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
+            }
+        }
+
+        const QSize max = property("kddockwidgets_max_size").toSize();
+        return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
+                             : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
     }
 
     QSize maximumSize() const override
@@ -89,7 +114,15 @@ public:
 
     QRect geometry() const override
     {
-        return {};
+        if (isRootView()) {
+            if (QWindow *w = QQuickItem::window()) {
+                return w->geometry();
+            }
+        }
+
+        QRect r(QPoint(0, 0), QQuickItem::size().toSize());
+
+        return r;
     }
 
     QRect normalGeometry() const override
@@ -104,25 +137,18 @@ public:
 
     void setGeometry(QRect) override;
 
-    void setMaximumSize(QSize) override
+    void setMaximumSize(QSize sz) override
     {
+        if (maximumSize() != sz) {
+            setProperty("kddockwidgets_max_size", sz);
+            updateGeometry();
+        }
     }
 
-    bool isVisible() const override
-    {
-        return QQuickItem::isVisible();
-    }
+    bool isVisible() const override;
+    void setVisible(bool is) override;
 
-    void setVisible(bool is) override
-    {
-        QQuickItem::setVisible(is);
-    }
-
-    void move(int x, int y) override
-    {
-        Q_UNUSED(x)
-        Q_UNUSED(y)
-    }
+    void move(int x, int y) override;
 
     void move(QPoint) override
     {
@@ -163,6 +189,11 @@ public:
         setVisible(false);
     }
 
+    void updateGeometry()
+    {
+        Q_EMIT geometryUpdated();
+    }
+
     // TODOv2: Check if this is even called from controllers
     void update() override
     {
@@ -186,14 +217,30 @@ public:
 
     void raiseAndActivate() override
     {
+        if (QWindow *w = QQuickItem::window()) {
+            w->raise();
+            w->requestActivate();
+        }
     }
 
     void activateWindow() override
     {
+        if (QWindow *w = QQuickItem::window())
+            w->requestActivate();
     }
 
     void raise() override
     {
+        if (isRootView()) {
+            if (QWindow *w = QQuickItem::window())
+                w->raise();
+        } else if (auto p = QQuickItem::parentItem()) {
+            // It's not a top-level, so just increase its Z-order
+            const auto siblings = p->childItems();
+            QQuickItem *last = siblings.last();
+            if (last != this)
+                stackAfter(last);
+        }
     }
 
     QVariant property(const char *name) const override
@@ -203,7 +250,16 @@ public:
 
     bool isRootView() const override
     {
-        return {};
+        QQuickItem *parent = parentItem();
+        if (!parent)
+            return true;
+
+        if (QQuickView *w = quickView()) {
+            if (parent == w->contentItem() || parent == w->rootObject())
+                return true;
+        }
+
+        return false;
     }
 
     QQuickView *quickView() const
@@ -260,10 +316,7 @@ public:
         return {};
     }
 
-    bool close() override
-    {
-        return {};
-    }
+    bool close() override;
 
     void setFlag(Qt::WindowType f, bool on = true) override
     {
@@ -292,39 +345,60 @@ public:
         return m_windowFlags;
     }
 
-    void setWindowTitle(const QString &) override
+    void setWindowTitle(const QString &title) override
     {
+        if (QWindow *w = QQuickItem::window())
+            w->setTitle(title);
     }
 
-    void setWindowIcon(const QIcon &) override
+    void setWindowIcon(const QIcon &icon) override
     {
+        if (QWindow *w = QQuickItem::window())
+            w->setIcon(icon);
     }
 
     bool isActiveWindow() const override
     {
-        return {};
+        if (QWindow *w = QQuickItem::window())
+            return w->isActive();
+
+        return false;
     }
 
-    void showNormal() override
+    Q_INVOKABLE void redirectMouseEvents(QObject *from);
+
+    Q_INVOKABLE void showNormal() override
     {
+        if (QWindow *w = QQuickItem::window())
+            w->showNormal();
     }
 
-    void showMinimized() override
+    Q_INVOKABLE void showMinimized() override
     {
+        if (QWindow *w = QQuickItem::window())
+            w->showMinimized();
     }
 
-    void showMaximized() override
+    Q_INVOKABLE void showMaximized() override
     {
+        if (QWindow *w = QQuickItem::window())
+            w->showMaximized();
     }
 
     bool isMinimized() const override
     {
-        return {};
+        if (QWindow *w = QQuickItem::window())
+            return w->windowStates() & Qt::WindowMinimized;
+
+        return false;
     }
 
     bool isMaximized() const override
     {
-        return {};
+        if (QWindow *w = QQuickItem::window())
+            return w->windowStates() & Qt::WindowMaximized;
+
+        return false;
     }
 
     std::shared_ptr<Window> windowHandle() const override
@@ -394,7 +468,10 @@ public:
 
     QScreen *screen() const override
     {
-        return {};
+        if (QWindow *w = QQuickItem::window())
+            return w->screen();
+
+        return nullptr;
     }
 
     void setFocus(Qt::FocusReason reason) override
@@ -418,13 +495,16 @@ public:
         return QQuickItem::objectName();
     }
 
-    void setMinimumSize(QSize) override
+    void setMinimumSize(QSize sz) override
     {
+        if (minSize() != sz) {
+            setProperty("kddockwidgets_min_size", sz);
+            updateGeometry();
+        }
     }
 
     void render(QPainter *) override
     {
-        // TODOv2
         qWarning() << Q_FUNC_INFO << "Implement me";
     }
 
@@ -490,11 +570,33 @@ public:
         anchors->setProperty("fill", QVariant::fromValue(parentItem));
     }
 
-protected:
-    bool event(QEvent *e) override
+    void onWindowStateChangeEvent(QWindowStateChangeEvent *)
     {
-        return QQuickItem::event(e);
+        if (QWindow *window = QQuickItem::window()) {
+            m_oldWindowState = window->windowState();
+        }
     }
+
+    /// @brief Convenience to create a QQuickItem
+    static QQuickItem *createItem(QQmlEngine *engine, const QString &filename);
+
+Q_SIGNALS:
+    void geometryUpdated(); // similar to QLayout stuff, when size constraints change
+    void itemGeometryChanged(); // emitted when the geometry changes. QQuickItem::geometryChanged()
+                                // isn't a signal, so prefixed item
+
+protected:
+    void QQUICKITEMgeometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+    void itemChange(QQuickItem::ItemChange, const QQuickItem::ItemChangeData &) override;
+    bool eventFilter(QObject *watched, QEvent *ev) override;
+    bool event(QEvent *) override;
+
+    // TODOv2: Port these
+    void onCloseEvent(QCloseEvent *)
+    {
+    }
+    void onMoveEvent(QMoveEvent *);
+    void onResizeEvent(QResizeEvent *);
 
 private:
     Q_DISABLE_COPY(View_qtquick)
@@ -509,6 +611,22 @@ private:
     bool m_isWrapper = false; // TODOv2: What's this about
     QRect m_normalGeometry;
     Qt::WindowStates m_oldWindowState = Qt::WindowState::WindowNoState;
+    MouseEventRedirector *m_mouseEventRedirector = nullptr;
 };
+
+inline qreal logicalDpiFactor(const QQuickItem *item)
+{
+#ifndef Q_OS_MACOS
+    if (QQuickWindow *window = item->window()) {
+        if (QScreen *s = window->screen()) {
+            return s->logicalDotsPerInch() / 96.0;
+        }
+    }
+#endif
+
+    // It's always 72 on mac
+    Q_UNUSED(item);
+    return 1;
+}
 
 } // namespace KDDockWidgets::Views

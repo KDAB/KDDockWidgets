@@ -58,5 +58,5 @@ target_link_libraries(tests_launcher Qt${Qt_VERSION_MAJOR}::Core)
 add_executable(tst_viewguard tst_viewguard.cpp)
 target_link_libraries(tst_viewguard kddockwidgets)
 
-add_executable(tst_view tst_view.cpp)
+add_executable(tst_view tst_view.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_view kddockwidgets)

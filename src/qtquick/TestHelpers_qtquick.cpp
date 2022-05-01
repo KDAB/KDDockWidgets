@@ -65,7 +65,6 @@ View *Platform_qtquick::tests_createView(View *parent)
         newItem->QQuickItem::setParentItem(view->contentItem());
         newItem->QQuickItem::setParent(view->contentItem());
 
-        view->show();
         QTest::qWait(100); // the root object gets sized delayed
     }
 
