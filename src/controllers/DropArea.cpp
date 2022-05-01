@@ -533,7 +533,7 @@ void DropArea::addWidget(View *w, Location location,
         frame = new Controllers::Frame();
         newItem->setGuestView(frame->view());
         frame->addWidget(dw, option);
-    } else if (auto ms = w->asDropArea()) {
+    } else if (auto ms = w->asDropAreaController()) {
         newItem = ms->m_rootItem;
         newItem->setHostWidget(thisView);
 

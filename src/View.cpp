@@ -242,7 +242,7 @@ Controllers::MainWindow *View::asMainWindowController() const
     return nullptr;
 }
 
-Controllers::DropArea *View::asDropArea() const
+Controllers::DropArea *View::asDropAreaController() const
 {
     if (!m_inDtor && m_controller && m_controller->is(Type::DropArea)) {
         return qobject_cast<Controllers::DropArea *>(m_controller);
@@ -250,7 +250,7 @@ Controllers::DropArea *View::asDropArea() const
     return nullptr;
 }
 
-MDILayoutWidget *View::asMDILayout() const
+MDILayoutWidget *View::asMDILayoutController() const
 {
     if (!m_inDtor && m_controller && m_controller->is(Type::MDILayout))
         return qobject_cast<MDILayoutWidget *>(m_controller);
@@ -260,9 +260,9 @@ MDILayoutWidget *View::asMDILayout() const
 
 LayoutWidget *View::asLayout() const
 {
-    if (Controllers::DropArea *da = asDropArea()) {
+    if (Controllers::DropArea *da = asDropAreaController()) {
         return da;
-    } else if (MDILayoutWidget *mdi = asMDILayout()) {
+    } else if (MDILayoutWidget *mdi = asMDILayoutController()) {
         return mdi;
     }
 

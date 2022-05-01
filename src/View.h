@@ -240,8 +240,8 @@ public:
     Controllers::Stack *asStackController() const;
     Controllers::DockWidget *asDockWidgetController() const;
     Controllers::MainWindow *asMainWindowController() const;
-    Controllers::DropArea *asDropArea() const;
-    MDILayoutWidget *asMDILayout() const;
+    Controllers::DropArea *asDropAreaController() const;
+    MDILayoutWidget *asMDILayoutController() const;
     LayoutWidget *asLayout() const;
 
     /// @brief returns whether this view is inside the specified window
