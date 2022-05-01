@@ -346,16 +346,6 @@ QRect QWidgetAdapter::geometry() const
     return KDDockWidgets::Private::geometry(this);
 }
 
-QRect QWidgetAdapter::normalGeometry() const
-{
-    return m_normalGeometry;
-}
-
-void QWidgetAdapter::setNormalGeometry(QRect geo)
-{
-    m_normalGeometry = geo;
-}
-
 QRect QWidgetAdapter::rect() const
 {
     return QRectF(0, 0, width(), height()).toRect();
@@ -367,22 +357,6 @@ QPoint QWidgetAdapter::pos() const
 }
 
 
-void QWidgetAdapter::setFixedHeight(int height)
-{
-    setHeight(height);
-}
-
-void QWidgetAdapter::setFixedWidth(int width)
-{
-    setWidth(width);
-}
-
-void QWidgetAdapter::setGeometry(QRect rect)
-{
-    setWidth(rect.width());
-    setHeight(rect.height());
-    move(rect.topLeft());
-}
 
 QRect QWidgetAdapter::frameGeometry() const
 {
@@ -392,20 +366,6 @@ QRect QWidgetAdapter::frameGeometry() const
     return geometry();
 }
 
-void QWidgetAdapter::grabMouse()
-{
-    QQuickItem::grabMouse();
-}
-
-void QWidgetAdapter::releaseMouse()
-{
-    QQuickItem::ungrabMouse();
-}
-
-void QWidgetAdapter::releaseKeyboard()
-{
-    // Not needed apparently
-}
 
 void QWidgetAdapter::setMinimumSize(QSize sz)
 {
@@ -423,30 +383,9 @@ void QWidgetAdapter::setMaximumSize(QSize sz)
     }
 }
 
-void QWidgetAdapter::setMaximumSize(int w, int h)
-{
-    QWidgetAdapter::setMaximumSize(QSize(w, h));
-}
-
-void QWidgetAdapter::setMinimumSize(int w, int h)
-{
-    QWidgetAdapter::setMinimumSize(QSize(w, h));
-}
-
 void QWidgetAdapter::updateGeometry()
 {
     Q_EMIT geometryUpdated();
-}
-
-void QWidgetAdapter::resize(QSize sz)
-{
-    setWidth(sz.width());
-    setHeight(sz.height());
-}
-
-void QWidgetAdapter::resize(int w, int h)
-{
-    resize({ w, h });
 }
 
 bool QWidgetAdapter::isWindow() const
@@ -505,11 +444,6 @@ void QWidgetAdapter::showNormal()
         w->showNormal();
 }
 
-QQuickView *QWidgetAdapter::quickView() const
-{
-    return qobject_cast<QQuickView *>(QQuickItem::window());
-}
-
 QWindow *QWidgetAdapter::windowHandle() const
 {
     return QQuickItem::window();
@@ -548,36 +482,6 @@ QWidgetAdapter *QWidgetAdapter::parentWidget(bool includeTransient) const
     return nullptr;
 }
 
-QPoint QWidgetAdapter::mapToGlobal(QPoint pt) const
-{
-    return QQuickItem::mapToGlobal(pt).toPoint();
-}
-
-QPoint QWidgetAdapter::mapFromGlobal(QPoint pt) const
-{
-    return QQuickItem::mapFromGlobal(pt).toPoint();
-}
-
-QPoint QWidgetAdapter::mapTo(const QQuickItem *parent, QPoint pos) const
-{
-    if (!parent)
-        return {};
-
-    return parent->mapFromGlobal(QQuickItem::mapToGlobal(pos)).toPoint();
-}
-
-bool QWidgetAdapter::testAttribute(Qt::WidgetAttribute attr) const
-{
-    return m_widgetAttributes & attr;
-}
-
-void QWidgetAdapter::setAttribute(Qt::WidgetAttribute attr, bool enable)
-{
-    if (enable)
-        m_widgetAttributes |= attr;
-    else
-        m_widgetAttributes &= ~attr;
-}
 
 void QWidgetAdapter::setWindowTitle(const QString &title)
 {
@@ -604,15 +508,6 @@ bool QWidgetAdapter::close()
     return false;
 }
 
-QQuickItem *QWidgetAdapter::childAt(QPoint p) const
-{
-    return QQuickItem::childAt(p.x(), p.y());
-}
-
-void QWidgetAdapter::move(QPoint pt)
-{
-    move(pt.x(), pt.y());
-}
 
 void QWidgetAdapter::move(int x, int y)
 {
@@ -628,46 +523,15 @@ void QWidgetAdapter::move(int x, int y)
     setAttribute(Qt::WA_Moved);
 }
 
-void QWidgetAdapter::setSize(QSize size)
-{
-    QQuickItem::setSize(QSizeF(size));
-}
-
 void QWidgetAdapter::activateWindow()
 {
     if (QWindow *w = windowHandle())
         w->requestActivate();
 }
 
-void QWidgetAdapter::setSizePolicy(QSizePolicy sp)
-{
-    m_sizePolicy = sp;
-}
-
-QSizePolicy QWidgetAdapter::sizePolicy() const
-{
-    return m_sizePolicy;
-}
-
-QSize QWidgetAdapter::sizeHint() const
-{
-    return m_sizeHint;
-}
-
 bool QWidgetAdapter::hasFocus() const
 {
     return hasActiveFocus();
-}
-
-void QWidgetAdapter::setWindowFlag(int flag, bool enable)
-{
-    Q_UNUSED(flag);
-    Q_UNUSED(enable);
-}
-
-Qt::WindowFlags QWidgetAdapter::windowFlags() const
-{
-    return m_windowFlags;
 }
 
 /** static */
@@ -683,64 +547,6 @@ QQuickItem *QWidgetAdapter::createItem(QQmlEngine *engine, const QString &filena
     return qobject_cast<QQuickItem *>(obj);
 }
 
-void QWidgetAdapter::makeItemFillParent(QQuickItem *item)
-{
-    // This is equivalent to "anchors.fill: parent
-
-    if (!item) {
-        qWarning() << Q_FUNC_INFO << "Invalid item";
-        return;
-    }
-
-    QQuickItem *parentItem = item->parentItem();
-    if (!parentItem) {
-        qWarning() << Q_FUNC_INFO << "Invalid parentItem for" << item;
-        return;
-    }
-
-    QObject *anchors = item->property("anchors").value<QObject *>();
-    if (!anchors) {
-        qWarning() << Q_FUNC_INFO << "Invalid anchors for" << item;
-        return;
-    }
-
-    anchors->setProperty("fill", QVariant::fromValue(parentItem));
-}
-
-void QWidgetAdapter::setFlag(Qt::WindowType f, bool on)
-{
-    if (on) {
-        m_windowFlags |= f;
-    } else {
-        m_windowFlags &= ~f;
-    }
-}
-
-Qt::FocusPolicy QWidgetAdapter::focusPolicy() const
-{
-    return m_focusPolicy;
-}
-
-void QWidgetAdapter::setFocusPolicy(Qt::FocusPolicy policy)
-{
-    m_focusPolicy = policy;
-}
-
-void QWidgetAdapter::setFocus(Qt::FocusReason reason)
-{
-    QQuickItem::setFocus(true, reason);
-    forceActiveFocus(reason);
-}
-
-void QWidgetAdapter::render(QPainter *)
-{
-    qWarning() << Q_FUNC_INFO << "Implement me";
-}
-
-void QWidgetAdapter::setMouseTracking(bool enabled)
-{
-    m_mouseTrackingEnabled = enabled;
-}
 
 bool QWidgetAdapter::event(QEvent *ev)
 {
@@ -790,16 +596,6 @@ QScreen *QWidgetAdapter::screen() const
     return nullptr;
 }
 
-void QWidgetAdapter::setWindowIsBeingDestroyed(bool is)
-{
-    m_windowIsBeingDestroyed = is;
-}
-
-void QWidgetAdapter::create()
-{
-    // Nothing to do, for QtQuick ?
-}
-
 QQuickItem *KDDockWidgets::Private::widgetForWindow(QWindow *window)
 {
     if (!window)
@@ -819,17 +615,3 @@ void QWidgetAdapter::redirectMouseEvents(QObject *source)
 
     new MouseEventRedirector(source, this);
 }
-
-void QWidgetAdapter::setIsWrapper()
-{
-    m_isWrapper = true;
-}
-
-bool QWidgetAdapter::isWrapper() const
-{
-    return m_isWrapper;
-}
-
-LayoutGuestWidget::~LayoutGuestWidget() = default;
-
-#include "QWidgetAdapter_quick.moc"

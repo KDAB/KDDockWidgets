@@ -22,6 +22,7 @@
 #include <QQuickItem>
 #include <QQuickWindow>
 #include <QScopedValueRollback>
+#include <QQuickView>
 
 #include <memory>
 
@@ -67,7 +68,7 @@ public:
 
     QSize sizeHint() const override
     {
-        return {};
+        return m_sizeHint;
     }
 
     QSize minSize() const override
@@ -92,7 +93,12 @@ public:
 
     QRect normalGeometry() const override
     {
-        return {};
+        return m_normalGeometry;
+    }
+
+    void setNormalGeometry(QRect geo)
+    {
+        m_normalGeometry = geo;
     }
 
     void setGeometry(QRect) override;
@@ -121,8 +127,9 @@ public:
     {
     }
 
-    void setSize(int, int) override
+    void setSize(int w, int h) override
     {
+        QQuickItem::setSize(QSizeF(w, h));
     }
 
     void setWidth(int w) override
@@ -135,12 +142,14 @@ public:
         QQuickItem::setHeight(h);
     }
 
-    void setFixedWidth(int) override
+    void setFixedWidth(int w) override
     {
+        setWidth(w);
     }
 
-    void setFixedHeight(int) override
+    void setFixedHeight(int h) override
     {
+        setHeight(h);
     }
 
     void show() override
@@ -153,8 +162,10 @@ public:
         setVisible(false);
     }
 
+    // TODOv2: Check if this is even called from controllers
     void update() override
     {
+        // Nothing to do for QtQuick
     }
 
     void setParent(View *parent) override
@@ -184,9 +195,9 @@ public:
     {
     }
 
-    QVariant property(const char *) const override
+    QVariant property(const char *name) const override
     {
-        return {};
+        return QObject::property(name);
     }
 
     bool isRootView() const override
@@ -194,19 +205,28 @@ public:
         return {};
     }
 
-    QPoint mapToGlobal(QPoint /*localPt*/) const override
+    QQuickView *quickView() const
     {
-        return {};
+        return qobject_cast<QQuickView *>(QQuickItem::window());
     }
 
-    QPoint mapFromGlobal(QPoint /*globalPt*/) const override
+    QPoint mapToGlobal(QPoint localPt) const override
     {
-        return {};
+        return QQuickItem::mapToGlobal(localPt).toPoint();
     }
 
-    QPoint mapTo(View *, QPoint) const override
+    QPoint mapFromGlobal(QPoint globalPt) const override
     {
-        return {};
+        return QQuickItem::mapFromGlobal(globalPt).toPoint();
+    }
+
+    QPoint mapTo(View *parent, QPoint pos) const override
+    {
+        if (!parent)
+            return {};
+
+        auto parentItem = asQQuickItem(parent);
+        return parentItem->mapFromGlobal(QQuickItem::mapToGlobal(pos)).toPoint();
     }
 
     void setWindowOpacity(double v) override
@@ -215,13 +235,14 @@ public:
             w->setOpacity(v);
     }
 
-    void setSizePolicy(QSizePolicy) override
+    void setSizePolicy(QSizePolicy sp) override
     {
+        m_sizePolicy = sp;
     }
 
     QSizePolicy sizePolicy() const override
     {
-        return {};
+        return m_sizePolicy;
     }
 
     void closeWindow() override
@@ -243,22 +264,31 @@ public:
         return {};
     }
 
-    void setFlag(Qt::WindowType, bool = true) override
+    void setFlag(Qt::WindowType f, bool on = true) override
     {
+        if (on) {
+            m_windowFlags |= f;
+        } else {
+            m_windowFlags &= ~f;
+        }
     }
 
-    void setAttribute(Qt::WidgetAttribute, bool = true) override
+    void setAttribute(Qt::WidgetAttribute attr, bool enable = true) override
     {
+        if (enable)
+            m_widgetAttributes |= attr;
+        else
+            m_widgetAttributes &= ~attr;
     }
 
-    bool testAttribute(Qt::WidgetAttribute) const override
+    bool testAttribute(Qt::WidgetAttribute attr) const override
     {
-        return {};
+        return m_widgetAttributes & attr;
     }
 
     Qt::WindowFlags flags() const override
     {
-        return {};
+        return m_windowFlags;
     }
 
     void setWindowTitle(const QString &) override
@@ -306,9 +336,10 @@ public:
         return reinterpret_cast<HANDLE>(this);
     }
 
-    std::shared_ptr<ViewWrapper> childViewAt(QPoint) const override
+    std::shared_ptr<ViewWrapper> childViewAt(QPoint p) const override
     {
-        return {};
+        auto child = QQuickItem::childAt(p.x(), p.y());
+        return child ? asQQuickWrapper(child) : nullptr;
     }
 
     std::shared_ptr<ViewWrapper> window() const override
@@ -335,14 +366,17 @@ public:
 
     void grabMouse() override
     {
+        QQuickItem::grabMouse();
     }
 
     void releaseMouse() override
     {
+        QQuickItem::ungrabMouse();
     }
 
     void releaseKeyboard() override
     {
+        // Not needed for QtQuick
     }
 
     QScreen *screen() const override
@@ -350,8 +384,20 @@ public:
         return {};
     }
 
-    void setFocus(Qt::FocusReason) override
+    void setFocus(Qt::FocusReason reason) override
     {
+        QQuickItem::setFocus(true, reason);
+        forceActiveFocus(reason);
+    }
+
+    Qt::FocusPolicy focusPolicy() const
+    {
+        return m_focusPolicy;
+    }
+    /// TODOv2: Make these 2 virtual ?
+    void setFocusPolicy(Qt::FocusPolicy policy)
+    {
+        m_focusPolicy = policy;
     }
 
     QString objectName() const override
@@ -365,6 +411,7 @@ public:
 
     void render(QPainter *) override
     {
+        // TODOv2
         qWarning() << Q_FUNC_INFO << "Implement me";
     }
 
@@ -375,7 +422,7 @@ public:
 
     void setMouseTracking(bool enable) override
     {
-        qWarning() << Q_FUNC_INFO << "Implement me" << enable;
+        m_mouseTrackingEnabled = enable;
     }
 
     QVector<std::shared_ptr<View>> childViews() const override
@@ -389,6 +436,47 @@ public:
         return result;
     }
 
+    // TODOv2: Check if this is still needed
+    void setWindowIsBeingDestroyed(bool is)
+    {
+        m_windowIsBeingDestroyed = is;
+    }
+
+    // TODOv2: Check if this is still needed
+    void setIsWrapper()
+    {
+        m_isWrapper = true;
+    }
+
+    // TODOv2: Check if this is still needed
+    bool isWrapper() const
+    {
+        return m_isWrapper;
+    }
+
+    /// @brief This is equivalent to "anchors.fill: parent but in C++
+    void makeItemFillParent(QQuickItem *item)
+    {
+        if (!item) {
+            qWarning() << Q_FUNC_INFO << "Invalid item";
+            return;
+        }
+
+        QQuickItem *parentItem = item->parentItem();
+        if (!parentItem) {
+            qWarning() << Q_FUNC_INFO << "Invalid parentItem for" << item;
+            return;
+        }
+
+        QObject *anchors = item->property("anchors").value<QObject *>();
+        if (!anchors) {
+            qWarning() << Q_FUNC_INFO << "Invalid anchors for" << item;
+            return;
+        }
+
+        anchors->setProperty("fill", QVariant::fromValue(parentItem));
+    }
+
 protected:
     bool event(QEvent *e) override
     {
@@ -398,6 +486,16 @@ protected:
 private:
     Q_DISABLE_COPY(View_qtquick)
     bool m_inSetParent = false;
+    QSize m_sizeHint;
+    QSizePolicy m_sizePolicy = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    Qt::WindowFlags m_windowFlags;
+    int m_widgetAttributes = 0; // Qt::WidgetAttribute
+    Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;
+    bool m_windowIsBeingDestroyed = false;
+    bool m_mouseTrackingEnabled = false;
+    bool m_isWrapper = false; // TODOv2: What's this about
+    QRect m_normalGeometry;
+    Qt::WindowStates m_oldWindowState = Qt::WindowState::WindowNoState;
 };
 
 } // namespace KDDockWidgets::Views
