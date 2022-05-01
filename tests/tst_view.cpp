@@ -19,6 +19,23 @@
 
 using namespace KDDockWidgets;
 
+std::ostream &operator<<(std::ostream &os, QSize size)
+{
+    os << QStringLiteral("QSize(%1x%2)").arg(size.width()).arg(size.height()).toStdString();
+    return os;
+}
+
+std::ostream &operator<<(std::ostream &os, QPoint pt)
+{
+    os << QStringLiteral("QPoint(%1,%2)").arg(pt.x()).arg(pt.y()).toStdString();
+    return os;
+}
+
+std::ostream &operator<<(std::ostream &os, QRect r)
+{
+    os << QStringLiteral("QRect(%1,%2 %3x%4)").arg(r.x()).arg(r.y()).arg(r.width()).arg(r.height()).toStdString();
+    return os;
+}
 
 TEST_CASE("View::setParent()")
 {
@@ -103,6 +120,7 @@ TEST_CASE("View::isVisible(),show(),hide()")
 
 TEST_CASE("View::geometry,pos,x,y,width,height,rect")
 {
+    // Test with a top-level view first
     auto rootView = Platform::instance()->tests_createView();
     rootView->show();
 
@@ -119,6 +137,19 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
     CHECK_EQ(rootView->width(), initialGeo.width());
     CHECK_EQ(rootView->height(), initialGeo.height());
     CHECK_EQ(rootView->rect(), QRect(QPoint(0, 0), initialGeo.size()));
+
+    // Now test with child view
+    auto childView = Platform::instance()->tests_createView(true, rootView);
+    CHECK(childView->isVisible());
+    const QRect newChildGeo(1, 2, 300, 301);
+    childView->setGeometry(newChildGeo);
+
+    Platform::instance()->tests_wait(500);
+
+    CHECK(!childView->isRootView());
+    CHECK_EQ(childView->size(), newChildGeo.size());
+    CHECK_EQ(childView->x(), newChildGeo.x());
+    CHECK_EQ(childView->geometry(), newChildGeo);
 }
 
 int main(int argc, char **argv)

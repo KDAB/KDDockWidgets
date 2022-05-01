@@ -234,8 +234,8 @@ void View_qtquick::move(int x, int y)
         }
     }
 
-    setX(x);
-    setY(y);
+    QQuickItem::setX(x);
+    QQuickItem::setY(y);
     setAttribute(Qt::WA_Moved);
 }
 

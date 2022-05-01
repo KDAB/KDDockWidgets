@@ -120,8 +120,7 @@ public:
             }
         }
 
-        QRect r(QPoint(0, 0), QQuickItem::size().toSize());
-
+        QRect r(QPointF(QQuickItem::x(), QQuickItem::y()).toPoint(), QQuickItem::size().toSize());
         return r;
     }
 
