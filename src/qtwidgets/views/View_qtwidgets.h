@@ -137,11 +137,6 @@ public:
         Base::move(x, y);
     }
 
-    void move(QPoint pt) override
-    {
-        Base::move(pt);
-    }
-
     void setSize(int width, int height) override
     {
         Base::resize(width, height);

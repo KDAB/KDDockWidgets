@@ -130,7 +130,7 @@ void View_qtquick::setGeometry(QRect rect)
 {
     setWidth(rect.width());
     setHeight(rect.height());
-    move(rect.topLeft());
+    View::move(rect.topLeft());
 }
 
 QQuickItem *View_qtquick::createItem(QQmlEngine *engine, const QString &filename)

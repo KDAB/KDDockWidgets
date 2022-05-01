@@ -139,6 +139,11 @@ int View::width() const
     return geometry().width();
 }
 
+void View::move(QPoint pt)
+{
+    move(pt.x(), pt.y());
+}
+
 void View::resize(QSize sz)
 {
     setSize(sz.width(), sz.height());

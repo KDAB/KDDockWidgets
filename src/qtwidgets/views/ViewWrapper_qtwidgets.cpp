@@ -166,11 +166,6 @@ void ViewWrapper_qtwidgets::move(int x, int y)
     m_widget->move(x, y);
 }
 
-void ViewWrapper_qtwidgets::move(QPoint pt)
-{
-    m_widget->move(pt);
-}
-
 void ViewWrapper_qtwidgets::activateWindow()
 {
     m_widget->activateWindow();

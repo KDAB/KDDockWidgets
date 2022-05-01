@@ -31,7 +31,6 @@ public:
     QRect geometry() const override;
     void setGeometry(QRect) override;
     void move(int x, int y) override;
-    void move(QPoint) override;
     QPoint mapToGlobal(QPoint) const override;
     QPoint mapFromGlobal(QPoint) const override;
     bool isRootView() const override;

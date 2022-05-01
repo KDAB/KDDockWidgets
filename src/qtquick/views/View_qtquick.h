@@ -150,10 +150,6 @@ public:
 
     void move(int x, int y) override;
 
-    void move(QPoint) override
-    {
-    }
-
     void setSize(int w, int h) override
     {
         QQuickItem::setSize(QSizeF(w, h));

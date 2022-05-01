@@ -128,7 +128,7 @@ public:
     virtual bool isVisible() const = 0;
     virtual void setVisible(bool) = 0;
     virtual void move(int x, int y) = 0;
-    virtual void move(QPoint) = 0;
+    void move(QPoint);
     virtual void setSize(int width, int height) = 0;
     virtual void setWidth(int width) = 0;
     virtual void setHeight(int height) = 0;

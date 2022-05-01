@@ -92,10 +92,6 @@ void ViewWrapper_qtquick::move(int, int)
 {
 }
 
-void ViewWrapper_qtquick::move(QPoint)
-{
-}
-
 void ViewWrapper_qtquick::activateWindow()
 {
 }
