@@ -160,7 +160,7 @@ bool ViewWrapper_qtquick::is(Type t) const
     return false;
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::window() const
+std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::rootView() const
 {
     // return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtquick(m_item->window()));
     return {};

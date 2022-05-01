@@ -118,7 +118,7 @@ bool Controller::close()
 
 std::shared_ptr<ViewWrapper> Controller::window() const
 {
-    return view()->window();
+    return view()->rootView();
 }
 
 void Controller::show() const

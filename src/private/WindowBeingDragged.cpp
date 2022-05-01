@@ -163,7 +163,7 @@ bool WindowBeingDragged::contains(LayoutWidget *layoutWidget) const
     if (m_floatingWindow)
         return m_floatingWindow->layoutWidget() == layoutWidget;
 
-    if (auto fw = m_draggableWidget->window()->asFloatingWindowController()) {
+    if (auto fw = m_draggableWidget->rootView()->asFloatingWindowController()) {
         // We're not dragging via the floating window itself, but via the tab bar. Still might represent floating window though.
         return fw->layoutWidget() == layoutWidget && fw->hasSingleFrame();
     }

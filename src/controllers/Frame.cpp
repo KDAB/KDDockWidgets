@@ -550,7 +550,7 @@ FloatingWindow *Frame::floatingWindow() const
         if (auto fw = p->asFloatingWindowController())
             return fw;
 
-        if (p->equals(view()->window())) {
+        if (p->equals(view()->rootView())) {
             // We stop at the window. (top-levels can have parent, but we're not interested)
             return nullptr;
         }

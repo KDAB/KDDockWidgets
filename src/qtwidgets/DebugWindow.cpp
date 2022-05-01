@@ -242,7 +242,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     connect(button, &QPushButton::clicked, this, [] {
         const auto layouts = DockRegistry::self()->layouts();
         for (auto l : layouts) {
-            auto tlw = l->view()->window();
+            auto tlw = l->view()->rootView();
             tlw->resize(tlw->size() + QSize(1, 1));
         }
     });

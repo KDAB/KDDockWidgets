@@ -51,7 +51,7 @@ public:
      */
     Controllers::FloatingWindow *floatingWindow() const
     {
-        if (auto fw = q->view()->window()->asFloatingWindowController())
+        if (auto fw = q->view()->rootView()->asFloatingWindowController())
             return fw;
 
         return nullptr;

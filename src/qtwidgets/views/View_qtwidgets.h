@@ -375,7 +375,7 @@ public:
         return reinterpret_cast<HANDLE>(this);
     }
 
-    std::shared_ptr<ViewWrapper> window() const override
+    std::shared_ptr<ViewWrapper> rootView() const override
     {
         if (auto w = QWidget::window()) {
             ViewWrapper *wrapper = new ViewWrapper_qtwidgets(w);

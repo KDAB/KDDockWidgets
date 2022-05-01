@@ -235,7 +235,7 @@ bool ViewWrapper_qtwidgets::is(Type t) const
     return false;
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::window() const
+std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::rootView() const
 {
     if (auto w = m_widget->window())
         return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtwidgets(w));

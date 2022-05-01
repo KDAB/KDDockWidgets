@@ -122,7 +122,7 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
                                                  DockWidget *relativeTo,
                                                  InitialOption initialOption)
 {
-    if (auto mainWindow = view()->window()->asMainWindowController()) {
+    if (auto mainWindow = view()->rootView()->asMainWindowController()) {
         // It's inside a main window. Simply use the main window API.
         mainWindow->addDockWidget(other, location, relativeTo, initialOption);
         return;
@@ -510,7 +510,7 @@ bool DockWidget::skipsRestore() const
 void DockWidget::setFloatingGeometry(QRect geometry)
 {
     if (isOpen() && isFloating()) {
-        view()->window()->setGeometry(geometry);
+        view()->rootView()->setGeometry(geometry);
     } else {
         d->m_lastPosition->setLastFloatingGeometry(geometry);
     }
@@ -518,7 +518,7 @@ void DockWidget::setFloatingGeometry(QRect geometry)
 
 Controllers::FloatingWindow *DockWidget::floatingWindow() const
 {
-    if (auto fw = view()->window()->asFloatingWindowController())
+    if (auto fw = view()->rootView()->asFloatingWindowController())
         return fw;
 
     return nullptr;
@@ -644,7 +644,7 @@ bool DockWidget::Private::eventFilter(QObject *watched, QEvent *event)
 {
     const bool isWindowActivate = event->type() == QEvent::WindowActivate;
     const bool isWindowDeactivate = event->type() == QEvent::WindowDeactivate;
-    if ((isWindowActivate || isWindowDeactivate) && watched == q->view()->window()->asQObject())
+    if ((isWindowActivate || isWindowDeactivate) && watched == q->view()->rootView()->asQObject())
         Q_EMIT q->windowActiveAboutToChange(isWindowActivate);
 
     return QObject::eventFilter(watched, event);
@@ -653,7 +653,7 @@ bool DockWidget::Private::eventFilter(QObject *watched, QEvent *event)
 void DockWidget::Private::updateTitle()
 {
     if (q->isFloating())
-        q->view()->window()->setWindowTitle(title);
+        q->view()->rootView()->setWindowTitle(title);
 
     toggleAction->setText(title);
 }

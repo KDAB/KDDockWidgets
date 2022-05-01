@@ -212,8 +212,7 @@ public:
 
     /// @brief Returns the top-level gui element which this view is inside
     /// It's the root view of the window.
-    /// Like QWidget::window() // TODOv2 rename window() to rootView()
-    virtual std::shared_ptr<ViewWrapper> window() const = 0;
+    virtual std::shared_ptr<ViewWrapper> rootView() const = 0;
 
     /// @brief Returns the window this view is inside
     /// For the Qt frontend, this wraps a QWindow.

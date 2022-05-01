@@ -656,7 +656,7 @@ void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
 void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
     for (DockWidgetBase *dw : qAsConst(m_dockWidgets)) {
-        if (dw->view()->window()->equals(dw->view()) && dw->isVisible())
+        if (dw->view()->rootView()->equals(dw->view()) && dw->isVisible())
             dw->d->morphIntoFloatingWindow();
     }
 }

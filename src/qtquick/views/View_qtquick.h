@@ -413,7 +413,7 @@ public:
         return child ? asQQuickWrapper(child) : nullptr;
     }
 
-    std::shared_ptr<ViewWrapper> window() const override
+    std::shared_ptr<ViewWrapper> rootView() const override
     {
         return {};
     }
