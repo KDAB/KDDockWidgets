@@ -26,3 +26,10 @@ View_qtquick::View_qtquick(KDDockWidgets::Controller *controller, Type type,
 
     // setSize(800, 800);
 }
+
+void View_qtquick::setGeometry(QRect rect)
+{
+    setWidth(rect.width());
+    setHeight(rect.height());
+    move(rect.topLeft());
+}

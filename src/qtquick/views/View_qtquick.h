@@ -95,9 +95,7 @@ public:
         return {};
     }
 
-    void setGeometry(QRect) override
-    {
-    }
+    void setGeometry(QRect) override;
 
     void setMaximumSize(QSize) override
     {
@@ -127,12 +125,14 @@ public:
     {
     }
 
-    void setWidth(int) override
+    void setWidth(int w) override
     {
+        QQuickItem::setWidth(w);
     }
 
-    void setHeight(int) override
+    void setHeight(int h) override
     {
+        QQuickItem::setHeight(h);
     }
 
     void setFixedWidth(int) override
