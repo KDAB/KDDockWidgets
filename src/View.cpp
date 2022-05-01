@@ -250,7 +250,7 @@ Controllers::DropArea *View::asDropArea() const
     return nullptr;
 }
 
-MDILayoutWidget *View::asMDILayoutView()
+MDILayoutWidget *View::asMDILayoutView() const
 {
     if (!m_inDtor && m_controller && m_controller->is(Type::MDILayout))
         return qobject_cast<MDILayoutWidget *>(m_controller);
@@ -258,7 +258,7 @@ MDILayoutWidget *View::asMDILayoutView()
     return nullptr;
 }
 
-LayoutWidget *View::asLayoutWidget()
+LayoutWidget *View::asLayoutWidget() const
 {
     if (Controllers::DropArea *da = asDropArea()) {
         return da;
