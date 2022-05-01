@@ -11,9 +11,11 @@
 
 #include "View_qtquick.h"
 #include "private/Utils_p.h"
+#include "ViewWrapper_qtquick.h"
 
 #include <QGuiApplication>
 
+using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
 namespace KDDockWidgets::Views {
@@ -347,5 +349,13 @@ void View_qtquick::setSize(int w, int h)
     QQuickItem::setSize(QSizeF(w, h));
 }
 
+std::shared_ptr<ViewWrapper> View_qtquick::rootView() const
+{
+    if (Window::Ptr window = windowHandle())
+        return window->rootView();
+
+    qWarning() << Q_FUNC_INFO << "No window present";
+    return {};
+}
 
 #include "View_qtquick.moc"

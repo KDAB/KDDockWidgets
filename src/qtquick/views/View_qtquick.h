@@ -413,11 +413,7 @@ public:
         return child ? asQQuickWrapper(child) : nullptr;
     }
 
-    std::shared_ptr<ViewWrapper> rootView() const override
-    {
-        return {};
-    }
-
+    std::shared_ptr<ViewWrapper> rootView() const override;
     std::shared_ptr<ViewWrapper> parentView() const override
     {
         auto p = QQuickItem::parentItem();

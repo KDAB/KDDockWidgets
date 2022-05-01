@@ -68,14 +68,16 @@ TEST_CASE("View::setParent()")
     delete rootView2;
 }
 
-TEST_CASE("View::windowHandle(),Window::rootView()")
+TEST_CASE("View::windowHandle,rootView,Window::rootView")
 {
     auto rootView = Platform::instance()->tests_createView();
-    auto childView = Platform::instance()->tests_createView(false, rootView);
+    auto childView = Platform::instance()->tests_createView(true, rootView);
 
     auto window = rootView->windowHandle();
     REQUIRE(window);
     CHECK_EQ(window->handle(), childView->windowHandle()->handle());
+    CHECK(rootView->rootView()->equals(rootView));
+    CHECK(childView->rootView()->equals(rootView));
 
     REQUIRE(window->rootView());
     CHECK(window->rootView()->equals(rootView));
