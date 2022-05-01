@@ -241,8 +241,8 @@ public:
     Controllers::DockWidget *asDockWidgetController() const;
     Controllers::MainWindow *asMainWindowController() const;
     Controllers::DropArea *asDropArea() const;
-    MDILayoutWidget *asMDILayoutView() const;
-    LayoutWidget *asLayoutWidget() const;
+    MDILayoutWidget *asMDILayout() const;
+    LayoutWidget *asLayout() const;
 
     /// @brief returns whether this view is inside the specified window
     bool isInWindow(std::shared_ptr<Window> window) const;

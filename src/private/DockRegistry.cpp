@@ -258,7 +258,7 @@ LayoutWidget *DockRegistry::layoutForItem(const Layouting::Item *item) const
     if (!item->hostWidget())
         return nullptr;
 
-    return item->hostWidget()->asLayoutWidget();
+    return item->hostWidget()->asLayout();
 }
 
 bool DockRegistry::itemIsInMainWindow(const Layouting::Item *item) const
@@ -701,7 +701,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
             if (auto dw = p->asDockWidgetController())
                 return onDockWidgetPressed(dw, static_cast<QMouseEvent *>(event));
 
-            if (auto layoutWidget = p->asLayoutWidget()) {
+            if (auto layoutWidget = p->asLayout()) {
                 if (auto mw = layoutWidget->mainWindow()) {
                     // The user clicked somewhere in the main window's drop area, but outside of the
                     // overlayed dock widget

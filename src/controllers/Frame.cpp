@@ -80,7 +80,7 @@ Frame::Frame(View *parent, FrameOptions options, int userType)
     connect(m_tabWidget, &Controllers::Stack::currentTabChanged,
             this, &Frame::onCurrentTabChanged);
 
-    setLayoutWidget(parent ? parent->asLayoutWidget() : nullptr);
+    setLayoutWidget(parent ? parent->asLayout() : nullptr);
     view()->init();
 
     m_inCtor = false;

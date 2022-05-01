@@ -566,7 +566,7 @@ MDILayoutWidget *DockWidget::Private::mdiLayout() const
     auto p = q->view()->parentView();
     while (p) {
         // We found a layout
-        if (auto mdiLayout = p->asMDILayoutView()) {
+        if (auto mdiLayout = p->asMDILayout()) {
             // And it's MDI
             return mdiLayout;
         } else if (auto dropArea = p->asDropArea()) {
