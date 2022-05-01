@@ -27,7 +27,7 @@ TEST_CASE("View::setParent()")
     REQUIRE(!rootView->isNull());
     CHECK(rootView->childViews().isEmpty());
 
-    auto childView = Platform::instance()->tests_createView(rootView);
+    auto childView = Platform::instance()->tests_createView(false, rootView);
 
     CHECK(!rootView->parentView());
     REQUIRE(childView->parentView());
@@ -54,7 +54,7 @@ TEST_CASE("View::setParent()")
 TEST_CASE("View::windowHandle(),Window::rootView()")
 {
     auto rootView = Platform::instance()->tests_createView();
-    auto childView = Platform::instance()->tests_createView(rootView);
+    auto childView = Platform::instance()->tests_createView(false, rootView);
 
     auto window = rootView->windowHandle();
     REQUIRE(window);
