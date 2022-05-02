@@ -687,10 +687,11 @@ std::shared_ptr<ViewWrapper> View_qtquick::childViewAt(QPoint p) const
     return child ? asQQuickWrapper(child) : nullptr;
 }
 
-std::shared_ptr<ViewWrapper> View_qtquick::parentView() const
+/*static*/
+std::shared_ptr<ViewWrapper> View_qtquick::parentViewFor(const QQuickItem *item)
 {
-    auto p = QQuickItem::parentItem();
-    if (QQuickWindow *window = QQuickItem::window()) {
+    auto p = item->parentItem();
+    if (QQuickWindow *window = item->window()) {
         if (p == window->contentItem()) {
             // For our purposes, the root view is the one directly bellow QQuickWindow::contentItem
             return nullptr;
@@ -698,6 +699,11 @@ std::shared_ptr<ViewWrapper> View_qtquick::parentView() const
     }
 
     return p ? asQQuickWrapper(p) : nullptr;
+}
+
+std::shared_ptr<ViewWrapper> View_qtquick::parentView() const
+{
+    return parentViewFor(this);
 }
 
 std::shared_ptr<ViewWrapper> View_qtquick::asWrapper()

@@ -63,6 +63,8 @@ public:
     QSize minSize() const override;
     bool close() override;
 
+    View *unwrap();
+
 private:
     QPointer<QQuickItem> m_item;
 };

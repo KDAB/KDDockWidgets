@@ -170,8 +170,7 @@ std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::rootView() const
 
 std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::parentView() const
 {
-    // return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtquick(m_item->parentWidget()));
-    return {};
+    return View_qtquick::parentViewFor(m_item);
 }
 
 HANDLE ViewWrapper_qtquick::handle() const
@@ -236,14 +235,34 @@ QSize ViewWrapper_qtquick::minSize() const
 
 QVector<std::shared_ptr<View>> ViewWrapper_qtquick::childViews() const
 {
-    return {};
+    QVector<std::shared_ptr<View>> result;
+    const auto childItems = m_item->childItems();
+    for (QQuickItem *child : childItems) {
+        result << asQQuickWrapper(child);
+    }
+
+    return result;
 }
 
-void ViewWrapper_qtquick::setParent(View *)
+void ViewWrapper_qtquick::setParent(View *parent)
 {
+    if (auto view = unwrap()) {
+        view->setParent(parent);
+    } else {
+        auto parentItem = Views::asQQuickItem(parent);
+        m_item->QQuickItem::setParent(parentItem);
+        m_item->QQuickItem::setParentItem(parentItem);
+    }
+
+    m_item->setVisible(false);
 }
 
 bool ViewWrapper_qtquick::close()
 {
     return View_qtquick::close(m_item);
+}
+
+View *ViewWrapper_qtquick::unwrap()
+{
+    return qobject_cast<View_qtquick *>(m_item);
 }

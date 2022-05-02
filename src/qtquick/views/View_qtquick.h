@@ -129,6 +129,7 @@ public:
     std::shared_ptr<ViewWrapper> childViewAt(QPoint p) const override;
     std::shared_ptr<ViewWrapper> rootView() const override;
     std::shared_ptr<ViewWrapper> parentView() const override;
+
     std::shared_ptr<ViewWrapper> asWrapper() override;
 
     void setObjectName(const QString &name) override;
@@ -162,6 +163,7 @@ public:
 
     /// @brief Convenience to create a QQuickItem
     static QQuickItem *createItem(QQmlEngine *engine, const QString &filename);
+    static std::shared_ptr<ViewWrapper> parentViewFor(const QQuickItem *);
 
 Q_SIGNALS:
     void geometryUpdated(); // similar to QLayout stuff, when size constraints change
