@@ -308,33 +308,10 @@ public:
     }
 
     bool close() override;
-
-    void setFlag(Qt::WindowType f, bool on = true) override
-    {
-        if (on) {
-            m_windowFlags |= f;
-        } else {
-            m_windowFlags &= ~f;
-        }
-    }
-
-    void setAttribute(Qt::WidgetAttribute attr, bool enable = true) override
-    {
-        if (enable)
-            m_widgetAttributes |= attr;
-        else
-            m_widgetAttributes &= ~attr;
-    }
-
-    bool testAttribute(Qt::WidgetAttribute attr) const override
-    {
-        return m_widgetAttributes & attr;
-    }
-
-    Qt::WindowFlags flags() const override
-    {
-        return m_windowFlags;
-    }
+    void setFlag(Qt::WindowType f, bool on = true) override;
+    void setAttribute(Qt::WidgetAttribute attr, bool enable = true) override;
+    bool testAttribute(Qt::WidgetAttribute attr) const override;
+    Qt::WindowFlags flags() const override;
 
     void setWindowTitle(const QString &title) override
     {
@@ -535,28 +512,7 @@ public:
     }
 
     /// @brief This is equivalent to "anchors.fill: parent but in C++
-    void makeItemFillParent(QQuickItem *item)
-    {
-        if (!item) {
-            qWarning() << Q_FUNC_INFO << "Invalid item";
-            return;
-        }
-
-        QQuickItem *parentItem = item->parentItem();
-        if (!parentItem) {
-            qWarning() << Q_FUNC_INFO << "Invalid parentItem for" << item;
-            return;
-        }
-
-        QObject *anchors = item->property("anchors").value<QObject *>();
-        if (!anchors) {
-            qWarning() << Q_FUNC_INFO << "Invalid anchors for" << item;
-            return;
-        }
-
-        anchors->setProperty("fill", QVariant::fromValue(parentItem));
-    }
-
+    void makeItemFillParent(QQuickItem *item);
     void onWindowStateChangeEvent(QWindowStateChangeEvent *)
     {
         if (QWindow *window = QQuickItem::window()) {

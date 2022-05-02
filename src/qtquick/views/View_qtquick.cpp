@@ -358,4 +358,53 @@ std::shared_ptr<ViewWrapper> View_qtquick::rootView() const
     return {};
 }
 
+void View_qtquick::makeItemFillParent(QQuickItem *item)
+{
+    if (!item) {
+        qWarning() << Q_FUNC_INFO << "Invalid item";
+        return;
+    }
+
+    QQuickItem *parentItem = item->parentItem();
+    if (!parentItem) {
+        qWarning() << Q_FUNC_INFO << "Invalid parentItem for" << item;
+        return;
+    }
+
+    QObject *anchors = item->property("anchors").value<QObject *>();
+    if (!anchors) {
+        qWarning() << Q_FUNC_INFO << "Invalid anchors for" << item;
+        return;
+    }
+
+    anchors->setProperty("fill", QVariant::fromValue(parentItem));
+}
+
+void View_qtquick::setAttribute(Qt::WidgetAttribute attr, bool enable)
+{
+    if (enable)
+        m_widgetAttributes |= attr;
+    else
+        m_widgetAttributes &= ~attr;
+}
+
+bool View_qtquick::testAttribute(Qt::WidgetAttribute attr) const
+{
+    return m_widgetAttributes & attr;
+}
+
+void View_qtquick::setFlag(Qt::WindowType f, bool on)
+{
+    if (on) {
+        m_windowFlags |= f;
+    } else {
+        m_windowFlags &= ~f;
+    }
+}
+
+Qt::WindowFlags View_qtquick::flags() const
+{
+    return m_windowFlags;
+}
+
 #include "View_qtquick.moc"
