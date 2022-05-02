@@ -180,10 +180,12 @@ HANDLE ViewWrapper_qtquick::handle() const
 
 void ViewWrapper_qtquick::grabMouse()
 {
+    m_item->grabMouse();
 }
 
 void ViewWrapper_qtquick::releaseMouse()
 {
+    m_item->ungrabMouse();
 }
 
 QScreen *ViewWrapper_qtquick::screen() const
