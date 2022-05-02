@@ -78,6 +78,7 @@ public:
     {
         bool isVisible = false;
         QSize sizeHint = {};
+        QSize minSize = { 100, 100 };
     };
 
     /// @brief list the list of frontend types supported by this build

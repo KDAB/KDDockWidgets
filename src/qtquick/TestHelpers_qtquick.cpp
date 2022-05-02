@@ -32,6 +32,7 @@ public:
         : Views::View_qtquick(nullptr, Type::None, parent)
         , m_opts(opts)
     {
+        setMinimumSize(opts.minSize);
     }
 
     QSize sizeHint() const override

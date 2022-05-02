@@ -161,6 +161,18 @@ TEST_CASE("View::sizeHint")
     CHECK_EQ(rootView->sizeHint(), sizeHint);
 }
 
+TEST_CASE("View::minSize")
+{
+    const QSize sizeHint = {};
+    const QSize minSize = { 201, 202 };
+    auto rootView = Platform::instance()->tests_createView({ true, sizeHint, minSize });
+    CHECK_EQ(rootView->minSize(), minSize);
+
+    const QSize newMinSize = { 301, 302 };
+    rootView->setMinimumSize(newMinSize);
+    CHECK_EQ(rootView->minSize(), newMinSize);
+}
+
 int main(int argc, char **argv)
 {
     int exitCode = 0;

@@ -31,6 +31,7 @@ public:
         , m_opts(opts)
     {
         create();
+        setMinimumSize(opts.minSize);
     }
 
     QSize sizeHint() const override
