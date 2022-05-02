@@ -225,7 +225,7 @@ void View_qtquick::move(int x, int y)
 bool View_qtquick::event(QEvent *ev)
 {
     if (ev->type() == QEvent::Close)
-        onCloseEvent(static_cast<QCloseEvent *>(ev));
+        closeRequested.emit(static_cast<QCloseEvent *>(ev));
 
     return QQuickItem::event(ev);
 }
@@ -263,7 +263,7 @@ bool View_qtquick::close(QQuickItem *item)
 {
     if (auto viewqtquick = qobject_cast<View_qtquick *>(item)) {
         QCloseEvent ev;
-        viewqtquick->onCloseEvent(&ev);
+        viewqtquick->closeRequested.emit(&ev);
 
         if (ev.isAccepted()) {
             viewqtquick->setVisible(false);

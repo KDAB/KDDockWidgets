@@ -470,6 +470,11 @@ protected:
             Base::resizeEvent(ev);
     }
 
+    void closeEvent(QCloseEvent *ev) override
+    {
+        closeRequested.emit(ev);
+    }
+
 private:
     Q_DISABLE_COPY(View_qtwidgets)
 };

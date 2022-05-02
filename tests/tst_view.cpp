@@ -183,6 +183,21 @@ TEST_CASE("View::objectName")
     CHECK_EQ(rootView->objectName(), newName);
 }
 
+TEST_CASE("View::closeRequested")
+{
+    // Tests that the closeRequested signal is emitted
+
+    auto rootView = Platform::instance()->tests_createView({});
+    bool signalArrived = false;
+    KDBindings::ScopedConnection connection = rootView->closeRequested.connect([&signalArrived](QCloseEvent *ev) {
+        signalArrived = true;
+        CHECK(ev->isAccepted());
+    });
+
+    rootView->close();
+    CHECK(signalArrived);
+}
+
 int main(int argc, char **argv)
 {
     int exitCode = 0;

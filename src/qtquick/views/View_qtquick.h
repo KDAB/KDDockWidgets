@@ -174,11 +174,6 @@ protected:
     bool eventFilter(QObject *watched, QEvent *ev) override;
     bool event(QEvent *) override;
 
-    // TODOv2: Port these
-    void onCloseEvent(QCloseEvent *)
-    {
-    }
-
 private:
     Q_DISABLE_COPY(View_qtquick)
     void updateNormalGeometry();

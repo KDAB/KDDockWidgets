@@ -27,6 +27,7 @@ namespace Layouting {
 class Item;
 }
 
+class QCloseEvent;
 class QFocusEvent;
 class QSizePolicy;
 class QScreen;
@@ -253,6 +254,9 @@ public:
 public:
     /// @brief signal emitted once ~View starts
     KDBindings::Signal<> beingDestroyed;
+
+    /// @brief signal emitted when something tried to close this view
+    KDBindings::Signal<QCloseEvent *> closeRequested;
 
 protected:
     virtual void free_impl();
