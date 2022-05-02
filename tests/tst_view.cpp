@@ -39,12 +39,12 @@ std::ostream &operator<<(std::ostream &os, QRect r)
 
 TEST_CASE("View::setParent()")
 {
-    auto rootView = Platform::instance()->tests_createView();
+    auto rootView = Platform::instance()->tests_createView({});
     REQUIRE(rootView);
     REQUIRE(!rootView->isNull());
     CHECK(rootView->childViews().isEmpty());
 
-    auto childView = Platform::instance()->tests_createView(false, rootView);
+    auto childView = Platform::instance()->tests_createView({}, rootView);
 
     CHECK(!rootView->parentView());
     REQUIRE(childView->parentView());
@@ -54,7 +54,7 @@ TEST_CASE("View::setParent()")
     REQUIRE_EQ(children.size(), 1);
     CHECK(children[0]->equals(childView));
 
-    auto rootView2 = Platform::instance()->tests_createView();
+    auto rootView2 = Platform::instance()->tests_createView({});
     childView->setParent(rootView2);
     CHECK(childView->parentView()->equals(rootView2));
     CHECK(rootView->childViews().isEmpty());
@@ -70,8 +70,8 @@ TEST_CASE("View::setParent()")
 
 TEST_CASE("View::windowHandle,rootView,Window::rootView")
 {
-    auto rootView = Platform::instance()->tests_createView();
-    auto childView = Platform::instance()->tests_createView(true, rootView);
+    auto rootView = Platform::instance()->tests_createView({});
+    auto childView = Platform::instance()->tests_createView({ true }, rootView);
 
     auto window = rootView->window();
     REQUIRE(window);
@@ -85,14 +85,14 @@ TEST_CASE("View::windowHandle,rootView,Window::rootView")
 
 TEST_CASE("View::isVisible(),show(),hide()")
 {
-    auto rootView = Platform::instance()->tests_createView();
+    auto rootView = Platform::instance()->tests_createView({});
     CHECK(!rootView->isVisible());
 
     rootView->setVisible(true);
     CHECK(rootView->isVisible());
 
     // Changing parent will make it hide
-    auto view2 = Platform::instance()->tests_createView();
+    auto view2 = Platform::instance()->tests_createView({});
     view2->setVisible(true);
     CHECK(view2->isVisible());
     view2->setParent(rootView);
@@ -123,7 +123,7 @@ TEST_CASE("View::isVisible(),show(),hide()")
 TEST_CASE("View::geometry,pos,x,y,width,height,rect")
 {
     // Test with a top-level view first
-    auto rootView = Platform::instance()->tests_createView();
+    auto rootView = Platform::instance()->tests_createView({});
     rootView->show();
 
     const QRect initialGeo = QRect(200, 201, 500, 501);
@@ -141,7 +141,7 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
     CHECK_EQ(rootView->rect(), QRect(QPoint(0, 0), initialGeo.size()));
 
     // Now test with child view
-    auto childView = Platform::instance()->tests_createView(true, rootView);
+    auto childView = Platform::instance()->tests_createView({ true }, rootView);
     CHECK(childView->isVisible());
     const QRect newChildGeo(1, 2, 300, 301);
     childView->setGeometry(newChildGeo);

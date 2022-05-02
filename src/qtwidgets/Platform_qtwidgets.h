@@ -38,7 +38,7 @@ public:
     explicit Platform_qtwidgets(int argc, char *argv[]);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
-    View *tests_createView(bool visible = false, View *parent = nullptr) override;
+    View *tests_createView(CreateViewOptions, View *parent = nullptr) override;
 #endif
 protected:
     void init();

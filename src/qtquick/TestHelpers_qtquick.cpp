@@ -53,7 +53,7 @@ void Platform_qtquick::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-View *Platform_qtquick::tests_createView(bool visible, View *parent)
+View *Platform_qtquick::tests_createView(CreateViewOptions opts, View *parent)
 {
     auto parentItem = parent ? Views::asQQuickItem(parent) : nullptr;
     auto newItem = new TestView_qtquick(nullptr, Type::None, parentItem);
@@ -64,8 +64,8 @@ View *Platform_qtquick::tests_createView(bool visible, View *parent)
 
         newItem->QQuickItem::setParentItem(view->contentItem());
         newItem->QQuickItem::setParent(view->contentItem());
-        if (visible)
-            newItem->Views::View_qtquick::setVisible(visible);
+        if (opts.isVisible)
+            newItem->Views::View_qtquick::setVisible(true);
 
         QTest::qWait(100); // the root object gets sized delayed
     }

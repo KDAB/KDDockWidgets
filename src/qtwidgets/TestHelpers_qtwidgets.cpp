@@ -53,12 +53,12 @@ void Platform_qtwidgets::tests_deinitPlatform_impl()
     Platform_qt::tests_deinitPlatform_impl();
 }
 
-View *Platform_qtwidgets::tests_createView(bool visible, View *parent)
+View *Platform_qtwidgets::tests_createView(CreateViewOptions opts, View *parent)
 {
     QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
 
     auto newWidget = new TestView_qtwidgets(parentWidget);
-    if (visible)
+    if (opts.isVisible)
         newWidget->show();
 
     return newWidget;

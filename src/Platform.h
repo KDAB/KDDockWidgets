@@ -74,6 +74,11 @@ public:
 
 #ifdef DOCKS_DEVELOPER_MODE
 
+    struct CreateViewOptions
+    {
+        bool isVisible = false;
+    };
+
     /// @brief list the list of frontend types supported by this build
     static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 
@@ -108,7 +113,7 @@ public:
 
     /// @brief Creates a view with the specified parent
     /// If the parent is null then a new window is created and the returned view will be the root view
-    virtual View *tests_createView(bool visible = false, View *parent = nullptr) = 0;
+    virtual View *tests_createView(CreateViewOptions, View *parent = nullptr) = 0;
 
     /// @brief halts the test during the specified number of milliseconds
     /// The event loop keeps running. Use this for debugging purposes so you can interact with your test
