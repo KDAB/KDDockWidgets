@@ -13,6 +13,7 @@
 #include "private/Utils_p.h"
 #include "ViewWrapper_qtquick.h"
 
+#include <qpa/qplatformwindow.h>
 #include <QGuiApplication>
 
 using namespace KDDockWidgets;
@@ -186,44 +187,24 @@ void View_qtquick::itemChange(QQuickItem::ItemChange change, const QQuickItem::I
     }
 }
 
-void View_qtquick::onResizeEvent(QResizeEvent *event)
+void View_qtquick::updateNormalGeometry()
 {
     QWindow *window = QQuickItem::window();
     if (!window) {
         return;
     }
 
-    if (isNormalWindowState(m_oldWindowState)) {
-        QRect geo = normalGeometry();
-
-        auto curState = window->windowState();
-        if (isNormalWindowState(curState)) {
-            geo.setSize(event->size());
-        } else {
-            geo.setSize(event->oldSize());
-        }
-
-        setNormalGeometry(geo);
-    }
-}
-void View_qtquick::onMoveEvent(QMoveEvent *event)
-{
-    QWindow *window = QQuickItem::window();
-    if (!window) {
-        return;
+    QRect normalGeometry;
+    if (const QPlatformWindow *pw = window->handle()) {
+        normalGeometry = pw->normalGeometry();
     }
 
-    if (isNormalWindowState(m_oldWindowState)) {
-        QRect geo = normalGeometry();
+    if (!normalGeometry.isValid() && isNormalWindowState(window->windowState())) {
+        normalGeometry = window->geometry();
+    }
 
-        auto windowCurrentState = window->windowState();
-        if (isNormalWindowState(windowCurrentState)) {
-            geo.moveTopLeft(event->pos());
-        } else {
-            geo.moveTopLeft(event->oldPos());
-        }
-
-        setNormalGeometry(geo);
+    if (normalGeometry.isValid()) {
+        setNormalGeometry(normalGeometry);
     }
 }
 
@@ -268,10 +249,8 @@ bool View_qtquick::eventFilter(QObject *watched, QEvent *ev)
             }
         }
 
-        if (ev->type() == QEvent::Resize) {
-            onResizeEvent(static_cast<QResizeEvent *>(ev));
-        } else if (ev->type() == QEvent::Move) {
-            onMoveEvent(static_cast<QMoveEvent *>(ev));
+        if (ev->type() == QEvent::Resize || ev->type() == QEvent::Move) {
+            updateNormalGeometry();
         } else if (ev->type() == QEvent::WindowStateChange) {
             onWindowStateChangeEvent(static_cast<QWindowStateChangeEvent *>(ev));
         }
@@ -413,5 +392,428 @@ Qt::WindowFlags View_qtquick::flags() const
 {
     return m_windowFlags;
 }
+
+void View_qtquick::free_impl()
+{
+    // QObject::deleteLater();
+    delete this;
+}
+
+QSize View_qtquick::sizeHint() const
+{
+    return m_sizeHint;
+}
+
+QSize View_qtquick::minSize() const
+{
+    if (m_isWrapper) {
+        const auto children = childItems();
+        if (!children.isEmpty()) {
+            const QSize min = children.constFirst()->property("kddockwidgets_min_size").toSize();
+            return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
+        }
+    }
+
+    const QSize min = property("kddockwidgets_min_size").toSize();
+    return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
+}
+
+QSize View_qtquick::maxSizeHint() const
+{
+    if (m_isWrapper) {
+        const auto children = childItems();
+        if (!children.isEmpty()) {
+            const QSize max = children.constFirst()->property("kddockwidgets_max_size").toSize();
+            return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
+                                 : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
+        }
+    }
+
+    const QSize max = property("kddockwidgets_max_size").toSize();
+    return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
+                         : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
+}
+
+QSize View_qtquick::maximumSize() const
+{
+    return {};
+}
+
+QRect View_qtquick::geometry() const
+{
+    if (isRootView()) {
+        if (QWindow *w = QQuickItem::window()) {
+            return w->geometry();
+        }
+    }
+
+    QRect r(QPointF(QQuickItem::x(), QQuickItem::y()).toPoint(), QQuickItem::size().toSize());
+    return r;
+}
+
+QRect View_qtquick::normalGeometry() const
+{
+    return m_normalGeometry;
+}
+
+void View_qtquick::setNormalGeometry(QRect geo)
+{
+    m_normalGeometry = geo;
+}
+
+void View_qtquick::setMaximumSize(QSize sz)
+{
+    if (maximumSize() != sz) {
+        setProperty("kddockwidgets_max_size", sz);
+        updateGeometry();
+    }
+}
+
+void View_qtquick::setWidth(int w)
+{
+    QQuickItem::setWidth(w);
+}
+
+void View_qtquick::setHeight(int h)
+{
+    QQuickItem::setHeight(h);
+}
+
+void View_qtquick::setFixedWidth(int w)
+{
+    setWidth(w);
+}
+
+void View_qtquick::setFixedHeight(int h)
+{
+    setHeight(h);
+}
+
+void View_qtquick::show()
+{
+    setVisible(true);
+}
+
+void View_qtquick::hide()
+{
+    setVisible(false);
+}
+
+void View_qtquick::updateGeometry()
+{
+    Q_EMIT geometryUpdated();
+}
+
+void View_qtquick::update()
+{
+    // Nothing to do for QtQuick
+}
+
+void View_qtquick::setParent(View *parent)
+{
+    auto parentItem = Views::asQQuickItem(parent);
+
+    {
+        QScopedValueRollback<bool> guard(m_inSetParent, true);
+        QQuickItem::setParent(parentItem);
+        QQuickItem::setParentItem(parentItem);
+    }
+
+    // Mimic QWidget::setParent(), hide widget when setting parent
+    // if (!parentItem) // TODOv2: Why was this if needed, QWidget hides unconditionally
+    setVisible(false);
+}
+
+void View_qtquick::raiseAndActivate()
+{
+    if (QWindow *w = QQuickItem::window()) {
+        w->raise();
+        w->requestActivate();
+    }
+}
+
+void View_qtquick::activateWindow()
+{
+    if (QWindow *w = QQuickItem::window())
+        w->requestActivate();
+}
+
+void View_qtquick::raise()
+{
+    if (isRootView()) {
+        if (QWindow *w = QQuickItem::window())
+            w->raise();
+    } else if (auto p = QQuickItem::parentItem()) {
+        // It's not a top-level, so just increase its Z-order
+        const auto siblings = p->childItems();
+        QQuickItem *last = siblings.last();
+        if (last != this)
+            stackAfter(last);
+    }
+}
+
+QVariant View_qtquick::property(const char *name) const
+{
+    return QObject::property(name);
+}
+
+bool View_qtquick::isRootView() const
+{
+    QQuickItem *parent = parentItem();
+    if (!parent)
+        return true;
+
+    if (QQuickView *w = quickView()) {
+        if (parent == w->contentItem() || parent == w->rootObject())
+            return true;
+    }
+
+    return false;
+}
+
+QQuickView *View_qtquick::quickView() const
+{
+    return qobject_cast<QQuickView *>(QQuickItem::window());
+}
+
+QPoint View_qtquick::mapToGlobal(QPoint localPt) const
+{
+    return QQuickItem::mapToGlobal(localPt).toPoint();
+}
+
+QPoint View_qtquick::mapFromGlobal(QPoint globalPt) const
+{
+    return QQuickItem::mapFromGlobal(globalPt).toPoint();
+}
+
+QPoint View_qtquick::mapTo(View *parent, QPoint pos) const
+{
+    if (!parent)
+        return {};
+
+    auto parentItem = asQQuickItem(parent);
+    return parentItem->mapFromGlobal(QQuickItem::mapToGlobal(pos)).toPoint();
+}
+
+void View_qtquick::setWindowOpacity(double v)
+{
+    if (QWindow *w = QQuickItem::window())
+        w->setOpacity(v);
+}
+
+void View_qtquick::setSizePolicy(QSizePolicy sp)
+{
+    m_sizePolicy = sp;
+}
+
+QSizePolicy View_qtquick::sizePolicy() const
+{
+    return m_sizePolicy;
+}
+
+void View_qtquick::setWindowTitle(const QString &title)
+{
+    if (QWindow *w = QQuickItem::window())
+        w->setTitle(title);
+}
+
+void View_qtquick::setWindowIcon(const QIcon &icon)
+{
+    if (QWindow *w = QQuickItem::window())
+        w->setIcon(icon);
+}
+
+bool View_qtquick::isActiveWindow() const
+{
+    if (QWindow *w = QQuickItem::window())
+        return w->isActive();
+
+    return false;
+}
+
+
+void View_qtquick::showNormal()
+{
+    if (QWindow *w = QQuickItem::window())
+        w->showNormal();
+}
+
+void View_qtquick::showMinimized()
+{
+    if (QWindow *w = QQuickItem::window())
+        w->showMinimized();
+}
+
+void View_qtquick::showMaximized()
+{
+    if (QWindow *w = QQuickItem::window())
+        w->showMaximized();
+}
+
+bool View_qtquick::isMinimized() const
+{
+    if (QWindow *w = QQuickItem::window())
+        return w->windowStates() & Qt::WindowMinimized;
+
+    return false;
+}
+
+bool View_qtquick::isMaximized() const
+{
+    if (QWindow *w = QQuickItem::window())
+        return w->windowStates() & Qt::WindowMaximized;
+
+    return false;
+}
+
+std::shared_ptr<Window> View_qtquick::window() const
+{
+    if (QWindow *w = QQuickItem::window()) {
+        auto windowqtquick = new Window_qtquick(w);
+        return std::shared_ptr<Window>(windowqtquick);
+    }
+
+    return {};
+}
+
+HANDLE View_qtquick::handle() const
+{
+    return reinterpret_cast<HANDLE>(this);
+}
+
+std::shared_ptr<ViewWrapper> View_qtquick::childViewAt(QPoint p) const
+{
+    auto child = QQuickItem::childAt(p.x(), p.y());
+    return child ? asQQuickWrapper(child) : nullptr;
+}
+
+std::shared_ptr<ViewWrapper> View_qtquick::parentView() const
+{
+    auto p = QQuickItem::parentItem();
+    if (QQuickWindow *window = QQuickItem::window()) {
+        if (p == window->contentItem()) {
+            // For our purposes, the root view is the one directly bellow QQuickWindow::contentItem
+            return nullptr;
+        }
+    }
+
+    return p ? asQQuickWrapper(p) : nullptr;
+}
+
+std::shared_ptr<ViewWrapper> View_qtquick::asWrapper()
+{
+    ViewWrapper *wrapper = new ViewWrapper_qtquick(this);
+    return std::shared_ptr<ViewWrapper>(wrapper);
+}
+
+void View_qtquick::setObjectName(const QString &name)
+{
+    QQuickItem::setObjectName(name);
+}
+
+void View_qtquick::grabMouse()
+{
+    QQuickItem::grabMouse();
+}
+
+void View_qtquick::releaseMouse()
+{
+    QQuickItem::ungrabMouse();
+}
+
+void View_qtquick::releaseKeyboard()
+{
+    // Not needed for QtQuick
+}
+
+QScreen *View_qtquick::screen() const
+{
+    if (QWindow *w = QQuickItem::window())
+        return w->screen();
+
+    return nullptr;
+}
+
+void View_qtquick::setFocus(Qt::FocusReason reason)
+{
+    QQuickItem::setFocus(true, reason);
+    forceActiveFocus(reason);
+}
+
+Qt::FocusPolicy View_qtquick::focusPolicy() const
+{
+    return m_focusPolicy;
+}
+
+/// TODOv2: Make these 2 virtual ?
+void View_qtquick::setFocusPolicy(Qt::FocusPolicy policy)
+{
+    m_focusPolicy = policy;
+}
+
+QString View_qtquick::objectName() const
+{
+    return QQuickItem::objectName();
+}
+
+void View_qtquick::setMinimumSize(QSize sz)
+{
+    if (minSize() != sz) {
+        setProperty("kddockwidgets_min_size", sz);
+        updateGeometry();
+    }
+}
+
+void View_qtquick::render(QPainter *)
+{
+    qWarning() << Q_FUNC_INFO << "Implement me";
+}
+
+void View_qtquick::setCursor(Qt::CursorShape shape)
+{
+    QQuickItem::setCursor(shape);
+}
+
+void View_qtquick::setMouseTracking(bool enable)
+{
+    m_mouseTrackingEnabled = enable;
+}
+
+QVector<std::shared_ptr<View>> View_qtquick::childViews() const
+{
+    QVector<std::shared_ptr<View>> result;
+    const auto childItems = QQuickItem::childItems();
+    for (QQuickItem *child : childItems) {
+        result << asQQuickWrapper(child);
+    }
+
+    return result;
+}
+
+// TODOv2: Check if this is still needed
+void View_qtquick::setWindowIsBeingDestroyed(bool is)
+{
+    m_windowIsBeingDestroyed = is;
+}
+
+// TODOv2: Check if this is still needed
+void View_qtquick::setIsWrapper()
+{
+    m_isWrapper = true;
+}
+
+// TODOv2: Check if this is still needed
+bool View_qtquick::isWrapper() const
+{
+    return m_isWrapper;
+}
+
+void View_qtquick::onWindowStateChangeEvent(QWindowStateChangeEvent *)
+{
+    if (QWindow *window = QQuickItem::window()) {
+        m_oldWindowState = window->windowState();
+    }
+}
+
 
 #include "View_qtquick.moc"
