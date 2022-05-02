@@ -45,6 +45,14 @@ TEST_CASE("View::setParent")
     delete r2;
 }
 
+TEST_CASE("View::minSize")
+{
+    const QSize sizeHint = {};
+    const QSize minSize = { 201, 202 };
+    auto rootView = Platform::instance()->tests_createView({ true, sizeHint, minSize })->asWrapper();
+    CHECK_EQ(rootView->minSize(), minSize);
+}
+
 TEST_CASE("View::objectName")
 {
     auto rootView = Platform::instance()->tests_createView({})->asWrapper();

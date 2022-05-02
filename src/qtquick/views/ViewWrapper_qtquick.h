@@ -62,6 +62,7 @@ public:
     QSize minSize() const override;
     bool close() override;
 
+    const View *unwrap() const;
     View *unwrap();
 
 private:

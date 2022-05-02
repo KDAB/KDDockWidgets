@@ -227,7 +227,12 @@ void ViewWrapper_qtquick::setCursor(Qt::CursorShape)
 
 QSize ViewWrapper_qtquick::minSize() const
 {
-    return {};
+    if (auto view = unwrap()) {
+        // Only real views have min size
+        return view->minSize();
+    } else {
+        return {};
+    }
 }
 
 QVector<std::shared_ptr<View>> ViewWrapper_qtquick::childViews() const
@@ -262,4 +267,9 @@ bool ViewWrapper_qtquick::close()
 View *ViewWrapper_qtquick::unwrap()
 {
     return qobject_cast<View_qtquick *>(m_item);
+}
+
+const View *ViewWrapper_qtquick::unwrap() const
+{
+    return qobject_cast<const View_qtquick *>(m_item);
 }
