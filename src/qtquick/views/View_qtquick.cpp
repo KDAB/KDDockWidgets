@@ -745,7 +745,6 @@ Qt::FocusPolicy View_qtquick::focusPolicy() const
     return m_focusPolicy;
 }
 
-/// TODOv2: Make these 2 virtual ?
 void View_qtquick::setFocusPolicy(Qt::FocusPolicy policy)
 {
     m_focusPolicy = policy;
@@ -790,19 +789,16 @@ QVector<std::shared_ptr<View>> View_qtquick::childViews() const
     return result;
 }
 
-// TODOv2: Check if this is still needed
 void View_qtquick::setWindowIsBeingDestroyed(bool is)
 {
     m_windowIsBeingDestroyed = is;
 }
 
-// TODOv2: Check if this is still needed
 void View_qtquick::setIsWrapper()
 {
     m_isWrapper = true;
 }
 
-// TODOv2: Check if this is still needed
 bool View_qtquick::isWrapper() const
 {
     return m_isWrapper;
