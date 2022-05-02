@@ -251,14 +251,6 @@ public:
             window->close();
     }
 
-    QRect windowGeometry() const override
-    {
-        if (QWidget *window = QWidget::window())
-            return window->geometry();
-
-        return {};
-    }
-
     void setWindowOpacity(double v) override
     {
         QWidget::setWindowOpacity(v);

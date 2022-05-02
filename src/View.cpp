@@ -306,3 +306,11 @@ QSize View::parentSize() const
         return p->size();
     return {};
 }
+
+QRect View::windowGeometry() const
+{
+    if (Window::Ptr window = this->window())
+        return window->geometry();
+
+    return {};
+}

@@ -45,7 +45,6 @@ public:
     void setSizePolicy(QSizePolicy) override;
     QSizePolicy sizePolicy() const override;
     void closeWindow() override;
-    QRect windowGeometry() const override;
     bool close() override;
     void setFlag(Qt::WindowType, bool = true) override;
     void setAttribute(Qt::WidgetAttribute, bool enable = true) override;

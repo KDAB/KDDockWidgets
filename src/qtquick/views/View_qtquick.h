@@ -297,11 +297,6 @@ public:
     {
     }
 
-    QRect windowGeometry() const override
-    {
-        return {};
-    }
-
     bool close() override;
     void setFlag(Qt::WindowType f, bool on = true) override;
     void setAttribute(Qt::WidgetAttribute attr, bool enable = true) override;

@@ -145,7 +145,7 @@ public:
     virtual void setSizePolicy(QSizePolicy) = 0;
     virtual QSizePolicy sizePolicy() const = 0;
     virtual void closeWindow() = 0;
-    virtual QRect windowGeometry() const = 0;
+    QRect windowGeometry() const;
     QSize parentSize() const;
     virtual bool close() = 0;
     virtual void setFlag(Qt::WindowType, bool = true) = 0;

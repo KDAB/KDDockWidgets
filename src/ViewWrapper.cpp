@@ -89,12 +89,6 @@ void ViewWrapper::closeWindow()
     qFatal("Not implemented");
 }
 
-QRect ViewWrapper::windowGeometry() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 bool ViewWrapper::close()
 {
     qFatal("Not implemented");
