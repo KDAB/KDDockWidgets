@@ -28,7 +28,19 @@ namespace KDDockWidgets {
 class TestView_qtquick : public Views::View_qtquick
 {
 public:
-    using Views::View_qtquick::View_qtquick;
+    explicit TestView_qtquick(Platform::CreateViewOptions opts, QQuickItem *parent)
+        : Views::View_qtquick(nullptr, Type::None, parent)
+        , m_opts(opts)
+    {
+    }
+
+    QSize sizeHint() const override
+    {
+        return m_opts.sizeHint;
+    }
+
+private:
+    Platform::CreateViewOptions m_opts;
 };
 }
 
@@ -56,7 +68,7 @@ void Platform_qtquick::tests_deinitPlatform_impl()
 View *Platform_qtquick::tests_createView(CreateViewOptions opts, View *parent)
 {
     auto parentItem = parent ? Views::asQQuickItem(parent) : nullptr;
-    auto newItem = new TestView_qtquick(nullptr, Type::None, parentItem);
+    auto newItem = new TestView_qtquick(opts, parentItem);
 
     if (!parentItem) {
         auto view = new QQuickView(m_qmlEngine, nullptr);

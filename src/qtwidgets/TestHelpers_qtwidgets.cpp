@@ -26,11 +26,20 @@ namespace KDDockWidgets {
 class TestView_qtwidgets : public Views::View_qtwidgets<QWidget>
 {
 public:
-    explicit TestView_qtwidgets(QWidget *parent)
+    explicit TestView_qtwidgets(Platform::CreateViewOptions opts, QWidget *parent)
         : Views::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
+        , m_opts(opts)
     {
         create();
     }
+
+    QSize sizeHint() const override
+    {
+        return m_opts.sizeHint;
+    }
+
+private:
+    Platform::CreateViewOptions m_opts;
 };
 }
 
@@ -57,7 +66,7 @@ View *Platform_qtwidgets::tests_createView(CreateViewOptions opts, View *parent)
 {
     QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
 
-    auto newWidget = new TestView_qtwidgets(parentWidget);
+    auto newWidget = new TestView_qtwidgets(opts, parentWidget);
     if (opts.isVisible)
         newWidget->show();
 

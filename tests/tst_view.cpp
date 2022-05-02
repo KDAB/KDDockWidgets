@@ -154,6 +154,13 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
     CHECK_EQ(childView->geometry(), newChildGeo);
 }
 
+TEST_CASE("View::sizeHint")
+{
+    const QSize sizeHint = QSize(200, 200);
+    auto rootView = Platform::instance()->tests_createView({ true, sizeHint });
+    CHECK_EQ(rootView->sizeHint(), sizeHint);
+}
+
 int main(int argc, char **argv)
 {
     int exitCode = 0;

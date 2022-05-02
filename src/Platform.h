@@ -77,6 +77,7 @@ public:
     struct CreateViewOptions
     {
         bool isVisible = false;
+        QSize sizeHint = {};
     };
 
     /// @brief list the list of frontend types supported by this build
