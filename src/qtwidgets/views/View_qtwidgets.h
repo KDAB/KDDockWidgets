@@ -245,12 +245,6 @@ public:
         return QWidget::sizePolicy();
     }
 
-    void closeWindow() override
-    {
-        if (QWidget *window = QWidget::window())
-            window->close();
-    }
-
     void setWindowOpacity(double v) override
     {
         QWidget::setWindowOpacity(v);

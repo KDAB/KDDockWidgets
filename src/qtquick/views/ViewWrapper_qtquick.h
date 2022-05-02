@@ -61,6 +61,7 @@ public:
     bool testAttribute(Qt::WidgetAttribute) const override;
     void setCursor(Qt::CursorShape) override;
     QSize minSize() const override;
+    bool close() override;
 
 private:
     QPointer<QQuickItem> m_item;

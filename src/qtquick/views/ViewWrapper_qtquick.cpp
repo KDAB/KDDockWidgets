@@ -10,6 +10,8 @@
 */
 
 #include "ViewWrapper_qtquick.h"
+#include "qtquick/views/View_qtquick.h"
+
 // #include "qtwidgets/views/DockWidget_qtquick.h"
 // #include "qtwidgets/views/FloatingWindow_qtquick.h"
 // #include "qtwidgets/views/Frame_qtquick.h"
@@ -239,4 +241,9 @@ QVector<std::shared_ptr<View>> ViewWrapper_qtquick::childViews() const
 
 void ViewWrapper_qtquick::setParent(View *)
 {
+}
+
+bool ViewWrapper_qtquick::close()
+{
+    return View_qtquick::close(m_item);
 }

@@ -144,7 +144,7 @@ public:
     virtual QPoint mapTo(View *, QPoint) const = 0;
     virtual void setSizePolicy(QSizePolicy) = 0;
     virtual QSizePolicy sizePolicy() const = 0;
-    virtual void closeWindow() = 0;
+    void closeRootView();
     QRect windowGeometry() const;
     QSize parentSize() const;
     virtual bool close() = 0;

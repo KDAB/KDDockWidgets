@@ -352,3 +352,8 @@ void ViewWrapper_qtwidgets::setParent(View *parent)
 {
     Views::View_qtwidgets<QWidget>::setParentFor(m_widget, parent);
 }
+
+bool ViewWrapper_qtwidgets::close()
+{
+    return m_widget->close();
+}

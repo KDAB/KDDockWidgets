@@ -318,7 +318,7 @@ void TitleBar::onCloseClicked()
             }
         } else {
             if (m_frame->isTheOnlyFrame() && !m_frame->isInMainWindow()) {
-                m_frame->view()->closeWindow();
+                m_frame->view()->closeRootView();
             } else {
                 m_frame->view()->close();
             }

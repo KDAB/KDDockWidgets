@@ -314,3 +314,9 @@ QRect View::windowGeometry() const
 
     return {};
 }
+
+void View::closeRootView()
+{
+    if (auto view = rootView())
+        view->close();
+}

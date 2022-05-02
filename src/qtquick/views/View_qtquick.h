@@ -293,10 +293,7 @@ public:
         return m_sizePolicy;
     }
 
-    void closeWindow() override
-    {
-    }
-
+    static bool close(QQuickItem *);
     bool close() override;
     void setFlag(Qt::WindowType f, bool on = true) override;
     void setAttribute(Qt::WidgetAttribute attr, bool enable = true) override;

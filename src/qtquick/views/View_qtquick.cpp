@@ -280,17 +280,24 @@ bool View_qtquick::eventFilter(QObject *watched, QEvent *ev)
     return QQuickItem::eventFilter(watched, ev);
 }
 
-bool View_qtquick::close()
+bool View_qtquick::close(QQuickItem *item)
 {
-    QCloseEvent ev;
-    onCloseEvent(&ev);
+    if (auto viewqtquick = qobject_cast<View_qtquick *>(item)) {
+        QCloseEvent ev;
+        viewqtquick->onCloseEvent(&ev);
 
-    if (ev.isAccepted()) {
-        setVisible(false);
-        return true;
+        if (ev.isAccepted()) {
+            viewqtquick->setVisible(false);
+            return true;
+        }
     }
 
     return false;
+}
+
+bool View_qtquick::close()
+{
+    return close(this);
 }
 
 void View_qtquick::QQUICKITEMgeometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
