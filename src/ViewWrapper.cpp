@@ -95,12 +95,6 @@ QRect ViewWrapper::windowGeometry() const
     return {};
 }
 
-QSize ViewWrapper::parentSize() const
-{
-    qFatal("Not implemented");
-    return {};
-}
-
 bool ViewWrapper::close()
 {
     qFatal("Not implemented");

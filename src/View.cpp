@@ -299,3 +299,10 @@ bool View::isInWindow(std::shared_ptr<Window> window) const
 
     return false;
 }
+
+QSize View::parentSize() const
+{
+    if (auto p = parentView())
+        return p->size();
+    return {};
+}

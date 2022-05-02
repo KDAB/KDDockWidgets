@@ -279,13 +279,6 @@ public:
         QWidget::setMouseTracking(enable);
     }
 
-    virtual QSize parentSize() const override
-    {
-        if (auto p = QWidget::parentWidget())
-            return p->size();
-        return {};
-    }
-
     bool close() override
     {
         return QWidget::close();
