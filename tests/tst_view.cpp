@@ -173,6 +173,16 @@ TEST_CASE("View::minSize")
     CHECK_EQ(rootView->minSize(), newMinSize);
 }
 
+TEST_CASE("View::objectName")
+{
+    auto rootView = Platform::instance()->tests_createView({});
+
+    CHECK_EQ(rootView->objectName(), QString());
+    const QString newName = QStringLiteral("name1");
+    rootView->setObjectName(newName);
+    CHECK_EQ(rootView->objectName(), newName);
+}
+
 int main(int argc, char **argv)
 {
     int exitCode = 0;
