@@ -732,14 +732,6 @@ void View_qtquick::releaseKeyboard()
     // Not needed for QtQuick
 }
 
-QScreen *View_qtquick::screen() const
-{
-    if (QWindow *w = QQuickItem::window())
-        return w->screen();
-
-    return nullptr;
-}
-
 void View_qtquick::setFocus(Qt::FocusReason reason)
 {
     QQuickItem::setFocus(true, reason);

@@ -23,6 +23,7 @@
 #include "controllers/DropArea.h"
 
 #include <QWidget> // TODOv2 remove
+#include <QScreen>
 
 using namespace KDDockWidgets;
 
@@ -319,4 +320,12 @@ void View::closeRootView()
 {
     if (auto view = rootView())
         view->close();
+}
+
+QScreen *View::screen() const
+{
+    if (Window::Ptr window = this->window())
+        return window->screen();
+
+    return nullptr;
 }

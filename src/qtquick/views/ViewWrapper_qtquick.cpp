@@ -188,11 +188,6 @@ void ViewWrapper_qtquick::releaseMouse()
     m_item->ungrabMouse();
 }
 
-QScreen *ViewWrapper_qtquick::screen() const
-{
-    return {};
-}
-
 void ViewWrapper_qtquick::setFocus(Qt::FocusReason)
 {
 }

@@ -44,6 +44,7 @@ public:
 
     QPoint mapFromGlobal(QPoint globalPos) const override;
     QPoint mapToGlobal(QPoint localPos) const override;
+    QScreen *screen() const override;
 
 protected:
     QPointer<QWindow> m_window;

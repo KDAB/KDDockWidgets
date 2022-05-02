@@ -17,6 +17,8 @@
 
 #include "kdbindings/signal.h"
 
+class QScreen;
+
 namespace KDDockWidgets {
 
 /// @brief Represents a top-level window
@@ -78,6 +80,9 @@ public:
     /// Like for example QWindow::screenChanged() for Qt.
     /// Needs to be emitted by the derived classes.
     KDBindings::Signal<> screenChanged;
+
+    /// @brief Returns the screen this window is on
+    virtual QScreen *screen() const = 0;
 };
 
 inline bool operator==(Window::Ptr w1, Window::Ptr w2)

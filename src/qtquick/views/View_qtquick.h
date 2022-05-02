@@ -136,7 +136,6 @@ public:
     void grabMouse() override;
     void releaseMouse() override;
     void releaseKeyboard() override;
-    QScreen *screen() const override;
     void setFocus(Qt::FocusReason reason) override;
     Qt::FocusPolicy focusPolicy() const;
     /// TODOv2: Make these 2 virtual ?

@@ -400,11 +400,6 @@ public:
         QWidget::releaseKeyboard();
     }
 
-    QScreen *screen() const override
-    {
-        return QWidget::screen();
-    }
-
     void setFocus(Qt::FocusReason reason) override
     {
         return QWidget::setFocus(reason);

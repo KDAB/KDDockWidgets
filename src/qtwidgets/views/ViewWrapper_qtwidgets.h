@@ -52,7 +52,6 @@ public:
     HANDLE handle() const override;
     void grabMouse() override;
     void releaseMouse() override;
-    QScreen *screen() const override;
     void setFocus(Qt::FocusReason) override;
     QString objectName() const override;
     QVariant property(const char *) const override;

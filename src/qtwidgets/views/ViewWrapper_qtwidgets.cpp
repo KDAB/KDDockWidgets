@@ -274,11 +274,6 @@ void ViewWrapper_qtwidgets::releaseMouse()
     m_widget->releaseMouse();
 }
 
-QScreen *ViewWrapper_qtwidgets::screen() const
-{
-    return m_widget->screen();
-}
-
 void ViewWrapper_qtwidgets::setFocus(Qt::FocusReason reason)
 {
     m_widget->setFocus(reason);

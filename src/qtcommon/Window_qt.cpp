@@ -112,3 +112,8 @@ QPoint Window_qt::mapToGlobal(QPoint localPos) const
 {
     return m_window->mapToGlobal(localPos);
 }
+
+QScreen *Window_qt::screen() const
+{
+    return m_window->screen();
+}

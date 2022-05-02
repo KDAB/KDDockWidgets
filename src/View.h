@@ -170,7 +170,7 @@ public:
     virtual void grabMouse() = 0;
     virtual void releaseMouse() = 0;
     virtual void releaseKeyboard() = 0;
-    virtual QScreen *screen() const = 0;
+    QScreen *screen() const;
     virtual void setFocus(Qt::FocusReason) = 0;
     virtual void setWindowOpacity(double) = 0;
     virtual void setCursor(Qt::CursorShape) = 0;
