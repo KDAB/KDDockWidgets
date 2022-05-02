@@ -194,7 +194,7 @@ void ViewWrapper_qtquick::setFocus(Qt::FocusReason)
 
 QString ViewWrapper_qtquick::objectName() const
 {
-    return {};
+    return m_item->objectName();
 }
 
 QVariant ViewWrapper_qtquick::property(const char *) const

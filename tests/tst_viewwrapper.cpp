@@ -44,3 +44,13 @@ TEST_CASE("View::setParent")
     delete r;
     delete r2;
 }
+
+TEST_CASE("View::objectName")
+{
+    auto rootView = Platform::instance()->tests_createView({})->asWrapper();
+
+    CHECK_EQ(rootView->objectName(), QString());
+    const QString newName = QStringLiteral("name1");
+    rootView->setObjectName(newName);
+    CHECK_EQ(rootView->objectName(), newName);
+}
