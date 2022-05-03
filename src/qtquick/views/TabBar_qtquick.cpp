@@ -9,123 +9,133 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "TabBar_qtquick.h"
-#include "../controllers/TabBar.h"
-#include "private/Utils_p.h"
-#include "private/Logging_p.h"
-#include "Config.h"
-#include "kddockwidgets/FrameworkWidgetFactory.h"
-#include "kddockwidgets/private/DockRegistry_p.h"
+/**
+ * @file
+ * @brief Implements a QTabWidget derived class with support for docking and undocking
+ * KDockWidget::DockWidget as tabs .
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
 
+#include "TabBar_qtquick.h"
+#include "controllers/TabBar.h"
+
+#include <QMetaObject>
 #include <QMouseEvent>
-#include <QApplication>
-#include <QProxyStyle>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-namespace KDDockWidgets {
-namespace { // anonymous namespace to silence -Wweak-vtables
-class MyProxy : public QProxyStyle
-{
-public:
-    MyProxy()
-        : QProxyStyle(qApp->style())
-    {
-        setParent(qApp);
-    }
-
-    int styleHint(QStyle::StyleHint hint, const QStyleOption *option = nullptr,
-                  const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override
-    {
-        if (hint == QStyle::SH_Widget_Animation_Duration) {
-            // QTabBar has a bug which causes the paint event to dereference a tab which was already removed.
-            // Because, after the tab being removed, the d->pressedIndex is only reset after the animation ends.
-            // So disable the animation. Crash can be repro by enabling movable tabs, and detaching a tab quickly from
-            // a floating window containing two dock widgets. Reproduced on Windows
-            return 0;
-        }
-        return baseStyle()->styleHint(hint, option, widget, returnData);
-    }
-};
-}
-}
-
-
-TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QWidget *parent)
+TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::TabBar, parent)
     , m_controller(controller)
 {
 }
 
-int TabBar_qtquick::tabAt(QPoint localPos) const
+int TabBar_qtquick::tabAt(QPoint p) const
 {
-    return QTabBar::tabAt(localPos);
-}
+    // QtQuick's TabBar doesn't provide any API for this.
+    // So ask its *internal* ListView instead.
 
-Controllers::DockWidget *TabBar_qtquick::currentDockWidget() const
-{
-    const int index = currentIndex();
-    return index == -1 ? nullptr
-                       : m_controller->dockWidgetAt(index);
-}
-
-void TabBar_qtquick::mousePressEvent(QMouseEvent *e)
-{
-    m_controller->onMousePress(e->pos());
-    QTabBar::mousePressEvent(e);
-}
-
-void TabBar_qtquick::mouseMoveEvent(QMouseEvent *e)
-{
-    if (count() > 1) {
-        // Only allow to re-order tabs if we have more than 1 tab, otherwise it's just weird.
-        QTabBar::mouseMoveEvent(e);
-    }
-}
-
-void TabBar_qtquick::mouseDoubleClickEvent(QMouseEvent *e)
-{
-    m_controller->onMouseDoubleClick(e->pos());
-}
-
-bool TabBar_qtquick::event(QEvent *ev)
-{
-    // Qt has a bug in QWidgetPrivate::deepestFocusProxy(), it doesn't honour visibility
-    // of the focus scope. Once an hidden widget is focused the chain is broken and tab
-    // stops working (#180)
-
-    auto parent = parentWidget();
-    if (!parent)
-        return QTabBar::event(ev);
-
-    const bool result = QTabBar::event(ev);
-
-    if (ev->type() == QEvent::Show) {
-        parent->setFocusProxy(this);
-    } else if (ev->type() == QEvent::Hide) {
-        parent->setFocusProxy(nullptr);
+    if (!m_tabBarQmlItem) {
+        qWarning() << Q_FUNC_INFO << "No visual tab bar item yet";
+        return -1;
     }
 
-    return result;
+    if (QQuickItem *internalListView = listView()) {
+        int index = -1;
+        QMetaObject::invokeMethod(internalListView, "indexAt", Q_RETURN_ARG(int, index),
+                                  Q_ARG(double, p.x()), Q_ARG(double, p.y()));
+
+        return index;
+    } else {
+        qWarning() << Q_FUNC_INFO << "Couldn't find the internal ListView";
+    }
+
+    return -1;
+}
+
+QQuickItem *TabBar_qtquick::tabBarQmlItem() const
+{
+    return m_tabBarQmlItem;
+}
+
+void TabBar_qtquick::setTabBarQmlItem(QQuickItem *item)
+{
+    m_tabBarQmlItem = item;
 }
 
 QString TabBar_qtquick::text(int index) const
 {
-    return tabText(index);
+    if (QQuickItem *item = tabAt(index))
+        return item->property("text").toString();
+
+    return {};
 }
 
 QRect TabBar_qtquick::rectForTab(int index) const
 {
-    return QTabBar::tabRect(index);
+    if (QQuickItem *item = tabAt(index))
+        return item->boundingRect().toRect();
+
+    return {};
+}
+
+bool TabBar_qtquick::event(QEvent *ev)
+{
+    switch (ev->type()) {
+    case QEvent::MouseButtonDblClick:
+    case QEvent::MouseButtonPress: {
+        if (m_tabBarQmlItem) {
+            auto me = static_cast<QMouseEvent *>(ev);
+            m_tabBarQmlItem->setProperty("currentIndex", tabAt(me->pos()));
+            if (ev->type() == QEvent::MouseButtonPress)
+                m_controller->onMousePress(me->pos());
+            else
+                m_controller->onMouseDoubleClick(me->pos());
+        }
+
+        break;
+    }
+    default:
+        break;
+    }
+
+    return View_qtquick::event(ev);
+}
+
+QQuickItem *TabBar_qtquick::tabAt(int index) const
+{
+    QQuickItem *view = listView();
+    if (!view)
+        return nullptr;
+
+    QQuickItem *item = nullptr;
+    QMetaObject::invokeMethod(view, "itemAtIndex", Q_RETURN_ARG(QQuickItem *, item),
+                              Q_ARG(int, index));
+
+    return item;
+}
+
+QQuickItem *TabBar_qtquick::listView() const
+{
+    // Returns the internal ListView of the TabBar
+
+    if (!m_tabBarQmlItem)
+        return nullptr;
+
+    const QList<QQuickItem *> children = m_tabBarQmlItem->childItems();
+    for (QQuickItem *child : children) {
+        if (qstrcmp(child->metaObject()->className(), "QQuickListView") == 0)
+            return child;
+    }
+
+    return nullptr;
 }
 
 void TabBar_qtquick::moveTabTo(int from, int to)
 {
-    moveTab(from, to);
-}
-
-bool TabBar_qtquick::tabsAreMovable() const
-{
-    return isMovable();
+    Q_UNUSED(from);
+    Q_UNUSED(to);
+    // Not implemented yet
 }

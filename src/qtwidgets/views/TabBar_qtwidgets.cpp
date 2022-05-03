@@ -10,7 +10,7 @@
 */
 
 #include "TabBar_qtwidgets.h"
-#include "../controllers/TabBar.h"
+#include "controllers/TabBar.h"
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 #include "Config.h"

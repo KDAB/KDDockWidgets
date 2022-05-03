@@ -9,48 +9,62 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+/**
+ * @file
+ * @brief Implements a QTabWidget derived class with support for docking and undocking
+ * KDockWidget::DockWidget as tabs .
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
+#ifndef KD_TABBAR_QUICK_P_H
+#define KD_TABBAR_QUICK_P_H
 #pragma once
 
 #include "View_qtquick.h"
 #include "views/TabBar.h"
 
-
-QT_BEGIN_NAMESPACE
-class QMouseEvent;
-QT_END_NAMESPACE
+#include <QPointer>
 
 namespace KDDockWidgets::Controllers {
 class TabBar;
-class DockWidget;
 }
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT TabBar_qtquick : public View_qtquick<QQuickItem>, public TabBar
+class DockWidget;
+class TabWidget;
+
+class DOCKS_EXPORT TabBar_qtquick
+    : public View_qtquick,
+      public TabBar
 {
     Q_OBJECT
+    Q_PROPERTY(QQuickItem *tabBarQmlItem READ tabBarQmlItem WRITE setTabBarQmlItem NOTIFY tabBarQmlItemChanged)
 public:
     explicit TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *parent = nullptr);
+    int tabAt(QPoint localPos) const override;
 
-    Controllers::TabBar *tabBar() const;
-
-    Controllers::DockWidget *currentDockWidget() const override;
+    QQuickItem *tabBarQmlItem() const;
+    void setTabBarQmlItem(QQuickItem *);
 
     QString text(int index) const override;
     QRect rectForTab(int index) const override;
+
     void moveTabTo(int from, int to) override;
 
-    bool tabsAreMovable() const override;
-    int tabAt(QPoint localPos) const override;
+Q_SIGNALS:
+    void tabBarQmlItemChanged();
 
 protected:
-    void mousePressEvent(QMouseEvent *) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseDoubleClickEvent(QMouseEvent *e) override;
-    bool event(QEvent *) override;
+    bool event(QEvent *ev) override;
 
 private:
+    QQuickItem *tabAt(int index) const;
+    QQuickItem *listView() const;
+    QPointer<QQuickItem> m_tabBarQmlItem;
     Controllers::TabBar *const m_controller;
 };
-
 }
+
+#endif
