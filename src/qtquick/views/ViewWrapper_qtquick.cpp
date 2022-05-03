@@ -73,12 +73,17 @@ std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::childViewAt(QPoint) const
 
 std::shared_ptr<Window> ViewWrapper_qtquick::window() const
 {
+    if (QWindow *w = m_item->window()) {
+        auto windowqtquick = new Window_qtquick(w);
+        return std::shared_ptr<Window>(windowqtquick);
+    }
+
     return {};
 }
 
 bool ViewWrapper_qtquick::isRootView() const
 {
-    return {};
+    return View_qtquick::isRootView(m_item);
 }
 
 void ViewWrapper_qtquick::setVisible(bool)
@@ -164,7 +169,10 @@ bool ViewWrapper_qtquick::is(Type t) const
 
 std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::rootView() const
 {
-    // return std::shared_ptr<ViewWrapper>(new ViewWrapper_qtquick(m_item->window()));
+    if (Window::Ptr window = this->window())
+        return window->rootView();
+
+    qWarning() << Q_FUNC_INFO << "No window present";
     return {};
 }
 
@@ -197,9 +205,9 @@ QString ViewWrapper_qtquick::objectName() const
     return m_item->objectName();
 }
 
-QVariant ViewWrapper_qtquick::property(const char *) const
+QVariant ViewWrapper_qtquick::property(const char *name) const
 {
-    return {};
+    return m_item->property(name);
 }
 
 bool ViewWrapper_qtquick::isNull() const
@@ -221,8 +229,9 @@ bool ViewWrapper_qtquick::testAttribute(Qt::WidgetAttribute) const
     return {};
 }
 
-void ViewWrapper_qtquick::setCursor(Qt::CursorShape)
+void ViewWrapper_qtquick::setCursor(Qt::CursorShape shape)
 {
+    m_item->QQuickItem::setCursor(shape);
 }
 
 QSize ViewWrapper_qtquick::minSize() const

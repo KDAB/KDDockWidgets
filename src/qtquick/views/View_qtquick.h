@@ -96,6 +96,7 @@ public:
     void activateWindow() override;
     void raise() override;
     QVariant property(const char *name) const override;
+    static bool isRootView(const QQuickItem *);
     bool isRootView() const override;
     QQuickView *quickView() const;
     QPoint mapToGlobal(QPoint localPt) const override;

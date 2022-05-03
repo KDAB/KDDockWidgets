@@ -16,6 +16,7 @@
 #include <QWidget>
 #include <QVariant>
 #include <QWindow>
+#include <QDebug>
 
 using namespace KDDockWidgets;
 
@@ -37,6 +38,7 @@ std::shared_ptr<ViewWrapper> Window_qtwidgets::rootView() const
     if (QWidget *widget = m_window->property("kddockwidgets_qwidget").value<QWidget *>())
         return std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(widget));
 
+    qWarning() << Q_FUNC_INFO << "Window does not have a root";
     return nullptr;
 }
 

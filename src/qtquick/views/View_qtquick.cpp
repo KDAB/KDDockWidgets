@@ -557,18 +557,23 @@ QVariant View_qtquick::property(const char *name) const
     return QObject::property(name);
 }
 
-bool View_qtquick::isRootView() const
+/*static*/ bool View_qtquick::isRootView(const QQuickItem *item)
 {
-    QQuickItem *parent = parentItem();
+    QQuickItem *parent = item->parentItem();
     if (!parent)
         return true;
 
-    if (QQuickView *w = quickView()) {
+    if (QQuickView *w = qobject_cast<QQuickView *>(item->window())) {
         if (parent == w->contentItem() || parent == w->rootObject())
             return true;
     }
 
     return false;
+}
+
+bool View_qtquick::isRootView() const
+{
+    return View_qtquick::isRootView(this);
 }
 
 QQuickView *View_qtquick::quickView() const

@@ -45,6 +45,22 @@ TEST_CASE("ViewWrapper::setParent")
     delete r2;
 }
 
+TEST_CASE("ViewWrapper::windowHandle,rootView,Window::rootView")
+{
+    auto r = Platform::instance()->tests_createView({});
+    auto rootView = r->asWrapper();
+    auto childView = Platform::instance()->tests_createView({ true }, r)->asWrapper();
+
+    auto window = rootView->window();
+    REQUIRE(window);
+    CHECK_EQ(window->handle(), childView->window()->handle());
+    CHECK(rootView->rootView()->equals(rootView));
+    CHECK(childView->rootView()->equals(rootView));
+
+    REQUIRE(window->rootView());
+    CHECK(window->rootView()->equals(rootView));
+}
+
 TEST_CASE("ViewWrapper::minSize")
 {
     const QSize sizeHint = {};

@@ -32,6 +32,7 @@ std::shared_ptr<ViewWrapper> Window_qtquick::rootView() const
         qWarning() << Q_FUNC_INFO << "Expected QQuickView";
     }
 
+    qWarning() << Q_FUNC_INFO << "Window does not have a root";
     return {};
 }
 
