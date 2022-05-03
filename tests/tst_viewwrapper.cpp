@@ -11,7 +11,7 @@
 
 #include "main.h"
 
-TEST_CASE("View::setParent")
+TEST_CASE("ViewWrapper::setParent")
 {
     auto r = Platform::instance()->tests_createView({});
     auto rootView = r->asWrapper();
@@ -45,7 +45,7 @@ TEST_CASE("View::setParent")
     delete r2;
 }
 
-TEST_CASE("View::minSize")
+TEST_CASE("ViewWrapper::minSize")
 {
     const QSize sizeHint = {};
     const QSize minSize = { 201, 202 };
@@ -53,7 +53,7 @@ TEST_CASE("View::minSize")
     CHECK_EQ(rootView->minSize(), minSize);
 }
 
-TEST_CASE("View::objectName")
+TEST_CASE("ViewWrapper::objectName")
 {
     auto rootView = Platform::instance()->tests_createView({})->asWrapper();
 
