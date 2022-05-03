@@ -9,83 +9,51 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+#ifndef KD_TITLEBARQUICK_P_H
+#define KD_TITLEBARQUICK_P_H
 #pragma once
 
-#include "View_qtquick.h"
-#include "controllers/FloatingWindow.h"
+#include "kddockwidgets/docks_export.h"
 #include "views/TitleBar.h"
-
-#include <QToolButton>
-
-class QHBoxLayout;
-class QLabel;
-
-namespace KDDockWidgets::Controllers {
-class TitleBar;
-}
+#include "View_qtquick.h"
 
 namespace KDDockWidgets::Views {
 
-class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick<QQuickItem>, public Views::TitleBar
+class DOCKS_EXPORT TitleBar_qtquick : public View_qtquick, public Views::TitleBar
 {
     Q_OBJECT
+    // These properties is just for the unit-tests
+    Q_PROPERTY(QQuickItem *titleBarQmlItem READ titleBarQmlItem WRITE setTitleBarQmlItem NOTIFY titleBarQmlItemChanged)
+    Q_PROPERTY(QQuickItem *titleBarMouseArea READ titleBarMouseArea CONSTANT)
 public:
     explicit TitleBar_qtquick(Controllers::TitleBar *controller, QQuickItem *parent = nullptr);
-
-    // TODO:
-    void updateMaximizeButton() override;
-    void updateMinimizeButton();
-    void updateAutoHideButton();
-
-#ifdef DOCKS_DEVELOPER_MODE
-    // The following are needed for the unit-tests
-    bool isCloseButtonVisible() const;
-    bool isCloseButtonEnabled() const;
-    bool isFloatButtonVisible() const;
-    bool isFloatButtonEnabled() const;
-#endif
-
-    Controllers::TitleBar *titleBar() const;
+    ~TitleBar_qtquick() override;
 
 protected:
-    void paintEvent(QPaintEvent *) override;
-    void mouseDoubleClickEvent(QMouseEvent *) override;
-    QSize sizeHint() const override;
-    void focusInEvent(QFocusEvent *) override;
+#ifdef DOCKS_DEVELOPER_MODE
+    // These 4 just for unit-tests
+    bool isCloseButtonEnabled() const override;
+    bool isCloseButtonVisible() const override;
+    bool isFloatButtonVisible() const override;
+#endif
+
+    /*void paintEvent(QPaintEvent *) override;
+    void mouseDoubleClickEvent(QMouseEvent *) override; */
+
+    QQuickItem *titleBarQmlItem() const;
+    QQuickItem *titleBarMouseArea() const;
+    void setTitleBarQmlItem(QQuickItem *);
+
+Q_SIGNALS:
+    void titleBarQmlItemChanged();
 
 private:
-    friend class KDDockWidgets::Controllers::TitleBar;
-    void init() override;
-    int buttonAreaWidth() const;
-    QRect iconRect() const;
-    void updateMargins();
+    QQuickItem *floatButton() const;
+    QQuickItem *closeButton() const;
 
-    Controllers::TitleBar *const m_controller;
-    QHBoxLayout *const m_layout;
-    QAbstractButton *m_closeButton = nullptr;
-    QAbstractButton *m_floatButton = nullptr;
-    QAbstractButton *m_maximizeButton = nullptr;
-    QAbstractButton *m_minimizeButton = nullptr;
-    QAbstractButton *m_autoHideButton = nullptr;
-    QLabel *m_dockWidgetIcon = nullptr;
-};
-
-/// @brief Button widget to be used in the TitleBar.
-/// These are the KDDockWidget default buttons. Users can replace with their own and are not
-/// forced to use these.
-class Button : public QToolButton
-{
-    Q_OBJECT
-public:
-    explicit Button(QQuickItem *parent)
-        : QToolButton(parent)
-    {
-        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
-    }
-
-    ~Button() override;
-    QSize sizeHint() const override;
-    void paintEvent(QPaintEvent *) override;
+    QPointer<QQuickItem> m_titleBarQmlItem;
 };
 
 }
+
+#endif

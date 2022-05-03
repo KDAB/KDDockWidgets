@@ -305,9 +305,4 @@ bool TitleBar_qtwidgets::isFloatButtonVisible() const
     return m_floatButton->isVisible();
 }
 
-bool TitleBar_qtwidgets::isFloatButtonEnabled() const
-{
-    return m_floatButton->isEnabled();
-}
-
 #endif

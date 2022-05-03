@@ -42,7 +42,6 @@ public:
     bool isCloseButtonVisible() const override;
     bool isCloseButtonEnabled() const override;
     bool isFloatButtonVisible() const override;
-    bool isFloatButtonEnabled() const;
 #endif
 
     Controllers::TitleBar *titleBar() const;

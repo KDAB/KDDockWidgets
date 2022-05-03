@@ -212,6 +212,8 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/views/View_qtquick.h
   qtquick/views/ViewWrapper_qtquick.cpp
   qtquick/views/ViewWrapper_qtquick.h
+  qtquick/views/TitleBar_qtquick.cpp
+  qtquick/views/TitleBar_qtquick.h
 )
 
 if(${PROJECT_NAME}_QTQUICK)
