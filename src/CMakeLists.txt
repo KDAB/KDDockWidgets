@@ -212,6 +212,8 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/views/View_qtquick.h
   qtquick/views/ViewWrapper_qtquick.cpp
   qtquick/views/ViewWrapper_qtquick.h
+  qtquick/views/Stack_qtquick.cpp
+  qtquick/views/Stack_qtquick.h
   qtquick/views/TabBar_qtquick.cpp
   qtquick/views/TabBar_qtquick.h
   qtquick/views/TitleBar_qtquick.cpp

@@ -10,235 +10,238 @@
 */
 
 #include "Stack_qtquick.h"
-#include "Controller.h"
-#include "controllers/Stack.h"
-#include "controllers/TitleBar.h"
-#include "qtwidgets/views/DockWidget_qtquick.h"
-#include "private/DockRegistry_p.h"
-#include "kddockwidgets/FrameworkWidgetFactory.h"
+#include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
-#include <QMouseEvent>
-#include <QTabBar>
-#include <QHBoxLayout>
-#include <QAbstractButton>
-#include <QMenu>
+#include "controllers/Frame.h"
+
+#include <QDebug>
+#include <QScopedValueRollback>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, Controllers::Frame *parent)
-    : View_qtquick<QTabWidget>(controller, Type::Separator, parent ? parent->view()->asQWidget() : nullptr)
+Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
+                             Controllers::Frame *parent)
+    : View_qtquick(controller, Type::Stack, Views::asQQuickItem(parent))
+    , m_dockWidgetModel(new DockWidgetModel(this))
+    // , m_tabBar(Config::self().frameworkWidgetFactory()->createTabBar(this))
     , m_stack(controller)
 {
+    connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
+            [this] {
+                if (m_currentDockWidget && indexOfDockWidget(m_currentDockWidget) == -1) {
+                    // The current dock widget was removed, set the first one as current
+                    if (numDockWidgets() > 0)
+                        setCurrentDockWidget(0);
+                }
+
+                Q_EMIT countChanged(); });
 }
 
-void Stack_qtquick::init()
-{
-    setTabBar(tabBar());
-    setTabsClosable(Config::self().flags() & Config::Flag_TabsHaveCloseButton);
-
-    setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &QTabWidget::customContextMenuRequested, this, &Stack_qtquick::showContextMenu);
-
-    // In case tabs closable is set by the factory, a tabClosedRequested() is emitted when the user presses [x]
-    connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
-        if (auto dw = dockwidgetAt(index)) {
-            if (dw->options() & Controllers::DockWidget::Option_NotClosable) {
-                qWarning() << "QTabWidget::tabCloseRequested: Refusing to close dock widget with Option_NotClosable option. name=" << dw->uniqueName();
-            } else {
-                dw->view()->close();
-            }
-        } else {
-            qWarning() << "QTabWidget::tabCloseRequested Couldn't find dock widget for index" << index << "; count=" << count();
-        }
-    });
-
-    connect(this, &QTabWidget::currentChanged, this, [this](int index) {
-        m_stack->onCurrentTabChanged(index);
-        Q_EMIT m_stack->currentTabChanged(index);
-        Q_EMIT m_stack->currentDockWidgetChanged(m_stack->currentDockWidget());
-    });
-
-    if (!QTabWidget::tabBar()->isVisible())
-        setFocusProxy(nullptr);
-
-    setupTabBarButtons();
-
-    setDocumentMode(m_stack->options() & StackOption_DocumentMode);
-}
+// TabBar *Stack_qtquick::tabBar() const
+// {
+//     return m_tabBar;
+// }
 
 int Stack_qtquick::numDockWidgets() const
 {
-    return count();
+    return m_dockWidgetModel->count();
 }
 
-void Stack_qtquick::removeDockWidget(Controllers::DockWidget *dw)
+void Stack_qtquick::removeDockWidget(DockWidgetBase *dw)
 {
-    removeTab(indexOf(dw->view()->asQWidget()));
+    m_dockWidgetModel->remove(dw);
 }
 
-int Stack_qtquick::indexOfDockWidget(const Controllers::DockWidget *dw) const
+int Stack_qtquick::indexOfDockWidget(const DockWidgetBase *dw) const
 {
-    return indexOf(dw->view()->asQWidget());
-}
-
-void Stack_qtquick::mouseDoubleClickEvent(QMouseEvent *ev)
-{
-    if (m_stack->onMouseDoubleClick(ev->pos())) {
-        ev->accept();
-    } else {
-        ev->ignore();
-    }
-}
-
-void Stack_qtquick::mousePressEvent(QMouseEvent *ev)
-{
-    QTabWidget::mousePressEvent(ev);
-
-    if ((Config::self().flags() & Config::Flag_TitleBarIsFocusable) && !m_stack->frame()->isFocused()) {
-        // User clicked on the tab widget itself
-        m_stack->frame()->FocusScope::focus(Qt::MouseFocusReason);
-    }
-}
-
-void Stack_qtquick::tabInserted(int)
-{
-    m_stack->onTabInserted();
-}
-
-void Stack_qtquick::tabRemoved(int)
-{
-    m_stack->onTabRemoved();
-}
-
-void Stack_qtquick::setCurrentDockWidget(int index)
-{
-    setCurrentIndex(index);
-}
-
-bool Stack_qtquick::insertDockWidget(int index, Controllers::DockWidget *dw,
-                                     const QIcon &icon, const QString &title)
-{
-    insertTab(index, dw->view()->asQWidget(), icon, title);
-    return true;
-}
-
-void Stack_qtquick::setTabBarAutoHide(bool b)
-{
-    QTabWidget::setTabBarAutoHide(b);
-}
-
-void Stack_qtquick::renameTab(int index, const QString &text)
-{
-    setTabText(index, text);
-}
-
-void Stack_qtquick::changeTabIcon(int index, const QIcon &icon)
-{
-    setTabIcon(index, icon);
-}
-
-Controllers::DockWidget *Stack_qtquick::dockwidgetAt(int index) const
-{
-    auto view = qobject_cast<DockWidget_qtquick *>(widget(index));
-    return view ? view->dockWidget() : nullptr;
-}
-
-int Stack_qtquick::currentIndex() const
-{
-    return QTabWidget::currentIndex();
-}
-
-void Stack_qtquick::setupTabBarButtons()
-{
-    if (!(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden))
-        return;
-
-    auto factory = Config::self().frameworkWidgetFactory();
-    m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
-    m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
-
-    auto cornerWidget = new QWidget(this);
-    cornerWidget->setObjectName(QStringLiteral("Corner Widget"));
-
-    setCornerWidget(cornerWidget, Qt::TopRightCorner);
-
-    m_cornerWidgetLayout = new QHBoxLayout(cornerWidget);
-
-    m_cornerWidgetLayout->addWidget(m_floatButton);
-    m_cornerWidgetLayout->addWidget(m_closeButton);
-
-    connect(m_floatButton, &QAbstractButton::clicked, this, [this] {
-        Controllers::TitleBar *tb = m_stack->frame()->titleBar();
-        tb->onFloatClicked();
-    });
-
-    connect(m_closeButton, &QAbstractButton::clicked, this, [this] {
-        Controllers::TitleBar *tb = m_stack->frame()->titleBar();
-        tb->onCloseClicked();
-    });
-
-    updateMargins();
-    connect(DockRegistry::self(), &DockRegistry::windowChangedScreen, this, [this](QWindow *w) {
-        if (w == window()->window())
-            updateMargins();
-    });
-}
-
-void Stack_qtquick::updateMargins()
-{
-    const qreal factor = logicalDpiFactor(this);
-    m_cornerWidgetLayout->setContentsMargins(QMargins(0, 0, 2, 0) * factor);
-    m_cornerWidgetLayout->setSpacing(int(2 * factor));
-}
-
-void Stack_qtquick::showContextMenu(QPoint pos)
-{
-    if (!(Config::self().flags() & Config::Flag_AllowSwitchingTabsViaMenu))
-        return;
-
-    QTabBar *tabBar = QTabWidget::tabBar();
-    // We don't want context menu if there is only one tab
-    if (tabBar->count() <= 1)
-        return;
-
-    // Click on a tab => No menu
-    if (tabBar->tabAt(pos) >= 0)
-        return;
-
-    // Right click is allowed only on the tabs area
-    QRect tabAreaRect = tabBar->rect();
-    tabAreaRect.setWidth(this->width());
-    if (!tabAreaRect.contains(pos))
-        return;
-
-    QMenu menu(this);
-    for (int i = 0; i < tabBar->count(); ++i) {
-        QAction *action = menu.addAction(tabText(i), this, [this, i] {
-            setCurrentIndex(i);
-        });
-        if (i == currentIndex())
-            action->setDisabled(true);
-    }
-    menu.exec(mapToGlobal(pos));
-}
-
-QTabBar *Stack_qtquick::tabBar() const
-{
-    return static_cast<QTabBar *>(m_stack->tabBar()->view()->asQWidget());
-}
-
-Controllers::Stack *Stack_qtquick::stack() const
-{
-    return m_stack;
+    return m_dockWidgetModel->indexOf(dw);
 }
 
 bool Stack_qtquick::isPositionDraggable(QPoint p) const
 {
-    if (tabPosition() != QTabWidget::North) {
-        qWarning() << Q_FUNC_INFO << "Not implemented yet. Only North is supported";
+    Q_UNUSED(p);
+    return true;
+}
+
+void Stack_qtquick::setCurrentDockWidget(int index)
+{
+    DockWidgetBase *dw = dockwidgetAt(index);
+
+    if (m_currentDockWidget != dw) {
+        m_currentDockWidget = dw;
+        Q_EMIT currentDockWidgetChanged(dw);
+        Q_EMIT currentTabChanged(index);
+    }
+}
+
+QObject *Stack_qtquick::tabBarObj() const
+{
+    // TODOv2
+    return nullptr;
+    // return m_tabBar->asWidget();
+}
+
+bool Stack_qtquick::insertDockWidget(int index, DockWidgetBase *dw, const QIcon &, const QString &title)
+{
+    Q_UNUSED(title); // todo
+    return m_dockWidgetModel->insert(dw, index);
+}
+
+void Stack_qtquick::setTabBarAutoHide(bool)
+{
+    qWarning() << Q_FUNC_INFO << "Not implemented";
+}
+
+void Stack_qtquick::renameTab(int index, const QString &)
+{
+    Q_UNUSED(index);
+    qWarning() << Q_FUNC_INFO << "Not implemented";
+}
+
+void Stack_qtquick::changeTabIcon(int index, const QIcon &)
+{
+    Q_UNUSED(index);
+    qWarning() << Q_FUNC_INFO << "Not implemented";
+}
+
+DockWidgetBase *Stack_qtquick::dockwidgetAt(int index) const
+{
+    return m_dockWidgetModel->dockWidgetAt(index);
+}
+
+int Stack_qtquick::currentIndex() const
+{
+    if (!m_currentDockWidget)
+        return -1;
+
+    const int index = indexOfDockWidget(m_currentDockWidget);
+
+    if (index == -1)
+        qWarning() << Q_FUNC_INFO << "Unexpected null index for" << m_currentDockWidget << this
+                   << "; count=" << m_dockWidgetModel->count();
+
+    return index;
+}
+
+DockWidgetModel *Stack_qtquick::dockWidgetModel() const
+{
+    return m_dockWidgetModel;
+}
+
+DockWidgetModel::DockWidgetModel(QObject *parent)
+    : QAbstractListModel(parent)
+{
+}
+
+int DockWidgetModel::count() const
+{
+    return m_dockWidgets.size();
+}
+
+int DockWidgetModel::rowCount(const QModelIndex &parent) const
+{
+    return parent.isValid() ? 0 : m_dockWidgets.size();
+}
+
+QVariant DockWidgetModel::data(const QModelIndex &index, int role) const
+{
+    const int row = index.row();
+    if (row < 0 || row >= m_dockWidgets.size())
+        return {};
+
+    DockWidgetBase *dw = m_dockWidgets.at(row);
+
+    switch (role) {
+    case Role_Title:
+        return dw->title();
+    }
+
+    return {};
+}
+
+DockWidgetBase *DockWidgetModel::dockWidgetAt(int index) const
+{
+    if (index < 0 || index >= m_dockWidgets.size()) {
+        // Can happen. Benign.
+        return nullptr;
+    }
+
+    return m_dockWidgets[index];
+}
+
+bool DockWidgetModel::contains(DockWidgetBase *dw) const
+{
+    return m_dockWidgets.contains(dw);
+}
+
+QHash<int, QByteArray> DockWidgetModel::roleNames() const
+{
+    return { { Role_Title, "title" } };
+}
+
+void DockWidgetModel::emitDataChangedFor(DockWidgetBase *dw)
+{
+    const int row = indexOf(dw);
+    if (row == -1) {
+        qWarning() << Q_FUNC_INFO << "Couldn't find" << dw;
+    } else {
+        QModelIndex index = this->index(row, 0);
+        Q_EMIT dataChanged(index, index);
+    }
+}
+
+void DockWidgetModel::remove(DockWidgetBase *dw)
+{
+    QScopedValueRollback<bool> guard(m_removeGuard, true);
+    const int row = indexOf(dw);
+    if (row == -1) {
+        if (!m_removeGuard) {
+            // can happen if there's reentrancy. Some user code reacting
+            // to the signals and call remove for whatever reason.
+            qWarning() << Q_FUNC_INFO << "Nothing to remove"
+                       << static_cast<void *>(dw); // Print address only, as it might be deleted already
+        }
+    } else {
+        const auto connections = m_connections.take(dw);
+        for (const QMetaObject::Connection &conn : connections)
+            disconnect(conn);
+
+        beginRemoveRows(QModelIndex(), row, row);
+        m_dockWidgets.removeOne(dw);
+        endRemoveRows();
+
+        Q_EMIT countChanged();
+    }
+}
+
+int DockWidgetModel::indexOf(const DockWidgetBase *dw)
+{
+    return m_dockWidgets.indexOf(const_cast<DockWidgetBase *>(dw));
+}
+
+bool DockWidgetModel::insert(DockWidgetBase *dw, int index)
+{
+    if (m_dockWidgets.contains(dw)) {
+        qWarning() << Q_FUNC_INFO << "Shouldn't happen";
         return false;
     }
 
-    return p.y() >= 0 && p.y() <= tabBar()->height();
+    QMetaObject::Connection conn = connect(dw, &DockWidgetBase::titleChanged, this, [dw, this] {
+        emitDataChangedFor(dw);
+    });
+
+    QMetaObject::Connection conn2 = connect(dw, &QObject::destroyed, this, [dw, this] {
+        remove(dw);
+    });
+
+    m_connections[dw] = { conn, conn2 };
+
+    beginInsertRows(QModelIndex(), index, index);
+    m_dockWidgets.insert(index, dw);
+    endInsertRows();
+
+    Q_EMIT countChanged();
+    return true;
 }

@@ -41,6 +41,14 @@ inline QQuickItem *asQQuickItem(View *view)
     return qobject_cast<QQuickItem *>(view->asQObject());
 }
 
+inline QQuickItem *asQQuickItem(Controller *controller)
+{
+    if (!controller)
+        return nullptr;
+
+    return asQQuickItem(controller->view());
+}
+
 inline std::shared_ptr<ViewWrapper> asQQuickWrapper(QQuickItem *item)
 {
     auto wrapper = new ViewWrapper_qtquick(item);
