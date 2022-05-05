@@ -14,8 +14,8 @@
 
 #include "kddockwidgets/docks_export.h"
 
-#include "KDDockWidgets.h"
-#include "QWidgetAdapter.h"
+#include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/QWidgetAdapter.h"
 
 namespace KDDockWidgets {
 
