@@ -166,6 +166,8 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index, InitialOption ad
     if (m_layoutItem)
         dockWidget->d->addPlaceholderItem(m_layoutItem);
 
+    const int originalCurrentIndex = currentIndex();
+
     insertDockWidget(dockWidget, index);
 
     if (addingOption.startsHidden()) {
@@ -181,6 +183,8 @@ void Frame::insertWidget(DockWidgetBase *dockWidget, int index, InitialOption ad
                 // use that size as the initial suggested size.
                 resize(dockWidget->size());
             }
+        } else if (addingOption.preservesCurrentTab() && originalCurrentIndex != -1) {
+            setCurrentTabIndex(originalCurrentIndex);
         }
     }
 
