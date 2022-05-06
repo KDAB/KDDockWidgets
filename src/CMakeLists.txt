@@ -208,6 +208,8 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/Platform_qtquick.cpp
   qtquick/Platform_qtquick.h
   qtquick/TestHelpers_qtquick.cpp
+  qtquick/LayoutSaverInstantiator.cpp
+  qtquick/LayoutSaverInstantiator.h
   qtquick/views/View_qtquick.cpp
   qtquick/views/View_qtquick.h
   qtquick/views/ViewWrapper_qtquick.cpp

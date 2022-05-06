@@ -9,14 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-/**
- * @file
- * @brief The GUI counterpart of Frame.
- *
- * @author Sérgio Martins \<sergio.martins@kdab.com\>
- */
-
-#include "LayoutSaverInstantiator_p.h"
+#include "LayoutSaverInstantiator.h"
 
 
 using namespace KDDockWidgets;
