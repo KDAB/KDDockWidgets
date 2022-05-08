@@ -22,6 +22,10 @@
 #include <vector>
 #include <memory.h>
 
+#ifdef DOCKS_DEVELOPER_MODE
+#include "private/multisplitter/Item_p.h"
+#endif
+
 namespace KDDockWidgets {
 
 class FrameworkWidgetFactory;
@@ -78,7 +82,8 @@ public:
     {
         bool isVisible = false;
         QSize sizeHint = {};
-        QSize minSize = { 100, 100 };
+        QSize minSize = { 200, 200 };
+        QSize maxSize = Layouting::Item::hardcodedMaximumSize;
     };
 
     /// @brief list the list of frontend types supported by this build
