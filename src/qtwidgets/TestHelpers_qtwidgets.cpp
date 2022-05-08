@@ -32,7 +32,6 @@ public:
     {
         create();
         setMinimumSize(opts.minSize);
-        setMaximumSize(opts.maxSize);
     }
 
     QSize sizeHint() const override
@@ -40,9 +39,15 @@ public:
         return m_opts.sizeHint;
     }
 
+    QSize maxSizeHint() const override
+    {
+        return m_opts.maxSize;
+    }
+
 private:
     Platform::CreateViewOptions m_opts;
 };
+
 }
 
 Platform_qtwidgets::Platform_qtwidgets(int argc, char *argv[])
