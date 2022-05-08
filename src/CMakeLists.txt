@@ -268,8 +268,6 @@ if(${PROJECT_NAME}_QTQUICK)
       private/quick/MainWindowQuick_p.h
       private/quick/MainWindowInstantiator.cpp
       private/quick/MainWindowInstantiator_p.h
-      private/multisplitter/Widget_quick.cpp
-      private/multisplitter/Widget_quick.h
       private/multisplitter/Separator_quick.cpp
       private/multisplitter/Separator_quick.h
       private/multisplitter/Rubberband_quick.cpp
@@ -284,8 +282,6 @@ else()
       # MainWindow.cpp
       # MainWindow.h
       # DockWidget.h
-      # private/multisplitter/Widget_qwidget.cpp
-      # private/multisplitter/Widget_qwidget.h
       # private/widgets/TabBarWidget.cpp
       # private/widgets/TabBarWidget_p.h
       # private/widgets/FloatingWindowWidget.cpp
@@ -442,7 +438,6 @@ install(FILES ${camelcase_HEADERS} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kd
 install(FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
 install(FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
 install(FILES private/multisplitter/Item_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
-# install(FILES private/multisplitter/Widget.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
 install(FILES private/indicators/ClassicIndicators_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators)
 install(FILES private/indicators/SegmentedIndicators_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators)
 
@@ -452,7 +447,6 @@ if(KDDockWidgets_QTQUICK)
   install(FILES private/multisplitter/Widget_quick.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
 else()
   install(FILES ${DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/widgets)
-  # install(FILES private/multisplitter/Widget_qwidget.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
 endif()
 
 # Generate library version files
