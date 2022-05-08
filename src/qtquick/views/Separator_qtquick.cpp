@@ -1,8 +1,7 @@
-#include "Separator_qtquick.h"
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -10,95 +9,64 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "View_qtquick.h"
+#include "Separator_quick.h"
+#include "Widget_quick.h"
+#include "Logging_p.h"
+#include "Item_p.h"
+#include "Rubberband_quick.h"
 
-#include "Config.h"
-#include "private/Logging_p.h"
-#include "controllers/Separator.h"
+#include <QTimer>
 
-#include <QMouseEvent>
-#include <QPainter>
-#include <QStyleOption>
+using namespace Layouting;
 
-using namespace KDDockWidgets::Views;
-
-Separator_qtquick::Separator_qtquick(Controllers::Separator *controller, QWidget *parent)
-    : View_qtquick(controller, Type::Separator, parent)
-    , m_controller(controller)
+SeparatorQuick::SeparatorQuick(Layouting::Widget *parent)
+    : QQuickItem(qobject_cast<QQuickItem *>(parent->asQObject()))
+    , Separator(parent)
+    , Layouting::Widget_quick(this)
 {
-    setMouseTracking(true);
+    createQQuickItem(QStringLiteral(":/kddockwidgets/multisplitter/private/multisplitter/qml/Separator.qml"), this);
+
+    // Only set on Separator::init(), so single-shot
+    QTimer::singleShot(0, this, &SeparatorQuick::isVerticalChanged);
 }
 
-void Separator_qtquick::paintEvent(QPaintEvent *ev)
+bool SeparatorQuick::isVertical() const
 {
-    if (freed())
-        return;
+    return Separator::isVertical();
+}
 
-    if (KDDockWidgets::Config::self().disabledPaintEvents() & KDDockWidgets::Config::CustomizableWidget_Separator) {
-        QWidget::paintEvent(ev);
-        return;
+Layouting::Widget *SeparatorQuick::createRubberBand(Layouting::Widget *parent)
+{
+    if (!parent) {
+        qWarning() << Q_FUNC_INFO << "Parent is required";
+        return nullptr;
     }
 
-    QPainter p(this);
-
-    QStyleOption opt;
-    opt.palette = palette();
-    opt.rect = QWidget::rect();
-    opt.state = QStyle::State_None;
-    if (!m_controller->isVertical())
-        opt.state |= QStyle::State_Horizontal;
-
-    if (isEnabled())
-        opt.state |= QStyle::State_Enabled;
-
-    QWidget::parentWidget()->style()->drawControl(QStyle::CE_Splitter, &opt, &p, this);
+    return new Layouting::Widget_quick(new Layouting::RubberBand(parent));
 }
 
-void Separator_qtquick::enterEvent(KDDockWidgets::Qt5Qt6Compat::QEnterEvent *)
+Widget *SeparatorQuick::asWidget()
 {
-    if (freed())
-        return;
-
-    qCDebug(separators) << Q_FUNC_INFO << this;
-    if (m_controller->isVertical())
-        setCursor(Qt::SizeVerCursor);
-    else
-        setCursor(Qt::SizeHorCursor);
+    return this;
 }
 
-void Separator_qtquick::leaveEvent(QEvent *)
+void SeparatorQuick::onMousePressed()
 {
-    setCursor(Qt::ArrowCursor);
+    Separator::onMousePress();
 }
 
-void Separator_qtquick::mousePressEvent(QMouseEvent *)
+void SeparatorQuick::onMouseMoved(QPointF localPos)
 {
-    if (freed())
-        return;
-
-    m_controller->onMousePress();
+    const QPointF pos = QQuickItem::mapToItem(parentItem(), localPos);
+    Separator::onMouseMove(pos.toPoint());
 }
 
-void Separator_qtquick::mouseMoveEvent(QMouseEvent *ev)
+void SeparatorQuick::onMouseReleased()
 {
-    if (freed())
-        return;
-
-    m_controller->onMouseMove(mapToParent(ev->pos()));
+    Separator::onMouseReleased();
 }
 
-void Separator_qtquick::mouseReleaseEvent(QMouseEvent *)
+void SeparatorQuick::onMouseDoubleClicked()
 {
-    if (freed())
-        return;
-
-    m_controller->onMouseReleased();
-}
-
-void Separator_qtquick::mouseDoubleClickEvent(QMouseEvent *)
-{
-    if (freed())
-        return;
-
-    m_controller->onMouseDoubleClick();
+    Separator::onMouseDoubleClick();
 }

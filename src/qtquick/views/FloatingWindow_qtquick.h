@@ -9,45 +9,38 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#pragma once
+#ifndef KD_FLOATING_WINDOWQUICK_P_H
+#define KD_FLOATING_WINDOWQUICK_P_H
 
-#include "View_qtquick.h"
+#include "../FloatingWindow_p.h"
 
-QT_BEGIN_NAMESPACE
-class QVBoxLayout;
-class QMainWindow;
-QT_END_NAMESPACE
+class QQuickView;
 
-namespace KDDockWidgets::Controllers {
-class FloatingWindow;
-class Frame;
-}
+namespace KDDockWidgets {
 
-namespace KDDockWidgets::Views {
-
-
-class DOCKS_EXPORT FloatingWindow_qtquick : public View_qtquick<QQuickItem>
+class DOCKS_EXPORT FloatingWindowQuick : public FloatingWindow
 {
     Q_OBJECT
 public:
-    explicit FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
-                                    QQuickItem *parent = nullptr,
-                                    Qt::WindowFlags windowFlags = {});
+    explicit FloatingWindowQuick(MainWindowBase *parent = nullptr);
+    explicit FloatingWindowQuick(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent = nullptr);
+    ~FloatingWindowQuick();
 
-    Controllers::FloatingWindow *floatingWindow() const;
+    QSize minimumSize() const override;
 
 protected:
-    void paintEvent(QPaintEvent *) override;
-    void closeEvent(QCloseEvent *) override;
-    bool event(QEvent *ev) override;
-    void init() override;
+    void setGeometry(QRect) override;
 
 private:
-    Controllers::FloatingWindow *const m_controller;
-    QVBoxLayout *const m_vlayout;
-    QMetaObject::Connection m_screenChangedConnection;
-
-    void updateMargins();
-    Q_DISABLE_COPY(FloatingWindow_qtquick)
+    int contentsMargins() const;
+    int titleBarHeight() const;
+    QWindow *candidateParentWindow() const;
+    void init();
+    QQuickView *const m_quickWindow;
+    QQuickItem *m_visualItem = nullptr;
+    Q_DISABLE_COPY(FloatingWindowQuick)
 };
+
 }
+
+#endif

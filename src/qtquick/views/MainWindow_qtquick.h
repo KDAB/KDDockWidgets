@@ -9,88 +9,41 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-/**
- * @file
- * @brief QMainWindow sub-class to enable KDDockWidgets support.
- *
- * @author Sérgio Martins \<sergio.martins@kdab.com\>
- */
+#ifndef KD_MAIN_WINDOW_QUICK_P_H
+#define KD_MAIN_WINDOW_QUICK_P_H
 
-#ifndef KD_MAINWINDOW_H
-#define KD_MAINWINDOW_H
-
-#include "View_qtquick.h"
-#include "controllers/MainWindow.h"
-#include "views/MainWindow.h"
-
-#include <QMainWindow>
+#include "kddockwidgets/MainWindow.h"
 
 namespace KDDockWidgets {
 
-namespace Controllers {
-class MainWindow;
-class SideBar;
-}
-
-namespace Views {
-
-/**
- * @brief The QMainwindow sub-class that the application should use to be able
- * to dock KDDockWidget::DockWidget instances.
- */
-class DOCKS_EXPORT MainWindow_qtquick : public View_qtquick<QQuickItem>, public MainWindow
+///@brief The MainWindow counterpart for QtQuick
+/// Provides the ability of acepting drops of dock widgets.
+/// It's not a real QWindow and not a main window in the sense of QMainWindow. Would be overkill
+/// to have tool bars, menu bar and footer in the QtQuick implementation. That's left for the user to do.
+class DOCKS_EXPORT MainWindowQuick : public MainWindowBase
 {
     Q_OBJECT
 public:
-    typedef QVector<MainWindow_qtquick *> List;
+    explicit MainWindowQuick(const QString &uniqueName,
+                             MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                             QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
 
-    ///@brief Constructor. Use it as you would use QMainWindow.
-    ///@param uniqueName Mandatory name that should be unique between all MainWindow instances.
-    ///       This name won't be user visible and just used internally for the save/restore.
-    ///@param options optional MainWindowOptions to use
-    ///@param parent QObject *parent to pass to QMainWindow constructor.
-    ///@param flags Window flags to  pass to QMainWindow constructor.
-    explicit MainWindow_qtquick(Controllers::MainWindow *,
-                                  QQuickItem *parent = nullptr,
-                                  Qt::WindowFlags flags = Qt::WindowFlags());
+    ~MainWindowQuick() override;
 
+    /// @reimp
+    QSize minimumSize() const override;
 
-    explicit MainWindow_qtquick(const QString &uniqueName,
-                                  MainWindowOptions options = {},
-                                  QQuickItem *parent = nullptr,
-                                  Qt::WindowFlags flags = Qt::WindowFlags());
-
-    ///@brief Destructor
-    ~MainWindow_qtquick() override;
-
-    ///@brief returns the sidebar for the specified location
-    Controllers::SideBar *sideBar(SideBarLocation) const override;
-
-    //@brief returns the margins for the contents widget
-    QMargins centerWidgetMargins() const override;
-
-    //@brief sets the margins for the contents widgets
-    void setCenterWidgetMargins(const QMargins &margins);
-
-    /// @brief Returns the main window controller
-    Controllers::MainWindow *mainWindow() const;
-
-    void setContentsMargins(int left, int top, int right, int bottom) override;
-
-    void init() override;
+    /// @reimp
+    QSize maximumSize() const override;
 
 protected:
-    void resizeEvent(QResizeEvent *) override;
-    QRect centralAreaGeometry() const override;
+    SideBar *sideBar(SideBarLocation) const override;
+    QMargins centerWidgetMargins() const override;
 
 private:
-    friend class Controllers::MainWindow;
-    using QMainWindow::setCentralWidget;
-    void setCentralWidget(QWidget *); // overridden just to make it private
-    class Private;
-    Private *const d;
+    void onMultiSplitterGeometryUpdated();
 };
-}
+
 }
 
 #endif

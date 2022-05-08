@@ -210,20 +210,32 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/TestHelpers_qtquick.cpp
   qtquick/LayoutSaverInstantiator.cpp
   qtquick/LayoutSaverInstantiator.h
+  # qtquick/MainWindowInstantiator.cpp
+  # qtquick/MainWindowInstantiator.h
+  # qtquick/DockWidgetInstantiator.cpp
+  # qtquick/DockWidgetInstantiator.h
   # qtquick/views/DockWidget_qtquick.cpp
   # qtquick/views/DockWidget_qtquick.h
+  # qtquick/views/FloatingWindow_qtquick.cpp
+  # qtquick/views/FloatingWindow_qtquick.h
   qtquick/views/Frame_qtquick.cpp
   qtquick/views/Frame_qtquick.h
-  qtquick/views/View_qtquick.cpp
-  qtquick/views/View_qtquick.h
-  qtquick/views/ViewWrapper_qtquick.cpp
-  qtquick/views/ViewWrapper_qtquick.h
+  # qtquick/views/MainWindow_qtquick.cpp
+  # qtquick/views/MainWindow_qtquick.h
+  # qtquick/views/RubberBand_qtquick.cpp
+  # qtquick/views/RubberBand_qtquick.h
+  # qtquick/views/Separator_qtquick.cpp
+  # qtquick/views/Separator_qtquick.h
   qtquick/views/Stack_qtquick.cpp
   qtquick/views/Stack_qtquick.h
   qtquick/views/TabBar_qtquick.cpp
   qtquick/views/TabBar_qtquick.h
   qtquick/views/TitleBar_qtquick.cpp
   qtquick/views/TitleBar_qtquick.h
+  qtquick/views/View_qtquick.cpp
+  qtquick/views/View_qtquick.h
+  qtquick/views/ViewWrapper_qtquick.cpp
+  qtquick/views/ViewWrapper_qtquick.h
 )
 
 if(${PROJECT_NAME}_QTQUICK)
