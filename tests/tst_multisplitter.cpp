@@ -1628,7 +1628,9 @@ void TestMultiSplitter::tst_maxSizeHonoured1()
 
     auto guest2 = static_cast<MyGuestWidget *>(item2->guestView());
     const int maxHeight = 250;
+    QCOMPARE(guest2->View::size(), item2->size());
     guest2->setMaxSize(QSize(250, maxHeight));
+    QCOMPARE(guest2->View::size(), item2->size());
 
     root->insertItem(item2, Location_OnBottom);
     QCOMPARE(item2->height(), maxHeight);
