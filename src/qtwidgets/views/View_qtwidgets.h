@@ -74,7 +74,10 @@ public:
 
     void setMinimumSize(QSize sz) override
     {
-        QWidget::setMinimumSize(sz);
+        if (sz != QWidget::minimumSize()) {
+            QWidget::setMinimumSize(sz);
+            layoutInvalidated.emit();
+        }
     }
 
     QSize maxSizeHint() const override
@@ -119,7 +122,10 @@ public:
 
     void setMaximumSize(QSize sz) override
     {
-        Base::setMaximumSize(sz);
+        if (sz != QWidget::maximumSize()) {
+            Base::setMaximumSize(sz);
+            layoutInvalidated.emit();
+        }
     }
 
     bool isVisible() const override
