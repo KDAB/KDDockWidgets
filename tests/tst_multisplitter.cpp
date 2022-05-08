@@ -14,7 +14,7 @@
 #include "View.h"
 #include "controllers/Separator.h"
 
-#include "qtwidgets/views/View_qtwidgets.h"
+#include "Platform.h"
 #include "qtwidgets/views/Separator_qtwidgets.h"
 
 #include <QPainter>
@@ -40,57 +40,19 @@ inline QWidget *qwidgetFromView(View *view)
     return dynamic_cast<QWidget *>(view);
 }
 
-class MyGuestWidget : public Views::View_qtwidgets<QWidget>
-{
-    Q_OBJECT
-public:
-    MyGuestWidget()
-        : Views::View_qtwidgets<QWidget>(nullptr, Type::LayoutItem)
-    {
-    }
-
-    QSize minimumSizeHint() const override
-    {
-        return m_minSize;
-    }
-
-    void setMinSize(QSize sz)
-    {
-        if (sz != m_minSize) {
-            m_minSize = sz;
-            layoutInvalidated.emit();
-        }
-    }
-
-    void setMaxSize(QSize sz)
-    {
-        if (sz != m_maxSize) {
-            m_maxSize = sz;
-            layoutInvalidated.emit();
-        }
-    }
-
-    QSize maxSizeHint() const override
-    {
-        return m_maxSize;
-    }
-
-private:
-    QSize m_minSize = QSize(200, 200);
-    QSize m_maxSize = Layouting::Item::hardcodedMaximumSize;
-};
-
 static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
 {
-    s_original(t, context, msg);
     if (t == QtWarningMsg) {
-        if (msg.contains(QLatin1String("checkSanity"))) {
+        if (msg.contains(QLatin1String("checkSanity")) || msg.contains(QLatin1String("This plugin does not support"))) {
             // These will already fail in QVERIFY(checkSanity())
             return;
         }
 
+        s_original(t, context, msg);
         if (s_expectedWarning.isEmpty() || !msg.contains(s_expectedWarning))
             qFatal("Got a warning, category=%s", context.category);
+    } else {
+        s_original(t, context, msg);
     }
 }
 
@@ -172,29 +134,6 @@ private Q_SLOTS:
     void tst_adjacentLayoutBorders();
 };
 
-class MyHostWidget : public Views::View_qtwidgets<QWidget>
-{
-public:
-    MyHostWidget()
-        : Views::View_qtwidgets<QWidget>(nullptr, Type::LayoutItem)
-    {
-        s_testObject->m_hostWidgets << this;
-    }
-
-    ~MyHostWidget() override;
-
-    void paintEvent(QPaintEvent *) override
-    {
-        QPainter p(this);
-        p.fillRect(QWidget::rect(), Qt::yellow);
-    }
-};
-
-MyHostWidget::~MyHostWidget()
-{
-    s_testObject->m_hostWidgets.removeOne(this);
-}
-
 static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &root)
 {
     // Serializes and deserializes a layout
@@ -217,9 +156,9 @@ static bool serializeDeserializeTest(const std::unique_ptr<ItemBoxContainer> &ro
 
 static std::unique_ptr<ItemBoxContainer> createRoot()
 {
-    auto hostWidget = new MyHostWidget();
+    auto hostWidget = Platform::instance()->tests_createView({});
     hostWidget->setObjectName("HostWidget");
-    hostWidget->QWidget::show();
+    hostWidget->show();
     auto root = new ItemBoxContainer(hostWidget);
     root->setSize({ 1000, 1000 });
     return std::unique_ptr<ItemBoxContainer>(root);
@@ -229,17 +168,18 @@ static Item *createItem(QSize minSz = {}, QSize maxSz = {})
 {
     static int count = 0;
     count++;
-    auto hostWidget = new MyHostWidget();
+    auto hostWidget = Platform::instance()->tests_createView({});
     hostWidget->setObjectName("HostWidget");
-    hostWidget->QWidget::show();
+    hostWidget->show();
     auto item = new Item(hostWidget);
     item->setGeometry(QRect(0, 0, 200, 200));
     item->setObjectName(QStringLiteral("%1").arg(count));
-    auto guest = new MyGuestWidget();
+    Platform::CreateViewOptions opts;
     if (minSz.isValid())
-        guest->setMinSize(minSz);
+        opts.minSize = minSz;
     if (maxSz.isValid())
-        guest->setMaxSize(maxSz);
+        opts.maxSize = maxSz;
+    auto guest = Platform::instance()->tests_createView(opts);
 
     guest->setObjectName(item->objectName());
     item->setGuestView(guest);
@@ -248,7 +188,8 @@ static Item *createItem(QSize minSz = {}, QSize maxSz = {})
 
 static ItemBoxContainer *createRootWithSingleItem()
 {
-    auto root = new ItemBoxContainer(new MyHostWidget());
+    auto host = Platform::instance()->tests_createView({});
+    auto root = new ItemBoxContainer(host);
     root->setSize({ 1000, 1000 });
 
     Item *item1 = createItem();
@@ -1535,11 +1476,11 @@ void TestMultiSplitter::tst_minSizeChangedBeforeRestore()
     root->insertItem(item2, Location_OnBottom);
     const QSize originalSize2 = item2->size();
 
-    auto guest2 = qobject_cast<MyGuestWidget *>(qwidgetFromView(item2->guestView()));
+    auto guest2 = item2->guestView();
     const QSize newMinSize = originalSize2 + QSize(10, 10);
 
     item2->turnIntoPlaceholder();
-    guest2->setMinSize(newMinSize);
+    guest2->setMinimumSize(newMinSize);
     item2->restore(guest2);
 }
 
@@ -1572,19 +1513,14 @@ void TestMultiSplitter::tst_separatorMoveCrash()
 
 void TestMultiSplitter::tst_separatorMoveHonoursMax()
 {
+    const int maxWidth = 250;
     auto root = createRoot();
     auto item1 = createItem();
-    auto item2 = createItem();
+    auto item2 = createItem({}, QSize(maxWidth, 250));
     auto item3 = createItem();
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);
     root->insertItem(item3, Location_OnRight);
-    QVERIFY(root->checkSanity());
-
-
-    auto guest2 = static_cast<MyGuestWidget *>(item2->guestView());
-    const int maxWidth = 250;
-    guest2->setMaxSize(QSize(maxWidth, 250));
     QVERIFY(root->checkSanity());
 
     auto separator1 = root->separators()[0];
@@ -1597,11 +1533,9 @@ void TestMultiSplitter::tst_separatorMoveHonoursMax()
 
     QCOMPARE(min1, item1->minSize().width());
 
-    // qDebug() << min1 << max1 << max2;
-
-    root->requestSeparatorMove(separator1, separator1->position() - min1);
-    QVERIFY(root->checkSanity());
+    root->requestSeparatorMove(separator1, -(separator1->position() - min1));
     QVERIFY(item2->width() <= maxWidth);
+    QVERIFY(root->checkSanity());
 
     root->requestSeparatorMove(separator2, max2 - separator2->position());
     QVERIFY(root->checkSanity());
@@ -1626,11 +1560,12 @@ void TestMultiSplitter::tst_maxSizeHonoured1()
     root->insertItem(item1, Location_OnTop);
     root->setSize_recursive(QSize(3000, 3000));
 
-    auto guest2 = static_cast<MyGuestWidget *>(item2->guestView());
+    auto guest2 = item2->guestView();
     const int maxHeight = 250;
-    QCOMPARE(guest2->View::size(), item2->size());
-    guest2->setMaxSize(QSize(250, maxHeight));
-    QCOMPARE(guest2->View::size(), item2->size());
+    QCOMPARE(guest2->size(), item2->size());
+    guest2->setMaximumSize(QSize(250, maxHeight));
+    QCOMPARE(guest2->size(), item2->size());
+    QCOMPARE(item2->maxSizeHint(), guest2->maxSizeHint());
 
     root->insertItem(item2, Location_OnBottom);
     QCOMPARE(item2->height(), maxHeight);
@@ -1886,10 +1821,13 @@ int main(int argc, char *argv[])
         qputenv("QT_QPA_PLATFORM", "offscreen");
     }
 
-    QApplication app(argc, argv);
+    KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
     TestMultiSplitter test;
 
-    return QTest::qExec(&test, argc, argv);
+    const int exitCode = QTest::qExec(&test, argc, argv);
+    KDDockWidgets::Platform::tests_deinitPlatform();
+
+    return exitCode;
 }
 
 #include "tst_multisplitter.moc"

@@ -41,7 +41,7 @@ public:
 
     QSize maxSizeHint() const override
     {
-        return m_opts.maxSize;
+        return m_opts.maxSize.boundedTo(Views::View_qtwidgets<QWidget>::maximumSize());
     }
 
 private:
