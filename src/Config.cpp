@@ -30,12 +30,6 @@
 #include <QDebug>
 #include <QOperatingSystemVersion>
 
-#ifdef KDDOCKWIDGETS_QTQUICK
-#include "private/quick/Helpers_p.h"
-#include <QQmlEngine>
-#include <QQmlContext>
-#endif
-
 namespace KDDockWidgets {
 
 class Config::Private
@@ -53,7 +47,6 @@ public:
 
     void fixFlags();
 
-    QQmlEngine *m_qmlEngine = nullptr;
     DockWidgetFactoryFunc m_dockWidgetFactoryFunc = nullptr;
     MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
     TabbingAllowedFunc m_tabbingAllowedFunc = nullptr;
@@ -65,9 +58,6 @@ public:
     qreal m_draggedWindowOpacity = Q_QNAN;
     int m_mdiPopupThreshold = 250;
     bool m_dropIndicatorsInhibited = false;
-#ifdef KDDOCKWIDGETS_QTQUICK
-    QtQuickHelpers m_qquickHelpers;
-#endif
 };
 
 Config::Config()
@@ -233,38 +223,6 @@ void Config::setInternalFlags(InternalFlags flags)
 {
     d->m_internalFlags = flags;
 }
-
-#ifdef KDDOCKWIDGETS_QTQUICK
-void Config::setQmlEngine(QQmlEngine *qmlEngine)
-{
-    if (d->m_qmlEngine) {
-        qWarning() << Q_FUNC_INFO << "Already has QML engine";
-        return;
-    }
-
-    if (!qmlEngine) {
-        qWarning() << Q_FUNC_INFO << "Null QML engine";
-        return;
-    }
-
-    auto dr = DockRegistry::self(); // make sure our QML types are registered
-    QQmlContext *context = qmlEngine->rootContext();
-    context->setContextProperty(QStringLiteral("_kddwHelpers"), &d->m_qquickHelpers);
-    context->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
-    context->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
-    context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), d->m_frameworkWidgetFactory);
-
-    d->m_qmlEngine = qmlEngine;
-}
-
-QQmlEngine *Config::qmlEngine() const
-{
-    if (!d->m_qmlEngine)
-        qWarning() << "Please call KDDockWidgets::Config::self()->setQmlEngine(engine)";
-
-    return d->m_qmlEngine;
-}
-#endif
 
 void Config::Private::fixFlags()
 {

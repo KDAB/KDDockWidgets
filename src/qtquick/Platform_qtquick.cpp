@@ -17,6 +17,9 @@
 #include "Window_qtquick.h"
 #include "views/View_qtquick.h"
 #include "qtquick/Window_qtquick.h"
+#include "private/DockRegistry_p.h"
+#include "private/DragController_p.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QQmlEngine>
 #include <QQuickStyle>
@@ -25,10 +28,11 @@
 #include <QScreen>
 #include <QQuickItem>
 #include <QGuiApplication>
+#include <QQmlContext>
 
 using namespace KDDockWidgets;
 
-QQmlEngine *Platform_qtquick::m_qmlEngine = nullptr;
+// QQmlEngine *Platform_qtquick::m_qmlEngine = nullptr;
 
 Platform_qtquick::Platform_qtquick()
 {
@@ -105,4 +109,32 @@ QSize Platform_qtquick::screenSizeFor(View *view) const
 
 
     return {};
+}
+
+QQmlEngine *Platform_qtquick::qmlEngine() const
+{
+    if (!m_qmlEngine)
+        qWarning() << "Please call KDDockWidgets::Platform_qtquick::self()->setQmlEngine(engine)";
+
+    return m_qmlEngine;
+}
+
+void Platform_qtquick::setQmlEngine(QQmlEngine *qmlEngine)
+{
+    if (m_qmlEngine) {
+        qWarning() << Q_FUNC_INFO << "Already has QML engine";
+        return;
+    }
+
+    if (!qmlEngine) {
+        qWarning() << Q_FUNC_INFO << "Null QML engine";
+        return;
+    }
+
+    auto dr = DockRegistry::self(); // make sure our QML types are registered
+    QQmlContext *context = qmlEngine->rootContext();
+    context->setContextProperty(QStringLiteral("_kddwHelpers"), &m_qquickHelpers);
+    context->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
+    context->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
+    context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), Config::self().frameworkWidgetFactory());
 }

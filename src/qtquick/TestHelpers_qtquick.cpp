@@ -57,7 +57,7 @@ void Platform_qtquick::tests_initPlatform_impl()
     Platform_qt::tests_initPlatform_impl();
 
     QQuickStyle::setStyle(QStringLiteral("Material")); // so we don't load KDE plugins
-    m_qmlEngine = new QQmlEngine();
+    plat()->setQmlEngine(new QQmlEngine());
 }
 
 void Platform_qtquick::tests_deinitPlatform_impl()

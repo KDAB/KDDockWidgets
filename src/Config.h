@@ -25,7 +25,6 @@
 #include <qglobal.h>
 
 QT_BEGIN_NAMESPACE
-class QQmlEngine;
 class QSize;
 QT_END_NAMESPACE
 
@@ -315,12 +314,6 @@ public:
     /// by default this value is 250px. Use -1 to disable
     void setMDIPopupThreshold(int);
     int mdiPopupThreshold() const;
-
-#ifdef KDDOCKWIDGETS_QTQUICK
-    ///@brief Sets the QQmlEngine to use. Applicable only when using QtQuick.
-    void setQmlEngine(QQmlEngine *);
-    QQmlEngine *qmlEngine() const;
-#endif
 
 private:
     Q_DISABLE_COPY(Config)

@@ -13,6 +13,7 @@
 
 #include "KDDockWidgets.h"
 #include "qtcommon/Platform_qt.h"
+#include "Helpers_p.h"
 
 class QQmlEngine;
 
@@ -33,17 +34,24 @@ public:
     using Platform_qt::screenNumberFor;
     int screenNumberFor(View *) const override;
     QSize screenSizeFor(View *) const override;
+    void setQmlEngine(QQmlEngine *);
+    QQmlEngine *qmlEngine() const;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtquick(int argc, char *argv[]);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     View *tests_createView(CreateViewOptions, View *parent = nullptr) override;
-
-    static QQmlEngine *m_qmlEngine;
 #endif
 private:
     void init();
+    QQmlEngine *m_qmlEngine = nullptr;
+    QtQuickHelpers m_qquickHelpers;
 };
+
+inline Platform_qtquick *plat()
+{
+    return static_cast<Platform_qtquick *>(Platform::instance());
+}
 
 }
