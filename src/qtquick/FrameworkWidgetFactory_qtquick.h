@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_QTWIDGETS_H
-#define KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_QTWIDGETS_H
+#ifndef KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_QTQUICK_H
+#define KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_QTQUICK_H
 
 #include "FrameworkWidgetFactory.h"
 
@@ -48,12 +48,12 @@ class MainWindow;
 /**
  * @brief The FrameworkWidgetFactory that's used if none is specified.
  */
-class DOCKS_EXPORT DefaultWidgetFactory_qtwidgets : public FrameworkWidgetFactory
+class DOCKS_EXPORT DefaultWidgetFactory_qtquick : public FrameworkWidgetFactory
 {
     Q_OBJECT
 public:
-    DefaultWidgetFactory_qtwidgets() = default;
-    ~DefaultWidgetFactory_qtwidgets() override;
+    DefaultWidgetFactory_qtquick() = default;
+    ~DefaultWidgetFactory_qtquick() override;
     View *createMainWindow(Controllers::MainWindow *, View *, Qt::WindowFlags) const override;
     View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const override;
     View *createFrame(Controllers::Frame *, View *parent, FrameOptions options = FrameOption_None) const override;
@@ -70,11 +70,16 @@ public:
     View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
     View *createMDILayout(MDILayoutWidget *, View *parent) const override;
+
+    Q_INVOKABLE QUrl titleBarFilename() const;
+    QUrl dockwidgetFilename() const;
+    QUrl frameFilename() const;
+    QUrl floatingWindowFilename() const;
+
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
-    QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
 private:
-    Q_DISABLE_COPY(DefaultWidgetFactory_qtwidgets)
+    Q_DISABLE_COPY(DefaultWidgetFactory_qtquick)
 };
 
 }

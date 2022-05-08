@@ -13,9 +13,9 @@
 #include "Controller.h"
 #include "controllers/Stack.h"
 #include "controllers/TitleBar.h"
+#include "qtwidgets/FrameworkWidgetFactory_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "private/DockRegistry_p.h"
-#include "kddockwidgets/FrameworkWidgetFactory.h"
 
 #include <QMouseEvent>
 #include <QTabBar>
@@ -154,7 +154,8 @@ void Stack_qtwidgets::setupTabBarButtons()
     if (!(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden))
         return;
 
-    auto factory = Config::self().frameworkWidgetFactory();
+    // TODOv2: Make sure people can only inherit from the Default*variants
+    auto factory = static_cast<DefaultWidgetFactory_qtwidgets *>(Config::self().frameworkWidgetFactory());
     m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
     m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
 

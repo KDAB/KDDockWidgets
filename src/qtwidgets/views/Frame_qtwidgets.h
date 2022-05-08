@@ -40,9 +40,8 @@ public:
     Controllers::DockWidget *dockWidgetAt_impl(int index) const override;
     Controllers::DockWidget *currentDockWidget_impl() const override;
     int nonContentsHeight() const override;
-
-    Controllers::Frame *frame() const;
     QRect dragRect() const override;
+    Controllers::Frame *frame() const;
 
 protected:
     void free_impl() override;

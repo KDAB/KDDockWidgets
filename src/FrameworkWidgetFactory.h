@@ -129,17 +129,6 @@ public:
     ///@param parent The MainWindow. Just forward into your SideBar sub-class ctor.
     virtual View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const = 0;
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    ///@brief Called internally by the framework to create a title bar button
-    ///@p parent the button's parent
-    virtual QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const = 0;
-#else
-    virtual QUrl titleBarFilename() const = 0;
-    virtual QUrl dockwidgetFilename() const = 0;
-    virtual QUrl frameFilename() const = 0;
-    virtual QUrl floatingWindowFilename() const = 0;
-#endif
-
     /// @brief Returns the icon to be used with the specified @p type
     /// @param dpr the device pixel ratio of the button
     virtual QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const = 0;
