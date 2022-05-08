@@ -43,7 +43,7 @@ public:
         if (m_frameWidget->inDtor())
             return;
         QVBoxLayout::invalidate();
-        Q_EMIT m_frameWidget->layoutInvalidated();
+        m_frameWidget->layoutInvalidated.emit();
     }
 
     Frame_qtwidgets *const m_frameWidget;

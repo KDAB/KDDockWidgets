@@ -49,10 +49,6 @@ public:
     {
     }
 
-    void setLayoutItem(Item *) override
-    {
-    }
-
     QSize minimumSizeHint() const override
     {
         return m_minSize;
@@ -62,7 +58,7 @@ public:
     {
         if (sz != m_minSize) {
             m_minSize = sz;
-            Q_EMIT layoutInvalidated();
+            layoutInvalidated.emit();
         }
     }
 
@@ -70,7 +66,7 @@ public:
     {
         if (sz != m_maxSize) {
             m_maxSize = sz;
-            Q_EMIT layoutInvalidated();
+            layoutInvalidated.emit();
         }
     }
 
@@ -78,9 +74,6 @@ public:
     {
         return m_maxSize;
     }
-
-Q_SIGNALS:
-    void layoutInvalidated();
 
 private:
     QSize m_minSize = QSize(200, 200);

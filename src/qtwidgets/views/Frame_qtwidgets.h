@@ -44,9 +44,6 @@ public:
     Controllers::Frame *frame() const;
     QRect dragRect() const override;
 
-Q_SIGNALS:
-    void layoutInvalidated();
-
 protected:
     void free_impl() override;
     void paintEvent(QPaintEvent *) override;

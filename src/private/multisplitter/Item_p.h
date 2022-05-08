@@ -392,6 +392,7 @@ private:
 
     KDBindings::ConnectionHandle m_minSizeChangedHandle;
     KDBindings::ConnectionHandle m_visibleChangedHandle;
+    KDBindings::ScopedConnection m_layoutInvalidatedConnection;
 };
 
 /// @brief And Item which can contain other Items

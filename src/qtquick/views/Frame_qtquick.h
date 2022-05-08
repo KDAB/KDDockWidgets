@@ -70,9 +70,6 @@ protected:
 Q_SIGNALS:
     void tabTitlesChanged();
 
-    // TODOv2: It's duplicated with Frame_qtwidgets, port to views/Frame.h as KDSignal
-    void layoutInvalidated();
-
 public Q_SLOTS:
     void updateConstriants();
 

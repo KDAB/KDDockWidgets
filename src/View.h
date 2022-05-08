@@ -258,6 +258,9 @@ public:
     /// @brief signal emitted when something tried to close this view
     KDBindings::Signal<QCloseEvent *> closeRequested;
 
+    /// @brief signal emitted when when constraints change, for example min/max sizes
+    KDBindings::Signal<> layoutInvalidated;
+
 protected:
     virtual void free_impl();
 

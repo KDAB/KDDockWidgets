@@ -44,7 +44,9 @@ Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
     connect(m_controller->tabWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)), /// clazy:exclude=old-style-connect
             this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)));
 
-    connect(this, &View_qtquick::geometryUpdated, this, &Frame_qtquick::layoutInvalidated);
+    connect(this, &View_qtquick::geometryUpdated, this, [this] {
+        layoutInvalidated.emit();
+    });
 
     /*
     // TODOv2: This signal seems unused
@@ -94,7 +96,7 @@ void Frame_qtquick::updateConstriants()
     setProperty("kddockwidgets_min_size", minSize());
     setProperty("kddockwidgets_max_size", maximumSize());
 
-    Q_EMIT layoutInvalidated();
+    layoutInvalidated.emit();
 }
 
 void Frame_qtquick::removeWidget_impl(Controllers::DockWidget *dw)
