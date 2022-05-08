@@ -15,7 +15,8 @@
 #include "controllers/Separator.h"
 
 #include "Platform.h"
-#include "qtwidgets/views/Separator_qtwidgets.h"
+#include "Config.h"
+#include "FrameworkWidgetFactory.h"
 
 #include <QPainter>
 #include <QWidget>
@@ -70,7 +71,7 @@ public Q_SLOTS:
         s_testObject = this;
 
         Layouting::Config::self().setSeparatorFactoryFunc([](Controllers::Separator *controller, View *parent) -> View * {
-            return new Views::Separator_qtwidgets(controller, qwidgetFromView(parent));
+            return KDDockWidgets::Config::self().frameworkWidgetFactory()->createSeparator(controller, parent);
         });
     }
 
