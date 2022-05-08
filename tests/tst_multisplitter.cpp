@@ -79,30 +79,6 @@ public:
         return m_maxSize;
     }
 
-    void resizeEvent(QResizeEvent *ev) override
-    {
-        QWidget::resizeEvent(ev);
-        /*Debug helpers:
-         * if (geometry() == QRect(800,0, 200,200)) {
-            qDebug() << "HERE2";
-        }*/
-    }
-
-    void moveEvent(QMoveEvent *ev) override
-    {
-        QWidget::moveEvent(ev);
-        /*Debug helpers:
-         * if (geometry() == QRect(800,0, 200,200)) {
-            //qDebug() << "HERE1";
-        }*/
-    }
-
-    void paintEvent(QPaintEvent *) override
-    {
-        QPainter p(this);
-        p.fillRect(QWidget::rect(), Qt::green);
-    }
-
 Q_SIGNALS:
     void layoutInvalidated();
 
