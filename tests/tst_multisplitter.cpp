@@ -1579,10 +1579,14 @@ void TestMultiSplitter::tst_separatorMoveHonoursMax()
     root->insertItem(item1, Location_OnLeft);
     root->insertItem(item2, Location_OnRight);
     root->insertItem(item3, Location_OnRight);
+    QVERIFY(root->checkSanity());
+
 
     auto guest2 = static_cast<MyGuestWidget *>(item2->guestView());
     const int maxWidth = 250;
     guest2->setMaxSize(QSize(maxWidth, 250));
+    QVERIFY(root->checkSanity());
+
     auto separator1 = root->separators()[0];
     auto separator2 = root->separators()[1];
 
