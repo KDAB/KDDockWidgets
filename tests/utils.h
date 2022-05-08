@@ -439,17 +439,6 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, Controllers::D
 
 }
 
-inline bool qpaPassedAsArgument(int argc, char *argv[])
-{
-    for (int i = 1; i < argc; ++i) {
-        if (qstrcmp(argv[i], "-platform") == 0) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 }
 
 Q_DECLARE_METATYPE(KDDockWidgets::Tests::DockDescriptor)

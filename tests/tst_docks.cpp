@@ -6344,11 +6344,6 @@ void TestDocks::tst_persistentCentralWidget()
 
 int main(int argc, char *argv[])
 {
-    if (!qpaPassedAsArgument(argc, argv)) {
-        // Use offscreen by default as it's less annoying, doesn't create visible windows
-        qputenv("QT_QPA_PLATFORM", "offscreen");
-    }
-
     KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
     if (shouldSkipTests())
         return 0;

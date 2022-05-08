@@ -28,11 +28,6 @@ using namespace KDDockWidgets::Testing;
 
 int main(int argc, char **argv)
 {
-    if (!qpaPassedAsArgument(argc, argv)) {
-        // Use offscreen by default as it's less annoying, doesn't create visible windows
-        qputenv("QT_QPA_PLATFORM", "offscreen");
-    }
-
     QApplication app(argc, argv);
 
     QCommandLineParser parser;
@@ -88,7 +83,7 @@ int main(int argc, char **argv)
         if (filesToLoad.isEmpty()) {
             do {
                 fuzzer.fuzz({ 1, 10, true });
-            } while(loops);
+            } while (loops);
         } else {
             fuzzer.fuzz(filesToLoad);
         }

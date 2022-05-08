@@ -196,8 +196,20 @@ bool Platform_qt::isGammaray()
 
 Platform_qt::Platform_qt(int argc, char *argv[])
 {
-    Q_UNUSED(argc)
-    Q_UNUSED(argv)
+    // This CTOR is called before we have a QApplication
+
+    bool qpaPassed = false;
+    for (int i = 1; i < argc; ++i) {
+        if (qstrcmp(argv[i], "-platform") == 0) {
+            qpaPassed = true;
+            break;
+        }
+    }
+
+    if (!qpaPassed) {
+        // Use offscreen by default as it's less annoying, doesn't create visible windows
+        qputenv("QT_QPA_PLATFORM", "offscreen");
+    }
 }
 
 void Platform_qt::tests_wait(int ms)

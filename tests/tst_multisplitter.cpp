@@ -1808,19 +1808,6 @@ void TestMultiSplitter::tst_adjacentLayoutBorders()
 
 int main(int argc, char *argv[])
 {
-    bool qpaPassed = false;
-    for (int i = 1; i < argc; ++i) {
-        if (qstrcmp(argv[i], "-platform") == 0) {
-            qpaPassed = true;
-            break;
-        }
-    }
-
-    if (!qpaPassed) {
-        // Use offscreen by default as it's less annoying, doesn't create visible windows
-        qputenv("QT_QPA_PLATFORM", "offscreen");
-    }
-
     KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
     TestMultiSplitter test;
 
