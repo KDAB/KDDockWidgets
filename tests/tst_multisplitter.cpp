@@ -18,8 +18,6 @@
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
-#include <QPainter>
-#include <QWidget>
 #include <QtTest/QtTest>
 
 #include <memory.h>
@@ -35,11 +33,6 @@ static QString s_expectedWarning;
 
 class TestMultiSplitter;
 static TestMultiSplitter *s_testObject = nullptr;
-
-inline QWidget *qwidgetFromView(View *view)
-{
-    return dynamic_cast<QWidget *>(view);
-}
 
 static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
 {
@@ -61,9 +54,6 @@ class TestMultiSplitter : public QObject
 {
     Q_OBJECT
 
-public:
-    QVector<QWidget *> m_hostWidgets; // for cleanup purposes
-
 public Q_SLOTS:
     void initTestCase()
     {
@@ -77,8 +67,6 @@ public Q_SLOTS:
 
     void cleanupTestCase()
     {
-        auto copy = m_hostWidgets;
-        qDeleteAll(copy);
     }
 
 private Q_SLOTS:
@@ -899,7 +887,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         auto root1 = createRoot();
         Item *item1 = createItem();
         root1->insertItem(item1, Location_OnRight);
-        QWidget *host1 = qwidgetFromView(root1->hostWidget());
+        auto host1 = root1->hostWidget();
 
         auto root2 = createRoot();
         Item *item2 = createItem();
@@ -907,11 +895,11 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnBottom);
 
-        QCOMPARE(qwidgetFromView(root1->hostWidget()), host1);
-        QCOMPARE(qwidgetFromView(item2->hostWidget()), host1);
+        QVERIFY(root1->hostWidget()->equals(host1));
+        QVERIFY(item2->hostWidget()->equals(host1));
         const auto &items = root1->items_recursive();
         for (Item *item : items) {
-            QCOMPARE(qwidgetFromView(item->hostWidget()), host1);
+            QVERIFY(item->hostWidget()->equals(host1));
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());
@@ -924,7 +912,7 @@ void TestMultiSplitter::tst_insertAnotherRoot()
         Item *item2 = createItem();
         root1->insertItem(item1, Location_OnLeft);
         root1->insertItem(item2, Location_OnRight);
-        QWidget *host1 = qwidgetFromView(root1->hostWidget());
+        auto host1 = root1->hostWidget();
 
         auto root2 = createRoot();
         Item *item12 = createItem();
@@ -932,10 +920,10 @@ void TestMultiSplitter::tst_insertAnotherRoot()
 
         root1->insertItem(root2.release(), Location_OnTop);
 
-        QCOMPARE(qwidgetFromView(root1->hostWidget()), host1);
-        QCOMPARE(qwidgetFromView(item2->hostWidget()), host1);
+        QVERIFY(root1->hostWidget()->equals(host1));
+        QVERIFY(item2->hostWidget()->equals(host1));
         for (Item *item : root1->items_recursive()) {
-            QCOMPARE(qwidgetFromView(item->hostWidget()), host1);
+            QVERIFY(item->hostWidget()->equals(host1));
             QVERIFY(item->isVisible());
         }
         QVERIFY(root1->checkSanity());
