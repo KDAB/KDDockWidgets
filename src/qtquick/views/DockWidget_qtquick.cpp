@@ -10,9 +10,15 @@
 */
 
 #include "DockWidget_qtquick.h"
+#include "FrameworkWidgetFactory.h"
 
+#include "controllers/TitleBar.h"
+#include "controllers/DockWidget.h"
+#include "controllers/Frame.h"
+
+#include <Config.h>
+#include <QQuickItem>
 #include <QCloseEvent>
-#include <QVBoxLayout>
 
 /**
  * @file
@@ -22,32 +28,34 @@
  */
 
 using namespace KDDockWidgets;
-using namespace KDDockWidgets::Controllers;
 using namespace KDDockWidgets::Views;
 
 class DockWidget_qtquick::Private
 {
 public:
-    Private(DockWidget_qtquick *q, Controllers::DockWidget *controller)
-        : layout(new QVBoxLayout(q))
-        , m_controller(controller)
+    Private(DockWidget_qtquick *view, QQmlEngine *qmlengine)
+        : q(view->m_controller)
+        , m_visualItem(q->createItem(qmlengine,
+                                     Config::self().frameworkWidgetFactory()->dockwidgetFilename().toString()))
+        , m_qmlEngine(qmlengine)
     {
-        layout->setSpacing(0);
-        layout->setContentsMargins(0, 0, 0, 0);
-
-        // propagate the max-size constraints from the guest widget to the DockWidget
-        layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+        Q_ASSERT(m_visualItem);
+        m_visualItem->setParent(view);
+        m_visualItem->setParentItem(view);
     }
 
-    QVBoxLayout *const layout;
-    Controllers::DockWidget *const m_controller;
+    Controllers::DockWidget *const q;
+    QQuickItem *const m_visualItem;
+    QQmlEngine *const m_qmlEngine;
 };
 
 DockWidget_qtquick::DockWidget_qtquick(Controllers::DockWidget *controller,
-                                           Qt::WindowFlags windowFlags)
-    : View_qtquick<QWidget>(controller, Type::DockWidget, nullptr, windowFlags)
-    , d(new Private(this, controller))
+                                       Qt::WindowFlags windowFlags, QQmlEngine *engine)
+    : View_qtquick(controller, Type::DockWidget, nullptr, windowFlags)
+    , d(new Private(this, engine ? engine : Config::self().qmlEngine()))
 {
+    // To mimic what QtWidgets does when creating a new QWidget.
+    setVisible(false);
 }
 
 DockWidget_qtquick::~DockWidget_qtquick()
@@ -55,38 +63,105 @@ DockWidget_qtquick::~DockWidget_qtquick()
     delete d;
 }
 
-void DockWidget_qtquick::init()
+void DockWidget_qtquick::setWidget(const QString &qmlFilename)
 {
-    connect(d->m_controller, &DockWidgetBase::widgetChanged, this, [this](QWidget *w) {
-        d->layout->addWidget(w);
-    });
+    QQuickItem *guest = createItem(d->m_qmlEngine, qmlFilename);
+    if (!guest)
+        return;
+
+    setWidget(guest);
 }
 
-Controllers::DockWidget *DockWidget_qtquick::dockWidget() const
+void DockWidget_qtquick::setWidget(QWidgetAdapter *widget)
 {
-    return d->m_controller;
+    widget->QWidgetAdapter::setParent(this);
+    makeItemFillParent(widget);
+    DockWidget::setWidget(widget);
+}
+
+void DockWidget_qtquick::setWidget(QQuickItem *guest)
+{
+    auto adapter = new View_qtquick(nullptr, Type::None, this);
+    adapter->setIsWrapper();
+
+    // In case the user app needs to use them:
+    adapter->setProperty("originalParent", QVariant::fromValue(guest->parent()));
+    adapter->setProperty("originalParentItem", QVariant::fromValue(guest->parentItem()));
+
+    guest->setParentItem(adapter);
+    guest->setParent(adapter);
+    makeItemFillParent(guest);
+
+    setWidget(adapter);
 }
 
 bool DockWidget_qtquick::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
-        d->m_controller->onParentChanged();
+        d->q->onParentChanged();
+        Q_EMIT d->q->actualTitleBarChanged();
     } else if (e->type() == QEvent::Show) {
-        d->m_controller->onShown(e->spontaneous());
+        d->q->onShown(e->spontaneous());
     } else if (e->type() == QEvent::Hide) {
-        d->m_controller->onHidden(e->spontaneous());
+        d->q->onHidden(e->spontaneous());
+    } else if (e->type() == QEvent::Close) {
+        d->q->onCloseEvent(static_cast<QCloseEvent *>(e));
     }
 
-    return QWidget::event(e);
+    return DockWidget_qtquick::event(e);
 }
 
-void DockWidget_qtquick::closeEvent(QCloseEvent *e)
+QSize DockWidget_qtquick::minSize() const
 {
-    d->m_controller->onCloseEvent(e);
+    if (auto guestWidget = widget()) {
+        // The guests min-size is the same as the widget's, there's no spacing or margins.
+        return guestWidget->minimumSize();
+    }
+
+    return View_qtquick::minSize();
 }
 
-void DockWidget_qtquick::resizeEvent(QResizeEvent *e)
+QSize DockWidget_qtquick::maximumSize() const
 {
-    d->m_controller->onResize(e->size());
-    return QWidget::resizeEvent(e);
+    if (auto guestWidget = widget()) {
+        // The guests max-size is the same as the widget's, there's no spacing or margins.
+        return guestWidget->maximumSize();
+    }
+
+    return View_qtquick::maximumSize();
+}
+
+QObject *DockWidget_qtquick::actualTitleBar() const
+{
+    if (Controllers::Frame *frame = d->q->d->frame())
+        return frame->actualTitleBar();
+    return nullptr;
+}
+
+QObject *DockWidget_qtquick::actualTitleBarObj() const
+{
+    return actualTitleBar();
+}
+
+QQuickItem *DockWidget_qtquick::frameVisualItem() const
+{
+    if (Controllers::Frame *frame = d->q->d->frame()) {
+        return frame->visualItem();
+    }
+
+
+    return nullptr;
+}
+
+void DockWidget_qtquick::onGeometryUpdated()
+{
+    if (auto frame = qobject_cast<FrameQuick *>(DockWidgetBase::d->frame())) {
+        frame->updateConstriants();
+        frame->updateGeometry();
+    }
+}
+
+Frame *DockWidget_qtquick::frame() const
+{
+    return qobject_cast<FrameQuick *>(DockWidgetBase::d->frame());
 }
