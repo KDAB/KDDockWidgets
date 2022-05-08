@@ -1591,6 +1591,10 @@ void TestMultiSplitter::tst_separatorMoveHonoursMax()
     // const int min2 = root->minPosForSeparator_global(separator2);
     const int max2 = root->maxPosForSeparator_global(separator2);
 
+    QCOMPARE(min1, item1->minSize().width());
+
+    // qDebug() << min1 << max1 << max2;
+
     root->requestSeparatorMove(separator1, separator1->position() - min1);
     QVERIFY(root->checkSanity());
     QVERIFY(item2->width() <= maxWidth);
