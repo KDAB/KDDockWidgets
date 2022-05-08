@@ -131,6 +131,8 @@ void Platform_qtquick::setQmlEngine(QQmlEngine *qmlEngine)
         return;
     }
 
+    m_qmlEngine = qmlEngine;
+
     auto dr = DockRegistry::self(); // make sure our QML types are registered
     QQmlContext *context = qmlEngine->rootContext();
     context->setContextProperty(QStringLiteral("_kddwHelpers"), &m_qquickHelpers);
