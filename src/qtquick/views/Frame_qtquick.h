@@ -9,28 +9,49 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+
+#ifndef KD_FRAME_QUICK_P_H
+#define KD_FRAME_QUICK_P_H
 #pragma once
 
 #include "View_qtquick.h"
 #include "views/Frame.h"
 
-namespace KDDockWidgets::Controllers {
+class QQuickItem;
+
+namespace KDDockWidgets {
+
+namespace Controllers {
 class Frame;
+class DockWidget;
 }
 
-namespace KDDockWidgets::Views {
+namespace Views {
 
-class DOCKS_EXPORT Frame_qtquick : public View_qtquick<QQuickItem>, public Frame
+class Stack_qtquick;
+
+class DOCKS_EXPORT Frame_qtquick : public View_qtquick, public Frame
 {
     Q_OBJECT
+    Q_PROPERTY(QObject *tabWidget READ tabWidgetObj CONSTANT)
 public:
     explicit Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent = nullptr);
-    void init() override;
+    ~Frame_qtquick() override;
 
-    void setLayoutItem(Layouting::Item *item) override;
+    /// @reimp
+    QSize minSize() const override;
 
-    void renameTab(int index, const QString &) override;
-    void changeTabIcon(int index, const QIcon &) override;
+    /// @reimp
+    QSize maximumSize() const override;
+
+    /// @brief returns the tab widget as QObject for usage in QML.
+    /// We can't return TabWidget directly as it's not a QObject
+    QObject *tabWidgetObj() const;
+
+    /// @brief Returns the QQuickItem which represents this frame on the screen
+    QQuickItem *visualItem() const;
+
+protected:
     void removeWidget_impl(Controllers::DockWidget *) override;
     int indexOfDockWidget_impl(const Controllers::DockWidget *) override;
     int currentIndex_impl() const override;
@@ -39,23 +60,32 @@ public:
     void insertDockWidget_impl(Controllers::DockWidget *, int index) override;
     Controllers::DockWidget *dockWidgetAt_impl(int index) const override;
     Controllers::DockWidget *currentDockWidget_impl() const override;
+    void renameTab(int index, const QString &) override;
+    void changeTabIcon(int index, const QIcon &) override;
+
+    Q_INVOKABLE void setStackLayout(QQuickItem *);
+
     int nonContentsHeight() const override;
 
-    Controllers::Frame *frame() const;
-    QRect dragRect() const override;
-
 Q_SIGNALS:
+    void tabTitlesChanged();
+
+    // TODOv2: It's duplicated with Frame_qtwidgets, port to views/Frame.h as KDSignal
     void layoutInvalidated();
 
-protected:
-    void free_impl() override;
-    void paintEvent(QPaintEvent *) override;
-    QSize maxSizeHint() const override;
+public Q_SLOTS:
+    void updateConstriants();
 
 private:
-    void closeEvent(QCloseEvent *e) override;
-    bool event(QEvent *) override;
+    Stack_qtquick *stackView() const;
+
+    QQuickItem *m_stackLayout = nullptr;
+    QQuickItem *m_visualItem = nullptr;
     Controllers::Frame *const m_controller;
+    QHash<Controllers::DockWidget *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambdas
 };
 
 }
+}
+
+#endif

@@ -1,7 +1,7 @@
 /*
   This file is part of KDDockWidgets.
 
-  SPDX-FileCopyrightText: 2020-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+  SPDX-FileCopyrightText: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
   Author: Sérgio Martins <sergio.martins@kdab.com>
 
   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
@@ -9,103 +9,113 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
+/**
+ * @file
+ * @brief The GUI counterpart of Frame.
+ *
+ * @author Sérgio Martins \<sergio.martins@kdab.com\>
+ */
+
 #include "Frame_qtquick.h"
+#include "views/Frame.h"
 
-#include "qtwidgets/views/View_qtquick.h"
-#include "qtwidgets/views/DockWidget_qtquick.h"
-
-#include "private/LayoutWidget_p.h"
 #include "controllers/Frame.h"
-#include "controllers/Stack.h"
-#include "controllers/TabBar.h"
-#include "controllers/TitleBar.h"
+#include "controllers/DockWidget.h"
+#include "controllers/DockWidget_p.h"
 
-#include <QPainter>
-#include <QTabBar>
-#include <QVBoxLayout>
+#include "qtquick/Platform_qtquick.h"
+#include "Config.h"
+#include "FrameworkWidgetFactory.h"
+#include "Stack_qtquick.h"
+#include "private/WidgetResizeHandler_p.h"
+
+#include <QDebug>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-///@brief a QVBoxLayout that emits layoutInvalidated so that Item can detect minSize changes
-class VBoxLayout : public QVBoxLayout // clazy:exclude=missing-qobject-macro
-{
-public:
-    explicit VBoxLayout(Frame_qtquick *parent)
-        : QVBoxLayout(parent)
-        , m_frameWidget(parent)
-    {
-    }
-    ~VBoxLayout() override;
-
-    void invalidate() override
-    {
-        if (m_frameWidget->inDtor())
-            return;
-        QVBoxLayout::invalidate();
-        Q_EMIT m_frameWidget->layoutInvalidated();
-    }
-
-    Frame_qtquick *const m_frameWidget;
-};
-
-VBoxLayout::~VBoxLayout() = default;
-
-Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QWidget *parent)
-    : View_qtquick<QWidget>(controller, Type::Frame, parent)
+Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
+    : View_qtquick(controller, Type::Frame, parent)
     , m_controller(controller)
 {
+    connect(m_controller->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
+            this, SLOT(updateConstriants()));
+
+    connect(m_controller->tabWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)), /// clazy:exclude=old-style-connect
+            this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)));
+
+    connect(this, &View_qtquick::geometryUpdated, this, &Frame_qtquick::layoutInvalidated);
+
+    /*
+    // TODOv2: This signal seems unused
+    connect(this, &QWidgetAdapter::itemGeometryChanged, this, [this] {
+        for (auto dw : m_controller->dockWidgets()) {
+            Q_EMIT static_cast<Controllers::DockWidget *>(dw)->frameGeometryChanged(geometry());
+        }
+    });*/
+
+    // TODOv2: Port widget factory first
+    // QQmlComponent component(Config::self().qmlEngine(),
+    //                         Config::self().frameworkWidgetFactory()->frameFilename());
+
+    // m_visualItem = static_cast<QQuickItem *>(component.create());
+
+    // if (!m_visualItem) {
+    //     qWarning() << Q_FUNC_INFO << "Failed to create item" << component.errorString();
+    //     return;
+    // }
+
+    m_visualItem->setProperty("frameCpp", QVariant::fromValue(this));
+    m_visualItem->setParentItem(this);
+    m_visualItem->setParent(this);
 }
 
-void Frame_qtquick::init()
+Frame_qtquick::~Frame_qtquick()
 {
-    auto vlayout = new VBoxLayout(this);
-    vlayout->setContentsMargins(0, 0, 0, 0);
-    vlayout->setSpacing(0);
-    vlayout->addWidget(m_controller->titleBar()->view()->asQWidget());
-    auto tabWidget = m_controller->tabWidget();
-    vlayout->addWidget(tabWidget->view()->asQWidget());
+    {
+        const DockWidgetBase::List docks = m_controller->dockWidgets();
 
-    tabWidget->setTabBarAutoHide(!m_controller->alwaysShowsTabs());
+        // The QML item must be deleted with deleteLater(), has we might be currently with its mouse
+        // handler in the stack. QML doesn't support it being deleted in that case.
+        // So unparent it and deleteLater().
+        m_visualItem->setParent(nullptr);
+        m_visualItem->deleteLater();
 
-    if (m_controller->isOverlayed())
-        setAutoFillBackground(true);
+        qDeleteAll(docks);
+    }
 }
 
-void Frame_qtquick::free_impl()
+void Frame_qtquick::updateConstriants()
 {
-    // TODO: just use the base class impl, which uses deleteLater()
-    // do it once there's no state here
-    delete this;
+    m_controller->onDockWidgetCountChanged();
+
+    // QtQuick doesn't have layouts, so we need to do constraint propagation manually
+
+    setProperty("kddockwidgets_min_size", minSize());
+    setProperty("kddockwidgets_max_size", maximumSize());
+
+    Q_EMIT layoutInvalidated();
 }
 
-void Frame_qtquick::setLayoutItem(Layouting::Item *item)
+void Frame_qtquick::removeWidget_impl(Controllers::DockWidget *dw)
 {
-    // TODO: Remove from View, maybe
-    m_controller->setLayoutItem(item);
-}
-
-void Frame_qtquick::renameTab(int index, const QString &text)
-{
-    m_controller->tabWidget()->renameTab(index, text);
-}
-
-void Frame_qtquick::changeTabIcon(int index, const QIcon &icon)
-{
-    m_controller->tabWidget()->changeTabIcon(index, icon);
-}
-
-int Frame_qtquick::nonContentsHeight() const
-{
-    Controllers::TitleBar *tb = m_controller->titleBar();
-    QWidget *tabBar = m_controller->tabBar()->view()->asQWidget();
-
-    return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);
+    stackView()->removeDockWidget(dw);
+    disconnect(m_connections.take(dw));
 }
 
 int Frame_qtquick::indexOfDockWidget_impl(const Controllers::DockWidget *dw)
 {
-    return m_controller->tabWidget()->indexOfDockWidget(dw);
+    return stackView()->indexOfDockWidget(dw);
+}
+
+int Frame_qtquick::currentIndex_impl() const
+{
+    return stackView()->currentIndex();
+}
+
+void Frame_qtquick::setCurrentTabIndex_impl(int index)
+{
+    setCurrentDockWidget_impl(m_controller->dockWidgetAt(index));
 }
 
 void Frame_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
@@ -113,115 +123,95 @@ void Frame_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
     m_controller->tabWidget()->setCurrentDockWidget(dw);
 }
 
-int Frame_qtquick::currentIndex_impl() const
-{
-    return m_controller->tabWidget()->currentIndex();
-}
-
 void Frame_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
 {
-    m_controller->tabWidget()->insertDockWidget(dw, index);
-}
+    QPointer<Controllers::Frame> oldFrame = dw->d->frame();
+    if (stackView()->insertDockWidget(index, dw, {}, {})) {
+        dw->setParent(m_stackLayout);
 
-void Frame_qtquick::removeWidget_impl(Controllers::DockWidget *dw)
-{
-    m_controller->tabWidget()->removeDockWidget(dw);
-}
+        QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::parentChanged, this, [dw, this] {
+            if (dw->parent() != m_stackLayout)
+                removeWidget_impl(dw);
+        });
 
-void Frame_qtquick::setCurrentTabIndex_impl(int index)
-{
-    m_controller->tabWidget()->setCurrentDockWidget(index);
-}
+        m_connections[dw] = conn;
+        setCurrentDockWidget_impl(dw);
 
-KDDockWidgets::Controllers::DockWidget *Frame_qtquick::currentDockWidget_impl() const
-{
-    return m_controller->tabWidget()->dockwidgetAt(m_controller->tabWidget()->currentIndex());
-}
+        if (oldFrame && oldFrame->beingDeletedLater()) {
+            // give it a push and delete it immediately.
+            // Having too many deleteLater() puts us in an inconsistent state. For example if LayoutSaver::saveState()
+            // would to be called while the Frame hadn't been deleted yet it would count with that frame unless hacks.
+            // Also the unit-tests are full of waitForDeleted() due to deleteLater.
 
-KDDockWidgets::Controllers::DockWidget *Frame_qtquick::dockWidgetAt_impl(int index) const
-{
-    return m_controller->tabWidget()->dockwidgetAt(index);
-}
+            // Ideally we would just remove the deleteLater from frame.cpp, but QTabWidget::insertTab()
+            // would crash, as it accesses the old tab-widget we're stealing from
 
-Controllers::Frame *Frame_qtquick::frame() const
-{
-    return m_controller;
-}
-
-bool Frame_qtquick::event(QEvent *e)
-{
-    if (freed())
-        return QWidget::event(e);
-
-    if (e->type() == QEvent::ParentChange) {
-        if (auto layoutWidget = qobject_cast<LayoutWidget *>(QWidget::parentWidget())) {
-            m_controller->setLayoutWidget(layoutWidget);
-        } else {
-            m_controller->setLayoutWidget(nullptr);
+            delete oldFrame;
         }
     }
-
-    return QWidget::event(e);
 }
 
-void Frame_qtquick::closeEvent(QCloseEvent *e)
+Controllers::DockWidget *Frame_qtquick::dockWidgetAt_impl(int index) const
 {
-    if (!freed())
-        m_controller->onCloseEvent(e);
+    return stackView()->dockwidgetAt(index);
 }
 
-void Frame_qtquick::paintEvent(QPaintEvent *)
+Controllers::DockWidget *Frame_qtquick::currentDockWidget_impl() const
 {
-    if (freed())
+    return stackView()->currentDockWidget();
+}
+
+void Frame_qtquick::renameTab(int, const QString &)
+{
+    // Not needed for QtQuick. Our model reacts to titleChanged()
+}
+
+void Frame_qtquick::changeTabIcon(int index, const QIcon &)
+{
+    Q_UNUSED(index);
+    qDebug() << Q_FUNC_INFO << "Not implemented";
+}
+
+void Frame_qtquick::setStackLayout(QQuickItem *stackLayout)
+{
+    if (m_stackLayout || !stackLayout) {
+        qWarning() << Q_FUNC_INFO << "Shouldn't happen";
         return;
-
-    if (!m_controller->isFloating()) {
-        QPainter p(this);
-        p.setRenderHint(QPainter::Antialiasing);
-
-        const qreal penWidth = 1;
-        const qreal halfPenWidth = penWidth / 2;
-        const QRectF rectf = QWidget::rect();
-
-        const bool isOverlayed = m_controller->isOverlayed();
-        const QColor penColor = isOverlayed ? QColor(0x666666)
-                                            : QColor(184, 184, 184, 184);
-        QPen pen(penColor);
-        pen.setWidthF(penWidth);
-        p.setPen(pen);
-
-        if (isOverlayed) {
-            pen.setJoinStyle(Qt::MiterJoin);
-            p.drawRect(rectf.adjusted(halfPenWidth, penWidth, -halfPenWidth, -halfPenWidth));
-        } else {
-            p.drawRoundedRect(rectf.adjusted(halfPenWidth, halfPenWidth, -halfPenWidth, -halfPenWidth), 2, 2);
-        }
-    }
-}
-
-QSize Frame_qtquick::maxSizeHint() const
-{
-    if (freed())
-        return {};
-
-    // waste due to QTabWidget margins, tabbar etc.
-    const QSize waste = minSize() - m_controller->dockWidgetsMinSize();
-    return waste + m_controller->biggestDockWidgetMaxSize();
-}
-
-QRect Frame_qtquick::dragRect() const
-{
-    QRect rect = m_controller->dragRect();
-    if (rect.isValid())
-        return rect;
-
-    if (Config::self().flags() & Config::Flag_HideTitleBarWhenTabsVisible) {
-        auto tabBar = qobject_cast<QTabBar *>(m_controller->tabBar()->view()->asQWidget());
-        rect.setHeight(tabBar->height());
-        rect.setWidth(QWidget::width() - tabBar->width());
-        rect.moveTopLeft(QPoint(tabBar->width(), tabBar->y()));
-        rect.moveTopLeft(QWidget::mapToGlobal(rect.topLeft()));
     }
 
-    return rect;
+    m_stackLayout = stackLayout;
+}
+
+QSize Frame_qtquick::minSize() const
+{
+    const QSize contentsSize = m_controller->dockWidgetsMinSize();
+    return contentsSize + QSize(0, nonContentsHeight());
+}
+
+QSize Frame_qtquick::maximumSize() const
+{
+    return View_qtquick::maximumSize();
+}
+
+QObject *Frame_qtquick::tabWidgetObj() const
+{
+    return stackView();
+}
+
+QQuickItem *Frame_qtquick::visualItem() const
+{
+    return m_visualItem;
+}
+
+int Frame_qtquick::nonContentsHeight() const
+{
+    return m_visualItem->property("nonContentsHeight").toInt();
+}
+
+Stack_qtquick *Frame_qtquick::stackView() const
+{
+    if (auto stack = m_controller->tabWidget())
+        return qobject_cast<Stack_qtquick *>(asQQuickItem(stack->view()));
+
+    return nullptr;
 }

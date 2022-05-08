@@ -83,6 +83,11 @@ QObject *Stack_qtquick::tabBarObj() const
     // return m_tabBar->asWidget();
 }
 
+Controllers::DockWidget *Stack_qtquick::currentDockWidget() const
+{
+    return m_currentDockWidget;
+}
+
 bool Stack_qtquick::insertDockWidget(int index, DockWidgetBase *dw, const QIcon &, const QString &title)
 {
     Q_UNUSED(title); // todo

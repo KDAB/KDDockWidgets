@@ -293,11 +293,13 @@ public:
     /// @brief Returns the resize handler. Used mostly in MDI mode.
     WidgetResizeHandler *resizeHandler() const;
 
-
     void renameTab(int index, const QString &);
     void changeTabIcon(int index, const QIcon &);
     /// @brief Sets the LayoutWidget which this frame is in
     void setLayoutWidget(LayoutWidget *);
+
+    void onDockWidgetCountChanged();
+
 Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
     void numDockWidgetsChanged();
@@ -312,7 +314,6 @@ protected:
     void focusedWidgetChangedCallback() final;
 
 protected Q_SLOTS:
-    void onDockWidgetCountChanged();
     void onCurrentTabChanged(int index);
 
 public:

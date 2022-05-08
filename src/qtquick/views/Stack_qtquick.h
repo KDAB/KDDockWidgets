@@ -59,6 +59,7 @@ public:
     int currentIndex() const override;
     bool insertDockWidget(int index, Controllers::DockWidget *, const QIcon &, const QString &title) override;
     Q_INVOKABLE void setCurrentDockWidget(int index) override;
+    Controllers::DockWidget *currentDockWidget() const;
 
     /// @brief Returns the tab bar as a QObject for QML.
     /// As the base class is not a QObject.
