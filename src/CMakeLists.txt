@@ -382,8 +382,24 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   endif()
 endif()
 
+# BEGIN coverage
+add_library(coverage_options INTERFACE)
+
+if(${PROJECT_NAME}_CODE_COVERAGE AND (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD) AND NOT MSVC)
+  if(${PROJECT_NAME}_DEVELOPER_MODE)
+    # Add required flags (GCC & LLVM/Clang)
+    target_compile_options(coverage_options INTERFACE --coverage)
+    if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
+      target_link_options(coverage_options INTERFACE --coverage)
+    else()
+      target_link_libraries(coverage_options INTERFACE --coverage)
+    endif()
+  endif()
+endif()
+# END coverage
+
 # TODOv2: Remove linking against QtTest after refactorings are made
-target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
+target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate coverage_options)
 target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
 
 

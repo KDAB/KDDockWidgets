@@ -68,6 +68,11 @@
 #  Build the fuzzer.
 #  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
 #  Default=true
+#
+# -DKDDockWidgets_CODE_COVERAGE=[true|false]
+#  Enable coverage reporting.
+#  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
+#  Default=false
 
 cmake_minimum_required(VERSION 3.7)
 
@@ -108,6 +113,7 @@ option(${PROJECT_NAME}_DOCS "Build the API documentation" OFF)
 option(${PROJECT_NAME}_WERROR "Use -Werror (will be true for developer-mode unconditionally)" OFF)
 option(${PROJECT_NAME}_X11EXTRAS "On Linux, link against QtX11Extras so we can detect if the compositor supports transparency. Not applicable to other platforms or Qt6." ON)
 option(${PROJECT_NAME}_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
+option(${PROJECT_NAME}_CODE_COVERAGE "Enable coverage reporting" OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
