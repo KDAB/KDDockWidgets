@@ -382,7 +382,8 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   endif()
 endif()
 
-target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
+# TODOv2: Remove linking against QtTest after refactorings are made
+target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
 target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
 
 
