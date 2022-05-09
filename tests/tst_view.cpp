@@ -147,6 +147,19 @@ TEST_CASE("View::minSize")
     CHECK_EQ(rootView->minSize(), newMinSize);
 }
 
+TEST_CASE("View::maxSize")
+{
+    const QSize sizeHint = {};
+    const QSize minSize = { 201, 202 };
+    const QSize maxSize = { 500, 501 };
+    auto rootView = Platform::instance()->tests_createView({ true, sizeHint, minSize, maxSize });
+    CHECK_EQ(rootView->maxSizeHint(), maxSize);
+
+    const QSize newMaxSize = { 301, 302 };
+    rootView->setMaximumSize(newMaxSize);
+    CHECK_EQ(rootView->maxSizeHint(), newMaxSize);
+}
+
 TEST_CASE("View::objectName")
 {
     auto rootView = Platform::instance()->tests_createView({});

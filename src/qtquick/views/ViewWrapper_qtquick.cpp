@@ -49,21 +49,25 @@ void ViewWrapper_qtquick::setObjectName(const QString &name)
 
 QRect ViewWrapper_qtquick::geometry() const
 {
+    qFatal("not implemented");
     return {};
 }
 
 QPoint ViewWrapper_qtquick::mapToGlobal(QPoint /*localPt*/) const
 {
+    qFatal("not implemented");
     return {};
 }
 
 QPoint ViewWrapper_qtquick::mapFromGlobal(QPoint /*globalPt*/) const
 {
+    qFatal("not implemented");
     return {};
 }
 
 void ViewWrapper_qtquick::setGeometry(QRect)
 {
+    qFatal("not implemented");
 }
 
 std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::childViewAt(QPoint) const
@@ -115,6 +119,7 @@ bool ViewWrapper_qtquick::isMinimized() const
 
 QSize ViewWrapper_qtquick::maximumSize() const
 {
+    qFatal("not implemented");
     return {};
 }
 
@@ -240,6 +245,7 @@ QSize ViewWrapper_qtquick::minSize() const
         // Only real views have min size
         return view->minSize();
     } else {
+        qFatal("not implemented");
         return {};
     }
 }

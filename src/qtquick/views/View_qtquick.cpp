@@ -436,7 +436,7 @@ QSize View_qtquick::maxSizeHint() const
 
 QSize View_qtquick::maximumSize() const
 {
-    return {};
+    return maxSizeHint();
 }
 
 QRect View_qtquick::geometry() const
@@ -466,6 +466,7 @@ void View_qtquick::setMaximumSize(QSize sz)
     if (maximumSize() != sz) {
         setProperty("kddockwidgets_max_size", sz);
         updateGeometry();
+        layoutInvalidated.emit();
     }
 }
 
@@ -763,6 +764,7 @@ void View_qtquick::setMinimumSize(QSize sz)
     if (minSize() != sz) {
         setProperty("kddockwidgets_min_size", sz);
         updateGeometry();
+        layoutInvalidated.emit();
     }
 }
 
