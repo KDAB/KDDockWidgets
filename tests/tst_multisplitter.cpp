@@ -1795,7 +1795,7 @@ void TestMultiSplitter::tst_adjacentLayoutBorders()
     QCOMPARE(borders4, LayoutBorderLocation_South);
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
     KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
     TestMultiSplitter test;

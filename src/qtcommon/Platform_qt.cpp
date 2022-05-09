@@ -194,7 +194,7 @@ bool Platform_qt::isGammaray()
     return is;
 }
 
-Platform_qt::Platform_qt(int argc, char *argv[])
+Platform_qt::Platform_qt(int &argc, char **argv)
 {
     // This CTOR is called before we have a QApplication
 

@@ -47,7 +47,7 @@ bool Platform::hasActivePopup() const
 #ifdef DOCKS_DEVELOPER_MODE
 
 /*static*/
-void Platform::tests_initPlatform(int argc, char *argv[], KDDockWidgets::FrontendType type)
+void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::FrontendType type)
 {
     if (Platform::instance())
         return;

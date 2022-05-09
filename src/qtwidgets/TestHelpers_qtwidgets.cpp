@@ -50,7 +50,7 @@ private:
 
 }
 
-Platform_qtwidgets::Platform_qtwidgets(int argc, char *argv[])
+Platform_qtwidgets::Platform_qtwidgets(int &argc, char **argv)
     : Platform_qt(argc, argv)
 {
     qputenv("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW", "");

@@ -38,7 +38,7 @@ public:
     QQmlEngine *qmlEngine() const;
 
 #ifdef DOCKS_DEVELOPER_MODE
-    explicit Platform_qtquick(int argc, char *argv[]);
+    explicit Platform_qtquick(int &argc, char **argv);
     void tests_initPlatform_impl() override;
     void tests_deinitPlatform_impl() override;
     View *tests_createView(CreateViewOptions, View *parent = nullptr) override;

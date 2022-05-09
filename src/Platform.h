@@ -112,7 +112,7 @@ public:
 
     /// @brief Creates the platform. Called by the tests at startup.
     /// For any custom behaviour in your derived Platform override tests_initPlatform_impl()
-    static void tests_initPlatform(int argc, char *argv[], KDDockWidgets::FrontendType);
+    static void tests_initPlatform(int &argc, char *argv[], KDDockWidgets::FrontendType);
 
     /// @brief Deletes the platform. Called at end of tests.
     /// For any custom behaviour in your derived Platform override tests_deinitPlatform_impl()
