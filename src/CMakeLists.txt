@@ -239,6 +239,7 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/views/View_qtquick.h
   qtquick/views/ViewWrapper_qtquick.cpp
   qtquick/views/ViewWrapper_qtquick.h
+  kddockwidgets_qtquick.qrc
 )
 
 if(${PROJECT_NAME}_QTQUICK)
