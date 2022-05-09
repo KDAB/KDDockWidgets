@@ -9,8 +9,9 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "KDDockWidgets_DEVELOPER_MODE": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS" : "ON",
-                "KDDockWidgets_FUZZER" : "OFF"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "KDDockWidgets_FUZZER": "OFF",
+                "KDDockWidgets_CODE_COVERAGE": "ON"
             },
             "warnings" : {
                 "uninitialized" : true
