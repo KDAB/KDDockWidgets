@@ -814,5 +814,31 @@ void View_qtquick::onWindowStateChangeEvent(QWindowStateChangeEvent *)
     }
 }
 
+QQuickItem *View_qtquick::createQQuickItem(const QString &filename, QQuickItem *parent) const
+{
+    auto p = parent;
+    QQmlEngine *engine = nullptr;
+    while (p && !engine) {
+        engine = qmlEngine(p);
+        p = p->parentItem();
+    }
+
+    if (!engine) {
+        qWarning() << Q_FUNC_INFO << "No engine found";
+        return nullptr;
+    }
+
+    QQmlComponent component(engine, filename);
+    auto qquickitem = qobject_cast<QQuickItem *>(component.create());
+    if (!qquickitem) {
+        qWarning() << Q_FUNC_INFO << component.errorString();
+        return nullptr;
+    }
+
+    qquickitem->setParentItem(parent);
+    qquickitem->QObject::setParent(parent);
+
+    return qquickitem;
+}
 
 #include "View_qtquick.moc"

@@ -183,6 +183,7 @@ protected:
     void itemChange(QQuickItem::ItemChange, const QQuickItem::ItemChangeData &) override;
     bool eventFilter(QObject *watched, QEvent *ev) override;
     bool event(QEvent *) override;
+    QQuickItem *createQQuickItem(const QString &filename, QQuickItem *parent) const;
 
 private:
     Q_DISABLE_COPY(View_qtquick)
