@@ -828,6 +828,11 @@ QQuickItem *View_qtquick::createQQuickItem(const QString &filename, QQuickItem *
         return nullptr;
     }
 
+    if (!QFile::exists(filename)) {
+        qWarning() << Q_FUNC_INFO << "File not found" << filename;
+        return nullptr;
+    }
+
     QQmlComponent component(engine, filename);
     auto qquickitem = qobject_cast<QQuickItem *>(component.create());
     if (!qquickitem) {
