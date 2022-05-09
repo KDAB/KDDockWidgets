@@ -1797,13 +1797,18 @@ void TestMultiSplitter::tst_adjacentLayoutBorders()
 
 int main(int argc, char **argv)
 {
-    KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
-    TestMultiSplitter test;
+    for (FrontendType type : Platform::frontendTypes()) {
+        qDebug() << "\nTesting platform" << type << ":\n";
+        KDDockWidgets::Platform::tests_initPlatform(argc, argv, type);
+        TestMultiSplitter test;
 
-    const int exitCode = QTest::qExec(&test, argc, argv);
-    KDDockWidgets::Platform::tests_deinitPlatform();
+        const int exitCode = QTest::qExec(&test, argc, argv);
+        KDDockWidgets::Platform::tests_deinitPlatform();
+        if (exitCode != 0)
+            return exitCode;
+    }
 
-    return exitCode;
+    return 0;
 }
 
 #include "tst_multisplitter.moc"
