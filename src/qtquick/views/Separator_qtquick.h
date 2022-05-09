@@ -27,6 +27,7 @@ class DOCKS_EXPORT Separator_qtquick : public View_qtquick
 public:
     explicit Separator_qtquick(Controllers::Separator *controller, QQuickItem *parent = nullptr);
     bool isVertical() const;
+    void init() override;
 
 protected:
     // TODOv2

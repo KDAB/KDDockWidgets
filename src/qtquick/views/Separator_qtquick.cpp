@@ -24,6 +24,10 @@ Separator_qtquick::Separator_qtquick(Controllers::Separator *controller, QQuickI
     : View_qtquick(controller, Type::Separator, parent)
     , m_controller(controller)
 {
+}
+
+void Separator_qtquick::init()
+{
     createQQuickItem(QStringLiteral(":/kddockwidgets/qtquick/views/qml/Separator.qml"), this);
 
     // Only set on Separator::init(), so single-shot

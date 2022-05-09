@@ -66,6 +66,7 @@ Separator::Separator(View *host)
     : Controller(Type::Separator, Layouting::Config::self().createSeparator(this, host))
     , d(new Private())
 {
+    Q_ASSERT(view());
     view()->show();
 }
 
@@ -83,6 +84,7 @@ void Separator::init(Layouting::ItemBoxContainer *parentContainer, Qt::Orientati
 
     d->parentContainer = parentContainer;
     d->orientation = orientation;
+    view()->init();
     // d->lazyResizeRubberBand = d->usesLazyResize ? createRubberBand(rubberBandIsTopLevel() ? nullptr : d->m_hostWidget)
     //                                             : nullptr;
     view()->setVisible(true);
