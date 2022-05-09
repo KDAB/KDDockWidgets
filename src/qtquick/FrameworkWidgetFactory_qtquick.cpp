@@ -27,7 +27,7 @@
 // #include "qtquick/views/DropArea_qtquick.h"
 #include "qtquick/views/Frame_qtquick.h"
 #include "qtquick/views/View_qtquick.h"
-// #include "qtquick/views/Separator_qtquick.h"
+#include "qtquick/views/Separator_qtquick.h"
 #include "qtquick/views/TitleBar_qtquick.h"
 #include "qtquick/views/TabBar_qtquick.h"
 // #include "qtquick/views/SideBar_qtquick.h"
@@ -90,10 +90,9 @@ View *DefaultWidgetFactory_qtquick::createTabWidget(Controllers::Stack *, Contro
     // return new Views::Stack_qtquick(controller, parent);
 }
 
-View *DefaultWidgetFactory_qtquick::createSeparator(Controllers::Separator *, View *) const
+View *DefaultWidgetFactory_qtquick::createSeparator(Controllers::Separator *controller, View *parent) const
 {
-    return {};
-    // return new Views::Separator_qtquick(controller, parent ? static_cast<Views::View_qtwidgets<QWidget> *>(parent) : nullptr);
+    return new Views::Separator_qtquick(controller, parent ? static_cast<Views::View_qtquick *>(parent) : nullptr);
 }
 
 View *DefaultWidgetFactory_qtquick::createFloatingWindow(Controllers::FloatingWindow *,
