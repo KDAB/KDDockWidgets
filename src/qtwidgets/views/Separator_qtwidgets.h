@@ -13,7 +13,6 @@
 
 #include "View_qtwidgets.h"
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
-#include <qwidget.h>
 
 
 namespace KDDockWidgets::Controllers {

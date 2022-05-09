@@ -9,64 +9,72 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "Separator_quick.h"
-#include "Widget_quick.h"
-#include "Logging_p.h"
-#include "Item_p.h"
-#include "Rubberband_quick.h"
+#include "Separator_qtquick.h"
+#include "controllers/Separator.h"
+#include "private/Logging_p.h"
+#include "private/multisplitter/Item_p.h"
+// #include "Rubberband_quick.h"
 
 #include <QTimer>
 
-using namespace Layouting;
+using namespace KDDockWidgets;
+using namespace KDDockWidgets::Views;
 
-SeparatorQuick::SeparatorQuick(Layouting::Widget *parent)
-    : QQuickItem(qobject_cast<QQuickItem *>(parent->asQObject()))
-    , Separator(parent)
-    , Layouting::Widget_quick(this)
+Separator_qtquick::Separator_qtquick(Controllers::Separator *controller, QQuickItem *parent)
+    : View_qtquick(controller, Type::Separator, parent)
+    , m_controller(controller)
 {
     createQQuickItem(QStringLiteral(":/kddockwidgets/multisplitter/private/multisplitter/qml/Separator.qml"), this);
 
     // Only set on Separator::init(), so single-shot
-    QTimer::singleShot(0, this, &SeparatorQuick::isVerticalChanged);
+    QTimer::singleShot(0, this, &Separator_qtquick::isVerticalChanged);
 }
 
-bool SeparatorQuick::isVertical() const
+bool Separator_qtquick::isVertical() const
 {
-    return Separator::isVertical();
+    return m_controller->isVertical();
 }
 
-Layouting::Widget *SeparatorQuick::createRubberBand(Layouting::Widget *parent)
-{
-    if (!parent) {
-        qWarning() << Q_FUNC_INFO << "Parent is required";
-        return nullptr;
-    }
+// TODOv2
+// Layouting::Widget *Separator_qtquick::createRubberBand(Layouting::Widget *parent)
+// {
+//     if (!parent) {
+//         qWarning() << Q_FUNC_INFO << "Parent is required";
+//         return nullptr;
+//     }
 
-    return new Layouting::Widget_quick(new Layouting::RubberBand(parent));
+//     return new Layouting::Widget_quick(new Layouting::RubberBand(parent));
+// }
+
+void Separator_qtquick::onMousePressed()
+{
+    if (freed())
+        return;
+
+    m_controller->onMousePress();
 }
 
-Widget *SeparatorQuick::asWidget()
+void Separator_qtquick::onMouseMoved(QPointF localPos)
 {
-    return this;
-}
+    if (freed())
+        return;
 
-void SeparatorQuick::onMousePressed()
-{
-    Separator::onMousePress();
-}
-
-void SeparatorQuick::onMouseMoved(QPointF localPos)
-{
     const QPointF pos = QQuickItem::mapToItem(parentItem(), localPos);
-    Separator::onMouseMove(pos.toPoint());
+    m_controller->onMouseMove(pos.toPoint());
 }
 
-void SeparatorQuick::onMouseReleased()
+void Separator_qtquick::onMouseReleased()
 {
-    Separator::onMouseReleased();
+    if (freed())
+        return;
+
+    m_controller->onMouseReleased();
 }
 
-void SeparatorQuick::onMouseDoubleClicked()
+void Separator_qtquick::onMouseDoubleClicked()
 {
-    Separator::onMouseDoubleClick();
+    if (freed())
+        return;
+
+    m_controller->onMouseDoubleClick();
 }
