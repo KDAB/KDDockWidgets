@@ -7,13 +7,11 @@
         <file>qtquick/views/qml/MainWindowMDI.qml</file>
         <file>qtquick/views/qml/ResizeHandlerHelper.qml</file>
         <file>qtquick/views/qml/RubberBand.qml</file>
+        <file>qtquick/views/qml/Separator.qml</file>
         <file>qtquick/views/qml/TitleBarBase.qml</file>
         <file>qtquick/views/qml/TitleBar.qml</file>
         <file>qtquick/views/qml/TitleBarButton.qml</file>
         <file>qtquick/views/qml/ClassicIndicatorsOverlay.qml</file>
         <file>qtquick/views/qml/ClassicIndicator.qml</file>
-    </qresource>
-    <qresource prefix="/kddockwidgets/multisplitter/">
-        <file>private/multisplitter/qml/Separator.qml</file>
     </qresource>
 </RCC>

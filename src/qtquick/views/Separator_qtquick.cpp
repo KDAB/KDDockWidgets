@@ -24,7 +24,7 @@ Separator_qtquick::Separator_qtquick(Controllers::Separator *controller, QQuickI
     : View_qtquick(controller, Type::Separator, parent)
     , m_controller(controller)
 {
-    createQQuickItem(QStringLiteral(":/kddockwidgets/multisplitter/private/multisplitter/qml/Separator.qml"), this);
+    createQQuickItem(QStringLiteral(":/kddockwidgets/qtquick/views/qml/Separator.qml"), this);
 
     // Only set on Separator::init(), so single-shot
     QTimer::singleShot(0, this, &Separator_qtquick::isVerticalChanged);
