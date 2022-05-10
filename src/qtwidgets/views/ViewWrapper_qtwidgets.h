@@ -62,6 +62,7 @@ public:
     bool testAttribute(Qt::WidgetAttribute) const override;
     void setCursor(Qt::CursorShape) override;
     QSize minSize() const override;
+    Qt::FocusPolicy focusPolicy() const override;
 
     QWidget *widget() const;
 

@@ -336,6 +336,11 @@ public:
         return QWidget::isMaximized();
     }
 
+    Qt::FocusPolicy focusPolicy() const override
+    {
+        return QWidget::focusPolicy();
+    }
+
     std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const override
     {
         if (QWidget *child = QWidget::childAt(localPos))

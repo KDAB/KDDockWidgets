@@ -201,6 +201,16 @@ void ViewWrapper_qtquick::releaseMouse()
     m_item->ungrabMouse();
 }
 
+Qt::FocusPolicy ViewWrapper_qtquick::focusPolicy() const
+{
+    if (auto view = unwrap()) {
+        return view->focusPolicy();
+    } else {
+        qFatal("not implemented");
+        return {};
+    }
+}
+
 void ViewWrapper_qtquick::setFocus(Qt::FocusReason)
 {
 }

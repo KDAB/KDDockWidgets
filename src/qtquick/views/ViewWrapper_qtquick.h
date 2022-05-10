@@ -61,6 +61,7 @@ public:
     void setCursor(Qt::CursorShape) override;
     QSize minSize() const override;
     bool close() override;
+    Qt::FocusPolicy focusPolicy() const override;
 
     const View *unwrap() const;
     View *unwrap();

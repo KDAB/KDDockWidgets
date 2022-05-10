@@ -352,3 +352,8 @@ bool ViewWrapper_qtwidgets::close()
 {
     return m_widget->close();
 }
+
+Qt::FocusPolicy ViewWrapper_qtwidgets::focusPolicy() const
+{
+    return m_widget->focusPolicy();
+}

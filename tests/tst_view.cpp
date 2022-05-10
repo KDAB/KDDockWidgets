@@ -184,3 +184,9 @@ TEST_CASE("View::closeRequested")
     rootView->close();
     CHECK(signalArrived);
 }
+
+TEST_CASE("View::focusPolicy")
+{
+    auto rootView = Platform::instance()->tests_createView({});
+    CHECK_EQ(rootView->focusPolicy(), Qt::NoFocus);
+}

@@ -78,3 +78,9 @@ TEST_CASE("ViewWrapper::objectName")
     rootView->setObjectName(newName);
     CHECK_EQ(rootView->objectName(), newName);
 }
+
+TEST_CASE("View::focusPolicy")
+{
+    auto rootView = Platform::instance()->tests_createView({});
+    CHECK_EQ(rootView->asWrapper()->focusPolicy(), Qt::NoFocus);
+}
