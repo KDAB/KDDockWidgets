@@ -57,7 +57,7 @@ DockWidget_qtwidgets::~DockWidget_qtwidgets()
 
 void DockWidget_qtwidgets::init()
 {
-    connect(d->m_controller, &DockWidgetBase::widgetChanged, this, [this](QWidget *w) {
+    connect(d->m_controller, &Controllers::DockWidget::widgetChanged, this, [this](QWidget *w) {
         d->layout->addWidget(w);
     });
 }

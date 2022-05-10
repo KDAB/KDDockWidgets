@@ -231,8 +231,8 @@ public:
      * #include <kddockwidgets/Config.h>
      * (...)
      *
-     * auto func = [] (const KDDockWidgets::DockWidgetBase::List &source,
-     *                 const KDDockWidgets::DockWidgetBase::List &target)
+     * auto func = [] (const KDDockWidgets::Controllers::DockWidget::List &source,
+     *                 const KDDockWidgets::Controllers::DockWidget::List &target)
      * {
      *    // disallows dockFoo to be tabbed with dockBar.
      *    return !(source.contains(dockFoo) && target.contains(dockBar));
@@ -260,8 +260,8 @@ public:
      * (...)
      *
      * auto func = [] (KDDockWidgets::DropLocation loc,
-     *                 const KDDockWidgets::DockWidgetBase::List &source,
-     *                 const KDDockWidgets::DockWidgetBase::List &target)
+     *                 const KDDockWidgets::Controllers::DockWidget::List &source,
+     *                 const KDDockWidgets::Controllers::DockWidget::List &target)
      * {
      *    // disallows dockFoo to be docked to outter areas
      *    return !((loc & KDDockWidgets::DropLocation_Outter) && source.contains(dockFoo));

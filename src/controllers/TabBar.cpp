@@ -73,7 +73,7 @@ bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
     return false;
 }
 
-DockWidgetBase *Controllers::TabBar::dockWidgetAt(int index) const
+Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(int index) const
 {
     if (index < 0 || index >= numDockWidgets())
         return nullptr;
@@ -81,7 +81,7 @@ DockWidgetBase *Controllers::TabBar::dockWidgetAt(int index) const
     return m_tabWidget->dockwidgetAt(index);
 }
 
-DockWidgetBase *Controllers::TabBar::dockWidgetAt(QPoint localPos) const
+Controllers::DockWidget *Controllers::TabBar::dockWidgetAt(QPoint localPos) const
 {
     return dockWidgetAt(dynamic_cast<Views::TabBar *>(view())->tabAt(localPos));
 }
@@ -158,7 +158,7 @@ int Controllers::TabBar::numDockWidgets() const
 }
 
 
-DockWidgetBase *Controllers::TabBar::singleDockWidget() const
+Controllers::DockWidget *Controllers::TabBar::singleDockWidget() const
 {
     return m_tabWidget->singleDockWidget();
 }

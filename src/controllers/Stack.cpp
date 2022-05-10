@@ -57,7 +57,7 @@ bool Stack::isPositionDraggable(QPoint p) const
     return dynamic_cast<Views::Stack *>(view())->isPositionDraggable(p);
 }
 
-DockWidgetBase *Stack::currentDockWidget() const
+Controllers::DockWidget *Stack::currentDockWidget() const
 {
     return dockwidgetAt(currentIndex());
 }
@@ -146,7 +146,7 @@ bool Stack::isWindow() const
     return false;
 }
 
-DockWidgetBase *Stack::singleDockWidget() const
+Controllers::DockWidget *Stack::singleDockWidget() const
 {
     if (m_frame->hasSingleDockWidget())
         return m_frame->dockWidgets().first();
@@ -231,7 +231,7 @@ void Stack::changeTabIcon(int index, const QIcon &icon)
     dynamic_cast<Views::Stack *>(view())->changeTabIcon(index, icon);
 }
 
-DockWidgetBase *Stack::dockwidgetAt(int index) const
+Controllers::DockWidget *Stack::dockwidgetAt(int index) const
 {
     return dynamic_cast<Views::Stack *>(view())->dockwidgetAt(index);
 }

@@ -13,7 +13,6 @@
 #include "MyMainWindow.h"
 // #include "MyFrameworkWidgetFactory.h"
 
-#include <algorithm>
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/FrameworkWidgetFactory.h>
 
@@ -21,6 +20,8 @@
 #include <QApplication>
 #include <QDebug>
 #include <QCommandLineParser>
+
+#include <algorithm>
 
 // clazy:excludeall=qstring-allocations
 
@@ -264,11 +265,11 @@ int main(int argc, char **argv)
         // Here we exemplify adding a restriction to "Dock Widget 8"
         // Dock widget 8 will only be allowed to dock to the outter areasa
         auto func = [](KDDockWidgets::DropLocation location,
-                       const KDDockWidgets::DockWidgetBase::List &source,
-                       const KDDockWidgets::DockWidgetBase::List &target) {
+                       const KDDockWidgets::Controllers::DockWidget::List &source,
+                       const KDDockWidgets::Controllers::DockWidget::List &target) {
             Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already tabbed dock widgets
 
-            const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [](KDDockWidgets::DockWidgetBase *dw) {
+            const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [](KDDockWidgets::Controllers::DockWidget *dw) {
                                            return dw->uniqueName() == QLatin1String("DockWidget #8");
                                        })
                 != source.cend();
@@ -324,7 +325,7 @@ int main(int argc, char **argv)
         mainWindow2->resize(1200, 1200);
         mainWindow2->show();
     } else if (usesDockableMainWindows) {
-        auto mainWindowDockWidget = new DockWidgetBase(QStringLiteral("MyMainWindow-2-DW"));
+        auto mainWindowDockWidget = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyMainWindow-2-DW"));
 
         const QString affinity = QStringLiteral("Inner-DockWidgets-2");
         auto dockableMainWindow = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,

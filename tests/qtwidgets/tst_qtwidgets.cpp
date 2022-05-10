@@ -396,7 +396,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     // Test floating:
     frame2 = mdiWidget2->d->frame();
-    QPointer<DockWidgetBase> dwWrapper2 = frame2->mdiDockWidgetWrapper();
+    QPointer<Controllers::DockWidget> dwWrapper2 = frame2->mdiDockWidgetWrapper();
     dropArea2 = frame2->mdiDropAreaWrapper();
     QVERIFY(mdiWidget2->isVisible());
     QVERIFY(frame2->isMDIWrapper());
@@ -682,7 +682,7 @@ void TestQtWidgets::tst_deleteOnCloseWhenOnSideBar()
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    QPointer<DockWidgetBase> dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)), DockWidgetBase::Option_DeleteOnClose);
+    QPointer<Controllers::DockWidget> dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)), Controllers::DockWidget::Option_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
 
     dock1->moveToSideBar();
@@ -1340,7 +1340,7 @@ void TestQtWidgets::tst_complex()
     m->view()->resize(QSize(3266, 2239));
     m->show(); // TODO: Remove and see if it crashes
 
-    DockWidgetBase::List docks;
+    Controllers::DockWidget::List docks;
 
     QVector<KDDockWidgets::Location> locations = { Location_OnLeft, Location_OnLeft, Location_OnLeft,
                                                    Location_OnRight, Location_OnRight, Location_OnRight, Location_OnRight,

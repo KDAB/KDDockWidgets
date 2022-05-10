@@ -523,7 +523,7 @@ void MainWindow::moveToSideBar(Controllers::DockWidget *dw, SideBarLocation loca
     }
 }
 
-void MainWindow::restoreFromSideBar(DockWidgetBase *dw)
+void MainWindow::restoreFromSideBar(Controllers::DockWidget *dw)
 {
     // First un-overlay it, if it's overlayed
     if (dw == d->m_overlayedDockWidget)
@@ -540,7 +540,7 @@ void MainWindow::restoreFromSideBar(DockWidgetBase *dw)
     dw->setFloating(false); // dock it
 }
 
-void MainWindow::overlayOnSideBar(DockWidgetBase *dw)
+void MainWindow::overlayOnSideBar(Controllers::DockWidget *dw)
 {
     if (!dw || dw->isPersistentCentralDockWidget())
         return;
@@ -571,7 +571,7 @@ void MainWindow::overlayOnSideBar(DockWidgetBase *dw)
     Q_EMIT dw->isOverlayedChanged(true);
 }
 
-void MainWindow::toggleOverlayOnSideBar(DockWidgetBase *dw)
+void MainWindow::toggleOverlayOnSideBar(Controllers::DockWidget *dw)
 {
     const bool wasOverlayed = d->m_overlayedDockWidget == dw;
     clearSideBarOverlay(); // Because only 1 dock widget can be overlayed each time
@@ -611,13 +611,13 @@ void MainWindow::clearSideBarOverlay(bool deleteFrame)
     }
 }
 
-Controllers::SideBar *MainWindow::sideBarForDockWidget(const DockWidgetBase *dw) const
+Controllers::SideBar *MainWindow::sideBarForDockWidget(const Controllers::DockWidget *dw) const
 {
     for (auto loc : { SideBarLocation::North, SideBarLocation::South,
                       SideBarLocation::East, SideBarLocation::West }) {
 
         if (Controllers::SideBar *sb = sideBar(loc)) {
-            if (sb->containsDockWidget(const_cast<DockWidgetBase *>(dw)))
+            if (sb->containsDockWidget(const_cast<Controllers::DockWidget *>(dw)))
                 return sb;
         }
     }
@@ -625,7 +625,7 @@ Controllers::SideBar *MainWindow::sideBarForDockWidget(const DockWidgetBase *dw)
     return nullptr;
 }
 
-DockWidgetBase *MainWindow::overlayedDockWidget() const
+Controllers::DockWidget *MainWindow::overlayedDockWidget() const
 {
     return d->m_overlayedDockWidget;
 }
@@ -660,7 +660,7 @@ bool MainWindow::closeDockWidgets(bool force)
     bool allClosed = true;
 
     const auto dockWidgets = d->m_layoutWidget->dockWidgets();
-    for (DockWidgetBase *dw : dockWidgets) {
+    for (Controllers::DockWidget *dw : dockWidgets) {
         Controllers::Frame *frame = dw->d->frame();
 
         if (force) {
@@ -732,7 +732,7 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
         const QStringList dockWidgets = mw.dockWidgetsPerSideBar.value(loc);
         for (const QString &uniqueName : dockWidgets) {
 
-            DockWidgetBase *dw = DockRegistry::self()->dockByName(uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
+            Controllers::DockWidget *dw = DockRegistry::self()->dockByName(uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
             if (!dw) {
                 qWarning() << Q_FUNC_INFO << "Could not find dock widget" << uniqueName
                            << ". Won't restore it to sidebar";

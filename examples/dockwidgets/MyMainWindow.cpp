@@ -163,12 +163,12 @@ void MyMainWindow::createDockWidgets()
     floatingWindow->move(100, 100);
 }
 
-KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
+KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
 {
     static int count = 0;
 
     // Passing options is optional, we just want to illustrate Option_NotClosable here
-    KDDockWidgets::Controllers::DockWidget::Options options = KDDockWidgets::DockWidgetBase::Option_None;
+    KDDockWidgets::Controllers::DockWidget::Options options = KDDockWidgets::Controllers::DockWidget::Option_None;
     KDDockWidgets::Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = KDDockWidgets::Controllers::DockWidget::LayoutSaverOption::None;
 
     if (count == 0 && m_dockWidget0IsNonClosable)

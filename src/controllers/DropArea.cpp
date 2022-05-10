@@ -134,8 +134,8 @@ Layouting::Item *DropArea::centralFrame() const
     return nullptr;
 }
 
-void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
-                             DockWidgetBase *relativeTo, InitialOption option)
+void DropArea::addDockWidget(Controllers::DockWidget *dw, Location location,
+                             Controllers::DockWidget *relativeTo, InitialOption option)
 {
     if (!dw || dw == relativeTo || location == Location_None) {
         qWarning() << Q_FUNC_INFO << "Invalid parameters" << dw << relativeTo << location;
@@ -187,7 +187,7 @@ void DropArea::addDockWidget(DockWidgetBase *dw, Location location,
     }
 }
 
-bool DropArea::containsDockWidget(DockWidgetBase *dw) const
+bool DropArea::containsDockWidget(Controllers::DockWidget *dw) const
 {
     return dw->d->frame() && LayoutWidget::containsFrame(dw->d->frame());
 }
@@ -214,7 +214,7 @@ QStringList DropArea::affinities() const
     return {};
 }
 
-void DropArea::layoutParentContainerEqually(DockWidgetBase *dw)
+void DropArea::layoutParentContainerEqually(Controllers::DockWidget *dw)
 {
     Layouting::Item *item = itemForFrame(dw->d->frame());
     if (!item) {
@@ -304,9 +304,9 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Frame *accep
 
     bool result = true;
     const bool needToFocusNewlyDroppedWidgets = Config::self().flags() & Config::Flag_TitleBarIsFocusable;
-    const DockWidgetBase::List droppedDockWidgets = needToFocusNewlyDroppedWidgets
+    const Controllers::DockWidget::List droppedDockWidgets = needToFocusNewlyDroppedWidgets
         ? droppedWindow->layoutWidget()->dockWidgets()
-        : DockWidgetBase::List(); // just so save some memory allocations for the case where this
+        : Controllers::DockWidget::List(); // just so save some memory allocations for the case where this
     // variable isn't used
 
     switch (droploc) {
@@ -414,7 +414,7 @@ bool DropArea::isMDIWrapper() const
     return m_isMDIWrapper;
 }
 
-DockWidgetBase *DropArea::mdiDockWidgetWrapper() const
+Controllers::DockWidget *DropArea::mdiDockWidgetWrapper() const
 {
     if (m_isMDIWrapper) {
         return view()->parentView()->asDockWidgetController();

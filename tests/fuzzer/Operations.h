@@ -26,7 +26,7 @@
 
 namespace KDDockWidgets {
 
-class DockWidgetBase;
+class Controllers::DockWidget;
 class MainWindowBase;
 
 namespace Testing {
@@ -38,10 +38,10 @@ Q_NAMESPACE
 enum OperationType {
     OperationType_None = 0,
     OperationType_CloseViaDockWidgetAPI, ///< Closing programmatically via DockWidget::close()
-    OperationType_HideViaDockWidgetAPI,  ///< Hiding programmatically via DockWidget::hide()
-    OperationType_ShowViaDockWidgetAPI,  ///< Hiding programmatically via DockWidget::show()
-    OperationType_AddDockWidget,         ///< MainWindow::addDockWidget()
-    OperationType_AddDockWidgetAsTab,    ///< DockWidget::addDockWidgetAsTab()
+    OperationType_HideViaDockWidgetAPI, ///< Hiding programmatically via DockWidget::hide()
+    OperationType_ShowViaDockWidgetAPI, ///< Hiding programmatically via DockWidget::show()
+    OperationType_AddDockWidget, ///< MainWindow::addDockWidget()
+    OperationType_AddDockWidgetAsTab, ///< DockWidget::addDockWidgetAsTab()
     OperationType_SaveLayout, ///< LayoutSaver::saveLayout()
     OperationType_RestoreLayout, ///< LayoutSaver::restoreLayout()
     OperationType_Count /// Keep at end
@@ -65,8 +65,14 @@ public:
     static OperationBase::Ptr fromVariantMap(Fuzzer *fuzzer, const QVariantMap &);
     static OperationBase::Ptr newOperation(Fuzzer *fuzzer, OperationType);
 
-    OperationType type() const { return m_operationType; }
-    QString description() const { return m_description; }
+    OperationType type() const
+    {
+        return m_operationType;
+    }
+    QString description() const
+    {
+        return m_description;
+    }
 
     virtual void updateDescription() = 0;
     virtual bool hasParams() const = 0;
@@ -77,8 +83,8 @@ protected:
     virtual void generateRandomParams() = 0;
     virtual QVariantMap paramsToVariantMap() const = 0;
     virtual void fillParamsFromVariantMap(const QVariantMap &) = 0;
-    DockWidgetBase* dockByName(const QString &) const;
-    MainWindowBase* mainWindowByName(const QString &) const;
+    Controllers::DockWidget *dockByName(const QString &) const;
+    MainWindowBase *mainWindowByName(const QString &) const;
     QString dockStr(const QString &name) const;
 
     const OperationType m_operationType;
@@ -148,6 +154,7 @@ protected:
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
+
 private:
     Testing::AddDockWidgetParams m_params;
 };
@@ -165,6 +172,7 @@ protected:
     void execute_impl() override;
     QVariantMap paramsToVariantMap() const override;
     void fillParamsFromVariantMap(const QVariantMap &) override;
+
 private:
     QString m_dockWidgetName;
     QString m_dockWidgetToAddName;

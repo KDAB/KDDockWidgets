@@ -111,7 +111,7 @@ void Fuzzer::runTest(const Test &test)
         for (Controllers::FloatingWindow *fw : DockRegistry::self()->floatingWindows())
             delete fw;
 
-        for (DockWidgetBase *dw : DockRegistry::self()->dockwidgets())
+        for (Controllers::DockWidget *dw : DockRegistry::self()->dockwidgets())
             delete dw;
 
         if (!DockRegistry::self()->isEmpty())
@@ -238,7 +238,7 @@ MainWindowBase *Fuzzer::getRandomMainWindow()
     return windows.first();
 }
 
-DockWidgetBase *Fuzzer::getRandomDockWidget(const DockWidgetBase::List &excluding)
+Controllers::DockWidget *Fuzzer::getRandomDockWidget(const Controllers::DockWidget::List &excluding)
 {
     auto docks = DockRegistry::self()->dockwidgets();
     for (auto dw : excluding)
@@ -251,13 +251,13 @@ DockWidgetBase *Fuzzer::getRandomDockWidget(const DockWidgetBase::List &excludin
     return docks[locationDistrib(m_randomEngine)];
 }
 
-DockWidgetBase *Fuzzer::getRandomRelativeTo(MainWindowBase *mainWindow, DockWidgetBase *excluding)
+Controllers::DockWidget *Fuzzer::getRandomRelativeTo(MainWindowBase *mainWindow, Controllers::DockWidget *excluding)
 {
     auto docks = DockRegistry::self()->dockwidgets();
 
-    DockWidgetBase::List candidates;
+    Controllers::DockWidget::List candidates;
 
-    for (DockWidgetBase *dw : docks) {
+    for (Controllers::DockWidget *dw : docks) {
         if (dw != excluding && dw->window() == mainWindow)
             candidates << dw;
     }

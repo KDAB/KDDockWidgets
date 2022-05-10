@@ -63,12 +63,12 @@ public:
 
     Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::DockWidgetInstantiator *other,
                                         KDDockWidgets::InitialVisibilityOption = {});
-    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::DockWidgetBase *other,
+    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other,
                                         KDDockWidgets::InitialVisibilityOption = {});
 
-    Q_INVOKABLE void addDockWidgetToContainingWindow(KDDockWidgets::DockWidgetBase *other,
+    Q_INVOKABLE void addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget *other,
                                                      KDDockWidgets::Location location,
-                                                     KDDockWidgets::DockWidgetBase *relativeTo = nullptr,
+                                                     KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,
                                                      QSize initialSize = {},
                                                      KDDockWidgets::InitialVisibilityOption = {});
 
@@ -99,7 +99,7 @@ Q_SIGNALS:
     void hidden();
     void iconChanged();
     void widgetChanged(KDDockWidgets::QWidgetOrQuick *);
-    void optionsChanged(KDDockWidgets::DockWidgetBase::Options);
+    void optionsChanged(KDDockWidgets::Controllers::DockWidget::Options);
     void isFocusedChanged(bool);
     void isOverlayedChanged(bool);
     void isFloatingChanged(bool);

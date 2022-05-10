@@ -155,7 +155,7 @@ QQuickItem *DockWidget_qtquick::frameVisualItem() const
 
 void DockWidget_qtquick::onGeometryUpdated()
 {
-    if (auto frame = qobject_cast<FrameQuick *>(DockWidgetBase::d->frame())) {
+    if (auto frame = qobject_cast<FrameQuick *>(Controllers::DockWidget::d->frame())) {
         frame->updateConstriants();
         frame->updateGeometry();
     }
@@ -163,5 +163,5 @@ void DockWidget_qtquick::onGeometryUpdated()
 
 Frame *DockWidget_qtquick::frame() const
 {
-    return qobject_cast<FrameQuick *>(DockWidgetBase::d->frame());
+    return qobject_cast<FrameQuick *>(Controllers::DockWidget::d->frame());
 }

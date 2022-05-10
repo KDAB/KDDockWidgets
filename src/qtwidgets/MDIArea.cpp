@@ -57,9 +57,9 @@ MDIArea::~MDIArea()
     delete d;
 }
 
-void MDIArea::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption addingOption)
+void MDIArea::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, InitialOption addingOption)
 {
-    if (dw->options() & DockWidgetBase::Option_MDINestable) {
+    if (dw->options() & Controllers::DockWidget::Option_MDINestable) {
         // We' wrap it with a drop area, so we can drag other dock widgets over this one and dock
         auto wrapperDW = new Controllers::DockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()));
         auto dropAreaWrapper = new DropArea(wrapperDW->view(), {}, /*isMDIWrapper= */ true);
@@ -72,12 +72,12 @@ void MDIArea::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption ad
     d->layoutWidget->addDockWidget(dw, localPt, addingOption);
 }
 
-void MDIArea::moveDockWidget(DockWidgetBase *dw, QPoint pos)
+void MDIArea::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
 {
     d->layoutWidget->moveDockWidget(dw, pos);
 }
 
-void MDIArea::resizeDockWidget(DockWidgetBase *dw, QSize size)
+void MDIArea::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
 {
     d->layoutWidget->resizeDockWidget(dw, size);
 }

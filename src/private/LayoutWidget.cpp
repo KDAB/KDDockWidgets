@@ -138,7 +138,7 @@ void LayoutWidget::dumpLayout() const
     m_rootItem->dumpLayout();
 }
 
-void LayoutWidget::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item, int tabIndex)
+void LayoutWidget::restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *item, int tabIndex)
 {
     if (item->isPlaceholder()) {
         auto newFrame = new Controllers::Frame(view());
@@ -160,7 +160,7 @@ void LayoutWidget::restorePlaceholder(DockWidgetBase *dw, Layouting::Item *item,
 void LayoutWidget::unrefOldPlaceholders(const Controllers::Frame::List &framesBeingAdded) const
 {
     for (Controllers::Frame *frame : framesBeingAdded) {
-        for (DockWidgetBase *dw : frame->dockWidgets()) {
+        for (Controllers::DockWidget *dw : frame->dockWidgets()) {
             dw->d->lastPosition()->removePlaceholders(this);
         }
     }
@@ -213,9 +213,9 @@ Layouting::Item *LayoutWidget::itemForFrame(const Controllers::Frame *frame) con
     return m_rootItem->itemForWidget(frame->view()); // TODO: layout could have just the controller
 }
 
-DockWidgetBase::List LayoutWidget::dockWidgets() const
+Controllers::DockWidget::List LayoutWidget::dockWidgets() const
 {
-    DockWidgetBase::List dockWidgets;
+    Controllers::DockWidget::List dockWidgets;
     const Controllers::Frame::List frames = this->frames();
     for (Controllers::Frame *frame : frames)
         dockWidgets << frame->dockWidgets();

@@ -180,12 +180,12 @@ void Frame::insertDockWidget_impl(DockWidget *dw, int index)
     dynamic_cast<Views::Frame *>(view())->insertDockWidget_impl(dw, index);
 }
 
-DockWidgetBase *Frame::dockWidgetAt_impl(int index) const
+Controllers::DockWidget *Frame::dockWidgetAt_impl(int index) const
 {
     return dynamic_cast<Views::Frame *>(view())->dockWidgetAt_impl(index);
 }
 
-DockWidgetBase *Frame::currentDockWidget_impl() const
+Controllers::DockWidget *Frame::currentDockWidget_impl() const
 {
     return dynamic_cast<Views::Frame *>(view())->currentDockWidget_impl();
 }
@@ -365,7 +365,7 @@ void Frame::insertDockWidget(DockWidget *dw, int index)
     insertDockWidget_impl(dw, index);
 }
 
-DockWidgetBase *Frame::dockWidgetAt(int index) const
+Controllers::DockWidget *Frame::dockWidgetAt(int index) const
 {
     if (m_inCtor || m_inDtor)
         return nullptr;
@@ -373,7 +373,7 @@ DockWidgetBase *Frame::dockWidgetAt(int index) const
     return dockWidgetAt_impl(index);
 }
 
-DockWidgetBase *Frame::currentDockWidget() const
+Controllers::DockWidget *Frame::currentDockWidget() const
 {
     if (m_inCtor || m_inDtor)
         return nullptr;
@@ -512,7 +512,7 @@ QIcon Frame::icon() const
     return m_titleBar->icon();
 }
 
-const DockWidgetBase::List Frame::dockWidgets() const
+const Controllers::DockWidget::List Frame::dockWidgets() const
 {
     if (m_inCtor || m_inDtor)
         return {};
@@ -916,7 +916,7 @@ Frame *Frame::mdiFrame() const
     return nullptr;
 }
 
-DockWidgetBase *Frame::mdiDockWidgetWrapper() const
+Controllers::DockWidget *Frame::mdiDockWidgetWrapper() const
 {
     if (auto dropArea = mdiDropAreaWrapper())
         return dropArea->view()->parentView()->asDockWidgetController();

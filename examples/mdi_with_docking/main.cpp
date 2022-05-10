@@ -68,9 +68,9 @@ int main(int argc, char **argv)
     mainWindow.mainWindow()->addDockWidget(dock2, KDDockWidgets::Location_OnBottom,
                                            nullptr, KDDockWidgets::InitialOption(QSize(0, 300)));
 
-    KDDockWidgets::DockWidgetBase::Options options = {};
+    KDDockWidgets::Controllers::DockWidget::Options options = {};
     if (parser.isSet(nestedDocking)) {
-        options |= KDDockWidgets::DockWidgetBase::Option_MDINestable;
+        options |= KDDockWidgets::Controllers::DockWidget::Option_MDINestable;
     }
 
     // 4. Create our MDI widgets, which will go into the MDI area

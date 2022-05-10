@@ -60,8 +60,8 @@ bool MainWindowInstantiator::isMDI() const
     return m_mainWindow && m_mainWindow->isMDI();
 }
 
-void MainWindowInstantiator::addDockWidget(DockWidgetBase *dockWidget, Location location,
-                                           DockWidgetBase *relativeTo, QSize initialSize,
+void MainWindowInstantiator::addDockWidget(Controllers::DockWidget *dockWidget, Location location,
+                                           Controllers::DockWidget *relativeTo, QSize initialSize,
                                            InitialVisibilityOption option)
 {
     if (!m_mainWindow) {
@@ -86,37 +86,37 @@ void MainWindowInstantiator::layoutEqually()
         m_mainWindow->layoutEqually();
 }
 
-void MainWindowInstantiator::layoutParentContainerEqually(DockWidgetBase *dw)
+void MainWindowInstantiator::layoutParentContainerEqually(Controllers::DockWidget *dw)
 {
     if (m_mainWindow)
         m_mainWindow->layoutParentContainerEqually(dw);
 }
 
-void MainWindowInstantiator::moveToSideBar(DockWidgetBase *dw)
+void MainWindowInstantiator::moveToSideBar(Controllers::DockWidget *dw)
 {
     if (m_mainWindow)
         m_mainWindow->moveToSideBar(dw);
 }
 
-void MainWindowInstantiator::moveToSideBar(DockWidgetBase *dw, SideBarLocation loc)
+void MainWindowInstantiator::moveToSideBar(Controllers::DockWidget *dw, SideBarLocation loc)
 {
     if (m_mainWindow)
         m_mainWindow->moveToSideBar(dw, loc);
 }
 
-void MainWindowInstantiator::restoreFromSideBar(DockWidgetBase *dw)
+void MainWindowInstantiator::restoreFromSideBar(Controllers::DockWidget *dw)
 {
     if (m_mainWindow)
         m_mainWindow->restoreFromSideBar(dw);
 }
 
-void MainWindowInstantiator::overlayOnSideBar(DockWidgetBase *dw)
+void MainWindowInstantiator::overlayOnSideBar(Controllers::DockWidget *dw)
 {
     if (m_mainWindow)
         m_mainWindow->overlayOnSideBar(dw);
 }
 
-void MainWindowInstantiator::toggleOverlayOnSideBar(DockWidgetBase *dw)
+void MainWindowInstantiator::toggleOverlayOnSideBar(Controllers::DockWidget *dw)
 {
     if (m_mainWindow)
         m_mainWindow->toggleOverlayOnSideBar(dw);
@@ -128,7 +128,7 @@ void MainWindowInstantiator::clearSideBarOverlay(bool deleteFrame)
         m_mainWindow->clearSideBarOverlay(deleteFrame);
 }
 
-SideBar *MainWindowInstantiator::sideBarForDockWidget(const DockWidgetBase *dw) const
+SideBar *MainWindowInstantiator::sideBarForDockWidget(const Controllers::DockWidget *dw) const
 {
     return m_mainWindow ? m_mainWindow->sideBarForDockWidget(dw) : nullptr;
 }

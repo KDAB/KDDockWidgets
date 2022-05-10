@@ -70,7 +70,7 @@ public:
      * @warning Requires that the MainWindow was constructed with MainWindowOption_HasCentralFrame option.
      * @param dockwidget The dockwidget to dock.
      *
-     * @sa DockWidgetBase::addDockWidgetAsTab()
+     * @sa Controllers::DockWidget::addDockWidgetAsTab()
      */
     Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *dockwidget);
 
@@ -135,7 +135,7 @@ public:
      *
      * By default the affinity is empty and a dock widget can dock into any main window. Usually you
      * won't ever need to call this function, unless you have requirements where certain dock widgets
-     * can only dock into certain main windows. @sa DockWidgetBase::setAffinities().
+     * can only dock into certain main windows. @sa Controllers::DockWidget::setAffinities().
      *
      * Note: Call this function right after creating your main window, before docking any dock widgets
      * into a main window and before restoring any layout.

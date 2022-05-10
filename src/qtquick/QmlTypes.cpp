@@ -35,6 +35,6 @@ void KDDockWidgets::registerQmlTypes()
 
     qRegisterMetaType<Frame *>();
     qRegisterMetaType<DropArea *>();
-    qRegisterMetaType<DockWidgetBase *>();
+    qRegisterMetaType<Controllers::DockWidget *>();
     qRegisterMetaType<ClassicIndicators *>();
 }

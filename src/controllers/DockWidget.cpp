@@ -497,7 +497,7 @@ QSize DockWidget::lastOverlayedSize() const
     return d->m_lastOverlayedSize;
 }
 
-DockWidgetBase *DockWidget::byName(const QString &uniqueName)
+Controllers::DockWidget *DockWidget::byName(const QString &uniqueName)
 {
     return DockRegistry::self()->dockByName(uniqueName);
 }
@@ -599,7 +599,7 @@ DropArea *DockWidget::Private::mdiDropAreaWrapper() const
     return nullptr;
 }
 
-DockWidgetBase *DockWidget::Private::mdiDockWidgetWrapper() const
+Controllers::DockWidget *DockWidget::Private::mdiDockWidgetWrapper() const
 {
     if (isMDIWrapper()) {
         // We are the wrapper
@@ -880,7 +880,7 @@ void DockWidget::onCloseEvent(QCloseEvent *e)
         d->close();
 }
 
-DockWidgetBase *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
+Controllers::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
 {
     auto dr = DockRegistry::self();
     DockWidget *dw = dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);

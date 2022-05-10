@@ -68,14 +68,14 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     return ptr;
 }
 
-DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidgetOrQuick *w,
-                                                       DockWidgetBase::Options options,
-                                                       DockWidgetBase::LayoutSaverOptions layoutSaverOptions,
-                                                       bool show,
-                                                       const QString &affinityName)
+Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidgetOrQuick *w,
+                                                                Controllers::DockWidget::Options options,
+                                                                Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
+                                                                bool show,
+                                                                const QString &affinityName)
 {
     w->setFocusPolicy(Qt::StrongFocus);
-    auto dock = new DockWidgetBase(name, options, layoutSaverOptions);
+    auto dock = new Controllers::DockWidget(name, options, layoutSaverOptions);
     dock->setAffinityName(affinityName);
     dock->setWidget(w);
     dock->setObjectName(name);
@@ -95,7 +95,7 @@ DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QWid
     }
 };
 
-DockWidgetBase *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor color)
+Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor color)
 {
     return createDockWidget(name, new MyWidget(name, color));
 };
@@ -135,7 +135,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     int i = 0;
     for (DockDescriptor &desc : docks) {
         desc.createdDock = createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), createGuestWidget(i), {}, {}, false);
-        DockWidgetBase *relativeTo = nullptr;
+        Controllers::DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docks.at(desc.relativeToIndex).createdDock;
 
@@ -276,7 +276,7 @@ void KDDockWidgets::Tests::moveMouseTo(QPoint globalDest, View *receiver)
     }
 }
 
-void KDDockWidgets::Tests::nestDockWidget(DockWidgetBase *dock, DropArea *dropArea, Controllers::Frame *relativeTo, Location location)
+void KDDockWidgets::Tests::nestDockWidget(Controllers::DockWidget *dock, DropArea *dropArea, Controllers::Frame *relativeTo, Location location)
 {
     auto frame = new Controllers::Frame();
     frame->addWidget(dock);

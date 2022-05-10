@@ -41,8 +41,8 @@ Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
     connect(m_controller->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
-    connect(m_controller->tabWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)), /// clazy:exclude=old-style-connect
-            this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::DockWidgetBase *)));
+    connect(m_controller->tabWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *)), /// clazy:exclude=old-style-connect
+            this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *)));
 
     connect(this, &View_qtquick::geometryUpdated, this, [this] {
         layoutInvalidated.emit();
@@ -75,7 +75,7 @@ Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
 Frame_qtquick::~Frame_qtquick()
 {
     {
-        const DockWidgetBase::List docks = m_controller->dockWidgets();
+        const Controllers::DockWidget::List docks = m_controller->dockWidgets();
 
         // The QML item must be deleted with deleteLater(), has we might be currently with its mouse
         // handler in the stack. QML doesn't support it being deleted in that case.

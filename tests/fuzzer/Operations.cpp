@@ -36,7 +36,6 @@ OperationBase::OperationBase(KDDockWidgets::Testing::Operations::OperationType t
     : m_operationType(type)
     , m_fuzzer(fuzzer)
 {
-
 }
 
 OperationBase::~OperationBase()
@@ -141,7 +140,7 @@ QString OperationBase::toString()
     return QStringLiteral("type=%1;description=%2").arg(operationTypeStr(m_operationType), m_description);
 }
 
-DockWidgetBase *OperationBase::dockByName(const QString &name) const
+Controllers::DockWidget *OperationBase::dockByName(const QString &name) const
 {
     return DockRegistry::self()->dockByName(name);
 }
@@ -169,7 +168,7 @@ CloseViaDockWidgetAPI::CloseViaDockWidgetAPI(Fuzzer *fuzzer)
 
 void CloseViaDockWidgetAPI::generateRandomParams()
 {
-    if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget())
+    if (Controllers::DockWidget *dw = m_fuzzer->getRandomDockWidget())
         if (dw->isVisible())
             m_dockWidgetName = dw->uniqueName();
 }
@@ -186,7 +185,7 @@ void CloseViaDockWidgetAPI::updateDescription()
 
 void CloseViaDockWidgetAPI::execute_impl()
 {
-    DockWidgetBase *dw = dockByName(m_dockWidgetName);
+    Controllers::DockWidget *dw = dockByName(m_dockWidgetName);
     auto fw = dw->floatingWindow();
     dw->close();
     if (fw && fw->beingDeleted())
@@ -213,7 +212,7 @@ HideViaDockWidgetAPI::HideViaDockWidgetAPI(Fuzzer *fuzzer)
 
 void HideViaDockWidgetAPI::generateRandomParams()
 {
-    if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget())
+    if (Controllers::DockWidget *dw = m_fuzzer->getRandomDockWidget())
         if (dw->isVisible())
             m_dockWidgetName = dw->uniqueName();
 }
@@ -230,7 +229,7 @@ void HideViaDockWidgetAPI::updateDescription()
 
 void HideViaDockWidgetAPI::execute_impl()
 {
-    DockWidgetBase *dw = dockByName(m_dockWidgetName);
+    Controllers::DockWidget *dw = dockByName(m_dockWidgetName);
     if (!dw) {
         qDebug() << Q_FUNC_INFO << "not found" << m_dockWidgetName;
         Q_ASSERT(false);
@@ -262,7 +261,7 @@ ShowViaDockWidgetAPI::ShowViaDockWidgetAPI(Fuzzer *fuzzer)
 
 void ShowViaDockWidgetAPI::generateRandomParams()
 {
-    if (DockWidgetBase *dw = m_fuzzer->getRandomDockWidget())
+    if (Controllers::DockWidget *dw = m_fuzzer->getRandomDockWidget())
         if (!dw->isVisible())
             m_dockWidgetName = dw->uniqueName();
 }
@@ -279,7 +278,7 @@ void ShowViaDockWidgetAPI::updateDescription()
 
 void ShowViaDockWidgetAPI::execute_impl()
 {
-    DockWidgetBase *dw = dockByName(m_dockWidgetName);
+    Controllers::DockWidget *dw = dockByName(m_dockWidgetName);
     dw->show();
 }
 
@@ -323,7 +322,7 @@ void AddDockWidget::execute_impl()
 {
     auto fw = m_params.dockWidget()->floatingWindow();
     m_params.mainWindow()->addDockWidget(m_params.dockWidget(), m_params.location,
-                                          m_params.relativeTo(), m_params.addingOption);
+                                         m_params.relativeTo(), m_params.addingOption);
     if (fw && fw->beingDeleted())
         Testing::waitForDeleted(fw);
 }
@@ -331,7 +330,7 @@ void AddDockWidget::execute_impl()
 QVariantMap AddDockWidget::paramsToVariantMap() const
 {
     return m_params.isNull() ? QVariantMap()
-                             :  m_params.toVariantMap();
+                             : m_params.toVariantMap();
 }
 
 void AddDockWidget::fillParamsFromVariantMap(const QVariantMap &map)
@@ -346,11 +345,11 @@ AddDockWidgetAsTab::AddDockWidgetAsTab(Fuzzer *fuzzer)
 
 void AddDockWidgetAsTab::generateRandomParams()
 {
-    DockWidgetBase *dw = m_fuzzer->getRandomDockWidget();
+    Controllers::DockWidget *dw = m_fuzzer->getRandomDockWidget();
     if (!dw)
         return;
 
-    DockWidgetBase *dw2 = nullptr;
+    Controllers::DockWidget *dw2 = nullptr;
 
     if (auto frame = dw->d->frame()) {
         auto toExclude = frame->dockWidgets();
@@ -380,8 +379,8 @@ void AddDockWidgetAsTab::updateDescription()
 
 void AddDockWidgetAsTab::execute_impl()
 {
-    DockWidgetBase *dw = dockByName(m_dockWidgetName);
-    DockWidgetBase *dw2 = dockByName(m_dockWidgetToAddName);
+    Controllers::DockWidget *dw = dockByName(m_dockWidgetName);
+    Controllers::DockWidget *dw2 = dockByName(m_dockWidgetToAddName);
 
     auto fw = dw2->floatingWindow();
     dw->addDockWidgetAsTab(dw2);
@@ -455,7 +454,7 @@ bool RestoreLayout::hasParams() const
 
 void RestoreLayout::updateDescription()
 {
-     m_description = QStringLiteral("RestoreLayout");
+    m_description = QStringLiteral("RestoreLayout");
 }
 
 void RestoreLayout::execute_impl()

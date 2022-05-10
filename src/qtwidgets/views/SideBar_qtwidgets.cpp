@@ -44,15 +44,15 @@ void SideBar_qtwidgets::init()
     m_layout->addStretch();
 }
 
-void SideBar_qtwidgets::addDockWidget_Impl(DockWidgetBase *dw)
+void SideBar_qtwidgets::addDockWidget_Impl(Controllers::DockWidget *dw)
 {
     auto button = createButton(dw, this);
     button->setText(dw->title());
-    connect(dw, &DockWidgetBase::titleChanged, button, &SideBarButton::setText);
-    connect(dw, &DockWidgetBase::isOverlayedChanged, button, [button] {
+    connect(dw, &Controllers::DockWidget::titleChanged, button, &SideBarButton::setText);
+    connect(dw, &Controllers::DockWidget::isOverlayedChanged, button, [button] {
         button->update();
     });
-    connect(dw, &DockWidgetBase::removedFromSideBar, button, &QObject::deleteLater);
+    connect(dw, &Controllers::DockWidget::removedFromSideBar, button, &QObject::deleteLater);
     connect(dw, &QObject::destroyed, button, &QObject::deleteLater);
     connect(button, &SideBarButton::clicked, this, [this, dw] {
         m_controller->onButtonClicked(dw);
@@ -62,7 +62,7 @@ void SideBar_qtwidgets::addDockWidget_Impl(DockWidgetBase *dw)
     m_layout->insertWidget(count - 1, button);
 }
 
-void SideBar_qtwidgets::removeDockWidget_Impl(DockWidgetBase *)
+void SideBar_qtwidgets::removeDockWidget_Impl(Controllers::DockWidget *)
 {
     // Nothing is needed. Button is removed automatically.
 }
@@ -72,12 +72,12 @@ bool SideBar_qtwidgets::isVertical() const
     return m_controller->isVertical();
 }
 
-SideBarButton *SideBar_qtwidgets::createButton(DockWidgetBase *dw, SideBar_qtwidgets *parent) const
+SideBarButton *SideBar_qtwidgets::createButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent) const
 {
     return new SideBarButton(dw, parent);
 }
 
-SideBarButton::SideBarButton(DockWidgetBase *dw, SideBar_qtwidgets *parent)
+SideBarButton::SideBarButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent)
     : QToolButton(parent)
     , m_sideBar(parent)
     , m_dockWidget(dw)

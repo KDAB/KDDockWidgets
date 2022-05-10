@@ -161,7 +161,7 @@ FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometr
             Controllers::Frame *innerFrame = dropAreaMDIWrapper->frames().constFirst();
             if (innerFrame->hasSingleDockWidget()) {
                 // When pressing the unfloat button, the dock widgets gets docked to the previous
-                // position it was at. DockWidgetBase::Private::m_lastPosition stores that location,
+                // position it was at. Controllers::DockWidget::Private::m_lastPosition stores that location,
                 // however, when having nested MDI, we have an extra Dock Widget, the wrapper, and it
                 // contains the last position. So, when floating, we need to transfer that and not lose it.
                 DockWidget *dw = innerFrame->dockWidgetAt(0);

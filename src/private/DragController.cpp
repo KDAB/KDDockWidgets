@@ -283,7 +283,7 @@ void StateDragging::onEntry()
 {
     m_maybeCancelDrag.start();
 
-    if (DockWidgetBase *dw = q->m_draggable->singleDockWidget()) {
+    if (Controllers::DockWidget *dw = q->m_draggable->singleDockWidget()) {
         // When we start to drag a floating window which has a single dock widget, we save the position
         if (dw->isFloating())
             dw->d->saveLastFloatingGeometry();

@@ -318,7 +318,7 @@ void DebugWindow::dumpDockWidgetInfo()
 {
     const QVector<Controllers::FloatingWindow *> floatingWindows = DockRegistry::self()->floatingWindows();
     const MainWindow::List mainWindows = DockRegistry::self()->mainwindows();
-    const DockWidgetBase::List dockWidgets = DockRegistry::self()->dockwidgets();
+    const Controllers::DockWidget::List dockWidgets = DockRegistry::self()->dockwidgets();
 
     for (Controllers::FloatingWindow *fw : floatingWindows) {
         qDebug() << fw << "; affinities=" << fw->affinities();
@@ -330,7 +330,7 @@ void DebugWindow::dumpDockWidgetInfo()
         mw->layoutWidget()->dumpLayout();
     }
 
-    for (DockWidgetBase *dw : dockWidgets) {
+    for (Controllers::DockWidget *dw : dockWidgets) {
         qDebug() << dw << "; affinities=";
     }
 }

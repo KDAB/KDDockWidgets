@@ -90,7 +90,7 @@ void DockRegistry::onFocusedViewChanged(std::shared_ptr<ViewWrapper> view)
     setFocusedDockWidget(nullptr);
 }
 
-void DockRegistry::setFocusedDockWidget(DockWidgetBase *dw)
+void DockRegistry::setFocusedDockWidget(Controllers::DockWidget *dw)
 {
     if (m_focusedDockWidget.data() == dw)
         return;
@@ -202,7 +202,7 @@ bool DockRegistry::isProbablyObscured(Window::Ptr target, WindowBeingDragged *ex
     return isProbablyObscured(target, fw);
 }
 
-SideBarLocation DockRegistry::sideBarLocationForDockWidget(const DockWidgetBase *dw) const
+SideBarLocation DockRegistry::sideBarLocationForDockWidget(const Controllers::DockWidget *dw) const
 {
     if (Controllers::SideBar *sb = sideBarForDockWidget(dw))
         return sb->location();
@@ -210,7 +210,7 @@ SideBarLocation DockRegistry::sideBarLocationForDockWidget(const DockWidgetBase 
     return SideBarLocation::None;
 }
 
-Controllers::SideBar *DockRegistry::sideBarForDockWidget(const DockWidgetBase *dw) const
+Controllers::SideBar *DockRegistry::sideBarForDockWidget(const Controllers::DockWidget *dw) const
 {
     for (auto mw : m_mainWindows) {
         if (Controllers::SideBar *sb = mw->sideBarForDockWidget(dw))
@@ -281,7 +281,7 @@ DockRegistry *DockRegistry::self()
     return s_dockRegistry;
 }
 
-void DockRegistry::registerDockWidget(DockWidgetBase *dock)
+void DockRegistry::registerDockWidget(Controllers::DockWidget *dock)
 {
     if (dock->uniqueName().isEmpty()) {
         qWarning() << Q_FUNC_INFO << "DockWidget" << dock << " doesn't have an ID";
@@ -292,7 +292,7 @@ void DockRegistry::registerDockWidget(DockWidgetBase *dock)
     m_dockWidgets << dock;
 }
 
-void DockRegistry::unregisterDockWidget(DockWidgetBase *dock)
+void DockRegistry::unregisterDockWidget(Controllers::DockWidget *dock)
 {
     if (m_focusedDockWidget == dock)
         m_focusedDockWidget = nullptr;
@@ -349,7 +349,7 @@ void DockRegistry::unregisterFrame(Controllers::Frame *frame)
     m_frames.removeOne(frame);
 }
 
-DockWidgetBase *DockRegistry::focusedDockWidget() const
+Controllers::DockWidget *DockRegistry::focusedDockWidget() const
 {
     return m_focusedDockWidget;
 }
@@ -364,7 +364,7 @@ bool DockRegistry::containsMainWindow(const QString &uniqueName) const
     return mainWindowByName(uniqueName) != nullptr;
 }
 
-DockWidgetBase *DockRegistry::dockByName(const QString &name, DockByNameFlags flags) const
+Controllers::DockWidget *DockRegistry::dockByName(const QString &name, DockByNameFlags flags) const
 {
     for (auto dock : qAsConst(m_dockWidgets)) {
         if (dock->uniqueName() == name)
@@ -412,12 +412,12 @@ MainWindowMDI *DockRegistry::mdiMainWindowByName(const QString &name) const
     return qobject_cast<MainWindowMDI *>(mainWindowByName(name));
 }
 
-DockWidgetBase *DockRegistry::dockWidgetForGuest(QWidgetOrQuick *guest) const
+Controllers::DockWidget *DockRegistry::dockWidgetForGuest(QWidgetOrQuick *guest) const
 {
     if (!guest)
         return nullptr;
 
-    for (DockWidgetBase *dw : m_dockWidgets) {
+    for (Controllers::DockWidget *dw : m_dockWidgets) {
         if (dw->widget() == guest)
             return dw;
     }
@@ -461,14 +461,14 @@ bool DockRegistry::isSane() const
     return true;
 }
 
-const DockWidgetBase::List DockRegistry::dockwidgets() const
+const Controllers::DockWidget::List DockRegistry::dockwidgets() const
 {
     return m_dockWidgets;
 }
 
-const DockWidgetBase::List DockRegistry::dockWidgets(const QStringList &names)
+const Controllers::DockWidget::List DockRegistry::dockWidgets(const QStringList &names)
 {
-    DockWidgetBase::List result;
+    Controllers::DockWidget::List result;
     result.reserve(names.size());
 
     for (auto dw : qAsConst(m_dockWidgets)) {
@@ -492,12 +492,12 @@ const Controllers::MainWindow::List DockRegistry::mainWindows(const QStringList 
     return result;
 }
 
-const DockWidgetBase::List DockRegistry::closedDockwidgets() const
+const Controllers::DockWidget::List DockRegistry::closedDockwidgets() const
 {
-    DockWidgetBase::List result;
+    Controllers::DockWidget::List result;
     result.reserve(m_dockWidgets.size());
 
-    for (DockWidgetBase *dw : m_dockWidgets) {
+    for (Controllers::DockWidget *dw : m_dockWidgets) {
         if (dw->parent() == nullptr && !dw->isVisible())
             result.push_back(dw);
     }
@@ -635,7 +635,7 @@ void DockRegistry::clear(const QStringList &affinities)
     clear(m_dockWidgets, m_mainWindows, affinities);
 }
 
-void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
+void DockRegistry::clear(const Controllers::DockWidget::List &dockWidgets,
                          const Controllers::MainWindow::List &mainWindows,
                          const QStringList &affinities)
 {
@@ -655,7 +655,7 @@ void DockRegistry::clear(const DockWidgetBase::List &dockWidgets,
 
 void DockRegistry::ensureAllFloatingWidgetsAreMorphed()
 {
-    for (DockWidgetBase *dw : qAsConst(m_dockWidgets)) {
+    for (Controllers::DockWidget *dw : qAsConst(m_dockWidgets)) {
         if (dw->view()->rootView()->equals(dw->view()) && dw->isVisible())
             dw->d->morphIntoFloatingWindow();
     }
@@ -717,7 +717,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
     return false;
 }
 
-bool DockRegistry::onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *ev)
+bool DockRegistry::onDockWidgetPressed(Controllers::DockWidget *dw, QMouseEvent *ev)
 {
     // Here we implement "auto-hide". If there's a overlayed dock widget, we hide it if some other
     // dock widget is clicked.
@@ -730,7 +730,7 @@ bool DockRegistry::onDockWidgetPressed(DockWidgetBase *dw, QMouseEvent *ev)
     if (!mainWindow) // Only docked widgets are interesting
         return false;
 
-    if (DockWidgetBase *overlayedDockWidget = mainWindow->overlayedDockWidget()) {
+    if (Controllers::DockWidget *overlayedDockWidget = mainWindow->overlayedDockWidget()) {
         ev->ignore();
         Platform::instance()->sendEvent(overlayedDockWidget->d->frame()->view(), ev);
 

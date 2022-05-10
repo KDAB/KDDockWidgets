@@ -20,7 +20,7 @@
 namespace KDDockWidgets {
 
 class MainWindowQuick;
-class DockWidgetBase;
+class Controllers::DockWidget;
 class DockWidgetInstantiator;
 class SideBar;
 
@@ -48,9 +48,9 @@ public:
     bool isMDI() const;
 
     /// @brief See KDDockWidgets::MainWindowBase::addDockWidget()
-    Q_INVOKABLE void addDockWidget(KDDockWidgets::DockWidgetBase *dockWidget,
+    Q_INVOKABLE void addDockWidget(KDDockWidgets::Controllers::DockWidget *dockWidget,
                                    KDDockWidgets::Location location,
-                                   KDDockWidgets::DockWidgetBase *relativeTo = nullptr,
+                                   KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,
                                    QSize initialSize = {}, KDDockWidgets::InitialVisibilityOption = {});
 
     Q_INVOKABLE void addDockWidget(KDDockWidgets::DockWidgetInstantiator *dockWidget,
@@ -59,14 +59,14 @@ public:
                                    QSize initialSize = {}, KDDockWidgets::InitialVisibilityOption = {});
 
     Q_INVOKABLE void layoutEqually();
-    Q_INVOKABLE void layoutParentContainerEqually(KDDockWidgets::DockWidgetBase *dockWidget);
-    Q_INVOKABLE void moveToSideBar(KDDockWidgets::DockWidgetBase *);
-    Q_INVOKABLE void moveToSideBar(KDDockWidgets::DockWidgetBase *, KDDockWidgets::SideBarLocation);
-    Q_INVOKABLE void restoreFromSideBar(KDDockWidgets::DockWidgetBase *);
-    Q_INVOKABLE void overlayOnSideBar(KDDockWidgets::DockWidgetBase *);
-    Q_INVOKABLE void toggleOverlayOnSideBar(KDDockWidgets::DockWidgetBase *);
+    Q_INVOKABLE void layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget *dockWidget);
+    Q_INVOKABLE void moveToSideBar(KDDockWidgets::Controllers::DockWidget *);
+    Q_INVOKABLE void moveToSideBar(KDDockWidgets::Controllers::DockWidget *, KDDockWidgets::SideBarLocation);
+    Q_INVOKABLE void restoreFromSideBar(KDDockWidgets::Controllers::DockWidget *);
+    Q_INVOKABLE void overlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
+    Q_INVOKABLE void toggleOverlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
     Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
-    Q_INVOKABLE KDDockWidgets::SideBar *sideBarForDockWidget(const KDDockWidgets::DockWidgetBase *) const;
+    Q_INVOKABLE KDDockWidgets::SideBar *sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget *) const;
     Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
     Q_INVOKABLE bool closeDockWidgets(bool force = false);
 

@@ -287,7 +287,7 @@ public:
     /// @sa isMDI()
     bool hasNestedMDIDockWidgets() const;
 
-    /// @brief See DockWidgetBase::userType()
+    /// @brief See Controllers::DockWidget::userType()
     int userType() const;
 
     /// @brief Returns the resize handler. Used mostly in MDI mode.

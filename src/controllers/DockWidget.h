@@ -33,8 +33,6 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-using DockWidgetBase = KDDockWidgets::Controllers::DockWidget; // TODOv2: Remove
-
 class DragController;
 class DockRegistry;
 class LayoutSaver;
@@ -51,9 +49,9 @@ class Frame;
 class TitleBar;
 
 /**
- * @brief The DockWidget base-class. DockWidget and DockWidgetBase are only
+ * @brief The DockWidget base-class. DockWidget and Controllers::DockWidget are only
  * split in two so we can share some code with the QtQuick implementation,
- * which also derives from DockWidgetBase.
+ * which also derives from Controllers::DockWidget.
  *
  * Do not use instantiate directly in user code. Use DockWidget instead.
  */
@@ -149,7 +147,7 @@ public:
      * @brief sets the widget which this dock widget hosts.
      * @param widget the widget to show inside this dock widget. Must not be null.
      *
-     * Ownership for @p widget is transferred to DockWidgetBase.
+     * Ownership for @p widget is transferred to Controllers::DockWidget.
      * Ownsership for any previously existing widget is transferred back to the user. Meaning if you
      * call setWidget(A) followed by setWidget(B) then A will have to be deleted by you, while B is
      * owned by the dock widget.

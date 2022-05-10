@@ -30,7 +30,7 @@ MDILayoutWidget::~MDILayoutWidget()
 {
 }
 
-void MDILayoutWidget::addDockWidget(DockWidgetBase *dw, QPoint localPt, InitialOption addingOption)
+void MDILayoutWidget::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, InitialOption addingOption)
 {
     if (!dw) {
         qWarning() << Q_FUNC_INFO << "Refusing to add null dock widget";
@@ -76,7 +76,7 @@ void MDILayoutWidget::setDockWidgetGeometry(Controllers::Frame *frame, QRect geo
     item->setGeometry(geometry);
 }
 
-void MDILayoutWidget::moveDockWidget(DockWidgetBase *dw, QPoint pos)
+void MDILayoutWidget::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
 {
     moveDockWidget(dw->d->frame(), pos);
 }
@@ -97,7 +97,7 @@ void MDILayoutWidget::moveDockWidget(Controllers::Frame *frame, QPoint pos)
     item->setGeometry(geo);
 }
 
-void MDILayoutWidget::resizeDockWidget(DockWidgetBase *dw, QSize size)
+void MDILayoutWidget::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
 {
     resizeDockWidget(dw->d->frame(), size);
 }

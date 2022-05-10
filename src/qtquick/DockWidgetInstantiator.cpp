@@ -83,16 +83,16 @@ void DockWidgetInstantiator::addDockWidgetAsTab(DockWidgetInstantiator *other,
         m_dockWidget->addDockWidgetAsTab(other ? other->dockWidget() : nullptr, option);
 }
 
-void DockWidgetInstantiator::addDockWidgetAsTab(DockWidgetBase *other,
+void DockWidgetInstantiator::addDockWidgetAsTab(Controllers::DockWidget *other,
                                                 InitialVisibilityOption option)
 {
     if (m_dockWidget)
         m_dockWidget->addDockWidgetAsTab(other, option);
 }
 
-void DockWidgetInstantiator::addDockWidgetToContainingWindow(DockWidgetBase *other,
+void DockWidgetInstantiator::addDockWidgetToContainingWindow(Controllers::DockWidget *other,
                                                              Location location,
-                                                             DockWidgetBase *relativeTo,
+                                                             Controllers::DockWidget *relativeTo,
                                                              QSize initialSize,
                                                              InitialVisibilityOption option)
 {

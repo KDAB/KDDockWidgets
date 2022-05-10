@@ -130,9 +130,9 @@ bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) c
     if (!windowBeingDragged)
         return false;
 
-    const DockWidgetBase::List source = windowBeingDragged->dockWidgets();
-    const DockWidgetBase::List target = m_hoveredFrame ? m_hoveredFrame->dockWidgets()
-                                                       : DockWidgetBase::List();
+    const Controllers::DockWidget::List source = windowBeingDragged->dockWidgets();
+    const Controllers::DockWidget::List target = m_hoveredFrame ? m_hoveredFrame->dockWidgets()
+                                                                : Controllers::DockWidget::List();
 
     const bool isInner = dropLoc & DropLocation_Inner;
     const bool isOutter = dropLoc & DropLocation_Outter;
