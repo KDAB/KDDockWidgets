@@ -211,8 +211,15 @@ Qt::FocusPolicy ViewWrapper_qtquick::focusPolicy() const
     }
 }
 
-void ViewWrapper_qtquick::setFocus(Qt::FocusReason)
+void ViewWrapper_qtquick::setFocus(Qt::FocusReason reason)
 {
+    m_item->QQuickItem::setFocus(true, reason);
+    m_item->forceActiveFocus(reason);
+}
+
+bool ViewWrapper_qtquick::hasFocus() const
+{
+    return m_item->hasActiveFocus();
 }
 
 QString ViewWrapper_qtquick::objectName() const

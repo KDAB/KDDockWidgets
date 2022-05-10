@@ -341,6 +341,11 @@ public:
         return QWidget::focusPolicy();
     }
 
+    bool hasFocus() const override
+    {
+        return QWidget::hasFocus();
+    }
+
     std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const override
     {
         if (QWidget *child = QWidget::childAt(localPos))

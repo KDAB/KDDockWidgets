@@ -122,6 +122,7 @@ public:
     }
 
     virtual Qt::FocusPolicy focusPolicy() const = 0;
+    virtual bool hasFocus() const = 0;
     virtual QSize maxSizeHint() const = 0;
     virtual QSize maximumSize() const = 0;
     virtual QRect geometry() const = 0;

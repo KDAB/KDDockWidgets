@@ -190,3 +190,15 @@ TEST_CASE("View::focusPolicy")
     auto rootView = Platform::instance()->tests_createView({});
     CHECK_EQ(rootView->focusPolicy(), Qt::NoFocus);
 }
+
+TEST_CASE("View::hasFocus")
+{
+    auto rootView = Platform::instance()->tests_createView({});
+    rootView->show();
+    CHECK(rootView->isVisible());
+    CHECK(!rootView->hasFocus());
+
+    // TODOv2: Uncomment once setFocusPolicy is implemented and implement in ViewWrapper too
+    // rootView->setFocus(Qt::MouseFocusReason);
+    // CHECK(rootView->hasFocus());
+}

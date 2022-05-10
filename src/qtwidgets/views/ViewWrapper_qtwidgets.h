@@ -63,6 +63,7 @@ public:
     void setCursor(Qt::CursorShape) override;
     QSize minSize() const override;
     Qt::FocusPolicy focusPolicy() const override;
+    bool hasFocus() const override;
 
     QWidget *widget() const;
 

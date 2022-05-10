@@ -62,6 +62,7 @@ public:
     QSize minSize() const override;
     bool close() override;
     Qt::FocusPolicy focusPolicy() const override;
+    bool hasFocus() const override;
 
     const View *unwrap() const;
     View *unwrap();

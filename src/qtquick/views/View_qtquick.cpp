@@ -744,6 +744,11 @@ void View_qtquick::setFocus(Qt::FocusReason reason)
     forceActiveFocus(reason);
 }
 
+bool View_qtquick::hasFocus() const
+{
+    return QQuickItem::hasActiveFocus();
+}
+
 Qt::FocusPolicy View_qtquick::focusPolicy() const
 {
     return m_focusPolicy;

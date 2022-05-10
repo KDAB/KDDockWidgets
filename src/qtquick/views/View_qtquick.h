@@ -147,6 +147,8 @@ public:
     void releaseKeyboard() override;
     void setFocus(Qt::FocusReason reason) override;
     Qt::FocusPolicy focusPolicy() const override;
+    bool hasFocus() const override;
+
     /// TODOv2: Make these 2 virtual ?
     void setFocusPolicy(Qt::FocusPolicy policy);
     QString objectName() const override;
