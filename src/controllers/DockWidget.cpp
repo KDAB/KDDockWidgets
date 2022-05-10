@@ -421,7 +421,9 @@ void DockWidget::raise()
 
 bool DockWidget::isMainWindow() const
 {
-    return qobject_cast<Views::MainWindow_qtwidgets *>(widget());
+    if (auto guest = guestView())
+        return guest->is(Type::MainWindow);
+    return false;
 }
 
 bool DockWidget::isInMainWindow() const
@@ -885,8 +887,8 @@ Controllers::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::
     auto dr = DockRegistry::self();
     DockWidget *dw = dr->dockByName(saved->uniqueName, DockRegistry::DockByNameFlag::CreateIfNotFound);
     if (dw) {
-        if (QWidgetOrQuick *w = dw->widget())
-            w->setVisible(true);
+        if (auto guest = dw->guestView())
+            guest->setVisible(true);
         dw->setProperty("kddockwidget_was_restored", true);
 
         if (dw->affinities() != saved->affinities) {

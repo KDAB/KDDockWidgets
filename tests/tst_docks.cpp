@@ -2594,7 +2594,7 @@ void TestDocks::tst_isFocused()
 
     // 2. Raise dock1 and focus its line edit
     dock1->raise();
-    dock1->widget()->setFocus(Qt::OtherFocusReason);
+    dock1->guestView()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock1->widget(), QEvent::FocusIn);
 
     QVERIFY(dock1->isFocused());
@@ -2605,7 +2605,7 @@ void TestDocks::tst_isFocused()
     if (!dock2->window()->window()->isActive())
         Platform::instance()->tests_waitForEvent(dock2->view()->window(), QEvent::WindowActivate);
 
-    dock2->widget()->setFocus(Qt::OtherFocusReason);
+    dock2->guestView()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock2->widget(), QEvent::FocusIn);
 
     QVERIFY(!dock1->isFocused());
@@ -2627,7 +2627,7 @@ void TestDocks::tst_isFocused()
     auto dock3 = createDockWidget(QStringLiteral("dock3"), new FocusableWidget());
     auto oldFw3 = dock3->window();
     dock3->raise();
-    dock3->widget()->setFocus(Qt::OtherFocusReason);
+    dock3->guestView()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock2->widget(), QEvent::FocusIn);
     QVERIFY(!dock1->isFocused());
     QVERIFY(!dock2->isFocused());
@@ -2636,7 +2636,7 @@ void TestDocks::tst_isFocused()
     // 4. Add dock3 to the 1st window, nested, focus 2 again
     dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
     dock2->raise();
-    dock2->widget()->setFocus(Qt::OtherFocusReason);
+    dock2->guestView()->setFocus(Qt::OtherFocusReason);
     Platform::instance()->tests_waitForEvent(dock2->widget(), QEvent::FocusIn);
     QVERIFY(!dock1->isFocused());
     QVERIFY(dock2->isFocused());
@@ -4703,7 +4703,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
     dock2->addDockWidgetAsTab(dock3);
 
     Controllers::TitleBar *titleBar1 = dock1->titleBar();
-    dock1->widget()->setFocus(Qt::MouseFocusReason);
+    dock1->guestView()->setFocus(Qt::MouseFocusReason);
 
     QVERIFY(dock1->isFocused() || Platform::instance()->tests_waitForEvent(dock1->widget(), QEvent::FocusIn));
     QVERIFY(titleBar1->isFocused());
