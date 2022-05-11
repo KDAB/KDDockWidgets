@@ -412,13 +412,13 @@ MainWindowMDI *DockRegistry::mdiMainWindowByName(const QString &name) const
     return qobject_cast<MainWindowMDI *>(mainWindowByName(name));
 }
 
-Controllers::DockWidget *DockRegistry::dockWidgetForGuest(QWidgetOrQuick *guest) const
+Controllers::DockWidget *DockRegistry::dockWidgetForGuest(View *guest) const
 {
     if (!guest)
         return nullptr;
 
     for (Controllers::DockWidget *dw : m_dockWidgets) {
-        if (dw->widget() == guest)
+        if (guest->equals(dw->guestView()))
             return dw;
     }
 

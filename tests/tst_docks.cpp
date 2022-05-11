@@ -2595,7 +2595,7 @@ void TestDocks::tst_isFocused()
     // 2. Raise dock1 and focus its line edit
     dock1->raise();
     dock1->guestView()->setFocus(Qt::OtherFocusReason);
-    Platform::instance()->tests_waitForEvent(dock1->widget(), QEvent::FocusIn);
+    Platform::instance()->tests_waitForEvent(dock1->guestView().get(), QEvent::FocusIn);
 
     QVERIFY(dock1->isFocused());
     QVERIFY(!dock2->isFocused());
@@ -2606,7 +2606,7 @@ void TestDocks::tst_isFocused()
         Platform::instance()->tests_waitForEvent(dock2->view()->window(), QEvent::WindowActivate);
 
     dock2->guestView()->setFocus(Qt::OtherFocusReason);
-    Platform::instance()->tests_waitForEvent(dock2->widget(), QEvent::FocusIn);
+    Platform::instance()->tests_waitForEvent(dock1->guestView().get(), QEvent::FocusIn);
 
     QVERIFY(!dock1->isFocused());
     QVERIFY(dock2->guestView()->hasFocus());
@@ -2628,7 +2628,7 @@ void TestDocks::tst_isFocused()
     auto oldFw3 = dock3->window();
     dock3->raise();
     dock3->guestView()->setFocus(Qt::OtherFocusReason);
-    Platform::instance()->tests_waitForEvent(dock2->widget(), QEvent::FocusIn);
+    Platform::instance()->tests_waitForEvent(dock1->guestView().get(), QEvent::FocusIn);
     QVERIFY(!dock1->isFocused());
     QVERIFY(!dock2->isFocused());
     QVERIFY(dock3->isFocused());
@@ -2637,7 +2637,7 @@ void TestDocks::tst_isFocused()
     dock2->addDockWidgetToContainingWindow(dock3, Location_OnLeft);
     dock2->raise();
     dock2->guestView()->setFocus(Qt::OtherFocusReason);
-    Platform::instance()->tests_waitForEvent(dock2->widget(), QEvent::FocusIn);
+    Platform::instance()->tests_waitForEvent(dock2->guestView().get(), QEvent::FocusIn);
     QVERIFY(!dock1->isFocused());
     QVERIFY(dock2->isFocused());
     QVERIFY(!dock3->isFocused());
@@ -2720,9 +2720,11 @@ void TestDocks::tst_registry()
     QCOMPARE(dr->dockwidgets().size(), 0);
     auto dw = new Controllers::DockWidget(QStringLiteral("dw1"));
     auto guest = new QWidgetOrQuick();
+    auto wrapper = std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(guest)); // TODOv2 port
+
     dw->setWidget(guest);
     QCOMPARE(dr->dockWidgetForGuest(nullptr), nullptr);
-    QCOMPARE(dr->dockWidgetForGuest(guest), dw);
+    QCOMPARE(dr->dockWidgetForGuest(wrapper.get()), dw);
     delete dw;
 }
 
@@ -4705,7 +4707,7 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
     Controllers::TitleBar *titleBar1 = dock1->titleBar();
     dock1->guestView()->setFocus(Qt::MouseFocusReason);
 
-    QVERIFY(dock1->isFocused() || Platform::instance()->tests_waitForEvent(dock1->widget(), QEvent::FocusIn));
+    QVERIFY(dock1->isFocused() || Platform::instance()->tests_waitForEvent(dock1->guestView().get(), QEvent::FocusIn));
     QVERIFY(titleBar1->isFocused());
 
     auto frame2 = dock2->dptr()->frame();

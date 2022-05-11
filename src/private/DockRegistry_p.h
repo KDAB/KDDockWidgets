@@ -81,7 +81,7 @@ public:
     Q_INVOKABLE KDDockWidgets::MainWindowMDI *mdiMainWindowByName(const QString &) const;
 
     /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
-    Controllers::DockWidget *dockWidgetForGuest(QWidgetOrQuick *guest) const;
+    Controllers::DockWidget *dockWidgetForGuest(View *guest) const;
 
     bool isSane() const;
 
