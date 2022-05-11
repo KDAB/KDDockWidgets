@@ -418,7 +418,12 @@ public:
 
     void setFocus(Qt::FocusReason reason) override
     {
-        return QWidget::setFocus(reason);
+        QWidget::setFocus(reason);
+    }
+
+    void setFocusPolicy(Qt::FocusPolicy policy) override
+    {
+        QWidget::setFocusPolicy(policy);
     }
 
     QString objectName() const override

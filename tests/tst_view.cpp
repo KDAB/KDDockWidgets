@@ -185,7 +185,7 @@ TEST_CASE("View::closeRequested")
     CHECK(signalArrived);
 }
 
-TEST_CASE("View::focusPolicy")
+TEST_CASE("View::focusPolicy, Platform::focusedView")
 {
     auto rootView = Platform::instance()->tests_createView({});
     CHECK_EQ(rootView->focusPolicy(), Qt::NoFocus);
@@ -195,10 +195,23 @@ TEST_CASE("View::hasFocus")
 {
     auto rootView = Platform::instance()->tests_createView({});
     rootView->show();
+    rootView->activateWindow();
+
     CHECK(rootView->isVisible());
+    Platform::instance()->tests_wait(0);
     CHECK(!rootView->hasFocus());
 
-    // TODOv2: Uncomment once setFocusPolicy is implemented and implement in ViewWrapper too
-    // rootView->setFocus(Qt::MouseFocusReason);
-    // CHECK(rootView->hasFocus());
+    rootView->setFocus(Qt::MouseFocusReason);
+    Platform::instance()->tests_wait(200); // QWidget::setFocus() requires 1 event loop iteration
+    CHECK(rootView->hasFocus());
+    CHECK(rootView->equals(Platform::instance()->focusedView()));
+
+    auto child1 = Platform::instance()->tests_createView({}, rootView);
+    CHECK(rootView->hasFocus());
+    CHECK(rootView->equals(Platform::instance()->focusedView()));
+    child1->setVisible(true);
+    child1->setFocus(Qt::MouseFocusReason);
+    Platform::instance()->tests_wait(200); // QWidget::setFocus() requires 1 event loop iteration
+    CHECK(child1->hasFocus());
+    CHECK(child1->equals(Platform::instance()->focusedView()));
 }

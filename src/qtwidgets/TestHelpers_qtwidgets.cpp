@@ -25,6 +25,7 @@ using namespace KDDockWidgets;
 namespace KDDockWidgets {
 class TestView_qtwidgets : public Views::View_qtwidgets<QWidget>
 {
+    Q_OBJECT
 public:
     explicit TestView_qtwidgets(Platform::CreateViewOptions opts, QWidget *parent)
         : Views::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
@@ -81,3 +82,5 @@ View *Platform_qtwidgets::tests_createView(CreateViewOptions opts, View *parent)
 }
 
 #endif
+
+#include "TestHelpers_qtwidgets.moc"

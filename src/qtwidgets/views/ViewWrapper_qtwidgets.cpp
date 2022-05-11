@@ -358,6 +358,11 @@ Qt::FocusPolicy ViewWrapper_qtwidgets::focusPolicy() const
     return m_widget->focusPolicy();
 }
 
+void ViewWrapper_qtwidgets::setFocusPolicy(Qt::FocusPolicy policy)
+{
+    m_widget->setFocusPolicy(policy);
+}
+
 bool ViewWrapper_qtwidgets::hasFocus() const
 {
     return m_widget->hasFocus();

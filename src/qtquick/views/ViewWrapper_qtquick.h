@@ -52,6 +52,7 @@ public:
     void grabMouse() override;
     void releaseMouse() override;
     void setFocus(Qt::FocusReason) override;
+    void setFocusPolicy(Qt::FocusPolicy) override;
     QString objectName() const override;
     QVariant property(const char *) const override;
     bool isNull() const override;

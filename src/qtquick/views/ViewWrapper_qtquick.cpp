@@ -217,6 +217,11 @@ void ViewWrapper_qtquick::setFocus(Qt::FocusReason reason)
     m_item->forceActiveFocus(reason);
 }
 
+void ViewWrapper_qtquick::setFocusPolicy(Qt::FocusPolicy)
+{
+    qFatal("not implemented");
+}
+
 bool ViewWrapper_qtquick::hasFocus() const
 {
     return m_item->hasActiveFocus();

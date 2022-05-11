@@ -174,6 +174,7 @@ public:
     virtual void releaseKeyboard() = 0;
     QScreen *screen() const;
     virtual void setFocus(Qt::FocusReason) = 0;
+    virtual void setFocusPolicy(Qt::FocusPolicy) = 0;
     virtual void setWindowOpacity(double) = 0;
     virtual void setCursor(Qt::CursorShape) = 0;
     virtual void setMouseTracking(bool) = 0;
