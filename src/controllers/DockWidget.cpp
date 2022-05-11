@@ -166,11 +166,6 @@ void DockWidget::setWidget(QWidgetOrQuick *w)
     Q_EMIT widgetChanged(w);
 }
 
-QWidgetOrQuick *DockWidget::widget() const
-{
-    return d->widget;
-}
-
 std::shared_ptr<ViewWrapper> DockWidget::guestView() const
 {
     if (!d->widget)

@@ -802,12 +802,12 @@ void MainWindow::setPersistentCentralWidget(QWidgetOrQuick *widget)
     }
 }
 
-QWidgetOrQuick *MainWindow::persistentCentralWidget() const
+std::shared_ptr<ViewWrapper> MainWindow::persistentCentralWidget() const
 {
     if (auto dw = d->m_persistentCentralDockWidget)
-        return dw->widget();
+        return dw->guestView();
 
-    return nullptr;
+    return {};
 }
 
 void MainWindow::setContentsMargins(int left, int top, int right, int bottom)

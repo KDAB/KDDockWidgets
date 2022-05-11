@@ -101,7 +101,7 @@ public:
      * Example: kddockwidgets_example --central-widget
      */
     Q_INVOKABLE void setPersistentCentralWidget(QWidget *widget);
-    QWidget *persistentCentralWidget() const;
+    std::shared_ptr<ViewWrapper> persistentCentralWidget() const;
 
     /**
      * @brief Returns the unique name that was passed via constructor.

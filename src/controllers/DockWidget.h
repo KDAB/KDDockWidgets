@@ -62,7 +62,7 @@ class DOCKS_EXPORT DockWidget : public Controller
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
     Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
-    Q_PROPERTY(QObject *widget READ widget NOTIFY widgetChanged)
+    // Q_PROPERTY(QObject *widget READ widget NOTIFY widgetChanged) TODOv2
     Q_PROPERTY(KDDockWidgets::Controllers::DockWidget::Options options READ options WRITE setOptions NOTIFY
                    optionsChanged)
 public:
@@ -153,11 +153,6 @@ public:
      * owned by the dock widget.
      */
     virtual void setWidget(QWidget *widget);
-
-    /**
-     * @brief returns the widget which this dock widget hosts
-     */
-    QWidget *widget() const;
 
     /// @brief Like widget() but returns a view
     std::shared_ptr<ViewWrapper> guestView() const;
