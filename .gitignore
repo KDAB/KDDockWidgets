@@ -66,3 +66,4 @@ kddockwidgets_minimal_example
 .vscode
 /.cache
 /compile_commands.json
+/site
