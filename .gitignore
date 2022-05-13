@@ -67,3 +67,4 @@ kddockwidgets_minimal_example
 /.cache
 /compile_commands.json
 /site
+.DS_Store
