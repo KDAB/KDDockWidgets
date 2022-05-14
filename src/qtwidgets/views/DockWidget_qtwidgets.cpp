@@ -57,9 +57,17 @@ DockWidget_qtwidgets::~DockWidget_qtwidgets()
 
 void DockWidget_qtwidgets::init()
 {
-    connect(d->m_controller, &Controllers::DockWidget::widgetChanged, this, [this](QWidget *w) {
-        d->layout->addWidget(w);
+    connect(d->m_controller, &Controllers::DockWidget::guestViewChanged, this, [this] {
+        if (auto guest = dockWidget()->guestView()) {
+            d->layout->addWidget(static_cast<QWidget *>(guest->asQObject()));
+        }
     });
+}
+
+void DockWidget_qtwidgets::setWidget(QWidget *widget)
+{
+    auto wrapper = widget ? new ViewWrapper_qtwidgets(widget) : nullptr;
+    d->m_controller->setGuestView(std::shared_ptr<ViewWrapper>(wrapper));
 }
 
 Controllers::DockWidget *DockWidget_qtwidgets::dockWidget() const
@@ -89,4 +97,13 @@ void DockWidget_qtwidgets::resizeEvent(QResizeEvent *e)
 {
     d->m_controller->onResize(e->size());
     return QWidget::resizeEvent(e);
+}
+
+KDDockWidgets::Views::DockWidget_qtwidgets *
+KDDockWidgets::createDockWidget_qtwidgets(const QString &uniqueName,
+                                          Controllers::DockWidget::Options options,
+                                          Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions)
+{
+    auto dw = new Controllers::DockWidget(uniqueName, options, layoutSaverOptions);
+    return static_cast<KDDockWidgets::Views::DockWidget_qtwidgets *>(dw->view());
 }

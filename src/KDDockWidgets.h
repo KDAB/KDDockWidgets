@@ -43,6 +43,10 @@ namespace Controllers {
 class DropArea;
 }
 
+namespace Views {
+class DockWidget_qtwidgets;
+}
+
 enum Location {
     Location_None,
     Location_OnLeft, ///> Left docking location

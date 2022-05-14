@@ -152,7 +152,7 @@ public:
      * call setWidget(A) followed by setWidget(B) then A will have to be deleted by you, while B is
      * owned by the dock widget.
      */
-    virtual void setWidget(QWidget *widget);
+    virtual void setGuestView(std::shared_ptr<ViewWrapper> guest);
 
     /// @brief Like widget() but returns a view
     std::shared_ptr<ViewWrapper> guestView() const;
@@ -477,8 +477,8 @@ Q_SIGNALS:
     ///@param title the new title
     void titleChanged(const QString &title);
 
-    ///@brief emitted when the hosted widget changed
-    void widgetChanged(QWidget *);
+    /// @brief emitted when the hosted guest widget changed
+    void guestViewChanged();
 
     ///@brief emitted when the options change
     ///@sa setOptions(), options()

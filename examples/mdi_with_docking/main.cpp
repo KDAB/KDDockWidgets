@@ -13,6 +13,7 @@
 
 #include <kddockwidgets/DockWidget.h>
 #include <qtwidgets/views/MainWindow_qtwidgets.h>
+#include <qtwidgets/views/DockWidget_qtwidgets.h>
 #include <kddockwidgets/MDIArea.h>
 
 #include <QStyleFactory>
@@ -54,18 +55,18 @@ int main(int argc, char **argv)
     mainWindow.show();
 
     // # 2. Create a dock widget, it needs a unique name
-    auto dock1 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock1"));
+    auto dock1 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock1"));
     auto widget1 = new MyWidget1();
     dock1->setWidget(widget1);
 
-    auto dock2 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock2"));
+    auto dock2 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock2"));
     auto widget2 = new MyWidget2();
     dock2->setWidget(widget2);
 
     // # 3. Dock them
-    mainWindow.mainWindow()->addDockWidget(dock1, KDDockWidgets::Location_OnLeft,
+    mainWindow.mainWindow()->addDockWidget(dock1->dockWidget(), KDDockWidgets::Location_OnLeft,
                                            nullptr, KDDockWidgets::InitialOption(QSize(300, 0)));
-    mainWindow.mainWindow()->addDockWidget(dock2, KDDockWidgets::Location_OnBottom,
+    mainWindow.mainWindow()->addDockWidget(dock2->dockWidget(), KDDockWidgets::Location_OnBottom,
                                            nullptr, KDDockWidgets::InitialOption(QSize(0, 300)));
 
     KDDockWidgets::Controllers::DockWidget::Options options = {};
@@ -74,21 +75,23 @@ int main(int argc, char **argv)
     }
 
     // 4. Create our MDI widgets, which will go into the MDI area
-    auto mdiWidget1 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MDI widget1"), options);
+    auto mdiWidget1 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MDI widget1"), options);
     mdiWidget1->setWidget(new MyWidget1());
 
-    auto mdiWidget2 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MDI widget2"), options);
+    auto mdiWidget2 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MDI widget2"), options);
     mdiWidget2->setWidget(new MyWidget2());
 
-    auto mdiWidget3 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MDI widget3"), options);
+    auto mdiWidget3 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MDI widget3"), options);
     mdiWidget3->setWidget(new MyWidget3());
 
     auto mdiArea = new KDDockWidgets::MDIArea();
-    mainWindow.mainWindow()->setPersistentCentralWidget(mdiArea);
+    // TODOv2: Add View::MainWindow::setPersistentCentralWidget
+    auto mdiAreaW = std::shared_ptr<KDDockWidgets::ViewWrapper>(new KDDockWidgets::Views::ViewWrapper_qtwidgets(mdiArea));
+    mainWindow.mainWindow()->setPersistentCentralWidget(mdiAreaW);
 
-    mdiArea->addDockWidget(mdiWidget1, QPoint(10, 10));
-    mdiArea->addDockWidget(mdiWidget2, QPoint(50, 50));
-    mdiArea->addDockWidget(mdiWidget3, QPoint(110, 110));
+    mdiArea->addDockWidget(mdiWidget1->dockWidget(), QPoint(10, 10));
+    mdiArea->addDockWidget(mdiWidget2->dockWidget(), QPoint(50, 50));
+    mdiArea->addDockWidget(mdiWidget3->dockWidget(), QPoint(110, 110));
 
 
     return app.exec();

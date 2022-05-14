@@ -13,6 +13,7 @@
 
 #include <kddockwidgets/DockWidget.h>
 #include <kddockwidgets/MainWindowMDI.h>
+#include <qtwidgets/views/DockWidget_qtwidgets.h>
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -43,22 +44,22 @@ int main(int argc, char **argv)
     mainWindow.show();
 
     // # 2. Create a dock widget, it needs a unique name
-    auto dock1 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock1"));
+    auto dock1 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock1"));
     auto widget1 = new MyWidget1();
     dock1->setWidget(widget1);
 
-    auto dock2 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock2"));
+    auto dock2 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock2"));
     auto widget2 = new MyWidget2();
     dock2->setWidget(widget2);
 
-    auto dock3 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock3"));
+    auto dock3 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock3"));
     auto widget3 = new MyWidget3();
     dock3->setWidget(widget3);
 
     // # 3. Dock them
-    mainWindow.addDockWidget(dock1, QPoint(10, 10));
-    mainWindow.addDockWidget(dock2, QPoint(50, 50));
-    mainWindow.addDockWidget(dock3, QPoint(90, 90));
+    mainWindow.addDockWidget(dock1->dockWidget(), QPoint(10, 10));
+    mainWindow.addDockWidget(dock2->dockWidget(), QPoint(50, 50));
+    mainWindow.addDockWidget(dock3->dockWidget(), QPoint(90, 90));
 
     return app.exec();
 }

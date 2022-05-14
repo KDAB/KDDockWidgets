@@ -387,7 +387,7 @@ void TestDocks::tst_sizeAfterRedock()
     EnsureTopLevelsDeleted e;
     auto dw1 = new Controllers::DockWidget(QStringLiteral("1"));
     auto dw2 = new Controllers::DockWidget(QStringLiteral("2"));
-    dw2->setWidget(new MyWidget("2", Qt::red));
+    dw2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new MyWidget("2", Qt::red))));
 
     dw1->addDockWidgetToContainingWindow(dw2, Location_OnBottom);
     const int height2 = dw2->dptr()->frame()->height();
@@ -1443,13 +1443,13 @@ void TestDocks::tst_negativeAnchorPosition7()
     auto w2 = new MyWidget2(QSize(400, 400));
 
     auto d1 = new Controllers::DockWidget("1");
-    d1->setWidget(w1);
+    d1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w1)));
     auto d2 = new Controllers::DockWidget("2");
-    d2->setWidget(w2);
+    d2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w2)));
 
     auto w3 = new MyWidget2(QSize(100, 100));
     auto d3 = new Controllers::DockWidget("3");
-    d3->setWidget(w3);
+    d3->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w3)));
 
     // Stack 1, 2
     m->addDockWidget(d2, Location_OnTop);
@@ -2549,8 +2549,8 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
     auto dw2 = new Controllers::DockWidget(QStringLiteral("2"));
     auto le1 = new FocusableWidget();
     auto le2 = new FocusableWidget();
-    dw1->setWidget(le1);
-    dw2->setWidget(le2);
+    dw1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(le1)));
+    dw2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(le2)));
     dw2->show();
     dw1->show();
     QTest::qWait(200);
@@ -2649,8 +2649,8 @@ void TestDocks::tst_setWidget()
     auto dw = new Controllers::DockWidget(QStringLiteral("FOO"));
     auto button1 = new QPushButton("button1");
     auto button2 = new QPushButton("button2");
-    dw->setWidget(button1);
-    dw->setWidget(button2);
+    dw->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(button1)));
+    dw->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(button2)));
     delete button1;
     delete dw;
 }
@@ -2696,7 +2696,7 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
     EnsureTopLevelsDeleted e;
 
     auto d1 = new Controllers::DockWidget("1");
-    d1->setWidget(new QTextEdit());
+    d1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
 
     QVERIFY(!d1->isVisible());
 
@@ -2722,7 +2722,7 @@ void TestDocks::tst_registry()
     auto guest = new QWidgetOrQuick();
     auto wrapper = std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(guest)); // TODOv2 port
 
-    dw->setWidget(guest);
+    dw->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(guest)));
     QCOMPARE(dr->dockWidgetForGuest(nullptr), nullptr);
     QCOMPARE(dr->dockWidgetForGuest(wrapper.get()), dw);
     delete dw;
@@ -2822,7 +2822,7 @@ void TestDocks::tst_preventClose()
 
     auto nonClosableWidget = new NonClosableWidget();
     auto dock1 = new Controllers::DockWidget("1");
-    dock1->setWidget(nonClosableWidget);
+    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(nonClosableWidget)));
 
     // 1. Test a floating dock widget
     dock1->view()->resize(QSize(200, 200));
@@ -4398,97 +4398,97 @@ void TestDocks::tst_sizeConstraintWarning()
     QList<Controllers::DockWidget *> listDockWidget;
     {
         auto dock = new Controllers::DockWidget("foo-0");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-1");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-2");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-3");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-4");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-5");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-6");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-7");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-8");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-9");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-10");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-11");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-12");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-13");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-14");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-15");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-16");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-17");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-18");
-        dock->setWidget(new QTextEdit());
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
         listDockWidget.append(dock);
     }
 
@@ -5379,7 +5379,7 @@ void TestDocks::tst_maxSizedHonouredAfterRemoved()
     auto w = new MyWidget("foo");
     w->setMinimumSize(120, 100);
     w->setMaximumSize(300, 150);
-    dock1->setWidget(w);
+    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
     m1->dropArea()->addMultiSplitter(dock1->floatingWindow()->multiSplitter(), Location_OnLeft);
 
     auto dock2 = new Controllers::DockWidget("dock2");

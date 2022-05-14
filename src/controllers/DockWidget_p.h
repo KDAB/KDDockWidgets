@@ -158,7 +158,7 @@ public:
     QString title;
     QIcon titleBarIcon;
     QIcon tabBarIcon;
-    QWidgetOrQuick *widget = nullptr;
+    std::shared_ptr<ViewWrapper> guest;
     DockWidget *const q;
     DockWidget::Options options;
     const LayoutSaverOptions layoutSaverOptions;

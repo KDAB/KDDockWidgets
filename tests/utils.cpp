@@ -77,7 +77,7 @@ Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &n
     w->setFocusPolicy(Qt::StrongFocus);
     auto dock = new Controllers::DockWidget(name, options, layoutSaverOptions);
     dock->setAffinityName(affinityName);
-    dock->setWidget(w);
+    dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
     dock->setObjectName(name);
     dock->view()->setGeometry(QRect(0, 0, 400, 400));
     if (show) {

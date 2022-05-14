@@ -64,7 +64,7 @@ void MDIArea::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, Initial
         auto wrapperDW = new Controllers::DockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()));
         auto dropAreaWrapper = new DropArea(wrapperDW->view(), {}, /*isMDIWrapper= */ true);
         dropAreaWrapper->addDockWidget(dw, Location_OnBottom, nullptr);
-        wrapperDW->setWidget(qobject_cast<QWidget *>(dropAreaWrapper->view()->asQObject()));
+        wrapperDW->setGuestView(dropAreaWrapper->view()->asWrapper());
 
         dw = wrapperDW;
     }

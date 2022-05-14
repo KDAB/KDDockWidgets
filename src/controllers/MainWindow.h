@@ -100,7 +100,7 @@ public:
      *
      * Example: kddockwidgets_example --central-widget
      */
-    Q_INVOKABLE void setPersistentCentralWidget(QWidget *widget);
+    Q_INVOKABLE void setPersistentCentralWidget(std::shared_ptr<ViewWrapper> widget);
     std::shared_ptr<ViewWrapper> persistentCentralWidget() const;
 
     /**

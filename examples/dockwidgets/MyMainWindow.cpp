@@ -71,9 +71,9 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         count++;
         auto w = newMyWidget();
         w->setGeometry(100, 100, 400, 400);
-        auto dock = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("new dock %1").arg(count));
+        auto dock = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("new dock %1").arg(count));
         dock->setWidget(w);
-        dock->view()->resize(QSize(600, 600));
+        dock->resize(QSize(600, 600));
         dock->show();
     });
 
@@ -118,7 +118,8 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
     createDockWidgets();
 
     if (options & KDDockWidgets::MainWindowOption_HasCentralWidget) {
-        mainWindow()->setPersistentCentralWidget(new MyWidget1());
+        auto widget = std::shared_ptr<KDDockWidgets::ViewWrapper>(new KDDockWidgets::Views::ViewWrapper_qtwidgets(new MyWidget1()));
+        mainWindow()->setPersistentCentralWidget(widget);
     }
 }
 
@@ -192,7 +193,8 @@ KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
         myWidget->setMaximumSize(200, 200);
     }
 
-    dock->setWidget(myWidget);
+    auto myWidgetw = std::shared_ptr<KDDockWidgets::ViewWrapper>(new KDDockWidgets::Views::ViewWrapper_qtwidgets(myWidget));
+    dock->setGuestView(myWidgetw);
 
     if (dock->options() & KDDockWidgets::Controllers::DockWidget::Option_NotDockable) {
         dock->setTitle(QStringLiteral("DockWidget #%1 (%2)").arg(count).arg("non dockable"));

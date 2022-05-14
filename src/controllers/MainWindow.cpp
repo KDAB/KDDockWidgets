@@ -787,16 +787,15 @@ QRect MainWindow::windowGeometry() const
     return window()->geometry();
 }
 
-void MainWindow::setPersistentCentralWidget(QWidgetOrQuick *widget)
+void MainWindow::setPersistentCentralWidget(std::shared_ptr<ViewWrapper> widget)
 {
     if (!d->supportsPersistentCentralWidget()) {
         qWarning() << "MainWindow::setPersistentCentralWidget() requires MainWindowOption_HasCentralWidget";
         return;
     }
 
-    auto dw = d->m_persistentCentralDockWidget;
-    if (dw) {
-        dw->setWidget(widget);
+    if (auto dw = d->m_persistentCentralDockWidget) {
+        dw->setGuestView(widget);
     } else {
         qWarning() << Q_FUNC_INFO << "Unexpected null central dock widget";
     }

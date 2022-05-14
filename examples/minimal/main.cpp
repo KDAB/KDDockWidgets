@@ -13,6 +13,7 @@
 
 #include <kddockwidgets/DockWidget.h>
 #include <qtwidgets/views/MainWindow_qtwidgets.h>
+#include <qtwidgets/views/DockWidget_qtwidgets.h>
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -44,40 +45,41 @@ int main(int argc, char **argv)
     mainWindow.show();
 
     // # 2. Create a dock widget, it needs a unique name
-    auto dock1 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock1"));
+    auto dock1 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock1"));
     auto widget1 = new MyWidget();
     dock1->setWidget(widget1);
 
-    auto dock2 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock2"));
+    auto dock2 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock2"));
     auto widget2 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock2->setWidget(widget2);
 
-    auto dock3 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock3"));
+    auto dock3 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock3"));
     auto widget3 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock3->setWidget(widget3);
 
-    auto dock4 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock4"));
+    auto dock4 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock4"));
     auto widget4 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock4->setWidget(widget4);
 
-    auto dock5 = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("MyDock5"));
+    auto dock5 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock5"));
     auto widget5 = new MyWidget(QStringLiteral(":/assets/base.png"),
                                 QStringLiteral(":/assets/KDAB_bubble_fulcolor.png"));
     dock5->setWidget(widget5);
 
     // 3. Add them to the main window
-    mainWindow.mainWindow()->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
-    mainWindow.mainWindow()->addDockWidget(dock2, KDDockWidgets::Location_OnTop);
+    mainWindow.mainWindow()->addDockWidget(dock1->dockWidget(), KDDockWidgets::Location_OnLeft);
+    mainWindow.mainWindow()->addDockWidget(dock2->dockWidget(), KDDockWidgets::Location_OnTop);
 
     // 4. Add dock3 to the right of dock2
-    mainWindow.mainWindow()->addDockWidget(dock3, KDDockWidgets::Location_OnRight, dock2);
+    mainWindow.mainWindow()->addDockWidget(dock3->dockWidget(), KDDockWidgets::Location_OnRight, dock2->dockWidget());
 
     // 5. dock4 is docked at the bottom, with 200px height
     const QSize preferredSize(QSize(/*ignored*/ 0, 200));
-    mainWindow.mainWindow()->addDockWidget(dock4, KDDockWidgets::Location_OnBottom, nullptr, preferredSize);
+    mainWindow.mainWindow()->addDockWidget(dock4->dockWidget(), KDDockWidgets::Location_OnBottom,
+                                           nullptr, preferredSize);
 
 
     // 5. dock5 will be its own top level (floating window)

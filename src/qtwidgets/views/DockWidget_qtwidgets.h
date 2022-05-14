@@ -60,6 +60,17 @@ public:
 
     Controllers::DockWidget *dockWidget() const;
 
+    /**
+     * @brief sets the widget which this dock widget hosts.
+     * @param widget the widget to show inside this dock widget. Must not be null.
+     *
+     * Ownership for @p widget is transferred to Controllers::DockWidget.
+     * Ownsership for any previously existing widget is transferred back to the user. Meaning if you
+     * call setWidget(A) followed by setWidget(B) then A will have to be deleted by you, while B is
+     * owned by the dock widget.
+     */
+    void setWidget(QWidget *widget);
+
 protected:
     void init() override;
     bool event(QEvent *) override;
@@ -72,6 +83,11 @@ private:
 };
 
 }
+
+KDDockWidgets::Views::DockWidget_qtwidgets *DOCKS_EXPORT
+createDockWidget_qtwidgets(const QString &uniqueName,
+                           Controllers::DockWidget::Options options = {},
+                           Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {});
 
 }
 

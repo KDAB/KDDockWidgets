@@ -22,6 +22,7 @@
 #include "private/Utils_p.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/Position_p.h"
+#include "Platform.h"
 
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
@@ -149,30 +150,26 @@ void DockWidget::addDockWidgetToContainingWindow(DockWidget *other,
     }
 }
 
-void DockWidget::setWidget(QWidgetOrQuick *w)
-{
-    if (w == d->widget)
-        return;
-
-    if (d->widget) {
-        // Unparent the old widget, we're giving back ownership
-        d->widget->setParent(nullptr);
-    }
-
-    d->widget = w;
-    if (w)
-        view()->setSizePolicy(w->sizePolicy());
-
-    Q_EMIT widgetChanged(w);
-}
-
 std::shared_ptr<ViewWrapper> DockWidget::guestView() const
 {
-    if (!d->widget)
-        return {};
+    return d->guest;
+}
 
-    auto wrapper = new Views::ViewWrapper_qtwidgets(d->widget);
-    return std::shared_ptr<ViewWrapper>(wrapper);
+void DockWidget::setGuestView(std::shared_ptr<ViewWrapper> guest)
+{
+    if ((guest && guest->equals(d->guest)) || (!guest && !d->guest))
+        return;
+
+    if (d->guest) {
+        // Unparent the old widget, we're giving back ownership
+        d->guest->setParent(nullptr);
+    }
+
+    d->guest = guest;
+    if (guest)
+        view()->setSizePolicy(guest->sizePolicy());
+
+    Q_EMIT guestViewChanged();
 }
 
 bool DockWidget::isFloating() const
@@ -247,7 +244,7 @@ QString DockWidget::title() const
 {
     if (d->isMDIWrapper()) {
         // It's just a wrapper to help implementing Option_MDINestable. Return the title of the real dock widget we're hosting.
-        auto dropAreaGuest = d->widget ? guestView()->asDropArea() : nullptr;
+        auto dropAreaGuest = d->guest ? guestView()->asDropArea() : nullptr;
         Q_ASSERT(dropAreaGuest);
         if (dropAreaGuest->hasSingleFrame()) {
             return dropAreaGuest->frames().constFirst()->title();
@@ -588,7 +585,7 @@ bool DockWidget::Private::isMDIWrapper() const
 
 DropArea *DockWidget::Private::mdiDropAreaWrapper() const
 {
-    if (auto dropAreaGuest = widget ? q->guestView()->asDropArea() : nullptr) {
+    if (auto dropAreaGuest = guest ? q->guestView()->asDropArea() : nullptr) {
         if (dropAreaGuest->isMDIWrapper())
             return dropAreaGuest;
     }
@@ -870,8 +867,10 @@ void DockWidget::onResize(QSize)
 void DockWidget::onCloseEvent(QCloseEvent *e)
 {
     e->accept(); // By default we accept, means DockWidget closes
-    if (d->widget)
-        qApp->sendEvent(d->widget, e); // Give a chance for the widget to ignore
+    if (d->guest) {
+        // Give a chance for the widget to ignore
+        Platform::instance()->sendEvent(d->guest.get(), e);
+    }
 
     if (e->isAccepted())
         d->close();

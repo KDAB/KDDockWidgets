@@ -257,7 +257,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
     m->addDockWidget(dock1, Location_OnBottom);
 
     auto mdiArea = new MDIArea();
-    m->setPersistentCentralWidget(mdiArea);
+    m->setPersistentCentralWidget(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
 
     auto mdiWidget1 = createDockWidget("mdi1", new QPushButton("mdi1"));
     auto mdiWidget2 = createDockWidget("mdi2", new QPushButton("mdi12"));
@@ -303,12 +303,15 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     m->addDockWidget(dock1, Location_OnBottom);
 
     auto mdiArea = new MDIArea();
-    m->setPersistentCentralWidget(mdiArea);
+
+    m->setPersistentCentralWidget(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
 
 
     auto createSheet = [](int id) -> Controllers::DockWidget * {
         auto dock = new Controllers::DockWidget(QStringLiteral("dw-sheet-%1").arg(id), DockWidget::Option_MDINestable);
-        dock->setWidget(new QPushButton(QStringLiteral("Sheet %1").arg(id)));
+        auto btn = new QPushButton(QStringLiteral("Sheet %1").arg(id));
+        auto btnw = std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(btn));
+        dock->setGuestView(btnw);
         dock->setTitle(QStringLiteral("Sheet %1").arg(id));
 
         return dock;
@@ -471,11 +474,11 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
     m->addDockWidget(dock1, Location_OnBottom);
 
     auto mdiArea = new MDIArea();
-    m->setPersistentCentralWidget(mdiArea);
+    m->setPersistentCentralWidget(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
 
     auto createSheet = [](int id) -> Controllers::DockWidget * {
         auto dock = new Controllers::DockWidget(QStringLiteral("dw-sheet-%1").arg(id), Controllers::DockWidget::Option_MDINestable);
-        dock->setWidget(new QPushButton(QStringLiteral("Sheet %1").arg(id)));
+        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QPushButton(QStringLiteral("Sheet %1").arg(id)))));
         dock->setTitle(QStringLiteral("Sheet %1").arg(id));
 
         return dock;
@@ -512,13 +515,13 @@ void TestQtWidgets::tst_floatingWindowDeleted()
         {
             auto dock1 = new Controllers::DockWidget(QStringLiteral("DockWidget #1"));
             auto myWidget = new QWidget();
-            dock1->setWidget(myWidget);
+            dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(myWidget)));
             dock1->view()->resize(QSize(600, 600));
             dock1->show();
 
             auto dock2 = new Controllers::DockWidget(QStringLiteral("DockWidget #2"));
             myWidget = new QWidget();
-            dock2->setWidget(myWidget);
+            dock2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(myWidget)));
             dock2->view()->resize(QSize(600, 600));
             dock2->show();
 
@@ -742,7 +745,7 @@ void TestQtWidgets::tst_sidebarOverlayGetsHiddenOnClick()
         QVERIFY(!dw1->isOverlayed());
 
         auto widget2 = new MyWidget("foo");
-        dw2->setWidget(widget2);
+        dw2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(widget2)));
         m1->overlayOnSideBar(dw1);
         QVERIFY(dw1->isOverlayed());
         auto wrapper = ViewWrapper::Ptr(new Views::ViewWrapper_qtwidgets(widget2));
@@ -1050,9 +1053,9 @@ void TestQtWidgets::tst_minSizeChanges()
     auto w2 = new MyWidget2(QSize(400, 400));
 
     auto d1 = new Controllers::DockWidget("1");
-    d1->setWidget(w1);
+    d1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w1)));
     auto d2 = new Controllers::DockWidget("2");
-    d2->setWidget(w2);
+    d2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w2)));
 
     m->addDockWidget(d1, Location_OnTop);
     m->addDockWidget(d2, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
@@ -1083,7 +1086,7 @@ void TestQtWidgets::tst_minSizeChanges()
     // add a small one to the middle
     auto w3 = new MyWidget2(QSize(100, 100));
     auto d3 = new Controllers::DockWidget("3");
-    d3->setWidget(w3);
+    d3->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w3)));
     m->addDockWidget(d3, Location_OnTop, d1);
 }
 
@@ -1096,7 +1099,7 @@ void TestQtWidgets::tst_maxSizePropagates()
     auto w = new MyWidget2(QSize(200, 200));
     w->setMinimumSize(120, 120);
     w->setMaximumSize(500, 500);
-    dock1->setWidget(w);
+    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
     dock1->show();
 
     Views::ViewWrapper_qtwidgets guestWrapper(w);
@@ -1126,7 +1129,7 @@ void TestQtWidgets::tst_maxSizedFloatingWindow()
     auto w = new MyWidget("foo");
     w->setMinimumSize(120, 100);
     w->setMaximumSize(300, 300);
-    dock1->setWidget(w);
+    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
 
     dock1->show();
     dock2->show();
@@ -1178,7 +1181,7 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
     auto w = new MyWidget2(QSize(400, 400));
     w->setMinimumSize(120, 100);
     w->setMaximumSize(300, 150);
-    dock1->setWidget(w);
+    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
     m1->addDockWidget(dock1, Location_OnLeft);
 
     auto dock2 = new Controllers::DockWidget("dock2");
@@ -1225,7 +1228,7 @@ void TestQtWidgets::tst_maxSizePropagates2()
     auto w = new MyWidget2(QSize(200, 200));
     w->setMinimumSize(120, 120);
     w->setMaximumSize(300, 500);
-    dock1->setWidget(w);
+    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
     dock1->show();
 
     auto dock2 = new Controllers::DockWidget("dock2");
@@ -1268,7 +1271,7 @@ void TestQtWidgets::tst_maxSizeHonouredWhenDropped()
     m1->view()->resize(QSize(2000, 2000));
 
     auto w2 = new MyWidget2(QSize(400, 400));
-    dock2->setWidget(w2);
+    dock2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w2)));
     const int maxWidth = 200;
     w2->setMaximumSize(maxWidth, 200);
     m1->addDockWidget(dock2, Location_OnLeft);
@@ -1386,7 +1389,7 @@ void TestQtWidgets::tst_complex()
     for (int i = 0; i < num; ++i) {
         auto widget = new MyWidget2(minSizes.at(i));
         auto dw = new Controllers::DockWidget(QString::number(i));
-        dw->setWidget(widget);
+        dw->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(widget)));
         docks << dw;
     }
 
