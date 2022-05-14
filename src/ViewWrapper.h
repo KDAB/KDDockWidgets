@@ -43,7 +43,6 @@ public:
     void raiseAndActivate() override;
     void raise() override;
     void setSizePolicy(QSizePolicy) override;
-    QSizePolicy sizePolicy() const override;
     void setFlag(Qt::WindowType, bool = true) override;
     void setAttribute(Qt::WidgetAttribute, bool enable = true) override;
     Qt::WindowFlags flags() const override;

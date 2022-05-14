@@ -65,7 +65,7 @@ public:
     Qt::FocusPolicy focusPolicy() const override;
     void setFocusPolicy(Qt::FocusPolicy) override;
     bool hasFocus() const override;
-
+    QSizePolicy sizePolicy() const override;
     QWidget *widget() const;
 
 private:

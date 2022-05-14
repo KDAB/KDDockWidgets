@@ -367,3 +367,8 @@ bool ViewWrapper_qtwidgets::hasFocus() const
 {
     return m_widget->hasFocus();
 }
+
+QSizePolicy ViewWrapper_qtwidgets::sizePolicy() const
+{
+    return m_widget->sizePolicy();
+}

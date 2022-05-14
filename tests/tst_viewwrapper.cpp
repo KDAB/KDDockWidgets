@@ -79,8 +79,15 @@ TEST_CASE("ViewWrapper::objectName")
     CHECK_EQ(rootView->objectName(), newName);
 }
 
-TEST_CASE("View::focusPolicy")
+TEST_CASE("ViewWrapper::focusPolicy")
 {
     auto rootView = Platform::instance()->tests_createView({});
     CHECK_EQ(rootView->asWrapper()->focusPolicy(), Qt::NoFocus);
+}
+
+TEST_CASE("ViewWrapper::sizePolicy")
+{
+    auto rootView = Platform::instance()->tests_createView({});
+    CHECK_EQ(rootView->asWrapper()->sizePolicy().horizontalPolicy(), QSizePolicy::Preferred);
+    CHECK_EQ(rootView->asWrapper()->sizePolicy().verticalPolicy(), QSizePolicy::Preferred);
 }
