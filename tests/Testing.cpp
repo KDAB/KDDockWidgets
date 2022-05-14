@@ -92,10 +92,6 @@ bool Testing::waitForDeleted(QObject *o, int timeout)
     return wasDeleted;
 }
 
-HostedWidget::~HostedWidget()
-{
-}
-
 void Testing::installFatalMessageHandler()
 {
     s_original = qInstallMessageHandler(fatalWarningsMessageHandler);

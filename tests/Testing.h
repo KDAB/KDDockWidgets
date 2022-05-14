@@ -108,35 +108,6 @@ void installFatalMessageHandler();
 void setExpectedWarning(const QString &);
 
 bool waitForDeleted(QObject *o, int timeout = 2000);
-
-class HostedWidget : public QWidgetOrQuick
-{
-public:
-    explicit HostedWidget(QSize minSz = QSize(1, 1))
-        : m_minSz(minSz)
-    {
-    }
-
-    ~HostedWidget() override;
-
-    QSize sizeHint() const override
-    {
-        return m_minSz;
-    }
-
-    QSize minimumSizeHint() const override
-    {
-        return m_minSz;
-    }
-
-    void setMinSize(QSize s)
-    {
-        m_minSz = s;
-        updateGeometry();
-    }
-
-    QSize m_minSz;
-};
 }
 
 struct SetExpectedWarning
