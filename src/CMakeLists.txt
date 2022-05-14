@@ -127,6 +127,8 @@ set(DOCKSLIBS_SRCS
     qtwidgets/views/Frame_qtwidgets.h
     qtwidgets/views/MainWindow_qtwidgets.cpp
     qtwidgets/views/MainWindow_qtwidgets.h
+    qtwidgets/views/RubberBand_qtwidgets.cpp
+    qtwidgets/views/RubberBand_qtwidgets.h
     qtwidgets/views/Separator_qtwidgets.cpp
     qtwidgets/views/Separator_qtwidgets.h
     qtwidgets/views/TitleBar_qtwidgets.cpp

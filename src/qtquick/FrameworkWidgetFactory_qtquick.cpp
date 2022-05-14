@@ -122,7 +122,7 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory_qtquick::createDropIndicator
     return new ClassicIndicators(dropArea);
 }
 
-QWidgetOrQuick *DefaultWidgetFactory_qtquick::createRubberBand(View *) const
+View *DefaultWidgetFactory_qtquick::createRubberBand(View *) const
 {
     return {};
     // return new QRubberBand(QRubberBand::Rectangle, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr);

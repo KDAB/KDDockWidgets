@@ -43,8 +43,9 @@ enum class Type
     ViewWrapper = 4096,
     DropArea = 8192,
     MDILayout = 0x4000,
+    RubberBand = 0x8000,
 
-    LAST = MDILayout // Keep last
+    LAST = RubberBand // Keep last
 };
 
 class DOCKS_EXPORT Controller : public QObject // TODOv2 remove QObject

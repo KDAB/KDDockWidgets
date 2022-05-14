@@ -68,7 +68,7 @@ private:
     void setDropLocation(DropLocation);
     void updateWindowPosition();
 
-    QWidgetOrQuick *const m_rubberBand;
+    View *const m_rubberBand;
     IndicatorWindow *const m_indicatorWindow;
 };
 

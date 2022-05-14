@@ -122,7 +122,7 @@ public:
 
     ///@brief Called internally by the framework to create a RubberBand to show as drop zone
     /// Returns a rubber band
-    virtual QWidgetOrQuick *createRubberBand(View *parent) const = 0;
+    virtual View *createRubberBand(View *parent) const = 0;
 
     ///@brief Called internally by the framework to create a SideBar
     ///@param loc The side-bar location without the main window. Just forward into your SideBar sub-class ctor.

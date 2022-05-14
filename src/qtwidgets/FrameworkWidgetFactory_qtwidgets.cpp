@@ -34,8 +34,8 @@
 #include "qtwidgets/views/Stack_qtwidgets.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/MDILayout_qtwidgets.h"
+#include "qtwidgets/views/RubberBand_qtwidgets.h"
 
-#include <QRubberBand>
 #include <QToolButton>
 
 
@@ -116,9 +116,9 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory_qtwidgets::createDropIndicat
     return new ClassicIndicators(dropArea);
 }
 
-QWidgetOrQuick *DefaultWidgetFactory_qtwidgets::createRubberBand(View *parent) const
+View *DefaultWidgetFactory_qtwidgets::createRubberBand(View *parent) const
 {
-    return new QRubberBand(QRubberBand::Rectangle, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr);
+    return new Views::RubberBand_qtwidgets(parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr);
 }
 
 View *DefaultWidgetFactory_qtwidgets::createSideBar(Controllers::SideBar *controller,

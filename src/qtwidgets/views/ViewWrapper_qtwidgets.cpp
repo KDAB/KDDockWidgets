@@ -21,6 +21,7 @@
 #include "qtwidgets/views/Stack_qtwidgets.h"
 #include "qtwidgets/views/TabBar_qtwidgets.h"
 #include "qtwidgets/views/TitleBar_qtwidgets.h"
+#include "qtwidgets/views/RubberBand_qtwidgets.h"
 #include "qtwidgets/Window_qtwidgets.h"
 
 #include "private/MDILayoutWidget_p.h"
@@ -90,6 +91,7 @@ static Controller *controllerForWidget(QWidget *widget)
             if (auto view = qobject_cast<MainWindow_qtwidgets *>(widget))
                 return view->controller();
             break;
+        case Type::RubberBand:
         case Type::LayoutItem:
         case Type::DropIndicatorOverlayInterface:
         case Type::ViewWrapper:
@@ -220,6 +222,8 @@ bool ViewWrapper_qtwidgets::is(Type t) const
         return qobject_cast<Views::DropArea_qtwidgets *>(m_widget);
     case Type::MDILayout:
         return qobject_cast<MDILayout_qtwidgets *>(m_widget);
+    case Type::RubberBand:
+        return qobject_cast<RubberBand_qtwidgets *>(m_widget);
     case Type::MDIArea:
         return qobject_cast<MDIArea *>(m_widget);
     case Type::LayoutItem:

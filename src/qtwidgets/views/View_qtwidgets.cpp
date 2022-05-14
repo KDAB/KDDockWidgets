@@ -14,6 +14,7 @@
 #include <QTabBar>
 #include <QTabWidget>
 #include <QMainWindow>
+#include <QRubberBand>
 
 using namespace KDDockWidgets::Views;
 
@@ -41,6 +42,13 @@ View_qtwidgets<QTabWidget>::View_qtwidgets(KDDockWidgets::Controller *controller
 template<>
 View_qtwidgets<QMainWindow>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
     : QMainWindow(parent)
+    , View(controller, type, this)
+{
+}
+
+template<>
+View_qtwidgets<QRubberBand>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
+    : QRubberBand(QRubberBand::Rectangle, parent)
     , View(controller, type, this)
 {
 }
