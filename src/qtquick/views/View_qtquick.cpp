@@ -15,6 +15,7 @@
 
 #include <qpa/qplatformwindow.h>
 #include <QGuiApplication>
+#include <QFile>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
