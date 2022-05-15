@@ -9,31 +9,31 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "MDILayout_qtwidgets.h"
+#include "MDILayout_qtquick.h"
 #include "controllers/MDILayout.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-MDILayout_qtwidgets::MDILayout_qtwidgets(MDILayoutWidget *controller, View *parent)
-    : Views::View_qtwidgets<QWidget>(controller, Type::MDILayout, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr)
+MDILayout_qtquick::MDILayout_qtquick(MDILayoutWidget *controller, View *parent)
+    : Views::View_qtquick(controller, Type::MDILayout, asQQuickItem(parent))
     , m_controller(controller)
 {
     Q_ASSERT(controller);
 }
 
-MDILayout_qtwidgets::~MDILayout_qtwidgets()
+MDILayout_qtquick::~MDILayout_qtquick()
 {
     if (!freed())
         m_controller->viewAboutToBeDeleted();
 }
 
-void MDILayout_qtwidgets::onLayoutRequest()
+void MDILayout_qtquick::onLayoutRequest()
 {
     m_controller->updateSizeConstraints();
 }
 
-bool MDILayout_qtwidgets::onResize(QSize newSize)
+bool MDILayout_qtquick::onResize(QSize newSize)
 {
     return m_controller->onResize(newSize);
 }

@@ -10,9 +10,11 @@
 */
 
 #include "MDIArea.h"
+
 #include "controllers/DockWidget.h"
-#include "private/MDILayoutWidget_p.h"
+#include "controllers/MDILayout.h"
 #include "controllers/DropArea.h"
+
 #include "qtwidgets/views/View_qtwidgets.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS

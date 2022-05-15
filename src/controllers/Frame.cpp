@@ -18,9 +18,13 @@
 #include "View.h"
 #include "Platform.h"
 #include "views/Frame.h"
+
 #include "controllers/TitleBar.h"
 #include "controllers/Stack.h"
 #include "controllers/FloatingWindow.h"
+#include "controllers/MDILayout.h"
+#include "controllers/DropArea.h"
+
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 #include "private/DockRegistry_p.h"
@@ -29,8 +33,6 @@
 #include "private/LayoutWidget_p.h"
 #include "private/Position_p.h"
 #include "private/WidgetResizeHandler_p.h"
-#include "private/MDILayoutWidget_p.h"
-#include "controllers/DropArea.h"
 #include "private/multisplitter/Item_p.h"
 
 #include <QCloseEvent>

@@ -21,9 +21,9 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/TabBar.h"
 #include "controllers/MainWindow.h"
+#include "controllers/MDILayout.h"
 
 #include "kddockwidgets/FrameworkWidgetFactory.h"
-#include "kddockwidgets/private/MDILayoutWidget_p.h"
 
 #include <QTimer>
 

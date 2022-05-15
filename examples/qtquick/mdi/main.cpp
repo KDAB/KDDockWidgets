@@ -21,7 +21,7 @@
 #include <QCommandLineParser>
 
 // Foro my own debugging, until we have better API
-#include "../../src/private/MDILayoutWidget_p.h"
+#include "../../src/controllers/MDILayout.h"
 
 int main(int argc, char *argv[])
 {
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #3");
     dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
 
-    auto mainWindow = static_cast<KDDockWidgets::MainWindowMDI*>(KDDockWidgets::DockRegistry::self()->mainwindows().constFirst());
+    auto mainWindow = static_cast<KDDockWidgets::MainWindowMDI *>(KDDockWidgets::DockRegistry::self()->mainwindows().constFirst());
 
     mainWindow->addDockWidget(dw1, QPoint(10, 10));
     mainWindow->addDockWidget(dw2, QPoint(50, 50));

@@ -23,7 +23,7 @@
 // #include "qtwidgets/views/TitleBar_qtquick.h"
 
 #include "controllers/DropArea.h"
-#include "private/MDILayoutWidget_p.h"
+#include "controllers/MDILayout.h"
 // #include "MDIArea.h"
 
 #include <QDebug>

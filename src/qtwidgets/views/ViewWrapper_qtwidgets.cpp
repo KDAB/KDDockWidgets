@@ -24,7 +24,7 @@
 #include "qtwidgets/views/RubberBand_qtwidgets.h"
 #include "qtwidgets/Window_qtwidgets.h"
 
-#include "private/MDILayoutWidget_p.h"
+#include "controllers/MDILayout.h"
 #include "qtwidgets/MDIArea.h"
 #include "controllers/DropArea.h"
 

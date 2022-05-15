@@ -14,7 +14,7 @@
 #include "private/DockRegistry_p.h"
 #include "private/LayoutSaver_p.h"
 #include "private/Logging_p.h"
-#include "private/MDILayoutWidget_p.h"
+#include "controllers/MDILayout.h"
 #include "controllers/TitleBar.h"
 #include "controllers/Frame.h"
 #include "controllers/FloatingWindow.h"

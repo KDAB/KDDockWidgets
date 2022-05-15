@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "MDILayoutWidget_p.h"
-#include "multisplitter/ItemFreeContainer_p.h"
+#include "MDILayout.h"
+#include "private/multisplitter/ItemFreeContainer_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 #include "controllers/Frame.h"

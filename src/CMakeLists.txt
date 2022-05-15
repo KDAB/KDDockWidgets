@@ -37,8 +37,6 @@ set(DOCKSLIBS_SRCS
     private/LayoutSaver_p.h
     private/LayoutWidget.cpp
     private/LayoutWidget_p.h
-    private/MDILayoutWidget.cpp
-    private/MDILayoutWidget_p.h
     private/Position.cpp
     private/Position_p.h
     private/DropIndicatorOverlayInterface.cpp
@@ -81,6 +79,8 @@ set(DOCKSLIBS_SRCS
     controllers/Frame.h
     controllers/MainWindow.cpp
     controllers/MainWindow.h
+    controllers/MDILayout.cpp
+    controllers/MDILayout.h
     controllers/Separator.cpp
     controllers/Separator.h
     controllers/SideBar.cpp
@@ -188,7 +188,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/WidgetResizeHandler_p.h
     private/DockRegistry_p.h
     # private/TabWidget_p.h
-    private/MDILayoutWidget_p.h
+
 )
 
 set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES

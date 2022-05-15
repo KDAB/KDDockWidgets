@@ -15,10 +15,11 @@
 #include "Qt5Qt6Compat_p.h"
 #include "Utils_p.h"
 #include "DockRegistry_p.h"
-#include "MDILayoutWidget_p.h"
 
+#include "controllers/MDILayout.h"
 #include "controllers/TitleBar.h"
 #include "controllers/FloatingWindow.h"
+
 #include "Platform.h"
 
 #include <QEvent>

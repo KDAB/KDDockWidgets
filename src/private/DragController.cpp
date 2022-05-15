@@ -16,11 +16,11 @@
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "Config.h"
-#include "MDILayoutWidget_p.h"
 #include "WindowZOrder_x11_p.h"
 #include "Platform.h"
 #include "Window.h"
 
+#include "controllers/MDILayout.h"
 #include "controllers/DropArea.h"
 #include "controllers/TitleBar.h"
 #include "controllers/Frame.h"

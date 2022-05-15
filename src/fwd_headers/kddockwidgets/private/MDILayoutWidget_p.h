@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../../private/MDILayoutWidget_p.h"
+#include "../../../controllers/MDILayout.h"

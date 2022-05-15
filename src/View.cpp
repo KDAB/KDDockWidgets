@@ -11,7 +11,6 @@
 
 #include "View.h"
 
-#include "private/MDILayoutWidget_p.h"
 #include "private/multisplitter/Item_p.h"
 
 #include "controllers/FloatingWindow.h"
@@ -21,6 +20,7 @@
 #include "controllers/TabBar.h"
 #include "controllers/MainWindow.h"
 #include "controllers/DropArea.h"
+#include "controllers/MDILayout.h"
 
 #include <QWidget> // TODOv2 remove
 #include <QScreen>

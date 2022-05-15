@@ -10,7 +10,7 @@
 */
 
 #include "MainWindowMDI.h"
-#include "private/MDILayoutWidget_p.h"
+#include "controllers/MDILayout.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
