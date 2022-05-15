@@ -58,11 +58,6 @@ public:
 
     bool tabsAreMovable() const;
 
-    /**
-     * @brief Returns this class as a QWidget (if using QtWidgets) or QQuickItem
-     */
-    // QWidgetOrQuick *asWidget() const;
-
     DockWidget *singleDockWidget() const override;
 
     /// @reimp
