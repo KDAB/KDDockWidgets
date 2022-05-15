@@ -219,8 +219,8 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   # qtquick/MainWindowInstantiator.h
   # qtquick/DockWidgetInstantiator.cpp
   # qtquick/DockWidgetInstantiator.h
-  # qtquick/views/DockWidget_qtquick.cpp
-  # qtquick/views/DockWidget_qtquick.h
+  qtquick/views/DockWidget_qtquick.cpp
+  qtquick/views/DockWidget_qtquick.h
   # qtquick/views/FloatingWindow_qtquick.cpp
   # qtquick/views/FloatingWindow_qtquick.h
   qtquick/views/Frame_qtquick.cpp

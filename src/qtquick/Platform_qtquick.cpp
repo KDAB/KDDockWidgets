@@ -140,3 +140,8 @@ void Platform_qtquick::setQmlEngine(QQmlEngine *qmlEngine)
     context->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
     context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), Config::self().frameworkWidgetFactory());
 }
+
+DefaultWidgetFactory_qtquick *Platform_qtquick::frameworkWidgetFactory() const
+{
+    return static_cast<DefaultWidgetFactory_qtquick *>(Config::self().frameworkWidgetFactory());
+}

@@ -43,7 +43,7 @@ namespace Views {
 class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick
 {
     Q_OBJECT
-    Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarObj NOTIFY actualTitleBarChanged)
+    // Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarObj NOTIFY actualTitleBarChanged)
 public:
     /**
      * @brief constructs a new DockWidget
@@ -67,10 +67,7 @@ public:
     /// Similar to Controllers::DockWidget::setWidget(QQuickItem*)
     void setWidget(const QString &qmlFilename);
 
-    /// @reimp
-    // void setWidget(QQuickItem *widget);
-
-    /// @reimp
+    /// @reimp // TODOv2: Rename to setGuestView
     Q_INVOKABLE void setWidget(QQuickItem *widget);
 
     /// @reimp
@@ -90,6 +87,8 @@ public:
     /// @brief Returns the visual item which represents Frame in the screen
     /// Equivalent to Frame::visualItem().
     QQuickItem *frameVisualItem() const;
+
+    Controllers::DockWidget *dockWidget() const;
 
     ///@internal
     Q_INVOKABLE KDDockWidgets::Controllers::Frame *frame() const;
