@@ -14,7 +14,7 @@
 #ifndef KDDOCKWIDGETS_MDI_LAYOUT_WIDGET_P_H
 #define KDDOCKWIDGETS_MDI_LAYOUT_WIDGET_P_H
 
-#include "LayoutWidget_p.h"
+#include "Layout.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/docks_export.h"
 

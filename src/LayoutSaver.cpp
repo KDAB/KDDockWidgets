@@ -24,7 +24,7 @@
 #include "private/multisplitter/Item_p.h"
 #include "private/LayoutSaver_p.h"
 #include "private/DockRegistry_p.h"
-#include "private/LayoutWidget_p.h"
+#include "private/Layout.h"
 #include "private/Logging_p.h"
 #include "private/Position_p.h"
 #include "private/Utils_p.h"

@@ -10,7 +10,7 @@
 */
 
 #include "MainWindow_qtquick.h"
-#include "private/LayoutWidget_p.h"
+#include "private/Layout.h"
 #include "controllers/MainWindow.h"
 
 #include <QDebug>

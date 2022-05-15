@@ -12,7 +12,7 @@
 #include "KDDockWidgets.h"
 #include "WindowBeingDragged_p.h"
 #include "DragController_p.h"
-#include "LayoutWidget_p.h"
+#include "Layout.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
 

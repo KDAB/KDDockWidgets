@@ -35,8 +35,8 @@ set(DOCKSLIBS_SRCS
     LayoutSaver.cpp
     LayoutSaver.h
     private/LayoutSaver_p.h
-    private/LayoutWidget.cpp
-    private/LayoutWidget_p.h
+    private/Layout.cpp
+    private/Layout.h
     private/Position.cpp
     private/Position_p.h
     private/DropIndicatorOverlayInterface.cpp
@@ -181,7 +181,7 @@ set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     # private/FloatingWindow_p.h
     # private/Frame_p.h
     private/LayoutSaver_p.h
-    private/LayoutWidget_p.h
+    # private/Layout.h
     # private/SideBar_p.h
     private/TitleBar_p.h
     private/WindowBeingDragged_p.h

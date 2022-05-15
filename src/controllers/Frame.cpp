@@ -30,7 +30,7 @@
 #include "private/DockRegistry_p.h"
 #include "DockWidget_p.h"
 #include "private/LayoutSaver_p.h"
-#include "private/LayoutWidget_p.h"
+#include "private/Layout.h"
 #include "private/Position_p.h"
 #include "private/WidgetResizeHandler_p.h"
 #include "private/multisplitter/Item_p.h"

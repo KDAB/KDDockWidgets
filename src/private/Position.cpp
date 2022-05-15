@@ -18,7 +18,7 @@
 #include "Position_p.h"
 #include "DockRegistry_p.h"
 #include "LayoutSaver_p.h"
-#include "LayoutWidget_p.h"
+#include "Layout.h"
 #include "multisplitter/Item_p.h"
 #include "controllers/FloatingWindow.h"
 

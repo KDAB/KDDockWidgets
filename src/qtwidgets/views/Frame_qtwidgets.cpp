@@ -14,7 +14,7 @@
 #include "qtwidgets/views/View_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 
-#include "private/LayoutWidget_p.h"
+#include "private/Layout.h"
 #include "controllers/Frame.h"
 #include "controllers/Stack.h"
 #include "controllers/TabBar.h"

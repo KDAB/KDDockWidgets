@@ -18,7 +18,7 @@
 
 #include "DebugWindow_p.h"
 #include "private/DockRegistry_p.h"
-#include "private/LayoutWidget_p.h"
+#include "private/Layout.h"
 #include "LayoutSaver.h"
 #include "ObjectViewer_p.h"
 #include "Qt5Qt6Compat_p.h"
