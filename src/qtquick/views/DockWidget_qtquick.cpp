@@ -37,9 +37,10 @@ class DockWidget_qtquick::Private
 {
 public:
     Private(DockWidget_qtquick *view, Controllers::DockWidget *controller, QQmlEngine *qmlengine)
-        : q(controller)
-        , m_visualItem(view->createItem(qmlengine,
-                                        plat()->frameworkWidgetFactory()->dockwidgetFilename().toString()))
+        : q(view)
+        , dockWidget(controller)
+        , m_visualItem(q->createItem(qmlengine,
+                                     plat()->frameworkWidgetFactory()->dockwidgetFilename().toString()))
         , m_qmlEngine(qmlengine)
     {
         Q_ASSERT(m_visualItem);
@@ -47,7 +48,8 @@ public:
         m_visualItem->setParentItem(view);
     }
 
-    Controllers::DockWidget *const q;
+    DockWidget_qtquick *const q;
+    Controllers::DockWidget *const dockWidget;
     QQuickItem *const m_visualItem;
     QQmlEngine *const m_qmlEngine;
 };
@@ -86,14 +88,14 @@ void DockWidget_qtquick::setWidget(QQuickItem *widget)
 bool DockWidget_qtquick::event(QEvent *e)
 {
     if (e->type() == QEvent::ParentChange) {
-        d->q->onParentChanged();
-        Q_EMIT d->q->actualTitleBarChanged();
+        dockWidget()->onParentChanged();
+        Q_EMIT dockWidget()->actualTitleBarChanged();
     } else if (e->type() == QEvent::Show) {
-        d->q->onShown(e->spontaneous());
+        dockWidget()->onShown(e->spontaneous());
     } else if (e->type() == QEvent::Hide) {
-        d->q->onHidden(e->spontaneous());
+        dockWidget()->onHidden(e->spontaneous());
     } else if (e->type() == QEvent::Close) {
-        d->q->onCloseEvent(static_cast<QCloseEvent *>(e));
+        dockWidget()->onCloseEvent(static_cast<QCloseEvent *>(e));
     }
 
     return View_qtquick::event(e);
@@ -158,5 +160,5 @@ Controllers::Frame *DockWidget_qtquick::frame() const
 
 Controllers::DockWidget *DockWidget_qtquick::dockWidget() const
 {
-    return d->q;
+    return d->dockWidget;
 }
