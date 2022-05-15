@@ -76,6 +76,12 @@ public:
     /// @brief Returns the size of the screen where this view is in
     virtual QSize screenSizeFor(View *) const = 0;
 
+    /// @brief Returns whether this platform is QtWidgets
+    bool isQtWidgets() const;
+
+    /// @brief Returns whether this platform is QtQuick
+    bool isQtQuick() const;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions

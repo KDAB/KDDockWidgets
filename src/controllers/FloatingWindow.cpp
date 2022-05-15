@@ -106,7 +106,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     if (!suggestedGeometry.isNull())
         view()->setGeometry(suggestedGeometry);
 
-    if (kddwUsesQtWidgets()) {
+    if (Platform::instance()->isQtWidgets()) {
         // For QtQuick we do it a bit later, once we have the QQuickWindow
 #ifdef Q_OS_WIN
         create();
@@ -123,7 +123,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     if (Config::self().flags() & Config::Flag_KeepAboveIfNotUtilityWindow)
         view()->setFlag(Qt::WindowStaysOnTopHint, true);
 
-    if (kddwUsesQtWidgets()) {
+    if (Platform::instance()->isQtWidgets()) {
         // QtQuick will do it a bit later, once it has a QWindow
         maybeCreateResizeHandler();
     }

@@ -12,6 +12,7 @@
 #include "private/LayoutSaver_p.h"
 #include "private/Position_p.h"
 #include "Config.h"
+#include "Platform.h"
 #include "FrameworkWidgetFactory.h"
 #include "private/Utils_p.h"
 
@@ -62,7 +63,7 @@ bool Layout::isInMainWindow(bool honourNesting) const
 Controllers::MainWindow *Layout::mainWindow(bool honourNesting) const
 {
     // QtQuick doesn't support nesting yet
-    honourNesting = honourNesting && kddwUsesQtWidgets();
+    honourNesting = honourNesting && Platform::instance()->isQtWidgets();
 
     if (honourNesting) {
         // This layout might be a MDIArea, nested in DropArea, which is main window.

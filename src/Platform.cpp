@@ -43,6 +43,15 @@ bool Platform::hasActivePopup() const
     return false;
 }
 
+bool Platform::isQtWidgets() const
+{
+    return strcmp(name(), "qtwidgets") == 0;
+}
+
+bool Platform::isQtQuick() const
+{
+    return strcmp(name(), "qtquick") == 0;
+}
 
 #ifdef DOCKS_DEVELOPER_MODE
 
