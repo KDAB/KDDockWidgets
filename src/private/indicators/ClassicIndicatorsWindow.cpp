@@ -273,7 +273,7 @@ IndicatorWindow::IndicatorWindow(KDDockWidgets::ClassicIndicators *classicIndica
     setColor(Qt::transparent);
 
     rootContext()->setContextProperty(QStringLiteral("_window"), QVariant::fromValue<QObject *>(this));
-    setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/private/quick/qml/ClassicIndicatorsOverlay.qml")));
+    setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
 
 
     // Two workarounds for two unrelated bugs:
