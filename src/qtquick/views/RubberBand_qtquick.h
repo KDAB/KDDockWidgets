@@ -13,21 +13,18 @@
 #define KD_MULTISPLITTER_RUBBERBAND_QUICK_H
 
 #include "kddockwidgets/docks_export.h"
-#include "Widget_quick.h"
+#include "View_qtquick.h"
 
 #include <QQuickItem>
 
-namespace Layouting {
+namespace KDDockWidgets::Views {
 
-// TODO: Finish rubberband
-class DOCKS_EXPORT_FOR_UNIT_TESTS RubberBand
-    : public QQuickItem,
-      public Layouting::Widget_quick
+class DOCKS_EXPORT RubberBand_qtquick
+    : public View_qtquick
 {
     Q_OBJECT
 public:
-    explicit RubberBand(Layouting::Widget *parent);
-    ~RubberBand() override;
+    explicit RubberBand_qtquick(QQuickItem *parent);
 };
 
 }

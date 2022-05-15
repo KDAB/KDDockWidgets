@@ -227,8 +227,8 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/views/Frame_qtquick.h
   # qtquick/views/MainWindow_qtquick.cpp
   # qtquick/views/MainWindow_qtquick.h
-  # qtquick/views/RubberBand_qtquick.cpp
-  # qtquick/views/RubberBand_qtquick.h
+  qtquick/views/RubberBand_qtquick.cpp
+  qtquick/views/RubberBand_qtquick.h
   qtquick/views/Separator_qtquick.cpp
   qtquick/views/Separator_qtquick.h
   qtquick/views/Stack_qtquick.cpp

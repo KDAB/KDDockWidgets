@@ -9,17 +9,23 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "RubberBandQuick.h"
+#include "RubberBand_qtquick.h"
 #include "Config.h"
+#include "qtquick/Platform_qtquick.h"
+
+#include <QQmlEngine>
 
 using namespace KDDockWidgets;
 
-RubberBandQuick::RubberBandQuick(QQuickItem *parent)
-    : QWidgetAdapter(parent)
+using namespace KDDockWidgets;
+using namespace KDDockWidgets::Views;
+
+RubberBand_qtquick::RubberBand_qtquick(QQuickItem *parent)
+    : View_qtquick(nullptr, Type::RubberBand, parent)
 {
     setVisible(false);
     setZ(1000);
-    QQuickItem *visualItem = createItem(Config::self().qmlEngine(), QStringLiteral("qrc:/kddockwidgets/private/quick/qml/RubberBand.qml"));
+    QQuickItem *visualItem = createItem(plat()->qmlEngine(), QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/RubberBand.qml"));
     visualItem->setParent(this);
     visualItem->setParentItem(this);
 }
