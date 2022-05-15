@@ -9,9 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DockWidgetInstantiator_p.h"
-#include "DockWidgetQuick.h"
-#include "../DockRegistry_p.h"
+#include "DockWidgetInstantiator.h"
+#include "private/DockRegistry_p.h"
 
 using namespace KDDockWidgets;
 
@@ -37,7 +36,7 @@ void DockWidgetInstantiator::setSource(const QString &source)
     Q_EMIT sourceChanged();
 }
 
-DockWidgetQuick *DockWidgetInstantiator::dockWidget() const
+Controllers::DockWidget *DockWidgetInstantiator::dockWidget() const
 {
     return m_dockWidget;
 }
@@ -179,31 +178,31 @@ void DockWidgetInstantiator::componentComplete()
         return;
     }
 
-    m_dockWidget = new DockWidgetQuick(m_uniqueName, {}, {}, qmlEngine(this));
+    m_dockWidget = new Controllers::DockWidget(m_uniqueName, {}, {}, qmlEngine(this));
 
-    connect(m_dockWidget, &DockWidgetQuick::titleChanged, this,
+    connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this,
             &DockWidgetInstantiator::titleChanged);
-    connect(m_dockWidget, &DockWidgetQuick::actualTitleBarChanged, this,
+    connect(m_dockWidget, &Controllers::DockWidget::actualTitleBarChanged, this,
             &DockWidgetInstantiator::actualTitleBarChanged);
-    connect(m_dockWidget, &DockWidgetQuick::optionsChanged, this,
+    connect(m_dockWidget, &Controllers::DockWidget::optionsChanged, this,
             &DockWidgetInstantiator::optionsChanged);
-    connect(m_dockWidget, &DockWidgetQuick::shown, this, &DockWidgetInstantiator::shown);
-    connect(m_dockWidget, &DockWidgetQuick::hidden, this, &DockWidgetInstantiator::hidden);
-    connect(m_dockWidget, &DockWidgetQuick::iconChanged, this,
+    connect(m_dockWidget, &Controllers::DockWidget::shown, this, &DockWidgetInstantiator::shown);
+    connect(m_dockWidget, &Controllers::DockWidget::hidden, this, &DockWidgetInstantiator::hidden);
+    connect(m_dockWidget, &Controllers::DockWidget::iconChanged, this,
             &DockWidgetInstantiator::iconChanged);
-    connect(m_dockWidget, &DockWidgetQuick::widgetChanged, this,
+    connect(m_dockWidget, &Controllers::DockWidget::widgetChanged, this,
             &DockWidgetInstantiator::widgetChanged);
-    connect(m_dockWidget, &DockWidgetQuick::isFocusedChanged, this,
+    connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this,
             &DockWidgetInstantiator::isFocusedChanged);
-    connect(m_dockWidget, &DockWidgetQuick::isFocusedChanged, this,
+    connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this,
             &DockWidgetInstantiator::isFocusedChanged);
-    connect(m_dockWidget, &DockWidgetQuick::isOverlayedChanged, this,
+    connect(m_dockWidget, &Controllers::DockWidget::isOverlayedChanged, this,
             &DockWidgetInstantiator::isOverlayedChanged);
-    connect(m_dockWidget, &DockWidgetQuick::isFloatingChanged, this,
+    connect(m_dockWidget, &Controllers::DockWidget::isFloatingChanged, this,
             &DockWidgetInstantiator::isFloatingChanged);
-    connect(m_dockWidget, &DockWidgetQuick::removedFromSideBar, this,
+    connect(m_dockWidget, &Controllers::DockWidget::removedFromSideBar, this,
             &DockWidgetInstantiator::removedFromSideBar);
-    connect(m_dockWidget, &DockWidgetQuick::windowActiveAboutToChange, this,
+    connect(m_dockWidget, &Controllers::DockWidget::windowActiveAboutToChange, this,
             &DockWidgetInstantiator::windowActiveAboutToChange);
 
 

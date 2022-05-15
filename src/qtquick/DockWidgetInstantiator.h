@@ -12,7 +12,7 @@
 #ifndef KD_DOCKWIDGET_INSTANTIATOR_P_H
 #define KD_DOCKWIDGET_INSTANTIATOR_P_H
 
-#include "DockWidgetQuick.h"
+#include "controllers/DockWidget.h"
 
 #include <QQmlParserStatus>
 #include <QQuickItem>
@@ -21,8 +21,6 @@
 #include <optional>
 
 namespace KDDockWidgets {
-
-class DockWidgetQuick;
 
 /**
  * @brief Indirection helper to instantiate dock widgets from QML
@@ -51,7 +49,7 @@ public:
     QString source() const;
     void setSource(const QString &);
 
-    DockWidgetQuick *dockWidget() const;
+    Controllers::DockWidget *dockWidget() const;
     KDDockWidgets::TitleBar *actualTitleBar() const;
 
     QString title() const;
@@ -98,7 +96,7 @@ Q_SIGNALS:
     void shown();
     void hidden();
     void iconChanged();
-    void widgetChanged(KDDockWidgets::QWidgetOrQuick *);
+    void widgetChanged(QQuickItem *);
     void optionsChanged(KDDockWidgets::Controllers::DockWidget::Options);
     void isFocusedChanged(bool);
     void isOverlayedChanged(bool);
@@ -111,7 +109,7 @@ private:
     QString m_uniqueName;
     QString m_sourceFilename;
     QString m_title;
-    DockWidgetQuick *m_dockWidget = nullptr;
+    Controllers::DockWidget *m_dockWidget = nullptr;
 };
 }
 

@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "MainWindowInstantiator_p.h"
+#include "MainWindowInstantiator.h"
 #include "MainWindowQuick_p.h"
 #include "MainWindowMDI.h"
 

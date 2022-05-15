@@ -20,9 +20,12 @@
 namespace KDDockWidgets {
 
 class MainWindowQuick;
-class Controllers::DockWidget;
 class DockWidgetInstantiator;
 class SideBar;
+
+namespace Controllers {
+class DockWidget;
+}
 
 /// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through MainWindowQuick's ctor
 /// So instead, user instantiates a MainWindowWrapper in QML and calls init.
