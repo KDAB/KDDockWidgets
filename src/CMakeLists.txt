@@ -221,12 +221,12 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   # qtquick/DockWidgetInstantiator.h
   qtquick/views/DockWidget_qtquick.cpp
   qtquick/views/DockWidget_qtquick.h
-  # qtquick/views/FloatingWindow_qtquick.cpp
-  # qtquick/views/FloatingWindow_qtquick.h
+  qtquick/views/FloatingWindow_qtquick.cpp
+  qtquick/views/FloatingWindow_qtquick.h
   qtquick/views/Frame_qtquick.cpp
   qtquick/views/Frame_qtquick.h
-  # qtquick/views/MainWindow_qtquick.cpp
-  # qtquick/views/MainWindow_qtquick.h
+  qtquick/views/MainWindow_qtquick.cpp
+  qtquick/views/MainWindow_qtquick.h
   qtquick/views/RubberBand_qtquick.cpp
   qtquick/views/RubberBand_qtquick.h
   qtquick/views/Separator_qtquick.cpp

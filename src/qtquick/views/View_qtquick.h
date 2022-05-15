@@ -55,7 +55,9 @@ inline std::shared_ptr<ViewWrapper> asQQuickWrapper(QQuickItem *item)
     return std::shared_ptr<ViewWrapper>(wrapper);
 }
 
-class DOCKS_EXPORT View_qtquick : public QQuickItem, public View
+
+class DOCKS_EXPORT View_qtquick : public QQuickItem,
+                                  public View
 {
     Q_OBJECT
 public:
@@ -100,6 +102,7 @@ public:
     void updateGeometry();
     void update() override;
     void setParent(View *parent) override;
+    void setParent(QQuickItem *parent);
     void raiseAndActivate() override;
     void activateWindow() override;
     void raise() override;
@@ -200,6 +203,21 @@ private:
     Qt::WindowStates m_oldWindowState = Qt::WindowState::WindowNoState;
     MouseEventRedirector *m_mouseEventRedirector = nullptr;
 };
+
+inline View_qtquick *asView_qtquick(View *view)
+{
+    if (!view)
+        return nullptr;
+    return static_cast<View_qtquick *>(view);
+}
+
+inline View_qtquick *asView_qtquick(Controller *controller)
+{
+    if (!controller)
+        return nullptr;
+
+    return static_cast<View_qtquick *>(controller->view());
+}
 
 inline qreal logicalDpiFactor(const QQuickItem *item)
 {

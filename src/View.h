@@ -133,6 +133,7 @@ public:
     virtual void move(int x, int y) = 0;
     void move(QPoint);
     virtual void setSize(int width, int height) = 0;
+    void setSize(QSize);
     virtual void setWidth(int width) = 0;
     virtual void setHeight(int height) = 0;
     virtual void show() = 0;

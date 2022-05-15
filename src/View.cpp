@@ -150,6 +150,11 @@ void View::resize(QSize sz)
     setSize(sz.width(), sz.height());
 }
 
+void View::setSize(QSize sz)
+{
+    setSize(sz.width(), sz.height());
+}
+
 void View::resize(int w, int h)
 {
     setSize(w, h);

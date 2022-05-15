@@ -22,40 +22,40 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
                                        QQuickItem *parent, Qt::WindowFlags flags)
     : View_qtquick(new Controllers::MainWindow(this, uniqueName, options),
                    Type::MainWindow, parent, flags)
+    , m_controller(static_cast<Controllers::MainWindow *>(controller()))
 {
     makeItemFillParent(this);
 
-
-
-    LayoutWidget *lw = layoutWidget();
-    makeItemFillParent(lw);
+    LayoutWidget *lw = m_controller->layoutWidget();
+    auto layoutView = asView_qtquick(lw->view());
+    makeItemFillParent(layoutView);
 
 
     // MainWindowQuick has the same constraints as LayoutWidget, so just forward the signal
-    connect(lw, &LayoutWidget::geometryUpdated, this, &MainWindow_qtquick::geometryUpdated);
+    connect(layoutView, &View_qtquick::geometryUpdated, this, &MainWindow_qtquick::geometryUpdated);
 
-    connect(lw, &LayoutWidget::geometryUpdated, this,
+    connect(layoutView, &View_qtquick::geometryUpdated, this,
             &MainWindow_qtquick::onMultiSplitterGeometryUpdated);
 }
 
 MainWindow_qtquick::~MainWindow_qtquick()
 {
-    if (isRootView()()) {
-        if (QWindow *window = window()) {
+    if (isRootView()) {
+        if (auto window = this->window()) {
             QObject::setParent(nullptr);
-            delete window;
+            window->destroy();
         }
     }
 }
 
 QSize MainWindow_qtquick::minSize() const
 {
-    return layoutWidget()->layoutMinimumSize();
+    return m_controller->layoutWidget()->layoutMinimumSize();
 }
 
 QSize MainWindow_qtquick::maximumSize() const
 {
-    return layoutWidget()->layoutMaximumSizeHint();
+    return m_controller->layoutWidget()->layoutMaximumSizeHint();
 }
 
 Controllers::SideBar *MainWindow_qtquick::sideBar(SideBarLocation) const
@@ -72,9 +72,9 @@ QMargins MainWindow_qtquick::centerWidgetMargins() const
 void MainWindow_qtquick::onMultiSplitterGeometryUpdated()
 {
     const QSize minSz = minSize();
-    const bool mainWindowIsTooSmall = minSz.expandedTo(size()) != size();
+    const bool mainWindowIsTooSmall = minSz.expandedTo(View::size()) != View::size();
     if (mainWindowIsTooSmall) {
-        if (isRootView()()) {
+        if (isRootView()) {
             // If we're a top-level, let's go ahead and resize the QWindow
             // any other case is too complex for QtQuick as there's no layout propagation.
             window()->resize(minSz.width(), minSz.height());

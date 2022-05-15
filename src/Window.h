@@ -83,6 +83,9 @@ public:
 
     /// @brief Returns the screen this window is on
     virtual QScreen *screen() const = 0;
+
+    /// Deletes the underlying window
+    virtual void destroy() = 0;
 };
 
 inline bool operator==(Window::Ptr w1, Window::Ptr w2)

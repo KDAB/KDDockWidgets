@@ -511,10 +511,8 @@ void View_qtquick::update()
     // Nothing to do for QtQuick
 }
 
-void View_qtquick::setParent(View *parent)
+void View_qtquick::setParent(QQuickItem *parentItem)
 {
-    auto parentItem = Views::asQQuickItem(parent);
-
     {
         QScopedValueRollback<bool> guard(m_inSetParent, true);
         QQuickItem::setParent(parentItem);
@@ -524,6 +522,11 @@ void View_qtquick::setParent(View *parent)
     // Mimic QWidget::setParent(), hide widget when setting parent
     // if (!parentItem) // TODOv2: Why was this if needed, QWidget hides unconditionally
     setVisible(false);
+}
+
+void View_qtquick::setParent(View *parent)
+{
+    setParent(Views::asQQuickItem(parent));
 }
 
 void View_qtquick::raiseAndActivate()

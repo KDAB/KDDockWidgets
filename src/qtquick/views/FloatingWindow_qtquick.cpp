@@ -11,15 +11,20 @@
 
 #include "FloatingWindow_qtquick.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "qtquick/FrameworkWidgetFactory_qtquick.h"
 
 #include "TitleBar_qtquick.h"
 
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
+
 #include "controllers/DropArea.h"
+#include "controllers/FloatingWindow.h"
 #include "controllers/MainWindow.h"
+
 #include "private/WidgetResizeHandler_p.h"
+#include "qtquick/Platform_qtquick.h"
+#include "qtquick/views/MainWindow_qtquick.h"
 
 #include <QQuickView>
 #include <QDebug>
@@ -33,17 +38,18 @@ class QuickView : public QQuickView
 {
     Q_OBJECT
 public:
-    explicit QuickView(QQmlEngine *qmlEngine, Controllers::FloatingWindow *floatingWindow)
+    explicit QuickView(QQmlEngine *qmlEngine, FloatingWindow_qtquick *view)
         : QQuickView(qmlEngine, nullptr)
-        , m_floatingWindow(floatingWindow)
+        , m_view(view)
     {
         if (Config::self().internalFlags() & Config::InternalFlag_UseTransparentFloatingWindow)
             setColor(QColor(Qt::transparent));
 
         updateSize();
 
-        connect(m_floatingWindow, &QQuickItem::widthChanged, this, &QuickView::onRootItemWidthChanged);
-        connect(m_floatingWindow, &QQuickItem::heightChanged, this, &QuickView::onRootItemHeightChanged);
+        auto item = asQQuickItem(view);
+        connect(item, &QQuickItem::widthChanged, this, &QuickView::onRootItemWidthChanged);
+        connect(item, &QQuickItem::heightChanged, this, &QuickView::onRootItemHeightChanged);
     }
 
     ~QuickView();
@@ -59,7 +65,7 @@ public:
             // Mimic QWidget behaviour: The non-client mouse events go to the QWidget not the QWindow. In our case the QQuickItem.
             // I mean, they also go to QWindow, but for our QtWidgets impl we process them at the QWidget level, so use the same approach
             // so we maintain a single code path for processing mouse events
-            qApp->sendEvent(m_floatingWindow, ev);
+            qApp->sendEvent(m_view->asQObject(), ev);
             return true;
         }
 
@@ -68,22 +74,22 @@ public:
 
     void onRootItemWidthChanged()
     {
-        setWidth(int(m_floatingWindow->width()));
+        setWidth(int(m_view->width()));
     }
 
     void onRootItemHeightChanged()
     {
-        setHeight(int(m_floatingWindow->height()));
+        setHeight(int(m_view->height()));
     }
 
     void updateSize()
     {
-        resize(m_floatingWindow->size());
+        resize(m_view->View::size());
     }
 
     void updateRootItemSize()
     {
-        m_floatingWindow->setSize(size());
+        m_view->View::setSize(size());
     }
 
 #ifdef Q_OS_WIN
@@ -97,7 +103,7 @@ public:
     }
 #endif
 private:
-    Controllers::FloatingWindow *const m_floatingWindow;
+    FloatingWindow_qtquick *const m_view;
 };
 
 QuickView::~QuickView() = default;
@@ -105,46 +111,37 @@ QuickView::~QuickView() = default;
 }
 
 
-FloatingWindow_qtquick::FloatingWindow_qtquick(MainWindowBase *parent)
-    : FloatingWindow(QRect(), parent)
-    , m_quickWindow(new QuickView(Config::self().qmlEngine(), this))
+FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *controller, Views::MainWindow_qtquick *parent)
+    : Views::View_qtquick(controller, Type::FloatingWindow, parent)
+    , m_quickWindow(new QuickView(plat()->qmlEngine(), this))
+    , m_controller(controller)
 {
-    init();
-}
-
-FloatingWindow_qtquick::FloatingWindow_qtquick(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
-    : FloatingWindow(frame, QRect(), parent)
-    , m_quickWindow(new QuickView(Config::self().qmlEngine(), this))
-{
-    init();
-    // For QtQuick we need to set the suggested geometry only after we have the QWindow
-    setGeometry(suggestedGeometry);
 }
 
 FloatingWindow_qtquick::~FloatingWindow_qtquick()
 {
     // Avoid a bunch of QML warnings and constraints being violated at destruction.
     // Also simply avoiding unneeded work, as QML is destroying stuff 1 by 1
-    if (m_dropArea)
-        m_dropArea->setWindowIsBeingDestroyed(true);
+    if (auto dropArea = m_controller->dropArea())
+        asView_qtquick(dropArea)->setWindowIsBeingDestroyed(true);
 
-    QWidgetAdapter::setParent(nullptr);
+    setParent(static_cast<View *>(nullptr));
     if (qobject_cast<QQuickView *>(m_quickWindow)) // QObject cast just to make sure the QWindow is not in ~QObject already
         delete m_quickWindow;
 }
 
-QSize FloatingWindow_qtquick::minimumSize() const
+QSize FloatingWindow_qtquick::minSize() const
 {
     // Doesn't matter if it's not visible. We don't want the min-size to jump around. Also not so
     // easy to track as we don't have layouts
     const int margins = contentsMargins();
-    return multiSplitter()->minimumSize() + QSize(0, titleBarHeight()) + QSize(margins * 2, margins * 2);
+    return m_controller->multiSplitter()->view()->minSize() + QSize(0, titleBarHeight()) + QSize(margins * 2, margins * 2);
 }
 
 void FloatingWindow_qtquick::setGeometry(QRect geo)
 {
     // Not needed with QtWidgets, but needed with QtQuick as we don't have layouts
-    geo.setSize(geo.size().expandedTo(minimumSize()));
+    geo.setSize(geo.size().expandedTo(minSize()));
 
     parentItem()->setSize(geo.size());
     m_quickWindow->setGeometry(geo);
@@ -162,7 +159,7 @@ int FloatingWindow_qtquick::titleBarHeight() const
 
 QWindow *FloatingWindow_qtquick::candidateParentWindow() const
 {
-    if (auto mainWindow = qobject_cast<MainWindowBase *>(QObject::parent())) {
+    if (auto mainWindow = qobject_cast<MainWindow_qtquick *>(QObject::parent())) {
         return mainWindow->QQuickItem::window();
     }
 
@@ -172,8 +169,8 @@ QWindow *FloatingWindow_qtquick::candidateParentWindow() const
 void FloatingWindow_qtquick::init()
 {
     connect(this, &QQuickItem::visibleChanged, this, [this] {
-        if (!isVisible() && !beingDeleted()) {
-            scheduleDeleteLater();
+        if (!isVisible() && !m_controller->beingDeleted()) {
+            m_controller->scheduleDeleteLater();
         }
     });
 
@@ -193,24 +190,24 @@ void FloatingWindow_qtquick::init()
         m_quickWindow->setObjectName(QStringLiteral("Floating QWindow"));
     }
 
-    QWidgetAdapter::setParent(m_quickWindow->contentItem());
+    setParent(m_quickWindow->contentItem());
     WidgetResizeHandler::setupWindow(m_quickWindow);
     m_quickWindow->installEventFilter(this); // for window resizing
-    maybeCreateResizeHandler();
+    m_controller->maybeCreateResizeHandler();
 
     m_visualItem = createItem(m_quickWindow->engine(),
-                              Config::self().frameworkWidgetFactory()->floatingWindowFilename().toString());
+                              plat()->frameworkWidgetFactory()->floatingWindowFilename().toString());
     Q_ASSERT(m_visualItem);
 
     // Ensure our window size is never smaller than our min-size
-    setSize(size().expandedTo(minimumSize()));
+    View::setSize(View::size().expandedTo(minSize()));
 
     m_visualItem->setParent(this);
     m_visualItem->setParentItem(this);
 
-    m_quickWindow->setFlags(windowFlags());
+    m_quickWindow->setFlags(flags());
 
-    updateTitleAndIcon();
+    m_controller->updateTitleAndIcon();
 
     m_quickWindow->show();
 }

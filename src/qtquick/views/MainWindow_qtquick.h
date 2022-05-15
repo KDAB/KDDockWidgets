@@ -18,6 +18,7 @@
 namespace KDDockWidgets {
 
 namespace Controllers {
+class MainWindow;
 class SideBar;
 }
 
@@ -49,6 +50,7 @@ protected:
 
 private:
     void onMultiSplitterGeometryUpdated();
+    Controllers::MainWindow *const m_controller;
 };
 }
 }

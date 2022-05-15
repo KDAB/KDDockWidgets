@@ -117,3 +117,8 @@ QScreen *Window_qt::screen() const
 {
     return m_window->screen();
 }
+
+void Window_qt::destroy()
+{
+    delete m_window;
+}

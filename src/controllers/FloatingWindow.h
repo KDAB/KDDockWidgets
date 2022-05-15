@@ -215,6 +215,7 @@ public:
     void updateSizeConstraints(); // TODO: Move private
 
     void onCloseEvent(QCloseEvent *);
+    void maybeCreateResizeHandler();
 
 Q_SIGNALS:
     void activatedChanged();
@@ -222,8 +223,6 @@ Q_SIGNALS:
     void windowStateChanged(QWindowStateChangeEvent *);
 
 protected:
-    void maybeCreateResizeHandler();
-
 #if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
     bool nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override;
 #endif

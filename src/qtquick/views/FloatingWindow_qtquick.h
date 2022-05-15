@@ -18,6 +18,10 @@ class QQuickView;
 
 namespace KDDockWidgets {
 
+namespace Controllers {
+class FloatingWindow;
+}
+
 namespace Views {
 
 class MainWindow_qtquick;
@@ -41,6 +45,7 @@ private:
     void init() override;
     QQuickView *const m_quickWindow;
     QQuickItem *m_visualItem = nullptr;
+    Controllers::FloatingWindow *const m_controller;
     Q_DISABLE_COPY(FloatingWindow_qtquick)
 };
 
