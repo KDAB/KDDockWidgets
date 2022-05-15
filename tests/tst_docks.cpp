@@ -2720,12 +2720,10 @@ void TestDocks::tst_registry()
 
     QCOMPARE(dr->dockwidgets().size(), 0);
     auto dw = new Controllers::DockWidget(QStringLiteral("dw1"));
-    auto guest = new QWidgetOrQuick();
-    auto wrapper = std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(guest)); // TODOv2 port
-
-    dw->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(guest)));
+    auto guest = Platform::instance()->tests_createView({});
+    dw->setGuestView(guest->asWrapper());
     QCOMPARE(dr->dockWidgetForGuest(nullptr), nullptr);
-    QCOMPARE(dr->dockWidgetForGuest(wrapper.get()), dw);
+    QCOMPARE(dr->dockWidgetForGuest(guest), dw);
     delete dw;
 }
 
