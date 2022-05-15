@@ -32,7 +32,7 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-class LayoutWidget;
+class Layout;
 
 namespace Controllers {
 
@@ -125,7 +125,7 @@ public:
 
     ///@internal
     ///@brief returns the MultiSplitter.
-    LayoutWidget *layoutWidget() const;
+    Layout *layoutWidget() const;
 
     ///@internal
     ///@brief Returns the MDI layout. Or nullptr if this isn't a MDI main window

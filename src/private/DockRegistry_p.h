@@ -35,7 +35,7 @@ class FloatingWindow;
 class SideBar;
 }
 
-class LayoutWidget;
+class Layout;
 class MainWindowMDI;
 struct WindowBeingDragged;
 
@@ -64,8 +64,8 @@ public:
     void registerFloatingWindow(Controllers::FloatingWindow *);
     void unregisterFloatingWindow(Controllers::FloatingWindow *);
 
-    void registerLayout(LayoutWidget *);
-    void unregisterLayout(LayoutWidget *);
+    void registerLayout(Layout *);
+    void unregisterLayout(Layout *);
 
     void registerFrame(Controllers::Frame *);
     void unregisterFrame(Controllers::Frame *);
@@ -100,8 +100,8 @@ public:
     ///@brief overload returning only the ones with the specified names
     const Controllers::MainWindow::List mainWindows(const QStringList &names);
 
-    ///@brief returns the list of LayoutWidget instances
-    const QVector<LayoutWidget *> layouts() const;
+    ///@brief returns the list of Layout instances
+    const QVector<Layout *> layouts() const;
 
     ///@brief returns a list of all Frame instances
     const QList<Controllers::Frame *> frames() const;
@@ -169,7 +169,7 @@ public:
     bool isEmpty(bool excludeBeingDeleted = false) const;
 
     /**
-     * @brief Calls LayoutWidget::checkSanity() on all layouts.
+     * @brief Calls Layout::checkSanity() on all layouts.
      *
      * @param dumpDebug If true then each layout is dumped too
      *
@@ -190,8 +190,8 @@ public:
      */
     Controllers::MainWindow::List mainWindowsWithAffinity(const QStringList &affinities) const;
 
-    /// @brief Returns the LayoutWidget where the specified item is in
-    LayoutWidget *layoutForItem(const Layouting::Item *) const;
+    /// @brief Returns the Layout where the specified item is in
+    Layout *layoutForItem(const Layouting::Item *) const;
 
     /// @brief Returns whether the item is in a main window.
     /// Nesting is honoured. (MDIArea inside DropArea inside MainWindow, for example)
@@ -252,7 +252,7 @@ private:
     Controllers::MainWindow::List m_mainWindows;
     QList<Controllers::Frame *> m_frames;
     QVector<Controllers::FloatingWindow *> m_floatingWindows;
-    QVector<LayoutWidget *> m_layouts;
+    QVector<Layout *> m_layouts;
     QPointer<Controllers::DockWidget> m_focusedDockWidget;
     KDBindings::ConnectionHandle m_connection;
 

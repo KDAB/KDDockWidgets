@@ -58,11 +58,11 @@ class MainWindow;
  * It's suitable to be set as a main window central widget for instance. The actual layouting is
  * then done by the root Item.
  */
-class DOCKS_EXPORT LayoutWidget : public Controller
+class DOCKS_EXPORT Layout : public Controller
 {
 public:
-    explicit LayoutWidget(Type, View *);
-    ~LayoutWidget();
+    explicit Layout(Type, View *);
+    ~Layout();
 
     /// @brief Returns whether this layout is in a MainWindow
     /// @param honourNesting If true, then we'll count DropAreas/MDIAreas which are nested into DropAreas/MDIAreas as inside the main window.

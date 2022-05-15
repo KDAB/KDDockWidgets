@@ -155,7 +155,7 @@ QSize WindowBeingDragged::maxSize() const
     return {};
 }
 
-bool WindowBeingDragged::contains(LayoutWidget *layoutWidget) const
+bool WindowBeingDragged::contains(Layout *layoutWidget) const
 {
     if (!layoutWidget)
         return false;

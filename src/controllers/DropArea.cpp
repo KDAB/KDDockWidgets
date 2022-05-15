@@ -41,7 +41,7 @@ using namespace KDDockWidgets::Controllers;
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
-    : LayoutWidget(Type::DropArea, Config::self().frameworkWidgetFactory()->createDropArea(this, parent))
+    : Layout(Type::DropArea, Config::self().frameworkWidgetFactory()->createDropArea(this, parent))
     , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))
@@ -189,7 +189,7 @@ void DropArea::addDockWidget(Controllers::DockWidget *dw, Location location,
 
 bool DropArea::containsDockWidget(Controllers::DockWidget *dw) const
 {
-    return dw->d->frame() && LayoutWidget::containsFrame(dw->d->frame());
+    return dw->d->frame() && Layout::containsFrame(dw->d->frame());
 }
 
 bool DropArea::hasSingleFloatingFrame() const
@@ -601,7 +601,7 @@ void DropArea::layoutEqually(Layouting::ItemBoxContainer *container)
 
 void DropArea::setRootItem(Layouting::ItemBoxContainer *root)
 {
-    LayoutWidget::setRootItem(root);
+    Layout::setRootItem(root);
     m_rootItem = root;
 }
 
@@ -630,5 +630,5 @@ QRect DropArea::rectForDrop(const WindowBeingDragged *wbd, Location location,
 bool DropArea::deserialize(const LayoutSaver::MultiSplitter &l)
 {
     setRootItem(new Layouting::ItemBoxContainer(view()));
-    return LayoutWidget::deserialize(l);
+    return Layout::deserialize(l);
 }

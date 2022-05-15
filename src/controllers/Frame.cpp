@@ -118,7 +118,7 @@ void Frame::onCloseEvent(QCloseEvent *e)
     }
 }
 
-void Frame::setLayoutWidget(LayoutWidget *dt)
+void Frame::setLayoutWidget(Layout *dt)
 {
     if (dt == m_layoutWidget)
         return;

@@ -322,7 +322,7 @@ Controllers::DropArea *FloatingWindow::multiSplitter() const
     return m_dropArea;
 }
 
-LayoutWidget *FloatingWindow::layoutWidget() const
+Layout *FloatingWindow::layoutWidget() const
 {
     return m_dropArea;
 }

@@ -264,7 +264,7 @@ Controllers::MDILayout *View::asMDILayoutController() const
     return nullptr;
 }
 
-LayoutWidget *View::asLayout() const
+Layout *View::asLayout() const
 {
     if (Controllers::DropArea *da = asDropAreaController()) {
         return da;

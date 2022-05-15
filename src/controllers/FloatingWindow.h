@@ -22,7 +22,7 @@
 #include "kddockwidgets/docks_export.h"
 
 namespace KDDockWidgets {
-class LayoutWidget;
+class Layout;
 }
 
 namespace KDDockWidgets::Controllers {
@@ -124,9 +124,9 @@ public:
     Controllers::DropArea *multiSplitter() const;
 
     /**
-     * @brief Returns the LayoutWidget
+     * @brief Returns the Layout
      */
-    LayoutWidget *layoutWidget() const;
+    Layout *layoutWidget() const;
 
     /**
      * @brief Returns whether @p globalPoint is inside the title bar (or, when there's no title-bar, the draggable empty

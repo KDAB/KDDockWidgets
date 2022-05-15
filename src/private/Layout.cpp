@@ -28,12 +28,12 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 
-LayoutWidget::LayoutWidget(Type type, View *view)
+Layout::Layout(Type type, View *view)
     : Controller(type, view)
 {
 }
 
-LayoutWidget::~LayoutWidget()
+Layout::~Layout()
 {
     m_minSizeChangedHandler.disconnect();
 
@@ -42,7 +42,7 @@ LayoutWidget::~LayoutWidget()
     DockRegistry::self()->unregisterLayout(this);
 }
 
-void LayoutWidget::viewAboutToBeDeleted()
+void Layout::viewAboutToBeDeleted()
 {
     if (view()) {
         if (view()->equals(m_rootItem->hostWidget())) {
@@ -54,12 +54,12 @@ void LayoutWidget::viewAboutToBeDeleted()
     }
 }
 
-bool LayoutWidget::isInMainWindow(bool honourNesting) const
+bool Layout::isInMainWindow(bool honourNesting) const
 {
     return mainWindow(honourNesting) != nullptr;
 }
 
-Controllers::MainWindow *LayoutWidget::mainWindow(bool honourNesting) const
+Controllers::MainWindow *Layout::mainWindow(bool honourNesting) const
 {
     // QtQuick doesn't support nesting yet
     honourNesting = honourNesting && kddwUsesQtWidgets();
@@ -83,13 +83,13 @@ Controllers::MainWindow *LayoutWidget::mainWindow(bool honourNesting) const
     return nullptr;
 }
 
-Controllers::FloatingWindow *LayoutWidget::floatingWindow() const
+Controllers::FloatingWindow *Layout::floatingWindow() const
 {
     auto parent = view()->parentView();
     return parent ? parent->asFloatingWindowController() : nullptr;
 }
 
-void LayoutWidget::setRootItem(Layouting::ItemContainer *root)
+void Layout::setRootItem(Layouting::ItemContainer *root)
 {
     delete m_rootItem;
     m_rootItem = root;
@@ -100,17 +100,17 @@ void LayoutWidget::setRootItem(Layouting::ItemContainer *root)
     m_minSizeChangedHandler = m_rootItem->minSizeChanged.connect([this] { view()->setMinimumSize(layoutMinimumSize()); });
 }
 
-QSize LayoutWidget::layoutMinimumSize() const
+QSize Layout::layoutMinimumSize() const
 {
     return m_rootItem->minSize();
 }
 
-QSize LayoutWidget::layoutMaximumSizeHint() const
+QSize Layout::layoutMaximumSizeHint() const
 {
     return m_rootItem->maxSizeHint();
 }
 
-void LayoutWidget::setLayoutMinimumSize(QSize sz)
+void Layout::setLayoutMinimumSize(QSize sz)
 {
     if (sz != m_rootItem->minSize()) {
         setLayoutSize(layoutSize().expandedTo(m_rootItem->minSize())); // Increase size in case we need to
@@ -118,27 +118,27 @@ void LayoutWidget::setLayoutMinimumSize(QSize sz)
     }
 }
 
-QSize LayoutWidget::layoutSize() const
+QSize Layout::layoutSize() const
 {
     return m_rootItem->size();
 }
 
-void LayoutWidget::clearLayout()
+void Layout::clearLayout()
 {
     m_rootItem->clear();
 }
 
-bool LayoutWidget::checkSanity() const
+bool Layout::checkSanity() const
 {
     return m_rootItem->checkSanity();
 }
 
-void LayoutWidget::dumpLayout() const
+void Layout::dumpLayout() const
 {
     m_rootItem->dumpLayout();
 }
 
-void LayoutWidget::restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *item, int tabIndex)
+void Layout::restorePlaceholder(Controllers::DockWidget *dw, Layouting::Item *item, int tabIndex)
 {
     if (item->isPlaceholder()) {
         auto newFrame = new Controllers::Frame(view());
@@ -157,7 +157,7 @@ void LayoutWidget::restorePlaceholder(Controllers::DockWidget *dw, Layouting::It
     frame->setVisible(true);
 }
 
-void LayoutWidget::unrefOldPlaceholders(const Controllers::Frame::List &framesBeingAdded) const
+void Layout::unrefOldPlaceholders(const Controllers::Frame::List &framesBeingAdded) const
 {
     for (Controllers::Frame *frame : framesBeingAdded) {
         for (Controllers::DockWidget *dw : frame->dockWidgets()) {
@@ -166,7 +166,7 @@ void LayoutWidget::unrefOldPlaceholders(const Controllers::Frame::List &framesBe
     }
 }
 
-void LayoutWidget::setLayoutSize(QSize size)
+void Layout::setLayoutSize(QSize size)
 {
     if (size != layoutSize()) {
         m_rootItem->setSize_recursive(size);
@@ -175,37 +175,37 @@ void LayoutWidget::setLayoutSize(QSize size)
     }
 }
 
-const Layouting::Item::List LayoutWidget::items() const
+const Layouting::Item::List Layout::items() const
 {
     return m_rootItem->items_recursive();
 }
 
-bool LayoutWidget::containsItem(const Layouting::Item *item) const
+bool Layout::containsItem(const Layouting::Item *item) const
 {
     return m_rootItem->contains_recursive(item);
 }
 
-bool LayoutWidget::containsFrame(const Controllers::Frame *frame) const
+bool Layout::containsFrame(const Controllers::Frame *frame) const
 {
     return itemForFrame(frame) != nullptr;
 }
 
-int LayoutWidget::count() const
+int Layout::count() const
 {
     return m_rootItem->count_recursive();
 }
 
-int LayoutWidget::visibleCount() const
+int Layout::visibleCount() const
 {
     return m_rootItem->visibleCount_recursive();
 }
 
-int LayoutWidget::placeholderCount() const
+int Layout::placeholderCount() const
 {
     return count() - visibleCount();
 }
 
-Layouting::Item *LayoutWidget::itemForFrame(const Controllers::Frame *frame) const
+Layouting::Item *Layout::itemForFrame(const Controllers::Frame *frame) const
 {
     if (!frame)
         return nullptr;
@@ -213,7 +213,7 @@ Layouting::Item *LayoutWidget::itemForFrame(const Controllers::Frame *frame) con
     return m_rootItem->itemForWidget(frame->view()); // TODO: layout could have just the controller
 }
 
-Controllers::DockWidget::List LayoutWidget::dockWidgets() const
+Controllers::DockWidget::List Layout::dockWidgets() const
 {
     Controllers::DockWidget::List dockWidgets;
     const Controllers::Frame::List frames = this->frames();
@@ -223,7 +223,7 @@ Controllers::DockWidget::List LayoutWidget::dockWidgets() const
     return dockWidgets;
 }
 
-Controllers::Frame::List LayoutWidget::framesFrom(View *frameOrMultiSplitter) const
+Controllers::Frame::List Layout::framesFrom(View *frameOrMultiSplitter) const
 {
     if (auto frame = frameOrMultiSplitter->asFrameController())
         return { frame };
@@ -234,7 +234,7 @@ Controllers::Frame::List LayoutWidget::framesFrom(View *frameOrMultiSplitter) co
     return {};
 }
 
-Controllers::Frame::List LayoutWidget::frames() const
+Controllers::Frame::List Layout::frames() const
 {
     const Layouting::Item::List items = m_rootItem->items_recursive();
 
@@ -250,7 +250,7 @@ Controllers::Frame::List LayoutWidget::frames() const
     return result;
 }
 
-void LayoutWidget::removeItem(Layouting::Item *item)
+void Layout::removeItem(Layouting::Item *item)
 {
     if (!item) {
         qWarning() << Q_FUNC_INFO << "nullptr item";
@@ -260,7 +260,7 @@ void LayoutWidget::removeItem(Layouting::Item *item)
     item->parentContainer()->removeItem(item);
 }
 
-void LayoutWidget::updateSizeConstraints()
+void Layout::updateSizeConstraints()
 {
     const QSize newMinSize = m_rootItem->minSize();
     qCDebug(sizing) << Q_FUNC_INFO << "Updating size constraints from" << view()->minSize() << "to"
@@ -269,7 +269,7 @@ void LayoutWidget::updateSizeConstraints()
     setLayoutMinimumSize(newMinSize);
 }
 
-bool LayoutWidget::deserialize(const LayoutSaver::MultiSplitter &l)
+bool Layout::deserialize(const LayoutSaver::MultiSplitter &l)
 {
     QHash<QString, View *> frames;
     for (const LayoutSaver::Frame &frame : qAsConst(l.frames)) {
@@ -291,7 +291,7 @@ bool LayoutWidget::deserialize(const LayoutSaver::MultiSplitter &l)
     return true;
 }
 
-bool LayoutWidget::onResize(QSize newSize)
+bool Layout::onResize(QSize newSize)
 {
     QScopedValueRollback<bool> resizeGuard(m_inResizeEvent, true); // to avoid re-entrancy
 
@@ -303,7 +303,7 @@ bool LayoutWidget::onResize(QSize newSize)
     return false; // So QWidget::resizeEvent is called
 }
 
-LayoutSaver::MultiSplitter LayoutWidget::serialize() const
+LayoutSaver::MultiSplitter Layout::serialize() const
 {
     LayoutSaver::MultiSplitter l;
     l.layout = m_rootItem->toVariantMap();
@@ -320,12 +320,12 @@ LayoutSaver::MultiSplitter LayoutWidget::serialize() const
     return l;
 }
 
-Controllers::DropArea *LayoutWidget::asDropArea() const
+Controllers::DropArea *Layout::asDropArea() const
 {
     return view()->asDropAreaController();
 }
 
-MDILayout *LayoutWidget::asMDILayout() const
+MDILayout *Layout::asMDILayout() const
 {
     return view()->asMDILayoutController();
 }

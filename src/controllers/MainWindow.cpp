@@ -38,7 +38,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-static LayoutWidget *createLayoutWidget(MainWindow *mainWindow, MainWindowOptions options)
+static Layout *createLayoutWidget(MainWindow *mainWindow, MainWindowOptions options)
 {
     if (options & MainWindowOption_MDI)
         return new MDILayout(mainWindow->view());
@@ -104,7 +104,7 @@ public:
     const MainWindowOptions m_options;
     MainWindow *const q;
     QPointer<Controllers::DockWidget> m_overlayedDockWidget;
-    LayoutWidget *m_layoutWidget = nullptr;
+    Layout *m_layoutWidget = nullptr;
     Controllers::DockWidget *m_persistentCentralDockWidget = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
 };
@@ -212,7 +212,7 @@ DropArea *MainWindow::multiSplitter() const
     return dropArea();
 }
 
-LayoutWidget *MainWindow::layoutWidget() const
+Layout *MainWindow::layoutWidget() const
 {
     return d->m_layoutWidget;
 }

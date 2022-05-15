@@ -26,12 +26,12 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
 {
     makeItemFillParent(this);
 
-    LayoutWidget *lw = m_controller->layoutWidget();
+    Layout *lw = m_controller->layoutWidget();
     auto layoutView = asView_qtquick(lw->view());
     makeItemFillParent(layoutView);
 
 
-    // MainWindowQuick has the same constraints as LayoutWidget, so just forward the signal
+    // MainWindowQuick has the same constraints as Layout, so just forward the signal
     connect(layoutView, &View_qtquick::geometryUpdated, this, &MainWindow_qtquick::geometryUpdated);
 
     connect(layoutView, &View_qtquick::geometryUpdated, this,

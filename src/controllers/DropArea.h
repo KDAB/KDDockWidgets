@@ -52,7 +52,7 @@ class Separator;
  * relative to a single widget.
  */
 
-class DOCKS_EXPORT DropArea : public LayoutWidget
+class DOCKS_EXPORT DropArea : public Layout
 {
     Q_OBJECT
 public:

@@ -29,10 +29,10 @@ namespace KDDockWidgets {
 namespace Controllers {
 
 /**
- * @brief The MDILayoutWidget class implements a layout suitable for MDI style docking.
+ * @brief The MDILayout class implements a layout suitable for MDI style docking.
  * Where dock widgets are free to be positioned in arbitrary positions, not restricted by layouting.
  */
-class DOCKS_EXPORT MDILayout : public LayoutWidget
+class DOCKS_EXPORT MDILayout : public Layout
 {
     Q_OBJECT
 public:

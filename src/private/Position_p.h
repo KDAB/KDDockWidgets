@@ -40,7 +40,7 @@ class DockWidget;
 class Frame;
 }
 
-class LayoutWidget;
+class Layout;
 
 // Just a RAII class so we don't forget to unref
 struct ItemRef
@@ -116,7 +116,7 @@ public:
     }
 
     ///@brief Removes the placeholders that belong to this multisplitter
-    void removePlaceholders(const LayoutWidget *);
+    void removePlaceholders(const Layout *);
 
     ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();

@@ -755,7 +755,7 @@ bool DockWidget::Private::restoreToPreviousPosition()
 
     Layouting::Item *item = m_lastPosition->lastItem();
 
-    LayoutWidget *layout = DockRegistry::self()->layoutForItem(item);
+    Layout *layout = DockRegistry::self()->layoutForItem(item);
     Q_ASSERT(layout);
     layout->restorePlaceholder(q, item, m_lastPosition->lastTabIndex());
     return true;
