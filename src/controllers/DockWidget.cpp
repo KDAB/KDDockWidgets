@@ -555,7 +555,7 @@ void DockWidget::Private::maybeMorphIntoFloatingWindow()
         morphIntoFloatingWindow();
 }
 
-MDILayoutWidget *DockWidget::Private::mdiLayout() const
+MDILayout *DockWidget::Private::mdiLayout() const
 {
     auto p = q->view()->parentView();
     while (p) {
@@ -907,7 +907,7 @@ int DockWidget::userType() const
 
 void DockWidget::setMDIPosition(QPoint pos)
 {
-    if (MDILayoutWidget *layout = d->mdiLayout()) {
+    if (MDILayout *layout = d->mdiLayout()) {
         if (auto wrapperDW = d->mdiDockWidgetWrapper()) {
             // Case of using Option_MDINestable. We need to layout the actual top level DW
             layout->moveDockWidget(wrapperDW, pos);
@@ -919,7 +919,7 @@ void DockWidget::setMDIPosition(QPoint pos)
 
 void DockWidget::setMDISize(QSize size)
 {
-    if (MDILayoutWidget *layout = d->mdiLayout()) {
+    if (MDILayout *layout = d->mdiLayout()) {
         if (auto wrapperDW = d->mdiDockWidgetWrapper()) {
             // Case of using Option_MDINestable. We need to layout the actual top level DW
             layout->resizeDockWidget(wrapperDW, size);

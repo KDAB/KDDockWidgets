@@ -27,7 +27,7 @@
 class TestDocks;
 
 namespace KDDockWidgets {
-class MDILayoutWidget;
+class MDILayout;
 class WidgetResizeHandler;
 }
 
@@ -281,7 +281,7 @@ public:
     Frame *mdiFrame() const;
 
     /// @brief Returns the MDI layout. Or nullptr if this frame isn't in a MDI layout
-    MDILayoutWidget *mdiLayoutWidget() const;
+    MDILayout *mdiLayoutWidget() const;
 
     /// @brief If this frame is a MDI frame (isMDI() == true), returns whether it contains nested dock widgets (DockWidget::Option_MDINestable)
     /// @sa isMDI()

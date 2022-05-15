@@ -325,7 +325,7 @@ Controllers::DropArea *LayoutWidget::asDropArea() const
     return view()->asDropAreaController();
 }
 
-MDILayoutWidget *LayoutWidget::asMDILayout() const
+MDILayout *LayoutWidget::asMDILayout() const
 {
     return view()->asMDILayoutController();
 }

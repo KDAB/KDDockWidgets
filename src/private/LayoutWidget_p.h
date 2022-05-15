@@ -191,7 +191,7 @@ public:
     LayoutSaver::MultiSplitter serialize() const;
 
     Controllers::DropArea *asDropArea() const;
-    MDILayoutWidget *asMDILayout() const;
+    MDILayout *asMDILayout() const;
 
     /// @brief Emitted when the count of visible widgets changes
     KDBindings::Signal<int> visibleWidgetCountChanged;

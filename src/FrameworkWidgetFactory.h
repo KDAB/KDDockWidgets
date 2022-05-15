@@ -118,7 +118,7 @@ public:
 
     /// @brief Called internally by the framework to create a DropArea
     virtual View *createDropArea(Controllers::DropArea *, View *parent) const = 0;
-    virtual View *createMDILayout(MDILayoutWidget *, View *parent) const = 0;
+    virtual View *createMDILayout(MDILayout *, View *parent) const = 0;
 
     ///@brief Called internally by the framework to create a RubberBand to show as drop zone
     /// Returns a rubber band

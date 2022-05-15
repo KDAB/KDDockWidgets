@@ -69,7 +69,7 @@ public:
     View *createRubberBand(View *parent) const override;
     View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
-    View *createMDILayout(MDILayoutWidget *, View *parent) const override;
+    View *createMDILayout(MDILayout *, View *parent) const override;
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 

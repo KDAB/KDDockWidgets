@@ -19,18 +19,18 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-MDILayoutWidget::MDILayoutWidget(View *parent)
+MDILayout::MDILayout(View *parent)
     : LayoutWidget(Type::MDILayout, Config::self().frameworkWidgetFactory()->createMDILayout(this, parent))
     , m_rootItem(new Layouting::ItemFreeContainer(view()))
 {
     setRootItem(m_rootItem);
 }
 
-MDILayoutWidget::~MDILayoutWidget()
+MDILayout::~MDILayout()
 {
 }
 
-void MDILayoutWidget::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, InitialOption addingOption)
+void MDILayout::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, InitialOption addingOption)
 {
     if (!dw) {
         qWarning() << Q_FUNC_INFO << "Refusing to add null dock widget";
@@ -62,7 +62,7 @@ void MDILayoutWidget::addDockWidget(Controllers::DockWidget *dw, QPoint localPt,
     }
 }
 
-void MDILayoutWidget::setDockWidgetGeometry(Controllers::Frame *frame, QRect geometry)
+void MDILayout::setDockWidgetGeometry(Controllers::Frame *frame, QRect geometry)
 {
     if (!frame)
         return;
@@ -76,12 +76,12 @@ void MDILayoutWidget::setDockWidgetGeometry(Controllers::Frame *frame, QRect geo
     item->setGeometry(geometry);
 }
 
-void MDILayoutWidget::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
+void MDILayout::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
 {
     moveDockWidget(dw->d->frame(), pos);
 }
 
-void MDILayoutWidget::moveDockWidget(Controllers::Frame *frame, QPoint pos)
+void MDILayout::moveDockWidget(Controllers::Frame *frame, QPoint pos)
 {
     if (!frame)
         return;
@@ -97,12 +97,12 @@ void MDILayoutWidget::moveDockWidget(Controllers::Frame *frame, QPoint pos)
     item->setGeometry(geo);
 }
 
-void MDILayoutWidget::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
+void MDILayout::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
 {
     resizeDockWidget(dw->d->frame(), size);
 }
 
-void MDILayoutWidget::resizeDockWidget(Controllers::Frame *frame, QSize size)
+void MDILayout::resizeDockWidget(Controllers::Frame *frame, QSize size)
 {
     if (!frame)
         return;

@@ -15,7 +15,7 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-MDILayout_qtwidgets::MDILayout_qtwidgets(MDILayoutWidget *controller, View *parent)
+MDILayout_qtwidgets::MDILayout_qtwidgets(MDILayout *controller, View *parent)
     : Views::View_qtwidgets<QWidget>(controller, Type::MDILayout, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr)
     , m_controller(controller)
 {

@@ -32,7 +32,7 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-class MDILayoutWidget;
+class MDILayout;
 class LayoutWidget;
 
 namespace Controllers {
@@ -128,7 +128,7 @@ public:
 
     ///@internal
     ///@brief Returns the MDI layout. Or nullptr if this isn't a MDI main window
-    MDILayoutWidget *mdiLayoutWidget() const;
+    MDILayout *mdiLayoutWidget() const;
 
     /**
      * @brief Sets the affinities names. Dock widgets can only dock into main windows of the same affinity.

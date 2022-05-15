@@ -935,7 +935,7 @@ DropArea *Frame::mdiDropAreaWrapper() const
     return nullptr;
 }
 
-MDILayoutWidget *Frame::mdiLayoutWidget() const
+MDILayout *Frame::mdiLayoutWidget() const
 {
     return m_layoutWidget ? m_layoutWidget->asMDILayout() : nullptr;
 }

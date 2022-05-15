@@ -140,7 +140,7 @@ public:
     void maybeMorphIntoFloatingWindow();
 
     /// @brief Returns the mdi layout this dock widget is in, if any.
-    MDILayoutWidget *mdiLayout() const;
+    MDILayout *mdiLayout() const;
 
     /// @brief Returns if this is an helper DockWidget created automatically to host a drop area inside MDI
     /// This is only used by the DockWidget::Option_MDINestable feature

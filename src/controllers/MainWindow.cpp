@@ -41,7 +41,7 @@ using namespace KDDockWidgets::Controllers;
 static LayoutWidget *createLayoutWidget(MainWindow *mainWindow, MainWindowOptions options)
 {
     if (options & MainWindowOption_MDI)
-        return new MDILayoutWidget(mainWindow->view());
+        return new MDILayout(mainWindow->view());
 
     return new DropArea(mainWindow->view(), options);
 }
@@ -217,7 +217,7 @@ LayoutWidget *MainWindow::layoutWidget() const
     return d->m_layoutWidget;
 }
 
-MDILayoutWidget *MainWindow::mdiLayoutWidget() const
+MDILayout *MainWindow::mdiLayoutWidget() const
 {
     return d->m_layoutWidget->asMDILayout();
 }

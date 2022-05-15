@@ -30,7 +30,7 @@ class MDIArea::Private
 {
 public:
     Private(View *parent)
-        : layoutWidget(new MDILayoutWidget(parent))
+        : layoutWidget(new MDILayout(parent))
     {
     }
 
@@ -39,7 +39,7 @@ public:
         delete layoutWidget;
     }
 
-    MDILayoutWidget *const layoutWidget;
+    MDILayout *const layoutWidget;
 };
 
 MDIArea::MDIArea(QWidget *parent)

@@ -18,7 +18,7 @@
 
 namespace KDDockWidgets {
 
-class MDILayoutWidget;
+class MDILayout;
 
 namespace Controllers {
 class Frame;
