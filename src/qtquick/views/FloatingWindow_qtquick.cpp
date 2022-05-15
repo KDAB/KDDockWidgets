@@ -111,8 +111,9 @@ QuickView::~QuickView() = default;
 }
 
 
-FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *controller, Views::MainWindow_qtquick *parent)
-    : Views::View_qtquick(controller, Type::FloatingWindow, parent)
+FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
+                                               Views::MainWindow_qtquick *parent, Qt::WindowFlags flags)
+    : Views::View_qtquick(controller, Type::FloatingWindow, parent, flags)
     , m_quickWindow(new QuickView(plat()->qmlEngine(), this))
     , m_controller(controller)
 {

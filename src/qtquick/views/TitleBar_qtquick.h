@@ -43,6 +43,7 @@ protected:
     QQuickItem *titleBarQmlItem() const;
     QQuickItem *titleBarMouseArea() const;
     void setTitleBarQmlItem(QQuickItem *);
+    void updateMaximizeButton() override;
 
 Q_SIGNALS:
     void titleBarQmlItemChanged();

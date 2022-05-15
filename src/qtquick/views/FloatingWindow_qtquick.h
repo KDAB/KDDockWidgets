@@ -30,7 +30,8 @@ class DOCKS_EXPORT FloatingWindow_qtquick : public Views::View_qtquick
 {
     Q_OBJECT
 public:
-    explicit FloatingWindow_qtquick(Controllers::FloatingWindow *controller, Views::MainWindow_qtquick *parent = nullptr);
+    explicit FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
+                                    Views::MainWindow_qtquick *parent = nullptr, Qt::WindowFlags flags = {});
     ~FloatingWindow_qtquick();
 
     QSize minSize() const override;

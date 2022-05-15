@@ -139,3 +139,14 @@ void TabBar_qtquick::moveTabTo(int from, int to)
     Q_UNUSED(to);
     // Not implemented yet
 }
+
+Controllers::DockWidget *TabBar_qtquick::currentDockWidget() const
+{
+    return nullptr;
+}
+
+bool TabBar_qtquick::tabsAreMovable() const
+{
+    qFatal("Not implemented");
+    return false;
+}

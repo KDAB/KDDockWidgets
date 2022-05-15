@@ -44,6 +44,11 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
 //     return m_tabBar;
 // }
 
+void Stack_qtquick::setDocumentMode(bool)
+{
+    qDebug() << "Not implemented";
+}
+
 int Stack_qtquick::numDockWidgets() const
 {
     return m_dockWidgetModel->count();

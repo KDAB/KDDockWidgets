@@ -95,3 +95,8 @@ QQuickItem *TitleBar_qtquick::closeButton() const
     return m_titleBarQmlItem ? m_titleBarQmlItem->property("closeButton").value<QQuickItem *>()
                              : nullptr;
 }
+
+void TitleBar_qtquick::updateMaximizeButton()
+{
+    qFatal("Not implemented");
+}

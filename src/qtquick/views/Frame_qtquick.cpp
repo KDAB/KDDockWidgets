@@ -217,3 +217,9 @@ Stack_qtquick *Frame_qtquick::stackView() const
 
     return nullptr;
 }
+
+QRect Frame_qtquick::dragRect() const
+{
+    qFatal("Not implemented");
+    return {};
+}

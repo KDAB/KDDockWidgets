@@ -51,6 +51,8 @@ public:
     /// @brief Returns the QQuickItem which represents this frame on the screen
     QQuickItem *visualItem() const;
 
+    QRect dragRect() const override;
+
 protected:
     void removeWidget_impl(Controllers::DockWidget *) override;
     int indexOfDockWidget_impl(const Controllers::DockWidget *) override;

@@ -81,3 +81,17 @@ void MainWindow_qtquick::onMultiSplitterGeometryUpdated()
         }
     }
 }
+
+QRect MainWindow_qtquick::centralAreaGeometry() const
+{
+    qFatal("Not implemented");
+}
+
+void MainWindow_qtquick::setContentsMargins(int left, int top, int right, int bottom)
+{
+    Q_UNUSED(left);
+    Q_UNUSED(right);
+    Q_UNUSED(top);
+    Q_UNUSED(bottom);
+    qFatal("Not implemented");
+}

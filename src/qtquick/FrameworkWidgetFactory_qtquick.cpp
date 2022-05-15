@@ -15,24 +15,25 @@
 #include "private/indicators/ClassicIndicators_p.h"
 #include "private/indicators/NullIndicators_p.h"
 #include "private/Utils_p.h"
+#include "private/indicators/SegmentedIndicators_p.h"
 
+#include "controllers/MainWindow.h"
 #include "controllers/TabBar.h"
 #include "controllers/Stack.h"
 #include "controllers/FloatingWindow.h"
 
-#include "private/indicators/SegmentedIndicators_p.h"
-
-// #include "qtquick/views/FloatingWindow_qtquick.h"
+#include "qtquick/views/FloatingWindow_qtquick.h"
 #include "qtquick/views/DockWidget_qtquick.h"
 #include "qtquick/views/DropArea_qtquick.h"
 #include "qtquick/views/Frame_qtquick.h"
 #include "qtquick/views/View_qtquick.h"
+#include "qtquick/views/RubberBand_qtquick.h"
 #include "qtquick/views/Separator_qtquick.h"
 #include "qtquick/views/TitleBar_qtquick.h"
 #include "qtquick/views/TabBar_qtquick.h"
 // #include "qtquick/views/SideBar_qtquick.h"
 #include "qtquick/views/Stack_qtquick.h"
-// #include "qtquick/views/MainWindow_qtquick.h"
+#include "qtquick/views/MainWindow_qtquick.h"
 #include "qtquick/views/MDILayout_qtquick.h"
 
 
@@ -46,48 +47,48 @@ DefaultWidgetFactory_qtquick::~DefaultWidgetFactory_qtquick()
 {
 }
 
-View *DefaultWidgetFactory_qtquick::createMainWindow(Controllers::MainWindow *, View *, Qt::WindowFlags) const
+View *DefaultWidgetFactory_qtquick::createMainWindow(Controllers::MainWindow *mainWindow,
+                                                     View *parent, Qt::WindowFlags flags) const
 {
+    Q_UNUSED(mainWindow);
+    Q_UNUSED(parent);
+    Q_UNUSED(flags);
+
     return {};
-    // return new Views::MainWindow_qtquick(mainWindow, parent ? static_cast<Views::View_qtwidgets<QMainWindow> *>(parent) : nullptr, flags);
+    // return new Views::MainWindow_qtquick(mainWindow, Views::asQQuickItem(parent), flags);
 }
 
-View *DefaultWidgetFactory_qtquick::createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const
+View *DefaultWidgetFactory_qtquick::createDockWidget(Controllers::DockWidget *dw, Qt::WindowFlags flags) const
 {
-    return {};
-    // return new Views::DockWidget_qtquick(dw, flags);
+    return new Views::DockWidget_qtquick(dw, flags);
 }
 
-View *DefaultWidgetFactory_qtquick::createFrame(Controllers::Frame *, View *,
+View *DefaultWidgetFactory_qtquick::createFrame(Controllers::Frame *controller, View *parent,
                                                 FrameOptions) const
 {
-    // TODOv2: Remove options
-    return {};
-    // return new Views::Frame_qtquick(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::Frame_qtquick(controller, Views::asQQuickItem(parent));
 }
 
-View *DefaultWidgetFactory_qtquick::createTitleBar(Controllers::TitleBar *, Controllers::Frame *) const
+View *DefaultWidgetFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar,
+                                                   Controllers::Frame *parent) const
 {
-    return {};
-    // return new Views::TitleBar_qtquick(titleBar, Views::View_qtwidgets<QWidget>::asQWidget(frame));
+    return new Views::TitleBar_qtquick(titleBar, Views::asQQuickItem(parent));
 }
 
-View *DefaultWidgetFactory_qtquick::createTitleBar(Controllers::TitleBar *, Controllers::FloatingWindow *) const
+View *DefaultWidgetFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar,
+                                                   Controllers::FloatingWindow *fw) const
 {
-    return {};
-    // return new Views::TitleBar_qtquick(titleBar, Views::View_qtwidgets<QWidget>::asQWidget(fw));
+    return new Views::TitleBar_qtquick(titleBar, Views::asQQuickItem(fw));
 }
 
-View *DefaultWidgetFactory_qtquick::createTabBar(Controllers::TabBar *, View *) const
+View *DefaultWidgetFactory_qtquick::createTabBar(Controllers::TabBar *controller, View *parent) const
 {
-    return {};
-    // return new Views::TabBar_qtquick(tabBar, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::TabBar_qtquick(controller, Views::asQQuickItem(parent));
 }
 
-View *DefaultWidgetFactory_qtquick::createTabWidget(Controllers::Stack *, Controllers::Frame *) const
+View *DefaultWidgetFactory_qtquick::createTabWidget(Controllers::Stack *controller, Controllers::Frame *parent) const
 {
-    return {};
-    // return new Views::Stack_qtquick(controller, parent);
+    return new Views::Stack_qtquick(controller, parent);
 }
 
 View *DefaultWidgetFactory_qtquick::createSeparator(Controllers::Separator *controller, View *parent) const
@@ -95,12 +96,13 @@ View *DefaultWidgetFactory_qtquick::createSeparator(Controllers::Separator *cont
     return new Views::Separator_qtquick(controller, parent ? static_cast<Views::View_qtquick *>(parent) : nullptr);
 }
 
-View *DefaultWidgetFactory_qtquick::createFloatingWindow(Controllers::FloatingWindow *,
-                                                         Controllers::MainWindow *, Qt::WindowFlags) const
+View *DefaultWidgetFactory_qtquick::createFloatingWindow(Controllers::FloatingWindow *controller,
+                                                         Controllers::MainWindow *parent, Qt::WindowFlags flags) const
 {
-    return {};
-    // auto mainwindow = qobject_cast<QMainWindow *>(Views::View_qtwidgets<QWidget>::asQWidget(parent));
-    // return new Views::FloatingWindow_qtquick(controller, mainwindow, windowFlags);
+
+    auto mainwindow = parent ? qobject_cast<Views::MainWindow_qtquick *>(Views::asQQuickItem(parent->view()))
+                             : nullptr;
+    return new Views::FloatingWindow_qtquick(controller, mainwindow, flags);
 }
 
 DropIndicatorOverlayInterface *DefaultWidgetFactory_qtquick::createDropIndicatorOverlay(Controllers::DropArea *dropArea) const
@@ -122,10 +124,9 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory_qtquick::createDropIndicator
     return new ClassicIndicators(dropArea);
 }
 
-View *DefaultWidgetFactory_qtquick::createRubberBand(View *) const
+View *DefaultWidgetFactory_qtquick::createRubberBand(View *parent) const
 {
-    return {};
-    // return new QRubberBand(QRubberBand::Rectangle, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr);
+    return new Views::RubberBand_qtquick(Views::asQQuickItem(parent));
 }
 
 View *DefaultWidgetFactory_qtquick::createSideBar(Controllers::SideBar *,
