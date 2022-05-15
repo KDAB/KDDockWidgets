@@ -12,38 +12,45 @@
 #ifndef KD_MAIN_WINDOW_QUICK_P_H
 #define KD_MAIN_WINDOW_QUICK_P_H
 
-#include "kddockwidgets/MainWindow.h"
+#include "View_qtquick.h"
+#include "views/MainWindow.h"
 
 namespace KDDockWidgets {
+
+namespace Controllers {
+class SideBar;
+}
+
+namespace Views {
 
 ///@brief The MainWindow counterpart for QtQuick
 /// Provides the ability of acepting drops of dock widgets.
 /// It's not a real QWindow and not a main window in the sense of QMainWindow. Would be overkill
 /// to have tool bars, menu bar and footer in the QtQuick implementation. That's left for the user to do.
-class DOCKS_EXPORT MainWindowQuick : public MainWindowBase
+class DOCKS_EXPORT MainWindow_qtquick : public Views::View_qtquick, public MainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWindowQuick(const QString &uniqueName,
-                             MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                             QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
+    explicit MainWindow_qtquick(const QString &uniqueName,
+                                MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                                QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
 
-    ~MainWindowQuick() override;
+    ~MainWindow_qtquick() override;
 
     /// @reimp
-    QSize minimumSize() const override;
+    QSize minSize() const override;
 
     /// @reimp
     QSize maximumSize() const override;
 
 protected:
-    SideBar *sideBar(SideBarLocation) const override;
+    Controllers::SideBar *sideBar(SideBarLocation) const override;
     QMargins centerWidgetMargins() const override;
 
 private:
     void onMultiSplitterGeometryUpdated();
 };
-
+}
 }
 
 #endif

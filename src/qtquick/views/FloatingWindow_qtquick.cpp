@@ -9,22 +9,23 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "FloatingWindowQuick_p.h"
-#include "MainWindow.h"
+#include "FloatingWindow_qtquick.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
 
-#include "TitleBarQuick_p.h"
+#include "TitleBar_qtquick.h"
 
-#include "../Logging_p.h"
-#include "../Utils_p.h"
+#include "private/Logging_p.h"
+#include "private/Utils_p.h"
 #include "controllers/DropArea.h"
-#include "../WidgetResizeHandler_p.h"
+#include "controllers/MainWindow.h"
+#include "private/WidgetResizeHandler_p.h"
 
 #include <QQuickView>
 #include <QDebug>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Views;
 
 namespace KDDockWidgets {
 
@@ -32,7 +33,7 @@ class QuickView : public QQuickView
 {
     Q_OBJECT
 public:
-    explicit QuickView(QQmlEngine *qmlEngine, FloatingWindow *floatingWindow)
+    explicit QuickView(QQmlEngine *qmlEngine, Controllers::FloatingWindow *floatingWindow)
         : QQuickView(qmlEngine, nullptr)
         , m_floatingWindow(floatingWindow)
     {
@@ -96,7 +97,7 @@ public:
     }
 #endif
 private:
-    FloatingWindow *const m_floatingWindow;
+    Controllers::FloatingWindow *const m_floatingWindow;
 };
 
 QuickView::~QuickView() = default;
@@ -104,14 +105,14 @@ QuickView::~QuickView() = default;
 }
 
 
-FloatingWindowQuick::FloatingWindowQuick(MainWindowBase *parent)
+FloatingWindow_qtquick::FloatingWindow_qtquick(MainWindowBase *parent)
     : FloatingWindow(QRect(), parent)
     , m_quickWindow(new QuickView(Config::self().qmlEngine(), this))
 {
     init();
 }
 
-FloatingWindowQuick::FloatingWindowQuick(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
+FloatingWindow_qtquick::FloatingWindow_qtquick(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent)
     : FloatingWindow(frame, QRect(), parent)
     , m_quickWindow(new QuickView(Config::self().qmlEngine(), this))
 {
@@ -120,7 +121,7 @@ FloatingWindowQuick::FloatingWindowQuick(Frame *frame, QRect suggestedGeometry, 
     setGeometry(suggestedGeometry);
 }
 
-FloatingWindowQuick::~FloatingWindowQuick()
+FloatingWindow_qtquick::~FloatingWindow_qtquick()
 {
     // Avoid a bunch of QML warnings and constraints being violated at destruction.
     // Also simply avoiding unneeded work, as QML is destroying stuff 1 by 1
@@ -132,7 +133,7 @@ FloatingWindowQuick::~FloatingWindowQuick()
         delete m_quickWindow;
 }
 
-QSize FloatingWindowQuick::minimumSize() const
+QSize FloatingWindow_qtquick::minimumSize() const
 {
     // Doesn't matter if it's not visible. We don't want the min-size to jump around. Also not so
     // easy to track as we don't have layouts
@@ -140,7 +141,7 @@ QSize FloatingWindowQuick::minimumSize() const
     return multiSplitter()->minimumSize() + QSize(0, titleBarHeight()) + QSize(margins * 2, margins * 2);
 }
 
-void FloatingWindowQuick::setGeometry(QRect geo)
+void FloatingWindow_qtquick::setGeometry(QRect geo)
 {
     // Not needed with QtWidgets, but needed with QtQuick as we don't have layouts
     geo.setSize(geo.size().expandedTo(minimumSize()));
@@ -149,17 +150,17 @@ void FloatingWindowQuick::setGeometry(QRect geo)
     m_quickWindow->setGeometry(geo);
 }
 
-int FloatingWindowQuick::contentsMargins() const
+int FloatingWindow_qtquick::contentsMargins() const
 {
     return m_visualItem->property("margins").toInt();
 }
 
-int FloatingWindowQuick::titleBarHeight() const
+int FloatingWindow_qtquick::titleBarHeight() const
 {
     return m_visualItem->property("titleBarHeight").toInt();
 }
 
-QWindow *FloatingWindowQuick::candidateParentWindow() const
+QWindow *FloatingWindow_qtquick::candidateParentWindow() const
 {
     if (auto mainWindow = qobject_cast<MainWindowBase *>(QObject::parent())) {
         return mainWindow->QQuickItem::window();
@@ -168,7 +169,7 @@ QWindow *FloatingWindowQuick::candidateParentWindow() const
     return nullptr;
 }
 
-void FloatingWindowQuick::init()
+void FloatingWindow_qtquick::init()
 {
     connect(this, &QQuickItem::visibleChanged, this, [this] {
         if (!isVisible() && !beingDeleted()) {
@@ -214,4 +215,4 @@ void FloatingWindowQuick::init()
     m_quickWindow->show();
 }
 
-#include "FloatingWindowQuick.moc"
+#include "FloatingWindow_qtquick.moc"

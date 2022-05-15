@@ -12,21 +12,24 @@
 #ifndef KD_FLOATING_WINDOWQUICK_P_H
 #define KD_FLOATING_WINDOWQUICK_P_H
 
-#include "../FloatingWindow_p.h"
+#include "View_qtquick.h"
 
 class QQuickView;
 
 namespace KDDockWidgets {
 
-class DOCKS_EXPORT FloatingWindowQuick : public FloatingWindow
+namespace Views {
+
+class MainWindow_qtquick;
+
+class DOCKS_EXPORT FloatingWindow_qtquick : public Views::View_qtquick
 {
     Q_OBJECT
 public:
-    explicit FloatingWindowQuick(MainWindowBase *parent = nullptr);
-    explicit FloatingWindowQuick(Frame *frame, QRect suggestedGeometry, MainWindowBase *parent = nullptr);
-    ~FloatingWindowQuick();
+    explicit FloatingWindow_qtquick(Controllers::FloatingWindow *controller, Views::MainWindow_qtquick *parent = nullptr);
+    ~FloatingWindow_qtquick();
 
-    QSize minimumSize() const override;
+    QSize minSize() const override;
 
 protected:
     void setGeometry(QRect) override;
@@ -35,11 +38,13 @@ private:
     int contentsMargins() const;
     int titleBarHeight() const;
     QWindow *candidateParentWindow() const;
-    void init();
+    void init() override;
     QQuickView *const m_quickWindow;
     QQuickItem *m_visualItem = nullptr;
-    Q_DISABLE_COPY(FloatingWindowQuick)
+    Q_DISABLE_COPY(FloatingWindow_qtquick)
 };
+
+}
 
 }
 

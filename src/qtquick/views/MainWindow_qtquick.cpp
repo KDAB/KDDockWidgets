@@ -9,33 +9,38 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "MainWindowQuick_p.h"
-#include "../LayoutWidget_p.h"
+#include "MainWindow_qtquick.h"
+#include "private/LayoutWidget_p.h"
+#include "controllers/MainWindow.h"
 
 #include <QDebug>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Views;
 
-MainWindowQuick::MainWindowQuick(const QString &uniqueName, MainWindowOptions options,
-                                 QQuickItem *parent, Qt::WindowFlags flags)
-    : MainWindowBase(uniqueName, options, parent, flags)
+MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOptions options,
+                                       QQuickItem *parent, Qt::WindowFlags flags)
+    : View_qtquick(new Controllers::MainWindow(this, uniqueName, options),
+                   Type::MainWindow, parent, flags)
 {
-    QWidgetAdapter::makeItemFillParent(this);
+    makeItemFillParent(this);
+
+
 
     LayoutWidget *lw = layoutWidget();
-    QWidgetAdapter::makeItemFillParent(lw);
+    makeItemFillParent(lw);
 
 
     // MainWindowQuick has the same constraints as LayoutWidget, so just forward the signal
-    connect(lw, &LayoutWidget::geometryUpdated, this, &MainWindowQuick::geometryUpdated);
+    connect(lw, &LayoutWidget::geometryUpdated, this, &MainWindow_qtquick::geometryUpdated);
 
     connect(lw, &LayoutWidget::geometryUpdated, this,
-            &MainWindowQuick::onMultiSplitterGeometryUpdated);
+            &MainWindow_qtquick::onMultiSplitterGeometryUpdated);
 }
 
-MainWindowQuick::~MainWindowQuick()
+MainWindow_qtquick::~MainWindow_qtquick()
 {
-    if (isTopLevel()) {
+    if (isRootView()()) {
         if (QWindow *window = window()) {
             QObject::setParent(nullptr);
             delete window;
@@ -43,36 +48,36 @@ MainWindowQuick::~MainWindowQuick()
     }
 }
 
-QSize MainWindowQuick::minimumSize() const
+QSize MainWindow_qtquick::minSize() const
 {
     return layoutWidget()->layoutMinimumSize();
 }
 
-QSize MainWindowQuick::maximumSize() const
+QSize MainWindow_qtquick::maximumSize() const
 {
     return layoutWidget()->layoutMaximumSizeHint();
 }
 
-SideBar *MainWindowQuick::sideBar(SideBarLocation) const
+Controllers::SideBar *MainWindow_qtquick::sideBar(SideBarLocation) const
 {
     return nullptr;
 }
 
-QMargins MainWindowQuick::centerWidgetMargins() const
+QMargins MainWindow_qtquick::centerWidgetMargins() const
 {
     qDebug() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";
     return {};
 }
 
-void MainWindowQuick::onMultiSplitterGeometryUpdated()
+void MainWindow_qtquick::onMultiSplitterGeometryUpdated()
 {
-    const QSize minSz = minimumSize();
+    const QSize minSz = minSize();
     const bool mainWindowIsTooSmall = minSz.expandedTo(size()) != size();
     if (mainWindowIsTooSmall) {
-        if (isTopLevel()) {
+        if (isRootView()()) {
             // If we're a top-level, let's go ahead and resize the QWindow
             // any other case is too complex for QtQuick as there's no layout propagation.
-            window()->resize(minSz);
+            window()->resize(minSz.width(), minSz.height());
         }
     }
 }
