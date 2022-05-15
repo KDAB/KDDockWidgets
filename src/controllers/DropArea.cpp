@@ -305,7 +305,7 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Frame *accep
     bool result = true;
     const bool needToFocusNewlyDroppedWidgets = Config::self().flags() & Config::Flag_TitleBarIsFocusable;
     const Controllers::DockWidget::List droppedDockWidgets = needToFocusNewlyDroppedWidgets
-        ? droppedWindow->layoutWidget()->dockWidgets()
+        ? droppedWindow->layout()->dockWidgets()
         : Controllers::DockWidget::List(); // just so save some memory allocations for the case where this
     // variable isn't used
 

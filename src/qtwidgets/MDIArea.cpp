@@ -30,16 +30,16 @@ class MDIArea::Private
 {
 public:
     Private(View *parent)
-        : layoutWidget(new MDILayout(parent))
+        : layout(new MDILayout(parent))
     {
     }
 
     ~Private()
     {
-        delete layoutWidget;
+        delete layout;
     }
 
-    MDILayout *const layoutWidget;
+    MDILayout *const layout;
 };
 
 MDIArea::MDIArea(QWidget *parent)
@@ -48,9 +48,9 @@ MDIArea::MDIArea(QWidget *parent)
 {
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     auto vlay = new QVBoxLayout(this);
-    vlay->addWidget(View_qtwidgets::asQWidget(d->layoutWidget));
+    vlay->addWidget(View_qtwidgets::asQWidget(d->layout));
 #else
-    QWidgetAdapter::makeItemFillParent(d->layoutWidget);
+    QWidgetAdapter::makeItemFillParent(d->layout);
 #endif
 }
 
@@ -71,20 +71,20 @@ void MDIArea::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, Initial
         dw = wrapperDW;
     }
 
-    d->layoutWidget->addDockWidget(dw, localPt, addingOption);
+    d->layout->addDockWidget(dw, localPt, addingOption);
 }
 
 void MDIArea::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
 {
-    d->layoutWidget->moveDockWidget(dw, pos);
+    d->layout->moveDockWidget(dw, pos);
 }
 
 void MDIArea::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
 {
-    d->layoutWidget->resizeDockWidget(dw, size);
+    d->layout->resizeDockWidget(dw, size);
 }
 
 QList<Controllers::Frame *> MDIArea::frames() const
 {
-    return d->layoutWidget->frames();
+    return d->layout->frames();
 }

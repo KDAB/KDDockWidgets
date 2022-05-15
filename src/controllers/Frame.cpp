@@ -82,7 +82,7 @@ Frame::Frame(View *parent, FrameOptions options, int userType)
     connect(m_tabWidget, &Controllers::Stack::currentTabChanged,
             this, &Frame::onCurrentTabChanged);
 
-    setLayoutWidget(parent ? parent->asLayout() : nullptr);
+    setLayout(parent ? parent->asLayout() : nullptr);
     view()->init();
 
     m_inCtor = false;
@@ -101,7 +101,7 @@ Frame::~Frame()
     DockRegistry::self()->unregisterFrame(this);
 
     // Run some disconnects() too, so we don't receive signals during destruction:
-    setLayoutWidget(nullptr);
+    setLayout(nullptr);
     delete m_titleBar;
     delete m_tabWidget;
 }
@@ -118,24 +118,24 @@ void Frame::onCloseEvent(QCloseEvent *e)
     }
 }
 
-void Frame::setLayoutWidget(Layout *dt)
+void Frame::setLayout(Layout *dt)
 {
-    if (dt == m_layoutWidget)
+    if (dt == m_layout)
         return;
 
     const bool wasInMainWindow = dt && isInMainWindow();
 
-    m_layoutWidget = dt;
+    m_layout = dt;
     delete m_resizeHandler;
     m_resizeHandler = nullptr;
 
-    if (m_layoutWidget) {
+    if (m_layout) {
         if (isMDI())
             m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, view());
 
-        // We keep the connect result so we don't dereference m_layoutWidget at shutdown
+        // We keep the connect result so we don't dereference m_layout at shutdown
         m_visibleWidgetCountChangedConnection->disconnect(); // TODOv2: Remove if tests pass. It's a KDBindings bug.
-        m_visibleWidgetCountChangedConnection = m_layoutWidget->visibleWidgetCountChanged.connect(&Frame::updateTitleBarVisibility, this);
+        m_visibleWidgetCountChangedConnection = m_layout->visibleWidgetCountChanged.connect(&Frame::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();
@@ -688,7 +688,7 @@ QStringList Frame::affinities() const
 
 bool Frame::isTheOnlyFrame() const
 {
-    return m_layoutWidget && m_layoutWidget->visibleCount() == 1;
+    return m_layout && m_layout->visibleCount() == 1;
 }
 
 bool Frame::isOverlayed() const
@@ -850,7 +850,7 @@ QRect Frame::dragRect() const
 
 MainWindow *Frame::mainWindow() const
 {
-    return m_layoutWidget ? m_layoutWidget->mainWindow() : nullptr;
+    return m_layout ? m_layout->mainWindow() : nullptr;
 }
 
 ///@brief Returns whether all dock widgets have the specified option set
@@ -937,7 +937,7 @@ DropArea *Frame::mdiDropAreaWrapper() const
 
 MDILayout *Frame::mdiLayoutWidget() const
 {
-    return m_layoutWidget ? m_layoutWidget->asMDILayout() : nullptr;
+    return m_layout ? m_layout->asMDILayout() : nullptr;
 }
 
 bool Frame::hasNestedMDIDockWidgets() const

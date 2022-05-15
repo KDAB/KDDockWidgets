@@ -295,8 +295,8 @@ public:
 
     void renameTab(int index, const QString &);
     void changeTabIcon(int index, const QIcon &);
-    /// @brief Sets the LayoutWidget which this frame is in
-    void setLayoutWidget(Layout *);
+    /// @brief Sets the Layout which this frame is in
+    void setLayout(Layout *);
 
     void onDockWidgetCountChanged();
 
@@ -362,7 +362,7 @@ private:
 
     void scheduleDeleteLater();
 
-    Layout *m_layoutWidget = nullptr;
+    Layout *m_layout = nullptr;
     WidgetResizeHandler *m_resizeHandler = nullptr;
     FrameOptions m_options = FrameOption_None;
     QPointer<Layouting::Item> m_layoutItem;

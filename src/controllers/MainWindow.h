@@ -125,7 +125,7 @@ public:
 
     ///@internal
     ///@brief returns the MultiSplitter.
-    Layout *layoutWidget() const;
+    Layout *layout() const;
 
     ///@internal
     ///@brief Returns the MDI layout. Or nullptr if this isn't a MDI main window

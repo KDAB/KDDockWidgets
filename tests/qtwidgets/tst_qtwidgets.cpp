@@ -905,7 +905,7 @@ void TestQtWidgets::tst_restoreEmbeddedMainWindow()
 
     QCOMPARE(window->pos(), originalPos);
     QCOMPARE(window->size(), originalSize);
-    window->mainWindow->layoutWidget()->checkSanity();
+    window->mainWindow->layout()->checkSanity();
 
     delete window;
 }
@@ -1213,7 +1213,7 @@ void TestQtWidgets::tst_addToHiddenMainWindow()
     QVERIFY(!m->isVisible());
     d1->setFloating(true);
     d2->setFloating(false);
-    m->layoutWidget()->checkSanity();
+    m->layout()->checkSanity();
 }
 
 void TestQtWidgets::tst_maxSizePropagates2()

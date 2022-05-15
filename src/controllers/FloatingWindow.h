@@ -126,7 +126,7 @@ public:
     /**
      * @brief Returns the Layout
      */
-    Layout *layoutWidget() const;
+    Layout *layout() const;
 
     /**
      * @brief Returns whether @p globalPoint is inside the title bar (or, when there's no title-bar, the draggable empty

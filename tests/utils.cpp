@@ -155,7 +155,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
 #endif
 
     auto m = std::unique_ptr<Controllers::MainWindow>(new Controllers::MainWindow(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
-    auto layout = m->layoutWidget();
+    auto layout = m->layout();
     m->show();
     m->view()->resize(QSize(700, 700));
 

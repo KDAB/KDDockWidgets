@@ -89,7 +89,7 @@ public:
 
     DropArea *dropArea() const
     {
-        return m_layoutWidget->asDropArea();
+        return m_layout->asDropArea();
     }
 
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
@@ -104,7 +104,7 @@ public:
     const MainWindowOptions m_options;
     MainWindow *const q;
     QPointer<Controllers::DockWidget> m_overlayedDockWidget;
-    Layout *m_layoutWidget = nullptr;
+    Layout *m_layout = nullptr;
     Controllers::DockWidget *m_persistentCentralDockWidget = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
 };
@@ -126,7 +126,7 @@ MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions 
 
 void MainWindow::init(const QString &name, bool initView)
 {
-    d->m_layoutWidget = createLayoutWidget(this, d->m_options);
+    d->m_layout = createLayoutWidget(this, d->m_options);
 
     if (initView)
         view()->init();
@@ -135,7 +135,7 @@ void MainWindow::init(const QString &name, bool initView)
 
     setUniqueName(name);
 
-    d->m_visibleWidgetCountConnection = d->m_layoutWidget->visibleWidgetCountChanged.connect(&MainWindow::frameCountChanged, this);
+    d->m_visibleWidgetCountConnection = d->m_layout->visibleWidgetCountChanged.connect(&MainWindow::frameCountChanged, this);
 }
 
 MainWindow::~MainWindow()
@@ -204,7 +204,7 @@ MainWindowOptions MainWindow::options() const
 
 DropArea *MainWindow::dropArea() const
 {
-    return d->m_layoutWidget->asDropArea();
+    return d->m_layout->asDropArea();
 }
 
 DropArea *MainWindow::multiSplitter() const
@@ -212,14 +212,14 @@ DropArea *MainWindow::multiSplitter() const
     return dropArea();
 }
 
-Layout *MainWindow::layoutWidget() const
+Layout *MainWindow::layout() const
 {
-    return d->m_layoutWidget;
+    return d->m_layout;
 }
 
 MDILayout *MainWindow::mdiLayoutWidget() const
 {
-    return d->m_layoutWidget->asMDILayout();
+    return d->m_layout->asMDILayout();
 }
 
 void MainWindow::setAffinities(const QStringList &affinityNames)
@@ -380,7 +380,7 @@ SideBarLocation MainWindow::Private::preferredSideBar(Controllers::DockWidget *d
 {
     // TODO: Algorithm can still be made smarter
 
-    Layouting::Item *item = q->layoutWidget()->itemForFrame(dw->d->frame());
+    Layouting::Item *item = q->layout()->itemForFrame(dw->d->frame());
     if (!item) {
         qWarning() << Q_FUNC_INFO << "No item for dock widget";
         return SideBarLocation::None;
@@ -467,14 +467,14 @@ void MainWindow::Private::updateOverlayGeometry(QSize suggestedSize)
             break;
         }
         case SideBarLocation::South: {
-            const int maxHeight = sb->pos().y() - m_layoutWidget->view()->pos().y() - 10; // gap
+            const int maxHeight = sb->pos().y() - m_layout->view()->pos().y() - 10; // gap
             const int bottom = newGeometry.bottom();
             newGeometry.setHeight(qMin(suggestedSize.height(), maxHeight));
             newGeometry.moveBottom(bottom);
             break;
         }
         case SideBarLocation::East: {
-            const int maxWidth = sb->pos().x() - m_layoutWidget->view()->pos().x() - 10; // gap
+            const int maxWidth = sb->pos().x() - m_layout->view()->pos().x() - 10; // gap
             const int right = newGeometry.right();
             newGeometry.setWidth(qMin(suggestedSize.width(), maxWidth));
             newGeometry.moveRight(right);
@@ -659,7 +659,7 @@ bool MainWindow::closeDockWidgets(bool force)
 {
     bool allClosed = true;
 
-    const auto dockWidgets = d->m_layoutWidget->dockWidgets();
+    const auto dockWidgets = d->m_layout->dockWidgets();
     for (Controllers::DockWidget *dw : dockWidgets) {
         Controllers::Frame *frame = dw->d->frame();
 
@@ -720,7 +720,7 @@ bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)
         d->affinities = mw.affinities;
     }
 
-    const bool success = layoutWidget()->deserialize(mw.multiSplitterLayout);
+    const bool success = layout()->deserialize(mw.multiSplitterLayout);
 
     // Restore the SideBars
     d->clearSideBars();
@@ -763,7 +763,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     m.uniqueName = uniqueName();
     m.screenIndex = Platform::instance()->screenNumberFor(view());
     m.screenSize = Platform::instance()->screenSizeFor(view());
-    m.multiSplitterLayout = layoutWidget()->serialize();
+    m.multiSplitterLayout = layout()->serialize();
     m.affinities = d->affinities;
     m.windowState = window ? window->windowState()
                            : Qt::WindowNoState;

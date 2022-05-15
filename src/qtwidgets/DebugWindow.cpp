@@ -203,12 +203,12 @@ DebugWindow::DebugWindow(QWidget *parent)
     connect(button, &QPushButton::clicked, this, [] {
         const auto mainWindows = DockRegistry::self()->mainwindows();
         for (MainWindow *mainWindow : mainWindows) {
-            mainWindow->layoutWidget()->checkSanity();
+            mainWindow->layout()->checkSanity();
         }
 
         const auto floatingWindows = DockRegistry::self()->floatingWindows();
         for (auto floatingWindow : floatingWindows) {
-            floatingWindow->layoutWidget()->checkSanity();
+            floatingWindow->layout()->checkSanity();
         }
     });
 
@@ -322,12 +322,12 @@ void DebugWindow::dumpDockWidgetInfo()
 
     for (Controllers::FloatingWindow *fw : floatingWindows) {
         qDebug() << fw << "; affinities=" << fw->affinities();
-        fw->layoutWidget()->dumpLayout();
+        fw->layout()->dumpLayout();
     }
 
     for (MainWindow *mw : mainWindows) {
         qDebug() << mw << "; affinities=" << mw->affinities();
-        mw->layoutWidget()->dumpLayout();
+        mw->layout()->dumpLayout();
     }
 
     for (Controllers::DockWidget *dw : dockWidgets) {

@@ -137,7 +137,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
                 auto serializedFw = LayoutSaver::Layout::s_currentLayoutBeingRestored->floatingWindowForIndex(index);
                 if (serializedFw.isValid()) {
                     if (auto fw = serializedFw.floatingWindowInstance) {
-                        layout = fw->layoutWidget();
+                        layout = fw->layout();
                     } else {
                         continue;
                     }
@@ -148,7 +148,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
             }
         } else {
             Controllers::MainWindow *mainWindow = DockRegistry::self()->mainWindowByName(placeholder.mainWindowUniqueName);
-            layout = mainWindow->layoutWidget();
+            layout = mainWindow->layout();
         }
 
         const Layouting::Item::List &items = layout->items();

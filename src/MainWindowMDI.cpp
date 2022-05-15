@@ -26,7 +26,7 @@ MainWindowMDI::~MainWindowMDI()
 
 void MainWindowMDI::addDockWidget(DockWidget *dockWidget, QPoint localPos, InitialOption addingOption)
 {
-    auto layout = static_cast<MDILayout *>(mainWindow()->layoutWidget());
+    auto layout = static_cast<MDILayout *>(mainWindow()->layout());
     layout->addDockWidget(dockWidget, localPos, addingOption);
 }
 

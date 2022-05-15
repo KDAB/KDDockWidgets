@@ -226,7 +226,7 @@ Controllers::Frame *DockRegistry::frameInMDIResize() const
         if (!mw->isMDI())
             continue;
 
-        Layout *layout = mw->layoutWidget();
+        Layout *layout = mw->layout();
         const QList<Controllers::Frame *> frames = layout->frames();
         for (Controllers::Frame *frame : frames) {
             if (WidgetResizeHandler *wrh = frame->resizeHandler()) {
@@ -701,8 +701,8 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
             if (auto dw = p->asDockWidgetController())
                 return onDockWidgetPressed(dw, static_cast<QMouseEvent *>(event));
 
-            if (auto layoutWidget = p->asLayout()) {
-                if (auto mw = layoutWidget->mainWindow()) {
+            if (auto layout = p->asLayout()) {
+                if (auto mw = layout->mainWindow()) {
                     // The user clicked somewhere in the main window's drop area, but outside of the
                     // overlayed dock widget
                     mw->clearSideBarOverlay();

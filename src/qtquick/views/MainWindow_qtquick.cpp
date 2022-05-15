@@ -26,7 +26,7 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
 {
     makeItemFillParent(this);
 
-    Layout *lw = m_controller->layoutWidget();
+    Layout *lw = m_controller->layout();
     auto layoutView = asView_qtquick(lw->view());
     makeItemFillParent(layoutView);
 
@@ -50,12 +50,12 @@ MainWindow_qtquick::~MainWindow_qtquick()
 
 QSize MainWindow_qtquick::minSize() const
 {
-    return m_controller->layoutWidget()->layoutMinimumSize();
+    return m_controller->layout()->layoutMinimumSize();
 }
 
 QSize MainWindow_qtquick::maximumSize() const
 {
-    return m_controller->layoutWidget()->layoutMaximumSizeHint();
+    return m_controller->layout()->layoutMaximumSizeHint();
 }
 
 Controllers::SideBar *MainWindow_qtquick::sideBar(SideBarLocation) const

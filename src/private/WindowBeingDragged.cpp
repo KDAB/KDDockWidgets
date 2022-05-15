@@ -142,7 +142,7 @@ QSize WindowBeingDragged::size() const
 QSize WindowBeingDragged::minSize() const
 {
     if (m_floatingWindow)
-        return m_floatingWindow->layoutWidget()->layoutMinimumSize();
+        return m_floatingWindow->layout()->layoutMinimumSize();
 
     return {};
 }
@@ -150,22 +150,22 @@ QSize WindowBeingDragged::minSize() const
 QSize WindowBeingDragged::maxSize() const
 {
     if (m_floatingWindow)
-        return m_floatingWindow->layoutWidget()->layoutMaximumSizeHint();
+        return m_floatingWindow->layout()->layoutMaximumSizeHint();
 
     return {};
 }
 
-bool WindowBeingDragged::contains(Layout *layoutWidget) const
+bool WindowBeingDragged::contains(Layout *layout) const
 {
-    if (!layoutWidget)
+    if (!layout)
         return false;
 
     if (m_floatingWindow)
-        return m_floatingWindow->layoutWidget() == layoutWidget;
+        return m_floatingWindow->layout() == layout;
 
     if (auto fw = m_draggableWidget->rootView()->asFloatingWindowController()) {
         // We're not dragging via the floating window itself, but via the tab bar. Still might represent floating window though.
-        return fw->layoutWidget() == layoutWidget && fw->hasSingleFrame();
+        return fw->layout() == layout && fw->hasSingleFrame();
     }
 
     return false;
