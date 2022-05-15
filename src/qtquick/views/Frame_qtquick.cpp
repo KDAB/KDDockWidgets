@@ -17,6 +17,7 @@
  */
 
 #include "Frame_qtquick.h"
+#include "qtquick/FrameworkWidgetFactory_qtquick.h"
 #include "views/Frame.h"
 
 #include "controllers/Frame.h"
@@ -56,16 +57,15 @@ Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
         }
     });*/
 
-    // TODOv2: Port widget factory first
-    // QQmlComponent component(Config::self().qmlEngine(),
-    //                         Config::self().frameworkWidgetFactory()->frameFilename());
+    QQmlComponent component(plat()->qmlEngine(),
+                            plat()->frameworkWidgetFactory()->frameFilename());
 
-    // m_visualItem = static_cast<QQuickItem *>(component.create());
+    m_visualItem = static_cast<QQuickItem *>(component.create());
 
-    // if (!m_visualItem) {
-    //     qWarning() << Q_FUNC_INFO << "Failed to create item" << component.errorString();
-    //     return;
-    // }
+    if (!m_visualItem) {
+        qWarning() << Q_FUNC_INFO << "Failed to create item" << component.errorString();
+        return;
+    }
 
     m_visualItem->setProperty("frameCpp", QVariant::fromValue(this));
     m_visualItem->setParentItem(this);
