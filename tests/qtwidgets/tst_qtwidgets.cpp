@@ -189,7 +189,7 @@ void TestQtWidgets::tst_dockableMainWindows()
     m1->addDockWidget(dock1, Location_OnTop);
 
     auto m2 = new KDDockWidgets::Views::MainWindow_qtwidgets("mainwindow-dockable");
-    auto m2Container = createDockWidget("mainwindow-dw", m2);
+    auto m2Container = createDockWidget("mainwindow-dw", ( View * )m2);
     auto menubar = m2->menuBar();
     menubar->addMenu("File");
     menubar->addMenu("View");
@@ -546,8 +546,8 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
     Platform::instance()->tests_waitForEvent(&container, QEvent::Resize);
     container.show();
     Platform::instance()->tests_waitForResize(&m);
-    auto dock1 = createDockWidget("dock1", new MyWidget2(QSize(50, 240)));
-    auto dock2 = createDockWidget("dock2", new MyWidget2(QSize(50, 240)));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(50, 240) }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true, {}, QSize(50, 240) }));
     m.addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
     m.addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
     Platform::instance()->tests_waitForResize(&m);
@@ -685,7 +685,7 @@ void TestQtWidgets::tst_deleteOnCloseWhenOnSideBar()
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_AutoHideSupport);
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    QPointer<Controllers::DockWidget> dock1 = createDockWidget("dock1", new MyWidget2(QSize(400, 400)), Controllers::DockWidget::Option_DeleteOnClose);
+    QPointer<Controllers::DockWidget> dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }), Controllers::DockWidget::Option_DeleteOnClose);
     m->addDockWidget(dock1, Location_OnLeft);
 
     dock1->moveToSideBar();
@@ -934,8 +934,8 @@ void TestQtWidgets::tst_negativeAnchorPositionWhenEmbedded()
     }
     auto layout = m->multiSplitter();
 
-    auto w1 = new MyWidget2(QSize(400, 400));
-    auto w2 = new MyWidget2(QSize(400, 400));
+    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
     auto d3 = createDockWidget("3", w2);
@@ -1007,10 +1007,8 @@ void TestQtWidgets::tst_maximumSizePolicy()
 {
     EnsureTopLevelsDeleted e;
 
-    auto widget = new MyWidget2();
     const int maxHeight = 250;
-    widget->setMinimumSize(QSize(200, 200));
-    widget->setSizeHint(QSize(250, maxHeight));
+    auto widget = Platform::instance()->tests_createView({ true, QSize(250, maxHeight), QSize(200, 200) });
     widget->setSizePolicy({ QSizePolicy::Preferred, QSizePolicy::Maximum });
 
     auto dock1 = createDockWidget("dock1", widget);
@@ -1049,13 +1047,13 @@ void TestQtWidgets::tst_minSizeChanges()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(600, 600), MainWindowOption_None);
     m->show();
-    auto w1 = new MyWidget2(QSize(400, 400));
-    auto w2 = new MyWidget2(QSize(400, 400));
+    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
 
     auto d1 = new Controllers::DockWidget("1");
-    d1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w1)));
+    d1->setGuestView(w1->asWrapper());
     auto d2 = new Controllers::DockWidget("2");
-    d2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w2)));
+    d2->setGuestView(w2->asWrapper());
 
     m->addDockWidget(d1, Location_OnTop);
     m->addDockWidget(d2, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
@@ -1084,9 +1082,9 @@ void TestQtWidgets::tst_minSizeChanges()
     QVERIFY(m->height() >= 1600);
 
     // add a small one to the middle
-    auto w3 = new MyWidget2(QSize(100, 100));
+    auto w3 = Platform::instance()->tests_createView({ true, {}, QSize(100, 100) });
     auto d3 = new Controllers::DockWidget("3");
-    d3->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w3)));
+    d3->setGuestView(w3->asWrapper());
     m->addDockWidget(d3, Location_OnTop, d1);
 }
 
@@ -1096,23 +1094,22 @@ void TestQtWidgets::tst_maxSizePropagates()
     EnsureTopLevelsDeleted e;
     auto dock1 = new Controllers::DockWidget("dock1");
 
-    auto w = new MyWidget2(QSize(200, 200));
-    w->setMinimumSize(120, 120);
-    w->setMaximumSize(500, 500);
-    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
+    auto w = Platform::instance()->tests_createView({ true, {}, QSize(200, 200) });
+    w->setMinimumSize(QSize(120, 120));
+    w->setMaximumSize(QSize(500, 500));
+    dock1->setGuestView(w->asWrapper());
     dock1->show();
 
-    Views::ViewWrapper_qtwidgets guestWrapper(w);
 
-    QCOMPARE(dock1->view()->minSize(), guestWrapper.minSize());
+    QCOMPARE(dock1->view()->minSize(), w->minSize());
     QCOMPARE(dock1->view()->maximumSize(), w->maximumSize());
 
-    w->setMinimumSize(121, 121);
-    w->setMaximumSize(501, 501);
+    w->setMinimumSize(QSize(121, 121));
+    w->setMaximumSize(QSize(501, 501));
 
     Platform::instance()->tests_waitForEvent(w, QEvent::LayoutRequest);
 
-    QCOMPARE(dock1->view()->minSize(), guestWrapper.minSize());
+    QCOMPARE(dock1->view()->minSize(), w->minSize());
     QCOMPARE(dock1->view()->maximumSize(), w->maximumSize());
 
     // Now let's see if our Frame also has proper size-constraints
@@ -1178,10 +1175,10 @@ void TestQtWidgets::tst_maxSizeHonouredWhenAnotherDropped()
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
     auto dock1 = new Controllers::DockWidget("dock1");
 
-    auto w = new MyWidget2(QSize(400, 400));
-    w->setMinimumSize(120, 100);
-    w->setMaximumSize(300, 150);
-    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
+    auto w = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    w->setMinimumSize(QSize(120, 100));
+    w->setMaximumSize(QSize(300, 150));
+    dock1->setGuestView(w->asWrapper());
     m1->addDockWidget(dock1, Location_OnLeft);
 
     auto dock2 = new Controllers::DockWidget("dock2");
@@ -1205,8 +1202,8 @@ void TestQtWidgets::tst_addToHiddenMainWindow()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(1000, 1000), MainWindowOption_HasCentralFrame, {}, false);
-    auto w1 = new MyWidget2(QSize(400, 400));
-    auto w2 = new MyWidget2(QSize(400, 400));
+    auto w1 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
+    auto w2 = Platform::instance()->tests_createView({ true, {}, QSize(400, 400) });
     auto d1 = createDockWidget("1", w1);
     auto d2 = createDockWidget("2", w2);
 
@@ -1225,10 +1222,10 @@ void TestQtWidgets::tst_maxSizePropagates2()
     auto m1 = createMainWindow(QSize(1000, 1000), MainWindowOption_None);
     auto dock1 = new Controllers::DockWidget("dock1");
 
-    auto w = new MyWidget2(QSize(200, 200));
-    w->setMinimumSize(120, 120);
-    w->setMaximumSize(300, 500);
-    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
+    auto w = Platform::instance()->tests_createView({ true, {}, QSize(200, 200) });
+    w->setMinimumSize(QSize(120, 120));
+    w->setMaximumSize(QSize(300, 500));
+    dock1->setGuestView(w->asWrapper());
     dock1->show();
 
     auto dock2 = new Controllers::DockWidget("dock2");
@@ -1270,10 +1267,10 @@ void TestQtWidgets::tst_maxSizeHonouredWhenDropped()
     m1->addDockWidget(dock1, Location_OnTop);
     m1->view()->resize(QSize(2000, 2000));
 
-    auto w2 = new MyWidget2(QSize(400, 400));
-    dock2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w2)));
+    auto w2 = Platform::instance()->tests_createView({ true, {}, { 0, 0 } });
+    dock2->setGuestView(w2->asWrapper());
     const int maxWidth = 200;
-    w2->setMaximumSize(maxWidth, 200);
+    w2->setMaximumSize(QSize(maxWidth, 200));
     m1->addDockWidget(dock2, Location_OnLeft);
     const int droppedWidth = dock2->dptr()->frame()->width();
     QVERIFY(droppedWidth < maxWidth + 50); // +50 to cover any margins and waste by QTabWidget
@@ -1387,9 +1384,9 @@ void TestQtWidgets::tst_complex()
 
     const int num = 21;
     for (int i = 0; i < num; ++i) {
-        auto widget = new MyWidget2(minSizes.at(i));
+        auto widget = Platform::instance()->tests_createView({ true, {}, minSizes.at(i) });
         auto dw = new Controllers::DockWidget(QString::number(i));
-        dw->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(widget)));
+        dw->setGuestView(widget->asWrapper());
         docks << dw;
     }
 

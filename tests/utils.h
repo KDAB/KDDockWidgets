@@ -142,6 +142,12 @@ Controllers::DockWidget *createDockWidget(const QString &name, QWidgetOrQuick *w
                                           Controllers::DockWidget::Options options = {},
                                           Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                                           bool show = true, const QString &affinityName = {});
+
+Controllers::DockWidget *createDockWidget(const QString &name, View *guest,
+                                          Controllers::DockWidget::Options options = {},
+                                          Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                                          bool show = true, const QString &affinityName = {});
+
 Controllers::DockWidget *createDockWidget(const QString &name, QColor color = Qt::black);
 
 void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea, Controllers::Frame *relativeTo,
@@ -294,40 +300,6 @@ protected:
 };
 
 namespace {
-
-class MyWidget2 : public QWidget
-{
-public:
-    explicit MyWidget2(QSize minSz = QSize(1, 1))
-        : m_minSz(minSz)
-        , m_sizeHint(minSz)
-    {
-    }
-
-    QSize sizeHint() const override
-    {
-        return m_sizeHint;
-    }
-
-    QSize minimumSizeHint() const override
-    {
-        return m_minSz;
-    }
-
-    void setMinSize(QSize s)
-    {
-        m_minSz = s;
-        updateGeometry();
-    }
-
-    void setSizeHint(QSize s)
-    {
-        m_sizeHint = s;
-    }
-
-    QSize m_minSz;
-    QSize m_sizeHint;
-};
 }
 
 #endif
