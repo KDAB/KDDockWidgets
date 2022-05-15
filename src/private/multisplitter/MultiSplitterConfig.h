@@ -74,8 +74,6 @@ private:
     friend class Item;
     friend class ItemBoxContainer;
 
-    void registerQmlTypes();
-
     SeparatorFactoryFunc m_separatorFactoryFunc = nullptr;
     Flags m_flags = Flag::None;
 
