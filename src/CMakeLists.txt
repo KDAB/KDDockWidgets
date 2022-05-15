@@ -35,8 +35,6 @@ set(DOCKSLIBS_SRCS
     LayoutSaver.cpp
     LayoutSaver.h
     private/LayoutSaver_p.h
-    private/Layout.cpp
-    private/Layout.h
     private/Position.cpp
     private/Position_p.h
     private/DropIndicatorOverlayInterface.cpp
@@ -77,6 +75,8 @@ set(DOCKSLIBS_SRCS
     controllers/FloatingWindow.h
     controllers/Frame.cpp
     controllers/Frame.h
+    controllers/Layout.cpp
+    controllers/Layout.h
     controllers/MainWindow.cpp
     controllers/MainWindow.h
     controllers/MDILayout.cpp

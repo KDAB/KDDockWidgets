@@ -12,13 +12,13 @@
 #include "KDDockWidgets.h"
 #include "WindowBeingDragged_p.h"
 #include "DragController_p.h"
-#include "Layout.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
 
 #include "controllers/TitleBar.h"
 #include "controllers/Stack.h"
 #include "controllers/Frame.h"
+#include "controllers/Layout.h"
 
 #include <QPixmap>
 #include <QPainter>

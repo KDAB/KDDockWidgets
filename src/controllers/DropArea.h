@@ -24,7 +24,7 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include "controllers/Frame.h"
-#include "private/Layout.h"
+#include "controllers/Layout.h"
 #include "private/DropIndicatorOverlayInterface_p.h"
 
 class TestQtWidgets;

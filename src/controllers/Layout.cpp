@@ -9,11 +9,11 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "LayoutSaver_p.h"
+#include "private/LayoutSaver_p.h"
+#include "private/Position_p.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
-#include "Position_p.h"
-#include "Utils_p.h"
+#include "private/Utils_p.h"
 
 #include "controllers/DockWidget_p.h"
 #include "controllers/Frame.h"
@@ -22,7 +22,7 @@
 
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 
-#include "multisplitter/Item_p.h"
+#include "private/multisplitter/Item_p.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;

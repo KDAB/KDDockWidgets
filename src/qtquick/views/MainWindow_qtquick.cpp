@@ -10,7 +10,7 @@
 */
 
 #include "MainWindow_qtquick.h"
-#include "private/Layout.h"
+#include "controllers/Layout.h"
 #include "controllers/MainWindow.h"
 
 #include <QDebug>
@@ -26,7 +26,7 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
 {
     makeItemFillParent(this);
 
-    Layout *lw = m_controller->layout();
+    Controllers::Layout *lw = m_controller->layout();
     auto layoutView = asView_qtquick(lw->view());
     makeItemFillParent(layoutView);
 

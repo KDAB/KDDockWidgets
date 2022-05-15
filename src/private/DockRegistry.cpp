@@ -11,7 +11,7 @@
 
 #include "DockRegistry_p.h"
 #include "Config.h"
-#include "Layout.h"
+#include "controllers/Layout.h"
 #include "Logging_p.h"
 #include "MainWindowMDI.h"
 #include "Position_p.h"
