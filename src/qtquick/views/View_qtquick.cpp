@@ -683,11 +683,6 @@ std::shared_ptr<Window> View_qtquick::window() const
     return {};
 }
 
-HANDLE View_qtquick::handle() const
-{
-    return reinterpret_cast<HANDLE>(this);
-}
-
 std::shared_ptr<ViewWrapper> View_qtquick::childViewAt(QPoint p) const
 {
     auto child = QQuickItem::childAt(p.x(), p.y());

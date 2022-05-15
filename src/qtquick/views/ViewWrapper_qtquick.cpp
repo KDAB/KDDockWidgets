@@ -186,11 +186,6 @@ std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::parentView() const
     return View_qtquick::parentViewFor(m_item);
 }
 
-HANDLE ViewWrapper_qtquick::handle() const
-{
-    return reinterpret_cast<HANDLE>(m_item.data());
-}
-
 void ViewWrapper_qtquick::grabMouse()
 {
     m_item->grabMouse();

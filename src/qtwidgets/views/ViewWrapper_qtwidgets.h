@@ -49,7 +49,6 @@ public:
     bool close() override;
     std::shared_ptr<ViewWrapper> childViewAt(QPoint localPos) const override;
     QVector<std::shared_ptr<View>> childViews() const override;
-    HANDLE handle() const override;
     void grabMouse() override;
     void releaseMouse() override;
     void setFocus(Qt::FocusReason) override;

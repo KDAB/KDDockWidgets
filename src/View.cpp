@@ -329,3 +329,8 @@ QScreen *View::screen() const
 
     return nullptr;
 }
+
+HANDLE View::handle() const
+{
+    return m_thisObj;
+}

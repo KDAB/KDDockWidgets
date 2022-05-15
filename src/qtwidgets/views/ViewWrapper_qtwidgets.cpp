@@ -263,11 +263,6 @@ std::shared_ptr<ViewWrapper> ViewWrapper_qtwidgets::childViewAt(QPoint localPos)
     return {};
 }
 
-HANDLE ViewWrapper_qtwidgets::handle() const
-{
-    return reinterpret_cast<HANDLE>(m_widget.data());
-}
-
 void ViewWrapper_qtwidgets::grabMouse()
 {
     m_widget->grabMouse();

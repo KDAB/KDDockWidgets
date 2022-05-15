@@ -95,7 +95,7 @@ public:
     /// This value only makes sense to the frontend. For example, for QtQuick it might be a
     /// QQuickItem, while for QtWidgets it's a QWidget *. Can be whatever the frontend developer wants,
     /// as long as it uniquely identifies the GUI element. KDDW backend only uses it for comparison purposes
-    virtual HANDLE handle() const = 0;
+    HANDLE handle() const;
 
     /// @brief Returns whether the gui item represented by this view was already deleted
     /// Usually false, as KDDW internal gui elements inherit View, and nobody will access them after destruction.

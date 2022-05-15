@@ -134,7 +134,6 @@ public:
     bool isMaximized() const override;
 
     std::shared_ptr<Window> window() const override;
-    HANDLE handle() const override;
     std::shared_ptr<ViewWrapper> childViewAt(QPoint p) const override;
     std::shared_ptr<ViewWrapper> rootView() const override;
     std::shared_ptr<ViewWrapper> parentView() const override;

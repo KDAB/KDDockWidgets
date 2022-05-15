@@ -365,11 +365,6 @@ public:
         return {};
     }
 
-    HANDLE handle() const override
-    {
-        return reinterpret_cast<HANDLE>(this);
-    }
-
     std::shared_ptr<ViewWrapper> rootView() const override
     {
         if (auto w = QWidget::window()) {
