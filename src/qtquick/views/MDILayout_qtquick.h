@@ -15,7 +15,9 @@
 #include "View_qtquick.h"
 
 namespace KDDockWidgets {
+namespace Controllers {
 class MDILayout;
+}
 
 namespace Views {
 
@@ -23,7 +25,7 @@ class DOCKS_EXPORT MDILayout_qtquick : public Views::View_qtquick
 {
     Q_OBJECT
 public:
-    explicit MDILayout_qtquick(MDILayout *controller, View *parent);
+    explicit MDILayout_qtquick(Controllers::MDILayout *controller, View *parent);
     ~MDILayout_qtquick();
 
     /// TODOv2
@@ -31,7 +33,7 @@ public:
     bool onResize(QSize newSize) override;
 
 private:
-    MDILayout *const m_controller;
+    Controllers::MDILayout *const m_controller;
 };
 
 }

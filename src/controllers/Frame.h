@@ -27,12 +27,12 @@
 class TestDocks;
 
 namespace KDDockWidgets {
-class MDILayout;
 class WidgetResizeHandler;
 }
 
 namespace KDDockWidgets::Controllers {
 
+class MDILayout;
 class DockWidget;
 class FloatingWindow;
 class MainWindow;

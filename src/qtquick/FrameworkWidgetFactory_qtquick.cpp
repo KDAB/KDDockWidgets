@@ -187,7 +187,7 @@ View *DefaultWidgetFactory_qtquick::createDropArea(Controllers::DropArea *contro
     return new Views::DropArea_qtquick(controller, parent);
 }
 
-View *DefaultWidgetFactory_qtquick::createMDILayout(MDILayout *controller, View *parent) const
+View *DefaultWidgetFactory_qtquick::createMDILayout(Controllers::MDILayout *controller, View *parent) const
 {
     return new Views::MDILayout_qtquick(controller, parent);
 }

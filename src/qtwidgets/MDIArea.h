@@ -18,11 +18,10 @@
 
 namespace KDDockWidgets {
 
-class MDILayout;
-
 namespace Controllers {
 class Frame;
 class DockWidget;
+class MDILayout;
 }
 
 /**

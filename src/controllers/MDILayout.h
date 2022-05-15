@@ -24,9 +24,9 @@ namespace Layouting {
 class ItemFreeContainer;
 }
 
-// TODOv2: Move to controllers/
-
 namespace KDDockWidgets {
+
+namespace Controllers {
 
 /**
  * @brief The MDILayoutWidget class implements a layout suitable for MDI style docking.
@@ -62,6 +62,8 @@ public:
 private:
     Layouting::ItemFreeContainer *const m_rootItem;
 };
+
+}
 
 }
 

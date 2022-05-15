@@ -15,7 +15,10 @@
 #include "qtwidgets/views/View_qtwidgets.h"
 
 namespace KDDockWidgets {
+
+namespace Controllers {
 class MDILayout;
+}
 
 namespace Views {
 
@@ -23,7 +26,7 @@ class DOCKS_EXPORT MDILayout_qtwidgets : public Views::View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit MDILayout_qtwidgets(MDILayout *controller, View *parent);
+    explicit MDILayout_qtwidgets(Controllers::MDILayout *controller, View *parent);
     ~MDILayout_qtwidgets();
 
     /// TODOv2
@@ -31,7 +34,7 @@ public:
     bool onResize(QSize newSize) override;
 
 private:
-    MDILayout *const m_controller;
+    Controllers::MDILayout *const m_controller;
 };
 
 }

@@ -38,10 +38,10 @@ namespace KDDockWidgets {
 class ViewWrapper;
 class Controller;
 class Window;
-class MDILayout;
 class LayoutWidget;
 
 namespace Controllers {
+class MDILayout;
 class DropArea;
 class DockWidget;
 class FloatingWindow;
@@ -246,7 +246,7 @@ public:
     Controllers::DockWidget *asDockWidgetController() const;
     Controllers::MainWindow *asMainWindowController() const;
     Controllers::DropArea *asDropAreaController() const;
-    MDILayout *asMDILayoutController() const;
+    Controllers::MDILayout *asMDILayoutController() const;
     LayoutWidget *asLayout() const;
 
     /// @brief returns whether this view is inside the specified window

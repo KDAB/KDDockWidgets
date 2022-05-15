@@ -69,7 +69,7 @@ public:
     View *createRubberBand(View *parent) const override;
     View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
-    View *createMDILayout(MDILayout *, View *parent) const override;
+    View *createMDILayout(Controllers::MDILayout *, View *parent) const override;
 
     Q_INVOKABLE QUrl titleBarFilename() const;
     QUrl dockwidgetFilename() const;
