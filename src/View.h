@@ -38,7 +38,6 @@ namespace KDDockWidgets {
 class ViewWrapper;
 class Controller;
 class Window;
-class Layout;
 
 namespace Controllers {
 class MDILayout;
@@ -46,6 +45,7 @@ class DropArea;
 class DockWidget;
 class FloatingWindow;
 class Frame;
+class Layout;
 class Stack;
 class TabBar;
 class TitleBar;
@@ -247,7 +247,7 @@ public:
     Controllers::MainWindow *asMainWindowController() const;
     Controllers::DropArea *asDropAreaController() const;
     Controllers::MDILayout *asMDILayoutController() const;
-    Layout *asLayout() const;
+    Controllers::Layout *asLayout() const;
 
     /// @brief returns whether this view is inside the specified window
     bool isInWindow(std::shared_ptr<Window> window) const;

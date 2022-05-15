@@ -47,6 +47,8 @@ class DockWidget;
 class MainWindow;
 }
 
+namespace Controllers {
+
 /**
  * @brief The widget (QWidget or QQuickItem) which holds a layout of dock widgets.
  *
@@ -234,6 +236,8 @@ private:
     KDBindings::ConnectionHandle m_minSizeChangedHandler;
     bool m_viewDeleted = false;
 };
+
+}
 
 }
 

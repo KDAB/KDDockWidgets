@@ -39,13 +39,13 @@ class LayoutSaver;
 class StateDragging;
 class FrameQuick;
 class DockWidgetQuick;
-class Layout;
 
 namespace Controllers {
 
 class MainWindow;
 class FloatingWindow;
 class Frame;
+class Layout;
 class TitleBar;
 
 /**
@@ -524,7 +524,7 @@ public:
 private:
 #endif
     Q_DISABLE_COPY(DockWidget)
-    friend class Layout;
+    friend class Controllers::Layout;
     friend class MDILayoutWidget;
     friend class Controllers::FloatingWindow;
     friend class Frame;

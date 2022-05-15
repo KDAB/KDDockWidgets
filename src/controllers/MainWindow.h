@@ -32,13 +32,13 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
-class Layout;
 
 namespace Controllers {
 
 class MDILayout;
 class DropArea;
 class Frame;
+class Layout;
 class SideBar;
 class DockWidget;
 

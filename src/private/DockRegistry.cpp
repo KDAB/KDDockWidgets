@@ -253,7 +253,7 @@ Controllers::MainWindow::List DockRegistry::mainWindowsWithAffinity(const QStrin
     return result;
 }
 
-Layout *DockRegistry::layoutForItem(const Layouting::Item *item) const
+Controllers::Layout *DockRegistry::layoutForItem(const Layouting::Item *item) const
 {
     if (!item->hostWidget())
         return nullptr;
@@ -263,7 +263,7 @@ Layout *DockRegistry::layoutForItem(const Layouting::Item *item) const
 
 bool DockRegistry::itemIsInMainWindow(const Layouting::Item *item) const
 {
-    if (Layout *layout = layoutForItem(item)) {
+    if (Controllers::Layout *layout = layoutForItem(item)) {
         return layout->isInMainWindow(/*honoursNesting=*/true);
     }
 
@@ -329,12 +329,12 @@ void DockRegistry::unregisterFloatingWindow(Controllers::FloatingWindow *window)
     maybeDelete();
 }
 
-void DockRegistry::registerLayout(Layout *layout)
+void DockRegistry::registerLayout(Controllers::Layout *layout)
 {
     m_layouts << layout;
 }
 
-void DockRegistry::unregisterLayout(Layout *layout)
+void DockRegistry::unregisterLayout(Controllers::Layout *layout)
 {
     m_layouts.removeOne(layout);
 }
@@ -510,7 +510,7 @@ const Controllers::MainWindow::List DockRegistry::mainwindows() const
     return m_mainWindows;
 }
 
-const QVector<Layout *> DockRegistry::layouts() const
+const QVector<Controllers::Layout *> DockRegistry::layouts() const
 {
     return m_layouts;
 }

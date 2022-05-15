@@ -21,14 +21,11 @@
 #include "controllers/DropArea.h"
 #include "kddockwidgets/docks_export.h"
 
-namespace KDDockWidgets {
-class Layout;
-}
-
 namespace KDDockWidgets::Controllers {
 
 class DropArea;
 class Frame;
+class Layout;
 class MainWindow;
 class TitleBar;
 

@@ -27,10 +27,10 @@ namespace KDDockWidgets {
 namespace Controllers {
 class Frame;
 class FloatingWindow;
+class Layout;
 }
 
 class Draggable;
-class Layout;
 
 struct DOCKS_EXPORT_FOR_UNIT_TESTS WindowBeingDragged
 {
@@ -55,7 +55,7 @@ public:
 
     /// @brief returns whether this window being dragged contains the specified drop area
     /// useful since we don't want to drop onto ourselves.
-    bool contains(Layout *) const;
+    bool contains(Controllers::Layout *) const;
 
     ///@brief returns the affinities of the window being dragged
     virtual QStringList affinities() const;

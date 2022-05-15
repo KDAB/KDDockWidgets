@@ -32,10 +32,10 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 class FloatingWindow;
+class Layout;
 class SideBar;
 }
 
-class Layout;
 class MainWindowMDI;
 struct WindowBeingDragged;
 
@@ -64,8 +64,8 @@ public:
     void registerFloatingWindow(Controllers::FloatingWindow *);
     void unregisterFloatingWindow(Controllers::FloatingWindow *);
 
-    void registerLayout(Layout *);
-    void unregisterLayout(Layout *);
+    void registerLayout(Controllers::Layout *);
+    void unregisterLayout(Controllers::Layout *);
 
     void registerFrame(Controllers::Frame *);
     void unregisterFrame(Controllers::Frame *);
@@ -101,7 +101,7 @@ public:
     const Controllers::MainWindow::List mainWindows(const QStringList &names);
 
     ///@brief returns the list of Layout instances
-    const QVector<Layout *> layouts() const;
+    const QVector<Controllers::Layout *> layouts() const;
 
     ///@brief returns a list of all Frame instances
     const QList<Controllers::Frame *> frames() const;
@@ -191,7 +191,7 @@ public:
     Controllers::MainWindow::List mainWindowsWithAffinity(const QStringList &affinities) const;
 
     /// @brief Returns the Layout where the specified item is in
-    Layout *layoutForItem(const Layouting::Item *) const;
+    Controllers::Layout *layoutForItem(const Layouting::Item *) const;
 
     /// @brief Returns whether the item is in a main window.
     /// Nesting is honoured. (MDIArea inside DropArea inside MainWindow, for example)
@@ -252,7 +252,7 @@ private:
     Controllers::MainWindow::List m_mainWindows;
     QList<Controllers::Frame *> m_frames;
     QVector<Controllers::FloatingWindow *> m_floatingWindows;
-    QVector<Layout *> m_layouts;
+    QVector<Controllers::Layout *> m_layouts;
     QPointer<Controllers::DockWidget> m_focusedDockWidget;
     KDBindings::ConnectionHandle m_connection;
 

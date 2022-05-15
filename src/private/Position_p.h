@@ -38,9 +38,8 @@ namespace KDDockWidgets {
 namespace Controllers {
 class DockWidget;
 class Frame;
-}
-
 class Layout;
+}
 
 // Just a RAII class so we don't forget to unref
 struct ItemRef
@@ -116,7 +115,7 @@ public:
     }
 
     ///@brief Removes the placeholders that belong to this multisplitter
-    void removePlaceholders(const Layout *);
+    void removePlaceholders(const Controllers::Layout *);
 
     ///@brief Removes the placeholders that reference a FloatingWindow
     void removeNonMainWindowPlaceholders();

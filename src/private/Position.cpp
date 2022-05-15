@@ -89,7 +89,7 @@ void Position::removePlaceholders()
     m_placeholders.clear();
 }
 
-void Position::removePlaceholders(const Layout *ms)
+void Position::removePlaceholders(const Controllers::Layout *ms)
 {
     auto layoutView = ms->view();
     m_placeholders.erase(std::remove_if(m_placeholders.begin(), m_placeholders.end(), [layoutView](const std::unique_ptr<ItemRef> &itemref) {
@@ -127,7 +127,7 @@ void Position::deserialize(const LayoutSaver::Position &lp)
     m_lastOverlayedGeometries = lp.lastOverlayedGeometries;
 
     for (const auto &placeholder : qAsConst(lp.placeholders)) {
-        Layout *layout;
+        Controllers::Layout *layout;
         int itemIndex = placeholder.itemIndex;
         if (placeholder.isFloatingWindow) {
             const int index = placeholder.indexOfFloatingWindow;
@@ -173,7 +173,7 @@ LayoutSaver::Position Position::serialize() const
         LayoutSaver::Placeholder p;
 
         Layouting::Item *item = itemRef->item;
-        Layout *layout = DockRegistry::self()->layoutForItem(item);
+        Controllers::Layout *layout = DockRegistry::self()->layoutForItem(item);
         const auto itemIndex = layout->items().indexOf(item);
 
         auto fw = layout->floatingWindow();
