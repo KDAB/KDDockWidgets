@@ -19,6 +19,7 @@
 
 #include "controllers/TitleBar.h"
 #include "controllers/FloatingWindow.h"
+#include "Platform.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -84,11 +85,11 @@ bool WidgetResizeHandler::eventFilter(QObject *o, QEvent *e)
     if (s_disableAllHandlers)
         return false;
 
-    auto widget = qobject_cast<QWidgetOrQuick *>(o);
+    auto widget = Platform::instance()->qobjectAsView(o);
     if (!widget)
         return false;
 
-    if (m_isTopLevelWindowResizer && (!widget->isTopLevel() || o != mTarget->asQObject()))
+    if (m_isTopLevelWindowResizer && (!widget->isRootView() || !widget->equals(mTarget)))
         return false;
 
     switch (e->type()) {
