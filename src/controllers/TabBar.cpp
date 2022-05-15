@@ -15,6 +15,7 @@
 #include "controllers/Stack.h"
 #include "controllers/FloatingWindow.h"
 #include "views/TabBar.h"
+#include "Platform.h"
 
 #include "private/DragController_p.h"
 #include "private/Utils_p.h"
@@ -50,7 +51,7 @@ bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
     if (!defaultResult || !tabsAreMovable()) {
         // Nothing more to do. If the drag wouldn't start anyway, return false.
         // And if the tabs aren't movable, just return the default result, which just considers
-        // QApplication::startDragDistances
+        // startDragDistance
         return defaultResult;
     }
 
@@ -61,10 +62,12 @@ bool Controllers::TabBar::dragCanStart(QPoint pressPos, QPoint pos) const
     const int deltaX = qAbs(pos.x() - pressPos.x());
     const int deltaY = qAbs(pos.y() - pressPos.y());
 
-    if (deltaY > 5 * QApplication::startDragDistance()) {
+    const int startDragDistance = Platform::instance()->startDragDistance();
+
+    if (deltaY > 5 * startDragDistance) {
         // Moving up or down too much results in a detach. No tab re-ordering allowed.
         return true;
-    } else if (deltaY > QApplication::startDragDistance() && deltaX < QApplication::startDragDistance()) {
+    } else if (deltaY > startDragDistance && deltaX < startDragDistance) {
         // Moved a bit up or down, but not left/right, then detach too.
         // Only if it's going considerably left/right we allow to re-order tabs.
         return true;

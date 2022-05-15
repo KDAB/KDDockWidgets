@@ -34,6 +34,8 @@ public:
     int screenNumberFor(View *) const override;
     QSize screenSizeFor(View *) const override;
 
+    int startDragDistance() const override;
+
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtwidgets(int &argc, char **argv);
     void tests_initPlatform_impl() override;

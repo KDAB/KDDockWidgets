@@ -178,15 +178,6 @@ inline bool isNonClientMouseEvent(const QEvent *e)
     return false;
 }
 
-inline int startDragDistance()
-{
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    return QApplication::startDragDistance();
-#else
-    return 4;
-#endif
-}
-
 /// @brief Returns the QWidget or QtQuickItem at the specified position
 /// Basically QApplication::widgetAt() but with support for QtQuick
 inline QWidget *mouseReceiverAt(QPoint globalPos)

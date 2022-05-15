@@ -53,6 +53,11 @@ bool Platform::isQtQuick() const
     return strcmp(name(), "qtquick") == 0;
 }
 
+int Platform::startDragDistance() const
+{
+    return 4;
+}
+
 #ifdef DOCKS_DEVELOPER_MODE
 
 /*static*/

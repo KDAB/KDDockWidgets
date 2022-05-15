@@ -82,6 +82,9 @@ public:
     /// @brief Returns whether this platform is QtQuick
     bool isQtQuick() const;
 
+    /// @brief Returns how many pixels the mouse must move for a drag to start
+    virtual int startDragDistance() const;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions

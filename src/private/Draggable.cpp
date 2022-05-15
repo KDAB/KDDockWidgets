@@ -13,6 +13,7 @@
 #include "DragController_p.h"
 #include "WidgetResizeHandler_p.h"
 #include "Utils_p.h"
+#include "Platform.h"
 
 #include "controllers/FloatingWindow.h"
 
@@ -54,7 +55,7 @@ View *Draggable::asView() const
 
 bool Draggable::dragCanStart(QPoint pressPos, QPoint globalPos) const
 {
-    return (globalPos - pressPos).manhattanLength() > KDDockWidgets::startDragDistance();
+    return (globalPos - pressPos).manhattanLength() > Platform::instance()->startDragDistance();
 }
 
 void Draggable::setWidgetResizeHandler(WidgetResizeHandler *w)
