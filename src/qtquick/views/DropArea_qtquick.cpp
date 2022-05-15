@@ -9,35 +9,35 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DropArea_qtwidgets.h"
+#include "DropArea_qtquick.h"
 #include "private/Utils_p.h"
 #include "controllers/DropArea.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-DropArea_qtwidgets::DropArea_qtwidgets(Controllers::DropArea *dropArea, View *parent)
-    : Views::View_qtwidgets<QWidget>(dropArea, Type::DropArea, parent ? qobject_cast<QWidget *>(parent->asQObject()) : nullptr)
+DropArea_qtquick::DropArea_qtquick(Controllers::DropArea *dropArea, View *parent)
+    : Views::View_qtquick(dropArea, Type::DropArea, asQQuickItem(parent))
     , m_dropArea(dropArea)
 {
     Q_ASSERT(dropArea);
     if (isWayland()) {
-        setAcceptDrops(true);
+        qWarning() << "Dropping not implement for QtQuick on Wayland yet!";
     }
 }
 
-DropArea_qtwidgets::~DropArea_qtwidgets()
+DropArea_qtquick::~DropArea_qtquick()
 {
     if (!freed())
         m_dropArea->viewAboutToBeDeleted();
 }
 
-void DropArea_qtwidgets::onLayoutRequest()
+void DropArea_qtquick::onLayoutRequest()
 {
     m_dropArea->updateSizeConstraints();
 }
 
-bool DropArea_qtwidgets::onResize(QSize newSize)
+bool DropArea_qtquick::onResize(QSize newSize)
 {
     return m_dropArea->onResize(newSize);
 }

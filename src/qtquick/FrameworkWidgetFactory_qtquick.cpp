@@ -24,7 +24,7 @@
 
 // #include "qtquick/views/FloatingWindow_qtquick.h"
 #include "qtquick/views/DockWidget_qtquick.h"
-// #include "qtquick/views/DropArea_qtquick.h"
+#include "qtquick/views/DropArea_qtquick.h"
 #include "qtquick/views/Frame_qtquick.h"
 #include "qtquick/views/View_qtquick.h"
 #include "qtquick/views/Separator_qtquick.h"
@@ -182,10 +182,9 @@ QIcon DefaultWidgetFactory_qtquick::iconForButtonType(TitleBarButtonType type, q
     return icon;
 }
 
-View *DefaultWidgetFactory_qtquick::createDropArea(Controllers::DropArea *, View *) const
+View *DefaultWidgetFactory_qtquick::createDropArea(Controllers::DropArea *controller, View *parent) const
 {
-    return {};
-    // return new Views::DropArea_qtquick(controller, parent);
+    return new Views::DropArea_qtquick(controller, parent);
 }
 
 View *DefaultWidgetFactory_qtquick::createMDILayout(MDILayoutWidget *, View *) const
