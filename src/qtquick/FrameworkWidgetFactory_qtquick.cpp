@@ -33,7 +33,7 @@
 // #include "qtquick/views/SideBar_qtquick.h"
 #include "qtquick/views/Stack_qtquick.h"
 // #include "qtquick/views/MainWindow_qtquick.h"
-// #include "qtquick/views/MDILayout_qtquick.h"
+#include "qtquick/views/MDILayout_qtquick.h"
 
 
 
@@ -187,10 +187,9 @@ View *DefaultWidgetFactory_qtquick::createDropArea(Controllers::DropArea *contro
     return new Views::DropArea_qtquick(controller, parent);
 }
 
-View *DefaultWidgetFactory_qtquick::createMDILayout(MDILayoutWidget *, View *) const
+View *DefaultWidgetFactory_qtquick::createMDILayout(MDILayoutWidget *controller, View *parent) const
 {
-    return {};
-    // return new Views::MDILayout_qtquick(controller, parent);
+    return new Views::MDILayout_qtquick(controller, parent);
 }
 
 Q_INVOKABLE QUrl DefaultWidgetFactory_qtquick::titleBarFilename() const
