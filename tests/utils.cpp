@@ -60,33 +60,6 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     return ptr;
 }
 
-Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QWidgetOrQuick *w,
-                                                                Controllers::DockWidget::Options options,
-                                                                Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
-                                                                bool show,
-                                                                const QString &affinityName)
-{
-    w->setFocusPolicy(Qt::StrongFocus);
-    auto dock = new Controllers::DockWidget(name, options, layoutSaverOptions);
-    dock->setAffinityName(affinityName);
-    dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
-    dock->setObjectName(name);
-    dock->view()->setGeometry(QRect(0, 0, 400, 400));
-    if (show) {
-        dock->show();
-        dock->dptr()->morphIntoFloatingWindow();
-        dock->view()->activateWindow();
-        Q_ASSERT(dock->window());
-        if (Platform::instance()->tests_waitForWindowActive(dock->view()->window(), 1000)) {
-            return dock;
-        }
-        qWarning() << Q_FUNC_INFO << "Couldn't activate window";
-        return nullptr;
-    } else {
-        return dock;
-    }
-};
-
 Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, View *guest,
                                                                 Controllers::DockWidget::Options options,
                                                                 Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,

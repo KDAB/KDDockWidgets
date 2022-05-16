@@ -741,7 +741,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
     if (!me)
         return MinimalStateMachine::eventFilter(o, e);
 
-    auto w = qobject_cast<QWidgetOrQuick *>(o);
+    auto w = qobject_cast<QWidget *>(o);
     if (!w)
         return MinimalStateMachine::eventFilter(o, e);
 
@@ -788,7 +788,7 @@ StateBase *DragController::activeState() const
 }
 
 #if defined(Q_OS_WIN)
-static QWidgetOrQuick *qtTopLevelForHWND(HWND hwnd)
+static QWidget *qtTopLevelForHWND(HWND hwnd)
 {
     const QList<QWindow *> windows = qApp->topLevelWindows();
     for (QWindow *window : windows) {
@@ -822,7 +822,7 @@ static QWidgetOrQuick *qtTopLevelForHWND(HWND hwnd)
     return nullptr;
 }
 
-static QRect topLevelGeometry(const QWidgetOrQuick *topLevel)
+static QRect topLevelGeometry(const QWidget *topLevel)
 {
     if (auto mainWindow = qobject_cast<const MainWindowBase *>(topLevel))
         return mainWindow->windowGeometry();
