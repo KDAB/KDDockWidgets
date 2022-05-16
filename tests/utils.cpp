@@ -21,14 +21,6 @@
 #include <QPainter>
 #include <QtTest/QtTest>
 
-#ifdef KDDOCKWIDGETS_QTQUICK
-#include "DockWidgetQuick.h"
-#include "private/quick/MainWindowQuick_p.h"
-#include <QQuickView>
-#else
-#include <QPushButton>
-#endif
-
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 using namespace KDDockWidgets::Tests;
@@ -129,16 +121,6 @@ Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &n
     return createDockWidget(name, Platform::instance()->tests_createView({ true, {}, { 100, 100 } }));
 };
 
-static QWidgetOrQuick *createGuestWidget(int i)
-{
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    return new QPushButton(QStringLiteral("%1").arg(i));
-#else
-    Q_UNUSED(i);
-    return new QWidgetAdapter();
-#endif
-}
-
 std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockDescriptor> &docks)
 {
     static int count = 0;
@@ -163,7 +145,8 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
 
     int i = 0;
     for (DockDescriptor &desc : docks) {
-        desc.createdDock = createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), createGuestWidget(i), {}, {}, false);
+        auto guest = Platform::instance()->tests_createView({ true, {}, { 100, 100 } });
+        desc.createdDock = createDockWidget(QStringLiteral("%1-%2").arg(i).arg(count), guest, {}, {}, false);
         Controllers::DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
             relativeTo = docks.at(desc.relativeToIndex).createdDock;
@@ -301,11 +284,3 @@ void KDDockWidgets::Tests::nestDockWidget(Controllers::DockWidget *dock, DropAre
 }
 
 EmbeddedWindow::~EmbeddedWindow() = default;
-
-#ifdef KDDOCKWIDGETS_QTQUICK
-MyWidget2::~MyWidget2() = default;
-NonClosableWidget::~NonClosableWidget() = default;
-QTextEdit::~QTextEdit() = default;
-FocusableWidget::~FocusableWidget() = default;
-QPushButton::~QPushButton() = default;
-#endif

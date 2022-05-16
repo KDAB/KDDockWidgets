@@ -29,7 +29,6 @@
 
 #include <QLineEdit>
 #include <QMenuBar>
-#include <QPushButton>
 #include <QTabBar>
 #include <QTextEdit>
 #endif

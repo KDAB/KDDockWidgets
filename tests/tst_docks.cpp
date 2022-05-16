@@ -515,11 +515,11 @@ void TestDocks::tst_restoreTwice()
     EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
 
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
-    auto dock3 = createDockWidget("3", new QPushButton("3"));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
     dock2->dptr()->morphIntoFloatingWindow();
     dock3->dptr()->morphIntoFloatingWindow();
@@ -753,7 +753,7 @@ void TestDocks::tst_doubleClose()
         // Test for #141, double delete would ruin lastPositions()
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow();
-        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, Location_OnBottom);
 
         QVERIFY(!dock1->dptr()->lastPosition()->wasFloating());
@@ -771,7 +771,7 @@ void TestDocks::tst_dockInternal()
      */
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     auto dropArea = m->dropArea();
 
     auto centralFrame = dropArea->items()[0]->asFrameController();
@@ -784,8 +784,8 @@ void TestDocks::tst_maximizeAndRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
@@ -810,18 +810,18 @@ void TestDocks::tst_propagateResize2()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, KDDockWidgets::Location_OnTop);
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight, dock1);
 
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
-    auto dock4 = createDockWidget("dock4", new QPushButton("four"));
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
+    auto dock4 = createDockWidget("dock4", Platform::instance()->tests_createView({ true }));
 
     m->addDockWidget(dock3, KDDockWidgets::Location_OnBottom);
     m->addDockWidget(dock4, KDDockWidgets::Location_OnRight, dock3);
 
-    auto dock5 = createDockWidget("dock5", new QPushButton("five"));
+    auto dock5 = createDockWidget("dock5", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock5, KDDockWidgets::Location_OnLeft);
 
     auto dropArea = m->dropArea();
@@ -1105,7 +1105,7 @@ void TestDocks::tst_28NestedWidgets()
 
     int i = 0;
     for (DockDescriptor &desc : docksToCreate) {
-        desc.createdDock = createDockWidget(QString("%1").arg(i), new QPushButton(QString("%1").arg(i).toLatin1()), {}, {}, false);
+        desc.createdDock = createDockWidget(QString("%1").arg(i), Platform::instance()->tests_createView({ true }), {}, {}, false);
 
         Controllers::DockWidget *relativeTo = nullptr;
         if (desc.relativeToIndex != -1)
@@ -1162,7 +1162,7 @@ void TestDocks::tst_28NestedWidgets()
 void TestDocks::tst_closeReparentsToNull()
 {
     EnsureTopLevelsDeleted e;
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto fw1 = dock1->window();
     QVERIFY(dock1->view()->parent() != nullptr);
     dock1->close();
@@ -1176,7 +1176,7 @@ void TestDocks::tst_startHidden()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, /*show=*/false);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }), {}, {}, /*show=*/false);
     m->addDockWidget(dock1, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
     delete dock1;
 }
@@ -1186,8 +1186,8 @@ void TestDocks::tst_startHidden2()
     EnsureTopLevelsDeleted e;
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, {}, false);
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, {}, false);
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {}, {}, false);
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, {}, false);
 
         auto dropArea = m->dropArea();
         Controllers::DropArea *layout = dropArea;
@@ -1215,9 +1215,9 @@ void TestDocks::tst_startHidden2()
 
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, {}, false);
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, {}, false);
-        auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, {}, false);
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {}, {}, false);
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, {}, false);
+        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {}, {}, false);
 
         auto dropArea = m->dropArea();
         Controllers::DropArea *layout = dropArea;
@@ -1299,9 +1299,9 @@ void TestDocks::tst_negativeAnchorPosition2()
     auto dropArea = m->dropArea();
     Controllers::DropArea *layout = dropArea;
 
-    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, /*show=*/false);
-    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, /*show=*/false);
-    auto dock3 = createDockWidget("3", new QPushButton("3"), {}, {}, /*show=*/false);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }), {}, {}, /*show=*/false);
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }), {}, {}, /*show=*/false);
+    auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }), {}, {}, /*show=*/false);
 
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight, nullptr, InitialVisibilityOption::StartHidden);
@@ -1469,8 +1469,8 @@ void TestDocks::tst_invalidAnchorGroup()
     EnsureTopLevelsDeleted e;
 
     {
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
         QPointer<Controllers::FloatingWindow> fw = dock2->dptr()->morphIntoFloatingWindow();
         nestDockWidget(dock1, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop);
@@ -1490,9 +1490,9 @@ void TestDocks::tst_invalidAnchorGroup()
         // Stack 1, 2, 3, close 2, close 1
 
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
 
         m->addDockWidget(dock3, Location_OnTop);
         m->addDockWidget(dock2, Location_OnTop);
@@ -1511,8 +1511,8 @@ void TestDocks::tst_addAsPlaceholder()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"), {}, {}, false);
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, {}, false);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), {}, {}, false);
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, {}, false);
 
     m->addDockWidget(dock1, Location_OnBottom);
     m->addDockWidget(dock2, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
@@ -1540,9 +1540,9 @@ void TestDocks::tst_removeItem()
     // Tests that MultiSplitterLayout::removeItem() works
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, {}, false);
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, {}, false);
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
 
     m->addDockWidget(dock1, Location_OnBottom);
     m->addDockWidget(dock2, Location_OnTop, nullptr, InitialVisibilityOption::StartHidden);
@@ -1642,9 +1642,9 @@ void TestDocks::tst_clear()
     QCOMPARE(Controllers::Frame::dbg_numFrames(), 0);
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
-    auto dock3 = createDockWidget("3", new QPushButton("3"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
     auto fw3 = dock3->floatingWindow();
 
     m->addDockWidget(dock1, Location_OnLeft);
@@ -1671,9 +1671,9 @@ void TestDocks::tst_samePositionAfterHideRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
-    auto dock3 = createDockWidget("3", new QPushButton("3"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
@@ -1692,8 +1692,8 @@ void TestDocks::tst_startClosed()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
     auto dropArea = m->dropArea();
     Controllers::DropArea *layout = dropArea;
@@ -1738,8 +1738,8 @@ void TestDocks::tst_crash()
     EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
     auto layout = m->multiSplitter();
 
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
@@ -1769,8 +1769,8 @@ void TestDocks::tst_refUnrefItem()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("1"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("2"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
     auto dropArea = m->dropArea();
@@ -1791,7 +1791,7 @@ void TestDocks::tst_refUnrefItem()
     QVERIFY(!item1.data());
 
     // 2. Delete dock3, but neither the frame or the item is deleted, since there were two tabs to begin with
-    auto dock3 = createDockWidget("dock3", new QPushButton("3"));
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
     QCOMPARE(item2->refCount(), 2);
     dock2->addDockWidgetAsTab(dock3);
     QCOMPARE(item2->refCount(), 3);
@@ -1814,7 +1814,7 @@ void TestDocks::tst_refUnrefItem()
 
     // 4. Move a closed dock widget from one mainwindow to another
     // It should delete its old placeholder
-    auto dock4 = createDockWidget("dock4", new QPushButton("4"));
+    auto dock4 = createDockWidget("dock4", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock4, KDDockWidgets::Location_OnLeft);
 
     QPointer<Controllers::Frame> frame4 = dock4->dptr()->frame();
@@ -1838,8 +1838,8 @@ void TestDocks::tst_placeholderCount()
 
     // 1. MainWindow with just the initial frame.
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     auto dropArea = m->dropArea();
     auto layout = dropArea;
 
@@ -1902,7 +1902,7 @@ void TestDocks::tst_availableLengthForOrientation()
 
     // 2. Now do the same, but we have some widget docked
 
-    auto dock1 = createDockWidget("dock1", new QPushButton("1"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
 
     const int dock1MinWidth =
@@ -1923,7 +1923,7 @@ void TestDocks::tst_closeShowWhenNoCentralFrame()
     // Tests a crash I got when hiding and showing and no central frame
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
-    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", new QPushButton("1"));
+    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     dock1->close();
     m->layout()->checkSanity();
@@ -1941,11 +1941,11 @@ void TestDocks::tst_setAsCurrentTab()
 
     // Tests DockWidget::setAsCurrentTab() and DockWidget::isCurrentTab()
     // 1. a single dock widget is current, by definition
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     QVERIFY(dock1->isCurrentTab());
 
     // 2. Tab dock2 to the group, dock2 is current now
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     dock1->addDockWidgetAsTab(dock2);
 
     QVERIFY(!dock1->isCurrentTab());
@@ -1976,7 +1976,7 @@ void TestDocks::tst_placeholderDisappearsOnReadd()
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     Controllers::DropArea *layout = m->multiSplitter();
 
-    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", new QPushButton("1"));
+    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     QCOMPARE(layout->count(), 1);
     QCOMPARE(layout->placeholderCount(), 0);
@@ -2007,8 +2007,8 @@ void TestDocks::tst_placeholdersAreRemovedProperly()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     Controllers::DropArea *layout = m->multiSplitter();
-    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", new QPushButton("1"));
-    QPointer<Controllers::DockWidget> dock2 = createDockWidget("2", new QPushButton("2"));
+    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    QPointer<Controllers::DockWidget> dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     Item *item = layout->items().constFirst();
     m->addDockWidget(dock2, Location_OnRight);
@@ -2149,12 +2149,12 @@ void TestDocks::tst_closeAllDockWidgets()
 
     auto m = createMainWindow();
     auto dropArea = m->dropArea();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("one"));
-    auto dock3 = createDockWidget("dock3", new QPushButton("one"));
-    auto dock4 = createDockWidget("dock4", new QPushButton("one"));
-    auto dock5 = createDockWidget("dock5", new QPushButton("one"));
-    auto dock6 = createDockWidget("dock6", new QPushButton("one"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
+    auto dock4 = createDockWidget("dock4", Platform::instance()->tests_createView({ true }));
+    auto dock5 = createDockWidget("dock5", Platform::instance()->tests_createView({ true }));
+    auto dock6 = createDockWidget("dock6", Platform::instance()->tests_createView({ true }));
 
     QPointer<Controllers::FloatingWindow> fw = dock3->dptr()->morphIntoFloatingWindow();
 
@@ -2208,9 +2208,9 @@ void TestDocks::tst_toggleMiddleDockCrash()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
     Controllers::DropArea *layout = m->multiSplitter();
-    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", new QPushButton("1"));
-    QPointer<Controllers::DockWidget> dock2 = createDockWidget("2", new QPushButton("2"));
-    QPointer<Controllers::DockWidget> dock3 = createDockWidget("3", new QPushButton("3"));
+    QPointer<Controllers::DockWidget> dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    QPointer<Controllers::DockWidget> dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    QPointer<Controllers::DockWidget> dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
     m->addDockWidget(dock1, Location_OnLeft);
     m->addDockWidget(dock2, Location_OnRight);
@@ -2236,12 +2236,12 @@ void TestDocks::tst_stealFrame()
     // Tests using addWidget() with dock widgets which are already in a layout
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
     auto m2 = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
-    auto dock4 = createDockWidget("dock4", new QPushButton("four"));
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
+    auto dock4 = createDockWidget("dock4", Platform::instance()->tests_createView({ true }));
 
     auto dropArea1 = m1->dropArea();
     auto dropArea2 = m2->dropArea();
@@ -2340,8 +2340,8 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
     // 1. Two floating dock widgets. They are floating, not tabbed.
     QVERIFY(!dock1->isTabbed());
@@ -2403,7 +2403,7 @@ void TestDocks::tst_setFloatingWhenWasTabbed()
     QVERIFY(!dock2->isFloating());
 
     // 7. Call setFloating(true) on an already docked widget
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
     dock3->setFloating(true);
     dock3->setFloating(true);
 
@@ -2443,8 +2443,8 @@ void TestDocks::tst_setFloatingWhenSideBySide()
     {
         // 1. Create a MainWindow with two docked dock-widgets, then float the first one.
         auto m = createMainWindow();
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
@@ -2466,9 +2466,9 @@ void TestDocks::tst_setFloatingWhenSideBySide()
     {
         // 2. Tests a case where restoring a dock widget wouldn't make it use all its available space
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
         auto dropArea = m->dropArea();
         Controllers::DropArea *layout = dropArea;
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
@@ -2648,10 +2648,10 @@ void TestDocks::tst_setWidget()
 {
     EnsureTopLevelsDeleted e;
     auto dw = new Controllers::DockWidget(QStringLiteral("FOO"));
-    auto button1 = new QPushButton("button1");
-    auto button2 = new QPushButton("button2");
-    dw->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(button1)));
-    dw->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(button2)));
+    auto button1 = Platform::instance()->tests_createView({ true });
+    auto button2 = Platform::instance()->tests_createView({ true });
+    dw->setGuestView(button1->asWrapper());
+    dw->setGuestView(button2->asWrapper());
     delete button1;
     delete dw;
 }
@@ -2850,9 +2850,9 @@ void TestDocks::tst_propagateMinSize()
     auto m = createMainWindow();
     auto dropArea = m->dropArea();
 
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
 
     nestDockWidget(dock1, dropArea, nullptr, KDDockWidgets::Location_OnRight);
     nestDockWidget(dock2, dropArea, nullptr, KDDockWidgets::Location_OnRight);
@@ -2889,7 +2889,7 @@ void TestDocks::tst_addAndReadd()
     // Make a dock widget float and immediately reattach it
     auto m = createMainWindow();
 
-    auto dock1 = createDockWidget("dock1", new QPushButton("1"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     dock1->setFloating(true);
     m->layout()->checkSanity();
@@ -3049,9 +3049,9 @@ void TestDocks::tst_fairResizeAfterRemoveWidget()
 
     EnsureTopLevelsDeleted e;
 
-    Controllers::DockWidget *dock1 = createDockWidget("dock1", new QPushButton("one"));
-    Controllers::DockWidget *dock2 = createDockWidget("dock2", new QPushButton("two"));
-    Controllers::DockWidget *dock3 = createDockWidget("dock3", new QPushButton("three"));
+    Controllers::DockWidget *dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    Controllers::DockWidget *dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    Controllers::DockWidget *dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
 
     dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
     dock1->addDockWidgetToContainingWindow(dock3, Location_OnRight, dock2);
@@ -3118,7 +3118,7 @@ void TestDocks::tst_invalidJSON()
     EnsureTopLevelsDeleted e;
     auto m1 = createMainWindow(QSize(800, 500), MainWindowOption_None, "MyMainWindow1");
     for (int i = 0; i < numDockWidgets; ++i) {
-        createDockWidget(QStringLiteral("dock-%1").arg(i), new QPushButton("one"));
+        createDockWidget(QStringLiteral("dock-%1").arg(i), Platform::instance()->tests_createView({ true }));
     }
 
     SetExpectedWarning sew(expectedWarning);
@@ -3143,9 +3143,9 @@ void TestDocks::tst_invalidPlaceholderPosition()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
-    auto dock3 = createDockWidget("3", new QPushButton("3"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
     Controllers::DropArea *layout = m->multiSplitter();
 
@@ -3221,8 +3221,8 @@ void TestDocks::tst_setVisibleFalseWhenSideBySide()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
@@ -3373,9 +3373,9 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
         Controllers::DropArea *layout = m->multiSplitter();
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock3, Location_OnTop);
         m->addDockWidget(dock2, Location_OnTop);
         m->addDockWidget(dock1, Location_OnTop);
@@ -3392,10 +3392,10 @@ void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()
 
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        auto dock3 = createDockWidget("dock3", new QPushButton("three"));
-        auto dock4 = createDockWidget("dock4", new QPushButton("four"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
+        auto dock4 = createDockWidget("dock4", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, Location_OnRight);
         m->addDockWidget(dock2, Location_OnRight);
         m->addDockWidget(dock3, Location_OnRight);
@@ -3466,7 +3466,7 @@ void TestDocks::tst_restoreAfterResize()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreAfterResize");
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     auto layout = m->multiSplitter();
     const QSize oldContentsSize = layout->layoutSize();
@@ -3562,7 +3562,7 @@ void TestDocks::tst_restoreCrash()
     {
         // Create a main window, with a left dock, save it to disk.
         auto m = createMainWindow({}, {}, "tst_restoreCrash");
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, Location_OnLeft);
         LayoutSaver saver;
         QVERIFY(saver.saveToFile(QStringLiteral("layout_tst_restoreCrash.json")));
@@ -3571,7 +3571,7 @@ void TestDocks::tst_restoreCrash()
     // Restore
     auto m = createMainWindow({}, {}, "tst_restoreCrash");
     auto layout = m->multiSplitter();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     QVERIFY(dock1->isFloating());
     QVERIFY(layout->checkSanity());
 
@@ -3591,13 +3591,13 @@ void TestDocks::tst_restoreSideBySide()
         EnsureTopLevelsDeleted e1;
         // MainWindow:
         auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
-        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         m->addDockWidgetAsTab(dock1);
         auto layout = m->multiSplitter();
 
         // FloatingWindow:
-        auto dock2 = createDockWidget("2", new QPushButton("2"));
-        auto dock3 = createDockWidget("3", new QPushButton("3"));
+        auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
         dock2->addDockWidgetToContainingWindow(dock3, Location_OnRight);
         auto fw2 = dock2->floatingWindow();
         item2MinSize = fw2->layout()->itemForFrame(dock2->dptr()->frame())->minSize();
@@ -3608,9 +3608,9 @@ void TestDocks::tst_restoreSideBySide()
 
     {
         auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
-        auto dock1 = createDockWidget("1", new QPushButton("1"));
-        auto dock2 = createDockWidget("2", new QPushButton("2"));
-        auto dock3 = createDockWidget("3", new QPushButton("3"));
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
         LayoutSaver restorer;
         QVERIFY(restorer.restoreFromFile(QStringLiteral("layout_tst_restoreSideBySide.json")));
@@ -3625,8 +3625,8 @@ void TestDocks::tst_restoreSideBySide()
 void TestDocks::tst_restoreWithCentralFrameWithTabs()
 {
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_restoreTwice");
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
     m->addDockWidgetAsTab(dock2);
 
@@ -3647,7 +3647,7 @@ void TestDocks::tst_restoreWithPlaceholder()
     {
         auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithPlaceholder");
 
-        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, Location_OnLeft);
         auto layout = m->multiSplitter();
         dock1->setFloating(true);
@@ -3675,7 +3675,7 @@ void TestDocks::tst_restoreWithPlaceholder()
 
     // Try again, but on a different main window
     auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithPlaceholder");
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     auto layout = m->multiSplitter();
 
     LayoutSaver saver;
@@ -3704,10 +3704,10 @@ void TestDocks::tst_restoreWithAffinity()
     auto m2 = createMainWindow(QSize(500, 500));
     m2->setAffinities({ "a2" });
 
-    auto dock1 = createDockWidget("1", new QPushButton("1"), {}, {}, true, "a1");
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }), {}, {}, true, "a1");
     m1->addDockWidget(dock1, Location_OnLeft);
 
-    auto dock2 = createDockWidget("2", new QPushButton("2"), {}, {}, true, "a2");
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }), {}, {}, true, "a2");
     dock2->setFloating(true);
     dock2->show();
 
@@ -3742,7 +3742,7 @@ void TestDocks::tst_marginsAfterRestore()
         EnsureTopLevelsDeleted e1;
         // MainWindow:
         auto m = createMainWindow(QSize(500, 500), {}, "tst_marginsAfterRestore");
-        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, Location_OnLeft);
         auto layout = m->multiSplitter();
 
@@ -3771,7 +3771,7 @@ void TestDocks::tst_restoreWithNewDockWidgets()
     const QByteArray saved = saver.serializeLayout();
     QVERIFY(!saved.isEmpty());
 
-    auto dock1 = createDockWidget("dock1", new QPushButton("dock1"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     dock1->show();
 
     QVERIFY(saver.restoreLayout(saved));
@@ -3784,7 +3784,7 @@ void TestDocks::tst_restoreWithDockFactory()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     auto layout = m->multiSplitter();
 
@@ -3812,7 +3812,7 @@ void TestDocks::tst_restoreWithDockFactory()
 
     // Now try with a factory func
     DockWidgetFactoryFunc func = [](const QString &) {
-        return createDockWidget("1", new QPushButton("1"), {}, {}, /*show=*/false);
+        return createDockWidget("1", Platform::instance()->tests_createView({ true }), {}, {}, /*show=*/false);
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(func);
@@ -3830,7 +3830,7 @@ void TestDocks::tst_restoreWithDockFactory2()
 
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
 
-    auto dock1 = createDockWidget("dw1", new QPushButton("1"));
+    auto dock1 = createDockWidget("dw1", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnLeft);
     dock1->setFloating(true);
 
@@ -3840,7 +3840,7 @@ void TestDocks::tst_restoreWithDockFactory2()
 
     DockWidgetFactoryFunc func = [](const QString &) {
         // A factory func which does id remapping
-        return createDockWidget("dw2", new QPushButton("w"), {}, {}, /*show=*/false);
+        return createDockWidget("dw2", Platform::instance()->tests_createView({ true }), {}, {}, /*show=*/false);
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(func);
@@ -3851,8 +3851,8 @@ void TestDocks::tst_addDockWidgetToMainWindow()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
     m->addDockWidget(dock1, Location_OnRight, nullptr);
     m->addDockWidget(dock2, Location_OnTop, dock1);
@@ -3872,9 +3872,9 @@ void TestDocks::tst_addDockWidgetToContainingWindow()
     { // Test with a floating window
         EnsureTopLevelsDeleted e;
 
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-        auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
 
         dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
         dock1->addDockWidgetToContainingWindow(dock3, Location_OnTop, dock2);
@@ -3894,8 +3894,8 @@ void TestDocks::tst_addDockWidgetToContainingWindow()
         EnsureTopLevelsDeleted e;
 
         auto m = createMainWindow();
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
         m->addDockWidget(dock1, Location_OnRight, nullptr);
         dock1->addDockWidgetToContainingWindow(dock2, Location_OnRight);
@@ -3909,8 +3909,8 @@ void TestDocks::tst_notClosable()
 {
     {
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), Controllers::DockWidget::Option_NotClosable);
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), Controllers::DockWidget::Option_NotClosable);
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         dock1->addDockWidgetAsTab(dock2);
 
         auto fw = dock1->floatingWindow();
@@ -3938,8 +3938,8 @@ void TestDocks::tst_notClosable()
     {
         // Now dock dock1 into dock1 instead
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"), Controllers::DockWidget::Option_NotClosable);
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }), Controllers::DockWidget::Option_NotClosable);
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
         dock2->dptr()->morphIntoFloatingWindow();
         dock2->addDockWidgetAsTab(dock1);
@@ -3960,8 +3960,8 @@ void TestDocks::tst_dragOverTitleBar()
     // Tests that dragging over the title bar is returning DropLocation_None
 
     EnsureTopLevelsDeleted e;
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("Two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
     DropArea *da = dock1->floatingWindow()->dropArea();
     Controllers::FloatingWindow *fw1 = dock1->floatingWindow();
@@ -4004,8 +4004,8 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
     EnsureTopLevelsDeleted e;
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         auto dropArea = m->dropArea();
         auto layout = dropArea;
 
@@ -4029,8 +4029,8 @@ void TestDocks::tst_setFloatingAfterDraggedFromTabToSideBySide()
         // 2. Try again, but now detach from tab before putting it on the bottom. What was happening was that MultiSplitterLayout::addWidget()
         // called with a MultiSplitter as widget wasn't setting the layout items for the dock widgets
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         auto dropArea = m->dropArea();
         auto layout = dropArea;
 
@@ -4078,8 +4078,8 @@ void TestDocks::tst_setFloatingAFrameWithTabs()
     auto m = createMainWindow();
     auto dropArea = m->dropArea();
     auto layout = dropArea;
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
     dock1->addDockWidgetAsTab(dock2);
 
@@ -4312,8 +4312,8 @@ void TestDocks::tst_moreTitleBarCornerCases()
 {
     {
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("foo2"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         dock1->show();
         dock2->show();
         auto fw2 = dock2->window();
@@ -4329,8 +4329,8 @@ void TestDocks::tst_moreTitleBarCornerCases()
 
     {
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("foo2"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         dock1->show();
         dock2->show();
         auto fw1 = dock1->floatingWindow();
@@ -4349,7 +4349,7 @@ void TestDocks::tst_moreTitleBarCornerCases()
         // As reproduced myself... and fixed in this commit
 
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("dock1", new QPushButton("foo1"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         dock1->show();
 
         auto fw1 = dock1->floatingWindow();
@@ -4743,8 +4743,8 @@ void TestDocks::tst_floatingAction()
         EnsureTopLevelsDeleted e;
         // 1. Create a MainWindow with two docked dock-widgets, then float the first one.
         auto m = createMainWindow();
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
 
@@ -4780,8 +4780,8 @@ void TestDocks::tst_floatingAction()
         EnsureTopLevelsDeleted e;
         // 1. Create a MainWindow with one docked dock-widgets, and one floating.
         auto m = createMainWindow();
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
 
         // The floating window action should be disabled as it has no previous place
@@ -4821,8 +4821,8 @@ void TestDocks::tst_floatingAction()
     {
         EnsureTopLevelsDeleted e;
         // 3. A floating window with two tabs
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
         bool dock1IsFloating = dock1->floatAction()->isChecked();
         bool dock2IsFloating = dock2->floatAction()->isChecked();
@@ -4869,8 +4869,8 @@ void TestDocks::tst_floatingAction()
         // If the dock widget is alone then it's floating, but we suddenly dock a widget side-by-side
         // to it, then both aren't floating anymore. This test tests if the signal was emitted
 
-        auto dock1 = createDockWidget("one", new QPushButton("one"));
-        auto dock2 = createDockWidget("two", new QPushButton("two"));
+        auto dock1 = createDockWidget("one", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("two", Platform::instance()->tests_createView({ true }));
 
         QVERIFY(dock1->isFloating());
         QVERIFY(dock2->isFloating());
@@ -4902,8 +4902,8 @@ void TestDocks::tst_floatingAction()
         EnsureTopLevelsDeleted e;
         // Like before, but now we use addMultiSplitter()
 
-        auto dock1 = createDockWidget("one", new QPushButton("one"));
-        auto dock2 = createDockWidget("two", new QPushButton("two"));
+        auto dock1 = createDockWidget("one", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("two", Platform::instance()->tests_createView({ true }));
 
         QVERIFY(dock1->isFloating());
         QVERIFY(dock2->isFloating());
@@ -4941,8 +4941,8 @@ void TestDocks::tst_floatingAction()
     {
         EnsureTopLevelsDeleted e;
         // Same test as before, but now tab instead of side-by-side
-        auto dock1 = createDockWidget("one", new QPushButton("one"));
-        auto dock2 = createDockWidget("two", new QPushButton("two"));
+        auto dock1 = createDockWidget("one", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("two", Platform::instance()->tests_createView({ true }));
 
         QVERIFY(dock1->isFloating());
         QVERIFY(dock2->isFloating());
@@ -5018,9 +5018,9 @@ void TestDocks::tst_invalidLayoutAfterRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }));
     auto dropArea = m->dropArea();
     Controllers::DropArea *layout = dropArea;
     // Stack 1, 2, 3
@@ -5068,10 +5068,10 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
-    auto dock4 = createDockWidget("4", new QPushButton("4"), {}, {}, /*show=*/false);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock4 = createDockWidget("4", Platform::instance()->tests_createView({ true }), {}, {}, /*show=*/false);
 
     m->addDockWidget(dock1, Location_OnBottom);
     m->addDockWidget(dock2, Location_OnBottom);
@@ -5095,7 +5095,7 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore()
     QVERIFY(!dock3->isOpen());
     QVERIFY(!dock3->isInMainWindow());
 
-    auto dock5 = createDockWidget("5", new QPushButton("5"), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock5 = createDockWidget("5", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
 
     dock4->show();
     dock5->show();
@@ -5111,8 +5111,8 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore2()
     // Meaning the whole window should be skipped
 
     EnsureTopLevelsDeleted e;
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
-    auto dock3 = createDockWidget("dock3", new QPushButton("three"), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock3 = createDockWidget("dock3", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
 
     dock2->close();
     dock3->close();
@@ -5139,8 +5139,8 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore3()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {}, Controllers::DockWidget::LayoutSaverOption::Skip);
     dock1->close();
     dock2->close();
 
@@ -5164,8 +5164,8 @@ void TestDocks::tst_dontCloseDockWidgetBeforeRestore4()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow({ 1000, 1000 }, {});
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"), {},
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }), {},
                                   Controllers::DockWidget::LayoutSaverOption::Skip);
 
     m->addDockWidget(dock1, Location_OnBottom);
@@ -5199,9 +5199,9 @@ void TestDocks::tst_closeOnlyCurrentTab()
         EnsureTopLevelsDeleted e;
         KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_CloseOnlyCurrentTab);
 
-        auto dock1 = createDockWidget("1", new QPushButton("1"));
-        auto dock2 = createDockWidget("2", new QPushButton("2"));
-        auto dock3 = createDockWidget("3", new QPushButton("3"));
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
         /// Floating window with 3 tabs
         dock1->addDockWidgetAsTab(dock2);
@@ -5226,9 +5226,9 @@ void TestDocks::tst_closeOnlyCurrentTab()
         KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_CloseOnlyCurrentTab);
 
         auto m = createMainWindow();
-        auto dock1 = createDockWidget("1", new QPushButton("1"));
-        auto dock2 = createDockWidget("2", new QPushButton("2"));
-        auto dock3 = createDockWidget("3", new QPushButton("3"));
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+        auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
 
         m->addDockWidget(dock1, Location_OnLeft);
         m->addDockWidget(dock2, Location_OnRight);
@@ -5251,9 +5251,9 @@ void TestDocks::tst_tabWidgetCurrentIndex()
 {
     EnsureTopLevelsDeleted e;
 
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
-    auto dock3 = createDockWidget("3", new QPushButton("3"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
+    auto dock3 = createDockWidget("3", Platform::instance()->tests_createView({ true }));
     auto fw2 = dock2->window();
     auto fw3 = dock3->window();
 
@@ -5286,8 +5286,8 @@ void TestDocks::tst_doubleClickTabToDetach()
 
     EnsureTopLevelsDeleted e;
 
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
 
     auto fw2 = dock2->window();
 
@@ -5308,8 +5308,8 @@ void TestDocks::tst_addingOptionHiddenTabbed()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
     m->addDockWidget(dock1, Location_OnTop);
 
     QCOMPARE(dock1->dptr()->frame()->dockWidgetCount(), 1);
@@ -5327,8 +5327,8 @@ void TestDocks::tst_flagDoubleClick()
         EnsureTopLevelsDeleted e;
         KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_DoubleClickMaximizes);
         auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("1", new QPushButton("1"));
-        auto dock2 = createDockWidget("2", new QPushButton("2"));
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
         m->addDockWidget(dock1, Location_OnTop);
 
         Controllers::FloatingWindow *fw2 = dock2->floatingWindow();
@@ -5350,7 +5350,7 @@ void TestDocks::tst_flagDoubleClick()
     {
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(QSize(500, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("1", new QPushButton("1"));
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
 
         m->addDockWidget(dock1, Location_OnTop);
 
@@ -5419,8 +5419,8 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
     EnsureTopLevelsDeleted e;
     {
         // Dock into a non-morphed floating dock widget
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
         dock1->addDockWidgetAsTab(dock2);
 
@@ -5435,9 +5435,9 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
     }
     {
         // Dock into a morphed dock widget
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         dock1->dptr()->morphIntoFloatingWindow();
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
 
         dock1->addDockWidgetAsTab(dock2);
 
@@ -5452,9 +5452,9 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
     }
     {
         // Dock a morphed dock widget into a morphed dock widget
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         dock1->dptr()->morphIntoFloatingWindow();
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         dock2->dptr()->morphIntoFloatingWindow();
         auto originalWindow2 = dock2->window();
 
@@ -5475,10 +5475,10 @@ void TestDocks::tst_addDockWidgetAsTabToDockWidget()
         // Dock to an already docked widget
         auto m = createMainWindow();
         auto dropArea = m->dropArea();
-        auto dock1 = createDockWidget("dock1", new QPushButton("one"));
+        auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
         nestDockWidget(dock1, dropArea, nullptr, KDDockWidgets::Location_OnLeft);
 
-        auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+        auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
         dock1->addDockWidgetAsTab(dock2);
         QVERIFY(dock1->window()->equals(m->view()));
         QVERIFY(dock2->window()->equals(m->view()));
@@ -5718,8 +5718,8 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
     EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new QPushButton("one"));
-    auto dock2 = createDockWidget("dock2", new QPushButton("two"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
     auto dropArea = m->dropArea();
     int min1 = widgetMinLength(dock1->view(), Qt::Horizontal);
     int min2 = widgetMinLength(dock2->view(), Qt::Horizontal);
@@ -6290,7 +6290,7 @@ void TestDocks::tst_closeTabOfCentralFrame()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_closeTabOfCentralFrame");
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
     m->addDockWidgetAsTab(dock1);
     Controllers::Frame *frame = dock1->dptr()->frame();
     QVERIFY(frame->options() & FrameOption_IsCentralFrame);
@@ -6307,8 +6307,8 @@ void TestDocks::tst_centralFrame245()
     Run: ./bin/tst_docks tst_centralFrame245 -platform xcb
 
     auto m = createMainWindow(QSize(500, 500), MainWindowOption_HasCentralFrame, "tst_centralFrame245");
-    auto dock1 = createDockWidget("1", new QPushButton("1"));
-    auto dock2 = createDockWidget("2", new QPushButton("2"));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true }));
 
     m->addDockWidgetAsTab(dock1);
     m->addDockWidgetAsTab(dock2);
