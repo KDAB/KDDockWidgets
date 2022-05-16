@@ -33,7 +33,6 @@
 #include <QVBoxLayout>
 #include <QToolButton>
 #include <QLineEdit>
-using FocusableWidget = QLineEdit;
 #else
 #include "quick/MainWindowQuick_p.h"
 #include "quick/TabWidgetQuick_p.h"
@@ -154,32 +153,6 @@ void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropAr
                     KDDockWidgets::Location location);
 
 #ifdef KDDOCKWIDGETS_QTQUICK
-// Don't want to adapt dozens of locations so it compiles for QtQuick, so just typedef.
-// the fact it's a button isn't important for the tests anyway
-
-class FocusableWidget : public QWidgetAdapter
-{
-public:
-    explicit FocusableWidget()
-        : QWidgetAdapter()
-    {
-        setFocusPolicy(Qt::StrongFocus);
-    }
-
-    ~FocusableWidget();
-};
-
-class QTextEdit : public QWidgetAdapter
-{
-public:
-    explicit QTextEdit()
-        : QWidgetAdapter()
-    {
-        setFocusPolicy(Qt::StrongFocus);
-    }
-
-    ~QTextEdit();
-};
 
 class NonClosableWidget : public QWidgetAdapter
 {

@@ -131,6 +131,10 @@ public:
     /// If the parent is null then a new window is created and the returned view will be the root view
     virtual View *tests_createView(CreateViewOptions, View *parent = nullptr) = 0;
 
+    /// @brief Returns a view that can have keyboard focus
+    /// For example a line edit. This is used to for testing focus related features.
+    virtual View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) = 0;
+
     /// @brief halts the test during the specified number of milliseconds
     /// The event loop keeps running. Use this for debugging purposes so you can interact with your test
     /// and see what's goign on

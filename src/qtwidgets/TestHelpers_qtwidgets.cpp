@@ -49,6 +49,32 @@ private:
     Platform::CreateViewOptions m_opts;
 };
 
+class FocusableTestView_qtwidgets : public Views::View_qtwidgets<QLineEdit>
+{
+    Q_OBJECT
+public:
+    explicit FocusableTestView_qtwidgets(Platform::CreateViewOptions opts, QWidget *parent)
+        : Views::View_qtwidgets<QLineEdit>(nullptr, Type::None, parent)
+        , m_opts(opts)
+    {
+        create();
+        setMinimumSize(opts.minSize.boundedTo(opts.maxSize));
+    }
+
+    QSize sizeHint() const override
+    {
+        return m_opts.sizeHint;
+    }
+
+    QSize maxSizeHint() const override
+    {
+        return m_opts.maxSize.boundedTo(Views::View_qtwidgets<QLineEdit>::maximumSize());
+    }
+
+private:
+    Platform::CreateViewOptions m_opts;
+};
+
 }
 
 Platform_qtwidgets::Platform_qtwidgets(int &argc, char **argv)
@@ -75,6 +101,17 @@ View *Platform_qtwidgets::tests_createView(CreateViewOptions opts, View *parent)
     QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
 
     auto newWidget = new TestView_qtwidgets(opts, parentWidget);
+    if (opts.isVisible)
+        newWidget->show();
+
+    return newWidget;
+}
+
+View *Platform_qtwidgets::tests_createFocusableView(CreateViewOptions opts, View *parent)
+{
+    QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
+
+    auto newWidget = new FocusableTestView_qtwidgets(opts, parentWidget);
     if (opts.isVisible)
         newWidget->show();
 

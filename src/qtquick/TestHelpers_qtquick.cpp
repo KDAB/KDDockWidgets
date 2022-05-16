@@ -87,4 +87,12 @@ View *Platform_qtquick::tests_createView(CreateViewOptions opts, View *parent)
     return newItem;
 }
 
+View *Platform_qtquick::tests_createFocusableView(CreateViewOptions opts, View *parent)
+{
+    auto view = tests_createView(opts, parent);
+    view->setFocusPolicy(Qt::StrongFocus);
+
+    return nullptr;
+}
+
 #endif

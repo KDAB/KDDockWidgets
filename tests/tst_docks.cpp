@@ -2548,10 +2548,10 @@ void TestDocks::tst_dockWidgetGetsFocusWhenDocked()
 
     auto dw1 = new Controllers::DockWidget(QStringLiteral("1"));
     auto dw2 = new Controllers::DockWidget(QStringLiteral("2"));
-    auto le1 = new FocusableWidget();
-    auto le2 = new FocusableWidget();
-    dw1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(le1)));
-    dw2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(le2)));
+    auto le1 = Platform::instance()->tests_createFocusableView({ true });
+    auto le2 = Platform::instance()->tests_createFocusableView({ true });
+    dw1->setGuestView(le1->asWrapper());
+    dw2->setGuestView(le2->asWrapper());
     dw2->show();
     dw1->show();
     QTest::qWait(200);
@@ -2586,8 +2586,8 @@ void TestDocks::tst_isFocused()
     EnsureTopLevelsDeleted e;
 
     // 1. Create 2 floating windows
-    auto dock1 = createDockWidget(QStringLiteral("dock1"), new FocusableWidget());
-    auto dock2 = createDockWidget(QStringLiteral("dock2"), new FocusableWidget());
+    auto dock1 = createDockWidget(QStringLiteral("dock1"), Platform::instance()->tests_createFocusableView({ true }));
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), Platform::instance()->tests_createFocusableView({ true }));
 
     QTest::qWait(200); // macOS is flaky here, needs dock2 to be shown first before focusing dock1, otherwise dock1 looses again
 
@@ -2625,7 +2625,7 @@ void TestDocks::tst_isFocused()
     QVERIFY(dock2->isFocused());
 
     // 6. Create dock3, focus it
-    auto dock3 = createDockWidget(QStringLiteral("dock3"), new FocusableWidget());
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), Platform::instance()->tests_createFocusableView({ true }));
     auto oldFw3 = dock3->window();
     dock3->raise();
     dock3->guestView()->setFocus(Qt::OtherFocusReason);
@@ -4688,11 +4688,11 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarIsFocusable);
 
-    auto le1 = new FocusableWidget();
+    auto le1 = Platform::instance()->tests_createFocusableView({ true });
     le1->setObjectName("le1");
     auto dock1 = createDockWidget(QStringLiteral("dock1"), le1);
-    auto dock2 = createDockWidget(QStringLiteral("dock2"), new FocusableWidget());
-    auto dock3 = createDockWidget(QStringLiteral("dock3"), new FocusableWidget());
+    auto dock2 = createDockWidget(QStringLiteral("dock2"), Platform::instance()->tests_createFocusableView({ true }));
+    auto dock3 = createDockWidget(QStringLiteral("dock3"), Platform::instance()->tests_createFocusableView({ true }));
     auto oldFw1 = dock1->window();
     auto oldFw2 = dock2->window();
     auto oldFw3 = dock3->window();

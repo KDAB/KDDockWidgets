@@ -107,7 +107,6 @@ QSize Platform_qtquick::screenSizeFor(View *view) const
                 return screen->size();
     }
 
-
     return {};
 }
 

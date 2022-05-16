@@ -15,6 +15,7 @@
 #include <QTabWidget>
 #include <QMainWindow>
 #include <QRubberBand>
+#include <QLineEdit>
 
 using namespace KDDockWidgets::Views;
 
@@ -49,6 +50,13 @@ View_qtwidgets<QMainWindow>::View_qtwidgets(KDDockWidgets::Controller *controlle
 template<>
 View_qtwidgets<QRubberBand>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
     : QRubberBand(QRubberBand::Rectangle, parent)
+    , View(controller, type, this)
+{
+}
+
+template<>
+View_qtwidgets<QLineEdit>::View_qtwidgets(KDDockWidgets::Controller *controller, Type type, QWidget *parent, Qt::WindowFlags)
+    : QLineEdit(parent)
     , View(controller, type, this)
 {
 }
