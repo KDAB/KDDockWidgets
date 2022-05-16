@@ -121,9 +121,9 @@ void TestDocks::tst_restoreSimple()
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto layout = m->multiSplitter();
-    auto dock1 = createDockWidget("one", new QTextEdit());
-    auto dock2 = createDockWidget("two", new QTextEdit());
-    auto dock3 = createDockWidget("three", new QTextEdit());
+    auto dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }));
+    auto dock2 = createDockWidget("two", Platform::instance()->tests_createFocusableView({ true }));
+    auto dock3 = createDockWidget("three", Platform::instance()->tests_createFocusableView({ true }));
 
     m->addDockWidget(dock1, Location_OnTop);
 
@@ -2685,8 +2685,8 @@ void TestDocks::tst_0()
     m->view()->resize(QSize(502, 500));
     m->show();
 
-    auto d1 = createDockWidget("1", new QTextEdit());
-    auto d2 = createDockWidget("2", new QTextEdit());
+    auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
+    auto d2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
 
     m->addDockWidget(d1, Location_OnLeft);
     m->addDockWidget(d2, Location_OnRight);
@@ -2697,7 +2697,9 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
     EnsureTopLevelsDeleted e;
 
     auto d1 = new Controllers::DockWidget("1");
-    d1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+    auto guest = Platform::instance()->tests_createFocusableView({ true });
+    guest->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+    d1->setGuestView(guest->asWrapper());
 
     QVERIFY(!d1->isVisible());
 
@@ -3257,7 +3259,7 @@ void TestDocks::tst_restoreSimplest()
     // Tests restoring a very simple layout, composed of just 1 docked widget
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     auto layout = m->multiSplitter();
-    auto dock1 = createDockWidget("one", new QTextEdit());
+    auto dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }));
     m->addDockWidget(dock1, Location_OnTop);
 
     LayoutSaver saver;
@@ -3277,7 +3279,7 @@ void TestDocks::tst_restoreNonClosable()
 
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("one", new QTextEdit(), Controllers::DockWidget::Option_NotClosable);
+        auto dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }), Controllers::DockWidget::Option_NotClosable);
         QCOMPARE(dock1->options(), Controllers::DockWidget::Option_NotClosable);
 
         LayoutSaver saver;
@@ -3290,9 +3292,9 @@ void TestDocks::tst_restoreNonClosable()
         // Case from issue #137
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
 
-        auto dock1 = createDockWidget("1", new QTextEdit());
-        auto dock2 = createDockWidget("2", new QTextEdit(), Controllers::DockWidget::Option_NotClosable);
-        auto dock3 = createDockWidget("3", new QTextEdit());
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
+        auto dock2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }), Controllers::DockWidget::Option_NotClosable);
+        auto dock3 = createDockWidget("3", Platform::instance()->tests_createFocusableView({ true }));
 
         m->addDockWidget(dock1, Location_OnLeft);
         m->addDockWidget(dock2, Location_OnLeft);
@@ -3505,11 +3507,11 @@ void TestDocks::tst_restoreNestedAndTabbed()
         m->view()->move(500, 500);
         oldGeo = m->geometry();
         auto layout = m->multiSplitter();
-        auto dock1 = createDockWidget("1", new QTextEdit());
-        auto dock2 = createDockWidget("2", new QTextEdit());
-        auto dock3 = createDockWidget("3", new QTextEdit());
-        auto dock4 = createDockWidget("4", new QTextEdit());
-        auto dock5 = createDockWidget("5", new QTextEdit());
+        auto dock1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
+        auto dock2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
+        auto dock3 = createDockWidget("3", Platform::instance()->tests_createFocusableView({ true }));
+        auto dock4 = createDockWidget("4", Platform::instance()->tests_createFocusableView({ true }));
+        auto dock5 = createDockWidget("5", Platform::instance()->tests_createFocusableView({ true }));
         dock4->addDockWidgetAsTab(dock5);
         oldFW4Pos = dock4->window()->pos();
 
@@ -3530,11 +3532,11 @@ void TestDocks::tst_restoreNestedAndTabbed()
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None, "tst_restoreNestedAndTabbed");
     auto layout = m->multiSplitter();
-    auto dock1 = createDockWidget("1", new QTextEdit());
-    auto dock2 = createDockWidget("2", new QTextEdit());
-    auto dock3 = createDockWidget("3", new QTextEdit());
-    auto dock4 = createDockWidget("4", new QTextEdit());
-    auto dock5 = createDockWidget("5", new QTextEdit());
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
+    auto dock3 = createDockWidget("3", Platform::instance()->tests_createFocusableView({ true }));
+    auto dock4 = createDockWidget("4", Platform::instance()->tests_createFocusableView({ true }));
+    auto dock5 = createDockWidget("5", Platform::instance()->tests_createFocusableView({ true }));
 
     LayoutSaver saver;
     QVERIFY(saver.restoreFromFile(QStringLiteral("layout_tst_restoreNestedAndTabbed.json")));
@@ -4136,8 +4138,8 @@ void TestDocks::tst_tabBarWithHiddenTitleBar()
 
     auto m = createMainWindow();
 
-    auto d1 = createDockWidget("1", new QTextEdit());
-    auto d2 = createDockWidget("2", new QTextEdit());
+    auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
+    auto d2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
     m->addDockWidget(d1, Location_OnTop);
 
     if (tabsAlwaysVisible) {
@@ -4172,7 +4174,7 @@ void TestDocks::tst_toggleDockWidgetWithHiddenTitleBar()
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible | KDDockWidgets::Config::Flag_AlwaysShowTabs);
     auto m = createMainWindow();
 
-    auto d1 = createDockWidget("1", new QTextEdit());
+    auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
     m->addDockWidget(d1, Location_OnTop);
 
     QVERIFY(!d1->dptr()->frame()->titleBar()->isVisible());
@@ -4397,97 +4399,97 @@ void TestDocks::tst_sizeConstraintWarning()
     QList<Controllers::DockWidget *> listDockWidget;
     {
         auto dock = new Controllers::DockWidget("foo-0");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-1");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-2");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-3");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-4");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-5");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-6");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-7");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-8");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-9");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-10");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-11");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-12");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-13");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-14");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-15");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-16");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-17");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
     {
         auto dock = new Controllers::DockWidget("foo-18");
-        dock->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new QTextEdit())));
+        dock->setGuestView(Platform::instance()->tests_createFocusableView({ true })->asWrapper());
         listDockWidget.append(dock);
     }
 
@@ -4617,9 +4619,9 @@ void TestDocks::tst_dockNotFillingSpace()
     m->view()->resize(QSize(500, 500));
     m->show();
 
-    auto d1 = createDockWidget("1", new QTextEdit());
-    auto d2 = createDockWidget("2", new QTextEdit());
-    auto d3 = createDockWidget("3", new QTextEdit());
+    auto d1 = createDockWidget("1", Platform::instance()->tests_createFocusableView({ true }));
+    auto d2 = createDockWidget("2", Platform::instance()->tests_createFocusableView({ true }));
+    auto d3 = createDockWidget("3", Platform::instance()->tests_createFocusableView({ true }));
 
     m->addDockWidget(d1, Location_OnTop);
     m->addDockWidget(d2, Location_OnBottom);
@@ -5751,9 +5753,9 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
     // Dock on top of center widget:
     m = createMainWindow();
 
-    dock1 = createDockWidget("one", new QTextEdit());
+    dock1 = createDockWidget("one", Platform::instance()->tests_createFocusableView({ true }));
     m->addDockWidgetAsTab(dock1);
-    auto dock3 = createDockWidget("three", new QTextEdit());
+    auto dock3 = createDockWidget("three", Platform::instance()->tests_createFocusableView({ true }));
     m->addDockWidget(dock3, Location_OnTop);
     QVERIFY(m->dropArea()->checkSanity());
 

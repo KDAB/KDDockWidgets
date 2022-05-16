@@ -27,10 +27,8 @@
 #include "quick/MainWindowQuick_p.h"
 #else
 
-#include <QLineEdit>
 #include <QMenuBar>
 #include <QTabBar>
-#include <QTextEdit>
 #endif
 
 using namespace KDDockWidgets::Tests;
