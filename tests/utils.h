@@ -153,27 +153,6 @@ Controllers::DockWidget *createDockWidget(const QString &name, QColor color = Qt
 void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea, Controllers::Frame *relativeTo,
                     KDDockWidgets::Location location);
 
-class MyWidget : public QWidgetOrQuick
-{
-public:
-    explicit MyWidget(const QString &, QColor c = Qt::black);
-    ~MyWidget() override;
-
-
-    QSize minimumSizeHint() const override
-    {
-        return { 100, 100 };
-    }
-
-protected:
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    void paintEvent(QPaintEvent *) override;
-#endif
-private:
-    QColor c;
-};
-
-
 #ifdef KDDOCKWIDGETS_QTQUICK
 // Don't want to adapt dozens of locations so it compiles for QtQuick, so just typedef.
 // the fact it's a button isn't important for the tests anyway

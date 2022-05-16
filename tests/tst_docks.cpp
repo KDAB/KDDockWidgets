@@ -107,7 +107,7 @@ void TestDocks::tst_simple2()
     // Simply create a MainWindow, and dock something on top
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dw = createDockWidget("dw", new MyWidget("dw", Qt::blue));
+    auto dw = createDockWidget("dw", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
     auto fw = dw->floatingWindow();
     m->addDockWidget(dw, KDDockWidgets::Location_OnTop);
     m->layout()->checkSanity();
@@ -309,8 +309,8 @@ void TestDocks::tst_detachPos()
     // Tests a situation where detaching a dock widget would send it to a bogus position
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new MyWidget(QStringLiteral("1"), Qt::black), {}, {}, /** show = */ false); // we're creating the dock widgets without showing them as floating initially, so it doesn't record the previous floating position
-    auto dock2 = createDockWidget("2", new MyWidget(QStringLiteral("2"), Qt::black), {}, {}, /** show = */ false);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }), {}, {}, /** show = */ false); // we're creating the dock widgets without showing them as floating initially, so it doesn't record the previous floating position
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }), {}, {}, /** show = */ false);
 
     QVERIFY(!dock1->isVisible());
     QVERIFY(!dock2->isVisible());
@@ -387,7 +387,7 @@ void TestDocks::tst_sizeAfterRedock()
     EnsureTopLevelsDeleted e;
     auto dw1 = new Controllers::DockWidget(QStringLiteral("1"));
     auto dw2 = new Controllers::DockWidget(QStringLiteral("2"));
-    dw2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(new MyWidget("2", Qt::red))));
+    dw2->setGuestView(Platform::instance()->tests_createView({ true, {}, QSize(100, 100) })->asWrapper());
 
     dw1->addDockWidgetToContainingWindow(dw2, Location_OnBottom);
     const int height2 = dw2->dptr()->frame()->height();
@@ -464,8 +464,8 @@ void TestDocks::tst_resizeWindow()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(501, 500), MainWindowOption_None);
-    auto dock1 = createDockWidget("1", new MyWidget("1", Qt::red));
-    auto dock2 = createDockWidget("2", new MyWidget("2", Qt::blue));
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
+    auto dock2 = createDockWidget("2", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
     QPointer<Controllers::FloatingWindow> fw1 = dock1->floatingWindow();
     QPointer<Controllers::FloatingWindow> fw2 = dock2->floatingWindow();
     m->addDockWidget(dock1, Location_OnLeft);
@@ -608,7 +608,7 @@ void TestDocks::tst_restoreMaximizedState()
 void TestDocks::tst_restoreFloatingMinimizedState()
 {
     EnsureTopLevelsDeleted e;
-    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
     dock1->floatingWindow()->showMinimized();
 
     QCOMPARE(dock1->floatingWindow()->view()->window()->windowState(), Qt::WindowMinimized);
@@ -637,7 +637,7 @@ void TestDocks::tst_restoreNonExistingDockWidget()
 
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(defaultMainWindowSize, MainWindowOption_None, "mainwindow1");
-    auto dock2 = createDockWidget("dock2", new MyWidget("dock2"));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
     m->addDockWidget(dock2, Location_OnBottom);
     LayoutSaver restorer;
     SetExpectedWarning sew("Couldn't find dock widget");
@@ -654,7 +654,7 @@ void TestDocks::tst_setFloatingSimple()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
     m->addDockWidget(dock1, Location_OnTop);
     auto l = m->multiSplitter();
     dock1->setFloating(true);
@@ -3982,7 +3982,7 @@ void TestDocks::tst_dragOverTitleBar()
 void TestDocks::tst_setFloatingGeometry()
 {
     EnsureTopLevelsDeleted e;
-    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(100, 100) }));
 
     QVERIFY(dock1->isVisible());
     const QRect requestedGeo = QRect(70, 70, 400, 400);
@@ -5375,10 +5375,10 @@ void TestDocks::tst_maxSizedHonouredAfterRemoved()
     auto dock1 = new Controllers::DockWidget("dock1");
     dock1->show();
 
-    auto w = new MyWidget("foo");
-    w->setMinimumSize(120, 100);
-    w->setMaximumSize(300, 150);
-    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
+    auto w = Platform::instance()->tests_createView({ true, {}, QSize(100, 100) });
+    w->setMinimumSize(QSize(120, 100));
+    w->setMaximumSize(QSize(300, 150));
+    dock1->setGuestView(w->asWrapper());
     m1->dropArea()->addMultiSplitter(dock1->floatingWindow()->multiSplitter(), Location_OnLeft);
 
     auto dock2 = new Controllers::DockWidget("dock2");

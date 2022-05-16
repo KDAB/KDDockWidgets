@@ -744,12 +744,11 @@ void TestQtWidgets::tst_sidebarOverlayGetsHiddenOnClick()
         Tests::clickOn(dw2->mapToGlobal(dw2->rect().bottomLeft() + QPoint(5, -5)), dw2->view());
         QVERIFY(!dw1->isOverlayed());
 
-        auto widget2 = new MyWidget("foo");
-        dw2->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(widget2)));
+        auto widget2 = Platform::instance()->tests_createView({ true });
+        dw2->setGuestView(widget2->asWrapper());
         m1->overlayOnSideBar(dw1);
         QVERIFY(dw1->isOverlayed());
-        auto wrapper = ViewWrapper::Ptr(new Views::ViewWrapper_qtwidgets(widget2));
-        Tests::clickOn(widget2->mapToGlobal(widget2->rect().bottomLeft() + QPoint(5, -5)), wrapper.get());
+        Tests::clickOn(widget2->mapToGlobal(widget2->rect().bottomLeft() + QPoint(5, -5)), widget2);
         QVERIFY(!dw1->isOverlayed());
 
         m1.reset();
@@ -1123,10 +1122,10 @@ void TestQtWidgets::tst_maxSizedFloatingWindow()
     EnsureTopLevelsDeleted e;
     auto dock1 = new Controllers::DockWidget("dock1");
     auto dock2 = new Controllers::DockWidget("dock2");
-    auto w = new MyWidget("foo");
-    w->setMinimumSize(120, 100);
-    w->setMaximumSize(300, 300);
-    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(w)));
+    auto w = Platform::instance()->tests_createView({ true });
+    w->setMinimumSize(QSize(120, 100));
+    w->setMaximumSize(QSize(300, 300));
+    dock1->setGuestView(w->asWrapper());
 
     dock1->show();
     dock2->show();
@@ -1309,7 +1308,7 @@ void TestQtWidgets::tst_restoreFloatingMaximizedState()
 {
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton);
-    auto dock1 = createDockWidget("dock1", new MyWidget("one"));
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
     const QRect originalNormalGeometry = dock1->floatingWindow()->normalGeometry();
     dock1->floatingWindow()->showMaximized();
     qDebug() << originalNormalGeometry;

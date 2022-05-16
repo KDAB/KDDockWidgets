@@ -124,7 +124,9 @@ Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &n
 
 Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor color)
 {
-    return createDockWidget(name, new MyWidget(name, color));
+    // TODOv2 remove color argument
+    Q_UNUSED(color);
+    return createDockWidget(name, Platform::instance()->tests_createView({ true, {}, { 100, 100 } }));
 };
 
 static QWidgetOrQuick *createGuestWidget(int i)
@@ -175,22 +177,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     return m;
 }
 
-MyWidget::MyWidget(const QString &, QColor c)
-    : QWidgetOrQuick()
-    , c(c)
-{
-}
-
-MyWidget::~MyWidget()
-{
-}
-
 #ifdef KDDOCKWIDGETS_QTWIDGETS
-void MyWidget::paintEvent(QPaintEvent *)
-{
-    QPainter p(this);
-    p.fillRect(rect(), c);
-}
 
 NonClosableWidget::NonClosableWidget(QWidget *parent)
     : QWidget(parent)
