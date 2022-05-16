@@ -19,17 +19,7 @@
 #include "Platform.h"
 
 #include <QGuiApplication>
-#include <QObject>
 #include <QtTest/QtTest>
-
-#ifdef KDDOCKWIDGETS_QTQUICK
-#include "DockWidgetQuick.h"
-#include "quick/MainWindowQuick_p.h"
-#else
-
-#include <QMenuBar>
-#include <QTabBar>
-#endif
 
 using namespace KDDockWidgets::Tests;
 
