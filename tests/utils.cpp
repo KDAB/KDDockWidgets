@@ -160,24 +160,6 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     return m;
 }
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-
-NonClosableWidget::NonClosableWidget(QWidget *parent)
-    : QWidget(parent)
-{
-}
-
-NonClosableWidget::~NonClosableWidget()
-{
-}
-
-void NonClosableWidget::closeEvent(QCloseEvent *ev)
-{
-    ev->ignore(); // don't allow to close
-}
-
-#endif
-
 bool KDDockWidgets::Tests::shouldBlacklistWarning(const QString &msg, const QString &category)
 {
     if (category == QLatin1String("qt.qpa.xcb"))

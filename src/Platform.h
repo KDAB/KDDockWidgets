@@ -135,6 +135,9 @@ public:
     /// For example a line edit. This is used to for testing focus related features.
     virtual View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) = 0;
 
+    /// @brief Returns a view that rejects close events
+    virtual View *tests_createNonClosableView(View *parent = nullptr) = 0;
+
     /// @brief halts the test during the specified number of milliseconds
     /// The event loop keeps running. Use this for debugging purposes so you can interact with your test
     /// and see what's goign on

@@ -92,6 +92,12 @@ View *Platform_qtquick::tests_createFocusableView(CreateViewOptions opts, View *
     auto view = tests_createView(opts, parent);
     view->setFocusPolicy(Qt::StrongFocus);
 
+    return view;
+}
+
+View *Platform_qtquick::tests_createNonClosableView(View *parent)
+{
+    Q_UNUSED(parent);
     return nullptr;
 }
 

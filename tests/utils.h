@@ -173,30 +173,6 @@ protected:
     }
 };
 
-class MyWidget2 : public QWidgetAdapter
-{
-public:
-    explicit MyWidget2(QSize minSz = QSize(1, 1))
-    {
-        setMinimumSize(minSz);
-        setSizeHint(minSz);
-    }
-
-    ~MyWidget2();
-
-    QSize sizeHint() const
-    {
-        return m_sizeHint;
-    }
-
-    void setSizeHint(QSize s)
-    {
-        m_sizeHint = s;
-    }
-
-    QSize m_sizeHint;
-};
-
 class EmbeddedWindow : public QWidgetAdapter
 {
 public:
@@ -223,18 +199,6 @@ public:
     ~EmbeddedWindow() override;
 
     Controllers::MainWindow *const mainWindow;
-};
-
-class NonClosableWidget : public QWidget
-{
-public:
-    Q_OBJECT
-public:
-    explicit NonClosableWidget(QWidget *parent = nullptr);
-    ~NonClosableWidget() override;
-
-protected:
-    void closeEvent(QCloseEvent *event) override;
 };
 
 namespace {

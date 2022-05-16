@@ -2821,9 +2821,9 @@ void TestDocks::tst_preventClose()
 {
     EnsureTopLevelsDeleted e;
 
-    auto nonClosableWidget = new NonClosableWidget();
+    auto nonClosableWidget = Platform::instance()->tests_createNonClosableView();
     auto dock1 = new Controllers::DockWidget("1");
-    dock1->setGuestView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(nonClosableWidget)));
+    dock1->setGuestView(nonClosableWidget->asWrapper());
 
     // 1. Test a floating dock widget
     dock1->view()->resize(QSize(200, 200));
@@ -3485,7 +3485,7 @@ void TestDocks::tst_restoreWithNonClosableWidget()
 {
     EnsureTopLevelsDeleted e;
     auto m = createMainWindow(QSize(500, 500), {}, "tst_restoreWithNonClosableWidget");
-    auto dock1 = createDockWidget("1", new NonClosableWidget(), Controllers::DockWidget::Option_NotClosable);
+    auto dock1 = createDockWidget("1", Platform::instance()->tests_createNonClosableView(), Controllers::DockWidget::Option_NotClosable);
     m->addDockWidget(dock1, Location_OnLeft);
     auto layout = m->multiSplitter();
 

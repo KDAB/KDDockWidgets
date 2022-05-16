@@ -75,6 +75,22 @@ private:
     Platform::CreateViewOptions m_opts;
 };
 
+class NonClosableTestView_qtwidgets : public Views::View_qtwidgets<QWidget>
+{
+    Q_OBJECT
+public:
+    explicit NonClosableTestView_qtwidgets(QWidget *parent)
+        : Views::View_qtwidgets<QWidget>(nullptr, Type::None, parent)
+    {
+        create();
+    }
+
+    void closeEvent(QCloseEvent *ev) override
+    {
+        ev->ignore(); // don't allow to close
+    }
+};
+
 }
 
 Platform_qtwidgets::Platform_qtwidgets(int &argc, char **argv)
@@ -114,6 +130,14 @@ View *Platform_qtwidgets::tests_createFocusableView(CreateViewOptions opts, View
     auto newWidget = new FocusableTestView_qtwidgets(opts, parentWidget);
     if (opts.isVisible)
         newWidget->show();
+
+    return newWidget;
+}
+
+View *Platform_qtwidgets::tests_createNonClosableView(View *parent)
+{
+    QWidget *parentWidget = Views::View_qtwidgets<QWidget>::asQWidget(parent);
+    auto newWidget = new NonClosableTestView_qtwidgets(parentWidget);
 
     return newWidget;
 }
