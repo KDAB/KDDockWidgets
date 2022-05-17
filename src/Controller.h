@@ -39,11 +39,10 @@ enum class Type
     LayoutItem = 256,
     SideBar = 512,
     MainWindow = 1024,
-    DropIndicatorOverlayInterface = 2048,
-    ViewWrapper = 4096,
-    DropArea = 8192,
-    MDILayout = 0x4000,
-    RubberBand = 0x8000,
+    ViewWrapper = 2048,
+    DropArea = 4096,
+    MDILayout = 8192,
+    RubberBand = 0x4000,
 
     LAST = RubberBand // Keep last
 };
