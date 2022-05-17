@@ -114,3 +114,8 @@ int Platform_qtwidgets::startDragDistance() const
 {
     return QApplication::startDragDistance();
 }
+
+View *Platform_qtwidgets::createView(View *parent) const
+{
+    return new Views::View_qtwidgets<QWidget>(nullptr, Type::None, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+}

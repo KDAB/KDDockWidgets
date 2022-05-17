@@ -76,6 +76,11 @@ public:
     /// @brief Returns the size of the screen where this view is in
     virtual QSize screenSizeFor(View *) const = 0;
 
+    /// @brief Create an empty view
+    /// For Qt this would just returns a empty QWidget or QQuickItem
+    /// other frontends can return something as basic.
+    virtual View *createView(View *parent = nullptr) const = 0;
+
     /// @brief Returns whether this platform is QtWidgets
     bool isQtWidgets() const;
 

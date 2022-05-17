@@ -39,6 +39,7 @@ public:
     QSize screenSizeFor(View *) const override;
     void setQmlEngine(QQmlEngine *);
     QQmlEngine *qmlEngine() const;
+    View *createView(View *parent = nullptr) const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtquick(int &argc, char **argv);

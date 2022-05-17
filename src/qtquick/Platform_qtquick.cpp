@@ -144,3 +144,8 @@ DefaultWidgetFactory_qtquick *Platform_qtquick::frameworkWidgetFactory() const
 {
     return static_cast<DefaultWidgetFactory_qtquick *>(Config::self().frameworkWidgetFactory());
 }
+
+View *Platform_qtquick::createView(View *parent) const
+{
+    return new Views::View_qtquick(nullptr, Type::None, Views::asQQuickItem(parent));
+}
