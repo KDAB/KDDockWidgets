@@ -23,7 +23,6 @@
 #include "controllers/Frame.h"
 #include "private/DockRegistry_p.h"
 
-#include <QWidget>
 #include <QPointer>
 
 using namespace KDDockWidgets;

@@ -26,8 +26,6 @@
 #include <QEvent>
 #include <QVariant>
 
-#include <QWidget> // TODOv2
-
 /**
  * @file
  * @brief Namespace for tests related enums and classes

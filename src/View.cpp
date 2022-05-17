@@ -22,7 +22,6 @@
 #include "controllers/DropArea.h"
 #include "controllers/MDILayout.h"
 
-#include <QWidget> // TODOv2 remove
 #include <QScreen>
 
 using namespace KDDockWidgets;

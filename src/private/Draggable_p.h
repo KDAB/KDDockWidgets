@@ -14,10 +14,9 @@
 
 #include "kddockwidgets/docks_export.h"
 #include <QVector>
+#include <QPoint>
 
 #include <memory>
-
-#include <QWidget> // TODO
 
 namespace KDDockWidgets {
 
