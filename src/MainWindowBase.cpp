@@ -113,6 +113,7 @@ public:
     QPointer<DockWidgetBase> m_overlayedDockWidget;
     LayoutWidget *const m_layoutWidget;
     DockWidgetBase *const m_persistentCentralDockWidget;
+    int m_overlayMargin = 1;
 };
 
 MainWindowBase::MainWindowBase(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
@@ -274,7 +275,7 @@ QRect MainWindowBase::Private::rectForOverlay(Frame *frame, SideBarLocation loca
     const QMargins centerWidgetMargins = q->centerWidgetMargins();
 
     QRect rect;
-    const int margin = 1;
+    const int margin = m_overlayMargin;
     switch (location) {
     case SideBarLocation::North:
     case SideBarLocation::South: {
@@ -769,6 +770,21 @@ QRect MainWindowBase::windowGeometry() const
         return window->geometry();
 
     return window()->geometry();
+}
+
+int MainWindowBase::overlayMargin() const
+{
+    return d->m_overlayMargin;
+}
+
+void MainWindowBase::setOverlayMargin(int margin)
+{
+    if (margin == d->m_overlayMargin) {
+        return;
+    }
+
+    d->m_overlayMargin = margin;
+    Q_EMIT overlayMarginChanged(margin);
 }
 
 void MainWindowBase::setPersistentCentralWidget(QWidgetOrQuick *widget)

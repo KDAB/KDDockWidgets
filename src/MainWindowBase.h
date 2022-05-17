@@ -59,6 +59,7 @@ class DOCKS_EXPORT MainWindowBase : public QMainWindow
     Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
     Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options CONSTANT)
     Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
+    Q_PROPERTY(int overlayMargin READ overlayMargin WRITE setOverlayMargin NOTIFY overlayMarginChanged)
 public:
     typedef QVector<MainWindowBase *> List;
     explicit MainWindowBase(const QString &uniqueName, MainWindowOptions options = MainWindowOption_HasCentralFrame,
@@ -222,6 +223,13 @@ public:
     /// - QtQuick: Our MainWindow is QQuickItem
     QRect windowGeometry() const;
 
+    /// @brief Returns the margin used by overlay docks. Default: 1
+    int overlayMargin() const;
+
+    /// @brief Sets the margin used by overlay docks.
+    /// Does not modify currently overlayed docks
+    void setOverlayMargin(int margin);
+
 protected:
 #ifdef KDDOCKWIDGETS_QTWIDGETS
     void onCloseEvent(QCloseEvent *);
@@ -246,6 +254,8 @@ Q_SIGNALS:
     /// Note that we're using the "Frame" nomenculature instead of "DockWidget" here, as DockWidgets
     /// can be tabbed together, in which case this signal isn't emitted.
     void frameCountChanged(int);
+
+    void overlayMarginChanged(int);
 
 private:
     class Private;
