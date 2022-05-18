@@ -9,10 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "ClassicIndicators_p.h"
+#include "ClassicIndicators.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
-#include "ClassicIndicatorsWindow_p.h"
+#include "private/indicators/ClassicIndicatorsWindow_p.h"
 
 #include "controllers/DropArea.h"
 #include "private/DragController_p.h"

@@ -13,7 +13,7 @@
 #define KD_INDICATORS_CLASSICINDICATORS_WINDOW_P_H
 
 #include "../DropIndicatorOverlayInterface_p.h"
-#include "ClassicIndicators_p.h"
+#include "controllers/indicators/ClassicIndicators.h"
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 

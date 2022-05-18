@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "NullIndicators_p.h"
+#include "NullIndicators.h"
 
 namespace KDDockWidgets::Controllers {
 

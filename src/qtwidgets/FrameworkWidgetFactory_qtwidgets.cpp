@@ -12,15 +12,14 @@
 #include "FrameworkWidgetFactory_qtwidgets.h"
 #include "Config.h"
 
-#include "private/indicators/ClassicIndicators_p.h"
-#include "private/indicators/NullIndicators_p.h"
 #include "private/Utils_p.h"
 
 #include "controllers/TabBar.h"
 #include "controllers/Stack.h"
 #include "controllers/FloatingWindow.h"
-
-#include "private/indicators/SegmentedIndicators_p.h"
+#include "controllers/indicators/ClassicIndicators.h"
+#include "controllers/indicators/NullIndicators.h"
+#include "controllers/indicators/SegmentedIndicators.h"
 
 #include "qtwidgets/views/FloatingWindow_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"

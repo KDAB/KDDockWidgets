@@ -12,7 +12,7 @@
 #ifndef KD_SEGMENTED_INDICATORS_P_H
 #define KD_SEGMENTED_INDICATORS_P_H
 
-#include "../DropIndicatorOverlayInterface_p.h"
+#include "private/DropIndicatorOverlayInterface_p.h"
 
 #include <QHash>
 #include <QPolygon>

@@ -12,7 +12,7 @@
 #ifndef KD_INDICATORS_CLASSICINDICATORS_P_H
 #define KD_INDICATORS_CLASSICINDICATORS_P_H
 
-#include "../DropIndicatorOverlayInterface_p.h"
+#include "private/DropIndicatorOverlayInterface_p.h"
 
 namespace KDDockWidgets {
 

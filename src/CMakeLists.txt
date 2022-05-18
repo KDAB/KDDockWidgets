@@ -53,10 +53,6 @@ set(DOCKSLIBS_SRCS
     private/WidgetResizeHandler.cpp
     private/WidgetResizeHandler_p.h
     private/WindowZOrder_x11_p.h
-    private/indicators/NullIndicators.cpp
-    private/indicators/NullIndicators_p.h
-    private/indicators/ClassicIndicators.cpp
-    private/indicators/ClassicIndicators_p.h
     private/indicators/ClassicIndicatorsWindow.cpp
     private/indicators/ClassicIndicatorsWindow_p.h
 
@@ -91,6 +87,12 @@ set(DOCKSLIBS_SRCS
     controllers/TitleBar.h
     controllers/TabBar.cpp
     controllers/TabBar.h
+    controllers/indicators/NullIndicators.cpp
+    controllers/indicators/NullIndicators.h
+    controllers/indicators/ClassicIndicators.cpp
+    controllers/indicators/ClassicIndicators.h
+    controllers/indicators/SegmentedIndicators.cpp
+    controllers/indicators/SegmentedIndicators.h
     Window.cpp
     Window.h
     View.cpp
@@ -309,8 +311,6 @@ else()
       # private/widgets/DockWidget.cpp
       # private/widgets/QWidgetAdapter_widgets.cpp
       # private/widgets/QWidgetAdapter_widgets_p.h
-      private/indicators/SegmentedIndicators.cpp
-      private/indicators/SegmentedIndicators_p.h
       # private/indicators/AnimatedIndicators.cpp
   )
 
@@ -470,7 +470,7 @@ install(FILES ${DOCKS_INSTALLABLE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL
 install(FILES ${DOCKS_INSTALLABLE_PRIVATE_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private)
 install(FILES private/multisplitter/Item_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/multisplitter)
 install(FILES private/indicators/ClassicIndicators_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators)
-install(FILES private/indicators/SegmentedIndicators_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators)
+# install(FILES private/indicators/SegmentedIndicators_p.h DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/indicators)
 
 if(KDDockWidgets_QTQUICK)
   install(FILES ${DOCKS_INSTALLABLE_PRIVATE_QUICK_INCLUDES} DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets/private/quick)

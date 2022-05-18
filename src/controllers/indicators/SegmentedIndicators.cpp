@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "SegmentedIndicators_p.h"
+#include "SegmentedIndicators.h"
 #include "controllers/DropArea.h"
 #include "Config.h"
 

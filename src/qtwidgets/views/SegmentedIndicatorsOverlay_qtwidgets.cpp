@@ -10,7 +10,7 @@
 */
 
 #include "SegmentedIndicatorsOverlay_qtwidgets.h"
-#include "private/indicators/SegmentedIndicators_p.h"
+#include "controllers/indicators/SegmentedIndicators.h"
 
 #include <QPainter>
 
