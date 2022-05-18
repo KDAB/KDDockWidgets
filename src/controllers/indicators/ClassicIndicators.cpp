@@ -12,7 +12,7 @@
 #include "ClassicIndicators.h"
 #include "Config.h"
 #include "FrameworkWidgetFactory.h"
-#include "private/indicators/ClassicIndicatorsWindow_p.h"
+#include "qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h"
 
 #include "controllers/DropArea.h"
 #include "private/DragController_p.h"

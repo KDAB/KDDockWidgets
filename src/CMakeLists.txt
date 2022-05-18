@@ -51,8 +51,6 @@ set(DOCKSLIBS_SRCS
     private/WidgetResizeHandler.cpp
     private/WidgetResizeHandler_p.h
     private/WindowZOrder_x11_p.h
-    private/indicators/ClassicIndicatorsWindow.cpp
-    private/indicators/ClassicIndicatorsWindow_p.h
 
     private/multisplitter/Item.cpp
     private/multisplitter/Item_p.h
@@ -142,6 +140,8 @@ set(DOCKSLIBS_SRCS
     qtwidgets/views/SideBar_qtwidgets.cpp
     qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.cpp
     qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h
+    qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.cpp
+    qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h
     qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.cpp
     qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h
     qtwidgets/TestHelpers_qtwidgets.cpp
