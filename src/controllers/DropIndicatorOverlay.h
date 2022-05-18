@@ -20,7 +20,8 @@
 namespace KDDockWidgets {
 
 namespace Controllers {
-class DropARea;
+
+class DropArea;
 
 class DOCKS_EXPORT DropIndicatorOverlay : public Controller
 {
