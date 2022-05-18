@@ -25,6 +25,9 @@
 #include "controllers/DockWidget_p.h"
 #include "controllers/MainWindow.h"
 #include "controllers/DropIndicatorOverlay.h"
+#include "controllers/indicators/ClassicIndicators.h"
+#include "controllers/indicators/NullIndicators.h"
+#include "controllers/indicators/SegmentedIndicators.h"
 
 #include "qtwidgets/views/Frame_qtwidgets.h"
 
@@ -34,16 +37,31 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-/**
- * @file
- * @brief A MultiSplitter with support for drop indicators when hovering over.
- *
- * @author Sérgio Martins \<sergio.martins@kdab.com\>
- */
+namespace KDDockWidgets {
+static Controllers::DropIndicatorOverlay *createDropIndicatorOverlay(Controllers::DropArea *dropArea)
+{
+#ifdef Q_OS_WASM
+    // On WASM windows don't support translucency, which is required for the classic indicators.
+    return new SegmentedIndicators(dropArea);
+#endif
+
+    switch (FrameworkWidgetFactory::s_dropIndicatorType) {
+    case DropIndicatorType::Classic:
+        return new Controllers::ClassicIndicators(dropArea);
+    case DropIndicatorType::Segmented:
+        return new Controllers::SegmentedIndicators(dropArea);
+    case DropIndicatorType::None:
+        return new Controllers::NullIndicators(dropArea);
+    }
+
+    return new Controllers::ClassicIndicators(dropArea);
+}
+}
+
 DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     : Layout(Type::DropArea, Config::self().frameworkWidgetFactory()->createDropArea(this, parent))
     , m_isMDIWrapper(isMDIWrapper)
-    , m_dropIndicatorOverlay(Config::self().frameworkWidgetFactory()->createDropIndicatorOverlay(this))
+    , m_dropIndicatorOverlay(createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))
 {
     Q_ASSERT(parent);

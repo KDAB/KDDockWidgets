@@ -105,25 +105,6 @@ View *DefaultWidgetFactory_qtquick::createFloatingWindow(Controllers::FloatingWi
     return new Views::FloatingWindow_qtquick(controller, mainwindow, flags);
 }
 
-Controllers::DropIndicatorOverlay *DefaultWidgetFactory_qtquick::createDropIndicatorOverlay(Controllers::DropArea *dropArea) const
-{
-#ifdef Q_OS_WASM
-    // On WASM windows don't support translucency, which is required for the classic indicators.
-    return new SegmentedIndicators(dropArea);
-#endif
-
-    switch (s_dropIndicatorType) {
-    case DropIndicatorType::Classic:
-        return new Controllers::ClassicIndicators(dropArea);
-    case DropIndicatorType::Segmented:
-        return new Controllers::SegmentedIndicators(dropArea);
-    case DropIndicatorType::None:
-        return new Controllers::NullIndicators(dropArea);
-    }
-
-    return new Controllers::ClassicIndicators(dropArea);
-}
-
 View *DefaultWidgetFactory_qtquick::createRubberBand(View *parent) const
 {
     return new Views::RubberBand_qtquick(Views::asQQuickItem(parent));
@@ -211,4 +192,14 @@ QUrl DefaultWidgetFactory_qtquick::frameFilename() const
 QUrl DefaultWidgetFactory_qtquick::floatingWindowFilename() const
 {
     return {};
+}
+
+View *DefaultWidgetFactory_qtquick::createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *, View *) const
+{
+    return nullptr;
+}
+
+View *DefaultWidgetFactory_qtquick::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *, View *) const
+{
+    return nullptr;
 }

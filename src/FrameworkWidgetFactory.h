@@ -33,6 +33,8 @@ class TabBar;
 class SideBar;
 class FloatingWindow;
 class MainWindow;
+class ClassicIndicators;
+class SegmentedIndicators;
 }
 
 /**
@@ -110,10 +112,11 @@ public:
                                        Controllers::MainWindow *parent = nullptr,
                                        Qt::WindowFlags windowFlags = {}) const = 0;
 
-    ///@brief Called internally by the framework to create a DropIndicatorOverlay
-    ///       Override to provide your own DropIndicatorOverlay sub-class.
-    ///@param dropArea Just forward to DropIndicatorOverlay's constructor.
-    virtual Controllers::DropIndicatorOverlay *createDropIndicatorOverlay(Controllers::DropArea *dropArea) const = 0;
+    /// @brief Creates the view that will parent the classic drop indicators
+    virtual View *createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent = nullptr) const = 0;
+
+    /// @brief Creates the view that will parent the segmented drop indicators
+    virtual View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const = 0;
 
     /// @brief Called internally by the framework to create a DropArea
     virtual View *createDropArea(Controllers::DropArea *, View *parent) const = 0;

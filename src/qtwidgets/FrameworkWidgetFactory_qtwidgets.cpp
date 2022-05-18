@@ -21,6 +21,8 @@
 #include "controllers/indicators/NullIndicators.h"
 #include "controllers/indicators/SegmentedIndicators.h"
 
+#include "qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h"
+#include "qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h"
 #include "qtwidgets/views/FloatingWindow_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "qtwidgets/views/DropArea_qtwidgets.h"
@@ -94,25 +96,6 @@ View *DefaultWidgetFactory_qtwidgets::createFloatingWindow(Controllers::Floating
 {
     auto mainwindow = qobject_cast<QMainWindow *>(Views::View_qtwidgets<QWidget>::asQWidget(parent));
     return new Views::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
-}
-
-Controllers::DropIndicatorOverlay *DefaultWidgetFactory_qtwidgets::createDropIndicatorOverlay(Controllers::DropArea *dropArea) const
-{
-#ifdef Q_OS_WASM
-    // On WASM windows don't support translucency, which is required for the classic indicators.
-    return new SegmentedIndicators(dropArea);
-#endif
-
-    switch (s_dropIndicatorType) {
-    case DropIndicatorType::Classic:
-        return new Controllers::ClassicIndicators(dropArea);
-    case DropIndicatorType::Segmented:
-        return new Controllers::SegmentedIndicators(dropArea);
-    case DropIndicatorType::None:
-        return new Controllers::NullIndicators(dropArea);
-    }
-
-    return new Controllers::ClassicIndicators(dropArea);
 }
 
 View *DefaultWidgetFactory_qtwidgets::createRubberBand(View *parent) const
@@ -194,4 +177,14 @@ View *DefaultWidgetFactory_qtwidgets::createDropArea(Controllers::DropArea *cont
 View *DefaultWidgetFactory_qtwidgets::createMDILayout(Controllers::MDILayout *controller, View *parent) const
 {
     return new Views::MDILayout_qtwidgets(controller, parent);
+}
+
+View *DefaultWidgetFactory_qtwidgets::createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent) const
+{
+    return new Views::ClassicIndicatorsOverlay_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+}
+
+View *DefaultWidgetFactory_qtwidgets::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent) const
+{
+    return new Views::SegmentedIndicatorsOverlay_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }

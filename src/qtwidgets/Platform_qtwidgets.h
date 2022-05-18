@@ -36,8 +36,6 @@ public:
 
     int startDragDistance() const override;
     View *createView(View *parent = nullptr) const override;
-    View *createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent = nullptr) const override;
-    View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtwidgets(int &argc, char **argv);

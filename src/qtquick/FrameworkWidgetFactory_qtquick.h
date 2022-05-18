@@ -65,7 +65,6 @@ public:
     View *createFloatingWindow(Controllers::FloatingWindow *,
                                Controllers::MainWindow *parent = nullptr,
                                Qt::WindowFlags windowFlags = {}) const override;
-    Controllers::DropIndicatorOverlay *createDropIndicatorOverlay(Controllers::DropArea *) const override;
     View *createRubberBand(View *parent) const override;
     View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
@@ -77,6 +76,8 @@ public:
     QUrl floatingWindowFilename() const;
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
+    View *createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent = nullptr) const override;
+    View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const override;
 
 private:
     Q_DISABLE_COPY(DefaultWidgetFactory_qtquick)
