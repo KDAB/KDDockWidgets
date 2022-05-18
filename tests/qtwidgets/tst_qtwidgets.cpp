@@ -38,6 +38,7 @@
 #include <QObject>
 #include <QPushButton>
 #include <QMenuBar>
+#include <QVBoxLayout>
 #include <QtTest/QtTest>
 
 using namespace KDDockWidgets;

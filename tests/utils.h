@@ -28,18 +28,6 @@
 
 #include "Utils_p.h"
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-
-#include <QVBoxLayout>
-#include <QToolButton>
-#include <QLineEdit>
-#else
-#include "quick/MainWindowQuick_p.h"
-#include "quick/TabWidgetQuick_p.h"
-
-#include <QQuickView>
-#endif
-
 #include <QPointer>
 #include <QVector>
 #include <QtTest/QtTest>
