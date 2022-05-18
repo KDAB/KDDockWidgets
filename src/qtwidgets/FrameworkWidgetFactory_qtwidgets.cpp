@@ -97,7 +97,7 @@ View *DefaultWidgetFactory_qtwidgets::createFloatingWindow(Controllers::Floating
     return new Views::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
 }
 
-DropIndicatorOverlayInterface *DefaultWidgetFactory_qtwidgets::createDropIndicatorOverlay(Controllers::DropArea *dropArea) const
+Controllers::DropIndicatorOverlayInterface *DefaultWidgetFactory_qtwidgets::createDropIndicatorOverlay(Controllers::DropArea *dropArea) const
 {
 #ifdef Q_OS_WASM
     // On WASM windows don't support translucency, which is required for the classic indicators.
@@ -106,14 +106,14 @@ DropIndicatorOverlayInterface *DefaultWidgetFactory_qtwidgets::createDropIndicat
 
     switch (s_dropIndicatorType) {
     case DropIndicatorType::Classic:
-        return new ClassicIndicators(dropArea);
+        return new Controllers::ClassicIndicators(dropArea);
     case DropIndicatorType::Segmented:
-        return new SegmentedIndicators(dropArea);
+        return new Controllers::SegmentedIndicators(dropArea);
     case DropIndicatorType::None:
-        return new NullIndicators(dropArea);
+        return new Controllers::NullIndicators(dropArea);
     }
 
-    return new ClassicIndicators(dropArea);
+    return new Controllers::ClassicIndicators(dropArea);
 }
 
 View *DefaultWidgetFactory_qtwidgets::createRubberBand(View *parent) const

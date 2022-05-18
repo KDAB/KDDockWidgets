@@ -65,7 +65,7 @@ public:
     View *createFloatingWindow(Controllers::FloatingWindow *,
                                Controllers::MainWindow *parent = nullptr,
                                Qt::WindowFlags windowFlags = {}) const override;
-    DropIndicatorOverlayInterface *createDropIndicatorOverlay(Controllers::DropArea *) const override;
+    Controllers::DropIndicatorOverlayInterface *createDropIndicatorOverlay(Controllers::DropArea *) const override;
     View *createRubberBand(View *parent) const override;
     View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
     View *createDropArea(Controllers::DropArea *, View *parent) const override;

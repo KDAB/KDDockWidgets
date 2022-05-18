@@ -300,7 +300,7 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, Controllers::D
     drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
 
     // Now we drag over the drop indicator and only then release mouse:
-    DropIndicatorOverlayInterface *dropIndicatorOverlay = target->dropIndicatorOverlay();
+    Controllers::DropIndicatorOverlayInterface *dropIndicatorOverlay = target->dropIndicatorOverlay();
     const QPoint dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
 
     drag(draggable, QPoint(), dropPoint, ButtonAction_Release);

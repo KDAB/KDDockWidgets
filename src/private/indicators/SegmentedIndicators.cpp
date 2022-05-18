@@ -17,6 +17,7 @@
 #include <QPainterPath>
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 int SegmentedIndicators::s_segmentGirth = 50;
 int SegmentedIndicators::s_segmentPenWidth = 4;

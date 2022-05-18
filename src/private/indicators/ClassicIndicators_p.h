@@ -19,6 +19,8 @@ namespace KDDockWidgets {
 class IndicatorWindow;
 class Indicator;
 
+namespace Controllers {
+
 class DOCKS_EXPORT ClassicIndicators : public DropIndicatorOverlayInterface
 {
     Q_OBJECT
@@ -72,6 +74,8 @@ private:
     View *const m_rubberBand;
     IndicatorWindow *const m_indicatorWindow;
 };
+
+}
 
 }
 

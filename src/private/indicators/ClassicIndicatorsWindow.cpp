@@ -14,6 +14,7 @@
 #include "../Utils_p.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 namespace KDDockWidgets {
 

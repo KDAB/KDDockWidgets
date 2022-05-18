@@ -28,8 +28,11 @@
 
 namespace KDDockWidgets {
 
+namespace Controllers {
 class ClassicIndicators;
 class SegmentedIndicators;
+}
+
 class FrameworkWidgetFactory;
 class Window;
 
@@ -84,10 +87,10 @@ public:
     virtual View *createView(View *parent = nullptr) const = 0;
 
     /// @brief Creates the view that will parent the classic drop indicators
-    virtual View *createClassicDropIndicatorOverlayView(ClassicIndicators *controller, View *parent = nullptr) const = 0;
+    virtual View *createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent = nullptr) const = 0;
 
     /// @brief Creates the view that will parent the classic drop indicators
-    virtual View *createSegmentedDropIndicatorOverlayView(SegmentedIndicators *controller, View *parent = nullptr) const = 0;
+    virtual View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const = 0;
 
     /// @brief Returns whether this platform is QtWidgets
     bool isQtWidgets() const;

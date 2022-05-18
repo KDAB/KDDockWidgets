@@ -16,8 +16,9 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::Controllers;
 
-SegmentedIndicatorsOverlay_qtwidgets::SegmentedIndicatorsOverlay_qtwidgets(SegmentedIndicators *controller,
+SegmentedIndicatorsOverlay_qtwidgets::SegmentedIndicatorsOverlay_qtwidgets(Controllers::SegmentedIndicators *controller,
                                                                            QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::None, parent)
     , m_controller(controller)

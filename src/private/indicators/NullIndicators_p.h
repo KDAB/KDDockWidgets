@@ -16,6 +16,8 @@
 
 namespace KDDockWidgets {
 
+namespace Controllers {
+
 /**
  * @brief A dummy DropIndicatorOverlayInterface implementation which doesn't do anything.
  *
@@ -43,6 +45,8 @@ protected:
         return {};
     }
 };
+
+}
 
 }
 

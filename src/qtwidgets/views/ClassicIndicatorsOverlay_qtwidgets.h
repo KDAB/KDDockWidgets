@@ -15,7 +15,9 @@
 
 namespace KDDockWidgets {
 
+namespace Controllers {
 class ClassicIndicators;
+}
 
 namespace Views {
 
@@ -23,12 +25,12 @@ class DOCKS_EXPORT ClassicIndicatorsOverlay_qtwidgets : public View_qtwidgets<QW
 {
     Q_OBJECT
 public:
-    explicit ClassicIndicatorsOverlay_qtwidgets(ClassicIndicators *controller, QWidget *parent = nullptr);
+    explicit ClassicIndicatorsOverlay_qtwidgets(Controllers::ClassicIndicators *controller, QWidget *parent = nullptr);
     ~ClassicIndicatorsOverlay_qtwidgets() override;
     bool onResize(QSize newSize) override;
 
 private:
-    ClassicIndicators *const m_controller;
+    Controllers::ClassicIndicators *const m_controller;
 };
 
 }

@@ -22,7 +22,6 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 class DropARea;
-}
 
 class DOCKS_EXPORT DropIndicatorOverlayInterface : public Controller
 {
@@ -76,6 +75,8 @@ protected:
     Controllers::DropArea *const m_dropArea;
     bool m_draggedWindowIsHovering = false;
 };
+
+}
 
 }
 

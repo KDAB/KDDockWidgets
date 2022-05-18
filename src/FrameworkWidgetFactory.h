@@ -25,9 +25,8 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets {
 
-class DropIndicatorOverlayInterface;
-
 namespace Controllers {
+class DropIndicatorOverlayInterface;
 class DropArea;
 class Separator;
 class TabBar;
@@ -114,7 +113,7 @@ public:
     ///@brief Called internally by the framework to create a DropIndicatorOverlayInterface
     ///       Override to provide your own DropIndicatorOverlayInterface sub-class.
     ///@param dropArea Just forward to DropIndicatorOverlayInterface's constructor.
-    virtual DropIndicatorOverlayInterface *createDropIndicatorOverlay(Controllers::DropArea *dropArea) const = 0;
+    virtual Controllers::DropIndicatorOverlayInterface *createDropIndicatorOverlay(Controllers::DropArea *dropArea) const = 0;
 
     /// @brief Called internally by the framework to create a DropArea
     virtual View *createDropArea(Controllers::DropArea *, View *parent) const = 0;

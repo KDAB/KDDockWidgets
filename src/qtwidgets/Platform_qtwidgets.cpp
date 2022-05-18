@@ -123,12 +123,14 @@ View *Platform_qtwidgets::createView(View *parent) const
     return new Views::View_qtwidgets<QWidget>(nullptr, Type::None, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
-View *Platform_qtwidgets::createClassicDropIndicatorOverlayView(ClassicIndicators *controller, View *parent) const
+View *Platform_qtwidgets::createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller,
+                                                                View *parent) const
 {
     return new Views::ClassicIndicatorsOverlay_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
-View *Platform_qtwidgets::createSegmentedDropIndicatorOverlayView(SegmentedIndicators *controller, View *parent) const
+View *Platform_qtwidgets::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller,
+                                                                  View *parent) const
 {
     return new Views::SegmentedIndicatorsOverlay_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }

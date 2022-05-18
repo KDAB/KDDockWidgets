@@ -14,8 +14,9 @@
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
+using namespace KDDockWidgets::Controllers;
 
-ClassicIndicatorsOverlay_qtwidgets::ClassicIndicatorsOverlay_qtwidgets(ClassicIndicators *controller,
+ClassicIndicatorsOverlay_qtwidgets::ClassicIndicatorsOverlay_qtwidgets(Controllers::ClassicIndicators *controller,
                                                                        QWidget *parent)
     : View_qtwidgets<QWidget>(controller, Type::None, parent)
     , m_controller(controller)

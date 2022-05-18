@@ -15,7 +15,9 @@
 
 namespace KDDockWidgets {
 
+namespace Controllers {
 class SegmentedIndicators;
+}
 
 namespace Views {
 
@@ -23,7 +25,7 @@ class DOCKS_EXPORT SegmentedIndicatorsOverlay_qtwidgets : public View_qtwidgets<
 {
     Q_OBJECT
 public:
-    explicit SegmentedIndicatorsOverlay_qtwidgets(SegmentedIndicators *controller, QWidget *parent = nullptr);
+    explicit SegmentedIndicatorsOverlay_qtwidgets(Controllers::SegmentedIndicators *controller, QWidget *parent = nullptr);
     ~SegmentedIndicatorsOverlay_qtwidgets() override;
 
 protected:
@@ -32,7 +34,7 @@ protected:
 private:
     void drawSegments(QPainter *p);
     void drawSegment(QPainter *p, const QPolygon &segment);
-    SegmentedIndicators *const m_controller;
+    Controllers::SegmentedIndicators *const m_controller;
 };
 
 }

@@ -19,6 +19,8 @@
 
 namespace KDDockWidgets {
 
+namespace Controllers {
+
 class DOCKS_EXPORT SegmentedIndicators : public DropIndicatorOverlayInterface
 {
     Q_OBJECT
@@ -47,6 +49,8 @@ private:
     QPoint m_hoveredPt = {};
     QHash<DropLocation, QPolygon> m_segments;
 };
+
+}
 
 }
 

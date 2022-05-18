@@ -23,6 +23,7 @@
 #include "controllers/Frame.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 
 static IndicatorWindow *createIndicatorWindow(ClassicIndicators *classicIndicators)
 {
