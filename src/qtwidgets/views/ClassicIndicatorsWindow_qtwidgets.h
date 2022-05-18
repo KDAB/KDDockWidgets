@@ -9,13 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_INDICATORS_CLASSICINDICATORS_WINDOW_P_H
-#define KD_INDICATORS_CLASSICINDICATORS_WINDOW_P_H
+#ifndef KD_CLASSICINDICATORS_WINDOW_QTWIDGETS_H
+#define KD_CLASSICINDICATORS_WINDOW_QTWIDGETS_H
+#pragma once
 
 #include "controllers/DropIndicatorOverlay.h"
 #include "controllers/indicators/ClassicIndicators.h"
-
-#ifdef KDDOCKWIDGETS_QTWIDGETS
 
 #include <QImage>
 #include <QWidget>
@@ -80,36 +79,7 @@ public:
     bool m_hovered = false;
     const DropLocation m_dropLocation;
 };
+
 }
-
-#else
-
-#include <QQuickView>
-
-namespace KDDockWidgets {
-class ClassicIndicators;
-
-class IndicatorWindow : public QQuickView
-{
-    Q_OBJECT
-    Q_PROPERTY(KDDockWidgets::ClassicIndicators *classicIndicators READ classicIndicators CONSTANT)
-public:
-    explicit IndicatorWindow(ClassicIndicators *);
-    DropLocation hover(QPoint);
-    void updatePositions();
-    QPoint posForIndicator(DropLocation) const;
-    Q_INVOKABLE QString iconName(int loc, bool active) const;
-    KDDockWidgets::ClassicIndicators *classicIndicators() const;
-    QQuickItem *indicatorForLocation(DropLocation loc) const;
-
-private:
-    DropLocation locationForIndicator(const QQuickItem *) const;
-    QQuickItem *indicatorForPos(QPoint) const;
-    QVector<QQuickItem *> indicatorItems() const;
-    ClassicIndicators *const m_classicIndicators;
-};
-}
-
-#endif
 
 #endif
