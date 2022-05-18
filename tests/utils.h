@@ -16,9 +16,9 @@
 
 #include "Config.h"
 #include "DockRegistry_p.h"
-#include "DropIndicatorOverlay_p.h"
 #include "KDDockWidgets.h"
 
+#include "controllers/DropIndicatorOverlay.h"
 #include "controllers/DropArea.h"
 #include "controllers/TitleBar.h"
 #include "controllers/Stack.h"

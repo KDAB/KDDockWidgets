@@ -14,7 +14,6 @@
 #include "FrameworkWidgetFactory.h"
 #include "private/DockRegistry_p.h"
 #include "private/Draggable_p.h"
-#include "private/DropIndicatorOverlay_p.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 #include "private/multisplitter/Item_p.h"
@@ -25,6 +24,7 @@
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"
 #include "controllers/MainWindow.h"
+#include "controllers/DropIndicatorOverlay.h"
 
 #include "qtwidgets/views/Frame_qtwidgets.h"
 

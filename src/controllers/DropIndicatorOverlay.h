@@ -9,13 +9,12 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KD_DROPINDICATOROVERLAYINTERFACE_P_H
-#define KD_DROPINDICATOROVERLAYINTERFACE_P_H
+#ifndef KD_DROPINDICATOROVERLAY_H
+#define KD_DROPINDICATOROVERLAY_H
 
 #include "kddockwidgets/docks_export.h"
-#include "controllers/Frame.h"
 #include "kddockwidgets/KDDockWidgets.h"
-
+#include "controllers/Frame.h"
 #include "Controller.h"
 
 namespace KDDockWidgets {

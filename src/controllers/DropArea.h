@@ -25,7 +25,7 @@
 
 #include "controllers/Frame.h"
 #include "controllers/Layout.h"
-#include "private/DropIndicatorOverlay_p.h"
+#include "controllers/DropIndicatorOverlay.h"
 
 class TestQtWidgets;
 class TestDocks;

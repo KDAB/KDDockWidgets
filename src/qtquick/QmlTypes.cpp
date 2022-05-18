@@ -11,7 +11,7 @@
 
 #include "QmlTypes.h"
 #include "controllers/DropArea.h"
-#include "../DropIndicatorOverlay_p.h"
+#include "../DropIndicatorOverlay.h"
 #include "../Frame_p.h"
 #include "../TitleBar_p.h"
 #include "../indicators/ClassicIndicators_p.h"

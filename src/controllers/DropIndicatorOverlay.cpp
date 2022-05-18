@@ -9,15 +9,16 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DropIndicatorOverlay_p.h"
-
-#include "controllers/DropArea.h"
-#include "DockRegistry_p.h"
-#include "DragController_p.h"
+#include "DropIndicatorOverlay.h"
 #include "Config.h"
 #include "Platform.h"
 
+#include "controllers/DropArea.h"
 #include "controllers/Frame.h"
+
+#include "private/DragController_p.h"
+#include "private/DockRegistry_p.h"
+
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
