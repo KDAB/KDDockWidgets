@@ -12,7 +12,7 @@
 #ifndef KD_SEGMENTED_INDICATORS_P_H
 #define KD_SEGMENTED_INDICATORS_P_H
 
-#include "private/DropIndicatorOverlayInterface_p.h"
+#include "private/DropIndicatorOverlay_p.h"
 
 #include <QHash>
 #include <QPolygon>
@@ -21,7 +21,7 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 
-class DOCKS_EXPORT SegmentedIndicators : public DropIndicatorOverlayInterface
+class DOCKS_EXPORT SegmentedIndicators : public DropIndicatorOverlay
 {
     Q_OBJECT
 public:

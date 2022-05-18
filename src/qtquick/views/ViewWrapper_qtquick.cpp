@@ -161,7 +161,7 @@ bool ViewWrapper_qtquick::is(Type t) const
     // case Type::MDIArea:
     //     return qobject_cast<MDIArea *>(m_item);
     // case Type::LayoutItem:
-    // case Type::DropIndicatorOverlayInterface:
+    // case Type::DropIndicatorOverlay:
     //     qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";
     //     return false;
     // case Type::ViewWrapper:

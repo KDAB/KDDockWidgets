@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "DropIndicatorOverlayInterface_p.h"
+#include "DropIndicatorOverlay_p.h"
 
 #include "controllers/DropArea.h"
 #include "DockRegistry_p.h"
@@ -22,12 +22,12 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-DropIndicatorOverlayInterface::DropIndicatorOverlayInterface(Controllers::DropArea *dropArea)
+DropIndicatorOverlay::DropIndicatorOverlay(Controllers::DropArea *dropArea)
     : Controller(Type::None, Platform::instance()->createView(dropArea->view()))
     , m_dropArea(dropArea)
 {
     view()->setVisible(false);
-    view()->setObjectName(QStringLiteral("DropIndicatorOverlayInterface"));
+    view()->setObjectName(QStringLiteral("DropIndicatorOverlay"));
 
     // Set transparent for mouse events so that topLevel->childAt() never returns the drop indicator overlay
     view()->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -41,7 +41,7 @@ DropIndicatorOverlayInterface::DropIndicatorOverlayInterface(Controllers::DropAr
             });
 }
 
-void DropIndicatorOverlayInterface::setWindowBeingDragged(bool is)
+void DropIndicatorOverlay::setWindowBeingDragged(bool is)
 {
     if (is == m_draggedWindowIsHovering)
         return;
@@ -58,22 +58,22 @@ void DropIndicatorOverlayInterface::setWindowBeingDragged(bool is)
     updateVisibility();
 }
 
-QRect DropIndicatorOverlayInterface::hoveredFrameRect() const
+QRect DropIndicatorOverlay::hoveredFrameRect() const
 {
     return m_hoveredFrameRect;
 }
 
-void DropIndicatorOverlayInterface::setHoveredFrame(Controllers::Frame *frame)
+void DropIndicatorOverlay::setHoveredFrame(Controllers::Frame *frame)
 {
     if (frame == m_hoveredFrame)
         return;
 
     if (m_hoveredFrame)
-        disconnect(m_hoveredFrame, &QObject::destroyed, this, &DropIndicatorOverlayInterface::onFrameDestroyed);
+        disconnect(m_hoveredFrame, &QObject::destroyed, this, &DropIndicatorOverlay::onFrameDestroyed);
 
     m_hoveredFrame = frame;
     if (m_hoveredFrame) {
-        connect(frame, &QObject::destroyed, this, &DropIndicatorOverlayInterface::onFrameDestroyed);
+        connect(frame, &QObject::destroyed, this, &DropIndicatorOverlay::onFrameDestroyed);
         setHoveredFrameRect(m_hoveredFrame->view()->geometry());
     } else {
         setHoveredFrameRect(QRect());
@@ -84,17 +84,17 @@ void DropIndicatorOverlayInterface::setHoveredFrame(Controllers::Frame *frame)
     onHoveredFrameChanged(m_hoveredFrame);
 }
 
-bool DropIndicatorOverlayInterface::isHovered() const
+bool DropIndicatorOverlay::isHovered() const
 {
     return m_draggedWindowIsHovering;
 }
 
-DropLocation DropIndicatorOverlayInterface::currentDropLocation() const
+DropLocation DropIndicatorOverlay::currentDropLocation() const
 {
     return m_currentDropLocation;
 }
 
-KDDockWidgets::Location DropIndicatorOverlayInterface::multisplitterLocationFor(DropLocation dropLoc)
+KDDockWidgets::Location DropIndicatorOverlay::multisplitterLocationFor(DropLocation dropLoc)
 {
     switch (dropLoc) {
     case DropLocation_None:
@@ -122,7 +122,7 @@ KDDockWidgets::Location DropIndicatorOverlayInterface::multisplitterLocationFor(
     return KDDockWidgets::Location_None;
 }
 
-bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) const
+bool DropIndicatorOverlay::dropIndicatorVisible(DropLocation dropLoc) const
 {
     if (dropLoc == DropLocation_None)
         return false;
@@ -171,16 +171,16 @@ bool DropIndicatorOverlayInterface::dropIndicatorVisible(DropLocation dropLoc) c
     return true;
 }
 
-void DropIndicatorOverlayInterface::onFrameDestroyed()
+void DropIndicatorOverlay::onFrameDestroyed()
 {
     setHoveredFrame(nullptr);
 }
 
-void DropIndicatorOverlayInterface::onHoveredFrameChanged(Controllers::Frame *)
+void DropIndicatorOverlay::onHoveredFrameChanged(Controllers::Frame *)
 {
 }
 
-void DropIndicatorOverlayInterface::setCurrentDropLocation(DropLocation location)
+void DropIndicatorOverlay::setCurrentDropLocation(DropLocation location)
 {
     if (m_currentDropLocation != location) {
         m_currentDropLocation = location;
@@ -188,12 +188,12 @@ void DropIndicatorOverlayInterface::setCurrentDropLocation(DropLocation location
     }
 }
 
-DropLocation DropIndicatorOverlayInterface::hover(QPoint globalPos)
+DropLocation DropIndicatorOverlay::hover(QPoint globalPos)
 {
     return hover_impl(globalPos);
 }
 
-void DropIndicatorOverlayInterface::setHoveredFrameRect(QRect rect)
+void DropIndicatorOverlay::setHoveredFrameRect(QRect rect)
 {
     if (m_hoveredFrameRect != rect) {
         m_hoveredFrameRect = rect;
@@ -201,7 +201,7 @@ void DropIndicatorOverlayInterface::setHoveredFrameRect(QRect rect)
     }
 }
 
-void DropIndicatorOverlayInterface::removeHover()
+void DropIndicatorOverlay::removeHover()
 {
     setWindowBeingDragged(false);
     setCurrentDropLocation(DropLocation_None);

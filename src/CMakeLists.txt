@@ -37,8 +37,8 @@ set(DOCKSLIBS_SRCS
     private/LayoutSaver_p.h
     private/Position.cpp
     private/Position_p.h
-    private/DropIndicatorOverlayInterface.cpp
-    private/DropIndicatorOverlayInterface_p.h
+    private/DropIndicatorOverlay.cpp
+    private/DropIndicatorOverlay_p.h
     private/Logging.cpp
     private/Logging_p.h
     private/DockRegistry.cpp
@@ -183,7 +183,7 @@ set(DOCKS_INSTALLABLE_INCLUDES
 set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
     private/DragController_p.h
     private/Draggable_p.h
-    private/DropIndicatorOverlayInterface_p.h
+    private/DropIndicatorOverlay_p.h
     # private/FloatingWindow_p.h
     # private/Frame_p.h
     private/LayoutSaver_p.h

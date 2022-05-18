@@ -14,7 +14,7 @@
 #include "FrameworkWidgetFactory.h"
 #include "private/DockRegistry_p.h"
 #include "private/Draggable_p.h"
-#include "private/DropIndicatorOverlayInterface_p.h"
+#include "private/DropIndicatorOverlay_p.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 #include "private/multisplitter/Item_p.h"
@@ -314,13 +314,13 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Controllers::Frame *accep
     case DropLocation_Top:
     case DropLocation_Bottom:
     case DropLocation_Right:
-        result = drop(droppedWindow->view(), DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), acceptingFrame);
+        result = drop(droppedWindow->view(), DropIndicatorOverlay::multisplitterLocationFor(droploc), acceptingFrame);
         break;
     case DropLocation_OutterLeft:
     case DropLocation_OutterTop:
     case DropLocation_OutterRight:
     case DropLocation_OutterBottom:
-        result = drop(droppedWindow->view(), DropIndicatorOverlayInterface::multisplitterLocationFor(droploc), nullptr);
+        result = drop(droppedWindow->view(), DropIndicatorOverlay::multisplitterLocationFor(droploc), nullptr);
         break;
     case DropLocation_Center:
         qCDebug(hovering) << "Tabbing" << droppedWindow << "into" << acceptingFrame;

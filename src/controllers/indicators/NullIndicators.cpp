@@ -14,7 +14,7 @@
 namespace KDDockWidgets::Controllers {
 
 NullIndicators::NullIndicators(Controllers::DropArea *dropArea)
-    : DropIndicatorOverlayInterface(dropArea)
+    : DropIndicatorOverlay(dropArea)
 {
 }
 

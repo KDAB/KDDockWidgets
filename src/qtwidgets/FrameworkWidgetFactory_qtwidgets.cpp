@@ -96,7 +96,7 @@ View *DefaultWidgetFactory_qtwidgets::createFloatingWindow(Controllers::Floating
     return new Views::FloatingWindow_qtwidgets(controller, mainwindow, windowFlags);
 }
 
-Controllers::DropIndicatorOverlayInterface *DefaultWidgetFactory_qtwidgets::createDropIndicatorOverlay(Controllers::DropArea *dropArea) const
+Controllers::DropIndicatorOverlay *DefaultWidgetFactory_qtwidgets::createDropIndicatorOverlay(Controllers::DropArea *dropArea) const
 {
 #ifdef Q_OS_WASM
     // On WASM windows don't support translucency, which is required for the classic indicators.

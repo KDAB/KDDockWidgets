@@ -16,7 +16,7 @@
 
 #include "Config.h"
 #include "DockRegistry_p.h"
-#include "DropIndicatorOverlayInterface_p.h"
+#include "DropIndicatorOverlay_p.h"
 #include "KDDockWidgets.h"
 
 #include "controllers/DropArea.h"
@@ -300,7 +300,7 @@ inline void dragFloatingWindowTo(Controllers::FloatingWindow *fw, Controllers::D
     drag(draggable, draggable->mapToGlobal(QPoint(10, 10)), target->window()->mapToGlobal(target->window()->rect().center()), ButtonAction_Press);
 
     // Now we drag over the drop indicator and only then release mouse:
-    Controllers::DropIndicatorOverlayInterface *dropIndicatorOverlay = target->dropIndicatorOverlay();
+    Controllers::DropIndicatorOverlay *dropIndicatorOverlay = target->dropIndicatorOverlay();
     const QPoint dropPoint = dropIndicatorOverlay->posForIndicator(dropLocation);
 
     drag(draggable, QPoint(), dropPoint, ButtonAction_Release);

@@ -12,7 +12,7 @@
 #ifndef KD_INDICATORS_CLASSICINDICATORS_P_H
 #define KD_INDICATORS_CLASSICINDICATORS_P_H
 
-#include "private/DropIndicatorOverlayInterface_p.h"
+#include "private/DropIndicatorOverlay_p.h"
 
 namespace KDDockWidgets {
 
@@ -21,7 +21,7 @@ class Indicator;
 
 namespace Controllers {
 
-class DOCKS_EXPORT ClassicIndicators : public DropIndicatorOverlayInterface
+class DOCKS_EXPORT ClassicIndicators : public DropIndicatorOverlay
 {
     Q_OBJECT
 

@@ -28,7 +28,7 @@ QColor SegmentedIndicators::s_hoveredSegmentBrushColor = QColor(0x3574c5);
 
 
 SegmentedIndicators::SegmentedIndicators(Controllers::DropArea *dropArea)
-    : DropIndicatorOverlayInterface(dropArea)
+    : DropIndicatorOverlay(dropArea)
 {
     // If the app didn't choose opacity then we choose a suitable default value.
     // ClassicIndicators works fine with an opaque dragged window because the indicators have higher Z,

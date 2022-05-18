@@ -11,7 +11,7 @@
 
 #include "QmlTypes.h"
 #include "controllers/DropArea.h"
-#include "../DropIndicatorOverlayInterface_p.h"
+#include "../DropIndicatorOverlay_p.h"
 #include "../Frame_p.h"
 #include "../TitleBar_p.h"
 #include "../indicators/ClassicIndicators_p.h"
@@ -32,7 +32,7 @@ void KDDockWidgets::registerQmlTypes()
     qmlRegisterUncreatableType<TitleBar>("com.kdab.dockwidgets", 1, 0, "TitleBar", QStringLiteral("Enum access only"));
     qmlRegisterUncreatableType<Item>("com.kdab.kddockwidgets.multisplitter", 1, 0,
                                      "KDMultiSplitter", QStringLiteral("enum access"));
-    qmlRegisterUncreatableType<DropIndicatorOverlayInterface>("com.kdab.dockwidgets", 1, 0, "DropIndicatorOverlayInterface", QStringLiteral("Enum access only"));
+    qmlRegisterUncreatableType<DropIndicatorOverlay>("com.kdab.dockwidgets", 1, 0, "DropIndicatorOverlay", QStringLiteral("Enum access only"));
     qmlRegisterUncreatableMetaObject(KDDockWidgets::staticMetaObject, "com.kdab.dockwidgets", 1, 0, "KDDockWidgets", QStringLiteral("Enum access only"));
 
     qRegisterMetaType<Frame *>();

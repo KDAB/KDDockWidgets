@@ -12,18 +12,18 @@
 #ifndef KD_NULL_INDICATORS_P_H
 #define KD_NULL_INDICATORS_P_H
 
-#include "private/DropIndicatorOverlayInterface_p.h"
+#include "private/DropIndicatorOverlay_p.h"
 
 namespace KDDockWidgets {
 
 namespace Controllers {
 
 /**
- * @brief A dummy DropIndicatorOverlayInterface implementation which doesn't do anything.
+ * @brief A dummy DropIndicatorOverlay implementation which doesn't do anything.
  *
  * Used for debugging purposes or if someone doesn't want the drop indicators.
  */
-class DOCKS_EXPORT NullIndicators : public DropIndicatorOverlayInterface
+class DOCKS_EXPORT NullIndicators : public DropIndicatorOverlay
 {
     Q_OBJECT
 public:

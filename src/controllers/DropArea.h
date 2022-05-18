@@ -25,7 +25,7 @@
 
 #include "controllers/Frame.h"
 #include "controllers/Layout.h"
-#include "private/DropIndicatorOverlayInterface_p.h"
+#include "private/DropIndicatorOverlay_p.h"
 
 class TestQtWidgets;
 class TestDocks;
@@ -66,7 +66,7 @@ public:
     Controllers::Frame::List frames() const;
 
     Layouting::Item *centralFrame() const;
-    DropIndicatorOverlayInterface *dropIndicatorOverlay() const
+    DropIndicatorOverlay *dropIndicatorOverlay() const
     {
         return m_dropIndicatorOverlay;
     }
@@ -139,7 +139,7 @@ private:
     friend class Controllers::FloatingWindow;
     friend class ::TestDocks;
     friend class ::TestQtWidgets;
-    friend class DropIndicatorOverlayInterface;
+    friend class DropIndicatorOverlay;
     friend class AnimatedIndicators;
 
     Layouting::ItemBoxContainer *rootItem() const;
@@ -174,7 +174,7 @@ private:
     bool m_inDestructor = false;
     const bool m_isMDIWrapper;
     QString m_affinityName;
-    DropIndicatorOverlayInterface *m_dropIndicatorOverlay = nullptr;
+    DropIndicatorOverlay *m_dropIndicatorOverlay = nullptr;
     Controllers::Frame *const m_centralFrame = nullptr;
     Layouting::ItemBoxContainer *m_rootItem = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
