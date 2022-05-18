@@ -18,6 +18,26 @@ using namespace KDDockWidgets::Controllers;
 
 namespace KDDockWidgets {
 
+class Indicator : public QWidget
+{
+    Q_OBJECT
+public:
+    typedef QList<Indicator *> List;
+    explicit Indicator(Controllers::ClassicIndicators *classicIndicators, IndicatorWindow *parent,
+                       DropLocation location);
+    void paintEvent(QPaintEvent *) override;
+
+    void setHovered(bool hovered);
+    QString iconName(bool active) const;
+    QString iconFileName(bool active) const;
+
+    QImage m_image;
+    QImage m_imageActive;
+    Controllers::ClassicIndicators *const q;
+    bool m_hovered = false;
+    const DropLocation m_dropLocation;
+};
+
 static QString iconName(DropLocation loc, bool active)
 {
     QString suffix = active ? QStringLiteral("_active")
@@ -259,3 +279,5 @@ Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *pare
     setFixedSize(m_image.size());
     setVisible(true);
 }
+
+#include "ClassicIndicatorsWindow_qtwidgets.moc"
