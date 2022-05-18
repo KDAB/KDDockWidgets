@@ -44,7 +44,7 @@ SegmentedIndicators::~SegmentedIndicators()
 
 DropLocation SegmentedIndicators::hover_impl(QPoint pt)
 {
-    m_hoveredPt = mapFromGlobal(pt);
+    m_hoveredPt = view()->mapFromGlobal(pt);
     updateSegments();
     setCurrentDropLocation(dropLocationForPos(m_hoveredPt));
 
@@ -60,13 +60,6 @@ DropLocation SegmentedIndicators::dropLocationForPos(QPoint pos) const
     }
 
     return DropLocation_None;
-}
-
-void SegmentedIndicators::paintEvent(QPaintEvent *)
-{
-    QPainter p(this);
-    p.setRenderHint(QPainter::Antialiasing, true);
-    drawSegments(&p);
 }
 
 QHash<DropLocation, QPolygon> SegmentedIndicators::segmentsForRect(QRect r, bool inner, bool useOffset) const
@@ -161,42 +154,21 @@ void SegmentedIndicators::updateSegments()
         m_segments.insert(segments);
     }
 
-    update();
+    view()->update();
 }
 
-void SegmentedIndicators::drawSegments(QPainter *p)
-{
-    for (DropLocation loc : { DropLocation_Left,
-                              DropLocation_Top,
-                              DropLocation_Right,
-                              DropLocation_Bottom,
-                              DropLocation_Center,
-                              DropLocation_OutterLeft,
-                              DropLocation_OutterTop,
-                              DropLocation_OutterRight,
-                              DropLocation_OutterBottom })
-        drawSegment(p, m_segments.value(loc));
-}
-
-void SegmentedIndicators::drawSegment(QPainter *p, const QPolygon &segment)
-{
-    if (segment.isEmpty())
-        return;
-
-    QPen pen(s_segmentPenColor);
-    pen.setWidth(s_segmentPenWidth);
-    p->setPen(pen);
-    QColor brush(s_segmentBrushColor);
-
-    if (segment.containsPoint(m_hoveredPt, Qt::OddEvenFill))
-        brush = s_hoveredSegmentBrushColor;
-
-    p->setBrush(brush);
-    p->drawPolygon(segment);
-}
-
-QPoint KDDockWidgets::SegmentedIndicators::posForIndicator(DropLocation) const
+QPoint SegmentedIndicators::posForIndicator(DropLocation) const
 {
     /// Doesn't apply to segmented indicators, completely different concept
     return {};
+}
+
+QPoint SegmentedIndicators::hoveredPt() const
+{
+    return m_hoveredPt;
+}
+
+QHash<DropLocation, QPolygon> SegmentedIndicators::segments() const
+{
+    return m_segments;
 }

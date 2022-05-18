@@ -21,6 +21,8 @@
 #include "controllers/DropArea.h"
 #include "kddockwidgets/docks_export.h"
 
+class QAbstractNativeEventFilter;
+
 namespace KDDockWidgets::Controllers {
 
 class DropArea;

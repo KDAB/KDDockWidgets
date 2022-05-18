@@ -53,8 +53,9 @@ public:
     bool outterBottomIndicatorVisible() const;
     bool tabIndicatorVisible() const;
 
+    bool onResize(QSize newSize);
+
 protected:
-    bool onResize(QSize newSize) override;
     void updateVisibility() override;
 Q_SIGNALS:
     void indicatorsVisibleChanged();

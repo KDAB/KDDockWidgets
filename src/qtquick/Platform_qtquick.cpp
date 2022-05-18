@@ -149,3 +149,13 @@ View *Platform_qtquick::createView(View *parent) const
 {
     return new Views::View_qtquick(nullptr, Type::None, Views::asQQuickItem(parent));
 }
+
+View *Platform_qtquick::createClassicDropIndicatorOverlayView(ClassicIndicators *, View *) const
+{
+    return nullptr;
+}
+
+View *Platform_qtquick::createSegmentedDropIndicatorOverlayView(SegmentedIndicators *, View *) const
+{
+    return nullptr;
+}

@@ -106,7 +106,7 @@ static QWidget *parentForIndicatorWindow(ClassicIndicators *classicIndicators_)
 {
     // On Wayland it can't be a top-level, as we have no way of positioning it
 
-    return isWayland() ? classicIndicators_
+    return isWayland() ? qobject_cast<QWidget *>(classicIndicators_->view()->asQObject())
                        : nullptr;
 }
 

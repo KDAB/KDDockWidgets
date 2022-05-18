@@ -70,10 +70,7 @@ public:
     virtual QSize maxSize() const;
 
     /// @brief Returns a pixmap representing this Window. For purposes of QDrag. Wayland only.
-    virtual QPixmap pixmap() const
-    {
-        return {};
-    }
+    virtual QPixmap pixmap() const;
 
     /// @brief Returns the list of dock widgets being dragged
     virtual QVector<Controllers::DockWidget *> dockWidgets() const;

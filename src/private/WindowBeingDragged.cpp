@@ -184,6 +184,11 @@ Draggable *WindowBeingDragged::draggable() const
     return m_draggable;
 }
 
+QPixmap WindowBeingDragged::pixmap() const
+{
+    return {};
+}
+
 WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
     : WindowBeingDragged(draggable)
 {

@@ -28,7 +28,8 @@ public:
     DropLocation hover_impl(QPoint globalPos) override;
 
     DropLocation dropLocationForPos(QPoint pos) const;
-
+    QPoint hoveredPt() const;
+    QHash<DropLocation, QPolygon> segments() const;
 
     static int s_segmentGirth;
     static int s_segmentPenWidth;
@@ -38,14 +39,11 @@ public:
     static QColor s_hoveredSegmentBrushColor;
 
 protected:
-    void paintEvent(QPaintEvent *) override;
     QPoint posForIndicator(DropLocation) const override;
 
 private:
     QHash<DropLocation, QPolygon> segmentsForRect(QRect, bool inner, bool useOffset = false) const;
     void updateSegments();
-    void drawSegments(QPainter *p);
-    void drawSegment(QPainter *p, const QPolygon &segment);
     QPoint m_hoveredPt = {};
     QHash<DropLocation, QPolygon> m_segments;
 };

@@ -138,6 +138,10 @@ set(DOCKSLIBS_SRCS
     qtwidgets/views/Stack_qtwidgets.cpp
     qtwidgets/views/Stack_qtwidgets.h
     qtwidgets/views/SideBar_qtwidgets.cpp
+    qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.cpp
+    qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h
+    qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.cpp
+    qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h
     qtwidgets/TestHelpers_qtwidgets.cpp
     qtwidgets/MDIArea.cpp
     qtwidgets/MDIArea.h

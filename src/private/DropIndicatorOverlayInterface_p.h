@@ -16,7 +16,7 @@
 #include "controllers/Frame.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
-#include "qtwidgets/views/View_qtwidgets.h"
+#include "Controller.h"
 
 namespace KDDockWidgets {
 
@@ -24,7 +24,7 @@ namespace Controllers {
 class DropARea;
 }
 
-class DOCKS_EXPORT DropIndicatorOverlayInterface : public Views::View_qtwidgets<QWidget>
+class DOCKS_EXPORT DropIndicatorOverlayInterface : public Controller
 {
     Q_OBJECT
     Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)

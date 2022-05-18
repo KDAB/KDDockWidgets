@@ -28,6 +28,8 @@
 
 namespace KDDockWidgets {
 
+class ClassicIndicators;
+class SegmentedIndicators;
 class FrameworkWidgetFactory;
 class Window;
 
@@ -80,6 +82,12 @@ public:
     /// For Qt this would just returns a empty QWidget or QQuickItem
     /// other frontends can return something as basic.
     virtual View *createView(View *parent = nullptr) const = 0;
+
+    /// @brief Creates the view that will parent the classic drop indicators
+    virtual View *createClassicDropIndicatorOverlayView(ClassicIndicators *controller, View *parent = nullptr) const = 0;
+
+    /// @brief Creates the view that will parent the classic drop indicators
+    virtual View *createSegmentedDropIndicatorOverlayView(SegmentedIndicators *controller, View *parent = nullptr) const = 0;
 
     /// @brief Returns whether this platform is QtWidgets
     bool isQtWidgets() const;

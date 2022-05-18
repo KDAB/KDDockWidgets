@@ -15,6 +15,7 @@
 #include "DockRegistry_p.h"
 #include "DragController_p.h"
 #include "Config.h"
+#include "Platform.h"
 
 #include "controllers/Frame.h"
 
@@ -22,14 +23,14 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 DropIndicatorOverlayInterface::DropIndicatorOverlayInterface(Controllers::DropArea *dropArea)
-    : Views::View_qtwidgets<QWidget>(nullptr, Type::None, qobject_cast<QWidget *>(dropArea->view()->asQObject()))
+    : Controller(Type::None, Platform::instance()->createView(dropArea->view()))
     , m_dropArea(dropArea)
 {
-    setVisible(false);
-    setObjectName(QStringLiteral("DropIndicatorOverlayInterface"));
+    view()->setVisible(false);
+    view()->setObjectName(QStringLiteral("DropIndicatorOverlayInterface"));
 
     // Set transparent for mouse events so that topLevel->childAt() never returns the drop indicator overlay
-    setAttribute(Qt::WA_TransparentForMouseEvents);
+    view()->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     connect(DockRegistry::self(), &DockRegistry::dropIndicatorsInhibitedChanged, this,
             [this](bool inhibited) {
@@ -47,8 +48,8 @@ void DropIndicatorOverlayInterface::setWindowBeingDragged(bool is)
 
     m_draggedWindowIsHovering = is;
     if (is) {
-        setGeometry(m_dropArea->rect());
-        raise();
+        view()->setGeometry(m_dropArea->rect());
+        view()->raise();
     } else {
         setHoveredFrame(nullptr);
     }

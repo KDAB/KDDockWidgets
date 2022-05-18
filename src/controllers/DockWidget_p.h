@@ -17,10 +17,12 @@
 #include "private/Position_p.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/SideBar.h"
+#include "ViewWrapper.h"
 
 #include <QCoreApplication>
 #include <QString>
 #include <QSize>
+#include <QIcon>
 
 QT_BEGIN_NAMESPACE
 class QAction;

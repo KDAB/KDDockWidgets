@@ -40,6 +40,8 @@ public:
     void setQmlEngine(QQmlEngine *);
     QQmlEngine *qmlEngine() const;
     View *createView(View *parent = nullptr) const override;
+    View *createClassicDropIndicatorOverlayView(ClassicIndicators *controller, View *parent = nullptr) const override;
+    View *createSegmentedDropIndicatorOverlayView(SegmentedIndicators *controller, View *parent = nullptr) const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtquick(int &argc, char **argv);

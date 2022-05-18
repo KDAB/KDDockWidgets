@@ -13,6 +13,7 @@
 #define KD_DRAGCONTROLLER_P_H
 
 #include "kddockwidgets/docks_export.h"
+#include "ViewWrapper.h"
 
 #include "WindowBeingDragged_p.h"
 
