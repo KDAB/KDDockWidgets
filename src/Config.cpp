@@ -51,7 +51,7 @@ public:
     MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
     TabbingAllowedFunc m_tabbingAllowedFunc = nullptr;
     DropIndicatorAllowedFunc m_dropIndicatorAllowedFunc = nullptr;
-    FrameworkWidgetFactory *m_frameworkWidgetFactory = nullptr;
+    ViewFactory *m_frameworkWidgetFactory = nullptr;
     Flags m_flags = Flag_Default;
     InternalFlags m_internalFlags = InternalFlag_None;
     CustomizableWidgets m_disabledPaintEvents = CustomizableWidget_None;
@@ -127,14 +127,14 @@ MainWindowFactoryFunc Config::mainWindowFactoryFunc() const
     return d->m_mainWindowFactoryFunc;
 }
 
-void Config::setFrameworkWidgetFactory(FrameworkWidgetFactory *wf)
+void Config::setFrameworkWidgetFactory(ViewFactory *wf)
 {
     Q_ASSERT(wf);
     delete d->m_frameworkWidgetFactory;
     d->m_frameworkWidgetFactory = wf;
 }
 
-FrameworkWidgetFactory *Config::frameworkWidgetFactory() const
+ViewFactory *Config::frameworkWidgetFactory() const
 {
     return d->m_frameworkWidgetFactory;
 }

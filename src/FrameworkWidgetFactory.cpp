@@ -13,8 +13,8 @@
 
 using namespace KDDockWidgets;
 
-DropIndicatorType FrameworkWidgetFactory::s_dropIndicatorType = DropIndicatorType::Classic;
+DropIndicatorType ViewFactory::s_dropIndicatorType = DropIndicatorType::Classic;
 
-FrameworkWidgetFactory::~FrameworkWidgetFactory()
+ViewFactory::~ViewFactory()
 {
 }

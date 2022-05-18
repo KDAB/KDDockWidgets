@@ -54,15 +54,15 @@ class SegmentedIndicators;
  *
  * @sa Config::setFrameworkWidgetFactory()
  */
-class DOCKS_EXPORT FrameworkWidgetFactory : public QObject
+class DOCKS_EXPORT ViewFactory : public QObject
 {
     Q_OBJECT
 public:
-    FrameworkWidgetFactory() = default;
+    ViewFactory() = default;
 
     ///@brief Destructor.Don't delete FrameworkWidgetFactory directly, it's owned
     /// by the framework.
-    virtual ~FrameworkWidgetFactory();
+    virtual ~ViewFactory();
 
     virtual View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const = 0;
     virtual View *createMainWindow(Controllers::MainWindow *, View *parent, Qt::WindowFlags) const = 0;
@@ -139,7 +139,7 @@ public:
     static DropIndicatorType s_dropIndicatorType;
 
 private:
-    Q_DISABLE_COPY(FrameworkWidgetFactory)
+    Q_DISABLE_COPY(ViewFactory)
 };
 
 }

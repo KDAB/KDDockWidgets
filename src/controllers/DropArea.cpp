@@ -45,7 +45,7 @@ static Controllers::DropIndicatorOverlay *createDropIndicatorOverlay(Controllers
     return new SegmentedIndicators(dropArea);
 #endif
 
-    switch (FrameworkWidgetFactory::s_dropIndicatorType) {
+    switch (ViewFactory::s_dropIndicatorType) {
     case DropIndicatorType::Classic:
         return new Controllers::ClassicIndicators(dropArea);
     case DropIndicatorType::Segmented:

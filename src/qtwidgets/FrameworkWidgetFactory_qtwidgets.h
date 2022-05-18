@@ -48,7 +48,7 @@ class MainWindow;
 /**
  * @brief The FrameworkWidgetFactory that's used if none is specified.
  */
-class DOCKS_EXPORT DefaultWidgetFactory_qtwidgets : public FrameworkWidgetFactory
+class DOCKS_EXPORT DefaultWidgetFactory_qtwidgets : public ViewFactory
 {
     Q_OBJECT
 public:

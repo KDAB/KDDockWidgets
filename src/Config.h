@@ -35,7 +35,7 @@ class DockWidget;
 class MainWindow;
 }
 
-class FrameworkWidgetFactory;
+class ViewFactory;
 
 typedef KDDockWidgets::Controllers::DockWidget *(*DockWidgetFactoryFunc)(const QString &name);
 typedef KDDockWidgets::Controllers::MainWindow *(*MainWindowFactoryFunc)(const QString &name);
@@ -185,10 +185,10 @@ public:
      * Also potentially useful to return QtQuick classes instead of the QtWidget based ones.
      * Ownership is taken.
      */
-    void setFrameworkWidgetFactory(FrameworkWidgetFactory *);
+    void setFrameworkWidgetFactory(ViewFactory *);
 
     ///@brief getter for the framework widget factory
-    FrameworkWidgetFactory *frameworkWidgetFactory() const;
+    ViewFactory *frameworkWidgetFactory() const;
 
     /**
      * @brief Returns the thickness of the separator.

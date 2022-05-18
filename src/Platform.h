@@ -33,7 +33,7 @@ class ClassicIndicators;
 class SegmentedIndicators;
 }
 
-class FrameworkWidgetFactory;
+class ViewFactory;
 class Window;
 
 /// @brief implements functions specific to a particular platform
@@ -65,7 +65,7 @@ public:
     virtual QVector<std::shared_ptr<Window>> windows() const = 0;
 
     /// @brief Creates and returns the default FrameworkWidgetFactory
-    virtual FrameworkWidgetFactory *createDefaultFrameworkWidgetFactory() = 0;
+    virtual ViewFactory *createDefaultFrameworkWidgetFactory() = 0;
 
     /// @brief Returns the window at the specified global coordinates
     virtual std::shared_ptr<Window> windowAt(QPoint globalPos) const = 0;
