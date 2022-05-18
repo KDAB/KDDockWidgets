@@ -16,7 +16,7 @@
 
 namespace KDDockWidgets {
 
-class IndicatorWindow;
+class IndicatorWindow_qtwidgets;
 class Indicator;
 
 namespace Controllers {
@@ -56,23 +56,21 @@ public:
     bool tabIndicatorVisible() const;
 
     bool onResize(QSize newSize);
-
-protected:
+    void setDropLocation(DropLocation);
     void updateVisibility() override;
+
 Q_SIGNALS:
     void indicatorsVisibleChanged();
 
 private:
     friend class KDDockWidgets::Indicator;
-    friend class KDDockWidgets::IndicatorWindow;
     bool rubberBandIsTopLevel() const;
     void raiseIndicators();
     QRect geometryForRubberband(QRect localRect) const;
-    void setDropLocation(DropLocation);
     void updateWindowPosition();
 
     View *const m_rubberBand;
-    IndicatorWindow *const m_indicatorWindow;
+    IndicatorWindow_qtwidgets *const m_indicatorWindow;
 };
 
 }

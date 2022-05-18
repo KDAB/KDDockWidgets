@@ -24,12 +24,12 @@ namespace Controllers {
 class ClassicIndicators;
 }
 
-class IndicatorWindow : public QQuickView
+class IndicatorWindow_qtquick : public QQuickView
 {
     Q_OBJECT
     Q_PROPERTY(KDDockWidgets::Controllers::ClassicIndicators *classicIndicators READ classicIndicators CONSTANT)
 public:
-    explicit IndicatorWindow(Controllers::ClassicIndicators *);
+    explicit IndicatorWindow_qtquick(Controllers::ClassicIndicators *);
     DropLocation hover(QPoint);
     void updatePositions();
     QPoint posForIndicator(DropLocation) const;

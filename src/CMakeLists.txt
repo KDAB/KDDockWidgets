@@ -251,8 +251,8 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/views/View_qtquick.h
   qtquick/views/ViewWrapper_qtquick.cpp
   qtquick/views/ViewWrapper_qtquick.h
-  # qtquick/views/ClassicIndicatorsWindow_qtquick.cpp
-  # qtquick/views/ClassicIndicatorsWindow_qtquick.h
+  qtquick/views/ClassicIndicatorsWindow_qtquick.cpp
+  qtquick/views/ClassicIndicatorsWindow_qtquick.h
   kddockwidgets_qtquick.qrc
 )
 

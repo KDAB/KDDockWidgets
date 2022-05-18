@@ -28,11 +28,11 @@ namespace Controllers {
 class ClassicIndicators;
 }
 
-class IndicatorWindow : public QWidget
+class IndicatorWindow_qtwidgets : public QWidget
 {
     Q_OBJECT
 public:
-    explicit IndicatorWindow(Controllers::ClassicIndicators *classicIndicators);
+    explicit IndicatorWindow_qtwidgets(Controllers::ClassicIndicators *classicIndicators);
     DropLocation hover(QPoint globalPos);
     void updatePositions();
     QPoint posForIndicator(DropLocation) const;

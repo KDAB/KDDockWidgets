@@ -23,7 +23,7 @@ class Indicator : public QWidget
     Q_OBJECT
 public:
     typedef QList<Indicator *> List;
-    explicit Indicator(Controllers::ClassicIndicators *classicIndicators, IndicatorWindow *parent,
+    explicit Indicator(Controllers::ClassicIndicators *classicIndicators, IndicatorWindow_qtwidgets *parent,
                        DropLocation location);
     void paintEvent(QPaintEvent *) override;
 
@@ -135,7 +135,7 @@ static Qt::WindowFlags flagsForIndicatorWindow()
                        : (Qt::Tool | Qt::BypassWindowManagerHint);
 }
 
-IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
+IndicatorWindow_qtwidgets::IndicatorWindow_qtwidgets(ClassicIndicators *classicIndicators_)
     : QWidget(parentForIndicatorWindow(classicIndicators_), flagsForIndicatorWindow())
     , classicIndicators(classicIndicators_)
     , m_center(new Indicator(classicIndicators, this, DropLocation_Center)) // Each indicator is not a top-level. Otherwise there's noticeable delay.
@@ -158,15 +158,15 @@ IndicatorWindow::IndicatorWindow(ClassicIndicators *classicIndicators_)
     setAttribute(Qt::WA_TranslucentBackground);
 
     connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged,
-            this, &IndicatorWindow::updateIndicatorVisibility);
+            this, &IndicatorWindow_qtwidgets::updateIndicatorVisibility);
     connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged,
-            this, &IndicatorWindow::updateIndicatorVisibility);
+            this, &IndicatorWindow_qtwidgets::updateIndicatorVisibility);
 
     m_indicators << m_center << m_left << m_right << m_top << m_bottom
                  << m_outterBottom << m_outterTop << m_outterLeft << m_outterRight;
 }
 
-Indicator *IndicatorWindow::indicatorForLocation(DropLocation loc) const
+Indicator *IndicatorWindow_qtwidgets::indicatorForLocation(DropLocation loc) const
 {
     switch (loc) {
     case DropLocation_Center:
@@ -196,7 +196,7 @@ Indicator *IndicatorWindow::indicatorForLocation(DropLocation loc) const
     return nullptr;
 }
 
-void IndicatorWindow::updateMask()
+void IndicatorWindow_qtwidgets::updateMask()
 {
     QRegion region;
 
@@ -210,13 +210,13 @@ void IndicatorWindow::updateMask()
     setMask(region);
 }
 
-void IndicatorWindow::resizeEvent(QResizeEvent *ev)
+void IndicatorWindow_qtwidgets::resizeEvent(QResizeEvent *ev)
 {
     QWidget::resizeEvent(ev);
     updatePositions();
 }
 
-void IndicatorWindow::updateIndicatorVisibility()
+void IndicatorWindow_qtwidgets::updateIndicatorVisibility()
 {
     for (Indicator *indicator : { m_left, m_right, m_bottom, m_top,
                                   m_outterTop, m_outterLeft, m_outterRight, m_outterBottom,
@@ -226,13 +226,13 @@ void IndicatorWindow::updateIndicatorVisibility()
     updateMask();
 }
 
-QPoint IndicatorWindow::posForIndicator(DropLocation loc) const
+QPoint IndicatorWindow_qtwidgets::posForIndicator(DropLocation loc) const
 {
     Indicator *indicator = indicatorForLocation(loc);
     return indicator->mapToGlobal(indicator->rect().center());
 }
 
-DropLocation IndicatorWindow::hover(QPoint globalPos)
+DropLocation IndicatorWindow_qtwidgets::hover(QPoint globalPos)
 {
     DropLocation loc = DropLocation_None;
 
@@ -248,7 +248,7 @@ DropLocation IndicatorWindow::hover(QPoint globalPos)
     return loc;
 }
 
-void IndicatorWindow::updatePositions()
+void IndicatorWindow_qtwidgets::updatePositions()
 {
     QRect r = rect();
     const int indicatorWidth = m_outterBottom->width();
@@ -258,7 +258,7 @@ void IndicatorWindow::updatePositions()
     m_outterBottom->move(r.center().x() - halfIndicatorWidth, r.y() + height() - indicatorWidth - OUTTER_INDICATOR_MARGIN);
     m_outterTop->move(r.center().x() - halfIndicatorWidth, r.y() + OUTTER_INDICATOR_MARGIN);
     m_outterRight->move(r.x() + width() - indicatorWidth - OUTTER_INDICATOR_MARGIN, r.center().y() - halfIndicatorWidth);
-    Controllers::Frame *hoveredFrame = classicIndicators->m_hoveredFrame;
+    Controllers::Frame *hoveredFrame = classicIndicators->hoveredFrame();
     if (hoveredFrame) {
         QRect hoveredRect = hoveredFrame->view()->geometry();
         m_center->move(r.topLeft() + hoveredRect.center() - QPoint(halfIndicatorWidth, halfIndicatorWidth));
@@ -269,7 +269,7 @@ void IndicatorWindow::updatePositions()
     }
 }
 
-Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow *parent, DropLocation location)
+Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow_qtwidgets *parent, DropLocation location)
     : QWidget(parent)
     , q(classicIndicators)
     , m_dropLocation(location)

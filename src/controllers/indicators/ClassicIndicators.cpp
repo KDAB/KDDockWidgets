@@ -25,9 +25,9 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-static IndicatorWindow *createIndicatorWindow(ClassicIndicators *classicIndicators)
+static IndicatorWindow_qtwidgets *createIndicatorWindow(ClassicIndicators *classicIndicators)
 {
-    auto window = new IndicatorWindow(classicIndicators);
+    auto window = new IndicatorWindow_qtwidgets(classicIndicators);
     window->setObjectName(QStringLiteral("_docks_IndicatorWindow_Overlay"));
 
     return window;
