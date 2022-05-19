@@ -197,7 +197,7 @@ void FloatingWindow_qtquick::init()
     m_controller->maybeCreateResizeHandler();
 
     m_visualItem = createItem(m_quickWindow->engine(),
-                              plat()->frameworkWidgetFactory()->floatingWindowFilename().toString());
+                              plat()->viewFactory()->floatingWindowFilename().toString());
     Q_ASSERT(m_visualItem);
 
     // Ensure our window size is never smaller than our min-size

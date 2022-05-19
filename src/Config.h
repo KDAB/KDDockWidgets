@@ -185,10 +185,10 @@ public:
      * Also potentially useful to return QtQuick classes instead of the QtWidget based ones.
      * Ownership is taken.
      */
-    void setFrameworkWidgetFactory(ViewFactory *);
+    void setViewFactory(ViewFactory *);
 
     ///@brief getter for the framework widget factory
-    ViewFactory *frameworkWidgetFactory() const;
+    ViewFactory *viewFactory() const;
 
     /**
      * @brief Returns the thickness of the separator.

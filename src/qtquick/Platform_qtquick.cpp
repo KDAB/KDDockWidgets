@@ -74,7 +74,7 @@ std::shared_ptr<Window> Platform_qtquick::windowFromQWindow(QWindow *qwindow) co
     return std::shared_ptr<Window>(new Window_qtquick(qwindow));
 }
 
-ViewFactory *Platform_qtquick::createDefaultFrameworkWidgetFactory()
+ViewFactory *Platform_qtquick::createDefaultViewFactory()
 {
     return new ViewFactory_qtquick();
 }
@@ -137,12 +137,12 @@ void Platform_qtquick::setQmlEngine(QQmlEngine *qmlEngine)
     context->setContextProperty(QStringLiteral("_kddwHelpers"), &m_qquickHelpers);
     context->setContextProperty(QStringLiteral("_kddwDockRegistry"), dr);
     context->setContextProperty(QStringLiteral("_kddwDragController"), DragController::instance());
-    context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), Config::self().frameworkWidgetFactory());
+    context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), Config::self().viewFactory());
 }
 
-ViewFactory_qtquick *Platform_qtquick::frameworkWidgetFactory() const
+ViewFactory_qtquick *Platform_qtquick::viewFactory() const
 {
-    return static_cast<ViewFactory_qtquick *>(Config::self().frameworkWidgetFactory());
+    return static_cast<ViewFactory_qtquick *>(Config::self().viewFactory());
 }
 
 View *Platform_qtquick::createView(View *parent) const

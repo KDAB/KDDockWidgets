@@ -20,7 +20,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 MDILayout::MDILayout(View *parent)
-    : Layout(Type::MDILayout, Config::self().frameworkWidgetFactory()->createMDILayout(this, parent))
+    : Layout(Type::MDILayout, Config::self().viewFactory()->createMDILayout(this, parent))
     , m_rootItem(new Layouting::ItemFreeContainer(view()))
 {
     setRootItem(m_rootItem);

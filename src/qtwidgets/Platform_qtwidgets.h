@@ -27,7 +27,7 @@ public:
     bool hasActivePopup() const override;
     std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const override;
     std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
-    ViewFactory *createDefaultFrameworkWidgetFactory() override;
+    ViewFactory *createDefaultViewFactory() override;
     std::shared_ptr<Window> windowAt(QPoint globalPos) const override;
 
     using Platform_qt::screenNumberFor;

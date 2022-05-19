@@ -46,7 +46,7 @@ using namespace KDDockWidgets::Controllers;
 
 DockWidget::DockWidget(const QString &name, Options options,
                        LayoutSaverOptions layoutSaverOptions)
-    : Controller(Type::DockWidget, Config::self().frameworkWidgetFactory()->createDockWidget(this, Qt::Tool))
+    : Controller(Type::DockWidget, Config::self().viewFactory()->createDockWidget(this, Qt::Tool))
     , d(new Private(name, options, layoutSaverOptions, this))
 {
     d->init();

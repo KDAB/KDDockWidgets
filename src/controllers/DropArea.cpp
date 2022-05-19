@@ -59,7 +59,7 @@ static Controllers::DropIndicatorOverlay *createDropIndicatorOverlay(Controllers
 }
 
 DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
-    : Layout(Type::DropArea, Config::self().frameworkWidgetFactory()->createDropArea(this, parent))
+    : Layout(Type::DropArea, Config::self().viewFactory()->createDropArea(this, parent))
     , m_isMDIWrapper(isMDIWrapper)
     , m_dropIndicatorOverlay(createDropIndicatorOverlay(this))
     , m_centralFrame(createCentralFrame(options))

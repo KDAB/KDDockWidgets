@@ -36,13 +36,13 @@ class Config::Private
 {
 public:
     Private()
-        : m_frameworkWidgetFactory(Platform::instance()->createDefaultFrameworkWidgetFactory())
+        : m_viewFactory(Platform::instance()->createDefaultViewFactory())
     {
     }
 
     ~Private()
     {
-        delete m_frameworkWidgetFactory;
+        delete m_viewFactory;
     }
 
     void fixFlags();
@@ -51,7 +51,7 @@ public:
     MainWindowFactoryFunc m_mainWindowFactoryFunc = nullptr;
     TabbingAllowedFunc m_tabbingAllowedFunc = nullptr;
     DropIndicatorAllowedFunc m_dropIndicatorAllowedFunc = nullptr;
-    ViewFactory *m_frameworkWidgetFactory = nullptr;
+    ViewFactory *m_viewFactory = nullptr;
     Flags m_flags = Flag_Default;
     InternalFlags m_internalFlags = InternalFlag_None;
     CustomizableWidgets m_disabledPaintEvents = CustomizableWidget_None;
@@ -67,7 +67,7 @@ Config::Config()
 
     // stuff in multisplitter/ can't include the framework widget factory, so set it here
     auto separatorCreator = [](Controllers::Separator *controller, View *parent) {
-        return Config::self().frameworkWidgetFactory()->createSeparator(controller, parent);
+        return Config::self().viewFactory()->createSeparator(controller, parent);
     };
 
     Layouting::Config::self().setSeparatorFactoryFunc(separatorCreator);
@@ -127,16 +127,16 @@ MainWindowFactoryFunc Config::mainWindowFactoryFunc() const
     return d->m_mainWindowFactoryFunc;
 }
 
-void Config::setFrameworkWidgetFactory(ViewFactory *wf)
+void Config::setViewFactory(ViewFactory *wf)
 {
     Q_ASSERT(wf);
-    delete d->m_frameworkWidgetFactory;
-    d->m_frameworkWidgetFactory = wf;
+    delete d->m_viewFactory;
+    d->m_viewFactory = wf;
 }
 
-ViewFactory *Config::frameworkWidgetFactory() const
+ViewFactory *Config::viewFactory() const
 {
-    return d->m_frameworkWidgetFactory;
+    return d->m_viewFactory;
 }
 
 int Config::separatorThickness() const

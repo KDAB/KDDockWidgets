@@ -75,7 +75,7 @@ std::shared_ptr<Window> Platform_qtwidgets::windowFromQWindow(QWindow *qwindow) 
     return std::shared_ptr<Window>(new Window_qtwidgets(qwindow));
 }
 
-ViewFactory *Platform_qtwidgets::createDefaultFrameworkWidgetFactory()
+ViewFactory *Platform_qtwidgets::createDefaultViewFactory()
 {
     return new ViewFactory_qtwidgets();
 }

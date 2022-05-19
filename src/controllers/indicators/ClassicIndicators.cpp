@@ -35,7 +35,7 @@ static IndicatorWindow_qtwidgets *createIndicatorWindow(ClassicIndicators *class
 
 ClassicIndicators::ClassicIndicators(Controllers::DropArea *dropArea)
     : DropIndicatorOverlay(dropArea) // Is parented on the drop-area, not a toplevel.
-    , m_rubberBand(Config::self().frameworkWidgetFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : dropArea->view()))
+    , m_rubberBand(Config::self().viewFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : dropArea->view()))
     , m_indicatorWindow(createIndicatorWindow(this))
 {
     if (rubberBandIsTopLevel())

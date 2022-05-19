@@ -61,7 +61,7 @@ public Q_SLOTS:
         s_testObject = this;
 
         Layouting::Config::self().setSeparatorFactoryFunc([](Controllers::Separator *controller, View *parent) -> View * {
-            return KDDockWidgets::Config::self().frameworkWidgetFactory()->createSeparator(controller, parent);
+            return KDDockWidgets::Config::self().viewFactory()->createSeparator(controller, parent);
         });
     }
 

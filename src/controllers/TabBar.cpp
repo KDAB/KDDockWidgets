@@ -26,7 +26,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 Controllers::TabBar::TabBar(Stack *tabWidget)
-    : Controller(Type::TabBar, Config::self().frameworkWidgetFactory()->createTabBar(this, tabWidget->view()))
+    : Controller(Type::TabBar, Config::self().viewFactory()->createTabBar(this, tabWidget->view()))
     , Draggable(view())
     , m_tabWidget(tabWidget)
 {

@@ -110,7 +110,7 @@ void TitleBar_qtwidgets::init()
     m_layout->addStretch();
     updateMargins();
 
-    auto factory = static_cast<ViewFactory_qtwidgets *>(Config::self().frameworkWidgetFactory());
+    auto factory = static_cast<ViewFactory_qtwidgets *>(Config::self().viewFactory());
 
     m_maximizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Maximize);
     m_minimizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Minimize);
@@ -196,7 +196,7 @@ void TitleBar_qtwidgets::updateMinimizeButton()
 void TitleBar_qtwidgets::updateAutoHideButton()
 {
     if (Config::self().flags() & Config::Flag_AutoHideSupport) {
-        auto factory = Config::self().frameworkWidgetFactory();
+        auto factory = Config::self().viewFactory();
         if (const Controllers::Frame *f = m_controller->frame()) {
             if (f->isInMainWindow()) {
                 m_autoHideButton->setIcon(factory->iconForButtonType(TitleBarButtonType::AutoHide, devicePixelRatioF()));
@@ -214,7 +214,7 @@ void TitleBar_qtwidgets::updateAutoHideButton()
 void TitleBar_qtwidgets::updateMaximizeButton()
 {
     if (auto fw = m_controller->floatingWindow()) {
-        auto factory = Config::self().frameworkWidgetFactory();
+        auto factory = Config::self().viewFactory();
         const TitleBarButtonType iconType = fw->isMaximizedOverride() ? TitleBarButtonType::Normal
                                                                       : TitleBarButtonType::Maximize;
         m_maximizeButton->setIcon(factory->iconForButtonType(iconType, devicePixelRatioF()));

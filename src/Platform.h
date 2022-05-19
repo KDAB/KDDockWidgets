@@ -64,8 +64,8 @@ public:
     /// @brief Returns all windows
     virtual QVector<std::shared_ptr<Window>> windows() const = 0;
 
-    /// @brief Creates and returns the default FrameworkWidgetFactory
-    virtual ViewFactory *createDefaultFrameworkWidgetFactory() = 0;
+    /// @brief Creates and returns the default ViewFactory
+    virtual ViewFactory *createDefaultViewFactory() = 0;
 
     /// @brief Returns the window at the specified global coordinates
     virtual std::shared_ptr<Window> windowAt(QPoint globalPos) const = 0;

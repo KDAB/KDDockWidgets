@@ -40,7 +40,7 @@ public:
         : q(view)
         , dockWidget(controller)
         , m_visualItem(q->createItem(qmlengine,
-                                     plat()->frameworkWidgetFactory()->dockwidgetFilename().toString()))
+                                     plat()->viewFactory()->dockwidgetFilename().toString()))
         , m_qmlEngine(qmlengine)
     {
         Q_ASSERT(m_visualItem);

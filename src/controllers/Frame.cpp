@@ -68,7 +68,7 @@ static StackOptions tabWidgetOptions(FrameOptions options)
 }
 
 Frame::Frame(View *parent, FrameOptions options, int userType)
-    : Controller(Type::Frame, Config::self().frameworkWidgetFactory()->createFrame(this, parent))
+    : Controller(Type::Frame, Config::self().viewFactory()->createFrame(this, parent))
     , FocusScope(view())
     , m_tabWidget(new Controllers::Stack(this, tabWidgetOptions(options)))
     , m_titleBar(new Controllers::TitleBar(this))

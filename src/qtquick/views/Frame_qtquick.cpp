@@ -58,7 +58,7 @@ Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
     });*/
 
     QQmlComponent component(plat()->qmlEngine(),
-                            plat()->frameworkWidgetFactory()->frameFilename());
+                            plat()->viewFactory()->frameFilename());
 
     m_visualItem = static_cast<QQuickItem *>(component.create());
 

@@ -31,8 +31,8 @@ public:
     const char *name() const override;
     std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const override;
     std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
-    ViewFactory *createDefaultFrameworkWidgetFactory() override;
-    ViewFactory_qtquick *frameworkWidgetFactory() const;
+    ViewFactory *createDefaultViewFactory() override;
+    ViewFactory_qtquick *viewFactory() const;
     Window::Ptr windowAt(QPoint globalPos) const override;
     using Platform_qt::screenNumberFor;
     int screenNumberFor(View *) const override;
