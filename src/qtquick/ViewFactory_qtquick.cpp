@@ -174,24 +174,24 @@ View *ViewFactory_qtquick::createMDILayout(Controllers::MDILayout *controller, V
     return new Views::MDILayout_qtquick(controller, parent);
 }
 
-Q_INVOKABLE QUrl ViewFactory_qtquick::titleBarFilename() const
+QUrl ViewFactory_qtquick::titleBarFilename() const
 {
-    return {};
+    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/TitleBar.qml"));
 }
 
 QUrl ViewFactory_qtquick::dockwidgetFilename() const
 {
-    return {};
+    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/DockWidget.qml"));
 }
 
 QUrl ViewFactory_qtquick::frameFilename() const
 {
-    return {};
+    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/Frame.qml"));
 }
 
 QUrl ViewFactory_qtquick::floatingWindowFilename() const
 {
-    return {};
+    return QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/FloatingWindow.qml"));
 }
 
 View *ViewFactory_qtquick::createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *, View *) const
