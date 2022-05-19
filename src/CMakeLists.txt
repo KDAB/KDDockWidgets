@@ -28,8 +28,8 @@ set(DOCKSLIBS_SRCS
     Qt5Qt6Compat_p.h
     FocusScope.cpp
     FocusScope.h
-    FrameworkWidgetFactory.cpp
-    FrameworkWidgetFactory.h
+    ViewFactory.cpp
+    ViewFactory.h
     MainWindowMDI.cpp
     MainWindowMDI.h
     LayoutSaver.cpp
@@ -147,8 +147,8 @@ set(DOCKSLIBS_SRCS
     qtwidgets/TestHelpers_qtwidgets.cpp
     qtwidgets/MDIArea.cpp
     qtwidgets/MDIArea.h
-    qtwidgets/FrameworkWidgetFactory_qtwidgets.cpp
-    qtwidgets/FrameworkWidgetFactory_qtwidgets.h
+    qtwidgets/ViewFactory_qtwidgets.cpp
+    qtwidgets/ViewFactory_qtwidgets.h
     qtwidgets/DebugWindow.cpp
     qtwidgets/DebugWindow_p.h
     qtwidgets/ObjectViewer.cpp
@@ -169,7 +169,7 @@ set(DOCKSLIBS_SRCS
 set(DOCKS_INSTALLABLE_INCLUDES
     docks_export.h
     Config.h
-    FrameworkWidgetFactory.h
+    ViewFactory.h
     # DockWidget.h
     KDDockWidgets.h
     Qt5Qt6Compat_p.h
@@ -217,8 +217,8 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   qtquick/Platform_qtquick.h
   qtquick/Helpers.cpp
   qtquick/TestHelpers_qtquick.cpp
-  qtquick/FrameworkWidgetFactory_qtquick.cpp
-  qtquick/FrameworkWidgetFactory_qtquick.h
+  qtquick/ViewFactory_qtquick.cpp
+  qtquick/ViewFactory_qtquick.h
   qtquick/LayoutSaverInstantiator.cpp
   qtquick/LayoutSaverInstantiator.h
   # qtquick/MainWindowInstantiator.cpp
@@ -334,7 +334,8 @@ ecm_generate_headers(camelcase_HEADERS
     # DockWidget
     # DockWidgetBase
     FocusScope
-    FrameworkWidgetFactory,DefaultWidgetFactory
+    ViewFactory,
+    # DefaultWidgetFactory
     LayoutSaver
     # MainWindow
     # MainWindowBase

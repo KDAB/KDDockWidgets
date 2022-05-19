@@ -17,7 +17,7 @@
 #include "views/ViewWrapper_qtwidgets.h"
 #include "views/View_qtwidgets.h"
 
-#include "FrameworkWidgetFactory_qtwidgets.h"
+#include "ViewFactory_qtwidgets.h"
 
 #include <QScreen>
 

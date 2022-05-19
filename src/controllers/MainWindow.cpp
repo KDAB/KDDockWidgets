@@ -25,7 +25,7 @@
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 #include "private/WidgetResizeHandler_p.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 #include "private/LayoutSaver_p.h"
 #include "private/multisplitter/Item_p.h"
 #include "Platform.h"

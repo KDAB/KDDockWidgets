@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "FrameworkWidgetFactory_qtwidgets.h"
+#include "ViewFactory_qtwidgets.h"
 #include "Config.h"
 
 #include "private/Utils_p.h"

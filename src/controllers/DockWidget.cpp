@@ -25,7 +25,7 @@
 #include "Platform.h"
 
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 

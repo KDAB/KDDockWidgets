@@ -165,7 +165,7 @@ Styling
 ========
 
 Almost all private widgets used by KDDW can be derived by the user to give them
-a custom look. That's done by providing your own FrameworkWidgetFactory. Run
+a custom look. That's done by providing your own ViewFactory. Run
 "kddockwidgets_example -p" to see that in action.
 
 Qt StyleSheets are not, and will not, be supported. See the comments in

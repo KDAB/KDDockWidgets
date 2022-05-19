@@ -9,8 +9,8 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_H
-#define KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_H
+#ifndef KDDOCKWIDGETS_ViewFactory_H
+#define KDDOCKWIDGETS_ViewFactory_H
 
 #include "docks_export.h"
 #include "KDDockWidgets.h"
@@ -44,15 +44,15 @@ class SegmentedIndicators;
  * Deriving from @ref DefaultWidgetFactory is recommended, unless you need to override
  * all methods.
  *
- * Sub-classing FrameworkWidgetFactory allows for fine-grained customization and
+ * Sub-classing ViewFactory allows for fine-grained customization and
  * styling of some non-public widgets, such as titlebars, dock widget frame and
  * tab widgets.
  *
- * To set your own factory see Config::setFrameworkWidgetFactory()
+ * To set your own factory see Config::setViewFactory()
  *
  * Will also be useful to provide a QtQuickWidget factory in the future.
  *
- * @sa Config::setFrameworkWidgetFactory()
+ * @sa Config::setViewFactory()
  */
 class DOCKS_EXPORT ViewFactory : public QObject
 {
@@ -60,7 +60,7 @@ class DOCKS_EXPORT ViewFactory : public QObject
 public:
     ViewFactory() = default;
 
-    ///@brief Destructor.Don't delete FrameworkWidgetFactory directly, it's owned
+    ///@brief Destructor.Don't delete ViewFactory directly, it's owned
     /// by the framework.
     virtual ~ViewFactory();
 

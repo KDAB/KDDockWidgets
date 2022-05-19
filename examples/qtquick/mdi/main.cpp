@@ -13,7 +13,7 @@
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/DockWidgetQuick.h>
 #include <kddockwidgets/private/DockRegistry_p.h>
-#include <kddockwidgets/FrameworkWidgetFactory.h>
+#include <kddockwidgets/ViewFactory.h>
 #include <kddockwidgets/MainWindowMDI.h>
 
 #include <QQmlApplicationEngine>

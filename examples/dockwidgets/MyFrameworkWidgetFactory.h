@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <kddockwidgets/FrameworkWidgetFactory.h>
+#include <kddockwidgets/ViewFactory.h>
 
 #include <QPainter>
 

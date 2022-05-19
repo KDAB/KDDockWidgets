@@ -13,17 +13,16 @@
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/DockWidgetQuick.h>
 #include <kddockwidgets/private/DockRegistry_p.h>
-#include <kddockwidgets/FrameworkWidgetFactory.h>
+#include <kddockwidgets/ViewFactory.h>
 
 #include <QQuickView>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-class CustomFrameworkWidgetFactory : public KDDockWidgets::DefaultWidgetFactory
+class CustomViewFactory : public KDDockWidgets::DefaultWidgetFactory
 {
 public:
-
-    ~CustomFrameworkWidgetFactory() override;
+    ~CustomViewFactory() override;
 
     QUrl titleBarFilename() const override
     {
@@ -31,7 +30,7 @@ public:
     }
 };
 
-CustomFrameworkWidgetFactory::~CustomFrameworkWidgetFactory() = default;
+CustomViewFactory::~CustomViewFactory() = default;
 
 int main(int argc, char *argv[])
 {
@@ -44,7 +43,7 @@ int main(int argc, char *argv[])
     auto flags = config.flags();
 
     config.setFlags(flags);
-    config.setFrameworkWidgetFactory(new CustomFrameworkWidgetFactory());
+    config.setViewFactory(new CustomViewFactory());
 
     QQmlApplicationEngine appEngine;
     KDDockWidgets::Config::self().setQmlEngine(&appEngine);

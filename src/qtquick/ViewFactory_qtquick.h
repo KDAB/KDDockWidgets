@@ -9,10 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#ifndef KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_QTWIDGETS_H
-#define KDDOCKWIDGETS_FRAMEWORKWIDGETFACTORY_QTWIDGETS_H
+#ifndef KDDOCKWIDGETS_ViewFactory_QTQUICK_H
+#define KDDOCKWIDGETS_ViewFactory_QTQUICK_H
 
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 
 // clazy:excludeall=ctor-missing-parent-argument
 
@@ -46,14 +46,14 @@ class MainWindow;
 }
 
 /**
- * @brief The default ViewFactory for QtWidgets frontend.
+ * @brief The default ViewFactory for QtQuick frontend.
  */
-class DOCKS_EXPORT ViewFactory_qtwidgets : public ViewFactory
+class DOCKS_EXPORT ViewFactory_qtquick : public ViewFactory
 {
     Q_OBJECT
 public:
-    ViewFactory_qtwidgets() = default;
-    ~ViewFactory_qtwidgets() override;
+    ViewFactory_qtquick() = default;
+    ~ViewFactory_qtquick() override;
     View *createMainWindow(Controllers::MainWindow *, View *, Qt::WindowFlags) const override;
     View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const override;
     View *createFrame(Controllers::Frame *, View *parent, FrameOptions options = FrameOption_None) const override;
@@ -69,14 +69,18 @@ public:
     View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
     View *createMDILayout(Controllers::MDILayout *, View *parent) const override;
-    QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
-    QAbstractButton *createTitleBarButton(QWidget *parent, TitleBarButtonType) const;
 
+    Q_INVOKABLE QUrl titleBarFilename() const;
+    QUrl dockwidgetFilename() const;
+    QUrl frameFilename() const;
+    QUrl floatingWindowFilename() const;
+
+    QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     View *createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent = nullptr) const override;
     View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const override;
 
 private:
-    Q_DISABLE_COPY(ViewFactory_qtwidgets)
+    Q_DISABLE_COPY(ViewFactory_qtquick)
 };
 
 }

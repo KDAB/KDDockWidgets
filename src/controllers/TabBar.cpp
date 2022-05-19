@@ -20,7 +20,7 @@
 #include "private/DragController_p.h"
 #include "private/Utils_p.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;

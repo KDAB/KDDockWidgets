@@ -24,7 +24,7 @@
 #include "private/DockRegistry_p.h"
 #include "private/Utils_p.h"
 #include "private/DragController_p.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 #include "controllers/Separator.h"
 
 #include <QDebug>

@@ -11,7 +11,7 @@
 
 #include "ClassicIndicators.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 #include "qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h"
 
 #include "controllers/DropArea.h"

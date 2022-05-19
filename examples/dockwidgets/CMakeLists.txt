@@ -26,7 +26,7 @@ set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_example.qrc)
 
 add_executable(kddockwidgets_example
     main.cpp
-    # MyFrameworkWidgetFactory.cpp
+    # MyViewFactory.cpp
     MyMainWindow.cpp
     MyWidget.cpp
     ${RESOURCES_EXAMPLE_SRC}

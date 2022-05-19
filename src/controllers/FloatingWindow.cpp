@@ -20,7 +20,7 @@
 #include "private/WidgetResizeHandler_p.h"
 #include "private/DockRegistry_p.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 #include "private/DragController_p.h"
 #include "private/LayoutSaver_p.h"
 #include "DockWidget_p.h"

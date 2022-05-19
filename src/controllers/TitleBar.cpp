@@ -11,7 +11,7 @@
 
 #include "TitleBar.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 #include "View.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/Utils_p.h"
@@ -23,7 +23,7 @@
 #include "controllers/MainWindow.h"
 #include "controllers/MDILayout.h"
 
-#include "kddockwidgets/FrameworkWidgetFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 
 #include <QTimer>
 

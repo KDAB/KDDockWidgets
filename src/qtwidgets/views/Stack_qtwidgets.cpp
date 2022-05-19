@@ -13,7 +13,7 @@
 #include "Controller.h"
 #include "controllers/Stack.h"
 #include "controllers/TitleBar.h"
-#include "qtwidgets/FrameworkWidgetFactory_qtwidgets.h"
+#include "qtwidgets/ViewFactory_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 #include "private/DockRegistry_p.h"
 

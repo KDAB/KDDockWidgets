@@ -10,14 +10,14 @@
 */
 
 #include "DockWidget_qtquick.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 
 #include "controllers/TitleBar.h"
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"
 #include "controllers/Frame.h"
 #include "qtquick/Platform_qtquick.h"
-#include "qtquick/FrameworkWidgetFactory_qtquick.h"
+#include "qtquick/ViewFactory_qtquick.h"
 
 #include <Config.h>
 #include <QQuickItem>

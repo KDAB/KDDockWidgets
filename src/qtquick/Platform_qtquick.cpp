@@ -19,7 +19,7 @@
 #include "qtquick/Window_qtquick.h"
 #include "private/DockRegistry_p.h"
 #include "private/DragController_p.h"
-#include "FrameworkWidgetFactory_qtquick.h"
+#include "ViewFactory_qtquick.h"
 
 #include <QQmlEngine>
 #include <QQuickStyle>

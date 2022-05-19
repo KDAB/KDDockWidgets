@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "FrameworkWidgetFactory_qtquick.h"
+#include "ViewFactory_qtquick.h"
 #include "Config.h"
 
 #include "controllers/indicators/ClassicIndicators.h"

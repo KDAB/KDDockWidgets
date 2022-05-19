@@ -11,7 +11,7 @@
 
 #include "utils.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 #include "Platform.h"
 #include "ViewGuard.h"
 #include "controllers/DropArea.h"

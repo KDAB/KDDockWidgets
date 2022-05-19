@@ -13,9 +13,9 @@
 #include "../controllers/TitleBar.h"
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
-#include "kddockwidgets/FrameworkWidgetFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/private/DockRegistry_p.h"
-#include "qtwidgets/FrameworkWidgetFactory_qtwidgets.h"
+#include "qtwidgets/ViewFactory_qtwidgets.h"
 
 #include <QPainter>
 #include <QStyle>

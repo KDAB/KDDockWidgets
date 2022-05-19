@@ -17,7 +17,7 @@
  */
 
 #include "Frame_qtquick.h"
-#include "qtquick/FrameworkWidgetFactory_qtquick.h"
+#include "qtquick/ViewFactory_qtquick.h"
 #include "views/Frame.h"
 
 #include "controllers/Frame.h"
@@ -26,7 +26,7 @@
 
 #include "qtquick/Platform_qtquick.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 #include "Stack_qtquick.h"
 #include "private/WidgetResizeHandler_p.h"
 

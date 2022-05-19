@@ -436,7 +436,7 @@ public:
 
     ///@brief Allows the user to set a type on this dock widget
     /// The type is opaque and will not be interpreted by KDDockWidgets.
-    /// This type is passed to FrameWorkWidgetFactory::createTitleBar(), which the user can override
+    /// This type is passed to ViewFactory::createTitleBar(), which the user can override
     /// and return different TitleBar subclasses, depending on the type.
     void setUserType(int userType);
     int userType() const;

@@ -11,7 +11,7 @@
 
 #include "FloatingWindow_qtquick.h"
 #include "Config.h"
-#include "qtquick/FrameworkWidgetFactory_qtquick.h"
+#include "qtquick/ViewFactory_qtquick.h"
 
 #include "TitleBar_qtquick.h"
 

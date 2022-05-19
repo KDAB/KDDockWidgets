@@ -16,7 +16,7 @@
 
 #include "Platform.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 
 #include <QtTest/QtTest>
 

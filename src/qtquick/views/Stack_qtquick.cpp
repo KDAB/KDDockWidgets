@@ -11,7 +11,7 @@
 
 #include "Stack_qtquick.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 
 #include "controllers/Frame.h"
 
@@ -25,7 +25,7 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
                              Controllers::Frame *parent)
     : View_qtquick(controller, Type::Stack, Views::asQQuickItem(parent))
     , m_dockWidgetModel(new DockWidgetModel(this))
-    // , m_tabBar(Config::self().frameworkWidgetFactory()->createTabBar(this))
+    // , m_tabBar(Config::self().ViewFactory()->createTabBar(this))
     , m_stack(controller)
 {
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,

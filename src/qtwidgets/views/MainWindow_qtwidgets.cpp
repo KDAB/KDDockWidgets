@@ -18,7 +18,7 @@
 
 #include "MainWindow_qtwidgets.h"
 #include "Config.h"
-#include "FrameworkWidgetFactory.h"
+#include "ViewFactory.h"
 
 #include "private/DockRegistry_p.h"
 #include "controllers/DropArea.h"

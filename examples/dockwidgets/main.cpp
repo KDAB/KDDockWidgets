@@ -11,10 +11,10 @@
 
 #include "MyWidget.h"
 #include "MyMainWindow.h"
-// #include "MyFrameworkWidgetFactory.h"
+// #include "MyViewFactory.h"
 
 #include <kddockwidgets/Config.h>
-#include <kddockwidgets/FrameworkWidgetFactory.h>
+#include <kddockwidgets/ViewFactory.h>
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -46,7 +46,7 @@ int main(int argc, char **argv)
     // Fusion looks better in general, but feel free to change
     qApp->setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
 
-    QCommandLineOption customStyle("p", QCoreApplication::translate("main", "Shows how to style framework internals via FrameworkWidgetFactory"));
+    QCommandLineOption customStyle("p", QCoreApplication::translate("main", "Shows how to style framework internals via ViewFactory"));
     parser.addOption(customStyle);
 
     QCommandLineOption reorderTabsOption("r", QCoreApplication::translate("main", "Support re-ordering tabs with mouse"));
@@ -163,7 +163,7 @@ int main(int argc, char **argv)
     parser.process(app);
 
     // if (parser.isSet(customStyle)) {
-    //     Config::self().setFrameworkWidgetFactory(new CustomWidgetFactory()); // Sets our custom factory
+    //     Config::self().setViewFactory(new CustomWidgetFactory()); // Sets our custom factory
 
     //     // Increase the separator size, just for demo
     //     Config::self().setSeparatorThickness(10);
