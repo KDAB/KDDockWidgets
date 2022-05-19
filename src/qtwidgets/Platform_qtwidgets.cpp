@@ -77,7 +77,7 @@ std::shared_ptr<Window> Platform_qtwidgets::windowFromQWindow(QWindow *qwindow) 
 
 ViewFactory *Platform_qtwidgets::createDefaultFrameworkWidgetFactory()
 {
-    return new DefaultWidgetFactory_qtwidgets();
+    return new ViewFactory_qtwidgets();
 }
 
 Window::Ptr Platform_qtwidgets::windowAt(QPoint globalPos) const

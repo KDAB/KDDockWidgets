@@ -110,7 +110,7 @@ void TitleBar_qtwidgets::init()
     m_layout->addStretch();
     updateMargins();
 
-    auto factory = static_cast<DefaultWidgetFactory_qtwidgets *>(Config::self().frameworkWidgetFactory());
+    auto factory = static_cast<ViewFactory_qtwidgets *>(Config::self().frameworkWidgetFactory());
 
     m_maximizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Maximize);
     m_minimizeButton = factory->createTitleBarButton(this, TitleBarButtonType::Minimize);

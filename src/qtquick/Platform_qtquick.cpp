@@ -76,7 +76,7 @@ std::shared_ptr<Window> Platform_qtquick::windowFromQWindow(QWindow *qwindow) co
 
 ViewFactory *Platform_qtquick::createDefaultFrameworkWidgetFactory()
 {
-    return new DefaultWidgetFactory_qtquick();
+    return new ViewFactory_qtquick();
 }
 
 Window::Ptr Platform_qtquick::windowAt(QPoint globalPos) const
@@ -140,9 +140,9 @@ void Platform_qtquick::setQmlEngine(QQmlEngine *qmlEngine)
     context->setContextProperty(QStringLiteral("_kddw_widgetFactory"), Config::self().frameworkWidgetFactory());
 }
 
-DefaultWidgetFactory_qtquick *Platform_qtquick::frameworkWidgetFactory() const
+ViewFactory_qtquick *Platform_qtquick::frameworkWidgetFactory() const
 {
-    return static_cast<DefaultWidgetFactory_qtquick *>(Config::self().frameworkWidgetFactory());
+    return static_cast<ViewFactory_qtquick *>(Config::self().frameworkWidgetFactory());
 }
 
 View *Platform_qtquick::createView(View *parent) const

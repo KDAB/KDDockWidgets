@@ -155,7 +155,7 @@ void Stack_qtwidgets::setupTabBarButtons()
         return;
 
     // TODOv2: Make sure people can only inherit from the Default*variants
-    auto factory = static_cast<DefaultWidgetFactory_qtwidgets *>(Config::self().frameworkWidgetFactory());
+    auto factory = static_cast<ViewFactory_qtwidgets *>(Config::self().frameworkWidgetFactory());
     m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
     m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);
 

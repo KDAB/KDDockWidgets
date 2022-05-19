@@ -46,14 +46,14 @@ class MainWindow;
 }
 
 /**
- * @brief The FrameworkWidgetFactory that's used if none is specified.
+ * @brief The default ViewFactory for QtWidgets frontend.
  */
-class DOCKS_EXPORT DefaultWidgetFactory_qtwidgets : public ViewFactory
+class DOCKS_EXPORT ViewFactory_qtwidgets : public ViewFactory
 {
     Q_OBJECT
 public:
-    DefaultWidgetFactory_qtwidgets() = default;
-    ~DefaultWidgetFactory_qtwidgets() override;
+    ViewFactory_qtwidgets() = default;
+    ~ViewFactory_qtwidgets() override;
     View *createMainWindow(Controllers::MainWindow *, View *, Qt::WindowFlags) const override;
     View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const override;
     View *createFrame(Controllers::Frame *, View *parent, FrameOptions options = FrameOption_None) const override;
@@ -76,7 +76,7 @@ public:
     View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const override;
 
 private:
-    Q_DISABLE_COPY(DefaultWidgetFactory_qtwidgets)
+    Q_DISABLE_COPY(ViewFactory_qtwidgets)
 };
 
 }

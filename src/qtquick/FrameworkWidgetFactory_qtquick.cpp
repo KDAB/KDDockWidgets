@@ -43,12 +43,12 @@
 using namespace KDDockWidgets;
 
 
-DefaultWidgetFactory_qtquick::~DefaultWidgetFactory_qtquick()
+ViewFactory_qtquick::~ViewFactory_qtquick()
 {
 }
 
-View *DefaultWidgetFactory_qtquick::createMainWindow(Controllers::MainWindow *mainWindow,
-                                                     View *parent, Qt::WindowFlags flags) const
+View *ViewFactory_qtquick::createMainWindow(Controllers::MainWindow *mainWindow,
+                                            View *parent, Qt::WindowFlags flags) const
 {
     Q_UNUSED(mainWindow);
     Q_UNUSED(parent);
@@ -58,46 +58,46 @@ View *DefaultWidgetFactory_qtquick::createMainWindow(Controllers::MainWindow *ma
     // return new Views::MainWindow_qtquick(mainWindow, Views::asQQuickItem(parent), flags);
 }
 
-View *DefaultWidgetFactory_qtquick::createDockWidget(Controllers::DockWidget *dw, Qt::WindowFlags flags) const
+View *ViewFactory_qtquick::createDockWidget(Controllers::DockWidget *dw, Qt::WindowFlags flags) const
 {
     return new Views::DockWidget_qtquick(dw, flags);
 }
 
-View *DefaultWidgetFactory_qtquick::createFrame(Controllers::Frame *controller, View *parent,
-                                                FrameOptions) const
+View *ViewFactory_qtquick::createFrame(Controllers::Frame *controller, View *parent,
+                                       FrameOptions) const
 {
     return new Views::Frame_qtquick(controller, Views::asQQuickItem(parent));
 }
 
-View *DefaultWidgetFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar,
-                                                   Controllers::Frame *parent) const
+View *ViewFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar,
+                                          Controllers::Frame *parent) const
 {
     return new Views::TitleBar_qtquick(titleBar, Views::asQQuickItem(parent));
 }
 
-View *DefaultWidgetFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar,
-                                                   Controllers::FloatingWindow *fw) const
+View *ViewFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar,
+                                          Controllers::FloatingWindow *fw) const
 {
     return new Views::TitleBar_qtquick(titleBar, Views::asQQuickItem(fw));
 }
 
-View *DefaultWidgetFactory_qtquick::createTabBar(Controllers::TabBar *controller, View *parent) const
+View *ViewFactory_qtquick::createTabBar(Controllers::TabBar *controller, View *parent) const
 {
     return new Views::TabBar_qtquick(controller, Views::asQQuickItem(parent));
 }
 
-View *DefaultWidgetFactory_qtquick::createTabWidget(Controllers::Stack *controller, Controllers::Frame *parent) const
+View *ViewFactory_qtquick::createTabWidget(Controllers::Stack *controller, Controllers::Frame *parent) const
 {
     return new Views::Stack_qtquick(controller, parent);
 }
 
-View *DefaultWidgetFactory_qtquick::createSeparator(Controllers::Separator *controller, View *parent) const
+View *ViewFactory_qtquick::createSeparator(Controllers::Separator *controller, View *parent) const
 {
     return new Views::Separator_qtquick(controller, parent ? static_cast<Views::View_qtquick *>(parent) : nullptr);
 }
 
-View *DefaultWidgetFactory_qtquick::createFloatingWindow(Controllers::FloatingWindow *controller,
-                                                         Controllers::MainWindow *parent, Qt::WindowFlags flags) const
+View *ViewFactory_qtquick::createFloatingWindow(Controllers::FloatingWindow *controller,
+                                                Controllers::MainWindow *parent, Qt::WindowFlags flags) const
 {
 
     auto mainwindow = parent ? qobject_cast<Views::MainWindow_qtquick *>(Views::asQQuickItem(parent->view()))
@@ -105,20 +105,20 @@ View *DefaultWidgetFactory_qtquick::createFloatingWindow(Controllers::FloatingWi
     return new Views::FloatingWindow_qtquick(controller, mainwindow, flags);
 }
 
-View *DefaultWidgetFactory_qtquick::createRubberBand(View *parent) const
+View *ViewFactory_qtquick::createRubberBand(View *parent) const
 {
     return new Views::RubberBand_qtquick(Views::asQQuickItem(parent));
 }
 
-View *DefaultWidgetFactory_qtquick::createSideBar(Controllers::SideBar *,
-                                                  Controllers::MainWindow *) const
+View *ViewFactory_qtquick::createSideBar(Controllers::SideBar *,
+                                         Controllers::MainWindow *) const
 {
     return {};
     // return new Views::SideBar_qtquick(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
 // iconForButtonType impl is the same for QtQuick and QtWidgets
-QIcon DefaultWidgetFactory_qtquick::iconForButtonType(TitleBarButtonType type, qreal dpr) const
+QIcon ViewFactory_qtquick::iconForButtonType(TitleBarButtonType type, qreal dpr) const
 {
     QString iconName;
     switch (type) {
@@ -164,42 +164,42 @@ QIcon DefaultWidgetFactory_qtquick::iconForButtonType(TitleBarButtonType type, q
     return icon;
 }
 
-View *DefaultWidgetFactory_qtquick::createDropArea(Controllers::DropArea *controller, View *parent) const
+View *ViewFactory_qtquick::createDropArea(Controllers::DropArea *controller, View *parent) const
 {
     return new Views::DropArea_qtquick(controller, parent);
 }
 
-View *DefaultWidgetFactory_qtquick::createMDILayout(Controllers::MDILayout *controller, View *parent) const
+View *ViewFactory_qtquick::createMDILayout(Controllers::MDILayout *controller, View *parent) const
 {
     return new Views::MDILayout_qtquick(controller, parent);
 }
 
-Q_INVOKABLE QUrl DefaultWidgetFactory_qtquick::titleBarFilename() const
+Q_INVOKABLE QUrl ViewFactory_qtquick::titleBarFilename() const
 {
     return {};
 }
 
-QUrl DefaultWidgetFactory_qtquick::dockwidgetFilename() const
+QUrl ViewFactory_qtquick::dockwidgetFilename() const
 {
     return {};
 }
 
-QUrl DefaultWidgetFactory_qtquick::frameFilename() const
+QUrl ViewFactory_qtquick::frameFilename() const
 {
     return {};
 }
 
-QUrl DefaultWidgetFactory_qtquick::floatingWindowFilename() const
+QUrl ViewFactory_qtquick::floatingWindowFilename() const
 {
     return {};
 }
 
-View *DefaultWidgetFactory_qtquick::createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *, View *) const
+View *ViewFactory_qtquick::createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *, View *) const
 {
     return nullptr;
 }
 
-View *DefaultWidgetFactory_qtquick::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *, View *) const
+View *ViewFactory_qtquick::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *, View *) const
 {
     return nullptr;
 }

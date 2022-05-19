@@ -19,7 +19,7 @@ class QQmlEngine;
 
 namespace KDDockWidgets {
 
-class DefaultWidgetFactory_qtquick;
+class ViewFactory_qtquick;
 
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
@@ -32,7 +32,7 @@ public:
     std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const override;
     std::shared_ptr<Window> windowFromQWindow(QWindow *) const override;
     ViewFactory *createDefaultFrameworkWidgetFactory() override;
-    DefaultWidgetFactory_qtquick *frameworkWidgetFactory() const;
+    ViewFactory_qtquick *frameworkWidgetFactory() const;
     Window::Ptr windowAt(QPoint globalPos) const override;
     using Platform_qt::screenNumberFor;
     int screenNumberFor(View *) const override;
