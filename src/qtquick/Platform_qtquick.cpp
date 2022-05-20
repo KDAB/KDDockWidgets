@@ -12,7 +12,7 @@
 #include "Platform_qtquick.h"
 #include "KDDockWidgets.h"
 #include "Config.h"
-// #include "QmlTypes.h" // TODOv2
+#include "QmlTypes.h"
 
 #include "Window_qtquick.h"
 #include "views/View_qtquick.h"
@@ -41,7 +41,7 @@ Platform_qtquick::Platform_qtquick()
 
 void Platform_qtquick::init()
 {
-    // KDDockWidgets::registerQmlTypes(); // TODOv2
+    KDDockWidgets::registerQmlTypes();
     QQuickWindow::setDefaultAlphaBuffer(true);
 
     qApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {

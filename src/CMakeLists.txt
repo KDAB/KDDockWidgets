@@ -225,6 +225,8 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   # qtquick/MainWindowInstantiator.h
   # qtquick/DockWidgetInstantiator.cpp
   # qtquick/DockWidgetInstantiator.h
+  qtquick/QmlTypes.cpp
+  qtquick/QmlTypes.h
   qtquick/views/DropArea_qtquick.cpp
   qtquick/views/DropArea_qtquick.h
   qtquick/views/DockWidget_qtquick.cpp
