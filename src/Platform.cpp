@@ -21,6 +21,8 @@
 using namespace KDDockWidgets;
 
 static Platform *s_platform = nullptr;
+QString Platform::s_expectedWarning = {};
+Platform::WarningObserver *Platform::s_warningObserver = nullptr;
 
 Platform::Platform()
 {
@@ -59,6 +61,8 @@ int Platform::startDragDistance() const
 }
 
 #ifdef DOCKS_DEVELOPER_MODE
+
+Platform::WarningObserver::~WarningObserver() = default;
 
 /*static*/
 void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::FrontendType type)

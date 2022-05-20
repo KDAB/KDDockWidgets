@@ -25,6 +25,52 @@ using namespace KDDockWidgets;
 
 namespace KDDockWidgets::Tests {
 
+static QtMessageHandler s_original = nullptr;
+static QString s_expectedWarning;
+
+static bool shouldBlacklistWarning(const QString &msg, const QString &category)
+{
+    if (category == QLatin1String("qt.qpa.xcb"))
+        return true;
+
+    return msg.contains(QLatin1String("QSocketNotifier: Invalid socket"))
+        || msg.contains(QLatin1String("QWindowsWindow::setGeometry"))
+        || msg.contains(QLatin1String("This plugin does not support"))
+        || msg.contains(QLatin1String("Note that Qt no longer ships fonts"))
+        || msg.contains(QLatin1String("Another dock KDDockWidgets::DockWidget"))
+        || msg.contains(QLatin1String("There's multiple MainWindows, not sure what to do about parenting"))
+        || msg.contains(QLatin1String("Testing::"))
+        || msg.contains(QLatin1String("outside any known screen, using primary screen"))
+        || msg.contains(QLatin1String("Populating font family aliases took"))
+        // TODO: Fix later, not important right now
+        || msg.contains(QLatin1String("Binding loop detected for property"))
+        || msg.contains(QLatin1String("Implement me"))
+
+        // Ignore benign warning in Material style when deleting a dock widget. Should be fixed in Qt.
+        || (msg.contains(QLatin1String("TypeError: Cannot read property")) && msg.contains(QLatin1String("Material")));
+}
+
+static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &context, const QString &msg)
+{
+    if (shouldBlacklistWarning(msg, QLatin1String(context.category)))
+        return;
+
+    s_original(t, context, msg);
+    if (t == QtWarningMsg) {
+
+        if (!s_expectedWarning.isEmpty() && msg.contains(s_expectedWarning))
+            return;
+
+        if (!Platform_qt::isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {
+
+            if (Platform::s_warningObserver)
+                Platform::s_warningObserver->onFatal();
+
+            QFAIL("Test caused warning");
+        }
+    }
+}
+
 /// @brief Helper class to help us with tests
 class EventFilter : public QObject
 {
@@ -179,6 +225,8 @@ void Platform_qt::tests_initPlatform_impl()
 {
     qApp->setOrganizationName(QStringLiteral("KDAB"));
     qApp->setApplicationName(QStringLiteral("dockwidgets-unit-tests"));
+
+    Tests::s_original = qInstallMessageHandler(Tests::fatalWarningsMessageHandler);
 }
 
 void Platform_qt::tests_deinitPlatform_impl()

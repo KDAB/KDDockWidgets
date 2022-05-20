@@ -29,7 +29,6 @@ class TestDocks : public QObject
 public Q_SLOTS:
     void initTestCase()
     {
-        KDDockWidgets::Testing::installFatalMessageHandler();
     }
 
 private Q_SLOTS:

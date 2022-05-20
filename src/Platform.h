@@ -105,6 +105,15 @@ public:
         QSize maxSize = Layouting::Item::hardcodedMaximumSize;
     };
 
+    class WarningObserver
+    {
+        Q_DISABLE_COPY(WarningObserver)
+    public:
+        WarningObserver() = default;
+        virtual ~WarningObserver();
+        virtual void onFatal() = 0;
+    };
+
     /// @brief list the list of frontend types supported by this build
     static std::vector<KDDockWidgets::FrontendType> frontendTypes();
 
@@ -153,6 +162,9 @@ public:
     /// and see what's goign on
     virtual void tests_wait(int ms) = 0;
 
+    static QString s_expectedWarning;
+    static WarningObserver *s_warningObserver;
+
 protected:
     /// @brief Implement any needed initializations before tests starting to run, if any
     /// Override in derived classes for custom behavior.
@@ -175,5 +187,25 @@ public:
 protected:
     Platform();
 };
+
+#ifdef DOCKS_DEVELOPER_MODE
+
+struct SetExpectedWarning
+{
+    explicit SetExpectedWarning(const QString &s)
+    {
+        if (!s.isEmpty())
+            Platform::s_expectedWarning = s;
+    }
+
+    ~SetExpectedWarning()
+    {
+        Platform::s_expectedWarning.clear();
+    }
+
+    Q_DISABLE_COPY(SetExpectedWarning)
+};
+
+#endif
 
 }

@@ -94,11 +94,6 @@ inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 class TestQtWidgets : public QObject
 {
     Q_OBJECT
-public Q_SLOTS:
-    void initTestCase()
-    {
-        KDDockWidgets::Testing::installFatalMessageHandler();
-    }
 
 private Q_SLOTS:
     // TODO: Port these to QtQuick

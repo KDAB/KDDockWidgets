@@ -19,6 +19,7 @@
 #include "controllers/MainWindow.h"
 #include "controllers/DockWidget.h"
 #include "DockRegistry_p.h"
+#include "Platform.h"
 
 #include <QSize>
 #include <QRect>
@@ -35,14 +36,6 @@ namespace KDDockWidgets {
 
 namespace Testing {
 
-class WarningObserver
-{
-    Q_DISABLE_COPY(WarningObserver)
-public:
-    WarningObserver() = default;
-    virtual ~WarningObserver();
-    virtual void onFatal() = 0;
-};
 
 struct AddDockWidgetParams
 {
@@ -100,28 +93,9 @@ struct AddDockWidgetParams
     }
 };
 
-void setWarningObserver(WarningObserver *);
-
-void installFatalMessageHandler();
-void setExpectedWarning(const QString &);
-
 bool waitForDeleted(QObject *o, int timeout = 2000);
+
 }
-
-struct SetExpectedWarning
-{
-    explicit SetExpectedWarning(const QString &s)
-    {
-        if (!s.isEmpty())
-            Testing::setExpectedWarning(s);
-    }
-
-    ~SetExpectedWarning()
-    {
-        Testing::setExpectedWarning({});
-    }
-    Q_DISABLE_COPY(SetExpectedWarning)
-};
 
 }
 
