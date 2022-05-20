@@ -20,14 +20,12 @@ endif()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-set(TESTING_SRCS utils.cpp Testing.cpp)
+set(TESTING_SRCS utils.cpp)
 
 include_directories(..)
 include_directories(../src)
 include_directories(../src/private)
 add_definitions(-DQT_NO_KEYWORDS)
-
-set(TESTING_SRCS utils.cpp Testing.cpp)
 
 option(KDDockWidgets_FUZZER "Builds the fuzzer" ON)
 

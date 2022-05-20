@@ -15,7 +15,6 @@
 #ifndef KDDOCKWIDGETS_FUZZER_H
 #define KDDOCKWIDGETS_FUZZER_H
 
-#include "../Testing.h"
 #include "MainWindow.h"
 #include "Operations.h"
 

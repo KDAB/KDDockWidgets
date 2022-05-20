@@ -29,6 +29,62 @@ using namespace KDDockWidgets::Testing::Operations;
 
 #define OPERATIONS_PER_TEST 200
 
+struct AddDockWidgetParams
+{
+    QString mainWindowName;
+    QString dockWidgetName;
+    QString relativeToName;
+    KDDockWidgets::Location location;
+    KDDockWidgets::InitialVisibilityOption addingOption;
+
+    bool isNull() const
+    {
+        return mainWindowName.isEmpty();
+    }
+
+    QVariantMap toVariantMap() const
+    {
+        QVariantMap map;
+
+        map["mainWindowName"] = mainWindowName;
+        map["dockWidgetName"] = dockWidgetName;
+        if (!relativeToName.isEmpty())
+            map["relativeToName"] = relativeToName;
+        map["location"] = location;
+        map["addingOption"] = QVariant::fromValue(addingOption);
+
+        return map;
+    }
+
+    static AddDockWidgetParams fillFromVariantMap(const QVariantMap &map)
+    {
+        AddDockWidgetParams params;
+
+        params.mainWindowName = map["mainWindowName"].toString();
+        params.dockWidgetName = map["dockWidgetName"].toString();
+        params.relativeToName = map["relativeToName"].toString();
+        params.location = KDDockWidgets::Location(map["location"].toInt());
+        params.addingOption = map["addingOption"].value<KDDockWidgets::InitialVisibilityOption>();
+
+        return params;
+    }
+
+    KDDockWidgets::Controllers::MainWindow *mainWindow() const
+    {
+        return KDDockWidgets::DockRegistry::self()->mainWindowByName(mainWindowName);
+    }
+
+    Controllers::DockWidget *dockWidget() const
+    {
+        return KDDockWidgets::DockRegistry::self()->dockByName(dockWidgetName);
+    }
+
+    Controllers::DockWidget *relativeTo() const
+    {
+        return KDDockWidgets::DockRegistry::self()->dockByName(relativeToName);
+    }
+};
+
 static MainWindow *createMainWindow(const Fuzzer::MainWindowDescriptor &mwd)
 {
     auto mainWindow = new MainWindow(mwd.name, mwd.mainWindowOption);

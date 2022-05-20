@@ -211,6 +211,26 @@ bool Platform_qt::tests_waitForDeleted(View *view, int timeout) const
     return wasDeleted;
 }
 
+
+bool Platform_qt::tests_waitForDeleted(QObject *o, int timeout) const
+{
+    if (!o)
+        return true;
+
+    QPointer<QObject> ptr = o;
+    QElapsedTimer time;
+    time.start();
+
+    while (ptr && time.elapsed() < timeout) {
+        qApp->processEvents();
+        QTest::qWait(50);
+    }
+
+    const bool wasDeleted = !ptr;
+    return wasDeleted;
+}
+
+
 void Platform_qt::sendEvent(View *view, QEvent *ev) const
 {
     qApp->sendEvent(view->asQObject(), ev);

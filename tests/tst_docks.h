@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include "Testing.h"
 #include "utils.h"
 #include "Platform.h"
 

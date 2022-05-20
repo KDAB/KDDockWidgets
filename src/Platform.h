@@ -135,6 +135,7 @@ public:
 
     /// @brief Waits for the specified view to be deleted
     virtual bool tests_waitForDeleted(View *, int timeout = 2000) const = 0;
+    virtual bool tests_waitForDeleted(QObject *, int timeout = 2000) const = 0;
 
     virtual void tests_sendEvent(std::shared_ptr<Window> window, QEvent *ev) const = 0;
 

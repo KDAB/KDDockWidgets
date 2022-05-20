@@ -17,7 +17,6 @@
 #include "Platform.h"
 #include "KDDockWidgets.h"
 #include "../utils.h"
-#include "../Testing.h"
 #include "Config.h"
 #include "LayoutSaver.h"
 #include "LayoutSaver_p.h"
@@ -254,7 +253,7 @@ void TestQtWidgets::tst_dockableMainWindows()
     // Put it how it was, FloatingWindow is single dock again
     auto frame1 = dock1->dptr()->frame();
     dock1->close();
-    Testing::waitForDeleted(frame1);
+    Platform::instance()->tests_waitForDeleted(frame1);
     QVERIFY(fwTitleBar->isVisible());
     QVERIFY(!m2Container->dptr()->frame()->titleBar()->isVisible());
 
@@ -392,7 +391,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     mdiWidget2->close();
     QVERIFY(!mdiWidget2->isOpen());
 
-    Testing::waitForDeleted(dropArea2);
+    Platform::instance()->tests_waitForDeleted(dropArea2);
     QVERIFY(dropArea2.isNull());
     QVERIFY(!mdiFrame2);
 
@@ -407,7 +406,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     QVERIFY(!frame3->titleBar()->isVisible());
 
     mdiWidget3->close();
-    QVERIFY(Testing::waitForDeleted(dropArea1));
+    QVERIFY(Platform::instance()->tests_waitForDeleted(dropArea1));
     QVERIFY(!mdiWidget3->isOpen());
     QVERIFY(dropArea1.isNull());
 
@@ -433,7 +432,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     QVERIFY(!mdiWidget2->d->frame()->isMDI());
     QVERIFY(!mdiWidget2->d->frame()->isMDIWrapper());
-    QVERIFY(Testing::waitForDeleted(mdiFrame2));
+    QVERIFY(Platform::instance()->tests_waitForDeleted(mdiFrame2));
 
     QVERIFY(dropArea2.isNull());
     QVERIFY(dwWrapper2.isNull());
@@ -447,7 +446,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     QVERIFY(mdiFrame1->titleBar()->isVisible());
     mdiTitleBar1->makeWindow();
 
-    QVERIFY(Testing::waitForDeleted(mdiFrame1));
+    QVERIFY(Platform::instance()->tests_waitForDeleted(mdiFrame1));
     QCOMPARE(mdiArea->frames().size(), 0);
 
     // Dock again:
@@ -473,7 +472,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
     mdiTitleBar->onFloatClicked();
     QVERIFY(mdiWidget3->isFloating());
 
-    QVERIFY(Testing::waitForDeleted(mdiArea->frames().constFirst()));
+    QVERIFY(Platform::instance()->tests_waitForDeleted(mdiArea->frames().constFirst()));
     QCOMPARE(mdiArea->frames().size(), 1);
 
     QVERIFY(!mdiWidget2->isFloating());
@@ -895,7 +894,7 @@ void TestQtWidgets::tst_embeddedMainWindow()
     dragFloatingWindowTo(fw, dropArea, DropLocation_Left);
 
     auto layout = dropArea;
-    QVERIFY(Testing::waitForDeleted(fw));
+    QVERIFY(Platform::instance()->tests_waitForDeleted(fw));
     QCOMPARE(layout->count(), 2); // 2, as it has the central frame
     QCOMPARE(layout->visibleCount(), 2);
     layout->checkSanity();
