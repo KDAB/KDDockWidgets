@@ -79,6 +79,8 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
         break;
     }
 
+    Platform::instance()->m_numWarningsEmitted = 0;
+
     /// Any additional setup
     Platform::instance()->tests_initPlatform_impl();
 

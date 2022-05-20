@@ -165,6 +165,7 @@ public:
 
     static QString s_expectedWarning;
     static WarningObserver *s_warningObserver;
+    int m_numWarningsEmitted = 0;
 
 protected:
     /// @brief Implement any needed initializations before tests starting to run, if any

@@ -57,7 +57,13 @@ int main(int argc, char **argv)
 
         std::cout << "\nStarting tests for Platform" << Platform::instance()->name() << "\n";
 
-        const int code = ctx.run();
+        int code = ctx.run();
+
+        if (Platform::instance()->m_numWarningsEmitted > 0) {
+            std::cout << "ABORTING! Test caused a warning.\n";
+            code = 1;
+        }
+
         if (code != 0)
             exitCode = code;
 

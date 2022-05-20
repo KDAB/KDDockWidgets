@@ -23,6 +23,8 @@
 
 using namespace KDDockWidgets;
 
+#ifdef DOCKS_DEVELOPER_MODE
+
 namespace KDDockWidgets::Tests {
 
 static QtMessageHandler s_original = nullptr;
@@ -54,10 +56,9 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
 {
     if (shouldBlacklistWarning(msg, QLatin1String(context.category)))
         return;
-
     s_original(t, context, msg);
-    if (t == QtWarningMsg) {
 
+    if (t == QtWarningMsg) {
         if (!s_expectedWarning.isEmpty() && msg.contains(s_expectedWarning))
             return;
 
@@ -66,6 +67,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
             if (Platform::s_warningObserver)
                 Platform::s_warningObserver->onFatal();
 
+            Platform::instance()->m_numWarningsEmitted++;
             QFAIL("Test caused warning");
         }
     }
@@ -95,7 +97,7 @@ public:
 EventFilter::~EventFilter() = default;
 
 }
-
+#endif
 
 Platform_qt::Platform_qt()
 {
@@ -251,6 +253,8 @@ void Platform_qt::tests_initPlatform_impl()
 
 void Platform_qt::tests_deinitPlatform_impl()
 {
+    qInstallMessageHandler(Tests::s_original);
+    Tests::s_original = nullptr;
     delete qApp;
 }
 
