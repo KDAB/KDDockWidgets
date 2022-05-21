@@ -61,8 +61,9 @@ void Frame_qtquick::init()
     connect(m_controller->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
+    /// TODOv2: Review, seems awkward
     connect(m_controller->tabWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *)), /// clazy:exclude=old-style-connect
-            this, SIGNAL(currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *)));
+            m_controller, SIGNAL(currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *)));
 
     connect(this, &View_qtquick::geometryUpdated, this, [this] {
         layoutInvalidated.emit();
