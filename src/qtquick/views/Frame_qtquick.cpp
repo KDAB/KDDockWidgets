@@ -228,3 +228,8 @@ QRect Frame_qtquick::dragRect() const
     qFatal("Not implemented");
     return {};
 }
+
+bool Frame_qtquick::isMDI() const
+{
+    return m_controller->isMDI();
+}

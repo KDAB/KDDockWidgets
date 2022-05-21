@@ -34,6 +34,7 @@ class DOCKS_EXPORT Frame_qtquick : public View_qtquick, public Frame
 {
     Q_OBJECT
     Q_PROPERTY(QObject *tabWidget READ tabWidgetObj CONSTANT)
+    Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
 public:
     explicit Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent = nullptr);
     ~Frame_qtquick() override;
@@ -52,6 +53,10 @@ public:
     QQuickItem *visualItem() const;
 
     QRect dragRect() const override;
+
+
+    // QML interface:
+    bool isMDI() const;
 
 protected:
     void removeWidget_impl(Controllers::DockWidget *) override;
