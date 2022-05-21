@@ -76,6 +76,7 @@ public Q_SLOTS:
     void updateConstriants();
 
 private:
+    void init() override;
     Stack_qtquick *stackView() const;
 
     QQuickItem *m_stackLayout = nullptr;

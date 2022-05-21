@@ -39,6 +39,25 @@ Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::Frame, parent)
     , m_controller(controller)
 {
+}
+
+Frame_qtquick::~Frame_qtquick()
+{
+    {
+        const Controllers::DockWidget::List docks = m_controller->dockWidgets();
+
+        // The QML item must be deleted with deleteLater(), has we might be currently with its mouse
+        // handler in the stack. QML doesn't support it being deleted in that case.
+        // So unparent it and deleteLater().
+        m_visualItem->setParent(nullptr);
+        m_visualItem->deleteLater();
+
+        qDeleteAll(docks);
+    }
+}
+
+void Frame_qtquick::init()
+{
     connect(m_controller->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
@@ -70,21 +89,6 @@ Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
     m_visualItem->setProperty("frameCpp", QVariant::fromValue(this));
     m_visualItem->setParentItem(this);
     m_visualItem->setParent(this);
-}
-
-Frame_qtquick::~Frame_qtquick()
-{
-    {
-        const Controllers::DockWidget::List docks = m_controller->dockWidgets();
-
-        // The QML item must be deleted with deleteLater(), has we might be currently with its mouse
-        // handler in the stack. QML doesn't support it being deleted in that case.
-        // So unparent it and deleteLater().
-        m_visualItem->setParent(nullptr);
-        m_visualItem->deleteLater();
-
-        qDeleteAll(docks);
-    }
 }
 
 void Frame_qtquick::updateConstriants()
