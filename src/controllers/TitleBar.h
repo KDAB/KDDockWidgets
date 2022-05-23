@@ -106,7 +106,8 @@ public:
 
     bool closeButtonEnabled() const;
     bool floatButtonVisible() const;
-
+    void setCloseButtonEnabled(bool);
+    void setFloatButtonVisible(bool);
 Q_SIGNALS:
     void titleChanged();
     void iconChanged();
@@ -133,8 +134,6 @@ private:
 
     void updateFloatButton();
     void updateCloseButton();
-    void setCloseButtonEnabled(bool);
-    void setFloatButtonVisible(bool);
     void setFloatButtonToolTip(const QString &);
     void init();
 
