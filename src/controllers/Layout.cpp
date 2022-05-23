@@ -328,5 +328,8 @@ Controllers::DropArea *Layout::asDropArea() const
 
 MDILayout *Layout::asMDILayout() const
 {
-    return view()->asMDILayoutController();
+    if (auto v = view())
+        return v->asMDILayoutController();
+
+    return nullptr;
 }

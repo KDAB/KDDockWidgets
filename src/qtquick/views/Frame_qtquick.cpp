@@ -25,6 +25,8 @@
 #include "controllers/DockWidget_p.h"
 
 #include "qtquick/Platform_qtquick.h"
+#include "Stack_qtquick.h"
+
 #include "Config.h"
 #include "ViewFactory.h"
 #include "Stack_qtquick.h"
@@ -68,6 +70,12 @@ void Frame_qtquick::init()
     connect(this, &View_qtquick::geometryUpdated, this, [this] {
         layoutInvalidated.emit();
     });
+
+
+    /// QML interface connect, since controllers won't be QObjects for much longer:
+    connect(m_controller, &Controllers::Frame::isMDIChanged, this, &Frame_qtquick::isMDIChanged);
+    connect(m_controller, &Controllers::Frame::currentDockWidgetChanged, this, &Frame_qtquick::currentDockWidgetChanged);
+    connect(m_controller, &Controllers::Frame::actualTitleBarChanged, this, &Frame_qtquick::actualTitleBarChanged);
 
     /*
     // TODOv2: This signal seems unused
@@ -232,4 +240,28 @@ QRect Frame_qtquick::dragRect() const
 bool Frame_qtquick::isMDI() const
 {
     return m_controller->isMDI();
+}
+
+KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::titleBar() const
+{
+    if (auto tb = m_controller->titleBar()) {
+        return dynamic_cast<KDDockWidgets::Views::TitleBar_qtquick *>(tb->view());
+    }
+
+    return nullptr;
+}
+
+KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::actualTitleBar() const
+{
+    if (auto tb = m_controller->actualTitleBar()) {
+        return dynamic_cast<KDDockWidgets::Views::TitleBar_qtquick *>(tb->view());
+    }
+
+    return nullptr;
+}
+
+int Frame_qtquick::userType() const
+{
+    /// TODOv2
+    return 0;
 }

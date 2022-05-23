@@ -16,6 +16,7 @@
 
 #include "View_qtquick.h"
 #include "views/Frame.h"
+#include "TitleBar_qtquick.h"
 
 class QQuickItem;
 
@@ -34,7 +35,12 @@ class DOCKS_EXPORT Frame_qtquick : public View_qtquick, public Frame
 {
     Q_OBJECT
     Q_PROPERTY(QObject *tabWidget READ tabWidgetObj CONSTANT)
-    Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
+    Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *titleBar READ titleBar CONSTANT)
+    Q_PROPERTY(int userType READ userType CONSTANT)
+    Q_PROPERTY(KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar READ actualTitleBar NOTIFY actualTitleBarChanged)
+    Q_PROPERTY(int currentIndex READ currentIndex_impl NOTIFY currentDockWidgetChanged)
+    Q_PROPERTY(bool isMDI READ isMDI NOTIFY isMDIChanged)
+
 public:
     explicit Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent = nullptr);
     ~Frame_qtquick() override;
@@ -45,18 +51,17 @@ public:
     /// @reimp
     QSize maximumSize() const override;
 
-    /// @brief returns the tab widget as QObject for usage in QML.
-    /// We can't return TabWidget directly as it's not a QObject
-    QObject *tabWidgetObj() const;
-
     /// @brief Returns the QQuickItem which represents this frame on the screen
     QQuickItem *visualItem() const;
 
     QRect dragRect() const override;
 
-
     // QML interface:
     bool isMDI() const;
+    KDDockWidgets::Views::TitleBar_qtquick *titleBar() const;
+    KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar() const;
+    int userType() const;
+    QObject *tabWidgetObj() const;
 
 protected:
     void removeWidget_impl(Controllers::DockWidget *) override;
@@ -75,7 +80,9 @@ protected:
     int nonContentsHeight() const override;
 
 Q_SIGNALS:
-    void tabTitlesChanged();
+    void isMDIChanged();
+    void currentDockWidgetChanged();
+    void actualTitleBarChanged();
 
 public Q_SLOTS:
     void updateConstriants();

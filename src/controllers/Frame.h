@@ -308,6 +308,7 @@ Q_SIGNALS:
     void isFocusedChanged();
     void focusedWidgetChanged();
     void actualTitleBarChanged();
+    void isMDIChanged();
 
 protected:
     void isFocusedChangedCallback() final;

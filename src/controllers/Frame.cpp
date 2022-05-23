@@ -124,6 +124,7 @@ void Frame::setLayout(Layout *dt)
         return;
 
     const bool wasInMainWindow = dt && isInMainWindow();
+    const bool wasMDI = isMDI();
 
     m_layout = dt;
     delete m_resizeHandler;
@@ -140,6 +141,9 @@ void Frame::setLayout(Layout *dt)
         if (wasInMainWindow != isInMainWindow())
             Q_EMIT isInMainWindowChanged();
     }
+
+    if (wasMDI != isMDI())
+        Q_EMIT isMDIChanged();
 }
 
 void Frame::renameTab(int index, const QString &title)
