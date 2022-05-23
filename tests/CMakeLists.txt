@@ -73,3 +73,6 @@ target_link_libraries(tst_stack kddockwidgets)
 
 add_executable(tst_tabbar controllers/tst_tabbar.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_tabbar kddockwidgets)
+
+add_executable(tst_separator controllers/tst_separator.cpp ${TESTING_RESOURCES})
+target_link_libraries(tst_separator kddockwidgets)
