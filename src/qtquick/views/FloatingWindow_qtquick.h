@@ -25,16 +25,24 @@ class FloatingWindow;
 namespace Views {
 
 class MainWindow_qtquick;
+class TitleBar_qtquick;
+class DropArea_qtquick;
 
 class DOCKS_EXPORT FloatingWindow_qtquick : public Views::View_qtquick
 {
     Q_OBJECT
+    Q_PROPERTY(QObject *titleBar READ titleBar CONSTANT)
+    Q_PROPERTY(QObject *dropArea READ dropArea CONSTANT)
 public:
     explicit FloatingWindow_qtquick(Controllers::FloatingWindow *controller,
                                     Views::MainWindow_qtquick *parent = nullptr, Qt::WindowFlags flags = {});
     ~FloatingWindow_qtquick();
 
     QSize minSize() const override;
+
+    // QML interface
+    QObject *titleBar() const;
+    QObject *dropArea() const;
 
 protected:
     void setGeometry(QRect) override;

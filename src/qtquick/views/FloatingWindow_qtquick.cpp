@@ -25,6 +25,8 @@
 #include "private/WidgetResizeHandler_p.h"
 #include "qtquick/Platform_qtquick.h"
 #include "qtquick/views/MainWindow_qtquick.h"
+#include "qtquick/views/TitleBar_qtquick.h"
+#include "qtquick/views/DropArea_qtquick.h"
 
 #include <QQuickView>
 #include <QDebug>
@@ -211,6 +213,22 @@ void FloatingWindow_qtquick::init()
     m_controller->updateTitleAndIcon();
 
     m_quickWindow->show();
+}
+
+QObject *FloatingWindow_qtquick::titleBar() const
+{
+    if (auto tb = m_controller->titleBar())
+        return qobject_cast<TitleBar_qtquick *>(asQQuickItem(tb->view()));
+
+    return nullptr;
+}
+
+QObject *FloatingWindow_qtquick::dropArea() const
+{
+    if (auto da = m_controller->dropArea())
+        return qobject_cast<DropArea_qtquick *>(asQQuickItem(da->view()));
+
+    return nullptr;
 }
 
 #include "FloatingWindow_qtquick.moc"
