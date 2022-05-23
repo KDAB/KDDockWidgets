@@ -22,7 +22,7 @@
 TEST_CASE("FloatingWindow Ctor")
 {
     auto dw = new Controllers::DockWidget("dw1");
-    // CHECK(dw->view()->rootView()->is(Type::DockWidget));
+    CHECK(dw->view()->rootView()->is(Type::DockWidget));
     dw->view()->show();
 
     /// Wait for FloatingWindow to be created

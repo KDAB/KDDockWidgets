@@ -20,5 +20,7 @@
 TEST_CASE("Frame ctor")
 {
     auto frame = new Controllers::Frame(nullptr, {});
+    CHECK(frame->view()->is(Type::Frame));
+    CHECK(frame->view()->asWrapper()->is(Type::Frame));
     delete frame;
 }

@@ -22,4 +22,6 @@ TEST_CASE("Stack ctor")
 {
     Controllers::Frame frame(nullptr, {});
     Controllers::Stack stack(&frame, {});
+    CHECK(stack.view()->is(Type::Stack));
+    CHECK(stack.view()->asWrapper()->is(Type::Stack));
 }

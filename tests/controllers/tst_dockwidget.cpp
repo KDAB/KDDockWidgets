@@ -20,6 +20,8 @@
 TEST_CASE("DockWidget Ctor")
 {
     auto dw = new Controllers::DockWidget("dw1");
+    CHECK(dw->view()->is(Type::DockWidget));
+    CHECK(dw->view()->asWrapper()->is(Type::DockWidget));
     dw->view()->show();
 
     delete dw;

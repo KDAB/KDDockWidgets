@@ -22,6 +22,8 @@ TEST_CASE("Separator Ctor")
 
     {
         Controllers::Separator separator(hostView);
+        CHECK(separator.view()->is(Type::Separator));
+        CHECK(separator.view()->asWrapper()->is(Type::Separator));
     }
 
     delete hostView;

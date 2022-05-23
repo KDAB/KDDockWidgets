@@ -10,17 +10,20 @@
 */
 
 #include "ViewWrapper_qtquick.h"
+#include "qtquick/views/RubberBand_qtquick.h"
 #include "qtquick/views/View_qtquick.h"
 
-// #include "qtwidgets/views/DockWidget_qtquick.h"
-// #include "qtwidgets/views/FloatingWindow_qtquick.h"
-// #include "qtwidgets/views/Frame_qtquick.h"
-// #include "qtwidgets/views/MainWindow_qtquick.h"
-// #include "qtwidgets/views/Separator_qtquick.h"
-// #include "qtwidgets/views/SideBar_qtquick.h"
-// #include "qtwidgets/views/Stack_qtquick.h"
-// #include "qtwidgets/views/TabBar_qtquick.h"
-// #include "qtwidgets/views/TitleBar_qtquick.h"
+#include "qtquick/views/DockWidget_qtquick.h"
+#include "qtquick/views/FloatingWindow_qtquick.h"
+#include "qtquick/views/Frame_qtquick.h"
+#include "qtquick/views/MainWindow_qtquick.h"
+#include "qtquick/views/Separator_qtquick.h"
+// #include "qtquick/views/SideBar_qtquick.h"
+#include "qtquick/views/Stack_qtquick.h"
+#include "qtquick/views/TabBar_qtquick.h"
+#include "qtquick/views/TitleBar_qtquick.h"
+#include "qtquick/views/MDILayout_qtquick.h"
+#include "qtquick/views/DropArea_qtquick.h"
 
 #include "controllers/DropArea.h"
 #include "controllers/MDILayout.h"
@@ -132,41 +135,42 @@ bool ViewWrapper_qtquick::is(Type t) const
     if (t == Type::ViewWrapper)
         return true;
 
-    // switch (t) {
+    switch (t) {
 
-    // case Type::Frame:
-    //     return qobject_cast<Views::Frame_qtquick *>(m_item);
-    // case Type::TitleBar:
-    //     return qobject_cast<Views::TitleBar_qtquick *>(m_item);
-    // case Type::TabBar:
-    //     return qobject_cast<Views::TabBar_qtquick *>(m_item);
-    // case Type::Stack:
-    //     return qobject_cast<Views::Stack_qtquick *>(m_item);
-    // case Type::FloatingWindow:
-    //     return qobject_cast<Views::FloatingWindow_qtquick *>(m_item);
-    // case Type::Separator:
-    //     return qobject_cast<Views::Separator_qtquick *>(m_item);
-    // case Type::DockWidget:
-    //     return qobject_cast<Views::DockWidget_qtquick *>(m_item);
-    // case Type::SideBar:
-    //     return qobject_cast<Views::SideBar_qtquick *>(m_item);
-    // case Type::MainWindow:
-    //     return qobject_cast<Views::MainWindow_qtquick *>(m_item);
-    // case Type::Layout:
-    //     return qobject_cast<LayoutWidget *>(m_item);
-    // case Type::MultiSplitter:
-    //     return qobject_cast<Views::DropArea *>(m_item);
-    // case Type::MDILayout:
-    //     return qobject_cast<MDILayoutWidget *>(m_item);
-    // case Type::MDIArea:
-    //     return qobject_cast<MDIArea *>(m_item);
-    // case Type::LayoutItem:
-    // case Type::DropIndicatorOverlay:
-    //     qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";
-    //     return false;
-    // case Type::ViewWrapper:
-    //     return true;
-    // }
+    case Type::Frame:
+        return qobject_cast<Views::Frame_qtquick *>(m_item);
+    case Type::TitleBar:
+        return qobject_cast<Views::TitleBar_qtquick *>(m_item);
+    case Type::TabBar:
+        return qobject_cast<Views::TabBar_qtquick *>(m_item);
+    case Type::Stack:
+        return qobject_cast<Views::Stack_qtquick *>(m_item);
+    case Type::FloatingWindow:
+        return qobject_cast<Views::FloatingWindow_qtquick *>(m_item);
+    case Type::Separator:
+        return qobject_cast<Views::Separator_qtquick *>(m_item);
+    case Type::DockWidget:
+        return qobject_cast<Views::DockWidget_qtquick *>(m_item);
+    case Type::SideBar:
+        return false; // QtQuick doesn't support sidebar yet
+        // return qobject_cast<Views::SideBar_qtquick *>(m_item);
+    case Type::MainWindow:
+        return qobject_cast<Views::MainWindow_qtquick *>(m_item);
+    case Type::DropArea:
+        return qobject_cast<Views::DropArea_qtquick *>(m_item);
+    case Type::MDILayout:
+        return qobject_cast<Views::MDILayout_qtquick *>(m_item);
+    case Type::RubberBand:
+        return qobject_cast<Views::RubberBand_qtquick *>(m_item);
+    case Type::MDIArea:
+        return false; // Not support by qtquick
+    case Type::LayoutItem:
+    case Type::None:
+        qWarning() << Q_FUNC_INFO << "These are framework internals that are not wrapped";
+        return false;
+    case Type::ViewWrapper:
+        return true;
+    }
 
     qWarning() << Q_FUNC_INFO << "Unknown type" << static_cast<int>(t);
     return false;
