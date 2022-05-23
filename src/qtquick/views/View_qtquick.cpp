@@ -341,8 +341,8 @@ std::shared_ptr<ViewWrapper> View_qtquick::rootView() const
     if (Window::Ptr window = View_qtquick::window())
         return window->rootView();
 
-    qWarning() << Q_FUNC_INFO << "No window present";
-    return {};
+    auto thisNonConst = const_cast<View_qtquick *>(this);
+    return thisNonConst->asWrapper();
 }
 
 void View_qtquick::makeItemFillParent(QQuickItem *item)

@@ -55,6 +55,9 @@ TEST_CASE("View::windowHandle,rootView,Window::rootView")
 
     REQUIRE(window->rootView());
     CHECK(window->rootView()->equals(rootView));
+
+    childView->setParent(nullptr);
+    CHECK(childView->rootView()->equals(childView));
 }
 
 TEST_CASE("View::isVisible(),show(),hide()")
