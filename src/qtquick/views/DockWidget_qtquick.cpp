@@ -59,13 +59,17 @@ DockWidget_qtquick::DockWidget_qtquick(Controllers::DockWidget *controller,
     : View_qtquick(controller, Type::DockWidget, nullptr, windowFlags)
     , d(new Private(this, controller, engine ? engine : plat()->qmlEngine()))
 {
-    // To mimic what QtWidgets does when creating a new QWidget.
-    setVisible(false);
 }
 
 DockWidget_qtquick::~DockWidget_qtquick()
 {
     delete d;
+}
+
+void DockWidget_qtquick::init()
+{
+    // To mimic what QtWidgets does when creating a new QWidget.
+    setVisible(false);
 }
 
 void DockWidget_qtquick::setWidget(const QString &qmlFilename)

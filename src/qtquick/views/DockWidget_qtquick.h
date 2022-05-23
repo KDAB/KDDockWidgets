@@ -67,6 +67,8 @@ public:
     /// Similar to Controllers::DockWidget::setWidget(QQuickItem*)
     void setWidget(const QString &qmlFilename);
 
+    void init() override;
+
     /// @reimp // TODOv2: Rename to setGuestView
     Q_INVOKABLE void setWidget(QQuickItem *widget);
 
