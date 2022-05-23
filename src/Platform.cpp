@@ -81,11 +81,11 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
 
     Platform::instance()->m_numWarningsEmitted = 0;
 
-    /// Any additional setup
-    Platform::instance()->tests_initPlatform_impl();
-
     /// Reset the default framework factory, so we can test several frontends in the same test run
     Config::self().setViewFactory(Platform::instance()->createDefaultViewFactory());
+
+    /// Any additional setup
+    Platform::instance()->tests_initPlatform_impl();
 }
 
 /*static */
