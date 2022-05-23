@@ -358,6 +358,8 @@ if(${PROJECT_NAME}_TESTS)
     add_test(NAME tst_viewguard COMMAND tst_viewguard)
     add_test(NAME tst_frame COMMAND tst_frame)
     add_test(NAME tst_titlebar COMMAND tst_titlebar)
+    add_test(NAME tst_stack COMMAND tst_stack)
+    add_test(NAME tst_tabbar COMMAND tst_tabbar)
 
     if(NOT ${PROJECT_NAME}_QTQUICK)
       # tst_multisplitter depends on QWidget

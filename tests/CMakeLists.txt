@@ -67,3 +67,9 @@ target_link_libraries(tst_frame kddockwidgets)
 
 add_executable(tst_titlebar controllers/tst_titlebar.cpp ${TESTING_RESOURCES})
 target_link_libraries(tst_titlebar kddockwidgets)
+
+add_executable(tst_stack controllers/tst_stack.cpp ${TESTING_RESOURCES})
+target_link_libraries(tst_stack kddockwidgets)
+
+add_executable(tst_tabbar controllers/tst_tabbar.cpp ${TESTING_RESOURCES})
+target_link_libraries(tst_tabbar kddockwidgets)
