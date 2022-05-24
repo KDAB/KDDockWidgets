@@ -110,12 +110,23 @@ MainWindow::MainWindow(const QString &name, MainWindowOptions options,
 
     setCentralWidget(d->m_centralWidget);
 
-    create();
-    connect(windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
-            [this] {
-                d->updateMargins(); // logical dpi might have changed
-                Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle());
-            });
+    const bool isWindow = !parent || (flags & Qt::Window);
+    if (isWindow) {
+        // Update our margins when logical dpi changes.
+        // QWidget doesn't have any screenChanged signal, so we need to use QWindow::screenChanged.
+        // Note #1: Someone might be using this main window embedded into another main window, in which case it will
+        // never have a QWindow, so guard it with isWindow.
+        // Note #2: We don't use QWidget::isWindow() as that will always be true since QMainWindow sets it. Anyone wanting
+        // or not wanting this immediate create() needs to pass a parent/flag pair that makes sense. For example, some people
+        // might want to add this main window into a layout and avoid the create(), so they pass a parent, with null flag.
+
+        create(); // ensure QWindow exists
+        connect(windowHandle(), &QWindow::screenChanged, DockRegistry::self(),
+                [this] {
+                    d->updateMargins();
+                    Q_EMIT DockRegistry::self()->windowChangedScreen(windowHandle());
+                });
+    }
 }
 
 MainWindow::~MainWindow()
