@@ -35,8 +35,9 @@
 #include "qtquick/views/Stack_qtquick.h"
 #include "qtquick/views/MainWindow_qtquick.h"
 #include "qtquick/views/MDILayout_qtquick.h"
+#include "qtquick/views/ClassicIndicatorsWindow_qtquick.h"
 
-
+#include "views/ClassicIndicatorWindow.h"
 
 // clazy:excludeall=ctor-missing-parent-argument
 
@@ -202,4 +203,9 @@ View *ViewFactory_qtquick::createClassicDropIndicatorOverlayView(Controllers::Cl
 View *ViewFactory_qtquick::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *, View *) const
 {
     return nullptr;
+}
+
+Views::ClassicIndicatorWindow *ViewFactory_qtquick::createClassicIndicatorWindow(Controllers::ClassicIndicators *classicIndicators) const
+{
+    return new IndicatorWindow_qtquick(classicIndicators);
 }

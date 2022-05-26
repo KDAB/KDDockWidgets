@@ -15,6 +15,7 @@
 
 #include "controllers/DropIndicatorOverlay.h"
 #include "controllers/indicators/ClassicIndicators.h"
+#include "views/ClassicIndicatorWindow.h"
 
 #include <QQuickView>
 
@@ -24,18 +25,26 @@ namespace Controllers {
 class ClassicIndicators;
 }
 
-class IndicatorWindow_qtquick : public QQuickView
+class IndicatorWindow_qtquick : public QQuickView, public Views::ClassicIndicatorWindow
 {
     Q_OBJECT
     Q_PROPERTY(KDDockWidgets::Controllers::ClassicIndicators *classicIndicators READ classicIndicators CONSTANT)
 public:
     explicit IndicatorWindow_qtquick(Controllers::ClassicIndicators *);
-    DropLocation hover(QPoint);
-    void updatePositions();
-    QPoint posForIndicator(DropLocation) const;
+
     Q_INVOKABLE QString iconName(int loc, bool active) const;
     Controllers::ClassicIndicators *classicIndicators() const;
     QQuickItem *indicatorForLocation(DropLocation loc) const;
+
+    DropLocation hover(QPoint globalPos) override;
+    void updatePositions() override;
+    QPoint posForIndicator(DropLocation) const override;
+    void raise() override;
+    void setVisible(bool) override;
+    bool isWindow() const override;
+    void setGeometry(QRect) override;
+    void resize(QSize) override;
+    void setObjectName(const QString &) override;
 
 private:
     DropLocation locationForIndicator(const QQuickItem *) const;

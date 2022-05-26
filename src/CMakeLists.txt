@@ -103,6 +103,7 @@ set(DOCKSLIBS_SRCS
     Controller.h
     Platform.cpp
     Platform.h
+    views/ClassicIndicatorWindow.cpp
     qtcommon/Platform_qt.cpp
     qtcommon/Platform_qt.h
     qtcommon/Window_qt.cpp

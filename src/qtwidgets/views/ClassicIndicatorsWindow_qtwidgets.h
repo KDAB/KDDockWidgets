@@ -15,6 +15,7 @@
 
 #include "controllers/DropIndicatorOverlay.h"
 #include "controllers/indicators/ClassicIndicators.h"
+#include "views/ClassicIndicatorWindow.h"
 
 #include <QImage>
 #include <QWidget>
@@ -28,14 +29,21 @@ namespace Controllers {
 class ClassicIndicators;
 }
 
-class IndicatorWindow_qtwidgets : public QWidget
+class IndicatorWindow_qtwidgets : public QWidget, public Views::ClassicIndicatorWindow
 {
     Q_OBJECT
 public:
     explicit IndicatorWindow_qtwidgets(Controllers::ClassicIndicators *classicIndicators);
-    DropLocation hover(QPoint globalPos);
-    void updatePositions();
-    QPoint posForIndicator(DropLocation) const;
+
+    DropLocation hover(QPoint globalPos) override;
+    void updatePositions() override;
+    QPoint posForIndicator(DropLocation) const override;
+    void raise() override;
+    void setVisible(bool) override;
+    bool isWindow() const override;
+    void setGeometry(QRect) override;
+    void resize(QSize) override;
+    void setObjectName(const QString &) override;
 
 private:
     void updateIndicatorVisibility();

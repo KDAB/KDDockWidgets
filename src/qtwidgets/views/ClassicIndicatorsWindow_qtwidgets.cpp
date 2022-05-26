@@ -269,6 +269,37 @@ void IndicatorWindow_qtwidgets::updatePositions()
     }
 }
 
+void IndicatorWindow_qtwidgets::raise()
+{
+    QWidget::raise();
+}
+
+void IndicatorWindow_qtwidgets::setGeometry(QRect rect)
+{
+    QWidget::setGeometry(rect);
+}
+
+void IndicatorWindow_qtwidgets::setObjectName(const QString &name)
+{
+    QWidget::setObjectName(name);
+}
+
+void IndicatorWindow_qtwidgets::setVisible(bool is)
+{
+    QWidget::setVisible(is);
+}
+
+void IndicatorWindow_qtwidgets::resize(QSize size)
+{
+    QWidget::resize(size);
+}
+
+bool IndicatorWindow_qtwidgets::isWindow() const
+{
+    /// TODOv2
+    return KDDockWidgets::isWindow(this);
+}
+
 Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow_qtwidgets *parent, DropLocation location)
     : QWidget(parent)
     , q(classicIndicators)

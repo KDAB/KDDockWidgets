@@ -22,6 +22,7 @@
 #include "controllers/indicators/SegmentedIndicators.h"
 
 #include "qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h"
+#include "qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h"
 #include "qtwidgets/views/SegmentedIndicatorsOverlay_qtwidgets.h"
 #include "qtwidgets/views/FloatingWindow_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
@@ -36,6 +37,8 @@
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/MDILayout_qtwidgets.h"
 #include "qtwidgets/views/RubberBand_qtwidgets.h"
+
+#include "views/ClassicIndicatorWindow.h"
 
 #include <QToolButton>
 
@@ -187,4 +190,9 @@ View *ViewFactory_qtwidgets::createClassicDropIndicatorOverlayView(Controllers::
 View *ViewFactory_qtwidgets::createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent) const
 {
     return new Views::SegmentedIndicatorsOverlay_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+}
+
+Views::ClassicIndicatorWindow *ViewFactory_qtwidgets::createClassicIndicatorWindow(Controllers::ClassicIndicators *classicIndicators) const
+{
+    return new IndicatorWindow_qtwidgets(classicIndicators);
 }

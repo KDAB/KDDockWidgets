@@ -37,6 +37,10 @@ class ClassicIndicators;
 class SegmentedIndicators;
 }
 
+namespace Views {
+class ClassicIndicatorWindow;
+}
+
 /**
  * @brief A factory class for allowing the user to customize some internal widgets.
  * This is optional, and if not provided, a default one will be used, @ref DefaultWidgetFactory.
@@ -112,11 +116,16 @@ public:
                                        Controllers::MainWindow *parent = nullptr,
                                        Qt::WindowFlags windowFlags = {}) const = 0;
 
-    /// @brief Creates the view that will parent the classic drop indicators
+    /// @brief Creates the view that will parent the classic drop indicators rubber band overlay
     virtual View *createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent = nullptr) const = 0;
 
+    /// @brief Creates the window that will show the actual drop indicators. They need a higher z-order, so this
+    /// is actually a separate window, not parented to the main window
+    virtual Views::ClassicIndicatorWindow *createClassicIndicatorWindow(Controllers::ClassicIndicators *) const = 0;
+
     /// @brief Creates the view that will parent the segmented drop indicators
-    virtual View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const = 0;
+    virtual View *
+    createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const = 0;
 
     /// @brief Called internally by the framework to create a DropArea
     virtual View *createDropArea(Controllers::DropArea *, View *parent) const = 0;

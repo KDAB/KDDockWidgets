@@ -12,7 +12,7 @@
 #include "ClassicIndicators.h"
 #include "Config.h"
 #include "ViewFactory.h"
-#include "qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h"
+#include "views/ClassicIndicatorWindow.h"
 
 #include "controllers/DropArea.h"
 #include "private/DragController_p.h"
@@ -25,9 +25,9 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-static IndicatorWindow_qtwidgets *createIndicatorWindow(ClassicIndicators *classicIndicators)
+static Views::ClassicIndicatorWindow *createIndicatorWindow(ClassicIndicators *classicIndicators)
 {
-    auto window = new IndicatorWindow_qtwidgets(classicIndicators);
+    auto window = Config::self().viewFactory()->createClassicIndicatorWindow(classicIndicators);
     window->setObjectName(QStringLiteral("_docks_IndicatorWindow_Overlay"));
 
     return window;
@@ -214,7 +214,7 @@ void ClassicIndicators::setDropLocation(DropLocation location)
 void ClassicIndicators::updateWindowPosition()
 {
     QRect rect = this->rect();
-    if (KDDockWidgets::isWindow(m_indicatorWindow)) {
+    if (m_indicatorWindow->isWindow()) {
         // On all non-wayland platforms it's a top-level.
         QPoint pos = mapToGlobal(QPoint(0, 0));
         rect.moveTo(pos);

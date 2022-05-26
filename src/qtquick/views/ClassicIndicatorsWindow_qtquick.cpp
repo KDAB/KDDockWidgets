@@ -186,3 +186,34 @@ QVector<QQuickItem *> IndicatorWindow_qtquick::indicatorItems() const
 
     return indicators;
 }
+
+void IndicatorWindow_qtquick::raise()
+{
+}
+
+void IndicatorWindow_qtquick::setGeometry(QRect)
+{
+    // View::setGeometry(rect);
+}
+
+void IndicatorWindow_qtquick::setObjectName(const QString &)
+{
+    // View::setObjectName(name);
+}
+
+void IndicatorWindow_qtquick::setVisible(bool)
+{
+    // View::setVisible(is);
+}
+
+void IndicatorWindow_qtquick::resize(QSize)
+{
+    // View::resize(size);
+}
+
+bool IndicatorWindow_qtquick::isWindow() const
+{
+    /// TODOv2
+    // return KDDockWidgets::isWindow(this);
+    return true;
+}
