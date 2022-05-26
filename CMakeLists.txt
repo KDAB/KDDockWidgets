@@ -32,10 +32,6 @@
 #  Build the API documentation. Enables the 'docs' build target.
 #  Default=false
 #
-# -DKDDockWidgets_QTQUICK=[true|false]
-#  Build for QtQuick instead of QtWidgets.
-#  Default=false
-#
 # -DKDDockWidgets_PYTHON_BINDINGS=[true|false]
 #  Build/Generate python bindings.  Always false for Debug builds
 #  (If your shiboken or pyside is installed in a non-standard locations
@@ -161,7 +157,6 @@ set(${PROJECT_NAME}_DEPS "widgets")
 if(${PROJECT_NAME}_QTQUICK)
   find_package(Qt${Qt_VERSION_MAJOR}Quick)
   find_package(Qt${Qt_VERSION_MAJOR}QuickControls2)
-  add_definitions(-DKDDOCKWIDGETS_QTQUICK)
   set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} quick quickcontrols2")
 else()
   add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
