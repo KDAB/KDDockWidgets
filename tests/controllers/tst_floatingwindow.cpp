@@ -26,7 +26,7 @@ TEST_CASE("FloatingWindow Ctor")
     dw->view()->show();
 
     /// Wait for FloatingWindow to be created
-    // Platform::instance()->tests_wait(100);
+    Platform::instance()->tests_wait(100);
 
     auto rootView = dw->view()->rootView();
     REQUIRE(rootView);

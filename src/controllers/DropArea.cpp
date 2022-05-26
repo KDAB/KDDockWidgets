@@ -29,9 +29,6 @@
 #include "controllers/indicators/NullIndicators.h"
 #include "controllers/indicators/SegmentedIndicators.h"
 
-#include "qtwidgets/views/Frame_qtwidgets.h"
-
-#include <QScopedValueRollback>
 #include <algorithm>
 
 using namespace KDDockWidgets;
@@ -108,12 +105,17 @@ DropArea::~DropArea()
 
 Controllers::Frame::List DropArea::frames() const
 {
-    const auto views = view()->asQObject()->findChildren<Views::Frame_qtwidgets *>(QString(), Qt::FindDirectChildrenOnly);
+    const Layouting::Item::List children = m_rootItem->items_recursive();
     Controllers::Frame::List frames;
 
-    for (auto view : views) {
-        if (!view->freed())
-            frames << view->frame();
+    for (const Layouting::Item *child : children) {
+        if (auto view = child->guestView()) {
+            if (!view->freed()) {
+                if (auto frame = view->asFrameController()) {
+                    frames << frame;
+                }
+            }
+        }
     }
 
     return frames;
