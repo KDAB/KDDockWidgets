@@ -33,6 +33,10 @@ Platform_qtwidgets::Platform_qtwidgets()
 
 void Platform_qtwidgets::init()
 {
+#if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
+    Q_INIT_RESOURCE(kddockwidgets_resources);
+#endif
+
 #ifdef DOCKS_DEVELOPER_MODE
     if (qEnvironmentVariableIntValue("KDDOCKWIDGETS_SHOW_DEBUG_WINDOW") == 1) {
         auto dv = new Debug::DebugWindow();

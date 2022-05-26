@@ -35,23 +35,11 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-static void initKDDockWidgetResources()
-{
-#if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
-    Q_INIT_RESOURCE(kddockwidgets_resources);
-#if defined(KDDOCKWIDGETS_QTQUICK)
-    Q_INIT_RESOURCE(kddockwidgets_qtquick);
-#endif
-#endif
-}
-
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
     qApp->installEventFilter(this);
     m_connection = Platform::instance()->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
-
-    initKDDockWidgetResources();
 }
 
 DockRegistry::~DockRegistry()

@@ -41,6 +41,11 @@ Platform_qtquick::Platform_qtquick()
 
 void Platform_qtquick::init()
 {
+#if defined(KDDOCKWIDGETS_STATICLIB) || defined(QT_STATIC)
+    Q_INIT_RESOURCE(kddockwidgets_resources);
+    Q_INIT_RESOURCE(kddockwidgets_qtquick);
+#endif
+
     KDDockWidgets::registerQmlTypes();
     QQuickWindow::setDefaultAlphaBuffer(true);
 
