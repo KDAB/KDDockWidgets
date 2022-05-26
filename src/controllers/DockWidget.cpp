@@ -27,8 +27,6 @@
 #include "Config.h"
 #include "ViewFactory.h"
 
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
-
 #include <QEvent>
 #include <QCloseEvent>
 #include <QTimer>

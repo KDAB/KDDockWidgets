@@ -22,6 +22,9 @@
 #include "controllers/DropArea.h"
 #include "controllers/MDILayout.h"
 
+#include "ViewWrapper.h"
+#include "Window.h"
+
 #include <QScreen>
 
 using namespace KDDockWidgets;

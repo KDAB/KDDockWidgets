@@ -18,8 +18,6 @@
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/docks_export.h"
 
-#include "qtwidgets/views/View_qtwidgets.h"
-
 namespace Layouting {
 class ItemFreeContainer;
 }

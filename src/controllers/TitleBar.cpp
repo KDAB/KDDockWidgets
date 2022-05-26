@@ -18,6 +18,7 @@
 #include "private/Logging_p.h"
 
 #include "views/TitleBar.h"
+#include "ViewWrapper.h"
 #include "controllers/FloatingWindow.h"
 #include "controllers/TabBar.h"
 #include "controllers/MainWindow.h"
