@@ -670,7 +670,7 @@ void DockWidget::Private::toggle(bool enabled)
 void DockWidget::Private::updateToggleAction()
 {
     QScopedValueRollback<bool> recursionGuard(m_updatingToggleAction, true); // Guard against recursiveness
-    m_updatingToggleAction = true;
+
     if ((q->isVisible() || frame()) && !toggleAction->isChecked()) {
         toggleAction->setChecked(true);
     } else if ((!q->isVisible() && !frame()) && toggleAction->isChecked()) {
