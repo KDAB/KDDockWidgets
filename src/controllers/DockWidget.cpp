@@ -680,6 +680,9 @@ void DockWidget::Private::updateToggleAction()
 
 void DockWidget::Private::updateFloatAction()
 {
+    if (m_willUpdateActions)
+        return;
+
     QScopedValueRollback<bool> recursionGuard(m_updatingFloatAction, true); // Guard against recursiveness
 
     if (q->isFloating()) {

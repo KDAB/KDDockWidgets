@@ -36,6 +36,27 @@ class SideBar;
 class DOCKS_EXPORT_FOR_UNIT_TESTS DockWidget::Private : public QObject /// clazy:exclude=missing-qobject-macro
 {
 public:
+    /// RAII class to help updating actions exactly once, otherwise they can be triggered in the middle
+    /// of operations during reparenting
+    struct UpdateActions
+    {
+        explicit UpdateActions(Controllers::DockWidget *dw)
+            : dw(dw)
+        {
+            dw->d->m_willUpdateActions = true;
+        }
+
+        ~UpdateActions()
+        {
+            dw->d->m_willUpdateActions = false;
+            dw->d->updateFloatAction();
+        }
+
+    private:
+        Q_DISABLE_COPY(UpdateActions)
+        Controllers::DockWidget *const dw;
+    };
+
     Private(const QString &dockName, DockWidget::Options options_,
             LayoutSaverOptions layoutSaverOptions_, DockWidget *qq);
 
@@ -175,7 +196,9 @@ public:
     bool m_isMovingToSideBar = false;
     QSize m_lastOverlayedSize = QSize(0, 0);
     int m_userType = 0;
+    bool m_willUpdateActions = false;
 };
+
 }
 }
 

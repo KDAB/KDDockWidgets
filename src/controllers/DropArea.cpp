@@ -169,6 +169,8 @@ void DropArea::addDockWidget(Controllers::DockWidget *dw, Location location,
     if (!validateAffinity(dw))
         return;
 
+    Controllers::DockWidget::Private::UpdateActions actionsUpdater(dw);
+
     Controllers::Frame *frame = nullptr;
     Controllers::Frame *relativeToFrame = relativeTo ? relativeTo->d->frame() : nullptr;
 
