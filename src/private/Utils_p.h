@@ -19,17 +19,9 @@
 #include <QWindow>
 #include <QMouseEvent>
 
-#ifdef KDDOCKWIDGETS_QTQUICK
-#include "private/quick/TitleBarQuick_p.h"
-
-#include <QQuickItem>
-#include <QQuickView>
-#include <QGuiApplication>
-#else
 #include <QApplication>
 #include <QAbstractButton>
 #include <QLineEdit>
-#endif
 
 #ifdef QT_X11EXTRAS_LIB
 #include <QtX11Extras/QX11Info>
@@ -41,10 +33,6 @@ class QWindow;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
-
-#ifdef KDDOCKWIDGETS_QTQUICK
-inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos);
-#endif
 
 inline bool isWayland()
 {
