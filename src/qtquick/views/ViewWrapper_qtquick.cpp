@@ -75,6 +75,7 @@ void ViewWrapper_qtquick::setGeometry(QRect)
 
 std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::childViewAt(QPoint) const
 {
+    qFatal("not implemented");
     return {};
 }
 
@@ -95,28 +96,34 @@ bool ViewWrapper_qtquick::isRootView() const
 
 void ViewWrapper_qtquick::setVisible(bool)
 {
+    qFatal("not implemented");
 }
 
 bool ViewWrapper_qtquick::isVisible() const
 {
+    qFatal("not implemented");
     return {};
 }
 
 void ViewWrapper_qtquick::move(int, int)
 {
+    qFatal("not implemented");
 }
 
 void ViewWrapper_qtquick::activateWindow()
 {
+    qFatal("not implemented");
 }
 
 bool ViewWrapper_qtquick::isMaximized() const
 {
+    qFatal("not implemented");
     return {};
 }
 
 bool ViewWrapper_qtquick::isMinimized() const
 {
+    qFatal("not implemented");
     return {};
 }
 
@@ -128,6 +135,7 @@ QSize ViewWrapper_qtquick::maximumSize() const
 
 void ViewWrapper_qtquick::setSize(int, int)
 {
+    qFatal("not implemented");
 }
 
 bool ViewWrapper_qtquick::is(Type t) const
@@ -241,17 +249,21 @@ bool ViewWrapper_qtquick::isNull() const
     return m_item.data() == nullptr;
 }
 
-void ViewWrapper_qtquick::setWindowTitle(const QString &)
+void ViewWrapper_qtquick::setWindowTitle(const QString &title)
 {
+    if (QWindow *w = m_item->window())
+        w->setTitle(title);
 }
 
 QPoint ViewWrapper_qtquick::mapTo(View *, QPoint) const
 {
+    qFatal("not implemented");
     return {};
 }
 
 bool ViewWrapper_qtquick::testAttribute(Qt::WidgetAttribute) const
 {
+    qFatal("not implemented");
     return {};
 }
 
