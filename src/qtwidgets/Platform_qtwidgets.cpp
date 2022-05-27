@@ -127,7 +127,8 @@ View *Platform_qtwidgets::createView(View *parent) const
     return new Views::View_qtwidgets<QWidget>(nullptr, Type::None, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
-Controllers::MainWindow *Platform_qtwidgets::createMainWindow(const QString &uniqueName, MainWindowOptions options,
+Controllers::MainWindow *Platform_qtwidgets::createMainWindow(const QString &uniqueName,
+                                                              CreateViewOptions, MainWindowOptions options,
                                                               View *parent, Qt::WindowFlags flags) const
 {
     auto view = new Views::MainWindow_qtwidgets(uniqueName, options,

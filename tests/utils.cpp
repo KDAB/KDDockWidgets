@@ -40,21 +40,11 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
 
     const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
                                                   : name;
-
-    View *parent = nullptr;
-#ifdef KDDOCKWIDGETS_QTQUICK
-    auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
-    view->resize(sz);
-    view->setResizeMode(QQuickView::SizeRootObjectToView);
-    view->setSource(QUrl("qrc:/main.qml"));
-    if (show)
-        view->show();
-    parent = view->rootObject();
-    QTest::qWait(100); // the root object gets sized delayed
-#endif
-
-
-    auto ptr = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(mainWindowName, options, parent));
+    Platform::CreateViewOptions viewOpts;
+    viewOpts.isVisible = true;
+    viewOpts.size = QSize(1000, 1000);
+    auto ptr = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(mainWindowName,
+                                                                                               viewOpts, options));
     if (show)
         ptr->show();
     ptr->view()->resize(sz);
@@ -101,18 +91,12 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     count++;
 
     View *parent = nullptr;
-#ifdef KDDOCKWIDGETS_QTQUICK
-    auto view = new QQuickView(Config::self().qmlEngine(), nullptr);
-    const QSize initialSize(1000, 1000);
-    view->setResizeMode(QQuickView::SizeRootObjectToView);
-    view->resize(initialSize);
-    view->setSource(QUrl("qrc:/main.qml"));
-    view->show();
-    parent = view->rootObject();
-    QTest::qWait(100); // the root object gets sized delayed
-#endif
 
-    auto m = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
+    Platform::CreateViewOptions viewOpts;
+    viewOpts.isVisible = true;
+    viewOpts.size = QSize(1000, 1000);
+    auto m = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(QStringLiteral("MyMainWindow%1").arg(count),
+                                                                                             viewOpts, MainWindowOption_None, parent));
     auto layout = m->layout();
     m->show();
     m->view()->resize(QSize(700, 700));

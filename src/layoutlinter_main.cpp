@@ -29,7 +29,7 @@ static bool lint(const QString &filename)
     };
 
     MainWindowFactoryFunc mwFunc = [](const QString &mwName) {
-        return Platform::instance()->createMainWindow(mwName);
+        return Platform::instance()->createMainWindow(mwName, {});
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);

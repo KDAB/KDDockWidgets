@@ -41,7 +41,7 @@ public:
     int startDragDistance() const override;
     View *createView(View *parent = nullptr) const override;
 
-    Controllers::MainWindow *createMainWindow(const QString &uniqueName,
+    Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
                                               MainWindowOptions options = MainWindowOption_HasCentralFrame,
                                               View *parent = nullptr, Qt::WindowFlags = {}) const override;
 

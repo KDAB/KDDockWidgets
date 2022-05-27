@@ -157,11 +157,29 @@ View *Platform_qtquick::createView(View *parent) const
     return new Views::View_qtquick(nullptr, Type::None, Views::asQQuickItem(parent));
 }
 
-Controllers::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName, MainWindowOptions options,
+Controllers::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
+                                                            CreateViewOptions viewOpts,
+                                                            MainWindowOptions options,
                                                             View *parent, Qt::WindowFlags flags) const
 {
+    QQuickItem *parentItem = Views::asQQuickItem(parent);
+
+    if (!parentItem) {
+        auto view = new QQuickView(m_qmlEngine, nullptr);
+        view->resize(viewOpts.size);
+
+        view->setResizeMode(QQuickView::SizeRootObjectToView);
+        view->setSource(QUrl(QStringLiteral("qrc:/main.qml")));
+
+        if (viewOpts.isVisible)
+            view->show();
+
+        parentItem = view->rootObject();
+        Platform::instance()->tests_wait(100); // the root object gets sized delayed
+    }
+
     auto view = new Views::MainWindow_qtquick(uniqueName, options,
-                                              Views::asQQuickItem(parent), flags);
+                                              parentItem, flags);
 
     return view->mainWindow();
 }

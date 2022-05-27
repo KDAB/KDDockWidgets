@@ -40,7 +40,7 @@ public:
     void setQmlEngine(QQmlEngine *);
     QQmlEngine *qmlEngine() const;
     View *createView(View *parent = nullptr) const override;
-    Controllers::MainWindow *createMainWindow(const QString &uniqueName,
+    Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
                                               MainWindowOptions options = MainWindowOption_HasCentralFrame,
                                               View *parent = nullptr, Qt::WindowFlags = {}) const override;
 

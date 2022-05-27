@@ -95,13 +95,6 @@ public:
     /// @brief Returns how many pixels the mouse must move for a drag to start
     virtual int startDragDistance() const;
 
-    /// @brief Creates a main window. This is not API that the user will use, but used
-    /// internally by some tools that need a main window
-    virtual Controllers::MainWindow *createMainWindow(const QString &uniqueName,
-                                                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                                                      View *parent = nullptr,
-                                                      Qt::WindowFlags = {}) const = 0;
-
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions
@@ -110,6 +103,7 @@ public:
         QSize sizeHint = {};
         QSize minSize = { 200, 200 };
         QSize maxSize = Layouting::Item::hardcodedMaximumSize;
+        QSize size = { 1000, 1000 };
     };
 
     class WarningObserver
@@ -169,6 +163,13 @@ public:
     /// The event loop keeps running. Use this for debugging purposes so you can interact with your test
     /// and see what's goign on
     virtual void tests_wait(int ms) = 0;
+
+    /// @brief Creates a main window. This is not API that the user will use, but used
+    /// internally by some tools that need a main window
+    virtual Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
+                                                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                                                      View *parent = nullptr,
+                                                      Qt::WindowFlags = {}) const = 0;
 
     static QString s_expectedWarning;
     static WarningObserver *s_warningObserver;

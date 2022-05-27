@@ -561,7 +561,8 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
 
     QWidget container;
     auto lay = new QVBoxLayout(&container);
-    auto m = Platform::instance()->createMainWindow("MyMainWindow_tst_addToSmallMainWindow8", MainWindowOption_None);
+    auto m = Platform::instance()->createMainWindow("MyMainWindow_tst_addToSmallMainWindow8", {},
+                                                    MainWindowOption_None);
     auto qmainwindow = qobject_cast<Views::MainWindow_qtwidgets *>(m->view()->asQObject());
     lay->addWidget(qmainwindow);
     container.resize(100, 100);
