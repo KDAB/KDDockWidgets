@@ -34,13 +34,80 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
+namespace KDDockWidgets {
+static Controller *controllerForItem(QQuickItem *item)
+{
+    // KDDW deals in views, but sometimes we might get a native type like QWidget, for example if you call
+    // someview->window(). This function let's us retrieve the actual controller of the stray QWidget.
+
+    for (int i = int(Type::FIRST); i <= int(::Type::LAST); i *= 2) {
+        // Using a for+switch pattern so that compiler reminds us if new enumerators are added to enum
+        switch (Type(i)) {
+        case Type::Frame:
+            if (auto view = qobject_cast<Frame_qtquick *>(item))
+                return view->controller();
+            break;
+        case Type::TitleBar:
+            if (auto view = qobject_cast<TitleBar_qtquick *>(item))
+                return view->controller();
+            break;
+        case Type::TabBar:
+            if (auto view = qobject_cast<TabBar_qtquick *>(item))
+                return view->controller();
+            break;
+        case Type::Stack:
+            if (auto view = qobject_cast<Stack_qtquick *>(item))
+                return view->controller();
+            break;
+        case Type::FloatingWindow:
+            if (auto view = qobject_cast<FloatingWindow_qtquick *>(item))
+                return view->controller();
+            break;
+        case Type::Separator:
+            if (auto view = qobject_cast<Separator_qtquick *>(item))
+                return view->controller();
+            break;
+        case Type::DockWidget:
+            if (auto view = qobject_cast<DockWidget_qtquick *>(item))
+                return view->controller();
+            break;
+        case Type::DropArea:
+            if (auto view = qobject_cast<DropArea_qtquick *>(item))
+                return view->controller();
+            break;
+        case Type::MDILayout:
+            if (auto view = qobject_cast<MDILayout_qtquick *>(item))
+                return view->controller();
+            break;
+
+        case Type::MDIArea:
+        case Type::SideBar:
+            // Not implemented for QtQuick yet
+            break;
+        case Type::MainWindow:
+            if (auto view = qobject_cast<MainWindow_qtquick *>(item))
+                return view->controller();
+            break;
+        case Type::RubberBand:
+        case Type::LayoutItem:
+        case Type::ViewWrapper:
+        case Type::None:
+            // skip internal types
+            continue;
+        }
+    }
+
+    return nullptr;
+}
+}
+
 ViewWrapper_qtquick::ViewWrapper_qtquick(QObject *item)
     : ViewWrapper_qtquick(qobject_cast<QQuickItem *>(item))
 {
 }
 
 ViewWrapper_qtquick::ViewWrapper_qtquick(QQuickItem *item)
-    : ViewWrapper(nullptr /*controllerForWidget(widget)*/, item)
+    : ViewWrapper(controllerForItem(item), item)
     , m_item(item)
 {
 }
