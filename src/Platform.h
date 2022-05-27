@@ -95,6 +95,13 @@ public:
     /// @brief Returns how many pixels the mouse must move for a drag to start
     virtual int startDragDistance() const;
 
+    /// @brief Creates a main window. This is not API that the user will use, but used
+    /// internally by some tools that need a main window
+    virtual Controllers::MainWindow *createMainWindow(const QString &uniqueName,
+                                                      MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                                                      View *parent = nullptr,
+                                                      Qt::WindowFlags = {}) const = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions

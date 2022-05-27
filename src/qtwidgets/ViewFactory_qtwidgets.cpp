@@ -52,11 +52,6 @@ ViewFactory_qtwidgets::~ViewFactory_qtwidgets()
 {
 }
 
-View *ViewFactory_qtwidgets::createMainWindow(Controllers::MainWindow *mainWindow, View *parent, Qt::WindowFlags flags) const
-{
-    return new Views::MainWindow_qtwidgets(mainWindow, parent ? static_cast<Views::View_qtwidgets<QMainWindow> *>(parent) : nullptr, flags);
-}
-
 View *ViewFactory_qtwidgets::createDockWidget(Controllers::DockWidget *dw, Qt::WindowFlags flags) const
 {
     return new Views::DockWidget_qtwidgets(dw, flags);

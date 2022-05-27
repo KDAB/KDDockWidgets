@@ -109,14 +109,6 @@ public:
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
 };
 
-MainWindow::MainWindow(const QString &uniqueName, KDDockWidgets::MainWindowOptions options,
-                       View *parent, Qt::WindowFlags flags)
-    : Controller(Type::MainWindow, Config::self().viewFactory()->createMainWindow(this, parent, flags))
-    , d(new Private(this, uniqueName, options))
-{
-    init(uniqueName, true);
-}
-
 MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions options)
     : Controller(Type::MainWindow, view)
     , d(new Private(this, uniqueName, options))

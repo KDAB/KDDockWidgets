@@ -16,6 +16,10 @@
 
 namespace KDDockWidgets {
 
+namespace Controllers {
+class MainWindow;
+}
+
 /// @brief implements functions specific to a particular platform
 /// A platform can be for example qtwidgets, qtquick, etc.
 class DOCKS_EXPORT Platform_qtwidgets : public Platform_qt
@@ -36,6 +40,10 @@ public:
 
     int startDragDistance() const override;
     View *createView(View *parent = nullptr) const override;
+
+    Controllers::MainWindow *createMainWindow(const QString &uniqueName,
+                                              MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                                              View *parent = nullptr, Qt::WindowFlags = {}) const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtwidgets(int &argc, char **argv);

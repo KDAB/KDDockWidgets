@@ -561,19 +561,20 @@ void TestQtWidgets::tst_addToSmallMainWindow6()
 
     QWidget container;
     auto lay = new QVBoxLayout(&container);
-    Controllers::MainWindow m("MyMainWindow_tst_addToSmallMainWindow8", MainWindowOption_None);
-    auto qmainwindow = qobject_cast<Views::MainWindow_qtwidgets *>(m.view()->asQObject());
+    auto m = Platform::instance()->createMainWindow("MyMainWindow_tst_addToSmallMainWindow8", MainWindowOption_None);
+    auto qmainwindow = qobject_cast<Views::MainWindow_qtwidgets *>(m->view()->asQObject());
     lay->addWidget(qmainwindow);
     container.resize(100, 100);
     Platform::instance()->tests_waitForEvent(&container, QEvent::Resize);
     container.show();
-    Platform::instance()->tests_waitForResize(&m);
+    Platform::instance()->tests_waitForResize(m);
     auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true, {}, QSize(50, 240) }));
     auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true, {}, QSize(50, 240) }));
-    m.addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
-    m.addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
-    Platform::instance()->tests_waitForResize(&m);
-    QVERIFY(m.dropArea()->checkSanity());
+    m->addDockWidget(dock1, KDDockWidgets::Location_OnBottom);
+    m->addDockWidget(dock2, KDDockWidgets::Location_OnBottom);
+    Platform::instance()->tests_waitForResize(m);
+    QVERIFY(m->dropArea()->checkSanity());
+    delete m;
 }
 
 void TestQtWidgets::tst_closeRemovesFromSideBar()

@@ -69,7 +69,6 @@ public:
     virtual ~ViewFactory();
 
     virtual View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const = 0;
-    virtual View *createMainWindow(Controllers::MainWindow *, View *parent, Qt::WindowFlags) const = 0;
 
     ///@brief Called internally by the framework to create a Frame class
     ///       Override to provide your own Frame sub-class. A frame is the

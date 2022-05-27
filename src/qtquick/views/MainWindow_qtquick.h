@@ -44,6 +44,9 @@ public:
     /// @reimp
     QSize maximumSize() const override;
 
+    /// TODOv2 move into interface
+    Controllers::MainWindow *mainWindow() const;
+
 protected:
     Controllers::SideBar *sideBar(SideBarLocation) const override;
     QMargins centerWidgetMargins() const override;

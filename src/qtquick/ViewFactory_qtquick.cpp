@@ -48,17 +48,6 @@ ViewFactory_qtquick::~ViewFactory_qtquick()
 {
 }
 
-View *ViewFactory_qtquick::createMainWindow(Controllers::MainWindow *mainWindow,
-                                            View *parent, Qt::WindowFlags flags) const
-{
-    Q_UNUSED(mainWindow);
-    Q_UNUSED(parent);
-    Q_UNUSED(flags);
-
-    return {};
-    // return new Views::MainWindow_qtquick(mainWindow, Views::asQQuickItem(parent), flags);
-}
-
 View *ViewFactory_qtquick::createDockWidget(Controllers::DockWidget *dw, Qt::WindowFlags flags) const
 {
     return new Views::DockWidget_qtquick(dw, flags);

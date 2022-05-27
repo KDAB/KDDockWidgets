@@ -53,7 +53,8 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     QTest::qWait(100); // the root object gets sized delayed
 #endif
 
-    auto ptr = std::unique_ptr<Controllers::MainWindow>(new Controllers::MainWindow(mainWindowName, options, parent));
+
+    auto ptr = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(mainWindowName, options, parent));
     if (show)
         ptr->show();
     ptr->view()->resize(sz);
@@ -111,7 +112,7 @@ std::unique_ptr<MainWindow> KDDockWidgets::Tests::createMainWindow(QVector<DockD
     QTest::qWait(100); // the root object gets sized delayed
 #endif
 
-    auto m = std::unique_ptr<Controllers::MainWindow>(new Controllers::MainWindow(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
+    auto m = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(QStringLiteral("MyMainWindow%1").arg(count), MainWindowOption_None, parent));
     auto layout = m->layout();
     m->show();
     m->view()->resize(QSize(700, 700));

@@ -13,6 +13,7 @@
 
 #include "controllers/MainWindow.h"
 #include "controllers/DockWidget.h"
+#include "Platform.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -27,8 +28,8 @@ static bool lint(const QString &filename)
         return new Controllers::DockWidget(dwName);
     };
 
-    MainWindowFactoryFunc mwFunc = [](const QString &dwName) {
-        return new Controllers::MainWindow(dwName);
+    MainWindowFactoryFunc mwFunc = [](const QString &mwName) {
+        return Platform::instance()->createMainWindow(mwName);
     };
 
     KDDockWidgets::Config::self().setDockWidgetFactoryFunc(dwFunc);

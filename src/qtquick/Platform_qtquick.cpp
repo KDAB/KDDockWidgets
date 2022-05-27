@@ -17,6 +17,8 @@
 #include "Window_qtquick.h"
 #include "views/View_qtquick.h"
 #include "qtquick/Window_qtquick.h"
+#include "qtquick/views/MainWindow_qtquick.h"
+#include "controllers/MainWindow.h"
 #include "private/DockRegistry_p.h"
 #include "private/DragController_p.h"
 #include "ViewFactory_qtquick.h"
@@ -153,4 +155,13 @@ ViewFactory_qtquick *Platform_qtquick::viewFactory() const
 View *Platform_qtquick::createView(View *parent) const
 {
     return new Views::View_qtquick(nullptr, Type::None, Views::asQQuickItem(parent));
+}
+
+Controllers::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName, MainWindowOptions options,
+                                                            View *parent, Qt::WindowFlags flags) const
+{
+    auto view = new Views::MainWindow_qtquick(uniqueName, options,
+                                              Views::asQQuickItem(parent), flags);
+
+    return view->mainWindow();
 }
