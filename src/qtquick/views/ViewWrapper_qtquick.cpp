@@ -101,8 +101,12 @@ void ViewWrapper_qtquick::setVisible(bool)
 
 bool ViewWrapper_qtquick::isVisible() const
 {
-    qFatal("not implemented");
-    return {};
+    if (QWindow *w = m_item->window()) {
+        if (!w->isVisible())
+            return false;
+    }
+
+    return m_item->isVisible();
 }
 
 void ViewWrapper_qtquick::move(int, int)

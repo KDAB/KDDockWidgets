@@ -31,7 +31,8 @@ TEST_CASE("FloatingWindow Ctor")
     auto rootView = dw->view()->rootView();
     REQUIRE(rootView);
 
-    // CHECK(rootView->is(Type::FloatingWindow));
+    CHECK(rootView->is(Type::FloatingWindow));
+    CHECK(rootView->isVisible());
 
     delete dw;
 }
