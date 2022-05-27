@@ -252,6 +252,13 @@ public:
     /// @brief returns whether this view is inside the specified window
     bool isInWindow(std::shared_ptr<Window> window) const;
 
+    /// @brief If true, it means destruction hasn't happen yet but is about to happen.
+    /// Useful when a controller is under destructions and wants all related views to stop painting or
+    /// doing anything that would call back into the controller.
+    /// If false, it doesn't mean anything, as not all controllers are using this.
+    void setAboutToBeDestroyed();
+    bool aboutToBeDestroyed() const;
+
     /// @Returns a list of child views
     virtual QVector<std::shared_ptr<View>> childViews() const = 0;
 
@@ -274,6 +281,7 @@ protected:
 private:
     bool m_freed = false;
     bool m_inDtor = false;
+    bool m_aboutToBeDestroyed = false;
     const QString m_id;
     const Type m_type;
 };

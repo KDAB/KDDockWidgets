@@ -341,3 +341,13 @@ HANDLE View::handle() const
 {
     return m_thisObj;
 }
+
+void View::setAboutToBeDestroyed()
+{
+    m_aboutToBeDestroyed = true;
+}
+
+bool View::aboutToBeDestroyed() const
+{
+    return m_aboutToBeDestroyed;
+}

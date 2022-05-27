@@ -115,12 +115,14 @@ View_qtquick::View_qtquick(KDDockWidgets::Controller *controller, Type type,
     }
 
     connect(this, &QQuickItem::widthChanged, this, [this] {
-        onResize(View::size());
-        updateGeometry();
+        if (!aboutToBeDestroyed()) { // If Window is being destroyed we don't bother
+            onResize(View::size());
+            updateGeometry();
+        }
     });
 
     connect(this, &QQuickItem::heightChanged, this, [this] {
-        if (!m_windowIsBeingDestroyed) { // If Window is being destroyed we don't bother
+        if (!aboutToBeDestroyed()) { // If Window is being destroyed we don't bother
             onResize(View::size());
             updateGeometry();
         }
@@ -796,11 +798,6 @@ QVector<std::shared_ptr<View>> View_qtquick::childViews() const
     }
 
     return result;
-}
-
-void View_qtquick::setWindowIsBeingDestroyed(bool is)
-{
-    m_windowIsBeingDestroyed = is;
 }
 
 void View_qtquick::setIsWrapper()

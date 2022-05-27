@@ -159,9 +159,6 @@ public:
     QVector<std::shared_ptr<View>> childViews() const override;
 
     // TODOv2: Check if this is still needed
-    void setWindowIsBeingDestroyed(bool is);
-
-    // TODOv2: Check if this is still needed
     void setIsWrapper();
 
     // TODOv2: Check if this is still needed
@@ -196,7 +193,6 @@ private:
     Qt::WindowFlags m_windowFlags;
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;
-    bool m_windowIsBeingDestroyed = false;
     bool m_mouseTrackingEnabled = false;
     bool m_isWrapper = false; // TODOv2: What's this about
     QRect m_normalGeometry;
