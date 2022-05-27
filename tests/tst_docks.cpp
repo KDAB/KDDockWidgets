@@ -716,7 +716,6 @@ void TestDocks::tst_layoutEqually()
     auto dock1 = createDockWidget("Favorite-481", Platform::instance()->tests_createView({ true, {}, QSize(536, 438) }));
     auto dock2 = createDockWidget("Favorite-482", Platform::instance()->tests_createView({ true, {}, QSize(229, 118) }));
     auto dock3 = createDockWidget("Favorite-483", Platform::instance()->tests_createView({ true, {}, QSize(356, 90) }));
-    m->setContentsMargins(10, 0, 10, 0);
     dock1->setAffinities({ mainWindowId });
     dock2->setAffinities({ mainWindowId });
     dock3->setAffinities({ mainWindowId });
