@@ -123,11 +123,6 @@ FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *cont
 
 FloatingWindow_qtquick::~FloatingWindow_qtquick()
 {
-    // Avoid a bunch of QML warnings and constraints being violated at destruction.
-    // Also simply avoiding unneeded work, as QML is destroying stuff 1 by 1
-    if (auto dropArea = m_controller->dropArea())
-        asView_qtquick(dropArea)->setAboutToBeDestroyed();
-
     setParent(static_cast<View *>(nullptr));
     if (qobject_cast<QQuickView *>(m_quickWindow)) // QObject cast just to make sure the QWindow is not in ~QObject already
         delete m_quickWindow;

@@ -193,6 +193,12 @@ FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometr
 FloatingWindow::~FloatingWindow()
 {
     m_inDtor = true;
+    if (auto da = dropArea()) {
+        // Avoid a bunch of QML warnings and constraints being violated at destruction.
+        // Also simply avoiding unneeded work, as QML is destroying stuff 1 by 1
+        da->view()->setAboutToBeDestroyed();
+    }
+
     disconnect(m_layoutDestroyedConnection);
     delete m_nchittestFilter;
 
