@@ -41,10 +41,6 @@ public:
     int startDragDistance() const override;
     View *createView(View *parent = nullptr) const override;
 
-    Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
-                                              MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                                              View *parent = nullptr, Qt::WindowFlags = {}) const override;
-
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtwidgets(int &argc, char **argv);
     void tests_initPlatform_impl() override;
@@ -52,6 +48,9 @@ public:
     View *tests_createView(CreateViewOptions, View *parent = nullptr) override;
     View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) override;
     View *tests_createNonClosableView(View *parent = nullptr) override;
+    Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
+                                              MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                                              View *parent = nullptr, Qt::WindowFlags = {}) const override;
 #endif
 protected:
     void init();

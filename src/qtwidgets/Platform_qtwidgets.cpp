@@ -18,8 +18,6 @@
 #include "views/View_qtwidgets.h"
 
 #include "ViewFactory_qtwidgets.h"
-#include "controllers/MainWindow.h"
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
 
 #include <QScreen>
 
@@ -125,15 +123,4 @@ int Platform_qtwidgets::startDragDistance() const
 View *Platform_qtwidgets::createView(View *parent) const
 {
     return new Views::View_qtwidgets<QWidget>(nullptr, Type::None, Views::View_qtwidgets<QWidget>::asQWidget(parent));
-}
-
-Controllers::MainWindow *Platform_qtwidgets::createMainWindow(const QString &uniqueName,
-                                                              CreateViewOptions, MainWindowOptions options,
-                                                              View *parent, Qt::WindowFlags flags) const
-{
-    auto view = new Views::MainWindow_qtwidgets(uniqueName, options,
-                                                parent ? static_cast<Views::View_qtwidgets<QMainWindow> *>(parent) : nullptr,
-                                                flags);
-
-    return view->mainWindow();
 }

@@ -40,9 +40,6 @@ public:
     void setQmlEngine(QQmlEngine *);
     QQmlEngine *qmlEngine() const;
     View *createView(View *parent = nullptr) const override;
-    Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
-                                              MainWindowOptions options = MainWindowOption_HasCentralFrame,
-                                              View *parent = nullptr, Qt::WindowFlags = {}) const override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtquick(int &argc, char **argv);
@@ -51,6 +48,9 @@ public:
     View *tests_createView(CreateViewOptions, View *parent = nullptr) override;
     View *tests_createFocusableView(CreateViewOptions, View *parent = nullptr) override;
     View *tests_createNonClosableView(View *parent = nullptr) override;
+    Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
+                                              MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                                              View *parent = nullptr, Qt::WindowFlags = {}) const override;
 #endif
 private:
     void init();

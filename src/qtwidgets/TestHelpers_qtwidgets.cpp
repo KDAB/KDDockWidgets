@@ -13,6 +13,8 @@
 #include "Platform_qtwidgets.h"
 #include "views/ViewWrapper_qtwidgets.h"
 #include "views/View_qtwidgets.h"
+#include "controllers/MainWindow.h"
+#include "qtwidgets/views/MainWindow_qtwidgets.h"
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -141,6 +143,18 @@ View *Platform_qtwidgets::tests_createNonClosableView(View *parent)
 
     return newWidget;
 }
+
+Controllers::MainWindow *Platform_qtwidgets::createMainWindow(const QString &uniqueName,
+                                                              CreateViewOptions, MainWindowOptions options,
+                                                              View *parent, Qt::WindowFlags flags) const
+{
+    auto view = new Views::MainWindow_qtwidgets(uniqueName, options,
+                                                parent ? static_cast<Views::View_qtwidgets<QMainWindow> *>(parent) : nullptr,
+                                                flags);
+
+    return view->mainWindow();
+}
+
 
 #endif
 

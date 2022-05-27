@@ -17,8 +17,6 @@
 #include "Window_qtquick.h"
 #include "views/View_qtquick.h"
 #include "qtquick/Window_qtquick.h"
-#include "qtquick/views/MainWindow_qtquick.h"
-#include "controllers/MainWindow.h"
 #include "private/DockRegistry_p.h"
 #include "private/DragController_p.h"
 #include "ViewFactory_qtquick.h"
@@ -155,31 +153,4 @@ ViewFactory_qtquick *Platform_qtquick::viewFactory() const
 View *Platform_qtquick::createView(View *parent) const
 {
     return new Views::View_qtquick(nullptr, Type::None, Views::asQQuickItem(parent));
-}
-
-Controllers::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
-                                                            CreateViewOptions viewOpts,
-                                                            MainWindowOptions options,
-                                                            View *parent, Qt::WindowFlags flags) const
-{
-    QQuickItem *parentItem = Views::asQQuickItem(parent);
-
-    if (!parentItem) {
-        auto view = new QQuickView(m_qmlEngine, nullptr);
-        view->resize(viewOpts.size);
-
-        view->setResizeMode(QQuickView::SizeRootObjectToView);
-        view->setSource(QUrl(QStringLiteral("qrc:/main.qml")));
-
-        if (viewOpts.isVisible)
-            view->show();
-
-        parentItem = view->rootObject();
-        Platform::instance()->tests_wait(100); // the root object gets sized delayed
-    }
-
-    auto view = new Views::MainWindow_qtquick(uniqueName, options,
-                                              parentItem, flags);
-
-    return view->mainWindow();
 }
