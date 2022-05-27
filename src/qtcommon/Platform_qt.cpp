@@ -154,6 +154,7 @@ int Platform_qt::screenNumberForQWindow(QWindow *window) const
 
 bool Platform_qt::tests_waitForWindowActive(Window::Ptr window, int timeout) const
 {
+    Q_ASSERT(window);
     auto windowqt = static_cast<Window_qt *>(window.get());
     return QTest::qWaitForWindowActive(windowqt->qtWindow(), timeout);
 }
