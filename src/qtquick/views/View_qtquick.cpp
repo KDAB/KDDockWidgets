@@ -450,8 +450,7 @@ QRect View_qtquick::geometry() const
         }
     }
 
-    QRect r(QPointF(QQuickItem::x(), QQuickItem::y()).toPoint(), QQuickItem::size().toSize());
-    return r;
+    return QRect(QPointF(QQuickItem::x(), QQuickItem::y()).toPoint(), QQuickItem::size().toSize());
 }
 
 QRect View_qtquick::normalGeometry() const

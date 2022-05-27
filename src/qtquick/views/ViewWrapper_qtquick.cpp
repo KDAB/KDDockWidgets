@@ -119,31 +119,35 @@ void ViewWrapper_qtquick::setObjectName(const QString &name)
 
 QRect ViewWrapper_qtquick::geometry() const
 {
-    qFatal("not implemented");
-    return {};
+    if (isRootView()) {
+        if (QWindow *w = m_item->window()) {
+            return w->geometry();
+        }
+    }
+
+    return QRect(QPointF(m_item->x(), m_item->y()).toPoint(), m_item->size().toSize());
 }
 
-QPoint ViewWrapper_qtquick::mapToGlobal(QPoint /*localPt*/) const
+QPoint ViewWrapper_qtquick::mapToGlobal(QPoint localPt) const
 {
-    qFatal("not implemented");
-    return {};
+    return m_item->mapToGlobal(localPt).toPoint();
 }
 
-QPoint ViewWrapper_qtquick::mapFromGlobal(QPoint /*globalPt*/) const
+QPoint ViewWrapper_qtquick::mapFromGlobal(QPoint globalPt) const
 {
-    qFatal("not implemented");
-    return {};
+    return m_item->mapFromGlobal(globalPt).toPoint();
 }
 
-void ViewWrapper_qtquick::setGeometry(QRect)
+void ViewWrapper_qtquick::setGeometry(QRect rect)
 {
-    qFatal("not implemented");
+    setSize(rect.width(), rect.height());
+    ViewWrapper_qtquick::move(rect.topLeft().x(), rect.topLeft().y());
 }
 
-std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::childViewAt(QPoint) const
+std::shared_ptr<ViewWrapper> ViewWrapper_qtquick::childViewAt(QPoint p) const
 {
-    qFatal("not implemented");
-    return {};
+    auto child = m_item->childAt(p.x(), p.y());
+    return child ? asQQuickWrapper(child) : nullptr;
 }
 
 std::shared_ptr<Window> ViewWrapper_qtquick::window() const
@@ -161,9 +165,17 @@ bool ViewWrapper_qtquick::isRootView() const
     return View_qtquick::isRootView(m_item);
 }
 
-void ViewWrapper_qtquick::setVisible(bool)
+void ViewWrapper_qtquick::setVisible(bool is)
 {
-    qFatal("not implemented");
+    if (isRootView()) {
+        if (QWindow *w = m_item->window()) {
+            if (!w->isVisible()) {
+                w->show();
+            }
+        }
+    }
+
+    m_item->setVisible(is);
 }
 
 bool ViewWrapper_qtquick::isVisible() const
@@ -176,37 +188,63 @@ bool ViewWrapper_qtquick::isVisible() const
     return m_item->isVisible();
 }
 
-void ViewWrapper_qtquick::move(int, int)
+void ViewWrapper_qtquick::move(int x, int y)
 {
-    qFatal("not implemented");
+    if (isRootView()) {
+        if (QWindow *w = m_item->window()) {
+            w->setPosition(x, y);
+            return;
+        }
+    }
+
+    m_item->setX(x);
+    m_item->setY(y);
+    setAttribute(Qt::WA_Moved);
 }
 
 void ViewWrapper_qtquick::activateWindow()
 {
-    qFatal("not implemented");
+    if (QWindow *w = m_item->window())
+        w->requestActivate();
 }
 
 bool ViewWrapper_qtquick::isMaximized() const
 {
-    qFatal("not implemented");
-    return {};
+    if (QWindow *w = m_item->window())
+        return w->windowStates() & Qt::WindowMaximized;
+
+    return false;
 }
 
 bool ViewWrapper_qtquick::isMinimized() const
 {
-    qFatal("not implemented");
-    return {};
+    if (QWindow *w = m_item->window())
+        return w->windowStates() & Qt::WindowMinimized;
+
+    return false;
 }
 
 QSize ViewWrapper_qtquick::maximumSize() const
 {
-    qFatal("not implemented");
-    return {};
+    if (auto view = unwrap()) {
+        return maximumSize();
+    } else {
+        qFatal("not implemented");
+        return {};
+    }
 }
 
-void ViewWrapper_qtquick::setSize(int, int)
+void ViewWrapper_qtquick::setSize(int w, int h)
 {
-    qFatal("not implemented");
+    if (isRootView()) {
+        if (QWindow *window = m_item->window()) {
+            QRect windowGeo = window->geometry();
+            windowGeo.setSize(QSize(w, h));
+            window->setGeometry(windowGeo);
+        }
+    }
+
+    m_item->setSize(QSizeF(w, h));
 }
 
 bool ViewWrapper_qtquick::is(Type t) const
@@ -295,9 +333,13 @@ void ViewWrapper_qtquick::setFocus(Qt::FocusReason reason)
     m_item->forceActiveFocus(reason);
 }
 
-void ViewWrapper_qtquick::setFocusPolicy(Qt::FocusPolicy)
+void ViewWrapper_qtquick::setFocusPolicy(Qt::FocusPolicy policy)
 {
-    qFatal("not implemented");
+    if (auto view = unwrap()) {
+        view->setFocusPolicy(policy);
+    } else {
+        qFatal("not implemented");
+    }
 }
 
 bool ViewWrapper_qtquick::hasFocus() const
@@ -326,16 +368,24 @@ void ViewWrapper_qtquick::setWindowTitle(const QString &title)
         w->setTitle(title);
 }
 
-QPoint ViewWrapper_qtquick::mapTo(View *, QPoint) const
+QPoint ViewWrapper_qtquick::mapTo(View *parent, QPoint pos) const
 {
-    qFatal("not implemented");
-    return {};
+    if (!parent)
+        return {};
+
+    auto parentItem = asQQuickItem(parent);
+    return parentItem->mapFromGlobal(m_item->mapToGlobal(pos)).toPoint();
 }
 
-bool ViewWrapper_qtquick::testAttribute(Qt::WidgetAttribute) const
+bool ViewWrapper_qtquick::testAttribute(Qt::WidgetAttribute attr) const
 {
-    qFatal("not implemented");
-    return {};
+    if (auto view = unwrap()) {
+        // Only real views have min size
+        return view->testAttribute(attr);
+    } else {
+        qFatal("not implemented");
+        return false;
+    }
 }
 
 void ViewWrapper_qtquick::setCursor(Qt::CursorShape shape)
