@@ -81,6 +81,7 @@ public:
     bool inDtor() const;
 
 private:
+    void setParent(QObject *) = delete;
     View *m_view = nullptr;
     bool m_inDtor = false;
     const Type m_type;

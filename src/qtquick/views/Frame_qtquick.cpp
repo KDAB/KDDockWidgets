@@ -142,7 +142,8 @@ void Frame_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index
 {
     QPointer<Controllers::Frame> oldFrame = dw->d->frame();
     if (stackView()->insertDockWidget(index, dw, {}, {})) {
-        dw->setParent(m_stackLayout);
+
+        asView_qtquick(dw->view())->setParent(m_stackLayout);
 
         QMetaObject::Connection conn = connect(dw, &Controllers::DockWidget::parentChanged, this, [dw, this] {
             if (dw->parent() != m_stackLayout)

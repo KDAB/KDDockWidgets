@@ -112,7 +112,7 @@ void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)
         }
     }
 
-    other->setParent(nullptr);
+    other->view()->setParent(nullptr);
     frame->addWidget(other, option);
 }
 
@@ -384,6 +384,7 @@ QStringList DockWidget::affinities() const
 
 void DockWidget::show()
 {
+    // TODOv2: show wont be called. move to view instead.
     if (view()->isRootView() && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
         // Create the FloatingWindow already, instead of waiting for the show event.
         // This reduces flickering on some platforms
@@ -734,7 +735,7 @@ void DockWidget::Private::close()
 
     // Do some cleaning. Widget is hidden, but we must hide the tab containing it.
     if (Controllers::Frame *frame = this->frame()) {
-        q->setParent(nullptr);
+        q->QObject::setParent(nullptr);
         q->view()->setParent(nullptr);
         frame->removeWidget(q);
 
