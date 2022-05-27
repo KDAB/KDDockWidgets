@@ -24,6 +24,7 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
                    Type::MainWindow, parent, flags)
     , m_controller(static_cast<Controllers::MainWindow *>(controller()))
 {
+    m_controller->init(uniqueName);
     makeItemFillParent(this);
 
     Controllers::Layout *lw = m_controller->layout();
