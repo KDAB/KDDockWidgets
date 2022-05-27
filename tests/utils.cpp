@@ -57,6 +57,7 @@ Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &n
                                                                 bool show,
                                                                 const QString &affinityName)
 {
+    Q_ASSERT(guest);
     guest->setFocusPolicy(Qt::StrongFocus);
     auto dock = new Controllers::DockWidget(name, options, layoutSaverOptions);
     dock->setAffinityName(affinityName);

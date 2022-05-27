@@ -99,8 +99,14 @@ View *Platform_qtquick::tests_createFocusableView(CreateViewOptions opts, View *
 
 View *Platform_qtquick::tests_createNonClosableView(View *parent)
 {
-    Q_UNUSED(parent);
-    return nullptr;
+    CreateViewOptions opts;
+    opts.isVisible = true;
+    auto view = tests_createView(opts, parent);
+    view->closeRequested.connect([](QCloseEvent *ev) {
+        ev->ignore();
+    });
+
+    return view;
 }
 
 Controllers::MainWindow *Platform_qtquick::createMainWindow(const QString &uniqueName,
