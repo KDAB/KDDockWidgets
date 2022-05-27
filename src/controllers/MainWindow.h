@@ -62,7 +62,7 @@ public:
     explicit MainWindow(View *view, const QString &uniqueName, MainWindowOptions options);
 
     ~MainWindow() override;
-    void init(const QString &name, bool initView);
+    void init(const QString &name);
 
     /**
      * @brief Docks a DockWidget into the central frame, tabbed.

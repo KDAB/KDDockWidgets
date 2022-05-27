@@ -113,15 +113,11 @@ MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions 
     : Controller(Type::MainWindow, view)
     , d(new Private(this, uniqueName, options))
 {
-    // Convenience CTOR called by Views
 }
 
-void MainWindow::init(const QString &name, bool initView)
+void MainWindow::init(const QString &name)
 {
     d->m_layout = createLayoutWidget(this, d->m_options);
-
-    if (initView)
-        view()->init();
 
     d->m_persistentCentralDockWidget = d->createPersistentCentralDockWidget(d->name);
 

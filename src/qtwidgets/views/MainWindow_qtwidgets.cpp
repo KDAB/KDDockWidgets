@@ -140,7 +140,7 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
     , d(new Private(static_cast<Controllers::MainWindow *>(controller()), this))
 {
     auto controller = mainWindow();
-    controller->init(uniqueName, false);
+    controller->init(uniqueName);
     init();
 }
 
