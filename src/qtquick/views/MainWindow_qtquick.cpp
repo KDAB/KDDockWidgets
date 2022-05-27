@@ -94,7 +94,7 @@ void MainWindow_qtquick::setContentsMargins(int left, int top, int right, int bo
     Q_UNUSED(right);
     Q_UNUSED(top);
     Q_UNUSED(bottom);
-    qFatal("Not implemented");
+    qDebug() << Q_FUNC_INFO << "not implemented";
 }
 
 Controllers::MainWindow *MainWindow_qtquick::mainWindow() const
