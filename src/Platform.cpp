@@ -119,10 +119,13 @@ void Platform::tests_deinitPlatform()
 std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 {
     std::vector<KDDockWidgets::FrontendType> types;
-    types.reserve(int(FrontendType::LAST));
-    for (int i = int(FrontendType::FIRST); i <= int(FrontendType::LAST); ++i) {
-        types.push_back(FrontendType(i));
-    }
+
+#ifdef KDDW_FRONTEND_QTWIDGETS
+    types.push_back(FrontendType::QtWidgets);
+#endif
+#ifdef KDDW_FRONTEND_QTQUICK
+    types.push_back(FrontendType::QtQuick);
+#endif
 
     return types;
 }
