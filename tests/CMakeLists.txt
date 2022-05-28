@@ -9,10 +9,6 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-# Tests:
-# 1. tst_docks      - The KDDockWidge tests. Compatible with QtWidgets and QtQuick.
-# 2. tests_launcher - helper executable to paralelize the execution of tests
-
 if(POLICY CMP0043)
   cmake_policy(SET CMP0043 NEW)
 endif()
@@ -40,13 +36,11 @@ add_executable(tst_qtwidgets qtwidgets/tst_qtwidgets.cpp ${TESTING_SRCS} ${TESTI
 target_link_libraries(tst_qtwidgets kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_qtwidgets)
 
-if(NOT ${PROJECT_NAME}_QTQUICK)
-  add_executable(tst_multisplitter tst_multisplitter.cpp)
-  target_link_libraries(tst_multisplitter kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
-  set_compiler_flags(tst_multisplitter)
-  if(KDDockWidgets_FUZZER)
-    add_subdirectory(fuzzer)
-  endif()
+add_executable(tst_multisplitter tst_multisplitter.cpp)
+target_link_libraries(tst_multisplitter kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+set_compiler_flags(tst_multisplitter)
+if(KDDockWidgets_FUZZER)
+  add_subdirectory(fuzzer)
 endif()
 
 # tests_launcher

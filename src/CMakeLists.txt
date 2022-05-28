@@ -332,8 +332,22 @@ endif()
 # END coverage
 
 # TODOv2: Remove linking against QtTest after refactorings are made
-target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate coverage_options)
-target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
+
+if (KDDW_FRONTEND_QTWIDGETS)
+  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
+endif()
+
+if (KDDW_FRONTEND_QTQUICK)
+  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
+endif()
+
+if (KDDockWidgets_CODE_COVERAGE)
+  target_link_libraries(kddockwidgets PUBLIC coverage_options)
+endif()
+
+if (KDDockWidgets_DEVELOPER_MODE)
+  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test)
+endif()
 
 
 if(WIN32)
@@ -431,7 +445,7 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
 
   option(KDDockWidgets_LINTER "Build the layout linter" ON)
 
-  if(NOT ${PROJECT_NAME}_QTQUICK AND KDDockWidgets_LINTER) # TODO: We can support it
+  if(KDDW_FRONTEND_QTWIDGETS AND KDDockWidgets_LINTER) # TODOv2: make it not require any frontend
     add_executable(kddockwidgets_linter layoutlinter_main.cpp)
     target_link_libraries(kddockwidgets_linter kddockwidgets Qt${Qt_VERSION_MAJOR}::Widgets)
   endif()
