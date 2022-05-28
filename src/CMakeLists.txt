@@ -21,7 +21,7 @@ add_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS
                 -DQT_NO_FOREACH
 )
 
-set(DOCKSLIBS_SRCS
+set(KDDW_BACKEND_SRCS
     KDDockWidgets.cpp
     Config.cpp
     Config.h
@@ -47,18 +47,15 @@ set(DOCKSLIBS_SRCS
     private/WindowBeingDragged_p.h
     private/DragController.cpp
     private/DragController_p.h
-
     private/WidgetResizeHandler.cpp
     private/WidgetResizeHandler_p.h
     private/WindowZOrder_x11_p.h
-
     private/multisplitter/Item.cpp
     private/multisplitter/Item_p.h
     private/multisplitter/ItemFreeContainer.cpp
     private/multisplitter/ItemFreeContainer_p.h
     private/multisplitter/MultiSplitterConfig.cpp
     private/multisplitter/MultiSplitterConfig.h
-
     controllers/DockWidget.cpp
     controllers/DockWidget.h
     controllers/DropArea.cpp
@@ -108,6 +105,10 @@ set(DOCKSLIBS_SRCS
     qtcommon/Platform_qt.h
     qtcommon/Window_qt.cpp
     qtcommon/Window_qt.h
+    kddockwidgets_resources.qrc
+)
+
+SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/Window_qtwidgets.cpp
     qtwidgets/Window_qtwidgets.h
     qtwidgets/Platform_qtwidgets.cpp
@@ -156,62 +157,7 @@ set(DOCKSLIBS_SRCS
     qtwidgets/ObjectViewer_p.h
 )
 
-# add_library(kddockwidgets_backend STATIC ${KDDW_BACKEND_SRCS})
-# target_link_libraries(kddockwidgets_backend Qt5::Widgets)
-# target_include_directories(kddockwidgets_backend
-#   PUBLIC
-#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes> # TODO remove
-#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backend_temp_includes/kddockwidgets>
-#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty> # TODO: Link to KDBindings instead
-#   )
-
-#--------------------------------
-
-set(DOCKS_INSTALLABLE_INCLUDES
-    docks_export.h
-    Config.h
-    ViewFactory.h
-    # DockWidget.h
-    KDDockWidgets.h
-    Qt5Qt6Compat_p.h
-    FocusScope.h
-    # QWidgetAdapter.h
-    LayoutSaver.h
-    MainWindowMDI.h
-    # MainWindow.h
-)
-
-set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
-    private/DragController_p.h
-    private/Draggable_p.h
-    private/DropIndicatorOverlay.h
-    # private/FloatingWindow_p.h
-    # private/Frame_p.h
-    private/LayoutSaver_p.h
-    # private/Layout.h
-    # private/SideBar_p.h
-    private/TitleBar_p.h
-    private/WindowBeingDragged_p.h
-    private/WidgetResizeHandler_p.h
-    private/DockRegistry_p.h
-    # private/TabWidget_p.h
-
-)
-
-set(DOCKS_INSTALLABLE_PRIVATE_WIDGET_INCLUDES
-    # private/widgets/QWidgetAdapter_widgets_p.h
-    # private/widgets/SideBarWidget_p.h
-    # private/widgets/FloatingWindowWidget_p.h
-    # private/widgets/FrameWidget_p.h
-    # private/widgets/TabBarWidget_p.h
-    # private/widgets/TabWidgetWidget_p.h
-)
-
-set(DOCKS_INSTALLABLE_PRIVATE_QUICK_INCLUDES
-    # private/quick/QWidgetAdapter_quick_p.h
-)
-
-set(KDDW_QTQUICK_FRONTEND_SRCS
+SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/Window_qtquick.cpp
   qtquick/Window_qtquick.h
   qtquick/Platform_qtquick.cpp
@@ -259,72 +205,44 @@ set(KDDW_QTQUICK_FRONTEND_SRCS
   kddockwidgets_qtquick.qrc
 )
 
-if(${PROJECT_NAME}_QTQUICK)
-  set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
-      DockWidgetQuick.cpp
-      DockWidgetQuick.h
-      private/quick/DockWidgetInstantiator.cpp
-      private/quick/DockWidgetInstantiator_p.h
-      # private/quick/QWidgetAdapter_quick.cpp
-      # private/quick/QWidgetAdapter_quick_p.h
-      private/quick/FloatingWindowQuick.cpp
-      private/quick/FloatingWindowQuick_p.h
-      # private/quick/TabWidgetQuick.cpp
-      # private/quick/TabWidgetQuick_p.h
-      private/quick/TabBarQuick.cpp
-      private/quick/TabBarQuick_p.h
-      private/quick/TitleBarQuick.cpp
-      private/quick/TitleBarQuick_p.h
-      private/quick/QmlTypes.cpp
-      private/quick/QmlTypes.h
-      private/quick/Helpers.cpp
-      private/quick/Helpers_p.h
-      private/quick/FrameQuick.cpp
-      private/quick/FrameQuick_p.h
-      private/quick/LayoutSaverInstantiator.cpp
-      private/quick/LayoutSaverInstantiator_p.h
-      private/quick/RubberBandQuick.cpp
-      private/quick/RubberBandQuick.h
-      private/quick/MainWindowQuick.cpp
-      private/quick/MainWindowQuick_p.h
-      private/quick/MainWindowInstantiator.cpp
-      private/quick/MainWindowInstantiator_p.h
-      private/multisplitter/Separator_quick.cpp
-      private/multisplitter/Separator_quick.h
-      private/multisplitter/Rubberband_quick.cpp
-      private/multisplitter/Rubberband_quick.h
-      kddockwidgets_qtquick.qrc)
+set(DOCKS_INSTALLABLE_INCLUDES
+    docks_export.h
+    Config.h
+    ViewFactory.h
+    # DockWidget.h
+    KDDockWidgets.h
+    Qt5Qt6Compat_p.h
+    FocusScope.h
+    # QWidgetAdapter.h
+    LayoutSaver.h
+    MainWindowMDI.h
+    # MainWindow.h
+)
 
-  set(DOCKS_INSTALLABLE_INCLUDES ${DOCKS_INSTALLABLE_INCLUDES} DockWidgetQuick.h)
+set(DOCKS_INSTALLABLE_PRIVATE_INCLUDES
+    private/DragController_p.h
+    private/Draggable_p.h
+    private/DropIndicatorOverlay.h
+    # private/FloatingWindow_p.h
+    # private/Frame_p.h
+    private/LayoutSaver_p.h
+    # private/Layout.h
+    # private/SideBar_p.h
+    private/TitleBar_p.h
+    private/WindowBeingDragged_p.h
+    private/WidgetResizeHandler_p.h
+    private/DockRegistry_p.h
+    # private/TabWidget_p.h
+)
 
-else()
-  set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS}
+set(DOCKSLIBS_SRCS ${KDDW_BACKEND_SRCS})
 
-      # MainWindow.cpp
-      # MainWindow.h
-      # DockWidget.h
-      # private/widgets/TabBarWidget.cpp
-      # private/widgets/TabBarWidget_p.h
-      # private/widgets/FloatingWindowWidget.cpp
-      # private/widgets/FloatingWindowWidget_p.h
-      # private/widgets/FrameWidget.cpp
-      # private/widgets/FrameWidget_p.h
-      # private/widgets/SideBarWidget.cpp
-      # private/widgets/SideBarWidget_p.h
-      # private/widgets/TabWidgetWidget.cpp
-      # private/widgets/TabWidgetWidget_p.h
-      # private/widgets/DockWidget.cpp
-      # private/widgets/QWidgetAdapter_widgets.cpp
-      # private/widgets/QWidgetAdapter_widgets_p.h
-      # private/indicators/AnimatedIndicators.cpp
-  )
+if (KDDW_FRONTEND_QTWIDGETS)
+  set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_QTWIDGETS_SRCS})
+endif()
 
-  set(DOCKS_INSTALLABLE_INCLUDES
-      ${DOCKS_INSTALLABLE_INCLUDES}
-      # MainWindow.h
-      # DockWidget.h
-      # MDIArea.h
-  )
+if (KDDW_FRONTEND_QTQUICK)
+  set(DOCKSLIBS_SRCS ${DOCKSLIBS_SRCS} ${KDDW_FRONTEND_QTQUICK_SRCS})
 endif()
 
 #Generate C/C++ CamelCase forwarding headers (only public includes)
@@ -345,9 +263,7 @@ ecm_generate_headers(camelcase_HEADERS
     MainWindowMDI
 )
 
-set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/kddockwidgets_resources.qrc)
-
-add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${KDDW_QTQUICK_FRONTEND_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
+add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})
 
 add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
 set_target_properties(kddockwidgets PROPERTIES OUTPUT_NAME "kddockwidgets${KDDockWidgets_LIBRARY_QTID}")

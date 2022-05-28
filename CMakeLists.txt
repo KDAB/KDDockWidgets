@@ -101,7 +101,6 @@ include(FeatureSummary)
 option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
 option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_PYTHON_BINDINGS "Build python bindings" OFF)
-option(${PROJECT_NAME}_QTQUICK "Build for QtQuick instead of QtWidgets" OFF)
 option(${PROJECT_NAME}_STATIC "Build statically" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
@@ -148,18 +147,22 @@ else()
 endif()
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
-# // TODOv2
-find_package(Qt${Qt_VERSION_MAJOR}Quick)
-find_package(Qt${Qt_VERSION_MAJOR}QuickControls2)
+set(KDDW_FRONTEND_QTWIDGETS ON)
+set(KDDW_FRONTEND_QTQUICK ON)
 
 add_definitions(-DQT_NO_KEYWORDS)
-set(${PROJECT_NAME}_DEPS "widgets")
-if(${PROJECT_NAME}_QTQUICK)
-  find_package(Qt${Qt_VERSION_MAJOR}Quick)
-  find_package(Qt${Qt_VERSION_MAJOR}QuickControls2)
+
+# TODOv2
+add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
+
+if (KDDW_FRONTEND_QTWIDGETS)
+  set(${PROJECT_NAME}_DEPS "widgets")
+endif()
+
+if (KDDW_FRONTEND_QTQUICK)
+  find_package(Qt${Qt_VERSION_MAJOR}Quick REQUIRED)
+  find_package(Qt${Qt_VERSION_MAJOR}QuickControls2 REQUIRED)
   set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} quick quickcontrols2")
-else()
-  add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
 endif()
 
 if(NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6 AND ${PROJECT_NAME}_X11EXTRAS)
@@ -171,7 +174,7 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
   set(${PROJECT_NAME}_TESTS ON)
   set(${PROJECT_NAME}_WERROR ON)
   include(ECMEnableSanitizers)
-  # find_package(doctest REQUIRED)
+  # find_package(doctest REQUIRED) TODOv2
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -181,10 +184,7 @@ else()
 endif()
 
 set(CMAKE_CXX_STANDARD 17)
-
-if(${PROJECT_NAME}_QTQUICK)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
-endif()
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -305,9 +305,10 @@ if(${PROJECT_NAME}_PYTHON_BINDINGS)
 endif()
 
 if(${PROJECT_NAME}_EXAMPLES)
-  if(${PROJECT_NAME}_QTQUICK)
+  if(KDDW_FRONTEND_QTQUICK AND FALSE)
     add_subdirectory(examples/qtquick)
-  else()
+  endif()
+  if(KDDW_FRONTEND_QTWIDGETS)
     add_subdirectory(examples/dockwidgets)
     add_subdirectory(examples/minimal)
     add_subdirectory(examples/minimal-mdi)
@@ -358,13 +359,11 @@ if(${PROJECT_NAME}_TESTS)
     add_test(NAME tst_separator COMMAND tst_separator)
     add_test(NAME tst_floatingwindow COMMAND tst_floatingwindow)
     add_test(NAME tst_dockwidget COMMAND tst_dockwidget)
+    add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
 
-    if(NOT ${PROJECT_NAME}_QTQUICK)
-      # tst_multisplitter depends on QWidget
-      add_test(NAME tst_multisplitter COMMAND tst_multisplitter)
+    if(KDDW_FRONTEND_QTWIDGETS)
       add_test(NAME tst_qtwidgets COMMAND tst_qtwidgets)
     endif()
-
   endif()
 endif()
 
