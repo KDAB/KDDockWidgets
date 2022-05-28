@@ -135,7 +135,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src) # TODOv2 Replace with targe
 
 if(${PROJECT_NAME}_QT6)
   set(Qt_VERSION_MAJOR 6)
-  set(QT_MIN_VERSION "6.0.0")
+  set(QT_MIN_VERSION "6.2.0")
   find_package(Qt6Widgets ${QT_MIN_VERSION} REQUIRED)
   find_package(Qt6Test ${QT_MIN_VERSION} REQUIRED)
   set(${PROJECT_NAME}_LIBRARY_QTID "-qt6")
