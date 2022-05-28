@@ -13,11 +13,6 @@
 #include "controllers/TitleBar.h"
 #include "controllers/Frame.h"
 
-#include "qtquick/Platform_qtquick.h"
-
-#include <QQmlContext>
-#include <QQmlEngine>
-
 TEST_CASE("TitleBar Ctor")
 {
     auto frame = new Controllers::Frame(nullptr, {});

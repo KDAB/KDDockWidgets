@@ -13,11 +13,6 @@
 #include "controllers/Frame.h"
 #include "controllers/Stack.h"
 
-#include "qtquick/Platform_qtquick.h"
-
-#include <QQmlContext>
-#include <QQmlEngine>
-
 TEST_CASE("Stack ctor")
 {
     Controllers::Frame frame(nullptr, {});

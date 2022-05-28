@@ -147,19 +147,23 @@ else()
 endif()
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
+# TODOv2
 set(KDDW_FRONTEND_QTWIDGETS ON)
 set(KDDW_FRONTEND_QTQUICK ON)
 
 add_definitions(-DQT_NO_KEYWORDS)
 
-# TODOv2
+# TODOv2: remove
 add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
 
+
 if (KDDW_FRONTEND_QTWIDGETS)
+  add_definitions(-DKDDW_FRONTEND_QTWIDGETS)
   set(${PROJECT_NAME}_DEPS "widgets")
 endif()
 
 if (KDDW_FRONTEND_QTQUICK)
+  add_definitions(-DKDDW_FRONTEND_QTQUICK)
   find_package(Qt${Qt_VERSION_MAJOR}Quick REQUIRED)
   find_package(Qt${Qt_VERSION_MAJOR}QuickControls2 REQUIRED)
   set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} quick quickcontrols2")

@@ -14,11 +14,6 @@
 #include "controllers/Frame.h"
 #include "controllers/DockWidget.h"
 
-#include "qtquick/Platform_qtquick.h"
-
-#include <QQmlContext>
-#include <QQmlEngine>
-
 TEST_CASE("FloatingWindow Ctor")
 {
     auto dw = new Controllers::DockWidget("dw1");

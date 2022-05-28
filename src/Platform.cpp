@@ -11,8 +11,14 @@
 
 #include "Platform.h"
 
-#include "qtwidgets/Platform_qtwidgets.h"
-#include "qtquick/Platform_qtquick.h"
+#ifdef KDDW_FRONTEND_QTWIDGETS
+# include "qtwidgets/Platform_qtwidgets.h"
+#endif
+
+#ifdef KDDW_FRONTEND_QTQUICK
+# include "qtquick/Platform_qtquick.h"
+#endif
+
 #include "Config.h"
 
 #include <qglobal.h>
@@ -70,13 +76,25 @@ void Platform::tests_initPlatform(int &argc, char **argv, KDDockWidgets::Fronten
     if (Platform::instance())
         return;
 
+    Platform *platform = nullptr;
+
     switch (type) {
     case FrontendType::QtWidgets:
-        new Platform_qtwidgets(argc, argv);
+#ifdef KDDW_FRONTEND_QTWIDGETS
+        platform = new Platform_qtwidgets(argc, argv);
+#endif
         break;
     case FrontendType::QtQuick:
-        new Platform_qtquick(argc, argv);
+#ifdef KDDW_FRONTEND_QTQUICK
+        platform = new Platform_qtquick(argc, argv);
+#endif
         break;
+    }
+
+    if (!platform) {
+        qCritical() << "Could not initialize platform for" << type << ". KDDockWidgets was built without support for it";
+        qFatal("Aborting");
+        return;
     }
 
     Platform::instance()->m_numWarningsEmitted = 0;

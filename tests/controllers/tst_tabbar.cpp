@@ -14,11 +14,6 @@
 #include "controllers/Stack.h"
 #include "controllers/TabBar.h"
 
-#include "qtquick/Platform_qtquick.h"
-
-#include <QQmlContext>
-#include <QQmlEngine>
-
 TEST_CASE("TabBar ctor")
 {
     Controllers::Frame frame(nullptr, {});

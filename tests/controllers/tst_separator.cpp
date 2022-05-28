@@ -11,10 +11,6 @@
 
 #include "../main.h"
 #include "controllers/Separator.h"
-#include "qtquick/Platform_qtquick.h"
-
-#include <QQmlContext>
-#include <QQmlEngine>
 
 TEST_CASE("Separator Ctor")
 {
