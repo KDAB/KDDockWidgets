@@ -39,7 +39,7 @@ Layout::~Layout()
     m_minSizeChangedHandler.disconnect();
 
     if (m_rootItem && !m_viewDeleted)
-        viewAboutToBeDeleted(); // TODO: Rename
+        viewAboutToBeDeleted();
     DockRegistry::self()->unregisterLayout(this);
 }
 
