@@ -339,6 +339,10 @@ endif()
 
 if (KDDW_FRONTEND_QTQUICK)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
+  target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate)
+
+  # TODOv2: Temporary, while QSizePolicy, QAction arent ported. These will be ported last.
+  target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets)
 endif()
 
 if (KDDockWidgets_CODE_COVERAGE)
