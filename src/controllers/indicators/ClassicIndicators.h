@@ -16,7 +16,6 @@
 
 namespace KDDockWidgets {
 
-class IndicatorWindow_qtwidgets;
 class Indicator;
 
 namespace Views {
