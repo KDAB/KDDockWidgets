@@ -158,12 +158,6 @@ public:
     void setMouseTracking(bool enable) override;
     QVector<std::shared_ptr<View>> childViews() const override;
 
-    // TODOv2: Check if this is still needed
-    void setIsWrapper();
-
-    // TODOv2: Check if this is still needed
-    bool isWrapper() const;
-
     /// @brief This is equivalent to "anchors.fill: parent but in C++
     void makeItemFillParent(QQuickItem *item);
     void onWindowStateChangeEvent(QWindowStateChangeEvent *);
@@ -194,7 +188,6 @@ private:
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;
     bool m_mouseTrackingEnabled = false;
-    bool m_isWrapper = false; // TODOv2: What's this about
     QRect m_normalGeometry;
     Qt::WindowStates m_oldWindowState = Qt::WindowState::WindowNoState;
     MouseEventRedirector *m_mouseEventRedirector = nullptr;

@@ -409,29 +409,12 @@ QSize View_qtquick::sizeHint() const
 
 QSize View_qtquick::minSize() const
 {
-    if (m_isWrapper) {
-        const auto children = childItems();
-        if (!children.isEmpty()) {
-            const QSize min = children.constFirst()->property("kddockwidgets_min_size").toSize();
-            return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
-        }
-    }
-
     const QSize min = property("kddockwidgets_min_size").toSize();
     return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
 }
 
 QSize View_qtquick::maxSizeHint() const
 {
-    if (m_isWrapper) {
-        const auto children = childItems();
-        if (!children.isEmpty()) {
-            const QSize max = children.constFirst()->property("kddockwidgets_max_size").toSize();
-            return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
-                                 : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
-        }
-    }
-
     const QSize max = property("kddockwidgets_max_size").toSize();
     return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
                          : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
@@ -797,16 +780,6 @@ QVector<std::shared_ptr<View>> View_qtquick::childViews() const
     }
 
     return result;
-}
-
-void View_qtquick::setIsWrapper()
-{
-    m_isWrapper = true;
-}
-
-bool View_qtquick::isWrapper() const
-{
-    return m_isWrapper;
 }
 
 void View_qtquick::onWindowStateChangeEvent(QWindowStateChangeEvent *)
