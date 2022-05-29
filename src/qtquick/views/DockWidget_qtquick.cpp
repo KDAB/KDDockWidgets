@@ -17,6 +17,7 @@
 #include "controllers/DockWidget_p.h"
 #include "controllers/Frame.h"
 #include "qtquick/Platform_qtquick.h"
+#include "qtquick/views/TitleBar_qtquick.h"
 #include "qtquick/ViewFactory_qtquick.h"
 
 #include <Config.h>
@@ -70,6 +71,10 @@ void DockWidget_qtquick::init()
 {
     // To mimic what QtWidgets does when creating a new QWidget.
     setVisible(false);
+
+    auto dw = this->dockWidget();
+    connect(dw, &Controllers::DockWidget::actualTitleBarChanged,
+            this, &DockWidget_qtquick::actualTitleBarChanged);
 }
 
 void DockWidget_qtquick::setWidget(const QString &qmlFilename)
@@ -125,16 +130,20 @@ QSize DockWidget_qtquick::maximumSize() const
     return View_qtquick::maximumSize();
 }
 
-QObject *DockWidget_qtquick::actualTitleBar() const
+Controllers::TitleBar *DockWidget_qtquick::actualTitleBar() const
 {
     if (Controllers::Frame *frame = this->frame())
         return frame->actualTitleBar();
     return nullptr;
 }
 
-QObject *DockWidget_qtquick::actualTitleBarObj() const
+QObject *DockWidget_qtquick::actualTitleBarView() const
 {
-    return actualTitleBar();
+    if (auto tb = actualTitleBar()) {
+        return static_cast<Views::TitleBar_qtquick *>(tb->view());
+    }
+
+    return nullptr;
 }
 
 QQuickItem *DockWidget_qtquick::frameVisualItem() const

@@ -43,7 +43,7 @@ namespace Views {
 class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick
 {
     Q_OBJECT
-    // Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarObj NOTIFY actualTitleBarChanged)
+    Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarView NOTIFY actualTitleBarChanged)
 public:
     /**
      * @brief constructs a new DockWidget
@@ -79,12 +79,12 @@ public:
     QSize maximumSize() const override;
 
     /// @brief Returns the title bar
-    QObject *actualTitleBar() const;
+    Controllers::TitleBar *actualTitleBar() const;
 
     /// @brief Returns the title bar
     /// Qt6 requires us to include TitleBar_p.h, so instead the Q_PROPERTY uses
     /// QObject so we don't include private headers in public headers
-    QObject *actualTitleBarObj() const;
+    QObject *actualTitleBarView() const;
 
     /// @brief Returns the visual item which represents Frame in the screen
     /// Equivalent to Frame::visualItem().
@@ -102,6 +102,7 @@ Q_SIGNALS:
     /// @brief The geometry of the frame container this dock widget is in changed
     /// For example, when dragging a dockwidget
     void frameGeometryChanged(QRect);
+    void actualTitleBarChanged();
 
 protected:
     bool event(QEvent *e) override;

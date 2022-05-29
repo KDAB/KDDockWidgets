@@ -36,14 +36,27 @@ void DockWidgetInstantiator::setSource(const QString &source)
     Q_EMIT sourceChanged();
 }
 
-Controllers::DockWidget *DockWidgetInstantiator::dockWidget() const
+Views::DockWidget_qtquick *DockWidgetInstantiator::dockWidget() const
+{
+    if (m_dockWidget) {
+        return static_cast<Views::DockWidget_qtquick *>(m_dockWidget->view());
+    }
+
+    return nullptr;
+}
+
+KDDockWidgets::Controllers::DockWidget *DockWidgetInstantiator::controller() const
 {
     return m_dockWidget;
 }
 
-TitleBar *DockWidgetInstantiator::actualTitleBar() const
+QObject *DockWidgetInstantiator::actualTitleBar() const
 {
-    return m_dockWidget ? m_dockWidget->actualTitleBar() : nullptr;
+    if (auto dockView = dockWidget()) {
+        return dockView->actualTitleBarView();
+    }
+
+    return nullptr;
 }
 
 QString DockWidgetInstantiator::title() const
@@ -79,7 +92,7 @@ void DockWidgetInstantiator::addDockWidgetAsTab(DockWidgetInstantiator *other,
                                                 InitialVisibilityOption option)
 {
     if (m_dockWidget)
-        m_dockWidget->addDockWidgetAsTab(other ? other->dockWidget() : nullptr, option);
+        m_dockWidget->addDockWidgetAsTab(other ? other->controller() : nullptr, option);
 }
 
 void DockWidgetInstantiator::addDockWidgetAsTab(Controllers::DockWidget *other,
@@ -108,8 +121,8 @@ void DockWidgetInstantiator::addDockWidgetToContainingWindow(DockWidgetInstantia
 {
     if (m_dockWidget)
         m_dockWidget->addDockWidgetToContainingWindow(
-            other ? other->dockWidget() : nullptr, location,
-            relativeTo ? relativeTo->dockWidget() : nullptr, InitialOption(option, initialSize));
+            other ? other->controller() : nullptr, location,
+            relativeTo ? relativeTo->controller() : nullptr, InitialOption(option, initialSize));
 }
 
 void DockWidgetInstantiator::setAsCurrentTab()
@@ -178,7 +191,8 @@ void DockWidgetInstantiator::componentComplete()
         return;
     }
 
-    m_dockWidget = new Controllers::DockWidget(m_uniqueName, {}, {}, qmlEngine(this));
+    // TODOv2: Pass qmlEngine(this). Instantiate the DockWidget view directly.
+    m_dockWidget = new Controllers::DockWidget(m_uniqueName, {}, {});
 
     connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this,
             &DockWidgetInstantiator::titleChanged);
@@ -190,8 +204,9 @@ void DockWidgetInstantiator::componentComplete()
     connect(m_dockWidget, &Controllers::DockWidget::hidden, this, &DockWidgetInstantiator::hidden);
     connect(m_dockWidget, &Controllers::DockWidget::iconChanged, this,
             &DockWidgetInstantiator::iconChanged);
-    connect(m_dockWidget, &Controllers::DockWidget::widgetChanged, this,
-            &DockWidgetInstantiator::widgetChanged);
+    connect(m_dockWidget, &Controllers::DockWidget::guestViewChanged, this, [this] {
+        Q_EMIT guestViewChanged(Views::asQQuickItem(m_dockWidget->guestView().get()));
+    });
     connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this,
             &DockWidgetInstantiator::isFocusedChanged);
     connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this,
@@ -207,9 +222,10 @@ void DockWidgetInstantiator::componentComplete()
 
 
     if (m_sourceFilename.isEmpty()) {
-        m_dockWidget->setWidget(childItems.constFirst());
+        m_dockWidget->setGuestView(Views::asQQuickWrapper(childItems.constFirst()));
     } else {
-        m_dockWidget->setWidget(m_sourceFilename);
+        auto view = this->dockWidget();
+        view->setWidget(m_sourceFilename);
     }
 
     if (!m_title.isEmpty())

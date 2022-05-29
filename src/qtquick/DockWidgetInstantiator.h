@@ -12,7 +12,8 @@
 #ifndef KD_DOCKWIDGET_INSTANTIATOR_P_H
 #define KD_DOCKWIDGET_INSTANTIATOR_P_H
 
-#include "controllers/DockWidget.h"
+#include "qtquick/views/DockWidget_qtquick.h"
+#include "qtquick/views/TitleBar_qtquick.h"
 
 #include <QQmlParserStatus>
 #include <QQuickItem>
@@ -36,9 +37,8 @@ class DockWidgetInstantiator : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(QString uniqueName READ uniqueName WRITE setUniqueName NOTIFY uniqueNameChanged)
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
-    Q_PROPERTY(KDDockWidgets::DockWidgetQuick *dockWidget READ dockWidget NOTIFY dockWidgetChanged)
-    Q_PROPERTY(
-        KDDockWidgets::TitleBar *actualTitleBar READ actualTitleBar NOTIFY actualTitleBarChanged)
+    Q_PROPERTY(KDDockWidgets::Views::DockWidget_qtquick *dockWidget READ dockWidget NOTIFY dockWidgetChanged)
+    Q_PROPERTY(QObject *actualTitleBar READ actualTitleBar NOTIFY actualTitleBarChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
@@ -49,8 +49,9 @@ public:
     QString source() const;
     void setSource(const QString &);
 
-    Controllers::DockWidget *dockWidget() const;
-    KDDockWidgets::TitleBar *actualTitleBar() const;
+    KDDockWidgets::Views::DockWidget_qtquick *dockWidget() const;
+    KDDockWidgets::Controllers::DockWidget *controller() const;
+    QObject *actualTitleBar() const;
 
     QString title() const;
     void setTitle(const QString &title);
@@ -96,7 +97,7 @@ Q_SIGNALS:
     void shown();
     void hidden();
     void iconChanged();
-    void widgetChanged(QQuickItem *);
+    void guestViewChanged(QQuickItem *);
     void optionsChanged(KDDockWidgets::Controllers::DockWidget::Options);
     void isFocusedChanged(bool);
     void isOverlayedChanged(bool);
