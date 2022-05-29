@@ -16,10 +16,9 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "DebugWindow_p.h"
+#include "DebugWindow.h"
 #include "private/DockRegistry_p.h"
 #include "LayoutSaver.h"
-#include "ObjectViewer_p.h"
 #include "Qt5Qt6Compat_p.h"
 
 #include "controllers/FloatingWindow.h"

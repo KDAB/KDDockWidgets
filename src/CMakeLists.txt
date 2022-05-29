@@ -152,9 +152,9 @@ SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/ViewFactory_qtwidgets.cpp
     qtwidgets/ViewFactory_qtwidgets.h
     qtwidgets/DebugWindow.cpp
-    qtwidgets/DebugWindow_p.h
+    qtwidgets/DebugWindow.h
     qtwidgets/ObjectViewer.cpp
-    qtwidgets/ObjectViewer_p.h
+    qtwidgets/ObjectViewer.h
 )
 
 SET(KDDW_FRONTEND_QTQUICK_SRCS

@@ -16,7 +16,7 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "ObjectViewer_p.h"
+#include "ObjectViewer.h"
 
 #include <QStandardItem>
 #include <QApplication>

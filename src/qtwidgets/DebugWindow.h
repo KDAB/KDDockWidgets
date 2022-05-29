@@ -17,8 +17,10 @@
  */
 #ifndef DEBUGWINDOW_H
 #define DEBUGWINDOW_H
+#pragma once
 
-#include "ObjectViewer_p.h"
+#include "ObjectViewer.h"
+
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE

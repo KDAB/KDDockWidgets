@@ -12,7 +12,6 @@
 #pragma once
 
 #include "qtcommon/Platform_qt.h"
-#include "qtwidgets/DebugWindow_p.h"
 
 namespace KDDockWidgets {
 

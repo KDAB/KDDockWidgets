@@ -13,7 +13,7 @@
 #include "KDDockWidgets.h"
 
 #include "Window_qtwidgets.h"
-#include "DebugWindow_p.h"
+#include "DebugWindow.h"
 #include "views/ViewWrapper_qtwidgets.h"
 #include "views/View_qtwidgets.h"
 
