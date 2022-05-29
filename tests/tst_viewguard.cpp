@@ -9,9 +9,9 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "main.h"
 #include "ViewGuard.h"
-#include "qtwidgets/views/ViewWrapper_qtwidgets.h"
+#include "Platform.h"
 
 #include <doctest/doctest.h>
 
@@ -23,18 +23,20 @@ TEST_CASE("ViewGuard test")
     CHECK(g.isNull());
 
     {
-        Views::ViewWrapper_qtwidgets wv(static_cast<QWidget *>(nullptr));
-        g = &wv;
+        auto view = Platform::instance()->tests_createView({});
+        g = view;
         CHECK(!g.isNull());
+        delete view;
     }
 
     CHECK(g.isNull());
 
     // Test when ViewGuard is destroyed before view
     // May not crash without ASAN
-    Views::ViewWrapper_qtwidgets wv(static_cast<QWidget *>(nullptr));
+    auto view = Platform::instance()->tests_createView({});
     {
-        ViewGuard gg(&wv);
+        ViewGuard gg(view);
         CHECK(!gg.isNull());
     }
+    delete view;
 }
