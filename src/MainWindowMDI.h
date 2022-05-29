@@ -18,12 +18,9 @@
 
 #ifndef KD_MAINWINDOW_MDI_H
 #define KD_MAINWINDOW_MDI_H
+#pragma once
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
-#else
-#include "private/quick/MainWindowQuick_p.h"
-#endif
 
 namespace KDDockWidgets {
 
