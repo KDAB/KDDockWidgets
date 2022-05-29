@@ -26,8 +26,6 @@
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"
 
-#include "qtwidgets/views/Frame_qtwidgets.h"
-
 #include <QPointer>
 #include <QDebug>
 #include <QGuiApplication>
@@ -670,9 +668,10 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
         }
     } else if (event->type() == QEvent::MouseButtonPress) {
         // When clicking on a MDI Frame we raise the window
-        if (auto frameView = firstParentOfType<Views::Frame_qtwidgets>(watched)) {
-            if (frameView->frame()->isMDI())
-                frameView->raise();
+        if (Controller *c = View::firstParentOfType(watched, Type::Frame)) {
+            auto frame = static_cast<Frame*>(c);
+            if (frame->isMDI())
+                frame->view()->raise();
         }
 
         // The following code is for hididng the overlay

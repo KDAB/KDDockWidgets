@@ -269,32 +269,6 @@ inline bool scalingFactorIsSupported(qreal factor)
 #endif
 }
 
-template<typename T>
-inline T *firstParentOfType(const QObject *child)
-{
-    auto p = const_cast<QObject *>(child);
-    while (p) {
-        if (auto candidate = qobject_cast<T *>(p))
-            return candidate;
-
-        if (qobject_cast<const QWindow *>(p)) {
-            // Ignore QObject hierarchies spanning though multiple windows
-            return nullptr;
-        }
-
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-        // Ignore QObject hierarchies spanning though multiple windows
-        if (auto w = qobject_cast<QWidget *>(p))
-            if (w->isWindow())
-                return nullptr;
-#endif
-
-        p = p->parent();
-    }
-
-    return nullptr;
-}
-
 };
 
 #endif
