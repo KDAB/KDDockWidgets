@@ -15,6 +15,7 @@
 #include "MainWindow_qtquick.h"
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Views;
 using namespace KDDockWidgets::Controllers;
 
 MainWindowMDI_qtquick::MainWindowMDI_qtquick(const QString &uniqueName, QQuickItem *parent, Qt::WindowFlags flags)

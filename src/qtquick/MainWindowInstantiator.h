@@ -11,6 +11,7 @@
 
 #ifndef KD_MAIN_WINDOW_INSTANTIATOR_P_H
 #define KD_MAIN_WINDOW_INSTANTIATOR_P_H
+#pragma once
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
@@ -21,10 +22,11 @@ namespace KDDockWidgets {
 
 class MainWindowQuick;
 class DockWidgetInstantiator;
-class SideBar;
 
 namespace Controllers {
 class DockWidget;
+class MainWindow;
+class SideBar;
 }
 
 /// @brief A wrapper to workaround the limitation that QtQuick can't pass arguments through MainWindowQuick's ctor
@@ -69,7 +71,7 @@ public:
     Q_INVOKABLE void overlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
     Q_INVOKABLE void toggleOverlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
     Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
-    Q_INVOKABLE KDDockWidgets::SideBar *sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget *) const;
+    // Q_INVOKABLE KDDockWidgets::SideBar *sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget *) const;
     Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
     Q_INVOKABLE bool closeDockWidgets(bool force = false);
 
@@ -83,7 +85,7 @@ Q_SIGNALS:
 
 private:
     QString m_uniqueName;
-    MainWindowQuick *m_mainWindow = nullptr;
+    Controllers::MainWindow *m_mainWindow = nullptr;
     KDDockWidgets::MainWindowOptions m_options = KDDockWidgets::MainWindowOption_None;
 };
 

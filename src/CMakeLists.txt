@@ -170,8 +170,8 @@ SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/ViewFactory_qtquick.h
   qtquick/LayoutSaverInstantiator.cpp
   qtquick/LayoutSaverInstantiator.h
-  # qtquick/MainWindowInstantiator.cpp
-  # qtquick/MainWindowInstantiator.h
+  qtquick/MainWindowInstantiator.cpp
+  qtquick/MainWindowInstantiator.h
   qtquick/DockWidgetInstantiator.cpp
   qtquick/DockWidgetInstantiator.h
   qtquick/QmlTypes.cpp

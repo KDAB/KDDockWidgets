@@ -13,9 +13,9 @@
 #include "qtquick/views/MainWindow_qtquick.h"
 #include "qtquick/views/MainWindowMDI_qtquick.h"
 
-#include "DockWidgetInstantiator_p.h"
+#include "DockWidgetInstantiator.h"
 
-#include "../DockRegistry_p.h"
+#include "private/DockRegistry_p.h"
 
 using namespace KDDockWidgets;
 
@@ -76,8 +76,8 @@ void MainWindowInstantiator::addDockWidget(DockWidgetInstantiator *dockWidget, L
                                            DockWidgetInstantiator *relativeTo, QSize initialSize,
                                            InitialVisibilityOption option)
 {
-    addDockWidget(dockWidget ? dockWidget->dockWidget() : nullptr, location,
-                  relativeTo ? relativeTo->dockWidget() : nullptr, initialSize, option);
+    addDockWidget(dockWidget ? dockWidget->controller() : nullptr, location,
+                  relativeTo ? relativeTo->controller() : nullptr, initialSize, option);
 }
 
 void MainWindowInstantiator::layoutEqually()
@@ -128,10 +128,11 @@ void MainWindowInstantiator::clearSideBarOverlay(bool deleteFrame)
         m_mainWindow->clearSideBarOverlay(deleteFrame);
 }
 
-SideBar *MainWindowInstantiator::sideBarForDockWidget(const Controllers::DockWidget *dw) const
-{
-    return m_mainWindow ? m_mainWindow->sideBarForDockWidget(dw) : nullptr;
-}
+// TODOv2
+// SideBar *MainWindowInstantiator::sideBarForDockWidget(const Controllers::DockWidget *dw) const
+// {
+//     return m_mainWindow ? m_mainWindow->sideBarForDockWidget(dw) : nullptr;
+// }
 
 bool MainWindowInstantiator::sideBarIsVisible(SideBarLocation loc) const
 {
@@ -173,8 +174,11 @@ void MainWindowInstantiator::componentComplete()
 
     const auto mainWindowOptions = MainWindowOptions(m_options);
 
+    View *view = nullptr;
     if (mainWindowOptions & MainWindowOption_MDI)
-        m_mainWindow = new MainWindowMDI(m_uniqueName, this);
+        view = new Views::MainWindowMDI_qtquick(m_uniqueName, this);
     else
-        m_mainWindow = new MainWindowQuick(m_uniqueName, mainWindowOptions, this);
+        view = new Views::MainWindow_qtquick(m_uniqueName, mainWindowOptions, this);
+
+    m_mainWindow = view->asMainWindowController();
 }

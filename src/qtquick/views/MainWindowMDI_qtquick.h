@@ -18,6 +18,7 @@
 
 namespace KDDockWidgets {
 
+namespace Views {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
 class DOCKS_EXPORT MainWindowMDI_qtquick : public Views::MainWindow_qtquick, public Views::MainWindowMDI
@@ -33,6 +34,8 @@ public:
     ///@brief Destructor
     ~MainWindowMDI_qtquick() override;
 };
+
+}
 
 }
 
