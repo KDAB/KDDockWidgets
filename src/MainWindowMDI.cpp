@@ -17,20 +17,10 @@ using namespace KDDockWidgets::Controllers;
 
 MainWindowMDI::MainWindowMDI(const QString &uniqueName, QWidget *parent, Qt::WindowFlags flags)
     : Views::MainWindow_qtwidgets(uniqueName, MainWindowOption_MDI, parent, flags)
+    , Views::MainWindowMDI(mainWindow()->mdiLayoutWidget())
 {
 }
 
 MainWindowMDI::~MainWindowMDI()
 {
-}
-
-void MainWindowMDI::addDockWidget(DockWidget *dockWidget, QPoint localPos, InitialOption addingOption)
-{
-    auto layout = static_cast<MDILayout *>(mainWindow()->layout());
-    layout->addDockWidget(dockWidget, localPos, addingOption);
-}
-
-void MainWindowMDI::addDockWidget(DockWidget *dockWidget, QPointF localPos, InitialOption addingOption)
-{
-    MainWindowMDI::addDockWidget(dockWidget, localPos.toPoint(), addingOption);
 }

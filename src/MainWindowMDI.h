@@ -20,31 +20,25 @@
 #define KD_MAINWINDOW_MDI_H
 #pragma once
 
+#include "views/MainWindowMDI.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 
 namespace KDDockWidgets {
 
 
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI : public Views::MainWindow_qtwidgets
+class DOCKS_EXPORT MainWindowMDI : public Views::MainWindow_qtwidgets, public Views::MainWindowMDI
 {
     Q_OBJECT
 public:
+    using Views::MainWindowMDI::addDockWidget;
+
     ///@brief Constructor. See base class documentation
     explicit MainWindowMDI(const QString &uniqueName, QWidget *parent = nullptr,
                            Qt::WindowFlags flags = Qt::WindowFlags());
 
     ///@brief Destructor
     ~MainWindowMDI() override;
-
-    ///@brief Docks @p dockWidget
-    /// The widget will be placed at the specified position
-    void addDockWidget(Controllers::DockWidget *dockWidget,
-                       QPoint localPos, InitialOption addingOption = {});
-
-    ///@brief Convenience overload
-    void addDockWidget(Controllers::DockWidget *dockWidget,
-                       QPointF localPos, InitialOption addingOption = {});
 };
 
 }
