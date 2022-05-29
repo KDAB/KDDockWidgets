@@ -12,8 +12,13 @@
 
 #include "KDDockWidgets.h"
 
+#ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform_qtwidgets.h"
+#endif
+
+#ifdef KDDW_FRONTEND_QTQUICK
 #include "qtquick/Platform_qtquick.h"
+#endif
 
 #include <QDebug>
 
@@ -24,10 +29,14 @@ void KDDockWidgets::initFrontend(FrontendType type)
 
     switch (type) {
     case FrontendType::QtWidgets:
+#ifdef KDDW_FRONTEND_QTWIDGETS
         new Platform_qtwidgets();
+#endif
         break;
     case FrontendType::QtQuick:
-        // new Platform_qtquick(); // TODOv2
+#ifdef KDDW_FRONTEND_QTQUICK
+        new Platform_qtquick();
+#endif
         break;
     }
 }
