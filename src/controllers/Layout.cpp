@@ -21,8 +21,6 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/MainWindow.h"
 
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
-
 #include "private/multisplitter/Item_p.h"
 
 using namespace KDDockWidgets;
@@ -67,8 +65,9 @@ Controllers::MainWindow *Layout::mainWindow(bool honourNesting) const
 
     if (honourNesting) {
         // This layout might be a MDIArea, nested in DropArea, which is main window.
-        auto v = firstParentOfType<Views::MainWindow_qtwidgets>(view()->asQObject());
-        return v ? v->mainWindow() : nullptr;
+        if (Controller *c = view()->firstParentOfType(Type::MainWindow))
+            return static_cast<Controllers::MainWindow *>(c);
+        return nullptr;
     } else {
         if (auto pw = view()->parentView()) {
             // Note that if pw is a FloatingWindow then pw->parentWidget() can be a MainWindow too, as

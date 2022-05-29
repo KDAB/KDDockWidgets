@@ -22,6 +22,7 @@
 #include "controllers/DropArea.h"
 #include "controllers/MDILayout.h"
 
+#include "Platform.h"
 #include "ViewWrapper.h"
 #include "Window.h"
 
@@ -350,4 +351,28 @@ void View::setAboutToBeDestroyed()
 bool View::aboutToBeDestroyed() const
 {
     return m_aboutToBeDestroyed;
+}
+
+
+/** static */
+Controller *View::firstParentOfType(const QObject *child, KDDockWidgets::Type type)
+{
+    auto p = Platform::instance()->qobjectAsView(const_cast<QObject *>(child));
+    while (p) {
+        if (p->is(type))
+            return p->controller();
+
+        // Ignore QObject hierarchies spanning though multiple windows
+        if (p->isRootView())
+            return nullptr;
+
+        p = p->parentView();
+    }
+
+    return nullptr;
+}
+
+Controller *View::firstParentOfType(KDDockWidgets::Type type) const
+{
+    return View::firstParentOfType(asQObject(), type);
 }

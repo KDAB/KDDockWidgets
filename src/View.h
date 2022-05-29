@@ -262,6 +262,13 @@ public:
     /// @Returns a list of child views
     virtual QVector<std::shared_ptr<View>> childViews() const = 0;
 
+    /// @brief Returns the controller of the first parent view of the specified type
+    /// Goes up the view hierarchy chain until it finds it. Returns nullptr otherwise.
+    static Controller *firstParentOfType(const QObject *child, KDDockWidgets::Type);
+
+    /// @overload
+    Controller *firstParentOfType(KDDockWidgets::Type) const;
+
 public:
     /// @brief signal emitted once ~View starts
     KDBindings::Signal<> beingDestroyed;
