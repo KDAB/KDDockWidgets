@@ -10,8 +10,8 @@
 */
 
 #include "MainWindowInstantiator.h"
-#include "MainWindowQuick_p.h"
-#include "MainWindowMDI.h"
+#include "qtquick/views/MainWindow_qtquick.h"
+#include "qtquick/views/MainWindowMDI_qtquick.h"
 
 #include "DockWidgetInstantiator_p.h"
 

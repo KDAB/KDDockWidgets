@@ -13,7 +13,6 @@
 #include "Config.h"
 #include "controllers/Layout.h"
 #include "Logging_p.h"
-#include "MainWindowMDI.h"
 #include "Position_p.h"
 #include "Utils_p.h"
 #include "WidgetResizeHandler_p.h"
@@ -393,11 +392,6 @@ Controllers::MainWindow *DockRegistry::mainWindowByName(const QString &name) con
     return nullptr;
 }
 
-MainWindowMDI *DockRegistry::mdiMainWindowByName(const QString &name) const
-{
-    return qobject_cast<MainWindowMDI *>(mainWindowByName(name));
-}
-
 Controllers::DockWidget *DockRegistry::dockWidgetForGuest(View *guest) const
 {
     if (!guest)
@@ -669,7 +663,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
     } else if (event->type() == QEvent::MouseButtonPress) {
         // When clicking on a MDI Frame we raise the window
         if (Controller *c = View::firstParentOfType(watched, Type::Frame)) {
-            auto frame = static_cast<Frame*>(c);
+            auto frame = static_cast<Frame *>(c);
             if (frame->isMDI())
                 frame->view()->raise();
         }

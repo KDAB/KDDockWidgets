@@ -30,8 +30,6 @@ set(KDDW_BACKEND_SRCS
     FocusScope.h
     ViewFactory.cpp
     ViewFactory.h
-    MainWindowMDI.cpp
-    MainWindowMDI.h
     LayoutSaver.cpp
     LayoutSaver.h
     private/LayoutSaver_p.h
@@ -131,6 +129,8 @@ SET(KDDW_FRONTEND_QTWIDGETS_SRCS
     qtwidgets/views/Frame_qtwidgets.h
     qtwidgets/views/MainWindow_qtwidgets.cpp
     qtwidgets/views/MainWindow_qtwidgets.h
+    qtwidgets/views/MainWindowMDI_qtwidgets.cpp
+    qtwidgets/views/MainWindowMDI_qtwidgets.h
     qtwidgets/views/RubberBand_qtwidgets.cpp
     qtwidgets/views/RubberBand_qtwidgets.h
     qtwidgets/views/Separator_qtwidgets.cpp
@@ -186,6 +186,8 @@ SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/views/Frame_qtquick.h
   qtquick/views/MainWindow_qtquick.cpp
   qtquick/views/MainWindow_qtquick.h
+  qtquick/views/MainWindowMDI_qtquick.cpp
+  qtquick/views/MainWindowMDI_qtquick.h
   qtquick/views/MDILayout_qtquick.cpp
   qtquick/views/MDILayout_qtquick.h
   qtquick/views/RubberBand_qtquick.cpp
@@ -217,7 +219,7 @@ set(DOCKS_INSTALLABLE_INCLUDES
     FocusScope.h
     # QWidgetAdapter.h
     LayoutSaver.h
-    MainWindowMDI.h
+    # MainWindowMDI.h
     # MainWindow.h
 )
 
@@ -262,7 +264,7 @@ ecm_generate_headers(camelcase_HEADERS
     LayoutSaver
     # MainWindow
     # MainWindowBase
-    MainWindowMDI
+    # MainWindowMDI
 )
 
 add_library(kddockwidgets ${KDDockWidgets_LIBRARY_MODE} ${DOCKSLIBS_SRCS} ${DOCKS_INSTALLABLE_INCLUDES} ${RESOURCES})

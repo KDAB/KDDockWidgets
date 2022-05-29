@@ -9,4 +9,4 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "../../MainWindowMDI.h"
+#include "../../qtwidgets/views/MainWindowMDI_qtwidgets.h"

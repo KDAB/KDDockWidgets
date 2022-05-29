@@ -16,8 +16,8 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#ifndef KD_MAINWINDOW_MDI_H
-#define KD_MAINWINDOW_MDI_H
+#ifndef KD_MAINWINDOW_MDI_QTWIDGETS_H
+#define KD_MAINWINDOW_MDI_QTWIDGETS_H
 #pragma once
 
 #include "views/MainWindowMDI.h"
@@ -25,21 +25,24 @@
 
 namespace KDDockWidgets {
 
+namespace Views {
 
 /// @brief MainWindow sub-class which uses MDI as a layout
-class DOCKS_EXPORT MainWindowMDI : public Views::MainWindow_qtwidgets, public Views::MainWindowMDI
+class DOCKS_EXPORT MainWindowMDI_qtwidgets : public Views::MainWindow_qtwidgets, public Views::MainWindowMDI
 {
     Q_OBJECT
 public:
     using Views::MainWindowMDI::addDockWidget;
 
     ///@brief Constructor. See base class documentation
-    explicit MainWindowMDI(const QString &uniqueName, QWidget *parent = nullptr,
-                           Qt::WindowFlags flags = Qt::WindowFlags());
+    explicit MainWindowMDI_qtwidgets(const QString &uniqueName, QWidget *parent = nullptr,
+                                     Qt::WindowFlags flags = Qt::WindowFlags());
 
     ///@brief Destructor
-    ~MainWindowMDI() override;
+    ~MainWindowMDI_qtwidgets() override;
 };
+
+}
 
 }
 

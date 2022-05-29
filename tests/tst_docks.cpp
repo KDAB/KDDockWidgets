@@ -15,7 +15,6 @@
 #include "tst_docks.h"
 #include "Config.h"
 #include "LayoutSaver_p.h"
-#include "MainWindowMDI.h"
 #include "Position_p.h"
 #include "WindowBeingDragged_p.h"
 #include "Platform.h"

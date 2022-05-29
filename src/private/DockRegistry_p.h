@@ -36,6 +36,10 @@ class Layout;
 class SideBar;
 }
 
+namespace Views {
+class MainWindowMDI;
+}
+
 class MainWindowMDI;
 struct WindowBeingDragged;
 
@@ -78,7 +82,6 @@ public:
     Q_INVOKABLE KDDockWidgets::Controllers::DockWidget *dockByName(const QString &,
                                                                    KDDockWidgets::DockRegistry::DockByNameFlags = {}) const;
     Q_INVOKABLE KDDockWidgets::Controllers::MainWindow *mainWindowByName(const QString &) const;
-    Q_INVOKABLE KDDockWidgets::MainWindowMDI *mdiMainWindowByName(const QString &) const;
 
     /// @brief returns the dock widget that hosts @p guest widget. Nullptr if there's none.
     Controllers::DockWidget *dockWidgetForGuest(View *guest) const;
