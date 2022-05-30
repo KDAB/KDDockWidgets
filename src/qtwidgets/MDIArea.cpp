@@ -18,11 +18,7 @@
 
 #include "qtwidgets/views/View_qtwidgets.h"
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
 #include <QVBoxLayout>
-#else
-#include "DockWidgetQuick.h"
-#endif
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
@@ -47,12 +43,12 @@ MDIArea::MDIArea(QWidget *parent)
     : Views::View_qtwidgets<QWidget>(nullptr, Type::MDIArea, parent)
     , d(new Private(this))
 {
-#ifdef KDDOCKWIDGETS_QTWIDGETS
+
     auto vlay = new QVBoxLayout(this);
     vlay->addWidget(View_qtwidgets::asQWidget(d->layout));
-#else
-    QWidgetAdapter::makeItemFillParent(d->layout);
-#endif
+
+    // TODOv2: for qtquick:
+    // QWidgetAdapter::makeItemFillParent(d->layout);
 }
 
 MDIArea::~MDIArea()
