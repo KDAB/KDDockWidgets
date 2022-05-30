@@ -49,6 +49,7 @@ public:
     void destroy() override;
     QSize minSize() const override;
     QSize maxSize() const override;
+    QPoint fromNativePixels(QPoint) const override;
 
 protected:
     QPointer<QWindow> m_window;

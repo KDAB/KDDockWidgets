@@ -16,6 +16,8 @@
 #include <QScreen>
 #include <QVariant>
 
+#include <QtGui/private/qhighdpiscaling_p.h>
+
 using namespace KDDockWidgets;
 
 Window_qt::Window_qt(QWindow *window)
@@ -137,4 +139,9 @@ QSize Window_qt::minSize() const
 QSize Window_qt::maxSize() const
 {
     return m_window->maximumSize();
+}
+
+QPoint Window_qt::fromNativePixels(QPoint nativePos) const
+{
+    return QHighDpi::fromNativePixels(nativePos, m_window.data());
 }

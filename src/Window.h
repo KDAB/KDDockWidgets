@@ -91,6 +91,7 @@ public:
     /// @brief Returns the Window's minimum size
     virtual QSize minSize() const = 0;
     virtual QSize maxSize() const = 0;
+    virtual QPoint fromNativePixels(QPoint) const = 0;
 
     int minWidth() const;
     int minHeight() const;

@@ -30,7 +30,7 @@
 #include <QWindow>
 #include <QScopedValueRollback>
 
-#if defined(Q_OS_WIN_TODO)
+#if defined(Q_OS_WIN)
 #include <QtGui/private/qhighdpiscaling_p.h>
 #include <windowsx.h>
 #include <windows.h>
@@ -279,10 +279,11 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     return true;
 }
 
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
 
 /// Handler to enable Aero-snap
-bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *fw, const QByteArray &eventType,
+bool WidgetResizeHandler::handleWindowsNativeEvent(Controllers::FloatingWindow *fw,
+                                                   const QByteArray &eventType,
                                                    void *message, Qt5Qt6Compat::qintptr *result)
 {
     if (eventType != "windows_generic_MSG")
@@ -297,13 +298,13 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *fw, const QBy
         }
 
         const QRect htCaptionRect = fw->dragRect();
-        const bool ret = handleWindowsNativeEvent(fw->window(), msg, result, htCaptionRect);
+        const bool ret = handleWindowsNativeEvent(fw->view()->window(), msg, result, htCaptionRect);
 
         fw->setLastHitTest(*result);
         return ret;
     } else if (msg->message == WM_NCLBUTTONDBLCLK) {
         if ((Config::self().flags() & Config::Flag_DoubleClickMaximizes)) {
-            return handleWindowsNativeEvent(fw->window(), msg, result, {});
+            return handleWindowsNativeEvent(fw->view()->window(), msg, result, {});
         } else {
             // Let the title bar handle it. It will re-dock the window.
             if (Controllers::TitleBar *titleBar = fw->titleBar()) {
@@ -316,10 +317,10 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *fw, const QBy
         }
     }
 
-    return handleWindowsNativeEvent(fw->window(), msg, result, {});
+    return handleWindowsNativeEvent(fw->view()->window(), msg, result, {});
 }
 
-bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
+bool WidgetResizeHandler::handleWindowsNativeEvent(Window::Ptr w, MSG *msg,
                                                    Qt5Qt6Compat::qintptr *result,
                                                    const NativeFeatures &features)
 {
@@ -328,14 +329,14 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
         return true;
     } else if (msg->message == WM_NCHITTEST && (features.hasResize() || features.hasDrag())) {
         const int borderWidth = 8;
-        const bool hasFixedWidth = w->minimumWidth() == w->maximumWidth();
-        const bool hasFixedHeight = w->minimumHeight() == w->maximumHeight();
+        const bool hasFixedWidth = w->minWidth() == w->maxWidth();
+        const bool hasFixedHeight = w->minHeight() == w->maxHeight();
 
         *result = 0;
         const int xPos = GET_X_LPARAM(msg->lParam);
         const int yPos = GET_Y_LPARAM(msg->lParam);
         RECT rect;
-        GetWindowRect(reinterpret_cast<HWND>(w->winId()), &rect);
+        GetWindowRect(reinterpret_cast<HWND>(w->handle()), &rect);
 
         if (xPos >= rect.left && xPos <= rect.left + borderWidth && yPos <= rect.bottom && yPos >= rect.bottom - borderWidth && features.hasResize()) {
             *result = HTBOTTOMLEFT;
@@ -354,7 +355,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
         } else if (!hasFixedWidth && xPos <= rect.right && xPos >= rect.right - borderWidth && features.hasResize()) {
             *result = HTRIGHT;
         } else if (features.hasDrag()) {
-            const QPoint globalPosQt = QHighDpi::fromNativePixels(QPoint(xPos, yPos), w);
+            const QPoint globalPosQt = w->fromNativePixels(QPoint(xPos, yPos));
             // htCaptionRect is the rect on which we allow for Windows to do a native drag
             const QRect htCaptionRect = features.htCaptionRect;
             if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
@@ -394,8 +395,8 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
         mmi->ptMaxPosition.x = availableGeometry.x();
         mmi->ptMaxPosition.y = availableGeometry.y();
 
-        mmi->ptMinTrackSize.x = int(w->minimumWidth() * dpr);
-        mmi->ptMinTrackSize.y = int(w->minimumHeight() * dpr);
+        mmi->ptMinTrackSize.x = int(w->minWidth() * dpr);
+        mmi->ptMinTrackSize.y = int(w->minHeight() * dpr);
 
         *result = 0;
         return true;
@@ -544,10 +545,10 @@ void WidgetResizeHandler::setupWindow(QWindow *window)
     }
 #else
     Q_UNUSED(window);
-#endif // Q_OS_WIN_TODO
+#endif // Q_OS_WIN
 }
 
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
 bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
 {
     switch (nativeEvent) {
@@ -595,7 +596,7 @@ CustomFrameHelper::CustomFrameHelper(ShouldUseCustomFrame func, QObject *parent)
     , QAbstractNativeEventFilter()
     , m_shouldUseCustomFrameFunc(func)
 {
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
     qApp->installNativeEventFilter(this);
 #endif
 }

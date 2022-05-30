@@ -16,6 +16,7 @@
 #include "kddockwidgets/Qt5Qt6Compat_p.h"
 #include "kddockwidgets/docks_export.h"
 #include "controllers/FloatingWindow.h"
+#include "Window.h"
 
 #include <QPoint>
 #include <QPointer>
@@ -27,6 +28,10 @@ class QMouseEvent;
 QT_END_NAMESPACE
 
 namespace KDDockWidgets {
+
+namespace Controllers {
+    class FloatingWindow;
+}
 
 class DOCKS_EXPORT WidgetResizeHandler : public QObject
 {
@@ -127,10 +132,10 @@ public:
     static int widgetResizeHandlerMargin();
 
     static void setupWindow(QWindow *window);
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
     static bool isInterestingNativeEvent(unsigned int);
-    static bool handleWindowsNativeEvent(QWindow *w, MSG *msg, Qt5Qt6Compat::qintptr *result, const NativeFeatures &);
-    static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType,
+    static bool handleWindowsNativeEvent(Window::Ptr, MSG *msg, Qt5Qt6Compat::qintptr *result, const NativeFeatures &);
+    static bool handleWindowsNativeEvent(Controllers::FloatingWindow *, const QByteArray &eventType,
                                          void *message, Qt5Qt6Compat::qintptr *result);
 #endif
     static bool s_disableAllHandlers;
@@ -179,7 +184,7 @@ public:
     QPointer<FloatingWindow> m_floatingWindow;
 };
 
-#endif // Q_OS_WIN_TODO
+#endif // Q_OS_WIN
 
 class DOCKS_EXPORT CustomFrameHelper
     : public QObject,
