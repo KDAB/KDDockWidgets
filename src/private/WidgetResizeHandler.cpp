@@ -306,7 +306,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *fw, const QBy
             return handleWindowsNativeEvent(fw->window(), msg, result, {});
         } else {
             // Let the title bar handle it. It will re-dock the window.
-            if (TitleBar *titleBar = fw->titleBar()) {
+            if (Controllers::TitleBar *titleBar = fw->titleBar()) {
                 if (titleBar->isVisible()) { // can't be invisible afaik
                     titleBar->onDoubleClicked();
                 }
@@ -358,7 +358,7 @@ bool WidgetResizeHandler::handleWindowsNativeEvent(QWindow *w, MSG *msg,
             // htCaptionRect is the rect on which we allow for Windows to do a native drag
             const QRect htCaptionRect = features.htCaptionRect;
             if (globalPosQt.y() >= htCaptionRect.top() && globalPosQt.y() <= htCaptionRect.bottom() && globalPosQt.x() >= htCaptionRect.left() && globalPosQt.x() <= htCaptionRect.right()) {
-                if (!KDDockWidgets::inDisallowDragWidget(globalPosQt)) { // Just makes sure the mouse isn't over the close button, we don't allow drag in that case.
+                if (!Platform::instance()->inDisallowedDragView(globalPosQt)) { // Just makes sure the mouse isn't over the close button, we don't allow drag in that case.
                     *result = HTCAPTION;
                 }
             }
@@ -636,7 +636,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
         return false;
     }
 
-    QWindow *window = DockRegistry::self()->windowForHandle(WId(msg->hwnd));
+    Window::Ptr window = DockRegistry::self()->windowForHandle(WId(msg->hwnd));
     if (!window)
         return false;
 
