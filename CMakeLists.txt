@@ -309,7 +309,7 @@ if(${PROJECT_NAME}_PYTHON_BINDINGS)
 endif()
 
 if(${PROJECT_NAME}_EXAMPLES)
-  if(KDDW_FRONTEND_QTQUICK AND FALSE)
+  if(KDDW_FRONTEND_QTQUICK)
     add_subdirectory(examples/qtquick)
   endif()
   if(KDDW_FRONTEND_QTWIDGETS)
