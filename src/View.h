@@ -166,6 +166,7 @@ public:
     virtual bool isMinimized() const = 0;
     virtual bool isMaximized() const = 0;
 
+    virtual void createPlatformWindow();
     virtual void setMaximumSize(QSize sz) = 0;
     virtual bool isActiveWindow() const = 0;
     virtual void setFixedWidth(int) = 0;

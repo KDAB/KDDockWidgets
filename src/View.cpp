@@ -384,3 +384,9 @@ QRect View::globalGeometry() const
         geo.moveTopLeft(mapToGlobal(QPoint(0, 0)));
     return geo;
 }
+
+void View::createPlatformWindow()
+{
+    // Only qtwidgets need this
+    qFatal("Shouldn't be called on this platform");
+}

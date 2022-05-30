@@ -113,17 +113,15 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     if (!suggestedGeometry.isNull())
         view()->setGeometry(suggestedGeometry);
 
+#ifdef Q_OS_WIN
+    // For QtQuick we do it a bit later, once we have the QQuickWindow
     if (Platform::instance()->isQtWidgets()) {
-        // For QtQuick we do it a bit later, once we have the QQuickWindow
-#ifdef Q_OS_WIN_TODO
-        create();
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-        m_nchittestFilter = new NCHITTESTEventFilter(this);
+        view()->createPlatformWindow(); // QWidget::create
+        m_nchittestFilter = new NCHITTESTEventFilter(view());
         qApp->installNativeEventFilter(m_nchittestFilter);
-#endif
-        WidgetResizeHandler::setupWindow(window());
-#endif
+        WidgetResizeHandler::setupWindow(view()->window());
     }
+#endif
 
     DockRegistry::self()->registerFloatingWindow(this);
 

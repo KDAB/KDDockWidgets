@@ -173,6 +173,11 @@ public:
         Base::show();
     }
 
+    void createPlatformWindow()
+    {
+        QWidget::create();
+    }
+
     void hide() override
     {
         Base::hide();
