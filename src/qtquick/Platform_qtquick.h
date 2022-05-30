@@ -40,6 +40,7 @@ public:
     void setQmlEngine(QQmlEngine *);
     QQmlEngine *qmlEngine() const;
     View *createView(View *parent = nullptr) const override;
+    bool usesFallbackMouseGrabber() const override;
     static Platform_qtquick *instance();
 
 #ifdef DOCKS_DEVELOPER_MODE

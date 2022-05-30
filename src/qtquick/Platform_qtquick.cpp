@@ -163,3 +163,11 @@ Platform_qtquick *Platform_qtquick::instance()
         return static_cast<Platform_qtquick *>(p);
     return nullptr;
 }
+
+bool Platform_qtquick::usesFallbackMouseGrabber() const
+{
+    // For QtQuick we use the global event filter as mouse delivery is flaky
+    // For example, the same QQuickItem that receives the press isn't receiving the mouse moves
+    // when the top-level window moves.
+    return true;
+}

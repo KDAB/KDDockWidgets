@@ -106,19 +106,6 @@ inline bool isNormalWindowState(Qt::WindowStates states)
     return !(states & Qt::WindowMaximized) && !(states & Qt::WindowFullScreen);
 }
 
-inline bool usesFallbackMouseGrabber()
-{
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    // Will use QWidget::grabMouse()
-    return false;
-#else
-    // For QtQuick we use the global event filter as mouse delivery is flaky
-    // For example, the same QQuickItem that receives the press isn't receiving the mouse moves
-    // when the top-level window moves.
-    return true;
-#endif
-}
-
 inline bool windowManagerHasTranslucency()
 {
     if (qEnvironmentVariableIsSet("KDDW_NO_TRANSLUCENCY") || (Config::self().internalFlags() & Config::InternalFlag_DisableTranslucency))

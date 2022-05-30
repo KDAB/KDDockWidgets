@@ -164,6 +164,9 @@ public:
     /// and see what's goign on
     virtual void tests_wait(int ms) = 0;
 
+    /// @brief Return whether we use the global event filter based mouse grabber
+    virtual bool usesFallbackMouseGrabber() const = 0;
+
     virtual void installMessageHandler() = 0;
     virtual void uninstallMessageHandler() = 0;
 

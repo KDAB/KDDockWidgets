@@ -618,7 +618,7 @@ DragController::DragController(QObject *parent)
     m_stateDraggingMDI->addTransition(this, &DragController::dragCanceled, m_stateNone);
     m_stateDraggingMDI->addTransition(this, &DragController::mdiPopOut, stateDragging);
 
-    if (usesFallbackMouseGrabber())
+    if (Platform::instance()->usesFallbackMouseGrabber())
         enableFallbackMouseGrabber();
 
     setCurrentState(m_stateNone);
