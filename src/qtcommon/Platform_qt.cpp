@@ -244,18 +244,27 @@ void Platform_qt::tests_sendEvent(Window::Ptr window, QEvent *ev) const
     qApp->sendEvent(static_cast<Window_qt *>(window.get())->qtWindow(), ev);
 }
 
+void Platform_qt::installMessageHandler()
+{
+    Tests::s_original = qInstallMessageHandler(Tests::fatalWarningsMessageHandler);
+}
+
+void Platform_qt::uninstallMessageHandler()
+{
+    if (!Tests::s_original)
+        qWarning() << Q_FUNC_INFO << "No message handler was installed or the fatalWarningsMessageHandler was already uninstalled!";
+    qInstallMessageHandler(Tests::s_original);
+    Tests::s_original = nullptr;
+}
+
 void Platform_qt::tests_initPlatform_impl()
 {
     qApp->setOrganizationName(QStringLiteral("KDAB"));
     qApp->setApplicationName(QStringLiteral("dockwidgets-unit-tests"));
-
-    Tests::s_original = qInstallMessageHandler(Tests::fatalWarningsMessageHandler);
 }
 
 void Platform_qt::tests_deinitPlatform_impl()
 {
-    qInstallMessageHandler(Tests::s_original);
-    Tests::s_original = nullptr;
     delete qApp;
 }
 

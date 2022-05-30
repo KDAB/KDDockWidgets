@@ -26,9 +26,8 @@ class TestDocks : public QObject
 {
     Q_OBJECT
 public Q_SLOTS:
-    void initTestCase()
-    {
-    }
+    void initTestCase();
+    void cleanupTestCase();
 
 private Q_SLOTS:
     void tst_simple1();
