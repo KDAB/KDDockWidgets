@@ -13,8 +13,8 @@
 #include "controllers/DropArea.h"
 #include "controllers/DropIndicatorOverlay.h"
 #include "controllers/indicators/ClassicIndicators.h"
-// #include "DockWidgetInstantiator.h"
-// #include "MainWindowInstantiator.h"
+#include "DockWidgetInstantiator.h"
+#include "MainWindowInstantiator.h"
 #include "LayoutSaverInstantiator.h"
 
 #include "private/multisplitter/Item_p.h"
@@ -25,8 +25,8 @@
 void KDDockWidgets::registerQmlTypes()
 {
     // qmlRegisterType<DropArea>("com.kdab.dockwidgets", 1, 0, "DropArea");
-    // qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 1, 0, "MainWindowLayout");
-    // qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 1, 0, "DockWidget");
+    qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 1, 0, "MainWindowLayout");
+    qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 1, 0, "DockWidget");
     qmlRegisterType<LayoutSaverInstantiator>("com.kdab.dockwidgets", 1, 0, "LayoutSaver");
 
     // qmlRegisterUncreatableType<TitleBar>("com.kdab.dockwidgets", 1, 0, "TitleBar", QStringLiteral("Enum access only"));
