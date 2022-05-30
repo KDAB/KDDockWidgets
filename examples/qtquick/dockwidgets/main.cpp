@@ -22,7 +22,7 @@
 
 int main(int argc, char *argv[])
 {
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     QGuiApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     parser.addOption(nativeTitleBar);
     parser.addOption(noDropIndicators);
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN_TODO)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
     parser.addOption(noAeroSnap);
 #endif
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     else if (parser.isSet(noDropIndicators))
         KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN_TODO)
     if (parser.isSet(noAeroSnap))
         internalFlags |= KDDockWidgets::Config::InternalFlag_NoAeroSnap;
 #endif

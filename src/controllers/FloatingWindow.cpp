@@ -108,7 +108,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
 
     if (Platform::instance()->isQtWidgets()) {
         // For QtQuick we do it a bit later, once we have the QQuickWindow
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
         create();
 #ifdef KDDOCKWIDGETS_QTWIDGETS
         m_nchittestFilter = new NCHITTESTEventFilter(this);
@@ -206,7 +206,7 @@ FloatingWindow::~FloatingWindow()
     delete m_titleBar;
 }
 
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN_TODO) && defined(KDDOCKWIDGETS_QTWIDGETS)
 bool FloatingWindow::nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result)
 {
     if (m_inDtor || m_deleteScheduled)
@@ -335,7 +335,7 @@ Layout *FloatingWindow::layout() const
 
 bool FloatingWindow::isInDragArea(QPoint globalPoint) const
 {
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     // A click near the border will still send a Qt::NonClientMousePressEvent. We shouldn't
     // interpret that as a drag, as it's for a native resize.
     // Keep track of how we handled the WM_NCHITTEST

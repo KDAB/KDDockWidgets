@@ -86,6 +86,7 @@ void MainWindow_qtquick::onMultiSplitterGeometryUpdated()
 QRect MainWindow_qtquick::centralAreaGeometry() const
 {
     qFatal("Not implemented");
+    return {};
 }
 
 void MainWindow_qtquick::setContentsMargins(int left, int top, int right, int bottom)

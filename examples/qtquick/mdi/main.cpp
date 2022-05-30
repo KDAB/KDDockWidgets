@@ -27,7 +27,7 @@
 
 int main(int argc, char *argv[])
 {
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     QGuiApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
     QGuiApplication app(argc, argv);

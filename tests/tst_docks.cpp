@@ -32,7 +32,7 @@
 
 #include <QAction>
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
 #include <windows.h>
 #endif
 
@@ -43,7 +43,7 @@ using namespace KDDockWidgets::Tests;
 
 static int osWindowMinWidth()
 {
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     return GetSystemMetrics(SM_CXMIN);
 #else
     return 140; // Some random value for our windows. It's only important on Windows
@@ -210,7 +210,7 @@ void TestDocks::tst_doesntHaveNativeTitleBar()
 
 #if defined(Q_OS_LINUX)
     QVERIFY(fw->view()->flags() & Qt::FramelessWindowHint);
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN_TODO)
     QVERIFY(!(fw->windowFlags() & Qt::FramelessWindowHint));
 #endif
 }
@@ -6283,7 +6283,7 @@ void TestDocks::tst_redockToMDIRestoresPosition()
 
 void TestDocks::tst_restoreWithNativeTitleBar()
 {
-#ifdef Q_OS_WIN // Other OS don't support this
+#ifdef Q_OS_WIN_TODO // Other OS don't support this
     EnsureTopLevelsDeleted e;
     KDDockWidgets::Config::self().setFlags(KDDockWidgets::Config::Flag_NativeTitleBar);
 

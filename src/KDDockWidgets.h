@@ -25,7 +25,7 @@
 #include <QObject>
 #include <QDebug>
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
 // Only on Windows, where this is popular. On linux the Qt::Tool windows need reparenting. Untested on macOS.
 #define KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
 #endif

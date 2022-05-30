@@ -30,7 +30,7 @@
 #include <QWindow>
 #include <QScopedValueRollback>
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN_TODO)
 #include <QtGui/private/qhighdpiscaling_p.h>
 #include <windowsx.h>
 #include <windows.h>
@@ -279,7 +279,7 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     return true;
 }
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
 
 /// Handler to enable Aero-snap
 bool WidgetResizeHandler::handleWindowsNativeEvent(FloatingWindow *fw, const QByteArray &eventType,
@@ -520,7 +520,7 @@ void WidgetResizeHandler::setupWindow(QWindow *window)
     // Does some minor setup on our QWindow.
     // Like adding the drop shadow on Windows and two other workarounds.
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN_TODO)
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
         const auto wid = HWND(window->winId());
         connect(window, &QWindow::screenChanged, window, [wid] {
@@ -544,10 +544,10 @@ void WidgetResizeHandler::setupWindow(QWindow *window)
     }
 #else
     Q_UNUSED(window);
-#endif // Q_OS_WIN
+#endif // Q_OS_WIN_TODO
 }
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
 bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
 {
     switch (nativeEvent) {
@@ -562,7 +562,7 @@ bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
 }
 #endif
 
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN_TODO) && defined(KDDOCKWIDGETS_QTWIDGETS)
 bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *message,
                                              Qt5Qt6Compat::qintptr *result)
 
@@ -595,7 +595,7 @@ CustomFrameHelper::CustomFrameHelper(ShouldUseCustomFrame func, QObject *parent)
     , QAbstractNativeEventFilter()
     , m_shouldUseCustomFrameFunc(func)
 {
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     qApp->installNativeEventFilter(this);
 #endif
 }
@@ -607,7 +607,7 @@ CustomFrameHelper::~CustomFrameHelper()
 
 void CustomFrameHelper::applyCustomFrame(QWindow *window)
 {
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     WidgetResizeHandler::setupWindow(window);
 #else
     Q_UNUSED(window);
@@ -623,7 +623,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
 
     QScopedValueRollback<bool> guard(m_recursionGuard, true);
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     if (m_inDtor || !KDDockWidgets::usesAeroSnapWithCustomDecos())
         return false;
 

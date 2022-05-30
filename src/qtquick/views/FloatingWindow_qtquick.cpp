@@ -94,7 +94,7 @@ public:
         m_view->View::setSize(size());
     }
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     bool nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override
     {
         // To enable aero snap we need to tell Windows where's our custom title bar

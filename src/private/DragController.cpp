@@ -34,7 +34,7 @@
 #include <QDrag>
 #include <QScopedValueRollback>
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN_TODO)
 #include <windows.h>
 #endif
 
@@ -261,7 +261,7 @@ bool StatePreDrag::handleMouseDoubleClick()
 StateDragging::StateDragging(DragController *parent)
     : StateBase(parent)
 {
-#if defined(Q_OS_WIN) && !defined(DOCKS_DEVELOPER_MODE)
+#if defined(Q_OS_WIN_TODO) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.setInterval(100);
     QObject::connect(&m_maybeCancelDrag, &QTimer::timeout, this, [this] {
         // Workaround bug #166 , where Qt doesn't agree with Window's mouse button state.
@@ -292,7 +292,7 @@ void StateDragging::onEntry()
     const bool needsUndocking = !q->m_draggable->isWindow();
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (q->m_windowBeingDragged) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(Q_OS_WIN)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(Q_OS_WIN_TODO)
         if (!q->m_nonClientDrag && KDDockWidgets::usesNativeDraggingAndResizing()) {
             // Started as a client move, as the dock widget was docked,
             // but now that we're dragging it as a floating window, switch to native drag, so we can still get aero-snap
@@ -787,7 +787,7 @@ StateBase *DragController::activeState() const
     return static_cast<StateBase *>(currentState());
 }
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN_TODO)
 static QWidget *qtTopLevelForHWND(HWND hwnd)
 {
     const QList<QWindow *> windows = qApp->topLevelWindows();
@@ -859,7 +859,7 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
     QPoint globalPos = QCursor::pos();
 
     if (qApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN_TODO)
         POINT globalNativePos;
         if (!GetCursorPos(&globalNativePos))
             return nullptr;
@@ -901,7 +901,7 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
                 return nullptr;
             }
         }
-#endif // Q_OS_WIN
+#endif // Q_OS_WIN_TODO
     } else if (linksToXLib() && isXCB()) {
         bool ok = false;
         const Window::List orderedWindows = KDDockWidgets::orderedWindows(ok);

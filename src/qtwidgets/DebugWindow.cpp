@@ -39,7 +39,7 @@
 #include <QAbstractNativeEventFilter>
 #include <QTimer>
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
 #include <windows.h>
 #include <winuser.h>
 #endif
@@ -63,7 +63,7 @@ public:
     bool nativeEventFilter(const QByteArray &eventType, void *message, long *) override
 #endif
     {
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
         if (eventType != "windows_generic_MSG")
             return false;
         auto msg = static_cast<MSG *>(message);
@@ -257,7 +257,7 @@ DebugWindow::DebugWindow(QWidget *parent)
         });
     });
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     button = new QPushButton(this);
     button->setText(QStringLiteral("Dump native windows"));
     layout->addWidget(button);
@@ -267,7 +267,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     resize(800, 800);
 }
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
 void DebugWindow::dumpWindow(QWidget *w)
 {
     if (w->window()) {

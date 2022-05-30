@@ -127,7 +127,7 @@ public:
     static int widgetResizeHandlerMargin();
 
     static void setupWindow(QWindow *window);
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     static bool isInterestingNativeEvent(unsigned int);
     static bool handleWindowsNativeEvent(QWindow *w, MSG *msg, Qt5Qt6Compat::qintptr *result, const NativeFeatures &);
     static bool handleWindowsNativeEvent(FloatingWindow *w, const QByteArray &eventType,
@@ -154,7 +154,7 @@ private:
     CursorPositions mAllowedResizeSides = CursorPosition_All;
 };
 
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN_TODO) && defined(KDDOCKWIDGETS_QTWIDGETS)
 
 /**
  * @brief Helper to rediriect WM_NCHITTEST from child widgets to the top-level widget
@@ -179,7 +179,7 @@ public:
     QPointer<FloatingWindow> m_floatingWindow;
 };
 
-#endif // Q_OS_WIN
+#endif // Q_OS_WIN_TODO
 
 class DOCKS_EXPORT CustomFrameHelper
     : public QObject,

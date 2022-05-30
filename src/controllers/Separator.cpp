@@ -235,7 +235,7 @@ void Separator::onMouseMove(QPoint pos)
         return;
     }
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     // Try harder, Qt can be wrong, if mixed with MFC
     const bool mouseButtonIsReallyDown = (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
     if (!mouseButtonIsReallyDown) {

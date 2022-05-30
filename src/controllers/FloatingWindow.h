@@ -58,7 +58,7 @@ public:
 
     static void ensureRectIsOnScreen(QRect &geometry);
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     void setLastHitTest(int hitTest)
     {
         m_lastHitTest = hitTest;
@@ -222,7 +222,7 @@ Q_SIGNALS:
     void windowStateChanged(QWindowStateChangeEvent *);
 
 protected:
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN_TODO) && defined(KDDOCKWIDGETS_QTWIDGETS)
     bool nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override;
 #endif
 
@@ -242,7 +242,7 @@ private:
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
     QAbstractNativeEventFilter *m_nchittestFilter = nullptr;
     Qt::WindowState windowStateOverride() const;
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN_TODO
     int m_lastHitTest = 0;
 #endif
 };
