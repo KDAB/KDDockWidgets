@@ -461,8 +461,8 @@ public:
     void onResize(QSize newSize);
 
 Q_SIGNALS:
-    ///@brief signal emitted when the parent changed
-    void parentChanged();
+    ///@brief signal emitted when the parent of the view changed
+    void parentViewChanged();
 
     ///@brief signal emitted when the DockWidget is shown. As in QEvent::Show.
     void shown();

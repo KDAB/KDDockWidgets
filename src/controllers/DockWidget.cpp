@@ -817,7 +817,7 @@ void DockWidget::Private::show()
 
 void DockWidget::onParentChanged()
 {
-    Q_EMIT parentChanged();
+    Q_EMIT parentViewChanged();
 
     d->updateToggleAction();
     d->updateFloatAction();
