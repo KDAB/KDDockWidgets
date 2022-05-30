@@ -229,8 +229,9 @@ QSize ViewWrapper_qtquick::maximumSize() const
     if (auto view = unwrap()) {
         return view->maximumSize();
     } else {
-        qFatal("not implemented");
-        return {};
+        const QSize max = m_item->property("kddockwidgets_max_size").toSize();
+        return max.isEmpty() ? Layouting::Item::hardcodedMaximumSize
+                             : max.boundedTo(Layouting::Item::hardcodedMaximumSize);
     }
 }
 
@@ -399,8 +400,8 @@ QSize ViewWrapper_qtquick::minSize() const
         // Only real views have min size
         return view->minSize();
     } else {
-        qFatal("not implemented");
-        return {};
+        const QSize min = m_item->property("kddockwidgets_min_size").toSize();
+        return min.expandedTo(Layouting::Item::hardcodedMinimumSize);
     }
 }
 
