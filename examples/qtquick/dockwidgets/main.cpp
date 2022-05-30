@@ -11,9 +11,10 @@
 
 
 #include <kddockwidgets/Config.h>
-#include <kddockwidgets/DockWidgetQuick.h>
 #include <kddockwidgets/private/DockRegistry_p.h>
 #include <kddockwidgets/ViewFactory.h>
+#include "qtquick/views/DockWidget_qtquick.h"
+#include "qtquick/Platform_qtquick.h"
 
 #include <QQmlApplicationEngine>
 #include <QGuiApplication>
@@ -66,7 +67,7 @@ int main(int argc, char *argv[])
     if (parser.isSet(nativeTitleBar))
         flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
     else if (parser.isSet(noDropIndicators))
-        KDDockWidgets::DefaultWidgetFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
+        KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
 #if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
@@ -82,30 +83,30 @@ int main(int argc, char *argv[])
 
     // Create your engine which loads main.qml. A simple QQuickView would work too.
     QQmlApplicationEngine appEngine;
-    KDDockWidgets::Config::self().setQmlEngine(&appEngine);
+    KDDockWidgets::Platform_qtquick::instance()->setQmlEngine(&appEngine);
     appEngine.load((QUrl("qrc:/main.qml")));
 
     // Below we illustrate usage of our C++ API. Alternative you can use declarative API.
     // See main.qml for examples of dockwidgets created directly in QML
 
-    auto dw1 = new KDDockWidgets::DockWidgetQuick("Dock #1");
+    auto dw1 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #1");
 
     dw1->setWidget(QStringLiteral("qrc:/Guest1.qml"));
     dw1->resize(QSize(800, 800));
     dw1->show();
 
-    auto dw2 = new KDDockWidgets::DockWidgetQuick("Dock #2");
+    auto dw2 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #2");
     dw2->setWidget(QStringLiteral("qrc:/Guest2.qml"));
     dw2->resize(QSize(800, 800));
     dw2->show();
 
-    auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #3");
+    auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
     dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
 
-    dw1->addDockWidgetToContainingWindow(dw3, KDDockWidgets::Location_OnRight);
+    dw1->dockWidget()->addDockWidgetToContainingWindow(dw3->dockWidget(), KDDockWidgets::Location_OnRight);
 
-    KDDockWidgets::MainWindowBase *mainWindow = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst();
-    mainWindow->addDockWidget(dw2, KDDockWidgets::Location_OnTop);
+    auto mainWindow = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst();
+    mainWindow->addDockWidget(dw2->dockWidget(), KDDockWidgets::Location_OnTop);
 
     return app.exec();
 }

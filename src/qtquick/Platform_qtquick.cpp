@@ -154,3 +154,12 @@ View *Platform_qtquick::createView(View *parent) const
 {
     return new Views::View_qtquick(nullptr, Type::None, Views::asQQuickItem(parent));
 }
+
+/** static */
+Platform_qtquick *Platform_qtquick::instance()
+{
+    auto p = Platform::instance();
+    if (p->isQtQuick())
+        return static_cast<Platform_qtquick *>(p);
+    return nullptr;
+}

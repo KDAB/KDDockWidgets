@@ -8,8 +8,8 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 
-# add_subdirectory(dockwidgets)
-# set_compiler_flags(kddockwidgets_example_quick)
+add_subdirectory(dockwidgets)
+set_compiler_flags(kddockwidgets_example_quick)
 
 # add_subdirectory(mdi)
 # set_compiler_flags(kddockwidgets_example_mdi_quick)
