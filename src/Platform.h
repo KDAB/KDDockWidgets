@@ -164,6 +164,9 @@ public:
     /// and see what's goign on
     virtual void tests_wait(int ms) = 0;
 
+    virtual void installMessageHandler() = 0;
+    virtual void uninstallMessageHandler() = 0;
+
     /// @brief Creates a main window. This is not API that the user will use, but used
     /// internally by some tools that need a main window
     virtual Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,

@@ -20,7 +20,6 @@
 #include "Platform.h"
 #include "multisplitter/Item_p.h"
 #include "ViewFactory.h"
-#include "qtcommon/Platform_qt.h"
 
 #include "controllers/MDILayout.h"
 #include "controllers/DropArea.h"
@@ -103,12 +102,12 @@ static std::unique_ptr<MainWindow> createSimpleNestedMainWindow(Controllers::Doc
 
 void TestDocks::initTestCase()
 {
-    KDDockWidgets::Platform_qt::installMessageHandler();
+    KDDockWidgets::Platform::instance()->installMessageHandler();
 }
 
 void TestDocks::cleanupTestCase()
 {
-    KDDockWidgets::Platform_qt::uninstallMessageHandler();
+    KDDockWidgets::Platform::instance()->uninstallMessageHandler();
 }
 
 void TestDocks::tst_simple1()

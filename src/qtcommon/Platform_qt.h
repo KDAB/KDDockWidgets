@@ -49,8 +49,8 @@ public:
     void tests_deinitPlatform_impl() override;
     void tests_wait(int ms) override;
 
-    static void installMessageHandler();
-    static void uninstallMessageHandler();
+    void installMessageHandler() override;
+    void uninstallMessageHandler() override;
 #endif
 protected:
     int screenNumberForQWindow(QWindow *) const;

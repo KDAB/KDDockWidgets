@@ -34,6 +34,7 @@
 #include "qtwidgets/MDIArea.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 #include "qtwidgets/views/ViewWrapper_qtwidgets.h"
+#include "Platform.h"
 
 #include <QObject>
 #include <QPushButton>
@@ -103,6 +104,10 @@ inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 class TestQtWidgets : public QObject
 {
     Q_OBJECT
+
+public Q_SLOTS:
+    void initTestCase();
+    void cleanupTestCase();
 
 private Q_SLOTS:
     // TODO: Port these to QtQuick
@@ -1435,6 +1440,16 @@ void TestQtWidgets::tst_complex()
     // Cleanup
     qDeleteAll(docks);
     qDeleteAll(DockRegistry::self()->frames());
+}
+
+void TestQtWidgets::initTestCase()
+{
+    KDDockWidgets::Platform::instance()->installMessageHandler();
+}
+
+void TestQtWidgets::cleanupTestCase()
+{
+    KDDockWidgets::Platform::instance()->uninstallMessageHandler();
 }
 
 int main(int argc, char *argv[])
