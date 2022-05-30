@@ -28,7 +28,6 @@ using namespace KDDockWidgets;
 namespace KDDockWidgets::Tests {
 
 static QtMessageHandler s_original = nullptr;
-static QString s_expectedWarning;
 
 static bool shouldBlacklistWarning(const QString &msg, const QString &category)
 {
@@ -59,7 +58,7 @@ static void fatalWarningsMessageHandler(QtMsgType t, const QMessageLogContext &c
     s_original(t, context, msg);
 
     if (t == QtWarningMsg) {
-        if (!s_expectedWarning.isEmpty() && msg.contains(s_expectedWarning))
+        if (!Platform::s_expectedWarning.isEmpty() && msg.contains(Platform::s_expectedWarning))
             return;
 
         if (!Platform_qt::isGammaray() && !qEnvironmentVariableIsSet("NO_FATAL")) {
