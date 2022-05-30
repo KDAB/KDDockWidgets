@@ -87,6 +87,15 @@ public:
 
     /// Deletes the underlying window
     virtual void destroy() = 0;
+
+    /// @brief Returns the Window's minimum size
+    virtual QSize minSize() const = 0;
+    virtual QSize maxSize() const = 0;
+
+    int minWidth() const;
+    int minHeight() const;
+    int maxWidth() const;
+    int maxHeight() const;
 };
 
 inline bool operator==(Window::Ptr w1, Window::Ptr w2)

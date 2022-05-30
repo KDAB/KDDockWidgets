@@ -128,3 +128,13 @@ QVariant Window_qt::property(const char *name) const
 {
     return m_window->property(name);
 }
+
+QSize Window_qt::minSize() const
+{
+    return m_window->minimumSize();
+}
+
+QSize Window_qt::maxSize() const
+{
+    return m_window->maximumSize();
+}

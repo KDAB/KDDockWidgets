@@ -14,3 +14,23 @@
 using namespace KDDockWidgets;
 
 Window::~Window() = default;
+
+int Window::minWidth() const
+{
+    return minSize().width();
+}
+
+int Window::minHeight() const
+{
+    return minSize().height();
+}
+
+int Window::maxWidth() const
+{
+    return maxSize().width();
+}
+
+int Window::maxHeight() const
+{
+    return maxSize().height();
+}
