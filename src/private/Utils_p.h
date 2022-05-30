@@ -153,36 +153,6 @@ inline bool isNonClientMouseEvent(const QEvent *e)
     return false;
 }
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-
-#else
-
-inline QPoint mapToGlobal(QQuickItem *item, QPoint p)
-{
-    Q_ASSERT(item);
-    return item->mapToGlobal(p).toPoint();
-}
-
-
-inline QRect globalGeometry(QQuickItem *item)
-{
-    QRect geo(QPoint(0, 0), item->size().toSize());
-    geo.moveTopLeft(item->mapToGlobal(QPointF(0, 0)).toPoint());
-    return geo;
-}
-
-#endif
-
-
-/// @brief Returns the widget's geometry, but always in global space.
-inline QRect globalGeometry(View *w)
-{
-    QRect geo = w->geometry();
-    if (!w->isRootView())
-        geo.moveTopLeft(w->mapToGlobal(QPoint(0, 0)));
-    return geo;
-}
-
 /// @brief Returns whether we support the specified scalling factor
 /// This is a workaround against a bug in older Qt (QTBUG-86170).
 /// Mostly affects Linux. Unless you're using Qt::HighDpiScaleFactorRoundingPolicy::PassThrough, in which case it will affect other OSes too.

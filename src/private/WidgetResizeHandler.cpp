@@ -177,13 +177,13 @@ bool WidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
         return pos != CursorPosition_Undefined;
     }
 
-    const QRect oldGeometry = KDDockWidgets::globalGeometry(mTarget);
+    const QRect oldGeometry = mTarget->globalGeometry();
     QRect newGeometry = oldGeometry;
 
     QRect parentGeometry;
     if (!mTarget->isRootView()) {
         auto parent = mTarget->parentView();
-        parentGeometry = KDDockWidgets::globalGeometry(parent.get());
+        parentGeometry = parent->globalGeometry();
     }
 
     {

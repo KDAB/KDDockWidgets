@@ -200,6 +200,9 @@ public:
     virtual QString objectName() const = 0;
     virtual void render(QPainter *) = 0;
 
+    /// @brief Returns the views's geometry, but always in global space
+    QRect globalGeometry() const;
+
     QPoint pos() const;
     QSize size() const;
     QRect rect() const;

@@ -376,3 +376,11 @@ Controller *View::firstParentOfType(KDDockWidgets::Type type) const
 {
     return View::firstParentOfType(asQObject(), type);
 }
+
+QRect View::globalGeometry() const
+{
+    QRect geo = geometry();
+    if (!isRootView())
+        geo.moveTopLeft(mapToGlobal(QPoint(0, 0)));
+    return geo;
+}
