@@ -14,5 +14,5 @@ set_compiler_flags(kddockwidgets_example_quick)
 add_subdirectory(mdi)
 set_compiler_flags(kddockwidgets_example_mdi_quick)
 
-# add_subdirectory(customtitlebar)
-# set_compiler_flags(kddockwidgets_customtitlebar_quick)
+add_subdirectory(customtitlebar)
+set_compiler_flags(kddockwidgets_customtitlebar_quick)

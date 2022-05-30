@@ -11,15 +11,17 @@
 
 
 #include <kddockwidgets/Config.h>
-#include <kddockwidgets/DockWidgetQuick.h>
+#include "qtquick/views/DockWidget_qtquick.h"
+#include "qtquick/Platform_qtquick.h"
+#include "qtquick/ViewFactory_qtquick.h"
+
 #include <kddockwidgets/private/DockRegistry_p.h>
-#include <kddockwidgets/ViewFactory.h>
 
 #include <QQuickView>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-class CustomViewFactory : public KDDockWidgets::DefaultWidgetFactory
+class CustomViewFactory : public KDDockWidgets::ViewFactory_qtquick
 {
 public:
     ~CustomViewFactory() override;
@@ -46,26 +48,26 @@ int main(int argc, char *argv[])
     config.setViewFactory(new CustomViewFactory());
 
     QQmlApplicationEngine appEngine;
-    KDDockWidgets::Config::self().setQmlEngine(&appEngine);
+    KDDockWidgets::Platform_qtquick::instance()->setQmlEngine(&appEngine);
     appEngine.load((QUrl("qrc:/main.qml")));
 
-    auto dw1 = new KDDockWidgets::DockWidgetQuick("Dock #1");
+    auto dw1 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #1");
 
     dw1->setWidget(QStringLiteral("qrc:/Guest1.qml"));
     dw1->resize(QSize(800, 800));
     dw1->show();
 
-    auto dw2 = new KDDockWidgets::DockWidgetQuick("Dock #2");
+    auto dw2 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #2");
     dw2->setWidget(QStringLiteral("qrc:/Guest2.qml"));
     dw2->resize(QSize(800, 800));
     dw2->show();
 
-    auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #3");
+    auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
     dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
 
-    dw1->addDockWidgetToContainingWindow(dw3, KDDockWidgets::Location_OnRight);
+    dw1->dockWidget()->addDockWidgetToContainingWindow(dw3->dockWidget(), KDDockWidgets::Location_OnRight);
 
-    KDDockWidgets::MainWindowBase *mainWindow = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst();
-    mainWindow->addDockWidget(dw2, KDDockWidgets::Location_OnTop);
+    auto mainWindow = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst();
+    mainWindow->addDockWidget(dw2->dockWidget(), KDDockWidgets::Location_OnTop);
     return app.exec();
 }

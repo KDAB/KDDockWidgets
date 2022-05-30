@@ -72,10 +72,10 @@ public:
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
     View *createMDILayout(Controllers::MDILayout *, View *parent) const override;
 
-    Q_INVOKABLE QUrl titleBarFilename() const;
-    QUrl dockwidgetFilename() const;
-    QUrl frameFilename() const;
-    QUrl floatingWindowFilename() const;
+    Q_INVOKABLE virtual QUrl titleBarFilename() const;
+    virtual QUrl dockwidgetFilename() const;
+    virtual QUrl frameFilename() const;
+    virtual QUrl floatingWindowFilename() const;
 
     QIcon iconForButtonType(TitleBarButtonType type, qreal dpr) const override;
     View *createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent = nullptr) const override;
