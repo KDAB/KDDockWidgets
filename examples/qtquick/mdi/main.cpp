@@ -11,10 +11,12 @@
 
 
 #include <kddockwidgets/Config.h>
-#include <kddockwidgets/DockWidgetQuick.h>
+#include "qtquick/views/DockWidget_qtquick.h"
+#include "qtquick/views/MainWindowMDI_qtquick.h"
+#include "qtquick/Platform_qtquick.h"
 #include <kddockwidgets/private/DockRegistry_p.h>
 #include <kddockwidgets/ViewFactory.h>
-#include <kddockwidgets/MainWindowMDI.h>
+
 
 #include <QQmlApplicationEngine>
 #include <QGuiApplication>
@@ -34,25 +36,26 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
 
     QQmlApplicationEngine appEngine;
-    KDDockWidgets::Config::self().setQmlEngine(&appEngine);
+    KDDockWidgets::Platform_qtquick::instance()->setQmlEngine(&appEngine);
     appEngine.load((QUrl("qrc:/main.qml")));
 
-    auto dw1 = new KDDockWidgets::DockWidgetQuick("Dock #1");
+    auto dw1 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #1");
     dw1->setWidget(QStringLiteral("qrc:/Guest1.qml"));
     dw1->resize(QSize(400, 400));
 
-    auto dw2 = new KDDockWidgets::DockWidgetQuick("Dock #2");
+    auto dw2 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #2");
     dw2->setWidget(QStringLiteral("qrc:/Guest2.qml"));
     dw2->resize(QSize(400, 400));
 
-    auto dw3 = new KDDockWidgets::DockWidgetQuick("Dock #3");
+    auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
     dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
 
-    auto mainWindow = static_cast<KDDockWidgets::MainWindowMDI *>(KDDockWidgets::DockRegistry::self()->mainwindows().constFirst());
+    auto mainWindowView = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst()->view();
+    auto mainWindowMDI = static_cast<KDDockWidgets::Views::MainWindowMDI_qtquick *>(mainWindowView);
 
-    mainWindow->addDockWidget(dw1, QPoint(10, 10));
-    mainWindow->addDockWidget(dw2, QPoint(50, 50));
-    mainWindow->addDockWidget(dw3, QPoint(90, 90));
+    mainWindowMDI->addDockWidget(dw1->dockWidget(), QPoint(10, 10));
+    mainWindowMDI->addDockWidget(dw2->dockWidget(), QPoint(50, 50));
+    mainWindowMDI->addDockWidget(dw3->dockWidget(), QPoint(90, 90));
 
 
     return app.exec();
