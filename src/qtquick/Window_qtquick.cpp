@@ -26,7 +26,9 @@ std::shared_ptr<ViewWrapper> Window_qtquick::rootView() const
 {
     if (auto quickwindow = qobject_cast<QQuickWindow *>(m_window)) {
         auto contentItem = quickwindow->contentItem();
-        Q_ASSERT(contentItem->childItems().size() == 1);
+        const auto children = contentItem->childItems();
+        Q_ASSERT(!children.isEmpty());
+
         return Views::asQQuickWrapper(contentItem->childItems().first());
     } else {
         qWarning() << Q_FUNC_INFO << "Expected QQuickView";
