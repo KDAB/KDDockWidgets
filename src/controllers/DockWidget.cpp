@@ -817,11 +817,8 @@ void DockWidget::Private::show()
 
 void DockWidget::onParentChanged()
 {
-#ifdef KDDOCKWIDGETS_QTWIDGETS
     Q_EMIT parentChanged();
-#else
-    Q_EMIT QQuickItem::parentChanged(parentItem());
-#endif
+
     d->updateToggleAction();
     d->updateFloatAction();
 
