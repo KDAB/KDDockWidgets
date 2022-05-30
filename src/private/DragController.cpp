@@ -34,7 +34,7 @@
 #include <QDrag>
 #include <QScopedValueRollback>
 
-#if defined(Q_OS_WIN_TODO)
+#if defined(Q_OS_WIN)
 #include <windows.h>
 #endif
 

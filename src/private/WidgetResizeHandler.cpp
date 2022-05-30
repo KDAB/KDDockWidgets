@@ -563,12 +563,12 @@ bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
 }
 #endif
 
-#if defined(Q_OS_WIN_TODO) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *message,
                                              Qt5Qt6Compat::qintptr *result)
 
 {
-    if (eventType != "windows_generic_MSG" || !m_floatingWindow)
+    if (eventType != "windows_generic_MSG" || !m_guard)
         return false;
 
     auto msg = static_cast<MSG *>(message);
@@ -576,10 +576,11 @@ bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *
         return false;
     const WId wid = WId(msg->hwnd);
 
-    QWidget *child = QWidget::find(wid);
-    if (!child || child->window() != m_floatingWindow)
+    auto child = Platform::instance()->qobjectAsView(QWidget::find(wid));
+
+    if (!child || !m_floatingWindow->equals(child->rootView()))
         return false;
-    const bool isThisWindow = child == m_floatingWindow;
+    const bool isThisWindow = m_floatingWindow->equals(child);
 
     if (!isThisWindow) {
         *result = HTTRANSPARENT;

@@ -159,7 +159,7 @@ private:
     CursorPositions mAllowedResizeSides = CursorPosition_All;
 };
 
-#if defined(Q_OS_WIN_TODO) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
 
 /**
  * @brief Helper to rediriect WM_NCHITTEST from child widgets to the top-level widget
@@ -174,14 +174,16 @@ private:
 class NCHITTESTEventFilter : public QAbstractNativeEventFilter
 {
 public:
-    explicit NCHITTESTEventFilter(FloatingWindow *fw)
+    explicit NCHITTESTEventFilter(View *fw)
         : m_floatingWindow(fw)
+        , m_guard(fw->asQObject())
     {
     }
     bool nativeEventFilter(const QByteArray &eventType, void *message,
                            Qt5Qt6Compat::qintptr *result) override;
 
-    QPointer<FloatingWindow> m_floatingWindow;
+    View *m_floatingWindow;
+    QPointer<QObject> m_guard;
 };
 
 #endif // Q_OS_WIN
