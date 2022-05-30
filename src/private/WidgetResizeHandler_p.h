@@ -131,7 +131,7 @@ public:
 
     static int widgetResizeHandlerMargin();
 
-    static void setupWindow(QWindow *window);
+    static void setupWindow(Window::Ptr);
 #ifdef Q_OS_WIN
     static bool isInterestingNativeEvent(unsigned int);
     static bool handleWindowsNativeEvent(Window::Ptr, MSG *msg, Qt5Qt6Compat::qintptr *result, const NativeFeatures &);
@@ -194,13 +194,13 @@ class DOCKS_EXPORT CustomFrameHelper
 {
     Q_OBJECT
 public:
-    typedef WidgetResizeHandler::NativeFeatures (*ShouldUseCustomFrame)(QWindow *);
+    typedef WidgetResizeHandler::NativeFeatures (*ShouldUseCustomFrame)(Window::Ptr);
     explicit CustomFrameHelper(ShouldUseCustomFrame shouldUseCustomFrameFunc,
                                QObject *parent = nullptr);
     ~CustomFrameHelper() override;
 
 public Q_SLOTS:
-    void applyCustomFrame(QWindow *);
+    void applyCustomFrame(Window::Ptr);
 
 protected:
     bool nativeEventFilter(const QByteArray &eventType, void *message,

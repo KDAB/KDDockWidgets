@@ -24,6 +24,7 @@
 
 #include "private/WidgetResizeHandler_p.h"
 #include "qtquick/Platform_qtquick.h"
+#include "qtquick/Window_qtquick.h"
 #include "qtquick/views/MainWindow_qtquick.h"
 #include "qtquick/views/TitleBar_qtquick.h"
 #include "qtquick/views/DropArea_qtquick.h"
@@ -190,7 +191,7 @@ void FloatingWindow_qtquick::init()
     }
 
     setParent(m_quickWindow->contentItem());
-    WidgetResizeHandler::setupWindow(m_quickWindow);
+    WidgetResizeHandler::setupWindow(Window::Ptr(new Window_qtquick(m_quickWindow)));
     m_quickWindow->installEventFilter(this); // for window resizing
     m_controller->maybeCreateResizeHandler();
 

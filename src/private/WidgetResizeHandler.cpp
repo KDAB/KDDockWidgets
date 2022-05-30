@@ -516,15 +516,15 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
 }
 
 /** static */
-void WidgetResizeHandler::setupWindow(QWindow *window)
+void WidgetResizeHandler::setupWindow(Window::Ptr window)
 {
     // Does some minor setup on our QWindow.
     // Like adding the drop shadow on Windows and two other workarounds.
 
-#if defined(Q_OS_WIN_TODO)
+#if defined(Q_OS_WIN)
     if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
-        const auto wid = HWND(window->winId());
-        connect(window, &QWindow::screenChanged, window, [wid] {
+        const auto wid = HWND(window->handle());
+        window->screenChanged.connect([wid] {
             // Qt honors our frame hijacking usually... but when screen changes we must give it a
             // nudge. Otherwise what Qt thinks is the client area is not what Windows knows it is.
             // SetWindowPos() will trigger an NCCALCSIZE message, which Qt will intercept and take
@@ -607,9 +607,9 @@ CustomFrameHelper::~CustomFrameHelper()
     m_inDtor = true;
 }
 
-void CustomFrameHelper::applyCustomFrame(QWindow *window)
+void CustomFrameHelper::applyCustomFrame(Window::Ptr window)
 {
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
     WidgetResizeHandler::setupWindow(window);
 #else
     Q_UNUSED(window);
@@ -625,7 +625,7 @@ bool CustomFrameHelper::nativeEventFilter(const QByteArray &eventType, void *mes
 
     QScopedValueRollback<bool> guard(m_recursionGuard, true);
 
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
     if (m_inDtor || !KDDockWidgets::usesAeroSnapWithCustomDecos())
         return false;
 
