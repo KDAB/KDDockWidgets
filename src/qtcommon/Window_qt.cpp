@@ -145,3 +145,8 @@ QPoint Window_qt::fromNativePixels(QPoint nativePos) const
 {
     return QHighDpi::fromNativePixels(nativePos, m_window.data());
 }
+
+void Window_qt::startSystemMove()
+{
+    m_window->startSystemMove();
+}

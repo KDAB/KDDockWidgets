@@ -11,6 +11,8 @@
 
 #include "Window.h"
 
+#include <QDebug>
+
 using namespace KDDockWidgets;
 
 Window::~Window() = default;
@@ -34,3 +36,9 @@ int Window::maxHeight() const
 {
     return maxSize().height();
 }
+
+void Window::startSystemMove()
+{
+    qFatal("Not needed in this platform");
+}
+

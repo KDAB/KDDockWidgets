@@ -92,6 +92,7 @@ public:
     virtual QSize minSize() const = 0;
     virtual QSize maxSize() const = 0;
     virtual QPoint fromNativePixels(QPoint) const = 0;
+    virtual void startSystemMove();
 
     int minWidth() const;
     int minHeight() const;

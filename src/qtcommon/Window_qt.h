@@ -50,6 +50,7 @@ public:
     QSize minSize() const override;
     QSize maxSize() const override;
     QPoint fromNativePixels(QPoint) const override;
+    void startSystemMove() override;
 
 protected:
     QPointer<QWindow> m_window;

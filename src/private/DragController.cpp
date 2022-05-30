@@ -292,7 +292,7 @@ void StateDragging::onEntry()
     const bool needsUndocking = !q->m_draggable->isWindow();
     q->m_windowBeingDragged = q->m_draggable->makeWindow();
     if (q->m_windowBeingDragged) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(Q_OS_WIN_TODO)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) && defined(Q_OS_WIN)
         if (!q->m_nonClientDrag && KDDockWidgets::usesNativeDraggingAndResizing()) {
             // Started as a client move, as the dock widget was docked,
             // but now that we're dragging it as a floating window, switch to native drag, so we can still get aero-snap
@@ -301,7 +301,7 @@ void StateDragging::onEntry()
             q->m_windowBeingDragged.reset();
             q->m_windowBeingDragged = fw->makeWindow();
 
-            QWindow *window = fw->window();
+            Window::Ptr window = fw->view()->window();
 
             if (needsUndocking) {
                 // Position the window before the drag start, otherwise if you move mouse too fast there will be an offset
@@ -901,7 +901,7 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
                 return nullptr;
             }
         }
-#endif // Q_OS_WIN_TODO
+#endif // Q_OS_WIN
     } else if (linksToXLib() && isXCB()) {
         bool ok = false;
         const Window::List orderedWindows = KDDockWidgets::orderedWindows(ok);
