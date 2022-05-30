@@ -296,8 +296,7 @@ void IndicatorWindow_qtwidgets::resize(QSize size)
 
 bool IndicatorWindow_qtwidgets::isWindow() const
 {
-    /// TODOv2
-    return KDDockWidgets::isWindow(this);
+    return QWidget::isWindow();
 }
 
 Indicator::Indicator(ClassicIndicators *classicIndicators, IndicatorWindow_qtwidgets *parent, DropLocation location)

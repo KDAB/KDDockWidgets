@@ -213,7 +213,5 @@ void IndicatorWindow_qtquick::resize(QSize)
 
 bool IndicatorWindow_qtquick::isWindow() const
 {
-    /// TODOv2
-    // return KDDockWidgets::isWindow(this);
     return true;
 }

@@ -186,11 +186,6 @@ inline bool inDisallowDragWidget(QPoint globalPos)
 
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 
-inline bool isWindow(const QWidget *w)
-{
-    return w && w->isWindow();
-}
-
 #else
 
 inline QPoint mapToGlobal(QQuickItem *item, QPoint p)
