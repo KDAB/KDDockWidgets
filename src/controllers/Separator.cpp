@@ -19,6 +19,10 @@
 
 #include <QApplication> // TODOv2 remove, add Platform instead
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
 using namespace KDDockWidgets::Controllers;
 
 Separator *Separator::s_separatorBeingDragged = nullptr;
@@ -235,7 +239,7 @@ void Separator::onMouseMove(QPoint pos)
         return;
     }
 
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
     // Try harder, Qt can be wrong, if mixed with MFC
     const bool mouseButtonIsReallyDown = (GetKeyState(VK_LBUTTON) & 0x8000) || (GetKeyState(VK_RBUTTON) & 0x8000);
     if (!mouseButtonIsReallyDown) {

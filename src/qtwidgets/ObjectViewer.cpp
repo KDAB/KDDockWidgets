@@ -32,7 +32,7 @@
 #include <QShortcut>
 #include <QDir>
 
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
 #include <windows.h>
 #endif
 
@@ -68,7 +68,7 @@ ObjectViewer::ObjectViewer(QWidget *parent)
     action = m_menu.addAction(QStringLiteral("Toggle Visible"));
     connect(action, &QAction::triggered, this, &ObjectViewer::toggleVisible);
 
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
     action = m_menu.addAction(QStringLiteral("Send WM_NCHITTEST"));
     connect(action, &QAction::triggered, this, &ObjectViewer::sendHitTest);
 #endif
@@ -113,7 +113,7 @@ void ObjectViewer::toggleVisible()
         w->setVisible(!w->isVisible());
 }
 
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
 void ObjectViewer::sendHitTest()
 {
     if (auto w = selectedWidget()) {

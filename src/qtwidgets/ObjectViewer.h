@@ -56,7 +56,7 @@ private:
     QObject *objectForItem(QStandardItem *) const;
     QWidget *widgetForItem(QStandardItem *) const;
 
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
     void sendHitTest();
 #endif
 

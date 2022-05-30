@@ -152,7 +152,7 @@ int main(int argc, char **argv)
     parser.addOption(nativeTitleBar);
     parser.addOption(noDropIndicators);
 
-#if defined(Q_OS_WIN_TODO)
+#if defined(Q_OS_WIN)
     QCommandLineOption noAeroSnap("no-aero-snap", QCoreApplication::translate("main", "(internal) Disable AeroSnap"));
     parser.addOption(noAeroSnap);
 #endif
@@ -198,7 +198,7 @@ int main(int argc, char **argv)
     if (parser.isSet(noDropIndicators))
         KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
-#if defined(Q_OS_WIN_TODO)
+#if defined(Q_OS_WIN)
     if (parser.isSet(noAeroSnap))
         internalFlags |= KDDockWidgets::Config::InternalFlag_NoAeroSnap;
 #endif

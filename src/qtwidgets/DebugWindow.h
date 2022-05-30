@@ -37,7 +37,7 @@ public:
     explicit DebugWindow(QWidget *parent = nullptr);
 
 private:
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
     void dumpWindow(QWidget *);
     void dumpWindows();
 #endif
