@@ -40,8 +40,8 @@ public:
     /// of operations during reparenting
     struct UpdateActions
     {
-        explicit UpdateActions(Controllers::DockWidget *dw)
-            : dw(dw)
+        explicit UpdateActions(Controllers::DockWidget *dock)
+            : dw(dock)
         {
             dw->d->m_willUpdateActions = true;
         }

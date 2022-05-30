@@ -227,6 +227,7 @@ bool ViewWrapper_qtquick::isMinimized() const
 QSize ViewWrapper_qtquick::maximumSize() const
 {
     if (auto view = unwrap()) {
+        Q_UNUSED(view)
         return maximumSize();
     } else {
         qFatal("not implemented");

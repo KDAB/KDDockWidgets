@@ -154,6 +154,7 @@ QObject *DockWidget_qtquick::actualTitleBarView() const
 QQuickItem *DockWidget_qtquick::frameVisualItem() const
 {
     if (Controllers::Frame *frame = this->frame()) {
+        Q_UNUSED(frame)
         // return frame->visualItem(); TODOv2
     }
 
@@ -165,6 +166,8 @@ void DockWidget_qtquick::onGeometryUpdated()
 {
     if (auto frame = this->frame()) {
         if (auto frameView = frame->view()) {
+            Q_UNUSED(frame)
+            Q_UNUSED(frameView)
             // frameView->updateConstriants(); // TODOv2
             // frameView->updateGeometry();
         }
