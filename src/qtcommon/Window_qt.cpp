@@ -14,6 +14,7 @@
 
 #include <QWindow>
 #include <QScreen>
+#include <QVariant>
 
 using namespace KDDockWidgets;
 
@@ -121,4 +122,9 @@ QScreen *Window_qt::screen() const
 void Window_qt::destroy()
 {
     delete m_window;
+}
+
+QVariant Window_qt::property(const char *name) const
+{
+    return m_window->property(name);
 }

@@ -31,6 +31,7 @@ public:
 
     // TODOv2: Remoove
     void setProperty(const char *name, const QVariant &value) override;
+    QVariant property(const char *name) const override;
     bool equals(std::shared_ptr<Window> other) const override;
     void setFramePosition(QPoint targetPos) override;
     void setPosition(QPoint targetPos) override;
