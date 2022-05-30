@@ -45,6 +45,9 @@ protected:
     void closeEvent(QCloseEvent *) override;
     bool event(QEvent *ev) override;
     void init() override;
+#if defined(Q_OS_WIN)
+    bool nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override;
+#endif
 
 private:
     Controllers::FloatingWindow *const m_controller;

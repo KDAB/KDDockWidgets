@@ -222,10 +222,6 @@ Q_SIGNALS:
     void windowStateChanged(QWindowStateChangeEvent *);
 
 protected:
-#if defined(Q_OS_WIN_TODO) && defined(KDDOCKWIDGETS_QTWIDGETS)
-    bool nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result) override;
-#endif
-
     QPointer<DropArea> m_dropArea;
     Controllers::TitleBar *const m_titleBar;
 

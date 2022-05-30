@@ -19,6 +19,8 @@
 #include "controllers/DropArea.h"
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
+#include "private/DragController_p.h"
+#include "private/WidgetResizeHandler_p.h"
 
 #include "TitleBar_qtwidgets.h"
 
@@ -29,6 +31,9 @@
 #include <QWindow>
 #include <QWindowStateChangeEvent>
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
@@ -129,3 +134,26 @@ void FloatingWindow_qtwidgets::closeEvent(QCloseEvent *ev)
 {
     m_controller->onCloseEvent(ev);
 }
+
+#if defined(Q_OS_WIN)
+bool FloatingWindow_qtwidgets::nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result)
+{
+    auto fw = floatingWindow();
+    if (fw->beingDeleted())
+        return QWidget::nativeEvent(eventType, message, result);
+
+    if (KDDockWidgets::usesAeroSnapWithCustomDecos()) {
+        // To enable aero snap we need to tell Windows where's our custom title bar
+        if (WidgetResizeHandler::handleWindowsNativeEvent(fw, eventType, message, result))
+            return true;
+    } else if (KDDockWidgets::usesNativeTitleBar()) {
+        auto msg = static_cast<MSG *>(message);
+        if (msg->message == WM_SIZING) {
+            // Cancel any drag if we're resizing
+            Q_EMIT DragController::instance()->dragCanceled();
+        }
+    }
+
+    return QWidget::nativeEvent(eventType, message, result);
+}
+#endif
