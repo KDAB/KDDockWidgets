@@ -33,6 +33,13 @@
 #include <QTimer>
 #include <QWindow>
 
+#ifdef Q_OS_WIN
+#define NOMINMAX
+#include <Windows.h>
+#endif
+
+#include <limits>
+
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
@@ -335,7 +342,7 @@ Layout *FloatingWindow::layout() const
 
 bool FloatingWindow::isInDragArea(QPoint globalPoint) const
 {
-#ifdef Q_OS_WIN_TODO
+#ifdef Q_OS_WIN
     // A click near the border will still send a Qt::NonClientMousePressEvent. We shouldn't
     // interpret that as a drag, as it's for a native resize.
     // Keep track of how we handled the WM_NCHITTEST
