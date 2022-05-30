@@ -12,11 +12,11 @@
 #include "Platform.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
-# include "qtwidgets/Platform_qtwidgets.h"
+#include "qtwidgets/Platform_qtwidgets.h"
 #endif
 
 #ifdef KDDW_FRONTEND_QTQUICK
-# include "qtquick/Platform_qtquick.h"
+#include "qtquick/Platform_qtquick.h"
 #endif
 
 #include "Config.h"
@@ -119,6 +119,18 @@ void Platform::tests_deinitPlatform()
 std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 {
     std::vector<KDDockWidgets::FrontendType> types;
+
+#ifdef DOCKS_DEVELOPER_MODE
+    // During development it's useful to quickly run tests only on the frontend we're developing.
+    // The developer can set, for example, KDDW_TEST_FRONTEND=2 to run only the QtQuick tests
+    bool ok = false;
+    const int frontendId = qEnvironmentVariableIntValue("KDDW_TEST_FRONTEND", &ok);
+    if (ok) {
+        types.push_back(FrontendType(frontendId));
+        return types;
+    }
+
+#endif
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
     types.push_back(FrontendType::QtWidgets);

@@ -6359,14 +6359,21 @@ void TestDocks::tst_persistentCentralWidget()
 
 int main(int argc, char *argv[])
 {
-    KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
-    if (shouldSkipTests())
-        return 0;
+    for (FrontendType type : Platform::frontendTypes()) {
 
-    TestDocks test;
+        if (type != KDDockWidgets::FrontendType::QtWidgets)
+            continue; // QtQuick not passing yet
 
-    const int exitCode = QTest::qExec(&test, argc, argv);
-    KDDockWidgets::Platform::tests_deinitPlatform();
+        qDebug() << "\nTesting platform" << type << ":\n";
+        KDDockWidgets::Platform::tests_initPlatform(argc, argv, type);
+        if (shouldSkipTests())
+            return 0;
 
-    return exitCode;
+        TestDocks test;
+
+        const int exitCode = QTest::qExec(&test, argc, argv);
+        KDDockWidgets::Platform::tests_deinitPlatform();
+
+        return exitCode;
+    }
 }
