@@ -39,6 +39,7 @@ public:
 
     int startDragDistance() const override;
     View *createView(View *parent = nullptr) const override;
+    bool inDisallowedDragView(QPoint globalPos) const override;
     bool usesFallbackMouseGrabber() const override;
 
 #ifdef DOCKS_DEVELOPER_MODE

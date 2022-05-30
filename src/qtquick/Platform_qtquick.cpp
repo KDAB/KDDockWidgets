@@ -32,7 +32,28 @@
 
 using namespace KDDockWidgets;
 
-// QQmlEngine *Platform_qtquick::m_qmlEngine = nullptr;
+inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
+{
+    QRectF rect = item->boundingRect();
+    rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)));
+
+    // Assumes children are inside its parent. That's fine for KDDW's purposes.
+    if (!rect.contains(globalPos)) {
+        return nullptr;
+    }
+
+    const QList<QQuickItem *> children = item->childItems();
+
+    for (auto it = children.rbegin(), end = children.rend(); it != end; ++it) {
+        if (QQuickItem *receiver = mouseAreaForPos(*it, globalPos))
+            return receiver;
+    }
+
+    if (QLatin1String(item->metaObject()->className()) == QLatin1String("QQuickMouseArea"))
+        return item;
+
+    return nullptr;
+}
 
 Platform_qtquick::Platform_qtquick()
 {
@@ -170,4 +191,16 @@ bool Platform_qtquick::usesFallbackMouseGrabber() const
     // For example, the same QQuickItem that receives the press isn't receiving the mouse moves
     // when the top-level window moves.
     return true;
+}
+
+bool Platform_qtquick::inDisallowedDragView(QPoint globalPos) const
+{
+    auto window = qobject_cast<QQuickWindow *>(qApp->topLevelAt(globalPos));
+    if (!window)
+        return false;
+
+    QQuickItem *item = mouseAreaForPos(window->contentItem(), globalPos);
+    if (!item)
+        return false;
+    return item->objectName() != QLatin1String("draggableMouseArea");
 }

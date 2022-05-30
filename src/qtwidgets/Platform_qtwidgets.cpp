@@ -130,3 +130,14 @@ bool Platform_qtwidgets::usesFallbackMouseGrabber() const
     // For QtWidgets we just use QWidget::grabMouse()
     return false;
 }
+
+bool Platform_qtwidgets::inDisallowedDragView(QPoint globalPos) const
+{
+    QWidget *widget = qApp->widgetAt(globalPos);
+    if (!widget)
+        return false;
+
+    // User might have a line edit on the toolbar.
+    // TODO: Not so elegant fix, we should make the user's tabbar implement some virtual method...
+    return qobject_cast<QAbstractButton *>(widget) || qobject_cast<QLineEdit *>(widget);
+}

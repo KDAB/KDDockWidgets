@@ -167,6 +167,11 @@ public:
     /// @brief Return whether we use the global event filter based mouse grabber
     virtual bool usesFallbackMouseGrabber() const = 0;
 
+    /// @brief Returns whether the specified global position is on top of a view
+    /// that isn't draggable. This is needed since not the entire title bar is draggable.
+    /// For example, clicking on the close button shouldn't start a drag.
+    virtual bool inDisallowedDragView(QPoint globalPos) const = 0;
+
     virtual void installMessageHandler() = 0;
     virtual void uninstallMessageHandler() = 0;
 

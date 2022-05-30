@@ -153,37 +153,6 @@ inline bool isNonClientMouseEvent(const QEvent *e)
     return false;
 }
 
-/// @brief Returns the QWidget or QtQuickItem at the specified position
-/// Basically QApplication::widgetAt() but with support for QtQuick
-inline QWidget *mouseReceiverAt(QPoint globalPos)
-{
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    return qApp->widgetAt(globalPos);
-#else
-    auto window = qobject_cast<QQuickWindow *>(qApp->topLevelAt(globalPos));
-    if (!window)
-        return nullptr;
-
-    return mouseAreaForPos(window->contentItem(), globalPos);
-#endif
-}
-
-/// Not the entire TitleBar is draggable. For example, the close button won't allow to start a drag from there.
-/// Returns true if we're over such controls where we shouldn't drag.
-inline bool inDisallowDragWidget(QPoint globalPos)
-{
-    QWidget *widget = mouseReceiverAt(globalPos);
-    if (!widget)
-        return false;
-
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    // User might have a line edit on the toolbar. TODO: Not so elegant fix, we should make the user's tabbar implement some virtual method...
-    return qobject_cast<QAbstractButton *>(widget) || qobject_cast<QLineEdit *>(widget);
-#else
-    return widget->objectName() != QLatin1String("draggableMouseArea");
-#endif
-}
-
 #ifdef KDDOCKWIDGETS_QTWIDGETS
 
 #else
@@ -194,28 +163,6 @@ inline QPoint mapToGlobal(QQuickItem *item, QPoint p)
     return item->mapToGlobal(p).toPoint();
 }
 
-inline QQuickItem *mouseAreaForPos(QQuickItem *item, QPointF globalPos)
-{
-    QRectF rect = item->boundingRect();
-    rect.moveTopLeft(item->mapToGlobal(QPointF(0, 0)));
-
-    // Assumes children are inside its parent. That's fine for KDDW's purposes.
-    if (!rect.contains(globalPos)) {
-        return nullptr;
-    }
-
-    const QList<QQuickItem *> children = item->childItems();
-
-    for (auto it = children.rbegin(), end = children.rend(); it != end; ++it) {
-        if (QQuickItem *receiver = mouseAreaForPos(*it, globalPos))
-            return receiver;
-    }
-
-    if (QLatin1String(item->metaObject()->className()) == QLatin1String("QQuickMouseArea"))
-        return item;
-
-    return nullptr;
-}
 
 inline QRect globalGeometry(QQuickItem *item)
 {
