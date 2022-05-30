@@ -108,11 +108,14 @@ public:
      * There's no parent argument. The DockWidget is either parented to FloatingWindow or MainWindow
      * when visible, or stays without a parent when hidden.
      */
-    explicit DockWidget(const QString &uniqueName,
-                        Options options = Options(), LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
+    explicit DockWidget(View *view, const QString &uniqueName,
+                        Options options = Options(),
+                        LayoutSaverOptions layoutSaverOptions = LayoutSaverOptions());
 
     ///@brief destructor
     ~DockWidget() override;
+
+    void init();
 
     /**
      * @brief docks @p other widget into this one. Tabs will be shown if not already.

@@ -16,8 +16,9 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#ifndef KD_DOCKWIDGET_H
-#define KD_DOCKWIDGET_H
+#ifndef KD_DOCKWIDGET_WIDGETS_H
+#define KD_DOCKWIDGET_WIDGETS_H
+#pragma once
 
 #include "controllers/DockWidget.h"
 #include "View_qtwidgets.h"
@@ -52,8 +53,10 @@ public:
      * when visible, or stays without a parent when hidden. This allows to support docking
      * to different main windows.
      */
-    explicit DockWidget_qtwidgets(Controllers::DockWidget *controller,
-                                  Qt::WindowFlags windowFlags = {});
+    explicit DockWidget_qtwidgets(const QString &uniqueName,
+                                  Controllers::DockWidget::Options options = {},
+                                  Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                                  Qt::WindowFlags windowFlags = Qt::Tool);
 
     ///@brief destructor
     ~DockWidget_qtwidgets() override;
@@ -83,11 +86,6 @@ private:
 };
 
 }
-
-KDDockWidgets::Views::DockWidget_qtwidgets *DOCKS_EXPORT
-createDockWidget_qtwidgets(const QString &uniqueName,
-                           Controllers::DockWidget::Options options = {},
-                           Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {});
 
 }
 

@@ -44,15 +44,15 @@ int main(int argc, char **argv)
     mainWindow.show();
 
     // # 2. Create a dock widget, it needs a unique name
-    auto dock1 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock1"));
+    auto dock1 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock1"));
     auto widget1 = new MyWidget1();
     dock1->setWidget(widget1);
 
-    auto dock2 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock2"));
+    auto dock2 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock2"));
     auto widget2 = new MyWidget2();
     dock2->setWidget(widget2);
 
-    auto dock3 = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("MyDock3"));
+    auto dock3 = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyDock3"));
     auto widget3 = new MyWidget3();
     dock3->setWidget(widget3);
 

@@ -71,7 +71,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
         count++;
         auto w = newMyWidget();
         w->setGeometry(100, 100, 400, 400);
-        auto dock = KDDockWidgets::createDockWidget_qtwidgets(QStringLiteral("new dock %1").arg(count));
+        auto dock = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("new dock %1").arg(count));
         dock->setWidget(w);
         dock->resize(QSize(600, 600));
         dock->show();
@@ -181,7 +181,8 @@ KDDockWidgets::Controllers::DockWidget *MyMainWindow::newDockWidget()
     if (count == 5 && m_dockwidget5DoesntCloseBeforeRestore)
         layoutSaverOptions |= KDDockWidgets::Controllers::DockWidget::LayoutSaverOption::Skip;
 
-    auto dock = new KDDockWidgets::Controllers::DockWidget(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
+    auto dockView = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("DockWidget #%1").arg(count), options, layoutSaverOptions);
+    auto dock = dockView->dockWidget();
     dock->setAffinities(mainWindow()->affinities()); // optional, just to show the feature. Pass -mi to the example to see incompatible dock widgets
 
     if (count == 1)

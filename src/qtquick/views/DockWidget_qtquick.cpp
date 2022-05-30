@@ -32,6 +32,7 @@
  */
 
 using namespace KDDockWidgets;
+using namespace KDDockWidgets::Controllers;
 using namespace KDDockWidgets::Views;
 
 class DockWidget_qtquick::Private
@@ -55,11 +56,15 @@ public:
     QQmlEngine *const m_qmlEngine;
 };
 
-DockWidget_qtquick::DockWidget_qtquick(Controllers::DockWidget *controller,
+DockWidget_qtquick::DockWidget_qtquick(const QString &uniqueName,
+                                       Controllers::DockWidget::Options options,
+                                       Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
                                        Qt::WindowFlags windowFlags, QQmlEngine *engine)
-    : View_qtquick(controller, Type::DockWidget, nullptr, windowFlags)
-    , d(new Private(this, controller, engine ? engine : plat()->qmlEngine()))
+    : View_qtquick(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget, nullptr, windowFlags)
+    , d(new Private(this, static_cast<DockWidget *>(controller()), engine ? engine : plat()->qmlEngine()))
 {
+    init();
+    d->dockWidget->init();
 }
 
 DockWidget_qtquick::~DockWidget_qtquick()

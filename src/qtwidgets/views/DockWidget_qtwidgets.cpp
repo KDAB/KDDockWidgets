@@ -43,11 +43,15 @@ public:
     Controllers::DockWidget *const m_controller;
 };
 
-DockWidget_qtwidgets::DockWidget_qtwidgets(Controllers::DockWidget *controller,
+DockWidget_qtwidgets::DockWidget_qtwidgets(const QString &uniqueName,
+                                           Controllers::DockWidget::Options options,
+                                           Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
                                            Qt::WindowFlags windowFlags)
-    : View_qtwidgets<QWidget>(controller, Type::DockWidget, nullptr, windowFlags)
-    , d(new Private(this, controller))
+    : View_qtwidgets<QWidget>(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget, nullptr, windowFlags)
+    , d(new Private(this, static_cast<DockWidget *>(controller())))
 {
+    init();
+    d->m_controller->init();
 }
 
 DockWidget_qtwidgets::~DockWidget_qtwidgets()
@@ -97,13 +101,4 @@ void DockWidget_qtwidgets::resizeEvent(QResizeEvent *e)
 {
     d->m_controller->onResize(e->size());
     return QWidget::resizeEvent(e);
-}
-
-KDDockWidgets::Views::DockWidget_qtwidgets *
-KDDockWidgets::createDockWidget_qtwidgets(const QString &uniqueName,
-                                          Controllers::DockWidget::Options options,
-                                          Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions)
-{
-    auto dw = new Controllers::DockWidget(uniqueName, options, layoutSaverOptions);
-    return static_cast<KDDockWidgets::Views::DockWidget_qtwidgets *>(dw->view());
 }

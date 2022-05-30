@@ -75,7 +75,8 @@ public:
         if (!supportsPersistentCentralWidget())
             return nullptr;
 
-        auto dw = new Controllers::DockWidget(QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
+        auto dockView = Config::self().viewFactory()->createDockWidget(QStringLiteral("%1-persistentCentralDockWidget").arg(uniqueName));
+        auto dw = dockView->asDockWidgetController();
         dw->dptr()->m_isPersistentCentralDockWidget = true;
         Controllers::Frame *frame = dropArea()->m_centralFrame;
         if (!frame) {

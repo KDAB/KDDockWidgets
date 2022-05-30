@@ -48,9 +48,12 @@ ViewFactory_qtquick::~ViewFactory_qtquick()
 {
 }
 
-View *ViewFactory_qtquick::createDockWidget(Controllers::DockWidget *dw, Qt::WindowFlags flags) const
+View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
+                                            Controllers::DockWidget::Options options,
+                                            Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
+                                            Qt::WindowFlags windowFlags) const
 {
-    return new Views::DockWidget_qtquick(dw, flags);
+    return new Views::DockWidget_qtquick(uniqueName, options, layoutSaverOptions, windowFlags);
 }
 
 View *ViewFactory_qtquick::createFrame(Controllers::Frame *controller, View *parent,

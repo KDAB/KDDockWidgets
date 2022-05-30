@@ -10,6 +10,7 @@
 */
 
 #include "Config.h"
+#include "ViewFactory.h"
 
 #include "controllers/MainWindow.h"
 #include "controllers/DockWidget.h"
@@ -25,7 +26,7 @@ using namespace KDDockWidgets::Controllers;
 static bool lint(const QString &filename)
 {
     DockWidgetFactoryFunc dwFunc = [](const QString &dwName) {
-        return new Controllers::DockWidget(dwName);
+        return Config::self().viewFactory()->createDockWidget(dwName)->asDockWidgetController();
     };
 
     MainWindowFactoryFunc mwFunc = [](const QString &mwName) {

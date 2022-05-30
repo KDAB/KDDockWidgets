@@ -11,10 +11,12 @@
 
 #include "../main.h"
 #include "controllers/DockWidget.h"
+#include "ViewFactory.h"
+#include "Config.h"
 
 TEST_CASE("DockWidget Ctor")
 {
-    auto dw = new Controllers::DockWidget("dw1");
+    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     CHECK(dw->view()->is(Type::DockWidget));
     CHECK(dw->view()->asWrapper()->is(Type::DockWidget));
     dw->view()->show();

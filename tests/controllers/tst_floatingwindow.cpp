@@ -13,10 +13,12 @@
 #include "controllers/FloatingWindow.h"
 #include "controllers/Frame.h"
 #include "controllers/DockWidget.h"
+#include "ViewFactory.h"
+#include "Config.h"
 
 TEST_CASE("FloatingWindow Ctor")
 {
-    auto dw = new Controllers::DockWidget("dw1");
+    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
     CHECK(dw->view()->rootView()->is(Type::DockWidget));
     dw->view()->show();
 

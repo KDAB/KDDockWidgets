@@ -42,25 +42,27 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
-DockWidget::DockWidget(const QString &name, Options options,
+DockWidget::DockWidget(View *view, const QString &name, Options options,
                        LayoutSaverOptions layoutSaverOptions)
-    : Controller(Type::DockWidget, Config::self().viewFactory()->createDockWidget(this, Qt::Tool))
+    : Controller(Type::DockWidget, view)
     , d(new Private(name, options, layoutSaverOptions, this))
 {
-    d->init();
-    view()->init();
     DockRegistry::self()->registerDockWidget(this);
 
     if (name.isEmpty())
         qWarning() << Q_FUNC_INFO << "Name can't be null";
-
-    view()->setAttribute(Qt::WA_PendingMoveEvent, false);
 }
 
 DockWidget::~DockWidget()
 {
     DockRegistry::self()->unregisterDockWidget(this);
     delete d;
+}
+
+void DockWidget::init()
+{
+    d->init();
+    view()->setAttribute(Qt::WA_PendingMoveEvent, false);
 }
 
 void DockWidget::addDockWidgetAsTab(DockWidget *other, InitialOption option)

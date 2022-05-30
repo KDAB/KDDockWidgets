@@ -55,7 +55,11 @@ public:
     ViewFactory_qtwidgets() = default;
     ~ViewFactory_qtwidgets() override;
 
-    View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const override;
+    View *createDockWidget(const QString &uniqueName,
+                           Controllers::DockWidget::Options = {},
+                           Controllers::DockWidget::LayoutSaverOptions = {},
+                           Qt::WindowFlags = {}) const override;
+
     View *createFrame(Controllers::Frame *, View *parent, FrameOptions options = FrameOption_None) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::Frame *) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::FloatingWindow *) const override;

@@ -68,7 +68,13 @@ public:
     /// by the framework.
     virtual ~ViewFactory();
 
-    virtual View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const = 0;
+    /// @brief Creates a dock widget. This is only used by MainWindow's persistent widget feature.
+    /// In all other cases users will instantiate DockWidget directly
+    virtual View *createDockWidget(const QString &uniqueName,
+                                   Controllers::DockWidget::Options options = {},
+                                   Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                                   Qt::WindowFlags windowFlags = {}) const = 0;
+
 
     ///@brief Called internally by the framework to create a Frame class
     ///       Override to provide your own Frame sub-class. A frame is the

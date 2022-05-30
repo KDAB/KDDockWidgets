@@ -11,6 +11,7 @@
 
 #include "MDIArea.h"
 
+#include "ViewFactory.h"
 #include "controllers/DockWidget.h"
 #include "controllers/MDILayout.h"
 #include "controllers/DropArea.h"
@@ -63,7 +64,8 @@ void MDIArea::addDockWidget(Controllers::DockWidget *dw, QPoint localPt, Initial
 {
     if (dw->options() & Controllers::DockWidget::Option_MDINestable) {
         // We' wrap it with a drop area, so we can drag other dock widgets over this one and dock
-        auto wrapperDW = new Controllers::DockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()));
+        auto wrapperDW = Config::self().viewFactory()->createDockWidget(QStringLiteral("%1-mdiWrapper").arg(dw->uniqueName()))->asDockWidgetController();
+
         auto dropAreaWrapper = new DropArea(wrapperDW->view(), {}, /*isMDIWrapper= */ true);
         dropAreaWrapper->addDockWidget(dw, Location_OnBottom, nullptr);
         wrapperDW->setGuestView(dropAreaWrapper->view()->asWrapper());

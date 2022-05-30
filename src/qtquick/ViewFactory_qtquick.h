@@ -54,7 +54,10 @@ class DOCKS_EXPORT ViewFactory_qtquick : public ViewFactory
 public:
     ViewFactory_qtquick() = default;
     ~ViewFactory_qtquick() override;
-    View *createDockWidget(Controllers::DockWidget *, Qt::WindowFlags) const override;
+    View *createDockWidget(const QString &uniqueName,
+                           Controllers::DockWidget::Options options = {},
+                           Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                           Qt::WindowFlags windowFlags = {}) const override;
     View *createFrame(Controllers::Frame *, View *parent, FrameOptions options = FrameOption_None) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::Frame *) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::FloatingWindow *) const override;
