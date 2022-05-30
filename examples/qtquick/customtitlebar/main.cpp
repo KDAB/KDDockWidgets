@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
     QGuiApplication app(argc, argv);
+    KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtQuick);
 
     auto &config = KDDockWidgets::Config::self();
     auto flags = config.flags();

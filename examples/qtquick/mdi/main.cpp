@@ -31,6 +31,8 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
     QGuiApplication app(argc, argv);
+    KDDockWidgets::initFrontend(KDDockWidgets::FrontendType::QtQuick);
+
     QCommandLineParser parser;
     parser.setApplicationDescription("KDDockWidgets example application");
     parser.addHelpOption();
