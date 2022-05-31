@@ -14,6 +14,7 @@
 #include "DragController_p.h"
 #include "Logging_p.h"
 #include "Utils_p.h"
+#include "Platform.h"
 
 #include "controllers/TitleBar.h"
 #include "controllers/Stack.h"
@@ -212,11 +213,13 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         // case #2: the floating window itself is the draggable, happens on platforms that support
         // native dragging. Not the case for Wayland. But adding this case for completeness.
         m_floatingWindow = fw;
-#ifdef KDDOCKWIDGETS_QTWIDGETS
+#ifdef KDDW_FRONTEND_QTWIDGETS // TODOv2: Review this block
     } else if (auto tabBar = draggable->asView()->asTabBarController()) {
-        m_dockWidget = tabBar->currentDockWidget();
+        if (Platform::instance()->isQtWidgets())
+            m_dockWidget = tabBar->currentDockWidget();
     } else if (auto stack = draggable->asView()->asStackController()) {
-        m_frame = stack->frame();
+        if (Platform::instance()->isQtWidgets())
+            m_frame = stack->frame();
 #endif
     } else {
         qWarning() << "Unknown draggable" << draggable << "please fix";

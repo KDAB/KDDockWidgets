@@ -153,9 +153,6 @@ set(KDDW_FRONTEND_QTQUICK ON)
 
 add_definitions(-DQT_NO_KEYWORDS)
 
-# TODOv2: remove
-add_definitions(-DKDDOCKWIDGETS_QTWIDGETS)
-
 
 if (KDDW_FRONTEND_QTWIDGETS)
   add_definitions(-DKDDW_FRONTEND_QTWIDGETS)

@@ -790,20 +790,22 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
         if (hwnd == ( HWND )window->winId()) {
             if (auto result = DockRegistry::self()->topLevelForHandle(window))
                 return result;
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-            // It's not a KDDW window, but we still return something, as the KDDW main window
-            // might be embedded into another non-kddw QMainWindow
-            // Case not supported for QtQuick.
-            const QWidgetList widgets = qApp->topLevelWidgets();
-            for (QWidget *widget : widgets) {
-                if (!widget->window()) {
-                    // Don't call winId on windows that don't have it, as that will force all its childrens to have it,
-                    // and that's not very stable. a top level might not have one because it's being destroyed, or because
-                    // it's a top-level just because it has't been reparented I guess.
-                    continue;
-                }
-                if (hwnd == ( HWND )widget->winId()) {
-                    return widget;
+#ifdef KDDW_FRONTEND_QTWIDGETS
+            if (Platform::instance()->isQtWidgets()) {
+                // It's not a KDDW window, but we still return something, as the KDDW main window
+                // might be embedded into another non-kddw QMainWindow
+                // Case not supported for QtQuick.
+                const QWidgetList widgets = qApp->topLevelWidgets();
+                for (QWidget *widget : widgets) {
+                    if (!widget->window()) {
+                        // Don't call winId on windows that don't have it, as that will force all its childrens to have it,
+                        // and that's not very stable. a top level might not have one because it's being destroyed, or because
+                        // it's a top-level just because it has't been reparented I guess.
+                        continue;
+                    }
+                    if (hwnd == ( HWND )widget->winId()) {
+                        return widget;
+                    }
                 }
             }
 #endif
@@ -876,21 +878,24 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
                     return tl;
                 }
             } else {
-#ifdef KDDOCKWIDGETS_QTWIDGETS // Maybe it's embedded in a QWinWidget:
-                auto topLevels = qApp->topLevelWidgets();
-                for (auto topLevel : topLevels) {
-                    if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
-                        if (hwnd == GetParent(HWND(topLevel->window()->winId()))) {
-                            if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos)) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
-                                qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
-                                return topLevel;
+#ifdef KDDW_FRONTEND_QTWIDGETS
+                if (Platform::instance()->isQtWidgets()) {
+                    // Maybe it's embedded in a QWinWidget:
+                    auto topLevels = qApp->topLevelWidgets();
+                    for (auto topLevel : topLevels) {
+                        if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
+                            if (hwnd == GetParent(HWND(topLevel->window()->winId()))) {
+                                if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos)) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
+                                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
+                                    return topLevel;
+                                }
                             }
                         }
                     }
-                }
 #endif // QtWidgets A window belonging to another app is below the cursor
-                qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
-                return nullptr;
+                    qCDebug(toplevels) << Q_FUNC_INFO << "Window from another app is under cursor" << hwnd;
+                    return nullptr;
+                }
             }
         }
 #endif // Q_OS_WIN
@@ -904,7 +909,6 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
         if (!ok) {
             qCDebug(toplevels) << Q_FUNC_INFO << "No top-level found. Some windows weren't seen by XLib";
         }
-
     } else {
         // !Windows: Linux, macOS, offscreen (offscreen on Windows too), etc.
 
