@@ -173,7 +173,7 @@ public:
         Base::show();
     }
 
-    void createPlatformWindow()
+    void createPlatformWindow() override
     {
         QWidget::create();
     }
