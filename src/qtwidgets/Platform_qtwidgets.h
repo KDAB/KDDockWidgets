@@ -41,6 +41,7 @@ public:
     View *createView(View *parent = nullptr) const override;
     bool inDisallowedDragView(QPoint globalPos) const override;
     bool usesFallbackMouseGrabber() const override;
+    void ungrabMouse() override;
 
 #ifdef DOCKS_DEVELOPER_MODE
     explicit Platform_qtwidgets(int &argc, char **argv);

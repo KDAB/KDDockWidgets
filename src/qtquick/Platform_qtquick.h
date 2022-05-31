@@ -42,6 +42,7 @@ public:
     View *createView(View *parent = nullptr) const override;
     bool usesFallbackMouseGrabber() const override;
     bool inDisallowedDragView(QPoint globalPos) const override;
+    void ungrabMouse() override;
     static Platform_qtquick *instance();
 
 #ifdef DOCKS_DEVELOPER_MODE

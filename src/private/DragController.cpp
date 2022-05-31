@@ -62,19 +62,11 @@ public:
 
     void releaseMouse()
     {
-#ifdef KDDOCKWIDGETS_QTQUICK
         // Ungrab harder if QtQuick.
         // QtQuick has the habit og grabbing the MouseArea internally, then doesn't ungrab it since
         // we're consuming the events. So explicitly ungrab if any QQuickWindow::mouseGrabberItem()
-        // is still set.
-
-        QQuickView *view = m_target ? m_target->quickView()
-                                    : nullptr;
-        QQuickItem *grabber = view ? view->mouseGrabberItem()
-                                   : nullptr;
-        if (grabber)
-            grabber->ungrabMouse();
-#endif
+        // is still set. Done via platform now, so it's generic. Should be a no-op for QtWidgets.
+        Platform::instance()->ungrabMouse();
 
         m_target = nullptr;
         m_guard.clear();

@@ -141,3 +141,9 @@ bool Platform_qtwidgets::inDisallowedDragView(QPoint globalPos) const
     // TODO: Not so elegant fix, we should make the user's tabbar implement some virtual method...
     return qobject_cast<QAbstractButton *>(widget) || qobject_cast<QLineEdit *>(widget);
 }
+
+void Platform_qtwidgets::ungrabMouse()
+{
+    if (QWidget *grabber = QWidget::mouseGrabber())
+        grabber->releaseMouse();
+}

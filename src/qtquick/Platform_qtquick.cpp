@@ -204,3 +204,14 @@ bool Platform_qtquick::inDisallowedDragView(QPoint globalPos) const
         return false;
     return item->objectName() != QLatin1String("draggableMouseArea");
 }
+
+void Platform_qtquick::ungrabMouse()
+{
+    const QWindowList windows = qApp->topLevelWindows();
+    for (QWindow *window : windows) {
+        if (auto quickWindow = qobject_cast<QQuickWindow *>(window)) {
+            if (QQuickItem *grabber = quickWindow->mouseGrabberItem())
+                grabber->ungrabMouse();
+        }
+    }
+}

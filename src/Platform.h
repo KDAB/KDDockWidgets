@@ -175,6 +175,9 @@ public:
     virtual void installMessageHandler() = 0;
     virtual void uninstallMessageHandler() = 0;
 
+    /// @brief Releases the mouse grab, if any
+    virtual void ungrabMouse() = 0;
+
     /// @brief Creates a main window. This is not API that the user will use, but used
     /// internally by some tools that need a main window
     virtual Controllers::MainWindow *createMainWindow(const QString &uniqueName, CreateViewOptions,
