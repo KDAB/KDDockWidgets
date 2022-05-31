@@ -563,7 +563,7 @@ bool WidgetResizeHandler::isInterestingNativeEvent(unsigned int nativeEvent)
 }
 #endif
 
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)
 bool NCHITTESTEventFilter::nativeEventFilter(const QByteArray &eventType, void *message,
                                              Qt5Qt6Compat::qintptr *result)
 

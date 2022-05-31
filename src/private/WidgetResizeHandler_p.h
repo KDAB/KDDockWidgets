@@ -30,7 +30,7 @@ QT_END_NAMESPACE
 namespace KDDockWidgets {
 
 namespace Controllers {
-    class FloatingWindow;
+class FloatingWindow;
 }
 
 class DOCKS_EXPORT WidgetResizeHandler : public QObject
@@ -159,7 +159,7 @@ private:
     CursorPositions mAllowedResizeSides = CursorPosition_All;
 };
 
-#if defined(Q_OS_WIN) && defined(KDDOCKWIDGETS_QTWIDGETS)
+#if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)
 
 /**
  * @brief Helper to rediriect WM_NCHITTEST from child widgets to the top-level widget
