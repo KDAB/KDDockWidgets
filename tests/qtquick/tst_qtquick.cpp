@@ -34,6 +34,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void tst_restoreRestoresMainWindowPosition();
+    void tst_hoverShowsDropIndicators();
 };
 
 
@@ -76,6 +77,38 @@ void TestQtQuick::tst_restoreRestoresMainWindowPosition()
     QCOMPARE(window->framePosition(), originalPos);
 
     delete mainWindow;
+}
+
+void TestQtQuick::tst_hoverShowsDropIndicators()
+{
+    return; // TODOv2: Indicators still not ported
+
+    // For QtQuick on Windows, there was a bug where drop indicators wouldn't be shown if MainWindowBase
+    // wasn't the root item.
+
+    EnsureTopLevelsDeleted e;
+    QQmlApplicationEngine engine(":/main2.qml");
+
+    const auto mainWindows = DockRegistry::self()->mainwindows();
+    QCOMPARE(mainWindows.size(), 1);
+    MainWindow *m = mainWindows.first();
+
+    m->window()->window()->setPosition(QPoint(500, 800));
+
+    auto dock0 = createDockWidget("dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+
+    auto floatingDockWidget = createDockWidget("floatingDockWidget", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
+
+    m->addDockWidget(dock0, Location_OnLeft);
+
+    const QPoint mainWindowCenterPos = m->mapToGlobal(m->geometry().center());
+
+    QTest::qWait(100);
+
+    auto fw = floatingDockWidget->floatingWindow();
+    dragFloatingWindowTo(fw, mainWindowCenterPos);
+
+    QCOMPARE(dock0->dptr()->frame()->dockWidgetCount(), 2);
 }
 
 int main(int argc, char *argv[])

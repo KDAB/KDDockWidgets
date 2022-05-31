@@ -205,8 +205,4 @@ private Q_SLOTS:
     void tst_addMDIDockWidget();
     void tst_redockToMDIRestoresPosition();
     void tst_persistentCentralWidget();
-
-#ifndef KDDOCKWIDGETS_QTWIDGETS // TODOv2: Move to tst_qtquick.cpp
-    void tst_hoverShowsDropIndicators();
-#endif
 };

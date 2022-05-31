@@ -853,39 +853,6 @@ void TestDocks::tst_shutdown()
     QVERIFY(Platform::instance()->tests_waitForWindowActive(m->view()->window()));
 }
 
-#ifndef KDDOCKWIDGETS_QTWIDGETS
-// TODOv2: Move to tst_qtquick.cpp
-void TestDocks::tst_hoverShowsDropIndicators()
-{
-    // For QtQuick on Windows, there was a bug where drop indicators wouldn't be shown if MainWindowBase
-    // wasn't the root item.
-
-    EnsureTopLevelsDeleted e;
-    QQmlApplicationEngine engine(":/main2.qml");
-
-    const MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
-    QCOMPARE(mainWindows.size(), 1);
-    MainWindowBase *m = mainWindows.first();
-
-    m->window()->window()->setPosition(500, 800);
-
-    auto dock0 = createDockWidget("dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
-
-    auto floatingDockWidget = createDockWidget("floatingDockWidget", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
-
-    m->addDockWidget(dock0, Location_OnLeft);
-
-    const QPoint mainWindowCenterPos = m->mapToGlobal(m->geometry().center());
-
-    QTest::qWait(100);
-
-    auto fw = floatingDockWidget->floatingWindow();
-    dragFloatingWindowTo(fw, mainWindowCenterPos);
-
-    QCOMPARE(dock0->dptr()->frame()->dockWidgetCount(), 2);
-}
-#endif
-
 void TestDocks::tst_28NestedWidgets_data()
 {
     QTest::addColumn<QVector<DockDescriptor>>("docksToCreate");
