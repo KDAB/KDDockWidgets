@@ -239,6 +239,9 @@ public:
     /// only the specific frontend can know what's the actual type
     virtual bool is(Type) const;
 
+    /// @brief Sets the z order
+    /// Not supported on all platforms
+    virtual void setZOrder(int) {};
 
     /// @brief if this view is a FloatingWindow, then returns its controller
     /// Mostly to save the call sites from having too many casts

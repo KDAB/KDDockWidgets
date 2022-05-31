@@ -821,4 +821,9 @@ QQuickItem *View_qtquick::createQQuickItem(const QString &filename, QQuickItem *
     return qquickitem;
 }
 
+void View_qtquick::setZOrder(int z)
+{
+    QQuickItem::setZ(z);
+}
+
 #include "View_qtquick.moc"

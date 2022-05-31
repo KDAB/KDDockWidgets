@@ -932,16 +932,10 @@ void DockWidget::setMDISize(QSize size)
 
 void DockWidget::setMDIZ(int z)
 {
-#ifdef KDDOCKWIDGETS_QTQUICK
     if (Frame *frame = d->frame()) {
-        if (!frame->isMDI())
-            return;
-        frame->setZ(z);
+        if (frame->isMDI())
+            frame->view()->setZOrder(z);
     }
-#else
-    Q_UNUSED(z);
-    qWarning() << Q_FUNC_INFO << "Not implemented for QtQuick";
-#endif
 }
 
 bool DockWidget::isPersistentCentralDockWidget() const

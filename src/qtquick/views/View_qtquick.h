@@ -157,6 +157,7 @@ public:
     void setCursor(Qt::CursorShape shape) override;
     void setMouseTracking(bool enable) override;
     QVector<std::shared_ptr<View>> childViews() const override;
+    void setZOrder(int) override;
 
     /// @brief This is equivalent to "anchors.fill: parent but in C++
     void makeItemFillParent(QQuickItem *item);
