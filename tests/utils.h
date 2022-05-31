@@ -140,8 +140,6 @@ void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropAr
 class NonClosableWidget : public QWidgetAdapter
 {
 public:
-    Q_OBJECT
-public:
     explicit NonClosableWidget()
         : QWidgetAdapter()
     {

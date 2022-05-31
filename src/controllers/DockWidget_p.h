@@ -208,7 +208,6 @@ public:
 // A QAction for QtQuick. Just so it compiles, for now
 class QAction : public QObject
 {
-    Q_OBJECT
 public:
     using QObject::QObject;
 
