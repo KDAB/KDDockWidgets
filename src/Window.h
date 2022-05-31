@@ -34,6 +34,7 @@ public:
     virtual ~Window();
     virtual void setWindowState(Qt::WindowState) = 0;
     virtual QRect geometry() const = 0;
+    virtual void setGeometry(QRect) const = 0;
     virtual void setProperty(const char *name, const QVariant &value) = 0;
     virtual QVariant property(const char *name) const = 0;
     virtual bool isVisible() const = 0;

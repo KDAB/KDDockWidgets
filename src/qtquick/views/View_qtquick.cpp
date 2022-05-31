@@ -552,9 +552,13 @@ QVariant View_qtquick::property(const char *name) const
     if (!parent)
         return true;
 
-    if (QQuickView *w = qobject_cast<QQuickView *>(item->window())) {
-        if (parent == w->contentItem() || parent == w->rootObject())
+    if (auto *w = qobject_cast<QQuickWindow *>(item->window())) {
+        if (parent == w->contentItem() || item == w->contentItem())
             return true;
+        if (auto *qv = qobject_cast<QQuickView *>(item->window())) {
+            if (parent == qv->rootObject() || item == qv->rootObject())
+                return true;
+        }
     }
 
     return false;

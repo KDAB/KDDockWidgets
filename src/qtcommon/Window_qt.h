@@ -26,6 +26,7 @@ public:
     ~Window_qt() override;
     void setWindowState(Qt::WindowState) override;
     QRect geometry() const override;
+    void setGeometry(QRect) const override;
     bool isVisible() const override;
     WId handle() const override;
 

@@ -23,6 +23,7 @@ using namespace KDDockWidgets;
 Window_qt::Window_qt(QWindow *window)
     : m_window(window)
 {
+    Q_ASSERT(window);
     m_connection = QObject::connect(window, &QWindow::screenChanged, [this] {
         screenChanged.emit();
     });
@@ -50,6 +51,7 @@ QRect Window_qt::geometry() const
 
 void Window_qt::setProperty(const char *name, const QVariant &value)
 {
+    Q_ASSERT(m_window);
     m_window->setProperty(name, value);
 }
 
@@ -150,4 +152,9 @@ QPoint Window_qt::fromNativePixels(QPoint nativePos) const
 void Window_qt::startSystemMove()
 {
     m_window->startSystemMove();
+}
+
+void KDDockWidgets::Window_qt::setGeometry(QRect geo) const
+{
+    m_window->setGeometry(geo);
 }

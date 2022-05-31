@@ -487,7 +487,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             continue;
 
         if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry)) {
-            auto window = mainWindow->window();
+            auto window = mainWindow->view()->rootView();
             d->deserializeWindowGeometry(mw, window.get()); // window(), as the MainWindow can be embedded
             if (mw.windowState != Qt::WindowNoState) {
                 if (auto w = mainWindow->view()->window()) {
@@ -590,14 +590,7 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, View *topLe
 
     Controllers::FloatingWindow::ensureRectIsOnScreen(geometry);
 
-    if (topLevel->isRootView()) {
-        topLevel->setGeometry(geometry);
-    } else {
-        // TODOv2: Have a WindowView abstraction, that will represent QWindow for Qt.
-        // Then we can ensure we receive WindowView instead of View. Probably even WindowViewWrapper.
-        topLevel->setGeometry(geometry);
-    }
-
+    topLevel->setGeometry(geometry);
     topLevel->setVisible(saved.isVisible);
 }
 

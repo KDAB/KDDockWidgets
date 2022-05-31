@@ -38,6 +38,12 @@ if (KDDW_FRONTEND_QTWIDGETS)
   set_compiler_flags(tst_qtwidgets)
 endif()
 
+if (KDDW_FRONTEND_QTQUICK)
+  add_executable(tst_qtquick qtquick/tst_qtquick.cpp ${TESTING_SRCS} ${TESTING_RESOURCES})
+  target_link_libraries(tst_qtquick kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
+  set_compiler_flags(tst_qtquick)
+endif()
+
 add_executable(tst_multisplitter tst_multisplitter.cpp)
 target_link_libraries(tst_multisplitter kddockwidgets Qt${Qt_VERSION_MAJOR}::Test)
 set_compiler_flags(tst_multisplitter)

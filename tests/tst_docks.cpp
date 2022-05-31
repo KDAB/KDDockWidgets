@@ -3352,34 +3352,6 @@ void TestDocks::tst_restoreRestoresMainWindowPosition()
         saver.restoreLayout(saved);
         QCOMPARE(originalPos, m->pos());
     }
-#ifdef KDDOCKWIDGETS_QTQUICK
-    // Tests the ApplicationWindow {} case
-    {
-        QQmlApplicationEngine engine(":/main2.qml");
-
-        const MainWindowBase::List mainWindows = DockRegistry::self()->mainwindows();
-        QCOMPARE(mainWindows.size(), 1);
-        MainWindowBase *mainWindow = mainWindows.first();
-        QVERIFY(mainWindow->isVisible());
-
-        QCOMPARE(mainWindow->pos(), QPoint(0, 0));
-
-        QWindow *window = mainWindow->window();
-
-        LayoutSaver saver;
-        const QByteArray saved = saver.serializeLayout();
-
-        const QPoint originalPos = window->position();
-        window->setPosition(originalPos + QPoint(200, 200));
-        QCOMPARE(window->position(), originalPos + QPoint(200, 200));
-
-        QVERIFY(saver.restoreLayout(saved));
-
-        QCOMPARE(window->position(), originalPos);
-
-        delete mainWindow;
-    }
-#endif
 }
 
 void TestDocks::tst_resizeViaAnchorsAfterPlaceholderCreation()

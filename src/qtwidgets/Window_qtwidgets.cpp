@@ -22,8 +22,16 @@ using namespace KDDockWidgets;
 
 Window_qtwidgets::~Window_qtwidgets() = default;
 
+inline QWindow *windowForWidget(QWidget *topLevel)
+{
+    if (!topLevel->windowHandle())
+        topLevel->winId();
+
+    return topLevel->windowHandle();
+}
+
 Window_qtwidgets::Window_qtwidgets(QWidget *topLevel)
-    : Window_qt(topLevel->windowHandle())
+    : Window_qt(windowForWidget(topLevel))
 {
     // QWidgetWindow is private API, we have no way for going from QWindow to the top-level QWidget
     // So set it as a property
