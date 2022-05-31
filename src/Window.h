@@ -52,6 +52,9 @@ public:
     /// This ignores any frame (native decos the window has)
     virtual void setPosition(QPoint targetPos) = 0;
 
+    /// @brif Returns the position of the top-left corner, including native frame.
+    QPoint framePosition() const;
+
     /// @brief Sets the position of the window at targetPos
     virtual void setFramePosition(QPoint targetPos) = 0;
 

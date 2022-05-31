@@ -42,3 +42,7 @@ void Window::startSystemMove()
     qFatal("Not needed in this platform");
 }
 
+QPoint Window::framePosition() const
+{
+    return frameGeometry().topLeft();
+}
