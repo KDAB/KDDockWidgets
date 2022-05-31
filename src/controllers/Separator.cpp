@@ -15,9 +15,11 @@
 #include "View.h"
 #include "private/Logging_p.h"
 #include "Config.h"
+#include "Platform.h"
 #include "Controller.h"
+#include "ViewFactory.h"
 
-#include <QApplication> // TODOv2 remove, add Platform instead
+#include <QGuiApplication>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -43,7 +45,8 @@ struct Separator::Private
 {
     // Only set when anchor is moved through mouse. Side1 if going towards left or top, Side2 otherwise.
 
-    Private()
+    Private(View *host)
+        : m_hostView(host)
     {
         Q_UNUSED(rubberBandIsTopLevel);
         s_numSeparators++;
@@ -58,17 +61,17 @@ struct Separator::Private
     QRect geometry;
     int lazyPosition = 0;
     // SeparatorOptions m_options; TODO: Have a Layouting::Config
-    // Widget *lazyResizeRubberBand = nullptr;
+    View *lazyResizeRubberBand = nullptr;
     Layouting::ItemBoxContainer *parentContainer = nullptr;
     Layouting::Side lastMoveDirection = Layouting::Side1;
     const bool usesLazyResize = Layouting::Config::self().flags() & Layouting::Config::Flag::LazyResize;
 
-    // Widget *const m_hostWidget;
+    View *const m_hostView;
 };
 
 Separator::Separator(View *host)
     : Controller(Type::Separator, Layouting::Config::self().createSeparator(this, host))
-    , d(new Private())
+    , d(new Private(host))
 {
     Q_ASSERT(view());
     view()->show();
@@ -89,8 +92,8 @@ void Separator::init(Layouting::ItemBoxContainer *parentContainer, Qt::Orientati
     d->parentContainer = parentContainer;
     d->orientation = orientation;
     view()->init();
-    // d->lazyResizeRubberBand = d->usesLazyResize ? createRubberBand(rubberBandIsTopLevel() ? nullptr : d->m_hostWidget)
-    //                                             : nullptr;
+    d->lazyResizeRubberBand = d->usesLazyResize ? Config::self().viewFactory()->createRubberBand(rubberBandIsTopLevel() ? nullptr : d->m_hostView)
+                                                : nullptr;
     view()->setVisible(true);
 }
 
@@ -177,11 +180,9 @@ void Separator::setLazyPosition(int pos)
         geo.moveLeft(pos);
     }
 
-    // #ifdef KDDOCKWIDGETS_QTWIDGETS
-    //     if (rubberBandIsTopLevel())
-    //         geo.translate(d->m_hostWidget->asQWidget()->mapToGlobal(QPoint(0, 0)));
-    // #endif
-    //     d->lazyResizeRubberBand->setGeometry(geo);
+    if (rubberBandIsTopLevel() && Platform::instance()->isQtWidgets())
+        geo.translate(d->m_hostView->mapToGlobal(QPoint(0, 0)));
+    d->lazyResizeRubberBand->setGeometry(geo);
 }
 
 bool Separator::isBeingDragged() const
@@ -200,22 +201,20 @@ void Separator::onMousePress()
 
     qCDebug(separators) << "Drag started";
 
-    //     if (d->lazyResizeRubberBand) {
-    //         setLazyPosition(position());
-    //         d->lazyResizeRubberBand->show();
-    // #ifdef KDDOCKWIDGETS_QTWIDGETS
-    //         if (rubberBandIsTopLevel())
-    //             d->lazyResizeRubberBand->asQWidget()->raise();
-    // #endif
-    //     }
+    if (d->lazyResizeRubberBand) {
+        setLazyPosition(position());
+        d->lazyResizeRubberBand->show();
+        if (rubberBandIsTopLevel() && Platform::instance()->isQtWidgets())
+            d->lazyResizeRubberBand->raise();
+    }
 }
 
 void Separator::onMouseReleased()
 {
-    // if (d->lazyResizeRubberBand) {
-    //     d->lazyResizeRubberBand->hide();
-    //     d->parentContainer->requestSeparatorMove(this, d->lazyPosition - position());
-    // }
+    if (d->lazyResizeRubberBand) {
+        d->lazyResizeRubberBand->hide();
+        d->parentContainer->requestSeparatorMove(this, d->lazyPosition - position());
+    }
 
     s_separatorBeingDragged = nullptr;
 }
@@ -268,10 +267,10 @@ void Separator::onMouseMove(QPoint pos)
                                                        : (positionToGoTo > position() ? Layouting::Side2
                                                                                       : Layouting::Side1); // Last case shouldn't happen though.
 
-    // if (d->lazyResizeRubberBand)
-    //     setLazyPosition(positionToGoTo);
-    // else
-    d->parentContainer->requestSeparatorMove(this, positionToGoTo - position());
+    if (d->lazyResizeRubberBand)
+        setLazyPosition(positionToGoTo);
+    else
+        d->parentContainer->requestSeparatorMove(this, positionToGoTo - position());
 }
 
 Layouting::ItemBoxContainer *Separator::parentContainer() const
