@@ -18,7 +18,6 @@
 
 #include "Config.h"
 #include "Platform.h"
-#include "private/multisplitter/MultiSplitterConfig.h"
 #include "View.h"
 #include "private/multisplitter/Item_p.h"
 #include "private/DockRegistry_p.h"
@@ -64,13 +63,6 @@ Config::Config()
     : d(new Private())
 {
     d->fixFlags();
-
-    // stuff in multisplitter/ can't include the framework widget factory, so set it here
-    auto separatorCreator = [](Controllers::Separator *controller, View *parent) {
-        return Config::self().viewFactory()->createSeparator(controller, parent);
-    };
-
-    Layouting::Config::self().setSeparatorFactoryFunc(separatorCreator);
 }
 
 Config &Config::self()
@@ -101,10 +93,6 @@ void Config::setFlags(Flags f)
 
     d->m_flags = f;
     d->fixFlags();
-
-    auto multisplitterFlags = Layouting::Config::self().flags();
-    multisplitterFlags.setFlag(Layouting::Config::Flag::LazyResize, d->m_flags & Flag_LazyResize);
-    Layouting::Config::self().setFlags(multisplitterFlags);
 }
 
 void Config::setDockWidgetFactoryFunc(DockWidgetFactoryFunc func)
@@ -141,7 +129,7 @@ ViewFactory *Config::viewFactory() const
 
 int Config::separatorThickness() const
 {
-    return Layouting::Config::self().separatorThickness();
+    return Layouting::Item::separatorThickness;
 }
 
 void Config::setSeparatorThickness(int value)
@@ -151,7 +139,12 @@ void Config::setSeparatorThickness(int value)
         return;
     }
 
-    Layouting::Config::self().setSeparatorThickness(value);
+    if (value < 0 || value >= 100) {
+        qWarning() << Q_FUNC_INFO << "Invalid value" << value;
+        return;
+    }
+
+    Layouting::Item::separatorThickness = value;
 }
 
 void Config::setDraggedWindowOpacity(qreal opacity)

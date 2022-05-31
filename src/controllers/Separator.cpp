@@ -10,7 +10,6 @@
 */
 
 #include "Separator.h"
-#include "private/multisplitter/MultiSplitterConfig.h"
 #include "private/multisplitter/Item_p.h"
 #include "View.h"
 #include "private/Logging_p.h"
@@ -64,13 +63,13 @@ struct Separator::Private
     View *lazyResizeRubberBand = nullptr;
     Layouting::ItemBoxContainer *parentContainer = nullptr;
     Layouting::Side lastMoveDirection = Layouting::Side1;
-    const bool usesLazyResize = Layouting::Config::self().flags() & Layouting::Config::Flag::LazyResize;
+    const bool usesLazyResize = Config::self().flags() & Config::Flag_LazyResize;
 
     View *const m_hostView;
 };
 
 Separator::Separator(View *host)
-    : Controller(Type::Separator, Layouting::Config::self().createSeparator(this, host))
+    : Controller(Type::Separator, Config::self().viewFactory()->createSeparator(this, host))
     , d(new Private(host))
 {
     Q_ASSERT(view());

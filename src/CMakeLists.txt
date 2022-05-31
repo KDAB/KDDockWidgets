@@ -52,8 +52,6 @@ set(KDDW_BACKEND_SRCS
     private/multisplitter/Item_p.h
     private/multisplitter/ItemFreeContainer.cpp
     private/multisplitter/ItemFreeContainer_p.h
-    private/multisplitter/MultiSplitterConfig.cpp
-    private/multisplitter/MultiSplitterConfig.h
     controllers/DockWidget.cpp
     controllers/DockWidget.h
     controllers/DropArea.cpp

@@ -10,8 +10,8 @@
 */
 
 #include "Item_p.h"
-#include "MultiSplitterConfig.h"
 #include "View.h"
+#include "Config.h"
 #include "controllers/Separator.h"
 #include "controllers/Frame.h"
 #include "ItemFreeContainer_p.h"

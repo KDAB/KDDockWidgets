@@ -10,7 +10,6 @@
 */
 
 #include "private/multisplitter/Item_p.h"
-#include "private/multisplitter/MultiSplitterConfig.h"
 #include "View.h"
 #include "controllers/Separator.h"
 
@@ -40,10 +39,6 @@ public Q_SLOTS:
     void initTestCase()
     {
         s_testObject = this;
-
-        Layouting::Config::self().setSeparatorFactoryFunc([](Controllers::Separator *controller, View *parent) -> View * {
-            return KDDockWidgets::Config::self().viewFactory()->createSeparator(controller, parent);
-        });
     }
 
     void cleanupTestCase()
