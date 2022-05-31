@@ -888,9 +888,9 @@ void TestDocks::tst_28NestedWidgets_data()
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible }
     };
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    QTest::newRow("28") << docks << QVector<int> { 11, 0 };
-#endif
+    if (Platform::instance()->isQtWidgets())
+        QTest::newRow("28") << docks << QVector<int> { 11, 0 };
+
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
@@ -917,19 +917,19 @@ void TestDocks::tst_28NestedWidgets_data()
         { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    // 2. Produced valgrind invalid reads while adding
-    QTest::newRow("valgrind") << docks << QVector<int> {};
-#endif
+    if (Platform::instance()->isQtWidgets()) {
+        // 2. Produced valgrind invalid reads while adding
+        QTest::newRow("valgrind") << docks << QVector<int> {};
+    }
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnTop, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    QTest::newRow("bug_when_closing") << docks << QVector<int> {}; // Q_ASSERT(!isSquashed())
-#endif
+    if (Platform::instance()->isQtWidgets())
+        QTest::newRow("bug_when_closing") << docks << QVector<int> {}; // Q_ASSERT(!isSquashed())
+
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
@@ -937,9 +937,9 @@ void TestDocks::tst_28NestedWidgets_data()
         { Location_OnRight, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartVisible },
     };
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    QTest::newRow("bug_when_closing2") << docks << QVector<int> {}; // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
-#endif
+    if (Platform::instance()->isQtWidgets())
+        QTest::newRow("bug_when_closing2") << docks << QVector<int> {}; // Tests for void KDDockWidgets::Anchor::setPosition(int, KDDockWidgets::Anchor::SetPositionOptions) Negative position -69
+
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartVisible },
         { Location_OnBottom, 0, nullptr, InitialVisibilityOption::StartVisible },
@@ -976,9 +976,9 @@ void TestDocks::tst_28NestedWidgets_data()
         if (i != 16 && i != 17 && i != 18 && i != 27)
             docksToHide << i;
     }
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    QTest::newRow("bug_with_holes") << docks << docksToHide;
-#endif
+    if (Platform::instance()->isQtWidgets())
+        QTest::newRow("bug_with_holes") << docks << docksToHide;
+
     docks = {
         { Location_OnLeft, -1, nullptr, InitialVisibilityOption::StartHidden },
         { Location_OnBottom, -1, nullptr, InitialVisibilityOption::StartHidden },
@@ -2956,11 +2956,11 @@ void TestDocks::tst_addToSmallMainWindow2()
 
     QVERIFY(qAbs(m->width() - osWindowMinWidth()) < 15); // Not very important verification. Anyway, using 15 to account for margins and what not.
     m->addDockWidget(dock2, KDDockWidgets::Location_OnRight);
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    QVERIFY(Platform::instance()->tests_waitForResize(m.get()));
-#else
-    QTest::qWait(100);
-#endif
+    if (Platform::instance()->isQtWidgets())
+        QVERIFY(Platform::instance()->tests_waitForResize(m.get()));
+    else
+        QTest::qWait(100);
+
 
     QVERIFY(dropArea->layoutWidth() > osWindowMinWidth());
     QMargins margins = m->centerWidgetMargins();
@@ -4683,12 +4683,12 @@ void TestDocks::tst_titleBarFocusedWhenTabsChange()
     QVERIFY(dock1->titleBar()->isFocused());
     QVERIFY(!dock2->titleBar()->isFocused());
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    // TODO: Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++ TitleBar for focus
-    Tests::clickOn(globalPos, tabBar2->view());
-    QVERIFY(!dock1->titleBar()->isFocused());
-    QVERIFY(dock2->titleBar()->isFocused());
-#endif
+    if (Platform::instance()->isQtWidgets()) {
+        // TODO: Not yet ready for QtQuick. The TitleBar.qml is clicked, but we check the C++ TitleBar for focus
+        Tests::clickOn(globalPos, tabBar2->view());
+        QVERIFY(!dock1->titleBar()->isFocused());
+        QVERIFY(dock2->titleBar()->isFocused());
+    }
 }
 
 void TestDocks::tst_floatingAction()
@@ -5765,9 +5765,8 @@ void TestDocks::tst_constraintsAfterPlaceholder()
     m->addDockWidget(dock2, Location_OnTop);
     m->addDockWidget(dock3, Location_OnTop);
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    QVERIFY(Platform::instance()->tests_waitForResize(m.get()));
-#endif
+    if (Platform::instance()->isQtWidgets())
+        QVERIFY(Platform::instance()->tests_waitForResize(m.get()));
 
     QVERIFY(m->view()->minimumHeight() > minHeight * 3); // > since some vertical space is occupied by the separators
 
@@ -6067,22 +6066,22 @@ void TestDocks::tst_redocksToPreviousTabIndex()
     auto tb = dock0->dptr()->frame()->tabWidget()->tabBar();
     tb->moveTabTo(0, 1);
 
-#ifdef KDDOCKWIDGETS_QTWIDGETS
-    QCOMPARE(dock0->tabIndex(), 1);
-    QCOMPARE(dock1->tabIndex(), 0);
+    if (!Platform::instance()->isQtQuick()) {
+        QCOMPARE(dock0->tabIndex(), 1);
+        QCOMPARE(dock1->tabIndex(), 0);
 
-    // Also detach via detachTab(), which is what is called when the user detaches with mouse
-    frame->detachTab(dock0);
-    dock0->setFloating(false);
+        // Also detach via detachTab(), which is what is called when the user detaches with mouse
+        frame->detachTab(dock0);
+        dock0->setFloating(false);
 
-    QCOMPARE(dock0->tabIndex(), 1);
-    QCOMPARE(dock1->tabIndex(), 0);
-#else
-    // An XFAIL so we remember to implement this
-    QEXPECT_FAIL("", "TabBar::moveTabTo not implemented for QtQuick yet", Continue);
-    QVERIFY(false);
-    Q_UNUSED(frame);
-#endif
+        QCOMPARE(dock0->tabIndex(), 1);
+        QCOMPARE(dock1->tabIndex(), 0);
+    } else {
+        // An XFAIL so we remember to implement this
+        QEXPECT_FAIL("", "TabBar::moveTabTo not implemented for QtQuick yet", Continue);
+        QVERIFY(false);
+        Q_UNUSED(frame);
+    }
 }
 
 void TestDocks::tst_toggleTabbed()
