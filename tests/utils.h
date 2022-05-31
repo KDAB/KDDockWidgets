@@ -135,22 +135,6 @@ Controllers::DockWidget *createDockWidget(const QString &name, QColor color = Qt
 void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea, Controllers::Frame *relativeTo,
                     KDDockWidgets::Location location);
 
-#ifdef KDDOCKWIDGETS_QTQUICK
-
-class EmbeddedWindow : public QWidgetAdapter
-{
-public:
-    explicit EmbeddedWindow(MainWindowBase *m)
-        : mainWindow(m)
-    {
-    }
-
-    ~EmbeddedWindow() override;
-
-    MainWindowBase *const mainWindow;
-};
-
-#else
 
 class EmbeddedWindow : public QWidget
 {
@@ -164,11 +148,6 @@ public:
 
     Controllers::MainWindow *const mainWindow;
 };
-
-namespace {
-}
-
-#endif
 
 void doubleClickOn(QPoint globalPos, View *receiver);
 void doubleClickOn(QPoint globalPos, Window::Ptr receiver);

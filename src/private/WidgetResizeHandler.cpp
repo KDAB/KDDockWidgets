@@ -484,13 +484,13 @@ CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
     if (!mTarget)
         return CursorPosition_Undefined;
 
-#ifdef KDDOCKWIDGETS_QTQUICK
     if (isMDI()) {
         // Special case for QtQuick. The MouseAreas are driving it and know better what's the
         // cursor position
-        return CursorPosition(mTarget->property("cursorPosition").toInt());
+        const QVariant v = mTarget->property("cursorPosition");
+        if (v.isValid())
+            return CursorPosition(v.toInt());
     }
-#endif
 
     QPoint pos = mTarget->mapFromGlobal(globalPos);
 
