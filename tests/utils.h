@@ -137,23 +137,6 @@ void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropAr
 
 #ifdef KDDOCKWIDGETS_QTQUICK
 
-class NonClosableWidget : public QWidgetAdapter
-{
-public:
-    explicit NonClosableWidget()
-        : QWidgetAdapter()
-    {
-    }
-
-    ~NonClosableWidget();
-
-protected:
-    void onCloseEvent(QCloseEvent *ev) override
-    {
-        ev->ignore(); // don't allow to close
-    }
-};
-
 class EmbeddedWindow : public QWidgetAdapter
 {
 public:
