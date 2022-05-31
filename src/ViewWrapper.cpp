@@ -85,7 +85,7 @@ void ViewWrapper::setFlag(Qt::WindowType, bool)
 
 void ViewWrapper::setAttribute(Qt::WidgetAttribute, bool)
 {
-    qFatal("Not implemented");
+    // Not relevant to QtQuick
 }
 
 Qt::WindowFlags ViewWrapper::flags() const
