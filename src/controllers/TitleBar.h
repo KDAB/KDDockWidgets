@@ -89,20 +89,19 @@ public:
     /// Returns nullptr otherwise
     MainWindow *mainWindow() const;
 
-    // slots:
-    bool onDoubleClicked();
     void focusInEvent(QFocusEvent *);
 
     /// @brief updates the close button enabled state
     void updateButtons();
-
-    Q_INVOKABLE void onCloseClicked();
-    Q_INVOKABLE void onFloatClicked();
     QString floatButtonToolTip() const;
-    Q_INVOKABLE void onMaximizeClicked();
-    Q_INVOKABLE void onMinimizeClicked();
-    Q_INVOKABLE void onAutoHideClicked();
-    Q_INVOKABLE void toggleMaximized();
+
+    bool onDoubleClicked();
+    void onCloseClicked();
+    void onFloatClicked();
+    void onMaximizeClicked();
+    void onMinimizeClicked();
+    void onAutoHideClicked();
+    void toggleMaximized();
 
     bool closeButtonEnabled() const;
     bool floatButtonVisible() const;

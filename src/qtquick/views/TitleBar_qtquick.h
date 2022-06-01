@@ -69,6 +69,14 @@ protected:
     void setCloseButtonEnabled(bool);
     void setFloatButtonVisible(bool);
 
+    Q_INVOKABLE bool onDoubleClicked();
+    Q_INVOKABLE void onCloseClicked();
+    Q_INVOKABLE void onFloatClicked();
+    Q_INVOKABLE void onMaximizeClicked();
+    Q_INVOKABLE void onMinimizeClicked();
+    Q_INVOKABLE void onAutoHideClicked();
+    Q_INVOKABLE void toggleMaximized();
+
 Q_SIGNALS:
     void titleBarQmlItemChanged();
     void titleChanged();

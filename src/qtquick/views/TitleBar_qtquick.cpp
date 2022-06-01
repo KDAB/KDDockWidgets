@@ -152,3 +152,38 @@ void TitleBar_qtquick::setFloatButtonVisible(bool is)
 {
     m_controller->setFloatButtonVisible(is);
 }
+
+bool TitleBar_qtquick::onDoubleClicked()
+{
+    return m_controller->onDoubleClicked();
+}
+
+void TitleBar_qtquick::onCloseClicked()
+{
+    m_controller->onCloseClicked();
+}
+
+void TitleBar_qtquick::onFloatClicked()
+{
+    m_controller->onFloatClicked();
+}
+
+void TitleBar_qtquick::onMaximizeClicked()
+{
+    m_controller->onMaximizeClicked();
+}
+
+void TitleBar_qtquick::onMinimizeClicked()
+{
+    m_controller->onMinimizeClicked();
+}
+
+void TitleBar_qtquick::onAutoHideClicked()
+{
+    m_controller->onAutoHideClicked();
+}
+
+void TitleBar_qtquick::toggleMaximized()
+{
+    m_controller->toggleMaximized();
+}
