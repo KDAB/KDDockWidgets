@@ -237,9 +237,9 @@ public:
      * {
      *    // disallows dockFoo to be tabbed with dockBar.
      *    return !(source.contains(dockFoo) && target.contains(dockBar));
-     * }
+     * };
      *
-     * KDDockWidgets::Config::self()->setTabbingAllowedFunc(func);
+     * KDDockWidgets::Config::self().setTabbingAllowedFunc(func);
      *
      * @endcode
      */
@@ -266,9 +266,9 @@ public:
      * {
      *    // disallows dockFoo to be docked to outer areas
      *    return !((loc & KDDockWidgets::DropLocation_Outter) && source.contains(dockFoo));
-     * }
+     * };
      *
-     * KDDockWidgets::Config::self()->setDropIndicatorAllowedFunc(func);
+     * KDDockWidgets::Config::self().setDropIndicatorAllowedFunc(func);
      *
      * @endcode
      *
