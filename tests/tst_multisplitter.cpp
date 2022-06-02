@@ -1920,6 +1920,10 @@ void TestMultiSplitter::tst_numSideBySide_recursive()
     ItemBoxContainer::insertItemRelativeTo(item1Child1Child, item1Child, Location_OnBottom);
     QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 4);
     QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 2);
+
+    item2->turnIntoPlaceholder();
+    QCOMPARE(root->numSideBySide_recursive(Qt::Vertical), 3);
+    QCOMPARE(root->numSideBySide_recursive(Qt::Horizontal), 2);
 }
 
 int main(int argc, char *argv[])
