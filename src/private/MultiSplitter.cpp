@@ -242,3 +242,8 @@ bool MultiSplitter::deserialize(const LayoutSaver::MultiSplitter &l)
     setRootItem(new Layouting::ItemBoxContainer(this));
     return LayoutWidget::deserialize(l);
 }
+
+int MultiSplitter::numSideBySide_recursive(Qt::Orientation o) const
+{
+    return m_rootItem->numSideBySide_recursive(o);
+}
