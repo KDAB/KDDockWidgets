@@ -475,6 +475,10 @@ public:
     bool isHorizontal() const;
     int length() const;
 
+    /// @brief Returns the number of items layed out horizontally or vertically
+    /// But honours nesting
+    int numSideBySide_recursive(Qt::Orientation) const;
+
 private:
     bool hasOrientation() const;
     int indexOfVisibleChild(const Item *) const;
