@@ -267,7 +267,8 @@ int main(int argc, char **argv)
         // Dock widget 8 will only be allowed to dock to the outer areasa
         auto func = [](KDDockWidgets::DropLocation location,
                        const KDDockWidgets::DockWidgetBase::List &source,
-                       const KDDockWidgets::DockWidgetBase::List &target) {
+                       const KDDockWidgets::DockWidgetBase::List &target,
+                       KDDockWidgets::DropArea *) {
             Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already tabbed dock widgets
 
             const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [] (KDDockWidgets::DockWidgetBase *dw) {
