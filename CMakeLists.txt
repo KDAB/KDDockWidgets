@@ -156,6 +156,7 @@ add_definitions(-DQT_NO_KEYWORDS)
 
 if (KDDW_FRONTEND_QTWIDGETS)
   add_definitions(-DKDDW_FRONTEND_QTWIDGETS)
+  find_package(Qt${Qt_VERSION_MAJOR}Widgets ${QT_MIN_VERSION} REQUIRED)
   set(${PROJECT_NAME}_DEPS "widgets")
 endif()
 
