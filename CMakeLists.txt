@@ -69,6 +69,11 @@
 #  Enable coverage reporting.
 #  Ignored unless KDDockWidgets_DEVELOPER_MODE=True
 #  Default=false
+#
+# -DKDDockWidgets_FRONTENDS='qtwidgets;qtquick'
+# Semicolon separated list of frontends to enable. If not specified,
+# frontends will be enabled based on availablity of libraries on
+# your system.
 
 cmake_minimum_required(VERSION 3.7)
 
@@ -109,6 +114,7 @@ option(${PROJECT_NAME}_WERROR "Use -Werror (will be true for developer-mode unco
 option(${PROJECT_NAME}_X11EXTRAS "On Linux, link against QtX11Extras so we can detect if the compositor supports transparency. Not applicable to other platforms or Qt6." ON)
 option(${PROJECT_NAME}_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
 option(${PROJECT_NAME}_CODE_COVERAGE "Enable coverage reporting" OFF)
+option(${PROJECT_NAME}_FRONTENDS "Semicolon separated list of frontends to enable" "")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
@@ -147,9 +153,59 @@ else()
 endif()
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
-# TODOv2
-set(KDDW_FRONTEND_QTWIDGETS ON)
-set(KDDW_FRONTEND_QTQUICK ON)
+# BEGIN frontend enabling
+set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick")
+foreach(frontend ${${PROJECT_NAME}_FRONTENDS})
+  if (NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
+    message(FATAL_ERROR "Unknown frontend ${frontend}")
+  endif()
+endforeach()
+
+if (NOT ${PROJECT_NAME}_FRONTENDS)
+  set(ENABLED_FRONTENDS "")
+  message("No frontends specified explicitly.")
+  # qtwidgets
+  if (Qt${Qt_VERSION_MAJOR}Widgets_FOUND)
+    #message("Qt${Qt_VERSION_MAJOR}Widgets found, enabling qtwidgets frontend")
+    list(APPEND ENABLED_FRONTENDS "qtwidgets")
+    set(KDDW_FRONTEND_QTWIDGETS ON)
+  endif()
+  # qtquick
+  find_package(Qt${Qt_VERSION_MAJOR}Quick ${QT_MIN_VERSION})
+  if (Qt${Qt_VERSION_MAJOR}Quick_FOUND)
+    list(APPEND ENABLED_FRONTENDS "qtquick")
+    set(KDDW_FRONTEND_QTQUICK ON)
+  endif()
+
+  if (NOT ENABLED_FRONTENDS)
+    message(FATAL_ERROR "Failed to enable any frontends. Please install the required libraries and try again.")
+  endif()
+
+  message("Following frontends have been enabled:")
+  foreach (frontend ${ENABLED_FRONTENDS})
+    message("* ${frontend}")
+  endforeach()
+
+else()
+  # qtwidgets
+  if ("qtwidgets" IN_LIST ${PROJECT_NAME}_FRONTENDS)
+    if (NOT Qt${Qt_VERSION_MAJOR}Widgets_FOUND)
+      message(FATAL_ERROR "qtwidgets specified in enabled frontends Qt${Qt_VERSION_MAJOR}Widgets not found on your system")
+    else()
+      set(KDDW_FRONTEND_QTWIDGETS ON)
+    endif()
+  endif()
+  # qtquick
+  if ("qtquick" IN_LIST ${PROJECT_NAME}_FRONTENDS)
+    find_package(Qt${Qt_VERSION_MAJOR}Quick ${QT_MIN_VERSION})
+    if (NOT Qt${Qt_VERSION_MAJOR}Quick_FOUND)
+      message(FATAL_ERROR "qtquick specified in enabled frontends Qt${Qt_VERSION_MAJOR}Quick not found on your system")
+    else()
+      set(KDDW_FRONTEND_QTQUICK ON)
+    endif()
+  endif()
+endif()
+# END frontend enabling
 
 add_definitions(-DQT_NO_KEYWORDS)
 
