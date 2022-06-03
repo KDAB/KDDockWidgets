@@ -461,6 +461,14 @@ bool QWidgetAdapter::isMaximized() const
     return false;
 }
 
+bool QWidgetAdapter::isFullScreen() const
+{
+    if (QWindow *w = windowHandle())
+        return w->windowStates() & Qt::WindowFullScreen;
+
+    return false;
+}
+
 bool QWidgetAdapter::isMinimized() const
 {
     if (QWindow *w = windowHandle())

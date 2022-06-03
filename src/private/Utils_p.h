@@ -62,6 +62,11 @@ inline bool isXCB()
     return qApp->platformName() == QLatin1String("xcb");
 }
 
+inline bool isEGLFS()
+{
+    return qApp->platformName() == QLatin1String("eglfs");
+}
+
 inline bool kddwUsesQtWidgets()
 {
     // Returns whether KDDW is built for QtWidgets or QtQuick

@@ -313,8 +313,13 @@ bool DropArea::drop(WindowBeingDragged *draggedWindow, Frame *acceptingFrame,
     }
 
     if (result) {
-        // Window receiving the drop gets raised:
-        raiseAndActivate();
+        // Window receiving the drop gets raised.
+        // Exception: Under EGLFS we don't raise the fullscreen main window, as then all floating windows would
+        // go behind. It's also unneeded to raise, as it's fullscreen.
+
+        const bool isEGLFSRootWindow = isEGLFS() && (window()->isFullScreen() || window()->isMaximized());
+        if (!isEGLFSRootWindow)
+            raiseAndActivate();
 
         if (needToFocusNewlyDroppedWidgets) {
             // Let's also focus the newly dropped dock widget

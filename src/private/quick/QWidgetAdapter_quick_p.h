@@ -186,6 +186,7 @@ public:
         return isWindow();
     }
     bool isMaximized() const;
+    bool isFullScreen() const;
     bool isMinimized() const;
     bool isActiveWindow() const;
     Q_INVOKABLE void showMaximized();
