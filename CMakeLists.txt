@@ -94,27 +94,27 @@ else()
           LANGUAGES CXX)
 endif()
 
-set(${PROJECT_NAME}_VERSION_MAJOR 2)
-set(${PROJECT_NAME}_VERSION_MINOR 0)
-set(${PROJECT_NAME}_VERSION_PATCH 9)
-set(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
-set(PROJECT_VERSION ${${PROJECT_NAME}_VERSION}) #PROJECT_VERSION is needed by some ECM modules
-set(${PROJECT_NAME}_SOVERSION "2.0")
+set(KDDockWidgets_VERSION_MAJOR 2)
+set(KDDockWidgets_VERSION_MINOR 0)
+set(KDDockWidgets_VERSION_PATCH 9)
+set(KDDockWidgets_VERSION ${KDDockWidgets_VERSION_MAJOR}.${KDDockWidgets_VERSION_MINOR}.${KDDockWidgets_VERSION_PATCH})
+set(PROJECT_VERSION ${KDDockWidgets_VERSION}) #PROJECT_VERSION is needed by some ECM modules
+set(KDDockWidgets_SOVERSION "2.0")
 
 include(FeatureSummary)
 
-option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
-option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
-option(${PROJECT_NAME}_PYTHON_BINDINGS "Build python bindings" OFF)
-option(${PROJECT_NAME}_STATIC "Build statically" OFF)
-option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
-option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
-option(${PROJECT_NAME}_DOCS "Build the API documentation" OFF)
-option(${PROJECT_NAME}_WERROR "Use -Werror (will be true for developer-mode unconditionally)" OFF)
-option(${PROJECT_NAME}_X11EXTRAS "On Linux, link against QtX11Extras so we can detect if the compositor supports transparency. Not applicable to other platforms or Qt6." ON)
-option(${PROJECT_NAME}_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
-option(${PROJECT_NAME}_CODE_COVERAGE "Enable coverage reporting" OFF)
-option(${PROJECT_NAME}_FRONTENDS "Semicolon separated list of frontends to enable" "")
+option(KDDockWidgets_QT6 "Build against Qt 6" OFF)
+option(KDDockWidgets_DEVELOPER_MODE "Developer Mode" OFF)
+option(KDDockWidgets_PYTHON_BINDINGS "Build python bindings" OFF)
+option(KDDockWidgets_STATIC "Build statically" OFF)
+option(KDDockWidgets_TESTS "Build the tests" OFF)
+option(KDDockWidgets_EXAMPLES "Build the examples" ON)
+option(KDDockWidgets_DOCS "Build the API documentation" OFF)
+option(KDDockWidgets_WERROR "Use -Werror (will be true for developer-mode unconditionally)" OFF)
+option(KDDockWidgets_X11EXTRAS "On Linux, link against QtX11Extras so we can detect if the compositor supports transparency. Not applicable to other platforms or Qt6." ON)
+option(KDDockWidgets_XLib "On Linux, link against XLib, for a more robust window z-order detection." OFF)
+option(KDDockWidgets_CODE_COVERAGE "Enable coverage reporting" OFF)
+option(KDDockWidgets_FRONTENDS "Semicolon separated list of frontends to enable" "")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
@@ -122,7 +122,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
 
 # Set a default build type if none was specified
 set(default_build_type "Release")
-if(EXISTS "${CMAKE_SOURCE_DIR}/.git" OR ${PROJECT_NAME}_DEVELOPER_MODE)
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git" OR KDDockWidgets_DEVELOPER_MODE)
   set(default_build_type "Debug")
 endif()
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -132,36 +132,36 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-if (${PROJECT_NAME}_XLib)
+if (KDDockWidgets_XLib)
   add_definitions(-DKDDockWidgets_XLIB)
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src) # TODOv2 Replace with target_include_directories (PRIVATE)
 
-if(${PROJECT_NAME}_QT6)
+if(KDDockWidgets_QT6)
   set(Qt_VERSION_MAJOR 6)
   set(QT_MIN_VERSION "6.2.0")
   find_package(Qt6Widgets ${QT_MIN_VERSION} REQUIRED)
   find_package(Qt6Test ${QT_MIN_VERSION} REQUIRED)
-  set(${PROJECT_NAME}_LIBRARY_QTID "-qt6")
+  set(KDDockWidgets_LIBRARY_QTID "-qt6")
 else()
   set(Qt_VERSION_MAJOR 5)
   set(QT_MIN_VERSION "5.15")
   find_package(Qt5Widgets ${QT_MIN_VERSION} REQUIRED)
   find_package(Qt5Test ${QT_MIN_VERSION} REQUIRED)
-  set(${PROJECT_NAME}_LIBRARY_QTID "")
+  set(KDDockWidgets_LIBRARY_QTID "")
 endif()
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 # BEGIN frontend enabling
 set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick")
-foreach(frontend ${${PROJECT_NAME}_FRONTENDS})
+foreach(frontend ${KDDockWidgets_FRONTENDS})
   if (NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
     message(FATAL_ERROR "Unknown frontend ${frontend}")
   endif()
 endforeach()
 
-if (NOT ${PROJECT_NAME}_FRONTENDS)
+if (NOT KDDockWidgets_FRONTENDS)
   set(ENABLED_FRONTENDS "")
   message("No frontends specified explicitly.")
   # qtwidgets
@@ -188,7 +188,7 @@ if (NOT ${PROJECT_NAME}_FRONTENDS)
 
 else()
   # qtwidgets
-  if ("qtwidgets" IN_LIST ${PROJECT_NAME}_FRONTENDS)
+  if ("qtwidgets" IN_LIST KDDockWidgets_FRONTENDS)
     if (NOT Qt${Qt_VERSION_MAJOR}Widgets_FOUND)
       message(FATAL_ERROR "qtwidgets specified in enabled frontends Qt${Qt_VERSION_MAJOR}Widgets not found on your system")
     else()
@@ -196,7 +196,7 @@ else()
     endif()
   endif()
   # qtquick
-  if ("qtquick" IN_LIST ${PROJECT_NAME}_FRONTENDS)
+  if ("qtquick" IN_LIST KDDockWidgets_FRONTENDS)
     find_package(Qt${Qt_VERSION_MAJOR}Quick ${QT_MIN_VERSION})
     if (NOT Qt${Qt_VERSION_MAJOR}Quick_FOUND)
       message(FATAL_ERROR "qtquick specified in enabled frontends Qt${Qt_VERSION_MAJOR}Quick not found on your system")
@@ -213,24 +213,24 @@ add_definitions(-DQT_NO_KEYWORDS)
 if (KDDW_FRONTEND_QTWIDGETS)
   add_definitions(-DKDDW_FRONTEND_QTWIDGETS)
   find_package(Qt${Qt_VERSION_MAJOR}Widgets ${QT_MIN_VERSION} REQUIRED)
-  set(${PROJECT_NAME}_DEPS "widgets")
+  set(KDDockWidgets_DEPS "widgets")
 endif()
 
 if (KDDW_FRONTEND_QTQUICK)
   add_definitions(-DKDDW_FRONTEND_QTQUICK)
   find_package(Qt${Qt_VERSION_MAJOR}Quick REQUIRED)
   find_package(Qt${Qt_VERSION_MAJOR}QuickControls2 REQUIRED)
-  set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} quick quickcontrols2")
+  set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} quick quickcontrols2")
 endif()
 
-if(NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6 AND ${PROJECT_NAME}_X11EXTRAS)
-  set(${PROJECT_NAME}_DEPS "${${PROJECT_NAME}_DEPS} x11extras")
+if(NOT WIN32 AND NOT APPLE AND NOT EMSCRIPTEN AND NOT KDDockWidgets_QT6 AND KDDockWidgets_X11EXTRAS)
+  set(KDDockWidgets_DEPS "${KDDockWidgets_DEPS} x11extras")
 endif()
 
 #Always build the test harness in developer-mode
-if(${PROJECT_NAME}_DEVELOPER_MODE)
-  set(${PROJECT_NAME}_TESTS ON)
-  set(${PROJECT_NAME}_WERROR ON)
+if(KDDockWidgets_DEVELOPER_MODE)
+  set(KDDockWidgets_TESTS ON)
+  set(KDDockWidgets_WERROR ON)
   include(ECMEnableSanitizers)
   # find_package(doctest REQUIRED) TODOv2
 endif()
@@ -253,7 +253,7 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 macro(set_compiler_flags targetName)
-  if(${PROJECT_NAME}_DEVELOPER_MODE)
+  if(KDDockWidgets_DEVELOPER_MODE)
     target_compile_definitions(${targetName} PUBLIC DOCKS_DEVELOPER_MODE PRIVATE QT_FORCE_ASSERTS)
 
     if(NOT MSVC)
@@ -267,7 +267,7 @@ macro(set_compiler_flags targetName)
   endif()
 
   # Enable -Werror
-  if(${PROJECT_NAME}_WERROR AND (NOT MSVC OR IS_CLANG_BUILD)) # clang-cl accepts these too
+  if(KDDockWidgets_WERROR AND (NOT MSVC OR IS_CLANG_BUILD)) # clang-cl accepts these too
     target_compile_options(${targetName} PRIVATE -Werror -Wundef -Wno-error=deprecated-declarations)
   endif()
 endmacro()
@@ -296,17 +296,17 @@ if((CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND NOT APPLE) OR
   endif()
 endif()
 
-if(${PROJECT_NAME}_STATIC)
-  set(${PROJECT_NAME}_LIBRARY_MODE "STATIC")
+if(KDDockWidgets_STATIC)
+  set(KDDockWidgets_LIBRARY_MODE "STATIC")
 else()
-  set(${PROJECT_NAME}_LIBRARY_MODE "SHARED")
+  set(KDDockWidgets_LIBRARY_MODE "SHARED")
 endif()
 
 if(KDAB_INSTALL)
   if(UNIX)
-    set(CMAKE_INSTALL_PREFIX "/usr/local/KDAB/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}" CACHE INTERNAL "Install to default KDAB Location")
+    set(CMAKE_INSTALL_PREFIX "/usr/local/KDAB/KDDockWidgets-${KDDockWidgets_VERSION}" CACHE INTERNAL "Install to default KDAB Location")
   elseif(WIN32)
-    set(CMAKE_INSTALL_PREFIX "C:\\KDAB\\${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}" CACHE INTERNAL "Install to default KDAB Location")
+    set(CMAKE_INSTALL_PREFIX "C:\\KDAB\\KDDockWidgets-${KDDockWidgets_VERSION}" CACHE INTERNAL "Install to default KDAB Location")
   endif()
 endif()
 
@@ -314,9 +314,9 @@ endif()
 include(InstallLocation)
 
 if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
-  set(${PROJECT_NAME}_IS_ROOT_PROJECT TRUE)
+  set(KDDockWidgets_IS_ROOT_PROJECT TRUE)
 
-  message(STATUS "Building ${PROJECT_NAME} ${${PROJECT_NAME}_VERSION} in ${CMAKE_BUILD_TYPE} mode. Installing to ${CMAKE_INSTALL_PREFIX}")
+  message(STATUS "Building KDDockWidgets ${KDDockWidgets_VERSION} in ${CMAKE_BUILD_TYPE} mode. Installing to ${CMAKE_INSTALL_PREFIX}")
 
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
@@ -330,10 +330,10 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
   if(Qt_VERSION_MAJOR EQUAL 5 AND
     CMAKE_VERSION VERSION_GREATER "3.11.99" AND NOT CMAKE_CONFIGURATION_TYPES) # Not working with VS generator or older cmake versions
     include(ECMGeneratePriFile)
-    set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
+    set(PROJECT_VERSION_STRING ${KDDockWidgets_VERSION})
     ecm_generate_pri_file(BASE_NAME KDDockWidgets
       LIB_NAME kddockwidgets
-      DEPS ${${PROJECT_NAME}_DEPS}
+      DEPS ${KDDockWidgets_DEPS}
       FILENAME_VAR pri_filename
       INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR}
     )
@@ -341,28 +341,28 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
   endif()
 else()
   #Always disable tests, examples, docs when used as a submodule
-  set(${PROJECT_NAME}_IS_ROOT_PROJECT FALSE)
-  set(${PROJECT_NAME}_TESTS FALSE)
-  set(${PROJECT_NAME}_EXAMPLES FALSE)
-  set(${PROJECT_NAME}_DOCS FALSE)
+  set(KDDockWidgets_IS_ROOT_PROJECT FALSE)
+  set(KDDockWidgets_TESTS FALSE)
+  set(KDDockWidgets_EXAMPLES FALSE)
+  set(KDDockWidgets_DOCS FALSE)
 endif()
 
-if(${PROJECT_NAME}_TESTS)
+if(KDDockWidgets_TESTS)
   enable_testing()
 endif()
 
 add_subdirectory(src)
 
-if(${PROJECT_NAME}_PYTHON_BINDINGS)
-  if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR ${PROJECT_NAME}_STATIC)
+if(KDDockWidgets_PYTHON_BINDINGS)
+  if(CMAKE_BUILD_TYPE MATCHES "^[Dd]eb" OR KDDockWidgets_STATIC)
     message(FATAL_ERROR "** Python Bindings are disabled in debug or static builds.")
   endif()
 endif()
-if(${PROJECT_NAME}_PYTHON_BINDINGS)
+if(KDDockWidgets_PYTHON_BINDINGS)
   add_subdirectory(python)
 endif()
 
-if(${PROJECT_NAME}_EXAMPLES)
+if(KDDockWidgets_EXAMPLES)
   if(KDDW_FRONTEND_QTQUICK)
     add_subdirectory(examples/qtquick)
   endif()
@@ -377,8 +377,8 @@ if(${PROJECT_NAME}_EXAMPLES)
   endif()
 endif()
 
-if(${PROJECT_NAME}_TESTS)
-  if(${PROJECT_NAME}_DEVELOPER_MODE)
+if(KDDockWidgets_TESTS)
+  if(KDDockWidgets_DEVELOPER_MODE)
     add_subdirectory(tests)
 
     # Require Qt5.15.1 or higher to run the tests_launcher tests on Mac
@@ -428,11 +428,11 @@ if(${PROJECT_NAME}_TESTS)
   endif()
 endif()
 
-if(${PROJECT_NAME}_DOCS)
+if(KDDockWidgets_DOCS)
   add_subdirectory(docs) # needs to go last, in case there are build source files
 endif()
 
-if(${PROJECT_NAME}_IS_ROOT_PROJECT)
+if(KDDockWidgets_IS_ROOT_PROJECT)
    # Add uninstall target (not for submodules since parent projects typically have uninstall too)
   include(ECMUninstallTarget)
 endif()

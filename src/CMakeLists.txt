@@ -271,7 +271,7 @@ add_library(KDAB::kddockwidgets ALIAS kddockwidgets)
 set_target_properties(kddockwidgets PROPERTIES OUTPUT_NAME "kddockwidgets${KDDockWidgets_LIBRARY_QTID}")
 set_compiler_flags(kddockwidgets)
 
-if(${PROJECT_NAME}_QT6)
+if(KDDockWidgets_QT6)
   set(DOCKS_INCLUDES_INSTALL_PATH "include/kddockwidgets-qt6")
 else()
   set(DOCKS_INCLUDES_INSTALL_PATH "include/")
@@ -294,7 +294,7 @@ target_compile_definitions(kddockwidgets
   QT_NO_URL_CAST_FROM_STRING
   QT_NO_CAST_FROM_BYTEARRAY
 )
-if(${PROJECT_NAME}_STATIC)
+if(KDDockWidgets_STATIC)
   target_compile_definitions(kddockwidgets PUBLIC KDDOCKWIDGETS_STATICLIB)
 else()
   target_compile_definitions(kddockwidgets PRIVATE BUILDING_DOCKS_LIBRARY)
@@ -307,7 +307,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   endif()
 
   # Disable -Wconversion for Qt6. The qsizetype to int conversions are harmless
-  if(NOT ${PROJECT_NAME}_QT6)
+  if(NOT KDDockWidgets_QT6)
     target_compile_options(kddockwidgets PRIVATE -Wconversion)
   endif()
 
@@ -320,8 +320,8 @@ endif()
 # BEGIN coverage
 add_library(coverage_options INTERFACE)
 
-if(${PROJECT_NAME}_CODE_COVERAGE AND (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD) AND NOT MSVC)
-  if(${PROJECT_NAME}_DEVELOPER_MODE)
+if(KDDockWidgets_CODE_COVERAGE AND (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD) AND NOT MSVC)
+  if(KDDockWidgets_DEVELOPER_MODE)
     # Add required flags (GCC & LLVM/Clang)
     target_compile_options(coverage_options INTERFACE --coverage)
     if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
@@ -358,12 +358,12 @@ endif()
 
 if(WIN32)
   target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate dwmapi)
-elseif(NOT APPLE AND NOT EMSCRIPTEN AND NOT ${PROJECT_NAME}_QT6 AND ${PROJECT_NAME}_X11EXTRAS)
+elseif(NOT APPLE AND NOT EMSCRIPTEN AND NOT KDDockWidgets_QT6 AND KDDockWidgets_X11EXTRAS)
   find_package(Qt${Qt_VERSION_MAJOR}X11Extras)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::X11Extras)
 endif()
 
-if(${PROJECT_NAME}_XLib)
+if(KDDockWidgets_XLib)
   target_link_libraries(kddockwidgets PRIVATE X11)
 endif()
 
@@ -376,14 +376,14 @@ else()
 endif()
 
 set_target_properties(kddockwidgets PROPERTIES
-  SOVERSION ${${PROJECT_NAME}_SOVERSION}
-  VERSION ${${PROJECT_NAME}_VERSION}
+  SOVERSION ${KDDockWidgets_SOVERSION}
+  VERSION ${KDDockWidgets_VERSION}
 )
 
 #version libraries on Windows
 if(WIN32)
   if(CMAKE_BUILD_TYPE)
-    set(postfix ${${PROJECT_NAME}_VERSION_MAJOR})
+    set(postfix ${KDDockWidgets_VERSION_MAJOR})
     string(TOUPPER ${CMAKE_BUILD_TYPE} UPPER_BUILD_TYPE)
     if(${UPPER_BUILD_TYPE} MATCHES "^DEBUG")
       string(CONCAT postfix ${postfix} "d")
@@ -403,7 +403,7 @@ install(TARGETS kddockwidgets
         LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
         ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
 )
-if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
+if(MSVC AND NOT KDDockWidgets_STATIC)
   install(FILES "$<TARGET_PDB_FILE_DIR:kddockwidgets>/$<TARGET_PDB_FILE_NAME:kddockwidgets>" DESTINATION ${INSTALL_LIBRARY_DIR} CONFIGURATIONS Debug RelWithDebInfo)
 endif()
 
@@ -425,11 +425,11 @@ endif()
 # Generate library version files
 include(ECMSetupVersion)
 ecm_setup_version(
-  ${${PROJECT_NAME}_VERSION}
+  ${KDDockWidgets_VERSION}
   VARIABLE_PREFIX KDDOCKWIDGETS
   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h"
   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}ConfigVersion.cmake"
-  SOVERSION ${${PROJECT_NAME}_SOVERSION}
+  SOVERSION ${KDDockWidgets_SOVERSION}
   COMPATIBILITY AnyNewerVersion
 )
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kddockwidgets_version.h" DESTINATION ${DOCKS_INCLUDES_INSTALL_PATH}/kddockwidgets)
@@ -445,7 +445,7 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDDockWidgets${KDDockWidgets_LIBRARY_
         DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDDockWidgets${KDDockWidgets_LIBRARY_QTID}
 )
 
-if(${PROJECT_NAME}_DEVELOPER_MODE)
+if(KDDockWidgets_DEVELOPER_MODE)
   # Under developer mode since kddw might be a sub-folder of a project setting a different value for QT_DISABLE_DEPRECATED_BEFORE
   target_compile_definitions(kddockwidgets PRIVATE QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
