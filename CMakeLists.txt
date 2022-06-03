@@ -154,12 +154,14 @@ endif()
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 # BEGIN frontend enabling
-set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick")
-foreach(frontend ${KDDockWidgets_FRONTENDS})
-  if (NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
-    message(FATAL_ERROR "Unknown frontend ${frontend}")
-  endif()
-endforeach()
+if (KDDockWidgets_FRONTENDS)
+  set(KDDockWidgets_ALL_FRONTENDS "qtwidgets;qtquick")
+  foreach(frontend ${KDDockWidgets_FRONTENDS})
+    if (NOT ${frontend} IN_LIST KDDockWidgets_ALL_FRONTENDS)
+      message(FATAL_ERROR "Unknown frontend ${frontend}")
+    endif()
+  endforeach()
+endif()
 
 if (NOT KDDockWidgets_FRONTENDS)
   set(ENABLED_FRONTENDS "")
