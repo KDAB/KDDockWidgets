@@ -81,9 +81,7 @@ public:
     ///       widget that holds the titlebar and tab-widget which holds the
     ///       DockWidgets.
     ///@param parent just forward to Frame's constructor
-    ///@param options just forward to Frame's constructor
-    virtual View *createFrame(Controllers::Frame *, View *parent = nullptr,
-                              FrameOptions options = FrameOption_None) const = 0;
+    virtual View *createFrame(Controllers::Frame *, View *parent = nullptr) const = 0;
 
     ///@brief Called internally by the framework to create a TitleBar
     ///       Override to provide your own TitleBar sub-class. If overridden then

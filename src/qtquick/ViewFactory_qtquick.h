@@ -58,7 +58,7 @@ public:
                            Controllers::DockWidget::Options options = {},
                            Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                            Qt::WindowFlags windowFlags = {}) const override;
-    View *createFrame(Controllers::Frame *, View *parent, FrameOptions options = FrameOption_None) const override;
+    View *createFrame(Controllers::Frame *, View *parent) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::Frame *) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::FloatingWindow *) const override;
     View *createTabWidget(Controllers::Stack *, Controllers::Frame *parent) const override;

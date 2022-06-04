@@ -56,8 +56,7 @@ View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
     return new Views::DockWidget_qtquick(uniqueName, options, layoutSaverOptions, windowFlags);
 }
 
-View *ViewFactory_qtquick::createFrame(Controllers::Frame *controller, View *parent,
-                                       FrameOptions) const
+View *ViewFactory_qtquick::createFrame(Controllers::Frame *controller, View *parent) const
 {
     return new Views::Frame_qtquick(controller, Views::asQQuickItem(parent));
 }

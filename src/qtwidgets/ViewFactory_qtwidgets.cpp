@@ -61,10 +61,8 @@ View *ViewFactory_qtwidgets::createDockWidget(const QString &uniqueName,
 }
 
 
-View *ViewFactory_qtwidgets::createFrame(Controllers::Frame *controller, View *parent = nullptr,
-                                         FrameOptions) const
+View *ViewFactory_qtwidgets::createFrame(Controllers::Frame *controller, View *parent = nullptr) const
 {
-    // TODOm2: Remove options
     return new Views::Frame_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
