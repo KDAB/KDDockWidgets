@@ -28,7 +28,7 @@ public:
     explicit MDILayout_qtquick(Controllers::MDILayout *controller, View *parent);
     ~MDILayout_qtquick();
 
-    /// TODOv2
+    /// TODOm3
     void onLayoutRequest() override;
     bool onResize(QSize newSize) override;
 

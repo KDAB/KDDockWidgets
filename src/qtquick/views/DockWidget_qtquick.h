@@ -71,7 +71,7 @@ public:
 
     void init() override;
 
-    /// @reimp // TODOv2: Rename to setGuestView
+    /// @reimp // TODOm2: Rename to setGuestView
     Q_INVOKABLE void setWidget(QQuickItem *widget);
 
     /// @reimp

@@ -56,7 +56,7 @@ public:
 
     QRect dragRect() const override;
 
-    // TODOv2: Move this to a common base class between qtquick and qtwidgets
+    // TODOm3: Move this to a common base class between qtquick and qtwidgets
     void setLayoutItem(Layouting::Item *item) override;
 
     // QML interface:

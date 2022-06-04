@@ -706,7 +706,7 @@ bool DragController::eventFilter(QObject *o, QEvent *e)
 
     if (isWayland()) {
         // Wayland is very different. It uses QDrag for the dragging of a window.
-        // TODOv2: Uncomment and fix the qobject_cast, which should cast to the view, not the controller
+        // TODOm2: Uncomment and fix the qobject_cast, which should cast to the view, not the controller
         // if (auto dropArea = qobject_cast<DropArea *>(o)) {
         //     switch (int(e->type())) {
         //     case QEvent::DragEnter:
@@ -827,7 +827,7 @@ static QRect topLevelGeometry(const QWidget *topLevel)
 #endif
 
 static ViewWrapper::Ptr qtTopLevelUnderCursor_impl(QPoint globalPos, const Window::List &windows,
-                                                   View *windowBeingDragged) // TODOv2: Rename to viewBeingDragged
+                                                   View *windowBeingDragged) // TODOm2: Rename to viewBeingDragged
 {
     for (auto i = windows.size() - 1; i >= 0; --i) {
         Window::Ptr window = windows.at(i);

@@ -113,7 +113,7 @@ public:
     MainWindow_qtwidgets *const q;
     Controllers::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
-    QHash<SideBarLocation, Controllers::SideBar *> m_sideBars; // TODOv2: Move to controller
+    QHash<SideBarLocation, Controllers::SideBar *> m_sideBars; // TODOm2: Move to controller
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
     KDBindings::ConnectionHandle m_connection;

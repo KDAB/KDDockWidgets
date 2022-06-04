@@ -198,10 +198,10 @@ public:
     /// @brief Emitted when the count of visible widgets changes
     KDBindings::Signal<int> visibleWidgetCountChanged;
 
-    /// TODOv2: Better a signal, so that derived classes don't have to remember to call these
+    /// TODOm3: Better a signal, so that derived classes don't have to remember to call these
     bool onResize(QSize newSize);
 
-    /// TODOv2: Remove
+    /// TODOm2: Remove
     void viewAboutToBeDeleted();
 
 protected:

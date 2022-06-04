@@ -325,7 +325,7 @@ void ViewWrapper_qtwidgets::setCursor(Qt::CursorShape cursor)
 
 QSize ViewWrapper_qtwidgets::minSize() const
 {
-    // TODOv2: Remove duplication
+    // TODOm3: Remove duplication
     const int minW = m_widget->minimumWidth() > 0 ? m_widget->minimumWidth()
                                                   : m_widget->minimumSizeHint().width();
 

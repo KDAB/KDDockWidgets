@@ -83,7 +83,7 @@ void Stack_qtquick::setCurrentDockWidget(int index)
 
 QObject *Stack_qtquick::tabBarObj() const
 {
-    // TODOv2
+    // TODOm2
     return nullptr;
     // return m_tabBar->asWidget();
 }

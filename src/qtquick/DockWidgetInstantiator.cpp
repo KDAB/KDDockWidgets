@@ -193,7 +193,7 @@ void DockWidgetInstantiator::componentComplete()
         return;
     }
 
-    // TODOv2: Pass qmlEngine(this). Instantiate the DockWidget view directly.
+    // TODOm2: Pass qmlEngine(this). Instantiate the DockWidget view directly.
     m_dockWidget = Config::self().viewFactory()->createDockWidget(m_uniqueName)->asDockWidgetController();
 
     connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this,

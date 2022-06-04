@@ -136,7 +136,7 @@ if (KDDockWidgets_XLib)
   add_definitions(-DKDDockWidgets_XLIB)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src) # TODOv2 Replace with target_include_directories (PRIVATE)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src) # TODOm2 Replace with target_include_directories (PRIVATE)
 
 if(KDDockWidgets_QT6)
   set(Qt_VERSION_MAJOR 6)
@@ -222,7 +222,7 @@ if(KDDockWidgets_DEVELOPER_MODE)
   set(KDDockWidgets_TESTS ON)
   set(KDDockWidgets_WERROR ON)
   include(ECMEnableSanitizers)
-  # find_package(doctest REQUIRED) TODOv2
+  # find_package(doctest REQUIRED) TODOm2
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -250,7 +250,7 @@ macro(set_compiler_flags targetName)
       target_compile_options(${targetName} PRIVATE -Wall -Wextra)
     endif()
 
-    # // TODOv2: KDBindings is failing due to weak-vtables
+    # // TODOm2: KDBindings is failing due to weak-vtables
     # if(APPLE)
     #   target_compile_options(${targetName} PRIVATE -Wweak-vtables)
     # endif()

@@ -30,7 +30,7 @@ public:
     void init() override;
 
 protected:
-    // TODOv2
+    // TODOm2
     // Widget *createRubberBand(Widget *parent) override;
 
 public:

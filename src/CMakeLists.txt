@@ -312,7 +312,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   endif()
 
   if(IS_CLANG_BUILD)
-    # // TODOv2: KDBindings is failing due to weak-vtables
+    # // TODOm2: KDBindings is failing due to weak-vtables
     # target_compile_options(kddockwidgets PRIVATE -Wweak-vtables)
   endif()
 endif()
@@ -333,7 +333,7 @@ if(KDDockWidgets_CODE_COVERAGE AND (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD) 
 endif()
 # END coverage
 
-# TODOv2: Remove linking against QtTest after refactorings are made
+# TODOm2: Remove linking against QtTest after refactorings are made
 
 if (KDDW_FRONTEND_QTWIDGETS)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
@@ -343,7 +343,7 @@ if (KDDW_FRONTEND_QTQUICK)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Quick Qt${Qt_VERSION_MAJOR}::QuickControls2)
   target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate)
 
-  # TODOv2: Temporary, while QSizePolicy, QAction arent ported. These will be ported last.
+  # TODOm2: Temporary, while QSizePolicy, QAction arent ported. These will be ported last.
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets)
 endif()
 
@@ -451,7 +451,7 @@ if(KDDockWidgets_DEVELOPER_MODE)
 
   option(KDDockWidgets_LINTER "Build the layout linter" ON)
 
-  if(KDDW_FRONTEND_QTWIDGETS AND KDDockWidgets_LINTER) # TODOv2: make it not require any frontend
+  if(KDDW_FRONTEND_QTWIDGETS AND KDDockWidgets_LINTER) # TODOm2: make it not require any frontend
     add_executable(kddockwidgets_linter layoutlinter_main.cpp)
     target_link_libraries(kddockwidgets_linter kddockwidgets Qt${Qt_VERSION_MAJOR}::Widgets)
   endif()

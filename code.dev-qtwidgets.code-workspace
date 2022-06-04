@@ -24,7 +24,9 @@
       "XXX",
       "[ ]",
       "[x]",
-      "TODOv2"
+      "TODOm2",
+      "TODOm3",
+      "TODOm4"
     ],
     "testMate.cpp.test.executables": "{build-dev}/**/*{tst}*"
   },

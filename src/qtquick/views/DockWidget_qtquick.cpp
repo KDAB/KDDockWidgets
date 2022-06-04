@@ -155,7 +155,7 @@ QQuickItem *DockWidget_qtquick::frameVisualItem() const
 {
     if (Controllers::Frame *frame = this->frame()) {
         Q_UNUSED(frame)
-        // return frame->visualItem(); TODOv2
+        // return frame->visualItem(); TODOm2
     }
 
 
@@ -168,7 +168,7 @@ void DockWidget_qtquick::onGeometryUpdated()
         if (auto frameView = frame->view()) {
             Q_UNUSED(frame)
             Q_UNUSED(frameView)
-            // frameView->updateConstriants(); // TODOv2
+            // frameView->updateConstriants(); // TODOm2
             // frameView->updateGeometry();
         }
     }

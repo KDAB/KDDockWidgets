@@ -154,7 +154,7 @@ void Stack_qtwidgets::setupTabBarButtons()
     if (!(Config::self().flags() & Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden))
         return;
 
-    // TODOv2: Make sure people can only inherit from the Default*variants
+    // TODOm2: Make sure people can only inherit from the Default*variants
     auto factory = static_cast<ViewFactory_qtwidgets *>(Config::self().viewFactory());
     m_closeButton = factory->createTitleBarButton(this, TitleBarButtonType::Close);
     m_floatButton = factory->createTitleBarButton(this, TitleBarButtonType::Float);

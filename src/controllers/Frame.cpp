@@ -135,7 +135,7 @@ void Frame::setLayout(Layout *dt)
             m_resizeHandler = new WidgetResizeHandler(/*topLevel=*/false, view());
 
         // We keep the connect result so we don't dereference m_layout at shutdown
-        m_visibleWidgetCountChangedConnection->disconnect(); // TODOv2: Remove if tests pass. It's a KDBindings bug.
+        m_visibleWidgetCountChangedConnection->disconnect(); // TODOm3: Remove if tests pass. It's a KDBindings bug.
         m_visibleWidgetCountChangedConnection = m_layout->visibleWidgetCountChanged.connect(&Frame::updateTitleBarVisibility, this);
         updateTitleBarVisibility();
         if (wasInMainWindow != isInMainWindow())

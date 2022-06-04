@@ -30,7 +30,7 @@ class DOCKS_EXPORT ViewWrapper : public View
 public:
     using Ptr = std::shared_ptr<ViewWrapper>;
 
-    explicit ViewWrapper(Controller *controller, QObject *thisObj); // TODOv2: Remove thisObj argument once all calls to asQWidget() are removed
+    explicit ViewWrapper(Controller *controller, QObject *thisObj); // TODOm4: Remove thisObj argument once all calls to asQWidget() are removed
 
     void setMinimumSize(QSize) override;
     QSize maxSizeHint() const override;
@@ -60,7 +60,7 @@ public:
     void setMouseTracking(bool) override;
     std::shared_ptr<ViewWrapper> asWrapper() override;
 
-    /// TODOv2: Remove
+    /// TODOm3: Remove
     virtual Controllers::DropArea *asDropArea() const
     {
         return {};

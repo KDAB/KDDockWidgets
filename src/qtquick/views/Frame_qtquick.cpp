@@ -63,7 +63,7 @@ void Frame_qtquick::init()
     connect(m_controller->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
-    /// TODOv2: Review, seems awkward
+    /// TODOm2: Review, seems awkward
     connect(m_controller->tabWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *)), /// clazy:exclude=old-style-connect
             m_controller, SIGNAL(currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *)));
 
@@ -78,7 +78,7 @@ void Frame_qtquick::init()
     connect(m_controller, &Controllers::Frame::actualTitleBarChanged, this, &Frame_qtquick::actualTitleBarChanged);
 
     /*
-    // TODOv2: This signal seems unused
+    // TODOm2: This signal seems unused
     connect(this, &QWidgetAdapter::itemGeometryChanged, this, [this] {
         for (auto dw : m_controller->dockWidgets()) {
             Q_EMIT static_cast<Controllers::DockWidget *>(dw)->frameGeometryChanged(geometry());
@@ -263,13 +263,13 @@ KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::actualTitleBar() const
 
 int Frame_qtquick::userType() const
 {
-    /// TODOv2
+    /// TODOm2
     return 0;
 }
 
 bool Frame_qtquick::event(QEvent *e)
 {
-    // TODOv2: Move to controller. Too much logic to be here, and it's duplicated
+    // TODOm3: Move to controller. Too much logic to be here, and it's duplicated
     // with QtWidgets
     if (freed())
         return View_qtquick::event(e);

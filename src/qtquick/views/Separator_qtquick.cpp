@@ -39,7 +39,7 @@ bool Separator_qtquick::isVertical() const
     return m_controller->isVertical();
 }
 
-// TODOv2
+// TODOm2
 // Layouting::Widget *Separator_qtquick::createRubberBand(Layouting::Widget *parent)
 // {
 //     if (!parent) {

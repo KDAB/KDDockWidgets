@@ -159,7 +159,7 @@ public:
     virtual void setWindowTitle(const QString &title) = 0;
     virtual void setWindowIcon(const QIcon &) = 0;
 
-    // TODOv2: Move these to Window instead
+    // TODOm3: Move these to Window instead
     virtual void showNormal() = 0;
     virtual void showMinimized() = 0;
     virtual void showMaximized() = 0;
@@ -181,7 +181,7 @@ public:
     virtual void setCursor(Qt::CursorShape) = 0;
     virtual void setMouseTracking(bool) = 0;
 
-    // TODOv2: Check if these two should be in the controller or on view
+    // TODOm2: Check if these two should be in the controller or on view
     virtual void onLayoutRequest()
     {
     }

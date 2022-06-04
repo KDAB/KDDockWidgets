@@ -386,7 +386,7 @@ QStringList DockWidget::affinities() const
 
 void DockWidget::show()
 {
-    // TODOv2: show wont be called. move to view instead.
+    // TODOm2: show wont be called. move to view instead.
     if (view()->isRootView() && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
         // Create the FloatingWindow already, instead of waiting for the show event.
         // This reduces flickering on some platforms

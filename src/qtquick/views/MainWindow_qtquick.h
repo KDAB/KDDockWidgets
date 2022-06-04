@@ -44,7 +44,7 @@ public:
     /// @reimp
     QSize maximumSize() const override;
 
-    /// TODOv2 move into interface
+    /// TODOm3 move into interface
     Controllers::MainWindow *mainWindow() const;
 
 protected:

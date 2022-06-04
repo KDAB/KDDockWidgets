@@ -29,7 +29,7 @@ public:
     explicit MDILayout_qtwidgets(Controllers::MDILayout *controller, View *parent);
     ~MDILayout_qtwidgets();
 
-    /// TODOv2
+    /// TODOm3
     void onLayoutRequest() override;
     bool onResize(QSize newSize) override;
 

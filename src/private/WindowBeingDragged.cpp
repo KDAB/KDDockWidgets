@@ -213,7 +213,7 @@ WindowBeingDraggedWayland::WindowBeingDraggedWayland(Draggable *draggable)
         // case #2: the floating window itself is the draggable, happens on platforms that support
         // native dragging. Not the case for Wayland. But adding this case for completeness.
         m_floatingWindow = fw;
-#ifdef KDDW_FRONTEND_QTWIDGETS // TODOv2: Review this block
+#ifdef KDDW_FRONTEND_QTWIDGETS // TODOm2: Review this block
     } else if (auto tabBar = draggable->asView()->asTabBarController()) {
         if (Platform::instance()->isQtWidgets())
             m_dockWidget = tabBar->currentDockWidget();

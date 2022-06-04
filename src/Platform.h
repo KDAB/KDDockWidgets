@@ -56,7 +56,7 @@ public:
     virtual std::shared_ptr<ViewWrapper> focusedView() const = 0;
 
     /// @brief Returns the specified QObject casted to View
-    /// Nullptr if it's not a view. TODOv2: This is shared between the
+    /// Nullptr if it's not a view. TODOm3: This is shared between the
     /// QtQuick and QWidgets impl, but will be remove once we started removing Qt from backend
     virtual std::shared_ptr<ViewWrapper> qobjectAsView(QObject *) const = 0;
     virtual std::shared_ptr<Window> qobjectAsWindow(QObject *) const = 0;

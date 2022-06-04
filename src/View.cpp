@@ -48,7 +48,7 @@ View::~View()
     beingDestroyed.emit();
 
     if (!freed() && !is(Type::ViewWrapper)) {
-        // TODOv2
+        // TODOm3
         // Views should be deleted via View::free()!
         // However some of our deletes are coming from widgets parent destroying their children
         // But we want the controllers to drive things instead. For now detect the view destruction
