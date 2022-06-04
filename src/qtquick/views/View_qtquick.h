@@ -56,6 +56,7 @@ inline std::shared_ptr<ViewWrapper> asQQuickWrapper(QQuickItem *item)
 }
 
 
+
 class DOCKS_EXPORT View_qtquick : public QQuickItem,
                                   public View
 {

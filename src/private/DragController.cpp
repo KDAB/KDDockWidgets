@@ -827,16 +827,16 @@ static QRect topLevelGeometry(const QWidget *topLevel)
 #endif
 
 static ViewWrapper::Ptr qtTopLevelUnderCursor_impl(QPoint globalPos, const Window::List &windows,
-                                                   View *windowBeingDragged) // TODOm2: Rename to viewBeingDragged
+                                                   View *rootViewBeingDragged)
 {
     for (auto i = windows.size() - 1; i >= 0; --i) {
         Window::Ptr window = windows.at(i);
         auto tl = window->rootView();
 
-        if (!tl->isVisible() || tl->equals(windowBeingDragged) || tl->isMinimized())
+        if (!tl->isVisible() || tl->equals(rootViewBeingDragged) || tl->isMinimized())
             continue;
 
-        if (windowBeingDragged && windowBeingDragged->window()->equals(window))
+        if (rootViewBeingDragged && rootViewBeingDragged->window()->equals(window))
             continue;
 
         if (window->geometry().contains(globalPos)) {
