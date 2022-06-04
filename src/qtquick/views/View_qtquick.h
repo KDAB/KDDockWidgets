@@ -158,6 +158,7 @@ public:
     void setMouseTracking(bool enable) override;
     QVector<std::shared_ptr<View>> childViews() const override;
     void setZOrder(int) override;
+    virtual QQuickItem *visualItem() const;
 
     /// @brief This is equivalent to "anchors.fill: parent but in C++
     void makeItemFillParent(QQuickItem *item);

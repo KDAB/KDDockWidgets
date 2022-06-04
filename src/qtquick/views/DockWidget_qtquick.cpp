@@ -154,10 +154,9 @@ QObject *DockWidget_qtquick::actualTitleBarView() const
 QQuickItem *DockWidget_qtquick::frameVisualItem() const
 {
     if (Controllers::Frame *frame = this->frame()) {
-        Q_UNUSED(frame)
-        // return frame->visualItem(); TODOm2
+        if (auto view = asView_qtquick(frame->view()))
+            return view->visualItem();
     }
-
 
     return nullptr;
 }

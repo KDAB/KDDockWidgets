@@ -52,7 +52,7 @@ public:
     QSize maximumSize() const override;
 
     /// @brief Returns the QQuickItem which represents this frame on the screen
-    QQuickItem *visualItem() const;
+    QQuickItem *visualItem() const override;
 
     QRect dragRect() const override;
 

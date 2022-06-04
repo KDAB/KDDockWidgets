@@ -830,4 +830,10 @@ void View_qtquick::setZOrder(int z)
     QQuickItem::setZ(z);
 }
 
+QQuickItem *View_qtquick::visualItem() const
+{
+    qWarning() << Q_FUNC_INFO << "Base class called, please implement in your derived class if needed";
+    return nullptr;
+}
+
 #include "View_qtquick.moc"
