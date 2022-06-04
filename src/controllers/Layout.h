@@ -201,7 +201,7 @@ public:
     /// TODOm3: Better a signal, so that derived classes don't have to remember to call these
     bool onResize(QSize newSize);
 
-    /// TODOm2: Remove
+    /// TODOm3: Remove
     void viewAboutToBeDeleted();
 
 protected:

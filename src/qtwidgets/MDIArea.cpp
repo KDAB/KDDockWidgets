@@ -47,7 +47,7 @@ MDIArea::MDIArea(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
     vlay->addWidget(View_qtwidgets::asQWidget(d->layout));
 
-    // TODOm2: for qtquick:
+    // TODOm3: for qtquick:
     // QWidgetAdapter::makeItemFillParent(d->layout);
 }
 

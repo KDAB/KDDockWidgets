@@ -49,8 +49,6 @@ public:
     explicit Stack_qtquick(Controllers::Stack *controller,
                            Controllers::Frame *parent = nullptr);
 
-    // TabBar *tabBar() const override;
-
     int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
     int indexOfDockWidget(const Controllers::DockWidget *) const override;
@@ -80,7 +78,7 @@ protected:
 private:
     Q_DISABLE_COPY(Stack_qtquick)
     DockWidgetModel *const m_dockWidgetModel;
-    // TabBar *const m_tabBar;
+    Controllers::TabBar *const m_tabBar;
     Controllers::Stack *const m_stack;
     Controllers::DockWidget *m_currentDockWidget = nullptr;
 };

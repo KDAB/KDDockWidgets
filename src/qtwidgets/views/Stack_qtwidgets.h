@@ -38,7 +38,7 @@ public:
                              Controllers::Frame *parent = nullptr);
 
     Controllers::Stack *stack() const;
-    QTabBar *tabBar() const;
+    QTabBar *tabBar() const; // TODOm3: tabBarView
 
     int numDockWidgets() const override;
     void removeDockWidget(Controllers::DockWidget *) override;
@@ -48,7 +48,7 @@ public:
     void init() override;
     void setDocumentMode(bool) override;
 
-public: // TODO: make protected
+public: // TODOm3: make protected
     void mouseDoubleClickEvent(QMouseEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void tabInserted(int index) override;

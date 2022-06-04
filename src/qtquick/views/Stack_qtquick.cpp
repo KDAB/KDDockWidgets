@@ -14,6 +14,7 @@
 #include "ViewFactory.h"
 
 #include "controllers/Frame.h"
+#include "controllers/TabBar.h"
 
 #include <QDebug>
 #include <QScopedValueRollback>
@@ -25,7 +26,7 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
                              Controllers::Frame *parent)
     : View_qtquick(controller, Type::Stack, Views::asQQuickItem(parent))
     , m_dockWidgetModel(new DockWidgetModel(this))
-    // , m_tabBar(Config::self().ViewFactory()->createTabBar(this))
+    , m_tabBar(new Controllers::TabBar(controller))
     , m_stack(controller)
 {
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
@@ -38,11 +39,6 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
 
                 Q_EMIT countChanged(); });
 }
-
-// TabBar *Stack_qtquick::tabBar() const
-// {
-//     return m_tabBar;
-// }
 
 void Stack_qtquick::setDocumentMode(bool)
 {
@@ -83,9 +79,7 @@ void Stack_qtquick::setCurrentDockWidget(int index)
 
 QObject *Stack_qtquick::tabBarObj() const
 {
-    // TODOm2
-    return nullptr;
-    // return m_tabBar->asWidget();
+    return m_tabBar->view()->asQObject();
 }
 
 Controllers::DockWidget *Stack_qtquick::currentDockWidget() const
