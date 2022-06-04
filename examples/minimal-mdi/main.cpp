@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
     KDDockWidgets::Views::MainWindowMDI_qtwidgets mainWindow(QStringLiteral("MyMainWindow"));
     mainWindow.setWindowTitle("Main Window");
-    mainWindow.QWidget::resize(1200, 1200); // TODOm2
+    mainWindow.resize(1200, 1200);
     mainWindow.show();
 
     // # 2. Create a dock widget, it needs a unique name
