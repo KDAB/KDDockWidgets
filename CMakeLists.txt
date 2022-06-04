@@ -163,7 +163,18 @@ if (KDDockWidgets_FRONTENDS)
   endforeach()
 endif()
 
-if (NOT KDDockWidgets_FRONTENDS)
+if (KDDockWidgets_FRONTENDS)
+  # qtwidgets
+  if ("qtwidgets" IN_LIST KDDockWidgets_FRONTENDS)
+    find_package(Qt${Qt_VERSION_MAJOR}Widgets ${QT_MIN_VERSION} REQUIRED)
+    set(KDDW_FRONTEND_QTWIDGETS ON)
+  endif()
+  # qtquick
+  if ("qtquick" IN_LIST KDDockWidgets_FRONTENDS)
+    find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Quick QuickControls2)
+    set(KDDW_FRONTEND_QTQUICK ON)
+  endif()
+else()
   set(ENABLED_FRONTENDS "")
   message("No frontends specified explicitly.")
   # qtwidgets
@@ -186,18 +197,6 @@ if (NOT KDDockWidgets_FRONTENDS)
   foreach (frontend ${ENABLED_FRONTENDS})
     message("* ${frontend}")
   endforeach()
-
-else()
-  # qtwidgets
-  if ("qtwidgets" IN_LIST KDDockWidgets_FRONTENDS)
-    find_package(Qt${Qt_VERSION_MAJOR}Widgets ${QT_MIN_VERSION} REQUIRED)
-    set(KDDW_FRONTEND_QTWIDGETS ON)
-  endif()
-  # qtquick
-  if ("qtquick" IN_LIST KDDockWidgets_FRONTENDS)
-    find_package(Qt${Qt_VERSION_MAJOR} ${QT_MIN_VERSION} NO_MODULE REQUIRED COMPONENTS Quick QuickControls2)
-    set(KDDW_FRONTEND_QTQUICK ON)
-  endif()
 endif()
 # END frontend enabling
 
