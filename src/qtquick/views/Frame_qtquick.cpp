@@ -17,14 +17,16 @@
  */
 
 #include "Frame_qtquick.h"
-#include "qtquick/ViewFactory_qtquick.h"
 #include "views/Frame.h"
 
 #include "controllers/Frame.h"
 #include "controllers/DockWidget.h"
 #include "controllers/DockWidget_p.h"
 
+#include "qtquick/ViewFactory_qtquick.h"
 #include "qtquick/Platform_qtquick.h"
+#include "qtquick/views/DockWidget_qtquick.h"
+
 #include "Stack_qtquick.h"
 
 #include "Config.h"
@@ -77,13 +79,12 @@ void Frame_qtquick::init()
     connect(m_controller, &Controllers::Frame::currentDockWidgetChanged, this, &Frame_qtquick::currentDockWidgetChanged);
     connect(m_controller, &Controllers::Frame::actualTitleBarChanged, this, &Frame_qtquick::actualTitleBarChanged);
 
-    /*
-    // TODOm2: This signal seems unused
-    connect(this, &QWidgetAdapter::itemGeometryChanged, this, [this] {
+    connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
         for (auto dw : m_controller->dockWidgets()) {
-            Q_EMIT static_cast<Controllers::DockWidget *>(dw)->frameGeometryChanged(geometry());
+            auto dwView = static_cast<DockWidget_qtquick *>(asView_qtquick(dw->view()));
+            dwView->frameGeometryChanged(geometry());
         }
-    });*/
+    });
 
     QQmlComponent component(plat()->qmlEngine(),
                             plat()->viewFactory()->frameFilename());
