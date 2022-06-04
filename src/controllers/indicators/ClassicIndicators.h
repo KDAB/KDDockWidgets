@@ -27,36 +27,11 @@ namespace Controllers {
 class DOCKS_EXPORT ClassicIndicators : public DropIndicatorOverlay
 {
     Q_OBJECT
-
-    // Properties for QML
-    Q_PROPERTY(bool innerLeftIndicatorVisible READ innerLeftIndicatorVisible NOTIFY indicatorsVisibleChanged)
-    Q_PROPERTY(bool innerRightIndicatorVisible READ innerRightIndicatorVisible NOTIFY indicatorsVisibleChanged)
-    Q_PROPERTY(bool innerTopIndicatorVisible READ innerTopIndicatorVisible NOTIFY indicatorsVisibleChanged)
-    Q_PROPERTY(bool innerBottomIndicatorVisible READ innerBottomIndicatorVisible NOTIFY indicatorsVisibleChanged)
-
-    Q_PROPERTY(bool outterLeftIndicatorVisible READ outterLeftIndicatorVisible NOTIFY indicatorsVisibleChanged)
-    Q_PROPERTY(bool outterRightIndicatorVisible READ outterRightIndicatorVisible NOTIFY indicatorsVisibleChanged)
-    Q_PROPERTY(bool outterTopIndicatorVisible READ outterTopIndicatorVisible NOTIFY indicatorsVisibleChanged)
-    Q_PROPERTY(bool outterBottomIndicatorVisible READ outterBottomIndicatorVisible NOTIFY indicatorsVisibleChanged)
-
-    Q_PROPERTY(bool tabIndicatorVisible READ tabIndicatorVisible NOTIFY indicatorsVisibleChanged)
-
 public:
     explicit ClassicIndicators(Controllers::DropArea *dropArea);
     ~ClassicIndicators() override;
     DropLocation hover_impl(QPoint globalPos) override;
     QPoint posForIndicator(DropLocation) const override;
-
-    // Lots of getters needed because of QML:
-    bool innerLeftIndicatorVisible() const;
-    bool innerRightIndicatorVisible() const;
-    bool innerTopIndicatorVisible() const;
-    bool innerBottomIndicatorVisible() const;
-    bool outterLeftIndicatorVisible() const;
-    bool outterRightIndicatorVisible() const;
-    bool outterTopIndicatorVisible() const;
-    bool outterBottomIndicatorVisible() const;
-    bool tabIndicatorVisible() const;
 
     bool onResize(QSize newSize);
     void setDropLocation(DropLocation);

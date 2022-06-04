@@ -57,51 +57,6 @@ QPoint ClassicIndicators::posForIndicator(DropLocation loc) const
     return m_indicatorWindow->posForIndicator(loc);
 }
 
-bool ClassicIndicators::innerLeftIndicatorVisible() const
-{
-    return dropIndicatorVisible(DropLocation_Left);
-}
-
-bool ClassicIndicators::innerRightIndicatorVisible() const
-{
-    return dropIndicatorVisible(DropLocation_Right);
-}
-
-bool ClassicIndicators::innerTopIndicatorVisible() const
-{
-    return dropIndicatorVisible(DropLocation_Top);
-}
-
-bool ClassicIndicators::innerBottomIndicatorVisible() const
-{
-    return dropIndicatorVisible(DropLocation_Bottom);
-}
-
-bool ClassicIndicators::outterLeftIndicatorVisible() const
-{
-    return dropIndicatorVisible(DropLocation_OutterLeft);
-}
-
-bool ClassicIndicators::outterRightIndicatorVisible() const
-{
-    return dropIndicatorVisible(DropLocation_OutterRight);
-}
-
-bool ClassicIndicators::outterTopIndicatorVisible() const
-{
-    return dropIndicatorVisible(DropLocation_OutterTop);
-}
-
-bool ClassicIndicators::outterBottomIndicatorVisible() const
-{
-    return dropIndicatorVisible(DropLocation_OutterBottom);
-}
-
-bool ClassicIndicators::tabIndicatorVisible() const
-{
-    return dropIndicatorVisible(DropLocation_Center);
-}
-
 bool ClassicIndicators::onResize(QSize)
 {
     m_indicatorWindow->resize(window()->size());

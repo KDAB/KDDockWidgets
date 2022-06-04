@@ -28,7 +28,17 @@ class ClassicIndicators;
 class IndicatorWindow_qtquick : public QQuickView, public Views::ClassicIndicatorWindow
 {
     Q_OBJECT
-    Q_PROPERTY(KDDockWidgets::Controllers::ClassicIndicators *classicIndicators READ classicIndicators CONSTANT)
+    Q_PROPERTY(bool innerLeftIndicatorVisible READ innerLeftIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool innerRightIndicatorVisible READ innerRightIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool innerTopIndicatorVisible READ innerTopIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool innerBottomIndicatorVisible READ innerBottomIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool outterLeftIndicatorVisible READ outterLeftIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool outterRightIndicatorVisible READ outterRightIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool outterTopIndicatorVisible READ outterTopIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool outterBottomIndicatorVisible READ outterBottomIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(bool tabIndicatorVisible READ tabIndicatorVisible NOTIFY indicatorsVisibleChanged)
+    Q_PROPERTY(QRect hoveredFrameRect READ hoveredFrameRect NOTIFY hoveredFrameRectChanged)
+    Q_PROPERTY(KDDockWidgets::DropLocation currentDropLocation READ currentDropLocation NOTIFY currentDropLocationChanged)
 public:
     explicit IndicatorWindow_qtquick(Controllers::ClassicIndicators *);
 
@@ -45,6 +55,24 @@ public:
     void setGeometry(QRect) override;
     void resize(QSize) override;
     void setObjectName(const QString &) override;
+
+    // Property getters for QML:
+    bool innerLeftIndicatorVisible() const;
+    bool innerRightIndicatorVisible() const;
+    bool innerTopIndicatorVisible() const;
+    bool innerBottomIndicatorVisible() const;
+    bool outterLeftIndicatorVisible() const;
+    bool outterRightIndicatorVisible() const;
+    bool outterTopIndicatorVisible() const;
+    bool outterBottomIndicatorVisible() const;
+    bool tabIndicatorVisible() const;
+    QRect hoveredFrameRect() const;
+    DropLocation currentDropLocation() const;
+
+Q_SIGNALS:
+    void indicatorsVisibleChanged();
+    void hoveredFrameRectChanged();
+    void currentDropLocationChanged();
 
 private:
     DropLocation locationForIndicator(const QQuickItem *) const;

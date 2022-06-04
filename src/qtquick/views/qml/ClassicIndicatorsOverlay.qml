@@ -21,7 +21,7 @@ Item {
     visible: width > 50 && height > 50 // don't show if window is too small'
 
     ClassicIndicator {
-        visible: _window.classicIndicators.outterLeftIndicatorVisible
+        visible: _window.outterLeftIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterLeft
         anchors {
             left: parent.left
@@ -31,7 +31,7 @@ Item {
     }
 
     ClassicIndicator {
-        visible: _window.classicIndicators.outterRightIndicatorVisible
+        visible: _window.outterRightIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterRight
         anchors {
             right: parent.right
@@ -41,7 +41,7 @@ Item {
     }
 
     ClassicIndicator {
-        visible: _window.classicIndicators.outterTopIndicatorVisible
+        visible: _window.outterTopIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterTop
         anchors {
             top: parent.top
@@ -51,7 +51,7 @@ Item {
     }
 
     ClassicIndicator {
-        visible: _window.classicIndicators.outterBottomIndicatorVisible
+        visible: _window.outterBottomIndicatorVisible
         indicatorType: KDDockWidgets.DropLocation_OutterBottom
         anchors {
             bottom: parent.bottom
@@ -64,17 +64,17 @@ Item {
         id: innerIndicators
         objectName: "innerIndicators"
 
-        x: _window.classicIndicators.hoveredFrameRect.x + (_window.classicIndicators.hoveredFrameRect.width / 2)
-        y: _window.classicIndicators.hoveredFrameRect.y + (_window.classicIndicators.hoveredFrameRect.height / 2)
+        x: _window.hoveredFrameRect.x + (_window.hoveredFrameRect.width / 2)
+        y: _window.hoveredFrameRect.y + (_window.hoveredFrameRect.height / 2)
 
         width: (centerIndicator * 3) + (2 * innerMargin)
         height: width
-        visible: _window.classicIndicators.innerLeftIndicatorVisible || _window.classicIndicators.innerRightIndicatorVisible ||
-                 _window.classicIndicators.innerTopIndicatorVisible || _window.classicIndicators.innerBottomIndicatorVisible || _window.classicIndicators.tabIndicatorVisible
+        visible: _window.innerLeftIndicatorVisible || _window.innerRightIndicatorVisible ||
+                 _window.innerTopIndicatorVisible || _window.innerBottomIndicatorVisible || _window.tabIndicatorVisible
 
         ClassicIndicator {
             id: innerLeft
-            visible: _window.classicIndicators.innerLeftIndicatorVisible
+            visible: _window.innerLeftIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Left
             anchors {
                 right: centerIndicator.left
@@ -85,14 +85,14 @@ Item {
 
         ClassicIndicator {
             id: centerIndicator
-            visible: _window.classicIndicators.tabIndicatorVisible
+            visible: _window.tabIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Center
             anchors.centerIn: parent
         }
 
         ClassicIndicator {
             id: innerRight
-            visible: _window.classicIndicators.innerRightIndicatorVisible
+            visible: _window.innerRightIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Right
             anchors {
                 left: centerIndicator.right
@@ -103,7 +103,7 @@ Item {
 
         ClassicIndicator {
             id: innerTop
-            visible: _window.classicIndicators.innerTopIndicatorVisible
+            visible: _window.innerTopIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Top
             anchors {
                 bottom: centerIndicator.top
@@ -114,7 +114,7 @@ Item {
 
         ClassicIndicator {
             id: innerBottom
-            visible: _window.classicIndicators.innerBottomIndicatorVisible
+            visible: _window.innerBottomIndicatorVisible
             indicatorType: KDDockWidgets.DropLocation_Bottom
             anchors {
                 top: centerIndicator.bottom

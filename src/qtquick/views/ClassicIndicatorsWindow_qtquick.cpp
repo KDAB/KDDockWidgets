@@ -76,6 +76,14 @@ IndicatorWindow_qtquick::IndicatorWindow_qtquick(Controllers::ClassicIndicators 
     rootContext()->setContextProperty(QStringLiteral("_window"), QVariant::fromValue<QObject *>(this));
     setSource(QUrl(QStringLiteral("qrc:/kddockwidgets/qtquick/views/qml/ClassicIndicatorsOverlay.qml")));
 
+    connect(classicIndicators, &ClassicIndicators::indicatorsVisibleChanged,
+            this, &IndicatorWindow_qtquick::indicatorsVisibleChanged);
+
+    connect(classicIndicators, &ClassicIndicators::hoveredFrameRectChanged,
+            this, &IndicatorWindow_qtquick::hoveredFrameRectChanged);
+
+    connect(classicIndicators, &ClassicIndicators::currentDropLocationChanged,
+            this, &IndicatorWindow_qtquick::currentDropLocationChanged);
 
     // Two workarounds for two unrelated bugs:
     if (KDDockWidgets::isOffscreen()) {
@@ -214,4 +222,59 @@ void IndicatorWindow_qtquick::resize(QSize)
 bool IndicatorWindow_qtquick::isWindow() const
 {
     return true;
+}
+
+bool IndicatorWindow_qtquick::innerLeftIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Left);
+}
+
+bool IndicatorWindow_qtquick::innerRightIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Right);
+}
+
+bool IndicatorWindow_qtquick::innerTopIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Top);
+}
+
+bool IndicatorWindow_qtquick::innerBottomIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Bottom);
+}
+
+bool IndicatorWindow_qtquick::outterLeftIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterLeft);
+}
+
+bool IndicatorWindow_qtquick::outterRightIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterRight);
+}
+
+bool IndicatorWindow_qtquick::outterTopIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterTop);
+}
+
+bool IndicatorWindow_qtquick::outterBottomIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_OutterBottom);
+}
+
+bool IndicatorWindow_qtquick::tabIndicatorVisible() const
+{
+    return m_classicIndicators->dropIndicatorVisible(DropLocation_Center);
+}
+
+QRect IndicatorWindow_qtquick::hoveredFrameRect() const
+{
+    return m_classicIndicators->hoveredFrameRect();
+}
+
+DropLocation IndicatorWindow_qtquick::currentDropLocation() const
+{
+    return m_classicIndicators->currentDropLocation();
 }
