@@ -5720,7 +5720,7 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
 void TestDocks::tst_constraintsPropagateUp()
 {
     // Mostly for QtQuick, which doesn't have any layouts, so we need to make the propagation
-    // Manually in DockWidgetQuick::minimumSize(), in FrameQuick, etc.
+    // Manually in DockWidgetQuick::minimumSize(), in Frame_qtquick, etc.
 
     EnsureTopLevelsDeleted e;
     const int minWidth = 500;

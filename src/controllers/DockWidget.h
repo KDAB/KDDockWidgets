@@ -37,8 +37,6 @@ class DragController;
 class DockRegistry;
 class LayoutSaver;
 class StateDragging;
-class FrameQuick;
-class DockWidgetQuick;
 
 namespace Controllers {
 
@@ -536,8 +534,6 @@ private:
     friend class KDDockWidgets::DragController;
     friend class KDDockWidgets::DockRegistry;
     friend class KDDockWidgets::LayoutSaver;
-    friend class KDDockWidgets::FrameQuick;
-    friend class KDDockWidgets::DockWidgetQuick;
 
     /**
      * @brief Constructs a dock widget from its serialized form.
