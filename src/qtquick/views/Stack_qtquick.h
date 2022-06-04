@@ -43,7 +43,7 @@ class DOCKS_EXPORT Stack_qtquick
 {
     Q_OBJECT
     Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
-    Q_PROPERTY(QObject *tabBar READ tabBarObj CONSTANT)
+    Q_PROPERTY(QObject *tabBar READ tabBarViewObj CONSTANT)
 
 public:
     explicit Stack_qtquick(Controllers::Stack *controller,
@@ -62,7 +62,7 @@ public:
 
     /// @brief Returns the tab bar as a QObject for QML.
     /// As the base class is not a QObject.
-    QObject *tabBarObj() const;
+    QObject *tabBarViewObj() const;
 
 Q_SIGNALS: // TODOm2: Review these signals
     void currentTabChanged(int index);
