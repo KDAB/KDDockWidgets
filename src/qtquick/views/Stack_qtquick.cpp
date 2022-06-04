@@ -26,7 +26,6 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
                              Controllers::Frame *parent)
     : View_qtquick(controller, Type::Stack, Views::asQQuickItem(parent))
     , m_dockWidgetModel(new DockWidgetModel(this))
-    , m_tabBar(new Controllers::TabBar(controller))
     , m_stack(controller)
 {
     connect(m_dockWidgetModel, &DockWidgetModel::countChanged, this,
@@ -38,6 +37,17 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
                 }
 
                 Q_EMIT countChanged(); });
+}
+
+void Stack_qtquick::init()
+{
+    m_tabBar = new Controllers::TabBar(m_stack);
+    Q_EMIT tabBarChanged();
+}
+
+Controllers::Stack *Stack_qtquick::stack() const
+{
+    return m_stack;
 }
 
 void Stack_qtquick::setDocumentMode(bool)

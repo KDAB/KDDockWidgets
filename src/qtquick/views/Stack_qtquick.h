@@ -43,7 +43,7 @@ class DOCKS_EXPORT Stack_qtquick
 {
     Q_OBJECT
     Q_PROPERTY(DockWidgetModel *dockWidgetModel READ dockWidgetModel CONSTANT)
-    Q_PROPERTY(QObject *tabBar READ tabBarViewObj CONSTANT)
+    Q_PROPERTY(QObject *tabBar READ tabBarViewObj NOTIFY tabBarChanged)
 
 public:
     explicit Stack_qtquick(Controllers::Stack *controller,
@@ -64,21 +64,27 @@ public:
     /// As the base class is not a QObject.
     QObject *tabBarViewObj() const;
 
+    /// @brief Returns the stack controller associated with this view
+    Controllers::Stack *stack() const;
+
 Q_SIGNALS: // TODOm2: Review these signals
     void currentTabChanged(int index);
     void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *dw);
     void countChanged();
+
+    void tabBarChanged();
 
 protected:
     bool isPositionDraggable(QPoint p) const override;
     void setTabBarAutoHide(bool) override;
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &) override;
+    void init() override;
 
 private:
     Q_DISABLE_COPY(Stack_qtquick)
     DockWidgetModel *const m_dockWidgetModel;
-    Controllers::TabBar *const m_tabBar;
+    Controllers::TabBar *m_tabBar = nullptr;
     Controllers::Stack *const m_stack;
     Controllers::DockWidget *m_currentDockWidget = nullptr;
 };
