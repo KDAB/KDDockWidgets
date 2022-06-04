@@ -79,10 +79,8 @@ Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &n
     }
 };
 
-Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name, QColor color)
+Controllers::DockWidget *KDDockWidgets::Tests::createDockWidget(const QString &name)
 {
-    // TODOm2 remove color argument
-    Q_UNUSED(color);
     return createDockWidget(name, Platform::instance()->tests_createView({ true, {}, { 100, 100 } }));
 };
 

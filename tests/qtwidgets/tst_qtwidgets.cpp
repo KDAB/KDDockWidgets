@@ -197,7 +197,7 @@ void TestQtWidgets::tst_mainWindowAlwaysHasCentralWidget()
     QCOMPARE(centralFrame->dockWidgetCount(), 0);
 
     // Add a tab
-    auto dock = createDockWidget("doc1", Qt::green);
+    auto dock = createDockWidget("doc1");
     m->addDockWidgetAsTab(dock);
     QCOMPARE(dropArea->count(), 1);
     QCOMPARE(centralFrame->dockWidgetCount(), 1);

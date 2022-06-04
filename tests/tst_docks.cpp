@@ -79,7 +79,7 @@ static Controllers::DockWidget *createAndNestDockWidget(DropArea *dropArea, Cont
     static int count = 0;
     count++;
     const QString name = QString("dock%1").arg(count);
-    auto dock = createDockWidget(name, Qt::red);
+    auto dock = createDockWidget(name);
     dock->setObjectName(name);
     nestDockWidget(dock, dropArea, relativeTo, location);
     dropArea->checkSanity();
@@ -91,7 +91,7 @@ static std::unique_ptr<MainWindow> createSimpleNestedMainWindow(Controllers::Doc
                                                                 Controllers::DockWidget **rightDock)
 {
     auto window = createMainWindow({ 900, 500 });
-    *centralDock = createDockWidget("centralDock", Qt::green);
+    *centralDock = createDockWidget("centralDock");
     window->addDockWidgetAsTab(*centralDock);
     auto dropArea = window->dropArea();
 
@@ -710,8 +710,8 @@ void TestDocks::tst_nonDockable()
 void TestDocks::tst_closeDockWidgets()
 {
     EnsureTopLevelsDeleted e;
-    auto dock1 = createDockWidget("hello1", Qt::green);
-    auto dock2 = createDockWidget("hello2", Qt::green);
+    auto dock1 = createDockWidget("hello1");
+    auto dock2 = createDockWidget("hello2");
 
     auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
     m->addDockWidget(dock1, Location_OnBottom);
@@ -747,14 +747,14 @@ void TestDocks::tst_doubleClose()
     {
         // Via close()
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("hello", Qt::green);
+        auto dock1 = createDockWidget("hello");
         dock1->close();
         dock1->close();
     }
     {
         // Via the button
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("hello", Qt::green);
+        auto dock1 = createDockWidget("hello");
         auto fw1 = dock1->floatingWindow();
 
         auto t = dock1->dptr()->frame()->titleBar();
@@ -846,7 +846,7 @@ void TestDocks::tst_propagateResize2()
 void TestDocks::tst_shutdown()
 {
     EnsureTopLevelsDeleted e;
-    createDockWidget("doc1", Qt::green);
+    createDockWidget("doc1");
 
     auto m = createMainWindow();
     m->show();
@@ -2482,7 +2482,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoCenter()
 
     auto m = createMainWindow();
     auto fw = createFloatingWindow();
-    auto dock2 = createDockWidget("doc2", Qt::red);
+    auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
     QCOMPARE(fw->frames().size(), 2);
     QVERIFY(fw->dropArea()->checkSanity());
@@ -2716,7 +2716,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoRight()
     EnsureTopLevelsDeleted e;
 
     auto fw = createFloatingWindow();
-    auto dock2 = createDockWidget("doc2", Qt::red);
+    auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnTop); // No we stack on top, unlike in previous test
     QCOMPARE(fw->frames().size(), 2);
 
@@ -2738,7 +2738,7 @@ void TestDocks::tst_dockWindowWithTwoSideBySideFramesIntoLeft()
     auto fw = createFloatingWindow();
     fw->setObjectName("fw1");
 
-    auto dock2 = createDockWidget("doc2", Qt::red);
+    auto dock2 = createDockWidget("doc2");
     nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnLeft);
     QCOMPARE(fw->frames().size(), 2);
 
@@ -2762,7 +2762,7 @@ void TestDocks::tst_posAfterLeftDetach()
     {
         EnsureTopLevelsDeleted e;
         auto fw = createFloatingWindow();
-        auto dock2 = createDockWidget("doc2", Qt::red);
+        auto dock2 = createDockWidget("doc2");
         nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnRight);
         QVERIFY(fw->dropArea()->checkSanity());
         // When dragging the right one there was a bug where it jumped
@@ -2783,7 +2783,7 @@ void TestDocks::tst_posAfterLeftDetach()
     {
         EnsureTopLevelsDeleted e;
         auto fw = createFloatingWindow();
-        auto dock2 = createDockWidget("doc2", Qt::red);
+        auto dock2 = createDockWidget("doc2");
         nestDockWidget(dock2, fw->dropArea(), nullptr, KDDockWidgets::Location_OnRight);
         QVERIFY(fw->dropArea()->checkSanity());
 
@@ -2850,7 +2850,7 @@ void TestDocks::tst_createFloatingWindow()
 {
     EnsureTopLevelsDeleted e;
 
-    auto dock = createDockWidget("doc1", Qt::green);
+    auto dock = createDockWidget("doc1");
     QVERIFY(dock);
     QVERIFY(dock->isFloating());
 
@@ -5449,9 +5449,9 @@ void TestDocks::tst_closeTabHidesDockWidget()
     // QtQuick had a bug where they would still be visible
     {
         EnsureTopLevelsDeleted e;
-        auto dock1 = createDockWidget("doc1", Qt::green);
-        auto dock2 = createDockWidget("doc2", Qt::green);
-        auto dock3 = createDockWidget("doc3", Qt::green);
+        auto dock1 = createDockWidget("doc1");
+        auto dock2 = createDockWidget("doc2");
+        auto dock3 = createDockWidget("doc3");
 
         dock1->addDockWidgetAsTab(dock2);
         dock1->addDockWidgetAsTab(dock3);
@@ -5472,9 +5472,9 @@ void TestDocks::tst_closeTabHidesDockWidget()
     {
         EnsureTopLevelsDeleted e;
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None);
-        auto dock1 = createDockWidget("doc1", Qt::green);
-        auto dock2 = createDockWidget("doc2", Qt::green);
-        auto dock3 = createDockWidget("doc3", Qt::green);
+        auto dock1 = createDockWidget("doc1");
+        auto dock2 = createDockWidget("doc2");
+        auto dock3 = createDockWidget("doc3");
         m->addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
         m->addDockWidget(dock2, KDDockWidgets::Location_OnLeft);
         m->addDockWidget(dock3, KDDockWidgets::Location_OnLeft);
@@ -5505,7 +5505,7 @@ void TestDocks::tst_close()
     EnsureTopLevelsDeleted e;
 
     // 1.0 Call QWidget::close() on QDockWidget
-    auto dock1 = createDockWidget("doc1", Qt::green);
+    auto dock1 = createDockWidget("doc1");
     QAction *toggleAction = dock1->toggleAction();
     QVERIFY(toggleAction->isChecked());
 
@@ -5628,7 +5628,7 @@ void TestDocks::tst_close()
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
         QPointer<MainWindow> mainWindowPtr = m.get();
-        dock1 = createDockWidget("hello", Qt::green);
+        dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
 
         // 2.2 Closing should not close the main window
@@ -5641,7 +5641,7 @@ void TestDocks::tst_close()
     {
         auto m = createMainWindow(QSize(800, 500), MainWindowOption_None); // Remove central frame
         QPointer<MainWindow> mainWindowPtr = m.get();
-        dock1 = createDockWidget("hello", Qt::green);
+        dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
 
         // 2.2 Closing should not close the main window
@@ -5655,7 +5655,7 @@ void TestDocks::tst_close()
     {
         auto m = createMainWindow(QSize(800, 500));
         QPointer<MainWindow> mainWindowPtr = m.get();
-        dock1 = createDockWidget("hello", Qt::green);
+        dock1 = createDockWidget("hello");
         m->addDockWidget(dock1, Location_OnLeft);
 
         // 2.2 Closing should not close the main window
@@ -5859,14 +5859,14 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     if (KDDockWidgets::usesNativeTitleBar())
         return; // Unit-tests can't drag via tab, yet
 
-    auto dock1 = createDockWidget("doc1", Qt::green);
+    auto dock1 = createDockWidget("doc1");
     auto fw1 = dock1->floatingWindow();
     fw1->view()->setGeometry(QRect(500, 500, 400, 400));
     QVERIFY(dock1);
     QPointer<Controllers::Frame> frame1 = dock1->dptr()->frame();
 
     auto titlebar1 = fw1->titleBar();
-    auto dock2 = createDockWidget("doc2", Qt::red);
+    auto dock2 = createDockWidget("doc2");
 
     QVERIFY(dock1->isFloating());
     QVERIFY(dock2->isFloating());
@@ -5915,7 +5915,7 @@ void TestDocks::tst_dock2FloatingWidgetsTabbed()
     QCOMPARE(frame2->dockWidgetCount(), 2);
 
     // 2.6 Drag the tabbed group over a 3rd floating window
-    auto dock3 = createDockWidget("doc3", Qt::black);
+    auto dock3 = createDockWidget("doc3");
     QTest::qWait(1000); // Test is flaky otherwise
 
     auto fw2 = dock2->floatingWindow();

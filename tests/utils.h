@@ -130,7 +130,7 @@ Controllers::DockWidget *createDockWidget(const QString &name, View *guest,
                                           Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                                           bool show = true, const QString &affinityName = {});
 
-Controllers::DockWidget *createDockWidget(const QString &name, QColor color = Qt::black);
+Controllers::DockWidget *createDockWidget(const QString &name);
 
 void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropArea, Controllers::Frame *relativeTo,
                     KDDockWidgets::Location location);
@@ -161,7 +161,7 @@ inline Controllers::FloatingWindow *createFloatingWindow()
 {
     static int count = 0;
     count++;
-    auto dock = createDockWidget(QString("dock %1").arg(count), Qt::green);
+    auto dock = createDockWidget(QString("dock %1").arg(count));
     return dock->d->morphIntoFloatingWindow();
 }
 

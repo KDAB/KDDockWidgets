@@ -30,7 +30,7 @@ public:
     bool isVisible() const override;
     WId handle() const override;
 
-    // TODOm2: Remoove
+    // TODOm3: Remove
     void setProperty(const char *name, const QVariant &value) override;
     QVariant property(const char *name) const override;
     bool equals(std::shared_ptr<Window> other) const override;
