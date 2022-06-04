@@ -78,7 +78,7 @@ View *ViewFactory_qtquick::createTabBar(Controllers::TabBar *controller, View *p
     return new Views::TabBar_qtquick(controller, Views::asQQuickItem(parent));
 }
 
-View *ViewFactory_qtquick::createTabWidget(Controllers::Stack *controller, Controllers::Frame *parent) const
+View *ViewFactory_qtquick::createStack(Controllers::Stack *controller, Controllers::Frame *parent) const
 {
     return new Views::Stack_qtquick(controller, parent);
 }

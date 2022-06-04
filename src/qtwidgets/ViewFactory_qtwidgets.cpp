@@ -81,7 +81,7 @@ View *ViewFactory_qtwidgets::createTabBar(Controllers::TabBar *tabBar, View *par
     return new Views::TabBar_qtwidgets(tabBar, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
-View *ViewFactory_qtwidgets::createTabWidget(Controllers::Stack *controller, Controllers::Frame *parent) const
+View *ViewFactory_qtwidgets::createStack(Controllers::Stack *controller, Controllers::Frame *parent) const
 {
     return new Views::Stack_qtwidgets(controller, parent);
 }

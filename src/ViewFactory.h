@@ -98,7 +98,7 @@ public:
     ///@brief Called internally by the framework to create a TabWidget
     ///       Override to provide your own TabWidget sub-class.
     ///@param parent Just forward to TabWidget's constructor.
-    virtual View *createTabWidget(Controllers::Stack *stack, Controllers::Frame *parent) const = 0;
+    virtual View *createStack(Controllers::Stack *stack, Controllers::Frame *parent) const = 0;
 
     ///@brief Called internally by the framework to create a TabBar
     ///       Override to provide your own TabBar sub-class.
