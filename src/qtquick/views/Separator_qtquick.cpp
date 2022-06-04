@@ -39,17 +39,6 @@ bool Separator_qtquick::isVertical() const
     return m_controller->isVertical();
 }
 
-// TODOm2
-// Layouting::Widget *Separator_qtquick::createRubberBand(Layouting::Widget *parent)
-// {
-//     if (!parent) {
-//         qWarning() << Q_FUNC_INFO << "Parent is required";
-//         return nullptr;
-//     }
-
-//     return new Layouting::Widget_quick(new Layouting::RubberBand(parent));
-// }
-
 void Separator_qtquick::onMousePressed()
 {
     if (freed())

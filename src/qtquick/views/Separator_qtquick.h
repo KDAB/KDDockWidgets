@@ -29,10 +29,6 @@ public:
     bool isVertical() const;
     void init() override;
 
-protected:
-    // TODOm2
-    // Widget *createRubberBand(Widget *parent) override;
-
 public:
     // Interface with QML:
     Q_INVOKABLE void onMousePressed();

@@ -77,7 +77,7 @@ void Stack_qtquick::setCurrentDockWidget(int index)
     }
 }
 
-QObject *Stack_qtquick::tabBarObj() const
+QObject *Stack_qtquick::tabBarViewObj() const
 {
     return m_tabBar->view()->asQObject();
 }
