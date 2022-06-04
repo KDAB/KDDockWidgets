@@ -18,6 +18,7 @@
 #include "controllers/Frame.h"
 #include "qtquick/Platform_qtquick.h"
 #include "qtquick/views/TitleBar_qtquick.h"
+#include "qtquick/views/Frame_qtquick.h"
 #include "qtquick/ViewFactory_qtquick.h"
 
 #include <Config.h>
@@ -164,11 +165,10 @@ QQuickItem *DockWidget_qtquick::frameVisualItem() const
 void DockWidget_qtquick::onGeometryUpdated()
 {
     if (auto frame = this->frame()) {
-        if (auto frameView = frame->view()) {
-            Q_UNUSED(frame)
-            Q_UNUSED(frameView)
-            // frameView->updateConstriants(); // TODOm2
-            // frameView->updateGeometry();
+        if (auto view = frame->view()) {
+            auto frameView = static_cast<Frame_qtquick *>(asView_qtquick(view));
+            frameView->updateConstriants();
+            frameView->updateGeometry();
         }
     }
 }
