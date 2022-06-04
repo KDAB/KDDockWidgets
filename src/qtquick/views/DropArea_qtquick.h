@@ -28,7 +28,7 @@ public:
     explicit DropArea_qtquick(Controllers::DropArea *, View *parent);
     ~DropArea_qtquick();
 
-    /// TODOm2
+    /// TODOm3
     void onLayoutRequest() override;
     bool onResize(QSize newSize) override;
 
