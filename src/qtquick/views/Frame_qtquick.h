@@ -56,6 +56,9 @@ public:
 
     QRect dragRect() const override;
 
+    // TODOv2: Move this to a common base class between qtquick and qtwidgets
+    void setLayoutItem(Layouting::Item *item) override;
+
     // QML interface:
     bool isMDI() const;
     KDDockWidgets::Views::TitleBar_qtquick *titleBar() const;
@@ -63,7 +66,9 @@ public:
     int userType() const;
     QObject *tabWidgetObj() const;
 
+
 protected:
+    bool event(QEvent *) override;
     void removeWidget_impl(Controllers::DockWidget *) override;
     int indexOfDockWidget_impl(const Controllers::DockWidget *) override;
     int currentIndex_impl() const override;

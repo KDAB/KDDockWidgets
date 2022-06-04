@@ -266,3 +266,23 @@ int Frame_qtquick::userType() const
     /// TODOv2
     return 0;
 }
+
+bool Frame_qtquick::event(QEvent *e)
+{
+    // TODOv2: Move to controller. Too much logic to be here, and it's duplicated
+    // with QtWidgets
+    if (freed())
+        return View_qtquick::event(e);
+
+    if (e->type() == QEvent::ParentChange) {
+        auto p = parentView();
+        m_controller->setLayout(p ? p->asLayout() : nullptr);
+    }
+
+    return View_qtquick::event(e);
+}
+
+void Frame_qtquick::setLayoutItem(Layouting::Item *item)
+{
+    m_controller->setLayoutItem(item);
+}

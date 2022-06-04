@@ -104,7 +104,7 @@ public:
     virtual bool isNull() const;
 
     /// @brief Called by the layouting engine
-    /// Override it in case your widget needs to know where it is in the layout. Usually only needed by Frame.s
+    /// Override it in case your widget needs to know where it is in the layout. Usually only needed by Frame.
     virtual void setLayoutItem(Layouting::Item *) {};
 
     virtual void setParent(View *) = 0;
