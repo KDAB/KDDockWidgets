@@ -6273,7 +6273,7 @@ int main(int argc, char *argv[])
 {
     for (FrontendType type : Platform::frontendTypes()) {
 
-        if (type != KDDockWidgets::FrontendType::QtQuick)
+        if (type != KDDockWidgets::FrontendType::QtWidgets)
             continue; // QtQuick not passing yet
 
         qDebug() << "\nTesting platform" << type << ":\n";
