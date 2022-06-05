@@ -212,8 +212,6 @@ public:
     static Qt::WindowFlags s_windowFlagsOverride;
 
     void updateSizeConstraints(); // TODO: Move private
-
-    void onCloseEvent(QCloseEvent *);
     void maybeCreateResizeHandler();
 
 Q_SIGNALS:
@@ -230,6 +228,7 @@ private:
     QSize maxSizeHint() const;
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
+    void onCloseEvent(QCloseEvent *);
     bool m_disableSetVisible = false;
     bool m_deleteScheduled = false;
     bool m_inDtor = false;

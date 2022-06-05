@@ -42,7 +42,6 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *) override;
-    void closeEvent(QCloseEvent *) override;
     bool event(QEvent *ev) override;
     void init() override;
 #if defined(Q_OS_WIN)

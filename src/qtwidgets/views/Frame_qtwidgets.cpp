@@ -161,12 +161,6 @@ bool Frame_qtwidgets::event(QEvent *e)
     return QWidget::event(e);
 }
 
-void Frame_qtwidgets::closeEvent(QCloseEvent *e)
-{
-    if (!freed())
-        m_controller->onCloseEvent(e);
-}
-
 void Frame_qtwidgets::paintEvent(QPaintEvent *)
 {
     if (freed())

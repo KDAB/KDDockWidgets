@@ -1022,7 +1022,6 @@ void DockWidget::Private::saveLastFloatingGeometry()
 
 void DockWidget::Private::onCloseEvent(QCloseEvent *e)
 {
-    qDebug() << Q_FUNC_INFO;
     e->accept(); // By default we accept, means DockWidget closes
     if (guest) {
         // Give a chance for the widget to ignore

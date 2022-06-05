@@ -188,7 +188,6 @@ public:
      */
     void restoreToPreviousPosition();
 
-    void onCloseEvent(QCloseEvent *e); // TODO move to controller and specialized view
     int currentTabIndex() const;
 
     FrameOptions options() const
@@ -362,6 +361,7 @@ private:
     friend class KDDockWidgets::Controllers::Stack;
 
     void scheduleDeleteLater();
+    void onCloseEvent(QCloseEvent *);
 
     Layout *m_layout = nullptr;
     WidgetResizeHandler *m_resizeHandler = nullptr;

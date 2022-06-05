@@ -84,6 +84,9 @@ Frame::Frame(View *parent, FrameOptions options, int userType)
 
     setLayout(parent ? parent->asLayout() : nullptr);
     view()->init();
+    view()->closeRequested.connect([this](QCloseEvent *ev) {
+        onCloseEvent(ev);
+    });
 
     m_inCtor = false;
 }

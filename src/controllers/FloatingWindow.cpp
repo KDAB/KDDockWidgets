@@ -141,6 +141,10 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
         onVisibleFrameCountChanged(count);
     });
 
+    view()->closeRequested.connect([this](QCloseEvent *ev) {
+        onCloseEvent(ev);
+    });
+
     m_layoutDestroyedConnection = connect(m_dropArea, &QObject::destroyed, this, &FloatingWindow::scheduleDeleteLater);
 }
 

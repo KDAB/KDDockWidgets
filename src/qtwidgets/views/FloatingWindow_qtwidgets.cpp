@@ -130,11 +130,6 @@ Controllers::FloatingWindow *FloatingWindow_qtwidgets::floatingWindow() const
     return m_controller;
 }
 
-void FloatingWindow_qtwidgets::closeEvent(QCloseEvent *ev)
-{
-    m_controller->onCloseEvent(ev);
-}
-
 #if defined(Q_OS_WIN)
 bool FloatingWindow_qtwidgets::nativeEvent(const QByteArray &eventType, void *message, Qt5Qt6Compat::qintptr *result)
 {

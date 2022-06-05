@@ -49,7 +49,6 @@ protected:
     QSize maxSizeHint() const override;
 
 private:
-    void closeEvent(QCloseEvent *e) override;
     bool event(QEvent *) override;
     Controllers::Frame *const m_controller;
 };
