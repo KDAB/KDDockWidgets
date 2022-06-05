@@ -525,9 +525,10 @@ LayoutSaver::FloatingWindow FloatingWindow::serialize() const
     fw.affinities = affinities();
     fw.windowState = windowStateOverride();
 
-    auto parentView = view()->parentView();
-    auto mainWindow = parentView ? parentView->asMainWindowController() : nullptr;
-    fw.parentIndex = mainWindow ? DockRegistry::self()->mainwindows().indexOf(mainWindow) : -1;
+    Window::Ptr window = view()->window();
+    Window::Ptr transientParentWindow = window ? window->transientParent() : nullptr;
+    auto transientMainWindow = transientParentWindow ? DockRegistry::self()->mainWindowForHandle(transientParentWindow) : nullptr;
+    fw.parentIndex = transientMainWindow ? DockRegistry::self()->mainwindows().indexOf(transientMainWindow) : -1;
 
     return fw;
 }
