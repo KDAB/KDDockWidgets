@@ -36,7 +36,7 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
                         setCurrentDockWidget(0);
                 }
 
-                Q_EMIT countChanged(); });
+                Q_EMIT m_stack->countChanged(); });
 }
 
 void Stack_qtquick::init()
