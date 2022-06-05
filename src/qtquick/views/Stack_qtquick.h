@@ -67,10 +67,7 @@ public:
     /// @brief Returns the stack controller associated with this view
     Controllers::Stack *stack() const;
 
-Q_SIGNALS: // TODOm2: Review these signals
-    void currentTabChanged(int index);
-    void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *dw);
-
+Q_SIGNALS:
     void tabBarChanged();
 
 protected:
