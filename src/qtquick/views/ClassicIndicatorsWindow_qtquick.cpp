@@ -197,26 +197,27 @@ QVector<QQuickItem *> IndicatorWindow_qtquick::indicatorItems() const
 
 void IndicatorWindow_qtquick::raise()
 {
+    QWindow::raise();
 }
 
-void IndicatorWindow_qtquick::setGeometry(QRect)
+void IndicatorWindow_qtquick::setGeometry(QRect geo)
 {
-    // View::setGeometry(rect);
+    QWindow::setGeometry(geo);
 }
 
-void IndicatorWindow_qtquick::setObjectName(const QString &)
+void IndicatorWindow_qtquick::setObjectName(const QString &name)
 {
-    // View::setObjectName(name);
+    QObject::setObjectName(name);
 }
 
-void IndicatorWindow_qtquick::setVisible(bool)
+void IndicatorWindow_qtquick::setVisible(bool is)
 {
-    // View::setVisible(is);
+    QWindow::setVisible(is);
 }
 
-void IndicatorWindow_qtquick::resize(QSize)
+void IndicatorWindow_qtquick::resize(QSize sz)
 {
-    // View::resize(size);
+    QWindow::resize(sz);
 }
 
 bool IndicatorWindow_qtquick::isWindow() const
