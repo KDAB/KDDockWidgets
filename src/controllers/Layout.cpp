@@ -85,7 +85,7 @@ Controllers::MainWindow *Layout::mainWindow(bool honourNesting) const
 
 Controllers::FloatingWindow *Layout::floatingWindow() const
 {
-    auto parent = view()->parentView();
+    auto parent = view()->rootView();
     return parent ? parent->asFloatingWindowController() : nullptr;
 }
 
