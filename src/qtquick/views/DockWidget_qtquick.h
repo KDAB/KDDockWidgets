@@ -23,7 +23,6 @@
 #include "View_qtquick.h"
 
 QT_BEGIN_NAMESPACE
-class QCloseEvent;
 class QQmlEngine;
 QT_END_NAMESPACE
 

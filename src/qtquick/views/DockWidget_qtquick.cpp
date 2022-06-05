@@ -23,7 +23,6 @@
 
 #include <Config.h>
 #include <QQuickItem>
-#include <QCloseEvent>
 
 /**
  * @file
@@ -109,8 +108,6 @@ bool DockWidget_qtquick::event(QEvent *e)
         dockWidget()->onShown(e->spontaneous());
     } else if (e->type() == QEvent::Hide) {
         dockWidget()->onHidden(e->spontaneous());
-    } else if (e->type() == QEvent::Close) {
-        dockWidget()->onCloseEvent(static_cast<QCloseEvent *>(e));
     }
 
     return View_qtquick::event(e);

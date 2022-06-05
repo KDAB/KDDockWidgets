@@ -865,18 +865,6 @@ void DockWidget::onResize(QSize)
     }
 }
 
-void DockWidget::onCloseEvent(QCloseEvent *e)
-{
-    e->accept(); // By default we accept, means DockWidget closes
-    if (d->guest) {
-        // Give a chance for the widget to ignore
-        Platform::instance()->sendEvent(d->guest.get(), e);
-    }
-
-    if (e->isAccepted())
-        d->close();
-}
-
 Controllers::DockWidget *DockWidget::deserialize(const LayoutSaver::DockWidget::Ptr &saved)
 {
     auto dr = DockRegistry::self();
@@ -1030,4 +1018,17 @@ void DockWidget::Private::saveLastFloatingGeometry()
         // It's getting docked, save last floating position
         lastPosition()->setLastFloatingGeometry(q->view()->windowGeometry());
     }
+}
+
+void DockWidget::Private::onCloseEvent(QCloseEvent *e)
+{
+    qDebug() << Q_FUNC_INFO;
+    e->accept(); // By default we accept, means DockWidget closes
+    if (guest) {
+        // Give a chance for the widget to ignore
+        Platform::instance()->sendEvent(guest.get(), e);
+    }
+
+    if (e->isAccepted())
+        close();
 }

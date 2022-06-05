@@ -92,11 +92,6 @@ bool DockWidget_qtwidgets::event(QEvent *e)
     return QWidget::event(e);
 }
 
-void DockWidget_qtwidgets::closeEvent(QCloseEvent *e)
-{
-    d->m_controller->onCloseEvent(e);
-}
-
 void DockWidget_qtwidgets::resizeEvent(QResizeEvent *e)
 {
     d->m_controller->onResize(e->size());

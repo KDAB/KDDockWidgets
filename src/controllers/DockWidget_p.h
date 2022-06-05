@@ -63,6 +63,9 @@ public:
     void init()
     {
         updateTitle();
+        q->view()->closeRequested.connect([this](QCloseEvent *ev) {
+            onCloseEvent(ev);
+        });
     }
 
     /**
@@ -127,6 +130,7 @@ public:
     bool restoreToPreviousPosition();
     void maybeRestoreToPreviousPosition();
     int currentTabIndex() const;
+    void onCloseEvent(QCloseEvent *e);
 
     /**
      * @brief Serializes this dock widget into an intermediate form

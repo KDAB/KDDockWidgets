@@ -23,10 +23,6 @@
 #include "controllers/DockWidget.h"
 #include "View_qtwidgets.h"
 
-QT_BEGIN_NAMESPACE
-class QCloseEvent;
-QT_END_NAMESPACE
-
 // clazy:excludeall=ctor-missing-parent-argument
 
 namespace KDDockWidgets {
@@ -77,7 +73,6 @@ public:
 protected:
     void init() override;
     bool event(QEvent *) override;
-    void closeEvent(QCloseEvent *) override;
     void resizeEvent(QResizeEvent *) override;
 
 private:

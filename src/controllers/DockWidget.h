@@ -455,7 +455,6 @@ public:
     /// This only applies when using MainWindowOption_HasCentralWidget
     bool isPersistentCentralDockWidget() const;
 
-    void onCloseEvent(QCloseEvent *e);
     void onResize(QSize newSize);
 
 Q_SIGNALS:
