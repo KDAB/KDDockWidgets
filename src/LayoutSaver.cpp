@@ -229,7 +229,7 @@ void from_json(const nlohmann::json &json, LayoutSaver::FloatingWindow &window)
 {
     window.multiSplitterLayout = json.value("multiSplitterLayout", LayoutSaver::MultiSplitter());
     window.parentIndex = json.value("parentIndex", -1);
-    window.geometry = json.value("normalGeometry", QRect());
+    window.geometry = json.value("geometry", QRect());
     window.normalGeometry = json.value("normalGeometry", QRect());
     window.screenIndex = json.value("screenIndex", 0);
     window.screenSize = json.value("screenSize", QSize(800, 600));
