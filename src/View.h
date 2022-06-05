@@ -228,6 +228,9 @@ public:
     /// Like QWidget::window()
     virtual std::shared_ptr<Window> window() const = 0;
 
+    /// @brief Convenience. See Window::transientWindow().
+    std::shared_ptr<Window> transientWindow() const;
+
     /// @brief Returns the gui element's parent. Like QWidget::parentWidget()
     virtual std::shared_ptr<ViewWrapper> parentView() const = 0;
 

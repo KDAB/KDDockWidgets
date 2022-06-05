@@ -571,6 +571,9 @@ Controllers::FloatingWindow *DockRegistry::floatingWindowForHandle(WId hwnd) con
 
 Controllers::MainWindow *DockRegistry::mainWindowForHandle(Window::Ptr window) const
 {
+    if (!window)
+        return nullptr;
+
     for (Controllers::MainWindow *mw : m_mainWindows) {
         if (mw->view()->isInWindow(window))
             return mw;

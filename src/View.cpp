@@ -390,3 +390,11 @@ void View::createPlatformWindow()
     // Only qtwidgets need this
     qFatal("Shouldn't be called on this platform");
 }
+
+std::shared_ptr<Window> View::transientWindow() const
+{
+    if (auto w = window())
+        return w->transientParent();
+
+    return {};
+}
