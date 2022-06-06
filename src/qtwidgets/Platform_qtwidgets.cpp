@@ -44,7 +44,7 @@ void Platform_qtwidgets::init()
     }
 #endif
 
-    qApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
+    qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
         ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtwidgets(obj) : nullptr;
         focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
     });
@@ -86,7 +86,7 @@ ViewFactory *Platform_qtwidgets::createDefaultViewFactory()
 
 Window::Ptr Platform_qtwidgets::windowAt(QPoint globalPos) const
 {
-    if (auto qwindow = qApp->QGuiApplication::topLevelAt(globalPos)) {
+    if (auto qwindow = qGuiApp->QGuiApplication::topLevelAt(globalPos)) {
         auto window = new Window_qtwidgets(qwindow);
         return Window::Ptr(window);
     }

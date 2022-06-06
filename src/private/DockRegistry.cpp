@@ -35,7 +35,7 @@ using namespace KDDockWidgets::Controllers;
 DockRegistry::DockRegistry(QObject *parent)
     : QObject(parent)
 {
-    qApp->installEventFilter(this);
+    qGuiApp->installEventFilter(this);
     m_connection = Platform::instance()->focusedViewChanged.connect(&DockRegistry::onFocusedViewChanged, this);
 }
 
@@ -652,7 +652,7 @@ bool DockRegistry::eventFilter(QObject *watched, QEvent *event)
 
     if (event->type() == QEvent::Quit && !m_isProcessingAppQuitEvent) {
         m_isProcessingAppQuitEvent = true;
-        qApp->sendEvent(qApp, event);
+        qGuiApp->sendEvent(qApp, event);
         m_isProcessingAppQuitEvent = false;
         return true;
     } else if (event->type() == QEvent::Expose) {

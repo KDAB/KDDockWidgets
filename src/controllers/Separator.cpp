@@ -231,7 +231,7 @@ void Separator::onMouseMove(QPoint pos)
     if (!isBeingDragged())
         return;
 
-    if (!(qApp->mouseButtons() & Qt::LeftButton)) {
+    if (!(qGuiApp->mouseButtons() & Qt::LeftButton)) {
         qCDebug(separators) << Q_FUNC_INFO << "Ignoring spurious mouse event. Someone ate our ReleaseEvent";
         onMouseReleased();
         return;

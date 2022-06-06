@@ -69,7 +69,7 @@ public:
 
         // Finally send the event
         m_eventTarget->setProperty("cursorPosition", m_eventSource->property("cursorPosition"));
-        qApp->sendEvent(m_eventTarget, me);
+        qGuiApp->sendEvent(m_eventTarget, me);
         m_eventTarget->setProperty("cursorPosition", CursorPosition_Undefined);
 
         return false;
@@ -128,7 +128,7 @@ View_qtquick::View_qtquick(KDDockWidgets::Controller *controller, Type type,
         }
     });
 
-    qApp->installEventFilter(this);
+    qGuiApp->installEventFilter(this);
     setSize(800, 800);
 }
 
@@ -170,7 +170,7 @@ void View_qtquick::itemChange(QQuickItem::ItemChange change, const QQuickItem::I
     switch (change) {
     case QQuickItem::ItemParentHasChanged: {
         QEvent ev(QEvent::ParentChange);
-        qApp->sendEvent(this, &ev); // Not calling event() directly, otherwise it would skip event filters
+        qGuiApp->sendEvent(this, &ev); // Not calling event() directly, otherwise it would skip event filters
         Q_EMIT parentChanged(this);
         break;
     }
@@ -242,7 +242,7 @@ bool View_qtquick::eventFilter(QObject *watched, QEvent *ev)
             case QEvent::MouseButtonPress:
             case QEvent::MouseButtonRelease:
                 ev->ignore();
-                qApp->sendEvent(this, ev);
+                qGuiApp->sendEvent(this, ev);
                 // qDebug() << "Mouse event" << ev;
                 if (ev->isAccepted())
                     return true;
@@ -291,12 +291,12 @@ void View_qtquick::QQUICKITEMgeometryChanged(const QRectF &newGeometry, const QR
 
     if (newGeometry.size() != oldGeometry.size()) {
         QEvent ev(QEvent::Resize);
-        qApp->sendEvent(this, &ev);
+        qGuiApp->sendEvent(this, &ev);
     }
 
     if (newGeometry.topLeft() != oldGeometry.topLeft()) {
         QEvent ev(QEvent::Move);
-        qApp->sendEvent(this, &ev);
+        qGuiApp->sendEvent(this, &ev);
     }
 
     Q_EMIT itemGeometryChanged();

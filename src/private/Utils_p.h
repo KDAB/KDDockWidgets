@@ -36,22 +36,22 @@ namespace KDDockWidgets {
 
 inline bool isWayland()
 {
-    return qApp->platformName() == QLatin1String("wayland");
+    return qGuiApp->platformName() == QLatin1String("wayland");
 }
 
 inline bool isOffscreen()
 {
-    return qApp->platformName() == QLatin1String("offscreen");
+    return qGuiApp->platformName() == QLatin1String("offscreen");
 }
 
 inline bool isXCB()
 {
-    return qApp->platformName() == QLatin1String("xcb");
+    return qGuiApp->platformName() == QLatin1String("xcb");
 }
 
 inline bool isLeftButtonPressed()
 {
-    return qApp->mouseButtons() & Qt::LeftButton;
+    return qGuiApp->mouseButtons() & Qt::LeftButton;
 }
 
 inline bool usesNativeTitleBar()

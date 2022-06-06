@@ -87,7 +87,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     : QWidget(parent)
     , m_objectViewer(this)
 {
-    // qApp->installNativeEventFilter(new DebugAppEventFilter());
+    // qGuiApp->installNativeEventFilter(new DebugAppEventFilter());
     auto layout = new QVBoxLayout(this);
     layout->addWidget(&m_objectViewer);
 
@@ -184,7 +184,7 @@ DebugWindow::DebugWindow(QWidget *parent)
     button->setText(QStringLiteral("Pick Widget"));
     layout->addWidget(button);
     connect(button, &QPushButton::clicked, this, [this] {
-        qApp->setOverrideCursor(Qt::CrossCursor);
+        qGuiApp->setOverrideCursor(Qt::CrossCursor);
         grabMouse();
 
         QEventLoop loop;
@@ -193,7 +193,7 @@ DebugWindow::DebugWindow(QWidget *parent)
 
         releaseMouse();
         m_isPickingWidget = nullptr;
-        qApp->restoreOverrideCursor();
+        qGuiApp->restoreOverrideCursor();
     });
 
     button = new QPushButton(this);
@@ -295,7 +295,7 @@ void DebugWindow::dumpWindow(QWidget *w)
 
 void DebugWindow::dumpWindows()
 {
-    for (QWidget *w : qApp->topLevelWidgets()) {
+    for (QWidget *w : qGuiApp->topLevelWidgets()) {
         if (w != window())
             dumpWindow(w);
     }

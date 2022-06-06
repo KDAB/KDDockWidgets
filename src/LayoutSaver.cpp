@@ -652,8 +652,8 @@ void LayoutSaver::Private::deleteEmptyFrames()
 
 std::unique_ptr<QSettings> LayoutSaver::Private::settings() const
 {
-    auto settings = std::unique_ptr<QSettings>(new QSettings(qApp->organizationName(),
-                                                             qApp->applicationName()));
+    auto settings = std::unique_ptr<QSettings>(new QSettings(qGuiApp->organizationName(),
+                                                             qGuiApp->applicationName()));
     settings->beginGroup(QStringLiteral("KDDockWidgets::LayoutSaver"));
 
     return settings;
@@ -1056,7 +1056,7 @@ LayoutSaver::ScalingInfo::ScalingInfo(const QString &mainWindowId, QRect savedMa
         return;
     }
 
-    const int currentScreenIndex = qApp->screens().indexOf(screenForMainWindow(mainWindow));
+    const int currentScreenIndex = qGuiApp->screens().indexOf(screenForMainWindow(mainWindow));
 
     this->mainWindowName = mainWindowId;
     this->savedMainWindowGeometry = savedMainWindowGeo;

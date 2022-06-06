@@ -249,7 +249,7 @@ QString DockWidget::title() const
         if (dropAreaGuest->hasSingleFrame()) {
             return dropAreaGuest->frames().constFirst()->title();
         } else {
-            return qApp->applicationName();
+            return qGuiApp->applicationName();
         }
     }
 
@@ -987,7 +987,7 @@ DockWidget::Private::Private(const QString &dockName, DockWidget::Options option
     toggleAction->setCheckable(true);
     floatAction->setCheckable(true);
 
-    qApp->installEventFilter(this);
+    qGuiApp->installEventFilter(this);
 }
 
 void DockWidget::Private::addPlaceholderItem(Layouting::Item *item)

@@ -57,7 +57,7 @@ public:
         p.setPen(pen);
         p.setBrush(brush);
         p.drawRect(rect().adjusted(4, 4, -4, -4));
-        QFont f = qApp->font();
+        QFont f = qGuiApp->font();
         f.setPixelSize(30);
         f.setBold(true);
         p.setFont(f);

@@ -30,6 +30,7 @@
 
 #include <QCloseEvent>
 #include <QScopedValueRollback>
+#include <QGuiApplication>
 #include <QTimer>
 #include <QWindow>
 
@@ -118,7 +119,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
     if (Platform::instance()->isQtWidgets()) {
         view()->createPlatformWindow(); // QWidget::create
         m_nchittestFilter = new NCHITTESTEventFilter(view());
-        qApp->installNativeEventFilter(m_nchittestFilter);
+        qGuiApp->installNativeEventFilter(m_nchittestFilter);
         WidgetResizeHandler::setupWindow(view()->window());
     }
 #endif
@@ -467,7 +468,7 @@ void FloatingWindow::updateTitleAndIcon()
         title = frame->title();
         icon = frame->icon();
     } else {
-        title = qApp->applicationName();
+        title = qGuiApp->applicationName();
     }
     m_titleBar->setTitle(title);
     m_titleBar->setIcon(icon);
@@ -659,7 +660,7 @@ void FloatingWindow::updateSizeConstraints()
 
 void FloatingWindow::ensureRectIsOnScreen(QRect &geometry)
 {
-    const auto screens = qApp->screens();
+    const auto screens = qGuiApp->screens();
     if (screens.empty())
         return;
 

@@ -57,7 +57,7 @@ public:
     {
         m_target = target;
         m_guard = target->asQObject();
-        qApp->installEventFilter(this);
+        qGuiApp->installEventFilter(this);
     }
 
     void releaseMouse()
@@ -70,7 +70,7 @@ public:
 
         m_target = nullptr;
         m_guard.clear();
-        qApp->removeEventFilter(this);
+        qGuiApp->removeEventFilter(this);
     }
 
     bool eventFilter(QObject *, QEvent *ev) override
@@ -523,9 +523,9 @@ void StateDraggingWayland::onEntry()
     drag.setMimeData(mimeData);
     drag.setPixmap(q->m_windowBeingDragged->pixmap());
 
-    qApp->installEventFilter(q);
+    qGuiApp->installEventFilter(q);
     const Qt::DropAction result = drag.exec();
-    qApp->removeEventFilter(q);
+    qGuiApp->removeEventFilter(q);
     if (result == Qt::IgnoreAction)
         Q_EMIT q->dragCanceled();
 }
@@ -783,7 +783,7 @@ StateBase *DragController::activeState() const
 #if defined(Q_OS_WIN_TODO)
 static QWidget *qtTopLevelForHWND(HWND hwnd)
 {
-    const QList<QWindow *> windows = qApp->topLevelWindows();
+    const QList<QWindow *> windows = qGuiApp->topLevelWindows();
     for (QWindow *window : windows) {
         if (!window->isVisible())
             continue;
@@ -796,7 +796,7 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
                 // It's not a KDDW window, but we still return something, as the KDDW main window
                 // might be embedded into another non-kddw QMainWindow
                 // Case not supported for QtQuick.
-                const QWidgetList widgets = qApp->topLevelWidgets();
+                const QWidgetList widgets = qGuiApp->topLevelWidgets();
                 for (QWidget *widget : widgets) {
                     if (!widget->window()) {
                         // Don't call winId on windows that don't have it, as that will force all its childrens to have it,
@@ -853,7 +853,7 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
 {
     QPoint globalPos = QCursor::pos();
 
-    if (qApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
+    if (qGuiApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
 #if defined(Q_OS_WIN_TODO)
         POINT globalNativePos;
         if (!GetCursorPos(&globalNativePos))
@@ -882,7 +882,7 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
 #ifdef KDDW_FRONTEND_QTWIDGETS
                 if (Platform::instance()->isQtWidgets()) {
                     // Maybe it's embedded in a QWinWidget:
-                    auto topLevels = qApp->topLevelWidgets();
+                    auto topLevels = qGuiApp->topLevelWidgets();
                     for (auto topLevel : topLevels) {
                         if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
                             if (hwnd == GetParent(HWND(topLevel->window()->winId()))) {

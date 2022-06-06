@@ -135,7 +135,7 @@ void KDDockWidgets::Tests::doubleClickOn(QPoint globalPos, View *receiver)
 
     if (auto actualReceiver = receiver->property("titleBarMouseArea").value<QObject *>()) {
         // QtQuick case, we need to send the event to the mouse area
-        qApp->sendEvent(actualReceiver, &ev);
+        qGuiApp->sendEvent(actualReceiver, &ev);
     } else {
         // QtWidgets case
         Platform::instance()->sendEvent(receiver, &ev);

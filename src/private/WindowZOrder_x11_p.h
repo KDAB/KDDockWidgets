@@ -59,7 +59,7 @@ static void travelTree(WId current, Display *disp, Window::List &remaining, Wind
 
 static Display *x11Display()
 {
-    auto nativeInterface = qApp->platformNativeInterface();
+    auto nativeInterface = qGuiApp->platformNativeInterface();
     void *disp = nativeInterface->nativeResourceForIntegration(QByteArrayLiteral("display"));
     return reinterpret_cast<Display *>(disp);
 }

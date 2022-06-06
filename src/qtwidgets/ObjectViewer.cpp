@@ -135,7 +135,7 @@ void ObjectViewer::dumpWindows()
     }
 
     qDebug() << "Top Level Windows:";
-    const auto &topLevelWindows = qApp->topLevelWindows();
+    const auto &topLevelWindows = qGuiApp->topLevelWindows();
     for (QWindow *w : topLevelWindows) {
         qDebug() << "    QWindow=" << w << "; parent=" << w->parent() << "; transientParent=" << w->transientParent() << "; hwnd=" << w->winId();
     }

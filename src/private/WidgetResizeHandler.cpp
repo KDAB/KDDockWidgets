@@ -415,7 +415,7 @@ void WidgetResizeHandler::setTarget(View *w)
         if (m_isTopLevelWindowResizer) {
             mTarget->asQObject()->installEventFilter(this);
         } else {
-            qApp->installEventFilter(this);
+            qGuiApp->installEventFilter(this);
         }
     } else {
         qWarning() << "Target widget is null!";
@@ -468,7 +468,7 @@ void WidgetResizeHandler::setMouseCursor(Qt::CursorShape cursor)
     if (m_isTopLevelWindowResizer)
         mTarget->setCursor(cursor);
     else
-        qApp->setOverrideCursor(cursor);
+        qGuiApp->setOverrideCursor(cursor);
 }
 
 void WidgetResizeHandler::restoreMouseCursor()
@@ -476,7 +476,7 @@ void WidgetResizeHandler::restoreMouseCursor()
     if (m_isTopLevelWindowResizer)
         mTarget->setCursor(Qt::ArrowCursor);
     else
-        qApp->restoreOverrideCursor();
+        qGuiApp->restoreOverrideCursor();
 }
 
 CursorPosition WidgetResizeHandler::cursorPosition(QPoint globalPos) const
@@ -598,7 +598,7 @@ CustomFrameHelper::CustomFrameHelper(ShouldUseCustomFrame func, QObject *parent)
     , m_shouldUseCustomFrameFunc(func)
 {
 #ifdef Q_OS_WIN
-    qApp->installNativeEventFilter(this);
+    qGuiApp->installNativeEventFilter(this);
 #endif
 }
 

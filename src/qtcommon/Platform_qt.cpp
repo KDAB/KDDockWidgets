@@ -100,7 +100,7 @@ EventFilter::~EventFilter() = default;
 
 Platform_qt::Platform_qt()
 {
-    if (!qApp)
+    if (!qGuiApp)
         qWarning() << "Please call KDDockWidgets::initPlatform() after QGuiApplication";
 }
 
@@ -110,13 +110,13 @@ Platform_qt::~Platform_qt()
 
 std::shared_ptr<ViewWrapper> Platform_qt::focusedView() const
 {
-    return qobjectAsView(qApp->focusObject());
+    return qobjectAsView(qGuiApp->focusObject());
 }
 
 Window::List Platform_qt::windows() const
 {
     Window::List windows;
-    const auto qtwindows = qApp->topLevelWindows();
+    const auto qtwindows = qGuiApp->topLevelWindows();
     windows.reserve(qtwindows.size());
     for (QWindow *qtwindow : qtwindows) {
         windows << windowFromQWindow(qtwindow);
@@ -143,7 +143,7 @@ int Platform_qt::screenNumberFor(std::shared_ptr<Window> window) const
 int Platform_qt::screenNumberForQWindow(QWindow *window) const
 {
     if (QScreen *screen = window->screen()) {
-        return qApp->screens().indexOf(screen);
+        return qGuiApp->screens().indexOf(screen);
     }
 
     return -1;
@@ -166,7 +166,7 @@ bool Platform_qt::tests_waitForEvent(QObject *w, QEvent::Type type, int timeout)
     time.start();
 
     while (!filter.m_got && time.elapsed() < timeout) {
-        qApp->processEvents();
+        qGuiApp->processEvents();
         QTest::qWait(50);
     }
 
@@ -205,7 +205,7 @@ bool Platform_qt::tests_waitForDeleted(View *view, int timeout) const
     time.start();
 
     while (ptr && time.elapsed() < timeout) {
-        qApp->processEvents();
+        qGuiApp->processEvents();
         QTest::qWait(50);
     }
 
@@ -224,7 +224,7 @@ bool Platform_qt::tests_waitForDeleted(QObject *o, int timeout) const
     time.start();
 
     while (ptr && time.elapsed() < timeout) {
-        qApp->processEvents();
+        qGuiApp->processEvents();
         QTest::qWait(50);
     }
 
@@ -235,12 +235,12 @@ bool Platform_qt::tests_waitForDeleted(QObject *o, int timeout) const
 
 void Platform_qt::sendEvent(View *view, QEvent *ev) const
 {
-    qApp->sendEvent(view->asQObject(), ev);
+    qGuiApp->sendEvent(view->asQObject(), ev);
 }
 
 void Platform_qt::tests_sendEvent(Window::Ptr window, QEvent *ev) const
 {
-    qApp->sendEvent(static_cast<Window_qt *>(window.get())->qtWindow(), ev);
+    qGuiApp->sendEvent(static_cast<Window_qt *>(window.get())->qtWindow(), ev);
 }
 
 void Platform_qt::installMessageHandler()
@@ -258,13 +258,13 @@ void Platform_qt::uninstallMessageHandler()
 
 void Platform_qt::tests_initPlatform_impl()
 {
-    qApp->setOrganizationName(QStringLiteral("KDAB"));
-    qApp->setApplicationName(QStringLiteral("dockwidgets-unit-tests"));
+    qGuiApp->setOrganizationName(QStringLiteral("KDAB"));
+    qGuiApp->setApplicationName(QStringLiteral("dockwidgets-unit-tests"));
 }
 
 void Platform_qt::tests_deinitPlatform_impl()
 {
-    delete qApp;
+    delete qGuiApp;
 }
 
 /*static*/

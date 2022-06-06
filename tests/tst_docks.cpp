@@ -4946,7 +4946,7 @@ void TestDocks::tst_raise()
     QVERIFY(!dock1->isCurrentTab());
     QVERIFY(dock2->isCurrentTab());
 
-    if (qApp->platformName() != QLatin1String("offscreen")) { // offscreen qpa doesn't seem to keep Window Z.
+    if (qGuiApp->platformName() != QLatin1String("offscreen")) { // offscreen qpa doesn't seem to keep Window Z.
         auto dock3 = createDockWidget("3");
         dock3->window()->setGeometry(dock1->window()->geometry());
         dock3->window()->setObjectName("3");
@@ -4955,7 +4955,7 @@ void TestDocks::tst_raise()
         QTest::qWait(200);
 
         if (!Platform::instance()->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->equals(dock3->view()->window())) {
-            qDebug() << "Failing before raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock3->window().get()
+            qDebug() << "Failing before raise" << dock3->window().get()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             QVERIFY(false);
         }
@@ -4965,7 +4965,7 @@ void TestDocks::tst_raise()
         QVERIFY(dock1->isCurrentTab());
 
         if (Platform::instance()->windowAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->equals(dock1->view()->window())) {
-            qDebug() << "Failing after raise" << qApp->widgetAt(dock3->window()->geometry().topLeft() + QPoint(50, 50))->window() << dock1->window().get()
+            qDebug() << "Failing after raise" << dock1->window().get()
                      << dock1->window()->geometry() << dock3->window()->geometry();
             QVERIFY(false);
         }

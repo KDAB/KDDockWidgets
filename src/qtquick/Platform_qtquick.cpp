@@ -70,7 +70,7 @@ void Platform_qtquick::init()
     KDDockWidgets::registerQmlTypes();
     QQuickWindow::setDefaultAlphaBuffer(true);
 
-    qApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
+    qGuiApp->connect(qApp, &QGuiApplication::focusObjectChanged, qApp, [this](QObject *obj) {
         ViewWrapper *wrapper = obj ? new Views::ViewWrapper_qtquick(obj) : nullptr;
         focusedViewChanged.emit(std::shared_ptr<ViewWrapper>(wrapper));
     });
@@ -107,7 +107,7 @@ ViewFactory *Platform_qtquick::createDefaultViewFactory()
 
 Window::Ptr Platform_qtquick::windowAt(QPoint globalPos) const
 {
-    if (auto qwindow = qApp->QGuiApplication::topLevelAt(globalPos)) {
+    if (auto qwindow = qGuiApp->QGuiApplication::topLevelAt(globalPos)) {
         auto window = new Window_qtquick(qwindow);
         return Window::Ptr(window);
     }
@@ -195,7 +195,7 @@ bool Platform_qtquick::usesFallbackMouseGrabber() const
 
 bool Platform_qtquick::inDisallowedDragView(QPoint globalPos) const
 {
-    auto window = qobject_cast<QQuickWindow *>(qApp->topLevelAt(globalPos));
+    auto window = qobject_cast<QQuickWindow *>(qGuiApp->topLevelAt(globalPos));
     if (!window)
         return false;
 
@@ -207,7 +207,7 @@ bool Platform_qtquick::inDisallowedDragView(QPoint globalPos) const
 
 void Platform_qtquick::ungrabMouse()
 {
-    const QWindowList windows = qApp->topLevelWindows();
+    const QWindowList windows = qGuiApp->topLevelWindows();
     for (QWindow *window : windows) {
         if (auto quickWindow = qobject_cast<QQuickWindow *>(window)) {
             if (QQuickItem *grabber = quickWindow->mouseGrabberItem())

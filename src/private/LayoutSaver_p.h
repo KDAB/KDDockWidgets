@@ -261,7 +261,7 @@ public:
     {
         s_currentLayoutBeingRestored = this;
 
-        const QList<QScreen *> screens = qApp->screens();
+        const QList<QScreen *> screens = qGuiApp->screens();
         const int numScreens = screens.size();
         screenInfo.reserve(numScreens);
         for (int i = 0; i < numScreens; ++i) {
