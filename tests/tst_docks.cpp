@@ -2690,7 +2690,7 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
     // Clear had a bug where it saved the position of all dock widgets being closed
     DockRegistry::self()->clear();
 
-    const QRect suggestedGeo(150, 150, 250, 250);
+    const QRect suggestedGeo(150, 150, 300, 500);
     d1->view()->setGeometry(suggestedGeo);
 
     d1->show();
