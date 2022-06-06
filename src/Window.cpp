@@ -46,3 +46,19 @@ QPoint Window::framePosition() const
 {
     return frameGeometry().topLeft();
 }
+
+bool Window::containsView(View *view) const
+{
+    if (!view)
+        return false;
+
+    return equals(view->window());
+}
+
+bool Window::containsView(Controller *c) const
+{
+    if (!c)
+        return false;
+
+    return containsView(c->view());
+}

@@ -102,6 +102,9 @@ public:
     int minHeight() const;
     int maxWidth() const;
     int maxHeight() const;
+
+    bool containsView(Controller *) const;
+    bool containsView(View *) const;
 };
 
 inline bool operator==(Window::Ptr w1, Window::Ptr w2)
