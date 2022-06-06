@@ -74,7 +74,7 @@ View *Platform_qtquick::tests_createView(CreateViewOptions opts, View *parent)
     auto parentItem = parent ? Views::asQQuickItem(parent) : nullptr;
     auto newItem = new TestView_qtquick(opts, parentItem);
 
-    if (!parentItem) {
+    if (!parentItem && opts.createWindow) {
         auto view = new QQuickView(m_qmlEngine, nullptr);
         view->resize(QSize(800, 800));
 

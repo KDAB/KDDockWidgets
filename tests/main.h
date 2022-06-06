@@ -42,6 +42,12 @@ std::ostream &operator<<(std::ostream &os, QRect r)
 
 using namespace KDDockWidgets;
 
+inline View *createViewAndWindow(Platform::CreateViewOptions opts, View *parent = nullptr)
+{
+    opts.createWindow = true;
+    return Platform::instance()->tests_createView(opts, parent);
+}
+
 int main(int argc, char **argv)
 {
     int exitCode = 0;

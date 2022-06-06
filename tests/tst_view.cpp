@@ -13,12 +13,12 @@
 
 TEST_CASE("View::setParent()")
 {
-    auto rootView = Platform::instance()->tests_createView({});
+    auto rootView = createViewAndWindow({});
     REQUIRE(rootView);
     REQUIRE(!rootView->isNull());
     CHECK(rootView->childViews().isEmpty());
 
-    auto childView = Platform::instance()->tests_createView({}, rootView);
+    auto childView = createViewAndWindow({}, rootView);
 
     CHECK(!rootView->parentView());
     REQUIRE(childView->parentView());
@@ -28,7 +28,7 @@ TEST_CASE("View::setParent()")
     REQUIRE_EQ(children.size(), 1);
     CHECK(children[0]->equals(childView));
 
-    auto rootView2 = Platform::instance()->tests_createView({});
+    auto rootView2 = createViewAndWindow({});
     childView->setParent(rootView2);
     CHECK(childView->parentView()->equals(rootView2));
     CHECK(rootView->childViews().isEmpty());
@@ -44,8 +44,8 @@ TEST_CASE("View::setParent()")
 
 TEST_CASE("View::windowHandle,rootView,Window::rootView")
 {
-    auto rootView = Platform::instance()->tests_createView({});
-    auto childView = Platform::instance()->tests_createView({ true }, rootView);
+    auto rootView = createViewAndWindow({});
+    auto childView = createViewAndWindow({ true }, rootView);
 
     auto window = rootView->window();
     REQUIRE(window);
@@ -62,14 +62,14 @@ TEST_CASE("View::windowHandle,rootView,Window::rootView")
 
 TEST_CASE("View::isVisible(),show(),hide()")
 {
-    auto rootView = Platform::instance()->tests_createView({});
+    auto rootView = createViewAndWindow({});
     CHECK(!rootView->isVisible());
 
     rootView->setVisible(true);
     CHECK(rootView->isVisible());
 
     // Changing parent will make it hide
-    auto view2 = Platform::instance()->tests_createView({});
+    auto view2 = createViewAndWindow({});
     view2->setVisible(true);
     CHECK(view2->isVisible());
     view2->setParent(rootView);
@@ -100,7 +100,7 @@ TEST_CASE("View::isVisible(),show(),hide()")
 TEST_CASE("View::geometry,pos,x,y,width,height,rect")
 {
     // Test with a top-level view first
-    auto rootView = Platform::instance()->tests_createView({});
+    auto rootView = createViewAndWindow({});
     rootView->show();
 
     const QRect initialGeo = QRect(200, 201, 500, 501);
@@ -118,7 +118,7 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
     CHECK_EQ(rootView->rect(), QRect(QPoint(0, 0), initialGeo.size()));
 
     // Now test with child view
-    auto childView = Platform::instance()->tests_createView({ true }, rootView);
+    auto childView = createViewAndWindow({ true }, rootView);
     CHECK(childView->isVisible());
     const QRect newChildGeo(1, 2, 300, 301);
     childView->setGeometry(newChildGeo);
@@ -134,7 +134,7 @@ TEST_CASE("View::geometry,pos,x,y,width,height,rect")
 TEST_CASE("View::sizeHint")
 {
     const QSize sizeHint = QSize(200, 200);
-    auto rootView = Platform::instance()->tests_createView({ true, sizeHint });
+    auto rootView = createViewAndWindow({ true, sizeHint });
     CHECK_EQ(rootView->sizeHint(), sizeHint);
 }
 
@@ -142,7 +142,7 @@ TEST_CASE("View::minSize")
 {
     const QSize sizeHint = {};
     const QSize minSize = { 201, 202 };
-    auto rootView = Platform::instance()->tests_createView({ true, sizeHint, minSize });
+    auto rootView = createViewAndWindow({ true, sizeHint, minSize });
     CHECK_EQ(rootView->minSize(), minSize);
 
     const QSize newMinSize = { 301, 302 };
@@ -155,7 +155,7 @@ TEST_CASE("View::maxSize")
     const QSize sizeHint = {};
     const QSize minSize = { 201, 202 };
     const QSize maxSize = { 500, 501 };
-    auto rootView = Platform::instance()->tests_createView({ true, sizeHint, minSize, maxSize });
+    auto rootView = createViewAndWindow({ true, sizeHint, minSize, maxSize });
     CHECK_EQ(rootView->maxSizeHint(), maxSize);
 
     const QSize newMaxSize = { 301, 302 };
@@ -165,7 +165,7 @@ TEST_CASE("View::maxSize")
 
 TEST_CASE("View::objectName")
 {
-    auto rootView = Platform::instance()->tests_createView({});
+    auto rootView = createViewAndWindow({});
 
     CHECK_EQ(rootView->objectName(), QString());
     const QString newName = QStringLiteral("name1");
@@ -177,7 +177,7 @@ TEST_CASE("View::closeRequested")
 {
     // Tests that the closeRequested signal is emitted
 
-    auto rootView = Platform::instance()->tests_createView({});
+    auto rootView = createViewAndWindow({});
     bool signalArrived = false;
     KDBindings::ScopedConnection connection = rootView->closeRequested.connect([&signalArrived](QCloseEvent *ev) {
         signalArrived = true;
@@ -190,13 +190,13 @@ TEST_CASE("View::closeRequested")
 
 TEST_CASE("View::focusPolicy, Platform::focusedView")
 {
-    auto rootView = Platform::instance()->tests_createView({});
+    auto rootView = createViewAndWindow({});
     CHECK_EQ(rootView->focusPolicy(), Qt::NoFocus);
 }
 
 TEST_CASE("View::hasFocus")
 {
-    auto rootView = Platform::instance()->tests_createView({});
+    auto rootView = createViewAndWindow({});
     rootView->show();
     rootView->activateWindow();
 
@@ -209,7 +209,7 @@ TEST_CASE("View::hasFocus")
     CHECK(rootView->hasFocus());
     CHECK(rootView->equals(Platform::instance()->focusedView()));
 
-    auto child1 = Platform::instance()->tests_createView({}, rootView);
+    auto child1 = createViewAndWindow({}, rootView);
     CHECK(rootView->hasFocus());
     CHECK(rootView->equals(Platform::instance()->focusedView()));
     child1->setVisible(true);

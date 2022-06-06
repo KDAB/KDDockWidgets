@@ -104,6 +104,7 @@ public:
         QSize minSize = { 200, 200 };
         QSize maxSize = Layouting::Item::hardcodedMaximumSize;
         QSize size = { 1000, 1000 };
+        bool createWindow = false;
     };
 
     class WarningObserver

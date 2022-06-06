@@ -13,13 +13,13 @@
 
 TEST_CASE("ViewWrapper::setParent")
 {
-    auto r = Platform::instance()->tests_createView({});
+    auto r = createViewAndWindow({});
     auto rootView = r->asWrapper();
     REQUIRE(rootView);
     REQUIRE(!rootView->isNull());
     CHECK(rootView->childViews().isEmpty());
 
-    auto c = Platform::instance()->tests_createView({}, r);
+    auto c = createViewAndWindow({}, r);
     auto childView = c->asWrapper();
 
     CHECK(!rootView->parentView());
@@ -30,7 +30,7 @@ TEST_CASE("ViewWrapper::setParent")
     REQUIRE_EQ(children.size(), 1);
     CHECK(children[0]->equals(childView));
 
-    auto r2 = Platform::instance()->tests_createView({});
+    auto r2 = createViewAndWindow({});
     auto rootView2 = r2->asWrapper();
     childView->setParent(r2);
     CHECK(childView->parentView()->equals(rootView2));
@@ -47,9 +47,9 @@ TEST_CASE("ViewWrapper::setParent")
 
 TEST_CASE("ViewWrapper::windowHandle,rootView,Window::rootView")
 {
-    auto r = Platform::instance()->tests_createView({});
+    auto r = createViewAndWindow({});
     auto rootView = r->asWrapper();
-    auto childView = Platform::instance()->tests_createView({ true }, r)->asWrapper();
+    auto childView = createViewAndWindow({ true }, r)->asWrapper();
 
     auto window = rootView->window();
     REQUIRE(window);
@@ -65,13 +65,13 @@ TEST_CASE("ViewWrapper::minSize")
 {
     const QSize sizeHint = {};
     const QSize minSize = { 201, 202 };
-    auto rootView = Platform::instance()->tests_createView({ true, sizeHint, minSize })->asWrapper();
+    auto rootView = createViewAndWindow({ true, sizeHint, minSize })->asWrapper();
     CHECK_EQ(rootView->minSize(), minSize);
 }
 
 TEST_CASE("ViewWrapper::objectName")
 {
-    auto rootView = Platform::instance()->tests_createView({})->asWrapper();
+    auto rootView = createViewAndWindow({})->asWrapper();
 
     CHECK_EQ(rootView->objectName(), QString());
     const QString newName = QStringLiteral("name1");
@@ -81,13 +81,13 @@ TEST_CASE("ViewWrapper::objectName")
 
 TEST_CASE("ViewWrapper::focusPolicy")
 {
-    auto rootView = Platform::instance()->tests_createView({});
+    auto rootView = createViewAndWindow({});
     CHECK_EQ(rootView->asWrapper()->focusPolicy(), Qt::NoFocus);
 }
 
 TEST_CASE("ViewWrapper::sizePolicy")
 {
-    auto rootView = Platform::instance()->tests_createView({});
+    auto rootView = createViewAndWindow({});
     CHECK_EQ(rootView->asWrapper()->sizePolicy().horizontalPolicy(), QSizePolicy::Preferred);
     CHECK_EQ(rootView->asWrapper()->sizePolicy().verticalPolicy(), QSizePolicy::Preferred);
 }
