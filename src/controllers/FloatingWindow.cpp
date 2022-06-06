@@ -206,6 +206,8 @@ FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometr
 FloatingWindow::~FloatingWindow()
 {
     m_inDtor = true;
+    view()->setAboutToBeDestroyed();
+
     if (auto da = dropArea()) {
         // Avoid a bunch of QML warnings and constraints being violated at destruction.
         // Also simply avoiding unneeded work, as QML is destroying stuff 1 by 1
@@ -310,6 +312,7 @@ void FloatingWindow::setSuggestedGeometry(QRect suggestedRect, SuggestedGeometry
 void FloatingWindow::scheduleDeleteLater()
 {
     m_deleteScheduled = true;
+    view()->setAboutToBeDestroyed();
     DockRegistry::self()->unregisterFloatingWindow(this);
     deleteLater();
 }

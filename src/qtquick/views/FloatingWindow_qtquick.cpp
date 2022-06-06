@@ -169,7 +169,7 @@ QWindow *FloatingWindow_qtquick::candidateParentWindow() const
 void FloatingWindow_qtquick::init()
 {
     connect(this, &QQuickItem::visibleChanged, this, [this] {
-        if (!isVisible() && !m_controller->beingDeleted()) {
+        if (!isVisible() && !aboutToBeDestroyed()) {
             m_controller->scheduleDeleteLater();
         }
     });
