@@ -22,14 +22,38 @@ Window_qtquick::~Window_qtquick()
 {
 }
 
+inline View *topMostKDDWView(QQuickItem *parent)
+{
+    if (!parent)
+        return {};
+
+    if (auto v = qobject_cast<Views::View_qtquick *>(parent))
+        return v;
+
+    const auto children = parent->childItems();
+    for (QQuickItem *item : children) {
+        if (auto v = topMostKDDWView(item))
+            return v;
+    }
+
+    return nullptr;
+}
+
 std::shared_ptr<ViewWrapper> Window_qtquick::rootView() const
 {
     if (auto quickwindow = qobject_cast<QQuickWindow *>(m_window)) {
         auto contentItem = quickwindow->contentItem();
-        const auto children = contentItem->childItems();
-        Q_ASSERT(!children.isEmpty());
+        if (View *view = topMostKDDWView(contentItem)) {
+            // This block is for retrocompatibility with 1.x. For QtQuick the topmost "widget" is a KDDW known widget
+            // and not any arbitrary user QtQuickItem.
+            // TODOm3: I'd like to change it so it's normalized.
+            return view->asWrapper();
+        } else {
+            const auto children = contentItem->childItems();
+            Q_ASSERT(!children.isEmpty());
 
-        return Views::asQQuickWrapper(contentItem->childItems().first());
+            return Views::asQQuickWrapper(contentItem->childItems().first());
+        }
     } else {
         qWarning() << Q_FUNC_INFO << "Expected QQuickView";
     }
