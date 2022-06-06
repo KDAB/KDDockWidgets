@@ -21,6 +21,7 @@ public:
     ~Window_qtquick();
     std::shared_ptr<ViewWrapper> rootView() const override;
     Window::Ptr transientParent() const override;
+    void setVisible(bool) override;
 };
 
 }

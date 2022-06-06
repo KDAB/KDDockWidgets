@@ -69,3 +69,10 @@ Window::Ptr Window_qtquick::transientParent() const
 
     return nullptr;
 }
+
+void Window_qtquick::setVisible(bool is)
+{
+    Window_qt::setVisible(is);
+    if (auto root = rootView())
+        root->setVisible(is);
+}

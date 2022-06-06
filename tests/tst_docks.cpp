@@ -4321,6 +4321,8 @@ void TestDocks::tst_moreTitleBarCornerCases()
         delete fw1; // the old window
 
         fw1 = dock1->floatingWindow();
+        QVERIFY(fw1);
+        QVERIFY(fw1->isVisible());
         QVERIFY(dock1->isVisible());
         QVERIFY(!dock1->dptr()->frame()->titleBar()->isVisible());
         QVERIFY(fw1->titleBar()->isVisible());
