@@ -168,12 +168,6 @@ QWindow *FloatingWindow_qtquick::candidateParentWindow() const
 
 void FloatingWindow_qtquick::init()
 {
-    connect(this, &QQuickItem::visibleChanged, this, [this] {
-        if (!isVisible() && !aboutToBeDestroyed()) {
-            m_controller->scheduleDeleteLater();
-        }
-    });
-
     /* for debug:
       connect(m_quickWindow, &QQuickView::focusObjectChanged, this, [this] (QObject *object) {
         qDebug() << "Focus object changed to " << object << this << m_quickWindow;
@@ -210,6 +204,11 @@ void FloatingWindow_qtquick::init()
     m_controller->updateTitleAndIcon();
 
     m_quickWindow->show();
+
+    connect(this, &QQuickItem::visibleChanged, this, [this] {
+        if (!isVisible() && !aboutToBeDestroyed())
+            m_controller->scheduleDeleteLater();
+    });
 }
 
 QObject *FloatingWindow_qtquick::titleBar() const
