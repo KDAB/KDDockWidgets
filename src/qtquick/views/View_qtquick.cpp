@@ -505,7 +505,8 @@ void View_qtquick::setParent(QQuickItem *parentItem)
 
     // Mimic QWidget::setParent(), hide widget when setting parent
     // if (!parentItem) // TODOm2: Why was this if needed, QWidget hides unconditionally
-    setVisible(false);
+    if (!m_inDtor)
+        setVisible(false);
 }
 
 void View_qtquick::setParent(View *parent)

@@ -125,6 +125,7 @@ FloatingWindow_qtquick::FloatingWindow_qtquick(Controllers::FloatingWindow *cont
 
 FloatingWindow_qtquick::~FloatingWindow_qtquick()
 {
+    m_inDtor = true;
     setParent(static_cast<View *>(nullptr));
     if (qobject_cast<QQuickView *>(m_quickWindow)) // QObject cast just to make sure the QWindow is not in ~QObject already
         delete m_quickWindow;

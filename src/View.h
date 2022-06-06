@@ -294,10 +294,10 @@ protected:
 
     Controller *const m_controller;
     QObject *const m_thisObj;
+    bool m_inDtor = false;
 
 private:
     bool m_freed = false;
-    bool m_inDtor = false;
     bool m_aboutToBeDestroyed = false;
     const QString m_id;
     const Type m_type;
