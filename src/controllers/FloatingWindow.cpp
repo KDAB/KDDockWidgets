@@ -386,13 +386,12 @@ bool FloatingWindow::beingDeleted() const
     if (m_deleteScheduled || m_inDtor)
         return true;
 
-    // TODO: Confusing logic
     for (Controllers::Frame *f : frames()) {
-        if (!f->beingDeletedLater())
-            return false;
+        if (f->beingDeletedLater())
+            return true;
     }
 
-    return true;
+    return false;
 }
 
 void FloatingWindow::onFrameCountChanged(int count)
