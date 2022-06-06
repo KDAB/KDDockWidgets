@@ -46,6 +46,10 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     auto ptr = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(mainWindowName,
                                                                                                viewOpts, options));
 
+    if (show)
+        ptr->show();
+    ptr->view()->resize(sz);
+
     return ptr;
 }
 
