@@ -291,13 +291,6 @@ bool ViewWrapper_qtwidgets::isNull() const
     return m_widget.data() == nullptr;
 }
 
-Controllers::DropArea *ViewWrapper_qtwidgets::asDropArea() const
-{
-    if (auto view = qobject_cast<DropArea_qtwidgets *>(m_widget))
-        return view->asDropAreaController();
-    return nullptr;
-}
-
 QWidget *ViewWrapper_qtwidgets::widget() const
 {
     return m_widget;

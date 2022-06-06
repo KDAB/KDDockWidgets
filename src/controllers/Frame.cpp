@@ -936,7 +936,7 @@ Controllers::DockWidget *Frame::mdiDockWidgetWrapper() const
 DropArea *Frame::mdiDropAreaWrapper() const
 {
     auto p = view()->parentView();
-    auto dropArea = p ? p->asDropArea() : nullptr;
+    auto dropArea = p ? p->asDropAreaController() : nullptr;
     if (dropArea && dropArea->isMDIWrapper())
         return dropArea;
     return nullptr;

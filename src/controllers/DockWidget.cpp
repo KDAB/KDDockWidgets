@@ -244,7 +244,7 @@ QString DockWidget::title() const
 {
     if (d->isMDIWrapper()) {
         // It's just a wrapper to help implementing Option_MDINestable. Return the title of the real dock widget we're hosting.
-        auto dropAreaGuest = d->guest ? guestView()->asDropArea() : nullptr;
+        auto dropAreaGuest = d->guest ? guestView()->asDropAreaController() : nullptr;
         Q_ASSERT(dropAreaGuest);
         if (dropAreaGuest->hasSingleFrame()) {
             return dropAreaGuest->frames().constFirst()->title();
@@ -564,7 +564,7 @@ MDILayout *DockWidget::Private::mdiLayout() const
         if (auto mdiLayout = p->asMDILayoutController()) {
             // And it's MDI
             return mdiLayout;
-        } else if (auto dropArea = p->asDropArea()) {
+        } else if (auto dropArea = p->asDropAreaController()) {
             // It's a DropArea. But maybe it's a drop area that's just helping
             // making the MDI windows accept drops (Option_MDINestable)
             if (!dropArea->isMDIWrapper())
@@ -586,7 +586,7 @@ bool DockWidget::Private::isMDIWrapper() const
 
 DropArea *DockWidget::Private::mdiDropAreaWrapper() const
 {
-    if (auto dropAreaGuest = guest ? q->guestView()->asDropArea() : nullptr) {
+    if (auto dropAreaGuest = guest ? q->guestView()->asDropAreaController() : nullptr) {
         if (dropAreaGuest->isMDIWrapper())
             return dropAreaGuest;
     }
@@ -605,7 +605,7 @@ Controllers::DockWidget *DockWidget::Private::mdiDockWidgetWrapper() const
     while (p) {
 
         if (p->is(Type::DropArea) || p->is(Type::MDILayout)) {
-            if (auto dropArea = p->asDropArea()) {
+            if (auto dropArea = p->asDropAreaController()) {
                 if (dropArea->isMDIWrapper())
                     return dropArea->mdiDockWidgetWrapper();
             }

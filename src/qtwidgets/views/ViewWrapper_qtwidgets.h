@@ -57,7 +57,6 @@ public:
     bool isNull() const override;
     void setWindowTitle(const QString &title) override;
     QPoint mapTo(View *, QPoint) const override;
-    Controllers::DropArea *asDropArea() const override;
     bool testAttribute(Qt::WidgetAttribute) const override;
     void setCursor(Qt::CursorShape) override;
     QSize minSize() const override;

@@ -59,12 +59,6 @@ public:
     void render(QPainter *p) override;
     void setMouseTracking(bool) override;
     std::shared_ptr<ViewWrapper> asWrapper() override;
-
-    /// TODOm3: Remove
-    virtual Controllers::DropArea *asDropArea() const
-    {
-        return {};
-    };
 };
 
 bool operator==(ViewWrapper::Ptr, ViewWrapper::Ptr) = delete;
