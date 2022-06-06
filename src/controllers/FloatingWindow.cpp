@@ -149,7 +149,7 @@ FloatingWindow::FloatingWindow(QRect suggestedGeometry, MainWindow *parent)
 }
 
 FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometry, MainWindow *parent)
-    : FloatingWindow(suggestedGeometry, hackFindParentHarder(frame, parent))
+    : FloatingWindow({}, hackFindParentHarder(frame, parent))
 {
     QScopedValueRollback<bool> guard(m_disableSetVisible, true);
 
@@ -197,6 +197,9 @@ FloatingWindow::FloatingWindow(Controllers::Frame *frame, QRect suggestedGeometr
         // So disable the setVisible(true) call while in the ctor.
         m_dropArea->addWidget(frame->view(), KDDockWidgets::Location_OnTop, {});
     }
+
+    if (!suggestedGeometry.isNull())
+        view()->setGeometry(suggestedGeometry);
 }
 
 FloatingWindow::~FloatingWindow()
