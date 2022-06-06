@@ -28,6 +28,7 @@ public:
     QRect geometry() const override;
     void setGeometry(QRect) const override;
     bool isVisible() const override;
+    void setVisible(bool) override;
     WId handle() const override;
 
     // TODOm3: Remove

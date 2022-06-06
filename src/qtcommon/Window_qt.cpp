@@ -154,7 +154,12 @@ void Window_qt::startSystemMove()
     m_window->startSystemMove();
 }
 
-void KDDockWidgets::Window_qt::setGeometry(QRect geo) const
+void Window_qt::setGeometry(QRect geo) const
 {
     m_window->setGeometry(geo);
+}
+
+void Window_qt::setVisible(bool is)
+{
+    m_window->setVisible(is);
 }

@@ -590,8 +590,8 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, View *topLe
 
     Controllers::FloatingWindow::ensureRectIsOnScreen(geometry);
 
-    topLevel->setGeometry(geometry);
-    topLevel->setVisible(saved.isVisible);
+    topLevel->window()->setGeometry(geometry);
+    topLevel->window()->setVisible(saved.isVisible);
 }
 
 LayoutSaver::Private::Private(RestoreOptions options)

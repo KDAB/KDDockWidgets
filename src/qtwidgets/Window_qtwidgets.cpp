@@ -57,3 +57,25 @@ Window::Ptr Window_qtwidgets::transientParent() const
 
     return nullptr;
 }
+
+void Window_qtwidgets::setGeometry(QRect geo) const
+{
+    if (auto v = rootView()) {
+        // In QWidget world QWidget interface is prefered over QWindow
+        v->setGeometry(geo);
+    } else {
+        // Go via QWindow instead
+        Window_qt::setGeometry(geo);
+    }
+}
+
+void Window_qtwidgets::setVisible(bool is)
+{
+    if (auto v = rootView()) {
+        // In QWidget world QWidget interface is prefered over QWindow
+        v->setVisible(is);
+    } else {
+        // Go via QWindow instead
+        Window_qt::setVisible(is);
+    }
+}

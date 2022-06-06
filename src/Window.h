@@ -38,6 +38,7 @@ public:
     virtual void setProperty(const char *name, const QVariant &value) = 0;
     virtual QVariant property(const char *name) const = 0;
     virtual bool isVisible() const = 0;
+    virtual void setVisible(bool) = 0;
     virtual WId handle() const = 0;
     virtual bool equals(std::shared_ptr<Window> other) const = 0;
 

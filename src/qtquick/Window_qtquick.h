@@ -22,4 +22,5 @@ public:
     std::shared_ptr<ViewWrapper> rootView() const override;
     Window::Ptr transientParent() const override;
 };
+
 }
