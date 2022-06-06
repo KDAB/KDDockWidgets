@@ -145,12 +145,16 @@ View *Platform_qtwidgets::tests_createNonClosableView(View *parent)
 }
 
 Controllers::MainWindow *Platform_qtwidgets::createMainWindow(const QString &uniqueName,
-                                                              CreateViewOptions, MainWindowOptions options,
+                                                              CreateViewOptions opts, MainWindowOptions options,
                                                               View *parent, Qt::WindowFlags flags) const
 {
     auto view = new Views::MainWindow_qtwidgets(uniqueName, options,
                                                 parent ? static_cast<Views::View_qtwidgets<QMainWindow> *>(parent) : nullptr,
                                                 flags);
+
+    if (opts.isVisible)
+        view->show();
+    view->resize(opts.size);
 
     return view->mainWindow();
 }

@@ -41,13 +41,11 @@ KDDockWidgets::Tests::createMainWindow(QSize sz, KDDockWidgets::MainWindowOption
     const QString mainWindowName = name.isEmpty() ? QStringLiteral("MyMainWindow%1").arg(count)
                                                   : name;
     Platform::CreateViewOptions viewOpts;
-    viewOpts.isVisible = true;
-    viewOpts.size = QSize(1000, 1000);
+    viewOpts.isVisible = show;
+    viewOpts.size = sz;
     auto ptr = std::unique_ptr<Controllers::MainWindow>(Platform::instance()->createMainWindow(mainWindowName,
                                                                                                viewOpts, options));
-    if (show)
-        ptr->show();
-    ptr->view()->resize(sz);
+
     return ptr;
 }
 
