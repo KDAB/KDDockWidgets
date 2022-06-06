@@ -81,8 +81,6 @@ void TestQtQuick::tst_restoreRestoresMainWindowPosition()
 
 void TestQtQuick::tst_hoverShowsDropIndicators()
 {
-    return; // TODOm2: Indicators still not ported
-
     // For QtQuick on Windows, there was a bug where drop indicators wouldn't be shown if MainWindowBase
     // wasn't the root item.
 

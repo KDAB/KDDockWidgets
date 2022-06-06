@@ -935,8 +935,9 @@ static DropArea *deepestDropAreaInTopLevel(ViewWrapper::Ptr topLevel, QPoint glo
 {
     const auto localPos = topLevel->mapFromGlobal(globalPos);
     ViewWrapper::Ptr view = topLevel->childViewAt(localPos);
+
     while (view) {
-        if (auto dt = view->asDropArea()) {
+        if (auto dt = view->asDropAreaController()) {
             if (DockRegistry::self()->affinitiesMatch(dt->affinities(), affinities))
                 return dt;
         }
