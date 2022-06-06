@@ -487,8 +487,8 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
             continue;
 
         if (!(d->m_restoreOptions & InternalRestoreOption::SkipMainWindowGeometry)) {
-            auto window = mainWindow->view()->rootView();
-            d->deserializeWindowGeometry(mw, window.get()); // window(), as the MainWindow can be embedded
+            Window::Ptr window = mainWindow->view()->window();
+            d->deserializeWindowGeometry(mw, window);
             if (mw.windowState != Qt::WindowNoState) {
                 if (auto w = mainWindow->view()->window()) {
                     w->setWindowState(mw.windowState);
@@ -510,7 +510,7 @@ bool LayoutSaver::restoreLayout(const QByteArray &data)
 
         auto floatingWindow = new Controllers::FloatingWindow({}, parent);
         fw.floatingWindowInstance = floatingWindow;
-        d->deserializeWindowGeometry(fw, floatingWindow->view());
+        d->deserializeWindowGeometry(fw, floatingWindow->view()->window());
         if (!floatingWindow->deserialize(fw)) {
             qWarning() << Q_FUNC_INFO << "Failed to deserialize floating window";
             return false;
@@ -576,7 +576,7 @@ void LayoutSaver::Private::clearRestoredProperty()
 }
 
 template<typename T>
-void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, View *topLevel)
+void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, Window::Ptr window)
 {
     // Not simply calling QWidget::setGeometry() here.
     // For QtQuick we need to modify the QWindow's geometry.
@@ -590,8 +590,8 @@ void LayoutSaver::Private::deserializeWindowGeometry(const T &saved, View *topLe
 
     Controllers::FloatingWindow::ensureRectIsOnScreen(geometry);
 
-    topLevel->window()->setGeometry(geometry);
-    topLevel->window()->setVisible(saved.isVisible);
+    window->setGeometry(geometry);
+    window->setVisible(saved.isVisible);
 }
 
 LayoutSaver::Private::Private(RestoreOptions options)
