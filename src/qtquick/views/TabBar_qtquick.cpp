@@ -147,6 +147,5 @@ Controllers::DockWidget *TabBar_qtquick::currentDockWidget() const
 
 bool TabBar_qtquick::tabsAreMovable() const
 {
-    qFatal("Not implemented");
     return false;
 }
