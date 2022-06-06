@@ -208,7 +208,6 @@ void DockWidgetModel::emitDataChangedFor(Controllers::DockWidget *dw)
 
 void DockWidgetModel::remove(Controllers::DockWidget *dw)
 {
-    qDebug() << Q_FUNC_INFO << dw->uniqueName();
     QScopedValueRollback<bool> guard(m_removeGuard, true);
     const int row = indexOf(dw);
     if (row == -1) {
@@ -225,7 +224,6 @@ void DockWidgetModel::remove(Controllers::DockWidget *dw)
 
         beginRemoveRows(QModelIndex(), row, row);
         m_dockWidgets.removeOne(dw);
-        qDebug() << "Removed one from " << row;
         endRemoveRows();
 
         Q_EMIT countChanged();
