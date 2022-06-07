@@ -18,6 +18,7 @@
 
 #include <QStyleFactory>
 #include <QApplication>
+#include <QLineEdit>
 #include <QWidget>
 
 using namespace KDDockWidgets;

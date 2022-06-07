@@ -18,10 +18,7 @@
 #include <QScreen>
 #include <QWindow>
 #include <QMouseEvent>
-
-#include <QApplication>
-#include <QAbstractButton>
-#include <QLineEdit>
+#include <QGuiApplication>
 
 #ifdef QT_X11EXTRAS_LIB
 #include <QtX11Extras/QX11Info>

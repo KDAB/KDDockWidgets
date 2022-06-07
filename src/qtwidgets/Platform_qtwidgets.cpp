@@ -20,6 +20,9 @@
 #include "ViewFactory_qtwidgets.h"
 
 #include <QScreen>
+#include <QApplication>
+#include <QLineEdit>
+#include <QAbstractButton>
 
 #include <memory.h>
 

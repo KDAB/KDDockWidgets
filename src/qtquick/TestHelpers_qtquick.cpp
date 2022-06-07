@@ -15,7 +15,7 @@
 #include "qtquick/views/MainWindow_qtquick.h"
 #include "controllers/MainWindow.h"
 
-#include <QApplication> // TODO: Make it QGuiApplication
+#include <QGuiApplication>
 #include <QQmlEngine>
 #include <QQuickStyle>
 #include <QQuickItem>
