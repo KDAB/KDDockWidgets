@@ -25,6 +25,7 @@
 #include "views/TabBar.h"
 
 #include <QPointer>
+#include <QHash>
 
 namespace KDDockWidgets::Controllers {
 class TabBar;
@@ -62,6 +63,7 @@ protected:
     bool event(QEvent *ev) override;
 
 private:
+    QHash<int, QQuickItem *> qmlTabs() const;
     QQuickItem *tabAt(int index) const;
     QQuickItem *listView() const;
     QPointer<QQuickItem> m_tabBarQmlItem;

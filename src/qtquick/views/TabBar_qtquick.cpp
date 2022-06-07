@@ -32,6 +32,29 @@ TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *pare
 {
 }
 
+QHash<int, QQuickItem *> TabBar_qtquick::qmlTabs() const
+{
+    if (!m_tabBarQmlItem)
+        return {};
+
+    /// Returns the list of QtQuickControls tabs in our tab bar
+    QHash<int, QQuickItem *> tabs;
+
+    if (QQuickItem *internalListView = listView()) {
+        const auto childItems = internalListView->childItems();
+        if (!childItems.isEmpty()) {
+            for (QQuickItem *item : childItems.first()->childItems()) {
+                bool ok = false;
+                const int index = item->property("tabIndex").toInt(&ok);
+                if (ok)
+                    tabs.insert(index, item);
+            }
+        }
+    }
+
+    return tabs;
+}
+
 int TabBar_qtquick::tabAt(QPoint localPt) const
 {
     // QtQuick's TabBar doesn't provide any API for this.
@@ -44,21 +67,13 @@ int TabBar_qtquick::tabAt(QPoint localPt) const
 
     const QPointF globalPos = m_tabBarQmlItem->mapToGlobal(localPt);
 
-    if (QQuickItem *internalListView = listView()) {
-        const auto childItems = internalListView->childItems();
-        if (!childItems.isEmpty()) {
-            for (QQuickItem *item : childItems.first()->childItems()) {
-                bool ok = false;
-                const int index = item->property("tabIndex").toInt(&ok);
-                if (ok && item->contains(item->mapFromGlobal(globalPos))) {
-                    return index;
-                }
-            }
+    const QHash<int, QQuickItem *> tabs = qmlTabs();
+    for (auto it = tabs.keyValueBegin(); it != tabs.keyValueEnd(); ++it) {
+        QQuickItem *tab = it->second;
+        if (tab->contains(tab->mapFromGlobal(globalPos))) {
+            const int index = it->first;
+            return index;
         }
-
-        return -1;
-    } else {
-        qWarning() << Q_FUNC_INFO << "Couldn't find the internal ListView";
     }
 
     return -1;
