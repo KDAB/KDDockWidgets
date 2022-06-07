@@ -32,22 +32,31 @@ TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *pare
 {
 }
 
-int TabBar_qtquick::tabAt(QPoint p) const
+int TabBar_qtquick::tabAt(QPoint localPt) const
 {
     // QtQuick's TabBar doesn't provide any API for this.
-    // So ask its *internal* ListView instead.
+    // Also note that the ListView's flickable has bogus contentX, so instead just iterate through the tabs
 
     if (!m_tabBarQmlItem) {
         qWarning() << Q_FUNC_INFO << "No visual tab bar item yet";
         return -1;
     }
 
-    if (QQuickItem *internalListView = listView()) {
-        int index = -1;
-        QMetaObject::invokeMethod(internalListView, "indexAt", Q_RETURN_ARG(int, index),
-                                  Q_ARG(double, p.x()), Q_ARG(double, p.y()));
+    const QPointF globalPos = m_tabBarQmlItem->mapToGlobal(localPt);
 
-        return index;
+    if (QQuickItem *internalListView = listView()) {
+        const auto childItems = internalListView->childItems();
+        if (!childItems.isEmpty()) {
+            for (QQuickItem *item : childItems.first()->childItems()) {
+                bool ok = false;
+                const int index = item->property("tabIndex").toInt(&ok);
+                if (ok && item->contains(item->mapFromGlobal(globalPos))) {
+                    return index;
+                }
+            }
+        }
+
+        return -1;
     } else {
         qWarning() << Q_FUNC_INFO << "Couldn't find the internal ListView";
     }

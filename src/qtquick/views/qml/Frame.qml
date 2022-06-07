@@ -240,6 +240,7 @@ Rectangle {
         Repeater {
             model: root.frameCpp ? root.frameCpp.tabWidget.dockWidgetModel : 0
             TabButton {
+                readonly property int tabIndex: index
                 text: title
             }
         }
