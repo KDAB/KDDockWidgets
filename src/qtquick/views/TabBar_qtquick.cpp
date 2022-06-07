@@ -34,8 +34,10 @@ TabBar_qtquick::TabBar_qtquick(Controllers::TabBar *controller, QQuickItem *pare
 
 QHash<int, QQuickItem *> TabBar_qtquick::qmlTabs() const
 {
-    if (!m_tabBarQmlItem)
+    if (!m_tabBarQmlItem) {
+        qWarning() << Q_FUNC_INFO << "No visual tab bar item yet" << this;
         return {};
+    }
 
     /// Returns the list of QtQuickControls tabs in our tab bar
     QHash<int, QQuickItem *> tabs;
@@ -50,6 +52,8 @@ QHash<int, QQuickItem *> TabBar_qtquick::qmlTabs() const
                     tabs.insert(index, item);
             }
         }
+    } else {
+        qWarning() << Q_FUNC_INFO << "Couldn't find the internal ListView";
     }
 
     return tabs;
@@ -130,23 +134,17 @@ bool TabBar_qtquick::event(QEvent *ev)
 
 QQuickItem *TabBar_qtquick::tabAt(int index) const
 {
-    QQuickItem *view = listView();
-    if (!view)
-        return nullptr;
-
-    QQuickItem *item = nullptr;
-    QMetaObject::invokeMethod(view, "itemAtIndex", Q_RETURN_ARG(QQuickItem *, item),
-                              Q_ARG(int, index));
-
-    return item;
+    const QHash<int, QQuickItem *> tabs = qmlTabs();
+    return tabs.value(index, nullptr);
 }
 
 QQuickItem *TabBar_qtquick::listView() const
 {
     // Returns the internal ListView of the TabBar
-
-    if (!m_tabBarQmlItem)
+    if (!m_tabBarQmlItem) {
+        qWarning() << Q_FUNC_INFO << "No visual tab bar item yet";
         return nullptr;
+    }
 
     const QList<QQuickItem *> children = m_tabBarQmlItem->childItems();
     for (QQuickItem *child : children) {

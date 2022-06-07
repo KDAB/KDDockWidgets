@@ -80,7 +80,6 @@ protected:
 private:
     Q_DISABLE_COPY(Stack_qtquick)
     DockWidgetModel *const m_dockWidgetModel;
-    Controllers::TabBar *m_tabBar = nullptr;
     Controllers::Stack *const m_stack;
     Controllers::DockWidget *m_currentDockWidget = nullptr;
 };

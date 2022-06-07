@@ -41,7 +41,6 @@ Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
 
 void Stack_qtquick::init()
 {
-    m_tabBar = new Controllers::TabBar(m_stack);
     Q_EMIT tabBarChanged();
 }
 
@@ -89,7 +88,7 @@ void Stack_qtquick::setCurrentDockWidget(int index)
 
 QObject *Stack_qtquick::tabBarViewObj() const
 {
-    return m_tabBar->view()->asQObject();
+    return m_stack->tabBar()->view()->asQObject();
 }
 
 Controllers::DockWidget *Stack_qtquick::currentDockWidget() const
