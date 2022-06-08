@@ -80,6 +80,14 @@ void DockWidget_qtquick::init()
     auto dw = this->dockWidget();
     connect(dw, &Controllers::DockWidget::actualTitleBarChanged,
             this, &DockWidget_qtquick::actualTitleBarChanged);
+
+    connect(dw, &Controllers::DockWidget::guestViewChanged, this, [this, dw] {
+        if (auto guest = dw->guestView()) {
+            // TODOm3: Move this logic to the controller
+            guest->setParent(this);
+            guest->setVisible(true);
+        }
+    });
 }
 
 void DockWidget_qtquick::setWidget(const QString &qmlFilename)

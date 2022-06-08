@@ -13,6 +13,7 @@
 #include "controllers/DockWidget.h"
 #include "ViewFactory.h"
 #include "Config.h"
+#include "Platform.h"
 
 TEST_CASE("DockWidget Ctor")
 {
@@ -20,6 +21,23 @@ TEST_CASE("DockWidget Ctor")
     CHECK(dw->view()->is(Type::DockWidget));
     CHECK(dw->view()->asWrapper()->is(Type::DockWidget));
     dw->view()->show();
+
+    delete dw;
+}
+
+TEST_CASE("setGuestView")
+{
+    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+    auto guest = Platform::instance()->tests_createView({ true })->asWrapper();
+    dw->setGuestView(guest);
+    dw->view()->show();
+    Platform::instance()->tests_wait(500); // TODOm3: Replace with wait for visible or so.
+
+    CHECK(guest->isVisible());
+    CHECK(dw->guestView()->equals(guest));
+    REQUIRE(dw->view()->window());
+    REQUIRE(guest->window());
+    CHECK(dw->view()->window()->equals(guest->window()));
 
     delete dw;
 }
