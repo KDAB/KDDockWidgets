@@ -84,9 +84,7 @@ public:
     QMargins m_centerWidgetMargins = { 1, 5, 1, 1 };
 };
 
-MyCentralWidget::~MyCentralWidget()
-{
-}
+MyCentralWidget::~MyCentralWidget() = default;
 
 
 MainWindow::MainWindow(const QString &name, MainWindowOptions options,
@@ -171,4 +169,9 @@ QRect MainWindow::centralAreaGeometry() const
 void MainWindow::closeEvent(QCloseEvent *ev)
 {
     onCloseEvent(ev);
+}
+
+QHBoxLayout *MainWindow::internalLayout() const
+{
+    return d->m_layout;
 }

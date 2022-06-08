@@ -21,6 +21,10 @@
 
 #include "MainWindowBase.h"
 
+QT_BEGIN_NAMESPACE
+class QHBoxLayout;
+QT_END_NAMESPACE
+
 namespace KDDockWidgets {
 
 class SideBar;
@@ -55,6 +59,11 @@ public:
 
     //@brief sets the margins for the contents widgets
     void setCenterWidgetMargins(const QMargins &margins);
+
+    ///@brief returns the internal layout
+    /// this is rarely needed unless you want to layout other widgets next to the
+    /// main dock widget layout
+    QHBoxLayout *internalLayout() const;
 
 protected:
     void closeEvent(QCloseEvent *) override;
