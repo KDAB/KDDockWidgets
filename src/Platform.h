@@ -101,7 +101,7 @@ public:
     {
         bool isVisible = false;
         QSize sizeHint = {};
-        QSize minSize = { 200, 200 };
+        QSize minSize = { 0, 0 };
         QSize maxSize = Layouting::Item::hardcodedMaximumSize;
         QSize size = { 1000, 1000 };
         bool createWindow = false;

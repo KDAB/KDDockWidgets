@@ -5678,8 +5678,11 @@ void TestDocks::tst_propagateSizeHonoursMinSize()
     EnsureTopLevelsDeleted e;
 
     auto m = createMainWindow();
-    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView({ true }));
-    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView({ true }));
+    Platform::CreateViewOptions opts;
+    opts.isVisible = true;
+    opts.minSize = { 80, 29 };
+    auto dock1 = createDockWidget("dock1", Platform::instance()->tests_createView(opts));
+    auto dock2 = createDockWidget("dock2", Platform::instance()->tests_createView(opts));
     auto dropArea = m->dropArea();
     int min1 = widgetMinLength(dock1->view(), Qt::Horizontal);
     int min2 = widgetMinLength(dock2->view(), Qt::Horizontal);
