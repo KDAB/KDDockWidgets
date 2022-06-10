@@ -8,22 +8,38 @@
     "C_Cpp.default.compileCommands": "${workspaceFolder}/build-dev6/compile_commands.json",
     "C_Cpp.default.cStandard": "c17",
     "files.trimTrailingWhitespace": true,
-    "editor.formatOnType": true,
-    "C_Cpp.autocompleteAddParentheses": true
+    "editor.formatOnSave": true,
+    "C_Cpp.autocompleteAddParentheses": true,
+    "clangd.arguments": [
+      "-header-insertion=never"
+    ],
+    "todo-tree.tree.scanMode": "workspace only",
+    "todo-tree.tree.disableCompactFolders": false,
+    "todo-tree.tree.showBadges": true,
+    "todo-tree.general.tags": [
+      "BUG",
+      "HACK",
+      "FIXME",
+      "TODO",
+      "XXX",
+      "[ ]",
+      "[x]",
+      "TODOm2",
+      "TODOm3",
+      "TODOm4"
+    ],
+    "testMate.cpp.test.executables": "{build-dev6}/**/*{tst}*"
   },
   "launch": {
     "version": "0.2.0",
     "configurations": [
       {
         "name": "gdb-kddockwidgets_example",
-        "type": "cppdbg",
+        "type": "lldb",
         "request": "launch",
         "program": "${workspaceFolder}/build-dev6/bin/kddockwidgets_example",
         "args": [],
-        "cwd": "${workspaceFolder}",
-        "MIMode": "gdb",
-        "stopAtEntry": false,
-        "externalConsole": false
+        "cwd": "${workspaceFolder}"
       },
       {
         "name": "gdb-kddockwidgets_minimal_example",
@@ -48,11 +64,24 @@
         "externalConsole": false
       },
       {
-        "name": "gdb-tst_docks",
+        "name": "gdb-kddockwidgets_mdi_with_docking_example",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build-dev6/bin/tst_docks",
+        "program": "${workspaceFolder}/build-dev6/bin/kddockwidgets_mdi_with_docking_example",
         "args": [],
+        "cwd": "${workspaceFolder}",
+        "MIMode": "gdb",
+        "stopAtEntry": false,
+        "externalConsole": false
+      },
+      {
+        "name": "gdb-tst_docks",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev6/bin/tst_docks",
+        "args": [
+          "tst_addMDIDockWidget"
+        ],
         "cwd": "${workspaceFolder}",
         "MIMode": "gdb",
         "stopAtEntry": false,
