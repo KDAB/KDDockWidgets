@@ -132,11 +132,12 @@ std::vector<KDDockWidgets::FrontendType> Platform::frontendTypes()
 
 #endif
 
-#ifdef KDDW_FRONTEND_QTWIDGETS
-    types.push_back(FrontendType::QtWidgets);
-#endif
 #ifdef KDDW_FRONTEND_QTQUICK
     types.push_back(FrontendType::QtQuick);
+#endif
+
+#ifdef KDDW_FRONTEND_QTWIDGETS
+    types.push_back(FrontendType::QtWidgets);
 #endif
 
     return types;
