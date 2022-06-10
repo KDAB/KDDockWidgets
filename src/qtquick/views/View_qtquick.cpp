@@ -327,11 +327,17 @@ void View_qtquick::setVisible(bool is)
 
 void View_qtquick::setSize(int w, int h)
 {
+    // TODOv3: Test that setting a size less than min doesn't set it
+    const auto newSize = QSize(w, h).expandedTo(minSize());
+
     if (isRootView()) {
         if (QWindow *window = QQuickItem::window()) {
-            QRect windowGeo = window->geometry();
-            windowGeo.setSize(QSize(w, h));
-            window->setGeometry(windowGeo);
+
+            if (window->size() != newSize) {
+                QRect windowGeo = window->geometry();
+                windowGeo.setSize(newSize);
+                window->setGeometry(windowGeo);
+            }
         }
     }
 

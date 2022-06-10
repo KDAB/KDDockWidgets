@@ -92,6 +92,9 @@ public:
 
     void updateRootItemSize()
     {
+        if (m_view->asFloatingWindowController()->beingDeleted())
+            return;
+
         Layouting::AtomicSanityChecks checks(m_view->rootItem());
         m_view->View::setSize(size());
     }
