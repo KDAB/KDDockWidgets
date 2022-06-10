@@ -61,7 +61,10 @@ public:
     std::shared_ptr<ViewWrapper> asWrapper() override;
 };
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) // In Qt6 we can't delete it
 bool operator==(ViewWrapper::Ptr, ViewWrapper::Ptr) = delete;
+#endif
+
 bool operator!=(ViewWrapper::Ptr, ViewWrapper::Ptr) = delete;
 
 }
