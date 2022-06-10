@@ -72,7 +72,13 @@ public:
             return true;
         }
 
-        return QQuickView::event(ev);
+        if (ev->type() == QEvent::Expose) {
+            Layouting::AtomicSanityChecks checks(m_view->rootItem());
+            auto res = QQuickView::event(ev);
+            return res;
+        } else {
+            return QQuickView::event(ev);
+        }
     }
 
     void onRootItemWidthChanged()
