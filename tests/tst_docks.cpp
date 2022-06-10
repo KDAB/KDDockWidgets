@@ -6282,8 +6282,6 @@ int main(int argc, char *argv[])
     for (FrontendType type : Platform::frontendTypes()) {
         qDebug() << "\nTesting platform" << type << ":\n";
         KDDockWidgets::Platform::tests_initPlatform(argc, argv, type);
-        if (shouldSkipTests())
-            return 0;
 
         TestDocks test;
 

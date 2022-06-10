@@ -1485,9 +1485,6 @@ int main(int argc, char *argv[])
 {
     KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
 
-    if (shouldSkipTests())
-        return 0;
-
     TestQtWidgets test;
     const int exitCode = QTest::qExec(&test, argc, argv);
     KDDockWidgets::Platform::tests_deinitPlatform();
