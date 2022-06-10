@@ -6278,11 +6278,8 @@ void TestDocks::tst_persistentCentralWidget()
 
 int main(int argc, char *argv[])
 {
+    int exitCode = 0;
     for (FrontendType type : Platform::frontendTypes()) {
-
-        if (type != KDDockWidgets::FrontendType::QtWidgets)
-            continue; // QtQuick not passing yet
-
         qDebug() << "\nTesting platform" << type << ":\n";
         KDDockWidgets::Platform::tests_initPlatform(argc, argv, type);
         if (shouldSkipTests())
@@ -6290,9 +6287,11 @@ int main(int argc, char *argv[])
 
         TestDocks test;
 
-        const int exitCode = QTest::qExec(&test, argc, argv);
+        const int code = QTest::qExec(&test, argc, argv);
+        if (code != 0)
+            exitCode = 1;
         KDDockWidgets::Platform::tests_deinitPlatform();
-
-        return exitCode;
     }
+
+    return exitCode;
 }
