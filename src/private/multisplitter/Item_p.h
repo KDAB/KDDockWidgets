@@ -325,8 +325,9 @@ public:
     QVector<int> pathFromRoot() const;
 
     Q_REQUIRED_RESULT virtual bool checkSanity();
-
     bool isMDI() const;
+
+    static bool s_silenceSanityChecks;
 
     virtual QSize minSize() const;
     virtual QSize maxSizeHint() const;
@@ -574,6 +575,34 @@ private:
     friend class ::TestMultiSplitter;
     struct Private;
     Private *const d;
+};
+
+/// QtQuick triggers a lot fo resizes due to bindings being updated individually
+/// Only check sanity at the end of an operation, and not each time a binding gets evaluated
+/// Tests will fail with a warning if anything is wrong.
+struct AtomicSanityChecks
+{
+    AtomicSanityChecks(Item *root)
+        : m_oldValue(Item::s_silenceSanityChecks)
+        , m_root(root)
+    {
+        Item::s_silenceSanityChecks = true;
+    }
+
+    ~AtomicSanityChecks()
+    {
+        Item::s_silenceSanityChecks = m_oldValue;
+#ifdef DOCKS_DEVELOPER_MODE
+        if (m_root) {
+            const bool result = m_root->checkSanity();
+            Q_UNUSED(result);
+        }
+#endif
+    }
+
+    const bool m_oldValue;
+    Item *const m_root;
+    Q_DISABLE_COPY(AtomicSanityChecks)
 };
 
 }

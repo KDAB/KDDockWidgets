@@ -204,6 +204,8 @@ public:
     /// TODOm3: Remove
     void viewAboutToBeDeleted();
 
+    Layouting::ItemContainer *rootItem() const;
+
 protected:
     void setRootItem(Layouting::ItemContainer *root);
     /**

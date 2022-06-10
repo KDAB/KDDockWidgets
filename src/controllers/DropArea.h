@@ -132,6 +132,8 @@ public:
     /// @brief overload that just resizes widgets within a sub-tree
     void layoutEqually(Layouting::ItemBoxContainer *);
 
+    Layouting::ItemBoxContainer *rootItem() const;
+
 private:
     Q_DISABLE_COPY(DropArea)
     friend class Controllers::MainWindow;
@@ -141,8 +143,6 @@ private:
     friend class ::TestQtWidgets;
     friend class DropIndicatorOverlay;
     friend class AnimatedIndicators;
-
-    Layouting::ItemBoxContainer *rootItem() const;
 
     // For debug/hardening
     bool validateInputs(View *widget, KDDockWidgets::Location location,

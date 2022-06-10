@@ -332,3 +332,8 @@ MDILayout *Layout::asMDILayout() const
 
     return nullptr;
 }
+
+Layouting::ItemContainer *Layout::rootItem() const
+{
+    return m_rootItem;
+}

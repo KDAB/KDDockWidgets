@@ -543,6 +543,8 @@ Controllers::FloatingWindow *DockWidget::Private::morphIntoFloatingWindow()
         geo.setSize(geo.size().expandedTo(frame->view()->minSize()));
         Controllers::FloatingWindow::ensureRectIsOnScreen(geo);
         auto floatingWindow = new Controllers::FloatingWindow(frame, geo);
+
+        Layouting::AtomicSanityChecks checks(floatingWindow->dropArea()->rootItem());
         floatingWindow->view()->show();
 
         return floatingWindow;

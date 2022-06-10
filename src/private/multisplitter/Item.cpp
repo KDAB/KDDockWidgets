@@ -39,6 +39,7 @@ using namespace Layouting;
 using namespace KDDockWidgets;
 
 int Layouting::Item::separatorThickness = 5;
+bool Layouting::Item::s_silenceSanityChecks = false;
 
 // There are the defaults. They can be changed by the user via Config.h API.
 QSize Layouting::Item::hardcodedMinimumSize = QSize(80, 90);
@@ -2015,13 +2016,16 @@ void ItemBoxContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy s
 
     const QSize minSize = this->minSize();
     if (newSize.width() < minSize.width() || newSize.height() < minSize.height()) {
-        root()->dumpLayout();
-        qWarning() << Q_FUNC_INFO << "New size doesn't respect size constraints"
-                   << "; new=" << newSize
-                   << "; min=" << minSize
-                   << this;
+        if (!s_silenceSanityChecks) {
+            root()->dumpLayout();
+            qWarning() << Q_FUNC_INFO << "New size doesn't respect size constraints"
+                       << "; new=" << newSize
+                       << "; min=" << minSize
+                       << this;
+        }
         return;
     }
+
     if (newSize == size())
         return;
 

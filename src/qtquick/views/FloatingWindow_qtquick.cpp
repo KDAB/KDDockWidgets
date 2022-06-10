@@ -92,6 +92,7 @@ public:
 
     void updateRootItemSize()
     {
+        Layouting::AtomicSanityChecks checks(m_view->rootItem());
         m_view->View::setSize(size());
     }
 
@@ -225,6 +226,13 @@ QObject *FloatingWindow_qtquick::dropArea() const
     if (auto da = m_controller->dropArea())
         return qobject_cast<DropArea_qtquick *>(asQQuickItem(da->view()));
 
+    return nullptr;
+}
+
+Layouting::Item *FloatingWindow_qtquick::rootItem() const
+{
+    if (auto da = m_controller->dropArea())
+        return da->rootItem();
     return nullptr;
 }
 
