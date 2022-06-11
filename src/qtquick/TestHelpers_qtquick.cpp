@@ -51,7 +51,7 @@ private:
 Platform_qtquick::Platform_qtquick(int &argc, char **argv)
     : Platform_qt(argc, argv)
 {
-    new QApplication(argc, argv);
+    new QGuiApplication(argc, argv);
     init();
 }
 
