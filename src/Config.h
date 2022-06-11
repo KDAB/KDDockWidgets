@@ -271,7 +271,7 @@ public:
      *
      * @endcode
      *
-     * Run "kddockwidgets_example --hide-certain-docking-indicators" to see this in action.
+     * Run "examples/qtwidgets_dockwidgets --hide-certain-docking-indicators" to see this in action.
      */
     void setDropIndicatorAllowedFunc(DropIndicatorAllowedFunc func);
 

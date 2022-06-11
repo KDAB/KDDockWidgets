@@ -22,7 +22,7 @@
  * Derive from KDDockWidgets::DefaultWidgetFactory and override the two createTitleBar() methods.
  *
  * To try it out, modify examples/dockwidgets/MyViewFactory.cpp to return a MyTitleBar_CSS instance.
- * Run the example with: ./bin/kddockwidgets_example -p
+ * Run the example with: ./bin/examples/qtwidgets_dockwidgets -p
  *
  * WARNINGS:
  *   - Qt StyleSheets are not recommended for new applications. Often you are able to style 90% of

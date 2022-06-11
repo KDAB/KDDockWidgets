@@ -97,7 +97,7 @@ Now build and run the example:
 $ cd path/to/kddockwidgets/examples/dockwidgets/
 $ cmake -G Ninja -DCMAKE_PREFIX_PATH=/path/where/to/install
 $ cmake --build .
-$ ./kddockwidgets_example
+$ ./bin/examples/qtwidgets_dockwidgets
 ```
 
 The installation directory defaults to `c:\KDAB\KDDockWidgets-<version>` on Windows
@@ -166,7 +166,7 @@ Styling
 
 Almost all private widgets used by KDDW can be derived by the user to give them
 a custom look. That's done by providing your own ViewFactory. Run
-"kddockwidgets_example -p" to see that in action.
+"examples/qtwidgets_dockwidgets -p" to see that in action.
 
 Qt StyleSheets are not, and will not, be supported. See the comments in
 `examples/dockwidgets/MyTitleBar_CSS.h` for why. You can however use some minimal

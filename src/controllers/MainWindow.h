@@ -97,7 +97,7 @@ public:
      * @param widget The QWidget (or QQuickItem if built with QtQuick support) that you
      * want to set.
      *
-     * Example: kddockwidgets_example --central-widget
+     * Example: examples/qtwidgets_dockwidgets --central-widget
      */
     Q_INVOKABLE void setPersistentCentralWidget(std::shared_ptr<ViewWrapper> widget);
     std::shared_ptr<ViewWrapper> persistentCentralWidget() const;

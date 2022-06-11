@@ -74,7 +74,7 @@ public:
         Option_DeleteOnClose = 4, ///< Deletes the DockWidget when closed
         Option_MDINestable = 8 ///< EXPERIMENTAL. When this dock widget is being shown in a MDI area it will also allow other dock widgets to be dropped to its sides and tabbed
                                /// Usually Each MDI "window" corresponds to one DockWidget, with this option each "window" will have a layout with 1 or more dock widgets
-                               /// Run "kddockwidgets_mdi_with_docking_example -n" to see it in action
+                               /// Run "examples/qtwidgets_mdi_with_docking -n" to see it in action
     };
     Q_DECLARE_FLAGS(Options, Option)
     Q_ENUM(Options);
@@ -357,7 +357,7 @@ public:
      * want to dock a main window into another main window. This is done by putting it into a
      * dock widget first.
      *
-     * See also kddockwidgets_example -j
+     * See also examples/qtwidgets_dockwidgets -j
      */
     bool isMainWindow() const;
 
