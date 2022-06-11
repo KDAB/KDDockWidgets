@@ -253,7 +253,7 @@ bool StatePreDrag::handleMouseDoubleClick()
 StateDragging::StateDragging(DragController *parent)
     : StateBase(parent)
 {
-#if defined(Q_OS_WIN_TODO) && !defined(DOCKS_DEVELOPER_MODE)
+#if defined(Q_OS_WIN) && !defined(DOCKS_DEVELOPER_MODE)
     m_maybeCancelDrag.setInterval(100);
     QObject::connect(&m_maybeCancelDrag, &QTimer::timeout, this, [this] {
         // Workaround bug #166 , where Qt doesn't agree with Window's mouse button state.
