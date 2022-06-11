@@ -515,25 +515,12 @@ public: // TODO make private
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);
 
-#if defined(DOCKS_DEVELOPER_MODE)
 public:
-#else
-private:
-#endif
-    Q_DISABLE_COPY(DockWidget)
-    friend class Controllers::Layout;
-    friend class MDILayoutWidget;
-    friend class Controllers::FloatingWindow;
-    friend class Frame;
-    friend class DropArea;
-    friend class Stack;
-    friend class MainWindow;
-    friend class ::TestDocks;
-    friend class StateDragging;
-    friend class KDDockWidgets::Controllers::TitleBar;
-    friend class KDDockWidgets::DragController;
-    friend class KDDockWidgets::DockRegistry;
-    friend class KDDockWidgets::LayoutSaver;
+    /// @brief Returns the private impl d-pointer.
+    /// Use at your own risk. Any issues reported involving its usage will be closed.
+    class Private;
+    Private *dptr() const;
+    Private *const d;
 
     /**
      * @brief Constructs a dock widget from its serialized form.
@@ -541,11 +528,8 @@ private:
      */
     static DockWidget *deserialize(const std::shared_ptr<LayoutSaver::DockWidget> &);
 
-
-    class Private;
-    Private *const d;
-
-    Private *dptr() const;
+private:
+    Q_DISABLE_COPY(DockWidget)
 };
 }
 }
