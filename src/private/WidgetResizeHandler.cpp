@@ -30,6 +30,10 @@
 #include <QWindow>
 #include <QScopedValueRollback>
 
+#if defined(Q_OS_WIN) && defined(KDDW_FRONTEND_QTWIDGETS)
+#include <QWidget>
+#endif
+
 #if defined(Q_OS_WIN)
 #include <QtGui/private/qhighdpiscaling_p.h>
 #include <windowsx.h>

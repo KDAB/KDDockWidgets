@@ -295,7 +295,7 @@ void DebugWindow::dumpWindow(QWidget *w)
 
 void DebugWindow::dumpWindows()
 {
-    for (QWidget *w : qGuiApp->topLevelWidgets()) {
+    for (QWidget *w : qApp->topLevelWidgets()) {
         if (w != window())
             dumpWindow(w);
     }
