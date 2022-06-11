@@ -471,6 +471,7 @@ public:
     Q_REQUIRED_RESULT bool checkSanity() override;
     void dumpLayout(int level = 0) override;
     void setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy = ChildrenResizeStrategy::Percentage) override;
+    bool hostSupportsHonouringLayoutMinSize() const;
     QRect suggestedDropRect(const Item *item, const Item *relativeTo, KDDockWidgets::Location) const;
     QVariantMap toVariantMap() const override;
     void fillFromVariantMap(const QVariantMap &map, const QHash<QString, KDDockWidgets::View *> &widgets) override;

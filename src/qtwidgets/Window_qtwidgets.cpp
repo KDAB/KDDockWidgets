@@ -79,3 +79,9 @@ void Window_qtwidgets::setVisible(bool is)
         Window_qt::setVisible(is);
     }
 }
+
+bool Window_qtwidgets::supportsHonouringLayoutMinSize() const
+{
+    // QWidget's QLayout does this for us and propagates the min-size up to QWindow
+    return true;
+}

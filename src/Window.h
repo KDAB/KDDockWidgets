@@ -106,6 +106,18 @@ public:
 
     bool containsView(Controller *) const;
     bool containsView(View *) const;
+
+
+    /// @brief Returns whether this window can't be shrinked to a size that would violate the layout's min size
+    /// This is true for QtWidgets where the layout constraings propagate up to the window
+    /// However, for QtQuick it difficult as there's no QLayout.
+    //    - For QtQuick/FloatingWindow we try to not violate the min-size, which we have total control over
+    //    - But for QtQuick/MainWindow it's more difficult, as we don't know how the user composed his
+    //      main.qml. so this is false if the Window is not a FloatingWindow
+    //
+    // This method is only used to so we can surpress some warnings regarding layout being clipped due to
+    // too small window.
+    virtual bool supportsHonouringLayoutMinSize() const = 0;
 };
 
 inline bool operator==(Window::Ptr w1, Window::Ptr w2)

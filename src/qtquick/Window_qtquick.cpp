@@ -76,3 +76,17 @@ void Window_qtquick::setVisible(bool is)
     if (auto root = rootView())
         root->setVisible(is);
 }
+
+bool Window_qtquick::supportsHonouringLayoutMinSize() const
+{
+    // If this method returns true, then Item.cpp will be strict and issue qWarnings
+    // whenever the window is resized lower than the layout's min-size.
+
+    if (auto view = rootView()) {
+        // For floating window we have full control. While for anything else we don't know the disposition
+        // of the users main.qml
+        return view->is(Type::FloatingWindow);
+    }
+
+    return false;
+}

@@ -25,6 +25,7 @@ public:
     Window::Ptr transientParent() const override;
     void setGeometry(QRect) const override;
     void setVisible(bool) override;
+    bool supportsHonouringLayoutMinSize() const override;
 };
 
 }

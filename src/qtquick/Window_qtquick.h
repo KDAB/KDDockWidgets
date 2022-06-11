@@ -22,6 +22,7 @@ public:
     std::shared_ptr<ViewWrapper> rootView() const override;
     Window::Ptr transientParent() const override;
     void setVisible(bool) override;
+    bool supportsHonouringLayoutMinSize() const override;
 };
 
 }

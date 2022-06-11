@@ -16,6 +16,7 @@
 #include "controllers/Frame.h"
 #include "ItemFreeContainer_p.h"
 #include "kdbindings/signal.h"
+#include "Window.h"
 
 #include <QEvent>
 #include <QDebug>
@@ -2010,13 +2011,28 @@ void ItemBoxContainer::Private::honourMaxSizes(SizingInfo::List &sizes)
     }
 }
 
+bool ItemBoxContainer::hostSupportsHonouringLayoutMinSize() const
+{
+    if (!m_hostWidget) {
+        // Corner case. No reason not to honour min-size
+        return true;
+    }
+
+    if (auto window = m_hostWidget->window()) {
+        return window->supportsHonouringLayoutMinSize();
+    } else {
+        // Corner case. No reason not to honour min-size
+        return true;
+    }
+}
+
 void ItemBoxContainer::setSize_recursive(QSize newSize, ChildrenResizeStrategy strategy)
 {
     QScopedValueRollback<bool> block(d->m_blockUpdatePercentages, true);
 
     const QSize minSize = this->minSize();
     if (newSize.width() < minSize.width() || newSize.height() < minSize.height()) {
-        if (!s_silenceSanityChecks) {
+        if (!s_silenceSanityChecks && hostSupportsHonouringLayoutMinSize()) {
             root()->dumpLayout();
             qWarning() << Q_FUNC_INFO << "New size doesn't respect size constraints"
                        << "; new=" << newSize
