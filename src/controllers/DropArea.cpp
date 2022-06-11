@@ -70,9 +70,6 @@ DropArea::DropArea(View *parent, MainWindowOptions options, bool isMDIWrapper)
     // Initialize min size
     updateSizeConstraints();
 
-    // TODOm2: Doesn't make much sense ?
-    view()->setMinimumSize(view()->minSize());
-
     qCDebug(creation) << "DropArea";
 
     if (m_isMDIWrapper) {
