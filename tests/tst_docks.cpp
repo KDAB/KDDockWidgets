@@ -145,11 +145,12 @@ void TestDocks::tst_restoreSimple()
 
     // Dock2 floats at 150,150
     const QPoint dock2FloatingPoint = QPoint(150, 150);
-    dock2->window()->move(dock2FloatingPoint);
+    dock2->view()->window()->setFramePosition(dock2FloatingPoint);
     QVERIFY(dock2->isVisible());
+    QTest::qWait(1000); // Wait for frame to settle
 
     const QPoint dock3FloatingPoint = QPoint(200, 200);
-    dock3->window()->move(dock3FloatingPoint);
+    dock3->view()->window()->setFramePosition(dock3FloatingPoint);
     dock3->close();
 
     LayoutSaver saver;
@@ -181,7 +182,8 @@ void TestDocks::tst_restoreSimple()
     QVERIFY(fw2);
     QVERIFY(fw2->isVisible());
     QVERIFY(fw2->view()->isRootView());
-    QCOMPARE(fw2->pos(), dock2FloatingPoint);
+
+    QCOMPARE(fw2->view()->window()->framePosition(), dock2FloatingPoint);
 
     QVERIFY(fw2->view()->window()->transientParent());
     QVERIFY(m->view()->window()->equals(fw2->view()->window()->transientParent()));
@@ -195,7 +197,8 @@ void TestDocks::tst_restoreSimple()
     dock3->dptr()->morphIntoFloatingWindow(); // as it would take 1 event loop. Do it now so we can
                                               // compare already.
 
-    QCOMPARE(dock3->window()->pos(), dock3FloatingPoint);
+    QTest::qWait(300);
+    QCOMPARE(dock3->view()->window()->framePosition(), dock3FloatingPoint);
 }
 
 void TestDocks::tst_doesntHaveNativeTitleBar()
@@ -4252,13 +4255,15 @@ void TestDocks::tst_positionWhenShown()
     auto window = createMainWindow();
     auto dock1 = newDockWidget("1");
     dock1->show();
-    dock1->window()->window()->setPosition(QPoint(100, 100));
-    QTest::qWait(1000);
-    QCOMPARE(dock1->window()->window()->geometry().topLeft(), QPoint(100, 100));
+    QTest::qWait(1000); // Wait for frame to settle
+    const QPoint desiredPos = QPoint(100, 100);
+    dock1->view()->window()->setFramePosition(desiredPos);
+    QTest::qWait(1000); // Wait for frame to settle
+    QCOMPARE(dock1->view()->window()->framePosition(), desiredPos);
 
     dock1->close();
     dock1->show();
-    QCOMPARE(dock1->window()->window()->geometry().topLeft(), QPoint(100, 100));
+    QCOMPARE(dock1->view()->window()->framePosition(), desiredPos);
 
     // Cleanup
     window->layout()->checkSanity();
