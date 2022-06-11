@@ -1483,11 +1483,16 @@ void TestQtWidgets::cleanupTestCase()
 
 int main(int argc, char *argv[])
 {
-    KDDockWidgets::Platform::tests_initPlatform(argc, argv, KDDockWidgets::FrontendType::QtWidgets);
+    // Might be disabled by env var
+    const auto frontends = Platform::instance()->frontendTypes();
+    if (std::find(frontends.cbegin(), frontends.cend(), FrontendType::QtWidgets) == frontends.cend())
+        return 0;
+
+    Platform::tests_initPlatform(argc, argv, FrontendType::QtWidgets);
 
     TestQtWidgets test;
     const int exitCode = QTest::qExec(&test, argc, argv);
-    KDDockWidgets::Platform::tests_deinitPlatform();
+    Platform::tests_deinitPlatform();
 
     return exitCode;
 }
