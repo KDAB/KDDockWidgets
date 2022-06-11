@@ -75,7 +75,7 @@
             "binaryDir": "${sourceDir}/build-release",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_UNITY_BUILD": "ON",
+                "CMAKE_UNITY_BUILD": "OFF",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             }
         },
@@ -86,7 +86,7 @@
             "binaryDir": "${sourceDir}/build-release-no-x11extras",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_UNITY_BUILD": "ON",
+                "CMAKE_UNITY_BUILD": "OFF",
                 "KDDockWidgets_X11EXTRAS": "OFF",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             }
@@ -123,7 +123,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "KDDockWidgets_QT6": "ON",
-                "CMAKE_UNITY_BUILD": "ON",
+                "CMAKE_UNITY_BUILD": "OFF",
                 "CMAKE_PREFIX_PATH": "$env{QT6_DIR}",
                 "KDDockWidgets_FRONTENDS": "qtwidgets;qtquick"
             },
