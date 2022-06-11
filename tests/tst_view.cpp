@@ -68,16 +68,10 @@ TEST_CASE("View::isVisible(),show(),hide()")
     rootView->setVisible(true);
     CHECK(rootView->isVisible());
 
-    // Changing parent will make it hide
-    auto view2 = createViewAndWindow({});
-    view2->setVisible(true);
-    CHECK(view2->isVisible());
-    view2->setParent(rootView);
-    CHECK(!view2->isVisible());
-
-    view2->setVisible(true);
-
     // Hiding the parent should hide the children
+    auto view2 = createViewAndWindow({});
+    view2->setParent(rootView);
+    view2->setVisible(true);
     CHECK(view2->isVisible());
     CHECK(rootView->isVisible());
     rootView->setVisible(false);
