@@ -34,6 +34,11 @@
 #include <QDrag>
 #include <QScopedValueRollback>
 
+#ifdef KDDW_FRONTEND_QTWIDGETS
+#include <QWidget>
+#include <QApplication>
+#endif
+
 #if defined(Q_OS_WIN)
 #include <windows.h>
 #endif
@@ -780,23 +785,23 @@ StateBase *DragController::activeState() const
     return static_cast<StateBase *>(currentState());
 }
 
-#if defined(Q_OS_WIN_TODO)
-static QWidget *qtTopLevelForHWND(HWND hwnd)
+#if defined(Q_OS_WIN)
+static std::shared_ptr<ViewWrapper> qtTopLevelForHWND(HWND hwnd)
 {
-    const QList<QWindow *> windows = qGuiApp->topLevelWindows();
-    for (QWindow *window : windows) {
+    const Window::List windows = Platform::instance()->windows();
+    for (Window::Ptr window : windows) {
         if (!window->isVisible())
             continue;
 
-        if (hwnd == ( HWND )window->winId()) {
-            if (auto result = DockRegistry::self()->topLevelForHandle(window))
+        if (hwnd == ( HWND )window->handle()) {
+            if (auto result = window->rootView())
                 return result;
 #ifdef KDDW_FRONTEND_QTWIDGETS
             if (Platform::instance()->isQtWidgets()) {
                 // It's not a KDDW window, but we still return something, as the KDDW main window
                 // might be embedded into another non-kddw QMainWindow
                 // Case not supported for QtQuick.
-                const QWidgetList widgets = qGuiApp->topLevelWidgets();
+                const QWidgetList widgets = qApp->topLevelWidgets();
                 for (QWidget *widget : widgets) {
                     if (!widget->window()) {
                         // Don't call winId on windows that don't have it, as that will force all its childrens to have it,
@@ -805,7 +810,7 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
                         continue;
                     }
                     if (hwnd == ( HWND )widget->winId()) {
-                        return widget;
+                        return Platform::instance()->qobjectAsView(widget);
                     }
                 }
             }
@@ -815,14 +820,6 @@ static QWidget *qtTopLevelForHWND(HWND hwnd)
 
     qCDebug(toplevels) << Q_FUNC_INFO << "Couldn't find hwnd for top-level" << hwnd;
     return nullptr;
-}
-
-static QRect topLevelGeometry(const QWidget *topLevel)
-{
-    if (auto mainWindow = qobject_cast<const MainWindowBase *>(topLevel))
-        return mainWindow->windowGeometry();
-
-    return topLevel->geometry();
 }
 
 #endif
@@ -854,14 +851,14 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
     QPoint globalPos = QCursor::pos();
 
     if (qGuiApp->platformName() == QLatin1String("windows")) { // So -platform offscreen on Windows doesn't use this
-#if defined(Q_OS_WIN_TODO)
+#if defined(Q_OS_WIN)
         POINT globalNativePos;
         if (!GetCursorPos(&globalNativePos))
             return nullptr;
 
         // There might be windows that don't belong to our app in between, so use win32 to travel by z-order.
         // Another solution is to set a parent on all top-levels. But this code is orthogonal.
-        HWND hwnd = HWND(m_windowBeingDragged->floatingWindow()->winId());
+        HWND hwnd = HWND(m_windowBeingDragged->floatingWindow()->view()->window()->handle());
         while (hwnd) {
             hwnd = GetWindow(hwnd, GW_HWNDNEXT);
             RECT r;
@@ -872,23 +869,23 @@ ViewWrapper::Ptr DragController::qtTopLevelUnderCursor() const
                 continue;
 
             if (auto tl = qtTopLevelForHWND(hwnd)) {
-                const QRect windowGeometry = topLevelGeometry(tl);
+                const QRect windowGeometry = tl->windowGeometry();
 
                 if (windowGeometry.contains(globalPos) && tl->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
-                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl;
+                    qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << tl->asQObject();
                     return tl;
                 }
             } else {
 #ifdef KDDW_FRONTEND_QTWIDGETS
                 if (Platform::instance()->isQtWidgets()) {
                     // Maybe it's embedded in a QWinWidget:
-                    auto topLevels = qGuiApp->topLevelWidgets();
+                    auto topLevels = qApp->topLevelWidgets();
                     for (auto topLevel : topLevels) {
                         if (QLatin1String(topLevel->metaObject()->className()) == QLatin1String("QWinWidget")) {
                             if (hwnd == GetParent(HWND(topLevel->window()->winId()))) {
                                 if (topLevel->rect().contains(topLevel->mapFromGlobal(globalPos)) && topLevel->objectName() != QStringLiteral("_docks_IndicatorWindow_Overlay")) {
                                     qCDebug(toplevels) << Q_FUNC_INFO << "Found top-level" << topLevel;
-                                    return topLevel;
+                                    return Platform::instance()->qobjectAsView(topLevel);
                                 }
                             }
                         }
