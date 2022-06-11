@@ -88,6 +88,6 @@ TEST_CASE("ViewWrapper::focusPolicy")
 TEST_CASE("ViewWrapper::sizePolicy")
 {
     auto rootView = createViewAndWindow({});
-    CHECK_EQ(rootView->asWrapper()->sizePolicy().horizontalPolicy(), QSizePolicy::Preferred);
-    CHECK_EQ(rootView->asWrapper()->sizePolicy().verticalPolicy(), QSizePolicy::Preferred);
+    CHECK_EQ(rootView->asWrapper()->horizontalSizePolicy(), SizePolicy::Preferred);
+    CHECK_EQ(rootView->asWrapper()->verticalSizePolicy(), SizePolicy::Preferred);
 }

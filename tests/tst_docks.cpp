@@ -2685,7 +2685,7 @@ void TestDocks::tst_honourGeometryOfHiddenWindow()
 
     auto d1 = newDockWidget("1");
     auto guest = Platform::instance()->tests_createFocusableView({ true });
-    guest->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+    guest->setSizePolicy(SizePolicy::Expanding, SizePolicy::Expanding);
     d1->setGuestView(guest->asWrapper());
 
     QVERIFY(!d1->isVisible());

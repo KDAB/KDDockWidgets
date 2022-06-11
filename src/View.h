@@ -12,12 +12,12 @@
 #pragma once
 
 #include "docks_export.h"
+#include "KDDockWidgets.h"
 #include "Controller.h"
 
-#include <QSize> // TODO Remove Qt headers, introduce Size and Rect structs
+#include <QSize> // TODOm4 Remove Qt headers, introduce Size and Rect structs
 #include <QRect>
 #include <QObject>
-#include <QSizePolicy>
 
 #include "kdbindings/signal.h"
 
@@ -146,8 +146,9 @@ public:
     virtual QPoint mapToGlobal(QPoint) const = 0;
     virtual QPoint mapFromGlobal(QPoint) const = 0;
     virtual QPoint mapTo(View *, QPoint) const = 0;
-    virtual void setSizePolicy(QSizePolicy) = 0;
-    virtual QSizePolicy sizePolicy() const = 0;
+    virtual void setSizePolicy(SizePolicy, SizePolicy) = 0;
+    virtual SizePolicy verticalSizePolicy() const = 0;
+    virtual SizePolicy horizontalSizePolicy() const = 0;
     void closeRootView();
     QRect windowGeometry() const;
     QSize parentSize() const;

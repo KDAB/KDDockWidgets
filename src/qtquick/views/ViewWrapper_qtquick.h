@@ -63,7 +63,8 @@ public:
     bool close() override;
     Qt::FocusPolicy focusPolicy() const override;
     bool hasFocus() const override;
-    QSizePolicy sizePolicy() const override;
+    SizePolicy verticalSizePolicy() const override;
+    SizePolicy horizontalSizePolicy() const override;
 
     const View *unwrap() const;
     View *unwrap();

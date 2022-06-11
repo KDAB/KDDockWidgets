@@ -63,7 +63,7 @@ TitleBar::TitleBar(FloatingWindow *parent)
 void TitleBar::init()
 {
     view()->init();
-    view()->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
+    view()->setSizePolicy(SizePolicy::Minimum, SizePolicy::Fixed);
 
     connect(this, &TitleBar::isFocusedChanged, this, [this] {
         // repaint

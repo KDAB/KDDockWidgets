@@ -358,7 +358,12 @@ bool ViewWrapper_qtwidgets::hasFocus() const
     return m_widget->hasFocus();
 }
 
-QSizePolicy ViewWrapper_qtwidgets::sizePolicy() const
+SizePolicy ViewWrapper_qtwidgets::horizontalSizePolicy() const
 {
-    return m_widget->sizePolicy();
+    return SizePolicy(m_widget->sizePolicy().horizontalPolicy());
+}
+
+SizePolicy ViewWrapper_qtwidgets::verticalSizePolicy() const
+{
+    return SizePolicy(m_widget->sizePolicy().verticalPolicy());
 }

@@ -29,6 +29,13 @@
 
 using namespace KDDockWidgets;
 
+static_assert(SizePolicy::Fixed == SizePolicy(QSizePolicy::Fixed), "Enums dont match");
+static_assert(SizePolicy::Minimum == SizePolicy(QSizePolicy::Minimum), "Enums dont match");
+static_assert(SizePolicy::Maximum == SizePolicy(QSizePolicy::Maximum), "Enums dont match");
+static_assert(SizePolicy::Preferred == SizePolicy(QSizePolicy::Preferred), "Enums dont match");
+static_assert(SizePolicy::Expanding == SizePolicy(QSizePolicy::Expanding), "Enums dont match");
+
+
 Platform_qtwidgets::Platform_qtwidgets()
 {
     init();

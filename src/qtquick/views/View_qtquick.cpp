@@ -607,14 +607,20 @@ void View_qtquick::setWindowOpacity(double v)
         w->setOpacity(v);
 }
 
-void View_qtquick::setSizePolicy(QSizePolicy sp)
+void View_qtquick::setSizePolicy(SizePolicy h, SizePolicy v)
 {
-    m_sizePolicy = sp;
+    m_horizontalSizePolicy = h;
+    m_verticalSizePolicy = v;
 }
 
-QSizePolicy View_qtquick::sizePolicy() const
+SizePolicy View_qtquick::verticalSizePolicy() const
 {
-    return m_sizePolicy;
+    return m_verticalSizePolicy;
+}
+
+SizePolicy View_qtquick::horizontalSizePolicy() const
+{
+    return m_horizontalSizePolicy;
 }
 
 void View_qtquick::setWindowTitle(const QString &title)

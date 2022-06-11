@@ -20,7 +20,6 @@
 #include <QDebug>
 #include <QEvent>
 #include <QResizeEvent>
-#include <QSizePolicy>
 #include <QQuickItem>
 #include <QQuickWindow>
 #include <QScopedValueRollback>
@@ -115,8 +114,9 @@ public:
     QPoint mapFromGlobal(QPoint globalPt) const override;
     QPoint mapTo(View *parent, QPoint pos) const override;
     void setWindowOpacity(double v) override;
-    void setSizePolicy(QSizePolicy sp) override;
-    QSizePolicy sizePolicy() const override;
+    void setSizePolicy(SizePolicy, SizePolicy) override;
+    SizePolicy verticalSizePolicy() const override;
+    SizePolicy horizontalSizePolicy() const override;
 
     static bool close(QQuickItem *);
     bool close() override;
@@ -186,7 +186,8 @@ private:
     void updateNormalGeometry();
     bool m_inSetParent = false;
     QSize m_sizeHint;
-    QSizePolicy m_sizePolicy = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    SizePolicy m_verticalSizePolicy = SizePolicy::Preferred;
+    SizePolicy m_horizontalSizePolicy = SizePolicy::Preferred;
     Qt::WindowFlags m_windowFlags;
     int m_widgetAttributes = 0; // Qt::WidgetAttribute
     Qt::FocusPolicy m_focusPolicy = Qt::NoFocus;

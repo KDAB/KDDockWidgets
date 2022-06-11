@@ -204,6 +204,16 @@ enum class DropIndicatorType
 };
 Q_ENUM_NS(DropIndicatorType)
 
+enum class SizePolicy
+{
+    Fixed = 0,
+    Minimum = 1,
+    Maximum = 4,
+    Preferred = 5,
+    Expanding = 7
+};
+Q_ENUM_NS(SizePolicy)
+
 ///@internal
 enum SuggestedGeometryHint {
     SuggestedGeometryHint_None,

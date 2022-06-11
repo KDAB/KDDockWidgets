@@ -73,7 +73,7 @@ void ViewWrapper::raise()
     qFatal("Not implemented");
 }
 
-void ViewWrapper::setSizePolicy(QSizePolicy)
+void ViewWrapper::setSizePolicy(SizePolicy, SizePolicy)
 {
     qFatal("Not implemented");
 }

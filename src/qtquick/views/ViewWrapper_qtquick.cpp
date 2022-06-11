@@ -444,10 +444,18 @@ const View *ViewWrapper_qtquick::unwrap() const
     return qobject_cast<const View_qtquick *>(m_item);
 }
 
-QSizePolicy ViewWrapper_qtquick::sizePolicy() const
+SizePolicy ViewWrapper_qtquick::verticalSizePolicy() const
 {
     if (auto view = unwrap()) {
-        return view->sizePolicy();
+        return view->verticalSizePolicy();
+    }
+    return {};
+}
+
+SizePolicy ViewWrapper_qtquick::horizontalSizePolicy() const
+{
+    if (auto view = unwrap()) {
+        return view->horizontalSizePolicy();
     }
     return {};
 }
