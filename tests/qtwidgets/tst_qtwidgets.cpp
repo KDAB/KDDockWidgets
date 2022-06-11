@@ -83,6 +83,21 @@ inline Controllers::DockWidget *createDockWidget(const QString &name, QWidget *w
     }
 };
 
+class EmbeddedWindow : public QWidget
+{
+public:
+    explicit EmbeddedWindow(Controllers::MainWindow *m)
+        : mainWindow(m)
+    {
+    }
+
+    ~EmbeddedWindow() override;
+
+    Controllers::MainWindow *const mainWindow;
+};
+EmbeddedWindow::~EmbeddedWindow() = default;
+
+
 inline EmbeddedWindow *createEmbeddedMainWindow(QSize sz)
 {
     static int count = 0;

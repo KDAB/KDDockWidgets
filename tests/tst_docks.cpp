@@ -20,7 +20,7 @@
 #include "Platform.h"
 #include "multisplitter/Item_p.h"
 #include "ViewFactory.h"
-
+#include "Action.h"
 #include "controllers/MDILayout.h"
 #include "controllers/DropArea.h"
 #include "controllers/DockWidget.h"
@@ -29,8 +29,6 @@
 #include "controllers/TabBar.h"
 #include "controllers/Stack.h"
 #include "controllers/SideBar.h"
-
-#include <QAction>
 
 #ifdef Q_OS_WIN
 #include <windows.h>

@@ -125,19 +125,6 @@ void nestDockWidget(Controllers::DockWidget *dock, Controllers::DropArea *dropAr
                     KDDockWidgets::Location location);
 
 
-class EmbeddedWindow : public QWidget
-{
-public:
-    explicit EmbeddedWindow(Controllers::MainWindow *m)
-        : mainWindow(m)
-    {
-    }
-
-    ~EmbeddedWindow() override;
-
-    Controllers::MainWindow *const mainWindow;
-};
-
 void doubleClickOn(QPoint globalPos, View *receiver);
 void doubleClickOn(QPoint globalPos, Window::Ptr receiver);
 void pressOn(QPoint globalPos, View *receiver);

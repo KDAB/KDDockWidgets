@@ -84,6 +84,8 @@ set(KDDW_BACKEND_SRCS
     controllers/indicators/ClassicIndicators.h
     controllers/indicators/SegmentedIndicators.cpp
     controllers/indicators/SegmentedIndicators.h
+    Action.cpp
+    Action.h
     Window.cpp
     Window.h
     View.cpp

@@ -223,5 +223,3 @@ void KDDockWidgets::Tests::nestDockWidget(Controllers::DockWidget *dock, DropAre
     dropArea->addWidget(frame->view(), location, relativeTo);
     QVERIFY(dropArea->checkSanity());
 }
-
-EmbeddedWindow::~EmbeddedWindow() = default;
