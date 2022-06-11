@@ -66,6 +66,14 @@
         "cwd": "${workspaceFolder}"
       },
       {
+        "name": "qtquick_dockwidgets",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${workspaceFolder}/build-dev/bin/examples/qtquick_dockwidgets",
+        "args": [],
+        "cwd": "${workspaceFolder}"
+      },
+      {
         "name": "tst_docks",
         "type": "lldb",
         "request": "launch",
