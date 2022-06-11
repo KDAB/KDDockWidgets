@@ -45,14 +45,11 @@ public:
 
 protected:
 #ifdef DOCKS_DEVELOPER_MODE
-    // These 4 just for unit-tests
+    // These 3 just for unit-tests
     bool isCloseButtonEnabled() const override;
     bool isCloseButtonVisible() const override;
     bool isFloatButtonVisible() const override;
 #endif
-
-    /*void paintEvent(QPaintEvent *) override;
-    void mouseDoubleClickEvent(QMouseEvent *) override; */
 
     QQuickItem *titleBarQmlItem() const;
     QQuickItem *titleBarMouseArea() const;

@@ -526,6 +526,7 @@ private:
     friend class Controllers::FloatingWindow;
     friend class Frame;
     friend class DropArea;
+    friend class Stack;
     friend class MainWindow;
     friend class ::TestDocks;
     friend class StateDragging;

@@ -22,9 +22,11 @@ class TitleBar
 {
 public:
     virtual void updateMaximizeButton() = 0;
+#ifdef DOCKS_DEVELOPER_MODE
     virtual bool isFloatButtonVisible() const = 0;
     virtual bool isCloseButtonVisible() const = 0;
     virtual bool isCloseButtonEnabled() const = 0;
+#endif
 };
 
 }

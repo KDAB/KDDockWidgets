@@ -95,6 +95,17 @@ public:
     /// @brief Returns how many pixels the mouse must move for a drag to start
     virtual int startDragDistance() const;
 
+    /// @brief Return whether we use the global event filter based mouse grabber
+    virtual bool usesFallbackMouseGrabber() const = 0;
+
+    /// @brief Returns whether the specified global position is on top of a view
+    /// that isn't draggable. This is needed since not the entire title bar is draggable.
+    /// For example, clicking on the close button shouldn't start a drag.
+    virtual bool inDisallowedDragView(QPoint globalPos) const = 0;
+
+    /// @brief Releases the mouse grab, if any
+    virtual void ungrabMouse() = 0;
+
 #ifdef DOCKS_DEVELOPER_MODE
 
     struct CreateViewOptions
@@ -165,19 +176,8 @@ public:
     /// and see what's goign on
     virtual void tests_wait(int ms) = 0;
 
-    /// @brief Return whether we use the global event filter based mouse grabber
-    virtual bool usesFallbackMouseGrabber() const = 0;
-
-    /// @brief Returns whether the specified global position is on top of a view
-    /// that isn't draggable. This is needed since not the entire title bar is draggable.
-    /// For example, clicking on the close button shouldn't start a drag.
-    virtual bool inDisallowedDragView(QPoint globalPos) const = 0;
-
     virtual void installMessageHandler() = 0;
     virtual void uninstallMessageHandler() = 0;
-
-    /// @brief Releases the mouse grab, if any
-    virtual void ungrabMouse() = 0;
 
     /// @brief Creates a main window. This is not API that the user will use, but used
     /// internally by some tools that need a main window
