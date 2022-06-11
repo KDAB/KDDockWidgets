@@ -10,7 +10,7 @@
 #
 
 cmake_minimum_required(VERSION 3.7)
-project(kddockwidgets_example_quick)
+project(qtquick_dockwidgets)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -26,12 +26,14 @@ set(RESOURCES_EXAMPLE_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/resources_qtquick_example.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/../../dockwidgets/resources_example.qrc)
 
-add_executable(kddockwidgets_example_quick
+add_executable(qtquick_dockwidgets
     main.cpp
     ${RESOURCES_EXAMPLE_SRC}
 )
 
-target_link_libraries(kddockwidgets_example_quick
+set_target_properties(qtquick_dockwidgets PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
+
+target_link_libraries(qtquick_dockwidgets
   PRIVATE
     KDAB::kddockwidgets
 )

@@ -10,7 +10,7 @@
 #
 
 cmake_minimum_required(VERSION 3.7)
-project(kddockwidgets_customtitlebar_quick)
+project(qtquick_customtitlebar)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -26,12 +26,14 @@ set(RESOURCES_EXAMPLE_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/resources_qtquick_example.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/../../dockwidgets/resources_example.qrc)
 
-add_executable(kddockwidgets_customtitlebar_quick
+add_executable(qtquick_customtitlebar
     main.cpp
     ${RESOURCES_EXAMPLE_SRC}
 )
 
-target_link_libraries(kddockwidgets_customtitlebar_quick
+set_target_properties(qtquick_customtitlebar PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
+
+target_link_libraries(qtquick_customtitlebar
   PRIVATE
     KDAB::kddockwidgets
 )

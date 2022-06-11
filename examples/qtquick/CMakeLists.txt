@@ -9,10 +9,10 @@
 #
 
 add_subdirectory(dockwidgets)
-set_compiler_flags(kddockwidgets_example_quick)
+set_compiler_flags(qtquick_dockwidgets)
 
 add_subdirectory(mdi)
-set_compiler_flags(kddockwidgets_example_mdi_quick)
+set_compiler_flags(qtquick_mdi)
 
 add_subdirectory(customtitlebar)
-set_compiler_flags(kddockwidgets_customtitlebar_quick)
+set_compiler_flags(qtquick_customtitlebar)

@@ -10,7 +10,7 @@
 #
 
 cmake_minimum_required(VERSION 3.7)
-project(kddockwidgets_example)
+project(qtwidgets_dockwidgets)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -24,7 +24,7 @@ endif()
 
 set(RESOURCES_EXAMPLE_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources_example.qrc)
 
-add_executable(kddockwidgets_example
+add_executable(qtwidgets_dockwidgets
     main.cpp
     # MyViewFactory.cpp
     MyMainWindow.cpp
@@ -32,7 +32,9 @@ add_executable(kddockwidgets_example
     ${RESOURCES_EXAMPLE_SRC}
 )
 
-target_link_libraries(kddockwidgets_example
+set_target_properties(qtwidgets_dockwidgets PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/examples/" )
+
+target_link_libraries(qtwidgets_dockwidgets
   PRIVATE
     KDAB::kddockwidgets
 )
