@@ -27,8 +27,11 @@
 using namespace KDDockWidgets;
 
 static Platform *s_platform = nullptr;
+
+#ifdef DOCKS_DEVELOPER_MODE
 QString Platform::s_expectedWarning = {};
 Platform::WarningObserver *Platform::s_warningObserver = nullptr;
+#endif
 
 Platform::Platform()
 {

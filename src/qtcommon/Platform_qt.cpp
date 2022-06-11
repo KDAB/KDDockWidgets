@@ -146,6 +146,11 @@ int Platform_qt::screenNumberForQWindow(QWindow *window) const
     return -1;
 }
 
+void Platform_qt::sendEvent(View *view, QEvent *ev) const
+{
+    qGuiApp->sendEvent(view->asQObject(), ev);
+}
+
 #ifdef DOCKS_DEVELOPER_MODE
 
 bool Platform_qt::tests_waitForWindowActive(Window::Ptr window, int timeout) const
@@ -227,12 +232,6 @@ bool Platform_qt::tests_waitForDeleted(QObject *o, int timeout) const
 
     const bool wasDeleted = !ptr;
     return wasDeleted;
-}
-
-
-void Platform_qt::sendEvent(View *view, QEvent *ev) const
-{
-    qGuiApp->sendEvent(view->asQObject(), ev);
 }
 
 void Platform_qt::tests_sendEvent(Window::Ptr window, QEvent *ev) const

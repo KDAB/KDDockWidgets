@@ -23,6 +23,7 @@
 #include "private/WindowBeingDragged_p.h"
 #include "private/Position_p.h"
 #include "Platform.h"
+#include "private/multisplitter/Item_p.h"
 
 #include "Config.h"
 #include "ViewFactory.h"
