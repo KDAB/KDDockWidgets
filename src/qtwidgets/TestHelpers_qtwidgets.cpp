@@ -113,6 +113,8 @@ void Platform_qtwidgets::tests_initPlatform_impl()
 
 void Platform_qtwidgets::tests_deinitPlatform_impl()
 {
+    qDeleteAll(qApp->topLevelWidgets());
+
     Platform_qt::tests_deinitPlatform_impl();
 }
 
