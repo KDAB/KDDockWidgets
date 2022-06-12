@@ -218,7 +218,7 @@ if(KDDockWidgets_DEVELOPER_MODE)
   set(KDDockWidgets_TESTS ON)
   set(KDDockWidgets_WERROR ON)
   include(ECMEnableSanitizers)
-  # find_package(doctest REQUIRED) TODOm2
+  # find_package(doctest REQUIRED) TODOm3
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

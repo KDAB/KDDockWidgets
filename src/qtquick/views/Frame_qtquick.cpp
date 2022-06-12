@@ -258,7 +258,7 @@ KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::actualTitleBar() const
 
 int Frame_qtquick::userType() const
 {
-    /// TODOm2
+    /// TODOm3
     return 0;
 }
 
