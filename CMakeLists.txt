@@ -141,15 +141,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src) # TODOm2 Replace with targe
 if(KDDockWidgets_QT6)
   set(Qt_VERSION_MAJOR 6)
   set(QT_MIN_VERSION "6.2.0")
-  find_package(Qt6Test ${QT_MIN_VERSION} REQUIRED)
   set(KDDockWidgets_LIBRARY_QTID "-qt6")
 else()
   set(Qt_VERSION_MAJOR 5)
   set(QT_MIN_VERSION "5.15")
-  find_package(Qt5Test ${QT_MIN_VERSION} REQUIRED)
-  set(KDDockWidgets_LIBRARY_QTID "")
 endif()
-include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 # BEGIN frontend enabling
 if (KDDockWidgets_FRONTENDS)
@@ -197,6 +193,8 @@ else()
   endforeach()
 endif()
 # END frontend enabling
+
+include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 add_definitions(-DQT_NO_KEYWORDS)
 

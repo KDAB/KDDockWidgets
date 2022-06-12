@@ -335,8 +335,6 @@ if(KDDockWidgets_CODE_COVERAGE AND (CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD) 
 endif()
 # END coverage
 
-# TODOm2: Remove linking against QtTest after refactorings are made
-
 if (KDDW_FRONTEND_QTWIDGETS)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Widgets PRIVATE Qt${Qt_VERSION_MAJOR}::WidgetsPrivate)
 endif()
@@ -351,6 +349,7 @@ if (KDDockWidgets_CODE_COVERAGE)
 endif()
 
 if (KDDockWidgets_DEVELOPER_MODE)
+  find_package(Qt${Qt_VERSION_MAJOR}Test ${QT_MIN_VERSION} REQUIRED)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test)
 endif()
 
