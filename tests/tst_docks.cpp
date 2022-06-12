@@ -3683,6 +3683,8 @@ void TestDocks::tst_restoreWithAffinity()
 
     // Close all and restore again
     DockRegistry::self()->clear();
+    QVERIFY(!dock2->isVisible());
+
     saver.restoreLayout(saved1);
 
     // dock2 continues closed

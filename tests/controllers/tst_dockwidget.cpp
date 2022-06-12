@@ -11,6 +11,7 @@
 
 #include "../main.h"
 #include "controllers/DockWidget.h"
+#include "Action.h"
 #include "ViewFactory.h"
 #include "Config.h"
 #include "Platform.h"
@@ -38,6 +39,17 @@ TEST_CASE("setGuestView")
     REQUIRE(dw->view()->window());
     REQUIRE(guest->window());
     CHECK(dw->view()->window()->equals(guest->window()));
+
+    delete dw;
+}
+
+TEST_CASE("toggleAction")
+{
+    auto dw = Config::self().viewFactory()->createDockWidget("dw1")->asDockWidgetController();
+
+    CHECK(!dw->toggleAction()->isChecked());
+    CHECK(dw->toggleAction()->isEnabled());
+    CHECK(dw->toggleAction()->isCheckable());
 
     delete dw;
 }

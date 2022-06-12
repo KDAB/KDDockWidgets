@@ -29,14 +29,14 @@ public:
 
     ~QAction() override;
 
-    bool isChecked() const
-    {
-        return m_isChecked;
-    }
-
     void setCheckable(bool is)
     {
-        m_isCheckable = is;
+        m_checkable = is;
+    }
+
+    bool isCheckable() const
+    {
+        return m_checkable;
     }
 
     void setIcon(const QIcon &)
@@ -75,14 +75,17 @@ public:
         m_enabled = enabled;
     }
 
-    bool checked() const
+    bool isChecked() const
     {
         return m_checked;
     }
 
     void setChecked(bool checked)
     {
-        m_checked = checked;
+        if (m_checked != checked) {
+            m_checked = checked;
+            Q_EMIT toggled(checked);
+        }
     }
 
     bool isEnabled() const
@@ -92,8 +95,7 @@ public:
 
     void toggle()
     {
-        m_enabled = !m_enabled;
-        Q_EMIT toggled(m_enabled);
+        setChecked(!m_checked);
     }
 
 Q_SIGNALS:
@@ -103,9 +105,8 @@ private:
     QString m_text;
     QString m_toolTip;
 
-    bool m_isChecked = false;
-    bool m_isCheckable = false;
-    bool m_enabled = false;
+    bool m_checkable = true;
+    bool m_enabled = true;
     bool m_checked = false;
 };
 
