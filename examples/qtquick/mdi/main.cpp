@@ -42,15 +42,15 @@ int main(int argc, char *argv[])
     appEngine.load((QUrl("qrc:/main.qml")));
 
     auto dw1 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #1");
-    dw1->setWidget(QStringLiteral("qrc:/Guest1.qml"));
+    dw1->setGuestView(QStringLiteral("qrc:/Guest1.qml"));
     dw1->resize(QSize(400, 400));
 
     auto dw2 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #2");
-    dw2->setWidget(QStringLiteral("qrc:/Guest2.qml"));
+    dw2->setGuestView(QStringLiteral("qrc:/Guest2.qml"));
     dw2->resize(QSize(400, 400));
 
     auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
-    dw3->setWidget(QStringLiteral("qrc:/Guest3.qml"));
+    dw3->setGuestView(QStringLiteral("qrc:/Guest3.qml"));
 
     auto mainWindowView = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst()->view();
     auto mainWindowMDI = static_cast<KDDockWidgets::Views::MainWindowMDI_qtquick *>(mainWindowView);

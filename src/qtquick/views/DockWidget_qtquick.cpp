@@ -90,16 +90,16 @@ void DockWidget_qtquick::init()
     });
 }
 
-void DockWidget_qtquick::setWidget(const QString &qmlFilename)
+void DockWidget_qtquick::setGuestView(const QString &qmlFilename)
 {
     QQuickItem *guest = createItem(d->m_qmlEngine, qmlFilename);
     if (!guest)
         return;
 
-    setWidget(guest);
+    setGuestView(guest);
 }
 
-void DockWidget_qtquick::setWidget(QQuickItem *widget)
+void DockWidget_qtquick::setGuestView(QQuickItem *widget)
 {
     auto wrapper = asQQuickWrapper(widget);
     wrapper->setParent(this);
