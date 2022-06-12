@@ -367,8 +367,6 @@ static SideBarLocation sideBarLocationForBorder(Layouting::LayoutBorderLocations
 
 SideBarLocation MainWindow::Private::preferredSideBar(Controllers::DockWidget *dw) const
 {
-    // TODO: Algorithm can still be made smarter
-
     Layouting::Item *item = q->layout()->itemForFrame(dw->d->frame());
     if (!item) {
         qWarning() << Q_FUNC_INFO << "No item for dock widget";

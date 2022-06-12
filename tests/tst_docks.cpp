@@ -1703,19 +1703,6 @@ void TestDocks::tst_startClosed()
     QCOMPARE(layout->placeholderCount(), 0);
 }
 
-void TestDocks::tst_dockDockWidgetNested()
-{
-    EnsureTopLevelsDeleted e;
-    // Test detaching too, and check if the window size is correct
-    // TODO
-}
-
-void TestDocks::tst_dockFloatingWindowNested()
-{
-    EnsureTopLevelsDeleted e;
-    // TODO
-}
-
 void TestDocks::tst_crash()
 {
     // tests some crash I got
@@ -2844,9 +2831,6 @@ void TestDocks::tst_propagateMinSize()
     nestDockWidget(dock1, dropArea, nullptr, KDDockWidgets::Location_OnRight);
     nestDockWidget(dock2, dropArea, nullptr, KDDockWidgets::Location_OnRight);
     nestDockWidget(dock3, dropArea, nullptr, KDDockWidgets::Location_OnRight);
-
-    // TODO finish this when the 3 dock widgets have proper sizes
-    // QTest::qWait(50000);
 }
 
 void TestDocks::tst_createFloatingWindow()
@@ -5545,7 +5529,7 @@ void TestDocks::tst_close()
     auto fw1 = dock1->floatingWindow();
     QVERIFY(fw1);
 
-    dock1->close(); // TODO: Hide doesn't delete the FloatingWindow
+    dock1->close();
 
     QVERIFY(Platform::instance()->tests_waitForDeleted(fw1));
     QVERIFY(!dock1->isVisible());
@@ -5582,10 +5566,7 @@ void TestDocks::tst_close()
     QVERIFY(Platform::instance()->tests_waitForDeleted(frame1));
     QVERIFY(Platform::instance()->tests_waitForDeleted(window));
 
-    // TODO: 1.6 Test FloatingWindow with two frames
-    // TODO: 1.7 Test Frame with two tabs
-
-    // 1.8 Check if space is reclaimed after closing left dock
+    // 1.6 Check if space is reclaimed after closing left dock
     Controllers::DockWidget *centralDock;
     Controllers::DockWidget *leftDock;
     Controllers::DockWidget *rightDock;
@@ -5603,14 +5584,14 @@ void TestDocks::tst_close()
              centralDock->dptr()->frame()->view()->geometry().right()
                  + Item::separatorThickness + 1);
     leftDock->close();
-    QTest::qWait(250); // TODO: wait for some signal
+    QTest::qWait(250);
     QCOMPARE(centralDock->dptr()->frame()->view()->x(), 0);
     QCOMPARE(rightDock->dptr()->frame()->view()->x(),
              centralDock->dptr()->frame()->view()->geometry().right()
                  + Item::separatorThickness + 1);
 
     rightDock->close();
-    QTest::qWait(250); // TODO: wait for some signal
+    QTest::qWait(250);
     QMargins margins = mainwindow->centerWidgetMargins();
     QCOMPARE(centralDock->dptr()->frame()->view()->width(),
              mainwindow->width() - 0 * 2 - margins.left() - margins.right());

@@ -59,7 +59,6 @@ struct Separator::Private
     Qt::Orientation orientation = Qt::Horizontal;
     QRect geometry;
     int lazyPosition = 0;
-    // SeparatorOptions m_options; TODO: Have a Layouting::Config
     View *lazyResizeRubberBand = nullptr;
     Layouting::ItemBoxContainer *parentContainer = nullptr;
     Layouting::Side lastMoveDirection = Layouting::Side1;

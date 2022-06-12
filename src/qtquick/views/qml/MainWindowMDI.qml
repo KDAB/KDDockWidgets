@@ -17,6 +17,6 @@ KDDW.MainWindow {
     property string uniqueName: ""
 
     Component.onCompleted: {
-        root.init(uniqueName, 2); // TODO use Q_ENUM_NS
+        root.init(uniqueName, 2); // TODOm2 use Q_ENUM_NS
     }
 }

@@ -1392,7 +1392,7 @@ void TestQtWidgets::tst_complex()
     auto m = createMainWindow(QSize(600, 500), MainWindowOption_None);
     auto layout = m->multiSplitter();
     m->view()->resize(QSize(3266, 2239));
-    m->show(); // TODO: Remove and see if it crashes
+    m->show();
 
     Controllers::DockWidget::List docks;
 

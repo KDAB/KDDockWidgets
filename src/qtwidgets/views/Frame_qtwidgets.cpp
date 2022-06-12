@@ -74,14 +74,14 @@ void Frame_qtwidgets::init()
 
 void Frame_qtwidgets::free_impl()
 {
-    // TODO: just use the base class impl, which uses deleteLater()
+    // TODOm2: just use the base class impl, which uses deleteLater()
     // do it once there's no state here
     delete this;
 }
 
 void Frame_qtwidgets::setLayoutItem(Layouting::Item *item)
 {
-    // TODO: Remove from View, maybe
+    // TODOm2: Remove from View, maybe
     m_controller->setLayoutItem(item);
 }
 

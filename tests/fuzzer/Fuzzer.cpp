@@ -196,10 +196,10 @@ Fuzzer::Layout Fuzzer::generateRandomLayout()
     mainWindow.name = QStringLiteral("MainWindow-%1").arg(count);
 
     mainWindow.geometry = randomGeometry();
-    mainWindow.mainWindowOption = MainWindowOption_None; // TODO: Maybe test other options
+    mainWindow.mainWindowOption = MainWindowOption_None;
     layout.mainWindows << mainWindow;
 
-    std::uniform_int_distribution<> numDocksDistrib(1, 10); // TODO: Increase
+    std::uniform_int_distribution<> numDocksDistrib(1, 10);
     const int numDockWidgets = numDocksDistrib(m_randomEngine);
     for (int i = 0; i < numDockWidgets; ++i) {
         layout.dockWidgets << generateRandomDockWidget();
@@ -278,7 +278,7 @@ Testing::AddDockWidgetParams Fuzzer::getRandomAddDockWidgetParams()
     }
 
     params.location = getRandomLocation();
-    params.addingOption = InitialVisibilityOption::StartVisible; // TODO: Test the other ones
+    params.addingOption = InitialVisibilityOption::StartVisible;
 
     return params;
 }

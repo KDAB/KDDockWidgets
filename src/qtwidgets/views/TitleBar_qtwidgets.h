@@ -32,7 +32,7 @@ class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>, public V
 public:
     explicit TitleBar_qtwidgets(Controllers::TitleBar *controller, QWidget *parent = nullptr);
 
-    // TODO:
+    // TODOm2:
     void updateMaximizeButton() override;
     void updateMinimizeButton();
     void updateAutoHideButton();

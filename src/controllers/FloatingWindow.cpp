@@ -69,7 +69,7 @@ static MainWindow *hackFindParentHarder(Controllers::Frame *frame, MainWindow *c
         return nullptr;
     }
 
-    // TODO: Using a parent helps the floating windows stay in front of the main window always.
+    // Using a parent helps the floating windows stay in front of the main window always.
     // We're not receiving the parent via ctor argument as the app can have multiple-main windows,
     // so use a hack here.
     // Not quite clear what to do if the app supports multiple main windows though.

@@ -105,8 +105,6 @@ private Q_SLOTS:
     void tst_addAsPlaceholder();
     void tst_removeItem();
     void tst_clear();
-    void tst_dockDockWidgetNested();
-    void tst_dockFloatingWindowNested();
     void tst_crash();
     void tst_refUnrefItem();
     void tst_placeholderCount();

@@ -510,7 +510,7 @@ Q_SIGNALS:
     /// @brief Emitted when this dock widget is about to be deleted due to Option_DeleteOnClose
     void aboutToDeleteOnClose();
 
-public: // TODO make private
+public: // TODOm2 make private
     void onParentChanged();
     void onShown(bool spontaneous);
     void onHidden(bool spontaneous);

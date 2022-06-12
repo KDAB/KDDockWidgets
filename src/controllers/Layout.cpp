@@ -210,7 +210,7 @@ Layouting::Item *Layout::itemForFrame(const Controllers::Frame *frame) const
     if (!frame)
         return nullptr;
 
-    return m_rootItem->itemForWidget(frame->view()); // TODO: layout could have just the controller
+    return m_rootItem->itemForWidget(frame->view());
 }
 
 Controllers::DockWidget::List Layout::dockWidgets() const

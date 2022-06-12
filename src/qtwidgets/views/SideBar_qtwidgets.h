@@ -60,7 +60,7 @@ public:
     explicit SideBar_qtwidgets(Controllers::SideBar *, QWidget *parent);
 
     void init() override;
-    bool isVertical() const; // TODO: Move to a potential base class
+    bool isVertical() const; // TODOm2: Move to a potential base class
 
     void addDockWidget_Impl(Controllers::DockWidget *dock) override;
     void removeDockWidget_Impl(Controllers::DockWidget *dock) override;

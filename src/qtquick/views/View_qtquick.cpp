@@ -327,7 +327,7 @@ void View_qtquick::setVisible(bool is)
 
 void View_qtquick::setSize(int w, int h)
 {
-    // TODOv3: Test that setting a size less than min doesn't set it
+    // TODOm3: Test that setting a size less than min doesn't set it
     const auto newSize = QSize(w, h).expandedTo(minSize());
 
     if (isRootView()) {

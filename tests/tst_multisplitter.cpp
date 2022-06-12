@@ -560,8 +560,6 @@ void TestMultiSplitter::tst_resizeWithConstraints()
         root->insertItem(item2, Location_OnRight);
         root->insertItem(item3, Location_OnRight);
         QVERIFY(root->checkSanity());
-
-        // TODO: Resize further
     }
     Platform::s_expectedWarning.clear();
 }

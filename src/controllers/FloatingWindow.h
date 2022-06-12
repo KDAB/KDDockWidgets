@@ -211,7 +211,7 @@ public:
     /// be open ended
     static Qt::WindowFlags s_windowFlagsOverride;
 
-    void updateSizeConstraints(); // TODO: Move private
+    void updateSizeConstraints(); // TODOm2: Move private
     void maybeCreateResizeHandler();
 
 Q_SIGNALS:
