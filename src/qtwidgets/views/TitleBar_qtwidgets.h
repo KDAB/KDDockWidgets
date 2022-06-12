@@ -17,8 +17,10 @@
 
 #include <QToolButton>
 
+QT_BEGIN_NAMESPACE
 class QHBoxLayout;
 class QLabel;
+QT_END_NAMESPACE
 
 namespace KDDockWidgets::Controllers {
 class TitleBar;
@@ -32,11 +34,6 @@ class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>, public V
 public:
     explicit TitleBar_qtwidgets(Controllers::TitleBar *controller, QWidget *parent = nullptr);
 
-    // TODOm2:
-    void updateMaximizeButton() override;
-    void updateMinimizeButton();
-    void updateAutoHideButton();
-
 #ifdef DOCKS_DEVELOPER_MODE
     // The following are needed for the unit-tests
     bool isCloseButtonVisible() const override;
@@ -44,6 +41,7 @@ public:
     bool isFloatButtonVisible() const override;
 #endif
 
+    /// @brief Returns the controller
     Controllers::TitleBar *titleBar() const;
 
 protected:
@@ -58,6 +56,11 @@ private:
     int buttonAreaWidth() const;
     QRect iconRect() const;
     void updateMargins();
+
+    // TODOm3:
+    void updateMaximizeButton() override;
+    void updateMinimizeButton();
+    void updateAutoHideButton();
 
     Controllers::TitleBar *const m_controller;
     QHBoxLayout *const m_layout;
@@ -83,6 +86,8 @@ public:
     }
 
     ~Button() override;
+
+protected:
     QSize sizeHint() const override;
     void paintEvent(QPaintEvent *) override;
 };
