@@ -449,9 +449,16 @@ if(KDDockWidgets_DEVELOPER_MODE)
 
   option(KDDockWidgets_LINTER "Build the layout linter" ON)
 
-  if(KDDW_FRONTEND_QTWIDGETS AND KDDockWidgets_LINTER) # TODOm2: make it not require any frontend
-    add_executable(kddockwidgets_linter layoutlinter_main.cpp)
-    target_link_libraries(kddockwidgets_linter kddockwidgets Qt${Qt_VERSION_MAJOR}::Widgets)
+  if(KDDockWidgets_LINTER)
+
+    set(LINTER_SRCS layoutlinter_main.cpp)
+    if (KDDW_FRONTEND_QTQUICK)
+      # QtQuick needs main.qml to create views
+      set(LINTER_SRCS ${LINTER_SRCS} ../tests/test_resources.qrc)
+    endif()
+
+    add_executable(kddockwidgets_linter ${LINTER_SRCS})
+    target_link_libraries(kddockwidgets_linter kddockwidgets)
   endif()
 
 endif()

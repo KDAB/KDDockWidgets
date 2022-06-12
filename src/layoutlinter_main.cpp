@@ -16,9 +16,9 @@
 #include "controllers/DockWidget.h"
 #include "Platform.h"
 
-#include <QApplication>
 #include <QDebug>
 #include <QString>
+#include <QGuiApplication>
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
@@ -42,12 +42,23 @@ static bool lint(const QString &filename)
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    const auto frontends = Platform::frontendTypes();
+    if (frontends.empty()) {
+        qDebug() << "Error: Your KDDockWidgets installation doesn't support any frontend!";
+        return -1;
+    }
 
-    if (app.arguments().size() != 2) {
+    if (argc != 2) {
         qDebug() << "Usage: kddockwidgets_linter <layout json file>";
         return 1;
     }
 
-    return lint(app.arguments().at(1)) ? 0 : 2;
+    // Just take the 1st frontend, any is fine
+    KDDockWidgets::Platform::tests_initPlatform(argc, argv, frontends[0]);
+
+    const int exitCode = lint(qGuiApp->arguments().at(1)) ? 0 : 2;
+
+    KDDockWidgets::Platform::tests_deinitPlatform();
+
+    return exitCode;
 }
