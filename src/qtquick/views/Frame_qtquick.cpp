@@ -59,14 +59,9 @@ void Frame_qtquick::init()
     connect(m_controller->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
-    /// TODOm2: Review, seems awkward
-    connect(m_controller->tabWidget(), SIGNAL(currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *)), /// clazy:exclude=old-style-connect
-            m_controller, SIGNAL(currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *)));
-
     connect(this, &View_qtquick::geometryUpdated, this, [this] {
         layoutInvalidated.emit();
     });
-
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
     connect(m_controller, &Controllers::Frame::isMDIChanged, this, &Frame_qtquick::isMDIChanged);
