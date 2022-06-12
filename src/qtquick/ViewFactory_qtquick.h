@@ -25,11 +25,8 @@
 
 QT_BEGIN_NAMESPACE
 class QAbstractButton;
+class QQmlEngine;
 QT_END_NAMESPACE
-
-namespace Layouting {
-class Widget;
-}
 
 namespace KDDockWidgets {
 
@@ -58,6 +55,10 @@ public:
                            Controllers::DockWidget::Options options = {},
                            Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                            Qt::WindowFlags windowFlags = {}) const override;
+    virtual View *createDockWidget(const QString &uniqueName,
+                                   QQmlEngine *, Controllers::DockWidget::Options options = {},
+                                   Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
+                                   Qt::WindowFlags windowFlags = {}) const;
     View *createFrame(Controllers::Frame *, View *parent) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::Frame *) const override;
     View *createTitleBar(Controllers::TitleBar *, Controllers::FloatingWindow *) const override;
@@ -81,6 +82,8 @@ public:
     View *createClassicDropIndicatorOverlayView(Controllers::ClassicIndicators *controller, View *parent = nullptr) const override;
     Views::ClassicIndicatorWindow *createClassicIndicatorWindow(Controllers::ClassicIndicators *) const override;
     View *createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const override;
+
+    static ViewFactory_qtquick *self();
 
 private:
     Q_DISABLE_COPY(ViewFactory_qtquick)

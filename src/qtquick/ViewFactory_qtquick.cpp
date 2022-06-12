@@ -53,7 +53,16 @@ View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
                                             Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
                                             Qt::WindowFlags windowFlags) const
 {
-    return new Views::DockWidget_qtquick(uniqueName, options, layoutSaverOptions, windowFlags);
+    return createDockWidget(uniqueName, /*engine=*/nullptr, options, layoutSaverOptions, windowFlags);
+}
+
+View *ViewFactory_qtquick::createDockWidget(const QString &uniqueName,
+                                            QQmlEngine *qmlEngine,
+                                            Controllers::DockWidget::Options options,
+                                            Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
+                                            Qt::WindowFlags windowFlags) const
+{
+    return new Views::DockWidget_qtquick(uniqueName, options, layoutSaverOptions, windowFlags, qmlEngine);
 }
 
 View *ViewFactory_qtquick::createFrame(Controllers::Frame *controller, View *parent) const
@@ -199,4 +208,15 @@ View *ViewFactory_qtquick::createSegmentedDropIndicatorOverlayView(Controllers::
 Views::ClassicIndicatorWindow *ViewFactory_qtquick::createClassicIndicatorWindow(Controllers::ClassicIndicators *classicIndicators) const
 {
     return new IndicatorWindow_qtquick(classicIndicators);
+}
+
+ViewFactory_qtquick *ViewFactory_qtquick::self()
+{
+    auto factory = qobject_cast<ViewFactory_qtquick *>(Config::self().viewFactory());
+
+    if (!factory)
+        qWarning() << Q_FUNC_INFO << "Expected a ViewFactory_qtquick subclass, not"
+                   << Config::self().viewFactory();
+
+    return factory;
 }

@@ -27,9 +27,6 @@ QT_BEGIN_NAMESPACE
 class QAbstractButton;
 QT_END_NAMESPACE
 
-namespace Layouting {
-class Widget;
-}
 
 namespace KDDockWidgets {
 

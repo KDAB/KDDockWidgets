@@ -11,7 +11,7 @@
 
 #include "DockWidgetInstantiator.h"
 #include "private/DockRegistry_p.h"
-#include "ViewFactory.h"
+#include "ViewFactory_qtquick.h"
 #include "Config.h"
 
 using namespace KDDockWidgets;
@@ -193,8 +193,7 @@ void DockWidgetInstantiator::componentComplete()
         return;
     }
 
-    // TODOm2: Pass qmlEngine(this). Instantiate the DockWidget view directly.
-    m_dockWidget = Config::self().viewFactory()->createDockWidget(m_uniqueName)->asDockWidgetController();
+    m_dockWidget = ViewFactory_qtquick::self()->createDockWidget(m_uniqueName, qmlEngine(this))->asDockWidgetController();
 
     connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this,
             &DockWidgetInstantiator::titleChanged);
