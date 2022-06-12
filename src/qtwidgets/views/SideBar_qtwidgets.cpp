@@ -44,6 +44,11 @@ void SideBar_qtwidgets::init()
     m_layout->addStretch();
 }
 
+Controllers::SideBar *SideBar_qtwidgets::controller() const
+{
+    return m_controller;
+}
+
 void SideBar_qtwidgets::addDockWidget_Impl(Controllers::DockWidget *dw)
 {
     auto button = createButton(dw, this);
@@ -67,11 +72,6 @@ void SideBar_qtwidgets::removeDockWidget_Impl(Controllers::DockWidget *)
     // Nothing is needed. Button is removed automatically.
 }
 
-bool SideBar_qtwidgets::isVertical() const
-{
-    return m_controller->isVertical();
-}
-
 SideBarButton *SideBar_qtwidgets::createButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent) const
 {
     return new SideBarButton(dw, parent);
@@ -79,7 +79,7 @@ SideBarButton *SideBar_qtwidgets::createButton(Controllers::DockWidget *dw, Side
 
 SideBarButton::SideBarButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent)
     : QToolButton(parent)
-    , m_sideBar(parent)
+    , m_sideBar(parent->controller())
     , m_dockWidget(dw)
 {
 }

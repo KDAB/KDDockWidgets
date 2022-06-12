@@ -47,7 +47,7 @@ public:
     QSize sizeHint() const override;
 
 private:
-    Views::SideBar_qtwidgets *const m_sideBar;
+    Controllers::SideBar *const m_sideBar;
     const QPointer<Controllers::DockWidget> m_dockWidget;
 };
 
@@ -60,13 +60,15 @@ public:
     explicit SideBar_qtwidgets(Controllers::SideBar *, QWidget *parent);
 
     void init() override;
-    bool isVertical() const; // TODOm2: Move to a potential base class
 
     void addDockWidget_Impl(Controllers::DockWidget *dock) override;
     void removeDockWidget_Impl(Controllers::DockWidget *dock) override;
 
     // virtual so users can provide their own buttons
     virtual SideBarButton *createButton(Controllers::DockWidget *dw, SideBar_qtwidgets *parent) const;
+
+    /// @brief Returns the controller
+    Controllers::SideBar *controller() const;
 
 private:
     Controllers::SideBar *const m_controller;
