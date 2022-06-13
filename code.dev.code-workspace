@@ -50,10 +50,10 @@
         "cwd": "${workspaceFolder}"
       },
       {
-        "name": "qtwidgets_minimal_mdi",
+        "name": "qtwidgets_mdi",
         "type": "lldb",
         "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_minimal_mdi",
+        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_mdi",
         "args": [],
         "cwd": "${workspaceFolder}"
       },
@@ -104,10 +104,10 @@
         "externalConsole": false
       },
       {
-        "name": "msvc-qtwidgets_minimal_mdi",
+        "name": "msvc-qtwidgets_mdi",
         "type": "cppvsdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_minimal_mdi",
+        "program": "${workspaceFolder}/build-dev/bin/examples/qtwidgets_mdi",
         "args": [],
         "cwd": "${workspaceFolder}",
         "stopAtEntry": false,
