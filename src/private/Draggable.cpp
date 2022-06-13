@@ -15,7 +15,7 @@
 #include "Utils_p.h"
 #include "Platform.h"
 
-#include "controllers/FloatingWindow.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
 
 using namespace KDDockWidgets;
 

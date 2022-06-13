@@ -13,8 +13,8 @@
 #include "Config.h"
 #include "ViewFactory.h"
 
-#include "controllers/Frame.h"
-#include "controllers/TabBar.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/TabBar.h"
 
 #include <QDebug>
 #include <QScopedValueRollback>

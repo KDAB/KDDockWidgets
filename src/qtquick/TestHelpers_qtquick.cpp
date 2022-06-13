@@ -13,7 +13,7 @@
 #include "Platform_qtquick.h"
 #include "views/View_qtquick.h"
 #include "qtquick/views/MainWindow_qtquick.h"
-#include "controllers/MainWindow.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include <QGuiApplication>
 #include <QQmlEngine>

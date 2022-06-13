@@ -11,7 +11,7 @@
 
 #include "DockRegistry_p.h"
 #include "Config.h"
-#include "controllers/Layout.h"
+#include "kddockwidgets/controllers/Layout.h"
 #include "Logging_p.h"
 #include "Position_p.h"
 #include "Utils_p.h"
@@ -20,10 +20,10 @@
 #include "multisplitter/Item_p.h"
 
 #include "Platform.h"
-#include "controllers/FloatingWindow.h"
-#include "controllers/SideBar.h"
-#include "controllers/DockWidget.h"
-#include "controllers/DockWidget_p.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
+#include "kddockwidgets/controllers/SideBar.h"
+#include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/controllers/DockWidget_p.h"
 
 #include <QPointer>
 #include <QDebug>

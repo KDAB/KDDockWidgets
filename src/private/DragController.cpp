@@ -20,12 +20,12 @@
 #include "Platform.h"
 #include "Window.h"
 
-#include "controllers/MDILayout.h"
-#include "controllers/DropArea.h"
-#include "controllers/TitleBar.h"
-#include "controllers/Frame.h"
-#include "controllers/FloatingWindow.h"
-#include "controllers/DockWidget_p.h"
+#include "kddockwidgets/controllers/MDILayout.h"
+#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
+#include "kddockwidgets/controllers/DockWidget_p.h"
 
 #include <QMouseEvent>
 #include <QGuiApplication>

@@ -14,13 +14,13 @@
 
 #include "private/Utils_p.h"
 
-#include "controllers/TabBar.h"
-#include "controllers/Stack.h"
-#include "controllers/FloatingWindow.h"
-#include "controllers/indicators/ClassicIndicators.h"
-#include "controllers/indicators/NullIndicators.h"
-#include "controllers/indicators/SegmentedIndicators.h"
-#include "controllers/MainWindow.h"
+#include "kddockwidgets/controllers/TabBar.h"
+#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
+#include "kddockwidgets/controllers/indicators/ClassicIndicators.h"
+#include "kddockwidgets/controllers/indicators/NullIndicators.h"
+#include "kddockwidgets/controllers/indicators/SegmentedIndicators.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include "qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h"
 #include "qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h"

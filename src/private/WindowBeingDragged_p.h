@@ -13,7 +13,7 @@
 #define KD_WINDOWBEINGDRAGGED_P_H
 
 #include "kddockwidgets/docks_export.h"
-#include "controllers/FloatingWindow.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
 #include "View.h"
 
 #include <QPointer>

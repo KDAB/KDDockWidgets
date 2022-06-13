@@ -10,9 +10,9 @@
 */
 
 #include "../main.h"
-#include "controllers/Frame.h"
-#include "controllers/Stack.h"
-#include "controllers/TabBar.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/controllers/TabBar.h"
 
 TEST_CASE("TabBar ctor")
 {

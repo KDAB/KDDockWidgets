@@ -10,9 +10,9 @@
 */
 
 #include "../main.h"
-#include "controllers/FloatingWindow.h"
-#include "controllers/Frame.h"
-#include "controllers/DockWidget.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/DockWidget.h"
 #include "ViewFactory.h"
 #include "Config.h"
 

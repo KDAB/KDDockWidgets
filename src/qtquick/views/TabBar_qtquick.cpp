@@ -18,7 +18,7 @@
  */
 
 #include "TabBar_qtquick.h"
-#include "controllers/TabBar.h"
+#include "kddockwidgets/controllers/TabBar.h"
 
 #include <QMetaObject>
 #include <QMouseEvent>

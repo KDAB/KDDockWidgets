@@ -11,13 +11,13 @@
 
 #include "DropIndicatorOverlay.h"
 
-#include "controllers/DropArea.h"
+#include "kddockwidgets/controllers/DropArea.h"
 #include "DockRegistry_p.h"
 #include "DragController_p.h"
 #include "Config.h"
 #include "Platform.h"
 
-#include "controllers/Frame.h"
+#include "kddockwidgets/controllers/Frame.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;

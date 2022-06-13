@@ -14,11 +14,11 @@
 #include "qtwidgets/views/View_qtwidgets.h"
 #include "qtwidgets/views/DockWidget_qtwidgets.h"
 
-#include "controllers/Layout.h"
-#include "controllers/Frame.h"
-#include "controllers/Stack.h"
-#include "controllers/TabBar.h"
-#include "controllers/TitleBar.h"
+#include "kddockwidgets/controllers/Layout.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/controllers/TabBar.h"
+#include "kddockwidgets/controllers/TitleBar.h"
 
 #include <QPainter>
 #include <QTabBar>

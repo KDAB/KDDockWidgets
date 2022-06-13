@@ -20,10 +20,10 @@
 #include "Config.h"
 #include "ViewFactory.h"
 
-#include "controllers/DropArea.h"
-#include "controllers/MainWindow.h"
-#include "controllers/Frame.h"
-#include "controllers/SideBar.h"
+#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/controllers/MainWindow.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/SideBar.h"
 
 #include "private/DockRegistry_p.h"
 #include "private/Logging_p.h"

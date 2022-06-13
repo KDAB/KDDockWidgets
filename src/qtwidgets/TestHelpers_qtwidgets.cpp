@@ -13,7 +13,7 @@
 #include "Platform_qtwidgets.h"
 #include "views/ViewWrapper_qtwidgets.h"
 #include "views/View_qtwidgets.h"
-#include "controllers/MainWindow.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 #include "qtwidgets/views/MainWindow_qtwidgets.h"
 
 #include <QStyleFactory>

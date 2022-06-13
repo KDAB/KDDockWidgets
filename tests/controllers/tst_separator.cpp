@@ -10,7 +10,7 @@
 */
 
 #include "../main.h"
-#include "controllers/Separator.h"
+#include "kddockwidgets/controllers/Separator.h"
 
 TEST_CASE("Separator Ctor")
 {

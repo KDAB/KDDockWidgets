@@ -12,9 +12,9 @@
 #include "MDIArea.h"
 
 #include "ViewFactory.h"
-#include "controllers/DockWidget.h"
-#include "controllers/MDILayout.h"
-#include "controllers/DropArea.h"
+#include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/controllers/MDILayout.h"
+#include "kddockwidgets/controllers/DropArea.h"
 
 #include "qtwidgets/views/View_qtwidgets.h"
 

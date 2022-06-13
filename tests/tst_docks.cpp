@@ -21,14 +21,14 @@
 #include "multisplitter/Item_p.h"
 #include "ViewFactory.h"
 #include "Action.h"
-#include "controllers/MDILayout.h"
-#include "controllers/DropArea.h"
-#include "controllers/DockWidget.h"
-#include "controllers/DockWidget_p.h"
-#include "controllers/Separator.h"
-#include "controllers/TabBar.h"
-#include "controllers/Stack.h"
-#include "controllers/SideBar.h"
+#include "kddockwidgets/controllers/MDILayout.h"
+#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/controllers/DockWidget_p.h"
+#include "kddockwidgets/controllers/Separator.h"
+#include "kddockwidgets/controllers/TabBar.h"
+#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/controllers/SideBar.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h>

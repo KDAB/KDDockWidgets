@@ -10,8 +10,8 @@
 */
 
 #include "MainWindow_qtquick.h"
-#include "controllers/Layout.h"
-#include "controllers/MainWindow.h"
+#include "kddockwidgets/controllers/Layout.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include <QDebug>
 

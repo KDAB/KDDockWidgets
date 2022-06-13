@@ -10,7 +10,7 @@
 */
 
 #include "../main.h"
-#include "controllers/Frame.h"
+#include "kddockwidgets/controllers/Frame.h"
 
 TEST_CASE("Frame ctor")
 {

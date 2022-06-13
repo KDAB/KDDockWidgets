@@ -16,10 +16,10 @@
 #include "Utils_p.h"
 #include "Platform.h"
 
-#include "controllers/TitleBar.h"
-#include "controllers/Stack.h"
-#include "controllers/Frame.h"
-#include "controllers/Layout.h"
+#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/controllers/Stack.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Layout.h"
 
 #include <QPixmap>
 #include <QPainter>

@@ -13,9 +13,9 @@
 
 #include "private/DragController_p.h"
 
-#include "controllers/Frame.h"
-#include "controllers/FloatingWindow.h"
-#include "controllers/TitleBar.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
+#include "kddockwidgets/controllers/TitleBar.h"
 
 #include "private/Logging_p.h"
 #include "private/WindowBeingDragged_p.h"

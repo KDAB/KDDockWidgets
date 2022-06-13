@@ -14,7 +14,7 @@
 
 #include "Config.h"
 #include "private/Logging_p.h"
-#include "controllers/Separator.h"
+#include "kddockwidgets/controllers/Separator.h"
 
 #include <QMouseEvent>
 #include <QPainter>

@@ -16,7 +16,7 @@
 #include <qtwidgets/views/DockWidget_qtwidgets.h>
 #include <kddockwidgets/MDIArea.h>
 
-#include "controllers/MainWindow.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include <QStyleFactory>
 #include <QApplication>

@@ -11,7 +11,7 @@
 
 #include "DropArea_qtquick.h"
 #include "private/Utils_p.h"
-#include "controllers/DropArea.h"
+#include "kddockwidgets/controllers/DropArea.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;

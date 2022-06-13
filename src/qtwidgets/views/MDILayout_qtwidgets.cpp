@@ -10,7 +10,7 @@
 */
 
 #include "MDILayout_qtwidgets.h"
-#include "controllers/MDILayout.h"
+#include "kddockwidgets/controllers/MDILayout.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;

@@ -10,7 +10,7 @@
 */
 
 #include "ClassicIndicatorsOverlay_qtwidgets.h"
-#include "controllers/indicators/ClassicIndicators.h"
+#include "kddockwidgets/controllers/indicators/ClassicIndicators.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;

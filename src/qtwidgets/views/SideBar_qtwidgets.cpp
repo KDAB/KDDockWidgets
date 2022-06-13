@@ -11,9 +11,9 @@
 
 #include "SideBar_qtwidgets.h"
 
-#include "controllers/DockWidget.h"
-#include "controllers/SideBar.h"
-#include "controllers/MainWindow.h"
+#include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/controllers/SideBar.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>

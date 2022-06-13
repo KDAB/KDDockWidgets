@@ -10,8 +10,8 @@
 */
 
 #include "../main.h"
-#include "controllers/Frame.h"
-#include "controllers/Stack.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/Stack.h"
 
 TEST_CASE("Stack ctor")
 {

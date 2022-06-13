@@ -14,7 +14,7 @@
 #include "ViewFactory.h"
 #include "Platform.h"
 #include "ViewGuard.h"
-#include "controllers/DropArea.h"
+#include "kddockwidgets/controllers/DropArea.h"
 
 #include <QCloseEvent>
 #include <QDebug>

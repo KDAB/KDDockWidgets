@@ -10,9 +10,9 @@
 */
 
 #include "QmlTypes.h"
-#include "controllers/DropArea.h"
-#include "controllers/DropIndicatorOverlay.h"
-#include "controllers/indicators/ClassicIndicators.h"
+#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/controllers/DropIndicatorOverlay.h"
+#include "kddockwidgets/controllers/indicators/ClassicIndicators.h"
 #include "DockWidgetInstantiator.h"
 #include "MainWindowInstantiator.h"
 #include "LayoutSaverInstantiator.h"

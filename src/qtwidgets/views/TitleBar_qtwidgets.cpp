@@ -11,8 +11,8 @@
 
 #include "TitleBar_qtwidgets.h"
 
-#include "controllers/TitleBar.h"
-#include "controllers/FloatingWindow.h"
+#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
 
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"

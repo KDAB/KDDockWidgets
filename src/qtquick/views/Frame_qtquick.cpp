@@ -19,9 +19,9 @@
 #include "Frame_qtquick.h"
 #include "views/Frame.h"
 
-#include "controllers/Frame.h"
-#include "controllers/DockWidget.h"
-#include "controllers/DockWidget_p.h"
+#include "kddockwidgets/controllers/Frame.h"
+#include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/controllers/DockWidget_p.h"
 
 #include "qtquick/ViewFactory_qtquick.h"
 #include "qtquick/Platform_qtquick.h"

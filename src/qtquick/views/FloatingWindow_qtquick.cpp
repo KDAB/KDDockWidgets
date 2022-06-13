@@ -18,9 +18,9 @@
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"
 
-#include "controllers/DropArea.h"
-#include "controllers/FloatingWindow.h"
-#include "controllers/MainWindow.h"
+#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/controllers/FloatingWindow.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 #include "private/WidgetResizeHandler_p.h"
 #include "qtquick/Platform_qtquick.h"

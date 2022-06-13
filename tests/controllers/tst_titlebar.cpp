@@ -10,8 +10,8 @@
 */
 
 #include "../main.h"
-#include "controllers/TitleBar.h"
-#include "controllers/Frame.h"
+#include "kddockwidgets/controllers/TitleBar.h"
+#include "kddockwidgets/controllers/Frame.h"
 
 TEST_CASE("TitleBar Ctor")
 {

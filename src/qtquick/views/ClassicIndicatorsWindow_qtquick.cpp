@@ -10,7 +10,7 @@
 */
 
 #include "ClassicIndicatorsWindow_qtquick.h"
-#include "controllers/indicators/ClassicIndicators.h"
+#include "kddockwidgets/controllers/indicators/ClassicIndicators.h"
 #include "private/Utils_p.h"
 
 #include <QQmlContext>

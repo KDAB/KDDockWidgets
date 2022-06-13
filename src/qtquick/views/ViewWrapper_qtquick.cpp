@@ -25,8 +25,8 @@
 #include "qtquick/views/MDILayout_qtquick.h"
 #include "qtquick/views/DropArea_qtquick.h"
 
-#include "controllers/DropArea.h"
-#include "controllers/MDILayout.h"
+#include "kddockwidgets/controllers/DropArea.h"
+#include "kddockwidgets/controllers/MDILayout.h"
 // #include "MDIArea.h"
 
 #include <QDebug>
