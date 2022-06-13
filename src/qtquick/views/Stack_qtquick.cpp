@@ -22,9 +22,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Stack_qtquick::Stack_qtquick(Controllers::Stack *controller,
-                             Controllers::Frame *parent)
-    : View_qtquick(controller, Type::Stack, Views::asQQuickItem(parent))
+Stack_qtquick::Stack_qtquick(Controllers::Stack *controller, QQuickItem *parent)
+    : View_qtquick(controller, Type::Stack, parent)
     , m_dockWidgetModel(new DockWidgetModel(this))
     , m_stack(controller)
 {

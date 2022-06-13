@@ -24,7 +24,6 @@ QT_END_NAMESPACE
 
 namespace KDDockWidgets::Controllers {
 class Stack;
-class Frame;
 }
 
 namespace KDDockWidgets {
@@ -35,7 +34,7 @@ class DOCKS_EXPORT Stack_qtwidgets : public View_qtwidgets<QTabWidget>, public S
     Q_OBJECT
 public:
     explicit Stack_qtwidgets(Controllers::Stack *controller,
-                             Controllers::Frame *parent = nullptr);
+                             QWidget *parent = nullptr);
 
     Controllers::Stack *stack() const;
     QTabBar *tabBar() const; // TODOm3: tabBarView

@@ -26,8 +26,8 @@
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;
 
-Stack_qtwidgets::Stack_qtwidgets(Controllers::Stack *controller, Controllers::Frame *parent)
-    : View_qtwidgets<QTabWidget>(controller, Type::Stack, View_qtwidgets::asQWidget(parent))
+Stack_qtwidgets::Stack_qtwidgets(Controllers::Stack *controller, QWidget *parent)
+    : View_qtwidgets<QTabWidget>(controller, Type::Stack, parent)
     , m_stack(controller)
 {
 }

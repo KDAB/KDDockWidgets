@@ -84,21 +84,14 @@ public:
     virtual View *createFrame(Controllers::Frame *, View *parent = nullptr) const = 0;
 
     ///@brief Called internally by the framework to create a TitleBar
-    ///       Override to provide your own TitleBar sub-class. If overridden then
-    ///       you also need to override the overload below.
-    ///@param frame Just forward to TitleBar's constructor.
-    virtual View *createTitleBar(Controllers::TitleBar *, Controllers::Frame *frame) const = 0;
-
-    ///@brief Called internally by the framework to create a TitleBar
-    ///       Override to provide your own TitleBar sub-class. If overridden then
-    ///       you also need to override the overload above.
-    ///@param floatingWindow Just forward to TitleBar's constructor.
-    virtual View *createTitleBar(Controllers::TitleBar *, Controllers::FloatingWindow *) const = 0;
+    ///       Override to provide your own TitleBar sub-class.
+    ///       Just forward the @p controller and @p parent arguments to the TitleBar view ctor
+    virtual View *createTitleBar(Controllers::TitleBar *controller, View *parent) const = 0;
 
     ///@brief Called internally by the framework to create a TabWidget
     ///       Override to provide your own TabWidget sub-class.
     ///@param parent Just forward to TabWidget's constructor.
-    virtual View *createStack(Controllers::Stack *stack, Controllers::Frame *parent) const = 0;
+    virtual View *createStack(Controllers::Stack *stack, View *parent) const = 0;
 
     ///@brief Called internally by the framework to create a TabBar
     ///       Override to provide your own TabBar sub-class.
@@ -141,7 +134,7 @@ public:
     ///@brief Called internally by the framework to create a SideBar
     ///@param loc The side-bar location without the main window. Just forward into your SideBar sub-class ctor.
     ///@param parent The MainWindow. Just forward into your SideBar sub-class ctor.
-    virtual View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const = 0;
+    virtual View *createSideBar(Controllers::SideBar *, View *parent) const = 0;
 
     /// @brief Returns the icon to be used with the specified @p type
     /// @param dpr the device pixel ratio of the button

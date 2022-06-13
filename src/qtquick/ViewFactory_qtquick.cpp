@@ -71,15 +71,9 @@ View *ViewFactory_qtquick::createFrame(Controllers::Frame *controller, View *par
 }
 
 View *ViewFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar,
-                                          Controllers::Frame *parent) const
+                                          View *parent) const
 {
     return new Views::TitleBar_qtquick(titleBar, Views::asQQuickItem(parent));
-}
-
-View *ViewFactory_qtquick::createTitleBar(Controllers::TitleBar *titleBar,
-                                          Controllers::FloatingWindow *fw) const
-{
-    return new Views::TitleBar_qtquick(titleBar, Views::asQQuickItem(fw));
 }
 
 View *ViewFactory_qtquick::createTabBar(Controllers::TabBar *controller, View *parent) const
@@ -87,9 +81,9 @@ View *ViewFactory_qtquick::createTabBar(Controllers::TabBar *controller, View *p
     return new Views::TabBar_qtquick(controller, Views::asQQuickItem(parent));
 }
 
-View *ViewFactory_qtquick::createStack(Controllers::Stack *controller, Controllers::Frame *parent) const
+View *ViewFactory_qtquick::createStack(Controllers::Stack *controller, View *parent) const
 {
-    return new Views::Stack_qtquick(controller, parent);
+    return new Views::Stack_qtquick(controller, Views::asQQuickItem(parent));
 }
 
 View *ViewFactory_qtquick::createSeparator(Controllers::Separator *controller, View *parent) const
@@ -111,11 +105,9 @@ View *ViewFactory_qtquick::createRubberBand(View *parent) const
     return new Views::RubberBand_qtquick(Views::asQQuickItem(parent));
 }
 
-View *ViewFactory_qtquick::createSideBar(Controllers::SideBar *,
-                                         Controllers::MainWindow *) const
+View *ViewFactory_qtquick::createSideBar(Controllers::SideBar *, View *) const
 {
     return {};
-    // return new Views::SideBar_qtquick(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
 // iconForButtonType impl is the same for QtQuick and QtWidgets

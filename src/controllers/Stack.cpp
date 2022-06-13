@@ -28,7 +28,7 @@ using namespace KDDockWidgets;
 using namespace KDDockWidgets::Controllers;
 
 Stack::Stack(Frame *frame, StackOptions options)
-    : Controller(Type::Stack, Config::self().viewFactory()->createStack(this, frame))
+    : Controller(Type::Stack, Config::self().viewFactory()->createStack(this, frame->view()))
     , Draggable(view(), Config::self().flags() & (Config::Flag_HideTitleBarWhenTabsVisible | Config::Flag_AlwaysShowTabs))
     , m_tabBar(new TabBar(this))
     , m_frame(frame)

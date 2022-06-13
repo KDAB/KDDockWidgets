@@ -67,14 +67,9 @@ View *ViewFactory_qtwidgets::createFrame(Controllers::Frame *controller, View *p
     return new Views::Frame_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
-View *ViewFactory_qtwidgets::createTitleBar(Controllers::TitleBar *titleBar, Controllers::Frame *frame) const
+View *ViewFactory_qtwidgets::createTitleBar(Controllers::TitleBar *titleBar, View *parent) const
 {
-    return new Views::TitleBar_qtwidgets(titleBar, Views::View_qtwidgets<QWidget>::asQWidget(frame));
-}
-
-View *ViewFactory_qtwidgets::createTitleBar(Controllers::TitleBar *titleBar, Controllers::FloatingWindow *fw) const
-{
-    return new Views::TitleBar_qtwidgets(titleBar, Views::View_qtwidgets<QWidget>::asQWidget(fw));
+    return new Views::TitleBar_qtwidgets(titleBar, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
 View *ViewFactory_qtwidgets::createTabBar(Controllers::TabBar *tabBar, View *parent) const
@@ -82,9 +77,9 @@ View *ViewFactory_qtwidgets::createTabBar(Controllers::TabBar *tabBar, View *par
     return new Views::TabBar_qtwidgets(tabBar, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
-View *ViewFactory_qtwidgets::createStack(Controllers::Stack *controller, Controllers::Frame *parent) const
+View *ViewFactory_qtwidgets::createStack(Controllers::Stack *controller, View *parent) const
 {
-    return new Views::Stack_qtwidgets(controller, parent);
+    return new Views::Stack_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }
 
 View *ViewFactory_qtwidgets::createSeparator(Controllers::Separator *controller, View *parent) const
@@ -105,7 +100,7 @@ View *ViewFactory_qtwidgets::createRubberBand(View *parent) const
 }
 
 View *ViewFactory_qtwidgets::createSideBar(Controllers::SideBar *controller,
-                                           Controllers::MainWindow *parent) const
+                                           View *parent) const
 {
     return new Views::SideBar_qtwidgets(controller, Views::View_qtwidgets<QWidget>::asQWidget(parent));
 }

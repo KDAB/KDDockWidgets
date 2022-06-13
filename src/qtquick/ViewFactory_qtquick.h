@@ -60,16 +60,15 @@ public:
                                    Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions = {},
                                    Qt::WindowFlags windowFlags = {}) const;
     View *createFrame(Controllers::Frame *, View *parent) const override;
-    View *createTitleBar(Controllers::TitleBar *, Controllers::Frame *) const override;
-    View *createTitleBar(Controllers::TitleBar *, Controllers::FloatingWindow *) const override;
-    View *createStack(Controllers::Stack *, Controllers::Frame *parent) const override;
+    View *createTitleBar(Controllers::TitleBar *, View *parent) const override;
+    View *createStack(Controllers::Stack *, View *parent) const override;
     View *createTabBar(Controllers::TabBar *tabBar, View *parent) const override;
     View *createSeparator(Controllers::Separator *, View *parent = nullptr) const override;
     View *createFloatingWindow(Controllers::FloatingWindow *,
                                Controllers::MainWindow *parent = nullptr,
                                Qt::WindowFlags windowFlags = {}) const override;
     View *createRubberBand(View *parent) const override;
-    View *createSideBar(Controllers::SideBar *, Controllers::MainWindow *parent) const override;
+    View *createSideBar(Controllers::SideBar *, View *parent) const override;
     View *createDropArea(Controllers::DropArea *, View *parent) const override;
     View *createMDILayout(Controllers::MDILayout *, View *parent) const override;
 
