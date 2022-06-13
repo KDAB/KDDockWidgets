@@ -11,6 +11,7 @@
 
 #include "MainWindowMDI_qtwidgets.h"
 #include "controllers/MDILayout.h"
+#include "controllers/MainWindow.h"
 
 using namespace KDDockWidgets;
 using namespace KDDockWidgets::Views;

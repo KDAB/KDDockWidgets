@@ -25,6 +25,7 @@
 #include "controllers/MDILayout.h"
 #include "controllers/DropArea.h"
 #include "controllers/Layout.h"
+#include "controllers/MainWindow.h"
 
 #include "private/Logging_p.h"
 #include "private/Utils_p.h"

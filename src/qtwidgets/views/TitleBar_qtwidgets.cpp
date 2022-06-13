@@ -10,7 +10,10 @@
 */
 
 #include "TitleBar_qtwidgets.h"
-#include "../controllers/TitleBar.h"
+
+#include "controllers/TitleBar.h"
+#include "controllers/FloatingWindow.h"
+
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 #include "kddockwidgets/ViewFactory.h"

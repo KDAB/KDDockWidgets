@@ -22,12 +22,13 @@
 
 #include "View_qtquick.h"
 #include "views/Stack.h"
-#include "controllers/DockWidget.h"
 
 #include <QAbstractListModel>
+#include <QVector>
 
 namespace KDDockWidgets {
 namespace Controllers {
+class DockWidget;
 class Frame;
 class TabBar;
 }
@@ -109,7 +110,7 @@ Q_SIGNALS:
 
 private:
     void emitDataChangedFor(Controllers::DockWidget *);
-    Controllers::DockWidget::List m_dockWidgets;
+    QVector<Controllers::DockWidget *> m_dockWidgets;
     QHash<Controllers::DockWidget *, QVector<QMetaObject::Connection>> m_connections; // To make it easy to disconnect from lambdas
     bool m_removeGuard = false;
 };

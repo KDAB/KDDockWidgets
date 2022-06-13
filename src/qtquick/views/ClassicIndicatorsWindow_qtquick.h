@@ -13,8 +13,6 @@
 #define KD_CLASSICINDICATORS_WINDOW_QTQUICK_H
 #pragma once
 
-#include "controllers/DropIndicatorOverlay.h"
-#include "controllers/indicators/ClassicIndicators.h"
 #include "views/ClassicIndicatorWindow.h"
 
 #include <QQuickView>

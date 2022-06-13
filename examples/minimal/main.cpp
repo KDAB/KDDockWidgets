@@ -15,6 +15,8 @@
 #include <qtwidgets/views/MainWindow_qtwidgets.h>
 #include <qtwidgets/views/DockWidget_qtwidgets.h>
 
+#include "controllers/MainWindow.h"
+
 #include <QStyleFactory>
 #include <QApplication>
 

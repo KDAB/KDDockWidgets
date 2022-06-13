@@ -12,7 +12,6 @@
 #pragma once
 
 #include "View_qtwidgets.h"
-#include "controllers/FloatingWindow.h"
 #include "views/TitleBar.h"
 
 #include <QToolButton>

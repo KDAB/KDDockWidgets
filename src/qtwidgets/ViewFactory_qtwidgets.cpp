@@ -20,6 +20,7 @@
 #include "controllers/indicators/ClassicIndicators.h"
 #include "controllers/indicators/NullIndicators.h"
 #include "controllers/indicators/SegmentedIndicators.h"
+#include "controllers/MainWindow.h"
 
 #include "qtwidgets/views/ClassicIndicatorsOverlay_qtwidgets.h"
 #include "qtwidgets/views/ClassicIndicatorsWindow_qtwidgets.h"

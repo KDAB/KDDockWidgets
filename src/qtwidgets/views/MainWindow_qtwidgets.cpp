@@ -20,13 +20,13 @@
 #include "Config.h"
 #include "ViewFactory.h"
 
-#include "private/DockRegistry_p.h"
 #include "controllers/DropArea.h"
-#include "controllers/DropArea.h"
-#include "private/Logging_p.h"
-
+#include "controllers/MainWindow.h"
 #include "controllers/Frame.h"
 #include "controllers/SideBar.h"
+
+#include "private/DockRegistry_p.h"
+#include "private/Logging_p.h"
 
 #include <QPainter>
 #include <QScreen>

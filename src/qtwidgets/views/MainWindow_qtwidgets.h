@@ -20,7 +20,6 @@
 #define KD_MAINWINDOW_H
 
 #include "View_qtwidgets.h"
-#include "controllers/MainWindow.h"
 #include "views/MainWindow.h"
 
 #include <QMainWindow>
