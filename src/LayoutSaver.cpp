@@ -703,19 +703,18 @@ void to_json(nlohmann::json &j, const LayoutSaver::Layout &layout)
 
 void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
 {
-    layout.serializationVersion = j["serializationVersion"].get<int>();
-    layout.mainWindows = j["mainWindows"].get<LayoutSaver::MainWindow::List>();
-
-    layout.allDockWidgets = j["allDockWidgets"].get<LayoutSaver::DockWidget::List>();
+    layout.serializationVersion = j.value("serializationVersion", layout.serializationVersion);
+    layout.mainWindows = j.value("mainWindows", LayoutSaver::MainWindow::List {});
+    layout.allDockWidgets = j.value("allDockWidgets", LayoutSaver::DockWidget::List {});
 
     layout.closedDockWidgets.clear();
-    const QVariantList closedDockWidgetsV = j["closedDockWidgets"].get<QVariantList>();
+    const QVariantList closedDockWidgetsV = j.value("closedDockWidgets", QVariantList {});
     for (const QVariant &v : closedDockWidgetsV) {
         layout.closedDockWidgets.push_back(LayoutSaver::DockWidget::dockWidgetForName(v.toString()));
     }
 
-    layout.floatingWindows = j["floatingWindows"].get<LayoutSaver::FloatingWindow::List>();
-    layout.screenInfo = j["screenInfo"].get<LayoutSaver::ScreenInfo::List>();
+    layout.floatingWindows = j.value("floatingWindows", LayoutSaver::FloatingWindow::List {});
+    layout.screenInfo = j.value("screenInfo", LayoutSaver::ScreenInfo::List {});
 }
 }
 
