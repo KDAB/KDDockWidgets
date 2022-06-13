@@ -99,9 +99,7 @@ bool FloatingWindow_qtwidgets::event(QEvent *ev)
         Q_EMIT m_controller->activatedChanged();
     } else if (ev->type() == QEvent::StatusTip && QWidget::parent()) {
         // show status tips in the main window
-        return QWidget::parent()->event(ev); // TODm2: Move to base class
-    } else if (ev->type() == QEvent::LayoutRequest) {
-        m_controller->updateSizeConstraints(); // TODOm2: Move to base class
+        return QWidget::parent()->event(ev); // TODOm3: Move to base class
     }
 
     return View_qtwidgets<QWidget>::event(ev);
