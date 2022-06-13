@@ -11,9 +11,9 @@
 
 
 #include <kddockwidgets/Config.h>
-#include "qtquick/views/DockWidget_qtquick.h"
-#include "qtquick/views/MainWindowMDI_qtquick.h"
-#include "qtquick/Platform_qtquick.h"
+#include <kddockwidgets/views/DockWidget_qtquick.h>
+#include <kddockwidgets/views/MainWindowMDI_qtquick.h>
+#include <kddockwidgets/Platform_qtquick.h>
 #include <kddockwidgets/private/DockRegistry_p.h>
 #include <kddockwidgets/ViewFactory.h>
 
@@ -22,7 +22,7 @@
 #include <QGuiApplication>
 #include <QCommandLineParser>
 
-// For my own debugging, until we have better API
+// TODOm2 For my own debugging, until we have better API
 #include "../../src/controllers/MDILayout.h"
 
 int main(int argc, char *argv[])

@@ -13,7 +13,7 @@
 
 #include <kddockwidgets/DockWidget.h>
 #include <kddockwidgets/MainWindowMDI.h>
-#include <qtwidgets/views/DockWidget_qtwidgets.h>
+#include <kddockwidgets/views/DockWidget_qtwidgets.h>
 
 #include <QStyleFactory>
 #include <QApplication>

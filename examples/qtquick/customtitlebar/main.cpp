@@ -11,10 +11,9 @@
 
 
 #include <kddockwidgets/Config.h>
-#include "qtquick/views/DockWidget_qtquick.h"
-#include "qtquick/Platform_qtquick.h"
-#include "qtquick/ViewFactory_qtquick.h"
-
+#include <kddockwidgets/views/DockWidget_qtquick.h>
+#include <kddockwidgets/Platform_qtquick.h>
+#include <kddockwidgets/ViewFactory_qtquick.h>
 #include <kddockwidgets/private/DockRegistry_p.h>
 
 #include <QQuickView>
