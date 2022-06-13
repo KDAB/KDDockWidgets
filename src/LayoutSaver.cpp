@@ -703,7 +703,7 @@ void to_json(nlohmann::json &j, const LayoutSaver::Layout &layout)
 
 void from_json(const nlohmann::json &j, LayoutSaver::Layout &layout)
 {
-    layout.serializationVersion = j.value("serializationVersion", layout.serializationVersion);
+    layout.serializationVersion = j.value("serializationVersion", 0);
     layout.mainWindows = j.value("mainWindows", LayoutSaver::MainWindow::List {});
     layout.allDockWidgets = j.value("allDockWidgets", LayoutSaver::DockWidget::List {});
 
