@@ -206,7 +206,7 @@ SET(KDDW_FRONTEND_QTQUICK_SRCS
   qtquick/views/ViewWrapper_qtquick.h
   qtquick/views/ClassicIndicatorsWindow_qtquick.cpp
   qtquick/views/ClassicIndicatorsWindow_qtquick.h
-  kddockwidgets_qtquick.qrc
+  qtquick/kddockwidgets_qtquick.qrc
 )
 
 set(DOCKS_INSTALLABLE_INCLUDES

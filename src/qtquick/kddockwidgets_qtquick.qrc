@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/kddockwidgets/qtquick/">
+        <file>views/qml/DockWidget.qml</file>
+        <file>views/qml/DropArea.qml</file>
+        <file>views/qml/FloatingWindow.qml</file>
+        <file>views/qml/Frame.qml</file>
+        <file>views/qml/MainWindowMDI.qml</file>
+        <file>views/qml/ResizeHandlerHelper.qml</file>
+        <file>views/qml/RubberBand.qml</file>
+        <file>views/qml/Separator.qml</file>
+        <file>views/qml/TitleBarBase.qml</file>
+        <file>views/qml/TitleBar.qml</file>
+        <file>views/qml/TitleBarButton.qml</file>
+        <file>views/qml/ClassicIndicatorsOverlay.qml</file>
+        <file>views/qml/ClassicIndicator.qml</file>
+    </qresource>
+</RCC>
