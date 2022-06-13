@@ -11,8 +11,8 @@
 
 import QtQuick 2.6
 
-// Will be moved to a plugin in the future
-import "qrc:/kddockwidgets/private/quick/qml/" as KDDW
+// Will be moved to a plugin in the future, if there's enough demand
+import "qrc:/kddockwidgets/qtquick/views/qml/" as KDDW
 
 KDDW.TitleBarBase {
     id: root
