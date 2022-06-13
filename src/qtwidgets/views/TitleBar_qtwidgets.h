@@ -31,7 +31,7 @@ class DOCKS_EXPORT TitleBar_qtwidgets : public View_qtwidgets<QWidget>, public V
 {
     Q_OBJECT
 public:
-    explicit TitleBar_qtwidgets(Controllers::TitleBar *controller, QWidget *parent = nullptr);
+    explicit TitleBar_qtwidgets(Controllers::TitleBar *controller, View *parent = nullptr);
 
 #ifdef DOCKS_DEVELOPER_MODE
     // The following are needed for the unit-tests

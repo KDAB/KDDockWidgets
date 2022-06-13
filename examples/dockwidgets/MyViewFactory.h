@@ -11,17 +11,16 @@
 
 #pragma once
 
-#include <kddockwidgets/ViewFactory.h>
-
-#include <QPainter>
+#include <kddockwidgets/ViewFactory_qtwidgets.h>
 
 // clazy:excludeall=ctor-missing-parent-argument
 
-class CustomWidgetFactory : public KDDockWidgets::DefaultWidgetFactory
+class CustomWidgetFactory : public KDDockWidgets::ViewFactory_qtwidgets
 {
     Q_OBJECT
 public:
-    KDDockWidgets::TitleBar *createTitleBar(KDDockWidgets::Frame *frame) const override;
-    KDDockWidgets::TitleBar *createTitleBar(KDDockWidgets::FloatingWindow *fw) const override;
-    KDDockWidgets::View *createSeparator(KDDockWidgets::Controllers::Separator *, KDDockWidgets::View *parent = nullptr) const override;
+    KDDockWidgets::View *createTitleBar(KDDockWidgets::Controllers::TitleBar *,
+                                        KDDockWidgets::View *parent) const override;
+    KDDockWidgets::View *createSeparator(KDDockWidgets::Controllers::Separator *,
+                                         KDDockWidgets::View *parent = nullptr) const override;
 };

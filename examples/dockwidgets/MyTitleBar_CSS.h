@@ -14,7 +14,8 @@
 
 #pragma once
 
-#include <kddockwidgets/private/widgets/TitleBarWidget_p.h>
+#include <kddockwidgets/views/TitleBar_qtwidgets.h>
+#include "controllers/TitleBar.h"
 
 /**
  * @brief Shows how to implement a custom titlebar which uses "Qt StyleSheets".
@@ -37,20 +38,21 @@
  *   - KDDockWidgets::TitleBarWidget::isFocused is a property, there for needs to workaround the
  *   above bug by unsetting the sheet and setting it again.
  */
-class MyTitleBar_CSS : public KDDockWidgets::TitleBarWidget
+class MyTitleBar_CSS : public KDDockWidgets::Views::TitleBar_qtwidgets
 {
 public:
-    explicit MyTitleBar_CSS(KDDockWidgets::Frame *frame)
-        : KDDockWidgets::TitleBarWidget(frame)
+    explicit MyTitleBar_CSS(KDDockWidgets::Controllers::TitleBar *controller,
+                            View *parent = nullptr)
+        : KDDockWidgets::Views::TitleBar_qtwidgets(controller, parent)
     {
-        init();
+        initStyleSheet();
+        connect(controller, &KDDockWidgets::Controllers::TitleBar::isFocusedChanged, this, [this] {
+            // Workaround QTBUG-51236, this makes the [isFocused=true] syntax useful
+            setStyleSheet(QString());
+            initStyleSheet();
+        });
     }
 
-    explicit MyTitleBar_CSS(KDDockWidgets::FloatingWindow *fw)
-        : KDDockWidgets::TitleBarWidget(fw)
-    {
-        init();
-    }
 
     ~MyTitleBar_CSS() override;
 
@@ -66,16 +68,6 @@ public:
                                      "KDDockWidgets--TitleBarWidget[isFocused=true] {"
                                      "background: green"
                                      "}"));
-    }
-
-    void init()
-    {
-        initStyleSheet();
-        connect(this, &KDDockWidgets::TitleBar::isFocusedChanged, this, [this] {
-            // Workaround QTBUG-51236, this makes the [isFocused=true] syntax useful
-            setStyleSheet(QString());
-            initStyleSheet();
-        });
     }
 };
 

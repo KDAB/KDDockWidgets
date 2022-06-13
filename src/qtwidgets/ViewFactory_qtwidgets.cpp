@@ -69,7 +69,7 @@ View *ViewFactory_qtwidgets::createFrame(Controllers::Frame *controller, View *p
 
 View *ViewFactory_qtwidgets::createTitleBar(Controllers::TitleBar *titleBar, View *parent) const
 {
-    return new Views::TitleBar_qtwidgets(titleBar, Views::View_qtwidgets<QWidget>::asQWidget(parent));
+    return new Views::TitleBar_qtwidgets(titleBar, parent);
 }
 
 View *ViewFactory_qtwidgets::createTabBar(Controllers::TabBar *tabBar, View *parent) const
@@ -84,7 +84,7 @@ View *ViewFactory_qtwidgets::createStack(Controllers::Stack *controller, View *p
 
 View *ViewFactory_qtwidgets::createSeparator(Controllers::Separator *controller, View *parent) const
 {
-    return new Views::Separator_qtwidgets(controller, parent ? static_cast<Views::View_qtwidgets<QWidget> *>(parent) : nullptr);
+    return new Views::Separator_qtwidgets(controller, parent);
 }
 
 View *ViewFactory_qtwidgets::createFloatingWindow(Controllers::FloatingWindow *controller,

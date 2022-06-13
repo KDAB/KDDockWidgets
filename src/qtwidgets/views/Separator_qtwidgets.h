@@ -25,7 +25,8 @@ class DOCKS_EXPORT Separator_qtwidgets : public View_qtwidgets<QWidget>
 {
     Q_OBJECT
 public:
-    explicit Separator_qtwidgets(Controllers::Separator *controller, QWidget *parent = nullptr);
+    explicit Separator_qtwidgets(Controllers::Separator *controller,
+                                 View *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *) override;

@@ -12,39 +12,26 @@
 #include "MyViewFactory.h"
 #include "MyTitleBar_CSS.h"
 
-#include <kddockwidgets/ViewFactory.h>
-
-#include <kddockwidgets/private/TabWidget_p.h>
-#include <kddockwidgets/private/widgets/FrameWidget_p.h>
-#include <kddockwidgets/private/widgets/TabBarWidget_p.h>
-#include <kddockwidgets/private/widgets/TabWidgetWidget_p.h>
-#include "../../src/private/multisplitter/views_qtwidgets/Separator_qtwidgets.h" // TODOm2
+#include <kddockwidgets/views/TitleBar_qtwidgets.h>
+#include <kddockwidgets/views/Separator_qtwidgets.h>
 
 #include <QApplication>
+#include <QPainter>
 
 // clazy:excludeall=missing-qobject-macro,ctor-missing-parent-argument
 
-class MyTitleBar : public KDDockWidgets::TitleBarWidget
+class MyTitleBar : public KDDockWidgets::Views::TitleBar_qtwidgets
 {
 public:
-    explicit MyTitleBar(KDDockWidgets::Frame *frame)
-        : KDDockWidgets::TitleBarWidget(frame)
-    {
-        init();
-    }
-
-    explicit MyTitleBar(KDDockWidgets::FloatingWindow *fw)
-        : KDDockWidgets::TitleBarWidget(fw)
-    {
-        init();
-    }
-
-    ~MyTitleBar() override;
-
-    void init()
+    explicit MyTitleBar(KDDockWidgets::Controllers::TitleBar *controller,
+                        View *parent = nullptr)
+        : KDDockWidgets::Views::TitleBar_qtwidgets(controller, parent)
+        , m_controller(controller)
     {
         setFixedHeight(60);
     }
+
+    ~MyTitleBar() override;
 
     void paintEvent(QPaintEvent *) override
     {
@@ -52,7 +39,7 @@ public:
         QPen pen(Qt::black);
         const QColor focusedBackgroundColor = Qt::yellow;
         const QColor backgroundColor = focusedBackgroundColor.darker(115);
-        QBrush brush(isFocused() ? focusedBackgroundColor : backgroundColor);
+        QBrush brush(m_controller->isFocused() ? focusedBackgroundColor : backgroundColor);
         pen.setWidth(4);
         p.setPen(pen);
         p.setBrush(brush);
@@ -61,8 +48,11 @@ public:
         f.setPixelSize(30);
         f.setBold(true);
         p.setFont(f);
-        p.drawText(QPoint(10, 40), title());
+        p.drawText(QPoint(10, 40), m_controller->title());
     }
+
+private:
+    KDDockWidgets::Controllers::TitleBar *const m_controller;
 };
 
 MyTitleBar::~MyTitleBar() = default;
@@ -71,7 +61,7 @@ MyTitleBar::~MyTitleBar() = default;
 class MySeparator : public KDDockWidgets::Views::Separator_qtwidgets
 {
 public:
-    explicit MySeparator(KDDockWidgets::Controllers::Separator *controller, QWidget *parent)
+    explicit MySeparator(KDDockWidgets::Controllers::Separator *controller, View *parent)
         : KDDockWidgets::Views::Separator_qtwidgets(controller, parent)
     {
     }
@@ -87,19 +77,15 @@ public:
 
 MySeparator::~MySeparator() = default;
 
-KDDockWidgets::TitleBar *CustomWidgetFactory::createTitleBar(KDDockWidgets::Frame *frame) const
+KDDockWidgets::View *CustomWidgetFactory::createTitleBar(KDDockWidgets::Controllers::TitleBar *controller,
+                                                         KDDockWidgets::View *parent) const
 {
     // Feel free to return MyTitleBar_CSS here instead, but just for education purposes!
-    return new MyTitleBar(frame);
+    return new MyTitleBar(controller, parent);
 }
 
-KDDockWidgets::TitleBar *CustomWidgetFactory::createTitleBar(KDDockWidgets::FloatingWindow *fw) const
+KDDockWidgets::View *CustomWidgetFactory::createSeparator(KDDockWidgets::Controllers::Separator *controller,
+                                                          KDDockWidgets::View *parent) const
 {
-    // Feel free to return MyTitleBar_CSS here instead, but just for education purposes!
-    return new MyTitleBar(fw);
-}
-
-KDDockWidgets::View *CustomWidgetFactory::createSeparator(KDDockWidgets::Controllers::Separator *controller, KDDockWidgets::View *parent) const
-{
-    return new MySeparator(controller, parent ? static_cast<KDDockWidgets::Views::View_qtwidgets *>(parent) : nullptr);
+    return new MySeparator(controller, parent);
 }
