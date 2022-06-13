@@ -115,7 +115,7 @@ Q_SIGNALS:
     void currentDockWidgetChanged(KDDockWidgets::Controllers::DockWidget *);
     void countChanged();
 
-public: // TODOm2
+public: // TODOm3
     void onTabInserted();
     void onTabRemoved();
     void onCurrentTabChanged(int index);

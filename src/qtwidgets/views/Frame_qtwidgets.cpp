@@ -74,7 +74,7 @@ void Frame_qtwidgets::init()
 
 void Frame_qtwidgets::free_impl()
 {
-    // TODOm2: just use the base class impl, which uses deleteLater()
+    // TODOm3: just use the base class impl, which uses deleteLater()
     // do it once there's no state here
     delete this;
 }
