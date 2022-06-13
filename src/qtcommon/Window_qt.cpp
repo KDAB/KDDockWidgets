@@ -83,10 +83,9 @@ void Window_qt::setFramePosition(QPoint targetPos)
     m_window->setFramePosition(targetPos);
 }
 
-// TODOm2: this is setting the frame position ?
 void Window_qt::setPosition(QPoint targetPos)
 {
-    m_window->setFramePosition(targetPos);
+    m_window->setPosition(targetPos);
 }
 
 QRect Window_qt::frameGeometry() const

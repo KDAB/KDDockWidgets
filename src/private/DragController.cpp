@@ -386,7 +386,7 @@ bool StateDragging::handleMouseMove(QPoint globalPos)
     }
 
     if (!q->m_nonClientDrag)
-        fw->view()->window()->setPosition(globalPos - q->m_offset);
+        fw->view()->window()->setFramePosition(globalPos - q->m_offset);
 
     if (fw->anyNonDockable()) {
         qCDebug(state) << "StateDragging: Ignoring non dockable floating window";

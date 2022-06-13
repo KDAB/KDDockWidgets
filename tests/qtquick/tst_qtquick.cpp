@@ -91,7 +91,7 @@ void TestQtQuick::tst_hoverShowsDropIndicators()
     QCOMPARE(mainWindows.size(), 1);
     MainWindow *m = mainWindows.first();
 
-    m->window()->window()->setPosition(QPoint(500, 800));
+    m->window()->window()->setFramePosition(QPoint(500, 800));
 
     auto dock0 = createDockWidget("dock0", Platform::instance()->tests_createView({ true, {}, QSize(400, 400) }));
 

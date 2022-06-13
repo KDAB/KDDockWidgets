@@ -211,7 +211,6 @@ public:
     /// be open ended
     static Qt::WindowFlags s_windowFlagsOverride;
 
-    void updateSizeConstraints(); // TODOm2: Move private
     void maybeCreateResizeHandler();
 
 Q_SIGNALS:
@@ -229,6 +228,7 @@ private:
     void onFrameCountChanged(int count);
     void onVisibleFrameCountChanged(int count);
     void onCloseEvent(QCloseEvent *);
+    void updateSizeConstraints();
     bool m_disableSetVisible = false;
     bool m_deleteScheduled = false;
     bool m_inDtor = false;
