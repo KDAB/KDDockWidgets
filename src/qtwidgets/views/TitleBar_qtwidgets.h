@@ -44,6 +44,7 @@ public:
     Controllers::TitleBar *titleBar() const;
 
 protected:
+    void init() override;
     void paintEvent(QPaintEvent *) override;
     void mouseDoubleClickEvent(QMouseEvent *) override;
     QSize sizeHint() const override;
@@ -51,7 +52,6 @@ protected:
 
 private:
     friend class KDDockWidgets::Controllers::TitleBar;
-    void init() override;
     int buttonAreaWidth() const;
     QRect iconRect() const;
     void updateMargins();
