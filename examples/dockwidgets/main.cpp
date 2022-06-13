@@ -167,195 +167,194 @@ int main(int argc, char **argv)
     if (parser.isSet(customStyle)) {
         Config::self().setViewFactory(new CustomWidgetFactory()); // Sets our custom factory
 
-        //     // Increase the separator size, just for demo
-        //     Config::self().setSeparatorThickness(10);
-        // }
+        // Increase the separator size, just for demo
+        Config::self().setSeparatorThickness(10);
+    }
 
-        if (parser.isSet(segmentedIndicators))
-            KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
+    if (parser.isSet(segmentedIndicators))
+        KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::Segmented;
 
-        MainWindowOptions options = MainWindowOption_None;
-        auto flags = KDDockWidgets::Config::self().flags();
+    MainWindowOptions options = MainWindowOption_None;
+    auto flags = KDDockWidgets::Config::self().flags();
 #if defined(DOCKS_DEVELOPER_MODE)
-        auto internalFlags = KDDockWidgets::Config::self().internalFlags();
+    auto internalFlags = KDDockWidgets::Config::self().internalFlags();
 
-        options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralFrame
-                                             : MainWindowOption_None;
+    options = parser.isSet(centralFrame) ? MainWindowOption_HasCentralFrame
+                                         : MainWindowOption_None;
 
-        if (parser.isSet(centralWidget))
-            options |= MainWindowOption_HasCentralWidget;
+    if (parser.isSet(centralWidget))
+        options |= MainWindowOption_HasCentralWidget;
 
-        if (parser.isSet(noQtTool))
-            internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows;
+    if (parser.isSet(noQtTool))
+        internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseQtToolWindowsForFloatingWindows;
 
-        if (parser.isSet(keepAbove))
-            flags |= KDDockWidgets::Config::Flag_KeepAboveIfNotUtilityWindow;
+    if (parser.isSet(keepAbove))
+        flags |= KDDockWidgets::Config::Flag_KeepAboveIfNotUtilityWindow;
 
-        if (parser.isSet(noParentForFloating))
-            internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseParentForFloatingWindows;
+    if (parser.isSet(noParentForFloating))
+        internalFlags |= KDDockWidgets::Config::InternalFlag_DontUseParentForFloatingWindows;
 
-        if (parser.isSet(nativeTitleBar))
-            flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
+    if (parser.isSet(nativeTitleBar))
+        flags |= KDDockWidgets::Config::Flag_NativeTitleBar;
 
-        if (parser.isSet(noDropIndicators))
-            KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
+    if (parser.isSet(noDropIndicators))
+        KDDockWidgets::ViewFactory::s_dropIndicatorType = KDDockWidgets::DropIndicatorType::None;
 
 #if defined(Q_OS_WIN)
-        if (parser.isSet(noAeroSnap))
-            internalFlags |= KDDockWidgets::Config::InternalFlag_NoAeroSnap;
+    if (parser.isSet(noAeroSnap))
+        internalFlags |= KDDockWidgets::Config::InternalFlag_NoAeroSnap;
 #endif
-        Config::self().setInternalFlags(internalFlags);
+    Config::self().setInternalFlags(internalFlags);
 #endif
 
-        if (parser.isSet(autoHideSupport))
-            flags |= Config::Flag_AutoHideSupport;
+    if (parser.isSet(autoHideSupport))
+        flags |= Config::Flag_AutoHideSupport;
 
-        if (parser.isSet(closeOnlyCurrentTab))
-            flags |= Config::Flag_CloseOnlyCurrentTab;
+    if (parser.isSet(closeOnlyCurrentTab))
+        flags |= Config::Flag_CloseOnlyCurrentTab;
 
-        if (parser.isSet(showButtonsInTabBarIfTitleBarHidden))
-            flags |= Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden;
+    if (parser.isSet(showButtonsInTabBarIfTitleBarHidden))
+        flags |= Config::Flag_ShowButtonsOnTabBarIfTitleBarHidden;
 
-        if (parser.isSet(noTitleBars))
-            flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
+    if (parser.isSet(noTitleBars))
+        flags |= KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible;
 
-        if (parser.isSet(noUtilityWindows))
-            flags |= KDDockWidgets::Config::Flag_DontUseUtilityFloatingWindows;
+    if (parser.isSet(noUtilityWindows))
+        flags |= KDDockWidgets::Config::Flag_DontUseUtilityFloatingWindows;
 
-        if (parser.isSet(alwaysTabs))
-            flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
+    if (parser.isSet(alwaysTabs))
+        flags |= KDDockWidgets::Config::Flag_AlwaysShowTabs;
 
-        if (parser.isSet(alwaysTitleBarWhenFloating)) {
-            flags |= KDDockWidgets::Config::Flag_AlwaysTitleBarWhenFloating;
-            if (!(flags & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible)) {
-                qWarning() << "Flag_AlwaysTitleBarWhenFloating is unneeded if Flag_HideTitleBarWhenTabsVisible isn't used."
-                           << "As floating windows already have title bars by default.";
-            }
+    if (parser.isSet(alwaysTitleBarWhenFloating)) {
+        flags |= KDDockWidgets::Config::Flag_AlwaysTitleBarWhenFloating;
+        if (!(flags & KDDockWidgets::Config::Flag_HideTitleBarWhenTabsVisible)) {
+            qWarning() << "Flag_AlwaysTitleBarWhenFloating is unneeded if Flag_HideTitleBarWhenTabsVisible isn't used."
+                       << "As floating windows already have title bars by default.";
         }
+    }
 
-        if (parser.isSet(customStyle) || qEnvironmentVariableIsSet("KDDW_DEBUG_FOCUS"))
-            flags |= KDDockWidgets::Config::Flag_TitleBarIsFocusable; // also showing title bar focus with -p, just to not introduce another switch
+    if (parser.isSet(customStyle) || qEnvironmentVariableIsSet("KDDW_DEBUG_FOCUS"))
+        flags |= KDDockWidgets::Config::Flag_TitleBarIsFocusable; // also showing title bar focus with -p, just to not introduce another switch
 
-        if (parser.isSet(reorderTabsOption))
-            flags |= KDDockWidgets::Config::Flag_AllowReorderTabs;
+    if (parser.isSet(reorderTabsOption))
+        flags |= KDDockWidgets::Config::Flag_AllowReorderTabs;
 
-        if (parser.isSet(maximizeButtonOption))
-            flags |= KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton;
+    if (parser.isSet(maximizeButtonOption))
+        flags |= KDDockWidgets::Config::Flag_TitleBarHasMaximizeButton;
 
-        if (parser.isSet(minimizeButtonOption))
-            flags |= KDDockWidgets::Config::Flag_TitleBarHasMinimizeButton;
+    if (parser.isSet(minimizeButtonOption))
+        flags |= KDDockWidgets::Config::Flag_TitleBarHasMinimizeButton;
 
-        if (parser.isSet(lazyResizeOption))
-            flags |= KDDockWidgets::Config::Flag_LazyResize;
+    if (parser.isSet(lazyResizeOption))
+        flags |= KDDockWidgets::Config::Flag_LazyResize;
 
-        if (parser.isSet(tabsHaveCloseButton))
-            flags |= KDDockWidgets::Config::Flag_TabsHaveCloseButton;
+    if (parser.isSet(tabsHaveCloseButton))
+        flags |= KDDockWidgets::Config::Flag_TabsHaveCloseButton;
 
-        if (parser.isSet(ctxtMenuOnTabs))
-            flags |= KDDockWidgets::Config::Flag_AllowSwitchingTabsViaMenu;
+    if (parser.isSet(ctxtMenuOnTabs))
+        flags |= KDDockWidgets::Config::Flag_AllowSwitchingTabsViaMenu;
 
 
-        if (parser.isSet(doubleClickMaximize))
-            flags |= KDDockWidgets::Config::Flag_DoubleClickMaximizes;
+    if (parser.isSet(doubleClickMaximize))
+        flags |= KDDockWidgets::Config::Flag_DoubleClickMaximizes;
 
-        if (parser.isSet(incompatibleMainWindows) && !parser.isSet(multipleMainWindows)) {
-            qWarning() << "Error: Argument -i requires -m";
+    if (parser.isSet(incompatibleMainWindows) && !parser.isSet(multipleMainWindows)) {
+        qWarning() << "Error: Argument -i requires -m";
+        return 1;
+    }
+
+    if (parser.isSet(hideCertainDockingIndicators)) {
+        // Here we exemplify adding a restriction to "Dock Widget 8"
+        // Dock widget 8 will only be allowed to dock to the outter areasa
+        auto func = [](KDDockWidgets::DropLocation location,
+                       const KDDockWidgets::Controllers::DockWidget::List &source,
+                       const KDDockWidgets::Controllers::DockWidget::List &target) {
+            Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already tabbed dock widgets
+
+            const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [](KDDockWidgets::Controllers::DockWidget *dw) {
+                                           return dw->uniqueName() == QLatin1String("DockWidget #8");
+                                       })
+                != source.cend();
+
+            return (location & KDDockWidgets::DropLocation_Outter) || !isDraggingDW8;
+        };
+
+        KDDockWidgets::Config::self().setDropIndicatorAllowedFunc(func);
+    }
+
+    KDDockWidgets::Config::self().setFlags(flags);
+
+    const bool nonClosableDockWidget0 = parser.isSet(nonClosableDockWidget);
+    const bool restoreIsRelative = parser.isSet(relativeRestore);
+    const bool nonDockableDockWidget9 = parser.isSet(nonDockable);
+    const bool maxSizeForDockWidget8 = parser.isSet(maxSizeOption);
+    const bool dontCloseDockWidget5BeforeRestore = parser.isSet(dontCloseBeforeRestore);
+    const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
+
+#ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
+    const bool usesDockableMainWindows = parser.isSet(dockableMainWindows);
+#else
+    const bool usesDockableMainWindows = false;
+#endif
+
+    MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0,
+                            nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8,
+                            dontCloseDockWidget5BeforeRestore);
+    mainWindow.setWindowTitle("Main Window 1");
+    mainWindow.resize(1200, 1200);
+    mainWindow.show();
+
+    if (usesMainWindowsWithAffinity) {
+        if (usesDockableMainWindows) {
+            qWarning() << "MainWindows with affinity option is incompatible with Dockable Main Windows option";
             return 1;
         }
 
-        if (parser.isSet(hideCertainDockingIndicators)) {
-            // Here we exemplify adding a restriction to "Dock Widget 8"
-            // Dock widget 8 will only be allowed to dock to the outter areasa
-            auto func = [](KDDockWidgets::DropLocation location,
-                           const KDDockWidgets::Controllers::DockWidget::List &source,
-                           const KDDockWidgets::Controllers::DockWidget::List &target) {
-                Q_UNUSED(target); // When dragging into a tab, 'target' would have the list of already tabbed dock widgets
+        // By default a dock widget can dock into any main window.
+        // By setting an affinity name we can prevent that. Dock widgets of different affinities are incompatible.
+        const QString affinity = parser.isSet(incompatibleMainWindows) ? QStringLiteral("affinity1")
+                                                                       : QString();
 
-                const bool isDraggingDW8 = std::find_if(source.cbegin(), source.cend(), [](KDDockWidgets::Controllers::DockWidget *dw) {
-                                               return dw->uniqueName() == QLatin1String("DockWidget #8");
-                                           })
-                    != source.cend();
+        auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
+                                            nonClosableDockWidget0, nonDockableDockWidget9,
+                                            restoreIsRelative, maxSizeForDockWidget8,
+                                            dontCloseDockWidget5BeforeRestore, affinity);
+        if (affinity.isEmpty())
+            mainWindow2->setWindowTitle("Main Window 2");
+        else
+            mainWindow2->setWindowTitle("Main Window 2 (different affinity)");
 
-                return (location & KDDockWidgets::DropLocation_Outter) || !isDraggingDW8;
-            };
+        mainWindow2->resize(1200, 1200);
+        mainWindow2->show();
+    } else if (usesDockableMainWindows) {
+        auto mainWindowDockWidget = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyMainWindow-2-DW"));
 
-            KDDockWidgets::Config::self().setDropIndicatorAllowedFunc(func);
-        }
+        const QString affinity = QStringLiteral("Inner-DockWidgets-2");
+        auto dockableMainWindow = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
+                                                   false, false, restoreIsRelative, false,
+                                                   false, affinity);
 
-        KDDockWidgets::Config::self().setFlags(flags);
+        dockableMainWindow->mainWindow()->setAffinities({ affinity }); // TODOm2: Add the MainWindow API to the views too
 
-        const bool nonClosableDockWidget0 = parser.isSet(nonClosableDockWidget);
-        const bool restoreIsRelative = parser.isSet(relativeRestore);
-        const bool nonDockableDockWidget9 = parser.isSet(nonDockable);
-        const bool maxSizeForDockWidget8 = parser.isSet(maxSizeOption);
-        const bool dontCloseDockWidget5BeforeRestore = parser.isSet(dontCloseBeforeRestore);
-        const bool usesMainWindowsWithAffinity = parser.isSet(multipleMainWindows);
+        dockableMainWindow->setStyleSheet(QStringLiteral("background: yellow"));
 
-#ifdef KDDOCKWIDGETS_SUPPORTS_NESTED_MAINWINDOWS
-        const bool usesDockableMainWindows = parser.isSet(dockableMainWindows);
-#else
-        const bool usesDockableMainWindows = false;
-#endif
-
-        MyMainWindow mainWindow(QStringLiteral("MyMainWindow"), options, nonClosableDockWidget0,
-                                nonDockableDockWidget9, restoreIsRelative, maxSizeForDockWidget8,
-                                dontCloseDockWidget5BeforeRestore);
-        mainWindow.setWindowTitle("Main Window 1");
-        mainWindow.resize(1200, 1200);
-        mainWindow.show();
-
-        if (usesMainWindowsWithAffinity) {
-            if (usesDockableMainWindows) {
-                qWarning() << "MainWindows with affinity option is incompatible with Dockable Main Windows option";
-                return 1;
-            }
-
-            // By default a dock widget can dock into any main window.
-            // By setting an affinity name we can prevent that. Dock widgets of different affinities are incompatible.
-            const QString affinity = parser.isSet(incompatibleMainWindows) ? QStringLiteral("affinity1")
-                                                                           : QString();
-
-            auto mainWindow2 = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
-                                                nonClosableDockWidget0, nonDockableDockWidget9,
-                                                restoreIsRelative, maxSizeForDockWidget8,
-                                                dontCloseDockWidget5BeforeRestore, affinity);
-            if (affinity.isEmpty())
-                mainWindow2->setWindowTitle("Main Window 2");
-            else
-                mainWindow2->setWindowTitle("Main Window 2 (different affinity)");
-
-            mainWindow2->resize(1200, 1200);
-            mainWindow2->show();
-        } else if (usesDockableMainWindows) {
-            auto mainWindowDockWidget = new KDDockWidgets::Views::DockWidget_qtwidgets(QStringLiteral("MyMainWindow-2-DW"));
-
-            const QString affinity = QStringLiteral("Inner-DockWidgets-2");
-            auto dockableMainWindow = new MyMainWindow(QStringLiteral("MyMainWindow-2"), options,
-                                                       false, false, restoreIsRelative, false,
-                                                       false, affinity);
-
-            dockableMainWindow->mainWindow()->setAffinities({ affinity }); // TODOm2: Add the MainWindow API to the views too
-
-            dockableMainWindow->setStyleSheet(QStringLiteral("background: yellow"));
-
-            dockableMainWindow->setWindowTitle("Dockable Main Window");
-            dockableMainWindow->show();
-            mainWindowDockWidget->setWidget(dockableMainWindow);
-            mainWindowDockWidget->show();
-            mainWindowDockWidget->resize(QSize(800, 800));
-        }
-
-        const QStringList args = parser.positionalArguments();
-        if (args.size() >= 1) {
-            const QString sourceJsonFileName = args[0];
-            KDDockWidgets::LayoutSaver loader;
-            if (!loader.restoreFromFile(sourceJsonFileName)) {
-                qWarning() << Q_FUNC_INFO << "Failed to restore from" << sourceJsonFileName;
-                return 1;
-            }
-        }
-
-
-        return app.exec();
+        dockableMainWindow->setWindowTitle("Dockable Main Window");
+        dockableMainWindow->show();
+        mainWindowDockWidget->setWidget(dockableMainWindow);
+        mainWindowDockWidget->show();
+        mainWindowDockWidget->resize(QSize(800, 800));
     }
+
+    const QStringList args = parser.positionalArguments();
+    if (args.size() >= 1) {
+        const QString sourceJsonFileName = args[0];
+        KDDockWidgets::LayoutSaver loader;
+        if (!loader.restoreFromFile(sourceJsonFileName)) {
+            qWarning() << Q_FUNC_INFO << "Failed to restore from" << sourceJsonFileName;
+            return 1;
+        }
+    }
+
+
+    return app.exec();
 }
