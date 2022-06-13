@@ -42,19 +42,17 @@ class ClassicIndicatorWindow;
 }
 
 /**
- * @brief A factory class for allowing the user to customize some internal widgets.
- * This is optional, and if not provided, a default one will be used, @ref DefaultWidgetFactory.
+ * @brief A factory class for allowing the user to customize some internal views.
+ * This is optional, and if not provided, a default one will be used.
  *
- * Deriving from @ref DefaultWidgetFactory is recommended, unless you need to override
- * all methods.
+ * You should however not derive directly from ViewFactory, and instead, derive from ViewFactory_qtwidgets (for QtWidgets),
+ * or ViewFactory_qtquick (for QtQuick).
  *
  * Sub-classing ViewFactory allows for fine-grained customization and
  * styling of some non-public widgets, such as titlebars, dock widget frame and
  * tab widgets.
  *
  * To set your own factory see Config::setViewFactory()
- *
- * Will also be useful to provide a QtQuickWidget factory in the future.
  *
  * @sa Config::setViewFactory()
  */
@@ -64,8 +62,8 @@ class DOCKS_EXPORT ViewFactory : public QObject
 public:
     ViewFactory() = default;
 
-    ///@brief Destructor.Don't delete ViewFactory directly, it's owned
-    /// by the framework.
+    ///@brief Destructor.
+    /// Don't delete ViewFactory directly, it's owned by the framework.
     virtual ~ViewFactory();
 
     /// @brief Creates a dock widget. This is only used by MainWindow's persistent widget feature.
@@ -76,37 +74,36 @@ public:
                                    Qt::WindowFlags windowFlags = {}) const = 0;
 
 
-    ///@brief Called internally by the framework to create a Frame class
+    ///@brief Called by the framework to create a Frame view
     ///       Override to provide your own Frame sub-class. A frame is the
     ///       widget that holds the titlebar and tab-widget which holds the
     ///       DockWidgets.
     ///@param parent just forward to Frame's constructor
     virtual View *createFrame(Controllers::Frame *, View *parent = nullptr) const = 0;
 
-    ///@brief Called internally by the framework to create a TitleBar
+    ///@brief Called by the framework to create a TitleBar view
     ///       Override to provide your own TitleBar sub-class.
     ///       Just forward the @p controller and @p parent arguments to the TitleBar view ctor
     virtual View *createTitleBar(Controllers::TitleBar *controller, View *parent) const = 0;
 
-    ///@brief Called internally by the framework to create a TabWidget
-    ///       Override to provide your own TabWidget sub-class.
-    ///@param parent Just forward to TabWidget's constructor.
+    ///@brief Called by the framework to create a Stack view
+    ///       Override to provide your own Stack sub-class.
+    ///@param parent Just forward to Stack's constructor.
     virtual View *createStack(Controllers::Stack *stack, View *parent) const = 0;
 
-    ///@brief Called internally by the framework to create a TabBar
+    ///@brief Called by the framework to create a TabBar view
     ///       Override to provide your own TabBar sub-class.
     ///@param parent Just forward to TabBar's's constructor.
     virtual View *createTabBar(Controllers::TabBar *tabBar, View *parent = nullptr) const = 0;
 
-    ///@brief Called internally by the framework to create a Separator
+    ///@brief Called by the framework to create a Separator view
     ///       Override to provide your own Separator sub-class. The Separator allows
     ///       the user to resize nested dock widgets.
     ///@param parent Just forward to Separator's constructor.
     virtual View *createSeparator(Controllers::Separator *, View *parent = nullptr) const = 0;
 
-    ///@brief Called internally by the framework to create a FloatingWindow
-    ///       Override to provide your own FloatingWindow sub-class. If overridden then
-    ///       you also need to override the overloads below.
+    ///@brief Called by the framework to create a FloatingWindow view
+    ///       Override to provide your own FloatingWindow sub-class.
     ///@param parent Just forward to FloatingWindow's constructor.
     virtual View *createFloatingWindow(Controllers::FloatingWindow *controller,
                                        Controllers::MainWindow *parent = nullptr,
@@ -123,15 +120,16 @@ public:
     virtual View *
     createSegmentedDropIndicatorOverlayView(Controllers::SegmentedIndicators *controller, View *parent = nullptr) const = 0;
 
-    /// @brief Called internally by the framework to create a DropArea
+    /// @brief Called by the framework to create a DropArea view
     virtual View *createDropArea(Controllers::DropArea *, View *parent) const = 0;
+
+    /// @brief Called by the framework to create a MDI Layout view
     virtual View *createMDILayout(Controllers::MDILayout *, View *parent) const = 0;
 
-    ///@brief Called internally by the framework to create a RubberBand to show as drop zone
-    /// Returns a rubber band
+    ///@brief Called by the framework to create a RubberBand view to show as drop zone
     virtual View *createRubberBand(View *parent) const = 0;
 
-    ///@brief Called internally by the framework to create a SideBar
+    ///@brief Called by the framework to create a SideBar view
     ///@param loc The side-bar location without the main window. Just forward into your SideBar sub-class ctor.
     ///@param parent The MainWindow. Just forward into your SideBar sub-class ctor.
     virtual View *createSideBar(Controllers::SideBar *, View *parent) const = 0;
