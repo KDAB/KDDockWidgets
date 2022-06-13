@@ -178,11 +178,6 @@ public:
     virtual void setCursor(Qt::CursorShape) = 0;
     virtual void setMouseTracking(bool) = 0;
 
-    // TODOm2: Check if these two should be in the controller or on view
-    virtual void onLayoutRequest()
-    {
-    }
-
     virtual bool onResize(QSize /*newSize*/)
     {
         return false;

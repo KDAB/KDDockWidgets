@@ -28,11 +28,6 @@ MDILayout_qtquick::~MDILayout_qtquick()
         m_controller->viewAboutToBeDeleted();
 }
 
-void MDILayout_qtquick::onLayoutRequest()
-{
-    m_controller->updateSizeConstraints();
-}
-
 bool MDILayout_qtquick::onResize(QSize newSize)
 {
     return m_controller->onResize(newSize);

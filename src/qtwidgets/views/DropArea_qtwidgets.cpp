@@ -32,11 +32,6 @@ DropArea_qtwidgets::~DropArea_qtwidgets()
         m_dropArea->viewAboutToBeDeleted();
 }
 
-void DropArea_qtwidgets::onLayoutRequest()
-{
-    m_dropArea->updateSizeConstraints();
-}
-
 bool DropArea_qtwidgets::onResize(QSize newSize)
 {
     return m_dropArea->onResize(newSize);

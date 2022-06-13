@@ -32,11 +32,6 @@ DropArea_qtquick::~DropArea_qtquick()
         m_dropArea->viewAboutToBeDeleted();
 }
 
-void DropArea_qtquick::onLayoutRequest()
-{
-    m_dropArea->updateSizeConstraints();
-}
-
 bool DropArea_qtquick::onResize(QSize newSize)
 {
     return m_dropArea->onResize(newSize);

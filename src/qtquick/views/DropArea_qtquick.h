@@ -29,7 +29,6 @@ public:
     ~DropArea_qtquick();
 
     /// TODOm3
-    void onLayoutRequest() override;
     bool onResize(QSize newSize) override;
 
 private:

@@ -481,7 +481,7 @@ protected:
     bool event(QEvent *e) override
     {
         if (e->type() == QEvent::LayoutRequest)
-            onLayoutRequest();
+            layoutInvalidated.emit();
 
         return Base::event(e);
     }

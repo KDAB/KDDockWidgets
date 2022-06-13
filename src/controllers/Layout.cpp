@@ -30,6 +30,9 @@ using namespace KDDockWidgets::Controllers;
 Layout::Layout(Type type, View *view)
     : Controller(type, view)
 {
+    view->layoutInvalidated.connect([this] {
+        updateSizeConstraints();
+    });
 }
 
 Layout::~Layout()
