@@ -27,8 +27,6 @@ public:
     explicit Frame_qtwidgets(Controllers::Frame *controller, QWidget *parent = nullptr);
     void init() override;
 
-    void setLayoutItem(Layouting::Item *item) override;
-
     void renameTab(int index, const QString &) override;
     void changeTabIcon(int index, const QIcon &) override;
     void removeWidget_impl(Controllers::DockWidget *) override;

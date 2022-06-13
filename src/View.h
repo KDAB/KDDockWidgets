@@ -103,10 +103,6 @@ public:
     /// Override isNull() in our ViewWrapper subclasses and return true if the wrapped gui element was already deleted
     virtual bool isNull() const;
 
-    /// @brief Called by the layouting engine
-    /// Override it in case your widget needs to know where it is in the layout. Usually only needed by Frame.
-    virtual void setLayoutItem(Layouting::Item *) {};
-
     virtual void setParent(View *) = 0;
     virtual QSize sizeHint() const;
     virtual QSize minSize() const = 0;

@@ -79,12 +79,6 @@ void Frame_qtwidgets::free_impl()
     delete this;
 }
 
-void Frame_qtwidgets::setLayoutItem(Layouting::Item *item)
-{
-    // TODOm2: Remove from View, maybe
-    m_controller->setLayoutItem(item);
-}
-
 void Frame_qtwidgets::renameTab(int index, const QString &text)
 {
     m_controller->tabWidget()->renameTab(index, text);

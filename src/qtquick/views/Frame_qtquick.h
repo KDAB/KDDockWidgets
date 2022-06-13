@@ -56,9 +56,6 @@ public:
 
     QRect dragRect() const override;
 
-    // TODOm3: Move this to a common base class between qtquick and qtwidgets
-    void setLayoutItem(Layouting::Item *item) override;
-
     // QML interface:
     bool isMDI() const;
     KDDockWidgets::Views::TitleBar_qtquick *titleBar() const;

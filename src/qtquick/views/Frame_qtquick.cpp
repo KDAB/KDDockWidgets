@@ -271,8 +271,3 @@ bool Frame_qtquick::event(QEvent *e)
 
     return View_qtquick::event(e);
 }
-
-void Frame_qtquick::setLayoutItem(Layouting::Item *item)
-{
-    m_controller->setLayoutItem(item);
-}
