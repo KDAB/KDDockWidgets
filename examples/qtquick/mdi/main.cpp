@@ -22,7 +22,7 @@
 #include <QGuiApplication>
 #include <QCommandLineParser>
 
-// Foro my own debugging, until we have better API
+// For my own debugging, until we have better API
 #include "../../src/controllers/MDILayout.h"
 
 int main(int argc, char *argv[])
