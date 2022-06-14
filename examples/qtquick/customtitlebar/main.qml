@@ -18,7 +18,7 @@ ApplicationWindow {
     width: 1000
     height: 800
 
-    KDDW.MainWindowLayout {
+    KDDW.DockingArea {
         id: dockWidgetArea
         anchors.fill: parent
 

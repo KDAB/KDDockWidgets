@@ -73,7 +73,7 @@ ApplicationWindow {
         }
     }
 
-    KDDW.MainWindowLayout {
+    KDDW.DockingArea {
         anchors.fill: parent
 
         // Each main layout needs a unique id

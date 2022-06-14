@@ -19,7 +19,7 @@
 
 void KDDockWidgets::registerQmlTypes()
 {
-    qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 2, 0, "MainWindowLayout");
+    qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 2, 0, "DockingArea");
     qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 2, 0, "DockWidget");
     qmlRegisterType<LayoutSaverInstantiator>("com.kdab.dockwidgets", 2, 0, "LayoutSaver");
 

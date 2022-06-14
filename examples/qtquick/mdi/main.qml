@@ -18,7 +18,7 @@ ApplicationWindow {
     width: 1000
     height: 1200
 
-    KDDW.MainWindowLayout {
+    KDDW.DockingArea {
         anchors.fill: parent
         uniqueName: "MyMainLayout"
         options: KDDW.KDDockWidgets.MainWindowOption_MDI
