@@ -14,8 +14,6 @@
 #include "MainWindowInstantiator.h"
 #include "LayoutSaverInstantiator.h"
 
-#include "private/multisplitter/Item_p.h"
-
 #include <QQmlEngine>
 #include <QDebug>
 
@@ -24,8 +22,6 @@ void KDDockWidgets::registerQmlTypes()
     qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 2, 0, "MainWindowLayout");
     qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 2, 0, "DockWidget");
     qmlRegisterType<LayoutSaverInstantiator>("com.kdab.dockwidgets", 2, 0, "LayoutSaver");
-    qmlRegisterUncreatableType<Layouting::Item>("com.kdab.kddockwidgets.multisplitter", 2, 0,
-                                                "KDMultiSplitter", QStringLiteral("enum access"));
 
     qmlRegisterUncreatableMetaObject(KDDockWidgets::staticMetaObject, "com.kdab.dockwidgets", 2, 0, "KDDockWidgets", QStringLiteral("Enum access only"));
 }
