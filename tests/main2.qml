@@ -14,7 +14,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.12
-import com.kdab.dockwidgets 1.0 as KDDW
+import com.kdab.dockwidgets 2.0 as KDDW
 
 ApplicationWindow {
     visible: true

@@ -10,7 +10,7 @@
 */
 
 import QtQuick 2.9
-import com.kdab.dockwidgets 1.0
+import com.kdab.dockwidgets 2.0
 
 Image {
     id: root

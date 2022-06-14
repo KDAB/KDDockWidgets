@@ -11,7 +11,7 @@
 
 import QtQuick 2.9
 import QtQuick.Controls 2.12
-import com.kdab.dockwidgets 1.0 as KDDW
+import com.kdab.dockwidgets 2.0 as KDDW
 
 Guest {
     anchors.fill: parent

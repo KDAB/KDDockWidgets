@@ -10,7 +10,7 @@
 */
 
 import QtQuick 2.6
-import com.kdab.dockwidgets 1.0 as KDDW
+import com.kdab.dockwidgets 2.0 as KDDW
 
 KDDW.MainWindow {
     id: root

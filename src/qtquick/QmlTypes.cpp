@@ -25,15 +25,15 @@
 void KDDockWidgets::registerQmlTypes()
 {
     // qmlRegisterType<DropArea>("com.kdab.dockwidgets", 1, 0, "DropArea");
-    qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 1, 0, "MainWindowLayout");
-    qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 1, 0, "DockWidget");
-    qmlRegisterType<LayoutSaverInstantiator>("com.kdab.dockwidgets", 1, 0, "LayoutSaver");
+    qmlRegisterType<MainWindowInstantiator>("com.kdab.dockwidgets", 2, 0, "MainWindowLayout");
+    qmlRegisterType<DockWidgetInstantiator>("com.kdab.dockwidgets", 2, 0, "DockWidget");
+    qmlRegisterType<LayoutSaverInstantiator>("com.kdab.dockwidgets", 2, 0, "LayoutSaver");
 
-    // qmlRegisterUncreatableType<TitleBar>("com.kdab.dockwidgets", 1, 0, "TitleBar", QStringLiteral("Enum access only"));
-    qmlRegisterUncreatableType<Layouting::Item>("com.kdab.kddockwidgets.multisplitter", 1, 0,
+    // qmlRegisterUncreatableType<TitleBar>("com.kdab.dockwidgets", 2, 0, "TitleBar", QStringLiteral("Enum access only"));
+    qmlRegisterUncreatableType<Layouting::Item>("com.kdab.kddockwidgets.multisplitter", 2, 0,
                                                 "KDMultiSplitter", QStringLiteral("enum access"));
-    // qmlRegisterUncreatableType<DropIndicatorOverlay>("com.kdab.dockwidgets", 1, 0, "DropIndicatorOverlay", QStringLiteral("Enum access only"));
-    qmlRegisterUncreatableMetaObject(KDDockWidgets::staticMetaObject, "com.kdab.dockwidgets", 1, 0, "KDDockWidgets", QStringLiteral("Enum access only"));
+    // qmlRegisterUncreatableType<DropIndicatorOverlay>("com.kdab.dockwidgets", 2, 0, "DropIndicatorOverlay", QStringLiteral("Enum access only"));
+    qmlRegisterUncreatableMetaObject(KDDockWidgets::staticMetaObject, "com.kdab.dockwidgets", 2, 0, "KDDockWidgets", QStringLiteral("Enum access only"));
 
     // qRegisterMetaType<Frame *>();
     // qRegisterMetaType<DropArea *>();
