@@ -10,7 +10,7 @@
 */
 
 
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform_qtwidgets.h"

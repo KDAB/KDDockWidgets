@@ -11,7 +11,7 @@
 
 #include "MDIArea.h"
 
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/controllers/MDILayout.h"
 #include "kddockwidgets/controllers/DropArea.h"

@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 class QMargins;
 class QRect;

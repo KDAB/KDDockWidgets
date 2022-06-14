@@ -33,7 +33,7 @@
 #include "qtquick/views/TabBar_qtquick.h"
 // #include "qtquick/views/SideBar_qtquick.h"
 #include "qtquick/views/Stack_qtquick.h"
-#include "qtquick/views/MainWindow_qtquick.h"
+#include "kddockwidgets/views/MainWindow_qtquick.h"
 #include "qtquick/views/MDILayout_qtquick.h"
 #include "qtquick/views/ClassicIndicatorsWindow_qtquick.h"
 

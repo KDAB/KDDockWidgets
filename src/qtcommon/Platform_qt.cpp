@@ -10,8 +10,8 @@
 */
 
 #include "Platform_qt.h"
-#include "KDDockWidgets.h"
-#include "Window_qt.h"
+#include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/Window_qt.h"
 
 #include <QWindow>
 #include <QDebug>

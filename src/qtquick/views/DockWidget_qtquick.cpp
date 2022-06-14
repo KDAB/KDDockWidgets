@@ -10,7 +10,7 @@
 */
 
 #include "DockWidget_qtquick.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 
 #include "kddockwidgets/controllers/TitleBar.h"
 #include "kddockwidgets/controllers/DockWidget.h"

@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 #include "WindowBeingDragged_p.h"
 #include "DragController_p.h"
 #include "Logging_p.h"

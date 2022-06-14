@@ -12,7 +12,7 @@
 #include "../main.h"
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "Action.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "Config.h"
 #include "Platform.h"
 

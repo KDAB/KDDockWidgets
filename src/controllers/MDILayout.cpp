@@ -12,7 +12,7 @@
 #include "MDILayout.h"
 #include "private/multisplitter/ItemFreeContainer_p.h"
 #include "Config.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "controllers/Frame.h"
 #include "controllers/DockWidget_p.h"
 

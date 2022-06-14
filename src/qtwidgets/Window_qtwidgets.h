@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "qtcommon/Window_qt.h"
+#include "kddockwidgets/Window_qt.h"
 
 namespace KDDockWidgets {
 class DOCKS_EXPORT Window_qtwidgets : public Window_qt

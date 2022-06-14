@@ -20,8 +20,8 @@
 #define KD_MAINWINDOW_MDI_QTWIDGETS_H
 #pragma once
 
-#include "views/MainWindowMDI.h"
-#include "qtwidgets/views/MainWindow_qtwidgets.h"
+#include "kddockwidgets/views/MainWindowMDI.h"
+#include "kddockwidgets/views/MainWindow_qtwidgets.h"
 
 namespace KDDockWidgets {
 

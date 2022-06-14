@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "ViewWrapper.h"
+#include "kddockwidgets/ViewWrapper.h"
 
 #include <QQuickItem>
 #include <QPointer>

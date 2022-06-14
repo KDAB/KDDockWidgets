@@ -16,7 +16,7 @@
 #include "Config.h"
 #include "Platform.h"
 #include "Controller.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 
 #include <QGuiApplication>
 

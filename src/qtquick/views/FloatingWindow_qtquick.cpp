@@ -25,7 +25,7 @@
 #include "private/WidgetResizeHandler_p.h"
 #include "qtquick/Platform_qtquick.h"
 #include "qtquick/Window_qtquick.h"
-#include "qtquick/views/MainWindow_qtquick.h"
+#include "kddockwidgets/views/MainWindow_qtquick.h"
 #include "qtquick/views/TitleBar_qtquick.h"
 #include "qtquick/views/DropArea_qtquick.h"
 

@@ -14,8 +14,7 @@
 
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/LayoutSaver.h>
-
-#include "controllers/MainWindow.h"
+#include <kddockwidgets/controllers/MainWindow.h>
 
 #include <QMenu>
 #include <QMenuBar>

@@ -19,7 +19,7 @@
 #include "WindowBeingDragged_p.h"
 #include "Platform.h"
 #include "multisplitter/Item_p.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "Action.h"
 #include "kddockwidgets/controllers/MDILayout.h"
 #include "kddockwidgets/controllers/DropArea.h"

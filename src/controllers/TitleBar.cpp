@@ -11,7 +11,7 @@
 
 #include "TitleBar.h"
 #include "Config.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "View.h"
 #include "private/WindowBeingDragged_p.h"
 #include "private/Utils_p.h"

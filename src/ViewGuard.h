@@ -12,7 +12,7 @@
 #ifndef KDDW_VIEW_GUARD_H
 #define KDDW_VIEW_GUARD_H
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
 
 #include "kdbindings/signal.h"
 

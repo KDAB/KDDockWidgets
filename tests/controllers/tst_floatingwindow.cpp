@@ -13,7 +13,7 @@
 #include "kddockwidgets/controllers/FloatingWindow.h"
 #include "kddockwidgets/controllers/Frame.h"
 #include "kddockwidgets/controllers/DockWidget.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "Config.h"
 
 TEST_CASE("FloatingWindow Ctor")

@@ -15,7 +15,7 @@
 #ifndef KDDOCKWIDGETS_TESTING_OPERATIONS_H
 #define KDDOCKWIDGETS_TESTING_OPERATIONS_H
 
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include <QObject>
 #include <QVector>

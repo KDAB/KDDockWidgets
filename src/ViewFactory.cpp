@@ -9,7 +9,7 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 
 using namespace KDDockWidgets;
 

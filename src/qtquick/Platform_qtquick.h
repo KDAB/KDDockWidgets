@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "KDDockWidgets.h"
-#include "qtcommon/Platform_qt.h"
+#include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/Platform_qt.h"
 #include "Helpers_p.h"
 
 class QQmlEngine;

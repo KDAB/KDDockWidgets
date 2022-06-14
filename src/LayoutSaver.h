@@ -19,9 +19,9 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
 
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 QT_BEGIN_NAMESPACE
 class QByteArray;

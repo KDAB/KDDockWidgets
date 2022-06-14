@@ -18,7 +18,7 @@
 
 #include "LayoutSaver.h"
 #include "Config.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "nlohmann_qt_helpers.h"
 
 #include "private/multisplitter/Item_p.h"

@@ -15,13 +15,13 @@
 /// QtWidgets specific.
 
 #include "Platform.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 #include "../utils.h"
 #include "Config.h"
 #include "LayoutSaver.h"
 #include "LayoutSaver_p.h"
 #include "WindowBeingDragged_p.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 
 #include "multisplitter/Item_p.h"
 

@@ -13,7 +13,7 @@
 /// @brief Here lives the tests that only apply to QtQuick
 
 #include "Platform.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include "../utils.h"
 

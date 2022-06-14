@@ -136,8 +136,6 @@ if (KDDockWidgets_XLib)
   add_definitions(-DKDDockWidgets_XLIB)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src) # TODOm2 Replace with target_include_directories (PRIVATE)
-
 if(KDDockWidgets_QT6)
   set(Qt_VERSION_MAJOR 6)
   set(QT_MIN_VERSION "6.2.0")

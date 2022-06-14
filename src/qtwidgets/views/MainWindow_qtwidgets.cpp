@@ -18,7 +18,7 @@
 
 #include "MainWindow_qtwidgets.h"
 #include "Config.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 
 #include "kddockwidgets/controllers/DropArea.h"
 #include "kddockwidgets/controllers/MainWindow.h"

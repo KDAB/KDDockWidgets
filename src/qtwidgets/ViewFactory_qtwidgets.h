@@ -12,7 +12,7 @@
 #ifndef KDDOCKWIDGETS_ViewFactory_QTWIDGETS_H
 #define KDDOCKWIDGETS_ViewFactory_QTWIDGETS_H
 
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 
 // clazy:excludeall=ctor-missing-parent-argument
 

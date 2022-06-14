@@ -30,7 +30,7 @@
 #include "Stack_qtquick.h"
 
 #include "Config.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "Stack_qtquick.h"
 #include "private/WidgetResizeHandler_p.h"
 

@@ -26,7 +26,7 @@
 #include "private/multisplitter/Item_p.h"
 
 #include "Config.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 
 #include <QEvent>
 #include <QCloseEvent>

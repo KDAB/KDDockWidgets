@@ -12,8 +12,8 @@
 #ifndef KDDOCKWIDGETS_ViewFactory_H
 #define KDDOCKWIDGETS_ViewFactory_H
 
-#include "docks_export.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/KDDockWidgets.h"
 #include "View.h"
 #include "controllers/Stack.h"
 #include "controllers/TitleBar.h"

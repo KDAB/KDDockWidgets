@@ -20,10 +20,10 @@
 #ifndef KD_MAINWINDOW_BASE_H
 #define KD_MAINWINDOW_BASE_H
 
-#include "docks_export.h"
-#include "KDDockWidgets.h"
-#include "LayoutSaver.h"
-#include "Controller.h"
+#include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/LayoutSaver.h"
+#include "kddockwidgets/Controller.h"
 
 #include <QVector>
 #include <QMargins>

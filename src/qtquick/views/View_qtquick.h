@@ -11,11 +11,10 @@
 
 #pragma once
 
-#include "Controller.h"
-#include "View.h"
+#include "kddockwidgets/Controller.h"
+#include "kddockwidgets/View.h"
 #include "ViewWrapper_qtquick.h"
-#include "private/multisplitter/Item_p.h"
-#include "qtquick/Window_qtquick.h"
+#include "kddockwidgets/Window_qtquick.h"
 
 #include <QDebug>
 #include <QEvent>

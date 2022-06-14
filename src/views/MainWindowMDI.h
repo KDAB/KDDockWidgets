@@ -14,7 +14,7 @@
 #define KD_MAINWINDOW_MDI_INTERFACE_H
 #pragma once
 
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 namespace KDDockWidgets {
 

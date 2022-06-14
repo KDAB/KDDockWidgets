@@ -10,7 +10,7 @@
 */
 
 #include "Platform_qtquick.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 #include "Config.h"
 #include "QmlTypes.h"
 

@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "docks_export.h"
-#include "Platform.h"
-#include "Window_qt.h"
+#include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/Platform.h"
+#include "kddockwidgets/Window_qt.h"
 
 namespace KDDockWidgets {
 

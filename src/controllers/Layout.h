@@ -24,10 +24,11 @@
 
 #pragma once
 
-#include "View.h"
+#include "kddockwidgets/View.h"
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
+
 #include "kdbindings/signal.h"
 
 #include <QList>

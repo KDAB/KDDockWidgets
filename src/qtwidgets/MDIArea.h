@@ -13,8 +13,8 @@
 #define KDDOCKWIDGETS_MDI_AREA_H
 
 #include "kddockwidgets/docks_export.h"
-#include "KDDockWidgets.h"
-#include "qtwidgets/views/View_qtwidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
+#include "kddockwidgets/views/View_qtwidgets.h"
 
 namespace KDDockWidgets {
 

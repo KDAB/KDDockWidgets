@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include "private/Utils_p.h"
-#include "Controller.h"
-#include "View.h"
-#include "ViewWrapper_qtwidgets.h"
-#include "qtwidgets/Window_qtwidgets.h"
+#include "kddockwidgets/private/Utils_p.h"
+#include "kddockwidgets/Controller.h"
+#include "kddockwidgets/View.h"
+#include "kddockwidgets/Window_qtwidgets.h"
+#include "kddockwidgets/views/ViewWrapper_qtwidgets.h"
 
 #include <QDebug>
 #include <QEvent>

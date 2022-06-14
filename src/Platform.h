@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "docks_export.h"
+#include "kddockwidgets/docks_export.h"
 #include "ViewWrapper.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include "kdbindings/signal.h"
 

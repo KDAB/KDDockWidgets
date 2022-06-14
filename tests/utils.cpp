@@ -11,7 +11,7 @@
 
 #include "utils.h"
 #include "Config.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "Platform.h"
 #include "ViewGuard.h"
 #include "kddockwidgets/controllers/DropArea.h"

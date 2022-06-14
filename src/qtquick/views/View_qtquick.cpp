@@ -12,6 +12,7 @@
 #include "View_qtquick.h"
 #include "private/Utils_p.h"
 #include "ViewWrapper_qtquick.h"
+#include "private/multisplitter/Item_p.h"
 
 #include <qpa/qplatformwindow.h>
 #include <QGuiApplication>

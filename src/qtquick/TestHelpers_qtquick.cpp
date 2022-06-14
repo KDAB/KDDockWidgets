@@ -9,10 +9,10 @@
   Contact KDAB at <info@kdab.com> for commercial licensing options.
 */
 
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 #include "Platform_qtquick.h"
 #include "views/View_qtquick.h"
-#include "qtquick/views/MainWindow_qtquick.h"
+#include "kddockwidgets/views/MainWindow_qtquick.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 
 #include <QGuiApplication>

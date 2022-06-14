@@ -18,21 +18,21 @@
  */
 
 #include "MainWindow.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 #include "private/DockRegistry_p.h"
 #include "controllers/MDILayout.h"
 #include "controllers/DropArea.h"
 #include "private/Utils_p.h"
 #include "private/Logging_p.h"
 #include "private/WidgetResizeHandler_p.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 #include "private/LayoutSaver_p.h"
 #include "private/multisplitter/Item_p.h"
 #include "Platform.h"
 #include "controllers/DockWidget_p.h"
 #include "controllers/Frame.h"
 #include "controllers/SideBar.h"
-#include "views/MainWindow.h"
+#include "kddockwidgets/views/MainWindow.h"
 
 
 using namespace KDDockWidgets;

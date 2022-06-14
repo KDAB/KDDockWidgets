@@ -12,7 +12,7 @@
 #pragma once
 
 #include "View_qtwidgets.h"
-#include "views/TitleBar.h"
+#include "kddockwidgets/views/TitleBar.h"
 
 #include <QToolButton>
 

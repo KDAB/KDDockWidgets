@@ -13,7 +13,7 @@
 #define KD_MAIN_WINDOW_QUICK_P_H
 
 #include "View_qtquick.h"
-#include "views/MainWindow.h"
+#include "kddockwidgets/views/MainWindow.h"
 
 namespace KDDockWidgets {
 

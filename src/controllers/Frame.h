@@ -11,8 +11,7 @@
 
 #pragma once
 
-#include "Controller.h"
-
+#include "kddockwidgets/Controller.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/FocusScope.h"
 #include "DockWidget.h"

@@ -15,7 +15,7 @@
 
 #include "Platform.h"
 #include "Config.h"
-#include "ViewFactory.h"
+#include "kddockwidgets/ViewFactory.h"
 
 #include <QtTest/QtTest>
 

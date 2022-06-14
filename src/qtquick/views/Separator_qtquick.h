@@ -18,6 +18,10 @@
 
 #include <QQuickItem>
 
+namespace KDDockWidgets::Controllers {
+class Separator;
+}
+
 namespace KDDockWidgets::Views {
 
 class DOCKS_EXPORT Separator_qtquick : public View_qtquick

@@ -10,7 +10,7 @@
 */
 
 #include "Platform_qtwidgets.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include "Window_qtwidgets.h"
 #include "DebugWindow.h"

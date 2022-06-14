@@ -19,8 +19,8 @@
 #ifndef KD_DOCKWIDGETS_CONFIG_H
 #define KD_DOCKWIDGETS_CONFIG_H
 
-#include "docks_export.h"
-#include "KDDockWidgets.h"
+#include "kddockwidgets/docks_export.h"
+#include "kddockwidgets/KDDockWidgets.h"
 
 #include <qglobal.h>
 
