@@ -40,6 +40,14 @@ public:
     QString uniqueName() const;
     QString title() const;
     void setTitle(const QString &);
+    void setAsCurrentTab();
+    QAction *toggleAction() const;
+    QAction *floatAction() const;
+    bool isOpen() const;
+    void forceClose();
+    void show();
+    void raise();
+    void moveToSideBar();
 
 protected:
     Controllers::DockWidget *const m_dockWidget;

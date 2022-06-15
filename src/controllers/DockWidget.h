@@ -180,13 +180,13 @@ public:
      * @brief Returns the QAction that allows to hide/show the dock widget
      * Useful to put in menus.
      */
-    Q_INVOKABLE QAction *toggleAction() const;
+    QAction *toggleAction() const;
 
     /**
      * @brief Returns the QAction that allows to dock/undock the dock widget
      * Useful to put in menus.
      */
-    Q_INVOKABLE QAction *floatAction() const;
+    QAction *floatAction() const;
 
     /**
      * @brief the dock widget's unique name.
@@ -260,8 +260,7 @@ public:
     /**
      * @brief Makes this dock widget current in its tab group.
      */
-    Q_INVOKABLE void setAsCurrentTab();
-
+    void setAsCurrentTab();
 
     /**
      * @brief Returns which tab index this dock widget occupies in the tab widget it's contained in
@@ -291,7 +290,7 @@ public:
      * @brief Like QWidget::close() but the hosted widget won't be asked if we
      * should close.
      */
-    Q_INVOKABLE void forceClose();
+    void forceClose();
 
     /**
      * @brief Returns this dock widget's title bar.
@@ -305,7 +304,7 @@ public:
      * @brief Returns whether this dock widget is open.
      * Equivalent to calling toggleAction().isChecked() or isVisible()
      */
-    Q_INVOKABLE bool isOpen() const;
+    bool isOpen() const;
 
     /**
      * @brief Sets the affinity names. Dock widgets can only dock into dock widgets of the same affinity.
@@ -336,7 +335,7 @@ public:
     QStringList affinities() const;
 
     /// @brief Equivalent to QWidget::show(), but it's optimized to reduce flickering on some platforms
-    Q_INVOKABLE void show();
+    void show();
 
     /// @brief Brings the dock widget to the front.
     ///
@@ -345,7 +344,7 @@ public:
     /// - If the dock widget is floating, QWindow::raise() is called.
     ///
     /// This only applies if the dock widget is already open. If closed, does nothing.
-    Q_INVOKABLE void raise();
+    void raise();
 
     /**
      * @brief Returns whether widget() is a KDDockWidget::MainWindow
@@ -387,7 +386,7 @@ public:
      * The dockwidget will initially be visible and overlayed on top of the current layout (this is
      * the auto-hide feature).
      */
-    Q_INVOKABLE void moveToSideBar();
+    void moveToSideBar();
 
     /// @brief Returns whether this dock widget is overlayed from the side-bar.
     ///

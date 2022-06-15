@@ -49,6 +49,9 @@ class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick, public Views
     Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
 public:
+    using Views::DockWidgetViewInterface::raise;
+    using Views::DockWidgetViewInterface::show;
+
     /**
      * @brief constructs a new DockWidget
      * @param uniqueName the name of the dockwidget, should be unique. Use title for user visible text.
@@ -93,6 +96,17 @@ public:
     /// @brief Called by QtQuick when min-size changes
     Q_INVOKABLE void onGeometryUpdated();
 
+#ifdef Q_MOC_RUN
+    // DockWidgetViewInterface is not a QObject, so trick moc
+    Q_INVOKABLE QAction *toggleAction() const;
+    Q_INVOKABLE QAction *floatAction() const;
+    Q_INVOKABLE void setAsCurrentTab();
+    Q_INVOKABLE void forceClose();
+    Q_INVOKABLE bool isOpen() const;
+    Q_INVOKABLE void show();
+    Q_INVOKABLE void raise();
+    Q_INVOKABLE void moveToSideBar();
+#endif
 Q_SIGNALS:
     /// @brief The geometry of the frame container this dock widget is in changed
     /// For example, when dragging a dockwidget

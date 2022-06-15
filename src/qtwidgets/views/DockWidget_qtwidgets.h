@@ -39,6 +39,9 @@ class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>, public
 {
     Q_OBJECT
 public:
+    using Views::DockWidgetViewInterface::raise;
+    using Views::DockWidgetViewInterface::show;
+
     /**
      * @brief constructs a new DockWidget
      * @param uniqueName Mandatory name that should be unique between all DockWidget instances.

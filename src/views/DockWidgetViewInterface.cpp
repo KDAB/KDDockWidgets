@@ -69,4 +69,44 @@ void DockWidgetViewInterface::setFloating(bool is)
     m_dockWidget->setFloating(is);
 }
 
+QAction *DockWidgetViewInterface::toggleAction() const
+{
+    return m_dockWidget->toggleAction();
+}
+
+QAction *DockWidgetViewInterface::floatAction() const
+{
+    return m_dockWidget->floatAction();
+}
+
+void DockWidgetViewInterface::setAsCurrentTab()
+{
+    m_dockWidget->setAsCurrentTab();
+}
+
+bool DockWidgetViewInterface::isOpen() const
+{
+    return m_dockWidget->isOpen();
+}
+
+void DockWidgetViewInterface::forceClose()
+{
+    m_dockWidget->forceClose();
+}
+
+void DockWidgetViewInterface::show()
+{
+    m_dockWidget->show();
+}
+
+void DockWidgetViewInterface::raise()
+{
+    m_dockWidget->raise();
+}
+
+void DockWidgetViewInterface::moveToSideBar()
+{
+    m_dockWidget->moveToSideBar();
+}
+
 } // namespace
