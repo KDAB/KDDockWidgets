@@ -100,32 +100,10 @@ public:
     Q_INVOKABLE void setPersistentCentralWidget(std::shared_ptr<ViewWrapper> widget);
     std::shared_ptr<ViewWrapper> persistentCentralWidget() const;
 
-    /**
-     * @brief Returns the unique name that was passed via constructor.
-     *        Used internally by the save/restore mechanism.
-     * @internal
-     */
-    QString uniqueName() const;
-
 
     /// @brief Returns the main window options that were passed via constructor.
     MainWindowOptions options() const;
 
-    ///@internal
-    ///@brief returns the drop area.
-    DropArea *dropArea() const;
-
-    ///@internal
-    ///@brief returns the MultiSplitter.
-    DropArea *multiSplitter() const;
-
-    ///@internal
-    ///@brief returns the MultiSplitter.
-    Layout *layout() const;
-
-    ///@internal
-    ///@brief Returns the MDI layout. Or nullptr if this isn't a MDI main window
-    MDILayout *mdiLayoutWidget() const;
 
     /**
      * @brief Sets the affinities names. Dock widgets can only dock into main windows of the same affinity.
@@ -216,6 +194,30 @@ public:
 
     /// @brief Returns the side bar at the specified location
     Controllers::SideBar *sideBar(SideBarLocation) const;
+
+    // Internal public API:
+
+    ///@internal
+    ///@brief returns the drop area.
+    DropArea *dropArea() const;
+
+    ///@internal
+    ///@brief returns the MultiSplitter.
+    DropArea *multiSplitter() const;
+
+    ///@internal
+    ///@brief returns the MultiSplitter.
+    Layout *layout() const;
+
+    ///@internal
+    ///@brief Returns the MDI layout. Or nullptr if this isn't a MDI main window
+    MDILayout *mdiLayoutWidget() const;
+
+
+    /// @brief Returns the unique name that was passed via constructor.
+    ///        Used internally by the save/restore mechanism.
+    /// @internal
+    QString uniqueName() const;
 
 protected:
     void setUniqueName(const QString &uniqueName);

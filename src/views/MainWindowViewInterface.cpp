@@ -41,6 +41,11 @@ QStringList MainWindowViewInterface::affinities() const
     return m_mainWindow->affinities();
 }
 
+void MainWindowViewInterface::setAffinities(const QStringList &names)
+{
+    m_mainWindow->setAffinities(names);
+}
+
 MainWindowOptions MainWindowViewInterface::options() const
 {
     return m_mainWindow->options();
@@ -49,6 +54,31 @@ MainWindowOptions MainWindowViewInterface::options() const
 bool MainWindowViewInterface::isMDI() const
 {
     return m_mainWindow->isMDI();
+}
+
+bool MainWindowViewInterface::closeDockWidgets(bool force)
+{
+    return m_mainWindow->closeDockWidgets(force);
+}
+
+bool MainWindowViewInterface::sideBarIsVisible(KDDockWidgets::SideBarLocation loc) const
+{
+    return m_mainWindow->sideBarIsVisible(loc);
+}
+
+void MainWindowViewInterface::clearSideBarOverlay(bool deleteFrame)
+{
+    m_mainWindow->clearSideBarOverlay(deleteFrame);
+}
+
+void MainWindowViewInterface::layoutEqually()
+{
+    m_mainWindow->layoutEqually();
+}
+
+bool MainWindowViewInterface::anySideBarIsVisible() const
+{
+    return m_mainWindow->anySideBarIsVisible();
 }
 
 }
