@@ -116,6 +116,7 @@ public:
     SideBarLocation preferredSideBar(Controllers::DockWidget *) const;
     void updateOverlayGeometry(QSize suggestedSize);
     void clearSideBars();
+    QRect windowGeometry() const;
 
     QString name;
     QStringList affinities;
@@ -510,6 +511,20 @@ void MainWindow::Private::clearSideBars()
     }
 }
 
+QRect MainWindow::Private::windowGeometry() const
+{
+    /// @brief Returns the window geometry
+    /// This is usually the same as the view's geometry()
+    /// But fixes the following special cases:
+    /// - QWidgets: Our MainWindow is embedded in another widget
+    /// - QtQuick: Our MainWindow is QQuickItem
+
+    if (Window::Ptr window = q->view()->window())
+        return window->geometry();
+
+    return q->window()->geometry();
+}
+
 void MainWindow::moveToSideBar(Controllers::DockWidget *dw)
 {
     moveToSideBar(dw, d->preferredSideBar(dw));
@@ -758,7 +773,7 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     Window::Ptr window = view()->window();
 
     m.options = options();
-    m.geometry = windowGeometry();
+    m.geometry = d->windowGeometry();
     m.normalGeometry = view()->normalGeometry();
     m.isVisible = isVisible();
     m.uniqueName = uniqueName();
@@ -778,14 +793,6 @@ LayoutSaver::MainWindow MainWindow::serialize() const
     }
 
     return m;
-}
-
-QRect MainWindow::windowGeometry() const
-{
-    if (Window::Ptr window = view()->window())
-        return window->geometry();
-
-    return window()->geometry();
 }
 
 void MainWindow::setPersistentCentralWidget(std::shared_ptr<ViewWrapper> widget)

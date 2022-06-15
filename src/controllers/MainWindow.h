@@ -213,13 +213,7 @@ public:
     /// if all dock widgets were closed (0 or more)
     Q_INVOKABLE bool closeDockWidgets(bool force = false);
 
-    /// @brief Returns the window geometry
-    /// This is usually the same as MainWindowBase::geometry()
-    /// But fixes the following special cases:
-    /// - QWidgets: Our MainWindow is embedded in another widget
-    /// - QtQuick: Our MainWindow is QQuickItem
-    QRect windowGeometry() const;
-
+    /// @brief Sets the content's margins
     void setContentsMargins(int, int, int, int);
 
     /// @brief Returns the side bar at the specified location
