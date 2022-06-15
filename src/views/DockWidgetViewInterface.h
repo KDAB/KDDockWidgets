@@ -25,7 +25,11 @@ namespace Views {
 class DOCKS_EXPORT DockWidgetViewInterface
 {
 public:
+    explicit DockWidgetViewInterface(Controllers::DockWidget *);
     virtual ~DockWidgetViewInterface();
+
+protected:
+    Controllers::DockWidget *const m_dockWidget;
 };
 
 }

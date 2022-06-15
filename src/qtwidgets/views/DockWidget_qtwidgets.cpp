@@ -48,6 +48,7 @@ DockWidget_qtwidgets::DockWidget_qtwidgets(const QString &uniqueName,
                                            Controllers::DockWidget::LayoutSaverOptions layoutSaverOptions,
                                            Qt::WindowFlags windowFlags)
     : View_qtwidgets<QWidget>(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget, nullptr, windowFlags)
+    , Views::DockWidgetViewInterface(asDockWidgetController())
     , d(new Private(this, static_cast<DockWidget *>(controller())))
 {
     init();

@@ -12,5 +12,12 @@
 #include "DockWidgetViewInterface.h"
 
 namespace KDDockWidgets::Views {
-DockWidgetViewInterface::~DockWidgetViewInterface() = default;
+
+DockWidgetViewInterface::DockWidgetViewInterface(Controllers::DockWidget *controller)
+    : m_dockWidget(controller)
+{
 }
+
+DockWidgetViewInterface::~DockWidgetViewInterface() = default;
+
+} // namespace
