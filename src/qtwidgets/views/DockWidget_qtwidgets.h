@@ -75,8 +75,6 @@ public:
     /// @brief Returns the guest widget
     QWidget *widget() const;
 
-    // TODOm2: Add show to the views
-
 protected:
     void init() override;
     bool event(QEvent *) override;
