@@ -387,7 +387,6 @@ QStringList DockWidget::affinities() const
 
 void DockWidget::show()
 {
-    // TODOm2: show wont be called. move to view instead.
     if (view()->isRootView() && (d->m_lastPosition->wasFloating() || !d->m_lastPosition->isValid())) {
         // Create the FloatingWindow already, instead of waiting for the show event.
         // This reduces flickering on some platforms
@@ -665,7 +664,7 @@ void DockWidget::Private::toggle(bool enabled)
     } else {
         // The most common case. The dock widget is not in the sidebar. just close or open it.
         if (enabled) {
-            show();
+            q->show();
         } else {
             q->view()->close();
         }
@@ -811,12 +810,6 @@ int DockWidget::Private::currentTabIndex() const
 void DockWidget::Private::saveTabIndex()
 {
     m_lastPosition->saveTabIndex(currentTabIndex(), q->isFloating());
-}
-
-void DockWidget::Private::show()
-{
-    // Only show for now
-    q->show();
 }
 
 void DockWidget::onParentChanged()

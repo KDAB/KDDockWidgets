@@ -123,7 +123,6 @@ public:
     void updateFloatAction();
     void onDockWidgetShown();
     void onDockWidgetHidden();
-    void show();
     void close();
     bool restoreToPreviousPosition();
     void maybeRestoreToPreviousPosition();

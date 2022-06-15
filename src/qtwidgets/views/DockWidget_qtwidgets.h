@@ -70,6 +70,8 @@ public:
      */
     void setWidget(QWidget *widget);
 
+    // TODOm2: Add show to the views
+
 protected:
     void init() override;
     bool event(QEvent *) override;
