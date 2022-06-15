@@ -52,7 +52,18 @@ public:
     explicit Private(MainWindow *mainWindow, const QString &, MainWindowOptions options)
         : m_options(options)
         , q(mainWindow)
+        , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
     {
+    }
+
+    void init()
+    {
+        if (m_supportsAutoHide) {
+            for (auto location : { SideBarLocation::North, SideBarLocation::East,
+                                   SideBarLocation::West, SideBarLocation::South }) {
+                m_sideBars.insert(location, new Controllers::SideBar(location, q));
+            }
+        }
     }
 
     bool supportsCentralFrame() const
@@ -111,9 +122,11 @@ public:
     const MainWindowOptions m_options;
     MainWindow *const q;
     QPointer<Controllers::DockWidget> m_overlayedDockWidget;
+    QHash<SideBarLocation, Controllers::SideBar *> m_sideBars;
     Layout *m_layout = nullptr;
     Controllers::DockWidget *m_persistentCentralDockWidget = nullptr;
     KDBindings::ScopedConnection m_visibleWidgetCountConnection;
+    const bool m_supportsAutoHide;
 };
 
 MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions options)
@@ -124,6 +137,7 @@ MainWindow::MainWindow(View *view, const QString &uniqueName, MainWindowOptions 
 
 void MainWindow::init(const QString &name)
 {
+    d->init();
     d->m_layout = createLayoutWidget(this, d->m_options);
 
     d->m_persistentCentralDockWidget = d->createPersistentCentralDockWidget(d->name);
@@ -810,8 +824,7 @@ QMargins MainWindow::centerWidgetMargins() const
 
 Controllers::SideBar *MainWindow::sideBar(SideBarLocation loc) const
 {
-    auto v = dynamic_cast<Views::MainWindowViewInterface *>(view());
-    return v->sideBar(loc);
+    return d->m_sideBars.value(loc);
 }
 
 QRect MainWindow::centralAreaGeometry() const

@@ -35,7 +35,6 @@ public:
     virtual QMargins centerWidgetMargins() const = 0;
     virtual QRect centralAreaGeometry() const = 0;
     virtual void setContentsMargins(int left, int top, int right, int bottom) = 0;
-    virtual Controllers::SideBar *sideBar(SideBarLocation loc) const = 0;
 
     /// @brief Returns the main window controller
     Controllers::MainWindow *mainWindow() const;

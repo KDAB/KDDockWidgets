@@ -222,10 +222,12 @@ public:
 
     void setContentsMargins(int, int, int, int);
 
+    /// @brief Returns the side bar at the specified location
+    Controllers::SideBar *sideBar(SideBarLocation) const;
+
 protected:
     void setUniqueName(const QString &uniqueName);
     QMargins centerWidgetMargins() const;
-    Controllers::SideBar *sideBar(SideBarLocation) const;
     QRect centralAreaGeometry() const;
 
 Q_SIGNALS:

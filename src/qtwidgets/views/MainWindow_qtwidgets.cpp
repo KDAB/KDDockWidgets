@@ -71,26 +71,20 @@ public:
 
     void init()
     {
-        if (m_supportsAutoHide) {
-            for (auto location : { SideBarLocation::North, SideBarLocation::East,
-                                   SideBarLocation::West, SideBarLocation::South }) {
-                m_sideBars.insert(location, new Controllers::SideBar(location, m_controller));
-            }
-        }
 
         m_layout->setSpacing(0);
         updateMargins();
 
         if (m_supportsAutoHide) {
-            m_layout->addWidget(View_qtwidgets::asQWidget(q->sideBar(SideBarLocation::West)->view()));
+            m_layout->addWidget(View_qtwidgets::asQWidget(m_controller->sideBar(SideBarLocation::West)->view()));
             auto innerVLayout = new QVBoxLayout();
             innerVLayout->setSpacing(0);
             innerVLayout->setContentsMargins(0, 0, 0, 0);
-            innerVLayout->addWidget(View_qtwidgets::asQWidget(q->sideBar(SideBarLocation::North)));
+            innerVLayout->addWidget(View_qtwidgets::asQWidget(m_controller->sideBar(SideBarLocation::North)));
             innerVLayout->addWidget(View_qtwidgets::asQWidget(m_controller->layout()));
-            innerVLayout->addWidget(View_qtwidgets::asQWidget(q->sideBar(SideBarLocation::South)));
+            innerVLayout->addWidget(View_qtwidgets::asQWidget(m_controller->sideBar(SideBarLocation::South)));
             m_layout->addLayout(innerVLayout);
-            m_layout->addWidget(View_qtwidgets::asQWidget(q->sideBar(SideBarLocation::East)));
+            m_layout->addWidget(View_qtwidgets::asQWidget(m_controller->sideBar(SideBarLocation::East)));
         } else {
             m_layout->addWidget(qobject_cast<QWidget *>(m_controller->layout()->view()->asQObject()));
         }
@@ -113,7 +107,6 @@ public:
     MainWindow_qtwidgets *const q;
     Controllers::MainWindow *const m_controller;
     const bool m_supportsAutoHide;
-    QHash<SideBarLocation, Controllers::SideBar *> m_sideBars; // TODOm3: Move to controller
     MyCentralWidget *const m_centralWidget;
     QHBoxLayout *const m_layout;
     KDBindings::ConnectionHandle m_connection;
@@ -151,11 +144,6 @@ void MainWindow_qtwidgets::init()
 void MainWindow_qtwidgets::setCentralWidget(QWidget *w)
 {
     QMainWindow::setCentralWidget(w);
-}
-
-Controllers::SideBar *MainWindow_qtwidgets::sideBar(SideBarLocation location) const
-{
-    return d->m_sideBars.value(location);
 }
 
 QMargins MainWindow_qtwidgets::centerWidgetMargins() const

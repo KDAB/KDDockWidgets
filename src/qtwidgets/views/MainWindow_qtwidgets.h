@@ -58,9 +58,6 @@ public:
     /// @brief Destructor
     ~MainWindow_qtwidgets() override;
 
-    /// @brief returns the sidebar for the specified location
-    Controllers::SideBar *sideBar(SideBarLocation) const override;
-
     /// @brief returns the margins for the contents widget
     QMargins centerWidgetMargins() const override;
 

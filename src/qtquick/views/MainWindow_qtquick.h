@@ -48,7 +48,6 @@ public:
     QSize maximumSize() const override;
 
 protected:
-    Controllers::SideBar *sideBar(SideBarLocation) const override;
     QMargins centerWidgetMargins() const override;
     QRect centralAreaGeometry() const override;
     void setContentsMargins(int left, int top, int right, int bottom) override;

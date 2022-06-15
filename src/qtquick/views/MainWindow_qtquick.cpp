@@ -89,11 +89,6 @@ QSize MainWindow_qtquick::maximumSize() const
     return m_mainWindow->layout()->layoutMaximumSizeHint();
 }
 
-Controllers::SideBar *MainWindow_qtquick::sideBar(SideBarLocation) const
-{
-    return nullptr;
-}
-
 QMargins MainWindow_qtquick::centerWidgetMargins() const
 {
     qDebug() << Q_FUNC_INFO << "SideBar hasn't been implemented yet";
