@@ -22,9 +22,6 @@
 #include <QGuiApplication>
 #include <QCommandLineParser>
 
-// TODOm2 For my own debugging, until we have better API
-#include "../../src/controllers/MDILayout.h"
-
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_WIN
