@@ -35,6 +35,12 @@ class DOCKS_EXPORT MainWindow_qtquick : public Views::View_qtquick, public MainW
 {
     Q_OBJECT
 public:
+    ///@brief Constructor. Use it as you would use QMainWindow.
+    ///@param uniqueName Mandatory name that should be unique between all MainWindow instances.
+    ///       This name won't be user visible and just used internally for the save/restore.
+    ///@param options optional MainWindowOptions to use
+    ///@param parent Visual parent item.
+    ///@param flags Window flags to pass to top-level window, in case we're constructing it too
     explicit MainWindow_qtquick(const QString &uniqueName,
                                 MainWindowOptions options = {},
                                 QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
