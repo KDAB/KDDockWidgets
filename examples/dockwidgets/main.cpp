@@ -16,8 +16,6 @@
 #include <kddockwidgets/Config.h>
 #include <kddockwidgets/ViewFactory.h>
 
-#include "kddockwidgets/controllers/MainWindow.h"
-
 #include <QStyleFactory>
 #include <QApplication>
 #include <QDebug>
@@ -334,8 +332,7 @@ int main(int argc, char **argv)
                                                    false, false, restoreIsRelative, false,
                                                    false, affinity);
 
-        dockableMainWindow->mainWindow()->setAffinities({ affinity }); // TODOm2: Add the MainWindow API to the views too
-
+        dockableMainWindow->setAffinities({ affinity });
         dockableMainWindow->setStyleSheet(QStringLiteral("background: yellow"));
 
         dockableMainWindow->setWindowTitle("Dockable Main Window");

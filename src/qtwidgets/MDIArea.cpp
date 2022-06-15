@@ -12,6 +12,7 @@
 #include "MDIArea.h"
 
 #include "kddockwidgets/ViewFactory.h"
+#include "kddockwidgets/views/DockWidgetViewInterface.h"
 #include "kddockwidgets/controllers/DockWidget.h"
 #include "kddockwidgets/controllers/MDILayout.h"
 #include "kddockwidgets/controllers/DropArea.h"
@@ -80,6 +81,24 @@ void MDIArea::moveDockWidget(Controllers::DockWidget *dw, QPoint pos)
 void MDIArea::resizeDockWidget(Controllers::DockWidget *dw, QSize size)
 {
     d->layout->resizeDockWidget(dw, size);
+}
+
+void MDIArea::addDockWidget(Views::DockWidgetViewInterface *dwView, QPoint localPt, InitialOption addingOption)
+{
+    auto dw = dwView ? dwView->dockWidget() : nullptr;
+    addDockWidget(dw, localPt, addingOption);
+}
+
+void MDIArea::moveDockWidget(Views::DockWidgetViewInterface *dwView, QPoint pos)
+{
+    auto dw = dwView ? dwView->dockWidget() : nullptr;
+    moveDockWidget(dw, pos);
+}
+
+void MDIArea::resizeDockWidget(Views::DockWidgetViewInterface *dwView, QSize size)
+{
+    auto dw = dwView ? dwView->dockWidget() : nullptr;
+    resizeDockWidget(dw, size);
 }
 
 QList<Controllers::Frame *> MDIArea::frames() const

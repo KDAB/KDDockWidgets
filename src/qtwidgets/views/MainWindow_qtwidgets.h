@@ -41,6 +41,8 @@ class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>, pu
 {
     Q_OBJECT
 public:
+    using MainWindowViewInterface::addDockWidget; // don't consider QMainWindow's one
+
     ///@brief Constructor. Use it as you would use QMainWindow.
     ///@param uniqueName Mandatory name that should be unique between all MainWindow instances.
     ///       This name won't be user visible and just used internally for the save/restore.

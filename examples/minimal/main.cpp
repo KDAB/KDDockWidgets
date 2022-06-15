@@ -11,11 +11,9 @@
 
 #include "MyWidget.h"
 
-#include <kddockwidgets/DockWidget.h>
+#include <kddockwidgets/DockWidget.h> // TODOm2
 #include <kddockwidgets/views/MainWindow_qtwidgets.h>
 #include <kddockwidgets/views/DockWidget_qtwidgets.h>
-
-#include "kddockwidgets/controllers/MainWindow.h"
 
 #include <QStyleFactory>
 #include <QApplication>
@@ -72,16 +70,16 @@ int main(int argc, char **argv)
     dock5->setWidget(widget5);
 
     // 3. Add them to the main window
-    mainWindow.mainWindow()->addDockWidget(dock1->dockWidget(), KDDockWidgets::Location_OnLeft);
-    mainWindow.mainWindow()->addDockWidget(dock2->dockWidget(), KDDockWidgets::Location_OnTop);
+    mainWindow.addDockWidget(dock1, KDDockWidgets::Location_OnLeft);
+    mainWindow.addDockWidget(dock2, KDDockWidgets::Location_OnTop);
 
     // 4. Add dock3 to the right of dock2
-    mainWindow.mainWindow()->addDockWidget(dock3->dockWidget(), KDDockWidgets::Location_OnRight, dock2->dockWidget());
+    mainWindow.addDockWidget(dock3, KDDockWidgets::Location_OnRight, dock2);
 
     // 5. dock4 is docked at the bottom, with 200px height
     const QSize preferredSize(QSize(/*ignored*/ 0, 200));
-    mainWindow.mainWindow()->addDockWidget(dock4->dockWidget(), KDDockWidgets::Location_OnBottom,
-                                           nullptr, preferredSize);
+    mainWindow.addDockWidget(dock4, KDDockWidgets::Location_OnBottom,
+                             nullptr, preferredSize);
 
 
     // 5. dock5 will be its own top level (floating window)

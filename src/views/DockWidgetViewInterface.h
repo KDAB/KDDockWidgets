@@ -49,6 +49,15 @@ public:
     void raise();
     void moveToSideBar();
 
+    void addDockWidgetAsTab(DockWidgetViewInterface *other,
+                            KDDockWidgets::InitialOption initialOption = {});
+
+    void
+    addDockWidgetToContainingWindow(DockWidgetViewInterface *other,
+                                    KDDockWidgets::Location location,
+                                    DockWidgetViewInterface *relativeTo = nullptr,
+                                    KDDockWidgets::InitialOption initialOption = {});
+
 protected:
     Controllers::DockWidget *const m_dockWidget;
 };

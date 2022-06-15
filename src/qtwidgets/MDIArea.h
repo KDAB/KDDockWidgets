@@ -24,6 +24,9 @@ class DockWidget;
 class MDILayout;
 }
 
+namespace Views {
+class DockWidgetViewInterface;
+}
 /**
  * @brief MDIArea allows to host dock widget in MDI mode.
  * This is an alternative to using a full blown MainWindowMDI.
@@ -48,6 +51,11 @@ public:
 
     /// @brief Sets the size of dock widget @p dw to @p size
     void resizeDockWidget(Controllers::DockWidget *dw, QSize size);
+
+    /// @brief overloads
+    void addDockWidget(Views::DockWidgetViewInterface *, QPoint localPt, InitialOption addingOption = {});
+    void moveDockWidget(Views::DockWidgetViewInterface *, QPoint pos);
+    void resizeDockWidget(Views::DockWidgetViewInterface *, QSize size);
 
     /// @brief Returns the list of frames in this MDI Area
     /// Each Frame object represents a 'window' emebedded in the MDI Area

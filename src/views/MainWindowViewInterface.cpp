@@ -10,6 +10,7 @@
 */
 
 #include "MainWindowViewInterface.h"
+#include "DockWidgetViewInterface.h"
 #include "kddockwidgets/controllers/MainWindow.h"
 
 namespace KDDockWidgets::Views {
@@ -76,9 +77,61 @@ void MainWindowViewInterface::layoutEqually()
     m_mainWindow->layoutEqually();
 }
 
+void MainWindowViewInterface::addDockWidgetAsTab(DockWidgetViewInterface *dockView)
+{
+    auto dw = dockView ? dockView->dockWidget() : nullptr;
+    m_mainWindow->addDockWidgetAsTab(dw);
+}
+
+void MainWindowViewInterface::addDockWidget(DockWidgetViewInterface *dockView,
+                                            KDDockWidgets::Location location,
+                                            DockWidgetViewInterface *relativeToDockView,
+                                            KDDockWidgets::InitialOption initialOption)
+{
+    auto dw = dockView ? dockView->dockWidget() : nullptr;
+    auto relativeTo = relativeToDockView ? relativeToDockView->dockWidget() : nullptr;
+    m_mainWindow->addDockWidget(dw, location, relativeTo, initialOption);
+}
+
 bool MainWindowViewInterface::anySideBarIsVisible() const
 {
     return m_mainWindow->anySideBarIsVisible();
+}
+
+void MainWindowViewInterface::moveToSideBar(DockWidgetViewInterface *dockView)
+{
+    auto dw = dockView ? dockView->dockWidget() : nullptr;
+    m_mainWindow->moveToSideBar(dw);
+}
+
+void MainWindowViewInterface::moveToSideBar(DockWidgetViewInterface *dockView, KDDockWidgets::SideBarLocation loc)
+{
+    auto dw = dockView ? dockView->dockWidget() : nullptr;
+    m_mainWindow->moveToSideBar(dw, loc);
+}
+
+void MainWindowViewInterface::restoreFromSideBar(DockWidgetViewInterface *dockView)
+{
+    auto dw = dockView ? dockView->dockWidget() : nullptr;
+    m_mainWindow->restoreFromSideBar(dw);
+}
+
+void MainWindowViewInterface::overlayOnSideBar(DockWidgetViewInterface *dockView)
+{
+    auto dw = dockView ? dockView->dockWidget() : nullptr;
+    m_mainWindow->overlayOnSideBar(dw);
+}
+
+void MainWindowViewInterface::toggleOverlayOnSideBar(DockWidgetViewInterface *dockView)
+{
+    auto dw = dockView ? dockView->dockWidget() : nullptr;
+    m_mainWindow->toggleOverlayOnSideBar(dw);
+}
+
+void MainWindowViewInterface::layoutParentContainerEqually(DockWidgetViewInterface *dockView)
+{
+    auto dw = dockView ? dockView->dockWidget() : nullptr;
+    m_mainWindow->layoutParentContainerEqually(dw);
 }
 
 }

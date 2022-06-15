@@ -106,11 +106,11 @@ int main(int argc, char *argv[])
     auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
     dw3->setGuestItem(QStringLiteral("qrc:/Guest3.qml"));
 
-    dw1->dockWidget()->addDockWidgetToContainingWindow(dw3->dockWidget(), KDDockWidgets::Location_OnRight);
+    dw1->addDockWidgetToContainingWindow(dw3, KDDockWidgets::Location_OnRight);
 
     // Access the main area we created in QML with DockingArea {}
     auto mainArea = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst();
-    mainArea->addDockWidget(dw2->dockWidget(), KDDockWidgets::Location_OnTop);
+    mainArea->addDockWidget(dw2->dockWidget(), KDDockWidgets::Location_OnTop); // TODOm3: Don't require the ctrl
 
     return app.exec();
 }

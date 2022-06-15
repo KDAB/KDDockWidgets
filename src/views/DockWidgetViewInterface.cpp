@@ -109,4 +109,21 @@ void DockWidgetViewInterface::moveToSideBar()
     m_dockWidget->moveToSideBar();
 }
 
+void DockWidgetViewInterface::addDockWidgetAsTab(DockWidgetViewInterface *other,
+                                                 KDDockWidgets::InitialOption initialOption)
+{
+    Controllers::DockWidget *dw = other ? other->dockWidget() : nullptr;
+    m_dockWidget->addDockWidgetAsTab(dw, initialOption);
+}
+
+void DockWidgetViewInterface::addDockWidgetToContainingWindow(DockWidgetViewInterface *other,
+                                                              KDDockWidgets::Location location,
+                                                              DockWidgetViewInterface *relativeTo,
+                                                              KDDockWidgets::InitialOption initialOption)
+{
+    Controllers::DockWidget *dw = other ? other->dockWidget() : nullptr;
+    Controllers::DockWidget *relativeToDw = relativeTo ? relativeTo->dockWidget() : nullptr;
+    m_dockWidget->addDockWidgetToContainingWindow(dw, location, relativeToDw, initialOption);
+}
+
 } // namespace

@@ -121,8 +121,8 @@ public:
      * shown.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetToContainingWindow()
      */
-    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other,
-                                        KDDockWidgets::InitialOption initialOption = {});
+    void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *other,
+                            KDDockWidgets::InitialOption initialOption = {});
 
     /**
      * @brief docks @p other widget into the window that contains this one.
@@ -136,7 +136,7 @@ public:
      * @param initialOption Allows to specify some extra options that are used while docking.
      * @sa MainWindow::addDockWidget(), DockWidget::addDockWidgetAsTab()
      */
-    Q_INVOKABLE void
+    void
     addDockWidgetToContainingWindow(KDDockWidgets::Controllers::DockWidget *other,
                                     KDDockWidgets::Location location,
                                     KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,

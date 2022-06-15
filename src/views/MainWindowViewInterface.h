@@ -26,6 +26,8 @@ class MainWindow;
 
 namespace Views {
 
+class DockWidgetViewInterface;
+
 /// @brief The interface that MainWindow views should implement
 class DOCKS_EXPORT MainWindowViewInterface
 {
@@ -53,6 +55,19 @@ public:
     Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
     Q_INVOKABLE void layoutEqually();
     Q_INVOKABLE bool anySideBarIsVisible() const;
+
+    void addDockWidgetAsTab(DockWidgetViewInterface *dockwidget);
+    void addDockWidget(DockWidgetViewInterface *dockWidget,
+                       KDDockWidgets::Location location,
+                       DockWidgetViewInterface *relativeTo = nullptr,
+                       KDDockWidgets::InitialOption initialOption = {});
+
+    void moveToSideBar(DockWidgetViewInterface *);
+    void moveToSideBar(DockWidgetViewInterface *, KDDockWidgets::SideBarLocation);
+    void restoreFromSideBar(DockWidgetViewInterface *);
+    void overlayOnSideBar(DockWidgetViewInterface *);
+    void toggleOverlayOnSideBar(DockWidgetViewInterface *);
+    void layoutParentContainerEqually(DockWidgetViewInterface *);
 
 protected:
     void init(const QString &name);
