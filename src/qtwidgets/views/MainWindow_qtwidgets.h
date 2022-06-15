@@ -79,7 +79,6 @@ public:
     void init() override;
 
 protected:
-    void resizeEvent(QResizeEvent *) override;
     QRect centralAreaGeometry() const override;
 
 private:

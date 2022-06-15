@@ -93,6 +93,12 @@ public:
         return m_layout->asDropArea();
     }
 
+    void onResized(QSize)
+    {
+        if (m_overlayedDockWidget)
+            updateOverlayGeometry(m_overlayedDockWidget->d->frame()->size());
+    }
+
     CursorPositions allowedResizeSides(SideBarLocation loc) const;
 
     QRect rectForOverlay(Controllers::Frame *, SideBarLocation) const;
@@ -684,12 +690,6 @@ void MainWindow::setUniqueName(const QString &uniqueName)
     } else {
         qWarning() << Q_FUNC_INFO << "Already has a name." << this->uniqueName() << uniqueName;
     }
-}
-
-void MainWindow::onResized(QResizeEvent *)
-{
-    if (d->m_overlayedDockWidget)
-        d->updateOverlayGeometry(d->m_overlayedDockWidget->d->frame()->size());
 }
 
 bool MainWindow::deserialize(const LayoutSaver::MainWindow &mw)

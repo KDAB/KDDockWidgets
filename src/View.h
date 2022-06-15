@@ -178,8 +178,9 @@ public:
     virtual void setCursor(Qt::CursorShape) = 0;
     virtual void setMouseTracking(bool) = 0;
 
-    virtual bool onResize(QSize /*newSize*/)
+    virtual bool onResize(QSize newSize)
     {
+        resized.emit(newSize);
         return false;
     }
 
@@ -278,8 +279,11 @@ public:
     /// @brief signal emitted when something tried to close this view
     KDBindings::Signal<QCloseEvent *> closeRequested;
 
-    /// @brief signal emitted when when constraints change, for example min/max sizes
+    /// @brief signal emitted when constraints change, for example min/max sizes
     KDBindings::Signal<> layoutInvalidated;
+
+    /// @brief signal emitted when the view is resized
+    KDBindings::Signal<QSize> resized;
 
 protected:
     virtual void free_impl();

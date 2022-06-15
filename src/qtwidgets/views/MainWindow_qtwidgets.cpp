@@ -164,11 +164,6 @@ Controllers::SideBar *MainWindow_qtwidgets::sideBar(SideBarLocation location) co
     return d->m_sideBars.value(location);
 }
 
-void MainWindow_qtwidgets::resizeEvent(QResizeEvent *ev)
-{
-    d->m_controller->onResized(ev);
-}
-
 QMargins MainWindow_qtwidgets::centerWidgetMargins() const
 {
     return d->m_centerWidgetMargins;
