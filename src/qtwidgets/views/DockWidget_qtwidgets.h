@@ -21,6 +21,7 @@
 #pragma once
 
 #include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/views/DockWidgetViewInterface.h"
 #include "View_qtwidgets.h"
 
 // clazy:excludeall=ctor-missing-parent-argument
@@ -34,7 +35,7 @@ namespace Views {
  *
  * Most of the interface lives in Controllers::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>
+class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>, Views::DockWidgetViewInterface
 {
     Q_OBJECT
 public:

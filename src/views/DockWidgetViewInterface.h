@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "kddockwidgets/KDDockWidgets.h"
+
 namespace KDDockWidgets {
 
 namespace Controllers {
@@ -20,9 +22,10 @@ class DockWidget;
 namespace Views {
 
 /// @brief The interface that DockWidget views should implement
-class DockWidget
+class DOCKS_EXPORT DockWidgetViewInterface
 {
 public:
+    virtual ~DockWidgetViewInterface();
 };
 
 }

@@ -20,6 +20,7 @@
 #define KD_DOCKWIDGET_QUICK_H
 
 #include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/views/DockWidgetViewInterface.h"
 #include "View_qtquick.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,7 +40,7 @@ namespace Views {
  *
  * Most of the interface lives in Controllers::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick
+class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick, Views::DockWidgetViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarView NOTIFY actualTitleBarChanged)
