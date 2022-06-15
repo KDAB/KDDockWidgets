@@ -162,3 +162,19 @@ void MainWindow_qtwidgets::setContentsMargins(int left, int top, int right, int 
 {
     QMainWindow::setContentsMargins(left, top, right, bottom);
 }
+
+void MainWindow_qtwidgets::setPersistentCentralWidget(QWidget *widget)
+{
+    if (widget) {
+        auto wrapper = std::shared_ptr<KDDockWidgets::ViewWrapper>(new KDDockWidgets::Views::ViewWrapper_qtwidgets(widget));
+        m_mainWindow->setPersistentCentralView(wrapper);
+    } else {
+        m_mainWindow->setPersistentCentralView({});
+    }
+}
+
+QWidget *MainWindow_qtwidgets::persistentCentralWidget() const
+{
+    auto view = m_mainWindow->persistentCentralView();
+    return view ? qobject_cast<QWidget *>(view->asQObject()) : nullptr;
+}

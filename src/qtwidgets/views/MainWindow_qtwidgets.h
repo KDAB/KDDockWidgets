@@ -65,6 +65,9 @@ public:
     /// @brief Sets the main window's content margins
     void setContentsMargins(int left, int top, int right, int bottom) override;
 
+    void setPersistentCentralWidget(QWidget *widget);
+    QWidget *persistentCentralWidget() const;
+
 protected:
     QRect centralAreaGeometry() const override;
 

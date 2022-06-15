@@ -87,9 +87,7 @@ int main(int argc, char **argv)
     mdiWidget3->setWidget(new MyWidget3());
 
     auto mdiArea = new KDDockWidgets::MDIArea();
-    // TODOm2: Add View::MainWindow::setPersistentCentralWidget
-    auto mdiAreaW = std::shared_ptr<KDDockWidgets::ViewWrapper>(new KDDockWidgets::Views::ViewWrapper_qtwidgets(mdiArea));
-    mainWindow.mainWindow()->setPersistentCentralView(mdiAreaW);
+    mainWindow.setPersistentCentralWidget(mdiArea);
 
     mdiArea->addDockWidget(mdiWidget1->dockWidget(), QPoint(10, 10));
     mdiArea->addDockWidget(mdiWidget2->dockWidget(), QPoint(50, 50));
