@@ -3425,8 +3425,7 @@ const Item *ItemBoxContainer::Private::itemFromPath(const QVector<int> &path) co
     return q;
 }
 
-// TODOm2: Better namespacing
-KDDockWidgets::Controllers::Separator *ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const
+Controllers::Separator *ItemBoxContainer::Private::neighbourSeparator(const Item *item, Side side, Qt::Orientation orientation) const
 {
     Item::List children = q->visibleChildren();
     const auto itemIndex = children.indexOf(const_cast<Item *>(item));
