@@ -91,3 +91,11 @@ void DockWidget_qtwidgets::resizeEvent(QResizeEvent *e)
     m_dockWidget->onResize(e->size());
     return QWidget::resizeEvent(e);
 }
+
+QWidget *DockWidget_qtwidgets::widget() const
+{
+    if (auto guest = m_dockWidget->guestView())
+        return qobject_cast<QWidget *>(guest->asQObject());
+
+    return nullptr;
+}

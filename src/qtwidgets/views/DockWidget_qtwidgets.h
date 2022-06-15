@@ -69,6 +69,9 @@ public:
      */
     void setWidget(QWidget *widget);
 
+    /// @brief Returns the guest widget
+    QWidget *widget() const;
+
     // TODOm2: Add show to the views
 
 protected:
