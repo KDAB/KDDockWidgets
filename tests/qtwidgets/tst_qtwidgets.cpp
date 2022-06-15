@@ -310,7 +310,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking()
     m->addDockWidget(dock1, Location_OnBottom);
 
     auto mdiArea = new MDIArea();
-    m->setPersistentCentralWidget(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
+    m->setPersistentCentralView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
 
     auto mdiWidget1 = createDockWidget("mdi1", new QPushButton("mdi1"));
     auto mdiWidget2 = createDockWidget("mdi2", new QPushButton("mdi12"));
@@ -357,7 +357,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking2()
 
     auto mdiArea = new MDIArea();
 
-    m->setPersistentCentralWidget(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
+    m->setPersistentCentralView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
 
 
     auto createSheet = [](int id) -> Controllers::DockWidget * {
@@ -527,7 +527,7 @@ void TestQtWidgets::tst_mdi_mixed_with_docking_setMDISize()
     m->addDockWidget(dock1, Location_OnBottom);
 
     auto mdiArea = new MDIArea();
-    m->setPersistentCentralWidget(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
+    m->setPersistentCentralView(std::shared_ptr<ViewWrapper>(new Views::ViewWrapper_qtwidgets(mdiArea)));
 
     auto createSheet = [](int id) -> Controllers::DockWidget * {
         auto dock = newDockWidget(QStringLiteral("dw-sheet-%1").arg(id), Controllers::DockWidget::Option_MDINestable);

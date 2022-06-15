@@ -56,6 +56,5 @@ int main(int argc, char *argv[])
     mainAreaMDI->addDockWidget(dw2->dockWidget(), QPoint(50, 50));
     mainAreaMDI->addDockWidget(dw3->dockWidget(), QPoint(90, 90));
 
-
     return app.exec();
 }

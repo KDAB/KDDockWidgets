@@ -97,13 +97,11 @@ public:
      *
      * Example: examples/qtwidgets_dockwidgets --central-widget
      */
-    void setPersistentCentralWidget(std::shared_ptr<ViewWrapper> widget);
-    std::shared_ptr<ViewWrapper> persistentCentralWidget() const;
-
+    void setPersistentCentralView(std::shared_ptr<ViewWrapper> widget);
+    std::shared_ptr<ViewWrapper> persistentCentralView() const;
 
     /// @brief Returns the main window options that were passed via constructor.
     MainWindowOptions options() const;
-
 
     /**
      * @brief Sets the affinities names. Dock widgets can only dock into main windows of the same affinity.

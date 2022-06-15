@@ -60,7 +60,7 @@ public:
     QMargins centerWidgetMargins() const override;
 
     /// @brief sets the margins for the contents widget
-    void setCenterWidgetMargins(const QMargins &margins);
+    void setCenterWidgetMargins(const QMargins &);
 
     /// @brief Sets the main window's content margins
     void setContentsMargins(int left, int top, int right, int bottom) override;

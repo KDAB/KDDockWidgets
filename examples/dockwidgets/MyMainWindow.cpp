@@ -120,7 +120,7 @@ MyMainWindow::MyMainWindow(const QString &uniqueName, KDDockWidgets::MainWindowO
 
     if (options & KDDockWidgets::MainWindowOption_HasCentralWidget) {
         auto widget = std::shared_ptr<KDDockWidgets::ViewWrapper>(new KDDockWidgets::Views::ViewWrapper_qtwidgets(new MyWidget1()));
-        mainWindow()->setPersistentCentralWidget(widget);
+        mainWindow()->setPersistentCentralView(widget);
     }
 }
 
