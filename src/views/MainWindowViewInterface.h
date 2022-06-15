@@ -39,6 +39,11 @@ public:
     /// @brief Returns the main window controller
     Controllers::MainWindow *mainWindow() const;
 
+    QString uniqueName() const;
+    QStringList affinities() const;
+    MainWindowOptions options() const;
+    bool isMDI() const;
+
 protected:
     void init(const QString &name);
     Controllers::MainWindow *const m_mainWindow;

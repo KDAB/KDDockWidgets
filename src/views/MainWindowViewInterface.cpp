@@ -31,4 +31,24 @@ void MainWindowViewInterface::init(const QString &name)
     m_mainWindow->init(name);
 }
 
+QString MainWindowViewInterface::uniqueName() const
+{
+    return m_mainWindow->uniqueName();
+}
+
+QStringList MainWindowViewInterface::affinities() const
+{
+    return m_mainWindow->affinities();
+}
+
+MainWindowOptions MainWindowViewInterface::options() const
+{
+    return m_mainWindow->options();
+}
+
+bool MainWindowViewInterface::isMDI() const
+{
+    return m_mainWindow->isMDI();
+}
+
 }

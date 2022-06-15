@@ -55,10 +55,6 @@ class DockWidget;
 class DOCKS_EXPORT MainWindow : public Controller
 {
     Q_OBJECT
-    Q_PROPERTY(QStringList affinities READ affinities CONSTANT)
-    Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
-    Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options CONSTANT)
-    Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
 public:
     typedef QVector<MainWindow *> List;
 

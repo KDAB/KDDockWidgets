@@ -15,6 +15,8 @@
 #include "View_qtquick.h"
 #include "kddockwidgets/views/MainWindowViewInterface.h"
 
+#include <QString>
+
 namespace KDDockWidgets {
 
 namespace Controllers {
@@ -34,6 +36,10 @@ namespace Views {
 class DOCKS_EXPORT MainWindow_qtquick : public Views::View_qtquick, public MainWindowViewInterface
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList affinities READ affinities CONSTANT)
+    Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
+    Q_PROPERTY(KDDockWidgets::MainWindowOptions options READ options CONSTANT)
+    Q_PROPERTY(bool isMDI READ isMDI CONSTANT)
 public:
     ///@brief Constructor. Use it as you would use QMainWindow.
     ///@param uniqueName Mandatory name that should be unique between all MainWindow instances.
