@@ -22,12 +22,12 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
                                        QQuickItem *parent, Qt::WindowFlags flags)
     : View_qtquick(new Controllers::MainWindow(this, uniqueName, options),
                    Type::MainWindow, parent, flags)
-    , m_controller(static_cast<Controllers::MainWindow *>(controller()))
+    , MainWindowViewInterface(static_cast<Controllers::MainWindow *>(View::controller()))
 {
-    m_controller->init(uniqueName);
+    m_mainWindow->init(uniqueName);
     makeItemFillParent(this);
 
-    Controllers::Layout *lw = m_controller->layout();
+    Controllers::Layout *lw = m_mainWindow->layout();
     auto layoutView = asView_qtquick(lw->view());
     makeItemFillParent(layoutView);
 
@@ -51,12 +51,12 @@ MainWindow_qtquick::~MainWindow_qtquick()
 
 QSize MainWindow_qtquick::minSize() const
 {
-    return m_controller->layout()->layoutMinimumSize();
+    return m_mainWindow->layout()->layoutMinimumSize();
 }
 
 QSize MainWindow_qtquick::maximumSize() const
 {
-    return m_controller->layout()->layoutMaximumSizeHint();
+    return m_mainWindow->layout()->layoutMaximumSizeHint();
 }
 
 Controllers::SideBar *MainWindow_qtquick::sideBar(SideBarLocation) const
@@ -96,9 +96,4 @@ void MainWindow_qtquick::setContentsMargins(int left, int top, int right, int bo
     Q_UNUSED(top);
     Q_UNUSED(bottom);
     qDebug() << Q_FUNC_INFO << "not implemented";
-}
-
-Controllers::MainWindow *MainWindow_qtquick::mainWindow() const
-{
-    return m_controller;
 }

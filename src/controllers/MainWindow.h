@@ -222,8 +222,6 @@ public:
 
     void setContentsMargins(int, int, int, int);
 
-    void onResized(QResizeEvent *);
-
 protected:
     void setUniqueName(const QString &uniqueName);
     QMargins centerWidgetMargins() const;

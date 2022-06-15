@@ -16,7 +16,6 @@
 #include "kddockwidgets/views/Frame.h"
 #include "kddockwidgets/views/TabBar.h"
 #include "kddockwidgets/views/TitleBar.h"
-#include "kddockwidgets/views/MainWindow.h"
 #include "kddockwidgets/views/Stack.h"
 #include "kddockwidgets/views/Frame.h"
 
@@ -55,6 +54,6 @@ SideBar::~SideBar() = default;
 Stack::~Stack() = default;
 TabBar::~TabBar() = default;
 TitleBar::~TitleBar() = default;
-MainWindow::~MainWindow() = default;
+
 Frame::~Frame() = default;
 }

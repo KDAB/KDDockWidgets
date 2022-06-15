@@ -55,9 +55,9 @@ public:
 class MainWindow_qtwidgets::Private
 {
 public:
-    explicit Private(Controllers::MainWindow *controller, MainWindow_qtwidgets *qq)
+    explicit Private(MainWindow_qtwidgets *qq)
         : q(qq)
-        , m_controller(controller)
+        , m_controller(qq->mainWindow())
         , m_supportsAutoHide(Config::self().flags() & Config::Flag_AutoHideSupport)
         , m_centralWidget(new MyCentralWidget(qq))
         , m_layout(new QHBoxLayout(m_centralWidget)) // 1 level of indirection so we can add some margins
@@ -127,7 +127,8 @@ MyCentralWidget::~MyCentralWidget()
 MainWindow_qtwidgets::MainWindow_qtwidgets(Controllers::MainWindow *controller,
                                            QWidget *parent, Qt::WindowFlags flags)
     : View_qtwidgets<QMainWindow>(controller, Type::MainWindow, parent, flags)
-    , d(new Private(controller, this))
+    , MainWindowViewInterface(controller)
+    , d(new Private(this))
 {
 }
 
@@ -137,7 +138,8 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
                                            Qt::WindowFlags flags)
     : View_qtwidgets<QMainWindow>(new Controllers::MainWindow(this, uniqueName, options),
                                   Type::MainWindow, parent, flags)
-    , d(new Private(static_cast<Controllers::MainWindow *>(controller()), this))
+    , MainWindowViewInterface(static_cast<Controllers::MainWindow *>(controller()))
+    , d(new Private(this))
 {
     auto controller = mainWindow();
     controller->init(uniqueName);
@@ -180,11 +182,6 @@ void MainWindow_qtwidgets::setCenterWidgetMargins(const QMargins &margins)
 QRect MainWindow_qtwidgets::centralAreaGeometry() const
 {
     return centralWidget()->geometry();
-}
-
-Controllers::MainWindow *MainWindow_qtwidgets::mainWindow() const
-{
-    return d->m_controller;
 }
 
 void MainWindow_qtwidgets::setContentsMargins(int left, int top, int right, int bottom)

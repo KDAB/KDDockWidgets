@@ -32,7 +32,7 @@
 #include "controllers/DockWidget_p.h"
 #include "controllers/Frame.h"
 #include "controllers/SideBar.h"
-#include "kddockwidgets/views/MainWindow.h"
+#include "kddockwidgets/views/MainWindowViewInterface.h"
 
 
 using namespace KDDockWidgets;
@@ -798,24 +798,24 @@ std::shared_ptr<ViewWrapper> MainWindow::persistentCentralWidget() const
 
 void MainWindow::setContentsMargins(int left, int top, int right, int bottom)
 {
-    auto v = dynamic_cast<Views::MainWindow *>(view());
+    auto v = dynamic_cast<Views::MainWindowViewInterface *>(view());
     v->setContentsMargins(left, top, right, bottom);
 }
 
 QMargins MainWindow::centerWidgetMargins() const
 {
-    auto v = dynamic_cast<Views::MainWindow *>(view());
+    auto v = dynamic_cast<Views::MainWindowViewInterface *>(view());
     return v->centerWidgetMargins();
 }
 
 Controllers::SideBar *MainWindow::sideBar(SideBarLocation loc) const
 {
-    auto v = dynamic_cast<Views::MainWindow *>(view());
+    auto v = dynamic_cast<Views::MainWindowViewInterface *>(view());
     return v->sideBar(loc);
 }
 
 QRect MainWindow::centralAreaGeometry() const
 {
-    auto v = dynamic_cast<Views::MainWindow *>(view());
+    auto v = dynamic_cast<Views::MainWindowViewInterface *>(view());
     return v->centralAreaGeometry();
 }

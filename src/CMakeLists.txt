@@ -101,6 +101,8 @@ set(KDDW_BACKEND_SRCS
     views/ClassicIndicatorWindow.cpp
     views/MainWindowMDI.cpp
     views/MainWindowMDI.h
+    views/MainWindowViewInterface.cpp
+    views/MainWindowViewInterface.h
     qtcommon/Platform_qt.cpp
     qtcommon/Platform_qt.h
     qtcommon/Window_qt.cpp

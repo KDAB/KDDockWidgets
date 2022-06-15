@@ -13,7 +13,7 @@
 #define KD_MAIN_WINDOW_QUICK_P_H
 
 #include "View_qtquick.h"
-#include "kddockwidgets/views/MainWindow.h"
+#include "kddockwidgets/views/MainWindowViewInterface.h"
 
 namespace KDDockWidgets {
 
@@ -28,7 +28,7 @@ namespace Views {
 /// Provides the ability of acepting drops of dock widgets.
 /// It's not a real QWindow and not a main window in the sense of QMainWindow. Would be overkill
 /// to have tool bars, menu bar and footer in the QtQuick implementation. That's left for the user to do.
-class DOCKS_EXPORT MainWindow_qtquick : public Views::View_qtquick, public MainWindow
+class DOCKS_EXPORT MainWindow_qtquick : public Views::View_qtquick, public MainWindowViewInterface
 {
     Q_OBJECT
 public:
@@ -44,9 +44,6 @@ public:
     /// @reimp
     QSize maximumSize() const override;
 
-    /// TODOm3 move into interface
-    Controllers::MainWindow *mainWindow() const;
-
 protected:
     Controllers::SideBar *sideBar(SideBarLocation) const override;
     QMargins centerWidgetMargins() const override;
@@ -55,7 +52,6 @@ protected:
 
 private:
     void onMultiSplitterGeometryUpdated();
-    Controllers::MainWindow *const m_controller;
 };
 }
 }
