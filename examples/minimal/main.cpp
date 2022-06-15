@@ -11,7 +11,6 @@
 
 #include "MyWidget.h"
 
-#include <kddockwidgets/DockWidget.h> // TODOm2
 #include <kddockwidgets/views/MainWindow_qtwidgets.h>
 #include <kddockwidgets/views/DockWidget_qtwidgets.h>
 
