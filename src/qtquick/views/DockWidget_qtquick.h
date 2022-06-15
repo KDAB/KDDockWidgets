@@ -66,11 +66,10 @@ public:
     ~DockWidget_qtquick() override;
 
     /// Sets the DockWidget's guest item
-    /// Similar to Controllers::DockWidget::setGuestView(QQuickItem*)
-    void setGuestView(const QString &qmlFilename);
+    void setGuestItem(const QString &qmlFilename);
 
     /// @reimp
-    Q_INVOKABLE void setGuestView(QQuickItem *);
+    Q_INVOKABLE void setGuestItem(QQuickItem *);
 
     /// @reimp
     QSize minSize() const override;

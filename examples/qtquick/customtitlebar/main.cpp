@@ -53,17 +53,17 @@ int main(int argc, char *argv[])
 
     auto dw1 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #1");
 
-    dw1->setGuestView(QStringLiteral("qrc:/Guest1.qml"));
+    dw1->setGuestItem(QStringLiteral("qrc:/Guest1.qml"));
     dw1->resize(QSize(800, 800));
     dw1->show();
 
     auto dw2 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #2");
-    dw2->setGuestView(QStringLiteral("qrc:/Guest2.qml"));
+    dw2->setGuestItem(QStringLiteral("qrc:/Guest2.qml"));
     dw2->resize(QSize(800, 800));
     dw2->show();
 
     auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
-    dw3->setGuestView(QStringLiteral("qrc:/Guest3.qml"));
+    dw3->setGuestItem(QStringLiteral("qrc:/Guest3.qml"));
 
     dw1->dockWidget()->addDockWidgetToContainingWindow(dw3->dockWidget(), KDDockWidgets::Location_OnRight);
 

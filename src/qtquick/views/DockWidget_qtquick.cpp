@@ -89,20 +89,20 @@ void DockWidget_qtquick::init()
     });
 }
 
-void DockWidget_qtquick::setGuestView(const QString &qmlFilename)
+void DockWidget_qtquick::setGuestItem(const QString &qmlFilename)
 {
     QQuickItem *guest = createItem(d->m_qmlEngine, qmlFilename);
     if (!guest)
         return;
 
-    setGuestView(guest);
+    setGuestItem(guest);
 }
 
-void DockWidget_qtquick::setGuestView(QQuickItem *widget)
+void DockWidget_qtquick::setGuestItem(QQuickItem *item)
 {
-    auto wrapper = asQQuickWrapper(widget);
+    auto wrapper = asQQuickWrapper(item);
     wrapper->setParent(this);
-    makeItemFillParent(widget);
+    makeItemFillParent(item);
     dockWidget()->setGuestView(wrapper);
 }
 

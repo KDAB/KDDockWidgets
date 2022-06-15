@@ -226,7 +226,7 @@ void DockWidgetInstantiator::componentComplete()
         m_dockWidget->setGuestView(Views::asQQuickWrapper(childItems.constFirst()));
     } else {
         auto view = this->dockWidget();
-        view->setGuestView(m_sourceFilename);
+        view->setGuestItem(m_sourceFilename);
     }
 
     if (!m_title.isEmpty())
