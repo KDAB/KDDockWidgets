@@ -39,6 +39,8 @@ public:
     /// @brief Returns the main window controller
     Controllers::MainWindow *mainWindow() const;
 
+
+    // controllers/MainWindow.h public interface:
     QString uniqueName() const;
     QStringList affinities() const;
     MainWindowOptions options() const;
