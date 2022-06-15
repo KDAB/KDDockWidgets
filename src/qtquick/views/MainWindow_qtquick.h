@@ -59,6 +59,21 @@ public:
     /// @reimp
     QSize maximumSize() const override;
 
+
+    /// controllers/MainWindow.h public API as invokables. Since controllers will cease to be a QObject.
+    /// See controllers/MainWindow.h for respective documentation
+    Q_INVOKABLE void moveToSideBar(const QString &dockId);
+    Q_INVOKABLE void moveToSideBar(const QString &dockId, KDDockWidgets::SideBarLocation);
+    Q_INVOKABLE void restoreFromSideBar(const QString &dockId);
+    Q_INVOKABLE void overlayOnSideBar(const QString &dockId);
+    Q_INVOKABLE void toggleOverlayOnSideBar(const QString &dockId);
+    Q_INVOKABLE void layoutParentContainerEqually(const QString &dockId);
+    Q_INVOKABLE void addDockWidgetAsTab(const QString &dockId);
+    Q_INVOKABLE void addDockWidget(const QString &dockId,
+                                   KDDockWidgets::Location,
+                                   const QString &relativeToDockId = {},
+                                   KDDockWidgets::InitialOption = {});
+
 protected:
     QMargins centerWidgetMargins() const override;
     QRect centralAreaGeometry() const override;

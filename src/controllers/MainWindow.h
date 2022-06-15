@@ -69,7 +69,7 @@ public:
      *
      * @sa Controllers::DockWidget::addDockWidgetAsTab()
      */
-    Q_INVOKABLE void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *dockwidget);
+    void addDockWidgetAsTab(KDDockWidgets::Controllers::DockWidget *dockwidget);
 
     /**
      * @brief Docks a DockWidget into this main window.
@@ -80,10 +80,10 @@ public:
      * as hidden, recording only a placeholder in the tab. So it's restored to tabbed when eventually
      * shown.
      */
-    Q_INVOKABLE void addDockWidget(KDDockWidgets::Controllers::DockWidget *dockWidget,
-                                   KDDockWidgets::Location location,
-                                   KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,
-                                   KDDockWidgets::InitialOption initialOption = {});
+    void addDockWidget(KDDockWidgets::Controllers::DockWidget *dockWidget,
+                       KDDockWidgets::Location location,
+                       KDDockWidgets::Controllers::DockWidget *relativeTo = nullptr,
+                       KDDockWidgets::InitialOption initialOption = {});
 
     /**
      * @brief Sets a persistent central widget. It can't be detached.
@@ -97,7 +97,7 @@ public:
      *
      * Example: examples/qtwidgets_dockwidgets --central-widget
      */
-    Q_INVOKABLE void setPersistentCentralWidget(std::shared_ptr<ViewWrapper> widget);
+    void setPersistentCentralWidget(std::shared_ptr<ViewWrapper> widget);
     std::shared_ptr<ViewWrapper> persistentCentralWidget() const;
 
 
@@ -134,12 +134,12 @@ public:
     /// nodes closer to the root will have more space.
     ///
     /// min/max constraints will still be honoured.
-    Q_INVOKABLE void layoutEqually();
+    void layoutEqually();
 
     /// @brief like layoutEqually() but starts with the container that has @p dockWidget.
     /// While layoutEqually() starts from the root of the layout tree this function starts on a
     /// sub-tree.
-    Q_INVOKABLE void layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget *dockWidget);
+    void layoutParentContainerEqually(KDDockWidgets::Controllers::DockWidget *dockWidget);
 
     ///@brief Moves the dock widget into one of the MainWindow's sidebar.
     /// Means the dock widget is removed from the layout, and the sidebar shows a button that if pressed
@@ -147,29 +147,29 @@ public:
     /// functionality.
     ///
     /// The chosen side bar will depend on some heuristics, mostly proximity.
-    Q_INVOKABLE void moveToSideBar(KDDockWidgets::Controllers::DockWidget *);
+    void moveToSideBar(KDDockWidgets::Controllers::DockWidget *);
 
     /// @brief overload that allows to specify which sidebar to use, instead of using heuristics.
-    Q_INVOKABLE void moveToSideBar(KDDockWidgets::Controllers::DockWidget *, KDDockWidgets::SideBarLocation);
+    void moveToSideBar(KDDockWidgets::Controllers::DockWidget *, KDDockWidgets::SideBarLocation);
 
     /// @brief Removes the dock widget from the sidebar and docks it into the main window again
-    Q_INVOKABLE void restoreFromSideBar(KDDockWidgets::Controllers::DockWidget *);
+    void restoreFromSideBar(KDDockWidgets::Controllers::DockWidget *);
 
     ///@brief Shows the dock widget overlayed on top of the main window, placed next to the sidebar
-    Q_INVOKABLE void overlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
+    void overlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
 
     ///@brief Shows or hides an overlay. It's assumed the dock widget is already in a side-bar.
-    Q_INVOKABLE void toggleOverlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
+    void toggleOverlayOnSideBar(KDDockWidgets::Controllers::DockWidget *);
 
     /// @brief closes any overlayed dock widget. The sidebar still displays them as button.
-    Q_INVOKABLE void clearSideBarOverlay(bool deleteFrame = true);
+    void clearSideBarOverlay(bool deleteFrame = true);
 
     /// @brief Returns the sidebar this dockwidget is in. nullptr if not in any.
-    Q_INVOKABLE KDDockWidgets::Controllers::SideBar *
+    KDDockWidgets::Controllers::SideBar *
     sideBarForDockWidget(const KDDockWidgets::Controllers::DockWidget *) const;
 
     /// @brief Returns whether the specified sidebar is visible
-    Q_INVOKABLE bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
+    bool sideBarIsVisible(KDDockWidgets::SideBarLocation) const;
 
     /// @brief returns the dock widget which is currently overlayed. nullptr if none.
     /// This is only relevant when using the auto-hide and side-bar feature.
@@ -187,7 +187,7 @@ public:
     /// If force is true, then the individual dock widgets can't stop the process
     /// Returns false if there's at least one dock widget which rejected closing. Returns true
     /// if all dock widgets were closed (0 or more)
-    Q_INVOKABLE bool closeDockWidgets(bool force = false);
+    bool closeDockWidgets(bool force = false);
 
     /// @brief Sets the content's margins
     void setContentsMargins(int, int, int, int);
@@ -212,7 +212,6 @@ public:
     ///@internal
     ///@brief Returns the MDI layout. Or nullptr if this isn't a MDI main window
     MDILayout *mdiLayoutWidget() const;
-
 
     /// @brief Returns the unique name that was passed via constructor.
     ///        Used internally by the save/restore mechanism.
