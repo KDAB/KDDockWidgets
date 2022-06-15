@@ -126,19 +126,13 @@ MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
     , MainWindowViewInterface(static_cast<Controllers::MainWindow *>(controller()))
     , d(new Private(this))
 {
-    auto controller = mainWindow();
-    controller->init(uniqueName);
-    init();
+    MainWindowViewInterface::init(uniqueName);
+    d->init();
 }
 
 MainWindow_qtwidgets::~MainWindow_qtwidgets()
 {
     delete d;
-}
-
-void MainWindow_qtwidgets::init()
-{
-    d->init();
 }
 
 void MainWindow_qtwidgets::setCentralWidget(QWidget *w)

@@ -32,6 +32,9 @@ class TestDocks;
 
 namespace KDDockWidgets {
 
+namespace Views {
+class MainWindowViewInterface;
+}
 
 namespace Controllers {
 
@@ -62,7 +65,6 @@ public:
     explicit MainWindow(View *view, const QString &uniqueName, MainWindowOptions options);
 
     ~MainWindow() override;
-    void init(const QString &name);
 
     /**
      * @brief Docks a DockWidget into the central frame, tabbed.
@@ -233,9 +235,12 @@ Q_SIGNALS:
     void frameCountChanged(int);
 
 private:
+    void init(const QString &name);
+
     class Private;
     Private *const d;
 
+    friend class KDDockWidgets::Views::MainWindowViewInterface;
     friend class ::TestDocks;
     friend class KDDockWidgets::LayoutSaver;
     bool deserialize(const LayoutSaver::MainWindow &);

@@ -10,6 +10,7 @@
 */
 
 #include "MainWindowViewInterface.h"
+#include "kddockwidgets/controllers/MainWindow.h"
 
 namespace KDDockWidgets::Views {
 
@@ -23,6 +24,11 @@ MainWindowViewInterface::~MainWindowViewInterface() = default;
 Controllers::MainWindow *MainWindowViewInterface::mainWindow() const
 {
     return m_mainWindow;
+}
+
+void MainWindowViewInterface::init(const QString &name)
+{
+    m_mainWindow->init(name);
 }
 
 }

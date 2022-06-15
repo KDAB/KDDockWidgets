@@ -52,7 +52,7 @@ MainWindow_qtquick::MainWindow_qtquick(const QString &uniqueName, MainWindowOpti
     , MainWindowViewInterface(static_cast<Controllers::MainWindow *>(View::controller()))
     , d(new Private(this))
 {
-    m_mainWindow->init(uniqueName);
+    MainWindowViewInterface::init(uniqueName);
     makeItemFillParent(this);
 
     Controllers::Layout *lw = m_mainWindow->layout();

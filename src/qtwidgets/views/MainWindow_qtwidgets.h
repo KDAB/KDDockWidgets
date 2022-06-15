@@ -73,7 +73,6 @@ protected:
 private:
     friend class Controllers::MainWindow;
     using QMainWindow::setCentralWidget;
-    void init() override;
     void setCentralWidget(QWidget *); // overridden just to make it private
 
     class Private;

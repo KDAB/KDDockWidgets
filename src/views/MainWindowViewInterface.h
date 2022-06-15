@@ -40,6 +40,7 @@ public:
     Controllers::MainWindow *mainWindow() const;
 
 protected:
+    void init(const QString &name);
     Controllers::MainWindow *const m_mainWindow;
 };
 
