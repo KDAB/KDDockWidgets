@@ -22,7 +22,7 @@ class DockWidget;
 namespace Views {
 
 /// @brief The interface that SideBar views should implement
-class SideBar
+class DOCKS_EXPORT SideBar
 {
 public:
     virtual ~SideBar();

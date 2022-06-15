@@ -26,7 +26,7 @@ class DockWidget;
 namespace Views {
 
 /// @brief The interface that Stack views should implement
-class Stack
+class DOCKS_EXPORT Stack
 {
 public:
     virtual ~Stack();
