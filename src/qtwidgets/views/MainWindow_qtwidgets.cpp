@@ -124,14 +124,6 @@ MyCentralWidget::~MyCentralWidget()
 {
 }
 
-MainWindow_qtwidgets::MainWindow_qtwidgets(Controllers::MainWindow *controller,
-                                           QWidget *parent, Qt::WindowFlags flags)
-    : View_qtwidgets<QMainWindow>(controller, Type::MainWindow, parent, flags)
-    , MainWindowViewInterface(controller)
-    , d(new Private(this))
-{
-}
-
 MainWindow_qtwidgets::MainWindow_qtwidgets(const QString &uniqueName,
                                            MainWindowOptions options,
                                            QWidget *parent,

@@ -35,7 +35,7 @@ namespace Views {
 
 /**
  * @brief The QMainwindow sub-class that the application should use to be able
- * to dock KDDockWidget::DockWidget instances.
+ * to dock KDDockWidget DockWidget instances.
  */
 class DOCKS_EXPORT MainWindow_qtwidgets : public View_qtwidgets<QMainWindow>, public MainWindowViewInterface
 {
@@ -49,31 +49,26 @@ public:
     ///@param options optional MainWindowOptions to use
     ///@param parent QObject *parent to pass to QMainWindow constructor.
     ///@param flags Window flags to  pass to QMainWindow constructor.
-    explicit MainWindow_qtwidgets(Controllers::MainWindow *,
-                                  QWidget *parent = nullptr,
-                                  Qt::WindowFlags flags = Qt::WindowFlags());
-
-
     explicit MainWindow_qtwidgets(const QString &uniqueName,
                                   MainWindowOptions options = {},
                                   QWidget *parent = nullptr,
                                   Qt::WindowFlags flags = Qt::WindowFlags());
 
-    ///@brief Destructor
+
+    /// @brief Destructor
     ~MainWindow_qtwidgets() override;
 
-    ///@brief returns the sidebar for the specified location
+    /// @brief returns the sidebar for the specified location
     Controllers::SideBar *sideBar(SideBarLocation) const override;
 
-    //@brief returns the margins for the contents widget
+    /// @brief returns the margins for the contents widget
     QMargins centerWidgetMargins() const override;
 
-    //@brief sets the margins for the contents widgets
+    /// @brief sets the margins for the contents widget
     void setCenterWidgetMargins(const QMargins &margins);
 
+    /// @brief Sets the main window's content margins
     void setContentsMargins(int left, int top, int right, int bottom) override;
-
-    void init() override;
 
 protected:
     QRect centralAreaGeometry() const override;
@@ -81,7 +76,9 @@ protected:
 private:
     friend class Controllers::MainWindow;
     using QMainWindow::setCentralWidget;
+    void init() override;
     void setCentralWidget(QWidget *); // overridden just to make it private
+
     class Private;
     Private *const d;
 };

@@ -18,22 +18,25 @@
 namespace KDDockWidgets {
 
 namespace Controllers {
-class MainWindow;
 class SideBar;
 }
 
 namespace Views {
 
-///@brief The MainWindow counterpart for QtQuick
+///@brief A docking area for dock widgets
+/// Named MainWindow as it's the QtWidgets/QMainWindow counterpart.
 /// Provides the ability of acepting drops of dock widgets.
 /// It's not a real QWindow and not a main window in the sense of QMainWindow. Would be overkill
 /// to have tool bars, menu bar and footer in the QtQuick implementation. That's left for the user to do.
+/// From QML just use DockingArea {}, which will create a this class behind the scenes. It's mostly
+/// an implementation detail unless you want to use C++.
+
 class DOCKS_EXPORT MainWindow_qtquick : public Views::View_qtquick, public MainWindowViewInterface
 {
     Q_OBJECT
 public:
     explicit MainWindow_qtquick(const QString &uniqueName,
-                                MainWindowOptions options = MainWindowOption_HasCentralFrame,
+                                MainWindowOptions options = {},
                                 QQuickItem *parent = nullptr, Qt::WindowFlags flags = {});
 
     ~MainWindow_qtquick() override;
@@ -51,7 +54,8 @@ protected:
     void setContentsMargins(int left, int top, int right, int bottom) override;
 
 private:
-    void onMultiSplitterGeometryUpdated();
+    class Private;
+    Private *const d;
 };
 }
 }
