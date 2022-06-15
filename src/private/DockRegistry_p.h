@@ -100,6 +100,11 @@ public:
     ///@brief returns all MainWindow instances
     const Controllers::MainWindow::List mainwindows() const;
 
+    /// @brief returns all MainWindow instances
+    /// Exactly the same as mainwindows(), but with better terminology for QtQuick
+    /// as we're phasing out the "MainWindow" name there
+    const Controllers::MainWindow::List mainDockingAreas() const;
+
     ///@brief overload returning only the ones with the specified names
     const Controllers::MainWindow::List mainWindows(const QStringList &names);
 

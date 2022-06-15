@@ -49,12 +49,12 @@ int main(int argc, char *argv[])
     auto dw3 = new KDDockWidgets::Views::DockWidget_qtquick("Dock #3");
     dw3->setGuestView(QStringLiteral("qrc:/Guest3.qml"));
 
-    auto mainWindowView = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst()->view();
-    auto mainWindowMDI = static_cast<KDDockWidgets::Views::MainWindowMDI_qtquick *>(mainWindowView);
+    auto mainAreaView = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst()->view();
+    auto mainAreaMDI = static_cast<KDDockWidgets::Views::MainWindowMDI_qtquick *>(mainAreaView);
 
-    mainWindowMDI->addDockWidget(dw1->dockWidget(), QPoint(10, 10));
-    mainWindowMDI->addDockWidget(dw2->dockWidget(), QPoint(50, 50));
-    mainWindowMDI->addDockWidget(dw3->dockWidget(), QPoint(90, 90));
+    mainAreaMDI->addDockWidget(dw1->dockWidget(), QPoint(10, 10));
+    mainAreaMDI->addDockWidget(dw2->dockWidget(), QPoint(50, 50));
+    mainAreaMDI->addDockWidget(dw3->dockWidget(), QPoint(90, 90));
 
 
     return app.exec();

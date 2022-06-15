@@ -67,7 +67,9 @@ int main(int argc, char *argv[])
 
     dw1->dockWidget()->addDockWidgetToContainingWindow(dw3->dockWidget(), KDDockWidgets::Location_OnRight);
 
-    auto mainWindow = KDDockWidgets::DockRegistry::self()->mainwindows().constFirst();
-    mainWindow->addDockWidget(dw2->dockWidget(), KDDockWidgets::Location_OnTop);
+    // Access the main area we created in QML with DockingArea {}
+    auto mainArea = KDDockWidgets::DockRegistry::self()->mainDockingAreas().constFirst();
+    mainArea->addDockWidget(dw2->dockWidget(), KDDockWidgets::Location_OnTop);
+
     return app.exec();
 }

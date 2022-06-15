@@ -490,6 +490,11 @@ const Controllers::MainWindow::List DockRegistry::mainwindows() const
     return m_mainWindows;
 }
 
+const Controllers::MainWindow::List DockRegistry::mainDockingAreas() const
+{
+    return m_mainWindows;
+}
+
 const QVector<Controllers::Layout *> DockRegistry::layouts() const
 {
     return m_layouts;
