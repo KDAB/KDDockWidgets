@@ -34,6 +34,13 @@ public:
     Controllers::DockWidget *dockWidget() const;
     Controllers::TitleBar *actualTitleBar() const;
 
+    bool isFocused() const;
+    bool isFloating() const;
+    void setFloating(bool);
+    QString uniqueName() const;
+    QString title() const;
+    void setTitle(const QString &);
+
 protected:
     Controllers::DockWidget *const m_dockWidget;
 };

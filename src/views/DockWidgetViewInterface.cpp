@@ -39,4 +39,34 @@ Controllers::TitleBar *DockWidgetViewInterface::actualTitleBar() const
 
 DockWidgetViewInterface::~DockWidgetViewInterface() = default;
 
+bool DockWidgetViewInterface::isFocused() const
+{
+    return m_dockWidget->isFocused();
+}
+
+bool DockWidgetViewInterface::isFloating() const
+{
+    return m_dockWidget->isFloating();
+}
+
+QString DockWidgetViewInterface::uniqueName() const
+{
+    return m_dockWidget->uniqueName();
+}
+
+QString DockWidgetViewInterface::title() const
+{
+    return m_dockWidget->title();
+}
+
+void DockWidgetViewInterface::setTitle(const QString &title)
+{
+    m_dockWidget->setTitle(title);
+}
+
+void DockWidgetViewInterface::setFloating(bool is)
+{
+    m_dockWidget->setFloating(is);
+}
+
 } // namespace

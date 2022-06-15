@@ -44,6 +44,10 @@ class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick, public Views
 {
     Q_OBJECT
     Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarView NOTIFY actualTitleBarChanged)
+    Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
+    Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
+    Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
+    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
 public:
     /**
      * @brief constructs a new DockWidget
@@ -94,6 +98,9 @@ Q_SIGNALS:
     /// For example, when dragging a dockwidget
     void frameGeometryChanged(QRect);
     void actualTitleBarChanged();
+    void isFocusedChanged();
+    void isFloatingChanged();
+    void titleChanged();
 
 protected:
     bool event(QEvent *e) override;

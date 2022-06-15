@@ -16,15 +16,17 @@
  * @author Sérgio Martins \<sergio.martins@kdab.com\>
  */
 
-#ifndef KD_DOCKWIDGET_BASE_H
-#define KD_DOCKWIDGET_BASE_H
+#ifndef KD_CONTROLLERS_DOCKWIDGET_H
+#define KD_CONTROLLERS_DOCKWIDGET_H
+#pragma once
 
 #include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 #include "kddockwidgets/LayoutSaver.h"
-#include "../Controller.h"
+#include "kddockwidgets/Controller.h"
 
 #include <QVector>
+
 #include <memory>
 
 // clazy:excludeall=ctor-missing-parent-argument
@@ -56,10 +58,6 @@ class TitleBar;
 class DOCKS_EXPORT DockWidget : public Controller
 {
     Q_OBJECT
-    Q_PROPERTY(bool isFocused READ isFocused NOTIFY isFocusedChanged)
-    Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
-    Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
-    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     // Q_PROPERTY(QObject *widget READ widget NOTIFY widgetChanged) TODOm2
     Q_PROPERTY(KDDockWidgets::Controllers::DockWidget::Options options READ options WRITE setOptions NOTIFY
                    optionsChanged)
