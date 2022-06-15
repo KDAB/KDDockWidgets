@@ -280,13 +280,20 @@ else()
 endif()
 
 
+# Use a separate target for our kdbindings/signal.h header
+# as it doesn't compile with -Wweak-vtables
+add_library(kdbindings INTERFACE)
+target_include_directories(kdbindings SYSTEM INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty>
+)
+
+
 target_include_directories(kddockwidgets
   PUBLIC
     $<INSTALL_INTERFACE:${DOCKS_INCLUDES_INSTALL_PATH}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtwidgets>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/fwd_headers/qtquick>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty> # TODOm2: Link to KDBindings instead
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
@@ -316,8 +323,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR IS_CLANG_BUILD)
   endif()
 
   if(IS_CLANG_BUILD)
-    # // TODOm2: KDBindings is failing due to weak-vtables
-    # target_compile_options(kddockwidgets PRIVATE -Wweak-vtables)
+    target_compile_options(kddockwidgets PRIVATE -Wweak-vtables)
   endif()
 endif()
 
@@ -355,6 +361,8 @@ if (KDDockWidgets_DEVELOPER_MODE)
   target_link_libraries(kddockwidgets PUBLIC Qt${Qt_VERSION_MAJOR}::Test)
 endif()
 
+
+target_link_libraries(kddockwidgets PUBLIC kdbindings)
 
 if(WIN32)
   target_link_libraries(kddockwidgets PRIVATE Qt${Qt_VERSION_MAJOR}::GuiPrivate dwmapi)
@@ -397,7 +405,7 @@ if(WIN32)
   endif()
 endif()
 
-install(TARGETS kddockwidgets
+install(TARGETS kdbindings kddockwidgets
         EXPORT kddockwidgetsTargets
         RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
         LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
