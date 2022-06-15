@@ -17,6 +17,8 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 class DockWidget;
+class Frame;
+class TitleBar;
 }
 
 namespace Views {
@@ -27,6 +29,10 @@ class DOCKS_EXPORT DockWidgetViewInterface
 public:
     explicit DockWidgetViewInterface(Controllers::DockWidget *);
     virtual ~DockWidgetViewInterface();
+
+    Controllers::Frame *frame() const;
+    Controllers::DockWidget *dockWidget() const;
+    Controllers::TitleBar *actualTitleBar() const;
 
 protected:
     Controllers::DockWidget *const m_dockWidget;

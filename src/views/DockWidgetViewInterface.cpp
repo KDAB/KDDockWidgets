@@ -10,12 +10,31 @@
 */
 
 #include "DockWidgetViewInterface.h"
+#include "kddockwidgets/controllers/DockWidget.h"
+#include "kddockwidgets/controllers/DockWidget_p.h"
 
 namespace KDDockWidgets::Views {
 
 DockWidgetViewInterface::DockWidgetViewInterface(Controllers::DockWidget *controller)
     : m_dockWidget(controller)
 {
+}
+
+Controllers::Frame *DockWidgetViewInterface::frame() const
+{
+    return m_dockWidget->dptr()->frame();
+}
+
+Controllers::DockWidget *DockWidgetViewInterface::dockWidget() const
+{
+    return m_dockWidget;
+}
+
+Controllers::TitleBar *DockWidgetViewInterface::actualTitleBar() const
+{
+    if (Controllers::Frame *frame = this->frame())
+        return frame->actualTitleBar();
+    return nullptr;
 }
 
 DockWidgetViewInterface::~DockWidgetViewInterface() = default;

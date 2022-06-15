@@ -38,9 +38,8 @@ using namespace KDDockWidgets::Views;
 class DockWidget_qtquick::Private
 {
 public:
-    Private(DockWidget_qtquick *view, Controllers::DockWidget *controller, QQmlEngine *qmlengine)
+    Private(DockWidget_qtquick *view, QQmlEngine *qmlengine)
         : q(view)
-        , dockWidget(controller)
         , m_visualItem(q->createItem(qmlengine,
                                      plat()->viewFactory()->dockwidgetFilename().toString()))
         , m_qmlEngine(qmlengine)
@@ -51,7 +50,6 @@ public:
     }
 
     DockWidget_qtquick *const q;
-    Controllers::DockWidget *const dockWidget;
     QQuickItem *const m_visualItem;
     QQmlEngine *const m_qmlEngine;
 };
@@ -62,10 +60,10 @@ DockWidget_qtquick::DockWidget_qtquick(const QString &uniqueName,
                                        Qt::WindowFlags windowFlags, QQmlEngine *engine)
     : View_qtquick(new DockWidget(this, uniqueName, options, layoutSaverOptions), Type::DockWidget, nullptr, windowFlags)
     , Views::DockWidgetViewInterface(asDockWidgetController())
-    , d(new Private(this, static_cast<DockWidget *>(controller()), engine ? engine : plat()->qmlEngine()))
+    , d(new Private(this, engine ? engine : plat()->qmlEngine()))
 {
     init();
-    d->dockWidget->init();
+    m_dockWidget->init();
 }
 
 DockWidget_qtquick::~DockWidget_qtquick()
@@ -142,13 +140,6 @@ QSize DockWidget_qtquick::maximumSize() const
     return View_qtquick::maximumSize();
 }
 
-Controllers::TitleBar *DockWidget_qtquick::actualTitleBar() const
-{
-    if (Controllers::Frame *frame = this->frame())
-        return frame->actualTitleBar();
-    return nullptr;
-}
-
 QObject *DockWidget_qtquick::actualTitleBarView() const
 {
     if (auto tb = actualTitleBar()) {
@@ -177,14 +168,4 @@ void DockWidget_qtquick::onGeometryUpdated()
             frameView->updateGeometry();
         }
     }
-}
-
-Controllers::Frame *DockWidget_qtquick::frame() const
-{
-    return dockWidget()->dptr()->frame();
-}
-
-Controllers::DockWidget *DockWidget_qtquick::dockWidget() const
-{
-    return d->dockWidget;
 }

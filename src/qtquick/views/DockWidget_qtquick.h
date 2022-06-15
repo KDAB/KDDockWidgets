@@ -40,7 +40,7 @@ namespace Views {
  *
  * Most of the interface lives in Controllers::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick, Views::DockWidgetViewInterface
+class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick, public Views::DockWidgetViewInterface
 {
     Q_OBJECT
     Q_PROPERTY(QObject *actualTitleBar READ actualTitleBarView NOTIFY actualTitleBarChanged)
@@ -69,8 +69,6 @@ public:
     /// Similar to Controllers::DockWidget::setGuestView(QQuickItem*)
     void setGuestView(const QString &qmlFilename);
 
-    void init() override;
-
     /// @reimp
     Q_INVOKABLE void setGuestView(QQuickItem *);
 
@@ -80,10 +78,7 @@ public:
     /// @reimp
     QSize maximumSize() const override;
 
-    /// @brief Returns the title bar
-    Controllers::TitleBar *actualTitleBar() const;
-
-    /// @brief Returns the title bar
+    /// @brief Returns the title bar view
     /// Qt6 requires us to include TitleBar_p.h, so instead the Q_PROPERTY uses
     /// QObject so we don't include private headers in public headers
     QObject *actualTitleBarView() const;
@@ -91,11 +86,6 @@ public:
     /// @brief Returns the visual item which represents Frame in the screen
     /// Equivalent to Frame::visualItem().
     QQuickItem *frameVisualItem() const;
-
-    Controllers::DockWidget *dockWidget() const;
-
-    ///@internal
-    Q_INVOKABLE KDDockWidgets::Controllers::Frame *frame() const;
 
     /// @brief Called by QtQuick when min-size changes
     Q_INVOKABLE void onGeometryUpdated();
@@ -108,6 +98,7 @@ Q_SIGNALS:
 
 protected:
     bool event(QEvent *e) override;
+    void init() override;
 
 private:
     class Private;

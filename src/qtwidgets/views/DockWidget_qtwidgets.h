@@ -35,7 +35,7 @@ namespace Views {
  *
  * Most of the interface lives in Controllers::DockWidget, to facilitate sharing with QtQuick.
  */
-class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>, Views::DockWidgetViewInterface
+class DOCKS_EXPORT DockWidget_qtwidgets : public View_qtwidgets<QWidget>, public Views::DockWidgetViewInterface
 {
     Q_OBJECT
 public:
@@ -57,8 +57,6 @@ public:
 
     ///@brief destructor
     ~DockWidget_qtwidgets() override;
-
-    Controllers::DockWidget *dockWidget() const;
 
     /**
      * @brief sets the widget which this dock widget hosts.
