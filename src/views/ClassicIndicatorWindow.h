@@ -20,7 +20,7 @@ namespace Views {
 
 /// @brief The window that will hold the classic indicators
 /// This is a window so it can be over the window that is being dragged
-class ClassicIndicatorWindow
+class DOCKS_EXPORT ClassicIndicatorWindow
 {
 public:
     virtual ~ClassicIndicatorWindow();

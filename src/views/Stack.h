@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "kddockwidgets/docks_export.h"
+
 class QPoint;
 class QIcon;
 class QString;
@@ -23,11 +25,11 @@ class DockWidget;
 
 namespace Views {
 
-
 /// @brief The interface that Stack views should implement
 class Stack
 {
 public:
+    virtual ~Stack();
     virtual bool isPositionDraggable(QPoint p) const = 0;
     virtual void setTabBarAutoHide(bool is) = 0;
     virtual void renameTab(int index, const QString &) = 0;

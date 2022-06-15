@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "kddockwidgets/docks_export.h"
+
 namespace KDDockWidgets {
 
 namespace Controllers {
@@ -23,6 +25,7 @@ namespace Views {
 class SideBar
 {
 public:
+    virtual ~SideBar();
     virtual void addDockWidget_Impl(Controllers::DockWidget *dock) = 0;
     virtual void removeDockWidget_Impl(Controllers::DockWidget *dock) = 0;
 };

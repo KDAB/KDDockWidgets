@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "kddockwidgets/docks_export.h"
 #include "kddockwidgets/KDDockWidgets.h"
 
 class QMargins;
@@ -25,9 +26,10 @@ class SideBar;
 namespace Views {
 
 /// @brief The interface that MainWindow views should implement
-class MainWindow
+class DOCKS_EXPORT MainWindow
 {
 public:
+    virtual ~MainWindow();
     virtual QMargins centerWidgetMargins() const = 0;
     virtual QRect centralAreaGeometry() const = 0;
     virtual void setContentsMargins(int left, int top, int right, int bottom) = 0;

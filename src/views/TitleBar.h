@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "kddockwidgets/docks_export.h"
 
 namespace KDDockWidgets {
 
@@ -18,9 +19,10 @@ namespace Views {
 
 
 /// @brief The interface that TitleBar views should implement
-class TitleBar
+class DOCKS_EXPORT TitleBar
 {
 public:
+    virtual ~TitleBar();
     virtual void updateMaximizeButton() = 0;
 #ifdef DOCKS_DEVELOPER_MODE
     virtual bool isFloatButtonVisible() const = 0;

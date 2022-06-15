@@ -12,6 +12,14 @@
 
 #include "kddockwidgets/KDDockWidgets.h"
 
+#include "kddockwidgets/views/SideBar.h"
+#include "kddockwidgets/views/Frame.h"
+#include "kddockwidgets/views/TabBar.h"
+#include "kddockwidgets/views/TitleBar.h"
+#include "kddockwidgets/views/MainWindow.h"
+#include "kddockwidgets/views/Stack.h"
+#include "kddockwidgets/views/Frame.h"
+
 #ifdef KDDW_FRONTEND_QTWIDGETS
 #include "qtwidgets/Platform_qtwidgets.h"
 #endif
@@ -39,4 +47,14 @@ void KDDockWidgets::initFrontend(FrontendType type)
 #endif
         break;
     }
+}
+
+namespace KDDockWidgets::Views {
+// Fix -Wweak-vtables warnings
+SideBar::~SideBar() = default;
+Stack::~Stack() = default;
+TabBar::~TabBar() = default;
+TitleBar::~TitleBar() = default;
+MainWindow::~MainWindow() = default;
+Frame::~Frame() = default;
 }

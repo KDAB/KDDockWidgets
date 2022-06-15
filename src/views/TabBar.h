@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "kddockwidgets/docks_export.h"
+
 class QPoint;
 class QRect;
 class QString;
@@ -24,9 +26,10 @@ class DockWidget;
 namespace Views {
 
 /// @brief The interface that TabBar views should implement
-class TabBar
+class DOCKS_EXPORT TabBar
 {
 public:
+    virtual ~TabBar();
     virtual bool tabsAreMovable() const = 0;
     virtual int tabAt(QPoint localPt) const = 0;
     virtual void moveTabTo(int from, int to) = 0;

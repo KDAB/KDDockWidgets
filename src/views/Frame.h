@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "kddockwidgets/docks_export.h"
+
 class QString;
 class QIcon;
 class QRect;
@@ -24,9 +26,10 @@ class DockWidget;
 namespace Views {
 
 /// @brief The interface that Frame views should implement
-class Frame
+class DOCKS_EXPORT Frame
 {
 public:
+    virtual ~Frame();
     virtual void renameTab(int index, const QString &) = 0;
     virtual void changeTabIcon(int index, const QIcon &) = 0;
     virtual void removeWidget_impl(Controllers::DockWidget *) = 0;

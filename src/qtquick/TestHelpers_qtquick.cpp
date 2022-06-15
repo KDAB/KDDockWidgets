@@ -38,6 +38,8 @@ public:
         setMaximumSize(opts.maxSize);
     }
 
+    ~TestView_qtquick();
+
     QSize sizeHint() const override
     {
         return m_opts.sizeHint;
@@ -46,6 +48,9 @@ public:
 private:
     Platform::CreateViewOptions m_opts;
 };
+
+TestView_qtquick::~TestView_qtquick() = default;
+
 }
 
 Platform_qtquick::Platform_qtquick(int &argc, char **argv)
