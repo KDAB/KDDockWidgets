@@ -58,7 +58,6 @@ class TitleBar;
 class DOCKS_EXPORT DockWidget : public Controller
 {
     Q_OBJECT
-    // Q_PROPERTY(QObject *widget READ widget NOTIFY widgetChanged) TODOm2
     Q_PROPERTY(KDDockWidgets::Controllers::DockWidget::Options options READ options WRITE setOptions NOTIFY
                    optionsChanged)
 public:

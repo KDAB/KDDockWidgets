@@ -48,6 +48,8 @@ class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick, public Views
     Q_PROPERTY(bool isFloating READ isFloating WRITE setFloating NOTIFY isFloatingChanged)
     Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+    Q_PROPERTY(QObject *guestItem READ guestItem NOTIFY guestItemChanged)
+
 public:
     using Views::DockWidgetViewInterface::raise;
     using Views::DockWidgetViewInterface::show;
@@ -77,6 +79,9 @@ public:
 
     /// @reimp
     Q_INVOKABLE void setGuestItem(QQuickItem *);
+
+    /// @brief Returns the guest item that we're hosting
+    QQuickItem *guestItem() const;
 
     /// @reimp
     QSize minSize() const override;
@@ -115,6 +120,7 @@ Q_SIGNALS:
     void isFocusedChanged();
     void isFloatingChanged();
     void titleChanged();
+    void guestItemChanged();
 
 protected:
     bool event(QEvent *e) override;

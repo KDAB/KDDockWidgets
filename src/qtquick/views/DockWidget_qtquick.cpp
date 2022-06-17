@@ -89,6 +89,8 @@ void DockWidget_qtquick::init()
             // TODOm3: Move this logic to the controller
             guest->setParent(this);
             guest->setVisible(true);
+
+            Q_EMIT guestItemChanged();
         }
     });
 }
@@ -108,6 +110,14 @@ void DockWidget_qtquick::setGuestItem(QQuickItem *item)
     wrapper->setParent(this);
     makeItemFillParent(item);
     dockWidget()->setGuestView(wrapper);
+}
+
+QQuickItem *DockWidget_qtquick::guestItem() const
+{
+    if (auto guest = m_dockWidget->guestView())
+        return qobject_cast<QQuickItem *>(guest->asQObject());
+
+    return nullptr;
 }
 
 bool DockWidget_qtquick::event(QEvent *e)
