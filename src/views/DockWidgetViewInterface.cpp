@@ -126,4 +126,14 @@ void DockWidgetViewInterface::addDockWidgetToContainingWindow(DockWidgetViewInte
     m_dockWidget->addDockWidgetToContainingWindow(dw, location, relativeToDw, initialOption);
 }
 
+DockWidgetOptions DockWidgetViewInterface::options() const
+{
+    return m_dockWidget->options();
+}
+
+void DockWidgetViewInterface::setOptions(DockWidgetOptions opts)
+{
+    m_dockWidget->setOptions(opts);
+}
+
 } // namespace

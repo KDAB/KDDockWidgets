@@ -58,7 +58,6 @@ class TitleBar;
 class DOCKS_EXPORT DockWidget : public Controller
 {
     Q_OBJECT
-    Q_PROPERTY(KDDockWidgets::DockWidgetOptions options READ options WRITE setOptions NOTIFY optionsChanged)
 public:
     typedef QVector<DockWidget *> List;
 

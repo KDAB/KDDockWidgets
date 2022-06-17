@@ -68,6 +68,7 @@ DockWidget_qtquick::DockWidget_qtquick(const QString &uniqueName,
     connect(m_dockWidget, &Controllers::DockWidget::isFloatingChanged, this, &DockWidget_qtquick::isFloatingChanged);
     connect(m_dockWidget, &Controllers::DockWidget::isFocusedChanged, this, &DockWidget_qtquick::isFocusedChanged);
     connect(m_dockWidget, &Controllers::DockWidget::titleChanged, this, &DockWidget_qtquick::titleChanged);
+    connect(m_dockWidget, &Controllers::DockWidget::optionsChanged, this, &DockWidget_qtquick::optionsChanged);
 }
 
 DockWidget_qtquick::~DockWidget_qtquick()

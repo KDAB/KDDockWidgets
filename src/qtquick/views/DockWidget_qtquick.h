@@ -49,7 +49,7 @@ class DOCKS_EXPORT DockWidget_qtquick : public Views::View_qtquick, public Views
     Q_PROPERTY(QString uniqueName READ uniqueName CONSTANT)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(QObject *guestItem READ guestItem NOTIFY guestItemChanged)
-
+    Q_PROPERTY(KDDockWidgets::DockWidgetOptions options READ options WRITE setOptions NOTIFY optionsChanged)
 public:
     using Views::DockWidgetViewInterface::raise;
     using Views::DockWidgetViewInterface::show;
@@ -121,6 +121,7 @@ Q_SIGNALS:
     void isFloatingChanged();
     void titleChanged();
     void guestItemChanged();
+    void optionsChanged();
 
 protected:
     bool event(QEvent *e) override;

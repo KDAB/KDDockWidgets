@@ -58,6 +58,9 @@ public:
                                     DockWidgetViewInterface *relativeTo = nullptr,
                                     KDDockWidgets::InitialOption initialOption = {});
 
+    DockWidgetOptions options() const;
+    void setOptions(DockWidgetOptions);
+
 protected:
     Controllers::DockWidget *const m_dockWidget;
 };
