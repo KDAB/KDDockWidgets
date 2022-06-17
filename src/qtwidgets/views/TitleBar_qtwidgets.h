@@ -36,9 +36,6 @@ public:
     bool isFloatButtonVisible() const override;
 #endif
 
-    /// @brief Returns the controller
-    Controllers::TitleBar *titleBar() const;
-
 protected:
     void init() override;
     void paintEvent(QPaintEvent *) override;

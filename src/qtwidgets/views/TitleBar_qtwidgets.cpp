@@ -287,11 +287,6 @@ void TitleBar_qtwidgets::focusInEvent(QFocusEvent *ev)
     m_titleBar->focusInEvent(ev);
 }
 
-Controllers::TitleBar *TitleBar_qtwidgets::titleBar() const
-{
-    return m_titleBar;
-}
-
 #ifdef DOCKS_DEVELOPER_MODE
 
 bool TitleBar_qtwidgets::isCloseButtonVisible() const
