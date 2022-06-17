@@ -57,7 +57,6 @@ public:
     QRect dragRect() const override;
 
     // QML interface:
-    bool isMDI() const;
     KDDockWidgets::Views::TitleBar_qtquick *titleBar() const;
     KDDockWidgets::Views::TitleBar_qtquick *actualTitleBar() const;
     int userType() const;
@@ -95,7 +94,6 @@ private:
 
     QQuickItem *m_stackLayout = nullptr;
     QQuickItem *m_visualItem = nullptr;
-    Controllers::Frame *const m_controller;
     QHash<Controllers::DockWidget *, QMetaObject::Connection> m_connections; // To make it easy to disconnect from lambdas
 };
 

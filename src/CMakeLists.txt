@@ -103,8 +103,10 @@ set(KDDW_BACKEND_SRCS
     views/MainWindowMDI.h
     views/MainWindowViewInterface.cpp
     views/MainWindowViewInterface.h
+    views/FrameViewInterface.cpp
     views/DockWidgetViewInterface.cpp
     views/DockWidgetViewInterface.h
+    views/FrameViewInterface.h
     qtcommon/Platform_qt.cpp
     qtcommon/Platform_qt.h
     qtcommon/Window_qt.cpp

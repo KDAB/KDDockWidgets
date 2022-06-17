@@ -40,7 +40,7 @@ using namespace KDDockWidgets::Views;
 
 Frame_qtquick::Frame_qtquick(Controllers::Frame *controller, QQuickItem *parent)
     : View_qtquick(controller, Type::Frame, parent)
-    , m_controller(controller)
+    , FrameViewInterface(controller)
 {
 }
 
@@ -55,7 +55,7 @@ Frame_qtquick::~Frame_qtquick()
 
 void Frame_qtquick::init()
 {
-    connect(m_controller->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
+    connect(m_frame->tabWidget(), SIGNAL(countChanged()), /// clazy:exclude=old-style-connect
             this, SLOT(updateConstriants()));
 
     connect(this, &View_qtquick::geometryUpdated, this, [this] {
@@ -63,12 +63,12 @@ void Frame_qtquick::init()
     });
 
     /// QML interface connect, since controllers won't be QObjects for much longer:
-    connect(m_controller, &Controllers::Frame::isMDIChanged, this, &Frame_qtquick::isMDIChanged);
-    connect(m_controller, &Controllers::Frame::currentDockWidgetChanged, this, &Frame_qtquick::currentDockWidgetChanged);
-    connect(m_controller, &Controllers::Frame::actualTitleBarChanged, this, &Frame_qtquick::actualTitleBarChanged);
+    connect(m_frame, &Controllers::Frame::isMDIChanged, this, &Frame_qtquick::isMDIChanged);
+    connect(m_frame, &Controllers::Frame::currentDockWidgetChanged, this, &Frame_qtquick::currentDockWidgetChanged);
+    connect(m_frame, &Controllers::Frame::actualTitleBarChanged, this, &Frame_qtquick::actualTitleBarChanged);
 
     connect(this, &View_qtquick::itemGeometryChanged, this, [this] {
-        for (auto dw : m_controller->dockWidgets()) {
+        for (auto dw : m_frame->dockWidgets()) {
             auto dwView = static_cast<DockWidget_qtquick *>(asView_qtquick(dw->view()));
             dwView->frameGeometryChanged(geometry());
         }
@@ -91,7 +91,7 @@ void Frame_qtquick::init()
 
 void Frame_qtquick::updateConstriants()
 {
-    m_controller->onDockWidgetCountChanged();
+    m_frame->onDockWidgetCountChanged();
 
     // QtQuick doesn't have layouts, so we need to do constraint propagation manually
 
@@ -119,12 +119,12 @@ int Frame_qtquick::currentIndex_impl() const
 
 void Frame_qtquick::setCurrentTabIndex_impl(int index)
 {
-    setCurrentDockWidget_impl(m_controller->dockWidgetAt(index));
+    setCurrentDockWidget_impl(m_frame->dockWidgetAt(index));
 }
 
 void Frame_qtquick::setCurrentDockWidget_impl(Controllers::DockWidget *dw)
 {
-    m_controller->tabWidget()->setCurrentDockWidget(dw);
+    m_frame->tabWidget()->setCurrentDockWidget(dw);
 }
 
 void Frame_qtquick::insertDockWidget_impl(Controllers::DockWidget *dw, int index)
@@ -189,7 +189,7 @@ void Frame_qtquick::setStackLayout(QQuickItem *stackLayout)
 
 QSize Frame_qtquick::minSize() const
 {
-    const QSize contentsSize = m_controller->dockWidgetsMinSize();
+    const QSize contentsSize = m_frame->dockWidgetsMinSize();
     return contentsSize + QSize(0, nonContentsHeight());
 }
 
@@ -215,7 +215,7 @@ int Frame_qtquick::nonContentsHeight() const
 
 Stack_qtquick *Frame_qtquick::stackView() const
 {
-    if (auto stack = m_controller->tabWidget())
+    if (auto stack = m_frame->tabWidget())
         return qobject_cast<Stack_qtquick *>(asQQuickItem(stack->view()));
 
     return nullptr;
@@ -227,14 +227,9 @@ QRect Frame_qtquick::dragRect() const
     return {};
 }
 
-bool Frame_qtquick::isMDI() const
-{
-    return m_controller->isMDI();
-}
-
 KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::titleBar() const
 {
-    if (auto tb = m_controller->titleBar()) {
+    if (auto tb = m_frame->titleBar()) {
         return dynamic_cast<KDDockWidgets::Views::TitleBar_qtquick *>(tb->view());
     }
 
@@ -243,7 +238,7 @@ KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::titleBar() const
 
 KDDockWidgets::Views::TitleBar_qtquick *Frame_qtquick::actualTitleBar() const
 {
-    if (auto tb = m_controller->actualTitleBar()) {
+    if (auto tb = m_frame->actualTitleBar()) {
         return dynamic_cast<KDDockWidgets::Views::TitleBar_qtquick *>(tb->view());
     }
 
@@ -265,7 +260,7 @@ bool Frame_qtquick::event(QEvent *e)
 
     if (e->type() == QEvent::ParentChange) {
         auto p = parentView();
-        m_controller->setLayout(p ? p->asLayout() : nullptr);
+        m_frame->setLayout(p ? p->asLayout() : nullptr);
     }
 
     return View_qtquick::event(e);

@@ -13,7 +13,6 @@
 #include "kddockwidgets/KDDockWidgets.h"
 
 #include "kddockwidgets/views/SideBarViewInterface.h"
-#include "kddockwidgets/views/FrameViewInterface.h"
 #include "kddockwidgets/views/TabBarViewInterface.h"
 #include "kddockwidgets/views/TitleBarViewInterface.h"
 #include "kddockwidgets/views/StackViewInterface.h"
@@ -53,5 +52,4 @@ SideBarViewInterface::~SideBarViewInterface() = default;
 StackViewInterface::~StackViewInterface() = default;
 TabBarViewInterface::~TabBarViewInterface() = default;
 TitleBarViewInterface::~TitleBarViewInterface() = default;
-FrameViewInterface::~FrameViewInterface() = default;
 }

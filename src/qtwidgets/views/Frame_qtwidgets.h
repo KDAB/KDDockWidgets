@@ -39,7 +39,6 @@ public:
     Controllers::DockWidget *currentDockWidget_impl() const override;
     int nonContentsHeight() const override;
     QRect dragRect() const override;
-    Controllers::Frame *frame() const;
 
 protected:
     void free_impl() override;
@@ -48,7 +47,6 @@ protected:
 
 private:
     bool event(QEvent *) override;
-    Controllers::Frame *const m_controller;
 };
 
 }

@@ -21,6 +21,7 @@ namespace KDDockWidgets {
 
 namespace Controllers {
 class DockWidget;
+class Frame;
 }
 
 namespace Views {
@@ -29,6 +30,7 @@ namespace Views {
 class DOCKS_EXPORT FrameViewInterface
 {
 public:
+    explicit FrameViewInterface(Controllers::Frame *);
     virtual ~FrameViewInterface();
     virtual void renameTab(int index, const QString &) = 0;
     virtual void changeTabIcon(int index, const QIcon &) = 0;
@@ -42,6 +44,12 @@ public:
     virtual Controllers::DockWidget *currentDockWidget_impl() const = 0;
     virtual int nonContentsHeight() const = 0;
     virtual QRect dragRect() const = 0;
+
+    bool isMDI() const;
+    Controllers::Frame *frame() const;
+
+protected:
+    Controllers::Frame *const m_frame;
 };
 
 }
