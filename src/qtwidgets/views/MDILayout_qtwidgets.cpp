@@ -27,8 +27,3 @@ MDILayout_qtwidgets::~MDILayout_qtwidgets()
     if (!freed())
         m_controller->viewAboutToBeDeleted();
 }
-
-bool MDILayout_qtwidgets::onResize(QSize newSize)
-{
-    return m_controller->onResize(newSize);
-}

@@ -199,10 +199,6 @@ public:
     /// @brief Emitted when the count of visible widgets changes
     KDBindings::Signal<int> visibleWidgetCountChanged;
 
-    /// TODOm3: Better a signal, so that derived classes don't have to remember to call these
-    bool onResize(QSize newSize);
-
-    /// TODOm3: Remove
     void viewAboutToBeDeleted();
 
     Layouting::ItemContainer *rootItem() const;
@@ -234,6 +230,7 @@ protected:
     QList<Controllers::Frame *> framesFrom(View *frameOrMultiSplitter) const;
 
 private:
+    bool onResize(QSize newSize);
     bool m_inResizeEvent = false;
     Layouting::ItemContainer *m_rootItem = nullptr;
     KDBindings::ConnectionHandle m_minSizeChangedHandler;

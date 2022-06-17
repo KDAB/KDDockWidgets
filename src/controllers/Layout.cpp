@@ -33,6 +33,8 @@ Layout::Layout(Type type, View *view)
     view->layoutInvalidated.connect([this] {
         updateSizeConstraints();
     });
+
+    view->resized.connect(&Layout::onResize, this);
 }
 
 Layout::~Layout()

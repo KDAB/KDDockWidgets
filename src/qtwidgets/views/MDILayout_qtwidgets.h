@@ -29,9 +29,6 @@ public:
     explicit MDILayout_qtwidgets(Controllers::MDILayout *controller, View *parent);
     ~MDILayout_qtwidgets();
 
-    /// TODOm3
-    bool onResize(QSize newSize) override;
-
 private:
     Controllers::MDILayout *const m_controller;
 };

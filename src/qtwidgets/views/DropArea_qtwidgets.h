@@ -38,9 +38,6 @@ public:
     explicit DropArea_qtwidgets(Controllers::DropArea *, View *parent);
     ~DropArea_qtwidgets();
 
-    /// TODOm3
-    bool onResize(QSize newSize) override;
-
 private:
     Controllers::DropArea *const m_dropArea;
 };

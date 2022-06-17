@@ -31,8 +31,3 @@ DropArea_qtwidgets::~DropArea_qtwidgets()
     if (!freed())
         m_dropArea->viewAboutToBeDeleted();
 }
-
-bool DropArea_qtwidgets::onResize(QSize newSize)
-{
-    return m_dropArea->onResize(newSize);
-}
